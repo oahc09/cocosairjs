@@ -59,6 +59,8 @@ const EXPECT = {
         'cocos/core/utils/path.ts',
         'cocos/game/director.ts',
         'cocos/gfx/base/define.ts',
+        'cocos/gfx/base/device.ts',
+        'cocos/render-scene/core/program-lib.ts',
         'cocos/gfx/device-manager.ts',
         'cocos/input/input.ts',
         'cocos/input/types/event/event-mouse.ts',
@@ -86,13 +88,13 @@ const EXPECT = {
         'external:emscripten/physx/physx.release.wasm.js',
         'external:emscripten/physx/physx.release.wasm.wasm',
     ],
-    featureUnitsAir: 34,
+    featureUnitsAir: 35,
     featureUnitsUpstream: 55,
-    featureUnitsMissing: 23,
+    featureUnitsMissing: 22,
     airOnlyFeatures: ['air', 'spark'],
     wasmBackendFeatures: ['physics-ammo', 'physics-physx', 'physics-2d-box2d-wasm'],
     // r46（owner #8(a)）：physics-cannon 入默认集（交付期切换），26 → 27；三个 wasm 后端仍不入。
-    defaultAirFeatures: 26, // Owner-approved retirement of gfx-webgl from the default runtime.
+    defaultAirFeatures: 27, // Owner-approved retirement of gfx-webgl from the default runtime.
     // A7 核对的子树（三 wasm 后端 + 两个已在 Air 的对照后端）
     physicsSubtreeDirs: [...SEED_DIRS, 'cocos/physics/cannon', 'cocos/physics-2d/box2d'],
 };

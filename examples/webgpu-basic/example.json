@@ -1,0 +1,103 @@
+{
+  "id": "webgpu-basic",
+  "version": "1.0.0",
+  "status": "experimental",
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "title": "Explicit WebGPU backend",
+  "category": "basics",
+  "apiClaims": ["createAirApp", "Scene", "Node", "Camera", "MeshRenderer", "DirectionalLight"],
+  "capabilities": ["basics"],
+  "validation": {
+    "functional": ["node-exists", "no-runtime-error"],
+    "interaction": [],
+    "visual": ["visible-frame"],
+    "lifecycle": [],
+    "capability": []
+  },
+  "specStatus": "frozen",
+  "learning": {
+    "goal": "显式选择桌面 WebGPU 后端并与默认 WebGL2 对照",
+    "points": [
+      "renderer 选项必须在初始化前选择",
+      "实际后端由 gfxAPI 判断",
+      "同一场景采用原生 Cocos Camera、MeshRenderer 和材质",
+      "通用 API 门禁使用显式 WebGL2 对照；真实 WebGPU 另由完整专项验收"
+    ]
+  },
+  "effect": {
+    "functional": "renderer=webgpu 请求真实 WebGPU；查询参数 renderer=webgl2 切换为初始化前显式选择；场景包含相机、主光和原生立方体。",
+    "visual": "深蓝背景上显示灰色受光立方体；不支持 WebGPU 的环境明确拒绝启动。"
+  },
+  "api": {
+    "primary": ["createAirApp"],
+    "supporting": ["Scene", "Node", "Camera", "MeshRenderer", "DirectionalLight"],
+    "claims": ["createAirApp", "Scene", "Node", "Camera", "MeshRenderer", "DirectionalLight"],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "src/main.ts",
+        "sourceLocation": "L27",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "Scene",
+        "source": "src/main.ts",
+        "sourceLocation": "L33",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "Node",
+        "source": "src/main.ts",
+        "sourceLocation": "L36",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "Camera",
+        "source": "src/main.ts",
+        "sourceLocation": "L40",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "MeshRenderer",
+        "source": "src/main.ts",
+        "sourceLocation": "L63",
+        "validator": "visible-frame"
+      },
+      {
+        "api": "DirectionalLight",
+        "source": "src/main.ts",
+        "sourceLocation": "L56",
+        "validator": "visible-frame"
+      }
+    ],
+    "forbiddenShortcut": ["用模拟计数或合成图像替代真实引擎、设备和帧验证"]
+  },
+  "entry": "index.html",
+  "scene": {
+    "expectedGraph": {
+      "nodes": ["Main Camera", "Main Light", "Cube"]
+    }
+  },
+  "assets": [],
+  "interaction": {
+    "steps": []
+  },
+  "ready": {
+    "validators": ["scene-ready"]
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "license": {
+    "assets": "原创程序化场景，无第三方模型或贴图"
+  },
+  "bench": {
+    "entryQuery": "renderer=webgl2"
+  },
+  "screenshot": {
+    "target": "#GameCanvas"
+  }
+}

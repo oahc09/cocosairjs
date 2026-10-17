@@ -1,0 +1,17 @@
+{
+  "name": "webkit",
+  "command": [
+    "D:\\Program Files\\nodejs\\node.exe",
+    "E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\webgpu-backend.cjs",
+    "--engine=webkit",
+    "--examples",
+    "--custom",
+    "--out=E:\\AIProMax\\github\\cocosair.js\\output\\webgpu-completion\\final-r5\\webkit"
+  ],
+  "startedAt": "2026-10-15T16:07:38.123Z",
+  "expectedExit": 1,
+  "browserPath": "C:/Program Files/Google/Chrome/Application/chrome.exe",
+  "exitCode": 1,
+  "signal": null,
+  "finishedAt": "2026-10-15T16:09:26.264Z"
+}

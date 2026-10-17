@@ -1,0 +1,2087 @@
+{
+  "measuredAt": "2026-10-15T14:18:29.840Z",
+  "completed": true,
+  "artifact": {
+    "bundleName": "cocosair.module.js"
+  },
+  "bundleSha256": "189de50c0f631c53dfcc08900612158410e24ad8fffb7bcb39666702a860074a",
+  "cases": [
+    {
+      "renderer": "webgl2",
+      "example": "webgpu-basic",
+      "state": {
+        "app": true,
+        "api": 7,
+        "expectedApi": 8,
+        "health": {
+          "state": "healthy",
+          "backend": "webgl2",
+          "lostCount": 0,
+          "restoredCount": 0,
+          "isContextLost": false,
+          "gamePaused": true,
+          "reason": null,
+          "suggestion": "none",
+          "lastEvent": null,
+          "lastEventAt": null,
+          "timeline": []
+        },
+        "gpuErrors": [],
+        "adapter": {
+          "vendor": "nvidia",
+          "architecture": "lovelace",
+          "device": "",
+          "description": "",
+          "isFallbackAdapter": false
+        },
+        "startupAndProbeMs": 2322,
+        "gpuTimestampMs": null
+      },
+      "resources": {
+        "readback": true
+      },
+      "visiblePixels": 11572,
+      "errors": [],
+      "translatorRequests": [],
+      "capture": "webgpu-basic-webgl2.png"
+    },
+    {
+      "renderer": "webgpu",
+      "example": "webgpu-basic",
+      "state": {
+        "app": true,
+        "api": 8,
+        "expectedApi": 8,
+        "health": {
+          "state": "healthy",
+          "backend": "webgpu",
+          "lostCount": 0,
+          "restoredCount": 0,
+          "isContextLost": null,
+          "gamePaused": true,
+          "reason": null,
+          "suggestion": "none",
+          "lastEvent": null,
+          "lastEventAt": null,
+          "timeline": []
+        },
+        "gpuErrors": [],
+        "adapter": {
+          "vendor": "nvidia",
+          "architecture": "lovelace",
+          "device": "",
+          "description": "",
+          "isFallbackAdapter": false
+        },
+        "startupAndProbeMs": 6664,
+        "gpuTimestampMs": null
+      },
+      "resources": {
+        "readback": true,
+        "syncReadbackRejected": true,
+        "msaaResolve": true,
+        "mipLayerAttachment": true,
+        "mrtDepth": true,
+        "compute": true,
+        "storageTexture": true,
+        "computeToDraw": true,
+        "resizeRebind": true
+      },
+      "visiblePixels": 11394,
+      "errors": [],
+      "translatorRequests": [
+        "http://127.0.0.1:57729/build/webgpu/glslang.js",
+        "http://127.0.0.1:57729/build/webgpu/glslang.wasm",
+        "http://127.0.0.1:57729/build/webgpu/twgsl.js",
+        "http://127.0.0.1:57729/build/webgpu/twgsl.wasm"
+      ],
+      "capture": "webgpu-basic-webgpu.png",
+      "deviceLost": {
+        "health": {
+          "state": "failed",
+          "backend": "webgpu",
+          "lostCount": 1,
+          "restoredCount": 0,
+          "isContextLost": null,
+          "gamePaused": true,
+          "reason": "webgpu-resources-require-reload",
+          "suggestion": "reload",
+          "lastEvent": "failed",
+          "lastEventAt": 1792073924651,
+          "timeline": [
+            {
+              "at": 1792073924651,
+              "type": "lost",
+              "detail": "webgpu-device-lost: destroyed: Device was destroyed."
+            },
+            {
+              "at": 1792073924651,
+              "type": "failed",
+              "detail": "webgpu-resources-require-reload"
+            }
+          ]
+        },
+        "submissionRejected": true
+      }
+    },
+    {
+      "renderer": "webgl2",
+      "example": "webgpu-basic",
+      "variant": "shadows",
+      "state": {
+        "app": true,
+        "api": 7,
+        "expectedApi": 8,
+        "health": {
+          "state": "healthy",
+          "backend": "webgl2",
+          "lostCount": 0,
+          "restoredCount": 0,
+          "isContextLost": false,
+          "gamePaused": true,
+          "reason": null,
+          "suggestion": "none",
+          "lastEvent": null,
+          "lastEventAt": null,
+          "timeline": []
+        },
+        "gpuErrors": [],
+        "adapter": {
+          "vendor": "nvidia",
+          "architecture": "lovelace",
+          "device": "",
+          "description": "",
+          "isFallbackAdapter": false
+        },
+        "startupAndProbeMs": 1845,
+        "gpuTimestampMs": null,
+        "shadow": {
+          "enabled": true,
+          "shadowMap": {
+            "format": "R32F",
+            "min": 0.4676305949687958,
+            "max": 1
+          },
+          "castObjects": 1,
+          "layerObjects": 1,
+          "phase": 8,
+          "queues": [
+            [
+              1
+            ]
+          ],
+          "runtimeEnabled": true,
+          "macros": {
+            "shadow": 2,
+            "dir": 1
+          },
+          "framebuffers": 1,
+          "models": [
+            {
+              "cast": true,
+              "receive": true,
+              "receiveDirLight": true,
+              "passes": [
+                {
+                  "phase": 16,
+                  "program": "builtin-standard|standard-vs|standard-fs",
+                  "defines": {
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 2,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 1,
+                    "CC_CASCADED_LAYERS_TRANSITION": false,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  }
+                },
+                {
+                  "phase": 2,
+                  "program": "builtin-standard|standard-vs|standard-fs",
+                  "defines": {
+                    "CC_FORWARD_ADD": true,
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 2,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 1,
+                    "CC_CASCADED_LAYERS_TRANSITION": false,
+                    "CC_IS_TRANSPARENCY_PASS": 1,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  }
+                },
+                {
+                  "phase": 8,
+                  "program": "builtin-standard|shadow-caster-vs|shadow-caster-fs",
+                  "defines": {
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 2,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 1,
+                    "CC_CASCADED_LAYERS_TRANSITION": false,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  }
+                },
+                {
+                  "phase": 32,
+                  "program": "builtin-standard|standard-vs|reflect-map-fs",
+                  "defines": {
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 2,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 1,
+                    "CC_CASCADED_LAYERS_TRANSITION": false,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  }
+                },
+                {
+                  "phase": 4,
+                  "program": "builtin-standard|planar-shadow-vs|planar-shadow-fs",
+                  "defines": {
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 2,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 1,
+                    "CC_CASCADED_LAYERS_TRANSITION": false,
+                    "CC_IS_TRANSPARENCY_PASS": 1,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  }
+                },
+                {
+                  "phase": 128,
+                  "program": "builtin-standard|standard-vs|standard-fs",
+                  "defines": {
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 2,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 1,
+                    "CC_CASCADED_LAYERS_TRANSITION": false,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  }
+                }
+              ]
+            },
+            {
+              "cast": false,
+              "receive": true,
+              "receiveDirLight": true,
+              "passes": [
+                {
+                  "phase": 16,
+                  "program": "builtin-standard|standard-vs|standard-fs",
+                  "defines": {
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 2,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 1,
+                    "CC_CASCADED_LAYERS_TRANSITION": false,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  }
+                },
+                {
+                  "phase": 2,
+                  "program": "builtin-standard|standard-vs|standard-fs",
+                  "defines": {
+                    "CC_FORWARD_ADD": true,
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 2,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 1,
+                    "CC_CASCADED_LAYERS_TRANSITION": false,
+                    "CC_IS_TRANSPARENCY_PASS": 1,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  }
+                },
+                {
+                  "phase": 8,
+                  "program": "builtin-standard|shadow-caster-vs|shadow-caster-fs",
+                  "defines": {
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 2,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 1,
+                    "CC_CASCADED_LAYERS_TRANSITION": false,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  }
+                },
+                {
+                  "phase": 32,
+                  "program": "builtin-standard|standard-vs|reflect-map-fs",
+                  "defines": {
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 2,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 1,
+                    "CC_CASCADED_LAYERS_TRANSITION": false,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  }
+                },
+                {
+                  "phase": 4,
+                  "program": "builtin-standard|planar-shadow-vs|planar-shadow-fs",
+                  "defines": {
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 2,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 1,
+                    "CC_CASCADED_LAYERS_TRANSITION": false,
+                    "CC_IS_TRANSPARENCY_PASS": 1,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  }
+                },
+                {
+                  "phase": 128,
+                  "program": "builtin-standard|standard-vs|standard-fs",
+                  "defines": {
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 2,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 1,
+                    "CC_CASCADED_LAYERS_TRANSITION": false,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "resources": null,
+      "shadowChangedPixels": 1828,
+      "visiblePixels": 70465,
+      "errors": [],
+      "translatorRequests": [],
+      "capture": "webgpu-basic-shadows-webgl2.png"
+    },
+    {
+      "renderer": "webgpu",
+      "example": "webgpu-basic",
+      "variant": "shadows",
+      "state": {
+        "app": true,
+        "api": 8,
+        "expectedApi": 8,
+        "health": {
+          "state": "healthy",
+          "backend": "webgpu",
+          "lostCount": 0,
+          "restoredCount": 0,
+          "isContextLost": null,
+          "gamePaused": true,
+          "reason": null,
+          "suggestion": "none",
+          "lastEvent": null,
+          "lastEventAt": null,
+          "timeline": []
+        },
+        "gpuErrors": [],
+        "adapter": {
+          "vendor": "nvidia",
+          "architecture": "lovelace",
+          "device": "",
+          "description": "",
+          "isFallbackAdapter": false
+        },
+        "startupAndProbeMs": 8217,
+        "gpuTimestampMs": null,
+        "shadow": {
+          "enabled": true,
+          "castObjects": 1,
+          "layerObjects": 1,
+          "phase": 8,
+          "queues": [
+            [
+              1
+            ]
+          ],
+          "runtimeEnabled": true,
+          "macros": {
+            "shadow": 2,
+            "dir": 1
+          },
+          "framebuffers": 1,
+          "models": [
+            {
+              "cast": true,
+              "receive": true,
+              "receiveDirLight": true,
+              "passes": [
+                {
+                  "phase": 16,
+                  "program": "builtin-standard|standard-vs|standard-fs",
+                  "defines": {
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 2,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 1,
+                    "CC_CASCADED_LAYERS_TRANSITION": false,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  }
+                },
+                {
+                  "phase": 2,
+                  "program": "builtin-standard|standard-vs|standard-fs",
+                  "defines": {
+                    "CC_FORWARD_ADD": true,
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 2,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 1,
+                    "CC_CASCADED_LAYERS_TRANSITION": false,
+                    "CC_IS_TRANSPARENCY_PASS": 1,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  }
+                },
+                {
+                  "phase": 8,
+                  "program": "builtin-standard|shadow-caster-vs|shadow-caster-fs",
+                  "defines": {
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 2,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 1,
+                    "CC_CASCADED_LAYERS_TRANSITION": false,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  }
+                },
+                {
+                  "phase": 32,
+                  "program": "builtin-standard|standard-vs|reflect-map-fs",
+                  "defines": {
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 2,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 1,
+                    "CC_CASCADED_LAYERS_TRANSITION": false,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  }
+                },
+                {
+                  "phase": 4,
+                  "program": "builtin-standard|planar-shadow-vs|planar-shadow-fs",
+                  "defines": {
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 2,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 1,
+                    "CC_CASCADED_LAYERS_TRANSITION": false,
+                    "CC_IS_TRANSPARENCY_PASS": 1,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  }
+                },
+                {
+                  "phase": 128,
+                  "program": "builtin-standard|standard-vs|standard-fs",
+                  "defines": {
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 2,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 1,
+                    "CC_CASCADED_LAYERS_TRANSITION": false,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  }
+                }
+              ]
+            },
+            {
+              "cast": false,
+              "receive": true,
+              "receiveDirLight": true,
+              "passes": [
+                {
+                  "phase": 16,
+                  "program": "builtin-standard|standard-vs|standard-fs",
+                  "defines": {
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 2,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 1,
+                    "CC_CASCADED_LAYERS_TRANSITION": false,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  }
+                },
+                {
+                  "phase": 2,
+                  "program": "builtin-standard|standard-vs|standard-fs",
+                  "defines": {
+                    "CC_FORWARD_ADD": true,
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 2,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 1,
+                    "CC_CASCADED_LAYERS_TRANSITION": false,
+                    "CC_IS_TRANSPARENCY_PASS": 1,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  }
+                },
+                {
+                  "phase": 8,
+                  "program": "builtin-standard|shadow-caster-vs|shadow-caster-fs",
+                  "defines": {
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 2,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 1,
+                    "CC_CASCADED_LAYERS_TRANSITION": false,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  }
+                },
+                {
+                  "phase": 32,
+                  "program": "builtin-standard|standard-vs|reflect-map-fs",
+                  "defines": {
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 2,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 1,
+                    "CC_CASCADED_LAYERS_TRANSITION": false,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  }
+                },
+                {
+                  "phase": 4,
+                  "program": "builtin-standard|planar-shadow-vs|planar-shadow-fs",
+                  "defines": {
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 2,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 1,
+                    "CC_CASCADED_LAYERS_TRANSITION": false,
+                    "CC_IS_TRANSPARENCY_PASS": 1,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  }
+                },
+                {
+                  "phase": 128,
+                  "program": "builtin-standard|standard-vs|standard-fs",
+                  "defines": {
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 2,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 1,
+                    "CC_CASCADED_LAYERS_TRANSITION": false,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "resources": null,
+      "shadowChangedPixels": 1814,
+      "visiblePixels": 69700,
+      "errors": [],
+      "translatorRequests": [
+        "http://127.0.0.1:57729/build/webgpu/glslang.js",
+        "http://127.0.0.1:57729/build/webgpu/glslang.wasm",
+        "http://127.0.0.1:57729/build/webgpu/twgsl.js",
+        "http://127.0.0.1:57729/build/webgpu/twgsl.wasm"
+      ],
+      "capture": "webgpu-basic-shadows-webgpu.png"
+    },
+    {
+      "renderer": "webgl2",
+      "example": "webgpu-basic",
+      "variant": "csm",
+      "state": {
+        "app": true,
+        "api": 7,
+        "expectedApi": 8,
+        "health": {
+          "state": "healthy",
+          "backend": "webgl2",
+          "lostCount": 0,
+          "restoredCount": 0,
+          "isContextLost": false,
+          "gamePaused": true,
+          "reason": null,
+          "suggestion": "none",
+          "lastEvent": null,
+          "lastEventAt": null,
+          "timeline": []
+        },
+        "gpuErrors": [],
+        "adapter": {
+          "vendor": "nvidia",
+          "architecture": "lovelace",
+          "device": "",
+          "description": "",
+          "isFallbackAdapter": false
+        },
+        "startupAndProbeMs": 2108,
+        "gpuTimestampMs": null,
+        "shadow": {
+          "enabled": true,
+          "shadowMap": {
+            "format": "R32F",
+            "min": 0.91914302110672,
+            "max": 1
+          },
+          "castObjects": 1,
+          "layerObjects": 0,
+          "phase": 8,
+          "queues": [
+            [
+              0
+            ]
+          ],
+          "runtimeEnabled": true,
+          "macros": {
+            "shadow": 2,
+            "dir": 2
+          },
+          "framebuffers": 1,
+          "models": [
+            {
+              "cast": true,
+              "receive": true,
+              "receiveDirLight": true,
+              "passes": [
+                {
+                  "phase": 16,
+                  "program": "builtin-standard|standard-vs|standard-fs",
+                  "defines": {
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 2,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 2,
+                    "CC_CASCADED_LAYERS_TRANSITION": false,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  }
+                },
+                {
+                  "phase": 2,
+                  "program": "builtin-standard|standard-vs|standard-fs",
+                  "defines": {
+                    "CC_FORWARD_ADD": true,
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 2,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 2,
+                    "CC_CASCADED_LAYERS_TRANSITION": false,
+                    "CC_IS_TRANSPARENCY_PASS": 1,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  }
+                },
+                {
+                  "phase": 8,
+                  "program": "builtin-standard|shadow-caster-vs|shadow-caster-fs",
+                  "defines": {
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 2,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 2,
+                    "CC_CASCADED_LAYERS_TRANSITION": false,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  }
+                },
+                {
+                  "phase": 32,
+                  "program": "builtin-standard|standard-vs|reflect-map-fs",
+                  "defines": {
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 2,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 2,
+                    "CC_CASCADED_LAYERS_TRANSITION": false,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  }
+                },
+                {
+                  "phase": 4,
+                  "program": "builtin-standard|planar-shadow-vs|planar-shadow-fs",
+                  "defines": {
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 2,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 2,
+                    "CC_CASCADED_LAYERS_TRANSITION": false,
+                    "CC_IS_TRANSPARENCY_PASS": 1,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  }
+                },
+                {
+                  "phase": 128,
+                  "program": "builtin-standard|standard-vs|standard-fs",
+                  "defines": {
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 2,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 2,
+                    "CC_CASCADED_LAYERS_TRANSITION": false,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  }
+                }
+              ]
+            },
+            {
+              "cast": false,
+              "receive": true,
+              "receiveDirLight": true,
+              "passes": [
+                {
+                  "phase": 16,
+                  "program": "builtin-standard|standard-vs|standard-fs",
+                  "defines": {
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 2,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 2,
+                    "CC_CASCADED_LAYERS_TRANSITION": false,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  }
+                },
+                {
+                  "phase": 2,
+                  "program": "builtin-standard|standard-vs|standard-fs",
+                  "defines": {
+                    "CC_FORWARD_ADD": true,
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 2,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 2,
+                    "CC_CASCADED_LAYERS_TRANSITION": false,
+                    "CC_IS_TRANSPARENCY_PASS": 1,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  }
+                },
+                {
+                  "phase": 8,
+                  "program": "builtin-standard|shadow-caster-vs|shadow-caster-fs",
+                  "defines": {
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 2,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 2,
+                    "CC_CASCADED_LAYERS_TRANSITION": false,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  }
+                },
+                {
+                  "phase": 32,
+                  "program": "builtin-standard|standard-vs|reflect-map-fs",
+                  "defines": {
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 2,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 2,
+                    "CC_CASCADED_LAYERS_TRANSITION": false,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  }
+                },
+                {
+                  "phase": 4,
+                  "program": "builtin-standard|planar-shadow-vs|planar-shadow-fs",
+                  "defines": {
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 2,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 2,
+                    "CC_CASCADED_LAYERS_TRANSITION": false,
+                    "CC_IS_TRANSPARENCY_PASS": 1,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  }
+                },
+                {
+                  "phase": 128,
+                  "program": "builtin-standard|standard-vs|standard-fs",
+                  "defines": {
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 2,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 2,
+                    "CC_CASCADED_LAYERS_TRANSITION": false,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "resources": null,
+      "shadowChangedPixels": 1828,
+      "visiblePixels": 70465,
+      "errors": [],
+      "translatorRequests": [],
+      "capture": "webgpu-basic-csm-webgl2.png"
+    },
+    {
+      "renderer": "webgpu",
+      "example": "webgpu-basic",
+      "variant": "csm",
+      "state": {
+        "app": true,
+        "api": 8,
+        "expectedApi": 8,
+        "health": {
+          "state": "healthy",
+          "backend": "webgpu",
+          "lostCount": 0,
+          "restoredCount": 0,
+          "isContextLost": null,
+          "gamePaused": true,
+          "reason": null,
+          "suggestion": "none",
+          "lastEvent": null,
+          "lastEventAt": null,
+          "timeline": []
+        },
+        "gpuErrors": [],
+        "adapter": {
+          "vendor": "nvidia",
+          "architecture": "lovelace",
+          "device": "",
+          "description": "",
+          "isFallbackAdapter": false
+        },
+        "startupAndProbeMs": 7875,
+        "gpuTimestampMs": null,
+        "shadow": {
+          "enabled": true,
+          "castObjects": 1,
+          "layerObjects": 0,
+          "phase": 8,
+          "queues": [
+            [
+              0
+            ]
+          ],
+          "runtimeEnabled": true,
+          "macros": {
+            "shadow": 2,
+            "dir": 2
+          },
+          "framebuffers": 1,
+          "models": [
+            {
+              "cast": true,
+              "receive": true,
+              "receiveDirLight": true,
+              "passes": [
+                {
+                  "phase": 16,
+                  "program": "builtin-standard|standard-vs|standard-fs",
+                  "defines": {
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 2,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 2,
+                    "CC_CASCADED_LAYERS_TRANSITION": false,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  }
+                },
+                {
+                  "phase": 2,
+                  "program": "builtin-standard|standard-vs|standard-fs",
+                  "defines": {
+                    "CC_FORWARD_ADD": true,
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 2,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 2,
+                    "CC_CASCADED_LAYERS_TRANSITION": false,
+                    "CC_IS_TRANSPARENCY_PASS": 1,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  }
+                },
+                {
+                  "phase": 8,
+                  "program": "builtin-standard|shadow-caster-vs|shadow-caster-fs",
+                  "defines": {
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 2,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 2,
+                    "CC_CASCADED_LAYERS_TRANSITION": false,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  }
+                },
+                {
+                  "phase": 32,
+                  "program": "builtin-standard|standard-vs|reflect-map-fs",
+                  "defines": {
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 2,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 2,
+                    "CC_CASCADED_LAYERS_TRANSITION": false,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  }
+                },
+                {
+                  "phase": 4,
+                  "program": "builtin-standard|planar-shadow-vs|planar-shadow-fs",
+                  "defines": {
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 2,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 2,
+                    "CC_CASCADED_LAYERS_TRANSITION": false,
+                    "CC_IS_TRANSPARENCY_PASS": 1,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  }
+                },
+                {
+                  "phase": 128,
+                  "program": "builtin-standard|standard-vs|standard-fs",
+                  "defines": {
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 2,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 2,
+                    "CC_CASCADED_LAYERS_TRANSITION": false,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  }
+                }
+              ]
+            },
+            {
+              "cast": false,
+              "receive": true,
+              "receiveDirLight": true,
+              "passes": [
+                {
+                  "phase": 16,
+                  "program": "builtin-standard|standard-vs|standard-fs",
+                  "defines": {
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 2,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 2,
+                    "CC_CASCADED_LAYERS_TRANSITION": false,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  }
+                },
+                {
+                  "phase": 2,
+                  "program": "builtin-standard|standard-vs|standard-fs",
+                  "defines": {
+                    "CC_FORWARD_ADD": true,
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 2,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 2,
+                    "CC_CASCADED_LAYERS_TRANSITION": false,
+                    "CC_IS_TRANSPARENCY_PASS": 1,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  }
+                },
+                {
+                  "phase": 8,
+                  "program": "builtin-standard|shadow-caster-vs|shadow-caster-fs",
+                  "defines": {
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 2,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 2,
+                    "CC_CASCADED_LAYERS_TRANSITION": false,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  }
+                },
+                {
+                  "phase": 32,
+                  "program": "builtin-standard|standard-vs|reflect-map-fs",
+                  "defines": {
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 2,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 2,
+                    "CC_CASCADED_LAYERS_TRANSITION": false,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  }
+                },
+                {
+                  "phase": 4,
+                  "program": "builtin-standard|planar-shadow-vs|planar-shadow-fs",
+                  "defines": {
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 2,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 2,
+                    "CC_CASCADED_LAYERS_TRANSITION": false,
+                    "CC_IS_TRANSPARENCY_PASS": 1,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  }
+                },
+                {
+                  "phase": 128,
+                  "program": "builtin-standard|standard-vs|standard-fs",
+                  "defines": {
+                    "CC_PIPELINE_TYPE": 0,
+                    "CC_USE_HDR": true,
+                    "CC_USE_DEBUG_VIEW": 0,
+                    "CC_SHADOWMAP_FORMAT": 0,
+                    "CC_SHADOWMAP_USE_LINEAR_DEPTH": 0,
+                    "CC_SUPPORT_CASCADED_SHADOW_MAP": true,
+                    "CC_SHADOW_TYPE": 2,
+                    "CC_DIR_SHADOW_PCF_TYPE": 0,
+                    "CC_DIR_LIGHT_SHADOW_TYPE": 2,
+                    "CC_CASCADED_LAYERS_TRANSITION": false,
+                    "CC_USE_IBL": 0,
+                    "CC_USE_DIFFUSEMAP": 0,
+                    "CC_IBL_CONVOLUTED": false,
+                    "CC_USE_FOG": 4,
+                    "CC_USE_ACCURATE_FOG": 0,
+                    "CC_TONE_MAPPING_TYPE": 0
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "resources": null,
+      "shadowChangedPixels": 1814,
+      "visiblePixels": 69700,
+      "errors": [],
+      "translatorRequests": [
+        "http://127.0.0.1:57729/build/webgpu/glslang.js",
+        "http://127.0.0.1:57729/build/webgpu/glslang.wasm",
+        "http://127.0.0.1:57729/build/webgpu/twgsl.js",
+        "http://127.0.0.1:57729/build/webgpu/twgsl.wasm"
+      ],
+      "capture": "webgpu-basic-csm-webgpu.png"
+    },
+    {
+      "renderer": "webgl2",
+      "example": "gltf-skin",
+      "state": {
+        "app": true,
+        "api": 7,
+        "expectedApi": 8,
+        "health": {
+          "state": "healthy",
+          "backend": "webgl2",
+          "lostCount": 0,
+          "restoredCount": 0,
+          "isContextLost": false,
+          "gamePaused": true,
+          "reason": null,
+          "suggestion": "none",
+          "lastEvent": null,
+          "lastEventAt": null,
+          "timeline": []
+        },
+        "gpuErrors": [],
+        "adapter": {
+          "vendor": "nvidia",
+          "architecture": "lovelace",
+          "device": "",
+          "description": "",
+          "isFallbackAdapter": false
+        },
+        "startupAndProbeMs": 1715,
+        "gpuTimestampMs": null,
+        "skinAnimationChangedPixels": 22210
+      },
+      "resources": null,
+      "visiblePixels": 59151,
+      "errors": [],
+      "translatorRequests": [],
+      "capture": "gltf-skin-webgl2.png"
+    },
+    {
+      "renderer": "webgpu",
+      "example": "gltf-basic",
+      "state": {
+        "app": true,
+        "api": 8,
+        "expectedApi": 8,
+        "health": {
+          "state": "healthy",
+          "backend": "webgpu",
+          "lostCount": 0,
+          "restoredCount": 0,
+          "isContextLost": null,
+          "gamePaused": false,
+          "reason": null,
+          "suggestion": "none",
+          "lastEvent": null,
+          "lastEventAt": null,
+          "timeline": []
+        },
+        "gpuErrors": [],
+        "adapter": {
+          "vendor": "nvidia",
+          "architecture": "lovelace",
+          "device": "",
+          "description": "",
+          "isFallbackAdapter": false
+        },
+        "startupAndProbeMs": 6375,
+        "gpuTimestampMs": null
+      },
+      "resources": null,
+      "visiblePixels": 76982,
+      "errors": [],
+      "translatorRequests": [
+        "http://127.0.0.1:57729/build/webgpu/glslang.js",
+        "http://127.0.0.1:57729/build/webgpu/glslang.wasm",
+        "http://127.0.0.1:57729/build/webgpu/twgsl.js",
+        "http://127.0.0.1:57729/build/webgpu/twgsl.wasm"
+      ],
+      "capture": "gltf-basic-webgpu.png"
+    },
+    {
+      "renderer": "webgpu",
+      "example": "gltf-skin",
+      "state": {
+        "app": true,
+        "api": 8,
+        "expectedApi": 8,
+        "health": {
+          "state": "healthy",
+          "backend": "webgpu",
+          "lostCount": 0,
+          "restoredCount": 0,
+          "isContextLost": null,
+          "gamePaused": true,
+          "reason": null,
+          "suggestion": "none",
+          "lastEvent": null,
+          "lastEventAt": null,
+          "timeline": []
+        },
+        "gpuErrors": [],
+        "adapter": {
+          "vendor": "nvidia",
+          "architecture": "lovelace",
+          "device": "",
+          "description": "",
+          "isFallbackAdapter": false
+        },
+        "startupAndProbeMs": 5359,
+        "gpuTimestampMs": null,
+        "skinAnimationChangedPixels": 21027
+      },
+      "resources": null,
+      "visiblePixels": 59180,
+      "errors": [],
+      "translatorRequests": [
+        "http://127.0.0.1:57729/build/webgpu/glslang.js",
+        "http://127.0.0.1:57729/build/webgpu/glslang.wasm",
+        "http://127.0.0.1:57729/build/webgpu/twgsl.js",
+        "http://127.0.0.1:57729/build/webgpu/twgsl.wasm"
+      ],
+      "capture": "gltf-skin-webgpu.png"
+    },
+    {
+      "renderer": "webgpu",
+      "example": "gltf-morph",
+      "state": {
+        "app": true,
+        "api": 8,
+        "expectedApi": 8,
+        "health": {
+          "state": "healthy",
+          "backend": "webgpu",
+          "lostCount": 0,
+          "restoredCount": 0,
+          "isContextLost": null,
+          "gamePaused": true,
+          "reason": null,
+          "suggestion": "none",
+          "lastEvent": null,
+          "lastEventAt": null,
+          "timeline": []
+        },
+        "gpuErrors": [],
+        "adapter": {
+          "vendor": "nvidia",
+          "architecture": "lovelace",
+          "device": "",
+          "description": "",
+          "isFallbackAdapter": false
+        },
+        "startupAndProbeMs": 5236,
+        "gpuTimestampMs": null
+      },
+      "resources": null,
+      "visiblePixels": 77224,
+      "errors": [],
+      "translatorRequests": [
+        "http://127.0.0.1:57729/build/webgpu/glslang.js",
+        "http://127.0.0.1:57729/build/webgpu/glslang.wasm",
+        "http://127.0.0.1:57729/build/webgpu/twgsl.js",
+        "http://127.0.0.1:57729/build/webgpu/twgsl.wasm"
+      ],
+      "capture": "gltf-morph-webgpu.png"
+    },
+    {
+      "renderer": "webgpu",
+      "example": "ui-components",
+      "state": {
+        "app": true,
+        "api": 8,
+        "expectedApi": 8,
+        "health": {
+          "state": "healthy",
+          "backend": "webgpu",
+          "lostCount": 0,
+          "restoredCount": 0,
+          "isContextLost": null,
+          "gamePaused": true,
+          "reason": null,
+          "suggestion": "none",
+          "lastEvent": null,
+          "lastEventAt": null,
+          "timeline": []
+        },
+        "gpuErrors": [],
+        "adapter": {
+          "vendor": "nvidia",
+          "architecture": "lovelace",
+          "device": "",
+          "description": "",
+          "isFallbackAdapter": false
+        },
+        "startupAndProbeMs": 4571,
+        "gpuTimestampMs": null
+      },
+      "resources": null,
+      "visiblePixels": 30771,
+      "errors": [],
+      "translatorRequests": [
+        "http://127.0.0.1:57729/build/webgpu/glslang.js",
+        "http://127.0.0.1:57729/build/webgpu/glslang.wasm",
+        "http://127.0.0.1:57729/build/webgpu/twgsl.js",
+        "http://127.0.0.1:57729/build/webgpu/twgsl.wasm"
+      ],
+      "capture": "ui-components-webgpu.png"
+    },
+    {
+      "renderer": "webgpu",
+      "example": "sprite-mask-blend",
+      "state": {
+        "app": true,
+        "api": 8,
+        "expectedApi": 8,
+        "health": {
+          "state": "healthy",
+          "backend": "webgpu",
+          "lostCount": 0,
+          "restoredCount": 0,
+          "isContextLost": null,
+          "gamePaused": true,
+          "reason": null,
+          "suggestion": "none",
+          "lastEvent": null,
+          "lastEventAt": null,
+          "timeline": []
+        },
+        "gpuErrors": [],
+        "adapter": {
+          "vendor": "nvidia",
+          "architecture": "lovelace",
+          "device": "",
+          "description": "",
+          "isFallbackAdapter": false
+        },
+        "startupAndProbeMs": 3058,
+        "gpuTimestampMs": null
+      },
+      "resources": null,
+      "visiblePixels": 252533,
+      "errors": [],
+      "translatorRequests": [
+        "http://127.0.0.1:57729/build/webgpu/glslang.js",
+        "http://127.0.0.1:57729/build/webgpu/glslang.wasm",
+        "http://127.0.0.1:57729/build/webgpu/twgsl.js",
+        "http://127.0.0.1:57729/build/webgpu/twgsl.wasm"
+      ],
+      "capture": "sprite-mask-blend-webgpu.png"
+    },
+    {
+      "renderer": "webgpu",
+      "example": "render-composite",
+      "state": {
+        "app": true,
+        "api": 8,
+        "expectedApi": 8,
+        "health": {
+          "state": "healthy",
+          "backend": "webgpu",
+          "lostCount": 0,
+          "restoredCount": 0,
+          "isContextLost": null,
+          "gamePaused": true,
+          "reason": null,
+          "suggestion": "none",
+          "lastEvent": null,
+          "lastEventAt": null,
+          "timeline": []
+        },
+        "gpuErrors": [],
+        "adapter": {
+          "vendor": "nvidia",
+          "architecture": "lovelace",
+          "device": "",
+          "description": "",
+          "isFallbackAdapter": false
+        },
+        "startupAndProbeMs": 6374,
+        "gpuTimestampMs": null
+      },
+      "resources": null,
+      "visiblePixels": 31167,
+      "errors": [],
+      "translatorRequests": [
+        "http://127.0.0.1:57729/build/webgpu/glslang.js",
+        "http://127.0.0.1:57729/build/webgpu/glslang.wasm",
+        "http://127.0.0.1:57729/build/webgpu/twgsl.js",
+        "http://127.0.0.1:57729/build/webgpu/twgsl.wasm"
+      ],
+      "capture": "render-composite-webgpu.png"
+    },
+    {
+      "renderer": "webgl2",
+      "example": "native-custom",
+      "state": {
+        "app": true,
+        "api": 7,
+        "expectedApi": 8,
+        "health": {
+          "state": "healthy",
+          "backend": "webgl2",
+          "lostCount": 0,
+          "restoredCount": 0,
+          "isContextLost": false,
+          "gamePaused": true,
+          "reason": null,
+          "suggestion": "none",
+          "lastEvent": null,
+          "lastEventAt": null,
+          "timeline": []
+        },
+        "gpuErrors": [],
+        "adapter": {
+          "vendor": "nvidia",
+          "architecture": "lovelace",
+          "device": "",
+          "description": "",
+          "isFallbackAdapter": false
+        },
+        "startupAndProbeMs": 1695,
+        "gpuTimestampMs": null
+      },
+      "resources": null,
+      "custom": {
+        "custom": true,
+        "effects": [
+          "pipeline/float-output-process",
+          "pipeline/post-process/blit-screen",
+          "pipeline/post-process/bloom",
+          "pipeline/post-process/color-grading",
+          "pipeline/post-process/fxaa-hq",
+          "pipeline/post-process/post-final"
+        ],
+        "effectsAB": {
+          "bloom": {
+            "on": {
+              "changed": 57057,
+              "maxDelta": 231
+            },
+            "restore": {
+              "changed": 0,
+              "maxDelta": 0
+            }
+          },
+          "fxaa": {
+            "on": {
+              "changed": 600,
+              "maxDelta": 104
+            },
+            "restore": {
+              "changed": 0,
+              "maxDelta": 0
+            }
+          },
+          "grading": {
+            "on": {
+              "changed": 6594,
+              "maxDelta": 190
+            },
+            "restore": {
+              "changed": 0,
+              "maxDelta": 0
+            }
+          }
+        },
+        "gradingOracle": {
+          "point": {
+            "x": 158,
+            "y": 240
+          },
+          "off": [
+            215,
+            89,
+            25
+          ],
+          "actual": [
+            89,
+            25,
+            215
+          ],
+          "expected": [
+            89,
+            25,
+            215
+          ]
+        }
+      },
+      "visiblePixels": 38042,
+      "errors": [],
+      "translatorRequests": [],
+      "capture": "native-custom-webgl2.png"
+    },
+    {
+      "renderer": "webgpu",
+      "example": "native-custom",
+      "state": {
+        "app": true,
+        "api": 8,
+        "expectedApi": 8,
+        "health": {
+          "state": "healthy",
+          "backend": "webgpu",
+          "lostCount": 0,
+          "restoredCount": 0,
+          "isContextLost": null,
+          "gamePaused": true,
+          "reason": null,
+          "suggestion": "none",
+          "lastEvent": null,
+          "lastEventAt": null,
+          "timeline": []
+        },
+        "gpuErrors": [],
+        "adapter": {
+          "vendor": "nvidia",
+          "architecture": "lovelace",
+          "device": "",
+          "description": "",
+          "isFallbackAdapter": false
+        },
+        "startupAndProbeMs": 3830,
+        "gpuTimestampMs": null
+      },
+      "resources": null,
+      "custom": {
+        "custom": true,
+        "effects": [
+          "pipeline/float-output-process",
+          "pipeline/post-process/blit-screen",
+          "pipeline/post-process/bloom",
+          "pipeline/post-process/color-grading",
+          "pipeline/post-process/fxaa-hq",
+          "pipeline/post-process/post-final"
+        ],
+        "effectsAB": {
+          "bloom": {
+            "on": {
+              "changed": 57057,
+              "maxDelta": 231
+            },
+            "restore": {
+              "changed": 0,
+              "maxDelta": 0
+            }
+          },
+          "fxaa": {
+            "on": {
+              "changed": 600,
+              "maxDelta": 104
+            },
+            "restore": {
+              "changed": 0,
+              "maxDelta": 0
+            }
+          },
+          "grading": {
+            "on": {
+              "changed": 6594,
+              "maxDelta": 190
+            },
+            "restore": {
+              "changed": 0,
+              "maxDelta": 0
+            }
+          }
+        },
+        "gradingOracle": {
+          "point": {
+            "x": 158,
+            "y": 240
+          },
+          "off": [
+            215,
+            89,
+            25
+          ],
+          "actual": [
+            89,
+            25,
+            215
+          ],
+          "expected": [
+            89,
+            25,
+            215
+          ]
+        }
+      },
+      "visiblePixels": 38042,
+      "errors": [],
+      "translatorRequests": [
+        "http://127.0.0.1:57729/build/webgpu/glslang.js",
+        "http://127.0.0.1:57729/build/webgpu/glslang.wasm",
+        "http://127.0.0.1:57729/build/webgpu/twgsl.js",
+        "http://127.0.0.1:57729/build/webgpu/twgsl.wasm"
+      ],
+      "capture": "native-custom-webgpu.png"
+    }
+  ],
+  "sourceSha256": "5f07808d2fe6b77f3ecbf23d473fb64b15b1a7496481bbffc6abfbb8119a2270",
+  "buildSources": {
+    "compared": 938,
+    "mismatches": [],
+    "sha256": "bf0d78bf8ae7f3ac12c8da39821a3df09fc1cc244cc0950eeb8f18766b20870e"
+  },
+  "probeSha256": "3e6414df99e30063cd93b07faba92a7ba22789a9709c05b454c8cbd62ea5505d",
+  "assetsManifestSha256": "84161a92c5469819bab8a3ddc6512bf8e6e88c1bb67c1fd4c873be84ce0e6df9",
+  "browser": {
+    "engine": "chromium",
+    "version": "149.0.7827.55"
+  },
+  "webgpuAvailability": {
+    "apiAvailable": true,
+    "adapterAvailable": true
+  },
+  "failures": [
+    {
+      "failure": "unsupported",
+      "expectedCode": "WEBGPU_UNSUPPORTED",
+      "actual": {
+        "code": "WEBGPU_UNSUPPORTED",
+        "retryCode": "AIR_E_APP_RELOAD_REQUIRED",
+        "contexts": [
+          "2d",
+          "2d"
+        ]
+      },
+      "ok": true
+    },
+    {
+      "failure": "no-adapter",
+      "expectedCode": "WEBGPU_ADAPTER_UNAVAILABLE",
+      "actual": {
+        "code": "WEBGPU_ADAPTER_UNAVAILABLE",
+        "retryCode": "AIR_E_APP_RELOAD_REQUIRED",
+        "contexts": [
+          "2d",
+          "2d"
+        ]
+      },
+      "ok": true
+    },
+    {
+      "failure": "device-rejected",
+      "expectedCode": "WEBGPU_DEVICE_REQUEST_FAILED",
+      "actual": {
+        "code": "WEBGPU_DEVICE_REQUEST_FAILED",
+        "retryCode": "AIR_E_APP_RELOAD_REQUIRED",
+        "contexts": [
+          "2d",
+          "2d"
+        ]
+      },
+      "ok": true
+    },
+    {
+      "failure": "assets-missing",
+      "expectedCode": "WEBGPU_SHADER_ASSETS_FAILED",
+      "actual": {
+        "code": "WEBGPU_SHADER_ASSETS_FAILED",
+        "retryCode": "AIR_E_APP_RELOAD_REQUIRED",
+        "contexts": [
+          "2d",
+          "2d"
+        ]
+      },
+      "ok": true
+    }
+  ],
+  "sourceUnchanged": true,
+  "status": "PASS",
+  "exitCode": 0
+}

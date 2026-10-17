@@ -1,0 +1,139 @@
+{
+  "method": "REAL_WEBGL2_EXISTING_PHYSICAL_PROBES",
+  "sourceSha256": "cdd552444066108de44b0c772b9c88bc26ac274de7eb3e4bebd369c172e349a9",
+  "sourceUnchanged": true,
+  "startedAt": "2026-10-16T14:53:20.295Z",
+  "finishedAt": "2026-10-16T14:53:41.975Z",
+  "records": [
+    {
+      "name": "physical",
+      "ok": true,
+      "failures": [],
+      "result": {
+        "effects": {
+          "ext": "air-gltf-physical",
+          "control": "air-gltf-standard",
+          "mapped": "air-gltf-physical"
+        },
+        "paramsOriginal": [
+          4,
+          4.591836929321289,
+          1,
+          1
+        ],
+        "paramsControl": null,
+        "specularMapBound": true,
+        "uvUniformBound": true,
+        "strengthPair": {
+          "cc": 377.7740444444444,
+          "bare": 152.24396396396398
+        },
+        "glError": 0
+      }
+    },
+    {
+      "name": "clearcoat",
+      "ok": true,
+      "failures": [],
+      "result": {
+        "ccEffect": "air-gltf-physical",
+        "bareEffect": "air-gltf-standard",
+        "ccUniform": [
+          1,
+          0.15000000596046448,
+          1,
+          1
+        ],
+        "bareUniform": null,
+        "ccSamplerBound": true,
+        "ccNormalBound": true,
+        "uvUniformBound": true,
+        "program": true,
+        "glError": 0
+      }
+    },
+    {
+      "name": "anisotropy",
+      "ok": true,
+      "failures": [],
+      "result": {
+        "effect": "air-gltf-physical",
+        "uniform": [
+          0.8999999761581421,
+          0.0007963267271406949,
+          0.9999997019767761,
+          1
+        ],
+        "compiled": true,
+        "glError": 0
+      }
+    },
+    {
+      "name": "iridescence",
+      "ok": true,
+      "failures": [],
+      "result": {
+        "effect": "air-gltf-physical",
+        "uniform": [
+          1,
+          1.7999999523162842,
+          200,
+          450
+        ],
+        "samplerBound": true,
+        "compiled": true,
+        "glError": 0
+      }
+    },
+    {
+      "name": "bump",
+      "ok": true,
+      "failures": [],
+      "result": {
+        "effect": "air-gltf-physical",
+        "uniform": [
+          2,
+          0,
+          0,
+          1
+        ],
+        "uvBound": true,
+        "samplerBound": true,
+        "rendered": true,
+        "glError": 0
+      }
+    },
+    {
+      "name": "transmission",
+      "ok": true,
+      "failures": [],
+      "result": {
+        "effect": "air-gltf-physical-single-pass",
+        "armed": true,
+        "transmission": [
+          1,
+          1.5,
+          0.6000000238418579,
+          5
+        ],
+        "attenuation": [
+          0.20000000298023224,
+          0.6000000238418579,
+          0.8999999761581421,
+          1.2000000476837158
+        ],
+        "sceneColorBound": true,
+        "instanceSceneColorBound": true,
+        "instanceInfoMatchesViewport": true,
+        "transmissionLayer": true,
+        "glassRGB": [
+          42,
+          47,
+          54
+        ],
+        "lit": true,
+        "glError": 0
+      }
+    }
+  ]
+}

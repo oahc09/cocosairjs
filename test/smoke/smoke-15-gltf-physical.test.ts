@@ -6,9 +6,18 @@
 import { TextDecoder, TextEncoder } from 'util';
 import { createAirApp, GLTFLoader, Vec4 } from '../../src';
 import type { GLTFParserContext } from '../../src/air/assets/gltf/parser-context';
-import { createMaterialFeatures, physicalScalars, GLTFMaterialFeatures } from '../../src/air/assets/gltf/material/features';
+import {
+    createMaterialFeatures,
+    physicalScalars,
+    GLTFMaterialFeatures,
+} from '../../src/air/assets/gltf/material/features';
 import { gltfEffect, createGLTFMaterial } from '../../src/air/assets/gltf/material';
-import { gltfPhysicalEffect, physicalParams, PHYSICAL_CONSTANT, PHYSICAL_COLOR_CONSTANT } from '../../src/air/assets/gltf/material/physical-effect';
+import {
+    gltfPhysicalEffect,
+    physicalParams,
+    PHYSICAL_CONSTANT,
+    PHYSICAL_COLOR_CONSTANT,
+} from '../../src/air/assets/gltf/material/physical-effect';
 import { emissiveStrengthFactory } from '../../src/air/assets/gltf/extensions/material/emissive-strength';
 import { iorFactory } from '../../src/air/assets/gltf/extensions/material/ior';
 import { specularFactory } from '../../src/air/assets/gltf/extensions/material/specular';
@@ -24,22 +33,31 @@ Object.assign(globalThis, { TextDecoder, TextEncoder });
 
 const PHYSICAL_FACTORIES = [emissiveStrengthFactory, iorFactory, specularFactory];
 /** Mimics the loader's material feature pipeline for the physical extensions. */
-function physicalFeatures (source: GLTFMaterial): GLTFMaterialFeatures {
+function physicalFeatures(source: GLTFMaterial): GLTFMaterialFeatures {
     const features = createMaterialFeatures(-1, source);
     const noop = null as unknown as GLTFParserContext;
     unlitFactory(noop).extendMaterial?.(-1, features, noop);
-    for (const factory of PHYSICAL_FACTORIES) { factory(noop).extendMaterial?.(-1, features, noop); }
+    for (const factory of PHYSICAL_FACTORIES) {
+        factory(noop).extendMaterial?.(-1, features, noop);
+    }
     return features;
 }
-function validate (factory: (ctx: GLTFParserContext) => GLTFExtensionHandler, materials: unknown[]): void {
+function validate(factory: (ctx: GLTFParserContext) => GLTFExtensionHandler, materials: unknown[]): void {
     const handler = factory({ json: { materials } } as unknown as GLTFParserContext);
     handler.validate?.({ json: { materials } } as unknown as GLTFParserContext);
 }
-const read = (material: { passes: Array<{ getHandle(name: string): number; getUniform(h: number, o: Vec4): void }> }, name: string): Vec4 | undefined => {
+const read = (
+    material: { passes: Array<{ getHandle(name: string): number; getUniform(h: number, o: Vec4): void }> },
+    name: string,
+): Vec4 | undefined => {
     const pass = material.passes[0];
     const handle = pass.getHandle(name);
-    if (!handle) { return undefined; }
-    const value = new Vec4(); pass.getUniform(handle, value); return value;
+    if (!handle) {
+        return undefined;
+    }
+    const value = new Vec4();
+    pass.getUniform(handle, value);
+    return value;
 };
 
 describe('glTF T5.1 physical materials', () => {
@@ -47,7 +65,11 @@ describe('glTF T5.1 physical materials', () => {
         document.body.innerHTML = '<canvas id="GameCanvas"></canvas>';
         await createAirApp({ canvas: '#GameCanvas', renderMode: 3 });
     });
-    afterEach(async () => { CCObject._deferredDestroy(); await Promise.resolve(); CCObject._deferredDestroy(); });
+    afterEach(async () => {
+        CCObject._deferredDestroy();
+        await Promise.resolve();
+        CCObject._deferredDestroy();
+    });
 
     test('opaque and masked glTF materials preserve additive-light pass depth and blend states', () => {
         for (const alphaMode of ['OPAQUE', 'MASK'] as const) {
@@ -72,30 +94,54 @@ describe('glTF T5.1 physical materials', () => {
     });
 
     test('handler validation accepts valid and rejects invalid extension bodies', () => {
-        expect(() => validate(emissiveStrengthFactory, [{ extensions: { KHR_materials_emissive_strength: {} } },
-            { extensions: { KHR_materials_emissive_strength: { emissiveStrength: 1 } }, name: 'm' }])).not.toThrow();
-        expect(() => validate(emissiveStrengthFactory, [{ extensions: { KHR_materials_emissive_strength: { emissiveStrength: 0.5 } } }]))
-            .toThrow(/emissiveStrength/);
-        expect(() => validate(emissiveStrengthFactory, [{ extensions: { KHR_materials_emissive_strength: { emissiveStrength: Infinity } } }]))
-            .toThrow(/emissiveStrength/);
+        expect(() =>
+            validate(emissiveStrengthFactory, [
+                { extensions: { KHR_materials_emissive_strength: {} } },
+                { extensions: { KHR_materials_emissive_strength: { emissiveStrength: 1 } }, name: 'm' },
+            ]),
+        ).not.toThrow();
+        expect(() =>
+            validate(emissiveStrengthFactory, [
+                { extensions: { KHR_materials_emissive_strength: { emissiveStrength: 0.5 } } },
+            ]),
+        ).toThrow(/emissiveStrength/);
+        expect(() =>
+            validate(emissiveStrengthFactory, [
+                { extensions: { KHR_materials_emissive_strength: { emissiveStrength: Infinity } } },
+            ]),
+        ).toThrow(/emissiveStrength/);
         expect(() => validate(iorFactory, [{ extensions: { KHR_materials_ior: { ior: 1 } } }])).not.toThrow();
         expect(() => validate(iorFactory, [{ extensions: { KHR_materials_ior: { ior: 0.9 } } }])).toThrow(/ior/);
         expect(() => validate(iorFactory, [{ extensions: { KHR_materials_ior: { ior: 'glass' } } }])).toThrow(/ior/);
-        expect(() => validate(specularFactory, [{ extensions: { KHR_materials_specular: {} } },
-            { extensions: { KHR_materials_specular: { specularFactor: [2, 0, 1, 0.5] } } }])).not.toThrow();
-        expect(() => validate(specularFactory, [{ extensions: { KHR_materials_specular: { specularFactor: [2.5, 1, 1, 1] } } }])).toThrow(/specularFactor/);
-        expect(() => validate(specularFactory, [{ extensions: { KHR_materials_specular: { specularFactor: [1, 1.5, 1, 1] } } }])).toThrow(/specularFactor/);
-        expect(() => validate(specularFactory, [{ extensions: { KHR_materials_specular: { specularFactor: [1, 1, 1] } } }])).toThrow(/specularFactor/);
+        expect(() =>
+            validate(specularFactory, [
+                { extensions: { KHR_materials_specular: {} } },
+                { extensions: { KHR_materials_specular: { specularFactor: [2, 0, 1, 0.5] } } },
+            ]),
+        ).not.toThrow();
+        expect(() =>
+            validate(specularFactory, [{ extensions: { KHR_materials_specular: { specularFactor: [2.5, 1, 1, 1] } } }]),
+        ).toThrow(/specularFactor/);
+        expect(() =>
+            validate(specularFactory, [{ extensions: { KHR_materials_specular: { specularFactor: [1, 1.5, 1, 1] } } }]),
+        ).toThrow(/specularFactor/);
+        expect(() =>
+            validate(specularFactory, [{ extensions: { KHR_materials_specular: { specularFactor: [1, 1, 1] } } }]),
+        ).toThrow(/specularFactor/);
     });
 
     test('extendMaterial normalizes scalars and defaults stay absent', () => {
         const plain = physicalFeatures({});
         expect(physicalScalars(plain)).toEqual({});
-        const full = physicalScalars(physicalFeatures({ extensions: {
-            KHR_materials_emissive_strength: { emissiveStrength: 4 },
-            KHR_materials_ior: { ior: 1.8 },
-            KHR_materials_specular: { specularFactor: [0.5, 1, 0.25, 0] },
-        } }));
+        const full = physicalScalars(
+            physicalFeatures({
+                extensions: {
+                    KHR_materials_emissive_strength: { emissiveStrength: 4 },
+                    KHR_materials_ior: { ior: 1.8 },
+                    KHR_materials_specular: { specularFactor: [0.5, 1, 0.25, 0] },
+                },
+            }),
+        );
         expect(full.emissiveStrength).toBe(4);
         expect(full.ior).toBe(1.8);
         expect(full.specular).toEqual({ factor0: 0.5, factor1: 1, color: [1, 0.25, 0] });
@@ -116,15 +162,37 @@ describe('glTF T5.1 physical materials', () => {
     });
 
     test('identity materials keep the base glTF effect, physical scalars select the variant', () => {
-        const plain = createGLTFMaterial(physicalFeatures({ pbrMetallicRoughness: { baseColorFactor: [1, 0.5, 0, 1] } }), [], false);
+        const plain = createGLTFMaterial(
+            physicalFeatures({ pbrMetallicRoughness: { baseColorFactor: [1, 0.5, 0, 1] } }),
+            [],
+            false,
+        );
         expect(plain.passes[0].getHandle(PHYSICAL_CONSTANT)).toBe(0);
         expect(plain.effectAsset!.name).toBe('air-gltf-standard');
-        const identity = createGLTFMaterial(physicalFeatures({ extensions: { KHR_materials_ior: { ior: 1.5 },
-            KHR_materials_specular: { specularFactor: [1, 1, 1, 1] }, KHR_materials_emissive_strength: { emissiveStrength: 1 } } }), [], false);
+        const identity = createGLTFMaterial(
+            physicalFeatures({
+                extensions: {
+                    KHR_materials_ior: { ior: 1.5 },
+                    KHR_materials_specular: { specularFactor: [1, 1, 1, 1] },
+                    KHR_materials_emissive_strength: { emissiveStrength: 1 },
+                },
+            }),
+            [],
+            false,
+        );
         expect(identity.effectAsset!.name).toBe('air-gltf-standard');
-        const physical = createGLTFMaterial(physicalFeatures({ pbrMetallicRoughness: { baseColorFactor: [1, 0.5, 0, 1] },
-            extensions: { KHR_materials_emissive_strength: { emissiveStrength: 4 },
-                KHR_materials_ior: { ior: 2 }, KHR_materials_specular: { specularFactor: [0.5, 1, 0.25, 0] } } }), [], false);
+        const physical = createGLTFMaterial(
+            physicalFeatures({
+                pbrMetallicRoughness: { baseColorFactor: [1, 0.5, 0, 1] },
+                extensions: {
+                    KHR_materials_emissive_strength: { emissiveStrength: 4 },
+                    KHR_materials_ior: { ior: 2 },
+                    KHR_materials_specular: { specularFactor: [0.5, 1, 0.25, 0] },
+                },
+            }),
+            [],
+            false,
+        );
         expect(physical.effectAsset!.name).toBe('air-gltf-physical');
         const params = read(physical, PHYSICAL_CONSTANT)!;
         expect(params.x).toBeCloseTo(4);
@@ -134,47 +202,82 @@ describe('glTF T5.1 physical materials', () => {
         expect([color.x, color.y, color.z, color.w]).toEqual([1, 0.25, 0, 1]);
         // The shared base surface still behaves identically on the physical variant.
         expect(read(physical, 'albedo')!.y).toBeCloseTo(0.5);
-        plain.destroy(); identity.destroy(); physical.destroy();
+        plain.destroy();
+        identity.destroy();
+        physical.destroy();
     });
 
     test('specular textures bind the physical samplers; unlit ignores BRDF modifiers', () => {
         const texture = new Texture2D();
-        const mapped = createGLTFMaterial(physicalFeatures({ extensions: { KHR_materials_specular: {
-            specularTexture: { index: 0, texCoord: 1 }, specularColorTexture: { index: 0 } } } }), [texture], false);
+        const mapped = createGLTFMaterial(
+            physicalFeatures({
+                extensions: {
+                    KHR_materials_specular: {
+                        specularTexture: { index: 0, texCoord: 1 },
+                        specularColorTexture: { index: 0 },
+                    },
+                },
+            }),
+            [texture],
+            false,
+        );
         expect(mapped.effectAsset!.name).toBe('air-gltf-physical');
         expect(mapped.passes[0].getHandle('specularMap')).not.toBe(0);
         expect(mapped.passes[0].getHandle('airSpecularUV0')).not.toBe(0);
         expect(mapped.passes[0].getHandle('airSpecularColorUV0')).not.toBe(0);
         expect(mapped.passes[0].getHandle('airPhysicalParams')).not.toBe(0);
-        const unlit = createGLTFMaterial({ ...physicalFeatures({ extensions: { KHR_materials_ior: { ior: 2 } } }), unlit: true }, [], false);
+        const unlit = createGLTFMaterial(
+            { ...physicalFeatures({ extensions: { KHR_materials_ior: { ior: 2 } } }), unlit: true },
+            [],
+            false,
+        );
         expect(unlit.effectAsset!.name).toBe('air-gltf-standard-single-pass');
         expect(unlit.passes[0].getHandle(PHYSICAL_CONSTANT)).toBe(0);
-        unlit.destroy(); mapped.destroy(); texture.destroy();
+        unlit.destroy();
+        mapped.destroy();
+        texture.destroy();
     });
 
     test('effect derivation registers once and its sources declare the physical inputs', () => {
-        const a = gltfPhysicalEffect(); const b = gltfPhysicalEffect();
+        const a = gltfPhysicalEffect();
+        const b = gltfPhysicalEffect();
         expect(a).toBe(b);
         expect(a).not.toBe(gltfEffect());
         const shader = a.shaders[0];
         expect((shader.samplerTextures || []).some((s) => s.name === 'specularMap' && s.binding === 15)).toBe(true);
-        expect((shader.samplerTextures || []).some((s) => s.name === 'specularColorMap' && s.binding === 16)).toBe(true);
+        expect((shader.samplerTextures || []).some((s) => s.name === 'specularColorMap' && s.binding === 16)).toBe(
+            true,
+        );
         for (const language of ['glsl1', 'glsl3', 'glsl4'] as const) {
             const stage = (shader as unknown as Record<string, { frag: string } | undefined>)[language];
-            if (!stage) { continue; }
+            if (!stage) {
+                continue;
+            }
             expect(stage.frag).toContain('airSpec');
             expect(stage.frag).toContain('USE_AIR_SPECULAR_MAP');
             expect(stage.frag).toContain('s.specularIntensity = airPhysicalParams.y * 0.5;');
             expect(stage.frag).toContain('* airPhysicalParams.x');
+            if (language === 'glsl4') {
+                expect(stage.frag).toContain('layout(set = 1, binding = 15) uniform lowp sampler2D specularMap;');
+                expect(stage.frag).toContain('layout(set = 1, binding = 27) uniform lowp sampler2D cc_sceneColorTex;');
+            }
         }
     });
 
     test('loader applies physical extensions end to end and stable-codes invalid bodies', async () => {
         const f = fixture();
         f.json.meshes![0].primitives[0].material = 0;
-        f.json.materials = [{ name: 'physical', doubleSided: false, extensions: {
-            KHR_materials_emissive_strength: { emissiveStrength: 2 }, KHR_materials_ior: { ior: 1.3 },
-            KHR_materials_specular: { specularFactor: [1.5, 1, 1, 1] } } }];
+        f.json.materials = [
+            {
+                name: 'physical',
+                doubleSided: false,
+                extensions: {
+                    KHR_materials_emissive_strength: { emissiveStrength: 2 },
+                    KHR_materials_ior: { ior: 1.3 },
+                    KHR_materials_specular: { specularFactor: [1.5, 1, 1, 1] },
+                },
+            },
+        ];
         f.json.extensionsUsed = ['KHR_materials_emissive_strength', 'KHR_materials_ior', 'KHR_materials_specular'];
         f.json.extensionsRequired = [...f.json.extensionsUsed!];
         const asset = await new GLTFLoader().parseAsync(toGLB(f.json, f.bin));

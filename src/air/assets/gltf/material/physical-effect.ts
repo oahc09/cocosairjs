@@ -81,24 +81,29 @@ export const PHYSICAL_SAMPLERS = [
 ] as const;
 
 /** Normalized scalars for the physical uniform (identity when all defaults hold). */
-export function physicalParams (ior: number, specularFactor0: number, emissiveStrength: number): Vec4 {
+export function physicalParams(ior: number, specularFactor0: number, emissiveStrength: number): Vec4 {
     check(ior >= 1 && Number.isFinite(ior), 'KHR_materials_ior.ior must be finite and >= 1');
     check(specularFactor0 >= 0 && specularFactor0 <= 2, 'KHR_materials_specular.specularFactor[0] must be [0,2]');
-    check(emissiveStrength >= 1 && Number.isFinite(emissiveStrength), 'KHR_materials_emissive_strength must be finite and >= 1');
+    check(
+        emissiveStrength >= 1 && Number.isFinite(emissiveStrength),
+        'KHR_materials_emissive_strength must be finite and >= 1',
+    );
     const iorF0 = Math.pow((ior - 1) / (ior + 1), 2);
     // Engine default F0 is 0.04 (0.08 * specularIntensity 0.5), i.e. exactly ior 1.5.
     return new Vec4(emissiveStrength, iorF0 / 0.04, specularFactor0, 1);
 }
 
 /** Whether any physical scalar departs from the identity baseline (skip the variant otherwise). */
-export function needsPhysicalEffect (ior: number, factor0: number, strength: number): boolean {
+export function needsPhysicalEffect(ior: number, factor0: number, strength: number): boolean {
     return Math.abs(ior - 1.5) > 1e-6 || Math.abs(factor0 - 1) > 1e-6 || Math.abs(strength - 1) > 1e-6;
 }
 
-export function gltfPhysicalEffect (): EffectAsset {
+export function gltfPhysicalEffect(): EffectAsset {
     const name = 'air-gltf-physical';
     const existing = EffectAsset.get(name);
-    if (existing) { return existing; }
+    if (existing) {
+        return existing;
+    }
     const base = gltfEffect();
     const effect = new EffectAsset();
     effect.name = name;
@@ -109,7 +114,8 @@ export function gltfPhysicalEffect (): EffectAsset {
         const oldName = shader.name;
         shader.name = `${name}|${oldName.split('|').slice(1).join('|')}`;
         shader.hash = (shader.hash ^ 0x2f6a19d4) >>> 0;
-        shader.defines = [...(shader.defines || []),
+        shader.defines = [
+            ...(shader.defines || []),
             { name: 'USE_AIR_SPECULAR_COLOR', type: 'boolean' },
             { name: 'USE_AIR_SPECULAR_MAP', type: 'boolean' },
             { name: 'USE_AIR_SPECULAR_COLOR_MAP', type: 'boolean' },
@@ -141,23 +147,42 @@ export function gltfPhysicalEffect (): EffectAsset {
             { name: 'USE_AIR_VOLUME_THICKNESS_MAP', type: 'boolean' },
             { name: 'USE_AIR_DISPERSION', type: 'boolean' },
             { name: 'TRANSMISSION_UV', type: 'string', options: ['v_uv', 'v_uv1'] },
-            { name: 'VOLUMETHICKNESS_UV', type: 'string', options: ['v_uv', 'v_uv1'] }];
+            { name: 'VOLUMETHICKNESS_UV', type: 'string', options: ['v_uv', 'v_uv1'] },
+        ];
 
         // One extra material-block member holding the four physical scalars (vec4, std140-safe).
         const blocks = (shader.blocks as Array<{ name: string; members: Uniform[] }>).slice();
-        for (const descriptor of shader.descriptors || []) { blocks.push(...(descriptor.blocks || [])); }
+        for (const descriptor of shader.descriptors || []) {
+            blocks.push(...(descriptor.blocks || []));
+        }
         for (const block of blocks) {
-            if (block.name !== 'Constants') { continue; }
+            if (block.name !== 'Constants') {
+                continue;
+            }
             // UV transform uniforms come from the base effect's slot mechanism; only the
             // two scalar constants are added here.
-            if (!block.members.some((m) => m.name === PHYSICAL_CONSTANT)) { block.members.push(new Uniform(PHYSICAL_CONSTANT, Type.FLOAT4, 1)); }
-            if (!block.members.some((m) => m.name === PHYSICAL_COLOR_CONSTANT)) { block.members.push(new Uniform(PHYSICAL_COLOR_CONSTANT, Type.FLOAT4, 1)); }
-            if (!block.members.some((m) => m.name === CLEARCOAT_CONSTANT)) { block.members.push(new Uniform(CLEARCOAT_CONSTANT, Type.FLOAT4, 1)); }
-            if (!block.members.some((m) => m.name === ANISO_CONSTANT)) { block.members.push(new Uniform(ANISO_CONSTANT, Type.FLOAT4, 1)); }
-            if (!block.members.some((m) => m.name === IRIDESCENCE_CONSTANT)) { block.members.push(new Uniform(IRIDESCENCE_CONSTANT, Type.FLOAT4, 1)); }
-            if (!block.members.some((m) => m.name === BUMP_CONSTANT)) { block.members.push(new Uniform(BUMP_CONSTANT, Type.FLOAT4, 1)); }
+            if (!block.members.some((m) => m.name === PHYSICAL_CONSTANT)) {
+                block.members.push(new Uniform(PHYSICAL_CONSTANT, Type.FLOAT4, 1));
+            }
+            if (!block.members.some((m) => m.name === PHYSICAL_COLOR_CONSTANT)) {
+                block.members.push(new Uniform(PHYSICAL_COLOR_CONSTANT, Type.FLOAT4, 1));
+            }
+            if (!block.members.some((m) => m.name === CLEARCOAT_CONSTANT)) {
+                block.members.push(new Uniform(CLEARCOAT_CONSTANT, Type.FLOAT4, 1));
+            }
+            if (!block.members.some((m) => m.name === ANISO_CONSTANT)) {
+                block.members.push(new Uniform(ANISO_CONSTANT, Type.FLOAT4, 1));
+            }
+            if (!block.members.some((m) => m.name === IRIDESCENCE_CONSTANT)) {
+                block.members.push(new Uniform(IRIDESCENCE_CONSTANT, Type.FLOAT4, 1));
+            }
+            if (!block.members.some((m) => m.name === BUMP_CONSTANT)) {
+                block.members.push(new Uniform(BUMP_CONSTANT, Type.FLOAT4, 1));
+            }
             for (const member of [TRANSMISSION_CONSTANT, ATTENUATION_CONSTANT, SCENE_INFO_CONSTANT]) {
-                if (!block.members.some((m) => m.name === member)) { block.members.push(new Uniform(member, Type.FLOAT4, 1)); }
+                if (!block.members.some((m) => m.name === member)) {
+                    block.members.push(new Uniform(member, Type.FLOAT4, 1));
+                }
             }
         }
 
@@ -165,67 +190,130 @@ export function gltfPhysicalEffect (): EffectAsset {
         const samplers = (shader.samplerTextures || []) as Array<{ name: string }>;
         for (const sampler of PHYSICAL_SAMPLERS) {
             if (!samplers.some((s) => s.name === sampler.name)) {
-                (shader.samplerTextures as unknown[]).push({ name: sampler.name, type: Type.SAMPLER2D, count: 1,
-                    defines: [sampler.macro], stageFlags: 16, binding: sampler.binding });
+                (shader.samplerTextures as unknown[]).push({
+                    name: sampler.name,
+                    type: Type.SAMPLER2D,
+                    count: 1,
+                    defines: [sampler.macro],
+                    stageFlags: 16,
+                    binding: sampler.binding,
+                });
             }
         }
 
         for (const language of ['glsl1', 'glsl3', 'glsl4'] as const) {
             const stage = shader[language];
-            if (!stage) { continue; }
+            if (!stage) {
+                continue;
+            }
             let frag = stage.frag as string;
             const nl = String.fromCharCode(10);
             // 0. uniform declarations. The block grows in place in BOTH stages (drivers link
             // the shared Constants field count); glsl1 flattens UBOs at load, so the members
             // are added to its declared block metadata only (above) and the frag takes
             // top-level uniforms instead. Sampler declarations bind by name at the top.
-            const samplerDecls = PHYSICAL_SAMPLERS.map((s) => `#if ${s.macro}\nuniform lowp sampler2D ${s.name};\n#endif`).join(nl);
+            const samplerDecls = PHYSICAL_SAMPLERS.map(
+                (s) =>
+                    `#if ${s.macro}\n${language === 'glsl4' ? `layout(set = 1, binding = ${s.binding}) ` : ''}uniform lowp sampler2D ${s.name};\n#endif`,
+            ).join(nl);
             // Texture modulation happens where v_uv is in scope: inside main, below the
             // in-variable declarations. A file-global carries the product into the shading
             // function, which only references it (declaration before the function is legal).
-            const texVar = `#if USE_AIR_SPECULAR_MAP\nfloat airSpecScale = 1.0;\n#endif\n`
-                + `#if USE_AIR_SPECULAR_COLOR_MAP\nvec3 airSpecColor = vec3(1.0);\n#endif\n`
-                + `#if USE_AIR_CLEARCOAT\nfloat airCCFactorTex = 1.0;\nfloat airCCRoughTex = 0.0;\nvec3 airCCNormal = vec3(0.0, 0.0, 1.0);\n#endif\n`
-                + `#if USE_AIR_ANISOTROPY\nvec3 airAnisoT = vec3(1.0, 0.0, 0.0);\nvec3 airAnisoB = vec3(0.0, 1.0, 0.0);\nfloat airAnisoStrength = 0.0;\n#endif\n`
-                + `#if USE_AIR_IRIDESCENCE\nfloat airIriFactorTex = 1.0;\nfloat airIriIorTex = 1.3;\nfloat airIriThickTex = 400.0;\n#endif\n`
-                + `#if USE_AIR_TRANSMISSION\nfloat airTrFactorTex = 0.0;\nfloat airThickTex = 0.0;\n#endif\n`;
+            const texVar =
+                `#if USE_AIR_SPECULAR_MAP\nfloat airSpecScale = 1.0;\n#endif\n` +
+                `#if USE_AIR_SPECULAR_COLOR_MAP\nvec3 airSpecColor = vec3(1.0);\n#endif\n` +
+                `#if USE_AIR_CLEARCOAT\nfloat airCCFactorTex = 1.0;\nfloat airCCRoughTex = 0.0;\nvec3 airCCNormal = vec3(0.0, 0.0, 1.0);\n#endif\n` +
+                `#if USE_AIR_ANISOTROPY\nvec3 airAnisoT = vec3(1.0, 0.0, 0.0);\nvec3 airAnisoB = vec3(0.0, 1.0, 0.0);\nfloat airAnisoStrength = 0.0;\n#endif\n` +
+                `#if USE_AIR_IRIDESCENCE\nfloat airIriFactorTex = 1.0;\nfloat airIriIorTex = 1.3;\nfloat airIriThickTex = 400.0;\n#endif\n` +
+                `#if USE_AIR_TRANSMISSION\nfloat airTrFactorTex = 0.0;\nfloat airThickTex = 0.0;\n#endif\n`;
             // Insert after the leading `precision` statement: float types need a precision
             // qualifier and the raw shader source starts with one.
             const prependAfterPrecision = (source: string): string => {
                 const insert = samplerDecls + nl + texVar;
                 const m = /^(\s*precision\s+\w+\s+\w+;)/.exec(source);
-                return m ? source.slice(0, m[1].length) + nl + insert + source.slice(m[1].length)
+                return m
+                    ? source.slice(0, m[1].length) + nl + insert + source.slice(m[1].length)
                     : insert + nl + source;
             };
             if (language === 'glsl1') {
-                frag = prependAfterPrecision(`uniform highp vec4 ${PHYSICAL_CONSTANT};` + nl
-                    + `uniform highp vec4 ${PHYSICAL_COLOR_CONSTANT};` + nl + `uniform highp vec4 ${CLEARCOAT_CONSTANT};` + nl
-                    + `uniform highp vec4 ${ANISO_CONSTANT};` + nl + `uniform highp vec4 ${IRIDESCENCE_CONSTANT};` + nl
-                    + `uniform highp vec4 ${BUMP_CONSTANT};` + nl + `uniform highp vec4 ${TRANSMISSION_CONSTANT};` + nl
-                    + `uniform highp vec4 ${ATTENUATION_CONSTANT};` + nl + `uniform highp vec4 ${SCENE_INFO_CONSTANT};` + nl + frag);
+                frag = prependAfterPrecision(
+                    `uniform highp vec4 ${PHYSICAL_CONSTANT};` +
+                        nl +
+                        `uniform highp vec4 ${PHYSICAL_COLOR_CONSTANT};` +
+                        nl +
+                        `uniform highp vec4 ${CLEARCOAT_CONSTANT};` +
+                        nl +
+                        `uniform highp vec4 ${ANISO_CONSTANT};` +
+                        nl +
+                        `uniform highp vec4 ${IRIDESCENCE_CONSTANT};` +
+                        nl +
+                        `uniform highp vec4 ${BUMP_CONSTANT};` +
+                        nl +
+                        `uniform highp vec4 ${TRANSMISSION_CONSTANT};` +
+                        nl +
+                        `uniform highp vec4 ${ATTENUATION_CONSTANT};` +
+                        nl +
+                        `uniform highp vec4 ${SCENE_INFO_CONSTANT};` +
+                        nl +
+                        frag,
+                );
             } else {
                 const blockAppendRe = /(uniform\s+\w*\s*Constants\s*\{[^}]*)(\})/;
-                const grow = (source: string): string => source.replace(blockAppendRe,
-                    (_m, head, tail) => head + nl + `vec4 ${PHYSICAL_CONSTANT};` + nl
-                        + `vec4 ${PHYSICAL_COLOR_CONSTANT};` + nl + `vec4 ${CLEARCOAT_CONSTANT};` + nl
-                        + `vec4 ${ANISO_CONSTANT};` + nl + `vec4 ${IRIDESCENCE_CONSTANT};` + nl
-                        + `vec4 ${BUMP_CONSTANT};` + nl + `vec4 ${TRANSMISSION_CONSTANT};` + nl
-                        + `vec4 ${ATTENUATION_CONSTANT};` + nl + `vec4 ${SCENE_INFO_CONSTANT};` + nl + tail);
+                const grow = (source: string): string =>
+                    source.replace(
+                        blockAppendRe,
+                        (_m, head, tail) =>
+                            head +
+                            nl +
+                            `vec4 ${PHYSICAL_CONSTANT};` +
+                            nl +
+                            `vec4 ${PHYSICAL_COLOR_CONSTANT};` +
+                            nl +
+                            `vec4 ${CLEARCOAT_CONSTANT};` +
+                            nl +
+                            `vec4 ${ANISO_CONSTANT};` +
+                            nl +
+                            `vec4 ${IRIDESCENCE_CONSTANT};` +
+                            nl +
+                            `vec4 ${BUMP_CONSTANT};` +
+                            nl +
+                            `vec4 ${TRANSMISSION_CONSTANT};` +
+                            nl +
+                            `vec4 ${ATTENUATION_CONSTANT};` +
+                            nl +
+                            `vec4 ${SCENE_INFO_CONSTANT};` +
+                            nl +
+                            tail,
+                    );
                 stage.vert = grow(stage.vert as string);
                 frag = prependAfterPrecision(grow(frag));
             }
             // 2. shading injections apply only to shaders carrying the standard body;
             // shadow-caster variants share the grown declarations but no specular math.
-            const specularMix = 'vec3 diffuse = s.albedo.rgb * (1.0 - s.metallic);\nvec3 specular = mix(vec3(0.08 * s.specularIntensity), s.albedo.rgb, s.metallic);';
-            if (!frag.includes(specularMix)) { stage.frag = frag; continue; }
+            const specularMix =
+                /vec3 diffuse = s\.albedo\.rgb \* \(1\.0 - s\.metallic\);\s*vec3 specular = mix\(vec3\(0\.08 \* s\.specularIntensity\), s\.albedo\.rgb, s\.metallic\);/.exec(
+                    frag,
+                )?.[0];
+            if (!specularMix) {
+                stage.frag = frag;
+                continue;
+            }
             //    emissive strength
-            frag = frag.replace('s.emissive = emissive.rgb * emissiveScaleParam.xyz',
-                `s.emissive = emissive.rgb * emissiveScaleParam.xyz * ${PHYSICAL_CONSTANT}.x`);
+            frag = frag.replace(
+                's.emissive = emissive.rgb * emissiveScaleParam.xyz',
+                `s.emissive = emissive.rgb * emissiveScaleParam.xyz * ${PHYSICAL_CONSTANT}.x`,
+            );
+            frag = frag.replace(
+                's.emissive *= emissiveScaleParam.xyz;',
+                `s.emissive *= emissiveScaleParam.xyz * ${PHYSICAL_CONSTANT}.x;`,
+            );
             // 3. ior -> dielectric F0 base (was the constant 0.5 * 0.08)
             frag = frag.replace(/s\.specularIntensity = 0\.5;/g, `s.specularIntensity = ${PHYSICAL_CONSTANT}.y * 0.5;`);
+            frag = frag.replace('s.specularIntensity = pbr.w;', `s.specularIntensity = ${PHYSICAL_CONSTANT}.y * 0.5;`);
             // 4. specular factor: scalars inside the shading function, texture product applied
             // in main (see texVar), with per-slot UV transforms.
-            const tex = (sampler: string, uv: string, prefix: string): string => textureTransform(language, sampler, uv, prefix);
+            const tex = (sampler: string, uv: string, prefix: string): string =>
+                textureTransform(language, sampler, uv, prefix);
             // Thin-film interference (incoherent Airy, per-RGB spectral): modulates the dielectric
             // F0 base when iridescence is active. Substrate IOR derives from the ior scalar
             // (airPhysicalParams.y = iorF0/0.04), film IOR and thickness come from airIridescence.
@@ -279,13 +367,15 @@ export function gltfPhysicalEffect (): EffectAsset {
             // KHR_materials_specular energy conservation: dielectric diffuse is attenuated by
             // the view-angle Fresnel (Schlick from F0); grazing angles keep less diffuse. The
             // code goes after BRDFApprox where NV is already on the stack.
-            frag = frag.replace('specular = BRDFApprox(specular, s.roughness, NV);',
-                'specular = BRDFApprox(specular, s.roughness, NV);\n'
-                + '#if USE_AIR_SPECULAR\n'
-                + 'vec3 airFresnel = airDielectric + (vec3(airSpecularWeight) - airDielectric) * pow(1.0 - NV, 5.0);\n'
-                + 'float airFresnelMax = max(airFresnel.r, max(airFresnel.g, airFresnel.b));\n'
-                + 'diffuse *= 1.0 - airFresnelMax;\n'
-                + '#endif');
+            frag = frag.replace(
+                'specular = BRDFApprox(specular, s.roughness, NV);',
+                'specular = BRDFApprox(specular, s.roughness, NV);\n' +
+                    '#if USE_AIR_SPECULAR\n' +
+                    'vec3 airFresnel = airDielectric + (vec3(airSpecularWeight) - airDielectric) * pow(1.0 - NV, 5.0);\n' +
+                    'float airFresnelMax = max(airFresnel.r, max(airFresnel.g, airFresnel.b));\n' +
+                    'diffuse *= 1.0 - airFresnelMax;\n' +
+                    '#endif',
+            );
             // Clearcoat second-lobe direct term (layer F0 0.04, Schlick, GGX via engine helper).
             const ccDirect = [
                 '{',
@@ -302,8 +392,12 @@ export function gltfPhysicalEffect (): EffectAsset {
                 '#endif',
                 '}',
             ].join(nl);
-            const ccAnchor = 'finalColor *= dirlightContrib;';
-            if (!frag.includes(ccAnchor)) { throw new Error(`physical effect: '${ccAnchor}' missing in ${shader.name} [${language}]`); }
+            const ccAnchor = frag.includes('finalColor *= dirlightContrib;')
+                ? 'finalColor *= dirlightContrib;'
+                : 'finalColor += lightingColor * dirlightContrib;';
+            if (!frag.includes(ccAnchor)) {
+                throw new Error(`physical effect: '${ccAnchor}' missing in ${shader.name} [${language}]`);
+            }
             frag = frag.replace(ccAnchor, `#if USE_AIR_CLEARCOAT\n${ccDirect}\n#endif\n${ccAnchor}`);
             // Clearcoat IBL lobe: low-roughness environment reflection off the layer normal.
             const ccIBL = [
@@ -348,19 +442,31 @@ export function gltfPhysicalEffect (): EffectAsset {
                 '#endif',
             ].join(nl);
             const specLine = 'vec3 specularContrib = specular * CalcSpecular(s.roughness, NH, H, N);';
-            if (!frag.includes(specLine)) { throw new Error(`physical effect: specularContrib missing in ${shader.name} [${language}]`); }
-            frag = frag.replace(specLine,
-                '#if USE_AIR_ANISOTROPY\n'
-                + `vec3 specularContrib = specular * mix(CalcSpecular(s.roughness, NH, H, N), airAnisoVisibility(s.roughness, N, H, V, L), clamp(airAnisoStrength, 0.0, 1.0));\n`
-                + '#else\n' + specLine + '\n#endif');
+            if (!frag.includes(specLine)) {
+                throw new Error(`physical effect: specularContrib missing in ${shader.name} [${language}]`);
+            }
+            frag = frag.replace(
+                specLine,
+                '#if USE_AIR_ANISOTROPY\n' +
+                    `vec3 specularContrib = specular * mix(CalcSpecular(s.roughness, NH, H, N), airAnisoVisibility(s.roughness, N, H, V, L), clamp(airAnisoStrength, 0.0, 1.0));\n` +
+                    '#else\n' +
+                    specLine +
+                    '\n#endif',
+            );
             // Define the helper above the shading function that uses it.
             const shadingDecl = 'vec4 CCStandardShadingBase (StandardSurface s, vec4 shadowPos) {';
-            if (!frag.includes(shadingDecl)) { throw new Error(`physical effect: shading fn missing in ${shader.name} [${language}]`); }
+            if (!frag.includes(shadingDecl)) {
+                throw new Error(`physical effect: shading fn missing in ${shader.name} [${language}]`);
+            }
             frag = frag.replace(shadingDecl, `${anisoFn}\n${iriFn}\n${shadingDecl}`);
             const emissiveAnchor = 'finalColor += s.emissive;';
-            if (!frag.includes(emissiveAnchor)) { throw new Error(`physical effect: '${emissiveAnchor}' missing in ${shader.name} [${language}]`); }
-            frag = frag.replace(emissiveAnchor,
-                `${ccIBL}\n#if USE_AIR_CLEARCOAT\nfinalColor += s.emissive * (1.0 - clamp(airCCFactorTex, 0.0, 1.0) * (0.04 + 0.96 * pow(1.0 - max(dot(airCCNormal, V), 0.0), 5.0)));\n#else\n${emissiveAnchor}\n#endif`);
+            if (!frag.includes(emissiveAnchor)) {
+                throw new Error(`physical effect: '${emissiveAnchor}' missing in ${shader.name} [${language}]`);
+            }
+            frag = frag.replace(
+                emissiveAnchor,
+                `${ccIBL}\n#if USE_AIR_CLEARCOAT\nfinalColor += s.emissive * (1.0 - clamp(airCCFactorTex, 0.0, 1.0) * (0.04 + 0.96 * pow(1.0 - max(dot(airCCNormal, V), 0.0), 5.0)));\n#else\n${emissiveAnchor}\n#endif`,
+            );
             // Refractive transmission samples the offscreen scene color with a view-offset UV,
             // Beer-Lambert absorption for volume and RGB index-split for dispersion.
             const transmission = [
@@ -379,11 +485,19 @@ export function gltfPhysicalEffect (): EffectAsset {
                 'vec4 trClip0 = cc_matViewProj * vec4(s.position, 1.0);',
                 'vec2 trScreen = trClip0.xy / max(abs(trClip0.w), 1e-4) * 0.5 + 0.5;',
                 'float trFlip = cc_cameraPos.w > 0.0 ? -1.0 : 1.0;',
-                'vec2 trUv = clamp(trScreen + trOffset * trFlip, ' + SCENE_INFO_CONSTANT + '.zw, vec2(1.0) - ' + SCENE_INFO_CONSTANT + '.zw);',
+                'vec2 trUv = clamp(trScreen + trOffset * trFlip, ' +
+                    SCENE_INFO_CONSTANT +
+                    '.zw, vec2(1.0) - ' +
+                    SCENE_INFO_CONSTANT +
+                    '.zw);',
                 // Absorption over the path length, then refracted background sample (single tap).
                 // Beer-Lambert per spec: transmittance = attenuationColor ^ (d / attenuationDistance)
                 // (equivalently exp(-(-ln color) * d / dist); exact for dark media unlike the 1-color approximation).
-                'vec3 trAtten = pow(clamp(' + ATTENUATION_CONSTANT + '.rgb, vec3(0.0), vec3(1.0)), vec3(trThick / max(' + ATTENUATION_CONSTANT + '.w, 1e-4)));',
+                'vec3 trAtten = pow(clamp(' +
+                    ATTENUATION_CONSTANT +
+                    '.rgb, vec3(0.0), vec3(1.0)), vec3(trThick / max(' +
+                    ATTENUATION_CONSTANT +
+                    '.w, 1e-4)));',
                 'vec3 trColor = texture(cc_sceneColorTex, trUv).rgb * trAtten;',
                 '#if USE_AIR_DISPERSION',
                 `float trDisp = max(${TRANSMISSION_CONSTANT}.w, 0.0);`,
@@ -395,8 +509,16 @@ export function gltfPhysicalEffect (): EffectAsset {
                 'float trIorB = trIor + trHalf;',
                 'vec2 trRV = (mat3(cc_matView) * refract(-trV, trN, 1.0 / trIorR)).xy / max(abs(trView.z), 1.0) * trThick * 0.5;',
                 'vec2 trBV = (mat3(cc_matView) * refract(-trV, trN, 1.0 / trIorB)).xy / max(abs(trView.z), 1.0) * trThick * 0.5;',
-                'vec2 uvR = clamp(trScreen + trRV * trFlip, ' + SCENE_INFO_CONSTANT + '.zw, vec2(1.0) - ' + SCENE_INFO_CONSTANT + '.zw);',
-                'vec2 uvB = clamp(trScreen + trBV * trFlip, ' + SCENE_INFO_CONSTANT + '.zw, vec2(1.0) - ' + SCENE_INFO_CONSTANT + '.zw);',
+                'vec2 uvR = clamp(trScreen + trRV * trFlip, ' +
+                    SCENE_INFO_CONSTANT +
+                    '.zw, vec2(1.0) - ' +
+                    SCENE_INFO_CONSTANT +
+                    '.zw);',
+                'vec2 uvB = clamp(trScreen + trBV * trFlip, ' +
+                    SCENE_INFO_CONSTANT +
+                    '.zw, vec2(1.0) - ' +
+                    SCENE_INFO_CONSTANT +
+                    '.zw);',
                 'trColor.r = texture(cc_sceneColorTex, uvR).r * trAtten.r;',
                 'trColor.b = texture(cc_sceneColorTex, uvB).b * trAtten.b;',
                 '}',
@@ -409,7 +531,9 @@ export function gltfPhysicalEffect (): EffectAsset {
                 'return vec4(finalColor, s.albedo.a);',
             ].join(nl);
             const returnAnchor = 'return vec4(finalColor, s.albedo.a);';
-            if (!frag.includes(returnAnchor)) { throw new Error(`physical effect: return missing in ${shader.name} [${language}]`); }
+            if (!frag.includes(returnAnchor)) {
+                throw new Error(`physical effect: return missing in ${shader.name} [${language}]`);
+            }
             frag = frag.replace(returnAnchor, transmission);
             const modulate = [
                 '#if USE_AIR_TRANSMISSION',
@@ -518,7 +642,9 @@ export function gltfPhysicalEffect (): EffectAsset {
                 '#endif',
             ].join(nl);
             const mainAnchor = 'StandardSurface s; surf(s);';
-            if (!frag.includes(mainAnchor)) { throw new Error(`physical effect: '${mainAnchor}' missing in ${shader.name} [${language}]`); }
+            if (!frag.includes(mainAnchor)) {
+                throw new Error(`physical effect: '${mainAnchor}' missing in ${shader.name} [${language}]`);
+            }
             // Forward-add, forward-base and deferred paths each have their own main.
             // Replacing only the first anchor leaves the default forward-base path
             // with file-global defaults, despite live uniforms and successful draws.
@@ -527,14 +653,20 @@ export function gltfPhysicalEffect (): EffectAsset {
         }
 
         for (const technique of effect.techniques) {
-            for (const pass of technique.passes) { if (pass.program === oldName) { pass.program = shader.name; } }
+            for (const pass of technique.passes) {
+                if (pass.program === oldName) {
+                    pass.program = shader.name;
+                }
+            }
         }
     }
 
     // Default the physical property and samplers on every pass so unused slots bind safely.
     for (const technique of effect.techniques) {
         for (const pass of technique.passes) {
-            if (!pass.properties) { continue; }
+            if (!pass.properties) {
+                continue;
+            }
             pass.properties[PHYSICAL_CONSTANT] = { type: Type.FLOAT4, value: [1, 1, 1, 1] };
             pass.properties[PHYSICAL_COLOR_CONSTANT] = { type: Type.FLOAT4, value: [1, 1, 1, 1] };
             pass.properties[CLEARCOAT_CONSTANT] = { type: Type.FLOAT4, value: [1, 0, 1, 1] };
@@ -551,7 +683,6 @@ export function gltfPhysicalEffect (): EffectAsset {
             pass.properties.iridescenceIorMap = { value: 'white', type: Type.SAMPLER2D };
             pass.properties.iridescenceThicknessMap = { value: 'white', type: Type.SAMPLER2D };
             pass.properties.bumpMap = { value: 'white', type: Type.SAMPLER2D };
-
         }
     }
     effect.onLoaded();

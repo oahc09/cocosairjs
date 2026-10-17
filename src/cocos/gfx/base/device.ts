@@ -366,6 +366,12 @@ export abstract class Device {
      */
     public abstract copyTextureToBuffers (texture: Readonly<Texture>, buffers: ArrayBufferView[], regions: Readonly<BufferTextureCopy[]>): void;
 
+    /** Readback completion is explicit on asynchronous backends. */
+    public async copyTextureToBuffersAsync (texture: Readonly<Texture>, buffers: ArrayBufferView[], regions: Readonly<BufferTextureCopy[]>): Promise<void> {
+        this.copyTextureToBuffers(texture, buffers, regions);
+    }
+
+
     /**
      * @en Copy texture images to texture.
      * @zh 拷贝图像到纹理。

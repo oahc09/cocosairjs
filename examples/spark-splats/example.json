@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "title": "Spark 独立模块",
   "category": "rendering",
-  "status": "draft",
+  "status": "experimental",
   "specStatus": "frozen",
   "requiresDevTools": false,
   "apiClaims": ["createAirApp", "Camera", "Node"],
@@ -16,35 +16,32 @@
     "functional": "360 个程序化泼溅绑定到原生 Node，使用同一主引擎的 Camera、Device 和 framebuffer。",
     "visual": "中央显示由 360 个 Gaussian Splats 构成的彩色球。"
   },
+  "entry": "index.html",
   "api": {
-    "primary": ["createAirApp", "Camera", "Node"],
-    "supporting": [],
+    "primary": ["createAirApp"],
+    "supporting": ["Camera", "Node"],
     "claims": ["createAirApp", "Camera", "Node"],
-    "forbiddenShortcut": [
-      "不得另建 Cocos 引擎、相机或设备来代替复用主引擎的独立 Spark 模块。",
-      "不得用 DOM 图片代替 Gaussian Splats 的实际渲染。",
-      "静态规格冻结不代表 Spark 浏览器运行、像素正确性或资源释放已验证。"
-    ],
     "evidence": [
       {
         "api": "createAirApp",
         "source": "src/main.ts",
-        "validator": "scene-ready",
-        "sourceLocation": "L6"
+        "sourceLocation": "L6",
+        "validator": "visible-frame"
       },
       {
         "api": "Camera",
         "source": "src/main.ts",
-        "validator": "node-exists",
-        "sourceLocation": "L12"
+        "sourceLocation": "L13",
+        "validator": "visible-frame"
       },
       {
         "api": "Node",
         "source": "src/main.ts",
-        "validator": "node-exists",
-        "sourceLocation": "L8"
+        "sourceLocation": "L9",
+        "validator": "visible-frame"
       }
-    ]
+    ],
+    "forbiddenShortcut": ["用模拟计数或合成图像替代真实引擎、设备和帧验证"]
   },
   "assets": [],
   "scene": {
@@ -69,9 +66,10 @@
     "benchmarkRefs": [],
     "recipeRefs": []
   },
-  "screenshot": {},
   "license": {
-    "assets": "本示例的 360 个 Gaussian Splats 在运行时程序化生成，无下载的第三方模型或图像资产。"
+    "assets": "原创程序化 Gaussian Splats；独立 Spark 模块许可见既有许可记录"
   },
-  "supportBoundary": "仅冻结静态规格；status=draft。当前独立 Spark 入口尚无通用浏览器验证、截图或晋级证据；此处不声明 Spark 像素与生命周期验证通过。"
+  "screenshot": {
+    "target": "#GameCanvas"
+  }
 }

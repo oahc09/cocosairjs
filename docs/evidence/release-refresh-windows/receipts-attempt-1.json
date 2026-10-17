@@ -1,0 +1,24 @@
+[
+  {
+    "name": "devtools",
+    "endedAt": "2026-10-17T00:13:09.9354281Z",
+    "commandArgs": [
+      "tools/verify/devtools-examples.cjs",
+      "--preserve-metadata"
+    ],
+    "exitCode": 0,
+    "startedAt": "2026-10-17T00:11:57.3488465Z",
+    "inputGuardExitCode": 0
+  },
+  {
+    "name": "gallery",
+    "endedAt": "2026-10-17T00:13:45.5307382Z",
+    "commandArgs": [
+      "tools/verify/gallery-artifact.cjs",
+      "all"
+    ],
+    "exitCode": 1,
+    "startedAt": "2026-10-17T00:13:10.0251198Z",
+    "inputGuardExitCode": 0
+  }
+]

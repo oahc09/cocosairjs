@@ -1,0 +1,949 @@
+{
+  "measuredAt": "2026-10-17T00:09:44.515Z",
+  "total": 188,
+  "frozen": 188,
+  "draft": 0,
+  "blocked": 0,
+  "examples": [
+    {
+      "id": "anim-position",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "anim-rotation",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "animated-character-showcase",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "audio-basic",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "automation",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "batching-dynamic",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "batching-merged",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "batching-shared",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "batching-utility",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "black-hole-accretion",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "camera",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "camera-geometry-extras",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "camera-lookat",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "camera-multi",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "camera-ortho",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "camera-screen-world",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "camera-second-view",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "camera-viewport-props",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "campfire-night",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "collector-dodge",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "color-timeline-key",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "colortimeline-ops",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "contra-action",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "directional-light-face",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "dom-overlay-texture",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "dragonbones-basic",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "fog-accuracy",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "glass-refraction",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "gltf-animation-contract",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "gltf-asset-readonly",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "gltf-basic",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "gltf-catalog",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "gltf-clearcoat",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "gltf-draco",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "gltf-loader-registry",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "gltf-meshopt",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "gltf-morph",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "gltf-skin",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "gltf-viewer",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "graphics-svg-paints",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "hdr-color-pipeline",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "hello-cube",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "html-texture-experimental",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "input",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "input-queries",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "interaction-click",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "interactive-container",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "interactive-geometry",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "interactive-input",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "interactive-multipass",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "interactive-timeline",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "k0-r2-porting-contracts",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "layers-enum-ops",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "light-attach-cycle",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "light-point",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "light-sphere",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "light-spot",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "light-two-directional",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "match3-classic",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "material-basic",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "material-color",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "material-lifecycle",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "material-ops",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "material-transparent",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "material-unlit",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-approx-compare",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-bits",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-bits-constants",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-color-applied",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-color-convert",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-color-models",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-easing-patterns",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-enumerable-props",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-float-encoding",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-mat3-basics",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-mat3-elements",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-mat3-transforms",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-mat4-applied",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-mat4-basics",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-mat4-compose",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-mat4-transform",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-quat-applied",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-quat-components",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-quat-euler",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-quat-interp",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-random-utils",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-rect-geometry",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-rect-ops",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-scalar-utils",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-size-ops",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-vec2-applied",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-vec2-arithmetic",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-vec2-components",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-vec2-equality-misc",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-vec2-length-angle",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-vec2-tovec3",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-vec3-applied",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-vec3-arithmetic",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-vec3-components",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-vec3-equality-misc",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-vec3-length-products",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-vec3-tovec2",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-vec4-arithmetic",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-vec4-components",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-vec4-length-misc",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "mesh-attributes-indices",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "mesh-cylinder",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "mesh-lifecycle-ops",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "mesh-morph-bounds",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "mesh-multi-material",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "mesh-plane",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "mesh-prim-compare",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "mesh-sphere",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "mesh-torus",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "meshrenderer-hooks",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "model-character-interaction",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "neon-night-city",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "node-active",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "node-children-ops",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "node-component-queries",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "node-events",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "node-hierarchy",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "node-pool",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "node-scale",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "node-scene-id",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "orbit-controls",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "particle-2d-basic",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "physics-2d-basic",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "physics-2d-collision",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "physics-3d-basic",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "physics-3d-collision",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "physics-interaction",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "point-cloud-basics",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "primitives-geometry-ops",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "primitives-shapes-extra",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "primitives-wireframe-obj",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "product-viewer",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "profiler-overlay",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "rc-capture-frame",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "rc-create-node",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "rc-error-report",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "rc-inspect-scene",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "render-composite",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "responsive-board-recipes",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "runtime-asset-release",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "scene-asset-meta",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "scene-globals-read",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "scene-runtime-ops",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "scene-switch-reentry",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "shader-cursor-trail",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "shader-custom-gradient",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "shader-dissolve",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "shader-driver-pilot",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "shader-emboss",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "shader-film-neon",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "shader-glass",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "shader-glass-trail",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "shader-holographic",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "shader-input-dissolve",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "shader-laser-card",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "shader-liquid-metal",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "shader-neon",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "shader-noise-dissolve",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "shader-sparkle",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "shader-thin-film",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "skinned-animation",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "spark-splats",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "sprite-mask-blend",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "starfield-galaxy",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "starter",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "static-model",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "tank-battle",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "tetris-classic",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "texture-basic",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "texture2d-ops",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "texture2d-serialization",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "tiledmap-basic",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "transform",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "tween-basic",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "ui-api-lifecycle",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "ui-asset-loading",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "ui-components",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "ui-layout",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "utils-family",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "video-basic",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "water-multipass",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "webgpu-basic",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "webview-basic",
+      "specStatus": "frozen",
+      "issues": []
+    }
+  ]
+}

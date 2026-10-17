@@ -1,0 +1,72 @@
+{
+  "completed": true,
+  "passed": true,
+  "startedAt": "2026-10-16T14:52:48.731Z",
+  "finishedAt": "2026-10-16T14:53:00.189Z",
+  "sourceSha256": "cdd552444066108de44b0c772b9c88bc26ac274de7eb3e4bebd369c172e349a9",
+  "sourceUnchanged": true,
+  "browserVersion": "155.0.8059.40",
+  "fixture": "Existing profiler-overlay source with only explicit renderer selection in a temporary workspace",
+  "state": {
+    "api": 8,
+    "paused": true,
+    "probe": {
+      "overlayActive": true,
+      "counters": {
+        "fps": {
+          "value": 0,
+          "enabled": false
+        },
+        "draws": {
+          "value": 2,
+          "enabled": false
+        },
+        "dispatches": {
+          "value": 0,
+          "enabled": false
+        },
+        "frame": {
+          "value": 1.7,
+          "enabled": false
+        },
+        "instances": {
+          "value": 0,
+          "enabled": false
+        },
+        "tricount": {
+          "value": 208,
+          "enabled": false
+        },
+        "logic": {
+          "value": 0,
+          "enabled": false
+        },
+        "physics": {
+          "value": 0,
+          "enabled": false
+        },
+        "render": {
+          "value": 1.5,
+          "enabled": false
+        },
+        "present": {
+          "value": 0,
+          "enabled": false
+        },
+        "textureMemory": {
+          "value": 1.16,
+          "enabled": false
+        },
+        "bufferMemory": {
+          "value": 6.82,
+          "enabled": false
+        }
+      }
+    },
+    "gpuErrors": [],
+    "isFallbackAdapter": false
+  },
+  "errors": [],
+  "hudPixels": 947,
+  "pngSha256": "b3647ec13657319d2a2a0e5490811948d5ff00c6eeba935dafad68792d91f8f3"
+}

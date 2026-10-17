@@ -1,0 +1,17 @@
+{
+  "name": "edge",
+  "command": [
+    "D:\\Program Files\\nodejs\\node.exe",
+    "E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\webgpu-backend.cjs",
+    "--engine=edge",
+    "--examples",
+    "--custom",
+    "--out=E:\\AIProMax\\github\\cocosair.js\\output\\webgpu-completion\\final-r5\\edge"
+  ],
+  "startedAt": "2026-10-15T16:07:38.024Z",
+  "expectedExit": 0,
+  "browserPath": "C:/Program Files/Google/Chrome/Application/chrome.exe",
+  "exitCode": 0,
+  "signal": null,
+  "finishedAt": "2026-10-15T16:09:32.169Z"
+}

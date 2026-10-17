@@ -283,6 +283,11 @@
                 "physics-2d-box2d-wasm",
                 "physics-2d-framework"
             ]
+        },
+        "gfx-webgpu": {
+            "modules": [
+                "gfx-webgpu"
+            ]
         }
     },
     "moduleOverrides": [

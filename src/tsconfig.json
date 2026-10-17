@@ -70,13 +70,12 @@
       // Same upstream empty-script exemption as the root typecheck.
       "cocos/physics/cannon/constraints/cannon-distance-constraint.ts",
 
-      // V1.2 批次 E / D10（与根 tsconfig.json 的同名豁免配对，理由见 UPSTREAM.md Deviation-04）：
-      // dtsBundler 用本配置把 exports/** 全部收进声明图，未接线的 gfx-webgpu 会被并入发布面
-      // （cc.d.ts 多出 `export class WebGPUDevice`，而默认 bundle 的导出表没有它 → 类型/产物不一致，
-      // 实测 +60,649 B）。emscripten-only 子图同时无法在此快照内核对，故整图移出声明与核对闭包。
-      "cocos/gfx/webgpu/**",
+      // WG-01: active TypeScript WebGPU code participates in declarations.
+      // Dormant native-device WASM bridge files remain outside this graph.
+      "cocos/gfx/webgpu/override.ts",
+      "cocos/gfx/webgpu/webgpu-define.ts",
       "cocos/webgpu/**",
-      "exports/gfx-webgpu.ts",
+
 
       // V1.2 批次 D-4 / G-3（LV12-14 / LV12-16，与 Deviation-04 同一类，登记为 UPSTREAM.md Deviation-05）：
       // 这三个 wasm 后端子图已按上游原文抽取并逐字节核对（82 文件），但它们的类型只存在于

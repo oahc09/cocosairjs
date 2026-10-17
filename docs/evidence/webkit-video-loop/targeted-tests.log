@@ -1,0 +1,36 @@
+  console.log
+    Cannot access game frame or container.
+
+      at warnID (src/cocos/core/platform/debug.ts:314:5)
+
+  console.log
+    [AIR_W_VIDEO_FULLSCREEN_EXIT] Error: Document not active
+
+      at warn (src/cocos/core/platform/debug.ts:110:12)
+
+PASS test/smoke/video-fullscreen-cleanup.test.ts (6.983 s)
+  VideoPlayer fullscreen cleanup
+    √ disabling an already windowed player does not request a native exit (6 ms)
+    √ a rejected native exit is observed and retains the actual fullscreen state (27 ms)
+  VideoPlayer seek/play calibration
+    √ a confirmed seek is not repeated after playback has advanced (4 ms)
+    √ an old play promise cannot seek a replacement video (1 ms)
+    √ a rejected play does not calibrate the native loop position (2 ms)
+  Windows WebKit native loop seek
+    √ resumes the native rewind once, without changing media time (4 ms)
+    √ a zero start-position assignment before metadata does not block native looping (2 ms)
+    √ pause cancels a pending loop resume (2 ms)
+    √ stop cancels a pending loop resume (1 ms)
+    √ seek cancels a pending loop resume (1 ms)
+    √ disable cancels a pending loop resume (2 ms)
+    √ loop-off cancels a pending loop resume (2 ms)
+    √ interrupt cancels a pending loop resume (1 ms)
+    √ a detached element cannot resume its replacement (2 ms)
+    √ a queued ended event cannot complete a newer seek/play on the same element (2 ms)
+    √ ordinary pauses and other browser platforms do not auto-resume (1 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       16 passed, 16 total
+Snapshots:   0 total
+Time:        8.627 s
+Ran all test suites matching /test\\smoke\\video-fullscreen-cleanup.test.ts/i.

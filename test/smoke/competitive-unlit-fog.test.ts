@@ -30,13 +30,17 @@ describe('AIR accurate unlit fog specialization', () => {
         EffectAsset.remove(builtin);
         builtin.destroy();
     });
-    test('transforms every shader variant without changing builtin data and keeps instance ownership independent', () => {
+    test('specializes fog variants, preserves shadow variants and keeps instance ownership independent', () => {
         const before = JSON.stringify([builtin.techniques, builtin.shaders]);
         const a = createAirUnlitFogEffect();
         const b = createAirUnlitFogEffect();
         expect(a.name).not.toBe(b.name);
-        for (const shader of a.shaders)
+        for (const [index, shader] of a.shaders.entries())
             for (const variant of ['glsl3', 'glsl4'] as const) {
+                if (builtin.shaders[index].name.includes('|planar-shadow-vs:')) {
+                    expect(shader[variant]).toEqual(builtin.shaders[index][variant]);
+                    continue;
+                }
                 expect(shader[variant].vert).toContain('air_fogWorldPos = (matWorld * position).xyz');
                 expect(shader[variant].frag).toContain('CC_APPLY_FOG(o, air_fogWorldPos);');
                 expect(shader[variant].frag).not.toContain('CC_APPLY_FOG(o);');
@@ -56,7 +60,7 @@ describe('AIR accurate unlit fog specialization', () => {
         builtin.shaders[0].glsl3.frag = 'void main() {}';
         expect(() => createAirUnlitFogEffect()).toThrow(/incompatible builtin-unlit glsl3/);
     });
-    test('repeated owned assets share one template and leave no deferred listener or registry growth', () => {
+    test('repeated owned assets share templates per variant and leave no deferred listener or registry growth', () => {
         const registryCount = Object.keys(EffectAsset.getAll()).length;
         const event = cclegacy.Game.EVENT_RENDERER_INITED;
         const listeners = () => cclegacy.game._callbackTable[event]?.callbackInfos.length || 0;
@@ -71,6 +75,6 @@ describe('AIR accurate unlit fog specialization', () => {
         }
         expect(Object.keys(EffectAsset.getAll()).length).toBe(registryCount);
         expect(listeners()).toBe(beforeListeners);
-        expect(templates().length).toBe(1);
+        expect(templates().length).toBe(builtin.shaders.length);
     });
 });

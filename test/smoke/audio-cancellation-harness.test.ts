@@ -23,7 +23,7 @@ function ownershipProbe(script: string): any {
 describe('audio browser process ownership', () => {
     it('tracks the exact configured default Playwright executable without a local wrapper', () => {
         const result = ownershipProbe(`
-            const executable = '/opt/playwright/webkit-999/pw_run.sh';
+            const executable = require('path').resolve('playwright', 'webkit-999', 'pw_run.sh');
             tracker.configureBrowserExecutable(executable);
             cp.spawn(executable, ['--inspector-pipe'], { detached: true });
             console.log(JSON.stringify(tracker.rows.map(row => row.role)));`);
@@ -32,8 +32,8 @@ describe('audio browser process ownership', () => {
 
     it('does not infer browser ownership from an unrelated wrapper-like command', () => {
         const result = ownershipProbe(`
-            tracker.configureBrowserExecutable('/opt/playwright/webkit-999/pw_run.sh');
-            cp.spawn('/tmp/unrelated-run-webkit-local-deps.sh', [], { detached: true });
+            tracker.configureBrowserExecutable(require('path').resolve('playwright', 'webkit-999', 'pw_run.sh'));
+            cp.spawn(require('path').resolve('unrelated-run-webkit-local-deps.sh'), [], { detached: true });
             console.log(JSON.stringify(tracker.rows));`);
         expect(result).toEqual([]);
     });
@@ -42,9 +42,10 @@ describe('audio browser process ownership', () => {
         const result = ownershipProbe(`
             const errors = [];
             try { tracker.configureBrowserExecutable('pw_run.sh'); } catch (e) { errors.push(e.message); }
-            tracker.configureBrowserExecutable('/opt/playwright/webkit-999/pw_run.sh');
-            cp.spawn('/opt/playwright/webkit-999/pw_run.sh', [], { detached: true });
-            try { tracker.configureBrowserExecutable('/other/browser'); } catch (e) { errors.push(e.message); }
+            const executable = require('path').resolve('playwright', 'webkit-999', 'pw_run.sh');
+            tracker.configureBrowserExecutable(executable);
+            cp.spawn(executable, ['--inspector-pipe'], { detached: true });
+            try { tracker.configureBrowserExecutable(require('path').resolve('other', 'browser')); } catch (e) { errors.push(e.message); }
             console.log(JSON.stringify(errors));`);
         expect(result).toEqual([
             'Browser executable must be an absolute path',

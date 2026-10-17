@@ -1,7 +1,7 @@
 {
-  "measuredAt": "2026-10-15T01:04:45.249Z",
-  "total": 187,
-  "frozen": 187,
+  "measuredAt": "2026-10-16T15:38:44.209Z",
+  "total": 188,
+  "frozen": 188,
   "draft": 0,
   "blocked": 0,
   "examples": [
@@ -932,6 +932,11 @@
     },
     {
       "id": "water-multipass",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "webgpu-basic",
       "specStatus": "frozen",
       "issues": []
     },

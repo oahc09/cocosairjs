@@ -160,11 +160,16 @@ export class DeviceManager {
                     useWebGL2 = false;
                 }
                 Device.canvas = canvas!;
+                if (renderMode === LegacyRenderMode.WEBGPU && (!this._supportWebGPU() || !cclegacy.WebGPUDevice)) {
+                    throw Object.assign(new Error('WebGPU is unavailable; no backend fallback was requested.'), { code: 'WEBGPU_UNSUPPORTED' });
+                }
                 if (this._renderType === RenderType.WEBGPU && cclegacy.WebGPUDevice) {
                     return new Promise<boolean>((resolve, reject) => {
                         this._tryInitializeWebGPUDevice(cclegacy.WebGPUDevice, deviceInfo).then((val) => {
-                            this._initSwapchain();
-                            resolve(val);
+                            try {
+                                if (!val) throw new Error('WebGPU initialization returned false.');
+                                this._initSwapchain(); resolve(true);
+                            } catch (error) { this._gfxDevice.destroy(); reject(error); }
                         }).catch((err) => {
                             reject(err);
                         });
@@ -224,7 +229,7 @@ export class DeviceManager {
             renderType = RenderType.CANVAS;
             supportRender = true;
         } else if (renderMode === LegacyRenderMode.AUTO || renderMode === LegacyRenderMode.WEBGPU) {
-            renderType = (this._supportWebGPU() && !EDITOR) ? RenderType.WEBGPU : RenderType.WEBGL;
+            renderType = renderMode === LegacyRenderMode.WEBGPU && !EDITOR ? RenderType.WEBGPU : RenderType.WEBGL;
             supportRender = true;
         } else if (renderMode === LegacyRenderMode.WEBGL) {
             renderType = RenderType.WEBGL;

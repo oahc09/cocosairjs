@@ -1,0 +1,256 @@
+{
+  "records": [
+    {
+      "component": "Cocos builtin effect/chunk sources",
+      "licenseId": "MIT (frozen cocos4 source; original source copyright lines included)",
+      "licenseFile": "licenses/LICENSE_builtin_source.txt",
+      "licenseBytes": 1478,
+      "ships": "default",
+      "probes": [
+        {
+          "probe": "builtin-standard",
+          "inBundle": true
+        },
+        {
+          "probe": "builtin-unlit",
+          "inBundle": true
+        }
+      ],
+      "decision": null,
+      "gaps": [],
+      "problems": []
+    },
+    {
+      "component": "glslang (WebGPU shader translator)",
+      "licenseId": "glslang bundled license terms (see original text)",
+      "licenseFile": "vendor/webgpu/LICENSE-glslang.txt",
+      "licenseBytes": 55719,
+      "ships": "source",
+      "probes": [],
+      "decision": null,
+      "gaps": [],
+      "problems": []
+    },
+    {
+      "component": "TWGSL (WebGPU shader translator)",
+      "licenseId": "Apache-2.0 (BabylonJS official NOTICE); Dawn/Tint BSD-3-Clause notice also shipped",
+      "licenseFile": "vendor/webgpu/LICENSE-apache.txt",
+      "licenseBytes": 9226,
+      "ships": "source",
+      "probes": [],
+      "decision": null,
+      "gaps": [],
+      "problems": []
+    },
+    {
+      "component": "spine runtime (spine-core.js)",
+      "licenseId": "Spine Runtimes License Agreement (2019-05-01, Esoteric Software LLC)",
+      "licenseFile": "licenses/LICENSE_spine.txt",
+      "licenseBytes": 1455,
+      "ships": "default",
+      "probes": [
+        {
+          "probe": "spine.TimelineType",
+          "inBundle": true
+        }
+      ],
+      "decision": "accepted",
+      "gaps": [],
+      "problems": []
+    },
+    {
+      "component": "DragonBonesJS (@cocos/dragonbones-js)",
+      "licenseId": "MIT (c) 2012-2016 DragonBones team and other contributors",
+      "licenseFile": "licenses/LICENSE_DragonBones.txt",
+      "licenseBytes": 1111,
+      "ships": "default",
+      "probes": [
+        {
+          "probe": "DragonBones",
+          "inBundle": true
+        }
+      ],
+      "decision": "accepted",
+      "gaps": [],
+      "problems": []
+    },
+    {
+      "component": "Box2D (@cocos/box2d)",
+      "licenseId": "MIT (c) 2019 Erin Catto",
+      "licenseFile": "licenses/LICENSE_box2d.txt",
+      "licenseBytes": 1086,
+      "ships": "default",
+      "probes": [
+        {
+          "probe": "b2World",
+          "inBundle": true
+        }
+      ],
+      "decision": null,
+      "gaps": [],
+      "problems": []
+    },
+    {
+      "component": "cannon.js (@cocos/cannon)",
+      "licenseId": "MIT (c) 2015 cannon.js Authors",
+      "licenseFile": "licenses/LICENSE_cannon.txt",
+      "licenseBytes": 1147,
+      "ships": "default",
+      "probes": [
+        {
+          "probe": "CannonWorld",
+          "inBundle": true
+        }
+      ],
+      "decision": null,
+      "gaps": [],
+      "problems": []
+    },
+    {
+      "component": "zlib.js (src/external/compression/zlib.min.js)",
+      "licenseId": "MIT (zlib.js, imaya)",
+      "licenseFile": "licenses/LICENSE_zlibjs.txt",
+      "licenseBytes": 1221,
+      "ships": "default",
+      "probes": [
+        {
+          "probe": "adler",
+          "inBundle": true
+        },
+        {
+          "probe": "inflate",
+          "inBundle": true
+        }
+      ],
+      "decision": null,
+      "gaps": [],
+      "problems": []
+    },
+    {
+      "component": "notepack.io (src/external/deserialize)",
+      "licenseId": "MIT (c) 2014 Ion Drive Software Ltd.",
+      "licenseFile": "licenses/LICENSE_notepack.io.txt",
+      "licenseBytes": 1067,
+      "ships": "default",
+      "probes": [
+        {
+          "probe": "notepack",
+          "inBundle": true
+        }
+      ],
+      "decision": null,
+      "gaps": [],
+      "problems": []
+    },
+    {
+      "component": "Cocos PAL (public MIT source)",
+      "licenseId": "MIT (cocos4 public source @ 9f0e30ac)",
+      "licenseFile": "licenses/LICENSE_pal.txt",
+      "licenseBytes": 1060,
+      "ships": "default",
+      "probes": [
+        {
+          "probe": "AudioContext",
+          "inBundle": true
+        }
+      ],
+      "decision": "accepted",
+      "gaps": [],
+      "problems": []
+    },
+    {
+      "component": "Spark 高斯泼溅 (@sparkjsdev/spark)",
+      "licenseId": "MIT (c) 2025 WORLD LABS TECHNOLOGIES, INC.（@sparkjsdev/spark 2.3.1，冻结提交 c57ebb93）",
+      "licenseFile": "licenses/LICENSE_spark.txt",
+      "licenseBytes": 1088,
+      "ships": "variant",
+      "probes": [
+        {
+          "probe": "SparkRenderer",
+          "inBundle": false
+        },
+        {
+          "probe": "sparkjsdev",
+          "inBundle": false
+        }
+      ],
+      "decision": null,
+      "gaps": [],
+      "problems": []
+    },
+    {
+      "component": "spark-rs WASM 与 wasm-bindgen glue",
+      "licenseId": "MIT (c) 2025 WORLD LABS TECHNOLOGIES, INC.（spark-rs 与 spark 同源同许可；上游 2.3.1 dist 发行字节）",
+      "licenseFile": "licenses/LICENSE_spark.txt",
+      "licenseBytes": 1088,
+      "ships": "variant",
+      "probes": [
+        {
+          "probe": "spark_rs_bg",
+          "inBundle": false
+        },
+        {
+          "probe": "WASM_MODULE",
+          "inBundle": false
+        }
+      ],
+      "decision": "pending",
+      "gaps": [],
+      "problems": []
+    },
+    {
+      "component": "fflate (SPZ 解压依赖)",
+      "licenseId": "MIT (c) 2023 Arjun Barrett（fflate 0.8.2，npm pack 原文）",
+      "licenseFile": "licenses/LICENSE_fflate.txt",
+      "licenseBytes": 1069,
+      "ships": "variant",
+      "probes": [
+        {
+          "probe": "fflate",
+          "inBundle": false
+        }
+      ],
+      "decision": null,
+      "gaps": [],
+      "problems": []
+    },
+    {
+      "component": "meshoptimizer (glTF 解码器)",
+      "licenseId": "MIT (zeux/meshoptimizer 1.2.0)",
+      "licenseFile": "build/gltf-decoders/meshopt/LICENSE.md",
+      "licenseBytes": 1079,
+      "ships": "source",
+      "probes": [],
+      "decision": null,
+      "gaps": [],
+      "problems": []
+    },
+    {
+      "component": "draco3d (glTF 解码器)",
+      "licenseId": "Apache-2.0 (google/draco 1.5.7)",
+      "licenseFile": "build/gltf-decoders/draco/LICENSE.md",
+      "licenseBytes": 12203,
+      "ships": "source",
+      "probes": [],
+      "decision": null,
+      "gaps": [],
+      "problems": []
+    },
+    {
+      "component": "Basis Universal (glTF 解码器)",
+      "licenseId": "Apache-2.0 (Binomial LLC, three r168 构建)",
+      "licenseFile": "build/gltf-decoders/basis/LICENSE.md",
+      "licenseBytes": 12400,
+      "ships": "source",
+      "probes": [],
+      "decision": null,
+      "gaps": [],
+      "problems": []
+    }
+  ],
+  "failures": [],
+  "attention": [
+    "spark-rs WASM 与 wasm-bindgen glue: disposition=pending"
+  ],
+  "shipsLicensesDir": true
+}

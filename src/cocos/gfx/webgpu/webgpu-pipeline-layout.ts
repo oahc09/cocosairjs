@@ -40,6 +40,7 @@ export class WebGPUPipelineLayout extends PipelineLayout {
         if (resetAll) {
             gpuPipelineLayout.gpuSetLayouts.length = 0;
             gpuPipelineLayout.dynamicOffsetIndices.length = 0;
+            gpuPipelineLayout.dynamicOffsetCount = 0;
         }
         const webGPUDevice = WebGPUDeviceManager.instance;
         const nativeDevice = webGPUDevice.nativeDevice;
@@ -94,7 +95,7 @@ export class WebGPUPipelineLayout extends PipelineLayout {
             },
 
         };
-        this.fetchPipelineLayout();
+        // Native layout is created by the shader-specific pipeline, not this unfiltered template.
         return true;
     }
 

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "title": "Points and Lines: Topology Contract",
   "category": "shader",
-  "status": "draft",
+  "status": "stable",
   "specStatus": "frozen",
   "requiresDevTools": false,
   "learning": {
@@ -68,5 +68,13 @@
   "screenshot": {},
   "license": {
     "assets": "原创程序化网格与shader，无第三方模型资产"
+  },
+  "promotion": {
+    "spec": "d38351764399",
+    "source": "9bd2de5487457126",
+    "candidate": "0a6c249084b50f2f",
+    "verified": 3,
+    "attested": 0,
+    "units": 3
   }
 }

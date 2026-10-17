@@ -1,0 +1,6 @@
+
+> cocosair.js@1.0.0 format:check
+> prettier --check "examples/**/*.{ts,js,json,html,css}" "docs/manual/examples/**/*.{ts,js,json,html,css}" "tools/debug/probes/**/*.{ts,js,json,html}" "tools/verify/trial-probes.cjs" "tools/verify/shader-probe.cjs" "tools/examples/spec-fixlines.cjs" "tools/dev/resolve-script.cjs" "tools/verify/dev-tooling.cjs" ".github/workflows/format.yml" "docs/manual/script-component-workflow.md" "docs/manual/custom-shaders.md" "tools/verify/dev-samples.cjs" "tools/verify/spark-pixel-parity.cjs" "tools/verify/spark-dpr-mismatch-parity.cjs" "tools/verify/spark-cpu-parity.cjs"
+
+Checking formatting...
+All matched files use Prettier code style!

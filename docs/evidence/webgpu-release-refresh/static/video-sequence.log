@@ -1,0 +1,16 @@
+✔ LOCAL source readiness ignores the previous REMOTE metadata event (3.6824ms)
+✔ LOCAL metadata timeout rejects instead of continuing with an old callback (1.1911ms)
+✔ loop playback begins only after the paused seek has settled (3.5954ms)
+✔ an unsettled loop seek cannot start playback or report a loop (1.4511ms)
+✔ a playing state with a stalled media clock is not a successful loop (0.9648ms)
+✔ playback that reaches the end without wrapping still fails (0.9791ms)
+✔ a transient loop reset followed by a pause is not continuous playback (1.0443ms)
+✔ a low stale time during an unfinished seek is not mistaken for a wrap (0.8941ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 29.967

@@ -27,6 +27,8 @@ import { Buffer } from '../base/buffer';
 import { CommandBuffer } from '../base/command-buffer';
 import {
     BufferUsageBit,
+    BlendFactor,
+    BlendOp,
     CommandBufferType,
     StencilFace,
     BufferSource,
@@ -46,15 +48,13 @@ import { Framebuffer } from '../base/framebuffer';
 import { InputAssembler } from '../base/input-assembler';
 import { PipelineState } from '../base/pipeline-state';
 import { Texture } from '../base/texture';
+import { WebGPUDescriptorSetLayout } from './webgpu-descriptor-set-layout';
 import { WebGPUDescriptorSet } from './webgpu-descriptor-set';
 import { WebGPUBuffer } from './webgpu-buffer';
 import { WebGPUCommandAllocator } from './webgpu-command-allocator';
 import {
     clearRect,
-    WebGPUCmd,
-    WebGPUCmdCopyBufferToTexture,
     WebGPUCmdPackage,
-    WebGPUCmdUpdateBuffer,
 } from './webgpu-commands';
 import { WebGPUFramebuffer } from './webgpu-framebuffer';
 import {
@@ -72,6 +72,7 @@ import { INT_MAX } from '../../core/math/bits';
 import { GeneralBarrier } from '../base/states/general-barrier';
 import { TextureBarrier } from '../base/states/texture-barrier';
 import { BufferBarrier } from '../base/states/buffer-barrier';
+import { WebGPUCmdFuncUpdateBuffer, WebGPUCmdFuncBlitTexture, WebGPUCmdFuncCopyBuffersToTexture } from './webgpu-commands';
 import { WebGPUDeviceManager } from './define';
 import { WebGPUSwapchain } from './webgpu-swapchain';
 import { WebGPUPipelineLayout } from './webgpu-pipeline-layout';
@@ -113,45 +114,13 @@ export class WebGPUCommandBuffer extends CommandBuffer {
         textureBarriers?: readonly TextureBarrier[] | undefined,
         textures?: readonly Texture[] | undefined,
     ): void {
-        throw new Error('Method not implemented.');
+        if (this._isInRenderPass) throw new Error('WEBGPU_BARRIER_IN_RENDER_PASS');
+        this.submitComputePass();
     }
     public blitTexture (srcTexture: Readonly<Texture>, dstTexture: Texture, regions: readonly TextureBlit[], filter: Filter): void {
-        // The blit operation for MSAA is moved to the rendering phase of the render pass to perform the resolve operation.
-        if (srcTexture.samples > 1) {
-            return;
-        }
-        const device = WebGPUDeviceManager.instance;
-        const gpuDevice = device.nativeDevice!;
-        const encoder: GPUCommandEncoder =  gpuDevice.createCommandEncoder();
-        const actualSrcTexture: GPUTexture = srcTexture.getTextureHandle() as GPUTexture;
-
-        for (const region of regions) {
-            encoder.copyTextureToTexture(
-                {
-                    texture: actualSrcTexture,
-                    origin: {
-                        x: region.srcOffset.x,
-                        y: region.srcOffset.y,
-                        z: region.srcSubres.baseArrayLayer,
-                    },
-                },
-                {
-                    texture: dstTexture.getTextureHandle() as GPUTexture,
-                    origin: {
-                        x: region.dstOffset.x,
-                        y: region.dstOffset.y,
-                        z: region.dstSubres.baseArrayLayer,
-                    },
-                },
-                {
-                    width: region.dstExtent.width,
-                    height: region.dstExtent.height,
-                    depthOrArrayLayers: region.dstExtent.depth,
-                },
-            );
-        }
-        const commandBuffer = encoder.finish();
-        gpuDevice.queue.submit([commandBuffer]);
+        if (this._isInRenderPass) throw new Error('WEBGPU_COPY_IN_RENDER_PASS');
+        this.submitComputePass();
+        WebGPUCmdFuncBlitTexture(WebGPUDeviceManager.instance, srcTexture, dstTexture, regions, filter);
     }
 
     public cmdPackage: WebGPUCmdPackage = new WebGPUCmdPackage();
@@ -206,6 +175,7 @@ export class WebGPUCommandBuffer extends CommandBuffer {
     }
 
     public begin (renderPass?: RenderPass, subpass?: number, frameBuffer?: Framebuffer): void {
+        if (WebGPUDeviceManager.instance.isLost) throw new Error('WEBGPU_DEVICE_LOST');
         this._webGPUAllocator!.clearCmds(this.cmdPackage);
         renderAreas.length = 0;
         this._curGPUPipelineState = null;
@@ -231,6 +201,8 @@ export class WebGPUCommandBuffer extends CommandBuffer {
     }
 
     public end (): void {
+        if (this._isInRenderPass) throw new Error('WEBGPU_RENDER_PASS_NOT_ENDED');
+        this.submitComputePass();
         this._isStateValid = false;
         this._isInRenderPass = false;
         this._computeFuncQueue.length = 0;
@@ -244,7 +216,9 @@ export class WebGPUCommandBuffer extends CommandBuffer {
         clearDepth: number,
         clearStencil: number,
     ): void {
+        this.submitComputePass();
         const device = WebGPUDeviceManager.instance;
+        if (device.isLost) throw new Error('WEBGPU_DEVICE_LOST');
         const gpuDevice = device;
         this._wgpuRenderPass = renderPass as WebGPURenderPass;
         const nativePassDesc = this._nativePassDesc = this._wgpuRenderPass.gpuRenderPass.nativeRenderPass!;
@@ -262,11 +236,13 @@ export class WebGPUCommandBuffer extends CommandBuffer {
         const swapchain = gpuDevice.getSwapchains()[0] as WebGPUSwapchain;
         const clearColorSize = clearColors.length;
         for (let i = 0; i < clearColorSize; i++) {
-            let colorTex = swapchain.colorGPUTextureView;
+            let colorTex: GPUTextureView;
             let currGPUTex;
             if (gpuFramebuffer.isOffscreen) {
                 currGPUTex = gpuFramebuffer.gpuColorTextures[i];
-                colorTex = currGPUTex.getTextureView();
+                colorTex = currGPUTex.getTextureView()!;
+            } else {
+                colorTex = swapchain.colorGPUTextureView;
             }
             colorTex.label = gpuFramebuffer.isOffscreen ? 'offscreen' : 'swapchain';
             if (!renderingFullScreen) {
@@ -285,11 +261,11 @@ export class WebGPUCommandBuffer extends CommandBuffer {
 
         if (this._wgpuRenderPass.depthStencilAttachment?.format !== Format.UNKNOWN) {
             const tex = gpuFramebuffer.gpuDepthStencilTexture?.gpuTexture;
-            const depthTex = tex ? tex.createView() : swapchain.gpuDepthStencilTextureView;
+            const depthTex = tex ? gpuFramebuffer.gpuDepthStencilTexture!.getTextureView()! : swapchain.gpuDepthStencilTextureView;
             const depthStencilAttachment = nativePassDesc.depthStencilAttachment!;
             depthStencilAttachment.view = depthTex;
             depthStencilAttachment.depthClearValue = clearDepth;
-            depthStencilAttachment.stencilClearValue = clearStencil;
+            if (depthStencilAttachment.stencilLoadOp !== undefined) depthStencilAttachment.stencilClearValue = clearStencil;
         }
 
         renderArea.x = Math.floor(renderArea.x);
@@ -376,8 +352,7 @@ export class WebGPUCommandBuffer extends CommandBuffer {
         viewport.top = Math.floor(viewport.top);
         viewport.width = Math.floor(viewport.width);
         viewport.height = Math.floor(viewport.height);
-        viewport.minDepth = Math.floor(viewport.minDepth);
-        viewport.maxDepth = Math.floor(viewport.maxDepth);
+
         this._curViewport = new Viewport(viewport.left, viewport.top, viewport.width, viewport.height, viewport.minDepth, viewport.maxDepth);
         const vpfunc = (passEncoder: GPURenderPassEncoder): void => {
             passEncoder.setViewport(
@@ -505,30 +480,22 @@ export class WebGPUCommandBuffer extends CommandBuffer {
         const nativeDevice = device;
 
         if (ia.indirectBuffer) {
-            const indirectBuffer = iaData.gpuIndirectBuffer!;
-            if (nativeDevice.multiDrawIndirectSupport) {
-                // not support yet
-            } else {
-                const drawInfoCount = iaData.gpuIndirectBuffer?.indirects.length as number;
-                if (indirectBuffer.drawIndirectByIndex) {
-                    const drawFunc = (passEncoder: GPURenderPassEncoder): void => {
-                        const drawInfoSize = Object.keys(DrawInfo).length;
-                        for (let i = 0; i < drawInfoCount; i++) {
-                            passEncoder?.drawIndexedIndirect(indirectBuffer.gpuBuffer!, indirectBuffer.gpuOffset + i * drawInfoSize);
-                        }
-                    };
-                    this._renderPassFuncQueue.push(drawFunc);
-                } else {
-                    // FIXME: draw IndexedIndirect and Indirect by different buffer
-                    const drawFunc = (passEncoder: GPURenderPassEncoder): void => {
-                        const drawInfoSize = Object.keys(DrawInfo).length;
-                        for (let i = 0; i < drawInfoCount; i++) {
-                            passEncoder?.drawIndirect(indirectBuffer.gpuBuffer!, indirectBuffer.gpuOffset + i * drawInfoSize);
-                        }
-                    };
-                    this._renderPassFuncQueue.push(drawFunc);
+            const buffer = iaData.gpuIndirectBuffer!;
+            const infos = buffer.indirects.map((info) => new DrawInfo().copy(info));
+            this._renderPassFuncQueue.push((encoder) => {
+                if (!infos.length) {
+                    const stride = buffer.stride;
+                    if (stride !== 16 && stride !== 20) throw new Error('WEBGPU_INDIRECT_STRIDE_UNSUPPORTED');
+                    for (let offset = 0; offset + stride <= buffer.size; offset += stride) {
+                        if (stride === 20) encoder.drawIndexedIndirect(buffer.gpuBuffer!, buffer.gpuOffset + offset);
+                        else encoder.drawIndirect(buffer.gpuBuffer!, buffer.gpuOffset + offset);
+                    }
                 }
-            }
+                for (const info of infos) {
+                    if (info.indexCount) encoder.drawIndexed(info.indexCount, Math.max(1, info.instanceCount), info.firstIndex, info.vertexOffset, info.firstInstance);
+                    else encoder.draw(info.vertexCount, Math.max(1, info.instanceCount), info.firstVertex, info.firstInstance);
+                }
+            });
         } else {
             const instanceCount = inputAssembler.instanceCount > 0 ? inputAssembler.instanceCount : 1;
             const drawByIndex = inputAssembler.indexBuffer && (ia.indexCount > 0);
@@ -567,7 +534,7 @@ export class WebGPUCommandBuffer extends CommandBuffer {
         }
     }
 
-    public updateBuffer (buffer: Buffer, data: BufferSource, offset?: number, size?: number): void {
+    public updateBuffer (buffer: Buffer, data: BufferSource, size?: number): void {
         if (this._type === CommandBufferType.PRIMARY && this._isInRenderPass) {
             errorID(16329);
             return;
@@ -576,25 +543,10 @@ export class WebGPUCommandBuffer extends CommandBuffer {
         if (!gpuBuffer) {
             return;
         }
-        const cmd = this._webGPUAllocator!.updateBufferCmdPool.alloc(WebGPUCmdUpdateBuffer);
-        let buffSize = 0;
-        let buff: BufferSource | null = null;
+        this.submitComputePass();
+        const byteCount = size ?? (data as ArrayBuffer).byteLength;
+        WebGPUCmdFuncUpdateBuffer(WebGPUDeviceManager.instance, gpuBuffer, data, gpuBuffer.gpuOffset, byteCount);
 
-        // TODO: Have to copy to staging buffer first to make this work for the execution is deferred.
-        // But since we are using specialized primary command buffers in WebGL backends, we leave it as is for now
-        if (buffer.usage & BufferUsageBit.INDIRECT) {
-            buff = data;
-        } else {
-            if (size !== undefined) {
-                buffSize = size;
-            } else {
-                buffSize = (data as ArrayBuffer).byteLength;
-            }
-            buff = data;
-        }
-        const device = WebGPUDeviceManager.instance;
-        const nativeDevice = (device).nativeDevice;
-        nativeDevice?.queue.writeBuffer(gpuBuffer.gpuBuffer!, gpuBuffer.gpuOffset, buff as ArrayBuffer);
     }
 
     public copyBuffersToTexture (buffers: ArrayBufferView[], texture: Texture, regions: BufferTextureCopy[]): void {
@@ -606,77 +558,19 @@ export class WebGPUCommandBuffer extends CommandBuffer {
         if (!gpuTexture) {
             return;
         }
-        const cmd = this._webGPUAllocator!.copyBufferToTextureCmdPool.alloc(WebGPUCmdCopyBufferToTexture);
-        cmd.gpuTexture = gpuTexture;
-        cmd.regions = regions;
-        cmd.buffers = buffers;
-
-        this.cmdPackage.copyBufferToTextureCmds.push(cmd);
-        this.cmdPackage.cmds.push(WebGPUCmd.COPY_BUFFER_TO_TEXTURE);
+        this.submitComputePass();
+        WebGPUCmdFuncCopyBuffersToTexture(WebGPUDeviceManager.instance, buffers, gpuTexture, regions);
     }
 
     public execute (cmdBuffs: CommandBuffer[], count: number): void {
-        for (let i = 0; i < count; ++i) {
-            const WebGPUCmdBuff = cmdBuffs[i] as WebGPUCommandBuffer;
-            const cmdPackage = WebGPUCmdBuff.cmdPackage;
-            const rpLength = cmdPackage.beginRenderPassCmds.length;
-            for (let c = 0; c < rpLength; ++c) {
-                const cmd = cmdPackage.beginRenderPassCmds.array[c];
-                ++cmd.refCount;
-                this.cmdPackage.beginRenderPassCmds.push(cmd);
-            }
-            const bindStatesCmds = cmdPackage.bindStatesCmds;
-            const stateCmdCount = bindStatesCmds.length;
-            for (let c = 0; c < stateCmdCount; ++c) {
-                const cmd = bindStatesCmds.array[c];
-                ++cmd.refCount;
-                this.cmdPackage.bindStatesCmds.push(cmd);
-            }
-            const drawCmds = cmdPackage.drawCmds;
-            const drawCmdCount = drawCmds.length;
-            for (let c = 0; c < drawCmdCount; ++c) {
-                const cmd = drawCmds.array[c];
-                ++cmd.refCount;
-                this.cmdPackage.drawCmds.push(cmd);
-            }
-            const updateBufferCmdCount = cmdPackage.updateBufferCmds.length;
-            for (let c = 0; c < updateBufferCmdCount; ++c) {
-                const cmd = cmdPackage.updateBufferCmds.array[c];
-                ++cmd.refCount;
-                this.cmdPackage.updateBufferCmds.push(cmd);
-            }
-            const copyBufferTexCmdCount = cmdPackage.copyBufferToTextureCmds.length;
-            for (let c = 0; c < copyBufferTexCmdCount; ++c) {
-                const cmd = cmdPackage.copyBufferToTextureCmds.array[c];
-                ++cmd.refCount;
-                this.cmdPackage.copyBufferToTextureCmds.push(cmd);
-            }
-
-            this.cmdPackage.cmds.concat(cmdPackage.cmds.array);
-
-            this._numDrawCalls += WebGPUCmdBuff._numDrawCalls;
-            this._numDispatches += WebGPUCmdBuff._numDispatches;
-            this._numInstances += WebGPUCmdBuff._numInstances;
-            this._numTris += WebGPUCmdBuff._numTris;
-        }
+        if (count) throw new Error('WEBGPU_SECONDARY_COMMAND_BUFFERS_UNSUPPORTED');
     }
 
+    private _preparedDescriptorSets: WebGPUDescriptorSet[] = [];
+
     private _prepareDescriptorSets (): void {
-        const wgpuPipLayout = (currPipelineState?.pipelineLayout as WebGPUPipelineLayout);
-        const device = WebGPUDeviceManager.instance;
-        for (let i = 0; i < groupSets.length; i++) {
-            const currSetIdx = groupSets[i];
-            const currDesc = descriptorSets[currSetIdx];
-            if (currDesc && currDesc.gpuDescriptorSet) {
-                // prepare() builds the bind group if it was never created, or rebuilds it on resource change.
-                currDesc.prepare();
-            } else {
-                const currLayout = wgpuPipLayout.setLayouts[currSetIdx];
-                const currLayoutInfo = new DescriptorSetInfo(currLayout);
-                const newDescSet = device.createDescriptorSet(currLayoutInfo) as WebGPUDescriptorSet;
-                descriptorSets[currSetIdx] = newDescSet;
-                newDescSet.prepare(true);
-            }
+        for (const set of groupSets) {
+            this._preparedDescriptorSets[set] = this._curWebGPUPipelineState!.prepareDescriptorSet(set, descriptorSets[set]);
         }
     }
 
@@ -690,10 +584,11 @@ export class WebGPUCommandBuffer extends CommandBuffer {
         const wgpuDynOffsets = new Array<number[]>(currGPUDescSize);
         for (let i = 0; i < currGPUDescSize; i++) {
             const currSetIdx = groupSets[i];
-            const descObj = descriptorSets[currSetIdx];
+            const descObj = this._preparedDescriptorSets[currSetIdx];
             const curGpuDesc = descObj.gpuDescriptorSet;
             wgpuBindGroups[currSetIdx] = curGpuDesc.bindGroup;
-            wgpuDynOffsets[currSetIdx] = [...this._curDynamicOffsets[currSetIdx]];
+            const originalDynamic = (descriptorSets[currSetIdx]?.layout as WebGPUDescriptorSetLayout | undefined)?.gpuDescriptorSetLayout?.dynamicBindings || [];
+            wgpuDynOffsets[currSetIdx] = descObj.dynamicOffsets.map((binding) => this._curDynamicOffsets[currSetIdx]?.[originalDynamic.indexOf(binding)] || 0);
             if (!descObj.dynamicOffsetCount) {
                 wgpuDynOffsets[currSetIdx] = [];
             } else if (descObj.dynamicOffsetCount !== wgpuDynOffsets[currSetIdx].length) {
@@ -716,6 +611,19 @@ export class WebGPUCommandBuffer extends CommandBuffer {
     }
 
     public dispatch (info: DispatchInfo): void {
+        if (this._isInRenderPass) throw new Error('WEBGPU_COMPUTE_IN_RENDER_PASS');
+        const indirect = (info.indirectBuffer as WebGPUBuffer | null)?.gpuBuffer;
+        if (info.indirectBuffer && !indirect) throw new Error('WEBGPU_INDIRECT_DISPATCH_RANGE');
+        const indirectOffset = (indirect?.gpuOffset || 0) + info.indirectOffset;
+        if (indirect && (!(indirect.usage & BufferUsageBit.INDIRECT) || !Number.isInteger(indirectOffset)
+            || indirectOffset < 0 || indirectOffset % 4 || info.indirectOffset + 12 > indirect.size)) {
+            throw new Error('WEBGPU_INDIRECT_DISPATCH_RANGE');
+        }
+        const limits = WebGPUDeviceManager.instance.capabilities.maxComputeWorkGroupCount;
+        if (!indirect && (![info.groupCountX, info.groupCountY, info.groupCountZ].every((n) => Number.isInteger(n) && n >= 0)
+            || info.groupCountX > limits.x || info.groupCountY > limits.y || info.groupCountZ > limits.z)) {
+            throw new Error('WEBGPU_DISPATCH_LIMIT');
+        }
         if (!this._curGPUPipelineState) {
             return;
         }
@@ -730,13 +638,15 @@ export class WebGPUCommandBuffer extends CommandBuffer {
         // Build bind groups for compute pass
         const { wgpuBindGroups, wgpuDynOffsets } = this._collectBindGroups();
 
+        const { groupCountX, groupCountY, groupCountZ } = info;
         const func = (passEncoder: GPUComputePassEncoder): void => {
             passEncoder.setPipeline(computePipeline);
             const gpuBindGroupSize = wgpuBindGroups.length;
             for (let i = 0; i < gpuBindGroupSize; i++) {
                 passEncoder.setBindGroup(i, wgpuBindGroups[i], wgpuDynOffsets[i]);
             }
-            passEncoder.dispatchWorkgroups(info.groupCountX, info.groupCountY, info.groupCountZ);
+            if (indirect) passEncoder.dispatchWorkgroupsIndirect(indirect.gpuBuffer!, indirectOffset);
+            else passEncoder.dispatchWorkgroups(groupCountX, groupCountY, groupCountZ);
         };
         this._computeFuncQueue.push(func);
         ++this._numDispatches;
@@ -744,6 +654,7 @@ export class WebGPUCommandBuffer extends CommandBuffer {
     }
 
     public submitComputePass (): void {
+        if (WebGPUDeviceManager.instance.isLost) throw new Error('WEBGPU_DEVICE_LOST');
         if (this._computeFuncQueue.length === 0) {
             return;
         }
@@ -825,14 +736,14 @@ export class WebGPUCommandBuffer extends CommandBuffer {
             };
             this._renderPassFuncQueue.push(ibFunc);
         }
-        const bcFunc = (passEncoder: GPURenderPassEncoder): void => {
-            passEncoder.setBlendConstant([this._curBlendConstants[0],
-                this._curBlendConstants[1],
-                this._curBlendConstants[2],
-                this._curBlendConstants[3]]);
-        };
-
-        if (this._curBlendConstants.length) this._renderPassFuncQueue.push(bcFunc);
+        const color = this._curGPUPipelineState.bs.blendColor;
+        const constants = this._curBlendConstants.length ? this._curBlendConstants.slice() : [color.x, color.y, color.z, color.w];
+        const alphaOnly = this._curGPUPipelineState.bs.targets.some((target) => target.blend
+            && target.blendEq !== BlendOp.MIN && target.blendEq !== BlendOp.MAX
+            && [target.blendSrc, target.blendDst].some((factor) => factor === BlendFactor.CONSTANT_ALPHA
+                || factor === BlendFactor.ONE_MINUS_CONSTANT_ALPHA));
+        const value = alphaOnly ? [constants[3], constants[3], constants[3], constants[3]] : constants;
+        this._renderPassFuncQueue.push((passEncoder): void => { passEncoder.setBlendConstant(value); });
 
         this._isStateValid = false;
     }

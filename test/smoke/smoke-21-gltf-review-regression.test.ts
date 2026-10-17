@@ -15,7 +15,10 @@ import { specularFactory } from '../../src/air/assets/gltf/extensions/material/s
 import { anisotropyFactory } from '../../src/air/assets/gltf/extensions/material/anisotropy';
 import { createMaterialFeatures, physicalScalars } from '../../src/air/assets/gltf/material/features';
 import { createGLTFMaterial } from '../../src/air/assets/gltf/material';
-import { setTransmissionPipelineAvailable, transmissionPipelineAvailable } from '../../src/air/assets/gltf/material/transmission-capability';
+import {
+    setTransmissionPipelineAvailable,
+    transmissionPipelineAvailable,
+} from '../../src/air/assets/gltf/material/transmission-capability';
 import { gltfPhysicalEffect } from '../../src/air/assets/gltf/material/physical-effect';
 import { isTransmissionMaterial, TRANSMISSION_LAYER } from '../../src/air/rendering/transmission-capture';
 import { Material } from '../../src/cocos/asset/assets/material';
@@ -25,16 +28,19 @@ import { CCObject } from '../../src/cocos/core/data/object';
 Object.assign(globalThis, { TextDecoder, TextEncoder });
 const C = { FLOAT: 5126, BYTE: 5120, UNSIGNED_BYTE: 5121, SHORT: 5122, UNSIGNED_SHORT: 5123 };
 
-function validate (factory: (ctx: GLTFParserContext) => GLTFExtensionHandler, materials: unknown[]): void {
+function validate(factory: (ctx: GLTFParserContext) => GLTFExtensionHandler, materials: unknown[]): void {
     const handler = factory({ json: { materials } } as unknown as GLTFParserContext);
     handler.validate?.({ json: { materials } } as unknown as GLTFParserContext);
 }
-function extend (factory: (ctx: GLTFParserContext) => GLTFExtensionHandler, source: Parameters<typeof createMaterialFeatures>[1]) {
+function extend(
+    factory: (ctx: GLTFParserContext) => GLTFExtensionHandler,
+    source: Parameters<typeof createMaterialFeatures>[1],
+) {
     const features = createMaterialFeatures(-1, source);
     factory(null as never).extendMaterial?.(-1, features, null as never);
     return physicalScalars(features);
 }
-function sourceOf (): string {
+function sourceOf(): string {
     const shader = gltfPhysicalEffect().shaders.find((x) => x.name.includes('standard-fs'))!;
     return (shader as unknown as Record<string, { frag: string }>).glsl4.frag;
 }
@@ -44,7 +50,11 @@ describe('V0.5 review regression', () => {
         document.body.innerHTML = '<canvas id="GameCanvas"></canvas>';
         await createAirApp({ canvas: '#GameCanvas', renderMode: 3 });
     });
-    afterEach(async () => { CCObject._deferredDestroy(); await Promise.resolve(); CCObject._deferredDestroy(); });
+    afterEach(async () => {
+        CCObject._deferredDestroy();
+        await Promise.resolve();
+        CCObject._deferredDestroy();
+    });
 
     // #5 — KHR_mesh_quantization allowed-type table.
     test('quantized POSITION accepts unnormalized integer types', () => {
@@ -64,11 +74,17 @@ describe('V0.5 review regression', () => {
 
     // #2 — the dispersion JSON key is `dispersion`, not `dispersionFactor`.
     test('KHR_materials_dispersion reads the `dispersion` field', () => {
-        expect(extend(dispersionFactory, { extensions: { KHR_materials_dispersion: { dispersion: 4 } } } as never).dispersion)
-            .toEqual({ factor: 4 });
-        expect(extend(dispersionFactory, { extensions: { KHR_materials_dispersion: { dispersionFactor: 4 } } } as never).dispersion)
-            .toEqual({ factor: 0 }); // the non-spec key must be ignored (defaults to 0), not read
-        expect(() => validate(dispersionFactory, [{ extensions: { KHR_materials_dispersion: { dispersion: -1 } } }])).toThrow(/dispersion/);
+        expect(
+            extend(dispersionFactory, { extensions: { KHR_materials_dispersion: { dispersion: 4 } } } as never)
+                .dispersion,
+        ).toEqual({ factor: 4 });
+        expect(
+            extend(dispersionFactory, { extensions: { KHR_materials_dispersion: { dispersionFactor: 4 } } } as never)
+                .dispersion,
+        ).toEqual({ factor: 0 }); // the non-spec key must be ignored (defaults to 0), not read
+        expect(() =>
+            validate(dispersionFactory, [{ extensions: { KHR_materials_dispersion: { dispersion: -1 } } }]),
+        ).toThrow(/dispersion/);
     });
 
     // #3 — specularTexture samples the alpha channel; specularColorFactor may exceed 1 (HDR).
@@ -83,8 +99,16 @@ describe('V0.5 review regression', () => {
         expect(frag).toMatch(/vec3 diffuse = s\.albedo\.rgb \* \(1\.0 - s\.metallic\);/);
         expect(frag).toContain('diffuse *= 1.0 - airFresnelMax;');
         // HDR color factors are permitted (the reviewer flagged the old [0,1] rejection)
-        expect(() => validate(specularFactory, [{ extensions: { KHR_materials_specular: { specularColorFactor: [5.441, 5.441, 5.441] } } }])).not.toThrow();
-        expect(() => validate(specularFactory, [{ extensions: { KHR_materials_specular: { specularColorFactor: [-0.1, 1, 1] } } }])).toThrow(/specularColorFactor/);
+        expect(() =>
+            validate(specularFactory, [
+                { extensions: { KHR_materials_specular: { specularColorFactor: [5.441, 5.441, 5.441] } } },
+            ]),
+        ).not.toThrow();
+        expect(() =>
+            validate(specularFactory, [
+                { extensions: { KHR_materials_specular: { specularColorFactor: [-0.1, 1, 1] } } },
+            ]),
+        ).toThrow(/specularColorFactor/);
     });
 
     // #4 — anisotropyTexture blue channel carries per-texel strength.
@@ -111,7 +135,9 @@ describe('V0.5 review regression', () => {
     // Review round 2 — R5: volume uses the exact Beer-Lambert form (no 1-color approximation).
     test('volume attenuation uses pow(color, d/dist), not the 1-color approximation', () => {
         const frag = sourceOf();
-        expect(frag).toMatch(/trAtten = pow\(clamp\(airAttenuation\.rgb, vec3\(0\.0\), vec3\(1\.0\)\), vec3\(trThick \/ max\(airAttenuation\.w, 1e-4\)\)\)/);
+        expect(frag).toMatch(
+            /trAtten = pow\(clamp\(airAttenuation\.rgb, vec3\(0\.0\), vec3\(1\.0\)\), vec3\(trThick \/ max\(airAttenuation\.w, 1e-4\)\)\)/,
+        );
         // the 1-color linear approximation (exp(-(1-color)*...)) is gone; pow form remains
         expect(frag).not.toMatch(/exp\?\(-\(vec3\(1\.0\) - clamp/);
         expect(frag).toMatch(/trAtten = pow\(clamp\(airAttenuation/);
@@ -124,7 +150,9 @@ describe('V0.5 review regression', () => {
         expect(frag).toContain('float airFresnelMax = max(airFresnel.r, max(airFresnel.g, airFresnel.b));');
         expect(frag).toContain('diffuse *= 1.0 - airFresnelMax;');
         expect(frag).not.toContain('mix(vec3(1.0), vec3(1.0) - airFresnel, 1.0 - s.metallic)');
-        const features = createMaterialFeatures(-1, { extensions: { KHR_materials_specular: { specularFactor: 0.5 } } } as never);
+        const features = createMaterialFeatures(-1, {
+            extensions: { KHR_materials_specular: { specularFactor: 0.5 } },
+        } as never);
         specularFactory(null as never).extendMaterial?.(-1, features, null as never);
         const material = createGLTFMaterial(features, [], false);
         expect(material.passes.some((pass) => pass.defines.USE_AIR_SPECULAR === true)).toBe(true);
@@ -139,10 +167,14 @@ describe('V0.5 review regression', () => {
         const transmitting = new Material();
         transmitting.initialize({ effectAsset: gltfPhysicalEffect(), defines: { USE_AIR_TRANSMISSION: true } });
         // Old detection (handle !== 0) wrongly flagged `physical` too; the define does not.
-        expect(physical.passes.every((p) => p.getHandle('airTransmission') !== 0)).toBe(true);
+        // The frozen legacy template also has a planar-shadow pass without
+        // material Constants. The visible surface pass still demonstrates why
+        // a uniform handle cannot be used as transmission feature detection.
+        expect(physical.passes[0].getHandle('airTransmission')).not.toBe(0);
         expect(isTransmissionMaterial(physical)).toBe(false);
         expect(isTransmissionMaterial(transmitting)).toBe(true);
-        physical.destroy(); transmitting.destroy();
+        physical.destroy();
+        transmitting.destroy();
         void TRANSMISSION_LAYER;
     });
 
@@ -163,8 +195,11 @@ describe('V0.5 review regression', () => {
 
     // #6 — the meshopt handler declares it provides placeholder-buffer decompression.
     test('meshopt handler advertises providesPlaceholders for no-URI fallback buffers', async () => {
-        const { meshoptCompressionFactory, KHR_MESHOPT_COMPRESSION } = await import('../../src/air/assets/gltf/extensions/geometry/meshopt');
-        const handler = meshoptCompressionFactory(KHR_MESHOPT_COMPRESSION)({ json: { asset: { version: '2.0' } } } as unknown as GLTFParserContext);
+        const { meshoptCompressionFactory, KHR_MESHOPT_COMPRESSION } =
+            await import('../../src/air/assets/gltf/extensions/geometry/meshopt');
+        const handler = meshoptCompressionFactory(KHR_MESHOPT_COMPRESSION)({
+            json: { asset: { version: '2.0' } },
+        } as unknown as GLTFParserContext);
         expect(handler.providesPlaceholders).toBe(true);
     });
 });

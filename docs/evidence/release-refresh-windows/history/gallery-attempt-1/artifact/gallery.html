@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cocos Air Examples Gallery</title>
+<style>
+* { box-sizing: border-box; margin: 0; }
+body { font: 14px system-ui,sans-serif; background: #1a1a2e; color: #ccc; display: flex; height: 100vh; overflow: hidden; }
+#sidebar { width: 280px; min-width: 220px; background: #12121e; border-right: 1px solid #2a2a4e; padding: 16px; overflow-y: auto; flex-shrink: 0; }
+#sidebar h1 { font-size: 18px; color: #7eb8ff; margin-bottom: 12px; }
+#search { width: 100%; padding: 8px; background: #1e1e3e; border: 1px solid #3a3a5e; color: #ccc; border-radius: 6px; margin-bottom: 12px; font-size: 13px; }
+.cat-header { color: #7eb8ff; font-size: 12px; text-transform: uppercase; margin: 14px 0 4px; letter-spacing: 1px; }
+.example-link { display: block; padding: 6px 8px; color: #aab; text-decoration: none; border-radius: 4px; cursor: pointer; }
+.example-link:hover { background: #2a2a4e; color: #fff; }
+.example-link.active { background: #3a3a6e; color: #7eb8ff; }
+.example-link .tags { font-size: 10px; color: #666; margin-top: 2px; }
+#main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+#toolbar { padding: 8px 16px; background: #12121e; border-bottom: 1px solid #2a2a4e; display: flex; gap: 8px; align-items: center; }
+#toolbar button { padding: 6px 14px; background: #2a2a4e; color: #ccc; border: 1px solid #3a3a5e; border-radius: 4px; cursor: pointer; font-size: 13px; }
+#toolbar button:hover { background: #3a3a6e; }
+#toolbar button.active { background: #4a4a7e; color: #fff; }
+#toolbar .title { color: #7eb8ff; font-weight: bold; margin-right: auto; }
+#content { flex: 1; overflow: hidden; }
+#preview-frame { width: 100%; height: 100%; border: none; background: #000; }
+#source-view { display: none; width: 100%; height: 100%; overflow: auto; padding: 16px; background: #0d0d1a; }
+#source-view pre { color: #9cd; font: 13px/1.5 monospace; white-space: pre-wrap; }
+#api-tags { padding: 4px 16px; display: flex; gap: 6px; flex-wrap: wrap; background: #0d0d1a; }
+#api-tags span { background: #2a2a4e; color: #8ab; padding: 2px 8px; border-radius: 3px; font-size: 11px; }
+#cap-tags span { background: #2a4a2e; color: #8c8; }
+#spec-panel { background: #10101c; border-top: 1px solid #2a2a4e; border-bottom: 1px solid #2a2a4e; padding: 10px 16px; display: none; max-height: 200px; overflow-y: auto; }
+#spec-panel.open { display: block; }
+#spec-panel h3 { font-size: 11px; color: #7eb8ff; text-transform: uppercase; letter-spacing: 1px; margin: 8px 0 4px; }
+#spec-panel h3:first-child { margin-top: 0; }
+#spec-panel ul { margin: 0 0 4px 16px; padding: 0; }
+#spec-panel li { font-size: 12px; color: #aab; line-height: 1.5; }
+#spec-panel .expected { font-size: 12px; color: #bcc; line-height: 1.5; }
+#spec-panel .status-row { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 2px; }
+#spec-panel .status-item { font-size: 11px; color: #99a; }
+#spec-panel .status-item b { color: #8c8; font-weight: normal; }
+#spec-toggle { padding: 6px 14px; background: #2a2a4e; color: #ccc; border: 1px solid #3a3a5e; border-radius: 4px; cursor: pointer; font-size: 13px; }
+#spec-toggle:hover { background: #3a3a6e; }
+</style>
+</head>
+<body>
+<div id="sidebar">
+  <h1>Cocos Air Examples</h1>
+  <input id="search" placeholder="Search examples…" oninput="filterList(this.value)">
+  <div id="example-list"></div>
+</div>
+<div id="main">
+  <div id="toolbar">
+    <span class="title" id="current-title">Select an example</span>
+    <button id="btn-preview" class="active" onclick="showPreview()">Preview</button>
+    <button id="btn-source" onclick="showSource()">Source</button>
+    <button onclick="toggleFullscreen()">Fullscreen</button>
+    <button id="spec-toggle" onclick="toggleSpecPanel()">Spec ℹ</button>
+    <button onclick="history.back()">←</button>
+    <button onclick="history.forward()">→</button>
+  </div>
+  <div id="api-tags"></div>
+  <img id="spec-thumb" alt="" style="display:none;max-height:120px;border:1px solid #334;border-radius:4px;margin:6px 0">
+  <div id="spec-panel">
+    <h3>What you'll learn</h3>
+    <ul id="spec-learn"></ul>
+    <h3>Expected Result</h3>
+    <div class="expected" id="spec-expected"></div>
+    <h3>Validation Status</h3>
+    <div class="status-row" id="spec-status"></div>
+  </div>
+  <div id="content">
+    <iframe id="preview-frame" src="about:blank"></iframe>
+    <div id="source-view"><pre id="source-code"></pre></div>
+  </div>
+</div>
+<script>
+var MANIFEST, EXAMPLES_BY_ID = {}, currentExample = null;
+
+fetch('files.json').then(r => r.json()).then(m => {
+  MANIFEST = m;
+  buildList();
+  // Deep link: #example-id
+  var hash = location.hash.slice(1);
+  if (hash && EXAMPLES_BY_ID[hash]) selectExample(hash);
+});
+
+function buildList() {
+  var listEl = document.getElementById('example-list');
+  var cats = {};
+  MANIFEST.examples.forEach(ex => {
+    if (!cats[ex.category]) cats[ex.category] = [];
+    cats[ex.category].push(ex);
+    EXAMPLES_BY_ID[ex.id] = ex;
+  });
+  listEl.innerHTML = '';
+  for (var cat in cats) {
+    var header = document.createElement('div');
+    header.className = 'cat-header'; header.textContent = cat;
+    listEl.appendChild(header);
+    cats[cat].forEach(ex => {
+      var a = document.createElement('a');
+      a.className = 'example-link'; a.id = 'link-' + ex.id;
+      a.innerHTML = '<b>' + ex.title + '</b>' +
+        '<div class="tags">' + apiClaimsOf(ex).slice(0,3).join(' · ') + '</div>';
+      a.onclick = function() { selectExample(ex.id); };
+      a.dataset.search = (ex.title + ' ' + ex.id + ' ' + apiClaimsOf(ex).join(' ')).toLowerCase();
+      listEl.appendChild(a);
+    });
+  }
+}
+
+function filterList(q) {
+  q = q.toLowerCase();
+  document.querySelectorAll('.example-link').forEach(function(a) {
+    a.style.display = a.dataset.search.includes(q) ? '' : 'none';
+  });
+}
+
+function apiClaimsOf(ex) {
+  return (ex.api && ex.api.claims) || ex.apiClaims || [];
+}
+
+function toggleSpecPanel() {
+  document.getElementById('spec-panel').classList.toggle('open');
+}
+
+function selectExample(id) {
+  var ex = EXAMPLES_BY_ID[id];
+  if (!ex) return;
+  currentExample = ex;
+  document.querySelectorAll('.example-link').forEach(function(a) { a.classList.remove('active'); });
+  var link = document.getElementById('link-' + id);
+  if (link) { link.classList.add('active'); link.scrollIntoView({ block: 'nearest' }); }
+  document.getElementById('current-title').textContent = ex.title + ' (' + ex.id + ')';
+  document.getElementById('preview-frame').src = './' + ex.dir + '/';
+  showPreview();
+  // §20 APIs Used
+  var tagsEl = document.getElementById('api-tags');
+  tagsEl.innerHTML = '';
+  apiClaimsOf(ex).forEach(function(t) {
+    var s = document.createElement('span'); s.textContent = t; tagsEl.appendChild(s);
+  });
+  (ex.capabilities || []).forEach(function(t) {
+    var s = document.createElement('span'); s.textContent = 'cap:' + t; s.style.background = '#2a4a2e'; tagsEl.appendChild(s);
+  });
+  // §19 What you'll learn / §21 Expected Result / §22 Validation Status
+  var learnEl = document.getElementById('spec-learn');
+  learnEl.innerHTML = '';
+  var goal = ex.learning && ex.learning.goal;
+  var points = (ex.learning && ex.learning.points) || [];
+  if (goal) { var gi = document.createElement('li'); gi.textContent = goal; learnEl.appendChild(gi); }
+  points.forEach(function(p) {
+    var li = document.createElement('li'); li.textContent = p; learnEl.appendChild(li);
+  });
+  if (!goal && points.length === 0) {
+    document.getElementById('spec-panel').classList.remove('open');
+  }
+  var thumb = document.getElementById('spec-thumb');
+  thumb.src = './thumbnails/' + ex.id + '.png';
+  thumb.style.display = 'none';
+  thumb.onload = function () { thumb.style.display = ''; };
+  document.getElementById('spec-expected').textContent =
+    (ex.effect && (ex.effect.visual || ex.effect.functional)) || '—';
+  var statusEl = document.getElementById('spec-status');
+  statusEl.innerHTML = '';
+  var dims = [
+    ['Ready', ex.ready && ex.ready.validators],
+    ['Functional', ex.validation && ex.validation.functional],
+    ['Visual', ex.validation && ex.validation.visual],
+    ['Interaction', ex.validation && ex.validation.interaction],
+    ['Lifecycle', ex.validation && ex.validation.lifecycle],
+    ['Capability', ex.validation && ex.validation.capability],
+  ];
+  dims.forEach(function(pair) {
+    var d = document.createElement('span');
+    d.className = 'status-item';
+    var validators = pair[1] || [];
+    d.innerHTML = pair[0] + ': <b>' + (validators.length ? validators.join(', ') : 'N/A') + '</b>';
+    statusEl.appendChild(d);
+  });
+  var meta = document.createElement('span');
+  meta.className = 'status-item';
+  meta.innerHTML = 'status: <b>' + (ex.status || 'draft') + '</b> · spec: <b>' + (ex.specStatus || '—') + '</b>' +
+    (ex.promotionEvidence ? ' · verified: <b>' + ex.promotionEvidence + '</b>' : '');
+  statusEl.appendChild(meta);
+  location.hash = id;
+}
+
+function showPreview() {
+  document.getElementById('preview-frame').style.display = '';
+  document.getElementById('source-view').style.display = 'none';
+  document.getElementById('btn-preview').classList.add('active');
+  document.getElementById('btn-source').classList.remove('active');
+}
+
+function showSource() {
+  if (!currentExample) return;
+  // 尝试 .ts → .js → main.js（兼容旧示例）
+  var entryCandidates = [
+    './' + currentExample.dir + '/src/main.ts',
+    './' + currentExample.dir + '/src/main.js',
+    './' + currentExample.dir + '/main.js',
+    './' + currentExample.dir + '/main.ts'
+  ];
+  // 顺序探测（命中即停）：并发 Promise.any 会对不存在的候选各发一次 404，
+  // 部署验收的 no-http-errors 检查把每一次都算部署缺陷（r46 实测 mesh-sphere 4 次 404）。
+  var showSourceText = function (text) {
+    document.getElementById('source-code').textContent = text;
+    document.getElementById('preview-frame').style.display = 'none';
+    var sv = document.getElementById('source-view');
+    sv.style.display = '';
+    document.getElementById('btn-source').classList.add('active');
+    document.getElementById('btn-preview').classList.remove('active');
+  };
+  var probeCandidate = function (i) {
+    if (i >= entryCandidates.length) {
+      document.getElementById('source-code').textContent = '// source not available';
+      return;
+    }
+    fetch(entryCandidates[i]).then(function (r) {
+      if (!r.ok) { throw new Error('404'); }
+      return r.text();
+    }).then(showSourceText).catch(function () { probeCandidate(i + 1); });
+  };
+  probeCandidate(0);
+}
+
+function toggleFullscreen() {
+  var el = document.getElementById('content');
+  if (document.fullscreenElement) document.exitFullscreen();
+  else el.requestFullscreen();
+}
+
+window.addEventListener('hashchange', function() {
+  var id = location.hash.slice(1);
+  if (id && EXAMPLES_BY_ID[id] && id !== (currentExample && currentExample.id)) selectExample(id);
+});
+</script>
+</body>
+</html>

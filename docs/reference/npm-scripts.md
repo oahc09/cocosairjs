@@ -3,7 +3,7 @@
 [AGENTS.md](../../AGENTS.md#development-workflow) 的开发工作流是权威说明；本文件承载逐条脚本的完整
 目录（目的、主要产物、写入行为），供按需查阅。运行任何脚本前先确认它的写入行为。
 
-`package.json` 当前有 47 个 `scripts`。从仓库根目录运行，`baseline` 例外（见下）。
+`package.json` 当前有 48 个 `scripts`。从仓库根目录运行，`baseline` 例外（见下）。
 `npm test` 等价于 `npm run test`；传参用 `npm run <name> -- <args>`。
 
 初始开发：安装依赖、生成开发 bundle、启动服务器。
@@ -97,6 +97,10 @@ npm run dev
 
 这些命令要求可解析的 Playwright 工具与匹配的浏览器二进制。Playwright 非项目依赖时，使用配置好的工具环境或 `NODE_PATH`；`npm install` 成功不建立浏览器可用性。通常要求已存在 `build/cocosair.module.js`；具体前置见下。
 
+`AIR_CHROMIUM_PATH` 可显式指定现有 Chrome/Chromium 可执行文件，适用于 `example-spec-browser.cjs`、`devtools-examples.cjs`、`gallery-artifact.cjs` 和 `browser-matrix.cjs`。采集仍使用真实浏览器；不自动安装浏览器或修改系统配置。
+
+静态 Gallery 使用直接入口 `node tools/verify/gallery-artifact.cjs build`，重建 `build/examples/`，按 manifest 选择示例、内联配方源码并改写嵌套部署链接；不携带仓库验证脚本或历史诊断基线。`scan` 只读扫描该产物的绝对路径依赖，输出 JSON，不启动浏览器或写证据；`verify` 用真实浏览器验证嵌套部署并写 `docs/evidence/gallery-artifact.json`。独立 Gallery 的 legacy 基线比较明确报错，仓库内诊断入口保持。
+
 | 命令                              | 用途与前置                                                                                                                                                                                                                                                                             | 产物与写入行为                                                                                                                                                                                                            |
 | --------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `npm run verify:browser-matrix`   | 先执行 `tools/verify/video-loop-sequencing.test.cjs` 的 CPU 时序回归，再用 `tools/verify/browser-matrix-contract.json` 在 Chromium、Firefox、WebKit 跑合同条目；要求 bundle、示例资产与浏览器二进制。`--ids/--engines/--out` 透传给矩阵采集器。合同定义范围，不等于每个 Gallery 示例。 | 默认重写 `docs/evidence/browser-matrix/browser-matrix.json`；截图写入 `docs/evidence/browser-matrix/<id>/matrix-<engine>.png`（部分还有 `-before.png`）。子集运行不是完整验证。`--out=` 只重定向 JSON；截图仍用这些目录。 |
@@ -124,3 +128,26 @@ Spark 高斯泼溅是可选特性单元，仅进 spark 变体产物（`build/spa
 - 报告文件存在不代表当前运行成功：检查退出码、时间戳、完成/子集标记与适用的源码/bundle/合同指纹。
 - 不要仅为了解命令含义而运行写证据的门禁。
 - 名称含 `verify` 不必然表示只读操作。
+
+## WebGPU 接入的资产写入
+
+`build` / `build:min` / `build:system` 在编译前验证 `vendor/webgpu/manifest.json`，复制冻结 JS/WASM 与许可到当前输出目录的 `webgpu/`；不下载资产。`prepack` 同样验证并复制到 `build/npm/webgpu/`，该目录包含在 npm files 清单内。默认 WebGL2 不触发运行时加载。
+
+`node tools/build/webgpu-assets.cjs --check` 只读核对已登记资产哈希；`node tools/verify/webgpu-backend.cjs [--examples] [--custom] [--engine=edge|firefox|webkit]` 需要配置好的 Playwright 和现有 bundle，写 `output/webgpu-backend/report.json` 与截图，不重建、不发布。
+
+`node tools/build/builtin-assets.cjs --verify` 只读核对冻结 builtin 输入/输出哈希；`--write` 需要显式配置 `COCOS_EFFECT_COMPILER_ROOT` 与 `COCOS_UPSTREAM`，写 `vendor/builtin-source/` 快照和 manifest、两份 `src/air/builtin/` 生成源码及 `licenses/LICENSE_builtin_source.txt`；`--check` 重编到内存比对。后两种模式使用 `build/.tmp-builtin-source-*` 临时目录，成功后清理；不下载编译器或更换冻结上游。
+
+`node tools/verify/consumer-acceptance.cjs --webgpu-browser` 在现有消费门禁上增加安装后 dev/min 的实际 Chromium WebGPU 验证，分别写 `output/webgpu-backend/package/`、`package-min/`；临时 tarball/消费者结束清理。Firefox/WebKit 无 adapter 的渲染报告保持 `BLOCKED` 并返回非零，不当作渲染通过。范围和当前结果见 [WebGPU 验收说明](webgpu-acceptance.md)。
+
+### WebGPU 完整 Windows 专项
+
+| 入口                                                        | 用途与前置                                                                                      | 输出与写入                                                                                          |
+| ----------------------------------------------------------- | ----------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| webgpu-environment.cjs --out=新目录                         | 不加载 AIR 的原生 Firefox/WebKit 对照；需 Playwright                                            | 新目录 report.json；--graphics 仅额外尝试 about:support，不改变浏览器设置                           |
+| webgpu-backend.cjs --examples --custom --out=新目录         | 21 行场景；--headed --firefox-fixed-refresh 用于 Firefox；AIR_CHROMIUM_PATH 可指定现有 Chromium | 新目录 JSON/PNG；默认旧输出行为保留；--case/--renderer 是诊断子集，完整验收不接受子集               |
+| consumer-acceptance.cjs --webgpu-full --webgpu-out=新目录根 | 在实际安装包 dev/min 上运行同一全矩阵                                                           | prepack 更新 build/npm；临时目录打包安装并清理；写 package/、package-min/                           |
+| webgpu-completion-runner.cjs --out=新目录                   | 顺序完成原生预检后采集浏览器及包；不构建或升级依赖                                              | 新目录报告、日志、真实 OS 退出码；--resume 仅复用匹配当前源码/采集器/完整范围的成功记录，并披露来源 |
+| webgpu-acceptance.cjs --reports=输出目录                    | 核对当前候选、资产、完整行集、17 资源（含 canvas 外部图像上传）、退出码、七效果及 PNG 像素      | 默认只读终端 JSON；仅 --archive=新目录 时复制证据/源码/清单，不覆盖或嵌套输入目录                   |
+| webgpu-candidate.cjs                                        | 供采集器和验收器共享源码/JS map 指纹                                                            | 内部只读模块，无独立写入                                                                            |
+
+这些是直接 Node 入口，未新增 npm scripts；scripts 总数仍为 48。Firefox 自动化刷新配置、Windows WebKit 排除与 Safari 外部项见 [环境说明](webgpu-environment.md)。

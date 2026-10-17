@@ -4,6 +4,7 @@ const status = document.querySelector<HTMLElement>('#status')!;
 try {
     const { CocosSparkLayer, sparkRuntime: S, sparkMath: M } = await import('cocosair-spark');
     const app = await cc.createAirApp({ canvas: '#GameCanvas' });
+    (window as any).__airApp = app;
     const scene = new cc.Scene('Independent Spark');
     const cameraNode = new cc.Node('Camera');
     scene.addChild(cameraNode);
@@ -47,6 +48,12 @@ try {
         sharedDevice: layer.renderer.device === cc.director.root!.device,
         count: 360,
     };
+    const checks = [
+        { name: 'shared-device', ok: layer.renderer.device === cc.director.root!.device },
+        { name: 'splat-count', ok: packed.numSplats === 360 },
+        { name: 'sort-settled', ok: !layer.spark.sorting && !layer.spark.sortDirty },
+    ];
+    (window as any).__trialProbe = { ready: true, ok: checks.every((check) => check.ok), checks };
 } catch (error) {
     status.textContent = `加载失败：${String(error)}。请先运行 npm run build:spark。`;
     throw error;

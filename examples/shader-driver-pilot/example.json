@@ -142,7 +142,7 @@
         "validator": "visible-frame"
       }
     ],
-    "evidenceStatus": "仅绑定当前可执行源码；浏览器、Agent 与 Gallery 验收仍为 NOT_RUN。"
+    "evidenceStatus": "通用 API 运行证据由 examples-verified.json 记录；专用浏览器、Agent 与 Gallery 合同仍按独立台账保持 NOT_RUN。"
   },
   "effect": {
     "functional": "指针、时间和范围值驱动原生 Holographic / Neon uniform；支持步进、暂停、重建与释放。",
@@ -166,6 +166,25 @@
       {
         "action": "暂停、步进、重建和释放",
         "expected": "同一模拟时钟受控推进，原生资源通过既有生命周期桥接释放并重建"
+      },
+      {
+        "probe": "__driverpilot.linearProbe",
+        "probeArgs": [
+          [
+            {
+              "x": 240,
+              "y": 180
+            }
+          ]
+        ],
+        "expected": "实际创建离屏目标并由同一 step clock 读回消费者像素",
+        "action": "运行原生离屏读回探针"
+      },
+      {
+        "probe": "__driverpilot.resumePacer",
+        "probeArgs": [],
+        "expected": "恢复原生显示循环后继续可见帧与生命周期检查",
+        "action": "恢复原生显示循环"
       }
     ]
   },

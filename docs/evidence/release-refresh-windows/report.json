@@ -1,0 +1,181 @@
+{
+  "generatedAt": "2026-10-17T00:41:27.930Z",
+  "schema": "cocos-air.windows-release-refresh/v1",
+  "version": "1.0.0",
+  "buildCounter": 169,
+  "candidateFingerprint": "e79eab0b6db8f03a",
+  "sourceSha256": "9d81a5c2093bc43e3f69a136e85891997de19abf3c13e3733035de74f830f227",
+  "inputDigest": "1e17d8d6e936712a17b6e349b91a03ad0263723ce1385dfd32bb74d81a592f0f",
+  "inputGuard": {
+    "unchanged": true,
+    "metadataFiles": 189,
+    "statusOrPromotionChanges": 0
+  },
+  "sdk": {
+    "reusedVerifiedBuild": true,
+    "devBuildNumber": 168,
+    "minBuildNumber": 169,
+    "sourceMapsVerified": [
+      {
+        "path": "build/cocosair.module.js.map",
+        "sources": 938
+      },
+      {
+        "path": "build/cocosair.module.min.js.map",
+        "sources": 938
+      },
+      {
+        "path": "build/spark.module.js.map",
+        "sources": 63
+      }
+    ]
+  },
+  "api": {
+    "inventory": "REFRESHED",
+    "totalUnits": 13515,
+    "requiredUnits": 1439,
+    "apiInventoryRevision": "daac697eff117a73",
+    "runtimeEvidence": "BLOCKED",
+    "ordinaryExamples": 183,
+    "ordinarySessions": 184,
+    "blocker": "Evidence custody requires Linux subreaper support",
+    "coverage": {
+      "refreshed": true,
+      "thresholdsPassed": false,
+      "totalVerified": 18,
+      "viaCall": 16,
+      "viaRead": 2,
+      "core": {
+        "verified": 17,
+        "required": 964,
+        "viaCall": 15,
+        "viaRead": 2
+      },
+      "important": {
+        "verified": 0,
+        "required": 283
+      },
+      "advanced": {
+        "verified": 0,
+        "required": 192
+      }
+    },
+    "ownerDecision": "Complete Windows-runnable items; retain API environment blocker",
+    "formalApiFreezeCreated": false
+  },
+  "devtools": {
+    "completed": true,
+    "pass": 5,
+    "total": 5,
+    "metadataPreserved": true
+  },
+  "gallery": {
+    "completed": true,
+    "pass": 303,
+    "total": 303,
+    "scope": {
+      "examples": 188,
+      "booted": 183,
+      "devToolsPagesServed": 5,
+      "lifecycle": 91
+    },
+    "gpuValidationErrors": 0
+  },
+  "browserMatrix": {
+    "completed": true,
+    "subset": false,
+    "pass": 78,
+    "total": 78,
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "screenshotHashesVerified": 81
+  },
+  "releaseReady": false,
+  "readinessExitCode": 1,
+  "releaseFailures": [
+    "[release] FAIL coverage --check failed: report, specs and runtime evidence must agree",
+    "[release] FAIL V1.1 strict campaign invalid: unknown/legacy campaign schema",
+    "[release] FAIL release candidate has uncommitted or untracked changes",
+    "[release] FAIL V1.1 evidence and coverage use different candidates",
+    "[release] FAIL core verified 17/964 (1.8%) < 100%",
+    "[release] FAIL important verified 0/283 (0.0%) < 90%",
+    "[release] FAIL advanced verified 0/192 (0.0%) < 80%",
+    "[release] FAIL 272 unverified Important units lack an explicit status",
+    "[release] FAIL Advanced uncovered=180 (must be 0)"
+  ],
+  "expectedWorktreeBlocker": [
+    "[release] FAIL release candidate has uncommitted or untracked changes"
+  ],
+  "blockedApiChain": [
+    "[release] FAIL coverage --check failed: report, specs and runtime evidence must agree",
+    "[release] FAIL V1.1 strict campaign invalid: unknown/legacy campaign schema",
+    "[release] FAIL V1.1 evidence and coverage use different candidates",
+    "[release] FAIL core verified 17/964 (1.8%) < 100%",
+    "[release] FAIL important verified 0/283 (0.0%) < 90%",
+    "[release] FAIL advanced verified 0/192 (0.0%) < 80%",
+    "[release] FAIL 272 unverified Important units lack an explicit status",
+    "[release] FAIL Advanced uncovered=180 (must be 0)"
+  ],
+  "externalSafari": "NOT_RUN - retained external acceptance",
+  "receipts": [
+    {
+      "name": "devtools",
+      "endedAt": "2026-10-17T00:13:09.9354281Z",
+      "commandArgs": [
+        "tools/verify/devtools-examples.cjs",
+        "--preserve-metadata"
+      ],
+      "exitCode": 0,
+      "startedAt": "2026-10-17T00:11:57.3488465Z",
+      "inputGuardExitCode": 0
+    },
+    {
+      "name": "gallery",
+      "endedAt": "2026-10-17T00:13:45.5307382Z",
+      "commandArgs": [
+        "tools/verify/gallery-artifact.cjs",
+        "all"
+      ],
+      "exitCode": 1,
+      "startedAt": "2026-10-17T00:13:10.0251198Z",
+      "inputGuardExitCode": 0
+    },
+    {
+      "startedAt": "2026-10-17T00:14:52.1411097Z",
+      "inputGuardExitCode": 0,
+      "name": "gallery",
+      "commandArgs": [
+        "output/playwright/release-refresh-windows/gallery-full.cjs"
+      ],
+      "attempt": 2,
+      "endedAt": "2026-10-17T00:19:02.8166897Z",
+      "exitCode": 0
+    },
+    {
+      "startedAt": "2026-10-17T00:19:02.8754769Z",
+      "inputGuardExitCode": 0,
+      "name": "browser-matrix",
+      "commandArgs": [
+        "tools/verify/browser-matrix.cjs"
+      ],
+      "attempt": 1,
+      "endedAt": "2026-10-17T00:36:36.4744519Z",
+      "exitCode": 0
+    }
+  ],
+  "history": {
+    "firstGalleryAttempt": "FAIL - empty environment selection; raw bytes retained; corrected invocation did not alter collector assertions or timeouts",
+    "apiOrdinaryEvidence": "historical file retained unchanged; not accepted as current campaign",
+    "coverage": "historical PASS retained in history; current report regenerated and fails thresholds because ordinary API evidence is unavailable"
+  },
+  "evidenceSha256": {
+    "docs/example-api-inventory.json": "2e04a0fda7ea1fcbcad5e68ef26c0dc6a47868a87f13de9e9b0d707d4799d193",
+    "docs/api-coverage-report.json": "ef40424380e9e4875fe05f6a7d75b0ba2b86d13c348034db1fff87f03bcd03a6",
+    "docs/evidence/devtools-examples.json": "bcfe5a37b64c635f3c8ac3199ffa7bce36aba3c34ea12cf4bbc30a40e6f84d43",
+    "docs/evidence/gallery-artifact.json": "c6d589d9601b0fd62a8c73eb72a3e0d1cea3b74fb7869a04907d9d8c517d24ce",
+    "docs/evidence/browser-matrix/browser-matrix.json": "90e4b667b950f25289cb80451c94dd10d2278e064b487eb37f0e027d0b7e2b4f"
+  }
+}

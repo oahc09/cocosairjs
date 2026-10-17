@@ -1,23 +1,31 @@
 {
-  "measuredAt": "2026-10-04T05:55:42.641Z",
+  "measuredAt": "2026-10-17T00:18:44.726Z",
   "mount": "/apps/gallery",
   "base": "<self-hosted>",
   "runner": "tools/verify/gallery-artifact.cjs",
+  "runnerSha256": "1be2c7a971a4bc60b71d419aeef91c019f3d391956fafece7fb42b4402543057",
+  "browserVersion": "155.0.8059.40",
+  "gpuValidationErrors": [],
   "completed": true,
   "scope": {
-    "examples": 159,
-    "booted": 154,
+    "examples": 188,
+    "booted": 183,
     "devToolsPagesServed": 5,
-    "lifecycle": 65
+    "lifecycle": 91
   },
   "artifactBytes": {
-    "engineCopySha256_16": "de4e0472e8a9cf86",
-    "liveBundleSha256_16": "de4e0472e8a9cf86",
+    "engineCopySha256_16": "33b91ac2fa1592c7",
+    "liveBundleSha256_16": "33b91ac2fa1592c7",
     "identical": true
   },
-  "total": 245,
-  "pass": 245,
+  "total": 303,
+  "pass": 303,
   "results": [
+    {
+      "id": "artifact:webgpu-assets-current",
+      "ok": true,
+      "detail": "all WebGPU assets match the live build"
+    },
     {
       "id": "artifact:no-absolute-path-dependency",
       "ok": true,
@@ -31,7 +39,7 @@
     {
       "id": "artifact:engine-copy-current",
       "ok": true,
-      "detail": "artifact de4e0472e8a9cf86 vs live build de4e0472e8a9cf86"
+      "detail": "artifact 33b91ac2fa1592c7 vs live build 33b91ac2fa1592c7"
     },
     {
       "id": "static:index.html",
@@ -56,7 +64,7 @@
     {
       "id": "artifact:thumbnails-all",
       "ok": true,
-      "detail": "154/154 thumbnails reachable"
+      "detail": "183/183 thumbnails reachable"
     },
     {
       "id": "artifact:devtools-page-served:automation",
@@ -86,12 +94,12 @@
     {
       "id": "gallery:list-rendered",
       "ok": true,
-      "detail": "links=159 expected=159"
+      "detail": "links=188 expected=188"
     },
     {
       "id": "gallery:deep-link",
       "ok": true,
-      "detail": "iframe src=http://127.0.0.1:53720/apps/gallery/mesh-sphere/"
+      "detail": "iframe src=http://127.0.0.1:51455/apps/gallery/mesh-sphere/"
     },
     {
       "id": "gallery:source-view",
@@ -274,6 +282,16 @@
       "detail": "booted via /directional-light-face/"
     },
     {
+      "id": "example-boot:dom-overlay-texture",
+      "ok": true,
+      "detail": "booted via /dom-overlay-texture/"
+    },
+    {
+      "id": "lifecycle:dom-overlay-texture",
+      "ok": true,
+      "detail": "held=2 leaked=0 reloaded=true"
+    },
+    {
       "id": "example-boot:dragonbones-basic",
       "ok": true,
       "detail": "booted via /dragonbones-basic/"
@@ -301,7 +319,7 @@
     {
       "id": "lifecycle:glass-refraction",
       "ok": true,
-      "detail": "held=5 leaked=0 reloaded=true"
+      "detail": "held=6 leaked=0 reloaded=true"
     },
     {
       "id": "example-boot:gltf-animation-contract",
@@ -416,7 +434,7 @@
     {
       "id": "lifecycle:gltf-skin",
       "ok": true,
-      "detail": "held=3 leaked=0 reloaded=true"
+      "detail": "held=2 leaked=0 reloaded=true"
     },
     {
       "id": "example-boot:gltf-viewer",
@@ -429,9 +447,39 @@
       "detail": "held=2 leaked=0 reloaded=true"
     },
     {
+      "id": "example-boot:graphics-svg-paints",
+      "ok": true,
+      "detail": "booted via /graphics-svg-paints/"
+    },
+    {
+      "id": "lifecycle:graphics-svg-paints",
+      "ok": true,
+      "detail": "held=2 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:hdr-color-pipeline",
+      "ok": true,
+      "detail": "booted via /hdr-color-pipeline/"
+    },
+    {
+      "id": "lifecycle:hdr-color-pipeline",
+      "ok": true,
+      "detail": "held=94 leaked=0 reloaded=true"
+    },
+    {
       "id": "example-boot:hello-cube",
       "ok": true,
       "detail": "booted via /hello-cube/"
+    },
+    {
+      "id": "example-boot:html-texture-experimental",
+      "ok": true,
+      "detail": "booted via /html-texture-experimental/"
+    },
+    {
+      "id": "lifecycle:html-texture-experimental",
+      "ok": true,
+      "detail": "held=3 leaked=0 reloaded=true"
     },
     {
       "id": "example-boot:input",
@@ -447,6 +495,66 @@
       "id": "example-boot:interaction-click",
       "ok": true,
       "detail": "booted via /interaction-click/"
+    },
+    {
+      "id": "example-boot:interactive-container",
+      "ok": true,
+      "detail": "booted via /interactive-container/"
+    },
+    {
+      "id": "lifecycle:interactive-container",
+      "ok": true,
+      "detail": "held=2 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:interactive-geometry",
+      "ok": true,
+      "detail": "booted via /interactive-geometry/"
+    },
+    {
+      "id": "lifecycle:interactive-geometry",
+      "ok": true,
+      "detail": "held=4 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:interactive-input",
+      "ok": true,
+      "detail": "booted via /interactive-input/"
+    },
+    {
+      "id": "lifecycle:interactive-input",
+      "ok": true,
+      "detail": "held=2 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:interactive-multipass",
+      "ok": true,
+      "detail": "booted via /interactive-multipass/"
+    },
+    {
+      "id": "lifecycle:interactive-multipass",
+      "ok": true,
+      "detail": "held=8 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:interactive-timeline",
+      "ok": true,
+      "detail": "booted via /interactive-timeline/"
+    },
+    {
+      "id": "lifecycle:interactive-timeline",
+      "ok": true,
+      "detail": "held=3 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:k0-r2-porting-contracts",
+      "ok": true,
+      "detail": "booted via /k0-r2-porting-contracts/"
+    },
+    {
+      "id": "lifecycle:k0-r2-porting-contracts",
+      "ok": true,
+      "detail": "held=3 leaked=0 reloaded=true"
     },
     {
       "id": "example-boot:layers-enum-ops",
@@ -979,6 +1087,11 @@
       "detail": "held=5 leaked=0 reloaded=true"
     },
     {
+      "id": "example-boot:responsive-board-recipes",
+      "ok": true,
+      "detail": "booted via /responsive-board-recipes/"
+    },
+    {
       "id": "example-boot:runtime-asset-release",
       "ok": true,
       "detail": "booted via /runtime-asset-release/"
@@ -1024,6 +1137,16 @@
       "detail": "held=2 leaked=0 reloaded=true"
     },
     {
+      "id": "example-boot:shader-cursor-trail",
+      "ok": true,
+      "detail": "booted via /shader-cursor-trail/"
+    },
+    {
+      "id": "lifecycle:shader-cursor-trail",
+      "ok": true,
+      "detail": "held=4 leaked=0 reloaded=true"
+    },
+    {
       "id": "example-boot:shader-custom-gradient",
       "ok": true,
       "detail": "booted via /shader-custom-gradient/"
@@ -1044,6 +1167,136 @@
       "detail": "held=3 leaked=0 reloaded=true"
     },
     {
+      "id": "example-boot:shader-driver-pilot",
+      "ok": true,
+      "detail": "booted via /shader-driver-pilot/"
+    },
+    {
+      "id": "lifecycle:shader-driver-pilot",
+      "ok": true,
+      "detail": "held=3 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:shader-emboss",
+      "ok": true,
+      "detail": "booted via /shader-emboss/"
+    },
+    {
+      "id": "lifecycle:shader-emboss",
+      "ok": true,
+      "detail": "held=6 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:shader-film-neon",
+      "ok": true,
+      "detail": "booted via /shader-film-neon/"
+    },
+    {
+      "id": "lifecycle:shader-film-neon",
+      "ok": true,
+      "detail": "held=3 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:shader-glass",
+      "ok": true,
+      "detail": "booted via /shader-glass/"
+    },
+    {
+      "id": "lifecycle:shader-glass",
+      "ok": true,
+      "detail": "held=6 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:shader-glass-trail",
+      "ok": true,
+      "detail": "booted via /shader-glass-trail/"
+    },
+    {
+      "id": "lifecycle:shader-glass-trail",
+      "ok": true,
+      "detail": "held=6 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:shader-holographic",
+      "ok": true,
+      "detail": "booted via /shader-holographic/"
+    },
+    {
+      "id": "lifecycle:shader-holographic",
+      "ok": true,
+      "detail": "held=3 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:shader-input-dissolve",
+      "ok": true,
+      "detail": "booted via /shader-input-dissolve/"
+    },
+    {
+      "id": "lifecycle:shader-input-dissolve",
+      "ok": true,
+      "detail": "held=5 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:shader-laser-card",
+      "ok": true,
+      "detail": "booted via /shader-laser-card/"
+    },
+    {
+      "id": "lifecycle:shader-laser-card",
+      "ok": true,
+      "detail": "held=7 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:shader-liquid-metal",
+      "ok": true,
+      "detail": "booted via /shader-liquid-metal/"
+    },
+    {
+      "id": "lifecycle:shader-liquid-metal",
+      "ok": true,
+      "detail": "held=3 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:shader-neon",
+      "ok": true,
+      "detail": "booted via /shader-neon/"
+    },
+    {
+      "id": "lifecycle:shader-neon",
+      "ok": true,
+      "detail": "held=3 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:shader-noise-dissolve",
+      "ok": true,
+      "detail": "booted via /shader-noise-dissolve/"
+    },
+    {
+      "id": "lifecycle:shader-noise-dissolve",
+      "ok": true,
+      "detail": "held=3 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:shader-sparkle",
+      "ok": true,
+      "detail": "booted via /shader-sparkle/"
+    },
+    {
+      "id": "lifecycle:shader-sparkle",
+      "ok": true,
+      "detail": "held=3 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:shader-thin-film",
+      "ok": true,
+      "detail": "booted via /shader-thin-film/"
+    },
+    {
+      "id": "lifecycle:shader-thin-film",
+      "ok": true,
+      "detail": "held=3 leaked=0 reloaded=true"
+    },
+    {
       "id": "example-boot:skinned-animation",
       "ok": true,
       "detail": "booted via /skinned-animation/"
@@ -1052,6 +1305,21 @@
       "id": "lifecycle:skinned-animation",
       "ok": true,
       "detail": "held=4 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:spark-splats",
+      "ok": true,
+      "detail": "booted via /spark-splats/"
+    },
+    {
+      "id": "example-boot:sprite-mask-blend",
+      "ok": true,
+      "detail": "booted via /sprite-mask-blend/"
+    },
+    {
+      "id": "lifecycle:sprite-mask-blend",
+      "ok": true,
+      "detail": "held=3 leaked=0 reloaded=true"
     },
     {
       "id": "example-boot:starfield-galaxy",
@@ -1209,6 +1477,21 @@
       "detail": "held=2 leaked=0 reloaded=true"
     },
     {
+      "id": "example-boot:water-multipass",
+      "ok": true,
+      "detail": "booted via /water-multipass/"
+    },
+    {
+      "id": "lifecycle:water-multipass",
+      "ok": true,
+      "detail": "held=30 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:webgpu-basic",
+      "ok": true,
+      "detail": "booted via /webgpu-basic/"
+    },
+    {
       "id": "example-boot:webview-basic",
       "ok": true,
       "detail": "booted via /webview-basic/"
@@ -1221,12 +1504,12 @@
     {
       "id": "artifact:all-boottable-examples",
       "ok": true,
-      "detail": "154/154 booted under nested mount"
+      "detail": "183/183 booted under nested mount"
     },
     {
       "id": "artifact:lifecycle-covered",
       "ok": true,
-      "detail": "65 §25 合同示例在部署物内完成释放核对"
+      "detail": "91 §25 合同示例在部署物内完成释放核对"
     },
     {
       "id": "artifact:no-http-errors",
@@ -1242,6 +1525,16 @@
       "id": "gallery:no-page-errors",
       "ok": true,
       "detail": "0 page errors"
+    },
+    {
+      "id": "collector:source-unchanged",
+      "ok": true,
+      "detail": "collector bytes remain unchanged"
+    },
+    {
+      "id": "artifact:no-webgpu-validation-errors",
+      "ok": true,
+      "detail": "0 native WebGPU validation errors"
     }
   ],
   "absolutePathHits": [],

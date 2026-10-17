@@ -1,0 +1,16 @@
+[gallery-artifact] compiled entries: 0
+[gallery-artifact] built build\examples: 0 examples, 239 thumbnails, 0 path rewrites
+PASS artifact:no-absolute-path-dependency no repo-absolute / agent-endpoint references in shipped bytes
+PASS artifact:decoder-set 17 decoder files shipped
+PASS artifact:engine-copy-current artifact 33b91ac2fa1592c7 vs live build 33b91ac2fa1592c7
+PASS static:index.html status=200
+PASS static:gallery.html status=200
+PASS static:files.json status=200
+PASS static:cocosair.module.js status=200
+PASS artifact:thumbnails-all 0/0 thumbnails reachable
+page.waitForFunction: Timeout 15000ms exceeded.
+    at verifyArtifact (E:\AIProMax\github\cocosair.js\tools\verify\gallery-artifact.cjs:528:20)
+    at async E:\AIProMax\github\cocosair.js\tools\verify\gallery-artifact.cjs:771:19 {
+  log: [],
+  name: 'TimeoutError'
+}

@@ -2,7 +2,7 @@
   "meta": {
     "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
     "note": "Air Path 与 Upstream Path 一致(前缀 src/)；modified 文件另行标注 reason；upstreamPath=null 表示该行为 Air 原创文件或上游产物（仓库内无对应源文件），必须 modified:true 并在 reason 说明出处",
-    "modifiedCount": 207,
+    "modifiedCount": 225,
     "pal": {
       "revision": "9f0e30acb31f6d670f2c0bf818d61039846a2860",
       "license": "MIT",
@@ -50,7 +50,7 @@
       "upstreamPath": null,
       "baseline": "AIR original",
       "modified": true,
-      "reason": "AIR: owned builtin-sprite specialization for red/alpha soft and threshold masks"
+      "reason": "AIR: owned builtin-sprite specialization for red/alpha soft and threshold masks; AIR: assign non-overlapping material block and texture bindings for WebGPU"
     },
     {
       "airPath": "src/air/html-source.ts",
@@ -76,16 +76,16 @@
     {
       "airPath": "src/air/builtin/builtin-effects.ts",
       "upstreamPath": null,
-      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "baseline": "Generated from cocos4 4.0.0-alpha.34 / fffd9a514a",
       "modified": true,
-      "reason": "AIR 原创（上游 cocos4 无 air/builtin/builtin-effects.ts）。原登记 reason=\"extraction copy\" 系 V0.x tools/analyze/dep-graph.cjs 批量生成时按「去掉 src/ 前缀」臆造 upstreamPath 所致，r26 起由 tools/verify/verify-file-map.cjs 门禁检出并更正。"
+      "reason": "AIR generated builtin asset from frozen MIT effect/chunk sources; reproducible compiler inputs and outputs recorded in vendor/builtin-source/manifest.json; CPU/WebGL2/WebGPU ABI aligned."
     },
     {
       "airPath": "src/air/builtin/builtin-glsl4.ts",
       "upstreamPath": null,
-      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "baseline": "Generated from cocos4 4.0.0-alpha.34 / fffd9a514a",
       "modified": true,
-      "reason": "AIR 原创（上游 cocos4 无 air/builtin/builtin-glsl4.ts）。原登记 reason=\"extraction copy\" 系 V0.x tools/analyze/dep-graph.cjs 批量生成时按「去掉 src/ 前缀」臆造 upstreamPath 所致，r26 起由 tools/verify/verify-file-map.cjs 门禁检出并更正。"
+      "reason": "AIR generated builtin asset from frozen MIT effect/chunk sources; reproducible compiler inputs and outputs recorded in vendor/builtin-source/manifest.json; CPU/WebGL2/WebGPU ABI aligned."
     },
     {
       "airPath": "src/air/builtin/builtin-material.ts",
@@ -3584,8 +3584,8 @@
       "airPath": "src/cocos/gfx/base/device.ts",
       "upstreamPath": "cocos/gfx/base/device.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR: explicit Promise-based texture readback entry, preserving synchronous WebGL API"
     },
     {
       "airPath": "src/cocos/gfx/base/framebuffer.ts",
@@ -3704,7 +3704,7 @@
       "upstreamPath": "cocos/gfx/device-manager.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "AIR: owner-approved WebGL 2-only browser rendering; WEBGL2_REQUIRED rejects unavailable/failed contexts; EmptyDevice reserved for explicit HEADLESS."
+      "reason": "AIR: owner-approved WebGL 2-only browser rendering; WEBGL2_REQUIRED rejects unavailable/failed contexts; EmptyDevice reserved for explicit HEADLESS.; AIR: WebGL2 default, explicit WebGPU selection without fallback and rejecting failed device/swapchain initialization"
     },
     {
       "airPath": "src/cocos/gfx/empty/empty-buffer.ts",
@@ -5369,8 +5369,8 @@
       "airPath": "src/cocos/render-scene/core/program-lib.ts",
       "upstreamPath": "cocos/render-scene/core/program-lib.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR: choose WebGPU binding preparation from actual device rather than a build-wide constant"
     },
     {
       "airPath": "src/cocos/render-scene/core/program-utils.ts",
@@ -6903,7 +6903,7 @@
       "upstreamPath": "cocos/video/video-player-impl-web.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
       "modified": true,
-      "reason": "AIR: idempotent windowed VideoPlayer fullscreen disable and observed native exit rejection during detach/navigation; preserve fullscreen admission and real browser diagnostics."
+      "reason": "AIR: idempotent windowed VideoPlayer fullscreen disable and observed native exit rejection during detach/navigation; preserve fullscreen admission and real browser diagnostics.; consume confirmed seek calibration and bind asynchronous play calibration to the original video element; restore requested playback only after Windows WebKit native loop seek, with explicit-control and element-ownership cancellation; validate current native ended state for queued callbacks and calibrate only successful still-requested plays"
     },
     {
       "airPath": "src/cocos/video/video-player-impl.ts",
@@ -8078,8 +8078,8 @@
       "airPath": "src/cocos/rendering/post-process/post-process-builder.ts",
       "upstreamPath": "cocos/rendering/post-process/post-process-builder.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
-      "modified": false,
-      "reason": "V1.2 批次 post-process 回归抽取，官方原文"
+      "modified": true,
+      "reason": "AIR: restore camera projection when TAA transitions from enabled to disabled; remove residual jitter on both Web backends"
     },
     {
       "airPath": "src/cocos/rendering/post-process/utils/pass-context.ts",
@@ -8512,8 +8512,8 @@
       "airPath": "src/cocos/gfx/webgpu/instantiated.ts",
       "upstreamPath": "cocos/gfx/webgpu/instantiated.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
-      "modified": false,
-      "reason": "V1.2 批次 E1 回归抽取，官方原文"
+      "modified": true,
+      "reason": "AIR: lazy frozen ESM shader translators, configurable asset base and rejecting initialization errors; no native device WASM path"
     },
     {
       "airPath": "src/cocos/gfx/webgpu/override.ts",
@@ -8526,8 +8526,8 @@
       "airPath": "src/cocos/gfx/webgpu/webgpu-buffer.ts",
       "upstreamPath": "cocos/gfx/webgpu/webgpu-buffer.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
-      "modified": false,
-      "reason": "V1.2 批次 E1 回归抽取，官方原文"
+      "modified": true,
+      "reason": "AIR: preserve raw indirect buffer byte uploads alongside Cocos draw-info snapshots"
     },
     {
       "airPath": "src/cocos/gfx/webgpu/webgpu-command-allocator.ts",
@@ -8540,15 +8540,15 @@
       "airPath": "src/cocos/gfx/webgpu/webgpu-command-buffer.ts",
       "upstreamPath": "cocos/gfx/webgpu/webgpu-command-buffer.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
-      "modified": false,
-      "reason": "V1.2 批次 E1 回归抽取，官方原文"
+      "modified": true,
+      "reason": "AIR: explicit unsupported barriers/blits, compute pass ordering and device-loss guard; completion: native indirect dispatch validation and sampled color blit with mip/layer/region handling; snapshot per-draw blend constants and represent constant-alpha color factors; review: execute command-buffer texture uploads after pending compute and before following blit/render work instead of enqueueing unconsumed legacy commands"
     },
     {
       "airPath": "src/cocos/gfx/webgpu/webgpu-commands.ts",
       "upstreamPath": "cocos/gfx/webgpu/webgpu-commands.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
-      "modified": false,
-      "reason": "V1.2 批次 E1 回归抽取，官方原文"
+      "modified": true,
+      "reason": "AIR: aligned asynchronous readback, format rejection, shader diagnostics and valid WebGPU texture creation ; completion: combined color-write masks, raw indirect argument uploads and nearest/linear color blit; renderable single-sampled 2D color upload targets include native render-attachment usage for external canvas/image copies; separate native samplers use offset 64 to avoid glTF physical texture bindings 15..27"
     },
     {
       "airPath": "src/cocos/gfx/webgpu/webgpu-core.d.ts",
@@ -8568,29 +8568,29 @@
       "airPath": "src/cocos/gfx/webgpu/webgpu-descriptor-set-layout.ts",
       "upstreamPath": "cocos/gfx/webgpu/webgpu-descriptor-set-layout.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
-      "modified": false,
-      "reason": "V1.2 批次 E1 回归抽取，官方原文"
+      "modified": true,
+      "reason": "AIR: permit true empty bind groups rather than injecting dummy uniform buffers; native layout creation is lazy so unfiltered glTF templates are metadata until shader-specific projection"
     },
     {
       "airPath": "src/cocos/gfx/webgpu/webgpu-descriptor-set.ts",
       "upstreamPath": "cocos/gfx/webgpu/webgpu-descriptor-set.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
-      "modified": false,
-      "reason": "V1.2 批次 E1 回归抽取，官方原文"
+      "modified": true,
+      "reason": "AIR: sparse binding resource indexing and non-filterable sampler isolation; per-set native resource identities refresh shared resized resources; depth textures use non-filtering samplers"
     },
     {
       "airPath": "src/cocos/gfx/webgpu/webgpu-device.ts",
       "upstreamPath": "cocos/gfx/webgpu/webgpu-device.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
-      "modified": false,
-      "reason": "V1.2 批次 E1 回归抽取，官方原文"
+      "modified": true,
+      "reason": "AIR: explicit WebGPU admission, device limits, asynchronous readback and owned resource cleanup"
     },
     {
       "airPath": "src/cocos/gfx/webgpu/webgpu-framebuffer.ts",
       "upstreamPath": "cocos/gfx/webgpu/webgpu-framebuffer.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
-      "modified": false,
-      "reason": "V1.2 批次 E1 回归抽取，官方原文"
+      "modified": true,
+      "reason": "AIR: framebuffer attachment views honor selected mip/layer and report effective dimensions"
     },
     {
       "airPath": "src/cocos/gfx/webgpu/webgpu-gpu-objects.ts",
@@ -8610,15 +8610,15 @@
       "airPath": "src/cocos/gfx/webgpu/webgpu-pipeline-layout.ts",
       "upstreamPath": "cocos/gfx/webgpu/webgpu-pipeline-layout.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
-      "modified": false,
-      "reason": "V1.2 批次 E1 回归抽取，官方原文"
+      "modified": true,
+      "reason": "AIR: defer native pipeline creation until shader-specific bindings are known"
     },
     {
       "airPath": "src/cocos/gfx/webgpu/webgpu-pipeline-state.ts",
       "upstreamPath": "cocos/gfx/webgpu/webgpu-pipeline-state.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
-      "modified": false,
-      "reason": "V1.2 批次 E1 回归抽取，官方原文"
+      "modified": true,
+      "reason": "AIR: per-shader stage-visible layouts and projected descriptor sets avoid exceeding device limits ; completion: native MIN/MAX blending instead of ADD substitution; adapt texture sample layouts to actual depth/unfilterable resources; reject simultaneous RGB constant-color and constant-alpha factors that WebGPU cannot represent; shader reflection shares the native sampler binding offset"
     },
     {
       "airPath": "src/cocos/gfx/webgpu/webgpu-queue.ts",
@@ -8631,22 +8631,22 @@
       "airPath": "src/cocos/gfx/webgpu/webgpu-render-pass.ts",
       "upstreamPath": "cocos/gfx/webgpu/webgpu-render-pass.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
-      "modified": false,
-      "reason": "V1.2 批次 E1 回归抽取，官方原文"
+      "modified": true,
+      "reason": "AIR: depth-only attachments omit stencil load/store fields"
     },
     {
       "airPath": "src/cocos/gfx/webgpu/webgpu-sampler.ts",
       "upstreamPath": "cocos/gfx/webgpu/webgpu-sampler.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
-      "modified": false,
-      "reason": "V1.2 批次 E1 回归抽取，官方原文"
+      "modified": true,
+      "reason": "AIR: texture-specific non-filterable sampling does not mutate shared sampler state"
     },
     {
       "airPath": "src/cocos/gfx/webgpu/webgpu-shader.ts",
       "upstreamPath": "cocos/gfx/webgpu/webgpu-shader.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
-      "modified": false,
-      "reason": "V1.2 批次 E1 回归抽取，官方原文"
+      "modified": true,
+      "reason": "AIR: synchronize GLSL resource declarations with actual legacy/custom ShaderInfo bindings before WGSL conversion"
     },
     {
       "airPath": "src/cocos/gfx/webgpu/webgpu-state-cache.ts",
@@ -8666,8 +8666,8 @@
       "airPath": "src/cocos/gfx/webgpu/webgpu-texture.ts",
       "upstreamPath": "cocos/gfx/webgpu/webgpu-texture.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
-      "modified": false,
-      "reason": "V1.2 批次 E1 回归抽取，官方原文"
+      "modified": true,
+      "reason": "AIR: native texture views respect selected mip and array layer range; depth-only sampled views retain all aspects for attachments"
     },
     {
       "airPath": "src/cocos/webgpu/instantiated.ts",
@@ -8680,8 +8680,8 @@
       "airPath": "src/exports/gfx-webgpu.ts",
       "upstreamPath": "exports/gfx-webgpu.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
-      "modified": false,
-      "reason": "V1.2 批次 E1 回归抽取，官方原文"
+      "modified": true,
+      "reason": "AIR: register optional WebGPU device without exposing implementation class as a new SDK API"
     },
     {
       "airPath": "src/@types/webGPU.d.ts",

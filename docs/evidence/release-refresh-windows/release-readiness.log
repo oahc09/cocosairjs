@@ -1,0 +1,11 @@
+[release] stable=184; coverage core=17/964, important=0/283, advanced=0/192
+[release] NOT READY (9 blockers)
+[release] FAIL coverage --check failed: report, specs and runtime evidence must agree
+[release] FAIL V1.1 strict campaign invalid: unknown/legacy campaign schema
+[release] FAIL release candidate has uncommitted or untracked changes
+[release] FAIL V1.1 evidence and coverage use different candidates
+[release] FAIL core verified 17/964 (1.8%) < 100%
+[release] FAIL important verified 0/283 (0.0%) < 90%
+[release] FAIL advanced verified 0/192 (0.0%) < 80%
+[release] FAIL 272 unverified Important units lack an explicit status
+[release] FAIL Advanced uncovered=180 (must be 0)

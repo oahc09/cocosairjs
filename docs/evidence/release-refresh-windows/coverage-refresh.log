@@ -1,0 +1,9 @@
+[coverage] core: required 964/964 | claimed 964 | verified 17 (0.018) [call 15 / read 2 / unknown 0] | attested(all-units) 0
+[coverage] important: required 283/283 | claimed 273 | verified 0 (0) [call 0 / read 0 / unknown 0] | attested(all-units) 0
+[coverage] advanced: required 192/192 | claimed 186 | verified 0 (0) [call 0 / read 0 / unknown 0] | attested(all-units) 0
+[coverage] core gate (V1.1 Release: 100% verified of coverageRequired): FAIL
+[coverage] important gate (V1.1 Release: >=90% verified of coverageRequired): FAIL
+[coverage] advanced gate (V1.1 Release: >=80% verified of coverageRequired): FAIL
+[coverage] inventory fingerprint: 2e04a0fda7ea1fcb
+[coverage] wrote docs\api-coverage-report.json
+[coverage] gate: FAIL (V1.1 Release: core=100% important>=90% advanced>=80%; tier pass=core:false,important:false,advanced:false)

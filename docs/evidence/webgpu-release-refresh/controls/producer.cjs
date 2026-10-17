@@ -1,0 +1,23 @@
+const fs = require('fs');
+const path = require('path');
+const { sourceFingerprint } = require(path.join(process.cwd(), 'tools/verify/api-trace.cjs'));
+const fixture = path.join(__dirname, 'source-fingerprint-fixture');
+if (fs.existsSync(fixture)) throw Error('Control fixture must be new');
+const example = path.join(fixture, 'driver');
+fs.mkdirSync(path.join(example, 'src'), { recursive: true });
+fs.mkdirSync(path.join(fixture, 'shader/src'), { recursive: true });
+fs.writeFileSync(path.join(example, 'example.json'), '{"status":"draft"}');
+fs.writeFileSync(path.join(example, 'src/main.ts'), 'import { effectDefinition } from "../../shader/src/effect.generated.js";\n');
+const dependency = path.join(fixture, 'shader/src/effect.generated.ts');
+fs.writeFileSync(dependency, 'export const effectDefinition = { value: 1 };\n');
+const before = sourceFingerprint(example);
+fs.writeFileSync(dependency, 'export const effectDefinition = { value: 2 };\n');
+const changedDependencyBound = sourceFingerprint(example) !== before;
+const after = sourceFingerprint(example);
+fs.writeFileSync(path.join(example, 'example.json'), '{"status":"stable","promotion":{"candidate":"bookkeeping"}}');
+const bookkeepingExcluded = sourceFingerprint(example) === after;
+const result = { method: 'CPU_FINGERPRINT_NEGATIVE_CONTROL', changedDependencyBound, bookkeepingExcluded,
+    passed: changedDependencyBound && bookkeepingExcluded };
+fs.writeFileSync(path.join(__dirname, 'shader-dependency-control.json'), JSON.stringify(result, null, 2) + '\n');
+console.log(result);
+process.exitCode = result.passed ? 0 : 1;

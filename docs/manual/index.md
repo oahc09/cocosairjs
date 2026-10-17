@@ -134,10 +134,10 @@
 
 ## WebGPU
 
-| 篇目                                                 | 状态 | 示例 |
-| ---------------------------------------------------- | ---- | ---- |
-| [WebGPURenderer](./webgpurenderer.md)                | N/A  | –    |
-| [Post-Processing 后处理](./webgpu-postprocessing.md) | N/A  | –    |
+| 篇目                                                 | 状态    | 示例           |
+| ---------------------------------------------------- | ------- | -------------- |
+| [WebGPURenderer](./webgpurenderer.md)                | PARTIAL | `webgpu-basic` |
+| [Post-Processing 后处理](./webgpu-postprocessing.md) | PARTIAL | 专项探针       |
 
 ## WebXR
 
@@ -164,7 +164,7 @@
 [Cocos 4.0 覆盖矩阵](./cocos4-coverage-matrix.md)，各主题的工作流教程见下方「Cocos 4.0 开发工作流」组。
 
 仍不包含（官方指南有此流程，但 AIR 当前发行目标或公开工作流不同）：Creator 编辑器/Inspector/
-Prefab 资源绑定、原生 JSB、各平台发布、地形、XR、WebGPU、MiniGame、Native、Spine（导出面在、
+Prefab 资源绑定、原生 JSB、各平台发布、地形、XR、MiniGame、Native、Spine（导出面在、
 浏览器验证缺，单列 `待验证`）。相关 `N/A` 篇目如实说明现状与近似替代，不做能力伪装。
 
 ## 运行示例

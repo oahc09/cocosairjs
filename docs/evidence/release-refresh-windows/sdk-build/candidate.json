@@ -1,0 +1,15 @@
+{
+  "source": "e91b58fcf80dbc872ed8e2c5817e0dbc2574bfc514251997ca6e70aa0f59e337",
+  "dev": {
+    "compared": 938,
+    "mismatches": [],
+    "sha256": "ae9f7c0474e98373288650c58382c4cef40097ed48343fcad91c333645710b40"
+  },
+  "min": {
+    "compared": 938,
+    "mismatches": [],
+    "sha256": "8fa8467ce9b209b73c0d8b0714cc5cd199c873d85556f73199ba6f833458eb3b"
+  },
+  "version": "1.0.0",
+  "counter": 169
+}

@@ -4,7 +4,7 @@ Cocos AIR 使用原生 Cocos 场景、节点、组件、网格、材质、动画
 
 ## 渲染与加载
 
-浏览器需要 WebGL 2，初始化失败时返回 `WEBGL2_REQUIRED`。WebGL 1 和默认 WebGPU 后端不属于当前支持面；测试用 HEADLESS 不产生浏览器画面。具体约定见 [WebGL 2 策略](../webgl2-only.md)。
+默认浏览器路径使用 WebGL 2，初始化失败时返回 `WEBGL2_REQUIRED`；可显式选择桌面 WebGPU 实验后端，不自动回退。WebGL 1 不受支持，HEADLESS 仅用于测试。见 [默认 WebGL2 策略](../webgl2-only.md) 和 [WebGPU 指南](../guides/webgpu.md)。
 
 glTF/GLB 使用原生 Mesh、Material、Skeleton 和 AnimationClip。模型扩展的状态以运行时 registry 和模型目录能力清单为准；加载 Draco、Meshopt 或 KTX2 时需配置单独部署的解码器。见 [模型加载](../gltf/gltf-runtime.md) 和 [扩展参考](../gltf/gltf-extension-reference.md)。
 
@@ -13,7 +13,7 @@ glTF/GLB 使用原生 Mesh、Material、Skeleton 和 AnimationClip。模型扩�
 冻结上游源码在 `vendor/spark/`（`@sparkjsdev/spark` 2.3.1，MIT，105 文件 / `src` 52 个 `.ts` + 8 个 `.glsl`），适配层在 `src/air/spark/`。
 **源码在仓库不等于默认可用**：`spark` 已是声明在 `src/cc.config.json` 的**可选 feature unit**（入口 `src/exports/spark.ts`，运行时子树由
 `tools/build/spark-runtime-tree.cjs` 生成到 `src/air/spark/generated/`），但它**必须**由变体构建显式点名（`AIR_FEATURES=…,spark`）才会被编译，
-默认 26 项构建集合不含它；`package.json` 也**没有** `./spark` 子路径导出与 `files` 条目，因此安装本包无法 `import ... from 'cocosair.js/spark'`
+默认 27 项构建集合不含它；`package.json` 也**没有** `./spark` 子路径导出与 `files` 条目，因此安装本包无法 `import ... from 'cocosair.js/spark'`
 （阻塞项是下面的 crate 许可缺口，不是构建能力）。默认 bundle 的依赖闭包内 spark 节点数为 0，产物里也不含 `SparkRenderer` / `sparkjsdev` 指纹
 （由 `npm run verify:licenses` 与 `npm run verify:spark-assets` 负向断言）。
 

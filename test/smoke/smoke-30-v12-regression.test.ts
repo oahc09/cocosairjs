@@ -159,11 +159,13 @@ describe('smoke 30 — V1.2 回归组产物面与运行时', () => {
         expect(transformed.code).not.toContain('(this && this.__extends)');
         expect(JSON.parse(transformed.map.toString()).sourcesContent[0]).toBe(original);
         expect(plugin.transform(original, dragonPath + '.unrelated')).toBeNull();
-        const inherit = (source: string) => require('vm').runInNewContext(
-            '(function () { "use strict"; ' + source.slice(0, source.indexOf('let dragonBones'))
-            + '; class Base {} Base.token = 42; function Child() {} __extends(Child, Base); '
-            + 'return [Child.token, new Child() instanceof Base, new Child().constructor === Child]; })()',
-        );
+        const inherit = (source: string) =>
+            require('vm').runInNewContext(
+                '(function () { "use strict"; ' +
+                    source.slice(0, source.indexOf('let dragonBones')) +
+                    '; class Base {} Base.token = 42; function Child() {} __extends(Child, Base); ' +
+                    'return [Child.token, new Child() instanceof Base, new Child().constructor === Child]; })()',
+            );
         expect(Array.from(inherit(transformed.code))).toEqual(Array.from(inherit(original)));
     });
 
@@ -174,11 +176,23 @@ describe('smoke 30 — V1.2 回归组产物面与运行时', () => {
         expect(readFileSync(join(ROOT, 'vendor/pal-source/LICENSE'), 'utf8')).toContain('MIT License');
         const palRows = fileMap.mapping.filter((row: any) => row.airPath.startsWith('src/pal/'));
         expect(palRows).toHaveLength(40);
-        expect(palRows.every((row: any) => row.upstreamPath.startsWith('public-pal/') && row.modified && row.reason)).toBe(true);
-        expect(palRows.filter((row: any) => row.reason.includes('AIR host')).map((row: any) => row.airPath).sort()).toEqual([
-            'src/pal/env/web/env.js', 'src/pal/input/web/keyboard-input.js', 'src/pal/input/web/mouse-input.js',
-            'src/pal/input/web/touch-input.js', 'src/pal/screen-adapter/web/screen-adapter.js',
-        ].sort());
+        expect(
+            palRows.every((row: any) => row.upstreamPath.startsWith('public-pal/') && row.modified && row.reason),
+        ).toBe(true);
+        expect(
+            palRows
+                .filter((row: any) => row.reason.includes('AIR host'))
+                .map((row: any) => row.airPath)
+                .sort(),
+        ).toEqual(
+            [
+                'src/pal/env/web/env.js',
+                'src/pal/input/web/keyboard-input.js',
+                'src/pal/input/web/mouse-input.js',
+                'src/pal/input/web/touch-input.js',
+                'src/pal/screen-adapter/web/screen-adapter.js',
+            ].sort(),
+        );
     });
 
     test('Web DPR cap applies the host value and falls back safely', () => {
@@ -316,9 +330,9 @@ describe('smoke 30 — V1.2 回归组产物面与运行时', () => {
         expect(stdout).toContain('[file-map] PASS');
     });
 
-    describe('批次 E / D10：gfx-webgpu 子图的类型核对豁免不外溢', () => {
-        const SUBTREES = ['cocos/gfx/webgpu', 'cocos/webgpu'];
-        const EXCLUDED_FILES = ['exports/gfx-webgpu.ts'];
+    describe('批次 E / D10：活动 WebGPU 后端进入核对，历史桥接豁免不外溢', () => {
+        const SUBTREES = ['cocos/webgpu'];
+        const EXCLUDED_FILES = ['cocos/gfx/webgpu/override.ts', 'cocos/gfx/webgpu/webgpu-define.ts'];
         const isExcluded = (rel: string) =>
             EXCLUDED_FILES.includes(rel) || SUBTREES.some((d) => rel.startsWith(`${d}/`));
 
@@ -327,9 +341,9 @@ describe('smoke 30 — V1.2 回归组产物面与运行时', () => {
             expect(strip('tsconfig.json').exclude).toEqual([
                 'src/editor',
                 'src/cocos/physics/cannon/constraints/cannon-distance-constraint.ts',
-                'src/cocos/gfx/webgpu/**',
+                'src/cocos/gfx/webgpu/override.ts',
+                'src/cocos/gfx/webgpu/webgpu-define.ts',
                 'src/cocos/webgpu/**',
-                'src/exports/gfx-webgpu.ts',
                 'src/cocos/physics/bullet/**',
                 'src/cocos/physics/physx/**',
                 'src/cocos/physics-2d/box2d-wasm/**',
@@ -340,9 +354,9 @@ describe('smoke 30 — V1.2 回归组产物面与运行时', () => {
             expect(strip(join('src', 'tsconfig.json')).exclude).toEqual([
                 'editor',
                 'cocos/physics/cannon/constraints/cannon-distance-constraint.ts',
-                'cocos/gfx/webgpu/**',
+                'cocos/gfx/webgpu/override.ts',
+                'cocos/gfx/webgpu/webgpu-define.ts',
                 'cocos/webgpu/**',
-                'exports/gfx-webgpu.ts',
                 'cocos/physics/bullet/**',
                 'cocos/physics/physx/**',
                 'cocos/physics-2d/box2d-wasm/**',
@@ -352,7 +366,7 @@ describe('smoke 30 — V1.2 回归组产物面与运行时', () => {
             ]);
         });
 
-        test('类型面与产物面一致：未接线的 gfx-webgpu 不得出现在发布 d.ts 导出表中', () => {
+        test('类型面与产物面一致：WebGPU 实现类不提升为公开 SDK 导出', () => {
             // 回归锁：r26 曾把 gfx-webgpu 登记进 cc.config features / 让 dtsBundler 收全量 exports/**，
             // 结果 cc.d.ts 多出 `export class WebGPUDevice` 而 build/cocosair.module.js 的导出表没有它。
             const dts = readFileSync(join(ROOT, 'build', 'cocosair.module.d.ts'), 'utf8');
@@ -399,7 +413,7 @@ describe('smoke 30 — V1.2 回归组产物面与运行时', () => {
             expect(offenders).toEqual([]);
         });
 
-        test('26 个 gfx-webgpu 抽取文件仍与官方逐字节一致（豁免只作用于类型核对，不改内容）', () => {
+        test('gfx-webgpu 抽取文件仍在上游映射中，改动由 file-map 核对', () => {
             // 逐字节一致性由 tools/verify/verify-file-map.cjs 全量覆盖；这里只确认登记行仍在，
             // 防止「文件在盘但脱离簿记」的静默漂移。
             const map = JSON.parse(readFileSync(join(ROOT, 'docs', 'upstream-file-map.json'), 'utf8'));
@@ -408,7 +422,6 @@ describe('smoke 30 — V1.2 回归组产物面与运行时', () => {
                 'cocos/gfx/webgpu/webgpu-device.ts',
                 'cocos/gfx/webgpu/webgpu-define.ts',
                 'cocos/webgpu/instantiated.ts',
-                'exports/gfx-webgpu.ts',
             ]) {
                 expect(registered.has(`src/${rel}`)).toBe(true);
             }

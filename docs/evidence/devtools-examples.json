@@ -1,9 +1,9 @@
 {
-  "measuredAt": "2026-10-04T05:43:59.283Z",
+  "measuredAt": "2026-10-17T00:12:57.150Z",
   "runner": "tools/verify/devtools-examples.cjs",
   "mode": "devtools-session-v3",
   "instrumentation": "per-api-execution-trace (cocosair.traced.js via importmap)",
-  "candidateFingerprint": "2f089f6ce25eaccd",
+  "candidateFingerprint": "e79eab0b6db8f03a",
   "apiProofTotals": {
     "verified": 77,
     "attested": 10,
@@ -17,13 +17,13 @@
       "result": "PASS",
       "specFingerprint": "735d00cae975",
       "sourceFingerprint": "e89d32ce3ed3bbb6",
-      "candidateFingerprint": "2f089f6ce25eaccd",
+      "candidateFingerprint": "e79eab0b6db8f03a",
       "instrumentation": {
         "name": "cocosair.traced.js",
-        "exports": 601,
+        "exports": 645,
         "unitCount": 11,
-        "bytes": 56497,
-        "hash": "1711fd5d7d4b6cde",
+        "bytes": 60451,
+        "hash": "24e3c52787b9701d",
         "notes": [
           "Node.addChild: no own descriptor on static"
         ],
@@ -293,12 +293,12 @@
         {
           "validatorId": "captureFrame",
           "state": "PASS",
-          "detail": "bytes=11166 viewport=480x360"
+          "detail": "bytes=8034 viewport=480x360"
         },
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "center rgb=[172,178,184] differs from clear color"
+          "detail": "center rgb=[188,198,206] differs from clear color"
         },
         {
           "validatorId": "getRuntimeErrors",
@@ -323,13 +323,13 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 1→59 after session close (must keep growing)"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/automation.png",
-        "bytes": 8358,
-        "hash": "a4bb751336c280d6"
+        "bytes": 6008,
+        "hash": "d6c3aaa991052013"
       },
       "assetDigests": [],
       "errors": []
@@ -340,13 +340,13 @@
       "result": "PASS",
       "specFingerprint": "4daffe289d95",
       "sourceFingerprint": "14dcaa1b1f04abd7",
-      "candidateFingerprint": "2f089f6ce25eaccd",
+      "candidateFingerprint": "e79eab0b6db8f03a",
       "instrumentation": {
         "name": "cocosair.traced.js",
-        "exports": 601,
+        "exports": 645,
         "unitCount": 18,
-        "bytes": 57198,
-        "hash": "be984b8a99771e79",
+        "bytes": 61152,
+        "hash": "233f096ee1b7de40",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -731,12 +731,12 @@
         {
           "validatorId": "captureFrame",
           "state": "PASS",
-          "detail": "bytes=10818 viewport=480x360"
+          "detail": "bytes=8390 viewport=480x360"
         },
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "center rgb=[19,77,40] differs from clear color"
+          "detail": "center rgb=[31,126,73] differs from clear color"
         },
         {
           "validatorId": "getRuntimeErrors",
@@ -761,13 +761,13 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 1→57 after session close (must keep growing)"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/rc-capture-frame.png",
-        "bytes": 8095,
-        "hash": "ad28144c8ffb7a53"
+        "bytes": 6276,
+        "hash": "50e6cbd3d599b88e"
       },
       "assetDigests": [],
       "errors": []
@@ -778,13 +778,13 @@
       "result": "PASS",
       "specFingerprint": "4533f62e9a73",
       "sourceFingerprint": "adc7fb751d03f149",
-      "candidateFingerprint": "2f089f6ce25eaccd",
+      "candidateFingerprint": "e79eab0b6db8f03a",
       "instrumentation": {
         "name": "cocosair.traced.js",
-        "exports": 601,
+        "exports": 645,
         "unitCount": 20,
-        "bytes": 57389,
-        "hash": "83ddeff01858709d",
+        "bytes": 61343,
+        "hash": "3131420911401d20",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -1221,12 +1221,12 @@
         {
           "validatorId": "captureFrame",
           "state": "PASS",
-          "detail": "bytes=10810 viewport=480x360"
+          "detail": "bytes=8346 viewport=480x360"
         },
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "center rgb=[48,144,78] differs from clear color"
+          "detail": "center rgb=[58,166,102] differs from clear color"
         },
         {
           "validatorId": "getRuntimeErrors",
@@ -1256,13 +1256,13 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→54 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 1→55 after session close (must keep growing)"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/rc-create-node.png",
-        "bytes": 8090,
-        "hash": "3d3bda8e2112064a"
+        "bytes": 6243,
+        "hash": "94db62c109de4a8a"
       },
       "assetDigests": [],
       "errors": []
@@ -1273,13 +1273,13 @@
       "result": "PASS",
       "specFingerprint": "01b9b4271da2",
       "sourceFingerprint": "8d42f5b915ecd42a",
-      "candidateFingerprint": "2f089f6ce25eaccd",
+      "candidateFingerprint": "e79eab0b6db8f03a",
       "instrumentation": {
         "name": "cocosair.traced.js",
-        "exports": 601,
+        "exports": 645,
         "unitCount": 19,
-        "bytes": 57301,
-        "hash": "2af327ee055a267c",
+        "bytes": 61255,
+        "hash": "08c6c44c4fb51387",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -1697,12 +1697,12 @@
         {
           "validatorId": "captureFrame",
           "state": "PASS",
-          "detail": "bytes=10810 viewport=480x360"
+          "detail": "bytes=8346 viewport=480x360"
         },
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "center rgb=[48,144,78] differs from clear color"
+          "detail": "center rgb=[58,166,102] differs from clear color"
         },
         {
           "validatorId": "getRuntimeErrors",
@@ -1732,13 +1732,13 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→56 after session close (must keep growing)"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/rc-error-report.png",
-        "bytes": 8090,
-        "hash": "3d3bda8e2112064a"
+        "bytes": 6243,
+        "hash": "94db62c109de4a8a"
       },
       "assetDigests": [],
       "errors": []
@@ -1749,13 +1749,13 @@
       "result": "PASS",
       "specFingerprint": "dc7942ac2896",
       "sourceFingerprint": "8dbf1e634cee45fa",
-      "candidateFingerprint": "2f089f6ce25eaccd",
+      "candidateFingerprint": "e79eab0b6db8f03a",
       "instrumentation": {
         "name": "cocosair.traced.js",
-        "exports": 601,
+        "exports": 645,
         "unitCount": 19,
-        "bytes": 57298,
-        "hash": "70f829ad51d9fa85",
+        "bytes": 61252,
+        "hash": "1ffb6d1a070b619c",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -2158,12 +2158,12 @@
         {
           "validatorId": "captureFrame",
           "state": "PASS",
-          "detail": "bytes=10810 viewport=480x360"
+          "detail": "bytes=8346 viewport=480x360"
         },
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "center rgb=[48,144,78] differs from clear color"
+          "detail": "center rgb=[58,166,102] differs from clear color"
         },
         {
           "validatorId": "getRuntimeErrors",
@@ -2188,13 +2188,13 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 2→56 after session close (must keep growing)"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/rc-inspect-scene.png",
-        "bytes": 8090,
-        "hash": "3d3bda8e2112064a"
+        "bytes": 6243,
+        "hash": "94db62c109de4a8a"
       },
       "assetDigests": [],
       "errors": []
@@ -2207,13 +2207,13 @@
       "result": "PASS",
       "specFingerprint": "735d00cae975",
       "sourceFingerprint": "e89d32ce3ed3bbb6",
-      "candidateFingerprint": "2f089f6ce25eaccd",
+      "candidateFingerprint": "e79eab0b6db8f03a",
       "instrumentation": {
         "name": "cocosair.traced.js",
-        "exports": 601,
+        "exports": 645,
         "unitCount": 11,
-        "bytes": 56497,
-        "hash": "1711fd5d7d4b6cde",
+        "bytes": 60451,
+        "hash": "24e3c52787b9701d",
         "notes": [
           "Node.addChild: no own descriptor on static"
         ],
@@ -2483,12 +2483,12 @@
         {
           "validatorId": "captureFrame",
           "state": "PASS",
-          "detail": "bytes=11166 viewport=480x360"
+          "detail": "bytes=8034 viewport=480x360"
         },
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "center rgb=[172,178,184] differs from clear color"
+          "detail": "center rgb=[188,198,206] differs from clear color"
         },
         {
           "validatorId": "getRuntimeErrors",
@@ -2513,13 +2513,13 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 1→59 after session close (must keep growing)"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/automation.png",
-        "bytes": 8358,
-        "hash": "a4bb751336c280d6"
+        "bytes": 6008,
+        "hash": "d6c3aaa991052013"
       },
       "assetDigests": [],
       "errors": []
@@ -2530,13 +2530,13 @@
       "result": "PASS",
       "specFingerprint": "4daffe289d95",
       "sourceFingerprint": "14dcaa1b1f04abd7",
-      "candidateFingerprint": "2f089f6ce25eaccd",
+      "candidateFingerprint": "e79eab0b6db8f03a",
       "instrumentation": {
         "name": "cocosair.traced.js",
-        "exports": 601,
+        "exports": 645,
         "unitCount": 18,
-        "bytes": 57198,
-        "hash": "be984b8a99771e79",
+        "bytes": 61152,
+        "hash": "233f096ee1b7de40",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -2921,12 +2921,12 @@
         {
           "validatorId": "captureFrame",
           "state": "PASS",
-          "detail": "bytes=10818 viewport=480x360"
+          "detail": "bytes=8390 viewport=480x360"
         },
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "center rgb=[19,77,40] differs from clear color"
+          "detail": "center rgb=[31,126,73] differs from clear color"
         },
         {
           "validatorId": "getRuntimeErrors",
@@ -2951,13 +2951,13 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 1→57 after session close (must keep growing)"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/rc-capture-frame.png",
-        "bytes": 8095,
-        "hash": "ad28144c8ffb7a53"
+        "bytes": 6276,
+        "hash": "50e6cbd3d599b88e"
       },
       "assetDigests": [],
       "errors": []
@@ -2968,13 +2968,13 @@
       "result": "PASS",
       "specFingerprint": "4533f62e9a73",
       "sourceFingerprint": "adc7fb751d03f149",
-      "candidateFingerprint": "2f089f6ce25eaccd",
+      "candidateFingerprint": "e79eab0b6db8f03a",
       "instrumentation": {
         "name": "cocosair.traced.js",
-        "exports": 601,
+        "exports": 645,
         "unitCount": 20,
-        "bytes": 57389,
-        "hash": "83ddeff01858709d",
+        "bytes": 61343,
+        "hash": "3131420911401d20",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -3411,12 +3411,12 @@
         {
           "validatorId": "captureFrame",
           "state": "PASS",
-          "detail": "bytes=10810 viewport=480x360"
+          "detail": "bytes=8346 viewport=480x360"
         },
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "center rgb=[48,144,78] differs from clear color"
+          "detail": "center rgb=[58,166,102] differs from clear color"
         },
         {
           "validatorId": "getRuntimeErrors",
@@ -3446,13 +3446,13 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→54 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 1→55 after session close (must keep growing)"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/rc-create-node.png",
-        "bytes": 8090,
-        "hash": "3d3bda8e2112064a"
+        "bytes": 6243,
+        "hash": "94db62c109de4a8a"
       },
       "assetDigests": [],
       "errors": []
@@ -3463,13 +3463,13 @@
       "result": "PASS",
       "specFingerprint": "01b9b4271da2",
       "sourceFingerprint": "8d42f5b915ecd42a",
-      "candidateFingerprint": "2f089f6ce25eaccd",
+      "candidateFingerprint": "e79eab0b6db8f03a",
       "instrumentation": {
         "name": "cocosair.traced.js",
-        "exports": 601,
+        "exports": 645,
         "unitCount": 19,
-        "bytes": 57301,
-        "hash": "2af327ee055a267c",
+        "bytes": 61255,
+        "hash": "08c6c44c4fb51387",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -3887,12 +3887,12 @@
         {
           "validatorId": "captureFrame",
           "state": "PASS",
-          "detail": "bytes=10810 viewport=480x360"
+          "detail": "bytes=8346 viewport=480x360"
         },
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "center rgb=[48,144,78] differs from clear color"
+          "detail": "center rgb=[58,166,102] differs from clear color"
         },
         {
           "validatorId": "getRuntimeErrors",
@@ -3922,13 +3922,13 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→56 after session close (must keep growing)"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/rc-error-report.png",
-        "bytes": 8090,
-        "hash": "3d3bda8e2112064a"
+        "bytes": 6243,
+        "hash": "94db62c109de4a8a"
       },
       "assetDigests": [],
       "errors": []
@@ -3939,13 +3939,13 @@
       "result": "PASS",
       "specFingerprint": "dc7942ac2896",
       "sourceFingerprint": "8dbf1e634cee45fa",
-      "candidateFingerprint": "2f089f6ce25eaccd",
+      "candidateFingerprint": "e79eab0b6db8f03a",
       "instrumentation": {
         "name": "cocosair.traced.js",
-        "exports": 601,
+        "exports": 645,
         "unitCount": 19,
-        "bytes": 57298,
-        "hash": "70f829ad51d9fa85",
+        "bytes": 61252,
+        "hash": "1ffb6d1a070b619c",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -4348,12 +4348,12 @@
         {
           "validatorId": "captureFrame",
           "state": "PASS",
-          "detail": "bytes=10810 viewport=480x360"
+          "detail": "bytes=8346 viewport=480x360"
         },
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "center rgb=[48,144,78] differs from clear color"
+          "detail": "center rgb=[58,166,102] differs from clear color"
         },
         {
           "validatorId": "getRuntimeErrors",
@@ -4378,13 +4378,13 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 2→56 after session close (must keep growing)"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/rc-inspect-scene.png",
-        "bytes": 8090,
-        "hash": "3d3bda8e2112064a"
+        "bytes": 6243,
+        "hash": "94db62c109de4a8a"
       },
       "assetDigests": [],
       "errors": []

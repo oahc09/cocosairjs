@@ -36,6 +36,7 @@ import { Texture } from '../base/texture';
 import { WebGPUDeviceManager } from './define';
 import {
     GFXFormatToWGPUFormat,
+    GFXTextureToWebGPUTexture,
     WebGPUCmdFuncCreateTexture,
     WebGPUCmdFuncDestroyTexture,
     WebGPUCmdFuncResizeTexture,
@@ -160,17 +161,18 @@ export class WebGPUTexture extends Texture {
         }
     }
 
-    public getNativeTextureView (): GPUTextureView | null {
+    public getNativeTextureView (attachment = false): GPUTextureView | null {
         if (!this._gpuTexture || !this._gpuTexture.gpuTexture) {
             return null;
         }
         return this._gpuTexture.gpuTexture.createView({
-            format: this.gpuTexture.gpuFormat,
-            dimension: this._gpuTexture.gpuTarget,
-            mipLevelCount: this._gpuTexture.mipLevel,
-            arrayLayerCount: this.viewInfo.layerCount,
-            baseMipLevel: 0,
-            baseArrayLayer: 0,
+            format: !attachment && FormatInfos[this.format].hasDepth ? undefined : this.gpuTexture.gpuFormat,
+            aspect: !attachment && FormatInfos[this.format].hasDepth ? 'depth-only' : 'all',
+            dimension: attachment ? '2d' : GFXTextureToWebGPUTexture(this.viewInfo.type),
+            mipLevelCount: attachment ? 1 : this.viewInfo.levelCount,
+            arrayLayerCount: attachment ? 1 : this.viewInfo.layerCount,
+            baseMipLevel: this.viewInfo.baseLevel,
+            baseArrayLayer: this.viewInfo.baseLayer,
         });
     }
 

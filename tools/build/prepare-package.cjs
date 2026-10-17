@@ -28,10 +28,14 @@ for (const bundle of bundles) {
     }
     fs.mkdirSync(packageDir, { recursive: true });
     fs.writeFileSync(path.join(packageDir, bundle), releaseCode);
-    console.error(`[package] ${path.relative(root, bundle)} -> ${path.relative(root, packageDir)}/${bundle} (source map omitted)`);
+    console.error(
+        `[package] ${path.relative(root, bundle)} -> ${path.relative(root, packageDir)}/${bundle} (source map omitted)`,
+    );
 }
 
-const unexpected = fs.readdirSync(packageDir).filter((name) => !bundles.includes(name));
+const unexpected = fs.readdirSync(packageDir).filter((name) => !bundles.includes(name) && name !== 'webgpu');
 if (unexpected.length) {
     throw new Error(`Unexpected files in ${path.relative(root, packageDir)}: ${unexpected.join(', ')}`);
 }
+
+require('./webgpu-assets.cjs').copy(root, packageDir);

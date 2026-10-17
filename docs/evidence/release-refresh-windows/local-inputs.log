@@ -1,0 +1,17 @@
+E:\AIProMax\github\cocosair.js\tools\verify\example-evidence-campaign.cjs:84
+    if (!ok) throw new Error(message);
+             ^
+
+Error: duplicate/invalid mode query: webgpu-basic
+    at invariant (E:\AIProMax\github\cocosair.js\tools\verify\example-evidence-campaign.cjs:84:20)
+    at E:\AIProMax\github\cocosair.js\tools\verify\example-evidence-campaign.cjs:241:13
+    at Array.map (<anonymous>)
+    at Object.collectScope (E:\AIProMax\github\cocosair.js\tools\verify\example-evidence-campaign.cjs:239:39)
+    at Object.<anonymous> (E:\AIProMax\github\cocosair.js\output\playwright\release-refresh-windows\local-inputs.cjs:27:28)
+    at Module._compile (node:internal/modules/cjs/loader:1812:14)
+    at Object..js (node:internal/modules/cjs/loader:1943:10)
+    at Module.load (node:internal/modules/cjs/loader:1533:32)
+    at Module._load (node:internal/modules/cjs/loader:1335:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+
+Node.js v24.14.0

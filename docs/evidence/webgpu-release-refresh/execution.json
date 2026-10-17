@@ -1,0 +1,105 @@
+{
+  "completed": true,
+  "passed": true,
+  "receipts": [
+    {
+      "name": "environment",
+      "command": [
+        "D:\\Program Files\\nodejs\\node.exe",
+        "E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\webgpu-environment.cjs",
+        "--out=E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\webkit-video-loop-r4\\webgpu\\environment"
+      ],
+      "startedAt": "2026-10-16T14:38:45.975Z",
+      "expectedExit": 0,
+      "browserPath": "C:/Program Files/Google/Chrome/Application/chrome.exe",
+      "exitCode": 0,
+      "signal": null,
+      "finishedAt": "2026-10-16T14:39:21.340Z"
+    },
+    {
+      "name": "chromium",
+      "command": [
+        "D:\\Program Files\\nodejs\\node.exe",
+        "E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\webgpu-backend.cjs",
+        "--engine=chromium",
+        "--examples",
+        "--custom",
+        "--out=E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\webkit-video-loop-r4\\webgpu\\chromium"
+      ],
+      "startedAt": "2026-10-16T14:39:21.346Z",
+      "expectedExit": 0,
+      "browserPath": "C:/Program Files/Google/Chrome/Application/chrome.exe",
+      "exitCode": 0,
+      "signal": null,
+      "finishedAt": "2026-10-16T14:41:14.752Z"
+    },
+    {
+      "name": "edge",
+      "command": [
+        "D:\\Program Files\\nodejs\\node.exe",
+        "E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\webgpu-backend.cjs",
+        "--engine=edge",
+        "--examples",
+        "--custom",
+        "--out=E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\webkit-video-loop-r4\\webgpu\\edge"
+      ],
+      "startedAt": "2026-10-16T14:39:21.406Z",
+      "expectedExit": 0,
+      "browserPath": "C:/Program Files/Google/Chrome/Application/chrome.exe",
+      "exitCode": 0,
+      "signal": null,
+      "finishedAt": "2026-10-16T14:41:19.754Z"
+    },
+    {
+      "name": "firefox",
+      "command": [
+        "D:\\Program Files\\nodejs\\node.exe",
+        "E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\webgpu-backend.cjs",
+        "--engine=firefox",
+        "--examples",
+        "--custom",
+        "--headed",
+        "--firefox-fixed-refresh",
+        "--out=E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\webkit-video-loop-r4\\webgpu\\firefox"
+      ],
+      "startedAt": "2026-10-16T14:39:21.456Z",
+      "expectedExit": 0,
+      "browserPath": "C:/Program Files/Google/Chrome/Application/chrome.exe",
+      "exitCode": 0,
+      "signal": null,
+      "finishedAt": "2026-10-16T14:40:58.188Z"
+    },
+    {
+      "name": "webkit",
+      "command": [
+        "D:\\Program Files\\nodejs\\node.exe",
+        "E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\webgpu-backend.cjs",
+        "--engine=webkit",
+        "--examples",
+        "--custom",
+        "--out=E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\webkit-video-loop-r4\\webgpu\\webkit"
+      ],
+      "startedAt": "2026-10-16T14:39:21.507Z",
+      "expectedExit": 1,
+      "browserPath": "C:/Program Files/Google/Chrome/Application/chrome.exe",
+      "exitCode": 1,
+      "signal": null,
+      "finishedAt": "2026-10-16T14:41:29.476Z"
+    },
+    {
+      "name": "consumer",
+      "command": [
+        "D:\\Program Files\\nodejs\\node.exe",
+        "E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\consumer-acceptance.cjs",
+        "--webgpu-full",
+        "--webgpu-out=E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\webkit-video-loop-r4\\webgpu"
+      ],
+      "startedAt": "2026-10-16T14:41:29.481Z",
+      "expectedExit": 0,
+      "browserPath": "C:/Program Files/Google/Chrome/Application/chrome.exe",
+      "exitCode": 0,
+      "signal": null,
+      "finishedAt": "2026-10-16T14:45:30.832Z"
+    }
+  ]
+}

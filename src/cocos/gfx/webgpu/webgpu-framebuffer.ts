@@ -29,6 +29,8 @@ import { WebGPUTexture } from './webgpu-texture';
 import { FramebufferInfo } from '../base/define';
 
 export class WebGPUFramebuffer extends Framebuffer {
+    public get width (): number { return this._gpuFramebuffer?.width ?? this._width; }
+    public get height (): number { return this._gpuFramebuffer?.height ?? this._height; }
     get gpuFramebuffer (): IWebGPUGPUFramebuffer {
         return this._gpuFramebuffer!;
     }
@@ -46,7 +48,13 @@ export class WebGPUFramebuffer extends Framebuffer {
             const colorTexture = info.colorTextures[i] as WebGPUTexture;
             if (colorTexture) {
                 const gpuTex = colorTexture.gpuTexture;
-                gpuColorTextures.push(gpuTex);
+                gpuColorTextures.push({ ...gpuTex,
+                    get width () { return Math.max(1, gpuTex.width >> colorTexture.viewInfo.baseLevel); },
+                    get height () { return Math.max(1, gpuTex.height >> colorTexture.viewInfo.baseLevel); },
+                    get gpuTexture () { return gpuTex.gpuTexture; },
+                    get resolveTex () { return gpuTex.resolveTex; },
+                    getTextureView: () => colorTexture.getNativeTextureView(true),
+                });
                 if (gpuTex.isSwapchainTexture) {
                     isOffscreen = false;
                 }
@@ -55,7 +63,14 @@ export class WebGPUFramebuffer extends Framebuffer {
 
         let gpuDepthStencilTexture: IWebGPUTexture | null = null;
         if (info.depthStencilTexture) {
-            gpuDepthStencilTexture = (info.depthStencilTexture as WebGPUTexture).gpuTexture;
+            const texture = info.depthStencilTexture as WebGPUTexture;
+            const gpu = texture.gpuTexture;
+            gpuDepthStencilTexture = { ...gpu,
+                get width () { return Math.max(1, gpu.width >> texture.viewInfo.baseLevel); },
+                get height () { return Math.max(1, gpu.height >> texture.viewInfo.baseLevel); },
+                get gpuTexture () { return gpu.gpuTexture; },
+                getTextureView: () => texture.getNativeTextureView(true),
+            };
         }
         let width = Number.MAX_SAFE_INTEGER;
         let height = Number.MAX_SAFE_INTEGER;

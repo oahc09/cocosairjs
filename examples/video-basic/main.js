@@ -626,10 +626,17 @@ async function p6SourceSwitch() {
 // ---------------------------------------------------------------- P7 自然播完 → COMPLETED；P8 loop 回绕不出 completed
 async function p7Completed() {
     const before = completedEvents;
+    const v = player.nativeVideo;
+    player.pause();
+    player.loop = false;
     player.currentTime = 2.9;
+    const endSeekMs = await waitFor(() => v && !v.seeking && v.currentTime >= 2.8, 2000);
+    if (endSeekMs < 0) throw new Error('Natural-completion seek did not settle');
+    player.play();
     const doneMs = await waitFor(() => completedEvents > before, 2500);
     await sleep(200);
     results.p7Completed = {
+        endSeekWithinMs: endSeekMs,
         completedWithinMs: doneMs,
         endedDelta: completedEvents - before,
         stateAfterEnd: player.state,
@@ -641,19 +648,27 @@ async function p7Completed() {
         })(),
     };
 
+    // The clamp check above is another asynchronous seek. Finish it before
+    // changing loop mode and issuing the next seek on this media element.
+    const clampSeekMs = await waitFor(() => v && !v.seeking && v.currentTime >= 2.9, 2000);
+    results.p7Completed.clampSeekWithinMs = clampSeekMs;
+    if (clampSeekMs < 0) throw new Error('Clamped end seek did not settle');
+
     // P7 leaves an asynchronous seek at the end of the clip. Starting playback
     // there overlaps the browser's loop restart with our seek below. Establish a
     // paused, settled position first; PLAYING alone does not prove media progress.
     player.pause();
-    player.loop = true;
     const beforeLoop = completedEvents;
-    const v = player.nativeVideo;
     player.currentTime = 2.0;
     const seekSettledMs = await waitFor(() => v && !v.seeking && v.currentTime >= 1.9 && v.currentTime <= 2.3, 2000);
     let playingMs = -1;
     let wrapMs = -1;
+    let continuedMs = -1;
     if (seekSettledMs >= 0) {
         const seekTime = v.currentTime;
+        // Clear the ended position before enabling native looping; otherwise
+        // WebKit can schedule an end-of-stream restart over the explicit seek.
+        player.loop = true;
         player.play();
         playingMs = await waitFor(
             () =>
@@ -662,18 +677,29 @@ async function p7Completed() {
         );
         if (playingMs >= 0) {
             wrapMs = await waitFor(() => player.isPlaying && !v.paused && !v.seeking && v.currentTime < 1.0, 3000);
+            if (wrapMs >= 0) {
+                const atWrap = v.currentTime;
+                continuedMs = await waitFor(
+                    () => player.isPlaying && !v.paused && !v.seeking && v.currentTime > Math.max(0.15, atWrap + 0.1),
+                    2000,
+                );
+            }
         }
     }
     results.p8Loop = {
-        wrappedBelowSeekTarget: seekSettledMs >= 0 && playingMs >= 0 && wrapMs >= 0,
+        wrappedBelowSeekTarget: seekSettledMs >= 0 && playingMs >= 0 && wrapMs >= 0 && continuedMs >= 0,
         seekSettledWithinMs: seekSettledMs,
         playingWithinMs: playingMs,
         wrapWithinMs: wrapMs,
+        continuedAfterWrapWithinMs: continuedMs,
         completedDeltaDuringLoop: completedEvents - beforeLoop,
         stateNow: player.state,
         currentTimeNow: num(player.currentTime),
         nativePausedNow: v ? v.paused : null,
         nativeSeekingNow: v ? v.seeking : null,
+        nativeLoopNow: v ? v.loop : null,
+        nativeMutedNow: v ? v.muted : null,
+        nativePlaybackRateNow: v ? v.playbackRate : null,
     };
     status.string = results.p8Loop.wrappedBelowSeekTarget ? 'video loop ok' : 'video loop failed';
 }
@@ -782,45 +808,81 @@ async function runSequence() {
     await p4Transparency();
     await p5Geometry();
     await p6SourceSwitch();
+    const startButton = document.querySelector('#start-demo');
+    startButton.hidden = false;
+    status.string = 'click Play video to continue';
+    await new Promise((resolve, reject) => {
+        startButton.addEventListener(
+            'click',
+            async () => {
+                const before = player.currentTime;
+                player.play();
+                const started = await waitFor(
+                    () => player.isPlaying && !player.nativeVideo.paused && player.currentTime > before + 0.05,
+                    3000,
+                );
+                if (started < 0) {
+                    reject(new Error('Video did not advance after the playback gesture'));
+                    return;
+                }
+                startButton.hidden = true;
+                resolve();
+            },
+            { once: true },
+        );
+    });
     await p7Completed();
+    const checks = [
+        {
+            name: 'natural-completion',
+            ok: results.p7Completed.endedDelta === 1,
+            detail: JSON.stringify(results.p7Completed),
+        },
+        { name: 'native-loop-wrap', ok: results.p8Loop.wrappedBelowSeekTarget, detail: JSON.stringify(results.p8Loop) },
+        { name: 'no-completed-during-loop', ok: results.p8Loop.completedDeltaDuringLoop === 0 },
+    ];
+    window.__trialProbe = { ready: true, ok: checks.every((check) => check.ok), checks };
     if (!results.p8Loop.wrappedBelowSeekTarget) {
         return;
     }
     hostNode.on('clicked', onUserClick); // CLICKED 由引擎的 DOM click 监听转发（video-player.ts:477-480）
     results.sequenceComplete = true;
+    installVideoLifecycle();
     results.sequenceMs = Math.round(performance.now() - T0);
     status.string = 'video ready — click to fullscreen';
 }
 
 // ---------------------------------------------------------------- §25 生命周期合同：真释放 + 真重建
-installAssetLifecycle({
-    label: 'video-basic',
-    hold: heldAssets,
-    release: () => {
-        // ⚠️ 只 destroy 组件/节点不够：`loadRemote` 以 URL 为键缓存，`release-manager._free`
-        //   对已失效资产提前 return ⇒ 光 destroy 会让第二次 loadRemote 交回**已销毁实例**（F-102）。
-        //   正确姿势是「资产还有效时」走 assetManager.releaseAsset(clip)。
-        if (player) {
-            player.pause();
-        }
-        hostNode.destroy();
-        hostNode = null;
-        player = null;
-        assetManager.releaseAsset(clip);
-        clip = null;
-    },
-    reacquire: async () => {
-        clip = await loadRemote(CLIP_URL);
-        mountPlayer();
-        player.clip = clip;
-        player.mute = true;
-        player.loop = true;
-        await sleep(400);
-        player.play();
-        await sleep(400);
-        return heldAssets();
-    },
-});
+function installVideoLifecycle() {
+    installAssetLifecycle({
+        label: 'video-basic',
+        hold: heldAssets,
+        release: () => {
+            // ⚠️ 只 destroy 组件/节点不够：`loadRemote` 以 URL 为键缓存，`release-manager._free`
+            //   对已失效资产提前 return ⇒ 光 destroy 会让第二次 loadRemote 交回**已销毁实例**（F-102）。
+            //   正确姿势是「资产还有效时」走 assetManager.releaseAsset(clip)。
+            if (player) {
+                player.pause();
+            }
+            hostNode.destroy();
+            hostNode = null;
+            player = null;
+            assetManager.releaseAsset(clip);
+            clip = null;
+        },
+        reacquire: async () => {
+            clip = await loadRemote(CLIP_URL);
+            mountPlayer();
+            player.clip = clip;
+            player.mute = true;
+            player.loop = true;
+            await sleep(400);
+            player.play();
+            await sleep(400);
+            return heldAssets();
+        },
+    });
+}
 
 window.__airApp = app;
 window.__runSequence = runSequence;

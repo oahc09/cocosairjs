@@ -19,6 +19,33 @@ const DECISIONS_PATH = path.join(ROOT, 'docs', 'license-decisions.json');
  */
 const REGISTRY = [
     {
+        component: 'Cocos builtin effect/chunk sources',
+        licenseFile: 'licenses/LICENSE_builtin_source.txt',
+        sourceOfTruth: { kind: 'self', path: 'licenses/LICENSE_builtin_source.txt' },
+        licenseId: 'MIT (frozen cocos4 source; original source copyright lines included)',
+        ships: 'default',
+        probes: ['builtin-standard', 'builtin-unlit'],
+        note: 'Original frozen LICENSE and used source notices; hashes verified by tools/build/builtin-assets.cjs --verify.',
+    },
+    {
+        component: 'glslang (WebGPU shader translator)',
+        licenseFile: 'vendor/webgpu/LICENSE-glslang.txt',
+        sourceOfTruth: { kind: 'upstream', path: 'licenses/LICENSE_glslang.txt' },
+        licenseId: 'glslang bundled license terms (see original text)',
+        ships: 'source',
+        probes: [],
+        note: 'Separate build/npm/webgpu assets. Distribution bytes and license hashes are frozen by vendor/webgpu/manifest.json.',
+    },
+    {
+        component: 'TWGSL (WebGPU shader translator)',
+        licenseFile: 'vendor/webgpu/LICENSE-apache.txt',
+        sourceOfTruth: { kind: 'self', path: 'vendor/webgpu/LICENSE-apache.txt' },
+        licenseId: 'Apache-2.0 (BabylonJS official NOTICE); Dawn/Tint BSD-3-Clause notice also shipped',
+        ships: 'source',
+        probes: [],
+        note: 'Attribution: vendor/webgpu/NOTICE-babylon.md at pinned official commit; binary source: frozen Cocos external archive, no local rebuild claim.',
+    },
+    {
         component: 'spine runtime (spine-core.js)',
         licenseFile: 'licenses/LICENSE_spine.txt',
         sourceOfTruth: { kind: 'upstream', path: 'licenses/LICENSE_spine.txt' },

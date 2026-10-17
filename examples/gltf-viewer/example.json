@@ -257,7 +257,7 @@
           "provenance": [
             {
               "source": "main.js",
-              "line": 138,
+              "line": 187,
               "text": "'BoxTextured.glb': ["
             }
           ]
@@ -268,7 +268,7 @@
   "promotion": {
     "spec": "633e34bc9127",
     "source": "8211e97d651e8024",
-    "candidate": "24fcbd038ef9869c",
+    "candidate": "0a6c249084b50f2f",
     "verified": 18,
     "attested": 2,
     "units": 20

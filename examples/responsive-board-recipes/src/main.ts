@@ -4,7 +4,7 @@ import { pickBoardCell, createVisualGate } from '../../../tools/recipes/board-st
 const query = new URLSearchParams(location.search);
 const legacy = query.has('legacy');
 const canvasSelector = query.has('safe') ? '#custom-board' : '#GameCanvas';
-const options = {
+const options: import('cocosair').AirAppOptions = {
     canvas: canvasSelector,
     pixelRatioCap: Number(query.get('cap') ?? 2),
     ...(legacy || query.has('default')
@@ -16,7 +16,7 @@ const options = {
 };
 let cc: any, app: any;
 if (query.has('safe')) {
-    const safe = await import('/build/cocosair.module.js');
+    const safe = await import('cocosair');
     app = await safe.createAirApp(options);
     cc = await import('cocosair');
 } else {

@@ -65,9 +65,9 @@
   "experimentalEntry": "cocosair.js",
   "supportBoundary": "Normal browsers may report HTML UNSUPPORTED; only an experimental browser can validate live textures.",
   "promotion": {
-    "spec": "533471c42d45",
-    "source": "f9bcee417e395ab7",
-    "candidate": "24fcbd038ef9869c",
+    "spec": "4ba396ace187",
+    "source": "5e4038ad8271bf66",
+    "candidate": "0a6c249084b50f2f",
     "verified": 2,
     "attested": 0,
     "units": 2

@@ -1,0 +1,5 @@
+
+> cocosair.js@1.0.0 build:spark
+> node tools/build/spark-module.cjs
+
+[spark] independent JS/map and declarations; main engine remains external

@@ -46,7 +46,7 @@ import { game } from '../cocos/game';
 export type AirContextHealthState = 'healthy' | 'lost' | 'restoring' | 'failed';
 
 /** @en Detected WebGL backend of the attached canvas. @zh 画布实际使用的 WebGL 后端。 */
-export type AirContextBackend = 'webgl2' | 'none' | 'unknown';
+export type AirContextBackend = 'webgl2' | 'webgpu' | 'none' | 'unknown';
 
 /** @en Readable point-in-time health report. @zh 可轮询的健康快照。 */
 export interface AirContextHealthSnapshot {
@@ -86,6 +86,8 @@ export interface AirContextLossOptions {
 /** @en Health handle exposed on [[AirApp]]. @zh 挂在 AirApp 上的健康句柄。 */
 export interface AirContextHealth {
     snapshot(): AirContextHealthSnapshot;
+    /** Observe the actual initialized WebGPU device without acquiring another canvas context. */
+    watchWebGPUDevice(device: { readonly lost: Promise<{ readonly reason: string; readonly message: string }> }): void;
     /** 订阅状态迁移，返回退订函数。 */
     onChange(cb: (snapshot: AirContextHealthSnapshot) => void): () => void;
     /**
@@ -105,10 +107,7 @@ const TIMELINE_LIMIT = 32;
  * @zh 在画布上挂接 W01 上下文健康状态机。createAirApp 内部调用；HEADLESS 等无 GL
  * 后端时安全空转（backend='none'，事件不来则状态恒 healthy）。
  */
-export function attachContextHealth (
-    canvas: HTMLCanvasElement,
-    options: AirContextLossOptions = {},
-): AirContextHealth {
+export function attachContextHealth(canvas: HTMLCanvasElement, options: AirContextLossOptions = {}): AirContextHealth {
     const autoPause = options.autoPause !== false;
     let state: AirContextHealthState = 'healthy';
     let backend: AirContextBackend = 'unknown';
@@ -118,16 +117,26 @@ export function attachContextHealth (
     let lastEvent: AirContextHealthSnapshot['lastEvent'] = null;
     let lastEventAt: number | null = null;
     let gl: WebGL2RenderingContext | null = null;
+    let destroyed = false;
     const timeline: AirContextHealthSnapshot['timeline'] = [];
     const listeners = new Set<(snapshot: AirContextHealthSnapshot) => void>();
-    if (typeof options.onEvent === 'function') { listeners.add(options.onEvent); }
+    if (typeof options.onEvent === 'function') {
+        listeners.add(options.onEvent);
+    }
 
-    function acquireGl (): typeof gl {
-        if (gl) { return gl; }
+    function acquireGl(): typeof gl {
+        if (backend === 'webgpu') return null;
+        if (gl) {
+            return gl;
+        }
         try {
             // 同类型 getContext 返回既有上下文（引擎创建后）；跨类型返回 null。
             const g2 = canvas.getContext('webgl2');
-            if (g2) { gl = g2; backend = 'webgl2'; return gl; }
+            if (g2) {
+                gl = g2;
+                backend = 'webgl2';
+                return gl;
+            }
             backend = 'none';
         } catch {
             backend = 'none';
@@ -135,7 +144,7 @@ export function attachContextHealth (
         return null;
     }
 
-    function readGamePaused (): boolean | null {
+    function readGamePaused(): boolean | null {
         try {
             return (game as unknown as { _paused?: boolean })._paused ?? null;
         } catch {
@@ -143,11 +152,15 @@ export function attachContextHealth (
         }
     }
 
-    function snapshot (): AirContextHealthSnapshot {
+    function snapshot(): AirContextHealthSnapshot {
         let isLost: boolean | null = null;
         const g = acquireGl();
         if (g) {
-            try { isLost = g.isContextLost(); } catch { isLost = null; }
+            try {
+                isLost = g.isContextLost();
+            } catch {
+                isLost = null;
+            }
         }
         return {
             state,
@@ -164,32 +177,50 @@ export function attachContextHealth (
         };
     }
 
-    function transition (next: AirContextHealthState, detail?: string): void {
+    function transition(next: AirContextHealthState, detail?: string): void {
         state = next;
-        if (next === 'failed') { reason = detail ?? 'unknown'; } else { reason = null; }
+        if (next === 'failed') {
+            reason = detail ?? 'unknown';
+        } else {
+            reason = null;
+        }
         timeline.push({ at: Date.now(), type: next, detail });
-        if (timeline.length > TIMELINE_LIMIT) { timeline.splice(0, timeline.length - TIMELINE_LIMIT); }
+        if (timeline.length > TIMELINE_LIMIT) {
+            timeline.splice(0, timeline.length - TIMELINE_LIMIT);
+        }
         lastEvent = next === 'healthy' ? null : next;
         lastEventAt = Date.now();
         const snap = snapshot();
         for (const cb of listeners) {
-            try { cb(snap); } catch { /* 观察者异常不阻断状态机 */ }
+            try {
+                cb(snap);
+            } catch {
+                /* 观察者异常不阻断状态机 */
+            }
         }
     }
 
-    function onLost (event: Event): void {
+    function onLost(event: Event): void {
         // spec：preventDefault 后浏览器才可能走恢复路径（真实 GPU reset 的自动恢复与
         // WEBGL_lose_context.restoreContext() 模拟均以此为前提）。
-        try { event.preventDefault(); } catch { /* 某些平台无此方法（上游注记同源） */ }
+        try {
+            event.preventDefault();
+        } catch {
+            /* 某些平台无此方法（上游注记同源） */
+        }
         acquireGl();
         lostCount += 1;
         if (autoPause) {
-            try { game.pause(); } catch { /* 未 run() 时 pause 幂等安全 */ }
+            try {
+                game.pause();
+            } catch {
+                /* 未 run() 时 pause 幂等安全 */
+            }
         }
         transition('lost', 'webglcontextlost');
     }
 
-    function onRestored (): void {
+    function onRestored(): void {
         restoredCount += 1;
         transition('restoring', 'webglcontextrestored');
         // 如实判定：AIR 本期不重建 GPU 资源（所有既有纹理/buffer/program/FBO 句柄已失效），
@@ -202,19 +233,41 @@ export function attachContextHealth (
 
     return {
         snapshot,
-        onChange (cb: (snapshot: AirContextHealthSnapshot) => void): () => void {
-            listeners.add(cb);
-            return () => { listeners.delete(cb); };
-        },
-        requestReload (): boolean {
-            if (state !== 'failed') { return false; }
-            const reload = options.reload ?? ((): void => {
-                if (typeof window !== 'undefined' && window.location) { window.location.reload(); }
+        watchWebGPUDevice(device: {
+            readonly lost: Promise<{ readonly reason: string; readonly message: string }>;
+        }): void {
+            backend = 'webgpu';
+            device.lost.then((info) => {
+                if (destroyed) return;
+                lostCount += 1;
+                // A dead device must never continue drawing, including autoPause:false.
+                game.pause();
+                transition('lost', `webgpu-device-lost: ${info.reason}: ${info.message}`);
+                transition('failed', 'webgpu-resources-require-reload');
             });
+        },
+        onChange(cb: (snapshot: AirContextHealthSnapshot) => void): () => void {
+            listeners.add(cb);
+            return () => {
+                listeners.delete(cb);
+            };
+        },
+        requestReload(): boolean {
+            if (state !== 'failed') {
+                return false;
+            }
+            const reload =
+                options.reload ??
+                ((): void => {
+                    if (typeof window !== 'undefined' && window.location) {
+                        window.location.reload();
+                    }
+                });
             reload();
             return true;
         },
-        destroy (): void {
+        destroy(): void {
+            destroyed = true;
             canvas.removeEventListener('webglcontextlost', onLost as EventListener, false);
             canvas.removeEventListener('webglcontextrestored', onRestored as EventListener, false);
             listeners.clear();

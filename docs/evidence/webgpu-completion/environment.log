@@ -1,0 +1,5 @@
+{"name":"firefox-headless","native":{"secure":true,"apiAvailable":true,"adapterAvailable":false}}
+{"name":"firefox-headed","native":{"secure":true,"apiAvailable":true,"adapterAvailable":true,"adapter":{"vendor":"","architecture":"","device":"","description":"","isFallbackAdapter":false},"features":["depth-clip-control","depth32float-stencil8","texture-compression-bc","texture-compression-bc-sliced-3d","timestamp-query","indirect-first-instance","shader-f16","rg11b10ufloat-renderable","bgra8unorm-storage","float32-filterable","dual-source-blending","core-features-and-limits"],"limits":{"maxBindGroups":8,"maxUniformBuffersPerShaderStage":64},"rawPixel":[191,127,64,255],"format":"bgra8unorm","nativeReadback":true,"validationError":null}}
+{"name":"firefox-headless-gpu-process","native":{"secure":true,"apiAvailable":true,"adapterAvailable":false}}
+{"name":"webkit-headless","native":{"secure":true,"apiAvailable":false,"adapterAvailable":false}}
+{"name":"webkit-headed","native":{"secure":true,"apiAvailable":false,"adapterAvailable":false}}

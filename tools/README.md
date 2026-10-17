@@ -54,7 +54,7 @@ PAL 的运行时来源固定在 `vendor/pal-source/` 的公开 MIT 快照；
 | 试跑页面行为探针        | `node tools/verify/trial-probes.cjs --root=tools/debug/probes --ids=lights-hdr-calibration`                                               | 需要 Playwright 与开发 bundle；结果写系统临时目录，不改正典证据。                                                                                                                                |
 | Shader 探针             | `node tools/verify/shader-probe.cjs`                                                                                                      | 需要 Playwright 与 bundle；会写 Shader 证据。                                                                                                                                                    |
 | 示例规格浏览器验证      | `node tools/verify/run-example-evidence-campaign.cjs --freeze=<freeze.json> --id=<id> --out=<new-attempt-directory> --execute-authorized` | 前先执行 CPU preflight 与 freeze；每次只采固定范围的一例、保留全部模式及真实关闭原件，写外置 partial；完整合并后单独严格发布。见[固定快照流程](../docs/reference/example-evidence-campaign.md)。 |
-| DevTools 示例验证       | `node tools/verify/devtools-examples.cjs`                                                                                                 | 会写独立 DevTools 示例证据。                                                                                                                                                                     |
+| DevTools 示例验证       | `node tools/verify/devtools-examples.cjs --preserve-metadata`                                                                             | 写独立 DevTools 示例证据；保留规格状态、promotion 和 manifest。省略此参数仍沿用旧晋降级及 manifest 重建行为。                                                                                    |
 | 静态 Gallery 构建与验证 | `node tools/verify/gallery-artifact.cjs build`                                                                                            | `build` 写 `build/examples/`；验证子命令见脚本文件头。                                                                                                                                           |
 | 手册源码一致性          | `node tools/verify/manual-doc-consistency.cjs --strict`                                                                                   | 只读核对手册代码块与示例源码。                                                                                                                                                                   |
 | 文档路径引用            | `npm run verify:doc-refs`                                                                                                                 | 默认只读；使用显式输出参数才写报告。                                                                                                                                                             |
@@ -262,6 +262,8 @@ C04 `shaders-input-dissolve-browser.cjs --phase=functional --browser=all --out=<
 
 ## Build layout and startup lifecycle
 
+WebGPU 的冻结 shader/builtin 资产校验、重建、浏览器及安装包命令见 [npm 脚本写入说明](../docs/reference/npm-scripts.md#webgpu-接入的资产写入) 和 [专项验收](../docs/reference/webgpu-acceptance.md)。浏览器采集默认写 `output/webgpu-backend/`；无 adapter 的环境返回 BLOCKED，不自动回退。
+
 - `node tools/build/build.cjs --format esm --spark`: rebuild the full default feature set plus Spark directly as `build/spark.module.js` and its correctly named map. This increments the build counter once, does not overwrite default/npm copies, and accepts AIR_OUT_DIR for an isolated destination. Do not combine --spark with AIR_FEATURES, --min or SystemJS.
 - `tools/build/startup-binding-patch.cjs`: internal checked PAL adaptation; only pal-source --write changes generated PAL outputs.
 - `node tools/verify/build-layout-consumer.cjs --modern-ts=/path/to/tsc --out=new.json`: real tarball installation, clean/upgrade npm-copy regeneration, recursive exports, single main entry, consumer bundler resolution, and isolated TS4.9/modern subpath checks. Writes build/npm and temporary consumers; optional report refuses overwrite. Does not build runtime JS or change the build number.
@@ -270,3 +272,11 @@ C04 `shaders-input-dissolve-browser.cjs --phase=functional --browser=all --out=<
 
 - `node tools/verify/prepare-startup-browser.cjs --out=output/build-layout/browser-fixtures`: CPU-only, new-directory preparation of an actual installed tarball, real split bundler consumer, and five-entry Gallery subset with byte equality. Writes only generated npm copies, the new fixture directory and a temporary Gallery directory; does not compile runtime JS or launch a browser. Run the supervisor with --fixtures=<that directory>.
 - `node tools/verify/source-maps.cjs --out=new.json`: verifies all five tracked JS/map pairs using ECMAScript line counting and actual generated-token mappings into multiple sources, real VM line-ending controls, corrupted-map negative controls, and npm-copy equality. Retains the original relocation checks; reports sampled mapping coverage rather than claiming every segment is certified.
+
+## WebGPU Windows 专项收尾
+
+`node tools/verify/webgpu-completion-runner.cjs --out=<新目录>` 运行原生环境预检、三浏览器双后端与 Windows WebKit 边界、安装包 dev/min 全矩阵；新目录保存实际退出码与日志，不构建或发布。`--resume=<旧目录>` 只复用同候选/同采集器的完整成功证据，原退出码、时间和来源保留。
+
+`node tools/verify/webgpu-acceptance.cjs --reports=<输出目录>` 默认只读重算；显式 `--archive=<新目录>` 才复制证据。该 Windows 范围通过与 Safari 外部 NOT_RUN、全仓 release NOT READY 分开。命令前置、Firefox 的临时刷新/遮挡配置与写入见[环境说明](../docs/reference/webgpu-environment.md)及[npm 命令目录](../docs/reference/npm-scripts.md)。
+
+`node tools/delivery/webgpu-submission.cjs` 只读核对精确提交范围、并行源码/组合生成物依赖、Git 可见性及证据闭包；显式 `--export=<output 下的新目录>` 才复制证据交付树并复验，不构建、不采证、不暂存。独立复制品可用 `--evidence-only` 离线复核。文件清单、输出内容和依赖顺序见 [WebGPU 提交范围](../docs/reference/webgpu-submission.md)。

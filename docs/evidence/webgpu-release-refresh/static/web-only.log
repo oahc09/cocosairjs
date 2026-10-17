@@ -1,0 +1,6 @@
+=== verify:web-only ===
+baseline: cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)
+features: air
+reachable: 1136 files
+  [note] cocos/3d/misc/mesh-codec.ts: external: 导入被常量折叠（白名单）
+verify:web-only PASSED

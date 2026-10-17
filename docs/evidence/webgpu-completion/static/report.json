@@ -1,0 +1,158 @@
+{
+  "passed": true,
+  "sourceSha256": "bec315aa4430e9ee31ebf52eed2a91ca96cc76b82457788a8dc825e7609b12b9",
+  "sourceUnchanged": true,
+  "receipts": [
+    {
+      "name": "typecheck",
+      "command": [
+        "node",
+        "node_modules/typescript/bin/tsc",
+        "--noEmit"
+      ],
+      "startedAt": "2026-10-15T16:22:36.0054139Z",
+      "finishedAt": "2026-10-15T16:22:55.9307067Z",
+      "exitCode": 0,
+      "log": "typecheck.log"
+    },
+    {
+      "name": "startup-gltf",
+      "command": [
+        "node",
+        "node_modules/jest/bin/jest.js",
+        "--runInBand",
+        "--cacheDirectory",
+        "output/jest-webgpu",
+        "test/smoke/webgpu-admission.test.ts",
+        "test/smoke/startup-admission.test.ts",
+        "test/smoke/port-gap-bootstrap-config.test.ts",
+        "test/smoke/smoke-07-gltf.test.ts",
+        "test/smoke/smoke-11-gltf-geometry.test.ts"
+      ],
+      "startedAt": "2026-10-15T16:22:55.9326591Z",
+      "finishedAt": "2026-10-15T16:23:11.2143857Z",
+      "exitCode": 0,
+      "log": "startup-gltf.log"
+    },
+    {
+      "name": "d10",
+      "command": [
+        "node",
+        "node_modules/jest/bin/jest.js",
+        "--runInBand",
+        "--cacheDirectory",
+        "output/jest-webgpu",
+        "test/smoke/smoke-30-v12-regression.test.ts",
+        "--testNamePattern",
+        "D10"
+      ],
+      "startedAt": "2026-10-15T16:23:11.2147958Z",
+      "finishedAt": "2026-10-15T16:23:24.5699559Z",
+      "exitCode": 0,
+      "log": "d10.log"
+    },
+    {
+      "name": "file-map",
+      "command": [
+        "node",
+        "tools/verify/verify-file-map.cjs"
+      ],
+      "startedAt": "2026-10-15T16:23:24.5703730Z",
+      "finishedAt": "2026-10-15T16:23:28.6716091Z",
+      "exitCode": 0,
+      "log": "file-map.log"
+    },
+    {
+      "name": "wasm-boundary",
+      "command": [
+        "node",
+        "tools/verify/verify-wasm-backends.cjs"
+      ],
+      "startedAt": "2026-10-15T16:23:28.6719024Z",
+      "finishedAt": "2026-10-15T16:23:31.1441101Z",
+      "exitCode": 0,
+      "log": "wasm-boundary.log"
+    },
+    {
+      "name": "web-only",
+      "command": [
+        "node",
+        "tools/verify/verify-web-only.cjs"
+      ],
+      "startedAt": "2026-10-15T16:23:31.1444502Z",
+      "finishedAt": "2026-10-15T16:23:34.1496979Z",
+      "exitCode": 0,
+      "log": "web-only.log"
+    },
+    {
+      "name": "custom-exports",
+      "command": [
+        "node",
+        "tools/verify/verify-custom-exports.cjs",
+        "--json"
+      ],
+      "startedAt": "2026-10-15T16:23:34.1500035Z",
+      "finishedAt": "2026-10-15T16:23:34.3724792Z",
+      "exitCode": 0,
+      "log": "custom-exports.log"
+    },
+    {
+      "name": "licenses",
+      "command": [
+        "node",
+        "tools/verify/verify-licenses.cjs",
+        "--json"
+      ],
+      "startedAt": "2026-10-15T16:23:34.3728084Z",
+      "finishedAt": "2026-10-15T16:23:37.3097395Z",
+      "exitCode": 0,
+      "log": "licenses.log"
+    },
+    {
+      "name": "webgpu-assets",
+      "command": [
+        "node",
+        "tools/build/webgpu-assets.cjs",
+        "--check"
+      ],
+      "startedAt": "2026-10-15T16:23:37.3100484Z",
+      "finishedAt": "2026-10-15T16:23:37.5048948Z",
+      "exitCode": 0,
+      "log": "webgpu-assets.log"
+    },
+    {
+      "name": "builtin-regeneration",
+      "command": [
+        "node",
+        "tools/build/builtin-assets.cjs",
+        "--check"
+      ],
+      "startedAt": "2026-10-15T16:23:37.5065224Z",
+      "finishedAt": "2026-10-15T16:23:52.4322339Z",
+      "exitCode": 0,
+      "log": "builtin-regeneration.log"
+    },
+    {
+      "name": "focused-format",
+      "command": [
+        "node",
+        "node_modules/prettier/bin/prettier.cjs",
+        "--check",
+        "tools/verify/webgpu-backend.cjs",
+        "tools/verify/webgpu-candidate.cjs",
+        "tools/verify/webgpu-custom-pipeline.cjs",
+        "tools/verify/webgpu-environment.cjs",
+        "tools/verify/webgpu-resource-contracts.cjs",
+        "tools/verify/webgpu-completion-runner.cjs",
+        "tools/verify/webgpu-acceptance.cjs",
+        "tools/verify/consumer-acceptance.cjs",
+        "tools/verify/verify-custom-exports.cjs",
+        "examples/webgpu-basic/src/main.ts"
+      ],
+      "startedAt": "2026-10-15T16:23:52.4325408Z",
+      "finishedAt": "2026-10-15T16:23:53.5177860Z",
+      "exitCode": 0,
+      "log": "focused-format.log"
+    }
+  ]
+}

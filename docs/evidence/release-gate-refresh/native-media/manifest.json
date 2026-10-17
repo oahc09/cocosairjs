@@ -1,0 +1,14 @@
+{
+  "scope": "Native HTMLVideo, no AIR, Windows WebKit",
+  "classification": "BLOCKED_CONTINUOUS_LOOP",
+  "clip": {
+    "path": "examples/video-basic/assets/clip.mp4",
+    "sha256": "6ff568dbe13fd6065974b19b8618a40fb0f80d119bb91c484224512796bf38f4"
+  },
+  "files": {
+    "producer.cjs": "76d68bdc633fb39eeb5963113acac65740c2ee22f1b05c8358d79c23050b1d47",
+    "report.json": "4a8d1c9010d52756dc75c19cef66267abb68ed5f42bcc9e7659d931c6c58071d",
+    "execution.log": "815de25e21fdbfb9662339cf61f666b981140e59ae4fbfb1c0401c94158b57e5",
+    "range-helper.cjs": "23101765da4ecb8693245cf357f3b9fd8637806ec8c9a1bd7b55536c353e2667"
+  }
+}

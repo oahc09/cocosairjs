@@ -1,0 +1,58 @@
+[t1] published-artifacts: 4 markers x 2 bundles, 0 fail
+
+> cocosair.js@1.0.0 prepack
+> node tools/build/prepare-package.cjs
+
+[package] cocosair.module.js -> build\npm/cocosair.module.js (source map omitted)
+[package] cocosair.module.min.js -> build\npm/cocosair.module.min.js (source map omitted)
+[t1] tarball: cocosair.js-1.0.0.tgz (6492339 bytes)
+Cannot access game frame or container.
+{"renderer":"webgl2","example":"webgpu-basic","api":7,"resources":{"readback":true},"visiblePixels":11572,"errors":[],"gpuErrors":[]}
+{"renderer":"webgpu","example":"webgpu-basic","api":8,"resources":{"readback":true,"externalImageUpload":true,"syncReadbackRejected":true,"msaaResolve":true,"mipLayerAttachment":true,"mrtDepth":true,"compute":true,"storageTexture":true,"computeToDraw":true,"resizeRebind":true,"indirectCompute":true,"colorWriteMask":true,"minMaxBlend":true,"blendConstants":true,"mixedBlendRejected":true,"scaledBlit":true,"linearBlit":true},"visiblePixels":11394,"errors":[],"gpuErrors":[]}
+{"renderer":"webgl2","example":"webgpu-basic","api":7,"resources":null,"visiblePixels":70465,"errors":[],"gpuErrors":[]}
+{"renderer":"webgpu","example":"webgpu-basic","api":8,"resources":null,"visiblePixels":69700,"errors":[],"gpuErrors":[]}
+{"renderer":"webgl2","example":"webgpu-basic","api":7,"resources":null,"visiblePixels":70465,"errors":[],"gpuErrors":[]}
+{"renderer":"webgpu","example":"webgpu-basic","api":8,"resources":null,"visiblePixels":69700,"errors":[],"gpuErrors":[]}
+{"renderer":"webgpu","example":"webgpu-basic","api":8,"resources":null,"visiblePixels":11394,"errors":[],"gpuErrors":[]}
+{"renderer":"webgl2","example":"gltf-skin","api":7,"resources":null,"visiblePixels":58979,"errors":[],"gpuErrors":[]}
+{"renderer":"webgpu","example":"gltf-basic","api":8,"resources":null,"visiblePixels":76982,"errors":[],"gpuErrors":[]}
+{"renderer":"webgl2","example":"gltf-basic","api":7,"resources":null,"visiblePixels":77422,"errors":[],"gpuErrors":[]}
+{"renderer":"webgpu","example":"gltf-skin","api":8,"resources":null,"visiblePixels":59148,"errors":[],"gpuErrors":[]}
+{"renderer":"webgpu","example":"gltf-morph","api":8,"resources":null,"visiblePixels":76892,"errors":[],"gpuErrors":[]}
+{"renderer":"webgl2","example":"gltf-morph","api":7,"resources":null,"visiblePixels":74001,"errors":[],"gpuErrors":[]}
+{"renderer":"webgpu","example":"ui-components","api":8,"resources":null,"visiblePixels":29286,"errors":[],"gpuErrors":[]}
+{"renderer":"webgl2","example":"ui-components","api":7,"resources":null,"visiblePixels":29353,"errors":[],"gpuErrors":[]}
+{"renderer":"webgpu","example":"sprite-mask-blend","api":8,"resources":null,"visiblePixels":162292,"errors":[],"gpuErrors":[]}
+{"renderer":"webgl2","example":"sprite-mask-blend","api":7,"resources":null,"visiblePixels":162292,"errors":[],"gpuErrors":[]}
+{"renderer":"webgpu","example":"render-composite","api":8,"resources":null,"visiblePixels":31167,"errors":[],"gpuErrors":[]}
+{"renderer":"webgl2","example":"render-composite","api":7,"resources":null,"visiblePixels":31285,"errors":[],"gpuErrors":[]}
+{"renderer":"webgl2","example":"native-custom","api":7,"resources":null,"visiblePixels":106582,"errors":[],"gpuErrors":[]}
+{"renderer":"webgpu","example":"native-custom","api":8,"resources":null,"visiblePixels":106582,"errors":[],"gpuErrors":[]}
+
+{"renderer":"webgl2","example":"webgpu-basic","api":7,"resources":{"readback":true},"visiblePixels":11572,"errors":[],"gpuErrors":[]}
+{"renderer":"webgpu","example":"webgpu-basic","api":8,"resources":{"readback":true,"externalImageUpload":true,"syncReadbackRejected":true,"msaaResolve":true,"mipLayerAttachment":true,"mrtDepth":true,"compute":true,"storageTexture":true,"computeToDraw":true,"resizeRebind":true,"indirectCompute":true,"colorWriteMask":true,"minMaxBlend":true,"blendConstants":true,"mixedBlendRejected":true,"scaledBlit":true,"linearBlit":true},"visiblePixels":11394,"errors":[],"gpuErrors":[]}
+{"renderer":"webgl2","example":"webgpu-basic","api":7,"resources":null,"visiblePixels":70465,"errors":[],"gpuErrors":[]}
+{"renderer":"webgpu","example":"webgpu-basic","api":8,"resources":null,"visiblePixels":69700,"errors":[],"gpuErrors":[]}
+{"renderer":"webgl2","example":"webgpu-basic","api":7,"resources":null,"visiblePixels":70465,"errors":[],"gpuErrors":[]}
+{"renderer":"webgpu","example":"webgpu-basic","api":8,"resources":null,"visiblePixels":69700,"errors":[],"gpuErrors":[]}
+{"renderer":"webgpu","example":"webgpu-basic","api":8,"resources":null,"visiblePixels":11394,"errors":[],"gpuErrors":[]}
+{"renderer":"webgl2","example":"gltf-skin","api":7,"resources":null,"visiblePixels":59122,"errors":[],"gpuErrors":[]}
+{"renderer":"webgpu","example":"gltf-basic","api":8,"resources":null,"visiblePixels":76982,"errors":[],"gpuErrors":[]}
+{"renderer":"webgl2","example":"gltf-basic","api":7,"resources":null,"visiblePixels":77422,"errors":[],"gpuErrors":[]}
+{"renderer":"webgpu","example":"gltf-skin","api":8,"resources":null,"visiblePixels":59149,"errors":[],"gpuErrors":[]}
+{"renderer":"webgpu","example":"gltf-morph","api":8,"resources":null,"visiblePixels":76850,"errors":[],"gpuErrors":[]}
+{"renderer":"webgl2","example":"gltf-morph","api":7,"resources":null,"visiblePixels":74620,"errors":[],"gpuErrors":[]}
+{"renderer":"webgpu","example":"ui-components","api":8,"resources":null,"visiblePixels":29322,"errors":[],"gpuErrors":[]}
+{"renderer":"webgl2","example":"ui-components","api":7,"resources":null,"visiblePixels":29373,"errors":[],"gpuErrors":[]}
+{"renderer":"webgpu","example":"sprite-mask-blend","api":8,"resources":null,"visiblePixels":162292,"errors":[],"gpuErrors":[]}
+{"renderer":"webgl2","example":"sprite-mask-blend","api":7,"resources":null,"visiblePixels":162292,"errors":[],"gpuErrors":[]}
+{"renderer":"webgpu","example":"render-composite","api":8,"resources":null,"visiblePixels":31167,"errors":[],"gpuErrors":[]}
+{"renderer":"webgl2","example":"render-composite","api":7,"resources":null,"visiblePixels":31529,"errors":[],"gpuErrors":[]}
+{"renderer":"webgl2","example":"native-custom","api":7,"resources":null,"visiblePixels":106582,"errors":[],"gpuErrors":[]}
+{"renderer":"webgpu","example":"native-custom","api":8,"resources":null,"visiblePixels":106582,"errors":[],"gpuErrors":[]}
+
+{
+  "ok": true,
+  "failures": [],
+  "exportCount": 645
+}

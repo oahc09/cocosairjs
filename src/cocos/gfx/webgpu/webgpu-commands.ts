@@ -24,12 +24,14 @@
 
 import { CachedArray } from '../../core/memop/cached-array';
 import { BufferSource, DrawInfo, IndirectBuffer, Texture } from '..';
+import type { WebGPUTexture } from './webgpu-texture';
 import {
     BufferUsageBit,
     ColorMask,
     Filter,
     Format,
     FormatInfos,
+    FormatFeatureBit,
     ShaderStageFlagBit,
     TextureType,
     TextureUsageBit,
@@ -43,6 +45,7 @@ import {
     alignTo,
     TextureFlagBit,
     DescriptorSetLayoutBinding,
+    TextureBlit,
 } from '../base/define';
 
 import { WebGPUCommandAllocator } from './webgpu-command-allocator';
@@ -216,7 +219,7 @@ function GFXFormatToWGPUTextureFormat (format: Format): GPUTextureFormat {
     case Format.RGBA8I: return 'rgba8sint';
     case Format.R16I: return 'r16sint';
     case Format.R16UI: return 'r16uint';
-    case Format.R16F: return 'r16sint';
+    case Format.R16F: return 'r16float';
     case Format.RG16I: return 'rg16sint';
     case Format.RG16UI: return 'rg16uint';
     case Format.RG16F: return 'rg16float';
@@ -250,8 +253,7 @@ function GFXFormatToWGPUTextureFormat (format: Format): GPUTextureFormat {
     case Format.BC7_SRGB: return 'bc7-rgba-unorm-srgb';
 
     default: {
-        warn('Unsupported Format, return rgba8unorm indefault.');
-        return 'rgba8unorm';
+        throw new Error(`WEBGPU_FORMAT_UNSUPPORTED: ${Format[format]}`);
     }
     }
 }
@@ -358,10 +360,7 @@ export function GFXTextureUsageToNative (usage: TextureUsageBit): GPUTextureUsag
         nativeUsage = GPUTextureUsage.TEXTURE_BINDING | GPUTextureUsage.RENDER_ATTACHMENT;
     }
 
-    if ((nativeUsage & GPUTextureUsage.TEXTURE_BINDING)
-    && !(nativeUsage & (GPUTextureUsage.RENDER_ATTACHMENT))) {
-        nativeUsage |= GPUTextureUsage.RENDER_ATTACHMENT;
-    }
+
 
     return nativeUsage;
 }
@@ -397,18 +396,10 @@ export const WebGPUBlendOps: GPUBlendOperation[] = [
 ];
 
 export function WebGPUBlendMask (mask: ColorMask): GPUColorWriteFlags {
-    switch (mask) {
-    case ColorMask.R:
-        return GPUColorWrite.RED;
-    case ColorMask.G:
-        return GPUColorWrite.GREEN;
-    case ColorMask.B:
-        return GPUColorWrite.BLUE;
-    case ColorMask.A:
-        return GPUColorWrite.ALPHA;
-    default:
-        return GPUColorWrite.ALL;
-    }
+    return ((mask & ColorMask.R) ? GPUColorWrite.RED : 0)
+        | ((mask & ColorMask.G) ? GPUColorWrite.GREEN : 0)
+        | ((mask & ColorMask.B) ? GPUColorWrite.BLUE : 0)
+        | ((mask & ColorMask.A) ? GPUColorWrite.ALPHA : 0);
 }
 
 export const WebGPUBlendFactors: GPUBlendFactor[] = [
@@ -425,8 +416,8 @@ export const WebGPUBlendFactors: GPUBlendFactor[] = [
     'src-alpha-saturated',
     'constant', // CONSTANT_COLOR
     'one-minus-constant', // ONE_MINUS_CONSTANT_COLOR
-    'src-alpha', // CONSTANT_ALPHA: not supported
-    'one-minus-src-alpha', // ONE_MINUS_CONSTANT_ALPHA: not supported
+    'constant', // RGB constant-alpha uses an alpha-replicated blend constant.
+    'one-minus-constant',
 ];
 
 export enum WebGPUCmd {
@@ -633,42 +624,21 @@ export function WebGPUCmdFuncUpdateBuffer (
     offset: number,
     size: number,
 ): void {
-    if (gpuBuffer.usage & BufferUsageBit.INDIRECT) {
+    if ((gpuBuffer.usage & BufferUsageBit.INDIRECT) && (buffer as IndirectBuffer).drawInfos) {
         gpuBuffer.indirects.length = offset;
         Array.prototype.push.apply(gpuBuffer.indirects, (buffer as IndirectBuffer).drawInfos);
     } else {
-        const nativeDevice: GPUDevice = device.nativeDevice!;
-        let buff = buffer as ArrayBuffer;
-        let rawBuffer: ArrayBuffer;
+        if (gpuBuffer.usage & BufferUsageBit.INDIRECT) gpuBuffer.indirects.length = 0;
+        const bytes = ArrayBuffer.isView(buffer)
+            ? new Uint8Array(buffer.buffer, buffer.byteOffset, buffer.byteLength)
+            : new Uint8Array(buffer as ArrayBuffer);
+        if (!Number.isInteger(offset) || offset < 0 || offset % 4 || !Number.isInteger(size) || size < 0
+            || size % 4 || offset + size > gpuBuffer.gpuBuffer!.size) throw new Error('WEBGPU_BUFFER_UPDATE_RANGE');
+        // Preserve typed-array byteOffset; pad only the backend's four-byte allocation tail.
+        const data = new Uint8Array(size);
+        data.set(bytes.subarray(0, size));
+        device.nativeDevice!.queue.writeBuffer(gpuBuffer.gpuBuffer!, offset, data);
 
-        // arraybuffer size not equal to buff.bytelength, so new another array
-        buff = buff.slice(0, size);
-
-        if ('buffer' in buff) {
-            // es-lint as any
-            rawBuffer = (buff as any).buffer;
-        } else {
-            rawBuffer = buff;
-        }
-
-        if (rawBuffer.byteLength !== size) {
-            rawBuffer = rawBuffer.slice(0, size);
-        }
-        // Buffer.gpubuffer may not able to be mapped directly, so staging buffer here.
-        const stagingBuffer = nativeDevice.createBuffer({
-            label: `staging buffer ${size}`,
-            size,
-            usage: GPUBufferUsage.MAP_WRITE | GPUBufferUsage.COPY_SRC,
-            mappedAtCreation: true,
-        });
-        const mappedRange = stagingBuffer.getMappedRange();
-        new Uint8Array(mappedRange).set(new Uint8Array(rawBuffer));
-        stagingBuffer.unmap();
-        const commandEncoder = nativeDevice.createCommandEncoder();
-        commandEncoder.copyBufferToBuffer(stagingBuffer, 0, gpuBuffer.gpuBuffer as GPUBuffer, offset, size);
-        const commandBuffer = commandEncoder.finish();
-        nativeDevice.queue.submit([commandBuffer]);
-        stagingBuffer.destroy();
     }
 }
 
@@ -678,24 +648,54 @@ export function WebGPUCmdFuncCreateTexture (device: WebGPUDevice, gpuTexture: IW
     gpuTexture.gpuInternalFmt = GFXFormatToWGPUTextureFormat(gpuTexture.format);
     gpuTexture.gpuFormat = GFXFormatToWGPUFormat(gpuTexture.format);
     gpuTexture.gpuUsage = GFXTextureUsageToNative(gpuTexture.usage);
+    if (gpuTexture.flags & TextureFlagBit.GEN_MIPMAP) gpuTexture.gpuUsage |= GPUTextureUsage.RENDER_ATTACHMENT;
     gpuTexture.gpuWrapS = gpuTexture.isPowerOf2 ? 'repeat' : 'clamp-to-edge';
     gpuTexture.gpuWrapT = gpuTexture.isPowerOf2 ? 'repeat' : 'clamp-to-edge';
     gpuTexture.gpuMinFilter = 'linear';
     gpuTexture.gpuMagFilter = 'linear';
     // only 1 and 4 supported.
-    gpuTexture.samples = Number(gpuTexture.samples) > 1 ? 4 : 1;
+    if (gpuTexture.samples !== 1 && gpuTexture.samples !== 4) throw new Error('WEBGPU_SAMPLE_COUNT_UNSUPPORTED');
+    const features = device.getFormatFeatures(gpuTexture.format);
+    // External canvas/image uploads require COPY_DST and RENDER_ATTACHMENT in WebGPU.
+    // Add the native capability only where a single-sampled 2D color attachment is valid.
+    if (gpuTexture.gpuTarget === '2d' && gpuTexture.samples === 1
+        && (gpuTexture.gpuUsage & GPUTextureUsage.COPY_DST) && !FormatInfos[gpuTexture.format].hasDepth
+        && (features & FormatFeatureBit.RENDER_TARGET)) {
+        gpuTexture.gpuUsage |= GPUTextureUsage.RENDER_ATTACHMENT;
+    }
+    if ((gpuTexture.gpuUsage & GPUTextureUsage.RENDER_ATTACHMENT) && !(features & FormatFeatureBit.RENDER_TARGET)) {
+        throw new Error(`WEBGPU_TEXTURE_USAGE_UNSUPPORTED: ${Format[gpuTexture.format]} render attachment`);
+    }
+    if ((gpuTexture.gpuUsage & GPUTextureUsage.STORAGE_BINDING) && !(features & FormatFeatureBit.STORAGE_TEXTURE)) {
+        throw new Error('WEBGPU_STORAGE_FORMAT_UNSUPPORTED');
+    }
     const texDescriptor: GPUTextureDescriptor = {
-        size: [gpuTexture.width, gpuTexture.height, gpuTexture.arrayLayer],
+        dimension: gpuTexture.type === TextureType.TEX3D ? '3d' : gpuTexture.type === TextureType.TEX1D ? '1d' : '2d',
+        size: [gpuTexture.width, gpuTexture.height, gpuTexture.type === TextureType.TEX3D ? gpuTexture.depth : gpuTexture.arrayLayer],
         mipLevelCount: gpuTexture.mipLevel,
         sampleCount: gpuTexture.samples,
         format: gpuTexture.gpuFormat,
         usage: gpuTexture.gpuUsage,
     };
 
+    if (gpuTexture.samples > 1) {
+        if (gpuTexture.type !== TextureType.TEX2D || gpuTexture.mipLevel !== 1 || gpuTexture.arrayLayer !== 1) {
+            throw new Error('WEBGPU_MULTISAMPLE_TEXTURE_UNSUPPORTED');
+        }
+        if (!FormatInfos[gpuTexture.format].hasDepth) {
+            const resolved = device.nativeDevice!.createTexture({ ...texDescriptor, sampleCount: 1,
+                usage: texDescriptor.usage | GPUTextureUsage.COPY_SRC });
+            gpuTexture.resolveTex = { ...gpuTexture, samples: 1, resolveTex: null, gpuTexture: resolved,
+                getTextureView: () => resolved.createView() };
+        }
+        texDescriptor.usage = GPUTextureUsage.RENDER_ATTACHMENT;
+    }
     gpuTexture.gpuTexture = device.nativeDevice!.createTexture(texDescriptor);
 }
 
 export function WebGPUCmdFuncDestroyTexture (gpuTexture: IWebGPUTexture): void {
+    gpuTexture.resolveTex?.gpuTexture?.destroy();
+    gpuTexture.resolveTex = null;
     if (gpuTexture.gpuTexture) {
         gpuTexture.gpuTexture.destroy();
     }
@@ -748,64 +748,182 @@ export function WebGPUCmdFuncDestroyFramebuffer (device: WebGPUDevice, gpuFrameb
     }
 }
 
-const copyTexToBufferDesc: GPUBufferDescriptor = {} as GPUBufferDescriptor;
-const destArrayBuffer: ArrayBuffer[] = [];
 export async function WebGPUCmdFuncCopyTextureToBuffer (
-    device: WebGPUDevice,
-    texture: IWebGPUTexture,
-    buffers: ArrayBufferView[],
-    regions: readonly BufferTextureCopy[],
+    device: WebGPUDevice, texture: IWebGPUTexture, buffers: ArrayBufferView[], regions: readonly BufferTextureCopy[],
 ): Promise<void> {
-    let x = 0;
-    let y = 0;
-    let w = 1;
-    let h = 1;
-    const nativeDevice: GPUDevice = device.nativeDevice!;
-    const commandEncoder = nativeDevice.createCommandEncoder({});
-    const regionSize = regions.length;
-    for (let k = 0; k < regionSize; k++) {
-        if (destArrayBuffer[k]) {
-            (buffers[k] as Uint8Array).set(new Uint8Array(destArrayBuffer[k]), 0);
-        }
-        copyTexToBufferDesc.size = buffers[k].byteLength;
-        copyTexToBufferDesc.usage = GPUBufferUsage.MAP_READ | GPUBufferUsage.COPY_DST;
-
-        const copyDestBuffer = nativeDevice.createBuffer(copyTexToBufferDesc);
-        const region = regions[k];
-        x = region.texOffset.x;
-        y = region.texOffset.y;
-        w = region.texExtent.width;
-        h = region.texExtent.height;
-
-        commandEncoder.copyTextureToBuffer({
-            texture: texture.gpuTexture!,
-            mipLevel: 0,
-            origin: {
-                x,
-                y,
-            },
-        }, {
-            buffer: copyDestBuffer,
-            offset: 0,
-            bytesPerRow: w * 4,
-            rowsPerImage: h,
-        }, {
-            width: w,
-            height: h,
-        });
-
-        nativeDevice.queue.submit([commandEncoder.finish()]);
-        // eslint-disable-next-line no-await-in-loop
-        await copyDestBuffer.mapAsync(GPUMapMode.READ);
-        destArrayBuffer[k] = copyDestBuffer.getMappedRange();
-        (buffers[k] as Uint8Array).set(new Uint8Array(destArrayBuffer[k]), 0);
+    const info = FormatInfos[texture.format];
+    if (info.hasDepth || info.hasStencil || info.isCompressed || texture.samples !== 1) {
+        throw new Error('WEBGPU_READBACK_UNSUPPORTED: requires a single-sample uncompressed color texture.');
+    }
+    if (buffers.length !== regions.length) throw new Error('WEBGPU_READBACK_BUFFERS');
+    const layouts = regions.map((region, index) => {
+        const { width, height, depth } = region.texExtent;
+        const layers = texture.type === TextureType.TEX3D ? depth : region.texSubres.layerCount;
+        const stride = region.buffStride || width;
+        const imageHeight = region.buffTexHeight || height;
+        const required = region.buffOffset + ((layers - 1) * imageHeight * stride + (height - 1) * stride + width) * info.size;
+        if (![width, height, layers, stride, imageHeight, region.buffOffset, region.texSubres.mipLevel,
+            region.texOffset.x, region.texOffset.y, region.texOffset.z, region.texSubres.baseArrayLayer].every(Number.isInteger)
+            || width <= 0 || height <= 0 || layers <= 0 || stride < width || imageHeight < height || region.buffOffset < 0
+            || region.texSubres.mipLevel < 0 || region.texSubres.mipLevel >= texture.mipLevel
+            || region.texOffset.x < 0 || region.texOffset.y < 0 || region.texOffset.z < 0 || region.texSubres.baseArrayLayer < 0
+            || region.texOffset.x + width > Math.max(1, texture.width >> region.texSubres.mipLevel)
+            || region.texOffset.y + height > Math.max(1, texture.height >> region.texSubres.mipLevel)
+            || (texture.type === TextureType.TEX3D ? region.texOffset.z + layers > Math.max(1, texture.depth >> region.texSubres.mipLevel)
+                : region.texSubres.baseArrayLayer + layers > texture.arrayLayer)
+            || buffers[index].byteLength < required) throw new Error('WEBGPU_READBACK_RANGE');
+        const bytesPerRow = Math.ceil(width * info.size / 256) * 256;
+        return { width, height, layers, stride, imageHeight, bytesPerRow };
+    });
+    const native = device.nativeDevice!;
+    for (let index = 0; index < regions.length; index++) {
+        const region = regions[index];
+        const layout = layouts[index];
+        const staging = native.createBuffer({ size: layout.bytesPerRow * layout.height * layout.layers,
+            usage: GPUBufferUsage.MAP_READ | GPUBufferUsage.COPY_DST });
+        try {
+            const encoder = native.createCommandEncoder();
+            encoder.copyTextureToBuffer({ texture: texture.gpuTexture!, mipLevel: region.texSubres.mipLevel,
+                origin: { x: region.texOffset.x, y: region.texOffset.y,
+                    z: texture.type === TextureType.TEX3D ? region.texOffset.z : region.texSubres.baseArrayLayer } },
+            { buffer: staging, bytesPerRow: layout.bytesPerRow, rowsPerImage: layout.height },
+            { width: layout.width, height: layout.height, depthOrArrayLayers: layout.layers });
+            native.queue.submit([encoder.finish()]);
+            await staging.mapAsync(GPUMapMode.READ);
+            const source = new Uint8Array(staging.getMappedRange());
+            const destination = new Uint8Array(buffers[index].buffer, buffers[index].byteOffset, buffers[index].byteLength);
+            for (let layer = 0; layer < layout.layers; layer++) for (let row = 0; row < layout.height; row++) {
+                const from = (layer * layout.height + row) * layout.bytesPerRow;
+                const to = region.buffOffset + (layer * layout.imageHeight + row) * layout.stride * info.size;
+                destination.set(source.subarray(from, from + layout.width * info.size), to);
+            }
+        } finally { staging.unmap(); staging.destroy(); }
     }
 }
 
-export const SEPARATE_SAMPLER_BINDING_OFFSET = 16;
+// Keep native sampler slots clear of material texture bindings, including glTF physical extensions.
+export const SEPARATE_SAMPLER_BINDING_OFFSET = 64;
+const colorBlitPipelines = new WeakMap<GPUDevice, Map<string, GPURenderPipeline>>();
+
+export function WebGPUCmdFuncBlitTexture (
+    device: WebGPUDevice, src: Readonly<Texture>, dst: Texture, regions: readonly TextureBlit[], filter: Filter,
+): void {
+    const source = (src as WebGPUTexture).gpuTexture;
+    const target = (dst as WebGPUTexture).gpuTexture;
+    const native = device.nativeDevice!;
+    const sourceTexture = source.resolveTex?.gpuTexture || source.gpuTexture!;
+    if (dst.samples !== 1 || (src.samples > 1 && !source.resolveTex)) throw new Error('WEBGPU_BLIT_MULTISAMPLE_UNSUPPORTED');
+    const sourceInfo = FormatInfos[src.format], targetInfo = FormatInfos[dst.format];
+    if (sourceInfo.hasDepth || sourceInfo.hasStencil || targetInfo.hasDepth || targetInfo.hasStencil) {
+        throw new Error('WEBGPU_BLIT_DEPTH_UNSUPPORTED');
+    }
+    const linear = filter === Filter.LINEAR || filter === Filter.ANISOTROPIC;
+    const copies = regions.map((region) => {
+        const sourceMip = src.viewInfo.baseLevel + region.srcSubres.mipLevel;
+        const targetMip = dst.viewInfo.baseLevel + region.dstSubres.mipLevel;
+        const sourceLayer = src.viewInfo.baseLayer + region.srcSubres.baseArrayLayer;
+        const targetLayer = dst.viewInfo.baseLayer + region.dstSubres.baseArrayLayer;
+        const layers = region.srcSubres.layerCount;
+        const sw = Math.max(1, source.width >> sourceMip), sh = Math.max(1, source.height >> sourceMip);
+        const tw = Math.max(1, target.width >> targetMip), th = Math.max(1, target.height >> targetMip);
+        if (src.type === TextureType.TEX3D || dst.type === TextureType.TEX3D || region.srcExtent.depth !== 1 || region.dstExtent.depth !== 1) {
+            throw new Error('WEBGPU_BLIT_DIMENSION_UNSUPPORTED');
+        }
+        const values = [region.srcSubres.mipLevel, region.dstSubres.mipLevel, region.srcSubres.baseArrayLayer,
+            region.dstSubres.baseArrayLayer, layers, region.dstSubres.layerCount,
+            region.srcOffset.x, region.srcOffset.y, region.dstOffset.x, region.dstOffset.y,
+            region.srcExtent.width, region.srcExtent.height, region.dstExtent.width, region.dstExtent.height];
+        if (!values.every((value) => Number.isInteger(value) && value >= 0) || !layers || layers !== region.dstSubres.layerCount
+            || region.srcSubres.mipLevel >= src.viewInfo.levelCount || region.dstSubres.mipLevel >= dst.viewInfo.levelCount
+            || region.srcSubres.baseArrayLayer + layers > src.viewInfo.layerCount
+            || region.dstSubres.baseArrayLayer + layers > dst.viewInfo.layerCount
+            || !region.srcExtent.width || !region.srcExtent.height || !region.dstExtent.width || !region.dstExtent.height
+            || region.srcOffset.x + region.srcExtent.width > sw || region.srcOffset.y + region.srcExtent.height > sh
+            || region.dstOffset.x + region.dstExtent.width > tw || region.dstOffset.y + region.dstExtent.height > th) {
+            throw new Error('WEBGPU_BLIT_RANGE');
+        }
+        if (sourceTexture === target.gpuTexture && sourceMip === targetMip
+            && sourceLayer < targetLayer + layers && targetLayer < sourceLayer + layers) throw new Error('WEBGPU_BLIT_ALIAS');
+        const copy = src.format === dst.format && region.srcExtent.width === region.dstExtent.width
+            && region.srcExtent.height === region.dstExtent.height
+            && (sourceTexture.usage & GPUTextureUsage.COPY_SRC) && (target.gpuUsage & GPUTextureUsage.COPY_DST);
+        if (!copy && (!(sourceTexture.usage & GPUTextureUsage.TEXTURE_BINDING)
+            || !(target.gpuUsage & GPUTextureUsage.RENDER_ATTACHMENT) || sourceInfo.isCompressed || targetInfo.isCompressed
+            || /(?:uint|sint)$/.test(source.gpuFormat) || /(?:uint|sint)$/.test(target.gpuFormat))) {
+            throw new Error('WEBGPU_BLIT_USAGE_UNSUPPORTED');
+        }
+        if (!copy && linear && !(device.getFormatFeatures(src.format) & FormatFeatureBit.LINEAR_FILTER)) {
+            throw new Error('WEBGPU_BLIT_FILTER_UNSUPPORTED');
+        }
+        return { region, sourceMip, targetMip, sourceLayer, targetLayer, layers, sw, sh, copy };
+    });
+    const encoder = native.createCommandEncoder();
+    const uniforms: GPUBuffer[] = [];
+    try {
+        for (const entry of copies) {
+            const { region, sourceMip, targetMip, sourceLayer, targetLayer, layers, sw, sh } = entry;
+            if (entry.copy) {
+                encoder.copyTextureToTexture({ texture: sourceTexture, mipLevel: sourceMip,
+                    origin: [region.srcOffset.x, region.srcOffset.y, sourceLayer] },
+                { texture: target.gpuTexture!, mipLevel: targetMip, origin: [region.dstOffset.x, region.dstOffset.y, targetLayer] },
+                [region.dstExtent.width, region.dstExtent.height, layers]);
+                continue;
+            }
+            let cache = colorBlitPipelines.get(native);
+            if (!cache) { cache = new Map(); colorBlitPipelines.set(native, cache); }
+            const filterable = !!(device.getFormatFeatures(src.format) & FormatFeatureBit.LINEAR_FILTER);
+            const key = `${target.gpuFormat}/${filterable}`;
+            let pipeline = cache.get(key);
+            if (!pipeline) {
+                const layout = native.createBindGroupLayout({ entries: [
+                    { binding: 0, visibility: GPUShaderStage.FRAGMENT, sampler: { type: filterable ? 'filtering' : 'non-filtering' } },
+                    { binding: 1, visibility: GPUShaderStage.FRAGMENT, texture: { sampleType: filterable ? 'float' : 'unfilterable-float' } },
+                    { binding: 2, visibility: GPUShaderStage.FRAGMENT, buffer: { type: 'uniform' } },
+                ] });
+                const module = native.createShaderModule({ code: `
+                    struct Output { @builtin(position) position: vec4<f32>, @location(0) uv: vec2<f32> }
+                    @vertex fn vs(@builtin(vertex_index) i: u32) -> Output {
+                        let p = vec2<f32>(f32((i << 1u) & 2u), f32(i & 2u));
+                        return Output(vec4<f32>(p * 2.0 - 1.0, 0.0, 1.0), vec2<f32>(p.x, 1.0 - p.y));
+                    }
+                    @group(0) @binding(0) var s: sampler;
+                    @group(0) @binding(1) var t: texture_2d<f32>;
+                    @group(0) @binding(2) var<uniform> region: vec4<f32>;
+                    @fragment fn fs(input: Output) -> @location(0) vec4<f32> {
+                        return textureSampleLevel(t, s, region.xy + input.uv * region.zw, 0.0);
+                    }` });
+                pipeline = native.createRenderPipeline({ layout: native.createPipelineLayout({ bindGroupLayouts: [layout] }),
+                    vertex: { module, entryPoint: 'vs' }, fragment: { module, entryPoint: 'fs', targets: [{ format: target.gpuFormat }] },
+                    primitive: { topology: 'triangle-list' } });
+                cache.set(key, pipeline);
+            }
+            const uniform = native.createBuffer({ size: 16, usage: GPUBufferUsage.UNIFORM, mappedAtCreation: true });
+            new Float32Array(uniform.getMappedRange()).set([region.srcOffset.x / sw, region.srcOffset.y / sh,
+                region.srcExtent.width / sw, region.srcExtent.height / sh]);
+            uniform.unmap(); uniforms.push(uniform);
+            const sampler = native.createSampler({ minFilter: linear ? 'linear' : 'nearest', magFilter: linear ? 'linear' : 'nearest' });
+            for (let layer = 0; layer < layers; layer++) {
+                const sourceView = sourceTexture.createView({ dimension: '2d', baseMipLevel: sourceMip, mipLevelCount: 1,
+                    baseArrayLayer: sourceLayer + layer, arrayLayerCount: 1 });
+                const targetView = target.gpuTexture!.createView({ dimension: '2d', baseMipLevel: targetMip, mipLevelCount: 1,
+                    baseArrayLayer: targetLayer + layer, arrayLayerCount: 1 });
+                const group = native.createBindGroup({ layout: pipeline.getBindGroupLayout(0), entries: [
+                    { binding: 0, resource: sampler }, { binding: 1, resource: sourceView }, { binding: 2, resource: { buffer: uniform } },
+                ] });
+                const pass = encoder.beginRenderPass({ colorAttachments: [{ view: targetView, loadOp: 'load', storeOp: 'store' }] });
+                pass.setPipeline(pipeline); pass.setBindGroup(0, group);
+                pass.setViewport(region.dstOffset.x, region.dstOffset.y, region.dstExtent.width, region.dstExtent.height, 0, 1);
+                pass.setScissorRect(region.dstOffset.x, region.dstOffset.y, region.dstExtent.width, region.dstExtent.height);
+                pass.draw(3); pass.end();
+            }
+        }
+        native.queue.submit([encoder.finish()]);
+    } finally { for (const uniform of uniforms) uniform.destroy(); }
+}
+
 function seperateCombinedSamplerTexture (shaderSource: string): string {
     // gather
-    const samplerReg = /.*?(\(set = \d+, binding = )(\d+)\) uniform[^;]+sampler(\w*) (\w+);/g;
+    const samplerReg = /layout\s*(\(set = \d+, binding = )(\d+)\) uniform[^;]+sampler(\w*) (\w+);/g;
     let iter = samplerReg.exec(shaderSource);
     // samplerName, samplerType
     const referredMap = new Map<string, string>();
@@ -817,7 +935,7 @@ function seperateCombinedSamplerTexture (shaderSource: string): string {
     }
 
     let code = shaderSource;
-    const sampReg = /.*?(\(set = \d+, binding = )(\d+)\) uniform[^;]+sampler(\w*) (\w+);/g;
+    const sampReg = /layout\s*(\(set = \d+, binding = )(\d+)\) uniform[^;]+sampler(\w*) (\w+);/g;
     let it = sampReg.exec(code);
     while (it) {
         code = code.replace(sampReg, `layout$1 $2) uniform texture$3 $4;\n
@@ -1222,15 +1340,32 @@ export function WebGPUCmdFuncCreateGPUShader (device: WebGPUDevice, gpuShader: I
     for (let i = 0; i < stageSize; ++i) {
         wgslCodes.length = 0;
         const gpuStage = gpuShader.gpuStages[i];
-        const glslSource = seperateCombinedSamplerTexture(gpuStage.source);
+        let source = gpuStage.source;
+        const shadowSample = /\btexture\s*\(\s*(?:shadowMap|cc_shadowMap|cc_spotShadowMap)\s*,/g;
+        let match: RegExpExecArray | null;
+        while ((match = shadowSample.exec(source))) {
+            const open = source.indexOf('(', match.index);
+            let end = open + 1, depth = 1;
+            for (; end < source.length && depth; end++) {
+                if (source[end] === '(') depth++;
+                if (source[end] === ')') depth--;
+            }
+            source = source.slice(0, match.index) + 'textureLod' + source.slice(open, end - 1) + ', 0.0)' + source.slice(end);
+            shadowSample.lastIndex = end + 8;
+        }
+        const glslSource = seperateCombinedSamplerTexture(source);
         const stageStr = gpuStage.type === ShaderStageFlagBit.VERTEX ? 'vertex'
             : gpuStage.type === ShaderStageFlagBit.FRAGMENT ? 'fragment' : 'compute';
         const sourceCode = `#version 450\n#define CC_USE_WGPU 1\n${glslSource}`;
-        const spv = glslang.compileGLSL(sourceCode, stageStr, false, '1.3');
-
-        let wgsl: string = twgsl.convertSpirV2WGSL(spv);
-        if (wgsl === '') {
-            error('empty wgsl');
+        let wgsl: string;
+        try {
+            const spv = glslang.compileGLSL(sourceCode, stageStr, false, '1.3');
+            wgsl = twgsl.convertSpirV2WGSL(spv);
+            if (!wgsl) throw new Error('Translator returned empty WGSL.');
+        } catch (cause) {
+            throw Object.assign(new Error(`WebGPU shader '${gpuShader.name}' ${stageStr} translation failed.`), {
+                code: 'WEBGPU_SHADER_TRANSLATION_FAILED', cause,
+            });
         }
         gpuStage.source = wgsl;
         findEmployAttr(gpuStage);
@@ -1243,14 +1378,11 @@ export function WebGPUCmdFuncCreateGPUShader (device: WebGPUDevice, gpuShader: I
             });
         // eslint-disable-next-line no-loop-func
         }).catch((compileInfo: GPUCompilationInfo) => {
-            compileInfo.messages.forEach((info) => {
-                log(sourceCode, wgsl, info.lineNum, info.linePos, info.type, info.message);
-            });
+            error(`WebGPU shader '${gpuShader.name}' ${stageStr} diagnostics failed:`, compileInfo);
         });
-        const shaderStage: GPUProgrammableStage = {
-            module: shader,
-            entryPoint: 'main',
-        };
+        const entry = new RegExp(`@${stageStr}\\b[\\s\\S]*?\\bfn\\s+(\\w+)\\s*\\(`).exec(wgsl);
+        if (!entry) throw new Error(`WEBGPU_SHADER_ENTRY_POINT: ${gpuShader.name} ${stageStr}`);
+        const shaderStage: GPUProgrammableStage = { module: shader, entryPoint: entry[1] };
         gpuStage.gpuShader = shaderStage;
         wgslCodes.push(wgsl);
         const bindingList = reflect(wgslCodes);
@@ -1407,7 +1539,6 @@ export function createBindGroupLayoutEntry (currBind: DescriptorSetLayoutBinding
     const device = WebGPUDeviceManager.instance;
     let entrySampler: GPUBindGroupLayoutEntry | null = null;
     let samplerType = GFXSampleTypeToGPUTextureSampleType[currBind.sampleType];
-    if (samplerType === 'float' && !device.floatFilterable) { samplerType = 'unfilterable-float'; }
     const isTexUnFilter = samplerType === 'unfilterable-float';
     const viewDimension = GFXViewDimensionToGPUViewDimension[currBind.viewDimension];
     const type = currBind.descriptorType;
@@ -1500,6 +1631,8 @@ export function TextureSampleTypeTrait (format: Format): GPUTextureSampleType {
     case Format.SRGB8_A8:
     case Format.RGB10A2:
     case Format.RGBA16F:
+    case Format.R16F:
+    case Format.RG16F:
         return 'float';
     case Format.R8UI:
     case Format.R16UI:
@@ -1522,9 +1655,7 @@ export function TextureSampleTypeTrait (format: Format): GPUTextureSampleType {
     case Format.RGBA32I:
     case Format.R32I:
         return 'sint';
-    case Format.R16F:
     case Format.R32F:
-    case Format.RG16F:
     case Format.R11G11B10F:
     case Format.RG32F:
     case Format.RGBA32F:
@@ -1545,6 +1676,7 @@ export function FormatToWGPUFormatType (format: Format): GPUTextureSampleType {
 }
 
 interface MipmapPassData {
+    format: GPUTextureFormat;
     vertShader: GPUShaderModule;
     fragShader: GPUShaderModule;
     sampler: GPUSampler;
@@ -1559,8 +1691,8 @@ function genMipMap (device: WebGPUDevice, texture: IWebGPUTexture, fromLevel: nu
     const format = texture.gpuFormat;
     const dimension = texture.gpuTarget;
     const nativeDevice = device.nativeDevice!;
-    if (!mipmapData) {
-        mipmapData = {} as any;
+    if (!mipmapData || mipmapData.format !== format) {
+        mipmapData = { format } as any;
         const texQuadVert = `
         struct VertexOutput {
             @builtin(position) Position : vec4<f32>,
@@ -1767,70 +1899,26 @@ export function WebGPUCmdFuncCopyBuffersToTexture (
     regions: BufferTextureCopy[],
 ): void {
     const nativeDevice = device.nativeDevice!;
-    const dstFormat = gpuTexture.format;
-    const blockSize = formatAlignment(dstFormat);
-    const regionSize = regions.length;
-    for (let i = 0; i < regionSize; ++i) {
-        const region = regions[i];
-        const bufferPixelWidth = region.buffStride > 0 ? region.buffStride : region.texExtent.width;
-        const bufferPixelHeight = region.buffTexHeight > 0 ? region.buffTexHeight : region.texExtent.height;
-        const bytesPerRow = FormatSize(dstFormat, region.texExtent.width, 1, 1);
-        const bufferBytesPerRow = FormatSize(dstFormat, bufferPixelWidth, 1, 1);
-        const bufferBytesPerImageSlice = FormatSize(dstFormat, bufferPixelWidth, bufferPixelHeight, 1);
-        const bufferBytesPerImageLayer = FormatSize(dstFormat, bufferPixelWidth, bufferPixelHeight, region.texExtent.depth);
-        const targetWidth = region.texExtent.width === 0 ? 0 : alignTo(region.texExtent.width, blockSize.width);
-        const targetHeight = region.texExtent.height === 0 ? 0 : alignTo(region.texExtent.height, blockSize.height);
-        const imgDataLayout: GPUImageDataLayout = {
-            offset: 0,
-            bytesPerRow: bufferBytesPerRow,
-            rowsPerImage: bufferPixelHeight,
-        };
-        const compactInWidth = bufferPixelWidth === region.texExtent.width;
-        for (let l = region.texSubres.baseArrayLayer; l < region.texSubres.layerCount + region.texSubres.baseArrayLayer; l++) {
-            for (let d = region.texOffset.z; d < region.texExtent.depth + region.texOffset.z; d++) {
-                if (compactInWidth) {
-                    const arrayBuffer: ArrayBufferView | ArrayBufferLike = buffers[i];
-                    let buffer: Uint8Array; // buffers and regions are a one-to-one mapping
-                    if ('buffer' in arrayBuffer) {
-                        buffer = new Uint8Array(arrayBuffer.buffer, arrayBuffer.byteOffset, arrayBuffer.byteLength);
-                    } else {
-                        buffer = new Uint8Array(arrayBuffer);
-                    }
-                    const srcData = new Uint8Array(buffer, buffer.byteOffset
-                        + region.buffOffset
-                        + (l - region.texSubres.baseArrayLayer) * bufferBytesPerImageLayer
-                        + (d - region.texOffset.z) * bufferBytesPerImageSlice);
-                    const copyTarget = {
-                        texture: gpuTexture.gpuTexture!,
-                        mipLevel: region.texSubres.mipLevel,
-                        origin: {
-                            x: region.texOffset.x,
-                            y: region.texOffset.y,
-                            z: l,
-                        },
-                    };
-                    nativeDevice.queue.writeTexture(copyTarget, srcData, imgDataLayout, [targetWidth, targetHeight, region.texExtent.depth]);
-                } else {
-                    for (let h = region.texOffset.y; h < region.texExtent.height + region.texOffset.y; h += blockSize.height) {
-                        const srcData = new Uint8Array(buffers[i].buffer, buffers[i].byteOffset
-                            + region.buffOffset + (l - region.texSubres.baseArrayLayer) * bufferBytesPerImageLayer
-                            + ((d - region.texOffset.z) * bufferBytesPerImageSlice
-                            + (h - region.texOffset.y) / blockSize.height * bufferBytesPerRow));
-                        const copyTarget = {
-                            texture: gpuTexture.gpuTexture!,
-                            mipLevel: region.texSubres.mipLevel,
-                            origin: {
-                                x: region.texOffset.x,
-                                y: h,
-                                z: l,
-                            },
-                        };
-                        nativeDevice.queue.writeTexture(copyTarget, srcData, imgDataLayout, [targetWidth, blockSize.height, region.texExtent.depth]);
-                    }
-                }
-            }
+    let bufferIndex = 0;
+    for (const region of regions) {
+        const is3D = gpuTexture.type === TextureType.TEX3D;
+        const layers = is3D ? 1 : region.texSubres.layerCount;
+        const depth = is3D ? region.texExtent.depth : 1;
+        const stride = region.buffStride || region.texExtent.width;
+        const imageHeight = region.buffTexHeight || region.texExtent.height;
+        const alignment = formatAlignment(gpuTexture.format);
+        const bytesPerRow = FormatSize(gpuTexture.format, stride, 1, 1);
+        const rowsPerImage = Math.ceil(imageHeight / alignment.height);
+        for (let layer = 0; layer < layers; layer++) {
+            const source = buffers[bufferIndex++];
+            if (!source) throw new Error('WEBGPU_UPLOAD_BUFFERS');
+            const data = new Uint8Array(source.buffer, source.byteOffset, source.byteLength);
+            nativeDevice.queue.writeTexture({ texture: gpuTexture.gpuTexture!, mipLevel: region.texSubres.mipLevel,
+                origin: { x: region.texOffset.x, y: region.texOffset.y, z: is3D ? region.texOffset.z : region.texSubres.baseArrayLayer + layer } },
+            data, { offset: region.buffOffset, bytesPerRow, rowsPerImage },
+            { width: region.texExtent.width, height: region.texExtent.height, depthOrArrayLayers: depth });
             if (gpuTexture.flags & TextureFlagBit.GEN_MIPMAP) {
-                genMipMap(device, gpuTexture, 1, gpuTexture.mipLevel - 1, 0);
+                genMipMap(device, gpuTexture, 1, gpuTexture.mipLevel - 1, region.texSubres.baseArrayLayer + layer);
             }
         }
     }

@@ -91,6 +91,18 @@ function sourceFingerprint(exampleDir) {
         })(src);
     }
     const assets = path.join(exampleDir, 'assets');
+    // Bind cross-example generated shader data used by the driver example, too.
+    // These imports stay outside the example directory after normal source traversal.
+    for (const file of [...files]) {
+        if (!/\.[jt]s$/.test(file.rel)) continue;
+        const absolute = path.join(exampleDir, file.rel);
+        const code = fs.readFileSync(absolute, 'utf8');
+        for (const match of code.matchAll(/['"]((?:\.\.\/)+[\w-]+\/src\/effect\.generated\.js)['"]/g)) {
+            const requested = path.resolve(path.dirname(absolute), match[1]);
+            const dependency = require('../dev/resolve-script.cjs').resolveScript(requested);
+            push(path.relative(exampleDir, dependency).replace(/\\/g, '/'));
+        }
+    }
     if (fs.existsSync(assets)) {
         (function walk(dir) {
             for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {

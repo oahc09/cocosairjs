@@ -1,0 +1,196 @@
+{
+  "generatedAt": "2026-10-16T15:47:28.291Z",
+  "version": "1.0.0",
+  "npmScripts": 48,
+  "buildCounter": 165,
+  "candidateFingerprint": "0a6c249084b50f2f",
+  "sourceSha256": "cdd552444066108de44b0c772b9c88bc26ac274de7eb3e4bebd369c172e349a9",
+  "api": {
+    "completed": true,
+    "pass": 183,
+    "total": 183
+  },
+  "devtools": {
+    "pass": 5,
+    "total": 5
+  },
+  "gallery": {
+    "completed": true,
+    "pass": 303,
+    "total": 303
+  },
+  "browserMatrix": {
+    "completed": true,
+    "subset": false,
+    "pass": 78,
+    "total": 78,
+    "failed": []
+  },
+  "coverage": {
+    "totalUnits": 13514,
+    "totalRequired": 1439,
+    "inventoryFingerprint": "ade3ee644bfc5a67",
+    "apiInventoryRevision": "9aa223482b9ae1f3",
+    "totalVerified": 1627,
+    "call": 1442,
+    "read": 185,
+    "unknown": 0
+  },
+  "webgpu": {
+    "desktopScopePassed": true,
+    "externalSafari": "NOT_RUN - owner retained external acceptance",
+    "releaseReady": false,
+    "sourceSha256": "cdd552444066108de44b0c772b9c88bc26ac274de7eb3e4bebd369c172e349a9",
+    "failures": [],
+    "casesPerReport": 21,
+    "resourceContracts": 17,
+    "files": 408,
+    "pngs": 311
+  },
+  "windowsWebKit": {
+    "nativeBrowserPatched": false,
+    "originalAssertions": {
+      "exampleSourceUnchanged": true,
+      "sourceFingerprint": "7307f72b4443420c",
+      "originalSourceFingerprint": "7307f72b4443420c",
+      "contractUnchanged": true,
+      "contractSha256": "9e1b3732776da969c1a015756a5975f15a780622b9963a897825320bbf67a69c",
+      "clipSha256": "6ff568dbe13fd6065974b19b8618a40fb0f80d119bb91c484224512796bf38f4",
+      "passed": true
+    },
+    "sdk": {
+      "sdk-existing": {
+        "wraps": 3,
+        "decodedFrames": 38,
+        "completed": 0,
+        "seekWrites": 0
+      },
+      "sdk-fresh": {
+        "wraps": 3,
+        "decodedFrames": 38,
+        "completed": 0,
+        "seekWrites": 0
+      },
+      "sdk-min": {
+        "wraps": 3,
+        "decodedFrames": 36,
+        "completed": 0,
+        "seekWrites": 0
+      }
+    }
+  },
+  "tests": {
+    "ok": true,
+    "mode": "update",
+    "extraJestArgs": [
+      "--runInBand",
+      "--cacheDirectory",
+      "output/jest-release"
+    ],
+    "manifest": "docs/test-inventory.json",
+    "totals": {
+      "suites": 197,
+      "tests": 3105,
+      "passed": 3105,
+      "failed": 0
+    },
+    "observedTotals": {
+      "suites": 197,
+      "tests": 3105,
+      "passed": 3105,
+      "failed": 0
+    },
+    "failures": [],
+    "output": "docs/test-inventory.json"
+  },
+  "testInventoryUpdated": true,
+  "testInventorySha256": "5688ee18b204fa0bca8fcecde86ceab95c138f31706ed4b727912159350a8324",
+  "testInventoryLogSha256": "74d61ac857fc19aa14a9b7e4edd939bb4967faec1b6b9f4c9736953a2250419d",
+  "promotionFormatting": {
+    "examples": 188,
+    "drift": [],
+    "candidateUnchanged": true,
+    "sourceUnchanged": true,
+    "sourceSha256": "cdd552444066108de44b0c772b9c88bc26ac274de7eb3e4bebd369c172e349a9",
+    "passed": true
+  },
+  "releaseReady": false,
+  "releaseFailures": [
+    "[release] FAIL release candidate has uncommitted or untracked changes"
+  ],
+  "externalSafari": "NOT_RUN - user retained external acceptance",
+  "previousReportSha256": "e87045dbff63ce8f5ced1e2e001393e14211b13a3e5412b5577f4990ddf17df9",
+  "receipts": [
+    {
+      "name": "format-promotions",
+      "command": [
+        "node",
+        "output/playwright/webkit-video-loop-r4/format-promotions.cjs"
+      ],
+      "startedAt": "2026-10-16T15:07:26.7876491Z",
+      "finishedAt": "2026-10-16T15:07:38.1995050Z",
+      "exitCode": 0,
+      "log": "format-promotions.log"
+    },
+    {
+      "name": "coverage",
+      "command": [
+        "node",
+        "tools/examples/coverage-report.cjs"
+      ],
+      "startedAt": "2026-10-16T15:07:38.2334517Z",
+      "finishedAt": "2026-10-16T15:07:39.5771241Z",
+      "exitCode": 0,
+      "log": "coverage.log"
+    },
+    {
+      "name": "gallery",
+      "command": [
+        "node",
+        "tools/verify/gallery-artifact.cjs"
+      ],
+      "startedAt": "2026-10-16T15:07:39.7505368Z",
+      "finishedAt": "2026-10-16T15:11:59.7954707Z",
+      "exitCode": 0,
+      "log": "gallery.log"
+    },
+    {
+      "name": "test-inventory",
+      "command": [
+        "node",
+        "tools/verify/test-inventory.cjs",
+        "--update",
+        "--",
+        "--runInBand",
+        "--cacheDirectory",
+        "output/jest-release"
+      ],
+      "startedAt": "2026-10-16T15:12:00.0064827Z",
+      "finishedAt": "2026-10-16T15:43:48.2579709Z",
+      "exitCode": 0,
+      "log": "test-inventory.log"
+    },
+    {
+      "name": "readiness",
+      "command": [
+        "node",
+        "tools/verify/release-readiness.cjs"
+      ],
+      "startedAt": "2026-10-16T15:43:48.2644033Z",
+      "finishedAt": "2026-10-16T15:43:53.5066555Z",
+      "exitCode": 1,
+      "log": "readiness.log"
+    }
+  ],
+  "evidenceSha256": {
+    "docs/evidence/examples-verified.json": "061a45b8c8a266e7108086519ceed68d727f08f605edb80e9ec60b81e6fd7e0f",
+    "docs/evidence/devtools-examples.json": "bd7d1324ef0d395b96b8dec05cdf2342276f5243207259e1a2a723ed65bf290d",
+    "docs/evidence/gallery-artifact.json": "09c80ceff7fe1eb4dd020782bc2b4908f377f93761d71bbf46488eed4058b783",
+    "docs/evidence/browser-matrix/browser-matrix.json": "3c7788f57812d195b993501afd188b55a1f4f8dfd65d70f507f9805d5e2baf45",
+    "docs/api-coverage-report.json": "e1a7b4ea02a20cd739e961d9fcfa500514cb660ccfed552f3f36e49c70e9d3d5",
+    "docs/example-api-inventory.json": "ade3ee644bfc5a67ccfc17ee3be69bfcf8bce0430b159ffac3542f9ecd5caedb",
+    "docs/evidence/webgpu-release-refresh/manifest.json": "1b309d63ec5143796b956c69cff2d0d721a32c30427866850d59685465b1b379",
+    "docs/evidence/webkit-video-loop/manifest.json": "73d89942561e3898d14391bc5706405f17bccb54c026e97376726e6740ab6306",
+    "docs/test-inventory.json": "5688ee18b204fa0bca8fcecde86ceab95c138f31706ed4b727912159350a8324"
+  }
+}

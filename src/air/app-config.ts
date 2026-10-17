@@ -25,6 +25,8 @@ import type { AirApp, AirAppOptions } from './app';
 export interface AirNormalizedOptions {
     readonly canvas: HTMLCanvasElement;
     readonly renderMode: number;
+    readonly renderer: 'webgl2' | 'webgpu';
+    readonly webgpuAssetBaseUrl: string | undefined;
     readonly physics: 'builtin' | 'cannon';
     readonly diagnostics: 'errors' | 'warnings';
     readonly pixelRatioCap: number;
@@ -116,6 +118,28 @@ export function normalizeAirOptions(options: AirAppOptions): AirNormalizedOption
             'renderMode must be an engine render mode integer (0..3); browser startup requires WebGL 2.',
         );
     }
+    if (options.renderer !== undefined && !['webgl2', 'webgpu'].includes(options.renderer)) {
+        throw airError('AIR_E_RENDERER', 'renderer must be webgl2 or webgpu.');
+    }
+    if (options.renderer !== undefined && options.renderMode !== undefined) {
+        throw airError('AIR_E_RENDERER_CONFLICT', 'Use renderer or legacy renderMode, not both.');
+    }
+    if (
+        options.webgpu !== undefined &&
+        (!options.webgpu ||
+            typeof options.webgpu !== 'object' ||
+            (options.webgpu.assetBaseUrl !== undefined &&
+                (typeof options.webgpu.assetBaseUrl !== 'string' || !options.webgpu.assetBaseUrl.trim())))
+    ) {
+        throw airError('AIR_E_WEBGPU_OPTIONS', 'webgpu.assetBaseUrl must be a nonempty URL string.');
+    }
+    if (options.webgpu !== undefined && options.renderer !== 'webgpu') {
+        throw airError('AIR_E_WEBGPU_OPTIONS', 'webgpu options require renderer: webgpu.');
+    }
+    const webgpuAssetBaseUrl =
+        options.webgpu?.assetBaseUrl === undefined
+            ? undefined
+            : new URL(options.webgpu.assetBaseUrl.replace(/\/?$/, '/'), document.baseURI).href;
     const legacyCap = Number((globalThis as { __CCDPR_CAP__?: unknown }).__CCDPR_CAP__);
     const pixelRatioCap = options.pixelRatioCap ?? (Number.isFinite(legacyCap) && legacyCap > 0 ? legacyCap : 2);
     if (typeof pixelRatioCap !== 'number' || !Number.isFinite(pixelRatioCap) || pixelRatioCap <= 0) {
@@ -202,7 +226,9 @@ export function normalizeAirOptions(options: AirAppOptions): AirNormalizedOption
     }
     return Object.freeze({
         canvas,
-        renderMode: options.renderMode ?? 0,
+        renderMode: options.renderer === 'webgpu' ? 4 : !options.renderMode ? 2 : options.renderMode,
+        renderer: options.renderer ?? 'webgl2',
+        webgpuAssetBaseUrl,
         physics,
         diagnostics,
         pixelRatioCap,
@@ -223,6 +249,8 @@ export function equalAirOptions(a: AirNormalizedOptions, b: AirNormalizedOptions
     return (
         a.canvas === b.canvas &&
         a.renderMode === b.renderMode &&
+        a.renderer === b.renderer &&
+        a.webgpuAssetBaseUrl === b.webgpuAssetBaseUrl &&
         a.physics === b.physics &&
         a.diagnostics === b.diagnostics &&
         a.pixelRatioCap === b.pixelRatioCap &&

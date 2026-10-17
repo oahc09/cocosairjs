@@ -25,7 +25,7 @@
 import { Sampler } from '../base/states/sampler';
 import { WebGPUCmdFuncCreateSampler, WebGPUCmdFuncDestroySampler } from './webgpu-commands';
 import { IWebGPUGPUSampler } from './webgpu-gpu-objects';
-import { SamplerInfo } from '../base/define';
+import { Filter, SamplerInfo } from '../base/define';
 import { WebGPUDeviceManager } from './define';
 
 const samplerCaches: Map<number, GPUSampler> = new Map();
@@ -83,19 +83,20 @@ export class WebGPUSampler extends Sampler {
         return hash;
     }
 
-    public createGPUSampler (mipLevel: number = 1): GPUSampler | null {
+    public createGPUSampler (mipLevel: number = 1, forcePoint = false): GPUSampler | null {
         if (!this._gpuSampler) {
             return null;
         }
-        this._gpuSampler.mipLevel = mipLevel;
-        const currKey = this._computeSamplerKey(this._gpuSampler);
+        const info = { ...this._gpuSampler, mipLevel };
+        if (forcePoint) info.minFilter = info.magFilter = info.mipFilter = Filter.POINT;
+        const currKey = this._computeSamplerKey(info);
         let currGPUSampler = samplerCaches.get(currKey);
         if (currGPUSampler) return currGPUSampler;
 
         const device = WebGPUDeviceManager.instance;
         this._hasChange = true;
-        WebGPUCmdFuncCreateSampler(device, this._gpuSampler);
-        currGPUSampler = this._gpuSampler.gpuSampler!;
+        WebGPUCmdFuncCreateSampler(device, info);
+        currGPUSampler = info.gpuSampler!;
         samplerCaches.set(currKey, currGPUSampler);
         return currGPUSampler;
     }

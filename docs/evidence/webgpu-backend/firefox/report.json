@@ -1,0 +1,90 @@
+{
+  "measuredAt": "2026-10-15T14:18:29.860Z",
+  "completed": true,
+  "artifact": {
+    "bundleName": "cocosair.module.js"
+  },
+  "bundleSha256": "189de50c0f631c53dfcc08900612158410e24ad8fffb7bcb39666702a860074a",
+  "cases": [
+    {
+      "renderer": "webgl2",
+      "example": "webgpu-basic",
+      "state": {
+        "app": true,
+        "api": 7,
+        "expectedApi": 8,
+        "health": {
+          "state": "healthy",
+          "backend": "webgl2",
+          "lostCount": 0,
+          "restoredCount": 0,
+          "isContextLost": false,
+          "gamePaused": true,
+          "reason": null,
+          "suggestion": "none",
+          "lastEvent": null,
+          "lastEventAt": null,
+          "timeline": []
+        },
+        "gpuErrors": [],
+        "adapter": null,
+        "startupAndProbeMs": 3570,
+        "gpuTimestampMs": null
+      },
+      "resources": {
+        "readback": true
+      },
+      "visiblePixels": 11572,
+      "errors": [],
+      "translatorRequests": [],
+      "capture": "webgpu-basic-webgl2.png"
+    },
+    {
+      "renderer": "webgpu",
+      "example": "webgpu-basic",
+      "blocked": true,
+      "reason": "No native WebGPU adapter in this browser environment.",
+      "rejection": {
+        "code": "WEBGPU_ADAPTER_UNAVAILABLE",
+        "contexts": [
+          "2d",
+          "2d"
+        ]
+      }
+    }
+  ],
+  "sourceSha256": "5f07808d2fe6b77f3ecbf23d473fb64b15b1a7496481bbffc6abfbb8119a2270",
+  "buildSources": {
+    "compared": 938,
+    "mismatches": [],
+    "sha256": "bf0d78bf8ae7f3ac12c8da39821a3df09fc1cc244cc0950eeb8f18766b20870e"
+  },
+  "probeSha256": "3e6414df99e30063cd93b07faba92a7ba22789a9709c05b454c8cbd62ea5505d",
+  "assetsManifestSha256": "84161a92c5469819bab8a3ddc6512bf8e6e88c1bb67c1fd4c873be84ce0e6df9",
+  "browser": {
+    "engine": "firefox",
+    "version": "155.0"
+  },
+  "webgpuAvailability": {
+    "apiAvailable": true,
+    "adapterAvailable": false
+  },
+  "failures": [
+    {
+      "failure": "unsupported",
+      "expectedCode": "WEBGPU_UNSUPPORTED",
+      "actual": {
+        "code": "WEBGPU_UNSUPPORTED",
+        "retryCode": "AIR_E_APP_RELOAD_REQUIRED",
+        "contexts": [
+          "2d",
+          "2d"
+        ]
+      },
+      "ok": true
+    }
+  ],
+  "sourceUnchanged": true,
+  "status": "BLOCKED",
+  "exitCode": 1
+}

@@ -58,9 +58,20 @@ export class WebGPUShader extends Shader {
 
         for (let i = 0; i < stageSize; ++i) {
             const stage = info.stages[i];
+            const resources = [...info.blocks, ...info.buffers, ...info.samplerTextures,
+                ...info.samplers, ...info.textures, ...info.images, ...info.subpassInputs];
+            // Legacy effects retain offline binding numbers; ShaderInfo contains AIR's actual GFX assignments.
+            const source = stage.source.replace(/layout\s*\(([^)]+)\)(\s*(?:(?:readonly|writeonly)\s+)?uniform\s+(?:(?:lowp|mediump|highp)\s+)?(?:[iu]?sampler\w+\s+)?|\s*(?:(?:readonly|writeonly)\s+)?buffer\s+)(\w+)(?=\s*[{;])/g,
+                (declaration, layout: string, middle: string, name: string) => {
+                    const resource = resources.find((item) => item.name === name);
+                    if (!resource) return declaration;
+                    const mapped = layout.replace(/set\s*=\s*\d+/, `set = ${resource.set}`)
+                        .replace(/binding\s*=\s*\d+/, `binding = ${resource.binding}`).replace(/,\s*/g, ', ');
+                    return `layout(${mapped})${middle}${name}`;
+                });
             this._gpuShader.gpuStages[i] = {
                 type: stage.stage,
-                source: stage.source,
+                source,
                 gpuShader: null,
                 bindings: [],
                 attrs: new Map(),

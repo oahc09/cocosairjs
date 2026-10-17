@@ -1,0 +1,1542 @@
+{
+  "measuredAt": "2026-10-16T15:11:58.839Z",
+  "mount": "/apps/gallery",
+  "base": "<self-hosted>",
+  "runner": "tools/verify/gallery-artifact.cjs",
+  "runnerSha256": "1be2c7a971a4bc60b71d419aeef91c019f3d391956fafece7fb42b4402543057",
+  "browserVersion": "155.0.8059.40",
+  "gpuValidationErrors": [],
+  "completed": true,
+  "scope": {
+    "examples": 188,
+    "booted": 183,
+    "devToolsPagesServed": 5,
+    "lifecycle": 91
+  },
+  "artifactBytes": {
+    "engineCopySha256_16": "afdbc64cf8e48fb4",
+    "liveBundleSha256_16": "afdbc64cf8e48fb4",
+    "identical": true
+  },
+  "total": 303,
+  "pass": 303,
+  "results": [
+    {
+      "id": "artifact:webgpu-assets-current",
+      "ok": true,
+      "detail": "all WebGPU assets match the live build"
+    },
+    {
+      "id": "artifact:no-absolute-path-dependency",
+      "ok": true,
+      "detail": "no repo-absolute / agent-endpoint references in shipped bytes"
+    },
+    {
+      "id": "artifact:decoder-set",
+      "ok": true,
+      "detail": "17 decoder files shipped"
+    },
+    {
+      "id": "artifact:engine-copy-current",
+      "ok": true,
+      "detail": "artifact afdbc64cf8e48fb4 vs live build afdbc64cf8e48fb4"
+    },
+    {
+      "id": "static:index.html",
+      "ok": true,
+      "detail": "status=200"
+    },
+    {
+      "id": "static:gallery.html",
+      "ok": true,
+      "detail": "status=200"
+    },
+    {
+      "id": "static:files.json",
+      "ok": true,
+      "detail": "status=200"
+    },
+    {
+      "id": "static:cocosair.module.js",
+      "ok": true,
+      "detail": "status=200"
+    },
+    {
+      "id": "artifact:thumbnails-all",
+      "ok": true,
+      "detail": "183/183 thumbnails reachable"
+    },
+    {
+      "id": "artifact:devtools-page-served:automation",
+      "ok": true,
+      "detail": "status=200（仅静态可访问；agent 通道启动不在本门禁范围）"
+    },
+    {
+      "id": "artifact:devtools-page-served:rc-capture-frame",
+      "ok": true,
+      "detail": "status=200（仅静态可访问；agent 通道启动不在本门禁范围）"
+    },
+    {
+      "id": "artifact:devtools-page-served:rc-create-node",
+      "ok": true,
+      "detail": "status=200（仅静态可访问；agent 通道启动不在本门禁范围）"
+    },
+    {
+      "id": "artifact:devtools-page-served:rc-error-report",
+      "ok": true,
+      "detail": "status=200（仅静态可访问；agent 通道启动不在本门禁范围）"
+    },
+    {
+      "id": "artifact:devtools-page-served:rc-inspect-scene",
+      "ok": true,
+      "detail": "status=200（仅静态可访问；agent 通道启动不在本门禁范围）"
+    },
+    {
+      "id": "gallery:list-rendered",
+      "ok": true,
+      "detail": "links=188 expected=188"
+    },
+    {
+      "id": "gallery:deep-link",
+      "ok": true,
+      "detail": "iframe src=http://127.0.0.1:61790/apps/gallery/mesh-sphere/"
+    },
+    {
+      "id": "gallery:source-view",
+      "ok": true,
+      "detail": "source chars=1965 head=\"/**\\n * mesh-sphere — 球体图元 + 标准材质 + 慢速自转（\""
+    },
+    {
+      "id": "example-boot:anim-position",
+      "ok": true,
+      "detail": "booted via /anim-position/"
+    },
+    {
+      "id": "lifecycle:anim-position",
+      "ok": true,
+      "detail": "held=2 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:anim-rotation",
+      "ok": true,
+      "detail": "booted via /anim-rotation/"
+    },
+    {
+      "id": "example-boot:animated-character-showcase",
+      "ok": true,
+      "detail": "booted via /animated-character-showcase/"
+    },
+    {
+      "id": "lifecycle:animated-character-showcase",
+      "ok": true,
+      "detail": "held=17 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:audio-basic",
+      "ok": true,
+      "detail": "booted via /audio-basic/"
+    },
+    {
+      "id": "lifecycle:audio-basic",
+      "ok": true,
+      "detail": "held=1 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:batching-dynamic",
+      "ok": true,
+      "detail": "booted via /batching-dynamic/"
+    },
+    {
+      "id": "lifecycle:batching-dynamic",
+      "ok": true,
+      "detail": "held=2 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:batching-merged",
+      "ok": true,
+      "detail": "booted via /batching-merged/"
+    },
+    {
+      "id": "lifecycle:batching-merged",
+      "ok": true,
+      "detail": "held=2 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:batching-shared",
+      "ok": true,
+      "detail": "booted via /batching-shared/"
+    },
+    {
+      "id": "lifecycle:batching-shared",
+      "ok": true,
+      "detail": "held=2 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:batching-utility",
+      "ok": true,
+      "detail": "booted via /batching-utility/"
+    },
+    {
+      "id": "example-boot:black-hole-accretion",
+      "ok": true,
+      "detail": "booted via /black-hole-accretion/"
+    },
+    {
+      "id": "lifecycle:black-hole-accretion",
+      "ok": true,
+      "detail": "held=19 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:camera",
+      "ok": true,
+      "detail": "booted via /camera/"
+    },
+    {
+      "id": "example-boot:camera-geometry-extras",
+      "ok": true,
+      "detail": "booted via /camera-geometry-extras/"
+    },
+    {
+      "id": "lifecycle:camera-geometry-extras",
+      "ok": true,
+      "detail": "held=2 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:camera-lookat",
+      "ok": true,
+      "detail": "booted via /camera-lookat/"
+    },
+    {
+      "id": "example-boot:camera-multi",
+      "ok": true,
+      "detail": "booted via /camera-multi/"
+    },
+    {
+      "id": "example-boot:camera-ortho",
+      "ok": true,
+      "detail": "booted via /camera-ortho/"
+    },
+    {
+      "id": "example-boot:camera-screen-world",
+      "ok": true,
+      "detail": "booted via /camera-screen-world/"
+    },
+    {
+      "id": "example-boot:camera-second-view",
+      "ok": true,
+      "detail": "booted via /camera-second-view/"
+    },
+    {
+      "id": "example-boot:camera-viewport-props",
+      "ok": true,
+      "detail": "booted via /camera-viewport-props/"
+    },
+    {
+      "id": "lifecycle:camera-viewport-props",
+      "ok": true,
+      "detail": "held=2 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:campfire-night",
+      "ok": true,
+      "detail": "booted via /campfire-night/"
+    },
+    {
+      "id": "lifecycle:campfire-night",
+      "ok": true,
+      "detail": "held=10 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:collector-dodge",
+      "ok": true,
+      "detail": "booted via /collector-dodge/"
+    },
+    {
+      "id": "lifecycle:collector-dodge",
+      "ok": true,
+      "detail": "held=7 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:color-timeline-key",
+      "ok": true,
+      "detail": "booted via /color-timeline-key/"
+    },
+    {
+      "id": "example-boot:colortimeline-ops",
+      "ok": true,
+      "detail": "booted via /colortimeline-ops/"
+    },
+    {
+      "id": "example-boot:contra-action",
+      "ok": true,
+      "detail": "booted via /contra-action/"
+    },
+    {
+      "id": "lifecycle:contra-action",
+      "ok": true,
+      "detail": "held=4 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:directional-light-face",
+      "ok": true,
+      "detail": "booted via /directional-light-face/"
+    },
+    {
+      "id": "example-boot:dom-overlay-texture",
+      "ok": true,
+      "detail": "booted via /dom-overlay-texture/"
+    },
+    {
+      "id": "lifecycle:dom-overlay-texture",
+      "ok": true,
+      "detail": "held=2 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:dragonbones-basic",
+      "ok": true,
+      "detail": "booted via /dragonbones-basic/"
+    },
+    {
+      "id": "lifecycle:dragonbones-basic",
+      "ok": true,
+      "detail": "held=3 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:fog-accuracy",
+      "ok": true,
+      "detail": "booted via /fog-accuracy/"
+    },
+    {
+      "id": "lifecycle:fog-accuracy",
+      "ok": true,
+      "detail": "held=5 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:glass-refraction",
+      "ok": true,
+      "detail": "booted via /glass-refraction/"
+    },
+    {
+      "id": "lifecycle:glass-refraction",
+      "ok": true,
+      "detail": "held=5 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:gltf-animation-contract",
+      "ok": true,
+      "detail": "booted via /gltf-animation-contract/"
+    },
+    {
+      "id": "lifecycle:gltf-animation-contract",
+      "ok": true,
+      "detail": "held=15 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:gltf-asset-readonly",
+      "ok": true,
+      "detail": "booted via /gltf-asset-readonly/"
+    },
+    {
+      "id": "lifecycle:gltf-asset-readonly",
+      "ok": true,
+      "detail": "held=1 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:gltf-basic",
+      "ok": true,
+      "detail": "booted via /gltf-basic/"
+    },
+    {
+      "id": "lifecycle:gltf-basic",
+      "ok": true,
+      "detail": "held=2 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:gltf-catalog",
+      "ok": true,
+      "detail": "booted via /gltf-catalog/"
+    },
+    {
+      "id": "example-boot:gltf-clearcoat",
+      "ok": true,
+      "detail": "booted via /gltf-clearcoat/"
+    },
+    {
+      "id": "lifecycle:gltf-clearcoat",
+      "ok": true,
+      "detail": "held=2 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:gltf-draco",
+      "ok": true,
+      "detail": "booted via /gltf-draco/"
+    },
+    {
+      "id": "decoder-request:gltf-draco",
+      "ok": true,
+      "detail": "draco.glb 已被部署页请求"
+    },
+    {
+      "id": "decoder-state:gltf-draco",
+      "ok": true,
+      "detail": "__decoderState=decoder-missing-observed"
+    },
+    {
+      "id": "example-boot:gltf-loader-registry",
+      "ok": true,
+      "detail": "booted via /gltf-loader-registry/"
+    },
+    {
+      "id": "lifecycle:gltf-loader-registry",
+      "ok": true,
+      "detail": "held=1 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:gltf-meshopt",
+      "ok": true,
+      "detail": "booted via /gltf-meshopt/"
+    },
+    {
+      "id": "lifecycle:gltf-meshopt",
+      "ok": true,
+      "detail": "held=3 leaked=0 reloaded=true"
+    },
+    {
+      "id": "decoder-request:gltf-meshopt",
+      "ok": true,
+      "detail": "meshopt/meshopt_decoder.mjs 已被部署页请求"
+    },
+    {
+      "id": "decoder-wasm:meshopt",
+      "ok": true,
+      "detail": "配置解码器完成真实 decode（wasm 内嵌形制，无独立 .wasm 请求）"
+    },
+    {
+      "id": "decoder-state:gltf-meshopt",
+      "ok": true,
+      "detail": "__decoderState=loaded-bare"
+    },
+    {
+      "id": "example-boot:gltf-morph",
+      "ok": true,
+      "detail": "booted via /gltf-morph/"
+    },
+    {
+      "id": "lifecycle:gltf-morph",
+      "ok": true,
+      "detail": "held=2 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:gltf-skin",
+      "ok": true,
+      "detail": "booted via /gltf-skin/"
+    },
+    {
+      "id": "lifecycle:gltf-skin",
+      "ok": true,
+      "detail": "held=2 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:gltf-viewer",
+      "ok": true,
+      "detail": "booted via /gltf-viewer/"
+    },
+    {
+      "id": "lifecycle:gltf-viewer",
+      "ok": true,
+      "detail": "held=2 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:graphics-svg-paints",
+      "ok": true,
+      "detail": "booted via /graphics-svg-paints/"
+    },
+    {
+      "id": "lifecycle:graphics-svg-paints",
+      "ok": true,
+      "detail": "held=2 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:hdr-color-pipeline",
+      "ok": true,
+      "detail": "booted via /hdr-color-pipeline/"
+    },
+    {
+      "id": "lifecycle:hdr-color-pipeline",
+      "ok": true,
+      "detail": "held=94 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:hello-cube",
+      "ok": true,
+      "detail": "booted via /hello-cube/"
+    },
+    {
+      "id": "example-boot:html-texture-experimental",
+      "ok": true,
+      "detail": "booted via /html-texture-experimental/"
+    },
+    {
+      "id": "lifecycle:html-texture-experimental",
+      "ok": true,
+      "detail": "held=3 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:input",
+      "ok": true,
+      "detail": "booted via /input/"
+    },
+    {
+      "id": "example-boot:input-queries",
+      "ok": true,
+      "detail": "booted via /input-queries/"
+    },
+    {
+      "id": "example-boot:interaction-click",
+      "ok": true,
+      "detail": "booted via /interaction-click/"
+    },
+    {
+      "id": "example-boot:interactive-container",
+      "ok": true,
+      "detail": "booted via /interactive-container/"
+    },
+    {
+      "id": "lifecycle:interactive-container",
+      "ok": true,
+      "detail": "held=2 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:interactive-geometry",
+      "ok": true,
+      "detail": "booted via /interactive-geometry/"
+    },
+    {
+      "id": "lifecycle:interactive-geometry",
+      "ok": true,
+      "detail": "held=4 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:interactive-input",
+      "ok": true,
+      "detail": "booted via /interactive-input/"
+    },
+    {
+      "id": "lifecycle:interactive-input",
+      "ok": true,
+      "detail": "held=2 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:interactive-multipass",
+      "ok": true,
+      "detail": "booted via /interactive-multipass/"
+    },
+    {
+      "id": "lifecycle:interactive-multipass",
+      "ok": true,
+      "detail": "held=8 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:interactive-timeline",
+      "ok": true,
+      "detail": "booted via /interactive-timeline/"
+    },
+    {
+      "id": "lifecycle:interactive-timeline",
+      "ok": true,
+      "detail": "held=3 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:k0-r2-porting-contracts",
+      "ok": true,
+      "detail": "booted via /k0-r2-porting-contracts/"
+    },
+    {
+      "id": "lifecycle:k0-r2-porting-contracts",
+      "ok": true,
+      "detail": "held=3 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:layers-enum-ops",
+      "ok": true,
+      "detail": "booted via /layers-enum-ops/"
+    },
+    {
+      "id": "example-boot:light-attach-cycle",
+      "ok": true,
+      "detail": "booted via /light-attach-cycle/"
+    },
+    {
+      "id": "example-boot:light-point",
+      "ok": true,
+      "detail": "booted via /light-point/"
+    },
+    {
+      "id": "example-boot:light-sphere",
+      "ok": true,
+      "detail": "booted via /light-sphere/"
+    },
+    {
+      "id": "example-boot:light-spot",
+      "ok": true,
+      "detail": "booted via /light-spot/"
+    },
+    {
+      "id": "lifecycle:light-spot",
+      "ok": true,
+      "detail": "held=4 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:light-two-directional",
+      "ok": true,
+      "detail": "booted via /light-two-directional/"
+    },
+    {
+      "id": "example-boot:match3-classic",
+      "ok": true,
+      "detail": "booted via /match3-classic/"
+    },
+    {
+      "id": "lifecycle:match3-classic",
+      "ok": true,
+      "detail": "held=3 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:material-basic",
+      "ok": true,
+      "detail": "booted via /material-basic/"
+    },
+    {
+      "id": "example-boot:material-color",
+      "ok": true,
+      "detail": "booted via /material-color/"
+    },
+    {
+      "id": "example-boot:material-lifecycle",
+      "ok": true,
+      "detail": "booted via /material-lifecycle/"
+    },
+    {
+      "id": "example-boot:material-ops",
+      "ok": true,
+      "detail": "booted via /material-ops/"
+    },
+    {
+      "id": "lifecycle:material-ops",
+      "ok": true,
+      "detail": "held=2 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:material-transparent",
+      "ok": true,
+      "detail": "booted via /material-transparent/"
+    },
+    {
+      "id": "lifecycle:material-transparent",
+      "ok": true,
+      "detail": "held=5 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:material-unlit",
+      "ok": true,
+      "detail": "booted via /material-unlit/"
+    },
+    {
+      "id": "example-boot:math-approx-compare",
+      "ok": true,
+      "detail": "booted via /math-approx-compare/"
+    },
+    {
+      "id": "example-boot:math-bits",
+      "ok": true,
+      "detail": "booted via /math-bits/"
+    },
+    {
+      "id": "example-boot:math-bits-constants",
+      "ok": true,
+      "detail": "booted via /math-bits-constants/"
+    },
+    {
+      "id": "example-boot:math-color-applied",
+      "ok": true,
+      "detail": "booted via /math-color-applied/"
+    },
+    {
+      "id": "example-boot:math-color-convert",
+      "ok": true,
+      "detail": "booted via /math-color-convert/"
+    },
+    {
+      "id": "example-boot:math-color-models",
+      "ok": true,
+      "detail": "booted via /math-color-models/"
+    },
+    {
+      "id": "example-boot:math-easing-patterns",
+      "ok": true,
+      "detail": "booted via /math-easing-patterns/"
+    },
+    {
+      "id": "example-boot:math-enumerable-props",
+      "ok": true,
+      "detail": "booted via /math-enumerable-props/"
+    },
+    {
+      "id": "example-boot:math-float-encoding",
+      "ok": true,
+      "detail": "booted via /math-float-encoding/"
+    },
+    {
+      "id": "example-boot:math-mat3-basics",
+      "ok": true,
+      "detail": "booted via /math-mat3-basics/"
+    },
+    {
+      "id": "example-boot:math-mat3-elements",
+      "ok": true,
+      "detail": "booted via /math-mat3-elements/"
+    },
+    {
+      "id": "example-boot:math-mat3-transforms",
+      "ok": true,
+      "detail": "booted via /math-mat3-transforms/"
+    },
+    {
+      "id": "example-boot:math-mat4-applied",
+      "ok": true,
+      "detail": "booted via /math-mat4-applied/"
+    },
+    {
+      "id": "example-boot:math-mat4-basics",
+      "ok": true,
+      "detail": "booted via /math-mat4-basics/"
+    },
+    {
+      "id": "example-boot:math-mat4-compose",
+      "ok": true,
+      "detail": "booted via /math-mat4-compose/"
+    },
+    {
+      "id": "example-boot:math-mat4-transform",
+      "ok": true,
+      "detail": "booted via /math-mat4-transform/"
+    },
+    {
+      "id": "example-boot:math-quat-applied",
+      "ok": true,
+      "detail": "booted via /math-quat-applied/"
+    },
+    {
+      "id": "example-boot:math-quat-components",
+      "ok": true,
+      "detail": "booted via /math-quat-components/"
+    },
+    {
+      "id": "example-boot:math-quat-euler",
+      "ok": true,
+      "detail": "booted via /math-quat-euler/"
+    },
+    {
+      "id": "example-boot:math-quat-interp",
+      "ok": true,
+      "detail": "booted via /math-quat-interp/"
+    },
+    {
+      "id": "example-boot:math-random-utils",
+      "ok": true,
+      "detail": "booted via /math-random-utils/"
+    },
+    {
+      "id": "example-boot:math-rect-geometry",
+      "ok": true,
+      "detail": "booted via /math-rect-geometry/"
+    },
+    {
+      "id": "example-boot:math-rect-ops",
+      "ok": true,
+      "detail": "booted via /math-rect-ops/"
+    },
+    {
+      "id": "example-boot:math-scalar-utils",
+      "ok": true,
+      "detail": "booted via /math-scalar-utils/"
+    },
+    {
+      "id": "example-boot:math-size-ops",
+      "ok": true,
+      "detail": "booted via /math-size-ops/"
+    },
+    {
+      "id": "example-boot:math-vec2-applied",
+      "ok": true,
+      "detail": "booted via /math-vec2-applied/"
+    },
+    {
+      "id": "example-boot:math-vec2-arithmetic",
+      "ok": true,
+      "detail": "booted via /math-vec2-arithmetic/"
+    },
+    {
+      "id": "example-boot:math-vec2-components",
+      "ok": true,
+      "detail": "booted via /math-vec2-components/"
+    },
+    {
+      "id": "example-boot:math-vec2-equality-misc",
+      "ok": true,
+      "detail": "booted via /math-vec2-equality-misc/"
+    },
+    {
+      "id": "example-boot:math-vec2-length-angle",
+      "ok": true,
+      "detail": "booted via /math-vec2-length-angle/"
+    },
+    {
+      "id": "example-boot:math-vec2-tovec3",
+      "ok": true,
+      "detail": "booted via /math-vec2-tovec3/"
+    },
+    {
+      "id": "example-boot:math-vec3-applied",
+      "ok": true,
+      "detail": "booted via /math-vec3-applied/"
+    },
+    {
+      "id": "example-boot:math-vec3-arithmetic",
+      "ok": true,
+      "detail": "booted via /math-vec3-arithmetic/"
+    },
+    {
+      "id": "example-boot:math-vec3-components",
+      "ok": true,
+      "detail": "booted via /math-vec3-components/"
+    },
+    {
+      "id": "example-boot:math-vec3-equality-misc",
+      "ok": true,
+      "detail": "booted via /math-vec3-equality-misc/"
+    },
+    {
+      "id": "example-boot:math-vec3-length-products",
+      "ok": true,
+      "detail": "booted via /math-vec3-length-products/"
+    },
+    {
+      "id": "example-boot:math-vec3-tovec2",
+      "ok": true,
+      "detail": "booted via /math-vec3-tovec2/"
+    },
+    {
+      "id": "example-boot:math-vec4-arithmetic",
+      "ok": true,
+      "detail": "booted via /math-vec4-arithmetic/"
+    },
+    {
+      "id": "example-boot:math-vec4-components",
+      "ok": true,
+      "detail": "booted via /math-vec4-components/"
+    },
+    {
+      "id": "example-boot:math-vec4-length-misc",
+      "ok": true,
+      "detail": "booted via /math-vec4-length-misc/"
+    },
+    {
+      "id": "example-boot:mesh-attributes-indices",
+      "ok": true,
+      "detail": "booted via /mesh-attributes-indices/"
+    },
+    {
+      "id": "example-boot:mesh-cylinder",
+      "ok": true,
+      "detail": "booted via /mesh-cylinder/"
+    },
+    {
+      "id": "example-boot:mesh-lifecycle-ops",
+      "ok": true,
+      "detail": "booted via /mesh-lifecycle-ops/"
+    },
+    {
+      "id": "lifecycle:mesh-lifecycle-ops",
+      "ok": true,
+      "detail": "held=4 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:mesh-morph-bounds",
+      "ok": true,
+      "detail": "booted via /mesh-morph-bounds/"
+    },
+    {
+      "id": "example-boot:mesh-multi-material",
+      "ok": true,
+      "detail": "booted via /mesh-multi-material/"
+    },
+    {
+      "id": "lifecycle:mesh-multi-material",
+      "ok": true,
+      "detail": "held=2 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:mesh-plane",
+      "ok": true,
+      "detail": "booted via /mesh-plane/"
+    },
+    {
+      "id": "example-boot:mesh-prim-compare",
+      "ok": true,
+      "detail": "booted via /mesh-prim-compare/"
+    },
+    {
+      "id": "example-boot:mesh-sphere",
+      "ok": true,
+      "detail": "booted via /mesh-sphere/"
+    },
+    {
+      "id": "example-boot:mesh-torus",
+      "ok": true,
+      "detail": "booted via /mesh-torus/"
+    },
+    {
+      "id": "example-boot:meshrenderer-hooks",
+      "ok": true,
+      "detail": "booted via /meshrenderer-hooks/"
+    },
+    {
+      "id": "lifecycle:meshrenderer-hooks",
+      "ok": true,
+      "detail": "held=2 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:model-character-interaction",
+      "ok": true,
+      "detail": "booted via /model-character-interaction/"
+    },
+    {
+      "id": "lifecycle:model-character-interaction",
+      "ok": true,
+      "detail": "held=4 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:neon-night-city",
+      "ok": true,
+      "detail": "booted via /neon-night-city/"
+    },
+    {
+      "id": "lifecycle:neon-night-city",
+      "ok": true,
+      "detail": "held=13 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:node-active",
+      "ok": true,
+      "detail": "booted via /node-active/"
+    },
+    {
+      "id": "example-boot:node-children-ops",
+      "ok": true,
+      "detail": "booted via /node-children-ops/"
+    },
+    {
+      "id": "lifecycle:node-children-ops",
+      "ok": true,
+      "detail": "held=1 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:node-component-queries",
+      "ok": true,
+      "detail": "booted via /node-component-queries/"
+    },
+    {
+      "id": "example-boot:node-events",
+      "ok": true,
+      "detail": "booted via /node-events/"
+    },
+    {
+      "id": "example-boot:node-hierarchy",
+      "ok": true,
+      "detail": "booted via /node-hierarchy/"
+    },
+    {
+      "id": "example-boot:node-pool",
+      "ok": true,
+      "detail": "booted via /node-pool/"
+    },
+    {
+      "id": "example-boot:node-scale",
+      "ok": true,
+      "detail": "booted via /node-scale/"
+    },
+    {
+      "id": "example-boot:node-scene-id",
+      "ok": true,
+      "detail": "booted via /node-scene-id/"
+    },
+    {
+      "id": "example-boot:orbit-controls",
+      "ok": true,
+      "detail": "booted via /orbit-controls/"
+    },
+    {
+      "id": "example-boot:particle-2d-basic",
+      "ok": true,
+      "detail": "booted via /particle-2d-basic/"
+    },
+    {
+      "id": "lifecycle:particle-2d-basic",
+      "ok": true,
+      "detail": "held=8 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:physics-2d-basic",
+      "ok": true,
+      "detail": "booted via /physics-2d-basic/"
+    },
+    {
+      "id": "lifecycle:physics-2d-basic",
+      "ok": true,
+      "detail": "held=12 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:physics-2d-collision",
+      "ok": true,
+      "detail": "booted via /physics-2d-collision/"
+    },
+    {
+      "id": "lifecycle:physics-2d-collision",
+      "ok": true,
+      "detail": "held=21 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:physics-3d-basic",
+      "ok": true,
+      "detail": "booted via /physics-3d-basic/"
+    },
+    {
+      "id": "lifecycle:physics-3d-basic",
+      "ok": true,
+      "detail": "held=10 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:physics-3d-collision",
+      "ok": true,
+      "detail": "booted via /physics-3d-collision/"
+    },
+    {
+      "id": "lifecycle:physics-3d-collision",
+      "ok": true,
+      "detail": "held=8 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:physics-interaction",
+      "ok": true,
+      "detail": "booted via /physics-interaction/"
+    },
+    {
+      "id": "lifecycle:physics-interaction",
+      "ok": true,
+      "detail": "held=21 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:point-cloud-basics",
+      "ok": true,
+      "detail": "booted via /point-cloud-basics/"
+    },
+    {
+      "id": "lifecycle:point-cloud-basics",
+      "ok": true,
+      "detail": "held=6 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:primitives-geometry-ops",
+      "ok": true,
+      "detail": "booted via /primitives-geometry-ops/"
+    },
+    {
+      "id": "example-boot:primitives-shapes-extra",
+      "ok": true,
+      "detail": "booted via /primitives-shapes-extra/"
+    },
+    {
+      "id": "example-boot:primitives-wireframe-obj",
+      "ok": true,
+      "detail": "booted via /primitives-wireframe-obj/"
+    },
+    {
+      "id": "example-boot:product-viewer",
+      "ok": true,
+      "detail": "booted via /product-viewer/"
+    },
+    {
+      "id": "lifecycle:product-viewer",
+      "ok": true,
+      "detail": "held=8 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:profiler-overlay",
+      "ok": true,
+      "detail": "booted via /profiler-overlay/"
+    },
+    {
+      "id": "example-boot:render-composite",
+      "ok": true,
+      "detail": "booted via /render-composite/"
+    },
+    {
+      "id": "lifecycle:render-composite",
+      "ok": true,
+      "detail": "held=5 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:responsive-board-recipes",
+      "ok": true,
+      "detail": "booted via /responsive-board-recipes/"
+    },
+    {
+      "id": "example-boot:runtime-asset-release",
+      "ok": true,
+      "detail": "booted via /runtime-asset-release/"
+    },
+    {
+      "id": "lifecycle:runtime-asset-release",
+      "ok": true,
+      "detail": "held=2 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:scene-asset-meta",
+      "ok": true,
+      "detail": "booted via /scene-asset-meta/"
+    },
+    {
+      "id": "lifecycle:scene-asset-meta",
+      "ok": true,
+      "detail": "held=1 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:scene-globals-read",
+      "ok": true,
+      "detail": "booted via /scene-globals-read/"
+    },
+    {
+      "id": "example-boot:scene-runtime-ops",
+      "ok": true,
+      "detail": "booted via /scene-runtime-ops/"
+    },
+    {
+      "id": "lifecycle:scene-runtime-ops",
+      "ok": true,
+      "detail": "held=1 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:scene-switch-reentry",
+      "ok": true,
+      "detail": "booted via /scene-switch-reentry/"
+    },
+    {
+      "id": "lifecycle:scene-switch-reentry",
+      "ok": true,
+      "detail": "held=2 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:shader-cursor-trail",
+      "ok": true,
+      "detail": "booted via /shader-cursor-trail/"
+    },
+    {
+      "id": "lifecycle:shader-cursor-trail",
+      "ok": true,
+      "detail": "held=4 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:shader-custom-gradient",
+      "ok": true,
+      "detail": "booted via /shader-custom-gradient/"
+    },
+    {
+      "id": "lifecycle:shader-custom-gradient",
+      "ok": true,
+      "detail": "held=2 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:shader-dissolve",
+      "ok": true,
+      "detail": "booted via /shader-dissolve/"
+    },
+    {
+      "id": "lifecycle:shader-dissolve",
+      "ok": true,
+      "detail": "held=3 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:shader-driver-pilot",
+      "ok": true,
+      "detail": "booted via /shader-driver-pilot/"
+    },
+    {
+      "id": "lifecycle:shader-driver-pilot",
+      "ok": true,
+      "detail": "held=3 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:shader-emboss",
+      "ok": true,
+      "detail": "booted via /shader-emboss/"
+    },
+    {
+      "id": "lifecycle:shader-emboss",
+      "ok": true,
+      "detail": "held=6 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:shader-film-neon",
+      "ok": true,
+      "detail": "booted via /shader-film-neon/"
+    },
+    {
+      "id": "lifecycle:shader-film-neon",
+      "ok": true,
+      "detail": "held=3 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:shader-glass",
+      "ok": true,
+      "detail": "booted via /shader-glass/"
+    },
+    {
+      "id": "lifecycle:shader-glass",
+      "ok": true,
+      "detail": "held=6 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:shader-glass-trail",
+      "ok": true,
+      "detail": "booted via /shader-glass-trail/"
+    },
+    {
+      "id": "lifecycle:shader-glass-trail",
+      "ok": true,
+      "detail": "held=6 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:shader-holographic",
+      "ok": true,
+      "detail": "booted via /shader-holographic/"
+    },
+    {
+      "id": "lifecycle:shader-holographic",
+      "ok": true,
+      "detail": "held=3 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:shader-input-dissolve",
+      "ok": true,
+      "detail": "booted via /shader-input-dissolve/"
+    },
+    {
+      "id": "lifecycle:shader-input-dissolve",
+      "ok": true,
+      "detail": "held=5 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:shader-laser-card",
+      "ok": true,
+      "detail": "booted via /shader-laser-card/"
+    },
+    {
+      "id": "lifecycle:shader-laser-card",
+      "ok": true,
+      "detail": "held=7 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:shader-liquid-metal",
+      "ok": true,
+      "detail": "booted via /shader-liquid-metal/"
+    },
+    {
+      "id": "lifecycle:shader-liquid-metal",
+      "ok": true,
+      "detail": "held=3 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:shader-neon",
+      "ok": true,
+      "detail": "booted via /shader-neon/"
+    },
+    {
+      "id": "lifecycle:shader-neon",
+      "ok": true,
+      "detail": "held=3 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:shader-noise-dissolve",
+      "ok": true,
+      "detail": "booted via /shader-noise-dissolve/"
+    },
+    {
+      "id": "lifecycle:shader-noise-dissolve",
+      "ok": true,
+      "detail": "held=3 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:shader-sparkle",
+      "ok": true,
+      "detail": "booted via /shader-sparkle/"
+    },
+    {
+      "id": "lifecycle:shader-sparkle",
+      "ok": true,
+      "detail": "held=3 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:shader-thin-film",
+      "ok": true,
+      "detail": "booted via /shader-thin-film/"
+    },
+    {
+      "id": "lifecycle:shader-thin-film",
+      "ok": true,
+      "detail": "held=3 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:skinned-animation",
+      "ok": true,
+      "detail": "booted via /skinned-animation/"
+    },
+    {
+      "id": "lifecycle:skinned-animation",
+      "ok": true,
+      "detail": "held=4 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:spark-splats",
+      "ok": true,
+      "detail": "booted via /spark-splats/"
+    },
+    {
+      "id": "example-boot:sprite-mask-blend",
+      "ok": true,
+      "detail": "booted via /sprite-mask-blend/"
+    },
+    {
+      "id": "lifecycle:sprite-mask-blend",
+      "ok": true,
+      "detail": "held=3 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:starfield-galaxy",
+      "ok": true,
+      "detail": "booted via /starfield-galaxy/"
+    },
+    {
+      "id": "lifecycle:starfield-galaxy",
+      "ok": true,
+      "detail": "held=3 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:starter",
+      "ok": true,
+      "detail": "booted via /starter/"
+    },
+    {
+      "id": "example-boot:static-model",
+      "ok": true,
+      "detail": "booted via /static-model/"
+    },
+    {
+      "id": "lifecycle:static-model",
+      "ok": true,
+      "detail": "held=8 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:tank-battle",
+      "ok": true,
+      "detail": "booted via /tank-battle/"
+    },
+    {
+      "id": "lifecycle:tank-battle",
+      "ok": true,
+      "detail": "held=4 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:tetris-classic",
+      "ok": true,
+      "detail": "booted via /tetris-classic/"
+    },
+    {
+      "id": "lifecycle:tetris-classic",
+      "ok": true,
+      "detail": "held=3 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:texture-basic",
+      "ok": true,
+      "detail": "booted via /texture-basic/"
+    },
+    {
+      "id": "lifecycle:texture-basic",
+      "ok": true,
+      "detail": "held=8 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:texture2d-ops",
+      "ok": true,
+      "detail": "booted via /texture2d-ops/"
+    },
+    {
+      "id": "lifecycle:texture2d-ops",
+      "ok": true,
+      "detail": "held=1 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:texture2d-serialization",
+      "ok": true,
+      "detail": "booted via /texture2d-serialization/"
+    },
+    {
+      "id": "lifecycle:texture2d-serialization",
+      "ok": true,
+      "detail": "held=1 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:tiledmap-basic",
+      "ok": true,
+      "detail": "booted via /tiledmap-basic/"
+    },
+    {
+      "id": "lifecycle:tiledmap-basic",
+      "ok": true,
+      "detail": "held=3 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:transform",
+      "ok": true,
+      "detail": "booted via /transform/"
+    },
+    {
+      "id": "example-boot:tween-basic",
+      "ok": true,
+      "detail": "booted via /tween-basic/"
+    },
+    {
+      "id": "lifecycle:tween-basic",
+      "ok": true,
+      "detail": "held=2 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:ui-api-lifecycle",
+      "ok": true,
+      "detail": "booted via /ui-api-lifecycle/"
+    },
+    {
+      "id": "lifecycle:ui-api-lifecycle",
+      "ok": true,
+      "detail": "held=4 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:ui-asset-loading",
+      "ok": true,
+      "detail": "booted via /ui-asset-loading/"
+    },
+    {
+      "id": "lifecycle:ui-asset-loading",
+      "ok": true,
+      "detail": "held=2 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:ui-components",
+      "ok": true,
+      "detail": "booted via /ui-components/"
+    },
+    {
+      "id": "lifecycle:ui-components",
+      "ok": true,
+      "detail": "held=36 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:ui-layout",
+      "ok": true,
+      "detail": "booted via /ui-layout/"
+    },
+    {
+      "id": "lifecycle:ui-layout",
+      "ok": true,
+      "detail": "held=18 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:utils-family",
+      "ok": true,
+      "detail": "booted via /utils-family/"
+    },
+    {
+      "id": "example-boot:video-basic",
+      "ok": true,
+      "detail": "booted via /video-basic/"
+    },
+    {
+      "id": "lifecycle:video-basic",
+      "ok": true,
+      "detail": "held=2 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:water-multipass",
+      "ok": true,
+      "detail": "booted via /water-multipass/"
+    },
+    {
+      "id": "lifecycle:water-multipass",
+      "ok": true,
+      "detail": "held=30 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:webgpu-basic",
+      "ok": true,
+      "detail": "booted via /webgpu-basic/"
+    },
+    {
+      "id": "example-boot:webview-basic",
+      "ok": true,
+      "detail": "booted via /webview-basic/"
+    },
+    {
+      "id": "lifecycle:webview-basic",
+      "ok": true,
+      "detail": "held=1 leaked=0 reloaded=true"
+    },
+    {
+      "id": "artifact:all-boottable-examples",
+      "ok": true,
+      "detail": "183/183 booted under nested mount"
+    },
+    {
+      "id": "artifact:lifecycle-covered",
+      "ok": true,
+      "detail": "91 §25 合同示例在部署物内完成释放核对"
+    },
+    {
+      "id": "artifact:no-http-errors",
+      "ok": true,
+      "detail": "zero non-2xx response"
+    },
+    {
+      "id": "artifact:no-external-requests",
+      "ok": true,
+      "detail": "every request served from the artifact mount"
+    },
+    {
+      "id": "gallery:no-page-errors",
+      "ok": true,
+      "detail": "0 page errors"
+    },
+    {
+      "id": "collector:source-unchanged",
+      "ok": true,
+      "detail": "collector bytes remain unchanged"
+    },
+    {
+      "id": "artifact:no-webgpu-validation-errors",
+      "ok": true,
+      "detail": "0 native WebGPU validation errors"
+    }
+  ],
+  "absolutePathHits": [],
+  "failedRequests": []
+}

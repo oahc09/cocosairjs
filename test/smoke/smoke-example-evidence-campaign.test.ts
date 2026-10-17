@@ -36,11 +36,14 @@ describe('fixed-snapshot segmented example evidence', () => {
         for (const file of state.segmentFiles) expect(read(file)).toMatchObject({ partial: true, completed: false });
         expect(read(path.join(state.repo, 'examples/alpha/example.json')).status).toBe('stable');
     });
-    test('current real manifest includes all 182 examples and 183 ordered modes including Spark', () => {
+    test('current real manifest includes all 183 examples and 184 ordered modes including Spark and WebGPU', () => {
         const scope = campaign.collectScope(path.resolve(__dirname, '../..'));
-        expect(scope).toHaveLength(182);
-        expect(scope.reduce((n, e) => n + e.modes.length, 0)).toBe(183);
+        expect(scope).toHaveLength(183);
+        expect(scope.reduce((n, e) => n + e.modes.length, 0)).toBe(184);
         expect(scope.some((e) => e.id === 'spark-splats')).toBe(true);
+        expect(scope.find((e) => e.id === 'webgpu-basic').modes).toEqual([
+            expect.objectContaining({ id: 'primary', query: 'renderer=webgl2' }),
+        ]);
     });
     test('production consumers reject the identical synthetic package when the explicit test spy is removed', () => {
         const data = complete(state);

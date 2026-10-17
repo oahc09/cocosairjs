@@ -81,9 +81,9 @@ import { Swapchain } from '../base/swapchain';
 import { WebGPUSwapchain } from './webgpu-swapchain';
 
 import { IWebGPUBindingMapping, IWebGPUGPUBuffer as IWebGPUBuffer, IWebGPUGPUSampler as IWebGPUSampler, IWebGPUTexture } from './webgpu-gpu-objects';
-import { debug, warn } from '../../core';
+import { debug, warn, error } from '../../core';
 import { WebGPUCmdFuncCopyBuffersToTexture, WebGPUCmdFuncCopyTexImagesToTexture,
-    WebGPUCmdFuncCopyTextureToBuffer, WGPUFormatToGFXFormat } from './webgpu-commands';
+    WebGPUCmdFuncCopyTextureToBuffer, WGPUFormatToGFXFormat, GFXFormatToWGPUFormat } from './webgpu-commands';
 import { waitForWebGPUWasmInstantiation } from './instantiated';
 
 let loadWebGPUPromise: Promise<void> | undefined;
@@ -133,8 +133,22 @@ export class WebGPUDevice extends Device {
         }
         return this._bufferBarriers.get(hash)!;
     }
-    public async copyTextureToBuffers (texture: Readonly<Texture>, buffers: ArrayBufferView[], regions: readonly BufferTextureCopy[]): Promise<void> {
-        await WebGPUCmdFuncCopyTextureToBuffer(this, (texture as WebGPUTexture).gpuTexture, buffers, regions);
+    public copyTextureToBuffers (): never {
+        throw Object.assign(new Error('WebGPU readback is asynchronous; use copyTextureToBuffersAsync.'), { code: 'WEBGPU_ASYNC_READBACK_REQUIRED' });
+    }
+    public async copyTextureToBuffersAsync (texture: Readonly<Texture>, buffers: ArrayBufferView[], regions: readonly BufferTextureCopy[]): Promise<void> {
+        if (!(texture.usage & TextureUsageBit.TRANSFER_SRC)) throw new Error('WEBGPU_READBACK_REQUIRES_TRANSFER_SRC');
+        const view = texture.viewInfo;
+        const adjusted = regions.map((region) => {
+            if (region.texSubres.mipLevel >= view.levelCount || region.texSubres.baseArrayLayer + region.texSubres.layerCount > view.layerCount) {
+                throw new Error('WEBGPU_READBACK_VIEW_RANGE');
+            }
+            const copy = new BufferTextureCopy(); copy.copy(region);
+            copy.texSubres.mipLevel += view.baseLevel;
+            copy.texSubres.baseArrayLayer += view.baseLayer;
+            return copy;
+        });
+        await WebGPUCmdFuncCopyTextureToBuffer(this, (texture as WebGPUTexture).gpuTexture, buffers, adjusted);
     }
     public flushCommands (cmdBuffs: CommandBuffer[]): void {
         // noop
@@ -176,9 +190,11 @@ export class WebGPUDevice extends Device {
     private _gpuConfig: GPUCanvasConfiguration | null = null;
     protected _textureExclusive = new Array<boolean>(Format.COUNT);
 
+    public isLost = false;
     public async initialize (info: Readonly<DeviceInfo>): Promise<boolean> {
         WebGPUDeviceManager.setInstance(this);
-        return this.initDevice(info);
+        try { return await this.initDevice(info); }
+        catch (cause) { this.destroy(); throw cause; }
     }
 
     set gpuConfig (config: GPUCanvasConfiguration) {
@@ -191,206 +207,33 @@ export class WebGPUDevice extends Device {
 
     protected initFormatFeatures (exts: GPUSupportedFeatures): void {
         this._formatFeatures.fill(FormatFeatureBit.NONE);
-
         this._textureExclusive.fill(true);
-
-        let tempFeature: FormatFeature = FormatFeatureBit.RENDER_TARGET | FormatFeatureBit.SAMPLED_TEXTURE
-            | FormatFeatureBit.STORAGE_TEXTURE | FormatFeatureBit.LINEAR_FILTER | FormatFeatureBit.VERTEX_ATTRIBUTE;
-
-        this._formatFeatures[Format.R8] = tempFeature;
-        this._formatFeatures[Format.RG8] = tempFeature;
-        this._formatFeatures[Format.RGB8] = tempFeature;
-        this._formatFeatures[Format.RGBA8] = tempFeature;
-
-        tempFeature = FormatFeatureBit.RENDER_TARGET | FormatFeatureBit.SAMPLED_TEXTURE
-            | FormatFeatureBit.STORAGE_TEXTURE | FormatFeatureBit.LINEAR_FILTER;
-
-        this._formatFeatures[Format.R8SN] = tempFeature;
-        this._formatFeatures[Format.RG8SN] = tempFeature;
-        this._formatFeatures[Format.RGB8SN] = tempFeature;
-        this._formatFeatures[Format.RGBA8SN] = tempFeature;
-        this._formatFeatures[Format.R5G6B5] = tempFeature;
-        this._formatFeatures[Format.RGBA4] = tempFeature;
-        this._formatFeatures[Format.RGB5A1] = tempFeature;
-        this._formatFeatures[Format.RGB10A2] = tempFeature;
-
-        this._formatFeatures[Format.SRGB8] = tempFeature;
-        this._formatFeatures[Format.SRGB8_A8] = tempFeature;
-
-        this._formatFeatures[Format.R11G11B10F] = tempFeature;
-        this._formatFeatures[Format.RGB9E5] = tempFeature;
-
-        this._formatFeatures[Format.DEPTH] = tempFeature;
-        this._formatFeatures[Format.DEPTH_STENCIL] = tempFeature;
-
-        this._formatFeatures[Format.RGB10A2UI] = FormatFeatureBit.RENDER_TARGET | FormatFeatureBit.STORAGE_TEXTURE
-            | FormatFeatureBit.SAMPLED_TEXTURE | FormatFeatureBit.LINEAR_FILTER;
-
-        tempFeature = FormatFeatureBit.RENDER_TARGET | FormatFeatureBit.SAMPLED_TEXTURE
-            | FormatFeatureBit.STORAGE_TEXTURE | FormatFeatureBit.VERTEX_ATTRIBUTE;
-
-        this._formatFeatures[Format.R16F] = tempFeature;
-        this._formatFeatures[Format.RG16F] = tempFeature;
-        this._formatFeatures[Format.RGB16F] = tempFeature;
-        this._formatFeatures[Format.RGBA16F] = tempFeature;
-
-        tempFeature = FormatFeatureBit.STORAGE_TEXTURE | FormatFeatureBit.RENDER_TARGET
-        | FormatFeatureBit.SAMPLED_TEXTURE | FormatFeatureBit.VERTEX_ATTRIBUTE;
-
-        this._formatFeatures[Format.R32F] = tempFeature;
-        this._formatFeatures[Format.RG32F] = tempFeature;
-        this._formatFeatures[Format.RGB32F] = tempFeature;
-        this._formatFeatures[Format.RGBA32F] = tempFeature;
-
-        this._formatFeatures[Format.RGB10A2UI] = FormatFeatureBit.RENDER_TARGET | FormatFeatureBit.STORAGE_TEXTURE
-            | FormatFeatureBit.SAMPLED_TEXTURE | FormatFeatureBit.LINEAR_FILTER;
-
-        tempFeature = FormatFeatureBit.RENDER_TARGET | FormatFeatureBit.STORAGE_TEXTURE
-            | FormatFeatureBit.SAMPLED_TEXTURE | FormatFeatureBit.LINEAR_FILTER | FormatFeatureBit.VERTEX_ATTRIBUTE;
-
-        this._formatFeatures[Format.R8I] = tempFeature;
-        this._formatFeatures[Format.R8UI] = tempFeature;
-        this._formatFeatures[Format.R16I] = tempFeature;
-        this._formatFeatures[Format.R16UI] = tempFeature;
-        this._formatFeatures[Format.R32I] = tempFeature;
-        this._formatFeatures[Format.R32UI] = tempFeature;
-
-        this._formatFeatures[Format.RG8I] = tempFeature;
-        this._formatFeatures[Format.RG8UI] = tempFeature;
-        this._formatFeatures[Format.RG16I] = tempFeature;
-        this._formatFeatures[Format.RG16UI] = tempFeature;
-        this._formatFeatures[Format.RG32I] = tempFeature;
-        this._formatFeatures[Format.RG32UI] = tempFeature;
-
-        this._formatFeatures[Format.RGB8I] = tempFeature;
-        this._formatFeatures[Format.RGB8UI] = tempFeature;
-        this._formatFeatures[Format.RGB16I] = tempFeature;
-        this._formatFeatures[Format.RGB16UI] = tempFeature;
-        this._formatFeatures[Format.RGB32I] = tempFeature;
-        this._formatFeatures[Format.RGB32UI] = tempFeature;
-
-        this._formatFeatures[Format.RGBA8I] = tempFeature;
-        this._formatFeatures[Format.RGBA8UI] = tempFeature;
-        this._formatFeatures[Format.RGBA16I] = tempFeature;
-        this._formatFeatures[Format.RGBA16UI] = tempFeature;
-        this._formatFeatures[Format.RGBA32I] = tempFeature;
-        this._formatFeatures[Format.RGBA32UI] = tempFeature;
-
-        this._textureExclusive[Format.R8] = false;
-        this._textureExclusive[Format.RG8] = false;
-        this._textureExclusive[Format.RGB8] = false;
-        this._textureExclusive[Format.R5G6B5] = false;
-        this._textureExclusive[Format.RGBA4] = false;
-
-        this._textureExclusive[Format.RGB5A1] = false;
-        this._textureExclusive[Format.RGBA8] = false;
-        this._textureExclusive[Format.RGB10A2] = false;
-        this._textureExclusive[Format.RGB10A2UI] = false;
-        this._textureExclusive[Format.SRGB8_A8] = false;
-
-        this._textureExclusive[Format.R8I] = false;
-        this._textureExclusive[Format.R8UI] = false;
-        this._textureExclusive[Format.R16I] = false;
-        this._textureExclusive[Format.R16UI] = false;
-        this._textureExclusive[Format.R32I] = false;
-        this._textureExclusive[Format.R32UI] = false;
-
-        this._textureExclusive[Format.RG8I] = false;
-        this._textureExclusive[Format.RG8UI] = false;
-        this._textureExclusive[Format.RG16I] = false;
-        this._textureExclusive[Format.RG16UI] = false;
-        this._textureExclusive[Format.RG32I] = false;
-        this._textureExclusive[Format.RG32UI] = false;
-
-        this._textureExclusive[Format.RGBA8I] = false;
-        this._textureExclusive[Format.RGBA8UI] = false;
-        this._textureExclusive[Format.RGBA16I] = false;
-        this._textureExclusive[Format.RGBA16UI] = false;
-        this._textureExclusive[Format.RGBA32I] = false;
-        this._textureExclusive[Format.RGBA32UI] = false;
-
-        this._textureExclusive[Format.DEPTH] = false;
-        this._textureExclusive[Format.DEPTH_STENCIL] = false;
-
-        if (exts.has('float32-filterable')) {
-            this._formatFeatures[Format.R32F] |= FormatFeatureBit.RENDER_TARGET;
-            this._formatFeatures[Format.RG32F] |= FormatFeatureBit.RENDER_TARGET;
-            this._formatFeatures[Format.RGBA32F] |= FormatFeatureBit.RENDER_TARGET;
-
-            this._textureExclusive[Format.R32F] = false;
-            this._textureExclusive[Format.RG32F] = false;
-            this._textureExclusive[Format.RGBA32F] = false;
-
-            this._formatFeatures[Format.RGB32F] |= FormatFeatureBit.LINEAR_FILTER;
-            this._formatFeatures[Format.RGBA32F] |= FormatFeatureBit.LINEAR_FILTER;
-            this._formatFeatures[Format.R32F] |= FormatFeatureBit.LINEAR_FILTER;
-            this._formatFeatures[Format.RG32F] |= FormatFeatureBit.LINEAR_FILTER;
+        const storage = new Set(['rgba8unorm', 'rgba8snorm', 'rgba8uint', 'rgba8sint',
+            'rgba16uint', 'rgba16sint', 'rgba16float', 'r32uint', 'r32sint', 'r32float',
+            'rg32uint', 'rg32sint', 'rg32float', 'rgba32uint', 'rgba32sint', 'rgba32float']);
+        const notRenderable = new Set(['r8snorm', 'rg8snorm', 'rgba8snorm', 'rgb9e5ufloat']);
+        for (let format = 1; format < Format.COUNT; ++format) {
+            let native: GPUTextureFormat;
+            try { native = GFXFormatToWGPUFormat(format); } catch { continue; }
+            const compressed = native.startsWith('bc') || native.startsWith('etc') || native.startsWith('eac') || native.startsWith('astc');
+            if (compressed && !(native.startsWith('bc') ? exts.has('texture-compression-bc')
+                : native.startsWith('astc') ? exts.has('texture-compression-astc') : exts.has('texture-compression-etc2'))) continue;
+            let bits = FormatFeatureBit.SAMPLED_TEXTURE;
+            const integer = /(?:uint|sint)$/.test(native);
+            const depth = native.startsWith('depth');
+            if (!integer && !depth && (!native.includes('32float') || exts.has('float32-filterable'))) bits |= FormatFeatureBit.LINEAR_FILTER;
+            if (!compressed && !notRenderable.has(native)) bits |= FormatFeatureBit.RENDER_TARGET;
+            if (storage.has(native)) bits |= FormatFeatureBit.STORAGE_TEXTURE;
+            this._formatFeatures[format] = bits;
+            this._textureExclusive[format] = false;
+        }
+        for (const format of [Format.R32F, Format.R32UI, Format.R32I, Format.RG8, Format.RG8SN, Format.RG8UI,
+            Format.RG8I, Format.RG16F, Format.RG16UI, Format.RG16I, Format.RG32F, Format.RG32UI, Format.RG32I,
+            Format.RGB32F, Format.RGB32UI, Format.RGB32I, Format.RGBA8, Format.RGBA8SN, Format.RGBA8UI,
+            Format.RGBA8I, Format.RGBA16F, Format.RGBA16UI, Format.RGBA16I, Format.RGBA32F, Format.RGBA32UI, Format.RGBA32I]) {
+            this._formatFeatures[format] |= FormatFeatureBit.VERTEX_ATTRIBUTE;
         }
 
-        if (exts.has('shader-f16')) {
-            this._textureExclusive[Format.R16F] = false;
-            this._textureExclusive[Format.RG16F] = false;
-            this._textureExclusive[Format.RGBA16F] = false;
-
-            this._formatFeatures[Format.RGB16F] |= FormatFeatureBit.LINEAR_FILTER;
-            this._formatFeatures[Format.RGBA16F] |= FormatFeatureBit.LINEAR_FILTER;
-            this._formatFeatures[Format.R16F] |= FormatFeatureBit.LINEAR_FILTER;
-            this._formatFeatures[Format.RG16F] |= FormatFeatureBit.LINEAR_FILTER;
-        }
-
-        const compressedFeature: FormatFeature = FormatFeatureBit.SAMPLED_TEXTURE | FormatFeatureBit.LINEAR_FILTER;
-
-        if (exts.has('texture-compression-etc2')) {
-            this._formatFeatures[Format.ETC2_RGB8] = compressedFeature;
-            this._formatFeatures[Format.ETC2_RGBA8] = compressedFeature;
-            this._formatFeatures[Format.ETC2_SRGB8] = compressedFeature;
-            this._formatFeatures[Format.ETC2_SRGB8_A8] = compressedFeature;
-            this._formatFeatures[Format.ETC2_RGB8_A1] = compressedFeature;
-            this._formatFeatures[Format.ETC2_SRGB8_A1] = compressedFeature;
-        }
-
-        if (exts.has('texture-compression-bc')) {
-            this._formatFeatures[Format.BC1] = compressedFeature;
-            this._formatFeatures[Format.BC1_ALPHA] = compressedFeature;
-            this._formatFeatures[Format.BC1_SRGB] = compressedFeature;
-            this._formatFeatures[Format.BC1_SRGB_ALPHA] = compressedFeature;
-            this._formatFeatures[Format.BC2] = compressedFeature;
-            this._formatFeatures[Format.BC2_SRGB] = compressedFeature;
-            this._formatFeatures[Format.BC3] = compressedFeature;
-            this._formatFeatures[Format.BC3_SRGB] = compressedFeature;
-        }
-
-        if (exts.has('texture-compression-astc')) {
-            this._formatFeatures[Format.ASTC_RGBA_4X4] = compressedFeature;
-            this._formatFeatures[Format.ASTC_RGBA_5X4] = compressedFeature;
-            this._formatFeatures[Format.ASTC_RGBA_5X5] = compressedFeature;
-            this._formatFeatures[Format.ASTC_RGBA_6X5] = compressedFeature;
-            this._formatFeatures[Format.ASTC_RGBA_6X6] = compressedFeature;
-            this._formatFeatures[Format.ASTC_RGBA_8X5] = compressedFeature;
-            this._formatFeatures[Format.ASTC_RGBA_8X6] = compressedFeature;
-            this._formatFeatures[Format.ASTC_RGBA_8X8] = compressedFeature;
-            this._formatFeatures[Format.ASTC_RGBA_10X5] = compressedFeature;
-            this._formatFeatures[Format.ASTC_RGBA_10X6] = compressedFeature;
-            this._formatFeatures[Format.ASTC_RGBA_10X8] = compressedFeature;
-            this._formatFeatures[Format.ASTC_RGBA_10X10] = compressedFeature;
-            this._formatFeatures[Format.ASTC_RGBA_12X10] = compressedFeature;
-            this._formatFeatures[Format.ASTC_RGBA_12X12] = compressedFeature;
-
-            this._formatFeatures[Format.ASTC_SRGBA_4X4] = compressedFeature;
-            this._formatFeatures[Format.ASTC_SRGBA_5X4] = compressedFeature;
-            this._formatFeatures[Format.ASTC_SRGBA_5X5] = compressedFeature;
-            this._formatFeatures[Format.ASTC_SRGBA_6X5] = compressedFeature;
-            this._formatFeatures[Format.ASTC_SRGBA_6X6] = compressedFeature;
-            this._formatFeatures[Format.ASTC_SRGBA_8X5] = compressedFeature;
-            this._formatFeatures[Format.ASTC_SRGBA_8X6] = compressedFeature;
-            this._formatFeatures[Format.ASTC_SRGBA_8X8] = compressedFeature;
-            this._formatFeatures[Format.ASTC_SRGBA_10X5] = compressedFeature;
-            this._formatFeatures[Format.ASTC_SRGBA_10X6] = compressedFeature;
-            this._formatFeatures[Format.ASTC_SRGBA_10X8] = compressedFeature;
-            this._formatFeatures[Format.ASTC_SRGBA_10X10] = compressedFeature;
-            this._formatFeatures[Format.ASTC_SRGBA_12X10] = compressedFeature;
-            this._formatFeatures[Format.ASTC_SRGBA_12X12] = compressedFeature;
-        }
     }
 
     public getDefaultDescResources (
@@ -482,8 +325,10 @@ export class WebGPUDevice extends Device {
     }
 
     private async initDevice (info: Readonly<DeviceInfo>): Promise<boolean> {
-        const gpu = navigator.gpu;
-        this._adapter = await gpu?.requestAdapter();
+        const gpu = typeof navigator === 'undefined' ? undefined : navigator.gpu;
+        if (!gpu) throw Object.assign(new Error('WebGPU requires a supported secure browser context.'), { code: 'WEBGPU_UNSUPPORTED' });
+        this._adapter = await gpu.requestAdapter();
+        if (!this._adapter) throw Object.assign(new Error('No WebGPU adapter is available.'), { code: 'WEBGPU_ADAPTER_UNAVAILABLE' });
         const maxVertAttrs = this._adapter!.limits.maxVertexAttributes;
         const maxSampledTexPerShaderStage = this._adapter!.limits.maxSampledTexturesPerShaderStage;
         const submitFeatures: GPUFeatureName[] = [];
@@ -492,13 +337,23 @@ export class WebGPUDevice extends Device {
         } else {
             warn('Filterable 32-bit float textures support is not available');
         }
-        this._device = await this._adapter?.requestDevice({
+        for (const feature of ['texture-compression-bc', 'texture-compression-etc2', 'texture-compression-astc', 'indirect-first-instance'] as GPUFeatureName[]) {
+            if (this._adapter.features.has(feature)) submitFeatures.push(feature);
+        }
+        try { this._device = await this._adapter.requestDevice({
             requiredLimits: {
                 // Must be changed, default support for 16 is not enough
                 maxVertexAttributes: maxVertAttrs,
                 maxSampledTexturesPerShaderStage: maxSampledTexPerShaderStage,
             },
             requiredFeatures: submitFeatures,
+        });
+        } catch (cause) {
+            throw Object.assign(new Error('WebGPU device request failed.'), { code: 'WEBGPU_DEVICE_REQUEST_FAILED', cause });
+        }
+        this._device.lost.then(() => { this.isLost = true; });
+        this._device.addEventListener('uncapturederror', (event) => {
+            error('[WEBGPU_VALIDATION_ERROR]', (event as GPUUncapturedErrorEvent).error.message);
         });
         await loadWebGPUWasmModule();
         this._glslang = webGPU.glslang;
@@ -532,7 +387,8 @@ export class WebGPUDevice extends Device {
         };
 
         const canvas = Device.canvas;
-        this._context = canvas.getContext('webgpu')!;
+        this._context = canvas.getContext('webgpu');
+        if (!this._context) throw Object.assign(new Error('Canvas cannot acquire a WebGPU context.'), { code: 'WEBGPU_CANVAS_FAILED' });
         const device: GPUDevice = this._device as GPUDevice;
 
         const adapterInfo = this._adapter!.info;
@@ -540,13 +396,16 @@ export class WebGPUDevice extends Device {
         this._renderer = adapterInfo.device;
         const description = adapterInfo.description;
 
-        const limits =  this._adapter!.limits;
+        const limits = this._device!.limits;
         this._caps.clipSpaceMinZ = 0.0;
         this._caps.screenSpaceSignY = -1.0;
         this._caps.uboOffsetAlignment = 256;
-        this._caps.maxUniformBufferBindings = 12;
+        this._caps.maxTextureUnits = limits.maxSampledTexturesPerShaderStage;
+        this._caps.maxVertexTextureUnits = limits.maxSampledTexturesPerShaderStage;
+        this._caps.maxFragmentUniformVectors = Math.floor(limits.maxUniformBufferBindingSize / 16);
+        this._caps.maxVertexUniformVectors = Math.floor(limits.maxUniformBufferBindingSize / 16);
         this._caps.maxVertexAttributes = limits.maxVertexAttributes;
-        this._caps.maxUniformBufferBindings = limits.maxUniformBufferBindingSize;
+        this._caps.maxUniformBufferBindings = limits.maxUniformBuffersPerShaderStage;
         this._caps.maxTextureSize = limits.maxTextureDimension2D;
         this._caps.maxArrayTextureLayers = limits.maxTextureArrayLayers;
         this._caps.max3DTextureSize = limits.maxTextureDimension3D;
@@ -568,7 +427,7 @@ export class WebGPUDevice extends Device {
             deviceLimits.maxComputeWorkgroupsPerDimension,
         );
 
-        const features = this._adapter!.features;
+        const features = device.features;
         // FIXME: require by query
         this._multiDrawIndirect = false;
 
@@ -671,7 +530,18 @@ export class WebGPUDevice extends Device {
             res = it.next();
         }
 
+        this._samplers.clear();
+        this._swapchain?.destroy();
         this._swapchain = null;
+        for (const item of [...this.defaultResource.buffersDescLayout.values(), ...this.defaultResource.texturesDescLayout.values(),
+            ...this.defaultResource.storageBuffers, this.defaultResource.buffer, this.defaultResource.texture, this.defaultResource.cubeTexture,
+            this.defaultResource.descSet, this.defaultResource.setLayout]) item?.destroy();
+        this.defaultResource.buffersDescLayout.clear();
+        this.defaultResource.texturesDescLayout.clear();
+        this._context?.unconfigure();
+        this._device?.destroy();
+        this._device = null;
+        this._context = null;
     }
 
     public resize (width: number, height: number): void {

@@ -1,0 +1,307 @@
+{"galleryFullScope":true,"filterPresent":false,"artifactOverridePresent":false}
+[gallery-artifact] compiled entries: 188
+[gallery-artifact] built build\examples: 188 examples, 239 thumbnails, 189 path rewrites
+PASS artifact:webgpu-assets-current all WebGPU assets match the live build
+PASS artifact:no-absolute-path-dependency no repo-absolute / agent-endpoint references in shipped bytes
+PASS artifact:decoder-set 17 decoder files shipped
+PASS artifact:engine-copy-current artifact 33b91ac2fa1592c7 vs live build 33b91ac2fa1592c7
+PASS static:index.html status=200
+PASS static:gallery.html status=200
+PASS static:files.json status=200
+PASS static:cocosair.module.js status=200
+PASS artifact:thumbnails-all 183/183 thumbnails reachable
+PASS artifact:devtools-page-served:automation status=200（仅静态可访问；agent 通道启动不在本门禁范围）
+PASS artifact:devtools-page-served:rc-capture-frame status=200（仅静态可访问；agent 通道启动不在本门禁范围）
+PASS artifact:devtools-page-served:rc-create-node status=200（仅静态可访问；agent 通道启动不在本门禁范围）
+PASS artifact:devtools-page-served:rc-error-report status=200（仅静态可访问；agent 通道启动不在本门禁范围）
+PASS artifact:devtools-page-served:rc-inspect-scene status=200（仅静态可访问；agent 通道启动不在本门禁范围）
+PASS gallery:list-rendered links=188 expected=188
+PASS gallery:deep-link iframe src=http://127.0.0.1:51455/apps/gallery/mesh-sphere/
+PASS gallery:source-view source chars=1965 head="/**\n * mesh-sphere — 球体图元 + 标准材质 + 慢速自转（"
+PASS example-boot:anim-position booted via /anim-position/
+PASS lifecycle:anim-position held=2 leaked=0 reloaded=true
+PASS example-boot:anim-rotation booted via /anim-rotation/
+PASS example-boot:animated-character-showcase booted via /animated-character-showcase/
+PASS lifecycle:animated-character-showcase held=17 leaked=0 reloaded=true
+PASS example-boot:audio-basic booted via /audio-basic/
+PASS lifecycle:audio-basic held=1 leaked=0 reloaded=true
+PASS example-boot:batching-dynamic booted via /batching-dynamic/
+PASS lifecycle:batching-dynamic held=2 leaked=0 reloaded=true
+PASS example-boot:batching-merged booted via /batching-merged/
+PASS lifecycle:batching-merged held=2 leaked=0 reloaded=true
+PASS example-boot:batching-shared booted via /batching-shared/
+PASS lifecycle:batching-shared held=2 leaked=0 reloaded=true
+PASS example-boot:batching-utility booted via /batching-utility/
+PASS example-boot:black-hole-accretion booted via /black-hole-accretion/
+PASS lifecycle:black-hole-accretion held=19 leaked=0 reloaded=true
+PASS example-boot:camera booted via /camera/
+PASS example-boot:camera-geometry-extras booted via /camera-geometry-extras/
+PASS lifecycle:camera-geometry-extras held=2 leaked=0 reloaded=true
+PASS example-boot:camera-lookat booted via /camera-lookat/
+PASS example-boot:camera-multi booted via /camera-multi/
+PASS example-boot:camera-ortho booted via /camera-ortho/
+PASS example-boot:camera-screen-world booted via /camera-screen-world/
+PASS example-boot:camera-second-view booted via /camera-second-view/
+PASS example-boot:camera-viewport-props booted via /camera-viewport-props/
+PASS lifecycle:camera-viewport-props held=2 leaked=0 reloaded=true
+PASS example-boot:campfire-night booted via /campfire-night/
+PASS lifecycle:campfire-night held=10 leaked=0 reloaded=true
+PASS example-boot:collector-dodge booted via /collector-dodge/
+PASS lifecycle:collector-dodge held=7 leaked=0 reloaded=true
+PASS example-boot:color-timeline-key booted via /color-timeline-key/
+PASS example-boot:colortimeline-ops booted via /colortimeline-ops/
+PASS example-boot:contra-action booted via /contra-action/
+PASS lifecycle:contra-action held=4 leaked=0 reloaded=true
+PASS example-boot:directional-light-face booted via /directional-light-face/
+PASS example-boot:dom-overlay-texture booted via /dom-overlay-texture/
+PASS lifecycle:dom-overlay-texture held=2 leaked=0 reloaded=true
+PASS example-boot:dragonbones-basic booted via /dragonbones-basic/
+PASS lifecycle:dragonbones-basic held=3 leaked=0 reloaded=true
+PASS example-boot:fog-accuracy booted via /fog-accuracy/
+PASS lifecycle:fog-accuracy held=5 leaked=0 reloaded=true
+PASS example-boot:glass-refraction booted via /glass-refraction/
+PASS lifecycle:glass-refraction held=6 leaked=0 reloaded=true
+PASS example-boot:gltf-animation-contract booted via /gltf-animation-contract/
+PASS lifecycle:gltf-animation-contract held=15 leaked=0 reloaded=true
+PASS example-boot:gltf-asset-readonly booted via /gltf-asset-readonly/
+PASS lifecycle:gltf-asset-readonly held=1 leaked=0 reloaded=true
+PASS example-boot:gltf-basic booted via /gltf-basic/
+PASS lifecycle:gltf-basic held=2 leaked=0 reloaded=true
+PASS example-boot:gltf-catalog booted via /gltf-catalog/
+PASS example-boot:gltf-clearcoat booted via /gltf-clearcoat/
+PASS lifecycle:gltf-clearcoat held=2 leaked=0 reloaded=true
+PASS example-boot:gltf-draco booted via /gltf-draco/
+PASS decoder-request:gltf-draco draco.glb 已被部署页请求
+PASS decoder-state:gltf-draco __decoderState=decoder-missing-observed
+PASS example-boot:gltf-loader-registry booted via /gltf-loader-registry/
+PASS lifecycle:gltf-loader-registry held=1 leaked=0 reloaded=true
+PASS example-boot:gltf-meshopt booted via /gltf-meshopt/
+PASS lifecycle:gltf-meshopt held=3 leaked=0 reloaded=true
+PASS decoder-request:gltf-meshopt meshopt/meshopt_decoder.mjs 已被部署页请求
+PASS decoder-wasm:meshopt 配置解码器完成真实 decode（wasm 内嵌形制，无独立 .wasm 请求）
+PASS decoder-state:gltf-meshopt __decoderState=loaded-bare
+PASS example-boot:gltf-morph booted via /gltf-morph/
+PASS lifecycle:gltf-morph held=2 leaked=0 reloaded=true
+PASS example-boot:gltf-skin booted via /gltf-skin/
+PASS lifecycle:gltf-skin held=2 leaked=0 reloaded=true
+PASS example-boot:gltf-viewer booted via /gltf-viewer/
+PASS lifecycle:gltf-viewer held=2 leaked=0 reloaded=true
+PASS example-boot:graphics-svg-paints booted via /graphics-svg-paints/
+PASS lifecycle:graphics-svg-paints held=2 leaked=0 reloaded=true
+PASS example-boot:hdr-color-pipeline booted via /hdr-color-pipeline/
+PASS lifecycle:hdr-color-pipeline held=94 leaked=0 reloaded=true
+PASS example-boot:hello-cube booted via /hello-cube/
+PASS example-boot:html-texture-experimental booted via /html-texture-experimental/
+PASS lifecycle:html-texture-experimental held=3 leaked=0 reloaded=true
+PASS example-boot:input booted via /input/
+PASS example-boot:input-queries booted via /input-queries/
+PASS example-boot:interaction-click booted via /interaction-click/
+PASS example-boot:interactive-container booted via /interactive-container/
+PASS lifecycle:interactive-container held=2 leaked=0 reloaded=true
+PASS example-boot:interactive-geometry booted via /interactive-geometry/
+PASS lifecycle:interactive-geometry held=4 leaked=0 reloaded=true
+PASS example-boot:interactive-input booted via /interactive-input/
+PASS lifecycle:interactive-input held=2 leaked=0 reloaded=true
+PASS example-boot:interactive-multipass booted via /interactive-multipass/
+PASS lifecycle:interactive-multipass held=8 leaked=0 reloaded=true
+PASS example-boot:interactive-timeline booted via /interactive-timeline/
+PASS lifecycle:interactive-timeline held=3 leaked=0 reloaded=true
+PASS example-boot:k0-r2-porting-contracts booted via /k0-r2-porting-contracts/
+PASS lifecycle:k0-r2-porting-contracts held=3 leaked=0 reloaded=true
+PASS example-boot:layers-enum-ops booted via /layers-enum-ops/
+PASS example-boot:light-attach-cycle booted via /light-attach-cycle/
+PASS example-boot:light-point booted via /light-point/
+PASS example-boot:light-sphere booted via /light-sphere/
+PASS example-boot:light-spot booted via /light-spot/
+PASS lifecycle:light-spot held=4 leaked=0 reloaded=true
+PASS example-boot:light-two-directional booted via /light-two-directional/
+PASS example-boot:match3-classic booted via /match3-classic/
+PASS lifecycle:match3-classic held=3 leaked=0 reloaded=true
+PASS example-boot:material-basic booted via /material-basic/
+PASS example-boot:material-color booted via /material-color/
+PASS example-boot:material-lifecycle booted via /material-lifecycle/
+PASS example-boot:material-ops booted via /material-ops/
+PASS lifecycle:material-ops held=2 leaked=0 reloaded=true
+PASS example-boot:material-transparent booted via /material-transparent/
+PASS lifecycle:material-transparent held=5 leaked=0 reloaded=true
+PASS example-boot:material-unlit booted via /material-unlit/
+PASS example-boot:math-approx-compare booted via /math-approx-compare/
+PASS example-boot:math-bits booted via /math-bits/
+PASS example-boot:math-bits-constants booted via /math-bits-constants/
+PASS example-boot:math-color-applied booted via /math-color-applied/
+PASS example-boot:math-color-convert booted via /math-color-convert/
+PASS example-boot:math-color-models booted via /math-color-models/
+PASS example-boot:math-easing-patterns booted via /math-easing-patterns/
+PASS example-boot:math-enumerable-props booted via /math-enumerable-props/
+PASS example-boot:math-float-encoding booted via /math-float-encoding/
+PASS example-boot:math-mat3-basics booted via /math-mat3-basics/
+PASS example-boot:math-mat3-elements booted via /math-mat3-elements/
+PASS example-boot:math-mat3-transforms booted via /math-mat3-transforms/
+PASS example-boot:math-mat4-applied booted via /math-mat4-applied/
+PASS example-boot:math-mat4-basics booted via /math-mat4-basics/
+PASS example-boot:math-mat4-compose booted via /math-mat4-compose/
+PASS example-boot:math-mat4-transform booted via /math-mat4-transform/
+PASS example-boot:math-quat-applied booted via /math-quat-applied/
+PASS example-boot:math-quat-components booted via /math-quat-components/
+PASS example-boot:math-quat-euler booted via /math-quat-euler/
+PASS example-boot:math-quat-interp booted via /math-quat-interp/
+PASS example-boot:math-random-utils booted via /math-random-utils/
+PASS example-boot:math-rect-geometry booted via /math-rect-geometry/
+PASS example-boot:math-rect-ops booted via /math-rect-ops/
+PASS example-boot:math-scalar-utils booted via /math-scalar-utils/
+PASS example-boot:math-size-ops booted via /math-size-ops/
+PASS example-boot:math-vec2-applied booted via /math-vec2-applied/
+PASS example-boot:math-vec2-arithmetic booted via /math-vec2-arithmetic/
+PASS example-boot:math-vec2-components booted via /math-vec2-components/
+PASS example-boot:math-vec2-equality-misc booted via /math-vec2-equality-misc/
+PASS example-boot:math-vec2-length-angle booted via /math-vec2-length-angle/
+PASS example-boot:math-vec2-tovec3 booted via /math-vec2-tovec3/
+PASS example-boot:math-vec3-applied booted via /math-vec3-applied/
+PASS example-boot:math-vec3-arithmetic booted via /math-vec3-arithmetic/
+PASS example-boot:math-vec3-components booted via /math-vec3-components/
+PASS example-boot:math-vec3-equality-misc booted via /math-vec3-equality-misc/
+PASS example-boot:math-vec3-length-products booted via /math-vec3-length-products/
+PASS example-boot:math-vec3-tovec2 booted via /math-vec3-tovec2/
+PASS example-boot:math-vec4-arithmetic booted via /math-vec4-arithmetic/
+PASS example-boot:math-vec4-components booted via /math-vec4-components/
+PASS example-boot:math-vec4-length-misc booted via /math-vec4-length-misc/
+PASS example-boot:mesh-attributes-indices booted via /mesh-attributes-indices/
+PASS example-boot:mesh-cylinder booted via /mesh-cylinder/
+PASS example-boot:mesh-lifecycle-ops booted via /mesh-lifecycle-ops/
+PASS lifecycle:mesh-lifecycle-ops held=4 leaked=0 reloaded=true
+PASS example-boot:mesh-morph-bounds booted via /mesh-morph-bounds/
+PASS example-boot:mesh-multi-material booted via /mesh-multi-material/
+PASS lifecycle:mesh-multi-material held=2 leaked=0 reloaded=true
+PASS example-boot:mesh-plane booted via /mesh-plane/
+PASS example-boot:mesh-prim-compare booted via /mesh-prim-compare/
+PASS example-boot:mesh-sphere booted via /mesh-sphere/
+PASS example-boot:mesh-torus booted via /mesh-torus/
+PASS example-boot:meshrenderer-hooks booted via /meshrenderer-hooks/
+PASS lifecycle:meshrenderer-hooks held=2 leaked=0 reloaded=true
+PASS example-boot:model-character-interaction booted via /model-character-interaction/
+PASS lifecycle:model-character-interaction held=4 leaked=0 reloaded=true
+PASS example-boot:neon-night-city booted via /neon-night-city/
+PASS lifecycle:neon-night-city held=13 leaked=0 reloaded=true
+PASS example-boot:node-active booted via /node-active/
+PASS example-boot:node-children-ops booted via /node-children-ops/
+PASS lifecycle:node-children-ops held=1 leaked=0 reloaded=true
+PASS example-boot:node-component-queries booted via /node-component-queries/
+PASS example-boot:node-events booted via /node-events/
+PASS example-boot:node-hierarchy booted via /node-hierarchy/
+PASS example-boot:node-pool booted via /node-pool/
+PASS example-boot:node-scale booted via /node-scale/
+PASS example-boot:node-scene-id booted via /node-scene-id/
+PASS example-boot:orbit-controls booted via /orbit-controls/
+PASS example-boot:particle-2d-basic booted via /particle-2d-basic/
+PASS lifecycle:particle-2d-basic held=8 leaked=0 reloaded=true
+PASS example-boot:physics-2d-basic booted via /physics-2d-basic/
+PASS lifecycle:physics-2d-basic held=12 leaked=0 reloaded=true
+PASS example-boot:physics-2d-collision booted via /physics-2d-collision/
+PASS lifecycle:physics-2d-collision held=21 leaked=0 reloaded=true
+PASS example-boot:physics-3d-basic booted via /physics-3d-basic/
+PASS lifecycle:physics-3d-basic held=10 leaked=0 reloaded=true
+PASS example-boot:physics-3d-collision booted via /physics-3d-collision/
+PASS lifecycle:physics-3d-collision held=8 leaked=0 reloaded=true
+PASS example-boot:physics-interaction booted via /physics-interaction/
+PASS lifecycle:physics-interaction held=21 leaked=0 reloaded=true
+PASS example-boot:point-cloud-basics booted via /point-cloud-basics/
+PASS lifecycle:point-cloud-basics held=6 leaked=0 reloaded=true
+PASS example-boot:primitives-geometry-ops booted via /primitives-geometry-ops/
+PASS example-boot:primitives-shapes-extra booted via /primitives-shapes-extra/
+PASS example-boot:primitives-wireframe-obj booted via /primitives-wireframe-obj/
+PASS example-boot:product-viewer booted via /product-viewer/
+PASS lifecycle:product-viewer held=8 leaked=0 reloaded=true
+PASS example-boot:profiler-overlay booted via /profiler-overlay/
+PASS example-boot:render-composite booted via /render-composite/
+PASS lifecycle:render-composite held=5 leaked=0 reloaded=true
+PASS example-boot:responsive-board-recipes booted via /responsive-board-recipes/
+PASS example-boot:runtime-asset-release booted via /runtime-asset-release/
+PASS lifecycle:runtime-asset-release held=2 leaked=0 reloaded=true
+PASS example-boot:scene-asset-meta booted via /scene-asset-meta/
+PASS lifecycle:scene-asset-meta held=1 leaked=0 reloaded=true
+PASS example-boot:scene-globals-read booted via /scene-globals-read/
+PASS example-boot:scene-runtime-ops booted via /scene-runtime-ops/
+PASS lifecycle:scene-runtime-ops held=1 leaked=0 reloaded=true
+PASS example-boot:scene-switch-reentry booted via /scene-switch-reentry/
+PASS lifecycle:scene-switch-reentry held=2 leaked=0 reloaded=true
+PASS example-boot:shader-cursor-trail booted via /shader-cursor-trail/
+PASS lifecycle:shader-cursor-trail held=4 leaked=0 reloaded=true
+PASS example-boot:shader-custom-gradient booted via /shader-custom-gradient/
+PASS lifecycle:shader-custom-gradient held=2 leaked=0 reloaded=true
+PASS example-boot:shader-dissolve booted via /shader-dissolve/
+PASS lifecycle:shader-dissolve held=3 leaked=0 reloaded=true
+PASS example-boot:shader-driver-pilot booted via /shader-driver-pilot/
+PASS lifecycle:shader-driver-pilot held=3 leaked=0 reloaded=true
+PASS example-boot:shader-emboss booted via /shader-emboss/
+PASS lifecycle:shader-emboss held=6 leaked=0 reloaded=true
+PASS example-boot:shader-film-neon booted via /shader-film-neon/
+PASS lifecycle:shader-film-neon held=3 leaked=0 reloaded=true
+PASS example-boot:shader-glass booted via /shader-glass/
+PASS lifecycle:shader-glass held=6 leaked=0 reloaded=true
+PASS example-boot:shader-glass-trail booted via /shader-glass-trail/
+PASS lifecycle:shader-glass-trail held=6 leaked=0 reloaded=true
+PASS example-boot:shader-holographic booted via /shader-holographic/
+PASS lifecycle:shader-holographic held=3 leaked=0 reloaded=true
+PASS example-boot:shader-input-dissolve booted via /shader-input-dissolve/
+PASS lifecycle:shader-input-dissolve held=5 leaked=0 reloaded=true
+PASS example-boot:shader-laser-card booted via /shader-laser-card/
+PASS lifecycle:shader-laser-card held=7 leaked=0 reloaded=true
+PASS example-boot:shader-liquid-metal booted via /shader-liquid-metal/
+PASS lifecycle:shader-liquid-metal held=3 leaked=0 reloaded=true
+PASS example-boot:shader-neon booted via /shader-neon/
+PASS lifecycle:shader-neon held=3 leaked=0 reloaded=true
+PASS example-boot:shader-noise-dissolve booted via /shader-noise-dissolve/
+PASS lifecycle:shader-noise-dissolve held=3 leaked=0 reloaded=true
+PASS example-boot:shader-sparkle booted via /shader-sparkle/
+PASS lifecycle:shader-sparkle held=3 leaked=0 reloaded=true
+PASS example-boot:shader-thin-film booted via /shader-thin-film/
+PASS lifecycle:shader-thin-film held=3 leaked=0 reloaded=true
+PASS example-boot:skinned-animation booted via /skinned-animation/
+PASS lifecycle:skinned-animation held=4 leaked=0 reloaded=true
+PASS example-boot:spark-splats booted via /spark-splats/
+PASS example-boot:sprite-mask-blend booted via /sprite-mask-blend/
+PASS lifecycle:sprite-mask-blend held=3 leaked=0 reloaded=true
+PASS example-boot:starfield-galaxy booted via /starfield-galaxy/
+PASS lifecycle:starfield-galaxy held=3 leaked=0 reloaded=true
+PASS example-boot:starter booted via /starter/
+PASS example-boot:static-model booted via /static-model/
+PASS lifecycle:static-model held=8 leaked=0 reloaded=true
+PASS example-boot:tank-battle booted via /tank-battle/
+PASS lifecycle:tank-battle held=4 leaked=0 reloaded=true
+PASS example-boot:tetris-classic booted via /tetris-classic/
+PASS lifecycle:tetris-classic held=3 leaked=0 reloaded=true
+PASS example-boot:texture-basic booted via /texture-basic/
+PASS lifecycle:texture-basic held=8 leaked=0 reloaded=true
+PASS example-boot:texture2d-ops booted via /texture2d-ops/
+PASS lifecycle:texture2d-ops held=1 leaked=0 reloaded=true
+PASS example-boot:texture2d-serialization booted via /texture2d-serialization/
+PASS lifecycle:texture2d-serialization held=1 leaked=0 reloaded=true
+PASS example-boot:tiledmap-basic booted via /tiledmap-basic/
+PASS lifecycle:tiledmap-basic held=3 leaked=0 reloaded=true
+PASS example-boot:transform booted via /transform/
+PASS example-boot:tween-basic booted via /tween-basic/
+PASS lifecycle:tween-basic held=2 leaked=0 reloaded=true
+PASS example-boot:ui-api-lifecycle booted via /ui-api-lifecycle/
+PASS lifecycle:ui-api-lifecycle held=4 leaked=0 reloaded=true
+PASS example-boot:ui-asset-loading booted via /ui-asset-loading/
+PASS lifecycle:ui-asset-loading held=2 leaked=0 reloaded=true
+PASS example-boot:ui-components booted via /ui-components/
+PASS lifecycle:ui-components held=36 leaked=0 reloaded=true
+PASS example-boot:ui-layout booted via /ui-layout/
+PASS lifecycle:ui-layout held=18 leaked=0 reloaded=true
+PASS example-boot:utils-family booted via /utils-family/
+PASS example-boot:video-basic booted via /video-basic/
+PASS lifecycle:video-basic held=2 leaked=0 reloaded=true
+PASS example-boot:water-multipass booted via /water-multipass/
+PASS lifecycle:water-multipass held=30 leaked=0 reloaded=true
+PASS example-boot:webgpu-basic booted via /webgpu-basic/
+PASS example-boot:webview-basic booted via /webview-basic/
+PASS lifecycle:webview-basic held=1 leaked=0 reloaded=true
+PASS artifact:all-boottable-examples 183/183 booted under nested mount
+PASS artifact:lifecycle-covered 91 §25 合同示例在部署物内完成释放核对
+PASS artifact:no-http-errors zero non-2xx response
+PASS artifact:no-external-requests every request served from the artifact mount
+PASS gallery:no-page-errors 0 page errors
+PASS collector:source-unchanged collector bytes remain unchanged
+PASS artifact:no-webgpu-validation-errors 0 native WebGPU validation errors
+[gallery-artifact] verify: 303/303 PASS → docs\evidence\gallery-artifact.json

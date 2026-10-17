@@ -1,0 +1,46 @@
+[
+  {
+    "name": "devtools",
+    "endedAt": "2026-10-17T00:13:09.9354281Z",
+    "commandArgs": [
+      "tools/verify/devtools-examples.cjs",
+      "--preserve-metadata"
+    ],
+    "exitCode": 0,
+    "startedAt": "2026-10-17T00:11:57.3488465Z",
+    "inputGuardExitCode": 0
+  },
+  {
+    "name": "gallery",
+    "endedAt": "2026-10-17T00:13:45.5307382Z",
+    "commandArgs": [
+      "tools/verify/gallery-artifact.cjs",
+      "all"
+    ],
+    "exitCode": 1,
+    "startedAt": "2026-10-17T00:13:10.0251198Z",
+    "inputGuardExitCode": 0
+  },
+  {
+    "startedAt": "2026-10-17T00:14:52.1411097Z",
+    "inputGuardExitCode": 0,
+    "name": "gallery",
+    "commandArgs": [
+      "output/playwright/release-refresh-windows/gallery-full.cjs"
+    ],
+    "attempt": 2,
+    "endedAt": "2026-10-17T00:19:02.8166897Z",
+    "exitCode": 0
+  },
+  {
+    "startedAt": "2026-10-17T00:19:02.8754769Z",
+    "inputGuardExitCode": 0,
+    "name": "browser-matrix",
+    "commandArgs": [
+      "tools/verify/browser-matrix.cjs"
+    ],
+    "attempt": 1,
+    "endedAt": "2026-10-17T00:36:36.4744519Z",
+    "exitCode": 0
+  }
+]

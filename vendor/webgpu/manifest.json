@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "repository": "https://github.com/cocos/cocos-engine-external",
+  "tag": "v4.0.0-9",
+  "commit": "11dde1bdc5af95b0227cbe8cc29340f4b757aea9",
+  "engineBaseline": "fffd9a514a",
+  "path": "emscripten/webgpu",
+  "attribution": {
+    "glslang": "licenses/LICENSE_glslang.txt from frozen Cocos engine",
+    "twgsl": "Apache-2.0 per BabylonJS official NOTICE at 1d7cbaad3a8da8b434daa0676e830e96bdcb49ab",
+    "dawn": "BSD-3-Clause; license snapshot f9ac6c61ff0a88ddec67db7f2d0455b4125ab69d"
+  },
+  "reproducibility": "Frozen distribution bytes, not a claim of a local source rebuild; external archive does not identify compiler submodule revisions.",
+  "files": {
+    "glslang.js": {
+      "bytes": 12829,
+      "sha256": "7937463b384ded16e10da2c1d64cb63a0894e56e8d8167cce636be5635caef59"
+    },
+    "glslang.wasm": {
+      "bytes": 1192271,
+      "sha256": "2746e37cbb52ff99f21a836e56e72e5771873a83a032faec2ed860941b23768e"
+    },
+    "LICENSE-apache.txt": {
+      "bytes": 9226,
+      "sha256": "9362ea9ea17cb221a20cbbd63f404710834cc273d2a9a7b60314fd68ab702cd6"
+    },
+    "LICENSE-dawn.txt": {
+      "bytes": 11829,
+      "sha256": "0493f897193af1796d5054659f45ec7d4c5af648fa67a99f01d30e55cc805abc"
+    },
+    "LICENSE-glslang.txt": {
+      "bytes": 55719,
+      "sha256": "373bb541d74f5a2854e4b752c57952dd8155cca535124176de90c94efc67ef85"
+    },
+    "NOTICE-babylon.md": {
+      "bytes": 793,
+      "sha256": "7f85d099ce3c6e1900a45ee8d5b8fa405e760c746af687b3ee2081416e48f183"
+    },
+    "twgsl.js": {
+      "bytes": 74129,
+      "sha256": "e5664e33a74d064118769636440a5b09121db31370d6fe54b778deb17cd0e4f5"
+    },
+    "twgsl.wasm": {
+      "bytes": 1702916,
+      "sha256": "a434c2decdbb38caadf5f486d806384a1543554828c983c77922b2d92579914c"
+    }
+  }
+}

@@ -84,7 +84,7 @@ function assetDigestsOf(exampleDir, assets) {
 /** 证据行定位（§12 强化）：api.evidence[].sourceLocation 指向的行必须真的出现该 API 的名字，
  *  否则"行号绑定"只是元数据（改一行注释也能维持指纹）。返回 {ok, reason}。 */
 function evidenceLineOk(exampleDir, ev) {
-    const { codeLines, resolveSource, evidenceToken } = require(
+    const { codeLines, resolveSource, evidenceToken, findSymbolLine } = require(
         path.join(REPO, 'tools', 'examples', 'spec-evidence.cjs'),
     );
     const file = resolveSource(exampleDir, ev.source);
@@ -103,6 +103,12 @@ function evidenceLineOk(exampleDir, ev) {
     const token = evidenceToken(ev.api);
     if (!new RegExp(`\\b${token.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`).test(line)) {
         return { ok: false, reason: `L${m[1]} 未出现 ${token}（行内容漂移）` };
+    }
+    if (ev.api === 'GLTFAsset.destroy') {
+        const actual = findSymbolLine(exampleDir, ev.source, ev.api);
+        if (actual.error || actual.line !== Number(m[1])) {
+            return { ok: false, reason: actual.error || `L${m[1]} is not the GLTFAsset.destroy receiver call` };
+        }
     }
     return { ok: true, line: Number(m[1]) };
 }
@@ -214,6 +220,14 @@ function promoteFromEvidence(results) {
             continue;
         }
         const spec = JSON.parse(fs.readFileSync(file, 'utf8'));
+        // Generic API evidence does not authorize promoting explicitly experimental examples
+        // or a draft whose dedicated Agent/Gallery acceptance is still pending.
+        if (
+            spec.status === 'experimental' ||
+            (spec.status === 'draft' &&
+                (spec.validation?.agentGate === 'NOT_RUN' || spec.validation?.galleryGate === 'NOT_RUN'))
+        )
+            continue;
         const record = promotionOf(result);
         const reason = record
             ? null

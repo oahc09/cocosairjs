@@ -569,7 +569,7 @@ test('canonical consumer recomputes lifecycle settlement and resource consistenc
 });
 
 test('all evidence references to changed lifecycle sources remain bound to actual executable lines', () => {
-    const { resolveSource, codeLines } = require('../examples/spec-evidence.cjs');
+    const { resolveSource, codeLines, findSymbolLine } = require('../examples/spec-evidence.cjs');
     const { evidenceLineOk } = require('./example-spec-common.cjs');
     const affected = new Set(
         [
@@ -597,6 +597,20 @@ test('all evidence references to changed lifecycle sources remain bound to actua
                     'bind the asset call, not a material destroy with the same name',
                 );
                 assert.equal(evidenceLineOk(dir, { ...evidence, sourceLocation: 'L296' }).ok, false);
+                assert.equal(
+                    findSymbolLine(dir, evidence.source, evidence.api).line,
+                    Number(evidence.sourceLocation.slice(1)),
+                );
+                const materialLine =
+                    codeLines(fs.readFileSync(source, 'utf8')).findIndex((line) =>
+                        /\bmaterial\.destroy\(\)/.test(line),
+                    ) + 1;
+                assert.ok(materialLine > 0, 'the same-named Material.destroy negative control must remain present');
+                assert.equal(
+                    evidenceLineOk(dir, { ...evidence, sourceLocation: `L${materialLine}` }).ok,
+                    false,
+                    'a same-named Material.destroy call cannot prove GLTFAsset.destroy',
+                );
             }
             if (evidence.source === 'shared/asset-lifecycle.js' && evidence.api === 'isValid') {
                 assert.equal(evidenceLineOk(dir, { ...evidence, sourceLocation: 'L30' }).ok, false);

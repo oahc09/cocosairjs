@@ -1,0 +1,116 @@
+{
+  "measuredAt": "2026-10-16T14:38:46.807Z",
+  "platform": "win32",
+  "playwright": "1.62.1",
+  "completed": true,
+  "profiles": [
+    {
+      "name": "firefox-headless",
+      "options": {
+        "executablePath": "C:\\Users\\caosh\\AppData\\Local\\ms-playwright\\firefox-1543\\firefox\\firefox.exe",
+        "args": [],
+        "headless": true
+      },
+      "version": "155.0",
+      "native": {
+        "secure": true,
+        "apiAvailable": true,
+        "adapterAvailable": false
+      }
+    },
+    {
+      "name": "firefox-headed",
+      "options": {
+        "executablePath": "C:\\Users\\caosh\\AppData\\Local\\ms-playwright\\firefox-1543\\firefox\\firefox.exe",
+        "args": [],
+        "headless": false
+      },
+      "version": "155.0",
+      "native": {
+        "secure": true,
+        "apiAvailable": true,
+        "adapterAvailable": true,
+        "adapter": {
+          "vendor": "",
+          "architecture": "",
+          "device": "",
+          "description": "",
+          "isFallbackAdapter": false
+        },
+        "features": [
+          "depth-clip-control",
+          "depth32float-stencil8",
+          "texture-compression-bc",
+          "texture-compression-bc-sliced-3d",
+          "timestamp-query",
+          "indirect-first-instance",
+          "shader-f16",
+          "rg11b10ufloat-renderable",
+          "bgra8unorm-storage",
+          "float32-filterable",
+          "dual-source-blending",
+          "core-features-and-limits"
+        ],
+        "limits": {
+          "maxBindGroups": 8,
+          "maxUniformBuffersPerShaderStage": 64
+        },
+        "rawPixel": [
+          191,
+          127,
+          64,
+          255
+        ],
+        "format": "bgra8unorm",
+        "nativeReadback": true,
+        "validationError": null
+      }
+    },
+    {
+      "name": "firefox-headless-gpu-process",
+      "options": {
+        "executablePath": "C:\\Users\\caosh\\AppData\\Local\\ms-playwright\\firefox-1543\\firefox\\firefox.exe",
+        "args": [],
+        "headless": true,
+        "firefoxUserPrefs": {
+          "layers.gpu-process.allow-headless": true
+        }
+      },
+      "version": "155.0",
+      "native": {
+        "secure": true,
+        "apiAvailable": true,
+        "adapterAvailable": false
+      }
+    },
+    {
+      "name": "webkit-headless",
+      "options": {
+        "executablePath": "C:\\Users\\caosh\\AppData\\Local\\ms-playwright\\webkit-2336\\Playwright.exe",
+        "args": [],
+        "headless": true
+      },
+      "version": "26.5",
+      "native": {
+        "secure": true,
+        "apiAvailable": false,
+        "adapterAvailable": false
+      }
+    },
+    {
+      "name": "webkit-headed",
+      "options": {
+        "executablePath": "C:\\Users\\caosh\\AppData\\Local\\ms-playwright\\webkit-2336\\Playwright.exe",
+        "args": [],
+        "headless": false
+      },
+      "version": "26.5",
+      "native": {
+        "secure": true,
+        "apiAvailable": false,
+        "adapterAvailable": false
+      }
+    }
+  ],
+  "probeSha256": "5ae948d14588eac1269a4d079ea5fae82a12655c1a50591478569d68b299bc38"
+}

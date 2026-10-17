@@ -1,4 +1,6 @@
-# Browser rendering requires WebGL 2
+# Default browser rendering uses WebGL 2
+
+2026-10-15: explicit WebGPU integration is tracked separately in [WebGPU deployment and acceptance](guides/webgpu.md). The rules below apply to the default WebGL2 path; no WebGL1 fallback is restored.
 
 Owner decision: 2026-09-30. Cocos AIR's target environments formally drop WebGL 1 support.
 

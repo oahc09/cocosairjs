@@ -25,6 +25,7 @@ import { PipelineEventType } from '../pipeline-event';
 
 export class PostProcessBuilder implements PipelineBuilder  {
     pipelines: Map<string, BasePass[]> = new Map();
+    private _jitteredCameras = new WeakSet<Camera>();
     constructor () {
         this.init();
     }
@@ -222,6 +223,11 @@ export class PostProcessBuilder implements PipelineBuilder  {
         if (taaPass && taaPass.checkEnable(camera)) {
             taaPass.applyCameraJitter(camera);
             taaPass.updateSample();
+            this._jitteredCameras.add(camera);
+        } else if (this._jitteredCameras.delete(camera)) {
+            // Native fov assignment invalidates projection without changing the application's field of view.
+            camera.fov = camera.fov;
+            camera.update(true);
         }
 
         const floatOutputPass = passes.find((p): boolean => p instanceof FloatOutputProcessPass) as FloatOutputProcessPass;

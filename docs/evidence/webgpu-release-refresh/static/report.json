@@ -1,0 +1,289 @@
+{
+  "passed": true,
+  "sourceSha256": "cdd552444066108de44b0c772b9c88bc26ac274de7eb3e4bebd369c172e349a9",
+  "sourceUnchanged": true,
+  "receipts": [
+    {
+      "name": "typecheck",
+      "command": [
+        "node",
+        "node_modules/typescript/bin/tsc",
+        "--noEmit"
+      ],
+      "startedAt": "2026-10-16T14:40:52.0948602Z",
+      "finishedAt": "2026-10-16T14:41:20.2879731Z",
+      "exitCode": 0,
+      "log": "typecheck.log"
+    },
+    {
+      "name": "startup-gltf",
+      "command": [
+        "node",
+        "node_modules/jest/bin/jest.js",
+        "--runInBand",
+        "--cacheDirectory",
+        "output/jest-webgpu",
+        "test/smoke/webgpu-admission.test.ts",
+        "test/smoke/startup-admission.test.ts",
+        "test/smoke/port-gap-bootstrap-config.test.ts",
+        "test/smoke/smoke-07-gltf.test.ts",
+        "test/smoke/smoke-11-gltf-geometry.test.ts"
+      ],
+      "startedAt": "2026-10-16T14:41:20.2907662Z",
+      "finishedAt": "2026-10-16T14:41:45.9371751Z",
+      "exitCode": 0,
+      "log": "startup-gltf.log"
+    },
+    {
+      "name": "physical-materials",
+      "command": [
+        "node",
+        "node_modules/jest/bin/jest.js",
+        "--runInBand",
+        "--cacheDirectory",
+        "output/jest-webgpu",
+        "test/smoke/smoke-15-gltf-physical.test.ts",
+        "test/smoke/smoke-16-gltf-clearcoat.test.ts",
+        "test/smoke/smoke-17-gltf-anisotropy.test.ts",
+        "test/smoke/smoke-18-gltf-iridescence.test.ts",
+        "test/smoke/smoke-19-gltf-bump.test.ts",
+        "test/smoke/smoke-21-gltf-review-regression.test.ts"
+      ],
+      "startedAt": "2026-10-16T14:41:45.9378400Z",
+      "finishedAt": "2026-10-16T14:42:10.5600038Z",
+      "exitCode": 0,
+      "log": "physical-materials.log"
+    },
+    {
+      "name": "unlit-fog",
+      "command": [
+        "node",
+        "node_modules/jest/bin/jest.js",
+        "--runInBand",
+        "--cacheDirectory",
+        "output/jest-webgpu",
+        "test/smoke/competitive-unlit-fog.test.ts"
+      ],
+      "startedAt": "2026-10-16T14:42:10.5602958Z",
+      "finishedAt": "2026-10-16T14:42:29.6166260Z",
+      "exitCode": 0,
+      "log": "unlit-fog.log"
+    },
+    {
+      "name": "video-calibration",
+      "command": [
+        "node",
+        "node_modules/jest/bin/jest.js",
+        "--runInBand",
+        "--cacheDirectory",
+        "output/jest-webgpu",
+        "test/smoke/video-fullscreen-cleanup.test.ts"
+      ],
+      "startedAt": "2026-10-16T14:42:29.6169368Z",
+      "finishedAt": "2026-10-16T14:42:45.1681802Z",
+      "exitCode": 0,
+      "log": "video-calibration.log"
+    },
+    {
+      "name": "api-trace",
+      "command": [
+        "node",
+        "tools/verify/api-trace.cjs",
+        "--selftest"
+      ],
+      "startedAt": "2026-10-16T14:42:45.1685092Z",
+      "finishedAt": "2026-10-16T14:42:45.9564193Z",
+      "exitCode": 0,
+      "log": "api-trace.log"
+    },
+    {
+      "name": "video-sequence",
+      "command": [
+        "node",
+        "tools/verify/video-loop-sequencing.test.cjs"
+      ],
+      "startedAt": "2026-10-16T14:42:45.9567709Z",
+      "finishedAt": "2026-10-16T14:42:46.1926365Z",
+      "exitCode": 0,
+      "log": "video-sequence.log"
+    },
+    {
+      "name": "spec-validation",
+      "command": [
+        "node",
+        "tools/examples/spec-validate.cjs",
+        "--strict"
+      ],
+      "startedAt": "2026-10-16T14:42:46.1929582Z",
+      "finishedAt": "2026-10-16T14:42:51.2906218Z",
+      "exitCode": 0,
+      "log": "spec-validation.log"
+    },
+    {
+      "name": "spec-evidence",
+      "command": [
+        "node",
+        "tools/examples/spec-evidence.cjs",
+        "--check"
+      ],
+      "startedAt": "2026-10-16T14:42:51.2910635Z",
+      "finishedAt": "2026-10-16T14:42:55.7029831Z",
+      "exitCode": 0,
+      "log": "spec-evidence.log"
+    },
+    {
+      "name": "http-range",
+      "command": [
+        "node",
+        "tools/verify/static-file-response.cjs"
+      ],
+      "startedAt": "2026-10-16T14:42:55.7033211Z",
+      "finishedAt": "2026-10-16T14:42:56.1764472Z",
+      "exitCode": 0,
+      "log": "http-range.log"
+    },
+    {
+      "name": "d10",
+      "command": [
+        "node",
+        "node_modules/jest/bin/jest.js",
+        "--runInBand",
+        "--cacheDirectory",
+        "output/jest-webgpu",
+        "test/smoke/smoke-30-v12-regression.test.ts",
+        "--testNamePattern",
+        "D10"
+      ],
+      "startedAt": "2026-10-16T14:42:56.1767810Z",
+      "finishedAt": "2026-10-16T14:43:14.9365652Z",
+      "exitCode": 0,
+      "log": "d10.log"
+    },
+    {
+      "name": "file-map",
+      "command": [
+        "node",
+        "tools/verify/verify-file-map.cjs"
+      ],
+      "startedAt": "2026-10-16T14:43:14.9368532Z",
+      "finishedAt": "2026-10-16T14:43:19.5901258Z",
+      "exitCode": 0,
+      "log": "file-map.log"
+    },
+    {
+      "name": "wasm-boundary",
+      "command": [
+        "node",
+        "tools/verify/verify-wasm-backends.cjs"
+      ],
+      "startedAt": "2026-10-16T14:43:19.5904432Z",
+      "finishedAt": "2026-10-16T14:43:22.9847706Z",
+      "exitCode": 0,
+      "log": "wasm-boundary.log"
+    },
+    {
+      "name": "web-only",
+      "command": [
+        "node",
+        "tools/verify/verify-web-only.cjs"
+      ],
+      "startedAt": "2026-10-16T14:43:22.9851564Z",
+      "finishedAt": "2026-10-16T14:43:26.4515269Z",
+      "exitCode": 0,
+      "log": "web-only.log"
+    },
+    {
+      "name": "custom-exports",
+      "command": [
+        "node",
+        "tools/verify/verify-custom-exports.cjs",
+        "--json"
+      ],
+      "startedAt": "2026-10-16T14:43:26.4518192Z",
+      "finishedAt": "2026-10-16T14:43:26.7361422Z",
+      "exitCode": 0,
+      "log": "custom-exports.log"
+    },
+    {
+      "name": "licenses",
+      "command": [
+        "node",
+        "tools/verify/verify-licenses.cjs",
+        "--json"
+      ],
+      "startedAt": "2026-10-16T14:43:26.7364576Z",
+      "finishedAt": "2026-10-16T14:43:29.9861096Z",
+      "exitCode": 0,
+      "log": "licenses.log"
+    },
+    {
+      "name": "webgpu-assets",
+      "command": [
+        "node",
+        "tools/build/webgpu-assets.cjs",
+        "--check"
+      ],
+      "startedAt": "2026-10-16T14:43:29.9863861Z",
+      "finishedAt": "2026-10-16T14:43:30.2110954Z",
+      "exitCode": 0,
+      "log": "webgpu-assets.log"
+    },
+    {
+      "name": "builtin-regeneration",
+      "command": [
+        "node",
+        "tools/build/builtin-assets.cjs",
+        "--check"
+      ],
+      "startedAt": "2026-10-16T14:43:30.2121396Z",
+      "finishedAt": "2026-10-16T14:43:50.2556952Z",
+      "exitCode": 0,
+      "log": "builtin-regeneration.log"
+    },
+    {
+      "name": "focused-format",
+      "command": [
+        "node",
+        "node_modules/prettier/bin/prettier.cjs",
+        "--check",
+        "tools/verify/example-spec-browser.cjs",
+        "tools/verify/browser-matrix.cjs",
+        "tools/verify/gallery-artifact.cjs",
+        "tools/benchmark/runner/browser-runtime.cjs",
+        "docs/reference/npm-scripts.md",
+        "docs/UPSTREAM.md",
+        "tools/verify/webgpu-candidate.cjs",
+        "tools/verify/webgpu-resource-contracts.cjs",
+        "tools/verify/webgpu-acceptance.cjs",
+        "src/air/effects/unlit-fog.ts",
+        "test/smoke/competitive-unlit-fog.test.ts",
+        "test/smoke/video-fullscreen-cleanup.test.ts",
+        "tools/verify/example-spec-common.cjs",
+        "tools/verify/api-trace.cjs",
+        "tools/verify/browser-matrix-contract.json",
+        "tools/verify/video-loop-sequencing.test.cjs",
+        "examples/video-basic/main.js",
+        "examples/video-basic/index.html",
+        "examples/video-basic/example.json",
+        "examples/spark-splats/src/main.ts",
+        "examples/spark-splats/example.json",
+        "examples/webgpu-basic/example.json",
+        "examples/responsive-board-recipes/src/main.ts",
+        "examples/shader-driver-pilot/example.json",
+        "tools/examples/spec-validate.cjs",
+        "tools/benchmark/runner/browser-runtime.cjs",
+        "src/air/assets/gltf/material/physical-effect.ts",
+        "src/air/assets/gltf/material/standard-effect.ts",
+        "test/smoke/smoke-21-gltf-review-regression.test.ts",
+        "test/smoke/smoke-15-gltf-physical.test.ts",
+        "tools/build/builtin-assets.cjs",
+        "--ignore-path",
+        ".gitignore"
+      ],
+      "startedAt": "2026-10-16T14:43:50.2559585Z",
+      "finishedAt": "2026-10-16T14:43:53.4636038Z",
+      "exitCode": 0,
+      "log": "focused-format.log"
+    }
+  ]
+}

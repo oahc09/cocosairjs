@@ -1,0 +1,6 @@
+{
+  "method": "CPU_FINGERPRINT_NEGATIVE_CONTROL",
+  "changedDependencyBound": true,
+  "bookkeepingExcluded": true,
+  "passed": true
+}

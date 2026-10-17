@@ -1,0 +1,110 @@
+  console.log
+    Cannot access game frame or container.
+
+      at warnID (src/cocos/core/platform/debug.ts:314:5)
+
+PASS test/smoke/smoke-example-evidence-campaign.test.ts (11.101 s)
+  fixed-snapshot segmented example evidence
+    √ current real manifest includes all 183 examples and 184 ordered modes including Spark and WebGPU (1962 ms)
+    √ missing index cannot silently shrink scope (354 ms)
+    √ unknown schema and historical completed:true fail closed (355 ms)
+    ○ skipped exact complete union of three IDs/four modes validates; each raw segment stays partial
+    ○ skipped production consumers reject the identical synthetic package when the explicit test spy is removed
+    ○ skipped final screenshot cannot replace the immutable pre-close application original
+    ○ skipped final probe cannot replace the immutable pre-close application original
+    ○ skipped final scene cannot replace the immutable pre-close application original
+    ○ skipped final HTTP prefix cannot replace the immutable pre-close application original
+    ○ skipped UI shell legitimately has zero APIs while still proving declared validators and DOM closure
+    ○ skipped duplicate manifest id is rejected
+    ○ skipped duplicate manifest dir is rejected
+    ○ skipped partial checkpoint outside canonical never becomes complete
+    ○ skipped empty segments rejected instead of vacuous all-pass
+    ○ skipped duplicate segments and duplicate attempt IDs rejected
+    ○ skipped raw segment completed:true rejected even with passing rows
+    ○ skipped unknown attempt ID rejected
+    ○ skipped a clean failed first attempt is retained when an explicit same-freeze retry passes
+    ○ skipped omitting the first failure and starting with attempt 2 is rejected
+    ○ skipped a later failure cannot silently select an earlier success
+    ○ skipped changed frozen input .github/workflows/format.yml rejects reuse
+    ○ skipped changed frozen input .github/workflows/example-evidence.yml rejects reuse
+    ○ skipped changed frozen input build/cocosair.module.js rejects reuse
+    ○ skipped changed frozen input build/spark.module.js rejects reuse
+    ○ skipped changed frozen input build/spark.module.d.ts rejects reuse
+    ○ skipped changed frozen input src/fixture.txt rejects reuse
+    ○ skipped changed frozen input examples/alpha/src/main.ts rejects reuse
+    ○ skipped changed frozen input examples/alpha/index.html rejects reuse
+    ○ skipped changed frozen input tools/recipes/fixture.txt rejects reuse
+    ○ skipped changed frozen input tools/verify/fixture.txt rejects reuse
+    ○ skipped changed frozen input tools/benchmark/runner/fixture.txt rejects reuse
+    ○ skipped changed frozen input tools/debug/fixture.txt rejects reuse
+    ○ skipped changed frozen input tools/build/fixture.txt rejects reuse
+    ○ skipped changed frozen input package-lock.json rejects reuse
+    ○ skipped new dependency file changes inventory even when old paths still match
+    ○ skipped symlink inputs and artifact symlinks fail closed
+    ○ skipped publication normalization never excludes status
+    ○ skipped publication normalization never excludes stableReview
+    ○ skipped even promotion-only changes are forbidden during worker collection
+    ○ skipped publication allows only derived stable promotion and a recorded exact raw hash manifest
+    ○ skipped changed screenshot bytes reject even after successful merge
+    ○ skipped changed HTTP response bytes reject
+    ○ skipped changed raw collector, raw receipt, and logs are hash-bound
+    ○ skipped missing validator rejects completion
+    ○ skipped failed validator rejects completion
+    ○ skipped missing mode rejects completion
+    ○ skipped duplicate mode rejects completion
+    ○ skipped mixed candidate rejects completion
+    ○ skipped missing proof rejects completion
+    ○ skipped unobserved API rejects completion
+    ○ skipped unsupported attestation rejects completion
+    ○ skipped missing response inventory rejects completion
+    ○ skipped missing body hash rejects completion
+    ○ skipped stale served source rejects completion
+    ○ skipped forced browser rejects completion without trusting ok:true
+    ○ skipped missing stdio close rejects completion without trusting ok:true
+    ○ skipped missing server close rejects completion without trusting ok:true
+    ○ skipped missing browser close rejects completion without trusting ok:true
+    ○ skipped missing ready rejects completion without trusting ok:true
+    ○ skipped runtime identity mismatch rejects completion without trusting ok:true
+    ○ skipped CPU dummy cannot be relabeled as production rejects completion without trusting ok:true
+    ○ skipped stale before/after input digests and mixed freeze reject
+    ○ skipped immutable attempts cannot overwrite a previous attempt file
+    ○ skipped a campaign copied into the repository stays portable without rewriting raw report bytes
+    ○ skipped in-repository canonical output cannot depend on external report or PNG paths
+    ○ skipped tampered completed header counts, rows, or attempt history are rejected
+    ○ skipped manifest cannot omit a discovered non-DevTools example
+    ○ skipped manifest cannot relabel a discovered non-DevTools example
+    ○ skipped missing collector is sealed as failed history and cannot be merged or silently renumbered
+    ○ skipped cross-example overlapping workers cannot be called a serial campaign
+    ○ skipped reusing one physical attempt identity across IDs is rejected
+    ○ skipped publication transaction guard blocks otherwise valid complete evidence
+    ○ skipped changing a draft manifest promotion cannot be hidden by normalization
+    ○ skipped raw screenshots cannot escape the admitted origin root
+    ○ skipped established unresolved attestation stays attested only with live instrumentation and validator/source binding
+    ○ skipped single-mode rows cannot hide an unproven top-level claim behind an artificial mode wrapper
+    ○ skipped missing custody cannot be frozen as runtime identity
+    ○ skipped unknown custody schema cannot be frozen as runtime identity
+    ○ skipped unsupported custody platform cannot be frozen as runtime identity
+    ○ skipped missing custody IPC contract cannot be frozen as runtime identity
+    ○ skipped unknown custody IPC contract cannot be frozen as runtime identity
+    ○ skipped missing Python hash cannot be frozen as runtime identity
+    ○ skipped unknown helper cannot be frozen as runtime identity
+    ○ skipped the custodian identity must hash the frozen helper source
+    ○ skipped a changed custody Python executablePath prevents resume
+    ○ skipped a changed custody Python version prevents resume
+    ○ skipped a changed custody Python sha256 prevents resume
+    ○ skipped changing the frozen custodian source prevents resume
+    ○ skipped kernel custody raw originals are content-hash bound
+    ○ skipped kernel custody nodeReceipt originals are content-hash bound
+    ○ skipped kernel custody journal originals are content-hash bound
+    ○ skipped kernel custody stdout originals are content-hash bound
+    ○ skipped kernel custody stderr originals are content-hash bound
+    ○ skipped rehashing a changed custody raw cannot sever its original semantic binding
+    ○ skipped rehashing a changed custody nodeReceipt cannot sever its original semantic binding
+    ○ skipped rehashing a changed custody journal cannot sever its original semantic binding
+    ○ skipped a missing custody proof is preserved as failed admission, never accepted by a completed marker
+
+Test Suites: 1 passed, 1 total
+Tests:       94 skipped, 3 passed, 97 total
+Snapshots:   0 total
+Time:        14.579 s
+Ran all test suites within paths "test/smoke/smoke-example-evidence-campaign.test.ts".

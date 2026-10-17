@@ -1,8 +1,10 @@
 # Fixed-snapshot example evidence campaigns
 
-This **manual milestone workflow** collects genuine browser results in small, bounded attempts, then publishes one complete, strictly validated campaign. A subset is never a release PASS. The current ordinary-browser scope is **182 examples and 183 sessions**, including the extra interactive-geometry mode. Scope is derived from independent discovery of all example specifications, matched one-to-one against the live manifest before filtering DevTools, rather than a permanent numeric allowlist. Every non-DevTools example and every declared mode must be present; deleting an ID from the manifest or changing only its DevTools flag cannot shrink the campaign. A missing entry page is an error, not a reason to skip its example.
+This **manual milestone workflow** collects genuine browser results in small, bounded attempts, then publishes one complete, strictly validated campaign. A subset is never a release PASS. Scope, including every declared extra mode, is derived from independent discovery of all example specifications, matched one-to-one against the live manifest before filtering DevTools, rather than a permanent numeric allowlist. The freeze records the exact current example and session counts. Every non-DevTools example and every declared mode must be present; deleting an ID from the manifest or changing only its DevTools flag cannot shrink the campaign. A missing entry page is an error, not a reason to skip its example.
 
 The five historical `requiresDevTools` examples remain a separate contract, collected by `tools/verify/devtools-examples.cjs`. Their evidence neither fills ordinary-browser gaps nor becomes current merely because the ordinary campaign passed.
+
+For an evidence-only refresh, run `node tools/verify/devtools-examples.cjs --preserve-metadata` before freezing or alongside an unchanged candidate. This keeps all runtime assertions and the separate five-example scope while disabling legacy promotion/demotion and manifest regeneration. The default legacy mode still mutates metadata; do not use it inside a frozen campaign.
 
 ## Before freezing
 

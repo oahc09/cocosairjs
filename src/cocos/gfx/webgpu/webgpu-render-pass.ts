@@ -24,7 +24,7 @@
 
 import { RenderPass } from '../base/render-pass';
 import { IWebGPUGPURenderPass } from './webgpu-gpu-objects';
-import { LoadOp, StoreOp, RenderPassInfo, DepthStencilAttachment, ColorAttachment, Format } from '../base/define';
+import { LoadOp, StoreOp, RenderPassInfo, DepthStencilAttachment, ColorAttachment, Format, FormatInfos } from '../base/define';
 
 export class WebGPURenderPass extends RenderPass {
     public get gpuRenderPass (): IWebGPUGPURenderPass {
@@ -44,9 +44,11 @@ export class WebGPURenderPass extends RenderPass {
         depthStencilDescriptor.depthClearValue = 1.0;
         depthStencilDescriptor.depthLoadOp = dsAttachment.depthLoadOp === LoadOp.CLEAR ? 'clear' : 'load';
         depthStencilDescriptor.depthStoreOp = dsAttachment.depthStoreOp === StoreOp.STORE ? 'store' : 'discard';
-        depthStencilDescriptor.stencilClearValue = 0.0;
-        depthStencilDescriptor.stencilLoadOp = dsAttachment.stencilLoadOp === LoadOp.CLEAR ? 'clear' : 'load';
-        depthStencilDescriptor.stencilStoreOp = dsAttachment.stencilStoreOp === StoreOp.STORE ? 'store' : 'discard';
+        if (FormatInfos[dsAttachment.format].hasStencil) {
+            depthStencilDescriptor.stencilClearValue = 0.0;
+            depthStencilDescriptor.stencilLoadOp = dsAttachment.stencilLoadOp === LoadOp.CLEAR ? 'clear' : 'load';
+            depthStencilDescriptor.stencilStoreOp = dsAttachment.stencilStoreOp === StoreOp.STORE ? 'store' : 'discard';
+        }
         depthStencilDescriptor.view = {} as GPUTextureView;
         return depthStencilDescriptor;
     }

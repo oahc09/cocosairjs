@@ -1,0 +1,19 @@
+{
+  "name": "firefox",
+  "command": [
+    "D:\\Program Files\\nodejs\\node.exe",
+    "E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\webgpu-backend.cjs",
+    "--engine=firefox",
+    "--examples",
+    "--custom",
+    "--headed",
+    "--firefox-fixed-refresh",
+    "--out=E:\\AIProMax\\github\\cocosair.js\\output\\webgpu-completion\\final-r5\\firefox"
+  ],
+  "startedAt": "2026-10-15T16:07:38.074Z",
+  "expectedExit": 0,
+  "browserPath": "C:/Program Files/Google/Chrome/Application/chrome.exe",
+  "exitCode": 0,
+  "signal": null,
+  "finishedAt": "2026-10-15T16:08:52.558Z"
+}

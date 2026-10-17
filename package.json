@@ -41,7 +41,8 @@
     "docs/notes/",
     "README.md",
     "LICENSE",
-    "licenses/"
+    "licenses/",
+    "build/npm/webgpu/"
   ],
   "engines": {
     "node": ">=18.0.0"

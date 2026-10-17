@@ -1,0 +1,15 @@
+{
+  "platform": "win32",
+  "node": "v24.14.0",
+  "linuxCustodySupported": false,
+  "wsl": {
+    "exitCode": 1,
+    "stdout": "",
+    "stderr": "未安装适用于 Linux 的 Windows 子系统。可通过运行 “wsl.exe --install” 进行安装。\r\r\n有关详细信息，请访问 https://aka.ms/wslinstall"
+  },
+  "dockerAvailable": false,
+  "ownerDecision": "Complete Windows-runnable items; retain API Linux environment blocker",
+  "apiPreflightExitCode": 1,
+  "apiPreflightError": "Evidence custody requires Linux subreaper support",
+  "externalSafari": "NOT_RUN"
+}

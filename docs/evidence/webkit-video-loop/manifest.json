@@ -1,0 +1,28 @@
+{
+  "scope": "Windows WebKit native-loop pause compatibility",
+  "sourceSha256": "cdd552444066108de44b0c772b9c88bc26ac274de7eb3e4bebd369c172e349a9",
+  "nativeBrowserPatched": false,
+  "externalSafari": "NOT_RUN - user retained external acceptance",
+  "files": {
+    "native-control/producer.cjs": "a69ddcb003904d0e3642ce8b5e0be450a6d5885d57683bc09c45d40337d53be8",
+    "native-control/report.json": "09867625fb849c582eac2ae61e77a9215c762567b2499e3a73297f23ab24ce85",
+    "native-control/execution.log": "da34a9bf6b63f5c918f98390349994664b52543cfceb78b2f52bfa870cc8b8ac",
+    "sdk-existing/producer.cjs": "0d0e5aa4f52dac89bc0260544cafb9cf8f208b452df69fd5bd407d583fc8ed6c",
+    "sdk-existing/report.json": "fdabdbb260c2b94568a96a02bee3c3b589f503f02d294477d9f996dd5020867d",
+    "sdk-existing/execution.log": "86abb1bc9a5136deaab8ca84ea0926b0cd50d8a54c271f2742ecb81270b6795d",
+    "sdk-existing/presented.png": "c084d95c2b1cbece1dc4a9038514520f272ae100c3165063522373b45276d44f",
+    "sdk-fresh/producer.cjs": "d55f4f6c45bc18f3e29a7b8c080ee7fc0abec6623b80c26c346a83b0f922988d",
+    "sdk-fresh/report.json": "d4213291efbea6f6e1816748ee502b79e8375381fd371fdebafbbf77593ff2e6",
+    "sdk-fresh/execution.log": "36277242e504fa70bdf40ccfd8d49d87a375d605e4ed221866e0397aaf49fb22",
+    "sdk-fresh/presented.png": "525c38950290dc246808839334f2f975bdafada6b5f2f3800db49a4c78ad584b",
+    "sdk-min/producer.cjs": "a07c453120325259fcdb5c846eb8d73cb5b0dd9cd0a883f8aa2b06882bca636c",
+    "sdk-min/report.json": "a5b99f9b9e5b4ccd17ae0862772eb7ee8379f0a8417596b453c560ab82e52796",
+    "sdk-min/execution.log": "f34c34391427b12c8c6ef06286a7dc7bb87bd2724595d3dfceb02077131b72bd",
+    "sdk-min/presented.png": "3fa2caf1c9ee6dff7179ad8083ce612bbb468a305c19d4b6da99a53c34384b31",
+    "original-assertions-preserved.json": "26f5813d991195b06222c63a8320c47b3c70c3616f5c3b0c0c8d3f94e46d7c70",
+    "targeted-tests.log": "f183427cd9ec7ecb2ac91f3913e9092ffb34577724dfb194a2c769f9db9964bc",
+    "sequencing-tests.log": "77700b82654c896660971cda006e28ff9cccab2e16c0c333ee3501f7f9012743",
+    "video-player-impl-web.ts": "e0729e2e0ee55b92c040486d8eed21c5676245abf7c2fe92a2d1459768d75bbf",
+    "video-fullscreen-cleanup.test.ts": "99d09e72823d789aa2e0e92bc482c8910d8a762f9c8c4aaeb0c8aeb1295c82c2"
+  }
+}

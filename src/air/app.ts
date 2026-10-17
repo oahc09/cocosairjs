@@ -81,6 +81,10 @@ export const AIR_BUILD_DATE: string = 'unbuilt';
 export const AIR_BUILD_NUMBER: number = 1;
 
 export interface AirAppOptions {
+    /** Explicit browser backend. Defaults to WebGL2; WebGPU never silently falls back. */
+    renderer?: 'webgl2' | 'webgpu';
+    /** Offline shader translator deployment; resolved relative to document.baseURI when provided. */
+    webgpu?: { assetBaseUrl?: string };
     /** canvas 元素，或 CSS selector 字符串（如 '#game'）。 */
     canvas: HTMLCanvasElement | string;
     /** 可选：强制渲染模式（3 = HEADLESS，供测试/无头环境使用）。 */
@@ -140,32 +144,40 @@ export class AirAppImpl implements AirApp {
     private _close: Promise<AirSceneReleaseReceipt> | undefined;
     private _releaseFailed = false;
     private _needsResume = false;
-    get session (): AirSessionScope { return this._scope; }
+    get session(): AirSessionScope {
+        return this._scope;
+    }
 
-    constructor (
+    constructor(
         readonly canvas: HTMLCanvasElement,
         readonly contextHealth: AirContextHealth,
         readonly diagnostics?: AirDiagnostics,
-    ) {
-    }
+    ) {}
 
     /**
      * @en Run the given scene and start the main loop (idempotent for the loop).
      * @zh 运行传入的场景并启动主循环（主循环只启动一次）。
      */
-    run (scene: Scene): void {
-        if (this._close) throw airError('AIR_E_APP_CLOSED', 'This app is closing or closed; reload before creating another app.');
+    run(scene: Scene): void {
+        if (this._close)
+            throw airError('AIR_E_APP_CLOSED', 'This app is closing or closed; reload before creating another app.');
         if (this._release) throw airError('AIR_E_SCENE_RELEASING', 'Await releaseScene before running another scene.');
-        if (this._releaseFailed) throw airError('AIR_E_SCENE_RELEASE_FAILED', 'Cleanup failed; resolve ownership failures and reload.');
-        if (!(scene instanceof Scene) || !scene.isValid) throw airError('AIR_E_SCENE', 'run requires a valid native Scene.');
+        if (this._releaseFailed)
+            throw airError('AIR_E_SCENE_RELEASE_FAILED', 'Cleanup failed; resolve ownership failures and reload.');
+        if (!(scene instanceof Scene) || !scene.isValid)
+            throw airError('AIR_E_SCENE', 'run requires a valid native Scene.');
         if (scene === this.getScene()) return;
         if (this.getScene() && this._scope.ownedCount) {
-            throw airError('AIR_E_SCENE_RELEASE_REQUIRED', 'The current session owns cleanup callbacks; await releaseScene before replacement.');
+            throw airError(
+                'AIR_E_SCENE_RELEASE_REQUIRED',
+                'The current session owns cleanup callbacks; await releaseScene before replacement.',
+            );
         }
         // The first scene adopts resources prepared in the initial scope. Later
         // runs retire the preceding scene/released scope and start a generation.
         if (this._started || this._needsResume || this.getScene()) {
-            this._scope.deactivate('replaced'); void this._scope.dispose();
+            this._scope.deactivate('replaced');
+            void this._scope.dispose();
             this._scope = createSessionScope();
         }
         this._scope.activate();
@@ -183,50 +195,89 @@ export class AirAppImpl implements AirApp {
      * @en Current running scene, or null before run().
      * @zh 当前运行中的场景；run() 之前为 null。
      */
-    getScene (): Scene | null {
+    getScene(): Scene | null {
         return director.getScene();
     }
 
-    releaseScene (): Promise<AirSceneReleaseReceipt> {
+    releaseScene(): Promise<AirSceneReleaseReceipt> {
         if (this._release) return this._release;
-        const scene = this.getScene(), scope = this._scope;
+        const scene = this.getScene(),
+            scope = this._scope;
         // Install the shared Promise before callbacks or destruction can reenter.
-        this._release = Promise.resolve().then(async () => {
-            const cleanup = scope.dispose();
-            let retained: string[] = [], destructionFailure: string | undefined;
-            try { retained = director._releaseSceneImmediate(); }
-            catch (error) { destructionFailure = String(error); }
-            const result = await cleanup;
-            const pending = [...result.pending], failures = [...result.failures];
-            try { releaseManager._flushAirReleaseQueue(); CCObject._deferredDestroy(); }
-            catch (error) { failures.push({ label: 'native-asset-destruction', message: String(error) }); }
-            if (destructionFailure) failures.push({ label: 'native-scene-destruction', message: destructionFailure });
-            if (scene?.isValid) pending.push('native-scene-destruction');
-            const status = pending.length || failures.length ? 'failed' as const : 'released' as const;
-            this._releaseFailed = status === 'failed';
-            return Object.freeze({ status, scene: scene?.uuid ?? null, completed: result.completed,
-                pending: Object.freeze(pending), failures: Object.freeze(failures),
-                retained: Object.freeze(['runtime', 'scheduler', 'builtin-resources', 'shared-asset-caches',
-                    ...retained.map((id) => `persist-node:${id}`)]),
-                measurements: Object.freeze({ gpuMemory: 'unavailable' as const,
-                    reason: 'WebGL provides no portable complete GPU allocation measurement; scene destruction is not proof of zero leaks.' }) });
-        }).then((receipt) => { this._release = undefined; return receipt; }, (error) => {
-            this._release = undefined; this._releaseFailed = true; throw error;
-        });
-        scope.deactivate('release'); game.pause(); this._needsResume = true;
+        this._release = Promise.resolve()
+            .then(async () => {
+                const cleanup = scope.dispose();
+                let retained: string[] = [],
+                    destructionFailure: string | undefined;
+                try {
+                    retained = director._releaseSceneImmediate();
+                } catch (error) {
+                    destructionFailure = String(error);
+                }
+                const result = await cleanup;
+                const pending = [...result.pending],
+                    failures = [...result.failures];
+                try {
+                    releaseManager._flushAirReleaseQueue();
+                    CCObject._deferredDestroy();
+                } catch (error) {
+                    failures.push({ label: 'native-asset-destruction', message: String(error) });
+                }
+                if (destructionFailure)
+                    failures.push({ label: 'native-scene-destruction', message: destructionFailure });
+                if (scene?.isValid) pending.push('native-scene-destruction');
+                const status = pending.length || failures.length ? ('failed' as const) : ('released' as const);
+                this._releaseFailed = status === 'failed';
+                return Object.freeze({
+                    status,
+                    scene: scene?.uuid ?? null,
+                    completed: result.completed,
+                    pending: Object.freeze(pending),
+                    failures: Object.freeze(failures),
+                    retained: Object.freeze([
+                        'runtime',
+                        'scheduler',
+                        'builtin-resources',
+                        'shared-asset-caches',
+                        ...retained.map((id) => `persist-node:${id}`),
+                    ]),
+                    measurements: Object.freeze({
+                        gpuMemory: 'unavailable' as const,
+                        reason: 'WebGL provides no portable complete GPU allocation measurement; scene destruction is not proof of zero leaks.',
+                    }),
+                });
+            })
+            .then(
+                (receipt) => {
+                    this._release = undefined;
+                    return receipt;
+                },
+                (error) => {
+                    this._release = undefined;
+                    this._releaseFailed = true;
+                    throw error;
+                },
+            );
+        scope.deactivate('release');
+        game.pause();
+        this._needsResume = true;
         return this._release!;
     }
 
-    close (): Promise<AirSceneReleaseReceipt> {
+    close(): Promise<AirSceneReleaseReceipt> {
         if (this._close) return this._close;
         (screenAdapter as unknown as { destroyLayoutObserver?: () => void }).destroyLayoutObserver?.();
         const registry = airBootstrapRegistry();
         if (registry.app === this) registry.status = 'closed';
-        this._close = Promise.resolve().then(() => this.releaseScene()).then((receipt) => {
-            this.contextHealth.destroy(); this.diagnostics?.destroy();
-            return receipt;
-        });
-        this._scope.deactivate('close'); game.pause();
+        this._close = Promise.resolve()
+            .then(() => this.releaseScene())
+            .then((receipt) => {
+                this.contextHealth.destroy();
+                this.diagnostics?.destroy();
+                return receipt;
+            });
+        this._scope.deactivate('close');
+        game.pause();
         return this._close;
     }
 }

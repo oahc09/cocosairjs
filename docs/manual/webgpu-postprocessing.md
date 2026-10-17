@@ -1,34 +1,15 @@
-# Post-Processing（WebGPU 后处理）
+# WebGPU 后处理与多通道渲染
 
-> 话题：在 WebGPU 后端上以节点式 API 编写 pass/effect，组装成自定义后处理管线。
-> 状态：**N/A**（双重不成立）—— 后端没有 WebGPU（见上篇），管线也没有用户装配面
-> （见 [post-processing](post-processing.md) 篇实测），不配示例。
+WebGPU 实验后端已接入；后端启动、内置材质、RenderTexture 和后处理必须分别验收。公开 Stage 类型和成功构建都不能证明多通道画面正确。
 
-## 1. 两层边界，各有一篇实测证据
+## 已验证范围
 
-| 层       | AIR 现状                                                                                                                            | 证据去处                                                       |
-| -------- | ----------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------- |
-| 后端     | 构建只带 `WebGL2Device`，`RenderType.WEBGPU` 有枚举无实现                                                                           | [webgpurenderer](webgpurenderer.md) §1                         |
-| 管线     | Stage 类全导出，但 `PostProcessStage.initialize(IRenderStageInfo)` 是元数据初始化，没有"把自定义 stage 插进 RenderFlow"的公开装配面 | [post-processing](post-processing.md) §1                       |
-| 效果编写 | 无用户 GLSL 入口，效果集是 builtin-effects 编译期定死的                                                                             | [shadertoy](shadertoy.md)、[debugging-glsl](debugging-glsl.md) |
+沿用官方 legacy/custom pipeline 与原生 GFX，验证离屏颜色、深度、MSAA resolve、附件 load/store、下游采样、resize、颜色空间及多 pass。七个原生效果 Bloom/FXAA/ColorGrading/HBAO/DOF/FSR/TAA 已在两后端验证开关与恢复；修复了深度采样 view 和 TAA 关闭后的投影残留，不另建后处理框架。
 
-## 2. 现在能做的（不是这级别的需求先别急着要 WebGPU）
+## 当前边界
 
-- **内建单项效果**：`camera.usePostProcess` + 色调映射类设置，见
-  [how-to-use-post-processing](how-to-use-post-processing.md)（PARTIAL，有示例）。
-- **离屏合成**：`RenderTargetTexture` 把场景渲进纹理再贴 unlit 平面/公告板——
-  "渲到 RT 再消费"这一步 AIR 支持（[rendertargets](rendertargets.md)、
-  [dynamic-texture 上传路线](canvas-textures.md)），但 RT 之后的**像素级自定义
-  效果**仍卡在无用户着色器这一层——能做"取景/画中画"，做不了"自写 bloom"。
-- **雾/透明排序**等画面观感需求：[fog](fog.md)、[transparency](transparency.md)
-  已覆盖 AIR 侧对应机制。
+完整功能验收状态见 [验收说明](../reference/webgpu-acceptance.md)。AIR 原有 `AirRenderTarget` 等明确要求 WebGL2 的高级 helper 不自动扩大到 WebGPU；它们的设备拒绝仍有效。不能把 WebGL2 专用 helper 通过情况当作 WebGPU 后处理证据。
 
-## 3. 升级条件
+纹理读回使用异步 GFX 入口，限制与部署要求见 [WebGPU 指南](../guides/webgpu.md)。二维颜色 blit 支持 nearest/linear 缩放；不支持的格式/维度组合明确拒绝；transient MSAA 不在本轮。
 
-与两篇前置同签：`WebGPUDevice` 实现进包 + 用户可注册的 stage/自定义 effect 入口
-出现，二者齐备才谈"WebGPU 后处理"；届时本篇与 [post-processing](post-processing.md)
-合并重组并补示例（`manual-webgpu-postprocessing`：RT→自定义 pass→屏幕）。
-
----
-
-上一篇：[WebGPURenderer（WebGPU 渲染器）](webgpurenderer.md) ｜ 下一篇：[VR - Basics VR 基础](webxr-basics.md)
+上一篇：[WebGPU 渲染器](webgpurenderer.md) ｜ 下一篇：[VR 基础](webxr-basics.md)

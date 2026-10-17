@@ -367,8 +367,8 @@
   "validationExpectations": {},
   "promotion": {
     "spec": "58000f69e95e",
-    "source": "4753b596e6ba21cb",
-    "candidate": "24fcbd038ef9869c",
+    "source": "4022486e1efb0d2f",
+    "candidate": "0a6c249084b50f2f",
     "verified": 41,
     "attested": 0,
     "units": 41

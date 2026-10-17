@@ -26,6 +26,7 @@ const AIR_FEATURES = [
     'air', // bundle 入口: src/exports/air.ts（含 base/3d/animation/... 与 createAirApp）
     'base',
     'gfx-webgl2',
+    'gfx-webgpu',
     'gfx-empty',
     '3d',
     'animation',
@@ -70,7 +71,9 @@ const FEATURES = (process.env.AIR_FEATURES || '')
     .filter(Boolean);
 const spark = process.argv.includes('--spark');
 if (spark && (FEATURES.length || process.argv.includes('--min') || process.argv.includes('system'))) {
-    throw new Error('--spark builds a standalone unminified ESM module; AIR_FEATURES/system/min overrides are not supported.');
+    throw new Error(
+        '--spark builds a standalone unminified ESM module; AIR_FEATURES/system/min overrides are not supported.',
+    );
 }
 // 变体构建（feature 集被覆盖，或产物被 AIR_OUT_DIR 重定向到仓库外）既不共享默认集合的
 // 增量缓存，也不写 build/ 的发布附属产物，避免污染共用工作树里的默认 bundle。
@@ -112,6 +115,8 @@ const moduleFormat = formatIdx >= 0 ? args[formatIdx + 1] : 'esm';
         const buildDate = resolveBuildDate(process.env.SOURCE_DATE_EPOCH);
         const buildNumber = readBuildNumber(ROOT) + 1;
         console.log(`[build] AIR_BUILD_DATE=${buildDate} AIR_BUILD_NUMBER=${buildNumber}`);
+        require('./builtin-assets.cjs').verify();
+        require('./webgpu-assets.cjs').copy(ROOT, OUT);
         const started = Date.now();
         const build = () =>
             withESMHelpers(
@@ -136,7 +141,11 @@ const moduleFormat = formatIdx >= 0 ? args[formatIdx + 1] : 'esm';
                         // 会产生 `_i is not defined` 的上游变换 bug（program-lib 布局合并路径）。
                         targets: { chrome: '66' },
                     }),
-                [lineEndingsPlugin(), buildMetadataPlugin(ROOT, buildDate, buildNumber)],
+                [
+                    lineEndingsPlugin(),
+                    require('./webgpu-assets.cjs').webgpuAssetsPlugin(ROOT),
+                    buildMetadataPlugin(ROOT, buildDate, buildNumber),
+                ],
             );
         if (!min && moduleFormat === 'esm' && !VARIANT) await withIncrementalCache(ROOT, build);
         else await build();
@@ -145,11 +154,7 @@ const moduleFormat = formatIdx >= 0 ? args[formatIdx + 1] : 'esm';
         // 归一化产物名并移动到 build/ 根目录：
         //   ESM  dev: build/cocosair.module.js      min: build/cocosair.module.min.js
         //   SYS  dev: build/cc.js
-        const bundleName = min
-              ? 'cocosair.module.min.js'
-              : moduleFormat === 'esm'
-                ? 'cocosair.module.js'
-                : 'cc.js';
+        const bundleName = min ? 'cocosair.module.min.js' : moduleFormat === 'esm' ? 'cocosair.module.js' : 'cc.js';
         const candidates = moduleFormat === 'esm' ? ['cc.mjs', 'cc.js'] : ['cc.js'];
         let moved = false;
         for (const c of candidates) {

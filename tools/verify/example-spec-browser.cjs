@@ -69,6 +69,9 @@ if (BROWSER !== 'chromium' && !OUT_ARG) {
 }
 const { launchOptions } = require(path.join(REPO, 'tools', 'verify', 'browser-engines.cjs'));
 const BROWSER_LAUNCH = launchOptions(BROWSER);
+if (BROWSER === 'chromium' && process.env.AIR_CHROMIUM_PATH) {
+    BROWSER_LAUNCH.executablePath = process.env.AIR_CHROMIUM_PATH;
+}
 const EVIDENCE_PATH = OUT_ARG ? path.resolve(REPO, OUT_ARG.slice(6)) : CANON_EVIDENCE_PATH;
 const WRITES_CANONICAL = EVIDENCE_PATH === CANON_EVIDENCE_PATH;
 // 截图目录同样可外置：一次「只为测三引擎可行性」的探查跑不应往仓库里落新证据。
@@ -1084,11 +1087,22 @@ async function verifyApp(example, workspace, html, spec, prepared) {
             );
         let scenarioProbe = null;
         if (hasProbeContract) {
-            await runtime.page.waitForFunction(
+            if (runtime.pageErrors.length) throw new Error(runtime.pageErrors.map((row) => row.message).join(' | '));
+            let probeError;
+            const pageError = new Promise((_, reject) => {
+                probeError = (error) => reject(error);
+                runtime.page.once('pageerror', probeError);
+            });
+            const ready = runtime.page.waitForFunction(
                 () => !!(window.__trialProbe && window.__trialProbe.ready === true),
                 null,
                 { timeout: 60000 },
             );
+            try {
+                await Promise.race([ready, pageError]);
+            } finally {
+                runtime.page.off('pageerror', probeError);
+            }
             scenarioProbe = await runtime.page.evaluate(() => window.__trialProbe);
             if (
                 scenarioProbe.ok !== true ||

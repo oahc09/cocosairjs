@@ -1,0 +1,18 @@
+{
+  "name": "environment",
+  "command": [
+    "D:\\Program Files\\nodejs\\node.exe",
+    "E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\webgpu-environment.cjs",
+    "--out=E:\\AIProMax\\github\\cocosair.js\\output\\webgpu-completion\\final-r3\\environment"
+  ],
+  "startedAt": "2026-10-15T15:27:15.483Z",
+  "expectedExit": 0,
+  "browserPath": "C:/Program Files/Google/Chrome/Application/chrome.exe",
+  "exitCode": 0,
+  "signal": null,
+  "finishedAt": "2026-10-15T15:27:42.419Z",
+  "reusedFrom": "E:\\AIProMax\\github\\cocosair.js\\output\\webgpu-completion\\final-r3",
+  "reusedReportSha256": {
+    "environment": "91ece5632fcb601642839a7df711e5b74db80d40ae1f350166eb457435641375"
+  }
+}

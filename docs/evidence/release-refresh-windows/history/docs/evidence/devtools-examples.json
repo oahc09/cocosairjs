@@ -1,0 +1,4408 @@
+{
+  "measuredAt": "2026-10-16T14:39:34.035Z",
+  "runner": "tools/verify/devtools-examples.cjs",
+  "mode": "devtools-session-v3",
+  "instrumentation": "per-api-execution-trace (cocosair.traced.js via importmap)",
+  "candidateFingerprint": "0a6c249084b50f2f",
+  "apiProofTotals": {
+    "verified": 77,
+    "attested": 10,
+    "unproven": 0
+  },
+  "contract": "V0.5.1 DevTools/Agent Session 冻结合同（inspectScene/inspectNode/dispatch/captureFrame/getRuntimeErrors/close）",
+  "examples": [
+    {
+      "id": "automation",
+      "requiresDevTools": true,
+      "result": "PASS",
+      "specFingerprint": "735d00cae975",
+      "sourceFingerprint": "e89d32ce3ed3bbb6",
+      "candidateFingerprint": "0a6c249084b50f2f",
+      "instrumentation": {
+        "name": "cocosair.traced.js",
+        "exports": 645,
+        "unitCount": 11,
+        "bytes": 60451,
+        "hash": "24e3c52787b9701d",
+        "notes": [
+          "Node.addChild: no own descriptor on static"
+        ],
+        "observed": 9,
+        "total": 11
+      },
+      "apiProof": [
+        {
+          "api": "DevToolsSession.dispatch",
+          "proof": "attested",
+          "state": "unresolved",
+          "calls": 0,
+          "reads": 0,
+          "via": null,
+          "mechanism": "unresolved",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "DevToolsSession.inspectScene",
+          "proof": "attested",
+          "state": "unresolved",
+          "calls": 0,
+          "reads": 0,
+          "via": null,
+          "mechanism": "unresolved",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Layers",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 2,
+          "via": "read",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "MeshRenderer",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 116,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 5,
+          "reads": 94,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.addChild",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 5,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Scene",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "builtinResMgr",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 1,
+          "via": "read",
+          "mechanism": "export-object",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "material-property",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "createAirApp",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "primitives.box",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "frozen-namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "material-property",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "utils.createMesh",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "frozen-namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "material-property",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        }
+      ],
+      "sessionUnits": [
+        "DevToolsSession.inspectScene",
+        "DevToolsSession.dispatch"
+      ],
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "no-runtime-error",
+          "material-property"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "attach",
+          "state": "PASS",
+          "detail": "__benchSession=true"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=4 expected=3"
+        },
+        {
+          "validatorId": "node-count",
+          "state": "PASS",
+          "detail": "nodeCount=4 min=3"
+        },
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "scene=automation-demo nodeCount=4"
+        },
+        {
+          "validatorId": "inspectNode:id-stable",
+          "state": "PASS",
+          "detail": "node ids identical across snapshots"
+        },
+        {
+          "validatorId": "inspectNode:view-matches-scene",
+          "state": "PASS",
+          "detail": "Main Camera local.position=[0,2,6] equals live node"
+        },
+        {
+          "validatorId": "material-property",
+          "state": "PASS",
+          "detail": "existing-cube=builtin-standard | coverage 1/1 nodes authored"
+        },
+        {
+          "validatorId": "dispatch:createNode",
+          "state": "PASS",
+          "detail": "nodeId=node-6 present=true nodeCount 4→5"
+        },
+        {
+          "validatorId": "dispatch:error-code",
+          "state": "PASS",
+          "detail": "ok=false code=STALE_TARGET nodeCount 5→5 leaked=false"
+        },
+        {
+          "validatorId": "dispatch:duplicate-requestId",
+          "state": "PASS",
+          "detail": "ok=false code=INVALID_ARGUMENT nodeCount 5→5"
+        },
+        {
+          "validatorId": "captureFrame",
+          "state": "PASS",
+          "detail": "bytes=8034 viewport=480x360"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "center rgb=[188,198,206] differs from clear color"
+        },
+        {
+          "validatorId": "getRuntimeErrors",
+          "state": "PASS",
+          "detail": "schema ok, 0 entries, dropped=0"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "session-self-report",
+          "state": "PASS",
+          "detail": "in-page checks green: {\"pass\":14,\"fail\":0}"
+        },
+        {
+          "validatorId": "detach:SESSION_CLOSED",
+          "state": "PASS",
+          "detail": "ok=false code=SESSION_CLOSED"
+        },
+        {
+          "validatorId": "detach:loop-alive",
+          "state": "PASS",
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/automation.png",
+        "bytes": 6008,
+        "hash": "d6c3aaa991052013"
+      },
+      "assetDigests": [],
+      "errors": []
+    },
+    {
+      "id": "rc-capture-frame",
+      "requiresDevTools": true,
+      "result": "PASS",
+      "specFingerprint": "4daffe289d95",
+      "sourceFingerprint": "14dcaa1b1f04abd7",
+      "candidateFingerprint": "0a6c249084b50f2f",
+      "instrumentation": {
+        "name": "cocosair.traced.js",
+        "exports": 645,
+        "unitCount": 18,
+        "bytes": 61152,
+        "hash": "233f096ee1b7de40",
+        "notes": [
+          "Material.initialize: no own descriptor on static",
+          "Material.setProperty: no own descriptor on static",
+          "Node.addChild: no own descriptor on static",
+          "Node.setPosition: no own descriptor on static",
+          "Node.setRotationFromEuler: no own descriptor on static"
+        ],
+        "observed": 17,
+        "total": 18
+      },
+      "apiProof": [
+        {
+          "api": "Camera",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 10,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "DevToolsSession.captureFrame",
+          "proof": "attested",
+          "state": "unresolved",
+          "calls": 0,
+          "reads": 0,
+          "via": null,
+          "mechanism": "unresolved",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "visible-frame",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "DirectionalLight",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 8,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Layers",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 2,
+          "via": "read",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Material",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 6,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Material.initialize",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 26,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "material-property",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Material.setProperty",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "material-property",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "MeshRenderer",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 24,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 16,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.addChild",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.setPosition",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.setRotationFromEuler",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Scene",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "createAirApp",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Color",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "alias:Color",
+          "observedVia": "Color",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec3",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 4,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "alias:Vec3",
+          "observedVia": "Vec3",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "primitives.box",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "frozen-namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "material-property",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "utils.createMesh",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "frozen-namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "material-property",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        }
+      ],
+      "sessionUnits": [
+        "DevToolsSession.captureFrame"
+      ],
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "no-runtime-error",
+          "material-property",
+          "transform-equals"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "attach",
+          "state": "PASS",
+          "detail": "__benchSession=true"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=4 expected=3"
+        },
+        {
+          "validatorId": "node-count",
+          "state": "PASS",
+          "detail": "nodeCount=4 min=3"
+        },
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "scene=rc-capture-frame nodeCount=4"
+        },
+        {
+          "validatorId": "inspectNode:id-stable",
+          "state": "PASS",
+          "detail": "node ids identical across snapshots"
+        },
+        {
+          "validatorId": "inspectNode:view-matches-scene",
+          "state": "PASS",
+          "detail": "Main Camera local.position=[0,2.2,6.5] equals live node"
+        },
+        {
+          "validatorId": "transform-equals",
+          "state": "PASS",
+          "detail": "5 declared components matched (nodes 3/3 in graph) | coverage 3/3 nodes authored + 1 grounded exclusions"
+        },
+        {
+          "validatorId": "material-property",
+          "state": "PASS",
+          "detail": "DemoCube=builtin-standard{mainColor} | coverage 1/1 nodes authored"
+        },
+        {
+          "validatorId": "captureFrame",
+          "state": "PASS",
+          "detail": "bytes=8390 viewport=480x360"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "center rgb=[31,126,73] differs from clear color"
+        },
+        {
+          "validatorId": "getRuntimeErrors",
+          "state": "PASS",
+          "detail": "schema ok, 0 entries, dropped=0"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "session-self-report",
+          "state": "PASS",
+          "detail": "in-page checks green: {\"captured\":true,\"repeatable\":true}"
+        },
+        {
+          "validatorId": "detach:SESSION_CLOSED",
+          "state": "PASS",
+          "detail": "ok=false code=SESSION_CLOSED"
+        },
+        {
+          "validatorId": "detach:loop-alive",
+          "state": "PASS",
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/rc-capture-frame.png",
+        "bytes": 6276,
+        "hash": "50e6cbd3d599b88e"
+      },
+      "assetDigests": [],
+      "errors": []
+    },
+    {
+      "id": "rc-create-node",
+      "requiresDevTools": true,
+      "result": "PASS",
+      "specFingerprint": "4533f62e9a73",
+      "sourceFingerprint": "adc7fb751d03f149",
+      "candidateFingerprint": "0a6c249084b50f2f",
+      "instrumentation": {
+        "name": "cocosair.traced.js",
+        "exports": 645,
+        "unitCount": 20,
+        "bytes": 61343,
+        "hash": "3131420911401d20",
+        "notes": [
+          "Material.initialize: no own descriptor on static",
+          "Material.setProperty: no own descriptor on static",
+          "Node.addChild: no own descriptor on static",
+          "Node.setPosition: no own descriptor on static",
+          "Node.setRotationFromEuler: no own descriptor on static"
+        ],
+        "observed": 17,
+        "total": 20
+      },
+      "apiProof": [
+        {
+          "api": "Camera",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 34,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "DevToolsSession.dispatch",
+          "proof": "attested",
+          "state": "unresolved",
+          "calls": 0,
+          "reads": 0,
+          "via": null,
+          "mechanism": "unresolved",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "DevToolsSession.inspectNode",
+          "proof": "attested",
+          "state": "unresolved",
+          "calls": 0,
+          "reads": 0,
+          "via": null,
+          "mechanism": "unresolved",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "DevToolsSession.inspectScene",
+          "proof": "attested",
+          "state": "unresolved",
+          "calls": 0,
+          "reads": 0,
+          "via": null,
+          "mechanism": "unresolved",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "DirectionalLight",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 32,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Layers",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 2,
+          "via": "read",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Material",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 30,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Material.initialize",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 26,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "material-property",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Material.setProperty",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "material-property",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "MeshRenderer",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 120,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 5,
+          "reads": 110,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.addChild",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 5,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.setPosition",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 4,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.setRotationFromEuler",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Scene",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "createAirApp",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Color",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "alias:Color",
+          "observedVia": "Color",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec3",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 4,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "alias:Vec3",
+          "observedVia": "Vec3",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "primitives.box",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "frozen-namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "material-property",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "utils.createMesh",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "frozen-namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "material-property",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        }
+      ],
+      "sessionUnits": [
+        "DevToolsSession.dispatch",
+        "DevToolsSession.inspectScene",
+        "DevToolsSession.inspectNode"
+      ],
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "node-count",
+          "transform-equals",
+          "no-runtime-error",
+          "material-property"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "attach",
+          "state": "PASS",
+          "detail": "__benchSession=true"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=5 expected=4"
+        },
+        {
+          "validatorId": "node-count",
+          "state": "PASS",
+          "detail": "nodeCount=5 min=4"
+        },
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "scene=rc-create-node nodeCount=5"
+        },
+        {
+          "validatorId": "inspectNode:id-stable",
+          "state": "PASS",
+          "detail": "node ids identical across snapshots"
+        },
+        {
+          "validatorId": "inspectNode:view-matches-scene",
+          "state": "PASS",
+          "detail": "Main Camera local.position=[0,2.2,6.5] equals live node"
+        },
+        {
+          "validatorId": "transform-equals",
+          "state": "PASS",
+          "detail": "7 declared components matched (nodes 4/4 in graph) | coverage 4/4 nodes authored + 1 grounded exclusions"
+        },
+        {
+          "validatorId": "material-property",
+          "state": "PASS",
+          "detail": "DemoCube=builtin-standard{mainColor} | coverage 1/1 nodes authored"
+        },
+        {
+          "validatorId": "dispatch:createNode",
+          "state": "PASS",
+          "detail": "nodeId=node-7 present=true nodeCount 5→6"
+        },
+        {
+          "validatorId": "dispatch:error-code",
+          "state": "PASS",
+          "detail": "ok=false code=STALE_TARGET nodeCount 6→6 leaked=false"
+        },
+        {
+          "validatorId": "dispatch:duplicate-requestId",
+          "state": "PASS",
+          "detail": "ok=false code=INVALID_ARGUMENT nodeCount 6→6"
+        },
+        {
+          "validatorId": "captureFrame",
+          "state": "PASS",
+          "detail": "bytes=8346 viewport=480x360"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "center rgb=[58,166,102] differs from clear color"
+        },
+        {
+          "validatorId": "getRuntimeErrors",
+          "state": "PASS",
+          "detail": "schema ok, 0 entries, dropped=0"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "session-self-report",
+          "state": "PASS",
+          "detail": "in-page checks green: {\"created\":true,\"nodeCount\":5,\"duplicateCode\":\"INVALID_ARGUMENT\",\"dupNodeSuppressed\":true}"
+        },
+        {
+          "validatorId": "session-self-report-codes",
+          "state": "PASS",
+          "detail": "duplicateCode: in-page=INVALID_ARGUMENT gate=INVALID_ARGUMENT"
+        },
+        {
+          "validatorId": "detach:SESSION_CLOSED",
+          "state": "PASS",
+          "detail": "ok=false code=SESSION_CLOSED"
+        },
+        {
+          "validatorId": "detach:loop-alive",
+          "state": "PASS",
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/rc-create-node.png",
+        "bytes": 6243,
+        "hash": "94db62c109de4a8a"
+      },
+      "assetDigests": [],
+      "errors": []
+    },
+    {
+      "id": "rc-error-report",
+      "requiresDevTools": true,
+      "result": "PASS",
+      "specFingerprint": "01b9b4271da2",
+      "sourceFingerprint": "8d42f5b915ecd42a",
+      "candidateFingerprint": "0a6c249084b50f2f",
+      "instrumentation": {
+        "name": "cocosair.traced.js",
+        "exports": 645,
+        "unitCount": 19,
+        "bytes": 61255,
+        "hash": "08c6c44c4fb51387",
+        "notes": [
+          "Material.initialize: no own descriptor on static",
+          "Material.setProperty: no own descriptor on static",
+          "Node.addChild: no own descriptor on static",
+          "Node.setPosition: no own descriptor on static",
+          "Node.setRotationFromEuler: no own descriptor on static"
+        ],
+        "observed": 17,
+        "total": 19
+      },
+      "apiProof": [
+        {
+          "api": "Camera",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 28,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "DevToolsSession.dispatch",
+          "proof": "attested",
+          "state": "unresolved",
+          "calls": 0,
+          "reads": 0,
+          "via": null,
+          "mechanism": "unresolved",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "DevToolsSession.getRuntimeErrors",
+          "proof": "attested",
+          "state": "unresolved",
+          "calls": 0,
+          "reads": 0,
+          "via": null,
+          "mechanism": "unresolved",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "DirectionalLight",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 26,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Layers",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 2,
+          "via": "read",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Material",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 24,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Material.initialize",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 26,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "material-property",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Material.setProperty",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "material-property",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "MeshRenderer",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 90,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 4,
+          "reads": 76,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.addChild",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 4,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.setPosition",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.setRotationFromEuler",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Scene",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "createAirApp",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Color",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "alias:Color",
+          "observedVia": "Color",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec3",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 4,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "alias:Vec3",
+          "observedVia": "Vec3",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "primitives.box",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "frozen-namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "material-property",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "utils.createMesh",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "frozen-namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "material-property",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        }
+      ],
+      "sessionUnits": [
+        "DevToolsSession.getRuntimeErrors",
+        "DevToolsSession.dispatch"
+      ],
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "no-runtime-error",
+          "material-property",
+          "transform-equals"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "attach",
+          "state": "PASS",
+          "detail": "__benchSession=true"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=4 expected=3"
+        },
+        {
+          "validatorId": "node-count",
+          "state": "PASS",
+          "detail": "nodeCount=4 min=3"
+        },
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "scene=rc-error-report nodeCount=4"
+        },
+        {
+          "validatorId": "inspectNode:id-stable",
+          "state": "PASS",
+          "detail": "node ids identical across snapshots"
+        },
+        {
+          "validatorId": "inspectNode:view-matches-scene",
+          "state": "PASS",
+          "detail": "Main Camera local.position=[0,2.2,6.5] equals live node"
+        },
+        {
+          "validatorId": "transform-equals",
+          "state": "PASS",
+          "detail": "4 declared components matched (nodes 3/3 in graph) | coverage 3/3 nodes authored + 1 grounded exclusions"
+        },
+        {
+          "validatorId": "material-property",
+          "state": "PASS",
+          "detail": "DemoCube=builtin-standard{mainColor} | coverage 1/1 nodes authored"
+        },
+        {
+          "validatorId": "dispatch:createNode",
+          "state": "PASS",
+          "detail": "nodeId=node-6 present=true nodeCount 4→5"
+        },
+        {
+          "validatorId": "dispatch:error-code",
+          "state": "PASS",
+          "detail": "ok=false code=STALE_TARGET nodeCount 5→5 leaked=false"
+        },
+        {
+          "validatorId": "dispatch:duplicate-requestId",
+          "state": "PASS",
+          "detail": "ok=false code=INVALID_ARGUMENT nodeCount 5→5"
+        },
+        {
+          "validatorId": "captureFrame",
+          "state": "PASS",
+          "detail": "bytes=8346 viewport=480x360"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "center rgb=[58,166,102] differs from clear color"
+        },
+        {
+          "validatorId": "getRuntimeErrors",
+          "state": "PASS",
+          "detail": "schema ok, 0 entries, dropped=0"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "session-self-report",
+          "state": "PASS",
+          "detail": "in-page checks green: {\"baseline\":0,\"stableCode\":\"STALE_TARGET\",\"staleRejected\":true}"
+        },
+        {
+          "validatorId": "session-self-report-codes",
+          "state": "PASS",
+          "detail": "stableCode: in-page=STALE_TARGET gate=STALE_TARGET"
+        },
+        {
+          "validatorId": "detach:SESSION_CLOSED",
+          "state": "PASS",
+          "detail": "ok=false code=SESSION_CLOSED"
+        },
+        {
+          "validatorId": "detach:loop-alive",
+          "state": "PASS",
+          "detail": "Director.EVENT_AFTER_DRAW frames 1→51 after session close (must keep growing)"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/rc-error-report.png",
+        "bytes": 6243,
+        "hash": "94db62c109de4a8a"
+      },
+      "assetDigests": [],
+      "errors": []
+    },
+    {
+      "id": "rc-inspect-scene",
+      "requiresDevTools": true,
+      "result": "PASS",
+      "specFingerprint": "dc7942ac2896",
+      "sourceFingerprint": "8dbf1e634cee45fa",
+      "candidateFingerprint": "0a6c249084b50f2f",
+      "instrumentation": {
+        "name": "cocosair.traced.js",
+        "exports": 645,
+        "unitCount": 19,
+        "bytes": 61252,
+        "hash": "1ffb6d1a070b619c",
+        "notes": [
+          "Material.initialize: no own descriptor on static",
+          "Material.setProperty: no own descriptor on static",
+          "Node.addChild: no own descriptor on static",
+          "Node.setPosition: no own descriptor on static",
+          "Node.setRotationFromEuler: no own descriptor on static"
+        ],
+        "observed": 17,
+        "total": 19
+      },
+      "apiProof": [
+        {
+          "api": "Camera",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 20,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "DevToolsSession.inspectNode",
+          "proof": "attested",
+          "state": "unresolved",
+          "calls": 0,
+          "reads": 0,
+          "via": null,
+          "mechanism": "unresolved",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "DevToolsSession.inspectScene",
+          "proof": "attested",
+          "state": "unresolved",
+          "calls": 0,
+          "reads": 0,
+          "via": null,
+          "mechanism": "unresolved",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "DirectionalLight",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 11,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Layers",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 2,
+          "via": "read",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Material",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 9,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Material.initialize",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 26,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "material-property",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Material.setProperty",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "material-property",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "MeshRenderer",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 36,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 24,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.addChild",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.setPosition",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.setRotationFromEuler",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Scene",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "createAirApp",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Color",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "alias:Color",
+          "observedVia": "Color",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec3",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 4,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "alias:Vec3",
+          "observedVia": "Vec3",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "primitives.box",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "frozen-namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "material-property",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "utils.createMesh",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "frozen-namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "material-property",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        }
+      ],
+      "sessionUnits": [
+        "DevToolsSession.inspectScene",
+        "DevToolsSession.inspectNode"
+      ],
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "no-runtime-error",
+          "material-property",
+          "transform-equals"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "attach",
+          "state": "PASS",
+          "detail": "__benchSession=true"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=4 expected=3"
+        },
+        {
+          "validatorId": "node-count",
+          "state": "PASS",
+          "detail": "nodeCount=4 min=3"
+        },
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "scene=rc-inspect-scene nodeCount=4"
+        },
+        {
+          "validatorId": "inspectNode:id-stable",
+          "state": "PASS",
+          "detail": "node ids identical across snapshots"
+        },
+        {
+          "validatorId": "inspectNode:view-matches-scene",
+          "state": "PASS",
+          "detail": "Main Camera local.position=[0,2.2,6.5] equals live node"
+        },
+        {
+          "validatorId": "transform-equals",
+          "state": "PASS",
+          "detail": "4 declared components matched (nodes 3/3 in graph) | coverage 3/3 nodes authored + 1 grounded exclusions"
+        },
+        {
+          "validatorId": "material-property",
+          "state": "PASS",
+          "detail": "DemoCube=builtin-standard{mainColor} | coverage 1/1 nodes authored"
+        },
+        {
+          "validatorId": "captureFrame",
+          "state": "PASS",
+          "detail": "bytes=8346 viewport=480x360"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "center rgb=[58,166,102] differs from clear color"
+        },
+        {
+          "validatorId": "getRuntimeErrors",
+          "state": "PASS",
+          "detail": "schema ok, 0 entries, dropped=0"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "session-self-report",
+          "state": "PASS",
+          "detail": "in-page checks green: {\"nodeCount\":4,\"inspected\":true}"
+        },
+        {
+          "validatorId": "detach:SESSION_CLOSED",
+          "state": "PASS",
+          "detail": "ok=false code=SESSION_CLOSED"
+        },
+        {
+          "validatorId": "detach:loop-alive",
+          "state": "PASS",
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/rc-inspect-scene.png",
+        "bytes": 6243,
+        "hash": "94db62c109de4a8a"
+      },
+      "assetDigests": [],
+      "errors": []
+    }
+  ],
+  "results": [
+    {
+      "id": "automation",
+      "requiresDevTools": true,
+      "result": "PASS",
+      "specFingerprint": "735d00cae975",
+      "sourceFingerprint": "e89d32ce3ed3bbb6",
+      "candidateFingerprint": "0a6c249084b50f2f",
+      "instrumentation": {
+        "name": "cocosair.traced.js",
+        "exports": 645,
+        "unitCount": 11,
+        "bytes": 60451,
+        "hash": "24e3c52787b9701d",
+        "notes": [
+          "Node.addChild: no own descriptor on static"
+        ],
+        "observed": 9,
+        "total": 11
+      },
+      "apiProof": [
+        {
+          "api": "DevToolsSession.dispatch",
+          "proof": "attested",
+          "state": "unresolved",
+          "calls": 0,
+          "reads": 0,
+          "via": null,
+          "mechanism": "unresolved",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "DevToolsSession.inspectScene",
+          "proof": "attested",
+          "state": "unresolved",
+          "calls": 0,
+          "reads": 0,
+          "via": null,
+          "mechanism": "unresolved",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Layers",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 2,
+          "via": "read",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "MeshRenderer",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 116,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 5,
+          "reads": 94,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.addChild",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 5,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Scene",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "builtinResMgr",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 1,
+          "via": "read",
+          "mechanism": "export-object",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "material-property",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "createAirApp",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "primitives.box",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "frozen-namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "material-property",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "utils.createMesh",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "frozen-namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "material-property",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        }
+      ],
+      "sessionUnits": [
+        "DevToolsSession.inspectScene",
+        "DevToolsSession.dispatch"
+      ],
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "no-runtime-error",
+          "material-property"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "attach",
+          "state": "PASS",
+          "detail": "__benchSession=true"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=4 expected=3"
+        },
+        {
+          "validatorId": "node-count",
+          "state": "PASS",
+          "detail": "nodeCount=4 min=3"
+        },
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "scene=automation-demo nodeCount=4"
+        },
+        {
+          "validatorId": "inspectNode:id-stable",
+          "state": "PASS",
+          "detail": "node ids identical across snapshots"
+        },
+        {
+          "validatorId": "inspectNode:view-matches-scene",
+          "state": "PASS",
+          "detail": "Main Camera local.position=[0,2,6] equals live node"
+        },
+        {
+          "validatorId": "material-property",
+          "state": "PASS",
+          "detail": "existing-cube=builtin-standard | coverage 1/1 nodes authored"
+        },
+        {
+          "validatorId": "dispatch:createNode",
+          "state": "PASS",
+          "detail": "nodeId=node-6 present=true nodeCount 4→5"
+        },
+        {
+          "validatorId": "dispatch:error-code",
+          "state": "PASS",
+          "detail": "ok=false code=STALE_TARGET nodeCount 5→5 leaked=false"
+        },
+        {
+          "validatorId": "dispatch:duplicate-requestId",
+          "state": "PASS",
+          "detail": "ok=false code=INVALID_ARGUMENT nodeCount 5→5"
+        },
+        {
+          "validatorId": "captureFrame",
+          "state": "PASS",
+          "detail": "bytes=8034 viewport=480x360"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "center rgb=[188,198,206] differs from clear color"
+        },
+        {
+          "validatorId": "getRuntimeErrors",
+          "state": "PASS",
+          "detail": "schema ok, 0 entries, dropped=0"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "session-self-report",
+          "state": "PASS",
+          "detail": "in-page checks green: {\"pass\":14,\"fail\":0}"
+        },
+        {
+          "validatorId": "detach:SESSION_CLOSED",
+          "state": "PASS",
+          "detail": "ok=false code=SESSION_CLOSED"
+        },
+        {
+          "validatorId": "detach:loop-alive",
+          "state": "PASS",
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/automation.png",
+        "bytes": 6008,
+        "hash": "d6c3aaa991052013"
+      },
+      "assetDigests": [],
+      "errors": []
+    },
+    {
+      "id": "rc-capture-frame",
+      "requiresDevTools": true,
+      "result": "PASS",
+      "specFingerprint": "4daffe289d95",
+      "sourceFingerprint": "14dcaa1b1f04abd7",
+      "candidateFingerprint": "0a6c249084b50f2f",
+      "instrumentation": {
+        "name": "cocosair.traced.js",
+        "exports": 645,
+        "unitCount": 18,
+        "bytes": 61152,
+        "hash": "233f096ee1b7de40",
+        "notes": [
+          "Material.initialize: no own descriptor on static",
+          "Material.setProperty: no own descriptor on static",
+          "Node.addChild: no own descriptor on static",
+          "Node.setPosition: no own descriptor on static",
+          "Node.setRotationFromEuler: no own descriptor on static"
+        ],
+        "observed": 17,
+        "total": 18
+      },
+      "apiProof": [
+        {
+          "api": "Camera",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 10,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "DevToolsSession.captureFrame",
+          "proof": "attested",
+          "state": "unresolved",
+          "calls": 0,
+          "reads": 0,
+          "via": null,
+          "mechanism": "unresolved",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "visible-frame",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "DirectionalLight",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 8,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Layers",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 2,
+          "via": "read",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Material",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 6,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Material.initialize",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 26,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "material-property",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Material.setProperty",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "material-property",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "MeshRenderer",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 24,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 16,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.addChild",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.setPosition",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.setRotationFromEuler",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Scene",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "createAirApp",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Color",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "alias:Color",
+          "observedVia": "Color",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec3",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 4,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "alias:Vec3",
+          "observedVia": "Vec3",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "primitives.box",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "frozen-namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "material-property",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "utils.createMesh",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "frozen-namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "material-property",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        }
+      ],
+      "sessionUnits": [
+        "DevToolsSession.captureFrame"
+      ],
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "no-runtime-error",
+          "material-property",
+          "transform-equals"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "attach",
+          "state": "PASS",
+          "detail": "__benchSession=true"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=4 expected=3"
+        },
+        {
+          "validatorId": "node-count",
+          "state": "PASS",
+          "detail": "nodeCount=4 min=3"
+        },
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "scene=rc-capture-frame nodeCount=4"
+        },
+        {
+          "validatorId": "inspectNode:id-stable",
+          "state": "PASS",
+          "detail": "node ids identical across snapshots"
+        },
+        {
+          "validatorId": "inspectNode:view-matches-scene",
+          "state": "PASS",
+          "detail": "Main Camera local.position=[0,2.2,6.5] equals live node"
+        },
+        {
+          "validatorId": "transform-equals",
+          "state": "PASS",
+          "detail": "5 declared components matched (nodes 3/3 in graph) | coverage 3/3 nodes authored + 1 grounded exclusions"
+        },
+        {
+          "validatorId": "material-property",
+          "state": "PASS",
+          "detail": "DemoCube=builtin-standard{mainColor} | coverage 1/1 nodes authored"
+        },
+        {
+          "validatorId": "captureFrame",
+          "state": "PASS",
+          "detail": "bytes=8390 viewport=480x360"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "center rgb=[31,126,73] differs from clear color"
+        },
+        {
+          "validatorId": "getRuntimeErrors",
+          "state": "PASS",
+          "detail": "schema ok, 0 entries, dropped=0"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "session-self-report",
+          "state": "PASS",
+          "detail": "in-page checks green: {\"captured\":true,\"repeatable\":true}"
+        },
+        {
+          "validatorId": "detach:SESSION_CLOSED",
+          "state": "PASS",
+          "detail": "ok=false code=SESSION_CLOSED"
+        },
+        {
+          "validatorId": "detach:loop-alive",
+          "state": "PASS",
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/rc-capture-frame.png",
+        "bytes": 6276,
+        "hash": "50e6cbd3d599b88e"
+      },
+      "assetDigests": [],
+      "errors": []
+    },
+    {
+      "id": "rc-create-node",
+      "requiresDevTools": true,
+      "result": "PASS",
+      "specFingerprint": "4533f62e9a73",
+      "sourceFingerprint": "adc7fb751d03f149",
+      "candidateFingerprint": "0a6c249084b50f2f",
+      "instrumentation": {
+        "name": "cocosair.traced.js",
+        "exports": 645,
+        "unitCount": 20,
+        "bytes": 61343,
+        "hash": "3131420911401d20",
+        "notes": [
+          "Material.initialize: no own descriptor on static",
+          "Material.setProperty: no own descriptor on static",
+          "Node.addChild: no own descriptor on static",
+          "Node.setPosition: no own descriptor on static",
+          "Node.setRotationFromEuler: no own descriptor on static"
+        ],
+        "observed": 17,
+        "total": 20
+      },
+      "apiProof": [
+        {
+          "api": "Camera",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 34,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "DevToolsSession.dispatch",
+          "proof": "attested",
+          "state": "unresolved",
+          "calls": 0,
+          "reads": 0,
+          "via": null,
+          "mechanism": "unresolved",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "DevToolsSession.inspectNode",
+          "proof": "attested",
+          "state": "unresolved",
+          "calls": 0,
+          "reads": 0,
+          "via": null,
+          "mechanism": "unresolved",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "DevToolsSession.inspectScene",
+          "proof": "attested",
+          "state": "unresolved",
+          "calls": 0,
+          "reads": 0,
+          "via": null,
+          "mechanism": "unresolved",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "DirectionalLight",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 32,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Layers",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 2,
+          "via": "read",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Material",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 30,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Material.initialize",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 26,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "material-property",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Material.setProperty",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "material-property",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "MeshRenderer",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 120,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 5,
+          "reads": 110,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.addChild",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 5,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.setPosition",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 4,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.setRotationFromEuler",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Scene",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "createAirApp",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Color",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "alias:Color",
+          "observedVia": "Color",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec3",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 4,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "alias:Vec3",
+          "observedVia": "Vec3",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "primitives.box",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "frozen-namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "material-property",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "utils.createMesh",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "frozen-namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "material-property",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        }
+      ],
+      "sessionUnits": [
+        "DevToolsSession.dispatch",
+        "DevToolsSession.inspectScene",
+        "DevToolsSession.inspectNode"
+      ],
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "node-count",
+          "transform-equals",
+          "no-runtime-error",
+          "material-property"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "attach",
+          "state": "PASS",
+          "detail": "__benchSession=true"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=5 expected=4"
+        },
+        {
+          "validatorId": "node-count",
+          "state": "PASS",
+          "detail": "nodeCount=5 min=4"
+        },
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "scene=rc-create-node nodeCount=5"
+        },
+        {
+          "validatorId": "inspectNode:id-stable",
+          "state": "PASS",
+          "detail": "node ids identical across snapshots"
+        },
+        {
+          "validatorId": "inspectNode:view-matches-scene",
+          "state": "PASS",
+          "detail": "Main Camera local.position=[0,2.2,6.5] equals live node"
+        },
+        {
+          "validatorId": "transform-equals",
+          "state": "PASS",
+          "detail": "7 declared components matched (nodes 4/4 in graph) | coverage 4/4 nodes authored + 1 grounded exclusions"
+        },
+        {
+          "validatorId": "material-property",
+          "state": "PASS",
+          "detail": "DemoCube=builtin-standard{mainColor} | coverage 1/1 nodes authored"
+        },
+        {
+          "validatorId": "dispatch:createNode",
+          "state": "PASS",
+          "detail": "nodeId=node-7 present=true nodeCount 5→6"
+        },
+        {
+          "validatorId": "dispatch:error-code",
+          "state": "PASS",
+          "detail": "ok=false code=STALE_TARGET nodeCount 6→6 leaked=false"
+        },
+        {
+          "validatorId": "dispatch:duplicate-requestId",
+          "state": "PASS",
+          "detail": "ok=false code=INVALID_ARGUMENT nodeCount 6→6"
+        },
+        {
+          "validatorId": "captureFrame",
+          "state": "PASS",
+          "detail": "bytes=8346 viewport=480x360"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "center rgb=[58,166,102] differs from clear color"
+        },
+        {
+          "validatorId": "getRuntimeErrors",
+          "state": "PASS",
+          "detail": "schema ok, 0 entries, dropped=0"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "session-self-report",
+          "state": "PASS",
+          "detail": "in-page checks green: {\"created\":true,\"nodeCount\":5,\"duplicateCode\":\"INVALID_ARGUMENT\",\"dupNodeSuppressed\":true}"
+        },
+        {
+          "validatorId": "session-self-report-codes",
+          "state": "PASS",
+          "detail": "duplicateCode: in-page=INVALID_ARGUMENT gate=INVALID_ARGUMENT"
+        },
+        {
+          "validatorId": "detach:SESSION_CLOSED",
+          "state": "PASS",
+          "detail": "ok=false code=SESSION_CLOSED"
+        },
+        {
+          "validatorId": "detach:loop-alive",
+          "state": "PASS",
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/rc-create-node.png",
+        "bytes": 6243,
+        "hash": "94db62c109de4a8a"
+      },
+      "assetDigests": [],
+      "errors": []
+    },
+    {
+      "id": "rc-error-report",
+      "requiresDevTools": true,
+      "result": "PASS",
+      "specFingerprint": "01b9b4271da2",
+      "sourceFingerprint": "8d42f5b915ecd42a",
+      "candidateFingerprint": "0a6c249084b50f2f",
+      "instrumentation": {
+        "name": "cocosair.traced.js",
+        "exports": 645,
+        "unitCount": 19,
+        "bytes": 61255,
+        "hash": "08c6c44c4fb51387",
+        "notes": [
+          "Material.initialize: no own descriptor on static",
+          "Material.setProperty: no own descriptor on static",
+          "Node.addChild: no own descriptor on static",
+          "Node.setPosition: no own descriptor on static",
+          "Node.setRotationFromEuler: no own descriptor on static"
+        ],
+        "observed": 17,
+        "total": 19
+      },
+      "apiProof": [
+        {
+          "api": "Camera",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 28,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "DevToolsSession.dispatch",
+          "proof": "attested",
+          "state": "unresolved",
+          "calls": 0,
+          "reads": 0,
+          "via": null,
+          "mechanism": "unresolved",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "DevToolsSession.getRuntimeErrors",
+          "proof": "attested",
+          "state": "unresolved",
+          "calls": 0,
+          "reads": 0,
+          "via": null,
+          "mechanism": "unresolved",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "DirectionalLight",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 26,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Layers",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 2,
+          "via": "read",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Material",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 24,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Material.initialize",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 26,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "material-property",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Material.setProperty",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "material-property",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "MeshRenderer",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 90,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 4,
+          "reads": 76,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.addChild",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 4,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.setPosition",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.setRotationFromEuler",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Scene",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "createAirApp",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Color",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "alias:Color",
+          "observedVia": "Color",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec3",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 4,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "alias:Vec3",
+          "observedVia": "Vec3",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "primitives.box",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "frozen-namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "material-property",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "utils.createMesh",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "frozen-namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "material-property",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        }
+      ],
+      "sessionUnits": [
+        "DevToolsSession.getRuntimeErrors",
+        "DevToolsSession.dispatch"
+      ],
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "no-runtime-error",
+          "material-property",
+          "transform-equals"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "attach",
+          "state": "PASS",
+          "detail": "__benchSession=true"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=4 expected=3"
+        },
+        {
+          "validatorId": "node-count",
+          "state": "PASS",
+          "detail": "nodeCount=4 min=3"
+        },
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "scene=rc-error-report nodeCount=4"
+        },
+        {
+          "validatorId": "inspectNode:id-stable",
+          "state": "PASS",
+          "detail": "node ids identical across snapshots"
+        },
+        {
+          "validatorId": "inspectNode:view-matches-scene",
+          "state": "PASS",
+          "detail": "Main Camera local.position=[0,2.2,6.5] equals live node"
+        },
+        {
+          "validatorId": "transform-equals",
+          "state": "PASS",
+          "detail": "4 declared components matched (nodes 3/3 in graph) | coverage 3/3 nodes authored + 1 grounded exclusions"
+        },
+        {
+          "validatorId": "material-property",
+          "state": "PASS",
+          "detail": "DemoCube=builtin-standard{mainColor} | coverage 1/1 nodes authored"
+        },
+        {
+          "validatorId": "dispatch:createNode",
+          "state": "PASS",
+          "detail": "nodeId=node-6 present=true nodeCount 4→5"
+        },
+        {
+          "validatorId": "dispatch:error-code",
+          "state": "PASS",
+          "detail": "ok=false code=STALE_TARGET nodeCount 5→5 leaked=false"
+        },
+        {
+          "validatorId": "dispatch:duplicate-requestId",
+          "state": "PASS",
+          "detail": "ok=false code=INVALID_ARGUMENT nodeCount 5→5"
+        },
+        {
+          "validatorId": "captureFrame",
+          "state": "PASS",
+          "detail": "bytes=8346 viewport=480x360"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "center rgb=[58,166,102] differs from clear color"
+        },
+        {
+          "validatorId": "getRuntimeErrors",
+          "state": "PASS",
+          "detail": "schema ok, 0 entries, dropped=0"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "session-self-report",
+          "state": "PASS",
+          "detail": "in-page checks green: {\"baseline\":0,\"stableCode\":\"STALE_TARGET\",\"staleRejected\":true}"
+        },
+        {
+          "validatorId": "session-self-report-codes",
+          "state": "PASS",
+          "detail": "stableCode: in-page=STALE_TARGET gate=STALE_TARGET"
+        },
+        {
+          "validatorId": "detach:SESSION_CLOSED",
+          "state": "PASS",
+          "detail": "ok=false code=SESSION_CLOSED"
+        },
+        {
+          "validatorId": "detach:loop-alive",
+          "state": "PASS",
+          "detail": "Director.EVENT_AFTER_DRAW frames 1→51 after session close (must keep growing)"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/rc-error-report.png",
+        "bytes": 6243,
+        "hash": "94db62c109de4a8a"
+      },
+      "assetDigests": [],
+      "errors": []
+    },
+    {
+      "id": "rc-inspect-scene",
+      "requiresDevTools": true,
+      "result": "PASS",
+      "specFingerprint": "dc7942ac2896",
+      "sourceFingerprint": "8dbf1e634cee45fa",
+      "candidateFingerprint": "0a6c249084b50f2f",
+      "instrumentation": {
+        "name": "cocosair.traced.js",
+        "exports": 645,
+        "unitCount": 19,
+        "bytes": 61252,
+        "hash": "1ffb6d1a070b619c",
+        "notes": [
+          "Material.initialize: no own descriptor on static",
+          "Material.setProperty: no own descriptor on static",
+          "Node.addChild: no own descriptor on static",
+          "Node.setPosition: no own descriptor on static",
+          "Node.setRotationFromEuler: no own descriptor on static"
+        ],
+        "observed": 17,
+        "total": 19
+      },
+      "apiProof": [
+        {
+          "api": "Camera",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 20,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "DevToolsSession.inspectNode",
+          "proof": "attested",
+          "state": "unresolved",
+          "calls": 0,
+          "reads": 0,
+          "via": null,
+          "mechanism": "unresolved",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "DevToolsSession.inspectScene",
+          "proof": "attested",
+          "state": "unresolved",
+          "calls": 0,
+          "reads": 0,
+          "via": null,
+          "mechanism": "unresolved",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "DirectionalLight",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 11,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Layers",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 2,
+          "via": "read",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Material",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 9,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Material.initialize",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 26,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "material-property",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Material.setProperty",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "material-property",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "MeshRenderer",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 36,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 24,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.addChild",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.setPosition",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.setRotationFromEuler",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Scene",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "createAirApp",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Color",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "alias:Color",
+          "observedVia": "Color",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec3",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 4,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "alias:Vec3",
+          "observedVia": "Vec3",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "primitives.box",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "frozen-namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "material-property",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "utils.createMesh",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "frozen-namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "material-property",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        }
+      ],
+      "sessionUnits": [
+        "DevToolsSession.inspectScene",
+        "DevToolsSession.inspectNode"
+      ],
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "no-runtime-error",
+          "material-property",
+          "transform-equals"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "attach",
+          "state": "PASS",
+          "detail": "__benchSession=true"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=4 expected=3"
+        },
+        {
+          "validatorId": "node-count",
+          "state": "PASS",
+          "detail": "nodeCount=4 min=3"
+        },
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "scene=rc-inspect-scene nodeCount=4"
+        },
+        {
+          "validatorId": "inspectNode:id-stable",
+          "state": "PASS",
+          "detail": "node ids identical across snapshots"
+        },
+        {
+          "validatorId": "inspectNode:view-matches-scene",
+          "state": "PASS",
+          "detail": "Main Camera local.position=[0,2.2,6.5] equals live node"
+        },
+        {
+          "validatorId": "transform-equals",
+          "state": "PASS",
+          "detail": "4 declared components matched (nodes 3/3 in graph) | coverage 3/3 nodes authored + 1 grounded exclusions"
+        },
+        {
+          "validatorId": "material-property",
+          "state": "PASS",
+          "detail": "DemoCube=builtin-standard{mainColor} | coverage 1/1 nodes authored"
+        },
+        {
+          "validatorId": "captureFrame",
+          "state": "PASS",
+          "detail": "bytes=8346 viewport=480x360"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "center rgb=[58,166,102] differs from clear color"
+        },
+        {
+          "validatorId": "getRuntimeErrors",
+          "state": "PASS",
+          "detail": "schema ok, 0 entries, dropped=0"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "session-self-report",
+          "state": "PASS",
+          "detail": "in-page checks green: {\"nodeCount\":4,\"inspected\":true}"
+        },
+        {
+          "validatorId": "detach:SESSION_CLOSED",
+          "state": "PASS",
+          "detail": "ok=false code=SESSION_CLOSED"
+        },
+        {
+          "validatorId": "detach:loop-alive",
+          "state": "PASS",
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/rc-inspect-scene.png",
+        "bytes": 6243,
+        "hash": "94db62c109de4a8a"
+      },
+      "assetDigests": [],
+      "errors": []
+    }
+  ],
+  "checks": [
+    {
+      "validatorId": "runtime-bundle-boundary",
+      "state": "PASS",
+      "detail": "runtime bundle free of DevTools session implementation"
+    }
+  ],
+  "total": 5,
+  "pass": 5,
+  "fail": 0,
+  "partial": false,
+  "completed": true,
+  "scopePassed": true,
+  "runPass": 5,
+  "runTotal": 5
+}

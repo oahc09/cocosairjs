@@ -23,6 +23,7 @@ const esbuild = require('esbuild');
 const { resolveScript } = require('../dev/resolve-script.cjs');
 
 const REPO = path.resolve(__dirname, '..', '..');
+const TRACE_MEDIA = process.argv.includes('--trace-media');
 const CONTRACT_ARG = process.argv.find((a) => a.startsWith('--contract='));
 const CONTRACT = CONTRACT_ARG
     ? path.resolve(REPO, CONTRACT_ARG.slice(11))
@@ -131,7 +132,13 @@ async function runOne(pw, id, contract, port, engines) {
         const rec = { engine, example: id, group: contract.group };
         let browser;
         try {
-            browser = await pw[engine].launch({ ...launchOptions(engine), env: loopbackBrowserEnv() });
+            browser = await pw[engine].launch({
+                ...launchOptions(engine),
+                ...(engine === 'chromium' && process.env.AIR_CHROMIUM_PATH
+                    ? { executablePath: process.env.AIR_CHROMIUM_PATH }
+                    : {}),
+                env: loopbackBrowserEnv(),
+            });
             rec.browserVersion = browser.version();
         } catch (e) {
             records.push({
@@ -143,6 +150,56 @@ async function runOne(pw, id, contract, port, engines) {
         }
         try {
             const page = await browser.newPage({ viewport: { width: 480, height: 360 } });
+            if (TRACE_MEDIA)
+                await page.addInitScript(() => {
+                    const ids = new WeakMap();
+                    let serial = 0;
+                    const rows = (window.__mediaTrace = []);
+                    const record = (kind, media, extra = {}) => {
+                        if (!ids.has(media)) ids.set(media, ++serial);
+                        if (rows.length < 5000)
+                            rows.push({
+                                kind,
+                                id: ids.get(media),
+                                at: performance.now(),
+                                time: media.currentTime,
+                                paused: media.paused,
+                                seeking: media.seeking,
+                                loop: media.loop,
+                                muted: media.muted,
+                                ...extra,
+                            });
+                    };
+                    const descriptor = Object.getOwnPropertyDescriptor(HTMLMediaElement.prototype, 'currentTime');
+                    Object.defineProperty(HTMLMediaElement.prototype, 'currentTime', {
+                        ...descriptor,
+                        set(value) {
+                            record('set-time', this, { value, stack: new Error().stack });
+                            return descriptor.set.call(this, value);
+                        },
+                    });
+                    for (const name of ['play', 'pause', 'load']) {
+                        const original = HTMLMediaElement.prototype[name];
+                        HTMLMediaElement.prototype[name] = function (...args) {
+                            record('call-' + name, this, { stack: new Error().stack });
+                            const result = original.apply(this, args);
+                            if (name === 'play' && result?.then)
+                                result.then(
+                                    () => record('play-resolved', this),
+                                    (error) => record('play-rejected', this, { error: String(error) }),
+                                );
+                            return result;
+                        };
+                    }
+                    for (const name of ['play', 'playing', 'pause', 'ended', 'seeking', 'seeked', 'loadedmetadata'])
+                        document.addEventListener(
+                            name,
+                            (event) => {
+                                if (event.target instanceof HTMLMediaElement) record('event-' + name, event.target);
+                            },
+                            true,
+                        );
+                });
             const consoleErrors = [];
             page.on('console', (m) => {
                 if (m.type() === 'error') consoleErrors.push(m.text().slice(0, 240));
@@ -157,6 +214,8 @@ async function runOne(pw, id, contract, port, engines) {
                 waitUntil: 'load',
                 timeout: 30000,
             });
+            if (contract.startupButtonText)
+                await page.getByRole('button', { name: contract.startupButtonText, exact: true }).click();
             await page.waitForTimeout(contract.waitMs || 3000);
             // resize 步骤：真实改变视口（setViewportSize → window resize → 引擎 screenAdapter → widgetManager
             // 全链路），用于自适应类示例。前置 probe 作为 before 挂到最终 probe 上，契约即可用普通
@@ -242,6 +301,23 @@ async function runOne(pw, id, contract, port, engines) {
                 },
                 viewports,
                 probe,
+                ...(TRACE_MEDIA
+                    ? {
+                          mediaTrace: await page.evaluate(() => window.__mediaTrace),
+                          mediaRuntime: await page.evaluate(async () => {
+                              const m = await import('/build/cocosair.module.js');
+                              const player = m.director.getScene()?.getComponentsInChildren(m.VideoPlayer)[0];
+                              return player
+                                  ? {
+                                        cachedTime: player._impl._cachedCurrentTime,
+                                        bindings: [...player._impl._eventList.keys()],
+                                        canPlay: player._impl.canPlay.toString(),
+                                        bindEvents: player._impl._bindDomEvent.toString(),
+                                    }
+                                  : null;
+                          }),
+                      }
+                    : {}),
                 consoleErrors: fatal,
                 benignConsole: benign,
                 failedRequests: [...new Set(failedRequests)],
@@ -325,7 +401,7 @@ async function runOne(pw, id, contract, port, engines) {
         }
     }
     const pass = records.filter((r) => r.result === 'PASS').length;
-    const subset = Boolean(idsArg || enginesArg);
+    const subset = Boolean(idsArg || enginesArg || TRACE_MEDIA);
     const scopePassed = completed;
     completed = scopePassed && !subset;
     specCommon.writeJsonAtomic(OUT, {

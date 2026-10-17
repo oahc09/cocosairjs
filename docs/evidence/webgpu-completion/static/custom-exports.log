@@ -1,0 +1,57 @@
+{
+ "generatedAt": "2026-10-15T16:23:34.352Z",
+ "upstream": "E:\\AIProMax\\github\\cocos4",
+ "ok": true,
+ "exportFaces": [
+  {
+   "file": "src/exports/custom-pipeline.ts",
+   "same": true,
+   "bytes": 169
+  },
+  {
+   "file": "src/exports/custom-pipeline-post-process.ts",
+   "same": true,
+   "bytes": 89
+  }
+ ],
+ "dirs": [
+  {
+   "sub": "cocos/rendering/post-process",
+   "airCount": 34,
+   "upstreamCount": 34,
+   "byteSame": 33,
+   "airOnly": [],
+   "upstreamOnly": []
+  },
+  {
+   "sub": "cocos/rendering/custom",
+   "airCount": 25,
+   "upstreamCount": 26,
+   "byteSame": 25,
+   "airOnly": [],
+   "upstreamOnly": [
+    "cocos/rendering/custom/index.jsb.ts"
+   ]
+  }
+ ],
+ "intentionalDeviations": {
+  "src/cocos/rendering/post-process/post-process-builder.ts": "be08d00808d73a56fa2eaa95043e2502ad7764d46a4054b3074a9a914999942c"
+ },
+ "registeredRowCount": 1403,
+ "features": [
+  {
+   "id": "custom-pipeline",
+   "definedInAir": true,
+   "identicalToUpstream": true,
+   "inDefaultAirFeatures": true
+  },
+  {
+   "id": "custom-pipeline-post-process",
+   "definedInAir": true,
+   "identicalToUpstream": true,
+   "inDefaultAirFeatures": true
+  }
+ ],
+ "defaultAirFeatures": 27,
+ "errors": []
+}

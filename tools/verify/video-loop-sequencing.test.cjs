@@ -88,12 +88,20 @@ test('LOCAL metadata timeout rejects instead of continuing with an old callback'
     assert.equal(results.p6SourceSwitch, undefined);
 });
 
-function loopFixture({ stuckSeek = false, unlandedSeek = false, stalledPlayback = false, loopWorks = true } = {}) {
+function loopFixture({
+    stuckSeek = false,
+    unlandedSeek = false,
+    stalledPlayback = false,
+    loopWorks = true,
+    pauseAfterWrap = false,
+} = {}) {
     const video = { currentTime: 0, seeking: false, paused: true, ended: false, readyState: 4 };
     const calls = [];
     let seekTicks = 0;
+    let seekTarget = 0;
     let overlappingPlay = false;
     let clock = 0;
+    let wrapPausePending = false;
     const player = {
         nativeVideo: video,
         duration: 3,
@@ -104,10 +112,12 @@ function loopFixture({ stuckSeek = false, unlandedSeek = false, stalledPlayback 
             return video.currentTime;
         },
         set currentTime(value) {
+            const overlapping = video.seeking;
+            seekTarget = value;
             video.currentTime = unlandedSeek && value === 2 ? 0 : Math.min(3, value);
             video.seeking = true;
             seekTicks = 2;
-            calls.push({ kind: 'seek', value, paused: video.paused });
+            calls.push({ kind: 'seek', value, paused: video.paused, overlapping });
         },
         pause() {
             video.paused = true;
@@ -116,7 +126,7 @@ function loopFixture({ stuckSeek = false, unlandedSeek = false, stalledPlayback 
             calls.push({ kind: 'pause' });
         },
         play() {
-            calls.push({ kind: 'play', seeking: video.seeking, currentTime: video.currentTime });
+            calls.push({ kind: 'play', loop: this.loop, seeking: video.seeking, currentTime: video.currentTime });
             overlappingPlay = video.seeking;
             video.paused = false;
             this.isPlaying = true;
@@ -125,14 +135,21 @@ function loopFixture({ stuckSeek = false, unlandedSeek = false, stalledPlayback 
     };
     function tick() {
         clock += 20;
+        if (wrapPausePending) {
+            video.paused = true;
+            player.isPlaying = false;
+            wrapPausePending = false;
+        }
         if (video.seeking) {
-            if (stuckSeek || overlappingPlay) return;
+            if ((stuckSeek && seekTarget === 2) || overlappingPlay) return;
             if (--seekTicks <= 0) video.seeking = false;
         } else if (!video.paused && !stalledPlayback) {
             video.currentTime += 0.02;
             if (video.currentTime >= 3) {
-                if (player.loop && loopWorks) video.currentTime = 0;
-                else {
+                if (player.loop && loopWorks) {
+                    video.currentTime = 0;
+                    wrapPausePending = pauseAfterWrap;
+                } else {
                     video.currentTime = 3;
                     video.paused = true;
                 }
@@ -167,19 +184,21 @@ function loopFixture({ stuckSeek = false, unlandedSeek = false, stalledPlayback 
 test('loop playback begins only after the paused seek has settled', async () => {
     const fixture = loopFixture();
     await fixture.run();
-    const plays = fixture.calls.filter((call) => call.kind === 'play');
+    assert.equal(fixture.calls.filter((call) => call.kind === 'play' && !call.loop).length, 1);
+    const plays = fixture.calls.filter((call) => call.kind === 'play' && call.loop);
     assert.equal(plays.length, 1);
     assert.equal(plays[0].seeking, false);
     assert.equal(plays[0].currentTime, 2);
+    assert.equal(fixture.calls.find((call) => call.kind === 'seek' && call.value === 2).overlapping, false);
     assert.equal(fixture.results.p8Loop.wrappedBelowSeekTarget, true);
     assert.equal(fixture.results.p8Loop.completedDeltaDuringLoop, 0);
 });
 
-test('an unsettled seek cannot start playback or report a loop', async () => {
+test('an unsettled loop seek cannot start playback or report a loop', async () => {
     const fixture = loopFixture({ stuckSeek: true });
     await fixture.run();
     assert.equal(
-        fixture.calls.some((call) => call.kind === 'play'),
+        fixture.calls.some((call) => call.kind === 'play' && call.loop),
         false,
     );
     assert.equal(fixture.results.p8Loop.seekSettledWithinMs, -1);
@@ -199,6 +218,14 @@ test('playback that reaches the end without wrapping still fails', async () => {
     await fixture.run();
     assert.equal(fixture.results.p8Loop.wrappedBelowSeekTarget, false);
     assert.equal(fixture.status.string, 'video loop failed');
+});
+
+test('a transient loop reset followed by a pause is not continuous playback', async () => {
+    const fixture = loopFixture({ pauseAfterWrap: true });
+    await fixture.run();
+    assert.ok(fixture.results.p8Loop.wrapWithinMs >= 0);
+    assert.equal(fixture.results.p8Loop.continuedAfterWrapWithinMs, -1);
+    assert.equal(fixture.results.p8Loop.wrappedBelowSeekTarget, false);
 });
 
 test('a low stale time during an unfinished seek is not mistaken for a wrap', async () => {

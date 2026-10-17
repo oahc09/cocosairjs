@@ -578,7 +578,7 @@ export class ProgramLib {
         tmplInfo.shaderInfo.name = getShaderInstanceName(name, macroArray);
 
         let shaderInfo = tmplInfo.shaderInfo;
-        if (env.WEBGPU) {
+        if (device.gfxAPI === API.WEBGPU) {
             // keep 'tmplInfo.shaderInfo' originally
             shaderInfo = new ShaderInfo();
             shaderInfo.copy(tmplInfo.shaderInfo);

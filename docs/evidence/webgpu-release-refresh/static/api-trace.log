@@ -1,0 +1,2 @@
+[api-trace] bundle exports: 645 | wrapper bytes: 17882
+[api-trace] selftest PASS (shape + alias/normalize semantics + generated ESM parses)

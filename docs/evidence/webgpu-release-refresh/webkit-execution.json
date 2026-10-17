@@ -1,0 +1,17 @@
+{
+  "name": "webkit",
+  "command": [
+    "D:\\Program Files\\nodejs\\node.exe",
+    "E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\webgpu-backend.cjs",
+    "--engine=webkit",
+    "--examples",
+    "--custom",
+    "--out=E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\webkit-video-loop-r4\\webgpu\\webkit"
+  ],
+  "startedAt": "2026-10-16T14:39:21.507Z",
+  "expectedExit": 1,
+  "browserPath": "C:/Program Files/Google/Chrome/Application/chrome.exe",
+  "exitCode": 1,
+  "signal": null,
+  "finishedAt": "2026-10-16T14:41:29.476Z"
+}

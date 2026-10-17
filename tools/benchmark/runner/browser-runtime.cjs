@@ -13,6 +13,7 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
+const { serveStaticFile } = require('../../verify/static-file-response.cjs');
 
 const REPO = path.resolve(__dirname, '..', '..', '..');
 const DEBUG_BUNDLE_CACHE = new Map();
@@ -276,9 +277,37 @@ class BrowserRuntime {
                 workspace.evidenceMode ||
                 /\.(wav|mp3|ogg|mp4|glb|gltf|bin|json|png|jpe?g|webp|ktx2|basis)(?:[?#]|$)/i.test(req.url || '')
             ) {
+                let writtenBytes = 0;
+                const chunks = [];
+                const responseHash = crypto.createHash('sha256');
+                const write = res.write;
+                res.write = (chunk, ...args) => {
+                    if (chunk) {
+                        const bytes = Buffer.isBuffer(chunk)
+                            ? chunk
+                            : Buffer.from(chunk, typeof args[0] === 'string' ? args[0] : undefined);
+                        responseHash.update(bytes);
+                        if (workspace.evidenceResponseDir) chunks.push(bytes);
+                    }
+                    writtenBytes +=
+                        Buffer.isBuffer(chunk) || chunk instanceof Uint8Array
+                            ? chunk.length
+                            : typeof chunk === 'string'
+                              ? Buffer.byteLength(chunk)
+                              : 0;
+                    return write.call(res, chunk, ...args);
+                };
                 const end = res.end;
                 res.end = (...args) => {
-                    const body = args[0];
+                    const tail = args[0];
+                    if (tail && (typeof tail === 'string' || tail instanceof Uint8Array)) {
+                        const bytes = Buffer.isBuffer(tail)
+                            ? tail
+                            : Buffer.from(tail, typeof args[1] === 'string' ? args[1] : undefined);
+                        responseHash.update(bytes);
+                        if (workspace.evidenceResponseDir) chunks.push(bytes);
+                    }
+                    const body = workspace.evidenceResponseDir ? Buffer.concat(chunks) : tail;
                     const bodyArtifact = workspace.evidenceResponseDir
                         ? persistResponseBody(workspace.evidenceResponseDir, body)
                         : null;
@@ -292,12 +321,9 @@ class BrowserRuntime {
                         this.resourceResponses.push({
                             url: `http://127.0.0.1:${this.port}${req.url}`,
                             status: res.statusCode,
-                            size,
+                            size: workspace.evidenceResponseDir ? size : writtenBytes + size,
                             observation: 'server-response',
-                            sha256: crypto
-                                .createHash('sha256')
-                                .update(body || Buffer.alloc(0))
-                                .digest('hex'),
+                            sha256: responseHash.digest('hex'),
                             source: res.evidenceSource || {
                                 kind: 'generated',
                                 generator: 'tools/benchmark/runner/browser-runtime.cjs',
@@ -393,11 +419,7 @@ class BrowserRuntime {
                     serveTs(this.esbuild, res, file);
                     return;
                 }
-                res.writeHead(200, {
-                    'Content-Type': MIME[path.extname(file)] || 'application/octet-stream',
-                    'Cache-Control': 'no-store',
-                });
-                res.end(fs.readFileSync(file));
+                serveStaticFile(req, res, file, MIME[path.extname(file)] || 'application/octet-stream');
             } catch (error) {
                 console.error('[bench-serve]', req && req.url, '→', String(error.message || error).slice(0, 200));
                 if (!res.headersSent) {
@@ -418,17 +440,19 @@ class BrowserRuntime {
             Object.assign(launchOpts, this.browserLaunch);
         } else if (this.browserType === 'chromium') {
             // chromium-1228 是已安装的旧版但可与当前 Playwright 版本配合使用
-            launchOpts.executablePath = [
-                'C:',
-                'Users',
-                'caosh',
-                'AppData',
-                'Local',
-                'ms-playwright',
-                'chromium-1228',
-                'chrome-win64',
-                'chrome.exe',
-            ].join('\\');
+            launchOpts.executablePath =
+                process.env.AIR_CHROMIUM_PATH ||
+                [
+                    'C:',
+                    'Users',
+                    'caosh',
+                    'AppData',
+                    'Local',
+                    'ms-playwright',
+                    'chromium-1228',
+                    'chrome-win64',
+                    'chrome.exe',
+                ].join('\\');
             launchOpts.args = ['--use-gl=angle', '--enable-unsafe-swiftshader', '--disable-gpu-sandbox'];
         }
         const browser = await launcher.launch(launchOpts);
@@ -464,11 +488,13 @@ class BrowserRuntime {
                 }
             });
         }
+        this.consoleErrors = [];
         this.page = await this.context.newPage();
         this.page.on('crash', () => this.recordPageCrash());
         // 页面错误可见性（dev server Task 13 同语义）：诊断 Benchmark 页面加载失败
         this.page.on('console', (m) => {
             if (m.type() === 'error') {
+                this.consoleErrors.push(m.text());
                 console.error('[bench-page]', m.text().slice(0, 300));
             }
         });

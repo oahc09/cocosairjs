@@ -300,7 +300,7 @@ cocosair.js/
 
 ### 不包含或需要额外资产
 
-- **WebGPU**：源码保留用于上游追溯，未纳入默认运行时及公开 SDK 后端。
+- **WebGPU**：桌面 Web 实验后端已接入，使用 `createAirApp({ canvas, renderer: 'webgpu' })` 显式选择；默认仍 WebGL2，不自动回退。部署和当前验收边界见 [WebGPU 指南](docs/guides/webgpu.md)。
 - **WASM 物理后端**：bullet/physx、Box2D WASM 的外部 JS/WASM 资产未随包提供，不属于当前可直接使用的后端。见 [资产来源记录](docs/notes/physics-asset-sourcing.md)。
 - **Spine**：组件、类型及适配代码存在，但基线的完整运行时依赖尚未部署的外部资产；不能据此宣称 Spine 动画运行已验收。见 [Spine 资产来源](docs/notes/spine-asset-sourcing.md)。
 - **Draco 浏览器解码**：adapter 支持注入 provider；随包入口为 Node/CommonJS 形态，浏览器 factory 由应用另行提供。见 [decoder 部署边界](docs/gltf/gltf-decoder-deployment.md)。

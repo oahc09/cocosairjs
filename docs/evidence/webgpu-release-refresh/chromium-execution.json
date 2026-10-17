@@ -1,0 +1,17 @@
+{
+  "name": "chromium",
+  "command": [
+    "D:\\Program Files\\nodejs\\node.exe",
+    "E:\\AIProMax\\github\\cocosair.js\\tools\\verify\\webgpu-backend.cjs",
+    "--engine=chromium",
+    "--examples",
+    "--custom",
+    "--out=E:\\AIProMax\\github\\cocosair.js\\output\\playwright\\webkit-video-loop-r4\\webgpu\\chromium"
+  ],
+  "startedAt": "2026-10-16T14:39:21.346Z",
+  "expectedExit": 0,
+  "browserPath": "C:/Program Files/Google/Chrome/Application/chrome.exe",
+  "exitCode": 0,
+  "signal": null,
+  "finishedAt": "2026-10-16T14:41:14.752Z"
+}

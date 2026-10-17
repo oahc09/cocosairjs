@@ -44,6 +44,9 @@ const _mat4_temp = mat4();
 /** @mangle */
 export class VideoPlayerImplWeb extends VideoPlayerImpl {
     protected _eventList: Map<string, ((e: Event) => void)> = new Map();
+    private _requestedPlaying = false;
+    private _apiSeeking = false;
+    private _loopSeekResume: HTMLVideoElement | null = null;
 
     // use stay on bottom
     protected _clearColorA = -1;
@@ -71,23 +74,28 @@ export class VideoPlayerImplWeb extends VideoPlayerImpl {
     }
 
     public canPlay (): void {
-        if (this.video) {
-            const promise = this.video.play();
+        const video = this.video;
+        if (video) {
+            this._requestedPlaying = true;
+            this._loopSeekResume = null;
+            const promise = video.play();
             // the play API can only be initiated by user gesture.
             if (ccwindow.Promise && promise instanceof Promise) {
                 // eslint-disable-next-line @typescript-eslint/no-floating-promises
-                promise.catch((error) => {
+                promise.then(() => {
+                    // A rejected/cancelled play must not re-seek during native loop recovery.
+                    if (this.video === video && this._requestedPlaying) this.syncCurrentTime();
+                }, (error) => {
                     // Auto-play was prevented
                     // Show a UI element to let the user manually start playback
-                }).then(() => {
-                    // calibration time
-                    this.syncCurrentTime();
                 });
             }
         }
     }
 
     public pause (): void {
+        this._requestedPlaying = false;
+        this._loopSeekResume = null;
         if (this.video) {
             this.video.pause();
             this._cachedCurrentTime = this.video.currentTime;
@@ -99,6 +107,8 @@ export class VideoPlayerImplWeb extends VideoPlayerImpl {
     }
 
     public stop (): void {
+        this._requestedPlaying = false;
+        this._loopSeekResume = null;
         if (this.video) {
             this._ignorePause = true;
             this.video.currentTime = 0;
@@ -146,6 +156,7 @@ export class VideoPlayerImplWeb extends VideoPlayerImpl {
     }
 
     public syncLoop (enabled: boolean): void {
+        if (!enabled) this._loopSeekResume = null;
         if (this.video) {
             this.video.loop = enabled;
         }
@@ -166,8 +177,11 @@ export class VideoPlayerImplWeb extends VideoPlayerImpl {
     }
 
     public seekTo (val: number): void {
+        this._loopSeekResume = null;
         if (this.video) {
             this.video.currentTime = val;
+            // Before metadata, a zero start-position assignment need not start a seek.
+            this._apiSeeking = this.video.seeking;
             this._cachedCurrentTime = this.video.currentTime;
         }
     }
@@ -247,6 +261,9 @@ export class VideoPlayerImplWeb extends VideoPlayerImpl {
     }
 
     public removeVideoPlayer (): void {
+        this._requestedPlaying = false;
+        this._apiSeeking = false;
+        this._loopSeekResume = null;
         const video = this._video;
         if (video) {
             if (contains(game.container, video)) {
@@ -290,10 +307,43 @@ export class VideoPlayerImplWeb extends VideoPlayerImpl {
         this.addListener('canplaythrough', this.onCanPlay.bind(this));
         this.addListener('play', this.onPlay.bind(this));
         this.addListener('playing', this.onPlaying.bind(this));
+        this.addListener('seeked', (event: Event): void => {
+            // A confirmed seek must not be applied again after the play Promise settles.
+            if (event.target !== this._video) return;
+            this._cachedCurrentTime = -1;
+            this._apiSeeking = false;
+            const resume = this._loopSeekResume === video;
+            this._loopSeekResume = null;
+            if (resume && video && this._requestedPlaying && !this._interrupted
+                && video.loop && video.paused && !video.seeking && video.currentTime >= 0 && video.currentTime <= 0.05) {
+                this.canPlay();
+            }
+        });
         this.addListener('pause', this.onPause.bind(this));
         this.addListener('click', this.onClick.bind(this));
         this.addListener('ended', this.onEnded.bind(this));
         this.addListener('error', this.onError.bind(this));
+    }
+
+    public onPause (event: Event): void {
+        const video = this._video;
+        if (event.target !== video) return;
+        // Windows WebKit reports paused at EOS before its native loop seek. Preserve the
+        // caller's intent until seeked; never seek/replay or override explicit controls.
+        if (video && sys.browserType === BrowserType.SAFARI && /^Win/.test(ccwindow.navigator?.platform || '')
+            && this._requestedPlaying && !this._interrupted && !this._ignorePause && !this._apiSeeking
+            && video.loop && video.paused && video.seeking && video.currentTime >= 0 && video.currentTime <= 0.05) {
+            this._loopSeekResume = video;
+        }
+        super.onPause(event);
+    }
+
+    public onEnded (event: Event): void {
+        // A queued ended callback may arrive after the same element has already sought away.
+        if (event.target !== this._video || !this._video?.ended) return;
+        this._requestedPlaying = false;
+        this._loopSeekResume = null;
+        super.onEnded(event);
     }
 
     public onCanPlay (e: Event): void {
@@ -322,6 +372,10 @@ export class VideoPlayerImplWeb extends VideoPlayerImpl {
     }
 
     public disable (noPause?: boolean): void {
+        if (!noPause) {
+            this._requestedPlaying = false;
+            this._loopSeekResume = null;
+        }
         if (this._video) {
             if (!noPause && this._playing) {
                 this._video.pause();

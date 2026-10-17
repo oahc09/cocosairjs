@@ -241,3 +241,9 @@ Stable 计数 **131 ≥ 120 达标**；Core VerifiedRate **6.9% → 36%**（294/
 | PG-25 Billboard | 公开原生组件  | 直接导出已有Billboard文件，保留原生API；验证默认小闭包、bundle/d.ts、安装消费者、移动相机像素及销毁。                                                                    |
 
 依据见[决策备忘录](../notes/port-spine-and-billboard-decisions.md)，进度见[实施台账](../../ai/ledgers/port-gap-remediation.md)。本决议不授权提交、发布或修改外部应用；AG1/AG2材料缺口继续独立披露。
+
+2026-10-15 WebGPU 实施授权：用户批准严格对齐冻结官方能力、默认 WebGL2、显式 WebGPU 的专项方案。物理 WASM 三后端继续保持原豁免和 A6 解禁条件；新增 WebGPU feature 后声明数 35、默认集 27，共享 Device/program-lib 的定向改动见 upstream-file-map。此登记不批准更改物理后端或重标旧证据。
+
+阴影 ABI 路线追加决定：用户选择「按冻结上游重建 builtin 资产，统一两后端 ABI」。据此从冻结 effect/chunk 生成 builtin 与溯源清单，并在 WebGL2/WebGPU 分别验证单阴影及 CSM；不通过扩展 CPU UBO 去迁就旧资产。
+
+2026-10-16 WebGPU 收尾范围：用户要求继续实现与排查环境，保持不提交、不发布、不改版本号；用户确认目前没有 Mac，Safari 保留外部验收。Windows WebKit 的原生能力排除不改标为渲染通过，Firefox 临时自动化 profile 的刷新配置与默认 GPU 能力对照分开记录。

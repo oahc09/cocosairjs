@@ -1,6 +1,34 @@
 # UPSTREAM
 
+2026-10-17 提交前审查修复：活动 TypeScript WebGPU 的 CommandBuffer.copyBuffersToTexture 改用与当前后端一致的即时上传路径，先提交待执行 compute，避免遗留 cmdPackage 无消费路径造成静默丢失，并保持与后续 blit/render 的队列顺序。冻结基线、上游版权及其他后端保持；实际 compute→upload→blit 及双纹理读回纳入资源合同。
+
 2026-10-14 DOM 音频取消：`tools/build/audio-cancellation-patch.cjs` 在冻结 PAL 生成流程中让 DOM play 具有可取消代际，pause/stop/destroy 不再等待原生 play Promise；取消以 AbortError 结算，迟到回调不能恢复 PLAYING。仅 NotAllowedError 等待选定 canvas 手势，停止或销毁清理重试监听，销毁释放原媒体 src。AudioSource 使用播放与加载代际抑制迟到 STARTED、旧拒绝移除新播放、A→B→A 旧加载污染，并在有效 clip 替换时立即销毁旧播放器。共享 operation-queue、WebAudio/video 与冻结 vendor 原字节保持。自然 EOS 与晚到 play 完成的竞态另有回归；这不声明已查明 WebKit 延迟 Promise 的原因或产品27 epoch5 的历史根因。验收范围见 [音频取消验证](notes/audio-cancellation.md)。
+
+2026-10-16 Windows WebKit 视频循环：原生 Media Foundation 播放器在 EOS 后先报告暂停，再执行 loop 的原生 seek，可能把暂停状态保留到 seek 完成。实际 Win32 平台的 Safari/WebKit 兼容路径在确认该原生回绕后，仅恢复调用方仍有效的播放意图；不写 currentTime、不伪造媒体事件。显式暂停、停止、seek、禁用、换源和关闭 loop 均取消待恢复动作；非 Windows 平台及其他浏览器不进入此路径。Windows WebKit 的 UA 模拟 macOS，平台判断使用 navigator.platform，不修改 PAL。
+
+播放 Promise 只在成功且原元素仍被请求播放时执行时间校准；原生 loop 导致的 AbortError 不再触发迟到的 seek。
+
+同元素 seek/play 后迟到的 ended 回调也检查当前原生 ended 状态，避免把上一播放位置的结束误报为新一轮 COMPLETED；保留原视频示例的循环计数窗口与 0 COMPLETED 断言。
+
+2026-10-16 glTF 物理材质原生 WebGPU 补验：AIR 派生的 glsl4 sampler 声明使用明确的 material set/binding；活动 TypeScript WebGPU 后端将独立 sampler 的 native binding 偏移从 16 调整为 64，避免与物理扩展的逻辑纹理槽 15..27 冲突，并保持在 WebGPU 默认 binding 索引上限内。GLSL 翻译、布局及实际 descriptor 绑定共享同一偏移，不改 WebGL2 或未接入的历史 WASM 后端。
+
+同轮 descriptor layout 延迟到实际使用时创建原生对象；保留模板元数据，由已有 shader reflection 投影出当前变体的真实绑定后才校验 GPU 限制。避免未启用的物理扩展采样器在完整模板阶段提前占用原生槽。管线投影使用共享 sampler 偏移。
+
+2026-10-16 全仓门禁回归：补回冻结 builtin 重建遗漏的 7 个原有 pipeline/util 注册名称，包括 Profiler 依赖的 `util/profiler` 和启动画面资产；该批恢复 21 个原有默认 effect / 47 个 shader，来源仍是同一冻结提交；后续 glTF 私有模板补编见下文。`pipeline/bloom` 从冻结 `pipeline/post-process/bloom.effect` 编译并保留原注册名称。生成器确保保留这些既有入口，未改 Profiler 实现或降低浏览器断言。
+
+同轮 Profiler WebGPU 实测进一步暴露 canvas 外部图像上传缺少原生 `RENDER_ATTACHMENT` usage。`webgpu-commands.ts` 为可渲染、单采样的二维颜色上传目标补充该原生用途，满足 `copyExternalImageToTexture` 约束；不扩大深度、三维或多采样上传能力，不改公共 TextureInfo 合同。
+
+AIR `createAirUnlitFogEffect` 同步冻结模板的多 shader 结构：仅保留明确命名且不含雾钩子的 planar-shadow stage 原文，其他 stage 仍严格验证并注入片元雾；独立资产命名、共享模板缓存和销毁合同保持。Gallery 打包解析配方的 TypeScript 源码及当前 SDK，仓库外 legacy 比较基线在独立部署物中明确拒绝。
+
+同轮媒体验证：Web VideoPlayer 在原生 `seeked` 后消费已完成的校准缓存，并将播放 Promise 的后续校准绑定到原视频元素，避免播放已前进或换源后被迟到回调重新 seek。保留原生播放器、真实循环和浏览器媒体激活约束；不是以 JS 强制重播替代原生 loop。
+
+全量回归还检出了 glTF physical 派生对现代 `SurfacesMaterialData` 模板的不兼容。生成器现额外编译同一冻结提交的官方 `legacy/standard.effect` 为 AIR 私有 `air-gltf-template`，保留原有 glTF `StandardSurface` 扩展语义，同时使用冻结版本当前的全局 uniform ABI。默认注册集为 21 个原入口加 1 个 glTF 模板，共 22 effect / 50 shader；未回引旧 builtin 字节。physical 派生适配缩进、分离的 emissive 缩放和当前方向光累加钩子，材质语义回归保持。
+
+2026-10-15 WebGPU 收尾：登记 native indirect compute、raw indirect 参数上传、颜色 blit 缩放/过滤、组合 color mask 与 MIN/MAX blend 修复；不引入 native-device WASM 或改变默认 WebGL2。原生 post-process-builder 在 TAA 关闭时恢复相机投影，消除两后端残余 jitter；深度采样使用 depth-only view 与不可过滤浮点布局。Firefox 的无头 GPU 进程与 Windows WebKit 的编译能力分别验证，不能把浏览器配置问题改成引擎回退。验收结果以本轮新输出为准。
+
+2026-10-15 WebGPU 接入实施：冻结上游仍为 fffd9a514a。活动路径采用 TypeScript GFX 后端与独立 glslang/twgsl shader 资产；历史 native-device WASM 路径不接入。新增显式 renderer 选择，默认仍 WebGL2；按实际设备处理 shader 绑定、异步读回、失败和生命周期。历史 Deviation-04 是旧交付记录，当前进度与验证以 ai/ledgers/webgpu-backend.md 为准，本段不声明完整 GPU 矩阵或发布通过。物理 WASM 门禁保持原范围，仅同步新增 WebGPU 后的 feature 计数（35 声明、27 默认）及共享 Device/program-lib 已登记偏差。
+
+同日按用户选择的修复路线从该冻结提交重建 14 个 builtin effect / 37 个 shader，消除旧资产 CCShadow/CCCSM 与运行时 UBO 的 ABI 差异；来源、编译器哈希、原始 MIT 声明和生成物哈希见 `vendor/builtin-source/manifest.json`。原生 custom 验证使用独立生成的效果与官方布局，不使用浏览器 descriptor 注入；后续 TAA 共享修复见上段。AIR glTF 网格按实际 WebGPU 设备为 joints 打包无符号整数，匹配官方 glsl4，WebGL2 保留其 glsl3 数据合同。
 
 2026-10-14 安全启动：`tools/build/startup-binding-patch.cjs` 在冻结 PAL 生成流程中将 ScreenAdapter 的 DOM 包装、画布解析、事件注册与 Input 单例的 keyboard/mouse/touch 绑定移到显式启动边界；生成器精确校验替换命中数。音频手势恢复选择相同的自定义 canvas。冻结 vendor 与 `src/cocos` 不变。AIR 主入口与延迟入口通过一个 admission/initPromise 启动，options-only canvas/DPR 在 PAL bind 前生效；主入口仍依赖浏览器，不承诺 SSR。
 

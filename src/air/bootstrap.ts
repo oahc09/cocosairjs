@@ -48,6 +48,9 @@ import {
 import { view } from '../cocos/ui/view';
 import { screenAdapter } from 'pal/screen-adapter';
 import { settings, SettingsCategory } from '../cocos/core/settings';
+import '../exports/gfx-webgpu';
+import { configureWebGPUAssets } from '../cocos/gfx/webgpu/instantiated';
+import { deviceManager } from '../cocos/gfx/device-manager';
 import { VERSION } from '../cocos/core/global-exports';
 
 export type { AirApp, AirAppOptions } from './app';
@@ -113,6 +116,7 @@ export function createAirApp(options: AirAppOptions): Promise<AirApp> {
 
 async function initializeAirApp(options: AirNormalizedOptions): Promise<AirApp> {
     const canvas = options.canvas;
+    if (options.renderer === 'webgpu') configureWebGPUAssets(options.webgpuAssetBaseUrl);
     const exactFit = settings.querySettings(SettingsCategory.SCREEN, 'exactFitScreen');
     validateAirScreenMode(options.screenMode, exactFit);
     ensureCanvasDOM(canvas, options);
@@ -144,6 +148,10 @@ async function initializeAirApp(options: AirNormalizedOptions): Promise<AirApp> 
                     : {}),
             },
         });
+        if (options.renderer === 'webgpu') {
+            const device = deviceManager.gfxDevice as typeof deviceManager.gfxDevice & { nativeDevice: GPUDevice };
+            contextHealth.watchWebGPUDevice(device.nativeDevice);
+        }
         if (options.designResolution) {
             const { width, height, policy } = options.designResolution;
             view.setDesignResolutionSize(width, height, policy);

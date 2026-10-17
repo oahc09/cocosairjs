@@ -1,0 +1,403 @@
+
+> cocosair.js@1.0.0 build:all
+> node tools/build/build.cjs --format esm && node tools/build/build.cjs --format esm --min && node tools/build/build-dts.cjs && node tools/build/prepare-package.cjs && node tools/verify/published-artifacts.cjs
+
+[build] cocosair moduleFormat=esm min=false
+[build] AIR_BUILD_DATE=202610170739 AIR_BUILD_NUMBER=168
+Module source "internal-constants":
+function tryDefineGlobal (name, value) {
+    const _global = typeof window === 'undefined' ? global : window;
+    if (typeof _global[name] === 'undefined') {
+        return (_global[name] = value);
+    } else {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+        return _global[name];
+    }
+}
+export const HTML5 = true;
+
+export const NATIVE = false;
+
+export const ANDROID = false;
+
+export const IOS = false;
+
+export const MAC = false;
+
+export const WINDOWS = false;
+
+export const LINUX = false;
+
+export const OHOS = false;
+
+export const OPEN_HARMONY = false;
+
+export const WECHAT = false;
+tryDefineGlobal('CC_WECHAT', false);
+
+export const WECHAT_MINI_PROGRAM = false;
+
+export const XIAOMI = false;
+tryDefineGlobal('CC_XIAOMI', false);
+
+export const ALIPAY = false;
+tryDefineGlobal('CC_ALIPAY', false);
+
+export const TAOBAO = false;
+
+export const TAOBAO_MINIGAME = false;
+
+export const BYTEDANCE = false;
+tryDefineGlobal('CC_BYTEDANCE', false);
+
+export const OPPO = false;
+tryDefineGlobal('CC_OPPO', false);
+
+export const VIVO = false;
+tryDefineGlobal('CC_VIVO', false);
+
+export const HUAWEI = false;
+tryDefineGlobal('CC_HUAWEI', false);
+
+export const MIGU = false;
+tryDefineGlobal('CC_MIGU', false);
+
+export const HONOR = false;
+tryDefineGlobal('CC_HONOR', false);
+
+export const COCOS_RUNTIME = false;
+tryDefineGlobal('CC_COCOS_RUNTIME', false);
+
+export const SUD = false;
+tryDefineGlobal('CC_SUD', false);
+
+export const SUDV2 = false;
+tryDefineGlobal('CC_SUDV2', false);
+
+export const NODEJS = false;
+tryDefineGlobal('CC_NODEJS', false);
+
+export const EDITOR = false;
+tryDefineGlobal('CC_EDITOR', false);
+
+export const EDITOR_NOT_IN_PREVIEW = false;
+
+export const PREVIEW = false;
+tryDefineGlobal('CC_PREVIEW', false);
+
+export const BUILD = true;
+tryDefineGlobal('CC_BUILD', true);
+
+export const TEST = false;
+tryDefineGlobal('CC_TEST', false);
+
+export const DEBUG = true;
+tryDefineGlobal('CC_DEBUG', true);
+
+export const SERVER_MODE = false;
+
+export const DEV = false;
+tryDefineGlobal('CC_DEV', false);
+
+export const MINIGAME = false;
+tryDefineGlobal('CC_MINIGAME', false);
+
+export const RUNTIME_BASED = false;
+tryDefineGlobal('CC_RUNTIME_BASED', false);
+
+export const SUPPORT_JIT = false;
+tryDefineGlobal('CC_SUPPORT_JIT', false);
+
+export const JSB = false;
+tryDefineGlobal('CC_JSB', false);
+
+export const NOT_PACK_PHYSX_LIBS = false;
+
+export const NET_MODE = 0;
+
+export const WEBGPU = false;
+
+export const NATIVE_CODE_BUNDLE_MODE = 2;
+
+export const WASM_SUBPACKAGE = false;
+
+export const CULL_MESHOPT = true;
+
+export const LOAD_SPINE_MANUALLY = false;
+
+export const LOAD_BOX2D_MANUALLY = false;
+
+export const LOAD_BULLET_MANUALLY = false;
+
+export const LOAD_PHYSX_MANUALLY = false;
+
+export const USE_3D = true;
+
+export const USE_UI_SKEW = false;
+
+export const USE_XR = false;
+
+export const USE_SORTING_2D = false;
+
+
+Module source "cc":
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\air.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\base.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\gfx-webgl2.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\gfx-webgpu.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\gfx-empty.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\3d.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\animation.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\skeletal-animation.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\primitive.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\tween.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\custom-pipeline.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\legacy-pipeline.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\profiler.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\video.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\webview.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\2d.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\sorting.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\physics-2d-framework.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\particle-2d.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\tiled-map.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\ui.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\spine.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\dragon-bones.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\physics-2d-box2d.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\physics-builtin.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\physics-framework.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\physics-cannon.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\custom-pipeline-post-process.ts';
+Redirect module internal:native to E:\AIProMax\github\cocosair.js\src\cocos\native-binding\impl.ts
+Redirect module pal/system-info to E:\AIProMax\github\cocosair.js\src\pal\system-info\web\system-info.js
+Redirect module E:\AIProMax\github\cocosair.js\src\cocos\spine\lib\spine-version.ts to E:\AIProMax\github\cocosair.js\src\cocos\spine\lib\spine-version-dynamic.ts
+Redirect module E:\AIProMax\github\cocosair.js\src\cocos\2d\renderer\native-2d.ts to E:\AIProMax\github\cocosair.js\src\cocos\2d\renderer\native-2d-empty.ts
+Redirect module pal/screen-adapter to E:\AIProMax\github\cocosair.js\src\pal\screen-adapter\web\screen-adapter.js
+Redirect module pal/env to E:\AIProMax\github\cocosair.js\src\pal\env\web\env.js
+Redirect module pal/pacer to E:\AIProMax\github\cocosair.js\src\pal\pacer\pacer-web.js
+Redirect module pal/input to E:\AIProMax\github\cocosair.js\src\pal\input\web\index.js
+Redirect module E:\AIProMax\github\cocosair.js\src\cocos\animation\marionette\runtime-exports.ts to E:\AIProMax\github\cocosair.js\src\cocos\animation\marionette\index-empty.ts
+Redirect module pal/minigame to E:\AIProMax\github\cocosair.js\src\pal\minigame\non-minigame.js
+Redirect module E:\AIProMax\github\cocosair.js\src\cocos\spine\lib\spine-instantiate.ts to E:\AIProMax\github\cocosair.js\src\cocos\spine\lib\air-spine-instantiate-js.ts
+Redirect module pal/audio to E:\AIProMax\github\cocosair.js\src\pal\audio\web\player.js
+Redirect module pal/wasm to E:\AIProMax\github\cocosair.js\src\pal\wasm\wasm-web.js
+==== Performance ====
+{"# BUILD":[49887.37550000001,312921256,3307920968],"## initialize":[34718.682199999996,797306488,3792315944],"- plugin 10 (node-resolve) - buildStart":[0.441899999997986,7688,2995028136],"- plugin 12 (commonjs) - buildStart":[0.46889999999984866,12280,2995042168],"- plugin 13 (@cocos/typescript) - buildStart":[34717.3364,797272504,3792315248],"## generate module graph":[7180.450199999999,-705501960,3087190632],"- plugin 0 (commonjs--resolver) - resolveId":[0.8706999999994878,377936,4161146320],"- plugin 5 (@cocos/ccbuild|external-loader) - resolveId":[0.13980000000447035,238744,4161187152],"- plugin 6 (@cocos/ccbuild|module-overrides) - resolveId":[0.12639999999373686,7712,4161197688],"- plugin 7 (virtual) - resolveId":[0.3107000000018161,-270968,4163566976],"- plugin 5 (@cocos/ccbuild|external-loader) - load":[7.762599999907252,983816,4264600864],"- plugin 6 (@cocos/ccbuild|module-overrides) - load":[13.404599999928905,698368,4264602840],"- plugin 7 (virtual) - load":[4.833899999968708,296368,4264604192],"- plugin 3 (air-build-metadata) - shouldTransformCachedModule":[11.085400000090885,470648,4264615320],"- plugin 12 (commonjs) - shouldTransformCachedModule":[77.41020000006392,-29424448,4264618496],"- plugin 10 (node-resolve) - load":[5.248400000113179,1000040,4264605560],"- plugin 12 (commonjs) - load":[12.692400000225462,682816,4264611064],"- plugin 13 (@cocos/typescript) - load":[87.26890000022104,-16844768,4261215328],"generate ast":[5324.474000000155,-709177376,4264634264],"- plugin 14 (babel) - load":[795.2397000000128,60551608,4261217016],"- plugin 1 (air-line-endings) - transform":[12.009999999994761,5486272,3843643088],"- plugin 2 (air-webgpu-assets) - transform":[0.2624000000068918,3560,3843821944],"- plugin 3 (air-build-metadata) - transform":[4.087899999998626,1458832,3844306648],"- plugin 4 (air-esm-helpers) - transform":[0.21510000000125729,3496,3845137352],"- plugin 11 (json) - transform":[0.1915000000008149,2296,3845537056],"- plugin 12 (commonjs) - transform":[0.07700000000477303,131960,3845870152],"- plugin 14 (babel) - transform":[64.32600000000093,862352,3846651416],"- plugin 15 (air-transform-count) - transform":[0.1304999999993015,1200,4106884616],"- plugin 8 (@cocos/ccbuild|module-query-plugin) - resolveId":[1.2779000000082306,-448952,4163602448],"- plugin 9 (ts-paths) - resolveId":[0.07770000000164146,5304,4260701392],"- plugin 13 (@cocos/typescript) - resolveId":[17.61969999998837,472984,4260988224],"- plugin 14 (babel) - resolveId":[0.1573999999964144,768,4260989984],"## sort and bind modules":[654.7338999999993,8066448,3095257376],"## mark included statements":[7301.530200000001,212064920,3307322592],"treeshaking pass 1":[1735.402399999999,84310568,3180236864],"treeshaking pass 2":[1838.2362999999896,69558192,3249795352],"treeshaking pass 3":[794.2324999999983,3602352,3253398000],"treeshaking pass 4":[606.209600000002,28132248,3281530544],"treeshaking pass 5":[432.5987000000023,-24301208,3257229632],"treeshaking pass 6":[324.7448000000004,3704296,3260934224],"treeshaking pass 7":[337.4747999999963,-6709552,3254224968],"treeshaking pass 8":[287.23099999999977,48403040,3302628304],"treeshaking pass 9":[307.8222999999998,-19196880,3283431720],"treeshaking pass 10":[314.690300000002,-21323464,3262108552],"treeshaking pass 11":[318.50449999999546,45213048,3307321896],"- plugin 12 (commonjs) - buildEnd":[0.25190000000293367,1744,3307329400],"- plugin 13 (@cocos/typescript) - buildEnd":[30.891099999993457,590160,3307919856]}
+====             ====
+[cache] {"reused":true,"reason":"hit","transformed":2,"modules":1070,"elapsedMs":60378}
+[build] ccbuild done in 77.5s
+[build] output: build\cocosair.module.js.map (source map)
+[build] output: build\cocosair.module.js
+[build] output: build\package.json (type: module)
+[build] output: build/gltf-decoders/package.json (type: commonjs)
+[build] cleaned: build\.tmp-dev-1792193966099
+[build] cocosair moduleFormat=esm min=true
+[build] AIR_BUILD_DATE=202610170740 AIR_BUILD_NUMBER=169
+Module source "internal-constants":
+function tryDefineGlobal (name, value) {
+    const _global = typeof window === 'undefined' ? global : window;
+    if (typeof _global[name] === 'undefined') {
+        return (_global[name] = value);
+    } else {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+        return _global[name];
+    }
+}
+export const HTML5 = true;
+
+export const NATIVE = false;
+
+export const ANDROID = false;
+
+export const IOS = false;
+
+export const MAC = false;
+
+export const WINDOWS = false;
+
+export const LINUX = false;
+
+export const OHOS = false;
+
+export const OPEN_HARMONY = false;
+
+export const WECHAT = false;
+tryDefineGlobal('CC_WECHAT', false);
+
+export const WECHAT_MINI_PROGRAM = false;
+
+export const XIAOMI = false;
+tryDefineGlobal('CC_XIAOMI', false);
+
+export const ALIPAY = false;
+tryDefineGlobal('CC_ALIPAY', false);
+
+export const TAOBAO = false;
+
+export const TAOBAO_MINIGAME = false;
+
+export const BYTEDANCE = false;
+tryDefineGlobal('CC_BYTEDANCE', false);
+
+export const OPPO = false;
+tryDefineGlobal('CC_OPPO', false);
+
+export const VIVO = false;
+tryDefineGlobal('CC_VIVO', false);
+
+export const HUAWEI = false;
+tryDefineGlobal('CC_HUAWEI', false);
+
+export const MIGU = false;
+tryDefineGlobal('CC_MIGU', false);
+
+export const HONOR = false;
+tryDefineGlobal('CC_HONOR', false);
+
+export const COCOS_RUNTIME = false;
+tryDefineGlobal('CC_COCOS_RUNTIME', false);
+
+export const SUD = false;
+tryDefineGlobal('CC_SUD', false);
+
+export const SUDV2 = false;
+tryDefineGlobal('CC_SUDV2', false);
+
+export const NODEJS = false;
+tryDefineGlobal('CC_NODEJS', false);
+
+export const EDITOR = false;
+tryDefineGlobal('CC_EDITOR', false);
+
+export const EDITOR_NOT_IN_PREVIEW = false;
+
+export const PREVIEW = false;
+tryDefineGlobal('CC_PREVIEW', false);
+
+export const BUILD = true;
+tryDefineGlobal('CC_BUILD', true);
+
+export const TEST = false;
+tryDefineGlobal('CC_TEST', false);
+
+export const DEBUG = true;
+tryDefineGlobal('CC_DEBUG', true);
+
+export const SERVER_MODE = false;
+
+export const DEV = false;
+tryDefineGlobal('CC_DEV', false);
+
+export const MINIGAME = false;
+tryDefineGlobal('CC_MINIGAME', false);
+
+export const RUNTIME_BASED = false;
+tryDefineGlobal('CC_RUNTIME_BASED', false);
+
+export const SUPPORT_JIT = false;
+tryDefineGlobal('CC_SUPPORT_JIT', false);
+
+export const JSB = false;
+tryDefineGlobal('CC_JSB', false);
+
+export const NOT_PACK_PHYSX_LIBS = false;
+
+export const NET_MODE = 0;
+
+export const WEBGPU = false;
+
+export const NATIVE_CODE_BUNDLE_MODE = 2;
+
+export const WASM_SUBPACKAGE = false;
+
+export const CULL_MESHOPT = true;
+
+export const LOAD_SPINE_MANUALLY = false;
+
+export const LOAD_BOX2D_MANUALLY = false;
+
+export const LOAD_BULLET_MANUALLY = false;
+
+export const LOAD_PHYSX_MANUALLY = false;
+
+export const USE_3D = true;
+
+export const USE_UI_SKEW = false;
+
+export const USE_XR = false;
+
+export const USE_SORTING_2D = false;
+
+
+Module source "cc":
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\air.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\base.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\gfx-webgl2.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\gfx-webgpu.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\gfx-empty.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\3d.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\animation.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\skeletal-animation.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\primitive.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\tween.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\custom-pipeline.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\legacy-pipeline.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\profiler.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\video.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\webview.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\2d.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\sorting.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\physics-2d-framework.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\particle-2d.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\tiled-map.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\ui.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\spine.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\dragon-bones.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\physics-2d-box2d.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\physics-builtin.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\physics-framework.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\physics-cannon.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\custom-pipeline-post-process.ts';
+Redirect module internal:native to E:\AIProMax\github\cocosair.js\src\cocos\native-binding\impl.ts
+Redirect module pal/system-info to E:\AIProMax\github\cocosair.js\src\pal\system-info\web\system-info.js
+Redirect module E:\AIProMax\github\cocosair.js\src\cocos\spine\lib\spine-version.ts to E:\AIProMax\github\cocosair.js\src\cocos\spine\lib\spine-version-dynamic.ts
+Redirect module pal/screen-adapter to E:\AIProMax\github\cocosair.js\src\pal\screen-adapter\web\screen-adapter.js
+Redirect module pal/env to E:\AIProMax\github\cocosair.js\src\pal\env\web\env.js
+Redirect module pal/pacer to E:\AIProMax\github\cocosair.js\src\pal\pacer\pacer-web.js
+Redirect module pal/input to E:\AIProMax\github\cocosair.js\src\pal\input\web\index.js
+Redirect module E:\AIProMax\github\cocosair.js\src\cocos\animation\marionette\runtime-exports.ts to E:\AIProMax\github\cocosair.js\src\cocos\animation\marionette\index-empty.ts
+Redirect module pal/minigame to E:\AIProMax\github\cocosair.js\src\pal\minigame\non-minigame.js
+Redirect module E:\AIProMax\github\cocosair.js\src\cocos\2d\renderer\native-2d.ts to E:\AIProMax\github\cocosair.js\src\cocos\2d\renderer\native-2d-empty.ts
+Redirect module E:\AIProMax\github\cocosair.js\src\cocos\spine\lib\spine-instantiate.ts to E:\AIProMax\github\cocosair.js\src\cocos\spine\lib\air-spine-instantiate-js.ts
+Redirect module pal/wasm to E:\AIProMax\github\cocosair.js\src\pal\wasm\wasm-web.js
+[BABEL] Note: The code generator has deoptimised the styling of E:\AIProMax\github\cocosair.js\src\air\builtin\builtin-effects.ts as it exceeds the max of 500KB.
+[BABEL] Note: The code generator has deoptimised the styling of E:\AIProMax\github\cocosair.js\src\air\builtin\builtin-glsl4.ts as it exceeds the max of 500KB.
+Redirect module pal/audio to E:\AIProMax\github\cocosair.js\src\pal\audio\web\player.js
+==== Performance ====
+{"# BUILD":[81909.9272,4640924648,4768924504],"## initialize":[37801.3736,770104296,898114784],"- plugin 10 (node-resolve) - buildStart":[0.6482999999989261,7688,128029200],"- plugin 12 (commonjs) - buildStart":[0.7141999999985273,12376,128043024],"- plugin 13 (@cocos/typescript) - buildStart":[37799.4542,770067632,898111200],"## generate module graph":[36807.637,3693797944,4592418480],"- plugin 0 (commonjs--resolver) - resolveId":[62.38890000011452,20253032,4588191192],"- plugin 5 (@cocos/ccbuild|external-loader) - resolveId":[25.680700000135403,3287736,4588191880],"- plugin 6 (@cocos/ccbuild|module-overrides) - resolveId":[31.988500000305066,1042112,4588193384],"- plugin 7 (virtual) - resolveId":[57.34589999955642,7779792,4588195376],"- plugin 5 (@cocos/ccbuild|external-loader) - load":[6.709000000031665,861096,4580275640],"- plugin 6 (@cocos/ccbuild|module-overrides) - load":[15.288799999732873,992032,4580278424],"- plugin 7 (virtual) - load":[4.72060000012425,975568,4580279264],"- plugin 1 (air-line-endings) - transform":[2852.057599999578,-156513776,4585382616],"- plugin 2 (air-webgpu-assets) - transform":[13.219600000054925,1807880,4585385776],"- plugin 3 (air-build-metadata) - transform":[8.734499999918626,2223896,4585388936],"- plugin 4 (air-esm-helpers) - transform":[104.05929999991349,67641472,4585392080],"- plugin 11 (json) - transform":[9.9739999997837,1059072,4585394472],"- plugin 12 (commonjs) - transform":[370.83339999970485,5307104,4585397456],"- plugin 14 (babel) - transform":[1269.683200000116,-66567528,4585462240],"generate ast":[4088.495700000014,1909827656,4587501744],"- plugin 8 (@cocos/ccbuild|module-query-plugin) - resolveId":[37.44940000070346,6475528,4588198184],"- plugin 9 (ts-paths) - resolveId":[20.608899999657297,625904,4588199744],"- plugin 13 (@cocos/typescript) - resolveId":[1104.5777999998027,32521128,4588214456],"- plugin 14 (babel) - resolveId":[4.927899999835063,167544,4588215544],"- plugin 10 (node-resolve) - resolveId":[19.503899999996065,1531392,4588216992],"- plugin 10 (node-resolve) - load":[4.816600000165636,11112,4580280120],"- plugin 12 (commonjs) - load":[6.267000000203552,290272,4580280960],"- plugin 13 (@cocos/typescript) - load":[63.624100000008184,15954912,4580295024],"- plugin 14 (babel) - load":[527.5606999999945,51008864,4580296184],"## sort and bind modules":[579.4084999999905,18345304,4610763888],"## mark included statements":[6689.516900000002,157648920,4768412840],"treeshaking pass 1":[1640.4444999999978,82141320,4693572600],"treeshaking pass 2":[1637.8251000000018,19588816,4713161448],"treeshaking pass 3":[684.9080000000104,70506480,4783667960],"treeshaking pass 4":[573.5153999999893,-20004312,4763663680],"treeshaking pass 5":[352.76230000000214,39335256,4802998968],"treeshaking pass 6":[337.29210000000603,11348824,4814347824],"treeshaking pass 7":[331.0923999999941,1417328,4815765184],"treeshaking pass 8":[296.0421999999962,-9737568,4806027648],"treeshaking pass 9":[299.5774999999994,-11071224,4794956456],"treeshaking pass 10":[292.9887999999919,-13086600,4781869888],"treeshaking pass 11":[238.7213000000047,-13457512,4768412408],"- plugin 12 (commonjs) - buildEnd":[0.19830000000365544,1528,4768419192],"- plugin 13 (@cocos/typescript) - buildEnd":[30.945800000001327,504432,4768923656]}
+====             ====
+Workers failed to exit gracefully
+[build] ccbuild done in 128.8s
+[build] output: build\cocosair.module.min.js.map (source map)
+[build] output: build\cocosair.module.min.js
+[build] output: build\package.json (type: module)
+[build] output: build/gltf-decoders/package.json (type: commonjs)
+[build] cleaned: build\.tmp-min-1792194051663
+[dts] bundling type declarations (this may take a few minutes) ...
+Typescript version: 4.9.5
+With index: true
+With exports: false
+With editor exports: true
+Unbundled will write to: E:/AIProMax/github/cocosair.js/src/__dts_before_bundle
+Generating...
+It's 2026/10/17 07:43:43, we're still doing the hack for spine-core.d.ts
+Bundling...
+DeprecationWarning: 'createIndexSignature' has been deprecated since v4.8.0. Decorators are no longer supported for this function. Callers should switch to an overload that does not accept a 'decorators' parameter.
+DeprecationWarning: '' has been deprecated since v4.0.0. Use the appropriate method on 'ts.factory' or the 'factory' supplied by your transformation context instead.
+Don't know how to handle type `${x}`(Syntax Kind: TemplateLiteralType)
+Don't know how to handle type `${x}`(Syntax Kind: TemplateLiteralType)
+[dts] done in 69.9s → build/cocosair.module.d.ts
+[package] cocosair.module.js -> build\npm/cocosair.module.js (source map omitted)
+[package] cocosair.module.min.js -> build\npm/cocosair.module.min.js (source map omitted)
+[published-artifacts] 4 markers x 2 bundles: PASS (build/npm/cocosair.module.js 8441720B, build/npm/cocosair.module.min.js 5396312B)

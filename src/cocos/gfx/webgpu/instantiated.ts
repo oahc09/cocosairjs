@@ -22,111 +22,56 @@
  THE SOFTWARE.
 */
 
-import { fetchBuffer, ensureWasmModuleReady, instantiateWasm, fetchUrl } from 'pal/wasm';
-import { NATIVE_CODE_BUNDLE_MODE } from 'internal:constants';
-import { error, sys } from '../../core';
-import { NativeCodeBundleMode } from '../../misc/webassembly-support';
-import { WebGPUWasm } from './webgpu-core';
-import { overrideWebGPUDefine } from './define';
+import { webGPU } from './define';
 
-const PAGESIZE = 65536; // 64KiB
+const defaultAssetBase = '__AIR_WEBGPU_ASSET_BASE__';
+let assetBase: string | undefined;
+let initialization: Promise<void> | undefined;
 
-// How many pages of the wasm memory
-// TODO: let this can be canfiguable by user.
-const PAGECOUNT = 32 * 16;
+export function configureWebGPUAssets (url?: string): void {
+    if (initialization && url !== assetBase) throw new Error('WebGPU translators are already initializing.');
+    assetBase = url;
+}
 
-// How mush memory size of the wasm memory
-const MEMORYSIZE = PAGESIZE * PAGECOUNT; // 32 MiB
-
-let wasmInstance: WebGPUWasm.instance = null!;
-const registerList: any[] = [];
-
-function initWasm (wasmFactory, wasmUrl: string): Promise<void> {
-    return new Promise<void>((resolve, reject) => {
-        const errorMessage = (err: any): string => `[WebGPU]: WebGPU wasm load failed: ${err}`;
-        // eslint-disable-next-line @typescript-eslint/no-floating-promises
-        wasmFactory({
-            instantiateWasm (
-                importObject: WebAssembly.Imports,
-                receiveInstance: (instance: WebAssembly.Instance, module: WebAssembly.Module) => void,
-            ) {
-                instantiateWasm(wasmUrl, importObject).then((result) => {
-                    receiveInstance(result.instance, result.module);
-                }).catch((err) => reject(errorMessage(err)));
-            },
-        }).then((Instance: any) => {
-            wasmInstance = Instance;
-            registerList.forEach((cb) => {
-                cb(wasmInstance);
+export function waitForWebGPUWasmInstantiation (): Promise<void> {
+    if (initialization) return initialization;
+    initialization = (async () => {
+        const base = assetBase ?? (defaultAssetBase.startsWith('__AIR_')
+            ? new URL('build/webgpu/', document.baseURI).href : defaultAssetBase);
+        async function load (name: string): Promise<any> {
+            const url = new URL(name + '.js', base).href;
+            const wasmUrl = new URL(name + '.wasm', base).href;
+            const [module, response] = await Promise.all([import(url), fetch(wasmUrl)]);
+            if (!response.ok) throw new Error(`HTTP ${response.status}: ${wasmUrl}`);
+            const binary = await response.arrayBuffer();
+            // Cocos factory wrappers expose instantiateWasm, not wasmBinary.
+            return new Promise((resolve, reject) => {
+                let completed = false;
+                const timer = setTimeout(() => {
+                    if (!completed) reject(new Error(`WebGPU translator timed out: ${name}`));
+                }, 30000);
+                const fail = (error: unknown): void => { clearTimeout(timer); reject(error); };
+                Promise.resolve(module.default({
+                    wasmPath: wasmUrl,
+                    instantiateWasm(imports: WebAssembly.Imports, receive: (instance: WebAssembly.Instance) => void) {
+                        WebAssembly.instantiate(binary, imports).then((result) => receive(result.instance)).catch(fail);
+                        return {};
+                    },
+                })).then((instance) => { completed = true; clearTimeout(timer); resolve(instance); }, fail);
             });
-        }).then(resolve).catch((err: any) => reject(errorMessage(err)));
-    });
-}
-
-function initAsmJS (asmFactory, asmJsMemUrl: string): Promise<void> {
-    return new Promise<void>((resolve, reject) => {
-        fetchBuffer(asmJsMemUrl).then((arrayBuffer) => {
-            const wasmMemory: any = {};
-            wasmMemory.buffer = new ArrayBuffer(MEMORYSIZE);
-            const module = {
-                wasmMemory,
-                memoryInitializerRequest: {
-                    response: arrayBuffer,
-                    status: 200,
-                } as Partial<XMLHttpRequest>,
-            };
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-            return asmFactory(module).then((instance: any) => {
-                wasmInstance = instance;
-                registerList.forEach((cb) => {
-                    cb(wasmInstance);
-                });
-            });
-        }).then(resolve).catch(reject);
-    });
-}
-
-function shouldUseWasmModule (): boolean {
-    if (NATIVE_CODE_BUNDLE_MODE === (NativeCodeBundleMode.BOTH as number)) {
-        return sys.hasFeature(sys.Feature.WASM);
-    } else if (NATIVE_CODE_BUNDLE_MODE === (NativeCodeBundleMode.WASM as number)) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-export async function waitForWebGPUWasmInstantiation (): Promise<void> {
-    const errorReport = (msg: any): void => {
-        error('Error during WebGPU Wasm instantiation:', msg);
-    };
-    try {
-        await ensureWasmModuleReady();
-        if (shouldUseWasmModule()) {
-            const [
-                glslModule,
-                glslWasmModule,
-                twgslModule,
-                twgslWasmModule,
-            ] = await Promise.all([
-                import('external:emscripten/webgpu/glslang.js'),
-                import('external:emscripten/webgpu/glslang.wasm'),
-                import('external:emscripten/webgpu/twgsl.js'),
-                import('external:emscripten/webgpu/twgsl.wasm'),
-            ]);
-            const glslFactory = glslModule.default;
-            const glslWasmUrl = glslWasmModule.default;
-            const twgslFactory = twgslModule.default;
-            const twgslWasmUrl = twgslWasmModule.default;
-            await Promise.all([initWasm(glslFactory, glslWasmUrl), initWasm(twgslFactory, twgslWasmUrl)]);
-        } else {
-            throw new Error('Wasm module is not supported in this environment.');
         }
-    } catch (error) {
-        errorReport(error);
-    }
+        try {
+            const [glslang, twgsl] = await Promise.all([load('glslang'), load('twgsl')]);
+            if (typeof glslang.compileGLSL !== 'function' || typeof twgsl.convertSpirV2WGSL !== 'function') {
+                throw new Error('Invalid WebGPU shader translator exports.');
+            }
+            webGPU.glslang = glslang;
+            webGPU.twgsl = twgsl;
+        } catch (cause) {
+            throw Object.assign(new Error('WebGPU shader translators could not be initialized.'), {
+                code: 'WEBGPU_SHADER_ASSETS_FAILED', cause,
+            });
+        }
+    })();
+    return initialization;
 }
-
-registerList.push(overrideWebGPUDefine);
-
-export const WEBGPU_WASM = 1;

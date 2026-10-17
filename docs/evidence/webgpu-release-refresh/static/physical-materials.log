@@ -1,0 +1,306 @@
+PASS test/smoke/smoke-15-gltf-physical.test.ts (9.735 s)
+  ● Console
+
+    console.log
+      Cannot access game frame or container.
+
+      at warnID (src/cocos/core/platform/debug.ts:314:5)
+
+    console.time
+      Init Base: 1 ms
+
+      at src/cocos/game/game.ts:759:29
+
+    console.time
+      Init Infrastructure: 14 ms
+
+      at src/cocos/game/game.ts:812:29
+
+    console.warn
+      [cocosair] no physics backend registered in this module graph; running with physics disabled (PHYSICS_NONE).
+
+      68 |             // 源码消费图（src/index.ts）/ 测试环境不引任何物理 feature：保持既有
+      69 |             // PHYSICS_NONE 行为（引擎对该空态本就容忍），仅提示，不抛错。
+    > 70 |             console.warn('[cocosair] no physics backend registered in this module graph;'
+         |                     ^
+      71 |                 + ' running with physics disabled (PHYSICS_NONE).');
+      72 |             return;
+      73 |         }
+
+      at selectPhysicsBackend (src/air/physics-backend.ts:70:21)
+      at selectBackend (src/air/bootstrap.ts:133:59)
+      at Game._invokeCallback (src/cocos/core/event/callbacks-invoker.ts:372:13)
+      at Game.emit (src/cocos/core/event/callbacks-invoker.ts:351:34)
+      at src/cocos/game/game.ts:822:22
+
+    console.time
+      Init SubSystem: 5 ms
+
+      at src/cocos/game/game.ts:861:29
+
+    console.time
+      Init Project: 7 ms
+
+      at src/cocos/game/game.ts:905:29
+
+    console.info
+      [Cocos AIR] v1.0.0 (r100) | Cocos Engine v4.0.0 | Build unbuilt #1
+
+      at src/air/bootstrap.ts:170:13
+
+PASS test/smoke/smoke-18-gltf-iridescence.test.ts
+  ● Console
+
+    console.log
+      Cannot access game frame or container.
+
+      at warnID (src/cocos/core/platform/debug.ts:314:5)
+
+    console.time
+      Init Base: 0 ms
+
+      at src/cocos/game/game.ts:759:29
+
+    console.time
+      Init Infrastructure: 4 ms
+
+      at src/cocos/game/game.ts:812:29
+
+    console.warn
+      [cocosair] no physics backend registered in this module graph; running with physics disabled (PHYSICS_NONE).
+
+      68 |             // 源码消费图（src/index.ts）/ 测试环境不引任何物理 feature：保持既有
+      69 |             // PHYSICS_NONE 行为（引擎对该空态本就容忍），仅提示，不抛错。
+    > 70 |             console.warn('[cocosair] no physics backend registered in this module graph;'
+         |                     ^
+      71 |                 + ' running with physics disabled (PHYSICS_NONE).');
+      72 |             return;
+      73 |         }
+
+      at selectPhysicsBackend (src/air/physics-backend.ts:70:21)
+      at selectBackend (src/air/bootstrap.ts:133:59)
+      at Game._invokeCallback (src/cocos/core/event/callbacks-invoker.ts:372:13)
+      at Game.emit (src/cocos/core/event/callbacks-invoker.ts:351:34)
+      at src/cocos/game/game.ts:822:22
+
+    console.time
+      Init SubSystem: 1 ms
+
+      at src/cocos/game/game.ts:861:29
+
+    console.time
+      Init Project: 2 ms
+
+      at src/cocos/game/game.ts:905:29
+
+    console.info
+      [Cocos AIR] v1.0.0 (r100) | Cocos Engine v4.0.0 | Build unbuilt #1
+
+      at src/air/bootstrap.ts:170:13
+
+PASS test/smoke/smoke-21-gltf-review-regression.test.ts
+  ● Console
+
+    console.log
+      Cannot access game frame or container.
+
+      at warnID (src/cocos/core/platform/debug.ts:314:5)
+
+    console.time
+      Init Base: 0 ms
+
+      at src/cocos/game/game.ts:759:29
+
+    console.time
+      Init Infrastructure: 5 ms
+
+      at src/cocos/game/game.ts:812:29
+
+    console.warn
+      [cocosair] no physics backend registered in this module graph; running with physics disabled (PHYSICS_NONE).
+
+      68 |             // 源码消费图（src/index.ts）/ 测试环境不引任何物理 feature：保持既有
+      69 |             // PHYSICS_NONE 行为（引擎对该空态本就容忍），仅提示，不抛错。
+    > 70 |             console.warn('[cocosair] no physics backend registered in this module graph;'
+         |                     ^
+      71 |                 + ' running with physics disabled (PHYSICS_NONE).');
+      72 |             return;
+      73 |         }
+
+      at selectPhysicsBackend (src/air/physics-backend.ts:70:21)
+      at selectBackend (src/air/bootstrap.ts:133:59)
+      at Game._invokeCallback (src/cocos/core/event/callbacks-invoker.ts:372:13)
+      at Game.emit (src/cocos/core/event/callbacks-invoker.ts:351:34)
+      at src/cocos/game/game.ts:822:22
+
+    console.time
+      Init SubSystem: 2 ms
+
+      at src/cocos/game/game.ts:861:29
+
+    console.time
+      Init Project: 2 ms
+
+      at src/cocos/game/game.ts:905:29
+
+    console.info
+      [Cocos AIR] v1.0.0 (r100) | Cocos Engine v4.0.0 | Build unbuilt #1
+
+      at src/air/bootstrap.ts:170:13
+
+PASS test/smoke/smoke-19-gltf-bump.test.ts
+  ● Console
+
+    console.log
+      Cannot access game frame or container.
+
+      at warnID (src/cocos/core/platform/debug.ts:314:5)
+
+    console.time
+      Init Base: 0 ms
+
+      at src/cocos/game/game.ts:759:29
+
+    console.time
+      Init Infrastructure: 3 ms
+
+      at src/cocos/game/game.ts:812:29
+
+    console.warn
+      [cocosair] no physics backend registered in this module graph; running with physics disabled (PHYSICS_NONE).
+
+      68 |             // 源码消费图（src/index.ts）/ 测试环境不引任何物理 feature：保持既有
+      69 |             // PHYSICS_NONE 行为（引擎对该空态本就容忍），仅提示，不抛错。
+    > 70 |             console.warn('[cocosair] no physics backend registered in this module graph;'
+         |                     ^
+      71 |                 + ' running with physics disabled (PHYSICS_NONE).');
+      72 |             return;
+      73 |         }
+
+      at selectPhysicsBackend (src/air/physics-backend.ts:70:21)
+      at selectBackend (src/air/bootstrap.ts:133:59)
+      at Game._invokeCallback (src/cocos/core/event/callbacks-invoker.ts:372:13)
+      at Game.emit (src/cocos/core/event/callbacks-invoker.ts:351:34)
+      at src/cocos/game/game.ts:822:22
+
+    console.time
+      Init SubSystem: 1 ms
+
+      at src/cocos/game/game.ts:861:29
+
+    console.time
+      Init Project: 2 ms
+
+      at src/cocos/game/game.ts:905:29
+
+    console.info
+      [Cocos AIR] v1.0.0 (r100) | Cocos Engine v4.0.0 | Build unbuilt #1
+
+      at src/air/bootstrap.ts:170:13
+
+PASS test/smoke/smoke-16-gltf-clearcoat.test.ts
+  ● Console
+
+    console.log
+      Cannot access game frame or container.
+
+      at warnID (src/cocos/core/platform/debug.ts:314:5)
+
+    console.time
+      Init Base: 1 ms
+
+      at src/cocos/game/game.ts:759:29
+
+    console.time
+      Init Infrastructure: 3 ms
+
+      at src/cocos/game/game.ts:812:29
+
+    console.warn
+      [cocosair] no physics backend registered in this module graph; running with physics disabled (PHYSICS_NONE).
+
+      68 |             // 源码消费图（src/index.ts）/ 测试环境不引任何物理 feature：保持既有
+      69 |             // PHYSICS_NONE 行为（引擎对该空态本就容忍），仅提示，不抛错。
+    > 70 |             console.warn('[cocosair] no physics backend registered in this module graph;'
+         |                     ^
+      71 |                 + ' running with physics disabled (PHYSICS_NONE).');
+      72 |             return;
+      73 |         }
+
+      at selectPhysicsBackend (src/air/physics-backend.ts:70:21)
+      at selectBackend (src/air/bootstrap.ts:133:59)
+      at Game._invokeCallback (src/cocos/core/event/callbacks-invoker.ts:372:13)
+      at Game.emit (src/cocos/core/event/callbacks-invoker.ts:351:34)
+      at src/cocos/game/game.ts:822:22
+
+    console.time
+      Init SubSystem: 1 ms
+
+      at src/cocos/game/game.ts:861:29
+
+    console.time
+      Init Project: 2 ms
+
+      at src/cocos/game/game.ts:905:29
+
+    console.info
+      [Cocos AIR] v1.0.0 (r100) | Cocos Engine v4.0.0 | Build unbuilt #1
+
+      at src/air/bootstrap.ts:170:13
+
+PASS test/smoke/smoke-17-gltf-anisotropy.test.ts
+  ● Console
+
+    console.log
+      Cannot access game frame or container.
+
+      at warnID (src/cocos/core/platform/debug.ts:314:5)
+
+    console.time
+      Init Base: 1 ms
+
+      at src/cocos/game/game.ts:759:29
+
+    console.time
+      Init Infrastructure: 4 ms
+
+      at src/cocos/game/game.ts:812:29
+
+    console.warn
+      [cocosair] no physics backend registered in this module graph; running with physics disabled (PHYSICS_NONE).
+
+      68 |             // 源码消费图（src/index.ts）/ 测试环境不引任何物理 feature：保持既有
+      69 |             // PHYSICS_NONE 行为（引擎对该空态本就容忍），仅提示，不抛错。
+    > 70 |             console.warn('[cocosair] no physics backend registered in this module graph;'
+         |                     ^
+      71 |                 + ' running with physics disabled (PHYSICS_NONE).');
+      72 |             return;
+      73 |         }
+
+      at selectPhysicsBackend (src/air/physics-backend.ts:70:21)
+      at selectBackend (src/air/bootstrap.ts:133:59)
+      at Game._invokeCallback (src/cocos/core/event/callbacks-invoker.ts:372:13)
+      at Game.emit (src/cocos/core/event/callbacks-invoker.ts:351:34)
+      at src/cocos/game/game.ts:822:22
+
+    console.time
+      Init SubSystem: 1 ms
+
+      at src/cocos/game/game.ts:861:29
+
+    console.time
+      Init Project: 2 ms
+
+      at src/cocos/game/game.ts:905:29
+
+    console.info
+      [Cocos AIR] v1.0.0 (r100) | Cocos Engine v4.0.0 | Build unbuilt #1
+
+      at src/air/bootstrap.ts:170:13
+
+
+Test Suites: 6 passed, 6 total
+Tests:       40 passed, 40 total
+Snapshots:   0 total
+Time:        16.597 s, estimated 18 s
+Ran all test suites matching /test\\smoke\\smoke-15-gltf-physical.test.ts|test\\smoke\\smoke-16-gltf-clearcoat.test.ts|test\\smoke\\smoke-17-gltf-anisotropy.test.ts|test\\smoke\\smoke-18-gltf-iridescence.test.ts|test\\smoke\\smoke-19-gltf-bump.test.ts|test\\smoke\\smoke-21-gltf-review-regression.test.ts/i.

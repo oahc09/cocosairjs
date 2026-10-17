@@ -1,0 +1,24 @@
+{
+  warmed: false,
+  settled: true,
+  nearEnd: true,
+  wrapped: true,
+  continued: false,
+  playError: null,
+  error: undefined,
+  paused: true,
+  currentTime: 0.0024247,
+  loop: true,
+  muted: true,
+  defaultMuted: false,
+  events: [
+    { name: 'pause', time: 3, paused: true },
+    { name: 'ended', time: 3, paused: true },
+    { name: 'seeking', time: 2, paused: true },
+    { name: 'seeked', time: 2.0034291, paused: true },
+    { name: 'playing', time: 2.0182463, paused: false },
+    { name: 'pause', time: 0.0024247, paused: true },
+    { name: 'seeking', time: 0.0024247, paused: true },
+    { name: 'seeked', time: 0.0024247, paused: true }
+  ]
+}

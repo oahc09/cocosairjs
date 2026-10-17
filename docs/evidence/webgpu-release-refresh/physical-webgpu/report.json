@@ -1,0 +1,60 @@
+{
+  "passed": true,
+  "sourceSha256": "cdd552444066108de44b0c772b9c88bc26ac274de7eb3e4bebd369c172e349a9",
+  "sourceUnchanged": true,
+  "state": {
+    "api": 8,
+    "backend": "WebGPUDevice",
+    "params": [
+      4,
+      4.591836929321289,
+      1,
+      1
+    ],
+    "effects": [
+      {
+        "name": "ior2.5 + strength4",
+        "effect": "air-gltf-physical"
+      },
+      {
+        "name": "identity pbr",
+        "effect": "air-gltf-standard"
+      },
+      {
+        "name": "specular map",
+        "effect": "air-gltf-physical"
+      },
+      {
+        "name": "clearcoat red",
+        "effect": "air-gltf-physical"
+      },
+      {
+        "name": "bare red",
+        "effect": "air-gltf-standard"
+      },
+      {
+        "name": "brushed gold",
+        "effect": "air-gltf-physical"
+      },
+      {
+        "name": "iridescent film",
+        "effect": "air-gltf-physical"
+      },
+      {
+        "name": "bumpy gray",
+        "effect": "air-gltf-physical"
+      },
+      {
+        "name": "kitchen sink",
+        "effect": "air-gltf-physical"
+      },
+      {
+        "name": "transmissive glass",
+        "effect": "air-gltf-standard-single-pass"
+      }
+    ]
+  },
+  "changedPixels": 7832,
+  "errors": [],
+  "native": []
+}

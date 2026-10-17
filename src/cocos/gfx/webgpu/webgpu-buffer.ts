@@ -162,7 +162,7 @@ export class WebGPUBuffer extends Buffer {
         let buffSize: number;
         if (size !== undefined) {
             buffSize = size;
-        } else if (this._usage & BufferUsageBit.INDIRECT) {
+        } else if ((this._usage & BufferUsageBit.INDIRECT) && (buffer as IndirectBuffer).drawInfos) {
             buffSize = 0;
         } else {
             buffSize = (buffer as ArrayBuffer).byteLength;

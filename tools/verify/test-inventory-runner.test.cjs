@@ -129,11 +129,16 @@ test('nonzero exit is preserved even with an otherwise passing report; update do
 
 test('child signal is a failure even with a passing report', async () => {
     const result = await fixture("writeReport(); process.kill(process.pid, 'SIGTERM');");
-    assert.equal(result.status, 143);
-    assert.match(result.stdout, /jest terminated by SIGTERM/);
+    // Windows implements process.kill(SIGTERM) through forced termination,
+    // so Node reports exit 1 rather than the POSIX signal number.
+    assert.equal(result.status, process.platform === 'win32' ? 1 : 143);
+    assert.match(
+        result.stdout,
+        process.platform === 'win32' ? /jest exited with status 1/ : /jest terminated by SIGTERM/,
+    );
 });
 
-test('parent cancellation is forwarded and cannot become a success', async () => {
+test('parent cancellation cannot publish an inventory; POSIX signals are forwarded', async () => {
     let sent = false;
     const result = await fixture(
         `
@@ -146,17 +151,32 @@ test('parent cancellation is forwarded and cannot become a success', async () =>
         setInterval(() => {}, 1000);
     `,
         {
+            args: ['--update'],
             onOutput: ({ child, stdout }) => {
                 if (!sent && stdout.includes('ready-for-signal')) {
                     sent = true;
-                    child.kill('SIGTERM');
+                    if (process.platform === 'win32') {
+                        // Force-cancel the owned tree, as Windows supervisors do.
+                        // A POSIX signal handler is not invoked by TerminateProcess.
+                        spawn('taskkill', ['/PID', String(child.pid), '/T', '/F'], {
+                            windowsHide: true,
+                            stdio: 'ignore',
+                        });
+                    } else child.kill('SIGTERM');
                 }
             },
         },
     );
-    assert.equal(result.status, 143);
-    assert.equal(result.forwarded, true);
-    assert.match(result.stdout, /jest terminated by SIGTERM/);
+    assert.equal(result.manifestUnchanged, true);
+    assert.doesNotMatch(result.stdout, /"ok": true/);
+    if (process.platform === 'win32') {
+        assert.ok(result.status !== 0 || result.signal !== null);
+        assert.equal(result.forwarded, false);
+    } else {
+        assert.equal(result.status, 143);
+        assert.equal(result.forwarded, true);
+        assert.match(result.stdout, /jest terminated by SIGTERM/);
+    }
 });
 
 test('missing, malformed and incomplete reports fail despite exit zero', async () => {
