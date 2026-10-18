@@ -7475,6 +7475,8 @@
              * @param regions The region descriptions
              */
             abstract copyTextureToBuffers(texture: Readonly<Texture>, buffers: ArrayBufferView[], regions: Readonly<BufferTextureCopy[]>): void;
+            /** Readback completion is explicit on asynchronous backends. */
+            copyTextureToBuffersAsync(texture: Readonly<Texture>, buffers: ArrayBufferView[], regions: Readonly<BufferTextureCopy[]>): Promise<void>;
             /**
              * @en Copy texture images to texture.
              * @zh 拷贝图像到纹理。
@@ -55852,6 +55854,12 @@
      */
     export const AIR_BUILD_NUMBER: number;
     export interface AirAppOptions {
+        /** Explicit browser backend. Defaults to WebGL2; WebGPU never silently falls back. */
+        renderer?: "webgl2" | "webgpu";
+        /** Offline shader translator deployment; resolved relative to document.baseURI when provided. */
+        webgpu?: {
+            assetBaseUrl?: string;
+        };
         /** canvas 元素，或 CSS selector 字符串（如 '#game'）。 */
         canvas: HTMLCanvasElement | string;
         /** 可选：强制渲染模式（3 = HEADLESS，供测试/无头环境使用）。 */
@@ -56033,7 +56041,7 @@
     /** @en Context health state. @zh 上下文健康状态（W01 状态机）。 */
     export type AirContextHealthState = "healthy" | "lost" | "restoring" | "failed";
     /** @en Detected WebGL backend of the attached canvas. @zh 画布实际使用的 WebGL 后端。 */
-    export type AirContextBackend = "webgl2" | "none" | "unknown";
+    export type AirContextBackend = "webgl2" | "webgpu" | "none" | "unknown";
     /** @en Readable point-in-time health report. @zh 可轮询的健康快照。 */
     export interface AirContextHealthSnapshot {
         state: AirContextHealthState;
@@ -56074,6 +56082,13 @@
     /** @en Health handle exposed on [[AirApp]]. @zh 挂在 AirApp 上的健康句柄。 */
     export interface AirContextHealth {
         snapshot(): AirContextHealthSnapshot;
+        /** Observe the actual initialized WebGPU device without acquiring another canvas context. */
+        watchWebGPUDevice(device: {
+            readonly lost: Promise<{
+                readonly reason: string;
+                readonly message: string;
+            }>;
+        }): void;
         /** 订阅状态迁移，返回退订函数。 */
         onChange(cb: (snapshot: AirContextHealthSnapshot) => void): () => void;
         /**
@@ -57662,6 +57677,216 @@
         }): Float32Array | Uint8Array;
         dispose(): void;
     }
+    /**
+     * @en Assemble and register a full-screen effect asset at runtime. Returns an asset the caller
+     *  owns (addRef while a material uses it, destroy when done).
+     * @zh 运行期装配并注册一个全屏 effect 资产。返回的资产由调用方持有（材质使用期间 addRef，用完
+     *  destroy）；调用时机与 `createAirRenderTarget` 一样必须在 `createAirApp()` 之后。
+     */
+    export function createAirScreenEffect(options: AirScreenEffectOptions): EffectAsset;
+    export interface AirScreenEffectOptions {
+        /** @en Effect name; must be unique, registration keeps it until the asset is destroyed. @zh effect 名，必须唯一，注册后直到资产销毁才释放。 */
+        name: string;
+        /**
+         * @en GLSL ES 3.00 fragment body (helper functions plus `void main()`), written after the
+         *  generated preamble that declares `v_uv`, the `Constants` block, the samplers and
+         *  `cc_FragColor`.
+         * @zh 片元主体（辅助函数 + `void main()`），接在自动生成的声明之后：`v_uv`、`Constants`
+         *  块、采样器和 `cc_FragColor` 都已声明好，主体只需写它们并使用 `cc_FragColor` 输出。
+         */
+        body: string;
+        /** @en `vec4` members of the generated `Constants` block, in declaration order. @zh 生成的 `Constants` 块的 vec4 成员，按声明顺序。 */
+        constants: readonly string[];
+        /** @en `sampler2D` names, bound after the `Constants` block. @zh sampler2D 名称，接在 `Constants` 块之后绑定。 */
+        samplers?: readonly string[];
+        /** @en Boolean macro names the material can switch on through `initialize({ defines })`. @zh 可通过 material `initialize({ defines })` 打开的布尔宏名。 */
+        defines?: readonly string[];
+        /** @en Initial values for the pass properties; every key must be a declared constant. @zh pass 属性初值，键必须是已声明的常量。 */
+        defaults?: Readonly<Record<string, readonly number[]>>;
+    }
+    /**
+     * @en Route one camera's output through a full-screen effect and draw the result with an owned
+     *  higher-priority camera.
+     * @zh 把源相机的输出接到全屏效果上，由本 pass 自持的高优先级相机把结果画回屏幕。
+     */
+    export function createAirScreenPass(options: AirScreenPassOptions): AirScreenPass;
+    /**
+     * @en Default node layer for the full-screen quad. Bits 20-31 are engine-preserved
+     *  (`src/cocos/scene-graph/layers.ts:33-45`), and 1 << 25 is UI_2D, which every UI camera can see.
+     * @zh 全屏 quad 的默认图层。20~31 位是引擎保留位（`src/cocos/scene-graph/layers.ts:33-45`），
+     *  而 `1 << 25` 是 UI_2D，会被所有 UI 相机看到，所以这里取一个用户位。
+     */
+    export const AIR_SCREEN_PASS_LAYER: number;
+    /** @en A `vec4` constant, given as a Vec4, a Color or four finite numbers. @zh vec4 常量：Vec4、Color 或四个有限数。 */
+    export type AirScreenConstant = math.Vec4 | math.Color | readonly number[];
+    export interface AirScreenPassOptions {
+        /** @en Camera whose output is post-processed. @zh 被后处理的源相机。 */
+        camera: Camera;
+        /** @en Effect from `createAirScreenEffect`; the pass holds a reference to it. @zh `createAirScreenEffect` 产出的 effect，本 pass 持有一份引用。 */
+        effect: EffectAsset;
+        /** @en Name of the sampler2D that receives the source colour. @zh 接收源颜色的 sampler2D 名称。 */
+        sampler: string;
+        /** @en Initial `vec4` constants, applied through the same path as `setConstant`. @zh 初始 vec4 常量，走与 `setConstant` 相同的写入路径。 */
+        constants?: Readonly<Record<string, AirScreenConstant>>;
+        /** @en Quad layer; must stay invisible to every other camera. @zh quad 图层，必须对其他相机不可见。 */
+        layer?: number;
+        /** @en Output camera priority; defaults to the source camera priority plus one. @zh 输出相机优先级，默认源相机优先级 +1。 */
+        priority?: number;
+        /** @en Render-target resolution scale relative to the viewport in device pixels. @zh 相对视口设备像素的 RT 分辨率倍率。 */
+        resolutionScale?: number;
+        /** @en RT filtering; `nearest` keeps the 1:1 pixel mapping exact. @zh RT 滤波方式，`nearest` 保持 1:1 像素对应。 */
+        filter?: "nearest" | "linear";
+        /** @en RT colour format. @zh RT 颜色格式。 */
+        colorFormat?: AirTargetColorFormat;
+        /** @en RT depth attachment; keep the default when the source camera renders 3D. @zh RT 深度附件，源相机渲染 3D 时保持默认。 */
+        depthFormat?: "none" | "depth24-stencil8";
+        /**
+         * @en Multisample count for the render target. The window framebuffer is usually multisampled,
+         *  so a target with `1` sample re-rasterises every edge without that smoothing; match the
+         *  window's count when the pass must reproduce the direct path pixel for pixel. A driver that
+         *  refuses the request settles on the closest supported count instead of throwing — read
+         *  `info.samples` for what the target actually got.
+         * @zh RT 的采样数。屏幕帧缓冲默认是多重采样的，`1` 会让所有边在重画时丢掉这层平滑；
+         *  要求 pass 与直连路径逐像素一致时，把这里设成窗口实际的采样数。驱动不接受请求值时会自动
+         *  降到最近的支持档位而不是抛错，实际拿到多少看 `info.samples`。
+         */
+        samples?: 1 | 2 | 4 | 8;
+        /** @en Clear colour of the screen window behind the quad. @zh quad 之后屏幕窗口的清屏色。 */
+        clearColor?: math.Color;
+        /**
+         * @en Called with the render-target size whenever it changes, including once at creation.
+         *  Effects that need the viewport aspect push their constant from here.
+         * @zh RT 尺寸变化时回调（创建时也会调用一次）。需要视口宽高比的效果从这里写回自己的常量。
+         */
+        onResize?: (width: number, height: number) => void;
+        /** @en Prefix for the owned nodes. @zh 自建节点的名字前缀。 */
+        name?: string;
+    }
+    export interface AirScreenPassInfo {
+        readonly width: number;
+        readonly height: number;
+        /** @en Multisample count the render target actually got, which can be below the request. @zh RT 实际拿到的采样数，可能低于请求值。 */
+        readonly samples: number;
+        readonly layer: number;
+        readonly priority: number;
+        readonly enabled: boolean;
+        readonly disposed: boolean;
+    }
+    export interface AirScreenPass {
+        /** @en Material of the full-screen quad; owns the effect's constants and sampler. @zh 全屏 quad 的材质。 */
+        readonly material: Material;
+        /** @en Render target holding the source camera output. @zh 承载源相机输出的渲染目标。 */
+        readonly target: AirRenderTarget;
+        /** @en Owned output camera that draws the quad back to the screen. @zh 自持的输出相机。 */
+        readonly camera: Camera;
+        /** @en Node carrying the quad renderer. @zh 挂载 quad 的节点。 */
+        readonly quadNode: Node;
+        readonly enabled: boolean;
+        readonly info: Readonly<AirScreenPassInfo>;
+        setConstant(key: string, value: AirScreenConstant): void;
+        setEnabled(enabled: boolean): void;
+        /** @en Re-read the viewport; runs automatically before the source camera renders. @zh 主动同步视口；源相机渲染前会自动执行。 */
+        syncViewport(): void;
+        dispose(): void;
+    }
+    /**
+     * @en Post-process one camera with a full-screen vignette.
+     * @zh 给一个相机接上全屏暗角。返回句柄持有 effect、材质、节点与 render target，`dispose()`
+     *  按 sampler unbind → camera detach → 资源释放回收，并把源相机接回原来的输出。
+     */
+    export function attachAirVignette(camera: Camera, options?: AirVignetteOptions): AirVignette;
+    export interface AirVignetteOptions {
+        /** @en Only `classic` exists; `masked` would need a mask texture this module does not carry. @zh 只实现 `classic`；`masked` 需要本模块未提供的遮罩纹理。 */
+        mode?: "classic";
+        /** @en Tint multiplied into the darkened area. @zh 变暗区域乘上的色调。 */
+        color?: math.Color;
+        /** @en Falloff centre, expressed as an offset from the viewport centre (Unity's convention). @zh 暗角中心，按 Unity 约定用相对视口中心的偏移表达。 */
+        center?: {
+            x: number;
+            y: number;
+        };
+        /** @en Size of the clear area; larger shrinks the vignette. @zh 亮区大小，越大暗角越小。 */
+        intensity?: number;
+        /** @en Width of the falloff band, 0..1. @zh 过渡带宽度，0..1。 */
+        smoothness?: number;
+        /** @en Exponent applied to each axis before the distance is measured. @zh 距离度量前施加在每个轴上的指数。 */
+        roundness?: number;
+        /** @en Circular instead of rectangular falloff. @zh 用圆形衰减替代矩形衰减。 */
+        rounded?: boolean;
+        /** @en Overall strength, 0..1. @zh 总体强度，0..1。 */
+        opacity?: number;
+        /** @en Quad layer for the underlying pass. @zh 底层 pass 的 quad 图层。 */
+        layer?: number;
+        /**
+         * @en Render-target colour format. The default `rgba8` keeps the source camera's own output
+         *  byte-exact for solid colours; `srgb8-alpha8` is the option for pipelines that blend
+         *  partial-coverage fragments against an sRGB backbuffer.
+         * @zh RT 颜色格式。默认 `rgba8` 对纯色像素保持源相机输出一致；`srgb8-alpha8` 是给
+         *  "半覆盖片元要按 sRGB 帧缓冲混合"的场景准备的开关。
+         */
+        colorFormat?: AirTargetColorFormat;
+        /**
+         * @en Render-target multisample count; set it to the window framebuffer's count so anti-aliased
+         *  edges survive the round trip unchanged. `pass.info.samples` reports what the target got.
+         * @zh RT 的采样数；设成屏幕帧缓冲的采样数，抗锯齿边缘才能在往返后保持不变。实际档位看
+         *  `pass.info.samples`。
+         */
+        samples?: 1 | 2 | 4 | 8;
+        /** @en Name prefix for the owned effect and nodes. @zh 自建 effect 与节点的名字前缀。 */
+        name?: string;
+    }
+    export interface AirVignette {
+        /** @en Underlying full-screen pass; its `target` is where the source camera now renders. @zh 底层全屏 pass，其 `target` 就是源相机现在的输出。 */
+        readonly pass: AirScreenPass;
+        readonly settings: Readonly<__private._air_effects_vignette__AirVignetteSettings>;
+        setOptions(next: AirVignetteOptions): void;
+        setEnabled(enabled: boolean): void;
+        dispose(): void;
+    }
+    /**
+     * @en Post-process one camera with a single-pass bloom.
+     * @zh 给一个相机接上单 pass 泛光。生命周期与 `attachAirVignette` 相同：`dispose()` 归还源相机
+     *  的输出并释放本句柄创建的 effect/材质/节点/render target。
+     */
+    export function attachAirBloom(camera: Camera, options?: AirBloomOptions): AirBloom;
+    export interface AirBloomOptions {
+        /** @en Weight of the added glow. @zh 叠加辉光的权重。 */
+        intensity?: number;
+        /** @en Luminance a tap must pass before it contributes. @zh 采样点亮度超过该阈值才贡献辉光。 */
+        threshold?: number;
+        /** @en Soft-knee width as a fraction of the threshold, 0..1. @zh 以阈值比例表达的软拐点宽度，0..1。 */
+        softKnee?: number;
+        /** @en Per-tap contribution cap in LDR units. @zh 单个采样点贡献的上限（LDR 0..1 量纲）。 */
+        clamp?: number;
+        /** @en Kernel radius in device pixels. @zh 卷积核半径，单位是设备像素。 */
+        diffusion?: number;
+        /** @en -1 vertical streak, 0 isotropic, 1 horizontal streak. @zh -1 竖向拉丝，0 各向同性，1 横向拉丝。 */
+        anamorphicRatio?: number;
+        /** @en Tint multiplied into the glow. @zh 辉光叠加时乘上的色调。 */
+        color?: math.Color;
+        /** @en Eight taps instead of sixteen. @zh 用 8 个采样点代替 16 个。 */
+        fastMode?: boolean;
+        /** @en Quad layer for the underlying pass. @zh 底层 pass 的 quad 图层。 */
+        layer?: number;
+        /** @en Render-target colour format, same trade-off as the vignette pass. @zh RT 颜色格式，取舍同暗角 pass。 */
+        colorFormat?: AirTargetColorFormat;
+        /**
+         * @en Render-target multisample count; set it to the window framebuffer's count so anti-aliased
+         *  edges survive the round trip unchanged. `pass.info.samples` reports what the target got.
+         * @zh RT 的采样数；设成屏幕帧缓冲的采样数，抗锯齿边缘才能在往返后保持不变。实际档位看
+         *  `pass.info.samples`。
+         */
+        samples?: 1 | 2 | 4 | 8;
+        /** @en Name prefix for the owned effect and nodes. @zh 自建 effect 与节点的名字前缀。 */
+        name?: string;
+    }
+    export interface AirBloom {
+        readonly pass: AirScreenPass;
+        readonly settings: Readonly<__private._air_effects_bloom__AirBloomSettings>;
+        setOptions(next: AirBloomOptions): void;
+        setEnabled(enabled: boolean): void;
+        dispose(): void;
+    }
     export function isAirSRGBFormat(format: number): boolean;
     export function isAirDepthFormat(format: number): boolean;
     /** Omitting format preserves the caller's native default. An explicitly undefined format is a mistake. */
@@ -57805,6 +58030,259 @@
         readonly code: string;
         readonly severity: "info" | "warning" | "error";
         readonly message: string;
+    }
+    /**
+     * Pure and total: no engine state, so the whole grammar is testable without a renderer.
+     * An unbalanced tag is an error instead of a silent drop — dialogue text is authored by hand and a
+     * swallowed `</link>` would otherwise hide a whole hover target.
+     */
+    export function parseAirGlyphTags(source: string): AirGlyphTaggedText;
+    /** One grapheme (U+FFFC OBJECT REPLACEMENT CHARACTER) standing in for an inline sprite in the display string. */
+    export const AIR_ICON_PLACEHOLDER: string;
+    export interface AirGlyphIconSlot {
+        /**
+         * Grapheme index in the *display string* the parser returns. `AirGlyphText.tags` hands out the
+         * same slots with this re-expressed as a layout ordinal — the index `getCharacterRect` uses —
+         * because layout drops line feeds and the trailing spaces it folds away.
+         */
+        readonly ordinal: number;
+        readonly name: string;
+        /** TMP `tint=1`: paint with the text colour. `tint=0` keeps the sprite as authored. */
+        readonly tint: boolean;
+        /** Id of the innermost `<link>` wrapping this sprite, or null when it is not a target. */
+        readonly linkId: string | null;
+    }
+    export interface AirGlyphLinkSpan {
+        readonly id: string;
+        /** First and last display-string grapheme owned by the span, inclusive; see `AirGlyphIconSlot.ordinal`. */
+        readonly start: number;
+        readonly end: number;
+    }
+    export interface AirGlyphTaggedText {
+        /** Tags removed, each sprite replaced by one `AIR_ICON_PLACEHOLDER` grapheme. */
+        readonly text: string;
+        readonly icons: ReadonlyArray<AirGlyphIconSlot>;
+        readonly links: ReadonlyArray<AirGlyphLinkSpan>;
+    }
+    /**
+     * Pure layout: no canvas and no engine state, so it is unit-testable with an injected measurer.
+     * Visibility is deliberately not a layout concern — `maxVisibleCharacters` must never reflow.
+     */
+    export function layoutAirGlyphs(text: string, options: AirGlyphLayoutOptions): AirGlyphLayout;
+    /** Advance width of one grapheme cluster at `fontSize`, in design-space units. */
+    export type AirGlyphMeasurer = (grapheme: string, fontSize: number) => number;
+    /** Deterministic stand-in used when there is no canvas 2D context and the caller injected none. */
+    export const measureAirGlyphFallback: AirGlyphMeasurer;
+    export type AirHAlign = "left" | "center" | "right";
+    export interface AirGlyphLayoutOptions {
+        readonly fontSize: number;
+        readonly lineHeight?: number;
+        readonly letterSpacing?: number;
+        /** 0 (default) disables wrapping; any positive value wraps lines at that width. */
+        readonly maxWidth?: number;
+        readonly measure?: AirGlyphMeasurer;
+    }
+    /** One grapheme cluster in text-block space: `x`/`y` are the quad's top-left, `y` grows downward. */
+    export interface AirGlyphInfo {
+        readonly char: string;
+        /** Ordinal of this grapheme in the source string, line feeds included — so it can run ahead of the glyph's own index. */
+        readonly sourceIndex: number;
+        readonly line: number;
+        /** True when a `\n` in the source put this glyph at the start of a line; soft wraps are false. */
+        readonly afterLineFeed: boolean;
+        readonly x: number;
+        readonly y: number;
+        readonly width: number;
+        readonly height: number;
+        readonly advance: number;
+    }
+    export interface AirGlyphLayout {
+        readonly glyphs: ReadonlyArray<AirGlyphInfo>;
+        readonly lineWidths: ReadonlyArray<number>;
+        readonly lineCount: number;
+        /** Natural content size of the laid-out block. */
+        readonly width: number;
+        readonly height: number;
+    }
+    /** Node-local rect, `y` growing upward like every other UI space in this engine. */
+    export interface AirGlyphRect {
+        readonly x: number;
+        readonly y: number;
+        readonly width: number;
+        readonly height: number;
+    }
+    export interface AirGlyphMesh {
+        readonly positions: number[];
+        readonly uvs: number[];
+        readonly alphas: number[];
+        readonly indices: number[];
+    }
+    /**
+     * Character-addressable text. Unlike `Label` this keeps one contract per glyph: `glyphAt(i)`,
+     * `getCharacterRect(i)`, `setCharacterAlpha(i, a)` and `maxVisibleCharacters` all index the same
+     * grapheme order, and revealing never changes layout. The order is TMP's: every rendered glyph
+     * counts, line feeds and inline tags do not (`AirGlyphInfo.sourceIndex` maps back to the source).
+     *
+     * `<link>` spans are hover targets resolved against the same per-glyph rects, and `<sprite>` tags
+     * reserve a glyph rect without emitting geometry — `AirGlyphIconLayer` draws the frame there.
+     */
+    export class AirGlyphText extends UIRenderer {
+        /** Fires when the pointer moves onto a link span — TMP's OnLinkEnter. */
+        onLinkEnter?: (id: string) => void;
+        /** Fires when the pointer leaves a link span — TMP's OnLinkExit. */
+        onLinkExit?: (id: string) => void;
+        /** Fires every `updatePointer` call while a link stays hovered. The game's StayLink handler is an empty stub. */
+        onLinkStay?: (id: string) => void;
+        get string(): string;
+        /**
+         * The source text, inline tags included. `<link>` / `<sprite>` are parsed out and the layout
+         * runs on the remaining display string — same as TMP, where the tag never occupies glyphs.
+         */
+        set string(value: string);
+        get fontSize(): number;
+        set fontSize(value: number);
+        /** Line box height; defaults to `ceil(fontSize * 1.25)`. Set it to emulate TMP's lineSpacing. */
+        get lineHeight(): number;
+        set lineHeight(value: number);
+        get letterSpacing(): number;
+        set letterSpacing(value: number);
+        /** 0 keeps a single unwrapped line; any positive value wraps at that width. */
+        get maxWidth(): number;
+        set maxWidth(value: number);
+        get horizontalAlign(): AirHAlign;
+        set horizontalAlign(value: AirHAlign);
+        /**
+         * TMP-shaped reveal window. Layout is computed over the whole string once, so changing this
+         * never reflows. Default is `Infinity` (everything visible).
+         */
+        get maxVisibleCharacters(): number;
+        set maxVisibleCharacters(value: number);
+        get firstVisibleCharacter(): number;
+        set firstVisibleCharacter(value: number);
+        /** Grapheme count of the display string — the unit every character index below is in. */
+        get characterCount(): number;
+        /** Parsed view of `string`: display text, icon slots and link spans. */
+        get tags(): AirGlyphTaggedText;
+        /** Bumped whenever the mesh goes dirty — the seam `AirGlyphIconLayer` polls instead of re-syncing blindly. */
+        get meshRevision(): number;
+        /** Link currently under the pointer, or null. */
+        get hoveredLink(): string | null;
+        get spriteFrame(): SpriteFrame | null;
+        get disposed(): boolean;
+        /** Injected measurer — the seam that keeps headless layout tests deterministic. */
+        setMeasurer(measure: AirGlyphMeasurer | null): void;
+        layout(): AirGlyphLayout;
+        glyphAt(index: number): AirGlyphInfo | null;
+        /**
+         * True when glyph `index` starts a line because the source had a `\n` before it, as opposed to a
+         * soft wrap. The typewriter uses this to pause on line feeds only — a dropped trailing space also
+         * leaves a gap in `sourceIndex`, which is why the layout records the break itself.
+         */
+        isLineStartFromBreak(index: number): boolean;
+        /**
+         * Node-local point → id of the `<link>` span that owns the glyph under it, else null.
+         * TMP's `FindIntersectingLink` equivalent: a glyph outside the reveal window has no rect, so a
+         * link the typewriter has not finished typing cannot be hovered yet.
+         */
+        linkIdAtPoint(point: {
+            readonly x: number;
+            readonly y: number;
+        }): string | null;
+        /** Feeds a pointer position in this node's space, `null` when the pointer left. Fires the link callbacks. */
+        updatePointer(point: {
+            readonly x: number;
+            readonly y: number;
+        } | null): string | null;
+        /** Node-local rect of glyph `index`, or null when it is out of range or currently hidden. */
+        getCharacterRect(index: number): AirGlyphRect | null;
+        isCharacterVisible(index: number): boolean;
+        /** Per-glyph multiplier on top of `color` — the hook fade-in appearances animate. */
+        setCharacterAlpha(index: number, alpha: number): void;
+        getCharacterAlpha(index: number): number;
+        clearCharacterAlphas(): void;
+        /** Read-only view of the built vertex data — for the acceptance gate, not for mutation. */
+        get meshData(): AirGlyphMesh | null;
+        /** Rebuilds mesh + per-glyph rects. Idempotent; the assembler calls it every dirty pass. */
+        rebuild(): void;
+        /** Releases the atlas and its GPU texture. The node itself is left alone. */
+        dispose(): void;
+        onDestroy(): void;
+        protected _flushAssembler(): void;
+        protected _canRender(): boolean;
+        protected _render(renderer: __private._cocos_2d_renderer_i_batcher__IBatcher): void;
+    }
+    export class AirGlyphIconLayer extends Component {
+        /** Extra multiplier on the reserved em box — TMP's sprite scale knob. */
+        scale: number;
+        get glyphText(): AirGlyphText;
+        /** Registers the frame an icon slot looks up by `name`. Passing null removes it. */
+        setFrames(name: string, frame: SpriteFrame | null): void;
+        frameFor(name: string): SpriteFrame | null;
+        /** Live child sprites this layer owns — node destruction is deferred, so count the registry instead. */
+        get slotCount(): number;
+        /** Places a child sprite per icon slot of the current text. Idempotent. */
+        sync(): void;
+        /** Removes every child sprite this layer created. */
+        dispose(): void;
+        protected start(): void;
+        /** Re-syncs after text changes or a registered frame arrives, changes or is removed. */
+        protected update(): void;
+        protected onDestroy(): void;
+    }
+    export interface AirTypewriterEvents {
+        /** Fired once when a reveal/hide pass starts. */
+        onTypewriterStart?: () => void;
+        /** Fired per revealed grapheme — the typewriter-sound hook (`TAnimSoundWriter.OnCharacter`). */
+        onCharacterVisible?: (grapheme: string) => void;
+        /** Fired when the last grapheme has been revealed. */
+        onTextShowed?: () => void;
+        /** Fired when the hide pass has emptied the text. */
+        onTextDisappeared?: () => void;
+    }
+    /**
+     * Per-character reveal for an `AirGlyphText`. Timing is in seconds per grapheme, with
+     * punctuation and newline overrides, matching the Febucci parameter model.
+     */
+    export class AirTypewriter extends Component {
+        /** Master switch: when false, `showText()` reveals instantly. */
+        useTypewriter: boolean;
+        /** Whether `onEnable`/`start` should kick off a reveal automatically. */
+        startTypewriterMode: boolean;
+        waitForNormalChars: number;
+        waitMiddle: number;
+        waitLong: number;
+        /** Consecutive punctuation waits only once (e.g. "?!" or "…"). */
+        avoidMultiplePunctuationWait: boolean;
+        waitForNewLines: number;
+        waitForLastCharacter: number;
+        useTypewriterWaitForDisappearances: boolean;
+        disappearanceWaitTime: number;
+        disappearanceSpeedMultiplier: number;
+        /** On skip, jump straight to the fully revealed (or fully hidden) state. */
+        hideAppearancesOnSkip: boolean;
+        /** Whether a skip still fires `onCharacterVisible` for the skipped graphemes. */
+        triggerEventsOnSkip: boolean;
+        onTypewriterStart?: () => void;
+        onCharacterVisible?: (grapheme: string) => void;
+        onTextShowed?: () => void;
+        onTextDisappeared?: () => void;
+        get isShowingText(): boolean;
+        get isHidingText(): boolean;
+        /** Graphemes revealed so far. */
+        get visibleCharacterCount(): number;
+        get glyphText(): AirGlyphText;
+        /** Assigns the string and starts the reveal pass. Returns the grapheme count being revealed. */
+        showText(value?: string): number;
+        /** Starts the reverse pass, emptying the text one grapheme at a time. */
+        hideText(): void;
+        /** Jumps to the end of the current pass — the dialogue "skip" input. */
+        skip(): void;
+        /** Stops the reveal pass where it is, leaving the currently visible prefix on screen. */
+        stopShowingText(): void;
+        /** Seconds still needed at the current position — 0 while idle or hiding. */
+        get remainingTime(): number;
+        protected start(): void;
+        protected update(dt: number): void;
     }
     export namespace rendering {
         export function createCustomPipeline(): BasicPipeline;
@@ -70609,6 +71087,8 @@
             removeVideoPlayer(): void;
             createVideoPlayer(url: string): void;
             protected _bindDomEvent(): void;
+            onPause(event: Event): void;
+            onEnded(event: Event): void;
             onCanPlay(e: Event): void;
             enable(): void;
             disable(noPause?: boolean): void;
@@ -73969,6 +74449,29 @@
             texCoord: number;
             row0: math.Vec4;
             row1: math.Vec4;
+        }
+        export interface _air_effects_vignette__AirVignetteSettings {
+            mode: "classic";
+            color: math.Color;
+            center: {
+                x: number;
+                y: number;
+            };
+            intensity: number;
+            smoothness: number;
+            roundness: number;
+            rounded: boolean;
+            opacity: number;
+        }
+        export interface _air_effects_bloom__AirBloomSettings {
+            intensity: number;
+            threshold: number;
+            softKnee: number;
+            clamp: number;
+            diffusion: number;
+            anamorphicRatio: number;
+            color: math.Color;
+            fastMode: boolean;
         }
         export interface _cocos_rendering_custom_private__ProgramProxy {
             readonly name: string;

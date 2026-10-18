@@ -1,7 +1,7 @@
 {
   "source": "build/cocosair.module.d.ts",
-  "sourceFingerprint": "a484558ded5db738",
-  "apiInventoryRevision": "313031af87550a6a",
+  "sourceFingerprint": "6978166bb3097ac5",
+  "apiInventoryRevision": "ea1b49839cbbb83d",
   "units": {
     "MeshBuffer": {
       "kind": "class",
@@ -9154,6 +9154,12 @@
       "parent": "gfx.Device"
     },
     "gfx.Device.copyTextureToBuffers": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "gfx.Device"
+    },
+    "gfx.Device.copyTextureToBuffersAsync": {
       "kind": "method",
       "tier": "supporting",
       "coverageRequired": false,
@@ -53041,6 +53047,30 @@
       "coverageRequired": false,
       "parent": "AudioSource"
     },
+    "AudioSource.loadState": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AudioSource"
+    },
+    "AudioSource.loadAsync": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AudioSource"
+    },
+    "AudioSource.cancelLoad": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AudioSource"
+    },
+    "AudioSource.playRequest": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AudioSource"
+    },
     "AudioSource.constructor": {
       "kind": "constructor",
       "tier": "supporting",
@@ -54583,6 +54613,36 @@
       "coverageRequired": false,
       "parent": "AirRenderTarget"
     },
+    "createAirScreenEffect": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "createAirScreenPass": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "AIR_SCREEN_PASS_LAYER": {
+      "kind": "constant",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "attachAirVignette": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "attachAirBloom": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
     "isAirSRGBFormat": {
       "kind": "function",
       "tier": "supporting",
@@ -54678,6 +54738,438 @@
       "tier": "supporting",
       "coverageRequired": false,
       "parent": null
+    },
+    "parseAirGlyphTags": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "AIR_ICON_PLACEHOLDER": {
+      "kind": "constant",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "layoutAirGlyphs": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "measureAirGlyphFallback": {
+      "kind": "constant",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "AirGlyphText": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "AirGlyphText.onLinkEnter": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirGlyphText"
+    },
+    "AirGlyphText.onLinkExit": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirGlyphText"
+    },
+    "AirGlyphText.onLinkStay": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirGlyphText"
+    },
+    "AirGlyphText.string": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirGlyphText"
+    },
+    "AirGlyphText.fontSize": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirGlyphText"
+    },
+    "AirGlyphText.lineHeight": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirGlyphText"
+    },
+    "AirGlyphText.letterSpacing": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirGlyphText"
+    },
+    "AirGlyphText.maxWidth": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirGlyphText"
+    },
+    "AirGlyphText.horizontalAlign": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirGlyphText"
+    },
+    "AirGlyphText.maxVisibleCharacters": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirGlyphText"
+    },
+    "AirGlyphText.firstVisibleCharacter": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirGlyphText"
+    },
+    "AirGlyphText.characterCount": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirGlyphText"
+    },
+    "AirGlyphText.tags": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirGlyphText"
+    },
+    "AirGlyphText.meshRevision": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirGlyphText"
+    },
+    "AirGlyphText.hoveredLink": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirGlyphText"
+    },
+    "AirGlyphText.spriteFrame": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirGlyphText"
+    },
+    "AirGlyphText.disposed": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirGlyphText"
+    },
+    "AirGlyphText.setMeasurer": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirGlyphText"
+    },
+    "AirGlyphText.layout": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirGlyphText"
+    },
+    "AirGlyphText.glyphAt": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirGlyphText"
+    },
+    "AirGlyphText.isLineStartFromBreak": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirGlyphText"
+    },
+    "AirGlyphText.linkIdAtPoint": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirGlyphText"
+    },
+    "AirGlyphText.updatePointer": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirGlyphText"
+    },
+    "AirGlyphText.getCharacterRect": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirGlyphText"
+    },
+    "AirGlyphText.isCharacterVisible": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirGlyphText"
+    },
+    "AirGlyphText.setCharacterAlpha": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirGlyphText"
+    },
+    "AirGlyphText.getCharacterAlpha": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirGlyphText"
+    },
+    "AirGlyphText.clearCharacterAlphas": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirGlyphText"
+    },
+    "AirGlyphText.meshData": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirGlyphText"
+    },
+    "AirGlyphText.rebuild": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirGlyphText"
+    },
+    "AirGlyphText.dispose": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirGlyphText"
+    },
+    "AirGlyphText.onDestroy": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirGlyphText"
+    },
+    "AirGlyphIconLayer": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "AirGlyphIconLayer.scale": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirGlyphIconLayer"
+    },
+    "AirGlyphIconLayer.glyphText": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirGlyphIconLayer"
+    },
+    "AirGlyphIconLayer.setFrames": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirGlyphIconLayer"
+    },
+    "AirGlyphIconLayer.frameFor": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirGlyphIconLayer"
+    },
+    "AirGlyphIconLayer.slotCount": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirGlyphIconLayer"
+    },
+    "AirGlyphIconLayer.sync": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirGlyphIconLayer"
+    },
+    "AirGlyphIconLayer.dispose": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirGlyphIconLayer"
+    },
+    "AirTypewriter": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "AirTypewriter.useTypewriter": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirTypewriter"
+    },
+    "AirTypewriter.startTypewriterMode": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirTypewriter"
+    },
+    "AirTypewriter.waitForNormalChars": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirTypewriter"
+    },
+    "AirTypewriter.waitMiddle": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirTypewriter"
+    },
+    "AirTypewriter.waitLong": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirTypewriter"
+    },
+    "AirTypewriter.avoidMultiplePunctuationWait": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirTypewriter"
+    },
+    "AirTypewriter.waitForNewLines": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirTypewriter"
+    },
+    "AirTypewriter.waitForLastCharacter": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirTypewriter"
+    },
+    "AirTypewriter.useTypewriterWaitForDisappearances": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirTypewriter"
+    },
+    "AirTypewriter.disappearanceWaitTime": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirTypewriter"
+    },
+    "AirTypewriter.disappearanceSpeedMultiplier": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirTypewriter"
+    },
+    "AirTypewriter.hideAppearancesOnSkip": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirTypewriter"
+    },
+    "AirTypewriter.triggerEventsOnSkip": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirTypewriter"
+    },
+    "AirTypewriter.onTypewriterStart": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirTypewriter"
+    },
+    "AirTypewriter.onCharacterVisible": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirTypewriter"
+    },
+    "AirTypewriter.onTextShowed": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirTypewriter"
+    },
+    "AirTypewriter.onTextDisappeared": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirTypewriter"
+    },
+    "AirTypewriter.isShowingText": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirTypewriter"
+    },
+    "AirTypewriter.isHidingText": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirTypewriter"
+    },
+    "AirTypewriter.visibleCharacterCount": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirTypewriter"
+    },
+    "AirTypewriter.glyphText": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirTypewriter"
+    },
+    "AirTypewriter.showText": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirTypewriter"
+    },
+    "AirTypewriter.hideText": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirTypewriter"
+    },
+    "AirTypewriter.skip": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirTypewriter"
+    },
+    "AirTypewriter.stopShowingText": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirTypewriter"
+    },
+    "AirTypewriter.remainingTime": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirTypewriter"
     },
     "rendering.createCustomPipeline": {
       "kind": "function",
@@ -69937,6 +70429,18 @@
       "coverageRequired": false,
       "parent": "__private._cocos_video_video_player_impl_web__VideoPlayerImplWeb"
     },
+    "__private._cocos_video_video_player_impl_web__VideoPlayerImplWeb.onPause": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_video_video_player_impl_web__VideoPlayerImplWeb"
+    },
+    "__private._cocos_video_video_player_impl_web__VideoPlayerImplWeb.onEnded": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_video_video_player_impl_web__VideoPlayerImplWeb"
+    },
     "__private._cocos_video_video_player_impl_web__VideoPlayerImplWeb.onCanPlay": {
       "kind": "method",
       "tier": "internal",
@@ -72938,6 +73442,18 @@
       "parent": "__private._pal_audio__AudioPlayer"
     },
     "__private._pal_audio__AudioPlayer.stop": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._pal_audio__AudioPlayer"
+    },
+    "__private._pal_audio__AudioPlayer.onStopRequested": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._pal_audio__AudioPlayer"
+    },
+    "__private._pal_audio__AudioPlayer.offStopRequested": {
       "kind": "method",
       "tier": "internal",
       "coverageRequired": false,
@@ -81586,9 +82102,9 @@
     "core": 964,
     "important": 283,
     "advanced": 192,
-    "supporting": 8744,
-    "internal": 3252
+    "supporting": 8826,
+    "internal": 3256
   },
-  "totalUnits": 13435,
+  "totalUnits": 13521,
   "coverageRequiredUnits": 1439
 }

@@ -74,6 +74,71 @@ GPU耗时与显示present时间均未测得，报告明确为null。60Hz附近rA
 
 开发工具可在控制台调用 `await window.__batchProbe.measure(120)` 重采同口径；
 `window.__trialProbe` 是像素/draw就绪合同，`window.__lifecycle()` 是释放/重建合同。
+
+## 观察 indexed instancing 的实际提交
+
+打开 `/examples/batching-shared/?count=2048&instancing=1`，等待 `window.__trialProbe.ready`，在控制台执行：
+
+```javascript
+const submission = await window.__batchProbe.observeIndexed();
+console.table(submission.calls);
+console.log(submission);
+```
+
+这是示例专用的 WebGL2 单帧观察器：临时包装当前 context 的 `drawElements` /
+`drawElementsInstanced`，成功、异常或四秒超时后恢复方法。正常浏览及 `measure()` 不安装观察器。
+不要并发调用观察器、时间采样和释放；属性查询会扰动 CPU 时间，观察帧不能纳入性能样本。
+它不覆盖 WebGPU、非索引 draw 或扩展 multi-draw，也不作为公共引擎 API。
+
+| 字段                                              | 口径                                                                             |
+| ------------------------------------------------- | -------------------------------------------------------------------------------- |
+| `requestedObjects`                                | 应用请求创建的对象数，不证明提交或可见                                           |
+| `meshVertexCount` / `meshIndexCount`              | 单个共享 mesh 的存储顶点/索引数；本例 quad 为 4 / 6                              |
+| `calls[].instances`                               | 实际 indexed API 调用的实例参数；普通 indexed draw 记为 1                        |
+| `calls[].indexCount` / `indexType` / `byteOffset` | 每次提交的索引数、GL 类型和字节偏移                                              |
+| `submittedInstances`                              | 本帧所有被观察调用的实例数之和；多 pass/相机会重复计数                           |
+| `submittedIndexReferences`                        | 各调用 `indexCount × instances` 之和；不是唯一顶点数或顶点 shader 执行次数       |
+| `maxVertexAttributes`                             | 当前 context 的 `MAX_VERTEX_ATTRIBS`，单位为属性 location                        |
+| `calls[].attributes`                              | 提交时当前 VAO 启用的 location、divisor 和分量数；不等于 shader 实际读取的属性数 |
+
+本例 2048 对象通常拆成两次各 1024 实例、每次 6 索引的提交，合计 12288 个索引引用。
+以观测结果为准，不把这个拆批大小硬编码成平台保证。属性上限由逐顶点和逐实例属性共同占用；
+矩阵按列占多个 location（`mat4` 占 4），divisor 大于零表示实例属性，不能按属性名称个数估算容量。
+提交数仍须配合截图或读回检查实际几何可见性，不能据此断言 GPU 成功完成。
+参数语义见 [WebGL2 indexed instancing](https://developer.mozilla.org/en-US/docs/Web/API/WebGL2RenderingContext/drawElementsInstanced)。
+
+## 分清四类时间
+
+| 指标       | 应怎样采                                                                   | 不能证明什么                                                    |
+| ---------- | -------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| CPU 提交   | 本例 `BEFORE_DRAW` 到 `AFTER_DRAW` 的 CPU 墙钟区间，包含渲染准备和驱动调用 | 不是纯驱动耗时，也不是 GPU 执行时间                             |
+| GPU 完成   | WebGL2 fence 完成等待；若测 GPU 时间则需有效且非 disjoint 的 timer query   | 等待耗时含排队/轮询；不能当作纯 GPU 时长或屏幕 present          |
+| 截图同步   | 单独记录截图调用开始/结束、采图方式、对应状态与 PNG                        | 截图往返不是帧时间；GPU readback 也不是 compositor present 证明 |
+| 连续帧间隔 | 原生 pacer 连续运行，预热后记录每帧原始时间戳；本例为 AFTER_DRAW 间隔      | 不是显示器呈现间隔，不能从接近 16.7ms 推出 GPU 达标             |
+
+本例 `measure()` 不插入截图、读回、fence 或手动 step；GPU 和 present 未采时保持 `null`。
+不要为了“同步”在连续帧采样中插入 `gl.finish()`：它会阻塞 CPU 等待先前 GPU 命令完成，改变被测负载。
+见 [finish 的完成与阻塞语义](https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext/finish)。
+固定状态采图应先按测试合同暂停原生 pacer、使用单一 step 时钟，再恢复原生 pacing；
+这类受控帧不能混入连续帧样本。物理显示性能需要独立 present 轴及真实设备证据。
+
+## 按短范围保留证据
+
+局部诊断分别使用新的 `output/batching-observation/<run-id>/capture/`、`input/`、`release/` 目录。
+每次重试使用新的 attempt 子目录；原失败、超时、日志和截图保留，不覆盖为成功。
+
+| 范围    | 最小保存内容                                                      | 成功依据                                                                                   |
+| ------- | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| capture | URL/count、单帧 submission JSON、PNG、画面断言、console/pageerror | 实际实例参数和索引数符合该场景，且有有效绿色几何像素                                       |
+| input   | 独立输入示例的原始事件序列、DPR/viewport、输入前后状态与截图      | 真实输入导致预期状态和画面响应；本批处理示例无交互，标 `NOT_APPLICABLE`，不得伪造输入 PASS |
+| release | `await window.__lifecycle()` 完整返回、异常和释放/重建截图        | 原资源真实释放、重建资源有效且画面恢复；不能只检查调用了 destroy                           |
+
+各范围附上当前 bundle、示例及共享依赖的 SHA-256，浏览器/后端版本、时间、完成标志、
+原始断言、退出状态及错误。源文件或 bundle 改变后另开 run，不给旧报告换指纹。
+应用结果和物理浏览器关闭结果分开记录；关闭失败保留原始状态。
+完整采集的冻结、进程关闭与发布规则见 [固定快照证据流程](../reference/example-evidence-campaign.md)。
+短范围结果只说明对应行为，不改写 canonical evidence、不更新示例 promotion、不代表完整矩阵通过。
+
 上述只属于本Recipe范围，不替代汇总Golden/Catalog/30条Recipe的全量门禁。
 本次3条Recipe通过同名gate的显式competitive-batching范围：
 

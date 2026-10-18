@@ -44,6 +44,12 @@
  * - 嵌套：外层组件跳过被另一个启用组件认领的子树，因此内层要晚于外层注册监听（同一
  *   `BEFORE_DRAW` 事件里按注册顺序执行），否则外层对父节点的亚像素纠正会让内层错位。
  *   在同一帧内先建外层再建内层即满足该顺序。
+ * - 输入坐标系（副作用，实测于复刻页）：本组件把 UI 相机 `orthoHeight` 钉成帧缓冲像素的一半，
+ *   世界单位随之等于设备像素；而 `event.getUILocation()` 仍按 `view` 的设计分辨率换算，两者相差
+ *   `设计高 / 帧缓冲高` 倍（1920x1080 设计 + 1000x700 帧缓冲 ⇒ 1.543 倍）。因此吸附生效时，照上游
+ *   惯例用 `getUILocation()` + `convertToNodeSpaceAR` 的悬停/点击会整体偏移；要走的是
+ *   `event.getLocation()` → `Camera.screenToWorld` → 节点局部坐标这条链，也就是上游
+ *   `UITransform.hitTest` 自己在用的那条（`src/cocos/2d/framework/ui-transform.ts:477`）。
  */
 
 import { ccclass } from 'cc.decorator';
@@ -317,6 +323,8 @@ export class AirPixelPerfect extends Component {
 
     private _grid: AirPixelGrid | null = null;
     private _rectBuffer: AirPixelRect = { x: 0, y: 0, width: 0, height: 0 };
+    private _cameraAnchor: Node | null = null;
+    private _canvasAnchor: Node | null = null;
 
     /** @en Device pixels per UI unit currently applied to this layer; `0` before the first snap. */
     get pixelRatio (): number {
@@ -335,6 +343,8 @@ export class AirPixelPerfect extends Component {
     protected onDisable (): void {
         director.off(DirectorEvent.BEFORE_DRAW, this._onBeforeDraw, this);
         this._grid = null;
+        this._cameraAnchor = null;
+        this._canvasAnchor = null;
     }
 
     private _onBeforeDraw (): void {
@@ -380,6 +390,8 @@ export class AirPixelPerfect extends Component {
             this._grid = null;
             return changed;
         }
+        this._cameraAnchor = camera.node;
+        this._canvasAnchor = this._resolveCanvasAnchor(camera);
         if (!this.snapPosition && !this.snapSizes) return changed;
         return this._snapNode(this.node) || changed;
     }
@@ -435,12 +447,48 @@ export class AirPixelPerfect extends Component {
         return null;
     }
 
-    /** Pre-order walk: parents first, so each child snaps against its already-snapped parent. */
+    /**
+     * @en The `Canvas` node that drives this camera: `Canvas._onResizeCamera` copies that node's
+     *  world position into the camera node, so the canvas node, not the camera node, is the real
+     *  anchor. Snapping it would snap the coordinate frame under our own feet.
+     * @zh 驱动这台相机的 `Canvas` 节点：`Canvas._onResizeCamera` 把这个节点的世界坐标拷进相机节点，
+     *  所以真正的锚点是画布节点而不是相机节点。吸附它等于把脚下坐标系搬走。
+     */
+    private _resolveCanvasAnchor (camera: Camera): Node | null {
+        let node: Node | null = camera.node;
+        while (node) {
+            const canvas = node.getComponent(Canvas);
+            if (canvas && canvas.cameraComponent === camera) return node;
+            node = node.parent;
+        }
+        return null;
+    }
+
+    /**
+     * @en Pre-order walk: parents first, so each child snaps against its already-snapped parent.
+     *  The two anchor nodes — `camera.node` and the `Canvas` node whose position the engine copies
+     *  into it — are passed over, but their subtrees are still walked. Both sit at the viewport
+     *  centre, which is a half device pixel whenever the frame buffer is an odd size: rounding them
+     *  "up" moves the grid they define, so the next frame is off by half a pixel again and the whole
+     *  layer crawls forever instead of settling.
+     * @zh 前序遍历：父节点先吸，子节点才能对着已吸好的父节点算。两个锚点（`camera.node`，以及位置会被
+     *  引擎拷贝给它的那个 `Canvas` 节点）跳过写入，但仍然继续向下遍历。这两个节点恒在视口中心，而帧缓冲
+     *  尺寸为奇数时中心本身就是半像素——每帧把它"上取整"会推动网格原点，下一帧又差半像素，
+     *  于是整层内容逐帧爬行而不是收敛。
+     */
     private _snapNode (node: Node): boolean {
         if (!node.active) return false;
         if (node !== this.node) {
             const nested = node.getComponent(AirPixelPerfect);
             if (nested && nested.enabled) return false;
+        }
+        if (node === this._cameraAnchor || node === this._canvasAnchor) {
+            let kept = false;
+            const under = node.children;
+            for (let i = 0; i < under.length; i++) {
+                if (this._snapNode(under[i])) kept = true;
+            }
+            return kept;
         }
         const grid = this._grid!;
         const world = node.worldPosition;

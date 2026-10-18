@@ -387,6 +387,98 @@ describe('AirPixelPerfect', () => {
         expect(component.snapNow()).toBe(false);
     });
 
+    test('the camera node is the anchor: an odd frame buffer settles instead of crawling', () => {
+        // Regression: rounding the anchor node itself moved it by +0.5 device pixel per frame,
+        // because the grid puts it at the viewport centre and an odd centre is never on the lattice.
+        const cameraNode = new Node('anchor-camera');
+        const camera = cameraNode.addComponent(Camera);
+        camera.projection = Camera.ProjectionType.ORTHO;
+        const win = screen.windowSize;
+        // Guarantee a half-pixel viewport centre whatever parity the harness window has.
+        camera.rect.set(
+            0,
+            0,
+            win.width % 2 === 0 ? (win.width - 1) / win.width : 1,
+            win.height % 2 === 0 ? (win.height - 1) / win.height : 1,
+        );
+        camera.orthoWidth = win.width / 2;
+        camera.orthoHeight = win.height / 2;
+        const component = cameraNode.addComponent(AirPixelPerfect);
+        component.camera = camera;
+        component.autoSnap = false;
+        const child = makeUiNode('content', 10, 10);
+        child.setPosition(0.27, 0.27, 0);
+        cameraNode.addChild(child);
+
+        expect(component.snapNow()).toBe(true);
+        const grid = component.grid!;
+        // The anchor sits at the viewport centre: off the pixel lattice whenever that centre is odd.
+        expect(
+            grid.toPixelX(cameraNode.worldPosition.x) % 1 !== 0 || grid.toPixelY(cameraNode.worldPosition.y) % 1 !== 0,
+        ).toBe(true);
+        expect(isPixelAligned(grid, child.worldPosition.x, child.worldPosition.y)).toBe(true);
+        const anchor = [cameraNode.worldPosition.x, cameraNode.worldPosition.y];
+        const origin = [grid.originX, grid.originY];
+
+        for (let i = 0; i < 5; i++) {
+            expect(component.snapNow()).toBe(false);
+        }
+        expect([cameraNode.worldPosition.x, cameraNode.worldPosition.y]).toEqual(anchor);
+        expect([component.grid!.originX, component.grid!.originY]).toEqual(origin);
+    });
+
+    test('a Canvas node drives the camera node, so it is an anchor as well', () => {
+        // Regression for the real wiring: the layer component sits on the Canvas node, whose world
+        // position Canvas._onResizeCamera copies into the camera node on every resize. Snapping it
+        // shifted the grid that had just been built from it, so each frame rounded a fresh half
+        // pixel and the whole layer crept by +0.5 device pixel — visible at 721x509, not at even sizes.
+        const root = makeUiNode('crawl-canvas', 100, 100);
+        const canvas = root.addComponent(Canvas);
+        const cameraNode = new Node('crawl-camera');
+        const camera = cameraNode.addComponent(Camera);
+        camera.projection = Camera.ProjectionType.ORTHO;
+        root.addChild(cameraNode);
+        canvas.cameraComponent = camera;
+        activate(root);
+
+        const win = screen.windowSize;
+        camera.rect.set(
+            0,
+            0,
+            win.width % 2 === 0 ? (win.width - 1) / win.width : 1,
+            win.height % 2 === 0 ? (win.height - 1) / win.height : 1,
+        );
+        camera.orthoWidth = win.width / 2;
+        camera.orthoHeight = win.height / 2;
+
+        root.setPosition(0.31, 0.17, 0);
+        const component = root.addComponent(AirPixelPerfect);
+        component.pixelRatioOverride = 1;
+        component.autoSnap = false;
+        const plate = makeUiNode('plate', 10, 10);
+        plate.setPosition(0.27, -0.23, 0);
+        root.addChild(plate);
+
+        expect(component.snapNow()).toBe(true);
+        const grid = component.grid!;
+        expect(grid.toPixelX(root.worldPosition.x) % 1 !== 0 || grid.toPixelY(root.worldPosition.y) % 1 !== 0).toBe(
+            true,
+        );
+        expect(isPixelAligned(grid, plate.worldPosition.x, plate.worldPosition.y)).toBe(true);
+
+        const canvasPos = [root.worldPosition.x, root.worldPosition.y];
+        const cameraZ = cameraNode.worldPosition.z;
+        const origin = [grid.originX, grid.originY];
+
+        for (let i = 0; i < 5; i++) {
+            // Emulate the engine re-copying the canvas position into the camera node between frames.
+            cameraNode.setWorldPosition(canvasPos[0], canvasPos[1], cameraZ);
+            expect(component.snapNow()).toBe(false);
+        }
+        expect([root.worldPosition.x, root.worldPosition.y]).toEqual(canvasPos);
+        expect([component.grid!.originX, component.grid!.originY]).toEqual(origin);
+    });
+
     test('roundToPixel reports the grid it just built', () => {
         const { component } = layer(2);
         expect(component.snapNow()).toBe(true);

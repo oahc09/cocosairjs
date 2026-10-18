@@ -14,6 +14,7 @@ import {
     Director,
 } from 'cocosair';
 import { installAssetLifecycle } from './asset-lifecycle.js';
+import { observeIndexedDraws } from './indexed-draw-observer.js';
 
 /** Three native routes, with equal visible geometry and explicit ownership. */
 export async function runBatchRoute(route: 'shared' | 'merged' | 'dynamic'): Promise<void> {
@@ -235,7 +236,40 @@ export async function runBatchRoute(route: 'shared' | 'merged' | 'dynamic'): Pro
         probe.state.measurement = result;
         return result;
     }
-    (window as any).__batchProbe = { measure, pixels: async () => (await pixelFrame()).lit };
+    let observing = false;
+    async function observeIndexed(): Promise<Record<string, unknown>> {
+        if (observing) throw new Error('indexed observation already running');
+        const gl = document.querySelector('canvas')!.getContext('webgl2');
+        if (!gl) throw new Error('indexed observation requires WebGL2');
+        observing = true;
+        try {
+            const submission = await observeIndexedDraws(
+                gl,
+                () =>
+                    new Promise<void>((resolve, reject) => {
+                        const done = (): void => {
+                            clearTimeout(timer);
+                            resolve();
+                        };
+                        const timer = setTimeout(() => {
+                            director.off(Director.EVENT_AFTER_DRAW, done);
+                            reject(new Error('indexed observation timed out after 4 seconds'));
+                        }, 4000);
+                        director.once(Director.EVENT_AFTER_DRAW, done);
+                    }),
+            );
+            return {
+                route,
+                requestedObjects: count,
+                meshVertexCount: mesh.struct.vertexBundles[0].view.count,
+                meshIndexCount: mesh.struct.primitives[0].indexView?.count ?? 0,
+                ...submission,
+            };
+        } finally {
+            observing = false;
+        }
+    }
+    (window as any).__batchProbe = { measure, observeIndexed, pixels: async () => (await pixelFrame()).lit };
     (window as any).__probe = async () => {
         const canvas = document.querySelector('canvas')!;
         return {
