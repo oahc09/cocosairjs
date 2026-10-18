@@ -1,0 +1,220 @@
+TAP version 13
+# Subtest: unchanged tree requires an explicit source-bound ledger and stays read-only
+ok 1 - unchanged tree requires an explicit source-bound ledger and stays read-only
+  ---
+  duration_ms: 52.807947
+  type: 'test'
+  ...
+# Subtest: every removed prose block and heading needs a valid explicit mapping
+ok 2 - every removed prose block and heading needs a valid explicit mapping
+  ---
+  duration_ms: 30.175686
+  type: 'test'
+  ...
+# Subtest: summaries alone cannot preserve original qualifiers
+ok 3 - summaries alone cannot preserve original qualifiers
+  ---
+  duration_ms: 34.617785
+  type: 'test'
+  ...
+# Subtest: tampered original snapshot bytes and manifest fingerprints fail closed
+ok 4 - tampered original snapshot bytes and manifest fingerprints fail closed
+  ---
+  duration_ms: 4.299123
+  type: 'test'
+  ...
+# Subtest: source and destination hashes independently detect tampering
+ok 5 - source and destination hashes independently detect tampering
+  ---
+  duration_ms: 38.555146
+  type: 'test'
+  ...
+# Subtest: unreviewed entries, empty destinations and unknown phases fail closed
+ok 6 - unreviewed entries, empty destinations and unknown phases fail closed
+  ---
+  duration_ms: 24.208051
+  type: 'test'
+  ...
+# Subtest: metadata original values can be fully archived, with exact field hashes
+ok 7 - metadata original values can be fully archived, with exact field hashes
+  ---
+  duration_ms: 11.414181
+  type: 'test'
+  ...
+# Subtest: host permissions cannot change even if old declaration has an archived ledger destination
+ok 8 - host permissions cannot change even if old declaration has an archived ledger destination
+  ---
+  duration_ms: 9.374758
+  type: 'test'
+  ...
+# Subtest: code body must be byte-exact even when fence style changes
+ok 9 - code body must be byte-exact even when fence style changes
+  ---
+  duration_ms: 132.865153
+  type: 'test'
+  ...
+# Subtest: table alignment and row order can change, but cell values and row multiplicity cannot
+ok 10 - table alignment and row order can change, but cell values and row multiplicity cannot
+  ---
+  duration_ms: 21.888532
+  type: 'test'
+  ...
+# Subtest: prose duplicate deletion requires explicit deduplication, including range aliases
+ok 11 - prose duplicate deletion requires explicit deduplication, including range aliases
+  ---
+  duration_ms: 31.730083
+  type: 'test'
+  ...
+# Subtest: code duplicate deletion requires explicit deduplication, including range aliases
+ok 12 - code duplicate deletion requires explicit deduplication, including range aliases
+  ---
+  duration_ms: 26.758966
+  type: 'test'
+  ...
+# Subtest: table duplicate deletion requires explicit deduplication, including range aliases
+ok 13 - table duplicate deletion requires explicit deduplication, including range aliases
+  ---
+  duration_ms: 21.659021
+  type: 'test'
+  ...
+# Subtest: recorded link edits require same logical target and preserve all surrounding prose
+ok 14 - recorded link edits require same logical target and preserve all surrounding prose
+  ---
+  duration_ms: 15.518693
+  type: 'test'
+  ...
+# Subtest: unrecorded link edits and invented mappings cannot be normalized away
+ok 15 - unrecorded link edits and invented mappings cannot be normalized away
+  ---
+  duration_ms: 26.304391
+  type: 'test'
+  ...
+# Subtest: restore performs a fresh exact disk enumeration and never executes restored scripts
+ok 16 - restore performs a fresh exact disk enumeration and never executes restored scripts
+  ---
+  duration_ms: 4.820143
+  type: 'test'
+  ...
+# Subtest: restore rejects existing output, source-tree destinations, symlinks and nonexistent parent
+ok 17 - restore rejects existing output, source-tree destinations, symlinks and nonexistent parent
+  ---
+  duration_ms: 4.914117
+  type: 'test'
+  ...
+# Subtest: snapshots reject added files, symlinks, path traversal and duplicate manifest paths
+ok 18 - snapshots reject added files, symlinks, path traversal and duplicate manifest paths
+  ---
+  duration_ms: 5.627176
+  type: 'test'
+  ...
+# Subtest: CLI only emits parseable JSON and rejects a write mode without explicit restore output
+ok 19 - CLI only emits parseable JSON and rejects a write mode without explicit restore output
+  ---
+  duration_ms: 299.326984
+  type: 'test'
+  ...
+# Subtest: one approved deduplication cannot exempt a third source move to the same destination
+ok 20 - one approved deduplication cannot exempt a third source move to the same destination
+  ---
+  duration_ms: 12.667235
+  type: 'test'
+  ...
+# Subtest: a full original archived in an unlinked file is not reachable preservation
+ok 21 - a full original archived in an unlinked file is not reachable preservation
+  ---
+  duration_ms: 5.39294
+  type: 'test'
+  ...
+# Subtest: inline code whitespace remains exact while prose layout can change
+ok 22 - inline code whitespace remains exact while prose layout can change
+  ---
+  duration_ms: 6.386827
+  type: 'test'
+  ...
+# Subtest: table header roles, inline code spaces and duplicate rows are preserved
+ok 23 - table header roles, inline code spaces and duplicate rows are preserved
+  ---
+  duration_ms: 0.42734
+  type: 'test'
+  ...
+# Subtest: actual YAML parser accepts block values; Unicode budgets count code points
+ok 24 - actual YAML parser accepts block values; Unicode budgets count code points
+  ---
+  duration_ms: 63.068822
+  type: 'test'
+  ...
+# Subtest: metadata-only skips body budget but final mode applies UTF-8 bytes
+ok 25 - metadata-only skips body budget but final mode applies UTF-8 bytes
+  ---
+  duration_ms: 25.660313
+  type: 'test'
+  ...
+# Subtest: frontmatter includes delimiter and newline code points
+ok 26 - frontmatter includes delimiter and newline code points
+  ---
+  duration_ms: 11.648254
+  type: 'test'
+  ...
+# Subtest: original read-only permissions cannot be widened or swapped by directory order
+ok 27 - original read-only permissions cannot be widened or swapped by directory order
+  ---
+  duration_ms: 18.952405
+  type: 'test'
+  ...
+# Subtest: host environment, attribution, version, date and Chinese description remain exact strings
+ok 28 - host environment, attribution, version, date and Chinese description remain exact strings
+  ---
+  duration_ms: 57.336433
+  type: 'test'
+  ...
+# Subtest: metadata-only explicitly selected skills leave all other originals byte-identical
+ok 29 - metadata-only explicitly selected skills leave all other originals byte-identical
+  ---
+  duration_ms: 15.604285
+  type: 'test'
+  ...
+# Subtest: metadata-only rejects selected body edits and unexpected new references
+ok 30 - metadata-only rejects selected body edits and unexpected new references
+  ---
+  duration_ms: 10.927659
+  type: 'test'
+  ...
+# Subtest: duplicate YAML keys and invalid list types fail rather than taking last value
+ok 31 - duplicate YAML keys and invalid list types fail rather than taking last value
+  ---
+  duration_ms: 11.581337
+  type: 'test'
+  ...
+# Subtest: retired, misplaced, duplicate and over-budget routing fields are rejected
+ok 32 - retired, misplaced, duplicate and over-budget routing fields are rejected
+  ---
+  duration_ms: 10.064602
+  type: 'test'
+  ...
+# Subtest: directory/name mismatch and unknown skill additions fail
+ok 33 - directory/name mismatch and unknown skill additions fail
+  ---
+  duration_ms: 7.927818
+  type: 'test'
+  ...
+# Subtest: final gate validates index schema and compact per-name object size
+ok 34 - final gate validates index schema and compact per-name object size
+  ---
+  duration_ms: 15.715571
+  type: 'test'
+  ...
+# Subtest: CLI is JSON-only, read-only and fails for unknown flags
+ok 35 - CLI is JSON-only, read-only and fails for unknown flags
+  ---
+  duration_ms: 861.827875
+  type: 'test'
+  ...
+1..35
+# tests 35
+# suites 0
+# pass 35
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1524.386183

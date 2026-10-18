@@ -1,0 +1,9 @@
+{
+  "received_untruncated": true,
+  "tool": "functions.exec -> tools.exec_command",
+  "chunk_id": "1c6ab3",
+  "record_count": 22,
+  "inner_max_output_tokens": 30000,
+  "outer_max_output_tokens": 30000,
+  "attestation": "The independent reader actually received all 22 complete name+description routing records in lexical order before reading the router. The saved source file alone is not used as receipt proof."
+}

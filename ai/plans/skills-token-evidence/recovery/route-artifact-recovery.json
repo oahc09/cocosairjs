@@ -1,0 +1,78 @@
+{
+  "schema": 1,
+  "task": "Recover prior route regression artifacts from complete retained tool-write inputs",
+  "recovery_is_new_execution": true,
+  "scope": "Six artifacts last authored by this worker before handoff; later changes by other workers are not represented unless independently compared.",
+  "source_evidence": {
+    "type": "Full prior conversation tool arguments retained in active worker context; no filesystem session logs were read.",
+    "route": "Initial complete source patch, complete CLI addition, baseline-recomputation patch, final root-symlink/probe-source/duplicate-flag patch.",
+    "fixtures": "Full original 44-prompt generator plus original four citation additions, replayed against byte-identical 66d11fd0 snapshot; only destination/parser module paths adjusted.",
+    "tests": "Full original route, Markdown parser and index test patches, including original baseline-tampering test and final route assertions.",
+    "formatting": "Original repository .prettierrc.json with restored locked Prettier dependency."
+  },
+  "original_snapshot_hash": "1e9c6637a512b819e822d8d06ea64d444c1e5640f35c48134f70fe80a5363e19",
+  "prompt_payload_sha256": "e0f0dfc9958ca3e25e8af464822e5956092fc94ef5aaf6b1e9ff7bae20bcedd9",
+  "tokenizer_hash": {
+    "current": "c357f02348306a85c8e5ef6abe3ee2308ea734b903e9525ae2d5481dfdb0f655",
+    "known_old": "c357f02348306a85c8e5ef6abe3ee2308ea734b903e9525ae2d5481dfdb0f655",
+    "check": "PASS"
+  },
+  "files": [
+    {
+      "path": "tools/skills/route-regression.cjs",
+      "bytes": 33321,
+      "sha256": "48e380487865b34e02c40e474e444f54cc2ad35e1244c2bd9777c1105bd5fd96",
+      "known_old_sha256": null,
+      "old_hash_check": "UNVERIFIED_OLD_HASH_UNAVAILABLE"
+    },
+    {
+      "path": "tools/skills/fixtures/route-prompts.json",
+      "bytes": 39373,
+      "sha256": "964eb2ce8b84f7d7b69125a8c33fabca1a6c89583b72cfb2d4e6d261e146bf7b",
+      "known_old_sha256": "964eb2ce8b84f7d7b69125a8c33fabca1a6c89583b72cfb2d4e6d261e146bf7b",
+      "old_hash_check": "PASS"
+    },
+    {
+      "path": "tools/skills/fixtures/probe-ids.json",
+      "bytes": 1104,
+      "sha256": "993256bd3c9d9cdea96e081f0e08d4a044fd96daf957049b6bbe9af06e205d33",
+      "known_old_sha256": "993256bd3c9d9cdea96e081f0e08d4a044fd96daf957049b6bbe9af06e205d33",
+      "old_hash_check": "PASS"
+    },
+    {
+      "path": "tools/skills/test/route-regression.test.cjs",
+      "bytes": 8328,
+      "sha256": "a3d593aef00909f936c5eb3f0861b7b62db0c1f22207fdf8954d988c92a7fb3b",
+      "known_old_sha256": null,
+      "old_hash_check": "UNVERIFIED_OLD_HASH_UNAVAILABLE"
+    },
+    {
+      "path": "tools/skills/test/md-parse.test.cjs",
+      "bytes": 4891,
+      "sha256": "f26959a0b228f6b4f7a136b83636ce6b6cc0b0ddd1f8a86f01054a8f69fc7554",
+      "known_old_sha256": null,
+      "old_hash_check": "UNVERIFIED_OLD_HASH_UNAVAILABLE"
+    },
+    {
+      "path": "tools/skills/test/gen-index.test.cjs",
+      "bytes": 8083,
+      "sha256": "8d63a559a36560879cacabec877a0012cab9f5ba1a8871deffb8061678361ebb",
+      "known_old_sha256": null,
+      "old_hash_check": "UNVERIFIED_OLD_HASH_UNAVAILABLE"
+    }
+  ],
+  "not_recovered": [
+    "Historical baseline result files and scoring execution evidence",
+    "Historical full source hashes for route and three test files",
+    "Any later implementation/test edits not present in this worker conversation"
+  ],
+  "actions_not_performed": [
+    "No real-corpus scoring",
+    "No new baseline generation",
+    "No skill edits",
+    "No claimed recreation of lost execution logs"
+  ],
+  "gen_index_test_original_copy": "recovery-notes/gen-index.test-before-recovery-hardening.cjs.txt",
+  "hash_scope": "Hashes record this worker restoration before any subsequent authorized recovery hardening by other workers. They do not certify later edited files.",
+  "later_changes": "Parent authorized rebuild_parser_index to change two closure tests to explicit inspect injection and add a safety regression. Such edits are new recovery implementation work, not old-byte restoration."
+}

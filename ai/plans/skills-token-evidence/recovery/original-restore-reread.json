@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "report": "ai/plans/skills-token-evidence/recovery/original-restore.json",
+  "report_sha256": "6ce78b30f1dc02cebedc57abe129934ca07734fb45f73cd51186e32731f797b1",
+  "restore_output": "/tmp/air-skills-restore-66d11fd0-recovery1",
+  "exit_code": 0,
+  "status": "PASS",
+  "snapshot_hash": "1e9c6637a512b819e822d8d06ea64d444c1e5640f35c48134f70fe80a5363e19",
+  "restored_hash": "1e9c6637a512b819e822d8d06ea64d444c1e5640f35c48134f70fe80a5363e19",
+  "file_count": 191,
+  "bytes": 1462180,
+  "manifest_equal": true,
+  "differences": [],
+  "recovery_restore_runs": 1
+}

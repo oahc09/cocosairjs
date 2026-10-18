@@ -1,0 +1,2813 @@
+{
+  "schema": 1,
+  "mode": "static",
+  "status": "PASS",
+  "tool_version": "skills-measure-p1-recovery1",
+  "metric_version": "air-document-input-1",
+  "parser_version": "air-markdown-1",
+  "projection_version": "air-routing-1",
+  "source_manifest_hash": "1e9c6637a512b819e822d8d06ea64d444c1e5640f35c48134f70fe80a5363e19",
+  "file_count": 191,
+  "skill_count": 22,
+  "l0": {
+    "view": "host-minimal",
+    "rendering": "serializeRoutingRecord(record,host-minimal),name-sort,join-LF",
+    "record_count": 22,
+    "text": "name: cocosair\ndescription: Route Cocos AIR (cocosair.js) work to the right cocosair-* subsystem skill and enforce Code First discipline - original Scene, Node, Camera, Component, Material, Texture2D and Sprite APIs, WebGL2-only rendering, createAirApp bootstrap ordering, and the source-export / bundle-reachable / browser-verified capability layers. Use when starting any cocosair.js task, adapting Cocos Creator knowledge to AIR, hitting WEBGL2_REQUIRED or USE_TEXTURE failures, or deciding which AIR skill to load.\n\nname: cocosair-2d-subsystems\ndescription: Drives the Cocos AIR 2D subsystem runtime modules in code-first scenes - the sp namespace and loadWasmModuleSpine plus the BLOCKED Spine backend and asset sourcing state, dragonBones ArmatureDisplay, DragonBonesAsset, DragonBonesAtlasAsset, CCFactory and AnimationCacheMode with realtime versus cached skinning on the vendored dragonbones-js, TiledMap, TiledMapAsset, TiledLayer, TiledObjectGroup and TiledTile built from runtime tmx and tsx strings, ParticleSystem2D and ParticleAsset fed by a generated plist through assetManager.parser.parsePlist, MotionStreak (exported as MotionStreak, there is no MotionStreak2D), and Billboard as a scene.Model whose size and rotation travel through one cc_size_rotation uniform. Use when a Spine skeleton draws nothing without any error, when a TiledMap cell edit or object query does not refresh or resolve, when plist-tuned particles compute but render no pixels, or when a billboard is invisible at its default size.\n\nname: cocosair-agent-session\ndescription: Drives and inspects a running Cocos AIR app from an agent or devtool session. Covers the window.__airApp page binding, the devtools agent-session request protocol in tools/debug/agent-session.ts (requestId/action/targetId/params returning requestId ok result or error, the INVALID_ARGUMENT duplicate-requestId rejection, inspectScene and inspectNode snapshots, captureFrame on AFTER_DRAW, getRuntimeErrors ring buffer), the visual probe pixel-region conventions, and the runtime AirDiagnostics bounded channel. Use when an agent needs to observe a live scene, apply a controlled write, capture a frame, read runtime errors, or wire the dev-only session, remembering the session and probe surface are devtools not default-runtime APIs.\n\nname: cocosair-animation-tween\ndescription: Drives the Cocos AIR animation and tween surface - the code-first tween(target) chain (to/by/set/delay/call/sequence/parallel/repeat/repeatForever/reverseTime/union/clone/timeScale plus start/stop/pause/resume and the target-bound statics), TweenSystem and its ActionManager, the native Animation component (play/stop/pause/resume/getState/createState/addClip/crossFade, executionOrder 99, playOnLoad), AnimationState wrapMode whose setter resets time and repeatCount, code-first AnimationClip construction, the AnimationClip.WrapMode static enum, the animation namespace that is the only route to VectorTrack and TrackPath, createStepClock single-clock stepping with its dual-clock guard, and the unpublished marionette and pose-graph state. Use when a tween will not reverse, when a clip plays once instead of looping, when track classes fail to import by name, when deterministic frame stepping is needed for evidence, or when pose-graph animation is assumed available.\n\nname: cocosair-application\ndescription: Configure and drive the Cocos AIR application handle - every AirAppOptions field vs its validator (canvas selector or element, renderMode 0..3, physics builtin or cannon, diagnostics errors or warnings, pixelRatioCap default 2, screenMode window or container, container, designResolution policy 0..4, contextLoss), the one-runtime-per-document admission rule keyed by Symbol.for('cocosair.bootstrap.v1'), the run/getScene/releaseScene/close lifecycle and the whole-page reload a closed runtime needs, startup error literals WEBGL2_REQUIRED and AIR_E_* codes, the attachContextHealth healthy/lost/restoring/failed state machine with no GPU rebuild, and createSessionScope ownership with (0,5000] timeoutMs. Use when starting a cocosair.js app with createAirApp, choosing or rejecting AirAppOptions values, hitting an AIR_E_ or WEBGL2_REQUIRED startup failure, replacing or releasing a scene, wiring screenMode container or designResolution, or reacting to a lost WebGL context.\n\nname: cocosair-assets\ndescription: Drives the Cocos AIR asset surface - the Code First loading route (assetManager.assets registry plus loadAssetAsync and its gltf, resources, registry, then URL deserialize order), the reference-counted AssetBank over assetManager.loadRemote with the ext and cache-key rules, the subscriber-side-only signal and the full AIR_E_* throw map, the two-object texture model where ImageAsset carries CPU pixels and Texture2D samples them through reset, uploadData, updateMipmaps and the wrap and filter setters, parseAtlasText and createAtlasHandle for libGDX TexturePacker text atlases with top-left rect.y semantics, and parseFnt, createBitmapFont and loadBitmapFont for single-page BMFont. Use when assetManager.resources is null, when load or loadRemote is not an importable name, when reloading the same URL hands back a destroyed asset, when an atlas or font handle refuses to dispose, or when a label still renders with a system font.\n\nname: cocosair-audio-video\ndescription: Drives Cocos AIR audio, video and WebView from code - AudioService business channels over AudioSource (load, playBgm, pauseBgm, resumeBgm, stopBgm, setBgmVolume, playSfx, setMusicEnabled, setSfxEnabled, bgmState, dispose, maxSfxVoices cap with sfxDropped), measured-currentTime playback evidence, browser autoplay gesture unlock, VideoPlayer DOM-overlay events and transparent video, WebView iframe limits and evaluateJS. Use when audio starts silently or play() seems ignored, when proving a channel actually advances, when a video or iframe must sit under or over the WebGL canvas, or when WebView loads the wrong URL on mount.\n\nname: cocosair-camera\ndescription: Add and drive the Cocos AIR Camera component with the original Cocos APIs - projection switching between PERSPECTIVE and ORTHO, fov and fovAxis, orthoHeight and orthoWidth, near and far clip planes, the normalized rect viewport and priority draw order, visibility layer masks, the screen-to-world conversions worldToScreen/screenToWorld/screenPointToRay/convertToUINode in left-bottom-origin physical pixels, the AIR frameObject(camera,target,fallbackDistance=6) framing helper over MeshRenderer worldBounds, and the oblique near plane via calculateObliqueMat and clip-space minZ. Use when adding or configuring a camera, switching perspective or ortho, stacking a split-screen or overlay second camera, fitting a model in view, converting pointer pixels to a world ray or UI node, or debugging AIR_E_ORTHO_WIDTH and wrong screenToWorld results.\n\nname: cocosair-gltf\ndescription: Drives the Cocos AIR glTF and GLB surface - GLTFLoader with loadAsync and parseAsync, the three decoder setters and the provider factories behind them, getExtensionSupport and the five-status extension contract across 21 registered handlers, GLTFAsset with its five read-only collections plus instantiate(sceneIndex), GLTFInstance setAnimationLoop and dispose, the five GLTFError codes, and the plain Error, DOMException and tagged TypeError shapes that are not GLTFError. Use when a Draco, meshopt or KTX2 model reports GLTF_DECODER_MISSING, when getExtensionSupport says decoder-required, when a load rejects with no code field, when an instance animation will not loop, or when destroying a GLTFAsset leaves GPU resources behind.\n\nname: cocosair-graphics-and-dom\ndescription: Reuse native Cocos objects for 2D drawing and DOM in Cocos AIR. Covers AirGraphicsCommand drawing data replayed on a Graphics component (drawAirGraphics, solid nonzero only), SVG serialization that preserves curves (airGraphicsCommandsToSvg), Canvas2D rich fills into a native Texture2D (rasterizeAirGraphics), borrowed-texture display (createAirTextureSprite), per-Sprite channel masks (attachAirSpriteMask), opt-in UI blend inheritance including ParticleSystem2D (createAirUIBlendScope), DOM elements that follow UI nodes (createAirDOMOverlay), the AirUIMesh renderer, and the experimental HTML-in-canvas texture subpath (cocosair.js). Use when authoring or exporting vector fills, gradients, patterns, sprite masks, blend scopes, texture sprites, DOM overlays, or live HTML textures, rather than copying PixiJS or Creator editor snippets.\n\nname: cocosair-input-action\ndescription: Wires native input events and the AIR action layer in code-first Cocos AIR - the engine input singleton and systemEvent globals, EventTouch/EventKeyboard/EventMouse with the Input.EventType and SystemEvent.EventType enums and KeyCode key codes, createActionState as a pure held/pressed/released/axis reducer keyed per (action, source) with seven reset reasons and no listener removal, createActionInput over the native or dom backend where dom needs an explicit canvas and skips editable targets, createSessionGate for session admission, and SceneStack persistent-page navigation with dual-page transition, capture-phase input block and LRU eviction. Use when handling touch/keyboard/mouse in a Cocos AIR scene, when keys stop firing because an input or textarea has focus, when a dom action backend throws for a missing canvas, when a held button must survive a blur or page-hidden reset, or when push/pop page state must be preserved during a transition.\n\nname: cocosair-materials-effects\ndescription: Author and drive Cocos AIR materials in a Code First scene - new Material() plus initialize({effectName, defines, technique, states}), the 21 registered AIR effect entries and 17 builtin materials, setProperty value types for float, Vec3, Vec4, Color, Texture2D and arrays, the USE_TEXTURE versus USE_ALBEDO_MAP define gates, handleInfo property aliases, MaterialInstance versus shared materials, the Pass warn stubs for recompileShaders and overridePipelineStates, the glsl4 to glsl3 source transform, the set and binding layout assignEffectBindings enforces including CCSkinning at binding 3, createAirUnlitFogEffect, attachAirSpriteMask and inspectAirMaterial. Use when creating or configuring a Material or EffectAsset, picking builtin-standard or builtin-unlit, setting a color, texture or uniform array, overriding blend or depth state, writing custom GLSL, or debugging AIR_E_MATERIAL_NOT_READY, AIR_E_MATERIAL_TYPE, uniform buffer too small, a flat untextured surface or a setProperty call that does nothing.\n\nname: cocosair-math\ndescription: Do vector, matrix, quaternion, rect, size and color arithmetic with the original Cocos math types in Cocos AIR - the math namespace and top-level exports, Vec2/Vec3/Vec4, Mat3/Mat4, Quat, Rect, Size and Color plus v2/v3/v4/quat/mat4/color factories, the out-first static convention (Vec3.add(out, a, b)), frozen constants like Vec3.UP via Object.freeze, Mat4 column-major m00..m15 layout and S->R->T composition with fromSRT/toSRT, Quat euler degrees versus radians, Mat3/Mat4 inverse and mirror handling, epsilon comparison with approx, scalar utilities clamp/clamp01/lerp/inverseLerp/repeat/pingPong, randomRange/pseudoRandom, floatToHalf encoding, bits helpers and easing curves. Use when normalizing or projecting a direction, composing or decomposing a node transform matrix, picking a quaternion or euler rotation, packing a Color or hex value, choosing an easing curve for a manual tween, hitting a TypeError from writing Vec3.UP, seeing -0 or NaN in a position, or getting an all-zero matrix from Mat4.invert.\n\nname: cocosair-performance\ndescription: Drives the Cocos AIR draw-call and frame-budget surface - the only three batching routes (shared mesh across N renderers, Mesh.merge and BatchingUtility.batchStaticModel for static subtrees, utils.MeshUtils.createDynamicMesh with Mesh.updateSubMesh for per-frame geometry), instancing through the single USE_INSTANCING material define with its 1024-per-group split, dynamic atlas defaults and silent-null acceptance rules, 2D auto-batch keys on director.root.batcher2D, the profiler singleton counters behind the pipeline.profiler gate, on-demand rendering as game.pause plus game.step behind Director.EVENT_AFTER_DRAW, pixelRatioCap and the DPR import-order contract, and the recorded limits of the 50k starfield evidence. Use when draw calls equal object count, batching hundreds of cubes or sprites, hitting AIR_E_MESH_CAPACITY or AIR_E_PIXEL_RATIO_IMPORT_ORDER, enabling dynamicAtlasManager, showing the stats overlay, checking whether the loop is really paused, or cutting resolution on a slow device.\n\nname: cocosair-physics\ndescription: Applies to physics in code-first Cocos AIR apps - choosing the 3D backend with createAirApp({ physics: 'builtin' | 'cannon' }) (default builtin), selectPhysicsBackend and the official last-registration-before-init rule, the query-only boundary of the builtin discrete collision detector (no gravity integration, no MeshCollider in the world, trigger events and raycasts still real), PhysicsSystem/RigidBody/Collider wiring and the bidirectional group-and-mask filter, error 9642 for default-physics-material (fatal on cannon, benign on builtin) and AIR's built-in material registration, and the pure-JS 2D box2d backend with PhysicsSystem2D, RigidBody2D, Collider2D, BoxCollider2D and the raycast/testPoint/testAABB queries. Use when dynamic bodies do not fall or stack, when triggers fire silently, when deciding between builtin and cannon, when 9642 appears in the console, or when asking whether ammo, physx or box2d-wasm ship (they do not).\n\nname: cocosair-primitives-mesh\ndescription: Builds and attaches procedural geometry in a Cocos AIR Code First scene - the nine primitives.* shape generators and their parameter defaults, the createPrimitiveGeometry(descriptor) helper whose box, sphere, cylinder, cone whitelist, integer segment cap of 1024, predicted-vertex cap and arc range throw RangeError AIR_E_PRIMITIVE_DESCRIPTOR, turning the returned IGeometry into a Mesh with utils.createMesh, hand-authoring a Mesh struct from gfx.Attribute and Format rows and reading or copying vertex attributes and indices, and driving MeshRenderer hooks such as bakeSettings, setInstancedAttribute and morph setWeight. Use when generating a box, sphere, cylinder or cone without a Creator asset, wiring a BufferGeometry-style object to a renderer, hitting AIR_E_PRIMITIVE_DESCRIPTOR, choosing new Mesh plus struct versus primitives.box, reading mesh vertex attributes, or exporting geometry as OBJ or wireframe.\n\nname: cocosair-project-setup\ndescription: Set up a Cocos AIR project end to end - install the cocosair.js npm package or build from source, choose among the main entry, cocosair.js and the experimental cocosair.js, write the importmap and the startup-bound canvas page skeleton, resolve TypeScript declarations on TS 4.9 and TS 5+ via the exports types conditions, map npm scripts to build artifacts, and run AIR_FEATURES/AIR_OUT_DIR variant builds without disturbing the default 26-feature candidate. Use when installing or importing cocosair.js, fixing unresolved-import or wrong-entry errors, wiring a page shell or editor types, or deciding which build command produces which file.\n\nname: cocosair-rendering\ndescription: Drives the Cocos AIR rendering contracts in code - legacy forward lighting units with illuminance in Lux, the single mainLight rule for multiple directional lights and inspectAirDirectionalLights, the per-light-type shadow matrix with the four switches a ShadowMap cast needs, offscreen rendering through createAirRenderTarget and camera targetTexture with requested-versus-effective MSAA samples and sampleFallback, the one-per-scene AirTransmissionCapture behind transmission materials, texture format and sRGB decode preflight with resolveAirTextureFormat and validateAirTextureColorContract, and which post-process and custom-pipeline names a Code First app can really reach. Use when lighting looks flat, asking why there are no shadows, rendering a mirror or refraction into a texture, reading back a target's pixels, hitting AIR_E_RENDER_TARGET_SAMPLES or AIR_E_TEXTURE_COLOR, choosing rgba8, rgba16f or hardware-srgb, or deciding whether bloom and other post-processing run without a variant build.\n\nname: cocosair-scene-graph\ndescription: Build and drive the Cocos AIR scene graph with the original Cocos APIs - Scene as the Node tree root, Node addChild/insertChild/removeChild/removeFromParent/setParent and getChildByUuid, active versus activeInHierarchy hiding, local setScale versus inherited worldScale, the Component lifecycle order onLoad onEnable start update lateUpdate onDisable onDestroy, node on/off/once/emit events and exactly what node.destroy() does and does not unsubscribe, Layers bits with UI_2D and DEFAULT and addLayer plus makeMaskInclude/makeMaskExclude, find by path, NodePool put/get, scene.globals ambient fog skybox lightProbeInfo activation, and Scene or SceneAsset addRef decRef plus autoReleaseAssets refcounting. Use when building or re-parenting nodes, ordering component lifecycle, subscribing node or input events, assigning camera-culling layers, pooling nodes, or releasing scenes without leaking.\n\nname: cocosair-skinning-morph\ndescription: Drives Cocos AIR skeletal skinning and morph targets from code - SkinnedMeshRenderer skeleton and skinningRoot binding, Skeleton.joints as full paths relative to the skinning root with AIR_E_SKINNING_JOINT_PATH, buildSkeletonTree bindposes as inverse world matrices, restoreBindPose ancestor-first ordering, realtime versus baked pose through setUseBakedAnimation, joint palette capacity and AIR_E_SKINNING_CAPACITY, Mesh.morphRendering plus getBoneSpaceBounds, and MeshRenderer setWeight, setWeights and enableMorph. Use when a skinned mesh stays in rest pose or draws nothing, when a joint path throws AIR_E_SKINNING_JOINT_PATH, when moving bone nodes after setUseBakedAnimation(true) has no effect, when a morph weight setter appears to be ignored, or when binding a hand-built Mesh to a Skeleton without the Cocos Creator asset pipeline.\n\nname: cocosair-ui-2d\ndescription: Drives code-first 2D UI in the Cocos AIR runtime - createUICanvas (Canvas plus fullscreen Widget plus an ortho UI camera bound through canvas.cameraComponent, defaults designWidth 1280, designHeight 720, layer Layers.Enum.UI_2D), the spriteNode and labelNode helpers and their real defaults (fontSize 28, lineHeight Math.round(fontSize*1.25), the AIR_E_LABEL_WRAP guard), the widget components Canvas, Widget, Layout (exported as Layout$1 as Layout), Button, ScrollView, ProgressBar, Slider, Toggle, EditBox, PageView, SafeArea and BlockInputEvents, each also aliased as ...Component, Label system-font and BMFont binding, LabelOutline, LabelShadow, LabelAtlas, the RichText-only-as-RichTextComponent alias, and 2D draw order through SortingLayers, Sorting2D and the Intersection2D utility. Use when a UI node renders nothing, when text needs a font without any Creator font-asset pipeline, when widgets must realign on a viewport change, or when 2D sprites and labels stack in the wrong order.\n\nname: cocosair-verification\ndescription: Runs and interprets Cocos AIR verification gates without confusing subset or stale evidence with release readiness. Use when validating an AIR change, classifying a verify:* npm command as read-only or write, reading browser or package evidence, binding a report to its source and bundle fingerprints, telling UNSUPPORTED from FAIL, or preparing a release candidate that needs a clean worktree.\n",
+    "hash": "f3d8193700056428b16f84f711771612f0ef24468d8b346ecd4bdf4bac755f26",
+    "chars": 19646,
+    "bytes": 19646,
+    "han_chars": 0,
+    "other_chars": 19646,
+    "estimated_tokens": 5170
+  },
+  "layers": {
+    "all_files": {
+      "chars": 1459940,
+      "bytes": 1462180,
+      "han_chars": 964,
+      "other_chars": 1458976,
+      "estimated_tokens": 384583.7192982457
+    },
+    "skill_full": {
+      "chars": 155540,
+      "bytes": 157540,
+      "han_chars": 854,
+      "other_chars": 154686,
+      "estimated_tokens": 41276.175438596496
+    },
+    "original_frontmatter": {
+      "chars": 49540,
+      "bytes": 51540,
+      "han_chars": 854,
+      "other_chars": 48686,
+      "estimated_tokens": 13381.438596491229
+    },
+    "skill_body": {
+      "chars": 106000,
+      "bytes": 106000,
+      "han_chars": 0,
+      "other_chars": 106000,
+      "estimated_tokens": 27894.736842105263
+    },
+    "references": {
+      "chars": 1287352,
+      "bytes": 1287352,
+      "han_chars": 0,
+      "other_chars": 1287352,
+      "estimated_tokens": 338776.84210526315
+    }
+  },
+  "subsystem_skill_mean_bytes": 7020.619047619048,
+  "reference_count": 167,
+  "giant_reference_count": 23,
+  "files": [
+    {
+      "path": "skills/README.md",
+      "sha256": "772c2c14f51d16c94d81e4cdc65a4cb8600d79b44cfcfd5023618dcc96740691",
+      "full": {
+        "chars": 201,
+        "bytes": 441,
+        "han_chars": 110,
+        "other_chars": 91,
+        "estimated_tokens": 97.28070175438596
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-2d-subsystems/SKILL.md",
+      "sha256": "c68e8358ff6d7613b59ee0d9cf4742d6d4d22bea253af3a73dcea7575c031049",
+      "full": {
+        "chars": 8587,
+        "bytes": 8669,
+        "han_chars": 35,
+        "other_chars": 8552,
+        "estimated_tokens": 2273.8596491228072
+      },
+      "frontmatter": {
+        "chars": 2491,
+        "bytes": 2573,
+        "han_chars": 35,
+        "other_chars": 2456,
+        "estimated_tokens": 669.6491228070176
+      },
+      "body": {
+        "chars": 6096,
+        "bytes": 6096,
+        "han_chars": 0,
+        "other_chars": 6096,
+        "estimated_tokens": 1604.2105263157896
+      }
+    },
+    {
+      "path": "skills/cocosair-2d-subsystems/references/billboard.md",
+      "sha256": "38e2dfe8796ad80ffbe85ba4e67af9f4289d680953cf878555d0fb3533f98ca3",
+      "full": {
+        "chars": 3415,
+        "bytes": 3415,
+        "han_chars": 0,
+        "other_chars": 3415,
+        "estimated_tokens": 898.6842105263158
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-2d-subsystems/references/common-mistakes.md",
+      "sha256": "8dc682a37304bd6454fdd756aca66b17495571385e497196fedac583a6d2f3e5",
+      "full": {
+        "chars": 4950,
+        "bytes": 4950,
+        "han_chars": 0,
+        "other_chars": 4950,
+        "estimated_tokens": 1302.6315789473686
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-2d-subsystems/references/context.md",
+      "sha256": "4bcd9707a310c640780c81b51602e7e5e456ad9010ff4e08187d884627f61d44",
+      "full": {
+        "chars": 1849,
+        "bytes": 1849,
+        "han_chars": 0,
+        "other_chars": 1849,
+        "estimated_tokens": 486.5789473684211
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-2d-subsystems/references/contracts.md",
+      "sha256": "7055128fcd33df5866ebd83610558265c8824c619b5db89fe7c5d3f669ce7a18",
+      "full": {
+        "chars": 3501,
+        "bytes": 3501,
+        "han_chars": 0,
+        "other_chars": 3501,
+        "estimated_tokens": 921.3157894736843
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-2d-subsystems/references/dragonbones.md",
+      "sha256": "51c3331c320a1f69339a2492df70f5008ce964b5e2ff4c5dd05e157ea81e9292",
+      "full": {
+        "chars": 4828,
+        "bytes": 4828,
+        "han_chars": 0,
+        "other_chars": 4828,
+        "estimated_tokens": 1270.5263157894738
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-2d-subsystems/references/particle-2d.md",
+      "sha256": "d2387d9063a10fd88c320fcba6d15673967d4cb8933ecba0af6657d524dcc896",
+      "full": {
+        "chars": 4883,
+        "bytes": 4883,
+        "han_chars": 0,
+        "other_chars": 4883,
+        "estimated_tokens": 1285
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-2d-subsystems/references/quick-start.md",
+      "sha256": "b8c7cf5276f8b8c691ebf926bc3a69339041c383ba824907b2518ae9a1d43942",
+      "full": {
+        "chars": 4650,
+        "bytes": 4650,
+        "han_chars": 0,
+        "other_chars": 4650,
+        "estimated_tokens": 1223.6842105263158
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-2d-subsystems/references/spine.md",
+      "sha256": "e0b0998e6184302b2fbe53c9cc9a059ea06093079d777290d7818154fe6f8974",
+      "full": {
+        "chars": 11535,
+        "bytes": 11535,
+        "han_chars": 0,
+        "other_chars": 11535,
+        "estimated_tokens": 3035.5263157894738
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-2d-subsystems/references/tiledmap.md",
+      "sha256": "939ae09d3e9ab4c9565b87804ea47e41bda74009b9475499784b17a58296892f",
+      "full": {
+        "chars": 4642,
+        "bytes": 4642,
+        "han_chars": 0,
+        "other_chars": 4642,
+        "estimated_tokens": 1221.578947368421
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-agent-session/SKILL.md",
+      "sha256": "fefe60b4576a9fdd4bd521e9a2c862e05d5976ef91813a5b4910a46dc41cf167",
+      "full": {
+        "chars": 6320,
+        "bytes": 6434,
+        "han_chars": 52,
+        "other_chars": 6268,
+        "estimated_tokens": 1684.1403508771932
+      },
+      "frontmatter": {
+        "chars": 2008,
+        "bytes": 2122,
+        "han_chars": 52,
+        "other_chars": 1956,
+        "estimated_tokens": 549.4035087719299
+      },
+      "body": {
+        "chars": 4312,
+        "bytes": 4312,
+        "han_chars": 0,
+        "other_chars": 4312,
+        "estimated_tokens": 1134.7368421052631
+      }
+    },
+    {
+      "path": "skills/cocosair-agent-session/references/agent-session.md",
+      "sha256": "cc11343a3bb0cd2a3b962a931d35a9a88dfc36e70f88c4cd937760eeda0863f1",
+      "full": {
+        "chars": 5885,
+        "bytes": 5885,
+        "han_chars": 0,
+        "other_chars": 5885,
+        "estimated_tokens": 1548.6842105263158
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-agent-session/references/common-mistakes.md",
+      "sha256": "9da6210c0ba679361d8e81bfa239e4aa3a96b68ebf3eb6bc6d1ae899c8edf27e",
+      "full": {
+        "chars": 3850,
+        "bytes": 3850,
+        "han_chars": 0,
+        "other_chars": 3850,
+        "estimated_tokens": 1013.1578947368422
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-agent-session/references/context.md",
+      "sha256": "3e019e5899b0a41b5928fa65f967b7ab6dc1f2085a7231cee288ff01cd011b6c",
+      "full": {
+        "chars": 1383,
+        "bytes": 1383,
+        "han_chars": 0,
+        "other_chars": 1383,
+        "estimated_tokens": 363.94736842105266
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-agent-session/references/contracts.md",
+      "sha256": "78f112fcc39ea2cb249640bb8ffe0e6bdbc789cfc2a1385779af7d6623784d0f",
+      "full": {
+        "chars": 4920,
+        "bytes": 4920,
+        "han_chars": 0,
+        "other_chars": 4920,
+        "estimated_tokens": 1294.7368421052631
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-agent-session/references/quick-start.md",
+      "sha256": "2fcf314b26fa2e588171e189defa7881b68825efd46c15dcc119bb84105fae9f",
+      "full": {
+        "chars": 1998,
+        "bytes": 1998,
+        "han_chars": 0,
+        "other_chars": 1998,
+        "estimated_tokens": 525.7894736842105
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-agent-session/references/runtime-control.md",
+      "sha256": "7a45f8cf9d8296e2362eaec7b46a8d2473b07fb618ddb16c15ea44e4e13b9db8",
+      "full": {
+        "chars": 5541,
+        "bytes": 5541,
+        "han_chars": 0,
+        "other_chars": 5541,
+        "estimated_tokens": 1458.157894736842
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-agent-session/references/visual-probes.md",
+      "sha256": "078a023125de91fc6a7b6fa7e0af810063d2e401abcf795ae36eef2bbed20b29",
+      "full": {
+        "chars": 3815,
+        "bytes": 3815,
+        "han_chars": 0,
+        "other_chars": 3815,
+        "estimated_tokens": 1003.9473684210527
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-animation-tween/SKILL.md",
+      "sha256": "4142eafbab8ddb0f71fa2d23bcf3c940a05590dd26d3cfc6bfff872af1fe0d4d",
+      "full": {
+        "chars": 7541,
+        "bytes": 7621,
+        "han_chars": 34,
+        "other_chars": 7507,
+        "estimated_tokens": 1998.1929824561405
+      },
+      "frontmatter": {
+        "chars": 2512,
+        "bytes": 2592,
+        "han_chars": 34,
+        "other_chars": 2478,
+        "estimated_tokens": 674.7719298245614
+      },
+      "body": {
+        "chars": 5029,
+        "bytes": 5029,
+        "han_chars": 0,
+        "other_chars": 5029,
+        "estimated_tokens": 1323.421052631579
+      }
+    },
+    {
+      "path": "skills/cocosair-animation-tween/references/animation-clip.md",
+      "sha256": "fd38bd065f64ec8f4fc60f17428ea27560d3793eceedb9915a9ad1ad7eebab0a",
+      "full": {
+        "chars": 13153,
+        "bytes": 13153,
+        "han_chars": 0,
+        "other_chars": 13153,
+        "estimated_tokens": 3461.315789473684
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-animation-tween/references/common-mistakes.md",
+      "sha256": "0b0a3dab8abffdc4cdc2e80e8a460140ab500cd814708a461caee64f8da93df2",
+      "full": {
+        "chars": 3228,
+        "bytes": 3228,
+        "han_chars": 0,
+        "other_chars": 3228,
+        "estimated_tokens": 849.4736842105264
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-animation-tween/references/context.md",
+      "sha256": "68619acab18dfea1c9942d6d527c2119ef57b08860f3321832df41e4ef5f8509",
+      "full": {
+        "chars": 1935,
+        "bytes": 1935,
+        "han_chars": 0,
+        "other_chars": 1935,
+        "estimated_tokens": 509.2105263157895
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-animation-tween/references/contracts.md",
+      "sha256": "07154c42542150b113d7a30aabf8d6e4f7ab9ded291041b0f743bde472b56348",
+      "full": {
+        "chars": 6187,
+        "bytes": 6187,
+        "han_chars": 0,
+        "other_chars": 6187,
+        "estimated_tokens": 1628.157894736842
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-animation-tween/references/quick-start.md",
+      "sha256": "a39f55701c1eaa94c317cac6295e6ce50db35356fc1a43ee8f3665593e60ffbd",
+      "full": {
+        "chars": 3032,
+        "bytes": 3032,
+        "han_chars": 0,
+        "other_chars": 3032,
+        "estimated_tokens": 797.8947368421053
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-animation-tween/references/step-clock.md",
+      "sha256": "b7078dd4241cf3974afefb36344be7d57aa12435b2e59fbb2f86dc2990c6b5b6",
+      "full": {
+        "chars": 6107,
+        "bytes": 6107,
+        "han_chars": 0,
+        "other_chars": 6107,
+        "estimated_tokens": 1607.1052631578948
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-animation-tween/references/tween-ops.md",
+      "sha256": "48cf68819076972153d37415a05b99197732eaae1544df6ba2ea6a5dfce7c01c",
+      "full": {
+        "chars": 9816,
+        "bytes": 9816,
+        "han_chars": 0,
+        "other_chars": 9816,
+        "estimated_tokens": 2583.157894736842
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-application/SKILL.md",
+      "sha256": "96f63f227ca71916b6adfa3de49f95b681e9f14d97d4223163744a6a21146531",
+      "full": {
+        "chars": 6576,
+        "bytes": 6666,
+        "han_chars": 39,
+        "other_chars": 6537,
+        "estimated_tokens": 1746.2631578947369
+      },
+      "frontmatter": {
+        "chars": 2514,
+        "bytes": 2604,
+        "han_chars": 39,
+        "other_chars": 2475,
+        "estimated_tokens": 677.3157894736843
+      },
+      "body": {
+        "chars": 4062,
+        "bytes": 4062,
+        "han_chars": 0,
+        "other_chars": 4062,
+        "estimated_tokens": 1068.9473684210527
+      }
+    },
+    {
+      "path": "skills/cocosair-application/references/app-options.md",
+      "sha256": "ab36af04fdd87f31eb8decce307bc9331bfd78ebc2e03746eb651a0390635562",
+      "full": {
+        "chars": 22459,
+        "bytes": 22459,
+        "han_chars": 0,
+        "other_chars": 22459,
+        "estimated_tokens": 5910.263157894738
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-application/references/common-mistakes.md",
+      "sha256": "38a18a96497b3dd3d23cad102d6dac8cc38c2e099cf61d9e646121cf3a098a7d",
+      "full": {
+        "chars": 5093,
+        "bytes": 5093,
+        "han_chars": 0,
+        "other_chars": 5093,
+        "estimated_tokens": 1340.2631578947369
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-application/references/context-health.md",
+      "sha256": "bb3be80867398df4f1868ff54f1732f1ba7a85139f16de7d4d5498d338aaccb9",
+      "full": {
+        "chars": 10842,
+        "bytes": 10842,
+        "han_chars": 0,
+        "other_chars": 10842,
+        "estimated_tokens": 2853.157894736842
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-application/references/context.md",
+      "sha256": "b317ad59f228f33c97970001217ac09f4aa944b6e7bb632d226b516c390f8d14",
+      "full": {
+        "chars": 1354,
+        "bytes": 1354,
+        "han_chars": 0,
+        "other_chars": 1354,
+        "estimated_tokens": 356.3157894736842
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-application/references/contracts.md",
+      "sha256": "539501ee2885c8d3e932d9423c164544e02574f810ca9cdea9fa0a4f1c048004",
+      "full": {
+        "chars": 3942,
+        "bytes": 3942,
+        "han_chars": 0,
+        "other_chars": 3942,
+        "estimated_tokens": 1037.3684210526317
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-application/references/quick-start.md",
+      "sha256": "73d6a03232f9a9341d986d393a97d3123a2ae78f7b7b599a0ed0f5678138de43",
+      "full": {
+        "chars": 2356,
+        "bytes": 2356,
+        "han_chars": 0,
+        "other_chars": 2356,
+        "estimated_tokens": 620
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-application/references/session-scope.md",
+      "sha256": "b598ad41a9d12c8fcddba2f8def07bc60ee85d5e9f2be588182ab28e6f3a3fec",
+      "full": {
+        "chars": 12614,
+        "bytes": 12614,
+        "han_chars": 0,
+        "other_chars": 12614,
+        "estimated_tokens": 3319.4736842105262
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-application/references/startup-errors.md",
+      "sha256": "89be478902f5fdaadfb4b00e5ff1192e93f5ea96bafcd55c2f82107bc232ab31",
+      "full": {
+        "chars": 22969,
+        "bytes": 22969,
+        "han_chars": 0,
+        "other_chars": 22969,
+        "estimated_tokens": 6044.473684210527
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-assets/SKILL.md",
+      "sha256": "8de481543141fd11ed371a223ae39ce29cf8b7a67a7ebe98742bcedb6aec414c",
+      "full": {
+        "chars": 8370,
+        "bytes": 8466,
+        "han_chars": 40,
+        "other_chars": 8330,
+        "estimated_tokens": 2218.7719298245615
+      },
+      "frontmatter": {
+        "chars": 2405,
+        "bytes": 2501,
+        "han_chars": 40,
+        "other_chars": 2365,
+        "estimated_tokens": 649.0350877192982
+      },
+      "body": {
+        "chars": 5965,
+        "bytes": 5965,
+        "han_chars": 0,
+        "other_chars": 5965,
+        "estimated_tokens": 1569.7368421052631
+      }
+    },
+    {
+      "path": "skills/cocosair-assets/references/asset-bank.md",
+      "sha256": "e3bba979d4040e5fee86f8e981e73973760dacbbc0013965c32476c07a7298e6",
+      "full": {
+        "chars": 11086,
+        "bytes": 11086,
+        "han_chars": 0,
+        "other_chars": 11086,
+        "estimated_tokens": 2917.3684210526317
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-assets/references/atlas.md",
+      "sha256": "8ec6c8c8a7a0a57663bf999435a67029ef39c19bc804054ce17dc2149f7cee11",
+      "full": {
+        "chars": 18985,
+        "bytes": 18985,
+        "han_chars": 0,
+        "other_chars": 18985,
+        "estimated_tokens": 4996.0526315789475
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-assets/references/bmfont.md",
+      "sha256": "9a479bda5f43e3f78f0ff25fce3c92eb85a5003047513f63b14d37d690dcc0e8",
+      "full": {
+        "chars": 16999,
+        "bytes": 16999,
+        "han_chars": 0,
+        "other_chars": 16999,
+        "estimated_tokens": 4473.421052631579
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-assets/references/common-mistakes.md",
+      "sha256": "cc6894172b0a684f29a5a8a0855c917fe4b49eeec16728b93760be466e5cdd31",
+      "full": {
+        "chars": 4779,
+        "bytes": 4779,
+        "han_chars": 0,
+        "other_chars": 4779,
+        "estimated_tokens": 1257.6315789473686
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-assets/references/context.md",
+      "sha256": "55316c489e4e2ab7b205f5ffaa78ee00253fe305581d5350b096e0f25adaebbd",
+      "full": {
+        "chars": 2383,
+        "bytes": 2383,
+        "han_chars": 0,
+        "other_chars": 2383,
+        "estimated_tokens": 627.1052631578948
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-assets/references/contracts.md",
+      "sha256": "82591cbb2e6305d9dee6cc9a2907c565d953da3fc1e9f9e8545539d6451e6537",
+      "full": {
+        "chars": 11956,
+        "bytes": 11956,
+        "han_chars": 0,
+        "other_chars": 11956,
+        "estimated_tokens": 3146.315789473684
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-assets/references/quick-start.md",
+      "sha256": "2109eb71f5016b2906f3ce786c8aca1c27d2b0266e1f5ff8e566f1db4856e591",
+      "full": {
+        "chars": 3700,
+        "bytes": 3700,
+        "han_chars": 0,
+        "other_chars": 3700,
+        "estimated_tokens": 973.6842105263158
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-assets/references/texture2d.md",
+      "sha256": "9beb1ef52e109b3c948af4ab4d816b993a49c43179601ad1760c900013ee2ecd",
+      "full": {
+        "chars": 11178,
+        "bytes": 11178,
+        "han_chars": 0,
+        "other_chars": 11178,
+        "estimated_tokens": 2941.5789473684213
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-audio-video/SKILL.md",
+      "sha256": "65f3dd8afe654eef3342b4fb1c18d0f491794c227d438a9645a863462c89f1c2",
+      "full": {
+        "chars": 5458,
+        "bytes": 5540,
+        "han_chars": 34,
+        "other_chars": 5424,
+        "estimated_tokens": 1450.0350877192984
+      },
+      "frontmatter": {
+        "chars": 1809,
+        "bytes": 1891,
+        "han_chars": 34,
+        "other_chars": 1775,
+        "estimated_tokens": 489.7719298245614
+      },
+      "body": {
+        "chars": 3649,
+        "bytes": 3649,
+        "han_chars": 0,
+        "other_chars": 3649,
+        "estimated_tokens": 960.2631578947369
+      }
+    },
+    {
+      "path": "skills/cocosair-audio-video/references/audio-service.md",
+      "sha256": "70c0940c433b9eb7e5be90e15f6e4509b3386f9d79836b538f6b3fe5a3882730",
+      "full": {
+        "chars": 9199,
+        "bytes": 9199,
+        "han_chars": 0,
+        "other_chars": 9199,
+        "estimated_tokens": 2420.789473684211
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-audio-video/references/common-mistakes.md",
+      "sha256": "99a1a2cf49eac89dee220e5eb6c866e3facc82bc1c3cc0d264ce789405581ced",
+      "full": {
+        "chars": 3541,
+        "bytes": 3541,
+        "han_chars": 0,
+        "other_chars": 3541,
+        "estimated_tokens": 931.8421052631579
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-audio-video/references/context.md",
+      "sha256": "eb38a866169404a464edc565386381c0fe6b40eea613a498bd28a17b2d1454ef",
+      "full": {
+        "chars": 1292,
+        "bytes": 1292,
+        "han_chars": 0,
+        "other_chars": 1292,
+        "estimated_tokens": 340
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-audio-video/references/contracts.md",
+      "sha256": "3ab6afd8decf1bb3c8c45dda01adf1587ab498362075dac5fdcdcac57e9c45ac",
+      "full": {
+        "chars": 4090,
+        "bytes": 4090,
+        "han_chars": 0,
+        "other_chars": 4090,
+        "estimated_tokens": 1076.3157894736842
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-audio-video/references/quick-start.md",
+      "sha256": "239c87225c9d2d3a7d061969c37d64246fafeded463706c95d3c4305401c849c",
+      "full": {
+        "chars": 2727,
+        "bytes": 2727,
+        "han_chars": 0,
+        "other_chars": 2727,
+        "estimated_tokens": 717.6315789473684
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-audio-video/references/videoplayer.md",
+      "sha256": "66f8218d1f464da182092ae4313fd248071be1c45d850191c5ad15b162d0a8c4",
+      "full": {
+        "chars": 6679,
+        "bytes": 6679,
+        "han_chars": 0,
+        "other_chars": 6679,
+        "estimated_tokens": 1757.6315789473686
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-audio-video/references/webview.md",
+      "sha256": "3af20f6327c1377c57fa974563ddf83f1de3f927ea387022a54d9c95db3089e4",
+      "full": {
+        "chars": 6647,
+        "bytes": 6647,
+        "han_chars": 0,
+        "other_chars": 6647,
+        "estimated_tokens": 1749.2105263157896
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-camera/SKILL.md",
+      "sha256": "a58e094c8456a56ab65b9c04523a5a331e2f6a3741756b121dff7cfecc987ecd",
+      "full": {
+        "chars": 5930,
+        "bytes": 6040,
+        "han_chars": 49,
+        "other_chars": 5881,
+        "estimated_tokens": 1580.2982456140353
+      },
+      "frontmatter": {
+        "chars": 2224,
+        "bytes": 2334,
+        "han_chars": 49,
+        "other_chars": 2175,
+        "estimated_tokens": 605.0350877192982
+      },
+      "body": {
+        "chars": 3706,
+        "bytes": 3706,
+        "han_chars": 0,
+        "other_chars": 3706,
+        "estimated_tokens": 975.2631578947369
+      }
+    },
+    {
+      "path": "skills/cocosair-camera/references/camera-projection.md",
+      "sha256": "b416b2a2963ee43028d611277696066cf03f19ecbf96493be92a1157451490d0",
+      "full": {
+        "chars": 26174,
+        "bytes": 26174,
+        "han_chars": 0,
+        "other_chars": 26174,
+        "estimated_tokens": 6887.894736842106
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-camera/references/common-mistakes.md",
+      "sha256": "66768042818f0df7968efc4e02223df41486d4b033b6a76f7c1a001d8bf6c72c",
+      "full": {
+        "chars": 3653,
+        "bytes": 3653,
+        "han_chars": 0,
+        "other_chars": 3653,
+        "estimated_tokens": 961.3157894736843
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-camera/references/context.md",
+      "sha256": "f6beea6a97be21b55f7290bc3915e1994079e51eb57c4d5879624ffe53d1b884",
+      "full": {
+        "chars": 1302,
+        "bytes": 1302,
+        "han_chars": 0,
+        "other_chars": 1302,
+        "estimated_tokens": 342.63157894736844
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-camera/references/contracts.md",
+      "sha256": "e907abffebf793b65215aacff457a7554b29dab94289fdb860f93885cbc1bfe5",
+      "full": {
+        "chars": 7494,
+        "bytes": 7494,
+        "han_chars": 0,
+        "other_chars": 7494,
+        "estimated_tokens": 1972.1052631578948
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-camera/references/multi-camera.md",
+      "sha256": "3bdceb75c6dcb69f48cc5b1a6756bd6819c603e0e3ca4e47648376d1e82635dc",
+      "full": {
+        "chars": 13940,
+        "bytes": 13940,
+        "han_chars": 0,
+        "other_chars": 13940,
+        "estimated_tokens": 3668.421052631579
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-camera/references/quick-start.md",
+      "sha256": "4a6d9e06d8b220fc0b36724e93ca603ad61656e36ced22b09a768b0f22c50ad4",
+      "full": {
+        "chars": 2893,
+        "bytes": 2893,
+        "han_chars": 0,
+        "other_chars": 2893,
+        "estimated_tokens": 761.3157894736843
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-camera/references/screen-world.md",
+      "sha256": "3a5eb296ef1e18ffd117979b08aa8328001739356300c96cfb7fc08d0dd84e43",
+      "full": {
+        "chars": 17587,
+        "bytes": 17587,
+        "han_chars": 0,
+        "other_chars": 17587,
+        "estimated_tokens": 4628.1578947368425
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-gltf/SKILL.md",
+      "sha256": "c25f882b9ab1c1d2b10f3e2654bfc5af41c9e9fa017d44e4e434e97b1f40c1d4",
+      "full": {
+        "chars": 7736,
+        "bytes": 7828,
+        "han_chars": 39,
+        "other_chars": 7697,
+        "estimated_tokens": 2051.5263157894738
+      },
+      "frontmatter": {
+        "chars": 1995,
+        "bytes": 2087,
+        "han_chars": 39,
+        "other_chars": 1956,
+        "estimated_tokens": 540.7368421052632
+      },
+      "body": {
+        "chars": 5741,
+        "bytes": 5741,
+        "han_chars": 0,
+        "other_chars": 5741,
+        "estimated_tokens": 1510.7894736842106
+      }
+    },
+    {
+      "path": "skills/cocosair-gltf/references/common-mistakes.md",
+      "sha256": "d50f7b7e19eff8da2ae700f280cb025990b348ecc2fcf1f0b2bb35f8b6795c57",
+      "full": {
+        "chars": 4845,
+        "bytes": 4845,
+        "han_chars": 0,
+        "other_chars": 4845,
+        "estimated_tokens": 1275
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-gltf/references/context.md",
+      "sha256": "c2e60e82544a81284228197e3a52d8d7b433bf32ca3ea35fa8214d8083b4838c",
+      "full": {
+        "chars": 2316,
+        "bytes": 2316,
+        "han_chars": 0,
+        "other_chars": 2316,
+        "estimated_tokens": 609.4736842105264
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-gltf/references/contracts.md",
+      "sha256": "8a9a6ddc354a8a70e4622c6e6294c3d5b11836ba5482ed2c006a246394f4e113",
+      "full": {
+        "chars": 10749,
+        "bytes": 10749,
+        "han_chars": 0,
+        "other_chars": 10749,
+        "estimated_tokens": 2828.684210526316
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-gltf/references/decoders.md",
+      "sha256": "ef29e865c9321c7b0e38d22a9b1b2fc90e5b9f2e4a9610fda0a9908d6f72dac1",
+      "full": {
+        "chars": 16689,
+        "bytes": 16689,
+        "han_chars": 0,
+        "other_chars": 16689,
+        "estimated_tokens": 4391.842105263158
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-gltf/references/diagnostics.md",
+      "sha256": "03aec7efda2a87d7d6c0791a8bb535925046a5c0e19d60f57a2c537fc43922ff",
+      "full": {
+        "chars": 20941,
+        "bytes": 20941,
+        "han_chars": 0,
+        "other_chars": 20941,
+        "estimated_tokens": 5510.789473684211
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-gltf/references/extensions-matrix.md",
+      "sha256": "54e13a8fe8bd33b8d90a023296dc061db0bad7c8cd8437dd5f5af0603d424dca",
+      "full": {
+        "chars": 25029,
+        "bytes": 25029,
+        "han_chars": 0,
+        "other_chars": 25029,
+        "estimated_tokens": 6586.578947368422
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-gltf/references/loader-api.md",
+      "sha256": "8eb6a39af2823db05922e3550119be985c3df69603e96148b96f5f7d5eeda5b8",
+      "full": {
+        "chars": 20188,
+        "bytes": 20188,
+        "han_chars": 0,
+        "other_chars": 20188,
+        "estimated_tokens": 5312.631578947368
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-gltf/references/quick-start.md",
+      "sha256": "8f1017ae6452eb8816f84843592235d2233ee9a643cb6359424de91bd2a467cb",
+      "full": {
+        "chars": 3082,
+        "bytes": 3082,
+        "han_chars": 0,
+        "other_chars": 3082,
+        "estimated_tokens": 811.0526315789474
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-graphics-and-dom/SKILL.md",
+      "sha256": "67ed62281723aa35088350844a0f5d85252c7c7b6e6ff483dbecb7a57ef54125",
+      "full": {
+        "chars": 7516,
+        "bytes": 7598,
+        "han_chars": 33,
+        "other_chars": 7483,
+        "estimated_tokens": 1991.2105263157896
+      },
+      "frontmatter": {
+        "chars": 2247,
+        "bytes": 2329,
+        "han_chars": 33,
+        "other_chars": 2214,
+        "estimated_tokens": 604.6315789473684
+      },
+      "body": {
+        "chars": 5269,
+        "bytes": 5269,
+        "han_chars": 0,
+        "other_chars": 5269,
+        "estimated_tokens": 1386.578947368421
+      }
+    },
+    {
+      "path": "skills/cocosair-graphics-and-dom/references/commands.md",
+      "sha256": "7575ad677353267bdd06a462ee8082b18a9b676875ea3f6966583793f9bda873",
+      "full": {
+        "chars": 4453,
+        "bytes": 4453,
+        "han_chars": 0,
+        "other_chars": 4453,
+        "estimated_tokens": 1171.842105263158
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-graphics-and-dom/references/common-mistakes.md",
+      "sha256": "912321ac26c843e73b40374060247262a93229d9ad0dbe1438c94fe3579f390c",
+      "full": {
+        "chars": 2895,
+        "bytes": 2895,
+        "han_chars": 0,
+        "other_chars": 2895,
+        "estimated_tokens": 761.8421052631579
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-graphics-and-dom/references/context.md",
+      "sha256": "f610feae3800ee8fc0a6782d26f1e5cccd72bd1761def2ffd41f98555ac5eecd",
+      "full": {
+        "chars": 1618,
+        "bytes": 1618,
+        "han_chars": 0,
+        "other_chars": 1618,
+        "estimated_tokens": 425.7894736842105
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-graphics-and-dom/references/contracts.md",
+      "sha256": "da92a7331b52b73111ba2ce2d2ee8042b068764eed30551926ae9a1dd613a5bb",
+      "full": {
+        "chars": 6812,
+        "bytes": 6812,
+        "han_chars": 0,
+        "other_chars": 6812,
+        "estimated_tokens": 1792.6315789473686
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-graphics-and-dom/references/dom-overlay.md",
+      "sha256": "1eab7c386605d8582b6dd8ed922ca39b81c5bc34946a8940a97855a0ae07692f",
+      "full": {
+        "chars": 3546,
+        "bytes": 3546,
+        "han_chars": 0,
+        "other_chars": 3546,
+        "estimated_tokens": 933.1578947368422
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-graphics-and-dom/references/html-source.md",
+      "sha256": "5782e0eaa4d501e4d6f08d0cfd6604d2ccad559be7b7d11cda39310ff0018e8b",
+      "full": {
+        "chars": 4388,
+        "bytes": 4388,
+        "han_chars": 0,
+        "other_chars": 4388,
+        "estimated_tokens": 1154.7368421052631
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-graphics-and-dom/references/quick-start.md",
+      "sha256": "738f6b7d0d17a6b7ae25cd32340267a173816f1f093b9a541626475a38aeedba",
+      "full": {
+        "chars": 3099,
+        "bytes": 3099,
+        "han_chars": 0,
+        "other_chars": 3099,
+        "estimated_tokens": 815.5263157894738
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-graphics-and-dom/references/raster.md",
+      "sha256": "1bcf3112aad6664a369e7ac79268f011625116e2ef6fed2a39058be2a2c8cb97",
+      "full": {
+        "chars": 4310,
+        "bytes": 4310,
+        "han_chars": 0,
+        "other_chars": 4310,
+        "estimated_tokens": 1134.2105263157896
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-graphics-and-dom/references/sprite-mask.md",
+      "sha256": "ec9a40e0585e95e30477b6ab6c90a5cc362b32f527651aaf77cbd4619414f877",
+      "full": {
+        "chars": 3795,
+        "bytes": 3795,
+        "han_chars": 0,
+        "other_chars": 3795,
+        "estimated_tokens": 998.6842105263158
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-graphics-and-dom/references/texture-sprite.md",
+      "sha256": "f3a42d5c84cd42fdaf60c467e69a41a638a3a0cace195eb7a2d4e3b302889037",
+      "full": {
+        "chars": 3214,
+        "bytes": 3214,
+        "han_chars": 0,
+        "other_chars": 3214,
+        "estimated_tokens": 845.7894736842105
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-graphics-and-dom/references/ui-blend.md",
+      "sha256": "79e695881e31a39de94af9496f1990bc9c6360910e6bce04bdd37fff5e3f4a8c",
+      "full": {
+        "chars": 3110,
+        "bytes": 3110,
+        "han_chars": 0,
+        "other_chars": 3110,
+        "estimated_tokens": 818.421052631579
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-graphics-and-dom/references/ui-mesh.md",
+      "sha256": "ebaa4782a4e1495e014e7b918dd21087b8d4cb7178ece700ce32463fc1bac06d",
+      "full": {
+        "chars": 3302,
+        "bytes": 3302,
+        "han_chars": 0,
+        "other_chars": 3302,
+        "estimated_tokens": 868.9473684210527
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-input-action/SKILL.md",
+      "sha256": "3af1f7e23c201cc26ceaf326b859d1f072b0534e710672ff697f2d2b23541310",
+      "full": {
+        "chars": 6451,
+        "bytes": 6539,
+        "han_chars": 37,
+        "other_chars": 6414,
+        "estimated_tokens": 1712.5614035087722
+      },
+      "frontmatter": {
+        "chars": 2464,
+        "bytes": 2552,
+        "han_chars": 37,
+        "other_chars": 2427,
+        "estimated_tokens": 663.3508771929825
+      },
+      "body": {
+        "chars": 3987,
+        "bytes": 3987,
+        "han_chars": 0,
+        "other_chars": 3987,
+        "estimated_tokens": 1049.2105263157896
+      }
+    },
+    {
+      "path": "skills/cocosair-input-action/references/action-input.md",
+      "sha256": "ffa3eb494217626c623658a6b72fd0d867410aa073815d72d9d82bcd816023d6",
+      "full": {
+        "chars": 5643,
+        "bytes": 5643,
+        "han_chars": 0,
+        "other_chars": 5643,
+        "estimated_tokens": 1485
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-input-action/references/action-state.md",
+      "sha256": "5d6166fcfe4e5ef4a5763cee2ca7ac32ba98a9d23fde0a2b245dcb0fad779013",
+      "full": {
+        "chars": 6480,
+        "bytes": 6480,
+        "han_chars": 0,
+        "other_chars": 6480,
+        "estimated_tokens": 1705.2631578947369
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-input-action/references/common-mistakes.md",
+      "sha256": "3b9f113c31cd566b58af6cf7d24bd35a5ce0a7b808992cce9377da0ae66a644d",
+      "full": {
+        "chars": 2063,
+        "bytes": 2063,
+        "han_chars": 0,
+        "other_chars": 2063,
+        "estimated_tokens": 542.8947368421053
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-input-action/references/context.md",
+      "sha256": "2b2c4ca06aae68db7ad36261a4a49f6ec242f3a192f9c592d7d8fd5d3f3d4e74",
+      "full": {
+        "chars": 1408,
+        "bytes": 1408,
+        "han_chars": 0,
+        "other_chars": 1408,
+        "estimated_tokens": 370.5263157894737
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-input-action/references/contracts.md",
+      "sha256": "08e3d8a28101f1a6ca1e3716aad2e6f2bc405205c20b7240bbfa2d5c018f3fbe",
+      "full": {
+        "chars": 4564,
+        "bytes": 4564,
+        "han_chars": 0,
+        "other_chars": 4564,
+        "estimated_tokens": 1201.0526315789475
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-input-action/references/native-input.md",
+      "sha256": "974dad60d80246a7daf037c4cf753820903d5695a597d884f4cec7929c8331dc",
+      "full": {
+        "chars": 4438,
+        "bytes": 4438,
+        "han_chars": 0,
+        "other_chars": 4438,
+        "estimated_tokens": 1167.8947368421054
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-input-action/references/quick-start.md",
+      "sha256": "17e4d606287edc85d7408ef3e13e83efd84b478322db1536d6d71009e0aefd3c",
+      "full": {
+        "chars": 3439,
+        "bytes": 3439,
+        "han_chars": 0,
+        "other_chars": 3439,
+        "estimated_tokens": 905
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-input-action/references/scene-stack.md",
+      "sha256": "ed18cd03a081a21e9e1e0e0e686f94638b9c464711fcfe259806df5b5125da76",
+      "full": {
+        "chars": 3720,
+        "bytes": 3720,
+        "han_chars": 0,
+        "other_chars": 3720,
+        "estimated_tokens": 978.9473684210527
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-materials-effects/SKILL.md",
+      "sha256": "883a75ff930251f257a682e73431b5cda9b487823294446bcc1ca0a3155472b5",
+      "full": {
+        "chars": 7598,
+        "bytes": 7674,
+        "han_chars": 31,
+        "other_chars": 7567,
+        "estimated_tokens": 2011.9824561403511
+      },
+      "frontmatter": {
+        "chars": 2597,
+        "bytes": 2673,
+        "han_chars": 31,
+        "other_chars": 2566,
+        "estimated_tokens": 695.9298245614035
+      },
+      "body": {
+        "chars": 5001,
+        "bytes": 5001,
+        "han_chars": 0,
+        "other_chars": 5001,
+        "estimated_tokens": 1316.0526315789475
+      }
+    },
+    {
+      "path": "skills/cocosair-materials-effects/references/builtin-effects.md",
+      "sha256": "3be2f817dafd47f1c0eac05c684895c6ea8087faa41e75a211ba606d34e53d2d",
+      "full": {
+        "chars": 11591,
+        "bytes": 11591,
+        "han_chars": 0,
+        "other_chars": 11591,
+        "estimated_tokens": 3050.263157894737
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-materials-effects/references/common-mistakes.md",
+      "sha256": "6da0e330049e39b7fd88367a4e9bd5df889ff8310ead32d50a3617fbe28567e2",
+      "full": {
+        "chars": 6468,
+        "bytes": 6468,
+        "han_chars": 0,
+        "other_chars": 6468,
+        "estimated_tokens": 1702.1052631578948
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-materials-effects/references/context.md",
+      "sha256": "8301b6b50d40238c0b760f457e1919884767f0d8af659ba4b01760b8cc6e8efa",
+      "full": {
+        "chars": 2054,
+        "bytes": 2054,
+        "han_chars": 0,
+        "other_chars": 2054,
+        "estimated_tokens": 540.5263157894738
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-materials-effects/references/contracts.md",
+      "sha256": "39d947250d5de69eee21baad79e3341ceb5baa8c9f9adf5484184007acca31ef",
+      "full": {
+        "chars": 7594,
+        "bytes": 7594,
+        "han_chars": 0,
+        "other_chars": 7594,
+        "estimated_tokens": 1998.421052631579
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-materials-effects/references/custom-glsl.md",
+      "sha256": "f7dd8ecb365c4853472658b1cac1250100559f2db423afb3a33f72f6fece67ca",
+      "full": {
+        "chars": 17331,
+        "bytes": 17331,
+        "han_chars": 0,
+        "other_chars": 17331,
+        "estimated_tokens": 4560.789473684211
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-materials-effects/references/defines.md",
+      "sha256": "3128686ab300cefa5c0fc6d390d84471acb652eceec2fefb678cb5914f165872",
+      "full": {
+        "chars": 20056,
+        "bytes": 20056,
+        "han_chars": 0,
+        "other_chars": 20056,
+        "estimated_tokens": 5277.894736842106
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-materials-effects/references/property-types.md",
+      "sha256": "8536b3799816446e3b9fdcbb3babc491fa9f1f52e91386a6c46bc733a357ee8c",
+      "full": {
+        "chars": 17740,
+        "bytes": 17740,
+        "han_chars": 0,
+        "other_chars": 17740,
+        "estimated_tokens": 4668.421052631579
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-materials-effects/references/quick-start.md",
+      "sha256": "78a951e321951c545d374ce1a8ccee149dfc694a562dd725b9c051f6a5cfac73",
+      "full": {
+        "chars": 3380,
+        "bytes": 3380,
+        "han_chars": 0,
+        "other_chars": 3380,
+        "estimated_tokens": 889.4736842105264
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-math/SKILL.md",
+      "sha256": "13c663bdca4dcc2f4e8e2a48e779c24cd40e8e59869dc4a4ac06125afe5cd28f",
+      "full": {
+        "chars": 7117,
+        "bytes": 7217,
+        "han_chars": 42,
+        "other_chars": 7075,
+        "estimated_tokens": 1889.842105263158
+      },
+      "frontmatter": {
+        "chars": 2566,
+        "bytes": 2666,
+        "han_chars": 42,
+        "other_chars": 2524,
+        "estimated_tokens": 692.2105263157895
+      },
+      "body": {
+        "chars": 4551,
+        "bytes": 4551,
+        "han_chars": 0,
+        "other_chars": 4551,
+        "estimated_tokens": 1197.6315789473686
+      }
+    },
+    {
+      "path": "skills/cocosair-math/references/common-mistakes.md",
+      "sha256": "6e1ecdbaf3c363802cc5e1aa00cd57d5c3aca9fe428ebf10e05acbdd4dea24d9",
+      "full": {
+        "chars": 4069,
+        "bytes": 4069,
+        "han_chars": 0,
+        "other_chars": 4069,
+        "estimated_tokens": 1070.7894736842106
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-math/references/context.md",
+      "sha256": "897f12780e8a6b019e16da4f0470843ced339daf73372ab68e05b756777be64c",
+      "full": {
+        "chars": 1435,
+        "bytes": 1435,
+        "han_chars": 0,
+        "other_chars": 1435,
+        "estimated_tokens": 377.63157894736844
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-math/references/contracts.md",
+      "sha256": "00f8653e33dd48b98ff524c39a0cffe52de3b16f8d23d4638dca9c461039cd2a",
+      "full": {
+        "chars": 5710,
+        "bytes": 5710,
+        "han_chars": 0,
+        "other_chars": 5710,
+        "estimated_tokens": 1502.6315789473686
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-math/references/easing-random.md",
+      "sha256": "df3353f56a5ea31c9e681a040d6287dcdc11c17cfdfbce3e38f5060a73651fb6",
+      "full": {
+        "chars": 39218,
+        "bytes": 39218,
+        "han_chars": 0,
+        "other_chars": 39218,
+        "estimated_tokens": 10320.526315789473
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-math/references/quick-start.md",
+      "sha256": "20cc1090dc034c03311e38a06599b38ee5fe091204f9223f3888ff427c475a24",
+      "full": {
+        "chars": 2653,
+        "bytes": 2653,
+        "han_chars": 0,
+        "other_chars": 2653,
+        "estimated_tokens": 698.1578947368421
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-math/references/transforms.md",
+      "sha256": "48cff1765dd525df4cd801c69da8036e69726b94b98d316c0cd2cbf19d317b06",
+      "full": {
+        "chars": 31085,
+        "bytes": 31085,
+        "han_chars": 0,
+        "other_chars": 31085,
+        "estimated_tokens": 8180.263157894738
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-math/references/value-types.md",
+      "sha256": "737e39276fa01403ce56f6bb2690361a7289ebae50c780decf70ca41b13f9928",
+      "full": {
+        "chars": 29962,
+        "bytes": 29962,
+        "han_chars": 0,
+        "other_chars": 29962,
+        "estimated_tokens": 7884.736842105263
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-performance/SKILL.md",
+      "sha256": "bcbd7bf2c6df0ffb139dd63f560b28a92b1010ae4e21250c84866c4738d130ed",
+      "full": {
+        "chars": 8481,
+        "bytes": 8579,
+        "han_chars": 43,
+        "other_chars": 8438,
+        "estimated_tokens": 2249.1929824561403
+      },
+      "frontmatter": {
+        "chars": 2550,
+        "bytes": 2648,
+        "han_chars": 43,
+        "other_chars": 2507,
+        "estimated_tokens": 688.4035087719299
+      },
+      "body": {
+        "chars": 5931,
+        "bytes": 5931,
+        "han_chars": 0,
+        "other_chars": 5931,
+        "estimated_tokens": 1560.7894736842106
+      }
+    },
+    {
+      "path": "skills/cocosair-performance/references/batching-routes.md",
+      "sha256": "4d48710116fe8764a2c1e9f8e74e670e3d0869c2de3c3a629c06352ee8d4f2ce",
+      "full": {
+        "chars": 13882,
+        "bytes": 13882,
+        "han_chars": 0,
+        "other_chars": 13882,
+        "estimated_tokens": 3653.157894736842
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-performance/references/common-mistakes.md",
+      "sha256": "29f5c28e5624b3f888a56ac82e159258fcafc1b734e564211773ac2d5863b80d",
+      "full": {
+        "chars": 4597,
+        "bytes": 4597,
+        "han_chars": 0,
+        "other_chars": 4597,
+        "estimated_tokens": 1209.7368421052631
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-performance/references/context.md",
+      "sha256": "36e5751a88fb8ac1435445d165bf4ddfa0f61df1cccb809c4b8a93b09a9951eb",
+      "full": {
+        "chars": 2458,
+        "bytes": 2458,
+        "han_chars": 0,
+        "other_chars": 2458,
+        "estimated_tokens": 646.8421052631579
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-performance/references/contracts.md",
+      "sha256": "ddff6b9425a7913a0816edcba1bd88a8c335580ead3390db0edda6d88c398e27",
+      "full": {
+        "chars": 9652,
+        "bytes": 9652,
+        "han_chars": 0,
+        "other_chars": 9652,
+        "estimated_tokens": 2540
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-performance/references/dynamic-atlas.md",
+      "sha256": "f1c185c842391541dff9b7e8faf44059cb9003f3c992184bafb054ea782713d4",
+      "full": {
+        "chars": 10566,
+        "bytes": 10566,
+        "han_chars": 0,
+        "other_chars": 10566,
+        "estimated_tokens": 2780.5263157894738
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-performance/references/instancing.md",
+      "sha256": "5a2a534d917752f5cb046b6a91feec735b3416b3322847a6ef74140f106e2583",
+      "full": {
+        "chars": 9030,
+        "bytes": 9030,
+        "han_chars": 0,
+        "other_chars": 9030,
+        "estimated_tokens": 2376.315789473684
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-performance/references/profiles.md",
+      "sha256": "83e35f16aeac08b19fd45d24c31efa7c61a572d4fc9af73e1be5dbd6c104f0ce",
+      "full": {
+        "chars": 13177,
+        "bytes": 13177,
+        "han_chars": 0,
+        "other_chars": 13177,
+        "estimated_tokens": 3467.631578947369
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-performance/references/quick-start.md",
+      "sha256": "02f60f5c2f2871f31ec615e08a98ccec7e5f4156003185519b3cd34090f89ac3",
+      "full": {
+        "chars": 2723,
+        "bytes": 2723,
+        "han_chars": 0,
+        "other_chars": 2723,
+        "estimated_tokens": 716.578947368421
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-physics/SKILL.md",
+      "sha256": "bd115ca26966eb96e4ae472a64f4ac391c6b880a7295647cb5043bb14440def7",
+      "full": {
+        "chars": 6253,
+        "bytes": 6341,
+        "han_chars": 38,
+        "other_chars": 6215,
+        "estimated_tokens": 1660.859649122807
+      },
+      "frontmatter": {
+        "chars": 2436,
+        "bytes": 2524,
+        "han_chars": 38,
+        "other_chars": 2398,
+        "estimated_tokens": 656.3859649122808
+      },
+      "body": {
+        "chars": 3817,
+        "bytes": 3817,
+        "han_chars": 0,
+        "other_chars": 3817,
+        "estimated_tokens": 1004.4736842105264
+      }
+    },
+    {
+      "path": "skills/cocosair-physics/references/2d-box2d.md",
+      "sha256": "3d05440db7bb0b96ddae7512ee2658089139169aa224ba094f24679d0d98e1f4",
+      "full": {
+        "chars": 5655,
+        "bytes": 5655,
+        "han_chars": 0,
+        "other_chars": 5655,
+        "estimated_tokens": 1488.157894736842
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-physics/references/3d-contracts.md",
+      "sha256": "1cb30600ae9e1ed886ffb3b0be5fe2f4d2ec145fed9f1da0d6765b7e54b4b937",
+      "full": {
+        "chars": 6602,
+        "bytes": 6602,
+        "han_chars": 0,
+        "other_chars": 6602,
+        "estimated_tokens": 1737.3684210526317
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-physics/references/backend-selection.md",
+      "sha256": "9d71eff1dad6fd74d556124d379dad10a3457bf445bd5bb22bfb6b52dec885b3",
+      "full": {
+        "chars": 5944,
+        "bytes": 5944,
+        "han_chars": 0,
+        "other_chars": 5944,
+        "estimated_tokens": 1564.2105263157896
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-physics/references/common-mistakes.md",
+      "sha256": "aa6b83c039335a25b0d0a4f66351f7a978a193150db17070e953d45b8395c09b",
+      "full": {
+        "chars": 2973,
+        "bytes": 2973,
+        "han_chars": 0,
+        "other_chars": 2973,
+        "estimated_tokens": 782.3684210526316
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-physics/references/context.md",
+      "sha256": "a941678e2e2284deaa20b2cf96084cb85c1c1ae0eac2846277f999e304c99167",
+      "full": {
+        "chars": 1130,
+        "bytes": 1130,
+        "han_chars": 0,
+        "other_chars": 1130,
+        "estimated_tokens": 297.3684210526316
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-physics/references/contracts.md",
+      "sha256": "042e7ce9349addb55b3ffea99c52642dda027da9d1d41874bd148aa4152f213d",
+      "full": {
+        "chars": 5122,
+        "bytes": 5122,
+        "han_chars": 0,
+        "other_chars": 5122,
+        "estimated_tokens": 1347.8947368421054
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-physics/references/quick-start.md",
+      "sha256": "e143566c84f5b18964459259289cd7a3713f37d4e878659f5576df3e3500017d",
+      "full": {
+        "chars": 3450,
+        "bytes": 3450,
+        "han_chars": 0,
+        "other_chars": 3450,
+        "estimated_tokens": 907.8947368421053
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-primitives-mesh/SKILL.md",
+      "sha256": "16e21b34c2f348e0252d6b8845f7133bf9f0b8b61e1311139721cc99376684a1",
+      "full": {
+        "chars": 7090,
+        "bytes": 7182,
+        "han_chars": 41,
+        "other_chars": 7049,
+        "estimated_tokens": 1882.3333333333333
+      },
+      "frontmatter": {
+        "chars": 2381,
+        "bytes": 2473,
+        "han_chars": 41,
+        "other_chars": 2340,
+        "estimated_tokens": 643.1228070175439
+      },
+      "body": {
+        "chars": 4709,
+        "bytes": 4709,
+        "han_chars": 0,
+        "other_chars": 4709,
+        "estimated_tokens": 1239.2105263157896
+      }
+    },
+    {
+      "path": "skills/cocosair-primitives-mesh/references/common-mistakes.md",
+      "sha256": "bd52b3af95d10a2706371a343b76f75a955aa1c91703d285d175e29703d443a1",
+      "full": {
+        "chars": 4870,
+        "bytes": 4870,
+        "han_chars": 0,
+        "other_chars": 4870,
+        "estimated_tokens": 1281.578947368421
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-primitives-mesh/references/context.md",
+      "sha256": "b0bb797cb1f429bd0361f7de30ab26deef4c57143f3dcf30ebd0078b5ea99396",
+      "full": {
+        "chars": 1759,
+        "bytes": 1759,
+        "han_chars": 0,
+        "other_chars": 1759,
+        "estimated_tokens": 462.89473684210526
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-primitives-mesh/references/contracts.md",
+      "sha256": "a829a622c197976fafea29d1c1648974f3f2101943f397a00422c83afa44c6de",
+      "full": {
+        "chars": 5839,
+        "bytes": 5839,
+        "han_chars": 0,
+        "other_chars": 5839,
+        "estimated_tokens": 1536.578947368421
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-primitives-mesh/references/create-primitive-geometry.md",
+      "sha256": "0d8323ed1bf03db16da5e46d113b279492c0a9f102765107f1abcdd1444734e1",
+      "full": {
+        "chars": 8900,
+        "bytes": 8900,
+        "han_chars": 0,
+        "other_chars": 8900,
+        "estimated_tokens": 2342.105263157895
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-primitives-mesh/references/mesh-attributes.md",
+      "sha256": "7f6b3ca686dfa84f69db86b95493302dd2b1c26ce82e02b1b05d588b5d07907e",
+      "full": {
+        "chars": 15767,
+        "bytes": 15767,
+        "han_chars": 0,
+        "other_chars": 15767,
+        "estimated_tokens": 4149.21052631579
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-primitives-mesh/references/primitive-shapes.md",
+      "sha256": "d4f3f8acaeceacba2662f13eddf691ef296c599b00f925622e63c68094504c7b",
+      "full": {
+        "chars": 11381,
+        "bytes": 11381,
+        "han_chars": 0,
+        "other_chars": 11381,
+        "estimated_tokens": 2995
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-primitives-mesh/references/quick-start.md",
+      "sha256": "06d37217ed13c67e0384db5c2c4c78bb49c56ddde3907c2389889ad29c10463c",
+      "full": {
+        "chars": 3040,
+        "bytes": 3040,
+        "han_chars": 0,
+        "other_chars": 3040,
+        "estimated_tokens": 800
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-project-setup/SKILL.md",
+      "sha256": "e913704bdf7654c9ad567fd316aa0ca346b9be5f5a8ea0819319bfc6c1e189f0",
+      "full": {
+        "chars": 5089,
+        "bytes": 5183,
+        "han_chars": 40,
+        "other_chars": 5049,
+        "estimated_tokens": 1355.3508771929826
+      },
+      "frontmatter": {
+        "chars": 1858,
+        "bytes": 1952,
+        "han_chars": 40,
+        "other_chars": 1818,
+        "estimated_tokens": 505.08771929824564
+      },
+      "body": {
+        "chars": 3231,
+        "bytes": 3231,
+        "han_chars": 0,
+        "other_chars": 3231,
+        "estimated_tokens": 850.2631578947369
+      }
+    },
+    {
+      "path": "skills/cocosair-project-setup/references/common-mistakes.md",
+      "sha256": "8fb1bf052263deae77f0fee8f584c68c429e85403ac3c16351c067edd371bce2",
+      "full": {
+        "chars": 2524,
+        "bytes": 2524,
+        "han_chars": 0,
+        "other_chars": 2524,
+        "estimated_tokens": 664.2105263157895
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-project-setup/references/context.md",
+      "sha256": "df29a0e1bba81e10caa6798806760dda4fc564b153d232cec0001e11060def1f",
+      "full": {
+        "chars": 992,
+        "bytes": 992,
+        "han_chars": 0,
+        "other_chars": 992,
+        "estimated_tokens": 261.0526315789474
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-project-setup/references/contracts.md",
+      "sha256": "751e34aa0663e7ddd07225363d2d870e58e43edcf107135df225678d31df3bba",
+      "full": {
+        "chars": 2125,
+        "bytes": 2125,
+        "han_chars": 0,
+        "other_chars": 2125,
+        "estimated_tokens": 559.2105263157895
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-project-setup/references/entries.md",
+      "sha256": "00d9555f14fa2d19fd9cfc594a52e6cbe5591abd5b5ef6da235b5908fcb59fa1",
+      "full": {
+        "chars": 1712,
+        "bytes": 1712,
+        "han_chars": 0,
+        "other_chars": 1712,
+        "estimated_tokens": 450.5263157894737
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-project-setup/references/feature-flags.md",
+      "sha256": "a4baa21dc3cce983c8c076ee787ffc107db369f734480d3aa4324153e09c97df",
+      "full": {
+        "chars": 7850,
+        "bytes": 7850,
+        "han_chars": 0,
+        "other_chars": 7850,
+        "estimated_tokens": 2065.7894736842104
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-project-setup/references/html-shell.md",
+      "sha256": "2437616db1242f3014c184cc8ca040454b3375f13c9f477024cdab116633eab3",
+      "full": {
+        "chars": 4128,
+        "bytes": 4128,
+        "han_chars": 0,
+        "other_chars": 4128,
+        "estimated_tokens": 1086.3157894736842
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-project-setup/references/quick-start.md",
+      "sha256": "f457a2faa7297306144dcc9fcc168a24c8e390c0fd07e83706065ed38f45e6a6",
+      "full": {
+        "chars": 2088,
+        "bytes": 2088,
+        "han_chars": 0,
+        "other_chars": 2088,
+        "estimated_tokens": 549.4736842105264
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-rendering/SKILL.md",
+      "sha256": "2ecaa1fa32de512ecb0ebb74a87b3b9dc425ef09dbf370a65a1f9aea4e6cc109",
+      "full": {
+        "chars": 8388,
+        "bytes": 8482,
+        "han_chars": 38,
+        "other_chars": 8350,
+        "estimated_tokens": 2222.701754385965
+      },
+      "frontmatter": {
+        "chars": 2548,
+        "bytes": 2642,
+        "han_chars": 38,
+        "other_chars": 2510,
+        "estimated_tokens": 685.8596491228071
+      },
+      "body": {
+        "chars": 5840,
+        "bytes": 5840,
+        "han_chars": 0,
+        "other_chars": 5840,
+        "estimated_tokens": 1536.842105263158
+      }
+    },
+    {
+      "path": "skills/cocosair-rendering/references/color-contract.md",
+      "sha256": "9de8bddad717705d292a0080348d079d531acab51d7d0b3e37318f69fc6b2444",
+      "full": {
+        "chars": 30893,
+        "bytes": 30893,
+        "han_chars": 0,
+        "other_chars": 30893,
+        "estimated_tokens": 8129.736842105263
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-rendering/references/common-mistakes.md",
+      "sha256": "efb27584a0f384008b865ee721fef87b16ecc56e1488f709ad1da0dc7a7fa541",
+      "full": {
+        "chars": 5888,
+        "bytes": 5888,
+        "han_chars": 0,
+        "other_chars": 5888,
+        "estimated_tokens": 1549.4736842105265
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-rendering/references/context.md",
+      "sha256": "392709473a0a1129b47e494ada456ab685790b42e9227e02b57bbc25f48b4a5a",
+      "full": {
+        "chars": 2111,
+        "bytes": 2111,
+        "han_chars": 0,
+        "other_chars": 2111,
+        "estimated_tokens": 555.5263157894738
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-rendering/references/contracts.md",
+      "sha256": "e64d1f4894a288b5b098d26e32f02e6c6fe8651e0197fefcf2adb6efadf6ecd6",
+      "full": {
+        "chars": 9421,
+        "bytes": 9421,
+        "han_chars": 0,
+        "other_chars": 9421,
+        "estimated_tokens": 2479.2105263157896
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-rendering/references/lighting-units.md",
+      "sha256": "4008359e0472e965874a8a164b5d0bc4709c1bca24d08f6b68ae92ecd20132c1",
+      "full": {
+        "chars": 14228,
+        "bytes": 14228,
+        "han_chars": 0,
+        "other_chars": 14228,
+        "estimated_tokens": 3744.2105263157896
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-rendering/references/pipeline-reachability.md",
+      "sha256": "410b20eb1f02c0d2d9349ef7caae60e0d483f4f62f525a8224265c6845050d83",
+      "full": {
+        "chars": 41393,
+        "bytes": 41393,
+        "han_chars": 0,
+        "other_chars": 41393,
+        "estimated_tokens": 10892.894736842105
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-rendering/references/quick-start.md",
+      "sha256": "74e68ed95da14fb2504c79fe21b765f05330e21d2e3035151db84a2e43b10214",
+      "full": {
+        "chars": 3686,
+        "bytes": 3686,
+        "han_chars": 0,
+        "other_chars": 3686,
+        "estimated_tokens": 970
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-rendering/references/render-target.md",
+      "sha256": "8f7b0cd474c6f2e5505fd7404a7c5957519342b5e00b4279a987e940925cd011",
+      "full": {
+        "chars": 16676,
+        "bytes": 16676,
+        "han_chars": 0,
+        "other_chars": 16676,
+        "estimated_tokens": 4388.421052631579
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-rendering/references/shadow-matrix.md",
+      "sha256": "9257147cb7f00db9d946ec38b58742f545eb3f414f12789469f4709e40f71d7c",
+      "full": {
+        "chars": 14073,
+        "bytes": 14073,
+        "han_chars": 0,
+        "other_chars": 14073,
+        "estimated_tokens": 3703.421052631579
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-scene-graph/SKILL.md",
+      "sha256": "bdfdb9af2f1a9a71e377f739c7592a7b7fb45be92928ee32f9509a8594715942",
+      "full": {
+        "chars": 6060,
+        "bytes": 6160,
+        "han_chars": 42,
+        "other_chars": 6018,
+        "estimated_tokens": 1611.6842105263158
+      },
+      "frontmatter": {
+        "chars": 2350,
+        "bytes": 2450,
+        "han_chars": 42,
+        "other_chars": 2308,
+        "estimated_tokens": 635.3684210526316
+      },
+      "body": {
+        "chars": 3710,
+        "bytes": 3710,
+        "han_chars": 0,
+        "other_chars": 3710,
+        "estimated_tokens": 976.3157894736843
+      }
+    },
+    {
+      "path": "skills/cocosair-scene-graph/references/common-mistakes.md",
+      "sha256": "cc758900c3a384a0bd0ab984032a8309e28cb5dfc14e170c153e3ec88533716d",
+      "full": {
+        "chars": 4708,
+        "bytes": 4708,
+        "han_chars": 0,
+        "other_chars": 4708,
+        "estimated_tokens": 1238.9473684210527
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-scene-graph/references/context.md",
+      "sha256": "3ab7b525f46866d7fd4b86ca3271c3a2b6a01fd6dc8bb15fa72afe2f41976548",
+      "full": {
+        "chars": 1366,
+        "bytes": 1366,
+        "han_chars": 0,
+        "other_chars": 1366,
+        "estimated_tokens": 359.47368421052636
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-scene-graph/references/contracts.md",
+      "sha256": "19f741371dc948f411bd218937596fc6e7a93a6563834c715d446e36d171132a",
+      "full": {
+        "chars": 5648,
+        "bytes": 5648,
+        "han_chars": 0,
+        "other_chars": 5648,
+        "estimated_tokens": 1486.3157894736844
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-scene-graph/references/layers.md",
+      "sha256": "702c118f9e150b7234129da15126d974616d79dbb5f4308e4b5841feb3beb96a",
+      "full": {
+        "chars": 8457,
+        "bytes": 8457,
+        "han_chars": 0,
+        "other_chars": 8457,
+        "estimated_tokens": 2225.5263157894738
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-scene-graph/references/node-events.md",
+      "sha256": "2d5dba56a978f83254a9075c78aca718985da6f341752f83a5437f68cf8bc28e",
+      "full": {
+        "chars": 18111,
+        "bytes": 18111,
+        "han_chars": 0,
+        "other_chars": 18111,
+        "estimated_tokens": 4766.0526315789475
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-scene-graph/references/node-ops.md",
+      "sha256": "dabd2f569f57254cb3cfe0c368c4cf401bd68f20e3ca096712edeccac47a5c56",
+      "full": {
+        "chars": 26256,
+        "bytes": 26256,
+        "han_chars": 0,
+        "other_chars": 26256,
+        "estimated_tokens": 6909.473684210527
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-scene-graph/references/quick-start.md",
+      "sha256": "2977114af27cf64f5390d6e2989838844edecff48e2cb3bc1dc180481b04f39c",
+      "full": {
+        "chars": 2064,
+        "bytes": 2064,
+        "han_chars": 0,
+        "other_chars": 2064,
+        "estimated_tokens": 543.1578947368421
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-scene-graph/references/scene-globals.md",
+      "sha256": "a1682cb0034837e6b106ef6c777bd409d1c32076f5fcaa5d373125ed7ef00114",
+      "full": {
+        "chars": 11829,
+        "bytes": 11829,
+        "han_chars": 0,
+        "other_chars": 11829,
+        "estimated_tokens": 3112.8947368421054
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-skinning-morph/SKILL.md",
+      "sha256": "60838b1c1d4369f4a0a870369534b1978275a64c82ba384fc6a597210745cc62",
+      "full": {
+        "chars": 6326,
+        "bytes": 6406,
+        "han_chars": 34,
+        "other_chars": 6292,
+        "estimated_tokens": 1678.4561403508774
+      },
+      "frontmatter": {
+        "chars": 2231,
+        "bytes": 2311,
+        "han_chars": 34,
+        "other_chars": 2197,
+        "estimated_tokens": 600.8245614035087
+      },
+      "body": {
+        "chars": 4095,
+        "bytes": 4095,
+        "han_chars": 0,
+        "other_chars": 4095,
+        "estimated_tokens": 1077.6315789473686
+      }
+    },
+    {
+      "path": "skills/cocosair-skinning-morph/references/bind-pose.md",
+      "sha256": "c3950e32e806a7b77fc3daf96ee3c8ce8731e42c542e27340af8d2b4b3f10134",
+      "full": {
+        "chars": 8847,
+        "bytes": 8847,
+        "han_chars": 0,
+        "other_chars": 8847,
+        "estimated_tokens": 2328.157894736842
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-skinning-morph/references/common-mistakes.md",
+      "sha256": "8737b427486c817f72f72313aa4bb674957b3a167b6b4ef8d1a0b7e5a0359e35",
+      "full": {
+        "chars": 3542,
+        "bytes": 3542,
+        "han_chars": 0,
+        "other_chars": 3542,
+        "estimated_tokens": 932.1052631578948
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-skinning-morph/references/context.md",
+      "sha256": "454ff264b0d393d05d5e58c69c4f84fb0b8e5d7fae80fc18b53e16fc2277db2b",
+      "full": {
+        "chars": 1619,
+        "bytes": 1619,
+        "han_chars": 0,
+        "other_chars": 1619,
+        "estimated_tokens": 426.0526315789474
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-skinning-morph/references/contracts.md",
+      "sha256": "abd45bfee9ee483c4ea985983e5162dacd14bf26ea968e8ad8a74cbaa4e69fe0",
+      "full": {
+        "chars": 6611,
+        "bytes": 6611,
+        "han_chars": 0,
+        "other_chars": 6611,
+        "estimated_tokens": 1739.7368421052633
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-skinning-morph/references/joint-paths.md",
+      "sha256": "c7862b4adfd431ed8302bea3d3a0c2eec65a2268431ac65cb99dfcb4bd3079e6",
+      "full": {
+        "chars": 9696,
+        "bytes": 9696,
+        "han_chars": 0,
+        "other_chars": 9696,
+        "estimated_tokens": 2551.5789473684213
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-skinning-morph/references/morph.md",
+      "sha256": "7ddde491b5fd504a1b2a809d2fe397753a093880fa10248d1d561363efd15bb7",
+      "full": {
+        "chars": 11709,
+        "bytes": 11709,
+        "han_chars": 0,
+        "other_chars": 11709,
+        "estimated_tokens": 3081.315789473684
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-skinning-morph/references/quick-start.md",
+      "sha256": "fa91c9483105e16ddcb8fc3e201dcad834b66c1f31478de0cb5188ef21df8d39",
+      "full": {
+        "chars": 5509,
+        "bytes": 5509,
+        "han_chars": 0,
+        "other_chars": 5509,
+        "estimated_tokens": 1449.7368421052631
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-ui-2d/SKILL.md",
+      "sha256": "8295e91e2bf59721ae2d77d213395e13d3b6f4b805c801c36a6783f17c8545ec",
+      "full": {
+        "chars": 6903,
+        "bytes": 6977,
+        "han_chars": 30,
+        "other_chars": 6873,
+        "estimated_tokens": 1828.6842105263158
+      },
+      "frontmatter": {
+        "chars": 2519,
+        "bytes": 2593,
+        "han_chars": 30,
+        "other_chars": 2489,
+        "estimated_tokens": 675
+      },
+      "body": {
+        "chars": 4384,
+        "bytes": 4384,
+        "han_chars": 0,
+        "other_chars": 4384,
+        "estimated_tokens": 1153.6842105263158
+      }
+    },
+    {
+      "path": "skills/cocosair-ui-2d/references/canvas-widget-layout.md",
+      "sha256": "a77af30ab1c76459747ee7b7c069022ab06699a008ebc4ec0ecf94d06e19ff79",
+      "full": {
+        "chars": 5442,
+        "bytes": 5442,
+        "han_chars": 0,
+        "other_chars": 5442,
+        "estimated_tokens": 1432.1052631578948
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-ui-2d/references/common-mistakes.md",
+      "sha256": "fced11650fdaf00992762efca7679475d9046de582567ca1aea94678697cee48",
+      "full": {
+        "chars": 2467,
+        "bytes": 2467,
+        "han_chars": 0,
+        "other_chars": 2467,
+        "estimated_tokens": 649.2105263157895
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-ui-2d/references/context.md",
+      "sha256": "9d7b02bd6c8bd5c84db67c6ca61f9f57f4d127e5f2a51981665e7c06f3702e55",
+      "full": {
+        "chars": 1573,
+        "bytes": 1573,
+        "han_chars": 0,
+        "other_chars": 1573,
+        "estimated_tokens": 413.94736842105266
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-ui-2d/references/contracts.md",
+      "sha256": "d446ba8a9cbd461bf222067d91adc3fceeebdb535ad83d9ee4e1a5c95d238ce4",
+      "full": {
+        "chars": 4385,
+        "bytes": 4385,
+        "han_chars": 0,
+        "other_chars": 4385,
+        "estimated_tokens": 1153.9473684210527
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-ui-2d/references/label-and-text.md",
+      "sha256": "def53c7d508542d96e1bc0b3036972ec540444c4fee2e759d8114de666321cdb",
+      "full": {
+        "chars": 5224,
+        "bytes": 5224,
+        "han_chars": 0,
+        "other_chars": 5224,
+        "estimated_tokens": 1374.7368421052631
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-ui-2d/references/quick-start.md",
+      "sha256": "dd8604f583f5d0896a5cb35114a0f9eeaf8bce7d2350da0ce49e4cf0e58e0c13",
+      "full": {
+        "chars": 2674,
+        "bytes": 2674,
+        "han_chars": 0,
+        "other_chars": 2674,
+        "estimated_tokens": 703.6842105263158
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-ui-2d/references/sorting.md",
+      "sha256": "fd2a67eaa993c5daf86671730ed8443de157a1bc4af83f3171329fea3e4b6bcb",
+      "full": {
+        "chars": 4528,
+        "bytes": 4528,
+        "han_chars": 0,
+        "other_chars": 4528,
+        "estimated_tokens": 1191.578947368421
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-ui-2d/references/widgets.md",
+      "sha256": "383539204eba351e7dc0cc2ecb5aec3d435f51b45da02a7a80b97129b55e575b",
+      "full": {
+        "chars": 5273,
+        "bytes": 5273,
+        "han_chars": 0,
+        "other_chars": 5273,
+        "estimated_tokens": 1387.6315789473686
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-verification/SKILL.md",
+      "sha256": "96faa081e8d6517f92b4414b11db6af9958ef6f3c6f31d468b529d4a705ef51d",
+      "full": {
+        "chars": 5745,
+        "bytes": 5831,
+        "han_chars": 37,
+        "other_chars": 5708,
+        "estimated_tokens": 1526.7719298245615
+      },
+      "frontmatter": {
+        "chars": 1321,
+        "bytes": 1407,
+        "han_chars": 37,
+        "other_chars": 1284,
+        "estimated_tokens": 362.56140350877195
+      },
+      "body": {
+        "chars": 4424,
+        "bytes": 4424,
+        "han_chars": 0,
+        "other_chars": 4424,
+        "estimated_tokens": 1164.2105263157896
+      }
+    },
+    {
+      "path": "skills/cocosair-verification/references/common-mistakes.md",
+      "sha256": "cbcdf70824ab0d5c15b62ce4de771d3771b70f09d5507a7bcf3c7cd66173f01f",
+      "full": {
+        "chars": 2808,
+        "bytes": 2808,
+        "han_chars": 0,
+        "other_chars": 2808,
+        "estimated_tokens": 738.9473684210527
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-verification/references/context.md",
+      "sha256": "3c90ba9b485b749d9a1c8172afaf16e37b89671f882c23751ea978537a4d08ea",
+      "full": {
+        "chars": 1131,
+        "bytes": 1131,
+        "han_chars": 0,
+        "other_chars": 1131,
+        "estimated_tokens": 297.63157894736844
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-verification/references/contracts.md",
+      "sha256": "a7a3f58a07d70b5f3247d75b88c33110aeb1b231ca1b05f261009f1e1ee72919",
+      "full": {
+        "chars": 3641,
+        "bytes": 3641,
+        "han_chars": 0,
+        "other_chars": 3641,
+        "estimated_tokens": 958.1578947368422
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-verification/references/gate-catalog.md",
+      "sha256": "6f193ee7391ccb1ad491818e6e797354cb5dd5359c673d9455ace15f058a0334",
+      "full": {
+        "chars": 8465,
+        "bytes": 8465,
+        "han_chars": 0,
+        "other_chars": 8465,
+        "estimated_tokens": 2227.6315789473683
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-verification/references/playwright-prereqs.md",
+      "sha256": "b3ad606e056caec7e2f7ac57800609a3282aa8369ef6513162f379585ac4e94b",
+      "full": {
+        "chars": 4419,
+        "bytes": 4419,
+        "han_chars": 0,
+        "other_chars": 4419,
+        "estimated_tokens": 1162.8947368421054
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-verification/references/quick-start.md",
+      "sha256": "8ddc1179e61dbac30d656d8e09426a5fb790764963269c4235a87f2f134b5624",
+      "full": {
+        "chars": 1738,
+        "bytes": 1738,
+        "han_chars": 0,
+        "other_chars": 1738,
+        "estimated_tokens": 457.3684210526316
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair-verification/references/report-layers.md",
+      "sha256": "fba72feaf4835f302214686df1c62f11464a8584ee51c819d1f028e1fc480484",
+      "full": {
+        "chars": 7211,
+        "bytes": 7211,
+        "han_chars": 0,
+        "other_chars": 7211,
+        "estimated_tokens": 1897.6315789473686
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair/SKILL.md",
+      "sha256": "84702d60eba4f4ac560df6f23e7a18eeaca67b6f94ff34dd5f1012dcf6926d7b",
+      "full": {
+        "chars": 10005,
+        "bytes": 10107,
+        "han_chars": 46,
+        "other_chars": 9959,
+        "estimated_tokens": 2651.4561403508774
+      },
+      "frontmatter": {
+        "chars": 1514,
+        "bytes": 1616,
+        "han_chars": 46,
+        "other_chars": 1468,
+        "estimated_tokens": 416.9824561403509
+      },
+      "body": {
+        "chars": 8491,
+        "bytes": 8491,
+        "han_chars": 0,
+        "other_chars": 8491,
+        "estimated_tokens": 2234.4736842105262
+      }
+    },
+    {
+      "path": "skills/cocosair/references/context.md",
+      "sha256": "d1242fa92acd4f1523738bc41348db667f69b4eb0703b93290cf04cf2aba4456",
+      "full": {
+        "chars": 3611,
+        "bytes": 3611,
+        "han_chars": 0,
+        "other_chars": 3611,
+        "estimated_tokens": 950.2631578947369
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair/references/environment.md",
+      "sha256": "7e06d7a1821b3330b32df6059ae1fa294e17506bb9402e2975293b7e48258908",
+      "full": {
+        "chars": 5379,
+        "bytes": 5379,
+        "han_chars": 0,
+        "other_chars": 5379,
+        "estimated_tokens": 1415.5263157894738
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair/references/skill-index.md",
+      "sha256": "376944046d699f48a1df21b63390ea948624b326632a0d7bd9353b3ad73e69b9",
+      "full": {
+        "chars": 17608,
+        "bytes": 17608,
+        "han_chars": 0,
+        "other_chars": 17608,
+        "estimated_tokens": 4633.684210526316
+      },
+      "frontmatter": null,
+      "body": null
+    },
+    {
+      "path": "skills/cocosair/scripts/check-paths.cjs",
+      "sha256": "62afa46025b1fe006a20652473c3a9b1cabb865f180ca3c2ee7878dcd8d42bc1",
+      "full": {
+        "chars": 16847,
+        "bytes": 16847,
+        "han_chars": 0,
+        "other_chars": 16847,
+        "estimated_tokens": 4433.421052631579
+      },
+      "frontmatter": null,
+      "body": null
+    }
+  ]
+}

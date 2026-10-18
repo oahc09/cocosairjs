@@ -1,0 +1,153 @@
+{
+  "schema": 1,
+  "mode": "fixed-scenarios",
+  "status": "PASS",
+  "validation_status": "PASS",
+  "tool_version": "skills-measure-p1-recovery1",
+  "metric_version": "air-document-input-1",
+  "parser_version": "air-markdown-1",
+  "projection_version": "air-routing-1",
+  "snapshot_hash": "1e9c6637a512b819e822d8d06ea64d444c1e5640f35c48134f70fe80a5363e19",
+  "source_snapshot_hash": "1e9c6637a512b819e822d8d06ea64d444c1e5640f35c48134f70fe80a5363e19",
+  "scenario_fixture_hash": "37604a27b0a77e634dbfac285bdbaa8c84a10c2c84229b9fd7fe1e23a76c3a85",
+  "loads_hash": "1f13c9037afa40522f7d66c55c21e28ffe984dd3e27682d35876b9028c5f6224",
+  "l0": {
+    "view": "host-minimal",
+    "rendering": "serializeRoutingRecord(record,host-minimal),name-sort,join-LF",
+    "record_count": 22,
+    "text": "name: cocosair\ndescription: Route Cocos AIR (cocosair.js) work to the right cocosair-* subsystem skill and enforce Code First discipline - original Scene, Node, Camera, Component, Material, Texture2D and Sprite APIs, WebGL2-only rendering, createAirApp bootstrap ordering, and the source-export / bundle-reachable / browser-verified capability layers. Use when starting any cocosair.js task, adapting Cocos Creator knowledge to AIR, hitting WEBGL2_REQUIRED or USE_TEXTURE failures, or deciding which AIR skill to load.\n\nname: cocosair-2d-subsystems\ndescription: Drives the Cocos AIR 2D subsystem runtime modules in code-first scenes - the sp namespace and loadWasmModuleSpine plus the BLOCKED Spine backend and asset sourcing state, dragonBones ArmatureDisplay, DragonBonesAsset, DragonBonesAtlasAsset, CCFactory and AnimationCacheMode with realtime versus cached skinning on the vendored dragonbones-js, TiledMap, TiledMapAsset, TiledLayer, TiledObjectGroup and TiledTile built from runtime tmx and tsx strings, ParticleSystem2D and ParticleAsset fed by a generated plist through assetManager.parser.parsePlist, MotionStreak (exported as MotionStreak, there is no MotionStreak2D), and Billboard as a scene.Model whose size and rotation travel through one cc_size_rotation uniform. Use when a Spine skeleton draws nothing without any error, when a TiledMap cell edit or object query does not refresh or resolve, when plist-tuned particles compute but render no pixels, or when a billboard is invisible at its default size.\n\nname: cocosair-agent-session\ndescription: Drives and inspects a running Cocos AIR app from an agent or devtool session. Covers the window.__airApp page binding, the devtools agent-session request protocol in tools/debug/agent-session.ts (requestId/action/targetId/params returning requestId ok result or error, the INVALID_ARGUMENT duplicate-requestId rejection, inspectScene and inspectNode snapshots, captureFrame on AFTER_DRAW, getRuntimeErrors ring buffer), the visual probe pixel-region conventions, and the runtime AirDiagnostics bounded channel. Use when an agent needs to observe a live scene, apply a controlled write, capture a frame, read runtime errors, or wire the dev-only session, remembering the session and probe surface are devtools not default-runtime APIs.\n\nname: cocosair-animation-tween\ndescription: Drives the Cocos AIR animation and tween surface - the code-first tween(target) chain (to/by/set/delay/call/sequence/parallel/repeat/repeatForever/reverseTime/union/clone/timeScale plus start/stop/pause/resume and the target-bound statics), TweenSystem and its ActionManager, the native Animation component (play/stop/pause/resume/getState/createState/addClip/crossFade, executionOrder 99, playOnLoad), AnimationState wrapMode whose setter resets time and repeatCount, code-first AnimationClip construction, the AnimationClip.WrapMode static enum, the animation namespace that is the only route to VectorTrack and TrackPath, createStepClock single-clock stepping with its dual-clock guard, and the unpublished marionette and pose-graph state. Use when a tween will not reverse, when a clip plays once instead of looping, when track classes fail to import by name, when deterministic frame stepping is needed for evidence, or when pose-graph animation is assumed available.\n\nname: cocosair-application\ndescription: Configure and drive the Cocos AIR application handle - every AirAppOptions field vs its validator (canvas selector or element, renderMode 0..3, physics builtin or cannon, diagnostics errors or warnings, pixelRatioCap default 2, screenMode window or container, container, designResolution policy 0..4, contextLoss), the one-runtime-per-document admission rule keyed by Symbol.for('cocosair.bootstrap.v1'), the run/getScene/releaseScene/close lifecycle and the whole-page reload a closed runtime needs, startup error literals WEBGL2_REQUIRED and AIR_E_* codes, the attachContextHealth healthy/lost/restoring/failed state machine with no GPU rebuild, and createSessionScope ownership with (0,5000] timeoutMs. Use when starting a cocosair.js app with createAirApp, choosing or rejecting AirAppOptions values, hitting an AIR_E_ or WEBGL2_REQUIRED startup failure, replacing or releasing a scene, wiring screenMode container or designResolution, or reacting to a lost WebGL context.\n\nname: cocosair-assets\ndescription: Drives the Cocos AIR asset surface - the Code First loading route (assetManager.assets registry plus loadAssetAsync and its gltf, resources, registry, then URL deserialize order), the reference-counted AssetBank over assetManager.loadRemote with the ext and cache-key rules, the subscriber-side-only signal and the full AIR_E_* throw map, the two-object texture model where ImageAsset carries CPU pixels and Texture2D samples them through reset, uploadData, updateMipmaps and the wrap and filter setters, parseAtlasText and createAtlasHandle for libGDX TexturePacker text atlases with top-left rect.y semantics, and parseFnt, createBitmapFont and loadBitmapFont for single-page BMFont. Use when assetManager.resources is null, when load or loadRemote is not an importable name, when reloading the same URL hands back a destroyed asset, when an atlas or font handle refuses to dispose, or when a label still renders with a system font.\n\nname: cocosair-audio-video\ndescription: Drives Cocos AIR audio, video and WebView from code - AudioService business channels over AudioSource (load, playBgm, pauseBgm, resumeBgm, stopBgm, setBgmVolume, playSfx, setMusicEnabled, setSfxEnabled, bgmState, dispose, maxSfxVoices cap with sfxDropped), measured-currentTime playback evidence, browser autoplay gesture unlock, VideoPlayer DOM-overlay events and transparent video, WebView iframe limits and evaluateJS. Use when audio starts silently or play() seems ignored, when proving a channel actually advances, when a video or iframe must sit under or over the WebGL canvas, or when WebView loads the wrong URL on mount.\n\nname: cocosair-camera\ndescription: Add and drive the Cocos AIR Camera component with the original Cocos APIs - projection switching between PERSPECTIVE and ORTHO, fov and fovAxis, orthoHeight and orthoWidth, near and far clip planes, the normalized rect viewport and priority draw order, visibility layer masks, the screen-to-world conversions worldToScreen/screenToWorld/screenPointToRay/convertToUINode in left-bottom-origin physical pixels, the AIR frameObject(camera,target,fallbackDistance=6) framing helper over MeshRenderer worldBounds, and the oblique near plane via calculateObliqueMat and clip-space minZ. Use when adding or configuring a camera, switching perspective or ortho, stacking a split-screen or overlay second camera, fitting a model in view, converting pointer pixels to a world ray or UI node, or debugging AIR_E_ORTHO_WIDTH and wrong screenToWorld results.\n\nname: cocosair-gltf\ndescription: Drives the Cocos AIR glTF and GLB surface - GLTFLoader with loadAsync and parseAsync, the three decoder setters and the provider factories behind them, getExtensionSupport and the five-status extension contract across 21 registered handlers, GLTFAsset with its five read-only collections plus instantiate(sceneIndex), GLTFInstance setAnimationLoop and dispose, the five GLTFError codes, and the plain Error, DOMException and tagged TypeError shapes that are not GLTFError. Use when a Draco, meshopt or KTX2 model reports GLTF_DECODER_MISSING, when getExtensionSupport says decoder-required, when a load rejects with no code field, when an instance animation will not loop, or when destroying a GLTFAsset leaves GPU resources behind.\n\nname: cocosair-graphics-and-dom\ndescription: Reuse native Cocos objects for 2D drawing and DOM in Cocos AIR. Covers AirGraphicsCommand drawing data replayed on a Graphics component (drawAirGraphics, solid nonzero only), SVG serialization that preserves curves (airGraphicsCommandsToSvg), Canvas2D rich fills into a native Texture2D (rasterizeAirGraphics), borrowed-texture display (createAirTextureSprite), per-Sprite channel masks (attachAirSpriteMask), opt-in UI blend inheritance including ParticleSystem2D (createAirUIBlendScope), DOM elements that follow UI nodes (createAirDOMOverlay), the AirUIMesh renderer, and the experimental HTML-in-canvas texture subpath (cocosair.js). Use when authoring or exporting vector fills, gradients, patterns, sprite masks, blend scopes, texture sprites, DOM overlays, or live HTML textures, rather than copying PixiJS or Creator editor snippets.\n\nname: cocosair-input-action\ndescription: Wires native input events and the AIR action layer in code-first Cocos AIR - the engine input singleton and systemEvent globals, EventTouch/EventKeyboard/EventMouse with the Input.EventType and SystemEvent.EventType enums and KeyCode key codes, createActionState as a pure held/pressed/released/axis reducer keyed per (action, source) with seven reset reasons and no listener removal, createActionInput over the native or dom backend where dom needs an explicit canvas and skips editable targets, createSessionGate for session admission, and SceneStack persistent-page navigation with dual-page transition, capture-phase input block and LRU eviction. Use when handling touch/keyboard/mouse in a Cocos AIR scene, when keys stop firing because an input or textarea has focus, when a dom action backend throws for a missing canvas, when a held button must survive a blur or page-hidden reset, or when push/pop page state must be preserved during a transition.\n\nname: cocosair-materials-effects\ndescription: Author and drive Cocos AIR materials in a Code First scene - new Material() plus initialize({effectName, defines, technique, states}), the 21 registered AIR effect entries and 17 builtin materials, setProperty value types for float, Vec3, Vec4, Color, Texture2D and arrays, the USE_TEXTURE versus USE_ALBEDO_MAP define gates, handleInfo property aliases, MaterialInstance versus shared materials, the Pass warn stubs for recompileShaders and overridePipelineStates, the glsl4 to glsl3 source transform, the set and binding layout assignEffectBindings enforces including CCSkinning at binding 3, createAirUnlitFogEffect, attachAirSpriteMask and inspectAirMaterial. Use when creating or configuring a Material or EffectAsset, picking builtin-standard or builtin-unlit, setting a color, texture or uniform array, overriding blend or depth state, writing custom GLSL, or debugging AIR_E_MATERIAL_NOT_READY, AIR_E_MATERIAL_TYPE, uniform buffer too small, a flat untextured surface or a setProperty call that does nothing.\n\nname: cocosair-math\ndescription: Do vector, matrix, quaternion, rect, size and color arithmetic with the original Cocos math types in Cocos AIR - the math namespace and top-level exports, Vec2/Vec3/Vec4, Mat3/Mat4, Quat, Rect, Size and Color plus v2/v3/v4/quat/mat4/color factories, the out-first static convention (Vec3.add(out, a, b)), frozen constants like Vec3.UP via Object.freeze, Mat4 column-major m00..m15 layout and S->R->T composition with fromSRT/toSRT, Quat euler degrees versus radians, Mat3/Mat4 inverse and mirror handling, epsilon comparison with approx, scalar utilities clamp/clamp01/lerp/inverseLerp/repeat/pingPong, randomRange/pseudoRandom, floatToHalf encoding, bits helpers and easing curves. Use when normalizing or projecting a direction, composing or decomposing a node transform matrix, picking a quaternion or euler rotation, packing a Color or hex value, choosing an easing curve for a manual tween, hitting a TypeError from writing Vec3.UP, seeing -0 or NaN in a position, or getting an all-zero matrix from Mat4.invert.\n\nname: cocosair-performance\ndescription: Drives the Cocos AIR draw-call and frame-budget surface - the only three batching routes (shared mesh across N renderers, Mesh.merge and BatchingUtility.batchStaticModel for static subtrees, utils.MeshUtils.createDynamicMesh with Mesh.updateSubMesh for per-frame geometry), instancing through the single USE_INSTANCING material define with its 1024-per-group split, dynamic atlas defaults and silent-null acceptance rules, 2D auto-batch keys on director.root.batcher2D, the profiler singleton counters behind the pipeline.profiler gate, on-demand rendering as game.pause plus game.step behind Director.EVENT_AFTER_DRAW, pixelRatioCap and the DPR import-order contract, and the recorded limits of the 50k starfield evidence. Use when draw calls equal object count, batching hundreds of cubes or sprites, hitting AIR_E_MESH_CAPACITY or AIR_E_PIXEL_RATIO_IMPORT_ORDER, enabling dynamicAtlasManager, showing the stats overlay, checking whether the loop is really paused, or cutting resolution on a slow device.\n\nname: cocosair-physics\ndescription: Applies to physics in code-first Cocos AIR apps - choosing the 3D backend with createAirApp({ physics: 'builtin' | 'cannon' }) (default builtin), selectPhysicsBackend and the official last-registration-before-init rule, the query-only boundary of the builtin discrete collision detector (no gravity integration, no MeshCollider in the world, trigger events and raycasts still real), PhysicsSystem/RigidBody/Collider wiring and the bidirectional group-and-mask filter, error 9642 for default-physics-material (fatal on cannon, benign on builtin) and AIR's built-in material registration, and the pure-JS 2D box2d backend with PhysicsSystem2D, RigidBody2D, Collider2D, BoxCollider2D and the raycast/testPoint/testAABB queries. Use when dynamic bodies do not fall or stack, when triggers fire silently, when deciding between builtin and cannon, when 9642 appears in the console, or when asking whether ammo, physx or box2d-wasm ship (they do not).\n\nname: cocosair-primitives-mesh\ndescription: Builds and attaches procedural geometry in a Cocos AIR Code First scene - the nine primitives.* shape generators and their parameter defaults, the createPrimitiveGeometry(descriptor) helper whose box, sphere, cylinder, cone whitelist, integer segment cap of 1024, predicted-vertex cap and arc range throw RangeError AIR_E_PRIMITIVE_DESCRIPTOR, turning the returned IGeometry into a Mesh with utils.createMesh, hand-authoring a Mesh struct from gfx.Attribute and Format rows and reading or copying vertex attributes and indices, and driving MeshRenderer hooks such as bakeSettings, setInstancedAttribute and morph setWeight. Use when generating a box, sphere, cylinder or cone without a Creator asset, wiring a BufferGeometry-style object to a renderer, hitting AIR_E_PRIMITIVE_DESCRIPTOR, choosing new Mesh plus struct versus primitives.box, reading mesh vertex attributes, or exporting geometry as OBJ or wireframe.\n\nname: cocosair-project-setup\ndescription: Set up a Cocos AIR project end to end - install the cocosair.js npm package or build from source, choose among the main entry, cocosair.js and the experimental cocosair.js, write the importmap and the startup-bound canvas page skeleton, resolve TypeScript declarations on TS 4.9 and TS 5+ via the exports types conditions, map npm scripts to build artifacts, and run AIR_FEATURES/AIR_OUT_DIR variant builds without disturbing the default 26-feature candidate. Use when installing or importing cocosair.js, fixing unresolved-import or wrong-entry errors, wiring a page shell or editor types, or deciding which build command produces which file.\n\nname: cocosair-rendering\ndescription: Drives the Cocos AIR rendering contracts in code - legacy forward lighting units with illuminance in Lux, the single mainLight rule for multiple directional lights and inspectAirDirectionalLights, the per-light-type shadow matrix with the four switches a ShadowMap cast needs, offscreen rendering through createAirRenderTarget and camera targetTexture with requested-versus-effective MSAA samples and sampleFallback, the one-per-scene AirTransmissionCapture behind transmission materials, texture format and sRGB decode preflight with resolveAirTextureFormat and validateAirTextureColorContract, and which post-process and custom-pipeline names a Code First app can really reach. Use when lighting looks flat, asking why there are no shadows, rendering a mirror or refraction into a texture, reading back a target's pixels, hitting AIR_E_RENDER_TARGET_SAMPLES or AIR_E_TEXTURE_COLOR, choosing rgba8, rgba16f or hardware-srgb, or deciding whether bloom and other post-processing run without a variant build.\n\nname: cocosair-scene-graph\ndescription: Build and drive the Cocos AIR scene graph with the original Cocos APIs - Scene as the Node tree root, Node addChild/insertChild/removeChild/removeFromParent/setParent and getChildByUuid, active versus activeInHierarchy hiding, local setScale versus inherited worldScale, the Component lifecycle order onLoad onEnable start update lateUpdate onDisable onDestroy, node on/off/once/emit events and exactly what node.destroy() does and does not unsubscribe, Layers bits with UI_2D and DEFAULT and addLayer plus makeMaskInclude/makeMaskExclude, find by path, NodePool put/get, scene.globals ambient fog skybox lightProbeInfo activation, and Scene or SceneAsset addRef decRef plus autoReleaseAssets refcounting. Use when building or re-parenting nodes, ordering component lifecycle, subscribing node or input events, assigning camera-culling layers, pooling nodes, or releasing scenes without leaking.\n\nname: cocosair-skinning-morph\ndescription: Drives Cocos AIR skeletal skinning and morph targets from code - SkinnedMeshRenderer skeleton and skinningRoot binding, Skeleton.joints as full paths relative to the skinning root with AIR_E_SKINNING_JOINT_PATH, buildSkeletonTree bindposes as inverse world matrices, restoreBindPose ancestor-first ordering, realtime versus baked pose through setUseBakedAnimation, joint palette capacity and AIR_E_SKINNING_CAPACITY, Mesh.morphRendering plus getBoneSpaceBounds, and MeshRenderer setWeight, setWeights and enableMorph. Use when a skinned mesh stays in rest pose or draws nothing, when a joint path throws AIR_E_SKINNING_JOINT_PATH, when moving bone nodes after setUseBakedAnimation(true) has no effect, when a morph weight setter appears to be ignored, or when binding a hand-built Mesh to a Skeleton without the Cocos Creator asset pipeline.\n\nname: cocosair-ui-2d\ndescription: Drives code-first 2D UI in the Cocos AIR runtime - createUICanvas (Canvas plus fullscreen Widget plus an ortho UI camera bound through canvas.cameraComponent, defaults designWidth 1280, designHeight 720, layer Layers.Enum.UI_2D), the spriteNode and labelNode helpers and their real defaults (fontSize 28, lineHeight Math.round(fontSize*1.25), the AIR_E_LABEL_WRAP guard), the widget components Canvas, Widget, Layout (exported as Layout$1 as Layout), Button, ScrollView, ProgressBar, Slider, Toggle, EditBox, PageView, SafeArea and BlockInputEvents, each also aliased as ...Component, Label system-font and BMFont binding, LabelOutline, LabelShadow, LabelAtlas, the RichText-only-as-RichTextComponent alias, and 2D draw order through SortingLayers, Sorting2D and the Intersection2D utility. Use when a UI node renders nothing, when text needs a font without any Creator font-asset pipeline, when widgets must realign on a viewport change, or when 2D sprites and labels stack in the wrong order.\n\nname: cocosair-verification\ndescription: Runs and interprets Cocos AIR verification gates without confusing subset or stale evidence with release readiness. Use when validating an AIR change, classifying a verify:* npm command as read-only or write, reading browser or package evidence, binding a report to its source and bundle fingerprints, telling UNSUPPORTED from FAIL, or preparing a release candidate that needs a clean worktree.\n",
+    "hash": "f3d8193700056428b16f84f711771612f0ef24468d8b346ecd4bdf4bac755f26",
+    "chars": 19646,
+    "bytes": 19646,
+    "han_chars": 0,
+    "other_chars": 19646,
+    "estimated_tokens": 5170
+  },
+  "task_count": 1,
+  "valid_task_count": 1,
+  "tasks": [
+    {
+      "task_id": "reading-original-B2",
+      "line": 1,
+      "started_at": "2026-10-18T07:08:47.407Z",
+      "outcome": "success",
+      "complete": true,
+      "task_kind": null,
+      "scenario_id": "B2",
+      "status": "PASS",
+      "snapshot_hash": "1e9c6637a512b819e822d8d06ea64d444c1e5640f35c48134f70fe80a5363e19",
+      "source_snapshot_hash": "1e9c6637a512b819e822d8d06ea64d444c1e5640f35c48134f70fe80a5363e19",
+      "metric_version": "air-document-input-1",
+      "question_hash": "f8a754763cf29188917c19b23b2653d17e9a6a37b3d7616c07cd47f7bfd5c7d2",
+      "read_protocol_hash": "15cb41ae79f3c5e9ac24b3812f0f89713e282803479c9f1e4f1f7f74fb6edb0b",
+      "scenario_fixture_hash": "37604a27b0a77e634dbfac285bdbaa8c84a10c2c84229b9fd7fe1e23a76c3a85",
+      "l0_hash": "f3d8193700056428b16f84f711771612f0ef24468d8b346ecd4bdf4bac755f26",
+      "l0_received_untruncated": true,
+      "C": 79432,
+      "bytes": 79628,
+      "estimated_tokens": 20937.052631578947,
+      "read_chars": 59786,
+      "read_bytes": 59982,
+      "recorded_C": 79432,
+      "recorded_bytes": 79628,
+      "unique_references": 1,
+      "giant_reference_hit": true,
+      "reads": [
+        {
+          "path": "skills/cocosair/SKILL.md",
+          "content_hash": "84702d60eba4f4ac560df6f23e7a18eeaca67b6f94ff34dd5f1012dcf6926d7b",
+          "read_chars": 10005,
+          "read_bytes": 10107,
+          "whole_file": true,
+          "fragments": [],
+          "payload": "payloads/01.txt",
+          "observed_at": "2026-10-18T07:08:57.150Z",
+          "received_untruncated": true,
+          "tool_chunk_id": "8efc91",
+          "receipt": {
+            "tool": "functions.exec -> tools.exec_command",
+            "chunk_id": "8efc91",
+            "inner_max_output_tokens": 30000,
+            "outer_max_output_tokens": 30000,
+            "attestation": "Reader received and inspected the complete file payload in the visible tool response; no truncation marker or omitted tail was present."
+          }
+        },
+        {
+          "path": "skills/cocosair-rendering/SKILL.md",
+          "content_hash": "2ecaa1fa32de512ecb0ebb74a87b3b9dc425ef09dbf370a65a1f9aea4e6cc109",
+          "read_chars": 8388,
+          "read_bytes": 8482,
+          "whole_file": true,
+          "fragments": [],
+          "payload": "payloads/02.txt",
+          "observed_at": "2026-10-18T07:09:03.936Z",
+          "received_untruncated": true,
+          "tool_chunk_id": "417e39",
+          "receipt": {
+            "tool": "functions.exec -> tools.exec_command",
+            "chunk_id": "417e39",
+            "inner_max_output_tokens": 30000,
+            "outer_max_output_tokens": 30000,
+            "attestation": "Reader received and inspected the complete file payload in the visible tool response; no truncation marker or omitted tail was present."
+          }
+        },
+        {
+          "path": "skills/cocosair-rendering/references/pipeline-reachability.md",
+          "content_hash": "410b20eb1f02c0d2d9349ef7caae60e0d483f4f62f525a8224265c6845050d83",
+          "read_chars": 41393,
+          "read_bytes": 41393,
+          "whole_file": true,
+          "fragments": [],
+          "payload": "payloads/03.txt",
+          "observed_at": "2026-10-18T07:09:10.493Z",
+          "received_untruncated": true,
+          "tool_chunk_id": "127316",
+          "receipt": {
+            "tool": "functions.exec -> tools.exec_command",
+            "chunk_id": "127316",
+            "inner_max_output_tokens": 30000,
+            "outer_max_output_tokens": 30000,
+            "attestation": "Reader received and inspected the complete file payload in the visible tool response; no truncation marker or omitted tail was present."
+          }
+        }
+      ],
+      "answer_checks": [
+        {
+          "id": "layers",
+          "passed": true,
+          "evidence": "- source-export / 声明：src/exports/custom-pipeline-post-process.ts 导出 postProcess 命名空间；声明中出现 PostProcessSetting、PostProcess、FSR 等成员，只证明符号或类型存在。\n- bundled / 默认 bundle 导出：src/exports/air.ts 第 39 行 re-export custom-pipeline-post-process，默认 ESM 导出面存在 index as postProcess。默认 26 个 AIR_FEATURES 中也同时有 custom-pipeline 和 custom-pipeline-post-process，但 feature membership 只是编译/资产注册条件，不会自动选择实际管线。\n- configured / 实际配置：要看初始化设置、运行中的管线及 builder；检查 director.root.usesCustomPipeline。默认 AIR bootstrap 只有 rendering.renderMode，没有 rendering.customPipeline，所以默认走 legacy forward。legacy forward 不读取 camera.postProcess；legacy 模块 re-export PostProcessStage 也不意味着后处理正在执行。\n- verified / 浏览器验证：需要在匹配当前候选代码、实际 bundle 和配置的真实 WebGL 2 浏览器中，验证后处理 pass 和实际效果。符号解析、类型检查、CPU stub、摄像机属性读回以及历史 PASS 都不能代替这项验证。",
+          "notes": "封存答案逐条区分 source/声明、默认导出、实际管线配置及浏览器验证。"
+        },
+        {
+          "id": "name-not-execution",
+          "passed": true,
+          "evidence": "不能。默认 bundle 的导出块中存在 postProcess，只能证明这个命名空间在该 bundle 的导出面可达，不能证明当前应用启用了后处理管线，更不能证明某个后处理效果已在当前候选版本的浏览器中运行通过。原始文档的 owner decision #6（D11 / LV12-17）仍将当前 shipping posture 的后处理判为不可达，采用 variant-build-level evidence 的口径。"
+        },
+        {
+          "id": "configuration",
+          "passed": true,
+          "evidence": "初始化时，rendering.customPipeline 为假会把 cclegacy.rendering 清成 undefined。为真但命名空间缺失会报 errorID(12109)。game._setupRenderPipeline 读取该设置并把布尔值传给 root.setRenderPipeline；只有真值才进入 custom branch，legacy branch 会设置 usesCustomPipeline = false。director 还要求 macro.CUSTOM_PIPELINE_NAME 非空、cclegacy.rendering 存在、root 存在且 root.usesCustomPipeline 为真，才会接入 custom builder。\n\npost-process 模块通过副作用注册 Forward 和 Custom 两个 PostProcessBuilder。macro.CUSTOM_PIPELINE_NAME 默认是 Builtin；未知名称的查找有 Forward fallback，但应明确让名称指向已注册 builder，而不是把名称存在当作完整配置。camera.postProcess、camera.usePostProcess 是组件接口并映射到 render-scene camera；后者默认 postProcess = null、usePostProcess = false，只有实际消费这些字段的管线才能发挥作用。仅给摄像机设置这些属性不足以越过上述初始化门槛。\n\n## 若要尝试后处理，应满足与验证什么\n\n按该快照的约定，应使用独立构建并交付的 AIR_FEATURES / AIR_OUT_DIR variant，提供 rendering.customPipeline 为真的 settings 对象，确保 custom-pipeline 命名空间不会在初始化中被清除，并选择已注册的 builder。AIR_FEATURES 环境变量替换默认列表，不是追加；variant 与默认构建是不同候选，variant 不会自动刷新默认产物或默认验证证据。\n\nAirAppOptions 没有 pipeline 键，renderMode 也不是选择后处理管线的开关。因此不能编造 createAirApp({ pipeline: ... }) 作为可运行方案；文档列出的 variant、settings 和 builder 条件也只是必要门槛，不能自行升级为浏览器通过结论。",
+          "notes": "此连续原文覆盖初始化清除、设置、root 状态、Director 条件、已注册 builder、variant 和 AirAppOptions/renderMode 边界。"
+        },
+        {
+          "id": "verification",
+          "passed": true,
+          "evidence": "验证时记录实际 usesCustomPipeline、builder 选择、摄像机和后处理配置，证明目标效果的 pass 实际执行及渲染像素发生预期变化，再把报告与当前候选指纹和实际 bundle 绑定。默认包和 variant 的验证结果分别归属各自候选。",
+          "notes": "前面的 verified 条目明确排除符号解析、类型检查、CPU stub 和摄像机属性读回作为效果验证；后面的证据局限段明确原有示例没有断言后处理 pass。"
+        },
+        {
+          "id": "historical-limit",
+          "passed": true,
+          "evidence": "现有 camera-viewport-props / camera-geometry-extras 的 postProcess 证据仅是摄像机属性的字符串读回，没有断言后处理 pass；rendering 在默认 bundle 上没有记录到相应浏览器验证。CPU competitive-early-effect 测试通过重赋值或 stub cclegacy.rendering 驱动分支，也不能证明默认 bootstrap 可用。该引用文件记载的旧 examples-verified.json 指纹是 2f089f6ce25eaccd，而文档当时重算的树指纹为 8f3e573cebbb315f，不能把旧 PASS 当成当前字节的证据；此处没有实际运行浏览器或重新测量指纹。"
+        }
+      ],
+      "answer_artifact": {
+        "path": "answer.md",
+        "sha256": "90dcc9794dd324aa6f6c661272583cee81050e6135bb515ec0bf94c65b2e7295",
+        "bytes": 5133
+      },
+      "errors": []
+    }
+  ],
+  "errors": []
+}

@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "kind": "mechanical-metadata-completion",
+  "recorded_at": "2026-10-18T07:14:32.893Z",
+  "reason": "Collection helper omitted metric_version. Raw reader files and actual reading/answer artifacts are immutable; this derivative only supplies the previously frozen scenario metric identifier.",
+  "source": "events.jsonl",
+  "source_sha256": "df53df4f293f0c86d59aad3b210797190665f030f158db0d273f2c82bcbec93e",
+  "derived": "events-audited.jsonl",
+  "derived_sha256": "1f13c9037afa40522f7d66c55c21e28ffe984dd3e27682d35876b9028c5f6224",
+  "fixture_path": "tools/skills/fixtures/load-scenarios.json",
+  "fixture_sha256": "37604a27b0a77e634dbfac285bdbaa8c84a10c2c84229b9fd7fe1e23a76c3a85",
+  "changes": [
+    {
+      "record": 0,
+      "field": "metric_version",
+      "before": "absent",
+      "after": "air-document-input-1"
+    }
+  ],
+  "claim": "No new reading, answer change, or metric choice occurred."
+}

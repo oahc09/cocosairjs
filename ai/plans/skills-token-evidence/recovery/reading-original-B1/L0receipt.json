@@ -1,0 +1,9 @@
+{
+  "received_untruncated": true,
+  "record_count": 22,
+  "tool": "exec_command",
+  "chunk_id": "1494e7",
+  "inner_max_output_tokens": 30000,
+  "outer_max_output_tokens": 30000,
+  "reader_attestation": "22个 name+description 路由记录按 frozen host-minimal 协议完整返回并实际收到；从 cocosair 至 cocosair-verification，无截断。"
+}
