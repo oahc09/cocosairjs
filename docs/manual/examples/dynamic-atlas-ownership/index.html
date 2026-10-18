@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8" />
+        <title>Dynamic atlas ownership</title>
+        <style>
+            body {
+                margin: 0;
+                background: #151923;
+                color: white;
+                font-family: sans-serif;
+            }
+            canvas {
+                width: 100vw;
+                height: 80vh;
+                display: block;
+            }
+        </style>
+        <script type="importmap">
+            { "imports": { "cocosair": "/build/cocosair.module.js" } }
+        </script>
+    </head>
+    <body>
+        <canvas id="GameCanvas"></canvas>
+        <button id="leave">返回展厅（右侧常驻）</button>
+        <button id="enter">再次进入</button>
+        <pre id="status"></pre>
+        <script type="module" src="./main.ts"></script>
+    </body>
+</html>

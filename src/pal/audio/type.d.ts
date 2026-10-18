@@ -39,6 +39,11 @@ export declare enum AudioType {
     UNKNOWN_AUDIO = 4
 }
 export interface AudioLoadOptions {
+    /** Total network/decode readiness deadline; default 8000ms. */
+    timeoutMs?: number;
+    signal?: AbortSignal;
+    /** media keeps native URL loading; buffered needs CORS and owns a cancellable XHR + Blob URL. */
+    transport?: 'media' | 'buffered';
     audioLoadMode?: AudioType;
 }
 export declare enum AudioState {

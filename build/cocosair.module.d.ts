@@ -55517,6 +55517,18 @@
         protected _loop: boolean;
         protected _playOnAwake: boolean;
         protected _volume: number;
+        get loadState(): "empty" | "loading" | "ready" | "error" | "cancelled";
+        /** Options or retry start a fresh attempt; plain calls share the current attempt. */
+        loadAsync(options?: {
+            clip?: AudioClip;
+            timeoutMs?: number;
+            signal?: AbortSignal;
+            retry?: boolean;
+            transport?: "media" | "buffered";
+        }): Promise<void>;
+        cancelLoad(): void;
+        /** Request identity is local to this source; legacy play() keeps its void signature. */
+        playRequest(): AudioPlaybackRequest;
         constructor();
         /**
          * @en
@@ -55690,6 +55702,22 @@
          */
         get playing(): boolean;
     }
+    export interface AudioPlaybackRequest {
+        readonly id: number;
+        /** Real startup acknowledgement, or the terminal result if it happened first. */
+        readonly started: Promise<AudioPlaybackStartResult>;
+        readonly result: Promise<AudioPlaybackResult>;
+        cancel(): void;
+    }
+    export interface AudioPlaybackResult {
+        readonly id: number;
+        readonly status: "ended" | "cancelled" | "failed";
+        readonly error?: unknown;
+    }
+    export type AudioPlaybackStartResult = AudioPlaybackResult | Readonly<{
+        id: number;
+        status: "started";
+    }>;
     export class AudioPCMDataView {
         constructor(arrayBufferView: __private._pal_audio_type__AudioBufferView, normalizeFactor: number);
         constructor(arrayBuffer: ArrayBuffer, Ctor: __private.__types_globals__Constructor<__private._pal_audio_type__AudioBufferView>, normalizeFactor: number);
@@ -73469,6 +73497,11 @@
             UNKNOWN_AUDIO = 4
         }
         export interface __pal_audio_type__AudioLoadOptions {
+            /** Total network/decode readiness deadline; default 8000ms. */
+            timeoutMs?: number;
+            signal?: AbortSignal;
+            /** media keeps native URL loading; buffered needs CORS and owns a cancellable XHR + Blob URL. */
+            transport?: "media" | "buffered";
             audioLoadMode?: __pal_audio_type__AudioType;
         }
         /**
@@ -73593,7 +73626,7 @@
             /**
              * Asynchronously plays the audio or resumes the audio while it is paused.
              */
-            play(): Promise<void>;
+            play(playToken?: number): Promise<void>;
             /**
              * Asynchronously pauses the playing.
              */
@@ -73602,6 +73635,9 @@
              * Asynchronously stops the playing.
              */
             stop(): Promise<void>;
+            /** Internal request retirement notification, not a physical stop completion fence. */
+            onStopRequested(cb: (playToken?: number) => void): void;
+            offStopRequested(): void;
             /**
              * Registers an callback which would be called at an interruption begin.
              * The interruption includes the show/hide events, phone call/alarm, earphones un-plugging.
@@ -73627,12 +73663,12 @@
              * Register an callback which would be called when the player finished its playing.
              * @param cb The callback.
              */
-            onEnded(cb: () => void): void;
+            onEnded(cb: (playToken?: number) => void): void;
             /**
              * Unregister the callback that registered to `onEnded`.
              * @param cb The callback. If not specified, all callback would be unregistered.
              */
-            offEnded(cb?: () => void): void;
+            offEnded(cb?: (playToken?: number) => void): void;
         }
         export interface _cocos_audio_audio_clip__AudioMeta {
             player: _pal_audio__AudioPlayer | null;

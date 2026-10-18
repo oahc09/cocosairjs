@@ -33,6 +33,20 @@ import { Node } from '../scene-graph';
 
 const _LOADED_EVENT = 'audiosource-loaded';
 
+export interface AudioPlaybackResult {
+    readonly id: number;
+    readonly status: 'ended' | 'cancelled' | 'failed';
+    readonly error?: unknown;
+}
+export type AudioPlaybackStartResult = AudioPlaybackResult | Readonly<{ id: number; status: 'started' }>;
+export interface AudioPlaybackRequest {
+    readonly id: number;
+    /** Real startup acknowledgement, or the terminal result if it happened first. */
+    readonly started: Promise<AudioPlaybackStartResult>;
+    readonly result: Promise<AudioPlaybackResult>;
+    cancel(): void;
+}
+
 enum AudioSourceEventType {
     STARTED = 'started',
     ENDED = 'ended',
@@ -90,6 +104,75 @@ export class AudioSource extends Component {
     private _loadGeneration = 0;
     private _playGeneration = 0;
     private _audioDestroyed = false;
+    private _loadController: AbortController | null = null;
+    private _loadPromise: Promise<void> | null = null;
+    private _loadState: 'empty' | 'loading' | 'ready' | 'error' | 'cancelled' = 'empty';
+    private _loadTransport: 'media' | 'buffered' = 'media';
+    private _oneShotLoads = new Set<AbortController>();
+    private _nextRequestId = 0;
+    private _request: { id: number; started: (value: AudioPlaybackStartResult) => void;
+        finish: (value: AudioPlaybackResult) => void } | null = null;
+
+    public get loadState (): 'empty' | 'loading' | 'ready' | 'error' | 'cancelled' { return this._loadState; }
+
+    /** Options or retry start a fresh attempt; plain calls share the current attempt. */
+    public loadAsync (options: { clip?: AudioClip; timeoutMs?: number; signal?: AbortSignal; retry?: boolean;
+        transport?: 'media' | 'buffered' } = {}): Promise<void> {
+        if (this._audioDestroyed) return Promise.reject(new Error('AudioSource has no live clip.'));
+        if (options.clip && !options.clip._nativeAsset) return Promise.reject(new Error('Invalid audio clip.'));
+        if (options.clip) this._clip = options.clip;
+        if (options.transport) this._loadTransport = options.transport;
+        if (!this.clip) return Promise.reject(new Error('AudioSource has no live clip.'));
+        if (options.clip || options.transport || options.retry || options.timeoutMs !== undefined || options.signal) this._syncPlayer(true, options);
+        else if (!this._loadPromise && !this._isLoaded) this._syncPlayer();
+        return this._isLoaded ? Promise.resolve() : this._loadPromise ?? Promise.reject(new Error('Invalid audio clip.'));
+    }
+
+    public cancelLoad (): void {
+        if (this._loadState === 'loading') this._loadController?.abort();
+    }
+
+    private _finishRequest (status: 'ended' | 'cancelled' | 'failed', error?: unknown): void {
+        const request = this._request;
+        if (!request) return;
+        this._request = null;
+        if (!this._isLoaded) {
+            this._operationsBeforeLoading = this._operationsBeforeLoading.filter((op) => op.op !== AudioOperationType.PLAY);
+        }
+        const result = Object.freeze({ id: request.id, status, error });
+        request.started(result);
+        request.finish(result);
+    }
+
+    /** Request identity is local to this source; legacy play() keeps its void signature. */
+    public playRequest (): AudioPlaybackRequest {
+        this._finishRequest('cancelled');
+        if (!this._isLoaded) {
+            let seek: AudioOperationInfo | undefined;
+            for (const op of this._operationsBeforeLoading) {
+                if (op.op === AudioOperationType.SEEK) seek = op;
+                else if (op.op === AudioOperationType.STOP) seek = { op: AudioOperationType.SEEK, params: [0] };
+            }
+            // Supersede older controls, keeping only the requested playback position.
+            this._operationsBeforeLoading = seek ? [seek] : [];
+        }
+        const id = ++this._nextRequestId;
+        let started!: (value: AudioPlaybackStartResult) => void;
+        let finish!: (value: AudioPlaybackResult) => void;
+        const request = Object.freeze({ id,
+            started: new Promise<AudioPlaybackStartResult>((resolve) => { started = resolve; }),
+            result: new Promise<AudioPlaybackResult>((resolve) => { finish = resolve; }),
+            cancel: (): void => {
+                if (this._request?.id !== id) return;
+                // A retired request must never replay PLAY after a delayed Web/DOM load.
+                if (!this._isLoaded) this._operationsBeforeLoading.length = 0;
+                this.stop();
+            },
+        });
+        this._request = { id, started, finish };
+        this._beginPlayback(true);
+        return request;
+    }
 
     constructor () {
         super();
@@ -122,9 +205,9 @@ export class AudioSource extends Component {
     get clip (): AudioClip | null {
         return this._clip;
     }
-    private _syncPlayer (): void {
+    private _syncPlayer (force = false, options: { timeoutMs?: number; signal?: AbortSignal } = {}): void {
         const clip = this._clip;
-        if (this._audioDestroyed || this._lastSetClip === clip) {
+        if (this._audioDestroyed || (!force && this._lastSetClip === clip)) {
             return;
         }
         const nativeAsset = clip?._nativeAsset;
@@ -135,41 +218,80 @@ export class AudioSource extends Component {
             return;
         }
         const generation = ++this._loadGeneration;
+        this._loadController?.abort();
+        this._finishRequest('cancelled');
         this._lastSetClip = clip;
         this._isLoaded = false;
         this._operationsBeforeLoading.length = 0;
         this._cachedCurrentTime = -1;
         // A new clip owns the source immediately, not only once its load finishes.
         this._resetPlayer();
+        this._loadPromise = null;
+        this._loadState = 'empty';
         if (!clip || !nativeAsset) {
             return;
         }
-        AudioPlayer.load(nativeAsset.url, {
-            audioLoadMode: clip.loadMode,
+        const controller = this._loadController = new AbortController();
+        this._loadState = 'loading';
+        const cancel = (): void => controller.abort();
+        options.signal?.addEventListener('abort', cancel, { once: true });
+        if (options.signal?.aborted) controller.abort();
+        let rejectCancelled!: (reason: unknown) => void;
+        const cancelled = new Promise<never>((_resolve, reject) => { rejectCancelled = reject; });
+        const onAbort = (): void => rejectCancelled(Object.assign(new Error('Audio loading cancelled.'), { name: 'AbortError' }));
+        controller.signal.addEventListener('abort', onAbort, { once: true });
+        if (controller.signal.aborted) onAbort();
+        const loading = AudioPlayer.load(nativeAsset.url, {
+            audioLoadMode: clip.loadMode, signal: controller.signal, timeoutMs: options.timeoutMs, transport: this._loadTransport,
         }).then((player) => {
-            if (this._audioDestroyed || generation !== this._loadGeneration || this._lastSetClip !== clip) {
+            if (controller.signal.aborted || this._audioDestroyed || generation !== this._loadGeneration || this._lastSetClip !== clip) {
                 // Identity alone cannot distinguish the first A from the last A in A -> B -> A.
                 player.destroy();
                 return;
             }
             this._isLoaded = true;
+            this._loadState = 'ready';
             // clear old player
             this._resetPlayer();
             this._player = player;
             this._syncStates();
             this.node?.emit(_LOADED_EVENT);
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        }).catch((e) => {});
+        });
+        const cleanup = (): void => {
+            options.signal?.removeEventListener('abort', cancel);
+            controller.signal.removeEventListener('abort', onAbort);
+            if (this._loadController === controller) this._loadController = null;
+        };
+        const promise = Promise.race([loading, cancelled]).catch((error) => {
+            if (generation === this._loadGeneration) {
+                this._loadState = (error as Error)?.name === 'AbortError' ? 'cancelled' : 'error';
+                this._operationsBeforeLoading.length = 0;
+                this._finishRequest(this._loadState === 'cancelled' ? 'cancelled' : 'failed', error);
+            }
+            throw error;
+        }).then(cleanup, (error) => {
+            cleanup();
+            throw error;
+        });
+        this._loadPromise = promise;
+        // Legacy clip assignment remains fire-and-forget; explicit waiters still receive rejection.
+        promise.catch(() => {});
     }
 
     private _registerListener (): void {
         if (!this._hasRegisterListener && this._player) {
             const player = this._player;
-            player.onEnded(() => {
-                if (this._player !== player) return;
+            player.onEnded((playToken?: number) => {
+                if (this._player !== player || (playToken !== undefined && playToken !== this._playGeneration)) return;
+                this._finishRequest('ended');
                 ++this._playGeneration;
                 audioManager.removePlaying(player);
                 this.node?.emit(AudioSourceEventType.ENDED, this);
+            });
+            player.onStopRequested((playToken?: number) => {
+                if (this._player !== player || playToken !== this._playGeneration) return;
+                this._finishRequest('cancelled');
+                ++this._playGeneration;
             });
             player.onInterruptionBegin(() => {
                 if (this._player !== player) return;
@@ -187,6 +309,7 @@ export class AudioSource extends Component {
     private _unregisterListener (): void {
         if (this._player && this._hasRegisterListener) {
             this._player.offEnded();
+            this._player.offStopRequested();
             this._player.offInterruptionBegin();
             this._player.offInterruptionEnd();
             this._hasRegisterListener = false;
@@ -275,6 +398,10 @@ export class AudioSource extends Component {
     public onDestroy (): void {
         this._audioDestroyed = true;
         ++this._loadGeneration;
+        this.cancelLoad();
+        this._oneShotLoads.forEach((controller) => controller.abort());
+        this._oneShotLoads.clear();
+        this._loadState = this._loadState === 'loading' ? 'cancelled' : 'empty';
         this.stop();
         this._clip = this._lastSetClip = null;
         this._isLoaded = false;
@@ -304,7 +431,7 @@ export class AudioSource extends Component {
      * ```
      */
     public getPCMData (channelIndex: number): Promise<AudioPCMDataView | undefined> {
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
             if (channelIndex !== 0 && channelIndex !== 1) {
                 warn('Only support channel index 0 or 1 to get buffer');
                 resolve(undefined);
@@ -313,9 +440,9 @@ export class AudioSource extends Component {
             if (this._player) {
                 resolve(this._player.getPCMData(channelIndex));
             } else {
-                this.node?.once(_LOADED_EVENT, () => {
+                this.loadAsync().then(() => {
                     resolve(this._player?.getPCMData(channelIndex));
-                });
+                }, reject);
             }
         });
     }
@@ -332,15 +459,7 @@ export class AudioSource extends Component {
      * @returns A Promise to get the sample rate after audio is loaded.
      */
     public getSampleRate (): Promise<number> {
-        return new Promise((resolve) => {
-            if (this._player) {
-                resolve(this._player.sampleRate);
-            } else {
-                this.node?.once(_LOADED_EVENT, () => {
-                    resolve(this._player!.sampleRate);
-                });
-            }
-        });
+        return this.loadAsync().then(() => this._player!.sampleRate);
     }
 
     private _getRootNode (): Node | null | undefined {
@@ -375,7 +494,22 @@ export class AudioSource extends Component {
      * - 直接播放音频，引擎会在下一次发生用户交互时自动播放。
      */
     public play (): void {
-        if (this._audioDestroyed) return;
+        this._beginPlayback(false);
+    }
+
+    private _beginPlayback (keepRequest: boolean): void {
+        if (!keepRequest) this._finishRequest('cancelled');
+        if (this._audioDestroyed || !this.clip || (this._request && !this.clip._nativeAsset && !this._player)) {
+            this._finishRequest('failed', new Error('AudioSource has no live clip.'));
+            return;
+        }
+        if (this._loadState === 'error' || this._loadState === 'cancelled') {
+            // Retrying legacy play must preserve a newly issued request token.
+            const request = this._request;
+            this._request = null;
+            this._syncPlayer(true);
+            this._request = request;
+        }
         const generation = ++this._playGeneration;
         if (!this._isLoaded && this.clip) {
             this._operationsBeforeLoading.push({ op: AudioOperationType.PLAY, params: null });
@@ -390,15 +524,23 @@ export class AudioSource extends Component {
         }
         const player = this._player;
         if (player) {
-            player.play().then(() => {
+            let playback: Promise<void>;
+            try { playback = player.play(generation); } catch (error) {
+                this._finishRequest('failed', error);
+                return;
+            }
+            playback.then(() => {
                 if (generation === this._playGeneration && this._player === player
                     && player.state === AudioState.PLAYING) {
+                    const request = this._request;
+                    request?.started(Object.freeze({ id: request.id, status: 'started' }));
                     this.node?.emit(AudioSourceEventType.STARTED, this);
                 }
             }).catch((e) => {
                 // Cancellation of an older play must not untrack a newer play on the same player.
                 if (generation === this._playGeneration && this._player === player) {
                     audioManager.removePlaying(player);
+                    this._finishRequest((e as Error)?.name === 'AbortError' ? 'cancelled' : 'failed', e);
                 }
             });
             audioManager.addPlaying(player);
@@ -412,6 +554,7 @@ export class AudioSource extends Component {
      * 暂停播放。
      */
     public pause (): void {
+        this._finishRequest('cancelled');
         ++this._playGeneration;
         if (!this._isLoaded && this.clip) {
             this._operationsBeforeLoading.push({ op: AudioOperationType.PAUSE, params: null });
@@ -428,6 +571,7 @@ export class AudioSource extends Component {
      * 停止播放。
      */
     public stop (): void {
+        this._finishRequest('cancelled');
         // Preserve the original void signature, including consumer subclass overrides.
         if (this._player?.type === AudioType.DOM_AUDIO || (!this._player && this.clip?.loadMode === AudioType.DOM_AUDIO)) {
             this.stopAsync().catch((e) => { warn('AudioSource.stop failed', e); });
@@ -462,6 +606,7 @@ export class AudioSource extends Component {
                 code: 'AUDIO_STOP_ASYNC_UNSUPPORTED',
             });
         }
+        this._finishRequest('cancelled');
         ++this._playGeneration;
         if (!this._isLoaded && this.clip) {
             this._operationsBeforeLoading.length = 0;
@@ -492,10 +637,15 @@ export class AudioSource extends Component {
             return;
         }
         let player: OneShotAudio;
+        const controller = new AbortController();
+        this._oneShotLoads.add(controller);
         AudioPlayer.loadOneShotAudio(clip._nativeAsset.url, this._volume * volumeScale, {
             audioLoadMode: clip.loadMode,
+            signal: controller.signal,
+            transport: this._loadTransport,
         }).then((oneShotAudio) => {
-            if (this._audioDestroyed) {
+            this._oneShotLoads.delete(controller);
+            if (this._audioDestroyed || controller.signal.aborted) {
                 oneShotAudio.stop();
                 return;
             }
@@ -507,6 +657,7 @@ export class AudioSource extends Component {
             oneShotAudio.play();
             audioManager.addPlaying(oneShotAudio);
         }).catch((e): void => {
+            this._oneShotLoads.delete(controller);
             if (player) {
                 audioManager.removePlaying(player);
             }
@@ -524,6 +675,8 @@ export class AudioSource extends Component {
                         // eslint-disable-next-line @typescript-eslint/no-empty-function
                         this._player.seek(this._cachedCurrentTime).catch((e): void => {});
                     }
+                } else if (opInfo.op === AudioOperationType.PLAY) {
+                    this._beginPlayback(true);
                 } else {
                     this[opInfo.op]?.();
                 }

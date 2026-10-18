@@ -31,6 +31,9 @@ import factory from '../asset/asset-manager/factory';
 export function loadAudioPlayer (url: string, options: Record<string, any>, onComplete: ((err: Error | null, data?: any | null) => void)): void {
     AudioPlayer.load(url, {
         audioLoadMode: options.audioLoadMode,
+        timeoutMs: options.timeoutMs,
+        signal: options.signal,
+        transport: options.transport,
     }).then((player) => {
         const audioMeta: AudioMeta = {
             player,

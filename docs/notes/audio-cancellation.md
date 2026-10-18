@@ -1,5 +1,9 @@
 # DOM audio cancellation and stop completion
 
+The follow-up [readiness and request contract](../manual/audio-readiness-ownership.md) adds load cancellation,
+bounded metadata waits and source-local playback requests. The limits below describe the original PR3 scope,
+not a claim that the follow-up or original products passed browser acceptance.
+
 `AudioSource.stop()` retains its `void` signature, including TypeScript subclasses that override it.
 `AudioSource.stopAsync(): Promise<void>` adds a DOM-only completion boundary. For DOM audio, both methods cancel
 playback requested before that call; `stopAsync` never waits for or invents a `STARTED` event.

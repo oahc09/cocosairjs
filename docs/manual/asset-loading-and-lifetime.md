@@ -1,5 +1,7 @@
 # Asset Loading and Lifetime 资源加载与生命周期
 
+动态合图原始纹理、SpriteFrame 与共享 atlas 的 session 所有权和可运行示例见 [资源所有权补充](audio-readiness-ownership.md#释放动态合图资源)。
+
 > **状态：FULL（能力）/ 本篇为统一叙述入口。** 官方 [asset/dynamic-load-resources] 与
 > [asset/release-manager] 讲资源加载与释放；AIR 的 Code First 形态下入口有三个——
 > 全局 `loadAssetAsync`、`assetManager`、`GLTFLoader`——本篇写清各自的适用边界、

@@ -73,7 +73,7 @@ export class AudioContextAgent {
             }, (err) => {
                 // TODO: need to reject the error.
                 // eslint-disable-next-line no-console
-                console.error('failed to load Web Audio', err);
+                reject(err);
             });
             promise?.catch(reject); // Safari doesn't support the promise based decodeAudioData
         });
@@ -197,7 +197,9 @@ export class OneShotAudioWeb {
     }
 }
 export class AudioPlayerWeb {
+    setPlayToken(token) { this._queuedEndToken = token; }
     constructor(audioBuffer, url) {
+        this._destroyed = false;
         this._currentTimer = 0;
         this._volume = 1;
         this._loop = false;
@@ -220,6 +222,13 @@ export class AudioPlayerWeb {
         game.on(Game.EVENT_RESUME, this._onInterruptedEnd, this);
     }
     destroy() {
+        if (this._destroyed)
+            return;
+        this._destroyed = true;
+        this._stopSourceNode();
+        this._gainNode.disconnect();
+        this._audioTimer.stop();
+        this._state = AudioState.STOPPED;
         window.clearTimeout(this._currentTimer);
         this._audioTimer.destroy();
         if (this._audioBuffer) {
@@ -231,46 +240,91 @@ export class AudioPlayerWeb {
         game.off(Game.EVENT_RESUME, this._onInterruptedEnd, this);
         this.offRunning();
     }
-    static load(url) {
+    static load(url, opts) {
         return new Promise((resolve, reject) => {
-            AudioPlayerWeb.loadNative(url).then((audioBuffer) => {
+            AudioPlayerWeb.loadNative(url, opts).then((audioBuffer) => {
                 resolve(new AudioPlayerWeb(audioBuffer, url));
             }).catch(reject);
         });
     }
-    static loadNative(url) {
+    static loadNative(url, opts = {}) {
         return new Promise((resolve, reject) => {
-            const cachedAudioBuffer = audioBufferManager.getCache(url);
-            if (cachedAudioBuffer) {
-                audioBufferManager.retainCache(url);
-                resolve(cachedAudioBuffer);
+            const timeoutMs = opts.timeoutMs ?? 8000;
+            if (!Number.isFinite(timeoutMs) || timeoutMs <= 0) {
+                reject(new RangeError('Audio timeoutMs must be positive and finite.'));
                 return;
             }
+            if (opts.signal?.aborted) {
+                reject(Object.assign(new Error('Audio loading cancelled.'), { name: 'AbortError' }));
+                return;
+            }
+            let settled = false;
+            const abort = () => fail(Object.assign(new Error('Audio loading cancelled.'), { name: 'AbortError' }));
+            const timer = setTimeout(() => fail(Object.assign(new Error('Audio loading timed out: ' + url), { name: 'TimeoutError' })), timeoutMs);
+            const cached = audioBufferManager.getCache(url);
             const xhr = new XMLHttpRequest();
-            const errInfo = `load audio failed: ${url}, status: `;
-            xhr.open('GET', url, true);
-            xhr.responseType = 'arraybuffer';
-            xhr.onload = () => {
-                if (xhr.status === 200 || xhr.status === 0) {
-                    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-                    audioContextAgent.decodeAudioData(xhr.response).then((decodedAudioBuffer) => {
-                        audioBufferManager.addCache(url, decodedAudioBuffer);
-                        resolve(decodedAudioBuffer);
-                    }).catch((e) => { debug.warn('loadNative error', url, e); });
-                }
-                else {
-                    reject(new Error(`${errInfo}${xhr.status}(no response)`));
-                }
+            const cleanup = () => {
+                clearTimeout(timer);
+                opts.signal?.removeEventListener('abort', abort);
+                xhr.onload = xhr.onerror = xhr.ontimeout = xhr.onabort = null;
             };
-            xhr.onerror = () => { reject(new Error(`${errInfo}${xhr.status}(error)`)); };
-            xhr.ontimeout = () => { reject(new Error(`${errInfo}${xhr.status}(time out)`)); };
-            xhr.onabort = () => { reject(new Error(`${errInfo}${xhr.status}(abort)`)); };
-            xhr.send(null);
+            const fail = (error) => {
+                if (settled)
+                    return;
+                settled = true;
+                cleanup();
+                try {
+                    xhr.abort();
+                }
+                catch { /* still settle */ }
+                reject(error);
+            };
+            const success = (buffer) => {
+                if (settled)
+                    return; // decodeAudioData cannot be cancelled; never cache a late result.
+                settled = true;
+                cleanup();
+                if (cached)
+                    audioBufferManager.retainCache(url);
+                else
+                    audioBufferManager.addCache(url, buffer);
+                resolve(buffer);
+            };
+            opts.signal?.addEventListener('abort', abort, { once: true });
+            if (cached) {
+                success(cached);
+                return;
+            }
+            try {
+                xhr.open('GET', url, true);
+                xhr.responseType = 'arraybuffer';
+                xhr.onload = () => {
+                    if (settled)
+                        return;
+                    if (xhr.status !== 200 && xhr.status !== 0) {
+                        fail(new Error('load audio failed: ' + url + ', status: ' + xhr.status));
+                        return;
+                    }
+                    try {
+                        audioContextAgent.decodeAudioData(xhr.response).then(success, fail);
+                    }
+                    catch (error) {
+                        fail(error);
+                    }
+                };
+                xhr.onerror = () => fail(new Error('load audio network error: ' + url));
+                xhr.ontimeout = () => fail(Object.assign(new Error('Audio loading timed out: ' + url), { name: 'TimeoutError' }));
+                xhr.onabort = abort;
+                xhr.send(null);
+            }
+            catch (error) {
+                fail(error);
+            }
         });
     }
-    static loadOneShotAudio(url, volume) {
+    static loadOneShotAudio(url, volume, opts) {
         return new Promise((resolve, reject) => {
-            AudioPlayerWeb.loadNative(url).then((audioBuffer) => {
+            AudioPlayerWeb.loadNative(url, opts).then((audioBuffer) => {
                 // HACK: AudioPlayer should be a friend class in OneShotAudio
                 const oneShotAudio = new OneShotAudioWeb(audioBuffer, volume, url);
                 // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
@@ -294,7 +348,7 @@ export class AudioPlayerWeb {
     }
     _onInterruptedEnd() {
         if (this._state === AudioState.INTERRUPTED) {
-            this.play().then(() => {
+            this.play(this._queuedEndToken ?? this._endToken).then(() => {
                 this._eventTarget.emit(AudioEvent.INTERRUPTION_END);
             }).catch((e) => { debug.warn('_onInterruptedEnd error', e); });
         }
@@ -351,7 +405,11 @@ export class AudioPlayerWeb {
             }
         });
     }
-    play() {
+    play(playToken) {
+        if (this._destroyed)
+            return Promise.reject(new Error('Audio player destroyed.'));
+        if (playToken !== undefined)
+            this._endToken = playToken;
         this.offRunning();
         if (EDITOR_NOT_IN_PREVIEW) {
             return Promise.resolve();
@@ -382,6 +440,8 @@ export class AudioPlayerWeb {
         });
     }
     _startSourceNode() {
+        if (this._destroyed)
+            return;
         // one AudioBufferSourceNode can't start twice
         this._stopSourceNode();
         this._sourceNode = audioContextAgent.createBufferSource(this._audioBuffer, this.loop);
@@ -393,31 +453,37 @@ export class AudioPlayerWeb {
         /* still not supported by all platforms *
         this._sourceNode.onended = this._onEnded;
         /* doing it manually for now */
+        const sourceNode = this._sourceNode;
+        const playToken = this._endToken;
         const checkEnded = () => {
+            if (this._destroyed || this._sourceNode !== sourceNode)
+                return;
             if (this.loop) {
                 this._currentTimer = window.setTimeout(checkEnded, this._audioBuffer.duration * 1000);
             }
             else { // do ended
                 this._audioTimer.stop();
-                this._eventTarget.emit(AudioEvent.ENDED);
                 this._state = AudioState.INIT;
+                if (playToken === undefined)
+                    this._eventTarget.emit(AudioEvent.ENDED);
+                else
+                    this._eventTarget.emit(AudioEvent.ENDED, playToken);
             }
         };
         window.clearTimeout(this._currentTimer);
         this._currentTimer = window.setTimeout(checkEnded, (this._audioBuffer.duration - this._audioTimer.currentTime) * 1000);
     }
     _stopSourceNode() {
+        const node = this._sourceNode;
+        this._sourceNode = undefined;
+        if (!node)
+            return;
         try {
-            if (this._sourceNode) {
-                this._sourceNode.stop();
-                this._sourceNode.disconnect();
-                this._sourceNode.buffer = null;
-                this._sourceNode = undefined;
-            }
+            node.stop();
         }
-        catch (e) {
-            // sourceNode can't be stopped twice, especially on Safari.
-        }
+        catch { /* Already ended/not started; still disconnect the graph. */ }
+        node.disconnect();
+        node.buffer = null;
     }
     pause() {
         this.offRunning();

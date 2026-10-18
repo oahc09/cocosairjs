@@ -58,18 +58,20 @@ export class AudioPlayer {
                 if (!AudioContextAgent.support) {
                     warnID(5201);
                 }
-                AudioPlayerDOM.load(url).then((domPlayer) => {
+                AudioPlayerDOM.load(url, opts).then((domPlayer) => {
                     resolve(new AudioPlayer(domPlayer));
                 }).catch(reject);
             }
             else {
-                AudioPlayerWeb.load(url).then((webPlayer) => {
+                AudioPlayerWeb.load(url, opts).then((webPlayer) => {
                     resolve(new AudioPlayer(webPlayer));
                 }).catch(reject);
             }
         });
     }
     destroy() {
+        this._player._eventTarget.emit('air-stop-requested', this._playToken);
+        this.offStopRequested();
         this._player.destroy();
     }
     static loadNative(url, opts) {
@@ -77,9 +79,9 @@ export class AudioPlayer {
             if (!AudioContextAgent.support) {
                 warnID(5201);
             }
-            return AudioPlayerDOM.loadNative(url);
+            return AudioPlayerDOM.loadNative(url, opts);
         }
-        return AudioPlayerWeb.loadNative(url);
+        return AudioPlayerWeb.loadNative(url, opts);
     }
     static loadOneShotAudio(url, volume, opts) {
         return new Promise((resolve, reject) => {
@@ -87,13 +89,13 @@ export class AudioPlayer {
                 if (!AudioContextAgent.support) {
                     warnID(5201);
                 }
-                AudioPlayerDOM.loadOneShotAudio(url, volume).then((oneShotAudioDOM) => {
+                AudioPlayerDOM.loadOneShotAudio(url, volume, opts).then((oneShotAudioDOM) => {
                     // HACK: AudioPlayer should be a friend class in OneShotAudio
                     resolve(new OneShotAudio(oneShotAudioDOM));
                 }).catch(reject);
             }
             else {
-                AudioPlayerWeb.loadOneShotAudio(url, volume).then((oneShotAudioWeb) => {
+                AudioPlayerWeb.loadOneShotAudio(url, volume, opts).then((oneShotAudioWeb) => {
                     // HACK: AudioPlayer should be a friend class in OneShotAudio
                     resolve(new OneShotAudio(oneShotAudioWeb));
                 }).catch(reject);
@@ -112,9 +114,20 @@ export class AudioPlayer {
     get sampleRate() { return this._player.sampleRate; }
     getPCMData(channelIndex) { return this._player.getPCMData(channelIndex); }
     seek(time) { return this._player.seek(time); }
-    play() { return this._player.play(); }
+    play(playToken) {
+        if (playToken !== undefined)
+            this._playToken = playToken;
+        if (playToken !== undefined)
+            this._player.setPlayToken(playToken);
+        return this._player.play(playToken);
+    }
     pause() { return this._player.pause(); }
-    stop() { return this._player.stop(); }
+    stop() {
+        this._player._eventTarget.emit('air-stop-requested', this._playToken);
+        return this._player.stop();
+    }
+    onStopRequested(cb) { this._player._eventTarget.on('air-stop-requested', cb); }
+    offStopRequested() { this._player._eventTarget.off('air-stop-requested'); }
     onInterruptionBegin(cb) { this._player.onInterruptionBegin(cb); }
     offInterruptionBegin(cb) { this._player.offInterruptionBegin(cb); }
     onInterruptionEnd(cb) { this._player.onInterruptionEnd(cb); }

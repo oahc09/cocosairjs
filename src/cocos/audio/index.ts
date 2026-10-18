@@ -31,6 +31,7 @@ import './deprecated';
 export { AudioClip } from './audio-clip';
 
 export { AudioSource };
+export type { AudioPlaybackRequest, AudioPlaybackResult, AudioPlaybackStartResult } from './audio-source';
 export { AudioPCMDataView } from '../../pal/audio/type';
 
 export { AudioSource as AudioSourceComponent };

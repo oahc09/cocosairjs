@@ -1,5 +1,15 @@
 # UPSTREAM
 
+2026-10-18 播放请求归属：audio-playback-patch.cjs 给 PAL 结束通知增加可选代际，Web Audio 计时回调绑定实际 AudioBufferSourceNode；Source 丢弃旧代际结束，兼容无参旧回调。包装播放器发出停止请求通知，使 AudioManager 淘汰也能结算请求；它不是物理停止完成事件。新 token 接管加载前队列、保留 seek/归零位置，旧无 token API 队列合同保持。Web Audio destroy 停止/断开源和 gain，防重释放缓存，防已销毁实例迟到启动；共享 operation-queue 与冻结 vendor 不变。PAL ambient 类型同步可选代际签名。
+
+2026-10-18 Windows WebKit pending audio control：无 SDK 原生对照复现 pause/seek 后仍推进，清 src + load 后时钟和 played 范围保持停止，恢复 URL 后可再次播放。PAL 只对 Win 平台 Safari/WebKit 未确认启动的 play，在 pause/stop 时退役原媒体源，显式下一次 play 再恢复 URL、暂停/seek 位置；保留真实时长 metadata，不修改时钟 getter、不伪造事件。其他平台和已确认启动路径保持。冻结 vendor 不变，适配由 audio-readiness-patch.cjs 重现。
+
+Audio downloader 同步转发 timeoutMs/signal/transport 至 PAL，资源管理器自身缓存与重试策略不变。
+
+音频后续浏览器核查：Windows WebKit 的原生 WAV 有 canplay/真实时钟与 EOS、无 canplaythrough，因此 DOM ready 改用 canplay（iOS 保留 metadata）。显式 buffered 传输使用可取消 XHR 与自有 Blob URL，失败/销毁回收；默认 media 保留跨域行为，不宣称所有原生媒体后端会中止网络。AudioSource.loadAsync 可原子提供 clip/transport，避免先启动旧媒体请求。该范围不替代缺失作品的归因。
+
+2026-10-17 音频就绪与请求合同：`tools/build/audio-readiness-patch.cjs` 为冻结 PAL 的 DOM/Web Audio 加载增加可配置总期限、AbortSignal、失败清理与解码拒绝；取消后的解码结果不缓存。AudioSource 增加 loadAsync/cancelLoad/loadState 和 source-local playRequest 结果，metadata 等待在失败、换 clip、销毁时结算，旧 play/stop 的 void 签名保持。音频 barrel 仅补导出结果类型。冻结 vendor、版权和共享 operation-queue 不变；详见 [就绪与所有权](manual/audio-readiness-ownership.md)。这些源码改动不确证《纸月律动》的历史根因。
+
 2026-10-17 提交前审查修复：活动 TypeScript WebGPU 的 CommandBuffer.copyBuffersToTexture 改用与当前后端一致的即时上传路径，先提交待执行 compute，避免遗留 cmdPackage 无消费路径造成静默丢失，并保持与后续 blit/render 的队列顺序。冻结基线、上游版权及其他后端保持；实际 compute→upload→blit 及双纹理读回纳入资源合同。
 
 2026-10-14 DOM 音频取消：`tools/build/audio-cancellation-patch.cjs` 在冻结 PAL 生成流程中让 DOM play 具有可取消代际，pause/stop/destroy 不再等待原生 play Promise；取消以 AbortError 结算，迟到回调不能恢复 PLAYING。仅 NotAllowedError 等待选定 canvas 手势，停止或销毁清理重试监听，销毁释放原媒体 src。AudioSource 使用播放与加载代际抑制迟到 STARTED、旧拒绝移除新播放、A→B→A 旧加载污染，并在有效 clip 替换时立即销毁旧播放器。共享 operation-queue、WebAudio/video 与冻结 vendor 原字节保持。自然 EOS 与晚到 play 完成的竞态另有回归；这不声明已查明 WebKit 延迟 Promise 的原因或产品27 epoch5 的历史根因。验收范围见 [音频取消验证](notes/audio-cancellation.md)。

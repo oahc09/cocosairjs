@@ -65,6 +65,8 @@ PAL 的运行时来源固定在 `vendor/pal-source/` 的公开 MIT 快照；
 
 ## 程序化场景与独立验收工具
 
+音频加载与所有权局部回归：`node tools/verify/audio-ownership-browser.cjs --bundle=build/cocosair.module.js --browser=chromium --out=output/audio-ownership/new-run`。需要可解析 Playwright 与匹配浏览器；只读 bundle，写新的报告/截图目录，保留失败，不更新正典证据。独立诊断模块 `tools/debug/resource-ownership.ts` 区分清理回调、排队销毁、对象有效性、GFX 与共享缓存状态；不在默认 runtime 内。
+
 WebGL2 图形合同：`node tools/verify/webgl2-gfx-contracts.cjs --browser=all --out=<new.json>` 使用现有 SDK 和 public gfx 验证格式能力、sampler、depth bias、整数 clear/attribute、分层附件及读回。必须指定未存在的报告路径；写相邻截图及原始数值，自动关闭自有服务和浏览器，不构建、安装或下载。可用 `--playwright=<existing-module-path>` 指定已有工具；`--sdk=<bundle-relative-path>`、`--cases=<comma-separated-case-ids>`、`--variant=<name>` 选择明确候选/子集/撤销控制，子集不等于九项完整验收。合同与支持边界见 [WebGL2 gfx 合同](../docs/reference/webgl2-gfx-contracts.md)，执行及证据见 [专项台账](../ai/ledgers/webgl2-gfx-contract-remediation.md)。
 
 逐机制负控：`node tools/verify/webgl2-gfx-controls.cjs --prefix=<new-prefix>` 从现有开发 bundle 生成隔离副本和 manifest，写入 `output/webgl2-gfx-contracts/variants/`，拒绝覆盖，不修改共享 SDK 或源码。使用上述 collector 的 `--control-manifest=<manifest.json>`、`--sdk=<variant.js>`、`--variant=<name>` 和指定 `--cases=` 采集对应反例；负控的预期失败独立记录，不等于正常候选通过。

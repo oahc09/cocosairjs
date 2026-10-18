@@ -3,9 +3,11 @@ import { audioManager } from '../../src/cocos/audio/audio-manager';
 import { AudioSource } from '../../src/cocos/audio/audio-source';
 import { Node } from '../../src/cocos/scene-graph';
 import { game, Game } from '../../src/cocos/game';
-import { AudioState, AudioType } from '../../src/pal/audio/type';
+import { AudioEvent, AudioState, AudioType } from '../../src/pal/audio/type';
 import { AudioPlayer, OneShotAudio } from '../../src/pal/audio/web/player';
 import { AudioPlayerDOM, OneShotAudioDOM } from '../../src/pal/audio/web/player-dom';
+import { systemInfo } from '../../src/pal/system-info/web/system-info';
+import { BrowserType } from '../../src/pal/system-info/enum-type';
 
 // CPU-only contract evidence: the engine classes below are real, but native media,
 // gestures, and promise completion are controlled doubles. No audible playback,
@@ -851,4 +853,211 @@ describe('audio cancellation and ownership (CPU media doubles)', () => {
         expect(native.removeAttribute).not.toHaveBeenCalled();
         expect(isTracked(player)).toBe(true);
     });
+
+    test('request EOS before startup acknowledges ended without inventing started; replay owns a new token', async () => {
+        const { source, native, started } = await loadedSource();
+        const first = source.playRequest();
+        native.end();
+        expect(await first.result).toMatchObject({ id: first.id, status: 'ended' });
+        expect(await first.started).toMatchObject({ status: 'ended' });
+        native.attempts[0].resolve();
+        await flushMicrotasks();
+        expect(started).not.toHaveBeenCalled();
+        const second = source.playRequest();
+        first.cancel(); // a retired token cannot stop the new request
+        native.attempts[1].resolve();
+        await flushMicrotasks();
+        expect(await second.started).toMatchObject({ id: second.id, status: 'started' });
+        expect(second.id).not.toBe(first.id);
+        native.end();
+        expect(await second.result).toMatchObject({ status: 'ended' });
+    });
+
+    test('request replacement, late failure, clip change and cancellation never cross tokens', async () => {
+        const { source, native } = await loadedSource();
+        const first = source.playRequest();
+        const second = source.playRequest();
+        expect(await first.result).toMatchObject({ status: 'cancelled' });
+        native.attempts[0].reject(new Error('old request'));
+        native.attempts[1].resolve();
+        await flushMicrotasks();
+        expect(await second.started).toMatchObject({ status: 'started' });
+        source.clip = makeClip('replacement.wav');
+        expect(await second.result).toMatchObject({ status: 'cancelled' });
+        await flushMicrotasks();
+        const third = source.playRequest();
+        third.cancel();
+        expect(await third.result).toMatchObject({ id: third.id, status: 'cancelled' });
+    });
+
+    test('native playback rejection becomes a request failure, not a false start', async () => {
+        const { source, native, started } = await loadedSource();
+        const request = source.playRequest();
+        native.attempts[0].reject(namedError('NotSupportedError'));
+        expect(await request.result).toMatchObject({ status: 'failed' });
+        expect(await request.started).toMatchObject({ status: 'failed' });
+        expect(started).not.toHaveBeenCalled();
+    });
+
+    test('a manager-level wrapped player stop retires a pending request without waiting for native play acknowledgement', async () => {
+        const { source, player, native, started } = await loadedSource();
+        const request = source.playRequest();
+        await player.stop(); // same native wrapper boundary used by AudioManager eviction
+        audioManager.removePlaying(player);
+        expect(await request.result).toMatchObject({ id: request.id, status: 'cancelled' });
+        native.attempts[0].resolve();
+        await flushMicrotasks();
+        expect(started).not.toHaveBeenCalled();
+    });
+
+    test('a tagged end from an older play cannot finish a newer request on the same player', async () => {
+        const { source, native, dom } = await loadedSource();
+        const first = source.playRequest();
+        native.attempts[0].resolve();
+        await flushMicrotasks();
+        const previousGeneration = (source as any)._playGeneration;
+        const latest = source.playRequest();
+        native.attempts[1].resolve();
+        await flushMicrotasks();
+        expect(await first.result).toMatchObject({ status: 'cancelled' });
+        let ended = false;
+        latest.result.then(() => {
+            ended = true;
+        });
+        dom._eventTarget.emit(AudioEvent.ENDED, previousGeneration); // labelled stale metadata negative control
+        await flushMicrotasks();
+        expect(ended).toBe(false);
+        native.end();
+        expect(await latest.result).toMatchObject({ id: latest.id, status: 'ended' });
+    });
+
+    test('token cancellation before a Web-mode load prevents queued playback and permits explicit replay', async () => {
+        const loading = deferred<AudioPlayer>();
+        jest.spyOn(AudioPlayer, 'load').mockReturnValue(loading.promise);
+        const { source, started } = makeSource();
+        const clip = makeClip('delayed-web.wav');
+        clip._nativeAsset = { player: null, url: 'delayed-web.wav', duration: 20, type: AudioType.WEB_AUDIO };
+        source.clip = clip;
+        const request = source.playRequest();
+        request.cancel();
+        expect(await request.result).toMatchObject({ status: 'cancelled' });
+        const fallback = makePlayer();
+        loading.resolve(fallback.player);
+        await flushMicrotasks();
+        expect(fallback.native.play).not.toHaveBeenCalled();
+        expect(started).not.toHaveBeenCalled();
+        const replay = source.playRequest();
+        fallback.native.attempts[0].resolve();
+        await flushMicrotasks();
+        expect(await replay.started).toMatchObject({ id: replay.id, status: 'started' });
+        request.cancel();
+        expect(fallback.native.paused).toBe(false);
+        fallback.native.end();
+        expect(await replay.result).toMatchObject({ status: 'ended' });
+    });
+
+    test('new requests supersede pre-load PLAY/STOP controls without cancelling the newest request', async () => {
+        const loading = deferred<AudioPlayer>();
+        jest.spyOn(AudioPlayer, 'load').mockReturnValue(loading.promise);
+        const { source } = makeSource();
+        const clip = makeClip('queued.wav');
+        clip._nativeAsset = { player: null, url: 'queued.wav', duration: 20, type: AudioType.WEB_AUDIO };
+        source.clip = clip;
+        const first = source.playRequest();
+        const second = source.playRequest();
+        second.cancel();
+        const latest = source.playRequest();
+        expect(await first.result).toMatchObject({ status: 'cancelled' });
+        expect(await second.result).toMatchObject({ status: 'cancelled' });
+        const fallback = makePlayer();
+        loading.resolve(fallback.player);
+        await flushMicrotasks();
+        expect(fallback.native.play).toHaveBeenCalledTimes(1);
+        fallback.native.attempts[0].resolve();
+        await flushMicrotasks();
+        expect(await latest.started).toMatchObject({ id: latest.id, status: 'started' });
+        first.cancel();
+        second.cancel();
+        expect(fallback.native.paused).toBe(false);
+        fallback.native.end();
+        expect(await latest.result).toMatchObject({ status: 'ended' });
+    });
+
+    test.each(['pause', 'stop'] as const)('%s retires a token without a delayed pre-load PLAY', async (control) => {
+        const loading = deferred<AudioPlayer>();
+        jest.spyOn(AudioPlayer, 'load').mockReturnValue(loading.promise);
+        const { source } = makeSource();
+        const clip = makeClip('retired.wav');
+        clip._nativeAsset = { player: null, url: 'retired.wav', duration: 20, type: AudioType.WEB_AUDIO };
+        source.clip = clip;
+        const request = source.playRequest();
+        source[control]();
+        expect(await request.result).toMatchObject({ status: 'cancelled' });
+        const fallback = makePlayer();
+        loading.resolve(fallback.player);
+        await flushMicrotasks();
+        expect(fallback.native.play).not.toHaveBeenCalled();
+    });
+
+    test('an invalid unloaded clip gives the request a failure terminal instead of an unbounded queue', async () => {
+        const error = jest.spyOn(console, 'error').mockImplementation(() => {});
+        const { source } = makeSource();
+        source.clip = new AudioClip('invalid');
+        expect(error).toHaveBeenCalled();
+        const request = source.playRequest();
+        expect(await request.result).toMatchObject({ id: request.id, status: 'failed' });
+    });
+
+    test('destroy aborts the transport for every owned pending one-shot load', async () => {
+        const signals: AbortSignal[] = [];
+        jest.spyOn(AudioPlayer, 'loadOneShotAudio').mockImplementation((_url, _volume, opts) => {
+            signals.push(opts!.signal!);
+            return new Promise((_resolve, reject) =>
+                opts!.signal!.addEventListener('abort', () => reject(namedError('AbortError'))),
+            );
+        });
+        const { source } = makeSource();
+        source.playOneShot(makeClip('one.wav'));
+        source.playOneShot(makeClip('two.wav'));
+        expect(signals).toHaveLength(2);
+        source.onDestroy();
+        await flushMicrotasks();
+        expect(signals.every((signal) => signal.aborted)).toBe(true);
+        expect((source as any)._oneShotLoads.size).toBe(0);
+    });
+
+    test.each(['pause', 'stop'] as const)(
+        'Windows WebKit pending %s retires the native source and restores it only on replay',
+        async (action) => {
+            const descriptor = Object.getOwnPropertyDescriptor(systemInfo, 'browserType');
+            Object.defineProperty(systemInfo, 'browserType', { value: BrowserType.SAFARI, configurable: true });
+            jest.spyOn(navigator, 'platform', 'get').mockReturnValue('Win32');
+            try {
+                const { dom, native } = makePlayer();
+                const url = native.src;
+                const pending = observe(dom.play());
+                await dom[action]();
+                await flushMicrotasks();
+                expect(pending.status).toBe('rejected');
+                expect(native.src).toBe('');
+                expect(native.load).toHaveBeenCalledTimes(1);
+                native.duration = NaN; // unloaded media has no duration; retain real pre-stop metadata
+                expect(dom.src).toBe(url);
+                expect(dom.duration).toBe(20);
+                await dom.seek(3);
+                const resumed = observe(dom.play());
+                expect(native.src).toBe(url);
+                expect(native.currentTime).toBe(3);
+                native.attempts[0].resolve();
+                await flushMicrotasks();
+                expect(resumed.status).toBe('pending');
+                native.attempts[1].resolve();
+                await flushMicrotasks();
+                expect(resumed.status).toBe('fulfilled');
+            } finally {
+                if (descriptor) Object.defineProperty(systemInfo, 'browserType', descriptor);
+                else delete (systemInfo as any).browserType;
+            }
+        },
+    );
 });

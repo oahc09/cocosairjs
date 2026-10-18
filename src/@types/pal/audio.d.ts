@@ -137,7 +137,7 @@ declare module 'pal/audio' {
         /**
          * Asynchronously plays the audio or resumes the audio while it is paused.
          */
-        play (): Promise<void>;
+        play (playToken?: number): Promise<void>;
 
         /**
          * Asynchronously pauses the playing.
@@ -147,6 +147,9 @@ declare module 'pal/audio' {
          * Asynchronously stops the playing.
          */
         stop (): Promise<void>;
+        /** Internal request retirement notification, not a physical stop completion fence. */
+        onStopRequested (cb: (playToken?: number) => void): void;
+        offStopRequested (): void;
 
         /**
          * Registers an callback which would be called at an interruption begin.
@@ -177,12 +180,12 @@ declare module 'pal/audio' {
          * Register an callback which would be called when the player finished its playing.
          * @param cb The callback.
          */
-        onEnded (cb: () => void): void;
+        onEnded (cb: (playToken?: number) => void): void;
 
         /**
          * Unregister the callback that registered to `onEnded`.
          * @param cb The callback. If not specified, all callback would be unregistered.
          */
-        offEnded (cb?: () => void): void;
+        offEnded (cb?: (playToken?: number) => void): void;
     }
 }

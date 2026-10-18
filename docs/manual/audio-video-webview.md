@@ -1,5 +1,7 @@
 # 音频、视频与 WebView（Web 条件与释放）
 
+加载失败、取消、重试及逐次播放 token 见 [音频终态与资源所有权](audio-readiness-ownership.md)。
+
 > **状态：FULL（Web 条件下）。** 官方 [audio-system/overview]、[audiosource]、[videoplayer]、[webview]
 > 三块的 AIR 落法。AIR 是 Web 运行时：**音频要用户手势解锁、视频编解码由浏览器决定、WebView 是
 > DOM overlay**——每一条都有可复跑示例背书（v11 链 53/53）。

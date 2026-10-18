@@ -58,6 +58,8 @@ function generate() {
         }
         source = patchStartupBinding(source, row.source);
         source = require('./audio-cancellation-patch.cjs').patchAudioCancellation(source, row.source);
+        source = require('./audio-readiness-patch.cjs').patchAudioReadiness(source, row.source);
+        source = require('./audio-playback-patch.cjs').patchAudioPlayback(source, row.source);
         const result = ts.transpileModule(source, {
             compilerOptions: {
                 target: ts.ScriptTarget.ES2020,
@@ -85,7 +87,11 @@ function generate() {
     try {
         for (const rel of ['pal/audio/type', 'pal/input/input-source']) {
             const file = path.join(temp, path.basename(rel) + '.ts');
-            fs.copyFileSync(path.join(SOURCE, rel + '.ts'), file);
+            const declarationSource = fs.readFileSync(path.join(SOURCE, rel + '.ts'), 'utf8');
+            fs.writeFileSync(
+                file,
+                require('./audio-readiness-patch.cjs').patchAudioReadiness(declarationSource, rel + '.ts'),
+            );
             ts.createProgram([file, path.join(ROOT, 'src/@types/globals.d.ts')], {
                 declaration: true,
                 emitDeclarationOnly: true,
