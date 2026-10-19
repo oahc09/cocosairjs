@@ -744,7 +744,7 @@ describe('Lead closure gates: raw correlation and native controls', () => {
 
 describe('IER-04 explicit browser scope and complete runtime identity', () => {
     const selected = () => {
-        const report = structuredClone(fixture);
+        const report = JSON.parse(JSON.stringify(fixture));
         report.engines = ['webkit'];
         for (const key of ['rows', 'ribbons', 'meshRows', 'lifecycles', 'normals']) {
             report[key] = report[key].filter((row: any) => row.engine === 'webkit');

@@ -359,3 +359,58 @@ describe('IER-05 recorded focus evidence is validated, not merely counted', () =
         );
     });
 });
+
+describe('IER-05 explicit diagnostic engine selection', () => {
+    const { checkSelectedReport } = require('../../tools/verify/interactive-input-browser.cjs');
+    function sparseReport(): any {
+        return {
+            schemaVersion: 'ier-input/1',
+            sourceStatus: 'recreated',
+            referenceComparison: { result: 'NOT_RUN' },
+            subset: true,
+            completed: false,
+            fingerprints: [],
+            rows: [false, true].map((control) => ({
+                engine: 'webkit',
+                control,
+                version: 'contract fixture',
+                pageErrors: [],
+                consoleErrors: [],
+                sdkRequests: control ? [] : ['/build/cocosair.module.js'],
+                operations: [],
+                supplementary: [],
+                notRun: [
+                    { caseId: 'blur', reason: 'not observed' },
+                    { caseId: 'hidden', reason: 'not observed' },
+                ],
+            })),
+        };
+    }
+    test.each([[[]], [['webkit', 'webkit']], [['unknown']], [undefined]])(
+        'rejects invalid explicit engine selection %s',
+        (engines) => {
+            expect(checkSelectedReport(sparseReport(), engines, { verifyInputs: false }).errors).toContain(
+                'invalid selected engine scope',
+            );
+        },
+    );
+    test('selected matrix does not silently require or claim the other engines', () => {
+        const report = sparseReport();
+        const full = checkReport(report, { verifyInputs: false }),
+            selected = checkSelectedReport(report, ['webkit'], { verifyInputs: false });
+        expect(full.errors).toContain('engine/control matrix');
+        expect(selected.errors).not.toContain('engine/control matrix');
+        expect(selected.errors.some((e: string) => e.startsWith('missing row'))).toBe(false);
+        expect(selected.scopePassed).toBe(false);
+        expect(selected.notRun).toHaveLength(4);
+    });
+    test.each(['missing', 'duplicate', 'mislabeled'])('rejects %s selected control rows', (mutation) => {
+        const r = sparseReport();
+        if (mutation === 'missing') r.rows.pop();
+        if (mutation === 'duplicate') r.rows[1].control = false;
+        if (mutation === 'mislabeled') r.rows[1].engine = 'chromium';
+        const result = checkSelectedReport(r, ['webkit'], { verifyInputs: false });
+        expect(result.valid).toBe(false);
+        expect(result.errors).toContain('missing row webkit/true');
+    });
+});

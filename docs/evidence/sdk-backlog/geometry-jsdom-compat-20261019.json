@@ -1,0 +1,24 @@
+{
+  "head": "73ca2fa0c13dd21fe7e68f83eeee20aaf44e4815",
+  "sdkRun": 39245299200,
+  "qualityRun": 39245299234,
+  "skillsRun": 39245299244,
+  "sdk": "FAIL_9_OF_145_JS_DOM_FIXTURE_TESTS",
+  "quality": "SUCCESS",
+  "skills": "SUCCESS",
+  "buildTypesMath": "PASS",
+  "cause": "New geometry fixture used structuredClone; repository jsdom environment lacks it. Engine code was not implicated.",
+  "artifactId": 12183477292,
+  "artifactSHA256": "dcf80249e201fb166348ae8e1bb3fe217aa18df664baa2c03e835fa13b86ece0",
+  "runtimeSHA256": "9b483501264630c2ecd47ba65fb7fd75e7d0fe3f98490057b48bc912ee2b0e35",
+  "fix": "Use this existing suite's JSON clone for its finite JSON-shaped source fixture; invalid-number controls are injected after cloning.",
+  "localReproduction": {
+    "node": "22.23.3",
+    "environment": "jest-environment-jsdom 29.7.0; isolated Babel transform, without full engine setup",
+    "originalFailedTests": 9,
+    "reason": "structuredClone is not defined",
+    "correctedTests": 42,
+    "result": "PASS",
+    "newHeadRepositoryConfig": "CI_PENDING"
+  }
+}

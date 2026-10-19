@@ -299,10 +299,23 @@ function checkSupplementary(r) {
     }
     return { ok: errors.length === 0, errors };
 }
-function checkReport(report, { verifyInputs = true } = {}) {
+function checkReport(report, options = {}) {
+    return checkMatrix(report, ENGINES, options);
+}
+function checkSelectedReport(report, engines, options = {}) {
+    return checkMatrix(report, engines, options);
+}
+function checkMatrix(report, engines, { verifyInputs = true } = {}) {
     const errors = [],
         notRun = [];
     try {
+        if (
+            !Array.isArray(engines) ||
+            !engines.length ||
+            new Set(engines).size !== engines.length ||
+            engines.some((e) => !ENGINES.includes(e))
+        )
+            return { valid: false, scopePassed: false, errors: ['invalid selected engine scope'], notRun: [] };
         if (
             report.schemaVersion !== 'ier-input/1' ||
             report.sourceStatus !== 'recreated' ||
@@ -320,11 +333,11 @@ function checkReport(report, { verifyInputs = true } = {}) {
             }
         if (
             !Array.isArray(report.rows) ||
-            report.rows.length !== 6 ||
-            new Set(report.rows.map((r) => r.engine + '/' + r.control)).size !== 6
+            report.rows.length !== engines.length * 2 ||
+            new Set(report.rows.map((r) => r.engine + '/' + r.control)).size !== engines.length * 2
         )
             errors.push('engine/control matrix');
-        for (const engine of ENGINES)
+        for (const engine of engines)
             for (const control of [false, true]) {
                 const r = report.rows.find((r) => r.engine === engine && r.control === control);
                 if (!r) {
@@ -438,9 +451,12 @@ async function main() {
             return [a.slice(2, i < 0 ? undefined : i), i < 0 ? true : a.slice(i + 1)];
         }),
     );
+    const choice = args.browser === undefined ? 'all' : args.browser;
+    if (choice !== 'all' && !ENGINES.includes(choice)) throw Error('unknown browser selection');
+    const engines = choice === 'all' ? ENGINES.slice() : [choice];
     if (args.verify) {
         const report = JSON.parse(fs.readFileSync(args.verify));
-        const v = checkReport(report);
+        const v = choice === 'all' ? checkReport(report) : checkSelectedReport(report, engines);
         console.log(JSON.stringify(v, null, 2));
         process.exitCode = v.scopePassed ? 0 : 1;
         return;
@@ -461,6 +477,7 @@ async function main() {
         subset: true,
         completed: false,
         method: 'REAL_BROWSER',
+        selectedEngines: engines,
         fingerprints: INPUTS.map(fp),
         rows: [],
         limitations: [
@@ -472,7 +489,7 @@ async function main() {
     const server = await require('./competitive-example-server.cjs').startExampleServer(ROOT),
         pw = require('playwright');
     try {
-        for (const engine of ENGINES) {
+        for (const engine of engines) {
             const browser = await pw[engine].launch({
                 ...require('./browser-engines.cjs').launchOptions(engine),
                 headless: true,
@@ -793,12 +810,22 @@ async function main() {
     report.endedAt = new Date().toISOString();
     report.validation = checkReport(report);
     report.scopePassed = report.validation.scopePassed;
-    report.exitCode = report.scopePassed ? 0 : 1;
+    report.selectedValidation = checkSelectedReport(report, engines);
+    report.selectedScopePassed = report.selectedValidation.scopePassed;
+    report.exitCode = report.selectedScopePassed ? 0 : 1;
     fs.writeFileSync(out, JSON.stringify(report, null, 2) + '\n', { flag: 'wx' });
-    console.log(JSON.stringify(report.validation, null, 2));
+    console.log(JSON.stringify({ full: report.validation, selected: report.selectedValidation }, null, 2));
     process.exitCode = report.exitCode;
 }
-module.exports = { expectedCenter, pixels, checkOperation, checkSupplementary, checkReport, INPUTS };
+module.exports = {
+    expectedCenter,
+    pixels,
+    checkOperation,
+    checkSupplementary,
+    checkReport,
+    checkSelectedReport,
+    INPUTS,
+};
 if (require.main === module)
     main().catch((e) => {
         console.error(e);

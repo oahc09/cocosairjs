@@ -6,7 +6,8 @@ on:
       - "examples/shared/*sprite-frame.ts"
       - "examples/shared/async-app-lifecycle.ts"
       - "examples/interactive-geometry/src/two-sided-page.ts"
-      - "examples/hdr-color-pipeline/vertex-texture-rgb.effect.json"
+      - "examples/hdr-color-pipeline/**"
+      - "examples/water-multipass/**"
       - "docs/manual/examples/input-focus/**"
       - "docs/manual/examples/runtime-lifecycle-page/**"
       - "docs/manual/examples/texture-replacement/**"
@@ -22,6 +23,10 @@ on:
       - "tools/verify/interactive-multipass*"
       - "tools/verify/interactive-geometry*"
       - "tools/verify/interactive-input*"
+      - "tools/verify/interactive-color-compare*"
+      - "tools/verify/interactive-performance*"
+      - "test/fixtures/interactive-color-compare/**"
+      - "test/smoke/interactive-performance-fixture.cjs"
       - "tools/verify/interactive-kit*"
       - "tools/examples/interactive-kit.cjs"
       - "test/smoke/interactive-*.test.ts"
@@ -69,6 +74,7 @@ jobs:
           npm run format:check
           npx prettier --check .github/workflows/sdk-recipes.yml tools/build/math-module.cjs tools/build/prepare-package.cjs tools/debug/effect-layout.ts tools/verify/sdk-recipe-regressions.cjs tools/verify/sdk-recipes-browser.cjs tools/verify/sdk-recipes.tsconfig.json tools/verify/math-entry.test.cjs tools/verify/math-tarball.cjs tools/verify/interactive-timeline-browser.cjs tools/verify/interactive-timeline-audit.cjs test/smoke/interactive-timeline-evidence.test.ts
           npx prettier --check tools/examples/interactive-kit.cjs tools/verify/interactive-kit-consumer.cjs tools/verify/interactive-kit-evidence.cjs tools/verify/interactive-kit-audit.cjs tools/verify/interactive-improvement-browser.cjs tools/verify/interactive-multipass-browser.cjs tools/verify/interactive-multipass-audit.cjs tools/verify/interactive-geometry-browser.cjs tools/verify/interactive-geometry-audit.cjs tools/verify/interactive-input-browser.cjs test/smoke/interactive-kit.test.ts test/smoke/interactive-multipass-review.test.ts test/smoke/interactive-geometry.test.ts test/smoke/interactive-input.test.ts
+          npx prettier --check tools/verify/interactive-color-compare-browser.cjs tools/verify/interactive-color-compare-audit.cjs tools/verify/interactive-performance.cjs tools/verify/interactive-performance-audit.cjs tools/verify/interactive-input-audit.cjs test/fixtures/interactive-color-compare/main.ts test/smoke/interactive-color-compare.test.ts test/smoke/interactive-performance.test.ts test/smoke/interactive-performance-fixture.cjs
           node --test tools/verify/sdk-recipe-regressions.cjs tools/verify/math-entry.test.cjs 2>&1 | tee output/sdk-ci/cpu.log
       - name: Build same-head main, math and declarations
         env:
@@ -82,8 +88,10 @@ jobs:
           npx tsc -p tools/verify/interactive-improvement-browser.tsconfig.json
           npx tsc -p tools/verify/interactive-multipass-browser.tsconfig.json
           npx tsc -p tools/verify/interactive-geometry-browser.tsconfig.json
+          npx tsc -p tools/verify/interactive-color-compare.tsconfig.json
+          npx tsc -p tools/verify/interactive-input-browser.tsconfig.json
           node tools/examples/interactive-kit.cjs --check
-          npx jest --runInBand --no-cache --runTestsByPath test/smoke/interactive-kit.test.ts test/smoke/interactive-multipass.test.ts test/smoke/interactive-multipass-review.test.ts test/smoke/interactive-geometry.test.ts test/smoke/interactive-geometry-review.test.ts test/smoke/interactive-input.test.ts --json --outputFile=output/sdk-ci/render-kit-contracts.json 2>&1 | tee output/sdk-ci/render-kit-contracts.log
+          npx jest --runInBand --no-cache --runTestsByPath test/smoke/interactive-kit.test.ts test/smoke/interactive-multipass.test.ts test/smoke/interactive-multipass-review.test.ts test/smoke/interactive-geometry.test.ts test/smoke/interactive-geometry-review.test.ts test/smoke/interactive-input.test.ts test/smoke/interactive-color-compare.test.ts test/smoke/interactive-performance.test.ts --json --outputFile=output/sdk-ci/render-kit-contracts.json 2>&1 | tee output/sdk-ci/render-kit-contracts.log
           npx jest --runInBand --no-cache --runTestsByPath test/smoke/interactive-timeline-evidence.test.ts --json --outputFile=output/sdk-ci/timeline-tests.json 2>&1 | tee output/sdk-ci/timeline-tests.log
           npx jest --runInBand --no-cache --runTestsByPath test/smoke/smoke-example-evidence-integration.test.ts -t 'clean-checkout npm copies' 2>&1 | tee output/sdk-ci/packaging-fixture.log
           SDK_CANDIDATE_HEAD="$(git rev-parse HEAD)" node tools/verify/math-tarball.cjs --out=output/sdk-ci/tarball
@@ -125,6 +133,51 @@ jobs:
           node tools/verify/interactive-geometry-browser.cjs --browser=chromium --out=output/sdk-ci/geometry.json 2>&1 | tee output/sdk-ci/geometry.log
           node tools/verify/interactive-geometry-browser.cjs --browser=chromium --verify=output/sdk-ci/geometry.json
           node tools/verify/interactive-geometry-audit.cjs --report=output/sdk-ci/geometry.json --out=output/sdk-ci/geometry-audit.json
+      - name: Verify current clipping and alpha controls
+        run: |
+          set -euo pipefail
+          node tools/verify/interactive-color-compare-browser.cjs --browser=chromium --out=output/sdk-ci/color-compare.json 2>&1 | tee output/sdk-ci/color-compare.log
+          node tools/verify/interactive-color-compare-browser.cjs --browser=chromium --verify=output/sdk-ci/color-compare.json
+          node tools/verify/interactive-color-compare-audit.cjs --report=output/sdk-ci/color-compare.json --out=output/sdk-ci/color-compare-audit.json
+      - name: Verify existing Water and HDR controls against same-head runtime
+        run: |
+          set -euo pipefail
+          node examples/hdr-color-pipeline/verify.cjs chromium 2>&1 | tee output/sdk-ci/hdr.log
+          node - <<'JS'
+          const fs = require('node:fs'), path = require('node:path'), { spawn } = require('node:child_process');
+          (async () => {
+            const server = await require('./tools/verify/competitive-example-server.cjs').startExampleServer(process.cwd());
+            try {
+              const code = await new Promise((resolve, reject) => {
+                const child = spawn(process.execPath, ['examples/water-multipass/verify-browser.cjs', '--browser=chromium', '--url=' + server.origin + '/examples/water-multipass/', '--out=' + path.resolve('output/sdk-ci/water')], { stdio: 'inherit', env: process.env });
+                child.on('error', reject);
+                child.on('exit', resolve);
+              });
+              if (code !== 0) throw Error('Water runtime verification failed: ' + code);
+            } finally { await server.close(); }
+          })().catch(error => { console.error(error); process.exitCode = 1; });
+          JS
+      - name: Record mixed-input diagnostic with explicit remaining NOT_RUN
+        run: |
+          set -euo pipefail
+          set +e
+          node tools/verify/interactive-input-browser.cjs --browser=chromium --out=output/sdk-ci/mixed-input.json 2>&1 | tee output/sdk-ci/mixed-input.log
+          pipeline_status=("${PIPESTATUS[@]}")
+          status=${pipeline_status[0]}
+          set -e
+          test "${pipeline_status[1]}" = 0
+          echo "$status" > output/sdk-ci/mixed-input-exit.txt
+          node - <<'JS'
+          const fs = require('node:fs');
+          const { checkSelectedReport } = require('./tools/verify/interactive-input-browser.cjs');
+          const report = JSON.parse(fs.readFileSync('output/sdk-ci/mixed-input.json'));
+          const actualExit = Number(fs.readFileSync('output/sdk-ci/mixed-input-exit.txt', 'utf8'));
+          const validation = checkSelectedReport(report, ['chromium']);
+          const expectedExit = validation.scopePassed ? 0 : 1;
+          if (!validation.valid || actualExit !== expectedExit || report.exitCode !== actualExit || (!validation.scopePassed && !validation.notRun.length)) throw Error('unexpected mixed-input failure');
+          fs.writeFileSync('output/sdk-ci/mixed-input-verification.json', JSON.stringify({ actualExit, validation, purpose: 'Diagnostic integrity only; NOT_RUN remains incomplete acceptance' }, null, 2));
+          JS
+          node tools/verify/interactive-input-audit.cjs --browser=chromium --report=output/sdk-ci/mixed-input.json --out=output/sdk-ci/mixed-input-audit.json
       - name: Verify all five recipes from actual installed same-head tarball
         run: |
           set -euo pipefail
@@ -138,6 +191,7 @@ jobs:
           name: sdk-recipes-${{ github.event.pull_request.head.sha }}
           path: |
             output/sdk-ci/
+            output/hdr-color-pipeline/
             build/cocosair.module.js
             build/cocosair.module.js.map
             build/cocosair.module.min.js
