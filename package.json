@@ -1,7 +1,7 @@
 {
   "name": "cocosair.js",
   "version": "1.0.0",
-  "description": "Cocos AIR — Agent-first Interactive Runtime. A code-first, standalone Web TypeScript engine extracted from cocos4.",
+  "description": "Cocos AIR \u2014 Agent-first Interactive Runtime. A code-first, standalone Web TypeScript engine extracted from cocos4.",
   "license": "MIT",
   "author": "oahc09@gmail.com",
   "type": "commonjs",
@@ -14,6 +14,12 @@
       "types": "./build/cocosair.module.d.ts",
       "import": "./build/npm/cocosair.module.js",
       "default": "./build/npm/cocosair.module.js"
+    },
+    "./math": {
+      "types@<5.0": "./build/cocosair.math.legacy.d.ts",
+      "types": "./build/cocosair.math.d.ts",
+      "import": "./build/npm/cocosair.math.js",
+      "default": "./build/npm/cocosair.math.js"
     }
   },
   "typesVersions": {
@@ -42,7 +48,10 @@
     "README.md",
     "LICENSE",
     "licenses/",
-    "build/npm/webgpu/"
+    "build/npm/webgpu/",
+    "build/npm/cocosair.math.js",
+    "build/cocosair.math.d.ts",
+    "build/cocosair.math.legacy.d.ts"
   ],
   "engines": {
     "node": ">=18.0.0"
