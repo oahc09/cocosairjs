@@ -52,25 +52,6 @@ jobs:
           npm run build:spark
         env:
           NODE_OPTIONS: --max-old-space-size=4096
-      - name: Record exact-head runtime build
-        run: |
-          set -euo pipefail
-          node tools/verify/runtime-build-receipt.cjs
-      - name: Retain runtime build for reviewed artifact commit
-        uses: actions/upload-artifact@v4
-        with:
-          name: audit-runtime-${{ github.event.pull_request.head.sha || github.sha }}
-          retention-days: 7
-          path: |
-            build/cocosair.module.js
-            build/cocosair.module.js.map
-            build/cocosair.module.min.js
-            build/cocosair.module.min.js.map
-            build/cocosair.module.d.ts
-            build/cocosair.legacy.d.ts
-            tools/build/build-number.json
-            output/audit-runtime/provenance.json
-          if-no-files-found: error
       - name: Run focused core regressions
         run: |
           set -euo pipefail
