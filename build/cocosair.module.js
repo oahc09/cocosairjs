@@ -137397,8 +137397,8 @@ function createSessionScope() {
 
 const AIR_VERSION = '1.0.0';
 const AIR_REVISION = 100;
-const AIR_BUILD_DATE = "202610191529";
-const AIR_BUILD_NUMBER = 182;
+const AIR_BUILD_DATE = "202610191637";
+const AIR_BUILD_NUMBER = 184;
 class AirAppImpl {
   get session() {
     return this._scope;
@@ -154366,8 +154366,9 @@ function WebGL2CmdFuncBindStates(device, gpuPipelineState, gpuInputAssembler, gp
   }
   if (gpuInputAssembler && gpuShader && (isShaderChanged || gfxStateCache.gpuInputAssembler !== gpuInputAssembler)) {
     for (const input of gpuShader.glInputs) {
+      if (input.glLoc === -1) continue;
       const end = input.glLoc + WebGLGetComponentCount(input.glType) * input.count;
-      if (input.glLoc < 0 || end > capabilities.maxVertexAttributes) {
+      if (!Number.isInteger(input.glLoc) || input.glLoc < 0 || end > capabilities.maxVertexAttributes) {
         throw new RangeError(`WEBGL2_VERTEX_ATTRIBUTE_LIMIT: ${input.name}, end ${end}`);
       }
     }
@@ -154385,6 +154386,7 @@ function WebGL2CmdFuncBindStates(device, gpuPipelineState, gpuInputAssembler, gp
         let glAttrib;
         for (let j = 0; j < gpuShader.glInputs.length; j++) {
           const glInput = gpuShader.glInputs[j];
+          if (glInput.glLoc === -1) continue;
           glAttrib = null;
           for (let k = 0; k < gpuInputAssembler.glAttribs.length; k++) {
             const attrib = gpuInputAssembler.glAttribs[k];
@@ -154428,6 +154430,7 @@ function WebGL2CmdFuncBindStates(device, gpuPipelineState, gpuInputAssembler, gp
       }
       for (let j = 0; j < gpuShader.glInputs.length; j++) {
         const glInput = gpuShader.glInputs[j];
+        if (glInput.glLoc === -1) continue;
         let glAttrib = null;
         for (let k = 0; k < gpuInputAssembler.glAttribs.length; k++) {
           const attrib = gpuInputAssembler.glAttribs[k];
