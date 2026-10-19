@@ -1,0 +1,293 @@
+{
+  "name": "air-vertex-texture-rgb-contract",
+  "techniques": [
+    {
+      "passes": [
+        {
+          "program": "air-color-paths|audit-sdk-1",
+          "rasterizerState": {
+            "cullMode": 0
+          },
+          "depthStencilState": {
+            "depthTest": true,
+            "depthWrite": true
+          },
+          "blendState": {
+            "targets": [
+              {
+                "blend": false
+              }
+            ]
+          },
+          "properties": {
+            "params": {
+              "type": 16,
+              "value": [0, 1, 0, 0]
+            },
+            "colorMap": {
+              "type": 28,
+              "value": "white"
+            },
+            "customColor": {
+              "type": 16,
+              "value": [0, 0, 0, 1]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "passes": [
+        {
+          "program": "air-color-paths|audit-sdk-2",
+          "rasterizerState": {
+            "cullMode": 0
+          },
+          "depthStencilState": {
+            "depthTest": true,
+            "depthWrite": true
+          },
+          "blendState": {
+            "targets": [
+              {
+                "blend": false
+              }
+            ]
+          },
+          "properties": {
+            "params": {
+              "type": 16,
+              "value": [0, 1, 0, 0]
+            },
+            "colorMap": {
+              "type": 28,
+              "value": "white"
+            },
+            "customColor": {
+              "type": 16,
+              "value": [0, 0, 0, 1]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "shaders": [
+    {
+      "name": "air-color-paths|audit-sdk-1",
+      "hash": 112233401,
+      "builtins": {
+        "statistics": {
+          "CC_EFFECT_USED_VERTEX_UNIFORM_VECTORS": 48,
+          "CC_EFFECT_USED_FRAGMENT_UNIFORM_VECTORS": 5
+        },
+        "globals": {
+          "blocks": [
+            {
+              "name": "CCGlobal",
+              "defines": [],
+              "set": 0,
+              "binding": 0
+            },
+            {
+              "name": "CCCamera",
+              "defines": [],
+              "set": 0,
+              "binding": 1
+            }
+          ],
+          "samplerTextures": [],
+          "buffers": [],
+          "images": []
+        },
+        "locals": {
+          "blocks": [
+            {
+              "name": "CCLocal",
+              "defines": [],
+              "set": 2,
+              "binding": 0
+            }
+          ],
+          "samplerTextures": [],
+          "buffers": [],
+          "images": []
+        }
+      },
+      "defines": [],
+      "attributes": [
+        {
+          "name": "a_position",
+          "defines": [],
+          "format": 32,
+          "location": 0
+        },
+        {
+          "name": "a_texCoord",
+          "defines": [],
+          "format": 21,
+          "location": 2
+        },
+        {
+          "name": "a_color",
+          "defines": [],
+          "format": 44,
+          "location": 3
+        }
+      ],
+      "blocks": [
+        {
+          "name": "Constants",
+          "defines": [],
+          "binding": 0,
+          "stageFlags": 17,
+          "members": [
+            {
+              "name": "params",
+              "type": 16,
+              "count": 1
+            },
+            {
+              "name": "customColor",
+              "type": 16,
+              "count": 1
+            }
+          ]
+        }
+      ],
+      "samplerTextures": [
+        {
+          "name": "colorMap",
+          "type": 28,
+          "count": 1,
+          "defines": [],
+          "stageFlags": 16,
+          "set": 1,
+          "binding": 1
+        }
+      ],
+      "buffers": [],
+      "images": [],
+      "textures": [],
+      "samplers": [],
+      "subpassInputs": [],
+      "glsl4": {
+        "vert": "precision highp float;\nlayout(set = 0, binding = 1) uniform CCCamera {\n  highp   mat4 cc_matView;\n  highp   mat4 cc_matViewInv;\n  highp   mat4 cc_matProj;\n  highp   mat4 cc_matProjInv;\n  highp   mat4 cc_matViewProj;\n  highp   mat4 cc_matViewProjInv;\n  highp   vec4 cc_cameraPos;\n  mediump vec4 cc_surfaceTransform;\n  mediump vec4 cc_screenScale;\n  mediump vec4 cc_exposure;\n  mediump vec4 cc_mainLitDir;\n  mediump vec4 cc_mainLitColor;\n  mediump vec4 cc_ambientSky;\n  mediump vec4 cc_ambientGround;\n  mediump vec4 cc_fogColor;\n  mediump vec4 cc_fogBase;\n  mediump vec4 cc_fogAdd;\n  mediump vec4 cc_nearFar;\n  mediump vec4 cc_viewPort;\n};\nlayout(set = 2, binding = 0) uniform CCLocal {\n  highp mat4 cc_matWorld;\n  highp mat4 cc_matWorldIT;\n  highp vec4 cc_lightingMapUVParam;\n  highp vec4 cc_localShadowBias;\n};\nlayout(set = 1, binding = 0) uniform Constants {\n  vec4 params;\n  vec4 customColor;\n};\nlayout(location = 0) in vec3 a_position;\nlayout(location = 2) in vec2 a_texCoord;\nlayout(location = 3) in vec4 a_color;\nout highp vec4 v_color;\nout highp vec2 v_uv;\nvoid main() { v_uv=a_texCoord; v_color=a_color; gl_Position=cc_matViewProj*cc_matWorld*vec4(a_position,1.0); }",
+        "frag": "precision highp float;\nlayout(set = 0, binding = 0) uniform CCGlobal {\n  highp   vec4 cc_time;\n  mediump vec4 cc_screenSize;\n  mediump vec4 cc_nativeSize;\n  mediump vec4 cc_debug_view_mode;\n};\nlayout(set = 1, binding = 0) uniform Constants {\n  vec4 params;\n  vec4 customColor;\n};\nlayout(set = 1, binding = 1) uniform sampler2D colorMap;\nin highp vec4 v_color;\nin highp vec2 v_uv;\nlayout(location = 0) out vec4 cc_FragColor;\nvec3 decodeSRGB(vec3 c) { return mix(c/12.92,pow((c+0.055)/1.055,vec3(2.4)),step(vec3(0.04045),c)); }\nvec3 encodeSRGB(vec3 c) { c=max(c,vec3(0)); return mix(c*12.92,1.055*pow(c,vec3(1.0/2.4))-0.055,step(vec3(0.0031308),c)); }\nvoid main() { vec3 c; if(params.x<0.5)c=decodeSRGB(v_color.rgb); else if(params.x<1.5)c=texture(colorMap,v_uv).rgb; else c=customColor.rgb; if(params.x>2.5)c=decodeSRGB(c); cc_FragColor=vec4(encodeSRGB(c),1); }"
+      },
+      "glsl3": {
+        "vert": "precision highp float;\nuniform CCCamera {\n  highp   mat4 cc_matView;\n  highp   mat4 cc_matViewInv;\n  highp   mat4 cc_matProj;\n  highp   mat4 cc_matProjInv;\n  highp   mat4 cc_matViewProj;\n  highp   mat4 cc_matViewProjInv;\n  highp   vec4 cc_cameraPos;\n  mediump vec4 cc_surfaceTransform;\n  mediump vec4 cc_screenScale;\n  mediump vec4 cc_exposure;\n  mediump vec4 cc_mainLitDir;\n  mediump vec4 cc_mainLitColor;\n  mediump vec4 cc_ambientSky;\n  mediump vec4 cc_ambientGround;\n  mediump vec4 cc_fogColor;\n  mediump vec4 cc_fogBase;\n  mediump vec4 cc_fogAdd;\n  mediump vec4 cc_nearFar;\n  mediump vec4 cc_viewPort;\n};\nuniform CCLocal {\n  highp mat4 cc_matWorld;\n  highp mat4 cc_matWorldIT;\n  highp vec4 cc_lightingMapUVParam;\n  highp vec4 cc_localShadowBias;\n};\nuniform Constants {\n  vec4 params;\n  vec4 customColor;\n};\nin vec3 a_position;\nin vec2 a_texCoord;\nin vec4 a_color;\nout highp vec4 v_color;\nout highp vec2 v_uv;\nvoid main() { v_uv=a_texCoord; v_color=a_color; gl_Position=cc_matViewProj*cc_matWorld*vec4(a_position,1.0); }",
+        "frag": "precision highp float;\nuniform CCGlobal {\n  highp   vec4 cc_time;\n  mediump vec4 cc_screenSize;\n  mediump vec4 cc_nativeSize;\n  mediump vec4 cc_debug_view_mode;\n};\nuniform Constants {\n  vec4 params;\n  vec4 customColor;\n};\nuniform sampler2D colorMap;\nin highp vec4 v_color;\nin highp vec2 v_uv;\nout vec4 cc_FragColor;\nvec3 decodeSRGB(vec3 c) { return mix(c/12.92,pow((c+0.055)/1.055,vec3(2.4)),step(vec3(0.04045),c)); }\nvec3 encodeSRGB(vec3 c) { c=max(c,vec3(0)); return mix(c*12.92,1.055*pow(c,vec3(1.0/2.4))-0.055,step(vec3(0.0031308),c)); }\nvoid main() { vec3 c; if(params.x<0.5)c=decodeSRGB(v_color.rgb); else if(params.x<1.5)c=texture(colorMap,v_uv).rgb; else c=customColor.rgb; if(params.x>2.5)c=decodeSRGB(c); cc_FragColor=vec4(encodeSRGB(c),1); }"
+      }
+    },
+    {
+      "name": "air-color-paths|audit-sdk-2",
+      "hash": 112233402,
+      "builtins": {
+        "statistics": {
+          "CC_EFFECT_USED_VERTEX_UNIFORM_VECTORS": 48,
+          "CC_EFFECT_USED_FRAGMENT_UNIFORM_VECTORS": 5
+        },
+        "globals": {
+          "blocks": [
+            {
+              "name": "CCGlobal",
+              "defines": [],
+              "set": 0,
+              "binding": 0
+            },
+            {
+              "name": "CCCamera",
+              "defines": [],
+              "set": 0,
+              "binding": 1
+            }
+          ],
+          "samplerTextures": [],
+          "buffers": [],
+          "images": []
+        },
+        "locals": {
+          "blocks": [
+            {
+              "name": "CCLocal",
+              "defines": [],
+              "set": 2,
+              "binding": 0
+            }
+          ],
+          "samplerTextures": [],
+          "buffers": [],
+          "images": []
+        }
+      },
+      "defines": [],
+      "attributes": [
+        {
+          "name": "a_position",
+          "defines": [],
+          "format": 32,
+          "location": 0
+        },
+        {
+          "name": "a_texCoord",
+          "defines": [],
+          "format": 21,
+          "location": 2
+        },
+        {
+          "name": "a_color",
+          "defines": [],
+          "format": 44,
+          "location": 3
+        }
+      ],
+      "blocks": [
+        {
+          "name": "Constants",
+          "defines": [],
+          "binding": 0,
+          "stageFlags": 17,
+          "members": [
+            {
+              "name": "params",
+              "type": 16,
+              "count": 1
+            },
+            {
+              "name": "customColor",
+              "type": 16,
+              "count": 1
+            }
+          ]
+        }
+      ],
+      "samplerTextures": [
+        {
+          "name": "colorMap",
+          "type": 28,
+          "count": 1,
+          "defines": [],
+          "stageFlags": 16,
+          "set": 1,
+          "binding": 1
+        }
+      ],
+      "buffers": [],
+      "images": [],
+      "textures": [],
+      "samplers": [],
+      "subpassInputs": [],
+      "glsl4": {
+        "vert": "precision highp float;\nlayout(set = 0, binding = 1) uniform CCCamera {\n  highp   mat4 cc_matView;\n  highp   mat4 cc_matViewInv;\n  highp   mat4 cc_matProj;\n  highp   mat4 cc_matProjInv;\n  highp   mat4 cc_matViewProj;\n  highp   mat4 cc_matViewProjInv;\n  highp   vec4 cc_cameraPos;\n  mediump vec4 cc_surfaceTransform;\n  mediump vec4 cc_screenScale;\n  mediump vec4 cc_exposure;\n  mediump vec4 cc_mainLitDir;\n  mediump vec4 cc_mainLitColor;\n  mediump vec4 cc_ambientSky;\n  mediump vec4 cc_ambientGround;\n  mediump vec4 cc_fogColor;\n  mediump vec4 cc_fogBase;\n  mediump vec4 cc_fogAdd;\n  mediump vec4 cc_nearFar;\n  mediump vec4 cc_viewPort;\n};\nlayout(set = 2, binding = 0) uniform CCLocal {\n  highp mat4 cc_matWorld;\n  highp mat4 cc_matWorldIT;\n  highp vec4 cc_lightingMapUVParam;\n  highp vec4 cc_localShadowBias;\n};\nlayout(set = 1, binding = 0) uniform Constants {\n  vec4 params;\n  vec4 customColor;\n};\nlayout(location = 0) in vec3 a_position;\nlayout(location = 2) in vec2 a_texCoord;\nlayout(location = 3) in vec4 a_color;\nout highp vec4 v_color;\nout highp vec2 v_uv;\nvoid main() { v_uv=a_texCoord; v_color=a_color; gl_Position=cc_matViewProj*cc_matWorld*vec4(a_position,1.0); }",
+        "frag": "precision highp float;\nlayout(set = 0, binding = 0) uniform CCGlobal {\n  highp   vec4 cc_time;\n  mediump vec4 cc_screenSize;\n  mediump vec4 cc_nativeSize;\n  mediump vec4 cc_debug_view_mode;\n};\nlayout(set = 1, binding = 0) uniform Constants {\n  vec4 params;\n  vec4 customColor;\n};\nlayout(set = 1, binding = 1) uniform sampler2D colorMap;\nin highp vec4 v_color;\nin highp vec2 v_uv;\nlayout(location = 0) out vec4 cc_FragColor;\nvec3 decodeSRGB(vec3 c) { return mix(c/12.92,pow((c+0.055)/1.055,vec3(2.4)),step(vec3(0.04045),c)); }\nvec3 encodeSRGB(vec3 c) { c=max(c,vec3(0)); return mix(c*12.92,1.055*pow(c,vec3(1.0/2.4))-0.055,step(vec3(0.0031308),c)); }\nvoid main() { vec3 c; // Second independent program uses the identical color contract.\n if(params.x<0.5)c=decodeSRGB(v_color.rgb); else if(params.x<1.5)c=texture(colorMap,v_uv).rgb; else c=customColor.rgb; if(params.x>2.5)c=decodeSRGB(c); cc_FragColor=vec4(encodeSRGB(c),1); }"
+      },
+      "glsl3": {
+        "vert": "precision highp float;\nuniform CCCamera {\n  highp   mat4 cc_matView;\n  highp   mat4 cc_matViewInv;\n  highp   mat4 cc_matProj;\n  highp   mat4 cc_matProjInv;\n  highp   mat4 cc_matViewProj;\n  highp   mat4 cc_matViewProjInv;\n  highp   vec4 cc_cameraPos;\n  mediump vec4 cc_surfaceTransform;\n  mediump vec4 cc_screenScale;\n  mediump vec4 cc_exposure;\n  mediump vec4 cc_mainLitDir;\n  mediump vec4 cc_mainLitColor;\n  mediump vec4 cc_ambientSky;\n  mediump vec4 cc_ambientGround;\n  mediump vec4 cc_fogColor;\n  mediump vec4 cc_fogBase;\n  mediump vec4 cc_fogAdd;\n  mediump vec4 cc_nearFar;\n  mediump vec4 cc_viewPort;\n};\nuniform CCLocal {\n  highp mat4 cc_matWorld;\n  highp mat4 cc_matWorldIT;\n  highp vec4 cc_lightingMapUVParam;\n  highp vec4 cc_localShadowBias;\n};\nuniform Constants {\n  vec4 params;\n  vec4 customColor;\n};\nin vec3 a_position;\nin vec2 a_texCoord;\nin vec4 a_color;\nout highp vec4 v_color;\nout highp vec2 v_uv;\nvoid main() { v_uv=a_texCoord; v_color=a_color; gl_Position=cc_matViewProj*cc_matWorld*vec4(a_position,1.0); }",
+        "frag": "precision highp float;\nuniform CCGlobal {\n  highp   vec4 cc_time;\n  mediump vec4 cc_screenSize;\n  mediump vec4 cc_nativeSize;\n  mediump vec4 cc_debug_view_mode;\n};\nuniform Constants {\n  vec4 params;\n  vec4 customColor;\n};\nuniform sampler2D colorMap;\nin highp vec4 v_color;\nin highp vec2 v_uv;\nout vec4 cc_FragColor;\nvec3 decodeSRGB(vec3 c) { return mix(c/12.92,pow((c+0.055)/1.055,vec3(2.4)),step(vec3(0.04045),c)); }\nvec3 encodeSRGB(vec3 c) { c=max(c,vec3(0)); return mix(c*12.92,1.055*pow(c,vec3(1.0/2.4))-0.055,step(vec3(0.0031308),c)); }\nvoid main() { vec3 c; // Second independent program uses the identical color contract.\n if(params.x<0.5)c=decodeSRGB(v_color.rgb); else if(params.x<1.5)c=texture(colorMap,v_uv).rgb; else c=customColor.rgb; if(params.x>2.5)c=decodeSRGB(c); cc_FragColor=vec4(encodeSRGB(c),1); }"
+      }
+    }
+  ],
+  "combinations": [],
+  "hideInEditor": false
+}
