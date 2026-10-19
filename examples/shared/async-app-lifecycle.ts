@@ -37,13 +37,17 @@ export function createAsyncAppLifecycle<Resource>(options: {
     const appPromise = Promise.resolve().then(options.createApp);
     const ready = appPromise.then(async (app) => {
         if (!token.isCurrent()) return false;
-        removeHealth = app.contextHealth.onChange((health) => {
+        const onHealth = (health: ReturnType<AirApp['contextHealth']['snapshot']>): void => {
             if (health.state === 'lost') disable();
             if (health.state === 'failed') {
                 // The SDK does not rebuild GPU resources on a restored context.
                 void close().then(() => app.contextHealth.requestReload());
             }
-        });
+        };
+        removeHealth = app.contextHealth.onChange(onHealth);
+        // Construction may settle after the first context-loss event was already emitted.
+        onHealth(app.contextHealth.snapshot());
+        if (!token.isCurrent()) return false;
         resource = await options.load(app, controller.signal);
         hasResource = true;
         if (!token.isCurrent()) return false;

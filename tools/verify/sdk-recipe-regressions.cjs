@@ -46,6 +46,7 @@ function lifecycle(overrides = {}) {
             return { status: 'released' };
         },
         contextHealth: {
+            snapshot: () => ({ state: 'healthy' }),
             onChange(callback) {
                 listeners.add(callback);
                 return () => listeners.delete(callback);
@@ -83,7 +84,7 @@ test('audio and GPU cleanup start concurrently; close returns one Promise and aw
                 starts.push('gpu');
                 return gpu.promise;
             },
-            contextHealth: { onChange: () => () => {} },
+            contextHealth: { snapshot: () => ({ state: 'healthy' }), onChange: () => () => {} },
         }),
     });
     await r.ready;
@@ -169,7 +170,7 @@ test('audio failure and app failed receipts are not reported as released', async
         {
             createApp: async () => ({
                 close: async () => ({ status: 'failed' }),
-                contextHealth: { onChange: () => () => {} },
+                contextHealth: { snapshot: () => ({ state: 'healthy' }), onChange: () => () => {} },
             }),
         },
     ]) {
@@ -470,3 +471,37 @@ test('runnable vertex/texture/custom color fixture validates both shader program
     assert.equal(result.effect.shaders.length, 2);
     assert.equal(new Set(result.bindings.map((b) => b.shader)).size, 2);
 });
+
+for (const state of ['lost', 'failed'])
+    test(`construction settles with already-${state} context: skip load and mount`, async () => {
+        const events = [];
+        const r = lifecycle({
+            createApp: async () => ({
+                close: async () => {
+                    events.push('gpu');
+                    return { status: 'released' };
+                },
+                contextHealth: {
+                    snapshot: () => ({ state }),
+                    onChange: () => () => {},
+                    requestReload: () => {
+                        events.push('reload');
+                        return true;
+                    },
+                },
+            }),
+            load: async () => {
+                events.push('load');
+                return 'resource';
+            },
+            mount: () => events.push('mount'),
+        });
+        assert.equal(await r.ready, false);
+        await r.close();
+        await ticks();
+        assert.equal(r.signal.aborted, true);
+        assert.equal(events.includes('load'), false);
+        assert.equal(events.includes('mount'), false);
+        assert.equal(events.filter((x) => x === 'gpu').length, 1);
+        assert.equal(events.includes('reload'), state === 'failed');
+    });

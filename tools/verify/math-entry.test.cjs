@@ -21,16 +21,56 @@ const temp = () => {
 test.after(() => {
     for (const directory of temporary) fs.rmSync(directory, { recursive: true, force: true });
 });
-test('fresh Node import preserves every host-global property descriptor', async () => {
+test('isolated Node import preserves every descriptor after an empty-ESM loader control', async (t) => {
     receipt = await buildMathModule(root);
-    const before = Object.getOwnPropertyDescriptors(globalThis);
-    math = await import(pathToFileURL(path.join(root, 'build/cocosair.math.js')).href);
-    assert.deepEqual(Object.keys(math).sort(), receipt.exports);
-    const after = Object.getOwnPropertyDescriptors(globalThis);
-    assert.deepEqual(Reflect.ownKeys(after), Reflect.ownKeys(before));
-    for (const key of Reflect.ownKeys(before)) assert.deepEqual(after[key], before[key], String(key));
-    assert.equal(typeof math.Color, 'function');
-    assert.equal(new math.Vec3(3, 4, 12).length(), 13);
+    const url = pathToFileURL(path.join(root, 'build/cocosair.math.js')).href;
+    const probe = spawnSync(
+        process.execPath,
+        [
+            '--input-type=module',
+            '-e',
+            `
+        import assert from 'node:assert/strict';
+        const snapshot=()=>Object.getOwnPropertyDescriptors(globalThis);
+        function differences(before,after) {
+            const changes=[];
+            for(const key of new Set([...Reflect.ownKeys(before),...Reflect.ownKeys(after)])) {
+                const a=before[key],b=after[key];
+                if(!a||!b||['value','get','set','writable','enumerable','configurable'].some(field=>!Object.is(a[field],b[field]))) changes.push(String(key));
+            }
+            return changes;
+        }
+        const beforeLoader=snapshot();
+        await import('data:text/javascript,export const empty = true');
+        const beforeMath=snapshot(), loaderChanges=differences(beforeLoader,beforeMath);
+        const math=await import(${JSON.stringify(url)});
+        const afterMath=snapshot(),mathChanges=differences(beforeMath,afterMath);
+        assert.deepEqual(mathChanges,[], 'math changed host globals');
+        assert.equal(new math.Vec3(3,4,12).length(),13);
+        await import('data:text/javascript,globalThis.__airMathPollutionControl = 42');
+        const polluted=differences(afterMath,snapshot());
+        assert.deepEqual(polluted,['__airMathPollutionControl']);
+        assert.throws(()=>assert.deepEqual(polluted,[]));
+        delete globalThis.__airMathPollutionControl;
+        assert.deepEqual(differences(afterMath,snapshot()),[]);
+        console.log(JSON.stringify({node:process.version,loaderChanges,mathChanges,pollutionDetected:true,exports:Object.keys(math).sort()}));
+    `,
+        ],
+        { encoding: 'utf8', timeout: 15000 },
+    );
+    assert.equal(probe.status, 0, probe.stderr);
+    const result = JSON.parse(probe.stdout);
+    assert.deepEqual(result.exports, receipt.exports);
+    t.diagnostic(
+        JSON.stringify({
+            node: result.node,
+            loaderChanges: result.loaderChanges,
+            mathChanges: result.mathChanges,
+            pollutionDetected: result.pollutionDetected,
+        }),
+    );
+    // Other numeric tests use their own module instance in the test process.
+    math = await import(url);
     assert.equal(new math.Vec3(3, 4, 12).toVec2().length(), 5);
 });
 test('canonical quaternion, matrix, vector and color algorithms remain usable', () => {
