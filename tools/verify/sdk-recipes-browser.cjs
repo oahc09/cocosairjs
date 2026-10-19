@@ -288,6 +288,92 @@ async function closePage(page) {
             await closePage(page);
         }
     });
+    await record('lifecycle-real-context-loss-reload', async () => {
+        const page = await context.newPage();
+        try {
+            await loadHandle(page, 'runtime-lifecycle-page');
+            assert.equal(await page.evaluate(() => __recipe.recipe.ready), true);
+            const before = await page.evaluate(() => {
+                const app = __recipe.app,
+                    canvas = app.canvas;
+                const extension = canvas.getContext('webgl2').getExtension('WEBGL_lose_context');
+                if (!extension) throw Error('WEBGL_lose_context unavailable: actual loss/reload NOT_RUN');
+                sessionStorage.removeItem('sdk-context-reload');
+                const evidence = { states: [], events: [], receipt: null, reloadCalls: 0 };
+                const save = () => sessionStorage.setItem('sdk-context-reload', JSON.stringify(evidence));
+                app.contextHealth.onChange((health) => {
+                    evidence.states.push(health.state);
+                    save();
+                });
+                for (const type of ['webglcontextlost', 'webglcontextrestored'])
+                    canvas.addEventListener(type, (event) => {
+                        evidence.events.push({ type, trusted: event.isTrusted });
+                        save();
+                    });
+                const close = app.close.bind(app);
+                app.close = () =>
+                    close().then((receipt) => {
+                        evidence.receipt = receipt;
+                        save();
+                        return receipt;
+                    });
+                const reload = app.contextHealth.requestReload.bind(app.contextHealth);
+                app.contextHealth.requestReload = () => {
+                    evidence.reloadCalls++;
+                    save();
+                    return reload();
+                };
+                window.__lose = extension;
+                extension.loseContext();
+                return { timeOrigin: performance.timeOrigin, url: location.href };
+            });
+            await page.waitForFunction(() => __recipe.app.contextHealth.snapshot().state === 'lost');
+            const lost = await page.evaluate(() => ({
+                health: __recipe.app.contextHealth.snapshot(),
+                disabled: document.querySelector('#angle').disabled,
+                aborted: __recipe.recipe.signal.aborted,
+            }));
+            assert.equal(lost.health.isContextLost, true);
+            assert.equal(lost.disabled, true);
+            assert.equal(lost.aborted, true);
+            const navigated = page.waitForNavigation({ waitUntil: 'load' });
+            await page.evaluate(() => __lose.restoreContext());
+            await navigated;
+            const after = await page.evaluate(async () => {
+                window.__recipe = (await import(new URL('main.ts', location.href))).verification;
+                return {
+                    evidence: JSON.parse(sessionStorage.getItem('sdk-context-reload')),
+                    timeOrigin: performance.timeOrigin,
+                    url: location.href,
+                    ready: await __recipe.recipe.ready,
+                    health: __recipe.app.contextHealth.snapshot().state,
+                };
+            });
+            assert.equal(after.url, before.url);
+            assert.notEqual(after.timeOrigin, before.timeOrigin);
+            assert.deepEqual(after.evidence.states, ['lost', 'restoring', 'failed']);
+            assert.deepEqual(after.evidence.events, [
+                { type: 'webglcontextlost', trusted: true },
+                { type: 'webglcontextrestored', trusted: true },
+            ]);
+            assert.equal(after.evidence.receipt.status, 'released');
+            assert.equal(after.evidence.reloadCalls, 1);
+            assert.equal(after.ready, true);
+            assert.equal(after.health, 'healthy');
+            await step(page);
+            const shot = await screenshot(page, 'context-full-reload');
+            assert.ok(colorCount(shot, (r, g, b) => r > 150 && g > 70 && g < 210 && b < 110) > 1000);
+            return {
+                before,
+                lost,
+                after,
+                screenshot: shot.sha256,
+                method: 'Real WEBGL_lose_context loss/restore plus actual same-URL navigation; not physical GPU reset',
+            };
+        } finally {
+            await closePage(page);
+        }
+    });
     await record('pageflip-real-upload-visible-front-back-and-close', async () => {
         const page = await context.newPage();
         try {
@@ -370,23 +456,26 @@ async function closePage(page) {
                 return c.toDataURL().split(',')[1];
             });
             for (let i = 0; i < 12; i++) {
+                await page.evaluate(() => {
+                    window.__previousFrame = __recipe.sprite.spriteFrame;
+                });
                 await page.setInputFiles('#import', {
                     name: 'image-' + i + '.png',
                     mimeType: 'image/png',
                     buffer: Buffer.from(png, 'base64'),
                 });
-                await page.waitForFunction(() => document.querySelector('#status').textContent.startsWith('replaced'));
+                // The previous import also says "replaced"; wait for this real frame commit.
+                await page.waitForFunction(() => __recipe.sprite.spriteFrame !== __previousFrame);
                 await step(page);
                 counts.push(await page.evaluate(() => __recipe.app.session.ownedCount));
             }
             assert.equal(new Set(counts).size, 1);
-            const frame = await page.evaluate(() => {
+            await page.evaluate(() => {
                 window.__frame = __recipe.sprite.spriteFrame;
-                return __frame.uuid;
             });
             await page.locator('#paper').fill('#ff0000');
             await step(page);
-            assert.equal(await page.evaluate(() => __recipe.sprite.spriteFrame.uuid), frame);
+            assert.equal(await page.evaluate(() => __recipe.sprite.spriteFrame === __frame), true);
             assert.ok((await page.locator('#status').textContent()).startsWith('preserved-import'));
             const shot = await screenshot(page, 'texture');
             assert.ok(colorCount(shot, (r, g, b) => g > 130 && r < 100 && b > 70 && b < 180) > 1000);
@@ -481,7 +570,7 @@ async function closePage(page) {
         receipt.runtimeSHA256 = hash(fs.readFileSync(path.join(build, 'cocosair.module.js')));
         receipt.mathSHA256 = hash(fs.readFileSync(path.join(root, 'build/cocosair.math.js')));
         receipt.passed =
-            receipt.completed && !errors.length && rows.length === 6 && rows.every((row) => row.status === 'PASS');
+            receipt.completed && !errors.length && rows.length === 7 && rows.every((row) => row.status === 'PASS');
         fs.writeFileSync(path.join(output, 'receipt.json'), JSON.stringify(receipt, null, 2));
         console.log(
             JSON.stringify({ passed: receipt.passed, rows: rows.map((r) => ({ id: r.id, status: r.status })), errors }),
