@@ -102,7 +102,9 @@ async function buildMathModule(root = path.resolve(__dirname, '../..'), output =
     for (const input of Object.keys(result.metafile.inputs)) {
         if (input.startsWith('src/')) record(path.join(root, input));
     }
-    const code = [...notices].sort().join('\n') + '\n' + result.outputFiles[0].text;
+    // Preserve license text while emitting deterministic LF bytes; canonical inputs
+    // can contain mixed line endings and their receipt hashes still cover raw bytes.
+    const code = ([...notices].sort().join('\n') + '\n' + result.outputFiles[0].text).replace(/\r\n/g, '\n');
     const exports = Object.values(result.metafile.outputs)[0].exports.slice().sort();
     const declarations = (entry) =>
         `// Types share the canonical main-entry declarations; this file has no runtime import.\nexport { ${exports.join(', ')} } from './${entry}';\n`;

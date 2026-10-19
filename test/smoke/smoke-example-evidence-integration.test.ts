@@ -128,8 +128,13 @@ describe('Evidence collector integration safeguards', () => {
         }
         for (const file of ['build/cocosair.module.js.map', 'build/cocosair.module.min.js.map']) put(file, '{}');
         fs.cpSync(path.join(root, 'vendor/webgpu'), path.join(temp, 'vendor/webgpu'), { recursive: true });
-        // The package builds the real canonical math entry, not a fixture stub.
-        fs.cpSync(path.join(root, 'src/cocos/core'), path.join(temp, 'src/cocos/core'), { recursive: true });
+        // Include the exact canonical dependency closure, including generated PAL helpers.
+        const mathReceipt = JSON.parse(fs.readFileSync(path.join(root, 'build/math-build.json'), 'utf8'));
+        for (const relative of Object.keys(mathReceipt.inputs)) {
+            const target = path.join(temp, relative);
+            fs.mkdirSync(path.dirname(target), { recursive: true });
+            fs.copyFileSync(path.join(root, relative), target);
+        }
         const before = fs.readFileSync(path.join(temp, 'build/cocosair.module.js'));
         const run = (script: string) =>
             cp.spawnSync('node', [path.join(temp, script)], {
@@ -139,7 +144,12 @@ describe('Evidence collector integration safeguards', () => {
                 env: { ...nodeProcess.env, NODE_PATH: path.join(root, 'node_modules') },
             });
         expect(run('tools/verify/published-artifacts.cjs').status).toBe(1);
-        expect(run('tools/build/prepare-package.cjs').status).toBe(0);
+        const prepared = run('tools/build/prepare-package.cjs');
+        expect({
+            status: prepared.status,
+            error: prepared.error?.message,
+            stderr: prepared.status ? prepared.stderr : '',
+        }).toEqual({ status: 0, error: undefined, stderr: '' });
         expect(run('tools/verify/published-artifacts.cjs').status).toBe(0);
         expect(fs.readFileSync(path.join(temp, 'build/cocosair.module.js')).equals(before)).toBe(true);
         for (const file of fs.readdirSync(path.join(temp, 'vendor/webgpu'))) {

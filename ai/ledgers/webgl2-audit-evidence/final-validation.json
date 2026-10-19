@@ -1,0 +1,36 @@
+{
+  "sourceCommit": "e229ee13255f8f78284354f0f2e8ad2b69f504bf",
+  "runtimeImportCommit": "0e7e9a8d597a0d42ca20c364c209b540c24e3902",
+  "mapsImportCommit": "6011b1a3b9f153b0a5243f111cfd75182b77f176",
+  "quality": {
+    "runId": 39225297967,
+    "jestPassed": 148,
+    "jestTotal": 148,
+    "chromiumExamples": [
+      "shader-driver-pilot",
+      "glass-refraction",
+      "gltf-viewer",
+      "input",
+      "spark-splats"
+    ],
+    "allReceiptsAndProcessCleanupPassed": true
+  },
+  "sparkAB": {
+    "runId": 39224042812,
+    "baseline": "PASS",
+    "candidate": "PASS",
+    "pageErrors": 0
+  },
+  "mapImport": {
+    "runId": 39230937033,
+    "onlyPaths": [
+      "build/cocosair.module.js.map",
+      "build/cocosair.module.min.js.map"
+    ],
+    "blobs": [
+      "b0f61656b5fa1524e94cdad796b7650591d6c08e",
+      "348ada8ebef3371b78283edf08b6a0fd8e8a0d2a"
+    ]
+  },
+  "scope": "Partial command and five-example smoke coverage. Final cleanup-head checks tracked by PR checks; not whole engine/device/application certification."
+}

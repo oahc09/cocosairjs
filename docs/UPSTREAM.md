@@ -1,5 +1,7 @@
 # UPSTREAM
 
+2026-10-19 WebGL2 审计 ENGINE-001/002/004/005：program 缓存检查独立于 PSO 身份，保留 shader 变化后的 IA/descriptor 语义；clear 临时打开全部部分 stencil 写掩码并精确恢复；按实际 stream 数初始化 IA offsets 并检查 stream/实际 shader location 上限；复用 scratch FBO 前解除旧 color/depth/stencil 附件并选定 read/draw buffer，保留独立外部 READ/DRAW 绑定。上游基线与版权不变。
+
 2026-10-18 播放请求归属：audio-playback-patch.cjs 给 PAL 结束通知增加可选代际，Web Audio 计时回调绑定实际 AudioBufferSourceNode；Source 丢弃旧代际结束，兼容无参旧回调。包装播放器发出停止请求通知，使 AudioManager 淘汰也能结算请求；它不是物理停止完成事件。新 token 接管加载前队列、保留 seek/归零位置，旧无 token API 队列合同保持。Web Audio destroy 停止/断开源和 gain，防重释放缓存，防已销毁实例迟到启动；共享 operation-queue 与冻结 vendor 不变。PAL ambient 类型同步可选代际签名。
 
 2026-10-18 Windows WebKit pending audio control：无 SDK 原生对照复现 pause/seek 后仍推进，清 src + load 后时钟和 played 范围保持停止，恢复 URL 后可再次播放。PAL 只对 Win 平台 Safari/WebKit 未确认启动的 play，在 pause/stop 时退役原媒体源，显式下一次 play 再恢复 URL、暂停/seek 位置；保留真实时长 metadata，不修改时钟 getter、不伪造事件。其他平台和已确认启动路径保持。冻结 vendor 不变，适配由 audio-readiness-patch.cjs 重现。
@@ -58,7 +60,7 @@ AIR `createAirUnlitFogEffect` 同步冻结模板的多 shader 结构：仅保留
 
 2026-10-06 AIR 构建身份：新增 `AIR_BUILD_DATE: string`（北京时间 yyyyMMddHHmm）与 `AIR_BUILD_NUMBER: number`。ESM/min/System 编译从 1 开始计数，成功输出后更新 tools/build/build-number.json；build:all 的 dev/min 分别占一个序号，声明/打包不计数。计数状态保存在生成目录之外。源码默认 unbuilt/1；SOURCE_DATE_EPOCH 仅固定时间。增量缓存刷新日期与序号，不改变 AIR_VERSION/AIR_REVISION 或上游版本。
 
-2026-10-06 ESM 构建告警：PAL 生成器将装饰器 helper 中必为 undefined 的顶层 this 回退读取去掉，保留本地实现；DragonBones 的同类 __extends 通过 `tools/build/esm-helpers.cjs` 在 Rollup 内存转换中处理，保留原始 npm 字节与源映射，不修改依赖或过滤警告。glTF 的基础 effect 提取为 `standard-effect.ts`，解除 material 与 physical-effect 的循环导入，保留原导出路径和着色器逻辑。
+2026-10-06 ESM 构建告警：PAL 生成器将装饰器 helper 中必为 undefined 的顶层 this 回退读取去掉，保留本地实现；DragonBones 的同类 \_\_extends 通过 `tools/build/esm-helpers.cjs` 在 Rollup 内存转换中处理，保留原始 npm 字节与源映射，不修改依赖或过滤警告。glTF 的基础 effect 提取为 `standard-effect.ts`，解除 material 与 physical-effect 的循环导入，保留原导出路径和着色器逻辑。
 
 2026-10-06 构建类型诊断：`src/tsconfig.json` 显式选择 bundler 使用的 Node 路径解析，加载已有 B2/Spine 环境声明及 Meshopt 外部模块声明，并与根配置同步官方空脚本豁免。Box2D 类型从官方已安装包生成 declaration-only 文件至 `src/node_modules/@cocos/box2d/types/`（约 181 KB），避免依赖 TS 被发射到引擎 rootDir 外；运行时包字节不变。PAL 生成器从冻结 MIT 源码补发 `input-source.d.ts`，输入与音频环境声明使用相对类型引用，消除 SDK 声明中的悬空 PAL 路径。外部 WASM 资产的部署要求和 feature 边界保持。
 
@@ -343,7 +345,7 @@ WASM 门禁 A7 改为现场比较五个物理后端子树，仅允许 EXPECT.jsb
 
 AIR modifies cocos/2d/assembler/label/{text-output-data,text-processing,ttfUtils,ttf}.ts to keep TTF logical content dimensions separate from shadow visual overflow. Overflow.NONE and RESIZE_HEIGHT render the full integer canvas at its font scale; shadow-only margins offset the quad and drawing origin without changing UITransform layout dimensions. RESIZE_HEIGHT reserves horizontal shadow margins without changing wrapping width. CLAMP/SHRINK retain fixed-box behavior. Anchor-only vertex updates use the same bounds.
 
-This preserves RichText segment advance, wrapping and alignment without a RichText-specific position patch or a new SDK export. Padding uses the existing outline/shadow union, including positive and negative offsets; it is not an independent 2*blur+abs(offset) estimate. Regression: test/smoke/smoke-33-label-shadow.test.ts and tools/debug/probes/label-shadow-probe/. Browser test runtime may include source RichText through tools/verify/build-label-shadow.cjs; default SDK export policy is unchanged. Multiline shadow text is painted once instead of being overpainted by both effect and text passes. Auto-sized quads also honor canvas integer dimensions when shadow is disabled, preventing a sampling-scale jump on shadow toggles.
+This preserves RichText segment advance, wrapping and alignment without a RichText-specific position patch or a new SDK export. Padding uses the existing outline/shadow union, including positive and negative offsets; it is not an independent 2\*blur+abs(offset) estimate. Regression: test/smoke/smoke-33-label-shadow.test.ts and tools/debug/probes/label-shadow-probe/. Browser test runtime may include source RichText through tools/verify/build-label-shadow.cjs; default SDK export policy is unchanged. Multiline shadow text is painted once instead of being overpainted by both effect and text passes. Auto-sized quads also honor canvas integer dimensions when shadow is disabled, preventing a sampling-scale jump on shadow toggles.
 
 ## PAL public-source replacement (2026-10-01)
 
@@ -507,7 +509,7 @@ Spark 是本项目除 `cocos4` 之外的**第二个上游**，按只读冻结源
 | Dist source commit  | `699e3ad06ef78fe7f5f4375f705ef4d17c948993`（上游 dist 提交；与冻结提交的 `src`/`rust` 树等价，差异仅 `dist/commit.txt`）                   |
 | Git tree（`src`）   | `e28ecaf12054536738814356db41a44afd1df999`                                                                                                 |
 | Git tree（`rust`）  | `23e1a2a05c28c625dfae7e28eeeb9aafbdec151b`                                                                                                 |
-| License / 版权      | MIT；© 2025 WORLD LABS TECHNOLOGIES, INC.                                                                                                  |
+| License / 版权      | MIT；© 2025 WORLD LABS TECHNOLOGIES, INC.                                                                                                 |
 | 落位根              | `vendor/spark/`（105 文件：`src` 60 = 52 个 `.ts` + 8 个 `.glsl`；`rust` 40 = 29 个 `.rs` + 11 个 Cargo/脚本/说明；根 5 个身份与许可文件） |
 | 树指纹              | `b511e63e5e800ffc700b6521b387bd11830c795860404dd3abe480fc27cb0b44`（对排序后的 `"<fileSha256>  <path>"` 行取 SHA-256）                     |
 | 抽取日期            | 2026-10-11                                                                                                                                 |

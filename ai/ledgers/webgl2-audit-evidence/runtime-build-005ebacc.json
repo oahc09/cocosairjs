@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "sourceCommit": "005ebaccf7c56acf2d3f7c99731b2d60020c9f30",
+  "createdAt": "2026-10-19T07:32:45.299Z",
+  "workflowRunId": "39216171943",
+  "source": {
+    "path": "src/cocos/gfx/webgl2/webgl2-commands.ts",
+    "bytes": 156501,
+    "sha256": "d6932489deaa47178804a3f369cd40ccad93b77d8fad2be70e0a44596e0bbec8"
+  },
+  "files": [
+    {
+      "path": "build/cocosair.module.js",
+      "bytes": 8457992,
+      "sha256": "2757b70da9635b462f32862684b457845da8698c63914d4dcafe8e3c283286d2"
+    },
+    {
+      "path": "build/cocosair.module.js.map",
+      "bytes": 24158815,
+      "sha256": "eedfe2871dd14cc6598a7b6cd21a4ebeb7ed3c6f46d3ab62e1036be82dd35ad4"
+    },
+    {
+      "path": "build/cocosair.module.min.js",
+      "bytes": 5405663,
+      "sha256": "60ea027e25fd80a01ab17eb9468f8947742144c070703ae2205e0a8452ac2fc8"
+    },
+    {
+      "path": "build/cocosair.module.min.js.map",
+      "bytes": 20316652,
+      "sha256": "849b80fa7883650633b78fd977d5085c47e859d7c0ccb1fe4d4ba49fb95d13b2"
+    },
+    {
+      "path": "build/cocosair.module.d.ts",
+      "bytes": 3430479,
+      "sha256": "6978166bb3097ac541c345f64313439f8be444bda6a9e237321ac6e66a72cec7"
+    },
+    {
+      "path": "build/cocosair.legacy.d.ts",
+      "bytes": 367,
+      "sha256": "6dd42c6a064b17f923568bce9e3befce5ff0e33d7b0af19bed965a9e1a86aed2"
+    },
+    {
+      "path": "tools/build/build-number.json",
+      "bytes": 29,
+      "sha256": "4cca5ea2d2944a5362f45bfcd2ddc9e361fc06ab16308c56d837c2e452fd8901"
+    }
+  ]
+}
