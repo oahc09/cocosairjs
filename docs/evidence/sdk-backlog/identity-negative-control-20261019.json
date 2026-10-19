@@ -1,0 +1,424 @@
+{
+  "schema": "sdk-identity-contract-negative-control/1",
+  "scope": "ACTUAL_TOOL_CONTRACT_NEGATIVE_CONTROL; historical baseline is only input, no API rerun claimed",
+  "recordedAt": "2026-10-19T10:34:57.093Z",
+  "originalBaseline": {
+    "path": "docs/evidence/examples/interactive-engine-improvements/baseline-s1.json",
+    "gitBlob": "4c883b708e8a27e65c71be8018b1801ef3bad8e7",
+    "sha256": "f055f9bc2fb475649f4ab58da0985f59b30d3a296a7a764b909a993b0b9a4cdb"
+  },
+  "before": {
+    "toolCommit": "993ebcbbf0f21971ac659bf813a8909ff2bf4beb",
+    "toolSHA256": "d71e67b98b80565736c705c36d8c840a9528d0c3dacd933b8eb90b6774408b35",
+    "rows": [
+      {
+        "changed": "sdkTypesSha256",
+        "executionReport": {
+          "identity": {
+            "sdkModuleSha256": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d",
+            "appCommit": "1228a50de0fb13308a9783b65429e96caf4d5404",
+            "sdkTypesSha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+            "groupDigests": {
+              "source": "8d8ec7d3c2c0359715d7529ae4115c44488ac9af151d3ecc6a77406606322a4d",
+              "config": "d5cc1e224ba6d4cd3716507743de768f92841e68448154ad30d0990cf4fb3b8a",
+              "runner": "36993ad3ab9040e06eb58a6f387f44b818e9d2fdc25aed31d2e270c82e9a1170",
+              "contracts": "ae2324474c14cbe195c19b845ec2bfcf1e1e5fc69a81ff258a4c32dc598fe69f",
+              "artifacts": "7e2504cf90167dac51b41e374cc3255019daefe59dfe5792df702c01a51b90e3"
+            }
+          },
+          "suites": [
+            {
+              "file": "test/smoke/port-gap-action-state.test.ts",
+              "exitCode": 0,
+              "testsPassed": 12,
+              "testsTotal": 12
+            }
+          ]
+        },
+        "result": {
+          "upgraded": 1,
+          "reason": null
+        },
+        "resultCapability": {
+          "name": "createActionState",
+          "status": "tested-passed",
+          "detection": {
+            "kind": "top-level",
+            "inTopLevelExports": true,
+            "inDts": true,
+            "bundleImpl": true
+          },
+          "testAvailable": true,
+          "testFiles": [
+            "test/smoke/port-gap-action-state.test.ts"
+          ],
+          "testExecution": {
+            "status": "PASS",
+            "suites": [
+              "test/smoke/port-gap-action-state.test.ts"
+            ]
+          },
+          "evidenceSource": "bundle SHA 3a448f029369 export 语句 + dts 声明"
+        }
+      },
+      {
+        "changed": "runner",
+        "executionReport": {
+          "identity": {
+            "sdkModuleSha256": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d",
+            "appCommit": "1228a50de0fb13308a9783b65429e96caf4d5404",
+            "sdkTypesSha256": "3c2b1853a372509d040bbfc93d957b2c525764d000467f8aac8f33f8b8068fee",
+            "groupDigests": {
+              "source": "8d8ec7d3c2c0359715d7529ae4115c44488ac9af151d3ecc6a77406606322a4d",
+              "config": "d5cc1e224ba6d4cd3716507743de768f92841e68448154ad30d0990cf4fb3b8a",
+              "runner": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+              "contracts": "ae2324474c14cbe195c19b845ec2bfcf1e1e5fc69a81ff258a4c32dc598fe69f",
+              "artifacts": "7e2504cf90167dac51b41e374cc3255019daefe59dfe5792df702c01a51b90e3"
+            }
+          },
+          "suites": [
+            {
+              "file": "test/smoke/port-gap-action-state.test.ts",
+              "exitCode": 0,
+              "testsPassed": 12,
+              "testsTotal": 12
+            }
+          ]
+        },
+        "result": {
+          "upgraded": 1,
+          "reason": null
+        },
+        "resultCapability": {
+          "name": "createActionState",
+          "status": "tested-passed",
+          "detection": {
+            "kind": "top-level",
+            "inTopLevelExports": true,
+            "inDts": true,
+            "bundleImpl": true
+          },
+          "testAvailable": true,
+          "testFiles": [
+            "test/smoke/port-gap-action-state.test.ts"
+          ],
+          "testExecution": {
+            "status": "PASS",
+            "suites": [
+              "test/smoke/port-gap-action-state.test.ts"
+            ]
+          },
+          "evidenceSource": "bundle SHA 3a448f029369 export 语句 + dts 声明"
+        }
+      }
+    ]
+  },
+  "after": {
+    "toolSHA256": "c00ff10d16a19d3390684944766fa9b8f552c3a43a251d095345771e96655e5d",
+    "rows": [
+      {
+        "changed": "sdkTypesSha256",
+        "executionReport": {
+          "schemaVersion": "ier-execution/1",
+          "identity": {
+            "sdkModuleSha256": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d",
+            "sdkTypesSha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+            "npmModuleSha256": "f2a59819e45b11ef75841439d713c1a73eae76b7f3be4bdded3398d6ac56e036",
+            "appCommit": "1228a50de0fb13308a9783b65429e96caf4d5404",
+            "dirtyDigest": "37eb0bd7256e0afc0bfc6690e080e8ebc57a59221739ace6c221d858e9d0a75a",
+            "candidateSnapshotId": "c0935bd3ca3640d3d499d661be2572fe4a0f6cbaf5ccb2d20252dcda3e5ae42a",
+            "airIdentityInputs": {
+              "digest": "ae1a007f383af7ff2fa38804cd1c39e9b5309f624c63966fd8e2c84514a50f7c",
+              "airFeatures": {
+                "declared": null,
+                "source": "unset(default-build-set)"
+              },
+              "airOutDir": {
+                "declared": null,
+                "resolved": null,
+                "source": "unset(repo-build/)"
+              }
+            },
+            "groupDigests": {
+              "source": "8d8ec7d3c2c0359715d7529ae4115c44488ac9af151d3ecc6a77406606322a4d",
+              "config": "d5cc1e224ba6d4cd3716507743de768f92841e68448154ad30d0990cf4fb3b8a",
+              "runner": "36993ad3ab9040e06eb58a6f387f44b818e9d2fdc25aed31d2e270c82e9a1170",
+              "contracts": "ae2324474c14cbe195c19b845ec2bfcf1e1e5fc69a81ff258a4c32dc598fe69f",
+              "artifacts": "7e2504cf90167dac51b41e374cc3255019daefe59dfe5792df702c01a51b90e3"
+            },
+            "artifactIdentity": {
+              "build/cocosair.module.js": {
+                "present": true,
+                "bytes": 6631057,
+                "sha256": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d"
+              },
+              "build/cocosair.module.js.map": {
+                "present": true,
+                "bytes": 20318600,
+                "sha256": "b9a6183d745ae774288c2d7963364a6fa9d87297f1a399b2421aa6d1e3a246f0"
+              },
+              "build/cocosair.module.min.js": {
+                "present": true,
+                "bytes": 3703206,
+                "sha256": "8e56fbd5a5b754252838204ff1c204223aadd7c401bd1615c2008e808b5fe05c"
+              },
+              "build/cocosair.module.min.js.map": {
+                "present": true,
+                "bytes": 16707399,
+                "sha256": "42a43a8245b1e366b5efb839d150deda41a9fdf494917f7ac67ea16fe10d6374"
+              },
+              "build/cocosair.module.d.ts": {
+                "present": true,
+                "bytes": 3303518,
+                "sha256": "3c2b1853a372509d040bbfc93d957b2c525764d000467f8aac8f33f8b8068fee"
+              },
+              "build/bootstrap.js": {
+                "present": true,
+                "bytes": 8518,
+                "sha256": "57b2dfc7f7b5d29d43b7d9619274c1879f6f37223c7ae2685c0d2619707aef8f"
+              },
+              "build/bootstrap.js.map": {
+                "present": true,
+                "bytes": 16392,
+                "sha256": "83744c5a4c3691fb3d6d881433c3faa875955e1fd55a66e7336bcbb3c9ded7d0"
+              },
+              "build/bootstrap.d.ts": {
+                "present": true,
+                "bytes": 213,
+                "sha256": "3fd56ec33a68ed72b488d01c95439c4c7b3c7fde2275724b5f37670248bc12c2"
+              },
+              "build/html-source.js": {
+                "present": true,
+                "bytes": 5700,
+                "sha256": "5b7cb2a1c6a80cae9f0ec48282dfb42516e85480cdb72a0abce37073e37cb005"
+              },
+              "build/html-source.d.ts": {
+                "present": true,
+                "bytes": 1328,
+                "sha256": "758885c886dd6f2ad744d9698358e86de39bd58dfc029f055c19cef57a26c96a"
+              },
+              "build/npm/cocosair.module.js": {
+                "present": true,
+                "bytes": 6631013,
+                "sha256": "f2a59819e45b11ef75841439d713c1a73eae76b7f3be4bdded3398d6ac56e036"
+              },
+              "build/npm/cocosair.module.min.js": {
+                "present": true,
+                "bytes": 3703158,
+                "sha256": "8e29adb99aff5b906d60fd9dbd95edb8752954cf795d19c97c87b3cb0b0976ad"
+              },
+              "build/npm/bootstrap.js": {
+                "present": true,
+                "bytes": 8480,
+                "sha256": "8f5a29d1d2459b303394d0fed5f300f25b44bd391eea1924ffbaeab531ff1785"
+              },
+              "build/npm/html-source.js": {
+                "present": true,
+                "bytes": 5660,
+                "sha256": "308922fb63cd751b647d7e81d1a32032baf9285014f6e9fdddb66e7a6cf8df31"
+              }
+            },
+            "harnessIdentity": {
+              "tools/verify/interactive-improvement-baseline.cjs": {
+                "bytes": 26043,
+                "sha256": "40d781b73972d9bb2ee2e2aa84b9a63d49dcb8ba14e320b3ec6882f09096afd0"
+              },
+              "tools/verify/interactive-improvement-evidence.cjs": {
+                "bytes": 23553,
+                "sha256": "67a14b3e07b8709be36e1cd20e7d8f24eaba146cc371439ac03338cdebdbc062"
+              },
+              "tools/verify/interactive-improvement-browser.cjs": {
+                "bytes": 13564,
+                "sha256": "ab3d0df389d3ac2eae520f3c37aedb479c815d2ea516539f2f4ed252585a762d"
+              },
+              "tools/verify/interactive-improvement-evidence-audit.cjs": {
+                "bytes": 3924,
+                "sha256": "521998849d92472dd9e97248f2256d4add22495613061980c964120037a51203"
+              }
+            }
+          },
+          "suites": [
+            {
+              "file": "test/smoke/port-gap-action-state.test.ts",
+              "exitCode": 0,
+              "testsPassed": 12,
+              "testsTotal": 12
+            }
+          ]
+        },
+        "result": {
+          "upgraded": false,
+          "reason": "execution identity mismatch: sdkTypesSha256"
+        },
+        "resultCapability": {
+          "name": "createActionState",
+          "status": "exported-verified",
+          "detection": {
+            "kind": "top-level",
+            "inTopLevelExports": true,
+            "inDts": true,
+            "bundleImpl": true
+          },
+          "testAvailable": true,
+          "testFiles": [
+            "test/smoke/port-gap-action-state.test.ts"
+          ],
+          "testExecution": "NOT_RUN",
+          "evidenceSource": "bundle SHA 3a448f029369 export 语句 + dts 声明"
+        }
+      },
+      {
+        "changed": "runner",
+        "executionReport": {
+          "schemaVersion": "ier-execution/1",
+          "identity": {
+            "sdkModuleSha256": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d",
+            "sdkTypesSha256": "3c2b1853a372509d040bbfc93d957b2c525764d000467f8aac8f33f8b8068fee",
+            "npmModuleSha256": "f2a59819e45b11ef75841439d713c1a73eae76b7f3be4bdded3398d6ac56e036",
+            "appCommit": "1228a50de0fb13308a9783b65429e96caf4d5404",
+            "dirtyDigest": "37eb0bd7256e0afc0bfc6690e080e8ebc57a59221739ace6c221d858e9d0a75a",
+            "candidateSnapshotId": "c0935bd3ca3640d3d499d661be2572fe4a0f6cbaf5ccb2d20252dcda3e5ae42a",
+            "airIdentityInputs": {
+              "digest": "ae1a007f383af7ff2fa38804cd1c39e9b5309f624c63966fd8e2c84514a50f7c",
+              "airFeatures": {
+                "declared": null,
+                "source": "unset(default-build-set)"
+              },
+              "airOutDir": {
+                "declared": null,
+                "resolved": null,
+                "source": "unset(repo-build/)"
+              }
+            },
+            "groupDigests": {
+              "source": "8d8ec7d3c2c0359715d7529ae4115c44488ac9af151d3ecc6a77406606322a4d",
+              "config": "d5cc1e224ba6d4cd3716507743de768f92841e68448154ad30d0990cf4fb3b8a",
+              "runner": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+              "contracts": "ae2324474c14cbe195c19b845ec2bfcf1e1e5fc69a81ff258a4c32dc598fe69f",
+              "artifacts": "7e2504cf90167dac51b41e374cc3255019daefe59dfe5792df702c01a51b90e3"
+            },
+            "artifactIdentity": {
+              "build/cocosair.module.js": {
+                "present": true,
+                "bytes": 6631057,
+                "sha256": "3a448f029369ac0253f3098fc08680c65f81bdf3bb472795e3032fdd725ab01d"
+              },
+              "build/cocosair.module.js.map": {
+                "present": true,
+                "bytes": 20318600,
+                "sha256": "b9a6183d745ae774288c2d7963364a6fa9d87297f1a399b2421aa6d1e3a246f0"
+              },
+              "build/cocosair.module.min.js": {
+                "present": true,
+                "bytes": 3703206,
+                "sha256": "8e56fbd5a5b754252838204ff1c204223aadd7c401bd1615c2008e808b5fe05c"
+              },
+              "build/cocosair.module.min.js.map": {
+                "present": true,
+                "bytes": 16707399,
+                "sha256": "42a43a8245b1e366b5efb839d150deda41a9fdf494917f7ac67ea16fe10d6374"
+              },
+              "build/cocosair.module.d.ts": {
+                "present": true,
+                "bytes": 3303518,
+                "sha256": "3c2b1853a372509d040bbfc93d957b2c525764d000467f8aac8f33f8b8068fee"
+              },
+              "build/bootstrap.js": {
+                "present": true,
+                "bytes": 8518,
+                "sha256": "57b2dfc7f7b5d29d43b7d9619274c1879f6f37223c7ae2685c0d2619707aef8f"
+              },
+              "build/bootstrap.js.map": {
+                "present": true,
+                "bytes": 16392,
+                "sha256": "83744c5a4c3691fb3d6d881433c3faa875955e1fd55a66e7336bcbb3c9ded7d0"
+              },
+              "build/bootstrap.d.ts": {
+                "present": true,
+                "bytes": 213,
+                "sha256": "3fd56ec33a68ed72b488d01c95439c4c7b3c7fde2275724b5f37670248bc12c2"
+              },
+              "build/html-source.js": {
+                "present": true,
+                "bytes": 5700,
+                "sha256": "5b7cb2a1c6a80cae9f0ec48282dfb42516e85480cdb72a0abce37073e37cb005"
+              },
+              "build/html-source.d.ts": {
+                "present": true,
+                "bytes": 1328,
+                "sha256": "758885c886dd6f2ad744d9698358e86de39bd58dfc029f055c19cef57a26c96a"
+              },
+              "build/npm/cocosair.module.js": {
+                "present": true,
+                "bytes": 6631013,
+                "sha256": "f2a59819e45b11ef75841439d713c1a73eae76b7f3be4bdded3398d6ac56e036"
+              },
+              "build/npm/cocosair.module.min.js": {
+                "present": true,
+                "bytes": 3703158,
+                "sha256": "8e29adb99aff5b906d60fd9dbd95edb8752954cf795d19c97c87b3cb0b0976ad"
+              },
+              "build/npm/bootstrap.js": {
+                "present": true,
+                "bytes": 8480,
+                "sha256": "8f5a29d1d2459b303394d0fed5f300f25b44bd391eea1924ffbaeab531ff1785"
+              },
+              "build/npm/html-source.js": {
+                "present": true,
+                "bytes": 5660,
+                "sha256": "308922fb63cd751b647d7e81d1a32032baf9285014f6e9fdddb66e7a6cf8df31"
+              }
+            },
+            "harnessIdentity": {
+              "tools/verify/interactive-improvement-baseline.cjs": {
+                "bytes": 26043,
+                "sha256": "40d781b73972d9bb2ee2e2aa84b9a63d49dcb8ba14e320b3ec6882f09096afd0"
+              },
+              "tools/verify/interactive-improvement-evidence.cjs": {
+                "bytes": 23553,
+                "sha256": "67a14b3e07b8709be36e1cd20e7d8f24eaba146cc371439ac03338cdebdbc062"
+              },
+              "tools/verify/interactive-improvement-browser.cjs": {
+                "bytes": 13564,
+                "sha256": "ab3d0df389d3ac2eae520f3c37aedb479c815d2ea516539f2f4ed252585a762d"
+              },
+              "tools/verify/interactive-improvement-evidence-audit.cjs": {
+                "bytes": 3924,
+                "sha256": "521998849d92472dd9e97248f2256d4add22495613061980c964120037a51203"
+              }
+            }
+          },
+          "suites": [
+            {
+              "file": "test/smoke/port-gap-action-state.test.ts",
+              "exitCode": 0,
+              "testsPassed": 12,
+              "testsTotal": 12
+            }
+          ]
+        },
+        "result": {
+          "upgraded": false,
+          "reason": "execution identity mismatch: groupDigests"
+        },
+        "resultCapability": {
+          "name": "createActionState",
+          "status": "exported-verified",
+          "detection": {
+            "kind": "top-level",
+            "inTopLevelExports": true,
+            "inDts": true,
+            "bundleImpl": true
+          },
+          "testAvailable": true,
+          "testFiles": [
+            "test/smoke/port-gap-action-state.test.ts"
+          ],
+          "testExecution": "NOT_RUN",
+          "evidenceSource": "bundle SHA 3a448f029369 export 语句 + dts 声明"
+        }
+      }
+    ]
+  },
+  "acceptance": "ACTUAL_TOOL_REJECTION_PROVEN; no current API behavior or original application acceptance inferred"
+}

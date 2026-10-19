@@ -1,0 +1,421 @@
+{
+  "schema": "environment-material-review/1",
+  "reviewedLocalSourceCommit": "cace062f69f8bfdb5cc06e6b69a1b7d38f80e6e9",
+  "reviewedSDKMain": "a21d49bd4f68054e22242609bca2da50eccd054d",
+  "scope": "Fourteen existing environment/permission boundary items; read-only availability, no new acceptance or application changes.",
+  "tasks": [
+    {
+      "id": "STILLWATER-ENV-005",
+      "review": "READ_ONLY_MATERIAL_AVAILABILITY",
+      "materials": [
+        {
+          "path": "public/reports/stillwater-candidate-investigation.json",
+          "archive": false,
+          "available": true,
+          "bytes": 3080,
+          "sha256": "be07f43074447c53f5e7ef6da87eb55f692136abd6b46e115f45460fd187b20f"
+        },
+        {
+          "path": "public/reports/stillwater-metadata.json",
+          "archive": false,
+          "available": true,
+          "bytes": 10930,
+          "sha256": "1b0d7c2e8a14be87eb0a5ea391fce1432fcaebb308034b3c815f6b604dba69ac"
+        },
+        {
+          "path": "public/experiments/stillwater/evidence.json",
+          "archive": false,
+          "available": true,
+          "bytes": 4480,
+          "sha256": "0e74cee3cbeffc669285128624b9d474c24debcb3c7137a92d1b6402a561d90f"
+        },
+        {
+          "path": "public/experiments/stillwater/runtime/app.js",
+          "archive": false,
+          "available": true,
+          "bytes": 1853410,
+          "sha256": "c2743523017b467a98357253d04d1d62548c3b178540eac1d2812afe1d280037"
+        }
+      ],
+      "currentAssessment": "Historical exact-scene timings and candidate metadata are available; original complete-world source/material identity has not yet been mapped. Target-device normal-RAF High/input evidence remains unrun. Complete migrated candidate runtime c2743523 and historical 153-asset receipt are located under experiments/stillwater; original-backend reference and current external asset availability remain unverified.",
+      "specificBlocker": "MAP_ORIGINAL_WORLD_THEN_REAL_DEVICE",
+      "newAcceptance": "NOT_RUN",
+      "privateArtifactsUploaded": false
+    },
+    {
+      "id": "ENV-001",
+      "review": "READ_ONLY_MATERIAL_AVAILABILITY",
+      "materials": [
+        {
+          "path": "public/reports/stillwater-candidate-investigation.json",
+          "archive": false,
+          "available": true,
+          "bytes": 3080,
+          "sha256": "be07f43074447c53f5e7ef6da87eb55f692136abd6b46e115f45460fd187b20f"
+        },
+        {
+          "path": "public/reports/gigacity-current-verification.json",
+          "archive": false,
+          "available": true,
+          "bytes": 23097,
+          "sha256": "61b38ce016949f9937046088683239f20ca0f4595907cfd867533fc42ce5d15a"
+        },
+        {
+          "path": "public/apps/gigacity/app.js",
+          "archive": false,
+          "available": true,
+          "bytes": 898432,
+          "sha256": "5ff62cfe37bd9d4d7a5adaab1749176cbabf52aada77f17e1c8dd291612323d1"
+        },
+        {
+          "path": "public/experiments/stillwater/evidence.json",
+          "archive": false,
+          "available": true,
+          "bytes": 4480,
+          "sha256": "0e74cee3cbeffc669285128624b9d474c24debcb3c7137a92d1b6402a561d90f"
+        },
+        {
+          "path": "public/experiments/stillwater/runtime/app.js",
+          "archive": false,
+          "available": true,
+          "bytes": 1853410,
+          "sha256": "c2743523017b467a98357253d04d1d62548c3b178540eac1d2812afe1d280037"
+        }
+      ],
+      "currentAssessment": "Gigacity application and historical Stillwater reports are available. They do not establish same-device original-versus-migrated full-world acceptance. Complete migrated candidate runtime c2743523 and historical 153-asset receipt are located under experiments/stillwater; original-backend reference and current external asset availability remain unverified.",
+      "specificBlocker": "ORIGINAL_WORLD_AND_TARGET_GPU",
+      "newAcceptance": "NOT_RUN",
+      "privateArtifactsUploaded": false
+    },
+    {
+      "id": "ENV-ROOM-001",
+      "review": "READ_ONLY_MATERIAL_AVAILABILITY",
+      "materials": [
+        {
+          "path": "public/reports/production-room-verification.json",
+          "archive": false,
+          "available": true,
+          "bytes": 5285,
+          "sha256": "d4bc833adb96be59e99cea842ac529fa4c8a6f762e136c9cf59a41f9cdf5a0b5"
+        },
+        {
+          "path": "public/apps/sunahama/app.js",
+          "archive": false,
+          "available": true,
+          "bytes": 368690,
+          "sha256": "d5b31e60cf6377e1b51ef2198ef7dcafaf8b4a6288e83539fee36947ce7c63e0"
+        }
+      ],
+      "currentAssessment": "Production protocol history is available. No production participants, writes, joins, ACK tests or rate-limit probes were performed in this review. Two independent visible clients and the actual 750ms window still require bounded production-test authorization.",
+      "specificBlocker": "PRODUCTION_INTERACTION_NOT_AUTHORIZED",
+      "newAcceptance": "NOT_RUN",
+      "privateArtifactsUploaded": false
+    },
+    {
+      "id": "CITY-ENV-010",
+      "review": "READ_ONLY_MATERIAL_AVAILABILITY",
+      "materials": [
+        {
+          "path": "public/reports/gigacity-verification.json",
+          "archive": false,
+          "available": true,
+          "bytes": 8438,
+          "sha256": "47a0757f16c82b2773fa977f3b07d50a460210435f338cf4fa7bc0a4057bfbea"
+        },
+        {
+          "path": "public/apps/gigacity/app.js",
+          "archive": false,
+          "available": true,
+          "bytes": 898432,
+          "sha256": "5ff62cfe37bd9d4d7a5adaab1749176cbabf52aada77f17e1c8dd291612323d1"
+        }
+      ],
+      "currentAssessment": "Original poster loss/blocking history and application source are available. Eleven exact original poster byte receipts have not been recovered by this review; no bypass of source-site protection attempted.",
+      "specificBlocker": "EXACT_ORIGINAL_POSTER_BYTES_UNVERIFIED",
+      "newAcceptance": "NOT_RUN",
+      "privateArtifactsUploaded": false
+    },
+    {
+      "id": "CITY-REF-001",
+      "review": "READ_ONLY_MATERIAL_AVAILABILITY",
+      "materials": [
+        {
+          "path": "public/reports/gigacity-verification.json",
+          "archive": false,
+          "available": true,
+          "bytes": 8438,
+          "sha256": "47a0757f16c82b2773fa977f3b07d50a460210435f338cf4fa7bc0a4057bfbea"
+        },
+        {
+          "path": "public/reports/gigacity-current-verification.json",
+          "archive": false,
+          "available": true,
+          "bytes": 23097,
+          "sha256": "61b38ce016949f9937046088683239f20ca0f4595907cfd867533fc42ce5d15a"
+        }
+      ],
+      "currentAssessment": "Original fog-only reference and migrated-app historical results are available. No new valid original-city screenshot at matched state was collected.",
+      "specificBlocker": "MATCHED_ORIGINAL_REFERENCE_UNVERIFIED",
+      "newAcceptance": "NOT_RUN",
+      "privateArtifactsUploaded": false
+    },
+    {
+      "id": "HIST-PLAYABLE12-AUDIO",
+      "review": "READ_ONLY_MATERIAL_AVAILABILITY",
+      "materials": [
+        {
+          "path": "public/reports/playable50-first-three.json",
+          "archive": false,
+          "available": true,
+          "bytes": 22003,
+          "sha256": "7eb284938f70e3a7cd62771d24bb9c999a63bcc6b3455c018d30076fe8d1e70c"
+        },
+        {
+          "path": "public/reports/playable50-second-three.json",
+          "archive": false,
+          "available": true,
+          "bytes": 18660,
+          "sha256": "93679da53976218d11b52d369f19b8a474dff857b7fac0a6c6bca34e8e56f86e"
+        },
+        {
+          "path": "evidence/playable50-revalidation-20261016/audio-eos.html",
+          "archive": true,
+          "available": true,
+          "bytes": 2067,
+          "sha256": "389b6b3235bb740c83471441641c9d8ac5f9a83dc969aa22bc8b34d468c467cc"
+        },
+        {
+          "path": "evidence/playable50-revalidation-20261016/audio-eos.cjs",
+          "archive": true,
+          "available": true,
+          "bytes": 2279,
+          "sha256": "9f322fea3942cca87bff5adc1de78dc620c79bc76671c05ce6e72686a4e65450"
+        },
+        {
+          "path": "evidence/playable50-revalidation-20261016/audio-eos-results.json",
+          "archive": true,
+          "available": true,
+          "bytes": 20977,
+          "sha256": "8eeb753fcc72971e2a3784ecb96bb6003dd9fdf78de3726e77f94c1b5fa4b7e1"
+        },
+        {
+          "path": "evidence/playable50-revalidation-20261016/audio-eos-blob-results.json",
+          "archive": true,
+          "available": true,
+          "bytes": 27921,
+          "sha256": "9a14f85ab469d07d89bd066200061cb2df021e828e5dc00c93918fec5f26e36d"
+        },
+        {
+          "path": "public/apps/playable50/19-highway-overtake/assets/runtime/gilt_hit.wav",
+          "archive": false,
+          "available": true,
+          "bytes": 17684,
+          "sha256": "62a4d868fc15f536eac6f68d0f9bdc61a894e6b2cac7be8fdb565459bd35d39f"
+        }
+      ],
+      "currentAssessment": "Located historical minimal natural-EOS fixture, direct-WAV failing receipt and Blob-WAV passing receipt on old c2dbcf40 SDK, plus exact cue bytes. These are focused controls, not original Playable12 acceptance. Current-main direct-versus-Blob replay can now be investigated locally without microphone access.",
+      "specificBlocker": "CURRENT_MAIN_AUDIO_CONTROL_NOT_RERUN",
+      "newAcceptance": "NOT_RUN",
+      "privateArtifactsUploaded": false
+    },
+    {
+      "id": "HIST-TOUCH-CANCEL",
+      "review": "READ_ONLY_MATERIAL_AVAILABILITY",
+      "materials": [
+        {
+          "path": "public/reports/playable50-second-three.json",
+          "archive": false,
+          "available": true,
+          "bytes": 18660,
+          "sha256": "93679da53976218d11b52d369f19b8a474dff857b7fac0a6c6bca34e8e56f86e"
+        }
+      ],
+      "currentAssessment": "The no-engine touchCancel/click historical report is available. It is not replaced by SDK input-focus tests; original native control and real touch/cancel semantics remain unrerun.",
+      "specificBlocker": "NATIVE_TOUCH_CONTROL_AND_DEVICE_UNVERIFIED",
+      "newAcceptance": "NOT_RUN",
+      "privateArtifactsUploaded": false
+    },
+    {
+      "id": "MI-ENV-008",
+      "review": "READ_ONLY_MATERIAL_AVAILABILITY",
+      "materials": [
+        {
+          "path": "public/reports/coverage.json",
+          "archive": false,
+          "available": true,
+          "bytes": 1887260,
+          "sha256": "9bdd4af86c37cbb769dec2b4ace3cbabef0e0a47996a510efd6512c3e0f3bea3"
+        },
+        {
+          "path": "public/apps/voice-glow/app.js",
+          "archive": false,
+          "available": true,
+          "bytes": 13218,
+          "sha256": "a8e6080c73973579e31461869d4919a8a0a1dd093e7d4c3e194e580b92fecfde"
+        }
+      ],
+      "currentAssessment": "Source and browser-scope history are available. PR7 adds scoped Chromium/WebKit lifecycle tests, not a full original-app matrix, physical multitouch or driver-reset evidence.",
+      "specificBlocker": "ORIGINAL_APP_MATRIX_AND_PHYSICAL_TOUCH",
+      "newAcceptance": "NOT_RUN",
+      "privateArtifactsUploaded": false
+    },
+    {
+      "id": "MI-VOICE-006",
+      "review": "READ_ONLY_MATERIAL_AVAILABILITY",
+      "materials": [
+        {
+          "path": "public/reports/new8-current-verification.json",
+          "archive": false,
+          "available": true,
+          "bytes": 529389,
+          "sha256": "7fc66a3cc3dfccd0535c6ff5c6cac14998c50dd1d69d722f9ab0747a3447e7d0"
+        },
+        {
+          "path": "public/apps/voice-glow/app.js",
+          "archive": false,
+          "available": true,
+          "bytes": 13218,
+          "sha256": "a8e6080c73973579e31461869d4919a8a0a1dd093e7d4c3e194e580b92fecfde"
+        }
+      ],
+      "currentAssessment": "Voice source and demo/refusal history are available. No microphone request was made; real capture, RMS response and track shutdown need explicit capture approval and a real input device.",
+      "specificBlocker": "MICROPHONE_PERMISSION_NOT_GRANTED",
+      "newAcceptance": "NOT_RUN",
+      "privateArtifactsUploaded": false
+    },
+    {
+      "id": "STILLWATER-ENV-004",
+      "review": "READ_ONLY_MATERIAL_AVAILABILITY",
+      "materials": [
+        {
+          "path": "public/reports/stillwater-ao-investigation.json",
+          "archive": false,
+          "available": true,
+          "bytes": 6134,
+          "sha256": "438c157e3536f7b3f371559316c99ac38a6709dffef4b9199bcdf5577cb440f4"
+        },
+        {
+          "path": "public/reports/stillwater-candidate-investigation.json",
+          "archive": false,
+          "available": true,
+          "bytes": 3080,
+          "sha256": "be07f43074447c53f5e7ef6da87eb55f692136abd6b46e115f45460fd187b20f"
+        },
+        {
+          "path": "public/experiments/stillwater/evidence.json",
+          "archive": false,
+          "available": true,
+          "bytes": 4480,
+          "sha256": "0e74cee3cbeffc669285128624b9d474c24debcb3c7137a92d1b6402a561d90f"
+        },
+        {
+          "path": "public/experiments/stillwater/runtime/app.js",
+          "archive": false,
+          "available": true,
+          "bytes": 1853410,
+          "sha256": "c2743523017b467a98357253d04d1d62548c3b178540eac1d2812afe1d280037"
+        }
+      ],
+      "currentAssessment": "Historical both-backend AO/nonfinite diagnosis is available. Exact geometry/textures and shader controls still need complete provenance mapping; no new float-pixel equivalence or cross-device generalization claimed. Complete migrated candidate runtime c2743523 and historical 153-asset receipt are located under experiments/stillwater; original-backend reference and current external asset availability remain unverified.",
+      "specificBlocker": "MAP_EXACT_AO_FIXTURE_THEN_MATCHED_GPU_REPLAY",
+      "newAcceptance": "NOT_RUN",
+      "privateArtifactsUploaded": false
+    },
+    {
+      "id": "TEST-SPARK-INJECTION",
+      "review": "READ_ONLY_MATERIAL_AVAILABILITY",
+      "materials": [
+        {
+          "path": "public/engine/improvements/sources/evidence/spark/report.json",
+          "archive": false,
+          "available": true,
+          "bytes": 7322,
+          "sha256": "df63613398e60da66cd2d1300fe734c739b0a3dabb3d9eb50cc60f40b03a61b9"
+        },
+        {
+          "path": "public/apps/spark/index.js",
+          "archive": false,
+          "available": true,
+          "bytes": 262,
+          "sha256": "b0eeacc5137ae660e325db389bd8a111542c3c69829b7a0531019a73a798fff2"
+        }
+      ],
+      "currentAssessment": "Spark source/report are available. PR6 normal-browser Spark and bounded A/B passed; the historical full interception/Worker wrapper injection is a distinct control not rerun here.",
+      "specificBlocker": "HISTORICAL_INJECTION_CONTROL_NOT_RERUN",
+      "newAcceptance": "NOT_RUN",
+      "privateArtifactsUploaded": false
+    },
+    {
+      "id": "WR-ENV-001",
+      "review": "READ_ONLY_MATERIAL_AVAILABILITY",
+      "materials": [
+        {
+          "path": "public/reports/production-room-verification.json",
+          "archive": false,
+          "available": true,
+          "bytes": 5285,
+          "sha256": "d4bc833adb96be59e99cea842ac529fa4c8a6f762e136c9cf59a41f9cdf5a0b5"
+        },
+        {
+          "path": "public/apps/sunahama/native-gfx.js",
+          "archive": false,
+          "available": true,
+          "bytes": 27144,
+          "sha256": "ccda62dccd601f1fe613a324ece90accaa156922af2111519a9319414824c074"
+        }
+      ],
+      "currentAssessment": "Native renderer and historical notes are available. Supported/disjoint timer devices and context-loss query release require actual device/API probes; cloud smoke is not target-device GPU timing.",
+      "specificBlocker": "REAL_TIMER_QUERY_DEVICE_MATRIX",
+      "newAcceptance": "NOT_RUN",
+      "privateArtifactsUploaded": false
+    },
+    {
+      "id": "WR-QA-001",
+      "review": "READ_ONLY_MATERIAL_AVAILABILITY",
+      "materials": [
+        {
+          "path": "public/reports/production-room-verification.json",
+          "archive": false,
+          "available": true,
+          "bytes": 5285,
+          "sha256": "d4bc833adb96be59e99cea842ac529fa4c8a6f762e136c9cf59a41f9cdf5a0b5"
+        },
+        {
+          "path": "public/apps/sunahama/app.js",
+          "archive": false,
+          "available": true,
+          "bytes": 368690,
+          "sha256": "d5b31e60cf6377e1b51ef2198ef7dcafaf8b4a6288e83539fee36947ce7c63e0"
+        }
+      ],
+      "currentAssessment": "Sunahama source and historical interaction reports are available. Original-state reference, CSS fade, fixed-step conditions and submitted GPU image need combined fresh verification; old draw counters do not close this.",
+      "specificBlocker": "MATCHED_REFERENCE_AND_RENDER_TIMING_REPLAY",
+      "newAcceptance": "NOT_RUN",
+      "privateArtifactsUploaded": false
+    },
+    {
+      "id": "MI-ENV-011",
+      "review": "READ_ONLY_MATERIAL_AVAILABILITY",
+      "materials": [
+        {
+          "path": "public/reports/coverage.json",
+          "archive": false,
+          "available": true,
+          "bytes": 1887260,
+          "sha256": "9bdd4af86c37cbb769dec2b4ace3cbabef0e0a47996a510efd6512c3e0f3bea3"
+        },
+        {
+          "path": "public/reports/new8-current-verification.json",
+          "archive": false,
+          "available": true,
+          "bytes": 529389,
+          "sha256": "7fc66a3cc3dfccd0535c6ff5c6cac14998c50dd1d69d722f9ab0747a3447e7d0"
+        }
+      ],
+      "currentAssessment": "Original reference 502 warning is retained. Its resource URL was not recorded, so the exact source remains unknown; it must not be relabeled console-zero or attributed to a guessed endpoint.",
+      "specificBlocker": "HISTORICAL_RESOURCE_URL_NOT_RECORDED",
+      "newAcceptance": "NOT_RUN",
+      "privateArtifactsUploaded": false
+    }
+  ]
+}

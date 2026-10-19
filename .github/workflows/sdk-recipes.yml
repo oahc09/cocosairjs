@@ -16,6 +16,9 @@ on:
       - "tools/debug/effect-layout.ts"
       - "tools/verify/sdk-*"
       - "tools/verify/math-*"
+      - "tools/verify/interactive-improvement-baseline.cjs"
+      - "tools/verify/consumer-acceptance.cjs"
+      - "test/smoke/interactive-improvement-baseline.test.ts"
       - "test/smoke/smoke-example-evidence-integration.test.ts"
       - "package.json"
       - ".github/workflows/sdk-recipes.yml"
@@ -59,6 +62,13 @@ jobs:
           npx tsc -p tools/verify/sdk-recipes.tsconfig.json
           npx jest --runInBand --no-cache --runTestsByPath test/smoke/smoke-example-evidence-integration.test.ts -t 'clean-checkout npm copies' 2>&1 | tee output/sdk-ci/packaging-fixture.log
           SDK_CANDIDATE_HEAD="$(git rev-parse HEAD)" node tools/verify/math-tarball.cjs --out=output/sdk-ci/tarball
+      - name: Verify candidate identity and real installed-package boundaries
+        run: |
+          set -euo pipefail
+          node tools/verify/interactive-improvement-baseline.cjs --out=output/sdk-ci/baseline.json
+          npx jest --runInBand --no-cache --runTestsByPath test/smoke/interactive-improvement-baseline.test.ts --json --outputFile=output/sdk-ci/identity-tests.json 2>&1 | tee output/sdk-ci/identity-tests.log
+          node tools/verify/interactive-improvement-baseline.cjs --verify=output/sdk-ci/baseline.json 2>&1 | tee output/sdk-ci/baseline-verification.json
+          node tools/verify/consumer-acceptance.cjs 2>&1 | tee output/sdk-ci/consumer.log
       - name: Install official Chromium tooling
         run: |
           set -euo pipefail

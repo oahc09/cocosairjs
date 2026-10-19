@@ -25,11 +25,75 @@ if (process.argv.includes('--bootstrap-browser') && (!browserOut || fs.existsSyn
 }
 let bundledConsumer;
 
+/** Real installed-package resolution, kept separate from missing HTTP assets.
+ * The shim belongs to the temporary consumer, never inside the installed package.
+ * Main import needs the same browser globals as the existing consumer acceptance.
+ */
+async function probeInstalledEntries(consumerDir) {
+    const assert = require('node:assert/strict');
+    const shimPath = path.join(consumerDir, 'entry-boundary-probe.mjs');
+    fs.writeFileSync(
+        shimPath,
+        [
+            "export const loadMain = () => import('cocosair');",
+            "export const loadOptional = () => import('cocosair/spark');",
+            "export const resolveMain = () => import.meta.resolve('cocosair');",
+        ].join('\n') + '\n',
+        { flag: 'wx' },
+    );
+    const probe = await import(pathToFileURL(shimPath).href);
+    const entry = probe.resolveMain();
+    assert.equal(
+        entry,
+        pathToFileURL(path.join(consumerDir, 'node_modules/cocosair/build/npm/cocosair.module.js')).href,
+    );
+    let optional;
+    try {
+        await probe.loadOptional();
+        assert.fail('default package unexpectedly loaded the unpublished cocosair/spark entry');
+    } catch (error) {
+        assert.equal(error.code, 'ERR_PACKAGE_PATH_NOT_EXPORTED');
+        assert.match(error.message, /\.\/spark/);
+        optional = { request: 'cocosair/spark', code: error.code, message: error.message };
+    }
+    const main = await probe.loadMain();
+    assert.equal(typeof main.createAirApp, 'function');
+
+    // An actual missing resource response is not a package-export or module-feature error.
+    // This is a loopback transport control, not a claim about an engine loader's diagnostics.
+    const requests = [];
+    const server = require('node:http').createServer((request, response) => {
+        requests.push(request.url);
+        response.writeHead(404, { 'Content-Type': 'text/plain' });
+        response.end('missing fixture asset');
+    });
+    await new Promise((resolve, reject) => {
+        server.once('error', reject);
+        server.listen(0, '127.0.0.1', resolve);
+    });
+    let asset;
+    try {
+        const response = await fetch(`http://127.0.0.1:${server.address().port}/missing-asset.bin`);
+        const body = await response.text();
+        assert.equal(response.status, 404);
+        assert.equal(response.ok, false);
+        assert.equal(body, 'missing fixture asset');
+        assert.deepEqual(requests, ['/missing-asset.bin']);
+        asset = { request: '/missing-asset.bin', status: response.status, ok: response.ok, body };
+    } finally {
+        await new Promise((resolve, reject) => server.close((error) => (error ? reject(error) : resolve())));
+    }
+    return {
+        main,
+        receipt: { main: { request: 'cocosair', resolved: entry, createAirApp: 'function' }, optional, asset },
+    };
+}
+
 function run(cmd, opts) {
     return execSync(cmd, { encoding: 'utf8', maxBuffer: 4 * 1024 * 1024, ...opts });
 }
 
-(async () => {
+async function main() {
     // 0. F-82: every published build/*.js must carry what src/air/builtin/register.ts registers,
     //    checked before packing so a stale bundle cannot reach a consumer.
     const published = require('./published-artifacts.cjs').check();
@@ -151,7 +215,7 @@ function run(cmd, opts) {
     // that is a documented runtime characteristic — the consumer gate must still perform the
     // actual import instead of patching or skipping it.
     let exportCount = 0;
-    const entryPath = path.join(nodeModules, 'build', 'npm', 'cocosair.module.js');
+    let entryBoundaries = null;
     try {
         const { JSDOM } = require(path.join(root, 'node_modules', 'jsdom'));
         // 引擎 ScreenAdapter 约束：模块求值期即按 id 查找 GameCanvas（docs/06）。
@@ -187,7 +251,9 @@ function run(cmd, opts) {
         dom.window.HTMLCanvasElement.prototype.toDataURL = function () {
             return 'data:image/png;base64,';
         };
-        const mod = await import(pathToFileURL(entryPath).href);
+        const boundary = await probeInstalledEntries(consumerDir);
+        const mod = boundary.main;
+        entryBoundaries = boundary.receipt;
         exportCount = Object.keys(mod).length;
         if (typeof mod.AIR_BUILD_DATE !== 'string' || !/^\d{12}$/.test(mod.AIR_BUILD_DATE)) {
             failures.push('installed AIR_BUILD_DATE is not a compiled yyyyMMddHHmm timestamp');
@@ -572,10 +638,14 @@ function run(cmd, opts) {
     fs.rmSync(packDir, { recursive: true, force: true });
     fs.rmSync(tarballPath, { force: true });
 
-    const report = { ok: failures.length === 0, failures, exportCount };
+    const report = { ok: failures.length === 0, failures, exportCount, entryBoundaries };
     console.log(JSON.stringify(report, null, 2));
     process.exit(failures.length ? 1 : 0);
-})().catch((error) => {
-    console.error(error);
-    process.exit(1);
-});
+}
+
+module.exports = { probeInstalledEntries };
+if (require.main === module)
+    main().catch((error) => {
+        console.error(error);
+        process.exit(1);
+    });
