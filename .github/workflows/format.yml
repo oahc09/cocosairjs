@@ -98,7 +98,7 @@ jobs:
           node tools/verify/ci-scope.cjs time-start format
           trap 'status=$?; node tools/verify/ci-scope.cjs time-end format "$status"; exit "$status"' EXIT
           npm run format:check
-          npx prettier --check tools/verify/example-asset-lifecycle.test.cjs tools/verify/runtime-readback.cjs tools/verify/example-spec-browser.cjs tools/verify/example-evidence-campaign.cjs tools/verify/example-evidence-shutdown-policy.cjs tools/verify/example-evidence-shutdown-policy.test.cjs tools/verify/shaders-holographic-rotation.test.cjs test/smoke/smoke-example-evidence-integration.test.ts .github/workflows/example-evidence.yml AGENTS.md tools/README.md docs/reference/verification.md docs/reference/example-evidence-campaign.md
+          npx prettier --check tools/verify/example-asset-lifecycle.test.cjs tools/verify/runtime-readback.cjs tools/verify/example-spec-browser.cjs tools/verify/example-evidence-campaign.cjs tools/verify/example-evidence-shutdown-policy.cjs tools/verify/example-evidence-shutdown-policy.test.cjs tools/verify/shaders-holographic-rotation.test.cjs test/smoke/smoke-example-evidence-integration.test.ts test/smoke/generated-source-maps.test.ts .github/workflows/example-evidence.yml AGENTS.md tools/README.md docs/reference/verification.md docs/reference/example-evidence-campaign.md
 
           npx --no-install prettier --check tools/verify/ci-scope.cjs tools/verify/ci-scope.test.cjs .github/workflows/format.yml .github/workflows/sdk-recipes.yml .github/workflows/skills.yml docs/reference/ci-scopes.md
           npx prettier --check .github/workflows/sdk-recipes.yml tools/build/math-module.cjs tools/build/prepare-package.cjs tools/debug/effect-layout.ts tools/verify/sdk-recipe-regressions.cjs tools/verify/sdk-recipes-browser.cjs tools/verify/sdk-recipes.tsconfig.json tools/verify/math-entry.test.cjs tools/verify/math-tarball.cjs tools/verify/interactive-timeline-browser.cjs tools/verify/interactive-timeline-audit.cjs test/smoke/interactive-timeline-evidence.test.ts
@@ -273,6 +273,8 @@ jobs:
           set -euo pipefail
           node tools/verify/ci-scope.cjs time-start package
           trap 'status=$?; node tools/verify/ci-scope.cjs time-end package "$status"; exit "$status"' EXIT
+          npx jest --runInBand --no-cache --runTestsByPath test/smoke/generated-source-maps.test.ts --json --outputFile=output/sdk-ci/generated-source-maps-tests.json 2>&1 | tee output/sdk-ci/generated-source-maps-tests.log
+          node -e 'const r=require("./output/sdk-ci/generated-source-maps-tests.json");if(!r.success||r.numTotalTests!==1||r.numPassedTests!==1||r.numPendingTests!==0)throw Error("fresh source-map contract did not execute exactly once");'
           SDK_CANDIDATE_HEAD="$CI_HEAD_SHA" node tools/verify/math-tarball.cjs --out=output/sdk-ci/tarball
           node tools/verify/consumer-acceptance.cjs 2>&1 | tee output/sdk-ci/consumer.log
       - name: Verify exact built identity and maps

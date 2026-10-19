@@ -235,12 +235,6 @@ describe('Evidence collector integration safeguards', () => {
         }
     });
 
-    test('current generated source maps match real current inputs', () => {
-        const maps = preflight.checkSourceMaps(root);
-        expect(maps).toHaveLength(3);
-        expect(maps.every((map: any) => map.verifiedSources > 0)).toBe(true);
-        expect(maps[2].virtual.map((item: any) => item.source)).toEqual(['air-inline-worker:air-spark-inline-worker']);
-    });
     test('stale source map contents fail before evidence collection', () => {
         put('src/main.ts', 'new source');
         for (const name of preflight.MAPS)

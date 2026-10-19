@@ -408,6 +408,59 @@ function checkBrowserCommands(text) {
     assert.doesNotMatch(shell, /node tools\/verify\/interactive-performance(?:-audit)?\.cjs/);
 }
 const workflowText = () => fs.readFileSync(path.join(root, '.github/workflows/format.yml'), 'utf8');
+function checkFreshMapPhase(text) {
+    const steps = yaml.load(text, { schema: yaml.JSON_SCHEMA }).jobs.quality.steps;
+    const build = steps.findIndex((s) => s.id === 'build');
+    const packageIndex = steps.findIndex((s) => s.id === 'package');
+    assert(build >= 0 && packageIndex > build);
+    const matches = steps.filter((s) => /npx jest[^\n]*test\/smoke\/generated-source-maps\.test\.ts/.test(s.run || ''));
+    assert.equal(matches.length, 1);
+    assert.equal(matches[0], steps[packageIndex]);
+    assert.equal(matches[0].if, "steps.classify.outputs.code == 'true'");
+    assert.doesNotMatch(matches[0].run, /--testNamePattern|--passWithNoTests/);
+    assert.match(
+        matches[0].run,
+        /!r\.success\|\|r\.numTotalTests!==1\|\|r\.numPassedTests!==1\|\|r\.numPendingTests!==0/,
+    );
+    assert.match(matches[0].run, /--json --outputFile=output\/sdk-ci\/generated-source-maps-tests\.json/);
+    const core = steps.find((s) => s.id === 'core_cpu');
+    assert.match(core.run, /test\/smoke\/smoke-example-evidence-integration\.test\.ts/);
+    assert.doesNotMatch(core.run, /--testNamePattern|generated-source-maps\.test/);
+}
+test('fresh source-map positive runs exactly once after the build; CPU negatives remain before it', () => {
+    checkFreshMapPhase(workflowText());
+    const cpu = fs.readFileSync(path.join(root, 'test/smoke/smoke-example-evidence-integration.test.ts'), 'utf8');
+    const built = fs.readFileSync(path.join(root, 'test/smoke/generated-source-maps.test.ts'), 'utf8');
+    assert.doesNotMatch(cpu, /current generated source maps match real current inputs/);
+    assert.match(cpu, /stale source map contents fail before evidence collection/);
+    assert.equal((built.match(/test\(/g) || []).length, 1);
+    assert.match(built, /preflight\.checkSourceMaps\(root\)/);
+    assert.match(built, /toHaveLength\(3\)/);
+});
+for (const [name, from, to] of [
+    [
+        'missing run',
+        'npx jest --runInBand --no-cache --runTestsByPath test/smoke/generated-source-maps.test.ts',
+        'echo missing-fresh-map-run',
+    ],
+    ['missing exact count', 'r.numPassedTests!==1', 'false'],
+    [
+        'test filter',
+        '--runTestsByPath test/smoke/generated-source-maps.test.ts',
+        '--testNamePattern=never --runTestsByPath test/smoke/generated-source-maps.test.ts',
+    ],
+    [
+        'prebuild run',
+        'test/smoke/webgl2-state-audit.test.ts',
+        'test/smoke/generated-source-maps.test.ts test/smoke/webgl2-state-audit.test.ts',
+    ],
+]) {
+    test('fresh source-map phase rejects ' + name, () => {
+        const text = workflowText();
+        assert(text.includes(from));
+        assert.throws(() => checkFreshMapPhase(text.replace(from, to)));
+    });
+}
 test('all real workflow collector, verification and audit CLI modes bind the same browser, report and tarball', () => {
     checkBrowserCommands(workflowText());
 });
