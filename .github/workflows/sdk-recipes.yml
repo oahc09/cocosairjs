@@ -1,0 +1,87 @@
+name: SDK recipes
+
+on:
+  pull_request:
+    paths:
+      - "examples/shared/*sprite-frame.ts"
+      - "examples/shared/async-app-lifecycle.ts"
+      - "examples/interactive-geometry/src/two-sided-page.ts"
+      - "examples/hdr-color-pipeline/vertex-texture-rgb.effect.json"
+      - "docs/manual/examples/input-focus/**"
+      - "docs/manual/examples/runtime-lifecycle-page/**"
+      - "docs/manual/examples/texture-replacement/**"
+      - "docs/manual/examples/color-input-contract/**"
+      - "tools/build/math-module.cjs"
+      - "tools/build/prepare-package.cjs"
+      - "tools/debug/effect-layout.ts"
+      - "tools/verify/sdk-*"
+      - "tools/verify/math-*"
+      - "test/smoke/smoke-example-evidence-integration.test.ts"
+      - "package.json"
+      - ".github/workflows/sdk-recipes.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  recipes:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      LIBGL_ALWAYS_SOFTWARE: "1"
+      AIR_CI_SOFTWARE_GL: "1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install and check focused sources
+        run: |
+          set -euo pipefail
+          npm ci --ignore-scripts
+          mkdir -p output/sdk-ci
+          git rev-parse HEAD > output/sdk-ci/head.txt
+          npm run format:check
+          npx prettier --check .github/workflows/sdk-recipes.yml tools/build/math-module.cjs tools/build/prepare-package.cjs tools/debug/effect-layout.ts tools/verify/sdk-recipe-regressions.cjs tools/verify/sdk-recipes-browser.cjs tools/verify/sdk-recipes.tsconfig.json tools/verify/math-entry.test.cjs tools/verify/math-tarball.cjs
+          node --test tools/verify/sdk-recipe-regressions.cjs tools/verify/math-entry.test.cjs 2>&1 | tee output/sdk-ci/cpu.log
+      - name: Build same-head main, math and declarations
+        env:
+          NODE_OPTIONS: --max-old-space-size=4096
+        run: |
+          set -euo pipefail
+          npm run build:all 2>&1 | tee output/sdk-ci/build.log
+          npx tsc -p tools/verify/sdk-recipes.tsconfig.json
+          npx jest --runInBand --no-cache --runTestsByPath test/smoke/smoke-example-evidence-integration.test.ts -t 'clean-checkout npm copies' 2>&1 | tee output/sdk-ci/packaging-fixture.log
+          SDK_CANDIDATE_HEAD="$(git rev-parse HEAD)" node tools/verify/math-tarball.cjs --out=output/sdk-ci/tarball
+      - name: Install official Chromium tooling
+        run: |
+          set -euo pipefail
+          npm install --prefix "$RUNNER_TEMP/sdk-browser-tools" --no-save --ignore-scripts --package-lock=false playwright@1.62.1
+          node "$RUNNER_TEMP/sdk-browser-tools/node_modules/playwright/cli.js" install --with-deps chromium
+          echo "NODE_PATH=$RUNNER_TEMP/sdk-browser-tools/node_modules" >> "$GITHUB_ENV"
+      - name: Verify real browser recipes and math-first bootstrap
+        run: |
+          set -euo pipefail
+          SDK_CANDIDATE_HEAD="$(git rev-parse HEAD)" SDK_BROWSER_OUT=output/sdk-ci/chromium node tools/verify/sdk-recipes-browser.cjs 2>&1 | tee output/sdk-ci/browser.log
+      - name: Retain same-head artifacts and all test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sdk-recipes-${{ github.event.pull_request.head.sha }}
+          path: |
+            output/sdk-ci/
+            build/cocosair.module.js
+            build/cocosair.module.js.map
+            build/cocosair.module.min.js
+            build/cocosair.module.min.js.map
+            build/cocosair.module.d.ts
+            build/cocosair.legacy.d.ts
+            build/cocosair.math.js
+            build/cocosair.math.d.ts
+            build/cocosair.math.legacy.d.ts
+            build/math-build.json
+          if-no-files-found: error
