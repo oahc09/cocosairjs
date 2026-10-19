@@ -168,6 +168,61 @@ function checkState(r, state) {
 function samePose(a, b) {
     return JSON.stringify(a.poses) === JSON.stringify(b.poses) && JSON.stringify(a.camera) === JSON.stringify(b.camera);
 }
+function checkResetBoundary(row) {
+    const errors = [];
+    try {
+        const { resetBefore: before, reset: after, resetBoundary: boundary } = row.observations;
+        if (!before || !after || !boundary || boundary.contract !== 'trusted-reset-boundary/1')
+            throw Error('reset boundary missing');
+        if (
+            boundary.selector !== '#reset' ||
+            boundary.targetId !== 'reset' ||
+            boundary.type !== 'click' ||
+            boundary.isTrusted !== true
+        )
+            errors.push('reset boundary trusted target');
+        if (
+            !Number.isSafeInteger(before.sequence) ||
+            !Number.isSafeInteger(before.generation) ||
+            !Number.isSafeInteger(after.sequence) ||
+            !Number.isSafeInteger(after.generation) ||
+            after.sequence <= before.sequence ||
+            after.generation <= before.generation ||
+            boundary.sequence !== after.sequence ||
+            boundary.generation !== after.generation
+        )
+            errors.push('reset boundary generation');
+        const event = after.events?.at(-1),
+            session = after.events?.at(-2);
+        if (
+            !event ||
+            event.type !== 'reset' ||
+            event.isTrusted !== true ||
+            event.sequence !== after.sequence ||
+            event.generation !== after.generation ||
+            !Number.isFinite(Date.parse(boundary.capturedAt)) ||
+            !Number.isFinite(Date.parse(event.wallTime)) ||
+            Date.parse(boundary.capturedAt) < Date.parse(event.wallTime) ||
+            session?.type !== 'session' ||
+            session.reason !== 'reset' ||
+            session.sequence !== event.sequence - 1 ||
+            session.generation !== after.generation ||
+            row.receivedEvents?.filter(
+                (e) =>
+                    e.type === 'reset' &&
+                    e.isTrusted === true &&
+                    e.sequence === event.sequence &&
+                    e.generation === event.generation &&
+                    e.wallTime === event.wallTime,
+            ).length !== 1
+        )
+            errors.push('reset boundary event binding');
+        if (after.logicalTime !== 0 || after.rangeValue !== 0 || poseError(after, 0) > 0.002) errors.push('reset');
+    } catch (error) {
+        errors.push(error.message);
+    }
+    return { pass: !errors.length, errors };
+}
 function checkAssembly(row) {
     const errors = [];
     try {
@@ -206,8 +261,7 @@ function checkAssembly(row) {
         )
             errors.push('paused speed feedback');
         if (!(x.resumeAfter.logicalTime > x.speedAfter.logicalTime) || x.resumeAfter.paused) errors.push('resume');
-        if (x.reset.logicalTime !== 0 || x.reset.rangeValue !== 0 || poseError(x.reset, 0) > 0.002)
-            errors.push('reset');
+        errors.push(...checkResetBoundary(row).errors);
         if (x.end.rangeValue !== 499 || x.end.logicalTime !== 499 || poseError(x.end, 2) > 0.002)
             errors.push('range End');
         if (x.late.accepted !== false || x.late.token >= x.late.current || poseError(x.afterLate, 2) > 0.002)
@@ -511,6 +565,45 @@ async function trustedClick(page, selector) {
     if (!hit.valid) throw Error('not visible button ' + selector);
     await page.mouse.click(hit.x, hit.y);
 }
+async function observeTrustedReset(page) {
+    // This listener is registered after the application's existing button handler.
+    // Capture its synchronous result before the native pacer can legitimately advance time.
+    await page.locator('#reset').evaluate((button) => {
+        const capture = { before: window.__timeline.snapshot(), result: null };
+        capture.listener = (event) => {
+            const snapshot = JSON.parse(JSON.stringify(window.__timeline.snapshot()));
+            capture.result = {
+                snapshot,
+                boundary: {
+                    contract: 'trusted-reset-boundary/1',
+                    selector: '#reset',
+                    targetId: event.currentTarget.id,
+                    type: event.type,
+                    isTrusted: event.isTrusted,
+                    sequence: snapshot.sequence,
+                    generation: snapshot.generation,
+                    capturedAt: new Date().toISOString(),
+                },
+            };
+        };
+        window.__timelineResetCapture = capture;
+        button.addEventListener('click', capture.listener, { once: true });
+    });
+    try {
+        await trustedClick(page, '#reset');
+        return await page.evaluate(() => {
+            const capture = window.__timelineResetCapture;
+            if (!capture?.result) throw Error('trusted reset event was not observed');
+            return { before: capture.before, ...capture.result };
+        });
+    } finally {
+        await page.locator('#reset').evaluate((button) => {
+            const capture = window.__timelineResetCapture;
+            if (capture) button.removeEventListener('click', capture.listener);
+            delete window.__timelineResetCapture;
+        });
+    }
+}
 async function main() {
     const arg = (n) => process.argv.find((v) => v.startsWith('--' + n + '='))?.slice(n.length + 3),
         verify = arg('verify');
@@ -709,8 +802,10 @@ async function main() {
                             expectedStage: 1,
                             expectConverged: true,
                         });
-                        await trustedClick(page, '#reset');
-                        row.observations.reset = await snap();
+                        const reset = await observeTrustedReset(page);
+                        row.observations.resetBefore = reset.before;
+                        row.observations.resetBoundary = reset.boundary;
+                        row.observations.reset = reset.snapshot;
                         await capture(page, row, 'reset', {
                             kind: 'assembly',
                             expectedStage: 0,
@@ -972,6 +1067,8 @@ async function main() {
 module.exports = {
     submittedSnapshot,
     waitForSubmittedSnapshot,
+    observeTrustedReset,
+    checkResetBoundary,
     expected,
     poseError,
     countPatch,

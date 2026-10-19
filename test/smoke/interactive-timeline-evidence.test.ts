@@ -194,3 +194,118 @@ describe('native submission synchronization', () => {
         expect(page.waitForFunction).toHaveBeenCalledTimes(1);
     });
 });
+
+const { checkResetBoundary } = require('../../tools/verify/interactive-timeline-browser.cjs');
+function resetBoundaryFixture(): any {
+    const event = { type: 'reset', sequence: 8, generation: 3, isTrusted: true, wallTime: '2026-10-19T12:55:51.048Z' };
+    return {
+        observations: {
+            resetBefore: { sequence: 6, generation: 2 },
+            reset: {
+                logicalTime: 0,
+                rangeValue: 0,
+                sequence: 8,
+                generation: 3,
+                poses: expected(0),
+                camera: { z: 6, orthoHeight: 2.5 },
+                events: [{ type: 'session', reason: 'reset', sequence: 7, generation: 3 }, event],
+            },
+            resetBoundary: {
+                contract: 'trusted-reset-boundary/1',
+                selector: '#reset',
+                targetId: 'reset',
+                type: 'click',
+                isTrusted: true,
+                sequence: 8,
+                generation: 3,
+                capturedAt: '2026-10-19T12:55:51.048Z',
+            },
+        },
+        receivedEvents: [event],
+    };
+}
+describe('reset zero-time observation is bound to the real event, before native time resumes', () => {
+    test('same-event zero-time result passes independently from later native advancement', () => {
+        expect(checkResetBoundary(resetBoundaryFixture())).toEqual({ pass: true, errors: [] });
+    });
+    test.each([
+        [
+            'e330 asynchronous observation is not the reset boundary',
+            (r: any) => (r.observations.reset.logicalTime = 0.0714000000001397),
+        ],
+        ['missing boundary', (r: any) => delete r.observations.resetBoundary],
+        ['wrong target', (r: any) => (r.observations.resetBoundary.targetId = 'replay')],
+        ['wrong selector', (r: any) => (r.observations.resetBoundary.selector = '#replay')],
+        ['untrusted observation', (r: any) => (r.observations.resetBoundary.isTrusted = false)],
+        ['untrusted application event', (r: any) => (r.observations.reset.events.at(-1).isTrusted = false)],
+        ['stale generation', (r: any) => (r.observations.resetBefore.generation = 3)],
+        ['stale sequence', (r: any) => (r.observations.resetBefore.sequence = 8)],
+        ['wrong event sequence', (r: any) => r.observations.resetBoundary.sequence++],
+        ['wrong event generation', (r: any) => r.observations.resetBoundary.generation++],
+        ['missing received event', (r: any) => (r.receivedEvents = [])],
+        ['duplicate received event', (r: any) => r.receivedEvents.push(r.receivedEvents[0])],
+        ['missing reset session', (r: any) => r.observations.reset.events.shift()],
+        ['capture before event', (r: any) => (r.observations.resetBoundary.capturedAt = '2026-10-19T12:55:50.000Z')],
+        ['nonzero range', (r: any) => (r.observations.reset.rangeValue = 1)],
+        ['nonzero pose', (r: any) => (r.observations.reset.poses[0].position[0] += 0.01)],
+    ])('rejects %s', (_name, change: any) => {
+        const row = resetBoundaryFixture();
+        change(row);
+        expect(checkResetBoundary(row).pass).toBe(false);
+    });
+});
+
+describe('audio cue records use the same raw context clock sample as their activation', () => {
+    function cueBlock(): string {
+        const ts = require('typescript');
+        const file = path.join(__dirname, '../../examples/interactive-timeline/src/main.ts');
+        const source = fs.readFileSync(file, 'utf8');
+        const ast = ts.createSourceFile(file, source, ts.ScriptTarget.Latest, true);
+        const advance = ast.statements.find((n: any) => ts.isFunctionDeclaration(n) && n.name?.text === 'advanceScene');
+        const block = advance.body.statements.filter(
+            (n: any) => ts.isIfStatement(n) && n.getText(ast).includes('cueRecords.push'),
+        );
+        expect(block).toHaveLength(1);
+        return block[0].getText(ast);
+    }
+    function execute(block: string): any {
+        let reads = 0;
+        const context = {
+            get currentTime() {
+                return 0.56 + reads++ * (256 / 44100);
+            },
+        };
+        const result = new Function(
+            'ctx',
+            `
+            let mode='audio',audioPlaying=true,audioPaused=false,audioTime=0,lastAudioTime=-1;
+            const audioToken={isCurrent:()=>true},origin=0.15,buffer={duration:16.2},CUES=[0.4];
+            const cueNodes=[{active:false}],cueRecords=[],scope={generation:3},cc={director:{getTotalFrames:()=>9}};
+            ${block}
+            return {audioTime,cueRecords,active:cueNodes[0].active};
+        `,
+        )(context);
+        return { ...result, reads };
+    }
+    test('actual advanceScene cue block reads once and preserves exact activation/origin relation', () => {
+        const result = execute(cueBlock());
+        expect(result.reads).toBe(1);
+        expect(result.active).toBe(true);
+        expect(result.cueRecords).toHaveLength(1);
+        const cue = result.cueRecords[0];
+        expect(cue.nodeActivationTime).toBe(cue.contextTime - cue.origin);
+        expect(cue.nodeActivationTime).toBe(result.audioTime);
+    });
+    test('old independent getter receipt reproduces the retained two-quantum failure without changing tolerance', () => {
+        const block = cueBlock().replace(
+            '                    contextTime,',
+            '                    contextTime: ctx.currentTime,',
+        );
+        expect(block).not.toBe(cueBlock());
+        const result = execute(block),
+            cue = result.cueRecords[0];
+        expect(result.reads).toBe(2);
+        expect(Math.abs(cue.nodeActivationTime - (cue.contextTime - cue.origin))).toBeGreaterThan(0.004);
+        expect(cue.nodeActivationTime - (cue.contextTime - cue.origin)).toBeCloseTo(-0.005804988662131194, 12);
+    });
+});

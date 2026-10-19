@@ -94,8 +94,8 @@
     {
       "path": "examples/interactive-timeline/src/main.ts",
       "kitPath": "interactive-timeline/src/main.ts",
-      "bytes": 24641,
-      "sha256": "61fc7c9472cf4de86e3a97a79117ea8ec82d4112b2e70bd1ce2864b35e7b3138"
+      "bytes": 24748,
+      "sha256": "32a7e49fedce17120476534032f81f125f3570ceddab5f6e5d1e201dca2ddc8d"
     },
     {
       "path": "examples/interactive-timeline/src/timeline-contract.ts",
