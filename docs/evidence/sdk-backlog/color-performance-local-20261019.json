@@ -1,0 +1,187 @@
+{
+  "schema": "sdk-color-performance-local/1",
+  "observedAt": "2026-10-19T11:48:38.785792Z",
+  "state": "LOCAL_WORKING_TREE_DIAGNOSTICS_NEW_HEAD_CI_PENDING",
+  "runtime": {
+    "head": "37974d6e320e4251df8288fa19b2d6508a9fd56e",
+    "artifactId": 12181203713,
+    "sha256": "7eb2d7b840ee56d1da57068b8513876edcb07075b82193884f3935ae8a1d4bf8"
+  },
+  "color": {
+    "browser": "WebKit 26.5",
+    "states": 5,
+    "clipping": {
+      "changed": 0,
+      "max": 0
+    },
+    "scopePassed": false,
+    "selectedScopePassed": true,
+    "report": {
+      "name": "color-webkit-candidate-2.json",
+      "bytes": 20449020,
+      "sha256": "72f4103e92270a3512c6eff1fa7f32e06621c06063c18638dd6522208554f852"
+    },
+    "audit": {
+      "rejected": 21,
+      "total": 21,
+      "record": {
+        "name": "color-webkit-audit-2.json",
+        "bytes": 1597,
+        "sha256": "3353f3c2ab4dccd09629f74bb208927d8c04f220cb12b105b34127d6f7d26ed3"
+      }
+    },
+    "PNGs": [
+      {
+        "bytes": 2337,
+        "sha256": "dad5a02056bc22733e9d3dda3b4a77a23c4f5a42f69356b4d455c3a53a0e1ff9",
+        "name": "webkit-plain.png"
+      },
+      {
+        "bytes": 2282,
+        "sha256": "70aa089272b14bd5d6b6afad37a05bbf1c6c2433f3b2e1ff979c9c38768ab4b3",
+        "name": "webkit-oblique.png"
+      },
+      {
+        "bytes": 2282,
+        "sha256": "70aa089272b14bd5d6b6afad37a05bbf1c6c2433f3b2e1ff979c9c38768ab4b3",
+        "name": "webkit-discard.png"
+      },
+      {
+        "bytes": 6836,
+        "sha256": "2b9e3cca91a629b7c664cc72a3694f81cc9a44ff5b3e167725ffd571833c273c",
+        "name": "webkit-alpha-base.png"
+      },
+      {
+        "bytes": 6836,
+        "sha256": "2b9e3cca91a629b7c664cc72a3694f81cc9a44ff5b3e167725ffd571833c273c",
+        "name": "webkit-alpha-instance.png"
+      }
+    ],
+    "humanObservation": "Alpha-base and oblique compositor PNGs viewed: translucent circular shadow over green and retained red half-plane visible.",
+    "firstFailure": {
+      "report": {
+        "name": "color-webkit-candidate-1.json",
+        "bytes": 3697,
+        "sha256": "c67d023df441d492460441fab6b355bb30bd66e31be7380247077b35c1e0df31"
+      },
+      "error": "AIR_E_RENDER_TARGET_BINDING: builtin-unlit mainTexture was requested across every pass, including planar-shadow without that sampler.",
+      "fix": "Bind the existing forward pass 0; no engine change."
+    },
+    "originalValidatorNegative": {
+      "method": "ACTUAL_WEBKIT_ROW_CLONES_NO_ADDITIONAL_BROWSER",
+      "validatorGitBlob": "059e3a0d73ca94e0495268a820c733df0415ca88",
+      "oldBaseline": {
+        "pass": true,
+        "errors": [],
+        "clipping": {
+          "changed": 0,
+          "max": 0
+        }
+      },
+      "results": [
+        {
+          "name": "truncatedPlain",
+          "old": {
+            "pass": true,
+            "errors": [],
+            "clipping": {
+              "changed": 0,
+              "max": 0
+            }
+          },
+          "fixed": {
+            "pass": false,
+            "errors": ["complete RGBA8 captures required"]
+          }
+        },
+        {
+          "name": "nonFinitePlain",
+          "old": {
+            "pass": true,
+            "errors": [],
+            "clipping": {
+              "changed": 0,
+              "max": 0
+            }
+          },
+          "fixed": {
+            "pass": false,
+            "errors": ["complete RGBA8 captures required"]
+          }
+        },
+        {
+          "name": "truncatedProjection",
+          "old": {
+            "pass": true,
+            "errors": [],
+            "clipping": {
+              "changed": 0,
+              "max": 0
+            }
+          },
+          "fixed": {
+            "pass": false,
+            "errors": ["finite 16-value native projection required"]
+          }
+        },
+        {
+          "name": "nonFiniteProjection",
+          "old": {
+            "pass": true,
+            "errors": [],
+            "clipping": {
+              "changed": 0,
+              "max": 0
+            }
+          },
+          "fixed": {
+            "pass": false,
+            "errors": ["finite 16-value native projection required"]
+          }
+        }
+      ]
+    }
+  },
+  "performance": {
+    "method": "CPU_SYNTHETIC_CONTRACT_ONLY",
+    "originalValidatorNegative": {
+      "method": "SYNTHETIC_CPU_CONTRACT_NOT_BROWSER",
+      "validatorGitBlob": "2813352aa177b934dc93d6228b5791753609f35c",
+      "baseline": {
+        "measurementValid": true,
+        "result": "LIMITED",
+        "deviceAcceptance": "NOT_RUN",
+        "errors": []
+      },
+      "duplicateRequiredIdentity": {
+        "measurementValid": true,
+        "result": "LIMITED",
+        "deviceAcceptance": "NOT_RUN",
+        "errors": []
+      },
+      "unfrozenBudget": {
+        "measurementValid": true,
+        "result": "LIMITED",
+        "deviceAcceptance": "NOT_RUN",
+        "errors": []
+      }
+    },
+    "current": "Pilot schema/2 requires exact unique current inputs including dynamic lifecycle and auditor, unchanged unmeasured budget, raw frame and screenshot-tool attribution.",
+    "deviceAcceptance": "NOT_RUN",
+    "blocker": "Target physical device and predeclared frame-time/visible-quality budgets have not been supplied. No 3x60s device result or assumed 60fps."
+  },
+  "Node22": {
+    "version": "22.23.3",
+    "colorAndPerformanceTests": 35,
+    "suites": 2
+  },
+  "sourceBaselineValidators": {
+    "colorGitBlob": "059e3a0d73ca94e0495268a820c733df0415ca88",
+    "performanceGitBlob": "2813352aa177b934dc93d6228b5791753609f35c"
+  },
+  "limits": [
+    "The five recreated color states have bounded scope. Separate current public Water/HDR controls are recorded in their own summaries; original private application/reference, physical device and long-stability acceptance remain pending.",
+    "Color same-head Chromium validation pending; local runtime and working-tree identities are not relabelled as the next commit.",
+    "Performance fixtures are synthetic test inputs, never performance measurements."
+  ]
+}

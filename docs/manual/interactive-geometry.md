@@ -1,5 +1,11 @@
 # 动态 Mesh 与屏幕投影
 
+## 2026-10-19 选定矩阵修复
+
+显式 --browser=webkit|chromium|firefox 现在验证该引擎完整 37 个切割/resize/offset 场景，加 ribbon、mesh、lifecycle 与三种普通入口；默认 all 仍要求完整三引擎。selectedScopePassed 与 scopePassed 分开，误差预算不变，shared helper 与 auditor 纳入身份。
+
+本地 37974d6e runtime + 工作树工具的 WebKit 37+7 行通过，30/30 实际报告篡改拒绝，见公开技术摘要 docs/evidence/sdk-backlog/geometry-webkit-local-20261019.json。下一提交的同 head Chromium 由 SDK CI 验证。下面 WebKit 26.6 的旧观察仅解释旧报告，不能作为当前失败的原因；当前原 soft/Water 素材比对仍单独待验。
+
 IER-04（原 ENG-04）示例：[interactive-geometry](../../examples/interactive-geometry/README.md)。运行 `npm run dev -- --example interactive-geometry`，使用 `?mode=mesh|cut|ribbon` 选择入口。普通页面使用原生 pacer；只有 `?test=1` 使用已有 `createStepClock`。
 
 ## 两条网格路径

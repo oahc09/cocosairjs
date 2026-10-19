@@ -77,7 +77,7 @@ export class TouchInputSource {
                 handleTouches.push(touch);
             }
             event.stopPropagation();
-            if (event.target === this._canvas) {
+            if (event.target === this._canvas && event.cancelable) {
                 event.preventDefault();
             }
             if (eventType === InputEventType.TOUCH_START) {

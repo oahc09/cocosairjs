@@ -56,6 +56,11 @@ function generate() {
             replace('result.width *= dpr;', 'result.width = Math.round(result.width * dpr);');
             replace('result.height *= dpr;', 'result.height = Math.round(result.height * dpr);');
         }
+        if (row.source === 'pal/input/web/touch-input.ts') {
+            // Native touchcancel/scroll events can be non-cancelable. Preserve
+            // touch retirement and dispatch without attempting an invalid cancel.
+            replace('if (event.target === this._canvas) {', 'if (event.target === this._canvas && event.cancelable) {');
+        }
         source = patchStartupBinding(source, row.source);
         source = require('./audio-cancellation-patch.cjs').patchAudioCancellation(source, row.source);
         source = require('./audio-readiness-patch.cjs').patchAudioReadiness(source, row.source);

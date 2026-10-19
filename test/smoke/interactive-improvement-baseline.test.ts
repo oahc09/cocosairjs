@@ -13,6 +13,8 @@ const {
     buildBaseline,
     verifyBaseline,
     applyExecutionReport,
+    executionIdentity,
+    EXECUTION_SCHEMA_VERSION,
     currentIdentity,
     INVENTORY_APIS,
     CAPABILITY_STATUS,
@@ -133,7 +135,11 @@ describe('IER-00 baseline: file presence is not executed evidence', () => {
 
     test('min/map/npm artifact identities provided', () => {
         const arts = buildBaseline().artifactIdentity;
-        for (const rel of ['build/cocosair.module.min.js', 'build/cocosair.module.min.js.map', 'build/npm/cocosair.module.js']) {
+        for (const rel of [
+            'build/cocosair.module.min.js',
+            'build/cocosair.module.min.js.map',
+            'build/npm/cocosair.module.js',
+        ]) {
             expect(arts[rel].present).toBe(true);
             expect(arts[rel].sha256).toMatch(/^[0-9a-f]{64}$/);
             expect(arts[rel].bytes).toBeGreaterThan(0);
@@ -218,7 +224,8 @@ describe('IER-00 baseline: file presence is not executed evidence', () => {
         expect(wrong.upgraded).toBe(false);
         // 身份匹配 + 通过套件 → 升级
         const ok = applyExecutionReport(baseline, {
-            identity: { sdkModuleSha256: baseline.sdkModuleSha256, appCommit: baseline.appCommit },
+            schemaVersion: EXECUTION_SCHEMA_VERSION,
+            identity: executionIdentity(baseline),
             suites: [goodSuite],
         });
         expect(ok.upgraded).toBeGreaterThan(0);
@@ -233,11 +240,128 @@ describe('IER-00 baseline: file presence is not executed evidence', () => {
             testsPassed: 11,
             testsTotal: 12,
         };
-        const r2 = applyExecutionReport(b2, { identity: { sdkModuleSha256: b2.sdkModuleSha256 }, suites: [failing] });
+        const r2 = applyExecutionReport(b2, {
+            schemaVersion: EXECUTION_SCHEMA_VERSION,
+            identity: executionIdentity(b2),
+            suites: [failing],
+        });
         expect(r2.upgraded).toBe(0);
         expect(b2.capabilities.find((c: any) => c.name === 'createActionState').status).not.toBe(
             CAPABILITY_STATUS.TESTED,
         );
+    });
+
+    test('same dev JS cannot attest wrong types, maps, runner, harness or application content', () => {
+        const baseline = buildBaseline();
+        const makeReport = () => ({
+            schemaVersion: EXECUTION_SCHEMA_VERSION,
+            identity: executionIdentity(baseline),
+            suites: [
+                { file: 'test/smoke/port-gap-action-state.test.ts', exitCode: 0, testsTotal: 12, testsPassed: 12 },
+            ],
+        });
+        const changedPaths = [
+            ['sdkTypesSha256'],
+            ['npmModuleSha256'],
+            ['appCommit'],
+            ['dirtyDigest'],
+            ['candidateSnapshotId'],
+            ['airIdentityInputs', 'digest'],
+            ...['source', 'config', 'runner', 'contracts', 'artifacts'].map((group) => ['groupDigests', group]),
+            ...[
+                'build/cocosair.module.js.map',
+                'build/cocosair.module.min.js',
+                'build/cocosair.module.min.js.map',
+                'build/cocosair.module.d.ts',
+                'build/npm/cocosair.module.js',
+            ].map((file) => ['artifactIdentity', file, 'sha256']),
+            ['harnessIdentity', 'tools/verify/interactive-improvement-browser.cjs', 'sha256'],
+        ];
+        for (const fields of changedPaths) {
+            const report = makeReport();
+            let target: any = report.identity;
+            for (const field of fields.slice(0, -1)) target = target[field];
+            target[fields[fields.length - 1]] = 'wrong-bound-identity';
+            const copy = JSON.parse(JSON.stringify(baseline));
+            const before = JSON.stringify(copy);
+            expect(applyExecutionReport(copy, report).reason).toContain('identity mismatch');
+            expect(JSON.stringify(copy)).toBe(before); // reject without mutating old records
+            expect(report.identity.sdkModuleSha256).toBe(baseline.sdkModuleSha256);
+        }
+        const legacy = { identity: { sdkModuleSha256: baseline.sdkModuleSha256 }, suites: makeReport().suites };
+        expect(applyExecutionReport(baseline, legacy).reason).toContain('schema mismatch');
+        for (const field of Object.keys(makeReport().identity)) {
+            const report = makeReport();
+            delete report.identity[field];
+            expect(applyExecutionReport(baseline, report).upgraded).toBe(false);
+        }
+        expect(baseline.capabilities.every((cap: any) => cap.testExecution === 'NOT_RUN')).toBe(true);
+    });
+
+    test('non-Git content manifests can bind reports; changed content cannot inherit them', () => {
+        const dir = makeTmpDir();
+        try {
+            fs.mkdirSync(path.join(dir, 'src'));
+            fs.writeFileSync(path.join(dir, 'src/application.js'), 'export const value = 1;\n');
+            const collect = require('../../tools/verify/port-gap-candidate-snapshot.cjs').collectSnapshot;
+            const snapshot = collect({ root: dir });
+            expect(snapshot.git.available).toBe(false);
+            const baseline = buildBaseline();
+            // Contract fixture: actual non-Git source manifest, current SDK bytes; not an API rerun.
+            baseline.appCommit = null;
+            baseline.git = snapshot.git;
+            baseline.groupDigests.source = snapshot.groups.source.digest;
+            baseline.candidateSnapshotId = snapshot.snapshotId;
+            const report = {
+                schemaVersion: EXECUTION_SCHEMA_VERSION,
+                identity: executionIdentity(baseline),
+                suites: [
+                    { file: 'test/smoke/port-gap-action-state.test.ts', exitCode: 0, testsTotal: 1, testsPassed: 1 },
+                ],
+            };
+            expect(applyExecutionReport(baseline, report).upgraded).toBeGreaterThan(0);
+            fs.writeFileSync(path.join(dir, 'src/application.js'), 'export const value = 2;\n');
+            const changed = collect({ root: dir });
+            baseline.groupDigests.source = changed.groups.source.digest;
+            baseline.candidateSnapshotId = changed.snapshotId;
+            expect(applyExecutionReport(baseline, report).upgraded).toBe(false);
+        } finally {
+            fs.rmSync(dir, { recursive: true, force: true });
+        }
+    });
+
+    test('duplicate, invalid, failed and empty suite results cannot preserve or create PASS', () => {
+        const baseline = buildBaseline();
+        const good = { file: 'test/smoke/port-gap-action-state.test.ts', exitCode: 0, testsTotal: 12, testsPassed: 12 };
+        const report = {
+            schemaVersion: EXECUTION_SCHEMA_VERSION,
+            identity: executionIdentity(baseline),
+            suites: [good],
+        };
+        for (const suites of [
+            [good, { ...good, exitCode: 1 }],
+            [{ ...good, testsPassed: Infinity }],
+            [{ ...good, testsTotal: 0.5 }],
+            [{ ...good, testsPassed: -1 }],
+        ]) {
+            expect(applyExecutionReport(baseline, { ...report, suites }).upgraded).toBe(false);
+        }
+        expect(applyExecutionReport(baseline, report).upgraded).toBeGreaterThan(0);
+        expect(applyExecutionReport(baseline, { ...report, suites: [{ ...good, exitCode: 1 }] }).upgraded).toBe(0);
+        expect(baseline.capabilities.find((cap: any) => cap.name === 'createActionState').status).not.toBe(
+            CAPABILITY_STATUS.TESTED,
+        );
+        applyExecutionReport(baseline, report);
+        expect(applyExecutionReport(baseline, { ...report, suites: [] }).upgraded).toBe(0);
+        expect(baseline.capabilities.find((cap: any) => cap.name === 'createActionState').status).not.toBe(
+            CAPABILITY_STATUS.TESTED,
+        );
+    });
+
+    test('verifyBaseline rejects forged execution labels even when capability status is unchanged', () => {
+        const baseline = buildBaseline();
+        baseline.capabilities[0].testExecution = { status: 'PASS', suites: baseline.capabilities[0].testFiles };
+        expect(verifyBaseline(baseline).ok).toBe(false);
     });
 
     test('currentIdentity reads disk for CLI verification', () => {

@@ -1,21 +1,169 @@
 import * as cc from 'cocosair';
 // Reuse verified compiled JSON layout. Only this local shader body is replaced; no SDK effects are patched.
-const app=await cc.createAirApp({canvas:'#GameCanvas'}),scene=new cc.Scene('color-compare'),assets:(cc.Mesh|cc.Material)[]=[];
-const own=<T extends cc.Mesh|cc.Material>(a:T):T=>{a.addRef();assets.push(a);return a;};
-const json=await(await fetch('/examples/water-multipass/scene.effect.json')).json();json.name='air-ier-color-compare';
-for(const shader of json.shaders){const old=shader.name;shader.name=old.replace('air-water-multipass-scene','air-ier-color-compare');shader.hash=300013;
- for(const technique of json.techniques)for(const pass of technique.passes)if(pass.program===old)pass.program=shader.name;
- shader.glsl3.frag=shader.glsl3.frag.replace(/void main\(\) \{[\s\S]*$/,'void main() {\n if (objectParams.z > 0.5 && worldPosition.y > 0.0) discard;\n float alpha = tint.a;\n if (objectParams.x > 0.5) { alpha *= 1.0 - smoothstep(0.55, 0.70, length(worldPosition.xy)); if (alpha <= 0.0) discard; }\n cc_FragColor = vec4(tint.rgb, alpha);\n}');}
-const effect=Object.assign(new cc.EffectAsset(),json);effect.onLoaded();
-const mesh=own(cc.utils.createMesh({positions:[-1,-1,0,1,-1,0,-1,1,0,1,1,0],normals:[0,0,1,0,0,1,0,0,1,0,0,1],uvs:[0,0,1,0,0,1,1,1],indices:[0,1,2,1,3,2]}));
-const states={blendState:{targets:[{blend:true,blendSrc:cc.gfx.BlendFactor.SRC_ALPHA,blendDst:cc.gfx.BlendFactor.ONE_MINUS_SRC_ALPHA}]},depthStencilState:{depthTest:true,depthWrite:false}};
-function material(blend:boolean):cc.Material{const m=own(new cc.Material());m.initialize({effectAsset:effect,...blend?{states}:{}});m.setProperty('tint',new cc.Vec4(1,0,0,blend?.5:1));m.setProperty('objectParams',new cc.Vec4());return m;}
-const fg=new cc.Node('clip-and-shadow');scene.addChild(fg);fg.layer=1<<20;const renderer=fg.addComponent(cc.MeshRenderer);renderer.mesh=mesh;
-const base=material(true),instanceParent=material(false);const bgNode=new cc.Node('green-background');scene.addChild(bgNode);bgNode.layer=1<<20;bgNode.setPosition(0,0,-.02);const bg=bgNode.addComponent(cc.MeshRenderer);bg.mesh=mesh;const bgMat=own(new cc.Material());bgMat.initialize({effectName:'builtin-unlit'});bgMat.setProperty('mainColor',new cc.Color(0,255,0,255));bg.setSharedMaterial(bgMat,0);
-const cameraNode=new cc.Node('capture-camera');scene.addChild(cameraNode);cameraNode.setPosition(0,1.5,5);cameraNode.lookAt(new cc.Vec3());const camera=cameraNode.addComponent(cc.Camera);camera.visibility=1<<20;camera.near=.1;camera.far=50;camera.fov=45;camera.clearFlags=cc.Camera.ClearFlag.SOLID_COLOR;camera.clearColor=new cc.Color(0,0,0,255);
-let mode='plain';const target=cc.createAirRenderTarget({width:256,height:256,colorFormat:'rgba8'});
-const detach=target.attachCamera(camera,()=>{const n=camera.camera;n.update(true);cc.Mat4.perspective(n.matProj,n.fov,n.aspect,n.nearClip,n.farClip,n.fovAxis===cc.Camera.FOVAxis.VERTICAL,n.getClipSpaceMinz(),cc.director.root!.device.capabilities.clipSpaceSignY);cc.Mat4.invert(n.matProjInv,n.matProj);if(mode==='oblique'){const t=new cc.Mat4();cc.Mat4.transpose(t,n.node.worldMatrix);n.calculateObliqueMat(new cc.Vec4(0,-1,0,0).transformMat4(t));}});
-const display=new cc.Node('display-target');scene.addChild(display);display.layer=1<<21;const dr=display.addComponent(cc.MeshRenderer);dr.mesh=mesh;const dm=own(new cc.Material());dm.initialize({effectName:'builtin-unlit',defines:{USE_TEXTURE:true}});dr.setSharedMaterial(dm,0);const unbind=target.bindColor(dm,'mainTexture');
-const screenNode=new cc.Node('display-camera');scene.addChild(screenNode);screenNode.setPosition(0,0,5);screenNode.lookAt(new cc.Vec3());const screen=screenNode.addComponent(cc.Camera);screen.visibility=1<<21;screen.priority=1;screen.projection=cc.Camera.ProjectionType.ORTHO;screen.orthoHeight=1.05;screen.clearFlags=cc.Camera.ClearFlag.SOLID_COLOR;screen.clearColor=new cc.Color(0,0,0,255);
-await app.run(scene);cc.game.pause();const clock=cc.createStepClock();clock.begin();await clock.step(0);let releasePromise:Promise<unknown>|null=null;
-(window as unknown as Record<string,unknown>).__colorCompare={async select(next:string){mode=next;const shadow=next.startsWith('alpha');bgNode.active=shadow;fg.setPosition(0,0,shadow?.02:0);renderer.setSharedMaterial(next==='alpha-instance'?instanceParent:base,0);const m=next==='alpha-instance'?renderer.getMaterialInstance(0)!:base;if(next==='alpha-instance')m.overridePipelineStates(states);m.setProperty('tint',new cc.Vec4(1,0,0,shadow?.5:1));m.setProperty('objectParams',new cc.Vec4(shadow?1:0,0,next==='discard'?1:0,0));for(const p of m.passes)p.update();await clock.step(1/60);await clock.step(1/60);return {mode,material:cc.inspectAirMaterial(m),projection:Array.from({length:16},(_,i)=>(camera.camera.matProj as unknown as Record<string,number>)['m'+String(i).padStart(2,'0')]),bytes:Array.from(target.readColor())};},release(){if(releasePromise)return releasePromise;detach();unbind();for(const r of [renderer,bg,dr]){r.mesh=null;r.setSharedMaterial(null,0);}target.dispose();const refs=assets.map(a=>{const before=a.refCount;a.decRef();return {before,after:a.refCount}});scene.destroy();releasePromise=Promise.resolve(app.close?.()).then(()=>({refs,released:true}));return releasePromise;}};
+const app = await cc.createAirApp({ canvas: '#GameCanvas' }),
+    scene = new cc.Scene('color-compare'),
+    assets: (cc.Mesh | cc.Material)[] = [];
+const own = <T extends cc.Mesh | cc.Material>(a: T): T => {
+    a.addRef();
+    assets.push(a);
+    return a;
+};
+const json = await (await fetch('/examples/water-multipass/scene.effect.json')).json();
+json.name = 'air-ier-color-compare';
+for (const shader of json.shaders) {
+    const old = shader.name;
+    shader.name = old.replace('air-water-multipass-scene', 'air-ier-color-compare');
+    shader.hash = 300013;
+    for (const technique of json.techniques)
+        for (const pass of technique.passes) if (pass.program === old) pass.program = shader.name;
+    shader.glsl3.frag = shader.glsl3.frag.replace(
+        /void main\(\) \{[\s\S]*$/,
+        'void main() {\n if (objectParams.z > 0.5 && worldPosition.y > 0.0) discard;\n float alpha = tint.a;\n if (objectParams.x > 0.5) { alpha *= 1.0 - smoothstep(0.55, 0.70, length(worldPosition.xy)); if (alpha <= 0.0) discard; }\n cc_FragColor = vec4(tint.rgb, alpha);\n}',
+    );
+}
+const effect = Object.assign(new cc.EffectAsset(), json);
+effect.onLoaded();
+const mesh = own(
+    cc.utils.createMesh({
+        positions: [-1, -1, 0, 1, -1, 0, -1, 1, 0, 1, 1, 0],
+        normals: [0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1],
+        uvs: [0, 0, 1, 0, 0, 1, 1, 1],
+        indices: [0, 1, 2, 1, 3, 2],
+    }),
+);
+const states = {
+    blendState: {
+        targets: [
+            { blend: true, blendSrc: cc.gfx.BlendFactor.SRC_ALPHA, blendDst: cc.gfx.BlendFactor.ONE_MINUS_SRC_ALPHA },
+        ],
+    },
+    depthStencilState: { depthTest: true, depthWrite: false },
+};
+function material(blend: boolean): cc.Material {
+    const m = own(new cc.Material());
+    m.initialize({ effectAsset: effect, ...(blend ? { states } : {}) });
+    m.setProperty('tint', new cc.Vec4(1, 0, 0, blend ? 0.5 : 1));
+    m.setProperty('objectParams', new cc.Vec4());
+    return m;
+}
+const fg = new cc.Node('clip-and-shadow');
+scene.addChild(fg);
+fg.layer = 1 << 20;
+const renderer = fg.addComponent(cc.MeshRenderer);
+renderer.mesh = mesh;
+const base = material(true),
+    instanceParent = material(false);
+const bgNode = new cc.Node('green-background');
+scene.addChild(bgNode);
+bgNode.layer = 1 << 20;
+bgNode.setPosition(0, 0, -0.02);
+const bg = bgNode.addComponent(cc.MeshRenderer);
+bg.mesh = mesh;
+const bgMat = own(new cc.Material());
+bgMat.initialize({ effectName: 'builtin-unlit' });
+bgMat.setProperty('mainColor', new cc.Color(0, 255, 0, 255));
+bg.setSharedMaterial(bgMat, 0);
+const cameraNode = new cc.Node('capture-camera');
+scene.addChild(cameraNode);
+cameraNode.setPosition(0, 1.5, 5);
+cameraNode.lookAt(new cc.Vec3());
+const camera = cameraNode.addComponent(cc.Camera);
+camera.visibility = 1 << 20;
+camera.near = 0.1;
+camera.far = 50;
+camera.fov = 45;
+camera.clearFlags = cc.Camera.ClearFlag.SOLID_COLOR;
+camera.clearColor = new cc.Color(0, 0, 0, 255);
+let mode = 'plain';
+const target = cc.createAirRenderTarget({ width: 256, height: 256, colorFormat: 'rgba8' });
+const detach = target.attachCamera(camera, () => {
+    const n = camera.camera;
+    n.update(true);
+    cc.Mat4.perspective(
+        n.matProj,
+        n.fov,
+        n.aspect,
+        n.nearClip,
+        n.farClip,
+        n.fovAxis === cc.Camera.FOVAxis.VERTICAL,
+        n.getClipSpaceMinz(),
+        cc.director.root!.device.capabilities.clipSpaceSignY,
+    );
+    cc.Mat4.invert(n.matProjInv, n.matProj);
+    if (mode === 'oblique') {
+        const t = new cc.Mat4();
+        cc.Mat4.transpose(t, n.node.worldMatrix);
+        n.calculateObliqueMat(new cc.Vec4(0, -1, 0, 0).transformMat4(t));
+    }
+});
+const display = new cc.Node('display-target');
+scene.addChild(display);
+display.layer = 1 << 21;
+const dr = display.addComponent(cc.MeshRenderer);
+dr.mesh = mesh;
+const dm = own(new cc.Material());
+dm.initialize({ effectName: 'builtin-unlit', defines: { USE_TEXTURE: true } });
+dr.setSharedMaterial(dm, 0);
+const unbind = target.bindColor(dm, 'mainTexture', 0);
+// builtin-unlit also contains a planar-shadow pass without this sampler; bind only its forward pass.
+const screenNode = new cc.Node('display-camera');
+scene.addChild(screenNode);
+screenNode.setPosition(0, 0, 5);
+screenNode.lookAt(new cc.Vec3());
+const screen = screenNode.addComponent(cc.Camera);
+screen.visibility = 1 << 21;
+screen.priority = 1;
+screen.projection = cc.Camera.ProjectionType.ORTHO;
+screen.orthoHeight = 1.05;
+screen.clearFlags = cc.Camera.ClearFlag.SOLID_COLOR;
+screen.clearColor = new cc.Color(0, 0, 0, 255);
+await app.run(scene);
+cc.game.pause();
+const clock = cc.createStepClock();
+clock.begin();
+await clock.step(0);
+let releasePromise: Promise<unknown> | null = null;
+(window as unknown as Record<string, unknown>).__colorCompare = {
+    async select(next: string) {
+        mode = next;
+        const shadow = next.startsWith('alpha');
+        bgNode.active = shadow;
+        fg.setPosition(0, 0, shadow ? 0.02 : 0);
+        renderer.setSharedMaterial(next === 'alpha-instance' ? instanceParent : base, 0);
+        const m = next === 'alpha-instance' ? renderer.getMaterialInstance(0)! : base;
+        if (next === 'alpha-instance') m.overridePipelineStates(states);
+        m.setProperty('tint', new cc.Vec4(1, 0, 0, shadow ? 0.5 : 1));
+        m.setProperty('objectParams', new cc.Vec4(shadow ? 1 : 0, 0, next === 'discard' ? 1 : 0, 0));
+        for (const p of m.passes) p.update();
+        await clock.step(1 / 60);
+        await clock.step(1 / 60);
+        return {
+            mode,
+            material: cc.inspectAirMaterial(m),
+            projection: Array.from(
+                { length: 16 },
+                (_, i) =>
+                    (camera.camera.matProj as unknown as Record<string, number>)['m' + String(i).padStart(2, '0')],
+            ),
+            bytes: Array.from(target.readColor()),
+        };
+    },
+    release() {
+        if (releasePromise) return releasePromise;
+        detach();
+        unbind();
+        for (const r of [renderer, bg, dr]) {
+            r.mesh = null;
+            r.setSharedMaterial(null, 0);
+        }
+        target.dispose();
+        const refs = assets.map((a) => {
+            const before = a.refCount;
+            a.decRef();
+            return { before, after: a.refCount };
+        });
+        scene.destroy();
+        releasePromise = Promise.resolve(app.close?.()).then(() => ({ refs, released: true }));
+        return releasePromise;
+    },
+};

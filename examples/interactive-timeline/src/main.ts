@@ -269,7 +269,9 @@ function advanceScene(dt: number): void {
         camera.orthoHeight += (2.5 + stage * 0.25 - camera.orthoHeight) * blend;
     }
     if (mode === 'audio' && ctx && audioPlaying && !audioPaused && audioToken.isCurrent()) {
-        audioTime = Math.min(buffer?.duration ?? 16.2, Math.max(0, ctx.currentTime - origin));
+        // Audio time can advance between getter reads, even within this JS frame.
+        const contextTime = ctx.currentTime;
+        audioTime = Math.min(buffer?.duration ?? 16.2, Math.max(0, contextTime - origin));
         for (let i = 0; i < CUES.length; i++)
             if (CUES[i] > lastAudioTime && CUES[i] <= audioTime) {
                 cueNodes[i].active = true;
@@ -277,7 +279,7 @@ function advanceScene(dt: number): void {
                     cueId: i,
                     targetAudioTime: CUES[i],
                     nodeActivationTime: audioTime,
-                    contextTime: ctx.currentTime,
+                    contextTime,
                     origin,
                     generation: scope.generation,
                     frame: cc.director.getTotalFrames(),

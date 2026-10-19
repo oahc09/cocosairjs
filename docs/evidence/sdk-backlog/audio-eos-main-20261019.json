@@ -1,0 +1,285 @@
+{
+  "schema": "audio-eos-diagnostic/1",
+  "recordedAt": "2026-10-19T10:38:47.371396+00:00",
+  "task": "HIST-PLAYABLE12-AUDIO",
+  "mainHead": "a21d49bd4f68054e22242609bca2da50eccd054d",
+  "mainRuntimeSHA256": "eb8a8a75c968571bc27d5d472a8ee02c5d89f3ab43e2d3ecf702016e406fddab",
+  "mainRuntimeGitBlob": "720795ba8785158172dae0a790b2306b744395b0",
+  "oldRuntimeSHA256": "c2dbcf4055a21f4c6db9d5abba4d4d963664344f846c24b678f6a852f66f645b",
+  "cueSHA256": "62a4d868fc15f536eac6f68d0f9bdc61a894e6b2cac7be8fdb565459bd35d39f",
+  "browser": "Cloud WebKit 26.5",
+  "rounds": [
+    {
+      "receiptSHA256": "cdb387c0203e3172ba86886b41e8e52813e6d8b89d849fd9abbc194648e47f51",
+      "control": "",
+      "transport": "Buffer response; explicit length",
+      "runs": [
+        {
+          "mode": "direct",
+          "completed": true,
+          "naturalEOS": 8,
+          "attempts": 8,
+          "sequenceEnded": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "pageErrors": [],
+          "stoppedAfterStop": true,
+          "releaseStatus": "released"
+        },
+        {
+          "mode": "blob",
+          "completed": true,
+          "naturalEOS": 8,
+          "attempts": 8,
+          "sequenceEnded": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "pageErrors": [],
+          "stoppedAfterStop": true,
+          "releaseStatus": "released"
+        }
+      ]
+    },
+    {
+      "receiptSHA256": "0e56db003eb93f6667ddc2495fdf91d59a3da5ed2c7dccc36fa4391b44bcfedf",
+      "control": "",
+      "transport": "Buffer response; no explicit length",
+      "runs": [
+        {
+          "mode": "direct",
+          "completed": true,
+          "naturalEOS": 8,
+          "attempts": 8,
+          "sequenceEnded": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "pageErrors": [],
+          "stoppedAfterStop": true,
+          "releaseStatus": "released"
+        },
+        {
+          "mode": "blob",
+          "completed": true,
+          "naturalEOS": 8,
+          "attempts": 8,
+          "sequenceEnded": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "pageErrors": [],
+          "stoppedAfterStop": true,
+          "releaseStatus": "released"
+        }
+      ]
+    },
+    {
+      "receiptSHA256": "3ffc0a363661fec5b0d524c4900646ada988b3ca0929af3a0e41e169ac828d85",
+      "control": "",
+      "transport": "Historical createReadStream pipe, no explicit content length/range handling",
+      "runs": [
+        {
+          "mode": "old-direct",
+          "completed": true,
+          "naturalEOS": 8,
+          "attempts": 8,
+          "sequenceEnded": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "pageErrors": [],
+          "stoppedAfterStop": true,
+          "releaseStatus": "released"
+        },
+        {
+          "mode": "old-blob",
+          "completed": true,
+          "naturalEOS": 8,
+          "attempts": 8,
+          "sequenceEnded": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "pageErrors": [],
+          "stoppedAfterStop": true,
+          "releaseStatus": "released"
+        },
+        {
+          "mode": "direct",
+          "completed": true,
+          "naturalEOS": 1,
+          "attempts": 8,
+          "sequenceEnded": [
+            true,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "pageErrors": [],
+          "stoppedAfterStop": true,
+          "releaseStatus": "released"
+        },
+        {
+          "mode": "blob",
+          "completed": true,
+          "naturalEOS": 8,
+          "attempts": 8,
+          "sequenceEnded": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "pageErrors": [],
+          "stoppedAfterStop": true,
+          "releaseStatus": "released"
+        }
+      ]
+    },
+    {
+      "receiptSHA256": "cbec7023e8c8b99b3ad181966a90d135bd902e1336fe81ab189ec2fa6896ede0",
+      "control": "Reverse order plus native HTMLAudio",
+      "transport": "Historical createReadStream pipe, no explicit content length/range handling",
+      "runs": [
+        {
+          "mode": "native",
+          "completed": true,
+          "naturalEOS": 2,
+          "attempts": 8,
+          "sequenceEnded": [
+            true,
+            true,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "pageErrors": [],
+          "stoppedAfterStop": true,
+          "releaseStatus": "released"
+        },
+        {
+          "mode": "direct",
+          "completed": true,
+          "naturalEOS": 1,
+          "attempts": 8,
+          "sequenceEnded": [
+            true,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "pageErrors": [],
+          "stoppedAfterStop": true,
+          "releaseStatus": "released"
+        },
+        {
+          "mode": "old-direct",
+          "completed": true,
+          "naturalEOS": 1,
+          "attempts": 8,
+          "sequenceEnded": [
+            true,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "pageErrors": [],
+          "stoppedAfterStop": true,
+          "releaseStatus": "released"
+        }
+      ]
+    },
+    {
+      "receiptSHA256": "b553e9b40cdb9b744c8657a627436a80b7dd6f64be888a845e79b182f5059a60",
+      "control": "",
+      "transport": "Historical createReadStream pipe, no explicit content length/range handling",
+      "runs": [
+        {
+          "mode": "buffered",
+          "completed": true,
+          "naturalEOS": 8,
+          "attempts": 8,
+          "sequenceEnded": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "pageErrors": [],
+          "stoppedAfterStop": true,
+          "releaseStatus": "released"
+        }
+      ]
+    }
+  ],
+  "finding": "Streaming WAV replay can stall in native HTMLAudio and both old/current SDK; old first-round success is not stable evidence of regression. Buffer-response and Blob controls pass. Existing AudioSource.loadAsync({transport: buffered}) passes eight natural EOS/replays on the same streaming server. No core engine fix justified by these results.",
+  "limits": [
+    "Original Playable12 complete application not rerun; minimal genuine-cue fixture only.",
+    "No microphone access, subjective speaker listening, physical device or Chromium audio claim.",
+    "Loopback stream server does not implement HTTP Range; these results do not generalize to correctly seekable production media servers.",
+    "Zero pageerror does not mean zero network warning; raw records preserve status-zero media observations.",
+    "No private fixture or cue bytes submitted to GitHub."
+  ],
+  "next": "Use existing explicit buffered transport in bounded audio-clock recipe; preserve direct-media negative controls and original application acceptance pending."
+}

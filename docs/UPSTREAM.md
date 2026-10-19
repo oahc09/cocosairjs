@@ -1,5 +1,7 @@
 # UPSTREAM
 
+2026-10-19 Web touch cancellation: the reproducible PAL source transform checks `event.cancelable` before canceling a canvas touch event. Native non-cancelable `touchcancel` still retires its touches and dispatches the normal cancel notification; propagation, focus, coordinates and cancelable-event behavior stay unchanged. Frozen MIT vendor bytes remain intact. The Chromium mixed-input control retained two real invalid-cancellation console errors before this correction; source-unit controls do not by themselves establish the corrected browser result.
+
 2026-10-19 WebGL2 审计 ENGINE-001/002/004/005：program 缓存检查独立于 PSO 身份，保留 shader 变化后的 IA/descriptor 语义；clear 临时打开全部部分 stencil 写掩码并精确恢复；按实际 stream 数初始化 IA offsets 并检查 stream/实际 shader location 上限；复用 scratch FBO 前解除旧 color/depth/stencil 附件并选定 read/draw buffer，保留独立外部 READ/DRAW 绑定。上游基线与版权不变。
 
 2026-10-18 播放请求归属：audio-playback-patch.cjs 给 PAL 结束通知增加可选代际，Web Audio 计时回调绑定实际 AudioBufferSourceNode；Source 丢弃旧代际结束，兼容无参旧回调。包装播放器发出停止请求通知，使 AudioManager 淘汰也能结算请求；它不是物理停止完成事件。新 token 接管加载前队列、保留 seek/归零位置，旧无 token API 队列合同保持。Web Audio destroy 停止/断开源和 gain，防重释放缓存，防已销毁实例迟到启动；共享 operation-queue 与冻结 vendor 不变。PAL ambient 类型同步可选代际签名。
@@ -509,7 +511,7 @@ Spark 是本项目除 `cocos4` 之外的**第二个上游**，按只读冻结源
 | Dist source commit  | `699e3ad06ef78fe7f5f4375f705ef4d17c948993`（上游 dist 提交；与冻结提交的 `src`/`rust` 树等价，差异仅 `dist/commit.txt`）                   |
 | Git tree（`src`）   | `e28ecaf12054536738814356db41a44afd1df999`                                                                                                 |
 | Git tree（`rust`）  | `23e1a2a05c28c625dfae7e28eeeb9aafbdec151b`                                                                                                 |
-| License / 版权      | MIT；© 2025 WORLD LABS TECHNOLOGIES, INC.                                                                                                 |
+| License / 版权      | MIT；© 2025 WORLD LABS TECHNOLOGIES, INC.                                                                                                  |
 | 落位根              | `vendor/spark/`（105 文件：`src` 60 = 52 个 `.ts` + 8 个 `.glsl`；`rust` 40 = 29 个 `.rs` + 11 个 Cargo/脚本/说明；根 5 个身份与许可文件） |
 | 树指纹              | `b511e63e5e800ffc700b6521b387bd11830c795860404dd3abe480fc27cb0b44`（对排序后的 `"<fileSha256>  <path>"` 行取 SHA-256）                     |
 | 抽取日期            | 2026-10-11                                                                                                                                 |

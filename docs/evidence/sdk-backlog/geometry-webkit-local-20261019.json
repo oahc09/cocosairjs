@@ -1,0 +1,57 @@
+{
+  "schemaVersion": "geometry-backlog-diagnostic/1",
+  "sourceHead": "37974d6e320e4251df8288fa19b2d6508a9fd56e",
+  "runtimeArtifactId": 12181203713,
+  "runtimeSha256": "7eb2d7b840ee56d1da57068b8513876edcb07075b82193884f3935ae8a1d4bf8",
+  "localPatches": [
+    {
+      "path": "tools/verify/interactive-geometry-browser.cjs",
+      "sha256": "30135d2906c9c26a39574c52fb0f2b51de09ea2426e5cbc0da5e4a1f1d28775b"
+    },
+    {
+      "path": "tools/verify/interactive-geometry-audit.cjs",
+      "sha256": "dc2e09a3d2b265f459c24065601e8a94440d3df426298d7e90d7d027949c910e"
+    },
+    {
+      "path": "test/smoke/interactive-geometry.test.ts",
+      "sha256": "eeb978cd56118c2ce2ed5cfeb650e89d9a7fe4f82d821ce260644aaed5d81426"
+    }
+  ],
+  "status": "selected-WebKit-pass; full-three-browser-not-completed",
+  "selectedScopePassed": true,
+  "fullScopePassed": false,
+  "observations": {
+    "cutRows": 37,
+    "ribbonRows": 2,
+    "meshRows": 1,
+    "lifecycleRows": 1,
+    "normalRows": 3
+  },
+  "tamperMutationsRejected": 30,
+  "unitTests": [
+    {
+      "node": "24.19.0",
+      "passed": 60,
+      "suites": 2
+    },
+    {
+      "node": "22.23.3",
+      "passed": 9,
+      "scope": "new selected-scope cases; 33 existing cases skipped in focused rerun"
+    }
+  ],
+  "reportSha256": "7e0fcceb6d019d06aa81278578e72a70f39c6688f2f3fbd17f1eac448cb4bb20",
+  "auditSha256": "141cd5e3cbdfa7876eb2bae02672a05e2a9fd7f92a84b8d9a51d00b2a796e68f",
+  "fixes": [
+    "Explicit selected-engine validation while preserving default complete three-engine gate",
+    "Fingerprint dynamically imported asset-lifecycle JS, declarations and auditor",
+    "Do not attribute current missing pixels to historical WebKit defect without fresh control evidence"
+  ],
+  "limitations": [
+    "Local patched collectors on source and runtime 37974d6e; not a later remote-head CI result",
+    "No Firefox or Chromium run in this local evidence",
+    "Original private soft-body / Water material parity not established",
+    "Interrupted prior preparation used stale runtime; retained separately and excluded from results",
+    "Pixel and error budgets unchanged"
+  ]
+}

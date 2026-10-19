@@ -1,5 +1,15 @@
 # 当前颜色、透明与斜裁剪对照
 
+## 2026-10-19 当前修复候选
+
+独立裁剪/透明夹具首次当前复跑真实报 AIR_E_RENDER_TARGET_BINDING：builtin-unlit 的 planar-shadow pass 没有 mainTexture，而默认 bindColor 校验所有 pass。夹具现明确绑定现有 forward pass 0；无需修改引擎。失败原报保留，修复后 WebKit 五状态通过，oblique/discard changedPixels=0，透明圆与裁剪 compositor PNG 均实际查看。
+
+旧校验器还会接受 plain RGBA 截断/NaN 或投影矩阵截断/Infinity，已用真实采集行的四个克隆反例证实。新版本要求每份完整 RGBA8、有限 16 维原生投影与精确身份闭包；21 个真实报告篡改均拒绝。明确 --browser=chromium|firefox|webkit 验证选定范围，默认 all 完整三引擎 gate 保留。报告 schema/2 独立记录 selectedScopePassed 和 scopePassed，旧 schema/1 保留为历史，不升级为当前通过。
+
+局部结果使用 37974d6e CI runtime + 工作树候选，技术摘要见 ../evidence/sdk-backlog/color-performance-local-20261019.json；提交后的同 head Chromium 验收由 SDK CI 留存。另以正式 73ca 原例/collector 和精确同 head runtime 复验公共 Water 39/39 与 HDR 15/15 WebKit 控制，包含 GGX 预过滤/未过滤负控、真实 HDR 读回、透明遮挡、释放重建；各自摘要见 ../evidence/sdk-backlog/water-current-local-20261019.json 和 hdr-current-local-20261019.json。原私有应用/原参考、实体设备与长期稳定性仍待验。
+
+## 历史 2026-10-08 对照
+
 2026-10-08，执行渠道Lead。SDK身份固定为任务起始的当前构建。此前[HDR当前复验](../evidence/examples/interactive-engine-improvements/hdr-current-s1-index.json)三浏览器45项通过：sRGB/线性、双解码负例、浮点capture/tone map与离线GGX消费。普通自动mip仅下采样，不能称PMREM；预过滤资产合同合规不证明过滤质量、IBL已认证或解析反射等价环境反射。原私有云端参考仍NOT_RUN。
 
 [Water当前复验](../evidence/examples/interactive-engine-improvements/water-runtime-s1.json)三引擎各39项通过。现有例已经使用AirRenderTarget，并非本批才从旧render-window迁移：RGBA16F/4x resolve、独立反射/折射/深度/焦散、三世界点线性深度、上下标记裁剪、固定状态相同PNG、透明fin source-over和depth-off负例、真实pointer/rain与目标resize/释放重建均实测。不能沿用Oct5旧缺口作为当前结论，历史记录未覆写。

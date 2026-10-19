@@ -1,14 +1,32 @@
 name: Code quality
-
-on:
-  pull_request:
+"on":
+  pull_request: null
   push:
-    branches: [main]
-    tags: ["v*"]
-
+    branches:
+      - main
+    tags:
+      - v*
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: Full retained coverage or isolated Skills P1
+        type: choice
+        options:
+          - full
+          - skills
+        default: full
+        required: true
+  workflow_call:
+    inputs:
+      mode:
+        type: string
+        default: full
+        required: false
 permissions:
   contents: read
-
+concurrency:
+  group: air-ci-${{ github.event.pull_request.number || github.ref }}-${{ inputs.mode || 'auto' }}
+  cancel-in-progress: true
 jobs:
   quality:
     runs-on: ubuntu-24.04
@@ -16,6 +34,8 @@ jobs:
     env:
       AIR_CI_SOFTWARE_GL: "1"
       LIBGL_ALWAYS_SOFTWARE: "1"
+      CI_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+      SDK_CANDIDATE_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
     steps:
       - name: Record core job budget
         run: |
@@ -26,49 +46,263 @@ jobs:
         with:
           persist-credentials: false
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
-      - uses: actions/setup-node@v4
+      - name: Read PR base tree without persistent credentials
+        id: base_tree
+        if: github.event_name == 'pull_request' && github.event.pull_request.base.sha != ''
+        continue-on-error: true
+        uses: actions/checkout@v4
         with:
-          node-version: 22
+          ref: ${{ github.event.pull_request.base.sha }}
+          path: .ci-base
+          sparse-checkout: /AGENTS.md
+          sparse-checkout-cone-mode: false
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        id: node
+        with:
+          node-version: 22.23.3
           cache: npm
-      - name: Install and verify generated source consistency
+      - name: Classify exact changed trees, conservatively on missing input
+        id: classify
+        env:
+          CI_MODE: ${{ inputs.mode || 'auto' }}
+          CI_EVENT: ${{ github.event_name }}
+          CI_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          CI_DEPENDENCY_CACHE_HIT: ${{ steps.node.outputs.cache-hit }}
         run: |
           set -euo pipefail
+          node tools/verify/ci-scope.cjs time-start classify
+          trap 'status=$?; node tools/verify/ci-scope.cjs time-end classify "$status"; exit "$status"' EXIT
+          node tools/verify/ci-scope.cjs plan
+      - name: Install locked dependencies once
+        id: install
+        run: |
+          set -euo pipefail
+          node tools/verify/ci-scope.cjs time-start install
+          trap 'status=$?; node tools/verify/ci-scope.cjs time-end install "$status"; exit "$status"' EXIT
           npm ci --ignore-scripts
+          mkdir -p output/sdk-ci
+          git rev-parse HEAD > output/sdk-ci/head.txt
+          sha256sum build/cocosair.math.js build/cocosair.math.d.ts build/cocosair.math.legacy.d.ts build/math-build.json > output/sdk-ci/committed-math.sha256
+      - name: Check classification and fail-closed result propagation
+        id: policy_tests
+        run: |
+          set -euo pipefail
+          node tools/verify/ci-scope.cjs time-start policy_tests
+          trap 'status=$?; node tools/verify/ci-scope.cjs time-end policy_tests "$status"; exit "$status"' EXIT
+          node --test tools/verify/ci-scope.test.cjs 2>&1 | tee output/ci/policy-tests.log
+      - name: Check formatting before builds
+        id: format
+        run: |
+          set -euo pipefail
+          node tools/verify/ci-scope.cjs time-start format
+          trap 'status=$?; node tools/verify/ci-scope.cjs time-end format "$status"; exit "$status"' EXIT
+          npm run format:check
+          npx prettier --check tools/verify/example-asset-lifecycle.test.cjs tools/verify/runtime-readback.cjs tools/verify/example-spec-browser.cjs tools/verify/example-evidence-campaign.cjs tools/verify/example-evidence-shutdown-policy.cjs tools/verify/example-evidence-shutdown-policy.test.cjs tools/verify/shaders-holographic-rotation.test.cjs test/smoke/smoke-example-evidence-integration.test.ts test/smoke/generated-source-maps.test.ts .github/workflows/example-evidence.yml AGENTS.md tools/README.md docs/reference/verification.md docs/reference/example-evidence-campaign.md
+
+          npx --no-install prettier --check tools/verify/ci-scope.cjs tools/verify/ci-scope.test.cjs .github/workflows/format.yml .github/workflows/sdk-recipes.yml .github/workflows/skills.yml docs/reference/ci-scopes.md
+          npx prettier --check .github/workflows/sdk-recipes.yml tools/build/math-module.cjs tools/build/prepare-package.cjs tools/debug/effect-layout.ts tools/verify/sdk-recipe-regressions.cjs tools/verify/sdk-recipes-browser.cjs tools/verify/sdk-recipes.tsconfig.json tools/verify/math-entry.test.cjs tools/verify/math-tarball.cjs tools/verify/interactive-timeline-browser.cjs tools/verify/interactive-timeline-audit.cjs test/smoke/interactive-timeline-evidence.test.ts
+          npx prettier --check tools/examples/interactive-kit.cjs tools/verify/interactive-kit-consumer.cjs tools/verify/interactive-kit-evidence.cjs tools/verify/interactive-kit-audit.cjs tools/verify/interactive-improvement-browser.cjs tools/verify/interactive-multipass-browser.cjs tools/verify/interactive-multipass-audit.cjs tools/verify/interactive-geometry-browser.cjs tools/verify/interactive-geometry-audit.cjs tools/verify/interactive-input-browser.cjs test/smoke/interactive-kit.test.ts test/smoke/interactive-multipass-review.test.ts test/smoke/interactive-geometry.test.ts test/smoke/interactive-input.test.ts
+          npx prettier --check tools/verify/interactive-color-compare-browser.cjs tools/verify/interactive-color-compare-audit.cjs tools/verify/interactive-performance.cjs tools/verify/interactive-performance-audit.cjs tools/verify/interactive-input-audit.cjs test/fixtures/interactive-color-compare/main.ts test/smoke/interactive-color-compare.test.ts test/smoke/interactive-performance.test.ts test/smoke/interactive-performance-fixture.cjs
+      - name: Verify generated-source consistency without runtime build
+        id: prepare
+        if: steps.classify.outputs.code == 'true'
+        run: |
+          set -euo pipefail
+          node tools/verify/ci-scope.cjs time-start prepare
+          trap 'status=$?; node tools/verify/ci-scope.cjs time-end prepare "$status"; exit "$status"' EXIT
           node tools/build/prepare-package.cjs
           sha256sum src/air/spark/generated/spark-runtime.js src/air/spark/generated/spark-runtime.js.map src/air/spark/generated/spark-runtime.d.ts > "$RUNNER_TEMP/committed-spark-tree.sha256"
           node tools/build/spark-runtime-tree.cjs
           sha256sum --check "$RUNNER_TEMP/committed-spark-tree.sha256"
           git diff --exit-code -- src/air/spark/generated
-      - name: Check formatting and types
-        run: |
-          set -euo pipefail
-          npm run format:check
-          npx prettier --check tools/verify/example-asset-lifecycle.test.cjs tools/verify/runtime-readback.cjs tools/verify/example-spec-browser.cjs tools/verify/example-evidence-campaign.cjs tools/verify/example-evidence-shutdown-policy.cjs tools/verify/example-evidence-shutdown-policy.test.cjs tools/verify/shaders-holographic-rotation.test.cjs test/smoke/smoke-example-evidence-integration.test.ts .github/workflows/example-evidence.yml AGENTS.md tools/README.md docs/reference/verification.md docs/reference/example-evidence-campaign.md
-          npm run typecheck
-      - name: Build runtime, source maps and declarations
-        run: |
-          set -euo pipefail
-          npm run build:all
-          npm run build:spark
+      - name: Check source and affected fixture types before builds
+        id: typecheck
+        if: steps.classify.outputs.code == 'true'
         env:
-          NODE_OPTIONS: --max-old-space-size=4096
-      - name: Run focused core regressions
+          TIMELINE: ${{ steps.classify.outputs.timeline }}
+          EVIDENCE: ${{ steps.classify.outputs.evidence }}
+          MULTIPASS: ${{ steps.classify.outputs.multipass }}
+          GEOMETRY: ${{ steps.classify.outputs.geometry }}
+          COLOR: ${{ steps.classify.outputs.color }}
+          INPUT: ${{ steps.classify.outputs.input }}
         run: |
           set -euo pipefail
+          node tools/verify/ci-scope.cjs time-start typecheck
+          trap 'status=$?; node tools/verify/ci-scope.cjs time-end typecheck "$status"; exit "$status"' EXIT
+          npm run typecheck
+          npx tsc -p tools/verify/sdk-recipes.tsconfig.json
+          if [ "$TIMELINE" = true ]; then npx tsc -p tools/verify/interactive-timeline-browser.tsconfig.json; fi
+          if [ "$EVIDENCE" = true ]; then npx tsc -p tools/verify/interactive-improvement-browser.tsconfig.json; fi
+          if [ "$MULTIPASS" = true ]; then npx tsc -p tools/verify/interactive-multipass-browser.tsconfig.json; fi
+          if [ "$GEOMETRY" = true ]; then npx tsc -p tools/verify/interactive-geometry-browser.tsconfig.json; fi
+          if [ "$COLOR" = true ]; then npx tsc -p tools/verify/interactive-color-compare.tsconfig.json; fi
+          if [ "$INPUT" = true ]; then npx tsc -p tools/verify/interactive-input-browser.tsconfig.json; fi
+      - name: Run mandatory core regressions before builds
+        id: core_cpu
+        if: steps.classify.outputs.code == 'true'
+        run: |
+          set -euo pipefail
+          node tools/verify/ci-scope.cjs time-start core_cpu
+          trap 'status=$?; node tools/verify/ci-scope.cjs time-end core_cpu "$status"; exit "$status"' EXIT
+          node --test tools/verify/pal-touch-cancellation.test.cjs 2>&1 | tee "$RUNNER_TEMP/core-cpu/pal-touch-cancellation.log"
           node --test tools/verify/shaders-holographic-rotation.test.cjs 2>&1 | tee "$RUNNER_TEMP/core-cpu/rotation.log"
           node --test tools/verify/example-asset-lifecycle.test.cjs 2>&1 | tee "$RUNNER_TEMP/core-cpu/asset-lifecycle.log"
           node --test tools/verify/example-evidence-status.test.cjs 2>&1 | tee "$RUNNER_TEMP/core-cpu/status-admission.log"
           EXAMPLE_SHUTDOWN_CPU_OUT="$RUNNER_TEMP/core-cpu/shutdown-policy" node --test tools/verify/example-evidence-shutdown-policy.test.cjs 2>&1 | tee "$RUNNER_TEMP/core-cpu/shutdown-policy.log"
           npx jest --runInBand --no-cache --runTestsByPath test/smoke/webgl2-state-audit.test.ts test/smoke/webgl2-gfx-command-contracts.test.ts test/smoke/smoke-01-bootstrap.test.ts test/smoke/smoke-02-scene.test.ts test/smoke/smoke-03-runtime-asset.test.ts test/smoke/audio-cancellation.test.ts test/smoke/audio-readiness.test.ts test/smoke/dynamic-atlas-ownership.test.ts test/smoke/audio-cancellation-harness.test.ts test/smoke/smoke-example-evidence-integration.test.ts 2>&1 | tee "$RUNNER_TEMP/core-cpu/unit-tests.log"
-      - name: Prepare Chromium for five core examples
+      - name: Run SDK and math CPU regressions before builds
+        id: sdk_cpu
+        if: steps.classify.outputs.code == 'true'
         run: |
           set -euo pipefail
+          node tools/verify/ci-scope.cjs time-start sdk_cpu
+          trap 'status=$?; node tools/verify/ci-scope.cjs time-end sdk_cpu "$status"; exit "$status"' EXIT
+          node --test tools/verify/sdk-recipe-regressions.cjs tools/verify/math-entry.test.cjs 2>&1 | tee output/sdk-ci/cpu.log
+      - name: Run affected timeline jsdom contracts before builds
+        id: timeline_cpu
+        if: steps.classify.outputs.timeline == 'true'
+        run: |
+          set -euo pipefail
+          node tools/verify/ci-scope.cjs time-start timeline_cpu
+          trap 'status=$?; node tools/verify/ci-scope.cjs time-end timeline_cpu "$status"; exit "$status"' EXIT
+          npx jest --runInBand --no-cache --runTestsByPath test/smoke/interactive-timeline-evidence.test.ts --json --outputFile=output/sdk-ci/timeline-tests.json 2>&1 | tee output/sdk-ci/timeline-tests.log
+      - name: Run affected geometry jsdom contracts before builds
+        id: geometry_cpu
+        if: steps.classify.outputs.geometry == 'true'
+        run: |
+          set -euo pipefail
+          node tools/verify/ci-scope.cjs time-start geometry_cpu
+          trap 'status=$?; node tools/verify/ci-scope.cjs time-end geometry_cpu "$status"; exit "$status"' EXIT
+          npx jest --runInBand --no-cache --runTestsByPath test/smoke/interactive-geometry.test.ts test/smoke/interactive-geometry-review.test.ts --json --outputFile=output/sdk-ci/geometry-tests.json 2>&1 | tee output/sdk-ci/geometry-tests.log
+      - name: Run affected multipass jsdom contracts before builds
+        id: multipass_cpu
+        if: steps.classify.outputs.multipass == 'true'
+        run: |
+          set -euo pipefail
+          node tools/verify/ci-scope.cjs time-start multipass_cpu
+          trap 'status=$?; node tools/verify/ci-scope.cjs time-end multipass_cpu "$status"; exit "$status"' EXIT
+          npx jest --runInBand --no-cache --runTestsByPath test/smoke/interactive-multipass.test.ts test/smoke/interactive-multipass-review.test.ts --json --outputFile=output/sdk-ci/multipass-tests.json 2>&1 | tee output/sdk-ci/multipass-tests.log
+      - name: Run affected input jsdom contracts before builds
+        id: input_cpu
+        if: steps.classify.outputs.input == 'true'
+        run: |
+          set -euo pipefail
+          node tools/verify/ci-scope.cjs time-start input_cpu
+          trap 'status=$?; node tools/verify/ci-scope.cjs time-end input_cpu "$status"; exit "$status"' EXIT
+          npx jest --runInBand --no-cache --runTestsByPath test/smoke/interactive-input.test.ts --json --outputFile=output/sdk-ci/input-tests.json 2>&1 | tee output/sdk-ci/input-tests.log
+      - name: Run affected color jsdom contracts before builds
+        id: color_cpu
+        if: steps.classify.outputs.color == 'true'
+        run: |
+          set -euo pipefail
+          node tools/verify/ci-scope.cjs time-start color_cpu
+          trap 'status=$?; node tools/verify/ci-scope.cjs time-end color_cpu "$status"; exit "$status"' EXIT
+          npx jest --runInBand --no-cache --runTestsByPath test/smoke/interactive-color-compare.test.ts --json --outputFile=output/sdk-ci/color-tests.json 2>&1 | tee output/sdk-ci/color-tests.log
+      - name: Run affected performance jsdom contracts before builds
+        id: performance_cpu
+        if: steps.classify.outputs.performance == 'true'
+        run: |
+          set -euo pipefail
+          node tools/verify/ci-scope.cjs time-start performance_cpu
+          trap 'status=$?; node tools/verify/ci-scope.cjs time-end performance_cpu "$status"; exit "$status"' EXIT
+          npx jest --runInBand --no-cache --runTestsByPath test/smoke/interactive-performance.test.ts --json --outputFile=output/sdk-ci/performance-tests.json 2>&1 | tee output/sdk-ci/performance-tests.log
+      - name: Run affected kit jsdom contracts before builds
+        id: kit_cpu
+        if: steps.classify.outputs.kit == 'true'
+        run: |
+          set -euo pipefail
+          node tools/verify/ci-scope.cjs time-start kit_cpu
+          trap 'status=$?; node tools/verify/ci-scope.cjs time-end kit_cpu "$status"; exit "$status"' EXIT
+          node tools/examples/interactive-kit.cjs --check
+          npx jest --runInBand --no-cache --runTestsByPath test/smoke/interactive-kit.test.ts --json --outputFile=output/sdk-ci/kit-tests.json 2>&1 | tee output/sdk-ci/kit-tests.log
+      - name: Run affected identity jsdom contracts before builds
+        id: identity_cpu
+        if: steps.classify.outputs.identity == 'true'
+        run: |
+          set -euo pipefail
+          node tools/verify/ci-scope.cjs time-start identity_cpu
+          trap 'status=$?; node tools/verify/ci-scope.cjs time-end identity_cpu "$status"; exit "$status"' EXIT
+          npx jest --runInBand --no-cache --runTestsByPath test/smoke/interactive-improvement-baseline.test.ts --json --outputFile=output/sdk-ci/identity-tests.json 2>&1 | tee output/sdk-ci/identity-tests.log
+      - name: Read immutable original skills from Git
+        uses: actions/checkout@v4
+        with:
+          ref: 66d11fd0c3c189b7dfa6d20645222e237352f9f3
+          path: .skills-original-source
+          sparse-checkout: /skills/
+          sparse-checkout-cone-mode: false
+          persist-credentials: false
+        id: skills_original
+        if: steps.classify.outputs.skills == 'true'
+      - name: Preserve complete Skills P1 and immutable lossless archives
+        id: skills_checks
+        if: steps.classify.outputs.skills == 'true'
+        run: |
+          set -euo pipefail
+          node tools/verify/ci-scope.cjs time-start skills_checks
+          trap 'status=$?; node tools/verify/ci-scope.cjs time-end skills_checks "$status"; exit "$status"' EXIT
+          test "$(git -C .skills-original-source rev-parse HEAD)" = 66d11fd0c3c189b7dfa6d20645222e237352f9f3
+
+          npx --no-install prettier --check "tools/skills/**/*.cjs" .github/workflows/skills.yml
+          set -euo pipefail
+          node --test tools/skills/test/md-parse.test.cjs tools/skills/test/gen-index.test.cjs tools/skills/test/measure-tokens.test.cjs tools/skills/test/verify-meta.test.cjs tools/skills/test/verify-lossless.test.cjs tools/skills/test/route-regression.test.cjs
+          node --test tools/skills/test/check-p1.test.cjs
+          node --test tools/skills/test/restore-route-reports.test.cjs
+          node skills/cocosair/scripts/check-paths.cjs --selftest
+
+          node tools/skills/restore-route-reports.cjs --out "$RUNNER_TEMP/skills-route-reports"
+          set -euo pipefail
+          node tools/skills/check-p1.cjs --source "$GITHUB_WORKSPACE/.skills-original-source" --out "$RUNNER_TEMP/skills-p1"
+      - name: Build main, min, maps, declarations and Spark exactly once
+        id: build
+        if: steps.classify.outputs.code == 'true'
+        env:
+          NODE_OPTIONS: --max-old-space-size=4096
+        run: |
+          set -euo pipefail
+          node tools/verify/ci-scope.cjs time-start build
+          trap 'status=$?; node tools/verify/ci-scope.cjs time-end build "$status"; exit "$status"' EXIT
+          npm run build:all 2>&1 | tee output/sdk-ci/build.log
+          npm run build:spark 2>&1 | tee output/sdk-ci/spark-build.log
+          sha256sum --check output/sdk-ci/committed-math.sha256
+          node tools/verify/ci-scope.cjs identity
+      - name: Verify actual same-head tarball and installed-package boundaries
+        id: package
+        if: steps.classify.outputs.code == 'true'
+        run: |
+          set -euo pipefail
+          node tools/verify/ci-scope.cjs time-start package
+          trap 'status=$?; node tools/verify/ci-scope.cjs time-end package "$status"; exit "$status"' EXIT
+          npx jest --runInBand --no-cache --runTestsByPath test/smoke/generated-source-maps.test.ts --json --outputFile=output/sdk-ci/generated-source-maps-tests.json 2>&1 | tee output/sdk-ci/generated-source-maps-tests.log
+          node -e 'const r=require("./output/sdk-ci/generated-source-maps-tests.json");if(!r.success||r.numTotalTests!==1||r.numPassedTests!==1||r.numPendingTests!==0)throw Error("fresh source-map contract did not execute exactly once");'
+          SDK_CANDIDATE_HEAD="$CI_HEAD_SHA" node tools/verify/math-tarball.cjs --out=output/sdk-ci/tarball
+          node tools/verify/consumer-acceptance.cjs 2>&1 | tee output/sdk-ci/consumer.log
+      - name: Verify exact built identity and maps
+        id: identity
+        if: steps.classify.outputs.identity == 'true'
+        run: |
+          set -euo pipefail
+          node tools/verify/ci-scope.cjs time-start identity
+          trap 'status=$?; node tools/verify/ci-scope.cjs time-end identity "$status"; exit "$status"' EXIT
+          node tools/verify/interactive-improvement-baseline.cjs --out=output/sdk-ci/baseline.json
+          node tools/verify/interactive-improvement-baseline.cjs --verify=output/sdk-ci/baseline.json 2>&1 | tee output/sdk-ci/baseline-verification.json
+      - name: Install pinned Chromium tooling once
+        id: browser_install
+        if: steps.classify.outputs.code == 'true'
+        run: |
+          set -euo pipefail
+          node tools/verify/ci-scope.cjs time-start browser_install
+          trap 'status=$?; node tools/verify/ci-scope.cjs time-end browser_install "$status"; exit "$status"' EXIT
           npm install --prefix "$RUNNER_TEMP/air-browser-tools" --no-save --ignore-scripts --package-lock=false playwright@1.62.1
           node "$RUNNER_TEMP/air-browser-tools/node_modules/playwright/cli.js" install --with-deps chromium
           echo "NODE_PATH=$RUNNER_TEMP/air-browser-tools/node_modules" >> "$GITHUB_ENV"
-      - name: Verify five core examples with bounded real browsers
+      - name: Verify the five bounded core Chromium examples
+        id: core_browser
+        if: steps.classify.outputs.code == 'true'
         run: |
           set -euo pipefail
+          node tools/verify/ci-scope.cjs time-start core_browser
+          trap 'status=$?; node tools/verify/ci-scope.cjs time-end core_browser "$status"; exit "$status"' EXIT
           campaign="$RUNNER_TEMP/core-example-smoke"
           node tools/verify/example-evidence-preflight.cjs > "$campaign/preflight.json"
           node tools/verify/example-evidence-campaign.cjs freeze --out="$campaign/freeze.json"
@@ -81,12 +315,136 @@ jobs:
             timeout --signal=TERM --kill-after=4s 174s node tools/verify/run-example-evidence-campaign.cjs --freeze="$campaign/freeze.json" --id="$id" --out="$campaign/attempts/$id/1" --execute-authorized 2>&1 | tee "$campaign/$id.log"
           done
           echo 'Five core examples passed. This is partial smoke coverage; no full campaign was published.' >> "$GITHUB_STEP_SUMMARY"
-      - name: Retain core test and browser originals
+      - name: Verify real browser recipes and math-first bootstrap
+        id: recipes
+        if: steps.classify.outputs.code == 'true'
+        run: |
+          set -euo pipefail
+          node tools/verify/ci-scope.cjs time-start recipes
+          trap 'status=$?; node tools/verify/ci-scope.cjs time-end recipes "$status"; exit "$status"' EXIT
+          SDK_CANDIDATE_HEAD="$(git rev-parse HEAD)" SDK_BROWSER_OUT=output/sdk-ci/chromium node tools/verify/sdk-recipes-browser.cjs 2>&1 | tee output/sdk-ci/browser.log
+      - name: Verify real timeline cues, natural EOS and stop separately
+        id: timeline
+        if: steps.classify.outputs.timeline == 'true'
+        run: |
+          set -euo pipefail
+          node tools/verify/ci-scope.cjs time-start timeline
+          trap 'status=$?; node tools/verify/ci-scope.cjs time-end timeline "$status"; exit "$status"' EXIT
+          SDK_CANDIDATE_HEAD="$(git rev-parse HEAD)" node tools/verify/interactive-timeline-browser.cjs --browser=chromium --out=output/sdk-ci/timeline.json 2>&1 | tee output/sdk-ci/timeline.log
+          node tools/verify/interactive-timeline-browser.cjs --browser=chromium --verify=output/sdk-ci/timeline.json 2>&1 | tee output/sdk-ci/timeline-verification.json
+          node tools/verify/interactive-timeline-audit.cjs --report=output/sdk-ci/timeline.json --out=output/sdk-ci/timeline-audit.json 2>&1 | tee output/sdk-ci/timeline-audit.log
+      - name: Verify input-to-compositor positive and occluded controls
+        id: evidence
+        if: steps.classify.outputs.evidence == 'true'
+        run: |
+          set -euo pipefail
+          node tools/verify/ci-scope.cjs time-start evidence
+          trap 'status=$?; node tools/verify/ci-scope.cjs time-end evidence "$status"; exit "$status"' EXIT
+          node tools/verify/interactive-improvement-browser.cjs --browser=chromium --out=output/sdk-ci/input-compositor.json 2>&1 | tee output/sdk-ci/input-compositor.log
+          node tools/verify/interactive-improvement-browser.cjs --verify=output/sdk-ci/input-compositor.json
+          node tools/verify/interactive-improvement-evidence-audit.cjs --report=output/sdk-ci/input-compositor.json --out=output/sdk-ci/input-compositor-audit.json
+      - name: Verify selected multipass browser matrix
+        id: multipass
+        if: steps.classify.outputs.multipass == 'true'
+        run: |
+          set -euo pipefail
+          node tools/verify/ci-scope.cjs time-start multipass
+          trap 'status=$?; node tools/verify/ci-scope.cjs time-end multipass "$status"; exit "$status"' EXIT
+          node tools/verify/interactive-multipass-browser.cjs --browser=chromium --out=output/sdk-ci/multipass.json 2>&1 | tee output/sdk-ci/multipass.log
+          node tools/verify/interactive-multipass-browser.cjs --browser=chromium --verify=output/sdk-ci/multipass.json
+          node tools/verify/interactive-multipass-audit.cjs --report=output/sdk-ci/multipass.json --out=output/sdk-ci/multipass-audit.json
+      - name: Verify selected geometry browser matrix
+        id: geometry
+        if: steps.classify.outputs.geometry == 'true'
+        run: |
+          set -euo pipefail
+          node tools/verify/ci-scope.cjs time-start geometry
+          trap 'status=$?; node tools/verify/ci-scope.cjs time-end geometry "$status"; exit "$status"' EXIT
+          node tools/verify/interactive-geometry-browser.cjs --browser=chromium --out=output/sdk-ci/geometry.json 2>&1 | tee output/sdk-ci/geometry.log
+          node tools/verify/interactive-geometry-browser.cjs --browser=chromium --verify=output/sdk-ci/geometry.json
+          node tools/verify/interactive-geometry-audit.cjs --browser=chromium --report=output/sdk-ci/geometry.json --out=output/sdk-ci/geometry-audit.json
+      - name: Verify clipping, alpha, Water and HDR current controls
+        id: color
+        if: steps.classify.outputs.color == 'true'
+        run: |
+          set -euo pipefail
+          node tools/verify/ci-scope.cjs time-start color
+          trap 'status=$?; node tools/verify/ci-scope.cjs time-end color "$status"; exit "$status"' EXIT
+          node tools/verify/interactive-color-compare-browser.cjs --browser=chromium --out=output/sdk-ci/color-compare.json 2>&1 | tee output/sdk-ci/color-compare.log
+          node tools/verify/interactive-color-compare-browser.cjs --browser=chromium --verify=output/sdk-ci/color-compare.json
+          node tools/verify/interactive-color-compare-audit.cjs --report=output/sdk-ci/color-compare.json --out=output/sdk-ci/color-compare-audit.json
+
+          set -euo pipefail
+          node examples/hdr-color-pipeline/verify.cjs chromium 2>&1 | tee output/sdk-ci/hdr.log
+          node - <<'JS'
+          const fs = require('node:fs'), path = require('node:path'), { spawn } = require('node:child_process');
+          (async () => {
+            const server = await require('./tools/verify/competitive-example-server.cjs').startExampleServer(process.cwd());
+            try {
+              const code = await new Promise((resolve, reject) => {
+                const child = spawn(process.execPath, ['examples/water-multipass/verify-browser.cjs', '--browser=chromium', '--url=' + server.origin + '/examples/water-multipass/', '--out=' + path.resolve('output/sdk-ci/water')], { stdio: 'inherit', env: process.env });
+                child.on('error', reject);
+                child.on('exit', resolve);
+              });
+              if (code !== 0) throw Error('Water runtime verification failed: ' + code);
+            } finally { await server.close(); }
+          })().catch(error => { console.error(error); process.exitCode = 1; });
+          JS
+      - name: Validate selected mixed-input diagnostics without erasing NOT_RUN
+        id: mixed_input
+        if: steps.classify.outputs.input == 'true'
+        run: |
+          set -euo pipefail
+          node tools/verify/ci-scope.cjs time-start mixed_input
+          trap 'status=$?; node tools/verify/ci-scope.cjs time-end mixed_input "$status"; exit "$status"' EXIT
+          if node tools/verify/interactive-input-browser.cjs --browser=chromium --out=output/sdk-ci/mixed-input.json 2>&1 | tee output/sdk-ci/mixed-input.log; then
+            status=0
+          else
+            pipeline_status=("${PIPESTATUS[@]}")
+            status=${pipeline_status[0]}
+            test "${pipeline_status[1]}" = 0
+          fi
+          echo "$status" > output/sdk-ci/mixed-input-exit.txt
+          node - <<'JS'
+          const fs = require('node:fs');
+          const { checkSelectedReport } = require('./tools/verify/interactive-input-browser.cjs');
+          const report = JSON.parse(fs.readFileSync('output/sdk-ci/mixed-input.json'));
+          const actualExit = Number(fs.readFileSync('output/sdk-ci/mixed-input-exit.txt', 'utf8'));
+          const validation = checkSelectedReport(report, ['chromium']);
+          const expectedExit = validation.scopePassed ? 0 : 1;
+          if (!validation.valid || actualExit !== expectedExit || report.exitCode !== actualExit || (!validation.scopePassed && !validation.notRun.length)) throw Error('unexpected mixed-input failure');
+          fs.writeFileSync('output/sdk-ci/mixed-input-verification.json', JSON.stringify({ actualExit, validation, purpose: 'Diagnostic integrity only; NOT_RUN remains incomplete acceptance' }, null, 2));
+          JS
+          node tools/verify/interactive-input-audit.cjs --browser=chromium --report=output/sdk-ci/mixed-input.json --out=output/sdk-ci/mixed-input-audit.json
+      - name: Verify all five installed same-head kit entries
+        id: installed_kit
+        if: steps.classify.outputs.kit == 'true'
+        run: |
+          set -euo pipefail
+          node tools/verify/ci-scope.cjs time-start installed_kit
+          trap 'status=$?; node tools/verify/ci-scope.cjs time-end installed_kit "$status"; exit "$status"' EXIT
+          node tools/verify/interactive-kit-consumer.cjs --browser=chromium --tarball=output/sdk-ci/tarball/cocosair.js-1.0.0.tgz --out=output/sdk-ci/installed-kit.json 2>&1 | tee output/sdk-ci/installed-kit.log
+          node tools/verify/interactive-kit-consumer.cjs --browser=chromium --verify=output/sdk-ci/installed-kit.json
+          node tools/verify/interactive-kit-audit.cjs --report=output/sdk-ci/installed-kit.json --out=output/sdk-ci/installed-kit-audit.json
+      - name: Require every planned check to succeed
+        id: gate
+        if: always()
+        env:
+          CI_STEPS_JSON: ${{ toJSON(steps) }}
+        run: |
+          set -euo pipefail
+          node tools/verify/ci-scope.cjs gate
+      - name: Retain exact-head originals, failures and timings
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: core-quality-results
+          name: ci-${{ github.event.pull_request.head.sha || github.sha }}
           path: |
+            output/ci/
+            output/sdk-ci/
+            output/hdr-color-pipeline/
             ${{ runner.temp }}/core-cpu/
             ${{ runner.temp }}/core-example-smoke/
+            ${{ runner.temp }}/skills-p1/
+            ${{ runner.temp }}/skills-route-reports/
           if-no-files-found: error

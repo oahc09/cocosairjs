@@ -1,4 +1,4 @@
-import { SpriteFrame, Texture2D, ImageAsset } from 'cocosair';
+import type { SpriteFrame, Texture2D, ImageAsset } from 'cocosair';
 
 /** Only for resources created exclusively by this owner; cached assets need their cache contract. */
 export function ownSpriteFrame(
@@ -8,14 +8,17 @@ export function ownSpriteFrame(
     originalImage?: ImageAsset,
 ): () => void {
     let disposed = false;
+    let unregister = (): void => {};
     const dispose = (): void => {
         if (disposed) return;
         disposed = true;
+        unregister();
         // SpriteFrame removes its own atlas entry. frame.texture may now be a SHARED atlas.
         frame.destroy();
         originalTexture.destroy();
         originalImage?.destroy();
     };
-    session.own(dispose, 'owned-sprite-frame');
+    unregister = session.own(dispose, 'owned-sprite-frame');
+    if (disposed) unregister();
     return dispose;
 }

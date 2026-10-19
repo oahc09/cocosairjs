@@ -1,0 +1,54 @@
+{
+  "schemaVersion": "mixed-input-selected-diagnostic/1",
+  "sourceHead": "73ca2fa0c13dd21fe7e68f83eeee20aaf44e4815",
+  "runtimeHead": "73ca2fa0c13dd21fe7e68f83eeee20aaf44e4815",
+  "runtimeArtifactId": 12183477292,
+  "runtimeSha256": "9b483501264630c2ecd47ba65fb7fd75e7d0fe3f98490057b48bc912ee2b0e35",
+  "crossHeadLocalDiagnostic": false,
+  "localPatches": [
+    {
+      "path": "tools/verify/interactive-input-browser.cjs",
+      "sha256": "f45253a5ff3af6aa420f1036981b997fdb08ea21c5d171c078c44fd489dd8737"
+    },
+    {
+      "path": "test/smoke/interactive-input.test.ts",
+      "sha256": "9bef1500781e4fb158eefa015ac4e8c3f145c82ca7dad1a66dba6612b3b0fe5f"
+    },
+    {
+      "path": "tools/verify/interactive-input-audit.cjs",
+      "sha256": "dcf6ead7191baa2458d92b13c73f882b626071a96053c00b7e03463ec01762bf"
+    }
+  ],
+  "browser": "WebKit 26.5",
+  "selectedValid": true,
+  "fullScopePassed": false,
+  "selectedScopePassed": false,
+  "exitCode": 1,
+  "observations": {
+    "trustedActionsAndPngs": 120,
+    "supplementary": 18,
+    "sdkAndHtmlControls": 2,
+    "notRun": 14,
+    "pageErrors": 0,
+    "consoleErrors": 0,
+    "htmlSdkRequests": 0
+  },
+  "jestPassed": 41,
+  "addedJestCases": 8,
+  "tamperRejected": 31,
+  "tamperTotal": 31,
+  "reportSha256": "a7b6f2145b61cd9872639c63012dcd21ec287f21e703876e0450ecebbf580556",
+  "auditSha256": "f2aedc6583d5106d9120614d8698cc4b48ca4abed4ce7a3ed15751039b7d1084",
+  "limitations": [
+    "41 CPU fixtures are validator tests, not browser observations",
+    "Fourteen protocol/focus NOT_RUN remain; full and selected scope are false, CLI correctly exits 1",
+    "Browser mouse and touchscreen tap are not physical touchscreen validation",
+    "Original private touch-cancel reference and three-browser current-head coverage not established",
+    "SDK/HTML ordinary page DOM replacement and immediate hover controls were exercised; this does not establish original application parity",
+    "Source and runtime both 73ca; collectors have explicit local patches identified above. Later committed-head CI acceptance remains separate."
+  ],
+  "localPatchedCollectors": true,
+  "artifactRun": 39245299200,
+  "artifactZipSha256": "dcf80249e201fb166348ae8e1bb3fe217aa18df664baa2c03e835fa13b86ece0",
+  "artifactRunConclusion": "failure: nine jsdom test fixtures; build/runtime artifact was generated"
+}

@@ -5,6 +5,10 @@ export interface AirEffectLayoutIssue {
     resource?: string;
     stage?: string;
     message: string;
+    /** One-based location in the named target and stage. */
+    line?: number;
+    column?: number;
+    target?: 'glsl4' | 'glsl3';
 }
 export class AirEffectLayoutError extends Error {
     readonly code = 'AIR_E_EFFECT_LAYOUT';
@@ -45,7 +49,9 @@ export interface AirEffectLayoutJson {
     techniques: { passes: { program: string }[] }[];
 }
 function clean(source: string): string {
-    return source.replace(/\/\*[\s\S]*?\*\//g, (comment) => comment.replace(/[^\n]/g, ' ')).replace(/\/\/[^\n]*/g, '');
+    return source
+        .replace(/\/\*[\s\S]*?\*\//g, (comment) => comment.replace(/[^\n]/g, ' '))
+        .replace(/\/\/[^\n]*/g, (comment) => ' '.repeat(comment.length));
 }
 /** Clone, assign missing material slots and reject detectable collisions before EffectAsset.onLoaded().
  * Scope: unconditional vec4/mat4 UBOs and sampler2D, explicit glsl4 layouts. This is not a GLSL compiler.
@@ -58,8 +64,14 @@ export function prepareEffectForRegistration<T extends AirEffectLayoutJson>(
     const ancestors = new Set<object>();
     function checkJson(value: unknown, location: string): void {
         const reject = (code: string): never => {
-            throw new AirEffectLayoutError([{ shader: '', resource: location, code,
-                message: 'Expected compiled effect JSON; preserve live callable resources outside this preflight' }]);
+            throw new AirEffectLayoutError([
+                {
+                    shader: '',
+                    resource: location,
+                    code,
+                    message: 'Expected compiled effect JSON; preserve live callable resources outside this preflight',
+                },
+            ]);
         };
         if (typeof value === 'function') reject('NON_JSON_FUNCTION');
         if (!value || typeof value !== 'object') return;
@@ -150,18 +162,100 @@ export function prepareEffectForRegistration<T extends AirEffectLayoutJson>(
             }
             const code = clean(source),
                 found = new Map<string, { set: number; binding: number; kind: string }>();
-            let conditionalDepth = 0;
-            for (const line of code.split('\n')) {
-                if (/^\s*#\s*(if|ifdef|ifndef)\b/.test(line)) conditionalDepth++;
-                if (conditionalDepth && /\buniform\b/.test(line))
-                    issue(
-                        shader.name,
-                        'UNSUPPORTED',
-                        'conditional uniform declarations need a macro-aware compiler',
-                        undefined,
+            // Unsupported declarations must never disappear from reflection silently.
+            // This remains a narrow fail-closed preflight, not a macro-aware compiler.
+            for (const target of ['glsl4', 'glsl3'] as const) {
+                const targetCode = clean(shader[target][stage]);
+                const at = (offset: number, message: string, resource?: string): void => {
+                    const before = targetCode.slice(0, offset);
+                    issues.push({
+                        shader: shader.name,
+                        code: 'DECLARATION_UNSUPPORTED',
+                        message,
+                        resource,
                         stage,
-                    );
-                if (/^\s*#\s*endif\b/.test(line)) conditionalDepth--;
+                        target,
+                        line: before.split('\n').length,
+                        column: offset - before.lastIndexOf('\n'),
+                    });
+                };
+                const seen = new Set<string>();
+                let depth = 0,
+                    lineOffset = 0;
+                for (const line of targetCode.split('\n')) {
+                    if (/^\s*#\s*(if|ifdef|ifndef)\b/.test(line)) depth++;
+                    const uniform = /\buniform\b/.exec(line);
+                    if (depth && uniform)
+                        at(
+                            lineOffset + uniform.index,
+                            'conditional uniforms require macro expansion and reflection before preflight',
+                        );
+                    if (/^\s*#\s*endif\b/.test(line)) depth--;
+                    lineOffset += line.length + 1;
+                }
+                for (const match of targetCode.matchAll(/\buniform\s+([^;{]*)([;{])/g)) {
+                    const declaration = match[1].trim();
+                    const isBlock = match[2] === '{' && /^[A-Za-z_]\w*$/.test(declaration);
+                    const isSampler =
+                        match[2] === ';' &&
+                        /^(?:(?:highp|mediump|lowp)\s+)?sampler2D\s+[A-Za-z_]\w*$/.test(declaration);
+                    const name = isBlock ? declaration : isSampler ? declaration.split(/\s+/).slice(-1)[0] : undefined;
+                    if (name) {
+                        if (seen.has(name)) at(match.index!, 'duplicate uniform declaration', name);
+                        seen.add(name);
+                        const reflected = resources.find((entry) => entry.r.name === name);
+                        if (!reflected) at(match.index!, 'uniform declaration has no reflected descriptor', name);
+                        else if (reflected.kind !== (isBlock ? 'block' : 'sampler'))
+                            at(match.index!, 'uniform kind differs from reflection', name);
+                        else if (reflected.set === 1 && !(reflected.r.stageFlags! & (stage === 'vert' ? 1 : 16)))
+                            at(match.index!, 'uniform stage differs from reflection', name);
+                    }
+                    if (!isBlock && !isSampler)
+                        at(
+                            match.index!,
+                            'use one scalar sampler2D per declaration; expand comma lists/macros/arrays or use a macro-aware compiler',
+                        );
+                    if (target === 'glsl4' && !/layout\s*\([^)]*\)\s*$/.test(targetCode.slice(0, match.index)))
+                        at(match.index!, 'glsl4 uniform requires an explicit set/binding layout');
+                    if (isBlock) {
+                        const bodyStart = match.index! + match[0].length;
+                        const bodyEnd = targetCode.indexOf('}', bodyStart);
+                        const body = targetCode.slice(bodyStart, bodyEnd < 0 ? targetCode.length : bodyEnd);
+                        const entry = resources.find((entry) => entry.r.name === declaration);
+                        // Built-in engine blocks have their own wider member contract.
+                        if (!entry || entry.set === 1) {
+                            const complex = /[,\[\]#]/.exec(body);
+                            if (complex)
+                                at(
+                                    bodyStart + complex.index,
+                                    'material block comma lists, arrays and macros require explicit supported reflection',
+                                    declaration,
+                                );
+                            if (target === 'glsl3' && entry) {
+                                const members = Array.from(
+                                    body.matchAll(
+                                        /(?:\b(?:highp|mediump|lowp)\s+)?\b(vec4|mat4)\s+([A-Za-z_]\w*)\s*;/g,
+                                    ),
+                                    (member) => ({ name: member[2], type: member[1] === 'vec4' ? 16 : 25, count: 1 }),
+                                );
+                                const expected = (entry.r.members || []).map(({ name, type, count }) => ({
+                                    name,
+                                    type,
+                                    count,
+                                }));
+                                const residue = body
+                                    .replace(/(?:\b(?:highp|mediump|lowp)\s+)?\b(vec4|mat4)\s+[A-Za-z_]\w*\s*;/g, '')
+                                    .trim();
+                                if (residue || JSON.stringify(members) !== JSON.stringify(expected))
+                                    at(bodyStart, 'glsl3 material member layout differs from reflection', declaration);
+                            }
+                        }
+                    }
+                }
+                for (const entry of resources) {
+                    if (entry.set === 1 && entry.r.stageFlags! & (stage === 'vert' ? 1 : 16) && !seen.has(entry.r.name))
+                        at(0, 'reflected descriptor has no declaration in this target/stage', entry.r.name);
+                }
             }
             if (/\bsampler2DShadow\b/.test(code) || /\bsampler2DShadow\b/.test(clean(shader.glsl3[stage])))
                 issue(

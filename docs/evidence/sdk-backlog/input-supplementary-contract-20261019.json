@@ -1,0 +1,54 @@
+{
+  "schemaVersion": "mixed-input-validator-regression/1",
+  "sourceHead": "37974d6e320e4251df8288fa19b2d6508a9fd56e",
+  "patches": [
+    {
+      "path": "tools/verify/interactive-input-browser.cjs",
+      "sha256": "83bbc2f42c6498dd0bbaa56edd943e6d7115fe51b3ac5564c86d7c5df00cc24a"
+    },
+    {
+      "path": "test/smoke/interactive-input.test.ts",
+      "sha256": "733d527007dec8dcca8419c796e2fe0f0a7d20335c8f5108c6c7648049d4db15"
+    }
+  ],
+  "finding": "checkReport counted recorded blur/hidden observations without validating their existing retirement/late/fresh-event contract",
+  "negativeControl": {
+    "standalone": {
+      "ok": false,
+      "errors": [
+        "missing before"
+      ]
+    },
+    "newReportErrors": [],
+    "notRunRemoved": 1,
+    "baselineValid": false,
+    "afterValid": false
+  },
+  "patchedControl": {
+    "standalone": {
+      "ok": false,
+      "errors": [
+        "missing before"
+      ]
+    },
+    "newReportErrors": [
+      "chromium/false/blur: missing before"
+    ],
+    "notRunRemoved": 1,
+    "baselineValid": false,
+    "afterValid": false
+  },
+  "validation": {
+    "node": "22.23.3",
+    "jestPassed": 33,
+    "addedCases": 7,
+    "browserRunsAdded": 0
+  },
+  "identityFix": "Fingerprint actual dynamic lifecycle JS/declarations and auditor",
+  "limitations": [
+    "Synthetic validator contract fixtures only; no new browser or physical device acceptance",
+    "Negative control report intentionally lacks other matrix evidence and remains invalid before and after; finding is absence then presence of specific focus validation errors",
+    "Historical protocol/focus NOT_RUN and PAL diagnostic claims are unchanged",
+    "No pixel budgets, required actions or completion gates relaxed"
+  ]
+}

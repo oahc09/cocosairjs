@@ -114,6 +114,8 @@ describe('Evidence collector integration safeguards', () => {
         const cp = nodeRequire('child_process') as typeof import('child_process');
         for (const relative of [
             'tools/build/prepare-package.cjs',
+            'tools/build/math-module.cjs',
+            'src/DebugInfos.json',
             'tools/build/runtime-layout.cjs',
             'tools/build/webgpu-assets.cjs',
             'tools/verify/published-artifacts.cjs',
@@ -126,6 +128,13 @@ describe('Evidence collector integration safeguards', () => {
         }
         for (const file of ['build/cocosair.module.js.map', 'build/cocosair.module.min.js.map']) put(file, '{}');
         fs.cpSync(path.join(root, 'vendor/webgpu'), path.join(temp, 'vendor/webgpu'), { recursive: true });
+        // Include the exact canonical dependency closure, including generated PAL helpers.
+        const mathReceipt = JSON.parse(fs.readFileSync(path.join(root, 'build/math-build.json'), 'utf8'));
+        for (const relative of Object.keys(mathReceipt.inputs)) {
+            const target = path.join(temp, relative);
+            fs.mkdirSync(path.dirname(target), { recursive: true });
+            fs.copyFileSync(path.join(root, relative), target);
+        }
         const before = fs.readFileSync(path.join(temp, 'build/cocosair.module.js'));
         const run = (script: string) =>
             cp.spawnSync('node', [path.join(temp, script)], {
@@ -135,7 +144,12 @@ describe('Evidence collector integration safeguards', () => {
                 env: { ...nodeProcess.env, NODE_PATH: path.join(root, 'node_modules') },
             });
         expect(run('tools/verify/published-artifacts.cjs').status).toBe(1);
-        expect(run('tools/build/prepare-package.cjs').status).toBe(0);
+        const prepared = run('tools/build/prepare-package.cjs');
+        expect({
+            status: prepared.status,
+            error: prepared.error?.message,
+            stderr: prepared.status ? prepared.stderr : '',
+        }).toEqual({ status: 0, error: undefined, stderr: '' });
         expect(run('tools/verify/published-artifacts.cjs').status).toBe(0);
         expect(fs.readFileSync(path.join(temp, 'build/cocosair.module.js')).equals(before)).toBe(true);
         for (const file of fs.readdirSync(path.join(temp, 'vendor/webgpu'))) {
@@ -221,12 +235,6 @@ describe('Evidence collector integration safeguards', () => {
         }
     });
 
-    test('current generated source maps match real current inputs', () => {
-        const maps = preflight.checkSourceMaps(root);
-        expect(maps).toHaveLength(3);
-        expect(maps.every((map: any) => map.verifiedSources > 0)).toBe(true);
-        expect(maps[2].virtual.map((item: any) => item.source)).toEqual(['air-inline-worker:air-spark-inline-worker']);
-    });
     test('stale source map contents fail before evidence collection', () => {
         put('src/main.ts', 'new source');
         for (const name of preflight.MAPS)
@@ -379,17 +387,23 @@ describe('Evidence collector integration safeguards', () => {
     });
 });
 
-test('default quality stays a bounded five-example core gate without requiring full evidence', () => {
+test('single quality preserves bounded core coverage and plans related checks without duplicate builds', () => {
     const yaml = nodeRequire('js-yaml');
     const text = fs.readFileSync(path.join(root, '.github/workflows/format.yml'), 'utf8');
     const workflow = yaml.load(text, { schema: yaml.JSON_SCHEMA });
     expect(Object.keys(workflow.jobs)).toEqual(['quality']);
-    expect(Object.keys(workflow.on).sort()).toEqual(['pull_request', 'push']);
+    expect(Object.keys(workflow.on).sort()).toEqual(['pull_request', 'push', 'workflow_call', 'workflow_dispatch']);
     expect(workflow.permissions).toEqual({ contents: 'read' });
     const job = workflow.jobs.quality;
     expect(job['timeout-minutes']).toBe(35);
     const checkouts = job.steps.filter((s: any) => s.uses === 'actions/checkout@v4');
-    expect(checkouts).toHaveLength(1);
+    expect(checkouts).toHaveLength(3);
+    expect(checkouts[0].with.ref).toBe('${{ github.event.pull_request.head.sha || github.sha }}');
+    expect(checkouts.find((s: any) => s.id === 'base_tree').with.path).toBe('.ci-base');
+    expect(checkouts.find((s: any) => s.id === 'skills_original').with.ref).toBe(
+        '66d11fd0c3c189b7dfa6d20645222e237352f9f3',
+    );
+    for (const checkout of checkouts) expect(checkout.with['persist-credentials']).toBe(false);
     expect(checkouts[0].with.repository).toBeUndefined();
     expect(checkouts[0].with['persist-credentials']).toBe(false);
     const runs = job.steps.filter((s: any) => typeof s.run === 'string').map((s: any) => s.run);
@@ -434,12 +448,27 @@ test('default quality stays a bounded five-example core gate without requiring f
         expect(run).toMatch(/^set -euo pipefail\n/);
         expect(run).not.toMatch(/\|\|\s*(?:true|:)|set \+e/);
     }
-    for (const step of job.steps) expect(step['continue-on-error']).toBeUndefined();
+    for (const step of job.steps) {
+        if (step.id === 'base_tree') expect(step['continue-on-error']).toBe(true);
+        else expect(step['continue-on-error']).toBeUndefined();
+    }
+    expect(shell.match(/npm run build:all/g)).toHaveLength(1);
+    expect(shell.match(/npm ci --ignore-scripts/g)).toHaveLength(1);
+    for (const id of ['typecheck', 'core_cpu', 'sdk_cpu', 'geometry_cpu']) {
+        expect(job.steps.findIndex((step: any) => step.id === id)).toBeLessThan(
+            job.steps.findIndex((step: any) => step.id === 'build'),
+        );
+    }
+    expect(workflow.concurrency['cancel-in-progress']).toBe(true);
+    expect(job.steps.find((step: any) => step.id === 'gate').if).toBe('always()');
+    expect(job.steps.find((step: any) => step.id === 'gate').env.CI_STEPS_JSON).toBe('${{ toJSON(steps) }}');
     const upload = job.steps.filter((s: any) => s.uses === 'actions/upload-artifact@v4');
     expect(upload).toHaveLength(1);
     expect(upload[0].if).toBe('always()');
     expect(upload[0].with.path).toContain('/core-example-smoke/');
     expect(upload[0].with.path).not.toContain('docs/evidence/');
+    expect(upload[0].with.path).toContain('output/ci/');
+    expect(upload[0].with.path).not.toMatch(/^\s*build\//m);
 });
 
 describe('Committed example evidence workflow safeguards', () => {

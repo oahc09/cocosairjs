@@ -1,5 +1,11 @@
 # 多 Pass 与 Mip 渲染
 
+## 2026-10-19 选定矩阵修复
+
+原采集器支持 --browser=webkit，却在完成真实矩阵后硬要求三浏览器，造成 invalid report header。现在显式选择只验证该引擎完整五行/15 场景和两种普通模式；默认 all 的三引擎完整 gate 不变。报告分开保存 selectedScopePassed 与 scopePassed，逐行像素、mip、负控和释放预算不变。动态 shared helper 及 auditor 进入身份清单。
+
+本地 37974d6e runtime + 工作树工具复验 15 场景及两种普通模式通过，19/19 实际报告篡改被拒绝；新提交的同 head Chromium 结果由 SDK CI 留存。原作品参考、实体设备与性能预算仍是单独范围。
+
 对应任务 IER-02（原 ENG-02）。完整示例见 `examples/interactive-multipass/`（含
 [README](../../examples/interactive-multipass/README.md)）；本页只讲最小接法与常见误用。
 
@@ -53,11 +59,11 @@ const sampler = device.getSampler(new gfx.SamplerInfo(
 
 ## 3. 何时用哪条
 
-| 需求 | 路线 |
-|---|---|
-| 相机视图离屏、后处理采样、MSAA resolve | capture（AirRenderTarget） |
-| 自管 mip 数据、逐级采样诊断、非相机数据通路 | native（gfx command buffer） |
-| 多 pass 中间链 | 两者可组合：native 写纹理 → bindColor 类视图给引擎材质 |
+| 需求                                        | 路线                                                   |
+| ------------------------------------------- | ------------------------------------------------------ |
+| 相机视图离屏、后处理采样、MSAA resolve      | capture（AirRenderTarget）                             |
+| 自管 mip 数据、逐级采样诊断、非相机数据通路 | native（gfx command buffer）                           |
+| 多 pass 中间链                              | 两者可组合：native 写纹理 → bindColor 类视图给引擎材质 |
 
 ## 4. 如实披露的行为边界（审查修订新增）
 

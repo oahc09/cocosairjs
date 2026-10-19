@@ -12,30 +12,41 @@ const { runtimeBundles: bundles, removeRetiredEntries } = require('./runtime-lay
 removeRetiredEntries(buildDir);
 const sourceMapComment = /(?:\r?\n)?\/\/# sourceMappingURL=[^\r\n]*(?:\r?\n)?$/;
 
-for (const bundle of bundles) {
-    const source = path.join(buildDir, bundle);
-    const map = `${source}.map`;
-    if (!fs.existsSync(source)) {
-        throw new Error(`Missing ${path.relative(root, source)}; run npm run build:all before packaging.`);
+async function preparePackage() {
+    for (const bundle of bundles) {
+        const source = path.join(buildDir, bundle);
+        const map = `${source}.map`;
+        if (!fs.existsSync(source)) {
+            throw new Error(`Missing ${path.relative(root, source)}; run npm run build:all before packaging.`);
+        }
+        if (!fs.existsSync(map)) {
+            throw new Error(`Missing ${path.relative(root, map)}; the development build must retain its source map.`);
+        }
+        const code = fs.readFileSync(source, 'utf8');
+        const releaseCode = code.replace(sourceMapComment, '\n');
+        if (releaseCode === code || /\/\/# sourceMappingURL=/.test(releaseCode)) {
+            throw new Error(`${path.relative(root, source)} has no removable trailing sourceMappingURL.`);
+        }
+        fs.mkdirSync(packageDir, { recursive: true });
+        fs.writeFileSync(path.join(packageDir, bundle), releaseCode);
+        console.error(
+            `[package] ${path.relative(root, bundle)} -> ${path.relative(root, packageDir)}/${bundle} (source map omitted)`,
+        );
     }
-    if (!fs.existsSync(map)) {
-        throw new Error(`Missing ${path.relative(root, map)}; the development build must retain its source map.`);
-    }
-    const code = fs.readFileSync(source, 'utf8');
-    const releaseCode = code.replace(sourceMapComment, '\n');
-    if (releaseCode === code || /\/\/# sourceMappingURL=/.test(releaseCode)) {
-        throw new Error(`${path.relative(root, source)} has no removable trailing sourceMappingURL.`);
-    }
-    fs.mkdirSync(packageDir, { recursive: true });
-    fs.writeFileSync(path.join(packageDir, bundle), releaseCode);
-    console.error(
-        `[package] ${path.relative(root, bundle)} -> ${path.relative(root, packageDir)}/${bundle} (source map omitted)`,
-    );
-}
 
-const unexpected = fs.readdirSync(packageDir).filter((name) => !bundles.includes(name) && name !== 'webgpu');
-if (unexpected.length) {
-    throw new Error(`Unexpected files in ${path.relative(root, packageDir)}: ${unexpected.join(', ')}`);
-}
+    await require('./math-module.cjs').buildMathModule(root, buildDir);
+    fs.copyFileSync(path.join(buildDir, 'cocosair.math.js'), path.join(packageDir, 'cocosair.math.js'));
 
-require('./webgpu-assets.cjs').copy(root, packageDir);
+    const unexpected = fs
+        .readdirSync(packageDir)
+        .filter((name) => !bundles.includes(name) && name !== 'webgpu' && name !== 'cocosair.math.js');
+    if (unexpected.length) {
+        throw new Error(`Unexpected files in ${path.relative(root, packageDir)}: ${unexpected.join(', ')}`);
+    }
+
+    require('./webgpu-assets.cjs').copy(root, packageDir);
+}
+preparePackage().catch((error) => {
+    console.error(error);
+    process.exitCode = 1;
+});

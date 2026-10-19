@@ -1,0 +1,35 @@
+{
+  "schemaVersion": "water-multipass-current-diagnostic/1",
+  "sourceHead": "73ca2fa0c13dd21fe7e68f83eeee20aaf44e4815",
+  "runtimeHead": "73ca2fa0c13dd21fe7e68f83eeee20aaf44e4815",
+  "runtimeArtifactId": 12183477292,
+  "artifactRun": 39245299200,
+  "artifactZipSha256": "dcf80249e201fb166348ae8e1bb3fe217aa18df664baa2c03e835fa13b86ece0",
+  "artifactRunConclusion": "failure: nine unrelated geometry jsdom fixtures; build/runtime generated",
+  "runtimeSha256": "9b483501264630c2ecd47ba65fb7fd75e7d0fe3f98490057b48bc912ee2b0e35",
+  "exampleAndVerifierModified": false,
+  "browser": "WebKit",
+  "completed": true,
+  "exitCode": 0,
+  "checksPassed": 39,
+  "checksTotal": 39,
+  "pngs": 19,
+  "errors": [],
+  "reportSha256": "b15ce4fc77e7f16a70d1f13831aef9df66ec3897839f86598fe2508de9f0b097",
+  "inputManifestSha256": "633cdd1ee96217aa2ea21905c081a7949866643f64668a60b974e3a77d27d484",
+  "scope": [
+    "five GLSL3 programs compile/link",
+    "HDR complete targets and finite nonuniform captures",
+    "above/below clipped markers and three world-space depth samples",
+    "repeatable fixed output, independent optical channel contributions",
+    "source-over fin blending, submerged depth occlusion and depth-off negative control",
+    "real pointer ripple and actual rain changes",
+    "resize targets/current bindings and release/reload lifecycle"
+  ],
+  "limitations": [
+    "Existing public SDK example only; no original private full application comparison",
+    "WebKit software-rendered environment, not physical GPU/mobile performance acceptance",
+    "No Chromium/Firefox acceptance claimed from this diagnostic",
+    "Later PR head CI must bind its own rebuilt runtime identity"
+  ]
+}
