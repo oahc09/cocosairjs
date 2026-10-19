@@ -7,7 +7,8 @@ const ts = require('typescript');
 const root = path.resolve(__dirname, '../..');
 const cache = new Map();
 function load(relative) {
-    const filename = path.resolve(root, relative);
+    let filename = path.resolve(root, relative);
+    if (filename.endsWith('.js') && !fs.existsSync(filename)) filename = filename.slice(0, -3) + '.ts';
     if (cache.has(filename)) return cache.get(filename).exports;
     const module = { exports: {} };
     cache.set(filename, module);
@@ -400,4 +401,64 @@ test('unreflected bare uniform is not silently accepted', () => {
 test('unchanged legacy HDR fixture remains accepted', () => {
     const fixture = require(path.join(root, 'examples/hdr-color-pipeline/color-input.effect.json'));
     assert.equal(prepareEffectForRegistration(fixture).effect.name, fixture.name);
+});
+const { ownSpriteFrame } = load('examples/shared/owned-sprite-frame.ts');
+test('actual closed scope rejects ownership without prematurely destroying caller-owned resources', async () => {
+    const scope = createSessionScope();
+    scope.activate();
+    await scope.dispose();
+    const value = content('unowned');
+    assert.throws(
+        () => ownSpriteFrame(scope, value.frame, value.texture, value.image),
+        (e) => e.code === 'AIR_E_SESSION_CLOSED',
+    );
+    for (const resource of Object.values(value)) assert.equal(resource.destroyed, 0);
+});
+test('a synchronous cleanup registration is safe and its callback is unregistered', () => {
+    const value = content('sync');
+    let unregistered = 0;
+    const dispose = ownSpriteFrame(
+        {
+            own(cleanup) {
+                cleanup();
+                return () => {
+                    unregistered++;
+                };
+            },
+        },
+        value.frame,
+        value.texture,
+        value.image,
+    );
+    dispose();
+    assert.equal(unregistered, 1);
+    for (const resource of Object.values(value)) assert.equal(resource.destroyed, 1);
+});
+test('ownership registration failure leaves old sprite bound and releases the temporary content', async () => {
+    const f = textureFixture(),
+        old = content('old'),
+        next = content('next');
+    await f.replacement.replace('paper', async () => old);
+    const own = f.scope.own;
+    f.scope.own = () => {
+        throw new Error('registration failed');
+    };
+    await assert.rejects(
+        f.replacement.replace('paper', async () => next),
+        /registration failed/,
+    );
+    assert.equal(f.sprite.spriteFrame, old.frame);
+    assert.equal(old.frame.destroyed, 0);
+    for (const resource of Object.values(next)) assert.equal(resource.destroyed, 1);
+    f.scope.own = own;
+    await f.scope.dispose();
+});
+test('actual scope schedules teardown after synchronous input disabling', async () => {
+    const r = lifecycle();
+    await r.ready;
+    const close = r.close();
+    assert.equal(r.events.at(-1), 'input-off');
+    await close;
+    assert.ok(r.events.indexOf('input-off') < r.events.indexOf('audio'));
+    assert.ok(r.events.indexOf('input-off') < r.events.indexOf('gpu'));
 });
