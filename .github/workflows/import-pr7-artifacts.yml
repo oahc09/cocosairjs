@@ -1,0 +1,155 @@
+name: Import verified PR7 runtime (temporary)
+on:
+  pull_request:
+    paths:
+      - .github/workflows/import-pr7-artifacts.yml
+permissions: {}
+concurrency:
+  group: import-pr7-artifacts
+  cancel-in-progress: false
+jobs:
+  import-runtime:
+    if: github.repository == 'oahc09/cocosairjs' && github.event.pull_request.number == 7 && github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.head.ref == 'fix/audit-sdk-recipes-20261019'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      actions: read
+      pull-requests: read
+    steps:
+      - name: Verify fixed successful inputs and import only five allowed files
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('node:fs');
+            const path = require('node:path');
+            const crypto = require('node:crypto');
+            const assert = require('node:assert/strict');
+            const pinned = {"source":"5a30209ebf37583674c05d17b5003f111f2c8c12","sourceTree":"57102406f4efc216e789ef6e7a35a745b89f77ad","run":39274694583,"artifact":12197813012,"digest":"sha256:18863a07d49521a977623911491a31b71a015a2bd49d9f77e78372a1dc72f434","zipBytes":57150077,"files":[{"path":"build/cocosair.module.js","bytes":8458176,"sha256":"d645b302ea0137d1f7498bc68b7186de5905bfd438f71b847d460cdf431de19f","gitSha":"9aa9891debaae2162b1b34baff9938d85004e21b"},{"path":"build/cocosair.module.min.js","bytes":5405773,"sha256":"f210e8b0f6569cbe67b421777b78d7f7e9f51fb0de7ffa43c58b55a8a4d94395","gitSha":"5e4a6700735dd2a03577dcc359096d6771aab4aa"},{"path":"build/cocosair.module.js.map","bytes":24159397,"sha256":"a0eec852c6fbec10dc3103fc2909c0212f430d718b294080157a422c3046d815","gitSha":"2685dc4eb88d9c466e4e5d9dce9ea4366d58b1b3"},{"path":"build/cocosair.module.min.js.map","bytes":20317136,"sha256":"ae86dfc2b2c0929f1a21a5d8418c2920b5fe137cb7ee6bdf11c862acacfff224","gitSha":"c3dc814d0f84fca3eabcfcd3d18036d29af77777"},{"path":"build/cocosair.module.d.ts","bytes":3430479,"sha256":"6978166bb3097ac541c345f64313439f8be444bda6a9e237321ac6e66a72cec7","gitSha":"d40d83c2b6a61dd4d662e3cb9b1b86d498f052f1"},{"path":"build/cocosair.legacy.d.ts","bytes":367,"sha256":"6dd42c6a064b17f923568bce9e3befce5ff0e33d7b0af19bed965a9e1a86aed2","gitSha":"052327096dc0032882f4d40f193ba41a987b185c"},{"path":"build/cocosair.math.js","bytes":367895,"sha256":"27974fb947783a06cde931fd528a6058f2d52c6b7975bdc76c48f3e4e593a8f5","gitSha":"8cc2f104c19c8cec74402f5e4ddf3b7a0718b6e7"},{"path":"build/cocosair.math.d.ts","bytes":564,"sha256":"e2610e2a2e6bf2a18a18f6aca0ddc821a8aed6128fa63c7d986f30339669c384","gitSha":"5855f76f07a874b1427bae97c2057b4293082edd"},{"path":"build/cocosair.math.legacy.d.ts","bytes":564,"sha256":"936f5db28d92f84a2ea490a0c2263ea10981c1fd94b0b8d5bf0d89c41274d516","gitSha":"d0625508bfc7f1fd776cd98766b04526299b705d"},{"path":"build/math-build.json","bytes":6452,"sha256":"10a37bf9c6b98e8b6563f0946c98db278a3e9721919d829522d7b95eac3aa69e","gitSha":"489bd410ef7a6872cb668952533937bb2720176f"}],"palBlob":"5e158735072657bfa9610fa553a516a297fb454d","palSha256":"f6b918e33472f9a4eab37b6bb9d2211fcd361e4cb672f48d6eddfd4fc67b1355","devNumber":186,"minNumber":187,"author":{"name":"oahc09","email":"caoshen1990@163.com"}};
+            const owner = 'oahc09', repo = 'cocosairjs', branch = 'fix/audit-sdk-recipes-20261019';
+            const workflowPath = '.github/workflows/import-pr7-artifacts.yml';
+            const artifactPaths = ['build/cocosair.module.js', 'build/cocosair.module.min.js', 'build/cocosair.module.js.map', 'build/cocosair.module.min.js.map'];
+            const counterPath = 'tools/build/build-number.json';
+            const sha256 = (bytes) => crypto.createHash('sha256').update(bytes).digest('hex');
+            const gitBlob = (bytes) => crypto.createHash('sha1').update(`blob ${bytes.length}\0`).update(bytes).digest('hex');
+            assert.equal(context.repo.owner, owner); assert.equal(context.repo.repo, repo);
+            assert.equal(context.eventName, 'pull_request');
+            assert.equal(context.payload.pull_request.number, 7);
+            assert.equal(context.payload.pull_request.head.ref, branch);
+            assert.equal(context.payload.pull_request.head.repo.full_name, `${owner}/${repo}`);
+            const expectedHead = context.payload.pull_request.head.sha;
+            async function checkHead() {
+                const { data: pr } = await github.rest.pulls.get({ owner, repo, pull_number: 7 });
+                assert.equal(pr.state, 'open'); assert.equal(pr.merged, false);
+                assert.equal(pr.head.ref, branch); assert.equal(pr.head.repo.full_name, `${owner}/${repo}`);
+                assert.equal(pr.head.sha, expectedHead); assert.equal(pr.base.ref, 'main');
+            }
+            await checkHead();
+            const { data: run } = await github.rest.actions.getWorkflowRun({ owner, repo, run_id: pinned.run });
+            assert.equal(run.head_sha, pinned.source); assert.equal(run.status, 'completed'); assert.equal(run.conclusion, 'success');
+            assert.equal(run.event, 'pull_request');
+            const { data: artifact } = await github.rest.actions.getArtifact({ owner, repo, artifact_id: pinned.artifact });
+            assert.equal(artifact.expired, false); assert.equal(artifact.workflow_run.id, pinned.run);
+            assert.equal(artifact.workflow_run.head_sha, pinned.source); assert.equal(artifact.digest, pinned.digest);
+            const { data: downloaded } = await github.rest.actions.downloadArtifact({ owner, repo, artifact_id: pinned.artifact, archive_format: 'zip' });
+            assert(Buffer.isBuffer(downloaded) || downloaded instanceof ArrayBuffer || ArrayBuffer.isView(downloaded));
+            const archive = Buffer.from(downloaded);
+            assert.equal(archive.length, pinned.zipBytes);
+            assert.equal('sha256:' + sha256(archive), pinned.digest, 'Downloaded ZIP digest mismatch');
+            const archivePath = path.join(process.env.RUNNER_TEMP, 'pr7-verified-artifact.zip');
+            fs.writeFileSync(archivePath, archive, { flag: 'wx' });
+            const extractionRoot = path.join(process.env.RUNNER_TEMP, 'pr7-artifact-import');
+            assert(!fs.existsSync(extractionRoot));
+            const extractPaths = ['build-identity.json', ...pinned.files.map((x) => x.path)].map((p) => 'cocosairjs/cocosairjs/output/ci/' + p);
+            assert.equal(new Set(extractPaths).size, 11);
+            require('node:child_process').execFileSync('python3', ['-c', `
+            import sys,zipfile,pathlib,stat,json
+            archive,destination,names=sys.argv[1:]
+            allowed=set(json.loads(names));root=pathlib.Path(destination)
+            with zipfile.ZipFile(archive) as z:
+                entries=z.infolist()
+                assert len({x.filename for x in entries})==len(entries), 'Duplicate ZIP path'
+                for item in entries:
+                    p=pathlib.PurePosixPath(item.filename)
+                    assert not p.is_absolute() and '..' not in p.parts and chr(92) not in item.filename, 'Unsafe ZIP path'
+                    assert not stat.S_ISLNK(item.external_attr >> 16), 'ZIP symlink'
+                assert allowed.issubset(set(z.namelist())), 'Missing exact ZIP input'
+                for name in sorted(allowed):
+                    item=z.getinfo(name);assert not item.is_dir(), 'Expected regular file'
+                    mode=stat.S_IFMT(item.external_attr >> 16);assert mode in (0,stat.S_IFREG), 'Nonregular ZIP file'
+                    target=root/name;target.parent.mkdir(parents=True,exist_ok=True)
+                    with target.open('xb') as out:out.write(z.read(item))
+            `, archivePath, extractionRoot, JSON.stringify(extractPaths)], { stdio: ['ignore', 'pipe', 'pipe'] });
+            const root = path.join(process.env.RUNNER_TEMP, 'pr7-artifact-import', 'cocosairjs/cocosairjs/output/ci');
+            function regular(relative) {
+                assert(!relative.includes('..') && !path.isAbsolute(relative));
+                const file = path.join(root, relative);
+                assert.equal(fs.realpathSync(file), file); assert(fs.lstatSync(file).isFile());
+                return fs.readFileSync(file);
+            }
+            const receipt = JSON.parse(regular('build-identity.json'));
+            assert.equal(receipt.head, pinned.source); assert.equal(receipt.files.length, 10);
+            assert.equal(new Set(receipt.files.map((x) => x.path)).size, 10);
+            const bytesByPath = new Map();
+            for (const item of receipt.files) {
+                assert(item.path.startsWith('build/'));
+                const bytes = regular(item.path);
+                assert.equal(bytes.length, item.bytes); assert.equal(sha256(bytes), item.sha256);
+                const expected = pinned.files.find((x) => x.path === item.path);
+                assert(expected, item.path); assert.equal(expected.bytes, item.bytes); assert.equal(expected.sha256, item.sha256);
+                assert.equal(gitBlob(bytes), expected.gitSha); bytesByPath.set(item.path, bytes);
+            }
+            const { data: parent } = await github.rest.git.getCommit({ owner, repo, commit_sha: expectedHead });
+            assert.equal(parent.parents.length, 1); assert.equal(parent.parents[0].sha, pinned.source);
+            const { data: currentTree } = await github.rest.git.getTree({ owner, repo, tree_sha: parent.tree.sha, recursive: 'true' });
+            const { data: sourceTree } = await github.rest.git.getTree({ owner, repo, tree_sha: pinned.sourceTree, recursive: 'true' });
+            assert.equal(currentTree.truncated, false); assert.equal(sourceTree.truncated, false);
+            const entries = new Map(currentTree.tree.filter((x) => x.type === 'blob').map((x) => [x.path, x]));
+            const original = new Map(sourceTree.tree.filter((x) => x.type === 'blob').map((x) => [x.path, x]));
+            assert.equal(entries.size, original.size + 1); assert(!original.has(workflowPath)); assert(entries.has(workflowPath));
+            for (const [file, entry] of original) {
+                assert.equal(entries.get(file)?.sha, entry.sha, file); assert.equal(entries.get(file)?.mode, entry.mode, file);
+            }
+            assert.equal(entries.get('src/pal/input/web/touch-input.js')?.sha, pinned.palBlob);
+            for (const item of pinned.files.filter((x) => !artifactPaths.includes(x.path))) {
+                assert.equal(entries.get(item.path)?.sha, item.gitSha, 'Unapproved declaration/math change: ' + item.path);
+            }
+            for (const file of artifactPaths.filter((x) => x.endsWith('.map'))) {
+                const map = JSON.parse(bytesByPath.get(file));
+                assert.equal(map.sources.length, map.sourcesContent.length);
+                let pal = 0;
+                for (let i = 0; i < map.sources.length; i++) {
+                    const relative = path.posix.normalize(path.posix.join('build', map.sourceRoot || '', map.sources[i]));
+                    if (relative.startsWith('src/')) {
+                        assert(original.has(relative), relative);
+                        assert.equal(gitBlob(Buffer.from(map.sourcesContent[i])), original.get(relative).sha, relative);
+                    }
+                    if (relative === 'src/pal/input/web/touch-input.js') {
+                        pal++; assert.equal(sha256(Buffer.from(map.sourcesContent[i])), pinned.palSha256);
+                    }
+                }
+                assert.equal(pal, 1);
+            }
+            const dev = bytesByPath.get('build/cocosair.module.js').toString('utf8');
+            assert.equal(Number(dev.match(/const AIR_BUILD_NUMBER = (\d+);/)[1]), pinned.devNumber);
+            const min = bytesByPath.get('build/cocosair.module.min.js').toString('utf8');
+            const minName = min.match(/([A-Za-z_$][\w$]*) as AIR_BUILD_NUMBER/)[1];
+            const minNumber = Number(min.match(new RegExp('(?<![\\w$])' + minName.replace(/\$/g, '\\$') + '=(\\d+)'))[1]);
+            assert.equal(minNumber, pinned.minNumber); assert.equal(minNumber, pinned.devNumber + 1);
+            const oldCounter = Buffer.from(JSON.stringify({ lastBuildNumber: pinned.devNumber - 1 }, null, 2) + '\n');
+            assert.equal(entries.get(counterPath)?.sha, gitBlob(oldCounter));
+            const counter = Buffer.from(JSON.stringify({ lastBuildNumber: minNumber }, null, 2) + '\n');
+            const changes = artifactPaths.map((file) => ({ file, bytes: bytesByPath.get(file) }));
+            changes.push({ file: counterPath, bytes: counter });
+            assert.deepEqual(changes.map((x) => x.file), [...artifactPaths, counterPath]);
+            await checkHead();
+            const additions = [];
+            for (const { file, bytes } of changes) {
+                const { data: blob } = await github.rest.git.createBlob({ owner, repo, encoding: 'base64', content: bytes.toString('base64') });
+                assert.equal(blob.sha, gitBlob(bytes)); additions.push({ path: file, mode: '100644', type: 'blob', sha: blob.sha });
+            }
+            const { data: nextTree } = await github.rest.git.createTree({ owner, repo, base_tree: parent.tree.sha, tree: additions });
+            const { data: committed } = await github.rest.git.createCommit({ owner, repo, tree: nextTree.sha, parents: [expectedHead], message: 'build(input): import verified cancelable-touch runtime and maps', author: pinned.author });
+            await checkHead();
+            await github.rest.git.updateRef({ owner, repo, ref: `heads/${branch}`, sha: committed.sha, force: false });
+            core.info(`Imported only ${additions.length} allowlisted runtime files in ${committed.sha}`);
