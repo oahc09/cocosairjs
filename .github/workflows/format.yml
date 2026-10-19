@@ -145,6 +145,7 @@ jobs:
           set -euo pipefail
           node tools/verify/ci-scope.cjs time-start core_cpu
           trap 'status=$?; node tools/verify/ci-scope.cjs time-end core_cpu "$status"; exit "$status"' EXIT
+          node --test tools/verify/pal-touch-cancellation.test.cjs 2>&1 | tee "$RUNNER_TEMP/core-cpu/pal-touch-cancellation.log"
           node --test tools/verify/shaders-holographic-rotation.test.cjs 2>&1 | tee "$RUNNER_TEMP/core-cpu/rotation.log"
           node --test tools/verify/example-asset-lifecycle.test.cjs 2>&1 | tee "$RUNNER_TEMP/core-cpu/asset-lifecycle.log"
           node --test tools/verify/example-evidence-status.test.cjs 2>&1 | tee "$RUNNER_TEMP/core-cpu/status-admission.log"
