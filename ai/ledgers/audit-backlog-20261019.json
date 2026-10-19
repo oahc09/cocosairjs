@@ -8,7 +8,7 @@
     {
       "id": "ENGINE-001",
       "title": "同一 PSO 下恢复被切换的 GL program",
-      "status": "待修复",
+      "status": "已修复，最终CI待验",
       "scope": "引擎源码",
       "priority": "P0",
       "action": "把shader/program一致性判断从仅PSO变化分支中独立出来；保持isShaderChanged与VAO/descriptor后续语义。",
@@ -31,15 +31,20 @@
       "sourceIds": [
         "ENGINE-001"
       ],
-      "implementation": "CANDIDATE_IMPLEMENTED",
-      "verification": "CPU_PASS_AND_WEBKIT_COMMAND_READBACK_PASS",
-      "pr": null,
-      "blocker": "Full SDK rebuild/integration and final CI pending; command fixture is not full application acceptance."
+      "implementation": "IMPLEMENTED_PR6",
+      "verification": "16_NEW_PLUS_12_EXISTING_JEST_PASS; WEBKIT_COMMAND_READBACK_11_OF_11; BASELINE_4_OF_11; BUILD_AND_TYPES_PASS",
+      "pr": "https://github.com/oahc09/cocosairjs/pull/6",
+      "blocker": "Final-head CI pending; hardware/device and original application scenes are not included in command-level acceptance.",
+      "verificationEvidence": [
+        "ai/ledgers/webgl2-audit-evidence/candidate-20261019.json",
+        "ai/ledgers/webgl2-audit-evidence/baseline-20261019.json",
+        "ai/ledgers/webgl2-audit-evidence/runtime-build-005ebacc.json"
+      ]
     },
     {
       "id": "ENGINE-002",
       "title": "Stencil clear 前解除非零部分写掩码并恢复",
-      "status": "待修复",
+      "status": "已修复，最终CI待验",
       "scope": "引擎源码",
       "priority": "P0",
       "action": "clear前保存front/back原写掩码，把所有非全写掩码放开；clear后精确恢复原值。",
@@ -69,15 +74,20 @@
       "sourceIds": [
         "ENGINE-002"
       ],
-      "implementation": "CANDIDATE_IMPLEMENTED",
-      "verification": "CPU_PASS_AND_WEBKIT_COMMAND_READBACK_PASS",
-      "pr": null,
-      "blocker": "Full SDK rebuild/integration and final CI pending; command fixture is not full application acceptance."
+      "implementation": "IMPLEMENTED_PR6",
+      "verification": "16_NEW_PLUS_12_EXISTING_JEST_PASS; WEBKIT_COMMAND_READBACK_11_OF_11; BASELINE_4_OF_11; BUILD_AND_TYPES_PASS",
+      "pr": "https://github.com/oahc09/cocosairjs/pull/6",
+      "blocker": "Final-head CI pending; hardware/device and original application scenes are not included in command-level acceptance.",
+      "verificationEvidence": [
+        "ai/ledgers/webgl2-audit-evidence/candidate-20261019.json",
+        "ai/ledgers/webgl2-audit-evidence/baseline-20261019.json",
+        "ai/ledgers/webgl2-audit-evidence/runtime-build-005ebacc.json"
+      ]
     },
     {
       "id": "ENGINE-004",
       "title": "InputAssembler 超过8个顶点流时产生未校验的 NaN offset",
-      "status": "待修复",
+      "status": "已修复，最终CI待验",
       "scope": "引擎源码",
       "priority": "P0",
       "action": "按实际vertexBuffers数初始化offset；校验stream为有效整数且buffer存在，非法输入给稳定错误；按实际硬件attribute上限检查。",
@@ -107,15 +117,20 @@
       "sourceIds": [
         "ENGINE-004"
       ],
-      "implementation": "CANDIDATE_IMPLEMENTED",
-      "verification": "CPU_PASS_AND_WEBKIT_COMMAND_READBACK_PASS",
-      "pr": null,
-      "blocker": "Full SDK rebuild/integration and final CI pending; command fixture is not full application acceptance."
+      "implementation": "IMPLEMENTED_PR6",
+      "verification": "16_NEW_PLUS_12_EXISTING_JEST_PASS; WEBKIT_COMMAND_READBACK_11_OF_11; BASELINE_4_OF_11; BUILD_AND_TYPES_PASS",
+      "pr": "https://github.com/oahc09/cocosairjs/pull/6",
+      "blocker": "Final-head CI pending; hardware/device and original application scenes are not included in command-level acceptance.",
+      "verificationEvidence": [
+        "ai/ledgers/webgl2-audit-evidence/candidate-20261019.json",
+        "ai/ledgers/webgl2-audit-evidence/baseline-20261019.json",
+        "ai/ledgers/webgl2-audit-evidence/runtime-build-005ebacc.json"
+      ]
     },
     {
       "id": "ENGINE-005",
       "title": "Blit临时framebuffer复用前清理残留color/depth/stencil附件",
-      "status": "待修复",
+      "status": "已修复，最终CI待验",
       "scope": "引擎源码",
       "priority": "P0",
       "action": "在复用scratch FBO前清除旧color/depth/stencil/combined附件与相应buffer状态，覆盖texture/renderbuffer交替；恢复外部READ/DRAW缓存。",
@@ -145,10 +160,15 @@
       "sourceIds": [
         "ENGINE-005"
       ],
-      "implementation": "CANDIDATE_IMPLEMENTED",
-      "verification": "CPU_PASS_AND_WEBKIT_COMMAND_READBACK_PASS",
-      "pr": null,
-      "blocker": "Full SDK rebuild/integration and final CI pending; command fixture is not full application acceptance."
+      "implementation": "IMPLEMENTED_PR6",
+      "verification": "16_NEW_PLUS_12_EXISTING_JEST_PASS; WEBKIT_COMMAND_READBACK_11_OF_11; BASELINE_4_OF_11; BUILD_AND_TYPES_PASS",
+      "pr": "https://github.com/oahc09/cocosairjs/pull/6",
+      "blocker": "Final-head CI pending; hardware/device and original application scenes are not included in command-level acceptance.",
+      "verificationEvidence": [
+        "ai/ledgers/webgl2-audit-evidence/candidate-20261019.json",
+        "ai/ledgers/webgl2-audit-evidence/baseline-20261019.json",
+        "ai/ledgers/webgl2-audit-evidence/runtime-build-005ebacc.json"
+      ]
     },
     {
       "id": "REUSE-002",
@@ -1854,5 +1874,13 @@
       "pr": null,
       "blocker": "Requires original scene/reference/device or explicit permission; historical evidence cannot establish current acceptance."
     }
-  ]
+  ],
+  "progress": {
+    "updatedAt": "2026-10-19T07:44:00Z",
+    "pr": "https://github.com/oahc09/cocosairjs/pull/6",
+    "main": "bac30c0f9b9e9cb61e43720d23053a98d24ac811",
+    "dependency": "PR5 merged",
+    "applicationSubmission": "PAUSED_BY_USER",
+    "sdkCheckpoint": "29770d7733f6b1936f1890cb0b28d31c17cf255a"
+  }
 }
