@@ -1,0 +1,94 @@
+{
+  "schema": 1,
+  "source_snapshot_hash": "46a9449ad54586ae70a914a77992801ea732270ab7f14509f40bf3792ee22d9d",
+  "entries": [
+    {
+      "source": {
+        "path": "skills/cocosair/references/skill-index.md",
+        "block_id": "prose:L1-L1"
+      },
+      "source_hash": "10df533e9bfc36396bac558c1080851babe88fed87912c47702360d4b5f4fe9c",
+      "kind": "prose",
+      "destinations": [
+        {
+          "path": "skills/cocosair/references/skill-index-archive.md",
+          "block_id": "prose:L5-L5",
+          "hash": "10df533e9bfc36396bac558c1080851babe88fed87912c47702360d4b5f4fe9c"
+        }
+      ],
+      "operation": "move",
+      "link_map": [],
+      "review": {
+        "status": "approved",
+        "reviewer": "P1 implementation self-review (independent review recorded separately)",
+        "notes": "Complete historical source unit preserved in the same reference directory; all original table cells and row multiplicity, source paths, qualifiers and sync note retained. The archive notice makes the old sync instruction historical."
+      }
+    },
+    {
+      "source": {
+        "path": "skills/cocosair/references/skill-index.md",
+        "block_id": "prose:L3-L3"
+      },
+      "source_hash": "669d4e793ad1335d7e08091bc2218e6956e96ea7d5e66ca8a53b0e21cc535a92",
+      "kind": "prose",
+      "destinations": [
+        {
+          "path": "skills/cocosair/references/skill-index-archive.md",
+          "block_id": "prose:L7-L7",
+          "hash": "669d4e793ad1335d7e08091bc2218e6956e96ea7d5e66ca8a53b0e21cc535a92"
+        }
+      ],
+      "operation": "move",
+      "link_map": [],
+      "review": {
+        "status": "approved",
+        "reviewer": "P1 implementation self-review (independent review recorded separately)",
+        "notes": "Complete historical source unit preserved in the same reference directory; all original table cells and row multiplicity, source paths, qualifiers and sync note retained. The archive notice makes the old sync instruction historical."
+      }
+    },
+    {
+      "source": {
+        "path": "skills/cocosair/references/skill-index.md",
+        "block_id": "table:L5-L28"
+      },
+      "source_hash": "c1c4cb0f879cb2f447bf2f9f8d3cf8d3b247a15d939ff1e7fe1259a961720314",
+      "kind": "table",
+      "destinations": [
+        {
+          "path": "skills/cocosair/references/skill-index-archive.md",
+          "block_id": "table:L9-L32",
+          "hash": "c1c4cb0f879cb2f447bf2f9f8d3cf8d3b247a15d939ff1e7fe1259a961720314"
+        }
+      ],
+      "operation": "move",
+      "link_map": [],
+      "review": {
+        "status": "approved",
+        "reviewer": "P1 implementation self-review (independent review recorded separately)",
+        "notes": "Complete historical source unit preserved in the same reference directory; all original table cells and row multiplicity, source paths, qualifiers and sync note retained. The archive notice makes the old sync instruction historical."
+      }
+    },
+    {
+      "source": {
+        "path": "skills/cocosair/references/skill-index.md",
+        "block_id": "prose:L30-L30"
+      },
+      "source_hash": "b95ffaf893b83c1d1106bc6b835e774ad59b7507127ddafcd01538b8ed1d81cf",
+      "kind": "prose",
+      "destinations": [
+        {
+          "path": "skills/cocosair/references/skill-index-archive.md",
+          "block_id": "prose:L34-L34",
+          "hash": "b95ffaf893b83c1d1106bc6b835e774ad59b7507127ddafcd01538b8ed1d81cf"
+        }
+      ],
+      "operation": "move",
+      "link_map": [],
+      "review": {
+        "status": "approved",
+        "reviewer": "P1 implementation self-review (independent review recorded separately)",
+        "notes": "Complete historical source unit preserved in the same reference directory; all original table cells and row multiplicity, source paths, qualifiers and sync note retained. The archive notice makes the old sync instruction historical."
+      }
+    }
+  ]
+}

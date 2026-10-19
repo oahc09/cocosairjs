@@ -327,3 +327,7 @@ cocosair.js/
 本项目自有代码使用 MIT（见 LICENSE），内嵌第三方代码分别遵循其许可。
 默认 bundle 包含 Spine 相关代码，使用与再分发须满足随包的 Spine Runtimes License Agreement 及其引用的 Spine Editor 授权条件；不能将整个 bundle 视为仅受 MIT 约束。
 PAL 已改由公开、带 MIT 许可的 cocos4 固定源码生成，旧 `@cocos/engine-pal` 包不再使用。许可及版权 notice 随包提供，完整来源登记见 [第三方许可](docs/THIRD_PARTY_LICENSES.md)。
+
+## AIR skills 路由与维护
+
+[技能说明](skills/README.md) 介绍 Profile A 的按需读取、完整目录分发与预算；[生成索引](skills/INDEX.md) 来自各技能 frontmatter 和 Reference map，不另维护路由表。修改这些字段后执行 `node tools/skills/gen-index.cjs --write`，再用 `--check` 检查一致性。技能目录随 npm 包分发，不自动安装到宿主；阶段一保留完整参考内容，未实施大文件切片或单技能 bundle。

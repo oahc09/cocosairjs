@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "specification": "skills-token-optimization-p1-v1",
+  "purpose": "Suite tooling metadata only; each SKILL.md retains its own host declarations.",
+  "host_metadata_inheritance": false,
+  "source_of_truth": "skills/*/SKILL.md",
+  "budgets": {
+    "name_code_points": 32,
+    "description_code_points": 180,
+    "frontmatter_code_points_including_delimiters_and_lf": 1400,
+    "when_to_use_max_items": 5,
+    "when_to_use_max_words_per_item": 10,
+    "owns_min_items": 3,
+    "owns_max_items": 6,
+    "not_for_max_items": 3,
+    "not_for_max_code_points_per_item": 80,
+    "subsystem_skill_utf8_bytes": 4000,
+    "router_skill_utf8_bytes": 4200,
+    "index_skill_compact_json_code_points": 2000
+  },
+  "measurement": { "characters": "Unicode code points", "bytes": "UTF-8 bytes", "kilobyte": 1000 },
+  "tool_permissions": "No inherited or default tool permissions; preserve allowed-tools in each SKILL.md."
+}

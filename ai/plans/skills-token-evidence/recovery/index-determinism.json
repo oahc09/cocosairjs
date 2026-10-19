@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "locations": [
+    "/tmp/cocosairjs-p1-index-location-a",
+    "/tmp/cocosairjs-p1-index-location-b"
+  ],
+  "files": [
+    {
+      "path": "skills/index.json",
+      "bytes": 34282,
+      "sha256": "5bc20e1649489e25f3c3b20637430e650cc2ba7df374f503f4020fb9ed0853b6",
+      "both_clean_locations_match": true
+    },
+    {
+      "path": "skills/INDEX.md",
+      "bytes": 2918,
+      "sha256": "38dcce5e252049d79fe994feb325b31284365b56b6cf02ed1ee2b4dbebfc6ada",
+      "both_clean_locations_match": true
+    }
+  ]
+}

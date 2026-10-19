@@ -1,0 +1,114 @@
+{
+  "schema": 1,
+  "decision": "A-only",
+  "reason": "All three representative navigation closures are approximately the whole tree; an optional bundle implementation has no material size value. The original path failures remain failures; repaired and candidate checks are separate.",
+  "stages": {
+    "original": [
+      {
+        "entry": "cocosair-rendering",
+        "status": "FAIL",
+        "bytes": 1461739,
+        "byte_ratio": 0.999698395546376,
+        "all_bytes": 1462180,
+        "report": "ai/plans/skills-token-evidence/recovery/original-closure-rendering.json",
+        "sha256": "bf2cff008cf1d2bc9e2fac1efb30321aa94f7aec8c004fb62b4f72857b7d1b34",
+        "file_count": 190,
+        "skill_count": 22
+      },
+      {
+        "entry": "cocosair-math",
+        "status": "FAIL",
+        "bytes": 1461739,
+        "byte_ratio": 0.999698395546376,
+        "all_bytes": 1462180,
+        "report": "ai/plans/skills-token-evidence/recovery/original-closure-math.json",
+        "sha256": "fdebfb8badbdaf14351402694632c25c96a04cfdbe3dc28349cfbf8f968737fd",
+        "file_count": 190,
+        "skill_count": 22
+      },
+      {
+        "entry": "cocosair-verification",
+        "status": "FAIL",
+        "bytes": 1461739,
+        "byte_ratio": 0.999698395546376,
+        "all_bytes": 1462180,
+        "report": "ai/plans/skills-token-evidence/recovery/original-closure-verification.json",
+        "sha256": "18a97ed5fac4ad7e7fc587a25ea5229cac6fcd2e1996d7a90b7bc5c03ea18dc4",
+        "file_count": 190,
+        "skill_count": 22
+      }
+    ],
+    "prerequisite": [
+      {
+        "entry": "cocosair-rendering",
+        "status": "PASS",
+        "bytes": 1467353,
+        "byte_ratio": 0.9996995491192906,
+        "all_bytes": 1467794,
+        "report": "ai/plans/skills-token-evidence/recovery/prerequisite-closure-rendering.json",
+        "sha256": "709f414201734c95e548cb2be095ee4323d8f680eb479bcf40f7039a90cdddc7",
+        "file_count": 191,
+        "skill_count": 22
+      },
+      {
+        "entry": "cocosair-math",
+        "status": "PASS",
+        "bytes": 1467353,
+        "byte_ratio": 0.9996995491192906,
+        "all_bytes": 1467794,
+        "report": "ai/plans/skills-token-evidence/recovery/prerequisite-closure-math.json",
+        "sha256": "6af73b328789403b39304ea8e6cf0dd3948c81f366e2901ae2d1dde7209db582",
+        "file_count": 191,
+        "skill_count": 22
+      },
+      {
+        "entry": "cocosair-verification",
+        "status": "PASS",
+        "bytes": 1467353,
+        "byte_ratio": 0.9996995491192906,
+        "all_bytes": 1467794,
+        "report": "ai/plans/skills-token-evidence/recovery/prerequisite-closure-verification.json",
+        "sha256": "68bc6f6248b60d5cd1134b45da74444c15bdcb8ea935370c4f590a6e337f591d",
+        "file_count": 191,
+        "skill_count": 22
+      }
+    ],
+    "candidate": [
+      {
+        "entry": "cocosair-rendering",
+        "status": "PASS",
+        "bytes": 1545407,
+        "byte_ratio": 0.9965475015169971,
+        "all_bytes": 1550761,
+        "report": "ai/plans/skills-token-evidence/recovery/candidate-closure-rendering.json",
+        "sha256": "2b6f9d183cf7f68022e417e38fed8b18e81a53ef95aff8efd1687975f92a8484",
+        "file_count": 217,
+        "skill_count": 22
+      },
+      {
+        "entry": "cocosair-math",
+        "status": "PASS",
+        "bytes": 1545407,
+        "byte_ratio": 0.9965475015169971,
+        "all_bytes": 1550761,
+        "report": "ai/plans/skills-token-evidence/recovery/candidate-closure-math.json",
+        "sha256": "3e83c2b0d04d141a21e8cf68e1f2f4f53b5b3b693656eb832a0351d5572277c5",
+        "file_count": 217,
+        "skill_count": 22
+      },
+      {
+        "entry": "cocosair-verification",
+        "status": "PASS",
+        "bytes": 1545407,
+        "byte_ratio": 0.9965475015169971,
+        "all_bytes": 1550761,
+        "report": "ai/plans/skills-token-evidence/recovery/candidate-closure-verification.json",
+        "sha256": "bfcc26cd3b134b68d40ce0941490236e3854d4c750c13c77bff464ac564cc9c7",
+        "file_count": 217,
+        "skill_count": 22
+      }
+    ]
+  },
+  "optional_bundle_implemented": false,
+  "isolated_full_tree_report": "ai/plans/skills-token-evidence/recovery/a-only-final-manifest.json"
+}

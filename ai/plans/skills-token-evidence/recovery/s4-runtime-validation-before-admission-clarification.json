@@ -1,0 +1,127 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "scope": "Only the ten assigned runtime entry migrations; every other original skill is restored from the prerequisite snapshot. This is not a full live-tree or final S7a claim.",
+  "source_snapshot_hash": "46a9449ad54586ae70a914a77992801ea732270ab7f14509f40bf3792ee22d9d",
+  "isolated_candidate_hash": "7c38fca0254f452e4a21a5579d4bf4d6cd2c1559b66b8b1d0ddf2a85c3df17d7",
+  "ledger_sha256": "b2df989d72a6dd5ba20611a2e3c3e17f913a433c3cb24326ce942f983824cad2",
+  "allowed_changed_files": 30,
+  "lossless_status": "PASS",
+  "approved_self_review_mappings": 160,
+  "path_status": "PASS",
+  "metadata_host_contract_issues": [],
+  "format_status": 0,
+  "independent_review": "pending",
+  "metrics": [
+    {
+      "name": "cocosair-agent-session",
+      "entry_utf8_bytes": 3204,
+      "frontmatter_code_points": 1147,
+      "frontmatter_matches_attempt3": true,
+      "core_contracts_unchanged": true,
+      "trigger_count": 6,
+      "max_trigger_words": 7,
+      "max_reference_line_code_points": 80,
+      "generated_index_record_code_points": 1147
+    },
+    {
+      "name": "cocosair-application",
+      "entry_utf8_bytes": 3271,
+      "frontmatter_code_points": 1180,
+      "frontmatter_matches_attempt3": true,
+      "core_contracts_unchanged": true,
+      "trigger_count": 6,
+      "max_trigger_words": 7,
+      "max_reference_line_code_points": 76,
+      "generated_index_record_code_points": 1234
+    },
+    {
+      "name": "cocosair-performance",
+      "entry_utf8_bytes": 3379,
+      "frontmatter_code_points": 1175,
+      "frontmatter_matches_attempt3": true,
+      "core_contracts_unchanged": true,
+      "trigger_count": 8,
+      "max_trigger_words": 7,
+      "max_reference_line_code_points": 80,
+      "generated_index_record_code_points": 1220
+    },
+    {
+      "name": "cocosair-physics",
+      "entry_utf8_bytes": 3228,
+      "frontmatter_code_points": 1169,
+      "frontmatter_matches_attempt3": true,
+      "core_contracts_unchanged": true,
+      "trigger_count": 6,
+      "max_trigger_words": 8,
+      "max_reference_line_code_points": 80,
+      "generated_index_record_code_points": 1163
+    },
+    {
+      "name": "cocosair-primitives-mesh",
+      "entry_utf8_bytes": 3311,
+      "frontmatter_code_points": 1169,
+      "frontmatter_matches_attempt3": true,
+      "core_contracts_unchanged": true,
+      "trigger_count": 7,
+      "max_trigger_words": 8,
+      "max_reference_line_code_points": 89,
+      "generated_index_record_code_points": 1163
+    },
+    {
+      "name": "cocosair-project-setup",
+      "entry_utf8_bytes": 3259,
+      "frontmatter_code_points": 1170,
+      "frontmatter_matches_attempt3": true,
+      "core_contracts_unchanged": true,
+      "trigger_count": 7,
+      "max_trigger_words": 8,
+      "max_reference_line_code_points": 81,
+      "generated_index_record_code_points": 1144
+    },
+    {
+      "name": "cocosair-scene-graph",
+      "entry_utf8_bytes": 3347,
+      "frontmatter_code_points": 1201,
+      "frontmatter_matches_attempt3": true,
+      "core_contracts_unchanged": true,
+      "trigger_count": 7,
+      "max_trigger_words": 7,
+      "max_reference_line_code_points": 77,
+      "generated_index_record_code_points": 1230
+    },
+    {
+      "name": "cocosair-skinning-morph",
+      "entry_utf8_bytes": 3163,
+      "frontmatter_code_points": 1142,
+      "frontmatter_matches_attempt3": true,
+      "core_contracts_unchanged": true,
+      "trigger_count": 7,
+      "max_trigger_words": 8,
+      "max_reference_line_code_points": 78,
+      "generated_index_record_code_points": 1107
+    },
+    {
+      "name": "cocosair-ui-2d",
+      "entry_utf8_bytes": 3223,
+      "frontmatter_code_points": 1152,
+      "frontmatter_matches_attempt3": true,
+      "core_contracts_unchanged": true,
+      "trigger_count": 7,
+      "max_trigger_words": 8,
+      "max_reference_line_code_points": 78,
+      "generated_index_record_code_points": 1183
+    },
+    {
+      "name": "cocosair-verification",
+      "entry_utf8_bytes": 3352,
+      "frontmatter_code_points": 1233,
+      "frontmatter_matches_attempt3": true,
+      "core_contracts_unchanged": true,
+      "trigger_count": 7,
+      "max_trigger_words": 7,
+      "max_reference_line_code_points": 82,
+      "generated_index_record_code_points": 1220
+    }
+  ]
+}

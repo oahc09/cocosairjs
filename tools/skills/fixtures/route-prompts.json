@@ -1,0 +1,792 @@
+{
+  "schema": 1,
+  "freeze": {
+    "protocol": "skills-token-optimization D.1/D.2/S2p, stage one",
+    "source_snapshot_hash": "1e9c6637a512b819e822d8d06ea64d444c1e5640f35c48134f70fe80a5363e19",
+    "reviewed_before_scoring": true,
+    "review_method": "Manual owner-first review against original task, boundary and reference blocks; all labels and exact errors fixed before any corpus scoring.",
+    "reviewer": "Implementation agent source audit",
+    "prompt_payload_sha256": "e0f0dfc9958ca3e25e8af464822e5956092fc94ef5aaf6b1e9ff7bae20bcedd9",
+    "counts": {
+      "gold": 22,
+      "boundary": 12,
+      "real-error": 10
+    },
+    "router_policy": "Router owns only cross-subsystem skill selection and shared discipline; startup diagnostics belong to application.",
+    "change_policy": "Frozen after source review. Never alter prompts, labels, error strings or probes in response to scores; protocol changes require separate approval and a fresh preserved baseline."
+  },
+  "prompts": [
+    {
+      "id": "gold-router",
+      "kind": "gold",
+      "prompt": "How should I choose the primary skill and only its direct dependencies for a request spanning several AIR subsystems, changing the owner as the current step changes?",
+      "gold": "cocosair",
+      "sources": [
+        {
+          "path": "skills/cocosair/SKILL.md",
+          "block_id": "prose:L44-L44",
+          "hash": "e3b7a963113d76a31552013e2b9fc249b077b4d82f3cfeac856ebabff1ce87fb"
+        }
+      ],
+      "source_skill": "cocosair",
+      "ownership_reason": "The request is exclusively about selecting the responsible skill and direct dependency boundaries across tasks. It asks for no subsystem implementation, so the router itself owns the answer."
+    },
+    {
+      "id": "gold-2d-subsystems",
+      "kind": "gold",
+      "prompt": "For a DragonBones armature, should atlasJson and dragonBonesJson receive parsed objects or raw JSON strings, and when should I assign armatureName?",
+      "gold": "cocosair-2d-subsystems",
+      "sources": [
+        {
+          "path": "skills/cocosair-2d-subsystems/references/dragonbones.md",
+          "block_id": "prose:L14-L17",
+          "hash": "87084e3e95d56c91b7633cd6604e0d0d395405ab32a25c6500ca28b0775a7128"
+        },
+        {
+          "path": "skills/cocosair-2d-subsystems/references/dragonbones.md",
+          "block_id": "prose:L21-L26",
+          "hash": "30646737da298e638241862f8e1a821cbfdbc917c49f45eab6b08ac3d022e23d"
+        }
+      ],
+      "source_skill": "cocosair-2d-subsystems",
+      "ownership_reason": "DragonBones asset setters and ArmatureDisplay construction order are native 2D subsystem contracts. The caller already has its payloads, so generic downloading and UI host setup are not the task."
+    },
+    {
+      "id": "gold-agent-session",
+      "kind": "gold",
+      "prompt": "I want a devtools agent to inspect the running scene and make a controlled node change. How do session-local IDs and writableScenes govern dispatch?",
+      "gold": "cocosair-agent-session",
+      "sources": [
+        {
+          "path": "skills/cocosair-agent-session/SKILL.md",
+          "block_id": "prose:L32-L37",
+          "hash": "246af3a99261d969688ceac87f208385303d9326950604db9033aea966083af6"
+        }
+      ],
+      "source_skill": "cocosair-agent-session",
+      "ownership_reason": "This is observation and scoped mutation through the devtools AgentSession API. Session-local identifiers and explicit writable scenes belong to this skill rather than application runtime lifecycle."
+    },
+    {
+      "id": "gold-animation-tween",
+      "kind": "gold",
+      "prompt": "How can I run two independent tweens on one target and loop a sequence of position and scale changes?",
+      "gold": "cocosair-animation-tween",
+      "sources": [
+        {
+          "path": "skills/cocosair-animation-tween/SKILL.md",
+          "block_id": "prose:L32-L38",
+          "hash": "e21e2a8c5212ffe06eed279ac650609948da1ff763721977533833360a590f3d"
+        }
+      ],
+      "source_skill": "cocosair-animation-tween",
+      "ownership_reason": "The requested behavior is timed property interpolation and tween sequencing. It needs no skeleton construction or glTF loading, which keeps animation-tween the primary owner."
+    },
+    {
+      "id": "gold-application",
+      "kind": "gold",
+      "prompt": "How do I register scene-owned cleanup callbacks and replace the running scene safely without reloading the page?",
+      "gold": "cocosair-application",
+      "sources": [
+        {
+          "path": "skills/cocosair-application/SKILL.md",
+          "block_id": "prose:L32-L37",
+          "hash": "1247ac5483cdb24aff28658c9a101fe18bcb221207d5f299afc32fbe262209d9"
+        }
+      ],
+      "source_skill": "cocosair-application",
+      "ownership_reason": "Application owns the app handle, session scope and releaseScene/run ordering. This asks for full scene replacement with registered resource cleanup, not node parenting or page-stack state."
+    },
+    {
+      "id": "gold-assets",
+      "kind": "gold",
+      "prompt": "How do I load a bitmap font from a .fnt URL and retain its page texture until the font handle can be disposed?",
+      "gold": "cocosair-assets",
+      "sources": [
+        {
+          "path": "skills/cocosair-assets/SKILL.md",
+          "block_id": "prose:L32-L40",
+          "hash": "0d62439a76e9db937e2f1af1fcc30189ad771ec3090c8895ad94f27c0661c22f"
+        }
+      ],
+      "source_skill": "cocosair-assets",
+      "ownership_reason": "Downloading, constructing and disposing the bitmap-font handle and texture is asset ownership. Binding an already-created font to an existing Label is a separate UI responsibility."
+    },
+    {
+      "id": "gold-audio-video",
+      "kind": "gold",
+      "prompt": "How do I play BGM and SFX with separate volume controls, then verify that audio currentTime actually advances after a user gesture?",
+      "gold": "cocosair-audio-video",
+      "sources": [
+        {
+          "path": "skills/cocosair-audio-video/SKILL.md",
+          "block_id": "prose:L32-L36",
+          "hash": "3a236e32fa24a9459edbdf297d34453c366b6a9aa86e69bcc4d8ef0123610aa0"
+        },
+        {
+          "path": "skills/cocosair-audio-video/SKILL.md",
+          "block_id": "prose:L40-L40",
+          "hash": "f548d298bed5ad4f90152a3ffbde53688838f32cad918dcf289f974f4f92d7e7"
+        }
+      ],
+      "source_skill": "cocosair-audio-video",
+      "ownership_reason": "AudioService channel management, user-gesture playback and media time evidence are audio/video contracts. The question is not generic event mapping or rendered-frame verification."
+    },
+    {
+      "id": "gold-camera",
+      "kind": "gold",
+      "prompt": "How do I switch between perspective and orthographic camera framing, choose fov or orthoHeight, and fit a loaded model in view?",
+      "gold": "cocosair-camera",
+      "sources": [
+        {
+          "path": "skills/cocosair-camera/SKILL.md",
+          "block_id": "prose:L32-L39",
+          "hash": "228b89886665bb00fa05149c0beb5a95439f479600c84f7f852cb81ea807ae8d"
+        }
+      ],
+      "source_skill": "cocosair-camera",
+      "ownership_reason": "Projection settings and framing an existing object belong to Camera. Model loading is already complete and there is no requested lighting or material change."
+    },
+    {
+      "id": "gold-gltf",
+      "kind": "gold",
+      "prompt": "How do I load a compressed glTF/GLB model, inject its Draco, meshopt or KTX2 decoders before loading, and inspect extension support?",
+      "gold": "cocosair-gltf",
+      "sources": [
+        {
+          "path": "skills/cocosair-gltf/SKILL.md",
+          "block_id": "prose:L32-L39",
+          "hash": "9e5aae9a58cedc75e18f2871b492260cf48999d4628a840f01bf57d4815c9f62"
+        }
+      ],
+      "source_skill": "cocosair-gltf",
+      "ownership_reason": "glTF loading and its extension/decoder integration are the requested operations. Generic asset loading and material authoring are downstream dependencies, not the primary task."
+    },
+    {
+      "id": "gold-graphics-and-dom",
+      "kind": "gold",
+      "prompt": "How do I keep an editable DOM input aligned with a UI node using an overlay while the canvas moves or resizes?",
+      "gold": "cocosair-graphics-and-dom",
+      "sources": [
+        {
+          "path": "skills/cocosair-graphics-and-dom/SKILL.md",
+          "block_id": "prose:L37-L45",
+          "hash": "da2d019f30ca8aeab2c7884675b863c9e9a02f2a1b0bc36cb907909f88e0626b"
+        },
+        {
+          "path": "skills/cocosair-graphics-and-dom/references/dom-overlay.md",
+          "block_id": "prose:L33-L40",
+          "hash": "9bf124647ae4f5fe97fe23f8613f287e120b54052d68f872b81cdd551a4e84ed"
+        }
+      ],
+      "source_skill": "cocosair-graphics-and-dom",
+      "ownership_reason": "Attaching a live DOM element to a UI node is the overlay binding responsibility. It differs from engine Label rendering and only needs input-action if action routing is separately implicated."
+    },
+    {
+      "id": "gold-input-action",
+      "kind": "gold",
+      "prompt": "How do I map held keys and pointer input to named game actions and consume pressed/released edges once per tick?",
+      "gold": "cocosair-input-action",
+      "sources": [
+        {
+          "path": "skills/cocosair-input-action/SKILL.md",
+          "block_id": "prose:L32-L35",
+          "hash": "f113a340461c21b4ccecb06d8acc77e3d24976d6217599491feabbafea502eb9"
+        }
+      ],
+      "source_skill": "cocosair-input-action",
+      "ownership_reason": "Named action mapping, held state and consumeTick edge semantics are the input reducer/adapter contract. This is not camera ray conversion or DOM overlay placement."
+    },
+    {
+      "id": "gold-materials-effects",
+      "kind": "gold",
+      "prompt": "How do I initialize a builtin-standard material with metallic and roughness properties and enable its albedo texture macro before setProperty?",
+      "gold": "cocosair-materials-effects",
+      "sources": [
+        {
+          "path": "skills/cocosair-materials-effects/SKILL.md",
+          "block_id": "prose:L32-L42",
+          "hash": "21d820dc1dd8b19c99d126be78021dca5fae734a4b682e681fbd112262f6e0ab"
+        }
+      ],
+      "source_skill": "cocosair-materials-effects",
+      "ownership_reason": "The requested work is native effect selection, defines and typed material properties. Lighting configuration and importing a glTF-authored material are not being requested."
+    },
+    {
+      "id": "gold-math",
+      "kind": "gold",
+      "prompt": "What are the angle units for Quat.fromEuler and Quat.fromAxisAngle, and how should I use the out-first matrix and quaternion operations?",
+      "gold": "cocosair-math",
+      "sources": [
+        {
+          "path": "skills/cocosair-math/SKILL.md",
+          "block_id": "prose:L32-L41",
+          "hash": "90fd657885fad20e87735db63ebbf41331eddc03b63b12c707ad0ca2cccaec1e"
+        },
+        {
+          "path": "skills/cocosair-math/SKILL.md",
+          "block_id": "prose:L45-L45",
+          "hash": "59bd05723183426d4b613a0e9f24c73d90fb47c67534ec68fa3ce1e386df4169"
+        }
+      ],
+      "source_skill": "cocosair-math",
+      "ownership_reason": "Quaternion angle conventions and mathematical value-operation signatures are the direct subject. No scene mutation or animation playback is requested, so math owns the answer."
+    },
+    {
+      "id": "gold-performance",
+      "kind": "gold",
+      "prompt": "I have 1000 identical cubes producing 1000 draw calls. How do I choose instancing or static batching and verify the actual draw count?",
+      "gold": "cocosair-performance",
+      "sources": [
+        {
+          "path": "skills/cocosair-performance/SKILL.md",
+          "block_id": "prose:L32-L42",
+          "hash": "0207a6f443b2e73abbea6412d0738e94bd17aa4f3934c0bc2971470fcbb6a3e2"
+        }
+      ],
+      "source_skill": "cocosair-performance",
+      "ownership_reason": "The request is the batching-route decision and measured draw-call reduction. The shared material is an input to that decision; shader authoring is not the primary task."
+    },
+    {
+      "id": "gold-physics",
+      "kind": "gold",
+      "prompt": "My objects need gravity, falling and stacking. Should I choose builtin or cannon physics, and when must I select the backend?",
+      "gold": "cocosair-physics",
+      "sources": [
+        {
+          "path": "skills/cocosair-physics/SKILL.md",
+          "block_id": "prose:L32-L36",
+          "hash": "78720409eb7e56f2e47f019fcb75d0e73fbeaed7f003d2f67a915bd25943a281"
+        }
+      ],
+      "source_skill": "cocosair-physics",
+      "ownership_reason": "Backend simulation capability and startup selection are physics contracts. The distinction is collision queries versus integrated dynamics, not rendering or general app option validation."
+    },
+    {
+      "id": "gold-primitives-mesh",
+      "kind": "gold",
+      "prompt": "How do I author a custom vertex buffer and index layout, create a Mesh, and read its attributes back out?",
+      "gold": "cocosair-primitives-mesh",
+      "sources": [
+        {
+          "path": "skills/cocosair-primitives-mesh/SKILL.md",
+          "block_id": "prose:L32-L39",
+          "hash": "4d8197583ba6f12b8dedc6bd5d1d2bd2b199f1a4dc61b744315eed1c69c27ebc"
+        }
+      ],
+      "source_skill": "cocosair-primitives-mesh",
+      "ownership_reason": "Geometry representation, Mesh structure and attribute/index access are this skill’s core ownership. No draw-call batching or skeletal deformation problem is being asked."
+    },
+    {
+      "id": "gold-project-setup",
+      "kind": "gold",
+      "prompt": "How do I install cocosair.js in a bundler project or wire its importmap in a static HTML page, using the supported package entry?",
+      "gold": "cocosair-project-setup",
+      "sources": [
+        {
+          "path": "skills/cocosair-project-setup/SKILL.md",
+          "block_id": "prose:L32-L38",
+          "hash": "ddb846734c7bc814239e01105093bfd2e7ad2165680d30fe3dde7ee26b11f30a"
+        }
+      ],
+      "source_skill": "cocosair-project-setup",
+      "ownership_reason": "Package installation, export resolution and HTML shell/importmap wiring are project setup. No runtime admission failure or lifecycle operation is part of the request."
+    },
+    {
+      "id": "gold-rendering",
+      "kind": "gold",
+      "prompt": "My directional light gives the wrong brightness and no shadows. Which lighting units, shadow support rules and cast/receive switches should I inspect?",
+      "gold": "cocosair-rendering",
+      "sources": [
+        {
+          "path": "skills/cocosair-rendering/SKILL.md",
+          "block_id": "prose:L32-L40",
+          "hash": "fbba7eb52b79f463f071e20e0a0aa351975542db6a3e2b0e9900609b7d253fb8"
+        }
+      ],
+      "source_skill": "cocosair-rendering",
+      "ownership_reason": "Lighting units and shadow reachability/switches are rendering contracts. The camera and material already exist; this asks neither projection setup nor typed material authoring."
+    },
+    {
+      "id": "gold-scene-graph",
+      "kind": "gold",
+      "prompt": "What happens when I re-parent or destroy a Node, and which external listeners must I unsubscribe rather than relying on deferred destruction?",
+      "gold": "cocosair-scene-graph",
+      "sources": [
+        {
+          "path": "skills/cocosair-scene-graph/SKILL.md",
+          "block_id": "prose:L32-L37",
+          "hash": "f7db427b1adad8d75594d82a4a6e515d62e3c76ce1ca058429749a5b9b86d51c"
+        }
+      ],
+      "source_skill": "cocosair-scene-graph",
+      "ownership_reason": "Node hierarchy operations, lifecycle events and deferred destruction ownership belong to scene-graph. Whole-application close and action-input mapping are outside this specific request."
+    },
+    {
+      "id": "gold-skinning-morph",
+      "kind": "gold",
+      "prompt": "How do I build a skeleton with full joint paths relative to its skinning root, capture bind poses, and restore the rig later?",
+      "gold": "cocosair-skinning-morph",
+      "sources": [
+        {
+          "path": "skills/cocosair-skinning-morph/SKILL.md",
+          "block_id": "prose:L32-L36",
+          "hash": "442c3567cdb3dd24cdc63293e10a2c5298f2f64a8679273a7bc9768b30ccc34c"
+        }
+      ],
+      "source_skill": "cocosair-skinning-morph",
+      "ownership_reason": "The request directly concerns skeleton construction, joint resolution and bind-pose restoration. It does not ask to parse a model file or sequence timed AnimationClip playback."
+    },
+    {
+      "id": "gold-ui-2d",
+      "kind": "gold",
+      "prompt": "How do I create a UI Canvas with its orthographic camera, then lay out Label and Sprite children using Widget and Layout?",
+      "gold": "cocosair-ui-2d",
+      "sources": [
+        {
+          "path": "skills/cocosair-ui-2d/SKILL.md",
+          "block_id": "prose:L33-L39",
+          "hash": "35395b22f1aeabb03f67b8c9ea6ebcfe24e1d32fd8e6e989c531666551169260"
+        }
+      ],
+      "source_skill": "cocosair-ui-2d",
+      "ownership_reason": "Engine UI host construction, renderers and layout components are the requested work. DOM overlays and generic Camera projection theory do not own this concrete UI setup."
+    },
+    {
+      "id": "gold-verification",
+      "kind": "gold",
+      "prompt": "Which repository gates prove browser rendering or installed-package consumption, and why do HEADLESS tests and typecheck alone not establish those claims?",
+      "gold": "cocosair-verification",
+      "sources": [
+        {
+          "path": "skills/cocosair-verification/SKILL.md",
+          "block_id": "prose:L32-L37",
+          "hash": "9f55935639ec6b1e5278ceeb41090d16b391ec41a461d3001b82bce83ab61ac7"
+        }
+      ],
+      "source_skill": "cocosair-verification",
+      "ownership_reason": "This asks how to select evidence collectors and interpret validation scope. It requests no subsystem feature implementation and no live devtools session mutation."
+    },
+    {
+      "id": "boundary-entry-versus-startup",
+      "kind": "boundary",
+      "prompt": "The npm import cannot resolve the package entry in my bundler project; createAirApp has not run. Which export or importmap wiring should I correct?",
+      "gold": "cocosair-project-setup",
+      "reject": ["cocosair-application"],
+      "sources": [
+        {
+          "path": "skills/cocosair/SKILL.md",
+          "block_id": "prose:L38-L42",
+          "hash": "a29f953e10304b35f7209ab044bdb6dac6551a39048673c91e6b0c4de958a536"
+        },
+        {
+          "path": "skills/cocosair-project-setup/SKILL.md",
+          "block_id": "prose:L32-L38",
+          "hash": "ddb846734c7bc814239e01105093bfd2e7ad2165680d30fe3dde7ee26b11f30a"
+        }
+      ],
+      "source_skill": "cocosair",
+      "ownership_reason": "The failure precedes runtime creation and is explicitly package-entry resolution. Router dispatch assigns unresolved imports to project-setup and startup option/admission errors to application."
+    },
+    {
+      "id": "boundary-target-versus-camera",
+      "kind": "boundary",
+      "prompt": "My camera framing is correct. I need an offscreen render target for a mirror, including MSAA sample negotiation, resize bindings and pixel readback.",
+      "gold": "cocosair-rendering",
+      "reject": ["cocosair-camera"],
+      "sources": [
+        {
+          "path": "skills/cocosair-rendering/references/context.md",
+          "block_id": "prose:L9-L14",
+          "hash": "b64c6456ecf1a1f67210a5005d02b0fbb8eb7babce2358a8216441351603eeac"
+        },
+        {
+          "path": "skills/cocosair-rendering/SKILL.md",
+          "block_id": "prose:L32-L40",
+          "hash": "fbba7eb52b79f463f071e20e0a0aa351975542db6a3e2b0e9900609b7d253fb8"
+        }
+      ],
+      "source_skill": "cocosair-rendering",
+      "ownership_reason": "The camera’s projection is already correct; the work is allocating and managing offscreen target attachments, sample fallback and readback. Rendering owns these target contracts."
+    },
+    {
+      "id": "boundary-material-versus-lighting",
+      "kind": "boundary",
+      "prompt": "The lights and shadow setup are already correct, but my custom GLSL effect needs declared properties, matching setProperty value types and texture defines.",
+      "gold": "cocosair-materials-effects",
+      "reject": ["cocosair-rendering"],
+      "sources": [
+        {
+          "path": "skills/cocosair-materials-effects/references/context.md",
+          "block_id": "prose:L18-L18",
+          "hash": "264bab95d5624465f9bd3ca99912e6883dfcd463314bbdb75b3ab05b88bf3100"
+        },
+        {
+          "path": "skills/cocosair-materials-effects/SKILL.md",
+          "block_id": "prose:L46-L46",
+          "hash": "b66c3806143c2147699fc34cda59aaa514f29edeff43f72b4de9d3dbfb296793"
+        }
+      ],
+      "source_skill": "cocosair-materials-effects",
+      "ownership_reason": "The requested change is effect authoring and uniform/property type correctness. Lighting and shadow configuration are explicitly settled and the context separates material authoring from rendering."
+    },
+    {
+      "id": "boundary-gltf-versus-material",
+      "kind": "boundary",
+      "prompt": "I am importing a glTF model and need to check which material extensions the loader supports and which require a decoder, rather than write a new effect.",
+      "gold": "cocosair-gltf",
+      "reject": ["cocosair-materials-effects"],
+      "sources": [
+        {
+          "path": "skills/cocosair-gltf/references/context.md",
+          "block_id": "prose:L9-L17",
+          "hash": "4791f60bd5f319d6f8fb9a61dab7fdaeb04458543bac82d3a94c709c5fc3def6"
+        },
+        {
+          "path": "skills/cocosair-gltf/SKILL.md",
+          "block_id": "prose:L32-L39",
+          "hash": "9e5aae9a58cedc75e18f2871b492260cf48999d4628a840f01bf57d4815c9f62"
+        }
+      ],
+      "source_skill": "cocosair-gltf",
+      "ownership_reason": "The question concerns the glTF importer’s extension support contract. Authoring or overriding native materials is distinct, even though imported materials use effects maintained by another skill."
+    },
+    {
+      "id": "boundary-assets-versus-gltf",
+      "kind": "boundary",
+      "prompt": "I am loading a PNG texture by URL with an explicit extension and need refcounted AssetBank disposal. No model or glTF/GLB file is involved.",
+      "gold": "cocosair-assets",
+      "reject": ["cocosair-gltf"],
+      "sources": [
+        {
+          "path": "skills/cocosair-gltf/references/context.md",
+          "block_id": "prose:L9-L17",
+          "hash": "4791f60bd5f319d6f8fb9a61dab7fdaeb04458543bac82d3a94c709c5fc3def6"
+        },
+        {
+          "path": "skills/cocosair-assets/SKILL.md",
+          "block_id": "prose:L32-L40",
+          "hash": "0d62439a76e9db937e2f1af1fcc30189ad771ec3090c8895ad94f27c0661c22f"
+        }
+      ],
+      "source_skill": "cocosair-gltf",
+      "ownership_reason": "This is generic image loading and ownership, which the glTF context explicitly assigns to assets. The absent model payload rules out the glTF-specific loader as primary."
+    },
+    {
+      "id": "boundary-camera-versus-input",
+      "kind": "boundary",
+      "prompt": "My pointer event is already delivered. How do I convert its framebuffer pixel to a world picking ray and account for the camera coordinate origin and depth conventions?",
+      "gold": "cocosair-camera",
+      "reject": ["cocosair-input-action"],
+      "sources": [
+        {
+          "path": "skills/cocosair-camera/references/context.md",
+          "block_id": "prose:L13-L13",
+          "hash": "a50f19adde67e39b6da0ccda8182dcd317a007b61b3df57b64cb4ae486d5d642"
+        },
+        {
+          "path": "skills/cocosair-camera/SKILL.md",
+          "block_id": "prose:L32-L39",
+          "hash": "228b89886665bb00fa05149c0beb5a95439f479600c84f7f852cb81ea807ae8d"
+        }
+      ],
+      "source_skill": "cocosair-camera",
+      "ownership_reason": "Input delivery already works. Camera owns screen-to-world projection, framebuffer coordinate conventions and ray construction; changing listeners or named action state will not answer the request."
+    },
+    {
+      "id": "boundary-animation-versus-math",
+      "kind": "boundary",
+      "prompt": "The interpolated Vec3 values are correct. I need to schedule concurrent tween motion and loop a keyed AnimationClip with the right WrapMode and clock.",
+      "gold": "cocosair-animation-tween",
+      "reject": ["cocosair-math"],
+      "sources": [
+        {
+          "path": "skills/cocosair-animation-tween/references/context.md",
+          "block_id": "prose:L9-L16",
+          "hash": "3f9704d22b9cf84dc9286d73b436d5b5a0b1946dd369c1c640feb3ada36cae85"
+        },
+        {
+          "path": "skills/cocosair-animation-tween/SKILL.md",
+          "block_id": "prose:L32-L38",
+          "hash": "e21e2a8c5212ffe06eed279ac650609948da1ff763721977533833360a590f3d"
+        }
+      ],
+      "source_skill": "cocosair-animation-tween",
+      "ownership_reason": "Mathematical value computation is already resolved; timed evaluation, tween concurrency and clip wrapping belong to animation-tween. Its context lists math only as the value-type dependency."
+    },
+    {
+      "id": "boundary-skinning-versus-gltf",
+      "kind": "boundary",
+      "prompt": "The glTF model has loaded successfully. I am now debugging joint paths and bind poses while manually moving bones in realtime skinning mode.",
+      "gold": "cocosair-skinning-morph",
+      "reject": ["cocosair-gltf"],
+      "sources": [
+        {
+          "path": "skills/cocosair-gltf/references/context.md",
+          "block_id": "prose:L9-L17",
+          "hash": "4791f60bd5f319d6f8fb9a61dab7fdaeb04458543bac82d3a94c709c5fc3def6"
+        },
+        {
+          "path": "skills/cocosair-skinning-morph/SKILL.md",
+          "block_id": "prose:L32-L36",
+          "hash": "442c3567cdb3dd24cdc63293e10a2c5298f2f64a8679273a7bc9768b30ccc34c"
+        }
+      ],
+      "source_skill": "cocosair-gltf",
+      "ownership_reason": "Loading succeeded and the current task is skeletal deformation, joint resolution and realtime pose binding. The glTF context explicitly routes those concerns to skinning-morph."
+    },
+    {
+      "id": "boundary-ui-versus-assets",
+      "kind": "boundary",
+      "prompt": "I already have a loaded bitmap-font handle. How do I bind its font to a Label and configure text wrapping and box size in the UI?",
+      "gold": "cocosair-ui-2d",
+      "reject": ["cocosair-assets"],
+      "sources": [
+        {
+          "path": "skills/cocosair/SKILL.md",
+          "block_id": "prose:L38-L42",
+          "hash": "a29f953e10304b35f7209ab044bdb6dac6551a39048673c91e6b0c4de958a536"
+        },
+        {
+          "path": "skills/cocosair-ui-2d/SKILL.md",
+          "block_id": "prose:L33-L39",
+          "hash": "35395b22f1aeabb03f67b8c9ea6ebcfe24e1d32fd8e6e989c531666551169260"
+        }
+      ],
+      "source_skill": "cocosair",
+      "ownership_reason": "The font resource already exists; the question is Label configuration and binding. Router guidance separates loading the font, owned by assets, from using it in a Label, owned by ui-2d."
+    },
+    {
+      "id": "boundary-dom-versus-input",
+      "kind": "boundary",
+      "prompt": "An attached DOM overlay is misaligned and intercepts clicks over the wrong canvas area. I need to fix overlay placement; named game-action routing is not involved.",
+      "gold": "cocosair-graphics-and-dom",
+      "reject": ["cocosair-input-action"],
+      "sources": [
+        {
+          "path": "skills/cocosair/SKILL.md",
+          "block_id": "prose:L38-L42",
+          "hash": "a29f953e10304b35f7209ab044bdb6dac6551a39048673c91e6b0c4de958a536"
+        },
+        {
+          "path": "skills/cocosair-graphics-and-dom/SKILL.md",
+          "block_id": "prose:L37-L45",
+          "hash": "da2d019f30ca8aeab2c7884675b863c9e9a02f2a1b0bc36cb907909f88e0626b"
+        }
+      ],
+      "source_skill": "cocosair",
+      "ownership_reason": "The fault is placement and hit behavior of the DOM overlay binding. Router guidance gives that task to graphics-and-dom and adds input-action only for focus/action routing issues."
+    },
+    {
+      "id": "boundary-dragonbones-versus-ui",
+      "kind": "boundary",
+      "prompt": "My Canvas, UI camera and layer are already visible. A DragonBones ArmatureDisplay stays static after I pass loaded objects to atlasJson and dragonBonesJson.",
+      "gold": "cocosair-2d-subsystems",
+      "reject": ["cocosair-ui-2d"],
+      "sources": [
+        {
+          "path": "skills/cocosair-2d-subsystems/references/context.md",
+          "block_id": "prose:L9-L15",
+          "hash": "bd79cac53b8813d356f32cffcf61d38c3b9dd829913c4da8aed5058475c40b78"
+        },
+        {
+          "path": "skills/cocosair-2d-subsystems/references/dragonbones.md",
+          "block_id": "prose:L41-L44",
+          "hash": "c1ed5a0c6dc01b4b066f50e13b13ad6198a152549e661b1e901f0302a4bb7970"
+        }
+      ],
+      "source_skill": "cocosair-2d-subsystems",
+      "ownership_reason": "The UI host is already established; the remaining failure is the DragonBones raw-text setter/armature construction contract. UI setup is only the prerequisite named in the adjacent-skill context."
+    },
+    {
+      "id": "boundary-batching-versus-material",
+      "kind": "boundary",
+      "prompt": "The instancing shader and shared material are already configured. How do I compare static merge with instancing for many identical meshes and measure saved draw calls?",
+      "gold": "cocosair-performance",
+      "reject": ["cocosair-materials-effects"],
+      "sources": [
+        {
+          "path": "skills/cocosair-performance/references/context.md",
+          "block_id": "prose:L9-L18",
+          "hash": "68b4faddf38a59b77189b3844e674308c17ec79e58a5b900e97cfd90e2da8fa2"
+        },
+        {
+          "path": "skills/cocosair-performance/SKILL.md",
+          "block_id": "prose:L32-L42",
+          "hash": "0207a6f443b2e73abbea6412d0738e94bd17aa4f3934c0bc2971470fcbb6a3e2"
+        }
+      ],
+      "source_skill": "cocosair-performance",
+      "ownership_reason": "The requested result is a batching strategy and measured draw count. Performance context explicitly owns those decisions while materials-effects owns the shader-side instancing definition."
+    },
+    {
+      "id": "error-webgl2-required",
+      "kind": "real-error",
+      "prompt": "createAirApp rejected with WEBGL2_REQUIRED during browser startup. How should I diagnose the unavailable WebGL 2 context and the allowed startup outcome?",
+      "gold": "cocosair-application",
+      "exact_error": "WEBGL2_REQUIRED",
+      "sources": [
+        {
+          "path": "skills/cocosair-application/references/startup-errors.md",
+          "block_id": "table:L50-L54",
+          "hash": "2fc7913d62b12b44ba57b1230b9a4cedaadf771868b2c03d347ed3cd78da0e61"
+        }
+      ],
+      "source_skill": "cocosair-application",
+      "ownership_reason": "This is a browser startup rejection produced during app initialization. Application owns error diagnosis even when the router or graphics documentation also mentions the WebGL requirement."
+    },
+    {
+      "id": "error-app-conflict",
+      "kind": "real-error",
+      "prompt": "A second createAirApp call rejects with AIR_E_APP_CONFLICT after I pass new contextLoss callbacks. Which normalized options and identities must match?",
+      "gold": "cocosair-application",
+      "exact_error": "AIR_E_APP_CONFLICT",
+      "sources": [
+        {
+          "path": "skills/cocosair-application/references/startup-errors.md",
+          "block_id": "table:L30-L34",
+          "hash": "8646558d73608733da0d16027d298d1bd8f5b5abaa002375ccb3b205a6480509"
+        }
+      ],
+      "source_skill": "cocosair-application",
+      "ownership_reason": "The failure is the per-document application admission registry comparing normalized options and callback identity. It is not a package import error or a rendering pipeline issue."
+    },
+    {
+      "id": "error-target-samples",
+      "kind": "real-error",
+      "prompt": "createAirRenderTarget throws AIR_E_RENDER_TARGET_SAMPLES for requested MSAA with sampleFallback set to error. How do I check supported and effective samples?",
+      "gold": "cocosair-rendering",
+      "exact_error": "AIR_E_RENDER_TARGET_SAMPLES",
+      "sources": [
+        {
+          "path": "skills/cocosair-rendering/references/render-target.md",
+          "block_id": "table:L77-L99",
+          "hash": "de5bf1610bca51bd208251d17dbd3f85ac42f8c64bfbd5ae90634f2714ffcf49"
+        }
+      ],
+      "source_skill": "cocosair-rendering",
+      "ownership_reason": "The error is the offscreen render target’s sample negotiation or driver allocation contract. Device startup has already happened, and effect property typing is unrelated."
+    },
+    {
+      "id": "error-texture-color",
+      "kind": "real-error",
+      "prompt": "Texture validation rejects AIR_E_TEXTURE_COLOR when a normal map uses shader-srgb decode. Which linear-data, GPU format and decode pairing should I check?",
+      "gold": "cocosair-rendering",
+      "exact_error": "AIR_E_TEXTURE_COLOR",
+      "sources": [
+        {
+          "path": "skills/cocosair-rendering/references/color-contract.md",
+          "block_id": "prose:L90-L90",
+          "hash": "7ccbf16848996f2f245fe1b4110b5d078df58c790c653d2a966c4311cc9de776"
+        },
+        {
+          "path": "skills/cocosair-rendering/references/color-contract.md",
+          "block_id": "table:L92-L98",
+          "hash": "3ae198b06e2c50a560c1cc18b35e8c639ce9d3b1055f42b40a12062442099605"
+        }
+      ],
+      "source_skill": "cocosair-rendering",
+      "ownership_reason": "The issue is the explicit texture color-space contract for data maps. Rendering owns format/decode validation; editing material property value types would not fix the forbidden sRGB pairing."
+    },
+    {
+      "id": "error-gltf-decoder",
+      "kind": "real-error",
+      "prompt": "Loading a compressed glTF model fails with GLTF_DECODER_MISSING before any instance renders. How do I diagnose absent Draco, meshopt or KTX2 decoder injection?",
+      "gold": "cocosair-gltf",
+      "exact_error": "GLTF_DECODER_MISSING",
+      "sources": [
+        {
+          "path": "skills/cocosair-gltf/references/diagnostics.md",
+          "block_id": "table:L7-L13",
+          "hash": "323b0cdcabc9d31cc2997588bb745638436ee15c85ec0daa06c749c1521a09b7"
+        }
+      ],
+      "source_skill": "cocosair-gltf",
+      "ownership_reason": "The exact code denotes a required glTF decoder/transcoder being absent or unusable. The primary task is loader decoder setup, not generic asset caching or a material render problem."
+    },
+    {
+      "id": "error-material-type",
+      "kind": "real-error",
+      "prompt": "Material.setProperty throws AIR_E_MATERIAL_TYPE while I assign a uniform value. How do I identify the declared property shape and pass the matching engine value type?",
+      "gold": "cocosair-materials-effects",
+      "exact_error": "AIR_E_MATERIAL_TYPE",
+      "sources": [
+        {
+          "path": "skills/cocosair-materials-effects/references/property-types.md",
+          "block_id": "prose:L42-L42",
+          "hash": "9e8bc0a735f50dbce69a1d44f859c2dafecad4d230b28b6a7a8b32b771ac40d9"
+        }
+      ],
+      "source_skill": "cocosair-materials-effects",
+      "ownership_reason": "The tagged TypeError comes from uniform/property type validation. Materials-effects owns declared effect properties and their accepted native values, even when those values are math objects."
+    },
+    {
+      "id": "error-material-pass-index",
+      "kind": "real-error",
+      "prompt": "Material.setProperty(name, value, passIdx) throws TypeError: Cannot read properties of undefined (reading 'getHandle'). I passed an out-of-range pass index; how should I diagnose the material call?",
+      "gold": "cocosair-materials-effects",
+      "exact_error": "TypeError: Cannot read properties of undefined (reading 'getHandle')",
+      "sources": [
+        {
+          "path": "skills/cocosair-materials-effects/references/property-types.md",
+          "block_id": "prose:L64-L69",
+          "hash": "444eb042f3f6389a3e0bdd3fa47f05e9f2a8f499952d9dc598ca88a2e81a5676"
+        }
+      ],
+      "source_skill": "cocosair-materials-effects",
+      "ownership_reason": "The reference identifies an invalid Material.setProperty pass index as the exact throw path. This is material-pass selection and API error behavior, not a generic JavaScript or rendering startup problem."
+    },
+    {
+      "id": "error-font-in-use",
+      "kind": "real-error",
+      "prompt": "Disposing my bitmap-font handle throws AIR_E_FNT_IN_USE while Labels still reference the font. What must I detach or release before disposing its page texture?",
+      "gold": "cocosair-assets",
+      "exact_error": "AIR_E_FNT_IN_USE",
+      "sources": [
+        {
+          "path": "skills/cocosair-assets/references/bmfont.md",
+          "block_id": "prose:L36-L36",
+          "hash": "5b83d64d1944e6495fcfb300cb74fb3849c1e6158246c331e56e17d4d38638f0"
+        }
+      ],
+      "source_skill": "cocosair-assets",
+      "ownership_reason": "The error is the font handle’s asset-refcount disposal guard. Labels are current consumers, but asset ownership and safe handle disposal remain the primary responsibility."
+    },
+    {
+      "id": "error-agent-out-of-scope",
+      "kind": "real-error",
+      "prompt": "A devtools session.dispatch node mutation returns OUT_OF_SCOPE although inspectNode can read that node. How should writableScenes constrain writes?",
+      "gold": "cocosair-agent-session",
+      "exact_error": "OUT_OF_SCOPE",
+      "sources": [
+        {
+          "path": "skills/cocosair-agent-session/references/agent-session.md",
+          "block_id": "prose:L11-L13",
+          "hash": "61dd5a1051923b87c35de6063d498f87310ce516a4c3c1dcf762f5db999faf73"
+        }
+      ],
+      "source_skill": "cocosair-agent-session",
+      "ownership_reason": "Read access and write authorization differ in AgentSession. Its explicit writable scene scope governs this error; the runtime application session scope manages cleanup rather than devtools permissions."
+    },
+    {
+      "id": "error-skinning-joint-path",
+      "kind": "real-error",
+      "prompt": "Binding a weighted skeleton throws AIR_E_SKINNING_JOINT_PATH for a joint path that no longer resolves below skinningRoot. How do I validate the relative joint path?",
+      "gold": "cocosair-skinning-morph",
+      "exact_error": "AIR_E_SKINNING_JOINT_PATH",
+      "sources": [
+        {
+          "path": "skills/cocosair-skinning-morph/references/joint-paths.md",
+          "block_id": "heading:L26-L26",
+          "hash": "818063a9ce46b622f22a59ce1984d98304d8a14911bdb31a7a265f1dcd063891"
+        },
+        {
+          "path": "skills/cocosair-skinning-morph/references/joint-paths.md",
+          "block_id": "prose:L30-L33",
+          "hash": "e6fe13302ce25d2152f953c737e4fb9f3628b880252bf0d6888688ad703603a8"
+        }
+      ],
+      "source_skill": "cocosair-skinning-morph",
+      "ownership_reason": "The failed operation is weighted-joint resolution during skeleton binding. Skinning-morph owns the full relative paths and binding error contract, regardless of how the skeleton was initially loaded."
+    }
+  ]
+}

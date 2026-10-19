@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "tool": "skills-meta-p1-v1-recovery1",
+  "parser_version": "air-markdown-1",
+  "status": "PASS",
+  "mode": "metadata-only",
+  "source_snapshot_hash": "46a9449ad54586ae70a914a77992801ea732270ab7f14509f40bf3792ee22d9d",
+  "candidate_hash": "5bff4a12527201f9bac5eee319f78de183439c8b1ebeb9d0fcf90965a5682013",
+  "original_skill_count": 22,
+  "validated_skills": [
+    "cocosair",
+    "cocosair-2d-subsystems",
+    "cocosair-agent-session",
+    "cocosair-animation-tween",
+    "cocosair-application",
+    "cocosair-assets",
+    "cocosair-audio-video",
+    "cocosair-camera",
+    "cocosair-gltf",
+    "cocosair-graphics-and-dom",
+    "cocosair-input-action",
+    "cocosair-materials-effects",
+    "cocosair-math",
+    "cocosair-performance",
+    "cocosair-physics",
+    "cocosair-primitives-mesh",
+    "cocosair-project-setup",
+    "cocosair-rendering",
+    "cocosair-scene-graph",
+    "cocosair-skinning-morph",
+    "cocosair-ui-2d",
+    "cocosair-verification"
+  ],
+  "budgets": {
+    "description_code_points": 180,
+    "frontmatter_code_points": 1400,
+    "subsystem_bytes": 4000,
+    "router_bytes": 4200,
+    "index_object_code_points": 2000
+  },
+  "issues": []
+}

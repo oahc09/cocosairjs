@@ -1,0 +1,1061 @@
+{
+  "schema": 1,
+  "purpose": "Frozen P1 publication inventory; technical source and validation artifacts only.",
+  "source_commit": "66d11fd0c3c189b7dfa6d20645222e237352f9f3",
+  "base_checkpoint_commit": "6d1e7ca63e5d5c51b311c37254cc00889097e78e",
+  "base_checkpoint_tree": "cb6d9221bdb692b16f580dfaaefc7a2b69af41ac",
+  "expected_tree_before_this_inventory": "6a60ee41d9c7d480ffef54f69908da0e596a4fdc",
+  "expected_skills_tree": "3afeca8b09ef2f20c15e0b33a8558743a9e66a47",
+  "candidate_snapshot_hash": "7f246c153901eae7a31d0bd849904412b575e2cbd5d3cfc507eab502ff0ada41",
+  "artifact_count": 208,
+  "artifacts": [
+    {
+      "path": ".github/workflows/skills.yml",
+      "bytes": 2163,
+      "sha": "8fe731aad1d3290cd098ac495a1274a676a714a8"
+    },
+    {
+      "path": "AGENTS.md",
+      "bytes": 17852,
+      "sha": "891bf62735664ad391ad9bdfa3b038640b029635"
+    },
+    {
+      "path": "ai/plans/skills-acceptance-record.md",
+      "bytes": 8628,
+      "sha": "a2f0aef82a37bc069a78ab2b7989ee3a1f433f84"
+    },
+    {
+      "path": "ai/plans/skills-load-event-guide.md",
+      "bytes": 3023,
+      "sha": "d25236d52ae08e67aa7705fa755f4cf52b05f99d"
+    },
+    {
+      "path": "ai/plans/skills-migration-ledger.json",
+      "bytes": 441083,
+      "sha": "f29874e94d820e250608f9c5c3c401c62c1aef9a"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/a-only-final-manifest.json",
+      "bytes": 55149,
+      "sha": "9f3e68daa528269990dccd10d82d7d2750089c7b"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/a-only-final-paths.exit.json",
+      "bytes": 56,
+      "sha": "100f26023681d704671acb35fefda50b436e95f5"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/a-only-final-paths.json",
+      "bytes": 89,
+      "sha": "1424e25de0373784a97aa761ccfc71904d62fd68"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/candidate-B1-diff.exit-code",
+      "bytes": 2,
+      "sha": "573541ac9702dd3969c9bc859d2b91ec1f7e6e56"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/candidate-B1-diff.json",
+      "bytes": 16579,
+      "sha": "28c8c42fef9b3ef79dbc67cb0e2df51fe323accc"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/candidate-closure-math.exit-code",
+      "bytes": 2,
+      "sha": "573541ac9702dd3969c9bc859d2b91ec1f7e6e56"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/candidate-closure-math.json",
+      "bytes": 108958,
+      "sha": "7e9109ea5130422617e7db4dd8cc6fd231bf73bf"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/candidate-closure-rendering.exit-code",
+      "bytes": 2,
+      "sha": "573541ac9702dd3969c9bc859d2b91ec1f7e6e56"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/candidate-closure-rendering.json",
+      "bytes": 108963,
+      "sha": "e37a962cf88fe989aa941cbcb0f3f85a44c89976"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/candidate-closure-verification.exit-code",
+      "bytes": 2,
+      "sha": "573541ac9702dd3969c9bc859d2b91ec1f7e6e56"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/candidate-closure-verification.json",
+      "bytes": 108966,
+      "sha": "00aa5fba5c8d5efc532bcdc6715e9a8ccac30dc9"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/candidate-manifest.json",
+      "bytes": 55246,
+      "sha": "44d49e92759655b76e78c7caff6ceae42460c9df"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/distribution-decision.json",
+      "bytes": 4230,
+      "sha": "8dbc41b77b65b8be67590c26a4360689b92f1b43"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/final-format-tools.exit-code",
+      "bytes": 2,
+      "sha": "573541ac9702dd3969c9bc859d2b91ec1f7e6e56"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/final-format-tools.txt",
+      "bytes": 66,
+      "sha": "4aa0d16e7a0ff5c16269bf45771cebe89cc2e81d"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/final-index.exit-code",
+      "bytes": 2,
+      "sha": "573541ac9702dd3969c9bc859d2b91ec1f7e6e56"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/final-index.json",
+      "bytes": 79,
+      "sha": "81ec905865ce3dbc25c4e17ea5a049761a4d764f"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/final-lossless-admission-fixed.exit-code",
+      "bytes": 2,
+      "sha": "573541ac9702dd3969c9bc859d2b91ec1f7e6e56"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/final-lossless-admission-fixed.json",
+      "bytes": 584,
+      "sha": "1b239a8fc4eccfea5b1d2f9aed8e5838f6d3818c"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/final-lossless-attempt1.exit-code",
+      "bytes": 2,
+      "sha": "573541ac9702dd3969c9bc859d2b91ec1f7e6e56"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/final-lossless-attempt1.json",
+      "bytes": 584,
+      "sha": "a6d44305cf7d0330016398fa10ea06aeb7b2c53e"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/final-lossless.exit-code",
+      "bytes": 2,
+      "sha": "573541ac9702dd3969c9bc859d2b91ec1f7e6e56"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/final-lossless.json",
+      "bytes": 584,
+      "sha": "1b239a8fc4eccfea5b1d2f9aed8e5838f6d3818c"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/final-meta-attempt1.exit-code",
+      "bytes": 2,
+      "sha": "573541ac9702dd3969c9bc859d2b91ec1f7e6e56"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/final-meta-attempt1.json",
+      "bytes": 1178,
+      "sha": "5ddd9b5976337e2d3410451a9740b73831692aad"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/final-meta.exit-code",
+      "bytes": 2,
+      "sha": "573541ac9702dd3969c9bc859d2b91ec1f7e6e56"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/final-meta.json",
+      "bytes": 1178,
+      "sha": "42bef80e3fb9952ea420f095c92f797ac37722e0"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/final-paths-admission-fixed.exit-code",
+      "bytes": 2,
+      "sha": "573541ac9702dd3969c9bc859d2b91ec1f7e6e56"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/final-paths-admission-fixed.json",
+      "bytes": 89,
+      "sha": "1424e25de0373784a97aa761ccfc71904d62fd68"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/final-paths-attempt1.exit-code",
+      "bytes": 2,
+      "sha": "573541ac9702dd3969c9bc859d2b91ec1f7e6e56"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/final-paths-attempt1.json",
+      "bytes": 89,
+      "sha": "9ab41859cc6f891520157aa325073a120087e4d2"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/final-paths.exit-code",
+      "bytes": 2,
+      "sha": "573541ac9702dd3969c9bc859d2b91ec1f7e6e56"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/final-paths.json",
+      "bytes": 89,
+      "sha": "1424e25de0373784a97aa761ccfc71904d62fd68"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/final-route-attempt1.exit-code",
+      "bytes": 2,
+      "sha": "d00491fd7e5bb6fa28c517a0bb32b8b506539d4d"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/final-route-attempt1.json",
+      "bytes": 1600925,
+      "sha": "d50836366625add547ff6f50818c4e19627f6106"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/final-route.exit-code",
+      "bytes": 2,
+      "sha": "573541ac9702dd3969c9bc859d2b91ec1f7e6e56"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/final-route.json",
+      "bytes": 1320744,
+      "sha": "6b6d7a6927de7ca1ca03714b1eaf313668d1cc50"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/final-scope.json",
+      "bytes": 3280,
+      "sha": "6945a3bb946a369a94b214e9157211ff8405c647"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/final-static-attempt1.exit-code",
+      "bytes": 2,
+      "sha": "573541ac9702dd3969c9bc859d2b91ec1f7e6e56"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/final-static-attempt1.json",
+      "bytes": 96646,
+      "sha": "bb12fcd3d166aa6a6d81575de77f8ef9f5888f04"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/final-static.exit-code",
+      "bytes": 2,
+      "sha": "573541ac9702dd3969c9bc859d2b91ec1f7e6e56"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/final-static.json",
+      "bytes": 96643,
+      "sha": "1941e8be4f20b11de7b8089f5f131381eec6949b"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/final-tools-tests.exit-code",
+      "bytes": 2,
+      "sha": "573541ac9702dd3969c9bc859d2b91ec1f7e6e56"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/final-tools-tests.tap",
+      "bytes": 13755,
+      "sha": "db0d62e0b49fd8053f4692141c259d746837b474"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/independent-final-review.json",
+      "bytes": 3533,
+      "sha": "7c176a58ead16572b0fc82040b60d83eff94a0f7"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/index-determinism.json",
+      "bytes": 549,
+      "sha": "e7bd661bd74ca90c4a91ce5e54d3c6286e8f4573"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/index-ledger.json",
+      "bytes": 3913,
+      "sha": "c13ad341c5ad49eb16946347fdc262260f4e5123"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/local-ci-final.exit-code",
+      "bytes": 2,
+      "sha": "573541ac9702dd3969c9bc859d2b91ec1f7e6e56"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/local-ci-final.json",
+      "bytes": 1593,
+      "sha": "38c7ca5f44136dbb99c8c0207b5d827df2d637ab"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/local-ci-report-index.json",
+      "bytes": 11650,
+      "sha": "13082b1d50d5cad33dccb037fb2fb5b2ef8eb86f"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/local-ci-reports/a-only-index.stderr",
+      "bytes": 0,
+      "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/local-ci-reports/format-scope.json",
+      "bytes": 4051,
+      "sha": "06e9d18fdbbb81fedcead3393cc5a093f0be56f9"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/local-ci-reports/original-paths.exit.json",
+      "bytes": 56,
+      "sha": "6fe144acc3d49cd899f36c172b7a7456b9e16d3b"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/local-ci-reports/original-paths.stdout",
+      "bytes": 897,
+      "sha": "df8a3eae43bf725b6e0959f8a409644576a4e693"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/local-ci-reports/prerequisite-chain.json",
+      "bytes": 1743,
+      "sha": "68c40a32ac27e97495f76891e469e8e454e6afdc"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/original-final-reread.json",
+      "bytes": 48483,
+      "sha": "37ab3b5dabd681859392b1e03f4d985541c951b9"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/prerequisite-closure-math.exit-code",
+      "bytes": 2,
+      "sha": "573541ac9702dd3969c9bc859d2b91ec1f7e6e56"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/prerequisite-closure-math.json",
+      "bytes": 76177,
+      "sha": "b44a3cd3fed500d501a08f4c99b7e54df305bb83"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/prerequisite-closure-rendering.exit-code",
+      "bytes": 2,
+      "sha": "573541ac9702dd3969c9bc859d2b91ec1f7e6e56"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/prerequisite-closure-rendering.json",
+      "bytes": 76182,
+      "sha": "2993aebbba65d94f27bec2a510c7dc60be9d3dc1"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/prerequisite-closure-verification.exit-code",
+      "bytes": 2,
+      "sha": "573541ac9702dd3969c9bc859d2b91ec1f7e6e56"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/prerequisite-closure-verification.json",
+      "bytes": 76185,
+      "sha": "44efa7bc3a83b359e310c624ef183b4bc8bddbe8"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/reading-candidate-B1/answer.md",
+      "bytes": 5083,
+      "sha": "f3a837408b78665225e74c01f1ce966604049d9f"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/reading-candidate-B1/events.jsonl",
+      "bytes": 9614,
+      "sha": "939d23b49c85b84545432b40a1a88200dc61b14e"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/reading-candidate-B1/l0.txt",
+      "bytes": 4504,
+      "sha": "cc286d3700ebbfbd316cf5745942af233c56d14d"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/reading-candidate-B1/payloads/01.txt",
+      "bytes": 4196,
+      "sha": "116d30f93009b4e7ad9f0fdb2282fec51c0895a7"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/reading-candidate-B1/payloads/02.txt",
+      "bytes": 3314,
+      "sha": "1d774868e2604bff38102b1f3da49d3693e34589"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/reading-candidate-B1/payloads/03.txt",
+      "bytes": 14228,
+      "sha": "3a37080bf190152ce7f33cbe7cb571973c6b75ec"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/reading-candidate-B1/payloads/04.txt",
+      "bytes": 14073,
+      "sha": "7eb7214d04a020c9b0255cbf2f6d1788e73d280c"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/reading-candidate-B1/payloads/05.txt",
+      "bytes": 5888,
+      "sha": "0b9c47e0b4337a617f887c029c7cc8d0a1eda2b4"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/reading-candidate-B1/payloads/06.txt",
+      "bytes": 9421,
+      "sha": "d10a1870e317d52eb7b95c773a88bba2b77db5be"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/reading-candidate-B1/payloads/07.txt",
+      "bytes": 3686,
+      "sha": "1e384839f4b15910fb92c6e52364db9e26a0e13a"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/reading-candidate-B1/read_receipts.json",
+      "bytes": 7337,
+      "sha": "eb755eb49ad2cea8ce28fd6d53d9b594e4b5352c"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/reading-candidate-B1/trial.json",
+      "bytes": 3484,
+      "sha": "30a924017e4b0bc0bbdc5b3908871d29abb6751e"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/README.md",
+      "bytes": 5467,
+      "sha": "ed7c2604270c12f5322a578ee91bac7e13795aa1"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/rendering-pilot-budget.json",
+      "bytes": 3319,
+      "sha": "001d4498eb268615e36f54f6377e9d6fe7551cfa"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/rendering-pilot-change-scope.json",
+      "bytes": 3050,
+      "sha": "a92dd7b480d18c8b2a94780acf27298b42902458"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/rendering-pilot-format.exit-code",
+      "bytes": 2,
+      "sha": "573541ac9702dd3969c9bc859d2b91ec1f7e6e56"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/rendering-pilot-format.txt",
+      "bytes": 66,
+      "sha": "4aa0d16e7a0ff5c16269bf45771cebe89cc2e81d"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/rendering-pilot-isolation.json",
+      "bytes": 1092,
+      "sha": "f7c2e3e53603a0395f86aa47dee993259985eef5"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/rendering-pilot-ledger.json",
+      "bytes": 17907,
+      "sha": "2646089bcc1af7cb21c584141e3fab7c22478d5f"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/rendering-pilot-live-measure.exit-code",
+      "bytes": 2,
+      "sha": "573541ac9702dd3969c9bc859d2b91ec1f7e6e56"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/rendering-pilot-live-measure.json",
+      "bytes": 86966,
+      "sha": "898053d1415f142b756c9a5683cf62c44f638a2f"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/rendering-pilot-live-paths.exit-code",
+      "bytes": 2,
+      "sha": "573541ac9702dd3969c9bc859d2b91ec1f7e6e56"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/rendering-pilot-live-paths.json",
+      "bytes": 89,
+      "sha": "d61a909f1ed2e43956ffccec26903f32662241e0"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/rendering-pilot-lossless-final.exit-code",
+      "bytes": 2,
+      "sha": "573541ac9702dd3969c9bc859d2b91ec1f7e6e56"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/rendering-pilot-lossless-final.json",
+      "bytes": 582,
+      "sha": "a3cf758791cf32231c6837e6b2e44988e7d8df9e"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/rendering-pilot-lossless.exit-code",
+      "bytes": 2,
+      "sha": "573541ac9702dd3969c9bc859d2b91ec1f7e6e56"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/rendering-pilot-lossless.json",
+      "bytes": 582,
+      "sha": "40231036c112649015f5c6765822883ee4b94892"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/rendering-pilot-report.md",
+      "bytes": 5437,
+      "sha": "7cddd3928ed7d6117f32b3885dd74a3b4e91cf57"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/rendering-pilot.diff",
+      "bytes": 14965,
+      "sha": "2e94af9c506c6c510ccb700d9180baa49ce8edae"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/router-ledger.json",
+      "bytes": 38159,
+      "sha": "48e981041384457e8b632861d2a2bb6322e4dda0"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/router-live-paths.json",
+      "bytes": 89,
+      "sha": "40058fc99832c99d204b26655f8270defab97645"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/router-lossless-final.exit-code",
+      "bytes": 2,
+      "sha": "573541ac9702dd3969c9bc859d2b91ec1f7e6e56"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/router-lossless-final.json",
+      "bytes": 582,
+      "sha": "773f8cc2500d2429f51a8c2daaf115b9275e8a37"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/router-lossless-referral-fixed.exit-code",
+      "bytes": 2,
+      "sha": "573541ac9702dd3969c9bc859d2b91ec1f7e6e56"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/router-lossless-referral-fixed.json",
+      "bytes": 582,
+      "sha": "6acd4bfad06bb4a58b7fd2366fb535d604073787"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/router-lossless.json",
+      "bytes": 582,
+      "sha": "86da25ffeac1cbcb4f53bc220e70a81274edca26"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/s2a-attempt1-manifest.json",
+      "bytes": 48979,
+      "sha": "f0877eb8864e0f8d3d2b0ac51c0f5cb4badd0104"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/s2a-meta.exit-code",
+      "bytes": 2,
+      "sha": "573541ac9702dd3969c9bc859d2b91ec1f7e6e56"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/s2a-meta.json",
+      "bytes": 724,
+      "sha": "1ea16a7d4a063dafe10269db56aacba9a98321f2"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/s2b-attempt1-manifest.json",
+      "bytes": 48803,
+      "sha": "c7aed0d321320a1bf9142b6b674ba5badf16fafb"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/s2b-attempt1-meta.exit-code",
+      "bytes": 2,
+      "sha": "573541ac9702dd3969c9bc859d2b91ec1f7e6e56"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/s2b-attempt1-meta.json",
+      "bytes": 1183,
+      "sha": "546c8912b525a781a22841ad0458091c0011fbc9"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/s2b-attempt1-route.exit-code",
+      "bytes": 2,
+      "sha": "d00491fd7e5bb6fa28c517a0bb32b8b506539d4d"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/s2b-attempt1-route.json",
+      "bytes": 1304144,
+      "sha": "56c81c51094f29efe88906227c0a96c14990ac04"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/s2b-attempt2-manifest.json",
+      "bytes": 48801,
+      "sha": "5cd8e44fafafd00eaaf58be915929090c37446fb"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/s2b-attempt2-meta.exit-code",
+      "bytes": 2,
+      "sha": "573541ac9702dd3969c9bc859d2b91ec1f7e6e56"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/s2b-attempt2-meta.json",
+      "bytes": 1183,
+      "sha": "b8f0c01a48118da82967451603d3f5df26b082c2"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/s2b-attempt2-route.exit-code",
+      "bytes": 2,
+      "sha": "573541ac9702dd3969c9bc859d2b91ec1f7e6e56"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/s2b-attempt2-route.json",
+      "bytes": 1316031,
+      "sha": "35b941a8a81a083bbd62abf157dd7bbc76606baf"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/s2b-attempt3-manifest.json",
+      "bytes": 48833,
+      "sha": "7e20d1755772102c7ee11a92361af214d03511f5"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/s2b-attempt3-meta.exit-code",
+      "bytes": 2,
+      "sha": "573541ac9702dd3969c9bc859d2b91ec1f7e6e56"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/s2b-attempt3-meta.json",
+      "bytes": 1183,
+      "sha": "60a4f9d8ffff128d497e3a87655d8c7d01683fdc"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/s2b-attempt3-route.exit-code",
+      "bytes": 2,
+      "sha": "573541ac9702dd3969c9bc859d2b91ec1f7e6e56"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/s2b-attempt3-route.json",
+      "bytes": 1316033,
+      "sha": "eadf54e0ea0a2eb3cad4414f5311d63e2294eeab"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/s2b-correction1.json",
+      "bytes": 4012,
+      "sha": "13fcde918c1426b93a4780393448c0d09d3bbddc"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/s2b-correction2.json",
+      "bytes": 915,
+      "sha": "4c3660d80973885c5738a4934093d40436ff3978"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/s2p-attempt1.exit-code",
+      "bytes": 2,
+      "sha": "573541ac9702dd3969c9bc859d2b91ec1f7e6e56"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/s2p-attempt1.json",
+      "bytes": 700031,
+      "sha": "54b9f64db665022ad1293cfa4821a8f557b36a55"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/s4-assets-budget.json",
+      "bytes": 4652,
+      "sha": "3207b2818f0a4e202848f2b576d0c160b5fec070"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/s4-assets-files.json",
+      "bytes": 5416,
+      "sha": "745cd95128bbac229850ad5575d39a10c6955283"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/s4-assets-report.md",
+      "bytes": 3935,
+      "sha": "97e278d5a9294f3318e6b3777386dc3825334057"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/s4-runtime-report.md",
+      "bytes": 4901,
+      "sha": "4af35b8009a3a1bd8270ea8b5c8ab3265580dfaf"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/s4-runtime-validation-before-admission-clarification.json",
+      "bytes": 4290,
+      "sha": "fbaca9e4c639f9b13b0d58be7faaa62f618fc513"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/stage-candidate-bytes.json",
+      "bytes": 466713,
+      "sha": "54bbe88a15d5d00257222bdcf8d5ede6b4f36b4a"
+    },
+    {
+      "path": "README.md",
+      "bytes": 26843,
+      "sha": "bda7694da352e2e9b42d45df5bf1e56b83959217"
+    },
+    {
+      "path": "skills/cocosair-2d-subsystems/references/context.md",
+      "bytes": 6799,
+      "sha": "61a5fc569177ae39e6c20bddf795d49b245eb937"
+    },
+    {
+      "path": "skills/cocosair-2d-subsystems/references/triggers.md",
+      "bytes": 1903,
+      "sha": "4b4eefdd02d8675c559c31116b7ac974ea521ec5"
+    },
+    {
+      "path": "skills/cocosair-2d-subsystems/SKILL.md",
+      "bytes": 3280,
+      "sha": "413a312b301b081e234c97843dcc6d0037bd2729"
+    },
+    {
+      "path": "skills/cocosair-agent-session/references/context.md",
+      "bytes": 4885,
+      "sha": "3367ac0e007f3e252b36cdbaf9128a61417abb4c"
+    },
+    {
+      "path": "skills/cocosair-agent-session/references/triggers.md",
+      "bytes": 1438,
+      "sha": "931f28ae2eb7f159487b6084a5f27969f07a944c"
+    },
+    {
+      "path": "skills/cocosair-agent-session/SKILL.md",
+      "bytes": 3204,
+      "sha": "e790b2f332034b9a81ce768b4eb18ddbf2c21818"
+    },
+    {
+      "path": "skills/cocosair-animation-tween/references/context.md",
+      "bytes": 6256,
+      "sha": "5c15a5daf6cab335dd1185bca21f05a53fdafedd"
+    },
+    {
+      "path": "skills/cocosair-animation-tween/references/triggers.md",
+      "bytes": 1451,
+      "sha": "cbe33dcc4034905e08a5ee46c9fc6418be7b76da"
+    },
+    {
+      "path": "skills/cocosair-animation-tween/SKILL.md",
+      "bytes": 3152,
+      "sha": "5674db8944d54c6e68e5538e2fa4b174163f9d1e"
+    },
+    {
+      "path": "skills/cocosair-application/references/context.md",
+      "bytes": 5398,
+      "sha": "d5295a3d706c910cae98bfcb97efb05496520c69"
+    },
+    {
+      "path": "skills/cocosair-application/references/triggers.md",
+      "bytes": 1339,
+      "sha": "a1aa3c1fcf297874ca4b6b198c1e8c2b4e4d5572"
+    },
+    {
+      "path": "skills/cocosair-application/SKILL.md",
+      "bytes": 3299,
+      "sha": "d89dddfb4f4fe46f323bb4dd7ebe2fcd4fac4627"
+    },
+    {
+      "path": "skills/cocosair-assets/references/context.md",
+      "bytes": 7048,
+      "sha": "64e234f9419c279d5b1aca3f291f9d753ad6aa55"
+    },
+    {
+      "path": "skills/cocosair-assets/references/triggers.md",
+      "bytes": 1946,
+      "sha": "be97916566d4baf8067bae9b0ca9dda378c369af"
+    },
+    {
+      "path": "skills/cocosair-assets/SKILL.md",
+      "bytes": 3294,
+      "sha": "8e26dafa5acbb4e3725b0edaf2a4ac7af97f8947"
+    },
+    {
+      "path": "skills/cocosair-audio-video/references/context.md",
+      "bytes": 4413,
+      "sha": "0bac9cae21ea90b08ddd0075662bcbd037c9a153"
+    },
+    {
+      "path": "skills/cocosair-audio-video/references/triggers.md",
+      "bytes": 992,
+      "sha": "ccb83dd4f0179291038f5410b7d4aa38823991ef"
+    },
+    {
+      "path": "skills/cocosair-audio-video/SKILL.md",
+      "bytes": 3087,
+      "sha": "d9a3e08ee26e76dcda93c7bb91e84cf8903c6922"
+    },
+    {
+      "path": "skills/cocosair-camera/references/context.md",
+      "bytes": 4445,
+      "sha": "a288760b4b362a8757ee5f286d15eb4e53b0d235"
+    },
+    {
+      "path": "skills/cocosair-camera/references/triggers.md",
+      "bytes": 1198,
+      "sha": "55900d8e7aff9e337ce8dce44409e28909aa45de"
+    },
+    {
+      "path": "skills/cocosair-camera/SKILL.md",
+      "bytes": 3087,
+      "sha": "f295d61b051fab2172d3514aac16c6315bfd9bf3"
+    },
+    {
+      "path": "skills/cocosair-gltf/references/context.md",
+      "bytes": 6933,
+      "sha": "648a75e3e0a1aa2a97191bab399f90e695b1fb62"
+    },
+    {
+      "path": "skills/cocosair-gltf/references/triggers.md",
+      "bytes": 1567,
+      "sha": "75d6e55422c25efd5b9433401f01580dacdd213b"
+    },
+    {
+      "path": "skills/cocosair-gltf/SKILL.md",
+      "bytes": 3265,
+      "sha": "b0a3c732a529732f12ebdbea6e2af4bb4a104c39"
+    },
+    {
+      "path": "skills/cocosair-graphics-and-dom/references/context.md",
+      "bytes": 6523,
+      "sha": "714424e79324f122740358180d84d3defd8ede02"
+    },
+    {
+      "path": "skills/cocosair-graphics-and-dom/references/triggers.md",
+      "bytes": 1390,
+      "sha": "9b055641bde497aef40b3c6a1953ac4751e7c604"
+    },
+    {
+      "path": "skills/cocosair-graphics-and-dom/SKILL.md",
+      "bytes": 3483,
+      "sha": "5b6922d0cf99cfe582a4d1b7605fe9755ac0edb6"
+    },
+    {
+      "path": "skills/cocosair-input-action/references/context.md",
+      "bytes": 5075,
+      "sha": "d4db5e61fba177817aaa9eeeff4aacbf6411f9c8"
+    },
+    {
+      "path": "skills/cocosair-input-action/references/triggers.md",
+      "bytes": 1095,
+      "sha": "6cd8a7a4873ab46fe51d8fb5ccebdf9251be6635"
+    },
+    {
+      "path": "skills/cocosair-input-action/SKILL.md",
+      "bytes": 3182,
+      "sha": "5acb6694b761452e6c9ee13ac843a6b418651038"
+    },
+    {
+      "path": "skills/cocosair-materials-effects/references/context.md",
+      "bytes": 6307,
+      "sha": "e4868b4acf98f46663852ff1613a151badf198fb"
+    },
+    {
+      "path": "skills/cocosair-materials-effects/references/triggers.md",
+      "bytes": 1549,
+      "sha": "5bf3e49ed060b8e975ae8a5cfc2277b1f8c77752"
+    },
+    {
+      "path": "skills/cocosair-materials-effects/SKILL.md",
+      "bytes": 3302,
+      "sha": "37cbb8e1e428a9d70782cdf1824bb5a46613e45f"
+    },
+    {
+      "path": "skills/cocosair-math/references/context.md",
+      "bytes": 4807,
+      "sha": "a957361733cd1ab674cd9afa83efd455d836484c"
+    },
+    {
+      "path": "skills/cocosair-math/references/triggers.md",
+      "bytes": 2006,
+      "sha": "9498f974c884221a3d41daa53835113ccff87311"
+    },
+    {
+      "path": "skills/cocosair-math/SKILL.md",
+      "bytes": 3223,
+      "sha": "4d2f0cf438645e0e31c3cd07bbddb6ceba15e67d"
+    },
+    {
+      "path": "skills/cocosair-performance/references/context.md",
+      "bytes": 6833,
+      "sha": "64229b77502e121e1377552f3295f3a30a3a970b"
+    },
+    {
+      "path": "skills/cocosair-performance/references/triggers.md",
+      "bytes": 2433,
+      "sha": "6f11e783aa3b65ff21d8f6cdb8c51bc100014599"
+    },
+    {
+      "path": "skills/cocosair-performance/SKILL.md",
+      "bytes": 3379,
+      "sha": "8e20a0dee86f98568e60db29866a740e6373d5ff"
+    },
+    {
+      "path": "skills/cocosair-physics/references/context.md",
+      "bytes": 4607,
+      "sha": "b356ae1b9fcb29acbe5c8725ff3c476389b314e7"
+    },
+    {
+      "path": "skills/cocosair-physics/references/triggers.md",
+      "bytes": 1140,
+      "sha": "00ddaa6a85ad41d4ba9f83dc5385bd14d86b1575"
+    },
+    {
+      "path": "skills/cocosair-physics/SKILL.md",
+      "bytes": 3228,
+      "sha": "b8e5747fa1805cf060e6504999ef892eb0b73253"
+    },
+    {
+      "path": "skills/cocosair-primitives-mesh/references/context.md",
+      "bytes": 5560,
+      "sha": "fe022dc2951f9ddd6a09827609006bfb88755185"
+    },
+    {
+      "path": "skills/cocosair-primitives-mesh/references/triggers.md",
+      "bytes": 1767,
+      "sha": "eb9a2a178a21da875c65f12590e864a78d1928ce"
+    },
+    {
+      "path": "skills/cocosair-primitives-mesh/SKILL.md",
+      "bytes": 3311,
+      "sha": "1ba2040a6fc238139797c2da0b37ad29ac1779a2"
+    },
+    {
+      "path": "skills/cocosair-project-setup/references/context.md",
+      "bytes": 3601,
+      "sha": "1f307f0d6621a20174450ea124cf72272fff64cf"
+    },
+    {
+      "path": "skills/cocosair-project-setup/references/triggers.md",
+      "bytes": 1102,
+      "sha": "ccf9f0c0fead6d5ffcc81a55cf3bf3b9687fe484"
+    },
+    {
+      "path": "skills/cocosair-project-setup/SKILL.md",
+      "bytes": 3259,
+      "sha": "ba7cd60ba7e7828420eb7bdb5a7ce5a33810d0db"
+    },
+    {
+      "path": "skills/cocosair-rendering/references/context.md",
+      "bytes": 6922,
+      "sha": "d327e9817ff7e3af33c79a3421ef8023ee84049c"
+    },
+    {
+      "path": "skills/cocosair-rendering/references/triggers.md",
+      "bytes": 1905,
+      "sha": "c62022177063ef7e2f7af20afc507998b3e93219"
+    },
+    {
+      "path": "skills/cocosair-rendering/SKILL.md",
+      "bytes": 3314,
+      "sha": "1d774868e2604bff38102b1f3da49d3693e34589"
+    },
+    {
+      "path": "skills/cocosair-scene-graph/references/context.md",
+      "bytes": 4909,
+      "sha": "947416eb28eda7a9384e8c95bd53ad700dc28803"
+    },
+    {
+      "path": "skills/cocosair-scene-graph/references/triggers.md",
+      "bytes": 994,
+      "sha": "dcf96966ec1d103a7f62ed77af885be6fb480cb1"
+    },
+    {
+      "path": "skills/cocosair-scene-graph/SKILL.md",
+      "bytes": 3347,
+      "sha": "9bf994d6437c74c6756ccf30fe3a7dbf27e96914"
+    },
+    {
+      "path": "skills/cocosair-skinning-morph/references/context.md",
+      "bytes": 4954,
+      "sha": "3f9002adb9d403f0e4ee63d470966643ecf4b430"
+    },
+    {
+      "path": "skills/cocosair-skinning-morph/references/triggers.md",
+      "bytes": 1504,
+      "sha": "47d51c293a523e126cbdd83e2e474ef20ea5f7b0"
+    },
+    {
+      "path": "skills/cocosair-skinning-morph/SKILL.md",
+      "bytes": 3163,
+      "sha": "89e9ab3e710edfb61d27324a4242ad23b01bfa6b"
+    },
+    {
+      "path": "skills/cocosair-ui-2d/references/context.md",
+      "bytes": 5433,
+      "sha": "da4fc3870df9060b1db3a3c3704eab6e59bd7ed2"
+    },
+    {
+      "path": "skills/cocosair-ui-2d/references/triggers.md",
+      "bytes": 1370,
+      "sha": "8bb82ff4942a70d826c01b509fde5e20fa5661cd"
+    },
+    {
+      "path": "skills/cocosair-ui-2d/SKILL.md",
+      "bytes": 3223,
+      "sha": "e725ec9c2f3492289ae76a056790df19afd66943"
+    },
+    {
+      "path": "skills/cocosair-verification/references/context.md",
+      "bytes": 4293,
+      "sha": "6a2afe4e7b8b5108bc744c578bfd1ce7c9eef5b3"
+    },
+    {
+      "path": "skills/cocosair-verification/references/triggers.md",
+      "bytes": 1510,
+      "sha": "23c8b78d26a25b423751827a245fea89653fbb9d"
+    },
+    {
+      "path": "skills/cocosair-verification/SKILL.md",
+      "bytes": 3352,
+      "sha": "dd710d9d3d7c084f4de258bfc8a6a38ba7c50d41"
+    },
+    {
+      "path": "skills/cocosair/references/common-mistakes.md",
+      "bytes": 2469,
+      "sha": "fe5fe2cf17f998223477162ecc96d9bd5f2a5ba0"
+    },
+    {
+      "path": "skills/cocosair/references/context.md",
+      "bytes": 10506,
+      "sha": "f748199707ef26ebd4e36394c0c2a79b5b730d17"
+    },
+    {
+      "path": "skills/cocosair/references/skill-index-archive.md",
+      "bytes": 17944,
+      "sha": "5d1535c43cdd2dd18c3c5091b8c42cc1fcda1190"
+    },
+    {
+      "path": "skills/cocosair/references/skill-index.md",
+      "bytes": 2320,
+      "sha": "a4cdbea3e160e6d602fb59e996d9be010d2f1375"
+    },
+    {
+      "path": "skills/cocosair/references/triggers.md",
+      "bytes": 612,
+      "sha": "d506a9a08b43ca94edbfb4b8b6f28e3631027011"
+    },
+    {
+      "path": "skills/cocosair/SKILL.md",
+      "bytes": 4196,
+      "sha": "116d30f93009b4e7ad9f0fdb2282fec51c0895a7"
+    },
+    {
+      "path": "skills/index.json",
+      "bytes": 34282,
+      "sha": "14bed0135b8435f8942996e47636d1ded45b7619"
+    },
+    {
+      "path": "skills/INDEX.md",
+      "bytes": 2918,
+      "sha": "8571c8884277b76ebb1ee343921c5fc964d09d4a"
+    },
+    {
+      "path": "skills/manifest.json",
+      "bytes": 925,
+      "sha": "93c090befc24027a9f9bb75af5092fe1c1e754db"
+    },
+    {
+      "path": "skills/README.md",
+      "bytes": 4429,
+      "sha": "a4cdbc3f04c7fea16992fefe8ae6044e3f8d5a81"
+    },
+    {
+      "path": "tools/README.md",
+      "bytes": 70344,
+      "sha": "ebfdeefc0f286a0216110218c971e5730a591017"
+    },
+    {
+      "path": "tools/skills/check-p1.cjs",
+      "bytes": 19436,
+      "sha": "478144c4ecd8dd942a5f3b4d4dbcac05623416eb"
+    },
+    {
+      "path": "tools/skills/test/check-p1.test.cjs",
+      "bytes": 10931,
+      "sha": "8c26444fefee47159c69be502ba58e4578aba906"
+    }
+  ],
+  "pending_blob_uploads": [
+    "35b941a8a81a083bbd62abf157dd7bbc76606baf",
+    "eadf54e0ea0a2eb3cad4414f5311d63e2294eeab",
+    "6b6d7a6927de7ca1ca03714b1eaf313668d1cc50",
+    "d50836366625add547ff6f50818c4e19627f6106"
+  ],
+  "status": "INVENTORY_CHECKPOINT_NOT_FINAL_DELIVERY",
+  "note": "All path/blob pairs reconstruct the previously frozen Git tree exactly. This inventory alone is not evidence that pending blobs, the final commit, a pull request, or GitHub CI have completed."
+}

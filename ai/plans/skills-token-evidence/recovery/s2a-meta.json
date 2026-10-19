@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "tool": "skills-meta-p1-v1-recovery1",
+  "parser_version": "air-markdown-1",
+  "status": "PASS",
+  "mode": "metadata-only",
+  "source_snapshot_hash": "46a9449ad54586ae70a914a77992801ea732270ab7f14509f40bf3792ee22d9d",
+  "candidate_hash": "913fd1057b596b7ae8e6962d615f50fc54224401d0d4e9326b05790ae1965123",
+  "original_skill_count": 22,
+  "validated_skills": [
+    "cocosair-application",
+    "cocosair-gltf",
+    "cocosair-materials-effects",
+    "cocosair-project-setup",
+    "cocosair-rendering"
+  ],
+  "budgets": {
+    "description_code_points": 180,
+    "frontmatter_code_points": 1400,
+    "subsystem_bytes": 4000,
+    "router_bytes": 4200,
+    "index_object_code_points": 2000
+  },
+  "issues": []
+}

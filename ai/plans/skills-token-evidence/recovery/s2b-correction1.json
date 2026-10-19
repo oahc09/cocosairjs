@@ -1,0 +1,69 @@
+{
+  "schema": 1,
+  "round": 1,
+  "recorded_at": "2026-10-18T09:18:34.709Z",
+  "prior_candidate_snapshot_hash": "accbdaf469f5f32fcbb88e5a6b8156af5d627da4e71544caffdec467a3e0a71e",
+  "prior_report": "s2b-attempt1-route.json",
+  "diagnosis": "The fixed tokenizer does not stem plurals. Four compact descriptions omitted natural owner terms present in the original contracts: URL/refcount disposal, DOM overlay placement, static merge/draw calls, and tween loop/sequence. The SceneStack exclusion target was also incorrect. All 22 candidates are now compact; this is not the earlier mixed-length corpus.",
+  "constraints": "No question, ownership label, scoring code, threshold, reference, or SKILL body changed. The failed first candidate and raw report remain immutable.",
+  "changes": [
+    {
+      "path": "skills/cocosair-assets/SKILL.md",
+      "field": "description",
+      "before": "Load assets, textures, atlases and BMFont through AssetBank. Use for cache/refcount ownership, runtime pixels or AIR_E_ATLAS_IN_USE and AIR_E_FNT_IN_USE cleanup.",
+      "after": "Load asset URL textures, atlases and BMFont with AssetBank. Use for refcounted disposal, extension selection, cache reuse or AIR_E_ATLAS_IN_USE/AIR_E_FNT_IN_USE cleanup.",
+      "code_points": 169,
+      "source": {
+        "path": "skills/cocosair-assets/SKILL.md",
+        "field": "description",
+        "hash": "066afdc22a34b35e865a56cd646650fad8f95a72cc6b37536c72b95db6d8832f"
+      }
+    },
+    {
+      "path": "skills/cocosair-graphics-and-dom/SKILL.md",
+      "field": "description",
+      "before": "Draw Graphics/SVG shapes, rich fills and sprite masks; bind DOM overlays and experimental HTML textures. Use for vector export, gradients, UI blend scopes or AirUIMesh.",
+      "after": "Draw Graphics/SVG shapes, gradients and sprite masks; align a DOM overlay with UI/canvas nodes. Use for overlay placement, input interception, HTML textures or AirUIMesh.",
+      "code_points": 170,
+      "source": {
+        "path": "skills/cocosair-graphics-and-dom/SKILL.md",
+        "field": "description",
+        "hash": "6f5430a4b76d243d21cc341dd097cf02358277c618c55ca142be6aec0e5a3a21"
+      }
+    },
+    {
+      "path": "skills/cocosair-performance/SKILL.md",
+      "field": "description",
+      "before": "Reduce draws with batching, instancing and dynamic atlases; profile frame budgets. Use for on-demand rendering, AIR_E_MESH_CAPACITY or AIR_E_PIXEL_RATIO_IMPORT_ORDER.",
+      "after": "Optimize draw calls with static merge, instancing and dynamic atlases. Use for frame budgets, on-demand rendering, AIR_E_MESH_CAPACITY or AIR_E_PIXEL_RATIO_IMPORT_ORDER.",
+      "code_points": 169,
+      "source": {
+        "path": "skills/cocosair-performance/SKILL.md",
+        "field": "description",
+        "hash": "d8b3305a1115aa52dbc75503037802fffdbe6e0655d1d5dd15d5556bc9e04921"
+      }
+    },
+    {
+      "path": "skills/cocosair-animation-tween/SKILL.md",
+      "field": "description",
+      "before": "Animate with tweens, AnimationClip tracks and a single step clock. Use for looping, reverseTime, playback cleanup, deterministic frames or unavailable pose graphs.",
+      "after": "Animate tweens and AnimationClip tracks with one step clock. Use to loop a sequence on a target, reverseTime, clean up playback or diagnose unavailable pose graphs.",
+      "code_points": 164,
+      "source": {
+        "path": "skills/cocosair-animation-tween/SKILL.md",
+        "field": "description",
+        "hash": "89c1c00e55dff649bb3156beb68e3a447378e105034839c5c3e6f0bf5c957e70"
+      }
+    },
+    {
+      "path": "skills/cocosair-application/SKILL.md",
+      "field": "not_for",
+      "before": "page-stack scene replacement -> cocosair-scene-graph",
+      "after": "persistent SceneStack pages -> cocosair-input-action",
+      "source": {
+        "path": "skills/cocosair-input-action/SKILL.md",
+        "statement": "Persistent-page push/pop with preserved state is SceneStack; app.run replacement belongs to application."
+      }
+    }
+  ]
+}

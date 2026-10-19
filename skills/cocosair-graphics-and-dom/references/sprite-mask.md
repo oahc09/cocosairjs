@@ -68,5 +68,5 @@ holds a reference to the borrowed texture (`src/air/effects/sprite-mask.ts:77`, 
 
 Use red/alpha and soft/threshold/inverted pixel assertions against native particles, not just
 type checks. See `examples/sprite-mask-blend/src/main.ts` for the runnable scene and
-[docs/manual/graphics-and-dom.md](../../../docs/manual/graphics-and-dom.md) for the probe
+[verification commands](verification-commands.md) for the probe
 commands (`examples/sprite-mask-blend/src/main.ts:1`).
