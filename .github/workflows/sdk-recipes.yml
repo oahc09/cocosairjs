@@ -45,6 +45,7 @@ jobs:
           npm ci --ignore-scripts
           mkdir -p output/sdk-ci
           git rev-parse HEAD > output/sdk-ci/head.txt
+          sha256sum build/cocosair.math.js build/cocosair.math.d.ts build/cocosair.math.legacy.d.ts build/math-build.json > output/sdk-ci/committed-math.sha256
           npm run format:check
           npx prettier --check .github/workflows/sdk-recipes.yml tools/build/math-module.cjs tools/build/prepare-package.cjs tools/debug/effect-layout.ts tools/verify/sdk-recipe-regressions.cjs tools/verify/sdk-recipes-browser.cjs tools/verify/sdk-recipes.tsconfig.json tools/verify/math-entry.test.cjs tools/verify/math-tarball.cjs
           node --test tools/verify/sdk-recipe-regressions.cjs tools/verify/math-entry.test.cjs 2>&1 | tee output/sdk-ci/cpu.log
@@ -54,6 +55,7 @@ jobs:
         run: |
           set -euo pipefail
           npm run build:all 2>&1 | tee output/sdk-ci/build.log
+          sha256sum --check output/sdk-ci/committed-math.sha256
           npx tsc -p tools/verify/sdk-recipes.tsconfig.json
           npx jest --runInBand --no-cache --runTestsByPath test/smoke/smoke-example-evidence-integration.test.ts -t 'clean-checkout npm copies' 2>&1 | tee output/sdk-ci/packaging-fixture.log
           SDK_CANDIDATE_HEAD="$(git rev-parse HEAD)" node tools/verify/math-tarball.cjs --out=output/sdk-ci/tarball
