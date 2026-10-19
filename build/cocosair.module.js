@@ -42458,7 +42458,7 @@ class TouchInputSource {
         handleTouches.push(touch);
       }
       event.stopPropagation();
-      if (event.target === this._canvas) {
+      if (event.target === this._canvas && event.cancelable) {
         event.preventDefault();
       }
       if (eventType === InputEventType.TOUCH_START) {
@@ -137397,8 +137397,8 @@ function createSessionScope() {
 
 const AIR_VERSION = '1.0.0';
 const AIR_REVISION = 100;
-const AIR_BUILD_DATE = "202610191637";
-const AIR_BUILD_NUMBER = 184;
+const AIR_BUILD_DATE = "202610192312";
+const AIR_BUILD_NUMBER = 186;
 class AirAppImpl {
   get session() {
     return this._scope;
