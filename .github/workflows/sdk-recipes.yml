@@ -17,6 +17,10 @@ on:
       - "tools/verify/sdk-*"
       - "tools/verify/math-*"
       - "tools/verify/interactive-improvement-baseline.cjs"
+      - "tools/verify/interactive-timeline-*"
+      - "examples/interactive-timeline/**"
+      - "examples/shared/asset-lifecycle.js"
+      - "test/smoke/interactive-timeline-evidence.test.ts"
       - "tools/verify/consumer-acceptance.cjs"
       - "test/smoke/interactive-improvement-baseline.test.ts"
       - "test/smoke/smoke-example-evidence-integration.test.ts"
@@ -50,7 +54,7 @@ jobs:
           git rev-parse HEAD > output/sdk-ci/head.txt
           sha256sum build/cocosair.math.js build/cocosair.math.d.ts build/cocosair.math.legacy.d.ts build/math-build.json > output/sdk-ci/committed-math.sha256
           npm run format:check
-          npx prettier --check .github/workflows/sdk-recipes.yml tools/build/math-module.cjs tools/build/prepare-package.cjs tools/debug/effect-layout.ts tools/verify/sdk-recipe-regressions.cjs tools/verify/sdk-recipes-browser.cjs tools/verify/sdk-recipes.tsconfig.json tools/verify/math-entry.test.cjs tools/verify/math-tarball.cjs
+          npx prettier --check .github/workflows/sdk-recipes.yml tools/build/math-module.cjs tools/build/prepare-package.cjs tools/debug/effect-layout.ts tools/verify/sdk-recipe-regressions.cjs tools/verify/sdk-recipes-browser.cjs tools/verify/sdk-recipes.tsconfig.json tools/verify/math-entry.test.cjs tools/verify/math-tarball.cjs tools/verify/interactive-timeline-browser.cjs tools/verify/interactive-timeline-audit.cjs test/smoke/interactive-timeline-evidence.test.ts
           node --test tools/verify/sdk-recipe-regressions.cjs tools/verify/math-entry.test.cjs 2>&1 | tee output/sdk-ci/cpu.log
       - name: Build same-head main, math and declarations
         env:
@@ -60,6 +64,8 @@ jobs:
           npm run build:all 2>&1 | tee output/sdk-ci/build.log
           sha256sum --check output/sdk-ci/committed-math.sha256
           npx tsc -p tools/verify/sdk-recipes.tsconfig.json
+          npx tsc -p tools/verify/interactive-timeline-browser.tsconfig.json
+          npx jest --runInBand --no-cache --runTestsByPath test/smoke/interactive-timeline-evidence.test.ts --json --outputFile=output/sdk-ci/timeline-tests.json 2>&1 | tee output/sdk-ci/timeline-tests.log
           npx jest --runInBand --no-cache --runTestsByPath test/smoke/smoke-example-evidence-integration.test.ts -t 'clean-checkout npm copies' 2>&1 | tee output/sdk-ci/packaging-fixture.log
           SDK_CANDIDATE_HEAD="$(git rev-parse HEAD)" node tools/verify/math-tarball.cjs --out=output/sdk-ci/tarball
       - name: Verify candidate identity and real installed-package boundaries
@@ -79,6 +85,12 @@ jobs:
         run: |
           set -euo pipefail
           SDK_CANDIDATE_HEAD="$(git rev-parse HEAD)" SDK_BROWSER_OUT=output/sdk-ci/chromium node tools/verify/sdk-recipes-browser.cjs 2>&1 | tee output/sdk-ci/browser.log
+      - name: Verify real timeline cues, natural EOS and stop separately
+        run: |
+          set -euo pipefail
+          SDK_CANDIDATE_HEAD="$(git rev-parse HEAD)" node tools/verify/interactive-timeline-browser.cjs --browser=chromium --out=output/sdk-ci/timeline.json 2>&1 | tee output/sdk-ci/timeline.log
+          node tools/verify/interactive-timeline-browser.cjs --browser=chromium --verify=output/sdk-ci/timeline.json 2>&1 | tee output/sdk-ci/timeline-verification.json
+          node tools/verify/interactive-timeline-audit.cjs --report=output/sdk-ci/timeline.json --out=output/sdk-ci/timeline-audit.json 2>&1 | tee output/sdk-ci/timeline-audit.log
       - name: Retain same-head artifacts and all test results
         if: always()
         uses: actions/upload-artifact@v4

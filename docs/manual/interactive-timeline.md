@@ -21,3 +21,19 @@ node tools/verify/interactive-timeline-audit.cjs --report=<report.json> --out=<n
 ```
 
 首命令写JSON和相邻artifacts，verify只读重算指纹、PNG、事件与pose；audit写新文件。示例strict tsconfig独立覆盖，根typecheck不覆盖全部示例。安装消费见 [consumer kit](examples/interactive-kit/README.md)。
+
+## 2026-10-19 验收合同增补
+
+以上 `timeline-s4` 与 WebKit 能力不足是 2026-10-08 的历史记录，不代表所有后续 WebKit 环境。当前 collector 使用 `ier-timeline/2`：`--browser=chromium|firefox|webkit` 只执行指定浏览器，记录 `requestedEngines`；`selectedScopePassed` 只表示所选范围通过，完整三浏览器的 `scopePassed` 仍为 false。`--browser=all` 保留全矩阵要求。只读验证必须带与采集一致的单浏览器参数，否则按完整矩阵拒绝部分报告。
+
+音频验收现在独立要求自然结束和显式停止：自然 EOS 增加当前代次 ended 计数，不增加 stop 计数，且同一 source 标记 ended；真实 Replay 后的 Reset 增加 stop 计数，不增加自然 EOS 计数。缺少完成记录、混用 ended/stop 或置换 source 都不能通过。29 项 CPU 合同测试中的合成收据只验证拒绝规则，不是浏览器播放证据。审计在当前所选矩阵必须先有真实正例，再篡改 cue、PNG、原生 pose、完成收据与浏览器矩阵。
+
+2026-10-19 本地 Cloud WebKit 26.5 的新诊断已执行原生/定步形变、短/长滚动及 idle/CPU 干扰音频六行；48 张截图含 22 张形变、24 张 cue 和 2 张 cue 前基线。该诊断使用 34bc 的 CI runtime 和修改后的 collector 工作树，身份分开记录；PR7 新 head 的正式 CI 仍待运行，不将这次本地诊断当同 head 验收。原 1188 部件/155 阶段与约 59 秒音乐的限制见 [材料核查](../evidence/sdk-backlog/proposal-original-materials-20261019.json)。实体扬声器、物理首显示时刻、完整原作品及真实设备预算仍不在教学夹具验收范围。
+
+```sh
+node tools/verify/interactive-timeline-browser.cjs --browser=chromium --out=<new.json>
+node tools/verify/interactive-timeline-browser.cjs --browser=chromium --verify=<report.json>
+node tools/verify/interactive-timeline-audit.cjs --report=<report.json> --out=<new-audit.json>
+```
+
+另一份 [当前 main 自然 EOS 传输对照](../evidence/sdk-backlog/audio-eos-main-20261019.json) 使用原有 `AudioSource.loadAsync({ transport: 'buffered' })`，在流式 WAV 上连续 8 次自然重播并通过 Stop/release。原生 HTMLAudio 与旧/新 SDK 的 direct 路径均出现过卡住，因此不能据一次旧版本通过认定引擎回归。该独立控制不是本例 WebAudio 时钟或原约 59 秒音轨的替代验收。

@@ -13,21 +13,62 @@ const playwright = require('playwright');
 const root = path.resolve(__dirname, '../..'),
     build = path.resolve(process.env.SDK_BUILD_DIR || path.join(root, 'build'));
 const output = path.resolve(process.env.SDK_BROWSER_OUT || path.join(root, 'output/sdk-recipes-browser'));
+// Includes dynamic imports and fetched effect data, not only HTML entry points.
+const requiredInputs = [
+    'build/cocosair.module.js',
+    'build/cocosair.math.js',
+    ...['input-focus', 'runtime-lifecycle-page', 'texture-replacement', 'color-input-contract'].flatMap((name) =>
+        ['index.html', 'main.ts'].map((file) => `docs/manual/examples/${name}/${file}`),
+    ),
+    'examples/shared/async-app-lifecycle.ts',
+    'examples/shared/owned-sprite-frame.ts',
+    'examples/shared/replace-owned-sprite-frame.ts',
+    'examples/interactive-geometry/src/two-sided-page.ts',
+    'examples/hdr-color-pipeline/vertex-texture-rgb.effect.json',
+    'tools/debug/effect-layout.ts',
+].map((input) => {
+    const file = input === 'build/cocosair.module.js' ? path.join(build, 'cocosair.module.js') : path.join(root, input);
+    if (!fs.existsSync(file) || !fs.statSync(file).isFile()) throw Error('Missing recipe input: ' + input);
+    const bytes = fs.readFileSync(file);
+    return { path: input, bytes: bytes.length, sha256: crypto.createHash('sha256').update(bytes).digest('hex') };
+});
 if (fs.existsSync(output)) throw Error('Evidence output exists; use a fresh SDK_BROWSER_OUT');
 fs.mkdirSync(output, { recursive: true });
 const engine = process.env.SDK_BROWSER || 'chromium',
     errors = [],
     rows = [],
+    network = [],
     responses = new Map();
+const networkControls = new Set(['/__sdk-network__/missing', '/__sdk-network__/disconnect']);
+function requestPath(url) {
+    try {
+        const parsed = new URL(url);
+        return ['http:', 'https:'].includes(parsed.protocol) ? parsed.pathname : '[non-http]';
+    } catch {
+        return '[unparseable-url]';
+    }
+}
+function failureText(text) {
+    // Retain native failure diagnostics without URL credentials, queries or fragments.
+    return String(text)
+        .replace(/\b(?:https?|file|ftp):\/\/[^\s"'<>]+/g, requestPath)
+        .slice(0, 512);
+}
 const hash = (bytes) => crypto.createHash('sha256').update(bytes).digest('hex');
 const receipt = {
     timestamp: new Date().toISOString(),
     browser: engine,
     candidate: process.env.SDK_CANDIDATE_HEAD || 'working-tree',
     runtimeHead: process.env.SDK_RUNTIME_HEAD || process.env.SDK_CANDIDATE_HEAD || 'working-tree',
-    crossCandidate: !!process.env.SDK_BUILD_DIR,
+    crossCandidate:
+        !!process.env.SDK_BUILD_DIR ||
+        (!!process.env.SDK_RUNTIME_HEAD && process.env.SDK_RUNTIME_HEAD !== process.env.SDK_CANDIDATE_HEAD),
     rows,
     errors,
+    network,
+    requiredInputs,
+    networkContract:
+        'Browser response/requestfailed observations; URL pathname only. Native failure is not HTTP status zero. Historical unrecorded URLs remain unknown.',
     canonicalEligible: false,
     completed: false,
 };
@@ -41,6 +82,15 @@ const mime = {
 const server = http.createServer(async (req, res) => {
     try {
         let pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
+        if (pathname === '/__sdk-network__/missing') {
+            res.writeHead(404, { 'content-type': 'text/plain' });
+            res.end('intentional missing network fixture');
+            return;
+        }
+        if (pathname === '/__sdk-network__/disconnect') {
+            req.socket.destroy();
+            return;
+        }
         if (pathname === '/math-probe.html') {
             res.writeHead(200, { 'content-type': 'text/html' });
             res.end('<!doctype html><title>Math first</title>');
@@ -130,6 +180,87 @@ async function closePage(page) {
     receipt.browserVersion = browser.version();
     const context = await browser.newContext({ viewport: { width: 960, height: 720 }, deviceScaleFactor: 2 });
     context.on('page', (page) => page.on('pageerror', (e) => errors.push(String(e))));
+    context.on('response', (response) => {
+        const pathname = requestPath(response.url());
+        network.push({
+            event: 'response',
+            path: pathname,
+            status: response.status(),
+            resourceType: response.request().resourceType(),
+            control: networkControls.has(pathname),
+        });
+    });
+    context.on('requestfailed', (request) => {
+        const pathname = requestPath(request.url());
+        network.push({
+            event: 'requestfailed',
+            path: pathname,
+            status: null,
+            failure: failureText(request.failure()?.errorText || 'unavailable'),
+            resourceType: request.resourceType(),
+            control: networkControls.has(pathname),
+        });
+    });
+    await record('network-error-observation-controls', async () => {
+        assert.equal(
+            requestPath('https://synthetic-user:synthetic-password@example.invalid/probe?synthetic-secret=yes#hidden'),
+            '/probe',
+        );
+        assert.equal(
+            failureText(
+                'failed https://synthetic-user:synthetic-password@example.invalid/probe?synthetic-secret=yes#hidden',
+            ),
+            'failed /probe',
+        );
+        const page = await context.newPage();
+        try {
+            await page.goto(base + '/math-probe.html?synthetic-secret=must-not-retain#hidden');
+            const missingResponse = page.waitForResponse(
+                (response) => requestPath(response.url()) === '/__sdk-network__/missing',
+            );
+            const failedRequest = page.waitForEvent('requestfailed', {
+                predicate: (request) => requestPath(request.url()) === '/__sdk-network__/disconnect',
+            });
+            const observations = await page.evaluate(async () => {
+                const missing = await fetch('/__sdk-network__/missing?synthetic-secret=must-not-retain#hidden');
+                const status = missing.status;
+                await missing.text();
+                let rejected = false;
+                try {
+                    await fetch('/__sdk-network__/disconnect?synthetic-secret=must-not-retain#hidden');
+                } catch {
+                    rejected = true;
+                }
+                return { status, rejected };
+            });
+            await Promise.all([missingResponse, failedRequest]);
+            assert.deepEqual(observations, { status: 404, rejected: true });
+            assert.ok(network.some((event) => event.path === '/math-probe.html' && event.status === 200));
+            assert.ok(
+                network.some(
+                    (event) =>
+                        event.path === '/__sdk-network__/missing' && event.event === 'response' && event.status === 404,
+                ),
+            );
+            assert.ok(
+                network.some(
+                    (event) =>
+                        event.path === '/__sdk-network__/disconnect' &&
+                        event.event === 'requestfailed' &&
+                        event.status === null &&
+                        event.failure,
+                ),
+            );
+            assert.ok(!JSON.stringify(network).includes('synthetic-secret'));
+            return {
+                observations,
+                events: network.filter((event) => event.control),
+                historical502: 'Original resource URL was not recorded and remains unknown',
+            };
+        } finally {
+            await page.close();
+        }
+    });
     await record('math-first-main-parity-canvas-dpr', async () => {
         const page = await context.newPage();
         try {
@@ -567,10 +698,17 @@ async function closePage(page) {
         esbuild.stop();
         receipt.completed = receipt.applicationCompleted === true && receipt.browserCloseResolved === true;
         receipt.responses = [...responses.values()];
+        receipt.unexpectedNetworkErrors = network.filter(
+            (event) => !event.control && (event.event === 'requestfailed' || event.status >= 400),
+        );
         receipt.runtimeSHA256 = hash(fs.readFileSync(path.join(build, 'cocosair.module.js')));
         receipt.mathSHA256 = hash(fs.readFileSync(path.join(root, 'build/cocosair.math.js')));
         receipt.passed =
-            receipt.completed && !errors.length && rows.length === 7 && rows.every((row) => row.status === 'PASS');
+            receipt.completed &&
+            !errors.length &&
+            !receipt.unexpectedNetworkErrors.length &&
+            rows.length === 8 &&
+            rows.every((row) => row.status === 'PASS');
         fs.writeFileSync(path.join(output, 'receipt.json'), JSON.stringify(receipt, null, 2));
         console.log(
             JSON.stringify({ passed: receipt.passed, rows: rows.map((r) => ({ id: r.id, status: r.status })), errors }),

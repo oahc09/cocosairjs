@@ -1,0 +1,79 @@
+{
+  "schema": "sdk-observability-timeline-local/1",
+  "candidate": "working-tree",
+  "runtimeHead": "34bc840f5fc2edd20bfe50c78d53dc931c734ef4",
+  "sameHeadAcceptance": false,
+  "browser": "Cloud WebKit 26.5",
+  "node": "22.23.3",
+  "results": {
+    "recipeRows": 8,
+    "timelineRows": 6,
+    "timelinePNGs": 48,
+    "unitTests": 29,
+    "tamperRejections": 39,
+    "unexpectedNetworkErrors": 0
+  },
+  "evidence": {
+    "timeline-webkit-diagnostic-1.json": {
+      "bytes": 10640,
+      "sha256": "6dd2ea0a291e20a73cb78154059641c77fcd24166f5fe9d0a8e18169ddb53936"
+    },
+    "timeline-webkit-diagnostic-2.json": {
+      "bytes": 2493323,
+      "sha256": "0f75019a3a109799bc70c03d5118dddb57cde66bb3c99791593eae1f7be2540e"
+    },
+    "timeline-webkit-diagnostic-3.json": {
+      "bytes": 2496886,
+      "sha256": "bd4269f7768cd98d82fbf3054e113c0297a514be27eafb6377acbb1850c67421"
+    },
+    "timeline-webkit-diagnostic-3-audit.json": {
+      "bytes": 3579,
+      "sha256": "0a8befb5edb880aee3d18c5030bc3b116e90207efd231b57eba3b3feb9ca6a5b"
+    },
+    "timeline-unit.json": {
+      "bytes": 11141,
+      "sha256": "fd0f9ed125743be48a682cdc32d8921e33f4a786619030a05b0fb30e8781e260"
+    },
+    "recipes-webkit-diagnostic-1/receipt.json": {
+      "bytes": 20041,
+      "sha256": "6715406e3da54d5e600c1d840094ba567bd573168adb723a372a768076c7392c"
+    },
+    "recipes-webkit-diagnostic-2/receipt.json": {
+      "bytes": 20013,
+      "sha256": "1cadafae75309e23ab20fee7cda7a34032088c6a946d56a2f68f6a7231d2a584"
+    },
+    "recipes-webkit-diagnostic-4/receipt.json": {
+      "bytes": 26389,
+      "sha256": "7183509b5ec7c0b95555ab5ecb6767b384c65dc40528083fd9991abad119e9ad"
+    },
+    "preflight-negative.json": {
+      "bytes": 1366,
+      "sha256": "864e6a3fdf0f99bb993176a8bd6f27351f0973d5fa0d8ea8046d3f97f63b44c6"
+    }
+  },
+  "failuresRetained": {
+    "timelineDiagnostic1": "Missing local examples/shared/asset-lifecycle.js, module 404; no audio measurement entered",
+    "recipesDiagnostic1": "Missing local tools/debug/effect-layout.ts, script 404",
+    "recipesDiagnostic2": "Missing local effect JSON, fetch 404"
+  },
+  "limits": [
+    "Same-head fresh CI pending",
+    "Original model/59-second score and physical audible/display timing unverified",
+    "Local browser-only typecheck used types:[] to exclude unrelated installed Node26 ambient typings; committed config awaits npm-ci locked CI"
+  ],
+  "privateSourceUploaded": false,
+  "sourceFingerprints": {
+    "tools/verify/sdk-recipes-browser.cjs": {
+      "bytes": 33340,
+      "sha256": "1cca4e43d1d566db503947eac20dfdf8e7228d3ab30d99f7feb5820dbb9addfa"
+    },
+    "tools/verify/interactive-timeline-browser.cjs": {
+      "bytes": 47410,
+      "sha256": "0b3a3d030323860bd26a712bdd92b1ecae50ad049cc85c7971a785f4ff346cb5"
+    },
+    "tools/verify/interactive-timeline-audit.cjs": {
+      "bytes": 5218,
+      "sha256": "4e342c27d24c427997549ab93449d814cee5f62ff84cb83bed522fef85573945"
+    }
+  }
+}

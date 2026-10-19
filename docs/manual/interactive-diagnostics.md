@@ -41,3 +41,9 @@ console原始消息全保留，报告consoleGroups仅按类型+完整文本汇�
 同候选 CI 的 `consumer.log` 保留原生错误、真实入口和传输结果；旧浏览器报告不因此升级。
 
 命令：`node tools/verify/interactive-misuse-browser.cjs --out=<new.json>`采集三浏览器，临时生成既有effect fixture并清理；`--verify=<report.json>`只读重算身份/原生状态与范围，不启动浏览器。运行需既有Playwright环境。原误用首轮console归因失败及工具函数丢失的失败日志均保留。
+
+## 浏览器网络观察合同（2026-10-19）
+
+`sdk-recipes-browser.cjs` 启动前核对 16 个静态输入，包括动态 import 的 shared helper、effect-layout 与 fetch 的 effect JSON，并记录逐文件 hash。缺失输入在启动浏览器前明确拒绝。浏览器 `response` 与 `requestfailed` 分别保留 pathname、真实 HTTP status 或原生 failure、resourceType；URL query、fragment、凭据不进入这份网络记录。原生失败的 status 为 null，不能冒充 HTTP 0、404 或 502。
+
+每次执行包含本地 200、真实 HTTP 404 和断开 socket 的 fetch 负控；仅两个精确控制路径允许失败，其余网络错误令整批失败。初次本地还原漏失 effect-layout 或 effect JSON 时，新记录已准确定位实际 404，并保留失败收据。修复完整还原后，本地 WebKit 的网络控制和原七组 recipes 8/8 通过；新 head 的同源 CI 验收另行记录。MI-ENV-011 历史未记录的 502 URL 仍为 UNKNOWN，本次工具不能补回历史请求。
