@@ -25,6 +25,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -58,7 +59,7 @@ jobs:
           node --test tools/verify/example-asset-lifecycle.test.cjs 2>&1 | tee "$RUNNER_TEMP/core-cpu/asset-lifecycle.log"
           node --test tools/verify/example-evidence-status.test.cjs 2>&1 | tee "$RUNNER_TEMP/core-cpu/status-admission.log"
           EXAMPLE_SHUTDOWN_CPU_OUT="$RUNNER_TEMP/core-cpu/shutdown-policy" node --test tools/verify/example-evidence-shutdown-policy.test.cjs 2>&1 | tee "$RUNNER_TEMP/core-cpu/shutdown-policy.log"
-          npx jest --runInBand --no-cache --runTestsByPath test/smoke/smoke-01-bootstrap.test.ts test/smoke/smoke-02-scene.test.ts test/smoke/smoke-03-runtime-asset.test.ts test/smoke/audio-cancellation.test.ts test/smoke/audio-readiness.test.ts test/smoke/dynamic-atlas-ownership.test.ts test/smoke/audio-cancellation-harness.test.ts test/smoke/smoke-example-evidence-integration.test.ts 2>&1 | tee "$RUNNER_TEMP/core-cpu/unit-tests.log"
+          npx jest --runInBand --no-cache --runTestsByPath test/smoke/webgl2-state-audit.test.ts test/smoke/webgl2-gfx-command-contracts.test.ts test/smoke/smoke-01-bootstrap.test.ts test/smoke/smoke-02-scene.test.ts test/smoke/smoke-03-runtime-asset.test.ts test/smoke/audio-cancellation.test.ts test/smoke/audio-readiness.test.ts test/smoke/dynamic-atlas-ownership.test.ts test/smoke/audio-cancellation-harness.test.ts test/smoke/smoke-example-evidence-integration.test.ts 2>&1 | tee "$RUNNER_TEMP/core-cpu/unit-tests.log"
       - name: Prepare Chromium for five core examples
         run: |
           set -euo pipefail

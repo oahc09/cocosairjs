@@ -1785,13 +1785,16 @@ export function WebGL2CmdFuncCreateInputAssember (device: WebGL2Device, gpuInput
 
     gpuInputAssembler.glAttribs = new Array<IWebGL2Attrib>(gpuInputAssembler.attributes.length);
 
-    const offsets = [0, 0, 0, 0, 0, 0, 0, 0];
+    const offsets = new Array<number>(gpuInputAssembler.gpuVertexBuffers.length).fill(0);
 
     for (let i = 0; i < gpuInputAssembler.attributes.length; ++i) {
         const attrib = gpuInputAssembler.attributes[i];
 
         const stream = attrib.stream !== undefined ? attrib.stream : 0;
-        // if (stream < gpuInputAssembler.gpuVertexBuffers.length) {
+        if (!Number.isInteger(stream) || stream < 0 || stream >= offsets.length
+            || !gpuInputAssembler.gpuVertexBuffers[stream]) {
+            throw new RangeError(`WEBGL2_VERTEX_STREAM_INVALID: attribute ${attrib.name}, stream ${stream}`);
+        }
 
         const gpuBuffer = gpuInputAssembler.gpuVertexBuffers[stream];
 
@@ -1992,11 +1995,11 @@ export function WebGL2CmdFuncBeginRenderPass (
                     switch (gpuRenderPass.depthStencilAttachment.stencilLoadOp) {
                     case LoadOp.LOAD: break; // GL default behavior
                     case LoadOp.CLEAR: {
-                        if (!cache.dss.stencilWriteMaskFront) {
+                        if (cache.dss.stencilWriteMaskFront !== 0xffff) {
                             gl.stencilMaskSeparate(WebGLConstants.FRONT, 0xffff);
                         }
 
-                        if (!cache.dss.stencilWriteMaskBack) {
+                        if (cache.dss.stencilWriteMaskBack !== 0xffff) {
                             gl.stencilMaskSeparate(WebGLConstants.BACK, 0xffff);
                         }
 
@@ -2046,12 +2049,12 @@ export function WebGL2CmdFuncBeginRenderPass (
         }
 
         if (clears & WebGLConstants.STENCIL_BUFFER_BIT) {
-            if (!cache.dss.stencilWriteMaskFront) {
-                gl.stencilMaskSeparate(WebGLConstants.FRONT, 0);
+            if (cache.dss.stencilWriteMaskFront !== 0xffff) {
+                gl.stencilMaskSeparate(WebGLConstants.FRONT, cache.dss.stencilWriteMaskFront);
             }
 
-            if (!cache.dss.stencilWriteMaskBack) {
-                gl.stencilMaskSeparate(WebGLConstants.BACK, 0);
+            if (cache.dss.stencilWriteMaskBack !== 0xffff) {
+                gl.stencilMaskSeparate(WebGLConstants.BACK, cache.dss.stencilWriteMaskBack);
             }
         }
     } // if (gpuFramebuffer)
@@ -2076,19 +2079,20 @@ export function WebGL2CmdFuncBindStates (
 
     let isShaderChanged = false;
 
+    // The program cache can change independently of pipeline identity (for example during blits).
+    if (gpuShader) {
+        const { glProgram } = gpuShader;
+        if (cache.glProgram !== glProgram) {
+            gl.useProgram(glProgram);
+            cache.glProgram = glProgram;
+            isShaderChanged = true;
+        }
+    }
+
     // bind pipeline
     if (gpuPipelineState && gfxStateCache.gpuPipelineState !== gpuPipelineState) {
         gfxStateCache.gpuPipelineState = gpuPipelineState;
         gfxStateCache.glPrimitive = gpuPipelineState.glPrimitive;
-
-        if (gpuShader) {
-            const { glProgram } = gpuShader;
-            if (cache.glProgram !== glProgram) {
-                gl.useProgram(glProgram);
-                cache.glProgram = glProgram;
-                isShaderChanged = true;
-            }
-        }
 
         // rasterizer state
         const { rs } = gpuPipelineState;
@@ -2424,6 +2428,15 @@ export function WebGL2CmdFuncBindStates (
     // bind vertex/index buffer
     if (gpuInputAssembler && gpuShader
         && (isShaderChanged || gfxStateCache.gpuInputAssembler !== gpuInputAssembler)) {
+        // Matrix/array inputs consume multiple locations; validate the actual shader layout.
+        for (const input of gpuShader.glInputs) {
+            // WebGL may reflect built-ins or inactive inputs with no generic attribute slot.
+            if (input.glLoc === -1) continue;
+            const end = input.glLoc + WebGLGetComponentCount(input.glType, gl) * input.count;
+            if (!Number.isInteger(input.glLoc) || input.glLoc < 0 || end > capabilities.maxVertexAttributes) {
+                throw new RangeError(`WEBGL2_VERTEX_ATTRIBUTE_LIMIT: ${input.name}, end ${end}`);
+            }
+        }
         gfxStateCache.gpuInputAssembler = gpuInputAssembler;
 
         if (device.extensions.useVAO) {
@@ -2442,6 +2455,7 @@ export function WebGL2CmdFuncBindStates (
                 let glAttrib: IWebGL2Attrib | null;
                 for (let j = 0; j < gpuShader.glInputs.length; j++) {
                     const glInput = gpuShader.glInputs[j];
+                    if (glInput.glLoc === -1) continue;
                     glAttrib = null;
 
                     for (let k = 0; k < gpuInputAssembler.glAttribs.length; k++) {
@@ -2494,6 +2508,7 @@ export function WebGL2CmdFuncBindStates (
 
             for (let j = 0; j < gpuShader.glInputs.length; j++) {
                 const glInput = gpuShader.glInputs[j];
+                if (glInput.glLoc === -1) continue;
                 let glAttrib: IWebGL2Attrib | null = null;
 
                 for (let k = 0; k < gpuInputAssembler.glAttribs.length; k++) {
@@ -3397,6 +3412,8 @@ export function WebGL2CmdFuncBlitTexture (
     const origReadFBO = cache.glReadFramebuffer;
     const origDrawFBO = cache.glFramebuffer;
 
+    if (!regions.length) return;
+
     let srcMip = regions[0].srcSubres.mipLevel;
     let dstMip = regions[0].dstSubres.mipLevel;
 
@@ -3405,7 +3422,7 @@ export function WebGL2CmdFuncBlitTexture (
         let attachment: number = WebGLConstants.COLOR_ATTACHMENT0;
 
         if (formatInfo.hasStencil) {
-            attachment = WebGLConstants.DEPTH_STENCIL_ATTACHMENT;
+            attachment = formatInfo.hasDepth ? WebGLConstants.DEPTH_STENCIL_ATTACHMENT : WebGLConstants.STENCIL_ATTACHMENT;
         } else if (formatInfo.hasDepth) {
             attachment = WebGLConstants.DEPTH_ATTACHMENT;
         }
@@ -3435,6 +3452,17 @@ export function WebGL2CmdFuncBlitTexture (
         cache.glReadFramebuffer = srcFramebuffer;
     }
 
+    // Detaching through framebufferRenderbuffer(null) also clears texture attachments.
+    // These scratch FBOs alternate between colour and depth/stencil, and between storage kinds.
+    const clearAttachments = (target: number): void => {
+        for (const attachment of [WebGLConstants.COLOR_ATTACHMENT0, WebGLConstants.DEPTH_ATTACHMENT,
+            WebGLConstants.STENCIL_ATTACHMENT, WebGLConstants.DEPTH_STENCIL_ATTACHMENT]) {
+            gl.framebufferRenderbuffer(target, attachment, WebGLConstants.RENDERBUFFER, null);
+        }
+    };
+    clearAttachments(WebGLConstants.READ_FRAMEBUFFER);
+    gl.readBuffer(srcAttachment === WebGLConstants.COLOR_ATTACHMENT0 ? WebGLConstants.COLOR_ATTACHMENT0 : WebGLConstants.NONE);
+
     if (src.glTexture) {
         gl.framebufferTexture2D(WebGLConstants.READ_FRAMEBUFFER, srcAttachment, src.glTarget, src.glTexture, srcMip);
     } else {
@@ -3453,6 +3481,8 @@ export function WebGL2CmdFuncBlitTexture (
         if (cache.glFramebuffer !== dstFramebuffer) {
             bindDrawFramebuffer(gl, dstFramebuffer, cache);
         }
+        clearAttachments(WebGLConstants.DRAW_FRAMEBUFFER);
+        gl.drawBuffers([dstAttachment === WebGLConstants.COLOR_ATTACHMENT0 ? WebGLConstants.COLOR_ATTACHMENT0 : WebGLConstants.NONE]);
         if (dst.glTexture) {
             gl.framebufferTexture2D(gl.DRAW_FRAMEBUFFER, dstAttachment, dst.glTarget, dst.glTexture, dstMip);
         } else {

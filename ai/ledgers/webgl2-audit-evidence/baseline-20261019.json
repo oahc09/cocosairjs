@@ -1,0 +1,193 @@
+{
+  "renderer": "WebKit WebGL",
+  "results": [
+    {
+      "id": "ENGINE-001",
+      "passed": false,
+      "pixel": [
+        255,
+        0,
+        0,
+        255
+      ]
+    },
+    {
+      "id": "ENGINE-002",
+      "front": 0,
+      "passed": true,
+      "pixel": [
+        0,
+        255,
+        0,
+        255
+      ],
+      "masks": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "ENGINE-002",
+      "front": 15,
+      "passed": false,
+      "pixel": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "masks": [
+        15,
+        240
+      ]
+    },
+    {
+      "id": "ENGINE-002",
+      "front": 240,
+      "passed": false,
+      "pixel": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "masks": [
+        240,
+        15
+      ]
+    },
+    {
+      "id": "ENGINE-002",
+      "front": 65535,
+      "passed": true,
+      "pixel": [
+        0,
+        255,
+        0,
+        255
+      ],
+      "masks": [
+        65535,
+        65280
+      ]
+    },
+    {
+      "id": "ENGINE-004",
+      "passed": false,
+      "pixel": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "offsets": [
+        null,
+        null
+      ]
+    },
+    {
+      "id": "ENGINE-005",
+      "format": 2,
+      "size": 4,
+      "rb": false,
+      "passed": true,
+      "error": 0,
+      "pixel": [
+        64,
+        128,
+        191,
+        255
+      ],
+      "expected": [
+        64,
+        128,
+        191,
+        255
+      ]
+    },
+    {
+      "id": "ENGINE-005",
+      "format": 3,
+      "size": 8,
+      "rb": true,
+      "passed": false,
+      "error": 1286,
+      "pixel": [
+        0,
+        255,
+        0,
+        255
+      ],
+      "expected": [
+        0,
+        255,
+        0,
+        255
+      ]
+    },
+    {
+      "id": "ENGINE-005",
+      "format": 4,
+      "size": 4,
+      "rb": true,
+      "passed": false,
+      "error": 1286,
+      "pixel": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "expected": [
+        0,
+        255,
+        0,
+        255
+      ]
+    },
+    {
+      "id": "ENGINE-005",
+      "format": 1,
+      "size": 8,
+      "rb": false,
+      "passed": false,
+      "error": 1286,
+      "pixel": [
+        0,
+        0,
+        0,
+        255
+      ],
+      "expected": [
+        0,
+        255,
+        0,
+        255
+      ]
+    },
+    {
+      "id": "ENGINE-005",
+      "format": 2,
+      "size": 8,
+      "rb": true,
+      "passed": true,
+      "error": 0,
+      "pixel": [
+        64,
+        128,
+        191,
+        255
+      ],
+      "expected": [
+        64,
+        128,
+        191,
+        255
+      ]
+    }
+  ],
+  "sourceSHA256": "8d0a93060e2ee32507c48976843145666ad6537e31943a132200bfb2bda38ff5",
+  "browserVersion": "26.5",
+  "method": "Exact source command functions with device/dependency fixture; real WebGL2 pixels, not full SDK/app acceptance",
+  "timestamp": "2026-10-19T07:28:23.020Z"
+}

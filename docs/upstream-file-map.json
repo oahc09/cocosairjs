@@ -3991,7 +3991,7 @@
       "upstreamPath": "cocos/gfx/webgl2/webgl2-commands.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "AIR: integer external formats/clear/attributes, sampler destruction, depth bias enable/order, selected layer attachments and validated native-layout readback with GL state/resource recovery (WGL-02/04/05/06/07/08/09)."
+      "reason": "AIR: integer external formats/clear/attributes, sampler destruction, depth bias enable/order, selected layer attachments and validated native-layout readback with GL state/resource recovery (WGL-02/04/05/06/07/08/09). Audit 2026-10-19: recover program independently of PSO identity; restore partial stencil masks; validate vertex streams/locations; reset scratch blit attachments and buffer selection."
     },
     {
       "airPath": "src/cocos/gfx/webgl2/webgl2-define.ts",
