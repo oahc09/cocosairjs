@@ -462,3 +462,11 @@ test('actual scope schedules teardown after synchronous input disabling', async 
     assert.ok(r.events.indexOf('input-off') < r.events.indexOf('audio'));
     assert.ok(r.events.indexOf('input-off') < r.events.indexOf('gpu'));
 });
+test('runnable vertex/texture/custom color fixture validates both shader programs and targets', () => {
+    const fixture = JSON.parse(
+        fs.readFileSync(path.join(root, 'examples/hdr-color-pipeline/vertex-texture-rgb.effect.json'), 'utf8'),
+    );
+    const result = prepareEffectForRegistration(fixture);
+    assert.equal(result.effect.shaders.length, 2);
+    assert.equal(new Set(result.bindings.map((b) => b.shader)).size, 2);
+});
