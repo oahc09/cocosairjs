@@ -19,4 +19,12 @@ npx tsc -p tools/verify/sdk-recipes.tsconfig.json
 node tools/verify/sdk-recipes-browser.cjs
 ```
 
-The browser collector uses real Playwright clicks/keys/file imports, the SDK's single step clock and screenshot pixels. It retains failures, response hashes and exact upload arrays in a fresh output directory. It is a bounded recipe check, not canonical gallery promotion. Browser-close resolution is recorded separately from application assertions. Full platform certification, physical shutdown proof under the gallery's versioned protocol, original private shaders/scene references, audible-device timing and long-window performance are separate acceptance work.
+The browser collector uses real Playwright clicks/keys/file imports, the SDK's single step clock and screenshot pixels. Each import must change the actual SpriteFrame object; runtime-created frames may have empty UUIDs, and a previous status message is not a completion signal. The context-loss row uses the real `WEBGL_lose_context` extension, trusted loss/restored events, an explicit failed state and actual full navigation before checking a newly rendered scene. This is not a physical GPU-reset test.
+
+It retains failures, response hashes and exact upload arrays in a fresh output directory. It is a bounded recipe check, not canonical gallery promotion. Browser-close resolution is recorded separately from application assertions. Full platform certification, physical shutdown proof under the gallery's versioned protocol, original private shaders/scene references, audible-device timing and long-window performance are separate acceptance work.
+
+## Audit batch status
+
+The [e29 SDK CI run](https://github.com/oahc09/cocosairjs/actions/runs/39234628691) passed 42 CPU checks, a fresh same-head main/math build and hash guards, the real clean-checkout packaging fixture, offline tarball installation, TypeScript 4.9 classic Node/NodeNext checks and six Chromium recipe rows. Core quality and Skills checks passed on that head as well. The final collector enhancement adds actual context-loss/reload coverage and stricter per-import identity waits; its latest-head CI is pending at this source checkpoint. The [PR description](https://github.com/oahc09/cocosairjs/pull/7) links the final immutable run without rewriting earlier results.
+
+The [19-item ledger](../../ai/ledgers/sdk-audit-backlog-20261019.json) separates seven implemented areas from twelve still-open original proposal scopes. Additional recovered project inputs are available for later read-only identity matching; historical missing-material notes are not a current claim that all originals are absent. True window blur, original shader per-pass readback and the original-project/device/performance scopes remain separate.

@@ -1,10 +1,10 @@
 {
   "schema": "sdk-audit-backlog/1",
   "baseline": "66d11fd0c3c189b7dfa6d20645222e237352f9f3",
-  "reviewedMain": "bac30c0f9b9e9cb61e43720d23053a98d24ac811",
-  "generatedAt": "2026-10-19T09:38:00Z",
+  "reviewedMain": "a21d49bd4f68054e22242609bca2da50eccd054d",
+  "generatedAt": "2026-10-19T10:11:00Z",
   "scope": "19 SDK/example/tool items, independent review branch; no application changes",
-  "acceptancePolicy": "Implementation and focused tests never imply original-project, device, same-head or full-gallery acceptance. Historical runtime 005ebacc diagnostics are superseded and cannot close any item.",
+  "acceptancePolicy": "Implementation and focused tests never imply original-project, device, same-head or full-gallery acceptance. Historical runtime 005ebacc diagnostics are superseded and cannot close any item. Fields status/action/acceptance/evidence/remainingImpact preserve the original audit snapshot; current outcomes are in implementation, verification and currentEvidence. Seven implemented areas are not completion of all 19 items.",
   "tasks": [
     {
       "id": "REUSE-002",
@@ -34,18 +34,24 @@
         }
       ],
       "remainingImpact": "合法复杂GLSL迁移仍需宏感知解析与std140证明；属于适配/示例范围，不是已证实编译器缺陷。",
-      "sourceIds": [
-        "REUSE-002"
-      ],
+      "sourceIds": ["REUSE-002"],
       "implementation": "IMPLEMENTED_FOR_REVIEW",
-      "verification": "PENDING_SAME_HEAD_CI",
-      "pr": null,
-      "blocker": "Original/target-device and complete acceptance remain separate from focused recipe checks.",
+      "verification": "PENDING_FINAL_HEAD_CI",
+      "pr": "https://github.com/oahc09/cocosairjs/pull/7",
+      "blocker": "Original shader per-pass finite GPU readback and reference matching",
       "paths": [
         "tools/debug/effect-layout.ts",
         "tools/verify/sdk-recipe-regressions.cjs",
         "examples/hdr-color-pipeline/vertex-texture-rgb.effect.json"
-      ]
+      ],
+      "currentEvidence": {
+        "head": "e29b9b370ddfe45fa32be325e52ab4574db9e6cd",
+        "passed": [
+          "42-check CPU suite includes positioned rejection of comma, macro-array and conditional resources",
+          "Two real shader programs show all 3 color input paths and a dark negative control in Chromium screenshots"
+        ],
+        "pending": ["Original shader per-pass finite GPU readback and reference matching"]
+      }
     },
     {
       "id": "NEW8-API-INPUT-FOCUS",
@@ -83,17 +89,20 @@
         }
       ],
       "remainingImpact": "浏览器真实焦点/文本输入/退出重入全链路仍需当前main验收。",
-      "sourceIds": [
-        "NEW8-API-INPUT-FOCUS"
-      ],
+      "sourceIds": ["NEW8-API-INPUT-FOCUS"],
       "implementation": "IMPLEMENTED_FOR_REVIEW",
-      "verification": "PENDING_SAME_HEAD_CI",
-      "pr": null,
-      "blocker": "Original/target-device and complete acceptance remain separate from focused recipe checks.",
-      "paths": [
-        "docs/manual/examples/input-focus/main.ts",
-        "tools/verify/sdk-recipes-browser.cjs"
-      ]
+      "verification": "PENDING_FINAL_HEAD_CI",
+      "pr": "https://github.com/oahc09/cocosairjs/pull/7",
+      "blocker": "Real browser-window blur/hidden-tab and physical touch target checks",
+      "paths": ["docs/manual/examples/input-focus/main.ts", "tools/verify/sdk-recipes-browser.cjs"],
+      "currentEvidence": {
+        "head": "e29b9b370ddfe45fa32be325e52ab4574db9e6cd",
+        "passed": [
+          "Real Start/HUD/canvas clicks and one-key routing",
+          "Held-key release over editable input, text suppression, Leave and four re-entries"
+        ],
+        "pending": ["Real browser-window blur/hidden-tab and physical touch target checks"]
+      }
     },
     {
       "id": "NEW8-API-LIFECYCLE-RECIPE",
@@ -132,17 +141,23 @@
         }
       ],
       "remainingImpact": "需要把reload恢复边界写清，并覆盖构造失败与晚到异步资源；不应承诺现有API可透明恢复。",
-      "sourceIds": [
-        "NEW8-API-LIFECYCLE-RECIPE"
-      ],
+      "sourceIds": ["NEW8-API-LIFECYCLE-RECIPE"],
       "implementation": "IMPLEMENTED_FOR_REVIEW",
-      "verification": "PENDING_SAME_HEAD_CI",
-      "pr": null,
-      "blocker": "Original/target-device and complete acceptance remain separate from focused recipe checks.",
-      "paths": [
-        "examples/shared/async-app-lifecycle.ts",
-        "docs/manual/examples/runtime-lifecycle-page/main.ts"
-      ]
+      "verification": "PENDING_FINAL_HEAD_CI",
+      "pr": "https://github.com/oahc09/cocosairjs/pull/7",
+      "blocker": "Latest collector's trusted WEBGL_lose_context loss/restored events, failed state, disabled input and actual full same-URL reload require final-head CI",
+      "paths": ["examples/shared/async-app-lifecycle.ts", "docs/manual/examples/runtime-lifecycle-page/main.ts"],
+      "currentEvidence": {
+        "head": "e29b9b370ddfe45fa32be325e52ab4574db9e6cd",
+        "passed": [
+          "Real session scope CPU cancellation, same-Promise close and parallel audio/GPU cleanup",
+          "Chromium cancel-before-mount; real AudioContext gesture/resume and awaited close"
+        ],
+        "pending": [
+          "Latest collector's trusted WEBGL_lose_context loss/restored events, failed state, disabled input and actual full same-URL reload require final-head CI"
+        ],
+        "diagnostic": "Seven-row local WebKit collector passed using e29 runtime with a working collector; separate from same-head CI"
+      }
     },
     {
       "id": "NEW8-API-MATERIAL-CONTRACT",
@@ -173,17 +188,23 @@
         }
       ],
       "remainingImpact": "复用范围大但顶点色/自写RGB目标组合仍缺专门验收。",
-      "sourceIds": [
-        "NEW8-API-MATERIAL-CONTRACT"
-      ],
+      "sourceIds": ["NEW8-API-MATERIAL-CONTRACT"],
       "implementation": "IMPLEMENTED_FOR_REVIEW",
-      "verification": "PENDING_SAME_HEAD_CI",
-      "pr": null,
-      "blocker": "Original/target-device and complete acceptance remain separate from focused recipe checks.",
+      "verification": "PENDING_FINAL_HEAD_CI",
+      "pr": "https://github.com/oahc09/cocosairjs/pull/7",
+      "blocker": "No claim of original private shader or all-driver certification",
       "paths": [
         "examples/hdr-color-pipeline/vertex-texture-rgb.effect.json",
         "docs/manual/examples/color-input-contract/main.ts"
-      ]
+      ],
+      "currentEvidence": {
+        "head": "e29b9b370ddfe45fa32be325e52ab4574db9e6cd",
+        "passed": [
+          "Chromium screenshot centers of 2 programs x 4 paths: three inputs [128,90,50], double-decode [55,26,8], tolerance 2",
+          "All programs/targets checked by narrow layout preflight"
+        ],
+        "pending": ["No claim of original private shader or all-driver certification"]
+      }
     },
     {
       "id": "NEW8-API-TEXTURE-OWNERSHIP",
@@ -215,18 +236,27 @@
         }
       ],
       "remainingImpact": "重复导入/换色失败和乱序成功仍可能导致应用内容丢失或资源残留，不能凭ownership API存在关闭。",
-      "sourceIds": [
-        "NEW8-API-TEXTURE-OWNERSHIP"
-      ],
+      "sourceIds": ["NEW8-API-TEXTURE-OWNERSHIP"],
       "implementation": "IMPLEMENTED_FOR_REVIEW",
-      "verification": "PENDING_SAME_HEAD_CI",
-      "pr": null,
-      "blocker": "Original/target-device and complete acceptance remain separate from focused recipe checks.",
+      "verification": "PENDING_FINAL_HEAD_CI",
+      "pr": "https://github.com/oahc09/cocosairjs/pull/7",
+      "blocker": "Final collector waits for actual object-reference change for every import; earlier repeated 'replaced' status did not prove all 12 per-iteration commits",
       "paths": [
         "examples/shared/owned-sprite-frame.ts",
         "examples/shared/replace-owned-sprite-frame.ts",
         "docs/manual/examples/texture-replacement/main.ts"
-      ]
+      ],
+      "currentEvidence": {
+        "head": "e29b9b370ddfe45fa32be325e52ab4574db9e6cd",
+        "passed": [
+          "Real scope CPU transaction failures, stale loads, post-close and 100 bounded replacements",
+          "Chromium visible imported green content, paper priority and final frame detach/ownedCount=0"
+        ],
+        "pending": [
+          "Final collector waits for actual object-reference change for every import; earlier repeated 'replaced' status did not prove all 12 per-iteration commits"
+        ],
+        "diagnostic": "Runtime-created SpriteFrame UUIDs can be empty; final collector compares actual object identities instead"
+      }
     },
     {
       "id": "NEW8-API-TWO-SIDED-MESH",
@@ -257,17 +287,23 @@
         }
       ],
       "remainingImpact": "仍需应用级几何法线/绕序/正反面身份示例，不构成已证核心渲染bug。",
-      "sourceIds": [
-        "NEW8-API-TWO-SIDED-MESH"
-      ],
+      "sourceIds": ["NEW8-API-TWO-SIDED-MESH"],
       "implementation": "IMPLEMENTED_FOR_REVIEW",
-      "verification": "PENDING_SAME_HEAD_CI",
-      "pr": null,
-      "blocker": "Original/target-device and complete acceptance remain separate from focused recipe checks.",
+      "verification": "PENDING_FINAL_HEAD_CI",
+      "pr": "https://github.com/oahc09/cocosairjs/pull/7",
+      "blocker": "Focused acceptance passed at e29; final collector-enhancement head remains pending CI.",
       "paths": [
         "examples/interactive-geometry/src/two-sided-page.ts",
         "docs/manual/examples/runtime-lifecycle-page/main.ts"
-      ]
+      ],
+      "currentEvidence": {
+        "head": "e29b9b370ddfe45fa32be325e52ab4574db9e6cd",
+        "passed": [
+          "CPU geometry checks and Chromium 13 angles from 0 to 180 and back",
+          "26 actual updateSubMesh upload arrays, opposite normals, finite data and front/back screenshot identity"
+        ],
+        "pending": []
+      }
     },
     {
       "id": "PROPOSAL-ENG-00",
@@ -297,17 +333,17 @@
         }
       ],
       "remainingImpact": "原私有Site、21项原JSON及历史参考缺失。",
-      "sourceIds": [
-        "PROPOSAL-ENG-00"
-      ],
+      "sourceIds": ["PROPOSAL-ENG-00"],
       "implementation": "REUSE_EXISTING_APIS_NO_DUPLICATE_IMPLEMENTATION",
       "verification": "NOT_RUN_ORIGINAL_SCOPE",
-      "pr": null,
-      "blocker": "原私有Site、21项原JSON及历史参考缺失。",
-      "paths": [
-        "tools/verify/interactive-improvement-baseline.cjs",
-        "ai/ledgers/interactive-engine-improvements.md"
-      ]
+      "pr": "https://github.com/oahc09/cocosairjs/pull/7",
+      "blocker": "Original proposal acceptance has not been rerun in this PR. Historical material gaps require current item-by-item mapping; device/reference/performance boundaries remain explicit.",
+      "paths": ["tools/verify/interactive-improvement-baseline.cjs", "ai/ledgers/interactive-engine-improvements.md"],
+      "currentEvidence": {
+        "status": "NOT_RUN_ORIGINAL_SCOPE",
+        "historicalRemainingImpact": "原私有Site、21项原JSON及历史参考缺失。",
+        "materialMapping": "Additional original/recovered inputs now available; exact equivalence and required devices/budgets not yet verified."
+      }
     },
     {
       "id": "PROPOSAL-ENG-01",
@@ -337,17 +373,17 @@
         }
       ],
       "remainingImpact": "原11/16/23、Water、soft、Puzzle50对象/雨线/切面参考不在重建fixture内。",
-      "sourceIds": [
-        "PROPOSAL-ENG-01"
-      ],
+      "sourceIds": ["PROPOSAL-ENG-01"],
       "implementation": "REUSE_EXISTING_APIS_NO_DUPLICATE_IMPLEMENTATION",
       "verification": "NOT_RUN_ORIGINAL_SCOPE",
-      "pr": null,
-      "blocker": "原11/16/23、Water、soft、Puzzle50对象/雨线/切面参考不在重建fixture内。",
-      "paths": [
-        "docs/manual/interactive-evidence-chain.md",
-        "ai/ledgers/interactive-engine-improvements.md"
-      ]
+      "pr": "https://github.com/oahc09/cocosairjs/pull/7",
+      "blocker": "Original proposal acceptance has not been rerun in this PR. Historical material gaps require current item-by-item mapping; device/reference/performance boundaries remain explicit.",
+      "paths": ["docs/manual/interactive-evidence-chain.md", "ai/ledgers/interactive-engine-improvements.md"],
+      "currentEvidence": {
+        "status": "NOT_RUN_ORIGINAL_SCOPE",
+        "historicalRemainingImpact": "原11/16/23、Water、soft、Puzzle50对象/雨线/切面参考不在重建fixture内。",
+        "materialMapping": "Additional original/recovered inputs now available; exact equivalence and required devices/budgets not yet verified."
+      }
     },
     {
       "id": "PROPOSAL-ENG-02",
@@ -377,17 +413,17 @@
         }
       ],
       "remainingImpact": "native MSAA采样、原参考和长期稳定性仍未验；静态binding预检不等于驱动拒绝。",
-      "sourceIds": [
-        "PROPOSAL-ENG-02"
-      ],
+      "sourceIds": ["PROPOSAL-ENG-02"],
       "implementation": "REUSE_EXISTING_APIS_NO_DUPLICATE_IMPLEMENTATION",
       "verification": "NOT_RUN_ORIGINAL_SCOPE",
-      "pr": null,
-      "blocker": "native MSAA采样、原参考和长期稳定性仍未验；静态binding预检不等于驱动拒绝。",
-      "paths": [
-        "docs/manual/interactive-multipass.md",
-        "ai/ledgers/interactive-engine-improvements.md"
-      ]
+      "pr": "https://github.com/oahc09/cocosairjs/pull/7",
+      "blocker": "Original proposal acceptance has not been rerun in this PR. Historical material gaps require current item-by-item mapping; device/reference/performance boundaries remain explicit.",
+      "paths": ["docs/manual/interactive-multipass.md", "ai/ledgers/interactive-engine-improvements.md"],
+      "currentEvidence": {
+        "status": "NOT_RUN_ORIGINAL_SCOPE",
+        "historicalRemainingImpact": "native MSAA采样、原参考和长期稳定性仍未验；静态binding预检不等于驱动拒绝。",
+        "materialMapping": "Additional original/recovered inputs now available; exact equivalence and required devices/budgets not yet verified."
+      }
     },
     {
       "id": "PROPOSAL-ENG-03",
@@ -417,12 +453,7 @@
         }
       ],
       "remainingImpact": "原参考、过滤质量、实体设备和长期稳定性未验；自动mip不是PMREM。",
-      "sourceIds": [
-        "PROPOSAL-ENG-03",
-        "HIST-WATER-FORMAT",
-        "HIST-DOUBLE-GAMMA",
-        "HIST-MATERIAL-STATE"
-      ],
+      "sourceIds": ["PROPOSAL-ENG-03", "HIST-WATER-FORMAT", "HIST-DOUBLE-GAMMA", "HIST-MATERIAL-STATE"],
       "additionalAcceptance": [
         {
           "sourceId": "HIST-WATER-FORMAT",
@@ -451,12 +482,14 @@
       ],
       "implementation": "REUSE_EXISTING_APIS_NO_DUPLICATE_IMPLEMENTATION",
       "verification": "NOT_RUN_ORIGINAL_SCOPE",
-      "pr": null,
-      "blocker": "原参考、过滤质量、实体设备和长期稳定性未验；自动mip不是PMREM。",
-      "paths": [
-        "docs/manual/interactive-color-controls.md",
-        "ai/ledgers/interactive-engine-improvements.md"
-      ]
+      "pr": "https://github.com/oahc09/cocosairjs/pull/7",
+      "blocker": "Original proposal acceptance has not been rerun in this PR. Historical material gaps require current item-by-item mapping; device/reference/performance boundaries remain explicit.",
+      "paths": ["docs/manual/interactive-color-controls.md", "ai/ledgers/interactive-engine-improvements.md"],
+      "currentEvidence": {
+        "status": "NOT_RUN_ORIGINAL_SCOPE",
+        "historicalRemainingImpact": "原参考、过滤质量、实体设备和长期稳定性未验；自动mip不是PMREM。",
+        "materialMapping": "Additional original/recovered inputs now available; exact equivalence and required devices/budgets not yet verified."
+      }
     },
     {
       "id": "PROPOSAL-ENG-04",
@@ -486,10 +519,7 @@
         }
       ],
       "remainingImpact": "111行中18个WebKit活resize不可见；原soft13未取得。无SDK对照也失败，不能转成核心bug。",
-      "sourceIds": [
-        "PROPOSAL-ENG-04",
-        "HIST-SOFT-PROJECTION"
-      ],
+      "sourceIds": ["PROPOSAL-ENG-04", "HIST-SOFT-PROJECTION"],
       "additionalAcceptance": [
         {
           "sourceId": "HIST-SOFT-PROJECTION",
@@ -502,12 +532,14 @@
       ],
       "implementation": "REUSE_EXISTING_APIS_NO_DUPLICATE_IMPLEMENTATION",
       "verification": "NOT_RUN_ORIGINAL_SCOPE",
-      "pr": null,
-      "blocker": "111行中18个WebKit活resize不可见；原soft13未取得。无SDK对照也失败，不能转成核心bug。",
-      "paths": [
-        "docs/manual/interactive-geometry.md",
-        "ai/ledgers/interactive-engine-improvements.md"
-      ]
+      "pr": "https://github.com/oahc09/cocosairjs/pull/7",
+      "blocker": "Original proposal acceptance has not been rerun in this PR. Historical material gaps require current item-by-item mapping; device/reference/performance boundaries remain explicit.",
+      "paths": ["docs/manual/interactive-geometry.md", "ai/ledgers/interactive-engine-improvements.md"],
+      "currentEvidence": {
+        "status": "NOT_RUN_ORIGINAL_SCOPE",
+        "historicalRemainingImpact": "111行中18个WebKit活resize不可见；原soft13未取得。无SDK对照也失败，不能转成核心bug。",
+        "materialMapping": "Additional original/recovered inputs now available; exact equivalence and required devices/budgets not yet verified."
+      }
     },
     {
       "id": "PROPOSAL-ENG-05",
@@ -537,11 +569,7 @@
         }
       ],
       "remainingImpact": "32项协议/真实blur/hidden未运行、两条PAL警告及实体触屏/原参考未验。",
-      "sourceIds": [
-        "PROPOSAL-ENG-05",
-        "HIST-DOM-CHURN",
-        "HIST-HOVER-SUPPRESSION"
-      ],
+      "sourceIds": ["PROPOSAL-ENG-05", "HIST-DOM-CHURN", "HIST-HOVER-SUPPRESSION"],
       "additionalAcceptance": [
         {
           "sourceId": "HIST-DOM-CHURN",
@@ -562,12 +590,14 @@
       ],
       "implementation": "REUSE_EXISTING_APIS_NO_DUPLICATE_IMPLEMENTATION",
       "verification": "NOT_RUN_ORIGINAL_SCOPE",
-      "pr": null,
-      "blocker": "32项协议/真实blur/hidden未运行、两条PAL警告及实体触屏/原参考未验。",
-      "paths": [
-        "docs/manual/interactive-input.md",
-        "ai/ledgers/interactive-engine-improvements.md"
-      ]
+      "pr": "https://github.com/oahc09/cocosairjs/pull/7",
+      "blocker": "Original proposal acceptance has not been rerun in this PR. Historical material gaps require current item-by-item mapping; device/reference/performance boundaries remain explicit.",
+      "paths": ["docs/manual/interactive-input.md", "ai/ledgers/interactive-engine-improvements.md"],
+      "currentEvidence": {
+        "status": "NOT_RUN_ORIGINAL_SCOPE",
+        "historicalRemainingImpact": "32项协议/真实blur/hidden未运行、两条PAL警告及实体触屏/原参考未验。",
+        "materialMapping": "Additional original/recovered inputs now available; exact equivalence and required devices/budgets not yet verified."
+      }
     },
     {
       "id": "PROPOSAL-ENG-06",
@@ -597,11 +627,7 @@
         }
       ],
       "remainingImpact": "15个WebKit活布局呈现失败；原Puzzle50仍NOT_RUN；无SDK对照6个同类失败。",
-      "sourceIds": [
-        "PROPOSAL-ENG-06",
-        "HIST-PUZZLE-CONTAINER-RESIZE",
-        "HIST-HIDDEN-BOOT"
-      ],
+      "sourceIds": ["PROPOSAL-ENG-06", "HIST-PUZZLE-CONTAINER-RESIZE", "HIST-HIDDEN-BOOT"],
       "additionalAcceptance": [
         {
           "sourceId": "HIST-PUZZLE-CONTAINER-RESIZE",
@@ -624,12 +650,14 @@
       ],
       "implementation": "REUSE_EXISTING_APIS_NO_DUPLICATE_IMPLEMENTATION",
       "verification": "NOT_RUN_ORIGINAL_SCOPE",
-      "pr": null,
-      "blocker": "15个WebKit活布局呈现失败；原Puzzle50仍NOT_RUN；无SDK对照6个同类失败。",
-      "paths": [
-        "docs/manual/interactive-container.md",
-        "ai/ledgers/interactive-engine-improvements.md"
-      ]
+      "pr": "https://github.com/oahc09/cocosairjs/pull/7",
+      "blocker": "Original proposal acceptance has not been rerun in this PR. Historical material gaps require current item-by-item mapping; device/reference/performance boundaries remain explicit.",
+      "paths": ["docs/manual/interactive-container.md", "ai/ledgers/interactive-engine-improvements.md"],
+      "currentEvidence": {
+        "status": "NOT_RUN_ORIGINAL_SCOPE",
+        "historicalRemainingImpact": "15个WebKit活布局呈现失败；原Puzzle50仍NOT_RUN；无SDK对照6个同类失败。",
+        "materialMapping": "Additional original/recovered inputs now available; exact equivalence and required devices/budgets not yet verified."
+      }
     },
     {
       "id": "PROPOSAL-ENG-07",
@@ -659,17 +687,17 @@
         }
       ],
       "remainingImpact": "18组教学部件不能证明原1188部件/155阶段大型工程；原工程参考未取得。",
-      "sourceIds": [
-        "PROPOSAL-ENG-07"
-      ],
+      "sourceIds": ["PROPOSAL-ENG-07"],
       "implementation": "REUSE_EXISTING_APIS_NO_DUPLICATE_IMPLEMENTATION",
       "verification": "NOT_RUN_ORIGINAL_SCOPE",
-      "pr": null,
-      "blocker": "18组教学部件不能证明原1188部件/155阶段大型工程；原工程参考未取得。",
-      "paths": [
-        "docs/manual/interactive-timeline.md",
-        "ai/ledgers/interactive-engine-improvements.md"
-      ]
+      "pr": "https://github.com/oahc09/cocosairjs/pull/7",
+      "blocker": "Original proposal acceptance has not been rerun in this PR. Historical material gaps require current item-by-item mapping; device/reference/performance boundaries remain explicit.",
+      "paths": ["docs/manual/interactive-timeline.md", "ai/ledgers/interactive-engine-improvements.md"],
+      "currentEvidence": {
+        "status": "NOT_RUN_ORIGINAL_SCOPE",
+        "historicalRemainingImpact": "18组教学部件不能证明原1188部件/155阶段大型工程；原工程参考未取得。",
+        "materialMapping": "Additional original/recovered inputs now available; exact equivalence and required devices/budgets not yet verified."
+      }
     },
     {
       "id": "PROPOSAL-ENG-08",
@@ -699,10 +727,7 @@
         }
       ],
       "remainingImpact": "WebKit无AudioContext两行NOT_RUN，原约59秒音乐未取得；PNG不是物理首显示/扬声器时刻。",
-      "sourceIds": [
-        "PROPOSAL-ENG-08",
-        "HIST-AUDIO-VISUAL-LATENCY"
-      ],
+      "sourceIds": ["PROPOSAL-ENG-08", "HIST-AUDIO-VISUAL-LATENCY"],
       "additionalAcceptance": [
         {
           "sourceId": "HIST-AUDIO-VISUAL-LATENCY",
@@ -715,12 +740,14 @@
       ],
       "implementation": "REUSE_EXISTING_APIS_NO_DUPLICATE_IMPLEMENTATION",
       "verification": "NOT_RUN_ORIGINAL_SCOPE",
-      "pr": null,
-      "blocker": "WebKit无AudioContext两行NOT_RUN，原约59秒音乐未取得；PNG不是物理首显示/扬声器时刻。",
-      "paths": [
-        "docs/manual/interactive-timeline.md",
-        "ai/ledgers/interactive-engine-improvements.md"
-      ]
+      "pr": "https://github.com/oahc09/cocosairjs/pull/7",
+      "blocker": "Original proposal acceptance has not been rerun in this PR. Historical material gaps require current item-by-item mapping; device/reference/performance boundaries remain explicit.",
+      "paths": ["docs/manual/interactive-timeline.md", "ai/ledgers/interactive-engine-improvements.md"],
+      "currentEvidence": {
+        "status": "NOT_RUN_ORIGINAL_SCOPE",
+        "historicalRemainingImpact": "WebKit无AudioContext两行NOT_RUN，原约59秒音乐未取得；PNG不是物理首显示/扬声器时刻。",
+        "materialMapping": "Additional original/recovered inputs now available; exact equivalence and required devices/budgets not yet verified."
+      }
     },
     {
       "id": "PROPOSAL-ENG-09",
@@ -750,17 +777,17 @@
         }
       ],
       "remainingImpact": "无目标实体设备、预算及3×60秒数据，首窗口有并发审计混杂。",
-      "sourceIds": [
-        "PROPOSAL-ENG-09"
-      ],
+      "sourceIds": ["PROPOSAL-ENG-09"],
       "implementation": "REUSE_EXISTING_APIS_NO_DUPLICATE_IMPLEMENTATION",
       "verification": "NOT_RUN_ORIGINAL_SCOPE",
-      "pr": null,
-      "blocker": "无目标实体设备、预算及3×60秒数据，首窗口有并发审计混杂。",
-      "paths": [
-        "docs/manual/interactive-performance.md",
-        "ai/ledgers/interactive-engine-improvements.md"
-      ]
+      "pr": "https://github.com/oahc09/cocosairjs/pull/7",
+      "blocker": "Original proposal acceptance has not been rerun in this PR. Historical material gaps require current item-by-item mapping; device/reference/performance boundaries remain explicit.",
+      "paths": ["docs/manual/interactive-performance.md", "ai/ledgers/interactive-engine-improvements.md"],
+      "currentEvidence": {
+        "status": "NOT_RUN_ORIGINAL_SCOPE",
+        "historicalRemainingImpact": "无目标实体设备、预算及3×60秒数据，首窗口有并发审计混杂。",
+        "materialMapping": "Additional original/recovered inputs now available; exact equivalence and required devices/budgets not yet verified."
+      }
     },
     {
       "id": "PROPOSAL-ENG-10",
@@ -790,17 +817,17 @@
         }
       ],
       "remainingImpact": "可选模块未启用时的主动请求路径仍NOT_RUN；base override局部消费诊断不是SDK错误码。",
-      "sourceIds": [
-        "PROPOSAL-ENG-10"
-      ],
+      "sourceIds": ["PROPOSAL-ENG-10"],
       "implementation": "REUSE_EXISTING_APIS_NO_DUPLICATE_IMPLEMENTATION",
       "verification": "NOT_RUN_ORIGINAL_SCOPE",
-      "pr": null,
-      "blocker": "可选模块未启用时的主动请求路径仍NOT_RUN；base override局部消费诊断不是SDK错误码。",
-      "paths": [
-        "docs/manual/interactive-diagnostics.md",
-        "ai/ledgers/interactive-engine-improvements.md"
-      ]
+      "pr": "https://github.com/oahc09/cocosairjs/pull/7",
+      "blocker": "Original proposal acceptance has not been rerun in this PR. Historical material gaps require current item-by-item mapping; device/reference/performance boundaries remain explicit.",
+      "paths": ["docs/manual/interactive-diagnostics.md", "ai/ledgers/interactive-engine-improvements.md"],
+      "currentEvidence": {
+        "status": "NOT_RUN_ORIGINAL_SCOPE",
+        "historicalRemainingImpact": "可选模块未启用时的主动请求路径仍NOT_RUN；base override局部消费诊断不是SDK错误码。",
+        "materialMapping": "Additional original/recovered inputs now available; exact equivalence and required devices/budgets not yet verified."
+      }
     },
     {
       "id": "PROPOSAL-ENG-11",
@@ -830,17 +857,17 @@
         }
       ],
       "remainingImpact": "55/60 PNG通过，5个WK活布局失败；原参考和全平台认证未完成。",
-      "sourceIds": [
-        "PROPOSAL-ENG-11"
-      ],
+      "sourceIds": ["PROPOSAL-ENG-11"],
       "implementation": "REUSE_EXISTING_APIS_NO_DUPLICATE_IMPLEMENTATION",
       "verification": "NOT_RUN_ORIGINAL_SCOPE",
-      "pr": null,
-      "blocker": "55/60 PNG通过，5个WK活布局失败；原参考和全平台认证未完成。",
-      "paths": [
-        "docs/manual/interactive-consumer-kit.md",
-        "ai/ledgers/interactive-engine-improvements.md"
-      ]
+      "pr": "https://github.com/oahc09/cocosairjs/pull/7",
+      "blocker": "Original proposal acceptance has not been rerun in this PR. Historical material gaps require current item-by-item mapping; device/reference/performance boundaries remain explicit.",
+      "paths": ["docs/manual/interactive-consumer-kit.md", "ai/ledgers/interactive-engine-improvements.md"],
+      "currentEvidence": {
+        "status": "NOT_RUN_ORIGINAL_SCOPE",
+        "historicalRemainingImpact": "55/60 PNG通过，5个WK活布局失败；原参考和全平台认证未完成。",
+        "materialMapping": "Additional original/recovered inputs now available; exact equivalence and required devices/budgets not yet verified."
+      }
     },
     {
       "id": "WR-ENGINE-PROPOSAL-001",
@@ -871,13 +898,11 @@
         }
       ],
       "remainingImpact": "纯CPU/Worker消费者仍需规避主入口初始化和快照分叉。",
-      "sourceIds": [
-        "WR-ENGINE-PROPOSAL-001"
-      ],
+      "sourceIds": ["WR-ENGINE-PROPOSAL-001"],
       "implementation": "IMPLEMENTED_FOR_REVIEW",
-      "verification": "PENDING_SAME_HEAD_CI",
-      "pr": null,
-      "blocker": "Original/target-device and complete acceptance remain separate from focused recipe checks.",
+      "verification": "PENDING_FINAL_HEAD_CI",
+      "pr": "https://github.com/oahc09/cocosairjs/pull/7",
+      "blocker": "Focused acceptance passed at e29; final collector-enhancement head remains pending CI.",
       "paths": [
         "tools/build/math-module.cjs",
         "tools/build/prepare-package.cjs",
@@ -885,7 +910,45 @@
         "tools/verify/math-entry.test.cjs",
         "tools/verify/math-tarball.cjs",
         ".github/workflows/sdk-recipes.yml"
-      ]
+      ],
+      "currentEvidence": {
+        "head": "e29b9b370ddfe45fa32be325e52ab4574db9e6cd",
+        "passed": [
+          "Node 22.23.3 all-global-descriptor isolation plus empty-ESM loader control and real pollution negative control",
+          "Real Node Worker and DOM-hostile VM imports",
+          "Same-head Chromium math-first bootstrap, 32 main/math numeric comparisons, selected canvas and DPR",
+          "Actual npm pack/offline install; TS4.9.5 classic Node and NodeNext; 33 common canonical main-map inputs"
+        ],
+        "pending": []
+      }
     }
-  ]
+  ],
+  "lastAcceptedCI": {
+    "head": "e29b9b370ddfe45fa32be325e52ab4574db9e6cd",
+    "sdkRun": "https://github.com/oahc09/cocosairjs/actions/runs/39234628691",
+    "coreRun": "https://github.com/oahc09/cocosairjs/actions/runs/39234628663",
+    "skillsRun": "https://github.com/oahc09/cocosairjs/actions/runs/39234628744",
+    "artifactId": 12177324622,
+    "artifactDigest": "sha256:8eeca353952dd79b4712dc42f2ee6abc500504658a81ea4d48351d079e173e93",
+    "cpu": 42,
+    "browserRows": 6,
+    "runtimeSHA256": "45db54c99b86d3038b9fa3cfe68a40fd86160e91524c01d94c2bac839fc29039",
+    "mathSHA256": "27974fb947783a06cde931fd528a6058f2d52c6b7975bdc76c48f3e4e593a8f5",
+    "tarballSHA256": "de0ced523ad666f55a9cf0ca3f2645bc59915e0a61394584adfb1def6b684e21",
+    "types": "4.9.5 Node + NodeNext",
+    "canonicalMapInputs": 33
+  },
+  "finalEnhancement": {
+    "status": "PENDING_FINAL_HEAD_CI",
+    "changes": [
+      "Trusted real context loss/restoration, explicit failed state, actual full navigation and new visible GPU scene",
+      "Wait for each imported SpriteFrame object identity change and preserve the exact imported object on paper edits"
+    ],
+    "expectedBrowserRows": 7,
+    "resolution": "Use the latest PR7 head workflow artifact and PR description for final outcome; e29 results above remain separate."
+  },
+  "materialAvailability": {
+    "status": "ORIGINAL_INPUTS_REQUIRE_CURRENT_ITEM_BY_ITEM_MAPPING",
+    "note": "Additional original/recovered project materials are now available in a separate authorized read-only workspace. Historical 'missing materials' notes in the frozen audit are not current availability findings. None have yet been matched and rerun against the original proposal's exact input identity in this PR. No application or source-material uploads are included."
+  }
 }
