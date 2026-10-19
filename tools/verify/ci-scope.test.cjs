@@ -330,3 +330,124 @@ test('one ordinary workflow has CPU before one build, exact-head receipts and al
         assert.equal(job.with.mode, name === 'skills' ? 'skills' : 'full');
     }
 });
+
+// CLI modes differ intentionally: geometry/input require an explicit selection;
+// timeline/multipass/color/kit auditors validate the report's selected scope internally.
+// Evidence-chain reports define their own requested browser/DPR subset. Performance
+// remains CPU-contract-only here, with no fabricated device measurement command.
+const BROWSER_COMMAND_CONTRACTS = [
+    ['timeline', 'interactive-timeline-browser', { browser: 'chromium', out: 'timeline.json' }],
+    ['timeline', 'interactive-timeline-browser', { browser: 'chromium', verify: 'timeline.json' }],
+    ['timeline', 'interactive-timeline-audit', { report: 'timeline.json', out: 'timeline-audit.json' }],
+    ['evidence', 'interactive-improvement-browser', { browser: 'chromium', out: 'input-compositor.json' }],
+    ['evidence', 'interactive-improvement-browser', { verify: 'input-compositor.json' }],
+    [
+        'evidence',
+        'interactive-improvement-evidence-audit',
+        { report: 'input-compositor.json', out: 'input-compositor-audit.json' },
+    ],
+    ['multipass', 'interactive-multipass-browser', { browser: 'chromium', out: 'multipass.json' }],
+    ['multipass', 'interactive-multipass-browser', { browser: 'chromium', verify: 'multipass.json' }],
+    ['multipass', 'interactive-multipass-audit', { report: 'multipass.json', out: 'multipass-audit.json' }],
+    ['geometry', 'interactive-geometry-browser', { browser: 'chromium', out: 'geometry.json' }],
+    ['geometry', 'interactive-geometry-browser', { browser: 'chromium', verify: 'geometry.json' }],
+    [
+        'geometry',
+        'interactive-geometry-audit',
+        { browser: 'chromium', report: 'geometry.json', out: 'geometry-audit.json' },
+    ],
+    ['color', 'interactive-color-compare-browser', { browser: 'chromium', out: 'color-compare.json' }],
+    ['color', 'interactive-color-compare-browser', { browser: 'chromium', verify: 'color-compare.json' }],
+    ['color', 'interactive-color-compare-audit', { report: 'color-compare.json', out: 'color-compare-audit.json' }],
+    ['mixed_input', 'interactive-input-browser', { browser: 'chromium', out: 'mixed-input.json' }],
+    [
+        'mixed_input',
+        'interactive-input-audit',
+        { browser: 'chromium', report: 'mixed-input.json', out: 'mixed-input-audit.json' },
+    ],
+    [
+        'installed_kit',
+        'interactive-kit-consumer',
+        { browser: 'chromium', tarball: 'tarball/cocosair.js-1.0.0.tgz', out: 'installed-kit.json' },
+    ],
+    ['installed_kit', 'interactive-kit-consumer', { browser: 'chromium', verify: 'installed-kit.json' }],
+    ['installed_kit', 'interactive-kit-audit', { report: 'installed-kit.json', out: 'installed-kit-audit.json' }],
+];
+function checkBrowserCommands(text) {
+    const workflow = yaml.load(text, { schema: yaml.JSON_SCHEMA });
+    const actual = [];
+    for (const step of workflow.jobs.quality.steps) {
+        for (const match of (step.run || '').matchAll(/\bnode (tools\/verify\/interactive-[\w-]+\.cjs)([^\n]*)/g)) {
+            if (!BROWSER_COMMAND_CONTRACTS.some(([id]) => id === step.id)) continue;
+            const options = {};
+            const args = match[2]
+                .split(/\s+(?:2>&1|\|)|;/)[0]
+                .trim()
+                .split(/\s+/)
+                .filter(Boolean);
+            for (const arg of args) {
+                const m = /^--([a-z-]+)=(.+)$/.exec(arg);
+                assert(m, 'unrecognized CLI argument ' + arg);
+                assert.equal(options[m[1]], undefined, 'duplicate CLI argument ' + m[1]);
+                options[m[1]] = m[2];
+            }
+            actual.push([step.id, path.basename(match[1], '.cjs'), options]);
+        }
+    }
+    const expected = BROWSER_COMMAND_CONTRACTS.map(([step, script, options]) => [
+        step,
+        script,
+        Object.fromEntries(Object.entries(options).map(([k, v]) => [k, k === 'browser' ? v : 'output/sdk-ci/' + v])),
+    ]);
+    assert.deepEqual(actual, expected);
+    const mixed = workflow.jobs.quality.steps.find((s) => s.id === 'mixed_input').run;
+    assert.match(mixed, /checkSelectedReport\(report, \['chromium'\]\)/);
+    assert.match(mixed, /!validation\.valid/);
+    assert.match(mixed, /!validation\.notRun\.length/);
+    const shell = workflow.jobs.quality.steps.map((s) => s.run || '').join('\n');
+    assert.doesNotMatch(shell, /node tools\/verify\/interactive-performance(?:-audit)?\.cjs/);
+}
+const workflowText = () => fs.readFileSync(path.join(root, '.github/workflows/format.yml'), 'utf8');
+test('all real workflow collector, verification and audit CLI modes bind the same browser, report and tarball', () => {
+    checkBrowserCommands(workflowText());
+});
+for (const [name, from, to] of [
+    [
+        'missing geometry selection (actual failed CI)',
+        'interactive-geometry-audit.cjs --browser=chromium',
+        'interactive-geometry-audit.cjs',
+    ],
+    [
+        'wrong geometry browser',
+        'interactive-geometry-audit.cjs --browser=chromium',
+        'interactive-geometry-audit.cjs --browser=webkit',
+    ],
+    [
+        'full geometry verification',
+        'interactive-geometry-browser.cjs --browser=chromium --verify=',
+        'interactive-geometry-browser.cjs --verify=',
+    ],
+    ['missing input selection', 'interactive-input-audit.cjs --browser=chromium', 'interactive-input-audit.cjs'],
+    [
+        'unrecognized color audit option',
+        'interactive-color-compare-audit.cjs --report=',
+        'interactive-color-compare-audit.cjs --browser=chromium --report=',
+    ],
+    ['wrong timeline report', '--report=output/sdk-ci/timeline.json', '--report=output/sdk-ci/other.json'],
+    [
+        'wrong installed tarball',
+        '--tarball=output/sdk-ci/tarball/cocosair.js-1.0.0.tgz',
+        '--tarball=output/sdk-ci/stale.tgz',
+    ],
+    [
+        'wrong selected input verifier',
+        "checkSelectedReport(report, ['chromium'])",
+        "checkSelectedReport(report, ['webkit'])",
+    ],
+]) {
+    test('workflow CLI contract rejects ' + name, () => {
+        const text = workflowText();
+        assert(text.includes(from));
+        assert.throws(() => checkBrowserCommands(text.replace(from, to)));
+    });
+}

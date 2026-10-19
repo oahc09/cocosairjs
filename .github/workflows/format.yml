@@ -359,7 +359,7 @@ jobs:
           trap 'status=$?; node tools/verify/ci-scope.cjs time-end geometry "$status"; exit "$status"' EXIT
           node tools/verify/interactive-geometry-browser.cjs --browser=chromium --out=output/sdk-ci/geometry.json 2>&1 | tee output/sdk-ci/geometry.log
           node tools/verify/interactive-geometry-browser.cjs --browser=chromium --verify=output/sdk-ci/geometry.json
-          node tools/verify/interactive-geometry-audit.cjs --report=output/sdk-ci/geometry.json --out=output/sdk-ci/geometry-audit.json
+          node tools/verify/interactive-geometry-audit.cjs --browser=chromium --report=output/sdk-ci/geometry.json --out=output/sdk-ci/geometry-audit.json
       - name: Verify clipping, alpha, Water and HDR current controls
         id: color
         if: steps.classify.outputs.color == 'true'
