@@ -1,0 +1,107 @@
+name: Import verified PR6 maps (temporary)
+on:
+  pull_request:
+    paths:
+      - .github/workflows/import-pr6-maps.yml
+permissions: {}
+concurrency:
+  group: import-pr6-maps
+  cancel-in-progress: false
+jobs:
+  import-maps:
+    if: github.repository == 'oahc09/cocosairjs' && github.event.pull_request.number == 6 && github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.head.ref == 'fix/audit-webgl2-state-stacked-20261019'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      actions: read
+      pull-requests: read
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          artifact-ids: "12172992282"
+          run-id: "39224042812"
+          repository: oahc09/cocosairjs
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          merge-multiple: true
+          path: ${{ runner.temp }}/pr6-map-import
+      - name: Verify immutable inputs and import only the two maps
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('node:fs');
+            const path = require('node:path');
+            const crypto = require('node:crypto');
+            const assert = require('node:assert/strict');
+            const owner = 'oahc09', repo = 'cocosairjs';
+            const branch = 'fix/audit-webgl2-state-stacked-20261019';
+            const source = 'e229ee13255f8f78284354f0f2e8ad2b69f504bf';
+            const sourceHash = 'db6175d1559676295c039f7ca0894132271a171043cebbfeb587c9b27e1b0f6b';
+            const sha256 = (b) => crypto.createHash('sha256').update(b).digest('hex');
+            const gitBlob = (b) => crypto.createHash('sha1').update(`blob ${b.length}\0`).update(b).digest('hex');
+            assert.equal(context.repo.owner, owner); assert.equal(context.repo.repo, repo);
+            assert.equal(context.eventName, 'pull_request');
+            assert.equal(context.payload.pull_request.number, 6);
+            assert.equal(context.payload.pull_request.head.repo.full_name, `${owner}/${repo}`);
+            assert.equal(context.payload.pull_request.head.ref, branch);
+            const expectedHead = context.payload.pull_request.head.sha;
+            const checkHead = async () => {
+                const { data: pr } = await github.rest.pulls.get({ owner, repo, pull_number: 6 });
+                assert.equal(pr.state, 'open'); assert.equal(pr.merged, false);
+                assert.equal(pr.head.ref, branch); assert.equal(pr.head.repo.full_name, `${owner}/${repo}`);
+                assert.equal(pr.head.sha, expectedHead); assert.equal(pr.base.ref, 'main');
+                return pr;
+            };
+            await checkHead();
+            const { data: artifact } = await github.rest.actions.getArtifact({ owner, repo, artifact_id: 12172992282 });
+            assert.equal(artifact.expired, false);
+            assert.equal(artifact.workflow_run.id, 39224042812);
+            assert.equal(artifact.workflow_run.head_sha, source);
+            assert.equal(artifact.digest, 'sha256:89de9f6ef85091c022daf8b25320887e72a3f217dbe9d07618b27c28fed8b574');
+            const root = path.join(process.env.RUNNER_TEMP, 'pr6-map-import', 'runtime-build');
+            const provenance = JSON.parse(fs.readFileSync(path.join(root, 'provenance.json'), 'utf8'));
+            assert.equal(provenance.sourceCommit, source); assert.equal(provenance.workflowRunId, '39224042812');
+            assert.equal(provenance.source.sha256, sourceHash); assert.equal(provenance.files.length, 7);
+            for (const item of provenance.files) {
+                assert(!item.path.includes('..') && !path.isAbsolute(item.path));
+                const bytes = fs.readFileSync(path.join(root, item.path));
+                assert.equal(bytes.length, item.bytes); assert.equal(sha256(bytes), item.sha256);
+            }
+            const { data: parent } = await github.rest.git.getCommit({ owner, repo, commit_sha: expectedHead });
+            const { data: tree } = await github.rest.git.getTree({ owner, repo, tree_sha: parent.tree.sha, recursive: 'true' });
+            assert.equal(tree.truncated, false);
+            const entries = new Map(tree.tree.map((entry) => [entry.path, entry]));
+            for (const [file, sha] of Object.entries({
+                'build/cocosair.module.js': '720795ba8785158172dae0a790b2306b744395b0',
+                'build/cocosair.module.min.js': 'f00ff4eed48f16196c49967c762cd81e70a5d8eb',
+                'tools/build/build-number.json': '74abdd7f9441744b11dd563cb0cc60c2ae9d77d8',
+                'src/cocos/gfx/webgl2/webgl2-commands.ts': 'd3f5ca897d5b17b588908b04c1526b4a890e1397',
+            })) assert.equal(entries.get(file)?.sha, sha, file);
+            const maps = [
+                ['build/cocosair.module.js.map', 24159332, 'd40bef6010efda27ecf996e2290d645c87cf9fb7c571805a3c3f09cf5e89f806', 'b0f61656b5fa1524e94cdad796b7650591d6c08e'],
+                ['build/cocosair.module.min.js.map', 20317078, '391ca508b5de136804721045130305ad587dc778b7ed6aca67d528863502f9e8', '348ada8ebef3371b78283edf08b6a0fd8e8a0d2a'],
+            ];
+            const changes = [];
+            for (const [file, length, hash, blob] of maps) {
+                const bytes = fs.readFileSync(path.join(root, file));
+                assert.equal(bytes.length, length); assert.equal(sha256(bytes), hash); assert.equal(gitBlob(bytes), blob);
+                const map = JSON.parse(bytes);
+                const indexes = map.sources.map((p, i) => p.endsWith('/gfx/webgl2/webgl2-commands.ts') ? i : -1).filter(i => i >= 0);
+                assert.equal(indexes.length, 1); assert.equal(sha256(Buffer.from(map.sourcesContent[indexes[0]])), sourceHash);
+                if (entries.get(file)?.sha === blob) continue;
+                changes.push({ file, bytes, blob });
+            }
+            if (!changes.length) { core.info('Both exact maps are already present; no write.'); return; }
+            await checkHead();
+            const additions = [];
+            for (const { file, bytes, blob } of changes) {
+                const { data: created } = await github.rest.git.createBlob({ owner, repo, encoding: 'base64', content: bytes.toString('base64') });
+                assert.equal(created.sha, blob);
+                additions.push({ path: file, mode: '100644', type: 'blob', sha: blob });
+            }
+            const { data: nextTree } = await github.rest.git.createTree({ owner, repo, base_tree: parent.tree.sha, tree: additions });
+            const { data: commit } = await github.rest.git.createCommit({ owner, repo, tree: nextTree.sha, parents: [expectedHead], message: 'build(gfx): restore exact build185 source maps', author: { name: 'oahc09', email: 'caoshen1990@163.com' } });
+            await checkHead();
+            // Non-force update with the checked head as sole parent rejects a concurrent divergent commit.
+            await github.rest.git.updateRef({ owner, repo, ref: `heads/${branch}`, sha: commit.sha, force: false });
+            core.info(`Imported only ${additions.length} exact source maps in ${commit.sha}`);
