@@ -116,6 +116,49 @@ describe('2026-10-19 WebGL2 audit regressions', () => {
             } as any),
         ).toThrow('WEBGL2_VERTEX_STREAM_INVALID');
     });
+    test.each([false, true])('built-in and inactive inputs consume no attribute slot (VAO=%s)', (useVAO) => {
+        const { device, gl } = fixture(useVAO);
+        const names = ['gl_InstanceID', 'gl_VertexID', 'inactiveUserAttribute'];
+        const pipeline = {
+            gpuShader: {
+                glProgram: {},
+                glBlocks: [],
+                glSamplerTextures: [],
+                glInputs: names.map((name) => ({ name, glLoc: -1, glType: GL.INT, count: 1 })),
+            },
+            dynamicStates: [],
+        } as any;
+        const ia = { glVAOs: new Map(), glAttribs: names.map((name) => ({ name, glBuffer: {} })) } as any;
+        const bind = () => WebGL2CmdFuncBindStates(device, pipeline, ia, [], [], new DynamicStates());
+        expect(bind).not.toThrow();
+        expect(bind).not.toThrow();
+        expect(gl.enableVertexAttribArray).not.toHaveBeenCalled();
+        expect(gl.vertexAttribPointer).not.toHaveBeenCalled();
+        expect(gl.vertexAttribIPointer).not.toHaveBeenCalled();
+        expect(gl.vertexAttribDivisor).not.toHaveBeenCalled();
+    });
+    test.each([false, true])('matrix at the last valid group of locations is accepted (VAO=%s)', (useVAO) => {
+        const { device } = fixture(useVAO);
+        const pipeline = {
+            gpuShader: {
+                glProgram: {},
+                glBlocks: [],
+                glSamplerTextures: [],
+                glInputs: [{ name: 'lastMatrix', glLoc: 12, glType: GL.FLOAT_MAT4, count: 1 }],
+            },
+            dynamicStates: [],
+        } as any;
+        expect(() =>
+            WebGL2CmdFuncBindStates(
+                device,
+                pipeline,
+                { glVAOs: new Map(), glAttribs: [] } as any,
+                [],
+                [],
+                new DynamicStates(),
+            ),
+        ).not.toThrow();
+    });
     test.each([false, true])('matrix locations respect hardware limit (VAO=%s)', (useVAO) => {
         const { device } = fixture(useVAO);
         const pipeline = {

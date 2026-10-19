@@ -32,19 +32,25 @@ jobs:
           set -euo pipefail
           npm ci --ignore-scripts
           node tools/build/prepare-package.cjs
+          npm run build:all
+          node tools/verify/runtime-build-receipt.cjs
           npm install --prefix "$RUNNER_TEMP/air-browser-tools" --no-save --ignore-scripts --package-lock=false playwright@1.62.1
           node "$RUNNER_TEMP/air-browser-tools/node_modules/playwright/cli.js" install --with-deps chromium
           echo "NODE_PATH=$RUNNER_TEMP/air-browser-tools/node_modules" >> "$GITHUB_ENV"
           mkdir -p "$RUNNER_TEMP/spark-ab-inputs" "$RUNNER_TEMP/spark-ab-results"
+          mkdir -p "$RUNNER_TEMP/spark-ab-results/runtime-build/build" "$RUNNER_TEMP/spark-ab-results/runtime-build/tools/build"
+          cp build/cocosair.module.js build/cocosair.module.js.map build/cocosair.module.min.js build/cocosair.module.min.js.map build/cocosair.module.d.ts build/cocosair.legacy.d.ts "$RUNNER_TEMP/spark-ab-results/runtime-build/build/"
+          cp tools/build/build-number.json "$RUNNER_TEMP/spark-ab-results/runtime-build/tools/build/"
+          cp output/audit-runtime/provenance.json "$RUNNER_TEMP/spark-ab-results/runtime-build/"
           cp build/cocosair.module.js "$RUNNER_TEMP/spark-ab-inputs/candidate.js"
           cp build/cocosair.module.min.js "$RUNNER_TEMP/spark-ab-inputs/candidate.min.js"
           git show bac30c0f9b9e9cb61e43720d23053a98d24ac811:build/cocosair.module.js > "$RUNNER_TEMP/spark-ab-inputs/baseline.js"
           git show bac30c0f9b9e9cb61e43720d23053a98d24ac811:build/cocosair.module.min.js > "$RUNNER_TEMP/spark-ab-inputs/baseline.min.js"
           test "$(git hash-object "$RUNNER_TEMP/spark-ab-inputs/baseline.js")" = debd136ea9899d06d80d4a761c8e396ccd4864d5
-          test "$(git hash-object "$RUNNER_TEMP/spark-ab-inputs/candidate.js")" = 96cfa03d3ffe9e5036fed28f1477e80e388378ce
+          echo 'db6175d1559676295c039f7ca0894132271a171043cebbfeb587c9b27e1b0f6b  src/cocos/gfx/webgl2/webgl2-commands.ts' | sha256sum --check
           test "$(git hash-object build/spark.module.js)" = 57acc480358690372e0d96ef55062c9cb752458f
           git rev-parse HEAD > "$RUNNER_TEMP/spark-ab-results/diagnostic-head.txt"
-          printf '%s\n' 'baseline-source=bac30c0f9b9e9cb61e43720d23053a98d24ac811' 'candidate-runtime-source=005ebaccf7c56acf2d3f7c99731b2d60020c9f30' > "$RUNNER_TEMP/spark-ab-results/source-heads.txt"
+          printf '%s\n' 'baseline-source=bac30c0f9b9e9cb61e43720d23053a98d24ac811' "candidate-runtime-source=$(git rev-parse HEAD)" > "$RUNNER_TEMP/spark-ab-results/source-heads.txt"
           sha256sum "$RUNNER_TEMP/spark-ab-inputs/"* build/spark.module.js examples/spark-splats/src/main.ts tools/benchmark/runner/browser-runtime.cjs tools/verify/example-evidence-observer.cjs tools/verify/spark-startup-diagnostic.cjs > "$RUNNER_TEMP/spark-ab-results/input-sha256.txt"
       - name: Run bounded Spark baseline and candidate on the same runner
         run: |

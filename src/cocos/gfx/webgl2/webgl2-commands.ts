@@ -2430,8 +2430,10 @@ export function WebGL2CmdFuncBindStates (
         && (isShaderChanged || gfxStateCache.gpuInputAssembler !== gpuInputAssembler)) {
         // Matrix/array inputs consume multiple locations; validate the actual shader layout.
         for (const input of gpuShader.glInputs) {
+            // WebGL may reflect built-ins or inactive inputs with no generic attribute slot.
+            if (input.glLoc === -1) continue;
             const end = input.glLoc + WebGLGetComponentCount(input.glType, gl) * input.count;
-            if (input.glLoc < 0 || end > capabilities.maxVertexAttributes) {
+            if (!Number.isInteger(input.glLoc) || input.glLoc < 0 || end > capabilities.maxVertexAttributes) {
                 throw new RangeError(`WEBGL2_VERTEX_ATTRIBUTE_LIMIT: ${input.name}, end ${end}`);
             }
         }
@@ -2453,6 +2455,7 @@ export function WebGL2CmdFuncBindStates (
                 let glAttrib: IWebGL2Attrib | null;
                 for (let j = 0; j < gpuShader.glInputs.length; j++) {
                     const glInput = gpuShader.glInputs[j];
+                    if (glInput.glLoc === -1) continue;
                     glAttrib = null;
 
                     for (let k = 0; k < gpuInputAssembler.glAttribs.length; k++) {
@@ -2505,6 +2508,7 @@ export function WebGL2CmdFuncBindStates (
 
             for (let j = 0; j < gpuShader.glInputs.length; j++) {
                 const glInput = gpuShader.glInputs[j];
+                if (glInput.glLoc === -1) continue;
                 let glAttrib: IWebGL2Attrib | null = null;
 
                 for (let k = 0; k < gpuInputAssembler.glAttribs.length; k++) {
