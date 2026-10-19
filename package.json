@@ -26,6 +26,14 @@
     "<5.0": {
       "build/cocosair.module.d.ts": [
         "build/cocosair.legacy.d.ts"
+      ],
+      "math": [
+        "build/cocosair.math.legacy.d.ts"
+      ]
+    },
+    "*": {
+      "math": [
+        "build/cocosair.math.d.ts"
       ]
     }
   },
