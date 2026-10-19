@@ -8,6 +8,7 @@ export function ownSpriteFrame(
     originalImage?: ImageAsset,
 ): () => void {
     let disposed = false;
+    let unregister = (): void => {};
     const dispose = (): void => {
         if (disposed) return;
         disposed = true;
@@ -17,6 +18,7 @@ export function ownSpriteFrame(
         originalTexture.destroy();
         originalImage?.destroy();
     };
-    const unregister = session.own(dispose, 'owned-sprite-frame');
+    unregister = session.own(dispose, 'owned-sprite-frame');
+    if (disposed) unregister();
     return dispose;
 }
