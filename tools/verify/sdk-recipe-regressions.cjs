@@ -340,3 +340,64 @@ test('invalid geometry inputs are rejected', () => {
         assert.throws(() => createTwoSidedPage(angle), RangeError);
     for (const n of [0, 1.5, 65536]) assert.throws(() => createTwoSidedPage(0, n), RangeError);
 });
+const { prepareEffectForRegistration, AirEffectLayoutError } = load('tools/debug/effect-layout.ts');
+function effect() {
+    const glsl4 =
+        'precision highp float;\nlayout(set=1,binding=0) uniform Constants { vec4 color; };\nlayout(set=1,binding=1) uniform sampler2D image;\nvoid main() {}';
+    return {
+        name: 'fixture',
+        techniques: [{ passes: [{ program: 'one' }, { program: 'two' }] }],
+        shaders: ['one', 'two'].map((name) => ({
+            name,
+            blocks: [
+                { name: 'Constants', binding: 0, stageFlags: 16, members: [{ name: 'color', type: 16, count: 1 }] },
+            ],
+            samplerTextures: [{ name: 'image', binding: 1, count: 1, type: 28, stageFlags: 16 }],
+            glsl4: { vert: 'void main(){}', frag: glsl4 },
+            glsl3: { vert: 'void main(){}', frag: glsl4.replace(/layout\([^)]*\) /g, '') },
+        })),
+    };
+}
+test('multiple shader programs retain independent bindings without mutating input', () => {
+    const input = effect(),
+        original = JSON.stringify(input),
+        result = prepareEffectForRegistration(input);
+    assert.equal(result.bindings.length, 4);
+    assert.equal(JSON.stringify(input), original);
+});
+for (const target of ['glsl4', 'glsl3'])
+    for (const [name, from, to] of [
+        ['comma sampler', 'sampler2D image;', 'sampler2D image, second;'],
+        ['macro array', 'sampler2D image;', 'sampler2D image[COUNT];'],
+        [
+            'conditional',
+            'uniform sampler2D image;',
+            'uniform sampler2D image;\n#if USE_EXTRA\nuniform sampler2D extra;\n#endif',
+        ],
+        ['comma block', 'vec4 color;', 'vec4 color, other;'],
+        ['block array', 'vec4 color;', 'vec4 color[COUNT];'],
+    ])
+        test(`${target} ${name}: source-positioned rejection`, () => {
+            const input = effect();
+            input.shaders[0][target].frag = input.shaders[0][target].frag.replace(from, to);
+            assert.throws(
+                () => prepareEffectForRegistration(input),
+                (e) =>
+                    e instanceof AirEffectLayoutError &&
+                    e.issues.some((i) => i.target === target && i.stage === 'frag' && i.line >= 2 && i.column >= 1),
+            );
+        });
+test('GLSL3 reflection drift fails even when GLSL4 matches', () => {
+    const input = effect();
+    input.shaders[0].glsl3.frag = input.shaders[0].glsl3.frag.replace('vec4 color;', 'mat4 color;');
+    assert.throws(() => prepareEffectForRegistration(input), /glsl3 material member layout/);
+});
+test('unreflected bare uniform is not silently accepted', () => {
+    const input = effect();
+    input.shaders[0].glsl4.vert += '\nuniform vec4 missing;';
+    assert.throws(() => prepareEffectForRegistration(input), /DECLARATION_UNSUPPORTED/);
+});
+test('unchanged legacy HDR fixture remains accepted', () => {
+    const fixture = require(path.join(root, 'examples/hdr-color-pipeline/color-input.effect.json'));
+    assert.equal(prepareEffectForRegistration(fixture).effect.name, fixture.name);
+});
