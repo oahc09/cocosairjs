@@ -1,0 +1,671 @@
+{
+  "generated_from": "skills/*/SKILL.md frontmatter + Reference map",
+  "schema": 2,
+  "min_compatible_schema": 2,
+  "skills": [
+    {
+      "name": "cocosair",
+      "layer": "router",
+      "family": "runtime-core",
+      "path": "cocosair/SKILL.md",
+      "description": "Route Cocos AIR tasks across subsystem skills and direct dependencies. Use to choose a primary owner, adapt Creator knowledge, or apply Code First and capability-evidence rules.",
+      "owns": ["skill-routing", "primary-owner", "direct-dependencies", "code-first", "capability-layers"],
+      "when_to_use": [
+        "which skill owns this AIR task",
+        "choose only the dependencies needed for this step",
+        "adapt Creator knowledge to code-first AIR",
+        "distinguish source exports from proven browser capabilities"
+      ],
+      "not_for": ["startup errors -> cocosair-application", "material property failures -> cocosair-materials-effects"],
+      "metadata": {
+        "description_zh": "为 Cocos AIR 任务选择主技能和直接依赖，并遵循原生 API、启动时序与能力证据分层。用于开始 AIR 开发、定位能力归属或选择技能。"
+      },
+      "refs": [
+        { "file": "references/context.md#related-skills", "answers": "Direct dependencies" },
+        { "file": "references/environment.md", "answers": "Roots and prerequisites" },
+        { "file": "references/skill-index.md", "answers": "Compatibility index" }
+      ],
+      "last_updated": "2026-10-13"
+    },
+    {
+      "name": "cocosair-2d-subsystems",
+      "layer": "subsystem",
+      "family": "ui-2d",
+      "path": "cocosair-2d-subsystems/SKILL.md",
+      "description": "Build DragonBones, TiledMap, particles and billboards from runtime data. Use for raw asset strings, missing pixels, MotionStreak or Spine backend limits.",
+      "owns": ["dragonbones", "tiledmap", "particle-2d", "billboard", "motion-streak", "spine-limits"],
+      "when_to_use": [
+        "build DragonBones assets from raw JSON strings",
+        "TiledMap edits do not redraw or resolve objects",
+        "particles compute but render no pixels",
+        "Spine skeleton stays blank without an error",
+        "billboard or motion trail is invisible"
+      ],
+      "not_for": [
+        "basic UI layout and controls -> cocosair-ui-2d",
+        "3D skeleton deformation -> cocosair-skinning-morph",
+        "remote asset caching -> cocosair-assets"
+      ],
+      "metadata": {
+        "description_zh": "配置 Spine、DragonBones、TiledMap、二维粒子和 Billboard 的原生运行时契约。用于资源构造、空白画面或子系统能力边界问题。"
+      },
+      "refs": [
+        { "file": "references/spine.md", "answers": "Runtime and asset blockers" },
+        { "file": "references/dragonbones.md", "answers": "Payloads and pitfalls" },
+        { "file": "references/tiledmap.md", "answers": "Arrays, dirty state and queries" },
+        { "file": "references/particle-2d.md", "answers": "Plist, blend and streaks" },
+        { "file": "references/billboard.md", "answers": "Size and texture ownership" }
+      ],
+      "last_updated": "2026-10-13"
+    },
+    {
+      "name": "cocosair-agent-session",
+      "layer": "subsystem",
+      "family": "runtime-core",
+      "path": "cocosair-agent-session/SKILL.md",
+      "description": "Inspect live scenes and frames with devtools; read runtime diagnostics. Use for scoped session writes, pixel probes or duplicate requestId INVALID_ARGUMENT errors.",
+      "owns": [
+        "agent-session",
+        "scene-inspection",
+        "scoped-writes",
+        "frame-capture",
+        "pixel-probes",
+        "runtime-diagnostics"
+      ],
+      "when_to_use": [
+        "inspect the running scene or node",
+        "apply a scoped change through an agent session",
+        "capture a frame after drawing",
+        "read runtime errors and diagnostics",
+        "duplicate requestId is rejected"
+      ],
+      "not_for": [
+        "app startup or shutdown -> cocosair-application",
+        "verification gates and release evidence -> cocosair-verification",
+        "scene-tree implementation -> cocosair-scene-graph"
+      ],
+      "metadata": {
+        "description_zh": "使用开发工具观察运行时、按明确范围写入、捕获画面和读取诊断。用于实时应用检查或受控自动化，工具不属于默认运行时包。"
+      },
+      "refs": [
+        { "file": "references/agent-session.md", "answers": "Protocol and writable scope" },
+        { "file": "references/runtime-control.md", "answers": "IDs and diagnostics" },
+        { "file": "references/visual-probes.md", "answers": "Capture and origins" }
+      ],
+      "last_updated": "2026-10-13"
+    },
+    {
+      "name": "cocosair-animation-tween",
+      "layer": "subsystem",
+      "family": "scene-3d",
+      "path": "cocosair-animation-tween/SKILL.md",
+      "description": "Animate tweens and AnimationClip tracks with one step clock. Use to loop a sequence on a target, reverseTime, clean up playback or diagnose unavailable pose graphs.",
+      "owns": ["tween", "animation-clip", "track-path", "wrap-mode", "step-clock", "pose-graph-limits"],
+      "when_to_use": [
+        "move or rotate a node over time",
+        "a clip plays once instead of looping",
+        "a tween will not reverse",
+        "track classes fail to import by name",
+        "step deterministic frames without a second live clock"
+      ],
+      "not_for": [
+        "glTF loading and instance setup -> cocosair-gltf",
+        "skeletal binding and morph weights -> cocosair-skinning-morph",
+        "scalar easing calculations -> cocosair-math"
+      ],
+      "metadata": {
+        "description_zh": "使用 AnimationClip、Animation 和 tween，管理播放模式、组合及单一时钟。用于动画播放、补间回收或确定性步进问题。"
+      },
+      "refs": [
+        { "file": "references/animation-clip.md", "answers": "Tracks and wrap modes" },
+        { "file": "references/tween-ops.md", "answers": "Chains, ownership and defects" },
+        { "file": "references/step-clock.md", "answers": "One clock and proof limits" }
+      ],
+      "last_updated": "2026-10-13"
+    },
+    {
+      "name": "cocosair-application",
+      "layer": "subsystem",
+      "family": "runtime-core",
+      "path": "cocosair-application/SKILL.md",
+      "description": "Configure createAirApp options, canvas, lifecycle, screen sizing and context health. Use for WEBGL2_REQUIRED startup errors, scene replacement, session cleanup or lost contexts.",
+      "owns": ["startup-admission", "app-lifecycle", "screen-sizing", "context-health", "session-cleanup"],
+      "when_to_use": [
+        "createAirApp rejects options or fails startup",
+        "replace or release the running scene",
+        "app closed and will not restart",
+        "fit a container or set design resolution",
+        "lost context or scene cleanup stalls"
+      ],
+      "not_for": [
+        "package imports or page shell -> cocosair-project-setup",
+        "persistent SceneStack pages -> cocosair-input-action",
+        "live-session inspection -> cocosair-agent-session"
+      ],
+      "metadata": {
+        "description_zh": "配置 createAirApp 和应用生命周期、屏幕尺寸、会话清理及 WebGL 上下文健康。用于启动错误、场景替换、关闭和自定义 canvas。"
+      },
+      "refs": [
+        { "file": "references/app-options.md", "answers": "Options and lifecycle" },
+        { "file": "references/startup-errors.md", "answers": "Codes and remedies" },
+        { "file": "references/context-health.md", "answers": "States and reload gate" },
+        { "file": "references/session-scope.md", "answers": "Ownership and disposal" }
+      ],
+      "last_updated": "2026-10-13"
+    },
+    {
+      "name": "cocosair-assets",
+      "layer": "subsystem",
+      "family": "runtime-core",
+      "path": "cocosair-assets/SKILL.md",
+      "description": "Load asset URL textures, atlases and BMFont with AssetBank. Use for refcounted disposal, extension selection, cache reuse or AIR_E_ATLAS_IN_USE/AIR_E_FNT_IN_USE cleanup.",
+      "owns": ["asset-bank", "asset-cache", "reference-counting", "texture2d", "atlas", "bmfont"],
+      "when_to_use": [
+        "load remote files without a Creator resources bundle",
+        "the same URL returns a destroyed asset",
+        "create a texture from canvas or pixel data",
+        "load a sprite atlas or bitmap font",
+        "an atlas or font handle refuses to dispose"
+      ],
+      "not_for": [
+        "glTF or GLB model loading -> cocosair-gltf",
+        "bind an existing font to Label -> cocosair-ui-2d",
+        "live HTML textures and DOM -> cocosair-graphics-and-dom"
+      ],
+      "metadata": {
+        "description_zh": "管理远程资产、AssetBank 引用计数、纹理、图集和位图字体。用于加载、缓存、取消、共享资源释放或字体导入问题。"
+      },
+      "refs": [
+        { "file": "references/asset-bank.md", "answers": "Cache, refs and errors" },
+        { "file": "references/texture2d.md", "answers": "CPU/GPU data and formats" },
+        { "file": "references/atlas.md", "answers": "Top-origin rects and ownership" },
+        { "file": "references/bmfont.md", "answers": "Single-page font lifecycle" }
+      ],
+      "last_updated": "2026-10-13"
+    },
+    {
+      "name": "cocosair-audio-video",
+      "layer": "subsystem",
+      "family": "interaction-media",
+      "path": "cocosair-audio-video/SKILL.md",
+      "description": "Play media with AudioService, VideoPlayer and WebView. Use for silent autoplay, advancing currentTime, BGM/SFX channels or DOM video and iframe overlays.",
+      "owns": ["audio-service", "autoplay-unlock", "playback-time", "video-player", "webview"],
+      "when_to_use": [
+        "audio starts silently before a user gesture",
+        "control BGM and SFX channels or volume",
+        "prove playback time actually advances",
+        "place video above or below the canvas",
+        "WebView mounts the wrong URL"
+      ],
+      "not_for": [
+        "shared remote-file caching -> cocosair-assets",
+        "DOM input geometry or HTML textures -> cocosair-graphics-and-dom",
+        "keyboard and action focus -> cocosair-input-action"
+      ],
+      "metadata": {
+        "description_zh": "管理音频通道、用户手势解锁、播放证据、VideoPlayer 和 WebView。用于媒体加载、播放、平台限制或资源清理。"
+      },
+      "refs": [
+        { "file": "references/audio-service.md", "answers": "Channels and gesture unlock" },
+        { "file": "references/videoplayer.md", "answers": "DOM geometry and events" },
+        { "file": "references/webview.md", "answers": "Mount order and iframe lifecycle" }
+      ],
+      "last_updated": "2026-10-13"
+    },
+    {
+      "name": "cocosair-camera",
+      "layer": "subsystem",
+      "family": "scene-3d",
+      "path": "cocosair-camera/SKILL.md",
+      "description": "Configure Camera projection, viewports, framing and screen/world conversion. Use for split-screen, pointer rays, wrong screenToWorld results or AIR_E_ORTHO_WIDTH.",
+      "owns": ["projection", "viewport", "camera-framing", "screen-world", "camera-order", "oblique-plane"],
+      "when_to_use": [
+        "switch perspective and orthographic views",
+        "fit a loaded model in view",
+        "stack cameras or create split-screen views",
+        "convert pointer pixels to a world ray",
+        "screenToWorld results or orthographic width are wrong"
+      ],
+      "not_for": [
+        "register node layer bits -> cocosair-scene-graph",
+        "offscreen render targets -> cocosair-rendering",
+        "physics collision queries -> cocosair-physics"
+      ],
+      "metadata": {
+        "description_zh": "配置相机投影、视口、可见层和多相机顺序，并进行坐标转换、射线拾取与模型取景。用于相机配置或屏幕与世界坐标问题。"
+      },
+      "refs": [
+        { "file": "references/camera-projection.md", "answers": "Projection and bounds" },
+        { "file": "references/multi-camera.md", "answers": "Priority, clear and layers" },
+        { "file": "references/screen-world.md", "answers": "Pixels, rays and depth" }
+      ],
+      "last_updated": "2026-10-13"
+    },
+    {
+      "name": "cocosair-gltf",
+      "layer": "subsystem",
+      "family": "scene-3d",
+      "path": "cocosair-gltf/SKILL.md",
+      "description": "Load glTF/GLB models, extensions, decoder injection and instances. Use for Draco/meshopt/KTX2 deployment, GLTF_DECODER_MISSING, uncoded load errors or animation loops.",
+      "owns": ["gltf", "glb", "decoder-injection", "extension-support", "model-instancing", "gltf-errors"],
+      "when_to_use": [
+        "load a glTF or GLB from URL or bytes",
+        "compressed model will not load",
+        "which glTF extensions are supported",
+        "instance animation will not loop",
+        "destroying a model leaves GPU resources"
+      ],
+      "not_for": [
+        "generic asset caching -> cocosair-assets",
+        "edit imported shared materials -> cocosair-materials-effects",
+        "skeleton bind poses or morph weights -> cocosair-skinning-morph"
+      ],
+      "metadata": {
+        "description_zh": "加载 glTF 和 GLB，配置解码器、扩展、进度、实例和错误处理。用于模型加载、压缩资源部署和加载器能力诊断。"
+      },
+      "refs": [
+        { "file": "references/loader-api.md", "answers": "Options and shared lifetime" },
+        { "file": "references/extensions-matrix.md", "answers": "Statuses and hooks" },
+        { "file": "references/decoders.md", "answers": "Injection and deployment" },
+        { "file": "references/diagnostics.md", "answers": "Errors, reports and progress" }
+      ],
+      "last_updated": "2026-10-13"
+    },
+    {
+      "name": "cocosair-graphics-and-dom",
+      "layer": "subsystem",
+      "family": "ui-2d",
+      "path": "cocosair-graphics-and-dom/SKILL.md",
+      "description": "Draw Graphics/SVG shapes and sprite masks; align a DOM overlay with UI/canvas nodes. Use for overlay placement, input interception, experimental HTML textures or AirUIMesh.",
+      "owns": ["graphics-svg", "rich-fills", "sprite-masks", "ui-blend", "dom-overlay", "html-texture"],
+      "when_to_use": [
+        "draw shapes or export curves as SVG",
+        "paint gradients, patterns or evenodd holes",
+        "mask a sprite or inherit subtree blending",
+        "keep a DOM input attached to a UI node",
+        "display live HTML or warp textured UI geometry"
+      ],
+      "not_for": [
+        "UI widgets and layout -> cocosair-ui-2d",
+        "keyboard focus and action routing -> cocosair-input-action",
+        "general offscreen render targets -> cocosair-rendering"
+      ],
+      "metadata": {
+        "description_zh": "使用 Graphics、SVG、栅格填充、纹理显示、遮罩、混合和 DOM 覆盖层。用于绘图导出、富填充或实验性 HTML 纹理。"
+      },
+      "refs": [
+        { "file": "references/commands.md", "answers": "Commands and SVG" },
+        { "file": "references/raster.md", "answers": "Canvas2D, 8192 cap" },
+        { "file": "references/sprite-mask.md", "answers": "Channels and ownership" },
+        { "file": "references/ui-blend.md", "answers": "Opt-in inheritance" },
+        { "file": "references/texture-sprite.md", "answers": "Borrow, refresh, dispose" },
+        { "file": "references/ui-mesh.md", "answers": "Geometry bounds" },
+        { "file": "references/dom-overlay.md", "answers": "Planar-ortho mapping" },
+        { "file": "references/html-source.md", "answers": "Experimental requirements" }
+      ],
+      "last_updated": "2026-10-13"
+    },
+    {
+      "name": "cocosair-input-action",
+      "layer": "subsystem",
+      "family": "interaction-media",
+      "path": "cocosair-input-action/SKILL.md",
+      "description": "Wire keyboard, mouse, touch and action state; navigate SceneStack pages. Use for focus, held-key resets, session gates, DOM canvas errors or persistent push/pop.",
+      "owns": ["native-input", "action-state", "dom-input", "focus-reset", "session-gate", "scene-stack"],
+      "when_to_use": [
+        "map keys, touch or mouse to named actions",
+        "keys stop firing while an input has focus",
+        "DOM input fails without an explicit canvas",
+        "clear held actions after blur or page hiding",
+        "preserve page state across push/pop transitions"
+      ],
+      "not_for": [
+        "full scene replacement -> cocosair-application",
+        "DOM overlay geometry -> cocosair-graphics-and-dom",
+        "node lifecycle and custom events -> cocosair-scene-graph"
+      ],
+      "metadata": {
+        "description_zh": "处理原生和 DOM 输入、动作状态、焦点、会话门禁及 SceneStack。用于按键触摸、动作映射、输入阻断或清理问题。"
+      },
+      "refs": [
+        { "file": "references/native-input.md", "answers": "Enums and event payloads" },
+        { "file": "references/action-state.md", "answers": "Sources, edges and resets" },
+        { "file": "references/action-input.md", "answers": "Canvas, focus and cleanup" },
+        { "file": "references/scene-stack.md", "answers": "Transitions and eviction" }
+      ],
+      "last_updated": "2026-10-13"
+    },
+    {
+      "name": "cocosair-materials-effects",
+      "layer": "subsystem",
+      "family": "scene-3d",
+      "path": "cocosair-materials-effects/SKILL.md",
+      "description": "Configure materials, effects, uniforms, defines and GLSL. Use for setProperty, missing textures, AIR_E_MATERIAL_NOT_READY, AIR_E_MATERIAL_TYPE or uniform buffer too small.",
+      "owns": ["material", "effect", "uniform-types", "shader-defines", "custom-glsl", "material-instance"],
+      "when_to_use": [
+        "setProperty changes nothing",
+        "texture missing after setProperty",
+        "different colors for each renderer",
+        "change blend or depth state",
+        "custom GLSL shader fails"
+      ],
+      "not_for": [
+        "lighting, shadows or post-process -> cocosair-rendering",
+        "glTF material import -> cocosair-gltf",
+        "mesh geometry and sub-models -> cocosair-primitives-mesh"
+      ],
+      "metadata": {
+        "description_zh": "配置材质、效果、属性类型、宏和自定义 GLSL。用于 USE_TEXTURE、uniform 类型、效果初始化或材质诊断问题。"
+      },
+      "refs": [
+        { "file": "references/builtin-effects.md", "answers": "Registration and instances" },
+        { "file": "references/property-types.md", "answers": "Types, aliases and color" },
+        { "file": "references/custom-glsl.md", "answers": "Variants and binding layouts" },
+        { "file": "references/defines.md", "answers": "Map gates and diagnostics" }
+      ],
+      "last_updated": "2026-10-13"
+    },
+    {
+      "name": "cocosair-math",
+      "layer": "subsystem",
+      "family": "runtime-core",
+      "path": "cocosair-math/SKILL.md",
+      "description": "Compute vectors, matrices, quaternions, colors and easing. Use for out-first math, frozen Vec3.UP errors, transform composition, rotation units or Mat4.invert.",
+      "owns": ["vector-math", "matrix-transforms", "quaternion", "color-values", "easing", "deterministic-random"],
+      "when_to_use": [
+        "normalize or project a direction",
+        "compose or decompose a transform matrix",
+        "choose quaternion rotation and angle units",
+        "convert colors or calculate easing and deterministic random",
+        "writing a frozen vector constant throws"
+      ],
+      "not_for": [
+        "screen and world camera conversion -> cocosair-camera",
+        "native tween playback -> cocosair-animation-tween",
+        "node parenting and lifecycle -> cocosair-scene-graph"
+      ],
+      "metadata": {
+        "description_zh": "使用 Cocos 数学类型进行向量、矩阵、四元数、颜色和插值计算。用于坐标变换、旋转、颜色处理、缓动或确定性随机。"
+      },
+      "refs": [
+        { "file": "references/value-types.md", "answers": "Mutation, color and bounds" },
+        { "file": "references/transforms.md", "answers": "Matrices and quaternion units" },
+        { "file": "references/easing-random.md", "answers": "Easing, bits and half floats" }
+      ],
+      "last_updated": "2026-10-13"
+    },
+    {
+      "name": "cocosair-performance",
+      "layer": "subsystem",
+      "family": "runtime-core",
+      "path": "cocosair-performance/SKILL.md",
+      "description": "Optimize draw calls with static merge, instancing and dynamic atlases. Use for frame budgets, on-demand rendering, AIR_E_MESH_CAPACITY or AIR_E_PIXEL_RATIO_IMPORT_ORDER.",
+      "owns": ["batching", "instancing", "dynamic-atlas", "profiler", "on-demand-rendering", "pixel-ratio"],
+      "when_to_use": [
+        "draw calls equal the object count",
+        "batch many static meshes or UI sprites",
+        "measure actual draw counts and frame budget",
+        "stop rendering until the next requested frame",
+        "high pixel density makes the device too slow"
+      ],
+      "not_for": [
+        "procedural geometry authoring -> cocosair-primitives-mesh",
+        "startup admission and app lifecycle -> cocosair-application",
+        "material property types -> cocosair-materials-effects"
+      ],
+      "metadata": {
+        "description_zh": "选择静态合批、动态图集和实例化，并检查性能统计、剔除和按需渲染。用于大量对象、动画或绘制性能优化。"
+      },
+      "refs": [
+        { "file": "references/batching-routes.md", "answers": "Routes and counts" },
+        { "file": "references/dynamic-atlas.md", "answers": "Acceptance and leases" },
+        { "file": "references/instancing.md", "answers": "Macro and grouping" },
+        { "file": "references/profiles.md", "answers": "Counters and step clock" }
+      ],
+      "last_updated": "2026-10-13"
+    },
+    {
+      "name": "cocosair-physics",
+      "layer": "subsystem",
+      "family": "interaction-media",
+      "path": "cocosair-physics/SKILL.md",
+      "description": "Choose builtin, cannon or Box2D physics; wire rigid bodies, colliders and raycasts. Use for missing gravity, trigger filters, backend limits or material error 9642.",
+      "owns": ["builtin-physics", "cannon", "box2d", "collision-filter", "rigid-body", "physics-queries"],
+      "when_to_use": [
+        "dynamic bodies do not fall or stack",
+        "triggers stop firing after changing collision groups",
+        "choose builtin or cannon before startup",
+        "query 2D bodies with raycasts or overlap tests",
+        "physics material error 9642 appears"
+      ],
+      "not_for": [
+        "camera pixel-to-ray conversion -> cocosair-camera",
+        "node hierarchy and transforms -> cocosair-scene-graph",
+        "non-physics startup errors -> cocosair-application"
+      ],
+      "metadata": {
+        "description_zh": "选择 builtin 或 cannon，并区分碰撞检测、运动积分和二维 Box2D 的能力。用于刚体、触发器、射线查询或物理后端问题。"
+      },
+      "refs": [
+        { "file": "references/backend-selection.md", "answers": "Selection and limits" },
+        { "file": "references/3d-contracts.md", "answers": "Bodies, filters and queries" },
+        { "file": "references/2d-box2d.md", "answers": "Box2D components and queries" }
+      ],
+      "last_updated": "2026-10-13"
+    },
+    {
+      "name": "cocosair-primitives-mesh",
+      "layer": "subsystem",
+      "family": "scene-3d",
+      "path": "cocosair-primitives-mesh/SKILL.md",
+      "description": "Build primitive geometry, Mesh buffers and MeshRenderer bindings. Use for vertex attributes, indices, wireframes or AIR_E_PRIMITIVE_DESCRIPTOR validation.",
+      "owns": ["primitive-geometry", "mesh-buffers", "vertex-attributes", "mesh-indices", "mesh-renderer", "wireframe"],
+      "when_to_use": [
+        "generate a box, sphere, cylinder or cone",
+        "attach procedural geometry to a renderer",
+        "author custom vertex buffers and indices",
+        "read or copy mesh attributes",
+        "a primitive descriptor fails validation"
+      ],
+      "not_for": [
+        "draw-call batching and instancing -> cocosair-performance",
+        "skeletal binding or morph weights -> cocosair-skinning-morph",
+        "material uniforms and effects -> cocosair-materials-effects"
+      ],
+      "metadata": {
+        "description_zh": "构建基本几何和原生 Mesh，检查顶点属性、索引、边界与渲染器写入契约。用于代码生成几何或自定义网格。"
+      },
+      "refs": [
+        { "file": "references/primitive-shapes.md", "answers": "Signatures and defaults" },
+        { "file": "references/mesh-attributes.md", "answers": "Formats and reads" },
+        { "file": "references/create-primitive-geometry.md", "answers": "Descriptor limits" }
+      ],
+      "last_updated": "2026-10-13"
+    },
+    {
+      "name": "cocosair-project-setup",
+      "layer": "subsystem",
+      "family": "runtime-core",
+      "path": "cocosair-project-setup/SKILL.md",
+      "description": "Set up npm imports, package entries, importmap, TypeScript and variant builds. Use for cocosair.js installation, unresolved-import errors, page shells or build artifacts.",
+      "owns": ["package-entries", "importmap", "typescript", "html-shell", "feature-flags", "build-artifacts"],
+      "when_to_use": [
+        "install or import cocosair.js",
+        "imports resolve to the wrong entry",
+        "TypeScript editor declarations fail",
+        "wire a page importmap and canvas",
+        "which build command produces this artifact"
+      ],
+      "not_for": [
+        "createAirApp startup failures -> cocosair-application",
+        "live HTML textures or overlays -> cocosair-graphics-and-dom",
+        "proving build artifacts -> cocosair-verification"
+      ],
+      "metadata": {
+        "description_zh": "安装和配置 Cocos AIR 项目，选择包入口、importmap、TypeScript 声明和变体构建。用于安装导入、页面骨架、类型解析或构建产物问题。"
+      },
+      "refs": [
+        { "file": "references/entries.md", "answers": "Exports and artifacts" },
+        { "file": "references/feature-flags.md", "answers": "Features and outputs" },
+        { "file": "references/html-shell.md", "answers": "Importmap and canvas" }
+      ],
+      "last_updated": "2026-10-13"
+    },
+    {
+      "name": "cocosair-rendering",
+      "layer": "subsystem",
+      "family": "scene-3d",
+      "path": "cocosair-rendering/SKILL.md",
+      "description": "Configure lighting, shadows, render targets, MSAA and sRGB. Use for offscreen pixels, post-processing, AIR_E_RENDER_TARGET_SAMPLES or AIR_E_TEXTURE_COLOR.",
+      "owns": ["lighting", "shadows", "render-target", "msaa", "srgb", "post-process"],
+      "when_to_use": [
+        "scene brightness looks wrong",
+        "no shadows from lights",
+        "render mirror or refraction into a texture",
+        "texture looks washed out after load",
+        "can bloom or post-processing run"
+      ],
+      "not_for": [
+        "material property types -> cocosair-materials-effects",
+        "camera framing or projection -> cocosair-camera",
+        "DOM offscreen textures -> cocosair-graphics-and-dom"
+      ],
+      "metadata": {
+        "description_zh": "配置灯光、阴影、渲染目标、MSAA、颜色契约和管线可达性。用于光照、阴影、离屏渲染、读回或后处理问题。"
+      },
+      "refs": [
+        { "file": "references/lighting-units.md", "answers": "Units and main light" },
+        { "file": "references/shadow-matrix.md", "answers": "Support grid and switches" },
+        { "file": "references/render-target.md", "answers": "Targets, MSAA and capture" },
+        { "file": "references/color-contract.md", "answers": "Format and decode" },
+        { "file": "references/pipeline-reachability.md", "answers": "Pipeline reachability" }
+      ],
+      "last_updated": "2026-10-13"
+    },
+    {
+      "name": "cocosair-scene-graph",
+      "layer": "subsystem",
+      "family": "scene-3d",
+      "path": "cocosair-scene-graph/SKILL.md",
+      "description": "Build Scene/Node hierarchies, Component lifecycles, layers and events. Use for reparenting, active inheritance, NodePool reuse, scene globals or resource release.",
+      "owns": ["scene-hierarchy", "component-lifecycle", "node-events", "layers", "node-pool", "scene-globals"],
+      "when_to_use": [
+        "attach or reparent nodes in a scene",
+        "understand component lifecycle and update order",
+        "a child is inactive or inherits unexpected scale",
+        "manage node events, layers or object pools",
+        "release scenes and external listeners without leaking"
+      ],
+      "not_for": [
+        "native input and action mapping -> cocosair-input-action",
+        "app-level scene replacement -> cocosair-application",
+        "camera framing and projection -> cocosair-camera"
+      ],
+      "metadata": {
+        "description_zh": "使用原生 Scene、Node、Component 构建场景树并管理层、事件、生命周期和资源释放。用于节点组织、组件更新、对象池或场景配置。"
+      },
+      "refs": [
+        { "file": "references/node-ops.md", "answers": "Hierarchy and lifecycle" },
+        { "file": "references/layers.md", "answers": "Bits and masks" },
+        { "file": "references/node-events.md", "answers": "Events and teardown" },
+        { "file": "references/scene-globals.md", "answers": "Activation and refs" }
+      ],
+      "last_updated": "2026-10-13"
+    },
+    {
+      "name": "cocosair-skinning-morph",
+      "layer": "subsystem",
+      "family": "scene-3d",
+      "path": "cocosair-skinning-morph/SKILL.md",
+      "description": "Bind skeletons, restore bind poses and drive morph weights. Use for realtime/baked deformation, AIR_E_SKINNING_JOINT_PATH or AIR_E_SKINNING_CAPACITY.",
+      "owns": ["skeletal-skinning", "joint-paths", "bind-pose", "baked-pose", "joint-capacity", "morph-weights"],
+      "when_to_use": [
+        "build or bind a skeleton from joint paths",
+        "a skinned mesh stays in its rest pose",
+        "bone edits stop working in baked mode",
+        "restore the captured bind pose",
+        "morph weight changes appear to be ignored"
+      ],
+      "not_for": [
+        "glTF loading and decoder deployment -> cocosair-gltf",
+        "clip playback and tweens -> cocosair-animation-tween",
+        "generic mesh buffer authoring -> cocosair-primitives-mesh"
+      ],
+      "metadata": {
+        "description_zh": "配置骨骼路径、蒙皮、绑定姿态、Morph 权重和烘焙动画。用于骨骼变形、绑定姿态恢复或 Morph 问题。"
+      },
+      "refs": [
+        { "file": "references/joint-paths.md", "answers": "Paths and capacity" },
+        { "file": "references/bind-pose.md", "answers": "Restore and rebind" },
+        { "file": "references/morph.md", "answers": "Morph data and lifecycle" }
+      ],
+      "last_updated": "2026-10-13"
+    },
+    {
+      "name": "cocosair-ui-2d",
+      "layer": "subsystem",
+      "family": "ui-2d",
+      "path": "cocosair-ui-2d/SKILL.md",
+      "description": "Build Canvas UI with sprites, Label text, layout and widgets. Use for missing UI, viewport alignment, 2D draw order, BMFont binding or AIR_E_LABEL_WRAP.",
+      "owns": ["ui-canvas", "sprite-label", "widget-layout", "ui-controls", "font-binding", "sorting-2d"],
+      "when_to_use": [
+        "put sprites, labels or controls on screen",
+        "UI renders nothing despite visible nodes",
+        "widgets must realign after a viewport change",
+        "bind an existing bitmap font to Label",
+        "2D sprites and labels overlap in the wrong order"
+      ],
+      "not_for": [
+        "load or parse a bitmap font -> cocosair-assets",
+        "sprite masks and DOM overlays -> cocosair-graphics-and-dom",
+        "native input and action mapping -> cocosair-input-action"
+      ],
+      "metadata": {
+        "description_zh": "使用 Canvas、布局、控件、Label、位图字体和二维排序。用于 UI 构建、文本显示或交互布局问题。"
+      },
+      "refs": [
+        { "file": "references/canvas-widget-layout.md", "answers": "Canvas and layout" },
+        { "file": "references/widgets.md", "answers": "Components and aliases" },
+        { "file": "references/label-and-text.md", "answers": "Fonts and wrapping" },
+        { "file": "references/sorting.md", "answers": "Layers and priority" }
+      ],
+      "last_updated": "2026-10-13"
+    },
+    {
+      "name": "cocosair-verification",
+      "layer": "subsystem",
+      "family": "runtime-core",
+      "path": "cocosair-verification/SKILL.md",
+      "description": "Choose verification gates and assess browser/package evidence, write behavior and fingerprints. Use to validate changes, distinguish FAIL/UNSUPPORTED or check release readiness.",
+      "owns": [
+        "verification-gates",
+        "evidence-layers",
+        "source-fingerprints",
+        "browser-proof",
+        "package-validation",
+        "release-readiness"
+      ],
+      "when_to_use": [
+        "choose focused gates for a changed contract",
+        "check whether a verify command writes files",
+        "verify package imports or actual browser behavior",
+        "check report fingerprints and coverage scope",
+        "assess release readiness without trusting stale evidence"
+      ],
+      "not_for": [
+        "package installation and setup -> cocosair-project-setup",
+        "live-session inspection and probes -> cocosair-agent-session",
+        "draw-call optimization -> cocosair-performance"
+      ],
+      "metadata": {
+        "description_zh": "选择并解释 AIR 验证门禁、写行为、指纹和逐 API 证据。用于验证改动、包消费、浏览器行为或发布候选。"
+      },
+      "refs": [
+        { "file": "references/report-layers.md", "answers": "Claims and fingerprints" },
+        { "file": "references/gate-catalog.md", "answers": "Gate effects" },
+        { "file": "references/playwright-prereqs.md", "answers": "Tools and status" }
+      ],
+      "last_updated": "2026-10-13"
+    }
+  ]
+}

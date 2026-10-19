@@ -103,3 +103,9 @@ and ECHILD. A signal alone is not an application failure; only the versioned pro
 shutdown policy may classify it. Preserve old failures. Keep optional signal tracing
 out of the formal 182-example capture dependency chain. CPU fixture scheduling
 budgets are bounded test mechanics, not user-facing performance requirements.
+
+### Skills metadata and preservation
+
+AIR skills remain at `skills/*/SKILL.md`; see [skills/README.md](skills/README.md) for Profile A loading, whole-tree distribution, budgets and maintenance. Maintain routing only in frontmatter and Reference maps, then run `node tools/skills/gen-index.cjs --write` and `--check`. Keep host declarations and the three read-only `Read Bash` skills intact. Generated indexes are not permission inheritance or proof that an external host supports custom metadata.
+
+For skills changes, use the focused tools and immutable evidence documented in [tools/README.md](tools/README.md). Preserve complete displaced content through a reachable, hash-bound migration ledger, format sources before collecting fingerprints, and do not treat a shorter summary as the only copy. Phase two, reference slicing and shared-content migration require separate approval. Skills-only documentation/tooling work does not require rebuilding runtime JS, maps, minified bundles or declarations.

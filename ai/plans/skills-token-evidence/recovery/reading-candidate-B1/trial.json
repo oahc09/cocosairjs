@@ -1,0 +1,90 @@
+{
+  "task_id": "reading-candidate-B1",
+  "scenario_id": "B1",
+  "metric_version": "air-document-input-1",
+  "started_at": "2026-10-18T09:39:59.536Z",
+  "snapshot_hash": "7f246c153901eae7a31d0bd849904412b575e2cbd5d3cfc507eab502ff0ada41",
+  "source_snapshot_hash": "1e9c6637a512b819e822d8d06ea64d444c1e5640f35c48134f70fe80a5363e19",
+  "scenario_fixture_hash": "37604a27b0a77e634dbfac285bdbaa8c84a10c2c84229b9fd7fe1e23a76c3a85",
+  "question_hash": "56e885d6561733e853ec6a075cfb7824c3fe15a55f4745b1a354ce37d0f26796",
+  "read_protocol_hash": "15cb41ae79f3c5e9ac24b3812f0f89713e282803479c9f1e4f1f7f74fb6edb0b",
+  "notes": [
+    "Recovery run. Original path failures remain historical facts; no external documents are supplied to the frozen snapshot."
+  ],
+  "reads": [
+    {
+      "path": "skills/cocosair/SKILL.md",
+      "content_hash": "6a57cc141eb1b6f66ce99af529ed52637f30376f125b2beef42ea393ae6d195c",
+      "read_chars": 4094,
+      "read_bytes": 4196,
+      "whole_file": true,
+      "fragments": [],
+      "payload": "payloads/01.txt",
+      "observed_at": "2026-10-18T09:40:09.050Z"
+    },
+    {
+      "path": "skills/cocosair-rendering/SKILL.md",
+      "content_hash": "f29cbad3dd19f82b5af4fc30b585ec1b1b5fbc03d64f936f7722c4c2c996ad3f",
+      "read_chars": 3220,
+      "read_bytes": 3314,
+      "whole_file": true,
+      "fragments": [],
+      "payload": "payloads/02.txt",
+      "observed_at": "2026-10-18T09:40:14.169Z"
+    },
+    {
+      "path": "skills/cocosair-rendering/references/lighting-units.md",
+      "content_hash": "4008359e0472e965874a8a164b5d0bc4709c1bca24d08f6b68ae92ecd20132c1",
+      "read_chars": 14228,
+      "read_bytes": 14228,
+      "whole_file": true,
+      "fragments": [],
+      "payload": "payloads/03.txt",
+      "observed_at": "2026-10-18T09:40:19.108Z"
+    },
+    {
+      "path": "skills/cocosair-rendering/references/shadow-matrix.md",
+      "content_hash": "9257147cb7f00db9d946ec38b58742f545eb3f414f12789469f4709e40f71d7c",
+      "read_chars": 14073,
+      "read_bytes": 14073,
+      "whole_file": true,
+      "fragments": [],
+      "payload": "payloads/04.txt",
+      "observed_at": "2026-10-18T09:40:24.669Z"
+    },
+    {
+      "path": "skills/cocosair-rendering/references/common-mistakes.md",
+      "content_hash": "efb27584a0f384008b865ee721fef87b16ecc56e1488f709ad1da0dc7a7fa541",
+      "read_chars": 5888,
+      "read_bytes": 5888,
+      "whole_file": true,
+      "fragments": [],
+      "payload": "payloads/05.txt",
+      "observed_at": "2026-10-18T09:40:30.390Z"
+    },
+    {
+      "path": "skills/cocosair-rendering/references/contracts.md",
+      "content_hash": "e64d1f4894a288b5b098d26e32f02e6c6fe8651e0197fefcf2adb6efadf6ecd6",
+      "read_chars": 9421,
+      "read_bytes": 9421,
+      "whole_file": true,
+      "fragments": [],
+      "payload": "payloads/06.txt",
+      "observed_at": "2026-10-18T09:40:36.102Z"
+    },
+    {
+      "path": "skills/cocosair-rendering/references/quick-start.md",
+      "content_hash": "74e68ed95da14fb2504c79fe21b765f05330e21d2e3035151db84a2e43b10214",
+      "read_chars": 3686,
+      "read_bytes": 3686,
+      "whole_file": true,
+      "fragments": [],
+      "payload": "payloads/07.txt",
+      "observed_at": "2026-10-18T09:40:42.101Z"
+    }
+  ],
+  "l0_hash": "edb212a52a1b299130ad9597d31acd59a32838893327a8995c4783a75ed42d44",
+  "answer_artifact": "answer.md",
+  "answer_hash": "48ee9175602868d15fca5edaea4e5b06ebdd1a16554d9139f96232b92c7fa98d",
+  "answer_sealed_at": "2026-10-18T09:41:28.965Z"
+}

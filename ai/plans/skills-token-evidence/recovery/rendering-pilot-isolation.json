@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "source_snapshot_hash": "46a9449ad54586ae70a914a77992801ea732270ab7f14509f40bf3792ee22d9d",
+  "restored": [
+    "skills/cocosair-2d-subsystems/SKILL.md",
+    "skills/cocosair-agent-session/SKILL.md",
+    "skills/cocosair-animation-tween/SKILL.md",
+    "skills/cocosair-application/SKILL.md",
+    "skills/cocosair-assets/SKILL.md",
+    "skills/cocosair-audio-video/SKILL.md",
+    "skills/cocosair-camera/SKILL.md",
+    "skills/cocosair-gltf/SKILL.md",
+    "skills/cocosair-graphics-and-dom/SKILL.md",
+    "skills/cocosair-input-action/SKILL.md",
+    "skills/cocosair-materials-effects/SKILL.md",
+    "skills/cocosair-math/SKILL.md",
+    "skills/cocosair-performance/SKILL.md",
+    "skills/cocosair-physics/SKILL.md",
+    "skills/cocosair-primitives-mesh/SKILL.md",
+    "skills/cocosair-project-setup/SKILL.md",
+    "skills/cocosair-scene-graph/SKILL.md",
+    "skills/cocosair-skinning-morph/SKILL.md",
+    "skills/cocosair-ui-2d/SKILL.md",
+    "skills/cocosair-verification/SKILL.md",
+    "skills/cocosair/SKILL.md"
+  ],
+  "rendering_only": true,
+  "live_suite_G4": false
+}

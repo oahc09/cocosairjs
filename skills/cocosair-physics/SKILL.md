@@ -1,39 +1,52 @@
 ---
 name: cocosair-physics
-description: "Applies to physics in code-first Cocos AIR apps - choosing the 3D backend with createAirApp({ physics: 'builtin' | 'cannon' }) (default builtin), selectPhysicsBackend and the official last-registration-before-init rule, the query-only boundary of the builtin discrete collision detector (no gravity integration, no MeshCollider in the world, trigger events and raycasts still real), PhysicsSystem/RigidBody/Collider wiring and the bidirectional group-and-mask filter, error 9642 for default-physics-material (fatal on cannon, benign on builtin) and AIR's built-in material registration, and the pure-JS 2D box2d backend with PhysicsSystem2D, RigidBody2D, Collider2D, BoxCollider2D and the raycast/testPoint/testAABB queries. Use when dynamic bodies do not fall or stack, when triggers fire silently, when deciding between builtin and cannon, when 9642 appears in the console, or when asking whether ammo, physx or box2d-wasm ship (they do not)."
+description: "Choose builtin, cannon or Box2D physics; wire rigid bodies, colliders and raycasts. Use for missing gravity, trigger filters, backend limits or material error 9642."
 license: MIT
 compatibility: "Cocos AIR source checkout or installed cocosair.js package. Browser rendering requires WebGL 2; source tooling requires Node.js >=18. Use the host-provided tools and user-authorized workspace."
 allowed-tools: Read Edit Write Bash
+when_to_use:
+  - dynamic bodies do not fall or stack
+  - triggers stop firing after changing collision groups
+  - choose builtin or cannon before startup
+  - query 2D bodies with raycasts or overlap tests
+  - physics material error 9642 appears
+owns: [builtin-physics, cannon, box2d, collision-filter, rigid-body, physics-queries]
+not_for:
+  - camera pixel-to-ray conversion -> cocosair-camera
+  - node hierarchy and transforms -> cocosair-scene-graph
+  - non-physics startup errors -> cocosair-application
+layer: subsystem
 metadata:
   author: "oahc09@gmail.com"
   version: "1.0.0"
   last-updated: "2026-10-13"
-  keywords: "Cocos AIR, cocosair.js, physics"
-  description_en: "Applies to physics in code-first Cocos AIR apps - choosing the 3D backend with createAirApp({ physics: 'builtin' | 'cannon' }) (default builtin), selectPhysicsBackend and the official last-registration-before-init rule, the query-only boundary of the builtin discrete collision detector (no gravity integration, no MeshCollider in the world, trigger events and raycasts still real), PhysicsSystem/RigidBody/Collider wiring and the bidirectional group-and-mask filter, error 9642 for default-physics-material (fatal on cannon, benign on builtin) and AIR's built-in material registration, and the pure-JS 2D box2d backend with PhysicsSystem2D, RigidBody2D, Collider2D, BoxCollider2D and the raycast/testPoint/testAABB queries. Use when dynamic bodies do not fall or stack, when triggers fire silently, when deciding between builtin and cannon, when 9642 appears in the console, or when asking whether ammo, physx or box2d-wasm ship (they do not)."
   description_zh: "选择 builtin 或 cannon，并区分碰撞检测、运动积分和二维 Box2D 的能力。用于刚体、触发器、射线查询或物理后端问题。"
 ---
 
 # Cocos AIR physics contracts
 
-Use the [environment rules](references/context.md) to locate the checkout or installed package; sibling skills are optional direct dependencies, not a recursive load list.
+Stop once you can answer the task. Do not read another same-topic reference for the same question.
 
-Pick the backend honestly, mount the framework components, and state what each backend actually simulates - no Creator asset bundle, no WASM artifacts, no parallel physics abstraction.
+Scope: Builtin/cannon selection, 3D bodies and filters, and pure-JS 2D Box2D.
+
+Environment: use package imports in apps; source paths require an AIR checkout. See [context](references/context.md).
 
 ## Quick Start
 
-Read [references/quick-start.md](references/quick-start.md) when constructing the minimal example. It preserves the complete setup and teardown sequence; select the source-checkout or npm-consumer environment first.
+For complete setup and teardown, read [Quick Start](references/quick-start.md).
 
-## Related skills
+Siblings: [direct dependencies](references/context.md#related-skills); reuse loaded skills.
 
-Read [references/context.md](references/context.md#related-skills) to select the owner of this step and only its directly needed dependencies. Reuse already loaded skills; this is not a recursive load list.
+## Triggers
 
-## When to use what
+- Choose query-only builtin or simulated cannon physics
+- Make bodies fall, stack or respond to forces
+- Configure colliders, triggers and bidirectional collision masks
+- Use 2D rigid bodies or spatial queries
+- Diagnose 9642 and backend registration
+- Check whether a requested WASM backend ships
 
-- "queries, triggers, collision callbacks only" -> default `physics: 'builtin'`; zero external dependencies, real raycasts, no simulation.
-- "gravity, falling, stacking, forces" -> `createAirApp({ physics: 'cannon' })`; pure-JS cannon from the vendored `@cocos/cannon`, both backends already in the default bundle (`tools/build/build.cjs:41`).
-- "2D rigid bodies and queries" -> box2d is the default 2D backend (`src/cocos/physics-2d/box2d/instantiate.ts:43`); `PhysicsSystem2D.raycast/testPoint/testAABB` (`src/cocos/physics-2d/framework/physics-system.ts:362`, `:370`, `:378`), see [2d-box2d.md](references/2d-box2d.md).
-- "ammo / physx / box2d-wasm" -> not shipped; the Emscripten artifacts do not exist in this repository (`docs/notes/physics-asset-sourcing.md:11-17`), see [backend-selection.md](references/backend-selection.md).
-- "why did my trigger stop firing after `setGroup`" -> the mask half of the pair is still 1; fix both sides (`docs/notes/physics-3d-notes.md:56-63`).
+Exact API and symptom mappings: [triggers](references/triggers.md).
 
 ## Contracts
 
@@ -43,21 +56,15 @@ Read [references/contracts.md](references/contracts.md) only when the task needs
 
 ## Common Mistakes
 
-Before implementing the relevant path, read its wrong/right examples in [references/common-mistakes.md](references/common-mistakes.md):
+- [HIGH] Default builtin physics does not provide gravity or stacking.
+- [HIGH] Set both collision groups and masks for valid pairs.
+- [MEDIUM] Ammo, physx and box2d-wasm are not shipped.
+- [MEDIUM] The flat selector export does not identify 3D backend.
 
-- [HIGH] Calling createAirApp({}) and expecting gravity or stacking
-- [HIGH] Setting only the collision group and losing every pair
-- [MEDIUM] Asking for a WASM backend that is not shipped
-- [MEDIUM] Reading 3D backend identity from the flat selector export
+Read relevant [wrong/right examples](references/common-mistakes.md) before implementation.
 
-## References
+## Reference map
 
-- [backend-selection.md](references/backend-selection.md) - the selector registry and event ordering, default normalization, zero-backend warn versus PHYSICS_NONE, the 9642 split and the built-in material registration, and why WASM backends are absent.
-- [3d-contracts.md](references/3d-contracts.md) - PhysicsSystem singleton timing, mount and query API, filter semantics, the builtin query-only boundary item by item, and what cannon inverts.
-- [2d-box2d.md](references/2d-box2d.md) - PhysicsSystem2D, deterministic stepping, rigid-body and collider components, shape set, joints, and the raycast/testPoint/testAABB queries.
-
-## Canonical docs
-
-- `docs/manual/physics-2d-and-3d.md` - open for the backend comparison table, the four event families and the five runnable physics examples.
-- `docs/notes/physics-3d-notes.md` - open for the browser-measured builtin boundary, filter semantics, lazy sync and the cannon variant reversal.
-- `docs/reference/api-stability.md` - open for which physics APIs are Stable versus Candidate and why (`docs/reference/api-stability.md:40-52`).
+- [Which backend ships?](references/backend-selection.md) - Selection and limits
+- [Why no 3D motion?](references/3d-contracts.md) - Bodies, filters and queries
+- [Need 2D physics?](references/2d-box2d.md) - Box2D components and queries

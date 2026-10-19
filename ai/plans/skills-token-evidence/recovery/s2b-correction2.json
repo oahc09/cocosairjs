@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "round": 2,
+  "recorded_at": "2026-10-18T09:20:32.074Z",
+  "prior_snapshot_hash": "24f1de7d40c46afe52036325161e41a1142c8253a8528ec777f87b0b68417e30",
+  "reason": "Independent review found that the compressed minimal-host description omitted the original experimental qualification of HTML textures. Restore the qualifier within the unchanged 180-character budget, preserving DOM placement intent.",
+  "path": "skills/cocosair-graphics-and-dom/SKILL.md",
+  "field": "description",
+  "after": "Draw Graphics/SVG shapes and sprite masks; align a DOM overlay with UI/canvas nodes. Use for overlay placement, input interception, experimental HTML textures or AirUIMesh.",
+  "source": "Original Graphics/DOM SKILL introduction and When to use what explicitly call the HTML texture helpers experimental.",
+  "other_changes": "None; questions, scorer, thresholds, all bodies and references unchanged."
+}

@@ -1,78 +1,75 @@
 ---
 name: cocosair-graphics-and-dom
-description: "Reuse native Cocos objects for 2D drawing and DOM in Cocos AIR. Covers AirGraphicsCommand drawing data replayed on a Graphics component (drawAirGraphics, solid nonzero only), SVG serialization that preserves curves (airGraphicsCommandsToSvg), Canvas2D rich fills into a native Texture2D (rasterizeAirGraphics), borrowed-texture display (createAirTextureSprite), per-Sprite channel masks (attachAirSpriteMask), opt-in UI blend inheritance including ParticleSystem2D (createAirUIBlendScope), DOM elements that follow UI nodes (createAirDOMOverlay), the AirUIMesh renderer, and the experimental HTML-in-canvas texture subpath (cocosair.js). Use when authoring or exporting vector fills, gradients, patterns, sprite masks, blend scopes, texture sprites, DOM overlays, or live HTML textures, rather than copying PixiJS or Creator editor snippets."
+description: "Draw Graphics/SVG shapes and sprite masks; align a DOM overlay with UI/canvas nodes. Use for overlay placement, input interception, experimental HTML textures or AirUIMesh."
 license: MIT
 compatibility: "Cocos AIR source checkout or installed cocosair.js package. Browser rendering requires WebGL 2; source tooling requires Node.js >=18. Use the host-provided tools and user-authorized workspace."
 allowed-tools: Read Edit Write Bash
+when_to_use:
+  - draw shapes or export curves as SVG
+  - paint gradients, patterns or evenodd holes
+  - mask a sprite or inherit subtree blending
+  - keep a DOM input attached to a UI node
+  - display live HTML or warp textured UI geometry
+owns: [graphics-svg, rich-fills, sprite-masks, ui-blend, dom-overlay, html-texture]
+not_for:
+  - UI widgets and layout -> cocosair-ui-2d
+  - keyboard focus and action routing -> cocosair-input-action
+  - general offscreen render targets -> cocosair-rendering
+layer: subsystem
 metadata:
   author: "oahc09@gmail.com"
   version: "1.0.0"
   last-updated: "2026-10-13"
-  keywords: "Cocos AIR, cocosair.js, graphics, and, dom"
-  description_en: "Reuse native Cocos objects for 2D drawing and DOM in Cocos AIR. Covers AirGraphicsCommand drawing data replayed on a Graphics component (drawAirGraphics, solid nonzero only), SVG serialization that preserves curves (airGraphicsCommandsToSvg), Canvas2D rich fills into a native Texture2D (rasterizeAirGraphics), borrowed-texture display (createAirTextureSprite), per-Sprite channel masks (attachAirSpriteMask), opt-in UI blend inheritance including ParticleSystem2D (createAirUIBlendScope), DOM elements that follow UI nodes (createAirDOMOverlay), the AirUIMesh renderer, and the experimental HTML-in-canvas texture subpath (cocosair.js). Use when authoring or exporting vector fills, gradients, patterns, sprite masks, blend scopes, texture sprites, DOM overlays, or live HTML textures, rather than copying PixiJS or Creator editor snippets."
   description_zh: "使用 Graphics、SVG、栅格填充、纹理显示、遮罩、混合和 DOM 覆盖层。用于绘图导出、富填充或实验性 HTML 纹理。"
 ---
 
 # Cocos AIR graphics and DOM
 
-Use the [environment rules](references/context.md) to locate the checkout or installed package; sibling skills are optional direct dependencies, not a recursive load list.
+Stop once you can answer the task. Do not read another same-topic reference for the same question.
 
-Replay drawing data on the native `Graphics`, rasterize rich fills into a native
-`Texture2D`, mask a single `Sprite`, inherit UI blend across a subtree, borrow a
-texture or a DOM element, and opt into the experimental HTML canvas texture. The
-single contract for this skill is `docs/manual/graphics-and-dom.md` (as of 2026-10-10);
-every claim below is traceable to the AIR source under `src/air/`. Browser targets
-still require WebGL 2.
+Scope: Graphics replay, raster textures, Sprite masks, UI blends, meshes and DOM bindings.
+
+Environment: use package imports in apps; source paths require an AIR checkout. See [context](references/context.md).
 
 ## Quick Start
 
-Read [references/quick-start.md](references/quick-start.md) when constructing the minimal example. It preserves the complete setup and teardown sequence; select the source-checkout or npm-consumer environment first.
+For complete setup and teardown, read [Quick Start](references/quick-start.md).
 
-## Related skills
+Siblings: [direct dependencies](references/context.md#related-skills); reuse loaded skills.
 
-Read [references/context.md](references/context.md#related-skills) to select the owner of this step and only its directly needed dependencies. Reuse already loaded skills; this is not a recursive load list.
+## Triggers
 
-## When to use what
+- Draw solid vector shapes or export SVG
+- Rasterize gradients, patterns or evenodd holes
+- Show a borrowed texture in UI
+- Mask one Sprite or blend a subtree
+- Keep a DOM element aligned with a UI node
+- Warp a textured UI quad
+- Paint experimental live HTML into a texture
 
-- "draw a shape in code" -> build `AirGraphicsCommand[]`, replay solid fills with `drawAirGraphics` on a `Graphics` component (`src/air/graphics-commands.ts:74-88`).
-- "export vector art" -> `airGraphicsCommandsToSvg(commands, bounds)`; it keeps the original curves, the `Graphics` mesh does not (`src/air/graphics-commands.ts:92-157`).
-- "gradient, radial, pattern or evenodd hole" -> `rasterizeAirGraphics(commands, options)` for a Canvas2D `Texture2D`, then display it (`src/air/graphics-raster.ts:11-85`).
-- "show a texture in UI" -> `createAirTextureSprite(parent, texture, options)`; the texture stays borrowed (`src/air/texture-sprite.ts:15-48`).
-- "cut one Sprite by another texture" -> `attachAirSpriteMask(sprite, maskTexture, options)` (`src/air/effects/sprite-mask.ts:18-83`).
-- "make a subtree add/multiply" -> `createAirUIBlendScope(root, mode)` (`src/air/ui-blend.ts:11-55`).
-- "keep a DOM input glued to a UI node" -> `createAirDOMOverlay({ canvas })` then `.attach(...)` (`src/air/dom-overlay.ts:24-83`).
-- "warp a textured UI quad by hand" -> add the `AirUIMesh` component and `setGeometry(...)` (`src/air/ui-mesh.ts:83-118`).
-- "paint a live form as a GPU texture" -> the experimental HTML helpers exported by `cocosair.js` (see [html-source.md](references/html-source.md)).
+Exact API and symptom mappings: [triggers](references/triggers.md).
 
 ## Contracts
 
-Use native Graphics for solid nonzero fills and rasterization for rich fills. Texture/element bindings borrow their sources and need explicit updates and disposal. Live HTML textures require the experimental subpath.
+Use native Graphics for solid nonzero fills and rasterization for rich fills. Texture/element bindings borrow sources and need explicit updates and disposal. Experimental HTML helpers use the main cocosair.js entry, with direct-child leases and RGBA8 single-mip textures.
 
 Read [references/contracts.md](references/contracts.md) only when the task needs exact option rules, limits, error behavior or source annotations. Prefer the topic references below for a narrower question.
 
 ## Common Mistakes
 
-Before implementing the relevant path, read its wrong/right examples in [references/common-mistakes.md](references/common-mistakes.md):
+- [HIGH] Rich fills and evenodd holes require rasterization.
+- [HIGH] Masks, blends and overlays require explicit cleanup.
+- [MEDIUM] Check SVG pattern-export constraints.
 
-- [HIGH] Passing a gradient, pattern, or evenodd hole to drawAirGraphics
-- [HIGH] Treating masks, blend scopes, and DOM overlays as fire-and-forget
-- [MEDIUM] Forgetting SVG export constraints for patterns
+Read relevant [wrong/right examples](references/common-mistakes.md) before implementation.
 
-## References
+## Reference map
 
-- [commands.md](references/commands.md) - `AirGraphicsCommand` set, `#rrggbb`+opacity validation, native solid replay, and the SVG serialization contract.
-- [raster.md](references/raster.md) - `rasterizeAirGraphics` options, the 8192 edge cap, `worldTransform` for global patterns, and top-first upload rows.
-- [sprite-mask.md](references/sprite-mask.md) - `attachAirSpriteMask` channel/mode/threshold/inverted, single-Sprite scope, and material ownership.
-- [ui-blend.md](references/ui-blend.md) - `createAirUIBlendScope` normal/add/multiply, the private factor rewrite and instance override, opt-in subtree inheritance.
-- [texture-sprite.md](references/texture-sprite.md) - `createAirTextureSprite` borrowed texture, default size/anchor, `refresh()` and `dispose()` ownership.
-- [ui-mesh.md](references/ui-mesh.md) - the `AirUIMesh` renderer and its 3..1024 vertex / 1..1365 triangle geometry bounds.
-- [dom-overlay.md](references/dom-overlay.md) - `createAirDOMOverlay` element borrowing, restore-on-dispose, and planar-ortho affine mapping.
-- [html-source.md](references/html-source.md) - the experimental HTML helpers in the main entry, direct-child lease, and RGBA8 single-mip texture requirement.
-
-## Canonical docs
-
-- `docs/manual/graphics-and-dom.md` - the single authoritative contract for texture display, DOM overlays, command replay, SVG export, raster fills, sprite masks, blend inheritance, and HTML textures; read it end to end before changing these APIs.
-- `examples/graphics-svg-paints/src/main.ts` - runnable native `Graphics`, gradient holes, non-square patterns, SVG preview/download and pixel round-trip.
-- `examples/sprite-mask-blend/src/main.ts` - red/alpha, soft/threshold/inverted, and normal/add against native particles.
-- `examples/dom-overlay-texture/src/main.ts` - real input/click, move/rotate, anchor, texture resize GPU display, unbind and release.
-- `examples/html-texture-experimental/src/main.ts` - live form texture, DOM repaint, immutable snapshot, and the ordinary-browser unsupported branch.
+- [Draw or export?](references/commands.md) - Commands and SVG
+- [Rich fills?](references/raster.md) - Canvas2D, 8192 cap
+- [Mask one Sprite?](references/sprite-mask.md) - Channels and ownership
+- [Blend a subtree?](references/ui-blend.md) - Opt-in inheritance
+- [Show a texture?](references/texture-sprite.md) - Borrow, refresh, dispose
+- [Warp a quad?](references/ui-mesh.md) - Geometry bounds
+- [Align DOM?](references/dom-overlay.md) - Planar-ortho mapping
+- [Live HTML texture?](references/html-source.md) - Experimental requirements

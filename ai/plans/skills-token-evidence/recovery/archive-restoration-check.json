@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "operation": "check",
+  "publication_inventory_git_blob_sha": "de422cb6c09f1720f8ebf58df400a023a62905c2",
+  "historical_reports_reexecuted": false,
+  "file_count": 4,
+  "original_bytes": 5553733,
+  "files": [
+    {
+      "logical_path": "ai/plans/skills-token-evidence/recovery/final-route-attempt1.json",
+      "bytes": 1600925,
+      "sha256": "31b991779e3dac0aba03ff8fa7f1b5909d592477af4beec7c67218b6f4d51ad9",
+      "original_git_blob_sha": "d50836366625add547ff6f50818c4e19627f6106",
+      "original_status": "FAIL",
+      "byte_verification": "PASS"
+    },
+    {
+      "logical_path": "ai/plans/skills-token-evidence/recovery/final-route.json",
+      "bytes": 1320744,
+      "sha256": "f91fa111bab723bb84ff62de226de8e95c17474058ae0bf4690cde77a171b23b",
+      "original_git_blob_sha": "6b6d7a6927de7ca1ca03714b1eaf313668d1cc50",
+      "original_status": "PASS",
+      "byte_verification": "PASS"
+    },
+    {
+      "logical_path": "ai/plans/skills-token-evidence/recovery/s2b-attempt2-route.json",
+      "bytes": 1316031,
+      "sha256": "edb0bd6aca905abd70eb98aa7e0c0dd2fa6c7a82f833106e5dbb8fbd8365e3d1",
+      "original_git_blob_sha": "35b941a8a81a083bbd62abf157dd7bbc76606baf",
+      "original_status": "PASS",
+      "byte_verification": "PASS"
+    },
+    {
+      "logical_path": "ai/plans/skills-token-evidence/recovery/s2b-attempt3-route.json",
+      "bytes": 1316033,
+      "sha256": "57e0af5718392d38ba27107b61213edb44a3b8b7d3731fee88499e45ec15b75a",
+      "original_git_blob_sha": "eadf54e0ea0a2eb3cad4414f5311d63e2294eeab",
+      "original_status": "PASS",
+      "byte_verification": "PASS"
+    }
+  ]
+}
