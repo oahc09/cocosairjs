@@ -1,0 +1,1858 @@
+{
+  "freeze": {
+    "catalog_sha256": "9c944d2bd61afbb5debc1bcf4702a2bb33ee342d98f501db459a3ceb9a8ba02c",
+    "main_sha": "66d11fd0c3c189b7dfa6d20645222e237352f9f3",
+    "catalog_updated_at": "2026-10-18"
+  },
+  "tasks": [
+    {
+      "id": "ENGINE-001",
+      "title": "同一 PSO 下恢复被切换的 GL program",
+      "status": "待修复",
+      "scope": "引擎源码",
+      "priority": "P0",
+      "action": "把shader/program一致性判断从仅PSO变化分支中独立出来；保持isShaderChanged与VAO/descriptor后续语义。",
+      "acceptance": [
+        "同PSO+program漂移必须恢复",
+        "同PSO+同program零冗余重绑",
+        "新PSO/VAO/descriptor保持正确",
+        "实际浏览器多pass切换像素读回及既有回归"
+      ],
+      "evidence": [
+        {
+          "path": "src/cocos/gfx/webgl2/webgl2-commands.ts",
+          "startLine": 2077,
+          "endLine": 2092,
+          "reason": "program一致性检查被包在PSO身份变化分支内",
+          "url": "https://github.com/oahc09/cocosairjs/blob/66d11fd0c3c189b7dfa6d20645222e237352f9f3/src/cocos/gfx/webgl2/webgl2-commands.ts#L2077-L2092"
+        }
+      ],
+      "remainingImpact": "共享 WebGL 状态的渲染流程可能使用错误 shader，产生错误或缺失画面。",
+      "sourceIds": [
+        "ENGINE-001"
+      ],
+      "implementation": "CANDIDATE_IMPLEMENTED",
+      "verification": "CPU_PASS_AND_WEBKIT_COMMAND_READBACK_PASS",
+      "pr": null,
+      "blocker": "Full SDK rebuild/integration and final CI pending; command fixture is not full application acceptance."
+    },
+    {
+      "id": "ENGINE-002",
+      "title": "Stencil clear 前解除非零部分写掩码并恢复",
+      "status": "待修复",
+      "scope": "引擎源码",
+      "priority": "P0",
+      "action": "clear前保存front/back原写掩码，把所有非全写掩码放开；clear后精确恢复原值。",
+      "acceptance": [
+        "覆盖0、0x0f、0xf0、全掩码及前后不一致",
+        "clear全模板值正确，恢复原掩码",
+        "保持depth/color清理与cache一致",
+        "实际WebGL2读回正负控"
+      ],
+      "evidence": [
+        {
+          "path": "src/cocos/gfx/webgl2/webgl2-commands.ts",
+          "startLine": 1992,
+          "endLine": 2005,
+          "reason": "仅零掩码临时改全掩码",
+          "url": "https://github.com/oahc09/cocosairjs/blob/66d11fd0c3c189b7dfa6d20645222e237352f9f3/src/cocos/gfx/webgl2/webgl2-commands.ts#L1992-L2005"
+        },
+        {
+          "path": "src/cocos/gfx/webgl2/webgl2-commands.ts",
+          "startLine": 2048,
+          "endLine": 2055,
+          "reason": "仅零掩码恢复为零",
+          "url": "https://github.com/oahc09/cocosairjs/blob/66d11fd0c3c189b7dfa6d20645222e237352f9f3/src/cocos/gfx/webgl2/webgl2-commands.ts#L2048-L2055"
+        }
+      ],
+      "remainingImpact": "部分 stencil mask 后的新 render pass 可能保留旧值，使遮罩结果错误。",
+      "sourceIds": [
+        "ENGINE-002"
+      ],
+      "implementation": "CANDIDATE_IMPLEMENTED",
+      "verification": "CPU_PASS_AND_WEBKIT_COMMAND_READBACK_PASS",
+      "pr": null,
+      "blocker": "Full SDK rebuild/integration and final CI pending; command fixture is not full application acceptance."
+    },
+    {
+      "id": "ENGINE-004",
+      "title": "InputAssembler 超过8个顶点流时产生未校验的 NaN offset",
+      "status": "待修复",
+      "scope": "引擎源码",
+      "priority": "P0",
+      "action": "按实际vertexBuffers数初始化offset；校验stream为有效整数且buffer存在，非法输入给稳定错误；按实际硬件attribute上限检查。",
+      "acceptance": [
+        "合法第9流从0正确累积",
+        "负数/非整数/越界stream明确拒绝",
+        "8流旧路径不回退",
+        "实际IA绑定offset有限且draw正确"
+      ],
+      "evidence": [
+        {
+          "path": "src/cocos/gfx/webgl2/webgl2-commands.ts",
+          "startLine": 1783,
+          "endLine": 1815,
+          "reason": "固定offsets与无校验stream访问",
+          "url": "https://github.com/oahc09/cocosairjs/blob/66d11fd0c3c189b7dfa6d20645222e237352f9f3/src/cocos/gfx/webgl2/webgl2-commands.ts#L1783-L1815"
+        },
+        {
+          "path": "src/cocos/gfx/webgl2/webgl2-input-assembler.ts",
+          "startLine": 45,
+          "endLine": 112,
+          "reason": "仅检查vertexBuffers非空，并直接调用创建函数",
+          "url": "https://github.com/oahc09/cocosairjs/blob/66d11fd0c3c189b7dfa6d20645222e237352f9f3/src/cocos/gfx/webgl2/webgl2-input-assembler.ts#L45-L112"
+        }
+      ],
+      "remainingImpact": "第9个及以上stream可能产生undefined/NaN offset并令实例矩阵错读。真实VAO四列偏移错误导致退化变换；仅看draw或零GL错误会漏报。应用无损交错解决此根因。后续退化AO UV采样在参考后端也出现NaN，是独立的非Cocos专有退化UV采样路径，尚不能断言浏览器缺陷，不合并计为此引擎缺陷。",
+      "sourceIds": [
+        "ENGINE-004"
+      ],
+      "implementation": "CANDIDATE_IMPLEMENTED",
+      "verification": "CPU_PASS_AND_WEBKIT_COMMAND_READBACK_PASS",
+      "pr": null,
+      "blocker": "Full SDK rebuild/integration and final CI pending; command fixture is not full application acceptance."
+    },
+    {
+      "id": "ENGINE-005",
+      "title": "Blit临时framebuffer复用前清理残留color/depth/stencil附件",
+      "status": "待修复",
+      "scope": "引擎源码",
+      "priority": "P0",
+      "action": "在复用scratch FBO前清除旧color/depth/stencil/combined附件与相应buffer状态，覆盖texture/renderbuffer交替；恢复外部READ/DRAW缓存。",
+      "acceptance": [
+        "color→depth→stencil→color交替及尺寸变化",
+        "texture/renderbuffer交替",
+        "FBO完整性与实际像素/depth验证",
+        "读写外部FBO及状态恢复"
+      ],
+      "evidence": [
+        {
+          "path": "src/cocos/gfx/webgl2/webgl2-commands.ts",
+          "startLine": 3378,
+          "endLine": 3403,
+          "reason": "复用blitManager临时FBO",
+          "url": "https://github.com/oahc09/cocosairjs/blob/66d11fd0c3c189b7dfa6d20645222e237352f9f3/src/cocos/gfx/webgl2/webgl2-commands.ts#L3378-L3403"
+        },
+        {
+          "path": "src/cocos/gfx/webgl2/webgl2-commands.ts",
+          "startLine": 3433,
+          "endLine": 3465,
+          "reason": "直接在目标attachment挂新texture/renderbuffer",
+          "url": "https://github.com/oahc09/cocosairjs/blob/66d11fd0c3c189b7dfa6d20645222e237352f9f3/src/cocos/gfx/webgl2/webgl2-commands.ts#L3433-L3465"
+        }
+      ],
+      "remainingImpact": "TRAA深度历史后彩色mipmap或自适应分辨率路径可产生不完整FBO、丢失复制画面。与应用DepthTexture误判为array的错误分别记录。",
+      "sourceIds": [
+        "ENGINE-005"
+      ],
+      "implementation": "CANDIDATE_IMPLEMENTED",
+      "verification": "CPU_PASS_AND_WEBKIT_COMMAND_READBACK_PASS",
+      "pr": null,
+      "blocker": "Full SDK rebuild/integration and final CI pending; command fixture is not full application acceptance."
+    },
+    {
+      "id": "REUSE-002",
+      "title": "为复杂GLSL适配提供可验证的声明反射与ShaderInfo示例",
+      "status": "待修复",
+      "scope": "SDK示例/文档/工具",
+      "priority": "P1",
+      "action": "复用现有预检，增加原shader fixture和声明/布局差分；不要另造宽泛渲染框架。",
+      "acceptance": [
+        "逗号多变量、宏数组、条件声明可正确进入描述符或带位置明确拒绝",
+        "真实shader逐pass读回有限且视觉对照通过"
+      ],
+      "evidence": [
+        {
+          "path": "tools/debug/effect-layout.ts",
+          "startLine": 104,
+          "endLine": 160,
+          "reason": "明确拒绝conditional resources、非vec4/mat4或数组成员",
+          "url": "https://github.com/oahc09/cocosairjs/blob/66d11fd0c3c189b7dfa6d20645222e237352f9f3/tools/debug/effect-layout.ts#L104-L160"
+        },
+        {
+          "path": "tools/debug/effect-layout.ts",
+          "startLine": 175,
+          "endLine": 185,
+          "reason": "有限layout声明匹配及缺少reflection诊断",
+          "url": "https://github.com/oahc09/cocosairjs/blob/66d11fd0c3c189b7dfa6d20645222e237352f9f3/tools/debug/effect-layout.ts#L175-L185"
+        }
+      ],
+      "remainingImpact": "合法复杂GLSL迁移仍需宏感知解析与std140证明；属于适配/示例范围，不是已证实编译器缺陷。",
+      "sourceIds": [
+        "REUSE-002"
+      ],
+      "implementation": "PENDING",
+      "verification": "NOT_RUN",
+      "pr": null,
+      "blocker": null
+    },
+    {
+      "id": "NEW8-API-INPUT-FOCUS",
+      "title": "Canvas与DOM焦点的统一输入 Recipe",
+      "status": "待验证",
+      "scope": "SDK示例/文档/工具",
+      "priority": "P2",
+      "action": "复用现有ActionInput和interactive-input；只补真实焦点矩阵，不新建输入框架。",
+      "acceptance": [
+        "按钮/画布点击后按键路由正确且一次触发",
+        "文本输入不触发动作但旧held键释放",
+        "真实失焦、退出和重入无卡键/重复监听"
+      ],
+      "evidence": [
+        {
+          "path": "src/air/action-input.ts",
+          "startLine": 222,
+          "endLine": 268,
+          "reason": "native/DOM editable准入与held keyup释放",
+          "url": "https://github.com/oahc09/cocosairjs/blob/66d11fd0c3c189b7dfa6d20645222e237352f9f3/src/air/action-input.ts#L222-L268"
+        },
+        {
+          "path": "src/air/action-input.ts",
+          "startLine": 307,
+          "endLine": 340,
+          "reason": "窗口捕获及blur/hidden订阅",
+          "url": "https://github.com/oahc09/cocosairjs/blob/66d11fd0c3c189b7dfa6d20645222e237352f9f3/src/air/action-input.ts#L307-L340"
+        },
+        {
+          "path": "examples/interactive-input/src/main.ts",
+          "startLine": 388,
+          "endLine": 407,
+          "reason": "示例捕获键盘、失焦及hidden退役",
+          "url": "https://github.com/oahc09/cocosairjs/blob/66d11fd0c3c189b7dfa6d20645222e237352f9f3/examples/interactive-input/src/main.ts#L388-L407"
+        }
+      ],
+      "remainingImpact": "浏览器真实焦点/文本输入/退出重入全链路仍需当前main验收。",
+      "sourceIds": [
+        "NEW8-API-INPUT-FOCUS"
+      ],
+      "implementation": "PENDING",
+      "verification": "NOT_RUN",
+      "pr": null,
+      "blocker": null
+    },
+    {
+      "id": "NEW8-API-LIFECYCLE-RECIPE",
+      "title": "原生应用异步生命周期与上下文恢复 Recipe",
+      "status": "待修复",
+      "scope": "SDK示例/文档/工具",
+      "priority": "P2",
+      "action": "补一个复用既有session/close/contextHealth的组合示例；只做reload或重新创建的明确路径。",
+      "acceptance": [
+        "构造中止迟到结果不挂载",
+        "重复close同Promise且音频/监听清理",
+        "context lost明确failed/reload，不能用恢复事件假称GPU重建",
+        "按当前来源明确要求：音频和GPU清理并行启动、共同等待；丢失后关闭输入，恢复后完整重载。"
+      ],
+      "evidence": [
+        {
+          "path": "src/air/session-scope.ts",
+          "startLine": 62,
+          "endLine": 108,
+          "reason": "代次token、异步清理收据、同dispose Promise",
+          "url": "https://github.com/oahc09/cocosairjs/blob/66d11fd0c3c189b7dfa6d20645222e237352f9f3/src/air/session-scope.ts#L62-L108"
+        },
+        {
+          "path": "src/air/context-health.ts",
+          "startLine": 160,
+          "endLine": 177,
+          "reason": "context restored仍failed，无自动重建",
+          "url": "https://github.com/oahc09/cocosairjs/blob/66d11fd0c3c189b7dfa6d20645222e237352f9f3/src/air/context-health.ts#L160-L177"
+        },
+        {
+          "path": "src/air/app.ts",
+          "startLine": 262,
+          "endLine": 281,
+          "reason": "close复用释放Promise",
+          "url": "https://github.com/oahc09/cocosairjs/blob/66d11fd0c3c189b7dfa6d20645222e237352f9f3/src/air/app.ts#L262-L281"
+        }
+      ],
+      "remainingImpact": "需要把reload恢复边界写清，并覆盖构造失败与晚到异步资源；不应承诺现有API可透明恢复。",
+      "sourceIds": [
+        "NEW8-API-LIFECYCLE-RECIPE"
+      ],
+      "implementation": "PENDING",
+      "verification": "NOT_RUN",
+      "pr": null,
+      "blocker": null
+    },
+    {
+      "id": "NEW8-API-MATERIAL-CONTRACT",
+      "title": "自定义 EffectAsset 的颜色与Shader合同示例",
+      "status": "待修复",
+      "scope": "SDK示例/文档/工具",
+      "priority": "P2",
+      "action": "扩展既有HDR/effect fixture，不重写EffectAsset/渲染框架。",
+      "acceptance": [
+        "相同目标颜色比较vertex/texture/custom RGB三输入",
+        "多个shader program及每个target声明/binding/颜色空间匹配",
+        "记录负例及真实读回/截图"
+      ],
+      "evidence": [
+        {
+          "path": "examples/hdr-color-pipeline/src/main.ts",
+          "startLine": 218,
+          "endLine": 239,
+          "reason": "三组是纹理sRGB/linear/double decode，并非顶点色三路径",
+          "url": "https://github.com/oahc09/cocosairjs/blob/66d11fd0c3c189b7dfa6d20645222e237352f9f3/examples/hdr-color-pipeline/src/main.ts#L218-L239"
+        },
+        {
+          "path": "tools/debug/effect-layout.ts",
+          "startLine": 104,
+          "endLine": 160,
+          "reason": "已有binding与有限GLSL合同检查",
+          "url": "https://github.com/oahc09/cocosairjs/blob/66d11fd0c3c189b7dfa6d20645222e237352f9f3/tools/debug/effect-layout.ts#L104-L160"
+        }
+      ],
+      "remainingImpact": "复用范围大但顶点色/自写RGB目标组合仍缺专门验收。",
+      "sourceIds": [
+        "NEW8-API-MATERIAL-CONTRACT"
+      ],
+      "implementation": "PENDING",
+      "verification": "NOT_RUN",
+      "pr": null,
+      "blocker": null
+    },
+    {
+      "id": "NEW8-API-TEXTURE-OWNERSHIP",
+      "title": "纹理替换与所有权转移小工具/示例",
+      "status": "待修复",
+      "scope": "SDK示例/文档/工具",
+      "priority": "P2",
+      "action": "在已有ownSpriteFrame/session上补最小替换示例与失败/乱序回归。",
+      "acceptance": [
+        "成功绑定后才释放旧texture/image",
+        "失败保留旧内容且释放新临时资源",
+        "旧请求晚到不能覆盖新状态，退出有效资源归零",
+        "纸色编辑不能覆盖用户导入内容；连续编辑/导入对象数量有界。"
+      ],
+      "evidence": [
+        {
+          "path": "examples/shared/owned-sprite-frame.ts",
+          "startLine": 3,
+          "endLine": 20,
+          "reason": "幂等终态销毁但没有replace/load事务",
+          "url": "https://github.com/oahc09/cocosairjs/blob/66d11fd0c3c189b7dfa6d20645222e237352f9f3/examples/shared/owned-sprite-frame.ts#L3-L20"
+        },
+        {
+          "path": "docs/manual/examples/dynamic-atlas-ownership/main.ts",
+          "startLine": 74,
+          "endLine": 94,
+          "reason": "enter/leave生命周期，不等于加载成功后原子换纹理",
+          "url": "https://github.com/oahc09/cocosairjs/blob/66d11fd0c3c189b7dfa6d20645222e237352f9f3/docs/manual/examples/dynamic-atlas-ownership/main.ts#L74-L94"
+        }
+      ],
+      "remainingImpact": "重复导入/换色失败和乱序成功仍可能导致应用内容丢失或资源残留，不能凭ownership API存在关闭。",
+      "sourceIds": [
+        "NEW8-API-TEXTURE-OWNERSHIP"
+      ],
+      "implementation": "PENDING",
+      "verification": "NOT_RUN",
+      "pr": null,
+      "blocker": null
+    },
+    {
+      "id": "NEW8-API-TWO-SIDED-MESH",
+      "title": "双面可变形网格与法线示例",
+      "status": "待修复",
+      "scope": "SDK示例/文档/工具",
+      "priority": "P2",
+      "action": "新增小型几何示例和数值检查，复用Mesh更新接口，页组合留应用。",
+      "acceptance": [
+        "完整正反翻页内部角度采样",
+        "中间帧正反页身份与法线/绕序一致",
+        "实际上传数据、可见图像与数值检查对应"
+      ],
+      "evidence": [
+        {
+          "path": "examples/interactive-geometry/src/geometry-contract.ts",
+          "startLine": 47,
+          "endLine": 85,
+          "reason": "只验证位置/索引/法线有限与长度",
+          "url": "https://github.com/oahc09/cocosairjs/blob/66d11fd0c3c189b7dfa6d20645222e237352f9f3/examples/interactive-geometry/src/geometry-contract.ts#L47-L85"
+        },
+        {
+          "path": "docs/manual/interactive-geometry.md",
+          "startLine": 18,
+          "endLine": 28,
+          "reason": "现有场景为平板切面与投影，不是翻页",
+          "url": "https://github.com/oahc09/cocosairjs/blob/66d11fd0c3c189b7dfa6d20645222e237352f9f3/docs/manual/interactive-geometry.md#L18-L28"
+        }
+      ],
+      "remainingImpact": "仍需应用级几何法线/绕序/正反面身份示例，不构成已证核心渲染bug。",
+      "sourceIds": [
+        "NEW8-API-TWO-SIDED-MESH"
+      ],
+      "implementation": "PENDING",
+      "verification": "NOT_RUN",
+      "pr": null,
+      "blocker": null
+    },
+    {
+      "id": "PROPOSAL-ENG-00",
+      "title": "固定最新基线并去重历史工作",
+      "status": "待验证",
+      "scope": "SDK示例/文档/工具",
+      "priority": "P2",
+      "action": "补齐原材料并对冻结main重新生成基线/源码映射，不重做已有去重工具。",
+      "acceptance": [
+        "同commit产物/声明/source-map身份关联；缺材料明确NOT_RUN。",
+        "当前main下重新关联源码、工具、产物和运行输入身份，不继承历史PASS。"
+      ],
+      "evidence": [
+        {
+          "path": "tools/verify/interactive-improvement-baseline.cjs",
+          "startLine": 1,
+          "endLine": 17,
+          "reason": "身份/能力分级与历史去重工具已实现；测试文件存在不会自动升级tested-passed。",
+          "url": "https://github.com/oahc09/cocosairjs/blob/66d11fd0c3c189b7dfa6d20645222e237352f9f3/tools/verify/interactive-improvement-baseline.cjs#L1-L17"
+        },
+        {
+          "path": "ai/ledgers/interactive-engine-improvements.md",
+          "startLine": 32,
+          "endLine": 42,
+          "reason": "具体执行结果与未完成范围",
+          "url": "https://github.com/oahc09/cocosairjs/blob/66d11fd0c3c189b7dfa6d20645222e237352f9f3/ai/ledgers/interactive-engine-improvements.md#L32-L42"
+        }
+      ],
+      "remainingImpact": "原私有Site、21项原JSON及历史参考缺失。",
+      "sourceIds": [
+        "PROPOSAL-ENG-00"
+      ],
+      "implementation": "PENDING",
+      "verification": "NOT_RUN",
+      "pr": null,
+      "blocker": null
+    },
+    {
+      "id": "PROPOSAL-ENG-01",
+      "title": "建立输入到可见画面的证据链",
+      "status": "待验证",
+      "scope": "SDK示例/文档/工具",
+      "priority": "P2",
+      "action": "复用collector对原场景补证，并拒绝旧身份/旧PNG与错代次。",
+      "acceptance": [
+        "每个PASS有当前身份原始事件、实际对象、提交、可见像素；遮挡不能冒称成功。",
+        "当前main下重新关联源码、工具、产物和运行输入身份，不继承历史PASS。"
+      ],
+      "evidence": [
+        {
+          "path": "docs/manual/interactive-evidence-chain.md",
+          "startLine": 7,
+          "endLine": 28,
+          "reason": "已建立输入→模型→原生提交→PNG链路，含遮挡负例；24可见状态和6预期拒绝已有归档。",
+          "url": "https://github.com/oahc09/cocosairjs/blob/66d11fd0c3c189b7dfa6d20645222e237352f9f3/docs/manual/interactive-evidence-chain.md#L7-L28"
+        },
+        {
+          "path": "ai/ledgers/interactive-engine-improvements.md",
+          "startLine": 30,
+          "endLine": 38,
+          "reason": "具体执行结果与未完成范围",
+          "url": "https://github.com/oahc09/cocosairjs/blob/66d11fd0c3c189b7dfa6d20645222e237352f9f3/ai/ledgers/interactive-engine-improvements.md#L30-L38"
+        }
+      ],
+      "remainingImpact": "原11/16/23、Water、soft、Puzzle50对象/雨线/切面参考不在重建fixture内。",
+      "sourceIds": [
+        "PROPOSAL-ENG-01"
+      ],
+      "implementation": "PENDING",
+      "verification": "NOT_RUN",
+      "pr": null,
+      "blocker": null
+    },
+    {
+      "id": "PROPOSAL-ENG-02",
+      "title": "交付双 pass 与 mip 渲染完整路径",
+      "status": "待验证",
+      "scope": "SDK示例/文档/工具",
+      "priority": "P2",
+      "action": "复用两路线，补native MSAA可采样路径实测及原场景匹配。",
+      "acceptance": [
+        "resize重绑/重置资源不积累；mip层读回、普通pacer、负例及MSAA边界分开。",
+        "当前main下重新关联源码、工具、产物和运行输入身份，不继承历史PASS。"
+      ],
+      "evidence": [
+        {
+          "path": "docs/manual/interactive-multipass.md",
+          "startLine": 6,
+          "endLine": 86,
+          "reason": "双路线、mip、std140、描述符示例及45定步/6普通模式已交付；不是渲染API空白。",
+          "url": "https://github.com/oahc09/cocosairjs/blob/66d11fd0c3c189b7dfa6d20645222e237352f9f3/docs/manual/interactive-multipass.md#L6-L86"
+        },
+        {
+          "path": "ai/ledgers/interactive-engine-improvements.md",
+          "startLine": 66,
+          "endLine": 74,
+          "reason": "具体执行结果与未完成范围",
+          "url": "https://github.com/oahc09/cocosairjs/blob/66d11fd0c3c189b7dfa6d20645222e237352f9f3/ai/ledgers/interactive-engine-improvements.md#L66-L74"
+        }
+      ],
+      "remainingImpact": "native MSAA采样、原参考和长期稳定性仍未验；静态binding预检不等于驱动拒绝。",
+      "sourceIds": [
+        "PROPOSAL-ENG-02"
+      ],
+      "implementation": "PENDING",
+      "verification": "NOT_RUN",
+      "pr": null,
+      "blocker": null
+    },
+    {
+      "id": "PROPOSAL-ENG-03",
+      "title": "建立颜色 环境贴图和透明合成对照",
+      "status": "待验证",
+      "scope": "SDK示例/文档/工具",
+      "priority": "P2",
+      "action": "复用现有颜色/Water对照，仅补原参考与设备质量评估。",
+      "acceptance": [
+        "同色输入路径数值/像素一致；避免双gamma；明确GGX预过滤与普通mip差别。",
+        "当前main下重新关联源码、工具、产物和运行输入身份，不继承历史PASS。"
+      ],
+      "evidence": [
+        {
+          "path": "docs/manual/interactive-color-controls.md",
+          "startLine": 3,
+          "endLine": 21,
+          "reason": "HDR45、Water117及裁剪/透明15状态有历史实测，颜色/环境/透明对照已实质交付。",
+          "url": "https://github.com/oahc09/cocosairjs/blob/66d11fd0c3c189b7dfa6d20645222e237352f9f3/docs/manual/interactive-color-controls.md#L3-L21"
+        },
+        {
+          "path": "ai/ledgers/interactive-engine-improvements.md",
+          "startLine": 168,
+          "endLine": 172,
+          "reason": "具体执行结果与未完成范围",
+          "url": "https://github.com/oahc09/cocosairjs/blob/66d11fd0c3c189b7dfa6d20645222e237352f9f3/ai/ledgers/interactive-engine-improvements.md#L168-L172"
+        }
+      ],
+      "remainingImpact": "原参考、过滤质量、实体设备和长期稳定性未验；自动mip不是PMREM。",
+      "sourceIds": [
+        "PROPOSAL-ENG-03",
+        "HIST-WATER-FORMAT",
+        "HIST-DOUBLE-GAMMA",
+        "HIST-MATERIAL-STATE"
+      ],
+      "additionalAcceptance": [
+        {
+          "sourceId": "HIST-WATER-FORMAT",
+          "action": "按原报告负例及当前精确版本独立复核。",
+          "acceptance": [
+            "按原报告负例及当前精确版本独立复核。",
+            "固定应用及SDK哈希，保留正负控、真实输入与可见结果；不将同名API存在当作现场关闭。"
+          ]
+        },
+        {
+          "sourceId": "HIST-DOUBLE-GAMMA",
+          "action": "按原报告负例及当前精确版本独立复核。",
+          "acceptance": [
+            "按原报告负例及当前精确版本独立复核。",
+            "固定应用及SDK哈希，保留正负控、真实输入与可见结果；不将同名API存在当作现场关闭。"
+          ]
+        },
+        {
+          "sourceId": "HIST-MATERIAL-STATE",
+          "action": "按原报告负例及当前精确版本独立复核。",
+          "acceptance": [
+            "按原报告负例及当前精确版本独立复核。",
+            "固定应用及SDK哈希，保留正负控、真实输入与可见结果；不将同名API存在当作现场关闭。"
+          ]
+        }
+      ],
+      "implementation": "PENDING",
+      "verification": "NOT_RUN",
+      "pr": null,
+      "blocker": null
+    },
+    {
+      "id": "PROPOSAL-ENG-04",
+      "title": "给动态 Mesh 与屏幕投影一条正确路径",
+      "status": "待验证",
+      "scope": "SDK示例/文档/工具",
+      "priority": "P2",
+      "action": "复用动态Mesh/投影配方，补原工程和当前设备呈现复验。",
+      "acceptance": [
+        "实际三组顶点误差满足预算且画面可见；GPU读回不能代替PNG。",
+        "当前main下重新关联源码、工具、产物和运行输入身份，不继承历史PASS。"
+      ],
+      "evidence": [
+        {
+          "path": "docs/manual/interactive-geometry.md",
+          "startLine": 18,
+          "endLine": 46,
+          "reason": "实际Float32上传顶点、相机VP、切面/轨迹/刀刃独立投影与取消释放已实现。",
+          "url": "https://github.com/oahc09/cocosairjs/blob/66d11fd0c3c189b7dfa6d20645222e237352f9f3/docs/manual/interactive-geometry.md#L18-L46"
+        },
+        {
+          "path": "ai/ledgers/interactive-engine-improvements.md",
+          "startLine": 110,
+          "endLine": 124,
+          "reason": "具体执行结果与未完成范围",
+          "url": "https://github.com/oahc09/cocosairjs/blob/66d11fd0c3c189b7dfa6d20645222e237352f9f3/ai/ledgers/interactive-engine-improvements.md#L110-L124"
+        }
+      ],
+      "remainingImpact": "111行中18个WebKit活resize不可见；原soft13未取得。无SDK对照也失败，不能转成核心bug。",
+      "sourceIds": [
+        "PROPOSAL-ENG-04",
+        "HIST-SOFT-PROJECTION"
+      ],
+      "additionalAcceptance": [
+        {
+          "sourceId": "HIST-SOFT-PROJECTION",
+          "action": "按原报告负例及当前精确版本独立复核。",
+          "acceptance": [
+            "按原报告负例及当前精确版本独立复核。",
+            "固定应用及SDK哈希，保留正负控、真实输入与可见结果；不将同名API存在当作现场关闭。"
+          ]
+        }
+      ],
+      "implementation": "PENDING",
+      "verification": "NOT_RUN",
+      "pr": null,
+      "blocker": null
+    },
+    {
+      "id": "PROPOSAL-ENG-05",
+      "title": "交付 Canvas 与 HTML 混合输入回归页",
+      "status": "待验证",
+      "scope": "SDK示例/文档/工具",
+      "priority": "P2",
+      "action": "不重写输入系统；补真实设备/焦点事件并保留PAL诊断归属。",
+      "acceptance": [
+        "一物理动作一次可见更新；文本/hover/取消/滚动和退场监听分别验证。",
+        "当前main下重新关联源码、工具、产物和运行输入身份，不继承历史PASS。"
+      ],
+      "evidence": [
+        {
+          "path": "docs/manual/interactive-input.md",
+          "startLine": 3,
+          "endLine": 19,
+          "reason": "ActionInput DOM/session混合页和无SDK对照已交付，400操作/PNG与62补充检查曾通过。",
+          "url": "https://github.com/oahc09/cocosairjs/blob/66d11fd0c3c189b7dfa6d20645222e237352f9f3/docs/manual/interactive-input.md#L3-L19"
+        },
+        {
+          "path": "ai/ledgers/interactive-engine-improvements.md",
+          "startLine": 140,
+          "endLine": 150,
+          "reason": "具体执行结果与未完成范围",
+          "url": "https://github.com/oahc09/cocosairjs/blob/66d11fd0c3c189b7dfa6d20645222e237352f9f3/ai/ledgers/interactive-engine-improvements.md#L140-L150"
+        }
+      ],
+      "remainingImpact": "32项协议/真实blur/hidden未运行、两条PAL警告及实体触屏/原参考未验。",
+      "sourceIds": [
+        "PROPOSAL-ENG-05",
+        "HIST-DOM-CHURN",
+        "HIST-HOVER-SUPPRESSION"
+      ],
+      "additionalAcceptance": [
+        {
+          "sourceId": "HIST-DOM-CHURN",
+          "action": "按原报告负例及当前精确版本独立复核。",
+          "acceptance": [
+            "按原报告负例及当前精确版本独立复核。",
+            "固定应用及SDK哈希，保留正负控、真实输入与可见结果；不将同名API存在当作现场关闭。"
+          ]
+        },
+        {
+          "sourceId": "HIST-HOVER-SUPPRESSION",
+          "action": "按原报告负例及当前精确版本独立复核。",
+          "acceptance": [
+            "按原报告负例及当前精确版本独立复核。",
+            "固定应用及SDK哈希，保留正负控、真实输入与可见结果；不将同名API存在当作现场关闭。"
+          ]
+        }
+      ],
+      "implementation": "PENDING",
+      "verification": "NOT_RUN",
+      "pr": null,
+      "blocker": null
+    },
+    {
+      "id": "PROPOSAL-ENG-06",
+      "title": "验证容器就绪并重跑 Puzzle50 反例",
+      "status": "待验证",
+      "scope": "SDK示例/文档/工具",
+      "priority": "P2",
+      "action": "取得原Puzzle50反例，在当前main/实体设备复跑；不把呈现器限制误修为核心。",
+      "acceptance": [
+        "隐藏/显示/父布局/冷加载代次和释放均验；framebuffer匹配与可见PNG分别判定。",
+        "当前main下重新关联源码、工具、产物和运行输入身份，不继承历史PASS。"
+      ],
+      "evidence": [
+        {
+          "path": "docs/manual/interactive-container.md",
+          "startLine": 3,
+          "endLine": 14,
+          "reason": "可见非零容器→buffer/camera→提交→PNG顺序已有配方和63场景矩阵。",
+          "url": "https://github.com/oahc09/cocosairjs/blob/66d11fd0c3c189b7dfa6d20645222e237352f9f3/docs/manual/interactive-container.md#L3-L14"
+        },
+        {
+          "path": "ai/ledgers/interactive-engine-improvements.md",
+          "startLine": 152,
+          "endLine": 158,
+          "reason": "具体执行结果与未完成范围",
+          "url": "https://github.com/oahc09/cocosairjs/blob/66d11fd0c3c189b7dfa6d20645222e237352f9f3/ai/ledgers/interactive-engine-improvements.md#L152-L158"
+        }
+      ],
+      "remainingImpact": "15个WebKit活布局呈现失败；原Puzzle50仍NOT_RUN；无SDK对照6个同类失败。",
+      "sourceIds": [
+        "PROPOSAL-ENG-06",
+        "HIST-PUZZLE-CONTAINER-RESIZE",
+        "HIST-HIDDEN-BOOT"
+      ],
+      "additionalAcceptance": [
+        {
+          "sourceId": "HIST-PUZZLE-CONTAINER-RESIZE",
+          "action": "取得原Puzzle50同份源/资源/历史最小反例，固定当前SDK哈希，禁用旧手动resize workaround做负正控；不先新增重复引擎修复。",
+          "acceptance": [
+            "CSS-only容器resize后canvas backing buffer、camera/UI布局和真实点击命中一致，DPR1/2覆盖。",
+            "隐藏→显现、父容器改变、重复相同尺寸、重入和退出不残留observer。",
+            "同原工程分别记录旧SDK负控/旧workaround正控/当前SDK无workaround。",
+            "原工程未跑继续NOT_RUN；原生canvas与page composition分别验收。"
+          ]
+        },
+        {
+          "sourceId": "HIST-HIDDEN-BOOT",
+          "action": "按原报告负例及当前精确版本独立复核。",
+          "acceptance": [
+            "按原报告负例及当前精确版本独立复核。",
+            "固定应用及SDK哈希，保留正负控、真实输入与可见结果；不将同名API存在当作现场关闭。"
+          ]
+        }
+      ],
+      "implementation": "PENDING",
+      "verification": "NOT_RUN",
+      "pr": null,
+      "blocker": null
+    },
+    {
+      "id": "PROPOSAL-ENG-07",
+      "title": "固化可取消的形变 相机和滚动时间轴",
+      "status": "待验证",
+      "scope": "SDK示例/文档/工具",
+      "priority": "P2",
+      "action": "复用timeline，仅用原大型工程补快速切换/Reset/晚到回调与实际段落验收。",
+      "acceptance": [
+        "阶段标签不替代pose收敛；旧timer不回写；短/长页实际section终点正确。",
+        "当前main下重新关联源码、工具、产物和运行输入身份，不继承历史PASS。"
+      ],
+      "evidence": [
+        {
+          "path": "docs/manual/interactive-timeline.md",
+          "startLine": 3,
+          "endLine": 7,
+          "reason": "原生/定步形变、实际pose/camera收敛、session代次取消和短长滚动已交付。",
+          "url": "https://github.com/oahc09/cocosairjs/blob/66d11fd0c3c189b7dfa6d20645222e237352f9f3/docs/manual/interactive-timeline.md#L3-L7"
+        },
+        {
+          "path": "ai/ledgers/interactive-engine-improvements.md",
+          "startLine": 174,
+          "endLine": 180,
+          "reason": "具体执行结果与未完成范围",
+          "url": "https://github.com/oahc09/cocosairjs/blob/66d11fd0c3c189b7dfa6d20645222e237352f9f3/ai/ledgers/interactive-engine-improvements.md#L174-L180"
+        }
+      ],
+      "remainingImpact": "18组教学部件不能证明原1188部件/155阶段大型工程；原工程参考未取得。",
+      "sourceIds": [
+        "PROPOSAL-ENG-07"
+      ],
+      "implementation": "PENDING",
+      "verification": "NOT_RUN",
+      "pr": null,
+      "blocker": null
+    },
+    {
+      "id": "PROPOSAL-ENG-08",
+      "title": "交付音频主时钟驱动的场景时间轴",
+      "status": "待验证",
+      "scope": "SDK示例/文档/工具",
+      "priority": "P2",
+      "action": "复用音频timeline，在支持的真实目标环境和原音轨补验。",
+      "acceptance": [
+        "Pause/Resume保留voice/origin；Seek/Replay换代；自然end与stop分开，原始context时钟推进。",
+        "当前main下重新关联源码、工具、产物和运行输入身份，不继承历史PASS。"
+      ],
+      "evidence": [
+        {
+          "path": "docs/manual/interactive-timeline.md",
+          "startLine": 9,
+          "endLine": 13,
+          "reason": "已有音频主时钟、voice/origin连续性、cue→Node→截图区间观测，CH/FF48cue通过。",
+          "url": "https://github.com/oahc09/cocosairjs/blob/66d11fd0c3c189b7dfa6d20645222e237352f9f3/docs/manual/interactive-timeline.md#L9-L13"
+        },
+        {
+          "path": "ai/ledgers/interactive-engine-improvements.md",
+          "startLine": 174,
+          "endLine": 180,
+          "reason": "具体执行结果与未完成范围",
+          "url": "https://github.com/oahc09/cocosairjs/blob/66d11fd0c3c189b7dfa6d20645222e237352f9f3/ai/ledgers/interactive-engine-improvements.md#L174-L180"
+        }
+      ],
+      "remainingImpact": "WebKit无AudioContext两行NOT_RUN，原约59秒音乐未取得；PNG不是物理首显示/扬声器时刻。",
+      "sourceIds": [
+        "PROPOSAL-ENG-08",
+        "HIST-AUDIO-VISUAL-LATENCY"
+      ],
+      "additionalAcceptance": [
+        {
+          "sourceId": "HIST-AUDIO-VISUAL-LATENCY",
+          "action": "按原报告负例及当前精确版本独立复核。",
+          "acceptance": [
+            "按原报告负例及当前精确版本独立复核。",
+            "固定应用及SDK哈希，保留正负控、真实输入与可见结果；不将同名API存在当作现场关闭。"
+          ]
+        }
+      ],
+      "implementation": "PENDING",
+      "verification": "NOT_RUN",
+      "pr": null,
+      "blocker": null
+    },
+    {
+      "id": "PROPOSAL-ENG-09",
+      "title": "建立可归因的性能画像和质量档位",
+      "status": "待验证",
+      "scope": "SDK示例/文档/工具",
+      "priority": "P2",
+      "action": "先确定设备和帧时间/画质预算，再复跑长窗口归因；不假设60fps。",
+      "acceptance": [
+        "隔离截图/CPU/提交成本，保留长帧与raw；固定画质预算和设备3×60秒。",
+        "当前main下重新关联源码、工具、产物和运行输入身份，不继承历史PASS。"
+      ],
+      "evidence": [
+        {
+          "path": "docs/manual/interactive-performance.md",
+          "startLine": 3,
+          "endLine": 18,
+          "reason": "36个5秒窗口已有raw/CPU/update/submit/截图成本与DPR负载对照，但结果明确LIMITED。",
+          "url": "https://github.com/oahc09/cocosairjs/blob/66d11fd0c3c189b7dfa6d20645222e237352f9f3/docs/manual/interactive-performance.md#L3-L18"
+        },
+        {
+          "path": "ai/ledgers/interactive-engine-improvements.md",
+          "startLine": 182,
+          "endLine": 186,
+          "reason": "具体执行结果与未完成范围",
+          "url": "https://github.com/oahc09/cocosairjs/blob/66d11fd0c3c189b7dfa6d20645222e237352f9f3/ai/ledgers/interactive-engine-improvements.md#L182-L186"
+        }
+      ],
+      "remainingImpact": "无目标实体设备、预算及3×60秒数据，首窗口有并发审计混杂。",
+      "sourceIds": [
+        "PROPOSAL-ENG-09"
+      ],
+      "implementation": "PENDING",
+      "verification": "NOT_RUN",
+      "pr": null,
+      "blocker": null
+    },
+    {
+      "id": "PROPOSAL-ENG-10",
+      "title": "将已知误用变成可定位的诊断",
+      "status": "待验证",
+      "scope": "SDK示例/文档/工具",
+      "priority": "P2",
+      "action": "复用现有诊断，补可选缺模块请求负例，不虚构Scene.addComponent禁用规则。",
+      "acceptance": [
+        "每条误用定位责任层/字段及正确最小调用；函数/循环不静默克隆。",
+        "当前main下重新关联源码、工具、产物和运行输入身份，不继承历史PASS。"
+      ],
+      "evidence": [
+        {
+          "path": "docs/manual/interactive-diagnostics.md",
+          "startLine": 3,
+          "endLine": 29,
+          "reason": "五类消费负例已有定位；可选effect JSON函数/循环拒绝真实实现，空issues不推出像素正确。",
+          "url": "https://github.com/oahc09/cocosairjs/blob/66d11fd0c3c189b7dfa6d20645222e237352f9f3/docs/manual/interactive-diagnostics.md#L3-L29"
+        },
+        {
+          "path": "ai/ledgers/interactive-engine-improvements.md",
+          "startLine": 160,
+          "endLine": 166,
+          "reason": "具体执行结果与未完成范围",
+          "url": "https://github.com/oahc09/cocosairjs/blob/66d11fd0c3c189b7dfa6d20645222e237352f9f3/ai/ledgers/interactive-engine-improvements.md#L160-L166"
+        }
+      ],
+      "remainingImpact": "可选模块未启用时的主动请求路径仍NOT_RUN；base override局部消费诊断不是SDK错误码。",
+      "sourceIds": [
+        "PROPOSAL-ENG-10"
+      ],
+      "implementation": "PENDING",
+      "verification": "NOT_RUN",
+      "pr": null,
+      "blocker": null
+    },
+    {
+      "id": "PROPOSAL-ENG-11",
+      "title": "整理小型官方示例并做独立接入",
+      "status": "待验证",
+      "scope": "SDK示例/文档/工具",
+      "priority": "P2",
+      "action": "复用kit，修验具体呈现缺口并在当前包做独立接入，不按示例数量收口。",
+      "acceptance": [
+        "干净tarball离线安装、无build fallback；真实输入/resize/清理/可见PNG全部逐项验收。",
+        "当前main下重新关联源码、工具、产物和运行输入身份，不继承历史PASS。"
+      ],
+      "evidence": [
+        {
+          "path": "docs/manual/interactive-consumer-kit.md",
+          "startLine": 3,
+          "endLine": 13,
+          "reason": "五个小型权威示例已进入离线tarball消费，15入口/TS4.9/终态实测已有。",
+          "url": "https://github.com/oahc09/cocosairjs/blob/66d11fd0c3c189b7dfa6d20645222e237352f9f3/docs/manual/interactive-consumer-kit.md#L3-L13"
+        },
+        {
+          "path": "ai/ledgers/interactive-engine-improvements.md",
+          "startLine": 188,
+          "endLine": 195,
+          "reason": "具体执行结果与未完成范围",
+          "url": "https://github.com/oahc09/cocosairjs/blob/66d11fd0c3c189b7dfa6d20645222e237352f9f3/ai/ledgers/interactive-engine-improvements.md#L188-L195"
+        }
+      ],
+      "remainingImpact": "55/60 PNG通过，5个WK活布局失败；原参考和全平台认证未完成。",
+      "sourceIds": [
+        "PROPOSAL-ENG-11"
+      ],
+      "implementation": "PENDING",
+      "verification": "NOT_RUN",
+      "pr": null,
+      "blocker": null
+    },
+    {
+      "id": "WR-ENGINE-PROPOSAL-001",
+      "title": "提供同源、完整、无DOM副作用的官方数学ESM入口",
+      "status": "待修复",
+      "scope": "SDK示例/文档/工具",
+      "priority": "P2",
+      "action": "从同源数学模块构建官方独立entry并建立发布及副作用测试。",
+      "acceptance": [
+        "Node与Worker无window/document导入完整Vec/Mat/Quat",
+        "同commit主入口/数学entry数值差分通过",
+        "先导入数学再创建指定canvas/DPR的app通过"
+      ],
+      "evidence": [
+        {
+          "path": "package.json",
+          "startLine": 8,
+          "endLine": 18,
+          "reason": "exports只有主模块",
+          "url": "https://github.com/oahc09/cocosairjs/blob/66d11fd0c3c189b7dfa6d20645222e237352f9f3/package.json#L8-L18"
+        },
+        {
+          "path": "skills/cocosair-math/references/quick-start.md",
+          "startLine": 1,
+          "endLine": 30,
+          "reason": "数学示例仍从主cocosair消费",
+          "url": "https://github.com/oahc09/cocosairjs/blob/66d11fd0c3c189b7dfa6d20645222e237352f9f3/skills/cocosair-math/references/quick-start.md#L1-L30"
+        }
+      ],
+      "remainingImpact": "纯CPU/Worker消费者仍需规避主入口初始化和快照分叉。",
+      "sourceIds": [
+        "WR-ENGINE-PROPOSAL-001"
+      ],
+      "implementation": "PENDING",
+      "verification": "NOT_RUN",
+      "pr": null,
+      "blocker": null
+    },
+    {
+      "id": "CI-APP-001",
+      "title": "按实际 draw 的几何语义选择原始 Shader 变体",
+      "status": "待验证",
+      "scope": "应用/迁移适配",
+      "priority": "P0",
+      "action": "采集每次实际 draw 的 CURRENT_PROGRAM、几何属性、skin/instance/morph/side 语义与精确 GLSL；选择器拒绝不匹配变体。保留全部模型和透明双面前后两次绘制，补充昼夜、雨天、关闭后处理等程序覆盖。",
+      "acceptance": [
+        "172 个真实 draw 均选中精确原始程序；不兼容补充候选被拒绝",
+        "普通船体、居民蒙皮和实例树木各用正确变体",
+        "HDR 抽样有限，原高画质岛屿、船、植被和海面可见",
+        "真实角色操作、地图、天气和多时段对照逐项验收，不以单个首帧替代"
+      ],
+      "evidence": [],
+      "remainingImpact": "场景结构、draw 数和零 JavaScript 错误并不能证明画面正确；此错误使完整世界经后处理变黑。",
+      "sourceIds": [
+        "CI-APP-001"
+      ],
+      "implementation": "PAUSED_PUBLICATION_BY_USER",
+      "verification": "NOT_CLOSED",
+      "pr": null,
+      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately."
+    },
+    {
+      "id": "APP-FOCUSED-KEYBOARD-001",
+      "title": "画布获得真实键盘焦点后，应用window冒泡热键被SDK目标监听阻断",
+      "status": "待验证",
+      "scope": "应用/迁移适配",
+      "priority": "P1",
+      "action": "对每个原应用保留callback语义：使用原生引擎input或仅canvas原事件capture桥接，其余目标保持bubble与文本控件stopPropagation；不clone/re-dispatch。补keyup/blur状态释放、pagehide/BFCache监听所有权。先补Stillwater真实焦点验收。",
+      "acceptance": [
+        "原生Tab确认activeElement=canvas和isTrusted，keydown触发一次、keyup释放状态。",
+        "原body/按钮行为及文本编辑/聊天隔离保持；Sun Space和前后位移目标条件同时覆盖canvas。",
+        "pagehide移除同一监听、BFCache恢复不重复注册，真实与合成生命周期区分。",
+        "各原应用和唯一SDK响应hash绑定真实浏览器/手机壳验收；Still/City未验范围保留。"
+      ],
+      "evidence": [
+        {
+          "path": "src/pal/input/web/keyboard-input.js",
+          "startLine": 44,
+          "endLine": 48,
+          "reason": "真实canvas目标绑定keydown/keyup，window bubble不能保证接收。",
+          "url": "https://github.com/oahc09/cocosairjs/blob/66d11fd0c3c189b7dfa6d20645222e237352f9f3/src/pal/input/web/keyboard-input.js#L44-L48"
+        },
+        {
+          "path": "src/pal/input/web/keyboard-input.js",
+          "startLine": 55,
+          "endLine": 73,
+          "reason": "目标事件stopPropagation/preventDefault；按repeat区分KEY_DOWN/KEY_PRESSING，KEY_UP发引擎事件。",
+          "url": "https://github.com/oahc09/cocosairjs/blob/66d11fd0c3c189b7dfa6d20645222e237352f9f3/src/pal/input/web/keyboard-input.js#L55-L73"
+        }
+      ],
+      "remainingImpact": "window冒泡热键在canvas真焦点后仍收不到属于应用接入问题。Stillwater尚欠实测，City整体视觉/上线不被输入通过覆盖；合成keyboard事件不能证明真实Tab焦点。",
+      "sourceIds": [
+        "APP-FOCUSED-KEYBOARD-001"
+      ],
+      "implementation": "PAUSED_PUBLICATION_BY_USER",
+      "verification": "NOT_CLOSED",
+      "pr": null,
+      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately."
+    },
+    {
+      "id": "MI-APP-001",
+      "title": "逗号并列 uniform 声明未反射到原生描述符",
+      "status": "待验证",
+      "scope": "应用/迁移适配",
+      "priority": "P1",
+      "action": "进入反射步骤前把逗号声明展开为独立uniform；将该测试加入应用辅助单元测试。",
+      "acceptance": [
+        "真实截图可见排线/纸纹/彩色光晕；纹理上传计数大于0；JS和console错误0。"
+      ],
+      "evidence": [],
+      "remainingImpact": "Uniform默认值为0，虽然WebGL不报错，画面完全错误。",
+      "sourceIds": [
+        "MI-APP-001"
+      ],
+      "implementation": "PAUSED_PUBLICATION_BY_USER",
+      "verification": "NOT_CLOSED",
+      "pr": null,
+      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately."
+    },
+    {
+      "id": "MI-APP-002",
+      "title": "移除复制的独立Vector/Matrix实现",
+      "status": "待验证",
+      "scope": "应用/迁移适配",
+      "priority": "P1",
+      "action": "Vector/Matrix改共享/shared/compat/air-math.js；GLB compose使用共享Quaternion；gfx MVP与normal matrix直接调用canonical CC.Mat4/Mat3。",
+      "acceptance": [
+        "应用无独立核心向量/矩阵算法；共享SDK/数学路径唯一；相机、GLB尺寸及法线经截图和数值复测。"
+      ],
+      "evidence": [],
+      "remainingImpact": "违反展览单一SDK数学边界，虽GPU完全使用Cocos gfx。",
+      "sourceIds": [
+        "MI-APP-002"
+      ],
+      "implementation": "PAUSED_PUBLICATION_BY_USER",
+      "verification": "NOT_CLOSED",
+      "pr": null,
+      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately."
+    },
+    {
+      "id": "MI-VOICE-COMPOSITING",
+      "title": "WebKit字幕动态blur合成出现页面进程崩溃",
+      "status": "待验证",
+      "scope": "应用/迁移适配",
+      "priority": "P1",
+      "action": "已去除字幕动态filter，保留320ms opacity交叉淡化、550ms逐词显现及400ms排版移位。新候选通过12次交叉切换、正常循环和完整交互；模糊核与原作存在披露差异。",
+      "acceptance": [
+        "最终opacity候选无page/console/HTTP错误；字体载入、真实.67/.94状态、首字Set、12次切换、手机旋转/页面返回均有收据。释放后应用原生资源0。"
+      ],
+      "evidence": [],
+      "remainingImpact": "完整SDK09c运行中，在.94高振幅切换字幕附近反复发生page crash。固定高度/独立层有过单次通过，但最后复现，不能视为修复。",
+      "sourceIds": [
+        "MI-VOICE-COMPOSITING"
+      ],
+      "implementation": "PAUSED_PUBLICATION_BY_USER",
+      "verification": "NOT_CLOSED",
+      "pr": null,
+      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately."
+    },
+    {
+      "id": "APP-AUDIO-STREAM-503",
+      "title": "共享音频 helper 非2xx流式错误响应未被取消",
+      "status": "待修复",
+      "scope": "应用/迁移适配",
+      "priority": "P2",
+      "action": "非2xx抛错前abort，再验证流式关闭、重试与22作加载回归。",
+      "acceptance": [
+        "非2xx先abort/取消body再传播失败",
+        "无限503流在cleanup后连接关闭，不仅active=0",
+        "重试与成功加载不回退",
+        "22作加载回归，真实浏览器证据另采"
+      ],
+      "evidence": [
+        {
+          "url": "https://cocosair-interactive-exhibition.oahc09.chatgpt.site/shared/playable50/audio-readiness.js",
+          "path": "site/audio-readiness.js",
+          "startLine": 88,
+          "endLine": 104,
+          "reason": "非2xx直接throw；finally删除controller但未abort"
+        }
+      ],
+      "remainingImpact": "失败后请求仍持续传输，active计数为0不能证明已释放。",
+      "sourceIds": [
+        "APP-AUDIO-STREAM-503"
+      ],
+      "implementation": "PAUSED_PUBLICATION_BY_USER",
+      "verification": "NOT_CLOSED",
+      "pr": null,
+      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately."
+    },
+    {
+      "id": "APP-GALLERY-MANIFEST-BACK",
+      "title": "目录未加载完成时立即返回触发manifest取消日志",
+      "status": "待修复",
+      "scope": "应用/迁移适配",
+      "priority": "P2",
+      "action": "为导航取消建立正常取消处理，独立验证立即后退与重新进入。",
+      "acceptance": [
+        "延迟manifest立即Back按导航取消处理，不记录未处理错误",
+        "重新进入可正常加载",
+        "真正网络错误仍可诊断，不被统一吞掉"
+      ],
+      "evidence": [
+        {
+          "url": "https://cocosair-interactive-exhibition.oahc09.chatgpt.site/assets/gallery.js",
+          "path": "site/gallery.js",
+          "startLine": 1,
+          "endLine": 1,
+          "reason": "manifest顶层await无取消处理"
+        },
+        {
+          "url": "https://cocosair-interactive-exhibition.oahc09.chatgpt.site/assets/gallery.js",
+          "path": "site/gallery.js",
+          "startLine": 15,
+          "endLine": 15,
+          "reason": "页面try/catch晚于manifest加载"
+        }
+      ],
+      "remainingImpact": "外层目录记录Load failed；不能记为作品渲染或SDK缺陷。",
+      "sourceIds": [
+        "APP-GALLERY-MANIFEST-BACK"
+      ],
+      "implementation": "PAUSED_PUBLICATION_BY_USER",
+      "verification": "NOT_CLOSED",
+      "pr": null,
+      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately."
+    },
+    {
+      "id": "APP-PUMPKIN-001",
+      "title": "实例化毛发示例与低帧率物理时间正确性",
+      "status": "待修复（应用范围）",
+      "scope": "应用/迁移适配",
+      "priority": "P2",
+      "action": "在作品内保持视觉/实例计数，优化共享索引和积分；不建立虚构引擎bug。",
+      "acceptance": [
+        "保持28壳/60000实例及15唯一顶点/72索引",
+        "真实指针释放回弹与真实dt分别观测",
+        "固定SDK且记录画面、帧间隔与根部折角"
+      ],
+      "evidence": [
+        {
+          "path": "skills/cocosair-performance/references/instancing.md",
+          "startLine": 1,
+          "endLine": 35,
+          "reason": "现有实例化合同只能用于应用优化设计",
+          "url": "https://github.com/oahc09/cocosairjs/blob/66d11fd0c3c189b7dfa6d20645222e237352f9f3/skills/cocosair-performance/references/instancing.md#L1-L35"
+        }
+      ],
+      "remainingImpact": "近根折角、真实低帧率积分及作品性能仍待应用层验收。",
+      "sourceIds": [
+        "APP-PUMPKIN-001"
+      ],
+      "implementation": "PAUSED_PUBLICATION_BY_USER",
+      "verification": "NOT_CLOSED",
+      "pr": null,
+      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately."
+    },
+    {
+      "id": "CITY-MIG-008",
+      "title": "TSL全屏与共享材质的几何缓存身份",
+      "status": "待验证",
+      "scope": "应用/迁移适配",
+      "priority": "P2",
+      "action": "CPU source audit confirms geometry.id cache isolation; next GPU must show no wrong-count/index/instanced-buffer errors.",
+      "acceptance": [
+        "CPU source audit confirms geometry.id cache isolation; next GPU must show no wrong-count/index/instanced-buffer errors."
+      ],
+      "evidence": [],
+      "remainingImpact": "Exception for attribute-free stage or wrong source geometry/count for later meshes.",
+      "sourceIds": [
+        "CITY-MIG-008"
+      ],
+      "implementation": "PAUSED_PUBLICATION_BY_USER",
+      "verification": "NOT_CLOSED",
+      "pr": null,
+      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately."
+    },
+    {
+      "id": "CITY-MIG-009",
+      "title": "TSL动态UBO与sampler逻辑binding冲突",
+      "status": "待验证",
+      "scope": "应用/迁移适配",
+      "priority": "P2",
+      "action": "No logical collision; every sampler physical index within device cap; all original passes run visibly. SDK diagnostic itself worked correctly.",
+      "acceptance": [
+        "No logical collision; every sampler physical index within device cap; all original passes run visibly. SDK diagnostic itself worked correctly."
+      ],
+      "evidence": [],
+      "remainingImpact": "Full original SSGI/TRAA pipeline stops before first visible native city.",
+      "sourceIds": [
+        "CITY-MIG-009"
+      ],
+      "implementation": "PAUSED_PUBLICATION_BY_USER",
+      "verification": "NOT_CLOSED",
+      "pr": null,
+      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately."
+    },
+    {
+      "id": "CITY-MIG-013",
+      "title": "嵌套TSL Pass必须恢复NodeFrame上下文",
+      "status": "待验证",
+      "scope": "应用/迁移适配",
+      "priority": "P2",
+      "action": "实际原NodeFrame与实际adapter方法的CPU递归夹具：nested/outer/nested/outer顺序、四次独立render、最终renderId恢复0全部通过；仍待完整native画面。",
+      "acceptance": [
+        "实际原NodeFrame与实际adapter方法的CPU递归夹具：nested/outer/nested/outer顺序、四次独立render、最终renderId恢复0全部通过；仍待完整native画面。"
+      ],
+      "evidence": [],
+      "remainingImpact": "SSGI/TRAA等嵌套pass缓存与相机矩阵错配。",
+      "sourceIds": [
+        "CITY-MIG-013"
+      ],
+      "implementation": "PAUSED_PUBLICATION_BY_USER",
+      "verification": "NOT_CLOSED",
+      "pr": null,
+      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately."
+    },
+    {
+      "id": "CITY-MIG-015",
+      "title": "恢复原视锥剔除与首帧资源诊断",
+      "status": "待修复（应用范围）",
+      "scope": "应用/迁移适配",
+      "priority": "P2",
+      "action": "实际原GLSLNodeBuilder不同几何生成相同shader，原Frustum近处通过/远离屏拒绝CPU通过；GPU必须出现完整城市且保留资源与进程退出证据。 Round6完整native城市可见，无crash；39 exact-source cores/384 IA，峰值2837064 KiB。仍不把round4 crash单因归给某补丁。",
+      "acceptance": [
+        "实际原GLSLNodeBuilder不同几何生成相同shader，原Frustum近处通过/远离屏拒绝CPU通过；GPU必须出现完整城市且保留资源与进程退出证据。 Round6完整native城市可见，无crash；39 exact-source cores/384 IA，峰值2837064 KiB。仍不把round4 crash单因归给某补丁。"
+      ],
+      "evidence": [],
+      "remainingImpact": "额外离屏chunk被编译/上传，可能增加软件GPU资源压力；不能把browser crash直接归为SDK缺陷。",
+      "sourceIds": [
+        "CITY-MIG-015"
+      ],
+      "implementation": "PAUSED_PUBLICATION_BY_USER",
+      "verification": "NOT_CLOSED",
+      "pr": null,
+      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately."
+    },
+    {
+      "id": "CITY-MIG-017",
+      "title": "绘制状态不应持有整个TSL编译器图",
+      "status": "待修复（应用范围）",
+      "scope": "应用/迁移适配",
+      "priority": "P2",
+      "action": "实际_program+真实GLSLNodeBuilder十项CPU断言通过，两个几何一个shader/两个descriptor且无完整builder直持；下一GPU记录core/资源/RSS与真实城市首帧。 Round6完整native城市可见，无crash；39 exact-source cores/384 IA，峰值2837064 KiB。仍不把round4 crash单因归给某补丁。",
+      "acceptance": [
+        "实际_program+真实GLSLNodeBuilder十项CPU断言通过，两个几何一个shader/两个descriptor且无完整builder直持；下一GPU记录core/资源/RSS与真实城市首帧。 Round6完整native城市可见，无crash；39 exact-source cores/384 IA，峰值2837064 KiB。仍不把round4 crash单因归给某补丁。"
+      ],
+      "evidence": [],
+      "remainingImpact": "可能增加CPU堆及原生驱动首帧压力。现无RSS证据证明它是round4崩溃原因。",
+      "sourceIds": [
+        "CITY-MIG-017"
+      ],
+      "implementation": "PAUSED_PUBLICATION_BY_USER",
+      "verification": "NOT_CLOSED",
+      "pr": null,
+      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately."
+    },
+    {
+      "id": "INSEL-LIFECYCLE-019",
+      "title": "岛屿宿主退出、pagehide与重新打开的生命周期",
+      "status": "待验证",
+      "scope": "应用/迁移适配",
+      "priority": "P2",
+      "action": "28 CPU assertions and 17 native cloud WebKit assertions on SDK SHA76ad; real focus blur, Escape, AudioContext close, idempotent dispose, non-persisted pagehide, new iframe reopen and early startup exit. Persisted transitions are simulated event-contract checks, not real browser bfcache eligibility.",
+      "acceptance": [
+        "28 CPU assertions and 17 native cloud WebKit assertions on SDK SHA76ad; real focus blur, Escape, AudioContext close, idempotent dispose, non-persisted pagehide, new iframe reopen and early startup exit. Persisted transitions are simulated event-contract checks, not real browser bfcache eligibility."
+      ],
+      "evidence": [],
+      "remainingImpact": "28 CPU assertions and 17 native cloud WebKit assertions on SDK SHA76ad; real focus blur, Escape, AudioContext close, idempotent dispose, non-persisted pagehide, new iframe reopen and early startup exit. Persisted transitions are simulated event-contract checks, not real browser bfcache eligibility.",
+      "sourceIds": [
+        "INSEL-LIFECYCLE-019"
+      ],
+      "implementation": "PAUSED_PUBLICATION_BY_USER",
+      "verification": "NOT_CLOSED",
+      "pr": null,
+      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately."
+    },
+    {
+      "id": "MI-FAB-005",
+      "title": "植物网格顶点复用和实例化尚未达到原作规模效率",
+      "status": "待修复（应用范围）",
+      "scope": "应用/迁移适配",
+      "priority": "P2",
+      "action": "应用层为叶片/草丛/枝节建立几何模板和实例属性；使用Cocos gfx实例输入，保持种子和视觉，切换/导出时再合并。",
+      "acceptance": [
+        "相同视觉和植物数量下显存顶点字节显著减少；导出展开GLB仍有效；多次重建后native资源数稳定。"
+      ],
+      "evidence": [],
+      "remainingImpact": "本版逐植物展开几何，虽安装资产很小，运行时内存/生成成本高于原作共享实例模型。",
+      "sourceIds": [
+        "MI-FAB-005"
+      ],
+      "implementation": "PAUSED_PUBLICATION_BY_USER",
+      "verification": "NOT_CLOSED",
+      "pr": null,
+      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately."
+    },
+    {
+      "id": "MI-FAB-VISUAL-ROUND4",
+      "title": "多尺度草丛分布与原作仍有差异",
+      "status": "待修复（应用范围）",
+      "scope": "应用/迁移适配",
+      "priority": "P2",
+      "action": "进一步独立校准草叶曲率、植株分布与分物种材质；不复用原生成器或植物资产。",
+      "acceptance": [
+        "当前41预设及353参数/62专项检查通过；GPU六状态渲染通过，资源释放为0。"
+      ],
+      "evidence": [],
+      "remainingImpact": "Round3 大片中央裸土和周期性沟槽已改善；独立植物形态、位置和土壤覆盖仍非一比一。",
+      "sourceIds": [
+        "MI-FAB-VISUAL-ROUND4"
+      ],
+      "implementation": "PAUSED_PUBLICATION_BY_USER",
+      "verification": "NOT_CLOSED",
+      "pr": null,
+      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately."
+    },
+    {
+      "id": "MI-SKETCH-003",
+      "title": "笔触、轮廓与纸纹仍有限定残差",
+      "status": "待修复（应用范围）",
+      "scope": "应用/迁移适配",
+      "priority": "P2",
+      "action": "继续在相同end相机/显现值下校准轮廓随机扰动、阴影接触与原生着色器采样。",
+      "acceptance": [
+        "四种笔触在相同相机和显现参数下可辨识，颜色/轮廓/纸纹与洗墨交互正确；不能以动画不同阶段截图证明pixel-perfect。"
+      ],
+      "evidence": [],
+      "remainingImpact": "原5×7字形已替换为原作公开矢量轮廓的独立孔洞三角化；轮廓抖动、采样抗锯齿与阴影/纸张细节仍不是逐像素一致。",
+      "sourceIds": [
+        "MI-SKETCH-003"
+      ],
+      "implementation": "PAUSED_PUBLICATION_BY_USER",
+      "verification": "NOT_CLOSED",
+      "pr": null,
+      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately."
+    },
+    {
+      "id": "MI-SKETCH-009",
+      "title": "补齐模型与镜头编辑",
+      "status": "待验证",
+      "scope": "应用/迁移适配",
+      "priority": "P2",
+      "action": "主要可见编辑控件已实现；之后补穷举组合与轨迹逐帧误差量化。",
+      "acceptance": [
+        "真实DOM输入：Gravestone位置X=3.2、Y转角60°、统一scale=1.4；复位；camera end X=8、smooth curve、0.5s回放；有效JSON下载。"
+      ],
+      "evidence": [],
+      "remainingImpact": "已补独立模型墨色/变换、洗墨分项、纸与影参数、四控制点、直线/曲线、时长/缓动、视角记录和JSON导出。",
+      "sourceIds": [
+        "MI-SKETCH-009"
+      ],
+      "implementation": "PAUSED_PUBLICATION_BY_USER",
+      "verification": "NOT_CLOSED",
+      "pr": null,
+      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately."
+    },
+    {
+      "id": "MI-VOICE-010",
+      "title": "同强度下光雾/弯曲亮带为独立GPU近似",
+      "status": "待修复（应用范围）",
+      "scope": "应用/迁移适配",
+      "priority": "P2",
+      "action": "以同一显示强度/phase继续校准band mask、色散和模糊；不把不同phase帧或runtime0error当视觉通过。",
+      "acceptance": [
+        "两端记录的显示level差<.002；可见向上扩散光雾与真实native亮带；麦克风请求0。"
+      ],
+      "evidence": [],
+      "remainingImpact": "已补非线性映射、0.325s/0.86s平滑、mobile reach/height、漂移与弯曲亮带；原CSS/Canvas合成与本版native GPU的颜色分布/柔化仍不同。",
+      "sourceIds": [
+        "MI-VOICE-010"
+      ],
+      "implementation": "PAUSED_PUBLICATION_BY_USER",
+      "verification": "NOT_CLOSED",
+      "pr": null,
+      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately."
+    },
+    {
+      "id": "STILLWATER-APP-006",
+      "title": "紧凑数字mat3数组不能用std140目标步长读源值",
+      "status": "待修复（应用范围）",
+      "scope": "应用/迁移适配",
+      "priority": "P2",
+      "action": "Apply smallest source-contract correction with focused regression tests after locked scene diagnostic baseline. Do not attribute unrelated NaN without actual-use evidence.",
+      "acceptance": [
+        "Focused contract reproducer passes and full actual scene preserves geometry/material behavior."
+      ],
+      "evidence": [],
+      "remainingImpact": "Potential wrong matrices for packed mat3[] uniforms, not established as the current black-output cause.",
+      "sourceIds": [
+        "STILLWATER-APP-006"
+      ],
+      "implementation": "PAUSED_PUBLICATION_BY_USER",
+      "verification": "NOT_CLOSED",
+      "pr": null,
+      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately."
+    },
+    {
+      "id": "STILLWATER-APP-007",
+      "title": "替换同名BufferAttribute时必须更新实际绑定",
+      "status": "待验证",
+      "scope": "应用/迁移适配",
+      "priority": "P2",
+      "action": "Interleaved layout tracks actual attribute identity/count/size/normalization/rate. Geometry input assembler rebinds when shared pack, source index buffer, source array or instance buffers change. Focused CPU replacement and cross-mesh-sharing contracts pass.",
+      "acceptance": [
+        "Focused contract reproducer passes and full actual scene preserves geometry/material behavior."
+      ],
+      "evidence": [],
+      "remainingImpact": "Potential stale vertex data after attribute-object replacement; not established as current black-output cause.",
+      "sourceIds": [
+        "STILLWATER-APP-007"
+      ],
+      "implementation": "PAUSED_PUBLICATION_BY_USER",
+      "verification": "NOT_CLOSED",
+      "pr": null,
+      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately."
+    },
+    {
+      "id": "STILLWATER-APP-008",
+      "title": "Transmission材质捕获目标的适配合同仍需完善",
+      "status": "待修复（应用范围）",
+      "scope": "应用/迁移适配",
+      "priority": "P2",
+      "action": "Apply smallest source-contract correction with focused regression tests after locked scene diagnostic baseline. Do not attribute unrelated NaN without actual-use evidence.",
+      "acceptance": [
+        "Focused contract reproducer passes and full actual scene preserves geometry/material behavior."
+      ],
+      "evidence": [],
+      "remainingImpact": "Unimplemented general transmission input contract; actual scene impact unconfirmed.",
+      "sourceIds": [
+        "STILLWATER-APP-008"
+      ],
+      "implementation": "PAUSED_PUBLICATION_BY_USER",
+      "verification": "NOT_CLOSED",
+      "pr": null,
+      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately."
+    },
+    {
+      "id": "STILLWATER-APP-009",
+      "title": "零活动实例不能降级为一次普通绘制",
+      "status": "待验证",
+      "scope": "应用/迁移适配",
+      "priority": "P2",
+      "action": "Actual native _draw skips count0 instanced submissions while keeping ordinary/nonzero instancing unchanged. Current complete first frame passed; dynamic particle/visitor reactivation remains in main interaction coverage.",
+      "acceptance": [
+        "CPU guard cases pass; full GPU records no submitted zero-instance draws and nonzero instances retain original count. Visual impact separately verified."
+      ],
+      "evidence": [],
+      "remainingImpact": "May draw inactive particle/visitor geometry once. Not established as cause of remaining final-canvas black output.",
+      "sourceIds": [
+        "STILLWATER-APP-009"
+      ],
+      "implementation": "PAUSED_PUBLICATION_BY_USER",
+      "verification": "NOT_CLOSED",
+      "pr": null,
+      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately."
+    },
+    {
+      "id": "STILLWATER-APP-010",
+      "title": "数字clearColor必须遵循原sRGB到线性转换",
+      "status": "待验证",
+      "scope": "应用/迁移适配",
+      "priority": "P2",
+      "action": "Actual NativeRenderer setter delegates unchanged original Color.set before base native upload. Five source-color CPU cases pass; full observed High first frame all targets finite and visible.",
+      "acceptance": [
+        "Hex,Color-object,black/white and clearalpha CPU tests match original Color.set; focused native readback verifies equivalent linear values."
+      ],
+      "evidence": [],
+      "remainingImpact": "Wrong clear-color radiometry. Whole-image GTAO remains finite; not attributed to current scene NaN/black output.",
+      "sourceIds": [
+        "STILLWATER-APP-010"
+      ],
+      "implementation": "PAUSED_PUBLICATION_BY_USER",
+      "verification": "NOT_CLOSED",
+      "pr": null,
+      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately."
+    },
+    {
+      "id": "WR-APP-001",
+      "title": "将原直接WebGL水面双pass移植为cc.gfx，保持程序纹理和混合语义",
+      "status": "待验证",
+      "scope": "应用/迁移适配",
+      "priority": "P2",
+      "action": "用cc.gfx Shader/UBO/DescriptorSet/RenderTarget执行原shader；对离屏Canvas生成的纹理正确预乘alpha并缓存尺寸。",
+      "acceptance": [
+        "与原作固定viewport/seed/time对照",
+        "2个native shader，2 pass/frame，无应用WebGL context",
+        "四时段、投喂、水花、天鹅状态均保留"
+      ],
+      "evidence": [],
+      "remainingImpact": "漏掉预乘alpha、源纹理坐标、动态尺寸重建或油画pass会改变白天鹅边缘与水面效果。",
+      "sourceIds": [
+        "WR-APP-001"
+      ],
+      "implementation": "PAUSED_PUBLICATION_BY_USER",
+      "verification": "NOT_CLOSED",
+      "pr": null,
+      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately."
+    },
+    {
+      "id": "WR-APP-002",
+      "title": "原GLSL宏表达式数组转换为原生uniform块布局",
+      "status": "待验证",
+      "scope": "应用/迁移适配",
+      "priority": "P2",
+      "action": "根据真实uniform值的维度将声明长度解析成固定整数，保留原QUALITY1/2数量。",
+      "acceptance": [
+        "高/低品质均正确编译",
+        "浪头与脚印数据不丢失",
+        "固定相机的像素对照通过"
+      ],
+      "evidence": [],
+      "remainingImpact": "仅匹配数字数组长度的应用适配器不能提取uniform，波浪/脚印数据将缺失。",
+      "sourceIds": [
+        "WR-APP-002"
+      ],
+      "implementation": "PAUSED_PUBLICATION_BY_USER",
+      "verification": "NOT_CLOSED",
+      "pr": null,
+      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately."
+    },
+    {
+      "id": "WR-APP-003",
+      "title": "嵌入式池塘需container启动契约，禁止窗口尺寸撑大画布",
+      "status": "待验证",
+      "scope": "应用/迁移适配",
+      "priority": "P2",
+      "action": "先以#pond容器启动canonical bootstrap，再导入共享数学和应用；量测GameDiv、canvas CSS与drawing-buffer及各pass尺寸。",
+      "acceptance": [
+        "宿主CSS912×570且canvas同尺寸",
+        "水面RT638×399，输出912×570",
+        "同种子同时间三只天鹅位置正确",
+        "无视觉scale补偿"
+      ],
+      "evidence": [],
+      "remainingImpact": "模拟三只天鹅完全相同，但显示只剩两只，右侧/底部被裁掉。",
+      "sourceIds": [
+        "WR-APP-003"
+      ],
+      "implementation": "PAUSED_PUBLICATION_BY_USER",
+      "verification": "NOT_CLOSED",
+      "pr": null,
+      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately."
+    },
+    {
+      "id": "STILLWATER-ENV-005",
+      "title": "默认High在当前云WebKit出现79–83秒热帧，实时操作尚不可验收",
+      "status": "待验证",
+      "scope": "环境/权限/验证边界",
+      "priority": "P0",
+      "action": "保留完整几何、纹理与HDR效果，先以已验证的事件观察器完成最少真实输入并分别标记功能/可玩性；进一步取得同状态原后端对照和driver等待分类，避免盲改UBO或删效果掩盖瓶颈。",
+      "acceptance": [
+        "同一当前hash真实默认High可见画面与真实输入各自有证据",
+        "实际normal RAF及原controller，不加速时钟、不跳渲染",
+        "记录热帧与输入延迟，不把Begin或一次位移叫流畅可玩",
+        "底层GPU/driver与原后端同状态对照未证时保持未知",
+        "原Balanced必须通过原UI选择并单列效果变化，不能换称High验收"
+      ],
+      "evidence": [],
+      "remainingImpact": "事件在完整长帧期间排队，无法据当前证据认定实时可玩。原始参考整世界未完成同状态对照，因此不能把全部耗时归为Cocos、浏览器缺陷或软件驱动。",
+      "sourceIds": [
+        "STILLWATER-ENV-005"
+      ],
+      "implementation": "NO_ENGINE_FIX_JUSTIFIED",
+      "verification": "NOT_RUN",
+      "pr": null,
+      "blocker": "Requires original scene/reference/device or explicit permission; historical evidence cannot establish current acceptance."
+    },
+    {
+      "id": "ENV-001",
+      "title": "大型原世界与迁移世界的浏览器崩溃需要设备复核",
+      "status": "待验证",
+      "scope": "环境/权限/验证边界",
+      "priority": "P1",
+      "action": "保留全部资源与玩法，分帧 shader warmup、程序缓存去重并继续支持环境复测；记录正式品质选项、renderer、峰值资源、contextlost/pagecrash和实际可见帧。",
+      "acceptance": [
+        "原版与迁移版在同一可用设备、同视口与品质对照",
+        "完整地形及动态内容可见",
+        "主要玩法真实操作通过",
+        "没有把加载页或 draw 计数替代视觉验收"
+      ],
+      "evidence": [],
+      "remainingImpact": "这些环境结果不足以判定引擎缺陷，也不足以宣称完整高品质视觉一致。",
+      "sourceIds": [
+        "ENV-001"
+      ],
+      "implementation": "NO_ENGINE_FIX_JUSTIFIED",
+      "verification": "NOT_RUN",
+      "pr": null,
+      "blocker": "Requires original scene/reference/device or explicit permission; historical evidence cannot establish current acceptance."
+    },
+    {
+      "id": "ENV-ROOM-001",
+      "title": "生产房间的云端验证链存在发出请求前排队",
+      "status": "待验证",
+      "scope": "环境/权限/验证边界",
+      "priority": "P1",
+      "action": "维持既有客户端和原出站链，保留精简复现供进一步定位WebKit导航期间fetch观测差异；尚不能证明底层实现缺陷或告警无害。750ms生产负例仅在实际到达间隔满足前提时才能记通过，当前19606ms未命中。",
+      "acceptance": [
+        "两个独立浏览器自然加入并真实可见",
+        "断网期间发送方实际ACK后恢复接收方，历史/DOM一致",
+        "真实pagehide成功离场；所有测试参与者清理",
+        "已实测8人活跃时第9被拒、fresh cursor和幂等；750ms负例需实际命中时间窗",
+        "不能把环境链延迟归为引擎或D1缺陷，不能把重试后的通过称无重试网络可靠"
+      ],
+      "evidence": [],
+      "remainingImpact": "多人综合25/26通过，断网后的服务器ACK、接收端历史/在线恢复与两次leave200均有证据。后续单端自然导航7/8：导航+18ms报poll访问控制标签错误，+190ms发生pagehide，实际API全200、导航期间无join、leave200后参与者0。纯DOM同源500ms轮询也在导航与pagehide之间复现同类pageerror。历史失败保留。",
+      "sourceIds": [
+        "ENV-ROOM-001"
+      ],
+      "implementation": "NO_ENGINE_FIX_JUSTIFIED",
+      "verification": "NOT_RUN",
+      "pr": null,
+      "blocker": "Requires original scene/reference/device or explicit permission; historical evidence cannot establish current acceptance."
+    },
+    {
+      "id": "CITY-ENV-010",
+      "title": "11张原广告牌纹理受原站Cloudflare拒绝",
+      "status": "待验证",
+      "scope": "环境/权限/验证边界",
+      "priority": "P2",
+      "action": "All twelve exact original image assets have verified source/byte receipts, or missing eleven remain prominently disclosed as unverified visual scope.",
+      "acceptance": [
+        "All twelve exact original image assets have verified source/byte receipts, or missing eleven remain prominently disclosed as unverified visual scope."
+      ],
+      "evidence": [],
+      "remainingImpact": "Only ai-office original poster bytes available locally; eleven source billboard textures missing. Source-authored gradient/loading fallback remains, with no invented substitute.",
+      "sourceIds": [
+        "CITY-ENV-010"
+      ],
+      "implementation": "NO_ENGINE_FIX_JUSTIFIED",
+      "verification": "NOT_RUN",
+      "pr": null,
+      "blocker": "Requires original scene/reference/device or explicit permission; historical evidence cannot establish current acceptance."
+    },
+    {
+      "id": "CITY-REF-001",
+      "title": "原站在当前WebKit只有雾屏，缺少有效城市对照",
+      "status": "待验证",
+      "scope": "环境/权限/验证边界",
+      "priority": "P2",
+      "action": "Reference screenshot shows original city geometry under documented quality/time/view state; matching local state inspected.",
+      "acceptance": [
+        "Reference screenshot shows original city geometry under documented quality/time/view state; matching local state inspected."
+      ],
+      "evidence": [],
+      "remainingImpact": "Cannot yet use the original screenshot as a valid city visual baseline.",
+      "sourceIds": [
+        "CITY-REF-001"
+      ],
+      "implementation": "NO_ENGINE_FIX_JUSTIFIED",
+      "verification": "NOT_RUN",
+      "pr": null,
+      "blocker": "Requires original scene/reference/device or explicit permission; historical evidence cannot establish current acceptance."
+    },
+    {
+      "id": "HIST-PLAYABLE12-AUDIO",
+      "title": "Playable12自然EOS与重播历史产品失败",
+      "status": "待验证",
+      "scope": "环境/权限/验证边界",
+      "priority": "P2",
+      "action": "保留旧版本证据，在升级候选当前main上建立最小复现再归因。",
+      "acceptance": [
+        "保留旧版本证据，在升级候选当前main上建立最小复现再归因。",
+        "固定应用及SDK哈希，保留正负控、真实输入与可见结果；不将同名API存在当作现场关闭。"
+      ],
+      "evidence": [],
+      "remainingImpact": "旧版本真实三轮失败/跳过仍保留；尚未证明当前main的SDK根因。",
+      "sourceIds": [
+        "HIST-PLAYABLE12-AUDIO"
+      ],
+      "implementation": "NO_ENGINE_FIX_JUSTIFIED",
+      "verification": "NOT_RUN",
+      "pr": null,
+      "blocker": "Requires original scene/reference/device or explicit permission; historical evidence cannot establish current acceptance."
+    },
+    {
+      "id": "HIST-TOUCH-CANCEL",
+      "title": "无引擎WebKit touchCancel后click受抑制",
+      "status": "待验证",
+      "scope": "环境/权限/验证边界",
+      "priority": "P2",
+      "action": "按原报告负例及当前精确版本独立复核。",
+      "acceptance": [
+        "按原报告负例及当前精确版本独立复核。",
+        "固定应用及SDK哈希，保留正负控、真实输入与可见结果；不将同名API存在当作现场关闭。"
+      ],
+      "evidence": [],
+      "remainingImpact": "互动08无引擎DPR1/2对照有可信touchstart/end但无新增click；不能归为SDK bug或泛化物理设备。",
+      "sourceIds": [
+        "HIST-TOUCH-CANCEL"
+      ],
+      "implementation": "NO_ENGINE_FIX_JUSTIFIED",
+      "verification": "NOT_RUN",
+      "pr": null,
+      "blocker": "Requires original scene/reference/device or explicit permission; historical evidence cannot establish current acceptance."
+    },
+    {
+      "id": "MI-ENV-008",
+      "title": "跨浏览器、物理触屏与上下文丢失恢复待验证",
+      "status": "待验证",
+      "scope": "环境/权限/验证边界",
+      "priority": "P2",
+      "action": "在下一可用浏览器窗口补Chromium；真机测试多指；验证上下文丢失告警与用户重载流程及释放回执。",
+      "acceptance": [
+        "截图/交互/资源计数证据明确区分已通过与未运行项目。"
+      ],
+      "evidence": [],
+      "remainingImpact": "不能把Headless WebKit通过等同所有GPU/终端通过，不能把资源销毁称为GPU零泄漏。",
+      "sourceIds": [
+        "MI-ENV-008"
+      ],
+      "implementation": "NO_ENGINE_FIX_JUSTIFIED",
+      "verification": "NOT_RUN",
+      "pr": null,
+      "blocker": "Requires original scene/reference/device or explicit permission; historical evidence cannot establish current acceptance."
+    },
+    {
+      "id": "MI-VOICE-006",
+      "title": "真实麦克风采集未在自动测试中授权",
+      "status": "待验证",
+      "scope": "环境/权限/验证边界",
+      "priority": "P2",
+      "action": "由用户主动点击Enable local microphone并完成浏览器授权后验证；无需外部服务、录音或上传。",
+      "acceptance": [
+        "用户授权后本地RMS驱动光晕；拒绝保持演示可用；切换Source、Pause、离开页面与隐藏标签时停止tracks；请求计数0为本轮测试硬边界。"
+      ],
+      "evidence": [],
+      "remainingImpact": "自动验证覆盖同意弹窗、取消、演示与形态切换，不代表真实设备麦克风权限/采集已通过。",
+      "sourceIds": [
+        "MI-VOICE-006"
+      ],
+      "implementation": "NO_ENGINE_FIX_JUSTIFIED",
+      "verification": "NOT_RUN",
+      "pr": null,
+      "blocker": "Requires original scene/reference/device or explicit permission; historical evidence cannot establish current acceptance."
+    },
+    {
+      "id": "STILLWATER-ENV-004",
+      "title": "退化AO UV采样在两个后端均产生非有限值",
+      "status": "待验证",
+      "scope": "环境/权限/验证边界",
+      "priority": "P2",
+      "action": "历史分段阶段：Whole-geometry constant-UV LOD0 is float-exact to the finite control on both backends and reduces full world main NaN53→12. Remaining draw115 New growth has192 varying-UV and3872 constant-UV triangles. Candidate segments original ordered index range into two draws, leaving varying triangles and all sampler settings unchanged; only proven constant primitives receive LOD0. Underlying platform/derivative root cause is not established.",
+      "acceptance": [
+        "历史 app163a / SDK76ad 验收范围：Leaf and mixed-UV New growth controls are pixel-float exact on both renderers. Final76ad complete High first frame has all recorded render-target pixels finite and a visible complete island. Source whole-world parity, normal RAF and main interactions remain pending."
+      ],
+      "evidence": [],
+      "remainingImpact": "Sparse AO NaN spreads through the main scene and bloom to the black final canvas. The controlled replay isolates this environment sampling behavior; it does not prove original full-world visual parity.",
+      "sourceIds": [
+        "STILLWATER-ENV-004"
+      ],
+      "implementation": "NO_ENGINE_FIX_JUSTIFIED",
+      "verification": "NOT_RUN",
+      "pr": null,
+      "blocker": "Requires original scene/reference/device or explicit permission; historical evidence cannot establish current acceptance."
+    },
+    {
+      "id": "TEST-SPARK-INJECTION",
+      "title": "Spark全量网络拦截/Worker包装导致审计启动异常",
+      "status": "待验证",
+      "scope": "环境/权限/验证边界",
+      "priority": "P2",
+      "action": "保留旧f70哈希边界，当前运行另看当前报告。",
+      "acceptance": [
+        "保留旧f70哈希边界，当前运行另看当前报告。",
+        "固定应用及SDK哈希，保留正负控、真实输入与可见结果；不将同名API存在当作现场关闭。"
+      ],
+      "evidence": [],
+      "remainingImpact": "审计draw=0不等于作品或SDK失败。",
+      "sourceIds": [
+        "TEST-SPARK-INJECTION"
+      ],
+      "implementation": "NO_ENGINE_FIX_JUSTIFIED",
+      "verification": "NOT_RUN",
+      "pr": null,
+      "blocker": "Requires original scene/reference/device or explicit permission; historical evidence cannot establish current acceptance."
+    },
+    {
+      "id": "WR-ENV-001",
+      "title": "跨设备GPU耗时查询与原自动分辨率控制",
+      "status": "待验证",
+      "scope": "环境/权限/验证边界",
+      "priority": "P2",
+      "action": "评估cc.gfx公开异步GPU时间戳能力与查询生命周期，再将原governor接上；无支持设备使用原CPU回退。",
+      "acceptance": [
+        "支持设备能异步返回GPU耗时",
+        "不阻塞主线程",
+        "不支持设备稳定回退",
+        "上下文丢失后查询释放"
+      ],
+      "evidence": [],
+      "remainingImpact": "当前保留原CPU帧耗时回退，真实设备GPU计时未验证，不能把云端软件渲染耗时当成引擎性能。",
+      "sourceIds": [
+        "WR-ENV-001"
+      ],
+      "implementation": "NO_ENGINE_FIX_JUSTIFIED",
+      "verification": "NOT_RUN",
+      "pr": null,
+      "blocker": "Requires original scene/reference/device or explicit permission; historical evidence cannot establish current acceptance."
+    },
+    {
+      "id": "WR-QA-001",
+      "title": "固定RAF对照必须同时控制CSS淡入和真实GPU画面提交",
+      "status": "待验证",
+      "scope": "环境/权限/验证边界",
+      "priority": "P2",
+      "action": "共享截图夹具同时固定模拟时钟并显式等待真实paint；记录实际shader uniform，而非只看菜单state。",
+      "acceptance": [
+        "可见海岸与海浪",
+        "步行/脚印/蹲下/天空有真实前后截图",
+        "固定条件与原版量化比较"
+      ],
+      "evidence": [],
+      "remainingImpact": "禁用同一CSS淡入并在同一模拟时刻step(0)+原生RAF提交后，五阶段源/复刻uniform一致，MAE均低于0.24/255；此前灰屏/晚景落后一档不属于产品渲染bug。",
+      "sourceIds": [
+        "WR-QA-001"
+      ],
+      "implementation": "NO_ENGINE_FIX_JUSTIFIED",
+      "verification": "NOT_RUN",
+      "pr": null,
+      "blocker": "Requires original scene/reference/device or explicit permission; historical evidence cannot establish current acceptance."
+    },
+    {
+      "id": "MI-ENV-011",
+      "title": "原Voice最终参考页出现一条502资源警告",
+      "status": "待验证",
+      "scope": "环境/权限/验证边界",
+      "priority": "P3",
+      "action": "未来参考采集加入response/requestfailed URL记录，以区分图形必需资产和附属服务。",
+      "acceptance": [
+        "不得把原参考这一轮标为console0或猜测502来源。"
+      ],
+      "evidence": [],
+      "remainingImpact": "原站光晕实际渲染且两档CSS level精确等于.670/.940；参考页面不是全网络无错。副本本地page/console0。",
+      "sourceIds": [
+        "MI-ENV-011"
+      ],
+      "implementation": "NO_ENGINE_FIX_JUSTIFIED",
+      "verification": "NOT_RUN",
+      "pr": null,
+      "blocker": "Requires original scene/reference/device or explicit permission; historical evidence cannot establish current acceptance."
+    }
+  ]
+}
