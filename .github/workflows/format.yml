@@ -55,7 +55,6 @@ jobs:
       - name: Run focused core regressions
         run: |
           set -euo pipefail
-          node --test tools/verify/browser-runtime-stop-phases.test.cjs 2>&1 | tee "$RUNNER_TEMP/core-cpu/stop-phases.log"
           node --test tools/verify/shaders-holographic-rotation.test.cjs 2>&1 | tee "$RUNNER_TEMP/core-cpu/rotation.log"
           node --test tools/verify/example-asset-lifecycle.test.cjs 2>&1 | tee "$RUNNER_TEMP/core-cpu/asset-lifecycle.log"
           node --test tools/verify/example-evidence-status.test.cjs 2>&1 | tee "$RUNNER_TEMP/core-cpu/status-admission.log"

@@ -17,7 +17,6 @@ const { serveStaticFile } = require('../../verify/static-file-response.cjs');
 
 const REPO = path.resolve(__dirname, '..', '..', '..');
 const DEBUG_BUNDLE_CACHE = new Map();
-let nextStopDiagnosticId = 0;
 // esbuild 由调用方注入（本文件会被打包到临时目录，彼处 require 无法解析仓库依赖）。
 
 const BENCH_PRELUDE = `(async function(){
@@ -140,7 +139,6 @@ class BrowserRuntime {
             throw new Error('BrowserRuntime requires repo injection');
         }
         this.esbuild = esbuild;
-        this.stopDiagnosticId = ++nextStopDiagnosticId;
         this.REPO = repo;
         this.browserType = browserType || 'chromium';
         // browserLaunch 由调用方显式给出时整体接管 executablePath/args（三引擎铺开用）。
@@ -671,42 +669,21 @@ class BrowserRuntime {
         this.normalStopRequested = true;
         ++this.generation;
         const errors = [];
-        const trace = (phase, state, error) => {
-            if (process.env.EXAMPLE_EVIDENCE_SUPERVISED === '1') {
-                console.error(
-                    JSON.stringify({
-                        kind: 'browser-runtime-stop-phase',
-                        phase,
-                        state,
-                        instanceId: this.stopDiagnosticId,
-                        monotonicMs: performance.now(),
-                        ...(error ? { errorName: error.name || 'Error' } : {}),
-                    }),
-                );
-            }
-        };
         try {
             if (this.context) {
-                trace('context', 'begin');
                 await this.context.close();
-                trace('context', 'end');
             }
         } catch (error) {
-            trace('context', 'error', error);
             errors.push(error);
         }
         try {
             if (this.browser) {
-                trace('browser', 'begin');
                 await this.browser.close();
-                trace('browser', 'end');
             }
         } catch (error) {
-            trace('browser', 'error', error);
             errors.push(error);
         }
         try {
-            trace('server', 'begin');
             await new Promise((resolve, reject) => {
                 if (!this.server) {
                     resolve();
@@ -715,9 +692,7 @@ class BrowserRuntime {
                 this.server.close((error) => (error ? reject(error) : resolve()));
                 this.server.closeAllConnections?.();
             });
-            trace('server', 'end');
         } catch (error) {
-            trace('server', 'error', error);
             errors.push(error);
         }
         this.context = this.browser = this.page = this.server = null;

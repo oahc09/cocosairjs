@@ -1,20 +1,22 @@
 # WebGL2 audit batch A
 
-## Correction after Spark integration
+This PR targets main after PR #5 was merged. It implements ENGINE-001/002/004/005: program recovery independent of PSO identity, exact stencil write-mask restoration, actual-stream vertex offsets and active-location limits, and scratch-blit attachment/buffer reset with external binding restoration.
 
-The first candidate's attribute-limit check incorrectly rejected reflected location -1 (`gl_InstanceID` in Chromium). Same-runner Spark A/B on run 39222443642 passed the frozen main engine and failed that candidate with repeated `WEBGL2_VERTEX_ATTRIBUTE_LIMIT` page errors. The corrected implementation treats -1 as no generic attribute slot in both validation and VAO/non-VAO binding, regardless of attribute name. Matrix/array limits and invalid stream checks remain enforced. Tests include built-in/inactive names and the final valid matrix location group. Focused source-command checks passed 14 cases with six negative controls against the old candidate; renewed WebKit command readbacks passed 11/11.
+## Integration correction
 
-The runtime from source 005ebacc (including its retained provenance) is SUPERSEDED and must not be used for acceptance or map import. Corrected source SHA-256 is `db6175d1559676295c039f7ca0894132271a171043cebbfeb587c9b27e1b0f6b`. A new exact-head build and same-runner Spark A/B are required before replacing every generated runtime/map. Existing historical receipts remain intact.
+The first candidate rejected reflected location -1 (`gl_InstanceID` in Chromium). Same-runner Spark A/B run 39222443642 passed frozen main and failed that candidate. The correction ignores -1 in validation and both VAO/non-VAO binding, regardless of name. Invalid streams and matrix location overflow remain errors. Built-in/inactive inputs and the last valid matrix slot have regression cases.
 
-This draft implements ENGINE-001, ENGINE-002, ENGINE-004 and ENGINE-005 only. It is stacked on PR #5, whose unrelated skills and CI fixes are a dependency, not part of this patch. Neither PR is to be merged automatically.
+## Verified results
 
-- Program recovery is independent of PSO identity, including IA/descriptor recovery without redundant program binds.
-- Stencil clears open partial front/back write masks and restore exact values.
-- Vertex offsets use the actual stream count, with explicit invalid-stream and hardware-location diagnostics.
-- Scratch blits detach prior color/depth/stencil attachments, choose read/draw buffers and restore external bindings. Empty regions are a no-op.
+- 20 new GFX cases plus 12 existing command contracts; complete focused Jest suite 148/148.
+- Renewed real WebKit command readbacks 11/11 against corrected source SHA-256 db6175d1559676295c039f7ca0894132271a171043cebbfeb587c9b27e1b0f6b.
+- Five real Chromium examples passed functional, pixel, resource and physical-close admission in runs 39223341041, 39224042838 and 39225297967.
+- Corrected Spark baseline/candidate A/B passed on the same runner (39224042812); neither produced page errors.
 
-Focused direct-import Jest cases are in `test/smoke/webgl2-state-audit.test.ts`; the pre-existing command contracts run alongside them in CI. CI checks out the exact source head, builds all runtime bundles/maps/declarations and retains a seven-day artifact with SHA-256 provenance. The resulting dev/min/maps must be reviewed and committed before this draft is considered complete.
+These are scoped smoke results, not complete device/application coverage. An earlier isolated shutdown timeout remains historical evidence; no timeout or threshold was relaxed. Temporary A/B and close-phase diagnostics are removed after validation.
 
-The earlier local session reported 20 CPU fixture cases, 28 combined Jest cases and 11 real WebKit command readbacks, including baseline negative controls. That execution environment was rolled back before its evidence was durably committed. The recovered source exactly matches its recorded SHA-256 (`d6932489deaa47178804a3f369cd40ccad93b77d8fad2be70e0a44596e0bbec8`), but those lost receipts are not claimed as current acceptance. Current CI and renewed browser observations are required.
+## Generated artifacts
 
-The 64-item ledger on the checkpoint branch separates engine, SDK, application and environment responsibility. Application patch submission remains paused at the user's request. Device, permission and missing-original-scene checks are not marked complete.
+All seven runtime outputs are from source e229ee13255f8f78284354f0f2e8ad2b69f504bf, build number 185, artifact 12172992282/run 39224042812. Dev/min and both original maps are committed; declarations match main byte-for-byte. Both maps' embedded GFX source hashes match the corrected source. The temporary map-import job wrote only the two allowed map paths, then its workflow and write permission were removed. Provenance and scoped validation receipts are in ai/ledgers/webgl2-audit-evidence/.
+
+The earlier 005ebacc runtime and receipts are superseded, retained only as history. The 64-item ledger preserves the 19 SDK partial stages; SDK continuation is a separate PR. Application patch submission remains paused. No automatic merge or deployment.

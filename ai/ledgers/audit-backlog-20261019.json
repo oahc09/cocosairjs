@@ -8,7 +8,7 @@
     {
       "id": "ENGINE-001",
       "title": "同一 PSO 下恢复被切换的 GL program",
-      "status": "已修复，最终CI待验",
+      "status": "已修复并通过范围内验收",
       "scope": "引擎源码",
       "priority": "P0",
       "action": "把shader/program一致性判断从仅PSO变化分支中独立出来；保持isShaderChanged与VAO/descriptor后续语义。",
@@ -32,19 +32,18 @@
         "ENGINE-001"
       ],
       "implementation": "IMPLEMENTED_PR6",
-      "verification": "16_NEW_PLUS_12_EXISTING_JEST_PASS; WEBKIT_COMMAND_READBACK_11_OF_11; BASELINE_4_OF_11; BUILD_AND_TYPES_PASS",
+      "verification": "20_NEW_PLUS_12_EXISTING_GFX_JEST; 148_TOTAL_JEST_PASS; WEBKIT_11_OF_11; FIVE_CHROMIUM_EXAMPLES_PASS; SPARK_BASELINE_CANDIDATE_PASS",
       "pr": "https://github.com/oahc09/cocosairjs/pull/6",
-      "blocker": "Final-head CI pending; hardware/device and original application scenes are not included in command-level acceptance.",
+      "blocker": "Final cleanup-head CI pending. Hardware/device and original application scenes are outside this command-level acceptance.",
       "verificationEvidence": [
-        "ai/ledgers/webgl2-audit-evidence/candidate-20261019.json",
-        "ai/ledgers/webgl2-audit-evidence/baseline-20261019.json",
-        "ai/ledgers/webgl2-audit-evidence/runtime-build-005ebacc.json"
+        "ai/ledgers/webgl2-audit-evidence/runtime-provenance-e229ee13.json",
+        "ai/ledgers/webgl2-audit-evidence/final-validation.json"
       ]
     },
     {
       "id": "ENGINE-002",
       "title": "Stencil clear 前解除非零部分写掩码并恢复",
-      "status": "已修复，最终CI待验",
+      "status": "已修复并通过范围内验收",
       "scope": "引擎源码",
       "priority": "P0",
       "action": "clear前保存front/back原写掩码，把所有非全写掩码放开；clear后精确恢复原值。",
@@ -75,19 +74,18 @@
         "ENGINE-002"
       ],
       "implementation": "IMPLEMENTED_PR6",
-      "verification": "16_NEW_PLUS_12_EXISTING_JEST_PASS; WEBKIT_COMMAND_READBACK_11_OF_11; BASELINE_4_OF_11; BUILD_AND_TYPES_PASS",
+      "verification": "20_NEW_PLUS_12_EXISTING_GFX_JEST; 148_TOTAL_JEST_PASS; WEBKIT_11_OF_11; FIVE_CHROMIUM_EXAMPLES_PASS; SPARK_BASELINE_CANDIDATE_PASS",
       "pr": "https://github.com/oahc09/cocosairjs/pull/6",
-      "blocker": "Final-head CI pending; hardware/device and original application scenes are not included in command-level acceptance.",
+      "blocker": "Final cleanup-head CI pending. Hardware/device and original application scenes are outside this command-level acceptance.",
       "verificationEvidence": [
-        "ai/ledgers/webgl2-audit-evidence/candidate-20261019.json",
-        "ai/ledgers/webgl2-audit-evidence/baseline-20261019.json",
-        "ai/ledgers/webgl2-audit-evidence/runtime-build-005ebacc.json"
+        "ai/ledgers/webgl2-audit-evidence/runtime-provenance-e229ee13.json",
+        "ai/ledgers/webgl2-audit-evidence/final-validation.json"
       ]
     },
     {
       "id": "ENGINE-004",
       "title": "InputAssembler 超过8个顶点流时产生未校验的 NaN offset",
-      "status": "已修复，最终CI待验",
+      "status": "已修复并通过范围内验收",
       "scope": "引擎源码",
       "priority": "P0",
       "action": "按实际vertexBuffers数初始化offset；校验stream为有效整数且buffer存在，非法输入给稳定错误；按实际硬件attribute上限检查。",
@@ -118,19 +116,18 @@
         "ENGINE-004"
       ],
       "implementation": "IMPLEMENTED_PR6",
-      "verification": "16_NEW_PLUS_12_EXISTING_JEST_PASS; WEBKIT_COMMAND_READBACK_11_OF_11; BASELINE_4_OF_11; BUILD_AND_TYPES_PASS",
+      "verification": "20_NEW_PLUS_12_EXISTING_GFX_JEST; 148_TOTAL_JEST_PASS; WEBKIT_11_OF_11; FIVE_CHROMIUM_EXAMPLES_PASS; SPARK_BASELINE_CANDIDATE_PASS",
       "pr": "https://github.com/oahc09/cocosairjs/pull/6",
-      "blocker": "Final-head CI pending; hardware/device and original application scenes are not included in command-level acceptance.",
+      "blocker": "Final cleanup-head CI pending. Hardware/device and original application scenes are outside this command-level acceptance.",
       "verificationEvidence": [
-        "ai/ledgers/webgl2-audit-evidence/candidate-20261019.json",
-        "ai/ledgers/webgl2-audit-evidence/baseline-20261019.json",
-        "ai/ledgers/webgl2-audit-evidence/runtime-build-005ebacc.json"
+        "ai/ledgers/webgl2-audit-evidence/runtime-provenance-e229ee13.json",
+        "ai/ledgers/webgl2-audit-evidence/final-validation.json"
       ]
     },
     {
       "id": "ENGINE-005",
       "title": "Blit临时framebuffer复用前清理残留color/depth/stencil附件",
-      "status": "已修复，最终CI待验",
+      "status": "已修复并通过范围内验收",
       "scope": "引擎源码",
       "priority": "P0",
       "action": "在复用scratch FBO前清除旧color/depth/stencil/combined附件与相应buffer状态，覆盖texture/renderbuffer交替；恢复外部READ/DRAW缓存。",
@@ -161,19 +158,18 @@
         "ENGINE-005"
       ],
       "implementation": "IMPLEMENTED_PR6",
-      "verification": "16_NEW_PLUS_12_EXISTING_JEST_PASS; WEBKIT_COMMAND_READBACK_11_OF_11; BASELINE_4_OF_11; BUILD_AND_TYPES_PASS",
+      "verification": "20_NEW_PLUS_12_EXISTING_GFX_JEST; 148_TOTAL_JEST_PASS; WEBKIT_11_OF_11; FIVE_CHROMIUM_EXAMPLES_PASS; SPARK_BASELINE_CANDIDATE_PASS",
       "pr": "https://github.com/oahc09/cocosairjs/pull/6",
-      "blocker": "Final-head CI pending; hardware/device and original application scenes are not included in command-level acceptance.",
+      "blocker": "Final cleanup-head CI pending. Hardware/device and original application scenes are outside this command-level acceptance.",
       "verificationEvidence": [
-        "ai/ledgers/webgl2-audit-evidence/candidate-20261019.json",
-        "ai/ledgers/webgl2-audit-evidence/baseline-20261019.json",
-        "ai/ledgers/webgl2-audit-evidence/runtime-build-005ebacc.json"
+        "ai/ledgers/webgl2-audit-evidence/runtime-provenance-e229ee13.json",
+        "ai/ledgers/webgl2-audit-evidence/final-validation.json"
       ]
     },
     {
       "id": "REUSE-002",
       "title": "为复杂GLSL适配提供可验证的声明反射与ShaderInfo示例",
-      "status": "待修复",
+      "status": "实现草稿，部分验收通过",
       "scope": "SDK示例/文档/工具",
       "priority": "P1",
       "action": "复用现有预检，增加原shader fixture和声明/布局差分；不要另造宽泛渲染框架。",
@@ -201,10 +197,12 @@
       "sourceIds": [
         "REUSE-002"
       ],
-      "implementation": "PENDING",
-      "verification": "NOT_RUN",
+      "implementation": "IMPLEMENTED_CPU_VERIFIED",
+      "verification": "GLSL3/4 source-positioned rejection and reflection checks pass in 33-case recipe suite.",
       "pr": null,
-      "blocker": null
+      "blocker": "Original shader per-pass browser readback and visual reference pending.",
+      "checkpoint": "https://github.com/oahc09/cocosairjs/tree/fix/audit-sdk-recipes-20261019",
+      "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a"
     },
     {
       "id": "NEW8-API-INPUT-FOCUS",
@@ -245,15 +243,17 @@
       "sourceIds": [
         "NEW8-API-INPUT-FOCUS"
       ],
-      "implementation": "PENDING",
-      "verification": "NOT_RUN",
+      "implementation": "PENDING_BROWSER_VALIDATION",
+      "verification": "Existing API/example reuse identified; no fresh browser acceptance.",
       "pr": null,
-      "blocker": null
+      "blocker": "Real focus/editable/blur/exit/reentry matrix pending.",
+      "checkpoint": "https://github.com/oahc09/cocosairjs/tree/fix/audit-sdk-recipes-20261019",
+      "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a"
     },
     {
       "id": "NEW8-API-LIFECYCLE-RECIPE",
       "title": "原生应用异步生命周期与上下文恢复 Recipe",
-      "status": "待修复",
+      "status": "实现草稿，部分验收通过",
       "scope": "SDK示例/文档/工具",
       "priority": "P2",
       "action": "补一个复用既有session/close/contextHealth的组合示例；只做reload或重新创建的明确路径。",
@@ -290,15 +290,17 @@
       "sourceIds": [
         "NEW8-API-LIFECYCLE-RECIPE"
       ],
-      "implementation": "PENDING",
-      "verification": "NOT_RUN",
+      "implementation": "IMPLEMENTED_CPU_VERIFIED",
+      "verification": "Concurrent audio/GPU close, cancellation, context-loss input disabling tested using actual session scope; GPU/app stand-ins.",
       "pr": null,
-      "blocker": null
+      "blocker": "Manual page local draft; real browser lifecycle/context-loss acceptance pending.",
+      "checkpoint": "https://github.com/oahc09/cocosairjs/tree/fix/audit-sdk-recipes-20261019",
+      "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a"
     },
     {
       "id": "NEW8-API-MATERIAL-CONTRACT",
       "title": "自定义 EffectAsset 的颜色与Shader合同示例",
-      "status": "待修复",
+      "status": "部分工作，待验收",
       "scope": "SDK示例/文档/工具",
       "priority": "P2",
       "action": "扩展既有HDR/effect fixture，不重写EffectAsset/渲染框架。",
@@ -327,15 +329,17 @@
       "sourceIds": [
         "NEW8-API-MATERIAL-CONTRACT"
       ],
-      "implementation": "PENDING",
-      "verification": "NOT_RUN",
+      "implementation": "LOCAL_DRAFT_UNVERIFIED",
+      "verification": "Local color-input EffectAsset/manual page drafts; not in remote B checkpoint.",
       "pr": null,
-      "blocker": null
+      "blocker": "Three color paths, shader targets and actual pixel/screenshot acceptance pending.",
+      "checkpoint": "https://github.com/oahc09/cocosairjs/tree/fix/audit-sdk-recipes-20261019",
+      "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a"
     },
     {
       "id": "NEW8-API-TEXTURE-OWNERSHIP",
       "title": "纹理替换与所有权转移小工具/示例",
-      "status": "待修复",
+      "status": "实现草稿，部分验收通过",
       "scope": "SDK示例/文档/工具",
       "priority": "P2",
       "action": "在已有ownSpriteFrame/session上补最小替换示例与失败/乱序回归。",
@@ -365,15 +369,17 @@
       "sourceIds": [
         "NEW8-API-TEXTURE-OWNERSHIP"
       ],
-      "implementation": "PENDING",
-      "verification": "NOT_RUN",
+      "implementation": "IMPLEMENTED_CPU_VERIFIED",
+      "verification": "Ownership and transactional replacement tested including 100 replacements, stale results, failure and import preference.",
       "pr": null,
-      "blocker": null
+      "blocker": "Manual page local draft; actual texture lifetime/browser image acceptance pending.",
+      "checkpoint": "https://github.com/oahc09/cocosairjs/tree/fix/audit-sdk-recipes-20261019",
+      "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a"
     },
     {
       "id": "NEW8-API-TWO-SIDED-MESH",
       "title": "双面可变形网格与法线示例",
-      "status": "待修复",
+      "status": "实现草稿，部分验收通过",
       "scope": "SDK示例/文档/工具",
       "priority": "P2",
       "action": "新增小型几何示例和数值检查，复用Mesh更新接口，页组合留应用。",
@@ -402,15 +408,17 @@
       "sourceIds": [
         "NEW8-API-TWO-SIDED-MESH"
       ],
-      "implementation": "PENDING",
-      "verification": "NOT_RUN",
+      "implementation": "IMPLEMENTED_CPU_VERIFIED",
+      "verification": "Both directions at 66 angles: normals/winding/identity and upload arrays CPU checks pass.",
       "pr": null,
-      "blocker": null
+      "blocker": "Real mesh upload/rendered intermediate frames pending.",
+      "checkpoint": "https://github.com/oahc09/cocosairjs/tree/fix/audit-sdk-recipes-20261019",
+      "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a"
     },
     {
       "id": "PROPOSAL-ENG-00",
       "title": "固定最新基线并去重历史工作",
-      "status": "待验证",
+      "status": "部分工作，待验收",
       "scope": "SDK示例/文档/工具",
       "priority": "P2",
       "action": "补齐原材料并对冻结main重新生成基线/源码映射，不重做已有去重工具。",
@@ -438,10 +446,12 @@
       "sourceIds": [
         "PROPOSAL-ENG-00"
       ],
-      "implementation": "PENDING",
-      "verification": "NOT_RUN",
+      "implementation": "PARTIAL_EVIDENCE_RESTORED",
+      "verification": "A exact-head source/runtime/maps provenance restored; 64-item frozen baseline preserved.",
       "pr": null,
-      "blocker": null
+      "blocker": "B same-head integrated main/math build and current browser identity pending.",
+      "checkpoint": "https://github.com/oahc09/cocosairjs/tree/fix/audit-sdk-recipes-20261019",
+      "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a"
     },
     {
       "id": "PROPOSAL-ENG-01",
@@ -474,10 +484,12 @@
       "sourceIds": [
         "PROPOSAL-ENG-01"
       ],
-      "implementation": "PENDING",
-      "verification": "NOT_RUN",
+      "implementation": "PENDING_VALIDATION",
+      "verification": "No current input-to-visible-pixel evidence chain completed.",
       "pr": null,
-      "blocker": null
+      "blocker": "Raw event/object/submission/visible pixel chain pending.",
+      "checkpoint": "https://github.com/oahc09/cocosairjs/tree/fix/audit-sdk-recipes-20261019",
+      "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a"
     },
     {
       "id": "PROPOSAL-ENG-02",
@@ -510,15 +522,17 @@
       "sourceIds": [
         "PROPOSAL-ENG-02"
       ],
-      "implementation": "PENDING",
-      "verification": "NOT_RUN",
+      "implementation": "PENDING_VALIDATION",
+      "verification": "A command blit readbacks do not close full dual-pass/mip scenario.",
       "pr": null,
-      "blocker": null
+      "blocker": "Resize/resource bounds/mip readback/pacer/MSAA scenario pending.",
+      "checkpoint": "https://github.com/oahc09/cocosairjs/tree/fix/audit-sdk-recipes-20261019",
+      "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a"
     },
     {
       "id": "PROPOSAL-ENG-03",
       "title": "建立颜色 环境贴图和透明合成对照",
-      "status": "待验证",
+      "status": "部分工作，待验收",
       "scope": "SDK示例/文档/工具",
       "priority": "P2",
       "action": "复用现有颜色/Water对照，仅补原参考与设备质量评估。",
@@ -575,15 +589,17 @@
           ]
         }
       ],
-      "implementation": "PENDING",
-      "verification": "NOT_RUN",
+      "implementation": "LOCAL_DRAFT_UNVERIFIED",
+      "verification": "Color input local draft only.",
       "pr": null,
-      "blocker": null
+      "blocker": "Color/environment/transparent-composition comparison pending.",
+      "checkpoint": "https://github.com/oahc09/cocosairjs/tree/fix/audit-sdk-recipes-20261019",
+      "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a"
     },
     {
       "id": "PROPOSAL-ENG-04",
       "title": "给动态 Mesh 与屏幕投影一条正确路径",
-      "status": "待验证",
+      "status": "部分工作，待验收",
       "scope": "SDK示例/文档/工具",
       "priority": "P2",
       "action": "复用动态Mesh/投影配方，补原工程和当前设备呈现复验。",
@@ -622,10 +638,12 @@
           ]
         }
       ],
-      "implementation": "PENDING",
-      "verification": "NOT_RUN",
+      "implementation": "PARTIAL_CPU_VERIFIED",
+      "verification": "Two-sided deformable geometry CPU draft contributes numerical checks only.",
       "pr": null,
-      "blocker": null
+      "blocker": "Three real uploaded vertex groups/projection errors and visible PNG pending.",
+      "checkpoint": "https://github.com/oahc09/cocosairjs/tree/fix/audit-sdk-recipes-20261019",
+      "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a"
     },
     {
       "id": "PROPOSAL-ENG-05",
@@ -678,10 +696,12 @@
           ]
         }
       ],
-      "implementation": "PENDING",
-      "verification": "NOT_RUN",
+      "implementation": "PENDING_BROWSER_VALIDATION",
+      "verification": "Existing mixed input APIs identified; no new acceptance.",
       "pr": null,
-      "blocker": null
+      "blocker": "Physical action exactly-once visible updates, editable/hover/cancel/scroll/teardown pending.",
+      "checkpoint": "https://github.com/oahc09/cocosairjs/tree/fix/audit-sdk-recipes-20261019",
+      "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a"
     },
     {
       "id": "PROPOSAL-ENG-06",
@@ -736,10 +756,12 @@
           ]
         }
       ],
-      "implementation": "PENDING",
-      "verification": "NOT_RUN",
+      "implementation": "PENDING_BROWSER_VALIDATION",
+      "verification": "No current Puzzle50/container matrix completed.",
       "pr": null,
-      "blocker": null
+      "blocker": "Hidden/shown/layout/cold load generation/release/framebuffer/PNG pending.",
+      "checkpoint": "https://github.com/oahc09/cocosairjs/tree/fix/audit-sdk-recipes-20261019",
+      "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a"
     },
     {
       "id": "PROPOSAL-ENG-07",
@@ -772,10 +794,12 @@
       "sourceIds": [
         "PROPOSAL-ENG-07"
       ],
-      "implementation": "PENDING",
-      "verification": "NOT_RUN",
+      "implementation": "PENDING_VALIDATION",
+      "verification": "No new timeline acceptance completed.",
       "pr": null,
-      "blocker": null
+      "blocker": "Cancelable deformation/camera/scroll actual pose and endpoint tests pending.",
+      "checkpoint": "https://github.com/oahc09/cocosairjs/tree/fix/audit-sdk-recipes-20261019",
+      "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a"
     },
     {
       "id": "PROPOSAL-ENG-08",
@@ -819,10 +843,12 @@
           ]
         }
       ],
-      "implementation": "PENDING",
-      "verification": "NOT_RUN",
+      "implementation": "PENDING_VALIDATION",
+      "verification": "Lifecycle cleanup tests do not establish audio-master-clock timeline.",
       "pr": null,
-      "blocker": null
+      "blocker": "Pause/resume/seek/replay/end/stop and raw audio context advancement pending.",
+      "checkpoint": "https://github.com/oahc09/cocosairjs/tree/fix/audit-sdk-recipes-20261019",
+      "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a"
     },
     {
       "id": "PROPOSAL-ENG-09",
@@ -855,15 +881,17 @@
       "sourceIds": [
         "PROPOSAL-ENG-09"
       ],
-      "implementation": "PENDING",
-      "verification": "NOT_RUN",
+      "implementation": "PENDING_DEVICE_MEASUREMENT",
+      "verification": "No device performance profile collected.",
       "pr": null,
-      "blocker": null
+      "blocker": "Fixed quality/device 3x60s with raw long frames and separated capture/CPU/submit costs required.",
+      "checkpoint": "https://github.com/oahc09/cocosairjs/tree/fix/audit-sdk-recipes-20261019",
+      "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a"
     },
     {
       "id": "PROPOSAL-ENG-10",
       "title": "将已知误用变成可定位的诊断",
-      "status": "待验证",
+      "status": "部分工作，待验收",
       "scope": "SDK示例/文档/工具",
       "priority": "P2",
       "action": "复用现有诊断，补可选缺模块请求负例，不虚构Scene.addComponent禁用规则。",
@@ -891,15 +919,17 @@
       "sourceIds": [
         "PROPOSAL-ENG-10"
       ],
-      "implementation": "PENDING",
-      "verification": "NOT_RUN",
+      "implementation": "PARTIAL_CPU_VERIFIED",
+      "verification": "GLSL misuse source-position diagnostics implemented; ownership failure diagnostics exercised.",
       "pr": null,
-      "blocker": null
+      "blocker": "Remaining documented misuse fields/minimal correct calls/function-cycle behavior pending.",
+      "checkpoint": "https://github.com/oahc09/cocosairjs/tree/fix/audit-sdk-recipes-20261019",
+      "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a"
     },
     {
       "id": "PROPOSAL-ENG-11",
       "title": "整理小型官方示例并做独立接入",
-      "status": "待验证",
+      "status": "部分工作，待验收",
       "scope": "SDK示例/文档/工具",
       "priority": "P2",
       "action": "复用kit，修验具体呈现缺口并在当前包做独立接入，不按示例数量收口。",
@@ -927,15 +957,17 @@
       "sourceIds": [
         "PROPOSAL-ENG-11"
       ],
-      "implementation": "PENDING",
-      "verification": "NOT_RUN",
+      "implementation": "PARTIAL_DRAFT",
+      "verification": "Focused recipes and package-shaped math import are drafted/tested.",
       "pr": null,
-      "blocker": null
+      "blocker": "Clean offline tarball integration without build fallback and actual input/resize/cleanup/PNG pending.",
+      "checkpoint": "https://github.com/oahc09/cocosairjs/tree/fix/audit-sdk-recipes-20261019",
+      "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a"
     },
     {
       "id": "WR-ENGINE-PROPOSAL-001",
       "title": "提供同源、完整、无DOM副作用的官方数学ESM入口",
-      "status": "待修复",
+      "status": "实现草稿，部分验收通过",
       "scope": "SDK示例/文档/工具",
       "priority": "P2",
       "action": "从同源数学模块构建官方独立entry并建立发布及副作用测试。",
@@ -964,10 +996,12 @@
       "sourceIds": [
         "WR-ENGINE-PROPOSAL-001"
       ],
-      "implementation": "PENDING",
-      "verification": "NOT_RUN",
+      "implementation": "IMPLEMENTED_NODE_WORKER_VERIFIED",
+      "verification": "Math entry derives from 37 verified canonical inputs; six fresh Node/Worker/DOM-guard/reproducibility/package-shape tests pass.",
       "pr": null,
-      "blocker": null
+      "blocker": "Same-commit main-entry numerical differential and math-first specified canvas/DPR app creation pending; generated math files not yet committed.",
+      "checkpoint": "https://github.com/oahc09/cocosairjs/tree/fix/audit-sdk-recipes-20261019",
+      "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a"
     },
     {
       "id": "CI-APP-001",
@@ -1876,11 +1910,13 @@
     }
   ],
   "progress": {
-    "updatedAt": "2026-10-19T07:44:00Z",
+    "updatedAt": "2026-10-19T09:34:00Z",
     "pr": "https://github.com/oahc09/cocosairjs/pull/6",
     "main": "bac30c0f9b9e9cb61e43720d23053a98d24ac811",
     "dependency": "PR5 merged",
     "applicationSubmission": "PAUSED_BY_USER",
-    "sdkCheckpoint": "29770d7733f6b1936f1890cb0b28d31c17cf255a"
+    "sdkCheckpoint": "29770d7733f6b1936f1890cb0b28d31c17cf255a",
+    "runtimeMapsCommit": "6011b1a3b9f153b0a5243f111cfd75182b77f176",
+    "sdkExecution": "Resumed original SDK task; prior partial acceptance remains, no new SDK completion claimed."
   }
 }
