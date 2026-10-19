@@ -1,0 +1,3308 @@
+{
+  "status": "PASS",
+  "entry": "cocosair-math",
+  "all_skills": 22,
+  "all_files": 219,
+  "all_bytes": 1550761,
+  "closure_skills": [
+    "cocosair",
+    "cocosair-2d-subsystems",
+    "cocosair-agent-session",
+    "cocosair-animation-tween",
+    "cocosair-application",
+    "cocosair-assets",
+    "cocosair-audio-video",
+    "cocosair-camera",
+    "cocosair-gltf",
+    "cocosair-graphics-and-dom",
+    "cocosair-input-action",
+    "cocosair-materials-effects",
+    "cocosair-math",
+    "cocosair-performance",
+    "cocosair-physics",
+    "cocosair-primitives-mesh",
+    "cocosair-project-setup",
+    "cocosair-rendering",
+    "cocosair-scene-graph",
+    "cocosair-skinning-morph",
+    "cocosair-ui-2d",
+    "cocosair-verification"
+  ],
+  "closure_files": [
+    "INDEX.md",
+    "cocosair-2d-subsystems/SKILL.md",
+    "cocosair-2d-subsystems/references/billboard.md",
+    "cocosair-2d-subsystems/references/common-mistakes.md",
+    "cocosair-2d-subsystems/references/context.md",
+    "cocosair-2d-subsystems/references/contracts.md",
+    "cocosair-2d-subsystems/references/dragonbones.md",
+    "cocosair-2d-subsystems/references/particle-2d.md",
+    "cocosair-2d-subsystems/references/quick-start.md",
+    "cocosair-2d-subsystems/references/spine.md",
+    "cocosair-2d-subsystems/references/tiledmap.md",
+    "cocosair-2d-subsystems/references/triggers.md",
+    "cocosair-agent-session/SKILL.md",
+    "cocosair-agent-session/references/agent-session.md",
+    "cocosair-agent-session/references/common-mistakes.md",
+    "cocosair-agent-session/references/context.md",
+    "cocosair-agent-session/references/contracts.md",
+    "cocosair-agent-session/references/quick-start.md",
+    "cocosair-agent-session/references/runtime-control.md",
+    "cocosair-agent-session/references/triggers.md",
+    "cocosair-agent-session/references/visual-probes.md",
+    "cocosair-animation-tween/SKILL.md",
+    "cocosair-animation-tween/references/animation-clip.md",
+    "cocosair-animation-tween/references/common-mistakes.md",
+    "cocosair-animation-tween/references/context.md",
+    "cocosair-animation-tween/references/contracts.md",
+    "cocosair-animation-tween/references/quick-start.md",
+    "cocosair-animation-tween/references/step-clock.md",
+    "cocosair-animation-tween/references/triggers.md",
+    "cocosair-animation-tween/references/tween-ops.md",
+    "cocosair-application/SKILL.md",
+    "cocosair-application/references/app-options.md",
+    "cocosair-application/references/common-mistakes.md",
+    "cocosair-application/references/context-health.md",
+    "cocosair-application/references/context.md",
+    "cocosair-application/references/contracts.md",
+    "cocosair-application/references/quick-start.md",
+    "cocosair-application/references/session-scope.md",
+    "cocosair-application/references/startup-errors.md",
+    "cocosair-application/references/triggers.md",
+    "cocosair-assets/SKILL.md",
+    "cocosair-assets/references/asset-bank.md",
+    "cocosair-assets/references/atlas.md",
+    "cocosair-assets/references/bmfont.md",
+    "cocosair-assets/references/common-mistakes.md",
+    "cocosair-assets/references/context.md",
+    "cocosair-assets/references/contracts.md",
+    "cocosair-assets/references/quick-start.md",
+    "cocosair-assets/references/texture2d.md",
+    "cocosair-assets/references/triggers.md",
+    "cocosair-audio-video/SKILL.md",
+    "cocosair-audio-video/references/audio-service.md",
+    "cocosair-audio-video/references/common-mistakes.md",
+    "cocosair-audio-video/references/context.md",
+    "cocosair-audio-video/references/contracts.md",
+    "cocosair-audio-video/references/quick-start.md",
+    "cocosair-audio-video/references/triggers.md",
+    "cocosair-audio-video/references/videoplayer.md",
+    "cocosair-audio-video/references/webview.md",
+    "cocosair-camera/SKILL.md",
+    "cocosair-camera/references/camera-projection.md",
+    "cocosair-camera/references/common-mistakes.md",
+    "cocosair-camera/references/context.md",
+    "cocosair-camera/references/contracts.md",
+    "cocosair-camera/references/multi-camera.md",
+    "cocosair-camera/references/quick-start.md",
+    "cocosair-camera/references/screen-world.md",
+    "cocosair-camera/references/triggers.md",
+    "cocosair-gltf/SKILL.md",
+    "cocosair-gltf/references/common-mistakes.md",
+    "cocosair-gltf/references/context.md",
+    "cocosair-gltf/references/contracts.md",
+    "cocosair-gltf/references/decoders.md",
+    "cocosair-gltf/references/diagnostics.md",
+    "cocosair-gltf/references/extensions-matrix.md",
+    "cocosair-gltf/references/loader-api.md",
+    "cocosair-gltf/references/quick-start.md",
+    "cocosair-gltf/references/triggers.md",
+    "cocosair-graphics-and-dom/SKILL.md",
+    "cocosair-graphics-and-dom/references/commands.md",
+    "cocosair-graphics-and-dom/references/common-mistakes.md",
+    "cocosair-graphics-and-dom/references/context.md",
+    "cocosair-graphics-and-dom/references/contracts.md",
+    "cocosair-graphics-and-dom/references/dom-overlay.md",
+    "cocosair-graphics-and-dom/references/html-source.md",
+    "cocosair-graphics-and-dom/references/quick-start.md",
+    "cocosair-graphics-and-dom/references/raster.md",
+    "cocosair-graphics-and-dom/references/sprite-mask.md",
+    "cocosair-graphics-and-dom/references/texture-sprite.md",
+    "cocosair-graphics-and-dom/references/triggers.md",
+    "cocosair-graphics-and-dom/references/ui-blend.md",
+    "cocosair-graphics-and-dom/references/ui-mesh.md",
+    "cocosair-graphics-and-dom/references/verification-commands.md",
+    "cocosair-input-action/SKILL.md",
+    "cocosair-input-action/references/action-input.md",
+    "cocosair-input-action/references/action-state.md",
+    "cocosair-input-action/references/common-mistakes.md",
+    "cocosair-input-action/references/context.md",
+    "cocosair-input-action/references/contracts.md",
+    "cocosair-input-action/references/native-input.md",
+    "cocosair-input-action/references/quick-start.md",
+    "cocosair-input-action/references/scene-stack.md",
+    "cocosair-input-action/references/triggers.md",
+    "cocosair-materials-effects/SKILL.md",
+    "cocosair-materials-effects/references/builtin-effects.md",
+    "cocosair-materials-effects/references/common-mistakes.md",
+    "cocosair-materials-effects/references/context.md",
+    "cocosair-materials-effects/references/contracts.md",
+    "cocosair-materials-effects/references/custom-glsl.md",
+    "cocosair-materials-effects/references/defines.md",
+    "cocosair-materials-effects/references/property-types.md",
+    "cocosair-materials-effects/references/quick-start.md",
+    "cocosair-materials-effects/references/triggers.md",
+    "cocosair-math/SKILL.md",
+    "cocosair-math/references/common-mistakes.md",
+    "cocosair-math/references/context.md",
+    "cocosair-math/references/contracts.md",
+    "cocosair-math/references/easing-random.md",
+    "cocosair-math/references/quick-start.md",
+    "cocosair-math/references/transforms.md",
+    "cocosair-math/references/triggers.md",
+    "cocosair-math/references/value-types.md",
+    "cocosair-performance/SKILL.md",
+    "cocosair-performance/references/batching-routes.md",
+    "cocosair-performance/references/common-mistakes.md",
+    "cocosair-performance/references/context.md",
+    "cocosair-performance/references/contracts.md",
+    "cocosair-performance/references/dynamic-atlas.md",
+    "cocosair-performance/references/instancing.md",
+    "cocosair-performance/references/profiles.md",
+    "cocosair-performance/references/quick-start.md",
+    "cocosair-performance/references/triggers.md",
+    "cocosair-physics/SKILL.md",
+    "cocosair-physics/references/2d-box2d.md",
+    "cocosair-physics/references/3d-contracts.md",
+    "cocosair-physics/references/backend-selection.md",
+    "cocosair-physics/references/common-mistakes.md",
+    "cocosair-physics/references/context.md",
+    "cocosair-physics/references/contracts.md",
+    "cocosair-physics/references/quick-start.md",
+    "cocosair-physics/references/triggers.md",
+    "cocosair-primitives-mesh/SKILL.md",
+    "cocosair-primitives-mesh/references/common-mistakes.md",
+    "cocosair-primitives-mesh/references/context.md",
+    "cocosair-primitives-mesh/references/contracts.md",
+    "cocosair-primitives-mesh/references/create-primitive-geometry.md",
+    "cocosair-primitives-mesh/references/mesh-attributes.md",
+    "cocosair-primitives-mesh/references/primitive-shapes.md",
+    "cocosair-primitives-mesh/references/quick-start.md",
+    "cocosair-primitives-mesh/references/triggers.md",
+    "cocosair-project-setup/SKILL.md",
+    "cocosair-project-setup/references/common-mistakes.md",
+    "cocosair-project-setup/references/context.md",
+    "cocosair-project-setup/references/contracts.md",
+    "cocosair-project-setup/references/entries.md",
+    "cocosair-project-setup/references/feature-flags.md",
+    "cocosair-project-setup/references/html-shell.md",
+    "cocosair-project-setup/references/quick-start.md",
+    "cocosair-project-setup/references/triggers.md",
+    "cocosair-rendering/SKILL.md",
+    "cocosair-rendering/references/color-contract.md",
+    "cocosair-rendering/references/common-mistakes.md",
+    "cocosair-rendering/references/context.md",
+    "cocosair-rendering/references/contracts.md",
+    "cocosair-rendering/references/lighting-units.md",
+    "cocosair-rendering/references/pipeline-reachability.md",
+    "cocosair-rendering/references/quick-start.md",
+    "cocosair-rendering/references/render-target.md",
+    "cocosair-rendering/references/shadow-matrix.md",
+    "cocosair-rendering/references/triggers.md",
+    "cocosair-scene-graph/SKILL.md",
+    "cocosair-scene-graph/references/common-mistakes.md",
+    "cocosair-scene-graph/references/context.md",
+    "cocosair-scene-graph/references/contracts.md",
+    "cocosair-scene-graph/references/layers.md",
+    "cocosair-scene-graph/references/node-events.md",
+    "cocosair-scene-graph/references/node-ops.md",
+    "cocosair-scene-graph/references/quick-start.md",
+    "cocosair-scene-graph/references/scene-globals.md",
+    "cocosair-scene-graph/references/triggers.md",
+    "cocosair-skinning-morph/SKILL.md",
+    "cocosair-skinning-morph/references/bind-pose.md",
+    "cocosair-skinning-morph/references/common-mistakes.md",
+    "cocosair-skinning-morph/references/context.md",
+    "cocosair-skinning-morph/references/contracts.md",
+    "cocosair-skinning-morph/references/joint-paths.md",
+    "cocosair-skinning-morph/references/morph.md",
+    "cocosair-skinning-morph/references/quick-start.md",
+    "cocosair-skinning-morph/references/triggers.md",
+    "cocosair-ui-2d/SKILL.md",
+    "cocosair-ui-2d/references/canvas-widget-layout.md",
+    "cocosair-ui-2d/references/common-mistakes.md",
+    "cocosair-ui-2d/references/context.md",
+    "cocosair-ui-2d/references/contracts.md",
+    "cocosair-ui-2d/references/label-and-text.md",
+    "cocosair-ui-2d/references/quick-start.md",
+    "cocosair-ui-2d/references/sorting.md",
+    "cocosair-ui-2d/references/triggers.md",
+    "cocosair-ui-2d/references/widgets.md",
+    "cocosair-verification/SKILL.md",
+    "cocosair-verification/references/common-mistakes.md",
+    "cocosair-verification/references/context.md",
+    "cocosair-verification/references/contracts.md",
+    "cocosair-verification/references/gate-catalog.md",
+    "cocosair-verification/references/playwright-prereqs.md",
+    "cocosair-verification/references/quick-start.md",
+    "cocosair-verification/references/report-layers.md",
+    "cocosair-verification/references/triggers.md",
+    "cocosair/SKILL.md",
+    "cocosair/references/common-mistakes.md",
+    "cocosair/references/context.md",
+    "cocosair/references/environment.md",
+    "cocosair/references/skill-index-archive.md",
+    "cocosair/references/skill-index.md",
+    "cocosair/references/triggers.md",
+    "cocosair/scripts/check-paths.cjs",
+    "index.json"
+  ],
+  "closure_bytes": 1545407,
+  "byte_ratio": 0.9965475015169971,
+  "file_ratio": 0.9908675799086758,
+  "navigation_targets": [
+    {
+      "file": "cocosair-math/SKILL.md",
+      "target": "cocosair-math/references/context.md"
+    },
+    {
+      "file": "cocosair-math/SKILL.md",
+      "target": "cocosair-math/references/quick-start.md"
+    },
+    {
+      "file": "cocosair-math/SKILL.md",
+      "target": "cocosair-math/references/context.md"
+    },
+    {
+      "file": "cocosair-math/SKILL.md",
+      "target": "cocosair-math/references/triggers.md"
+    },
+    {
+      "file": "cocosair-math/SKILL.md",
+      "target": "cocosair-math/references/contracts.md"
+    },
+    {
+      "file": "cocosair-math/SKILL.md",
+      "target": "cocosair-math/references/common-mistakes.md"
+    },
+    {
+      "file": "cocosair-math/SKILL.md",
+      "target": "cocosair-math/references/value-types.md"
+    },
+    {
+      "file": "cocosair-math/SKILL.md",
+      "target": "cocosair-math/references/transforms.md"
+    },
+    {
+      "file": "cocosair-math/SKILL.md",
+      "target": "cocosair-math/references/easing-random.md"
+    },
+    {
+      "file": "cocosair-math/references/common-mistakes.md",
+      "target": "cocosair-math/references/transforms.md"
+    },
+    {
+      "file": "cocosair-math/references/context.md",
+      "target": "cocosair/references/environment.md"
+    },
+    {
+      "file": "cocosair-math/references/context.md",
+      "target": "cocosair/SKILL.md"
+    },
+    {
+      "file": "cocosair-math/references/context.md",
+      "target": "cocosair-scene-graph/SKILL.md"
+    },
+    {
+      "file": "cocosair-math/references/context.md",
+      "target": "cocosair-camera/SKILL.md"
+    },
+    {
+      "file": "cocosair-math/references/context.md",
+      "target": "cocosair-project-setup/SKILL.md"
+    },
+    {
+      "file": "cocosair-math/references/context.md",
+      "target": "cocosair-materials-effects/SKILL.md"
+    },
+    {
+      "file": "cocosair-math/references/context.md",
+      "target": "cocosair-math/references/context.md"
+    },
+    {
+      "file": "cocosair-math/references/context.md",
+      "target": "cocosair-math/references/quick-start.md"
+    },
+    {
+      "file": "cocosair-math/references/context.md",
+      "target": "cocosair-math/references/context.md"
+    },
+    {
+      "file": "cocosair-math/references/context.md",
+      "target": "cocosair-math/references/common-mistakes.md"
+    },
+    {
+      "file": "cocosair-math/references/context.md",
+      "target": "cocosair-math/references/value-types.md"
+    },
+    {
+      "file": "cocosair-math/references/context.md",
+      "target": "cocosair-math/references/transforms.md"
+    },
+    {
+      "file": "cocosair-math/references/context.md",
+      "target": "cocosair-math/references/easing-random.md"
+    },
+    {
+      "file": "cocosair-math/references/quick-start.md",
+      "target": "cocosair-project-setup/SKILL.md"
+    },
+    {
+      "file": "cocosair-math/references/quick-start.md",
+      "target": "cocosair-application/SKILL.md"
+    },
+    {
+      "file": "cocosair-math/references/triggers.md",
+      "target": "cocosair-math/references/value-types.md"
+    },
+    {
+      "file": "cocosair-math/references/triggers.md",
+      "target": "cocosair-math/references/value-types.md"
+    },
+    {
+      "file": "cocosair-math/references/triggers.md",
+      "target": "cocosair-math/references/transforms.md"
+    },
+    {
+      "file": "cocosair-math/references/triggers.md",
+      "target": "cocosair-math/references/easing-random.md"
+    },
+    {
+      "file": "cocosair/SKILL.md",
+      "target": "cocosair/references/environment.md"
+    },
+    {
+      "file": "cocosair/SKILL.md",
+      "target": "cocosair/references/context.md"
+    },
+    {
+      "file": "cocosair/SKILL.md",
+      "target": "cocosair/references/context.md"
+    },
+    {
+      "file": "cocosair/SKILL.md",
+      "target": "cocosair/references/triggers.md"
+    },
+    {
+      "file": "cocosair/SKILL.md",
+      "target": "cocosair/references/context.md"
+    },
+    {
+      "file": "cocosair/SKILL.md",
+      "target": "cocosair/references/common-mistakes.md"
+    },
+    {
+      "file": "cocosair/SKILL.md",
+      "target": "cocosair/references/context.md"
+    },
+    {
+      "file": "cocosair/SKILL.md",
+      "target": "cocosair/references/environment.md"
+    },
+    {
+      "file": "cocosair/SKILL.md",
+      "target": "cocosair/references/skill-index.md"
+    },
+    {
+      "file": "cocosair/references/common-mistakes.md",
+      "target": "cocosair-application/SKILL.md"
+    },
+    {
+      "file": "cocosair/references/common-mistakes.md",
+      "target": "cocosair/references/environment.md"
+    },
+    {
+      "file": "cocosair/references/context.md",
+      "target": "cocosair/references/environment.md"
+    },
+    {
+      "file": "cocosair/references/context.md",
+      "target": "cocosair/references/environment.md"
+    },
+    {
+      "file": "cocosair/references/context.md",
+      "target": "cocosair-project-setup/SKILL.md"
+    },
+    {
+      "file": "cocosair/references/context.md",
+      "target": "cocosair-application/SKILL.md"
+    },
+    {
+      "file": "cocosair/references/context.md",
+      "target": "cocosair-scene-graph/SKILL.md"
+    },
+    {
+      "file": "cocosair/references/context.md",
+      "target": "cocosair-camera/SKILL.md"
+    },
+    {
+      "file": "cocosair/references/context.md",
+      "target": "cocosair-math/SKILL.md"
+    },
+    {
+      "file": "cocosair/references/context.md",
+      "target": "cocosair-materials-effects/SKILL.md"
+    },
+    {
+      "file": "cocosair/references/context.md",
+      "target": "cocosair-rendering/SKILL.md"
+    },
+    {
+      "file": "cocosair/references/context.md",
+      "target": "cocosair-primitives-mesh/SKILL.md"
+    },
+    {
+      "file": "cocosair/references/context.md",
+      "target": "cocosair-performance/SKILL.md"
+    },
+    {
+      "file": "cocosair/references/context.md",
+      "target": "cocosair-assets/SKILL.md"
+    },
+    {
+      "file": "cocosair/references/context.md",
+      "target": "cocosair-gltf/SKILL.md"
+    },
+    {
+      "file": "cocosair/references/context.md",
+      "target": "cocosair-animation-tween/SKILL.md"
+    },
+    {
+      "file": "cocosair/references/context.md",
+      "target": "cocosair-skinning-morph/SKILL.md"
+    },
+    {
+      "file": "cocosair/references/context.md",
+      "target": "cocosair-ui-2d/SKILL.md"
+    },
+    {
+      "file": "cocosair/references/context.md",
+      "target": "cocosair-graphics-and-dom/SKILL.md"
+    },
+    {
+      "file": "cocosair/references/context.md",
+      "target": "cocosair-2d-subsystems/SKILL.md"
+    },
+    {
+      "file": "cocosair/references/context.md",
+      "target": "cocosair-input-action/SKILL.md"
+    },
+    {
+      "file": "cocosair/references/context.md",
+      "target": "cocosair-physics/SKILL.md"
+    },
+    {
+      "file": "cocosair/references/context.md",
+      "target": "cocosair-audio-video/SKILL.md"
+    },
+    {
+      "file": "cocosair/references/context.md",
+      "target": "cocosair-agent-session/SKILL.md"
+    },
+    {
+      "file": "cocosair/references/context.md",
+      "target": "cocosair-verification/SKILL.md"
+    },
+    {
+      "file": "cocosair/references/context.md",
+      "target": "cocosair/references/context.md"
+    },
+    {
+      "file": "cocosair/references/context.md",
+      "target": "cocosair/references/environment.md"
+    },
+    {
+      "file": "cocosair/references/context.md",
+      "target": "cocosair/references/skill-index.md"
+    },
+    {
+      "file": "cocosair/references/context.md",
+      "target": "cocosair/references/environment.md"
+    },
+    {
+      "file": "cocosair/references/environment.md",
+      "target": "cocosair-scene-graph/references/layers.md"
+    },
+    {
+      "file": "cocosair/references/skill-index-archive.md",
+      "target": "cocosair/references/environment.md"
+    },
+    {
+      "file": "cocosair/references/skill-index.md",
+      "target": "index.json"
+    },
+    {
+      "file": "cocosair/references/skill-index.md",
+      "target": "INDEX.md"
+    },
+    {
+      "file": "cocosair/references/skill-index.md",
+      "target": "cocosair/references/skill-index-archive.md"
+    },
+    {
+      "file": "cocosair/references/triggers.md",
+      "target": "cocosair/references/context.md"
+    },
+    {
+      "file": "cocosair-scene-graph/SKILL.md",
+      "target": "cocosair-scene-graph/references/context.md"
+    },
+    {
+      "file": "cocosair-scene-graph/SKILL.md",
+      "target": "cocosair-scene-graph/references/quick-start.md"
+    },
+    {
+      "file": "cocosair-scene-graph/SKILL.md",
+      "target": "cocosair-scene-graph/references/context.md"
+    },
+    {
+      "file": "cocosair-scene-graph/SKILL.md",
+      "target": "cocosair-scene-graph/references/triggers.md"
+    },
+    {
+      "file": "cocosair-scene-graph/SKILL.md",
+      "target": "cocosair-scene-graph/references/contracts.md"
+    },
+    {
+      "file": "cocosair-scene-graph/SKILL.md",
+      "target": "cocosair-scene-graph/references/common-mistakes.md"
+    },
+    {
+      "file": "cocosair-scene-graph/SKILL.md",
+      "target": "cocosair-scene-graph/references/node-ops.md"
+    },
+    {
+      "file": "cocosair-scene-graph/SKILL.md",
+      "target": "cocosair-scene-graph/references/layers.md"
+    },
+    {
+      "file": "cocosair-scene-graph/SKILL.md",
+      "target": "cocosair-scene-graph/references/node-events.md"
+    },
+    {
+      "file": "cocosair-scene-graph/SKILL.md",
+      "target": "cocosair-scene-graph/references/scene-globals.md"
+    },
+    {
+      "file": "cocosair-scene-graph/references/common-mistakes.md",
+      "target": "cocosair-scene-graph/references/node-ops.md"
+    },
+    {
+      "file": "cocosair-scene-graph/references/common-mistakes.md",
+      "target": "cocosair-scene-graph/references/layers.md"
+    },
+    {
+      "file": "cocosair-scene-graph/references/common-mistakes.md",
+      "target": "cocosair-scene-graph/references/node-ops.md"
+    },
+    {
+      "file": "cocosair-scene-graph/references/context.md",
+      "target": "cocosair/references/environment.md"
+    },
+    {
+      "file": "cocosair-scene-graph/references/context.md",
+      "target": "cocosair/SKILL.md"
+    },
+    {
+      "file": "cocosair-scene-graph/references/context.md",
+      "target": "cocosair-project-setup/SKILL.md"
+    },
+    {
+      "file": "cocosair-scene-graph/references/context.md",
+      "target": "cocosair-application/SKILL.md"
+    },
+    {
+      "file": "cocosair-scene-graph/references/context.md",
+      "target": "cocosair-verification/SKILL.md"
+    },
+    {
+      "file": "cocosair-scene-graph/references/context.md",
+      "target": "cocosair-scene-graph/references/context.md"
+    },
+    {
+      "file": "cocosair-scene-graph/references/context.md",
+      "target": "cocosair-scene-graph/references/quick-start.md"
+    },
+    {
+      "file": "cocosair-scene-graph/references/context.md",
+      "target": "cocosair-scene-graph/references/context.md"
+    },
+    {
+      "file": "cocosair-scene-graph/references/context.md",
+      "target": "cocosair-scene-graph/references/common-mistakes.md"
+    },
+    {
+      "file": "cocosair-scene-graph/references/context.md",
+      "target": "cocosair-scene-graph/references/node-ops.md"
+    },
+    {
+      "file": "cocosair-scene-graph/references/context.md",
+      "target": "cocosair-scene-graph/references/layers.md"
+    },
+    {
+      "file": "cocosair-scene-graph/references/context.md",
+      "target": "cocosair-scene-graph/references/node-events.md"
+    },
+    {
+      "file": "cocosair-scene-graph/references/context.md",
+      "target": "cocosair-scene-graph/references/scene-globals.md"
+    },
+    {
+      "file": "cocosair-scene-graph/references/contracts.md",
+      "target": "cocosair-scene-graph/references/node-ops.md"
+    },
+    {
+      "file": "cocosair-scene-graph/references/contracts.md",
+      "target": "cocosair-scene-graph/references/node-ops.md"
+    },
+    {
+      "file": "cocosair-scene-graph/references/contracts.md",
+      "target": "cocosair-scene-graph/references/node-events.md"
+    },
+    {
+      "file": "cocosair-scene-graph/references/contracts.md",
+      "target": "cocosair-scene-graph/references/node-ops.md"
+    },
+    {
+      "file": "cocosair-scene-graph/references/contracts.md",
+      "target": "cocosair-scene-graph/references/layers.md"
+    },
+    {
+      "file": "cocosair-scene-graph/references/contracts.md",
+      "target": "cocosair-scene-graph/references/scene-globals.md"
+    },
+    {
+      "file": "cocosair-scene-graph/references/contracts.md",
+      "target": "cocosair-scene-graph/references/scene-globals.md"
+    },
+    {
+      "file": "cocosair-scene-graph/references/contracts.md",
+      "target": "cocosair-scene-graph/references/node-ops.md"
+    },
+    {
+      "file": "cocosair-scene-graph/references/quick-start.md",
+      "target": "cocosair-project-setup/SKILL.md"
+    },
+    {
+      "file": "cocosair-scene-graph/references/quick-start.md",
+      "target": "cocosair-application/SKILL.md"
+    },
+    {
+      "file": "cocosair-scene-graph/references/triggers.md",
+      "target": "cocosair-scene-graph/references/contracts.md"
+    },
+    {
+      "file": "cocosair-scene-graph/references/triggers.md",
+      "target": "cocosair-scene-graph/references/node-ops.md"
+    },
+    {
+      "file": "cocosair-scene-graph/references/triggers.md",
+      "target": "cocosair-scene-graph/references/layers.md"
+    },
+    {
+      "file": "cocosair-scene-graph/references/triggers.md",
+      "target": "cocosair-scene-graph/references/node-events.md"
+    },
+    {
+      "file": "cocosair-scene-graph/references/triggers.md",
+      "target": "cocosair-scene-graph/references/scene-globals.md"
+    },
+    {
+      "file": "cocosair-scene-graph/references/triggers.md",
+      "target": "cocosair-scene-graph/references/scene-globals.md"
+    },
+    {
+      "file": "cocosair-scene-graph/references/triggers.md",
+      "target": "cocosair-scene-graph/references/node-ops.md"
+    },
+    {
+      "file": "cocosair-camera/SKILL.md",
+      "target": "cocosair-camera/references/context.md"
+    },
+    {
+      "file": "cocosair-camera/SKILL.md",
+      "target": "cocosair-camera/references/quick-start.md"
+    },
+    {
+      "file": "cocosair-camera/SKILL.md",
+      "target": "cocosair-camera/references/context.md"
+    },
+    {
+      "file": "cocosair-camera/SKILL.md",
+      "target": "cocosair-camera/references/triggers.md"
+    },
+    {
+      "file": "cocosair-camera/SKILL.md",
+      "target": "cocosair-camera/references/contracts.md"
+    },
+    {
+      "file": "cocosair-camera/SKILL.md",
+      "target": "cocosair-camera/references/common-mistakes.md"
+    },
+    {
+      "file": "cocosair-camera/SKILL.md",
+      "target": "cocosair-camera/references/camera-projection.md"
+    },
+    {
+      "file": "cocosair-camera/SKILL.md",
+      "target": "cocosair-camera/references/multi-camera.md"
+    },
+    {
+      "file": "cocosair-camera/SKILL.md",
+      "target": "cocosair-camera/references/screen-world.md"
+    },
+    {
+      "file": "cocosair-camera/references/camera-projection.md",
+      "target": "cocosair-scene-graph/references/layers.md"
+    },
+    {
+      "file": "cocosair-camera/references/common-mistakes.md",
+      "target": "cocosair-camera/references/multi-camera.md"
+    },
+    {
+      "file": "cocosair-camera/references/context.md",
+      "target": "cocosair/references/environment.md"
+    },
+    {
+      "file": "cocosair-camera/references/context.md",
+      "target": "cocosair/SKILL.md"
+    },
+    {
+      "file": "cocosair-camera/references/context.md",
+      "target": "cocosair-scene-graph/SKILL.md"
+    },
+    {
+      "file": "cocosair-camera/references/context.md",
+      "target": "cocosair-scene-graph/references/layers.md"
+    },
+    {
+      "file": "cocosair-camera/references/context.md",
+      "target": "cocosair-project-setup/SKILL.md"
+    },
+    {
+      "file": "cocosair-camera/references/context.md",
+      "target": "cocosair-camera/references/context.md"
+    },
+    {
+      "file": "cocosair-camera/references/context.md",
+      "target": "cocosair-camera/references/quick-start.md"
+    },
+    {
+      "file": "cocosair-camera/references/context.md",
+      "target": "cocosair-camera/references/context.md"
+    },
+    {
+      "file": "cocosair-camera/references/context.md",
+      "target": "cocosair-camera/references/common-mistakes.md"
+    },
+    {
+      "file": "cocosair-camera/references/context.md",
+      "target": "cocosair-camera/references/camera-projection.md"
+    },
+    {
+      "file": "cocosair-camera/references/context.md",
+      "target": "cocosair-camera/references/multi-camera.md"
+    },
+    {
+      "file": "cocosair-camera/references/context.md",
+      "target": "cocosair-camera/references/screen-world.md"
+    },
+    {
+      "file": "cocosair-camera/references/multi-camera.md",
+      "target": "cocosair-camera/references/camera-projection.md"
+    },
+    {
+      "file": "cocosair-camera/references/multi-camera.md",
+      "target": "cocosair-camera/references/screen-world.md"
+    },
+    {
+      "file": "cocosair-camera/references/multi-camera.md",
+      "target": "cocosair-scene-graph/references/layers.md"
+    },
+    {
+      "file": "cocosair-camera/references/quick-start.md",
+      "target": "cocosair-project-setup/SKILL.md"
+    },
+    {
+      "file": "cocosair-camera/references/quick-start.md",
+      "target": "cocosair-application/SKILL.md"
+    },
+    {
+      "file": "cocosair-camera/references/quick-start.md",
+      "target": "cocosair-scene-graph/SKILL.md"
+    },
+    {
+      "file": "cocosair-camera/references/triggers.md",
+      "target": "cocosair-camera/references/camera-projection.md"
+    },
+    {
+      "file": "cocosair-camera/references/triggers.md",
+      "target": "cocosair-camera/references/multi-camera.md"
+    },
+    {
+      "file": "cocosair-camera/references/triggers.md",
+      "target": "cocosair-camera/references/screen-world.md"
+    },
+    {
+      "file": "cocosair-project-setup/SKILL.md",
+      "target": "cocosair-project-setup/references/context.md"
+    },
+    {
+      "file": "cocosair-project-setup/SKILL.md",
+      "target": "cocosair-project-setup/references/quick-start.md"
+    },
+    {
+      "file": "cocosair-project-setup/SKILL.md",
+      "target": "cocosair-project-setup/references/context.md"
+    },
+    {
+      "file": "cocosair-project-setup/SKILL.md",
+      "target": "cocosair-project-setup/references/triggers.md"
+    },
+    {
+      "file": "cocosair-project-setup/SKILL.md",
+      "target": "cocosair-project-setup/references/contracts.md"
+    },
+    {
+      "file": "cocosair-project-setup/SKILL.md",
+      "target": "cocosair-project-setup/references/common-mistakes.md"
+    },
+    {
+      "file": "cocosair-project-setup/SKILL.md",
+      "target": "cocosair-project-setup/references/entries.md"
+    },
+    {
+      "file": "cocosair-project-setup/SKILL.md",
+      "target": "cocosair-project-setup/references/feature-flags.md"
+    },
+    {
+      "file": "cocosair-project-setup/SKILL.md",
+      "target": "cocosair-project-setup/references/html-shell.md"
+    },
+    {
+      "file": "cocosair-project-setup/references/context.md",
+      "target": "cocosair/references/environment.md"
+    },
+    {
+      "file": "cocosair-project-setup/references/context.md",
+      "target": "cocosair/SKILL.md"
+    },
+    {
+      "file": "cocosair-project-setup/references/context.md",
+      "target": "cocosair-graphics-and-dom/SKILL.md"
+    },
+    {
+      "file": "cocosair-project-setup/references/context.md",
+      "target": "cocosair-verification/SKILL.md"
+    },
+    {
+      "file": "cocosair-project-setup/references/context.md",
+      "target": "cocosair-project-setup/references/context.md"
+    },
+    {
+      "file": "cocosair-project-setup/references/context.md",
+      "target": "cocosair-project-setup/references/quick-start.md"
+    },
+    {
+      "file": "cocosair-project-setup/references/context.md",
+      "target": "cocosair-project-setup/references/context.md"
+    },
+    {
+      "file": "cocosair-project-setup/references/context.md",
+      "target": "cocosair-project-setup/references/common-mistakes.md"
+    },
+    {
+      "file": "cocosair-project-setup/references/context.md",
+      "target": "cocosair-project-setup/references/entries.md"
+    },
+    {
+      "file": "cocosair-project-setup/references/context.md",
+      "target": "cocosair-project-setup/references/feature-flags.md"
+    },
+    {
+      "file": "cocosair-project-setup/references/context.md",
+      "target": "cocosair-project-setup/references/html-shell.md"
+    },
+    {
+      "file": "cocosair-project-setup/references/entries.md",
+      "target": "cocosair-project-setup/references/contracts.md"
+    },
+    {
+      "file": "cocosair-project-setup/references/triggers.md",
+      "target": "cocosair-project-setup/references/contracts.md"
+    },
+    {
+      "file": "cocosair-project-setup/references/triggers.md",
+      "target": "cocosair-project-setup/references/entries.md"
+    },
+    {
+      "file": "cocosair-project-setup/references/triggers.md",
+      "target": "cocosair-project-setup/references/html-shell.md"
+    },
+    {
+      "file": "cocosair-project-setup/references/triggers.md",
+      "target": "cocosair-project-setup/references/entries.md"
+    },
+    {
+      "file": "cocosair-project-setup/references/triggers.md",
+      "target": "cocosair-project-setup/references/feature-flags.md"
+    },
+    {
+      "file": "cocosair-project-setup/references/triggers.md",
+      "target": "cocosair-project-setup/references/entries.md"
+    },
+    {
+      "file": "cocosair-materials-effects/SKILL.md",
+      "target": "cocosair-materials-effects/references/context.md"
+    },
+    {
+      "file": "cocosair-materials-effects/SKILL.md",
+      "target": "cocosair-materials-effects/references/quick-start.md"
+    },
+    {
+      "file": "cocosair-materials-effects/SKILL.md",
+      "target": "cocosair-materials-effects/references/context.md"
+    },
+    {
+      "file": "cocosair-materials-effects/SKILL.md",
+      "target": "cocosair-materials-effects/references/triggers.md"
+    },
+    {
+      "file": "cocosair-materials-effects/SKILL.md",
+      "target": "cocosair-materials-effects/references/contracts.md"
+    },
+    {
+      "file": "cocosair-materials-effects/SKILL.md",
+      "target": "cocosair-materials-effects/references/common-mistakes.md"
+    },
+    {
+      "file": "cocosair-materials-effects/SKILL.md",
+      "target": "cocosair-materials-effects/references/builtin-effects.md"
+    },
+    {
+      "file": "cocosair-materials-effects/SKILL.md",
+      "target": "cocosair-materials-effects/references/property-types.md"
+    },
+    {
+      "file": "cocosair-materials-effects/SKILL.md",
+      "target": "cocosair-materials-effects/references/custom-glsl.md"
+    },
+    {
+      "file": "cocosair-materials-effects/SKILL.md",
+      "target": "cocosair-materials-effects/references/defines.md"
+    },
+    {
+      "file": "cocosair-materials-effects/references/context.md",
+      "target": "cocosair/references/environment.md"
+    },
+    {
+      "file": "cocosair-materials-effects/references/context.md",
+      "target": "cocosair/SKILL.md"
+    },
+    {
+      "file": "cocosair-materials-effects/references/context.md",
+      "target": "cocosair-project-setup/SKILL.md"
+    },
+    {
+      "file": "cocosair-materials-effects/references/context.md",
+      "target": "cocosair-application/SKILL.md"
+    },
+    {
+      "file": "cocosair-materials-effects/references/context.md",
+      "target": "cocosair-scene-graph/SKILL.md"
+    },
+    {
+      "file": "cocosair-materials-effects/references/context.md",
+      "target": "cocosair-camera/SKILL.md"
+    },
+    {
+      "file": "cocosair-materials-effects/references/context.md",
+      "target": "cocosair-math/SKILL.md"
+    },
+    {
+      "file": "cocosair-materials-effects/references/context.md",
+      "target": "cocosair-graphics-and-dom/SKILL.md"
+    },
+    {
+      "file": "cocosair-materials-effects/references/context.md",
+      "target": "cocosair-verification/SKILL.md"
+    },
+    {
+      "file": "cocosair-materials-effects/references/context.md",
+      "target": "cocosair-materials-effects/references/context.md"
+    },
+    {
+      "file": "cocosair-materials-effects/references/context.md",
+      "target": "cocosair-materials-effects/references/quick-start.md"
+    },
+    {
+      "file": "cocosair-materials-effects/references/context.md",
+      "target": "cocosair-materials-effects/references/context.md"
+    },
+    {
+      "file": "cocosair-materials-effects/references/context.md",
+      "target": "cocosair-materials-effects/references/common-mistakes.md"
+    },
+    {
+      "file": "cocosair-materials-effects/references/context.md",
+      "target": "cocosair-materials-effects/references/builtin-effects.md"
+    },
+    {
+      "file": "cocosair-materials-effects/references/context.md",
+      "target": "cocosair-materials-effects/references/property-types.md"
+    },
+    {
+      "file": "cocosair-materials-effects/references/context.md",
+      "target": "cocosair-materials-effects/references/custom-glsl.md"
+    },
+    {
+      "file": "cocosair-materials-effects/references/context.md",
+      "target": "cocosair-materials-effects/references/defines.md"
+    },
+    {
+      "file": "cocosair-materials-effects/references/contracts.md",
+      "target": "cocosair-materials-effects/references/property-types.md"
+    },
+    {
+      "file": "cocosair-materials-effects/references/defines.md",
+      "target": "cocosair-materials-effects/references/custom-glsl.md"
+    },
+    {
+      "file": "cocosair-materials-effects/references/quick-start.md",
+      "target": "cocosair-project-setup/SKILL.md"
+    },
+    {
+      "file": "cocosair-materials-effects/references/quick-start.md",
+      "target": "cocosair-application/SKILL.md"
+    },
+    {
+      "file": "cocosair-materials-effects/references/triggers.md",
+      "target": "cocosair-materials-effects/references/property-types.md"
+    },
+    {
+      "file": "cocosair-materials-effects/references/triggers.md",
+      "target": "cocosair-materials-effects/references/defines.md"
+    },
+    {
+      "file": "cocosair-materials-effects/references/triggers.md",
+      "target": "cocosair-materials-effects/references/builtin-effects.md"
+    },
+    {
+      "file": "cocosair-materials-effects/references/triggers.md",
+      "target": "cocosair-materials-effects/references/custom-glsl.md"
+    },
+    {
+      "file": "cocosair-application/SKILL.md",
+      "target": "cocosair-application/references/context.md"
+    },
+    {
+      "file": "cocosair-application/SKILL.md",
+      "target": "cocosair-application/references/quick-start.md"
+    },
+    {
+      "file": "cocosair-application/SKILL.md",
+      "target": "cocosair-application/references/context.md"
+    },
+    {
+      "file": "cocosair-application/SKILL.md",
+      "target": "cocosair-application/references/triggers.md"
+    },
+    {
+      "file": "cocosair-application/SKILL.md",
+      "target": "cocosair-application/references/contracts.md"
+    },
+    {
+      "file": "cocosair-application/SKILL.md",
+      "target": "cocosair-application/references/common-mistakes.md"
+    },
+    {
+      "file": "cocosair-application/SKILL.md",
+      "target": "cocosair-application/references/app-options.md"
+    },
+    {
+      "file": "cocosair-application/SKILL.md",
+      "target": "cocosair-application/references/startup-errors.md"
+    },
+    {
+      "file": "cocosair-application/SKILL.md",
+      "target": "cocosair-application/references/context-health.md"
+    },
+    {
+      "file": "cocosair-application/SKILL.md",
+      "target": "cocosair-application/references/session-scope.md"
+    },
+    {
+      "file": "cocosair-application/references/common-mistakes.md",
+      "target": "cocosair-application/references/context-health.md"
+    },
+    {
+      "file": "cocosair-application/references/context.md",
+      "target": "cocosair/references/environment.md"
+    },
+    {
+      "file": "cocosair-application/references/context.md",
+      "target": "cocosair/SKILL.md"
+    },
+    {
+      "file": "cocosair-application/references/context.md",
+      "target": "cocosair-project-setup/SKILL.md"
+    },
+    {
+      "file": "cocosair-application/references/context.md",
+      "target": "cocosair-graphics-and-dom/SKILL.md"
+    },
+    {
+      "file": "cocosair-application/references/context.md",
+      "target": "cocosair-verification/SKILL.md"
+    },
+    {
+      "file": "cocosair-application/references/context.md",
+      "target": "cocosair-application/references/app-options.md"
+    },
+    {
+      "file": "cocosair-application/references/context.md",
+      "target": "cocosair-project-setup/references/entries.md"
+    },
+    {
+      "file": "cocosair-application/references/context.md",
+      "target": "cocosair-input-action/SKILL.md"
+    },
+    {
+      "file": "cocosair-application/references/context.md",
+      "target": "cocosair-application/references/context.md"
+    },
+    {
+      "file": "cocosair-application/references/context.md",
+      "target": "cocosair-application/references/quick-start.md"
+    },
+    {
+      "file": "cocosair-application/references/context.md",
+      "target": "cocosair-application/references/context.md"
+    },
+    {
+      "file": "cocosair-application/references/context.md",
+      "target": "cocosair-application/references/common-mistakes.md"
+    },
+    {
+      "file": "cocosair-application/references/context.md",
+      "target": "cocosair-application/references/app-options.md"
+    },
+    {
+      "file": "cocosair-application/references/context.md",
+      "target": "cocosair-application/references/startup-errors.md"
+    },
+    {
+      "file": "cocosair-application/references/context.md",
+      "target": "cocosair-application/references/context-health.md"
+    },
+    {
+      "file": "cocosair-application/references/context.md",
+      "target": "cocosair-application/references/session-scope.md"
+    },
+    {
+      "file": "cocosair-application/references/contracts.md",
+      "target": "cocosair-application/references/app-options.md"
+    },
+    {
+      "file": "cocosair-application/references/contracts.md",
+      "target": "cocosair-application/references/startup-errors.md"
+    },
+    {
+      "file": "cocosair-application/references/contracts.md",
+      "target": "cocosair-application/references/app-options.md"
+    },
+    {
+      "file": "cocosair-application/references/contracts.md",
+      "target": "cocosair-application/references/app-options.md"
+    },
+    {
+      "file": "cocosair-application/references/contracts.md",
+      "target": "cocosair-application/references/startup-errors.md"
+    },
+    {
+      "file": "cocosair-application/references/contracts.md",
+      "target": "cocosair-application/references/session-scope.md"
+    },
+    {
+      "file": "cocosair-application/references/contracts.md",
+      "target": "cocosair-application/references/context-health.md"
+    },
+    {
+      "file": "cocosair-application/references/quick-start.md",
+      "target": "cocosair-application/references/app-options.md"
+    },
+    {
+      "file": "cocosair-application/references/quick-start.md",
+      "target": "cocosair-project-setup/SKILL.md"
+    },
+    {
+      "file": "cocosair-application/references/startup-errors.md",
+      "target": "cocosair-application/references/session-scope.md"
+    },
+    {
+      "file": "cocosair-application/references/startup-errors.md",
+      "target": "cocosair/SKILL.md"
+    },
+    {
+      "file": "cocosair-application/references/triggers.md",
+      "target": "cocosair-application/references/contracts.md"
+    },
+    {
+      "file": "cocosair-application/references/triggers.md",
+      "target": "cocosair-application/references/app-options.md"
+    },
+    {
+      "file": "cocosair-application/references/triggers.md",
+      "target": "cocosair-application/references/startup-errors.md"
+    },
+    {
+      "file": "cocosair-application/references/triggers.md",
+      "target": "cocosair-application/references/app-options.md"
+    },
+    {
+      "file": "cocosair-application/references/triggers.md",
+      "target": "cocosair-application/references/context-health.md"
+    },
+    {
+      "file": "cocosair-application/references/triggers.md",
+      "target": "cocosair-application/references/session-scope.md"
+    },
+    {
+      "file": "cocosair-application/references/triggers.md",
+      "target": "cocosair-application/references/app-options.md"
+    },
+    {
+      "file": "cocosair-rendering/SKILL.md",
+      "target": "cocosair-rendering/references/context.md"
+    },
+    {
+      "file": "cocosair-rendering/SKILL.md",
+      "target": "cocosair-rendering/references/quick-start.md"
+    },
+    {
+      "file": "cocosair-rendering/SKILL.md",
+      "target": "cocosair-rendering/references/context.md"
+    },
+    {
+      "file": "cocosair-rendering/SKILL.md",
+      "target": "cocosair-rendering/references/triggers.md"
+    },
+    {
+      "file": "cocosair-rendering/SKILL.md",
+      "target": "cocosair-rendering/references/contracts.md"
+    },
+    {
+      "file": "cocosair-rendering/SKILL.md",
+      "target": "cocosair-rendering/references/common-mistakes.md"
+    },
+    {
+      "file": "cocosair-rendering/SKILL.md",
+      "target": "cocosair-rendering/references/lighting-units.md"
+    },
+    {
+      "file": "cocosair-rendering/SKILL.md",
+      "target": "cocosair-rendering/references/shadow-matrix.md"
+    },
+    {
+      "file": "cocosair-rendering/SKILL.md",
+      "target": "cocosair-rendering/references/render-target.md"
+    },
+    {
+      "file": "cocosair-rendering/SKILL.md",
+      "target": "cocosair-rendering/references/color-contract.md"
+    },
+    {
+      "file": "cocosair-rendering/SKILL.md",
+      "target": "cocosair-rendering/references/pipeline-reachability.md"
+    },
+    {
+      "file": "cocosair-rendering/references/color-contract.md",
+      "target": "cocosair-rendering/references/render-target.md"
+    },
+    {
+      "file": "cocosair-rendering/references/context.md",
+      "target": "cocosair/references/environment.md"
+    },
+    {
+      "file": "cocosair-rendering/references/context.md",
+      "target": "cocosair/SKILL.md"
+    },
+    {
+      "file": "cocosair-rendering/references/context.md",
+      "target": "cocosair-camera/SKILL.md"
+    },
+    {
+      "file": "cocosair-rendering/references/context.md",
+      "target": "cocosair-materials-effects/SKILL.md"
+    },
+    {
+      "file": "cocosair-rendering/references/context.md",
+      "target": "cocosair-scene-graph/SKILL.md"
+    },
+    {
+      "file": "cocosair-rendering/references/context.md",
+      "target": "cocosair-math/SKILL.md"
+    },
+    {
+      "file": "cocosair-rendering/references/context.md",
+      "target": "cocosair-application/SKILL.md"
+    },
+    {
+      "file": "cocosair-rendering/references/context.md",
+      "target": "cocosair-project-setup/SKILL.md"
+    },
+    {
+      "file": "cocosair-rendering/references/context.md",
+      "target": "cocosair-graphics-and-dom/SKILL.md"
+    },
+    {
+      "file": "cocosair-rendering/references/context.md",
+      "target": "cocosair-rendering/references/context.md"
+    },
+    {
+      "file": "cocosair-rendering/references/context.md",
+      "target": "cocosair-rendering/references/quick-start.md"
+    },
+    {
+      "file": "cocosair-rendering/references/context.md",
+      "target": "cocosair-rendering/references/context.md"
+    },
+    {
+      "file": "cocosair-rendering/references/context.md",
+      "target": "cocosair-rendering/references/common-mistakes.md"
+    },
+    {
+      "file": "cocosair-rendering/references/context.md",
+      "target": "cocosair-rendering/references/lighting-units.md"
+    },
+    {
+      "file": "cocosair-rendering/references/context.md",
+      "target": "cocosair-rendering/references/shadow-matrix.md"
+    },
+    {
+      "file": "cocosair-rendering/references/context.md",
+      "target": "cocosair-rendering/references/render-target.md"
+    },
+    {
+      "file": "cocosair-rendering/references/context.md",
+      "target": "cocosair-rendering/references/color-contract.md"
+    },
+    {
+      "file": "cocosair-rendering/references/context.md",
+      "target": "cocosair-rendering/references/pipeline-reachability.md"
+    },
+    {
+      "file": "cocosair-rendering/references/quick-start.md",
+      "target": "cocosair-project-setup/SKILL.md"
+    },
+    {
+      "file": "cocosair-rendering/references/quick-start.md",
+      "target": "cocosair-application/SKILL.md"
+    },
+    {
+      "file": "cocosair-rendering/references/triggers.md",
+      "target": "cocosair-rendering/references/contracts.md"
+    },
+    {
+      "file": "cocosair-rendering/references/triggers.md",
+      "target": "cocosair-rendering/references/lighting-units.md"
+    },
+    {
+      "file": "cocosair-rendering/references/triggers.md",
+      "target": "cocosair-rendering/references/shadow-matrix.md"
+    },
+    {
+      "file": "cocosair-primitives-mesh/SKILL.md",
+      "target": "cocosair-primitives-mesh/references/context.md"
+    },
+    {
+      "file": "cocosair-primitives-mesh/SKILL.md",
+      "target": "cocosair-primitives-mesh/references/quick-start.md"
+    },
+    {
+      "file": "cocosair-primitives-mesh/SKILL.md",
+      "target": "cocosair-primitives-mesh/references/context.md"
+    },
+    {
+      "file": "cocosair-primitives-mesh/SKILL.md",
+      "target": "cocosair-primitives-mesh/references/triggers.md"
+    },
+    {
+      "file": "cocosair-primitives-mesh/SKILL.md",
+      "target": "cocosair-primitives-mesh/references/contracts.md"
+    },
+    {
+      "file": "cocosair-primitives-mesh/SKILL.md",
+      "target": "cocosair-primitives-mesh/references/common-mistakes.md"
+    },
+    {
+      "file": "cocosair-primitives-mesh/SKILL.md",
+      "target": "cocosair-primitives-mesh/references/primitive-shapes.md"
+    },
+    {
+      "file": "cocosair-primitives-mesh/SKILL.md",
+      "target": "cocosair-primitives-mesh/references/mesh-attributes.md"
+    },
+    {
+      "file": "cocosair-primitives-mesh/SKILL.md",
+      "target": "cocosair-primitives-mesh/references/create-primitive-geometry.md"
+    },
+    {
+      "file": "cocosair-primitives-mesh/references/context.md",
+      "target": "cocosair/references/environment.md"
+    },
+    {
+      "file": "cocosair-primitives-mesh/references/context.md",
+      "target": "cocosair/SKILL.md"
+    },
+    {
+      "file": "cocosair-primitives-mesh/references/context.md",
+      "target": "cocosair-scene-graph/SKILL.md"
+    },
+    {
+      "file": "cocosair-primitives-mesh/references/context.md",
+      "target": "cocosair-materials-effects/SKILL.md"
+    },
+    {
+      "file": "cocosair-primitives-mesh/references/context.md",
+      "target": "cocosair-rendering/SKILL.md"
+    },
+    {
+      "file": "cocosair-primitives-mesh/references/context.md",
+      "target": "cocosair-math/SKILL.md"
+    },
+    {
+      "file": "cocosair-primitives-mesh/references/context.md",
+      "target": "cocosair-primitives-mesh/references/context.md"
+    },
+    {
+      "file": "cocosair-primitives-mesh/references/context.md",
+      "target": "cocosair-primitives-mesh/references/quick-start.md"
+    },
+    {
+      "file": "cocosair-primitives-mesh/references/context.md",
+      "target": "cocosair-primitives-mesh/references/context.md"
+    },
+    {
+      "file": "cocosair-primitives-mesh/references/context.md",
+      "target": "cocosair-primitives-mesh/references/common-mistakes.md"
+    },
+    {
+      "file": "cocosair-primitives-mesh/references/context.md",
+      "target": "cocosair-primitives-mesh/references/primitive-shapes.md"
+    },
+    {
+      "file": "cocosair-primitives-mesh/references/context.md",
+      "target": "cocosair-primitives-mesh/references/mesh-attributes.md"
+    },
+    {
+      "file": "cocosair-primitives-mesh/references/context.md",
+      "target": "cocosair-primitives-mesh/references/create-primitive-geometry.md"
+    },
+    {
+      "file": "cocosair-primitives-mesh/references/create-primitive-geometry.md",
+      "target": "cocosair-primitives-mesh/references/primitive-shapes.md"
+    },
+    {
+      "file": "cocosair-primitives-mesh/references/triggers.md",
+      "target": "cocosair-primitives-mesh/references/contracts.md"
+    },
+    {
+      "file": "cocosair-performance/SKILL.md",
+      "target": "cocosair-performance/references/context.md"
+    },
+    {
+      "file": "cocosair-performance/SKILL.md",
+      "target": "cocosair-performance/references/quick-start.md"
+    },
+    {
+      "file": "cocosair-performance/SKILL.md",
+      "target": "cocosair-performance/references/context.md"
+    },
+    {
+      "file": "cocosair-performance/SKILL.md",
+      "target": "cocosair-performance/references/triggers.md"
+    },
+    {
+      "file": "cocosair-performance/SKILL.md",
+      "target": "cocosair-performance/references/contracts.md"
+    },
+    {
+      "file": "cocosair-performance/SKILL.md",
+      "target": "cocosair-performance/references/common-mistakes.md"
+    },
+    {
+      "file": "cocosair-performance/SKILL.md",
+      "target": "cocosair-performance/references/batching-routes.md"
+    },
+    {
+      "file": "cocosair-performance/SKILL.md",
+      "target": "cocosair-performance/references/dynamic-atlas.md"
+    },
+    {
+      "file": "cocosair-performance/SKILL.md",
+      "target": "cocosair-performance/references/instancing.md"
+    },
+    {
+      "file": "cocosair-performance/SKILL.md",
+      "target": "cocosair-performance/references/profiles.md"
+    },
+    {
+      "file": "cocosair-performance/references/batching-routes.md",
+      "target": "cocosair-performance/references/instancing.md"
+    },
+    {
+      "file": "cocosair-performance/references/common-mistakes.md",
+      "target": "cocosair-performance/references/batching-routes.md"
+    },
+    {
+      "file": "cocosair-performance/references/common-mistakes.md",
+      "target": "cocosair-performance/references/profiles.md"
+    },
+    {
+      "file": "cocosair-performance/references/context.md",
+      "target": "cocosair/references/environment.md"
+    },
+    {
+      "file": "cocosair-performance/references/context.md",
+      "target": "cocosair/SKILL.md"
+    },
+    {
+      "file": "cocosair-performance/references/context.md",
+      "target": "cocosair-application/SKILL.md"
+    },
+    {
+      "file": "cocosair-performance/references/context.md",
+      "target": "cocosair-project-setup/SKILL.md"
+    },
+    {
+      "file": "cocosair-performance/references/context.md",
+      "target": "cocosair-scene-graph/SKILL.md"
+    },
+    {
+      "file": "cocosair-performance/references/context.md",
+      "target": "cocosair-camera/SKILL.md"
+    },
+    {
+      "file": "cocosair-performance/references/context.md",
+      "target": "cocosair-materials-effects/SKILL.md"
+    },
+    {
+      "file": "cocosair-performance/references/context.md",
+      "target": "cocosair-primitives-mesh/SKILL.md"
+    },
+    {
+      "file": "cocosair-performance/references/context.md",
+      "target": "cocosair-rendering/SKILL.md"
+    },
+    {
+      "file": "cocosair-performance/references/context.md",
+      "target": "cocosair-graphics-and-dom/SKILL.md"
+    },
+    {
+      "file": "cocosair-performance/references/context.md",
+      "target": "cocosair-math/SKILL.md"
+    },
+    {
+      "file": "cocosair-performance/references/context.md",
+      "target": "cocosair-verification/SKILL.md"
+    },
+    {
+      "file": "cocosair-performance/references/context.md",
+      "target": "cocosair-performance/references/context.md"
+    },
+    {
+      "file": "cocosair-performance/references/context.md",
+      "target": "cocosair-performance/references/quick-start.md"
+    },
+    {
+      "file": "cocosair-performance/references/context.md",
+      "target": "cocosair-performance/references/context.md"
+    },
+    {
+      "file": "cocosair-performance/references/context.md",
+      "target": "cocosair-performance/references/common-mistakes.md"
+    },
+    {
+      "file": "cocosair-performance/references/context.md",
+      "target": "cocosair-performance/references/batching-routes.md"
+    },
+    {
+      "file": "cocosair-performance/references/context.md",
+      "target": "cocosair-performance/references/dynamic-atlas.md"
+    },
+    {
+      "file": "cocosair-performance/references/context.md",
+      "target": "cocosair-performance/references/instancing.md"
+    },
+    {
+      "file": "cocosair-performance/references/context.md",
+      "target": "cocosair-performance/references/profiles.md"
+    },
+    {
+      "file": "cocosair-performance/references/triggers.md",
+      "target": "cocosair-performance/references/batching-routes.md"
+    },
+    {
+      "file": "cocosair-performance/references/triggers.md",
+      "target": "cocosair-performance/references/instancing.md"
+    },
+    {
+      "file": "cocosair-performance/references/triggers.md",
+      "target": "cocosair-performance/references/batching-routes.md"
+    },
+    {
+      "file": "cocosair-performance/references/triggers.md",
+      "target": "cocosair-performance/references/dynamic-atlas.md"
+    },
+    {
+      "file": "cocosair-performance/references/triggers.md",
+      "target": "cocosair-performance/references/profiles.md"
+    },
+    {
+      "file": "cocosair-assets/SKILL.md",
+      "target": "cocosair-assets/references/context.md"
+    },
+    {
+      "file": "cocosair-assets/SKILL.md",
+      "target": "cocosair-assets/references/quick-start.md"
+    },
+    {
+      "file": "cocosair-assets/SKILL.md",
+      "target": "cocosair-assets/references/context.md"
+    },
+    {
+      "file": "cocosair-assets/SKILL.md",
+      "target": "cocosair-assets/references/triggers.md"
+    },
+    {
+      "file": "cocosair-assets/SKILL.md",
+      "target": "cocosair-assets/references/contracts.md"
+    },
+    {
+      "file": "cocosair-assets/SKILL.md",
+      "target": "cocosair-assets/references/common-mistakes.md"
+    },
+    {
+      "file": "cocosair-assets/SKILL.md",
+      "target": "cocosair-assets/references/asset-bank.md"
+    },
+    {
+      "file": "cocosair-assets/SKILL.md",
+      "target": "cocosair-assets/references/texture2d.md"
+    },
+    {
+      "file": "cocosair-assets/SKILL.md",
+      "target": "cocosair-assets/references/atlas.md"
+    },
+    {
+      "file": "cocosair-assets/SKILL.md",
+      "target": "cocosair-assets/references/bmfont.md"
+    },
+    {
+      "file": "cocosair-assets/references/context.md",
+      "target": "cocosair/references/environment.md"
+    },
+    {
+      "file": "cocosair-assets/references/context.md",
+      "target": "cocosair/SKILL.md"
+    },
+    {
+      "file": "cocosair-assets/references/context.md",
+      "target": "cocosair-project-setup/SKILL.md"
+    },
+    {
+      "file": "cocosair-assets/references/context.md",
+      "target": "cocosair-application/SKILL.md"
+    },
+    {
+      "file": "cocosair-assets/references/context.md",
+      "target": "cocosair-scene-graph/SKILL.md"
+    },
+    {
+      "file": "cocosair-assets/references/context.md",
+      "target": "cocosair-materials-effects/SKILL.md"
+    },
+    {
+      "file": "cocosair-assets/references/context.md",
+      "target": "cocosair-primitives-mesh/SKILL.md"
+    },
+    {
+      "file": "cocosair-assets/references/context.md",
+      "target": "cocosair-gltf/SKILL.md"
+    },
+    {
+      "file": "cocosair-assets/references/context.md",
+      "target": "cocosair-ui-2d/SKILL.md"
+    },
+    {
+      "file": "cocosair-assets/references/context.md",
+      "target": "cocosair-performance/SKILL.md"
+    },
+    {
+      "file": "cocosair-assets/references/context.md",
+      "target": "cocosair-graphics-and-dom/SKILL.md"
+    },
+    {
+      "file": "cocosair-assets/references/context.md",
+      "target": "cocosair-verification/SKILL.md"
+    },
+    {
+      "file": "cocosair-assets/references/context.md",
+      "target": "cocosair-assets/references/context.md"
+    },
+    {
+      "file": "cocosair-assets/references/context.md",
+      "target": "cocosair-assets/references/quick-start.md"
+    },
+    {
+      "file": "cocosair-assets/references/context.md",
+      "target": "cocosair-assets/references/context.md"
+    },
+    {
+      "file": "cocosair-assets/references/context.md",
+      "target": "cocosair-assets/references/common-mistakes.md"
+    },
+    {
+      "file": "cocosair-assets/references/context.md",
+      "target": "cocosair-assets/references/asset-bank.md"
+    },
+    {
+      "file": "cocosair-assets/references/context.md",
+      "target": "cocosair-assets/references/texture2d.md"
+    },
+    {
+      "file": "cocosair-assets/references/context.md",
+      "target": "cocosair-assets/references/atlas.md"
+    },
+    {
+      "file": "cocosair-assets/references/context.md",
+      "target": "cocosair-assets/references/bmfont.md"
+    },
+    {
+      "file": "cocosair-assets/references/triggers.md",
+      "target": "cocosair-assets/references/asset-bank.md"
+    },
+    {
+      "file": "cocosair-assets/references/triggers.md",
+      "target": "cocosair-assets/references/context.md"
+    },
+    {
+      "file": "cocosair-assets/references/triggers.md",
+      "target": "cocosair-assets/references/texture2d.md"
+    },
+    {
+      "file": "cocosair-assets/references/triggers.md",
+      "target": "cocosair-assets/references/atlas.md"
+    },
+    {
+      "file": "cocosair-assets/references/triggers.md",
+      "target": "cocosair-assets/references/bmfont.md"
+    },
+    {
+      "file": "cocosair-assets/references/triggers.md",
+      "target": "cocosair-assets/references/asset-bank.md"
+    },
+    {
+      "file": "cocosair-assets/references/triggers.md",
+      "target": "cocosair-assets/references/atlas.md"
+    },
+    {
+      "file": "cocosair-assets/references/triggers.md",
+      "target": "cocosair-assets/references/bmfont.md"
+    },
+    {
+      "file": "cocosair-gltf/SKILL.md",
+      "target": "cocosair-gltf/references/context.md"
+    },
+    {
+      "file": "cocosair-gltf/SKILL.md",
+      "target": "cocosair-gltf/references/quick-start.md"
+    },
+    {
+      "file": "cocosair-gltf/SKILL.md",
+      "target": "cocosair-gltf/references/context.md"
+    },
+    {
+      "file": "cocosair-gltf/SKILL.md",
+      "target": "cocosair-gltf/references/triggers.md"
+    },
+    {
+      "file": "cocosair-gltf/SKILL.md",
+      "target": "cocosair-gltf/references/contracts.md"
+    },
+    {
+      "file": "cocosair-gltf/SKILL.md",
+      "target": "cocosair-gltf/references/common-mistakes.md"
+    },
+    {
+      "file": "cocosair-gltf/SKILL.md",
+      "target": "cocosair-gltf/references/loader-api.md"
+    },
+    {
+      "file": "cocosair-gltf/SKILL.md",
+      "target": "cocosair-gltf/references/extensions-matrix.md"
+    },
+    {
+      "file": "cocosair-gltf/SKILL.md",
+      "target": "cocosair-gltf/references/decoders.md"
+    },
+    {
+      "file": "cocosair-gltf/SKILL.md",
+      "target": "cocosair-gltf/references/diagnostics.md"
+    },
+    {
+      "file": "cocosair-gltf/references/context.md",
+      "target": "cocosair/references/environment.md"
+    },
+    {
+      "file": "cocosair-gltf/references/context.md",
+      "target": "cocosair/SKILL.md"
+    },
+    {
+      "file": "cocosair-gltf/references/context.md",
+      "target": "cocosair-project-setup/SKILL.md"
+    },
+    {
+      "file": "cocosair-gltf/references/context.md",
+      "target": "cocosair-assets/SKILL.md"
+    },
+    {
+      "file": "cocosair-gltf/references/context.md",
+      "target": "cocosair-scene-graph/SKILL.md"
+    },
+    {
+      "file": "cocosair-gltf/references/context.md",
+      "target": "cocosair-materials-effects/SKILL.md"
+    },
+    {
+      "file": "cocosair-gltf/references/context.md",
+      "target": "cocosair-animation-tween/SKILL.md"
+    },
+    {
+      "file": "cocosair-gltf/references/context.md",
+      "target": "cocosair-skinning-morph/SKILL.md"
+    },
+    {
+      "file": "cocosair-gltf/references/context.md",
+      "target": "cocosair-performance/SKILL.md"
+    },
+    {
+      "file": "cocosair-gltf/references/context.md",
+      "target": "cocosair-verification/SKILL.md"
+    },
+    {
+      "file": "cocosair-gltf/references/context.md",
+      "target": "cocosair-gltf/references/context.md"
+    },
+    {
+      "file": "cocosair-gltf/references/context.md",
+      "target": "cocosair-gltf/references/quick-start.md"
+    },
+    {
+      "file": "cocosair-gltf/references/context.md",
+      "target": "cocosair-gltf/references/context.md"
+    },
+    {
+      "file": "cocosair-gltf/references/context.md",
+      "target": "cocosair-gltf/references/common-mistakes.md"
+    },
+    {
+      "file": "cocosair-gltf/references/context.md",
+      "target": "cocosair-gltf/references/loader-api.md"
+    },
+    {
+      "file": "cocosair-gltf/references/context.md",
+      "target": "cocosair-gltf/references/extensions-matrix.md"
+    },
+    {
+      "file": "cocosair-gltf/references/context.md",
+      "target": "cocosair-gltf/references/decoders.md"
+    },
+    {
+      "file": "cocosair-gltf/references/context.md",
+      "target": "cocosair-gltf/references/diagnostics.md"
+    },
+    {
+      "file": "cocosair-gltf/references/contracts.md",
+      "target": "cocosair-gltf/references/decoders.md"
+    },
+    {
+      "file": "cocosair-gltf/references/contracts.md",
+      "target": "cocosair-gltf/references/extensions-matrix.md"
+    },
+    {
+      "file": "cocosair-gltf/references/contracts.md",
+      "target": "cocosair-gltf/references/loader-api.md"
+    },
+    {
+      "file": "cocosair-gltf/references/contracts.md",
+      "target": "cocosair-gltf/references/diagnostics.md"
+    },
+    {
+      "file": "cocosair-gltf/references/triggers.md",
+      "target": "cocosair-gltf/references/loader-api.md"
+    },
+    {
+      "file": "cocosair-gltf/references/triggers.md",
+      "target": "cocosair-gltf/references/decoders.md"
+    },
+    {
+      "file": "cocosair-gltf/references/triggers.md",
+      "target": "cocosair-gltf/references/extensions-matrix.md"
+    },
+    {
+      "file": "cocosair-gltf/references/triggers.md",
+      "target": "cocosair-gltf/references/loader-api.md"
+    },
+    {
+      "file": "cocosair-gltf/references/triggers.md",
+      "target": "cocosair-gltf/references/diagnostics.md"
+    },
+    {
+      "file": "cocosair-gltf/references/triggers.md",
+      "target": "cocosair-gltf/references/extensions-matrix.md"
+    },
+    {
+      "file": "cocosair-gltf/references/triggers.md",
+      "target": "cocosair-gltf/references/loader-api.md"
+    },
+    {
+      "file": "cocosair-animation-tween/SKILL.md",
+      "target": "cocosair-animation-tween/references/context.md"
+    },
+    {
+      "file": "cocosair-animation-tween/SKILL.md",
+      "target": "cocosair-animation-tween/references/quick-start.md"
+    },
+    {
+      "file": "cocosair-animation-tween/SKILL.md",
+      "target": "cocosair-animation-tween/references/context.md"
+    },
+    {
+      "file": "cocosair-animation-tween/SKILL.md",
+      "target": "cocosair-animation-tween/references/triggers.md"
+    },
+    {
+      "file": "cocosair-animation-tween/SKILL.md",
+      "target": "cocosair-animation-tween/references/contracts.md"
+    },
+    {
+      "file": "cocosair-animation-tween/SKILL.md",
+      "target": "cocosair-animation-tween/references/common-mistakes.md"
+    },
+    {
+      "file": "cocosair-animation-tween/SKILL.md",
+      "target": "cocosair-animation-tween/references/animation-clip.md"
+    },
+    {
+      "file": "cocosair-animation-tween/SKILL.md",
+      "target": "cocosair-animation-tween/references/tween-ops.md"
+    },
+    {
+      "file": "cocosair-animation-tween/SKILL.md",
+      "target": "cocosair-animation-tween/references/step-clock.md"
+    },
+    {
+      "file": "cocosair-animation-tween/references/context.md",
+      "target": "cocosair/references/environment.md"
+    },
+    {
+      "file": "cocosair-animation-tween/references/context.md",
+      "target": "cocosair/SKILL.md"
+    },
+    {
+      "file": "cocosair-animation-tween/references/context.md",
+      "target": "cocosair-scene-graph/SKILL.md"
+    },
+    {
+      "file": "cocosair-animation-tween/references/context.md",
+      "target": "cocosair-application/SKILL.md"
+    },
+    {
+      "file": "cocosair-animation-tween/references/context.md",
+      "target": "cocosair-math/SKILL.md"
+    },
+    {
+      "file": "cocosair-animation-tween/references/context.md",
+      "target": "cocosair-gltf/SKILL.md"
+    },
+    {
+      "file": "cocosair-animation-tween/references/context.md",
+      "target": "cocosair-skinning-morph/SKILL.md"
+    },
+    {
+      "file": "cocosair-animation-tween/references/context.md",
+      "target": "cocosair-performance/SKILL.md"
+    },
+    {
+      "file": "cocosair-animation-tween/references/context.md",
+      "target": "cocosair-verification/SKILL.md"
+    },
+    {
+      "file": "cocosair-animation-tween/references/context.md",
+      "target": "cocosair-animation-tween/references/context.md"
+    },
+    {
+      "file": "cocosair-animation-tween/references/context.md",
+      "target": "cocosair-animation-tween/references/quick-start.md"
+    },
+    {
+      "file": "cocosair-animation-tween/references/context.md",
+      "target": "cocosair-animation-tween/references/context.md"
+    },
+    {
+      "file": "cocosair-animation-tween/references/context.md",
+      "target": "cocosair-animation-tween/references/common-mistakes.md"
+    },
+    {
+      "file": "cocosair-animation-tween/references/context.md",
+      "target": "cocosair-animation-tween/references/animation-clip.md"
+    },
+    {
+      "file": "cocosair-animation-tween/references/context.md",
+      "target": "cocosair-animation-tween/references/tween-ops.md"
+    },
+    {
+      "file": "cocosair-animation-tween/references/context.md",
+      "target": "cocosair-animation-tween/references/step-clock.md"
+    },
+    {
+      "file": "cocosair-animation-tween/references/contracts.md",
+      "target": "cocosair-animation-tween/references/step-clock.md"
+    },
+    {
+      "file": "cocosair-animation-tween/references/triggers.md",
+      "target": "cocosair-animation-tween/references/tween-ops.md"
+    },
+    {
+      "file": "cocosair-animation-tween/references/triggers.md",
+      "target": "cocosair-animation-tween/references/animation-clip.md"
+    },
+    {
+      "file": "cocosair-animation-tween/references/triggers.md",
+      "target": "cocosair-animation-tween/references/animation-clip.md"
+    },
+    {
+      "file": "cocosair-animation-tween/references/triggers.md",
+      "target": "cocosair-animation-tween/references/step-clock.md"
+    },
+    {
+      "file": "cocosair-animation-tween/references/triggers.md",
+      "target": "cocosair-animation-tween/references/animation-clip.md"
+    },
+    {
+      "file": "cocosair-skinning-morph/SKILL.md",
+      "target": "cocosair-skinning-morph/references/context.md"
+    },
+    {
+      "file": "cocosair-skinning-morph/SKILL.md",
+      "target": "cocosair-skinning-morph/references/quick-start.md"
+    },
+    {
+      "file": "cocosair-skinning-morph/SKILL.md",
+      "target": "cocosair-skinning-morph/references/context.md"
+    },
+    {
+      "file": "cocosair-skinning-morph/SKILL.md",
+      "target": "cocosair-skinning-morph/references/triggers.md"
+    },
+    {
+      "file": "cocosair-skinning-morph/SKILL.md",
+      "target": "cocosair-skinning-morph/references/contracts.md"
+    },
+    {
+      "file": "cocosair-skinning-morph/SKILL.md",
+      "target": "cocosair-skinning-morph/references/common-mistakes.md"
+    },
+    {
+      "file": "cocosair-skinning-morph/SKILL.md",
+      "target": "cocosair-skinning-morph/references/joint-paths.md"
+    },
+    {
+      "file": "cocosair-skinning-morph/SKILL.md",
+      "target": "cocosair-skinning-morph/references/bind-pose.md"
+    },
+    {
+      "file": "cocosair-skinning-morph/SKILL.md",
+      "target": "cocosair-skinning-morph/references/morph.md"
+    },
+    {
+      "file": "cocosair-skinning-morph/references/context.md",
+      "target": "cocosair/references/environment.md"
+    },
+    {
+      "file": "cocosair-skinning-morph/references/context.md",
+      "target": "cocosair/SKILL.md"
+    },
+    {
+      "file": "cocosair-skinning-morph/references/context.md",
+      "target": "cocosair-scene-graph/SKILL.md"
+    },
+    {
+      "file": "cocosair-skinning-morph/references/context.md",
+      "target": "cocosair-primitives-mesh/SKILL.md"
+    },
+    {
+      "file": "cocosair-skinning-morph/references/context.md",
+      "target": "cocosair-materials-effects/SKILL.md"
+    },
+    {
+      "file": "cocosair-skinning-morph/references/context.md",
+      "target": "cocosair-animation-tween/SKILL.md"
+    },
+    {
+      "file": "cocosair-skinning-morph/references/context.md",
+      "target": "cocosair-gltf/SKILL.md"
+    },
+    {
+      "file": "cocosair-skinning-morph/references/context.md",
+      "target": "cocosair-verification/SKILL.md"
+    },
+    {
+      "file": "cocosair-skinning-morph/references/context.md",
+      "target": "cocosair-skinning-morph/references/context.md"
+    },
+    {
+      "file": "cocosair-skinning-morph/references/context.md",
+      "target": "cocosair-skinning-morph/references/quick-start.md"
+    },
+    {
+      "file": "cocosair-skinning-morph/references/context.md",
+      "target": "cocosair-skinning-morph/references/context.md"
+    },
+    {
+      "file": "cocosair-skinning-morph/references/context.md",
+      "target": "cocosair-skinning-morph/references/common-mistakes.md"
+    },
+    {
+      "file": "cocosair-skinning-morph/references/context.md",
+      "target": "cocosair-skinning-morph/references/joint-paths.md"
+    },
+    {
+      "file": "cocosair-skinning-morph/references/context.md",
+      "target": "cocosair-skinning-morph/references/bind-pose.md"
+    },
+    {
+      "file": "cocosair-skinning-morph/references/context.md",
+      "target": "cocosair-skinning-morph/references/morph.md"
+    },
+    {
+      "file": "cocosair-skinning-morph/references/triggers.md",
+      "target": "cocosair-skinning-morph/references/contracts.md"
+    },
+    {
+      "file": "cocosair-skinning-morph/references/triggers.md",
+      "target": "cocosair-skinning-morph/references/joint-paths.md"
+    },
+    {
+      "file": "cocosair-skinning-morph/references/triggers.md",
+      "target": "cocosair-skinning-morph/references/bind-pose.md"
+    },
+    {
+      "file": "cocosair-ui-2d/SKILL.md",
+      "target": "cocosair-ui-2d/references/context.md"
+    },
+    {
+      "file": "cocosair-ui-2d/SKILL.md",
+      "target": "cocosair-ui-2d/references/quick-start.md"
+    },
+    {
+      "file": "cocosair-ui-2d/SKILL.md",
+      "target": "cocosair-ui-2d/references/context.md"
+    },
+    {
+      "file": "cocosair-ui-2d/SKILL.md",
+      "target": "cocosair-ui-2d/references/triggers.md"
+    },
+    {
+      "file": "cocosair-ui-2d/SKILL.md",
+      "target": "cocosair-ui-2d/references/contracts.md"
+    },
+    {
+      "file": "cocosair-ui-2d/SKILL.md",
+      "target": "cocosair-ui-2d/references/common-mistakes.md"
+    },
+    {
+      "file": "cocosair-ui-2d/SKILL.md",
+      "target": "cocosair-ui-2d/references/canvas-widget-layout.md"
+    },
+    {
+      "file": "cocosair-ui-2d/SKILL.md",
+      "target": "cocosair-ui-2d/references/widgets.md"
+    },
+    {
+      "file": "cocosair-ui-2d/SKILL.md",
+      "target": "cocosair-ui-2d/references/label-and-text.md"
+    },
+    {
+      "file": "cocosair-ui-2d/SKILL.md",
+      "target": "cocosair-ui-2d/references/sorting.md"
+    },
+    {
+      "file": "cocosair-ui-2d/references/context.md",
+      "target": "cocosair/references/environment.md"
+    },
+    {
+      "file": "cocosair-ui-2d/references/context.md",
+      "target": "cocosair/SKILL.md"
+    },
+    {
+      "file": "cocosair-ui-2d/references/context.md",
+      "target": "cocosair-scene-graph/SKILL.md"
+    },
+    {
+      "file": "cocosair-ui-2d/references/context.md",
+      "target": "cocosair-camera/SKILL.md"
+    },
+    {
+      "file": "cocosair-ui-2d/references/context.md",
+      "target": "cocosair-assets/SKILL.md"
+    },
+    {
+      "file": "cocosair-ui-2d/references/context.md",
+      "target": "cocosair-graphics-and-dom/SKILL.md"
+    },
+    {
+      "file": "cocosair-ui-2d/references/context.md",
+      "target": "cocosair-performance/SKILL.md"
+    },
+    {
+      "file": "cocosair-ui-2d/references/context.md",
+      "target": "cocosair-verification/SKILL.md"
+    },
+    {
+      "file": "cocosair-ui-2d/references/context.md",
+      "target": "cocosair-ui-2d/references/context.md"
+    },
+    {
+      "file": "cocosair-ui-2d/references/context.md",
+      "target": "cocosair-ui-2d/references/quick-start.md"
+    },
+    {
+      "file": "cocosair-ui-2d/references/context.md",
+      "target": "cocosair-ui-2d/references/context.md"
+    },
+    {
+      "file": "cocosair-ui-2d/references/context.md",
+      "target": "cocosair-ui-2d/references/common-mistakes.md"
+    },
+    {
+      "file": "cocosair-ui-2d/references/context.md",
+      "target": "cocosair-ui-2d/references/canvas-widget-layout.md"
+    },
+    {
+      "file": "cocosair-ui-2d/references/context.md",
+      "target": "cocosair-ui-2d/references/widgets.md"
+    },
+    {
+      "file": "cocosair-ui-2d/references/context.md",
+      "target": "cocosair-ui-2d/references/label-and-text.md"
+    },
+    {
+      "file": "cocosair-ui-2d/references/context.md",
+      "target": "cocosair-ui-2d/references/sorting.md"
+    },
+    {
+      "file": "cocosair-ui-2d/references/triggers.md",
+      "target": "cocosair-ui-2d/references/contracts.md"
+    },
+    {
+      "file": "cocosair-ui-2d/references/triggers.md",
+      "target": "cocosair-ui-2d/references/widgets.md"
+    },
+    {
+      "file": "cocosair-ui-2d/references/triggers.md",
+      "target": "cocosair-ui-2d/references/sorting.md"
+    },
+    {
+      "file": "cocosair-ui-2d/references/widgets.md",
+      "target": "cocosair-ui-2d/references/label-and-text.md"
+    },
+    {
+      "file": "cocosair-graphics-and-dom/SKILL.md",
+      "target": "cocosair-graphics-and-dom/references/context.md"
+    },
+    {
+      "file": "cocosair-graphics-and-dom/SKILL.md",
+      "target": "cocosair-graphics-and-dom/references/quick-start.md"
+    },
+    {
+      "file": "cocosair-graphics-and-dom/SKILL.md",
+      "target": "cocosair-graphics-and-dom/references/context.md"
+    },
+    {
+      "file": "cocosair-graphics-and-dom/SKILL.md",
+      "target": "cocosair-graphics-and-dom/references/triggers.md"
+    },
+    {
+      "file": "cocosair-graphics-and-dom/SKILL.md",
+      "target": "cocosair-graphics-and-dom/references/contracts.md"
+    },
+    {
+      "file": "cocosair-graphics-and-dom/SKILL.md",
+      "target": "cocosair-graphics-and-dom/references/common-mistakes.md"
+    },
+    {
+      "file": "cocosair-graphics-and-dom/SKILL.md",
+      "target": "cocosair-graphics-and-dom/references/commands.md"
+    },
+    {
+      "file": "cocosair-graphics-and-dom/SKILL.md",
+      "target": "cocosair-graphics-and-dom/references/raster.md"
+    },
+    {
+      "file": "cocosair-graphics-and-dom/SKILL.md",
+      "target": "cocosair-graphics-and-dom/references/sprite-mask.md"
+    },
+    {
+      "file": "cocosair-graphics-and-dom/SKILL.md",
+      "target": "cocosair-graphics-and-dom/references/ui-blend.md"
+    },
+    {
+      "file": "cocosair-graphics-and-dom/SKILL.md",
+      "target": "cocosair-graphics-and-dom/references/texture-sprite.md"
+    },
+    {
+      "file": "cocosair-graphics-and-dom/SKILL.md",
+      "target": "cocosair-graphics-and-dom/references/ui-mesh.md"
+    },
+    {
+      "file": "cocosair-graphics-and-dom/SKILL.md",
+      "target": "cocosair-graphics-and-dom/references/dom-overlay.md"
+    },
+    {
+      "file": "cocosair-graphics-and-dom/SKILL.md",
+      "target": "cocosair-graphics-and-dom/references/html-source.md"
+    },
+    {
+      "file": "cocosair-graphics-and-dom/references/commands.md",
+      "target": "cocosair-graphics-and-dom/references/raster.md"
+    },
+    {
+      "file": "cocosair-graphics-and-dom/references/commands.md",
+      "target": "cocosair-graphics-and-dom/references/verification-commands.md"
+    },
+    {
+      "file": "cocosair-graphics-and-dom/references/context.md",
+      "target": "cocosair/references/environment.md"
+    },
+    {
+      "file": "cocosair-graphics-and-dom/references/context.md",
+      "target": "cocosair/SKILL.md"
+    },
+    {
+      "file": "cocosair-graphics-and-dom/references/context.md",
+      "target": "cocosair-scene-graph/SKILL.md"
+    },
+    {
+      "file": "cocosair-graphics-and-dom/references/context.md",
+      "target": "cocosair-camera/SKILL.md"
+    },
+    {
+      "file": "cocosair-graphics-and-dom/references/context.md",
+      "target": "cocosair-ui-2d/SKILL.md"
+    },
+    {
+      "file": "cocosair-graphics-and-dom/references/context.md",
+      "target": "cocosair-assets/SKILL.md"
+    },
+    {
+      "file": "cocosair-graphics-and-dom/references/context.md",
+      "target": "cocosair-rendering/SKILL.md"
+    },
+    {
+      "file": "cocosair-graphics-and-dom/references/context.md",
+      "target": "cocosair-performance/SKILL.md"
+    },
+    {
+      "file": "cocosair-graphics-and-dom/references/context.md",
+      "target": "cocosair-verification/SKILL.md"
+    },
+    {
+      "file": "cocosair-graphics-and-dom/references/context.md",
+      "target": "cocosair-graphics-and-dom/references/context.md"
+    },
+    {
+      "file": "cocosair-graphics-and-dom/references/context.md",
+      "target": "cocosair-graphics-and-dom/references/quick-start.md"
+    },
+    {
+      "file": "cocosair-graphics-and-dom/references/context.md",
+      "target": "cocosair-graphics-and-dom/references/context.md"
+    },
+    {
+      "file": "cocosair-graphics-and-dom/references/context.md",
+      "target": "cocosair-graphics-and-dom/references/common-mistakes.md"
+    },
+    {
+      "file": "cocosair-graphics-and-dom/references/context.md",
+      "target": "cocosair-graphics-and-dom/references/html-source.md"
+    },
+    {
+      "file": "cocosair-graphics-and-dom/references/context.md",
+      "target": "cocosair-graphics-and-dom/references/commands.md"
+    },
+    {
+      "file": "cocosair-graphics-and-dom/references/context.md",
+      "target": "cocosair-graphics-and-dom/references/raster.md"
+    },
+    {
+      "file": "cocosair-graphics-and-dom/references/context.md",
+      "target": "cocosair-graphics-and-dom/references/sprite-mask.md"
+    },
+    {
+      "file": "cocosair-graphics-and-dom/references/context.md",
+      "target": "cocosair-graphics-and-dom/references/ui-blend.md"
+    },
+    {
+      "file": "cocosair-graphics-and-dom/references/context.md",
+      "target": "cocosair-graphics-and-dom/references/texture-sprite.md"
+    },
+    {
+      "file": "cocosair-graphics-and-dom/references/context.md",
+      "target": "cocosair-graphics-and-dom/references/ui-mesh.md"
+    },
+    {
+      "file": "cocosair-graphics-and-dom/references/context.md",
+      "target": "cocosair-graphics-and-dom/references/dom-overlay.md"
+    },
+    {
+      "file": "cocosair-graphics-and-dom/references/context.md",
+      "target": "cocosair-graphics-and-dom/references/html-source.md"
+    },
+    {
+      "file": "cocosair-graphics-and-dom/references/raster.md",
+      "target": "cocosair-graphics-and-dom/references/texture-sprite.md"
+    },
+    {
+      "file": "cocosair-graphics-and-dom/references/sprite-mask.md",
+      "target": "cocosair-graphics-and-dom/references/verification-commands.md"
+    },
+    {
+      "file": "cocosair-graphics-and-dom/references/texture-sprite.md",
+      "target": "cocosair-graphics-and-dom/references/raster.md"
+    },
+    {
+      "file": "cocosair-graphics-and-dom/references/texture-sprite.md",
+      "target": "cocosair-graphics-and-dom/references/sprite-mask.md"
+    },
+    {
+      "file": "cocosair-graphics-and-dom/references/triggers.md",
+      "target": "cocosair-graphics-and-dom/references/html-source.md"
+    },
+    {
+      "file": "cocosair-graphics-and-dom/references/ui-mesh.md",
+      "target": "cocosair-graphics-and-dom/references/commands.md"
+    },
+    {
+      "file": "cocosair-graphics-and-dom/references/ui-mesh.md",
+      "target": "cocosair-graphics-and-dom/references/raster.md"
+    },
+    {
+      "file": "cocosair-graphics-and-dom/references/ui-mesh.md",
+      "target": "cocosair-graphics-and-dom/references/texture-sprite.md"
+    },
+    {
+      "file": "cocosair-graphics-and-dom/references/verification-commands.md",
+      "target": "cocosair-graphics-and-dom/references/context.md"
+    },
+    {
+      "file": "cocosair-2d-subsystems/SKILL.md",
+      "target": "cocosair-2d-subsystems/references/context.md"
+    },
+    {
+      "file": "cocosair-2d-subsystems/SKILL.md",
+      "target": "cocosair-2d-subsystems/references/quick-start.md"
+    },
+    {
+      "file": "cocosair-2d-subsystems/SKILL.md",
+      "target": "cocosair-2d-subsystems/references/context.md"
+    },
+    {
+      "file": "cocosair-2d-subsystems/SKILL.md",
+      "target": "cocosair-2d-subsystems/references/triggers.md"
+    },
+    {
+      "file": "cocosair-2d-subsystems/SKILL.md",
+      "target": "cocosair-2d-subsystems/references/contracts.md"
+    },
+    {
+      "file": "cocosair-2d-subsystems/SKILL.md",
+      "target": "cocosair-2d-subsystems/references/common-mistakes.md"
+    },
+    {
+      "file": "cocosair-2d-subsystems/SKILL.md",
+      "target": "cocosair-2d-subsystems/references/spine.md"
+    },
+    {
+      "file": "cocosair-2d-subsystems/SKILL.md",
+      "target": "cocosair-2d-subsystems/references/dragonbones.md"
+    },
+    {
+      "file": "cocosair-2d-subsystems/SKILL.md",
+      "target": "cocosair-2d-subsystems/references/tiledmap.md"
+    },
+    {
+      "file": "cocosair-2d-subsystems/SKILL.md",
+      "target": "cocosair-2d-subsystems/references/particle-2d.md"
+    },
+    {
+      "file": "cocosair-2d-subsystems/SKILL.md",
+      "target": "cocosair-2d-subsystems/references/billboard.md"
+    },
+    {
+      "file": "cocosair-2d-subsystems/references/context.md",
+      "target": "cocosair/references/environment.md"
+    },
+    {
+      "file": "cocosair-2d-subsystems/references/context.md",
+      "target": "cocosair/SKILL.md"
+    },
+    {
+      "file": "cocosair-2d-subsystems/references/context.md",
+      "target": "cocosair-ui-2d/SKILL.md"
+    },
+    {
+      "file": "cocosair-2d-subsystems/references/context.md",
+      "target": "cocosair-assets/SKILL.md"
+    },
+    {
+      "file": "cocosair-2d-subsystems/references/context.md",
+      "target": "cocosair-scene-graph/SKILL.md"
+    },
+    {
+      "file": "cocosair-2d-subsystems/references/context.md",
+      "target": "cocosair-materials-effects/SKILL.md"
+    },
+    {
+      "file": "cocosair-2d-subsystems/references/context.md",
+      "target": "cocosair-camera/SKILL.md"
+    },
+    {
+      "file": "cocosair-2d-subsystems/references/context.md",
+      "target": "cocosair-project-setup/SKILL.md"
+    },
+    {
+      "file": "cocosair-2d-subsystems/references/context.md",
+      "target": "cocosair-2d-subsystems/references/context.md"
+    },
+    {
+      "file": "cocosair-2d-subsystems/references/context.md",
+      "target": "cocosair-2d-subsystems/references/quick-start.md"
+    },
+    {
+      "file": "cocosair-2d-subsystems/references/context.md",
+      "target": "cocosair-2d-subsystems/references/context.md"
+    },
+    {
+      "file": "cocosair-2d-subsystems/references/context.md",
+      "target": "cocosair-2d-subsystems/references/common-mistakes.md"
+    },
+    {
+      "file": "cocosair-2d-subsystems/references/context.md",
+      "target": "cocosair-2d-subsystems/references/spine.md"
+    },
+    {
+      "file": "cocosair-2d-subsystems/references/context.md",
+      "target": "cocosair-2d-subsystems/references/dragonbones.md"
+    },
+    {
+      "file": "cocosair-2d-subsystems/references/context.md",
+      "target": "cocosair-2d-subsystems/references/tiledmap.md"
+    },
+    {
+      "file": "cocosair-2d-subsystems/references/context.md",
+      "target": "cocosair-2d-subsystems/references/particle-2d.md"
+    },
+    {
+      "file": "cocosair-2d-subsystems/references/context.md",
+      "target": "cocosair-2d-subsystems/references/billboard.md"
+    },
+    {
+      "file": "cocosair-2d-subsystems/references/contracts.md",
+      "target": "cocosair-2d-subsystems/references/spine.md"
+    },
+    {
+      "file": "cocosair-2d-subsystems/references/contracts.md",
+      "target": "cocosair-2d-subsystems/references/dragonbones.md"
+    },
+    {
+      "file": "cocosair-2d-subsystems/references/contracts.md",
+      "target": "cocosair-2d-subsystems/references/tiledmap.md"
+    },
+    {
+      "file": "cocosair-2d-subsystems/references/contracts.md",
+      "target": "cocosair-2d-subsystems/references/particle-2d.md"
+    },
+    {
+      "file": "cocosair-2d-subsystems/references/contracts.md",
+      "target": "cocosair-2d-subsystems/references/billboard.md"
+    },
+    {
+      "file": "cocosair-input-action/SKILL.md",
+      "target": "cocosair-input-action/references/context.md"
+    },
+    {
+      "file": "cocosair-input-action/SKILL.md",
+      "target": "cocosair-input-action/references/quick-start.md"
+    },
+    {
+      "file": "cocosair-input-action/SKILL.md",
+      "target": "cocosair-input-action/references/context.md"
+    },
+    {
+      "file": "cocosair-input-action/SKILL.md",
+      "target": "cocosair-input-action/references/triggers.md"
+    },
+    {
+      "file": "cocosair-input-action/SKILL.md",
+      "target": "cocosair-input-action/references/contracts.md"
+    },
+    {
+      "file": "cocosair-input-action/SKILL.md",
+      "target": "cocosair-input-action/references/common-mistakes.md"
+    },
+    {
+      "file": "cocosair-input-action/SKILL.md",
+      "target": "cocosair-input-action/references/native-input.md"
+    },
+    {
+      "file": "cocosair-input-action/SKILL.md",
+      "target": "cocosair-input-action/references/action-state.md"
+    },
+    {
+      "file": "cocosair-input-action/SKILL.md",
+      "target": "cocosair-input-action/references/action-input.md"
+    },
+    {
+      "file": "cocosair-input-action/SKILL.md",
+      "target": "cocosair-input-action/references/scene-stack.md"
+    },
+    {
+      "file": "cocosair-input-action/references/context.md",
+      "target": "cocosair/references/environment.md"
+    },
+    {
+      "file": "cocosair-input-action/references/context.md",
+      "target": "cocosair/SKILL.md"
+    },
+    {
+      "file": "cocosair-input-action/references/context.md",
+      "target": "cocosair-application/SKILL.md"
+    },
+    {
+      "file": "cocosair-input-action/references/context.md",
+      "target": "cocosair-scene-graph/SKILL.md"
+    },
+    {
+      "file": "cocosair-input-action/references/context.md",
+      "target": "cocosair-camera/SKILL.md"
+    },
+    {
+      "file": "cocosair-input-action/references/context.md",
+      "target": "cocosair-verification/SKILL.md"
+    },
+    {
+      "file": "cocosair-input-action/references/context.md",
+      "target": "cocosair-input-action/references/context.md"
+    },
+    {
+      "file": "cocosair-input-action/references/context.md",
+      "target": "cocosair-input-action/references/quick-start.md"
+    },
+    {
+      "file": "cocosair-input-action/references/context.md",
+      "target": "cocosair-input-action/references/context.md"
+    },
+    {
+      "file": "cocosair-input-action/references/context.md",
+      "target": "cocosair-input-action/references/common-mistakes.md"
+    },
+    {
+      "file": "cocosair-input-action/references/context.md",
+      "target": "cocosair-input-action/references/native-input.md"
+    },
+    {
+      "file": "cocosair-input-action/references/context.md",
+      "target": "cocosair-input-action/references/action-state.md"
+    },
+    {
+      "file": "cocosair-input-action/references/context.md",
+      "target": "cocosair-input-action/references/action-input.md"
+    },
+    {
+      "file": "cocosair-input-action/references/context.md",
+      "target": "cocosair-input-action/references/scene-stack.md"
+    },
+    {
+      "file": "cocosair-input-action/references/native-input.md",
+      "target": "cocosair-input-action/references/action-state.md"
+    },
+    {
+      "file": "cocosair-input-action/references/native-input.md",
+      "target": "cocosair-input-action/references/action-input.md"
+    },
+    {
+      "file": "cocosair-input-action/references/native-input.md",
+      "target": "cocosair-input-action/references/action-state.md"
+    },
+    {
+      "file": "cocosair-input-action/references/native-input.md",
+      "target": "cocosair-input-action/references/action-input.md"
+    },
+    {
+      "file": "cocosair-physics/SKILL.md",
+      "target": "cocosair-physics/references/context.md"
+    },
+    {
+      "file": "cocosair-physics/SKILL.md",
+      "target": "cocosair-physics/references/quick-start.md"
+    },
+    {
+      "file": "cocosair-physics/SKILL.md",
+      "target": "cocosair-physics/references/context.md"
+    },
+    {
+      "file": "cocosair-physics/SKILL.md",
+      "target": "cocosair-physics/references/triggers.md"
+    },
+    {
+      "file": "cocosair-physics/SKILL.md",
+      "target": "cocosair-physics/references/contracts.md"
+    },
+    {
+      "file": "cocosair-physics/SKILL.md",
+      "target": "cocosair-physics/references/common-mistakes.md"
+    },
+    {
+      "file": "cocosair-physics/SKILL.md",
+      "target": "cocosair-physics/references/backend-selection.md"
+    },
+    {
+      "file": "cocosair-physics/SKILL.md",
+      "target": "cocosair-physics/references/3d-contracts.md"
+    },
+    {
+      "file": "cocosair-physics/SKILL.md",
+      "target": "cocosair-physics/references/2d-box2d.md"
+    },
+    {
+      "file": "cocosair-physics/references/3d-contracts.md",
+      "target": "cocosair-physics/references/backend-selection.md"
+    },
+    {
+      "file": "cocosair-physics/references/context.md",
+      "target": "cocosair/references/environment.md"
+    },
+    {
+      "file": "cocosair-physics/references/context.md",
+      "target": "cocosair/SKILL.md"
+    },
+    {
+      "file": "cocosair-physics/references/context.md",
+      "target": "cocosair-application/SKILL.md"
+    },
+    {
+      "file": "cocosair-physics/references/context.md",
+      "target": "cocosair-scene-graph/SKILL.md"
+    },
+    {
+      "file": "cocosair-physics/references/context.md",
+      "target": "cocosair-verification/SKILL.md"
+    },
+    {
+      "file": "cocosair-physics/references/context.md",
+      "target": "cocosair-physics/references/context.md"
+    },
+    {
+      "file": "cocosair-physics/references/context.md",
+      "target": "cocosair-physics/references/quick-start.md"
+    },
+    {
+      "file": "cocosair-physics/references/context.md",
+      "target": "cocosair-physics/references/context.md"
+    },
+    {
+      "file": "cocosair-physics/references/context.md",
+      "target": "cocosair-physics/references/common-mistakes.md"
+    },
+    {
+      "file": "cocosair-physics/references/context.md",
+      "target": "cocosair-physics/references/backend-selection.md"
+    },
+    {
+      "file": "cocosair-physics/references/context.md",
+      "target": "cocosair-physics/references/3d-contracts.md"
+    },
+    {
+      "file": "cocosair-physics/references/context.md",
+      "target": "cocosair-physics/references/2d-box2d.md"
+    },
+    {
+      "file": "cocosair-physics/references/triggers.md",
+      "target": "cocosair-physics/references/contracts.md"
+    },
+    {
+      "file": "cocosair-physics/references/triggers.md",
+      "target": "cocosair-physics/references/2d-box2d.md"
+    },
+    {
+      "file": "cocosair-physics/references/triggers.md",
+      "target": "cocosair-physics/references/backend-selection.md"
+    },
+    {
+      "file": "cocosair-audio-video/SKILL.md",
+      "target": "cocosair-audio-video/references/context.md"
+    },
+    {
+      "file": "cocosair-audio-video/SKILL.md",
+      "target": "cocosair-audio-video/references/quick-start.md"
+    },
+    {
+      "file": "cocosair-audio-video/SKILL.md",
+      "target": "cocosair-audio-video/references/context.md"
+    },
+    {
+      "file": "cocosair-audio-video/SKILL.md",
+      "target": "cocosair-audio-video/references/triggers.md"
+    },
+    {
+      "file": "cocosair-audio-video/SKILL.md",
+      "target": "cocosair-audio-video/references/contracts.md"
+    },
+    {
+      "file": "cocosair-audio-video/SKILL.md",
+      "target": "cocosair-audio-video/references/common-mistakes.md"
+    },
+    {
+      "file": "cocosair-audio-video/SKILL.md",
+      "target": "cocosair-audio-video/references/audio-service.md"
+    },
+    {
+      "file": "cocosair-audio-video/SKILL.md",
+      "target": "cocosair-audio-video/references/videoplayer.md"
+    },
+    {
+      "file": "cocosair-audio-video/SKILL.md",
+      "target": "cocosair-audio-video/references/webview.md"
+    },
+    {
+      "file": "cocosair-audio-video/references/context.md",
+      "target": "cocosair/references/environment.md"
+    },
+    {
+      "file": "cocosair-audio-video/references/context.md",
+      "target": "cocosair/SKILL.md"
+    },
+    {
+      "file": "cocosair-audio-video/references/context.md",
+      "target": "cocosair-application/SKILL.md"
+    },
+    {
+      "file": "cocosair-audio-video/references/context.md",
+      "target": "cocosair-assets/SKILL.md"
+    },
+    {
+      "file": "cocosair-audio-video/references/context.md",
+      "target": "cocosair-scene-graph/SKILL.md"
+    },
+    {
+      "file": "cocosair-audio-video/references/context.md",
+      "target": "cocosair-graphics-and-dom/SKILL.md"
+    },
+    {
+      "file": "cocosair-audio-video/references/context.md",
+      "target": "cocosair-verification/SKILL.md"
+    },
+    {
+      "file": "cocosair-audio-video/references/context.md",
+      "target": "cocosair-audio-video/references/context.md"
+    },
+    {
+      "file": "cocosair-audio-video/references/context.md",
+      "target": "cocosair-audio-video/references/quick-start.md"
+    },
+    {
+      "file": "cocosair-audio-video/references/context.md",
+      "target": "cocosair-audio-video/references/context.md"
+    },
+    {
+      "file": "cocosair-audio-video/references/context.md",
+      "target": "cocosair-audio-video/references/common-mistakes.md"
+    },
+    {
+      "file": "cocosair-audio-video/references/context.md",
+      "target": "cocosair-audio-video/references/audio-service.md"
+    },
+    {
+      "file": "cocosair-audio-video/references/context.md",
+      "target": "cocosair-audio-video/references/videoplayer.md"
+    },
+    {
+      "file": "cocosair-audio-video/references/context.md",
+      "target": "cocosair-audio-video/references/webview.md"
+    },
+    {
+      "file": "cocosair-agent-session/SKILL.md",
+      "target": "cocosair-agent-session/references/context.md"
+    },
+    {
+      "file": "cocosair-agent-session/SKILL.md",
+      "target": "cocosair-agent-session/references/quick-start.md"
+    },
+    {
+      "file": "cocosair-agent-session/SKILL.md",
+      "target": "cocosair-agent-session/references/context.md"
+    },
+    {
+      "file": "cocosair-agent-session/SKILL.md",
+      "target": "cocosair-agent-session/references/triggers.md"
+    },
+    {
+      "file": "cocosair-agent-session/SKILL.md",
+      "target": "cocosair-agent-session/references/contracts.md"
+    },
+    {
+      "file": "cocosair-agent-session/SKILL.md",
+      "target": "cocosair-agent-session/references/common-mistakes.md"
+    },
+    {
+      "file": "cocosair-agent-session/SKILL.md",
+      "target": "cocosair-agent-session/references/agent-session.md"
+    },
+    {
+      "file": "cocosair-agent-session/SKILL.md",
+      "target": "cocosair-agent-session/references/runtime-control.md"
+    },
+    {
+      "file": "cocosair-agent-session/SKILL.md",
+      "target": "cocosair-agent-session/references/visual-probes.md"
+    },
+    {
+      "file": "cocosair-agent-session/references/context.md",
+      "target": "cocosair/references/environment.md"
+    },
+    {
+      "file": "cocosair-agent-session/references/context.md",
+      "target": "cocosair/SKILL.md"
+    },
+    {
+      "file": "cocosair-agent-session/references/context.md",
+      "target": "cocosair-application/SKILL.md"
+    },
+    {
+      "file": "cocosair-agent-session/references/context.md",
+      "target": "cocosair-scene-graph/SKILL.md"
+    },
+    {
+      "file": "cocosair-agent-session/references/context.md",
+      "target": "cocosair-rendering/SKILL.md"
+    },
+    {
+      "file": "cocosair-agent-session/references/context.md",
+      "target": "cocosair-verification/SKILL.md"
+    },
+    {
+      "file": "cocosair-agent-session/references/context.md",
+      "target": "cocosair-performance/SKILL.md"
+    },
+    {
+      "file": "cocosair-agent-session/references/context.md",
+      "target": "cocosair-agent-session/references/context.md"
+    },
+    {
+      "file": "cocosair-agent-session/references/context.md",
+      "target": "cocosair-agent-session/references/quick-start.md"
+    },
+    {
+      "file": "cocosair-agent-session/references/context.md",
+      "target": "cocosair-agent-session/references/context.md"
+    },
+    {
+      "file": "cocosair-agent-session/references/context.md",
+      "target": "cocosair-agent-session/references/common-mistakes.md"
+    },
+    {
+      "file": "cocosair-agent-session/references/context.md",
+      "target": "cocosair-agent-session/references/agent-session.md"
+    },
+    {
+      "file": "cocosair-agent-session/references/context.md",
+      "target": "cocosair-agent-session/references/runtime-control.md"
+    },
+    {
+      "file": "cocosair-agent-session/references/context.md",
+      "target": "cocosair-agent-session/references/visual-probes.md"
+    },
+    {
+      "file": "cocosair-agent-session/references/triggers.md",
+      "target": "cocosair-agent-session/references/contracts.md"
+    },
+    {
+      "file": "cocosair-verification/SKILL.md",
+      "target": "cocosair-verification/references/context.md"
+    },
+    {
+      "file": "cocosair-verification/SKILL.md",
+      "target": "cocosair-verification/references/quick-start.md"
+    },
+    {
+      "file": "cocosair-verification/SKILL.md",
+      "target": "cocosair-verification/references/context.md"
+    },
+    {
+      "file": "cocosair-verification/SKILL.md",
+      "target": "cocosair-verification/references/triggers.md"
+    },
+    {
+      "file": "cocosair-verification/SKILL.md",
+      "target": "cocosair-verification/references/contracts.md"
+    },
+    {
+      "file": "cocosair-verification/SKILL.md",
+      "target": "cocosair-verification/references/common-mistakes.md"
+    },
+    {
+      "file": "cocosair-verification/SKILL.md",
+      "target": "cocosair-verification/references/report-layers.md"
+    },
+    {
+      "file": "cocosair-verification/SKILL.md",
+      "target": "cocosair-verification/references/gate-catalog.md"
+    },
+    {
+      "file": "cocosair-verification/SKILL.md",
+      "target": "cocosair-verification/references/playwright-prereqs.md"
+    },
+    {
+      "file": "cocosair-verification/references/common-mistakes.md",
+      "target": "cocosair-verification/references/report-layers.md"
+    },
+    {
+      "file": "cocosair-verification/references/common-mistakes.md",
+      "target": "cocosair-verification/references/gate-catalog.md"
+    },
+    {
+      "file": "cocosair-verification/references/common-mistakes.md",
+      "target": "cocosair-verification/references/gate-catalog.md"
+    },
+    {
+      "file": "cocosair-verification/references/common-mistakes.md",
+      "target": "cocosair-verification/references/playwright-prereqs.md"
+    },
+    {
+      "file": "cocosair-verification/references/context.md",
+      "target": "cocosair/references/environment.md"
+    },
+    {
+      "file": "cocosair-verification/references/context.md",
+      "target": "cocosair/SKILL.md"
+    },
+    {
+      "file": "cocosair-verification/references/context.md",
+      "target": "cocosair-application/SKILL.md"
+    },
+    {
+      "file": "cocosair-verification/references/context.md",
+      "target": "cocosair-project-setup/SKILL.md"
+    },
+    {
+      "file": "cocosair-verification/references/context.md",
+      "target": "cocosair-performance/SKILL.md"
+    },
+    {
+      "file": "cocosair-verification/references/context.md",
+      "target": "cocosair-verification/references/context.md"
+    },
+    {
+      "file": "cocosair-verification/references/context.md",
+      "target": "cocosair-verification/references/quick-start.md"
+    },
+    {
+      "file": "cocosair-verification/references/context.md",
+      "target": "cocosair-verification/references/context.md"
+    },
+    {
+      "file": "cocosair-verification/references/context.md",
+      "target": "cocosair-verification/references/common-mistakes.md"
+    },
+    {
+      "file": "cocosair-verification/references/context.md",
+      "target": "cocosair-verification/references/report-layers.md"
+    },
+    {
+      "file": "cocosair-verification/references/context.md",
+      "target": "cocosair-verification/references/gate-catalog.md"
+    },
+    {
+      "file": "cocosair-verification/references/context.md",
+      "target": "cocosair-verification/references/playwright-prereqs.md"
+    },
+    {
+      "file": "cocosair-verification/references/contracts.md",
+      "target": "cocosair-verification/references/report-layers.md"
+    },
+    {
+      "file": "cocosair-verification/references/contracts.md",
+      "target": "cocosair-verification/references/gate-catalog.md"
+    },
+    {
+      "file": "cocosair-verification/references/contracts.md",
+      "target": "cocosair-verification/references/gate-catalog.md"
+    },
+    {
+      "file": "cocosair-verification/references/contracts.md",
+      "target": "cocosair-verification/references/report-layers.md"
+    },
+    {
+      "file": "cocosair-verification/references/contracts.md",
+      "target": "cocosair-verification/references/gate-catalog.md"
+    },
+    {
+      "file": "cocosair-verification/references/contracts.md",
+      "target": "cocosair-verification/references/playwright-prereqs.md"
+    },
+    {
+      "file": "cocosair-verification/references/gate-catalog.md",
+      "target": "cocosair/references/environment.md"
+    },
+    {
+      "file": "cocosair-verification/references/gate-catalog.md",
+      "target": "cocosair-verification/references/report-layers.md"
+    },
+    {
+      "file": "cocosair-verification/references/playwright-prereqs.md",
+      "target": "cocosair-verification/references/gate-catalog.md"
+    },
+    {
+      "file": "cocosair-verification/references/quick-start.md",
+      "target": "cocosair-verification/references/gate-catalog.md"
+    },
+    {
+      "file": "cocosair-verification/references/report-layers.md",
+      "target": "cocosair-verification/references/playwright-prereqs.md"
+    },
+    {
+      "file": "cocosair-verification/references/triggers.md",
+      "target": "cocosair-verification/references/contracts.md"
+    },
+    {
+      "file": "cocosair-verification/references/triggers.md",
+      "target": "cocosair-verification/references/report-layers.md"
+    },
+    {
+      "file": "cocosair-verification/references/triggers.md",
+      "target": "cocosair-verification/references/gate-catalog.md"
+    },
+    {
+      "file": "cocosair-verification/references/triggers.md",
+      "target": "cocosair-verification/references/gate-catalog.md"
+    },
+    {
+      "file": "INDEX.md",
+      "target": "cocosair/SKILL.md"
+    },
+    {
+      "file": "INDEX.md",
+      "target": "cocosair-2d-subsystems/SKILL.md"
+    },
+    {
+      "file": "INDEX.md",
+      "target": "cocosair-agent-session/SKILL.md"
+    },
+    {
+      "file": "INDEX.md",
+      "target": "cocosair-animation-tween/SKILL.md"
+    },
+    {
+      "file": "INDEX.md",
+      "target": "cocosair-application/SKILL.md"
+    },
+    {
+      "file": "INDEX.md",
+      "target": "cocosair-assets/SKILL.md"
+    },
+    {
+      "file": "INDEX.md",
+      "target": "cocosair-audio-video/SKILL.md"
+    },
+    {
+      "file": "INDEX.md",
+      "target": "cocosair-camera/SKILL.md"
+    },
+    {
+      "file": "INDEX.md",
+      "target": "cocosair-gltf/SKILL.md"
+    },
+    {
+      "file": "INDEX.md",
+      "target": "cocosair-graphics-and-dom/SKILL.md"
+    },
+    {
+      "file": "INDEX.md",
+      "target": "cocosair-input-action/SKILL.md"
+    },
+    {
+      "file": "INDEX.md",
+      "target": "cocosair-materials-effects/SKILL.md"
+    },
+    {
+      "file": "INDEX.md",
+      "target": "cocosair-math/SKILL.md"
+    },
+    {
+      "file": "INDEX.md",
+      "target": "cocosair-performance/SKILL.md"
+    },
+    {
+      "file": "INDEX.md",
+      "target": "cocosair-physics/SKILL.md"
+    },
+    {
+      "file": "INDEX.md",
+      "target": "cocosair-primitives-mesh/SKILL.md"
+    },
+    {
+      "file": "INDEX.md",
+      "target": "cocosair-project-setup/SKILL.md"
+    },
+    {
+      "file": "INDEX.md",
+      "target": "cocosair-rendering/SKILL.md"
+    },
+    {
+      "file": "INDEX.md",
+      "target": "cocosair-scene-graph/SKILL.md"
+    },
+    {
+      "file": "INDEX.md",
+      "target": "cocosair-skinning-morph/SKILL.md"
+    },
+    {
+      "file": "INDEX.md",
+      "target": "cocosair-ui-2d/SKILL.md"
+    },
+    {
+      "file": "INDEX.md",
+      "target": "cocosair-verification/SKILL.md"
+    }
+  ],
+  "failures": [],
+  "snapshot_hash": "7f246c153901eae7a31d0bd849904412b575e2cbd5d3cfc507eab502ff0ada41",
+  "distribution": "analysis only; no bundle mode implemented",
+  "inspection": {
+    "status": "PASS",
+    "files": 216,
+    "skills": 22,
+    "links": 764,
+    "failures": []
+  },
+  "closure_inspection": {
+    "status": "PASS",
+    "files": 215,
+    "skills": 22,
+    "links": 759,
+    "failures": []
+  }
+}

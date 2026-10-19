@@ -1,0 +1,273 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "source_directory": "/tmp/cocosairjs-skills-p1-final/reports",
+  "candidate_snapshot_hash": "7f246c153901eae7a31d0bd849904412b575e2cbd5d3cfc507eab502ff0ada41",
+  "reports": [
+    {
+      "original_report": "a-only-index.exit.json",
+      "artifact": "ai/plans/skills-token-evidence/recovery/a-only-final-paths.exit.json",
+      "sha256": "3f61b7edb784a95342b7f740c144564d015ed9c6432893f407c7d15a00b74e9b",
+      "bytes": 56
+    },
+    {
+      "original_report": "a-only-index.stderr",
+      "artifact": "ai/plans/skills-token-evidence/recovery/local-ci-reports/a-only-index.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "original_report": "a-only-index.stdout",
+      "artifact": "ai/plans/skills-token-evidence/recovery/final-index.json",
+      "sha256": "cafb9e2d8ba6415b387deb653f62857572a0de55665b803914389aea92e3ffab",
+      "bytes": 79
+    },
+    {
+      "original_report": "a-only-manifest.json",
+      "artifact": "ai/plans/skills-token-evidence/recovery/a-only-final-manifest.json",
+      "sha256": "ed54e39d627d46850c1511734c969f4690f91029592066d152e021356505802c",
+      "bytes": 55149
+    },
+    {
+      "original_report": "a-only-meta.exit.json",
+      "artifact": "ai/plans/skills-token-evidence/recovery/a-only-final-paths.exit.json",
+      "sha256": "3f61b7edb784a95342b7f740c144564d015ed9c6432893f407c7d15a00b74e9b",
+      "bytes": 56
+    },
+    {
+      "original_report": "a-only-meta.stderr",
+      "artifact": "ai/plans/skills-token-evidence/recovery/local-ci-reports/a-only-index.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "original_report": "a-only-meta.stdout",
+      "artifact": "ai/plans/skills-token-evidence/recovery/final-meta.json",
+      "sha256": "c872e91f09f9df8816df2552e60b615fe83053009825bc6eeaa229bb6b620b0d",
+      "bytes": 1178
+    },
+    {
+      "original_report": "a-only-paths.exit.json",
+      "artifact": "ai/plans/skills-token-evidence/recovery/a-only-final-paths.exit.json",
+      "sha256": "3f61b7edb784a95342b7f740c144564d015ed9c6432893f407c7d15a00b74e9b",
+      "bytes": 56
+    },
+    {
+      "original_report": "a-only-paths.stderr",
+      "artifact": "ai/plans/skills-token-evidence/recovery/local-ci-reports/a-only-index.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "original_report": "a-only-paths.stdout",
+      "artifact": "ai/plans/skills-token-evidence/recovery/a-only-final-paths.json",
+      "sha256": "42488188bf9ba420717000db94f15a467f630e8a7af854b6be77dac9c70cc167",
+      "bytes": 89
+    },
+    {
+      "original_report": "candidate-B1-diff.exit.json",
+      "artifact": "ai/plans/skills-token-evidence/recovery/a-only-final-paths.exit.json",
+      "sha256": "3f61b7edb784a95342b7f740c144564d015ed9c6432893f407c7d15a00b74e9b",
+      "bytes": 56
+    },
+    {
+      "original_report": "candidate-B1-diff.stderr",
+      "artifact": "ai/plans/skills-token-evidence/recovery/local-ci-reports/a-only-index.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "original_report": "candidate-B1-diff.stdout",
+      "artifact": "ai/plans/skills-token-evidence/recovery/candidate-B1-diff.json",
+      "sha256": "cce931fd19167224dc3f0a36fe58c6184c9cbfaa002fc8d9b91e1bf417d3e5af",
+      "bytes": 16579
+    },
+    {
+      "original_report": "candidate-index.exit.json",
+      "artifact": "ai/plans/skills-token-evidence/recovery/a-only-final-paths.exit.json",
+      "sha256": "3f61b7edb784a95342b7f740c144564d015ed9c6432893f407c7d15a00b74e9b",
+      "bytes": 56
+    },
+    {
+      "original_report": "candidate-index.stderr",
+      "artifact": "ai/plans/skills-token-evidence/recovery/local-ci-reports/a-only-index.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "original_report": "candidate-index.stdout",
+      "artifact": "ai/plans/skills-token-evidence/recovery/final-index.json",
+      "sha256": "cafb9e2d8ba6415b387deb653f62857572a0de55665b803914389aea92e3ffab",
+      "bytes": 79
+    },
+    {
+      "original_report": "candidate-lossless.exit.json",
+      "artifact": "ai/plans/skills-token-evidence/recovery/a-only-final-paths.exit.json",
+      "sha256": "3f61b7edb784a95342b7f740c144564d015ed9c6432893f407c7d15a00b74e9b",
+      "bytes": 56
+    },
+    {
+      "original_report": "candidate-lossless.stderr",
+      "artifact": "ai/plans/skills-token-evidence/recovery/local-ci-reports/a-only-index.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "original_report": "candidate-lossless.stdout",
+      "artifact": "ai/plans/skills-token-evidence/recovery/final-lossless-admission-fixed.json",
+      "sha256": "cc4798e196d297674c37e95b6e8b89dee5a4a4668ad1ca61c7a8dabf24455ab2",
+      "bytes": 584
+    },
+    {
+      "original_report": "candidate-meta.exit.json",
+      "artifact": "ai/plans/skills-token-evidence/recovery/a-only-final-paths.exit.json",
+      "sha256": "3f61b7edb784a95342b7f740c144564d015ed9c6432893f407c7d15a00b74e9b",
+      "bytes": 56
+    },
+    {
+      "original_report": "candidate-meta.stderr",
+      "artifact": "ai/plans/skills-token-evidence/recovery/local-ci-reports/a-only-index.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "original_report": "candidate-meta.stdout",
+      "artifact": "ai/plans/skills-token-evidence/recovery/final-meta.json",
+      "sha256": "c872e91f09f9df8816df2552e60b615fe83053009825bc6eeaa229bb6b620b0d",
+      "bytes": 1178
+    },
+    {
+      "original_report": "candidate-paths.exit.json",
+      "artifact": "ai/plans/skills-token-evidence/recovery/a-only-final-paths.exit.json",
+      "sha256": "3f61b7edb784a95342b7f740c144564d015ed9c6432893f407c7d15a00b74e9b",
+      "bytes": 56
+    },
+    {
+      "original_report": "candidate-paths.stderr",
+      "artifact": "ai/plans/skills-token-evidence/recovery/local-ci-reports/a-only-index.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "original_report": "candidate-paths.stdout",
+      "artifact": "ai/plans/skills-token-evidence/recovery/a-only-final-paths.json",
+      "sha256": "42488188bf9ba420717000db94f15a467f630e8a7af854b6be77dac9c70cc167",
+      "bytes": 89
+    },
+    {
+      "original_report": "candidate-route.exit.json",
+      "artifact": "ai/plans/skills-token-evidence/recovery/a-only-final-paths.exit.json",
+      "sha256": "3f61b7edb784a95342b7f740c144564d015ed9c6432893f407c7d15a00b74e9b",
+      "bytes": 56
+    },
+    {
+      "original_report": "candidate-route.stderr",
+      "artifact": "ai/plans/skills-token-evidence/recovery/local-ci-reports/a-only-index.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "original_report": "candidate-route.stdout",
+      "artifact": "ai/plans/skills-token-evidence/recovery/final-route.json",
+      "sha256": "f91fa111bab723bb84ff62de226de8e95c17474058ae0bf4690cde77a171b23b",
+      "bytes": 1320744
+    },
+    {
+      "original_report": "candidate-static-diff.exit.json",
+      "artifact": "ai/plans/skills-token-evidence/recovery/a-only-final-paths.exit.json",
+      "sha256": "3f61b7edb784a95342b7f740c144564d015ed9c6432893f407c7d15a00b74e9b",
+      "bytes": 56
+    },
+    {
+      "original_report": "candidate-static-diff.stderr",
+      "artifact": "ai/plans/skills-token-evidence/recovery/local-ci-reports/a-only-index.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "original_report": "candidate-static-diff.stdout",
+      "artifact": "ai/plans/skills-token-evidence/recovery/final-static.json",
+      "sha256": "44913762eb77588ec19c046895701cd44bd1a98cf050990239ad85882761bbe8",
+      "bytes": 96643
+    },
+    {
+      "original_report": "format-scope.json",
+      "artifact": "ai/plans/skills-token-evidence/recovery/local-ci-reports/format-scope.json",
+      "sha256": "b3b17632bbafb6731d4f52b208d12c70eb92973132f7e19e8cb6aa31009df2eb",
+      "bytes": 4051
+    },
+    {
+      "original_report": "modified-skills-prettier.stderr",
+      "artifact": "ai/plans/skills-token-evidence/recovery/local-ci-reports/a-only-index.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "original_report": "modified-skills-prettier.stdout",
+      "artifact": "ai/plans/skills-token-evidence/recovery/final-format-tools.txt",
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20",
+      "bytes": 66
+    },
+    {
+      "original_report": "original-paths.exit.json",
+      "artifact": "ai/plans/skills-token-evidence/recovery/local-ci-reports/original-paths.exit.json",
+      "sha256": "e20785cbd029b4282060d7695c257c3361085d17b7bd4fcb0f68125f6b51f884",
+      "bytes": 56
+    },
+    {
+      "original_report": "original-paths.stderr",
+      "artifact": "ai/plans/skills-token-evidence/recovery/local-ci-reports/a-only-index.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "original_report": "original-paths.stdout",
+      "artifact": "ai/plans/skills-token-evidence/recovery/local-ci-reports/original-paths.stdout",
+      "sha256": "f35137a2081ce810a3962ad1c08557fe209adc2b2d03b5af5b0eedb86bc7249a",
+      "bytes": 897
+    },
+    {
+      "original_report": "original-restore.exit.json",
+      "artifact": "ai/plans/skills-token-evidence/recovery/a-only-final-paths.exit.json",
+      "sha256": "3f61b7edb784a95342b7f740c144564d015ed9c6432893f407c7d15a00b74e9b",
+      "bytes": 56
+    },
+    {
+      "original_report": "original-restore.stderr",
+      "artifact": "ai/plans/skills-token-evidence/recovery/local-ci-reports/a-only-index.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "original_report": "original-restore.stdout",
+      "artifact": "ai/plans/skills-token-evidence/recovery/original-restore.json",
+      "sha256": "6ce78b30f1dc02cebedc57abe129934ca07734fb45f73cd51186e32731f797b1",
+      "bytes": 96551
+    },
+    {
+      "original_report": "prerequisite-chain.json",
+      "artifact": "ai/plans/skills-token-evidence/recovery/local-ci-reports/prerequisite-chain.json",
+      "sha256": "defa2646d839f6918ae7c57aafc499f38f2583b9d95b25c8e94d0985a687f54d",
+      "bytes": 1743
+    },
+    {
+      "original_report": "prerequisite-paths.exit.json",
+      "artifact": "ai/plans/skills-token-evidence/recovery/a-only-final-paths.exit.json",
+      "sha256": "3f61b7edb784a95342b7f740c144564d015ed9c6432893f407c7d15a00b74e9b",
+      "bytes": 56
+    },
+    {
+      "original_report": "prerequisite-paths.stderr",
+      "artifact": "ai/plans/skills-token-evidence/recovery/local-ci-reports/a-only-index.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "original_report": "prerequisite-paths.stdout",
+      "artifact": "ai/plans/skills-token-evidence/recovery/prerequisite-paths.json",
+      "sha256": "1af42296f3ae56f79f5d8fae87f8598025580a6d1e600a677eb0285e7788b636",
+      "bytes": 89
+    }
+  ],
+  "identical_bytes_referenced_once": true
+}

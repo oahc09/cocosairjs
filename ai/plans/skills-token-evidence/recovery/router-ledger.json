@@ -1,0 +1,911 @@
+{
+  "schema": 1,
+  "source_snapshot_hash": "46a9449ad54586ae70a914a77992801ea732270ab7f14509f40bf3792ee22d9d",
+  "entries": [
+    {
+      "source": {
+        "path": "skills/cocosair/SKILL.md",
+        "field": "description"
+      },
+      "source_hash": "1717991d026112b5fa92fa9dbc4897e36474898c209df1996ca48629bc783de3",
+      "kind": "metadata",
+      "destinations": [
+        {
+          "path": "skills/cocosair/references/context.md",
+          "block_id": "prose:L117-L117",
+          "hash": "2bc31e528a14ddb48dc75f294493e9b8ac793617c1aeaf17d38616cb8060a507"
+        }
+      ],
+      "operation": "deduplicate",
+      "link_map": [],
+      "review": {
+        "status": "approved",
+        "reviewer": "P1 implementation self-review (independent review recorded separately)",
+        "notes": "The complete source unit is retained at this exact destination; only explicitly listed relative links are rebased to the same logical target. Historical source wording is archived with its limitations, not asserted as new evidence.",
+        "equivalence": "The original description and metadata.description_en are exactly equal decoded strings and explicitly share this one complete archive paragraph."
+      }
+    },
+    {
+      "source": {
+        "path": "skills/cocosair/SKILL.md",
+        "field": "metadata.keywords"
+      },
+      "source_hash": "b818cf32c0e42353f154dfd73d79cbd4ea916a68ee772362333ad1c41354b695",
+      "kind": "metadata",
+      "destinations": [
+        {
+          "path": "skills/cocosair/references/context.md",
+          "block_id": "prose:L121-L121",
+          "hash": "835b9dca875fefbfeb3387b39afc567ec704bb157dc73859a6c8ee1161c11abc"
+        }
+      ],
+      "operation": "move",
+      "link_map": [],
+      "review": {
+        "status": "approved",
+        "reviewer": "P1 implementation self-review (independent review recorded separately)",
+        "notes": "The complete source unit is retained at this exact destination; only explicitly listed relative links are rebased to the same logical target. Historical source wording is archived with its limitations, not asserted as new evidence."
+      }
+    },
+    {
+      "source": {
+        "path": "skills/cocosair/SKILL.md",
+        "field": "metadata.description_en"
+      },
+      "source_hash": "1717991d026112b5fa92fa9dbc4897e36474898c209df1996ca48629bc783de3",
+      "kind": "metadata",
+      "destinations": [
+        {
+          "path": "skills/cocosair/references/context.md",
+          "block_id": "prose:L117-L117",
+          "hash": "2bc31e528a14ddb48dc75f294493e9b8ac793617c1aeaf17d38616cb8060a507"
+        }
+      ],
+      "operation": "deduplicate",
+      "link_map": [],
+      "review": {
+        "status": "approved",
+        "reviewer": "P1 implementation self-review (independent review recorded separately)",
+        "notes": "The complete source unit is retained at this exact destination; only explicitly listed relative links are rebased to the same logical target. Historical source wording is archived with its limitations, not asserted as new evidence.",
+        "equivalence": "The original description and metadata.description_en are exactly equal decoded strings and explicitly share this one complete archive paragraph."
+      }
+    },
+    {
+      "source": {
+        "path": "skills/cocosair/SKILL.md",
+        "block_id": "prose:L18-L18"
+      },
+      "source_hash": "5887e969fac475f714367e6defb4f7ab990e6cd8302c0375222a1b8e5ccead1e",
+      "kind": "prose",
+      "destinations": [
+        {
+          "path": "skills/cocosair/references/context.md",
+          "block_id": "prose:L54-L54",
+          "hash": "5887e969fac475f714367e6defb4f7ab990e6cd8302c0375222a1b8e5ccead1e"
+        }
+      ],
+      "operation": "move",
+      "link_map": [],
+      "review": {
+        "status": "approved",
+        "reviewer": "P1 implementation self-review (independent review recorded separately)",
+        "notes": "The complete source unit is retained at this exact destination; only explicitly listed relative links are rebased to the same logical target. Historical source wording is archived with its limitations, not asserted as new evidence."
+      }
+    },
+    {
+      "source": {
+        "path": "skills/cocosair/SKILL.md",
+        "block_id": "code:L22-L28"
+      },
+      "source_hash": "71e9897964728317a7162e36403121490d3d95eb0a01f7788ef6e8a254462f7d",
+      "kind": "code",
+      "destinations": [
+        {
+          "path": "skills/cocosair/references/context.md",
+          "block_id": "code:L58-L64",
+          "hash": "71e9897964728317a7162e36403121490d3d95eb0a01f7788ef6e8a254462f7d"
+        }
+      ],
+      "operation": "move",
+      "link_map": [],
+      "review": {
+        "status": "approved",
+        "reviewer": "P1 implementation self-review (independent review recorded separately)",
+        "notes": "The complete source unit is retained at this exact destination; only explicitly listed relative links are rebased to the same logical target. Historical source wording is archived with its limitations, not asserted as new evidence."
+      }
+    },
+    {
+      "source": {
+        "path": "skills/cocosair/SKILL.md",
+        "block_id": "prose:L30-L30"
+      },
+      "source_hash": "e9688a339891fe6f6c110a2dacc2d3146fdb02e76e0ad319ed14b180c39e4f0a",
+      "kind": "prose",
+      "destinations": [
+        {
+          "path": "skills/cocosair/references/context.md",
+          "block_id": "prose:L66-L66",
+          "hash": "e9688a339891fe6f6c110a2dacc2d3146fdb02e76e0ad319ed14b180c39e4f0a"
+        }
+      ],
+      "operation": "move",
+      "link_map": [],
+      "review": {
+        "status": "approved",
+        "reviewer": "P1 implementation self-review (independent review recorded separately)",
+        "notes": "The complete source unit is retained at this exact destination; only explicitly listed relative links are rebased to the same logical target. Historical source wording is archived with its limitations, not asserted as new evidence."
+      }
+    },
+    {
+      "source": {
+        "path": "skills/cocosair/SKILL.md",
+        "block_id": "heading:L32-L32"
+      },
+      "source_hash": "616256e36495617ce743f159af6785c5665d58fe82a8df74994832316ad6545d",
+      "kind": "heading",
+      "destinations": [
+        {
+          "path": "skills/cocosair/references/context.md",
+          "block_id": "heading:L7-L7",
+          "hash": "616256e36495617ce743f159af6785c5665d58fe82a8df74994832316ad6545d"
+        }
+      ],
+      "operation": "move",
+      "link_map": [],
+      "review": {
+        "status": "approved",
+        "reviewer": "P1 implementation self-review (independent review recorded separately)",
+        "notes": "The complete source unit is retained at this exact destination; only explicitly listed relative links are rebased to the same logical target. Historical source wording is archived with its limitations, not asserted as new evidence."
+      }
+    },
+    {
+      "source": {
+        "path": "skills/cocosair/SKILL.md",
+        "block_id": "prose:L34-L34"
+      },
+      "source_hash": "ae9bcee4bed8490c24f92afa0fdb2169af11ff3dabc16f32135d5105a55fd556",
+      "kind": "prose",
+      "destinations": [
+        {
+          "path": "skills/cocosair/references/context.md",
+          "block_id": "prose:L70-L70",
+          "hash": "b3526fb9309bc1d1c0d5969eb854554fe5e67db4cd7f0dcbdf2d4e65b0009f58"
+        }
+      ],
+      "operation": "move",
+      "link_map": [
+        {
+          "from": "references/context.md#related-skills",
+          "to": "context.md#related-skills",
+          "destination_path": "skills/cocosair/references/context.md"
+        }
+      ],
+      "review": {
+        "status": "approved",
+        "reviewer": "P1 implementation self-review (independent review recorded separately)",
+        "notes": "The complete source unit is retained at this exact destination; only explicitly listed relative links are rebased to the same logical target. Historical source wording is archived with its limitations, not asserted as new evidence."
+      }
+    },
+    {
+      "source": {
+        "path": "skills/cocosair/SKILL.md",
+        "block_id": "heading:L36-L36"
+      },
+      "source_hash": "34fdab2244b8eb493fae0cf4c638326cafe3b527e7918d3390934f530f0e1635",
+      "kind": "heading",
+      "destinations": [
+        {
+          "path": "skills/cocosair/references/context.md",
+          "block_id": "heading:L72-L72",
+          "hash": "34fdab2244b8eb493fae0cf4c638326cafe3b527e7918d3390934f530f0e1635"
+        }
+      ],
+      "operation": "move",
+      "link_map": [],
+      "review": {
+        "status": "approved",
+        "reviewer": "P1 implementation self-review (independent review recorded separately)",
+        "notes": "The complete source unit is retained at this exact destination; only explicitly listed relative links are rebased to the same logical target. Historical source wording is archived with its limitations, not asserted as new evidence."
+      }
+    },
+    {
+      "source": {
+        "path": "skills/cocosair/SKILL.md",
+        "block_id": "prose:L38-L42"
+      },
+      "source_hash": "a29f953e10304b35f7209ab044bdb6dac6551a39048673c91e6b0c4de958a536",
+      "kind": "prose",
+      "destinations": [
+        {
+          "path": "skills/cocosair/references/context.md",
+          "block_id": "prose:L74-L78",
+          "hash": "a29f953e10304b35f7209ab044bdb6dac6551a39048673c91e6b0c4de958a536"
+        }
+      ],
+      "operation": "move",
+      "link_map": [],
+      "review": {
+        "status": "approved",
+        "reviewer": "P1 implementation self-review (independent review recorded separately)",
+        "notes": "The complete source unit is retained at this exact destination; only explicitly listed relative links are rebased to the same logical target. Historical source wording is archived with its limitations, not asserted as new evidence."
+      }
+    },
+    {
+      "source": {
+        "path": "skills/cocosair/SKILL.md",
+        "block_id": "prose:L44-L44"
+      },
+      "source_hash": "e3b7a963113d76a31552013e2b9fc249b077b4d82f3cfeac856ebabff1ce87fb",
+      "kind": "prose",
+      "destinations": [
+        {
+          "path": "skills/cocosair/references/context.md",
+          "block_id": "prose:L80-L80",
+          "hash": "e3b7a963113d76a31552013e2b9fc249b077b4d82f3cfeac856ebabff1ce87fb"
+        }
+      ],
+      "operation": "move",
+      "link_map": [],
+      "review": {
+        "status": "approved",
+        "reviewer": "P1 implementation self-review (independent review recorded separately)",
+        "notes": "The complete source unit is retained at this exact destination; only explicitly listed relative links are rebased to the same logical target. Historical source wording is archived with its limitations, not asserted as new evidence."
+      }
+    },
+    {
+      "source": {
+        "path": "skills/cocosair/SKILL.md",
+        "block_id": "heading:L46-L46"
+      },
+      "source_hash": "7be0f94c403fc7393619d3be9c2144acd5b1162cd6c11871d18d0e8ea8a1200b",
+      "kind": "heading",
+      "destinations": [
+        {
+          "path": "skills/cocosair/references/triggers.md",
+          "block_id": "heading:L5-L5",
+          "hash": "7be0f94c403fc7393619d3be9c2144acd5b1162cd6c11871d18d0e8ea8a1200b"
+        }
+      ],
+      "operation": "move",
+      "link_map": [],
+      "review": {
+        "status": "approved",
+        "reviewer": "P1 implementation self-review (independent review recorded separately)",
+        "notes": "The complete source unit is retained at this exact destination; only explicitly listed relative links are rebased to the same logical target. Historical source wording is archived with its limitations, not asserted as new evidence."
+      }
+    },
+    {
+      "source": {
+        "path": "skills/cocosair/SKILL.md",
+        "block_id": "prose:L48-L50"
+      },
+      "source_hash": "1b3d847bd2b34b9f2ad447f3bdee7d8d507b0242639e7d89458c29b87b8dbe9b",
+      "kind": "prose",
+      "destinations": [
+        {
+          "path": "skills/cocosair/references/triggers.md",
+          "block_id": "prose:L7-L9",
+          "hash": "1b3d847bd2b34b9f2ad447f3bdee7d8d507b0242639e7d89458c29b87b8dbe9b"
+        }
+      ],
+      "operation": "move",
+      "link_map": [],
+      "review": {
+        "status": "approved",
+        "reviewer": "P1 implementation self-review (independent review recorded separately)",
+        "notes": "The complete source unit is retained at this exact destination; only explicitly listed relative links are rebased to the same logical target. Historical source wording is archived with its limitations, not asserted as new evidence."
+      }
+    },
+    {
+      "source": {
+        "path": "skills/cocosair/SKILL.md",
+        "block_id": "prose:L54-L54"
+      },
+      "source_hash": "ba8a09d950e3dfeb8be52545f4727623ccbdbeb323ba6154ac80be0f0d40cbca",
+      "kind": "prose",
+      "destinations": [
+        {
+          "path": "skills/cocosair/references/context.md",
+          "block_id": "prose:L84-L84",
+          "hash": "9488f5a75ce8b2c8f0300c1dcc2f67f3293a578be531a3c2a45699d70e72e1e4"
+        }
+      ],
+      "operation": "move",
+      "link_map": [
+        {
+          "from": "references/environment.md",
+          "to": "environment.md",
+          "destination_path": "skills/cocosair/references/context.md"
+        }
+      ],
+      "review": {
+        "status": "approved",
+        "reviewer": "P1 implementation self-review (independent review recorded separately)",
+        "notes": "The complete source unit is retained at this exact destination; only explicitly listed relative links are rebased to the same logical target. Historical source wording is archived with its limitations, not asserted as new evidence."
+      }
+    },
+    {
+      "source": {
+        "path": "skills/cocosair/SKILL.md",
+        "block_id": "prose:L63-L63"
+      },
+      "source_hash": "cdb4050bb39090866642a81d7e33be9e129bf530f0c234acd297113615803e44",
+      "kind": "prose",
+      "destinations": [
+        {
+          "path": "skills/cocosair/references/context.md",
+          "block_id": "prose:L93-L93",
+          "hash": "cdb4050bb39090866642a81d7e33be9e129bf530f0c234acd297113615803e44"
+        }
+      ],
+      "operation": "move",
+      "link_map": [],
+      "review": {
+        "status": "approved",
+        "reviewer": "P1 implementation self-review (independent review recorded separately)",
+        "notes": "The complete source unit is retained at this exact destination; only explicitly listed relative links are rebased to the same logical target. Historical source wording is archived with its limitations, not asserted as new evidence."
+      }
+    },
+    {
+      "source": {
+        "path": "skills/cocosair/SKILL.md",
+        "block_id": "prose:L67-L68"
+      },
+      "source_hash": "2f66959d8d8b7dd742612313139f82e20943bce268495537cb8cf9f40c39bde5",
+      "kind": "prose",
+      "destinations": [
+        {
+          "path": "skills/cocosair/references/context.md",
+          "block_id": "prose:L97-L98",
+          "hash": "2f66959d8d8b7dd742612313139f82e20943bce268495537cb8cf9f40c39bde5"
+        }
+      ],
+      "operation": "move",
+      "link_map": [],
+      "review": {
+        "status": "approved",
+        "reviewer": "P1 implementation self-review (independent review recorded separately)",
+        "notes": "The complete source unit is retained at this exact destination; only explicitly listed relative links are rebased to the same logical target. Historical source wording is archived with its limitations, not asserted as new evidence."
+      }
+    },
+    {
+      "source": {
+        "path": "skills/cocosair/SKILL.md",
+        "block_id": "heading:L72-L72"
+      },
+      "source_hash": "b6d01f1df0d21ed8927f718923249cd0dec5da033853f1e06ef0d0d44721df3c",
+      "kind": "heading",
+      "destinations": [
+        {
+          "path": "skills/cocosair/references/common-mistakes.md",
+          "block_id": "heading:L7-L7",
+          "hash": "b6d01f1df0d21ed8927f718923249cd0dec5da033853f1e06ef0d0d44721df3c"
+        }
+      ],
+      "operation": "move",
+      "link_map": [],
+      "review": {
+        "status": "approved",
+        "reviewer": "P1 implementation self-review (independent review recorded separately)",
+        "notes": "The complete source unit is retained at this exact destination; only explicitly listed relative links are rebased to the same logical target. Historical source wording is archived with its limitations, not asserted as new evidence."
+      }
+    },
+    {
+      "source": {
+        "path": "skills/cocosair/SKILL.md",
+        "block_id": "prose:L74-L74"
+      },
+      "source_hash": "27bf5c15cd205d53ec8974ebcf55b0c14f54a3e112845b786d136123ea3ea18a",
+      "kind": "prose",
+      "destinations": [
+        {
+          "path": "skills/cocosair/references/common-mistakes.md",
+          "block_id": "prose:L9-L9",
+          "hash": "27bf5c15cd205d53ec8974ebcf55b0c14f54a3e112845b786d136123ea3ea18a"
+        }
+      ],
+      "operation": "move",
+      "link_map": [],
+      "review": {
+        "status": "approved",
+        "reviewer": "P1 implementation self-review (independent review recorded separately)",
+        "notes": "The complete source unit is retained at this exact destination; only explicitly listed relative links are rebased to the same logical target. Historical source wording is archived with its limitations, not asserted as new evidence."
+      }
+    },
+    {
+      "source": {
+        "path": "skills/cocosair/SKILL.md",
+        "block_id": "code:L76-L80"
+      },
+      "source_hash": "11c4a57d3d4b4f8a44a0d7f74f88e75be5a5e6b7357e832ca72fadc13e2ecfbc",
+      "kind": "code",
+      "destinations": [
+        {
+          "path": "skills/cocosair/references/common-mistakes.md",
+          "block_id": "code:L11-L15",
+          "hash": "11c4a57d3d4b4f8a44a0d7f74f88e75be5a5e6b7357e832ca72fadc13e2ecfbc"
+        }
+      ],
+      "operation": "move",
+      "link_map": [],
+      "review": {
+        "status": "approved",
+        "reviewer": "P1 implementation self-review (independent review recorded separately)",
+        "notes": "The complete source unit is retained at this exact destination; only explicitly listed relative links are rebased to the same logical target. Historical source wording is archived with its limitations, not asserted as new evidence."
+      }
+    },
+    {
+      "source": {
+        "path": "skills/cocosair/SKILL.md",
+        "block_id": "prose:L82-L82"
+      },
+      "source_hash": "b828cc3afe744552ad56e94bfa24f120ed6cb4d8e0b3f55d862207cdcab9274f",
+      "kind": "prose",
+      "destinations": [
+        {
+          "path": "skills/cocosair/references/common-mistakes.md",
+          "block_id": "prose:L17-L17",
+          "hash": "b828cc3afe744552ad56e94bfa24f120ed6cb4d8e0b3f55d862207cdcab9274f"
+        }
+      ],
+      "operation": "move",
+      "link_map": [],
+      "review": {
+        "status": "approved",
+        "reviewer": "P1 implementation self-review (independent review recorded separately)",
+        "notes": "The complete source unit is retained at this exact destination; only explicitly listed relative links are rebased to the same logical target. Historical source wording is archived with its limitations, not asserted as new evidence."
+      }
+    },
+    {
+      "source": {
+        "path": "skills/cocosair/SKILL.md",
+        "block_id": "code:L84-L91"
+      },
+      "source_hash": "19ce13ad62dcef7f20e95bbfed41720588f19899d889f053a6a941c983d9bdbe",
+      "kind": "code",
+      "destinations": [
+        {
+          "path": "skills/cocosair/references/common-mistakes.md",
+          "block_id": "code:L19-L26",
+          "hash": "19ce13ad62dcef7f20e95bbfed41720588f19899d889f053a6a941c983d9bdbe"
+        }
+      ],
+      "operation": "move",
+      "link_map": [],
+      "review": {
+        "status": "approved",
+        "reviewer": "P1 implementation self-review (independent review recorded separately)",
+        "notes": "The complete source unit is retained at this exact destination; only explicitly listed relative links are rebased to the same logical target. Historical source wording is archived with its limitations, not asserted as new evidence."
+      }
+    },
+    {
+      "source": {
+        "path": "skills/cocosair/SKILL.md",
+        "block_id": "prose:L93-L93"
+      },
+      "source_hash": "d205b1dc2eef6efde58097bdfd8340c6baea95085f5af26ee04cb91e4b9f32a1",
+      "kind": "prose",
+      "destinations": [
+        {
+          "path": "skills/cocosair/references/common-mistakes.md",
+          "block_id": "prose:L28-L28",
+          "hash": "d205b1dc2eef6efde58097bdfd8340c6baea95085f5af26ee04cb91e4b9f32a1"
+        }
+      ],
+      "operation": "move",
+      "link_map": [],
+      "review": {
+        "status": "approved",
+        "reviewer": "P1 implementation self-review (independent review recorded separately)",
+        "notes": "The complete source unit is retained at this exact destination; only explicitly listed relative links are rebased to the same logical target. Historical source wording is archived with its limitations, not asserted as new evidence."
+      }
+    },
+    {
+      "source": {
+        "path": "skills/cocosair/SKILL.md",
+        "block_id": "heading:L95-L95"
+      },
+      "source_hash": "c54a5425ded7d4f79c50f7a8bbd4c92c2be639cf37dbdcec85407c9b9372add3",
+      "kind": "heading",
+      "destinations": [
+        {
+          "path": "skills/cocosair/references/common-mistakes.md",
+          "block_id": "heading:L30-L30",
+          "hash": "c54a5425ded7d4f79c50f7a8bbd4c92c2be639cf37dbdcec85407c9b9372add3"
+        }
+      ],
+      "operation": "move",
+      "link_map": [],
+      "review": {
+        "status": "approved",
+        "reviewer": "P1 implementation self-review (independent review recorded separately)",
+        "notes": "The complete source unit is retained at this exact destination; only explicitly listed relative links are rebased to the same logical target. Historical source wording is archived with its limitations, not asserted as new evidence."
+      }
+    },
+    {
+      "source": {
+        "path": "skills/cocosair/SKILL.md",
+        "block_id": "prose:L97-L97"
+      },
+      "source_hash": "27bf5c15cd205d53ec8974ebcf55b0c14f54a3e112845b786d136123ea3ea18a",
+      "kind": "prose",
+      "destinations": [
+        {
+          "path": "skills/cocosair/references/common-mistakes.md",
+          "block_id": "prose:L32-L32",
+          "hash": "27bf5c15cd205d53ec8974ebcf55b0c14f54a3e112845b786d136123ea3ea18a"
+        }
+      ],
+      "operation": "move",
+      "link_map": [],
+      "review": {
+        "status": "approved",
+        "reviewer": "P1 implementation self-review (independent review recorded separately)",
+        "notes": "The complete source unit is retained at this exact destination; only explicitly listed relative links are rebased to the same logical target. Historical source wording is archived with its limitations, not asserted as new evidence."
+      }
+    },
+    {
+      "source": {
+        "path": "skills/cocosair/SKILL.md",
+        "block_id": "code:L99-L101"
+      },
+      "source_hash": "8f8f8eccf971a14ab8077749a33e456747bf38ee6a6b24b952309c4ba90a16f2",
+      "kind": "code",
+      "destinations": [
+        {
+          "path": "skills/cocosair/references/common-mistakes.md",
+          "block_id": "code:L34-L36",
+          "hash": "8f8f8eccf971a14ab8077749a33e456747bf38ee6a6b24b952309c4ba90a16f2"
+        }
+      ],
+      "operation": "move",
+      "link_map": [],
+      "review": {
+        "status": "approved",
+        "reviewer": "P1 implementation self-review (independent review recorded separately)",
+        "notes": "The complete source unit is retained at this exact destination; only explicitly listed relative links are rebased to the same logical target. Historical source wording is archived with its limitations, not asserted as new evidence."
+      }
+    },
+    {
+      "source": {
+        "path": "skills/cocosair/SKILL.md",
+        "block_id": "prose:L103-L103"
+      },
+      "source_hash": "b828cc3afe744552ad56e94bfa24f120ed6cb4d8e0b3f55d862207cdcab9274f",
+      "kind": "prose",
+      "destinations": [
+        {
+          "path": "skills/cocosair/references/common-mistakes.md",
+          "block_id": "prose:L38-L38",
+          "hash": "b828cc3afe744552ad56e94bfa24f120ed6cb4d8e0b3f55d862207cdcab9274f"
+        }
+      ],
+      "operation": "move",
+      "link_map": [],
+      "review": {
+        "status": "approved",
+        "reviewer": "P1 implementation self-review (independent review recorded separately)",
+        "notes": "The complete source unit is retained at this exact destination; only explicitly listed relative links are rebased to the same logical target. Historical source wording is archived with its limitations, not asserted as new evidence."
+      }
+    },
+    {
+      "source": {
+        "path": "skills/cocosair/SKILL.md",
+        "block_id": "code:L105-L111"
+      },
+      "source_hash": "0672d92600f57d37ca3ce4b88b115b8325ac3918fb8571a4b623311ad6b4abee",
+      "kind": "code",
+      "destinations": [
+        {
+          "path": "skills/cocosair/references/common-mistakes.md",
+          "block_id": "code:L40-L46",
+          "hash": "0672d92600f57d37ca3ce4b88b115b8325ac3918fb8571a4b623311ad6b4abee"
+        }
+      ],
+      "operation": "move",
+      "link_map": [],
+      "review": {
+        "status": "approved",
+        "reviewer": "P1 implementation self-review (independent review recorded separately)",
+        "notes": "The complete source unit is retained at this exact destination; only explicitly listed relative links are rebased to the same logical target. Historical source wording is archived with its limitations, not asserted as new evidence."
+      }
+    },
+    {
+      "source": {
+        "path": "skills/cocosair/SKILL.md",
+        "block_id": "prose:L113-L113"
+      },
+      "source_hash": "510af04c69df3437a8a3884259d23ff473e11febe4c1dace9e3cff7b0eb3d268",
+      "kind": "prose",
+      "destinations": [
+        {
+          "path": "skills/cocosair/references/common-mistakes.md",
+          "block_id": "prose:L48-L48",
+          "hash": "510af04c69df3437a8a3884259d23ff473e11febe4c1dace9e3cff7b0eb3d268"
+        }
+      ],
+      "operation": "move",
+      "link_map": [],
+      "review": {
+        "status": "approved",
+        "reviewer": "P1 implementation self-review (independent review recorded separately)",
+        "notes": "The complete source unit is retained at this exact destination; only explicitly listed relative links are rebased to the same logical target. Historical source wording is archived with its limitations, not asserted as new evidence."
+      }
+    },
+    {
+      "source": {
+        "path": "skills/cocosair/SKILL.md",
+        "block_id": "heading:L115-L115"
+      },
+      "source_hash": "8a0afe417040fc3ebb33bcd5b67fdbe01c3d7c1d4fdc439338bb6aa594a9fa65",
+      "kind": "heading",
+      "destinations": [
+        {
+          "path": "skills/cocosair/references/common-mistakes.md",
+          "block_id": "heading:L50-L50",
+          "hash": "8a0afe417040fc3ebb33bcd5b67fdbe01c3d7c1d4fdc439338bb6aa594a9fa65"
+        }
+      ],
+      "operation": "move",
+      "link_map": [],
+      "review": {
+        "status": "approved",
+        "reviewer": "P1 implementation self-review (independent review recorded separately)",
+        "notes": "The complete source unit is retained at this exact destination; only explicitly listed relative links are rebased to the same logical target. Historical source wording is archived with its limitations, not asserted as new evidence."
+      }
+    },
+    {
+      "source": {
+        "path": "skills/cocosair/SKILL.md",
+        "block_id": "prose:L117-L117"
+      },
+      "source_hash": "27bf5c15cd205d53ec8974ebcf55b0c14f54a3e112845b786d136123ea3ea18a",
+      "kind": "prose",
+      "destinations": [
+        {
+          "path": "skills/cocosair/references/common-mistakes.md",
+          "block_id": "prose:L52-L52",
+          "hash": "27bf5c15cd205d53ec8974ebcf55b0c14f54a3e112845b786d136123ea3ea18a"
+        }
+      ],
+      "operation": "move",
+      "link_map": [],
+      "review": {
+        "status": "approved",
+        "reviewer": "P1 implementation self-review (independent review recorded separately)",
+        "notes": "The complete source unit is retained at this exact destination; only explicitly listed relative links are rebased to the same logical target. Historical source wording is archived with its limitations, not asserted as new evidence."
+      }
+    },
+    {
+      "source": {
+        "path": "skills/cocosair/SKILL.md",
+        "block_id": "code:L119-L122"
+      },
+      "source_hash": "a816c7eaaa21759e55b0e7777c60da11a691ae0b45e5edff52c2deff29e2fa11",
+      "kind": "code",
+      "destinations": [
+        {
+          "path": "skills/cocosair/references/common-mistakes.md",
+          "block_id": "code:L54-L57",
+          "hash": "a816c7eaaa21759e55b0e7777c60da11a691ae0b45e5edff52c2deff29e2fa11"
+        }
+      ],
+      "operation": "move",
+      "link_map": [],
+      "review": {
+        "status": "approved",
+        "reviewer": "P1 implementation self-review (independent review recorded separately)",
+        "notes": "The complete source unit is retained at this exact destination; only explicitly listed relative links are rebased to the same logical target. Historical source wording is archived with its limitations, not asserted as new evidence."
+      }
+    },
+    {
+      "source": {
+        "path": "skills/cocosair/SKILL.md",
+        "block_id": "prose:L124-L124"
+      },
+      "source_hash": "b828cc3afe744552ad56e94bfa24f120ed6cb4d8e0b3f55d862207cdcab9274f",
+      "kind": "prose",
+      "destinations": [
+        {
+          "path": "skills/cocosair/references/common-mistakes.md",
+          "block_id": "prose:L59-L59",
+          "hash": "b828cc3afe744552ad56e94bfa24f120ed6cb4d8e0b3f55d862207cdcab9274f"
+        }
+      ],
+      "operation": "move",
+      "link_map": [],
+      "review": {
+        "status": "approved",
+        "reviewer": "P1 implementation self-review (independent review recorded separately)",
+        "notes": "The complete source unit is retained at this exact destination; only explicitly listed relative links are rebased to the same logical target. Historical source wording is archived with its limitations, not asserted as new evidence."
+      }
+    },
+    {
+      "source": {
+        "path": "skills/cocosair/SKILL.md",
+        "block_id": "code:L126-L130"
+      },
+      "source_hash": "e01a206f88e60e4fef3b58c92e5a5e7dfa2b4fc9f6c7596bbdebff1070140c07",
+      "kind": "code",
+      "destinations": [
+        {
+          "path": "skills/cocosair/references/common-mistakes.md",
+          "block_id": "code:L61-L65",
+          "hash": "e01a206f88e60e4fef3b58c92e5a5e7dfa2b4fc9f6c7596bbdebff1070140c07"
+        }
+      ],
+      "operation": "move",
+      "link_map": [],
+      "review": {
+        "status": "approved",
+        "reviewer": "P1 implementation self-review (independent review recorded separately)",
+        "notes": "The complete source unit is retained at this exact destination; only explicitly listed relative links are rebased to the same logical target. Historical source wording is archived with its limitations, not asserted as new evidence."
+      }
+    },
+    {
+      "source": {
+        "path": "skills/cocosair/SKILL.md",
+        "block_id": "prose:L132-L132"
+      },
+      "source_hash": "05866e81f724e72d1397a1fbef0c724f4416604c58c2e972a6a5e8e3ab2ce407",
+      "kind": "prose",
+      "destinations": [
+        {
+          "path": "skills/cocosair/references/common-mistakes.md",
+          "block_id": "prose:L67-L67",
+          "hash": "05866e81f724e72d1397a1fbef0c724f4416604c58c2e972a6a5e8e3ab2ce407"
+        }
+      ],
+      "operation": "move",
+      "link_map": [],
+      "review": {
+        "status": "approved",
+        "reviewer": "P1 implementation self-review (independent review recorded separately)",
+        "notes": "The complete source unit is retained at this exact destination; only explicitly listed relative links are rebased to the same logical target. Historical source wording is archived with its limitations, not asserted as new evidence."
+      }
+    },
+    {
+      "source": {
+        "path": "skills/cocosair/SKILL.md",
+        "block_id": "prose:L136-L136"
+      },
+      "source_hash": "8611cc1cd3f3d44f5c801dd37420236b23cb9b38186c7bec566b0460b67b76fd",
+      "kind": "prose",
+      "destinations": [
+        {
+          "path": "skills/cocosair/references/context.md",
+          "block_id": "prose:L102-L102",
+          "hash": "8611cc1cd3f3d44f5c801dd37420236b23cb9b38186c7bec566b0460b67b76fd"
+        }
+      ],
+      "operation": "move",
+      "link_map": [],
+      "review": {
+        "status": "approved",
+        "reviewer": "P1 implementation self-review (independent review recorded separately)",
+        "notes": "The complete source unit is retained at this exact destination; only explicitly listed relative links are rebased to the same logical target. Historical source wording is archived with its limitations, not asserted as new evidence."
+      }
+    },
+    {
+      "source": {
+        "path": "skills/cocosair/SKILL.md",
+        "block_id": "heading:L138-L138"
+      },
+      "source_hash": "3160398e951e3cd69234f55cd78966854539febf6019ba211c5647e6fbf7b06f",
+      "kind": "heading",
+      "destinations": [
+        {
+          "path": "skills/cocosair/references/context.md",
+          "block_id": "heading:L104-L104",
+          "hash": "3160398e951e3cd69234f55cd78966854539febf6019ba211c5647e6fbf7b06f"
+        }
+      ],
+      "operation": "move",
+      "link_map": [],
+      "review": {
+        "status": "approved",
+        "reviewer": "P1 implementation self-review (independent review recorded separately)",
+        "notes": "The complete source unit is retained at this exact destination; only explicitly listed relative links are rebased to the same logical target. Historical source wording is archived with its limitations, not asserted as new evidence."
+      }
+    },
+    {
+      "source": {
+        "path": "skills/cocosair/SKILL.md",
+        "block_id": "prose:L140-L140"
+      },
+      "source_hash": "536153d150e4c229602ada8c32395bc6429b3b1a9eaed8b35b1ea5a504ed38e0",
+      "kind": "prose",
+      "destinations": [
+        {
+          "path": "skills/cocosair/references/context.md",
+          "block_id": "prose:L106-L106",
+          "hash": "536153d150e4c229602ada8c32395bc6429b3b1a9eaed8b35b1ea5a504ed38e0"
+        }
+      ],
+      "operation": "move",
+      "link_map": [],
+      "review": {
+        "status": "approved",
+        "reviewer": "P1 implementation self-review (independent review recorded separately)",
+        "notes": "The complete source unit is retained at this exact destination; only explicitly listed relative links are rebased to the same logical target. Historical source wording is archived with its limitations, not asserted as new evidence."
+      }
+    },
+    {
+      "source": {
+        "path": "skills/cocosair/SKILL.md",
+        "block_id": "prose:L142-L143"
+      },
+      "source_hash": "d6b1e55ee540faa5061fd92cd5118fd346f17d3c80730bf4a308df79843e6b2f",
+      "kind": "prose",
+      "destinations": [
+        {
+          "path": "skills/cocosair/references/context.md",
+          "block_id": "prose:L108-L109",
+          "hash": "78a3bd58dcc136c6b1b03ca2ea92fee9164e93c78e3fda0d28a95cd81cc14787"
+        }
+      ],
+      "operation": "move",
+      "link_map": [
+        {
+          "from": "references/skill-index.md",
+          "to": "skill-index.md",
+          "destination_path": "skills/cocosair/references/context.md"
+        },
+        {
+          "from": "references/environment.md",
+          "to": "environment.md",
+          "destination_path": "skills/cocosair/references/context.md"
+        }
+      ],
+      "review": {
+        "status": "approved",
+        "reviewer": "P1 implementation self-review (independent review recorded separately)",
+        "notes": "The complete source unit is retained at this exact destination; only explicitly listed relative links are rebased to the same logical target. Historical source wording is archived with its limitations, not asserted as new evidence."
+      }
+    },
+    {
+      "source": {
+        "path": "skills/cocosair/SKILL.md",
+        "block_id": "heading:L145-L145"
+      },
+      "source_hash": "90365feb1ddd47e0c9283f088bcf09ca610dac7f5c684e51c201ca4f76824595",
+      "kind": "heading",
+      "destinations": [
+        {
+          "path": "skills/cocosair/references/context.md",
+          "block_id": "heading:L123-L123",
+          "hash": "90365feb1ddd47e0c9283f088bcf09ca610dac7f5c684e51c201ca4f76824595"
+        }
+      ],
+      "operation": "move",
+      "link_map": [],
+      "review": {
+        "status": "approved",
+        "reviewer": "P1 implementation self-review (independent review recorded separately)",
+        "notes": "The complete source unit is retained at this exact destination; only explicitly listed relative links are rebased to the same logical target. Historical source wording is archived with its limitations, not asserted as new evidence."
+      }
+    },
+    {
+      "source": {
+        "path": "skills/cocosair/SKILL.md",
+        "block_id": "prose:L147-L147"
+      },
+      "source_hash": "e1cbdcaac1118040e29effd5fa7ddff0d1a66f7b506db7e977d9ec134ca7f091",
+      "kind": "prose",
+      "destinations": [
+        {
+          "path": "skills/cocosair/references/context.md",
+          "block_id": "prose:L125-L125",
+          "hash": "e1cbdcaac1118040e29effd5fa7ddff0d1a66f7b506db7e977d9ec134ca7f091"
+        }
+      ],
+      "operation": "move",
+      "link_map": [],
+      "review": {
+        "status": "approved",
+        "reviewer": "P1 implementation self-review (independent review recorded separately)",
+        "notes": "The complete source unit is retained at this exact destination; only explicitly listed relative links are rebased to the same logical target. Historical source wording is archived with its limitations, not asserted as new evidence."
+      }
+    }
+  ]
+}

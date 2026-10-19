@@ -1,0 +1,109 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "before_hash": "5bff4a12527201f9bac5eee319f78de183439c8b1ebeb9d0fcf90965a5682013",
+  "live_hash": "ffa80d130e234f5061da4239a1c06aec73a125176381a435cb95a7ab5136806b",
+  "isolated_hash": "956c72dae4460874dc12735434249e4c098f6987f57f7c6f5e07518e6e1b48a2",
+  "changed_skill_files": [
+    {
+      "path": "skills/cocosair-rendering/SKILL.md",
+      "problem": "bytes-or-hash-mismatch"
+    },
+    {
+      "path": "skills/cocosair-rendering/references/context.md",
+      "problem": "bytes-or-hash-mismatch"
+    },
+    {
+      "path": "skills/cocosair-rendering/references/triggers.md",
+      "problem": "extra"
+    }
+  ],
+  "live_vs_isolated": [
+    {
+      "path": "skills/cocosair-2d-subsystems/SKILL.md",
+      "problem": "bytes-or-hash-mismatch"
+    },
+    {
+      "path": "skills/cocosair-agent-session/SKILL.md",
+      "problem": "bytes-or-hash-mismatch"
+    },
+    {
+      "path": "skills/cocosair-animation-tween/SKILL.md",
+      "problem": "bytes-or-hash-mismatch"
+    },
+    {
+      "path": "skills/cocosair-application/SKILL.md",
+      "problem": "bytes-or-hash-mismatch"
+    },
+    {
+      "path": "skills/cocosair-assets/SKILL.md",
+      "problem": "bytes-or-hash-mismatch"
+    },
+    {
+      "path": "skills/cocosair-audio-video/SKILL.md",
+      "problem": "bytes-or-hash-mismatch"
+    },
+    {
+      "path": "skills/cocosair-camera/SKILL.md",
+      "problem": "bytes-or-hash-mismatch"
+    },
+    {
+      "path": "skills/cocosair-gltf/SKILL.md",
+      "problem": "bytes-or-hash-mismatch"
+    },
+    {
+      "path": "skills/cocosair-graphics-and-dom/SKILL.md",
+      "problem": "bytes-or-hash-mismatch"
+    },
+    {
+      "path": "skills/cocosair-input-action/SKILL.md",
+      "problem": "bytes-or-hash-mismatch"
+    },
+    {
+      "path": "skills/cocosair-materials-effects/SKILL.md",
+      "problem": "bytes-or-hash-mismatch"
+    },
+    {
+      "path": "skills/cocosair-math/SKILL.md",
+      "problem": "bytes-or-hash-mismatch"
+    },
+    {
+      "path": "skills/cocosair-performance/SKILL.md",
+      "problem": "bytes-or-hash-mismatch"
+    },
+    {
+      "path": "skills/cocosair-physics/SKILL.md",
+      "problem": "bytes-or-hash-mismatch"
+    },
+    {
+      "path": "skills/cocosair-primitives-mesh/SKILL.md",
+      "problem": "bytes-or-hash-mismatch"
+    },
+    {
+      "path": "skills/cocosair-project-setup/SKILL.md",
+      "problem": "bytes-or-hash-mismatch"
+    },
+    {
+      "path": "skills/cocosair-scene-graph/SKILL.md",
+      "problem": "bytes-or-hash-mismatch"
+    },
+    {
+      "path": "skills/cocosair-skinning-morph/SKILL.md",
+      "problem": "bytes-or-hash-mismatch"
+    },
+    {
+      "path": "skills/cocosair-ui-2d/SKILL.md",
+      "problem": "bytes-or-hash-mismatch"
+    },
+    {
+      "path": "skills/cocosair-verification/SKILL.md",
+      "problem": "bytes-or-hash-mismatch"
+    },
+    {
+      "path": "skills/cocosair/SKILL.md",
+      "problem": "bytes-or-hash-mismatch"
+    }
+  ],
+  "rendering_frontmatter_matches_s2b": true,
+  "all_unmodified_skill_files_hash_equal": true
+}

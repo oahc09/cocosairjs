@@ -85,6 +85,6 @@ holes, but with two hard rules (`docs/manual/graphics-and-dom.md:58`):
 
 Use pixel round-trips for fills, orientation and pattern alignment, and SVG download-content
 checks for curve preservation; see
-[docs/manual/graphics-and-dom.md](../../../docs/manual/graphics-and-dom.md) and
+[verification commands](verification-commands.md) and
 `examples/graphics-svg-paints/src/main.ts` for the runnable scene and the low-level probe
 commands (`examples/graphics-svg-paints/src/main.ts:1`).

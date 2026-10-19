@@ -1,0 +1,58 @@
+{
+  "schema": 1,
+  "kind": "reimplemented-from-retained-tool-inputs",
+  "recovery_version": "recovery1",
+  "old_byte_identity_verified": false,
+  "old_file_sha256_available": false,
+  "source": "This worker retained complete initial write tool inputs and every subsequent patch in its own conversation, ending with the 2026-10-18 03:17:19 UTC 35-test verification. Final Prettier output bytes and old individual file hashes were not captured, so these files are a new implementation recovery, not an asserted byte restoration.",
+  "versions": {
+    "metadata": "skills-meta-p1-v1-recovery1",
+    "lossless": "skills-lossless-p1-v1-recovery1"
+  },
+  "known_reconstruction_differences": [
+    "Recovery version and provenance comments",
+    "Equivalent compact source transcription followed by current locked Prettier formatting",
+    "assertNoSymlinkPath uses one lstat per path component instead of existsSync plus lstat",
+    "enumerateFiles explicitly rejects a non-skills prefix",
+    "Malformed null ledger entry reporting uses optional chaining"
+  ],
+  "files": [
+    {
+      "path": "tools/skills/verify-meta.cjs",
+      "sha256": "5e19d8a1854aefd56402443cfd7278f73b7c491dd5ca20ee654ca6b5dead0149",
+      "bytes": 14157,
+      "old_sha256": null
+    },
+    {
+      "path": "tools/skills/verify-lossless.cjs",
+      "sha256": "2870092213985b65f888937952a17b1c6b732833687e91306fe6d311aad070b8",
+      "bytes": 30035,
+      "old_sha256": null
+    },
+    {
+      "path": "tools/skills/test/verify-meta.test.cjs",
+      "sha256": "812758fd8afc77fc33c53c2f41cc2bcd845bdecc769b72c9a49d777f3ccb6c93",
+      "bytes": 10038,
+      "old_sha256": null
+    },
+    {
+      "path": "tools/skills/test/verify-lossless.test.cjs",
+      "sha256": "4145ccae8b50c71217a2de2f1d56f855169b5e6b2ae2c6e6a8b2309cb79a610d",
+      "bytes": 18087,
+      "old_sha256": null
+    }
+  ],
+  "verification": {
+    "tests": 35,
+    "passed": 35,
+    "exit_code": 0,
+    "tests_report": "recovery-notes/preservation-tests-recovery.tap",
+    "tests_report_sha256": "4555259cbe2abbbcdd9009158a4cef4a1ce5c6d406a18313348fd52b0edbe626",
+    "parser_sha256": "dfe9fa6f32524868eab9ee822a39a02a3b90b41fde02fcc4b4512f5f120e84cf",
+    "snapshot_hash": "1e9c6637a512b819e822d8d06ea64d444c1e5640f35c48134f70fe80a5363e19",
+    "fresh_restore_report": "recovery-notes/original-restore-recovery.json",
+    "fresh_restore_report_sha256": "6ce78b30f1dc02cebedc57abe129934ca07734fb45f73cd51186e32731f797b1",
+    "fresh_restore_exit_code": 0,
+    "unchanged_snapshot_units": 3250
+  }
+}

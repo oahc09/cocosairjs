@@ -1,0 +1,140 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "scope": [
+    "cocosair-2d-subsystems",
+    "cocosair-animation-tween",
+    "cocosair-assets",
+    "cocosair-audio-video",
+    "cocosair-camera",
+    "cocosair-gltf",
+    "cocosair-graphics-and-dom",
+    "cocosair-input-action",
+    "cocosair-materials-effects",
+    "cocosair-math"
+  ],
+  "validation_mode": "Trusted validateRecord helper on the 10 selected entries; untouched prerequisite entries are outside new body/metadata budgets. Generated index was evaluated in memory, not written to the repository.",
+  "issues": [],
+  "skills": [
+    {
+      "name": "cocosair-2d-subsystems",
+      "original_bytes": 8669,
+      "entry_bytes": 3280,
+      "frontmatter_exact": true,
+      "context_prefix_exact": true,
+      "triggers_count": 6,
+      "longest_trigger_words": 7,
+      "longest_reference_line_chars": 78,
+      "generated_record_chars": 1285,
+      "entry_sha256": "1532fdf46aee923cdefbc4eb6432d387c89eb477db3baec6d4925efd418a4d76"
+    },
+    {
+      "name": "cocosair-animation-tween",
+      "original_bytes": 7621,
+      "entry_bytes": 3152,
+      "frontmatter_exact": true,
+      "context_prefix_exact": true,
+      "triggers_count": 6,
+      "longest_trigger_words": 7,
+      "longest_reference_line_chars": 80,
+      "generated_record_chars": 1141,
+      "entry_sha256": "97374a9a53b82eeb811da69ee1772172c97f88df7c5e6efc9ac249561cfedaad"
+    },
+    {
+      "name": "cocosair-assets",
+      "original_bytes": 8466,
+      "entry_bytes": 3294,
+      "frontmatter_exact": true,
+      "context_prefix_exact": true,
+      "triggers_count": 7,
+      "longest_trigger_words": 9,
+      "longest_reference_line_chars": 78,
+      "generated_record_chars": 1197,
+      "entry_sha256": "b98671df9b39131f58f6ca3a267c6ece182215c5e58cc9848d21fdd5881202b5"
+    },
+    {
+      "name": "cocosair-audio-video",
+      "original_bytes": 5540,
+      "entry_bytes": 3087,
+      "frontmatter_exact": true,
+      "context_prefix_exact": true,
+      "triggers_count": 6,
+      "longest_trigger_words": 8,
+      "longest_reference_line_chars": 82,
+      "generated_record_chars": 1128,
+      "entry_sha256": "44d7784984f81144118ba449a1ea5c38ea0cc8ebb312618c41645fc4c3bf37c6"
+    },
+    {
+      "name": "cocosair-camera",
+      "original_bytes": 6040,
+      "entry_bytes": 3087,
+      "frontmatter_exact": true,
+      "context_prefix_exact": true,
+      "triggers_count": 6,
+      "longest_trigger_words": 10,
+      "longest_reference_line_chars": 82,
+      "generated_record_chars": 1117,
+      "entry_sha256": "4017c7031142d91a160060c32e6a59f7ef2fe82d4280ccb8fd316e568adb60eb"
+    },
+    {
+      "name": "cocosair-gltf",
+      "original_bytes": 7828,
+      "entry_bytes": 3265,
+      "frontmatter_exact": true,
+      "context_prefix_exact": true,
+      "triggers_count": 7,
+      "longest_trigger_words": 7,
+      "longest_reference_line_chars": 81,
+      "generated_record_chars": 1187,
+      "entry_sha256": "8c1ba72dd5cda4d25c3ecf4b674e8c0e8558082528229bf6d2e08464b6a92676"
+    },
+    {
+      "name": "cocosair-graphics-and-dom",
+      "original_bytes": 7598,
+      "entry_bytes": 3483,
+      "frontmatter_exact": true,
+      "context_prefix_exact": true,
+      "triggers_count": 7,
+      "longest_trigger_words": 9,
+      "longest_reference_line_chars": 77,
+      "generated_record_chars": 1483,
+      "entry_sha256": "d66f1b9617fb02dad36b7755e3ec0a3ec90bbf68149a15d78143da97868c0608"
+    },
+    {
+      "name": "cocosair-input-action",
+      "original_bytes": 6539,
+      "entry_bytes": 3182,
+      "frontmatter_exact": true,
+      "context_prefix_exact": true,
+      "triggers_count": 6,
+      "longest_trigger_words": 7,
+      "longest_reference_line_chars": 82,
+      "generated_record_chars": 1242,
+      "entry_sha256": "630b9bc30a23a76aa584ef9ba775da0037d491ab472f4ea129ee623eb070d5ed"
+    },
+    {
+      "name": "cocosair-materials-effects",
+      "original_bytes": 7674,
+      "entry_bytes": 3302,
+      "frontmatter_exact": true,
+      "context_prefix_exact": true,
+      "triggers_count": 8,
+      "longest_trigger_words": 7,
+      "longest_reference_line_chars": 86,
+      "generated_record_chars": 1190,
+      "entry_sha256": "2b8b44258f99b7e7f9a7cee9691788fe48153082c8d80e9a566dec1cc7f4c4e4"
+    },
+    {
+      "name": "cocosair-math",
+      "original_bytes": 7217,
+      "entry_bytes": 3223,
+      "frontmatter_exact": true,
+      "context_prefix_exact": true,
+      "triggers_count": 8,
+      "longest_trigger_words": 7,
+      "longest_reference_line_chars": 88,
+      "generated_record_chars": 1157,
+      "entry_sha256": "694b2135f05603411db86359506ab7029e30deb13a724b98c9385b5539b5f45a"
+    }
+  ]
+}

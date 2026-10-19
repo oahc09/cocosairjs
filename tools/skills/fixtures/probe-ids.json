@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "skills": [
+    "cocosair-application",
+    "cocosair-gltf",
+    "cocosair-materials-effects",
+    "cocosair-project-setup",
+    "cocosair-rendering"
+  ],
+  "selection_rule": "Every prompt whose audited gold owner is one of the five fixed skills, preserving full fixture order; all 22 skills remain scoring competitors.",
+  "source_snapshot_hash": "1e9c6637a512b819e822d8d06ea64d444c1e5640f35c48134f70fe80a5363e19",
+  "prompt_payload_sha256": "e0f0dfc9958ca3e25e8af464822e5956092fc94ef5aaf6b1e9ff7bae20bcedd9",
+  "prompt_ids": [
+    "gold-application",
+    "gold-gltf",
+    "gold-materials-effects",
+    "gold-project-setup",
+    "gold-rendering",
+    "boundary-entry-versus-startup",
+    "boundary-target-versus-camera",
+    "boundary-material-versus-lighting",
+    "boundary-gltf-versus-material",
+    "error-webgl2-required",
+    "error-app-conflict",
+    "error-target-samples",
+    "error-texture-color",
+    "error-gltf-decoder",
+    "error-material-type",
+    "error-material-pass-index"
+  ],
+  "ids_sha256": "5f6c24931510f1225a2e19645724d37d05724a81bdb03e9ca77895ee2cc7ac5f"
+}

@@ -1,0 +1,155 @@
+{
+  "schema": 1,
+  "files": [
+    {
+      "path": "skills/cocosair-2d-subsystems/SKILL.md",
+      "sha256": "1532fdf46aee923cdefbc4eb6432d387c89eb477db3baec6d4925efd418a4d76",
+      "bytes": 3280
+    },
+    {
+      "path": "skills/cocosair-2d-subsystems/references/context.md",
+      "sha256": "de5f565812cb220c384dbe2932d632c9460894706932e918b0a33df8c8941820",
+      "bytes": 6799
+    },
+    {
+      "path": "skills/cocosair-2d-subsystems/references/triggers.md",
+      "sha256": "c625ec866c2bc3370e53c262db5b469653a9f1451c77417de86df4f688ab5f27",
+      "bytes": 1903
+    },
+    {
+      "path": "skills/cocosair-animation-tween/SKILL.md",
+      "sha256": "97374a9a53b82eeb811da69ee1772172c97f88df7c5e6efc9ac249561cfedaad",
+      "bytes": 3152
+    },
+    {
+      "path": "skills/cocosair-animation-tween/references/context.md",
+      "sha256": "01add939f88ae3963b5e0ab52fef6b60a0a1e9d3723aac418a31d8f2da692a55",
+      "bytes": 6256
+    },
+    {
+      "path": "skills/cocosair-animation-tween/references/triggers.md",
+      "sha256": "f11ae64c52faa62d5baf30819befde26f35e097b86b858b635e0f3eb2d2ccb09",
+      "bytes": 1451
+    },
+    {
+      "path": "skills/cocosair-assets/SKILL.md",
+      "sha256": "b98671df9b39131f58f6ca3a267c6ece182215c5e58cc9848d21fdd5881202b5",
+      "bytes": 3294
+    },
+    {
+      "path": "skills/cocosair-assets/references/context.md",
+      "sha256": "f529a596e13000c75feaf19738f8914e35714ce6b54fd1d468bbd9500f26f877",
+      "bytes": 7048
+    },
+    {
+      "path": "skills/cocosair-assets/references/triggers.md",
+      "sha256": "34c8266e35035dcd265063be07d355bb9ab6f0852142b40d145e2f6fb8fcca49",
+      "bytes": 1946
+    },
+    {
+      "path": "skills/cocosair-audio-video/SKILL.md",
+      "sha256": "44d7784984f81144118ba449a1ea5c38ea0cc8ebb312618c41645fc4c3bf37c6",
+      "bytes": 3087
+    },
+    {
+      "path": "skills/cocosair-audio-video/references/context.md",
+      "sha256": "296347ee16179815f1579d5383ca62d6d582aa9f7138b757806a05c8b2e76c84",
+      "bytes": 4413
+    },
+    {
+      "path": "skills/cocosair-audio-video/references/triggers.md",
+      "sha256": "743804e79e92b39eeaf416dfe8e174d152cd68903c96b3144146f00f88aa3402",
+      "bytes": 992
+    },
+    {
+      "path": "skills/cocosair-camera/SKILL.md",
+      "sha256": "4017c7031142d91a160060c32e6a59f7ef2fe82d4280ccb8fd316e568adb60eb",
+      "bytes": 3087
+    },
+    {
+      "path": "skills/cocosair-camera/references/context.md",
+      "sha256": "fa9293e62ea2c75e7025c174cf23e92ed027cb149d1ca37f8f1bd4867ad963fc",
+      "bytes": 4445
+    },
+    {
+      "path": "skills/cocosair-camera/references/triggers.md",
+      "sha256": "30464d4e193dbcae2374b013837219e4946b918668e3836bada87e207089df1f",
+      "bytes": 1198
+    },
+    {
+      "path": "skills/cocosair-gltf/SKILL.md",
+      "sha256": "8c1ba72dd5cda4d25c3ecf4b674e8c0e8558082528229bf6d2e08464b6a92676",
+      "bytes": 3265
+    },
+    {
+      "path": "skills/cocosair-gltf/references/context.md",
+      "sha256": "9cdefbe155b8d0a8ae9eb9f9ba7504f133db27d0a66581761feb1ffcd27dbf69",
+      "bytes": 6933
+    },
+    {
+      "path": "skills/cocosair-gltf/references/triggers.md",
+      "sha256": "65949bde48d65332810b3f96b71be62a6009b69ac71c19589646496a3a848ac1",
+      "bytes": 1567
+    },
+    {
+      "path": "skills/cocosair-graphics-and-dom/SKILL.md",
+      "sha256": "d66f1b9617fb02dad36b7755e3ec0a3ec90bbf68149a15d78143da97868c0608",
+      "bytes": 3483
+    },
+    {
+      "path": "skills/cocosair-graphics-and-dom/references/context.md",
+      "sha256": "79ba4d70b3d79466f43370de679edb12070ee71dcfe003472ce870f9097c769f",
+      "bytes": 6523
+    },
+    {
+      "path": "skills/cocosair-graphics-and-dom/references/triggers.md",
+      "sha256": "00bc9f12fdbeec2ce3db93568e093d74223390e4e25fe898508fe750be426d1c",
+      "bytes": 1390
+    },
+    {
+      "path": "skills/cocosair-input-action/SKILL.md",
+      "sha256": "630b9bc30a23a76aa584ef9ba775da0037d491ab472f4ea129ee623eb070d5ed",
+      "bytes": 3182
+    },
+    {
+      "path": "skills/cocosair-input-action/references/context.md",
+      "sha256": "07848afaf8a8abb29e4c3a8eeab15430c118a4e78a5e74bbabecf48dc3f782d6",
+      "bytes": 5075
+    },
+    {
+      "path": "skills/cocosair-input-action/references/triggers.md",
+      "sha256": "e6faca9a3e1ef56958813af26815a96a02468b19ecc46f54aacbe644f94429ad",
+      "bytes": 1095
+    },
+    {
+      "path": "skills/cocosair-materials-effects/SKILL.md",
+      "sha256": "2b8b44258f99b7e7f9a7cee9691788fe48153082c8d80e9a566dec1cc7f4c4e4",
+      "bytes": 3302
+    },
+    {
+      "path": "skills/cocosair-materials-effects/references/context.md",
+      "sha256": "f66d4333eb4eaefc9f0826e8eb115172f6703bc527ca603d3d7d4cdb405ad13d",
+      "bytes": 6307
+    },
+    {
+      "path": "skills/cocosair-materials-effects/references/triggers.md",
+      "sha256": "f3fa8d2a894d6c4f6edeaebd650a3cec56607995faad0f873350f10471be7f0c",
+      "bytes": 1549
+    },
+    {
+      "path": "skills/cocosair-math/SKILL.md",
+      "sha256": "694b2135f05603411db86359506ab7029e30deb13a724b98c9385b5539b5f45a",
+      "bytes": 3223
+    },
+    {
+      "path": "skills/cocosair-math/references/context.md",
+      "sha256": "4646ff76ebcd877298468805e077206db6321995c626d911f9aa7abccd5bbae7",
+      "bytes": 4807
+    },
+    {
+      "path": "skills/cocosair-math/references/triggers.md",
+      "sha256": "6c54dd6fb60ec40632c0220510f211de47ac7549e9b5d6c98dd041e537115fc8",
+      "bytes": 2006
+    }
+  ]
+}

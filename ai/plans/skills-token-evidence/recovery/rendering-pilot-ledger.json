@@ -1,0 +1,422 @@
+{
+  "schema": 1,
+  "source_snapshot_hash": "46a9449ad54586ae70a914a77992801ea732270ab7f14509f40bf3792ee22d9d",
+  "entries": [
+    {
+      "source": {
+        "path": "skills/cocosair-rendering/SKILL.md",
+        "field": "description"
+      },
+      "source_hash": "95b893d0ae7d2b1a0ec415d1db6e1243144adde4d84d069c88a3e2d0739ac545",
+      "kind": "metadata",
+      "destinations": [
+        {
+          "path": "skills/cocosair-rendering/references/context.md",
+          "block_id": "prose:L46-L46",
+          "hash": "e9e53c68acda925f1959d29c09c57a3155deea170668d60b44e079db3b57ee28"
+        }
+      ],
+      "operation": "deduplicate",
+      "link_map": [],
+      "review": {
+        "status": "approved",
+        "reviewer": "rendering-pilot implementation agent (source-preservation self-review; independent review pending)",
+        "notes": "Read the complete original description and archived paragraph, including all API names, error codes, format alternatives, unit limits, and variant-build condition. The archive is complete; the short frontmatter is not the preservation copy.",
+        "equivalence": "The original description and metadata.description_en values are byte-for-byte equal as decoded strings, with the same JSON-value SHA-256 95b893d0ae7d2b1a0ec415d1db6e1243144adde4d84d069c88a3e2d0739ac545. Both map explicitly to one standalone paragraph whose complete text equals that value; this deduplication does not rely on a summary or similar wording."
+      }
+    },
+    {
+      "source": {
+        "path": "skills/cocosair-rendering/SKILL.md",
+        "field": "metadata.description_en"
+      },
+      "source_hash": "95b893d0ae7d2b1a0ec415d1db6e1243144adde4d84d069c88a3e2d0739ac545",
+      "kind": "metadata",
+      "destinations": [
+        {
+          "path": "skills/cocosair-rendering/references/context.md",
+          "block_id": "prose:L46-L46",
+          "hash": "e9e53c68acda925f1959d29c09c57a3155deea170668d60b44e079db3b57ee28"
+        }
+      ],
+      "operation": "deduplicate",
+      "link_map": [],
+      "review": {
+        "status": "approved",
+        "reviewer": "rendering-pilot implementation agent (source-preservation self-review; independent review pending)",
+        "notes": "Read the complete English metadata value against the same archived paragraph. Equality is verified against the original description value; no English-only content is omitted.",
+        "equivalence": "The original description and metadata.description_en values are byte-for-byte equal as decoded strings, with the same JSON-value SHA-256 95b893d0ae7d2b1a0ec415d1db6e1243144adde4d84d069c88a3e2d0739ac545. Both map explicitly to one standalone paragraph whose complete text equals that value; this deduplication does not rely on a summary or similar wording."
+      }
+    },
+    {
+      "source": {
+        "path": "skills/cocosair-rendering/SKILL.md",
+        "field": "metadata.keywords"
+      },
+      "source_hash": "0f5ee8dfba195fda45bf630e9b4c1f722220fa70370ebae9e2e9e779722b66dd",
+      "kind": "metadata",
+      "destinations": [
+        {
+          "path": "skills/cocosair-rendering/references/context.md",
+          "block_id": "prose:L50-L50",
+          "hash": "218d9efad6fd8e918f09f265ac700e1df244809d85db4c3582a4319679b16b9e"
+        }
+      ],
+      "operation": "move",
+      "link_map": [],
+      "review": {
+        "status": "approved",
+        "reviewer": "rendering-pilot implementation agent (source-preservation self-review; independent review pending)",
+        "notes": "Checked the three original keyword terms and ordering against their dedicated complete archive paragraph."
+      }
+    },
+    {
+      "source": {
+        "path": "skills/cocosair-rendering/SKILL.md",
+        "block_id": "prose:L18-L18"
+      },
+      "source_hash": "7d3b35dd8e592970079e098c7dd82c8d7e61019c58ebba0ff6c20fe207245a09",
+      "kind": "prose",
+      "destinations": [
+        {
+          "path": "skills/cocosair-rendering/references/context.md",
+          "block_id": "prose:L22-L22",
+          "hash": "bee6ce58b6ba04d4764ec036f94b0f512f5a0c5b5963b81bdd3c1505762ebcef"
+        }
+      ],
+      "operation": "summarize",
+      "link_map": [
+        {
+          "from": "references/context.md",
+          "to": "context.md",
+          "destination_path": "skills/cocosair-rendering/references/context.md"
+        }
+      ],
+      "review": {
+        "status": "approved",
+        "reviewer": "rendering-pilot implementation agent (source-preservation self-review; independent review pending)",
+        "notes": "Checked the full environment and optional/direct/nonrecursive dependency wording; only the local link target is rerooted. The original paragraph remains in the archive."
+      }
+    },
+    {
+      "source": {
+        "path": "skills/cocosair-rendering/SKILL.md",
+        "block_id": "prose:L20-L20"
+      },
+      "source_hash": "bffce5b02f084dc98d5a8fe9a62950398fcd28a277fa3d3dfd08136cb7269794",
+      "kind": "prose",
+      "destinations": [
+        {
+          "path": "skills/cocosair-rendering/references/context.md",
+          "block_id": "prose:L24-L24",
+          "hash": "bffce5b02f084dc98d5a8fe9a62950398fcd28a277fa3d3dfd08136cb7269794"
+        }
+      ],
+      "operation": "summarize",
+      "link_map": [],
+      "review": {
+        "status": "approved",
+        "reviewer": "rendering-pilot implementation agent (source-preservation self-review; independent review pending)",
+        "notes": "Checked the original legacy-forward, main-light, target, color-contract and Code First reachability wording against the intact archive paragraph."
+      }
+    },
+    {
+      "source": {
+        "path": "skills/cocosair-rendering/SKILL.md",
+        "block_id": "prose:L24-L24"
+      },
+      "source_hash": "e7b0105793e91c124bcf441d16efd4ecc8582ea4c0dfec1026faf8fc5f9c1083",
+      "kind": "prose",
+      "destinations": [
+        {
+          "path": "skills/cocosair-rendering/references/context.md",
+          "block_id": "prose:L26-L26",
+          "hash": "bd2d099cf516295e284f670b0c2c51ddd883d2e4648ea07dedb7dcd76485589d"
+        }
+      ],
+      "operation": "summarize",
+      "link_map": [
+        {
+          "from": "references/quick-start.md",
+          "to": "quick-start.md",
+          "destination_path": "skills/cocosair-rendering/references/context.md"
+        }
+      ],
+      "review": {
+        "status": "approved",
+        "reviewer": "rendering-pilot implementation agent (source-preservation self-review; independent review pending)",
+        "notes": "Checked the complete setup/teardown and source-checkout/npm-consumer selection qualifiers. The original paragraph remains intact with an equivalent relative link."
+      }
+    },
+    {
+      "source": {
+        "path": "skills/cocosair-rendering/SKILL.md",
+        "block_id": "heading:L26-L26"
+      },
+      "source_hash": "616256e36495617ce743f159af6785c5665d58fe82a8df74994832316ad6545d",
+      "kind": "heading",
+      "destinations": [
+        {
+          "path": "skills/cocosair-rendering/references/context.md",
+          "block_id": "heading:L7-L7",
+          "hash": "616256e36495617ce743f159af6785c5665d58fe82a8df74994832316ad6545d"
+        }
+      ],
+      "operation": "deduplicate",
+      "link_map": [],
+      "review": {
+        "status": "approved",
+        "reviewer": "rendering-pilot implementation agent (source-preservation self-review; independent review pending)",
+        "notes": "Checked the removed Related skills heading against the existing context heading of the same name. The one-line entry now links to this exact section.",
+        "equivalence": "The original SKILL Related skills heading and the pre-existing context Related skills heading are exactly the same Markdown text. The surviving section is the explicit target of the new one-line Siblings link, and the original explanatory paragraph is separately archived."
+      }
+    },
+    {
+      "source": {
+        "path": "skills/cocosair-rendering/SKILL.md",
+        "block_id": "prose:L28-L28"
+      },
+      "source_hash": "ae9bcee4bed8490c24f92afa0fdb2169af11ff3dabc16f32135d5105a55fd556",
+      "kind": "prose",
+      "destinations": [
+        {
+          "path": "skills/cocosair-rendering/references/context.md",
+          "block_id": "prose:L28-L28",
+          "hash": "b3526fb9309bc1d1c0d5969eb854554fe5e67db4cd7f0dcbdf2d4e65b0009f58"
+        }
+      ],
+      "operation": "summarize",
+      "link_map": [
+        {
+          "from": "references/context.md#related-skills",
+          "to": "context.md#related-skills",
+          "destination_path": "skills/cocosair-rendering/references/context.md"
+        }
+      ],
+      "review": {
+        "status": "approved",
+        "reviewer": "rendering-pilot implementation agent (source-preservation self-review; independent review pending)",
+        "notes": "Checked owner selection, directly needed dependencies, reuse and nonrecursive wording against the intact archive paragraph. The link still resolves to this skill’s Related skills section."
+      }
+    },
+    {
+      "source": {
+        "path": "skills/cocosair-rendering/SKILL.md",
+        "block_id": "heading:L30-L30"
+      },
+      "source_hash": "7be0f94c403fc7393619d3be9c2144acd5b1162cd6c11871d18d0e8ea8a1200b",
+      "kind": "heading",
+      "destinations": [
+        {
+          "path": "skills/cocosair-rendering/references/triggers.md",
+          "block_id": "heading:L5-L5",
+          "hash": "7be0f94c403fc7393619d3be9c2144acd5b1162cd6c11871d18d0e8ea8a1200b"
+        }
+      ],
+      "operation": "move",
+      "link_map": [],
+      "review": {
+        "status": "approved",
+        "reviewer": "rendering-pilot implementation agent (source-preservation self-review; independent review pending)",
+        "notes": "Checked the original When to use what heading is retained verbatim in the new triggers reference."
+      }
+    },
+    {
+      "source": {
+        "path": "skills/cocosair-rendering/SKILL.md",
+        "block_id": "prose:L32-L40"
+      },
+      "source_hash": "fbba7eb52b79f463f071e20e0a0aa351975542db6a3e2b0e9900609b7d253fb8",
+      "kind": "prose",
+      "destinations": [
+        {
+          "path": "skills/cocosair-rendering/references/triggers.md",
+          "block_id": "prose:L7-L15",
+          "hash": "f4120207c34e9ae844f17b65852021b0917105651fb5bbc707568576b6495c50"
+        }
+      ],
+      "operation": "move",
+      "link_map": [
+        {
+          "from": "references/lighting-units.md",
+          "to": "lighting-units.md",
+          "destination_path": "skills/cocosair-rendering/references/triggers.md"
+        },
+        {
+          "from": "references/shadow-matrix.md",
+          "to": "shadow-matrix.md",
+          "destination_path": "skills/cocosair-rendering/references/triggers.md"
+        }
+      ],
+      "review": {
+        "status": "approved",
+        "reviewer": "rendering-pilot implementation agent (source-preservation self-review; independent review pending)",
+        "notes": "Read all nine original trigger bullets against the destination. API names, annotations, light-type limitations, one-per-scene restriction and default-pipeline qualification are unchanged. The two relative Markdown destinations resolve to the original files. A new prefatory link resolves the existing Contracts mention."
+      }
+    },
+    {
+      "source": {
+        "path": "skills/cocosair-rendering/SKILL.md",
+        "block_id": "prose:L50-L50"
+      },
+      "source_hash": "4892605872b448798d94dd083bc03d225cd58d9bea1cf9a8174d2eacbdd99dd2",
+      "kind": "prose",
+      "destinations": [
+        {
+          "path": "skills/cocosair-rendering/references/context.md",
+          "block_id": "prose:L32-L32",
+          "hash": "165fd97633dd8911cfe7b4dcac256d5f0da0f14d5e17f5f41e86ef36e928c37f"
+        }
+      ],
+      "operation": "summarize",
+      "link_map": [
+        {
+          "from": "references/common-mistakes.md",
+          "to": "common-mistakes.md",
+          "destination_path": "skills/cocosair-rendering/references/context.md"
+        }
+      ],
+      "review": {
+        "status": "approved",
+        "reviewer": "rendering-pilot implementation agent (source-preservation self-review; independent review pending)",
+        "notes": "Checked the original before-implementation and relevant-path restriction against the preserved navigation paragraph. Its wrong/right reference target is unchanged logically."
+      }
+    },
+    {
+      "source": {
+        "path": "skills/cocosair-rendering/SKILL.md",
+        "block_id": "prose:L52-L56"
+      },
+      "source_hash": "9fde356987c4d45f9afba2a8fadf55186be62483cf8a79fa38b622aed390adee",
+      "kind": "prose",
+      "destinations": [
+        {
+          "path": "skills/cocosair-rendering/references/context.md",
+          "block_id": "prose:L34-L38",
+          "hash": "9fde356987c4d45f9afba2a8fadf55186be62483cf8a79fa38b622aed390adee"
+        }
+      ],
+      "operation": "summarize",
+      "link_map": [],
+      "review": {
+        "status": "approved",
+        "reviewer": "rendering-pilot implementation agent (source-preservation self-review; independent review pending)",
+        "notes": "Read all five original mistake summaries and severity labels against the intact archive list; the existing detailed wrong/right reference remains byte-identical."
+      }
+    },
+    {
+      "source": {
+        "path": "skills/cocosair-rendering/SKILL.md",
+        "block_id": "heading:L58-L58"
+      },
+      "source_hash": "3160398e951e3cd69234f55cd78966854539febf6019ba211c5647e6fbf7b06f",
+      "kind": "heading",
+      "destinations": [
+        {
+          "path": "skills/cocosair-rendering/references/context.md",
+          "block_id": "heading:L52-L52",
+          "hash": "3160398e951e3cd69234f55cd78966854539febf6019ba211c5647e6fbf7b06f"
+        }
+      ],
+      "operation": "move",
+      "link_map": [],
+      "review": {
+        "status": "approved",
+        "reviewer": "rendering-pilot implementation agent (source-preservation self-review; independent review pending)",
+        "notes": "Checked the References heading is preserved verbatim with its original five-row navigation list in context."
+      }
+    },
+    {
+      "source": {
+        "path": "skills/cocosair-rendering/SKILL.md",
+        "block_id": "prose:L60-L64"
+      },
+      "source_hash": "42d3b4d4142e13b657cd8c7e50e76296286d528d9e7fb6579e39f50b0bb6ea4e",
+      "kind": "prose",
+      "destinations": [
+        {
+          "path": "skills/cocosair-rendering/references/context.md",
+          "block_id": "prose:L54-L58",
+          "hash": "45de22f61dcde70727eed8041982f68c458dd1f2e9a1712162e35d8feac49817"
+        }
+      ],
+      "operation": "summarize",
+      "link_map": [
+        {
+          "from": "references/lighting-units.md",
+          "to": "lighting-units.md",
+          "destination_path": "skills/cocosair-rendering/references/context.md"
+        },
+        {
+          "from": "references/shadow-matrix.md",
+          "to": "shadow-matrix.md",
+          "destination_path": "skills/cocosair-rendering/references/context.md"
+        },
+        {
+          "from": "references/render-target.md",
+          "to": "render-target.md",
+          "destination_path": "skills/cocosair-rendering/references/context.md"
+        },
+        {
+          "from": "references/color-contract.md",
+          "to": "color-contract.md",
+          "destination_path": "skills/cocosair-rendering/references/context.md"
+        },
+        {
+          "from": "references/pipeline-reachability.md",
+          "to": "pipeline-reachability.md",
+          "destination_path": "skills/cocosair-rendering/references/context.md"
+        }
+      ],
+      "review": {
+        "status": "approved",
+        "reviewer": "rendering-pilot implementation agent (source-preservation self-review; independent review pending)",
+        "notes": "Read the complete five-row original References list against the archive: defaults, ordinals, limits, ignored fields, silent misses, error tables, lifecycle, accepted-cell grids, evidence caveats and reachability wording all remain. Only five relative Markdown destinations are rerooted."
+      }
+    },
+    {
+      "source": {
+        "path": "skills/cocosair-rendering/SKILL.md",
+        "block_id": "heading:L66-L66"
+      },
+      "source_hash": "90365feb1ddd47e0c9283f088bcf09ca610dac7f5c684e51c201ca4f76824595",
+      "kind": "heading",
+      "destinations": [
+        {
+          "path": "skills/cocosair-rendering/references/context.md",
+          "block_id": "heading:L60-L60",
+          "hash": "90365feb1ddd47e0c9283f088bcf09ca610dac7f5c684e51c201ca4f76824595"
+        }
+      ],
+      "operation": "move",
+      "link_map": [],
+      "review": {
+        "status": "approved",
+        "reviewer": "rendering-pilot implementation agent (source-preservation self-review; independent review pending)",
+        "notes": "Checked the Canonical docs heading is preserved verbatim at the end of context."
+      }
+    },
+    {
+      "source": {
+        "path": "skills/cocosair-rendering/SKILL.md",
+        "block_id": "prose:L68-L68"
+      },
+      "source_hash": "c1b0f70e9a2dee74b3803cefc9cde29cbecfd8ad6908968175ba7c55dbdbf904",
+      "kind": "prose",
+      "destinations": [
+        {
+          "path": "skills/cocosair-rendering/references/context.md",
+          "block_id": "prose:L62-L62",
+          "hash": "c1b0f70e9a2dee74b3803cefc9cde29cbecfd8ad6908968175ba7c55dbdbf904"
+        }
+      ],
+      "operation": "move",
+      "link_map": [],
+      "review": {
+        "status": "approved",
+        "reviewer": "rendering-pilot implementation agent (source-preservation self-review; independent review pending)",
+        "notes": "Checked all seven original canonical documentation paths and their order. These are checkout-root source annotations in inline code, not Markdown navigation links; their literal paths are unchanged."
+      }
+    }
+  ]
+}

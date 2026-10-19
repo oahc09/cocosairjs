@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "purpose": "Lossless storage of four historical routing reports; restoration is not a new execution.",
+  "publication_inventory": "ai/plans/skills-token-evidence/recovery/publication-inventory.json",
+  "publication_inventory_git_blob_sha": "de422cb6c09f1720f8ebf58df400a023a62905c2",
+  "entries": [
+    {
+      "logical_path": "ai/plans/skills-token-evidence/recovery/final-route-attempt1.json",
+      "artifact_path": "ai/plans/skills-token-evidence/recovery/final-route-attempt1.json.gz",
+      "original_bytes": 1600925,
+      "original_git_blob_sha": "d50836366625add547ff6f50818c4e19627f6106",
+      "original_sha256": "31b991779e3dac0aba03ff8fa7f1b5909d592477af4beec7c67218b6f4d51ad9",
+      "gzip_bytes": 131739,
+      "gzip_sha256": "38c4c865658b4f1d2562d3da5c1baf0ab5bab47d2609270ca3f2f14654e47166",
+      "status": "FAIL"
+    },
+    {
+      "logical_path": "ai/plans/skills-token-evidence/recovery/final-route.json",
+      "artifact_path": "ai/plans/skills-token-evidence/recovery/final-route.json.gz",
+      "original_bytes": 1320744,
+      "original_git_blob_sha": "6b6d7a6927de7ca1ca03714b1eaf313668d1cc50",
+      "original_sha256": "f91fa111bab723bb84ff62de226de8e95c17474058ae0bf4690cde77a171b23b",
+      "gzip_bytes": 102800,
+      "gzip_sha256": "c192a9759c3188f510dd9ce53bbacc12a9f308bf78d91a394fa8d650cb092426",
+      "status": "PASS"
+    },
+    {
+      "logical_path": "ai/plans/skills-token-evidence/recovery/s2b-attempt2-route.json",
+      "artifact_path": "ai/plans/skills-token-evidence/recovery/s2b-attempt2-route.json.gz",
+      "original_bytes": 1316031,
+      "original_git_blob_sha": "35b941a8a81a083bbd62abf157dd7bbc76606baf",
+      "original_sha256": "edb0bd6aca905abd70eb98aa7e0c0dd2fa6c7a82f833106e5dbb8fbd8365e3d1",
+      "gzip_bytes": 101578,
+      "gzip_sha256": "556b84868ecdd35abe3a99e5f61569ccdca19fbb9ae3f0f478976d92c8bb2a61",
+      "status": "PASS"
+    },
+    {
+      "logical_path": "ai/plans/skills-token-evidence/recovery/s2b-attempt3-route.json",
+      "artifact_path": "ai/plans/skills-token-evidence/recovery/s2b-attempt3-route.json.gz",
+      "original_bytes": 1316033,
+      "original_git_blob_sha": "eadf54e0ea0a2eb3cad4414f5311d63e2294eeab",
+      "original_sha256": "57e0af5718392d38ba27107b61213edb44a3b8b7d3731fee88499e45ec15b75a",
+      "gzip_bytes": 101590,
+      "gzip_sha256": "9689f8a755f754077086ead9a7305b03b87a9e6ad365e8380fa202aa7e8603de",
+      "status": "PASS"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "status": "FAIL",
+  "files": 190,
+  "skills": 22,
+  "links": 522,
+  "failures": [
+    {
+      "file": "cocosair-verification/references/contracts.md",
+      "line": 14,
+      "reason": "use a relative Markdown link for skill navigation",
+      "reference": "v06-final-gate.md"
+    },
+    {
+      "file": "cocosair-verification/references/gate-catalog.md",
+      "line": 34,
+      "reason": "use a relative Markdown link for skill navigation",
+      "reference": "v06-final-gate.md"
+    }
+  ]
+}

@@ -282,3 +282,32 @@ WebGPU 的冻结 shader/builtin 资产校验、重建、浏览器及安装包命
 `node tools/verify/webgpu-acceptance.cjs --reports=<输出目录>` 默认只读重算；显式 `--archive=<新目录>` 才复制证据。该 Windows 范围通过与 Safari 外部 NOT_RUN、全仓 release NOT READY 分开。命令前置、Firefox 的临时刷新/遮挡配置与写入见[环境说明](../docs/reference/webgpu-environment.md)及[npm 命令目录](../docs/reference/npm-scripts.md)。
 
 `node tools/delivery/webgpu-submission.cjs` 只读核对精确提交范围、并行源码/组合生成物依赖、Git 可见性及证据闭包；显式 `--export=<output 下的新目录>` 才复制证据交付树并复验，不构建、不采证、不暂存。独立复制品可用 `--evidence-only` 离线复核。文件清单、输出内容和依赖顺序见 [WebGPU 提交范围](../docs/reference/webgpu-submission.md)。
+
+## Skills P1 tooling
+
+The six tools under `tools/skills/` share the Markdown/YAML parser in `lib/md-parse.cjs`. They validate documentation, not runtime/browser behavior. Run from the repository root with the existing locked dependencies:
+
+- `node --test tools/skills/test/*.test.cjs`: focused in-memory and temporary-directory regressions.
+- `node tools/skills/gen-index.cjs --check`: read-only generation drift check. `--write` explicitly writes only `skills/index.json` and `skills/INDEX.md`; `--analyze-bundle cocosair-rendering` is a read-only closure analysis, not a bundle producer.
+- `node tools/skills/verify-meta.cjs --snapshot <original>`: read-only YAML, host-field, entry and index budgets. `--metadata-only` supports the frozen early-stage gates.
+- `node tools/skills/verify-lossless.cjs --snapshot <prerequisite> --ledger ai/plans/skills-migration-ledger.json --phase P1`: read-only preservation validation. The approved original-to-prerequisite four-reference repair is separately hash-bound; it is not silently normalized as equivalent wording.
+- `node tools/skills/verify-lossless.cjs --restore-check <original> --out <new-isolated-directory>`: the explicit exception that restores original bytes to a new directory; it rejects overlap, symlinks and existing outputs and never executes restored code.
+- `node tools/skills/route-regression.cjs --root skills --snapshot <original> --baseline ai/plans/skills-route-baseline.json`: read-only frozen 44-question regression in both routing views. Probe and failed correction reports remain retained.
+- `node tools/skills/measure-tokens.cjs --json --diff ai/plans/skills-token-baseline.json --source-snapshot <original>`: static bytes, Unicode characters and rough token estimates; estimates are not model billing tokens.
+- `node tools/skills/measure-tokens.cjs --loads <actual-events.jsonl> --snapshot <candidate> --source-snapshot <original> --scenarios tools/skills/fixtures/load-scenarios.json --diff ai/plans/skills-token-evidence/recovery/original-B1.json --baseline-loads ai/plans/skills-token-evidence/recovery/reading-original-B1/events-audited.jsonl`: reaggregate genuine same-protocol B1 records and compare against re-read original logs. This command does not perform or invent a reading trial.
+- `node tools/skills/check-p1.cjs --source <immutable-original-checkout> --out <new-temp-directory>`: deterministic CI orchestration; writes only the new directory below the OS temporary root (or RUNNER_TEMP). It reconstructs and checks original/prerequisite/candidate manifests, retains the original path FAIL, runs final gates and checks a complete isolated skills copy. It never executes snapshot code or synthesizes real reading events.
+
+The original immutable source is commit `66d11fd0c3c189b7dfa6d20645222e237352f9f3`. The focused Skills P1 workflow checks it out separately and verifies all source bytes against the retained manifest. Existing Code quality and browser-smoke gates remain unchanged. Phase two is not part of these tools' acceptance claim.
+
+### Lossless routing-report archive transport
+
+Four large candidate routing reports are stored as `.json.gz`: `s2b-attempt2-route.json`, `s2b-attempt3-route.json`, `final-route.json`, and the historical failed `final-route-attempt1.json`. Their complete original JSON bytes, rankings and FAIL status are retained. The two original baseline JSON files remain uncompressed at their original paths.
+
+`ai/plans/skills-token-evidence/recovery/compressed-route-reports.json` maps each original logical path to its archive and records original byte count, Git blob SHA, SHA256 and status. The recovery tool binds these records to the unchanged historical `publication-inventory.json` identity. Old review records and `local-ci-report-index.json` continue to identify the original logical JSON bytes; use the command below to restore those exact paths beneath a new isolated directory. Restoration is not a new execution or reading trial.
+
+```bash
+node tools/skills/restore-route-reports.cjs --check
+node tools/skills/restore-route-reports.cjs --out /tmp/cocosair-route-reports
+```
+
+The output directory must not exist. The tool checks all four archives before writing and rejects missing, corrupt, altered, oversized or unsafe inputs. The 5,553,733 original bytes occupy 437,707 gzip bytes; independent decoding must reproduce every historical byte and hash. The historical publication inventory describes the uncompressed tree `6a60ee41d9c7d480ffef54f69908da0e596a4fdc`; adding archive transport creates a different final Git tree. Skill contents and their candidate snapshot hash `7f246c153901eae7a31d0bd849904412b575e2cbd5d3cfc507eab502ff0ada41` remain unchanged.

@@ -1,0 +1,61 @@
+{
+  "schema": 1,
+  "kind": "approved-skills-path-prerequisite",
+  "original_snapshot_hash": "1e9c6637a512b819e822d8d06ea64d444c1e5640f35c48134f70fe80a5363e19",
+  "prerequisite_snapshot_hash": "46a9449ad54586ae70a914a77992801ea732270ab7f14509f40bf3792ee22d9d",
+  "approval": {
+    "status": "approved",
+    "approved_at": "2026-10-18T06:51:17Z",
+    "scope": "four navigation/output references and skill-local verification excerpt"
+  },
+  "changes": [
+    {
+      "path": "skills/cocosair-verification/references/contracts.md",
+      "from": "`v06-final-gate.md`",
+      "to": "`build/reports/v06-final-gate.md`",
+      "before_sha256": "a7a3f58a07d70b5f3247d75b88c33110aeb1b231ca1b05f261009f1e1ee72919",
+      "after_sha256": "726076d0e5e27fe2910fc0173392ee02dded0297aeedc5bd44440e04d0599737"
+    },
+    {
+      "path": "skills/cocosair-verification/references/gate-catalog.md",
+      "from": "`v06-final-gate.md`",
+      "to": "`build/reports/v06-final-gate.md`",
+      "before_sha256": "6f193ee7391ccb1ad491818e6e797354cb5dd5359c673d9455ace15f058a0334",
+      "after_sha256": "4335221665c3eddf898406c4685fe4c0fa872afc954620799e5683e6565a4390"
+    },
+    {
+      "path": "skills/cocosair-graphics-and-dom/references/commands.md",
+      "from": "[docs/manual/graphics-and-dom.md](../../../docs/manual/graphics-and-dom.md)",
+      "to": "[verification commands](verification-commands.md)",
+      "before_sha256": "7575ad677353267bdd06a462ee8082b18a9b676875ea3f6966583793f9bda873",
+      "after_sha256": "60399fde6202020dda7229e33f0b605eb4cc8f2d730dc6f42673094e2d57f2e7"
+    },
+    {
+      "path": "skills/cocosair-graphics-and-dom/references/sprite-mask.md",
+      "from": "[docs/manual/graphics-and-dom.md](../../../docs/manual/graphics-and-dom.md)",
+      "to": "[verification commands](verification-commands.md)",
+      "before_sha256": "ec9a40e0585e95e30477b6ab6c90a5cc362b32f527651aaf77cbd4619414f877",
+      "after_sha256": "e2bebceb5f1045fd5b0cb6cebce4cddff6fc006e891213dfe37482213170c778"
+    }
+  ],
+  "added": [
+    {
+      "path": "skills/cocosair-graphics-and-dom/references/verification-commands.md",
+      "sha256": "282264335afb0903ddbbea81fbfb17d0a9c8dc6a5e750f9f55ae4aaaabc20509",
+      "bytes": 5526,
+      "source_commit": "66d11fd0c3c189b7dfa6d20645222e237352f9f3",
+      "source_path": "docs/manual/graphics-and-dom.md",
+      "source_sha256": "6ef7f792631034eb9150a966ab28024ee1cf6bf62e9a5d34d95d61051b82d3fb"
+    }
+  ],
+  "review": {
+    "status": "approved",
+    "reviewer": "independent-contract-reviewer",
+    "notes": [
+      "Independent disk audit: exactly four changed old reference files and one added page; no deletions; all 22 SKILL bytes unchanged.",
+      "Four replacements preserve target meaning and only gate-catalog table padding differs additionally.",
+      "The added 5526-byte page preserves 12 source excerpt blocks and both command code bodies; six source links are explicitly identified checkout locations; no new browser result is claimed.",
+      "Original failed path and isolation checks remain unchanged historical evidence; G4 will compare prerequisite to candidate, linked to this separately approved bounded repair."
+    ]
+  }
+}

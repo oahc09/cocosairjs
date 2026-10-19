@@ -17599,6 +17599,25 @@
           {
             "action": "暂停、步进、重建和释放",
             "expected": "同一模拟时钟受控推进，原生资源通过既有生命周期桥接释放并重建"
+          },
+          {
+            "probe": "__driverpilot.linearProbe",
+            "probeArgs": [
+              [
+                {
+                  "x": 240,
+                  "y": 180
+                }
+              ]
+            ],
+            "expected": "实际创建离屏目标并由同一 step clock 读回消费者像素",
+            "action": "运行原生离屏读回探针"
+          },
+          {
+            "probe": "__driverpilot.resumePacer",
+            "probeArgs": [],
+            "expected": "恢复原生显示循环后继续可见帧与生命周期检查",
+            "action": "恢复原生显示循环"
           }
         ]
       },
@@ -19360,11 +19379,12 @@
       },
       "api": {
         "primary": [
-          "createAirApp",
+          "createAirApp"
+        ],
+        "supporting": [
           "Camera",
           "Node"
         ],
-        "supporting": [],
         "claims": [
           "createAirApp",
           "Camera",
@@ -21564,7 +21584,8 @@
           "`player.volume` 不做区间校验：setter 先落 `_volume` 再直写 DOM（`video-player.ts` → impl:136-140），越界值 `5` 会**抛 DOM 异常而引擎字段已经脏**（实测 `volThrowOutOfRange 'assigned'`? 不，是 `'ERR:...'` 且 `volFieldAfterThrow 5`、DOM 仍 0.4）；`NaN` 同样把字段写脏。对照 `AudioSource.volume` 会 clamp 到 [0,1] 且忽略 NaN——两个组件同名字段语义不一致，本例把三值全部钉进 probe",
           "事件回调有两条线，都必须单独证明：① 节点事件（`node.on('meta-loaded'…)`，8 个名字由 `__preload` 装进 `componentEventList`）；② 序列化那条 `videoPlayerEvent: EventHandler[]`（`EventHandler` 用**类名字符串**找组件：`js.setClassName('V12VideoEventLog', …)` + `eh.component='V12VideoEventLog'`，`component-event-handler.ts:156-175`）。实测 `eventLog` 里每个原生事件都成对出现 `handler:*` 与裸事件名，且 `dispatchEvent` 只在表里有 key 时才改 `_state` ⇒ `player.state` 的取值序列本身就是回调链跑通的证据",
           "⚠️ `VideoPlayer.fullScreenOnAwake` 只有在 **clip 装载之前**设置才有效。加载完成后置真走 deprecated 重载 `screen.requestFullScreen(video, cb)`（`video-player-impl-web.ts:214-218`），实测三处连锁失效（chromium/firefox/webkit 一致）：(a) `element` 参数被整个忽略——PAL 的 `requestFullScreen()` 无 element 形参，自己选目标，实测 `document.fullscreenElement === BODY` 而不是 video，`videoRect` 全程 `160x120` 没被放大；(b) `cb` 被 `onFullScreenChange?.call(document)` **零参**调用（`screen.ts:157-158`），而实现把回调写成 `(document) => …` ⇒ 形参 shadow 掉全局，读到 `undefined.fullscreenElement` ⇒ 引擎自己 `console.error` 一条 TypeError；(c) 错误回调把 `impl._fullScreenOnAwake` 写成 false，而组件 getter 又从 impl 回读（`video-player.ts:248-255`），于是后续 `= false` 被 setter 的同值卫兵吞掉 ⇒ **永远退不出全屏**。三引擎矩阵的 `noConsoleError` 不容许这条，所以本例的全屏覆盖走 `screen.requestFullScreen()/exitFullScreen()`（现行签名，`await` + catch：非全屏态直接 `exitFullScreen()` 会 reject `Document not active`）与 awake 几何全屏两路",
-          "awake 路的全屏是**几何全屏**：`syncFullScreenOnAwake(true)` 在未加载时只置 `_waitingFullscreen`，`onLoadedMetadata` 里 `delayedFullScreen()` 因 `readyState!==4` 从 `canFullScreen` 早退 ⇒ 从不碰 DOM 全屏 API（实测 `fsEl 'null'`），但 `impl._fullScreenOnAwake` 保持 true，`syncMatrix` 于是按 `visibleRect` 出尺寸 ⇒ `<video>` 变成 `480x360` 且 `styleWH '480pxx360px'`，同屏另一个播放器不受影响（`mainPlayerUnaffected '160x120'`）。本例用第二个 VideoPlayer 跑这条路，跑完 `destroy()` 并回读 `videoCount` 回到 1"
+          "awake 路的全屏是**几何全屏**：`syncFullScreenOnAwake(true)` 在未加载时只置 `_waitingFullscreen`，`onLoadedMetadata` 里 `delayedFullScreen()` 因 `readyState!==4` 从 `canFullScreen` 早退 ⇒ 从不碰 DOM 全屏 API（实测 `fsEl 'null'`），但 `impl._fullScreenOnAwake` 保持 true，`syncMatrix` 于是按 `visibleRect` 出尺寸 ⇒ `<video>` 变成 `480x360` 且 `styleWH '480pxx360px'`，同屏另一个播放器不受影响（`mainPlayerUnaffected '160x120'`）。本例用第二个 VideoPlayer 跑这条路，跑完 `destroy()` 并回读 `videoCount` 回到 1",
+          "点击 Play video 激活当前媒体，并等待实际播放后验证自然完成与原生循环"
         ]
       },
       "effect": {
@@ -21685,6 +21706,9 @@
           "resource-released"
         ],
         "capability": []
+      },
+      "bench": {
+        "startupButtonText": "Play video"
       }
     },
     {
@@ -21779,6 +21803,84 @@
         "verified": 4,
         "attested": 0,
         "units": 4
+      }
+    },
+    {
+      "dir": "webgpu-basic",
+      "id": "webgpu-basic",
+      "version": "1.0.0",
+      "title": "Explicit WebGPU backend",
+      "category": "basics",
+      "status": "experimental",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "bench": {
+        "entryQuery": "renderer=webgl2"
+      },
+      "learning": {
+        "goal": "显式选择桌面 WebGPU 后端并与默认 WebGL2 对照",
+        "points": [
+          "renderer 选项必须在初始化前选择",
+          "实际后端由 gfxAPI 判断",
+          "同一场景采用原生 Cocos Camera、MeshRenderer 和材质",
+          "通用 API 门禁使用显式 WebGL2 对照；真实 WebGPU 另由完整专项验收"
+        ]
+      },
+      "effect": {
+        "functional": "renderer=webgpu 请求真实 WebGPU；查询参数 renderer=webgl2 切换为初始化前显式选择；场景包含相机、主光和原生立方体。",
+        "visual": "深蓝背景上显示灰色受光立方体；不支持 WebGPU 的环境明确拒绝启动。"
+      },
+      "api": {
+        "primary": [
+          "createAirApp"
+        ],
+        "supporting": [
+          "Scene",
+          "Node",
+          "Camera",
+          "MeshRenderer",
+          "DirectionalLight"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "Camera",
+          "MeshRenderer",
+          "DirectionalLight"
+        ]
+      },
+      "capabilities": [
+        "basics"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Main Light",
+            "Cube"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
       }
     },
     {
@@ -22050,7 +22152,8 @@
       "node-hierarchy",
       "node-scale",
       "starter",
-      "transform"
+      "transform",
+      "webgpu-basic"
     ],
     "interaction": [
       "input",

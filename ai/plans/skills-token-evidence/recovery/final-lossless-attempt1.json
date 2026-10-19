@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "tool": "skills-lossless-p1-v1-recovery1",
+  "parser_version": "air-markdown-1",
+  "phase": "P1",
+  "status": "PASS",
+  "source_snapshot_hash": "46a9449ad54586ae70a914a77992801ea732270ab7f14509f40bf3792ee22d9d",
+  "candidate_hash": "db6cf786562dc6aea77334d8e98c5589e6dd5173099b0c3c99d48ea518c5baf3",
+  "changed_original_files": 46,
+  "checked_original_units": 3265,
+  "unchanged_units": 2884,
+  "approved_mappings": 381,
+  "issues": [],
+  "limitation": "Checks explicit block/field preservation and reviews; does not prove semantic equivalence of new summaries."
+}

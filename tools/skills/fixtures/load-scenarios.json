@@ -1,0 +1,246 @@
+{
+  "schema": 1,
+  "recovery_run": "recovery-2026-10-18",
+  "source_snapshot_hash": "1e9c6637a512b819e822d8d06ea64d444c1e5640f35c48134f70fe80a5363e19",
+  "scenarios": [
+    {
+      "id": "B1",
+      "question": "场景亮度不符合预期，而且方向光没有阴影。应检查哪些光照单位、阴影支持条件和开关？",
+      "completion_checks": [
+        {
+          "id": "lighting-units",
+          "criterion": "Distinguish directional illuminance in Lux from local-light luminousFlux/luminance and nt2lm size conversion; do not use a universal brightness scalar.",
+          "sources": [
+            {
+              "path": "skills/cocosair-rendering/references/lighting-units.md",
+              "block_id": "prose:L42-L42",
+              "hash": "2478207a077e08c03486715280f278bbc8e093545881b27cb4d72a791e7e40d3"
+            },
+            {
+              "path": "skills/cocosair-rendering/references/lighting-units.md",
+              "block_id": "prose:L46-L46",
+              "hash": "cefef0f19c14d6227fae6bd2cece8faa2c79124ff25b149539281428a375da40"
+            },
+            {
+              "path": "skills/cocosair-rendering/references/lighting-units.md",
+              "block_id": "prose:L60-L60",
+              "hash": "ab228360a7a94c8b4abe333cc1463f3ef1d06addd98a5cd265b24dd555e57415"
+            }
+          ]
+        },
+        {
+          "id": "exposure-slots",
+          "criterion": "Explain HDR/LDR slot, camera exposure and local-light meter-scale differences with the required preconditions.",
+          "sources": [
+            {
+              "path": "skills/cocosair-rendering/references/lighting-units.md",
+              "block_id": "table:L74-L79",
+              "hash": "cd1f64f02ef1857181c2060c12d904c5e2af371696709741a1f91d6136ecf31a"
+            }
+          ]
+        },
+        {
+          "id": "main-light",
+          "criterion": "Ordinary directionals share one effective scene.renderScene.mainLight; inspect its identity, rather than expecting an added ordinary directional to provide fill.",
+          "sources": [
+            {
+              "path": "skills/cocosair-rendering/references/contracts.md",
+              "block_id": "prose:L5-L13",
+              "hash": "97501a31b5c27f0d54800bf2703855f2d266a6e9968a331b7c5a759a64cc2b56"
+            }
+          ]
+        },
+        {
+          "id": "shadow-support",
+          "criterion": "Distinguish main directional/Spot ShadowMap support from Point/Sphere non-support, and Planar from ShadowMap including documented validation limits.",
+          "sources": [
+            {
+              "path": "skills/cocosair-rendering/references/shadow-matrix.md",
+              "block_id": "table:L7-L14",
+              "hash": "d730cd85bf2fa863a1d9b88acdd6fc39675e81dc1a64ba9dc34bc84deb5d09b0"
+            }
+          ]
+        },
+        {
+          "id": "switches-and-bounds",
+          "criterion": "Give all four independent shadow switches: global enabled, ShadowMap type, light shadowEnabled and renderer shadowCastingMode ON; retain world-bounds/culling preconditions.",
+          "sources": [
+            {
+              "path": "skills/cocosair-rendering/references/contracts.md",
+              "block_id": "prose:L5-L13",
+              "hash": "97501a31b5c27f0d54800bf2703855f2d266a6e9968a331b7c5a759a64cc2b56"
+            }
+          ]
+        },
+        {
+          "id": "evidence-limits",
+          "criterion": "Treat source/default-bundle lookups and historical candidate/browser evidence as scoped evidence, not a current runtime pass; provide corresponding document references.",
+          "sources": [
+            {
+              "path": "skills/cocosair-rendering/references/shadow-matrix.md",
+              "block_id": "prose:L111-L111",
+              "hash": "bb320ac34b0decc62c6406ca09dc9074fa82d336f637d8582e560022a7b7fc23"
+            }
+          ]
+        }
+      ],
+      "expected_owner": "cocosair-rendering",
+      "source_snapshot_hash": "1e9c6637a512b819e822d8d06ea64d444c1e5640f35c48134f70fe80a5363e19",
+      "source_refs": [
+        {
+          "path": "skills/cocosair-rendering/references/lighting-units.md",
+          "block_id": "prose:L42-L42",
+          "hash": "2478207a077e08c03486715280f278bbc8e093545881b27cb4d72a791e7e40d3"
+        },
+        {
+          "path": "skills/cocosair-rendering/references/lighting-units.md",
+          "block_id": "prose:L46-L46",
+          "hash": "cefef0f19c14d6227fae6bd2cece8faa2c79124ff25b149539281428a375da40"
+        },
+        {
+          "path": "skills/cocosair-rendering/references/lighting-units.md",
+          "block_id": "prose:L60-L60",
+          "hash": "ab228360a7a94c8b4abe333cc1463f3ef1d06addd98a5cd265b24dd555e57415"
+        },
+        {
+          "path": "skills/cocosair-rendering/references/lighting-units.md",
+          "block_id": "table:L74-L79",
+          "hash": "cd1f64f02ef1857181c2060c12d904c5e2af371696709741a1f91d6136ecf31a"
+        },
+        {
+          "path": "skills/cocosair-rendering/references/contracts.md",
+          "block_id": "prose:L5-L13",
+          "hash": "97501a31b5c27f0d54800bf2703855f2d266a6e9968a331b7c5a759a64cc2b56"
+        },
+        {
+          "path": "skills/cocosair-rendering/references/shadow-matrix.md",
+          "block_id": "table:L7-L14",
+          "hash": "d730cd85bf2fa863a1d9b88acdd6fc39675e81dc1a64ba9dc34bc84deb5d09b0"
+        },
+        {
+          "path": "skills/cocosair-rendering/references/shadow-matrix.md",
+          "block_id": "prose:L111-L111",
+          "hash": "bb320ac34b0decc62c6406ca09dc9074fa82d336f637d8582e560022a7b7fc23"
+        }
+      ],
+      "read_protocol": {
+        "version": "air-reading-recovery-1",
+        "operator": "Independent cold native assistant reader; inherited same model deployment with no override. The runtime does not expose an exact model build identifier.",
+        "reading_method": "Manual document reading in a fresh context. First receive the entire frozen host-minimal L0, then the full router exactly once. Independently select the owner and only the necessary references. Return whole UTF-8 file payloads; record every repeated read.",
+        "stop_condition": "Stop when the unchanged frozen question can be answered completely. Seal the answer before revealing completion checks; do not read more or edit the sealed answer after seeing them.",
+        "field_rendering": "host-minimal: serialize each of 22 name+description records in lexical name order using air-routing-1, joined by one newline; count exactly once.",
+        "tool_text_scope": "Count actual document payload Unicode code points, UTF-8 bytes and uniform rough token estimate; exclude fixed tool wrappers, the question and answer. Count repeated actual reads. Never substitute internal file output for a truncated reader-visible response.",
+        "clean_context": true,
+        "profile": "A",
+        "router": "skills/cocosair/SKILL.md",
+        "receipts": "The actual reader attests untruncated L0 and every document payload, with tool call receipts. Set both inner command and outer function output budgets to 30000. A truncated response with unrecoverable exact received text invalidates cost and must be preserved as a failure.",
+        "answer_review": "After sealing, completion-check evidence must quote exact text in the sealed answer; record failure honestly. No source execution or browsing beyond the frozen snapshot."
+      },
+      "metric_version": "air-document-input-1"
+    },
+    {
+      "id": "B2",
+      "question": "默认 bundle 出现 postProcess 名称，是否说明后处理可以直接运行？需要区分哪些导出、管线配置和验证条件？",
+      "completion_checks": [
+        {
+          "id": "layers",
+          "criterion": "Separate source exports, built default ESM reachability, configured runtime pipeline and actual browser verification.",
+          "sources": [
+            {
+              "path": "skills/cocosair-rendering/references/pipeline-reachability.md",
+              "block_id": "prose:L3-L3",
+              "hash": "93e1c97239ed727a1cf2c55c1fa0df8a1fd80a3b3a9b848bca0c71e7398055a9"
+            }
+          ]
+        },
+        {
+          "id": "name-not-execution",
+          "criterion": "A postProcess namespace or compiled custom feature does not itself activate post-processing execution.",
+          "sources": [
+            {
+              "path": "skills/cocosair-rendering/references/pipeline-reachability.md",
+              "block_id": "table:L61-L73",
+              "hash": "6a4b8a003831b7a64644b16dd90903ea9b323a3c55f90b45f03799d1a7cbbdfb"
+            }
+          ]
+        },
+        {
+          "id": "configuration",
+          "criterion": "Explain rendering.customPipeline settings, cclegacy.rendering clearing/availability, usesCustomPipeline and registered builder/Director conditions; do not confuse renderMode with pipeline selection.",
+          "sources": [
+            {
+              "path": "skills/cocosair-rendering/references/pipeline-reachability.md",
+              "block_id": "table:L81-L96",
+              "hash": "eebaa1139ff7f02d8d3e7a2fa272d47ec0ddcd4c2360929422ee780294419441"
+            }
+          ]
+        },
+        {
+          "id": "verification",
+          "criterion": "Camera setting read-back or imports alone do not prove effect passes/pixels; scope any variant and require matching candidate/browser evidence.",
+          "sources": [
+            {
+              "path": "skills/cocosair-rendering/references/pipeline-reachability.md",
+              "block_id": "table:L61-L73",
+              "hash": "6a4b8a003831b7a64644b16dd90903ea9b323a3c55f90b45f03799d1a7cbbdfb"
+            },
+            {
+              "path": "skills/cocosair-rendering/references/pipeline-reachability.md",
+              "block_id": "table:L81-L96",
+              "hash": "eebaa1139ff7f02d8d3e7a2fa272d47ec0ddcd4c2360929422ee780294419441"
+            }
+          ]
+        },
+        {
+          "id": "historical-limit",
+          "criterion": "Keep historical and variant evidence separate from current default-bundle guarantees; state this trial did not execute current runtime verification.",
+          "sources": [
+            {
+              "path": "skills/cocosair-rendering/references/pipeline-reachability.md",
+              "block_id": "prose:L192-L192",
+              "hash": "ef6a2527bcaab0b209c42794f7c4136d2aa12b36ae2ece6c7916def0e7f413fa"
+            }
+          ]
+        }
+      ],
+      "expected_owner": "cocosair-rendering",
+      "source_snapshot_hash": "1e9c6637a512b819e822d8d06ea64d444c1e5640f35c48134f70fe80a5363e19",
+      "source_refs": [
+        {
+          "path": "skills/cocosair-rendering/references/pipeline-reachability.md",
+          "block_id": "prose:L3-L3",
+          "hash": "93e1c97239ed727a1cf2c55c1fa0df8a1fd80a3b3a9b848bca0c71e7398055a9"
+        },
+        {
+          "path": "skills/cocosair-rendering/references/pipeline-reachability.md",
+          "block_id": "table:L61-L73",
+          "hash": "6a4b8a003831b7a64644b16dd90903ea9b323a3c55f90b45f03799d1a7cbbdfb"
+        },
+        {
+          "path": "skills/cocosair-rendering/references/pipeline-reachability.md",
+          "block_id": "table:L81-L96",
+          "hash": "eebaa1139ff7f02d8d3e7a2fa272d47ec0ddcd4c2360929422ee780294419441"
+        },
+        {
+          "path": "skills/cocosair-rendering/references/pipeline-reachability.md",
+          "block_id": "prose:L192-L192",
+          "hash": "ef6a2527bcaab0b209c42794f7c4136d2aa12b36ae2ece6c7916def0e7f413fa"
+        }
+      ],
+      "read_protocol": {
+        "version": "air-reading-recovery-1",
+        "operator": "Independent cold native assistant reader; inherited same model deployment with no override. The runtime does not expose an exact model build identifier.",
+        "reading_method": "Manual document reading in a fresh context. First receive the entire frozen host-minimal L0, then the full router exactly once. Independently select the owner and only the necessary references. Return whole UTF-8 file payloads; record every repeated read.",
+        "stop_condition": "Stop when the unchanged frozen question can be answered completely. Seal the answer before revealing completion checks; do not read more or edit the sealed answer after seeing them.",
+        "field_rendering": "host-minimal: serialize each of 22 name+description records in lexical name order using air-routing-1, joined by one newline; count exactly once.",
+        "tool_text_scope": "Count actual document payload Unicode code points, UTF-8 bytes and uniform rough token estimate; exclude fixed tool wrappers, the question and answer. Count repeated actual reads. Never substitute internal file output for a truncated reader-visible response.",
+        "clean_context": true,
+        "profile": "A",
+        "router": "skills/cocosair/SKILL.md",
+        "receipts": "The actual reader attests untruncated L0 and every document payload, with tool call receipts. Set both inner command and outer function output budgets to 30000. A truncated response with unrecoverable exact received text invalidates cost and must be preserved as a failure.",
+        "answer_review": "After sealing, completion-check evidence must quote exact text in the sealed answer; record failure honestly. No source execution or browsing beyond the frozen snapshot."
+      },
+      "metric_version": "air-document-input-1"
+    }
+  ]
+}

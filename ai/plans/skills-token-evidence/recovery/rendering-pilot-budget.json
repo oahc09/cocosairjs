@@ -1,0 +1,100 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "scope": "Rendering entry record, full-suite unchanged host contracts, and rendering-only in-memory index-object feasibility. No final index files generated; not a full-suite G1/G2 final PASS.",
+  "candidate_hash": "ffa80d130e234f5061da4239a1c06aec73a125176381a435cb95a7ab5136806b",
+  "metadata_gate": "verify-meta.validateRecord(record, allSkillNames, false)",
+  "entry_bytes": 3314,
+  "entry_limit_bytes": 4000,
+  "frontmatter_code_points": 1077,
+  "frontmatter_limit_code_points": 1400,
+  "description_code_points": 154,
+  "description_limit_code_points": 180,
+  "frontmatter_matches_s2b_attempt3_bytes": true,
+  "reference_map_rows": [
+    {
+      "text": "- [Wrong brightness?](references/lighting-units.md) - Units and main light",
+      "code_points": 74,
+      "utf8_bytes": 74
+    },
+    {
+      "text": "- [No shadows?](references/shadow-matrix.md) - Support grid and switches",
+      "code_points": 72,
+      "utf8_bytes": 72
+    },
+    {
+      "text": "- [Offscreen pixels?](references/render-target.md) - Targets, MSAA and capture",
+      "code_points": 78,
+      "utf8_bytes": 78
+    },
+    {
+      "text": "- [Washed-out textures?](references/color-contract.md) - Format and decode",
+      "code_points": 74,
+      "utf8_bytes": 74
+    },
+    {
+      "text": "- [Can bloom run?](references/pipeline-reachability.md) - Pipeline reachability",
+      "code_points": 79,
+      "utf8_bytes": 79
+    }
+  ],
+  "reference_map_limit": 90,
+  "triggers": 7,
+  "trigger_max_words": 7,
+  "index_object_code_points": 1213,
+  "index_object_limit_code_points": 2000,
+  "index_object": {
+    "name": "cocosair-rendering",
+    "layer": "subsystem",
+    "family": "scene-3d",
+    "path": "cocosair-rendering/SKILL.md",
+    "description": "Configure lighting, shadows, render targets, MSAA and sRGB. Use for offscreen pixels, post-processing, AIR_E_RENDER_TARGET_SAMPLES or AIR_E_TEXTURE_COLOR.",
+    "owns": [
+      "lighting",
+      "shadows",
+      "render-target",
+      "msaa",
+      "srgb",
+      "post-process"
+    ],
+    "when_to_use": [
+      "scene brightness looks wrong",
+      "no shadows from lights",
+      "render mirror or refraction into a texture",
+      "texture looks washed out after load",
+      "can bloom or post-processing run"
+    ],
+    "not_for": [
+      "material property types -> cocosair-materials-effects",
+      "camera framing or projection -> cocosair-camera",
+      "DOM offscreen textures -> cocosair-graphics-and-dom"
+    ],
+    "metadata": {
+      "description_zh": "配置灯光、阴影、渲染目标、MSAA、颜色契约和管线可达性。用于光照、阴影、离屏渲染、读回或后处理问题。"
+    },
+    "refs": [
+      {
+        "file": "references/lighting-units.md",
+        "answers": "Units and main light"
+      },
+      {
+        "file": "references/shadow-matrix.md",
+        "answers": "Support grid and switches"
+      },
+      {
+        "file": "references/render-target.md",
+        "answers": "Targets, MSAA and capture"
+      },
+      {
+        "file": "references/color-contract.md",
+        "answers": "Format and decode"
+      },
+      {
+        "file": "references/pipeline-reachability.md",
+        "answers": "Pipeline reachability"
+      }
+    ],
+    "last_updated": "2026-10-13"
+  },
+  "issues": []
+}

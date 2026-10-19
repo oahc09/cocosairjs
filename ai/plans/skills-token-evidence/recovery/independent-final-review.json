@@ -1,0 +1,78 @@
+{
+  "schema": 1,
+  "reviewed_at": "2026-10-18T09:45:14Z",
+  "reviewer": "Independent read-only contract reviewer",
+  "status": "PASS",
+  "candidate_snapshot_hash": "7f246c153901eae7a31d0bd849904412b575e2cbd5d3cfc507eab502ff0ada41",
+  "checks": [
+    "All 22 short entries read; metadata equals S2b attempt3 and original context prefixes retained",
+    "Complete 381-mapping preservation independently recomputed",
+    "All six formal final deterministic reports independently recomputed and exactly matched",
+    "B1 seven actual received payloads, seal ordering, answer facts and six criteria reviewed; aggregate/diff exactly reproduced",
+    "152 focused tests, formatter, independent original/restore disk reread and A-only copy rechecked",
+    "Two clean-location generated indexes compared with candidate bytes",
+    "Original FAIL and incorrectly scoped route attempt retained; phase two not implemented"
+  ],
+  "closed_findings": [
+    "Restored experimental HTML qualifier before final S2b",
+    "Corrected second directional-light summary",
+    "Explained moved below pointer",
+    "Clarified historical application canvas-import conflict",
+    "Candidate root specified in final route command and documentation"
+  ],
+  "remote_ci_checked": false,
+  "evidence": [
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/candidate-manifest.json",
+      "sha256": "9d1560989d253b27b341f45d0b8189ea8291b565d05e74c02636fbff99386af0"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/final-meta.json",
+      "sha256": "c872e91f09f9df8816df2552e60b615fe83053009825bc6eeaa229bb6b620b0d"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/final-lossless.json",
+      "sha256": "cc4798e196d297674c37e95b6e8b89dee5a4a4668ad1ca61c7a8dabf24455ab2"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/final-paths.json",
+      "sha256": "42488188bf9ba420717000db94f15a467f630e8a7af854b6be77dac9c70cc167"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/final-index.json",
+      "sha256": "cafb9e2d8ba6415b387deb653f62857572a0de55665b803914389aea92e3ffab"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/final-route.json",
+      "sha256": "f91fa111bab723bb84ff62de226de8e95c17474058ae0bf4690cde77a171b23b"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/final-static.json",
+      "sha256": "44913762eb77588ec19c046895701cd44bd1a98cf050990239ad85882761bbe8"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/candidate-B1-diff.json",
+      "sha256": "cce931fd19167224dc3f0a36fe58c6184c9cbfaa002fc8d9b91e1bf417d3e5af"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/local-ci-final.json",
+      "sha256": "1b991b3cf2fc1fd823e91e213608936ccd1e1ce11ad3bb0a35a6a2903e51862a"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/local-ci-report-index.json",
+      "sha256": "b1a6ae7ced89b76eff607af1fe993ab63df9ce4fc112eacb6dee96c01ec0706e"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/index-determinism.json",
+      "sha256": "68b57bd80637d2840efad3a247b419a35e807f76d891adc74e7aee2bd78baee6"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/original-final-reread.json",
+      "sha256": "24426049e30933a0f0ffed82834f78f8841a4302fae9a2e8fed5be9a6a299366"
+    },
+    {
+      "path": "ai/plans/skills-token-evidence/recovery/final-scope.json",
+      "sha256": "1e7c9862ade6af7aadad6c4fd551489f61854f6969a44286a3eb5eb9398c72d1"
+    }
+  ]
+}

@@ -229,10 +229,14 @@ function collectScope(repo = REPO) {
             Boolean(spec.requiresDevTools) === Boolean(entry.requiresDevTools),
             `manifest/spec DevTools mismatch: ${entry.id}`,
         );
-        invariant(
-            spec.status === entry.status && same(spec.bench, entry.bench),
-            `manifest/spec contract mismatch: ${entry.id}`,
-        );
+        // Gallery publication can deliberately retain a more conservative status.
+        // Executing a specification does not promote its public Gallery identity.
+        const statuses = ['draft', 'experimental', 'stable'];
+        const specRank = statuses.indexOf(spec.status);
+        const galleryRank = statuses.indexOf(entry.status);
+        invariant(specRank >= 0 && galleryRank >= 0, `unknown manifest/spec status: ${entry.id}`);
+        invariant(galleryRank <= specRank, `manifest status exceeds specification: ${entry.id}`);
+        invariant(same(spec.bench, entry.bench), `manifest/spec contract mismatch: ${entry.id}`);
         if (entry.requiresDevTools) continue;
         regularFile(path.join(dir, 'index.html'));
         const seenQueries = new Set();
@@ -254,6 +258,7 @@ function collectScope(repo = REPO) {
         scope.push({
             id: entry.id,
             dir: entry.dir,
+            statusAdmission: { specification: spec.status, gallery: entry.status },
             shell: spec.bench?.mode === 'ui-shell',
             specFingerprint: common.specFingerprintOf(spec),
             sourceFingerprint: trace.sourceFingerprint(dir),
@@ -408,6 +413,12 @@ function validatePublication(freeze, publication, results, repo = REPO) {
         const spec = JSON.parse(fs.readFileSync(path.join(repo, 'examples', baseline.dir, 'example.json'), 'utf8'));
         const entry = manifest.examples.find((e) => e.id === baseline.id);
         const row = results.find((r) => r.id === baseline.id);
+        invariant(
+            ['draft', 'experimental', 'stable'].includes(baseline.status) &&
+                spec.status === baseline.status &&
+                entry?.status === baseline.status,
+            `publication status drift: ${baseline.id}`,
+        );
         invariant(row && row.result === 'PASS', 'publication contains missing/failed row');
         if (baseline.status === 'stable')
             invariant(
