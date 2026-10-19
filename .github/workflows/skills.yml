@@ -1,61 +1,10 @@
 name: Skills P1
-
-on:
-  pull_request:
-  push:
-    branches: [main]
-    tags: ["v*"]
-
+"on":
+  workflow_dispatch: null
 permissions:
   contents: read
-
 jobs:
   skills-p1:
-    runs-on: ubuntu-24.04
-    timeout-minutes: 10
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          persist-credentials: false
-      - name: Read immutable original skills from Git
-        uses: actions/checkout@v4
-        with:
-          ref: 66d11fd0c3c189b7dfa6d20645222e237352f9f3
-          path: .skills-original-source
-          sparse-checkout: /skills/
-          sparse-checkout-cone-mode: false
-          persist-credentials: false
-      - name: Confirm original checkout identity
-        run: |
-          set -euo pipefail
-          test "$(git -C .skills-original-source rev-parse HEAD)" = 66d11fd0c3c189b7dfa6d20645222e237352f9f3
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-      - name: Install existing dependencies without lifecycle scripts
-        run: npm ci --ignore-scripts
-      - name: Check focused tooling formatting
-        run: npx --no-install prettier --check "tools/skills/**/*.cjs" .github/workflows/skills.yml
-      - name: Run 135 focused P1 regressions and orchestration safety tests
-        run: |
-          set -euo pipefail
-          node --test tools/skills/test/md-parse.test.cjs tools/skills/test/gen-index.test.cjs tools/skills/test/measure-tokens.test.cjs tools/skills/test/verify-meta.test.cjs tools/skills/test/verify-lossless.test.cjs tools/skills/test/route-regression.test.cjs
-          node --test tools/skills/test/check-p1.test.cjs
-          node --test tools/skills/test/restore-route-reports.test.cjs
-          node skills/cocosair/scripts/check-paths.cjs --selftest
-      - name: Verify and restore four lossless routing archives
-        run: node tools/skills/restore-route-reports.cjs --out "$RUNNER_TEMP/skills-route-reports"
-      - name: Verify final P1, retained real B1, and isolated full-tree distribution
-        run: |
-          set -euo pipefail
-          node tools/skills/check-p1.cjs --source "$GITHUB_WORKSPACE/.skills-original-source" --out "$RUNNER_TEMP/skills-p1"
-      - name: Retain deterministic reports, including any failures
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: skills-p1-results
-          path: |
-            ${{ runner.temp }}/skills-p1/
-            ${{ runner.temp }}/skills-route-reports/
-          if-no-files-found: warn
+    uses: ./.github/workflows/format.yml
+    with:
+      mode: skills

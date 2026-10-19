@@ -149,3 +149,48 @@ describe('timeline selection and independent completion contract', () => {
         expect(checkAudioCompletion(receipt).pass).toBe(false);
     });
 });
+
+const { submittedSnapshot, waitForSubmittedSnapshot } = require('../../tools/verify/interactive-timeline-browser.cjs');
+describe('native submission synchronization', () => {
+    const failed = {
+        disposed: false,
+        frames: 3,
+        sequence: 1,
+        submitted: 0,
+        submissionTimestamp: '2026-10-19T12:10:12.038Z',
+    };
+    test('real f963 initial snapshot stays unready despite three existing frames', () => {
+        expect(submittedSnapshot(failed)).toBe(false);
+        const drawn = { ...failed, submitted: 1 };
+        expect(submittedSnapshot(drawn)).toBe(drawn);
+    });
+    test.each([
+        ['zero frames', { frames: 0 }],
+        ['disposed', { disposed: true }],
+        ['invalid timestamp', { submissionTimestamp: '' }],
+        ['non-finite sequence', { sequence: Infinity, submitted: Infinity }],
+    ])('never accepts %s', (_name, change) =>
+        expect(submittedSnapshot({ ...failed, submitted: 1, ...change })).toBe(false),
+    );
+    test('returns predicate snapshot handle and disposes it without a later evaluate', async () => {
+        const snapshot = { ...failed, submitted: 1 };
+        const handle = { jsonValue: jest.fn(async () => snapshot), dispose: jest.fn(async () => {}) };
+        const page = { waitForFunction: jest.fn(async () => handle), evaluate: jest.fn() };
+        expect(await waitForSubmittedSnapshot(page)).toBe(snapshot);
+        expect(page.waitForFunction).toHaveBeenCalledWith(submittedSnapshot, undefined, {
+            polling: 20,
+            timeout: 20000,
+        });
+        expect(handle.dispose).toHaveBeenCalledTimes(1);
+        expect(page.evaluate).not.toHaveBeenCalled();
+    });
+    test('missing submission rejects rather than fabricating a snapshot or retrying', async () => {
+        const page = {
+            waitForFunction: jest.fn(async () => {
+                throw new Error('submission timeout');
+            }),
+        };
+        await expect(waitForSubmittedSnapshot(page)).rejects.toThrow('submission timeout');
+        expect(page.waitForFunction).toHaveBeenCalledTimes(1);
+    });
+});

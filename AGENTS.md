@@ -78,9 +78,15 @@ When adding or changing an npm script, update `docs/reference/npm-scripts.md` wi
 
 ### Keep routine CI small
 
-The default `Code quality / quality` job builds the main and Spark artifacts,
-checks formatting/types, runs focused bootstrap/scene/runtime-asset/audio and
-current-change regressions, then verifies five real Chromium examples:
+The single ordinary PR entry is `Code quality / quality`. It checks formatting,
+types and focused bootstrap/scene/runtime-asset/audio/current-change CPU regressions
+before one main/Spark build. Package and browser checks consume that same workspace
+and SHA. Explicit prose-only changes skip runtime work; Skills changes retain the
+complete Skills P1 and immutable archive checks. Unknown/shared/config changes run
+all retained suites. The fail-closed final gate rejects required failures, cancelled
+checks and unexpected skips. See [CI scopes](docs/reference/ci-scopes.md).
+
+Code changes verify five real Chromium examples:
 `shader-driver-pilot`, `glass-refraction`, `gltf-viewer`, `input`, and `spark-splats`.
 Keep their functional, pixel, resource-release and physical-close checks intact.
 These results are explicitly partial smoke coverage; they do not update canonical

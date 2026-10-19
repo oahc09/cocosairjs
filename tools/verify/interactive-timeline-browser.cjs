@@ -80,20 +80,34 @@ function countPatch(p, s, world, kind) {
         }
     return { pixels: n, x, y };
 }
+// Return the exact snapshot that passed the native submission predicate. The browser
+// handle is read directly, never replaced with a later unsynchronized evaluate().
+function submittedSnapshot(snapshot) {
+    const s = snapshot ?? globalThis.window?.__timeline?.snapshot();
+    return s &&
+        !s.disposed &&
+        s.submitted === s.sequence &&
+        Number.isSafeInteger(s.sequence) &&
+        s.sequence >= 0 &&
+        Number.isFinite(Date.parse(s.submissionTimestamp)) &&
+        Number.isSafeInteger(s.frames) &&
+        s.frames >= 1
+        ? s
+        : false;
+}
+async function waitForSubmittedSnapshot(page) {
+    const handle = await page.waitForFunction(submittedSnapshot, undefined, { polling: 20, timeout: 20000 });
+    try {
+        return await handle.jsonValue();
+    } finally {
+        await handle.dispose();
+    }
+}
 function checkState(r, state) {
     const errors = [];
     try {
         const s = state.snapshot;
-        if (
-            s.disposed ||
-            s.submitted !== s.sequence ||
-            !Number.isSafeInteger(s.sequence) ||
-            s.sequence < 0 ||
-            !finite(Date.parse(s.submissionTimestamp)) ||
-            !Number.isSafeInteger(s.frames) ||
-            s.frames < 1
-        )
-            errors.push('submission');
+        if (!submittedSnapshot(s)) errors.push('submission');
         if (s.clock.method !== (r.clock ?? 'NATIVE_PACER')) errors.push('clock method');
         const p = readPNG(state.png);
         if (
@@ -600,10 +614,15 @@ async function main() {
                     });
                 }
                 async function capture(page, row, name, detail) {
-                    if (row.clock === 'STEP_CLOCK') await page.evaluate(() => window.__timeline.step(0));
                     await page.waitForTimeout(60);
                     const startedAt = new Date().toISOString(),
-                        snapshot = await page.evaluate(() => window.__timeline.snapshot()),
+                        snapshot =
+                            row.clock === 'STEP_CLOCK'
+                                ? await page.evaluate(async () => {
+                                      await window.__timeline.step(0);
+                                      return window.__timeline.snapshot();
+                                  })
+                                : await waitForSubmittedSnapshot(page),
                         p = path.join(artifacts, `${engine}-${row.clock || row.load}-${name}.png`);
                     await page.screenshot({ path: p });
                     const after = await page.evaluate(() => window.__timeline.snapshot()),
@@ -618,6 +637,12 @@ async function main() {
                                 endedAt: new Date().toISOString(),
                                 audioBefore: snapshot.audio.time,
                                 audioAfter: after.audio.time,
+                                submissionAfter: {
+                                    sequence: after.sequence,
+                                    submitted: after.submitted,
+                                    frames: after.frames,
+                                    submissionTimestamp: after.submissionTimestamp,
+                                },
                             },
                         };
                     row.states.push(state);
@@ -945,6 +970,8 @@ async function main() {
     process.exitCode = report.exitCode;
 }
 module.exports = {
+    submittedSnapshot,
+    waitForSubmittedSnapshot,
     expected,
     poseError,
     countPatch,
