@@ -4,6 +4,46 @@ const fs = require('fs'),
     crypto = require('crypto'),
     { PNG } = require('pngjs');
 const { checkRow, visiblePixels } = require('../../tools/verify/interactive-kit-evidence.cjs');
+describe('official installed npm CLI resolution', () => {
+    const { resolveNpmCli } = require('../../tools/verify/interactive-kit-consumer.cjs');
+    let dir: string;
+    beforeEach(() => {
+        dir = fs.mkdtempSync(path.join(os.tmpdir(), 'air-kit-npm-'));
+    });
+    afterEach(() => {
+        fs.rmSync(dir, { recursive: true, force: true });
+    });
+    function npmAt(relative: string, name = 'npm') {
+        const pkg = path.join(dir, relative);
+        fs.mkdirSync(path.join(pkg, 'bin'), { recursive: true });
+        fs.writeFileSync(path.join(pkg, 'package.json'), JSON.stringify({ name, bin: { npm: 'bin/npm-cli.js' } }));
+        const cli = path.join(pkg, 'bin/npm-cli.js');
+        fs.writeFileSync(cli, '// Synthetic path fixture only; never executed');
+        return cli;
+    }
+    test('setup-node POSIX bin/node uses sibling lib npm without npm_execpath', () => {
+        const cli = npmAt('lib/node_modules/npm');
+        expect(resolveNpmCli(path.join(dir, 'bin/node'), {})).toBe(cli);
+    });
+    test('adjacent Windows-style Node distribution npm remains supported', () => {
+        const cli = npmAt('node_modules/npm');
+        expect(resolveNpmCli(path.join(dir, 'node.exe'), {})).toBe(cli);
+    });
+    test('explicit npm lifecycle CLI is honored', () => {
+        const cli = npmAt('custom/npm');
+        expect(resolveNpmCli(path.join(dir, 'missing/node'), { npm_execpath: cli })).toBe(cli);
+    });
+    test('invalid explicit path cannot silently fall back', () => {
+        npmAt('lib/node_modules/npm');
+        expect(() => resolveNpmCli(path.join(dir, 'bin/node'), { npm_execpath: path.join(dir, 'missing.js') })).toThrow(
+            'npm CLI unavailable',
+        );
+    });
+    test('wrong package and arbitrary PATH do not identify npm', () => {
+        npmAt('lib/node_modules/npm', 'not-npm');
+        expect(() => resolveNpmCli(path.join(dir, 'bin/node'), { PATH: dir })).toThrow('npm CLI unavailable');
+    });
+});
 describe('installed recipe focused acceptance (synthetic PNG contract only)', () => {
     let dir: string, row: any;
     beforeAll(() => {

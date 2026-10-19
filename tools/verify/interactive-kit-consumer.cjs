@@ -15,6 +15,27 @@ const hash = (b) => crypto.createHash('sha256').update(b).digest('hex'),
         const b = fs.readFileSync(p);
         return { bytes: b.length, sha256: hash(b) };
     };
+// Official Node distributions place npm beside node.exe on Windows and in
+// ../lib/node_modules on POSIX. Never infer a CLI from an arbitrary PATH command.
+function resolveNpmCli(execPath = process.execPath, env = process.env) {
+    const candidates = env.npm_execpath
+        ? [env.npm_execpath]
+        : [
+              path.join(path.dirname(execPath), 'node_modules/npm/bin/npm-cli.js'),
+              path.join(path.dirname(execPath), '../lib/node_modules/npm/bin/npm-cli.js'),
+          ];
+    for (const candidate of candidates) {
+        if (!path.isAbsolute(candidate) || !fs.existsSync(candidate)) continue;
+        const cli = fs.realpathSync(candidate);
+        if (!fs.statSync(cli).isFile() || path.basename(cli) !== 'npm-cli.js') continue;
+        const packageRoot = path.resolve(path.dirname(cli), '..');
+        const metadata = path.join(packageRoot, 'package.json');
+        if (!fs.existsSync(metadata)) continue;
+        const pkg = JSON.parse(fs.readFileSync(metadata, 'utf8'));
+        if (pkg.name === 'npm' && path.resolve(packageRoot, pkg.bin?.npm || '') === cli) return cli;
+    }
+    throw Error('npm CLI unavailable: expected explicit npm_execpath or the official Node installation layout');
+}
 async function click(page, id) {
     await page.locator(id).click();
     await page.evaluate(() => window.scrollTo(0, 0));
@@ -64,9 +85,7 @@ async function main() {
     report.defaultsBefore = Object.fromEntries(defaults.map((p) => [p, identity(path.join(ROOT, p))]));
     try {
         if (!require('../examples/interactive-kit.cjs').run(false).ok) throw Error('regenerate consumer kit first');
-        const npmCli =
-            process.env.npm_execpath || path.join(path.dirname(process.execPath), 'node_modules/npm/bin/npm-cli.js');
-        if (!fs.existsSync(npmCli)) throw Error('npm CLI unavailable');
+        const npmCli = resolveNpmCli();
         const run = (args, cwd) => {
             const command = [process.execPath, npmCli, ...args],
                 start = new Date().toISOString();
@@ -462,6 +481,7 @@ async function main() {
     );
     process.exitCode = report.exitCode;
 }
+module.exports = { resolveNpmCli };
 if (require.main === module)
     main().catch((e) => {
         console.error(e);
