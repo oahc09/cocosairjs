@@ -264,7 +264,7 @@
       "checkpoint": "https://github.com/oahc09/cocosairjs/tree/fix/audit-sdk-recipes-20261019",
       "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a",
       "currentExecution": {
-        "state": "FOCUSED_ACCEPTANCE_PASS_34BC; CURRENT_BATCH_SAME_HEAD_CI_PENDING",
+        "state": "FOCUSED_ACCEPTANCE_PASS_379; NEW_BATCH_SAME_HEAD_CI_PENDING",
         "implementation": "IMPLEMENTED_FOR_REVIEW",
         "paths": [
           "tools/debug/effect-layout.ts",
@@ -331,7 +331,7 @@
       "checkpoint": "https://github.com/oahc09/cocosairjs/tree/fix/audit-sdk-recipes-20261019",
       "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a",
       "currentExecution": {
-        "state": "FOCUSED_ACCEPTANCE_PASS_34BC; CURRENT_BATCH_SAME_HEAD_CI_PENDING",
+        "state": "FOCUSED_ACCEPTANCE_PASS_379; NEW_BATCH_SAME_HEAD_CI_PENDING",
         "implementation": "IMPLEMENTED_FOR_REVIEW",
         "paths": [
           "docs/manual/examples/input-focus/main.ts",
@@ -398,7 +398,7 @@
       "checkpoint": "https://github.com/oahc09/cocosairjs/tree/fix/audit-sdk-recipes-20261019",
       "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a",
       "currentExecution": {
-        "state": "FOCUSED_ACCEPTANCE_PASS_34BC; CURRENT_BATCH_SAME_HEAD_CI_PENDING",
+        "state": "FOCUSED_ACCEPTANCE_PASS_379; NEW_BATCH_SAME_HEAD_CI_PENDING",
         "implementation": "IMPLEMENTED_FOR_REVIEW",
         "paths": [
           "examples/shared/async-app-lifecycle.ts",
@@ -458,7 +458,7 @@
       "checkpoint": "https://github.com/oahc09/cocosairjs/tree/fix/audit-sdk-recipes-20261019",
       "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a",
       "currentExecution": {
-        "state": "FOCUSED_ACCEPTANCE_PASS_34BC; CURRENT_BATCH_SAME_HEAD_CI_PENDING",
+        "state": "FOCUSED_ACCEPTANCE_PASS_379; NEW_BATCH_SAME_HEAD_CI_PENDING",
         "implementation": "IMPLEMENTED_FOR_REVIEW",
         "paths": [
           "examples/hdr-color-pipeline/vertex-texture-rgb.effect.json",
@@ -518,7 +518,7 @@
       "checkpoint": "https://github.com/oahc09/cocosairjs/tree/fix/audit-sdk-recipes-20261019",
       "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a",
       "currentExecution": {
-        "state": "FOCUSED_ACCEPTANCE_PASS_34BC; CURRENT_BATCH_SAME_HEAD_CI_PENDING",
+        "state": "FOCUSED_ACCEPTANCE_PASS_379; NEW_BATCH_SAME_HEAD_CI_PENDING",
         "implementation": "IMPLEMENTED_FOR_REVIEW",
         "paths": [
           "examples/shared/owned-sprite-frame.ts",
@@ -577,7 +577,7 @@
       "checkpoint": "https://github.com/oahc09/cocosairjs/tree/fix/audit-sdk-recipes-20261019",
       "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a",
       "currentExecution": {
-        "state": "FOCUSED_ACCEPTANCE_PASS_34BC; CURRENT_BATCH_SAME_HEAD_CI_PENDING",
+        "state": "FOCUSED_ACCEPTANCE_PASS_379; NEW_BATCH_SAME_HEAD_CI_PENDING",
         "implementation": "IMPLEMENTED_FOR_REVIEW",
         "paths": [
           "examples/interactive-geometry/src/two-sided-page.ts",
@@ -633,7 +633,7 @@
       "checkpoint": "https://github.com/oahc09/cocosairjs/tree/fix/audit-sdk-recipes-20261019",
       "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a",
       "currentExecution": {
-        "state": "SAME_HEAD_BASELINE_MAPS_AND_31_IDENTITY_TESTS_PASS_34BC",
+        "state": "SAME_HEAD_BASELINE_MAPS_AND_31_IDENTITY_TESTS_PASS_379",
         "implementation": "EXISTING_IDENTITY_TOOL_HARDENED",
         "paths": [
           "tools/verify/interactive-improvement-baseline.cjs",
@@ -702,18 +702,23 @@
       "checkpoint": "https://github.com/oahc09/cocosairjs/tree/fix/audit-sdk-recipes-20261019",
       "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a",
       "currentExecution": {
-        "state": "NOT_RUN_ORIGINAL_SCOPE",
-        "implementation": "REUSE_EXISTING_APIS_NO_DUPLICATE_IMPLEMENTATION",
+        "state": "LOCAL_WEBKIT_INPUT_COMPOSITOR_PASS_NEW_HEAD_CI_PENDING",
+        "implementation": "REUSE_EXISTING_COLLECTOR_UPDATED_MATERIAL_LIMIT",
         "paths": [
-          "docs/manual/interactive-evidence-chain.md",
-          "ai/ledgers/interactive-engine-improvements.md"
+          "tools/verify/interactive-improvement-browser.cjs"
         ],
         "currentEvidence": {
-          "status": "NOT_RUN_ORIGINAL_SCOPE",
-          "historicalRemainingImpact": "原11/16/23、Water、soft、Puzzle50对象/雨线/切面参考不在重建fixture内。",
-          "materialMapping": "Additional original/recovered inputs now available; exact equivalence and required devices/budgets not yet verified."
+          "runtimeHead": "37974d6e320e4251df8288fa19b2d6508a9fd56e",
+          "status": "WORKING_TREE_DIAGNOSTIC",
+          "passed": [
+            "DPR1/2: 8 visible positives and 2 occluded negative controls; 19/19 actual-report mutations rejected."
+          ],
+          "pending": [
+            "Original objects/rain/cut/reference comparisons and physical presentation time remain outside this generated fixture."
+          ],
+          "summary": "docs/evidence/sdk-backlog/render-kit-local-20261019.json"
         },
-        "remaining": "Original proposal acceptance has not been rerun in this PR. Historical material gaps require current item-by-item mapping; device/reference/performance boundaries remain explicit.",
+        "remaining": "Original objects/rain/cut/reference comparisons and physical presentation time remain outside this generated fixture.",
         "ledger": "ai/ledgers/sdk-audit-backlog-20261019.json"
       }
     },
@@ -755,18 +760,24 @@
       "checkpoint": "https://github.com/oahc09/cocosairjs/tree/fix/audit-sdk-recipes-20261019",
       "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a",
       "currentExecution": {
-        "state": "NOT_RUN_ORIGINAL_SCOPE",
-        "implementation": "REUSE_EXISTING_APIS_NO_DUPLICATE_IMPLEMENTATION",
+        "state": "LOCAL_WEBKIT_SELECTED_MATRIX_PASS_NEW_HEAD_CI_PENDING",
+        "implementation": "FIXED_EXPLICIT_SELECTED_MATRIX_GATE_AND_INPUT_CLOSURE",
         "paths": [
-          "docs/manual/interactive-multipass.md",
-          "ai/ledgers/interactive-engine-improvements.md"
+          "tools/verify/interactive-multipass-browser.cjs",
+          "tools/verify/interactive-multipass-audit.cjs"
         ],
         "currentEvidence": {
-          "status": "NOT_RUN_ORIGINAL_SCOPE",
-          "historicalRemainingImpact": "native MSAA采样、原参考和长期稳定性仍未验；静态binding预检不等于驱动拒绝。",
-          "materialMapping": "Additional original/recovered inputs now available; exact equivalence and required devices/budgets not yet verified."
+          "runtimeHead": "37974d6e320e4251df8288fa19b2d6508a9fd56e",
+          "status": "WORKING_TREE_DIAGNOSTIC",
+          "passed": [
+            "15 cases plus 2 normal modes passed; 19/19 actual-report mutations rejected."
+          ],
+          "pending": [
+            "Full three-browser acceptance, original rendering references and device/performance budgets remain pending."
+          ],
+          "summary": "docs/evidence/sdk-backlog/render-kit-local-20261019.json"
         },
-        "remaining": "Original proposal acceptance has not been rerun in this PR. Historical material gaps require current item-by-item mapping; device/reference/performance boundaries remain explicit.",
+        "remaining": "Full three-browser acceptance, original rendering references and device/performance budgets remain pending.",
         "ledger": "ai/ledgers/sdk-audit-backlog-20261019.json"
       }
     },
@@ -901,18 +912,24 @@
       "checkpoint": "https://github.com/oahc09/cocosairjs/tree/fix/audit-sdk-recipes-20261019",
       "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a",
       "currentExecution": {
-        "state": "NOT_RUN_ORIGINAL_SCOPE",
-        "implementation": "REUSE_EXISTING_APIS_NO_DUPLICATE_IMPLEMENTATION",
+        "state": "LOCAL_WEBKIT_SELECTED_MATRIX_PASS_NEW_HEAD_CI_PENDING",
+        "implementation": "FIXED_EXPLICIT_SELECTED_MATRIX_GATE_AND_INPUT_CLOSURE",
         "paths": [
-          "docs/manual/interactive-geometry.md",
-          "ai/ledgers/interactive-engine-improvements.md"
+          "tools/verify/interactive-geometry-browser.cjs",
+          "tools/verify/interactive-geometry-audit.cjs"
         ],
         "currentEvidence": {
-          "status": "NOT_RUN_ORIGINAL_SCOPE",
-          "historicalRemainingImpact": "111行中18个WebKit活resize不可见；原soft13未取得。无SDK对照也失败，不能转成核心bug。",
-          "materialMapping": "Additional original/recovered inputs now available; exact equivalence and required devices/budgets not yet verified."
+          "runtimeHead": "37974d6e320e4251df8288fa19b2d6508a9fd56e",
+          "status": "WORKING_TREE_DIAGNOSTIC",
+          "passed": [
+            "37 cutting/resize/offset and 7 additional rows passed; 30/30 actual-report mutations rejected."
+          ],
+          "pending": [
+            "Original soft/Water reference matching, complete topology/normals certification and device/GPU performance remain pending."
+          ],
+          "summary": "docs/evidence/sdk-backlog/geometry-webkit-local-20261019.json"
         },
-        "remaining": "Original proposal acceptance has not been rerun in this PR. Historical material gaps require current item-by-item mapping; device/reference/performance boundaries remain explicit.",
+        "remaining": "Original soft/Water reference matching, complete topology/normals certification and device/GPU performance remain pending.",
         "ledger": "ai/ledgers/sdk-audit-backlog-20261019.json"
       }
     },
@@ -974,18 +991,24 @@
       "checkpoint": "https://github.com/oahc09/cocosairjs/tree/fix/audit-sdk-recipes-20261019",
       "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a",
       "currentExecution": {
-        "state": "NOT_RUN_ORIGINAL_SCOPE",
-        "implementation": "REUSE_EXISTING_APIS_NO_DUPLICATE_IMPLEMENTATION",
+        "state": "LOCAL_NODE22_33_CONTRACTS_PASS_NEW_HEAD_CI_PENDING",
+        "implementation": "FIXED_SUPPLEMENTARY_REPORT_GATE",
         "paths": [
-          "docs/manual/interactive-input.md",
-          "ai/ledgers/interactive-engine-improvements.md"
+          "tools/verify/interactive-input-browser.cjs",
+          "test/smoke/interactive-input.test.ts"
         ],
         "currentEvidence": {
-          "status": "NOT_RUN_ORIGINAL_SCOPE",
-          "historicalRemainingImpact": "32项协议/真实blur/hidden未运行、两条PAL警告及实体触屏/原参考未验。",
-          "materialMapping": "Additional original/recovered inputs now available; exact equivalence and required devices/budgets not yet verified."
+          "runtimeHead": "37974d6e320e4251df8288fa19b2d6508a9fd56e",
+          "status": "WORKING_TREE_DIAGNOSTIC",
+          "passed": [
+            "Empty blur/hidden stages false-negative reproduced; existing supplementary lifecycle contract enforced; 33 Node22 tests including 7 new controls passed in isolated parent run."
+          ],
+          "pending": [
+            "Original mixed-page 32 protocol/environment NOT_RUN observations remain historical. No fresh full mixed-input or physical touch/real-window acceptance claimed."
+          ],
+          "summary": "docs/evidence/sdk-backlog/input-supplementary-contract-20261019.json"
         },
-        "remaining": "Original proposal acceptance has not been rerun in this PR. Historical material gaps require current item-by-item mapping; device/reference/performance boundaries remain explicit.",
+        "remaining": "Original mixed-page 32 protocol/environment NOT_RUN observations remain historical. No fresh full mixed-input or physical touch/real-window acceptance claimed.",
         "ledger": "ai/ledgers/sdk-audit-backlog-20261019.json"
       }
     },
@@ -1104,7 +1127,7 @@
       "checkpoint": "https://github.com/oahc09/cocosairjs/tree/fix/audit-sdk-recipes-20261019",
       "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a",
       "currentExecution": {
-        "state": "LOCAL_WEBKIT_TEACHING_SCOPE_PASS; SAME_HEAD_CHROMIUM_CI_PENDING",
+        "state": "LOCAL_WEBKIT_AND_SAME_HEAD_CHROMIUM_TEACHING_SCOPE_PASS_379",
         "implementation": "EXISTING_TIMELINE_COLLECTOR_CONTRACT_HARDENED",
         "paths": [
           "docs/manual/interactive-timeline.md",
@@ -1123,7 +1146,26 @@
           "pngs": 48,
           "scope": "18 teaching groups, two clocks, two scroll heights, 16.2-second WebAudio cue, two loads, natural EOS and explicit Stop tested separately.",
           "materialReview": "docs/evidence/sdk-backlog/proposal-original-materials-20261019.json",
-          "remaining": "Original 1188-part/155-stage model not located; real device scope remains."
+          "remaining": "Original 1188-part/155-stage model not located; real device scope remains.",
+          "acceptedCI": {
+            "head": "37974d6e320e4251df8288fa19b2d6508a9fd56e",
+            "sdkRun": 39241773257,
+            "qualityRun": 39241773236,
+            "skillsRun": 39241773222,
+            "status": "SUCCESS",
+            "cpuTests": 42,
+            "timelineTests": 29,
+            "identityTests": 31,
+            "chromiumRecipeRows": 8,
+            "timelineRows": 6,
+            "timelinePNGs": 48,
+            "timelineTamperRejections": 39,
+            "coreJestTests": 148,
+            "consumerMainExports": 645,
+            "artifactId": 12181203713,
+            "artifactSHA256": "c11ad0cfa5fafaf560fe46ab3d3ea462fdcd505925cec4e9c2d1b204aa221688",
+            "runtimeSHA256": "7eb2d7b840ee56d1da57068b8513876edcb07075b82193884f3935ae8a1d4bf8"
+          }
         },
         "remaining": "Original 1188-part/155-stage model not located; real device scope remains.",
         "ledger": "ai/ledgers/sdk-audit-backlog-20261019.json"
@@ -1178,7 +1220,7 @@
       "checkpoint": "https://github.com/oahc09/cocosairjs/tree/fix/audit-sdk-recipes-20261019",
       "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a",
       "currentExecution": {
-        "state": "LOCAL_WEBKIT_TEACHING_SCOPE_PASS; SAME_HEAD_CHROMIUM_CI_PENDING",
+        "state": "LOCAL_WEBKIT_AND_SAME_HEAD_CHROMIUM_TEACHING_SCOPE_PASS_379",
         "implementation": "EXISTING_TIMELINE_COLLECTOR_CONTRACT_HARDENED",
         "paths": [
           "docs/manual/interactive-timeline.md",
@@ -1197,7 +1239,26 @@
           "pngs": 48,
           "scope": "18 teaching groups, two clocks, two scroll heights, 16.2-second WebAudio cue, two loads, natural EOS and explicit Stop tested separately.",
           "materialReview": "docs/evidence/sdk-backlog/proposal-original-materials-20261019.json",
-          "remaining": "Original approximately 59-second score not located; physical audible/display timing and original app acceptance remain."
+          "remaining": "Original approximately 59-second score not located; physical audible/display timing and original app acceptance remain.",
+          "acceptedCI": {
+            "head": "37974d6e320e4251df8288fa19b2d6508a9fd56e",
+            "sdkRun": 39241773257,
+            "qualityRun": 39241773236,
+            "skillsRun": 39241773222,
+            "status": "SUCCESS",
+            "cpuTests": 42,
+            "timelineTests": 29,
+            "identityTests": 31,
+            "chromiumRecipeRows": 8,
+            "timelineRows": 6,
+            "timelinePNGs": 48,
+            "timelineTamperRejections": 39,
+            "coreJestTests": 148,
+            "consumerMainExports": 645,
+            "artifactId": 12181203713,
+            "artifactSHA256": "c11ad0cfa5fafaf560fe46ab3d3ea462fdcd505925cec4e9c2d1b204aa221688",
+            "runtimeSHA256": "7eb2d7b840ee56d1da57068b8513876edcb07075b82193884f3935ae8a1d4bf8"
+          }
         },
         "remaining": "Original approximately 59-second score not located; physical audible/display timing and original app acceptance remain.",
         "ledger": "ai/ledgers/sdk-audit-backlog-20261019.json"
@@ -1294,7 +1355,7 @@
       "checkpoint": "https://github.com/oahc09/cocosairjs/tree/fix/audit-sdk-recipes-20261019",
       "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a",
       "currentExecution": {
-        "state": "SAME_HEAD_REAL_INSTALLED_PACKAGE_CONSUMER_PASS_34BC",
+        "state": "SAME_HEAD_REAL_INSTALLED_PACKAGE_CONSUMER_PASS_379",
         "implementation": "EXISTING_REAL_PACKAGE_CONSUMER_EXTENDED",
         "paths": [
           "tools/verify/consumer-acceptance.cjs",
@@ -1362,18 +1423,28 @@
       "checkpoint": "https://github.com/oahc09/cocosairjs/tree/fix/audit-sdk-recipes-20261019",
       "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a",
       "currentExecution": {
-        "state": "NOT_RUN_ORIGINAL_SCOPE",
-        "implementation": "REUSE_EXISTING_APIS_NO_DUPLICATE_IMPLEMENTATION",
+        "state": "LOCAL_ACTUAL_INSTALLED_KIT_WEBKIT_PASS_NEW_HEAD_CI_PENDING",
+        "implementation": "FIXED_ACTUAL_PACKAGE_SHARED_DEPENDENCIES_AND_IDENTITY_SEPARATION",
         "paths": [
-          "docs/manual/interactive-consumer-kit.md",
-          "ai/ledgers/interactive-engine-improvements.md"
+          "tools/examples/interactive-kit.cjs",
+          "tools/verify/interactive-kit-consumer.cjs",
+          "tools/verify/interactive-kit-evidence.cjs",
+          "tools/verify/interactive-kit-audit.cjs",
+          "docs/manual/examples/interactive-kit/manifest.json"
         ],
         "currentEvidence": {
-          "status": "NOT_RUN_ORIGINAL_SCOPE",
-          "historicalRemainingImpact": "55/60 PNG通过，5个WK活布局失败；原参考和全平台认证未完成。",
-          "materialMapping": "Additional original/recovered inputs now available; exact equivalence and required devices/budgets not yet verified."
+          "runtimeHead": "37974d6e320e4251df8288fa19b2d6508a9fd56e",
+          "status": "WORKING_TREE_DIAGNOSTIC",
+          "passed": [
+            "Actual old tarball build failure reproduced for 3 entries; candidate actual pack/offline install: 5 entries and 20 PNGs passed.",
+            "Installed TS4.9 declarations, package entry, exact runtime, no published runtime maps, all 19 source copies verified; 26/26 report corruptions rejected."
+          ],
+          "pending": [
+            "Fresh committed same-head tarball CI pending; full three-browser/source-collector, original references and target-device acceptance remain separate."
+          ],
+          "summary": "docs/evidence/sdk-backlog/render-kit-local-20261019.json"
         },
-        "remaining": "Original proposal acceptance has not been rerun in this PR. Historical material gaps require current item-by-item mapping; device/reference/performance boundaries remain explicit.",
+        "remaining": "Fresh committed same-head tarball CI pending; full three-browser/source-collector, original references and target-device acceptance remain separate.",
         "ledger": "ai/ledgers/sdk-audit-backlog-20261019.json"
       }
     },
@@ -1416,7 +1487,7 @@
       "checkpoint": "https://github.com/oahc09/cocosairjs/tree/fix/audit-sdk-recipes-20261019",
       "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a",
       "currentExecution": {
-        "state": "FOCUSED_ACCEPTANCE_PASS_34BC; CURRENT_BATCH_SAME_HEAD_CI_PENDING",
+        "state": "FOCUSED_ACCEPTANCE_PASS_379; NEW_BATCH_SAME_HEAD_CI_PENDING",
         "implementation": "IMPLEMENTED_FOR_REVIEW",
         "paths": [
           "tools/build/math-module.cjs",
@@ -2375,7 +2446,7 @@
       "currentExecution": {
         "state": "READ_ONLY_MATERIAL_REVIEW_ACCEPTANCE_NOT_RUN",
         "pr": "https://github.com/oahc09/cocosairjs/pull/7",
-        "assessment": "Original poster loss/blocking history and application source are available. Eleven exact original poster byte receipts have not been recovered by this review; no bypass of source-site protection attempted.",
+        "assessment": "Current source contains only ai-office.webp in the posters directory. Metadata retains eleven missing/404 poster observations and historical cache-scan records. Exact original eleven poster bytes remain unavailable in the reviewed source.",
         "blocker": "EXACT_ORIGINAL_POSTER_BYTES_UNVERIFIED",
         "evidence": [
           {
@@ -2392,7 +2463,8 @@
             "bytes": 898432,
             "sha256": "5ff62cfe37bd9d4d7a5adaab1749176cbabf52aada77f17e1c8dd291612323d1"
           }
-        ]
+        ],
+        "materialAvailability": "ai/ledgers/environment-material-availability-20261019.json"
       }
     },
     {
@@ -3159,7 +3231,7 @@
     }
   ],
   "progress": {
-    "updatedAt": "2026-10-19T10:35:56.497Z",
+    "updatedAt": "2026-10-19T11:28:21.683833Z",
     "pr": "https://github.com/oahc09/cocosairjs/pull/7",
     "main": "a21d49bd4f68054e22242609bca2da50eccd054d",
     "dependency": "PR5 merged",
@@ -3181,20 +3253,24 @@
     "materialAvailability": "ai/ledgers/environment-material-availability-20261019.json",
     "policy": "Original audit fields are frozen history. currentExecution carries current outcomes. The consolidated PR remains in progress; scoped success is not full backlog completion.",
     "sdkLatestAcceptedCI": {
-      "head": "34bc840f5fc2edd20bfe50c78d53dc931c734ef4",
-      "sdkRun": 39238966875,
-      "qualityRun": 39238967061,
-      "skillsRun": 39238967071,
+      "head": "37974d6e320e4251df8288fa19b2d6508a9fd56e",
+      "sdkRun": 39241773257,
+      "qualityRun": 39241773236,
+      "skillsRun": 39241773222,
       "status": "SUCCESS",
       "cpuTests": 42,
+      "timelineTests": 29,
       "identityTests": 31,
-      "chromiumRecipeRows": 7,
+      "chromiumRecipeRows": 8,
+      "timelineRows": 6,
+      "timelinePNGs": 48,
+      "timelineTamperRejections": 39,
       "coreJestTests": 148,
       "consumerMainExports": 645,
-      "artifactId": 12180796410,
-      "artifactSHA256": "38964e74ea536ed53f144056674ce76d8268d3def004c7b48d52155c29adb75f",
-      "runtimeSHA256": "e1489f969db173d62098a99b594daf6afa2466fa5d04cf4bb7efbe818e525b13"
+      "artifactId": 12181203713,
+      "artifactSHA256": "c11ad0cfa5fafaf560fe46ab3d3ea462fdcd505925cec4e9c2d1b204aa221688",
+      "runtimeSHA256": "7eb2d7b840ee56d1da57068b8513876edcb07075b82193884f3935ae8a1d4bf8"
     },
-    "currentConsolidation": "Timeline/network collector batch pending same-head CI. Original minimal Puzzle50 and audio transport controls separately bound to current main."
+    "currentConsolidation": "Installed teaching-kit/shared-dependency and rendering/input-gate batch: local focused results recorded, new same-head CI pending."
   }
 }

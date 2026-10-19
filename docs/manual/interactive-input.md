@@ -1,5 +1,11 @@
 # 混合 Canvas、HTML 与滚动输入
 
+## 2026-10-19 补充证据合同修复
+
+报告层现在对每个已执行的 blur/hidden 补充行调用已有 checkSupplementary，检查 before/after/新手势、退场代次与旧回调拒绝。此前以空 stages 代替 NOT_RUN 不增加错误的负控已复现；新增七个正负合同检查后拒绝该伪证。共享生命周期模块及 auditor 纳入输入身份。
+
+这是 CPU 合同回归，保留原 32 个协议/环境 NOT_RUN 和真实窗口/页面可见性限制，不构成新混合输入浏览器或实体设备验收。公开技术摘要见 docs/evidence/sdk-backlog/input-supplementary-contract-20261019.json。
+
 详见 [interactive-input 示例说明](../../examples/interactive-input/README.md)。该页复用 ActionInput DOM 后端与 session gate，不新增全局输入框架。普通运行使用原生 pacer，无引擎 HTML 对照通过 `?control=html` 选择。
 
 采集命令：

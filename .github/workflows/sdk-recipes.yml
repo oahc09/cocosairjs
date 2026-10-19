@@ -18,6 +18,19 @@ on:
       - "tools/verify/math-*"
       - "tools/verify/interactive-improvement-baseline.cjs"
       - "tools/verify/interactive-timeline-*"
+      - "tools/verify/interactive-improvement*"
+      - "tools/verify/interactive-multipass*"
+      - "tools/verify/interactive-geometry*"
+      - "tools/verify/interactive-input*"
+      - "tools/verify/interactive-kit*"
+      - "tools/examples/interactive-kit.cjs"
+      - "test/smoke/interactive-*.test.ts"
+      - "docs/manual/examples/interactive-kit/**"
+      - "examples/interactive-multipass/**"
+      - "examples/interactive-geometry/**"
+      - "examples/interactive-input/**"
+      - "examples/interactive-container/**"
+      - "test/fixtures/interactive-evidence/**"
       - "examples/interactive-timeline/**"
       - "examples/shared/asset-lifecycle.js"
       - "test/smoke/interactive-timeline-evidence.test.ts"
@@ -55,6 +68,7 @@ jobs:
           sha256sum build/cocosair.math.js build/cocosair.math.d.ts build/cocosair.math.legacy.d.ts build/math-build.json > output/sdk-ci/committed-math.sha256
           npm run format:check
           npx prettier --check .github/workflows/sdk-recipes.yml tools/build/math-module.cjs tools/build/prepare-package.cjs tools/debug/effect-layout.ts tools/verify/sdk-recipe-regressions.cjs tools/verify/sdk-recipes-browser.cjs tools/verify/sdk-recipes.tsconfig.json tools/verify/math-entry.test.cjs tools/verify/math-tarball.cjs tools/verify/interactive-timeline-browser.cjs tools/verify/interactive-timeline-audit.cjs test/smoke/interactive-timeline-evidence.test.ts
+          npx prettier --check tools/examples/interactive-kit.cjs tools/verify/interactive-kit-consumer.cjs tools/verify/interactive-kit-evidence.cjs tools/verify/interactive-kit-audit.cjs tools/verify/interactive-improvement-browser.cjs tools/verify/interactive-multipass-browser.cjs tools/verify/interactive-multipass-audit.cjs tools/verify/interactive-geometry-browser.cjs tools/verify/interactive-geometry-audit.cjs tools/verify/interactive-input-browser.cjs test/smoke/interactive-kit.test.ts test/smoke/interactive-multipass-review.test.ts test/smoke/interactive-geometry.test.ts test/smoke/interactive-input.test.ts
           node --test tools/verify/sdk-recipe-regressions.cjs tools/verify/math-entry.test.cjs 2>&1 | tee output/sdk-ci/cpu.log
       - name: Build same-head main, math and declarations
         env:
@@ -65,6 +79,11 @@ jobs:
           sha256sum --check output/sdk-ci/committed-math.sha256
           npx tsc -p tools/verify/sdk-recipes.tsconfig.json
           npx tsc -p tools/verify/interactive-timeline-browser.tsconfig.json
+          npx tsc -p tools/verify/interactive-improvement-browser.tsconfig.json
+          npx tsc -p tools/verify/interactive-multipass-browser.tsconfig.json
+          npx tsc -p tools/verify/interactive-geometry-browser.tsconfig.json
+          node tools/examples/interactive-kit.cjs --check
+          npx jest --runInBand --no-cache --runTestsByPath test/smoke/interactive-kit.test.ts test/smoke/interactive-multipass.test.ts test/smoke/interactive-multipass-review.test.ts test/smoke/interactive-geometry.test.ts test/smoke/interactive-geometry-review.test.ts test/smoke/interactive-input.test.ts --json --outputFile=output/sdk-ci/render-kit-contracts.json 2>&1 | tee output/sdk-ci/render-kit-contracts.log
           npx jest --runInBand --no-cache --runTestsByPath test/smoke/interactive-timeline-evidence.test.ts --json --outputFile=output/sdk-ci/timeline-tests.json 2>&1 | tee output/sdk-ci/timeline-tests.log
           npx jest --runInBand --no-cache --runTestsByPath test/smoke/smoke-example-evidence-integration.test.ts -t 'clean-checkout npm copies' 2>&1 | tee output/sdk-ci/packaging-fixture.log
           SDK_CANDIDATE_HEAD="$(git rev-parse HEAD)" node tools/verify/math-tarball.cjs --out=output/sdk-ci/tarball
@@ -91,6 +110,27 @@ jobs:
           SDK_CANDIDATE_HEAD="$(git rev-parse HEAD)" node tools/verify/interactive-timeline-browser.cjs --browser=chromium --out=output/sdk-ci/timeline.json 2>&1 | tee output/sdk-ci/timeline.log
           node tools/verify/interactive-timeline-browser.cjs --browser=chromium --verify=output/sdk-ci/timeline.json 2>&1 | tee output/sdk-ci/timeline-verification.json
           node tools/verify/interactive-timeline-audit.cjs --report=output/sdk-ci/timeline.json --out=output/sdk-ci/timeline-audit.json 2>&1 | tee output/sdk-ci/timeline-audit.log
+      - name: Verify input-to-compositor positive and occluded controls
+        run: |
+          set -euo pipefail
+          node tools/verify/interactive-improvement-browser.cjs --browser=chromium --out=output/sdk-ci/input-compositor.json 2>&1 | tee output/sdk-ci/input-compositor.log
+          node tools/verify/interactive-improvement-browser.cjs --verify=output/sdk-ci/input-compositor.json
+          node tools/verify/interactive-improvement-evidence-audit.cjs --report=output/sdk-ci/input-compositor.json --out=output/sdk-ci/input-compositor-audit.json
+      - name: Verify selected multipass and geometry matrices
+        run: |
+          set -euo pipefail
+          node tools/verify/interactive-multipass-browser.cjs --browser=chromium --out=output/sdk-ci/multipass.json 2>&1 | tee output/sdk-ci/multipass.log
+          node tools/verify/interactive-multipass-browser.cjs --browser=chromium --verify=output/sdk-ci/multipass.json
+          node tools/verify/interactive-multipass-audit.cjs --report=output/sdk-ci/multipass.json --out=output/sdk-ci/multipass-audit.json
+          node tools/verify/interactive-geometry-browser.cjs --browser=chromium --out=output/sdk-ci/geometry.json 2>&1 | tee output/sdk-ci/geometry.log
+          node tools/verify/interactive-geometry-browser.cjs --browser=chromium --verify=output/sdk-ci/geometry.json
+          node tools/verify/interactive-geometry-audit.cjs --report=output/sdk-ci/geometry.json --out=output/sdk-ci/geometry-audit.json
+      - name: Verify all five recipes from actual installed same-head tarball
+        run: |
+          set -euo pipefail
+          node tools/verify/interactive-kit-consumer.cjs --browser=chromium --tarball=output/sdk-ci/tarball/cocosair.js-1.0.0.tgz --out=output/sdk-ci/installed-kit.json 2>&1 | tee output/sdk-ci/installed-kit.log
+          node tools/verify/interactive-kit-consumer.cjs --browser=chromium --verify=output/sdk-ci/installed-kit.json
+          node tools/verify/interactive-kit-audit.cjs --report=output/sdk-ci/installed-kit.json --out=output/sdk-ci/installed-kit-audit.json
       - name: Retain same-head artifacts and all test results
         if: always()
         uses: actions/upload-artifact@v4

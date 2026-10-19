@@ -1,0 +1,216 @@
+{
+  "schema": "sdk-render-kit-local-diagnostic/1",
+  "recordedAt": "2026-10-19T11:28:21.683833Z",
+  "scope": "Local working-tree tools and copied source, using exact CI runtime from 37974d6e; new commit same-head CI pending.",
+  "runtime": {
+    "head": "37974d6e320e4251df8288fa19b2d6508a9fd56e",
+    "sdkRun": 39241773257,
+    "artifactId": 12181203713,
+    "artifactSHA256": "c11ad0cfa5fafaf560fe46ab3d3ea462fdcd505925cec4e9c2d1b204aa221688",
+    "sha256": "7eb2d7b840ee56d1da57068b8513876edcb07075b82193884f3935ae8a1d4bf8"
+  },
+  "inputCompositor": {
+    "browser": "WebKit 26.5",
+    "DPR": [
+      1,
+      2
+    ],
+    "positiveVisible": 8,
+    "occludedNegative": 2,
+    "validation": {
+      "ok": true,
+      "errors": []
+    },
+    "report": {
+      "path": "evidence-webkit-candidate-2.json",
+      "bytes": 46294,
+      "sha256": "a858f93030c71c4bbaa3e6df4467d329774df5105ed7001297011d6354d97a29"
+    },
+    "audit": {
+      "rejected": 19,
+      "total": 19,
+      "record": {
+        "path": "evidence-webkit-audit-2.json",
+        "bytes": 4028,
+        "sha256": "f62a227803733d870925fdff70c43d97186b7acada71e3acc2502119e57bab8a"
+      }
+    }
+  },
+  "multipass": {
+    "browser": "WebKit 26.5",
+    "cases": 15,
+    "normalModes": 2,
+    "scopePassed": false,
+    "selectedScopePassed": true,
+    "report": {
+      "path": "multipass-webkit-candidate-2.json",
+      "bytes": 141935,
+      "sha256": "0930bde22fb2950532a7b4edc6a1242893f5635864f48017aa27f685dd84fbaf"
+    },
+    "audit": {
+      "rejected": 19,
+      "total": 19,
+      "record": {
+        "path": "multipass-webkit-audit-2.json",
+        "bytes": 5506,
+        "sha256": "54473913847066996602f4d61a79608ea7d53d7a0755d0e54719586100771f95"
+      }
+    },
+    "priorFailure": "Unmodified single-engine collector completed every row then exited 1: invalid report header; retained separately."
+  },
+  "installedKit": {
+    "browser": "WebKit 26.5",
+    "entries": 5,
+    "PNGs": 20,
+    "scopePassed": false,
+    "selectedScopePassed": true,
+    "report": {
+      "path": "kit-webkit-candidate-2.json",
+      "bytes": 139495,
+      "sha256": "d779ffc8313b80b6c3a4f5bb4f73f5edbcda2ceddb620db077f8b757d0440efb"
+    },
+    "sourceFiles": 19,
+    "installedRuntime": {
+      "bytes": 8458112,
+      "sha256": "9d5d86c1a5fa4efaa4607f40b3cb480521c00ebd77d80d464222559496b10da4"
+    },
+    "typeScript": "4.9.5",
+    "declaration": {
+      "path": "build/cocosair.legacy.d.ts",
+      "bytes": 367,
+      "sha256": "6dd42c6a064b17f923568bce9e3befce5ff0e33d7b0af19bed965a9e1a86aed2"
+    },
+    "installedPackage": {
+      "bytes": 6896,
+      "sha256": "ae30e6b3c6bbea785fbd08b77d9b65e3c45d3984eb1226265d9ec2e30e841a97"
+    },
+    "packageEntry": {
+      "requested": "cocosair.js",
+      "exportTarget": "./build/npm/cocosair.module.js",
+      "resolved": "build/npm/cocosair.module.js"
+    },
+    "installedRuntimeMaps": [],
+    "tarball": {
+      "filename": "cocosair.js-1.0.0.tgz",
+      "bytes": 6663169,
+      "sha256": "3a67f1351e4ff3afea9f90afb44a7d208d0aace5fabf72bae3544ef2b517af4d"
+    },
+    "audit": {
+      "rejected": 26,
+      "total": 26,
+      "record": {
+        "path": "kit-webkit-candidate-2-audit.json",
+        "bytes": 2575,
+        "sha256": "1b1ee8234d33876be4363bed1c4cef04a454145c5c451cf189f82039b33019ce"
+      }
+    },
+    "provenance": "Actual npm pack of the exact 379 package with working-tree generated kit copies overlaid, then actual offline install. Diagnostic candidate, not a committed same-head artifact."
+  },
+  "oldInstalledPackageNegative": {
+    "head": "34bc840f5fc2edd20bfe50c78d53dc931c734ef4",
+    "tarballSHA256": "39dcc8bf141aa49c02c9e432a6adada047423d34476603187c6675c4950d99be",
+    "entries": [
+      "interactive-multipass",
+      "interactive-geometry",
+      "interactive-timeline"
+    ],
+    "failure": "Actual installed sources fail esbuild resolution of ../../shared/asset-lifecycle.js; the package contains neither required shared lifecycle file.",
+    "record": {
+      "path": "kit-negative-build-2.json",
+      "bytes": 1260,
+      "sha256": "cfd97fa09abeea2a3571476b79f81db55c26b13de1d500886ddd99bb673805a0"
+    }
+  },
+  "retainedAttempts": [
+    {
+      "path": "kit-negative-install.log",
+      "bytes": 558,
+      "sha256": "258a61cf7866e6c72fdf194651dea06c5c7e9d0e4de77e139ba27d7f0aadc43e"
+    },
+    {
+      "path": "kit-negative-build.json",
+      "bytes": 1126,
+      "sha256": "00a36cdb56f601f5803bf8485765354c222d199644e2576da6ac05965a016b43"
+    },
+    {
+      "path": "kit-negative-install-2.log",
+      "bytes": 296,
+      "sha256": "e73eed75ddfda1674cc7c4568e44a2f3d4f30775e2044a9e147b15e44e4db3b5"
+    },
+    {
+      "path": "kit-negative-build-2.json",
+      "bytes": 1260,
+      "sha256": "cfd97fa09abeea2a3571476b79f81db55c26b13de1d500886ddd99bb673805a0"
+    },
+    {
+      "path": "kit-candidate-pack.log",
+      "bytes": 1057,
+      "sha256": "ae805f98b56bcba3af6c6ba449bcb4a1d23821f79f92afa26881250519dd2e9c"
+    },
+    {
+      "path": "kit-candidate-pack-2.log",
+      "bytes": 76083,
+      "sha256": "56aedfd1be9055a7ef2fb5633de0580e4f3c07e1de82d2dbb533f04f7c0e09b2"
+    },
+    {
+      "path": "kit-webkit-candidate-1.json",
+      "bytes": 139325,
+      "sha256": "d5d49f888554206685e83dcd1c50947301c980bd4c9543915b261b73ca8c90a1"
+    },
+    {
+      "path": "multipass-webkit-original-1.json",
+      "bytes": 140638,
+      "sha256": "450b24dcb69d226967555450c09776cbe48b192b501e8e89ccd397d9f2fee026"
+    },
+    {
+      "path": "evidence-webkit-original-1.json",
+      "bytes": 45888,
+      "sha256": "3c93cd7772e0641df141ac79b6f6b99d91f14ed723997679bdec99994d6a414e"
+    }
+  ],
+  "limits": [
+    "All local raw reports and PNGs retained; only this technical summary is committed.",
+    "No original-project/reference, physical-device, GPU memory or performance-budget completion is inferred.",
+    "Default full three-browser multipass/geometry/kit gates remain unchanged; selected one-browser outcomes are separate.",
+    "Parent geometry diagnostic used pre-format tool patch bytes; the next commit receives a fresh same-head CI run.",
+    "Input blur/hidden change is a CPU contract regression only, not a fresh protocol/device result."
+  ],
+  "cpu": {
+    "node": "22.23.3",
+    "tests": 145,
+    "suites": 6,
+    "result": "PASS",
+    "suitesObserved": [
+      {
+        "name": "interactive-multipass.test.ts",
+        "tests": 22,
+        "status": "passed"
+      },
+      {
+        "name": "interactive-geometry.test.ts",
+        "tests": 42,
+        "status": "passed"
+      },
+      {
+        "name": "interactive-input.test.ts",
+        "tests": 33,
+        "status": "passed"
+      },
+      {
+        "name": "interactive-kit.test.ts",
+        "tests": 18,
+        "status": "passed"
+      },
+      {
+        "name": "interactive-multipass-review.test.ts",
+        "tests": 12,
+        "status": "passed"
+      },
+      {
+        "name": "interactive-geometry-review.test.ts",
+        "tests": 18,
+        "status": "passed"
+      }
+    ]
+  }
+}

@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "interactive-consumer-kit/1",
+  "schemaVersion": "interactive-consumer-kit/2",
   "authoring": "examples/<id>",
   "sourceStatus": "recreated",
   "subset": true,
@@ -11,23 +11,7 @@
     "interactive-container",
     "interactive-timeline"
   ],
-  "sdk": [
-    {
-      "path": "build/cocosair.module.js",
-      "bytes": 6648919,
-      "sha256": "fbb567157fdb144bad2942780a2b0d77b690d56faaeb8aee9e4cfb9f47684de9"
-    },
-    {
-      "path": "build/cocosair.module.d.ts",
-      "bytes": 3374688,
-      "sha256": "9a3a050795ed05f63dd6b022d83fc0632e35e240fe0eac552bfcf7e54eb91345"
-    },
-    {
-      "path": "build/npm/cocosair.module.js",
-      "bytes": 6648875,
-      "sha256": "e50ecfd45f3bbdad60721c13838d465f7a5991841cede737441c76c586dadb41"
-    }
-  ],
+  "runtimeIdentity": "Bound separately by the actual installed-tarball consumer receipt",
   "sources": [
     {
       "path": "examples/interactive-multipass/index.html",
@@ -66,6 +50,12 @@
       "sha256": "40bb64e384a946f481c7726a5a20dc327e61ae6cceafd64760cd4e5e8de9dabf"
     },
     {
+      "path": "examples/interactive-geometry/src/two-sided-page.ts",
+      "kitPath": "interactive-geometry/src/two-sided-page.ts",
+      "bytes": 2980,
+      "sha256": "822cf816a4b5ba0a6504b3ff61b78e7f2fad780c16093658a950c7b90e2adc32"
+    },
+    {
       "path": "examples/interactive-input/index.html",
       "kitPath": "interactive-input/index.html",
       "bytes": 4352,
@@ -84,16 +74,16 @@
       "sha256": "2ca0ef0dc860713a520e2013296a1b720a8561574f8606d062e6b06c324620d7"
     },
     {
-      "path": "examples/interactive-container/src/main.ts",
-      "kitPath": "interactive-container/src/main.ts",
-      "bytes": 12323,
-      "sha256": "3835859fb0f45bf23c6f207b1ebf948a01739bde9c74d4c91cac28a2477866e7"
-    },
-    {
       "path": "examples/interactive-container/src/control.ts",
       "kitPath": "interactive-container/src/control.ts",
       "bytes": 2513,
       "sha256": "c6ac1659b17fcec7a962ae54099d12bd8d0af4c0879350d7210232a24d0275b5"
+    },
+    {
+      "path": "examples/interactive-container/src/main.ts",
+      "kitPath": "interactive-container/src/main.ts",
+      "bytes": 12323,
+      "sha256": "3835859fb0f45bf23c6f207b1ebf948a01739bde9c74d4c91cac28a2477866e7"
     },
     {
       "path": "examples/interactive-timeline/index.html",
@@ -102,16 +92,22 @@
       "sha256": "1bd27c17365fb976d5a97ca575f58d1a95b4e8f09e79d4a7aa1748b1b7e93d34"
     },
     {
+      "path": "examples/interactive-timeline/src/main.ts",
+      "kitPath": "interactive-timeline/src/main.ts",
+      "bytes": 24641,
+      "sha256": "61fc7c9472cf4de86e3a97a79117ea8ec82d4112b2e70bd1ce2864b35e7b3138"
+    },
+    {
       "path": "examples/interactive-timeline/src/timeline-contract.ts",
       "kitPath": "interactive-timeline/src/timeline-contract.ts",
       "bytes": 3254,
       "sha256": "7cff90b2e238e0c8ebd103911302434242ff127ef582d818c8c9db6c1a16774d"
     },
     {
-      "path": "examples/interactive-timeline/src/main.ts",
-      "kitPath": "interactive-timeline/src/main.ts",
-      "bytes": 24641,
-      "sha256": "61fc7c9472cf4de86e3a97a79117ea8ec82d4112b2e70bd1ce2864b35e7b3138"
+      "path": "examples/interactive-timeline/assets/LICENSE.md",
+      "kitPath": "interactive-timeline/assets/LICENSE.md",
+      "bytes": 309,
+      "sha256": "047af8b1e49a044af1a9ac94aedcb8c89a6898ee780ec10a64331aa10bf2f8e3"
     },
     {
       "path": "examples/interactive-timeline/assets/original-16s.wav",
@@ -120,15 +116,21 @@
       "sha256": "bdd03f0eb535c30ec69c892e996788222585b3c386c7517cf7d4242304975b39"
     },
     {
-      "path": "examples/interactive-timeline/assets/LICENSE.md",
-      "kitPath": "interactive-timeline/assets/LICENSE.md",
-      "bytes": 309,
-      "sha256": "047af8b1e49a044af1a9ac94aedcb8c89a6898ee780ec10a64331aa10bf2f8e3"
+      "path": "examples/shared/asset-lifecycle.js",
+      "kitPath": "shared/asset-lifecycle.js",
+      "bytes": 8251,
+      "sha256": "21eaaeda5cefd01bc72ef86d02a87ddad7b60f4cc8226745c3ffe88393bebde2"
+    },
+    {
+      "path": "examples/shared/asset-lifecycle.d.ts",
+      "kitPath": "shared/asset-lifecycle.d.ts",
+      "bytes": 1045,
+      "sha256": "34d5cc8469ea05a17f7cee6bf287d0c473cb0daaf50adfd6c49454fb68ef19cb"
     }
   ],
   "limitations": [
-    "No original Puzzle50/soft/audio reference comparison",
-    "WebKit live-resize compositor and WebAudio capability limits are retained",
+    "Original project/reference acceptance tracked separately; this source-copy manifest makes no comparison claim",
+    "Browser behavior is measured by the current consumer receipt, not inherited from historical records",
     "Target physical-device and performance budgets are NOT_RUN",
     "No new public runtime API or automatic install"
   ]

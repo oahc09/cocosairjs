@@ -1,5 +1,9 @@
 # 从输入到原生画面的证据链
 
+## 2026-10-19 当前定向复验
+
+SDK CI 对当前构建运行 DPR1/2 的可信输入→原生节点→AFTER_DRAW→compositor PNG 链，每组含遮挡负控；仍不能用帧提交或 GPU 读回替代可见像素。单引擎结果只覆盖明确选择的引擎，不表示完整多浏览器或原项目比对。历史材料可用性与原工程验收分别记录在 SDK 审计账本。
+
 IER-01 独立示范使用真实 Cocos Scene、Node、MeshRenderer、Mesh、Material，以及已有 ActionInput/SessionGate 和 createStepClock。没有复制云端工程或新增输入/场景框架。
 
 已有开发 bundle 时启动 `npm run dev`，打开 `/test/fixtures/interactive-evidence/`。点击画布或按 D 将动作入队，调用 `await window.__ierEvidence.step()` 后移动红色网格；重置返回左侧也在提交下一步后显示。遮挡按钮盖住画面，但不阻挡 Canvas 输入：再点击并提交后对象仍会移动，而截图不可见。页面显式使用测试步进时钟，自动采集调用 fixture 的 `step()`；这是自动化夹具，不是生产应用的实时动画配方。
