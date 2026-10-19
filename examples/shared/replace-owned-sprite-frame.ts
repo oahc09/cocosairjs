@@ -1,5 +1,5 @@
 import type { AirSessionScope, ImageAsset, Sprite, SpriteFrame, Texture2D } from 'cocosair';
-import { ownSpriteFrame } from './owned-sprite-frame';
+import { ownSpriteFrame } from './owned-sprite-frame.js';
 
 export interface ExclusiveSpriteContent {
     frame: SpriteFrame;
@@ -62,17 +62,24 @@ export function createSpriteContentReplacement(session: AirSessionScope, sprite:
                 return 'stale';
             }
             const previous = current;
+            let releaseNext: () => void;
+            try {
+                releaseNext = ownSpriteFrame(session, next.frame, next.texture, next.image);
+            } catch (error) {
+                discard(next);
+                throw error;
+            }
             try {
                 sprite.spriteFrame = next.frame;
             } catch (error) {
                 try {
                     sprite.spriteFrame = previous?.content.frame ?? null;
                 } finally {
-                    discard(next);
+                    releaseNext();
                 }
                 throw error;
             }
-            current = { content: next, origin, dispose: ownSpriteFrame(session, next.frame, next.texture, next.image) };
+            current = { content: next, origin, dispose: releaseNext };
             previous?.dispose();
             return 'replaced';
         },
