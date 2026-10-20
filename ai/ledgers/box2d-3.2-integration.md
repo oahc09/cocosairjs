@@ -49,9 +49,14 @@ The preceding acceptance is historical and is not a PASS for the merged candidat
 
 1. complete Save the original candidate as `ac59bafd`; merge main `aaf58b14`, preserving math exports and async packaging.
 2. complete Rebuild development/minified/maps/declarations and Spark; retain original 1359 artifacts in checked tar volumes.
-3. in_progress Validate merged candidate: Box2D three-engine suite, package/math, affected runtime regressions and browser recipes.
-4. pending Record portable merged-candidate evidence and final merge readiness.
+3. blocked Validate merged candidate: CPU/package/math/static gates passed; actual browser launch fails before page load on this Windows host. Fresh browser acceptance and Linux CI remain required.
+4. complete Record portable merged-candidate evidence and explicitly retain NOT_RUN/failed attempts. Merge readiness remains blocked; no main merge is performed.
 
 The official five-example custody collector and its `/proc` process proofs require Linux, as specified by
 `docs/reference/example-evidence-campaign.md`. Windows component/browser evidence cannot replace that CI receipt.
 Failures from initial Windows test attempts remain in `output/box2d/merge-main/`.
+
+See `docs/evidence/box2d3-merge-main/README.md`: 137 runtime, 42 SDK/math, 50 CI-policy and 22 portable evidence-tool tests passed.
+The two Linux/privilege-dependent evidence-tool controls are not counted as passed. Current browser attempts execute zero
+official cases because launch fails; previous 147/47 browser results remain historical only. Native sources and assets are
+unchanged, and tarball assets match their pinned receipt. The actual tarball, logs and failed launches are archived with hashes.
