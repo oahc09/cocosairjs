@@ -42458,7 +42458,7 @@ class TouchInputSource {
         handleTouches.push(touch);
       }
       event.stopPropagation();
-      if (event.target === this._canvas) {
+      if (event.target === this._canvas && event.cancelable) {
         event.preventDefault();
       }
       if (eventType === InputEventType.TOUCH_START) {
@@ -138622,8 +138622,8 @@ class MouseJoint extends BaseJoint {
 
 const AIR_VERSION = '1.0.0';
 const AIR_REVISION = 100;
-const AIR_BUILD_DATE = "202610200111";
-const AIR_BUILD_NUMBER = 196;
+const AIR_BUILD_DATE = "202610201944";
+const AIR_BUILD_NUMBER = 198;
 class AirAppImpl {
   get session() {
     return this._scope;

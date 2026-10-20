@@ -40,3 +40,18 @@ Branch: `feat/box2d-3.2-wasm`. User authorized development and complete acceptan
 - Delivered tarball: `output/box2d/cocosair.js-1.0.0.tgz`; asset hashes/license and extracted TypeScript consumer passed. Both extracted development and minified runtimes passed real-browser collision and teardown checks; `output/box2d/package-browser.json`.
 - Retained fixes include geometric AABB bounds, native-unlock mutation flushing, one-tick contact disabling, zero-frequency rigid spring semantics, stable minimum joint distances, transformed-Canvas mouse projection, debug rendering/clearing and release after destroyed debug nodes. Replay's supplied recording now includes a ground, and compositor checks compare actual painted coverage instead of an arbitrary pixel-area minimum that rejected sparse official scenes.
 - No project version change, Git commit/push, release, canonical evidence publication or default-backend replacement was performed. There are no remaining acceptance items within the documented single-thread, float, default-scenario scope.
+
+## Main integration follow-up
+
+User authorized the merge-review recommendations on 2026-10-20, including saving the implementation commit,
+integrating current main, rebuilding, rerunning affected checks and making original evidence portable.
+The preceding acceptance is historical and is not a PASS for the merged candidate.
+
+1. complete Save the original candidate as `ac59bafd`; merge main `aaf58b14`, preserving math exports and async packaging.
+2. complete Rebuild development/minified/maps/declarations and Spark; retain original 1359 artifacts in checked tar volumes.
+3. in_progress Validate merged candidate: Box2D three-engine suite, package/math, affected runtime regressions and browser recipes.
+4. pending Record portable merged-candidate evidence and final merge readiness.
+
+The official five-example custody collector and its `/proc` process proofs require Linux, as specified by
+`docs/reference/example-evidence-campaign.md`. Windows component/browser evidence cannot replace that CI receipt.
+Failures from initial Windows test attempts remain in `output/box2d/merge-main/`.

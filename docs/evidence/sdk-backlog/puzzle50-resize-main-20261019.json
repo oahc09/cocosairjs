@@ -1,0 +1,771 @@
+{
+  "schema": "puzzle50-original-resize-control/1",
+  "recordedAt": "2026-10-19T10:43:51.755750+00:00",
+  "task": "PROPOSAL-ENG-06",
+  "identity": {
+    "originalCommit": "aaecb78f17f5a1af05f658e8421b3653ef93467f",
+    "originalWorktreeClean": true,
+    "mainHead": "a21d49bd4f68054e22242609bca2da50eccd054d",
+    "mainRuntimeSHA256": "eb8a8a75c968571bc27d5d472a8ee02c5d89f3ab43e2d3ecf702016e406fddab",
+    "files": {
+      "verification/resize-repro.html": {
+        "bytes": 732,
+        "sha256": "98b6b5a101ad967ccdd26891da71ec961bad0c2f25b00f96eefe98976fc49585"
+      },
+      "verification/resize-repro.js": {
+        "bytes": 2598,
+        "sha256": "ae15958c5c9a09a39da096ba0cb82fd6b2ba411d5c34ca07db04c46f73137a42"
+      },
+      "shared/game.css": {
+        "bytes": 1184,
+        "sha256": "52cd00b937a05d35656ba4766dbb68e6947de530e58dab34887ba00ce4569f78"
+      },
+      "engine/cocosair.module.js": {
+        "bytes": 6538427,
+        "sha256": "de4e0472e8a9cf86af801e3f9f164c564ef43202278a3ef4ff6f67609de33d69"
+      },
+      "shared/host.js": {
+        "bytes": 9114,
+        "sha256": "793cd326669a024009a0df330df7f7748c8376ff9d5ff71ec97e30189e4f2c40"
+      },
+      "summary/host-before-resize-fix.js": {
+        "bytes": 8346,
+        "sha256": "10eecaaf12595d797a4a0ecfb3f652d60ea51f5ab18bd2804c1cfbdfee50f948"
+      }
+    }
+  },
+  "browser": "26.5",
+  "scope": "Original private minimal resize fixture; no source edits, current runtime substituted at HTTP response only.",
+  "rawReceiptSHA256": "4b0f28ea2b10f02dba3ae3007b386a60d5fa7b7551a536b9cba47829261950bf",
+  "runnerSHA256": "50d73f29643807ec1f04e4e811f1e210961015bb4580664c15ad9e220e6dc7dd",
+  "runs": [
+    {
+      "mode": "old",
+      "dpr": 1,
+      "completed": true,
+      "pageErrors": [],
+      "stages": [
+        {
+          "stage": "initial",
+          "buffer": [
+            808,
+            808
+          ],
+          "expectedBuffer": [
+            808,
+            808
+          ],
+          "bufferMatches": true,
+          "point": {
+            "x": 299.4059405940594,
+            "y": 299.4059405940594
+          },
+          "pointMatches": true
+        },
+        {
+          "stage": "viewport",
+          "buffer": [
+            808,
+            808
+          ],
+          "expectedBuffer": [
+            390,
+            390
+          ],
+          "bufferMatches": false,
+          "point": {
+            "x": 144.35643564356437,
+            "y": 516.8316831683169
+          },
+          "pointMatches": false
+        },
+        {
+          "stage": "css-only",
+          "buffer": [
+            808,
+            808
+          ],
+          "expectedBuffer": [
+            280,
+            280
+          ],
+          "bufferMatches": false,
+          "point": {
+            "x": 103.36633663366337,
+            "y": 573.8613861386139
+          },
+          "pointMatches": false
+        },
+        {
+          "stage": "shown",
+          "buffer": [
+            808,
+            808
+          ],
+          "expectedBuffer": [
+            280,
+            280
+          ],
+          "bufferMatches": false,
+          "point": {
+            "x": 103.36633663366337,
+            "y": 573.8613861386139
+          },
+          "pointMatches": false
+        },
+        {
+          "stage": "same-size",
+          "buffer": [
+            808,
+            808
+          ],
+          "expectedBuffer": [
+            280,
+            280
+          ],
+          "bufferMatches": false,
+          "point": {
+            "x": 103.36633663366337,
+            "y": 573.8613861386139
+          },
+          "pointMatches": false
+        }
+      ]
+    },
+    {
+      "mode": "old-workaround",
+      "dpr": 1,
+      "completed": true,
+      "pageErrors": [
+        "ResizeObserver loop completed with undelivered notifications."
+      ],
+      "stages": [
+        {
+          "stage": "initial",
+          "buffer": [
+            808,
+            808
+          ],
+          "expectedBuffer": [
+            808,
+            808
+          ],
+          "bufferMatches": true,
+          "point": {
+            "x": 299.4059405940594,
+            "y": 299.4059405940594
+          },
+          "pointMatches": true
+        },
+        {
+          "stage": "viewport",
+          "buffer": [
+            390,
+            390
+          ],
+          "expectedBuffer": [
+            390,
+            390
+          ],
+          "bufferMatches": true,
+          "point": {
+            "x": 299.0769230769231,
+            "y": 299.07692307692304
+          },
+          "pointMatches": true
+        },
+        {
+          "stage": "css-only",
+          "buffer": [
+            390,
+            390
+          ],
+          "expectedBuffer": [
+            390,
+            390
+          ],
+          "bufferMatches": true,
+          "point": {
+            "x": 299.0769230769231,
+            "y": 299.07692307692304
+          },
+          "pointMatches": true
+        },
+        {
+          "stage": "shown",
+          "buffer": [
+            390,
+            390
+          ],
+          "expectedBuffer": [
+            390,
+            390
+          ],
+          "bufferMatches": true,
+          "point": {
+            "x": 299.0769230769231,
+            "y": 299.07692307692304
+          },
+          "pointMatches": true
+        },
+        {
+          "stage": "same-size",
+          "buffer": [
+            390,
+            390
+          ],
+          "expectedBuffer": [
+            390,
+            390
+          ],
+          "bufferMatches": true,
+          "point": {
+            "x": 299.0769230769231,
+            "y": 299.07692307692304
+          },
+          "pointMatches": true
+        }
+      ]
+    },
+    {
+      "mode": "current",
+      "dpr": 1,
+      "completed": true,
+      "pageErrors": [],
+      "stages": [
+        {
+          "stage": "initial",
+          "buffer": [
+            808,
+            808
+          ],
+          "expectedBuffer": [
+            808,
+            808
+          ],
+          "bufferMatches": true,
+          "point": {
+            "x": 299.4059405940594,
+            "y": 299.4059405940594
+          },
+          "pointMatches": true
+        },
+        {
+          "stage": "viewport",
+          "buffer": [
+            390,
+            390
+          ],
+          "expectedBuffer": [
+            390,
+            390
+          ],
+          "bufferMatches": true,
+          "point": {
+            "x": 299.0769230769231,
+            "y": 299.07692307692304
+          },
+          "pointMatches": true
+        },
+        {
+          "stage": "css-only",
+          "buffer": [
+            280,
+            280
+          ],
+          "expectedBuffer": [
+            280,
+            280
+          ],
+          "bufferMatches": true,
+          "point": {
+            "x": 298.2857142857143,
+            "y": 298.2857142857143
+          },
+          "pointMatches": true
+        },
+        {
+          "stage": "shown",
+          "buffer": [
+            280,
+            280
+          ],
+          "expectedBuffer": [
+            280,
+            280
+          ],
+          "bufferMatches": true,
+          "point": {
+            "x": 298.2857142857143,
+            "y": 298.2857142857143
+          },
+          "pointMatches": true
+        },
+        {
+          "stage": "same-size",
+          "buffer": [
+            280,
+            280
+          ],
+          "expectedBuffer": [
+            280,
+            280
+          ],
+          "bufferMatches": true,
+          "point": {
+            "x": 298.2857142857143,
+            "y": 298.2857142857143
+          },
+          "pointMatches": true
+        }
+      ]
+    },
+    {
+      "mode": "old",
+      "dpr": 2,
+      "completed": true,
+      "pageErrors": [],
+      "stages": [
+        {
+          "stage": "initial",
+          "buffer": [
+            1616,
+            1616
+          ],
+          "expectedBuffer": [
+            1616,
+            1616
+          ],
+          "bufferMatches": true,
+          "point": {
+            "x": 299.4059405940594,
+            "y": 299.4059405940594
+          },
+          "pointMatches": true
+        },
+        {
+          "stage": "viewport",
+          "buffer": [
+            1616,
+            1616
+          ],
+          "expectedBuffer": [
+            780,
+            780
+          ],
+          "bufferMatches": false,
+          "point": {
+            "x": 144.35643564356437,
+            "y": 516.8316831683169
+          },
+          "pointMatches": false
+        },
+        {
+          "stage": "css-only",
+          "buffer": [
+            1616,
+            1616
+          ],
+          "expectedBuffer": [
+            560,
+            560
+          ],
+          "bufferMatches": false,
+          "point": {
+            "x": 103.36633663366337,
+            "y": 573.8613861386139
+          },
+          "pointMatches": false
+        },
+        {
+          "stage": "shown",
+          "buffer": [
+            1616,
+            1616
+          ],
+          "expectedBuffer": [
+            560,
+            560
+          ],
+          "bufferMatches": false,
+          "point": {
+            "x": 103.36633663366337,
+            "y": 573.8613861386139
+          },
+          "pointMatches": false
+        },
+        {
+          "stage": "same-size",
+          "buffer": [
+            1616,
+            1616
+          ],
+          "expectedBuffer": [
+            560,
+            560
+          ],
+          "bufferMatches": false,
+          "point": {
+            "x": 103.36633663366337,
+            "y": 573.8613861386139
+          },
+          "pointMatches": false
+        }
+      ]
+    },
+    {
+      "mode": "old-workaround",
+      "dpr": 2,
+      "completed": true,
+      "pageErrors": [
+        "ResizeObserver loop completed with undelivered notifications."
+      ],
+      "stages": [
+        {
+          "stage": "initial",
+          "buffer": [
+            1616,
+            1616
+          ],
+          "expectedBuffer": [
+            1616,
+            1616
+          ],
+          "bufferMatches": true,
+          "point": {
+            "x": 299.4059405940594,
+            "y": 299.4059405940594
+          },
+          "pointMatches": true
+        },
+        {
+          "stage": "viewport",
+          "buffer": [
+            780,
+            780
+          ],
+          "expectedBuffer": [
+            780,
+            780
+          ],
+          "bufferMatches": true,
+          "point": {
+            "x": 299.0769230769231,
+            "y": 299.07692307692304
+          },
+          "pointMatches": true
+        },
+        {
+          "stage": "css-only",
+          "buffer": [
+            780,
+            780
+          ],
+          "expectedBuffer": [
+            780,
+            780
+          ],
+          "bufferMatches": true,
+          "point": {
+            "x": 299.0769230769231,
+            "y": 299.07692307692304
+          },
+          "pointMatches": true
+        },
+        {
+          "stage": "shown",
+          "buffer": [
+            780,
+            780
+          ],
+          "expectedBuffer": [
+            780,
+            780
+          ],
+          "bufferMatches": true,
+          "point": {
+            "x": 299.0769230769231,
+            "y": 299.07692307692304
+          },
+          "pointMatches": true
+        },
+        {
+          "stage": "same-size",
+          "buffer": [
+            780,
+            780
+          ],
+          "expectedBuffer": [
+            780,
+            780
+          ],
+          "bufferMatches": true,
+          "point": {
+            "x": 299.0769230769231,
+            "y": 299.07692307692304
+          },
+          "pointMatches": true
+        }
+      ]
+    },
+    {
+      "mode": "current",
+      "dpr": 2,
+      "completed": true,
+      "pageErrors": [],
+      "stages": [
+        {
+          "stage": "initial",
+          "buffer": [
+            1616,
+            1616
+          ],
+          "expectedBuffer": [
+            1616,
+            1616
+          ],
+          "bufferMatches": true,
+          "point": {
+            "x": 299.4059405940594,
+            "y": 299.4059405940594
+          },
+          "pointMatches": true
+        },
+        {
+          "stage": "viewport",
+          "buffer": [
+            780,
+            780
+          ],
+          "expectedBuffer": [
+            780,
+            780
+          ],
+          "bufferMatches": true,
+          "point": {
+            "x": 299.0769230769231,
+            "y": 299.07692307692304
+          },
+          "pointMatches": true
+        },
+        {
+          "stage": "css-only",
+          "buffer": [
+            560,
+            560
+          ],
+          "expectedBuffer": [
+            560,
+            560
+          ],
+          "bufferMatches": true,
+          "point": {
+            "x": 298.2857142857143,
+            "y": 298.2857142857143
+          },
+          "pointMatches": true
+        },
+        {
+          "stage": "shown",
+          "buffer": [
+            560,
+            560
+          ],
+          "expectedBuffer": [
+            560,
+            560
+          ],
+          "bufferMatches": true,
+          "point": {
+            "x": 298.2857142857143,
+            "y": 298.2857142857143
+          },
+          "pointMatches": true
+        },
+        {
+          "stage": "same-size",
+          "buffer": [
+            560,
+            560
+          ],
+          "expectedBuffer": [
+            560,
+            560
+          ],
+          "bufferMatches": true,
+          "point": {
+            "x": 298.2857142857143,
+            "y": 298.2857142857143
+          },
+          "pointMatches": true
+        }
+      ]
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "current-dpr1-css-only.png",
+      "sha256": "ea299b87eb82015e72194b59a07d3423b5d50e270b5d45128193c6b250420260",
+      "bytes": 24788
+    },
+    {
+      "file": "current-dpr1-initial.png",
+      "sha256": "b8ddd738ba0a5232a61cd2093b7c7e61031df5d0e22cf9a0617c51bf601b4bdd",
+      "bytes": 52490
+    },
+    {
+      "file": "current-dpr1-same-size.png",
+      "sha256": "ea299b87eb82015e72194b59a07d3423b5d50e270b5d45128193c6b250420260",
+      "bytes": 24788
+    },
+    {
+      "file": "current-dpr1-shown.png",
+      "sha256": "ea299b87eb82015e72194b59a07d3423b5d50e270b5d45128193c6b250420260",
+      "bytes": 24788
+    },
+    {
+      "file": "current-dpr1-viewport.png",
+      "sha256": "f9a77fb5c0f14924e323f342b6b48b42f696c7e034bfbc67d5c096192cbe4fff",
+      "bytes": 28922
+    },
+    {
+      "file": "current-dpr2-css-only.png",
+      "sha256": "53875e5afb5c208b073267ae7a4aa3e4e5539cbdd6ac134dbf0155d02d678eeb",
+      "bytes": 71041
+    },
+    {
+      "file": "current-dpr2-initial.png",
+      "sha256": "e4f5b302ae39814a9a111d1c083a7c46ed22bf9363ca11e727eac5774945114c",
+      "bytes": 124207
+    },
+    {
+      "file": "current-dpr2-same-size.png",
+      "sha256": "53875e5afb5c208b073267ae7a4aa3e4e5539cbdd6ac134dbf0155d02d678eeb",
+      "bytes": 71041
+    },
+    {
+      "file": "current-dpr2-shown.png",
+      "sha256": "53875e5afb5c208b073267ae7a4aa3e4e5539cbdd6ac134dbf0155d02d678eeb",
+      "bytes": 71041
+    },
+    {
+      "file": "current-dpr2-viewport.png",
+      "sha256": "6d819ed7e819eb124d6f0634d79baab3b7db63f39e567399711c6ed9d34d584b",
+      "bytes": 77880
+    },
+    {
+      "file": "old-dpr1-css-only.png",
+      "sha256": "2e1d82b8e8f2ff6f969081b3e95f6880f75cb1f71e8417639ed2e41966b27ea0",
+      "bytes": 25905
+    },
+    {
+      "file": "old-dpr1-initial.png",
+      "sha256": "b8ddd738ba0a5232a61cd2093b7c7e61031df5d0e22cf9a0617c51bf601b4bdd",
+      "bytes": 52490
+    },
+    {
+      "file": "old-dpr1-same-size.png",
+      "sha256": "8ef00ba1143e55955e73316327d9f59aa30beea7fb8ca375c7e367b4f9f80957",
+      "bytes": 25991
+    },
+    {
+      "file": "old-dpr1-shown.png",
+      "sha256": "8ef00ba1143e55955e73316327d9f59aa30beea7fb8ca375c7e367b4f9f80957",
+      "bytes": 25991
+    },
+    {
+      "file": "old-dpr1-viewport.png",
+      "sha256": "77a71a3eea42170dd68a87806f1142bfc7bf4d4afa656e07bf501dfe8fea47c0",
+      "bytes": 30571
+    },
+    {
+      "file": "old-dpr2-css-only.png",
+      "sha256": "a2b6a0071e134f2dbd309f77e8233ed5c795c407b8548a6d1a39b132a9984bac",
+      "bytes": 69430
+    },
+    {
+      "file": "old-dpr2-initial.png",
+      "sha256": "e4f5b302ae39814a9a111d1c083a7c46ed22bf9363ca11e727eac5774945114c",
+      "bytes": 124207
+    },
+    {
+      "file": "old-dpr2-same-size.png",
+      "sha256": "a2b6a0071e134f2dbd309f77e8233ed5c795c407b8548a6d1a39b132a9984bac",
+      "bytes": 69430
+    },
+    {
+      "file": "old-dpr2-shown.png",
+      "sha256": "a2b6a0071e134f2dbd309f77e8233ed5c795c407b8548a6d1a39b132a9984bac",
+      "bytes": 69430
+    },
+    {
+      "file": "old-dpr2-viewport.png",
+      "sha256": "f9cafede1b65e5c76d486a127af59bbd6ae608e844625b5c03db27241bf94e28",
+      "bytes": 82301
+    },
+    {
+      "file": "old-workaround-dpr1-css-only.png",
+      "sha256": "611bb7ec6496a89c147291ccbfb93fb6a93320ec7e03a8031e981dcac3702dda",
+      "bytes": 29618
+    },
+    {
+      "file": "old-workaround-dpr1-initial.png",
+      "sha256": "e85cae2b26c72f38749a8f8c3096617d273df9f0930a428fb73a277c16beaf4a",
+      "bytes": 52669
+    },
+    {
+      "file": "old-workaround-dpr1-same-size.png",
+      "sha256": "611bb7ec6496a89c147291ccbfb93fb6a93320ec7e03a8031e981dcac3702dda",
+      "bytes": 29618
+    },
+    {
+      "file": "old-workaround-dpr1-shown.png",
+      "sha256": "611bb7ec6496a89c147291ccbfb93fb6a93320ec7e03a8031e981dcac3702dda",
+      "bytes": 29618
+    },
+    {
+      "file": "old-workaround-dpr1-viewport.png",
+      "sha256": "611bb7ec6496a89c147291ccbfb93fb6a93320ec7e03a8031e981dcac3702dda",
+      "bytes": 29618
+    },
+    {
+      "file": "old-workaround-dpr2-css-only.png",
+      "sha256": "16f3862140b12ba90c1b95afb5713fa8a1a2fde2340e9a3699aab623b825228c",
+      "bytes": 81922
+    },
+    {
+      "file": "old-workaround-dpr2-initial.png",
+      "sha256": "928d1919affcaea2b5818db2861b403b37a57d086f5af3eb1f1334ee661f0774",
+      "bytes": 124533
+    },
+    {
+      "file": "old-workaround-dpr2-same-size.png",
+      "sha256": "16f3862140b12ba90c1b95afb5713fa8a1a2fde2340e9a3699aab623b825228c",
+      "bytes": 81922
+    },
+    {
+      "file": "old-workaround-dpr2-shown.png",
+      "sha256": "16f3862140b12ba90c1b95afb5713fa8a1a2fde2340e9a3699aab623b825228c",
+      "bytes": 81922
+    },
+    {
+      "file": "old-workaround-dpr2-viewport.png",
+      "sha256": "16f3862140b12ba90c1b95afb5713fa8a1a2fde2340e9a3699aab623b825228c",
+      "bytes": 81922
+    }
+  ],
+  "visuallyReviewed": [
+    "current-dpr1-css-only.png",
+    "old-dpr1-css-only.png",
+    "current-dpr2-shown.png"
+  ],
+  "finding": "Original recovered private minimal fixture reproduced historical old-runtime resize/input failure. Old original workaround and current main without workaround each pass all five stages at DPR1 and DPR2. No new engine patch is required for this reproduced boundary.",
+  "limits": [
+    "Private original app/fixture bytes and PNGs remain local; only technical metadata is public.",
+    "Six focused sessions, not all 50 games or original full acceptance matrix.",
+    "Cloud WebKit real mouse input at DPR1/2; no physical touch device or Chromium claim.",
+    "Visible canvas inspected separately from backing buffer and input coordinates.",
+    "Context closed after each session, but observer counts/re-entry teardown receipts were not instrumented; no zero-leak claim.",
+    "Hidden/show after ready tested; cold-hidden boot generation behavior is not this fixture."
+  ]
+}

@@ -1,5 +1,15 @@
 # 实际安装包中的小型互动示例集
 
+## 2026-10-19 安装包修复候选
+
+当前源码副本为 manifest/2：21 个包内文件，其中 19 个来源文件，包括真实动态导入的 shared/asset-lifecycle.js 与声明，以及 two-sided-page.ts。原 34bc 实际 tarball 的三个消费者入口独立 esbuild 均因缺少 shared 模块失败；原始安装与失败输出保留。复制清单只绑定来源字节；实际消费者仍严格绑定安装包 runtime、声明、package exports、无 map 发布边界和采集器身份。运行时更新不再误判为来源副本漂移。
+
+本地工作树候选真实 pack/offline install 后，WebKit 五入口和 20 张 PNG 通过，26/26 实际报告篡改被拒绝；这份诊断使用 37974d6e 的 CI runtime，并非新提交的同 head 验收。新的 SDK CI 从提交源码构建、pack、安装，再验证 Chromium 五入口及所有身份。最终结果以 PR7 同 head CI 及 SDK 账本为准。
+
+单浏览器使用 --browser=chromium|firefox|webkit；结果分别记录 selectedScopePassed 与完整三浏览器 scopePassed。默认 all 的完整要求保持不变。可传 --tarball=<实际 tgz> 检查已生成包；不传则仍本地 pack。--verify 必须使用相同明确选择。
+
+## 历史 2026-10-08 记录
+
 2026-10-08，Lead实际执行。[生成副本](examples/interactive-kit/README.md)来自五个权威examples目录：多通道、几何/投影、混合输入、容器和可取消形变/音频。18份包内文件（16份来源代码/合法音频/许可加manifest与README）按字节收入现有npm manual目录；复制清单记录SHA和限制，不新增公共runtime API，也不自动给宿主安装工具。
 
 [第二轮实际报告](../evidence/examples/interactive-engine-improvements/kit-consumer-s2.json)包含本地npm pack、系统临时目录offline install、已安装声明的TS4.9 strict noEmit和实际package entry经esbuild分块。15个浏览器入口全部真实从已安装包字节加载，零仓库/build请求、零workspace fallback、零page/console error，默认开发/声明/npm三身份前后不变。报告附tarball及实际SDK分块，临时消费目录随后安全清理。

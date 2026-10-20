@@ -28,9 +28,7 @@
         }
       ],
       "remainingImpact": "共享 WebGL 状态的渲染流程可能使用错误 shader，产生错误或缺失画面。",
-      "sourceIds": [
-        "ENGINE-001"
-      ],
+      "sourceIds": ["ENGINE-001"],
       "implementation": "IMPLEMENTED_PR6",
       "verification": "20_NEW_PLUS_12_EXISTING_GFX_JEST; 148_TOTAL_JEST_PASS; WEBKIT_11_OF_11; FIVE_CHROMIUM_EXAMPLES_PASS; SPARK_BASELINE_CANDIDATE_PASS",
       "pr": "https://github.com/oahc09/cocosairjs/pull/6",
@@ -38,7 +36,22 @@
       "verificationEvidence": [
         "ai/ledgers/webgl2-audit-evidence/runtime-provenance-e229ee13.json",
         "ai/ledgers/webgl2-audit-evidence/final-validation.json"
-      ]
+      ],
+      "currentExecution": {
+        "state": "MERGED_SCOPED_FIX_VERIFIED",
+        "pr": "https://github.com/oahc09/cocosairjs/pull/6",
+        "mergeCommit": "a21d49bd4f68054e22242609bca2da50eccd054d",
+        "validationHead": "1f7bec3cf863250f05c22f24593c2ed8776df48c",
+        "evidence": {
+          "qualityRun": 39231357336,
+          "skillsRun": 39231357515,
+          "jestPassed": 148,
+          "chromiumExamplesPassed": 5,
+          "originalMapsImported": true,
+          "temporaryWriteWorkflowRemoved": true
+        },
+        "remainingBoundary": "Original application/full-device comparisons are not implied by scoped GFX acceptance."
+      }
     },
     {
       "id": "ENGINE-002",
@@ -70,9 +83,7 @@
         }
       ],
       "remainingImpact": "部分 stencil mask 后的新 render pass 可能保留旧值，使遮罩结果错误。",
-      "sourceIds": [
-        "ENGINE-002"
-      ],
+      "sourceIds": ["ENGINE-002"],
       "implementation": "IMPLEMENTED_PR6",
       "verification": "20_NEW_PLUS_12_EXISTING_GFX_JEST; 148_TOTAL_JEST_PASS; WEBKIT_11_OF_11; FIVE_CHROMIUM_EXAMPLES_PASS; SPARK_BASELINE_CANDIDATE_PASS",
       "pr": "https://github.com/oahc09/cocosairjs/pull/6",
@@ -80,7 +91,22 @@
       "verificationEvidence": [
         "ai/ledgers/webgl2-audit-evidence/runtime-provenance-e229ee13.json",
         "ai/ledgers/webgl2-audit-evidence/final-validation.json"
-      ]
+      ],
+      "currentExecution": {
+        "state": "MERGED_SCOPED_FIX_VERIFIED",
+        "pr": "https://github.com/oahc09/cocosairjs/pull/6",
+        "mergeCommit": "a21d49bd4f68054e22242609bca2da50eccd054d",
+        "validationHead": "1f7bec3cf863250f05c22f24593c2ed8776df48c",
+        "evidence": {
+          "qualityRun": 39231357336,
+          "skillsRun": 39231357515,
+          "jestPassed": 148,
+          "chromiumExamplesPassed": 5,
+          "originalMapsImported": true,
+          "temporaryWriteWorkflowRemoved": true
+        },
+        "remainingBoundary": "Original application/full-device comparisons are not implied by scoped GFX acceptance."
+      }
     },
     {
       "id": "ENGINE-004",
@@ -112,9 +138,7 @@
         }
       ],
       "remainingImpact": "第9个及以上stream可能产生undefined/NaN offset并令实例矩阵错读。真实VAO四列偏移错误导致退化变换；仅看draw或零GL错误会漏报。应用无损交错解决此根因。后续退化AO UV采样在参考后端也出现NaN，是独立的非Cocos专有退化UV采样路径，尚不能断言浏览器缺陷，不合并计为此引擎缺陷。",
-      "sourceIds": [
-        "ENGINE-004"
-      ],
+      "sourceIds": ["ENGINE-004"],
       "implementation": "IMPLEMENTED_PR6",
       "verification": "20_NEW_PLUS_12_EXISTING_GFX_JEST; 148_TOTAL_JEST_PASS; WEBKIT_11_OF_11; FIVE_CHROMIUM_EXAMPLES_PASS; SPARK_BASELINE_CANDIDATE_PASS",
       "pr": "https://github.com/oahc09/cocosairjs/pull/6",
@@ -122,7 +146,22 @@
       "verificationEvidence": [
         "ai/ledgers/webgl2-audit-evidence/runtime-provenance-e229ee13.json",
         "ai/ledgers/webgl2-audit-evidence/final-validation.json"
-      ]
+      ],
+      "currentExecution": {
+        "state": "MERGED_SCOPED_FIX_VERIFIED",
+        "pr": "https://github.com/oahc09/cocosairjs/pull/6",
+        "mergeCommit": "a21d49bd4f68054e22242609bca2da50eccd054d",
+        "validationHead": "1f7bec3cf863250f05c22f24593c2ed8776df48c",
+        "evidence": {
+          "qualityRun": 39231357336,
+          "skillsRun": 39231357515,
+          "jestPassed": 148,
+          "chromiumExamplesPassed": 5,
+          "originalMapsImported": true,
+          "temporaryWriteWorkflowRemoved": true
+        },
+        "remainingBoundary": "Original application/full-device comparisons are not implied by scoped GFX acceptance."
+      }
     },
     {
       "id": "ENGINE-005",
@@ -154,9 +193,7 @@
         }
       ],
       "remainingImpact": "TRAA深度历史后彩色mipmap或自适应分辨率路径可产生不完整FBO、丢失复制画面。与应用DepthTexture误判为array的错误分别记录。",
-      "sourceIds": [
-        "ENGINE-005"
-      ],
+      "sourceIds": ["ENGINE-005"],
       "implementation": "IMPLEMENTED_PR6",
       "verification": "20_NEW_PLUS_12_EXISTING_GFX_JEST; 148_TOTAL_JEST_PASS; WEBKIT_11_OF_11; FIVE_CHROMIUM_EXAMPLES_PASS; SPARK_BASELINE_CANDIDATE_PASS",
       "pr": "https://github.com/oahc09/cocosairjs/pull/6",
@@ -164,7 +201,22 @@
       "verificationEvidence": [
         "ai/ledgers/webgl2-audit-evidence/runtime-provenance-e229ee13.json",
         "ai/ledgers/webgl2-audit-evidence/final-validation.json"
-      ]
+      ],
+      "currentExecution": {
+        "state": "MERGED_SCOPED_FIX_VERIFIED",
+        "pr": "https://github.com/oahc09/cocosairjs/pull/6",
+        "mergeCommit": "a21d49bd4f68054e22242609bca2da50eccd054d",
+        "validationHead": "1f7bec3cf863250f05c22f24593c2ed8776df48c",
+        "evidence": {
+          "qualityRun": 39231357336,
+          "skillsRun": 39231357515,
+          "jestPassed": 148,
+          "chromiumExamplesPassed": 5,
+          "originalMapsImported": true,
+          "temporaryWriteWorkflowRemoved": true
+        },
+        "remainingBoundary": "Original application/full-device comparisons are not implied by scoped GFX acceptance."
+      }
     },
     {
       "id": "REUSE-002",
@@ -194,15 +246,32 @@
         }
       ],
       "remainingImpact": "合法复杂GLSL迁移仍需宏感知解析与std140证明；属于适配/示例范围，不是已证实编译器缺陷。",
-      "sourceIds": [
-        "REUSE-002"
-      ],
+      "sourceIds": ["REUSE-002"],
       "implementation": "IMPLEMENTED_CPU_VERIFIED",
       "verification": "GLSL3/4 source-positioned rejection and reflection checks pass in 33-case recipe suite.",
       "pr": null,
       "blocker": "Original shader per-pass browser readback and visual reference pending.",
       "checkpoint": "https://github.com/oahc09/cocosairjs/tree/fix/audit-sdk-recipes-20261019",
-      "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a"
+      "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a",
+      "currentExecution": {
+        "state": "FOCUSED_ACCEPTANCE_PASS_379; NEW_BATCH_SAME_HEAD_CI_PENDING",
+        "implementation": "IMPLEMENTED_FOR_REVIEW",
+        "paths": [
+          "tools/debug/effect-layout.ts",
+          "tools/verify/sdk-recipe-regressions.cjs",
+          "examples/hdr-color-pipeline/vertex-texture-rgb.effect.json"
+        ],
+        "currentEvidence": {
+          "head": "993ebcbbf0f21971ac659bf813a8909ff2bf4beb",
+          "passed": [
+            "42-check CPU suite includes positioned rejection of comma, macro-array and conditional resources",
+            "Two real shader programs show all 3 color input paths and a dark negative control in Chromium screenshots"
+          ],
+          "pending": ["Original shader per-pass finite GPU readback and reference matching"]
+        },
+        "remaining": "Original shader per-pass finite GPU readback and reference matching",
+        "ledger": "ai/ledgers/sdk-audit-backlog-20261019.json"
+      }
     },
     {
       "id": "NEW8-API-INPUT-FOCUS",
@@ -240,15 +309,28 @@
         }
       ],
       "remainingImpact": "浏览器真实焦点/文本输入/退出重入全链路仍需当前main验收。",
-      "sourceIds": [
-        "NEW8-API-INPUT-FOCUS"
-      ],
+      "sourceIds": ["NEW8-API-INPUT-FOCUS"],
       "implementation": "PENDING_BROWSER_VALIDATION",
       "verification": "Existing API/example reuse identified; no fresh browser acceptance.",
       "pr": null,
       "blocker": "Real focus/editable/blur/exit/reentry matrix pending.",
       "checkpoint": "https://github.com/oahc09/cocosairjs/tree/fix/audit-sdk-recipes-20261019",
-      "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a"
+      "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a",
+      "currentExecution": {
+        "state": "FOCUSED_ACCEPTANCE_PASS_379; NEW_BATCH_SAME_HEAD_CI_PENDING",
+        "implementation": "IMPLEMENTED_FOR_REVIEW",
+        "paths": ["docs/manual/examples/input-focus/main.ts", "tools/verify/sdk-recipes-browser.cjs"],
+        "currentEvidence": {
+          "head": "993ebcbbf0f21971ac659bf813a8909ff2bf4beb",
+          "passed": [
+            "Real Start/HUD/canvas clicks and one-key routing",
+            "Held-key release over editable input, text suppression, Leave and four re-entries"
+          ],
+          "pending": ["Real browser-window blur/hidden-tab and physical touch target checks"]
+        },
+        "remaining": "Real browser-window blur/hidden-tab and physical touch target checks",
+        "ledger": "ai/ledgers/sdk-audit-backlog-20261019.json"
+      }
     },
     {
       "id": "NEW8-API-LIFECYCLE-RECIPE",
@@ -287,15 +369,29 @@
         }
       ],
       "remainingImpact": "需要把reload恢复边界写清，并覆盖构造失败与晚到异步资源；不应承诺现有API可透明恢复。",
-      "sourceIds": [
-        "NEW8-API-LIFECYCLE-RECIPE"
-      ],
+      "sourceIds": ["NEW8-API-LIFECYCLE-RECIPE"],
       "implementation": "IMPLEMENTED_CPU_VERIFIED",
       "verification": "Concurrent audio/GPU close, cancellation, context-loss input disabling tested using actual session scope; GPU/app stand-ins.",
       "pr": null,
       "blocker": "Manual page local draft; real browser lifecycle/context-loss acceptance pending.",
       "checkpoint": "https://github.com/oahc09/cocosairjs/tree/fix/audit-sdk-recipes-20261019",
-      "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a"
+      "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a",
+      "currentExecution": {
+        "state": "FOCUSED_ACCEPTANCE_PASS_379; NEW_BATCH_SAME_HEAD_CI_PENDING",
+        "implementation": "IMPLEMENTED_FOR_REVIEW",
+        "paths": ["examples/shared/async-app-lifecycle.ts", "docs/manual/examples/runtime-lifecycle-page/main.ts"],
+        "currentEvidence": {
+          "head": "993ebcbbf0f21971ac659bf813a8909ff2bf4beb",
+          "passed": [
+            "Real session scope CPU cancellation, same-Promise close and parallel audio/GPU cleanup",
+            "Chromium cancel-before-mount; real AudioContext gesture/resume and awaited close",
+            "Trusted WEBGL_lose_context lost/restored events, lost/restoring/failed states, disabled input, same-Promise released close, exactly one actual same-URL reload and fresh ready visible scene passed in Chromium and WebKit"
+          ],
+          "pending": ["Physical GPU/driver reset is outside this focused test"]
+        },
+        "remaining": "Physical GPU/driver reset is outside this focused test",
+        "ledger": "ai/ledgers/sdk-audit-backlog-20261019.json"
+      }
     },
     {
       "id": "NEW8-API-MATERIAL-CONTRACT",
@@ -326,15 +422,31 @@
         }
       ],
       "remainingImpact": "复用范围大但顶点色/自写RGB目标组合仍缺专门验收。",
-      "sourceIds": [
-        "NEW8-API-MATERIAL-CONTRACT"
-      ],
+      "sourceIds": ["NEW8-API-MATERIAL-CONTRACT"],
       "implementation": "LOCAL_DRAFT_UNVERIFIED",
       "verification": "Local color-input EffectAsset/manual page drafts; not in remote B checkpoint.",
       "pr": null,
       "blocker": "Three color paths, shader targets and actual pixel/screenshot acceptance pending.",
       "checkpoint": "https://github.com/oahc09/cocosairjs/tree/fix/audit-sdk-recipes-20261019",
-      "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a"
+      "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a",
+      "currentExecution": {
+        "state": "FOCUSED_ACCEPTANCE_PASS_379; NEW_BATCH_SAME_HEAD_CI_PENDING",
+        "implementation": "IMPLEMENTED_FOR_REVIEW",
+        "paths": [
+          "examples/hdr-color-pipeline/vertex-texture-rgb.effect.json",
+          "docs/manual/examples/color-input-contract/main.ts"
+        ],
+        "currentEvidence": {
+          "head": "993ebcbbf0f21971ac659bf813a8909ff2bf4beb",
+          "passed": [
+            "Chromium screenshot centers of 2 programs x 4 paths: three inputs [128,90,50], double-decode [55,26,8], tolerance 2",
+            "All programs/targets checked by narrow layout preflight"
+          ],
+          "pending": ["No claim of original private shader or all-driver certification"]
+        },
+        "remaining": "No claim of original private shader or all-driver certification",
+        "ledger": "ai/ledgers/sdk-audit-backlog-20261019.json"
+      }
     },
     {
       "id": "NEW8-API-TEXTURE-OWNERSHIP",
@@ -366,15 +478,33 @@
         }
       ],
       "remainingImpact": "重复导入/换色失败和乱序成功仍可能导致应用内容丢失或资源残留，不能凭ownership API存在关闭。",
-      "sourceIds": [
-        "NEW8-API-TEXTURE-OWNERSHIP"
-      ],
+      "sourceIds": ["NEW8-API-TEXTURE-OWNERSHIP"],
       "implementation": "IMPLEMENTED_CPU_VERIFIED",
       "verification": "Ownership and transactional replacement tested including 100 replacements, stale results, failure and import preference.",
       "pr": null,
       "blocker": "Manual page local draft; actual texture lifetime/browser image acceptance pending.",
       "checkpoint": "https://github.com/oahc09/cocosairjs/tree/fix/audit-sdk-recipes-20261019",
-      "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a"
+      "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a",
+      "currentExecution": {
+        "state": "FOCUSED_ACCEPTANCE_PASS_379; NEW_BATCH_SAME_HEAD_CI_PENDING",
+        "implementation": "IMPLEMENTED_FOR_REVIEW",
+        "paths": [
+          "examples/shared/owned-sprite-frame.ts",
+          "examples/shared/replace-owned-sprite-frame.ts",
+          "docs/manual/examples/texture-replacement/main.ts"
+        ],
+        "currentEvidence": {
+          "head": "993ebcbbf0f21971ac659bf813a8909ff2bf4beb",
+          "passed": [
+            "Real scope CPU transaction failures, stale loads, post-close and 100 bounded replacements",
+            "Chromium visible imported green content, paper priority and final frame detach/ownedCount=0",
+            "All 12 real file-import iterations awaited a different actual SpriteFrame object; constant ownedCount=3; paper edit retained the exact imported object; final close detached the frame and returned ownedCount=0"
+          ],
+          "pending": []
+        },
+        "remaining": "No focused acceptance blocker at 34bc; current consolidation head awaits CI",
+        "ledger": "ai/ledgers/sdk-audit-backlog-20261019.json"
+      }
     },
     {
       "id": "NEW8-API-TWO-SIDED-MESH",
@@ -405,15 +535,31 @@
         }
       ],
       "remainingImpact": "仍需应用级几何法线/绕序/正反面身份示例，不构成已证核心渲染bug。",
-      "sourceIds": [
-        "NEW8-API-TWO-SIDED-MESH"
-      ],
+      "sourceIds": ["NEW8-API-TWO-SIDED-MESH"],
       "implementation": "IMPLEMENTED_CPU_VERIFIED",
       "verification": "Both directions at 66 angles: normals/winding/identity and upload arrays CPU checks pass.",
       "pr": null,
       "blocker": "Real mesh upload/rendered intermediate frames pending.",
       "checkpoint": "https://github.com/oahc09/cocosairjs/tree/fix/audit-sdk-recipes-20261019",
-      "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a"
+      "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a",
+      "currentExecution": {
+        "state": "FOCUSED_ACCEPTANCE_PASS_379; NEW_BATCH_SAME_HEAD_CI_PENDING",
+        "implementation": "IMPLEMENTED_FOR_REVIEW",
+        "paths": [
+          "examples/interactive-geometry/src/two-sided-page.ts",
+          "docs/manual/examples/runtime-lifecycle-page/main.ts"
+        ],
+        "currentEvidence": {
+          "head": "993ebcbbf0f21971ac659bf813a8909ff2bf4beb",
+          "passed": [
+            "CPU geometry checks and Chromium 13 angles from 0 to 180 and back",
+            "26 actual updateSubMesh upload arrays, opposite normals, finite data and front/back screenshot identity"
+          ],
+          "pending": []
+        },
+        "remaining": "No focused acceptance blocker at 34bc; current consolidation head awaits CI",
+        "ledger": "ai/ledgers/sdk-audit-backlog-20261019.json"
+      }
     },
     {
       "id": "PROPOSAL-ENG-00",
@@ -443,15 +589,44 @@
         }
       ],
       "remainingImpact": "原私有Site、21项原JSON及历史参考缺失。",
-      "sourceIds": [
-        "PROPOSAL-ENG-00"
-      ],
+      "sourceIds": ["PROPOSAL-ENG-00"],
       "implementation": "PARTIAL_EVIDENCE_RESTORED",
       "verification": "A exact-head source/runtime/maps provenance restored; 64-item frozen baseline preserved.",
       "pr": null,
       "blocker": "B same-head integrated main/math build and current browser identity pending.",
       "checkpoint": "https://github.com/oahc09/cocosairjs/tree/fix/audit-sdk-recipes-20261019",
-      "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a"
+      "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a",
+      "currentExecution": {
+        "state": "SAME_HEAD_BASELINE_MAPS_AND_31_IDENTITY_TESTS_PASS_379",
+        "implementation": "EXISTING_IDENTITY_TOOL_HARDENED",
+        "paths": [
+          "tools/verify/interactive-improvement-baseline.cjs",
+          "test/smoke/interactive-improvement-baseline.test.ts",
+          "docs/reference/interactive-improvement-baseline.md",
+          "docs/evidence/sdk-backlog/identity-negative-control-20261019.json"
+        ],
+        "currentEvidence": {
+          "state": "FOCUSED_IDENTITY_CONTRACT_PASS",
+          "acceptedCI": {
+            "head": "34bc840f5fc2edd20bfe50c78d53dc931c734ef4",
+            "sdkRun": 39238966875,
+            "qualityRun": 39238967061,
+            "skillsRun": 39238967071,
+            "status": "SUCCESS",
+            "cpuTests": 42,
+            "identityTests": 31,
+            "chromiumRecipeRows": 7,
+            "coreJestTests": 148,
+            "consumerMainExports": 645,
+            "artifactId": 12180796410,
+            "artifactSHA256": "38964e74ea536ed53f144056674ce76d8268d3def004c7b48d52155c29adb75f",
+            "runtimeSHA256": "e1489f969db173d62098a99b594daf6afa2466fa5d04cf4bb7efbe818e525b13"
+          },
+          "remaining": "No historical original acceptance is promoted without a matching new execution report."
+        },
+        "remaining": "Original per-project material matching remains incomplete; historical missing records are not current absence claims.",
+        "ledger": "ai/ledgers/sdk-audit-backlog-20261019.json"
+      }
     },
     {
       "id": "PROPOSAL-ENG-01",
@@ -481,15 +656,31 @@
         }
       ],
       "remainingImpact": "原11/16/23、Water、soft、Puzzle50对象/雨线/切面参考不在重建fixture内。",
-      "sourceIds": [
-        "PROPOSAL-ENG-01"
-      ],
+      "sourceIds": ["PROPOSAL-ENG-01"],
       "implementation": "PENDING_VALIDATION",
       "verification": "No current input-to-visible-pixel evidence chain completed.",
       "pr": null,
       "blocker": "Raw event/object/submission/visible pixel chain pending.",
       "checkpoint": "https://github.com/oahc09/cocosairjs/tree/fix/audit-sdk-recipes-20261019",
-      "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a"
+      "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a",
+      "currentExecution": {
+        "state": "LOCAL_WEBKIT_INPUT_COMPOSITOR_PASS_NEW_HEAD_CI_PENDING",
+        "implementation": "REUSE_EXISTING_COLLECTOR_UPDATED_MATERIAL_LIMIT",
+        "paths": ["tools/verify/interactive-improvement-browser.cjs"],
+        "currentEvidence": {
+          "runtimeHead": "37974d6e320e4251df8288fa19b2d6508a9fd56e",
+          "status": "WORKING_TREE_DIAGNOSTIC",
+          "passed": [
+            "DPR1/2: 8 visible positives and 2 occluded negative controls; 19/19 actual-report mutations rejected."
+          ],
+          "pending": [
+            "Original objects/rain/cut/reference comparisons and physical presentation time remain outside this generated fixture."
+          ],
+          "summary": "docs/evidence/sdk-backlog/render-kit-local-20261019.json"
+        },
+        "remaining": "Original objects/rain/cut/reference comparisons and physical presentation time remain outside this generated fixture.",
+        "ledger": "ai/ledgers/sdk-audit-backlog-20261019.json"
+      }
     },
     {
       "id": "PROPOSAL-ENG-02",
@@ -519,15 +710,29 @@
         }
       ],
       "remainingImpact": "native MSAA采样、原参考和长期稳定性仍未验；静态binding预检不等于驱动拒绝。",
-      "sourceIds": [
-        "PROPOSAL-ENG-02"
-      ],
+      "sourceIds": ["PROPOSAL-ENG-02"],
       "implementation": "PENDING_VALIDATION",
       "verification": "A command blit readbacks do not close full dual-pass/mip scenario.",
       "pr": null,
       "blocker": "Resize/resource bounds/mip readback/pacer/MSAA scenario pending.",
       "checkpoint": "https://github.com/oahc09/cocosairjs/tree/fix/audit-sdk-recipes-20261019",
-      "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a"
+      "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a",
+      "currentExecution": {
+        "state": "LOCAL_WEBKIT_SELECTED_MATRIX_PASS_NEW_HEAD_CI_PENDING",
+        "implementation": "FIXED_EXPLICIT_SELECTED_MATRIX_GATE_AND_INPUT_CLOSURE",
+        "paths": ["tools/verify/interactive-multipass-browser.cjs", "tools/verify/interactive-multipass-audit.cjs"],
+        "currentEvidence": {
+          "runtimeHead": "37974d6e320e4251df8288fa19b2d6508a9fd56e",
+          "status": "WORKING_TREE_DIAGNOSTIC",
+          "passed": ["15 cases plus 2 normal modes passed; 19/19 actual-report mutations rejected."],
+          "pending": [
+            "Full three-browser acceptance, original rendering references and device/performance budgets remain pending."
+          ],
+          "summary": "docs/evidence/sdk-backlog/render-kit-local-20261019.json"
+        },
+        "remaining": "Full three-browser acceptance, original rendering references and device/performance budgets remain pending.",
+        "ledger": "ai/ledgers/sdk-audit-backlog-20261019.json"
+      }
     },
     {
       "id": "PROPOSAL-ENG-03",
@@ -557,12 +762,7 @@
         }
       ],
       "remainingImpact": "原参考、过滤质量、实体设备和长期稳定性未验；自动mip不是PMREM。",
-      "sourceIds": [
-        "PROPOSAL-ENG-03",
-        "HIST-WATER-FORMAT",
-        "HIST-DOUBLE-GAMMA",
-        "HIST-MATERIAL-STATE"
-      ],
+      "sourceIds": ["PROPOSAL-ENG-03", "HIST-WATER-FORMAT", "HIST-DOUBLE-GAMMA", "HIST-MATERIAL-STATE"],
       "additionalAcceptance": [
         {
           "sourceId": "HIST-WATER-FORMAT",
@@ -594,7 +794,34 @@
       "pr": null,
       "blocker": "Color/environment/transparent-composition comparison pending.",
       "checkpoint": "https://github.com/oahc09/cocosairjs/tree/fix/audit-sdk-recipes-20261019",
-      "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a"
+      "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a",
+      "currentExecution": {
+        "state": "LOCAL_WEBKIT_FIVE_STATES_PASS_NEW_HEAD_CI_PENDING",
+        "implementation": "FIXED_FORWARD_PASS_BINDING_AND_COLOR_EVIDENCE_GATE",
+        "paths": [
+          "test/fixtures/interactive-color-compare/main.ts",
+          "tools/verify/interactive-color-compare-browser.cjs",
+          "tools/verify/interactive-color-compare-audit.cjs"
+        ],
+        "currentEvidence": {
+          "status": "LOCAL_WEBKIT_FIVE_STATES_PASS_NEW_HEAD_CI_PENDING",
+          "passed": [
+            "Current fixture binding failure reproduced and fixed with explicit existing pass 0.",
+            "Five real WebKit color/clipping/alpha states pass; 21/21 tamper rejections; 4 old false-positive clones reproduced.",
+            "Original unmodified public Water 39/39 and HDR 15/15 WebKit controls passed using exact source/runtime73ca; original SDK CI failure remains disclosed."
+          ],
+          "pending": [
+            "Original private application/reference, physical GPU/mobile devices and long stability remain pending; public Water/HDR bounded controls have current local evidence."
+          ],
+          "summary": "docs/evidence/sdk-backlog/color-performance-local-20261019.json",
+          "additionalSummaries": [
+            "docs/evidence/sdk-backlog/water-current-local-20261019.json",
+            "docs/evidence/sdk-backlog/hdr-current-local-20261019.json"
+          ]
+        },
+        "remaining": "Original private application/reference, physical GPU/mobile devices and long stability remain pending; public Water/HDR bounded controls have current local evidence.",
+        "ledger": "ai/ledgers/sdk-audit-backlog-20261019.json"
+      }
     },
     {
       "id": "PROPOSAL-ENG-04",
@@ -624,10 +851,7 @@
         }
       ],
       "remainingImpact": "111行中18个WebKit活resize不可见；原soft13未取得。无SDK对照也失败，不能转成核心bug。",
-      "sourceIds": [
-        "PROPOSAL-ENG-04",
-        "HIST-SOFT-PROJECTION"
-      ],
+      "sourceIds": ["PROPOSAL-ENG-04", "HIST-SOFT-PROJECTION"],
       "additionalAcceptance": [
         {
           "sourceId": "HIST-SOFT-PROJECTION",
@@ -643,7 +867,23 @@
       "pr": null,
       "blocker": "Three real uploaded vertex groups/projection errors and visible PNG pending.",
       "checkpoint": "https://github.com/oahc09/cocosairjs/tree/fix/audit-sdk-recipes-20261019",
-      "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a"
+      "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a",
+      "currentExecution": {
+        "state": "LOCAL_WEBKIT_SELECTED_MATRIX_PASS_NEW_HEAD_CI_PENDING",
+        "implementation": "FIXED_EXPLICIT_SELECTED_MATRIX_GATE_AND_INPUT_CLOSURE",
+        "paths": ["tools/verify/interactive-geometry-browser.cjs", "tools/verify/interactive-geometry-audit.cjs"],
+        "currentEvidence": {
+          "runtimeHead": "37974d6e320e4251df8288fa19b2d6508a9fd56e",
+          "status": "WORKING_TREE_DIAGNOSTIC",
+          "passed": ["37 cutting/resize/offset and 7 additional rows passed; 30/30 actual-report mutations rejected."],
+          "pending": [
+            "Original soft/Water reference matching, complete topology/normals certification and device/GPU performance remain pending."
+          ],
+          "summary": "docs/evidence/sdk-backlog/geometry-webkit-local-20261019.json"
+        },
+        "remaining": "Original soft/Water reference matching, complete topology/normals certification and device/GPU performance remain pending.",
+        "ledger": "ai/ledgers/sdk-audit-backlog-20261019.json"
+      }
     },
     {
       "id": "PROPOSAL-ENG-05",
@@ -673,11 +913,7 @@
         }
       ],
       "remainingImpact": "32项协议/真实blur/hidden未运行、两条PAL警告及实体触屏/原参考未验。",
-      "sourceIds": [
-        "PROPOSAL-ENG-05",
-        "HIST-DOM-CHURN",
-        "HIST-HOVER-SUPPRESSION"
-      ],
+      "sourceIds": ["PROPOSAL-ENG-05", "HIST-DOM-CHURN", "HIST-HOVER-SUPPRESSION"],
       "additionalAcceptance": [
         {
           "sourceId": "HIST-DOM-CHURN",
@@ -701,7 +937,29 @@
       "pr": null,
       "blocker": "Physical action exactly-once visible updates, editable/hover/cancel/scroll/teardown pending.",
       "checkpoint": "https://github.com/oahc09/cocosairjs/tree/fix/audit-sdk-recipes-20261019",
-      "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a"
+      "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a",
+      "currentExecution": {
+        "state": "LOCAL_SELECTED_MIXED_INPUT_VALID_WITH_NOT_RUN_NEW_HEAD_CI_PENDING",
+        "implementation": "FIXED_SUPPLEMENTARY_GATE_AND_EXPLICIT_DIAGNOSTIC_SELECTION",
+        "paths": [
+          "tools/verify/interactive-input-browser.cjs",
+          "tools/verify/interactive-input-audit.cjs",
+          "test/smoke/interactive-input.test.ts"
+        ],
+        "currentEvidence": {
+          "status": "LOCAL_SELECTED_MIXED_INPUT_VALID_WITH_NOT_RUN_NEW_HEAD_CI_PENDING",
+          "passed": [
+            "Actual selected WebKit SDK/HTML pages: 120 operations plus 18 supplementary observations valid, with 14 protocol/focus NOT_RUN and exit1 retained.",
+            "41 Node22 contract tests pass; selected auditor rejects corrupted actual receipts."
+          ],
+          "pending": [
+            "Physical touch and real focus/hidden protocol acceptance are incomplete; valid diagnostic rows do not close full mixed-input scope."
+          ],
+          "summary": "docs/evidence/sdk-backlog/input-selected-local-20261019.json"
+        },
+        "remaining": "Physical touch and real focus/hidden protocol acceptance are incomplete; valid diagnostic rows do not close full mixed-input scope.",
+        "ledger": "ai/ledgers/sdk-audit-backlog-20261019.json"
+      }
     },
     {
       "id": "PROPOSAL-ENG-06",
@@ -731,11 +989,7 @@
         }
       ],
       "remainingImpact": "15个WebKit活布局呈现失败；原Puzzle50仍NOT_RUN；无SDK对照6个同类失败。",
-      "sourceIds": [
-        "PROPOSAL-ENG-06",
-        "HIST-PUZZLE-CONTAINER-RESIZE",
-        "HIST-HIDDEN-BOOT"
-      ],
+      "sourceIds": ["PROPOSAL-ENG-06", "HIST-PUZZLE-CONTAINER-RESIZE", "HIST-HIDDEN-BOOT"],
       "additionalAcceptance": [
         {
           "sourceId": "HIST-PUZZLE-CONTAINER-RESIZE",
@@ -761,7 +1015,21 @@
       "pr": null,
       "blocker": "Hidden/shown/layout/cold load generation/release/framebuffer/PNG pending.",
       "checkpoint": "https://github.com/oahc09/cocosairjs/tree/fix/audit-sdk-recipes-20261019",
-      "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a"
+      "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a",
+      "currentExecution": {
+        "state": "CURRENT_MAIN_ORIGINAL_PUZZLE50_MINIMAL_CONTROL_PASS",
+        "implementation": "EXISTING_CONTAINER_API_ORIGINAL_MINIMAL_FIXTURE_VERIFIED",
+        "paths": ["docs/manual/interactive-container.md", "ai/ledgers/interactive-engine-improvements.md"],
+        "currentEvidence": {
+          "state": "ORIGINAL_MINIMAL_FIXTURE_PASS",
+          "head": "a21d49bd4f68054e22242609bca2da50eccd054d",
+          "summary": "docs/evidence/sdk-backlog/puzzle50-resize-main-20261019.json",
+          "scope": "DPR1/2; old negative, old workaround positive and current no-workaround, 30 stages; actual buffer, trusted click and PNG reviewed.",
+          "remaining": "50 complete games, physical devices and actual observer release remain untested."
+        },
+        "remaining": "50 complete games, physical devices and actual observer release remain untested.",
+        "ledger": "ai/ledgers/sdk-audit-backlog-20261019.json"
+      }
     },
     {
       "id": "PROPOSAL-ENG-07",
@@ -791,15 +1059,57 @@
         }
       ],
       "remainingImpact": "18组教学部件不能证明原1188部件/155阶段大型工程；原工程参考未取得。",
-      "sourceIds": [
-        "PROPOSAL-ENG-07"
-      ],
+      "sourceIds": ["PROPOSAL-ENG-07"],
       "implementation": "PENDING_VALIDATION",
       "verification": "No new timeline acceptance completed.",
       "pr": null,
       "blocker": "Cancelable deformation/camera/scroll actual pose and endpoint tests pending.",
       "checkpoint": "https://github.com/oahc09/cocosairjs/tree/fix/audit-sdk-recipes-20261019",
-      "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a"
+      "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a",
+      "currentExecution": {
+        "state": "LOCAL_WEBKIT_AND_SAME_HEAD_CHROMIUM_TEACHING_SCOPE_PASS_379",
+        "implementation": "EXISTING_TIMELINE_COLLECTOR_CONTRACT_HARDENED",
+        "paths": [
+          "docs/manual/interactive-timeline.md",
+          "ai/ledgers/interactive-engine-improvements.md",
+          "tools/verify/interactive-timeline-browser.cjs",
+          "tools/verify/interactive-timeline-audit.cjs",
+          "test/smoke/interactive-timeline-evidence.test.ts"
+        ],
+        "currentEvidence": {
+          "state": "TEACHING_SCOPE_DIAGNOSTIC_PASS",
+          "runtimeHead": "34bc840f5fc2edd20bfe50c78d53dc931c734ef4",
+          "collector": "working-tree",
+          "crossCandidate": true,
+          "browser": "Cloud WebKit 26.5",
+          "rows": 6,
+          "pngs": 48,
+          "scope": "18 teaching groups, two clocks, two scroll heights, 16.2-second WebAudio cue, two loads, natural EOS and explicit Stop tested separately.",
+          "materialReview": "docs/evidence/sdk-backlog/proposal-original-materials-20261019.json",
+          "remaining": "Original 1188-part/155-stage model not located; real device scope remains.",
+          "acceptedCI": {
+            "head": "37974d6e320e4251df8288fa19b2d6508a9fd56e",
+            "sdkRun": 39241773257,
+            "qualityRun": 39241773236,
+            "skillsRun": 39241773222,
+            "status": "SUCCESS",
+            "cpuTests": 42,
+            "timelineTests": 29,
+            "identityTests": 31,
+            "chromiumRecipeRows": 8,
+            "timelineRows": 6,
+            "timelinePNGs": 48,
+            "timelineTamperRejections": 39,
+            "coreJestTests": 148,
+            "consumerMainExports": 645,
+            "artifactId": 12181203713,
+            "artifactSHA256": "c11ad0cfa5fafaf560fe46ab3d3ea462fdcd505925cec4e9c2d1b204aa221688",
+            "runtimeSHA256": "7eb2d7b840ee56d1da57068b8513876edcb07075b82193884f3935ae8a1d4bf8"
+          }
+        },
+        "remaining": "Original 1188-part/155-stage model not located; real device scope remains.",
+        "ledger": "ai/ledgers/sdk-audit-backlog-20261019.json"
+      }
     },
     {
       "id": "PROPOSAL-ENG-08",
@@ -829,10 +1139,7 @@
         }
       ],
       "remainingImpact": "WebKit无AudioContext两行NOT_RUN，原约59秒音乐未取得；PNG不是物理首显示/扬声器时刻。",
-      "sourceIds": [
-        "PROPOSAL-ENG-08",
-        "HIST-AUDIO-VISUAL-LATENCY"
-      ],
+      "sourceIds": ["PROPOSAL-ENG-08", "HIST-AUDIO-VISUAL-LATENCY"],
       "additionalAcceptance": [
         {
           "sourceId": "HIST-AUDIO-VISUAL-LATENCY",
@@ -848,7 +1155,51 @@
       "pr": null,
       "blocker": "Pause/resume/seek/replay/end/stop and raw audio context advancement pending.",
       "checkpoint": "https://github.com/oahc09/cocosairjs/tree/fix/audit-sdk-recipes-20261019",
-      "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a"
+      "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a",
+      "currentExecution": {
+        "state": "LOCAL_WEBKIT_AND_SAME_HEAD_CHROMIUM_TEACHING_SCOPE_PASS_379",
+        "implementation": "EXISTING_TIMELINE_COLLECTOR_CONTRACT_HARDENED",
+        "paths": [
+          "docs/manual/interactive-timeline.md",
+          "ai/ledgers/interactive-engine-improvements.md",
+          "tools/verify/interactive-timeline-browser.cjs",
+          "tools/verify/interactive-timeline-audit.cjs",
+          "test/smoke/interactive-timeline-evidence.test.ts"
+        ],
+        "currentEvidence": {
+          "state": "TEACHING_SCOPE_DIAGNOSTIC_PASS",
+          "runtimeHead": "34bc840f5fc2edd20bfe50c78d53dc931c734ef4",
+          "collector": "working-tree",
+          "crossCandidate": true,
+          "browser": "Cloud WebKit 26.5",
+          "rows": 6,
+          "pngs": 48,
+          "scope": "18 teaching groups, two clocks, two scroll heights, 16.2-second WebAudio cue, two loads, natural EOS and explicit Stop tested separately.",
+          "materialReview": "docs/evidence/sdk-backlog/proposal-original-materials-20261019.json",
+          "remaining": "Original approximately 59-second score not located; physical audible/display timing and original app acceptance remain.",
+          "acceptedCI": {
+            "head": "37974d6e320e4251df8288fa19b2d6508a9fd56e",
+            "sdkRun": 39241773257,
+            "qualityRun": 39241773236,
+            "skillsRun": 39241773222,
+            "status": "SUCCESS",
+            "cpuTests": 42,
+            "timelineTests": 29,
+            "identityTests": 31,
+            "chromiumRecipeRows": 8,
+            "timelineRows": 6,
+            "timelinePNGs": 48,
+            "timelineTamperRejections": 39,
+            "coreJestTests": 148,
+            "consumerMainExports": 645,
+            "artifactId": 12181203713,
+            "artifactSHA256": "c11ad0cfa5fafaf560fe46ab3d3ea462fdcd505925cec4e9c2d1b204aa221688",
+            "runtimeSHA256": "7eb2d7b840ee56d1da57068b8513876edcb07075b82193884f3935ae8a1d4bf8"
+          }
+        },
+        "remaining": "Original approximately 59-second score not located; physical audible/display timing and original app acceptance remain.",
+        "ledger": "ai/ledgers/sdk-audit-backlog-20261019.json"
+      }
     },
     {
       "id": "PROPOSAL-ENG-09",
@@ -878,15 +1229,34 @@
         }
       ],
       "remainingImpact": "无目标实体设备、预算及3×60秒数据，首窗口有并发审计混杂。",
-      "sourceIds": [
-        "PROPOSAL-ENG-09"
-      ],
+      "sourceIds": ["PROPOSAL-ENG-09"],
       "implementation": "PENDING_DEVICE_MEASUREMENT",
       "verification": "No device performance profile collected.",
       "pr": null,
       "blocker": "Fixed quality/device 3x60s with raw long frames and separated capture/CPU/submit costs required.",
       "checkpoint": "https://github.com/oahc09/cocosairjs/tree/fix/audit-sdk-recipes-20261019",
-      "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a"
+      "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a",
+      "currentExecution": {
+        "state": "CPU_CONTRACT_PASS_DEVICE_MEASUREMENT_NOT_RUN",
+        "implementation": "FIXED_EXACT_PILOT_INPUT_IDENTITY_AND_UNMEASURED_BUDGET_GATE",
+        "paths": [
+          "tools/verify/interactive-performance.cjs",
+          "tools/verify/interactive-performance-audit.cjs",
+          "test/smoke/interactive-performance.test.ts"
+        ],
+        "currentEvidence": {
+          "status": "CPU_CONTRACT_PASS_DEVICE_MEASUREMENT_NOT_RUN",
+          "passed": [
+            "Synthetic CPU controls reproduce old duplicate-input and alleged-budget acceptance; new exact identity/budget/raw attribution gates reject them."
+          ],
+          "pending": [
+            "No target physical device, predeclared frame-time/visible-quality budget or 3x60s data. No new pilot performance measurement claimed."
+          ],
+          "summary": "docs/evidence/sdk-backlog/color-performance-local-20261019.json"
+        },
+        "remaining": "No target physical device, predeclared frame-time/visible-quality budget or 3x60s data. No new pilot performance measurement claimed.",
+        "ledger": "ai/ledgers/sdk-audit-backlog-20261019.json"
+      }
     },
     {
       "id": "PROPOSAL-ENG-10",
@@ -916,15 +1286,40 @@
         }
       ],
       "remainingImpact": "可选模块未启用时的主动请求路径仍NOT_RUN；base override局部消费诊断不是SDK错误码。",
-      "sourceIds": [
-        "PROPOSAL-ENG-10"
-      ],
+      "sourceIds": ["PROPOSAL-ENG-10"],
       "implementation": "PARTIAL_CPU_VERIFIED",
       "verification": "GLSL misuse source-position diagnostics implemented; ownership failure diagnostics exercised.",
       "pr": null,
       "blocker": "Remaining documented misuse fields/minimal correct calls/function-cycle behavior pending.",
       "checkpoint": "https://github.com/oahc09/cocosairjs/tree/fix/audit-sdk-recipes-20261019",
-      "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a"
+      "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a",
+      "currentExecution": {
+        "state": "SAME_HEAD_REAL_INSTALLED_PACKAGE_CONSUMER_PASS_379",
+        "implementation": "EXISTING_REAL_PACKAGE_CONSUMER_EXTENDED",
+        "paths": ["tools/verify/consumer-acceptance.cjs", "docs/manual/interactive-diagnostics.md"],
+        "currentEvidence": {
+          "state": "ACTIVE_OPTIONAL_ENTRY_REJECTION_PASS",
+          "acceptedCI": {
+            "head": "34bc840f5fc2edd20bfe50c78d53dc931c734ef4",
+            "sdkRun": 39238966875,
+            "qualityRun": 39238967061,
+            "skillsRun": 39238967071,
+            "status": "SUCCESS",
+            "cpuTests": 42,
+            "identityTests": 31,
+            "chromiumRecipeRows": 7,
+            "coreJestTests": 148,
+            "consumerMainExports": 645,
+            "artifactId": 12180796410,
+            "artifactSHA256": "38964e74ea536ed53f144056674ce76d8268d3def004c7b48d52155c29adb75f",
+            "runtimeSHA256": "e1489f969db173d62098a99b594daf6afa2466fa5d04cf4bb7efbe818e525b13"
+          },
+          "positive": "645 main exports from real installed tarball",
+          "negative": "cocosair/spark ERR_PACKAGE_PATH_NOT_EXPORTED, distinct from actual HTTP 404"
+        },
+        "remaining": "Original project-specific diagnostic/reference scope remains to map.",
+        "ledger": "ai/ledgers/sdk-audit-backlog-20261019.json"
+      }
     },
     {
       "id": "PROPOSAL-ENG-11",
@@ -954,15 +1349,38 @@
         }
       ],
       "remainingImpact": "55/60 PNG通过，5个WK活布局失败；原参考和全平台认证未完成。",
-      "sourceIds": [
-        "PROPOSAL-ENG-11"
-      ],
+      "sourceIds": ["PROPOSAL-ENG-11"],
       "implementation": "PARTIAL_DRAFT",
       "verification": "Focused recipes and package-shaped math import are drafted/tested.",
       "pr": null,
       "blocker": "Clean offline tarball integration without build fallback and actual input/resize/cleanup/PNG pending.",
       "checkpoint": "https://github.com/oahc09/cocosairjs/tree/fix/audit-sdk-recipes-20261019",
-      "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a"
+      "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a",
+      "currentExecution": {
+        "state": "LOCAL_ACTUAL_INSTALLED_KIT_WEBKIT_PASS_NEW_HEAD_CI_PENDING",
+        "implementation": "FIXED_ACTUAL_PACKAGE_SHARED_DEPENDENCIES_AND_IDENTITY_SEPARATION",
+        "paths": [
+          "tools/examples/interactive-kit.cjs",
+          "tools/verify/interactive-kit-consumer.cjs",
+          "tools/verify/interactive-kit-evidence.cjs",
+          "tools/verify/interactive-kit-audit.cjs",
+          "docs/manual/examples/interactive-kit/manifest.json"
+        ],
+        "currentEvidence": {
+          "runtimeHead": "37974d6e320e4251df8288fa19b2d6508a9fd56e",
+          "status": "WORKING_TREE_DIAGNOSTIC",
+          "passed": [
+            "Actual old tarball build failure reproduced for 3 entries; candidate actual pack/offline install: 5 entries and 20 PNGs passed.",
+            "Installed TS4.9 declarations, package entry, exact runtime, no published runtime maps, all 19 source copies verified; 26/26 report corruptions rejected."
+          ],
+          "pending": [
+            "Fresh committed same-head tarball CI pending; full three-browser/source-collector, original references and target-device acceptance remain separate."
+          ],
+          "summary": "docs/evidence/sdk-backlog/render-kit-local-20261019.json"
+        },
+        "remaining": "Fresh committed same-head tarball CI pending; full three-browser/source-collector, original references and target-device acceptance remain separate.",
+        "ledger": "ai/ledgers/sdk-audit-backlog-20261019.json"
+      }
     },
     {
       "id": "WR-ENGINE-PROPOSAL-001",
@@ -993,15 +1411,37 @@
         }
       ],
       "remainingImpact": "纯CPU/Worker消费者仍需规避主入口初始化和快照分叉。",
-      "sourceIds": [
-        "WR-ENGINE-PROPOSAL-001"
-      ],
+      "sourceIds": ["WR-ENGINE-PROPOSAL-001"],
       "implementation": "IMPLEMENTED_NODE_WORKER_VERIFIED",
       "verification": "Math entry derives from 37 verified canonical inputs; six fresh Node/Worker/DOM-guard/reproducibility/package-shape tests pass.",
       "pr": null,
       "blocker": "Same-commit main-entry numerical differential and math-first specified canvas/DPR app creation pending; generated math files not yet committed.",
       "checkpoint": "https://github.com/oahc09/cocosairjs/tree/fix/audit-sdk-recipes-20261019",
-      "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a"
+      "checkpointCommit": "29770d7733f6b1936f1890cb0b28d31c17cf255a",
+      "currentExecution": {
+        "state": "FOCUSED_ACCEPTANCE_PASS_379; NEW_BATCH_SAME_HEAD_CI_PENDING",
+        "implementation": "IMPLEMENTED_FOR_REVIEW",
+        "paths": [
+          "tools/build/math-module.cjs",
+          "tools/build/prepare-package.cjs",
+          "package.json",
+          "tools/verify/math-entry.test.cjs",
+          "tools/verify/math-tarball.cjs",
+          ".github/workflows/sdk-recipes.yml"
+        ],
+        "currentEvidence": {
+          "head": "993ebcbbf0f21971ac659bf813a8909ff2bf4beb",
+          "passed": [
+            "Node 22.23.3 all-global-descriptor isolation plus empty-ESM loader control and real pollution negative control",
+            "Real Node Worker and DOM-hostile VM imports",
+            "Same-head Chromium math-first bootstrap, 32 main/math numeric comparisons, selected canvas and DPR",
+            "Actual npm pack/offline install; TS4.9.5 classic Node and NodeNext; 33 common canonical main-map inputs"
+          ],
+          "pending": []
+        },
+        "remaining": "No focused acceptance blocker at 34bc; current consolidation head awaits CI",
+        "ledger": "ai/ledgers/sdk-audit-backlog-20261019.json"
+      }
     },
     {
       "id": "CI-APP-001",
@@ -1018,13 +1458,16 @@
       ],
       "evidence": [],
       "remainingImpact": "场景结构、draw 数和零 JavaScript 错误并不能证明画面正确；此错误使完整世界经后处理变黑。",
-      "sourceIds": [
-        "CI-APP-001"
-      ],
+      "sourceIds": ["CI-APP-001"],
       "implementation": "PAUSED_PUBLICATION_BY_USER",
       "verification": "NOT_CLOSED",
       "pr": null,
-      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately."
+      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately.",
+      "currentExecution": {
+        "state": "SUBMISSION_PAUSED_BY_USER",
+        "pr": null,
+        "blocker": "Application patch submission remains paused; no exhibition push/deploy authorized."
+      }
     },
     {
       "id": "APP-FOCUSED-KEYBOARD-001",
@@ -1056,13 +1499,16 @@
         }
       ],
       "remainingImpact": "window冒泡热键在canvas真焦点后仍收不到属于应用接入问题。Stillwater尚欠实测，City整体视觉/上线不被输入通过覆盖；合成keyboard事件不能证明真实Tab焦点。",
-      "sourceIds": [
-        "APP-FOCUSED-KEYBOARD-001"
-      ],
+      "sourceIds": ["APP-FOCUSED-KEYBOARD-001"],
       "implementation": "PAUSED_PUBLICATION_BY_USER",
       "verification": "NOT_CLOSED",
       "pr": null,
-      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately."
+      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately.",
+      "currentExecution": {
+        "state": "SUBMISSION_PAUSED_BY_USER",
+        "pr": null,
+        "blocker": "Application patch submission remains paused; no exhibition push/deploy authorized."
+      }
     },
     {
       "id": "MI-APP-001",
@@ -1071,18 +1517,19 @@
       "scope": "应用/迁移适配",
       "priority": "P1",
       "action": "进入反射步骤前把逗号声明展开为独立uniform；将该测试加入应用辅助单元测试。",
-      "acceptance": [
-        "真实截图可见排线/纸纹/彩色光晕；纹理上传计数大于0；JS和console错误0。"
-      ],
+      "acceptance": ["真实截图可见排线/纸纹/彩色光晕；纹理上传计数大于0；JS和console错误0。"],
       "evidence": [],
       "remainingImpact": "Uniform默认值为0，虽然WebGL不报错，画面完全错误。",
-      "sourceIds": [
-        "MI-APP-001"
-      ],
+      "sourceIds": ["MI-APP-001"],
       "implementation": "PAUSED_PUBLICATION_BY_USER",
       "verification": "NOT_CLOSED",
       "pr": null,
-      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately."
+      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately.",
+      "currentExecution": {
+        "state": "SUBMISSION_PAUSED_BY_USER",
+        "pr": null,
+        "blocker": "Application patch submission remains paused; no exhibition push/deploy authorized."
+      }
     },
     {
       "id": "MI-APP-002",
@@ -1091,18 +1538,19 @@
       "scope": "应用/迁移适配",
       "priority": "P1",
       "action": "Vector/Matrix改共享/shared/compat/air-math.js；GLB compose使用共享Quaternion；gfx MVP与normal matrix直接调用canonical CC.Mat4/Mat3。",
-      "acceptance": [
-        "应用无独立核心向量/矩阵算法；共享SDK/数学路径唯一；相机、GLB尺寸及法线经截图和数值复测。"
-      ],
+      "acceptance": ["应用无独立核心向量/矩阵算法；共享SDK/数学路径唯一；相机、GLB尺寸及法线经截图和数值复测。"],
       "evidence": [],
       "remainingImpact": "违反展览单一SDK数学边界，虽GPU完全使用Cocos gfx。",
-      "sourceIds": [
-        "MI-APP-002"
-      ],
+      "sourceIds": ["MI-APP-002"],
       "implementation": "PAUSED_PUBLICATION_BY_USER",
       "verification": "NOT_CLOSED",
       "pr": null,
-      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately."
+      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately.",
+      "currentExecution": {
+        "state": "SUBMISSION_PAUSED_BY_USER",
+        "pr": null,
+        "blocker": "Application patch submission remains paused; no exhibition push/deploy authorized."
+      }
     },
     {
       "id": "MI-VOICE-COMPOSITING",
@@ -1116,13 +1564,16 @@
       ],
       "evidence": [],
       "remainingImpact": "完整SDK09c运行中，在.94高振幅切换字幕附近反复发生page crash。固定高度/独立层有过单次通过，但最后复现，不能视为修复。",
-      "sourceIds": [
-        "MI-VOICE-COMPOSITING"
-      ],
+      "sourceIds": ["MI-VOICE-COMPOSITING"],
       "implementation": "PAUSED_PUBLICATION_BY_USER",
       "verification": "NOT_CLOSED",
       "pr": null,
-      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately."
+      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately.",
+      "currentExecution": {
+        "state": "SUBMISSION_PAUSED_BY_USER",
+        "pr": null,
+        "blocker": "Application patch submission remains paused; no exhibition push/deploy authorized."
+      }
     },
     {
       "id": "APP-AUDIO-STREAM-503",
@@ -1147,13 +1598,16 @@
         }
       ],
       "remainingImpact": "失败后请求仍持续传输，active计数为0不能证明已释放。",
-      "sourceIds": [
-        "APP-AUDIO-STREAM-503"
-      ],
+      "sourceIds": ["APP-AUDIO-STREAM-503"],
       "implementation": "PAUSED_PUBLICATION_BY_USER",
       "verification": "NOT_CLOSED",
       "pr": null,
-      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately."
+      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately.",
+      "currentExecution": {
+        "state": "SUBMISSION_PAUSED_BY_USER",
+        "pr": null,
+        "blocker": "Application patch submission remains paused; no exhibition push/deploy authorized."
+      }
     },
     {
       "id": "APP-GALLERY-MANIFEST-BACK",
@@ -1184,13 +1638,16 @@
         }
       ],
       "remainingImpact": "外层目录记录Load failed；不能记为作品渲染或SDK缺陷。",
-      "sourceIds": [
-        "APP-GALLERY-MANIFEST-BACK"
-      ],
+      "sourceIds": ["APP-GALLERY-MANIFEST-BACK"],
       "implementation": "PAUSED_PUBLICATION_BY_USER",
       "verification": "NOT_CLOSED",
       "pr": null,
-      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately."
+      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately.",
+      "currentExecution": {
+        "state": "SUBMISSION_PAUSED_BY_USER",
+        "pr": null,
+        "blocker": "Application patch submission remains paused; no exhibition push/deploy authorized."
+      }
     },
     {
       "id": "APP-PUMPKIN-001",
@@ -1214,13 +1671,16 @@
         }
       ],
       "remainingImpact": "近根折角、真实低帧率积分及作品性能仍待应用层验收。",
-      "sourceIds": [
-        "APP-PUMPKIN-001"
-      ],
+      "sourceIds": ["APP-PUMPKIN-001"],
       "implementation": "PAUSED_PUBLICATION_BY_USER",
       "verification": "NOT_CLOSED",
       "pr": null,
-      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately."
+      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately.",
+      "currentExecution": {
+        "state": "SUBMISSION_PAUSED_BY_USER",
+        "pr": null,
+        "blocker": "Application patch submission remains paused; no exhibition push/deploy authorized."
+      }
     },
     {
       "id": "CITY-MIG-008",
@@ -1234,13 +1694,16 @@
       ],
       "evidence": [],
       "remainingImpact": "Exception for attribute-free stage or wrong source geometry/count for later meshes.",
-      "sourceIds": [
-        "CITY-MIG-008"
-      ],
+      "sourceIds": ["CITY-MIG-008"],
       "implementation": "PAUSED_PUBLICATION_BY_USER",
       "verification": "NOT_CLOSED",
       "pr": null,
-      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately."
+      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately.",
+      "currentExecution": {
+        "state": "SUBMISSION_PAUSED_BY_USER",
+        "pr": null,
+        "blocker": "Application patch submission remains paused; no exhibition push/deploy authorized."
+      }
     },
     {
       "id": "CITY-MIG-009",
@@ -1254,13 +1717,16 @@
       ],
       "evidence": [],
       "remainingImpact": "Full original SSGI/TRAA pipeline stops before first visible native city.",
-      "sourceIds": [
-        "CITY-MIG-009"
-      ],
+      "sourceIds": ["CITY-MIG-009"],
       "implementation": "PAUSED_PUBLICATION_BY_USER",
       "verification": "NOT_CLOSED",
       "pr": null,
-      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately."
+      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately.",
+      "currentExecution": {
+        "state": "SUBMISSION_PAUSED_BY_USER",
+        "pr": null,
+        "blocker": "Application patch submission remains paused; no exhibition push/deploy authorized."
+      }
     },
     {
       "id": "CITY-MIG-013",
@@ -1274,13 +1740,16 @@
       ],
       "evidence": [],
       "remainingImpact": "SSGI/TRAA等嵌套pass缓存与相机矩阵错配。",
-      "sourceIds": [
-        "CITY-MIG-013"
-      ],
+      "sourceIds": ["CITY-MIG-013"],
       "implementation": "PAUSED_PUBLICATION_BY_USER",
       "verification": "NOT_CLOSED",
       "pr": null,
-      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately."
+      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately.",
+      "currentExecution": {
+        "state": "SUBMISSION_PAUSED_BY_USER",
+        "pr": null,
+        "blocker": "Application patch submission remains paused; no exhibition push/deploy authorized."
+      }
     },
     {
       "id": "CITY-MIG-015",
@@ -1294,13 +1763,16 @@
       ],
       "evidence": [],
       "remainingImpact": "额外离屏chunk被编译/上传，可能增加软件GPU资源压力；不能把browser crash直接归为SDK缺陷。",
-      "sourceIds": [
-        "CITY-MIG-015"
-      ],
+      "sourceIds": ["CITY-MIG-015"],
       "implementation": "PAUSED_PUBLICATION_BY_USER",
       "verification": "NOT_CLOSED",
       "pr": null,
-      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately."
+      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately.",
+      "currentExecution": {
+        "state": "SUBMISSION_PAUSED_BY_USER",
+        "pr": null,
+        "blocker": "Application patch submission remains paused; no exhibition push/deploy authorized."
+      }
     },
     {
       "id": "CITY-MIG-017",
@@ -1314,13 +1786,16 @@
       ],
       "evidence": [],
       "remainingImpact": "可能增加CPU堆及原生驱动首帧压力。现无RSS证据证明它是round4崩溃原因。",
-      "sourceIds": [
-        "CITY-MIG-017"
-      ],
+      "sourceIds": ["CITY-MIG-017"],
       "implementation": "PAUSED_PUBLICATION_BY_USER",
       "verification": "NOT_CLOSED",
       "pr": null,
-      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately."
+      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately.",
+      "currentExecution": {
+        "state": "SUBMISSION_PAUSED_BY_USER",
+        "pr": null,
+        "blocker": "Application patch submission remains paused; no exhibition push/deploy authorized."
+      }
     },
     {
       "id": "INSEL-LIFECYCLE-019",
@@ -1334,13 +1809,16 @@
       ],
       "evidence": [],
       "remainingImpact": "28 CPU assertions and 17 native cloud WebKit assertions on SDK SHA76ad; real focus blur, Escape, AudioContext close, idempotent dispose, non-persisted pagehide, new iframe reopen and early startup exit. Persisted transitions are simulated event-contract checks, not real browser bfcache eligibility.",
-      "sourceIds": [
-        "INSEL-LIFECYCLE-019"
-      ],
+      "sourceIds": ["INSEL-LIFECYCLE-019"],
       "implementation": "PAUSED_PUBLICATION_BY_USER",
       "verification": "NOT_CLOSED",
       "pr": null,
-      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately."
+      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately.",
+      "currentExecution": {
+        "state": "SUBMISSION_PAUSED_BY_USER",
+        "pr": null,
+        "blocker": "Application patch submission remains paused; no exhibition push/deploy authorized."
+      }
     },
     {
       "id": "MI-FAB-005",
@@ -1349,18 +1827,19 @@
       "scope": "应用/迁移适配",
       "priority": "P2",
       "action": "应用层为叶片/草丛/枝节建立几何模板和实例属性；使用Cocos gfx实例输入，保持种子和视觉，切换/导出时再合并。",
-      "acceptance": [
-        "相同视觉和植物数量下显存顶点字节显著减少；导出展开GLB仍有效；多次重建后native资源数稳定。"
-      ],
+      "acceptance": ["相同视觉和植物数量下显存顶点字节显著减少；导出展开GLB仍有效；多次重建后native资源数稳定。"],
       "evidence": [],
       "remainingImpact": "本版逐植物展开几何，虽安装资产很小，运行时内存/生成成本高于原作共享实例模型。",
-      "sourceIds": [
-        "MI-FAB-005"
-      ],
+      "sourceIds": ["MI-FAB-005"],
       "implementation": "PAUSED_PUBLICATION_BY_USER",
       "verification": "NOT_CLOSED",
       "pr": null,
-      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately."
+      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately.",
+      "currentExecution": {
+        "state": "SUBMISSION_PAUSED_BY_USER",
+        "pr": null,
+        "blocker": "Application patch submission remains paused; no exhibition push/deploy authorized."
+      }
     },
     {
       "id": "MI-FAB-VISUAL-ROUND4",
@@ -1369,18 +1848,19 @@
       "scope": "应用/迁移适配",
       "priority": "P2",
       "action": "进一步独立校准草叶曲率、植株分布与分物种材质；不复用原生成器或植物资产。",
-      "acceptance": [
-        "当前41预设及353参数/62专项检查通过；GPU六状态渲染通过，资源释放为0。"
-      ],
+      "acceptance": ["当前41预设及353参数/62专项检查通过；GPU六状态渲染通过，资源释放为0。"],
       "evidence": [],
       "remainingImpact": "Round3 大片中央裸土和周期性沟槽已改善；独立植物形态、位置和土壤覆盖仍非一比一。",
-      "sourceIds": [
-        "MI-FAB-VISUAL-ROUND4"
-      ],
+      "sourceIds": ["MI-FAB-VISUAL-ROUND4"],
       "implementation": "PAUSED_PUBLICATION_BY_USER",
       "verification": "NOT_CLOSED",
       "pr": null,
-      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately."
+      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately.",
+      "currentExecution": {
+        "state": "SUBMISSION_PAUSED_BY_USER",
+        "pr": null,
+        "blocker": "Application patch submission remains paused; no exhibition push/deploy authorized."
+      }
     },
     {
       "id": "MI-SKETCH-003",
@@ -1394,13 +1874,16 @@
       ],
       "evidence": [],
       "remainingImpact": "原5×7字形已替换为原作公开矢量轮廓的独立孔洞三角化；轮廓抖动、采样抗锯齿与阴影/纸张细节仍不是逐像素一致。",
-      "sourceIds": [
-        "MI-SKETCH-003"
-      ],
+      "sourceIds": ["MI-SKETCH-003"],
       "implementation": "PAUSED_PUBLICATION_BY_USER",
       "verification": "NOT_CLOSED",
       "pr": null,
-      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately."
+      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately.",
+      "currentExecution": {
+        "state": "SUBMISSION_PAUSED_BY_USER",
+        "pr": null,
+        "blocker": "Application patch submission remains paused; no exhibition push/deploy authorized."
+      }
     },
     {
       "id": "MI-SKETCH-009",
@@ -1414,13 +1897,16 @@
       ],
       "evidence": [],
       "remainingImpact": "已补独立模型墨色/变换、洗墨分项、纸与影参数、四控制点、直线/曲线、时长/缓动、视角记录和JSON导出。",
-      "sourceIds": [
-        "MI-SKETCH-009"
-      ],
+      "sourceIds": ["MI-SKETCH-009"],
       "implementation": "PAUSED_PUBLICATION_BY_USER",
       "verification": "NOT_CLOSED",
       "pr": null,
-      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately."
+      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately.",
+      "currentExecution": {
+        "state": "SUBMISSION_PAUSED_BY_USER",
+        "pr": null,
+        "blocker": "Application patch submission remains paused; no exhibition push/deploy authorized."
+      }
     },
     {
       "id": "MI-VOICE-010",
@@ -1429,18 +1915,19 @@
       "scope": "应用/迁移适配",
       "priority": "P2",
       "action": "以同一显示强度/phase继续校准band mask、色散和模糊；不把不同phase帧或runtime0error当视觉通过。",
-      "acceptance": [
-        "两端记录的显示level差<.002；可见向上扩散光雾与真实native亮带；麦克风请求0。"
-      ],
+      "acceptance": ["两端记录的显示level差<.002；可见向上扩散光雾与真实native亮带；麦克风请求0。"],
       "evidence": [],
       "remainingImpact": "已补非线性映射、0.325s/0.86s平滑、mobile reach/height、漂移与弯曲亮带；原CSS/Canvas合成与本版native GPU的颜色分布/柔化仍不同。",
-      "sourceIds": [
-        "MI-VOICE-010"
-      ],
+      "sourceIds": ["MI-VOICE-010"],
       "implementation": "PAUSED_PUBLICATION_BY_USER",
       "verification": "NOT_CLOSED",
       "pr": null,
-      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately."
+      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately.",
+      "currentExecution": {
+        "state": "SUBMISSION_PAUSED_BY_USER",
+        "pr": null,
+        "blocker": "Application patch submission remains paused; no exhibition push/deploy authorized."
+      }
     },
     {
       "id": "STILLWATER-APP-006",
@@ -1449,18 +1936,19 @@
       "scope": "应用/迁移适配",
       "priority": "P2",
       "action": "Apply smallest source-contract correction with focused regression tests after locked scene diagnostic baseline. Do not attribute unrelated NaN without actual-use evidence.",
-      "acceptance": [
-        "Focused contract reproducer passes and full actual scene preserves geometry/material behavior."
-      ],
+      "acceptance": ["Focused contract reproducer passes and full actual scene preserves geometry/material behavior."],
       "evidence": [],
       "remainingImpact": "Potential wrong matrices for packed mat3[] uniforms, not established as the current black-output cause.",
-      "sourceIds": [
-        "STILLWATER-APP-006"
-      ],
+      "sourceIds": ["STILLWATER-APP-006"],
       "implementation": "PAUSED_PUBLICATION_BY_USER",
       "verification": "NOT_CLOSED",
       "pr": null,
-      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately."
+      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately.",
+      "currentExecution": {
+        "state": "SUBMISSION_PAUSED_BY_USER",
+        "pr": null,
+        "blocker": "Application patch submission remains paused; no exhibition push/deploy authorized."
+      }
     },
     {
       "id": "STILLWATER-APP-007",
@@ -1469,18 +1957,19 @@
       "scope": "应用/迁移适配",
       "priority": "P2",
       "action": "Interleaved layout tracks actual attribute identity/count/size/normalization/rate. Geometry input assembler rebinds when shared pack, source index buffer, source array or instance buffers change. Focused CPU replacement and cross-mesh-sharing contracts pass.",
-      "acceptance": [
-        "Focused contract reproducer passes and full actual scene preserves geometry/material behavior."
-      ],
+      "acceptance": ["Focused contract reproducer passes and full actual scene preserves geometry/material behavior."],
       "evidence": [],
       "remainingImpact": "Potential stale vertex data after attribute-object replacement; not established as current black-output cause.",
-      "sourceIds": [
-        "STILLWATER-APP-007"
-      ],
+      "sourceIds": ["STILLWATER-APP-007"],
       "implementation": "PAUSED_PUBLICATION_BY_USER",
       "verification": "NOT_CLOSED",
       "pr": null,
-      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately."
+      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately.",
+      "currentExecution": {
+        "state": "SUBMISSION_PAUSED_BY_USER",
+        "pr": null,
+        "blocker": "Application patch submission remains paused; no exhibition push/deploy authorized."
+      }
     },
     {
       "id": "STILLWATER-APP-008",
@@ -1489,18 +1978,19 @@
       "scope": "应用/迁移适配",
       "priority": "P2",
       "action": "Apply smallest source-contract correction with focused regression tests after locked scene diagnostic baseline. Do not attribute unrelated NaN without actual-use evidence.",
-      "acceptance": [
-        "Focused contract reproducer passes and full actual scene preserves geometry/material behavior."
-      ],
+      "acceptance": ["Focused contract reproducer passes and full actual scene preserves geometry/material behavior."],
       "evidence": [],
       "remainingImpact": "Unimplemented general transmission input contract; actual scene impact unconfirmed.",
-      "sourceIds": [
-        "STILLWATER-APP-008"
-      ],
+      "sourceIds": ["STILLWATER-APP-008"],
       "implementation": "PAUSED_PUBLICATION_BY_USER",
       "verification": "NOT_CLOSED",
       "pr": null,
-      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately."
+      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately.",
+      "currentExecution": {
+        "state": "SUBMISSION_PAUSED_BY_USER",
+        "pr": null,
+        "blocker": "Application patch submission remains paused; no exhibition push/deploy authorized."
+      }
     },
     {
       "id": "STILLWATER-APP-009",
@@ -1514,13 +2004,16 @@
       ],
       "evidence": [],
       "remainingImpact": "May draw inactive particle/visitor geometry once. Not established as cause of remaining final-canvas black output.",
-      "sourceIds": [
-        "STILLWATER-APP-009"
-      ],
+      "sourceIds": ["STILLWATER-APP-009"],
       "implementation": "PAUSED_PUBLICATION_BY_USER",
       "verification": "NOT_CLOSED",
       "pr": null,
-      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately."
+      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately.",
+      "currentExecution": {
+        "state": "SUBMISSION_PAUSED_BY_USER",
+        "pr": null,
+        "blocker": "Application patch submission remains paused; no exhibition push/deploy authorized."
+      }
     },
     {
       "id": "STILLWATER-APP-010",
@@ -1534,13 +2027,16 @@
       ],
       "evidence": [],
       "remainingImpact": "Wrong clear-color radiometry. Whole-image GTAO remains finite; not attributed to current scene NaN/black output.",
-      "sourceIds": [
-        "STILLWATER-APP-010"
-      ],
+      "sourceIds": ["STILLWATER-APP-010"],
       "implementation": "PAUSED_PUBLICATION_BY_USER",
       "verification": "NOT_CLOSED",
       "pr": null,
-      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately."
+      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately.",
+      "currentExecution": {
+        "state": "SUBMISSION_PAUSED_BY_USER",
+        "pr": null,
+        "blocker": "Application patch submission remains paused; no exhibition push/deploy authorized."
+      }
     },
     {
       "id": "WR-APP-001",
@@ -1556,13 +2052,16 @@
       ],
       "evidence": [],
       "remainingImpact": "漏掉预乘alpha、源纹理坐标、动态尺寸重建或油画pass会改变白天鹅边缘与水面效果。",
-      "sourceIds": [
-        "WR-APP-001"
-      ],
+      "sourceIds": ["WR-APP-001"],
       "implementation": "PAUSED_PUBLICATION_BY_USER",
       "verification": "NOT_CLOSED",
       "pr": null,
-      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately."
+      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately.",
+      "currentExecution": {
+        "state": "SUBMISSION_PAUSED_BY_USER",
+        "pr": null,
+        "blocker": "Application patch submission remains paused; no exhibition push/deploy authorized."
+      }
     },
     {
       "id": "WR-APP-002",
@@ -1571,20 +2070,19 @@
       "scope": "应用/迁移适配",
       "priority": "P2",
       "action": "根据真实uniform值的维度将声明长度解析成固定整数，保留原QUALITY1/2数量。",
-      "acceptance": [
-        "高/低品质均正确编译",
-        "浪头与脚印数据不丢失",
-        "固定相机的像素对照通过"
-      ],
+      "acceptance": ["高/低品质均正确编译", "浪头与脚印数据不丢失", "固定相机的像素对照通过"],
       "evidence": [],
       "remainingImpact": "仅匹配数字数组长度的应用适配器不能提取uniform，波浪/脚印数据将缺失。",
-      "sourceIds": [
-        "WR-APP-002"
-      ],
+      "sourceIds": ["WR-APP-002"],
       "implementation": "PAUSED_PUBLICATION_BY_USER",
       "verification": "NOT_CLOSED",
       "pr": null,
-      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately."
+      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately.",
+      "currentExecution": {
+        "state": "SUBMISSION_PAUSED_BY_USER",
+        "pr": null,
+        "blocker": "Application patch submission remains paused; no exhibition push/deploy authorized."
+      }
     },
     {
       "id": "WR-APP-003",
@@ -1601,13 +2099,16 @@
       ],
       "evidence": [],
       "remainingImpact": "模拟三只天鹅完全相同，但显示只剩两只，右侧/底部被裁掉。",
-      "sourceIds": [
-        "WR-APP-003"
-      ],
+      "sourceIds": ["WR-APP-003"],
       "implementation": "PAUSED_PUBLICATION_BY_USER",
       "verification": "NOT_CLOSED",
       "pr": null,
-      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately."
+      "blocker": "User asked application patches not be submitted. Reviewable candidate patches retained separately.",
+      "currentExecution": {
+        "state": "SUBMISSION_PAUSED_BY_USER",
+        "pr": null,
+        "blocker": "Application patch submission remains paused; no exhibition push/deploy authorized."
+      }
     },
     {
       "id": "STILLWATER-ENV-005",
@@ -1625,13 +2126,47 @@
       ],
       "evidence": [],
       "remainingImpact": "事件在完整长帧期间排队，无法据当前证据认定实时可玩。原始参考整世界未完成同状态对照，因此不能把全部耗时归为Cocos、浏览器缺陷或软件驱动。",
-      "sourceIds": [
-        "STILLWATER-ENV-005"
-      ],
+      "sourceIds": ["STILLWATER-ENV-005"],
       "implementation": "NO_ENGINE_FIX_JUSTIFIED",
       "verification": "NOT_RUN",
       "pr": null,
-      "blocker": "Requires original scene/reference/device or explicit permission; historical evidence cannot establish current acceptance."
+      "blocker": "Requires original scene/reference/device or explicit permission; historical evidence cannot establish current acceptance.",
+      "currentExecution": {
+        "state": "READ_ONLY_MATERIAL_REVIEW_ACCEPTANCE_NOT_RUN",
+        "pr": "https://github.com/oahc09/cocosairjs/pull/7",
+        "assessment": "Historical exact-scene timings and candidate metadata are available; original complete-world source/material identity has not yet been mapped. Target-device normal-RAF High/input evidence remains unrun. Complete migrated candidate runtime c2743523 and historical 153-asset receipt are located under experiments/stillwater; original-backend reference and current external asset availability remain unverified.",
+        "blocker": "MAP_ORIGINAL_WORLD_THEN_REAL_DEVICE",
+        "evidence": [
+          {
+            "path": "public/reports/stillwater-candidate-investigation.json",
+            "archive": false,
+            "available": true,
+            "bytes": 3080,
+            "sha256": "be07f43074447c53f5e7ef6da87eb55f692136abd6b46e115f45460fd187b20f"
+          },
+          {
+            "path": "public/reports/stillwater-metadata.json",
+            "archive": false,
+            "available": true,
+            "bytes": 10930,
+            "sha256": "1b0d7c2e8a14be87eb0a5ea391fce1432fcaebb308034b3c815f6b604dba69ac"
+          },
+          {
+            "path": "public/experiments/stillwater/evidence.json",
+            "archive": false,
+            "available": true,
+            "bytes": 4480,
+            "sha256": "0e74cee3cbeffc669285128624b9d474c24debcb3c7137a92d1b6402a561d90f"
+          },
+          {
+            "path": "public/experiments/stillwater/runtime/app.js",
+            "archive": false,
+            "available": true,
+            "bytes": 1853410,
+            "sha256": "c2743523017b467a98357253d04d1d62548c3b178540eac1d2812afe1d280037"
+          }
+        ]
+      }
     },
     {
       "id": "ENV-001",
@@ -1648,13 +2183,54 @@
       ],
       "evidence": [],
       "remainingImpact": "这些环境结果不足以判定引擎缺陷，也不足以宣称完整高品质视觉一致。",
-      "sourceIds": [
-        "ENV-001"
-      ],
+      "sourceIds": ["ENV-001"],
       "implementation": "NO_ENGINE_FIX_JUSTIFIED",
       "verification": "NOT_RUN",
       "pr": null,
-      "blocker": "Requires original scene/reference/device or explicit permission; historical evidence cannot establish current acceptance."
+      "blocker": "Requires original scene/reference/device or explicit permission; historical evidence cannot establish current acceptance.",
+      "currentExecution": {
+        "state": "READ_ONLY_MATERIAL_REVIEW_ACCEPTANCE_NOT_RUN",
+        "pr": "https://github.com/oahc09/cocosairjs/pull/7",
+        "assessment": "Gigacity application and historical Stillwater reports are available. They do not establish same-device original-versus-migrated full-world acceptance. Complete migrated candidate runtime c2743523 and historical 153-asset receipt are located under experiments/stillwater; original-backend reference and current external asset availability remain unverified.",
+        "blocker": "ORIGINAL_WORLD_AND_TARGET_GPU",
+        "evidence": [
+          {
+            "path": "public/reports/stillwater-candidate-investigation.json",
+            "archive": false,
+            "available": true,
+            "bytes": 3080,
+            "sha256": "be07f43074447c53f5e7ef6da87eb55f692136abd6b46e115f45460fd187b20f"
+          },
+          {
+            "path": "public/reports/gigacity-current-verification.json",
+            "archive": false,
+            "available": true,
+            "bytes": 23097,
+            "sha256": "61b38ce016949f9937046088683239f20ca0f4595907cfd867533fc42ce5d15a"
+          },
+          {
+            "path": "public/apps/gigacity/app.js",
+            "archive": false,
+            "available": true,
+            "bytes": 898432,
+            "sha256": "5ff62cfe37bd9d4d7a5adaab1749176cbabf52aada77f17e1c8dd291612323d1"
+          },
+          {
+            "path": "public/experiments/stillwater/evidence.json",
+            "archive": false,
+            "available": true,
+            "bytes": 4480,
+            "sha256": "0e74cee3cbeffc669285128624b9d474c24debcb3c7137a92d1b6402a561d90f"
+          },
+          {
+            "path": "public/experiments/stillwater/runtime/app.js",
+            "archive": false,
+            "available": true,
+            "bytes": 1853410,
+            "sha256": "c2743523017b467a98357253d04d1d62548c3b178540eac1d2812afe1d280037"
+          }
+        ]
+      }
     },
     {
       "id": "ENV-ROOM-001",
@@ -1672,13 +2248,33 @@
       ],
       "evidence": [],
       "remainingImpact": "多人综合25/26通过，断网后的服务器ACK、接收端历史/在线恢复与两次leave200均有证据。后续单端自然导航7/8：导航+18ms报poll访问控制标签错误，+190ms发生pagehide，实际API全200、导航期间无join、leave200后参与者0。纯DOM同源500ms轮询也在导航与pagehide之间复现同类pageerror。历史失败保留。",
-      "sourceIds": [
-        "ENV-ROOM-001"
-      ],
+      "sourceIds": ["ENV-ROOM-001"],
       "implementation": "NO_ENGINE_FIX_JUSTIFIED",
       "verification": "NOT_RUN",
       "pr": null,
-      "blocker": "Requires original scene/reference/device or explicit permission; historical evidence cannot establish current acceptance."
+      "blocker": "Requires original scene/reference/device or explicit permission; historical evidence cannot establish current acceptance.",
+      "currentExecution": {
+        "state": "READ_ONLY_MATERIAL_REVIEW_ACCEPTANCE_NOT_RUN",
+        "pr": "https://github.com/oahc09/cocosairjs/pull/7",
+        "assessment": "Production protocol history is available. No production participants, writes, joins, ACK tests or rate-limit probes were performed in this review. Two independent visible clients and the actual 750ms window still require bounded production-test authorization.",
+        "blocker": "PRODUCTION_INTERACTION_NOT_AUTHORIZED",
+        "evidence": [
+          {
+            "path": "public/reports/production-room-verification.json",
+            "archive": false,
+            "available": true,
+            "bytes": 5285,
+            "sha256": "d4bc833adb96be59e99cea842ac529fa4c8a6f762e136c9cf59a41f9cdf5a0b5"
+          },
+          {
+            "path": "public/apps/sunahama/app.js",
+            "archive": false,
+            "available": true,
+            "bytes": 368690,
+            "sha256": "d5b31e60cf6377e1b51ef2198ef7dcafaf8b4a6288e83539fee36947ce7c63e0"
+          }
+        ]
+      }
     },
     {
       "id": "CITY-ENV-010",
@@ -1692,13 +2288,34 @@
       ],
       "evidence": [],
       "remainingImpact": "Only ai-office original poster bytes available locally; eleven source billboard textures missing. Source-authored gradient/loading fallback remains, with no invented substitute.",
-      "sourceIds": [
-        "CITY-ENV-010"
-      ],
+      "sourceIds": ["CITY-ENV-010"],
       "implementation": "NO_ENGINE_FIX_JUSTIFIED",
       "verification": "NOT_RUN",
       "pr": null,
-      "blocker": "Requires original scene/reference/device or explicit permission; historical evidence cannot establish current acceptance."
+      "blocker": "Requires original scene/reference/device or explicit permission; historical evidence cannot establish current acceptance.",
+      "currentExecution": {
+        "state": "READ_ONLY_MATERIAL_REVIEW_ACCEPTANCE_NOT_RUN",
+        "pr": "https://github.com/oahc09/cocosairjs/pull/7",
+        "assessment": "Current source contains only ai-office.webp in the posters directory. Metadata retains eleven missing/404 poster observations and historical cache-scan records. Exact original eleven poster bytes remain unavailable in the reviewed source.",
+        "blocker": "EXACT_ORIGINAL_POSTER_BYTES_UNVERIFIED",
+        "evidence": [
+          {
+            "path": "public/reports/gigacity-verification.json",
+            "archive": false,
+            "available": true,
+            "bytes": 8438,
+            "sha256": "47a0757f16c82b2773fa977f3b07d50a460210435f338cf4fa7bc0a4057bfbea"
+          },
+          {
+            "path": "public/apps/gigacity/app.js",
+            "archive": false,
+            "available": true,
+            "bytes": 898432,
+            "sha256": "5ff62cfe37bd9d4d7a5adaab1749176cbabf52aada77f17e1c8dd291612323d1"
+          }
+        ],
+        "materialAvailability": "ai/ledgers/environment-material-availability-20261019.json"
+      }
     },
     {
       "id": "CITY-REF-001",
@@ -1712,13 +2329,33 @@
       ],
       "evidence": [],
       "remainingImpact": "Cannot yet use the original screenshot as a valid city visual baseline.",
-      "sourceIds": [
-        "CITY-REF-001"
-      ],
+      "sourceIds": ["CITY-REF-001"],
       "implementation": "NO_ENGINE_FIX_JUSTIFIED",
       "verification": "NOT_RUN",
       "pr": null,
-      "blocker": "Requires original scene/reference/device or explicit permission; historical evidence cannot establish current acceptance."
+      "blocker": "Requires original scene/reference/device or explicit permission; historical evidence cannot establish current acceptance.",
+      "currentExecution": {
+        "state": "READ_ONLY_MATERIAL_REVIEW_ACCEPTANCE_NOT_RUN",
+        "pr": "https://github.com/oahc09/cocosairjs/pull/7",
+        "assessment": "Original fog-only reference and migrated-app historical results are available. No new valid original-city screenshot at matched state was collected.",
+        "blocker": "MATCHED_ORIGINAL_REFERENCE_UNVERIFIED",
+        "evidence": [
+          {
+            "path": "public/reports/gigacity-verification.json",
+            "archive": false,
+            "available": true,
+            "bytes": 8438,
+            "sha256": "47a0757f16c82b2773fa977f3b07d50a460210435f338cf4fa7bc0a4057bfbea"
+          },
+          {
+            "path": "public/reports/gigacity-current-verification.json",
+            "archive": false,
+            "available": true,
+            "bytes": 23097,
+            "sha256": "61b38ce016949f9937046088683239f20ca0f4595907cfd867533fc42ce5d15a"
+          }
+        ]
+      }
     },
     {
       "id": "HIST-PLAYABLE12-AUDIO",
@@ -1733,13 +2370,239 @@
       ],
       "evidence": [],
       "remainingImpact": "旧版本真实三轮失败/跳过仍保留；尚未证明当前main的SDK根因。",
-      "sourceIds": [
-        "HIST-PLAYABLE12-AUDIO"
-      ],
+      "sourceIds": ["HIST-PLAYABLE12-AUDIO"],
       "implementation": "NO_ENGINE_FIX_JUSTIFIED",
       "verification": "NOT_RUN",
       "pr": null,
-      "blocker": "Requires original scene/reference/device or explicit permission; historical evidence cannot establish current acceptance."
+      "blocker": "Requires original scene/reference/device or explicit permission; historical evidence cannot establish current acceptance.",
+      "currentExecution": {
+        "state": "FOCUSED_CURRENT_MAIN_CONTROLS_COMPLETED_ORIGINAL_APPLICATION_PENDING",
+        "pr": "https://github.com/oahc09/cocosairjs/pull/7",
+        "assessment": "Streaming WAV replay can stall in native HTMLAudio and both old/current SDK; old first-round success is not stable evidence of regression. Buffer-response and Blob controls pass. Existing AudioSource.loadAsync({transport: buffered}) passes eight natural EOS/replays on the same streaming server. No core engine fix justified by these results.",
+        "blocker": "ORIGINAL_APPLICATION_ACCEPTANCE_PENDING",
+        "evidence": [
+          {
+            "path": "evidence/playable50-revalidation-20261016/audio-eos.html",
+            "archive": true,
+            "available": true,
+            "bytes": 2067,
+            "sha256": "389b6b3235bb740c83471441641c9d8ac5f9a83dc969aa22bc8b34d468c467cc"
+          },
+          {
+            "path": "evidence/playable50-revalidation-20261016/audio-eos.cjs",
+            "archive": true,
+            "available": true,
+            "bytes": 2279,
+            "sha256": "9f322fea3942cca87bff5adc1de78dc620c79bc76671c05ce6e72686a4e65450"
+          },
+          {
+            "path": "evidence/playable50-revalidation-20261016/audio-eos-results.json",
+            "archive": true,
+            "available": true,
+            "bytes": 20977,
+            "sha256": "8eeb753fcc72971e2a3784ecb96bb6003dd9fdf78de3726e77f94c1b5fa4b7e1"
+          },
+          {
+            "path": "evidence/playable50-revalidation-20261016/audio-eos-blob-results.json",
+            "archive": true,
+            "available": true,
+            "bytes": 27921,
+            "sha256": "9a14f85ab469d07d89bd066200061cb2df021e828e5dc00c93918fec5f26e36d"
+          },
+          {
+            "path": "public/apps/playable50/19-highway-overtake/assets/runtime/gilt_hit.wav",
+            "archive": false,
+            "available": true,
+            "bytes": 17684,
+            "sha256": "62a4d868fc15f536eac6f68d0f9bdc61a894e6b2cac7be8fdb565459bd35d39f"
+          },
+          {
+            "path": "public/reports/playable50-closure-20261016.json",
+            "archive": false,
+            "available": true,
+            "bytes": 3393,
+            "sha256": "ba48768e99a83688be63c351d622c4401ab40cd17c7c441bcd1b0508256ecb3d"
+          }
+        ],
+        "diagnostic": {
+          "schema": "audio-eos-diagnostic/1",
+          "recordedAt": "2026-10-19T10:38:47.371396+00:00",
+          "task": "HIST-PLAYABLE12-AUDIO",
+          "mainHead": "a21d49bd4f68054e22242609bca2da50eccd054d",
+          "mainRuntimeSHA256": "eb8a8a75c968571bc27d5d472a8ee02c5d89f3ab43e2d3ecf702016e406fddab",
+          "mainRuntimeGitBlob": "720795ba8785158172dae0a790b2306b744395b0",
+          "oldRuntimeSHA256": "c2dbcf4055a21f4c6db9d5abba4d4d963664344f846c24b678f6a852f66f645b",
+          "cueSHA256": "62a4d868fc15f536eac6f68d0f9bdc61a894e6b2cac7be8fdb565459bd35d39f",
+          "browser": "Cloud WebKit 26.5",
+          "rounds": [
+            {
+              "receiptSHA256": "cdb387c0203e3172ba86886b41e8e52813e6d8b89d849fd9abbc194648e47f51",
+              "control": "",
+              "transport": "Buffer response; explicit length",
+              "runs": [
+                {
+                  "mode": "direct",
+                  "completed": true,
+                  "naturalEOS": 8,
+                  "attempts": 8,
+                  "sequenceEnded": [true, true, true, true, true, true, true, true],
+                  "pageErrors": [],
+                  "stoppedAfterStop": true,
+                  "releaseStatus": "released"
+                },
+                {
+                  "mode": "blob",
+                  "completed": true,
+                  "naturalEOS": 8,
+                  "attempts": 8,
+                  "sequenceEnded": [true, true, true, true, true, true, true, true],
+                  "pageErrors": [],
+                  "stoppedAfterStop": true,
+                  "releaseStatus": "released"
+                }
+              ]
+            },
+            {
+              "receiptSHA256": "0e56db003eb93f6667ddc2495fdf91d59a3da5ed2c7dccc36fa4391b44bcfedf",
+              "control": "",
+              "transport": "Buffer response; no explicit length",
+              "runs": [
+                {
+                  "mode": "direct",
+                  "completed": true,
+                  "naturalEOS": 8,
+                  "attempts": 8,
+                  "sequenceEnded": [true, true, true, true, true, true, true, true],
+                  "pageErrors": [],
+                  "stoppedAfterStop": true,
+                  "releaseStatus": "released"
+                },
+                {
+                  "mode": "blob",
+                  "completed": true,
+                  "naturalEOS": 8,
+                  "attempts": 8,
+                  "sequenceEnded": [true, true, true, true, true, true, true, true],
+                  "pageErrors": [],
+                  "stoppedAfterStop": true,
+                  "releaseStatus": "released"
+                }
+              ]
+            },
+            {
+              "receiptSHA256": "3ffc0a363661fec5b0d524c4900646ada988b3ca0929af3a0e41e169ac828d85",
+              "control": "",
+              "transport": "Historical createReadStream pipe, no explicit content length/range handling",
+              "runs": [
+                {
+                  "mode": "old-direct",
+                  "completed": true,
+                  "naturalEOS": 8,
+                  "attempts": 8,
+                  "sequenceEnded": [true, true, true, true, true, true, true, true],
+                  "pageErrors": [],
+                  "stoppedAfterStop": true,
+                  "releaseStatus": "released"
+                },
+                {
+                  "mode": "old-blob",
+                  "completed": true,
+                  "naturalEOS": 8,
+                  "attempts": 8,
+                  "sequenceEnded": [true, true, true, true, true, true, true, true],
+                  "pageErrors": [],
+                  "stoppedAfterStop": true,
+                  "releaseStatus": "released"
+                },
+                {
+                  "mode": "direct",
+                  "completed": true,
+                  "naturalEOS": 1,
+                  "attempts": 8,
+                  "sequenceEnded": [true, false, false, false, false, false, false, false],
+                  "pageErrors": [],
+                  "stoppedAfterStop": true,
+                  "releaseStatus": "released"
+                },
+                {
+                  "mode": "blob",
+                  "completed": true,
+                  "naturalEOS": 8,
+                  "attempts": 8,
+                  "sequenceEnded": [true, true, true, true, true, true, true, true],
+                  "pageErrors": [],
+                  "stoppedAfterStop": true,
+                  "releaseStatus": "released"
+                }
+              ]
+            },
+            {
+              "receiptSHA256": "cbec7023e8c8b99b3ad181966a90d135bd902e1336fe81ab189ec2fa6896ede0",
+              "control": "Reverse order plus native HTMLAudio",
+              "transport": "Historical createReadStream pipe, no explicit content length/range handling",
+              "runs": [
+                {
+                  "mode": "native",
+                  "completed": true,
+                  "naturalEOS": 2,
+                  "attempts": 8,
+                  "sequenceEnded": [true, true, false, false, false, false, false, false],
+                  "pageErrors": [],
+                  "stoppedAfterStop": true,
+                  "releaseStatus": "released"
+                },
+                {
+                  "mode": "direct",
+                  "completed": true,
+                  "naturalEOS": 1,
+                  "attempts": 8,
+                  "sequenceEnded": [true, false, false, false, false, false, false, false],
+                  "pageErrors": [],
+                  "stoppedAfterStop": true,
+                  "releaseStatus": "released"
+                },
+                {
+                  "mode": "old-direct",
+                  "completed": true,
+                  "naturalEOS": 1,
+                  "attempts": 8,
+                  "sequenceEnded": [true, false, false, false, false, false, false, false],
+                  "pageErrors": [],
+                  "stoppedAfterStop": true,
+                  "releaseStatus": "released"
+                }
+              ]
+            },
+            {
+              "receiptSHA256": "b553e9b40cdb9b744c8657a627436a80b7dd6f64be888a845e79b182f5059a60",
+              "control": "",
+              "transport": "Historical createReadStream pipe, no explicit content length/range handling",
+              "runs": [
+                {
+                  "mode": "buffered",
+                  "completed": true,
+                  "naturalEOS": 8,
+                  "attempts": 8,
+                  "sequenceEnded": [true, true, true, true, true, true, true, true],
+                  "pageErrors": [],
+                  "stoppedAfterStop": true,
+                  "releaseStatus": "released"
+                }
+              ]
+            }
+          ],
+          "finding": "Streaming WAV replay can stall in native HTMLAudio and both old/current SDK; old first-round success is not stable evidence of regression. Buffer-response and Blob controls pass. Existing AudioSource.loadAsync({transport: buffered}) passes eight natural EOS/replays on the same streaming server. No core engine fix justified by these results.",
+          "limits": [
+            "Original Playable12 complete application not rerun; minimal genuine-cue fixture only.",
+            "No microphone access, subjective speaker listening, physical device or Chromium audio claim.",
+            "Loopback stream server does not implement HTTP Range; these results do not generalize to correctly seekable production media servers.",
+            "Zero pageerror does not mean zero network warning; raw records preserve status-zero media observations.",
+            "No private fixture or cue bytes submitted to GitHub."
+          ],
+          "next": "Use existing explicit buffered transport in bounded audio-clock recipe; preserve direct-media negative controls and original application acceptance pending."
+        },
+        "publicSummary": "docs/evidence/sdk-backlog/audio-eos-main-20261019.json"
+      }
     },
     {
       "id": "HIST-TOUCH-CANCEL",
@@ -1754,13 +2617,33 @@
       ],
       "evidence": [],
       "remainingImpact": "互动08无引擎DPR1/2对照有可信touchstart/end但无新增click；不能归为SDK bug或泛化物理设备。",
-      "sourceIds": [
-        "HIST-TOUCH-CANCEL"
-      ],
+      "sourceIds": ["HIST-TOUCH-CANCEL"],
       "implementation": "NO_ENGINE_FIX_JUSTIFIED",
       "verification": "NOT_RUN",
       "pr": null,
-      "blocker": "Requires original scene/reference/device or explicit permission; historical evidence cannot establish current acceptance."
+      "blocker": "Requires original scene/reference/device or explicit permission; historical evidence cannot establish current acceptance.",
+      "currentExecution": {
+        "state": "READ_ONLY_MATERIAL_REVIEW_ACCEPTANCE_NOT_RUN",
+        "pr": "https://github.com/oahc09/cocosairjs/pull/7",
+        "assessment": "Recovered original summary identifies interaction08 no-engine DPR1/2 cancellation controls and original test path. The raw no-engine control script/JSON are not yet located in this split evidence directory; unrelated playable50 touch tests are not substitutes.",
+        "blocker": "NATIVE_TOUCH_CONTROL_AND_DEVICE_UNVERIFIED",
+        "evidence": [
+          {
+            "path": "public/engine/improvements/catalog.json",
+            "archive": false,
+            "available": true,
+            "bytes": 821901,
+            "sha256": "9c944d2bd61afbb5debc1bcf4702a2bb33ee342d98f501db459a3ceb9a8ba02c"
+          },
+          {
+            "path": "public/engine/improvements/sources/recovered/engine-improvement-summary/CocosAirJS-Latest-Replicas-Improvement-Summary.zh-CN.md",
+            "archive": false,
+            "available": true,
+            "bytes": 35954,
+            "sha256": "894610e4bc40e75ec7d0f995c959420a7cebe252ed19218f635edd279f6ad4c3"
+          }
+        ]
+      }
     },
     {
       "id": "MI-ENV-008",
@@ -1769,18 +2652,36 @@
       "scope": "环境/权限/验证边界",
       "priority": "P2",
       "action": "在下一可用浏览器窗口补Chromium；真机测试多指；验证上下文丢失告警与用户重载流程及释放回执。",
-      "acceptance": [
-        "截图/交互/资源计数证据明确区分已通过与未运行项目。"
-      ],
+      "acceptance": ["截图/交互/资源计数证据明确区分已通过与未运行项目。"],
       "evidence": [],
       "remainingImpact": "不能把Headless WebKit通过等同所有GPU/终端通过，不能把资源销毁称为GPU零泄漏。",
-      "sourceIds": [
-        "MI-ENV-008"
-      ],
+      "sourceIds": ["MI-ENV-008"],
       "implementation": "NO_ENGINE_FIX_JUSTIFIED",
       "verification": "NOT_RUN",
       "pr": null,
-      "blocker": "Requires original scene/reference/device or explicit permission; historical evidence cannot establish current acceptance."
+      "blocker": "Requires original scene/reference/device or explicit permission; historical evidence cannot establish current acceptance.",
+      "currentExecution": {
+        "state": "READ_ONLY_MATERIAL_REVIEW_ACCEPTANCE_NOT_RUN",
+        "pr": "https://github.com/oahc09/cocosairjs/pull/7",
+        "assessment": "Source and browser-scope history are available. PR7 adds scoped Chromium/WebKit lifecycle tests, not a full original-app matrix, physical multitouch or driver-reset evidence.",
+        "blocker": "ORIGINAL_APP_MATRIX_AND_PHYSICAL_TOUCH",
+        "evidence": [
+          {
+            "path": "public/reports/coverage.json",
+            "archive": false,
+            "available": true,
+            "bytes": 1887260,
+            "sha256": "9bdd4af86c37cbb769dec2b4ace3cbabef0e0a47996a510efd6512c3e0f3bea3"
+          },
+          {
+            "path": "public/apps/voice-glow/app.js",
+            "archive": false,
+            "available": true,
+            "bytes": 13218,
+            "sha256": "a8e6080c73973579e31461869d4919a8a0a1dd093e7d4c3e194e580b92fecfde"
+          }
+        ]
+      }
     },
     {
       "id": "MI-VOICE-006",
@@ -1794,13 +2695,33 @@
       ],
       "evidence": [],
       "remainingImpact": "自动验证覆盖同意弹窗、取消、演示与形态切换，不代表真实设备麦克风权限/采集已通过。",
-      "sourceIds": [
-        "MI-VOICE-006"
-      ],
+      "sourceIds": ["MI-VOICE-006"],
       "implementation": "NO_ENGINE_FIX_JUSTIFIED",
       "verification": "NOT_RUN",
       "pr": null,
-      "blocker": "Requires original scene/reference/device or explicit permission; historical evidence cannot establish current acceptance."
+      "blocker": "Requires original scene/reference/device or explicit permission; historical evidence cannot establish current acceptance.",
+      "currentExecution": {
+        "state": "READ_ONLY_MATERIAL_REVIEW_ACCEPTANCE_NOT_RUN",
+        "pr": "https://github.com/oahc09/cocosairjs/pull/7",
+        "assessment": "Voice source and demo/refusal history are available. No microphone request was made; real capture, RMS response and track shutdown need explicit capture approval and a real input device.",
+        "blocker": "MICROPHONE_PERMISSION_NOT_GRANTED",
+        "evidence": [
+          {
+            "path": "public/reports/new8-current-verification.json",
+            "archive": false,
+            "available": true,
+            "bytes": 529389,
+            "sha256": "7fc66a3cc3dfccd0535c6ff5c6cac14998c50dd1d69d722f9ab0747a3447e7d0"
+          },
+          {
+            "path": "public/apps/voice-glow/app.js",
+            "archive": false,
+            "available": true,
+            "bytes": 13218,
+            "sha256": "a8e6080c73973579e31461869d4919a8a0a1dd093e7d4c3e194e580b92fecfde"
+          }
+        ]
+      }
     },
     {
       "id": "STILLWATER-ENV-004",
@@ -1814,13 +2735,47 @@
       ],
       "evidence": [],
       "remainingImpact": "Sparse AO NaN spreads through the main scene and bloom to the black final canvas. The controlled replay isolates this environment sampling behavior; it does not prove original full-world visual parity.",
-      "sourceIds": [
-        "STILLWATER-ENV-004"
-      ],
+      "sourceIds": ["STILLWATER-ENV-004"],
       "implementation": "NO_ENGINE_FIX_JUSTIFIED",
       "verification": "NOT_RUN",
       "pr": null,
-      "blocker": "Requires original scene/reference/device or explicit permission; historical evidence cannot establish current acceptance."
+      "blocker": "Requires original scene/reference/device or explicit permission; historical evidence cannot establish current acceptance.",
+      "currentExecution": {
+        "state": "READ_ONLY_MATERIAL_REVIEW_ACCEPTANCE_NOT_RUN",
+        "pr": "https://github.com/oahc09/cocosairjs/pull/7",
+        "assessment": "Historical both-backend AO/nonfinite diagnosis is available. Exact geometry/textures and shader controls still need complete provenance mapping; no new float-pixel equivalence or cross-device generalization claimed. Complete migrated candidate runtime c2743523 and historical 153-asset receipt are located under experiments/stillwater; original-backend reference and current external asset availability remain unverified.",
+        "blocker": "MAP_EXACT_AO_FIXTURE_THEN_MATCHED_GPU_REPLAY",
+        "evidence": [
+          {
+            "path": "public/reports/stillwater-ao-investigation.json",
+            "archive": false,
+            "available": true,
+            "bytes": 6134,
+            "sha256": "438c157e3536f7b3f371559316c99ac38a6709dffef4b9199bcdf5577cb440f4"
+          },
+          {
+            "path": "public/reports/stillwater-candidate-investigation.json",
+            "archive": false,
+            "available": true,
+            "bytes": 3080,
+            "sha256": "be07f43074447c53f5e7ef6da87eb55f692136abd6b46e115f45460fd187b20f"
+          },
+          {
+            "path": "public/experiments/stillwater/evidence.json",
+            "archive": false,
+            "available": true,
+            "bytes": 4480,
+            "sha256": "0e74cee3cbeffc669285128624b9d474c24debcb3c7137a92d1b6402a561d90f"
+          },
+          {
+            "path": "public/experiments/stillwater/runtime/app.js",
+            "archive": false,
+            "available": true,
+            "bytes": 1853410,
+            "sha256": "c2743523017b467a98357253d04d1d62548c3b178540eac1d2812afe1d280037"
+          }
+        ]
+      }
     },
     {
       "id": "TEST-SPARK-INJECTION",
@@ -1835,13 +2790,33 @@
       ],
       "evidence": [],
       "remainingImpact": "审计draw=0不等于作品或SDK失败。",
-      "sourceIds": [
-        "TEST-SPARK-INJECTION"
-      ],
+      "sourceIds": ["TEST-SPARK-INJECTION"],
       "implementation": "NO_ENGINE_FIX_JUSTIFIED",
       "verification": "NOT_RUN",
       "pr": null,
-      "blocker": "Requires original scene/reference/device or explicit permission; historical evidence cannot establish current acceptance."
+      "blocker": "Requires original scene/reference/device or explicit permission; historical evidence cannot establish current acceptance.",
+      "currentExecution": {
+        "state": "READ_ONLY_MATERIAL_REVIEW_ACCEPTANCE_NOT_RUN",
+        "pr": "https://github.com/oahc09/cocosairjs/pull/7",
+        "assessment": "Spark source/report are available. PR6 normal-browser Spark and bounded A/B passed; the historical full interception/Worker wrapper injection is a distinct control not rerun here.",
+        "blocker": "HISTORICAL_INJECTION_CONTROL_NOT_RERUN",
+        "evidence": [
+          {
+            "path": "public/engine/improvements/sources/evidence/spark/report.json",
+            "archive": false,
+            "available": true,
+            "bytes": 7322,
+            "sha256": "df63613398e60da66cd2d1300fe734c739b0a3dabb3d9eb50cc60f40b03a61b9"
+          },
+          {
+            "path": "public/apps/spark/index.js",
+            "archive": false,
+            "available": true,
+            "bytes": 262,
+            "sha256": "b0eeacc5137ae660e325db389bd8a111542c3c69829b7a0531019a73a798fff2"
+          }
+        ]
+      }
     },
     {
       "id": "WR-ENV-001",
@@ -1850,21 +2825,36 @@
       "scope": "环境/权限/验证边界",
       "priority": "P2",
       "action": "评估cc.gfx公开异步GPU时间戳能力与查询生命周期，再将原governor接上；无支持设备使用原CPU回退。",
-      "acceptance": [
-        "支持设备能异步返回GPU耗时",
-        "不阻塞主线程",
-        "不支持设备稳定回退",
-        "上下文丢失后查询释放"
-      ],
+      "acceptance": ["支持设备能异步返回GPU耗时", "不阻塞主线程", "不支持设备稳定回退", "上下文丢失后查询释放"],
       "evidence": [],
       "remainingImpact": "当前保留原CPU帧耗时回退，真实设备GPU计时未验证，不能把云端软件渲染耗时当成引擎性能。",
-      "sourceIds": [
-        "WR-ENV-001"
-      ],
+      "sourceIds": ["WR-ENV-001"],
       "implementation": "NO_ENGINE_FIX_JUSTIFIED",
       "verification": "NOT_RUN",
       "pr": null,
-      "blocker": "Requires original scene/reference/device or explicit permission; historical evidence cannot establish current acceptance."
+      "blocker": "Requires original scene/reference/device or explicit permission; historical evidence cannot establish current acceptance.",
+      "currentExecution": {
+        "state": "READ_ONLY_MATERIAL_REVIEW_ACCEPTANCE_NOT_RUN",
+        "pr": "https://github.com/oahc09/cocosairjs/pull/7",
+        "assessment": "Native renderer and historical notes are available. Supported/disjoint timer devices and context-loss query release require actual device/API probes; cloud smoke is not target-device GPU timing.",
+        "blocker": "REAL_TIMER_QUERY_DEVICE_MATRIX",
+        "evidence": [
+          {
+            "path": "public/reports/production-room-verification.json",
+            "archive": false,
+            "available": true,
+            "bytes": 5285,
+            "sha256": "d4bc833adb96be59e99cea842ac529fa4c8a6f762e136c9cf59a41f9cdf5a0b5"
+          },
+          {
+            "path": "public/apps/sunahama/native-gfx.js",
+            "archive": false,
+            "available": true,
+            "bytes": 27144,
+            "sha256": "ccda62dccd601f1fe613a324ece90accaa156922af2111519a9319414824c074"
+          }
+        ]
+      }
     },
     {
       "id": "WR-QA-001",
@@ -1873,20 +2863,36 @@
       "scope": "环境/权限/验证边界",
       "priority": "P2",
       "action": "共享截图夹具同时固定模拟时钟并显式等待真实paint；记录实际shader uniform，而非只看菜单state。",
-      "acceptance": [
-        "可见海岸与海浪",
-        "步行/脚印/蹲下/天空有真实前后截图",
-        "固定条件与原版量化比较"
-      ],
+      "acceptance": ["可见海岸与海浪", "步行/脚印/蹲下/天空有真实前后截图", "固定条件与原版量化比较"],
       "evidence": [],
       "remainingImpact": "禁用同一CSS淡入并在同一模拟时刻step(0)+原生RAF提交后，五阶段源/复刻uniform一致，MAE均低于0.24/255；此前灰屏/晚景落后一档不属于产品渲染bug。",
-      "sourceIds": [
-        "WR-QA-001"
-      ],
+      "sourceIds": ["WR-QA-001"],
       "implementation": "NO_ENGINE_FIX_JUSTIFIED",
       "verification": "NOT_RUN",
       "pr": null,
-      "blocker": "Requires original scene/reference/device or explicit permission; historical evidence cannot establish current acceptance."
+      "blocker": "Requires original scene/reference/device or explicit permission; historical evidence cannot establish current acceptance.",
+      "currentExecution": {
+        "state": "READ_ONLY_MATERIAL_REVIEW_ACCEPTANCE_NOT_RUN",
+        "pr": "https://github.com/oahc09/cocosairjs/pull/7",
+        "assessment": "Sunahama source and historical interaction reports are available. Original-state reference, CSS fade, fixed-step conditions and submitted GPU image need combined fresh verification; old draw counters do not close this.",
+        "blocker": "MATCHED_REFERENCE_AND_RENDER_TIMING_REPLAY",
+        "evidence": [
+          {
+            "path": "public/reports/production-room-verification.json",
+            "archive": false,
+            "available": true,
+            "bytes": 5285,
+            "sha256": "d4bc833adb96be59e99cea842ac529fa4c8a6f762e136c9cf59a41f9cdf5a0b5"
+          },
+          {
+            "path": "public/apps/sunahama/app.js",
+            "archive": false,
+            "available": true,
+            "bytes": 368690,
+            "sha256": "d5b31e60cf6377e1b51ef2198ef7dcafaf8b4a6288e83539fee36947ce7c63e0"
+          }
+        ]
+      }
     },
     {
       "id": "MI-ENV-011",
@@ -1895,28 +2901,100 @@
       "scope": "环境/权限/验证边界",
       "priority": "P3",
       "action": "未来参考采集加入response/requestfailed URL记录，以区分图形必需资产和附属服务。",
-      "acceptance": [
-        "不得把原参考这一轮标为console0或猜测502来源。"
-      ],
+      "acceptance": ["不得把原参考这一轮标为console0或猜测502来源。"],
       "evidence": [],
       "remainingImpact": "原站光晕实际渲染且两档CSS level精确等于.670/.940；参考页面不是全网络无错。副本本地page/console0。",
-      "sourceIds": [
-        "MI-ENV-011"
-      ],
+      "sourceIds": ["MI-ENV-011"],
       "implementation": "NO_ENGINE_FIX_JUSTIFIED",
       "verification": "NOT_RUN",
       "pr": null,
-      "blocker": "Requires original scene/reference/device or explicit permission; historical evidence cannot establish current acceptance."
+      "blocker": "Requires original scene/reference/device or explicit permission; historical evidence cannot establish current acceptance.",
+      "currentExecution": {
+        "state": "READ_ONLY_MATERIAL_REVIEW_ACCEPTANCE_NOT_RUN",
+        "pr": "https://github.com/oahc09/cocosairjs/pull/7",
+        "assessment": "Original reference 502 warning is retained. Its resource URL was not recorded, so the exact source remains unknown; it must not be relabeled console-zero or attributed to a guessed endpoint.",
+        "blocker": "HISTORICAL_RESOURCE_URL_NOT_RECORDED",
+        "evidence": [
+          {
+            "path": "public/reports/coverage.json",
+            "archive": false,
+            "available": true,
+            "bytes": 1887260,
+            "sha256": "9bdd4af86c37cbb769dec2b4ace3cbabef0e0a47996a510efd6512c3e0f3bea3"
+          },
+          {
+            "path": "public/reports/new8-current-verification.json",
+            "archive": false,
+            "available": true,
+            "bytes": 529389,
+            "sha256": "7fc66a3cc3dfccd0535c6ff5c6cac14998c50dd1d69d722f9ab0747a3447e7d0"
+          }
+        ],
+        "futureCapture": {
+          "state": "LOCAL_NETWORK_CONTROLS_PASS_SAME_HEAD_CI_PENDING",
+          "path": "tools/verify/sdk-recipes-browser.cjs",
+          "observations": "Actual response pathname/status and requestfailed pathname/native failure; query/fragment/credentials removed. 200/404/socket-disconnect controls; unexpected errors fail.",
+          "historical502URL": "UNKNOWN; not recoverable from prior log"
+        }
+      }
     }
   ],
   "progress": {
-    "updatedAt": "2026-10-19T09:34:00Z",
-    "pr": "https://github.com/oahc09/cocosairjs/pull/6",
-    "main": "bac30c0f9b9e9cb61e43720d23053a98d24ac811",
+    "updatedAt": "2026-10-19T11:48:38.785792Z",
+    "pr": "https://github.com/oahc09/cocosairjs/pull/7",
+    "main": "a21d49bd4f68054e22242609bca2da50eccd054d",
     "dependency": "PR5 merged",
     "applicationSubmission": "PAUSED_BY_USER",
     "sdkCheckpoint": "29770d7733f6b1936f1890cb0b28d31c17cf255a",
     "runtimeMapsCommit": "6011b1a3b9f153b0a5243f111cfd75182b77f176",
-    "sdkExecution": "Resumed original SDK task; prior partial acceptance remains, no new SDK completion claimed."
+    "sdkExecution": "Resumed original SDK task; prior partial acceptance remains, no new SDK completion claimed.",
+    "delivery": "One consolidated remaining-work PR7; PR6 already merged by user.",
+    "environmentReview": "Read-only availability review of verified local source cace062f; no new environment acceptance.",
+    "statusPolicy": "Original fields retain prior audit/checkpoint history. currentExecution is the current action/status boundary; referenced SDK ledger supplies per-item detailed progress.",
+    "counts": {
+      "total": 64,
+      "engine": 4,
+      "sdk": 19,
+      "application": 27,
+      "environment": 14
+    },
+    "sdkLedger": "ai/ledgers/sdk-audit-backlog-20261019.json",
+    "materialAvailability": "ai/ledgers/environment-material-availability-20261019.json",
+    "policy": "Original audit fields are frozen history. currentExecution carries current outcomes. The consolidated PR remains in progress; scoped success is not full backlog completion.",
+    "sdkLatestAcceptedCI": {
+      "head": "37974d6e320e4251df8288fa19b2d6508a9fd56e",
+      "sdkRun": 39241773257,
+      "qualityRun": 39241773236,
+      "skillsRun": 39241773222,
+      "status": "SUCCESS",
+      "cpuTests": 42,
+      "timelineTests": 29,
+      "identityTests": 31,
+      "chromiumRecipeRows": 8,
+      "timelineRows": 6,
+      "timelinePNGs": 48,
+      "timelineTamperRejections": 39,
+      "coreJestTests": 148,
+      "consumerMainExports": 645,
+      "artifactId": 12181203713,
+      "artifactSHA256": "c11ad0cfa5fafaf560fe46ab3d3ea462fdcd505925cec4e9c2d1b204aa221688",
+      "runtimeSHA256": "7eb2d7b840ee56d1da57068b8513876edcb07075b82193884f3935ae8a1d4bf8"
+    },
+    "currentConsolidation": "Color/input/performance validation repairs and jsdom fixture compatibility pending new same-head CI.",
+    "sdkFailedCheckpoint": {
+      "head": "73ca2fa0c13dd21fe7e68f83eeee20aaf44e4815",
+      "sdkRun": 39245299200,
+      "qualityRun": 39245299234,
+      "skillsRun": 39245299244,
+      "sdk": "FAIL_9_OF_145_JS_DOM_FIXTURE_TESTS",
+      "quality": "SUCCESS",
+      "skills": "SUCCESS",
+      "buildTypesMath": "PASS",
+      "cause": "New geometry fixture used structuredClone; repository jsdom environment lacks it. Engine code was not implicated.",
+      "artifactId": 12183477292,
+      "artifactSHA256": "dcf80249e201fb166348ae8e1bb3fe217aa18df664baa2c03e835fa13b86ece0",
+      "runtimeSHA256": "9b483501264630c2ecd47ba65fb7fd75e7d0fe3f98490057b48bc912ee2b0e35",
+      "fix": "Use this existing suite's JSON clone for its finite JSON-shaped source fixture; invalid-number controls are injected after cloning."
+    }
   }
 }

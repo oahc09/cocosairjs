@@ -35,3 +35,16 @@ AIR 验收覆盖三类碰撞体、刚体状态/运动/冲量、查询、碰撞�
 - [接入与部署指南](../../guides/box2d3.md)
 
 此前失败、探索和因代码变化而失效的尝试全部保留在 `output/box2d/acceptance/`，没有重标通过或拼接历史 PASS。本轮没有刷新 canonical example campaign，也不构成其他功能的发布就绪声明。
+
+## 历史原件的仓库归档
+
+以上记录对应整合主干前的候选。1359 份原件现已逐字节归档到 [initial 归档](archives/initial/archive.json)，
+原来的 `artifacts.json`、输入指纹和 PASS 记录均保持不变。归档包括原始报告、截图、观察、日志及 tarball；
+不依赖本机已有的 `output/`。使用以下命令解包到临时目录并逐项核验全部大小与 SHA-256：
+
+```bash
+node tools/verify/box2d3-archive.cjs --check=docs/evidence/box2d3-acceptance/archives/initial
+```
+
+需要查看原件时，在一个新目录中依次执行 `tar -xzf <archive-path>`，恢复归档清单中的原始逻辑路径。
+整合最新主干后的验收会另立记录，不覆盖或重标本记录。

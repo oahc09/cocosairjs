@@ -1,0 +1,10 @@
+name: SDK recipes
+"on":
+  workflow_dispatch: null
+permissions:
+  contents: read
+jobs:
+  recipes:
+    uses: ./.github/workflows/format.yml
+    with:
+      mode: full

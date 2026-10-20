@@ -1,0 +1,2 @@
+// Types share the canonical main-entry declarations; this file has no runtime import.
+export { Color, EPSILON, HALF_PI, Mat3, Mat4, Quat, Rect, Size, TWO_PI, Vec2, Vec3, Vec4, absMax, absMaxComponent, approx, approxGE, approxGT, approxLE, approxLT, clamp, clamp01, color, enumerableProps, equals, floatToHalf, halfToFloat, inverseLerp, lerp, mat4, nextPow2, pingPong, pseudoRandom, pseudoRandomRange, pseudoRandomRangeInt, quat, random, randomRange, randomRangeInt, rect, repeat, setRandGenerator, size, toDegree, toRadian, v2, v3, v4 } from './cocosair.legacy';

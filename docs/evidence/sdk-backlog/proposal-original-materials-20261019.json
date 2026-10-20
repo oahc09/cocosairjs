@@ -1,0 +1,45 @@
+[
+  {
+    "id": "PROPOSAL-ENG-07",
+    "sourceCommit": "cace062f69f8bfdb5cc06e6b69a1b7d38f80e6e9",
+    "materials": [
+      {
+        "path": "public/apps/interactive/21-lego-ford-model-t/README.md",
+        "bytes": 1001,
+        "sha256": "58b608d69d5a67deaf98d45af615eb6df51b614715cdcdb4fde11856e0233301"
+      },
+      {
+        "path": "public/apps/interactive/21-lego-ford-model-t/index.html",
+        "bytes": 3329,
+        "sha256": "fe10307f24a7868a99d913642198c5142a60efc7f56ccc3cff18caaf00b731e3"
+      },
+      {
+        "path": "public/apps/interactive/21-lego-ford-model-t/main.js",
+        "bytes": 11387,
+        "sha256": "7677dbefe1ae5c27df809a760dff017c667b76804e58896f1b1f17c40316573e"
+      },
+      {
+        "path": "public/apps/interactive/21-lego-ford-model-t/model.js",
+        "bytes": 6913,
+        "sha256": "396eb575c54119411ea31bf3cac7ce666a94f4b6e34683898483e9bac53128f6"
+      }
+    ],
+    "limit": "Actual recovered teaching replica is 18 independently authored parts; not original 1188-part/155-stage model.",
+    "privateSourceUploaded": false,
+    "acceptance": "NOT_RUN_BY_THIS_READ_ONLY_REVIEW"
+  },
+  {
+    "id": "PROPOSAL-ENG-08",
+    "sourceCommit": "cace062f69f8bfdb5cc06e6b69a1b7d38f80e6e9",
+    "materials": [
+      {
+        "path": "public/apps/interactive/16-beat-synced-sphere-drop/audio.js",
+        "bytes": 4053,
+        "sha256": "d5e0b8589106dac660b8a7d8bbd40610b135805379bb735d99ea07217935e864"
+      }
+    ],
+    "limit": "Actual recovered score is original synthesized 16.2 seconds, not missing original approximately 59-second track.",
+    "privateSourceUploaded": false,
+    "acceptance": "NOT_RUN_BY_THIS_READ_ONLY_REVIEW"
+  }
+]

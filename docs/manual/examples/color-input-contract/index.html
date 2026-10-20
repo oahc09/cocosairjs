@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <title>Vertex, texture and custom RGB</title>
+        <style>
+            body {
+                margin: 0;
+                background: #15202b;
+                color: white;
+                font: 16px sans-serif;
+            }
+            canvas {
+                display: block;
+                width: 100vw;
+                height: 75vh;
+            }
+            section {
+                padding: 12px;
+            }
+            button,
+            input,
+            a {
+                margin-right: 12px;
+            }
+            a {
+                color: #9df;
+            }
+        </style>
+        <script type="importmap">
+            { "imports": { "cocosair": "/build/cocosair.module.js" } }
+        </script>
+    </head>
+    <body>
+        <canvas id="GameCanvas" tabindex="0"></canvas>
+        <section>
+            <p>Left to right: vertex sRGB, texture sRGB, custom linear RGB, double-decode negative control.</p>
+            <p id="status">Loading color contract.</p>
+        </section>
+        <script type="module" src="./main.ts"></script>
+    </body>
+</html>

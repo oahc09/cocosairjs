@@ -1,12 +1,108 @@
 'use strict';
 // Generated consumer copies: examples remain the authoring source, never edit the copies.
-const fs=require('fs'),path=require('path'),crypto=require('crypto');
-const ROOT=path.resolve(__dirname,'../..'),DEST='docs/manual/examples/interactive-kit';
-const IDS=['interactive-multipass','interactive-geometry','interactive-input','interactive-container','interactive-timeline'];
-const hash=b=>crypto.createHash('sha256').update(b).digest('hex');
-function contents(){const files=new Map(),sources=[];for(const id of IDS){const source=path.join(ROOT,'examples',id);const copy=(dir,prefix)=>{for(const e of fs.readdirSync(dir,{withFileTypes:true})){const rel=prefix+e.name,file=path.join(dir,e.name);if(e.isDirectory())copy(file,rel+'/');else{const b=fs.readFileSync(file);files.set(id+'/'+rel,b);sources.push({path:'examples/'+id+'/'+rel,kitPath:id+'/'+rel,bytes:b.length,sha256:hash(b)})}}};const html=fs.readFileSync(path.join(source,'index.html'));files.set(id+'/index.html',html);sources.push({path:'examples/'+id+'/index.html',kitPath:id+'/index.html',bytes:html.length,sha256:hash(html)});for(const dir of ['src','assets'])if(fs.existsSync(path.join(source,dir)))copy(path.join(source,dir),dir+'/')}
- const sdk=['build/cocosair.module.js','build/cocosair.module.d.ts','build/npm/cocosair.module.js'].map(p=>{const b=fs.readFileSync(path.join(ROOT,p));return {path:p,bytes:b.length,sha256:hash(b)}});
- files.set('manifest.json',Buffer.from(JSON.stringify({schemaVersion:'interactive-consumer-kit/1',authoring:'examples/<id>',sourceStatus:'recreated',subset:true,completed:false,ids:IDS,sdk,sources,limitations:['No original Puzzle50/soft/audio reference comparison','WebKit live-resize compositor and WebAudio capability limits are retained','Target physical-device and performance budgets are NOT_RUN','No new public runtime API or automatic install']},null,2)+'\n'));
- files.set('README.md',Buffer.from(`# Small interactive consumer kit\n\nThese are generated copies of five repository examples, shipped with the manual in the local npm tarball. Author sources live under examples/<id>. manifest.json binds every copied byte and the current SDK. Do not edit these copies.\n\nInstall the chosen local cocosair.js tarball into a fresh project (offline installation is supported when the tarball is available). Map cocosair to the installed cocosair.js main package, then bundle each src/main.ts with your normal browser bundler. Preserve the corresponding index.html DOM and asset paths. Pass the selected canvas to createAirApp; canvas creation after main import is supported. The container example delays engine import until its host has positive dimensions.\n\nRun npm scripts from the SDK repository only; this kit does not install a development toolchain automatically. tools/verify/interactive-kit-consumer.cjs demonstrates an actual offline consumer, installed declarations and package entry resolution without workspace /build fallback.\n\nExamples: multipass capture/mip; dynamic mesh/projection; mixed Canvas/HTML input; container readiness; 18-group motion and a new 16.2s WebAudio track. Each provides reset/cancel/release controls and state receipts. JavaScript runtime and TypeScript declarations are verified independently by the consumer.\n\nUse statuses in manifest.json and the repository manual. These are teaching recipes: 18 groups, a local 499-second endpoint, restricted cutting and shader/geometry scopes, not full reference replicas or all-platform certification. WebKit live layout presentation and WebAudio availability are limited in the current browser environment. No GPU physical-memory or hardware performance certification.\n\nAll program geometry/effect data are authored in the project under its MIT license. The timeline waveform is newly authored; assets/LICENSE.md specifies generation and avoids claiming the original music.\n`));return files;}
-function run(write=false){const files=contents(),errors=[];for(const [name,bytes]of files){const file=path.join(ROOT,DEST,name);if(write){fs.mkdirSync(path.dirname(file),{recursive:true});fs.writeFileSync(file,bytes)}else if(!fs.existsSync(file)||!fs.readFileSync(file).equals(bytes))errors.push(name)}return {ok:!errors.length,files:files.size,ids:IDS,errors}}
-module.exports={run,IDS,DEST};if(require.main===module){const write=process.argv.includes('--write');if(!write&&!process.argv.includes('--check'))throw Error('use --write or --check');const r=run(write);console.log(JSON.stringify(r));process.exitCode=r.ok?0:1}
+const fs = require('fs'),
+    path = require('path'),
+    crypto = require('crypto');
+const ROOT = path.resolve(__dirname, '../..'),
+    DEST = 'docs/manual/examples/interactive-kit';
+const IDS = [
+    'interactive-multipass',
+    'interactive-geometry',
+    'interactive-input',
+    'interactive-container',
+    'interactive-timeline',
+];
+const hash = (b) => crypto.createHash('sha256').update(b).digest('hex');
+function contents() {
+    const files = new Map(),
+        sources = [];
+    for (const id of IDS) {
+        const source = path.join(ROOT, 'examples', id);
+        const copy = (dir, prefix) => {
+            for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+                const rel = prefix + e.name,
+                    file = path.join(dir, e.name);
+                if (e.isDirectory()) copy(file, rel + '/');
+                else {
+                    const b = fs.readFileSync(file);
+                    files.set(id + '/' + rel, b);
+                    sources.push({
+                        path: 'examples/' + id + '/' + rel,
+                        kitPath: id + '/' + rel,
+                        bytes: b.length,
+                        sha256: hash(b),
+                    });
+                }
+            }
+        };
+        const html = fs.readFileSync(path.join(source, 'index.html'));
+        files.set(id + '/index.html', html);
+        sources.push({
+            path: 'examples/' + id + '/index.html',
+            kitPath: id + '/index.html',
+            bytes: html.length,
+            sha256: hash(html),
+        });
+        for (const dir of ['src', 'assets'])
+            if (fs.existsSync(path.join(source, dir))) copy(path.join(source, dir), dir + '/');
+    }
+    const shared = ['asset-lifecycle.js', 'asset-lifecycle.d.ts'];
+    for (const name of shared) {
+        const source = 'examples/shared/' + name,
+            b = fs.readFileSync(path.join(ROOT, source));
+        files.set('shared/' + name, b);
+        sources.push({ path: source, kitPath: 'shared/' + name, bytes: b.length, sha256: hash(b) });
+    }
+    files.set(
+        'manifest.json',
+        Buffer.from(
+            JSON.stringify(
+                {
+                    schemaVersion: 'interactive-consumer-kit/2',
+                    authoring: 'examples/<id>',
+                    sourceStatus: 'recreated',
+                    subset: true,
+                    completed: false,
+                    ids: IDS,
+                    runtimeIdentity: 'Bound separately by the actual installed-tarball consumer receipt',
+                    sources,
+                    limitations: [
+                        'Original project/reference acceptance tracked separately; this source-copy manifest makes no comparison claim',
+                        'Browser behavior is measured by the current consumer receipt, not inherited from historical records',
+                        'Target physical-device and performance budgets are NOT_RUN',
+                        'No new public runtime API or automatic install',
+                    ],
+                },
+                null,
+                2,
+            ) + '\n',
+        ),
+    );
+    files.set(
+        'README.md',
+        Buffer.from(
+            `# Small interactive consumer kit\n\nThese are generated copies of five repository examples, shipped with the manual in the local npm tarball. Author sources live under examples/<id>. manifest.json binds every copied source byte, including the shared lifecycle runtime and declarations. The independent consumer receipt binds the actual installed SDK and tarball; source copies do not carry build-time runtime hashes. Do not edit these copies.\n\nInstall the chosen local cocosair.js tarball into a fresh project (offline installation is supported when the tarball is available). Map cocosair to the installed cocosair.js main package, then bundle each src/main.ts with your normal browser bundler. Preserve the corresponding index.html DOM and asset paths. Pass the selected canvas to createAirApp; canvas creation after main import is supported. The container example delays engine import until its host has positive dimensions.\n\nRun npm scripts from the SDK repository only; this kit does not install a development toolchain automatically. tools/verify/interactive-kit-consumer.cjs demonstrates an actual offline consumer, installed declarations and package entry resolution without workspace /build fallback.\n\nExamples: multipass capture/mip; dynamic mesh/projection; mixed Canvas/HTML input; container readiness; 18-group motion and a new 16.2s WebAudio track. Each provides reset/cancel/release controls and state receipts. JavaScript runtime and TypeScript declarations are verified independently by the consumer.\n\nUse statuses in manifest.json and the repository manual. These are teaching recipes: 18 groups, a local 499-second endpoint, restricted cutting and shader/geometry scopes, not full reference replicas or all-platform certification. Historical WebKit layout/audio limitations do not establish current browser capability; inspect fresh receipts. No GPU physical-memory or hardware performance certification.\n\nAll program geometry/effect data are authored in the project under its MIT license. The timeline waveform is newly authored; assets/LICENSE.md specifies generation and avoids claiming the original music.\n`,
+        ),
+    );
+    return files;
+}
+function run(write = false) {
+    const files = contents(),
+        errors = [];
+    for (const [name, bytes] of files) {
+        const file = path.join(ROOT, DEST, name);
+        if (write) {
+            fs.mkdirSync(path.dirname(file), { recursive: true });
+            fs.writeFileSync(file, bytes);
+        } else if (!fs.existsSync(file) || !fs.readFileSync(file).equals(bytes)) errors.push(name);
+    }
+    return { ok: !errors.length, files: files.size, ids: IDS, errors };
+}
+module.exports = { run, contents, IDS, DEST };
+if (require.main === module) {
+    const write = process.argv.includes('--write');
+    if (!write && !process.argv.includes('--check')) throw Error('use --write or --check');
+    const r = run(write);
+    console.log(JSON.stringify(r));
+    process.exitCode = r.ok ? 0 : 1;
+}
