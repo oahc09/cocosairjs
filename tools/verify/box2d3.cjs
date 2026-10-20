@@ -433,7 +433,7 @@ async function integration(browser, base, report) {
     try {
         await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
         const base = `http://127.0.0.1:${server.address().port}`;
-        browserServer = await playwright[engine].launchServer({ ...launchOptions(engine), headless: true });
+        browserServer = await playwright[engine].launchServer({ headless: true, ...launchOptions(engine) });
         child = browserServer.process();
         child.once('exit', (code, signal) => {
             exited = true;

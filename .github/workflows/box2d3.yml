@@ -1,0 +1,74 @@
+name: Box2D acceptance
+"on":
+  workflow_dispatch: null
+  push:
+    branches:
+      - feat/box2d-*
+permissions:
+  contents: read
+concurrency:
+  group: box2d-acceptance-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  acceptance:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, windows-2025]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 40
+    defaults:
+      run:
+        shell: bash
+    env:
+      NODE_OPTIONS: --max-old-space-size=6144
+      AIR_CI_SOFTWARE_GL: "1"
+      LIBGL_ALWAYS_SOFTWARE: "1"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.23.3
+          cache: npm
+      - name: Install frozen project and browser dependencies
+        run: |
+          set -euo pipefail
+          npm ci --ignore-scripts
+          npm install --prefix "$RUNNER_TEMP/air-box2d-tools" --no-save --ignore-scripts --package-lock=false playwright@1.62.1
+          node "$RUNNER_TEMP/air-box2d-tools/node_modules/playwright/cli.js" install --with-deps chromium firefox webkit
+          echo "NODE_PATH=$RUNNER_TEMP/air-box2d-tools/node_modules" >> "$GITHUB_ENV"
+      - name: Build one candidate and its actual tarball
+        run: |
+          set -euo pipefail
+          mkdir -p output/box2d/ci/package
+          node tools/build/box2d3.cjs --check
+          npm run build:all 2>&1 | tee output/box2d/ci/build.log
+          npm pack --json --pack-destination output/box2d/ci/package > output/box2d/ci/package/pack.json
+      - name: Run complete official and AIR acceptance on three engines
+        run: |
+          set -euo pipefail
+          for engine in chromium firefox webkit; do
+            if [ "$RUNNER_OS" = Linux ]; then
+              xvfb-run -a node tools/verify/box2d3.cjs --engine="$engine" --scope=all 2>&1 | tee "output/box2d/ci/$engine.log"
+            else
+              node tools/verify/box2d3.cjs --engine="$engine" --scope=all 2>&1 | tee "output/box2d/ci/$engine.log"
+            fi
+          done
+      - name: Verify both installed tarball runtimes in a real browser
+        run: |
+          set -euo pipefail
+          tarball="output/box2d/ci/package/$(node -p 'JSON.parse(require("fs").readFileSync("output/box2d/ci/package/pack.json"))[0].filename')"
+          if [ "$RUNNER_OS" = Linux ]; then
+            xvfb-run -a node tools/verify/box2d3-package.cjs --tarball="$tarball" --out=output/box2d/ci/package-browser
+          else
+            node tools/verify/box2d3-package.cjs --tarball="$tarball" --out=output/box2d/ci/package-browser
+          fi
+      - name: Retain all reports, screenshots, observations, failed attempts and tarball
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: box2d-${{ matrix.os }}-${{ github.sha }}
+          path: output/box2d/
+          if-no-files-found: error

@@ -10,6 +10,12 @@
 使用系统 `tar` 写入新的分卷归档目录及 `archive.json`，不覆盖已有目录。每卷原始数据最多 40 MiB。
 `--check=<archive-directory>` 在临时目录中解包，逐项核验路径、大小和 SHA-256 后删除临时目录，不改仓库。
 
+`node tools/verify/box2d3-package.cjs --tarball=<npm-tarball> --out=<new-directory>` 在临时目录中解包实际 npm
+tarball，验证冻结资产后，使用真实 Chromium 分别运行开发版和压缩版的碰撞、自动资产定位及 world 释放检查。
+它保留报告和物理浏览器关闭状态，只写新的输出目录，随后删除临时解包目录。
+`.github/workflows/box2d3.yml` 是手动或 Box2D 功能分支推送触发的专项验收，在 Linux/Windows 各运行三个浏览器；
+不增加普通 PR 工作流，也不发布 canonical example evidence。
+
 ## 可选的参考源码审计
 
 `node tools/ci/prepare-shader-reference.cjs` 要求 `output/shaders-absorption/reference/` 已检出 Shader Effects 的固定提交 `dbfd42abe341e7a6ea0b8ea1f5bab018b8e8439a` 并包含原始许可证，MaterialX 固定提交 `7b64921ef1d42f2d57871e9d2c43dc11f041f26b` 位于相邻 `materialx-source/`。它从真实上游文件生成既有采集器所需的三个源码副本及确定性哈希收据，并按已登记 SHA/bytes 复制 MaterialX 噪声和许可证到 `reference/ancestors/`；已有内容不同则拒绝覆盖。它不下载、不执行参考源码，也不生成浏览器 PASS。需要该参考审计时，先检出这些固定提交再调用；默认 PR 的构建和核心冒烟不依赖它们。Holographic 的轮廓更正依据使用已入库的专题文档，不依赖某个 worker 的临时笔记。
