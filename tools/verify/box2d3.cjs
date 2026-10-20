@@ -240,7 +240,14 @@ async function integration(browser, base, report) {
         fs.appendFileSync(path.join(attempt, 'integration-console.log'), `${msg.type()}: ${msg.text()}\n`),
     );
     await page.goto(`${base}/examples/box2d3-lab/`);
-    await page.waitForFunction(() => !!window.box2d3Lab, {}, { timeout: 120000 });
+    try {
+        await page.waitForFunction(() => !!window.box2d3Lab, {}, { timeout: 120000 });
+    } catch (error) {
+        report.integration = { error: String(error), startupErrors: errors };
+        report.pageErrors.push(...errors);
+        await page.screenshot({ path: path.join(attempt, 'integration-startup-failure.png') }).catch(() => {});
+        throw error;
+    }
     const result = await page.evaluate(async () => {
         try {
             const probe = await import('/tools/verify/box2d3-integration.js');
@@ -445,8 +452,8 @@ async function integration(browser, base, report) {
         });
         browser = await playwright[engine].connect(browserServer.wsEndpoint());
         report.browserVersion = browser.version();
-        if (scope !== 'integration') await official(browser, base, report);
         if (scope !== 'official') await integration(browser, base, report);
+        if (scope !== 'integration') await official(browser, base, report);
         report.complete = !limit && (scope === 'integration' || report.official.length === manifest.samples.length);
         assert.deepEqual(inputs(), report.inputs, 'source/assets changed while collecting');
         report.pass =
