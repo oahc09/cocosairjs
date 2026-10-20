@@ -11,6 +11,8 @@ const assert = require('node:assert/strict');
 const { execFileSync } = require('node:child_process');
 const playwright = require('playwright');
 const { launchOptions } = require('./browser-engines.cjs');
+const tar =
+    process.platform === 'win32' ? path.join(process.env.SystemRoot || 'C:/Windows', 'System32/tar.exe') : 'tar';
 const option = (name) => process.argv.find((arg) => arg.startsWith(`--${name}=`))?.slice(name.length + 3);
 assert.ok(option('tarball') && option('out'), 'Expected --tarball and --out');
 const tarball = path.resolve(option('tarball')),
@@ -48,7 +50,7 @@ const server = http.createServer((req, res) => {
         exitStatus,
         closeStatus;
     try {
-        execFileSync('tar', ['-xzf', tarball, '-C', temporary]);
+        execFileSync(tar, ['-mxzf', tarball, '-C', temporary]);
         const receipt = JSON.parse(fs.readFileSync(path.join(installed, 'build/npm/box2d3/receipt.json')));
         for (const [file, expected] of Object.entries(receipt.files))
             assert.equal(hash(path.join(installed, 'build/npm/box2d3', file)), expected, file);

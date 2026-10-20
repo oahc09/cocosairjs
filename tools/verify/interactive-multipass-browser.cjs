@@ -1134,6 +1134,22 @@ async function main() {
                             timeout: 45000,
                             polling: 100,
                         });
+                        // The first AFTER_DRAW legitimately carries frame 0. Wait for
+                        // actual native advancement before freezing its receipt; two
+                        // browser RAFs alone do not establish an engine frame boundary.
+                        await page.waitForFunction(
+                            () => {
+                                const value = window.__multipassNormal.snapshot();
+                                return (
+                                    value.submittedFrame?.afterDraw === true &&
+                                    value.submittedFrame.totalFrames > 0 &&
+                                    value.clock?.method === 'NATIVE_PACER' &&
+                                    value.clock.totalFrames >= value.submittedFrame.totalFrames
+                                );
+                            },
+                            null,
+                            { timeout: 45000, polling: 'raf' },
+                        );
                         await sleepTwoFrames(page);
                         const readClock = () => page.evaluate(() => window.__multipassNormal.snapshot().clock);
                         const readEvents = () => page.evaluate(() => window.__multipassNormal.userEvents());

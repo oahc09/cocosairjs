@@ -10,6 +10,8 @@ const crypto = require('node:crypto');
 const { execFileSync } = require('node:child_process');
 const assert = require('node:assert/strict');
 const root = path.resolve(__dirname, '../..');
+const tar =
+    process.platform === 'win32' ? path.join(process.env.SystemRoot || 'C:/Windows', 'System32/tar.exe') : 'tar';
 const option = (name) => process.argv.find((arg) => arg.startsWith(`--${name}=`))?.slice(name.length + 3);
 const hash = (file) => crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');
 function safePath(relative) {
@@ -26,7 +28,7 @@ function verify(directory) {
             assert.equal(path.basename(volume.file), volume.file);
             const archive = path.join(directory, volume.file);
             assert.equal(hash(archive), volume.sha256, volume.file);
-            const members = execFileSync('tar', ['-tzf', archive], { encoding: 'utf8', maxBuffer: 8 * 1024 * 1024 })
+            const members = execFileSync(tar, ['-tzf', archive], { encoding: 'utf8', maxBuffer: 8 * 1024 * 1024 })
                 .trim()
                 .split('\n')
                 .map((name) => safePath(name.replace(/\r$/, '')));
@@ -34,7 +36,7 @@ function verify(directory) {
                 members,
                 volume.artifacts.map((row) => row.path),
             );
-            execFileSync('tar', ['-xzf', archive, '-C', temporary]);
+            execFileSync(tar, ['-mxzf', archive, '-C', temporary]);
             for (const row of volume.artifacts) {
                 const file = path.join(temporary, safePath(row.path));
                 const stat = fs.lstatSync(file);
@@ -87,7 +89,7 @@ if (check) {
         const list = path.join(directory, volume.file + '.files');
         fs.writeFileSync(list, volume.artifacts.map((row) => row.path).join('\n') + '\n', { flag: 'wx' });
         const archive = path.join(directory, volume.file);
-        execFileSync('tar', ['-czf', archive, '-T', list], { cwd: root });
+        execFileSync(tar, ['-czf', archive, '-T', list], { cwd: root });
         fs.unlinkSync(list);
         volume.sha256 = hash(archive);
         volume.archiveBytes = fs.statSync(archive).size;
