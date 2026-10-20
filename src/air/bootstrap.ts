@@ -36,6 +36,7 @@ import { AirAppImpl, AIR_VERSION, AIR_REVISION, AIR_BUILD_DATE, AIR_BUILD_NUMBER
 import type { AirApp, AirAppOptions } from './app';
 import { registerBuiltinAirAssets } from './builtin/register';
 import { selectPhysicsBackend } from './physics-backend';
+import { loadBox2D3, selectPhysics2DBackend, disposeBox2D3 } from './physics-2d/box2d3';
 import { attachContextHealth } from './context-health';
 import { createAirDiagnostics } from './diagnostics';
 import {
@@ -116,6 +117,8 @@ export function createAirApp(options: AirAppOptions): Promise<AirApp> {
 
 async function initializeAirApp(options: AirNormalizedOptions): Promise<AirApp> {
     const canvas = options.canvas;
+    if (options.physics2D === 'box2d-v3-wasm')
+        await loadBox2D3({ assetBaseUrl: options.box2d3AssetBaseUrl, subStepCount: options.box2d3SubStepCount });
     if (options.renderer === 'webgpu') configureWebGPUAssets(options.webgpuAssetBaseUrl);
     const exactFit = settings.querySettings(SettingsCategory.SCREEN, 'exactFitScreen');
     validateAirScreenMode(options.screenMode, exactFit);
@@ -130,7 +133,10 @@ async function initializeAirApp(options: AirNormalizedOptions): Promise<AirApp> 
     // Game.EVENT_PRE_SUBSYSTEM_INIT 各挂一个 register 监听器（builtin 先、cannon 后，
     // 故模块序默认会让 cannon 胜出）。本监听器在两个之后注册 ⇒ 同事件内最后执行，
     // 用户后端确定性胜出；世界在该事件之后的子系统初始化期才创建，时序安全。
-    const selectBackend = (): void => selectPhysicsBackend(options.physics);
+    const selectBackend = (): void => {
+        selectPhysicsBackend(options.physics);
+        if (options.physics2D === 'box2d-v3-wasm') selectPhysics2DBackend(options.physics2D);
+    };
     game.once(Game.EVENT_PRE_SUBSYSTEM_INIT, selectBackend);
 
     // 注册引擎同源 builtin effects/materials（glsl3 适配，见 builtin/register.ts）
@@ -157,6 +163,7 @@ async function initializeAirApp(options: AirNormalizedOptions): Promise<AirApp> 
             view.setDesignResolutionSize(width, height, policy);
         }
     } catch (error) {
+        disposeBox2D3();
         (screenAdapter as unknown as { destroyLayoutObserver?: () => void }).destroyLayoutObserver?.();
         contextHealth.destroy();
         diagnostics.destroy();

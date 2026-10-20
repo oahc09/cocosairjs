@@ -33,9 +33,12 @@ for (const bundle of bundles) {
     );
 }
 
-const unexpected = fs.readdirSync(packageDir).filter((name) => !bundles.includes(name) && name !== 'webgpu');
+const unexpected = fs
+    .readdirSync(packageDir)
+    .filter((name) => !bundles.includes(name) && !['webgpu', 'box2d3'].includes(name));
 if (unexpected.length) {
     throw new Error(`Unexpected files in ${path.relative(root, packageDir)}: ${unexpected.join(', ')}`);
 }
 
 require('./webgpu-assets.cjs').copy(root, packageDir);
+require('./box2d3.cjs').copy(packageDir);

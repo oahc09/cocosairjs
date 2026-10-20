@@ -4,6 +4,8 @@
 
 浏览器需要 WebGL 2。启动、渲染和 HTML 纹理接口统一从主入口导入；主入口不支持无 DOM 的 Node/SSR 运行。功能与发布边界见[支持策略](docs/webgl2-only.md)和[验证与发布检查](docs/reference/verification.md)。
 
+2D 物理默认使用现有 JavaScript 后端；可显式选择 [Box2D 3.2 WASM 后端](docs/guides/box2d3.md)，继续使用 Cocos 刚体、碰撞体和关节组件。WASM 资产独立部署、按需加载。
+
 ## 先选择使用方式
 
 | 你的目标                                    | 使用方式                                      | 是否需要引擎源码                            |

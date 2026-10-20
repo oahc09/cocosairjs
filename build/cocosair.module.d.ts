@@ -55726,6 +55726,18 @@
         get length(): number;
         getData(offset: number): number;
     }
+    /** Load the optional pinned 3.2.0 module. Does not select a backend or create a world. */
+    export function loadBox2D3(options?: Box2D3Options): Promise<void>;
+    /** Select once, before the 2D system creates its world. Called by createAirApp. */
+    export function selectPhysics2DBackend(backend: "box2d" | "box2d-v3-wasm"): void;
+    /** Backend-specific observability for diagnostics and resource acceptance. */
+    export function getBox2D3Stats(): ReturnType<__private._air_physics_2d_box2d3__Box2D3Module["stats"]> | null;
+    export interface Box2D3Options {
+        /** Directory containing air-box2d.mjs and air-box2d.wasm. Defaults beside the main runtime. */
+        assetBaseUrl?: string;
+        /** Solver subdivisions per fixed physics tick, independent of PhysicsSystem2D.maxSubSteps. Default 4. */
+        subStepCount?: number;
+    }
     /** A cooperative cleanup scope; it cannot preempt a blocking synchronous callback. */
     export function createSessionScope(): AirSessionScope;
     export interface AirSessionScope {
@@ -55870,6 +55882,13 @@
          * `'builtin'` 为官方内置离散碰撞检测器（不模拟）。须在 createAirApp 内 game.init 前生效。
          */
         physics?: "builtin" | "cannon";
+        /** Optional 2D backend. Existing JavaScript Box2D remains the default. */
+        physics2D?: "box2d" | "box2d-v3-wasm";
+        /** Separate WASM deployment and solver configuration, used only by box2d-v3-wasm. */
+        box2d3?: {
+            assetBaseUrl?: string;
+            subStepCount?: number;
+        };
         /**
          * 可选：WebGL 上下文丢失状态机（W01）。lost 时默认自动 game.pause() 停止绘制与
          * 业务时钟；恢复路径如实现不能安全重建 GPU 资源，进入 failed 并提供受控重载。
@@ -74168,6 +74187,81 @@
             ENDED = "ended"
         }
         export type _pal_audio_type__AudioBufferView = Int8Array | Uint8Array | Int16Array | Uint16Array | Int32Array | Uint32Array | Float32Array | Float64Array;
+        export type _air_physics_2d_box2d3__XY = {
+            x: number;
+            y: number;
+        };
+        export interface _air_physics_2d_box2d3__Observation {
+            a: number;
+            b: number;
+            id?: string;
+            normal: _air_physics_2d_box2d3__XY;
+            points: {
+                x: number;
+                y: number;
+                separation: number;
+                normalImpulse: number;
+                tangentImpulse: number;
+                localA: _air_physics_2d_box2d3__XY;
+                localB: _air_physics_2d_box2d3__XY;
+            }[];
+        }
+        export type _air_physics_2d_box2d3__Config = Record<string, unknown>;
+        export interface _air_physics_2d_box2d3__BodyState {
+            x: number;
+            y: number;
+            angle: number;
+            vx: number;
+            vy: number;
+            av: number;
+            awake: boolean;
+            enabled: boolean;
+            mass: number;
+            inertia: number;
+            localCenter: _air_physics_2d_box2d3__XY;
+            worldCenter: _air_physics_2d_box2d3__XY;
+        }
+        /** @internal Native module contract; handles are monotonic and scoped to this module instance. */
+        export interface _air_physics_2d_box2d3__Box2D3Module {
+            createWorld(gravity: _air_physics_2d_box2d3__XY, pre: (data: _air_physics_2d_box2d3__Observation, continuous: boolean) => _air_physics_2d_box2d3__Config): number;
+            destroyWorld(world: number): void;
+            createBody(world: number, config: _air_physics_2d_box2d3__Config): number;
+            destroyBody(body: number): void;
+            bodyState(body: number): _air_physics_2d_box2d3__BodyState;
+            bodyCommand(body: number, command: string, config: _air_physics_2d_box2d3__Config): void;
+            createShape(body: number, kind: string, config: _air_physics_2d_box2d3__Config): number;
+            destroyShape(shape: number): void;
+            shapeFilter(shape: number, category: number, mask: number): void;
+            shapeBounds(shape: number): {
+                lower: _air_physics_2d_box2d3__XY;
+                upper: _air_physics_2d_box2d3__XY;
+            };
+            createJoint(world: number, kind: string, a: number, b: number, config: _air_physics_2d_box2d3__Config): number;
+            destroyJoint(joint: number): void;
+            jointValid(joint: number): boolean;
+            jointTarget(joint: number, x: number, y: number): void;
+            step(world: number, delta: number, subSteps: number): void;
+            contacts(world: number): _air_physics_2d_box2d3__Observation[];
+            events(world: number): {
+                begin: {
+                    a: number;
+                    b: number;
+                }[];
+                end: {
+                    a: number;
+                    b: number;
+                }[];
+            };
+            query(world: number, kind: string, config: _air_physics_2d_box2d3__Config): any[];
+            worldCommand(world: number, command: string, config: _air_physics_2d_box2d3__Config): void;
+            stats(world: number): {
+                bodies: number;
+                shapes: number;
+                joints: number;
+                contacts: number;
+                worlds: number;
+            };
+        }
         /** @engineInternal Observes native diagnostics without changing console filtering. */
         export interface _cocos_core_platform_debug__DiagnosticLogEntry {
             severity: "warning" | "error";

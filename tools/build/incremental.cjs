@@ -25,6 +25,7 @@ async function withIncrementalCache(root, build) {
         'tools/build/build-metadata.cjs',
         'tools/build/line-endings.cjs',
         'tools/build/webgpu-assets.cjs',
+        'tools/build/box2d3.cjs',
         'tools/build/builtin-assets.cjs',
     ]) {
         const filename = path.join(root, file);

@@ -42,7 +42,8 @@
     "README.md",
     "LICENSE",
     "licenses/",
-    "build/npm/webgpu/"
+    "build/npm/webgpu/",
+    "build/npm/box2d3/"
   ],
   "engines": {
     "node": ">=18.0.0"

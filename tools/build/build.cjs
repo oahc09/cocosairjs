@@ -117,6 +117,7 @@ const moduleFormat = formatIdx >= 0 ? args[formatIdx + 1] : 'esm';
         console.log(`[build] AIR_BUILD_DATE=${buildDate} AIR_BUILD_NUMBER=${buildNumber}`);
         require('./builtin-assets.cjs').verify();
         require('./webgpu-assets.cjs').copy(ROOT, OUT);
+        require('./box2d3.cjs').copy(OUT);
         const started = Date.now();
         const build = () =>
             withESMHelpers(
@@ -144,6 +145,7 @@ const moduleFormat = formatIdx >= 0 ? args[formatIdx + 1] : 'esm';
                 [
                     lineEndingsPlugin(),
                     require('./webgpu-assets.cjs').webgpuAssetsPlugin(ROOT),
+                    require('./box2d3.cjs').box2dAssetsPlugin(),
                     buildMetadataPlugin(ROOT, buildDate, buildNumber),
                 ],
             );

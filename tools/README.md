@@ -1,5 +1,11 @@
 # Cocos AIR 工具
 
+## Box2D 3.2 可选后端
+
+`node tools/build/box2d3.cjs --check` 只读检查冻结源码；`--build` 使用固定的 Emscripten 4.0.21 编译，写入 vendor 运行时与 receipt、`build/box2d3/` 和开发专用的 `build/box2d3-samples/`。它不会安装系统工具链；本地路径可通过 `BOX2D_EMSDK`、`NINJA`、`BOX2D_BUILD_DIR` 指定。
+
+`node tools/verify/box2d3.cjs --engine=chromium --scope=all` 在真实浏览器运行全部 147 个官方注册案例及 AIR 组件集成断言，分别检查模拟结果、截图、原生资源释放和浏览器物理退出。支持 `firefox`、`webkit`；要求匹配的 Playwright 依赖与二进制，只写新的 `output/box2d/acceptance/` 目录，不更新 canonical example evidence。`--limit=N` 是不能通过完整验收的诊断子集。部署和兼容约定见 [Box2D 指南](../docs/guides/box2d3.md)。
+
 ## 可选的参考源码审计
 
 `node tools/ci/prepare-shader-reference.cjs` 要求 `output/shaders-absorption/reference/` 已检出 Shader Effects 的固定提交 `dbfd42abe341e7a6ea0b8ea1f5bab018b8e8439a` 并包含原始许可证，MaterialX 固定提交 `7b64921ef1d42f2d57871e9d2c43dc11f041f26b` 位于相邻 `materialx-source/`。它从真实上游文件生成既有采集器所需的三个源码副本及确定性哈希收据，并按已登记 SHA/bytes 复制 MaterialX 噪声和许可证到 `reference/ancestors/`；已有内容不同则拒绝覆盖。它不下载、不执行参考源码，也不生成浏览器 PASS。需要该参考审计时，先检出这些固定提交再调用；默认 PR 的构建和核心冒烟不依赖它们。Holographic 的轮廓更正依据使用已入库的专题文档，不依赖某个 worker 的临时笔记。

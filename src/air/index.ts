@@ -30,6 +30,8 @@ export * from './app';
 export * from './bootstrap';
 export * from './html-source';
 export * from './physics-backend';
+export { loadBox2D3, selectPhysics2DBackend, getBox2D3Stats } from './physics-2d/box2d3';
+export type { Box2D3Options } from './physics-2d/box2d3';
 export * from './context-health';
 export { createSessionScope } from './session-scope';
 export type { AirSessionScope, AirSessionToken, AirSessionChange, AirCleanupReceipt } from './session-scope';

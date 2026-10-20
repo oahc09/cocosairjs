@@ -47915,7 +47915,7 @@ legacyCC.NodePool = NodePool;
 
 var _globalThis$jsb, _globalJsb$copyTextTo;
 const globalJsb = (_globalThis$jsb = globalThis.jsb) !== null && _globalThis$jsb !== void 0 ? _globalThis$jsb : {};
-const native = {
+const native$1 = {
   DownloaderHints: globalJsb.DownloaderHints,
   Downloader: globalJsb.Downloader,
   zipUtils: globalJsb.zipUtils,
@@ -137071,10 +137071,14 @@ function validateAirScreenMode(mode, exactFit) {
   }
 }
 function normalizeAirOptions(options) {
-  var _options$physics, _options$diagnostics, _options$webgpu, _options$pixelRatioCa, _options$contextLoss, _options$renderer, _context$autoPause;
+  var _options$physics, _options$diagnostics, _options$physics2D, _options$box2d3$subSt, _options$box2d, _options$webgpu, _options$pixelRatioCa, _options$contextLoss, _options$renderer, _options$box2d2, _context$autoPause;
   if (!options || typeof options !== 'object') throw airError('AIR_E_APP_OPTIONS', 'createAirApp requires an options object.');
   const physics = (_options$physics = options.physics) !== null && _options$physics !== void 0 ? _options$physics : 'builtin',
     diagnostics = (_options$diagnostics = options.diagnostics) !== null && _options$diagnostics !== void 0 ? _options$diagnostics : 'errors';
+  const physics2D = (_options$physics2D = options.physics2D) !== null && _options$physics2D !== void 0 ? _options$physics2D : 'box2d';
+  if (physics2D !== 'box2d' && physics2D !== 'box2d-v3-wasm') throw airError('AIR_E_PHYSICS_2D_BACKEND', 'Invalid physics2D backend.');
+  const box2d3SubStepCount = (_options$box2d3$subSt = (_options$box2d = options.box2d3) == null ? void 0 : _options$box2d.subStepCount) !== null && _options$box2d3$subSt !== void 0 ? _options$box2d3$subSt : 4;
+  if (!Number.isInteger(box2d3SubStepCount) || box2d3SubStepCount < 1 || box2d3SubStepCount > 64) throw airError('BOX2D3_SUBSTEPS', 'Expected integer 1..64.');
   if (physics !== 'builtin' && physics !== 'cannon') throw airError('AIR_E_PHYSICS_BACKEND', 'physics must be builtin or cannon.');
   if (diagnostics !== 'errors' && diagnostics !== 'warnings') throw airError('AIR_E_DIAGNOSTIC_MODE', 'diagnostics must be errors or warnings.');
   if (typeof document === 'undefined' || typeof HTMLCanvasElement === 'undefined') {
@@ -137167,6 +137171,9 @@ function normalizeAirOptions(options) {
     renderer: (_options$renderer = options.renderer) !== null && _options$renderer !== void 0 ? _options$renderer : 'webgl2',
     webgpuAssetBaseUrl,
     physics,
+    physics2D,
+    box2d3AssetBaseUrl: ((_options$box2d2 = options.box2d3) == null ? void 0 : _options$box2d2.assetBaseUrl) === undefined ? undefined : new URL(options.box2d3.assetBaseUrl, document.baseURI).href,
+    box2d3SubStepCount,
     diagnostics,
     pixelRatioCap,
     screenMode: options.screenMode,
@@ -137185,7 +137192,7 @@ function normalizeAirOptions(options) {
 }
 function equalAirOptions(a, b) {
   var _a$designResolution, _b$designResolution, _a$designResolution2, _b$designResolution2, _a$designResolution3, _b$designResolution3;
-  return a.canvas === b.canvas && a.renderMode === b.renderMode && a.renderer === b.renderer && a.webgpuAssetBaseUrl === b.webgpuAssetBaseUrl && a.physics === b.physics && a.diagnostics === b.diagnostics && a.pixelRatioCap === b.pixelRatioCap && a.screenMode === b.screenMode && a.container === b.container && ((_a$designResolution = a.designResolution) == null ? void 0 : _a$designResolution.width) === ((_b$designResolution = b.designResolution) == null ? void 0 : _b$designResolution.width) && ((_a$designResolution2 = a.designResolution) == null ? void 0 : _a$designResolution2.height) === ((_b$designResolution2 = b.designResolution) == null ? void 0 : _b$designResolution2.height) && ((_a$designResolution3 = a.designResolution) == null ? void 0 : _a$designResolution3.policy) === ((_b$designResolution3 = b.designResolution) == null ? void 0 : _b$designResolution3.policy) && a.contextLoss.autoPause === b.contextLoss.autoPause && a.contextLoss.reload === b.contextLoss.reload && a.contextLoss.onEvent === b.contextLoss.onEvent;
+  return a.canvas === b.canvas && a.renderMode === b.renderMode && a.renderer === b.renderer && a.webgpuAssetBaseUrl === b.webgpuAssetBaseUrl && a.physics === b.physics && a.physics2D === b.physics2D && a.box2d3AssetBaseUrl === b.box2d3AssetBaseUrl && a.box2d3SubStepCount === b.box2d3SubStepCount && a.diagnostics === b.diagnostics && a.pixelRatioCap === b.pixelRatioCap && a.screenMode === b.screenMode && a.container === b.container && ((_a$designResolution = a.designResolution) == null ? void 0 : _a$designResolution.width) === ((_b$designResolution = b.designResolution) == null ? void 0 : _b$designResolution.width) && ((_a$designResolution2 = a.designResolution) == null ? void 0 : _a$designResolution2.height) === ((_b$designResolution2 = b.designResolution) == null ? void 0 : _b$designResolution2.height) && ((_a$designResolution3 = a.designResolution) == null ? void 0 : _a$designResolution3.policy) === ((_b$designResolution3 = b.designResolution) == null ? void 0 : _b$designResolution3.policy) && a.contextLoss.autoPause === b.contextLoss.autoPause && a.contextLoss.reload === b.contextLoss.reload && a.contextLoss.onEvent === b.contextLoss.onEvent;
 }
 function prepareAirContainer(options) {
   if (options.screenMode !== 'container') return undefined;
@@ -137395,10 +137402,1228 @@ function createSessionScope() {
   };
 }
 
+const PTM = PHYSICS_2D_PTM_RATIO;
+const RAD = Math.PI / 180;
+const defaultAssetBase$1 = new URL('./box2d3/', import.meta.url).href;
+let native;
+let pending;
+let loadedBase;
+let subSteps = 4;
+function loadBox2D3(options = {}) {
+  var _options$subStepCount, _options$assetBaseUrl;
+  const count = (_options$subStepCount = options.subStepCount) !== null && _options$subStepCount !== void 0 ? _options$subStepCount : 4;
+  if (!Number.isInteger(count) || count < 1 || count > 64) return Promise.reject(new Error('BOX2D3_SUBSTEPS: expected integer 1..64'));
+  const base = new URL((_options$assetBaseUrl = options.assetBaseUrl) !== null && _options$assetBaseUrl !== void 0 ? _options$assetBaseUrl : defaultAssetBase$1.startsWith('__') ? 'build/box2d3/' : defaultAssetBase$1, document.baseURI).href;
+  if (pending) {
+    if (loadedBase !== base || subSteps !== count) return Promise.reject(new Error('BOX2D3_CONFIG_CONFLICT'));
+    return pending;
+  }
+  loadedBase = base;
+  subSteps = count;
+  pending = (async () => {
+    const wasm = new URL('air-box2d.wasm', base).href;
+    const response = await fetch(wasm);
+    if (!response.ok) throw new Error(`BOX2D3_LOAD: HTTP ${response.status}: ${wasm}`);
+    const module = await import(new URL('air-box2d.mjs', base).href);
+    const instance = await module.default({
+      wasmBinary: await response.arrayBuffer()
+    });
+    if (typeof instance.createWorld !== 'function' || typeof instance.createJoint !== 'function') throw new Error('BOX2D3_ABI');
+    native = instance;
+  })().catch(error => {
+    pending = undefined;
+    loadedBase = undefined;
+    throw error;
+  });
+  return pending;
+}
+function api() {
+  if (!native) throw new Error('BOX2D3_NOT_READY: await loadBox2D3 before initialization');
+  return native;
+}
+function world() {
+  return PhysicsSystem2D.instance.physicsWorld;
+}
+function angle(node) {
+  const out = new Vec3();
+  Quat.toEulerInYXZOrder(out, node.worldRotation);
+  return out.z * RAD;
+}
+function rotate(p, a) {
+  return {
+    x: p.x * Math.cos(a) - p.y * Math.sin(a),
+    y: p.x * Math.sin(a) + p.y * Math.cos(a)
+  };
+}
+function pair(a, b) {
+  return a < b ? `${a}:${b}` : `${b}:${a}`;
+}
+function selectPhysics2DBackend(backend) {
+  if (selector$1.physicsWorld) throw new Error('BOX2D3_LATE_SELECTION: backend selection requires a fresh runtime');
+  if (backend === 'box2d') {
+    const wrapper = selector$1.backend.box2d;
+    if (!wrapper) throw new Error('BOX2D_BACKEND_MISSING');
+    selector$1.register('box2d', wrapper);
+    return;
+  }
+  api();
+  selector$1.register('box2d-v3-wasm', {
+    PhysicsWorld: Box2D3World,
+    RigidBody: Box2D3Body,
+    BoxShape: Box2D3Shape,
+    CircleShape: Box2D3Shape,
+    PolygonShape: Box2D3Shape,
+    DistanceJoint: DistanceJoint,
+    SpringJoint: SpringJoint,
+    FixedJoint: FixedJoint,
+    RelativeJoint: RelativeJoint,
+    MouseJoint: MouseJoint,
+    SliderJoint: SliderJoint,
+    WheelJoint: WheelJoint,
+    HingeJoint: HingeJoint
+  });
+}
+function disposeBox2D3() {
+  if (selector$1.id === 'box2d-v3-wasm' && selector$1.physicsWorld) selector$1.physicsWorld.destroy();
+}
+function getBox2D3Stats() {
+  return selector$1.id === 'box2d-v3-wasm' && selector$1.physicsWorld ? selector$1.physicsWorld.stats() : null;
+}
+class Box2D3World {
+  get debugDrawFlags() {
+    return this.drawFlags;
+  }
+  set debugDrawFlags(value) {
+    var _this$debug;
+    this.drawFlags = value;
+    if ((_this$debug = this.debug) != null && _this$debug.isValid) {
+      this.debug.node.active = !!value;
+      if (!value) this.debug.clear();
+    }
+  }
+  constructor() {
+    this.impl = void 0;
+    this.groundBodyImpl = void 0;
+    this.drawFlags = 0;
+    this.bodies = new Set();
+    this.shapes = new Map();
+    this.joints = new Set();
+    this.contacts = new Map();
+    this.seen = new Set();
+    this.disabledStep = new Set();
+    this.deferred = [];
+    this.stepping = false;
+    this.debug = void 0;
+    this.impl = api().createWorld({
+      x: 0,
+      y: -10
+    }, (o, continuous) => this.preSolve(o, continuous));
+    this.groundBodyImpl = api().createBody(this.impl, {
+      type: 0
+    });
+  }
+  mutate(action) {
+    if (this.stepping) this.deferred.push(action);else action();
+  }
+  stats() {
+    return this.impl ? api().stats(this.impl) : {
+      bodies: 0,
+      shapes: 0,
+      joints: 0,
+      contacts: 0,
+      worlds: 0
+    };
+  }
+  setGravity(v) {
+    this.mutate(() => api().worldCommand(this.impl, 'gravity', {
+      ...v
+    }));
+  }
+  setAllowSleep(v) {
+    this.mutate(() => api().worldCommand(this.impl, 'allowSleep', {
+      value: v
+    }));
+  }
+  contact(o) {
+    const key = pair(o.a, o.b);
+    let c = this.contacts.get(key);
+    if (!c) {
+      c = new Contact(this, o);
+      this.contacts.set(key, c);
+      c.emit(Contact2DType.BEGIN_CONTACT);
+    }
+    c.observation = o;
+    return c;
+  }
+  preSolve(o, continuous) {
+    var _c$friction, _c$restitution;
+    if (!this.shapes.has(o.a) || !this.shapes.has(o.b)) return {};
+    this.seen.add(pair(o.a, o.b));
+    const c = this.contact(o);
+    if (!continuous) c.emit(Contact2DType.PRE_SOLVE);
+    const key = pair(o.a, o.b);
+    if (c.disabledOnce) this.disabledStep.add(key);
+    const disabled = c.disabled || c.disabledOnce || this.disabledStep.has(key);
+    if (!continuous) c.disabledOnce = false;
+    return {
+      disabled,
+      friction: (_c$friction = c.friction) !== null && _c$friction !== void 0 ? _c$friction : -1,
+      restitution: (_c$restitution = c.restitution) !== null && _c$restitution !== void 0 ? _c$restitution : -1,
+      tangentSpeed: c.tangentSpeed
+    };
+  }
+  step(dt) {
+    if (!this.impl) throw new Error('BOX2D3_WORLD_CLOSED');
+    this.seen.clear();
+    this.disabledStep.clear();
+    for (const b of this.bodies) b.animate(dt);
+    this.stepping = true;
+    try {
+      api().step(this.impl, dt, subSteps);
+      for (const o of api().contacts(this.impl)) {
+        this.seen.add(pair(o.a, o.b));
+        if (!this.shapes.has(o.a) || !this.shapes.has(o.b)) continue;
+        const c = this.contact(o);
+        c.post = true;
+        c.emit(Contact2DType.POST_SOLVE);
+        c.post = false;
+      }
+      const events = api().events(this.impl);
+      for (const e of events.begin) if (this.shapes.has(e.a) && this.shapes.has(e.b)) this.contact({
+        ...e,
+        normal: {
+          x: 0,
+          y: 0
+        },
+        points: []
+      });
+      for (const e of events.end) this.end(pair(e.a, e.b));
+      for (const [key, c] of this.contacts) {
+        var _c$colliderA, _c$colliderB;
+        if ((_c$colliderA = c.colliderA) != null && _c$colliderA.sensor || (_c$colliderB = c.colliderB) != null && _c$colliderB.sensor) continue;
+        if (!this.seen.has(key)) this.end(key);
+      }
+    } finally {
+      this.stepping = false;
+    }
+    const actions = this.deferred.splice(0);
+    for (const action of actions) action();
+  }
+  end(key) {
+    const c = this.contacts.get(key);
+    if (c) {
+      this.contacts.delete(key);
+      c.touching = false;
+      c.emit(Contact2DType.END_CONTACT);
+    }
+  }
+  removeShape(id) {
+    for (const [key, c] of this.contacts) if (c.observation.a === id || c.observation.b === id) this.end(key);
+    this.shapes.delete(id);
+    api().destroyShape(id);
+  }
+  syncSceneToPhysics() {
+    for (const b of this.bodies) b.syncSceneToPhysics();
+    for (const s of new Set(this.shapes.values())) s.sync();
+  }
+  syncPhysicsToScene() {
+    for (const b of this.bodies) b.syncPhysicsToScene();
+  }
+  raycast(p1, p2, type, mask) {
+    const rows = api().query(this.impl, 'ray', {
+      x: p1.x / PTM,
+      y: p1.y / PTM,
+      dx: (p2.x - p1.x) / PTM,
+      dy: (p2.y - p1.y) / PTM,
+      mask: mask >>> 0
+    });
+    const found = rows.filter(r => this.shapes.has(r.shape)).sort((a, b) => a.fraction - b.fraction).map(r => ({
+      collider: this.shapes.get(r.shape).collider,
+      fixtureIndex: this.shapes.get(r.shape).impl.indexOf(r.shape),
+      point: new Vec2(r.point.x * PTM, r.point.y * PTM),
+      normal: new Vec2(r.normal.x, r.normal.y),
+      fraction: r.fraction
+    }));
+    if (type === ERaycast2DType.Closest || type === ERaycast2DType.Any) return found.slice(0, 1);
+    return type === ERaycast2DType.AllClosest ? found.filter((r, i) => found.findIndex(v => v.collider === r.collider) === i) : found;
+  }
+  testPoint(p) {
+    return this.query('point', {
+      x: p.x / PTM,
+      y: p.y / PTM
+    });
+  }
+  testAABB(r) {
+    return this.query('aabb', {
+      x: r.x / PTM,
+      y: r.y / PTM,
+      maxX: (r.x + r.width) / PTM,
+      maxY: (r.y + r.height) / PTM
+    });
+  }
+  query(kind, o) {
+    return [...new Set(api().query(this.impl, kind, o).map(id => {
+      var _this$shapes$get;
+      return (_this$shapes$get = this.shapes.get(id)) == null ? void 0 : _this$shapes$get.collider;
+    }).filter(Boolean))];
+  }
+  clearContacts() {
+    this.contacts.clear();
+  }
+  drawDebug() {
+    var _this$debug2;
+    const scene = director.getScene();
+    if (!scene) return;
+    if (!((_this$debug2 = this.debug) != null && _this$debug2.isValid)) {
+      const canvas = scene.getComponentInChildren(Canvas);
+      if (!canvas) return;
+      const node = new Node$1('Box2D3 Debug');
+      node.layer = canvas.node.layer;
+      canvas.node.addChild(node);
+      node.addComponent(UITransform);
+      this.debug = node.addComponent(Graphics);
+    }
+    const g = this.debug;
+    g.node.active = true;
+    g.clear();
+    g.lineWidth = 3;
+    g.strokeColor = Color.GREEN;
+    const transform = g.node.getComponent(UITransform);
+    const line = (a, b) => {
+      const p = transform.convertToNodeSpaceAR(new Vec3(a.x, a.y, 0)),
+        q = transform.convertToNodeSpaceAR(new Vec3(b.x, b.y, 0));
+      g.moveTo(p.x, p.y);
+      g.lineTo(q.x, q.y);
+      g.stroke();
+    };
+    const polygon = points => {
+      for (let i = 0; i < points.length; i++) line(points[i], points[(i + 1) % points.length]);
+    };
+    for (const s of this.drawFlags & 1 ? new Set(this.shapes.values()) : []) {
+      if (s.collider instanceof CircleCollider2D) {
+        const p = transform.convertToNodeSpaceAR(new Vec3(s.worldPosition.x, s.worldPosition.y, 0));
+        g.circle(p.x, p.y, s.worldRadius);
+        g.stroke();
+      } else {
+        const p = s.worldPoints;
+        if (!p.length) continue;
+        for (let i = 0; i < p.length; i++) {
+          const q = transform.convertToNodeSpaceAR(new Vec3(p[i].x, p[i].y, 0));
+          if (i === 0) g.moveTo(q.x, q.y);else g.lineTo(q.x, q.y);
+        }
+        g.close();
+        g.stroke();
+      }
+    }
+    if (this.drawFlags & 2) for (const joint of this.joints) {
+      const ends = joint.debugAnchors();
+      if (ends) line(ends[0], ends[1]);
+    }
+    if (this.drawFlags & 4) for (const shape of this.shapes.keys()) {
+      const a = api().shapeBounds(shape);
+      polygon([{
+        x: a.lower.x * PTM,
+        y: a.lower.y * PTM
+      }, {
+        x: a.upper.x * PTM,
+        y: a.lower.y * PTM
+      }, {
+        x: a.upper.x * PTM,
+        y: a.upper.y * PTM
+      }, {
+        x: a.lower.x * PTM,
+        y: a.upper.y * PTM
+      }]);
+    }
+    if (this.drawFlags & 8) for (const c of this.contacts.values()) {
+      const center = collider => {
+        const r = collider == null ? void 0 : collider.worldAABB;
+        return r ? {
+          x: r.x + r.width / 2,
+          y: r.y + r.height / 2
+        } : {
+          x: 0,
+          y: 0
+        };
+      };
+      line(center(c.colliderA), center(c.colliderB));
+    }
+    if (this.drawFlags & 16) for (const b of this.bodies) {
+      if (!b.impl) continue;
+      const s = api().bodyState(b.impl),
+        p = {
+          x: s.worldCenter.x * PTM,
+          y: s.worldCenter.y * PTM
+        },
+        x = rotate({
+          x: 16,
+          y: 0
+        }, s.angle),
+        y = rotate({
+          x: 0,
+          y: 16
+        }, s.angle);
+      g.strokeColor = Color.RED;
+      line(p, {
+        x: p.x + x.x,
+        y: p.y + x.y
+      });
+      g.strokeColor = Color.GREEN;
+      line(p, {
+        x: p.x + y.x,
+        y: p.y + y.y
+      });
+    }
+  }
+  destroy() {
+    var _this$debug3, _this$debug3$node;
+    if (!this.impl) return;
+    this.clearContacts();
+    (_this$debug3 = this.debug) == null ? void 0 : (_this$debug3$node = _this$debug3.node) == null ? void 0 : _this$debug3$node.destroy();
+    this.debug = undefined;
+    api().destroyWorld(this.impl);
+    this.impl = 0;
+    this.groundBodyImpl = 0;
+    for (const b of this.bodies) b.impl = 0;
+    for (const s of new Set(this.shapes.values())) s.impl = [];
+    for (const j of this.joints) j.impl = 0;
+    this.bodies.clear();
+    this.shapes.clear();
+    this.joints.clear();
+    this.deferred = [];
+  }
+}
+class Box2D3Body {
+  constructor() {
+    this.impl = 0;
+    this.rigidBody = void 0;
+    this.target = void 0;
+    this.lastScale = '';
+  }
+  get isAwake() {
+    return !!this.impl && api().bodyState(this.impl).awake;
+  }
+  get isSleeping() {
+    return !this.isAwake;
+  }
+  initialize(c) {
+    this.rigidBody = c;
+    world().mutate(() => {
+      if (this.impl || !c.isValid) return;
+      const p = c.node.worldPosition;
+      const privateComp = c;
+      this.impl = api().createBody(world().impl, {
+        type: c.type === ERigidBody2DType.Animated ? 1 : c.type,
+        x: p.x / PTM,
+        y: p.y / PTM,
+        angle: angle(c.node),
+        vx: privateComp._linearVelocity.x,
+        vy: privateComp._linearVelocity.y,
+        av: privateComp._angularVelocity,
+        linearDamping: c.linearDamping,
+        angularDamping: c.angularDamping,
+        gravityScale: c.gravityScale,
+        fixedRotation: c.fixedRotation,
+        allowSleep: c.allowSleep,
+        awake: c.awakeOnLoad,
+        bullet: c.bullet
+      });
+      world().bodies.add(this);
+      this.lastScale = `${c.node.worldScale.x}:${c.node.worldScale.y}`;
+      this.cmd('active', {
+        value: c.enabledInHierarchy ? 1 : 0
+      });
+    });
+  }
+  onEnable() {
+    world().mutate(() => this.setActive(true));
+  }
+  onDisable() {
+    world().mutate(() => this.setActive(false));
+  }
+  onDestroy() {
+    world().mutate(() => {
+      if (!this.impl) return;
+      for (const s of new Set(world().shapes.values())) if (s.body === this) s.destroy();
+      api().destroyBody(this.impl);
+      world().bodies.delete(this);
+      this.impl = 0;
+    });
+  }
+  cmd(op, value) {
+    world().mutate(() => {
+      if (this.impl) api().bodyCommand(this.impl, op, value);
+    });
+  }
+  setType(v) {
+    if (v !== ERigidBody2DType.Animated) this.target = undefined;
+    this.cmd('type', {
+      value: v === ERigidBody2DType.Animated ? 1 : v
+    });
+  }
+  setLinearDamping(v) {
+    this.cmd('linearDamping', {
+      value: v
+    });
+  }
+  setAngularDamping(v) {
+    this.cmd('angularDamping', {
+      value: v
+    });
+  }
+  setGravityScale(v) {
+    this.cmd('gravityScale', {
+      value: v
+    });
+  }
+  setFixedRotation(v) {
+    this.cmd('fixedRotation', {
+      value: +v
+    });
+  }
+  setAllowSleep(v) {
+    this.cmd('allowSleep', {
+      value: +v
+    });
+  }
+  isActive() {
+    return !!this.impl && api().bodyState(this.impl).enabled;
+  }
+  setActive(v) {
+    this.cmd('active', {
+      value: +v
+    });
+  }
+  wakeUp() {
+    this.cmd('awake', {
+      value: 1
+    });
+  }
+  sleep() {
+    this.cmd('awake', {
+      value: 0
+    });
+  }
+  getMass() {
+    return this.impl ? api().bodyState(this.impl).mass : 0;
+  }
+  getInertia() {
+    return this.impl ? api().bodyState(this.impl).inertia : 0;
+  }
+  getLinearVelocity(out) {
+    const s = api().bodyState(this.impl);
+    out.x = s.vx;
+    out.y = s.vy;
+    return out;
+  }
+  setLinearVelocity(v) {
+    this.cmd('velocity', {
+      x: v.x,
+      y: v.y
+    });
+  }
+  getAngularVelocity() {
+    return api().bodyState(this.impl).av;
+  }
+  setAngularVelocity(v) {
+    this.cmd('angularVelocity', {
+      value: v
+    });
+  }
+  getLocalVector(p, out) {
+    const v = rotate(p, -api().bodyState(this.impl).angle);
+    out.x = v.x;
+    out.y = v.y;
+    return out;
+  }
+  getWorldVector(p, out) {
+    const v = rotate(p, api().bodyState(this.impl).angle);
+    out.x = v.x;
+    out.y = v.y;
+    return out;
+  }
+  getLocalPoint(p, out) {
+    const s = api().bodyState(this.impl);
+    return this.getLocalVector({
+      x: p.x - s.x * PTM,
+      y: p.y - s.y * PTM
+    }, out);
+  }
+  getWorldPoint(p, out) {
+    const s = api().bodyState(this.impl);
+    this.getWorldVector(p, out);
+    out.x += s.x * PTM;
+    out.y += s.y * PTM;
+    return out;
+  }
+  getLocalCenter(out) {
+    const p = api().bodyState(this.impl).localCenter;
+    out.x = p.x * PTM;
+    out.y = p.y * PTM;
+    return out;
+  }
+  getWorldCenter(out) {
+    const p = api().bodyState(this.impl).worldCenter;
+    out.x = p.x * PTM;
+    out.y = p.y * PTM;
+    return out;
+  }
+  getLinearVelocityFromWorldPoint(p, out) {
+    const s = api().bodyState(this.impl);
+    out.x = (s.vx - s.av * (p.y / PTM - s.worldCenter.y)) * PTM;
+    out.y = (s.vy + s.av * (p.x / PTM - s.worldCenter.x)) * PTM;
+    return out;
+  }
+  applyForce(v, p, wake) {
+    this.cmd('force', {
+      ...v,
+      px: p.x / PTM,
+      py: p.y / PTM,
+      wake
+    });
+  }
+  applyForceToCenter(v, wake) {
+    this.cmd('forceCenter', {
+      ...v,
+      wake
+    });
+  }
+  applyTorque(value, wake) {
+    this.cmd('torque', {
+      value,
+      wake
+    });
+  }
+  applyLinearImpulse(v, p, wake) {
+    this.cmd('impulse', {
+      ...v,
+      px: p.x / PTM,
+      py: p.y / PTM,
+      wake
+    });
+  }
+  applyLinearImpulseToCenter(v, wake) {
+    this.cmd('impulseCenter', {
+      ...v,
+      wake
+    });
+  }
+  applyAngularImpulse(value, wake) {
+    this.cmd('angularImpulse', {
+      value,
+      wake
+    });
+  }
+  syncSceneToPhysics() {
+    if (!this.impl) return;
+    const node = this.rigidBody.node,
+      s = api().bodyState(this.impl),
+      p = node.worldPosition,
+      a = angle(node);
+    if (this.rigidBody.type === ERigidBody2DType.Animated) {
+      this.target = {
+        x: p.x / PTM,
+        y: p.y / PTM,
+        angle: a
+      };
+    } else if (Math.abs(s.x * PTM - p.x) > 0.0001 || Math.abs(s.y * PTM - p.y) > 0.0001 || Math.abs(Math.atan2(Math.sin(a - s.angle), Math.cos(a - s.angle))) > 0.00001) this.cmd('transform', {
+      x: p.x / PTM,
+      y: p.y / PTM,
+      angle: a
+    });
+    const scale = `${node.worldScale.x}:${node.worldScale.y}`;
+    if (scale !== this.lastScale) {
+      this.lastScale = scale;
+      for (const c of node.getComponents(Collider2D)) c.apply();
+    }
+  }
+  animate(dt) {
+    if (!this.target || !this.impl || dt <= 0) return;
+    const s = api().bodyState(this.impl),
+      t = this.target;
+    api().bodyCommand(this.impl, 'velocity', {
+      x: (t.x - s.x) / dt,
+      y: (t.y - s.y) / dt
+    });
+    api().bodyCommand(this.impl, 'angularVelocity', {
+      value: Math.atan2(Math.sin(t.angle - s.angle), Math.cos(t.angle - s.angle)) / dt
+    });
+  }
+  syncPhysicsToScene() {
+    if (!this.impl || this.rigidBody.type === ERigidBody2DType.Animated) return;
+    const s = api().bodyState(this.impl),
+      node = this.rigidBody.node;
+    node.setWorldPosition(s.x * PTM, s.y * PTM, node.worldPosition.z);
+    const q = new Quat();
+    Quat.fromEuler(q, 0, 0, s.angle / RAD);
+    node.setWorldRotation(q);
+  }
+}
+class Box2D3Shape {
+  constructor() {
+    this.impl = [];
+    this.collider = void 0;
+    this.body = void 0;
+    this.ownBody = 0;
+    this.signature = '';
+  }
+  initialize(c) {
+    this.collider = c;
+  }
+  onEnable() {
+    world().mutate(() => this.create());
+  }
+  onDisable() {
+    world().mutate(() => this.destroy());
+  }
+  onDestroy() {
+    world().mutate(() => this.destroy());
+  }
+  apply() {
+    world().mutate(() => {
+      this.destroy();
+      if (this.collider.enabledInHierarchy) this.create();
+    });
+  }
+  onGroupChanged() {
+    const [category, mask] = this.filter();
+    world().mutate(() => {
+      for (const h of this.impl) api().shapeFilter(h, category, mask);
+    });
+  }
+  filter() {
+    var _PhysicsSystem2D$inst;
+    const c = this.collider,
+      category = c.group === 1 && c.body ? c.body.group : c.group;
+    return [category >>> 0, ((_PhysicsSystem2D$inst = PhysicsSystem2D.instance.collisionMatrix[category]) !== null && _PhysicsSystem2D$inst !== void 0 ? _PhysicsSystem2D$inst : 0) >>> 0];
+  }
+  create() {
+    var _c$getComponent, _this$body, _this$body2;
+    if (this.impl.length || !this.collider.isValid || !this.collider.enabledInHierarchy) return;
+    const c = this.collider;
+    this.body = (_c$getComponent = c.getComponent(RigidBody2D)) == null ? void 0 : _c$getComponent.impl;
+    const p = c.node.worldPosition;
+    if (!((_this$body = this.body) != null && _this$body.impl)) this.ownBody = api().createBody(world().impl, {
+      type: 0,
+      x: p.x / PTM,
+      y: p.y / PTM,
+      angle: angle(c.node)
+    });
+    const body = ((_this$body2 = this.body) == null ? void 0 : _this$body2.impl) || this.ownBody;
+    const [category, mask] = this.filter();
+    const config = {
+      density: c.density,
+      friction: c.friction,
+      restitution: c.restitution,
+      sensor: c.sensor,
+      category,
+      mask
+    };
+    const sx = c.node.worldScale.x,
+      sy = c.node.worldScale.y;
+    if (Math.abs(sx) < 1e-8 || Math.abs(sy) < 1e-8) return;
+    if (c instanceof CircleCollider2D) this.impl.push(api().createShape(body, 'circle', {
+      ...config,
+      x: c.offset.x * sx / PTM,
+      y: c.offset.y * sy / PTM,
+      radius: c.radius * Math.abs(sx) / PTM
+    }));else {
+      let polygons;
+      if (c instanceof BoxCollider2D) {
+        const x = c.size.width / 2,
+          y = c.size.height / 2;
+        polygons = [[new Vec2(-x, -y), new Vec2(x, -y), new Vec2(x, y), new Vec2(-x, y)]];
+      } else {
+        const partition = ConvexPartition(c.points.map(p => new Vec2(p.x, p.y)));
+        if (!partition) throw new Error('BOX2D3_POLYGON: polygon cannot be partitioned');
+        polygons = partition;
+      }
+      for (const points of polygons) {
+        const scaled = points.map(p => ({
+          x: (p.x + c.offset.x) * sx / PTM,
+          y: (p.y + c.offset.y) * sy / PTM
+        }));
+        for (let start = 1; start < scaled.length - 1; start += 6) {
+          const vertices = [scaled[0], ...scaled.slice(start, Math.min(start + 7, scaled.length))];
+          if (vertices.length >= 3) this.impl.push(api().createShape(body, 'polygon', {
+            ...config,
+            points: vertices
+          }));
+        }
+      }
+    }
+    for (const h of this.impl) world().shapes.set(h, this);
+    this.signature = this.transformSignature();
+  }
+  destroy() {
+    for (const h of this.impl) world().removeShape(h);
+    this.impl = [];
+    if (this.ownBody) {
+      api().destroyBody(this.ownBody);
+      this.ownBody = 0;
+    }
+  }
+  transformSignature() {
+    const c = this.collider.node,
+      p = c.worldPosition,
+      s = c.worldScale;
+    return `${p.x}:${p.y}:${angle(c)}:${s.x}:${s.y}`;
+  }
+  sync() {
+    if (!this.body && this.ownBody && this.signature !== this.transformSignature()) this.apply();
+  }
+  toWorld(p) {
+    const node = this.collider.node,
+      s = node.worldScale,
+      v = rotate({
+        x: (p.x + this.collider.offset.x) * s.x,
+        y: (p.y + this.collider.offset.y) * s.y
+      }, angle(node));
+    return new Vec2(v.x + node.worldPosition.x, v.y + node.worldPosition.y);
+  }
+  get worldPoints() {
+    const c = this.collider;
+    if (c instanceof CircleCollider2D) return [];
+    if (c instanceof BoxCollider2D) {
+      const x = c.size.width / 2,
+        y = c.size.height / 2;
+      return [{
+        x: -x,
+        y: -y
+      }, {
+        x: x,
+        y: -y
+      }, {
+        x: x,
+        y: y
+      }, {
+        x: -x,
+        y: y
+      }].map(p => this.toWorld(p));
+    }
+    return c.points.map(p => this.toWorld(p));
+  }
+  get worldPosition() {
+    return this.toWorld({
+      x: 0,
+      y: 0
+    });
+  }
+  get worldRadius() {
+    return this.collider.radius * Math.abs(this.collider.node.worldScale.x);
+  }
+  get worldAABB() {
+    if (!this.impl.length) return new Rect();
+    if (this.collider instanceof CircleCollider2D) {
+      const p = this.worldPosition,
+        r = this.worldRadius;
+      return new Rect(p.x - r, p.y - r, 2 * r, 2 * r);
+    }
+    const points = this.worldPoints;
+    const x = Math.min(...points.map(p => p.x)),
+      y = Math.min(...points.map(p => p.y));
+    return new Rect(x, y, Math.max(...points.map(p => p.x)) - x, Math.max(...points.map(p => p.y)) - y);
+  }
+}
+class Contact {
+  constructor(w, observation) {
+    var _w$shapes$get$collide, _w$shapes$get, _w$shapes$get$collide2, _w$shapes$get2;
+    this.disabled = false;
+    this.disabledOnce = false;
+    this.touching = true;
+    this.post = false;
+    this.friction = void 0;
+    this.restitution = void 0;
+    this.tangentSpeed = 0;
+    this.colliderA = void 0;
+    this.colliderB = void 0;
+    this.observation = observation;
+    this.colliderA = (_w$shapes$get$collide = (_w$shapes$get = w.shapes.get(observation.a)) == null ? void 0 : _w$shapes$get.collider) !== null && _w$shapes$get$collide !== void 0 ? _w$shapes$get$collide : null;
+    this.colliderB = (_w$shapes$get$collide2 = (_w$shapes$get2 = w.shapes.get(observation.b)) == null ? void 0 : _w$shapes$get2.collider) !== null && _w$shapes$get$collide2 !== void 0 ? _w$shapes$get$collide2 : null;
+  }
+  emit(type) {
+    var _a$body, _b$body;
+    const a = this.colliderA,
+      b = this.colliderB,
+      la = a == null ? void 0 : (_a$body = a.body) == null ? void 0 : _a$body.enabledContactListener,
+      lb = b == null ? void 0 : (_b$body = b.body) == null ? void 0 : _b$body.enabledContactListener;
+    if (la) a.emit(type, a, b, this);
+    if (lb) b.emit(type, b, a, this);
+    if (la || lb) PhysicsSystem2D.instance.emit(type, a, b, this);
+  }
+  getWorldManifold() {
+    const o = this.observation;
+    return {
+      points: o.points.map(p => new Vec2(p.x * PTM, p.y * PTM)),
+      normal: new Vec2(o.normal.x, o.normal.y),
+      separations: o.points.map(p => p.separation * PTM)
+    };
+  }
+  getManifold() {
+    const o = this.observation;
+    const normal = this.colliderA ? rotate(o.normal, -angle(this.colliderA.node)) : o.normal;
+    return {
+      type: 1,
+      localNormal: new Vec2(normal.x, normal.y),
+      localPoint: o.points.length ? new Vec2(o.points[0].localA.x * PTM, o.points[0].localA.y * PTM) : new Vec2(),
+      points: o.points.map(p => ({
+        localPoint: new Vec2(p.localB.x * PTM, p.localB.y * PTM),
+        normalImpulse: p.normalImpulse * PTM,
+        tangentImpulse: p.tangentImpulse
+      }))
+    };
+  }
+  getImpulse() {
+    return this.post ? {
+      normalImpulses: this.observation.points.map(p => p.normalImpulse * PTM),
+      tangentImpulses: this.observation.points.map(p => p.tangentImpulse)
+    } : null;
+  }
+  isTouching() {
+    return this.touching;
+  }
+  setEnabled(v) {
+    this.disabledOnce = !v;
+  }
+  setFriction(v) {
+    if (!Number.isFinite(v) || v < 0) throw new Error('BOX2D3_FRICTION');
+    this.friction = v;
+  }
+  getFriction() {
+    var _this$friction, _this$colliderA$frict, _this$colliderA, _this$colliderB$frict, _this$colliderB;
+    return (_this$friction = this.friction) !== null && _this$friction !== void 0 ? _this$friction : Math.sqrt(((_this$colliderA$frict = (_this$colliderA = this.colliderA) == null ? void 0 : _this$colliderA.friction) !== null && _this$colliderA$frict !== void 0 ? _this$colliderA$frict : 0) * ((_this$colliderB$frict = (_this$colliderB = this.colliderB) == null ? void 0 : _this$colliderB.friction) !== null && _this$colliderB$frict !== void 0 ? _this$colliderB$frict : 0));
+  }
+  resetFriction() {
+    this.friction = undefined;
+  }
+  setRestitution(v) {
+    if (!Number.isFinite(v) || v < 0) throw new Error('BOX2D3_RESTITUTION');
+    this.restitution = v;
+  }
+  getRestitution() {
+    var _this$restitution, _this$colliderA$resti, _this$colliderA2, _this$colliderB$resti, _this$colliderB2;
+    return (_this$restitution = this.restitution) !== null && _this$restitution !== void 0 ? _this$restitution : Math.max((_this$colliderA$resti = (_this$colliderA2 = this.colliderA) == null ? void 0 : _this$colliderA2.restitution) !== null && _this$colliderA$resti !== void 0 ? _this$colliderA$resti : 0, (_this$colliderB$resti = (_this$colliderB2 = this.colliderB) == null ? void 0 : _this$colliderB2.restitution) !== null && _this$colliderB$resti !== void 0 ? _this$colliderB$resti : 0);
+  }
+  resetRestitution() {
+    this.restitution = undefined;
+  }
+  setTangentSpeed(v) {
+    if (!Number.isFinite(v)) throw new Error('BOX2D3_TANGENT_SPEED');
+    this.tangentSpeed = v;
+  }
+  getTangentSpeed() {
+    return this.tangentSpeed;
+  }
+}
+class BaseJoint {
+  constructor() {
+    this.impl = 0;
+    this.comp = void 0;
+    this.kind = '';
+    this.overrides = {};
+  }
+  debugAnchors() {
+    var _body$impl, _this$comp$connectedB, _this$comp$connectedB2, _this$comp$connectedB3;
+    if (!this.impl || !api().jointValid(this.impl)) return null;
+    const config = this.config(),
+      body = this.comp.getComponent(RigidBody2D);
+    if (!(body != null && (_body$impl = body.impl) != null && _body$impl.impl) || this.comp.connectedBody && !((_this$comp$connectedB = this.comp.connectedBody.impl) != null && _this$comp$connectedB.impl)) return null;
+    const a = body.getWorldPoint(new Vec2(Number(config.ax) * PTM, Number(config.ay) * PTM), new Vec2());
+    const local = new Vec2(Number(config.bx) * PTM, Number(config.by) * PTM);
+    const b = (_this$comp$connectedB2 = (_this$comp$connectedB3 = this.comp.connectedBody) == null ? void 0 : _this$comp$connectedB3.getWorldPoint(local, new Vec2())) !== null && _this$comp$connectedB2 !== void 0 ? _this$comp$connectedB2 : local;
+    return [a, b];
+  }
+  initialize(c) {
+    this.comp = c;
+  }
+  onEnable() {
+    world().mutate(() => this.create());
+  }
+  start() {
+    world().mutate(() => this.create());
+  }
+  onDisable() {
+    world().mutate(() => this.destroy());
+  }
+  onDestroy() {
+    world().mutate(() => this.destroy());
+  }
+  apply() {
+    world().mutate(() => {
+      this.destroy();
+      if (this.comp.enabledInHierarchy) this.create();
+    });
+  }
+  config() {
+    var _c$angle, _ref, _c$maxLength, _c$frequency, _c$dampingRatio, _c$enableLimit, _c$lowerAngle, _c$lowerLimit, _c$upperAngle, _c$upperLimit, _c$enableMotor, _c$motorSpeed, _c$motorSpeed2, _c$maxMotorTorque, _c$maxMotorForce, _c$maxForce, _c$maxTorque;
+    const c = this.comp;
+    const a = ((_c$angle = c.angle) !== null && _c$angle !== void 0 ? _c$angle : 0) * RAD;
+    return {
+      ax: c.anchor.x / PTM,
+      ay: c.anchor.y / PTM,
+      bx: c.connectedAnchor.x / PTM,
+      by: c.connectedAnchor.y / PTM,
+      angleA: a,
+      angleB: a,
+      collideConnected: c.collideConnected,
+      length: ((_ref = (_c$maxLength = c.maxLength) !== null && _c$maxLength !== void 0 ? _c$maxLength : c.distance) !== null && _ref !== void 0 ? _ref : 1) / PTM,
+      frequency: (_c$frequency = c.frequency) !== null && _c$frequency !== void 0 ? _c$frequency : 0,
+      dampingRatio: (_c$dampingRatio = c.dampingRatio) !== null && _c$dampingRatio !== void 0 ? _c$dampingRatio : 0.7,
+      enableLimit: (_c$enableLimit = c.enableLimit) !== null && _c$enableLimit !== void 0 ? _c$enableLimit : false,
+      lower: this.kind === 'hinge' ? ((_c$lowerAngle = c.lowerAngle) !== null && _c$lowerAngle !== void 0 ? _c$lowerAngle : 0) * RAD : ((_c$lowerLimit = c.lowerLimit) !== null && _c$lowerLimit !== void 0 ? _c$lowerLimit : 0) / PTM,
+      upper: this.kind === 'hinge' ? ((_c$upperAngle = c.upperAngle) !== null && _c$upperAngle !== void 0 ? _c$upperAngle : 0) * RAD : ((_c$upperLimit = c.upperLimit) !== null && _c$upperLimit !== void 0 ? _c$upperLimit : 0) / PTM,
+      enableMotor: (_c$enableMotor = c.enableMotor) !== null && _c$enableMotor !== void 0 ? _c$enableMotor : false,
+      motorSpeed: this.kind === 'slider' ? (_c$motorSpeed = c.motorSpeed) !== null && _c$motorSpeed !== void 0 ? _c$motorSpeed : 0 : ((_c$motorSpeed2 = c.motorSpeed) !== null && _c$motorSpeed2 !== void 0 ? _c$motorSpeed2 : 0) * RAD,
+      maxMotorTorque: (_c$maxMotorTorque = c.maxMotorTorque) !== null && _c$maxMotorTorque !== void 0 ? _c$maxMotorTorque : 0,
+      maxMotorForce: (_c$maxMotorForce = c.maxMotorForce) !== null && _c$maxMotorForce !== void 0 ? _c$maxMotorForce : 0,
+      maxForce: (_c$maxForce = c.maxForce) !== null && _c$maxForce !== void 0 ? _c$maxForce : 1000,
+      maxTorque: (_c$maxTorque = c.maxTorque) !== null && _c$maxTorque !== void 0 ? _c$maxTorque : 1000,
+      ...this.overrides
+    };
+  }
+  create() {
+    var _this$comp$getCompone, _this$comp$connectedB4;
+    if (this.impl || !this.comp.isValid || !this.comp.enabledInHierarchy) return;
+    const a = (_this$comp$getCompone = this.comp.getComponent(RigidBody2D)) == null ? void 0 : _this$comp$getCompone.impl,
+      b = (_this$comp$connectedB4 = this.comp.connectedBody) == null ? void 0 : _this$comp$connectedB4.impl;
+    if (!(a != null && a.impl) || this.comp.connectedBody && (!(b != null && b.impl) || !this.comp.connectedBody.enabledInHierarchy)) return;
+    this.impl = api().createJoint(world().impl, this.kind, a.impl, (b == null ? void 0 : b.impl) || world().groundBodyImpl, this.config());
+    world().joints.add(this);
+  }
+  destroy() {
+    if (this.impl) {
+      api().destroyJoint(this.impl);
+      this.impl = 0;
+      world().joints.delete(this);
+    }
+  }
+  update(key, value) {
+    this.overrides[key] = value;
+    if (this.impl) this.apply();
+  }
+  setMaxLength(v) {
+    this.update('length', v / PTM);
+  }
+  setDistance(v) {
+    this.update('length', v / PTM);
+  }
+  setFrequency(v) {
+    this.update('frequency', v);
+  }
+  setDampingRatio(v) {
+    this.update('dampingRatio', v);
+  }
+  setMaxForce(v) {
+    this.update('maxForce', v);
+  }
+  setMaxTorque(v) {
+    this.update('maxTorque', v);
+  }
+  enableMotor(v) {
+    this.update('enableMotor', v);
+  }
+  setMaxMotorForce(v) {
+    this.update('maxMotorForce', v);
+  }
+  setMaxMotorTorque(v) {
+    this.update('maxMotorTorque', v);
+  }
+  setMotorSpeed(v) {
+    this.update('motorSpeed', this.kind === 'slider' ? v : v * RAD);
+  }
+  enableLimit(v) {
+    this.update('enableLimit', v);
+  }
+  setLowerLimit(v) {
+    this.update('lower', v / PTM);
+  }
+  setUpperLimit(v) {
+    this.update('upper', v / PTM);
+  }
+  setLowerAngle(v) {
+    this.update('lower', v * RAD);
+  }
+  setUpperAngle(v) {
+    this.update('upper', v * RAD);
+  }
+  setLinearOffset(v) {
+    this.update('ax', v.x / PTM);
+    this.update('ay', v.y / PTM);
+  }
+  setAngularOffset(v) {
+    this.update('angleA', v * RAD);
+  }
+  setCorrectionFactor(v) {
+    if (!Number.isFinite(v) || v < 0 || v > 1) throw new Error('BOX2D3_CORRECTION_FACTOR');
+    this.update('frequency', Math.max(0.01, v * 60));
+  }
+}
+class DistanceJoint extends BaseJoint {
+  constructor(...args) {
+    super(...args);
+    this.kind = 'distance';
+  }
+}
+class SpringJoint extends BaseJoint {
+  constructor(...args) {
+    super(...args);
+    this.kind = 'spring';
+  }
+}
+class FixedJoint extends BaseJoint {
+  constructor(...args) {
+    super(...args);
+    this.kind = 'fixed';
+  }
+}
+class RelativeJoint extends BaseJoint {
+  constructor(...args) {
+    super(...args);
+    this.kind = 'relative';
+  }
+  config() {
+    const c = this.comp;
+    return {
+      ...super.config(),
+      ax: c.linearOffset.x / PTM,
+      ay: c.linearOffset.y / PTM,
+      angleA: c.angularOffset * RAD,
+      frequency: Math.max(0.01, c.correctionFactor * 60),
+      ...this.overrides
+    };
+  }
+}
+class SliderJoint extends BaseJoint {
+  constructor(...args) {
+    super(...args);
+    this.kind = 'slider';
+  }
+}
+class WheelJoint extends BaseJoint {
+  constructor(...args) {
+    super(...args);
+    this.kind = 'wheel';
+  }
+}
+class HingeJoint extends BaseJoint {
+  constructor(...args) {
+    super(...args);
+    this.kind = 'hinge';
+  }
+}
+class MouseJoint extends BaseJoint {
+  constructor(...args) {
+    super(...args);
+    this.kind = 'mouse';
+    this.target = new Vec2();
+    this.mouseBody = 0;
+    this.dragging = false;
+  }
+  pointerPosition(e) {
+    var _director$getScene, _director$getScene$ge;
+    const camera = (_director$getScene = director.getScene()) == null ? void 0 : (_director$getScene$ge = _director$getScene.getComponentInChildren(Canvas)) == null ? void 0 : _director$getScene$ge.cameraComponent;
+    if (camera) {
+      const p = e.getLocation(),
+        ray = camera.screenPointToRay(p.x, p.y);
+      if (Math.abs(ray.d.z) > 1e-8) {
+        const t = -ray.o.z / ray.d.z;
+        return new Vec2(ray.o.x + ray.d.x * t, ray.o.y + ray.d.y * t);
+      }
+    }
+    return e.getUILocation();
+  }
+  debugAnchors() {
+    var _this$comp$connectedB5, _this$comp$connectedB6, _this$comp$connectedB7;
+    if (!this.impl || !api().jointValid(this.impl) || !((_this$comp$connectedB5 = this.comp.connectedBody) != null && (_this$comp$connectedB6 = _this$comp$connectedB5.impl) != null && _this$comp$connectedB6.impl)) return null;
+    const center = (_this$comp$connectedB7 = this.comp.connectedBody) == null ? void 0 : _this$comp$connectedB7.getWorldCenter(new Vec2());
+    return center ? [this.target, center] : null;
+  }
+  onEnable() {
+    input.on(Input.EventType.TOUCH_START, this.onTouchBegan, this);
+    input.on(Input.EventType.TOUCH_MOVE, this.onTouchMove, this);
+    input.on(Input.EventType.TOUCH_END, this.onTouchEnd, this);
+    input.on(Input.EventType.TOUCH_CANCEL, this.onTouchEnd, this);
+  }
+  start() {}
+  update() {
+    if (this.dragging) this.setTarget(this.target);
+  }
+  onDisable() {
+    input.off(Input.EventType.TOUCH_START, this.onTouchBegan, this);
+    input.off(Input.EventType.TOUCH_MOVE, this.onTouchMove, this);
+    input.off(Input.EventType.TOUCH_END, this.onTouchEnd, this);
+    input.off(Input.EventType.TOUCH_CANCEL, this.onTouchEnd, this);
+    super.onDisable();
+  }
+  onDestroy() {
+    this.onDisable();
+  }
+  create() {
+    var _this$comp$connectedB8;
+    if (this.impl || !this.dragging || !this.comp.enabledInHierarchy) return;
+    const body = (_this$comp$connectedB8 = this.comp.connectedBody) == null ? void 0 : _this$comp$connectedB8.impl;
+    if (!(body != null && body.impl)) return;
+    this.mouseBody = api().createBody(world().impl, {
+      type: 1,
+      x: this.target.x / PTM,
+      y: this.target.y / PTM,
+      allowSleep: false
+    });
+    const local = body.getLocalPoint(this.target, new Vec2());
+    const c = this.comp;
+    this.impl = api().createJoint(world().impl, this.kind, this.mouseBody, body.impl, {
+      ...this.config(),
+      ax: 0,
+      ay: 0,
+      bx: local.x / PTM,
+      by: local.y / PTM,
+      maxForce: c.maxForce * body.getMass()
+    });
+    world().joints.add(this);
+  }
+  destroy() {
+    super.destroy();
+    if (this.mouseBody) {
+      api().destroyBody(this.mouseBody);
+      this.mouseBody = 0;
+    }
+  }
+  setTarget(v) {
+    this.target.set(v.x, v.y);
+    const x = v.x / PTM,
+      y = v.y / PTM;
+    world().mutate(() => {
+      if (this.mouseBody) api().bodyCommand(this.mouseBody, 'transform', {
+        x,
+        y,
+        angle: 0
+      });
+    });
+  }
+  onTouchBegan(e) {
+    this.target.set(this.pointerPosition(e));
+    const c = world().testPoint(this.target).find(c => {
+      var _c$body;
+      return ((_c$body = c.body) == null ? void 0 : _c$body.type) === ERigidBody2DType.Dynamic;
+    });
+    if (!(c != null && c.body)) return;
+    this.comp.connectedBody = c.body;
+    this.dragging = true;
+    world().mutate(() => this.create());
+  }
+  onTouchMove(e) {
+    this.setTarget(this.pointerPosition(e));
+  }
+  onTouchEnd() {
+    this.dragging = false;
+    world().mutate(() => this.destroy());
+  }
+}
+
 const AIR_VERSION = '1.0.0';
 const AIR_REVISION = 100;
-const AIR_BUILD_DATE = "202610191637";
-const AIR_BUILD_NUMBER = 184;
+const AIR_BUILD_DATE = "202610200111";
+const AIR_BUILD_NUMBER = 196;
 class AirAppImpl {
   get session() {
     return this._scope;
@@ -137506,6 +138731,7 @@ class AirAppImpl {
     if (registry.app === this) registry.status = 'closed';
     this._close = Promise.resolve().then(() => this.releaseScene()).then(receipt => {
       var _this$diagnostics;
+      disposeBox2D3();
       this.contextHealth.destroy();
       (_this$diagnostics = this.diagnostics) == null ? void 0 : _this$diagnostics.destroy();
       return receipt;
@@ -142619,6 +143845,10 @@ function createAirApp(options) {
 async function initializeAirApp(options) {
   var _options$diagnostics;
   const canvas = options.canvas;
+  if (options.physics2D === 'box2d-v3-wasm') await loadBox2D3({
+    assetBaseUrl: options.box2d3AssetBaseUrl,
+    subStepCount: options.box2d3SubStepCount
+  });
   if (options.renderer === 'webgpu') configureWebGPUAssets(options.webgpuAssetBaseUrl);
   const exactFit = settings.querySettings(SettingsCategory.SCREEN, 'exactFitScreen');
   validateAirScreenMode(options.screenMode, exactFit);
@@ -142626,7 +143856,10 @@ async function initializeAirApp(options) {
   screenAdapter.bindCanvas();
   const contextHealth = attachContextHealth(canvas, options.contextLoss);
   const diagnostics = createAirDiagnostics((_options$diagnostics = options.diagnostics) !== null && _options$diagnostics !== void 0 ? _options$diagnostics : 'errors');
-  const selectBackend = () => selectPhysicsBackend(options.physics);
+  const selectBackend = () => {
+    selectPhysicsBackend(options.physics);
+    if (options.physics2D === 'box2d-v3-wasm') selectPhysics2DBackend(options.physics2D);
+  };
   game.once(Game.EVENT_PRE_SUBSYSTEM_INIT, selectBackend);
   game.once(Game.EVENT_POST_SUBSYSTEM_INIT, registerBuiltinAirAssets);
   try {
@@ -142657,6 +143890,7 @@ async function initializeAirApp(options) {
       view.setDesignResolutionSize(width, height, policy);
     }
   } catch (error) {
+    disposeBox2D3();
     screenAdapter.destroyLayoutObserver == null ? void 0 : screenAdapter.destroyLayoutObserver();
     contextHealth.destroy();
     diagnostics.destroy();
@@ -164206,5 +165440,5 @@ var legacy_rendering = /*#__PURE__*/Object.freeze({
 
 legacyCC.legacy_rendering = legacy_rendering;
 
-export { AIR_BUILD_DATE, AIR_BUILD_NUMBER, AIR_ICON_PLACEHOLDER, AIR_REVISION, AIR_SCREEN_PASS_LAYER, AIR_VERSION, Acceleration, AirActionError, AirAppImpl, AirColorContractError, AirContentSizeFitter, AirGlyphIconLayer, AirGlyphText, AirPixelGrid, AirPixelPerfect, AirRenderTarget, AirTransmissionCapture, AirTypewriter, AirUIMesh, AlphaKey, AmbientInfo, AnimCurve, Animation$1 as Animation, AnimationClip, Animation$1 as AnimationComponent, AnimationManager, AnimationState$1 as AnimationState, Asset, AssetBank, AssetLibrary, AssetManager, AsyncDelegate, Atlas, AudioClip, AudioPCMDataView, AudioService, AudioSource, AudioSource as AudioSourceComponent, BASELINE_RATIO, BITMASK_TAG, Node$1 as BaseNode, BaseRenderData, SkinnedMeshBatchRenderer as BatchedSkinningModelComponent, BatchingUtility, Billboard, BitMask, BitmapFont, BlockInputEvents, BlockInputEvents as BlockInputEventsComponent, BloomStage, BoxCharacterController, BoxCollider, BoxCollider2D, BoxCollider as BoxColliderComponent, BufferAsset, BuiltinResMgr, Button, Button as ButtonComponent, CCBoolean, CCClass, CCFloat, CCInteger, CCLoader, CCObject, CCObjectFlags, CCString, CacheMode, CachedArray, CallbacksInvoker, Camera, Camera as CameraComponent, Canvas, Canvas as CanvasComponent, CapsuleCharacterController, CapsuleCollider, CapsuleCollider as CapsuleColliderComponent, CharacterController, CharacterControllerContact, CircleCollider2D, Collider, Collider2D, Collider as ColliderComponent, Color, ColorKey, CompactValueTypeArray, Component, ConeCollider, ConfigurableConstraint, ConstantForce, Constraint, Contact2DType, CylinderCollider, CylinderCollider as CylinderColliderComponent, DEFAULT_OCTREE_DEPTH, DEFAULT_WORLD_MAX_POS, DEFAULT_WORLD_MIN_POS, DebugMode, DebugView, DeferredPipeline, Details, DirectionalLight, DirectionalLight as DirectionalLightComponent, Director, DirectorEvent, DistanceJoint2D, DynamicAtlasManager, EAxisDirection, ECollider2DType, EColliderType, EJoint2DType, ENUM_TAG, EPSILON$3 as EPSILON, EPhysics2DDrawFlags, EPhysicsDrawFlags, ERaycast2DType, ERigidBody2DType, ERigidBodyType, EXT_MESHOPT_COMPRESSION, EasingMethod, EditBox, EditBox as EditBoxComponent, EditorExtendable, EffectAsset, EmptyDevice, Enum, Event, EventAcceleration, EventGamepad, EventHMD, EventHandheld, EventHandle, EventHandler, EventInfo, EventKeyboard, EventMouse, EventTarget, EventTouch, Eventify, ExtrapolationMode, FeedStatusController, FixedConstraint, FixedJoint2D, FogInfo, Font, ForwardFlow, ForwardPipeline, ForwardStage, GCObject, GLTFAsset, GLTFError, GLTFExtensionRegistry, GLTFLoader, Game, GbufferStage, GeometryRenderer, Gradient, Graphics, Graphics as GraphicsComponent, HALF_PI, HingeConstraint, HingeJoint2D, HorizontalTextAlignment, HtmlTextParser, ImageAsset, Input, InstanceMaterialType, InstancedBuffer, Intersection2D, JavaScript, Joint2D, JsonAsset, KHR_DRACO_MESH_COMPRESSION, KHR_MESHOPT_COMPRESSION, KHR_MESH_QUANTIZATION, KTX2_RAW_MIME, KeyCode, LOD, LODGroup, LRUCache, Label, LabelAtlas, Label as LabelComponent, LabelOutline, LabelOutline as LabelOutlineComponent, LabelShadow, Layers, Layout$1 as Layout, Layout$1 as LayoutComponent, Light, Light as LightComponent, LightProbeInfo, LightingStage, MATH_FLOAT_ARRAY, MIDDLE_RATIO, MainFlow, Mask, Mask as MaskComponent, MaskType, Mat3, Mat4, Material, MathBase, Mesh, MeshBuffer, MeshCollider, MeshCollider as MeshColliderComponent, MeshRenderData, MeshRenderer, MissingScript, MobilityMode, MeshRenderer as ModelComponent, ModelRenderer, MotionStreak, MotionStreakAssemblerManager, MouseJoint2D, Node$1 as Node, NodeActivator, NodeEventType, NodePool, NodeSpace, ObjectCurve, OctreeInfo, Overflow$1 as Overflow, PHYSICS_2D_PTM_RATIO, PageView, PageView as PageViewComponent, PageViewIndicator, PageViewIndicator as PageViewIndicatorComponent, ParticleAsset, ParticleSystem2D, ParticleSystem2DAssembler, PhysicsMaterial as PhysicMaterial, Physics2DManifoldType, Physics2DUtils, PhysicsGroup$1 as PhysicsGroup, PhysicsGroup2D, PhysicsLineStripCastResult, PhysicsMaterial, PhysicsRayResult, PhysicsSystem, PhysicsSystem2D, PipelineEventProcessor, PipelineEventType, PipelineInputAssemblerData, PipelineSceneData, PipelineStateManager, PlaneCollider, PointLight, PointToPointConstraint, PolygonCollider2D, Pool$1 as Pool, PostProcessStage, PostSettingsInfo, Prefab, PrefabLink, Primitive, PrivateNode, Profiler, ProgressBar, ProgressBar as ProgressBarComponent, QuadRenderData, Quat, QuatCurve, QuatInterpolationMode, RangedDirectionalLight, RatioSampler, RealCurve, RealInterpolationMode, Rect, RecyclePool, ReflectionProbe, ReflectionProbeFlow, ReflectionProbeManager, ReflectionProbeStage, ReflectionProbeType, RelativeJoint2D, UIRenderer as RenderComponent, RenderData$1 as RenderData, RenderFlow, RenderPipeline, RenderRoot2D, RenderStage, RenderTexture, UIRenderer as Renderable2D, ModelRenderer as RenderableComponent, Renderer, RenderingSubMesh, ResolutionPolicy, RichText as RichTextComponent, RigidBody, RigidBody2D, RigidBody as RigidBodyComponent, Root, SUPPORTED_IMAGE_MIMES, SafeArea, SafeArea as SafeAreaComponent, Scene, SceneAsset, SceneGlobals, SceneStack, Scheduler, Script, ScrollBar, ScrollBar as ScrollBarComponent, ScrollView, ScrollView as ScrollViewComponent, Settings, SettingsCategory, ShadowFlow, ShadowStage, ShadowsInfo, SimplexCollider, Size, SkelAnimDataHub, SkeletalAnimation, SkeletalAnimation as SkeletalAnimationComponent, SkeletalAnimationState, Skeleton$1 as Skeleton, SkinInfo, SkinnedMeshBatchRenderer, SkinnedMeshRenderer, SkinnedMeshUnit, SkinnedMeshRenderer as SkinningModelComponent, SkinnedMeshUnit as SkinningModelUnit, SkyboxInfo, Slider, Slider as SliderComponent, SliderJoint2D, Socket, Sorting, Sorting2D, SortingLayers, SphereCollider, SphereCollider as SphereColliderComponent, SphereLight, SphereLight as SphereLightComponent, SpotLight, SpotLight as SpotLightComponent, SpringJoint2D, Sprite, SpriteAtlas, Sprite as SpriteComponent, SpriteFrame, SpriteFrameEvent, SpriteRenderer, StencilManager, SubContextView, System, SystemEvent, SystemEventType, SystemPriority, TRANSMISSION_LAYER, TTFFont, TWO_PI, TangentWeightMode, TerrainCollider, TextAsset, Texture2D, TextureCube, TiledLayer, TiledMap, TiledMapAsset, TiledObjectGroup, TiledTile, TiledUserNodeData, Toggle, Toggle as ToggleComponent, ToggleContainer, ToggleContainer as ToggleContainerComponent, Touch, TransformBit, Tween, TweenAction, TweenSystem, TypeScript, Batcher2D as UI, UIComponent, UICoordinateTracker, UICoordinateTracker as UICoordinateTrackerComponent, UIDrawBatch, UIMeshRenderer, UIMeshRenderer as UIModelComponent, UIOpacity, UIOpacity as UIOpacityComponent, UIRenderer as UIRenderable, UIRenderer, UIReorderComponent, UIStaticBatch, UIStaticBatch as UIStaticBatchComponent, UITransform, UITransform as UITransformComponent, vertexFormat as UIVertexFormat, engineVersion as VERSION, ValueType, Vec2, Vec3, Vec4, VerticalTextAlignment, VideoClip, VideoPlayer, View, ViewGroup, WebGL2Device, WebView, WheelJoint2D, Widget, Widget as WidgetComponent, WorldNode3DToLocalNodeUI, WorldNode3DToWorldNodeUI, __checkObsoleteInNamespace__, __checkObsolete__, _decorator, _resetDebugSetting, absMax, absMaxComponent, airActionSourceKey, airGraphicsCommandsToSvg, airPixelOrtho, animation, applyMixins, approx, approxGE, approxGT, approxLE, approxLT, assert, assertID, assertIsNonNullable, assertIsTrue, assertValidSource, assertsArrayIndex, assetManager, attachAirBloom, attachAirSpriteMask, attachAirVignette, attachContextHealth, bezier$1 as bezier, bezierByTime, binarySearch, binarySearchBy, binarySearchEpsilon, bindAirPrefilteredEnvironment, bits, buildSkeletonTree, builtinResMgr, ccenum, cclegacy, clamp$1 as clamp, clamp01, color, computeRatioByType, configureGLTFLoaderDefaults, convertUtils, createActionInput, createActionState, createAirApp, createAirDOMOverlay, createAirHTMLSource, createAirRenderTarget, createAirScreenEffect, createAirScreenPass, createAirTextureSprite, createAirUIBlendScope, createAirUnlitFogEffect, createAtlasHandle, createAtlasSpriteFrame, createBitmapFont, createDefaultPipeline, createDracoDecoder, createKTX2Transcoder, createMeshoptDecoder, createPrimitiveGeometry, createSessionGate, createSessionScope, createStepClock, createUICanvas, debug, debugID, defaultTransmissionVisibility, deprecateModuleExportedName, describeAirTextureFormat, deserialize, deserializeTag, detectImageMime, director, disallowAnimation$1 as disallowAnimation, displayName$2 as displayName, displayOrder$3 as displayOrder, dracoCompressionFactory, index$1 as dragonBones, drawAirGraphics, dynamicAtlasManager, easing, editable$6 as editable, editorExtrasTag, enumerableProps, equals$2 as equals, error, errorID, find, flattenCodeArray, floatToHalf, formerlySerializedAs$3 as formerlySerializedAs, fragmentText, frameObject, game, garbageCollectionManager, geometry, getAirHTMLSourceSupport, getBaselineOffset, getEnglishWordPartAtFirst, getEnglishWordPartAtLast, getError, getPathFromRoot, getPhaseID$1 as getPhaseID, getSerializationMetadata, getSymbolAt, getSymbolCodeAt, getSymbolLength, getWorldTransformUntilRoot, index$4 as gfx, graphicsAssemblerManager as graphicsAssembler, halfToFloat, input, inspectAirAnimationControllers, inspectAirDirectionalLights, inspectAirGeometry, inspectAirMaterial, inspectAirMeshMaterial, instantiate, inverseLerp, isAirDepthFormat, isAirSRGBFormat, isCCClassOrFastDefined, isCCObject, isDisplayStats, isEnglishWordPartAtFirst, isEnglishWordPartAtLast, isKTX2, isKTX2Available, isMeshoptAvailable, isTransmissionMaterial, isUnicodeCJK, isUnicodeSpace, isValid, js$1 as js, labelAssembler, labelNode, layoutAirGlyphs, lerp, loadAssetAsync, loadAtlas, loadBitmapFont, loadWasmModuleSpine, loader, log, logID, macro, markAsWarning, mat4, math, measureAirGlyphFallback, index$5 as memop, meshQuantizationFactory, meshoptCompressionFactory, misc, murmurhash2_32_gc, native, nextPow2, override$1 as override, parseAirGlyphTags, parseAtlasText, parseFnt, path, physics, pingPong, define as pipeline, index as postProcess, preTransforms, primitives, profiler, pseudoRandom, pseudoRandomRange, pseudoRandomRangeInt, quat$1 as quat, random, randomRange, randomRangeInt, range$2 as range, rangeStep, rasterizeAirGraphics, rect, registerGLTFLoader, removeProperty, renderer, rendering, repeat$2 as repeat, replaceProperty, resolveAirPixelRatio, resolveAirTextureFormat, resources, restoreBindPose, safeMeasureText, sampleAnimationCurve, screen$1 as screen, selectPhysicsBackend, selector$1 as selector, serializable$c as serializable, serializeTag, setDefaultLogTimes, setDisplayStats, setPropertyEnumType, setPropertyEnumTypeOnAttrs, setRandGenerator, setTextureSupportForTesting, settings, shift, size, slide$2 as slide, index$2 as sp, spriteAssembler, spriteNode, sys, systemEvent, tiledLayerAssembler, toDegree, toRadian, tooltip$3 as tooltip, tween, tweenProgress, tweenUtil, url, utils, v2$1 as v2, v3, v4, validateAirGraphicsCommands, validateAirPrefilteredEnvironment, validateAirTextureColorContract, view, visible$5 as visible, visibleRect, warn, warnID, widgetManager };
+export { AIR_BUILD_DATE, AIR_BUILD_NUMBER, AIR_ICON_PLACEHOLDER, AIR_REVISION, AIR_SCREEN_PASS_LAYER, AIR_VERSION, Acceleration, AirActionError, AirAppImpl, AirColorContractError, AirContentSizeFitter, AirGlyphIconLayer, AirGlyphText, AirPixelGrid, AirPixelPerfect, AirRenderTarget, AirTransmissionCapture, AirTypewriter, AirUIMesh, AlphaKey, AmbientInfo, AnimCurve, Animation$1 as Animation, AnimationClip, Animation$1 as AnimationComponent, AnimationManager, AnimationState$1 as AnimationState, Asset, AssetBank, AssetLibrary, AssetManager, AsyncDelegate, Atlas, AudioClip, AudioPCMDataView, AudioService, AudioSource, AudioSource as AudioSourceComponent, BASELINE_RATIO, BITMASK_TAG, Node$1 as BaseNode, BaseRenderData, SkinnedMeshBatchRenderer as BatchedSkinningModelComponent, BatchingUtility, Billboard, BitMask, BitmapFont, BlockInputEvents, BlockInputEvents as BlockInputEventsComponent, BloomStage, BoxCharacterController, BoxCollider, BoxCollider2D, BoxCollider as BoxColliderComponent, BufferAsset, BuiltinResMgr, Button, Button as ButtonComponent, CCBoolean, CCClass, CCFloat, CCInteger, CCLoader, CCObject, CCObjectFlags, CCString, CacheMode, CachedArray, CallbacksInvoker, Camera, Camera as CameraComponent, Canvas, Canvas as CanvasComponent, CapsuleCharacterController, CapsuleCollider, CapsuleCollider as CapsuleColliderComponent, CharacterController, CharacterControllerContact, CircleCollider2D, Collider, Collider2D, Collider as ColliderComponent, Color, ColorKey, CompactValueTypeArray, Component, ConeCollider, ConfigurableConstraint, ConstantForce, Constraint, Contact2DType, CylinderCollider, CylinderCollider as CylinderColliderComponent, DEFAULT_OCTREE_DEPTH, DEFAULT_WORLD_MAX_POS, DEFAULT_WORLD_MIN_POS, DebugMode, DebugView, DeferredPipeline, Details, DirectionalLight, DirectionalLight as DirectionalLightComponent, Director, DirectorEvent, DistanceJoint2D, DynamicAtlasManager, EAxisDirection, ECollider2DType, EColliderType, EJoint2DType, ENUM_TAG, EPSILON$3 as EPSILON, EPhysics2DDrawFlags, EPhysicsDrawFlags, ERaycast2DType, ERigidBody2DType, ERigidBodyType, EXT_MESHOPT_COMPRESSION, EasingMethod, EditBox, EditBox as EditBoxComponent, EditorExtendable, EffectAsset, EmptyDevice, Enum, Event, EventAcceleration, EventGamepad, EventHMD, EventHandheld, EventHandle, EventHandler, EventInfo, EventKeyboard, EventMouse, EventTarget, EventTouch, Eventify, ExtrapolationMode, FeedStatusController, FixedConstraint, FixedJoint2D, FogInfo, Font, ForwardFlow, ForwardPipeline, ForwardStage, GCObject, GLTFAsset, GLTFError, GLTFExtensionRegistry, GLTFLoader, Game, GbufferStage, GeometryRenderer, Gradient, Graphics, Graphics as GraphicsComponent, HALF_PI, HingeConstraint, HingeJoint2D, HorizontalTextAlignment, HtmlTextParser, ImageAsset, Input, InstanceMaterialType, InstancedBuffer, Intersection2D, JavaScript, Joint2D, JsonAsset, KHR_DRACO_MESH_COMPRESSION, KHR_MESHOPT_COMPRESSION, KHR_MESH_QUANTIZATION, KTX2_RAW_MIME, KeyCode, LOD, LODGroup, LRUCache, Label, LabelAtlas, Label as LabelComponent, LabelOutline, LabelOutline as LabelOutlineComponent, LabelShadow, Layers, Layout$1 as Layout, Layout$1 as LayoutComponent, Light, Light as LightComponent, LightProbeInfo, LightingStage, MATH_FLOAT_ARRAY, MIDDLE_RATIO, MainFlow, Mask, Mask as MaskComponent, MaskType, Mat3, Mat4, Material, MathBase, Mesh, MeshBuffer, MeshCollider, MeshCollider as MeshColliderComponent, MeshRenderData, MeshRenderer, MissingScript, MobilityMode, MeshRenderer as ModelComponent, ModelRenderer, MotionStreak, MotionStreakAssemblerManager, MouseJoint2D, Node$1 as Node, NodeActivator, NodeEventType, NodePool, NodeSpace, ObjectCurve, OctreeInfo, Overflow$1 as Overflow, PHYSICS_2D_PTM_RATIO, PageView, PageView as PageViewComponent, PageViewIndicator, PageViewIndicator as PageViewIndicatorComponent, ParticleAsset, ParticleSystem2D, ParticleSystem2DAssembler, PhysicsMaterial as PhysicMaterial, Physics2DManifoldType, Physics2DUtils, PhysicsGroup$1 as PhysicsGroup, PhysicsGroup2D, PhysicsLineStripCastResult, PhysicsMaterial, PhysicsRayResult, PhysicsSystem, PhysicsSystem2D, PipelineEventProcessor, PipelineEventType, PipelineInputAssemblerData, PipelineSceneData, PipelineStateManager, PlaneCollider, PointLight, PointToPointConstraint, PolygonCollider2D, Pool$1 as Pool, PostProcessStage, PostSettingsInfo, Prefab, PrefabLink, Primitive, PrivateNode, Profiler, ProgressBar, ProgressBar as ProgressBarComponent, QuadRenderData, Quat, QuatCurve, QuatInterpolationMode, RangedDirectionalLight, RatioSampler, RealCurve, RealInterpolationMode, Rect, RecyclePool, ReflectionProbe, ReflectionProbeFlow, ReflectionProbeManager, ReflectionProbeStage, ReflectionProbeType, RelativeJoint2D, UIRenderer as RenderComponent, RenderData$1 as RenderData, RenderFlow, RenderPipeline, RenderRoot2D, RenderStage, RenderTexture, UIRenderer as Renderable2D, ModelRenderer as RenderableComponent, Renderer, RenderingSubMesh, ResolutionPolicy, RichText as RichTextComponent, RigidBody, RigidBody2D, RigidBody as RigidBodyComponent, Root, SUPPORTED_IMAGE_MIMES, SafeArea, SafeArea as SafeAreaComponent, Scene, SceneAsset, SceneGlobals, SceneStack, Scheduler, Script, ScrollBar, ScrollBar as ScrollBarComponent, ScrollView, ScrollView as ScrollViewComponent, Settings, SettingsCategory, ShadowFlow, ShadowStage, ShadowsInfo, SimplexCollider, Size, SkelAnimDataHub, SkeletalAnimation, SkeletalAnimation as SkeletalAnimationComponent, SkeletalAnimationState, Skeleton$1 as Skeleton, SkinInfo, SkinnedMeshBatchRenderer, SkinnedMeshRenderer, SkinnedMeshUnit, SkinnedMeshRenderer as SkinningModelComponent, SkinnedMeshUnit as SkinningModelUnit, SkyboxInfo, Slider, Slider as SliderComponent, SliderJoint2D, Socket, Sorting, Sorting2D, SortingLayers, SphereCollider, SphereCollider as SphereColliderComponent, SphereLight, SphereLight as SphereLightComponent, SpotLight, SpotLight as SpotLightComponent, SpringJoint2D, Sprite, SpriteAtlas, Sprite as SpriteComponent, SpriteFrame, SpriteFrameEvent, SpriteRenderer, StencilManager, SubContextView, System, SystemEvent, SystemEventType, SystemPriority, TRANSMISSION_LAYER, TTFFont, TWO_PI, TangentWeightMode, TerrainCollider, TextAsset, Texture2D, TextureCube, TiledLayer, TiledMap, TiledMapAsset, TiledObjectGroup, TiledTile, TiledUserNodeData, Toggle, Toggle as ToggleComponent, ToggleContainer, ToggleContainer as ToggleContainerComponent, Touch, TransformBit, Tween, TweenAction, TweenSystem, TypeScript, Batcher2D as UI, UIComponent, UICoordinateTracker, UICoordinateTracker as UICoordinateTrackerComponent, UIDrawBatch, UIMeshRenderer, UIMeshRenderer as UIModelComponent, UIOpacity, UIOpacity as UIOpacityComponent, UIRenderer as UIRenderable, UIRenderer, UIReorderComponent, UIStaticBatch, UIStaticBatch as UIStaticBatchComponent, UITransform, UITransform as UITransformComponent, vertexFormat as UIVertexFormat, engineVersion as VERSION, ValueType, Vec2, Vec3, Vec4, VerticalTextAlignment, VideoClip, VideoPlayer, View, ViewGroup, WebGL2Device, WebView, WheelJoint2D, Widget, Widget as WidgetComponent, WorldNode3DToLocalNodeUI, WorldNode3DToWorldNodeUI, __checkObsoleteInNamespace__, __checkObsolete__, _decorator, _resetDebugSetting, absMax, absMaxComponent, airActionSourceKey, airGraphicsCommandsToSvg, airPixelOrtho, animation, applyMixins, approx, approxGE, approxGT, approxLE, approxLT, assert, assertID, assertIsNonNullable, assertIsTrue, assertValidSource, assertsArrayIndex, assetManager, attachAirBloom, attachAirSpriteMask, attachAirVignette, attachContextHealth, bezier$1 as bezier, bezierByTime, binarySearch, binarySearchBy, binarySearchEpsilon, bindAirPrefilteredEnvironment, bits, buildSkeletonTree, builtinResMgr, ccenum, cclegacy, clamp$1 as clamp, clamp01, color, computeRatioByType, configureGLTFLoaderDefaults, convertUtils, createActionInput, createActionState, createAirApp, createAirDOMOverlay, createAirHTMLSource, createAirRenderTarget, createAirScreenEffect, createAirScreenPass, createAirTextureSprite, createAirUIBlendScope, createAirUnlitFogEffect, createAtlasHandle, createAtlasSpriteFrame, createBitmapFont, createDefaultPipeline, createDracoDecoder, createKTX2Transcoder, createMeshoptDecoder, createPrimitiveGeometry, createSessionGate, createSessionScope, createStepClock, createUICanvas, debug, debugID, defaultTransmissionVisibility, deprecateModuleExportedName, describeAirTextureFormat, deserialize, deserializeTag, detectImageMime, director, disallowAnimation$1 as disallowAnimation, displayName$2 as displayName, displayOrder$3 as displayOrder, dracoCompressionFactory, index$1 as dragonBones, drawAirGraphics, dynamicAtlasManager, easing, editable$6 as editable, editorExtrasTag, enumerableProps, equals$2 as equals, error, errorID, find, flattenCodeArray, floatToHalf, formerlySerializedAs$3 as formerlySerializedAs, fragmentText, frameObject, game, garbageCollectionManager, geometry, getAirHTMLSourceSupport, getBaselineOffset, getBox2D3Stats, getEnglishWordPartAtFirst, getEnglishWordPartAtLast, getError, getPathFromRoot, getPhaseID$1 as getPhaseID, getSerializationMetadata, getSymbolAt, getSymbolCodeAt, getSymbolLength, getWorldTransformUntilRoot, index$4 as gfx, graphicsAssemblerManager as graphicsAssembler, halfToFloat, input, inspectAirAnimationControllers, inspectAirDirectionalLights, inspectAirGeometry, inspectAirMaterial, inspectAirMeshMaterial, instantiate, inverseLerp, isAirDepthFormat, isAirSRGBFormat, isCCClassOrFastDefined, isCCObject, isDisplayStats, isEnglishWordPartAtFirst, isEnglishWordPartAtLast, isKTX2, isKTX2Available, isMeshoptAvailable, isTransmissionMaterial, isUnicodeCJK, isUnicodeSpace, isValid, js$1 as js, labelAssembler, labelNode, layoutAirGlyphs, lerp, loadAssetAsync, loadAtlas, loadBitmapFont, loadBox2D3, loadWasmModuleSpine, loader, log, logID, macro, markAsWarning, mat4, math, measureAirGlyphFallback, index$5 as memop, meshQuantizationFactory, meshoptCompressionFactory, misc, murmurhash2_32_gc, native$1 as native, nextPow2, override$1 as override, parseAirGlyphTags, parseAtlasText, parseFnt, path, physics, pingPong, define as pipeline, index as postProcess, preTransforms, primitives, profiler, pseudoRandom, pseudoRandomRange, pseudoRandomRangeInt, quat$1 as quat, random, randomRange, randomRangeInt, range$2 as range, rangeStep, rasterizeAirGraphics, rect, registerGLTFLoader, removeProperty, renderer, rendering, repeat$2 as repeat, replaceProperty, resolveAirPixelRatio, resolveAirTextureFormat, resources, restoreBindPose, safeMeasureText, sampleAnimationCurve, screen$1 as screen, selectPhysics2DBackend, selectPhysicsBackend, selector$1 as selector, serializable$c as serializable, serializeTag, setDefaultLogTimes, setDisplayStats, setPropertyEnumType, setPropertyEnumTypeOnAttrs, setRandGenerator, setTextureSupportForTesting, settings, shift, size, slide$2 as slide, index$2 as sp, spriteAssembler, spriteNode, sys, systemEvent, tiledLayerAssembler, toDegree, toRadian, tooltip$3 as tooltip, tween, tweenProgress, tweenUtil, url, utils, v2$1 as v2, v3, v4, validateAirGraphicsCommands, validateAirPrefilteredEnvironment, validateAirTextureColorContract, view, visible$5 as visible, visibleRect, warn, warnID, widgetManager };
 //# sourceMappingURL=cocosair.module.js.map

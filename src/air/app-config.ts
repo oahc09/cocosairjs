@@ -28,6 +28,9 @@ export interface AirNormalizedOptions {
     readonly renderer: 'webgl2' | 'webgpu';
     readonly webgpuAssetBaseUrl: string | undefined;
     readonly physics: 'builtin' | 'cannon';
+    readonly physics2D: 'box2d' | 'box2d-v3-wasm';
+    readonly box2d3AssetBaseUrl: string | undefined;
+    readonly box2d3SubStepCount: number;
     readonly diagnostics: 'errors' | 'warnings';
     readonly pixelRatioCap: number;
     readonly screenMode: 'window' | 'container' | undefined;
@@ -75,6 +78,12 @@ export function normalizeAirOptions(options: AirAppOptions): AirNormalizedOption
         throw airError('AIR_E_APP_OPTIONS', 'createAirApp requires an options object.');
     const physics = options.physics ?? 'builtin',
         diagnostics = options.diagnostics ?? 'errors';
+    const physics2D = options.physics2D ?? 'box2d';
+    if (physics2D !== 'box2d' && physics2D !== 'box2d-v3-wasm')
+        throw airError('AIR_E_PHYSICS_2D_BACKEND', 'Invalid physics2D backend.');
+    const box2d3SubStepCount = options.box2d3?.subStepCount ?? 4;
+    if (!Number.isInteger(box2d3SubStepCount) || box2d3SubStepCount < 1 || box2d3SubStepCount > 64)
+        throw airError('BOX2D3_SUBSTEPS', 'Expected integer 1..64.');
     if (physics !== 'builtin' && physics !== 'cannon')
         throw airError('AIR_E_PHYSICS_BACKEND', 'physics must be builtin or cannon.');
     if (diagnostics !== 'errors' && diagnostics !== 'warnings')
@@ -230,6 +239,12 @@ export function normalizeAirOptions(options: AirAppOptions): AirNormalizedOption
         renderer: options.renderer ?? 'webgl2',
         webgpuAssetBaseUrl,
         physics,
+        physics2D,
+        box2d3AssetBaseUrl:
+            options.box2d3?.assetBaseUrl === undefined
+                ? undefined
+                : new URL(options.box2d3.assetBaseUrl, document.baseURI).href,
+        box2d3SubStepCount,
         diagnostics,
         pixelRatioCap,
         screenMode: options.screenMode,
@@ -252,6 +267,9 @@ export function equalAirOptions(a: AirNormalizedOptions, b: AirNormalizedOptions
         a.renderer === b.renderer &&
         a.webgpuAssetBaseUrl === b.webgpuAssetBaseUrl &&
         a.physics === b.physics &&
+        a.physics2D === b.physics2D &&
+        a.box2d3AssetBaseUrl === b.box2d3AssetBaseUrl &&
+        a.box2d3SubStepCount === b.box2d3SubStepCount &&
         a.diagnostics === b.diagnostics &&
         a.pixelRatioCap === b.pixelRatioCap &&
         a.screenMode === b.screenMode &&
