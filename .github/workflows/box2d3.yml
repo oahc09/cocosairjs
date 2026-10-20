@@ -24,6 +24,9 @@ jobs:
       NODE_OPTIONS: --max-old-space-size=6144
       AIR_CI_SOFTWARE_GL: "1"
       LIBGL_ALWAYS_SOFTWARE: "1"
+      GIT_CONFIG_COUNT: "1"
+      GIT_CONFIG_KEY_0: core.autocrlf
+      GIT_CONFIG_VALUE_0: "false"
     steps:
       - uses: actions/checkout@v4
         with:
@@ -43,8 +46,9 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p output/box2d/ci/package
-          node tools/build/box2d3.cjs --check
+          node tools/build/box2d3.cjs --check 2>&1 | tee output/box2d/ci/source-check.log
           npm run build:all 2>&1 | tee output/box2d/ci/build.log
+          cp build/cocosair.module.js output/box2d/ci/cocosair.module.js
           npm pack --json --pack-destination output/box2d/ci/package > output/box2d/ci/package/pack.json
       - name: Run complete official and AIR acceptance on three engines
         run: |
