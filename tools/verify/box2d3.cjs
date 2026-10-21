@@ -11,6 +11,7 @@ const { transformSync } = require('esbuild');
 const { PNG } = require('pngjs');
 const playwright = require('playwright');
 const { launchOptions } = require('./browser-engines.cjs');
+const { capturePresentedFrame } = require('./box2d3-presentation.cjs');
 const root = path.resolve(__dirname, '../..');
 const arg = (name, fallback) =>
     process.argv
@@ -50,6 +51,7 @@ function inputs() {
         'src/air/bootstrap.ts',
         'src/air/index.ts',
         'tools/verify/box2d3.cjs',
+        'tools/verify/box2d3-presentation.cjs',
         'tools/verify/box2d3-integration.js',
     ];
     return Object.fromEntries(names.map((name) => [name, hash(path.join(root, name))]));
@@ -301,7 +303,11 @@ async function integration(browser, base, report) {
         l.physics.debugDrawFlags = 1;
         for (let i = 0; i < 3; i++) await l.clock.step();
     });
-    await page.screenshot({ path: path.join(attempt, 'integration-debug.png') });
+    // Retain the immediate frame too: it is diagnostic, not acceptance evidence.
+    await page.screenshot({ path: path.join(attempt, 'integration-debug-before-presentation.png') });
+    report.integration.debugPresentation = await capturePresentedFrame(page, {
+        path: path.join(attempt, 'integration-debug.png'),
+    });
     const greenCount = (file) => {
         const image = PNG.sync.read(fs.readFileSync(file));
         let count = 0;
@@ -313,6 +319,10 @@ async function integration(browser, base, report) {
         return count;
     };
     const debugPixels = greenCount(path.join(attempt, 'integration-debug.png'));
+    report.integration.debugPresentation.immediatePixels = greenCount(
+        path.join(attempt, 'integration-debug-before-presentation.png'),
+    );
+    report.integration.debugPresentation.presentedPixels = debugPixels;
     report.integration.debugState = await page.evaluate(() => {
         const l = window.box2d3Lab,
             n = l.scene.getChildByName('Canvas')?.getChildByName('Box2D3 Debug'),
@@ -347,8 +357,15 @@ async function integration(browser, base, report) {
         l.physics.debugDrawFlags = 0;
         await l.clock.step();
     });
-    await page.screenshot({ path: path.join(attempt, 'integration.png') });
+    await page.screenshot({ path: path.join(attempt, 'integration-disabled-before-presentation.png') });
+    report.integration.disabledPresentation = await capturePresentedFrame(page, {
+        path: path.join(attempt, 'integration.png'),
+    });
     const disabledDebugPixels = greenCount(path.join(attempt, 'integration.png'));
+    report.integration.disabledPresentation.immediatePixels = greenCount(
+        path.join(attempt, 'integration-disabled-before-presentation.png'),
+    );
+    report.integration.disabledPresentation.presentedPixels = disabledDebugPixels;
     assert(disabledDebugPixels < debugPixels / 4, 'disabling debug flags must clear the visible overlay');
     report.integration.debug = { debugPixels, disabledDebugPixels };
     report.integration.image = pixels(path.join(attempt, 'integration.png'));
