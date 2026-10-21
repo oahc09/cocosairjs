@@ -1,6 +1,7 @@
 # CI scopes and same-head artifacts
 
-`Code quality / quality` is the only ordinary pull-request workflow. It also runs
+`Code quality / quality` is the general pull-request workflow. Box2D acceptance is a
+separate path-selected physics regression workflow (see below). It also runs
 on main pushes and release tags. All jobs use read-only contents access; no branch
 protection or repository permissions are changed. At implementation review, main
 had no enforced required contexts. The former `recipes` and `skills-p1` workflows
@@ -73,3 +74,44 @@ prose-only run are not equivalent performance samples.
 rename/delete/mode changes, scope classification, a failing piped CPU command,
 required failure/cancel/skip propagation, source identity and workflow structure.
 This is a small policy regression suite, not a replacement for engine acceptance.
+
+## Box2D mainline acceptance
+
+`.github/workflows/box2d3.yml` runs a cheap selection job for PRs targeting main,
+pushes to main and the existing `feat/box2d-*` branches. Manual dispatch always
+selects acceptance. PRs test the checkout merge SHA against the PR base SHA;
+pushes compare the event's before SHA to its current SHA.
+
+`tools/ci/box2d-scope.cjs` reads the full NUL-delimited Git diff with rename
+detection disabled, so old and new names, deleted files and mode changes count.
+It avoids the workflow-level paths filter's 300-file limit. Missing revisions,
+zero before SHA, unreadable or oversized diffs and empty diffs select acceptance.
+Selection job failure or missing output also selects acceptance unless cancelled.
+
+Selection includes all src/vendor/build inputs, build/dev tooling, Box2D
+collectors, shared browser launch policy, published-artifact verification,
+Box2D lab, dependency manifests/lockfile and runtime/package configuration.
+All src changes intentionally count: physics uses shared scene, scheduling,
+math, PAL, graphics and package entry points. Markdown/text prose is excluded;
+other examples, Skills and unrelated workflows/tools do not select the expensive
+matrix. When collectors gain new dependencies outside these paths, update the
+selector and its tests in the same change.
+
+Selected runs preserve Ubuntu 24.04 and Windows 2025, fail-fast false,
+Chromium/Firefox/WebKit full-scope official and AIR checks, frozen-source/native
+regressions, fresh build:all and installed development/minified tarball checks.
+Existing always-run output/box2d artifact retention remains unchanged. A failed
+browser stops the remaining loop on that platform as before; failure is not
+reported as full completion. PR, push and manual concurrency groups are separate.
+
+Run `node --test tools/ci/box2d-scope.test.cjs` for selection regressions. This is
+configuration/policy validation, not browser physics acceptance. A skipped matrix
+means the change was classified unrelated, never a new browser PASS. Required
+check policy remains unchanged; any future unconditional required check must
+account for deliberately skipped acceptance jobs.
+
+Validate event routing in GitHub after applying: a related PR to main must run
+both platforms; a docs-only PR must skip both; a main merge containing related
+code must independently run both. Retain run URL, event, SHA, job conclusions and
+artifacts. Manual dispatch can validate the matrix but cannot prove PR/push
+event routing. Existing branch PASS records cannot certify a new merge SHA.

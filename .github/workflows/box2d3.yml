@@ -1,16 +1,44 @@
 name: Box2D acceptance
 "on":
   workflow_dispatch: null
+  pull_request:
+    branches:
+      - main
   push:
     branches:
+      - main
       - feat/box2d-*
 permissions:
   contents: read
 concurrency:
-  group: box2d-acceptance-${{ github.ref }}
+  group: box2d-acceptance-${{ github.event_name }}-${{ github.ref }}
   cancel-in-progress: true
 jobs:
+  changes:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    outputs:
+      run: ${{ steps.scope.outputs.run }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.23.3
+      - name: Check Box2D CI selection policy
+        run: node --test tools/ci/box2d-scope.test.cjs
+      - name: Select acceptance from complete Git diff
+        id: scope
+        env:
+          CI_EVENT: ${{ github.event_name }}
+          CI_BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
+          CI_HEAD: ${{ github.sha }}
+        run: node tools/ci/box2d-scope.cjs
   acceptance:
+    needs: changes
+    if: ${{ always() && !cancelled() && (needs.changes.result != 'success' || needs.changes.outputs.run != 'false') }}
     strategy:
       fail-fast: false
       matrix:
