@@ -28,7 +28,7 @@ jobs:
         with:
           node-version: 22.23.3
       - name: Check Box2D CI selection policy
-        run: node --test tools/ci/box2d-scope.test.cjs
+        run: node --test tools/ci/box2d-scope.test.cjs tools/verify/box2d3-presentation.test.cjs
       - name: Select acceptance from complete Git diff
         id: scope
         env:
