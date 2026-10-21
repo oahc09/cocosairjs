@@ -49,7 +49,10 @@ npm run build:dts
 - Distance 映射为仅限制最大距离的 Distance joint；Spring、Fixed、Relative、Slider、Wheel、Hinge 对应新版约束。Spring 的频率为 0 时保持刚性距离约束，距离按上游稳定下限处理。
   Mouse 使用官方 3.2 的 Motor joint 拖拽方式。Relative 的 correction factor 转为频率控制，不能保证与旧求解器逐帧数值相同。
 - BEGIN 在首次 pre-solve 观察时派发，PRE 在求解器回调内派发，POST 使用求解后的实际接触冲量；Sensor 使用原始传感器事件。
-  接触事件中的组件销毁、启停与形状重建延后到安全步进边界。
+  接触事件中的组件销毁、启停与形状重建延后到安全步进边界。休眠接触保留至真正分离，但不会重复派发旧冲量的 POST；入睡前最后一个求解步仍派发。
+- BEGIN/PRE 回调内可同步调用点查询、AABB 查询和射线查询。点/AABB 不受碰撞矩阵限制；射线只按调用者 mask 与碰撞体 group 筛选，
+  不受目标碰撞体自身 mask 限制，包括 mask 为 0 的形状。传感器参与查询，禁用刚体不参与。
+  为兼容锁定回调及上述筛选语义，查询遍历桥接层形状而不调用锁定期间禁止的 world broadphase 查询；单次查询成本为 O(已注册形状总数)，请避免在大型世界中高频全量查询。
 - `disabled`、`disabledOnce` 和逐接触材质由适配层保存；固定版本的小型原生桥写入当前 ContactSim，
   不改变其他接触或 shape 材质。升级上游时必须重新检查结构与物理效果。
 - 局部 manifold 由新版世界流形重建；它不是旧 Box2D 的内部布局。跨后端比较应使用世界接触点、法线与分离距离。
@@ -65,6 +68,7 @@ npm run build:dts
 官方清单固定为 147 个注册案例，包含 Replay Viewer；原始案例与模拟逻辑直接编译，桌面宿主由浏览器替代。
 
 ```powershell
+node tools/verify/box2d3-native.mjs
 # 使用配置好的 Playwright 依赖与浏览器；按需设置 NODE_PATH 和 PLAYWRIGHT_BROWSERS_PATH
 node tools/verify/box2d3.cjs --engine=chromium --scope=all
 node tools/verify/box2d3.cjs --engine=firefox --scope=all

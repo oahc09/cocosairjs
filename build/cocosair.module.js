@@ -137584,6 +137584,7 @@ class Box2D3World {
         this.seen.add(pair(o.a, o.b));
         if (!this.shapes.has(o.a) || !this.shapes.has(o.b)) continue;
         const c = this.contact(o);
+        if (!o.solved) continue;
         c.post = true;
         c.emit(Contact2DType.POST_SOLVE);
         c.post = false;
@@ -138622,8 +138623,8 @@ class MouseJoint extends BaseJoint {
 
 const AIR_VERSION = '1.0.0';
 const AIR_REVISION = 100;
-const AIR_BUILD_DATE = "202610201944";
-const AIR_BUILD_NUMBER = 198;
+const AIR_BUILD_DATE = "202610211000";
+const AIR_BUILD_NUMBER = 200;
 class AirAppImpl {
   get session() {
     return this._scope;

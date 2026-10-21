@@ -74195,6 +74195,8 @@
             a: number;
             b: number;
             id?: string;
+            /** Present on post-step snapshots; sleeping contacts are retained but were not solved. */
+            solved?: boolean;
             normal: _air_physics_2d_box2d3__XY;
             points: {
                 x: number;

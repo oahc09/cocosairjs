@@ -4,13 +4,14 @@
 #include <box2d/math_functions.h>
 #include <map>
 #include <vector>
+#include <set>
 #include <cmath>
 #include <stdexcept>
 #include <string>
 using emscripten::val;
 extern "C" void airSetContactMaterial(b2Manifold*, float, float, float);
 static unsigned nextHandle = 1;
-struct World { b2WorldId id; val pre; World(b2WorldId i, val p): id(i), pre(p) {} };
+struct World { b2WorldId id; val pre; std::set<unsigned> steppedBodies; World(b2WorldId i, val p): id(i), pre(p) {} };
 static std::map<unsigned, World> worlds;
 struct Body { b2BodyId id; unsigned world; };
 struct Shape { b2ShapeId id; unsigned body; };
@@ -118,20 +119,45 @@ static unsigned createShape(unsigned b,std::string kind,val o) {
 static void destroyShape(unsigned h) {auto it=shapes.find(h);if(it!=shapes.end()){b2DestroyShape(it->second.id,true);shapes.erase(it);}}
 static void shapeFilter(unsigned h,unsigned category,unsigned mask) {auto s=shapes.at(h).id;auto f=b2Shape_GetFilter(s);f.categoryBits=category;f.maskBits=mask;b2Shape_SetFilter(s,f);}
 static val shapeBounds(unsigned h) {auto a=b2Shape_GetBounds(shapes.at(h).id);val o=val::object();o.set("lower",vec(a.lowerBound));o.set("upper",vec(a.upperBound));return o;}
+// Cocos queries filter ray hits by category, not by the shape's collision mask.
+// The world-query APIs both apply two-sided filtering and reject a locked world.
+// Read-only shape queries preserve that contract even inside synchronous PRE_SOLVE.
+// This bridge is single-threaded; mutations remain deferred by the TS adapter.
 static val query(unsigned w,std::string kind,val o) {
-    val result=val::array();auto world=worlds.at(w).id;
-    if(kind=="ray") { b2QueryFilter f=b2DefaultQueryFilter();f.maskBits=(uint32_t)number(o,"mask",4294967295.0);
-        b2World_CastRay(world,{(float)number(o,"x"),(float)number(o,"y")},{(float)number(o,"dx"),(float)number(o,"dy")},f,
-            [](b2ShapeId s,b2Pos p,b2Vec2 n,float fraction,void* c)->float{val row=val::object();row.set("shape",shapeHandle(s));row.set("point",vec({p.x,p.y}));row.set("normal",vec(n));row.set("fraction",fraction);((val*)c)->call<void>("push",row);return 1;},&result);
-    } else {struct Context{val* rows;bool point;b2Pos p;} c={&result,kind=="point",{(float)number(o,"x"),(float)number(o,"y")}};
-        b2AABB bounds=kind=="point"?b2AABB{{c.p.x-0.0001f,c.p.y-0.0001f},{c.p.x+0.0001f,c.p.y+0.0001f}}:b2AABB{{(float)number(o,"x"),(float)number(o,"y")},{(float)number(o,"maxX"),(float)number(o,"maxY")}};
-        b2World_OverlapAABB(world,b2Pos_zero,bounds,b2DefaultQueryFilter(),[](b2ShapeId s,void* ptr)->bool {auto* c=(Context*)ptr;if(!c->point||b2Shape_TestPoint(s,c->p))c->rows->call<void>("push",shapeHandle(s));return true;},&c);
-    }return result;
+    worlds.at(w); // Validate the world handle even when it owns no shapes.
+    val result=val::array();
+    b2Pos origin={(float)number(o,"x"),(float)number(o,"y")};
+    b2Vec2 translation={(float)number(o,"dx"),(float)number(o,"dy")};
+    uint32_t mask=(uint32_t)number(o,"mask",4294967295.0);
+    b2AABB bounds={{origin.x,origin.y},{(float)number(o,"maxX"),(float)number(o,"maxY")}};
+    if(kind!="ray"&&kind!="point"&&kind!="aabb")throw std::invalid_argument("unknown query kind");
+    for(const auto& [h,shape]:shapes) {
+        const auto& body=bodies.at(shape.body);
+        if(body.world!=w||!b2Body_IsEnabled(body.id))continue;
+        if(kind=="ray") {
+            if((b2Shape_GetFilter(shape.id).categoryBits&mask)==0)continue;
+            auto hit=b2Shape_CastRay(shape.id,origin,translation);
+            if(!hit.hit)continue;
+            val row=val::object();row.set("shape",h);row.set("point",vec({hit.point.x,hit.point.y}));
+            row.set("normal",vec(hit.normal));row.set("fraction",hit.fraction);result.call<void>("push",row);
+        } else if(kind=="point") {
+            if(b2Shape_TestPoint(shape.id,origin))result.call<void>("push",h);
+        } else {
+            auto a=b2Shape_GetBounds(shape.id);
+            if(a.lowerBound.x<=bounds.upperBound.x&&a.upperBound.x>=bounds.lowerBound.x&&
+               a.lowerBound.y<=bounds.upperBound.y&&a.upperBound.y>=bounds.lowerBound.y)
+                result.call<void>("push",h);
+        }
+    }
+    return result;
 }
 static val contacts(unsigned w) {
     val rows=val::array();auto world=worlds.at(w).id;
     for(auto& [h,b]:bodies) { if(b.world!=w)continue;int capacity=b2Body_GetContactCapacity(b.id);std::vector<b2ContactData> data(capacity);int count=b2Body_GetContactData(b.id,data.data(),capacity);
-        for(int i=0;i<count;++i){auto& c=data[i];if(!B2_ID_EQUALS(b2Shape_GetBody(c.shapeIdA),b.id))continue;val row=manifoldValue(c.shapeIdA,c.shapeIdB,c.manifold);uint32_t key[3];b2StoreContactId(c.contactId,key);row.set("id",std::to_string(key[0])+":"+std::to_string(key[1])+":"+std::to_string(key[2]));rows.call<void>("push",row);}}
+        for(int i=0;i<count;++i){auto& c=data[i];if(!B2_ID_EQUALS(b2Shape_GetBody(c.shapeIdA),b.id))continue;val row=manifoldValue(c.shapeIdA,c.shapeIdB,c.manifold);uint32_t key[3];b2StoreContactId(c.contactId,key);row.set("id",std::to_string(key[0])+":"+std::to_string(key[1])+":"+std::to_string(key[2]));
+            auto& stepped=worlds.at(w).steppedBodies;
+            unsigned other=(uintptr_t)b2Body_GetUserData(b2Shape_GetBody(c.shapeIdB));
+            row.set("solved",stepped.count(h)!=0||stepped.count(other)!=0);rows.call<void>("push",row);}}
     return rows;
 }
 static val events(unsigned w) {
@@ -140,7 +166,22 @@ static val events(unsigned w) {
     for(int i=0;i<s.endCount;++i){val r=val::object();r.set("a",shapeHandle(s.endEvents[i].sensorShapeId));r.set("b",shapeHandle(s.endEvents[i].visitorShapeId));end.call<void>("push",r);}
     o.set("begin",begin);o.set("end",end);return o;
 }
-static void step(unsigned w,float dt,int count) {if(!(dt>=0)||!std::isfinite(dt)||count<1||count>64)throw std::invalid_argument("invalid step");b2World_Step(worlds.at(w).id,dt,count);}
+static void step(unsigned w,float dt,int count) {
+    if(!(dt>=0)||!std::isfinite(dt)||count<1||count>64)throw std::invalid_argument("invalid step");
+    auto& world=worlds.at(w);world.steppedBodies.clear();
+    // ContactData also includes sleeping contacts with retained impulses. Keep a
+    // per-step activity record rather than treating that snapshot as solver events.
+    // Sample both boundaries: preserve the final solved tick before sleep and
+    // contacts whose bodies were woken by collisions during this tick. Recycled
+    // manifolds may still solve without invoking the pre-solve callback.
+    auto rememberAwake=[&]() {
+        for(const auto& [h,b]:bodies)
+            if(b.world==w&&b2Body_IsEnabled(b.id)&&b2Body_IsAwake(b.id))world.steppedBodies.insert(h);
+    };
+    if(dt>0)rememberAwake();
+    b2World_Step(world.id,dt,count);
+    if(dt>0)rememberAwake();
+}
 static void worldCommand(unsigned w,std::string op,val o) {auto id=worlds.at(w).id;if(op=="gravity")b2World_SetGravity(id,readVec(o));else if(op=="allowSleep")b2World_EnableSleeping(id,flag(o,"value"));else throw std::invalid_argument("unknown world command");}
 static val stats(unsigned w) {val o=val::object();auto c=b2World_GetCounters(worlds.at(w).id);o.set("bodies",c.bodyCount);o.set("shapes",c.shapeCount);o.set("joints",c.jointCount);o.set("contacts",c.contactCount);o.set("worlds",worlds.size());return o;}
 static unsigned createJoint(unsigned w,std::string kind,unsigned a,unsigned b,val o) {

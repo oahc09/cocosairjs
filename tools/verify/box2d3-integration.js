@@ -41,10 +41,29 @@ export async function run(lab) {
             post = 0,
             impulse = 0,
             ended = 0;
-        box.collider.on(air.Contact2DType.BEGIN_CONTACT, () => begin++);
+        let callbackQueries = 0,
+            finalSleepPosts = 0;
+        const queryDuringContact = () => {
+            const point = physics.testPoint(new air.Vec2(640, 100));
+            const area = physics.testAABB(new air.Rect(630, 90, 20, 20));
+            const ray = physics.raycast(new air.Vec2(640, 50), new air.Vec2(640, 150), air.ERaycast2DType.All, 1);
+            if (
+                !point.includes(floor.collider) ||
+                !area.includes(floor.collider) ||
+                !ray.some((hit) => hit.collider === floor.collider)
+            )
+                throw Error('query inside contact lost floor');
+            callbackQueries++;
+        };
+        box.collider.on(air.Contact2DType.BEGIN_CONTACT, () => {
+            begin++;
+            queryDuringContact();
+        });
+        box.collider.on(air.Contact2DType.PRE_SOLVE, queryDuringContact);
         box.collider.on(air.Contact2DType.END_CONTACT, () => ended++);
         box.collider.on(air.Contact2DType.POST_SOLVE, (_a, _b, c) => {
             post++;
+            if (box.body.impl.isSleeping) finalSleepPosts++;
             impulse = Math.max(impulse, ...(c.getImpulse()?.normalImpulses ?? [0]));
             worldManifold = c.getWorldManifold();
         });
@@ -60,6 +79,17 @@ export async function run(lab) {
             begin > 0 && post > 0 && impulse > 0 && initialY - box.node.worldPosition.y > 150,
             { begin, post, impulse },
         );
+        check('BEGIN/PRE spatial queries preserve the running world', callbackQueries > begin && begin > 0, {
+            callbackQueries,
+            begin,
+        });
+        check(
+            'last solved tick is delivered even when body falls asleep',
+            box.body.impl.isSleeping && finalSleepPosts === 1,
+            { sleeping: box.body.impl.isSleeping, finalSleepPosts },
+        );
+        const sleepingPost = post,
+            sleepingEnd = ended;
         const stable = box.node.worldPosition.y;
         check(
             'world manifold matches the actual ground surface',
@@ -69,6 +99,15 @@ export async function run(lab) {
             worldManifold,
         );
         await frames(30);
+        check(
+            'sleeping contacts do not replay POST_SOLVE or synthesize END',
+            post === sleepingPost && ended === sleepingEnd,
+            {
+                sleepingPost,
+                post,
+                ended,
+            },
+        );
         check('rest remains stable', Math.abs(stable - box.node.worldPosition.y) < 0.1, {
             stable,
             y: box.node.worldPosition.y,
@@ -92,12 +131,19 @@ export async function run(lab) {
             aabb.includes(box.collider),
             aabb.map((c) => c.node.name),
         );
+        box.body.wakeUp();
+        await frames(1);
+        check('waking a retained contact resumes POST_SOLVE', post > sleepingPost, { sleepingPost, post });
         box.node.setWorldPosition(500, 420, 0);
         await frames(2);
-        check('Node transform updates physics and ends old contact', box.node.worldPosition.y > 410 && ended > 0, {
-            y: box.node.worldPosition.y,
-            ended,
-        });
+        check(
+            'Node transform updates physics and ends old contact',
+            box.node.worldPosition.y > 410 && ended > sleepingEnd,
+            {
+                y: box.node.worldPosition.y,
+                ended,
+            },
+        );
         box.body.gravityScale = 0;
         box.body.linearVelocity = new air.Vec2(2, 0);
         const x = box.node.worldPosition.x;
@@ -179,6 +225,49 @@ export async function run(lab) {
             entered > 0 && left > 0 && ball.node.worldPosition.y < 180,
             { entered, left, y: ball.node.worldPosition.y },
         );
+
+        await clear();
+        const queryOnly = spawn('polygon', 640, 250, air.ERigidBody2DType.Static);
+        queryOnly.collider.group = 2;
+        queryOnly.collider.sensor = true;
+        queryOnly.collider.apply();
+        for (const mask of [2, 0]) {
+            physics.collisionMatrix[2] = mask;
+            await frames(2);
+            const p = new air.Vec2(630, 240);
+            const area = physics.testAABB(new air.Rect(610, 220, 60, 60));
+            const start = new air.Vec2(600, 240),
+                end = new air.Vec2(680, 240);
+            const all = physics.raycast(start, end, air.ERaycast2DType.All, 2);
+            const closest = physics.raycast(start, end, air.ERaycast2DType.AllClosest, 2);
+            check(
+                `query ignores collider collision mask ${mask}, including sensors`,
+                physics.testPoint(p).includes(queryOnly.collider) &&
+                    area.filter((c) => c === queryOnly.collider).length === 1 &&
+                    all.length > 1 &&
+                    all.every((r) => r.collider === queryOnly.collider && r.fixtureIndex >= 0) &&
+                    new Set(all.map((r) => r.fixtureIndex)).size === all.length &&
+                    closest.length === 1 &&
+                    closest[0].fraction === Math.min(...all.map((r) => r.fraction)) &&
+                    physics.raycast(start, end, air.ERaycast2DType.All, 1).length === 0 &&
+                    physics.raycast(start, end, air.ERaycast2DType.All, 0).length === 0,
+                {
+                    mask,
+                    all: all.map((r) => ({ fixtureIndex: r.fixtureIndex, fraction: r.fraction })),
+                    closest: closest.map((r) => ({ fixtureIndex: r.fixtureIndex, fraction: r.fraction })),
+                },
+            );
+        }
+        queryOnly.node.active = false;
+        await frames(2);
+        check(
+            'mask-independent queries still exclude disabled bodies',
+            physics.testPoint(new air.Vec2(630, 240)).length === 0 &&
+                physics.testAABB(new air.Rect(610, 220, 60, 60)).length === 0 &&
+                physics.raycast(new air.Vec2(600, 240), new air.Vec2(680, 240), air.ERaycast2DType.All, 2).length === 0,
+            {},
+        );
+        physics.collisionMatrix[2] = 0xffffffff;
 
         await clear();
         const filteredFloor = spawn('floor', 640, 100, air.ERigidBody2DType.Static),

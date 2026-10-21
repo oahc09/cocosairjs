@@ -54,6 +54,8 @@ interface Observation {
     a: number;
     b: number;
     id?: string;
+    /** Present on post-step snapshots; sleeping contacts are retained but were not solved. */
+    solved?: boolean;
     normal: XY;
     points: {
         x: number;
@@ -274,6 +276,7 @@ class Box2D3World {
                 this.seen.add(pair(o.a, o.b));
                 if (!this.shapes.has(o.a) || !this.shapes.has(o.b)) continue;
                 const c = this.contact(o);
+                if (!o.solved) continue;
                 c.post = true;
                 c.emit(Contact2DType.POST_SOLVE);
                 c.post = false;
