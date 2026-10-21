@@ -1,0 +1,471 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "acceptedAt": "2026-10-19T17:42:18.513Z",
+  "branch": "feat/box2d-3.2-wasm",
+  "baseCommit": "a21d49bd4f68054e22242609bca2da50eccd054d",
+  "projectVersion": "1.0.0",
+  "upstream": {
+    "version": "3.2.0",
+    "commit": "178495ba35695aefe9c321e569d2277f06db3b90",
+    "source": "https://github.com/erincatto/box2d/tree/v3.2.0"
+  },
+  "compiler": "emcc (Emscripten gcc/clang-like replacement + linker emulating GNU ld) 4.0.21 (d6f42310010ddec0753a69bab01a4b33aae255b7)",
+  "scope": {
+    "precision": "float",
+    "threads": "single",
+    "simd": false,
+    "renderer": "WebGL2",
+    "platform": "Windows desktop",
+    "officialSamplesPerBrowser": 147,
+    "airAssertionsPerBrowser": 47,
+    "stepsPerOfficialSample": 120,
+    "determinismSteps": 1000,
+    "officialConfigurations": "Default configurations; original constructors and Sample::Step. Replay uses a recorded collision fixture. Desktop GUI parameter combinations are not an exhaustive acceptance claim.",
+    "canonicalExampleCampaignUpdated": false
+  },
+  "browsers": [
+    {
+      "engine": "chromium",
+      "version": "151.0.7922.34",
+      "report": "output/box2d/acceptance/2026-10-19T17-28-20-666Z-chromium-all/report.json",
+      "sha256": "8419f22b6cc841fe4e2d629c71f0e88b71892c3bfcb8a4d4635fcb456c30f2d5",
+      "officialPassed": 147,
+      "airAssertionsPassed": 47,
+      "debug": {
+        "debugPixels": 320,
+        "disabledDebugPixels": 0
+      },
+      "drag": {
+        "x": 880,
+        "y": 470,
+        "stats": {
+          "bodies": 4,
+          "shapes": 1,
+          "joints": 1,
+          "contacts": 0,
+          "worlds": 1
+        }
+      },
+      "closed": {
+        "bodies": 0,
+        "shapes": 0,
+        "joints": 0,
+        "contacts": 0,
+        "worlds": 0
+      },
+      "shutdown": {
+        "boundary": {
+          "acknowledged": true,
+          "applicationPass": true,
+          "official": {
+            "acknowledged": true,
+            "release": {
+              "bytes": 0,
+              "baselineBytes": 0,
+              "released": true
+            }
+          },
+          "integration": {
+            "acknowledged": true,
+            "closed": {
+              "bodies": 0,
+              "shapes": 0,
+              "joints": 0,
+              "contacts": 0,
+              "worlds": 0
+            }
+          }
+        },
+        "pid": 40440,
+        "exited": true,
+        "closed": true,
+        "exitStatus": {
+          "code": 0,
+          "signal": null
+        },
+        "closeStatus": {
+          "code": 0,
+          "signal": null
+        },
+        "pidGone": true,
+        "elapsedMs": 342,
+        "waitContract": "ChildProcess exit+close; ECHILD not applicable on Windows"
+      }
+    },
+    {
+      "engine": "firefox",
+      "version": "153.0",
+      "report": "output/box2d/acceptance/2026-10-19T17-28-20-666Z-firefox-all/report.json",
+      "sha256": "13e8cf273682b43ec3cab32b0c0ff82262a56a0c086e250d278cfd1785982818",
+      "officialPassed": 147,
+      "airAssertionsPassed": 47,
+      "debug": {
+        "debugPixels": 320,
+        "disabledDebugPixels": 0
+      },
+      "drag": {
+        "x": 880,
+        "y": 470,
+        "stats": {
+          "bodies": 4,
+          "shapes": 1,
+          "joints": 1,
+          "contacts": 0,
+          "worlds": 1
+        }
+      },
+      "closed": {
+        "bodies": 0,
+        "shapes": 0,
+        "joints": 0,
+        "contacts": 0,
+        "worlds": 0
+      },
+      "shutdown": {
+        "boundary": {
+          "acknowledged": true,
+          "applicationPass": true,
+          "official": {
+            "acknowledged": true,
+            "release": {
+              "bytes": 0,
+              "baselineBytes": 0,
+              "released": true
+            }
+          },
+          "integration": {
+            "acknowledged": true,
+            "closed": {
+              "bodies": 0,
+              "shapes": 0,
+              "joints": 0,
+              "contacts": 0,
+              "worlds": 0
+            }
+          }
+        },
+        "pid": 33848,
+        "exited": true,
+        "closed": true,
+        "exitStatus": {
+          "code": 0,
+          "signal": null
+        },
+        "closeStatus": {
+          "code": 0,
+          "signal": null
+        },
+        "pidGone": true,
+        "elapsedMs": 242,
+        "waitContract": "ChildProcess exit+close; ECHILD not applicable on Windows"
+      }
+    },
+    {
+      "engine": "webkit",
+      "version": "26.5",
+      "report": "output/box2d/acceptance/2026-10-19T17-28-20-666Z-webkit-all/report.json",
+      "sha256": "d4f0fc7e8f7b9fa6a706dae1b0bbe5ef5a1b0fc5703132bdf1e4dcfbe4fff8ae",
+      "officialPassed": 147,
+      "airAssertionsPassed": 47,
+      "debug": {
+        "debugPixels": 320,
+        "disabledDebugPixels": 0
+      },
+      "drag": {
+        "x": 880,
+        "y": 470,
+        "stats": {
+          "bodies": 4,
+          "shapes": 1,
+          "joints": 1,
+          "contacts": 0,
+          "worlds": 1
+        }
+      },
+      "closed": {
+        "bodies": 0,
+        "shapes": 0,
+        "joints": 0,
+        "contacts": 0,
+        "worlds": 0
+      },
+      "shutdown": {
+        "boundary": {
+          "acknowledged": true,
+          "applicationPass": true,
+          "official": {
+            "acknowledged": true,
+            "release": {
+              "bytes": 0,
+              "baselineBytes": 0,
+              "released": true
+            }
+          },
+          "integration": {
+            "acknowledged": true,
+            "closed": {
+              "bodies": 0,
+              "shapes": 0,
+              "joints": 0,
+              "contacts": 0,
+              "worlds": 0
+            }
+          }
+        },
+        "pid": 28796,
+        "exited": true,
+        "closed": true,
+        "exitStatus": {
+          "code": 0,
+          "signal": null
+        },
+        "closeStatus": {
+          "code": 0,
+          "signal": null
+        },
+        "pidGone": true,
+        "elapsedMs": 52,
+        "waitContract": "ChildProcess exit+close; ECHILD not applicable on Windows"
+      }
+    }
+  ],
+  "determinism": [
+    {
+      "engine": "chromium",
+      "cases": [
+        {
+          "name": "Falling Hinges",
+          "text": [
+            "sleep step = 299, hash = 0x465F3DF4"
+          ]
+        },
+        {
+          "name": "Rollback",
+          "text": [
+            "sleep step = 299, hash = 0x465F3DF4"
+          ]
+        }
+      ]
+    },
+    {
+      "engine": "firefox",
+      "cases": [
+        {
+          "name": "Falling Hinges",
+          "text": [
+            "sleep step = 299, hash = 0x465F3DF4"
+          ]
+        },
+        {
+          "name": "Rollback",
+          "text": [
+            "sleep step = 299, hash = 0x465F3DF4"
+          ]
+        }
+      ]
+    },
+    {
+      "engine": "webkit",
+      "cases": [
+        {
+          "name": "Falling Hinges",
+          "text": [
+            "sleep step = 299, hash = 0x465F3DF4"
+          ]
+        },
+        {
+          "name": "Rollback",
+          "text": [
+            "sleep step = 299, hash = 0x465F3DF4"
+          ]
+        }
+      ]
+    }
+  ],
+  "inputs": {
+    "vendor/box2d/manifest.json": "a6ddaa79883b819e664e349c696845e9cdff38f9b2bf3f96ddb5f69782a4480f",
+    "vendor/box2d/runtime/receipt.json": "0b44d7002b81d10bd2940fcfae23640d3d752676931f1aac9e14795dca4f633f",
+    "build/cocosair.module.js": "41913cdb676c0809c52f3444c207fae08f942c83b98ed99165a8d38bb44bcd86",
+    "build/box2d3/air-box2d.mjs": "6b8598ff980522ff8b09aad350588411d9aaa7fcc9600584d912db34b698eec4",
+    "build/box2d3/air-box2d.wasm": "542f80a7eaf9c47a1a552e448abe4740d31cf546ed04e362d71ed763a4d189db",
+    "build/box2d3-samples/air-box2d-samples.mjs": "2a91fd24b7f014a7e48d0e453da1b0b0e374eddd8daddaf17fd69fb83874c164",
+    "build/box2d3-samples/air-box2d-samples.wasm": "df9d3537a801f5db6a71783fe0f7d2ef360101f66d68d42b168edaaba3003e00",
+    "src/air/physics-2d/box2d3.ts": "c1793f73436e78651f7445a38b39892e62f026b85c90cfdb4c540640d21882d5",
+    "examples/box2d3-lab/src/main.ts": "c2f1dbe8c1c51f778a362a9ffb13346a10d9200f2ac4ca88501b49f949cca67d",
+    "examples/box2d3-lab/src/official.ts": "38f28c861dda49ed8216aadd55b9a99b6b3a304c4eeddee44c46ee60e00abcd0",
+    "examples/box2d3-lab/index.html": "0fdbc66dd7e6304d12df71913d4e79a5799613783517c33abe28d8f450feb1f1",
+    "examples/box2d3-lab/official.html": "719d42513220197a97656787c81e1e0a9fa105a73ed5153ff2e74805abf41c20",
+    "src/air/app.ts": "32523c84d5f2efb3af6afe17cff613679c1f0d0f53798f8049ebd1d2f173c714",
+    "src/air/app-config.ts": "68d1a6ea8a9f58f0a2a8d7002be2e8ee168031692baafa7e82481d364a19f02f",
+    "src/air/bootstrap.ts": "1f625d061489e4c31c235044733b27917d28e8563618275dea494a5ef98ea99c",
+    "src/air/index.ts": "1d2aea35bb8b17fe818486340d5e7718f1c12ad7badf491ac754f6de36801fdb",
+    "tools/verify/box2d3.cjs": "4179f5d84fb6d0257b8ca69582743912cd9a401a1316cecad885c89dbae9bf1a",
+    "tools/verify/box2d3-integration.js": "dbbd17a4cdcb797bd64010d120491a057ecd26e648c1de80e890a4025383a2ea"
+  },
+  "staticGates": {
+    "pass": true,
+    "results": [
+      {
+        "name": "typecheck",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 7486,
+        "log": "output/box2d/final-typecheck.log"
+      },
+      {
+        "name": "format-global",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 12776,
+        "log": "output/box2d/final-format-global.log"
+      },
+      {
+        "name": "format-focused",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 850,
+        "log": "output/box2d/final-format-focused.log"
+      },
+      {
+        "name": "file-map",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 6751,
+        "log": "output/box2d/final-file-map.log"
+      },
+      {
+        "name": "licenses",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 1309,
+        "log": "output/box2d/final-licenses.log"
+      },
+      {
+        "name": "doc-refs",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 1862,
+        "log": "output/box2d/final-doc-refs.log"
+      },
+      {
+        "name": "web-only",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 8144,
+        "log": "output/box2d/final-web-only.log"
+      },
+      {
+        "name": "bootstrap-regression",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 15529,
+        "log": "output/box2d/final-bootstrap-regression.log"
+      }
+    ]
+  },
+  "package": {
+    "filename": "cocosair.js-1.0.0.tgz",
+    "bytes": 6750274,
+    "integrity": "sha512-m29q+5ErHsi9O7zCeBckRpiuB1syJA9UoMP76MzsbA1HI3uVizy3ay3ctZJLajy8CXCP1akPwnZfnT2Tb/nS7A==",
+    "assets": [
+      {
+        "name": "air-box2d.mjs",
+        "sha256": "6b8598ff980522ff8b09aad350588411d9aaa7fcc9600584d912db34b698eec4",
+        "bytes": 56145
+      },
+      {
+        "name": "air-box2d.wasm",
+        "sha256": "542f80a7eaf9c47a1a552e448abe4740d31cf546ed04e362d71ed763a4d189db",
+        "bytes": 376818
+      },
+      {
+        "name": "LICENSE.Box2D.txt",
+        "sha256": "68a3e676d7e94093b102d5cba0d4e04af812040d6f230c3db67a6664574e43d2",
+        "bytes": 1067
+      }
+    ]
+  },
+  "packageBrowser": {
+    "pass": true,
+    "cases": [
+      {
+        "bundle": "cocosair.module.js",
+        "y": 9.99685001373291,
+        "stats": {
+          "bodies": 3,
+          "shapes": 2,
+          "joints": 0,
+          "contacts": 1,
+          "worlds": 1
+        },
+        "closed": {
+          "bodies": 0,
+          "shapes": 0,
+          "joints": 0,
+          "contacts": 0,
+          "worlds": 0
+        },
+        "requests": [
+          "air-box2d.wasm",
+          "air-box2d.mjs"
+        ],
+        "errors": []
+      },
+      {
+        "bundle": "cocosair.module.min.js",
+        "y": 9.99685001373291,
+        "stats": {
+          "bodies": 3,
+          "shapes": 2,
+          "joints": 0,
+          "contacts": 1,
+          "worlds": 1
+        },
+        "closed": {
+          "bodies": 0,
+          "shapes": 0,
+          "joints": 0,
+          "contacts": 0,
+          "worlds": 0
+        },
+        "requests": [
+          "air-box2d.wasm",
+          "air-box2d.mjs"
+        ],
+        "errors": []
+      }
+    ],
+    "shutdown": {
+      "elapsedMs": 261,
+      "exitStatus": {
+        "code": 0,
+        "signal": null
+      },
+      "closeStatus": {
+        "code": 0,
+        "signal": null
+      }
+    }
+  },
+  "reproducibility": {
+    "rows": [
+      {
+        "name": "air-box2d.mjs",
+        "identical": true,
+        "sha256": "6b8598ff980522ff8b09aad350588411d9aaa7fcc9600584d912db34b698eec4",
+        "bytes": 56145
+      },
+      {
+        "name": "air-box2d.wasm",
+        "identical": true,
+        "sha256": "542f80a7eaf9c47a1a552e448abe4740d31cf546ed04e362d71ed763a4d189db",
+        "bytes": 376818
+      }
+    ]
+  },
+  "unrelatedBaselineAttention": [
+    "Existing spark-rs license disposition remains pending; Box2D 3.2 license entry passed."
+  ],
+  "retainedAttempts": "output/box2d/acceptance/ (all earlier failed, exploratory and invalidated attempts retained)"
+}

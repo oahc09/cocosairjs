@@ -18,13 +18,13 @@ const ENGINES = {
 const DEFAULT_LOCAL_APP_DATA = 'C:/Users/caosh/AppData/Local';
 
 function runnerOptions(engine, options) {
-    if (process.platform === 'linux' && process.env.AIR_CI_SOFTWARE_GL === '1' && engine === 'chromium') {
-        // Do not let ANGLE auto-select Mesa/OpenGL in a GPU-less Xvfb session.
+    if (process.env.AIR_CI_SOFTWARE_GL === '1' && engine === 'chromium') {
+        // Select real software WebGL2 explicitly on GPU-less hosted runners.
         return { ...options, args: [...options.args, '--use-angle=swiftshader'] };
     }
-    if (process.platform === 'linux' && process.env.AIR_CI_SOFTWARE_GL === '1' && engine === 'firefox') {
-        // Firefox blocks software WebGL2 by default on GPU-less runners. Use the
-        // real Mesa context in an Xvfb display; no engine fallback or mocked pixels.
+    if (process.env.AIR_CI_SOFTWARE_GL === '1' && engine === 'firefox') {
+        // Firefox blocks software WebGL2 by default on GPU-less runners. Keep a
+        // real headed context (Xvfb on Linux) and opt into software WebGL support.
         return { ...options, headless: false, firefoxUserPrefs: { 'webgl.force-enabled': true } };
     }
     return options;

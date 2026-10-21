@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8" />
+        <title>Box2D 3.2 · Official scenarios</title>
+        <style>
+            html,
+            body {
+                margin: 0;
+                background: #111b29;
+                color: #e7f0fc;
+                font: 15px system-ui;
+            }
+            header {
+                padding: 18px 24px;
+                display: flex;
+                gap: 15px;
+                align-items: center;
+            }
+            a {
+                color: #8ee4cd;
+            }
+            select,
+            button {
+                font: inherit;
+                padding: 7px;
+            }
+            canvas {
+                display: block;
+                width: 100%;
+                height: calc(100vh - 110px);
+            }
+            #status {
+                padding: 0 24px;
+                color: #a7bad2;
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <a href="./">AIR 集成</a
+            ><select id="sample"></select
+            ><button id="restart">重启</button><button id="pause">暂停</button><button id="step">单步</button>
+        </header>
+        <div id="status">加载官方案例…</div>
+        <canvas id="view" width="1280" height="720"></canvas>
+        <script type="module" src="./src/official.ts"></script>
+    </body>
+</html>

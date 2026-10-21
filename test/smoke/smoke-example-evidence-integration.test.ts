@@ -118,6 +118,7 @@ describe('Evidence collector integration safeguards', () => {
             'src/DebugInfos.json',
             'tools/build/runtime-layout.cjs',
             'tools/build/webgpu-assets.cjs',
+            'tools/build/box2d3.cjs',
             'tools/verify/published-artifacts.cjs',
             'src/air/builtin/register.ts',
             'package.json',
@@ -128,6 +129,8 @@ describe('Evidence collector integration safeguards', () => {
         }
         for (const file of ['build/cocosair.module.js.map', 'build/cocosair.module.min.js.map']) put(file, '{}');
         fs.cpSync(path.join(root, 'vendor/webgpu'), path.join(temp, 'vendor/webgpu'), { recursive: true });
+        fs.cpSync(path.join(root, 'vendor/box2d'), path.join(temp, 'vendor/box2d'), { recursive: true });
+        fs.cpSync(path.join(root, 'tools/build/box2d'), path.join(temp, 'tools/build/box2d'), { recursive: true });
         // Include the exact canonical dependency closure, including generated PAL helpers.
         const mathReceipt = JSON.parse(fs.readFileSync(path.join(root, 'build/math-build.json'), 'utf8'));
         for (const relative of Object.keys(mathReceipt.inputs)) {
@@ -157,6 +160,14 @@ describe('Evidence collector integration safeguards', () => {
                 fs
                     .readFileSync(path.join(temp, 'build/npm/webgpu', file))
                     .equals(fs.readFileSync(path.join(temp, 'vendor/webgpu', file))),
+            ).toBe(true);
+        }
+        const box2dReceipt = JSON.parse(fs.readFileSync(path.join(temp, 'vendor/box2d/runtime/receipt.json'), 'utf8'));
+        for (const file of [...Object.keys(box2dReceipt.files), 'receipt.json']) {
+            expect(
+                fs
+                    .readFileSync(path.join(temp, 'build/npm/box2d3', file))
+                    .equals(fs.readFileSync(path.join(temp, 'vendor/box2d/runtime', file))),
             ).toBe(true);
         }
     });

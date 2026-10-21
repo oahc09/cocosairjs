@@ -1,0 +1,300 @@
+{
+  "schema": 1,
+  "artifacts": [
+    {
+      "path": "output/box2d/merge-main/build-all.log",
+      "bytes": 23754,
+      "sha256": "736ad6180f9b11c1445296d8ce117c8c32c1ca222184b48d64c814fc4b49412f"
+    },
+    {
+      "path": "output/box2d/merge-main/core-tests.log",
+      "bytes": 86629,
+      "sha256": "7752811bfed921b6699521672fd1d7d1992a8f3294aeae1a9a27ab00e9839160"
+    },
+    {
+      "path": "output/box2d/merge-main/core-node-tests.log",
+      "bytes": 12617,
+      "sha256": "09702e7a762283532bff7f1ceb7f729cc3e6f685a033d3a2a3e8f74201d31ba0"
+    },
+    {
+      "path": "output/box2d/merge-main/ci-policy-retry.log",
+      "bytes": 5764,
+      "sha256": "4daf7b60bc16fa3819d9b165a0c86559a4a65bb0b6b8e4fcdf44e81df9ac6aee"
+    },
+    {
+      "path": "output/box2d/merge-main/core-tests.json",
+      "bytes": 79322,
+      "sha256": "6e604e478134bbf4fb0f5c316bc96317b1f360f6199013bb3707a7a8784774d6"
+    },
+    {
+      "path": "output/box2d/merge-main/ci-policy-final.log",
+      "bytes": 4210,
+      "sha256": "0d049e9026be179f25988c7891638dd45065e48412869592471254a75c728c8b"
+    },
+    {
+      "path": "output/box2d/merge-main/packaging-regression.log",
+      "bytes": 2832,
+      "sha256": "6ed263f132f636231073343e7f93bc0dd2a9fd2331afec18300539a184993d7d"
+    },
+    {
+      "path": "output/box2d/merge-main/packaging-regression.json",
+      "bytes": 9016,
+      "sha256": "d065810096dfeb9a6e1dd86cabaecd4c1685ff1c98cbdc41d8490b3e7b8a2252"
+    },
+    {
+      "path": "output/box2d/merge-main/archive-initial.log",
+      "bytes": 146,
+      "sha256": "3569590ee2488f673e79cc3ba341f256f644622cb4846712348a55f0c5dbee75"
+    },
+    {
+      "path": "output/box2d/merge-main/sdk-math-cpu.log",
+      "bytes": 3598,
+      "sha256": "ed74b7c9cbb997bf173216888c6b4c01e5183b0cdbcf3e6a0de7a7ef9bca0585"
+    },
+    {
+      "path": "output/box2d/merge-main/typecheck.log",
+      "bytes": 59,
+      "sha256": "d996ffd3b476e6e5dffd2f9cd9fa997108aaae86a665274146f03b527f950e94"
+    },
+    {
+      "path": "output/box2d/merge-main/build-spark.log",
+      "bytes": 149,
+      "sha256": "4213cd5d42532720416bc1639ba385db0ebd4358d768a55d116ee7319be9c490"
+    },
+    {
+      "path": "output/box2d/merge-main/chromium-all.log",
+      "bytes": 2983,
+      "sha256": "87b9054e13eb60d8fc7901877cbae1746d5a1450da4ac6cd6b5253151c328104"
+    },
+    {
+      "path": "output/box2d/merge-main/firefox-all.log",
+      "bytes": 1313,
+      "sha256": "bd90d610ce4b0e72214a4f4bc25f6243f2e36e1d66da3399be0fe1c715a345ea"
+    },
+    {
+      "path": "output/box2d/merge-main/webkit-all.log",
+      "bytes": 739,
+      "sha256": "25a6bcadf02fe54e1cb09b089b13676ec1b6b515eb3c9a83b4e040eaf55f1250"
+    },
+    {
+      "path": "output/box2d/merge-main/math-tarball.log",
+      "bytes": 30416,
+      "sha256": "123dc17915252521bc532abe9606505cc30ed64e8aabee44e754e8452aed9342"
+    },
+    {
+      "path": "output/box2d/merge-main/math-tarball/cocosair.js-1.0.0.tgz",
+      "bytes": 6848811,
+      "sha256": "81436aa36e69e14412093817544e258ab5b26897b1170e243763cc9a4dbd296f"
+    },
+    {
+      "path": "output/box2d/merge-main/math-tarball/pack.stdout",
+      "bytes": 76458,
+      "sha256": "2dfbf1ea8020e19d024bcc06c9577fc220a95643dcd0005db9a888043988cf9b"
+    },
+    {
+      "path": "output/box2d/merge-main/math-tarball/pack.stderr",
+      "bytes": 241,
+      "sha256": "eda9d958bf148a3016d50c1e8600cc8b6f6132d5c7b057e99915169f06e9927c"
+    },
+    {
+      "path": "output/box2d/merge-main/math-tarball/offline-install.stdout",
+      "bytes": 23,
+      "sha256": "260b81283a0da65e0d8dfcf98575e940ede1f863ed00bc5c0ec5bd2f838907e1"
+    },
+    {
+      "path": "output/box2d/merge-main/math-tarball/offline-install.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "output/box2d/merge-main/math-tarball/node-import.stdout",
+      "bytes": 394,
+      "sha256": "f3eec131f6c9f735404e095570b8431a5d912311120b96a4578adc73dfdd7a7e"
+    },
+    {
+      "path": "output/box2d/merge-main/math-tarball/node-import.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "output/box2d/merge-main/math-tarball/types-node.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "output/box2d/merge-main/math-tarball/types-node.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "output/box2d/merge-main/math-tarball/types-nodenext.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "output/box2d/merge-main/math-tarball/types-nodenext.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "output/box2d/merge-main/math-tarball/receipt.json",
+      "bytes": 35203,
+      "sha256": "67ce6ce40ee3f739554eb1374dc4cc0d6715f4734c10fedd2755996588ed1bcf"
+    },
+    {
+      "path": "output/box2d/merge-main/runtime-tests-final.log",
+      "bytes": 78798,
+      "sha256": "e1f6301ff6f4e2be4525085f9af6456cc27c85b77d4d189699656eeb4644c8ba"
+    },
+    {
+      "path": "output/box2d/merge-main/sdk-recipes-browser.log",
+      "bytes": 1107,
+      "sha256": "7154363c3a8a57cf918a56f66679aae71b0ef8ffeeb84676bd590bf6bbcdda28"
+    },
+    {
+      "path": "output/box2d/merge-main/sdk-recipes-browser/receipt.json",
+      "bytes": 4687,
+      "sha256": "7b1977571512fcdd1a0d91999d4a07066f24c2c844e074bbf21a40a9233e793b"
+    },
+    {
+      "path": "output/box2d/merge-main/consumer.log",
+      "bytes": 1269,
+      "sha256": "dfbbbe6e35b95161df83bb2eceaae13e150e5cb17b772535811129f83a916dd9"
+    },
+    {
+      "path": "output/box2d/merge-main/runtime-tests-final.json",
+      "bytes": 49140,
+      "sha256": "6d6425a6afa4b63700fb933607f274dae28d9eeec0466c31a9312a348cfd68f4"
+    },
+    {
+      "path": "output/box2d/merge-main/chromium-retry.log",
+      "bytes": 2983,
+      "sha256": "5ac253bfe6b2d52d712eca40e6be29fd6f1cffd9039c764c080333a31176257c"
+    },
+    {
+      "path": "output/box2d/merge-main/browser-node-diagnostic.log",
+      "bytes": 5191,
+      "sha256": "b803b7c2de6cf21c90ba9cdeb19cfce8d741e59114aeaf388af528dbea7ed056"
+    },
+    {
+      "path": "output/box2d/merge-main/browser-stable-diagnostic.log",
+      "bytes": 4964,
+      "sha256": "5fd9cd05ed60731d9f6947a0b3b28faa1e8f56ad4af1645185df53db78d6dc31"
+    },
+    {
+      "path": "output/box2d/merge-main/browser-isolated-diagnostic.cjs",
+      "bytes": 354,
+      "sha256": "1451d3f19e3457b98c4b67ebd7247bfa2ff8491f85bd453ba6201faf02837c80"
+    },
+    {
+      "path": "output/box2d/merge-main/browser-isolated-diagnostic.out",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "output/box2d/merge-main/browser-isolated-diagnostic.err",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "output/box2d/merge-main/evidence-windows.log",
+      "bytes": 3666,
+      "sha256": "98ba39de3d4692f8fce016a49d26c853a95e291c97f543d92a71c3af5e0bfe5e"
+    },
+    {
+      "path": "output/box2d/merge-main/format-global.log",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    },
+    {
+      "path": "output/box2d/merge-main/format-focused.log",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    },
+    {
+      "path": "output/box2d/merge-main/file-map.log",
+      "bytes": 258,
+      "sha256": "3812efda6e2a8cd9ce8195701aebd6e5828d84b3f7980892a9cad3e66c6cd38f"
+    },
+    {
+      "path": "output/box2d/merge-main/package-assets.json",
+      "bytes": 788,
+      "sha256": "3e29e3ae49dc01e67dd7658d1a5c4e7944a78d1a604363fbd7eb6fed92174a4d"
+    },
+    {
+      "path": "output/box2d/merge-main/licenses.log",
+      "bytes": 3101,
+      "sha256": "d6919012ed4c277a8d190e8db6149818e8ec7177b720552d760c91c5df677109"
+    },
+    {
+      "path": "output/box2d/merge-main/doc-refs.log",
+      "bytes": 212,
+      "sha256": "e032e5ebec7a98a36e01b974274f0beb2f63d75548cf2e3f9434e024348d3386"
+    },
+    {
+      "path": "output/box2d/merge-main/web-only.log",
+      "bytes": 287,
+      "sha256": "f81b106287b5f48f4861d37bd7a400ed27ea636eabd52fb36ec07133ce2c1054"
+    },
+    {
+      "path": "output/box2d/merge-main/box2d-source.log",
+      "bytes": 30,
+      "sha256": "b7bba1bb90089720fb9ebba13151ab64fbff10c28d0d1a3986495a174dc2a645"
+    },
+    {
+      "path": "output/box2d/merge-main/static-gates.json",
+      "bytes": 1180,
+      "sha256": "283962dd276106fad0205ad45b5eeb10c0fd0489f37af84e3aab0c25b63e44bc"
+    },
+    {
+      "path": "output/box2d/merge-main/evidence-windows.json",
+      "bytes": 11777,
+      "sha256": "3b75eecb1821d611eadbd279f7a4857233b7f00aef2ace7a70ad282e3ac37e58"
+    },
+    {
+      "path": "output/box2d/merge-main/evidence-windows-final.log",
+      "bytes": 2850,
+      "sha256": "df3b5bbc1b1164514dc20648acd224e2247fd5a4d897075e9e1e4dc137263669"
+    },
+    {
+      "path": "output/box2d/merge-main/sdk-recipes-browser-explicit.log",
+      "bytes": 5626,
+      "sha256": "d8560c97f8f4702426cfcd85444cf438042f728f2de8b040d2651724201a0baa"
+    },
+    {
+      "path": "output/box2d/merge-main/sdk-recipes-browser-explicit/receipt.json",
+      "bytes": 9206,
+      "sha256": "e8f2f6ca127293390094330e3dcf97ea993c91d5b6a8d8af26d514a98699cd75"
+    },
+    {
+      "path": "output/box2d/merge-main/evidence-windows-final.json",
+      "bytes": 8962,
+      "sha256": "eb68daa0ea49721feb83ef209c9a2ce9807ff7ad7c3e1a9ce16c3f70fcc2062f"
+    },
+    {
+      "path": "output/box2d/merge-main/trace-format-final.log",
+      "bytes": 68,
+      "sha256": "f20510a9da4717c51c4cffee6d0dd88d6c9a723d0a83711d01216f5b48961283"
+    },
+    {
+      "path": "output/box2d/acceptance/2026-10-20T11-50-52-541Z-webkit-all/report.json",
+      "bytes": 5009,
+      "sha256": "c52e15eeca7471b3749057865658e332df3cd47d269aed5fcacc8ce7b0db4377"
+    },
+    {
+      "path": "output/box2d/acceptance/2026-10-20T11-50-52-541Z-chromium-all/report.json",
+      "bytes": 9502,
+      "sha256": "bff9d887c8d47c54d42f25bd560d8ec33c69a8cecfdc4c6cb2a3747b66614ccb"
+    },
+    {
+      "path": "output/box2d/acceptance/2026-10-20T11-50-52-541Z-firefox-all/report.json",
+      "bytes": 5985,
+      "sha256": "d12a12c45def7d687532b2b2cfafd2d305b2d8bb5122e917226045f6220e8209"
+    },
+    {
+      "path": "output/box2d/acceptance/2026-10-20T11-52-57-647Z-chromium-all/report.json",
+      "bytes": 9502,
+      "sha256": "1af5493397de61f3da5e7811073a5b2cdb73e4c5c9f06b11ffd20b380e098ef9"
+    }
+  ]
+}

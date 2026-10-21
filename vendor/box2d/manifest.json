@@ -1,0 +1,1250 @@
+{
+  "schema": 1,
+  "version": "3.2.0",
+  "commit": "178495ba35695aefe9c321e569d2277f06db3b90",
+  "source": "https://github.com/erincatto/box2d/tree/v3.2.0",
+  "emscripten": "4.0.21",
+  "precision": "float",
+  "threading": "single",
+  "simd": false,
+  "dependencies": {
+    "imgui": "v1.92.7",
+    "implot": "v0.17"
+  },
+  "files": {
+    "imgui/imconfig.h": "6e46e4e949b57c82a581e88a5eaba2d70980039911af8322daa5cfe494e8d739",
+    "imgui/imgui_draw.cpp": "a4b21db4b40e989fc7e76051f4362588be60150d4a12087474b5f8e14e7dba87",
+    "imgui/imgui_internal.h": "f5136d556253aa897029e06328b07a7f5d142906348eafc398690af898ec3c17",
+    "imgui/imgui_tables.cpp": "53d2473c7275b43655fa7ba7dbb496cac7bcbb837bd12ad3e84ee5f0ae911873",
+    "imgui/imgui_widgets.cpp": "154cfc80e36599bb1ff1bb8d184650c13342eb9e947c1d7c19c77bf1a4e70184",
+    "imgui/imgui.cpp": "a6beae86d25852a0e42684362006e7093ebbfe79748c458aef07205119552391",
+    "imgui/imgui.h": "2a2d7ece01bf40fe56a75f787d9eec205c6e129af39bbecbd77ebbac7b1d49ac",
+    "imgui/imstb_rectpack.h": "7f9bffb8ac5e79d20787fdc20d29d29f7474dca673f64d4a9a8a9f9373e40972",
+    "imgui/imstb_textedit.h": "24a8db00354af8f4057417841635a1b6dfd8986f1608336fe6f10d6fd9769aaa",
+    "imgui/imstb_truetype.h": "a4131c7a2e324c0625250830af6976adb5732b453f0fc6e8bc5ad70065bc2b79",
+    "imgui/LICENSE.txt": "f20418b409e53c8c9f4e90917ff395554a60320d4dfbf833da89b339cad8628a",
+    "implot/implot_internal.h": "063b951626d47fcf574c7123aa56a768199a245958a85e0851f7ea57540a711a",
+    "implot/implot_items.cpp": "e03e18b9aefd0c8cd5b075d24a1b2dfb91be9a838da6cc1efa2e280fb0cf5356",
+    "implot/implot.cpp": "9eeba30e78edf439d38f2eb62645486eb424080f19fabca3fa9a20d871ad8ddd",
+    "implot/implot.h": "8b5f27fb7344ddd6ed200b51ed65fb5a95b49498972c020ae32d9d930b8f291a",
+    "implot/LICENSE": "38bd30c2111fe7e3d8fb86d8607491239659eff1df1b1004b9a8349e20a91967",
+    "README.md": "5e6c14dfdc7d7be19504d3e44628aea43c26e938b2d85cf4e1b8f24a27a532f4",
+    "source/api/api_dump.py": "df4d0b5ebc8da5866a99c0badb8648bbc83e015ba87157a1fcd63dc1c3dac7d1",
+    "source/api/box2d_api_double.json": "d8e03fc4df75025a3a5e45e69749fe43dc752583d967cdaa9ddeda54b2aeff4e",
+    "source/api/box2d_api.json": "4e7fb059a4cb1b06cc15f5bb9c89c208797027c0c721d532224b9cdc22aa24e0",
+    "source/api/README.md": "63ccb57666bf94ee198f0755e174f9021ca13131c8ed717d4672c9403df60f88",
+    "source/CMakeLists.txt": "c3617da58c1fc6689f1190d2c2df8584babdd5aa7b082edd010ed2e35e15c0c6",
+    "source/extern/glad/include/glad/glad.h": "92101e60456b6e5b71f6715a45fe3b0388dac0fc88bf00108e8c352880ec49cf",
+    "source/extern/glad/include/KHR/khrplatform.h": "7b1e01aaa7ad8f6fc34b5c7bdf79ebf5189bb09e2c4d2e79fc5d350623d11e83",
+    "source/extern/glad/src/glad.c": "0482bb9e5db1aad89e7eee845751d689e2f9b2f9cc79e85e604b49f198ffb091",
+    "source/extern/jsmn/jsmn.h": "c04533e9181e1e33baceb0f55ac449b05145bb936e8c68cc77dfe0d8277514fb",
+    "source/include/box2d/base.h": "8227e2709817bb7bd90e1b5eaa158a4b03d0a529de3911485eddd49efe1cf567",
+    "source/include/box2d/box2d.h": "1478d258e626cbe90c357bc59b5679e40096d50e20e5ef03b54fbf0dc0d828e1",
+    "source/include/box2d/collision.h": "04c799e94a8cba81bf5f4d6ea26ad701cbd08da0d0c7474163c64b949366a30d",
+    "source/include/box2d/config.h": "c1f83c86511df37426d7c632de8addf795d76973461ebf7443999f20c6c5c0a0",
+    "source/include/box2d/constants.h": "6d08bfdf905b107a86144cbc825dacda0d8799008f06088166a4d8857cd7154b",
+    "source/include/box2d/id.h": "d0f088e548a146718837c94e1b4989ddb932e56990857ba9309fba207b92d697",
+    "source/include/box2d/math_functions.h": "e99086f074bd6e14d0ed7803198167298945ba5fa401454404f93ec7eb196d7a",
+    "source/include/box2d/math_types.h": "d023f0f686dba961d0c26ffca5d69f59c3f85c817a9d791181b7f6115759c2b7",
+    "source/include/box2d/types.h": "2d7672b1ec93db45f60fb4f24e560e3e40f15fa28c459865f86bbd9743707125",
+    "source/LICENSE": "68a3e676d7e94093b102d5cba0d4e04af812040d6f230c3db67a6664574e43d2",
+    "source/README.md": "49bee2e2c091343e0fcaba9dbff3d243c8496fc4d7f8f25849a7f499ca41011a",
+    "source/samples/car.cpp": "67194202aa8b1b949239e7aa6f7c68de5cfeeb67247680a7aece41230493cdf2",
+    "source/samples/car.h": "cf44c427d3cf2cd64152483c2a9dfcfc7cd64c47f87d247f5b8f4e2f0f32eec4",
+    "source/samples/CMakeLists.txt": "d0379b5f7691b6293f1f4458ca96509ea36693eb4846e39169226090f3e39735",
+    "source/samples/container.c": "0f651f7a5e74b7b4cfa7bc222bf8a4cfe1a90fb957b4eeb4b2e9a832c497a603",
+    "source/samples/container.h": "8335ef5129b0a9a333b901de7112b2525dc348af71ce807567d23be12269b800",
+    "source/samples/data/background.fs": "c712506c3d1a0ba2f4d7cb9dcc3352b1a7cb967baf7352518e6888683669ca93",
+    "source/samples/data/background.vs": "c57be536213b449d11be3fd4a6304814db407d1bfa282bd802f6718ee38329d7",
+    "source/samples/data/circle.fs": "1087673050d478717ddde2b5a8cadfbd021655c52c62cfba886c93795f0335fc",
+    "source/samples/data/circle.vs": "b4f5d63820fec14a73a23e268db8779706d5b79fc92f58d71178352bd66f05e0",
+    "source/samples/data/line.fs": "08a72edcf08673e5864176d9f0c477cdb7f485afe82c0713355daae7c6f6f11a",
+    "source/samples/data/line.vs": "ca1165d85fbfa909707322ab2cc527dced1b05aea07e231e46c8a4ff4e3e46bd",
+    "source/samples/data/map_left.svg": "27f9d275d616532c848e53698124a4134f7abc58bbbeb2fd6280a9d68f2bb06e",
+    "source/samples/data/map_right.svg": "1dbe0ba3452941e2e436a8ec3ee802485291b4a7b6df92f8697e168cd81168c5",
+    "source/samples/data/map02.svg": "daaed7c9967d9aa82e46d446aa4adf301dc2e374eae09c0800f3d66fdeb83e7e",
+    "source/samples/data/map03.svg": "8e4d47b5314e985500665d44b7d432337473fa57d4f47ba5d27170b48277f9dc",
+    "source/samples/data/map04.svg": "67f10ee2dd0742cb0e3796d8958388fb68bc869e4e70289d2c6b96d5cc4fd765",
+    "source/samples/data/point.fs": "08a72edcf08673e5864176d9f0c477cdb7f485afe82c0713355daae7c6f6f11a",
+    "source/samples/data/point.vs": "60e52fc2ed50e4ab7280ac708b4adf7ede64cbcf5698d6ee463a5d43a5f5e426",
+    "source/samples/data/ramp.svg": "760e21205d5b846f0bf8385e9b4a897f67edd7c9e48e65c7bf5bca8d32436dcb",
+    "source/samples/data/solid_capsule.fs": "5ebf91f9c7dc006e7d4fbfc0edba6396ff46f081004775f23afe9b4e8e1f34f8",
+    "source/samples/data/solid_capsule.vs": "621e4d7dc6dbc81efea18290eb14a4344acb98d54bcc4caeb77042b8454478b0",
+    "source/samples/data/solid_circle.fs": "e15a94dbd011a0e6395a4f531305e89e9218c37a6d787dba672ada36c7511ffe",
+    "source/samples/data/solid_circle.vs": "5ffd354f0f2373b34f8a3597c77ca197d1dd11ce9f1289b33f8f728f984318c8",
+    "source/samples/data/solid_polygon.fs": "81f3351beb5e0f3fc1c85900180d9977af2c03a3587b2a814be2d09a98f0a037",
+    "source/samples/data/solid_polygon.vs": "652f7177468bfe7c2c82c2a0d469bac937660522da72f057bd5af48a1d53428b",
+    "source/samples/donut.cpp": "3c794c1936ecb11fb0a6d700685420651587449ad4b7eefd47ea62c5f29c56dc",
+    "source/samples/donut.h": "39277c946599a1ee2b8278e5bba7c04844147d2e81f5b05c3b46d28a6530a76c",
+    "source/samples/doohickey.cpp": "1e5a89d7a405d0d680c7ecadd8b4a858ca5051b75a06bac8dfb3ec18109c0733",
+    "source/samples/doohickey.h": "6f7e12e1bb1fc031cc982448fec949355c0be1b736ebb4df8bf3538570bfb3e7",
+    "source/samples/draw_text.cpp": "ea35432934f287d8369c15028a1e1015080779510b2e46941284719a947adf71",
+    "source/samples/draw.c": "150c17c22fe9df018b11478c1416b6155ee83e43e0b988d6dcb553ba3bfa1263",
+    "source/samples/draw.h": "ba74a6b2d689ec55ee515ae0274004b0009e7060f5aa20334981aa31b163b30c",
+    "source/samples/dynamic_mover.cpp": "7ac717352bf0065ec42e86decfbf84e097c6121444200d2173b5152a44929d01",
+    "source/samples/dynamic_mover.h": "ad9080e95b63c4924acc83645f81e19ca900a1591edad2d1ae065db71f03f618",
+    "source/samples/geometric_mover.cpp": "05278633f892530f196448ee517565cfdb5821ddedfd43ffe2d7b384df9bfa6b",
+    "source/samples/geometric_mover.h": "8d1a3dce01fe881083bd2c4f8c90367c12be19f1c5d3b1ec29bcbef5788b48dc",
+    "source/samples/main.cpp": "06e5e32fb7cfe894c8f63c42518d08001feb2364ae16ea9a00df322bc6545d39",
+    "source/samples/sample_benchmark.cpp": "98a32f19237f88d2c40c81ccaedd7e3bccf74ebff65cceb9040907a64424a68e",
+    "source/samples/sample_bodies.cpp": "ec0049599d4db29f166c4913e14975b15f6faab45cffc8ba275f8e8639a57c29",
+    "source/samples/sample_character.cpp": "cdfd35eb3bc007976823f8aa50f3f25802d3a71f4ada3b0d2689470bf559bf2d",
+    "source/samples/sample_collision.cpp": "20f6dcc87dbe1d7b3e1e4bca306f612ca096a5c5f33231eb273dc1d2e51172bc",
+    "source/samples/sample_continuous.cpp": "5a5c00b71968175a926891780155b0fe2925c75462137b4cf7de88f866efeba8",
+    "source/samples/sample_determinism.cpp": "6ba1fe1aae3da28c21203b0b8a83b7074019b5c065423f9a51c572011cdf77b6",
+    "source/samples/sample_events.cpp": "4dfbd6fd4e428b6785f13c82ef1336e534d3143878db5930b6e8506b7148a1d3",
+    "source/samples/sample_geometry.cpp": "5916b3488f71684b69a30cc742702915e1cf8d23827349295f59ed633414a2a7",
+    "source/samples/sample_issues.cpp": "792f7158b7d5403110ea7ac1a0a3b4d5e176fe8865af29b5c5e2abb3a8733b99",
+    "source/samples/sample_joints.cpp": "87e698d3e4ee4da85d545f2009323dd8c8d3b727fdc7b5e9fc38bb7f154dadcc",
+    "source/samples/sample_replay.cpp": "b3b360e5a4451f1827811a4f2bb64454afa9c5a2a5f43860efb5ed18398ad5a0",
+    "source/samples/sample_restitution.cpp": "e4b923383573fcfbd4eb4d5106ea70e6cf7942cd26d42f6718b0f42a2e2b79f5",
+    "source/samples/sample_robustness.cpp": "394c026643a0d6967204e0744c469b82fc0b2a5df49e483053a2bbcb32bab415",
+    "source/samples/sample_shapes.cpp": "e8b7c4dbd2a65e181faf945d32bc341b0ab6988e81f112b04bd68f654fba7f28",
+    "source/samples/sample_stacking.cpp": "1335e18ed07f96985dc9b3e6b4650e1d868330743da4d3db83ee7ab7a4057e6c",
+    "source/samples/sample_world.cpp": "5cf75045cdbd5c8d1b640e2f112c22396f81882f9c6b10a7ddeade295c7a2db8",
+    "source/samples/sample.cpp": "1f7a90e10225d07edda528f77b98794d0736e3a89d5560a345972bad7da54fdf",
+    "source/samples/sample.h": "efdb0fd94f1c0171a7a97e4987d232ab730b97d1a6b93d9d184e15d158771d99",
+    "source/samples/shader.c": "44fcb7c1dac26bc50859d237673ccb19cb3b04016cccc55001e95b9945f40093",
+    "source/samples/shader.h": "0c30500b21c2cd847f1438a98d96f2ce4f114cc42bb1298ad30dfa39075894bb",
+    "source/samples/stb_image_write.h": "bdbaa2c548ac9bde2913b6b46c4d315a04d2624c81ee1553390eb8fb2de2835d",
+    "source/shared/benchmarks.c": "46cf1bfd0d479fc3b544700578183c63198c8709a5beb5b8802e434704511442",
+    "source/shared/benchmarks.h": "cce0b969946c0e63a4578309ccdd4011aeff2e0c9eb53b6cfbe8a2bbc3aff31f",
+    "source/shared/CMakeLists.txt": "3c604ceddbb394453079ad5d04b749104b2b53c9f510c2e2697c9ac9c5f69b71",
+    "source/shared/determinism.c": "b7bf1d59dd8641c8d9e1b63637fc0f63a51a41dc379ca528b6bb31cfc3615138",
+    "source/shared/determinism.h": "8702986b15cafde1bc597fe826c450c30b6f532fb593a4e4edf95ababe2efc9a",
+    "source/shared/human.c": "404a09b3e173687b797c553b576db92ca4a400d10359e215552a619129e1a045",
+    "source/shared/human.h": "edf3fbd7a5e06ab1adc6daec3213200c6900abce0ce5004e5c9a089767429447",
+    "source/shared/utils.c": "56a1d9391d16aa469283a4b9a335095a618b5dea34b79154cdec56d7654219b3",
+    "source/shared/utils.h": "9fd604fe818f1d9cc3a2f9063f64d549473f82c6b75db7cb47e6029fbe027a3a",
+    "source/src/aabb.c": "83f7c1360b7302b288688bd862bf1892066ed3db6419e4358e5dd39b6d661562",
+    "source/src/aabb.h": "058642427581ea31d49f56ed0c21afb4933e7c9eaee963c77a1f5b1cb1e60983",
+    "source/src/arena_allocator.c": "95f634ea951b53370eaa5762980f621bd4be5b8255b10d3b3e2ce30405dbe801",
+    "source/src/arena_allocator.h": "9421451cea20a26a4ba980b4100942322279627635cd877d6ded709170fc3b80",
+    "source/src/bitset.c": "8dbaa9c8c20ed67482f5bdb3686206de3a21ac8f34d65003997569b7a05e28cd",
+    "source/src/bitset.h": "1d944d15a56349a949493d94f4e285e5b87ed00a94a343541e41aab1b779caa7",
+    "source/src/body.c": "8bd5017706f7177cd7d1e5b936e700dd1e5801e5ac440fb49990d23bd00da678",
+    "source/src/body.h": "f58d9138507e1fddf31b6979423c6734b2eaf9f2b283c6bb94e946bec2f53651",
+    "source/src/box2d.natvis": "867c1c869169a489c829e3a1bfa1fd80b1cf3d24a91fabea2f60108eeb93830d",
+    "source/src/box2d.pc.in": "281b683d907511d7e29c89e86e00c4b131c6c345edf2668ac4eeb9440ac45e71",
+    "source/src/broad_phase.c": "8bbe862b0b56e66ddeb4ce95b276b68d6690def5d63ceb641de44f4a80dfca44",
+    "source/src/broad_phase.h": "df48d18b63f0912b101fe2de2d43fbd548dc0b3bab1e8c64fa5c52b1fa7c87f0",
+    "source/src/CMakeLists.txt": "87495dba5cb3986ce4105113db2005b2fd0cbc4c095e82c7d0f919efe74b323d",
+    "source/src/constraint_graph.c": "81b599fe23e2f124b8f37f15a4bb19bb449023acb778607d5ca02add72dc4d29",
+    "source/src/constraint_graph.h": "16b9c087e6267a26fabee867081890c30a21bf9435fffc54972c064ad423cf80",
+    "source/src/contact_solver_w4.c": "0b95b7ffd6a79f354f0cfef3d3f0143f1cf9c8967d9c0fe3817dbe097397b06a",
+    "source/src/contact_solver_w8.c": "a618037dbca172437edf941d91ebfe1c3205542e9a424e70976a11c31604cd4b",
+    "source/src/contact_solver_wide.inl": "a1723f33f4dfa5358b7d1f8573905d980442e1165f604b2085a6eaa30623c86b",
+    "source/src/contact_solver.c": "3968fc50be3dc7706d89d7c2b3041fb7329918361e940e1840f3967c793cc994",
+    "source/src/contact_solver.h": "2d89217a932b03b3e969f58c7146448743b830b7ad34cf3a257945afe0cb29ab",
+    "source/src/contact.c": "6d5823b6777cc955349351a6f974d2b2f1077ae8afed5f9ca788fa5a63ab6c1f",
+    "source/src/contact.h": "768ef99f46ac74a19f89a0edd9d5d284305cbca258816e36ca4a5009d9fdda52",
+    "source/src/container.h": "1498f3d025fcf04927153f74333d93ec34b3712beb049ca32162b46e445ad9f8",
+    "source/src/core.c": "066a683df4b1e9b1491c6b7051c79c9f56ec2b979e4eae3308946893c0eb6b67",
+    "source/src/core.h": "ff5d8424b8df95fa6b72f71e49c1828002246bbc751776632b8389d87d8720b0",
+    "source/src/distance_joint.c": "8d6b93f0aac3dc443bb08bbae5baae8fe0d408ec13b3869e76b68065107182b9",
+    "source/src/distance.c": "f45bd980961518eeac8a765e54b1922c2679925b720f5e27fc9a11ab10df0b3d",
+    "source/src/dynamic_tree.c": "6b60afde80543954a23f5d531579be0b7c4234187257e789478089a78c248639",
+    "source/src/dynamic_tree.h": "4b85e12bc7661a44598727f032798ac432bc566c15158d6be682da9f036c9da1",
+    "source/src/geometry.c": "5c62e22490fd76890a7c7a692619c574aaa5fc46b99a144447de86e8e5c745d0",
+    "source/src/hull.c": "61f59f649c6ee4ed1e1024852e8338d2a2be6de35f72fdbde27ca2f25d7d47d0",
+    "source/src/id_pool.c": "e8f01c799c422c35418dec38e5ada44ef57ccc00ab26065e76435ce27bee51c8",
+    "source/src/id_pool.h": "1f791e3895cd9cbf383c6ac140014a9b36239dc3fcfbc1d8b21dd66036296511",
+    "source/src/island.c": "80ee0d56743e8ff905f11c7d5027070103be647966ea4a537b554f54fd654051",
+    "source/src/island.h": "52d5ebd8c5126c2c353c3347b76b353606c6c171ee2e17f61dbf413a18e57fa8",
+    "source/src/joint.c": "a91d23906ec3771b6d399f64fceb17f08b400b3fb2713d2ff46667f9c8f0d54e",
+    "source/src/joint.h": "614b44f26a072719e778388215e13e98acc566bdaa9bc70a5a68b10ce9d7b7ee",
+    "source/src/manifold.c": "4afb5131ac07ca0e49cdd3c94d88c11d2137969a85a5dc8af870c5ce9c4a32c5",
+    "source/src/math_functions.c": "2154664afb22fdb0b8c722a79cd57ac872f8cf39cfd1b08b5906329dc1e47a38",
+    "source/src/motor_joint.c": "c066489c395cd323d2dfeefac9b0d8ce4520327bd5868da1b1a71894faa733e2",
+    "source/src/mover_joint.c": "bf1eebdc567619e35e1c83714e7a73b903afdcf87c74b48b7b9bc5d208cbcba3",
+    "source/src/mover.c": "570fcc34b323f04936fa0488e3c37451255ad25e8500f00624dca90f11d230fc",
+    "source/src/parallel_for.c": "99d18ada0335e403f7e9b6c24fef2916ff91c2b3668424e01153de8e7dcb0c51",
+    "source/src/parallel_for.h": "172acebcbe6461a0479c8db11149508330aec866e35991b7a151791e2da67df6",
+    "source/src/physics_world.c": "a59a6501364337efae0dbe6fb7512f79a9b1ef8c63b31bf48a0ee670afaf2a6f",
+    "source/src/physics_world.h": "2e9f092210c44c2b21133146ba1f4547b42795b0435105e3cf62d7180cb8896e",
+    "source/src/platform.h": "67bc31be8354b59b17408fd0b8ff1f0ea2a41e42d73fa5d56f0fc085f5d68a89",
+    "source/src/pogo_joint.c": "8f9f6066bd7cf321f7acdacddba0bd66956137f5789e869f0c8f7a5097042e5f",
+    "source/src/prismatic_joint.c": "518610795f46e96e9b9f516699e4bcff31e63488403d1fa11af8fd1560a623de",
+    "source/src/recording_ops.inl": "2735064e283ca05c231140ffd78a3839798cfc0ab05c5a4398df0d9652d1c6da",
+    "source/src/recording.c": "b4c5ab4084b18bda702109ffd89b836cfeccacf105aa3f52e2f8c615c1c9b585",
+    "source/src/recording.h": "baa8d4ae0cfd83ec87f2cc0f82155b4477173a4996811f38e8b0b4dde6490fde",
+    "source/src/replay.c": "3fc71a865a0284ae0b635bd3a0d4f23694f856358e14d36ffe7a7181414bd563",
+    "source/src/replay.h": "c35e2128adff2cf0e10fee304ae058f497097d29b51d8c36f7e1f69d6f438779",
+    "source/src/revolute_joint.c": "de502885f7c93ba96e82d1c372c005c2c4fa1f4a5759395ece5d1cee2753af1f",
+    "source/src/scheduler.c": "690f5755c2b826564b5fbaeae107ee8b5998f88849bca7fb67ecdfa867a33ca9",
+    "source/src/scheduler.h": "8771df8967de695f967760449d862cf10f3b7b7ec641dea37d533598242660ca",
+    "source/src/sensor.c": "41788c59f412dbb94a5da38cd6f0ef0a2aca8146ed1e1919bd4b7617adc46708",
+    "source/src/sensor.h": "d923fea5172bcf5bbdcaa99fb7ef01c0e36e9d534d4837494c50ea2388b012a0",
+    "source/src/shape.c": "bcb2485d244cfd46656fde31bd434cb80dadddba91de3959e0092d82c70b34dd",
+    "source/src/shape.h": "7724c6ab907d8a2bdfc58125076e35a52f57fc5a074bd77cee6d56e8ff234bc8",
+    "source/src/simd.c": "afacb9fd17e4cc15c6020c1b1815760a0923bf26a4f54133e3d16d17ebeec248",
+    "source/src/simd.h": "ef148b78609e92f6aaa47dc466d0fba9c15480d9d50bbe072ba13005744675d3",
+    "source/src/snapshot.c": "79ddfef9fd1466c2d5eba999ad284b6e432f66912fd9dd5512288fe2d0967ed1",
+    "source/src/snapshot.h": "a60c04cd436b86bc4c11486304bbb35135c7dc702e4961be6399951a31b94707",
+    "source/src/solver_set.c": "814704e39e0e357335d967c5a2e25281af9f8cd3e398b2219dab6f7b6e498c0b",
+    "source/src/solver_set.h": "fe3de0b7918ed8bc1786f58e220750999e212a09093ca37642aa4c826fd78cfa",
+    "source/src/solver.c": "3e4128edaf7f48d65c3ec564653e077da6ccbb86dae95efdf69abf5ccdf170d3",
+    "source/src/solver.h": "120a2247cffe9df7f1f6647ea503a55a0bad54a884fe901a2b15defc42842823",
+    "source/src/table.c": "0a73d3f3db52beacfad5fb9bdc391b195c910220ad7998b2c3002961c7be8669",
+    "source/src/table.h": "615adbd6f57973e7ad81695351a0cd47db142da43f8d0035419bdd6c835338ad",
+    "source/src/timer.c": "2875a670c9e6096b125021f078df66652e8e064bf5a775821f5b0b87e351445d",
+    "source/src/types.c": "ab9416c99fcfdfa8df282222f3408c4e90b704c7cb7610adac6577494a30f709",
+    "source/src/weld_joint.c": "838a15c5ac3221367742ce45cfa726b6ac4b2ec7f4766e3b069d2551ec5e929b",
+    "source/src/wheel_joint.c": "324734f4c3c64c6fab7a95a1bc459f4fb8054b1665a305e6d01dab32465a4cea",
+    "source/test/CMakeLists.txt": "1cea2d8014aa28da4da6d5eea69a93187bd25af7e4a34a423a8383fcd1a63eb3",
+    "source/test/main.c": "c677d7523926298192cecd25308011cc0ab5f400215fc6813710a5103b63c340",
+    "source/test/swift/test_world.swift": "5ebc7a55a33ade40fd9607da47ef8bdd0ac0a9c03bf66e77a405c57f72911466",
+    "source/test/test_bitset.c": "a8405a4e48843287cbb47fef8cf35b460f3f31cd2ff0db1d2e42eb5c5d99158b",
+    "source/test/test_chain.c": "7bbb605dcbea753eb3573ba12355ced6d12d5f8cdb1943d2d8708872a5e21c27",
+    "source/test/test_collision.c": "87054ad31354f811c7c5744cf0fc7946cbab5ff9d40fa7af52639ff0b856a211",
+    "source/test/test_container.c": "e079b831d3758930c1e5876e482813efe32ef5e137f0163e068ca321c1bf8835",
+    "source/test/test_determinism.c": "9efb200b7bd664729b2fc773194cbb3ac2652074fd50c4b50f2b58c093bdc3e9",
+    "source/test/test_distance.c": "7b2bb0ee5b52cafbefd048433a5e7aeacd15517f098535bcbda9a9e2007a1d09",
+    "source/test/test_dynamic_tree.c": "9b2538854a94ee185a6721a34136cac922bef1edd6aae4fb02f8aa070ad3c432",
+    "source/test/test_id.c": "2ac399463405a75ec5c6be0ed9fed74e0cc7fb89daf8baf9aca612e813879891",
+    "source/test/test_invalid_input.c": "be425841fbf924a458ea37a685b5209c3213e4197a2e8a99adfdf0c0e26dd893",
+    "source/test/test_large_world.c": "55344f244ea3d76c51f5cdb2370e9f72975a25d60d37b5957d8692cf305d1a66",
+    "source/test/test_macros.h": "bb2406894e135a067390f33428fc606a77cb111e7ca10c5f9115d99c8d74e55f",
+    "source/test/test_math.c": "0fc0868bb1f675d374f46e82822b5ea61148f81bac8668449d3f3d986e79c302",
+    "source/test/test_mover.c": "3cbfc188465507069adb0d827396e7b8a5fcccd5796dda84534fd7d31c3a7ae7",
+    "source/test/test_recording.c": "3054baf25543e07552c28b7a5e42f0585e8eba6b52d0bfd9f5bbffb3ceb280f6",
+    "source/test/test_restitution.c": "f68ae502127d34fc7c37da56ae62d92f265665d3ded5ef1d56d062c746f98458",
+    "source/test/test_shape.c": "1fe046bad2a29522d312f4a9a204d6799f7ad29a3ddf70ffb353105f5a1f3de9",
+    "source/test/test_snapshot.c": "10ec03f13066a975b3e9c4a0ecdba0a236c5dbcf1633b098edab8476a95acf15",
+    "source/test/test_sort.c": "4cac67fb326a958905f0b0241e1925e40cf557e045400c26db52a47651400dbc",
+    "source/test/test_table.c": "1d22db0b85360669d874d18a773d04d1e5a12c5bd3c8549337fe7f560b90c207",
+    "source/test/test_thread.c": "3a7581e2e99b7facbb14107a16ba9917cf4c00ab594e5316a93959b263bdc4b3",
+    "source/test/test_world.c": "bd3cac3c327b11c7a0ff2d899de1462c2f65aec29326d137539648c1f48a90dc"
+  },
+  "samples": [
+    {
+      "category": "Benchmark",
+      "name": "Barrel",
+      "file": "source/samples/sample_benchmark.cpp",
+      "line": 336,
+      "registration": "Sample"
+    },
+    {
+      "category": "Benchmark",
+      "name": "Barrel 2.4",
+      "file": "source/samples/sample_benchmark.cpp",
+      "line": 420,
+      "registration": "Sample"
+    },
+    {
+      "category": "Benchmark",
+      "name": "Compounds",
+      "file": "source/samples/sample_benchmark.cpp",
+      "line": 445,
+      "registration": "SampleWithCapacity"
+    },
+    {
+      "category": "Benchmark",
+      "name": "Tumbler",
+      "file": "source/samples/sample_benchmark.cpp",
+      "line": 468,
+      "registration": "SampleWithCapacity"
+    },
+    {
+      "category": "Benchmark",
+      "name": "Washer",
+      "file": "source/samples/sample_benchmark.cpp",
+      "line": 504,
+      "registration": "SampleWithCapacity"
+    },
+    {
+      "category": "Benchmark",
+      "name": "Many Tumblers",
+      "file": "source/samples/sample_benchmark.cpp",
+      "line": 691,
+      "registration": "Sample"
+    },
+    {
+      "category": "Benchmark",
+      "name": "Large Pyramid",
+      "file": "source/samples/sample_benchmark.cpp",
+      "line": 718,
+      "registration": "SampleWithCapacity"
+    },
+    {
+      "category": "Benchmark",
+      "name": "Many Pyramids",
+      "file": "source/samples/sample_benchmark.cpp",
+      "line": 743,
+      "registration": "SampleWithCapacity"
+    },
+    {
+      "category": "Benchmark",
+      "name": "CreateDestroy",
+      "file": "source/samples/sample_benchmark.cpp",
+      "line": 874,
+      "registration": "Sample"
+    },
+    {
+      "category": "Benchmark",
+      "name": "Sleep",
+      "file": "source/samples/sample_benchmark.cpp",
+      "line": 907,
+      "registration": "SampleWithCapacity"
+    },
+    {
+      "category": "Benchmark",
+      "name": "Joint Grid",
+      "file": "source/samples/sample_benchmark.cpp",
+      "line": 932,
+      "registration": "SampleWithCapacity"
+    },
+    {
+      "category": "Benchmark",
+      "name": "Smash",
+      "file": "source/samples/sample_benchmark.cpp",
+      "line": 955,
+      "registration": "SampleWithCapacity"
+    },
+    {
+      "category": "Benchmark",
+      "name": "Large Compounds",
+      "file": "source/samples/sample_benchmark.cpp",
+      "line": 1055,
+      "registration": "Sample"
+    },
+    {
+      "category": "Benchmark",
+      "name": "Kinematic",
+      "file": "source/samples/sample_benchmark.cpp",
+      "line": 1111,
+      "registration": "Sample"
+    },
+    {
+      "category": "Benchmark",
+      "name": "Cast",
+      "file": "source/samples/sample_benchmark.cpp",
+      "line": 1504,
+      "registration": "Sample"
+    },
+    {
+      "category": "Benchmark",
+      "name": "Spinner",
+      "file": "source/samples/sample_benchmark.cpp",
+      "line": 1545,
+      "registration": "SampleWithCapacity"
+    },
+    {
+      "category": "Benchmark",
+      "name": "Rain",
+      "file": "source/samples/sample_benchmark.cpp",
+      "line": 1586,
+      "registration": "SampleWithCapacity"
+    },
+    {
+      "category": "Benchmark",
+      "name": "Shape Distance",
+      "file": "source/samples/sample_benchmark.cpp",
+      "line": 1721,
+      "registration": "Sample"
+    },
+    {
+      "category": "Benchmark",
+      "name": "Sensor",
+      "file": "source/samples/sample_benchmark.cpp",
+      "line": 1946,
+      "registration": "Sample"
+    },
+    {
+      "category": "Benchmark",
+      "name": "Capacity",
+      "file": "source/samples/sample_benchmark.cpp",
+      "line": 2040,
+      "registration": "Sample"
+    },
+    {
+      "category": "Benchmark",
+      "name": "Junkyard",
+      "file": "source/samples/sample_benchmark.cpp",
+      "line": 2074,
+      "registration": "SampleWithCapacity"
+    },
+    {
+      "category": "Benchmark",
+      "name": "Queries",
+      "file": "source/samples/sample_benchmark.cpp",
+      "line": 2157,
+      "registration": "SampleWithCapacity"
+    },
+    {
+      "category": "Bodies",
+      "name": "Body Type",
+      "file": "source/samples/sample_bodies.cpp",
+      "line": 293,
+      "registration": "Sample"
+    },
+    {
+      "category": "Bodies",
+      "name": "Weeble",
+      "file": "source/samples/sample_bodies.cpp",
+      "line": 413,
+      "registration": "Sample"
+    },
+    {
+      "category": "Bodies",
+      "name": "Sleep",
+      "file": "source/samples/sample_bodies.cpp",
+      "line": 658,
+      "registration": "Sample"
+    },
+    {
+      "category": "Bodies",
+      "name": "Bad",
+      "file": "source/samples/sample_bodies.cpp",
+      "line": 735,
+      "registration": "Sample"
+    },
+    {
+      "category": "Bodies",
+      "name": "Pivot",
+      "file": "source/samples/sample_bodies.cpp",
+      "line": 806,
+      "registration": "Sample"
+    },
+    {
+      "category": "Bodies",
+      "name": "Kinematic",
+      "file": "source/samples/sample_bodies.cpp",
+      "line": 877,
+      "registration": "Sample"
+    },
+    {
+      "category": "Bodies",
+      "name": "Mixed Locks",
+      "file": "source/samples/sample_bodies.cpp",
+      "line": 987,
+      "registration": "Sample"
+    },
+    {
+      "category": "Bodies",
+      "name": "Set Velocity",
+      "file": "source/samples/sample_bodies.cpp",
+      "line": 1041,
+      "registration": "Sample"
+    },
+    {
+      "category": "Bodies",
+      "name": "Wake Touching",
+      "file": "source/samples/sample_bodies.cpp",
+      "line": 1103,
+      "registration": "Sample"
+    },
+    {
+      "category": "Character",
+      "name": "Geometric Mover",
+      "file": "source/samples/sample_character.cpp",
+      "line": 383,
+      "registration": "Sample"
+    },
+    {
+      "category": "Character",
+      "name": "Dynamic Mover",
+      "file": "source/samples/sample_character.cpp",
+      "line": 786,
+      "registration": "Sample"
+    },
+    {
+      "category": "Character",
+      "name": "Ghost Culling",
+      "file": "source/samples/sample_character.cpp",
+      "line": 1011,
+      "registration": "Sample"
+    },
+    {
+      "category": "Collision",
+      "name": "Shape Distance",
+      "file": "source/samples/sample_collision.cpp",
+      "line": 438,
+      "registration": "Sample"
+    },
+    {
+      "category": "Collision",
+      "name": "Dynamic Tree",
+      "file": "source/samples/sample_collision.cpp",
+      "line": 795,
+      "registration": "Sample"
+    },
+    {
+      "category": "Collision",
+      "name": "Ray Cast",
+      "file": "source/samples/sample_collision.cpp",
+      "line": 1116,
+      "registration": "Sample"
+    },
+    {
+      "category": "Collision",
+      "name": "Cast World",
+      "file": "source/samples/sample_collision.cpp",
+      "line": 1783,
+      "registration": "Sample"
+    },
+    {
+      "category": "Collision",
+      "name": "Overlap World",
+      "file": "source/samples/sample_collision.cpp",
+      "line": 2145,
+      "registration": "Sample"
+    },
+    {
+      "category": "Collision",
+      "name": "Manifold",
+      "file": "source/samples/sample_collision.cpp",
+      "line": 2809,
+      "registration": "Sample"
+    },
+    {
+      "category": "Collision",
+      "name": "Smooth Manifold",
+      "file": "source/samples/sample_collision.cpp",
+      "line": 3102,
+      "registration": "Sample"
+    },
+    {
+      "category": "Collision",
+      "name": "Shape Cast",
+      "file": "source/samples/sample_collision.cpp",
+      "line": 3502,
+      "registration": "Sample"
+    },
+    {
+      "category": "Collision",
+      "name": "Time of Impact",
+      "file": "source/samples/sample_collision.cpp",
+      "line": 3591,
+      "registration": "Sample"
+    },
+    {
+      "category": "Continuous",
+      "name": "Bounce House",
+      "file": "source/samples/sample_continuous.cpp",
+      "line": 190,
+      "registration": "Sample"
+    },
+    {
+      "category": "Continuous",
+      "name": "Bounce Humans",
+      "file": "source/samples/sample_continuous.cpp",
+      "line": 273,
+      "registration": "Sample"
+    },
+    {
+      "category": "Continuous",
+      "name": "Chain Drop",
+      "file": "source/samples/sample_continuous.cpp",
+      "line": 364,
+      "registration": "Sample"
+    },
+    {
+      "category": "Continuous",
+      "name": "Chain Slide",
+      "file": "source/samples/sample_continuous.cpp",
+      "line": 449,
+      "registration": "Sample"
+    },
+    {
+      "category": "Continuous",
+      "name": "Segment Slide",
+      "file": "source/samples/sample_continuous.cpp",
+      "line": 504,
+      "registration": "Sample"
+    },
+    {
+      "category": "Continuous",
+      "name": "Skinny Box",
+      "file": "source/samples/sample_continuous.cpp",
+      "line": 627,
+      "registration": "Sample"
+    },
+    {
+      "category": "Continuous",
+      "name": "Ghost Bumps",
+      "file": "source/samples/sample_continuous.cpp",
+      "line": 917,
+      "registration": "Sample"
+    },
+    {
+      "category": "Continuous",
+      "name": "Speculative Fallback",
+      "file": "source/samples/sample_continuous.cpp",
+      "line": 968,
+      "registration": "Sample"
+    },
+    {
+      "category": "Continuous",
+      "name": "Speculative Sliver",
+      "file": "source/samples/sample_continuous.cpp",
+      "line": 1012,
+      "registration": "Sample"
+    },
+    {
+      "category": "Continuous",
+      "name": "Speculative Ghost",
+      "file": "source/samples/sample_continuous.cpp",
+      "line": 1061,
+      "registration": "Sample"
+    },
+    {
+      "category": "Continuous",
+      "name": "Pixel Imperfect",
+      "file": "source/samples/sample_continuous.cpp",
+      "line": 1128,
+      "registration": "Sample"
+    },
+    {
+      "category": "Continuous",
+      "name": "Restitution Threshold",
+      "file": "source/samples/sample_continuous.cpp",
+      "line": 1198,
+      "registration": "Sample"
+    },
+    {
+      "category": "Continuous",
+      "name": "Drop",
+      "file": "source/samples/sample_continuous.cpp",
+      "line": 1530,
+      "registration": "Sample"
+    },
+    {
+      "category": "Continuous",
+      "name": "Pinball",
+      "file": "source/samples/sample_continuous.cpp",
+      "line": 1704,
+      "registration": "Sample"
+    },
+    {
+      "category": "Continuous",
+      "name": "Wedge",
+      "file": "source/samples/sample_continuous.cpp",
+      "line": 1752,
+      "registration": "Sample"
+    },
+    {
+      "category": "Continuous",
+      "name": "Safety Factor",
+      "file": "source/samples/sample_continuous.cpp",
+      "line": 1870,
+      "registration": "Sample"
+    },
+    {
+      "category": "Determinism",
+      "name": "Falling Hinges",
+      "file": "source/samples/sample_determinism.cpp",
+      "line": 103,
+      "registration": "Sample"
+    },
+    {
+      "category": "Determinism",
+      "name": "Rollback",
+      "file": "source/samples/sample_determinism.cpp",
+      "line": 304,
+      "registration": "Sample"
+    },
+    {
+      "category": "Events",
+      "name": "Sensor Funnel",
+      "file": "source/samples/sample_events.cpp",
+      "line": 333,
+      "registration": "Sample"
+    },
+    {
+      "category": "Events",
+      "name": "Sensor Bookend",
+      "file": "source/samples/sample_events.cpp",
+      "line": 662,
+      "registration": "Sample"
+    },
+    {
+      "category": "Events",
+      "name": "Foot Sensor",
+      "file": "source/samples/sample_events.cpp",
+      "line": 799,
+      "registration": "Sample"
+    },
+    {
+      "category": "Events",
+      "name": "Contact",
+      "file": "source/samples/sample_events.cpp",
+      "line": 1221,
+      "registration": "Sample"
+    },
+    {
+      "category": "Events",
+      "name": "Body Move",
+      "file": "source/samples/sample_events.cpp",
+      "line": 1406,
+      "registration": "Sample"
+    },
+    {
+      "category": "Events",
+      "name": "Sensor Types",
+      "file": "source/samples/sample_events.cpp",
+      "line": 1600,
+      "registration": "Sample"
+    },
+    {
+      "category": "Events",
+      "name": "Joint",
+      "file": "source/samples/sample_events.cpp",
+      "line": 1830,
+      "registration": "Sample"
+    },
+    {
+      "category": "Events",
+      "name": "Persistent Contact",
+      "file": "source/samples/sample_events.cpp",
+      "line": 1936,
+      "registration": "Sample"
+    },
+    {
+      "category": "Events",
+      "name": "Sensor Hits",
+      "file": "source/samples/sample_events.cpp",
+      "line": 2163,
+      "registration": "Sample"
+    },
+    {
+      "category": "Events",
+      "name": "Projectile Event",
+      "file": "source/samples/sample_events.cpp",
+      "line": 2329,
+      "registration": "Sample"
+    },
+    {
+      "category": "Events",
+      "name": "Circle Impulse",
+      "file": "source/samples/sample_events.cpp",
+      "line": 2470,
+      "registration": "Sample"
+    },
+    {
+      "category": "Geometry",
+      "name": "Convex Hull",
+      "file": "source/samples/sample_geometry.cpp",
+      "line": 214,
+      "registration": "Sample"
+    },
+    {
+      "category": "Issues",
+      "name": "Unstable Prismatic Joints",
+      "file": "source/samples/sample_issues.cpp",
+      "line": 101,
+      "registration": "Sample"
+    },
+    {
+      "category": "Issues",
+      "name": "Unstable Windmill",
+      "file": "source/samples/sample_issues.cpp",
+      "line": 186,
+      "registration": "Sample"
+    },
+    {
+      "category": "Joints",
+      "name": "Distance Joint",
+      "file": "source/samples/sample_joints.cpp",
+      "line": 240,
+      "registration": "Sample"
+    },
+    {
+      "category": "Joints",
+      "name": "Motor Joint",
+      "file": "source/samples/sample_joints.cpp",
+      "line": 413,
+      "registration": "Sample"
+    },
+    {
+      "category": "Joints",
+      "name": "Top Down Friction",
+      "file": "source/samples/sample_joints.cpp",
+      "line": 524,
+      "registration": "Sample"
+    },
+    {
+      "category": "Joints",
+      "name": "Filter Joint",
+      "file": "source/samples/sample_joints.cpp",
+      "line": 577,
+      "registration": "Sample"
+    },
+    {
+      "category": "Joints",
+      "name": "Revolute",
+      "file": "source/samples/sample_joints.cpp",
+      "line": 785,
+      "registration": "Sample"
+    },
+    {
+      "category": "Joints",
+      "name": "Prismatic",
+      "file": "source/samples/sample_joints.cpp",
+      "line": 942,
+      "registration": "Sample"
+    },
+    {
+      "category": "Joints",
+      "name": "Wheel",
+      "file": "source/samples/sample_joints.cpp",
+      "line": 1073,
+      "registration": "Sample"
+    },
+    {
+      "category": "Joints",
+      "name": "Bridge",
+      "file": "source/samples/sample_joints.cpp",
+      "line": 1246,
+      "registration": "Sample"
+    },
+    {
+      "category": "Joints",
+      "name": "Ball & Chain",
+      "file": "source/samples/sample_joints.cpp",
+      "line": 1354,
+      "registration": "Sample"
+    },
+    {
+      "category": "Joints",
+      "name": "Cantilever",
+      "file": "source/samples/sample_joints.cpp",
+      "line": 1510,
+      "registration": "Sample"
+    },
+    {
+      "category": "Joints",
+      "name": "Motion Locks",
+      "file": "source/samples/sample_joints.cpp",
+      "line": 1736,
+      "registration": "Sample"
+    },
+    {
+      "category": "Joints",
+      "name": "Breakable",
+      "file": "source/samples/sample_joints.cpp",
+      "line": 1967,
+      "registration": "Sample"
+    },
+    {
+      "category": "Joints",
+      "name": "Separation",
+      "file": "source/samples/sample_joints.cpp",
+      "line": 2193,
+      "registration": "Sample"
+    },
+    {
+      "category": "Joints",
+      "name": "User Constraint",
+      "file": "source/samples/sample_joints.cpp",
+      "line": 2314,
+      "registration": "Sample"
+    },
+    {
+      "category": "Joints",
+      "name": "Driving",
+      "file": "source/samples/sample_joints.cpp",
+      "line": 2568,
+      "registration": "Sample"
+    },
+    {
+      "category": "Joints",
+      "name": "Ragdoll",
+      "file": "source/samples/sample_joints.cpp",
+      "line": 2652,
+      "registration": "Sample"
+    },
+    {
+      "category": "Joints",
+      "name": "Soft Body",
+      "file": "source/samples/sample_joints.cpp",
+      "line": 2685,
+      "registration": "Sample"
+    },
+    {
+      "category": "Joints",
+      "name": "Doohickey",
+      "file": "source/samples/sample_joints.cpp",
+      "line": 2731,
+      "registration": "Sample"
+    },
+    {
+      "category": "Joints",
+      "name": "Scissor Lift",
+      "file": "source/samples/sample_joints.cpp",
+      "line": 2949,
+      "registration": "Sample"
+    },
+    {
+      "category": "Joints",
+      "name": "Gear Lift",
+      "file": "source/samples/sample_joints.cpp",
+      "line": 3273,
+      "registration": "Sample"
+    },
+    {
+      "category": "Joints",
+      "name": "Door",
+      "file": "source/samples/sample_joints.cpp",
+      "line": 3397,
+      "registration": "Sample"
+    },
+    {
+      "category": "Joints",
+      "name": "Scale Ragdoll",
+      "file": "source/samples/sample_joints.cpp",
+      "line": 3460,
+      "registration": "Sample"
+    },
+    {
+      "category": "Joints",
+      "name": "Theo Jansen",
+      "file": "source/samples/sample_joints.cpp",
+      "line": 3725,
+      "registration": "Sample"
+    },
+    {
+      "category": "Joints",
+      "name": "Desk Lamp",
+      "file": "source/samples/sample_joints.cpp",
+      "line": 4072,
+      "registration": "Sample"
+    },
+    {
+      "category": "Replay",
+      "name": "Viewer",
+      "file": "source/samples/sample_replay.cpp",
+      "line": 1306,
+      "registration": "Replay"
+    },
+    {
+      "category": "Restitution",
+      "name": "Varying",
+      "file": "source/samples/sample_restitution.cpp",
+      "line": 169,
+      "registration": "Sample"
+    },
+    {
+      "category": "Restitution",
+      "name": "Single Box Restitution",
+      "file": "source/samples/sample_restitution.cpp",
+      "line": 264,
+      "registration": "Sample"
+    },
+    {
+      "category": "Restitution",
+      "name": "Single Circle Restitution",
+      "file": "source/samples/sample_restitution.cpp",
+      "line": 357,
+      "registration": "Sample"
+    },
+    {
+      "category": "Restitution",
+      "name": "Circle Stack Restitution",
+      "file": "source/samples/sample_restitution.cpp",
+      "line": 555,
+      "registration": "Sample"
+    },
+    {
+      "category": "Restitution",
+      "name": "Restitution Propagation",
+      "file": "source/samples/sample_restitution.cpp",
+      "line": 725,
+      "registration": "Sample"
+    },
+    {
+      "category": "Restitution",
+      "name": "Box Restitution",
+      "file": "source/samples/sample_restitution.cpp",
+      "line": 885,
+      "registration": "Sample"
+    },
+    {
+      "category": "Restitution",
+      "name": "Rotated Box Restitution",
+      "file": "source/samples/sample_restitution.cpp",
+      "line": 1036,
+      "registration": "Sample"
+    },
+    {
+      "category": "Restitution",
+      "name": "Two Box Restitution",
+      "file": "source/samples/sample_restitution.cpp",
+      "line": 1112,
+      "registration": "Sample"
+    },
+    {
+      "category": "Restitution",
+      "name": "Circle Restitution",
+      "file": "source/samples/sample_restitution.cpp",
+      "line": 1179,
+      "registration": "Sample"
+    },
+    {
+      "category": "Robustness",
+      "name": "HighMassRatio1",
+      "file": "source/samples/sample_robustness.cpp",
+      "line": 73,
+      "registration": "Sample"
+    },
+    {
+      "category": "Robustness",
+      "name": "HighMassRatio2",
+      "file": "source/samples/sample_robustness.cpp",
+      "line": 131,
+      "registration": "Sample"
+    },
+    {
+      "category": "Robustness",
+      "name": "HighMassRatio3",
+      "file": "source/samples/sample_robustness.cpp",
+      "line": 191,
+      "registration": "Sample"
+    },
+    {
+      "category": "Robustness",
+      "name": "Overlap Recovery",
+      "file": "source/samples/sample_robustness.cpp",
+      "line": 309,
+      "registration": "Sample"
+    },
+    {
+      "category": "Robustness",
+      "name": "Tiny Pyramid",
+      "file": "source/samples/sample_robustness.cpp",
+      "line": 375,
+      "registration": "Sample"
+    },
+    {
+      "category": "Robustness",
+      "name": "Cart",
+      "file": "source/samples/sample_robustness.cpp",
+      "line": 543,
+      "registration": "Sample"
+    },
+    {
+      "category": "Robustness",
+      "name": "Multiple Prismatic",
+      "file": "source/samples/sample_robustness.cpp",
+      "line": 632,
+      "registration": "Sample"
+    },
+    {
+      "category": "Shapes",
+      "name": "Chain Shape",
+      "file": "source/samples/sample_shapes.cpp",
+      "line": 220,
+      "registration": "Sample"
+    },
+    {
+      "category": "Shapes",
+      "name": "Chain Segment",
+      "file": "source/samples/sample_shapes.cpp",
+      "line": 401,
+      "registration": "Sample"
+    },
+    {
+      "category": "Shapes",
+      "name": "Compound Shapes",
+      "file": "source/samples/sample_shapes.cpp",
+      "line": 616,
+      "registration": "Sample"
+    },
+    {
+      "category": "Shapes",
+      "name": "Filter",
+      "file": "source/samples/sample_shapes.cpp",
+      "line": 822,
+      "registration": "Sample"
+    },
+    {
+      "category": "Shapes",
+      "name": "Custom Filter",
+      "file": "source/samples/sample_shapes.cpp",
+      "line": 917,
+      "registration": "Sample"
+    },
+    {
+      "category": "Shapes",
+      "name": "Friction",
+      "file": "source/samples/sample_shapes.cpp",
+      "line": 984,
+      "registration": "Sample"
+    },
+    {
+      "category": "Shapes",
+      "name": "Rolling Resistance",
+      "file": "source/samples/sample_shapes.cpp",
+      "line": 1075,
+      "registration": "Sample"
+    },
+    {
+      "category": "Shapes",
+      "name": "Conveyor Belt",
+      "file": "source/samples/sample_shapes.cpp",
+      "line": 1134,
+      "registration": "Sample"
+    },
+    {
+      "category": "Shapes",
+      "name": "Tangent Speed",
+      "file": "source/samples/sample_shapes.cpp",
+      "line": 1269,
+      "registration": "Sample"
+    },
+    {
+      "category": "Shapes",
+      "name": "Modify Geometry",
+      "file": "source/samples/sample_shapes.cpp",
+      "line": 1426,
+      "registration": "Sample"
+    },
+    {
+      "category": "Shapes",
+      "name": "Chain Link",
+      "file": "source/samples/sample_shapes.cpp",
+      "line": 1511,
+      "registration": "Sample"
+    },
+    {
+      "category": "Shapes",
+      "name": "Rounded",
+      "file": "source/samples/sample_shapes.cpp",
+      "line": 1581,
+      "registration": "Sample"
+    },
+    {
+      "category": "Shapes",
+      "name": "Ellipse",
+      "file": "source/samples/sample_shapes.cpp",
+      "line": 1646,
+      "registration": "Sample"
+    },
+    {
+      "category": "Shapes",
+      "name": "Offset",
+      "file": "source/samples/sample_shapes.cpp",
+      "line": 1704,
+      "registration": "Sample"
+    },
+    {
+      "category": "Shapes",
+      "name": "Explosion",
+      "file": "source/samples/sample_shapes.cpp",
+      "line": 1816,
+      "registration": "Sample"
+    },
+    {
+      "category": "Shapes",
+      "name": "Recreate Static",
+      "file": "source/samples/sample_shapes.cpp",
+      "line": 1874,
+      "registration": "Sample"
+    },
+    {
+      "category": "Shapes",
+      "name": "Wind",
+      "file": "source/samples/sample_shapes.cpp",
+      "line": 2039,
+      "registration": "Sample"
+    },
+    {
+      "category": "Stacking",
+      "name": "Single Box",
+      "file": "source/samples/sample_stacking.cpp",
+      "line": 65,
+      "registration": "Sample"
+    },
+    {
+      "category": "Stacking",
+      "name": "Tilted Stack",
+      "file": "source/samples/sample_stacking.cpp",
+      "line": 136,
+      "registration": "Sample"
+    },
+    {
+      "category": "Stacking",
+      "name": "Vertical Stack",
+      "file": "source/samples/sample_stacking.cpp",
+      "line": 408,
+      "registration": "Sample"
+    },
+    {
+      "category": "Stacking",
+      "name": "Circle Stack",
+      "file": "source/samples/sample_stacking.cpp",
+      "line": 508,
+      "registration": "Sample"
+    },
+    {
+      "category": "Stacking",
+      "name": "Capsule Stack",
+      "file": "source/samples/sample_stacking.cpp",
+      "line": 569,
+      "registration": "Sample"
+    },
+    {
+      "category": "Stacking",
+      "name": "Cliff",
+      "file": "source/samples/sample_stacking.cpp",
+      "line": 711,
+      "registration": "Sample"
+    },
+    {
+      "category": "Stacking",
+      "name": "Arch",
+      "file": "source/samples/sample_stacking.cpp",
+      "line": 809,
+      "registration": "Sample"
+    },
+    {
+      "category": "Stacking",
+      "name": "Double Domino",
+      "file": "source/samples/sample_stacking.cpp",
+      "line": 862,
+      "registration": "Sample"
+    },
+    {
+      "category": "Stacking",
+      "name": "Confined",
+      "file": "source/samples/sample_stacking.cpp",
+      "line": 934,
+      "registration": "Sample"
+    },
+    {
+      "category": "Stacking",
+      "name": "Card House",
+      "file": "source/samples/sample_stacking.cpp",
+      "line": 1011,
+      "registration": "Sample"
+    },
+    {
+      "category": "World",
+      "name": "Tiles",
+      "file": "source/samples/sample_world.cpp",
+      "line": 243,
+      "registration": "Sample"
+    },
+    {
+      "category": "World",
+      "name": "Far Pyramid",
+      "file": "source/samples/sample_world.cpp",
+      "line": 315,
+      "registration": "Sample"
+    },
+    {
+      "category": "World",
+      "name": "Far Ragdolls",
+      "file": "source/samples/sample_world.cpp",
+      "line": 390,
+      "registration": "Sample"
+    },
+    {
+      "category": "World",
+      "name": "Far Gate",
+      "file": "source/samples/sample_world.cpp",
+      "line": 741,
+      "registration": "Sample"
+    }
+  ]
+}

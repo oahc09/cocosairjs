@@ -167,7 +167,8 @@ function traceBypasses(workspace, html, references = [], serveRoot = path.resolv
             files.add(path.join(serveRoot, item.resolved));
     }
     for (const file of files)
-        if (fs.existsSync(file)) scan(path.relative(serveRoot, file), fs.readFileSync(file, 'utf8'));
+        if (fs.existsSync(file))
+            scan(path.relative(serveRoot, file).split(path.sep).join('/'), fs.readFileSync(file, 'utf8'));
     if (/src=["'][^"']*cocosair\.module\.js/.test(html)) hits.push('index.html');
     for (const match of html.matchAll(/<script[^>]*type=["']module["'][^>]*>([\s\S]*?)<\/script>/g))
         scan('index.html:inline', match[1]);

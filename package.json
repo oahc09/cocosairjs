@@ -57,6 +57,7 @@
     "LICENSE",
     "licenses/",
     "build/npm/webgpu/",
+    "build/npm/box2d3/",
     "build/npm/cocosair.math.js",
     "build/cocosair.math.d.ts",
     "build/cocosair.math.legacy.d.ts"

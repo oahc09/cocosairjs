@@ -39,12 +39,13 @@ async function preparePackage() {
 
     const unexpected = fs
         .readdirSync(packageDir)
-        .filter((name) => !bundles.includes(name) && name !== 'webgpu' && name !== 'cocosair.math.js');
+        .filter((name) => !bundles.includes(name) && !['webgpu', 'box2d3', 'cocosair.math.js'].includes(name));
     if (unexpected.length) {
         throw new Error(`Unexpected files in ${path.relative(root, packageDir)}: ${unexpected.join(', ')}`);
     }
 
     require('./webgpu-assets.cjs').copy(root, packageDir);
+    require('./box2d3.cjs').copy(packageDir);
 }
 preparePackage().catch((error) => {
     console.error(error);

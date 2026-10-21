@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Cocos AIR · Box2D 3.2</title>
+        <style>
+            html,
+            body {
+                margin: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                background: #111b29;
+                color: #e7f0fc;
+                font: 15px system-ui;
+            }
+            canvas {
+                width: 100%;
+                height: 100%;
+                display: block;
+            }
+            header {
+                position: fixed;
+                top: 20px;
+                left: 24px;
+                z-index: 10;
+                pointer-events: none;
+            }
+            h1 {
+                font-size: 23px;
+                margin: 0 0 8px;
+            }
+            p {
+                color: #a7bad2;
+                margin: 5px 0;
+            }
+            nav {
+                position: fixed;
+                bottom: 20px;
+                left: 24px;
+                z-index: 10;
+                display: flex;
+                gap: 10px;
+            }
+            button,
+            a {
+                padding: 10px 16px;
+                background: #24374e;
+                color: #eff7ff;
+                border: 1px solid #48617c;
+                border-radius: 6px;
+                cursor: pointer;
+                text-decoration: none;
+                font: inherit;
+            }
+            #status {
+                position: fixed;
+                bottom: 25px;
+                right: 25px;
+                z-index: 10;
+                color: #a7bad2;
+            }
+        </style>
+        <script type="importmap">
+            { "imports": { "cocosair": "/build/cocosair.module.js" } }
+        </script>
+    </head>
+    <body>
+        <canvas id="GameCanvas"></canvas>
+        <header>
+            <h1>Box2D 3.2 · Cocos AIR</h1>
+            <p>WASM 刚体模拟 · 原生 Cocos 组件与 Graphics</p>
+            <p>点击添加刚体，拖动黄色方块。默认 JS 后端保持独立。</p>
+        </header>
+        <nav>
+            <button id="spawn">添加刚体</button><button id="reset">重置场景</button
+            ><a href="./official.html">官方案例</a>
+        </nav>
+        <span id="status">加载物理后端…</span>
+        <script type="module" src="./src/main.ts"></script>
+    </body>
+</html>

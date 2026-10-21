@@ -54,6 +54,10 @@ npm run dev
 **不下载或生成 decoder JS/WASM 资产**。构建脚本支持用 `AIR_FEATURES` 覆盖特性集、`AIR_OUT_DIR`
 重定向输出；这两个变体不刷新默认发布侧文件，也不共用默认 ESM 增量缓存。`build:dts` 独立，不跟随 `AIR_OUT_DIR`。
 
+这些运行时构建还会校验冻结的 Box2D 3.2 源码/桥接输入/二进制 receipt，将现有可选资产复制到输出目录的 `box2d3/`。
+`prepack` 同样复制到 `build/npm/box2d3/`，包含原始许可；它们都不编译 C/C++ 或安装工具链。
+重新生成原生资产使用独立入口 `node tools/build/box2d3.cjs --build`，写入范围见 [Box2D 指南](../guides/box2d3.md)。脚本数量不变。
+
 ## 清单、资源登记与报告生成
 
 声明与 API 清单交付必须在工作树自己的真实 `node_modules/` 目录中生成，不能将整个目录链接到

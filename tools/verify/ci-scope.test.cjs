@@ -136,8 +136,28 @@ test('real independent Git trees include renamed, deleted, new, spaced and newli
     const before = commit(base);
     fs.rmSync(path.join(dir, 'docs/deleted.md'));
     fs.renameSync(path.join(dir, 'old name.txt'), path.join(dir, 'new name.txt'));
-    put(dir, 'docs/new\nline.md', 'new');
-    const after = commit(dir);
+    // Git permits newline paths even on hosts whose filesystem does not. Keep the
+    // real tree fixture portable by writing this one entry through the index.
+    git(dir, 'add', '.');
+    const blob = cp
+        .execFileSync('git', ['-C', dir, 'hash-object', '-w', '--stdin'], {
+            input: 'new',
+            encoding: 'utf8',
+        })
+        .trim();
+    git(
+        dir,
+        '-c',
+        'core.protectNTFS=false',
+        'update-index',
+        '--add',
+        '--cacheinfo',
+        '100644',
+        blob,
+        'docs/new\nline.md',
+    );
+    git(dir, 'commit', '-qm', 'Synthetic CI policy fixture with newline path');
+    const after = git(dir, 'rev-parse', 'HEAD');
     assert.deepEqual(changedPaths(treeAt(base, before), treeAt(dir, after)), [
         'docs/deleted.md',
         'docs/new\nline.md',

@@ -22,6 +22,14 @@ const report = {
     passed: false,
 };
 function run(label, executable, args, cwd) {
+    // Windows cannot spawn npm.cmd directly without a shell. Invoke npm's JS
+    // entry with this Node executable, preserving arguments without shell quoting.
+    if (process.platform === 'win32' && executable === 'npm') {
+        const npmCli = path.join(path.dirname(process.execPath), 'node_modules/npm/bin/npm-cli.js');
+        assert.ok(fs.existsSync(npmCli), 'Missing npm CLI beside the selected Node executable');
+        args = [npmCli, ...args];
+        executable = process.execPath;
+    }
     const result = spawnSync(executable, args, {
         cwd,
         encoding: 'utf8',

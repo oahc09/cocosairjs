@@ -37,6 +37,7 @@ import type { AirSessionScope, AirCleanupReceipt } from './session-scope';
 import { airError, airBootstrapRegistry } from './app-config';
 import { CCObject } from '../cocos/core/data/object';
 import { releaseManager } from '../cocos/asset/asset-manager/release-manager';
+import { disposeBox2D3 } from './physics-2d/box2d3';
 
 export interface AirSceneReleaseReceipt extends AirCleanupReceipt {
     readonly scene: string | null;
@@ -95,6 +96,10 @@ export interface AirAppOptions {
      * `'builtin'` 为官方内置离散碰撞检测器（不模拟）。须在 createAirApp 内 game.init 前生效。
      */
     physics?: 'builtin' | 'cannon';
+    /** Optional 2D backend. Existing JavaScript Box2D remains the default. */
+    physics2D?: 'box2d' | 'box2d-v3-wasm';
+    /** Separate WASM deployment and solver configuration, used only by box2d-v3-wasm. */
+    box2d3?: { assetBaseUrl?: string; subStepCount?: number };
     /**
      * 可选：WebGL 上下文丢失状态机（W01）。lost 时默认自动 game.pause() 停止绘制与
      * 业务时钟；恢复路径如实现不能安全重建 GPU 资源，进入 failed 并提供受控重载。
@@ -272,6 +277,7 @@ export class AirAppImpl implements AirApp {
         this._close = Promise.resolve()
             .then(() => this.releaseScene())
             .then((receipt) => {
+                disposeBox2D3();
                 this.contextHealth.destroy();
                 this.diagnostics?.destroy();
                 return receipt;

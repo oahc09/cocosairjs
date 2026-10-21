@@ -19,6 +19,15 @@ const DECISIONS_PATH = path.join(ROOT, 'docs', 'license-decisions.json');
  */
 const REGISTRY = [
     {
+        component: 'Box2D 3.2.0 (optional WASM backend)',
+        licenseFile: 'vendor/box2d/runtime/LICENSE.Box2D.txt',
+        sourceOfTruth: { kind: 'vendored', path: 'vendor/box2d/source/LICENSE' },
+        licenseId: 'MIT (c) 2022 Erin Catto',
+        ships: 'source',
+        probes: [],
+        note: 'Separate build/npm/box2d3 assets; original MIT notice included. Frozen source and binary receipts checked by tools/build/box2d3.cjs.',
+    },
+    {
         component: 'Cocos builtin effect/chunk sources',
         licenseFile: 'licenses/LICENSE_builtin_source.txt',
         sourceOfTruth: { kind: 'self', path: 'licenses/LICENSE_builtin_source.txt' },

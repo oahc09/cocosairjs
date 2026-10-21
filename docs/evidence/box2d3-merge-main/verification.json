@@ -1,0 +1,204 @@
+{
+  "schema": 1,
+  "status": "BLOCKED",
+  "mergeReady": false,
+  "recordedAt": "2026-10-20T11:58:27.403Z",
+  "candidate": "25ad394088dd61c07bc0286d697536b061cf814d",
+  "integratedMain": "aaf58b147c0dc7ecabff149cf874d6877e10ef2c",
+  "runtimeBuildCandidate": "921ddaf84b3eefdc10756c6d985080d0f2389bf7",
+  "projectVersion": "1.0.0",
+  "scope": "Windows desktop local checks; no remote Linux CI executed",
+  "runtimeInputs": {
+    "build/cocosair.module.js": "955aa325a03dc95d4a1dc29f1641752765269c4011145476b4982d0f83fbad99",
+    "build/cocosair.module.min.js": "166e7e01f921f1b2bd35816c7a143e7b9740eb61a4d697c16fad98cf61fea71b",
+    "build/cocosair.module.d.ts": "1df62f40e1c6bf4869bf6839576547306e5914204600ef6542e398469ebd9f36",
+    "build/cocosair.module.js.map": "decafdf296e3c1cefdfc77080f83fe455f38e192809ecc4dbe41d0f38cbd3340",
+    "build/cocosair.module.min.js.map": "e3c12486f33ddfbc9b1c815e34a71ffcfec971fa12dc9bbd23b4f9a7b866a293",
+    "build/cocosair.math.js": "27974fb947783a06cde931fd528a6058f2d52c6b7975bdc76c48f3e4e593a8f5",
+    "build/math-build.json": "10a37bf9c6b98e8b6563f0946c98db278a3e9721919d829522d7b95eac3aa69e",
+    "build/spark.module.js": "378b1d6c0f69407517060b547aabf5be5632c14f29a2dee1fb60d01292217da9",
+    "build/spark.module.d.ts": "b1ebae2560e38a480e525d1706a2322c134480794aa899b5e7a568e47e5a087b",
+    "package.json": "043c56d47ad734a055b48e64eae4b6d2666d5da9cd9d07ddf6695101961e889c",
+    "src/air/physics-2d/box2d3.ts": "c1793f73436e78651f7445a38b39892e62f026b85c90cfdb4c540640d21882d5",
+    "tools/build/prepare-package.cjs": "1e0175b9a0beba6415c3c8a6db1619a9cde19f15c0ebbe6c1f7d0c34252ae469",
+    "tools/verify/box2d3.cjs": "4179f5d84fb6d0257b8ca69582743912cd9a401a1316cecad885c89dbae9bf1a",
+    "tools/verify/ci-scope.test.cjs": "42bda879fa5dda5f37197c18fee6e0e247360059cbcc0671df02ecdb4f1a0a67",
+    "tools/verify/math-tarball.cjs": "52a574ae72827fab35a73bf3e43e63bb73c71c4aa900c15d9845ed827a07b40f",
+    "tools/verify/example-spec-browser.cjs": "f41910b794d22a88fd0f4df2d5521c28fa31e3fbf3f1a1cd42a58e398d5d5eb7",
+    "test/smoke/smoke-example-evidence-integration.test.ts": "a9a6060048bfd0125aeee98b2c63ae68f2d424490728c2616b2461dd10f03200"
+  },
+  "checks": {
+    "buildAll": {
+      "pass": true,
+      "log": "output/box2d/merge-main/build-all.log"
+    },
+    "buildSpark": {
+      "pass": true,
+      "log": "output/box2d/merge-main/build-spark.log"
+    },
+    "runtime": {
+      "pass": true,
+      "suites": 12,
+      "tests": 137,
+      "report": "output/box2d/merge-main/runtime-tests-final.json"
+    },
+    "sdkMathCpu": {
+      "pass": true,
+      "tests": 42,
+      "log": "output/box2d/merge-main/sdk-math-cpu.log"
+    },
+    "ciPolicy": {
+      "pass": true,
+      "tests": 50,
+      "log": "output/box2d/merge-main/ci-policy-final.log"
+    },
+    "evidenceTools": {
+      "pass": true,
+      "partial": true,
+      "tests": 22,
+      "notRun": 2,
+      "report": "output/box2d/merge-main/evidence-windows-final.json"
+    },
+    "staticGates": {
+      "pass": true,
+      "results": [
+        {
+          "name": "format-global",
+          "exitCode": 0,
+          "signal": null,
+          "elapsedMs": 9043,
+          "log": "output/box2d/merge-main/format-global.log"
+        },
+        {
+          "name": "format-focused",
+          "exitCode": 0,
+          "signal": null,
+          "elapsedMs": 895,
+          "log": "output/box2d/merge-main/format-focused.log"
+        },
+        {
+          "name": "file-map",
+          "exitCode": 0,
+          "signal": null,
+          "elapsedMs": 14046,
+          "log": "output/box2d/merge-main/file-map.log"
+        },
+        {
+          "name": "licenses",
+          "exitCode": 0,
+          "signal": null,
+          "elapsedMs": 1553,
+          "log": "output/box2d/merge-main/licenses.log"
+        },
+        {
+          "name": "doc-refs",
+          "exitCode": 0,
+          "signal": null,
+          "elapsedMs": 3403,
+          "log": "output/box2d/merge-main/doc-refs.log"
+        },
+        {
+          "name": "web-only",
+          "exitCode": 0,
+          "signal": null,
+          "elapsedMs": 12560,
+          "log": "output/box2d/merge-main/web-only.log"
+        },
+        {
+          "name": "box2d-source",
+          "exitCode": 0,
+          "signal": null,
+          "elapsedMs": 175,
+          "log": "output/box2d/merge-main/box2d-source.log"
+        }
+      ]
+    },
+    "typecheck": {
+      "pass": true,
+      "log": "output/box2d/merge-main/typecheck.log"
+    },
+    "mathTarball": {
+      "pass": true,
+      "report": "output/box2d/merge-main/math-tarball/receipt.json"
+    },
+    "consumer": {
+      "pass": true,
+      "log": "output/box2d/merge-main/consumer.log"
+    },
+    "assets": {
+      "pass": true,
+      "assets": [
+        {
+          "name": "air-box2d.mjs",
+          "sha256": "6b8598ff980522ff8b09aad350588411d9aaa7fcc9600584d912db34b698eec4",
+          "bytes": 56145
+        },
+        {
+          "name": "air-box2d.wasm",
+          "sha256": "542f80a7eaf9c47a1a552e448abe4740d31cf546ed04e362d71ed763a4d189db",
+          "bytes": 376818
+        },
+        {
+          "name": "LICENSE.Box2D.txt",
+          "sha256": "68a3e676d7e94093b102d5cba0d4e04af812040d6f230c3db67a6664574e43d2",
+          "bytes": 1067
+        }
+      ],
+      "mathExport": {
+        "types@<5.0": "./build/cocosair.math.legacy.d.ts",
+        "types": "./build/cocosair.math.d.ts",
+        "import": "./build/npm/cocosair.math.js",
+        "default": "./build/npm/cocosair.math.js"
+      },
+      "tarballSha256": "81436aa36e69e14412093817544e258ab5b26897b1170e243763cc9a4dbd296f"
+    }
+  },
+  "browserAttempts": [
+    {
+      "report": "output/box2d/acceptance/2026-10-20T11-50-52-541Z-webkit-all/report.json",
+      "sha256": "c52e15eeca7471b3749057865658e332df3cd47d269aed5fcacc8ce7b0db4377",
+      "pass": false,
+      "complete": false,
+      "officialExecuted": 0,
+      "error": "Error:  Failed to launch browser.\n<launching> E:\\AIProMax\\github\\cocosair.js\\output\\box2d\\browsers\\webkit-2336\\Playwright.exe --inspector-pipe --disable-accelerated-compositing --headless --no-startup-window\n<launched> pid=28564\n[pid=28564] <gracefully close start>\n[pid=28564] <kill>\n[pid=28564] <will force kill>\n[pid=28564] taskkill stderr: ERROR: The process \"28564\" not found.\r\n\n[pid=28564] <process did exit: exitCode=3221226505, signal=null>\n[pid=28564] starting temporary directories cleanup\n[pid=28564] finished temporary directories cleanup\n[pid=28564] <gracefully close end>"
+    },
+    {
+      "report": "output/box2d/acceptance/2026-10-20T11-50-52-541Z-chromium-all/report.json",
+      "sha256": "bff9d887c8d47c54d42f25bd560d8ec33c69a8cecfdc4c6cb2a3747b66614ccb",
+      "pass": false,
+      "complete": false,
+      "officialExecuted": 0,
+      "error": "Error: Protocol error (Browser.getVersion): Internal server error, session closed. Failed to launch browser.\n<launching> E:\\AIProMax\\github\\cocosair.js\\output\\box2d\\browsers\\chromium-1234\\chrome-win64\\chrome.exe --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --use-gl=angle --enable-unsafe-swiftshader --disable-gpu-sandbox --user-data-dir=C:\\Users\\caosh\\AppData\\Local\\Temp\\playwright_chromiumdev_profile-yyeI4d --remote-debugging-pipe --no-startup-window\n<launched> pid=29064\n[pid=29064][err] [29064:28508:1020/195114.218:ERROR:base\\win\\message_window.cc:124] Failed to register the window class for a message-only window: 在活动的激活上下文中找不到任何查找密钥。 (0x36B7)\n[pid=29064][err] [29064:28508:1020/195114.220:ERROR:chrome\\app\\chrome_main_delegate.cc:704] Your computer has run out of resources and cannot start Google Chrome for Testing. Sign out of Windows or restart your computer and try again.\n[pid=29064] <gracefully close start>\n[pid=29064] <kill>\n[pid=29064] <will force kill>\n[pid=29064] taskkill stderr: ERROR: The process \"29064\" not found.\r\n\n[pid=29064] <process did exit: exitCode=1, signal=null>\n[pid=29064] starting temporary directories cleanup\n[pid=29064] finished temporary directories cleanup\n[pid=29064] <gracefully close end>"
+    },
+    {
+      "report": "output/box2d/acceptance/2026-10-20T11-50-52-541Z-firefox-all/report.json",
+      "sha256": "d12a12c45def7d687532b2b2cfafd2d305b2d8bb5122e917226045f6220e8209",
+      "pass": false,
+      "complete": false,
+      "officialExecuted": 0,
+      "error": "Error: Failed to launch the browser process.\nBrowser logs:\n\n<launching> E:\\AIProMax\\github\\cocosair.js\\output\\box2d\\browsers\\firefox-1538\\firefox\\firefox.exe -no-remote -headless -profile C:\\Users\\caosh\\AppData\\Local\\Temp\\playwright_firefoxdev_profile-6xHc1t -juggler-pipe -silent\n<launched> pid=30804\n[pid=30804][err] *** You are running in headless mode.\n[pid=30804] <process did exit: exitCode=2147483651, signal=null>\n[pid=30804] starting temporary directories cleanup Failed to launch browser.\n<launching> E:\\AIProMax\\github\\cocosair.js\\output\\box2d\\browsers\\firefox-1538\\firefox\\firefox.exe -no-remote -headless -profile C:\\Users\\caosh\\AppData\\Local\\Temp\\playwright_firefoxdev_profile-6xHc1t -juggler-pipe -silent\n<launched> pid=30804\n[pid=30804][err] *** You are running in headless mode.\n[pid=30804] <process did exit: exitCode=2147483651, signal=null>\n[pid=30804] starting temporary directories cleanup\n[pid=30804] <gracefully close start>\n[pid=30804] <kill>\n[pid=30804] <skipped force kill spawnedProcess.killed=false processClosed=true>\n[pid=30804] finished temporary directories cleanup\n[pid=30804] <gracefully close end>"
+    },
+    {
+      "report": "output/box2d/acceptance/2026-10-20T11-52-57-647Z-chromium-all/report.json",
+      "sha256": "1af5493397de61f3da5e7811073a5b2cdb73e4c5c9f06b11ffd20b380e098ef9",
+      "pass": false,
+      "complete": false,
+      "officialExecuted": 0,
+      "error": "Error: Protocol error (Browser.getVersion): Internal server error, session closed. Failed to launch browser.\n<launching> E:\\AIProMax\\github\\cocosair.js\\output\\box2d\\browsers\\chromium-1234\\chrome-win64\\chrome.exe --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --use-gl=angle --enable-unsafe-swiftshader --disable-gpu-sandbox --user-data-dir=C:\\Users\\caosh\\AppData\\Local\\Temp\\playwright_chromiumdev_profile-153nqg --remote-debugging-pipe --no-startup-window\n<launched> pid=30784\n[pid=30784][err] [30784:25480:1020/195259.850:ERROR:base\\win\\message_window.cc:124] Failed to register the window class for a message-only window: 在活动的激活上下文中找不到任何查找密钥。 (0x36B7)\n[pid=30784][err] [30784:25480:1020/195259.851:ERROR:chrome\\app\\chrome_main_delegate.cc:704] Your computer has run out of resources and cannot start Google Chrome for Testing. Sign out of Windows or restart your computer and try again.\n[pid=30784] <gracefully close start>\n[pid=30784] <kill>\n[pid=30784] <will force kill>\n[pid=30784] taskkill stderr: ERROR: The process \"30784\" not found.\r\n\n[pid=30784] <process did exit: exitCode=1, signal=null>\n[pid=30784] starting temporary directories cleanup\n[pid=30784] finished temporary directories cleanup\n[pid=30784] <gracefully close end>"
+    }
+  ],
+  "notRun": [
+    "Merged-candidate complete 147 official and 47 AIR assertions on each engine",
+    "Merged-candidate SDK recipes and installed tarball browser acceptance",
+    "Linux five-core-example custody collector",
+    "Linux /proc compiler-child and privileged symlink controls"
+  ],
+  "unrelatedBaselineAttention": [
+    "Existing Spark license disposition attention"
+  ],
+  "historicalAcceptance": "docs/evidence/box2d3-acceptance/acceptance.json",
+  "historicalArchive": "docs/evidence/box2d3-acceptance/archives/initial/archive.json",
+  "changesCommitted": true,
+  "pushed": false,
+  "mergedIntoMain": false
+}

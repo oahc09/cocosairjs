@@ -2,7 +2,7 @@
   "meta": {
     "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
     "note": "Air Path 与 Upstream Path 一致(前缀 src/)；modified 文件另行标注 reason；upstreamPath=null 表示该行为 Air 原创文件或上游产物（仓库内无对应源文件），必须 modified:true 并在 reason 说明出处",
-    "modifiedCount": 227,
+    "modifiedCount": 228,
     "pal": {
       "revision": "9f0e30acb31f6d670f2c0bf818d61039846a2860",
       "license": "MIT",
@@ -10,6 +10,13 @@
     }
   },
   "mapping": [
+    {
+      "airPath": "src/air/physics-2d/box2d3.ts",
+      "upstreamPath": null,
+      "baseline": "AIR original",
+      "modified": true,
+      "reason": "AIR optional Box2D 3.2.0 WebAssembly backend behind original Cocos 2D component interfaces; pinned source, native compatibility bridge and separate assets. Existing extracted physics backends unchanged."
+    },
     {
       "airPath": "src/air/dom-overlay.ts",
       "upstreamPath": null,

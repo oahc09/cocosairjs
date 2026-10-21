@@ -1,0 +1,6 @@
+# Frozen Box2D sources, native bridge inputs and compiler outputs are byte-hashed.
+# Preserve their original bytes when checking out on Windows with core.autocrlf.
+vendor/box2d/** -text
+tools/build/box2d/** -text
+build/box2d3/** -text
+build/box2d3-samples/** -text
