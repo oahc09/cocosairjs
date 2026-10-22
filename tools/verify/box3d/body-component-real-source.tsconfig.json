@@ -30,7 +30,9 @@
     "../../../src/air/physics/box3d/unsupported.ts",
     "../../../src/@types/external-modules.d.ts",
     "../../../src/air/physics/box3d/shared-body.ts",
-    "../../../src/air/physics/box3d/rigid-body.ts"
+    "../../../src/air/physics/box3d/rigid-body.ts",
+    "../../../src/air/physics/box3d/box-sphere-geometry.ts",
+    "../../../src/air/physics/box3d/box-sphere-shape.ts"
   ],
   "include": []
 }

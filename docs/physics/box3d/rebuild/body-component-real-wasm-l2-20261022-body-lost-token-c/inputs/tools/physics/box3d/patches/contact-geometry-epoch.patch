@@ -1,0 +1,100 @@
+--- a/include/box3d/types.h
++++ b/include/box3d/types.h
+@@ -1283,6 +1283,19 @@
+ /// The contact data for two shapes. By convention the manifold normal points
+ /// from shape A to shape B.
+ /// @see b3Shape_GetContactData() and b3Body_GetContactData()
++/// AIR geometry-only extension: the actual generation basis of a cached manifold.
++/// This is not the body's current pose, a TOI pose, or an impulse sampling epoch.
++/// Counters are interpreted together with the full contact identity.
++typedef struct b3ContactGeometryBasis
++{
++	uint64_t geometryRevision;
++	uint64_t generatedAfterStep;
++	b3WorldTransform generationTransformA;
++	b3WorldTransform generationTransformB;
++	b3Pos generationCOMA;
++	b3Pos generationCOMB;
++} b3ContactGeometryBasis;
++
+ typedef struct b3ContactData
+ {
+ 	/// The contact id. You may hold onto this to track a contact across time steps.
+--- a/src/contact.h
++++ b/src/contact.h
+@@ -159,6 +159,10 @@
+ 	// This is monotonically advanced when a contact is allocated in this slot
+ 	// Used to check for invalid b3ContactId
+ 	uint32_t generation;
++
++	// AIR: independent from the recycling cache; solver and CCD never overwrite it.
++	bool geometryValid;
++	b3ContactGeometryBasis geometryBasis;
+ } b3Contact;
+ 
+ typedef struct b3ContactSpec
+--- a/include/box3d/box3d.h
++++ b/include/box3d/box3d.h
+@@ -1807,4 +1807,9 @@
+ /// Get the manifolds for a contact. The manifold may have no points if the contact is not touching.
+ B3_API b3ContactData b3Contact_GetData( b3ContactId contactId );
+ 
++/// AIR geometry-only extension. Copies the manifold's generation basis.
++/// Returns false without writing output for null/invalid/locked/unavailable input.
++/// Does not refresh the manifold or assert that cached points lie on current surfaces.
++B3_API bool b3Contact_GetGeometryBasis( b3ContactId contactId, b3ContactGeometryBasis* outBasis );
++
+ /**@}*/ // contact
+--- a/src/contact.c
++++ b/src/contact.c
+@@ -93,6 +93,27 @@
+ 	return data;
+ }
+ 
++bool b3Contact_GetGeometryBasis( b3ContactId contactId, b3ContactGeometryBasis* outBasis )
++{
++	if ( outBasis == NULL || b3Contact_IsValid( contactId ) == false )
++	{
++		return false;
++	}
++	b3World* world = b3GetWorld( contactId.world0 );
++	if ( world->locked )
++	{
++		return false;
++	}
++	b3Contact* contact = b3GetContactFullId( world, contactId );
++	if ( contact->geometryValid == false || contact->manifoldCount == 0 ||
++		 ( contact->flags & b3_relativeTransformValid ) == 0 )
++	{
++		return false;
++	}
++	*outBasis = contact->geometryBasis;
++	return true;
++}
++
+ struct b3ContactRegister
+ {
+ 	// b3ManifoldFcn* fcn;
+--- a/src/physics_world.c
++++ b/src/physics_world.c
+@@ -745,6 +745,20 @@
+ 		// This updates solid contacts
+ 		bool touching = b3UpdateContact( world, workerIndex, contact, shapeA, bodySimA->localCenter, transformA, shapeB,
+ 										 bodySimB->localCenter, transformB, isFast, taskContext->arena );
++
++		// AIR: capture only after actual generation and common flip/COM adjustment.
++		// The recycle continue above, sleep, solve writeback and CCD retain this basis.
++		contact->geometryValid = touching && contact->geometryBasis.geometryRevision != UINT64_MAX;
++		// Exhaustion is permanent for this contact lifetime: never wrap into an old epoch.
++		if ( contact->geometryValid )
++		{
++			contact->geometryBasis.geometryRevision += 1;
++			contact->geometryBasis.generatedAfterStep = world->stepIndex;
++			contact->geometryBasis.generationTransformA = transformA;
++			contact->geometryBasis.generationTransformB = transformB;
++			contact->geometryBasis.generationCOMA = bodySimA->center;
++			contact->geometryBasis.generationCOMB = bodySimB->center;
++		}
+ 
+ 		int bucketIndex = b3MinInt( contact->manifoldCount, B3_CONTACT_MANIFOLD_COUNT_BUCKETS - 1 );
+ 		if ( bucketIndex > 0 )

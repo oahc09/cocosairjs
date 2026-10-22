@@ -22,16 +22,57 @@
 import type { IPhysicsSelector } from '../../../cocos/physics/framework/physics-selector';
 import type { Box3DWorldAdapter } from './prepare';
 import { Box3DPhysicsWorld } from './world';
-import { requireWorldBinding, worldError } from './world-binding';
+import { Box3DRigidBody } from './rigid-body';
+import { Box3DBoxShape, Box3DSphereShape } from './box-sphere-shape';
+import type { Box3DComponentConfiguration } from './shared-body';
+import { requireComponentBinding, requireWorldBinding, worldError } from './world-binding';
 import { createUnsupportedBox3DComponents } from './unsupported';
 
 /** Explicit factory only: module evaluation never registers a world/feature or requests assets. */
-export function createBox3DWorldAdapter(selector: IPhysicsSelector): Box3DWorldAdapter {
+export function createBox3DWorldAdapter(
+    selector: IPhysicsSelector,
+    components?: Box3DComponentConfiguration,
+): Box3DWorldAdapter {
     return (lease, options, preparation) => {
         requireWorldBinding(lease.binding); // Fail before selector mutation and native world allocation.
+        if (components) {
+            requireComponentBinding(lease.binding);
+            if (typeof components.collisionMask !== 'function' || typeof components.sleepThreshold !== 'function')
+                throw worldError(
+                    'AIR_E_BOX3D_CONFIG',
+                    'component registration',
+                    'Expected actual PhysicsSystem configuration readers.',
+                );
+        }
         let constructed = false;
+        let ownedWorld: Box3DPhysicsWorld | null = null;
+        const getWorld = () => {
+            if (!ownedWorld)
+                throw worldError('AIR_E_BOX3D_CONFIG', 'component construction', 'The owned world is not constructed.');
+            return ownedWorld;
+        };
+        const componentWrappers = components
+            ? {
+                  RigidBody: class extends Box3DRigidBody {
+                      constructor() {
+                          super(getWorld, components!);
+                      }
+                  },
+                  BoxShape: class extends Box3DBoxShape {
+                      constructor() {
+                          super(getWorld, components!);
+                      }
+                  },
+                  SphereShape: class extends Box3DSphereShape {
+                      constructor() {
+                          super(getWorld, components!);
+                      }
+                  },
+              }
+            : {};
         const wrapper = Object.freeze({
             ...createUnsupportedBox3DComponents(),
+            ...componentWrappers,
             PhysicsWorld: class extends Box3DPhysicsWorld {
                 constructor() {
                     if (constructed)
@@ -42,6 +83,7 @@ export function createBox3DWorldAdapter(selector: IPhysicsSelector): Box3DWorldA
                         );
                     constructed = true;
                     super(lease, options, preparation);
+                    ownedWorld = this;
                 }
             },
         });

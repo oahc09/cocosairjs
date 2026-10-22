@@ -1,0 +1,94 @@
+{
+  "createdAt": "2026-10-22T10:18:41.716449+00:00",
+  "sourceReceiptSha256": "c6c559a9688b7e4984d47feadf485b88354b16a8c6c2bc2d1618d1325db008a4",
+  "initialHandoffSha256": "8f45e49b116378747e5d1a18dc1725332b41162b4b1651bb1a0ff234a3d69e5b",
+  "completedRealReports": {
+    "docs/physics/box3d/rebuild/body-component-real-wasm-l2-20261022-body-committed-c": {
+      "receiptSha256": "52f130987f2f871dc3dff396c12b5700d3fa6579782f91aca823524842e14a6e",
+      "rawSha256": "557c5244726a88b57b38448c65cf4c7837356dc8ba92acfeb8103e7357adefb0",
+      "status": "PASS_LIMITED_NODE_COMPONENTS",
+      "closeStatus": "released",
+      "closeFailures": [],
+      "beforeBindingDispose": {
+        "coreBytes": "0",
+        "bridge": {
+          "liveBytes": "0",
+          "liveAllocations": 0,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    "docs/physics/box3d/rebuild/body-component-real-wasm-l2-20261022-body-unknown-c": {
+      "receiptSha256": "5944bc286a23792641df19ba7407e297a0f845bd41b084b728ce02a97442a482",
+      "rawSha256": "6841cb8e1af22302fbd2e60c692798b063e99da1311b31b4552571a4950ad5f2",
+      "status": "PASS_LIMITED_NODE_COMPONENTS",
+      "closeStatus": "released",
+      "closeFailures": [],
+      "beforeBindingDispose": {
+        "coreBytes": "0",
+        "bridge": {
+          "liveBytes": "0",
+          "liveAllocations": 0,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    "docs/physics/box3d/rebuild/body-component-real-wasm-l2-20261022-body-lost-token-c": {
+      "receiptSha256": "50bf3a022a96f9b0e5e47c42ba6273745e7ed431e3f284e53da74bb343dc425c",
+      "rawSha256": "37aeec24bb1c68a5e83c1d6847a9ca0f8cbfb19f4ece2e886be4a69a2bc9a642",
+      "status": "PASS_LIMITED_NODE_COMPONENTS",
+      "closeStatus": "released",
+      "closeFailures": [],
+      "beforeBindingDispose": {
+        "coreBytes": "0",
+        "bridge": {
+          "liveBytes": "0",
+          "liveAllocations": 0,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    "docs/physics/box3d/rebuild/body-component-real-wasm-l2-20261022-shape-lost-token-c": {
+      "receiptSha256": "12504936c5cdb6871c771825b7c735a131ab8e77d184c730f736b83340bfcda9",
+      "rawSha256": "4f6e4ccb95ccf5bc24aa83d88b7fdf162c2d60e603815bcb90c6f4fde59f7da8",
+      "status": "PASS_LIMITED_NODE_COMPONENTS",
+      "closeStatus": "released",
+      "closeFailures": [],
+      "beforeBindingDispose": {
+        "coreBytes": "0",
+        "bridge": {
+          "liveBytes": "0",
+          "liveAllocations": 0,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    "docs/physics/box3d/rebuild/body-component-real-wasm-l2-20261022-filter-committed-c": {
+      "receiptSha256": "3a3e10cf081506f52989e717cc1ee8efa777fbf3d3d89a586505c1996cadc448",
+      "rawSha256": "42cc4772ca01729b35e5aac3256de7b9173f7991189406a2b743dfe494f2be4a",
+      "status": "PASS_LIMITED_NODE_COMPONENTS",
+      "closeStatus": "released",
+      "closeFailures": [],
+      "beforeBindingDispose": {
+        "coreBytes": "0",
+        "bridge": {
+          "liveBytes": "0",
+          "liveAllocations": 0,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    }
+  },
+  "nativeInputCount": 37,
+  "remainingNaturalRED": "../body-component-real-wasm-l2-20261022-material-listener-a/receipt.json"
+}

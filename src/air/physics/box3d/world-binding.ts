@@ -46,6 +46,12 @@ export interface Box3DWorldBinding extends Box3DFoundation {
 export function worldError(code: string, operation: string, message: string): Error & { code: string } {
     return Object.assign(new Error(`[${code}] ${operation}: ${message}`), { code });
 }
+/** Only the reviewed facade's immutable phase record proves an operation did not mutate. */
+export function mutationNotApplied(error: unknown): boolean {
+    if (!error || (typeof error !== 'object' && typeof error !== 'function')) return false;
+    const phase = Object.getOwnPropertyDescriptor(error, 'mutationOutcome');
+    return !!phase && phase.value === 'not-mutated' && phase.writable === false && phase.configurable === false;
+}
 export function finiteFloat32(value: unknown, operation: string): number {
     if (typeof value !== 'number' || !Number.isFinite(value) || !Number.isFinite(Math.fround(value)))
         throw worldError('AIR_E_BOX3D_CONFIG', operation, 'Expected a finite float32 value.');
@@ -118,6 +124,11 @@ export interface Box3DShapeFilter {
 export interface Box3DComponentBinding extends Box3DWorldBinding {
     getShapeFilter(world: Box3DWorld, shape: Box3DId): Readonly<Box3DShapeFilter>;
     setShapeFilter(world: Box3DWorld, shape: Box3DId, value: Box3DShapeFilter): Readonly<Box3DShapeFilter>;
+    setShapeFilters(
+        world: Box3DWorld,
+        shapes: readonly Box3DId[],
+        value: Box3DShapeFilter,
+    ): readonly Readonly<Box3DShapeFilter>[];
 }
 export function requireComponentBinding(binding: Box3DFoundation): Box3DComponentBinding {
     const candidate = requireWorldBinding(binding) as unknown as Record<string, unknown>;
@@ -150,6 +161,7 @@ export function requireComponentBinding(binding: Box3DFoundation): Box3DComponen
         'configureShapeEvents',
         'getShapeFilter',
         'setShapeFilter',
+        'setShapeFilters',
     ];
     const missing = names.filter((name) => typeof candidate[name] !== 'function');
     if (missing.length)

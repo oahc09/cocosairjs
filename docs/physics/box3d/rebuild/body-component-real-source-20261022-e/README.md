@@ -1,0 +1,7 @@
+# Faulted component teardown checkpoint e
+
+The actual Cocos/real-l2 `body-committed-b` case retained a complete failing close receipt: Scene and asset destruction attempted `bodyState` on a faulted world, leaving Scene cleanup pending. Native world/module cleanup still completed and core/bridge allocations were zero. This is a real adapter lifecycle failure exposed by an explicitly injected post-commit native-readback error, not a natural core failure.
+
+The narrow AIR change permits only terminal component disable/destroy to detach JavaScript ownership after a world fault. It never retries uncertain native controls/destruction and never advertises a successful native disable. Native objects and the world-scoped owner entry remain retained until the world's sole final destroy. Normal setters, activation and stepping still reject through the unchanged ready-state guard. A failed shape acquisition retains its component reference for the real onDestroy listener-clearing callback, without publishing a native token.
+
+`../body-component-real-source-20261022-e-red/` retains the corresponding actual-AIR-source/mock-native regression. The six checks in `receipt.json` separately record component-source typing, collector typing, formatting, 46 mock controls and 34 existing mock world controls. These controls are not real physics acceptance. Real-module cases are separate `body-component-real-wasm-l2-20261022-*-c` outputs; their individual terminal receipts, not this prose, determine success.

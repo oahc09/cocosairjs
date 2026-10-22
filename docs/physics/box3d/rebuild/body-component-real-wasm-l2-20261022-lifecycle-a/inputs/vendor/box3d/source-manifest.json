@@ -1,0 +1,1176 @@
+{
+  "schemaVersion": 1,
+  "scope": "Complete core include/src plus root build/license/README; selected binding and old-header review sources. Not full upstream repository checkouts.",
+  "files": [
+    {
+      "path": "vendor/box3d/core/CMakeLists.txt",
+      "upstreamPath": "CMakeLists.txt",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "dc3ecb657e5abd7ffd03c7f976897686d300bedc",
+      "bytes": 7998,
+      "sha256": "b7cebacab24572651191298cf49c3e79f08e19231719df7a5f4a0b95dd995a4c"
+    },
+    {
+      "path": "vendor/box3d/core/LICENSE",
+      "upstreamPath": "LICENSE",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "cfff8ec228baf292c43e69ccae22d2990a68b717",
+      "bytes": 1067,
+      "sha256": "da5e31a26bf3cfd5ba5c96d6823e480128c81e76c107ef9d3ee5d94789184b90"
+    },
+    {
+      "path": "vendor/box3d/core/README.md",
+      "upstreamPath": "README.md",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "ab36b8c757b120983c05769a82e579bdf91d8c49",
+      "bytes": 5438,
+      "sha256": "598f87ccb57deeb48d9926a7bc743f38cf0be0563a108bd40f3d514b31d4c894"
+    },
+    {
+      "path": "vendor/box3d/core/include/box3d/base.h",
+      "upstreamPath": "include/box3d/base.h",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "eb850476f7b5618a52bc7ee2f4023e61c3bda062",
+      "bytes": 6315,
+      "sha256": "28dd4e2b671df5ff962f894d3a0c673ee407891bdbb99aaba0e785248d167438"
+    },
+    {
+      "path": "vendor/box3d/core/include/box3d/box3d.h",
+      "upstreamPath": "include/box3d/box3d.h",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "54d0bafda8270fedbed9e7e75b4e3bcbc83180e8",
+      "bytes": 83237,
+      "sha256": "3edb719e280ae09ff6fd225dbab6642ab7f5d68207aebd1a81a7d19827a22574"
+    },
+    {
+      "path": "vendor/box3d/core/include/box3d/collision.h",
+      "upstreamPath": "include/box3d/collision.h",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "51391f189d615b4ae050672fddc007e3b270a3b8",
+      "bytes": 28118,
+      "sha256": "c1da165f20285470075e1a9bed55faae7f29a06c54e0353f95d2ca7a0365242a"
+    },
+    {
+      "path": "vendor/box3d/core/include/box3d/config.h",
+      "upstreamPath": "include/box3d/config.h",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "f39eb7e0d044fe194d87d30502cc5ecac5d94c22",
+      "bytes": 1211,
+      "sha256": "392fae4847de7987b08b9a2627d1888a7e37f82e2de1d8903ccff55fae0015a5"
+    },
+    {
+      "path": "vendor/box3d/core/include/box3d/constants.h",
+      "upstreamPath": "include/box3d/constants.h",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "259dcb9a844e0366c6465ba583e58c87a071ece4",
+      "bytes": 6721,
+      "sha256": "a8a35f033995237520a3f0b6f5ea7a3102af219d2bce8b59895d4c4e32ab6a7b"
+    },
+    {
+      "path": "vendor/box3d/core/include/box3d/id.h",
+      "upstreamPath": "include/box3d/id.h",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "9f05e1287c00827dd8bfab2b1eff3d640a8f27e5",
+      "bytes": 5019,
+      "sha256": "b7064764f63390b0ed50f7079d8777fd87a51c5777216861536c24e8b8d88bab"
+    },
+    {
+      "path": "vendor/box3d/core/include/box3d/math_functions.h",
+      "upstreamPath": "include/box3d/math_functions.h",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "a12f25028054b886347f86b41d55facb2f7e5d1a",
+      "bytes": 32105,
+      "sha256": "c45f6e124eeca3cf6da4064aeb02492003e35d6597f151e69db9ad696aa1d2a1"
+    },
+    {
+      "path": "vendor/box3d/core/include/box3d/types.h",
+      "upstreamPath": "include/box3d/types.h",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "2cbbbebaf0e87f929273698fd9e9c786ba43e925",
+      "bytes": 95098,
+      "sha256": "7f888e6a75dff5fd6b79f9e0dad79c9b5a769f47caedb19d71e027a751fd3664"
+    },
+    {
+      "path": "vendor/box3d/core/src/CMakeLists.txt",
+      "upstreamPath": "src/CMakeLists.txt",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "f324addf4e64eaa1e6601e485f50d36cc2615ba8",
+      "bytes": 6640,
+      "sha256": "6e9984a0c67b40e5226e9df6d301d0da1ed2ac95ec0b65e8d4f3fc1833600f3c"
+    },
+    {
+      "path": "vendor/box3d/core/src/aabb.c",
+      "upstreamPath": "src/aabb.c",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "6045bd82f7fc5ac65f64a9d9305955a07c123222",
+      "bytes": 3678,
+      "sha256": "755891eef413119f13649415e4fc4ffc860d8954bb93569f34885f04ce984dc6"
+    },
+    {
+      "path": "vendor/box3d/core/src/aabb.h",
+      "upstreamPath": "src/aabb.h",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "97a00b18969851647a44b36d71bfc7e72ee7182a",
+      "bytes": 2012,
+      "sha256": "e26554dde0738614c58e75aa6b8e3c0c842516d42da02e651532a106dbf29f68"
+    },
+    {
+      "path": "vendor/box3d/core/src/algorithm.h",
+      "upstreamPath": "src/algorithm.h",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "155bb310d0f6cc21e68ce87b1ab6cf2b4348c210",
+      "bytes": 1387,
+      "sha256": "5aa5fc1c58df27cf74e302ecad39372896d87f40b6524a71f177a177e0d6112c"
+    },
+    {
+      "path": "vendor/box3d/core/src/arena_allocator.c",
+      "upstreamPath": "src/arena_allocator.c",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "8543e5782659d1211ca521fdeffce58a85158585",
+      "bytes": 3991,
+      "sha256": "970c9436b31ec137787a8595be9291729d19607e8043cd8b30b4794de2c2faf5"
+    },
+    {
+      "path": "vendor/box3d/core/src/arena_allocator.h",
+      "upstreamPath": "src/arena_allocator.h",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "41422b91b33a66adf130c9e54382433853df4a24",
+      "bytes": 3036,
+      "sha256": "189df60d7e2325e68db1fca5fc05640ff7726f75f1748b4e102b41dc1c3672bd"
+    },
+    {
+      "path": "vendor/box3d/core/src/bitset.c",
+      "upstreamPath": "src/bitset.c",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "319725bfcd2c7ce49d4fd88c248d59633dcc223a",
+      "bytes": 2038,
+      "sha256": "b0c4ad60ac23992e20df5a1a16931fc453d5559ed8238296d5c5da3e60625d18"
+    },
+    {
+      "path": "vendor/box3d/core/src/bitset.h",
+      "upstreamPath": "src/bitset.h",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "ff771d96771d144f6c396c7c11a3b806ffab03ae",
+      "bytes": 1723,
+      "sha256": "4f004fa43f34b505aae3e3461c52945d57624483896754e90a77b553504a4e22"
+    },
+    {
+      "path": "vendor/box3d/core/src/block_allocator.c",
+      "upstreamPath": "src/block_allocator.c",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "b3eeea8dac8f09b2408943739b00dfe56f2b693c",
+      "bytes": 2585,
+      "sha256": "e7f51cc2bbbb5f6f5173a1c71ab1f5713a7e55ea7cf9ff64ed3397db7ed4e0ec"
+    },
+    {
+      "path": "vendor/box3d/core/src/block_allocator.h",
+      "upstreamPath": "src/block_allocator.h",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "d271304be1bf4a22923d85a003c0f698c4c84c14",
+      "bytes": 937,
+      "sha256": "46658641592527f383ecb1ac774d4b387ce496b32c1854c185d95ee40b7a3d00"
+    },
+    {
+      "path": "vendor/box3d/core/src/body.c",
+      "upstreamPath": "src/body.c",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "6d673431b2b58ac63d65afbe94f21083cceb7034",
+      "bytes": 73901,
+      "sha256": "7fef18daada158a278d99c742111671088fa625df310ea96255831c90bb8f40b"
+    },
+    {
+      "path": "vendor/box3d/core/src/body.h",
+      "upstreamPath": "src/body.h",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "b03063df38e6c0135015e47827d57436183261f7",
+      "bytes": 8896,
+      "sha256": "3591fa7f38ef1ee00a4a9bd3d9d087f782e6c6c43875864c7e7c76e803a61e9c"
+    },
+    {
+      "path": "vendor/box3d/core/src/box3d.natvis",
+      "upstreamPath": "src/box3d.natvis",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "68d36e1c2120b08c499029c568df6b960883a50d",
+      "bytes": 3872,
+      "sha256": "e884d64fe93619a4c91a340bd9af27ef8777b2178e6aceb9d7575b168e189af3"
+    },
+    {
+      "path": "vendor/box3d/core/src/broad_phase.c",
+      "upstreamPath": "src/broad_phase.c",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "003c16ac17a1cdc3a1b948a887f1dba42cb33c49",
+      "bytes": 25083,
+      "sha256": "62ee00431501219959d650cacc7c6bff62cd634a43de4c7b905a0ae15e511c37"
+    },
+    {
+      "path": "vendor/box3d/core/src/broad_phase.h",
+      "upstreamPath": "src/broad_phase.h",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "4564f9f147d28a5316312c3125aaaeadff735c41",
+      "bytes": 2408,
+      "sha256": "4fd7c21a70ef28dd84877ee87e080429d78c7fd315719b2155715aa097deda81"
+    },
+    {
+      "path": "vendor/box3d/core/src/capsule.c",
+      "upstreamPath": "src/capsule.c",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "2927740814f5e7d333fe975eb94835908e5bdf7f",
+      "bytes": 11272,
+      "sha256": "c9076404f327f87f65f06b2370629e395b0b2cd0d351a6f82a9afff669c79114"
+    },
+    {
+      "path": "vendor/box3d/core/src/compound.c",
+      "upstreamPath": "src/compound.c",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "99a66e20274ae3adaa5bc0108b42ffad641850eb",
+      "bytes": 36972,
+      "sha256": "4e25b9ee118dc0e83f9a58e01300ffcff0ebc2261afd300876b7a682d7759059"
+    },
+    {
+      "path": "vendor/box3d/core/src/compound.h",
+      "upstreamPath": "src/compound.h",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "68b1cade6bccf113e8855fa609a8e33251db3ae8",
+      "bytes": 803,
+      "sha256": "fb2b2c181ce1f51dfa721c8a14afd856d15917499215ef054e3bd5d264b1de02"
+    },
+    {
+      "path": "vendor/box3d/core/src/constraint_graph.c",
+      "upstreamPath": "src/constraint_graph.c",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "c5e3d3e770cdc7f19db2471ba0080fe20f0f61ef",
+      "bytes": 10567,
+      "sha256": "8fa336c973cc6df95331e224a66e32aae6aa0207b0720e54bc356f285ffc9dde"
+    },
+    {
+      "path": "vendor/box3d/core/src/constraint_graph.h",
+      "upstreamPath": "src/constraint_graph.h",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "56bfdff816c6264c4333e6720cb3514cff777e55",
+      "bytes": 3019,
+      "sha256": "6c6dc98926f5f3244d4d935c27ac25f884e6e1d0807286eedb4fb98b3e37afef"
+    },
+    {
+      "path": "vendor/box3d/core/src/contact.c",
+      "upstreamPath": "src/contact.c",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "d20030131e0006cb6d3bb1c06d802a5b683cac17",
+      "bytes": 27926,
+      "sha256": "6d13719b6de73d8d2d2b5a7749fa1c4180480191b28afdd2e872aee6fedc9cbe"
+    },
+    {
+      "path": "vendor/box3d/core/src/contact.h",
+      "upstreamPath": "src/contact.h",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "c4388b377f7f16ea1139ad3202c45d7259974415",
+      "bytes": 4689,
+      "sha256": "691d5c92e12c090f75f42310a7299aea1c044ab0f195fda9a2161e615191f895"
+    },
+    {
+      "path": "vendor/box3d/core/src/contact_solver.c",
+      "upstreamPath": "src/contact_solver.c",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "ad41b41bcab89685c4ce74e5c4e7df0049d95ee4",
+      "bytes": 37963,
+      "sha256": "200d1d6010fb9995c06cddf8e259493dc50bbd94d45fbb9b08d9aa7e2a889e93"
+    },
+    {
+      "path": "vendor/box3d/core/src/contact_solver.h",
+      "upstreamPath": "src/contact_solver.h",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "d7773dbc819f4c9dcd05e71ae0879edd946dfdd0",
+      "bytes": 5438,
+      "sha256": "240740c6641bc5cbd51782d928e92e28f759c004557f444073f63d862e0f5e89"
+    },
+    {
+      "path": "vendor/box3d/core/src/contact_solver_wide.inl",
+      "upstreamPath": "src/contact_solver_wide.inl",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "1f685b377ce13b086dec35a7777e67b534f3594c",
+      "bytes": 65193,
+      "sha256": "3b8481229692249d534cfe7a04c4525f1f9c8537c90d2fdeaeb53e276bd9b549"
+    },
+    {
+      "path": "vendor/box3d/core/src/container.h",
+      "upstreamPath": "src/container.h",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "471db1a9074f4dacd15459df7646b6ae447d6da3",
+      "bytes": 14469,
+      "sha256": "7a7e6b600115b454ee4026700c48dfdaaff0e1f978335962a1acf7d7399e6a72"
+    },
+    {
+      "path": "vendor/box3d/core/src/convex_manifold.c",
+      "upstreamPath": "src/convex_manifold.c",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "6f84f44b0bc879f8b4ba169bf3c47dbe305dfe55",
+      "bytes": 50167,
+      "sha256": "c109f905b58a4deb6826b696bfa666933804cbd8e3d161931aefb6e6aaf11766"
+    },
+    {
+      "path": "vendor/box3d/core/src/convex_manifold_wide.inl",
+      "upstreamPath": "src/convex_manifold_wide.inl",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "cbb293b131543b9ab7576e8b490cb61c5fa53645",
+      "bytes": 27660,
+      "sha256": "91cebb2ee488aa77c06588d5ecbacfa6971c9a3f5847d4ac75f0906467d702f1"
+    },
+    {
+      "path": "vendor/box3d/core/src/core.c",
+      "upstreamPath": "src/core.c",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "2165eff218eedc57ceebe3fc0ddbf087fc25bacd",
+      "bytes": 5257,
+      "sha256": "61a7fd150194f960304388ddbaca425f2a1e2739813bd9497d5256b741895a0c"
+    },
+    {
+      "path": "vendor/box3d/core/src/core.h",
+      "upstreamPath": "src/core.h",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "94de040ad98da0ec774b718464e7923a5f5116d2",
+      "bytes": 5400,
+      "sha256": "7c2e0ef118cc2a1570a7c676366569e90c8dc0f3d84bac58888ad3ff4f748233"
+    },
+    {
+      "path": "vendor/box3d/core/src/ctz.h",
+      "upstreamPath": "src/ctz.h",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "483ce4bec164401736de017a87c939b6876024b8",
+      "bytes": 2324,
+      "sha256": "052af89db1c951b40119a58d0407f9b6d2032f98452b110b2f6b055481882e0a"
+    },
+    {
+      "path": "vendor/box3d/core/src/distance.c",
+      "upstreamPath": "src/distance.c",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "57f0814235b3a7543dfde6a498cb17f44145af95",
+      "bytes": 49535,
+      "sha256": "52210be1d2ba16702b1d5d8e88d3a5d3ba6b3706dda4f9566573ba723854189d"
+    },
+    {
+      "path": "vendor/box3d/core/src/distance_joint.c",
+      "upstreamPath": "src/distance_joint.c",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "9185010aeb0e19d1464ea93a5069d7702346b2fb",
+      "bytes": 19548,
+      "sha256": "416cb32cd3b84d924ccd2c8cecb5b569424f705b4c5f979575cd9f4f2318f3f9"
+    },
+    {
+      "path": "vendor/box3d/core/src/dynamic_tree.c",
+      "upstreamPath": "src/dynamic_tree.c",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "520663732f28959cbb5b4bdc525d0db826eb60c6",
+      "bytes": 65580,
+      "sha256": "5229aaa0faa6de2ab41a9b82864bdfd82388248ea0447827d7021df31bb35359"
+    },
+    {
+      "path": "vendor/box3d/core/src/dynamic_tree.h",
+      "upstreamPath": "src/dynamic_tree.h",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "cee702e089a2bbeec0dae62f3fa4ca02ca292b64",
+      "bytes": 3746,
+      "sha256": "cd5b6438ca8d3bc7270713aa8e0b73300dbad7a028f602b6554965a9bd16222b"
+    },
+    {
+      "path": "vendor/box3d/core/src/height_field.c",
+      "upstreamPath": "src/height_field.c",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "37ff65f6d6f402aabe27cf5223711017b2f241d1",
+      "bytes": 46120,
+      "sha256": "8ff20add39bbe422ae73c5f9a8e6ff97c93106b6a3a91dd7564c16d6f1231b3c"
+    },
+    {
+      "path": "vendor/box3d/core/src/hull.c",
+      "upstreamPath": "src/hull.c",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "b0392d89dcaf320e42ef4b9a84421ccadd0e3cfd",
+      "bytes": 83539,
+      "sha256": "9e062f54d79981d21c0a0bad25c9f995e1d47c8c1b31f01cbf840cc3dacdbde7"
+    },
+    {
+      "path": "vendor/box3d/core/src/hull.h",
+      "upstreamPath": "src/hull.h",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "23ebbe488046bdb75c5c7c9afaa1320d50998b56",
+      "bytes": 871,
+      "sha256": "4c1ed09611d6f09c49fc64a3c9658f4b74f669d28eea64023cd8653a29932158"
+    },
+    {
+      "path": "vendor/box3d/core/src/id_pool.c",
+      "upstreamPath": "src/id_pool.c",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "185b6eebc750b8441c38f2df5b95a650d5a12688",
+      "bytes": 1225,
+      "sha256": "f6702465f07520ef4b74d7ca970409bc60bbec4ea4afd31f51257b361ad5c4f0"
+    },
+    {
+      "path": "vendor/box3d/core/src/id_pool.h",
+      "upstreamPath": "src/id_pool.h",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "06106de20dc935f3d070156a93f7808cf25ce5be",
+      "bytes": 702,
+      "sha256": "6f550f715337d37c987f95c4ff93ef25bd8c8883379d044109dbb2261c4487bf"
+    },
+    {
+      "path": "vendor/box3d/core/src/island.c",
+      "upstreamPath": "src/island.c",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "6a17909231867d3dc59132ca1615c061713caa7c",
+      "bytes": 23721,
+      "sha256": "25005a467f0567dd223472bff5d81e42c1048e50d342b64ed826a261fd1ce1c7"
+    },
+    {
+      "path": "vendor/box3d/core/src/island.h",
+      "upstreamPath": "src/island.h",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "297c198dd240bfacf40d97d50c18f0d42cbe7e19",
+      "bytes": 3123,
+      "sha256": "e1ab0b3dad9826160783a38a35bff6b03b4018360c705eb16e5cd23eed1bd00c"
+    },
+    {
+      "path": "vendor/box3d/core/src/joint.c",
+      "upstreamPath": "src/joint.c",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "068a29daf287cb7776070df6a44c6917df53f499",
+      "bytes": 50427,
+      "sha256": "7ba2f12e489722f108d628b2530822f6c60c61e4646c8e954ad5670fcbef67ac"
+    },
+    {
+      "path": "vendor/box3d/core/src/joint.h",
+      "upstreamPath": "src/joint.h",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "9a8c34770ffab5f1a12aa2982eefbd4c967c4e55",
+      "bytes": 13152,
+      "sha256": "9d897c459cbe343a4c7b8a8cbfe342d834d69aca1950367154aa9fa5e7beafd3"
+    },
+    {
+      "path": "vendor/box3d/core/src/manifold.c",
+      "upstreamPath": "src/manifold.c",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "f15db6c03e8e64e1045dc5dfede81f0ddeed0da3",
+      "bytes": 6088,
+      "sha256": "e7fda02419fe48c194ef72effcc481e2dfb6953f95fa30eac67351f268bdb1a4"
+    },
+    {
+      "path": "vendor/box3d/core/src/manifold.h",
+      "upstreamPath": "src/manifold.h",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "577c5d023cdde6b0724f6578be791cd862e7a43d",
+      "bytes": 2728,
+      "sha256": "79adaa50c1cfb37a55a7f7661ae1b42e0b4cb55fc7c981584e8d1bc984b48713"
+    },
+    {
+      "path": "vendor/box3d/core/src/math_functions.c",
+      "upstreamPath": "src/math_functions.c",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "a339d95ff929fb7e8b1a2d67ed1af4dc806928a3",
+      "bytes": 12799,
+      "sha256": "082ffb9210244ee40390fcba9ce098a7846648f40a0db7dee5d360b97a693975"
+    },
+    {
+      "path": "vendor/box3d/core/src/math_internal.h",
+      "upstreamPath": "src/math_internal.h",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "b272bdc0d9b09eb1efdbab8213113fe49009d813",
+      "bytes": 12062,
+      "sha256": "fdb736668ff4dd546a05eba465c957383e57f5e216decdf1ab6c6b59b41eeee1"
+    },
+    {
+      "path": "vendor/box3d/core/src/mesh.c",
+      "upstreamPath": "src/mesh.c",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "7b8d617083b838f37b7e81e3d57e38107716dd1b",
+      "bytes": 66970,
+      "sha256": "94af41624a06156f24833256f1f358e390ccee6d96c6a2f1092795a021fafedc"
+    },
+    {
+      "path": "vendor/box3d/core/src/mesh_contact.c",
+      "upstreamPath": "src/mesh_contact.c",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "86f7ed041c3cb3bbef92854a3ed4990564b53c54",
+      "bytes": 39851,
+      "sha256": "eb2c86fb61bd640c6c8de1ce833dc74180d03ddd7b63fc5276acfd8deafcb5a0"
+    },
+    {
+      "path": "vendor/box3d/core/src/motor_joint.c",
+      "upstreamPath": "src/motor_joint.c",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "9487d0c2faa8bd47d2cc0b61f2ad4ac5633fae95",
+      "bytes": 15227,
+      "sha256": "7ea5e622a95db52271e9ff5bc0d8e2559e0b676891c26723dbe95a618c55a5dd"
+    },
+    {
+      "path": "vendor/box3d/core/src/mover.c",
+      "upstreamPath": "src/mover.c",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "209426e97afd0ef48a0f5ad02741ecaf203ece94",
+      "bytes": 1635,
+      "sha256": "665d322ba6271997b76802361cbbc3d5433e91b9ffa030cc9b03c2a9d0b0b70e"
+    },
+    {
+      "path": "vendor/box3d/core/src/name_cache.c",
+      "upstreamPath": "src/name_cache.c",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "a7833df5a8464c47c61773e1b7d95cc395955da9",
+      "bytes": 3214,
+      "sha256": "99eda2fc72f21d401defa56f4889280bb0c2d349b1ff241c0f48b4bd42acd9fd"
+    },
+    {
+      "path": "vendor/box3d/core/src/name_cache.h",
+      "upstreamPath": "src/name_cache.h",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "d1535b37a31646a9c1025005678ba20e58792b77",
+      "bytes": 1060,
+      "sha256": "556b86c019be94919256a0f5b6d3f9a1882dbaff45e34a9abc244a05bc3216ff"
+    },
+    {
+      "path": "vendor/box3d/core/src/parallel_for.c",
+      "upstreamPath": "src/parallel_for.c",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "5a497a420e1b2ff5b363079a31a65c019c9f8ec5",
+      "bytes": 3463,
+      "sha256": "13e5688ee1e42007430d0015c6b84d8bd2579931394e7b1299ed402ade390dca"
+    },
+    {
+      "path": "vendor/box3d/core/src/parallel_for.h",
+      "upstreamPath": "src/parallel_for.h",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "4a6d2851c9595058a695505fc4083eb24f55ac69",
+      "bytes": 1244,
+      "sha256": "4afdf17d45eb45ffbfb5c9fed655eafb16ebd88bc040419cc58f618aa7c5f0a9"
+    },
+    {
+      "path": "vendor/box3d/core/src/parallel_joint.c",
+      "upstreamPath": "src/parallel_joint.c",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "7390a2131b7a938a51eb3d2a5fec696a61ce3f40",
+      "bytes": 9329,
+      "sha256": "d50ed0139cf8fd62a4f2e20d6982a623408ae2e38b83554b60ed2c76d072faca"
+    },
+    {
+      "path": "vendor/box3d/core/src/physics_world.c",
+      "upstreamPath": "src/physics_world.c",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "192cfdbb151a4c435700aa9e5fe0f0eea51156e2",
+      "bytes": 128853,
+      "sha256": "f96c0a3a11d3b9818ad81df8c44be26bf069a9f11335d7fbcbcbf0d45bcff454"
+    },
+    {
+      "path": "vendor/box3d/core/src/physics_world.h",
+      "upstreamPath": "src/physics_world.h",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "1436ee47224be43b340b8cf2592f859f2bb521f0",
+      "bytes": 10744,
+      "sha256": "10a71c0b83c4d9c58a7cacce22b7e280c947cc6e63ffa5f3259ae2c679e919cf"
+    },
+    {
+      "path": "vendor/box3d/core/src/platform.h",
+      "upstreamPath": "src/platform.h",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "856b19bf819e0f01a055ff46fb3098f824c9ef21",
+      "bytes": 5048,
+      "sha256": "bc819b3b16093c09267537b89861b46ede921c003055ba2eefc8fa7bf533aa35"
+    },
+    {
+      "path": "vendor/box3d/core/src/prismatic_joint.c",
+      "upstreamPath": "src/prismatic_joint.c",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "b380d372dfd8cab706b37a71937830d54a44ea1a",
+      "bytes": 26490,
+      "sha256": "347bd5859972b0420898264e87a263e4e9aaf4e28ee7708aad973ebd17fb6b20"
+    },
+    {
+      "path": "vendor/box3d/core/src/qsort.h",
+      "upstreamPath": "src/qsort.h",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "9ab426bace341a934db267e9df8019f324d15eae",
+      "bytes": 7397,
+      "sha256": "24ed4997b78ddfd913cc45eb965f310074ab6ff0983645c68fdd92221a061d63"
+    },
+    {
+      "path": "vendor/box3d/core/src/rapidhash.h",
+      "upstreamPath": "src/rapidhash.h",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "88de4bc431d1b78e6eb29db78553274bfe98c01d",
+      "bytes": 20693,
+      "sha256": "337258afbe3e6254ef684f1fcf1df87b2e7d957351794f5d06da7d242dd6e2d8"
+    },
+    {
+      "path": "vendor/box3d/core/src/recording.c",
+      "upstreamPath": "src/recording.c",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "7e9bc034add1c02ac40af5772aadb6c7389b0528",
+      "bytes": 38898,
+      "sha256": "1e5d9639266de5b8533a22622f575cc0f757128ce857163ed51648b3de129989"
+    },
+    {
+      "path": "vendor/box3d/core/src/recording.h",
+      "upstreamPath": "src/recording.h",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "6f9df4d5aaac72f579bbe08f720a6fdf66db41e5",
+      "bytes": 17932,
+      "sha256": "94a069c4e27d507e806dfddcab5c99bf3378987f04a59137f12017ebde3ba8bf"
+    },
+    {
+      "path": "vendor/box3d/core/src/recording_ops.inl",
+      "upstreamPath": "src/recording_ops.inl",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "ed4b7d65aefd0c8b78c6f20d7195b4fc69971eac",
+      "bytes": 19003,
+      "sha256": "5e40fe07c4a8374c84ee9f28f1af44b2f575c4efde840c1050d643c5720ab2c0"
+    },
+    {
+      "path": "vendor/box3d/core/src/replay.c",
+      "upstreamPath": "src/replay.c",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "7a46d7391e485b39258ca6dbd2ca307291f23e2b",
+      "bytes": 119556,
+      "sha256": "635c4408ca9add8b5ce48d3665f3e8625526ee57f9735181ba70909ac4914010"
+    },
+    {
+      "path": "vendor/box3d/core/src/replay.h",
+      "upstreamPath": "src/replay.h",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "ea2bae883dd636e7d7fb5a9782356724f0e11be7",
+      "bytes": 9809,
+      "sha256": "2b3fee2469d14ec4b681848ea33833476953652a7398d7695e6b32f7c42961ab"
+    },
+    {
+      "path": "vendor/box3d/core/src/revolute_joint.c",
+      "upstreamPath": "src/revolute_joint.c",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "5f8b6da035072b6b35045fb40f92571368123c5e",
+      "bytes": 23518,
+      "sha256": "8abcd3e181e1afdc57ae60a1835d65bfedcdd39692537adf8ad202deccac985c"
+    },
+    {
+      "path": "vendor/box3d/core/src/scheduler.c",
+      "upstreamPath": "src/scheduler.c",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "ed942f2813bda415d6d2a716cf2f9bd6cbf43877",
+      "bytes": 4888,
+      "sha256": "544510b3b645c7d8a8ab7726c0e43554d577a4140c699dfc587ff08b1e24534a"
+    },
+    {
+      "path": "vendor/box3d/core/src/scheduler.h",
+      "upstreamPath": "src/scheduler.h",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "f9aeff7b2dd50e51174972f1e37f57c3d0c24bef",
+      "bytes": 562,
+      "sha256": "24411bca36ed788872d80c9814b7b1ed62efada2116658a5ade9dafff0218e8a"
+    },
+    {
+      "path": "vendor/box3d/core/src/sensor.c",
+      "upstreamPath": "src/sensor.c",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "056708a3bee8ba13fbaa583f1e51e5c5a81c73af",
+      "bytes": 13026,
+      "sha256": "324d4385d1ef1f1c83036c62808463eb93e4165ce2b2c358642c4f52421bce76"
+    },
+    {
+      "path": "vendor/box3d/core/src/sensor.h",
+      "upstreamPath": "src/sensor.h",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "1a17366b785a4aaaacbd80164abdfdb3b0c0f468",
+      "bytes": 776,
+      "sha256": "aaa3e44438ddc41070470609666044e28394ca74a2d9bdecc652b44a91a79dd2"
+    },
+    {
+      "path": "vendor/box3d/core/src/shape.c",
+      "upstreamPath": "src/shape.c",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "7b21700ccabece5ffb425e45e80f3dcb8b682021",
+      "bytes": 71413,
+      "sha256": "6b6b9dea2161a8ed5e561b4c684311c1ab2f068f62ce25e5b578e435afb7b4fe"
+    },
+    {
+      "path": "vendor/box3d/core/src/shape.h",
+      "upstreamPath": "src/shape.h",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "a9164d4fd81047dee6181d65c8adf54b77876acc",
+      "bytes": 7577,
+      "sha256": "c118865b290bb44b20f2603dfaf63173ace2e45f6bd14e536298f38c93c413b7"
+    },
+    {
+      "path": "vendor/box3d/core/src/simd.c",
+      "upstreamPath": "src/simd.c",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "30ad2e66ebe3e04bb345237ebf4d95d61c4b09da",
+      "bytes": 9930,
+      "sha256": "813421498912557733ad7eb7878bdedcfbd7dc0ce049062e5f537d6e1ec5eeb7"
+    },
+    {
+      "path": "vendor/box3d/core/src/simd.h",
+      "upstreamPath": "src/simd.h",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "b4da76a16ce97fd05cd8073ccd7a5d0a88cbb82f",
+      "bytes": 8582,
+      "sha256": "62b688c57ed06434dd5b7a7a10d67031ff4f793d32af22c284c7d62b3fd30391"
+    },
+    {
+      "path": "vendor/box3d/core/src/simd_avx2.h",
+      "upstreamPath": "src/simd_avx2.h",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "a751249f1cfea09d1700e3707cac69f84039732c",
+      "bytes": 6497,
+      "sha256": "d5e93e41eda031a0a962a7d1ffa9cc287653f368ada9ec1cace60ba28152d464"
+    },
+    {
+      "path": "vendor/box3d/core/src/simd_neon.h",
+      "upstreamPath": "src/simd_neon.h",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "c35f39ba5fd41493d64a219d6059c08e80159277",
+      "bytes": 7583,
+      "sha256": "a59326745a9354be11c2a5a4bf51206e45a584c91df3916c95eccbfbf343d852"
+    },
+    {
+      "path": "vendor/box3d/core/src/simd_scalar.h",
+      "upstreamPath": "src/simd_scalar.h",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "56cb0455988fc33e4ed3cc1204436ce2f55a876e",
+      "bytes": 7639,
+      "sha256": "f7746bc81b61b1ed488ff41cea0128d7c1ef2f8fad81e90fcaef078f659eedad"
+    },
+    {
+      "path": "vendor/box3d/core/src/simd_sse2.h",
+      "upstreamPath": "src/simd_sse2.h",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "b09a17c5c25da602a0507de9fb687b9337edaafa",
+      "bytes": 10930,
+      "sha256": "cc18b1f4f90fdceebb84b57f77e04c03009851a3a4c66439169318aa22a02719"
+    },
+    {
+      "path": "vendor/box3d/core/src/simd_wide.h",
+      "upstreamPath": "src/simd_wide.h",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "fe0bb9cd51b41aef36a1891a0399519e32f7877a",
+      "bytes": 2145,
+      "sha256": "9d9a233dc0dbb945b26f5195ca8b5a5214faaa2696135e2f6750d17ea5b8c031"
+    },
+    {
+      "path": "vendor/box3d/core/src/solver.c",
+      "upstreamPath": "src/solver.c",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "f1697bda6d2400a0da560d03604a27e6cce51733",
+      "bytes": 80188,
+      "sha256": "de47e9af50e594e77b63cdea7c40c0e0236ff0ebdd9a8799f24f8dcfcd2042da"
+    },
+    {
+      "path": "vendor/box3d/core/src/solver.h",
+      "upstreamPath": "src/solver.h",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "297213d7bd90c23aee0692be6f75200212691d09",
+      "bytes": 9342,
+      "sha256": "58488a69f0daa2acfc6ab1a62fc409fd1dcff830fb439750cf474fac25e1d551"
+    },
+    {
+      "path": "vendor/box3d/core/src/solver_set.c",
+      "upstreamPath": "src/solver_set.c",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "53b75ddde5faa07179ced318bc3c442b21651486",
+      "bytes": 21740,
+      "sha256": "b46e215c92576ab73e90bcfe552b9d7b5e775c75c2ae65d07106460a3524fc4e"
+    },
+    {
+      "path": "vendor/box3d/core/src/solver_set.h",
+      "upstreamPath": "src/solver_set.h",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "bf78ab04cc3d990fae4413997b64f1d25d455ef4",
+      "bytes": 2604,
+      "sha256": "1c1a3004a4a55c0bc7b30aebdbfd84983e2bfcf6c72a623939f053e9223a094b"
+    },
+    {
+      "path": "vendor/box3d/core/src/sphere.c",
+      "upstreamPath": "src/sphere.c",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "7b2e6cd3d9f75b3ff322fb9109128e61b784b4fa",
+      "bytes": 6341,
+      "sha256": "f43f1209698851950e6be5de4b1322e38ada4f89b948e52b3373b704e6277b5b"
+    },
+    {
+      "path": "vendor/box3d/core/src/spherical_joint.c",
+      "upstreamPath": "src/spherical_joint.c",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "cc9692c33684433c8e9676e3fc3c4fb9979c4853",
+      "bytes": 26637,
+      "sha256": "41803a0a5b0bd91ecaedb9a91c49c22e173bb4c208c62b7aabb0c46a930b8d67"
+    },
+    {
+      "path": "vendor/box3d/core/src/table.c",
+      "upstreamPath": "src/table.c",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "dc13c33043384d9a1e44121f4a9a587f054a4ad8",
+      "bytes": 4986,
+      "sha256": "f4ac6984bec65eae6840dc50a362a15ff0e9b6a5f46d713567ae8310f7df79f2"
+    },
+    {
+      "path": "vendor/box3d/core/src/table.h",
+      "upstreamPath": "src/table.h",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "9e12b99775326702c3ea45684cf2c726b53baa83",
+      "bytes": 2139,
+      "sha256": "22d6c55a8ae42354375f2c9d15ee0ef39cf267a7e288ffe016245113f9f37f7e"
+    },
+    {
+      "path": "vendor/box3d/core/src/timer.c",
+      "upstreamPath": "src/timer.c",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "f779e3bbbdb2ddc1eeb649987fe29264cca51658",
+      "bytes": 13867,
+      "sha256": "61c5e86efad816d329564fe6c9d8de36563d87c90d6fe54bb846499df1f33821"
+    },
+    {
+      "path": "vendor/box3d/core/src/triangle_manifold.c",
+      "upstreamPath": "src/triangle_manifold.c",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "eb3a25ef0127eeee70a3689d0bf5447928353f56",
+      "bytes": 41107,
+      "sha256": "dd2e473bad4a75ca0435ae8b1ec540cd4b6f260b55fa078844d4e622b0db7d55"
+    },
+    {
+      "path": "vendor/box3d/core/src/types.c",
+      "upstreamPath": "src/types.c",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "9caab0ae8ba2e7c64ab7b196c0fd6eea1f8faf37",
+      "bytes": 4180,
+      "sha256": "e0974d7cbaf4b255b62c3b1862e6063e7b57c832c6ed98976c129eec09ba0764"
+    },
+    {
+      "path": "vendor/box3d/core/src/verstable.h",
+      "upstreamPath": "src/verstable.h",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "c8601e6d42155230e34a0263b1b44efa4527f0e1",
+      "bytes": 84569,
+      "sha256": "f1db172f4755365af79b1f7ad261669846a8331d273619e39ae4eff50e53d762"
+    },
+    {
+      "path": "vendor/box3d/core/src/weld_joint.c",
+      "upstreamPath": "src/weld_joint.c",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "5a379a7666263106881cdbac80258aefd53ed9d8",
+      "bytes": 10266,
+      "sha256": "92761383113e590631480cc2aaea29b617210f060156c5331b4a92484377ec68"
+    },
+    {
+      "path": "vendor/box3d/core/src/wheel_joint.c",
+      "upstreamPath": "src/wheel_joint.c",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "05665e9f09565f3f059253781c5f70390b4320f7",
+      "bytes": 39580,
+      "sha256": "9f22019768fbc24fd28b1d5ddc1afa76b284f86d9f73a170200fab39aee0fe38"
+    },
+    {
+      "path": "vendor/box3d/core/src/wide4.c",
+      "upstreamPath": "src/wide4.c",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "e2132ec4e2fd141ca832bad90239c574fbf10189",
+      "bytes": 171,
+      "sha256": "471a5e51da35fc2013da08ff970c696e31a68fbaef64a127818a74cd00f64e85"
+    },
+    {
+      "path": "vendor/box3d/core/src/wide8.c",
+      "upstreamPath": "src/wide8.c",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "cb89f92ed8254e0617434cb665920c06f79828aa",
+      "bytes": 444,
+      "sha256": "e13bfec993601448ac284d8a3e1d14d496a20b354161c14c036dd20716c47b2a"
+    },
+    {
+      "path": "vendor/box3d/core/src/world_snapshot.c",
+      "upstreamPath": "src/world_snapshot.c",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "e763fdebbea0d3e5079ffe006c8fe280a116200a",
+      "bytes": 41955,
+      "sha256": "d01d0f6072a08c574153144761693148f893040c0832510e8940801fd100a8df"
+    },
+    {
+      "path": "vendor/box3d/core/src/world_snapshot.h",
+      "upstreamPath": "src/world_snapshot.h",
+      "repository": "erincatto/box3d",
+      "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "gitBlobSha1": "f58aa0665d251168297534f84706712b058b490b",
+      "bytes": 785,
+      "sha256": "3a7f387e62c5c03911cfed74399be2fc8116665ec5b52ccf250f65ca2d713e0e"
+    },
+    {
+      "path": "vendor/box3d/binding-base/.gitmodules",
+      "upstreamPath": ".gitmodules",
+      "repository": "isaac-mason/box3d.js",
+      "commit": "5d5a3af049cccd9948b2b55bac4342414af0ef64",
+      "gitBlobSha1": "0e874494da2feb4321149dc5a4fdb6d9c4b6c629",
+      "bytes": 94,
+      "sha256": "f474ddb2742420d4d7ae64788993ea6cc75d2f1f3942a016eebdc42ede282843"
+    },
+    {
+      "path": "vendor/box3d/binding-base/LICENSE",
+      "upstreamPath": "LICENSE",
+      "repository": "isaac-mason/box3d.js",
+      "commit": "5d5a3af049cccd9948b2b55bac4342414af0ef64",
+      "gitBlobSha1": "52427ec590538e5bc9c2299fd761adf1cbe52014",
+      "bytes": 1068,
+      "sha256": "0916e299b5f7cd92547a78ae0d5fb888dfe69f6930927d56da0d1129ab039615"
+    },
+    {
+      "path": "vendor/box3d/binding-base/LICENSE-box3d",
+      "upstreamPath": "LICENSE-box3d",
+      "repository": "isaac-mason/box3d.js",
+      "commit": "5d5a3af049cccd9948b2b55bac4342414af0ef64",
+      "gitBlobSha1": "8cb3586def0b30a9750772fc7fe6df5edfb4e977",
+      "bytes": 1320,
+      "sha256": "349536a9fffd16192d4eb15fe96ca6355cc8df60f0409aac4999417901196a81"
+    },
+    {
+      "path": "vendor/box3d/binding-base/package.json",
+      "upstreamPath": "package.json",
+      "repository": "isaac-mason/box3d.js",
+      "commit": "5d5a3af049cccd9948b2b55bac4342414af0ef64",
+      "gitBlobSha1": "37b2bd53efe62e9056b63020ba52bfa7065d4280",
+      "bytes": 1421,
+      "sha256": "61f96451b09e8fbbe0a74085cabc4e67285eb4b2d6d72aa2a9588c008be17686"
+    },
+    {
+      "path": "vendor/box3d/binding-base/scripts/build.mjs",
+      "upstreamPath": "scripts/build.mjs",
+      "repository": "isaac-mason/box3d.js",
+      "commit": "5d5a3af049cccd9948b2b55bac4342414af0ef64",
+      "gitBlobSha1": "a8dbdf147a9371ab72ddaafabcfc42cbf6cc0ec3",
+      "bytes": 20013,
+      "sha256": "b81520d79dd21daabab329117cc107cb1896b365837b1944f68f8daf5fa279d5"
+    },
+    {
+      "path": "vendor/box3d/binding-base/src/bindings.cpp",
+      "upstreamPath": "src/bindings.cpp",
+      "repository": "isaac-mason/box3d.js",
+      "commit": "5d5a3af049cccd9948b2b55bac4342414af0ef64",
+      "gitBlobSha1": "1f639ab798ff0e35e043b6fa8f00d435df84ff29",
+      "bytes": 120899,
+      "sha256": "6b1cb2385c33a289e7f85dc03fa725464cad641f01b160e47da0c50c764ec476"
+    },
+    {
+      "path": "vendor/box3d/binding-base/src/facade.js",
+      "upstreamPath": "src/facade.js",
+      "repository": "isaac-mason/box3d.js",
+      "commit": "5d5a3af049cccd9948b2b55bac4342414af0ef64",
+      "gitBlobSha1": "869940906c04aecacd29cad4a949351de312757d",
+      "bytes": 22024,
+      "sha256": "5041fb2766c352b05dd19c70a6ce61721edd4255d01fbd631552181c69a49c80"
+    },
+    {
+      "path": "vendor/box3d/binding-base/test/smoke.mjs",
+      "upstreamPath": "test/smoke.mjs",
+      "repository": "isaac-mason/box3d.js",
+      "commit": "5d5a3af049cccd9948b2b55bac4342414af0ef64",
+      "gitBlobSha1": "3f0f54f4991829bd2640862dfd1ba34fca6d3045",
+      "bytes": 9452,
+      "sha256": "aed7e9f342a35c388fb2fc3ac778ba50b8bb06b6654649b6d2148ee29c0bcee7"
+    },
+    {
+      "path": "vendor/box3d/old-core-review/LICENSE",
+      "upstreamPath": "LICENSE",
+      "repository": "erincatto/box3d",
+      "commit": "8441b4a06d6d09dcfb0b0f704df4d847d1437b92",
+      "gitBlobSha1": "cfff8ec228baf292c43e69ccae22d2990a68b717",
+      "bytes": 1067,
+      "sha256": "da5e31a26bf3cfd5ba5c96d6823e480128c81e76c107ef9d3ee5d94789184b90"
+    },
+    {
+      "path": "vendor/box3d/old-core-review/include/box3d/base.h",
+      "upstreamPath": "include/box3d/base.h",
+      "repository": "erincatto/box3d",
+      "commit": "8441b4a06d6d09dcfb0b0f704df4d847d1437b92",
+      "gitBlobSha1": "2c0bb93f321bb06e9abd01e593e4cb8ef5a1c486",
+      "bytes": 5827,
+      "sha256": "ec14043d27474dc9a7aa5e692fa675cdc692d4380356f254c0da0bb9cabeda8b"
+    },
+    {
+      "path": "vendor/box3d/old-core-review/include/box3d/box3d.h",
+      "upstreamPath": "include/box3d/box3d.h",
+      "repository": "erincatto/box3d",
+      "commit": "8441b4a06d6d09dcfb0b0f704df4d847d1437b92",
+      "gitBlobSha1": "22756636a0c41dca857e6f24233d838b1568b707",
+      "bytes": 78982,
+      "sha256": "a4a822ba320c75b376acdd9f33a3e24099ce5cd4005acdf2297ae1d9365f58bb"
+    },
+    {
+      "path": "vendor/box3d/old-core-review/include/box3d/collision.h",
+      "upstreamPath": "include/box3d/collision.h",
+      "repository": "erincatto/box3d",
+      "commit": "8441b4a06d6d09dcfb0b0f704df4d847d1437b92",
+      "gitBlobSha1": "30cc9579f015c4091834ec2c9943c83ed93dfaed",
+      "bytes": 26528,
+      "sha256": "9f194bc5344afaabcf05c193e2e29e7a92ddf2d3aad2514b76d6569dd19c57df"
+    },
+    {
+      "path": "vendor/box3d/old-core-review/include/box3d/config.h",
+      "upstreamPath": "include/box3d/config.h",
+      "repository": "erincatto/box3d",
+      "commit": "8441b4a06d6d09dcfb0b0f704df4d847d1437b92",
+      "gitBlobSha1": "2790fc0b8b48a62af948e815839b40d6f4119b69",
+      "bytes": 1139,
+      "sha256": "fd0bfc12f9c4ecd9903d2d9a936e2224cd99458838064269b08b7eb9bb016c34"
+    },
+    {
+      "path": "vendor/box3d/old-core-review/include/box3d/constants.h",
+      "upstreamPath": "include/box3d/constants.h",
+      "repository": "erincatto/box3d",
+      "commit": "8441b4a06d6d09dcfb0b0f704df4d847d1437b92",
+      "gitBlobSha1": "e32b7370666d88998beaf6a3268c1f57d34f5ed6",
+      "bytes": 5441,
+      "sha256": "bc488f7baa254ed399304550e33e8f6be901279a2dcc22ec2b906f7287692f07"
+    },
+    {
+      "path": "vendor/box3d/old-core-review/include/box3d/id.h",
+      "upstreamPath": "include/box3d/id.h",
+      "repository": "erincatto/box3d",
+      "commit": "8441b4a06d6d09dcfb0b0f704df4d847d1437b92",
+      "gitBlobSha1": "447fd34edf0d7fce12395e3a8e960bd4f0d34f6b",
+      "bytes": 4888,
+      "sha256": "49377abab846b3e0bfda1bc88d91f3e10dc70186e09254b16c7d69eb6a8777b4"
+    },
+    {
+      "path": "vendor/box3d/old-core-review/include/box3d/math_functions.h",
+      "upstreamPath": "include/box3d/math_functions.h",
+      "repository": "erincatto/box3d",
+      "commit": "8441b4a06d6d09dcfb0b0f704df4d847d1437b92",
+      "gitBlobSha1": "7ef7354f2ef0bf04df2aba735b4b4f9467e7e2ee",
+      "bytes": 32051,
+      "sha256": "771c306e7c19cc154c54c3a3df23ff3b7bfc897e2d0f32b0379369ee62bfc58f"
+    },
+    {
+      "path": "vendor/box3d/old-core-review/include/box3d/types.h",
+      "upstreamPath": "include/box3d/types.h",
+      "repository": "erincatto/box3d",
+      "commit": "8441b4a06d6d09dcfb0b0f704df4d847d1437b92",
+      "gitBlobSha1": "2c75977f0ca91c78f67a092f8dc823720673a6c2",
+      "bytes": 90350,
+      "sha256": "58d9049909155c7162904b343bcbdb4023bde4c41d1b85bfeef461d37848f9e5"
+    },
+    {
+      "path": "vendor/box3d/old-core-review/src/compound.h",
+      "upstreamPath": "src/compound.h",
+      "repository": "erincatto/box3d",
+      "commit": "8441b4a06d6d09dcfb0b0f704df4d847d1437b92",
+      "gitBlobSha1": "1f4d7e508c60ec651a0ae08fed11c96b79d252ef",
+      "bytes": 555,
+      "sha256": "9f6ef9132628c0a1e9ee9db58a2738557983bb7127ed74e85bb33a3dcca17819"
+    },
+    {
+      "path": "vendor/box3d/old-core-review/src/contact.h",
+      "upstreamPath": "src/contact.h",
+      "repository": "erincatto/box3d",
+      "commit": "8441b4a06d6d09dcfb0b0f704df4d847d1437b92",
+      "gitBlobSha1": "bd5b91aeac798f0f6650de419437cc31c7271087",
+      "bytes": 4462,
+      "sha256": "835b210a5d337dfbd49823fa3909e6b43bf95be37d08f81dee686dfb1266a1b8"
+    }
+  ]
+}

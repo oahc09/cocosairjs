@@ -58,7 +58,7 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
     private debug: Box3DDebugSnapshot | null = null;
     private material: Readonly<Box3DSurfaceMaterial> | null = null;
     readonly #sharedBodies = new Map<Node, Box3DSharedBody>();
-    private readonly materialShapes = new Map<Box3DId, boolean>();
+    readonly #materialShapes = new Map<Box3DId, boolean>();
     private nativeStep: Readonly<Box3DNativeStepDiagnostics> = Object.freeze({
         nativeStepIndex: 0,
         nativeCompleted: false,
@@ -204,7 +204,7 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
         if (value.rollingFriction !== 0 || value.spinningFriction !== 0)
             unsupportedBox3D('nonzero rollingFriction/spinningFriction');
         // Validate every inherited token and capture rollback values before the first write.
-        const changes = [...this.materialShapes]
+        const changes = [...this.#materialShapes]
             .filter(([, inherited]) => inherited)
             .map(([shape]) => ({
                 shape,
@@ -246,7 +246,7 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
     /** Internal shape-owner hook for later T10. Does not create or claim ownership of native shapes. */
     registerMaterialShape(shape: Box3DId, inheritsDefault: boolean): void {
         this.assertReady('registerMaterialShape');
-        if (typeof inheritsDefault !== 'boolean' || this.materialShapes.has(shape))
+        if (typeof inheritsDefault !== 'boolean' || this.#materialShapes.has(shape))
             throw worldError(
                 'AIR_E_BOX3D_CONFIG',
                 'registerMaterialShape',
@@ -265,13 +265,39 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
                 throw error;
             }
         }
-        this.materialShapes.set(shape, inheritsDefault);
+        this.#materialShapes.set(shape, inheritsDefault);
         this.invalidatePending();
     }
     unregisterMaterialShape(shape: Box3DId): void {
         this.assertReady('unregisterMaterialShape');
-        if (!this.materialShapes.delete(shape))
+        if (!this.#materialShapes.delete(shape))
             throw worldError('AIR_E_BOX3D_DISPOSED', 'unregisterMaterialShape', 'Unknown shape registration.');
+    }
+    /** Internal semantic shape-owner hook; the native capability is never returned. */
+    updateMaterialShape(shape: Box3DId, value: Box3DSurfaceMaterial | null): void {
+        this.assertReady('updateMaterialShape');
+        if (!this.#materialShapes.has(shape))
+            throw worldError('AIR_E_BOX3D_DISPOSED', 'shape material', 'Unknown shape.');
+        const next = value === null ? this.material : copySurfaceMaterial(value);
+        if (!next)
+            throw worldError(
+                'AIR_E_BOX3D_CONFIG',
+                'shape material',
+                'PhysicsSystem default material is not configured.',
+            );
+        copySurfaceMaterial(this.#binding.getShapeMaterial(this.#token, shape));
+        try {
+            this.#binding.setShapeMaterial(this.#token, shape, next);
+            this.invalidatePending();
+            const actual = copySurfaceMaterial(this.#binding.getShapeMaterial(this.#token, shape));
+            if (actual.friction !== next.friction || actual.restitution !== next.restitution)
+                throw worldError('AIR_E_BOX3D_ABI', 'shape material', 'Native readback mismatch.');
+            this.#materialShapes.set(shape, value === null);
+        } catch (error) {
+            this.invalidatePending();
+            this.fault(error);
+            throw error;
+        }
     }
     get debugDrawFlags(): number {
         this.assertReady('debugDrawFlags');
@@ -306,8 +332,12 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
                 node,
                 {
                     assertReady: (operation) => this.assertReady(operation),
+                    isFaulted: () => this.state === 'faulted',
                     invalidate: () => this.invalidatePending(),
                     fault: (error) => this.fault(error),
+                    registerShapeMaterial: (shape, inherited) => this.registerMaterialShape(shape, inherited),
+                    updateShapeMaterial: (shape, value) => this.updateMaterialShape(shape, value),
+                    unregisterShapeMaterial: (shape) => this.unregisterMaterialShape(shape),
                     released: (key, value) => {
                         if (this.#sharedBodies.get(key) === value) this.#sharedBodies.delete(key);
                     },
@@ -420,7 +450,7 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
             gravity: this.gravity,
             allowSleep: this.sleeping,
             material: this.material,
-            materialShapeCount: this.materialShapes.size,
+            materialShapeCount: this.#materialShapes.size,
             sceneBindingCount: this.#sharedBodies.size,
             sceneSyncCalls: this.sceneSyncCalls,
             afterEventsCalls: this.afterEventsCalls,
@@ -449,7 +479,7 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
             this.#binding.destroyWorld(this.#token);
             for (const body of this.#sharedBodies.values()) body.closeWithWorld();
             this.#sharedBodies.clear();
-            this.materialShapes.clear();
+            this.#materialShapes.clear();
             this.pendingSnapshot = null;
             this.snapshot = null;
             this.debug = null;

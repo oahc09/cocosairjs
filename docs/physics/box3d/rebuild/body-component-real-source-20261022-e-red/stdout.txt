@@ -1,0 +1,85 @@
+✔ MOCK: Cocos/native type mapping and 32-bit filter domain are explicit (2.538298ms)
+✔ MOCK: absent body/filter bridge rejects, not a successful component world (0.446895ms)
+✔ MOCK: constructor owns one disabled native static body at initial origin (1.250444ms)
+✔ MOCK: actual IRigidBody lifecycle retains/owns/releases one body (1.387355ms)
+✔ MOCK: last owner, not first owner, destroys the shared body (0.31099ms)
+✔ MOCK: enabled pending geometry preflight rejects without mutations and can recover (0.966724ms)
+✔ MOCK: post-step Node write uses origin, not COM, without clearing other dirty flags (0.744654ms)
+✔ MOCK: external Node pose/scale/parent is unsupported before any native change (0.536311ms)
+✔ MOCK: setters use incoming candidate, never precommit component cache (0.963586ms)
+✔ MOCK: local forces/impulses forward COM-relative offsets and real native method (0.874368ms)
+✔ MOCK: dynamic method names cannot escape the fixed body-control allowlist (0.312426ms)
+✔ MOCK: state copy failure faults owner; specified native argument rejection does not (0.461985ms)
+✔ MOCK: after world close, component destroy cannot double-free native body (0.328187ms)
+✔ MOCK/actual world RED: rejected native argument preserves completed snapshot and diagnostics (138.114169ms)
+✔ MOCK/actual world RED: unclassified native error after mutation is faulted, never assumed pure (0.834115ms)
+✔ MOCK/actual world: native destroy failure faults; world destruction remains the cleanup owner (0.568886ms)
+✔ MOCK/actual world: mass pending is rejected before stepping state/counters and resolves without fault (0.792184ms)
+✔ MOCK existing shared owner RED: invalid serialized mass rejects before every native write (0.27036ms)
+✔ MOCK existing shared owner RED: invalid serialized mass rejects before every native write (0.169471ms)
+✔ MOCK existing shared owner RED: invalid serialized mass rejects before every native write (0.090696ms)
+✔ MOCK existing shared owner RED: invalid serialized linearDamping rejects before every native write (0.385213ms)
+✔ MOCK existing shared owner RED: invalid serialized angularDamping rejects before every native write (0.203872ms)
+✔ MOCK existing shared owner RED: invalid serialized allowSleep rejects before every native write (0.142241ms)
+✔ MOCK existing shared owner RED: invalid serialized useGravity rejects before every native write (0.087925ms)
+✔ MOCK existing shared owner RED: invalid serialized linearFactor rejects before every native write (0.081093ms)
+✔ MOCK existing shared owner RED: invalid serialized angularFactor rejects before every native write (0.113236ms)
+✔ MOCK/actual world: later native configuration rejection faults after an earlier committed field (0.525756ms)
+✔ MOCK: initial sheared transform rejects before creating a native body (0.330338ms)
+✔ MOCK: invalid initialization is rejected by IRigidBody before native acquisition (0.160934ms)
+✔ MOCK/actual world phase RED: committed cannot be treated as pure by ARGUMENT code (0.323972ms)
+✔ MOCK/actual world phase RED: unknown cannot be treated as pure by ARGUMENT code (0.286053ms)
+✔ MOCK/actual world: readonly not-mutated native status/code preserves the completed observation (0.583787ms)
+✔ MOCK/actual world: writable or inherited not-mutated is not a trusted phase record (0.736421ms)
+✔ MOCK/actual world: creation throwing before token receipt faults and keeps world as cleanup owner (0.585577ms)
+✔ MOCK/actual world: shape allocation then lost token faults even with apparent argument code (1.504938ms)
+✔ MOCK: body-first shares one body, retains active collider on body disable, and destroys once (0.892707ms)
+✔ MOCK: shape-first shares one body, retains active collider on body disable, and destroys once (0.511788ms)
+✔ MOCK: collider-only box/sphere stay static and whole-body filter writes are one real bridge batch (0.908863ms)
+✔ MOCK/actual world: batch filter not-mutated keeps honest observation (0.945882ms)
+✔ MOCK/actual world: batch filter committed keeps honest observation (0.580486ms)
+✔ MOCK/actual world: batch filter unknown keeps honest observation (0.488454ms)
+✔ MOCK: invalid geometry and unsupported material reject before shape rebuild or cached bounds change (1.49086ms)
+✔ MOCK: valid geometry replacement owns exactly one live shape and updates native-derived bounds (0.854565ms)
+✔ MOCK: disabled last collider leaves dynamic mass pending recoverable until geometry re-enabled (0.446409ms)
+✔ MOCK: inactive/uninitialized shape material and event listeners cannot silently succeed (0.478308ms)
+✖ MOCK/actual world teardown RED: faulted components release JS owners without replaying native controls (1.295048ms)
+ℹ tests 46
+ℹ suites 0
+ℹ pass 45
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 991.773399
+
+✖ failing tests:
+
+test at tools/verify/box3d/body-component-real-source.test.cjs:722:1
+✖ MOCK/actual world teardown RED: faulted components release JS owners without replaying native controls (1.295048ms)
+  AssertionError [ERR_ASSERTION]: Got unwanted exception.
+  Actual message: "[AIR_E_BOX3D_WORLD_FAULTED] bodyState: World is faulted or closed; no native operation was attempted."
+      at TestContext.<anonymous> (/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/verify/box3d/body-component-real-source.test.cjs:733:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: Error: [AIR_E_BOX3D_WORLD_FAULTED] bodyState: World is faulted or closed; no native operation was attempted.
+        at worldError (/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/air/physics/box3d/world-binding.ts:5:26)
+        at Box3DPhysicsWorld.assertReady (/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/air/physics/box3d/world.ts:108:50)
+        at Object.assertReady (/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/air/physics/box3d/world.ts:283:50)
+        at Box3DSharedBody.assert (/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/air/physics/box3d/shared-body.ts:186:67)
+        at get state (/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/air/physics/box3d/shared-body.ts:262:14)
+        at Box3DSharedBody.enableRigidBody (/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/air/physics/box3d/shared-body.ts:328:18)
+        at Box3DRigidBody.onDisable (/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/air/physics/box3d/rigid-body.ts:74:19)
+        at /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/verify/box3d/body-component-real-source.test.cjs:734:15
+        at getActual (node:assert:611:5)
+        at strict.doesNotThrow (node:assert:779:32),
+    expected: undefined,
+    operator: 'doesNotThrow',
+    diff: 'simple'
+  }

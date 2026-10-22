@@ -1,0 +1,9 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "This action was rejected due to unacceptable risk.\nReason: This creates a remote commit in the engine repository’s feature branch, while the trusted user authorization covered the exhibition repository’s main branch and explicitly excluded the engine main repository; the target and external commitment are not authorized.\nDo not bypass this rejection through a workaround or indirect execution. Continue with a safer alternative, or carry out checks to prove that the action is authorized or low risk before trying again. Complete unaffected work without asking for confirmation. Report anything that remains blocked, clarify why it was blocked by auto-review, inform the user of the risk and ask for approval."
+    }
+  ],
+  "isError": true
+}

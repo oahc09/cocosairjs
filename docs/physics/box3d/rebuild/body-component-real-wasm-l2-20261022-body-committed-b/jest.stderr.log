@@ -1,0 +1,26 @@
+FAIL tools/verify/box3d/body-component-real-wasm.test.ts (13.421 s)
+  ✕ actual Cocos body/primitive components on current native WASM; independently scoped case (200 ms)
+
+  ● actual Cocos body/primitive components on current native WASM; independently scoped case
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "released"
+    Received: "failed"
+
+      398 |         const close = await app.close!();
+      399 |         fixture.checkpoint('complete-close-receipt-before-assertion', { close, observations: fixture.observations() });
+    > 400 |         expect(close.status).toBe('released');
+          |                              ^
+      401 |         expect(await app.close!()).toBe(close);
+      402 |         const observations = fixture.observations();
+      403 |         expect(observations.beforeBindingDispose.coreBytes).toBe(observations.initialCoreBytes);
+
+      at tools/verify/box3d/body-component-real-wasm.test.ts:400:30
+      at fulfilled (tools/verify/box3d/body-component-real-wasm.test.ts:5:58)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 1 total
+Snapshots:   0 total
+Time:        13.832 s
+Ran all test suites.

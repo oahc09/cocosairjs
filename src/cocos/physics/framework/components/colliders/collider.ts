@@ -432,10 +432,12 @@ export class Collider extends Eventify(Component) {
     protected onLoad (): void {
         if (!selector.runInEditor) return;
 
-        this.sharedMaterial = this._material;
+        const nativeFirst = selector.id === 'box3d';
+        if (!nativeFirst) this.sharedMaterial = this._material;
         this._shape = createShape(this.type);
         this._shape.initialize(this);
         this._shape.onLoad!();
+        if (nativeFirst && this._material) this._material.on(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
     }
 
     protected onEnable (): void {

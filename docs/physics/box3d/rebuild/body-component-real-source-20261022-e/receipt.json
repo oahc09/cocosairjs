@@ -1,0 +1,90 @@
+{
+  "status": "PASS_LIMITED_MOCK_SOURCE",
+  "createdAt": "2026-10-22T10:16:02.443052+00:00",
+  "checks": [
+    {
+      "argv": [
+        "./node_modules/.bin/prettier",
+        "--ignore-path",
+        "/dev/null",
+        "--check",
+        "src/air/physics/box3d/world.ts",
+        "src/air/physics/box3d/world-binding.ts",
+        "src/air/physics/box3d/shared-body.ts",
+        "src/air/physics/box3d/rigid-body.ts",
+        "src/air/physics/box3d/registration.ts",
+        "src/air/physics/box3d/box-sphere-geometry.ts",
+        "src/air/physics/box3d/box-sphere-shape.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "argv": [
+        "./node_modules/.bin/prettier",
+        "--check",
+        "tools/verify/box3d/body-component-real-source.test.cjs",
+        "tools/verify/box3d/body-component-real-source.tsconfig.json"
+      ],
+      "exitCode": 0
+    },
+    {
+      "argv": [
+        "./node_modules/.bin/tsc",
+        "-p",
+        "tools/verify/box3d/body-component-real-source.tsconfig.json",
+        "--pretty",
+        "false"
+      ],
+      "exitCode": 0
+    },
+    {
+      "argv": [
+        "./node_modules/.bin/tsc",
+        "-p",
+        "tools/verify/box3d/body-component-real-wasm.tsconfig.json",
+        "--pretty",
+        "false"
+      ],
+      "exitCode": 0
+    },
+    {
+      "argv": [
+        "node",
+        "--test",
+        "tools/verify/box3d/body-component-real-source.test.cjs"
+      ],
+      "exitCode": 0
+    },
+    {
+      "argv": [
+        "node",
+        "--test",
+        "tools/verify/box3d/world-control.test.cjs"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "sourceBefore": {
+    "src/air/physics/box3d/world.ts": "ec96866f6208ac987c1f0809b7259c526165df5ff8c5f081fd50ef54572beaee",
+    "src/air/physics/box3d/world-binding.ts": "aece3008837da8b55c77b969b2374c6a542b5debfa7cbffe5a8b2b41ffb78de0",
+    "src/air/physics/box3d/shared-body.ts": "b4e9665f0e688752de8689fcf992da95b50de45075a7e119161f2005995c3239",
+    "src/air/physics/box3d/rigid-body.ts": "0d00792b4f66ec30fdd255041b397f6a501257b071d78bf1516b97bc32ab51b6",
+    "src/air/physics/box3d/registration.ts": "a14fa6544069a089985ff59885f4e6ea3e09244a675c3373017b2472f4a2d704",
+    "src/air/physics/box3d/box-sphere-geometry.ts": "d492ee746f95ecb93466cbd1e96054280003e501e36408c6d7d65508fd1107c5",
+    "src/air/physics/box3d/box-sphere-shape.ts": "35747ae8df33ad523e01b68f8ea1d2a771a59c4a6a0af3cf9a4c04cb7ffad6ba",
+    "tools/verify/box3d/body-component-real-source.test.cjs": "e833337bd63e926899abadb9dc9e0d046374d204df2abd6a7e83521bb731f048",
+    "tools/verify/box3d/body-component-real-source.tsconfig.json": "d143b8c482da352511d4f214a301223043c451c45c9e3ff56b5a366a9165f558"
+  },
+  "sourceAfter": {
+    "src/air/physics/box3d/world.ts": "ec96866f6208ac987c1f0809b7259c526165df5ff8c5f081fd50ef54572beaee",
+    "src/air/physics/box3d/world-binding.ts": "aece3008837da8b55c77b969b2374c6a542b5debfa7cbffe5a8b2b41ffb78de0",
+    "src/air/physics/box3d/shared-body.ts": "b4e9665f0e688752de8689fcf992da95b50de45075a7e119161f2005995c3239",
+    "src/air/physics/box3d/rigid-body.ts": "0d00792b4f66ec30fdd255041b397f6a501257b071d78bf1516b97bc32ab51b6",
+    "src/air/physics/box3d/registration.ts": "a14fa6544069a089985ff59885f4e6ea3e09244a675c3373017b2472f4a2d704",
+    "src/air/physics/box3d/box-sphere-geometry.ts": "d492ee746f95ecb93466cbd1e96054280003e501e36408c6d7d65508fd1107c5",
+    "src/air/physics/box3d/box-sphere-shape.ts": "35747ae8df33ad523e01b68f8ea1d2a771a59c4a6a0af3cf9a4c04cb7ffad6ba",
+    "tools/verify/box3d/body-component-real-source.test.cjs": "e833337bd63e926899abadb9dc9e0d046374d204df2abd6a7e83521bb731f048",
+    "tools/verify/box3d/body-component-real-source.tsconfig.json": "d143b8c482da352511d4f214a301223043c451c45c9e3ff56b5a366a9165f558"
+  },
+  "nativePhysics": false
+}

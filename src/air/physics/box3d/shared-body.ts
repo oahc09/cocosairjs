@@ -22,8 +22,10 @@
 import type { Node } from '../../../cocos/scene-graph/node';
 import type { RigidBody } from '../../../cocos/physics/framework/components/rigid-body';
 import type { Box3DBodyState, Box3DId, Box3DWorld } from './binding/facade.mjs';
+import type { Box3DPrimitiveGeometry } from './box-sphere-geometry';
+import type { Box3DSurfaceMaterial } from './world-binding';
 import type { Box3DComponentBinding } from './world-binding';
-import { finiteFloat32, worldError } from './world-binding';
+import { finiteFloat32, mutationNotApplied, worldError } from './world-binding';
 import { unsupportedBox3D } from './unsupported';
 
 type Vec = { x: number; y: number; z: number };
@@ -34,8 +36,12 @@ export interface Box3DComponentConfiguration {
 }
 export interface Box3DBodyOwner {
     assertReady(operation: string): void;
+    isFaulted(): boolean;
     invalidate(): void;
     fault(error: unknown): void;
+    registerShapeMaterial(shape: Box3DId, inherited: boolean): void;
+    updateShapeMaterial(shape: Box3DId, value: Box3DSurfaceMaterial | null): void;
+    unregisterShapeMaterial(shape: Box3DId): void;
     released(node: Node, body: Box3DSharedBody): void;
 }
 type Mutation =
@@ -165,6 +171,7 @@ export class Box3DSharedBody {
     readonly #owner: Box3DBodyOwner;
     readonly #node: Node;
     readonly #references = new Set<object>();
+    readonly #shapes = new Map<object, { token: Box3DId; geometry: Box3DPrimitiveGeometry }>();
     #closed = false;
     #rigidBody: RigidBody | null = null;
     #rigidEnabled = false;
@@ -188,6 +195,7 @@ export class Box3DSharedBody {
         this.#owner = owner;
         this.#mask = filterBits(configuration.collisionMask(1));
         this.#pose = this.nodePose();
+        this.#pose.forEach((v) => finiteFloat32(v, 'initial pose'));
         rejectInitialShear(node);
         this.#scale = bodyVector(node.worldScale, 'initial scale');
         if (this.#scale.some((v) => v <= 0)) unsupportedBox3D('nonpositive initial Node scale');
@@ -195,23 +203,34 @@ export class Box3DSharedBody {
         // No dynamic, geometry-less body can enter simulation during component assembly.
         const threshold = finiteFloat32(configuration.sleepThreshold(), 'sleepThreshold');
         if (threshold < 0) throw worldError('AIR_E_BOX3D_CONFIG', 'sleepThreshold', 'Expected nonnegative threshold.');
-        this.#body = binding.createBody(world, {
-            type: 0,
-            position: this.#pose.slice(0, 3),
-            rotation: this.#pose.slice(3, 7),
-        });
-        owner.invalidate();
+        let allocated: Box3DId | undefined;
         try {
-            binding.setBodyEnabled(world, this.#body, false);
-            binding.setBodySleepThreshold(world, this.#body, threshold);
+            allocated = binding.createBody(world, {
+                type: 0,
+                position: this.#pose.slice(0, 3),
+                rotation: this.#pose.slice(3, 7),
+            });
+            this.#body = allocated;
+            owner.invalidate();
+            binding.setBodyEnabled(world, allocated, false);
+            binding.setBodySleepThreshold(world, allocated, threshold);
         } catch (error) {
-            try {
-                binding.destroyBody(this.#body);
-            } catch (cleanup) {
-                owner.fault(cleanup);
+            // Creation has no reviewed phase contract. A lost token may still own a real native body.
+            let failure = error;
+            if (allocated) {
+                try {
+                    binding.destroyBody(allocated);
+                } catch (cleanupError) {
+                    failure = Object.assign(
+                        worldError('AIR_E_BOX3D_WORLD_FAULTED', 'body cleanup', 'World owns unresolved cleanup.'),
+                        { cause: error, cleanupError },
+                    );
+                }
             }
+            owner.invalidate();
+            owner.fault(failure);
             this.#closed = true;
-            throw error;
+            throw failure;
         }
         owner.invalidate();
     }
@@ -225,7 +244,7 @@ export class Box3DSharedBody {
         return Object.freeze([p.x, p.y, p.z, q.x, q.y, q.z, q.w]);
     }
     /** Pure scene/readback preflight. No flags, diagnostics or native state are mutated. */
-    preflight(): void {
+    private assertSceneUnchanged(): void {
         if (this.#closed) throw worldError('AIR_E_BOX3D_DISPOSED', 'preflight', 'Shared body is closed.');
         const scale = this.#node.worldScale;
         if (
@@ -235,6 +254,9 @@ export class Box3DSharedBody {
             unsupportedBox3D('runtime Node parent/scale synchronization (T11)');
         if (this.nodePose().some((v, i) => v !== this.#pose[i]))
             unsupportedBox3D('external Node pose/teleport/kinematic target (T11)');
+    }
+    preflight(): void {
+        this.assertSceneUnchanged();
         const state = this.#binding.bodyState(this.#world, this.#body);
         if (state.enabled && state.type === 2 && state.massPending)
             throw worldError('AIR_E_BOX3D_MASS_PENDING', 'step preflight', 'Dynamic body needs effective geometry.');
@@ -258,6 +280,12 @@ export class Box3DSharedBody {
     }
     release(reference: object): void {
         if (this.#closed) return; // World destruction already invalidated every component reference.
+        if (this.#owner.isFaulted()) {
+            // Cleanup-only: remove JS owners, never retry unknown native mutations or remove world ownership.
+            this.#references.delete(reference);
+            this.#shapes.delete(reference);
+            return;
+        }
         this.assert('release body');
         if (!this.#references.has(reference))
             throw worldError('AIR_E_BOX3D_DISPOSED', 'release body', 'Unknown owner.');
@@ -280,6 +308,7 @@ export class Box3DSharedBody {
     closeWithWorld(): void {
         this.#closed = true;
         this.#references.clear();
+        this.#shapes.clear();
         this.#rigidBody = null;
     }
     get rigidBody(): RigidBody | null {
@@ -310,10 +339,8 @@ export class Box3DSharedBody {
                 throw worldError('AIR_E_BOX3D_ABI', method, 'Expected copied immutable native state.');
             return result;
         } catch (error) {
-            // Only phase-unambiguous pre-mutation failures preserve the last completed observation.
-            // AIR_E_BOX3D_NATIVE is deliberately NOT classified by code: a post-write readback may use it too.
-            const code = (error as { code?: string })?.code;
-            if (!['AIR_E_BOX3D_ARGUMENT', 'AIR_E_BOX3D_LOCKED', 'AIR_E_BOX3D_MASS_PENDING'].includes(code ?? '')) {
+            // Error codes do not establish phase. Unknown/committed results are conservatively fatal.
+            if (!mutationNotApplied(error)) {
                 this.#owner.invalidate();
                 this.#owner.fault(error);
             }
@@ -325,6 +352,7 @@ export class Box3DSharedBody {
         if (this.#rigidBody)
             throw worldError('AIR_E_BOX3D_CONFIG', 'attach RigidBody', 'Node already has a body owner.');
         const next = validateRigidBodyInitial(value, configuration);
+        this.readFilter(); // Every current native shape is validated before the first body-control write.
         let committed = 0;
         try {
             this.control('setBodyMass', next.mass);
@@ -339,6 +367,7 @@ export class Box3DSharedBody {
             ++committed;
             this.control('setBodyType', next.type);
             ++committed;
+            this.setFilter(next.group, next.mask);
         } catch (error) {
             // This is not a native batch transaction. A failure after an earlier write is explicitly fatal.
             if (committed) {
@@ -353,13 +382,23 @@ export class Box3DSharedBody {
         this.#rigidBody = value;
     }
     enableRigidBody(enabled: boolean): void {
-        this.control('setBodyEnabled', enabled);
+        if (!enabled && (this.#closed || this.#owner.isFaulted())) {
+            this.#rigidEnabled = false;
+            return; // Terminal cleanup only; native state is retained for world destruction, not reported disabled.
+        }
+        const active = enabled || this.#shapes.size > 0;
+        if (this.state.enabled !== active) this.control('setBodyEnabled', active);
         this.#rigidEnabled = enabled;
     }
     detachRigidBody(): void {
-        if (this.#closed) return;
-        this.control('setBodyEnabled', false);
+        if (this.#closed || this.#owner.isFaulted()) {
+            this.#rigidBody = null;
+            this.#rigidEnabled = false;
+            return;
+        }
         this.control('setBodyType', 0);
+        const active = this.#shapes.size > 0;
+        if (this.state.enabled !== active) this.control('setBodyEnabled', active);
         this.#rigidEnabled = false;
         this.#type = 0;
         this.#rigidBody = null;
@@ -369,20 +408,161 @@ export class Box3DSharedBody {
         this.control('setBodyType', next);
         this.#type = next;
     }
+    private readFilter(): { group: number; mask: number } {
+        for (const { token } of this.#shapes.values()) {
+            const value = this.#binding.getShapeFilter(this.#world, token);
+            if (value.group !== this.#group || value.mask !== this.#mask)
+                throw worldError(
+                    'AIR_E_BOX3D_ABI',
+                    'shape filter',
+                    'Owned shapes no longer share their committed filter.',
+                );
+        }
+        // No active geometry means pending configuration, not a claim of a native shape effect.
+        return { group: this.#group, mask: this.#mask };
+    }
+    private setFilter(group: number, mask: number): void {
+        this.assert('setFilter');
+        const next = { group: filterBits(group), mask: filterBits(mask) };
+        const shapes = [...this.#shapes.values()].map((v) => v.token);
+        try {
+            const result = this.#binding.setShapeFilters(this.#world, shapes, next);
+            if (shapes.length) this.#owner.invalidate();
+            if (result.length !== shapes.length || result.some((v) => v.group !== next.group || v.mask !== next.mask))
+                throw worldError('AIR_E_BOX3D_ABI', 'setShapeFilters', 'Batch native readback mismatch.');
+            this.#group = next.group;
+            this.#mask = next.mask;
+        } catch (error) {
+            if (!mutationNotApplied(error)) {
+                this.#owner.invalidate();
+                this.#owner.fault(error);
+            }
+            throw error;
+        }
+    }
     getGroup(): number {
         this.assert('getGroup');
-        return this.#group | 0;
+        return this.readFilter().group | 0;
     }
     getMask(): number {
         this.assert('getMask');
-        return this.#mask | 0;
+        return this.readFilter().mask | 0;
     }
     setGroup(value: number): void {
-        filterBits(value);
-        unsupportedBox3D('shape filter ownership transaction pending next source checkpoint');
+        this.setFilter(filterBits(value), this.#mask);
     }
     setMask(value: number): void {
-        filterBits(value);
-        unsupportedBox3D('shape filter ownership transaction pending next source checkpoint');
+        this.setFilter(this.#group, filterBits(value));
+    }
+    get initialScale(): readonly number[] {
+        this.assert('initial scale');
+        return this.#scale;
+    }
+    copiedTransform(): readonly number[] {
+        this.assert('copied transform');
+        this.assertSceneUnchanged();
+        const value = this.#binding.bodyTransforms(this.#world, [this.#body]);
+        if (value.length !== 10 || !value.every(Number.isFinite))
+            throw worldError('AIR_E_BOX3D_ABI', 'bodyTransforms', 'Expected one finite copied transform.');
+        return Object.freeze(Array.from(value));
+    }
+    /** Actual native geometry allocation. A later uncertain failure is not advertised as atomic rollback. */
+    setShape(reference: object, geometry: Box3DPrimitiveGeometry): void {
+        this.assert('setShape');
+        this.assertSceneUnchanged();
+        if (!this.#references.has(reference))
+            throw worldError('AIR_E_BOX3D_DISPOSED', 'setShape', 'Unknown component owner.');
+        const previous = this.#shapes.get(reference);
+        let token: Box3DId | undefined;
+        let registered = false;
+        try {
+            token =
+                geometry.kind === 'box'
+                    ? this.#binding.createOffsetBox(
+                          this.#body,
+                          geometry.center,
+                          geometry.dimensions,
+                          [0, 0, 0, 1],
+                          1,
+                          geometry.trigger,
+                      )
+                    : this.#binding.createOffsetSphere(
+                          this.#body,
+                          geometry.center,
+                          geometry.dimensions[0],
+                          1,
+                          geometry.trigger,
+                      );
+            this.#owner.invalidate();
+            this.#binding.configureShapeEvents(token, { sensor: false, contact: false, hit: false });
+            const filter = this.#binding.setShapeFilters(this.#world, [token], {
+                group: this.#group,
+                mask: this.#mask,
+            });
+            if (filter.length !== 1 || filter[0].group !== this.#group || filter[0].mask !== this.#mask)
+                throw worldError('AIR_E_BOX3D_ABI', 'shape creation', 'Filter readback mismatch.');
+            if (geometry.material) this.#binding.setShapeMaterial(this.#world, token, geometry.material);
+            this.#owner.registerShapeMaterial(token, geometry.material === null);
+            registered = true;
+            if (geometry.material) {
+                const actual = this.#binding.getShapeMaterial(this.#world, token);
+                if (
+                    actual.friction !== geometry.material.friction ||
+                    actual.restitution !== geometry.material.restitution
+                )
+                    throw worldError('AIR_E_BOX3D_ABI', 'shape creation', 'Material readback mismatch.');
+            }
+            if (previous) {
+                this.#binding.destroyShape(previous.token);
+                this.#owner.unregisterShapeMaterial(previous.token);
+            }
+            this.#shapes.set(reference, { token, geometry });
+            if (!this.state.enabled) this.control('setBodyEnabled', true);
+        } catch (error) {
+            // Candidate cleanup does not restore native contact history. The whole world is conservatively faulted.
+            let failure = error;
+            try {
+                if (token) {
+                    this.#binding.destroyShape(token);
+                    if (registered) this.#owner.unregisterShapeMaterial(token);
+                }
+            } catch (cleanupError) {
+                failure = Object.assign(
+                    worldError('AIR_E_BOX3D_WORLD_FAULTED', 'shape cleanup', 'World owns unresolved cleanup.'),
+                    { cause: error, cleanupError },
+                );
+            }
+            this.#owner.invalidate();
+            this.#owner.fault(failure);
+            throw failure;
+        }
+    }
+    removeShape(reference: object): void {
+        if (this.#closed || this.#owner.isFaulted()) return; // Final native cleanup belongs to the world.
+        this.assert('removeShape');
+        const value = this.#shapes.get(reference);
+        if (!value) return;
+        try {
+            this.#binding.destroyShape(value.token);
+            this.#owner.invalidate();
+            this.#owner.unregisterShapeMaterial(value.token);
+            this.#shapes.delete(reference);
+            const active = this.#rigidEnabled || this.#shapes.size > 0;
+            if (this.state.enabled !== active) this.control('setBodyEnabled', active);
+        } catch (error) {
+            this.#owner.invalidate();
+            this.#owner.fault(error);
+            throw error;
+        }
+    }
+    updateShapeMaterial(reference: object, value: Box3DSurfaceMaterial | null): void {
+        this.assert('updateShapeMaterial');
+        const shape = this.#shapes.get(reference);
+        if (!shape) throw worldError('AIR_E_BOX3D_DISPOSED', 'shape material', 'Shape is inactive.');
+        this.#owner.updateShapeMaterial(shape.token, value);
+        this.#shapes.set(reference, {
+            token: shape.token,
+            geometry: Object.freeze({ ...shape.geometry, material: value }),
+        });
     }
 }

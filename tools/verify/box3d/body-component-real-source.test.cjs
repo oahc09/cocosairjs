@@ -31,9 +31,17 @@ function load(relative) {
 const { Box3DSharedBody, nativeBodyType, filterBits } = load('src/air/physics/box3d/shared-body.ts');
 const { Box3DRigidBody } = load('src/air/physics/box3d/rigid-body.ts');
 const { requireComponentBinding } = load('src/air/physics/box3d/world-binding.ts');
+const { Box3DBoxShape, Box3DSphereShape } = load('src/air/physics/box3d/box-sphere-shape.ts');
+const { primitiveGeometry } = load('src/air/physics/box3d/box-sphere-geometry.ts');
+function phaseError(code, phase = 'not-mutated') {
+    return Object.defineProperty(Object.assign(new Error('explicit mocked phase'), { code }), 'mutationOutcome', {
+        value: phase,
+    });
+}
 const coded = (code) => (error) => error?.code === code;
 function fixture() {
     const calls = [];
+    const shapes = new Map();
     const token = Object.freeze({ testCapability: true });
     let state = {
         type: 0,
@@ -79,11 +87,24 @@ function fixture() {
         assertReady() {
             assert(this.ready);
         },
+        isFaulted() {
+            return this.faults.length > 0;
+        },
         invalidate() {
             ++this.invalidations;
         },
         fault(error) {
             this.faults.push(error);
+        },
+        registerShapeMaterial(token, inherited) {
+            calls.push(['registerShapeMaterial', token, inherited]);
+        },
+        updateShapeMaterial(token, value) {
+            binding.setShapeMaterial(null, token, value ?? { friction: 0.6, restitution: 0 });
+            this.invalidate();
+        },
+        unregisterShapeMaterial(token) {
+            calls.push(['unregisterShapeMaterial', token]);
         },
         released() {
             ++this.releasedCount;
@@ -93,6 +114,54 @@ function fixture() {
         createBody(world, options) {
             calls.push(['createBody', world, options]);
             return token;
+        },
+        setShapeFilters(_world, tokens, filter) {
+            calls.push(['setShapeFilters', [...tokens], { ...filter }]);
+            for (const token of tokens) assert(shapes.has(token));
+            return tokens.map((token) => {
+                shapes.get(token).filter = Object.freeze({ ...filter });
+                return shapes.get(token).filter;
+            });
+        },
+        getShapeFilter(_world, token) {
+            return shapes.get(token).filter;
+        },
+        setShapeFilter(world, token, filter) {
+            return this.setShapeFilters(world, [token], filter)[0];
+        },
+        createOffsetBox(body, ...args) {
+            assert.equal(body, token);
+            const shape = Object.freeze({ mockShape: shapes.size + calls.length });
+            shapes.set(shape, {
+                kind: 'box',
+                args,
+                filter: { group: 1, mask: 0xffffffff },
+                material: { friction: 0.6, restitution: 0 },
+            });
+            calls.push(['createOffsetBox', shape, ...args]);
+            state.massPending = false;
+            return shape;
+        },
+        createOffsetSphere(body, ...args) {
+            const shape = this.createOffsetBox(body, ...args);
+            shapes.get(shape).kind = 'sphere';
+            calls.at(-1)[0] = 'createOffsetSphere';
+            return shape;
+        },
+        destroyShape(shape) {
+            assert(shapes.delete(shape));
+            state.massPending = shapes.size === 0;
+            calls.push(['destroyShape', shape]);
+        },
+        configureShapeEvents(shape, flags) {
+            assert(shapes.has(shape));
+            calls.push(['configureShapeEvents', shape, flags]);
+        },
+        getShapeMaterial(_world, shape) {
+            return shapes.get(shape).material;
+        },
+        setShapeMaterial(_world, shape, value) {
+            shapes.get(shape).material = Object.freeze({ ...value });
         },
         destroyBody(body) {
             assert.equal(body, token);
@@ -159,7 +228,7 @@ function fixture() {
         },
     };
     const adapter = new Box3DRigidBody(() => world, configuration);
-    return { body, binding, node, owner, component, adapter, calls, state, token, configuration };
+    return { body, binding, node, owner, component, adapter, calls, state, token, configuration, shapes, world };
 }
 test('MOCK: Cocos/native type mapping and 32-bit filter domain are explicit', () => {
     assert.deepEqual([1, 2, 4].map(nativeBodyType), [2, 0, 1]);
@@ -267,7 +336,7 @@ test('MOCK: dynamic method names cannot escape the fixed body-control allowlist'
 test('MOCK: state copy failure faults owner; specified native argument rejection does not', () => {
     const f = fixture();
     f.binding.setBodyMass = () => {
-        throw Object.assign(new Error('invalid'), { code: 'AIR_E_BOX3D_ARGUMENT' });
+        throw phaseError('AIR_E_BOX3D_ARGUMENT');
     };
     assert.throws(() => f.body.control('setBodyMass', NaN));
     assert.equal(f.owner.faults.length, 0);
@@ -312,16 +381,8 @@ function actualWorldFixture() {
             native.sleeping = value;
         },
         debugSnapshot: (_world, flags, jointScale) => ({ flags, jointScale, supportedFlags: 5, primitives: [] }),
-        getShapeMaterial: () => ({ friction: 0.6, restitution: 0 }),
-        setShapeMaterial: () => assert.fail('unused mock shape mutation'),
         worldCounts: () => ({ counts: new Uint32Array([1, 0, 0, 0]), liveBytes: 0n }),
         liveBytes: () => 0n,
-        getShapeFilter: () => assert.fail('unused mock filter read'),
-        setShapeFilter: () => assert.fail('unused mock filter write'),
-        createOffsetBox: () => assert.fail('unused mock shape creation'),
-        createOffsetSphere: () => assert.fail('unused mock shape creation'),
-        destroyShape: () => assert.fail('unused mock shape destroy'),
-        configureShapeEvents: () => assert.fail('unused mock event config'),
     });
     const { Box3DPhysicsWorld } = load('src/air/physics/box3d/world.ts');
     const { createAirPhysicsPreparation } = load('src/air/physics/preparation.ts');
@@ -339,7 +400,7 @@ test('MOCK/actual world RED: rejected native argument preserves completed snapsh
     const before = f.world.diagnostics(),
         snapshot = f.world.getStepSnapshot();
     f.binding.setBodyMass = () => {
-        throw Object.assign(new Error('invalid mass'), { code: 'AIR_E_BOX3D_ARGUMENT' });
+        throw phaseError('AIR_E_BOX3D_ARGUMENT');
     };
     assert.throws(() => f.body.control('setBodyMass', NaN), coded('AIR_E_BOX3D_ARGUMENT'));
     assert.deepEqual(f.world.diagnostics(), before);
@@ -418,7 +479,7 @@ function expectRejected(action) {
 test('MOCK/actual world: later native configuration rejection faults after an earlier committed field', () => {
     const f = actualWorldFixture();
     f.binding.setBodyDamping = () => {
-        throw Object.assign(new Error('unexpected geometry/state rejection'), { code: 'AIR_E_BOX3D_ARGUMENT' });
+        throw phaseError('AIR_E_BOX3D_ARGUMENT');
     };
     assert.throws(() => f.body.attachRigidBody(f.component, f.configuration));
     assert.equal(f.world.diagnostics().state, 'faulted');
@@ -442,4 +503,246 @@ test('MOCK: invalid initialization is rejected by IRigidBody before native acqui
     assert.throws(() => f.adapter.initialize(f.component), coded('AIR_E_BOX3D_CONFIG'));
     assert.equal(f.calls.length, before);
     assert.equal(f.owner.faults.length, 0);
+});
+for (const outcome of ['committed', undefined]) {
+    test(`MOCK/actual world phase RED: ${outcome ?? 'unknown'} cannot be treated as pure by ARGUMENT code`, () => {
+        const f = actualWorldFixture();
+        f.world.step(1 / 60);
+        f.binding.setBodyMass = () => {
+            const error = Object.assign(new Error('injected phase seam'), { code: 'AIR_E_BOX3D_ARGUMENT' });
+            if (outcome)
+                Object.defineProperty(error, 'mutationOutcome', {
+                    value: outcome,
+                    writable: false,
+                    configurable: false,
+                });
+            throw error;
+        };
+        assert.throws(() => f.body.control('setBodyMass', 2));
+        assert.equal(f.world.diagnostics().state, 'faulted');
+        assert.equal(f.world.diagnostics().nativeObservationCurrent, false);
+        f.world.destroy();
+    });
+}
+
+function addShape(f, kind = 'box') {
+    const shape =
+        kind === 'box'
+            ? new Box3DBoxShape(() => f.world, f.configuration)
+            : new Box3DSphereShape(() => f.world, f.configuration);
+    const collider = {
+        node: f.node,
+        center: { x: 1, y: 0, z: 0 },
+        size: { x: 2, y: 4, z: 6 },
+        radius: 0.75,
+        isTrigger: false,
+        sharedMaterial: null,
+        needCollisionEvent: false,
+        needTriggerEvent: false,
+    };
+    shape.initialize(collider);
+    shape.onLoad();
+    shape.onEnable();
+    return { shape, collider };
+}
+test('MOCK/actual world: readonly not-mutated native status/code preserves the completed observation', () => {
+    const f = actualWorldFixture();
+    f.world.step(1 / 60);
+    const before = f.world.diagnostics(),
+        snapshot = f.world.getStepSnapshot();
+    f.binding.setBodyMass = () => {
+        throw phaseError('AIR_E_BOX3D_NATIVE');
+    };
+    assert.throws(() => f.body.control('setBodyMass', 2));
+    assert.deepEqual(f.world.diagnostics(), before);
+    assert.equal(f.world.getStepSnapshot(), snapshot);
+    f.world.destroy();
+});
+test('MOCK/actual world: writable or inherited not-mutated is not a trusted phase record', () => {
+    for (const error of [
+        Object.assign(new Error('writable'), { mutationOutcome: 'not-mutated' }),
+        Object.create({ mutationOutcome: 'not-mutated' }),
+    ]) {
+        const f = actualWorldFixture();
+        f.binding.setBodyMass = () => {
+            throw error;
+        };
+        assert.throws(() => f.body.control('setBodyMass', 2));
+        assert.equal(f.world.diagnostics().state, 'faulted');
+        f.world.destroy();
+    }
+});
+test('MOCK/actual world: creation throwing before token receipt faults and keeps world as cleanup owner', () => {
+    const f = actualWorldFixture();
+    f.world.step(1 / 60);
+    const create = f.binding.createBody;
+    f.binding.createBody = function (...args) {
+        create.apply(this, args);
+        throw phaseError('AIR_E_BOX3D_ARGUMENT');
+    };
+    assert.throws(() => f.world.acquireSharedBody({ ...f.node }, {}, f.configuration));
+    assert.equal(f.world.diagnostics().state, 'faulted');
+    assert.equal(f.world.diagnostics().nativeObservationCurrent, false);
+    f.world.destroy();
+});
+test('MOCK/actual world: shape allocation then lost token faults even with apparent argument code', () => {
+    const f = actualWorldFixture();
+    f.world.step(1 / 60);
+    const create = f.binding.createOffsetBox;
+    f.binding.createOffsetBox = function (...args) {
+        create.apply(this, args);
+        throw phaseError('AIR_E_BOX3D_ARGUMENT');
+    };
+    assert.throws(() => addShape(f));
+    assert.equal(f.shapes.size, 1); // Unreturned token cannot be individually freed; world is the owner.
+    assert.equal(f.world.diagnostics().state, 'faulted');
+    assert.equal(f.world.diagnostics().nativeObservationCurrent, false);
+    f.world.destroy();
+});
+for (const order of ['body-first', 'shape-first'])
+    test(`MOCK: ${order} shares one body, retains active collider on body disable, and destroys once`, () => {
+        const f = fixture();
+        let shape;
+        if (order === 'shape-first') shape = addShape(f).shape;
+        f.adapter.initialize(f.component);
+        f.adapter.onEnable();
+        if (order === 'body-first') shape = addShape(f).shape;
+        assert.equal(f.calls.filter((c) => c[0] === 'createBody').length, 1);
+        assert.equal(f.body.state.type, 2);
+        assert.equal(f.body.state.massPending, false);
+        f.adapter.onDisable();
+        assert.equal(f.body.state.enabled, true);
+        f.adapter.onDestroy();
+        assert.equal(f.body.state.type, 0);
+        assert.equal(shape.attachedRigidBody, null);
+        shape.onDisable();
+        assert.equal(f.body.state.enabled, false);
+        shape.onDestroy();
+        shape.onDestroy();
+        assert.equal(f.shapes.size, 0);
+        assert.equal(f.calls.filter((c) => c[0] === 'destroyBody').length, 1);
+    });
+test('MOCK: collider-only box/sphere stay static and whole-body filter writes are one real bridge batch', () => {
+    const f = fixture();
+    const a = addShape(f),
+        b = addShape(f, 'sphere');
+    assert.equal(f.body.state.type, 0);
+    assert.equal(f.body.state.enabled, true);
+    const before = f.calls.length;
+    a.shape.setGroup(-2147483648);
+    const batches = f.calls.slice(before).filter((c) => c[0] === 'setShapeFilters');
+    assert.equal(batches.length, 1);
+    assert.equal(batches[0][1].length, 2);
+    assert.equal(b.shape.getGroup(), -2147483648);
+    assert.deepEqual(
+        [...f.shapes.values()].map((s) => s.filter),
+        [
+            { group: 2147483648, mask: 1 },
+            { group: 2147483648, mask: 1 },
+        ],
+    );
+    a.shape.onDestroy();
+    assert.equal(f.body.state.enabled, true);
+    b.shape.onDestroy();
+    assert.equal(f.shapes.size, 0);
+});
+for (const phase of ['not-mutated', 'committed', undefined])
+    test(`MOCK/actual world: batch filter ${phase ?? 'unknown'} keeps honest observation`, () => {
+        const f = actualWorldFixture();
+        const { shape } = addShape(f);
+        f.world.step(1 / 60);
+        const before = f.world.diagnostics();
+        f.binding.setShapeFilters = () => {
+            if (phase) throw phaseError('AIR_E_BOX3D_ARGUMENT', phase);
+            throw Object.assign(new Error('unknown'), { code: 'AIR_E_BOX3D_ARGUMENT' });
+        };
+        assert.throws(() => shape.setMask(2));
+        if (phase === 'not-mutated') assert.deepEqual(f.world.diagnostics(), before);
+        else {
+            assert.equal(f.world.diagnostics().state, 'faulted');
+            assert.equal(f.world.diagnostics().nativeObservationCurrent, false);
+        }
+        f.world.destroy();
+        shape.onDestroy();
+    });
+test('MOCK: invalid geometry and unsupported material reject before shape rebuild or cached bounds change', () => {
+    const f = fixture();
+    const { shape } = addShape(f);
+    const aabb = { center: {}, halfExtents: {} };
+    shape.getAABB(aabb);
+    assert.deepEqual(aabb, { center: { x: 8, y: 8, z: 9 }, halfExtents: { x: 1, y: 2, z: 3 } });
+    const before = f.calls.length;
+    for (const candidate of [
+        { x: 0.001, y: 2, z: 3 },
+        { x: NaN, y: 2, z: 3 },
+    ])
+        assert.throws(() => shape.updateSize(candidate));
+    assert.throws(() => shape.setAsTrigger('false'));
+    assert.throws(() => shape.setMaterial({ friction: 0.1, restitution: 0, rollingFriction: 1, spinningFriction: 0 }));
+    assert.equal(f.calls.length, before);
+    const after = { center: {}, halfExtents: {} };
+    shape.getAABB(after);
+    assert.deepEqual(after, aabb);
+    shape.onDestroy();
+});
+test('MOCK: valid geometry replacement owns exactly one live shape and updates native-derived bounds', () => {
+    const f = fixture();
+    const { shape } = addShape(f);
+    shape.updateSize({ x: 4, y: 6, z: 8 });
+    shape.setCenter({ x: 2, y: 0, z: 0 });
+    shape.setAsTrigger(true);
+    assert.equal(f.shapes.size, 1);
+    assert.equal(f.calls.filter((c) => c[0] === 'destroyShape').length, 3);
+    const aabb = { center: {}, halfExtents: {} };
+    shape.getAABB(aabb);
+    assert.deepEqual(aabb, { center: { x: 9, y: 8, z: 9 }, halfExtents: { x: 2, y: 3, z: 4 } });
+    shape.onDestroy();
+});
+test('MOCK: disabled last collider leaves dynamic mass pending recoverable until geometry re-enabled', () => {
+    const f = fixture();
+    f.adapter.initialize(f.component);
+    f.adapter.onEnable();
+    const { shape } = addShape(f);
+    shape.onDisable();
+    assert.throws(() => f.body.preflight(), coded('AIR_E_BOX3D_MASS_PENDING'));
+    assert.equal(f.owner.faults.length, 0);
+    shape.onEnable();
+    assert.doesNotThrow(() => f.body.preflight());
+    shape.onDestroy();
+    f.adapter.onDestroy();
+});
+test('MOCK: inactive/uninitialized shape material and event listeners cannot silently succeed', () => {
+    const f = fixture();
+    const shape = new Box3DBoxShape(() => f.world, f.configuration);
+    assert.throws(() => shape.setMaterial(null), coded('AIR_E_BOX3D_DISPOSED'));
+    const live = addShape(f);
+    live.collider.needTriggerEvent = true;
+    assert.throws(() => live.shape.updateEventListener(), coded('AIR_E_BOX3D_UNSUPPORTED'));
+    live.shape.onDestroy();
+    assert.throws(() => live.shape.impl, coded('AIR_E_BOX3D_DISPOSED'));
+});
+
+test('MOCK/actual world teardown RED: faulted components release JS owners without replaying native controls', () => {
+    const f = actualWorldFixture();
+    const rigid = new Box3DRigidBody(() => f.world, f.configuration);
+    rigid.initialize(f.component);
+    rigid.onEnable();
+    const { shape } = addShape(f);
+    f.binding.setBodyMass = () => {
+        throw new Error('unknown native mutation');
+    };
+    assert.throws(() => rigid.setMass(3));
+    const calls = f.calls.length;
+    assert.doesNotThrow(() => {
+        rigid.onDisable();
+        shape.onDisable();
+        rigid.onDestroy();
+        shape.onDestroy();
+    });
+    assert.equal(f.calls.length, calls);
+    assert.equal(f.world.diagnostics().state, 'faulted');
+    assert.equal(f.world.diagnostics().sceneBindingCount, 1); // Native ownership is retained until the one world destroy.
+    assert.throws(() => f.world.step(1 / 60), coded('AIR_E_BOX3D_WORLD_FAULTED'));
+    f.world.destroy();
+    assert.equal(f.world.diagnostics().sceneBindingCount, 0);
 });
