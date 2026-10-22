@@ -22,16 +22,27 @@
 export { GLTFAsset } from './asset';
 export type { GLTFInstance } from './asset';
 export { GLTFLoader, registerGLTFLoader, configureGLTFLoaderDefaults } from './loader';
-export type { GLTFLoaderOptions, GLTFLoadProgress } from './progress';
+export type { AirRequestPolicy, GLTFLoaderOptions, GLTFLoadProgress } from './progress';
 export type { GLTFExtensionHandler, GLTFExtensionFactory, GLTFInstantiationContext } from './extension-registry';
 export { GLTFExtensionRegistry } from './extension-registry';
 export type { GLTFExtensionStatus, GLTFExtensionSupport } from './support';
 export { GLTFError } from './diagnostics';
-export { detectImageMime, setTextureSupportForTesting, SUPPORTED_IMAGE_MIMES } from './extensions/texture/image-formats';
+export {
+    detectImageMime,
+    setTextureSupportForTesting,
+    SUPPORTED_IMAGE_MIMES,
+} from './extensions/texture/image-formats';
 export { isKTX2 } from './extensions/texture/basisu';
 export { KTX2_RAW_MIME } from './decoder/types';
 export type { GLTFErrorCode, GLTFExtensionReportEntry } from './diagnostics';
-export type { GLTFDracoDecoder, GLTFMeshoptDecoder, GLTFKTX2Transcoder, DecodedPrimitive, DecodedTextureSource, DracoAttributeInfo } from './decoder/types';
+export type {
+    GLTFDracoDecoder,
+    GLTFMeshoptDecoder,
+    GLTFKTX2Transcoder,
+    DecodedPrimitive,
+    DecodedTextureSource,
+    DracoAttributeInfo,
+} from './decoder/types';
 export { createMeshoptDecoder, isMeshoptAvailable } from './decoder/meshopt';
 export type { MeshoptDecoderModule } from './decoder/meshopt';
 export { createDracoDecoder } from './decoder/draco';
@@ -39,7 +50,11 @@ export { createKTX2Transcoder, isKTX2Available } from './decoder/ktx2';
 export type { BasisTranscoderModule, BasisModuleFactory } from './decoder/ktx2';
 export type { DracoDecoderModule, DracoDecoderProvider } from './decoder/draco';
 export { meshQuantizationFactory, KHR_MESH_QUANTIZATION } from './extensions/geometry/quantization';
-export { meshoptCompressionFactory, KHR_MESHOPT_COMPRESSION, EXT_MESHOPT_COMPRESSION } from './extensions/geometry/meshopt';
+export {
+    meshoptCompressionFactory,
+    KHR_MESHOPT_COMPRESSION,
+    EXT_MESHOPT_COMPRESSION,
+} from './extensions/geometry/meshopt';
 export { dracoCompressionFactory, KHR_DRACO_MESH_COMPRESSION } from './extensions/geometry/draco';
 export type { GLTFMaterialFeatures } from './material/features';
 

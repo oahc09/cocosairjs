@@ -84,8 +84,8 @@ export function basisuFactory (context: GLTFParserContext): GLTFExtensionHandler
             if (!isKTX2(bytes)) {
                 throw new GLTFError('GLTF_EXTENSION_INVALID', `texture ${textureIndex}: ${name} image is not a KTX2 container`, name);
             }
-            const decoded = await transcoder.transcode(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength) as ArrayBuffer,
-                deviceKTX2Formats());
+            const decoded = await ctx.wait(() => transcoder.transcode(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength) as ArrayBuffer,
+                deviceKTX2Formats()));
             if (decoded.mimeType === KTX2_RAW_MIME) {
                 if (!decoded.width || !decoded.height || decoded.format === undefined) {
                     throw new GLTFError('GLTF_DECODE_FAILED', `texture ${textureIndex}: raw transcode result lacks geometry/format`);

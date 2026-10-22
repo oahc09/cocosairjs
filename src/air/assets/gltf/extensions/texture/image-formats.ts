@@ -105,7 +105,7 @@ export function imageExtensionFactory (name: 'EXT_texture_webp' | 'EXT_texture_a
             const ext = texture.extensions?.[name] as ImageExtension | undefined;
             if (!ext) { return null; }
             const format = FORMATS[name];
-            if (!await probeSupport(format.mime)) {
+            if (!await ctx.wait(() => probeSupport(format.mime))) {
                 if (ctx.json.extensionsRequired?.includes(name)) {
                     throw new GLTFError('GLTF_DEVICE_UNSUPPORTED',
                         `${name} required but ${format.decoder} decoding is unavailable in this browser`, name);

@@ -36,6 +36,7 @@ import { gltfPhysicalEffect, needsPhysicalEffect, physicalParams, PHYSICAL_CONST
 import { transmissionPipelineAvailable } from './material/transmission-capability';
 import type { DecodedTextureSource } from './decoder/types';
 import { KTX2_RAW_MIME } from './decoder/types';
+import { abortError } from './request-policy';
 import { SUPPORTED_IMAGE_MIMES, detectImageMime } from './extensions/texture/image-formats';
 
 import { gltfEffect, UV_SLOTS } from './material/standard-effect';
@@ -44,16 +45,29 @@ export { gltfEffect } from './material/standard-effect';
 export async function loadGLTFTextures (context: GLTFParserContext, textures: Texture2D[], images: ImageAsset[]): Promise<void> {
     const imageCache = new Map<number, ImageAsset>();
     const decodeImage = async (key: number, bytes: Uint8Array, mime: string): Promise<ImageAsset | null> => {
+        context.throwIfAborted();
         const cached = imageCache.get(key);
         if (cached) { return cached; }
         const url = URL.createObjectURL(new Blob([bytes], { type: mime }));
         try {
-            const element = await new Promise<HTMLImageElement | null>((resolve) => {
+            const element = await new Promise<HTMLImageElement | null>((resolve, reject) => {
                 const img = new Image();
-                img.onload = (): void => resolve(img);
-                img.onerror = (): void => resolve(null);
-                img.src = url;
+                const cleanup = (): void => {
+                    img.onload = null; img.onerror = null;
+                    context.signal?.removeEventListener('abort', aborted);
+                };
+                const aborted = (): void => {
+                    cleanup();
+                    // Stop native image loading where supported; a queued old event cannot
+                    // construct an ImageAsset after this promise has rejected.
+                    img.src = ''; reject(abortError());
+                };
+                img.onload = (): void => { cleanup(); resolve(img); };
+                img.onerror = (): void => { cleanup(); resolve(null); };
+                context.signal?.addEventListener('abort', aborted, { once: true });
+                if (context.signal?.aborted) { aborted(); } else { img.src = url; }
             });
+            context.throwIfAborted();
             if (!element) { return null; }
             const image = new ImageAsset(element); images.push(image); imageCache.set(key, image);
             return image;
@@ -62,11 +76,12 @@ export async function loadGLTFTextures (context: GLTFParserContext, textures: Te
     // Mimes whose native decoding failed this parse; later textures fall back immediately.
     const brokenMimes = new Set<string>();
     for (const [index, source] of (context.json.textures || []).entries()) {
+        context.throwIfAborted();
         let image: ImageAsset | undefined;
         // Candidate order: extension sources (handler-provided, e.g. WebP/AVIF) before core.
         let decoded: DecodedTextureSource | undefined;
         for (const handler of context.handlers) {
-            decoded = await handler.resolveTextureSource?.(index, context) ?? undefined;
+            decoded = await context.wait(() => handler.resolveTextureSource?.(index, context)) ?? undefined;
             if (decoded) { break; }
         }
         const candidates: Array<{ label: string; cacheKey: number; mime: string; declaredMime?: string; bytes: () => Promise<Uint8Array | null> }> = [];
@@ -102,7 +117,7 @@ export async function loadGLTFTextures (context: GLTFParserContext, textures: Te
         if (!candidates.length) { throw new Error(`[glTF] texture ${index}: no image source`); }
         for (const candidate of candidates) {
             if (imageCache.has(candidate.cacheKey)) { image = imageCache.get(candidate.cacheKey); break; }
-            let bytes: Uint8Array | null = await candidate.bytes();
+            let bytes: Uint8Array | null = await context.wait(candidate.bytes);
             if (!bytes) { continue; } // core source already cached
             let mime = candidate.mime;
             if (!mime) {
@@ -123,6 +138,7 @@ export async function loadGLTFTextures (context: GLTFParserContext, textures: Te
         }
         if (!image) { throw new Error(`[glTF] texture ${index}: all image sources failed to decode`); }
         }
+        context.throwIfAborted();
         const sampler = source.sampler === undefined ? {} : item(context.json.samplers, source.sampler, 'sampler');
         const texture = new Texture2D(); textures.push(texture); texture.name = source.name || `texture_${index}`;
         const min = sampler.minFilter ?? 9987; const mag = sampler.magFilter ?? 9729;
