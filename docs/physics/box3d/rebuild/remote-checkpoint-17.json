@@ -1,0 +1,25 @@
+{
+  "status": "PASS_INCREMENTAL_REMOTE_CHECKPOINT_READBACK",
+  "timeUTC": "2026-10-22T11:43:51.342Z",
+  "repository": "oahc09/cocosairjs",
+  "branch": "feat/box3d-rebuild-20261022",
+  "remoteCommit": "2d4d8d1881c7a0b605e083d7a461d9ca64273a0c",
+  "remoteParent": "bde1706f2f6591cc44484fd764e2997c6e87a009",
+  "remoteTree": "c10ad70ece5500555dd7d4db417396d8d6bcfbe7",
+  "localBase": "24c4ec977f173630009a3a42c57a0952fab1a736",
+  "localHead": "67d3491b96b46d2eb5023a1c8ad8f6f8190fb80f",
+  "treeVerification": {
+    "status": "PASS",
+    "verifiedAt": "2026-10-22T11:43:16.782Z",
+    "baseTree": "bfa46a2ef1dec7f03fd4bfe37d65ff7731b02ebe",
+    "newTree": "c10ad70ece5500555dd7d4db417396d8d6bcfbe7",
+    "changedFiles": 119,
+    "untouchedSiblings": 848,
+    "directories": 23,
+    "treeReads": 23,
+    "nonRecursive": true
+  },
+  "mainUnchanged": true,
+  "force": false,
+  "scope": "M2 finite motion/native qualification and staging preservation, not full T11, AIR writeback or formal Gates."
+}

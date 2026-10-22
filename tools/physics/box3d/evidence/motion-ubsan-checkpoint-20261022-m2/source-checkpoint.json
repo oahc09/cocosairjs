@@ -1,0 +1,21 @@
+{
+  "status": "SOURCE_ONLY_NOT_COMPILED",
+  "at": "2026-10-22T11:37:01.158935+00:00",
+  "runner": {
+    "path": "tools/physics/box3d/output/motion-ubsan-source-20261022-m2/native-motion-ubsan.mjs",
+    "bytes": 5007,
+    "sha256": "171f290981873ea4d94f3f7ad955f347335fd6c7a72bce924ea38b88b1215581"
+  },
+  "baseRunner": {
+    "path": "tools/physics/box3d/output/motion-ubsan-source-20261022-m2/base-runner.mjs",
+    "bytes": 4198,
+    "sha256": "1b241d15757820e41b178c552f3df1373a6cd488baa2b62d2a90180b3238f3a9"
+  },
+  "scope": "Independent UBSan-only qualification; original runner and all 43 product inputs/4 current artifacts unchanged. No ASan/LSan claim.",
+  "changes": [
+    "Resolve imports from isolated output directory.",
+    "Compile current motion_bridge.c plus six real C contract executables.",
+    "Exclude duplicate world_bridge object for world_contract and motion_contract, which include the exact collector with fixture-only allocation control.",
+    "Verify frozen current 43 build input hashes before and after; record every actual GCC command and raw output."
+  ]
+}

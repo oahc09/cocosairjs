@@ -299,6 +299,7 @@ async function verifySTBuild(buildDirectory) {
         'tinyTargetWakeAndStationaryCap',
         'postResetCOMTarget',
         'worldAxisLockAndCaps',
+        'actualFastRotationFlag',
         'fullGenerationWorld',
         'scratchTrackedAndCleanup',
         'substepDomain',

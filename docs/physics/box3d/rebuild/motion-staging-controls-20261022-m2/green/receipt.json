@@ -1,0 +1,53 @@
+{
+  "status": "PASS_7_GROUPS_93_EXACT_RECONSTRUCTIONS_AND_REPEAT_REJECTIONS",
+  "timeUTC": "2026-10-22T11:52:28.263742+00:00",
+  "command": [
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "tools/verify/box3d/build-assets.test.cjs",
+    "tools/verify/box3d/motion-assets.test.cjs"
+  ],
+  "env": {
+    "BOX3D_ST_TEST_BUILD": "tools/physics/box3d/output/motion-wasm-release-20261022-m2"
+  },
+  "exitCode": 0,
+  "raw": "test.raw.txt",
+  "sourceFiles": [
+    {
+      "path": "tools/build/box3d-assets.cjs",
+      "bytes": 21506,
+      "sha256": "05ca351ff155051ee2e8a8f2102f2241879d5759f0c51eb28c48c48323d6e63e"
+    },
+    {
+      "path": "tools/verify/box3d/build-assets.test.cjs",
+      "bytes": 22936,
+      "sha256": "1245f233452331c87a48eaad81717e7934d1ce7111efe71fcdc6d6f49c62b6ca"
+    },
+    {
+      "path": "tools/verify/box3d/motion-assets.test.cjs",
+      "bytes": 10666,
+      "sha256": "c1b89ca93f519b083b2811ad605be451cf4a7025cb7e9d556866fb32b699101d"
+    },
+    {
+      "path": "tools/verify/box3d/retained-negative-fixture.cjs",
+      "bytes": 7259,
+      "sha256": "e2a8c511be089c823bfe6ddb0d6eff97ce38732ee16cd16841b55b856522aeff"
+    },
+    {
+      "path": "tools/verify/box3d/verify-assets-negative-case.cjs",
+      "bytes": 1053,
+      "sha256": "fe53dc47f55ae03ceef258ae1d6c0cb4ffed8b75978fdade9574127db240aa68"
+    }
+  ],
+  "legacyCases": 52,
+  "newMotionCases": 41,
+  "actualRejectingProcesses": 186,
+  "outputDirectories": [
+    "output/box3d-assets-tests-5sql6C",
+    "output/box3d-motion-assets-tests-LDH1yT"
+  ],
+  "retainedOriginalRed": "../red/receipt.json",
+  "fix": "Require actualFastRotationFlag === true in native motion qualification before output copy. Native 43 inputs and physical artifacts unchanged.",
+  "scope": "Asset gate tests, actual Node positive loader cycle and repeatable mutation evidence. Not full T11, packaged browser or formal Gate acceptance."
+}

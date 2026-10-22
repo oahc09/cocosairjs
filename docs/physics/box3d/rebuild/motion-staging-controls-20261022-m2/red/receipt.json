@@ -1,0 +1,27 @@
+{
+  "status": "FAIL_RETAINED_ACTUAL_STAGING_GATE_OMISSION",
+  "timeUTC": "2026-10-22T11:48:19.514795+00:00",
+  "command": [
+    "node",
+    "--test",
+    "tools/verify/box3d/motion-assets.test.cjs"
+  ],
+  "env": {
+    "BOX3D_ST_TEST_BUILD": "tools/physics/box3d/output/motion-wasm-release-20261022-m2"
+  },
+  "exitCode": 1,
+  "raw": "test.raw.txt",
+  "case": "native-motion-missing-actualFastRotationFlag",
+  "observation": "Rehashed native qualification with required actualFastRotationFlag missing was staged successfully. Child expected-rejection assertion failed. This is a gate validation omission, not a failed physical motion run.",
+  "fullOutput": "output/box3d-motion-assets-tests-BKF8I9",
+  "sourceSnapshots": [
+    {
+      "path": "gate.cjs",
+      "sha256": "c1df0abbba0ff82e43200e00a2c52057042b1bd1371eafecca7c8281fa87daa2"
+    },
+    {
+      "path": "fixture.cjs",
+      "sha256": "c1b89ca93f519b083b2811ad605be451cf4a7025cb7e9d556866fb32b699101d"
+    }
+  ]
+}

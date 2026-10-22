@@ -1,0 +1,30 @@
+{
+  "status": "FROZEN_COLLECTOR_PENDING_COMPLETE_ORIGINAL_WASM_CAMPAIGN",
+  "createdAt": "2026-10-22T11:40:28.396Z",
+  "owned": {
+    "docs/physics/box3d/rebuild/writeback-epoch-contract-20261022.md": "90a93c01438212f3d85115258d1dd337092a401c6fa96005fbeb21b29be8f182",
+    "tools/verify/box3d/writeback-epoch-control.jest.cjs": "aa74a662b37323689a505b766d440463650ef533de5c03bbafee0901bf6f1bd3",
+    "tools/verify/box3d/writeback-epoch-control.test.ts": "70f059113e9f503194b34d0a92304c6f7ff9b3171b99a689d5a9437cc79a245c",
+    "tools/verify/box3d/writeback-epoch-control.tsconfig.json": "55124682d4d5b9e504cbf63a0d8b1572aea12b64821f30678db7d6c926979d4c",
+    "tools/verify/box3d/writeback-epoch-oracle.ts": "5f87fe6bad8379f11b4c99a6704efca7859aa59c1bea1b76495b840ac9480cc8",
+    "tools/verify/box3d/writeback-epoch-real-wasm-environment.cjs": "511fe3755bf17eab3b66a4295033164c027593e792248fe862a10014a4774c80",
+    "tools/verify/box3d/writeback-epoch-real-wasm-inputs.cjs": "eef4044a4200bebfebe7571ca88bfa873bcc98ab1875b67fa57defc978d7bc34",
+    "tools/verify/box3d/writeback-epoch-real-wasm-preload.mjs": "1b6e501b0214e79b400d405bb4cb45618f6ff9effd4601f41af79f72ad84c0ea",
+    "tools/verify/box3d/writeback-epoch-real-wasm.jest.cjs": "7071cf734cad7f88848030343b5d1f662d7b712deb36b241f3dd720485896617",
+    "tools/verify/box3d/writeback-epoch-real-wasm.mjs": "6aef72d30206aa4e2137057d404d62e1ba92f2997697bbd03e51bbc7ae30c9ec",
+    "tools/verify/box3d/writeback-epoch-real-wasm.test.ts": "ce8a9894a04c52bfef49bef3e708b59958c84b36ebaf23b149a39de09ab076e9",
+    "tools/verify/box3d/writeback-epoch-real-wasm.tsconfig.json": "083b9c406b742078c4bfeb15b2533293918c765961e5d28d60ab1c00c79ca503"
+  },
+  "staticReceiptSha256": "c1e5b3d8af1070fe438889b887eaeb153fa328b3221e092c349ca82472a8ad1d",
+  "controls": {
+    "receipt": "../writeback-epoch-source-20261022-b/receipt.json",
+    "passed": 26,
+    "scope": "actual Node/math control, not physics; unchanged control source bytes"
+  },
+  "retainedFailures": [
+    "../writeback-epoch-source-20261022-a",
+    "../writeback-epoch-real-m2-20261022-red/baseline",
+    "../writeback-epoch-real-m2-20261022-red/child-before-parent"
+  ],
+  "productEdited": false
+}

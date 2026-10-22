@@ -959,16 +959,16 @@
     "deploy": false,
     "npmPublish": false
   },
-  "nextStep": "Finish actual m2 AIR writeback RED then repair owned-pose epoch; add motion-specific staging rejection controls. Preserve bounded-source claims and all original failures.",
+  "nextStep": "Repair actual m2 AIR owned-pose writeback; qualify finite parent/scale cases while retaining unresolved mirror/scene synchronization. Freeze unified command/force/hook transaction design before next native extension.",
   "remoteHistoryPolicy": "True upstream main parent and incremental tree; local snapshot import is backup-only and is never pushed as upstream history.",
   "remotePublication": {
-    "status": "VERIFIED_CHECKPOINT_16",
-    "commit": "bde1706f2f6591cc44484fd764e2997c6e87a009",
-    "parent": "dc02008402631dd64a261cf08f84f6e0e0242d0c",
+    "status": "VERIFIED_CHECKPOINT_17",
+    "commit": "2d4d8d1881c7a0b605e083d7a461d9ca64273a0c",
+    "parent": "bde1706f2f6591cc44484fd764e2997c6e87a009",
     "branch": "feat/box3d-rebuild-20261022",
-    "receipt": "docs/physics/box3d/rebuild/remote-checkpoint-16.json"
+    "receipt": "docs/physics/box3d/rebuild/remote-checkpoint-17.json"
   },
-  "updatedAtUtc": "2026-10-22T11:39:52.825729+00:00",
+  "updatedAtUtc": "2026-10-22T11:52:28.263742+00:00",
   "currentEvidence": {
     "m0ContractTests": "PASS_7_SOURCE_DESIGN_CHECKS_ONLY_U01_U02_INVENTORY_ADDED",
     "nativeFoundationIndex": "tools/physics/box3d/evidence/index.json",
@@ -1177,10 +1177,10 @@
   },
   "persistentCheckpoint": {
     "status": "PASS_ACTUAL_LIBRARY_DOWNLOAD_INDEPENDENT_GIT_RESTORE",
-    "libraryFileId": "libfile_cec1d349a9ec8191849ca44a836f1be8",
-    "commit": "24c4ec977f173630009a3a42c57a0952fab1a736",
-    "trackedFiles": 8009,
-    "receipt": "docs/physics/box3d/rebuild/library-motion-complete-checkpoint-20261022.json"
+    "libraryFileId": "libfile_75a06caec6088191a321d983f052226a",
+    "commit": "67d3491b96b46d2eb5023a1c8ad8f6f8190fb80f",
+    "trackedFiles": 8121,
+    "receipt": "docs/physics/box3d/rebuild/library-motion-qualified-checkpoint-20261022.json"
   },
   "additionalOriginalMainSources": {
     "count": 445,
@@ -1222,6 +1222,8 @@
     "nativeArtifactStatus": "Four fresh m2 builds, exact motion sample comparison, independent scalar raw review. No target queue/AIR writeback/browser/full T11 acceptance.",
     "qualificationReceipt": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/summary.json",
     "nativeArtifactLibrary": "libfile_ff409b9f300881919347058fc27be297",
-    "stagingReceipt": "docs/physics/box3d/rebuild/motion-staging-20261022-m2/receipt.json"
+    "stagingReceipt": "docs/physics/box3d/rebuild/motion-staging-controls-20261022-m2/green/receipt.json",
+    "nativeUBSan": "PASS_M2_SIX_REAL_C_CONTRACTS_72_COMMANDS_ONLY",
+    "nativeUBSanReceipt": "tools/physics/box3d/evidence/motion-ubsan-checkpoint-20261022-m2/summary.json"
   }
 }
