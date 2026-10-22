@@ -1,0 +1,13 @@
+{
+  "extends": "./node-motion-guard-control.tsconfig.json",
+  "compilerOptions": {
+    "target": "ES2022"
+  },
+  "files": [
+    "transform-grant-budget-control.test.ts",
+    "node-motion-guard-control.test.ts",
+    "../../../src/air/physics/box3d/node-motion-guard.ts",
+    "../../../src/@types/external-modules.d.ts"
+  ],
+  "include": []
+}

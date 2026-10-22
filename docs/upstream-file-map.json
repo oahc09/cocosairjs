@@ -9332,7 +9332,7 @@
       "upstreamPath": null,
       "baseline": "AIR engine contracts 2026-10-06",
       "modified": true,
-      "reason": "AIR-owned finite TRS guard used by native Node setters. Private opt-in identity-keyed ownership registry with copied exact one-use world-pose permissions, ancestor/multi-owner admission, and reentrant revocation checks; no concrete physics runtime import."
+      "reason": "AIR-owned finite TRS guard used by native Node setters. Private opt-in identity-keyed ownership registry with copied exact one-use world-pose permissions, ancestor/multi-owner admission, and reentrant revocation checks; no concrete physics runtime import. Pure write-capacity checks and irreversible disjoint grant reservations preserve exact one-use operations and reject same-owner expected-value-copy reentry."
     },
     {
       "airPath": "src/node_modules/@cocos/box2d/types/index.d.ts",

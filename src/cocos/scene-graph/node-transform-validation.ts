@@ -9,9 +9,17 @@ export function validateTransformValues (method: string, values: readonly unknow
 /** Internal opt-in ownership primitives. No backend or Node runtime dependency. */
 export type NodeTransformWriteOperation = 'setWorldPosition' | 'setWorldRotation';
 
-export interface NodeTransformGuardLease {
+/** Private, finite write capability. Disposal burns unused capacity without releasing ownership. */
+export interface NodeTransformWriteReservation {
     dispose(): void;
     write(node: object, operation: NodeTransformWriteOperation, expected: readonly number[], perform: () => void): void;
+}
+
+export interface NodeTransformGuardLease extends NodeTransformWriteReservation {
+    /** Pure capacity check: no sequence allocation, expected-value reads or Node mutation. */
+    assertWriteCapacity(count: number): void;
+    /** Permanently allocates a disjoint grant range. Zero is valid but cannot authorize a write. */
+    reserveWrites(count: number): NodeTransformWriteReservation;
 }
 
 type GrantState = 'pending' | 'reading' | 'entered' | 'consumed';
@@ -20,7 +28,13 @@ interface TransformGrant {
     readonly operation: NodeTransformWriteOperation;
     readonly expected: readonly number[];
     readonly sequence: number;
+    readonly reservation: TransformReservation | undefined;
     state: GrantState;
+}
+interface TransformReservation {
+    disposed: boolean;
+    sequence: number;
+    readonly end: number;
 }
 interface TransformOwner {
     readonly nodes: Set<object>;
@@ -28,6 +42,7 @@ interface TransformOwner {
     readonly message: string;
     disposed: boolean;
     sequence: number;
+    preparing: boolean;
     grant: TransformGrant | undefined;
 }
 const transformOwners = new WeakMap<object, Set<TransformOwner>>();
@@ -37,6 +52,79 @@ function transformGuardError(owner: TransformOwner, operation: string, reason: s
 }
 function sameTransformValues(a: readonly unknown[], b: readonly number[]): boolean {
     return a.length === b.length && a.every((value, index) => Object.is(value, b[index]));
+}
+
+function assertTransformWriteCapacity(owner: TransformOwner, count: number, operation: string): void {
+    if (owner.disposed) throw transformGuardError(owner, operation, 'disposed ownership');
+    if (owner.preparing || owner.grant) throw transformGuardError(owner, operation, 'same-owner nested grant');
+    if (!Number.isSafeInteger(count) || count < 0) {
+        throw transformGuardError(owner, operation, 'invalid grant count');
+    }
+    if (count > Number.MAX_SAFE_INTEGER - owner.sequence) {
+        throw transformGuardError(owner, operation, 'grant sequence exhausted');
+    }
+}
+
+function writeTransform(
+    owner: TransformOwner,
+    reservation: TransformReservation | undefined,
+    node: object,
+    operation: NodeTransformWriteOperation,
+    expected: readonly number[],
+    perform: () => void,
+): void {
+    if (owner.disposed) throw transformGuardError(owner, operation, 'disposed ownership');
+    if (owner.preparing || owner.grant) throw transformGuardError(owner, operation, 'same-owner nested grant');
+    let sequence: number;
+    if (reservation) {
+        if (reservation.disposed) throw transformGuardError(owner, operation, 'disposed write reservation');
+        if (reservation.sequence >= reservation.end) {
+            throw transformGuardError(owner, operation, 'write reservation exhausted');
+        }
+        sequence = ++reservation.sequence;
+    } else {
+        assertTransformWriteCapacity(owner, 1, operation);
+        sequence = ++owner.sequence;
+    }
+    // Burn the attempt and close same-owner reentry before any caller-controlled expected getter.
+    // Neither an invalid candidate nor a falsy thrown value can return this sequence to circulation.
+    owner.preparing = true;
+    let grant: TransformGrant | undefined;
+    try {
+        const length = operation === 'setWorldPosition' ? 3 : operation === 'setWorldRotation' ? 4 : 0;
+        const copied = Array.isArray(expected) ? Array.from(expected) : [];
+        if (owner.disposed || reservation?.disposed) {
+            throw transformGuardError(owner, operation, 'ownership or write reservation disposed while copying grant');
+        }
+        if (
+            !owner.nodes.has(node) ||
+            !length ||
+            copied.length !== length ||
+            copied.some(
+                (value) => typeof value !== 'number' || !Number.isFinite(value) || !Number.isFinite(Math.fround(value)),
+            ) ||
+            typeof perform !== 'function'
+        ) {
+            throw transformGuardError(owner, operation, 'invalid exact write grant');
+        }
+        grant = {
+            node,
+            operation,
+            expected: Object.freeze(copied),
+            sequence,
+            reservation,
+            state: 'pending',
+        };
+        owner.preparing = false;
+        owner.grant = grant;
+        perform();
+        if (owner.disposed || reservation?.disposed || owner.grant !== grant || grant.state !== 'consumed') {
+            throw transformGuardError(owner, operation, 'owned write did not retain valid consumed permission');
+        }
+    } finally {
+        owner.preparing = false;
+        if (owner.grant === grant) owner.grant = undefined;
+    }
 }
 
 /** Register copied object identities. The private returned capability is not a public Node property. */
@@ -62,6 +150,7 @@ export function registerNodeTransformGuard(
         message: rejection.message,
         disposed: false,
         sequence: 0,
+        preparing: false,
         grant: undefined,
     };
     for (const node of owner.nodes) {
@@ -81,46 +170,41 @@ export function registerNodeTransformGuard(
             }
             owner.nodes.clear();
         },
+        assertWriteCapacity(count: number): void {
+            assertTransformWriteCapacity(owner, count, 'assertWriteCapacity');
+        },
+        reserveWrites(count: number): NodeTransformWriteReservation {
+            assertTransformWriteCapacity(owner, count, 'reserveWrites');
+            const reservation: TransformReservation = {
+                disposed: false,
+                sequence: owner.sequence,
+                end: owner.sequence + count,
+            };
+            // Reservation disposal and failed writes never roll back the allocated upper bound.
+            owner.sequence = reservation.end;
+            return Object.freeze({
+                dispose(): void {
+                    if (reservation.disposed) return;
+                    reservation.disposed = true;
+                    if (owner.grant?.reservation === reservation) owner.grant = undefined;
+                },
+                write(
+                    node: object,
+                    operation: NodeTransformWriteOperation,
+                    expected: readonly number[],
+                    perform: () => void,
+                ): void {
+                    writeTransform(owner, reservation, node, operation, expected, perform);
+                },
+            });
+        },
         write(
             node: object,
             operation: NodeTransformWriteOperation,
             expected: readonly number[],
             perform: () => void,
         ): void {
-            if (owner.disposed) throw transformGuardError(owner, operation, 'disposed ownership');
-            if (owner.grant) throw transformGuardError(owner, operation, 'same-owner nested grant');
-            const length = operation === 'setWorldPosition' ? 3 : operation === 'setWorldRotation' ? 4 : 0;
-            const copied = Array.isArray(expected) ? Array.from(expected) : [];
-            if (
-                !owner.nodes.has(node) ||
-                !length ||
-                copied.length !== length ||
-                copied.some(
-                    (value) =>
-                        typeof value !== 'number' || !Number.isFinite(value) || !Number.isFinite(Math.fround(value)),
-                ) ||
-                typeof perform !== 'function'
-            ) {
-                throw transformGuardError(owner, operation, 'invalid exact write grant');
-            }
-            if (owner.sequence >= Number.MAX_SAFE_INTEGER)
-                throw transformGuardError(owner, operation, 'grant sequence exhausted');
-            const grant: TransformGrant = {
-                node,
-                operation,
-                expected: Object.freeze(copied),
-                sequence: ++owner.sequence,
-                state: 'pending',
-            };
-            owner.grant = grant;
-            try {
-                perform();
-                if (owner.disposed || owner.grant !== grant || grant.state !== 'consumed') {
-                    throw transformGuardError(owner, operation, 'owned write did not retain valid consumed permission');
-                }
-            } finally {
-                if (owner.grant === grant) owner.grant = undefined;
-            }
+            writeTransform(owner, undefined, node, operation, expected, perform);
         },
     });
 }

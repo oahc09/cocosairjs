@@ -641,3 +641,10 @@ The explicit-only Box3D World adapter now connects the internal command queue an
 Producer configuration holds a whole-operation owner fence, while the internal step/control paths borrow exact scopes. System pause prepares both registry and queue before cache mutation. Type/disable changes revoke continuous ownership without silently retiring accepted user commands; teardown discards records whose component ownership has actually ended. Known commit, unknown apply delivery, and later solver/writeback failures remain separate outcomes and never trigger automatic replay.
 
 This is an unqualified internal dynamic-only candidate. Target/teleport, full scene/persist/application lifetime, automatic scheduling and complete material/entry qualification still block public activation. Limited source controls and upcoming actual-existing-WASM fixtures do not change any of the 2,128 formal NOT_RUN cells or pass a Gate. Checkpoint38 material evidence remains bound to its earlier exact sources.
+
+
+### Neutral transform grant source recovery (2026-10-22 22:49 transition)
+
+The AIR-owned neutral transform guard adds pure capacity assertions and irreversible disjoint write reservations. Grant attempts are consumed before caller-owned expected values are read; same-owner preparation/write reentry is rejected. Lease disposal invalidates reservations, while reservation disposal does not release underlying ownership. No concrete physics runtime import or public helper export is added.
+
+After an executor transition removed access to the uncommitted checkpoint40 worktree and raw, this one product file was recovered from visible context with exact original SHA-256 cb524abd2adff10589c9e60d8c1b37f336add89a56ade2dc428d45d7f2273e8d. Its three controls are reconstructed sources, not proven byte-identical historical artifacts. All tests for this recovered candidate are NOT_RUN. Historical source-control and finite-WASM counts are not imported as current evidence. See the explicit recovery boundary; all 2,128 formal cells remain NOT_RUN.

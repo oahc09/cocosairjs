@@ -1,0 +1,45 @@
+{
+  "verifiedAt": "2026-10-22T22:54:40.346413+00:00",
+  "libraryFileId": "libfile_dbcb760fb9d081918e51f85e7c2f9b39",
+  "fileId": "file_00000000de0c822fa31b0d3cc8b8c2a1",
+  "fileName": "Box3D-grant-budget-source-recovery-20261022.zip",
+  "version": 0,
+  "uploadedBytes": 10203,
+  "downloadedBytes": 10203,
+  "zipSha256": "a2edca66be1c590908c58593a9397b6fecb61cd9ff6f7445e9c8054385a60347",
+  "wholeArchiveByteEqual": true,
+  "entries": {
+    "src/cocos/scene-graph/node-transform-validation.ts": {
+      "bytes": 11810,
+      "sha256": "cb524abd2adff10589c9e60d8c1b37f336add89a56ade2dc428d45d7f2273e8d",
+      "byteEqual": true
+    },
+    "tools/verify/box3d/transform-grant-budget-control.jest.cjs": {
+      "bytes": 428,
+      "sha256": "6f1822a0e5a017dd343ec4f2f8f4d60b3b60da8e2dba4aba6452973b4d83e835",
+      "byteEqual": true
+    },
+    "tools/verify/box3d/transform-grant-budget-control.test.ts": {
+      "bytes": 19056,
+      "sha256": "9b0f5adf50a8576c8726aa60df8df28e64862383f734adbf37b0c052cf5b7a6a",
+      "byteEqual": true
+    },
+    "tools/verify/box3d/transform-grant-budget-control.tsconfig.json": {
+      "bytes": 341,
+      "sha256": "1d3a03028f6a19984f2dd62e6878a5c3d06f34b1acb4bde52d05e1187ad4173f",
+      "byteEqual": true
+    },
+    "recovery-manifest.json": {
+      "bytes": 1490,
+      "sha256": "f958a767e23c4bbb6df00209b11f6c6d9df8cda0aefaa7d9c533b47c9bf57032",
+      "byteEqual": true
+    },
+    "README.md": {
+      "bytes": 1338,
+      "sha256": "1a9eccb1996b4187e7ca7a96e8ff51a5ce71660cdf477d1c9144ab69a2608d63",
+      "byteEqual": true
+    }
+  },
+  "reconstructedTestsStatus": "NOT_RUN",
+  "historicalRawRecovered": false
+}
