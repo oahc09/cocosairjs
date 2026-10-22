@@ -23,7 +23,7 @@ THE SOFTWARE.
 // Internal, limited M1 foundation. This is not the Cocos physics adapter.
 const CORE_SHA = 'efca0c184d40fd6a82016983f1601c4d23965867';
 const BINDING_BASE_SHA = '5d5a3af049cccd9948b2b55bac4342414af0ef64';
-const SCHEMA_SHA256 = '3491202780428c1844359d149efed3be259681678486d51886e03de00d516700';
+const SCHEMA_SHA256 = '78fccc27f58503178fcc824473a0e30d42fa54f19e87bd9424b83a975d45b738';
 const PATCH_CHAIN_SHA256 = '434fb89494867f515051d5ac0dfc0c694556ba1f0da9ac3fc895a27097b1c7c7';
 
 function failure(code, message) {
@@ -474,13 +474,93 @@ export function createBox3DBinding(module, expected) {
         if (typeof value !== 'boolean') throw failure('AIR_E_BOX3D_ARGUMENT', `${name} must be boolean`);
         return value ? 1 : 0;
     }
+    let activeMutation;
+    function mutate(action) {
+        return exclusive(() => {
+            const context = { outcome: 'not-mutated' };
+            activeMutation = context;
+            try {
+                return action();
+            } catch (error) {
+                if (context.outcome !== undefined && error instanceof Error)
+                    Object.defineProperty(error, 'mutationOutcome', {
+                        value: context.outcome,
+                        enumerable: true,
+                        writable: false,
+                        configurable: false,
+                    });
+                throw error;
+            } finally {
+                activeMutation = undefined;
+            }
+        });
+    }
+    function mutatingCall(world, action) {
+        activeMutation.outcome = undefined;
+        let status;
+        try {
+            status = action();
+        } catch (error) {
+            // The call may already have mutated native state. Do not advertise an old snapshot as current.
+            changed(world);
+            throw error;
+        }
+        activeMutation.outcome = status === 0 ? 'committed' : 'not-mutated';
+        nativeStatus(status);
+    }
+    function filterBits(value, name) {
+        if (!Number.isInteger(value) || value < -2147483648 || value > 4294967295)
+            throw failure('AIR_E_BOX3D_ARGUMENT', `${name} must be a signed32 or unsigned32 bitset`);
+        return value >>> 0;
+    }
+    function shapeOwner(world, shape) {
+        const wid = worldId(world),
+            item = handle(shape, 'shape');
+        if (item.world !== world) throw failure('AIR_E_BOX3D_DISPOSED', 'Shape belongs to another world');
+        return wid;
+    }
+    function shapeFilters(world, shapes, filter) {
+        const wid = worldId(world);
+        if (!filter || typeof filter !== 'object') throw failure('AIR_E_BOX3D_ARGUMENT', 'Filter object required');
+        const group = filterBits(filter.group, 'group'),
+            mask = filterBits(filter.mask, 'mask');
+        if (!Array.isArray(shapes)) throw failure('AIR_E_BOX3D_ARGUMENT', 'Shape array required');
+        if (shapes.length > 4096) throw failure('AIR_E_BOX3D_CAPACITY', 'At most 4096 shapes per filter transaction');
+        const seen = new Set();
+        for (const shape of shapes) {
+            shapeOwner(world, shape);
+            const key = idKey(shape);
+            if (seen.has(key)) throw failure('AIR_E_BOX3D_ARGUMENT', 'Duplicate shape in filter transaction');
+            seen.add(key);
+        }
+        if (shapes.length === 0) {
+            // Native still validates exact world identity and unlocked state, without mutation.
+            nativeStatus(module._air_b3_shape_filters_set(wid, 0, 0, group, mask, 0, 0));
+            return freeze([]);
+        }
+        const bytes = shapes.length * 8;
+        return withBuffer(bytes * 2, (ptr) => {
+            const words = [];
+            for (const shape of shapes) words.push(shape.low, shape.high);
+            module.HEAPU32.set(words, ptr >>> 2);
+            mutatingCall(world, () =>
+                module._air_b3_shape_filters_set(wid, ptr, shapes.length, group, mask, ptr + bytes, shapes.length * 2),
+            );
+            changed(world);
+            // Acquire/copy after native completion. Never return or retain a HEAP view.
+            const actual = Array.from(module.HEAPU32.slice((ptr + bytes) >>> 2, (ptr + bytes * 2) >>> 2));
+            if (actual.length !== shapes.length * 2)
+                throw failure('AIR_E_BOX3D_ABI', 'Truncated native filter readback');
+            return freeze(shapes.map((_, i) => ({ group: actual[2 * i], mask: actual[2 * i + 1] })));
+        });
+    }
     function bodyControl(world, body, op, values) {
         const { wid, target } = bodyOwner(world, body);
         module.HEAPF32.set(
             values.map((v) => finite(v, 'body control')),
             input >>> 2,
         );
-        nativeStatus(module._air_b3_body_control(wid, body.low, body.high, op, input, target));
+        mutatingCall(world, () => module._air_b3_body_control(wid, body.low, body.high, op, input, target));
         changed(world);
         return bodyState(world, body);
     }
@@ -490,7 +570,9 @@ export function createBox3DBinding(module, expected) {
         const values = [...vector(value, 3, 'force/impulse'), ...vector(offset, 3, 'COM offset')];
         nativeStatus(module._air_b3_body_mass_ready(wid, body.low, body.high, target));
         module.HEAPF32.set(values, input >>> 2);
-        nativeStatus(module._air_b3_body_apply(wid, body.low, body.high, kind, space === 'local' ? 1 : 0, input));
+        mutatingCall(world, () =>
+            module._air_b3_body_apply(wid, body.low, body.high, kind, space === 'local' ? 1 : 0, input),
+        );
         changed(world);
         return bodyState(world, body);
     }
@@ -623,6 +705,20 @@ export function createBox3DBinding(module, expected) {
                 return Boolean(module.HEAPU32[output >>> 2]);
             });
         },
+        getShapeFilter(world, shape) {
+            return exclusive(() => {
+                const wid = shapeOwner(world, shape);
+                nativeStatus(module._air_b3_shape_filter_get(wid, shape.low, shape.high, output));
+                const actual = module.HEAPU32.slice(output >>> 2, (output >>> 2) + 2);
+                return freeze({ group: actual[0], mask: actual[1] });
+            });
+        },
+        setShapeFilter(world, shape, filter) {
+            return mutate(() => shapeFilters(world, [shape], filter)[0]);
+        },
+        setShapeFilters(world, shapes, filter) {
+            return mutate(() => shapeFilters(world, shapes, filter));
+        },
         getShapeMaterial(world, shape) {
             return exclusive(() => {
                 const wid = worldId(world);
@@ -735,27 +831,27 @@ export function createBox3DBinding(module, expected) {
             return exclusive(() => bodyState(world, body));
         },
         setBodyType(world, body, type) {
-            return exclusive(() => {
+            return mutate(() => {
                 if (![0, 1, 2].includes(type)) throw failure('AIR_E_BOX3D_ARGUMENT', 'Invalid body type');
                 return bodyControl(world, body, 1, [type]);
             });
         },
         setBodyEnabled(world, body, enabled) {
-            return exclusive(() => bodyControl(world, body, 2, [boolean(enabled, 'enabled')]));
+            return mutate(() => bodyControl(world, body, 2, [boolean(enabled, 'enabled')]));
         },
         setBodyMass(world, body, mass) {
-            return exclusive(() => {
+            return mutate(() => {
                 const { wid, item } = bodyOwner(world, body);
                 const value = Math.fround(finite(mass, 'mass'));
                 if (value <= 0) throw failure('AIR_E_BOX3D_ARGUMENT', 'Mass must be positive after float32 conversion');
-                nativeStatus(module._air_b3_body_mass_set(wid, body.low, body.high, value));
+                mutatingCall(world, () => module._air_b3_body_mass_set(wid, body.low, body.high, value));
                 item.targetMass = value;
                 changed(world);
                 return bodyState(world, body);
             });
         },
         setBodyDamping(world, body, linear, angular) {
-            return exclusive(() => {
+            return mutate(() => {
                 finite(linear, 'linear damping');
                 finite(angular, 'angular damping');
                 if (linear < 0 || linear > 1 || angular < 0 || angular > 1)
@@ -764,26 +860,26 @@ export function createBox3DBinding(module, expected) {
             });
         },
         setBodyGravityScale(world, body, scale) {
-            return exclusive(() => bodyControl(world, body, 4, [scale]));
+            return mutate(() => bodyControl(world, body, 4, [scale]));
         },
         setBodySleepEnabled(world, body, enabled) {
-            return exclusive(() => bodyControl(world, body, 5, [boolean(enabled, 'sleep enabled')]));
+            return mutate(() => bodyControl(world, body, 5, [boolean(enabled, 'sleep enabled')]));
         },
         setBodySleepThreshold(world, body, threshold) {
-            return exclusive(() => {
+            return mutate(() => {
                 finite(threshold, 'sleep threshold');
                 if (threshold < 0) throw failure('AIR_E_BOX3D_ARGUMENT', 'Sleep threshold must be nonnegative');
                 return bodyControl(world, body, 6, [threshold]);
             });
         },
         setBodyAwake(world, body, awake) {
-            return exclusive(() => bodyControl(world, body, 7, [boolean(awake, 'awake')]));
+            return mutate(() => bodyControl(world, body, 7, [boolean(awake, 'awake')]));
         },
         setBodyCCD(world, body, enabled) {
-            return exclusive(() => bodyControl(world, body, 8, [boolean(enabled, 'CCD')]));
+            return mutate(() => bodyControl(world, body, 8, [boolean(enabled, 'CCD')]));
         },
         setBodyMotionFactors(world, body, linear, angular) {
-            return exclusive(() => {
+            return mutate(() => {
                 const values = [...vector(linear, 3, 'linear factor'), ...vector(angular, 3, 'angular factor')];
                 if (values.some((v) => v !== 0 && v !== 1))
                     throw failure('AIR_E_BOX3D_ARGUMENT', 'Motion factors must be 0/1');
@@ -791,31 +887,31 @@ export function createBox3DBinding(module, expected) {
             });
         },
         setBodyLinearVelocity(world, body, value) {
-            return exclusive(() => bodyControl(world, body, 10, vector(value, 3, 'linear velocity')));
+            return mutate(() => bodyControl(world, body, 10, vector(value, 3, 'linear velocity')));
         },
         setBodyAngularVelocity(world, body, value) {
-            return exclusive(() => bodyControl(world, body, 11, vector(value, 3, 'angular velocity')));
+            return mutate(() => bodyControl(world, body, 11, vector(value, 3, 'angular velocity')));
         },
         clearBodyForces(world, body) {
-            return exclusive(() => bodyControl(world, body, 12, []));
+            return mutate(() => bodyControl(world, body, 12, []));
         },
         clearBodyVelocity(world, body) {
-            return exclusive(() => bodyControl(world, body, 13, []));
+            return mutate(() => bodyControl(world, body, 13, []));
         },
         clearBodyState(world, body) {
-            return exclusive(() => bodyControl(world, body, 14, []));
+            return mutate(() => bodyControl(world, body, 14, []));
         },
         applyBodyForce(world, body, value, offset = [0, 0, 0], space = 'world') {
-            return exclusive(() => bodyApply(world, body, 0, value, offset, space));
+            return mutate(() => bodyApply(world, body, 0, value, offset, space));
         },
         applyBodyImpulse(world, body, value, offset = [0, 0, 0], space = 'world') {
-            return exclusive(() => bodyApply(world, body, 1, value, offset, space));
+            return mutate(() => bodyApply(world, body, 1, value, offset, space));
         },
         applyBodyTorque(world, body, value, space = 'world') {
-            return exclusive(() => bodyApply(world, body, 2, value, [0, 0, 0], space));
+            return mutate(() => bodyApply(world, body, 2, value, [0, 0, 0], space));
         },
         applyBodyAngularImpulse(world, body, value, space = 'world') {
-            return exclusive(() => bodyApply(world, body, 3, value, [0, 0, 0], space));
+            return mutate(() => bodyApply(world, body, 3, value, [0, 0, 0], space));
         },
         createOffsetBox(body, center, halfExtents, rotation = [0, 0, 0, 1], density = 1, sensor = false) {
             return exclusive(() =>
@@ -849,13 +945,13 @@ export function createBox3DBinding(module, expected) {
             });
         },
         setLinearVelocity(body, velocity) {
-            return exclusive(() => {
+            return mutate(() => {
                 const item = handle(body, 'body');
                 bodyControl(item.world, body, 10, vector(velocity, 3, 'velocity'));
             });
         },
         applyCenterImpulse(body, impulse) {
-            return exclusive(() => {
+            return mutate(() => {
                 const item = handle(body, 'body');
                 bodyApply(item.world, body, 1, impulse, [0, 0, 0], 'world');
             });

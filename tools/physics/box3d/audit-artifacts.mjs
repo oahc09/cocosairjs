@@ -42,6 +42,8 @@ const expectedSources = [
     'tools/physics/box3d/native/geometry.c',
     'tools/physics/box3d/native/world_bridge.c',
     'tools/physics/box3d/native/body_control.c',
+    'tools/physics/box3d/native/filter_bridge.c',
+    'tools/physics/box3d/native/filter_contract.c',
     'tools/physics/box3d/native/body_contract.c',
     'tools/physics/box3d/native/world_contract.c',
     'tools/physics/box3d/native/wasm_entry.c',
@@ -202,6 +204,40 @@ for (const name of [
     'coreAndBridgeRestored',
 ])
     assert.equal(body.checks[name], true);
+const filters = json('wasm-filter-contract.raw.json');
+assert.equal(filters.status, 'PASS');
+for (const field of ['coreSha', 'bindingBaseSha', 'schemaSha256', 'patchChainSha256', 'abiVersion', 'variant'])
+    assert.equal(filters.identity[field], manifest[field]);
+assert.equal(
+    filters.fixtureSha256,
+    sha256(readFileSync(resolve(root, 'tools/physics/box3d/wasm-filter-contract.mjs'))),
+);
+for (const check of [
+    'bitsetsAndDefaults',
+    'batchAdmissionAtomic',
+    'contactNextStep',
+    'sensorNextStep',
+    'sleepWake',
+    'copiesAndGrowth',
+    'fullIdReuse',
+    'bodyMutationOutcome',
+    'filterMutationOutcome',
+    'cleanup',
+])
+    assert.equal(filters.checks[check], true, check);
+const nativeFilter = json('native-filter-contract.raw.json');
+assert.equal(nativeFilter.status, 'PASS');
+assert.equal(nativeFilter.pointerBytes, 4);
+assert.deepEqual(nativeFilter, receipt.filterContract);
+for (const check of [
+    'nativeUpperBitsAndGroupReject',
+    'batchNoPartialMutation',
+    'lockedCapacityOverlapCanaries',
+    'fullGenerationWorld',
+    'defaultAllCreationPaths',
+    'coreBytesRestored',
+])
+    assert.equal(nativeFilter[check], true, check);
 const report = {
     schemaVersion: 1,
     status: 'PASS',
@@ -242,6 +278,9 @@ const report = {
         'native-body-contract.raw.json',
         'wasm-body-contract.raw.json',
         'air_box3d_body_contract.cjs',
+        'native-filter-contract.raw.json',
+        'wasm-filter-contract.raw.json',
+        'air_box3d_filter_contract.cjs',
     ].map(fileHash),
 };
 writeFileSync(reportPath, JSON.stringify(report, null, 2) + '\n');

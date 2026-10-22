@@ -1,0 +1,236 @@
+✔ MOCK: Cocos/native type mapping and 32-bit filter domain are explicit (2.239523ms)
+✔ MOCK: absent body/filter bridge rejects, not a successful component world (0.407326ms)
+✔ MOCK: constructor owns one disabled native static body at initial origin (0.99657ms)
+✔ MOCK: actual IRigidBody lifecycle retains/owns/releases one body (0.915921ms)
+✔ MOCK: last owner, not first owner, destroys the shared body (0.40195ms)
+✔ MOCK: enabled pending geometry preflight rejects without mutations and can recover (0.533293ms)
+✔ MOCK: post-step Node write uses origin, not COM, without clearing other dirty flags (0.542448ms)
+✔ MOCK: external Node pose/scale/parent is unsupported before any native change (0.387386ms)
+✔ MOCK: setters use incoming candidate, never precommit component cache (0.550964ms)
+✔ MOCK: local forces/impulses forward COM-relative offsets and real native method (0.632756ms)
+✔ MOCK: dynamic method names cannot escape the fixed body-control allowlist (0.23603ms)
+✔ MOCK: state copy failure faults owner; specified native argument rejection does not (0.434134ms)
+✔ MOCK: after world close, component destroy cannot double-free native body (0.306368ms)
+✔ MOCK/actual world RED: rejected native argument preserves completed snapshot and diagnostics (163.283047ms)
+✔ MOCK/actual world RED: unclassified native error after mutation is faulted, never assumed pure (0.681409ms)
+✔ MOCK/actual world: native destroy failure faults; world destruction remains the cleanup owner (0.496664ms)
+✔ MOCK/actual world: mass pending is rejected before stepping state/counters and resolves without fault (1.478252ms)
+✖ MOCK existing shared owner RED: invalid serialized mass rejects before every native write (2.874936ms)
+✖ MOCK existing shared owner RED: invalid serialized mass rejects before every native write (0.620614ms)
+✖ MOCK existing shared owner RED: invalid serialized mass rejects before every native write (0.83031ms)
+✖ MOCK existing shared owner RED: invalid serialized linearDamping rejects before every native write (0.3419ms)
+✖ MOCK existing shared owner RED: invalid serialized angularDamping rejects before every native write (0.257974ms)
+✖ MOCK existing shared owner RED: invalid serialized allowSleep rejects before every native write (0.365119ms)
+✖ MOCK existing shared owner RED: invalid serialized useGravity rejects before every native write (0.202017ms)
+✖ MOCK existing shared owner RED: invalid serialized linearFactor rejects before every native write (0.123097ms)
+✖ MOCK existing shared owner RED: invalid serialized angularFactor rejects before every native write (1.678345ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 17
+ℹ fail 9
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 822.404593
+
+✖ failing tests:
+
+test at tools/verify/box3d/body-component-real-source.test.cjs:399:5
+✖ MOCK existing shared owner RED: invalid serialized mass rejects before every native write (2.874936ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at expectRejected (/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/verify/box3d/body-component-real-source.test.cjs:414:12)
+      at TestContext.<anonymous> (/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/verify/box3d/body-component-real-source.test.cjs:406:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tools/verify/box3d/body-component-real-source.test.cjs:399:5
+✖ MOCK existing shared owner RED: invalid serialized mass rejects before every native write (0.620614ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at expectRejected (/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/verify/box3d/body-component-real-source.test.cjs:414:12)
+      at TestContext.<anonymous> (/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/verify/box3d/body-component-real-source.test.cjs:406:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tools/verify/box3d/body-component-real-source.test.cjs:399:5
+✖ MOCK existing shared owner RED: invalid serialized mass rejects before every native write (0.83031ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at expectRejected (/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/verify/box3d/body-component-real-source.test.cjs:414:12)
+      at TestContext.<anonymous> (/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/verify/box3d/body-component-real-source.test.cjs:406:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tools/verify/box3d/body-component-real-source.test.cjs:399:5
+✖ MOCK existing shared owner RED: invalid serialized linearDamping rejects before every native write (0.3419ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at expectRejected (/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/verify/box3d/body-component-real-source.test.cjs:414:12)
+      at TestContext.<anonymous> (/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/verify/box3d/body-component-real-source.test.cjs:406:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tools/verify/box3d/body-component-real-source.test.cjs:399:5
+✖ MOCK existing shared owner RED: invalid serialized angularDamping rejects before every native write (0.257974ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at expectRejected (/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/verify/box3d/body-component-real-source.test.cjs:414:12)
+      at TestContext.<anonymous> (/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/verify/box3d/body-component-real-source.test.cjs:406:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tools/verify/box3d/body-component-real-source.test.cjs:399:5
+✖ MOCK existing shared owner RED: invalid serialized allowSleep rejects before every native write (0.365119ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at expectRejected (/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/verify/box3d/body-component-real-source.test.cjs:414:12)
+      at TestContext.<anonymous> (/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/verify/box3d/body-component-real-source.test.cjs:406:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tools/verify/box3d/body-component-real-source.test.cjs:399:5
+✖ MOCK existing shared owner RED: invalid serialized useGravity rejects before every native write (0.202017ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at expectRejected (/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/verify/box3d/body-component-real-source.test.cjs:414:12)
+      at TestContext.<anonymous> (/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/verify/box3d/body-component-real-source.test.cjs:406:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tools/verify/box3d/body-component-real-source.test.cjs:399:5
+✖ MOCK existing shared owner RED: invalid serialized linearFactor rejects before every native write (0.123097ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at expectRejected (/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/verify/box3d/body-component-real-source.test.cjs:414:12)
+      at TestContext.<anonymous> (/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/verify/box3d/body-component-real-source.test.cjs:406:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tools/verify/box3d/body-component-real-source.test.cjs:399:5
+✖ MOCK existing shared owner RED: invalid serialized angularFactor rejects before every native write (1.678345ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  ... Skipped lines
+  
+    {
+  +   angularDamping: 0.2,
+  -   angularDamping: 0,
+      angularFactor: [
+        1,
+        1,
+        1
+      ],
+  ...
+      gravityScale: 1,
+  +   linearDamping: 0.1,
+  -   linearDamping: 0,
+      linearFactor: [
+        1,
+        1,
+        1
+      ],
+  ...
+      ],
+  +   mass: 12,
+  -   mass: 1,
+      massPending: true,
+      sleepEnabled: true,
+      sleepThreshold: 0.125,
+      sleeping: false,
+      sleepy: false,
+  
+      at TestContext.<anonymous> (/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/verify/box3d/body-component-real-source.test.cjs:407:16)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { type: 0, enabled: false, massPending: true, awake: true, sleepy: false, sleeping: false, sleepEnabled: true, ccd: false, sleepThreshold: 0.125, mass: 12, linearDamping: 0.1, angularDamping: 0.2, gravityScale: 1, linearFactor: [ 1, 1, 1 ], angularFactor: [ 1, 1, 1 ], linearVelocity: [ 0, 0, 0 ], angularVelocity: [ 0, 0, 0 ] },
+    expected: { type: 0, enabled: false, massPending: true, awake: true, sleepy: false, sleeping: false, sleepEnabled: true, ccd: false, sleepThreshold: 0.125, mass: 1, linearDamping: 0, angularDamping: 0, gravityScale: 1, linearFactor: [ 1, 1, 1 ], angularFactor: [ 1, 1, 1 ], linearVelocity: [ 0, 0, 0 ], angularVelocity: [ 0, 0, 0 ] },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

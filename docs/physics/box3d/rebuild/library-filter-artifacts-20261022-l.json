@@ -1,0 +1,36 @@
+{
+  "status": "PASS_ACTUAL_LIBRARY_DOWNLOAD_ALL_ARCHIVE_MEMBERS_RESTORED",
+  "verifiedAt": "2026-10-22T09:59:42.461679+00:00",
+  "parts": [
+    {
+      "scope": "historical-l1",
+      "libraryFileId": "libfile_ec163abd2fac819197df10d04a0679e9",
+      "fileName": "filter-validation-20261022-l-historical-l1.tar.gz",
+      "bytes": 14986880,
+      "sha256": "d3b6cb02222d3606a19f2cd35e8b860115a12dffbb9157857241421301021722",
+      "membersVerified": 440,
+      "dataFilesVerified": 439,
+      "manifest": {
+        "path": "tools/physics/box3d/output/filter-checkpoint-20261022-l/historical-l1-archive-files.json",
+        "bytes": 95902,
+        "sha256": "83c873cfd522b0e79397e045c0580700acde389a52b9b6ef59ed7501ee7b4fed"
+      }
+    },
+    {
+      "scope": "current-l2",
+      "libraryFileId": "libfile_a8db3ccc14fc8191a07149558c0d7184",
+      "fileName": "filter-validation-20261022-l-current-l2.tar.gz",
+      "bytes": 44966358,
+      "sha256": "ba5f669b4c5839e15612cd4221667d5da286b4ae310503e890da97b79223d7fb",
+      "membersVerified": 2058,
+      "dataFilesVerified": 2057,
+      "manifest": {
+        "path": "tools/physics/box3d/output/filter-checkpoint-20261022-l/current-l2-archive-files.json",
+        "bytes": 458604,
+        "sha256": "2492f84393e2a2ef2a357858edc5721412fcc4f60337632ec62fcb293192f497"
+      }
+    }
+  ],
+  "uniqueDataFilesRestored": 2496,
+  "scope": "Frozen l source-bound native/WASM artifacts and complete retained failure history. Restoration does not rerun binaries or establish actual AIR components, browser, full T10/Gate acceptance."
+}

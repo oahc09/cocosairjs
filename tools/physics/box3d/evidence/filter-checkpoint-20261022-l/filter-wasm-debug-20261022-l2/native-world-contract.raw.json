@@ -1,0 +1,1 @@
+{"status":"PASS","pointerBytes":4,"creationAllocationFailure":true,"shapeAndGrowthAllocationFailure":true,"realCallbackOverflow":true,"capacityNoPartialWrite":true,"shapeBodyWorldCleanup":true,"worldIsolationAndMaterialNoWrite":true,"finalBridgeBytes":0,"qualificationAllocatorOnly":true}

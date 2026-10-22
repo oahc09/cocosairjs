@@ -178,7 +178,7 @@ int air_b3_mass_shape_create(uint32_t wid,uint32_t lo,uint32_t hi,int kind,const
   b3Transform xf={get(p),{{p[6],p[7],p[8]},p[9]}};hull=b3MakeTransformedBoxHull(p[3],p[4],p[5],xf);candidate.type=b3_hullShape;candidate.hull=&hull.base;}
  b3MassData single=b3ComputeShapeMass(&candidate);if(!isfinite(single.mass)||single.mass<=0||!matrix_ok(single.inertia))return AIR_B3_ARGUMENT;
  b3MassData plan;int f,n;if(target>0){s=mass_plan(w,b,target,B3_NULL_INDEX,&candidate,&plan,&f,&n);if(s)return s;}
- b3ShapeDef def=b3DefaultShapeDef();def.density=density;def.isSensor=sensor!=0;def.enableSensorEvents=sensor!=0;def.updateBodyMass=target==0;
+ b3ShapeDef def=b3DefaultShapeDef();def.filter=air_b3_default_filter();def.density=density;def.isSensor=sensor!=0;def.enableSensorEvents=sensor!=0;def.updateBodyMass=target==0;
  b3ShapeId shape=kind==0?b3CreateSphereShape(id,&def,&candidate.sphere):b3CreateHullShape(id,&def,candidate.hull);
  if(!b3Shape_IsValid(shape))return AIR_B3_CREATION;
  if(target>0)apply_mass(w,b,id,plan);

@@ -1,0 +1,98 @@
+{
+  "status": "PASS",
+  "startedAt": "2026-10-22T09:44:23.087Z",
+  "records": 617,
+  "points": 617,
+  "maxPointError": 0.0000017714655501377408,
+  "maxNormalError": 0.0000035486439173837425,
+  "maxSeparationError": 2.4005519788650176e-7,
+  "branches": {
+    "generated": 136,
+    "recycled": 481,
+    "sleeping": 86
+  },
+  "inputs": {
+    "sampleSha256": "cbb48189c1211e650e30185aa7202e3b8865178b718b80be47caadbdc7f74bb6",
+    "contractSha256": "17db9f66edf0f0474a65e9cbfc7732a9ae5dd14e579bc974343f87aafd09e017",
+    "scriptSha256": "fe3800e621b45e34a030e45800e900e5c213e5697e26fa6611fad27aae2ac680"
+  },
+  "identity": {
+    "schemaVersion": 1,
+    "patchChainSha256": "434fb89494867f515051d5ac0dfc0c694556ba1f0da9ac3fc895a27097b1c7c7",
+    "coreSha": "efca0c184d40fd6a82016983f1601c4d23965867",
+    "bindingBaseSha": "5d5a3af049cccd9948b2b55bac4342414af0ef64",
+    "abiVersion": 1,
+    "schemaSha256": "78fccc27f58503178fcc824473a0e30d42fa54f19e87bd9424b83a975d45b738",
+    "variant": "st-simd",
+    "patchLockSha256": "d6be04611f70223e21b1bcffc635088f49a5647739e97c2f9ce089091748ea77",
+    "appliedPatches": [
+      {
+        "id": "sse2-loadv-float-alignment-v1",
+        "path": "tools/physics/box3d/patches/sse2-loadv-alignment.patch",
+        "sha256": "e5c4e5f2ae7f015cf62dfc2de5a36af73cc15d9b0ca0118fc0259c7d1f0b1403",
+        "files": [
+          {
+            "path": "src/simd_sse2.h",
+            "beforeSha256": "cc18b1f4f90fdceebb84b57f77e04c03009851a3a4c66439169318aa22a02719",
+            "afterSha256": "2295eae13388e656dc71396530ea928ecc575c8a86009182d76a9ef69333e8f6"
+          }
+        ]
+      },
+      {
+        "id": "contact-generation-geometry-v2",
+        "path": "tools/physics/box3d/patches/contact-geometry-epoch.patch",
+        "sha256": "4ca29eed58cd20d4134bf55bb9b9ec25fbb322b731d0a319ad2567225463d094",
+        "files": [
+          {
+            "path": "include/box3d/types.h",
+            "beforeSha256": "7f888e6a75dff5fd6b79f9e0dad79c9b5a769f47caedb19d71e027a751fd3664",
+            "afterSha256": "15a99589d8a54d80ff600ade7dc48ba56b02a4468e518e6de54b65d31f674f68"
+          },
+          {
+            "path": "src/contact.h",
+            "beforeSha256": "691d5c92e12c090f75f42310a7299aea1c044ab0f195fda9a2161e615191f895",
+            "afterSha256": "c70b270b50770c60bab6d20f2d17e7eb26e85edf8a8ba6b314c8c0982dd69db3"
+          },
+          {
+            "path": "include/box3d/box3d.h",
+            "beforeSha256": "3edb719e280ae09ff6fd225dbab6642ab7f5d68207aebd1a81a7d19827a22574",
+            "afterSha256": "0a1dbc372cbca9d30eee09a7571d20991ef84e8f3d91fb46dfdd21e5e1c42632"
+          },
+          {
+            "path": "src/contact.c",
+            "beforeSha256": "6d13719b6de73d8d2d2b5a7749fa1c4180480191b28afdd2e872aee6fedc9cbe",
+            "afterSha256": "25d910b2c9e99cd2b9b571a45ec9c0161d4681faf04375ca770d4c138402b42b"
+          },
+          {
+            "path": "src/physics_world.c",
+            "beforeSha256": "f96c0a3a11d3b9818ad81df8c44be26bf069a9f11335d7fbcbcbf0d45bcff454",
+            "afterSha256": "c7d679cf8051b59fee54c8b76ee63131f9c8c7d1d01a71f241827e53775939da"
+          }
+        ]
+      }
+    ],
+    "artifacts": [
+      {
+        "path": "box3d-st.mjs",
+        "sha256": "3d2eebfefbb1763098d407de6aa54b208d46b0bc7556fa9455327995c842253d",
+        "bytes": 75761
+      },
+      {
+        "path": "box3d-st.wasm",
+        "sha256": "269eb8d2c5f6fe52fc22c84bd732dca11a2c601d011435c2c8b4cb9c30e4d9df",
+        "bytes": 4142474
+      },
+      {
+        "path": "facade.mjs",
+        "sha256": "fbf583f4aaf636e9c658bf9a0a9ca1b23efc755175cff102aa18f9342a0064e6",
+        "bytes": 50857
+      },
+      {
+        "path": "facade.d.mts",
+        "sha256": "44c8ec1a3808cf81772922d6f3af7787025cd61e5a9a1b037c33ce0142c5e262",
+        "bytes": 14705
+      }
+    ]
+  },
+  "completedAt": "2026-10-22T09:44:23.144Z"
+}

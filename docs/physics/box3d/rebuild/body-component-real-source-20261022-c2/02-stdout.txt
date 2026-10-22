@@ -1,0 +1,37 @@
+✔ MOCK: Cocos/native type mapping and 32-bit filter domain are explicit (2.964813ms)
+✔ MOCK: absent body/filter bridge rejects, not a successful component world (0.537657ms)
+✔ MOCK: constructor owns one disabled native static body at initial origin (2.668158ms)
+✔ MOCK: actual IRigidBody lifecycle retains/owns/releases one body (1.306165ms)
+✔ MOCK: last owner, not first owner, destroys the shared body (0.432029ms)
+✔ MOCK: enabled pending geometry preflight rejects without mutations and can recover (0.875193ms)
+✔ MOCK: post-step Node write uses origin, not COM, without clearing other dirty flags (0.759095ms)
+✔ MOCK: external Node pose/scale/parent is unsupported before any native change (0.750759ms)
+✔ MOCK: setters use incoming candidate, never precommit component cache (0.599884ms)
+✔ MOCK: local forces/impulses forward COM-relative offsets and real native method (0.798609ms)
+✔ MOCK: dynamic method names cannot escape the fixed body-control allowlist (0.239317ms)
+✔ MOCK: state copy failure faults owner; specified native argument rejection does not (0.457293ms)
+✔ MOCK: after world close, component destroy cannot double-free native body (0.758518ms)
+✔ MOCK/actual world RED: rejected native argument preserves completed snapshot and diagnostics (131.788368ms)
+✔ MOCK/actual world RED: unclassified native error after mutation is faulted, never assumed pure (1.394383ms)
+✔ MOCK/actual world: native destroy failure faults; world destruction remains the cleanup owner (0.404979ms)
+✔ MOCK/actual world: mass pending is rejected before stepping state/counters and resolves without fault (0.675615ms)
+✔ MOCK existing shared owner RED: invalid serialized mass rejects before every native write (0.304056ms)
+✔ MOCK existing shared owner RED: invalid serialized mass rejects before every native write (0.125009ms)
+✔ MOCK existing shared owner RED: invalid serialized mass rejects before every native write (0.093782ms)
+✔ MOCK existing shared owner RED: invalid serialized linearDamping rejects before every native write (0.272502ms)
+✔ MOCK existing shared owner RED: invalid serialized angularDamping rejects before every native write (0.141675ms)
+✔ MOCK existing shared owner RED: invalid serialized allowSleep rejects before every native write (0.100694ms)
+✔ MOCK existing shared owner RED: invalid serialized useGravity rejects before every native write (0.455323ms)
+✔ MOCK existing shared owner RED: invalid serialized linearFactor rejects before every native write (0.136541ms)
+✔ MOCK existing shared owner RED: invalid serialized angularFactor rejects before every native write (0.136215ms)
+✔ MOCK/actual world: later native configuration rejection faults after an earlier committed field (0.442273ms)
+✔ MOCK: initial sheared transform rejects before creating a native body (0.335312ms)
+✔ MOCK: invalid initialization is rejected by IRigidBody before native acquisition (0.192429ms)
+ℹ tests 29
+ℹ suites 0
+ℹ pass 29
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 816.848624

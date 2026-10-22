@@ -1,0 +1,360 @@
+{
+  "status": "PASS",
+  "scope": "Exact current-mode raw comparison and retained-k3 finite physics/ownership regressions; not whole runtime/browser qualification.",
+  "inputs": [
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/filter-wasm-debug-20261022-l2/wasm-contract.raw.json",
+      "sha256": "a0c2d9944dcbef4ee6b15915d1904278ae6ba1abff4f477f230fe4c6ea36b297"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/filter-wasm-release-20261022-l2/wasm-contract.raw.json",
+      "sha256": "1deb24caa6a12a00d6c501b6491140c8d30535e16c0d89a6d99a651457a255cf"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/body-wasm-debug-20261022-k3/wasm-contract.raw.json",
+      "sha256": "81766aa841ac34ac7ff3e420d3cfdfe0c61b29323f0ea83bb28721e0e41885dd"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/body-wasm-release-20261022-k3/wasm-contract.raw.json",
+      "sha256": "980c9d759bf8c1edcf1e3cd8e13d3f995ea650e21de476b655536a4340d48e48"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/filter-wasm-debug-20261022-l2/wasm-ownership-contract.raw.json",
+      "sha256": "268f3bc5c37299ac4f2c325b055bc737177e8d11a6fb0c3477da9f32b41045f6"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/filter-wasm-release-20261022-l2/wasm-ownership-contract.raw.json",
+      "sha256": "b086ee5428b2aaf7b96b83fa4e5867796b96c4b12855e41de1f0630350a4f0d9"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/body-wasm-debug-20261022-k3/wasm-ownership-contract.raw.json",
+      "sha256": "8a1f1a75ecc3566527b1a0b0a26582f225cea06aefcb64cd850471bc3d0c5460"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/body-wasm-release-20261022-k3/wasm-ownership-contract.raw.json",
+      "sha256": "dc1d2e66e71cec16fb7f30bdef5b6db0b4273ea005ec7a3a6fbd50a287c2a53d"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/filter-wasm-debug-20261022-l2/wasm-snapshot-contract.raw.json",
+      "sha256": "4465b6c83657e8ad5cfa2df14f5e9c286680b699529b40b8a2f7fea08c6d286d"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/filter-wasm-release-20261022-l2/wasm-snapshot-contract.raw.json",
+      "sha256": "e87e82d5b014ff8be63a06f55e7aee5c34e5caeecd0bf9970e4d01ae151d32a0"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/body-wasm-debug-20261022-k3/wasm-snapshot-contract.raw.json",
+      "sha256": "22f39890aacdd23cbf0b5edb98874a75fbc2a05ccf0ea591a4162e0f8e853544"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/body-wasm-release-20261022-k3/wasm-snapshot-contract.raw.json",
+      "sha256": "3b4191f91539cd39991fb167c76a36864a5becddd86b39567a1c6d38c2393513"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/filter-wasm-debug-20261022-l2/wasm-geometry-contract.raw.json",
+      "sha256": "17db9f66edf0f0474a65e9cbfc7732a9ae5dd14e579bc974343f87aafd09e017"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/filter-wasm-release-20261022-l2/wasm-geometry-contract.raw.json",
+      "sha256": "840dc02cd9ebbe4acd80d78fea67ba2eba9f3a93c17adfaf0fb386e1f3e852a7"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/body-wasm-debug-20261022-k3/wasm-geometry-contract.raw.json",
+      "sha256": "31b8aee62250f9ce4ab300160e55a3aad45f05906e462a1fffc3cd5defa214c3"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/body-wasm-release-20261022-k3/wasm-geometry-contract.raw.json",
+      "sha256": "54d2d27e31994e920229864f5471a9aeba2aa64def00e70b99018e72459be890"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/filter-wasm-debug-20261022-l2/wasm-world-contract.raw.json",
+      "sha256": "4b873c918bf10be8d864460f16cef060de4162a605346fa473482da1c13758a3"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/filter-wasm-release-20261022-l2/wasm-world-contract.raw.json",
+      "sha256": "79f61f4b4c4ec1690f0bc8d25e8053c3a95cc148d3beac03fbdfc5906776bad4"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/body-wasm-debug-20261022-k3/wasm-world-contract.raw.json",
+      "sha256": "00f1a83b6857d1c699ef805b00622ffcfe4f3f634037b8a4412924286e611072"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/body-wasm-release-20261022-k3/wasm-world-contract.raw.json",
+      "sha256": "e026bf22dc70309579b83b39ffde5c3174de2df4150d868573d7dde8d1d8884d"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/filter-wasm-debug-20261022-l2/wasm-body-contract.raw.json",
+      "sha256": "6450f22a74349e3c96d70fb8a1f6e4d9ed3161b5f122b9eb0654948c1326194b"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/filter-wasm-release-20261022-l2/wasm-body-contract.raw.json",
+      "sha256": "c31473632b495fb525a3db42da007f17f1417909739ac38f28557664a2ae799d"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/body-wasm-debug-20261022-k3/wasm-body-contract.raw.json",
+      "sha256": "80d8873492ec6e18c40d26ec9262548474a61379b065e88ba28d867fa3f55143"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/body-wasm-release-20261022-k3/wasm-body-contract.raw.json",
+      "sha256": "d5fe59439cbdf635bd4c770c6716e4c725c8c52838529bd599f1411c83f3bf1a"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/filter-wasm-debug-20261022-l2/wasm-filter-contract.raw.json",
+      "sha256": "55b949d27b603023f0f293cf5dac9e14c892602f62d9afc9a4566f28fada47b3"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/filter-wasm-release-20261022-l2/wasm-filter-contract.raw.json",
+      "sha256": "7bb890f536e452fc59d756f6dff351f9f58030e34fa6f84aea895ced8be59583"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/filter-wasm-debug-20261022-l2/native-geometry-contract.raw.json",
+      "sha256": "a6f0c8f945e9eb5822f912feefa9519ce47a9964c55e60de88c1849cabb47333"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/filter-wasm-release-20261022-l2/native-geometry-contract.raw.json",
+      "sha256": "a6f0c8f945e9eb5822f912feefa9519ce47a9964c55e60de88c1849cabb47333"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/filter-wasm-debug-20261022-l2/native-world-contract.raw.json",
+      "sha256": "f73a2add60a0509a8b241e216064a057a4f28dbf932ba3cfbbe01bce95e715a7"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/filter-wasm-release-20261022-l2/native-world-contract.raw.json",
+      "sha256": "f73a2add60a0509a8b241e216064a057a4f28dbf932ba3cfbbe01bce95e715a7"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/filter-wasm-debug-20261022-l2/native-body-contract.raw.json",
+      "sha256": "d00544df0e82dfdb149659799e0f854621628b735d46da45084af025a832bcef"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/filter-wasm-release-20261022-l2/native-body-contract.raw.json",
+      "sha256": "d00544df0e82dfdb149659799e0f854621628b735d46da45084af025a832bcef"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/filter-wasm-debug-20261022-l2/native-filter-contract.raw.json",
+      "sha256": "fdd38cf8512d70c77e92c9a3cf1b9ef91b52eb90a4a9c48d6d177d01bdcf0923"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/filter-wasm-release-20261022-l2/native-filter-contract.raw.json",
+      "sha256": "fdd38cf8512d70c77e92c9a3cf1b9ef91b52eb90a4a9c48d6d177d01bdcf0923"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/body-wasm-debug-20261022-k3/geometry-samples.raw.jsonl",
+      "sha256": "cbb48189c1211e650e30185aa7202e3b8865178b718b80be47caadbdc7f74bb6",
+      "lines": 617
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/body-wasm-release-20261022-k3/geometry-samples.raw.jsonl",
+      "sha256": "cbb48189c1211e650e30185aa7202e3b8865178b718b80be47caadbdc7f74bb6",
+      "lines": 617
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/filter-wasm-debug-20261022-l2/geometry-samples.raw.jsonl",
+      "sha256": "cbb48189c1211e650e30185aa7202e3b8865178b718b80be47caadbdc7f74bb6",
+      "lines": 617
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/filter-wasm-release-20261022-l2/geometry-samples.raw.jsonl",
+      "sha256": "cbb48189c1211e650e30185aa7202e3b8865178b718b80be47caadbdc7f74bb6",
+      "lines": 617
+    }
+  ],
+  "checks": [
+    "exact-current-modes:wasm-contract.raw.json",
+    "exact-retained-k3-both-modes:wasm-contract.raw.json",
+    "exact-current-modes:wasm-ownership-contract.raw.json",
+    "exact-retained-k3-both-modes:wasm-ownership-contract.raw.json",
+    "exact-current-modes:wasm-snapshot-contract.raw.json",
+    "exact-retained-k3-both-modes:wasm-snapshot-contract.raw.json",
+    "exact-current-modes:wasm-geometry-contract.raw.json",
+    "exact-retained-k3-both-modes:wasm-geometry-contract.raw.json",
+    "exact-current-modes:wasm-world-contract.raw.json",
+    "exact-retained-k3-both-modes:wasm-world-contract.raw.json",
+    "exact-current-modes:wasm-body-contract.raw.json",
+    "exact-retained-k3-both-modes:wasm-body-contract.raw.json",
+    "exact-current-filter-contract-all-observations-errors-and-23-negatives",
+    "exact-native-WASM32:native-geometry-contract.raw.json",
+    "exact-native-WASM32:native-world-contract.raw.json",
+    "exact-native-WASM32:native-body-contract.raw.json",
+    "exact-native-WASM32:native-filter-contract.raw.json",
+    "all-617-geometry-samples-byte-identical-to-k3-in-both-modes"
+  ],
+  "fixtureSha256": "4375f5812dde5c17732fe3b76779bb09cddf6348176ffd935ac5ea5aeb279285",
+  "memoryObservations": [
+    {
+      "label": "current-debug",
+      "field": "growth",
+      "growth": [
+        {
+          "before": 17367040,
+          "after": 20840448
+        },
+        {
+          "before": 20840448,
+          "after": 25034752
+        }
+      ]
+    },
+    {
+      "label": "current-release",
+      "field": "growth",
+      "growth": [
+        {
+          "before": 17301504,
+          "after": 20774912
+        },
+        {
+          "before": 20774912,
+          "after": 24969216
+        }
+      ]
+    },
+    {
+      "label": "current-0",
+      "field": "growth",
+      "growth": [
+        {
+          "before": 17367040,
+          "after": 20840448
+        },
+        {
+          "before": 20840448,
+          "after": 25034752
+        }
+      ]
+    },
+    {
+      "label": "retained-k3-0",
+      "field": "growth",
+      "growth": [
+        {
+          "before": 17367040,
+          "after": 20840448
+        },
+        {
+          "before": 20840448,
+          "after": 25034752
+        }
+      ]
+    },
+    {
+      "label": "current-1",
+      "field": "growth",
+      "growth": [
+        {
+          "before": 17301504,
+          "after": 20774912
+        },
+        {
+          "before": 20774912,
+          "after": 24969216
+        }
+      ]
+    },
+    {
+      "label": "retained-k3-1",
+      "field": "growth",
+      "growth": [
+        {
+          "before": 17301504,
+          "after": 20774912
+        },
+        {
+          "before": 20774912,
+          "after": 24969216
+        }
+      ]
+    },
+    {
+      "label": "current-debug",
+      "field": "world.debug.heapBefore/heapAfter",
+      "heapBefore": 17367040,
+      "heapAfter": 20840448
+    },
+    {
+      "label": "current-release",
+      "field": "world.debug.heapBefore/heapAfter",
+      "heapBefore": 17301504,
+      "heapAfter": 20774912
+    },
+    {
+      "label": "current-0",
+      "field": "world.debug.heapBefore/heapAfter",
+      "heapBefore": 17367040,
+      "heapAfter": 20840448
+    },
+    {
+      "label": "retained-k3-0",
+      "field": "world.debug.heapBefore/heapAfter",
+      "heapBefore": 17367040,
+      "heapAfter": 20840448
+    },
+    {
+      "label": "current-1",
+      "field": "world.debug.heapBefore/heapAfter",
+      "heapBefore": 17301504,
+      "heapAfter": 20774912
+    },
+    {
+      "label": "retained-k3-1",
+      "field": "world.debug.heapBefore/heapAfter",
+      "heapBefore": 17301504,
+      "heapAfter": 20774912
+    },
+    {
+      "label": "filter-debug",
+      "field": "heapGrowth",
+      "growth": {
+        "beforeBytes": 17367040,
+        "afterBytes": 20840448
+      }
+    },
+    {
+      "label": "filter-release",
+      "field": "heapGrowth",
+      "growth": {
+        "beforeBytes": 17301504,
+        "afterBytes": 20774912
+      }
+    }
+  ],
+  "note": "Earlier l2 comparator incorrectly required equal allocator capacities. Exact known heap-growth fields are retained separately and verified, as in existing compare-geometry-builds; all other observations remain exact.",
+  "sourceQualifications": [
+    {
+      "label": "current-debug",
+      "sourceSha256": "fbf583f4aaf636e9c658bf9a0a9ca1b23efc755175cff102aa18f9342a0064e6",
+      "qualifiedSourceSha256": "3c6bc11132e8a7d304f8cef49ebc4840d774eaa0d63292bde6a093f9b29db744",
+      "exactSingleInitializerChangeVerified": true
+    },
+    {
+      "label": "current-release",
+      "sourceSha256": "fbf583f4aaf636e9c658bf9a0a9ca1b23efc755175cff102aa18f9342a0064e6",
+      "qualifiedSourceSha256": "3c6bc11132e8a7d304f8cef49ebc4840d774eaa0d63292bde6a093f9b29db744",
+      "exactSingleInitializerChangeVerified": true
+    },
+    {
+      "label": "current-0",
+      "sourceSha256": "fbf583f4aaf636e9c658bf9a0a9ca1b23efc755175cff102aa18f9342a0064e6",
+      "qualifiedSourceSha256": "3c6bc11132e8a7d304f8cef49ebc4840d774eaa0d63292bde6a093f9b29db744",
+      "exactSingleInitializerChangeVerified": true
+    },
+    {
+      "label": "retained-k3-0",
+      "sourceSha256": "c01c0f05c46a6bbe0c669989cb47838482e0fca51b44f5369d7476a8fedea1a3",
+      "qualifiedSourceSha256": "2b723c03a23c4691b4ba3e4a823475e9bd8deb531b6d85cfa7f5dac550eb2a2f",
+      "exactSingleInitializerChangeVerified": true
+    },
+    {
+      "label": "current-1",
+      "sourceSha256": "fbf583f4aaf636e9c658bf9a0a9ca1b23efc755175cff102aa18f9342a0064e6",
+      "qualifiedSourceSha256": "3c6bc11132e8a7d304f8cef49ebc4840d774eaa0d63292bde6a093f9b29db744",
+      "exactSingleInitializerChangeVerified": true
+    },
+    {
+      "label": "retained-k3-1",
+      "sourceSha256": "c01c0f05c46a6bbe0c669989cb47838482e0fca51b44f5369d7476a8fedea1a3",
+      "qualifiedSourceSha256": "2b723c03a23c4691b4ba3e4a823475e9bd8deb531b6d85cfa7f5dac550eb2a2f",
+      "exactSingleInitializerChangeVerified": true
+    }
+  ]
+}

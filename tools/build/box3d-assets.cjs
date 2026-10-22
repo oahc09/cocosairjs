@@ -30,6 +30,7 @@ const INPUTS = [
     'tools/physics/box3d/wasm-geometry-contract.mjs',
     'tools/physics/box3d/wasm-world-contract.mjs',
     'tools/physics/box3d/wasm-body-contract.mjs',
+    'tools/physics/box3d/wasm-filter-contract.mjs',
     'tools/physics/box3d/verify-sources.mjs',
     'tools/physics/box3d/verify-wasm.mjs',
     'tools/physics/box3d/native/air_box3d.c',
@@ -39,6 +40,9 @@ const INPUTS = [
     'tools/physics/box3d/native/world_bridge.h',
     'tools/physics/box3d/native/body_control.c',
     'tools/physics/box3d/native/body_control.h',
+    'tools/physics/box3d/native/filter_bridge.c',
+    'tools/physics/box3d/native/filter_bridge.h',
+    'tools/physics/box3d/native/filter_contract.c',
     'tools/physics/box3d/native/air_box3d.h',
     'tools/physics/box3d/native/contract.c',
     'tools/physics/box3d/native/geometry_contract.c',
@@ -97,7 +101,7 @@ async function verifySTBuild(buildDirectory) {
     assert.equal(receipt.status, 'PASS', 'Native build did not pass');
     assert.equal(receipt.kind, 'st-simd-wasm');
     assert(['Debug', 'Release'].includes(receipt.mode));
-    assert(receipt.commands.length >= 13 && receipt.commands.every((row) => row.exitCode === 0 && !row.error));
+    assert(receipt.commands.length >= 15 && receipt.commands.every((row) => row.exitCode === 0 && !row.error));
     assert.deepEqual(sorted(receipt.inputHashes.map((row) => row.path)), sorted(INPUTS), 'Build input inventory drift');
     for (const input of receipt.inputHashes) {
         safeRelative(input.path);
@@ -130,9 +134,9 @@ async function verifySTBuild(buildDirectory) {
     assert.equal(audit.sharedMemory, false);
     assert.equal(audit.dynamicExecutionOrWorkerConstructorFound, false);
     assert.equal(audit.compiledSourceCount, audit.compiledSourceHashes.length);
-    assert(audit.compiledSourceCount >= 61, 'Incomplete compile audit');
+    assert(audit.compiledSourceCount >= 63, 'Incomplete compile audit');
     assert.equal(new Set(audit.compiledSourceHashes.map((row) => row.path)).size, audit.compiledSourceCount);
-    for (const name of ['body_control.c', 'body_contract.c']) {
+    for (const name of ['body_control.c', 'body_contract.c', 'filter_bridge.c', 'filter_contract.c']) {
         assert(audit.compiledSourceHashes.some((row) => row.path === `tools/physics/box3d/native/${name}`));
     }
     for (const input of audit.compiledSourceHashes) {
@@ -160,6 +164,9 @@ async function verifySTBuild(buildDirectory) {
             'native-body-contract.raw.json',
             'wasm-body-contract.raw.json',
             'air_box3d_body_contract.cjs',
+            'native-filter-contract.raw.json',
+            'wasm-filter-contract.raw.json',
+            'air_box3d_filter_contract.cjs',
         ]),
     );
     for (const record of audit.evidence) verifyRecord(directory, record);
@@ -226,6 +233,43 @@ async function verifySTBuild(buildDirectory) {
         'coreAndBridgeRestored',
     ]) {
         assert.equal(body.checks?.[key], true, `Body qualification missing: ${key}`);
+    }
+    const nativeFilter = json(fileInside(directory, 'native-filter-contract.raw.json'));
+    assert.equal(nativeFilter.status, 'PASS', 'Native filter qualification did not pass');
+    assert.equal(nativeFilter.pointerBytes, 4, 'Filter qualification must execute WASM32');
+    assert.deepEqual(nativeFilter.acceptedBitsets, [0, 2147483648, 4294967295]);
+    for (const key of [
+        'nativeUpperBitsAndGroupReject',
+        'batchNoPartialMutation',
+        'lockedCapacityOverlapCanaries',
+        'fullGenerationWorld',
+        'defaultAllCreationPaths',
+        'coreBytesRestored',
+    ]) {
+        assert.equal(nativeFilter[key], true, `Native filter qualification missing: ${key}`);
+    }
+    const filter = json(fileInside(directory, 'wasm-filter-contract.raw.json'));
+    assert.equal(filter.status, 'PASS', 'Real WASM filter qualification did not pass');
+    assert.equal(
+        filter.fixtureSha256,
+        sha256(read(path.join(ROOT, 'tools/physics/box3d/wasm-filter-contract.mjs'))),
+        'Filter fixture input drift',
+    );
+    for (const [key, value] of Object.entries(identity))
+        assert.equal(filter.identity?.[key], value, `Filter qualification identity mismatch: ${key}`);
+    for (const key of [
+        'bitsetsAndDefaults',
+        'batchAdmissionAtomic',
+        'copiesAndGrowth',
+        'fullIdReuse',
+        'contactNextStep',
+        'sleepWake',
+        'sensorNextStep',
+        'bodyMutationOutcome',
+        'filterMutationOutcome',
+        'cleanup',
+    ]) {
+        assert.equal(filter.checks?.[key], true, `Filter qualification missing: ${key}`);
     }
     const descriptor = freeze({
         manifestSha256: sha256(manifestBytes),

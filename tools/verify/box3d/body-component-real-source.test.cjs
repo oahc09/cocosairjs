@@ -59,6 +59,7 @@ function fixture() {
         worldPosition: { x: 1, y: 2, z: 3 },
         worldRotation: { x: 0, y: 0, z: 0, w: 1 },
         worldScale: { x: 1, y: 1, z: 1 },
+        worldMatrix: { m00: 1, m01: 0, m02: 0, m04: 0, m05: 1, m06: 0, m08: 0, m09: 0, m10: 1 },
         parent: null,
         hasChangedFlags: 0x60,
         setWorldPosition(x, y, z) {
@@ -245,7 +246,7 @@ test('MOCK: setters use incoming candidate, never precommit component cache', ()
     assert.equal(f.body.state.mass, 12);
     assert.equal(f.component.mass, 5);
     assert.equal(f.body.state.linearDamping, 0.75);
-    assert.equal(f.body.state.angularDamping, 0.2);
+    assert.equal(f.body.state.angularDamping, Math.fround(0.2));
     assert.equal(f.body.state.gravityScale, 0);
     assert.deepEqual(f.body.state.linearFactor, [0, 1, 0]);
 });
@@ -384,4 +385,61 @@ test('MOCK/actual world: mass pending is rejected before stepping state/counters
     assert.equal(f.native.step, 1);
     assert.equal(f.world.diagnostics().state, 'ready');
     f.world.destroy();
+});
+for (const [field, invalid] of [
+    ['mass', NaN],
+    ['mass', 0],
+    ['mass', Infinity],
+    ['linearDamping', -0.1],
+    ['angularDamping', 1.1],
+    ['allowSleep', 'false'],
+    ['useGravity', 0],
+    ['linearFactor', { x: 1, y: 0.5, z: 1 }],
+    ['angularFactor', { x: 1, y: 1, z: NaN }],
+]) {
+    test(`MOCK existing shared owner RED: invalid serialized ${field} rejects before every native write`, () => {
+        const f = fixture();
+        f.body.retain({ existingColliderOwner: true });
+        const candidate = { ...f.component, mass: 12, [field]: invalid };
+        const beforeState = f.body.state,
+            beforeCalls = f.calls.length,
+            beforeInvalidations = f.owner.invalidations;
+        expectRejected(() => f.body.attachRigidBody(candidate, f.configuration));
+        assert.deepEqual(f.body.state, beforeState);
+        assert.equal(f.calls.length, beforeCalls);
+        assert.equal(f.owner.invalidations, beforeInvalidations);
+        assert.equal(f.body.rigidBody, null);
+    });
+}
+function expectRejected(action) {
+    assert.throws(action);
+}
+
+test('MOCK/actual world: later native configuration rejection faults after an earlier committed field', () => {
+    const f = actualWorldFixture();
+    f.binding.setBodyDamping = () => {
+        throw Object.assign(new Error('unexpected geometry/state rejection'), { code: 'AIR_E_BOX3D_ARGUMENT' });
+    };
+    assert.throws(() => f.body.attachRigidBody(f.component, f.configuration));
+    assert.equal(f.world.diagnostics().state, 'faulted');
+    assert.equal(f.body.rigidBody, null);
+    f.world.destroy();
+});
+test('MOCK: initial sheared transform rejects before creating a native body', () => {
+    const f = fixture();
+    f.node.worldMatrix.m04 = 0.2;
+    const before = f.calls.length;
+    assert.throws(
+        () => new Box3DSharedBody(f.binding, {}, f.node, f.owner, f.configuration),
+        coded('AIR_E_BOX3D_UNSUPPORTED'),
+    );
+    assert.equal(f.calls.length, before);
+});
+test('MOCK: invalid initialization is rejected by IRigidBody before native acquisition', () => {
+    const f = fixture();
+    f.component.angularFactor.y = 0.5;
+    const before = f.calls.length;
+    assert.throws(() => f.adapter.initialize(f.component), coded('AIR_E_BOX3D_CONFIG'));
+    assert.equal(f.calls.length, before);
+    assert.equal(f.owner.faults.length, 0);
 });

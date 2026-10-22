@@ -56,6 +56,13 @@ export interface Box3DFoundation {
     getGravity(world: Box3DWorld): readonly number[];
     setSleepingEnabled(world: Box3DWorld, enabled: boolean): void;
     isSleepingEnabled(world: Box3DWorld): boolean;
+    getShapeFilter(world: Box3DWorld, shape: Box3DId): Readonly<Box3DShapeFilter>;
+    setShapeFilter(world: Box3DWorld, shape: Box3DId, filter: Box3DShapeFilter): Readonly<Box3DShapeFilter>;
+    setShapeFilters(
+        world: Box3DWorld,
+        shapes: readonly Box3DId[],
+        filter: Box3DShapeFilter,
+    ): readonly Readonly<Box3DShapeFilter>[];
     getShapeMaterial(world: Box3DWorld, shape: Box3DId): Box3DSurfaceMaterial;
     setShapeMaterial(world: Box3DWorld, shape: Box3DId, material: Box3DSurfaceMaterial): void;
     stepDiagnostics(world: Box3DWorld): Box3DNativeStepDiagnostics;
@@ -302,6 +309,15 @@ export interface Box3DBridgeMemory {
 }
 
 /** Copied native observations plus facade-owned requestedMass, never borrowed memory. */
+/** Optional only on reviewed body/filter mutation errors. Missing means unknown/unreviewed. */
+export interface Box3DMutationFailure extends Error {
+    readonly code: string;
+    readonly mutationOutcome?: 'not-mutated' | 'committed';
+}
+export interface Box3DShapeFilter {
+    readonly group: number;
+    readonly mask: number;
+}
 export interface Box3DBodyState {
     readonly type: 0 | 1 | 2;
     readonly enabled: boolean;

@@ -318,3 +318,33 @@ actual native set/readback, not complete CCD qualification. Arbitrary hull,
 compound, heightfield and mesh mass behavior are not qualified. Existing
 ASan/LSan and browser limitations remain unchanged. See the frozen body evidence
 summary for exact scope, all failed attempts and artifact archive identity.
+
+### Narrow 32-bit shape-filter transaction (l2)
+
+The [filter bridge contract](filter-bridge-contract.md) adds real copied filter
+get/set and atomic-admission batch updates for up to 4096 shapes. Signed32 and
+uint32 Cocos bitsets are zero-extended into actual native uint64 category/mask;
+`groupIndex` remains zero. Managed creation defaults to category 1 and mask
+`0xffffffff`; raw high bits or nonzero groupIndex explicitly reject. Real
+contact/sensor changes become observable at the next step, not as fabricated
+setter events. A successful mutation invalidates current snapshot availability
+without editing retained copies.
+
+Fresh l2 host Debug/Release, UBSan-only and Node WASM Debug/Release contracts pass.
+The current WASM audits bind 37 inputs, 63 compiled units and 21 evidence files.
+The filter fixture covers 23 admission negatives, 128 finite shape-slot reuse
+cycles, actual heap growth, real sleeping-contact wakeup and sensor exit/reentry.
+Reviewed body/filter mutation errors carry optional readonly `mutationOutcome`
+only when their phase is known. Explicit test wrappers demonstrate actual native
+commit followed by copy failure and unknown native-call delivery outcomes; they
+are not spontaneous native failure evidence. Disposed/reentrant outer guards
+remain unannotated and must be treated conservatively.
+
+The first l1 sensor fixture incorrectly supplied density 0 to an existing
+positive-density-only creation contract. Its FAIL is retained; l2 uses supported
+density 1 for the static sensor. Two overstrict comparison attempts also remain
+FAIL because they compared allocator capacities directly. The corrected separate
+comparison retains those capacities and exact source identities, verifies their
+own contracts, and compares all remaining observations. All 617 geometry samples
+are byte-identical to retained k3 samples; current physics contracts were still
+actually rerun. No full T10/C36/G1, complex-collider or browser claim is made.

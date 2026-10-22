@@ -1,0 +1,108 @@
+{
+  "status": "VALIDATED_NO_UNIQUE_FILES",
+  "timeUTC": "2026-10-22T09:55:33.630811+00:00",
+  "visibleProcReferences": [],
+  "scope": "Only ten exact previously restored, clean duplicate source clones. Preserve parent bundle/zip/manifest/receipts, active source Git, unique raw and latest native artifacts.",
+  "clones": [
+    {
+      "path": "box3d-geometry-world-checkpoint-20261022/restored-local",
+      "commit": "88dee6f893cf10f233dd8ad23b4cc9e6236c2840",
+      "trackedFilesReverified": 4864,
+      "logicalBytes": 123502749,
+      "libraryFileId": "libfile_2396ec8dac7c8191b0055e8e36579e54",
+      "proofReceipt": "docs/physics/box3d/rebuild/library-geometry-world-checkpoint-20261022.json",
+      "retainedBundle": "box3d-geometry-world-checkpoint-20261022/box3d-rebuild.bundle",
+      "retainedArchive": "box3d-geometry-world-checkpoint-20261022/Box3D-geometry-world-checkpoint-20261022.zip"
+    },
+    {
+      "path": "box3d-geometry-world-library-roundtrip-20261022/restored-source",
+      "commit": "88dee6f893cf10f233dd8ad23b4cc9e6236c2840",
+      "trackedFilesReverified": 4864,
+      "logicalBytes": 123502777,
+      "libraryFileId": "libfile_2396ec8dac7c8191b0055e8e36579e54",
+      "proofReceipt": "docs/physics/box3d/rebuild/library-geometry-world-checkpoint-20261022.json",
+      "retainedBundle": "box3d-geometry-world-library-roundtrip-20261022/box3d-rebuild.bundle",
+      "retainedArchive": "box3d-geometry-world-library-roundtrip-20261022/Box3D-geometry-world-checkpoint-20261022.zip"
+    },
+    {
+      "path": "box3d-native-world-checkpoint-20261022/restored-local",
+      "commit": "da50d73ea2b917ec7460f0303199dab137127e64",
+      "trackedFilesReverified": 5015,
+      "logicalBytes": 129711105,
+      "libraryFileId": "libfile_a3a85e9e02ac81918a314a19ae80cd6f",
+      "proofReceipt": "docs/physics/box3d/rebuild/library-native-world-checkpoint-20261022.json",
+      "retainedBundle": "box3d-native-world-checkpoint-20261022/box3d-rebuild.bundle",
+      "retainedArchive": "box3d-native-world-checkpoint-20261022/Box3D-native-world-checkpoint-20261022.zip"
+    },
+    {
+      "path": "box3d-native-world-source-library-roundtrip-20261022/restored",
+      "commit": "da50d73ea2b917ec7460f0303199dab137127e64",
+      "trackedFilesReverified": 5015,
+      "logicalBytes": 129711161,
+      "libraryFileId": "libfile_a3a85e9e02ac81918a314a19ae80cd6f",
+      "proofReceipt": "docs/physics/box3d/rebuild/library-native-world-checkpoint-20261022.json",
+      "retainedBundle": "box3d-native-world-source-library-roundtrip-20261022/box3d-rebuild.bundle",
+      "retainedArchive": "box3d-native-world-source-library-roundtrip-20261022/Box3D-native-world-checkpoint-20261022.zip"
+    },
+    {
+      "path": "box3d-coexist-checkpoint-20261022/restored-local",
+      "commit": "6cb9b873e2235a9a3abbb24e66bd379dea2e7fc1",
+      "trackedFilesReverified": 5077,
+      "logicalBytes": 131114481,
+      "libraryFileId": "libfile_a0592bcc8ba8819192d8d2405e2e0f19",
+      "proofReceipt": "docs/physics/box3d/rebuild/library-coexist-checkpoint-20261022.json",
+      "retainedBundle": "box3d-coexist-checkpoint-20261022/box3d-rebuild.bundle",
+      "retainedArchive": "box3d-coexist-checkpoint-20261022/Box3D-coexist-checkpoint-20261022.zip"
+    },
+    {
+      "path": "box3d-coexist-library-roundtrip-20261022/restored",
+      "commit": "6cb9b873e2235a9a3abbb24e66bd379dea2e7fc1",
+      "trackedFilesReverified": 5077,
+      "logicalBytes": 131114509,
+      "libraryFileId": "libfile_a0592bcc8ba8819192d8d2405e2e0f19",
+      "proofReceipt": "docs/physics/box3d/rebuild/library-coexist-checkpoint-20261022.json",
+      "retainedBundle": "box3d-coexist-library-roundtrip-20261022/box3d-rebuild.bundle",
+      "retainedArchive": "box3d-coexist-library-roundtrip-20261022/Box3D-coexist-checkpoint-20261022.zip"
+    },
+    {
+      "path": "box3d-body-contract-checkpoint-20261022/restored-local",
+      "commit": "3b3fce34abe385b8bbcfc2c382119f06f59953a2",
+      "trackedFilesReverified": 5127,
+      "logicalBytes": 135984125,
+      "libraryFileId": "libfile_0d1e44092bb481918c7a3aa31d09d7ba",
+      "proofReceipt": "docs/physics/box3d/rebuild/library-body-contract-checkpoint-20261022.json",
+      "retainedBundle": "box3d-body-contract-checkpoint-20261022/box3d-rebuild.bundle",
+      "retainedArchive": "box3d-body-contract-checkpoint-20261022/Box3D-body-contract-checkpoint-20261022.zip"
+    },
+    {
+      "path": "box3d-body-contract-library-roundtrip-20261022/restored",
+      "commit": "3b3fce34abe385b8bbcfc2c382119f06f59953a2",
+      "trackedFilesReverified": 5127,
+      "logicalBytes": 135984153,
+      "libraryFileId": "libfile_0d1e44092bb481918c7a3aa31d09d7ba",
+      "proofReceipt": "docs/physics/box3d/rebuild/library-body-contract-checkpoint-20261022.json",
+      "retainedBundle": "box3d-body-contract-library-roundtrip-20261022/box3d-rebuild.bundle",
+      "retainedArchive": "box3d-body-contract-library-roundtrip-20261022/Box3D-body-contract-checkpoint-20261022.zip"
+    },
+    {
+      "path": "box3d-native-body-checkpoint-20261022-final/restored-local",
+      "commit": "172e7f896c043261a55314bb1489d1d35e515cef",
+      "trackedFilesReverified": 5347,
+      "logicalBytes": 144044270,
+      "libraryFileId": "libfile_6945c12190808191a5127523a3b0df51",
+      "proofReceipt": "docs/physics/box3d/rebuild/library-native-body-checkpoint-20261022.json",
+      "retainedBundle": "box3d-native-body-checkpoint-20261022-final/box3d-rebuild.bundle",
+      "retainedArchive": "box3d-native-body-checkpoint-20261022-final/Box3D-native-body-checkpoint-20261022.zip"
+    },
+    {
+      "path": "box3d-native-body-source-library-roundtrip-20261022/restored",
+      "commit": "172e7f896c043261a55314bb1489d1d35e515cef",
+      "trackedFilesReverified": 5347,
+      "logicalBytes": 144044302,
+      "libraryFileId": "libfile_6945c12190808191a5127523a3b0df51",
+      "proofReceipt": "docs/physics/box3d/rebuild/library-native-body-checkpoint-20261022.json",
+      "retainedBundle": "box3d-native-body-source-library-roundtrip-20261022/box3d-rebuild.bundle",
+      "retainedArchive": "box3d-native-body-source-library-roundtrip-20261022/Box3D-native-body-checkpoint-20261022.zip"
+    }
+  ]
+}

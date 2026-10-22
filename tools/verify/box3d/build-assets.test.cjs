@@ -370,6 +370,100 @@ test('corrupt/missing assets, stale identities, failed/incomplete inputs and aud
                 writeJSON(d, 'artifact-audit.raw.json', r);
             },
         ],
+        ...[
+            [
+                'filter-failed',
+                'wasm-filter-contract.raw.json',
+                (r) => {
+                    r.status = 'FAIL';
+                },
+            ],
+            [
+                'filter-stale-fixture',
+                'wasm-filter-contract.raw.json',
+                (r) => {
+                    r.fixtureSha256 = '0'.repeat(64);
+                },
+            ],
+            [
+                'filter-stale-identity',
+                'wasm-filter-contract.raw.json',
+                (r) => {
+                    r.identity.schemaSha256 = '0'.repeat(64);
+                },
+            ],
+            [
+                'filter-native-failed',
+                'native-filter-contract.raw.json',
+                (r) => {
+                    r.status = 'FAIL';
+                },
+            ],
+            [
+                'filter-native-wrong-pointer-width',
+                'native-filter-contract.raw.json',
+                (r) => {
+                    r.pointerBytes = 8;
+                },
+            ],
+            [
+                'filter-native-wrong-bitsets',
+                'native-filter-contract.raw.json',
+                (r) => {
+                    r.acceptedBitsets.pop();
+                },
+            ],
+            ...[
+                'nativeUpperBitsAndGroupReject',
+                'batchNoPartialMutation',
+                'lockedCapacityOverlapCanaries',
+                'fullGenerationWorld',
+                'defaultAllCreationPaths',
+                'coreBytesRestored',
+            ].map((key) => [
+                `filter-native-missing-${key}`,
+                'native-filter-contract.raw.json',
+                (r) => {
+                    delete r[key];
+                },
+            ]),
+            ...[
+                'bitsetsAndDefaults',
+                'batchAdmissionAtomic',
+                'copiesAndGrowth',
+                'fullIdReuse',
+                'contactNextStep',
+                'sleepWake',
+                'sensorNextStep',
+                'bodyMutationOutcome',
+                'filterMutationOutcome',
+                'cleanup',
+            ].map((key) => [
+                `filter-missing-${key}`,
+                'wasm-filter-contract.raw.json',
+                (r) => {
+                    delete r.checks[key];
+                },
+            ]),
+        ].map(([label, name, mutate]) => [
+            label + '-rehashed',
+            (d) => {
+                const r = readJSON(d, name);
+                mutate(r);
+                writeJSON(d, name, r);
+                rehashAuditEvidence(d, name);
+            },
+        ]),
+        ...['filter_bridge.c', 'filter_contract.c'].map((name) => [
+            'filter-compile-source-omitted-' + name,
+            (d) => {
+                const r = readJSON(d, 'artifact-audit.raw.json');
+                const index = r.compiledSourceHashes.findIndex((row) => row.path.endsWith('/' + name));
+                assert(index >= 0);
+                r.compiledSourceHashes[index] = r.compiledSourceHashes[0];
+                writeJSON(d, 'artifact-audit.raw.json', r);
+            },
+        ]),
     ];
     for (const [name, mutate] of mutations) {
         const directory = copyInputs(name),
@@ -382,6 +476,15 @@ test('corrupt/missing assets, stale identities, failed/incomplete inputs and aud
         );
         assert.equal(fs.existsSync(target), false, `${name} wrote output before validation`);
     }
+    assert.equal(mutations.length, 52, 'Keep the independently enumerated rejection inventory complete');
+    fs.writeFileSync(
+        path.join(output, 'rejection-inventory.json'),
+        JSON.stringify(
+            mutations.map(([name]) => name),
+            null,
+            2,
+        ) + '\n',
+    );
 });
 test('existing old schema and symlink/overlap destinations cannot be silently distributed', async () => {
     await assert.rejects(verifySTBuild(path.join(root, 'tools/physics/box3d/output/wasm-patch-release-20261022-e')));

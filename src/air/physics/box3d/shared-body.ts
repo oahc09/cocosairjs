@@ -99,6 +99,64 @@ export function filterBits(value: number): number {
         throw worldError('AIR_E_BOX3D_CONFIG', 'filter', 'Expected a 32-bit integer bitset.');
     return value >>> 0;
 }
+/** Read every serialized candidate and validate the complete set before any native mutation. */
+export function validateRigidBodyInitial(value: RigidBody, configuration: Box3DComponentConfiguration) {
+    const type = nativeBodyType(value.type);
+    const mass = finiteFloat32(value.mass, 'initial mass');
+    if (mass <= 0 || !Number.isFinite(Math.fround(1 / mass)))
+        throw worldError('AIR_E_BOX3D_CONFIG', 'initial mass', 'Expected positive finite mass and reciprocal.');
+    const linear = value.linearDamping;
+    const angular = value.angularDamping;
+    const linearDamping = finiteFloat32(linear, 'initial linearDamping');
+    const angularDamping = finiteFloat32(angular, 'initial angularDamping');
+    if (linear < 0 || linear > 1 || angular < 0 || angular > 1)
+        throw worldError('AIR_E_BOX3D_CONFIG', 'initial damping', 'Expected damping in [0,1].');
+    const gravity = value.useGravity;
+    const sleep = value.allowSleep;
+    if (typeof gravity !== 'boolean' || typeof sleep !== 'boolean')
+        throw worldError('AIR_E_BOX3D_CONFIG', 'initial body flags', 'Expected exact booleans.');
+    const factors = (v: Vec, operation: string) => {
+        const copy = bodyVector(v, operation);
+        if ([v.x, v.y, v.z].some((n) => n !== 0 && n !== 1))
+            throw worldError('AIR_E_BOX3D_CONFIG', operation, 'Expected exact binary factors.');
+        return copy;
+    };
+    const linearFactor = factors(value.linearFactor, 'initial linearFactor');
+    const angularFactor = factors(value.angularFactor, 'initial angularFactor');
+    const group = filterBits(value.group);
+    const mask = filterBits(configuration.collisionMask(group | 0));
+    return Object.freeze({
+        type,
+        mass,
+        linearDamping,
+        angularDamping,
+        gravity,
+        sleep,
+        linearFactor,
+        angularFactor,
+        group,
+        mask,
+    });
+}
+function rejectInitialShear(node: Node): void {
+    const m = node.worldMatrix;
+    const axes = [
+        [m.m00, m.m01, m.m02],
+        [m.m04, m.m05, m.m06],
+        [m.m08, m.m09, m.m10],
+    ];
+    const lengths = axes.map((a) => Math.hypot(...a));
+    if (
+        axes.some((axis) => axis.some((v) => !Number.isFinite(v))) ||
+        lengths.some((v) => v === 0 || !Number.isFinite(v))
+    )
+        throw worldError('AIR_E_BOX3D_CONFIG', 'initial transform', 'Expected finite nondegenerate transform.');
+    for (let i = 0; i < 3; ++i)
+        for (let j = i + 1; j < 3; ++j) {
+            const cosine = axes[i].reduce((sum, n, k) => sum + n * axes[j][k], 0) / lengths[i] / lengths[j];
+            if (Math.abs(cosine) > 1e-6) unsupportedBox3D('initial sheared world transform');
+        }
+}
 /** One native body per Node per world. No native capability is exposed by this object. */
 export class Box3DSharedBody {
     readonly #binding: Box3DComponentBinding;
@@ -130,6 +188,7 @@ export class Box3DSharedBody {
         this.#owner = owner;
         this.#mask = filterBits(configuration.collisionMask(1));
         this.#pose = this.nodePose();
+        rejectInitialShear(node);
         this.#scale = bodyVector(node.worldScale, 'initial scale');
         if (this.#scale.some((v) => v <= 0)) unsupportedBox3D('nonpositive initial Node scale');
         this.#parent = node.parent;
@@ -265,23 +324,32 @@ export class Box3DSharedBody {
         this.assert('attach RigidBody');
         if (this.#rigidBody)
             throw worldError('AIR_E_BOX3D_CONFIG', 'attach RigidBody', 'Node already has a body owner.');
-        const type = nativeBodyType(value.type);
-        const group = filterBits(value.group);
-        const mask = filterBits(configuration.collisionMask(value.group));
-        // Existing colliders will gain these controls in the shape-owner checkpoint.
-        this.control('setBodyMass', value.mass);
-        this.control('setBodyDamping', value.linearDamping, value.angularDamping);
-        this.control('setBodyGravityScale', value.useGravity ? 1 : 0);
-        this.control('setBodySleepEnabled', value.allowSleep);
-        this.control(
-            'setBodyMotionFactors',
-            bodyVector(value.linearFactor, 'linearFactor'),
-            bodyVector(value.angularFactor, 'angularFactor'),
-        );
-        this.control('setBodyType', type);
-        this.#type = type;
-        this.#group = group;
-        this.#mask = mask;
+        const next = validateRigidBodyInitial(value, configuration);
+        let committed = 0;
+        try {
+            this.control('setBodyMass', next.mass);
+            ++committed;
+            this.control('setBodyDamping', next.linearDamping, next.angularDamping);
+            ++committed;
+            this.control('setBodyGravityScale', next.gravity ? 1 : 0);
+            ++committed;
+            this.control('setBodySleepEnabled', next.sleep);
+            ++committed;
+            this.control('setBodyMotionFactors', next.linearFactor, next.angularFactor);
+            ++committed;
+            this.control('setBodyType', next.type);
+            ++committed;
+        } catch (error) {
+            // This is not a native batch transaction. A failure after an earlier write is explicitly fatal.
+            if (committed) {
+                this.#owner.invalidate();
+                this.#owner.fault(error);
+            }
+            throw error;
+        }
+        this.#type = next.type;
+        this.#group = next.group;
+        this.#mask = next.mask;
         this.#rigidBody = value;
     }
     enableRigidBody(enabled: boolean): void {

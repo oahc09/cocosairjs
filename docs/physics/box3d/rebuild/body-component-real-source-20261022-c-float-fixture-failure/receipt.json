@@ -1,0 +1,13 @@
+{
+  "status": "MOCK_EXPECTATION_FAILURE",
+  "exitCode": 1,
+  "inputs": {
+    "src/air/physics/box3d/world.ts": "4bc8501315170fc2011f03413321c03162526005981f83d17da63491401ed49a",
+    "src/air/physics/box3d/world-binding.ts": "88b1663eebbe81c085eafec565e09d8653ca8f175770acf07c1bae842819d044",
+    "src/air/physics/box3d/shared-body.ts": "f603cc3590c4c4b4bdfaad65b99b47684b0bd884cc0d4c654962e9a3e9db1f04",
+    "src/air/physics/box3d/rigid-body.ts": "0d00792b4f66ec30fdd255041b397f6a501257b071d78bf1516b97bc32ab51b6",
+    "tools/verify/box3d/body-component-real-source.test.cjs": "7311c1d467333d2c3c35547e10e4b2bab6470d80aab76a7eb6791830622a29c5",
+    "tools/verify/box3d/body-component-real-source.tsconfig.json": "161ee5546b1bb85a4776f74c65b59caeb4afe3afb6cf597be17681ad8c8637e0"
+  },
+  "reason": "Mock expected double 0.2; strict initial float32 validation correctly forwards Math.fround(0.2)."
+}

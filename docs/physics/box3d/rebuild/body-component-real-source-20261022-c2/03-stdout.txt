@@ -1,0 +1,42 @@
+✔ current incomplete foundation fails before registration or world allocation (2.823597ms)
+✔ each mandatory bridge and wrong variant fail closed (0.609831ms)
+✔ selection only registers; constructor owns world immediately before fallible readback (1.321438ms)
+✔ late selection, closed preparation and second construction reject (0.876764ms)
+✔ every missing component constructor throws instead of selector no-op fallback (0.391257ms)
+✔ all Cocos queries explicitly reject and native pointers are not exposed (0.847308ms)
+✔ fixed step forwards once and snapshots before the event boundary (0.674294ms)
+✔ extra manual accumulator arguments and invalid dt reject without native work (0.450981ms)
+✔ prepared subdivision config is copied and never multiplies dt (0.65339ms)
+✔ post-native snapshot failure latches fault; next frame/manual call cannot replay (1.238723ms)
+✔ debug failure after native step also faults without replay (0.626913ms)
+✔ foreign advancement and inconsistent native step count fault before extra advance (0.328241ms)
+✔ gravity/sleep reach native and invalid arguments preserve valid state (0.602165ms)
+✔ native setter readback mismatch faults rather than reporting successful effect (0.254909ms)
+✔ debug snapshots are copied/frozen; invalid flags, unknown primitives and size reject (0.536893ms)
+✔ native unsupported debug flag does not commit JS setting (0.29234ms)
+✔ material defaults update inherited and future shapes, preserving explicit material (1.019119ms)
+✔ unsupported material fields and invalid numbers reject before mutation (0.489349ms)
+✔ material preflight validates every shape before mutation; failure rolls back all attempted writes (0.37622ms)
+✔ material rollback failure faults and cleanup still works (0.479098ms)
+✔ destroy is idempotent; closed calls reject while copied diagnostics remain readable (0.414069ms)
+✔ failed world release retains module but independent backend cleanup proceeds once (0.329997ms)
+✔ copied native counters are exposed without a raw heap view (0.965512ms)
+✔ mismatched ST options reject before native allocation (0.215498ms)
+✔ unreadable post-call diagnostics retain an explicitly unknown native outcome (0.349544ms)
+✔ pre-native binding rejection records no completion and faults safely (0.251225ms)
+✔ native reentrancy cannot destroy a world during its step (0.317124ms)
+✔ all material tokens are read before any inherited shape is modified (0.301149ms)
+✔ cross-world material adoption rejects before mutation (1.774399ms)
+✔ native material failure during adoption faults rather than silently registering (0.313469ms)
+✔ post-step gravity mutation plus readback failure marks native observation stale (0.589319ms)
+✔ post-step sleep mutation plus readback failure marks native observation stale (0.300451ms)
+✔ post-step inherited-shape adoption failure marks native observation stale (0.477554ms)
+✔ post-step material rollback failure marks native observation stale (0.335174ms)
+ℹ tests 34
+ℹ suites 0
+ℹ pass 34
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 829.057266

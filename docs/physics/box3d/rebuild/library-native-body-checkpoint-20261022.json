@@ -1,0 +1,17 @@
+{
+  "status": "PASS_ACTUAL_LIBRARY_DOWNLOAD_INDEPENDENT_GIT_RESTORE",
+  "libraryFileId": "libfile_6945c12190808191a5127523a3b0df51",
+  "fileName": "Box3D-native-body-checkpoint-20261022.zip",
+  "bytes": 19447109,
+  "sha256": "806bdd050f577ac789b18899a64e8433028f4e275f95ed49b3e58de63919350a",
+  "commit": "172e7f896c043261a55314bb1489d1d35e515cef",
+  "tree": "ec4c6173fa873cd32a85cd4fe62792c375787f67",
+  "verifiedAt": "2026-10-22T09:38:05.558Z",
+  "payloads": 3,
+  "restore": {
+    "status": "PASS",
+    "checkedFiles": 5347,
+    "independentObjectStore": true
+  },
+  "scope": "Source recovery only; qualified native k3 artifacts are separate Library archives. Current uncommitted filter and shape implementation excluded."
+}

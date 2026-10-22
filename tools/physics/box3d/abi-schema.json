@@ -262,5 +262,28 @@
     "qualificationScope": "Finite box/sphere only; arbitrary hull, mesh/compound, replay, full CCD/T10/G1 not implied.",
     "motionLocks": "Immediate world-axis velocity constraints: velocity setters and successful linear/angular impulses mask locked components before readback. Real force/torque accumulators remain pending until native solve. Legacy facade velocity/center-impulse methods route through these checks; C signatures unchanged.",
     "boxMinimumHalfExtent": "Each half extent must be >= 0.2f * B3_LINEAR_SLOP (0.001m in this pinned core). Reject smaller values before core helper silently enlarges them; applies both legacy and additive box facade/native creation."
+  },
+  "shapeFilters": {
+    "resultWords": 2,
+    "resultLayout": ["uint32 group/categoryBits", "uint32 maskBits"],
+    "batchInput": "count consecutive low/high uint32 full shape IDs; maximum4096; output must not overlap input",
+    "batchOutput": "count consecutive 2-word native readbacks; all admission precedes mutation/output writes",
+    "emptyBatch": "world/filter admission, no mutation/snapshot invalidation",
+    "inputDomain": "signed32 or uint32 integer bitset; normalize >>>0 then zero-extend native uint64; groupIndex always0",
+    "managedShapeDefault": {
+      "group": 1,
+      "mask": 4294967295,
+      "groupIndex": 0
+    },
+    "unsupportedNativeRead": "nonzero upper32 category/mask or nonzero groupIndex fails without truncation",
+    "contactTiming": "invokeContacts=true; current snapshot invalidated only after success; real new contact/sensor observations on next step, retained snapshots immutable",
+    "ownership": "full-generation IDs, exact world, unlocked, whole batch validation, duplicates rejected, capacity checked; no persistent allocation or exposed pointer"
+  },
+  "mutationOutcome": {
+    "scope": "reviewed body controls/mass/force and legacy velocity/center impulse plus filter setters only",
+    "not-mutated": "known admission failure including native nonzero status before any mutation",
+    "committed": "native mutator returned0 including post-call readback failure; not a numerical-change claim",
+    "unknown": "missing property on native throw/trap or unreviewed path; reviewed native-call exceptions conservatively invalidate current snapshot without changing step count; never inferred from error code",
+    "descriptor": "optional readonly nonconfigurable enumerable property on Error"
   }
 }

@@ -62,7 +62,7 @@ try {
             .filter((f) => f.endsWith('.c'))
             .sort()
             .map((f) => resolve(core, 'src', f)),
-        ...['air_box3d.c', 'snapshot.c', 'geometry.c', 'world_bridge.c', 'body_control.c'].map(
+        ...['air_box3d.c', 'snapshot.c', 'geometry.c', 'world_bridge.c', 'body_control.c', 'filter_bridge.c'].map(
             (f) => 'tools/physics/box3d/native/' + f,
         ),
     ];
@@ -74,7 +74,7 @@ try {
         report.inputs.push({ path: source.replaceAll(root, '<repo>'), sha256: sha256(readFileSync(source)) });
     }
     report.contracts = {};
-    for (const name of ['contract', 'geometry_contract', 'world_contract', 'body_contract']) {
+    for (const name of ['contract', 'geometry_contract', 'world_contract', 'body_contract', 'filter_contract']) {
         const source = `tools/physics/box3d/native/${name}.c`,
             exe = resolve(out, name);
         report.inputs.push({ path: source, sha256: sha256(readFileSync(source)) });

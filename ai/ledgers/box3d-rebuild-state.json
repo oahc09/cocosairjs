@@ -958,17 +958,17 @@
     "deploy": false,
     "npmPublish": false
   },
-  "nextStep": "Preserve k3 final native evidence and artifact archive; implement and test actual AIR RigidBody/Box/Sphere shared ownership without fake filter/pose support, retain new failures, then qualified filter bridge as a separate source/schema increment. Formal 2128-cell execution inventory stays NOT_RUN until each required exact environment/profile/fixture has evidence.",
+  "nextStep": "Preserve l2 source/native artifacts in thirteenth recoverable checkpoint; finish actual AIR RigidBody/Box/Sphere ownership and phase-aware mutation/allocation fault handling with retained REDs and real WASM component fixtures. Later T11 pose/scale, events, queries, remaining v1.2 work and formal 2128-cell acceptance remain incomplete.",
   "remoteHistoryPolicy": "True upstream main parent and incremental tree; local snapshot import is backup-only and is never pushed as upstream history.",
   "remotePublication": {
-    "status": "REMOTE_CHECKPOINT_11_READBACK_VERIFIED",
-    "commit": "c57edf9cf1924c39609027f3ec8ac8a4e3a5c1d3",
-    "tree": "e9ae821e8771e3b79d3c32f3995c153dc07d32c9",
-    "parent": "ee84df30474948a11f81c4112a2dc0255ce9b156",
+    "status": "REMOTE_CHECKPOINT_12_READBACK_VERIFIED",
+    "commit": "d1160c008fc4d178609a290eb9668ba420084029",
+    "tree": "0e0fb1955c207509173550561de6f33b1dd8eb0c",
+    "parent": "c57edf9cf1924c39609027f3ec8ac8a4e3a5c1d3",
     "branchUrl": "https://github.com/oahc09/cocosairjs/tree/feat/box3d-rebuild-20261022",
-    "receipt": "docs/physics/box3d/rebuild/remote-checkpoint-11.json"
+    "receipt": "docs/physics/box3d/rebuild/remote-checkpoint-12.json"
   },
-  "updatedAtUtc": "2026-10-22T09:33:06.247023+00:00",
+  "updatedAtUtc": "2026-10-22T10:00:38.315361+00:00",
   "currentEvidence": {
     "m0ContractTests": "PASS_7_SOURCE_DESIGN_CHECKS_ONLY_U01_U02_INVENTORY_ADDED",
     "nativeFoundationIndex": "tools/physics/box3d/evidence/index.json",
@@ -1026,10 +1026,10 @@
     "contactGeometryIndependentReview": "docs/physics/box3d/rebuild/geometry-independent-review-20261022-i/receipt.json",
     "worldControl": "PASS_34_MOCK_NATIVE_CASES_NOT_REAL_ENGINE_OR_WASM",
     "worldControlEvidence": "docs/physics/box3d/rebuild/world-control-diagnostic-staleness-20261022/green/receipt.json",
-    "currentStaging": "PASS_SCOPED_K3_33_INPUTS_61_UNITS_18_EVIDENCE_28_REJECTED_MUTATIONS_REAL_NODE_LOADER_CYCLE",
-    "currentStagingEvidence": "docs/physics/box3d/rebuild/assets-staging-20261022-k3/receipt.json",
+    "currentStaging": "PASS_SCOPED_L2_37_INPUTS_63_UNITS_21_EVIDENCE_52_REJECTED_MUTATIONS_REAL_NODE_LOADER_CYCLE",
+    "currentStagingEvidence": "docs/physics/box3d/rebuild/assets-staging-20261022-l2/receipt.json",
     "historicalGPatchChainSha256": "20dd450a4313774e1d934df9fa9ec3458df35d9ee314beffa9d846404cdb86bf",
-    "currentSchemaSha256": "3491202780428c1844359d149efed3be259681678486d51886e03de00d516700",
+    "currentSchemaSha256": "78fccc27f58503178fcc824473a0e30d42fa54f19e87bd9424b83a975d45b738",
     "stLoaderCurrentUnitEvidence": "docs/physics/box3d/rebuild/loader-unit-20261022-j2/command-receipt.json",
     "contactGeometryEvidence": "tools/physics/box3d/evidence/geometry-checkpoint-20261022-i/summary.json",
     "currentGeometryArtifactsLibrary": "libfile_7fd34247547c8191b9e121f5226fdb21",
@@ -1086,11 +1086,11 @@
       "artifactsLibrary": ["libfile_ab600aa29a78819190069e5bfae1c204", "libfile_0c829a71315c8191ac5b8bf5534c0f67"],
       "archiveRestoreReceipt": "docs/physics/box3d/rebuild/library-body-artifacts-20261022-k.json"
     },
-    "latestInputBoundary": "Current native body input is k3. Earlier j2 AIR world/coexistence, h2 runtime, g/e/i fixtures remain historical source-bound results, not a claim about current unqualified AIR component changes. Every PASS below is restricted to its linked exact inputs.",
+    "latestInputBoundary": "Current qualified narrow native input is l2. Earlier k3 body, j2 AIR world/coexistence, h2 runtime, g/e/i results remain historical source-bound evidence, not proof about current AIR component changes. Every PASS is restricted to its linked inputs; no public component activation or browser/full-Gate acceptance.",
     "actualComponentSourceControls": {
       "status": "PASS_SCOPED_MOCK_BOUND_SOURCE_CONTROLS_ONLY",
-      "bodyOwnershipSourceReceipt": "docs/physics/box3d/rebuild/body-component-real-source-20261022-b/receipt.json",
-      "bodyOwnershipControls": 17,
+      "bodyOwnershipSourceReceipt": "docs/physics/box3d/rebuild/body-component-real-source-20261022-c2/receipt.json",
+      "bodyOwnershipControls": 29,
       "worldRegressionControls": 34,
       "bodyPriorControls": 56,
       "colliderReceipt": "docs/physics/box3d/rebuild/body-component-real-collider-20261022-green/receipt.json",
@@ -1103,7 +1103,23 @@
         "Unexpected event subscription failure is not atomic rollback",
         "Direct mutable vector aliases bypass property setters",
         "Current body/filter/shape integration still in progress"
-      ]
+      ],
+      "initializationPreflight": "All candidates validated before body acquisition/attachment; c-red and two fixture/typecheck failures retained. Current shape/phase correction remains unqualified work in progress."
+    },
+    "filterIncrement": {
+      "status": "PASS_SCOPED_L2_NATIVE_DEBUG_RELEASE_UBSAN_ONLY_WASM_DEBUG_RELEASE",
+      "summary": "tools/physics/box3d/evidence/filter-checkpoint-20261022-l/summary.json",
+      "schema": "78fccc27f58503178fcc824473a0e30d42fa54f19e87bd9424b83a975d45b738",
+      "sourceReceipt": "docs/physics/box3d/rebuild/filter-source-20261022-l3/source-checkpoint.json",
+      "buildInputs": 37,
+      "wasmCompileUnits": 63,
+      "auditEvidenceFiles": 21,
+      "successfulWasmCommands": 15,
+      "independentRetainedObservationReview": "docs/physics/box3d/rebuild/filter-independent-review-20261022-l2/receipt.json",
+      "artifactsLibrary": ["libfile_ec163abd2fac819197df10d04a0679e9", "libfile_a8db3ccc14fc8191a07149558c0d7184"],
+      "archiveRestoreReceipt": "docs/physics/box3d/rebuild/library-filter-artifacts-20261022-l.json",
+      "uniqueArchiveFilesActuallyRestored": 2496,
+      "scope": "Actual 32-bit filters zero-extended to native64, atomic full-batch admission, next-step contacts/sensors and explicit body/filter mutation phase. Injected post-native failure mechanisms are not spontaneous native failure. ASan/LSan, actual AIR components, full T10/C36/Gates remain incomplete."
     }
   },
   "contractDesign": {
@@ -1117,10 +1133,10 @@
   },
   "persistentCheckpoint": {
     "status": "PASS_ACTUAL_LIBRARY_DOWNLOAD_INDEPENDENT_GIT_RESTORE",
-    "libraryFileId": "libfile_0d1e44092bb481918c7a3aa31d09d7ba",
-    "commit": "3b3fce34abe385b8bbcfc2c382119f06f59953a2",
-    "trackedFiles": 5127,
-    "receipt": "docs/physics/box3d/rebuild/library-body-contract-checkpoint-20261022.json",
+    "libraryFileId": "libfile_6945c12190808191a5127523a3b0df51",
+    "commit": "172e7f896c043261a55314bb1489d1d35e515cef",
+    "trackedFiles": 5347,
+    "receipt": "docs/physics/box3d/rebuild/library-native-body-checkpoint-20261022.json",
     "nativeArtifactsRemainSeparatelyArchived": true
   },
   "additionalOriginalMainSources": {
@@ -1144,5 +1160,6 @@
   "inventoryVersion": "box3d-required-inventory-frozen-v1",
   "inventoryManifest": "docs/physics/box3d/contracts/inventory-frozen-v1.json",
   "inventoryReview": "docs/physics/box3d/contracts/inventory-freeze-review-v1.json",
-  "inventoryValidation": "docs/physics/box3d/rebuild/inventory-freeze-check-20261022/receipt.json"
+  "inventoryValidation": "docs/physics/box3d/rebuild/inventory-freeze-check-20261022/receipt.json",
+  "redundantRecoveryCloneCleanup": "docs/physics/box3d/rebuild/redundant-clone-cleanup-20261022/receipt.json"
 }

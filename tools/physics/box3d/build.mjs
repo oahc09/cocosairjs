@@ -84,6 +84,7 @@ try {
             'tools/physics/box3d/native/geometry.c',
             'tools/physics/box3d/native/world_bridge.c',
             'tools/physics/box3d/native/body_control.c',
+            'tools/physics/box3d/native/filter_bridge.c',
             'tools/physics/box3d/native/contract.c',
         ]) {
             const object = resolve(out, basename(source) + '.o');
@@ -147,6 +148,20 @@ try {
         writeFileSync(resolve(out, 'native-body-contract.raw.json'), bodyRaw);
         result.bodyContract = JSON.parse(bodyRaw);
         if (result.bodyContract.status !== 'PASS') throw new Error('Native body contract failed');
+        const filterExe = resolve(out, 'native-filter-contract');
+        run(cc, [
+            ...flags,
+            'tools/physics/box3d/native/filter_contract.c',
+            ...objects.filter((file) => !file.endsWith('/contract.c.o')),
+            ...(sanitize ? ['-fsanitize=address,undefined'] : []),
+            '-lm',
+            '-o',
+            filterExe,
+        ]);
+        const filterRaw = run(filterExe, []);
+        writeFileSync(resolve(out, 'native-filter-contract.raw.json'), filterRaw);
+        result.filterContract = JSON.parse(filterRaw);
+        if (result.filterContract.status !== 'PASS') throw new Error('Native filter contract failed');
         result.artifacts = [
             { path: 'native-contract', sha256: sha256(readFileSync(exe)), bytes: readFileSync(exe).length },
         ];
@@ -222,12 +237,18 @@ try {
         result.bodyContract = JSON.parse(bodyRaw);
         if (result.bodyContract.status !== 'PASS' || result.bodyContract.pointerBytes !== 4)
             throw new Error('WASM32 body native contract failed');
+        const filterRaw = run(process.execPath, [resolve(out, 'air_box3d_filter_contract.cjs')]);
+        writeFileSync(resolve(out, 'native-filter-contract.raw.json'), filterRaw);
+        result.filterContract = JSON.parse(filterRaw);
+        if (result.filterContract.status !== 'PASS' || result.filterContract.pointerBytes !== 4)
+            throw new Error('WASM32 filter native contract failed');
         run(process.execPath, ['tools/physics/box3d/wasm-contract.mjs', out]);
         run(process.execPath, ['tools/physics/box3d/wasm-ownership-contract.mjs', out]);
         run(process.execPath, ['tools/physics/box3d/wasm-snapshot-contract.mjs', out]);
         run(process.execPath, ['tools/physics/box3d/wasm-geometry-contract.mjs', out]);
         run(process.execPath, ['tools/physics/box3d/wasm-world-contract.mjs', out]);
         run(process.execPath, ['tools/physics/box3d/wasm-body-contract.mjs', out]);
+        run(process.execPath, ['tools/physics/box3d/wasm-filter-contract.mjs', out]);
         result.artifacts = artifacts;
         result.browserStatus = 'NOT_RUN';
     }
@@ -256,6 +277,7 @@ try {
         'tools/physics/box3d/wasm-geometry-contract.mjs',
         'tools/physics/box3d/wasm-world-contract.mjs',
         'tools/physics/box3d/wasm-body-contract.mjs',
+        'tools/physics/box3d/wasm-filter-contract.mjs',
         'tools/physics/box3d/verify-sources.mjs',
         'tools/physics/box3d/verify-wasm.mjs',
         'tools/physics/box3d/native/air_box3d.c',
@@ -265,6 +287,9 @@ try {
         'tools/physics/box3d/native/world_bridge.h',
         'tools/physics/box3d/native/body_control.c',
         'tools/physics/box3d/native/body_control.h',
+        'tools/physics/box3d/native/filter_bridge.c',
+        'tools/physics/box3d/native/filter_bridge.h',
+        'tools/physics/box3d/native/filter_contract.c',
         'tools/physics/box3d/native/body_contract.c',
         'tools/physics/box3d/native/world_contract.c',
         'tools/physics/box3d/native/air_box3d.h',

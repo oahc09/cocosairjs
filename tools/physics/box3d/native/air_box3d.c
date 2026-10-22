@@ -152,7 +152,7 @@ int air_b3_shape_sphere(uint32_t lo, uint32_t hi, float radius, float density, u
     int status = valid_shape_args(lo, hi, density, out);
     if (status) return status;
     if (!isfinite(radius) || radius <= 0) return AIR_B3_ARGUMENT;
-    b3ShapeDef def = b3DefaultShapeDef(); def.density = density;
+    b3ShapeDef def = b3DefaultShapeDef(); def.filter = air_b3_default_filter(); def.density = density;
     b3Sphere sphere = {{0, 0, 0}, radius};
     b3ShapeId shape = b3CreateSphereShape(b3LoadBodyId(join_id(lo, hi)), &def, &sphere);
     if (!b3Shape_IsValid(shape)) return AIR_B3_CREATION;
@@ -164,7 +164,7 @@ int air_b3_shape_sphere_ex(uint32_t lo, uint32_t hi, float x, float y, float z, 
     int status = valid_shape_args(lo, hi, density, out);
     if (status) return status;
     if (!finite3(x, y, z) || !isfinite(radius) || radius <= 0 || (sensor != 0 && sensor != 1)) return AIR_B3_ARGUMENT;
-    b3ShapeDef def = b3DefaultShapeDef(); def.density = density; def.isSensor = sensor != 0; def.enableSensorEvents = sensor != 0;
+    b3ShapeDef def = b3DefaultShapeDef(); def.filter = air_b3_default_filter(); def.density = density; def.isSensor = sensor != 0; def.enableSensorEvents = sensor != 0;
     b3Sphere sphere = {{x, y, z}, radius};
     b3ShapeId shape = b3CreateSphereShape(b3LoadBodyId(join_id(lo, hi)), &def, &sphere);
     if (!b3Shape_IsValid(shape)) return AIR_B3_CREATION;
@@ -175,7 +175,7 @@ int air_b3_shape_box(uint32_t lo, uint32_t hi, float hx, float hy, float hz, flo
     int status = valid_shape_args(lo, hi, density, out);
     if (status) return status;
     if (!finite3(hx, hy, hz) || hx < 0.2f*B3_LINEAR_SLOP || hy < 0.2f*B3_LINEAR_SLOP || hz < 0.2f*B3_LINEAR_SLOP) return AIR_B3_ARGUMENT;
-    b3ShapeDef def = b3DefaultShapeDef(); def.density = density;
+    b3ShapeDef def = b3DefaultShapeDef(); def.filter = air_b3_default_filter(); def.density = density;
     b3BoxHull hull = b3MakeBoxHull(hx, hy, hz);
     /* b3CreateHullShape copies hull data. The stack hull is not retained. */
     b3ShapeId shape = b3CreateHullShape(b3LoadBodyId(join_id(lo, hi)), &def, &hull.base);

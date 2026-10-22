@@ -25,7 +25,7 @@ import type { IVec3Like } from '../../../cocos/core/math/type-define';
 import type { ERigidBodyType } from '../../../cocos/physics/framework/physics-enum';
 import type { Box3DPhysicsWorld } from './world';
 import type { Box3DComponentConfiguration } from './shared-body';
-import { Box3DSharedBody, bodyVector, filterBits } from './shared-body';
+import { Box3DSharedBody, bodyVector, filterBits, validateRigidBodyInitial } from './shared-body';
 import { worldError } from './world-binding';
 
 /** Actual Cocos IRigidBody adapter. Native ownership remains solely in the world's shared body. */
@@ -61,11 +61,23 @@ export class Box3DRigidBody implements IRigidBody {
     }
     initialize(value: RigidBody): void {
         if (this.#shared) throw worldError('AIR_E_BOX3D_CONFIG', 'initialize', 'Already initialized.');
+        validateRigidBodyInitial(value, this.#configuration);
         const body = this.#world().acquireSharedBody(value.node, this, this.#configuration);
         try {
             body.attachRigidBody(value, this.#configuration);
         } catch (error) {
-            body.release(this);
+            try {
+                body.release(this);
+            } catch (cleanupError) {
+                throw Object.assign(
+                    worldError(
+                        'AIR_E_BOX3D_WORLD_FAULTED',
+                        'RigidBody initialization',
+                        'Initialization failed and native cleanup remains owned by the faulted world.',
+                    ),
+                    { cause: error, cleanupError },
+                );
+            }
             throw error;
         }
         this.#component = value;

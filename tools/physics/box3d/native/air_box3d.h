@@ -2,6 +2,7 @@
 #pragma once
 #include <stdint.h>
 #include "body_control.h"
+#include "filter_bridge.h"
 
 #ifdef __cplusplus
 extern "C" {
