@@ -19,6 +19,8 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
 */
+import type { PhysicsMaterial } from '../../../cocos/physics/framework/assets/physics-material';
+import type { Box3DOwnedBodySeed, Box3DOwnedComponentSeed } from './world-command-owner';
 import type { Node } from '../../../cocos/scene-graph/node';
 import type { RigidBody } from '../../../cocos/physics/framework/components/rigid-body';
 import type { Box3DBodyState, Box3DId, Box3DWorld } from './binding/facade.mjs';
@@ -38,13 +40,20 @@ export interface Box3DComponentConfiguration {
 }
 export interface Box3DBodyOwner {
     assertReady(operation: string): void;
+    assertCommittedRead(operation: string): void;
+    adoptBody(seed: Box3DOwnedBodySeed): object;
+    attachComponent(body: object, seed: Box3DOwnedComponentSeed): void;
+    completeComponent(adapter: object): void;
+    componentEnabled(adapter: object, enabled: boolean): void;
+    observeMaterial(adapter: object, material: PhysicsMaterial | null): void;
+    releaseComponent(adapter: object): void;
     isFaulted(): boolean;
     invalidate(): void;
     fault(error: unknown): void;
     registerShapeMaterial(shape: Box3DId, inherited: boolean): void;
     updateShapeMaterial(shape: Box3DId, value: Box3DSurfaceMaterial | null): void;
     unregisterShapeMaterial(shape: Box3DId): void;
-    released(node: Node, body: Box3DSharedBody): void;
+    released(node: Node, body: Box3DSharedBody, logical: object): void;
 }
 type Mutation =
     | 'setBodyType'
@@ -170,6 +179,7 @@ export class Box3DSharedBody {
     readonly #binding: Box3DComponentBinding;
     readonly #world: Box3DWorld;
     readonly #body: Box3DId;
+    readonly #logical: object;
     readonly #owner: Box3DBodyOwner;
     readonly #node: Node;
     readonly #references = new Set<object>();
@@ -216,6 +226,19 @@ export class Box3DSharedBody {
             owner.invalidate();
             binding.setBodyEnabled(world, allocated, false);
             binding.setBodySleepThreshold(world, allocated, threshold);
+            this.#logical = owner.adoptBody({
+                node,
+                ancestry: Object.freeze(this.#scene.records().map((record) => record.node)),
+                preflight: () => this.preflight(),
+                readCommitted: () => {
+                    this.assertRead('private committed read');
+                    return this.#binding.bodyState(this.#world, this.#body);
+                },
+                resolveNative: () => {
+                    this.assertRead('private native identity resolution');
+                    return this.#body;
+                },
+            });
         } catch (error) {
             // Creation has no reviewed phase contract. A lost token may still own a real native body.
             let failure = error;
@@ -239,6 +262,22 @@ export class Box3DSharedBody {
     private assert(operation: string): void {
         if (this.#closed) throw worldError('AIR_E_BOX3D_DISPOSED', operation, 'Shared body is closed.');
         this.#owner.assertReady(operation);
+    }
+    private assertRead(operation: string): void {
+        if (this.#closed) throw worldError('AIR_E_BOX3D_DISPOSED', operation, 'Shared body is closed.');
+        this.#owner.assertCommittedRead(operation);
+    }
+    assertConfiguration(operation: string): void {
+        this.assert(operation);
+    }
+    completeComponent(reference: object): void {
+        this.#owner.completeComponent(reference);
+    }
+    componentEnabled(reference: object, enabled: boolean): void {
+        this.#owner.componentEnabled(reference, enabled);
+    }
+    observeMaterial(reference: object, material: PhysicsMaterial | null): void {
+        this.#owner.observeMaterial(reference, material);
     }
     private nodePose(): readonly number[] {
         const p = this.#node.worldPosition;
@@ -307,15 +346,17 @@ export class Box3DSharedBody {
             }),
         );
     }
-    retain(reference: object): void {
+    retain(reference: object, component: Box3DOwnedComponentSeed): void {
         this.assert('retain body');
         if (this.#references.has(reference)) throw worldError('AIR_E_BOX3D_CONFIG', 'retain body', 'Duplicate owner.');
+        this.#owner.attachComponent(this.#logical, component);
         this.#references.add(reference);
     }
     release(reference: object): void {
         if (this.#closed) return; // World destruction already invalidated every component reference.
         if (this.#owner.isFaulted()) {
             // Cleanup-only: remove JS owners, never retry unknown native mutations or remove world ownership.
+            this.#owner.releaseComponent(reference);
             this.#references.delete(reference);
             this.#shapes.delete(reference);
             return;
@@ -324,6 +365,7 @@ export class Box3DSharedBody {
         if (!this.#references.has(reference))
             throw worldError('AIR_E_BOX3D_DISPOSED', 'release body', 'Unknown owner.');
         if (this.#references.size > 1) {
+            this.#owner.releaseComponent(reference);
             this.#references.delete(reference);
             return;
         }
@@ -335,9 +377,10 @@ export class Box3DSharedBody {
             throw error;
         }
         this.#owner.invalidate();
+        this.#owner.releaseComponent(reference);
         this.#references.delete(reference);
         this.#closed = true;
-        this.#owner.released(this.#node, this);
+        this.#owner.released(this.#node, this, this.#logical);
     }
     closeWithWorld(): void {
         this.#closed = true;
@@ -345,15 +388,19 @@ export class Box3DSharedBody {
         this.#shapes.clear();
         this.#rigidBody = null;
     }
+    /** Only empty event-listener cleanup may bypass normal operations after terminal ownership. */
+    get cleanupOnly(): boolean {
+        return this.#closed || this.#owner.isFaulted();
+    }
     get rigidBody(): RigidBody | null {
         return this.#rigidBody;
     }
     get state(): Box3DBodyState {
-        this.assert('bodyState');
+        this.assertRead('bodyState');
         return this.#binding.bodyState(this.#world, this.#body);
     }
     get impl(): Readonly<{ backend: 'box3d'; kind: 'shared-body' }> {
-        this.assert('body impl');
+        this.assertRead('body impl');
         return Object.freeze({ backend: 'box3d', kind: 'shared-body' });
     }
     control<M extends Mutation>(method: M, ...args: Arguments<M>): Box3DBodyState {
@@ -475,11 +522,11 @@ export class Box3DSharedBody {
         }
     }
     getGroup(): number {
-        this.assert('getGroup');
+        this.assertRead('getGroup');
         return this.readFilter().group | 0;
     }
     getMask(): number {
-        this.assert('getMask');
+        this.assertRead('getMask');
         return this.readFilter().mask | 0;
     }
     setGroup(value: number): void {
@@ -489,11 +536,11 @@ export class Box3DSharedBody {
         this.setFilter(this.#group, filterBits(value));
     }
     get initialScale(): readonly number[] {
-        this.assert('initial scale');
+        this.assertRead('initial scale');
         return this.#scale;
     }
     copiedTransform(): readonly number[] {
-        this.assert('copied transform');
+        this.assertRead('copied transform');
         this.#scene.preflight();
         const value = this.#binding.bodyTransforms(this.#world, [this.#body]);
         if (value.length !== 10 || !value.every(Number.isFinite))

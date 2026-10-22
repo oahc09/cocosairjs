@@ -1,0 +1,52 @@
+[
+  {
+    "path": "src/air/physics/box3d/world-command-owner.ts",
+    "bytes": 17469,
+    "sha256": "476721a3aa4da92e5992c19c17734af51dbe64c6241587c74443599c13047917"
+  },
+  {
+    "path": "src/air/physics/box3d/world.ts",
+    "bytes": 30625,
+    "sha256": "cc519108e37bf17257801693698a1ee879f3a6b2c46689c142174c95d63e9187"
+  },
+  {
+    "path": "src/air/physics/box3d/shared-body.ts",
+    "bytes": 28927,
+    "sha256": "5d832e06d8ace552edc47f54ed6ac1198826a19c9f67a57f7b8f1913512e11ee"
+  },
+  {
+    "path": "src/air/physics/box3d/registration.ts",
+    "bytes": 6070,
+    "sha256": "6e681518fcaf2f65bc95cbf60488dfebc9038d6bc58526554d3e0ffa928a3f43"
+  },
+  {
+    "path": "src/air/physics/box3d/rigid-body.ts",
+    "bytes": 10595,
+    "sha256": "b3fa18706e05c0a44b32bd696bdefabe432a28b267192436eff804b053d96fb5"
+  },
+  {
+    "path": "src/air/physics/box3d/box-sphere-shape.ts",
+    "bytes": 10362,
+    "sha256": "79ddf28d26aa3f45cdf2e19356d8da1bc7d1837829cba0dca9fce5975107fd2d"
+  },
+  {
+    "path": "src/air/physics/box3d/world-writeback.ts",
+    "bytes": 12207,
+    "sha256": "9463203d068f7f9c9058777fa8491f74b9ac7ea32feaa5f5decab12261579ab6"
+  },
+  {
+    "path": "tools/verify/box3d/owner-checkpoint-a-control.jest.cjs",
+    "bytes": 335,
+    "sha256": "c75eb505356c267cfe1f926076b48955c2dcc0cd2bff1ec271432dec99d305aa"
+  },
+  {
+    "path": "tools/verify/box3d/owner-checkpoint-a-control.tsconfig.json",
+    "bytes": 164,
+    "sha256": "31e62bf341d449900b2e8fb8d55a835d0ab58ada7e8bdedb384e38d7cdd4a739"
+  },
+  {
+    "path": "tools/verify/box3d/owner-checkpoint-a-control.test.ts",
+    "bytes": 26778,
+    "sha256": "e2cb0fd2ddf80d692f70885d427985e82d534216c84f2a70f82adf664943587f"
+  }
+]

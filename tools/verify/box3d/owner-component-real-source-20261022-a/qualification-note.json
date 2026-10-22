@@ -1,0 +1,7 @@
+{
+  "status": "FIXTURE_FORMAT_AND_TSC_EXIT_ZERO_ONLY",
+  "timeUTC": "2026-10-22T14:49:57.395775+00:00",
+  "scope": "Fixture was formatted and typechecked during active owner edits; source qualification requires the separately frozen owner e inputs and actual execution below. No engine/WASM runtime execution inferred.",
+  "ownerSnapshot": "tools/verify/box3d/owner-checkpoint-a-source-20261022-e",
+  "ownerManifestSha256": "27a2ff32e89603f0a97c8775bf66a453ef43c1d2d788df1ba8b3a9284fff2e0c"
+}

@@ -1,0 +1,694 @@
+{
+  "status": "READ_ONLY_AUDIT_AND_PATCH_PLAN_NOT_IMPLEMENTED",
+  "createdAt": "2026-10-22T14:44:01.409152+00:00",
+  "scope": "Only actual Cocos RigidBody, Collider, BoxCollider and SphereCollider used by Box3D. No constraints, other shapes, SDK/native work or external operations. No src edits.",
+  "sourceIdentity": {
+    "src/cocos/physics/framework/components/rigid-body.ts": "838ca56a6dba323ff77568a51f16d9c290489329239245054cef8553252d9f0f",
+    "src/cocos/physics/framework/components/colliders/collider.ts": "14ec6146b64a327584e439bcd52c5c15fc15d77d08663ead1d1374f1a17f8333",
+    "src/cocos/physics/framework/components/colliders/box-collider.ts": "9957d3a6b789798560ed32913d22efff16e42bcc4d4592414a3082e572e6da13",
+    "src/cocos/physics/framework/components/colliders/sphere-collider.ts": "a54b0edc6af5ed9b9a81be221ae38b94ba400ae0b9ad2ee17253a290c9107a3e"
+  },
+  "recommendedStages": {
+    "A": "37 first-statement assertions plus 3 imports across the four files. No backend branches, normalization or cache/delegate order changes.",
+    "B": "4 first-statement Collider listener assertions are required, but native event dispatch must separately handle legitimate internal once/invalid-target removal while user configuration remains denied. No event support claim from these four guards.",
+    "C": "Owner/queue integration for the nine allowed force/impulse/torque/clear commands, not blanket component guards. Coordinate with the active src/air worker; do not edit those files in this task."
+  },
+  "newImports": {
+    "src/cocos/physics/framework/components/rigid-body.ts": "import { assertMutationAllowed } from '../../../core/data/mutation-guard';",
+    "src/cocos/physics/framework/components/colliders/box-collider.ts": "import { assertMutationAllowed } from '../../../../core/data/mutation-guard';",
+    "src/cocos/physics/framework/components/colliders/sphere-collider.ts": "import { assertMutationAllowed } from '../../../../core/data/mutation-guard';"
+  },
+  "guardSites": [
+    {
+      "path": "src/cocos/physics/framework/components/rigid-body.ts",
+      "line": 84,
+      "class": "RigidBody",
+      "entry": "group",
+      "kind": "set",
+      "oldBehavior": "DEBUG bit coercion v >>> 0 and Math.log2, then body getGroup/setGroup or cache assignment; no component guard.",
+      "earliestGuardPosition": "First statement, before DEBUG coercion, equality/no-op checks, getters, cache writes or _isInitialized.",
+      "proposedAssertion": "assertMutationAllowed(this, 'RigidBody.group');",
+      "stage": "A",
+      "noLeaseControl": "ordinary no-lease behavior and exact delegate arguments/order remain unchanged"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/rigid-body.ts",
+      "line": 111,
+      "class": "RigidBody",
+      "entry": "type",
+      "kind": "set",
+      "oldBehavior": "Same-value return then adapter setType before Box3D cache commit, other backends cache first; no component guard.",
+      "earliestGuardPosition": "First statement, before DEBUG coercion, equality/no-op checks, getters, cache writes or _isInitialized.",
+      "proposedAssertion": "assertMutationAllowed(this, 'RigidBody.type');",
+      "stage": "A",
+      "noLeaseControl": "ordinary no-lease behavior and exact delegate arguments/order remain unchanged"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/rigid-body.ts",
+      "line": 135,
+      "class": "RigidBody",
+      "entry": "mass",
+      "kind": "set",
+      "oldBehavior": "DEBUG value <= 0 coercion and warning, same-value return, normalization <= 0, then adapter/cache; no component guard.",
+      "earliestGuardPosition": "First statement, before DEBUG coercion, equality/no-op checks, getters, cache writes or _isInitialized.",
+      "proposedAssertion": "assertMutationAllowed(this, 'RigidBody.mass');",
+      "stage": "A",
+      "noLeaseControl": "ordinary no-lease behavior and exact delegate arguments/order remain unchanged"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/rigid-body.ts",
+      "line": 161,
+      "class": "RigidBody",
+      "entry": "allowSleep",
+      "kind": "set",
+      "oldBehavior": "Box3D adapter before cache, other backends cache before adapter; no component guard.",
+      "earliestGuardPosition": "First statement, before DEBUG coercion, equality/no-op checks, getters, cache writes or _isInitialized.",
+      "proposedAssertion": "assertMutationAllowed(this, 'RigidBody.allowSleep');",
+      "stage": "A",
+      "noLeaseControl": "ordinary no-lease behavior and exact delegate arguments/order remain unchanged"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/rigid-body.ts",
+      "line": 184,
+      "class": "RigidBody",
+      "entry": "linearDamping",
+      "kind": "set",
+      "oldBehavior": "DEBUG comparisons coerce input and may warn before Box3D adapter/cache.",
+      "earliestGuardPosition": "First statement, before DEBUG coercion, equality/no-op checks, getters, cache writes or _isInitialized.",
+      "proposedAssertion": "assertMutationAllowed(this, 'RigidBody.linearDamping');",
+      "stage": "A",
+      "noLeaseControl": "ordinary no-lease behavior and exact delegate arguments/order remain unchanged"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/rigid-body.ts",
+      "line": 208,
+      "class": "RigidBody",
+      "entry": "angularDamping",
+      "kind": "set",
+      "oldBehavior": "DEBUG comparisons coerce input and may warn before Box3D adapter/cache.",
+      "earliestGuardPosition": "First statement, before DEBUG coercion, equality/no-op checks, getters, cache writes or _isInitialized.",
+      "proposedAssertion": "assertMutationAllowed(this, 'RigidBody.angularDamping');",
+      "stage": "A",
+      "noLeaseControl": "ordinary no-lease behavior and exact delegate arguments/order remain unchanged"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/rigid-body.ts",
+      "line": 232,
+      "class": "RigidBody",
+      "entry": "useGravity",
+      "kind": "set",
+      "oldBehavior": "Box3D adapter before cache, other backends cache before adapter; no component guard.",
+      "earliestGuardPosition": "First statement, before DEBUG coercion, equality/no-op checks, getters, cache writes or _isInitialized.",
+      "proposedAssertion": "assertMutationAllowed(this, 'RigidBody.useGravity');",
+      "stage": "A",
+      "noLeaseControl": "ordinary no-lease behavior and exact delegate arguments/order remain unchanged"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/rigid-body.ts",
+      "line": 255,
+      "class": "RigidBody",
+      "entry": "linearFactor",
+      "kind": "set",
+      "oldBehavior": "Box3D adapter receives original object before Vec3.copy; non-Box3D/uninitialized path copies x/y/z into cache before delegation.",
+      "earliestGuardPosition": "First statement, before DEBUG coercion, equality/no-op checks, getters, cache writes or _isInitialized.",
+      "proposedAssertion": "assertMutationAllowed(this, 'RigidBody.linearFactor');",
+      "stage": "A",
+      "noLeaseControl": "ordinary no-lease behavior and exact delegate arguments/order remain unchanged"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/rigid-body.ts",
+      "line": 280,
+      "class": "RigidBody",
+      "entry": "angularFactor",
+      "kind": "set",
+      "oldBehavior": "Box3D adapter receives original object before Vec3.copy; non-Box3D/uninitialized path copies x/y/z into cache before delegation.",
+      "earliestGuardPosition": "First statement, before DEBUG coercion, equality/no-op checks, getters, cache writes or _isInitialized.",
+      "proposedAssertion": "assertMutationAllowed(this, 'RigidBody.angularFactor');",
+      "stage": "A",
+      "noLeaseControl": "ordinary no-lease behavior and exact delegate arguments/order remain unchanged"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/rigid-body.ts",
+      "line": 305,
+      "class": "RigidBody",
+      "entry": "sleepThreshold",
+      "kind": "set",
+      "oldBehavior": "Reads _isInitialized (logs if no body) then delegates setSleepThreshold.",
+      "earliestGuardPosition": "First statement, before DEBUG coercion, equality/no-op checks, getters, cache writes or _isInitialized.",
+      "proposedAssertion": "assertMutationAllowed(this, 'RigidBody.sleepThreshold');",
+      "stage": "A",
+      "noLeaseControl": "ordinary no-lease behavior and exact delegate arguments/order remain unchanged"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/rigid-body.ts",
+      "line": 324,
+      "class": "RigidBody",
+      "entry": "useCCD",
+      "kind": "set",
+      "oldBehavior": "Reads _isInitialized (logs if no body) then delegates useCCD.",
+      "earliestGuardPosition": "First statement, before DEBUG coercion, equality/no-op checks, getters, cache writes or _isInitialized.",
+      "proposedAssertion": "assertMutationAllowed(this, 'RigidBody.useCCD');",
+      "stage": "A",
+      "noLeaseControl": "ordinary no-lease behavior and exact delegate arguments/order remain unchanged"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/rigid-body.ts",
+      "line": 373,
+      "class": "RigidBody",
+      "entry": "isStatic",
+      "kind": "set",
+      "oldBehavior": "Reads isStatic getter and may same-value return before forwarding to type setter.",
+      "earliestGuardPosition": "First statement, before DEBUG coercion, equality/no-op checks, getters, cache writes or _isInitialized.",
+      "proposedAssertion": "assertMutationAllowed(this, 'RigidBody.isStatic');",
+      "stage": "A",
+      "noLeaseControl": "ordinary no-lease behavior and exact delegate arguments/order remain unchanged"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/rigid-body.ts",
+      "line": 388,
+      "class": "RigidBody",
+      "entry": "isDynamic",
+      "kind": "set",
+      "oldBehavior": "Reads isDynamic getter and may same-value return before forwarding to type setter.",
+      "earliestGuardPosition": "First statement, before DEBUG coercion, equality/no-op checks, getters, cache writes or _isInitialized.",
+      "proposedAssertion": "assertMutationAllowed(this, 'RigidBody.isDynamic');",
+      "stage": "A",
+      "noLeaseControl": "ordinary no-lease behavior and exact delegate arguments/order remain unchanged"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/rigid-body.ts",
+      "line": 403,
+      "class": "RigidBody",
+      "entry": "isKinematic",
+      "kind": "set",
+      "oldBehavior": "Reads isKinematic getter and may same-value return before forwarding to type setter.",
+      "earliestGuardPosition": "First statement, before DEBUG coercion, equality/no-op checks, getters, cache writes or _isInitialized.",
+      "proposedAssertion": "assertMutationAllowed(this, 'RigidBody.isKinematic');",
+      "stage": "A",
+      "noLeaseControl": "ordinary no-lease behavior and exact delegate arguments/order remain unchanged"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/rigid-body.ts",
+      "line": 553,
+      "class": "RigidBody",
+      "entry": "wakeUp",
+      "kind": "method",
+      "oldBehavior": "Reads _isInitialized (logs if absent), then calls adapter directly. Vector/filter handling occurs downstream, not in this wrapper.",
+      "earliestGuardPosition": "First statement, before _isInitialized or any body getter/delegation.",
+      "proposedAssertion": "assertMutationAllowed(this, 'RigidBody.wakeUp');",
+      "stage": "A",
+      "noLeaseControl": "ordinary no-lease behavior and exact delegate arguments/order remain unchanged"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/rigid-body.ts",
+      "line": 563,
+      "class": "RigidBody",
+      "entry": "sleep",
+      "kind": "method",
+      "oldBehavior": "Reads _isInitialized (logs if absent), then calls adapter directly. Vector/filter handling occurs downstream, not in this wrapper.",
+      "earliestGuardPosition": "First statement, before _isInitialized or any body getter/delegation.",
+      "proposedAssertion": "assertMutationAllowed(this, 'RigidBody.sleep');",
+      "stage": "A",
+      "noLeaseControl": "ordinary no-lease behavior and exact delegate arguments/order remain unchanged"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/rigid-body.ts",
+      "line": 615,
+      "class": "RigidBody",
+      "entry": "setLinearVelocity",
+      "kind": "method",
+      "oldBehavior": "Reads _isInitialized (logs if absent), then calls adapter directly. Vector/filter handling occurs downstream, not in this wrapper.",
+      "earliestGuardPosition": "First statement, before _isInitialized or any body getter/delegation.",
+      "proposedAssertion": "assertMutationAllowed(this, 'RigidBody.setLinearVelocity');",
+      "stage": "A",
+      "noLeaseControl": "ordinary no-lease behavior and exact delegate arguments/order remain unchanged"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/rigid-body.ts",
+      "line": 637,
+      "class": "RigidBody",
+      "entry": "setAngularVelocity",
+      "kind": "method",
+      "oldBehavior": "Reads _isInitialized (logs if absent), then calls adapter directly. Vector/filter handling occurs downstream, not in this wrapper.",
+      "earliestGuardPosition": "First statement, before _isInitialized or any body getter/delegation.",
+      "proposedAssertion": "assertMutationAllowed(this, 'RigidBody.setAngularVelocity');",
+      "stage": "A",
+      "noLeaseControl": "ordinary no-lease behavior and exact delegate arguments/order remain unchanged"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/rigid-body.ts",
+      "line": 662,
+      "class": "RigidBody",
+      "entry": "setGroup",
+      "kind": "method",
+      "oldBehavior": "Reads _isInitialized (logs if absent), then calls adapter directly. Vector/filter handling occurs downstream, not in this wrapper.",
+      "earliestGuardPosition": "First statement, before _isInitialized or any body getter/delegation.",
+      "proposedAssertion": "assertMutationAllowed(this, 'RigidBody.setGroup');",
+      "stage": "A",
+      "noLeaseControl": "ordinary no-lease behavior and exact delegate arguments/order remain unchanged"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/rigid-body.ts",
+      "line": 673,
+      "class": "RigidBody",
+      "entry": "addGroup",
+      "kind": "method",
+      "oldBehavior": "Reads _isInitialized (logs if absent), then calls adapter directly. Vector/filter handling occurs downstream, not in this wrapper.",
+      "earliestGuardPosition": "First statement, before _isInitialized or any body getter/delegation.",
+      "proposedAssertion": "assertMutationAllowed(this, 'RigidBody.addGroup');",
+      "stage": "A",
+      "noLeaseControl": "ordinary no-lease behavior and exact delegate arguments/order remain unchanged"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/rigid-body.ts",
+      "line": 684,
+      "class": "RigidBody",
+      "entry": "removeGroup",
+      "kind": "method",
+      "oldBehavior": "Reads _isInitialized (logs if absent), then calls adapter directly. Vector/filter handling occurs downstream, not in this wrapper.",
+      "earliestGuardPosition": "First statement, before _isInitialized or any body getter/delegation.",
+      "proposedAssertion": "assertMutationAllowed(this, 'RigidBody.removeGroup');",
+      "stage": "A",
+      "noLeaseControl": "ordinary no-lease behavior and exact delegate arguments/order remain unchanged"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/rigid-body.ts",
+      "line": 707,
+      "class": "RigidBody",
+      "entry": "setMask",
+      "kind": "method",
+      "oldBehavior": "Reads _isInitialized (logs if absent), then calls adapter directly. Vector/filter handling occurs downstream, not in this wrapper.",
+      "earliestGuardPosition": "First statement, before _isInitialized or any body getter/delegation.",
+      "proposedAssertion": "assertMutationAllowed(this, 'RigidBody.setMask');",
+      "stage": "A",
+      "noLeaseControl": "ordinary no-lease behavior and exact delegate arguments/order remain unchanged"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/rigid-body.ts",
+      "line": 718,
+      "class": "RigidBody",
+      "entry": "addMask",
+      "kind": "method",
+      "oldBehavior": "Reads _isInitialized (logs if absent), then calls adapter directly. Vector/filter handling occurs downstream, not in this wrapper.",
+      "earliestGuardPosition": "First statement, before _isInitialized or any body getter/delegation.",
+      "proposedAssertion": "assertMutationAllowed(this, 'RigidBody.addMask');",
+      "stage": "A",
+      "noLeaseControl": "ordinary no-lease behavior and exact delegate arguments/order remain unchanged"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/rigid-body.ts",
+      "line": 729,
+      "class": "RigidBody",
+      "entry": "removeMask",
+      "kind": "method",
+      "oldBehavior": "Reads _isInitialized (logs if absent), then calls adapter directly. Vector/filter handling occurs downstream, not in this wrapper.",
+      "earliestGuardPosition": "First statement, before _isInitialized or any body getter/delegation.",
+      "proposedAssertion": "assertMutationAllowed(this, 'RigidBody.removeMask');",
+      "stage": "A",
+      "noLeaseControl": "ordinary no-lease behavior and exact delegate arguments/order remain unchanged"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/colliders/collider.ts",
+      "line": 96,
+      "class": "Collider",
+      "entry": "sharedMaterial",
+      "kind": "set",
+      "oldBehavior": "EDITOR branch writes _material with no guard. Runtime forwards to already-guarded material setter without prior argument reads, but refusal operation is material.set.",
+      "earliestGuardPosition": "First statement before EDITOR branch; preserve existing material setter guard.",
+      "proposedAssertion": "assertMutationAllowed(this, 'Collider.sharedMaterial');",
+      "stage": "A",
+      "noLeaseControl": "Runtime delegation/return unchanged; EDITOR branch unchanged when unleased. Include a separately labeled EDITOR=true source-mapped fixture only if claiming that branch tested."
+    },
+    {
+      "path": "src/cocos/physics/framework/components/colliders/collider.ts",
+      "line": 158,
+      "class": "Collider",
+      "entry": "isTrigger",
+      "kind": "set",
+      "oldBehavior": "Box3D adapter before _isTrigger commit; other/uninitialized path writes cache first.",
+      "earliestGuardPosition": "First statement before backend/shape branch or value inspection.",
+      "proposedAssertion": "assertMutationAllowed(this, 'Collider.isTrigger');",
+      "stage": "A",
+      "noLeaseControl": "ordinary no-lease behavior and exact delegate arguments/order remain unchanged"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/colliders/collider.ts",
+      "line": 183,
+      "class": "Collider",
+      "entry": "center",
+      "kind": "set",
+      "oldBehavior": "Box3D adapter before Vec3.copy; other/uninitialized path reads x/y/z and writes _center before delegation.",
+      "earliestGuardPosition": "First statement before backend/shape branch or value inspection.",
+      "proposedAssertion": "assertMutationAllowed(this, 'Collider.center');",
+      "stage": "A",
+      "noLeaseControl": "ordinary no-lease behavior and exact delegate arguments/order remain unchanged"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/colliders/collider.ts",
+      "line": 205,
+      "class": "Collider",
+      "entry": "worldBounds",
+      "kind": "get",
+      "oldBehavior": "Lazily allocates _aabb when null, then delegates getAABB into that cached object. Existing cache also refreshes; not a committed read-only getter.",
+      "earliestGuardPosition": "First statement before allocation/cache test or shape lookup.",
+      "proposedAssertion": "assertMutationAllowed(this, 'Collider.worldBounds.get');",
+      "stage": "A",
+      "noLeaseControl": "No lease: null cache allocates exactly once; repeated reads preserve identity while refreshing values; missing shape still returns the original allocated default bounds."
+    },
+    {
+      "path": "src/cocos/physics/framework/components/colliders/collider.ts",
+      "line": 211,
+      "class": "Collider",
+      "entry": "boundingSphere",
+      "kind": "get",
+      "oldBehavior": "Lazily allocates _boundingSphere when null, then delegates getBoundingSphere into that cached object. Existing cache also refreshes; not a committed read-only getter.",
+      "earliestGuardPosition": "First statement before allocation/cache test or shape lookup.",
+      "proposedAssertion": "assertMutationAllowed(this, 'Collider.boundingSphere.get');",
+      "stage": "A",
+      "noLeaseControl": "No lease: null cache allocates exactly once; repeated reads preserve identity while refreshing values; missing shape still returns the original allocated default bounds."
+    },
+    {
+      "path": "src/cocos/physics/framework/components/colliders/collider.ts",
+      "line": 348,
+      "class": "Collider",
+      "entry": "setGroup",
+      "kind": "method",
+      "oldBehavior": "Reads _isInitialized (logs if absent), then delegates shape filter mutation.",
+      "earliestGuardPosition": "First statement before _isInitialized, filter coercion or shape delegation.",
+      "proposedAssertion": "assertMutationAllowed(this, 'Collider.setGroup');",
+      "stage": "A",
+      "noLeaseControl": "ordinary no-lease behavior and exact delegate arguments/order remain unchanged"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/colliders/collider.ts",
+      "line": 361,
+      "class": "Collider",
+      "entry": "addGroup",
+      "kind": "method",
+      "oldBehavior": "Reads _isInitialized (logs if absent), then delegates shape filter mutation.",
+      "earliestGuardPosition": "First statement before _isInitialized, filter coercion or shape delegation.",
+      "proposedAssertion": "assertMutationAllowed(this, 'Collider.addGroup');",
+      "stage": "A",
+      "noLeaseControl": "ordinary no-lease behavior and exact delegate arguments/order remain unchanged"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/colliders/collider.ts",
+      "line": 374,
+      "class": "Collider",
+      "entry": "removeGroup",
+      "kind": "method",
+      "oldBehavior": "Reads _isInitialized (logs if absent), then delegates shape filter mutation.",
+      "earliestGuardPosition": "First statement before _isInitialized, filter coercion or shape delegation.",
+      "proposedAssertion": "assertMutationAllowed(this, 'Collider.removeGroup');",
+      "stage": "A",
+      "noLeaseControl": "ordinary no-lease behavior and exact delegate arguments/order remain unchanged"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/colliders/collider.ts",
+      "line": 401,
+      "class": "Collider",
+      "entry": "setMask",
+      "kind": "method",
+      "oldBehavior": "Reads _isInitialized (logs if absent), then delegates shape filter mutation.",
+      "earliestGuardPosition": "First statement before _isInitialized, filter coercion or shape delegation.",
+      "proposedAssertion": "assertMutationAllowed(this, 'Collider.setMask');",
+      "stage": "A",
+      "noLeaseControl": "ordinary no-lease behavior and exact delegate arguments/order remain unchanged"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/colliders/collider.ts",
+      "line": 414,
+      "class": "Collider",
+      "entry": "addMask",
+      "kind": "method",
+      "oldBehavior": "Reads _isInitialized (logs if absent), then delegates shape filter mutation.",
+      "earliestGuardPosition": "First statement before _isInitialized, filter coercion or shape delegation.",
+      "proposedAssertion": "assertMutationAllowed(this, 'Collider.addMask');",
+      "stage": "A",
+      "noLeaseControl": "ordinary no-lease behavior and exact delegate arguments/order remain unchanged"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/colliders/collider.ts",
+      "line": 427,
+      "class": "Collider",
+      "entry": "removeMask",
+      "kind": "method",
+      "oldBehavior": "Reads _isInitialized (logs if absent), then delegates shape filter mutation.",
+      "earliestGuardPosition": "First statement before _isInitialized, filter coercion or shape delegation.",
+      "proposedAssertion": "assertMutationAllowed(this, 'Collider.removeMask');",
+      "stage": "A",
+      "noLeaseControl": "ordinary no-lease behavior and exact delegate arguments/order remain unchanged"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/colliders/collider.ts",
+      "line": 268,
+      "class": "Collider",
+      "entry": "on",
+      "kind": "method",
+      "oldBehavior": "Calls actual Eventify/CallbacksInvoker first, mutating listener table/pool/invocation cancellation; _updateNeedEvent then mutates flags and invokes shape.updateEventListener. Event keys in on/off/once can coerce before adapter refusal.",
+      "earliestGuardPosition": "First statement before super call. Coordinate dispatch-owned once removal before claiming event-phase closure.",
+      "proposedAssertion": "assertMutationAllowed(this, 'Collider.on');",
+      "stage": "B_EVENT_DISPATCH_COORDINATION",
+      "noLeaseControl": "Actual listener identities, order, once behavior, cancellation while invoking, targetOff/removeAll routing, event flags and adapter update counts match original unleased behavior, including existing unsupported Box3D listener refusal side effects."
+    },
+    {
+      "path": "src/cocos/physics/framework/components/colliders/collider.ts",
+      "line": 288,
+      "class": "Collider",
+      "entry": "off",
+      "kind": "method",
+      "oldBehavior": "Calls actual Eventify/CallbacksInvoker first, mutating listener table/pool/invocation cancellation; _updateNeedEvent then mutates flags and invokes shape.updateEventListener. Event keys in on/off/once can coerce before adapter refusal.",
+      "earliestGuardPosition": "First statement before super call. Coordinate dispatch-owned once removal before claiming event-phase closure.",
+      "proposedAssertion": "assertMutationAllowed(this, 'Collider.off');",
+      "stage": "B_EVENT_DISPATCH_COORDINATION",
+      "noLeaseControl": "Actual listener identities, order, once behavior, cancellation while invoking, targetOff/removeAll routing, event flags and adapter update counts match original unleased behavior, including existing unsupported Box3D listener refusal side effects."
+    },
+    {
+      "path": "src/cocos/physics/framework/components/colliders/collider.ts",
+      "line": 302,
+      "class": "Collider",
+      "entry": "once",
+      "kind": "method",
+      "oldBehavior": "Calls actual Eventify/CallbacksInvoker first, mutating listener table/pool/invocation cancellation; _updateNeedEvent then mutates flags and invokes shape.updateEventListener. Event keys in on/off/once can coerce before adapter refusal.",
+      "earliestGuardPosition": "First statement before super call. Coordinate dispatch-owned once removal before claiming event-phase closure.",
+      "proposedAssertion": "assertMutationAllowed(this, 'Collider.once');",
+      "stage": "B_EVENT_DISPATCH_COORDINATION",
+      "noLeaseControl": "Actual listener identities, order, once behavior, cancellation while invoking, targetOff/removeAll routing, event flags and adapter update counts match original unleased behavior, including existing unsupported Box3D listener refusal side effects."
+    },
+    {
+      "path": "src/cocos/physics/framework/components/colliders/collider.ts",
+      "line": 320,
+      "class": "Collider",
+      "entry": "removeAll",
+      "kind": "method",
+      "oldBehavior": "Calls actual Eventify/CallbacksInvoker first, mutating listener table/pool/invocation cancellation; _updateNeedEvent then mutates flags and invokes shape.updateEventListener. Event keys in on/off/once can coerce before adapter refusal.",
+      "earliestGuardPosition": "First statement before super call. Coordinate dispatch-owned once removal before claiming event-phase closure.",
+      "proposedAssertion": "assertMutationAllowed(this, 'Collider.removeAll');",
+      "stage": "B_EVENT_DISPATCH_COORDINATION",
+      "noLeaseControl": "Actual listener identities, order, once behavior, cancellation while invoking, targetOff/removeAll routing, event flags and adapter update counts match original unleased behavior, including existing unsupported Box3D listener refusal side effects."
+    },
+    {
+      "path": "src/cocos/physics/framework/components/colliders/box-collider.ts",
+      "line": 66,
+      "class": "BoxCollider",
+      "entry": "size",
+      "kind": "set",
+      "oldBehavior": "Vec3.strictEquals reads caller x/y/z before same-value return; Box3D then copies/absolute-normalizes candidate before adapter. Other paths mutate _size first.",
+      "earliestGuardPosition": "First statement before Vec3.strictEquals; same-value assignment is still a mutable admission.",
+      "proposedAssertion": "assertMutationAllowed(this, 'BoxCollider.size');",
+      "stage": "A",
+      "noLeaseControl": "No lease: equality fast path, negative absolute normalization, candidate-vs-cache identity and Box3D native-first/other-backend cache-first ordering unchanged."
+    },
+    {
+      "path": "src/cocos/physics/framework/components/colliders/sphere-collider.ts",
+      "line": 62,
+      "class": "SphereCollider",
+      "entry": "radius",
+      "kind": "set",
+      "oldBehavior": "Same-value return, then Math.abs input coercion before Box3D updateRadius; other paths write cache before delegation.",
+      "earliestGuardPosition": "First statement before equality or Math.abs.",
+      "proposedAssertion": "assertMutationAllowed(this, 'SphereCollider.radius');",
+      "stage": "A",
+      "noLeaseControl": "No lease: equality fast path, negative radius normalization and native-first/cache-first backend ordering unchanged."
+    }
+  ],
+  "stagedCommandExceptions": [
+    {
+      "path": "src/cocos/physics/framework/components/rigid-body.ts",
+      "line": 485,
+      "entry": "applyForce",
+      "decision": "Do not add blanket assertMutationAllowed(this) here. These nine entries are allowed staged commands under a component lease during collection.",
+      "oldBehavior": "_isInitialized then adapter delegation, without local caller vector reads or cache mutation. Current adapter implementation is in active World-owner work; this audit does not modify or qualify it.",
+      "requiredOwnerProof": "Adapter must enter queue.withSubmissionAdmission before owner validation or argument reads, obtain/reuse leases inside its reader, hold them through full copy/enqueue, and poison candidate on caught nested rejected command. Never release a component lease to pass a command."
+    },
+    {
+      "path": "src/cocos/physics/framework/components/rigid-body.ts",
+      "line": 497,
+      "entry": "applyLocalForce",
+      "decision": "Do not add blanket assertMutationAllowed(this) here. These nine entries are allowed staged commands under a component lease during collection.",
+      "oldBehavior": "_isInitialized then adapter delegation, without local caller vector reads or cache mutation. Current adapter implementation is in active World-owner work; this audit does not modify or qualify it.",
+      "requiredOwnerProof": "Adapter must enter queue.withSubmissionAdmission before owner validation or argument reads, obtain/reuse leases inside its reader, hold them through full copy/enqueue, and poison candidate on caught nested rejected command. Never release a component lease to pass a command."
+    },
+    {
+      "path": "src/cocos/physics/framework/components/rigid-body.ts",
+      "line": 509,
+      "entry": "applyImpulse",
+      "decision": "Do not add blanket assertMutationAllowed(this) here. These nine entries are allowed staged commands under a component lease during collection.",
+      "oldBehavior": "_isInitialized then adapter delegation, without local caller vector reads or cache mutation. Current adapter implementation is in active World-owner work; this audit does not modify or qualify it.",
+      "requiredOwnerProof": "Adapter must enter queue.withSubmissionAdmission before owner validation or argument reads, obtain/reuse leases inside its reader, hold them through full copy/enqueue, and poison candidate on caught nested rejected command. Never release a component lease to pass a command."
+    },
+    {
+      "path": "src/cocos/physics/framework/components/rigid-body.ts",
+      "line": 521,
+      "entry": "applyLocalImpulse",
+      "decision": "Do not add blanket assertMutationAllowed(this) here. These nine entries are allowed staged commands under a component lease during collection.",
+      "oldBehavior": "_isInitialized then adapter delegation, without local caller vector reads or cache mutation. Current adapter implementation is in active World-owner work; this audit does not modify or qualify it.",
+      "requiredOwnerProof": "Adapter must enter queue.withSubmissionAdmission before owner validation or argument reads, obtain/reuse leases inside its reader, hold them through full copy/enqueue, and poison candidate on caught nested rejected command. Never release a component lease to pass a command."
+    },
+    {
+      "path": "src/cocos/physics/framework/components/rigid-body.ts",
+      "line": 532,
+      "entry": "applyTorque",
+      "decision": "Do not add blanket assertMutationAllowed(this) here. These nine entries are allowed staged commands under a component lease during collection.",
+      "oldBehavior": "_isInitialized then adapter delegation, without local caller vector reads or cache mutation. Current adapter implementation is in active World-owner work; this audit does not modify or qualify it.",
+      "requiredOwnerProof": "Adapter must enter queue.withSubmissionAdmission before owner validation or argument reads, obtain/reuse leases inside its reader, hold them through full copy/enqueue, and poison candidate on caught nested rejected command. Never release a component lease to pass a command."
+    },
+    {
+      "path": "src/cocos/physics/framework/components/rigid-body.ts",
+      "line": 543,
+      "entry": "applyLocalTorque",
+      "decision": "Do not add blanket assertMutationAllowed(this) here. These nine entries are allowed staged commands under a component lease during collection.",
+      "oldBehavior": "_isInitialized then adapter delegation, without local caller vector reads or cache mutation. Current adapter implementation is in active World-owner work; this audit does not modify or qualify it.",
+      "requiredOwnerProof": "Adapter must enter queue.withSubmissionAdmission before owner validation or argument reads, obtain/reuse leases inside its reader, hold them through full copy/enqueue, and poison candidate on caught nested rejected command. Never release a component lease to pass a command."
+    },
+    {
+      "path": "src/cocos/physics/framework/components/rigid-body.ts",
+      "line": 573,
+      "entry": "clearState",
+      "decision": "Do not add blanket assertMutationAllowed(this) here. These nine entries are allowed staged commands under a component lease during collection.",
+      "oldBehavior": "_isInitialized then adapter delegation, without local caller vector reads or cache mutation. Current adapter implementation is in active World-owner work; this audit does not modify or qualify it.",
+      "requiredOwnerProof": "Adapter must enter queue.withSubmissionAdmission before owner validation or argument reads, obtain/reuse leases inside its reader, hold them through full copy/enqueue, and poison candidate on caught nested rejected command. Never release a component lease to pass a command."
+    },
+    {
+      "path": "src/cocos/physics/framework/components/rigid-body.ts",
+      "line": 583,
+      "entry": "clearForces",
+      "decision": "Do not add blanket assertMutationAllowed(this) here. These nine entries are allowed staged commands under a component lease during collection.",
+      "oldBehavior": "_isInitialized then adapter delegation, without local caller vector reads or cache mutation. Current adapter implementation is in active World-owner work; this audit does not modify or qualify it.",
+      "requiredOwnerProof": "Adapter must enter queue.withSubmissionAdmission before owner validation or argument reads, obtain/reuse leases inside its reader, hold them through full copy/enqueue, and poison candidate on caught nested rejected command. Never release a component lease to pass a command."
+    },
+    {
+      "path": "src/cocos/physics/framework/components/rigid-body.ts",
+      "line": 593,
+      "entry": "clearVelocity",
+      "decision": "Do not add blanket assertMutationAllowed(this) here. These nine entries are allowed staged commands under a component lease during collection.",
+      "oldBehavior": "_isInitialized then adapter delegation, without local caller vector reads or cache mutation. Current adapter implementation is in active World-owner work; this audit does not modify or qualify it.",
+      "requiredOwnerProof": "Adapter must enter queue.withSubmissionAdmission before owner validation or argument reads, obtain/reuse leases inside its reader, hold them through full copy/enqueue, and poison candidate on caught nested rejected command. Never release a component lease to pass a command."
+    }
+  ],
+  "alreadyCorrect": [
+    {
+      "path": "src/cocos/physics/framework/components/colliders/collider.ts",
+      "entry": "material setter",
+      "line": 121,
+      "reason": "Existing Collider.material.set guard is the first statement, before adapter/listener/material-id reads."
+    },
+    {
+      "path": "src/cocos/physics/framework/components/colliders/collider.ts",
+      "entry": "material getter",
+      "line": 110,
+      "reason": "Existing Collider.material.get guard precedes first clone/listener/cache effect, inside the private-field-only shared-material branch. Keep pure non-cloning reads available."
+    },
+    {
+      "path": "src/cocos/scene-graph/component.ts",
+      "entry": "enabled/destroy",
+      "reason": "Inherited public lifecycle entries already guard component identity; do not duplicate protected lifecycle guards or expand into arbitrary direct/private calls."
+    }
+  ],
+  "readsToKeepAvailable": {
+    "RigidBody": [
+      "group",
+      "type",
+      "mass",
+      "allowSleep",
+      "linearDamping",
+      "angularDamping",
+      "useGravity",
+      "linearFactor",
+      "angularFactor",
+      "sleepThreshold",
+      "useCCD",
+      "isAwake",
+      "isSleepy",
+      "isSleeping",
+      "isStatic",
+      "isDynamic",
+      "isKinematic",
+      "body",
+      "getLinearVelocity(out)",
+      "getAngularVelocity(out)",
+      "getGroup()",
+      "getMask()"
+    ],
+    "Collider": [
+      "attachedRigidBody",
+      "sharedMaterial",
+      "material when no clone is needed",
+      "isTrigger",
+      "center",
+      "shape",
+      "needTriggerEvent",
+      "needCollisionEvent",
+      "getGroup()",
+      "getMask()",
+      "hasEventListener()"
+    ],
+    "BoxCollider": ["size", "shape"],
+    "SphereCollider": ["radius", "shape"],
+    "note": "Velocity output writes are caller-owned output mutation, not engine cache mutation. Output setters may execute caller code; nested engine writes remain fenced. Direct vector/object aliases, private method calls and overridden methods are not sandboxed."
+  },
+  "inheritedEventAudit": [
+    {
+      "entry": "targetOff(typeOrTarget)",
+      "source": "src/cocos/core/event/eventify.ts:167",
+      "finding": "Forwards directly to this.removeAll without input access. A guarded Collider.removeAll covers it before listener side effects; no additional override needed."
+    },
+    {
+      "entry": "emit(type, ...args)",
+      "source": "src/cocos/core/event/callbacks-invoker.ts:329",
+      "finding": "Inherited public API reads/coerces key, sets list.isInvoking, removes once/invalid-target callbacks via this.off before callback, invokes user code and may purge lists. It is not read-only.",
+      "requiredFollowUp": "Do not silently claim this entry protected by on/off guards. A Collider.emit wrapper can refuse external emit before superclass work, but also blocks legitimate dispatch under the same lease. Requires a private exact dispatch admission or prevalidated dispatch design, not a global bypass or releasing owner leases."
+    },
+    {
+      "entry": "runtime-mixed clear()",
+      "source": "src/cocos/core/event/callbacks-invoker.ts:379",
+      "finding": "CallbacksInvoker.clear is mixed into runtime prototypes but omitted from typed IEventified surface; it clears tables directly and bypasses Collider.removeAll.",
+      "requiredFollowUp": "Report as runtime/internal escape boundary. Do not broaden shared Eventify or invent a clear algorithm in this four-class source-only patch; explicit engine-private hardening would need separate scoped design."
+    }
+  ],
+  "verificationPlan": [
+    "Use actual imported engine classes, Eventify, pools, geometry, Vec3 and Component lifecycle. No copied setter bodies. Snapshot all tested source/config/fixture identities before each retained run.",
+    "Retain ORIGINAL RED before editing any of the four sources, then run the exact immutable fixture against patched GREEN. Preserve every failed harness/type/format attempt. No runtime/native/WASM build is necessary for this source control.",
+    "Each proposed entry: explicitly register guard on the component identity; assert exact operation and immutable snapshots of scalar/vector caches, geometry cache identities/values, listener tables/flags and zero adapter/native-mock counts. Register a second independent lease, release only first, prove continued refusal; release last and prove recovery. Unrelated identity remains usable.",
+    "Cover initialized Box3D branch, no adapter/uninitialized branch and a representative non-Box3D branch. Leased same-value setters must reject before equality, and missing-adapter branches before error logging. No-lease controls preserve all existing early returns, warnings/normalization and backend ordering.",
+    "Poison/caught nested accessors: group/mass/damping/radius Symbol.toPrimitive/valueOf; Box.size x/y/z reads even in strictEquals; center/factor Vec3 getters; material id access; listener key coercion. Observe zero accessor/clone/listener/adapter activity under lease, not just a thrown error.",
+    "Bounds: both null-cache and populated-cache getter cases. Refusal must not allocate/replace or refresh either cache. No-lease repeated calls preserve cached object identity and normal refreshed values.",
+    "Listener stage uses real callback tables: on/off/once/removeAll and inherited targetOff, registered callbacks, invalid target, cancellation while invoking, flags and shape.updateEventListener counts. Establish once dispatch compatibility before event integration; current T15 unsupported adapter does not establish event delivery.",
+    "Committed reads: body cached getters, getLinear/AngularVelocity(out), filter getters, material shared/pure getter, collider shape/vector identities. Verify reads remain accessible during lease and do not call mutating delegates.",
+    "Command exceptions: separate owner test with valid force/impulse/torque/clear submission while component leased must enqueue without native writes; caught nested command refusal poisons candidate. A pure lease fixture is not valid reason to demand those allowed commands reject at the wrapper.",
+    "Record full raw errors, exact check values, stdout/stderr, type and format exits. Header and assertion-only diff audit. Keep formal native/browser cells unqualified and leave upstream map/docs updates to lead."
+  ],
+  "unresolvedBoundaries": [
+    "CallbacksInvoker/Collider inherited event dispatch mutates its own listener machinery. Four listener guards alone cannot close emit or safely authorize internal once removal.",
+    "No-lease Box3D on/once already changes listeners and flags before current unsupported event adapter rejects. This patch must not claim to repair that preexisting no-lease transaction behavior.",
+    "Force/impulse/torque/ordinary clear methods are queue admissions, not forbidden configuration. Uninitialized wrapper _isInitialized still logs and returns under existing behavior; owner-level invalid/stale submission contracts require their own tests, not a new generic mutation guard.",
+    "Inherited generic Component name/scheduler utilities and engine-private lifecycle accessors are outside physics-configuration patch scope; existing enabled/destroy fences and Node category guard remain prerequisites.",
+    "No guards can protect direct public Vec3, result, material or private-field aliases; owner raw snapshot verification remains necessary."
+  ],
+  "contractSources": [
+    "docs/physics/box3d/contracts/unified-command-decisions-v1.md#2-queue-and-callback-contract",
+    "docs/physics/box3d/contracts/unified-admission-fence-v1.md",
+    "docs/physics/box3d/contracts/unified-mutation-fence-v1.md"
+  ],
+  "sourceUnchangedAtAuditCompletion": true
+}

@@ -1,0 +1,9 @@
+{
+  "command": [
+    "python3",
+    "tools/verify/box3d/review-unified-command-analytic.py",
+    "docs/physics/box3d/rebuild/unified-command-independent-arithmetic-20261022-n4"
+  ],
+  "exitCode": 0,
+  "scope": "Read-only review of archived real outputs, not a new physics run"
+}

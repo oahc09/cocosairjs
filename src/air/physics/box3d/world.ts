@@ -19,6 +19,9 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
 */
+import type { PhysicsSystem } from '../../../cocos/physics/framework/physics-system';
+import { Box3DWorldCommandOwner } from './world-command-owner';
+import type { Box3DOwnedComponentSeed } from './world-command-owner';
 import type { Node } from '../../../cocos/scene-graph/node';
 import { Box3DSharedBody } from './shared-body';
 import type { Box3DComponentConfiguration } from './shared-body';
@@ -48,6 +51,8 @@ type WorldState = 'ready' | 'stepping' | 'faulted' | 'destroying' | 'destroyed' 
 /** Internal adapter only. Not registered/exported by the optional feature yet. */
 export class Box3DPhysicsWorld implements IPhysicsWorld {
     readonly #binding: Box3DWorldBinding;
+    readonly #commandOwner: Box3DWorldCommandOwner;
+    private ownerCleanupFailure: unknown;
     readonly #token: Box3DWorld;
     private readonly description: Readonly<{ backend: 'box3d'; generation: number; worldId: number }>;
     private state: WorldState = 'ready';
@@ -82,9 +87,11 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
         lease: Box3DSTLease,
         options: AirNormalizedBox3DOptions,
         preparation: AirPhysicsPreparation,
-        qualification?: Box3DWritebackQualification,
+        qualification: Box3DWritebackQualification | undefined,
+        system: PhysicsSystem,
     ) {
         this.#writebackQualification = copyWritebackQualification(qualification);
+        this.#commandOwner = new Box3DWorldCommandOwner(preparation.generation, system, this);
         this.#binding = requireWorldBinding(lease.binding);
         this.options = Object.freeze({ ...options });
         if (
@@ -159,9 +166,20 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
                 operation,
                 'World is faulted or closed; no native operation was attempted.',
             );
+        this.#commandOwner.assertConfiguration(operation);
+    }
+    private assertCommittedRead(operation: string): void {
+        if (this.state !== 'ready' && this.state !== 'stepping')
+            throw worldError(
+                this.state === 'faulted' ? 'AIR_E_BOX3D_WORLD_FAULTED' : 'AIR_E_BOX3D_DISPOSED',
+                operation,
+                'World cannot provide committed reads.',
+            );
+        this.#commandOwner.assertCommittedRead(operation);
     }
     private fault(error: unknown): void {
         this.state = 'faulted';
+        this.#commandOwner.fault();
         this.failure = error;
         this.pendingSnapshot = null;
     }
@@ -173,7 +191,7 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
         this.nativeObservationCurrent = false;
     }
     get impl(): Readonly<{ backend: 'box3d'; generation: number; worldId: number }> {
-        this.assertReady('impl');
+        this.assertCommittedRead('impl');
         return this.description;
     }
     setGravity(v: { x: number; y: number; z: number }): void {
@@ -210,6 +228,7 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
     }
     setDefaultMaterial(value: PhysicsMaterial): void {
         this.assertReady('setDefaultMaterial');
+        this.#commandOwner.validateDefaultMaterial(value);
         const next = copySurfaceMaterial(value);
         if (value.rollingFriction !== 0 || value.spinningFriction !== 0)
             unsupportedBox3D('nonzero rollingFriction/spinningFriction');
@@ -251,6 +270,7 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
             throw error;
         }
         this.material = next;
+        this.#commandOwner.observeDefaultMaterial(value);
         this.invalidatePending();
     }
     /** Internal shape-owner hook for later T10. Does not create or claim ownership of native shapes. */
@@ -310,7 +330,7 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
         }
     }
     get debugDrawFlags(): number {
-        this.assertReady('debugDrawFlags');
+        this.assertCommittedRead('debugDrawFlags');
         return this.drawFlags;
     }
     set debugDrawFlags(value: number) {
@@ -321,7 +341,7 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
         this.debug = snapshot;
     }
     get debugDrawConstraintSize(): number {
-        this.assertReady('debugDrawConstraintSize');
+        this.assertCommittedRead('debugDrawConstraintSize');
         return this.jointScale;
     }
     set debugDrawConstraintSize(value: number) {
@@ -331,9 +351,19 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
         this.jointScale = next;
         this.debug = snapshot;
     }
+    /** Internal adapter admission before caller-controlled component inputs. */
+    assertComponentConfiguration(operation: string): void {
+        this.assertReady(operation);
+    }
     /** Internal component acquisition; never returns a native token or binding. */
-    acquireSharedBody(node: Node, reference: object, configuration: Box3DComponentConfiguration): Box3DSharedBody {
+    acquireSharedBody(
+        node: Node,
+        reference: object,
+        configuration: Box3DComponentConfiguration,
+        component: Box3DOwnedComponentSeed,
+    ): Box3DSharedBody {
         this.assertReady('acquire shared body');
+        const copiedComponent = this.#commandOwner.copyComponentSeed(node, reference, component);
         let body = this.#sharedBodies.get(node);
         if (!body) {
             body = new Box3DSharedBody(
@@ -342,13 +372,22 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
                 node,
                 {
                     assertReady: (operation) => this.assertReady(operation),
-                    isFaulted: () => this.state === 'faulted',
+                    assertCommittedRead: (operation) => this.assertCommittedRead(operation),
+                    adoptBody: (seed) => this.#commandOwner.adoptBody(seed),
+                    attachComponent: (key, seed) => this.#commandOwner.attachComponent(key, seed),
+                    completeComponent: (adapter) => this.#commandOwner.completeComponent(adapter),
+                    componentEnabled: (adapter, enabled) => this.#commandOwner.commitComponentEnabled(adapter, enabled),
+                    observeMaterial: (adapter, material) =>
+                        this.#commandOwner.observeColliderMaterial(adapter, material),
+                    releaseComponent: (adapter) => this.#commandOwner.releaseComponentAfterCleanup(adapter),
+                    isFaulted: () => this.state === 'faulted' || this.state === 'destroy-failed',
                     invalidate: () => this.invalidatePending(),
                     fault: (error) => this.fault(error),
                     registerShapeMaterial: (shape, inherited) => this.registerMaterialShape(shape, inherited),
                     updateShapeMaterial: (shape, value) => this.updateMaterialShape(shape, value),
                     unregisterShapeMaterial: (shape) => this.unregisterMaterialShape(shape),
-                    released: (key, value) => {
+                    released: (key, value, logical) => {
+                        this.#commandOwner.retireBodyAfterDestroy(logical);
                         if (this.#sharedBodies.get(key) === value) this.#sharedBodies.delete(key);
                     },
                 },
@@ -356,7 +395,7 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
             );
             this.#sharedBodies.set(node, body);
         }
-        body.retain(reference);
+        body.retain(reference, copiedComponent);
         return body;
     }
     syncSceneToPhysics(): void {
@@ -370,9 +409,14 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
     }
     emitEvents(): void {
         this.assertReady('emitEvents');
-        if (this.pendingSnapshot) {
-            this.emittedStep = this.pendingSnapshot.stepIndex;
-            this.pendingSnapshot = null;
+        const scope = this.#commandOwner.beginDispatch();
+        try {
+            if (this.pendingSnapshot) {
+                this.emittedStep = this.pendingSnapshot.stepIndex;
+                this.pendingSnapshot = null;
+            }
+        } finally {
+            scope.dispose();
         }
         // T09 admits no collider event listeners; raw snapshots are diagnostics, not Cocos events.
     }
@@ -390,72 +434,93 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
             );
         const nextEpoch = this.#writebackEpoch + 1;
         const bodies = Object.freeze(Array.from(this.#sharedBodies.values()));
-        // Recoverable assembly/configuration rejection precedes the fault-latched native-step region.
-        for (const body of bodies) body.preflight();
-        this.state = 'stepping';
-        this.lastDt = delta;
-        ++this.attemptedSteps;
-        const before = this.nativeStep.nativeStepIndex;
-        this.lastStepOutcome = 'not-attempted';
+        const scope = this.#commandOwner.beginStep();
         try {
-            const start = copyStepDiagnostics(this.#binding.stepDiagnostics(this.#token));
-            if (start.nativeStepIndex !== before)
-                throw worldError('AIR_E_BOX3D_ABI', 'step', 'World advanced outside its owner.');
-            this.lastStepOutcome = 'unknown';
-            this.nativeObservationCurrent = false;
-            this.#binding.step(this.#token, delta, this.options.solverSubSteps);
-            this.nativeStep = copyStepDiagnostics(this.#binding.stepDiagnostics(this.#token));
-            if (
-                this.nativeStep.nativeStepIndex !== before + 1 ||
-                !this.nativeStep.nativeCompleted ||
-                !this.nativeStep.snapshotAvailable
-            )
-                throw worldError('AIR_E_BOX3D_ABI', 'step', 'Expected exactly one completed native step and snapshot.');
-            this.lastStepOutcome = 'completed';
-            this.nativeObservationCurrent = true;
-            const snapshot = this.#binding.readStepSnapshot(this.#token);
-            if (
-                !snapshot ||
-                snapshot.worldId !== this.#token.id ||
-                snapshot.stepIndex !== this.nativeStep.nativeStepIndex ||
-                !Object.isFrozen(snapshot)
-            )
-                throw worldError('AIR_E_BOX3D_ABI', 'step', 'Expected the current owned immutable snapshot.');
-            this.snapshot = this.pendingSnapshot = snapshot;
-            const plans = Box3DSharedBody.captureWriteback(bodies);
-            writebackSceneBatch(plans, () => {
-                const current = Array.from(this.#sharedBodies.values());
-                if (current.length !== bodies.length || current.some((body, i) => body !== bodies[i]))
-                    throw worldError(
-                        'AIR_E_BOX3D_CONFIG',
-                        'writeback',
-                        'World body ownership changed during the batch.',
-                    );
-            });
-            this.#writebackEpoch = nextEpoch;
-            if (this.drawFlags) this.debug = this.collectDebug(this.drawFlags, this.jointScale);
-            this.state = 'ready';
-        } catch (error) {
+            // Recoverable assembly/configuration rejection precedes the fault-latched native-step region.
+            for (const body of bodies) body.preflight();
+            this.state = 'stepping';
+            this.lastDt = delta;
+            ++this.attemptedSteps;
+            const before = this.nativeStep.nativeStepIndex;
+            this.lastStepOutcome = 'not-attempted';
             try {
-                this.nativeStep = copyStepDiagnostics(this.#binding.stepDiagnostics(this.#token));
-                this.nativeObservationCurrent = true;
-                if (this.lastStepOutcome !== 'not-attempted')
-                    this.lastStepOutcome =
-                        this.nativeStep.nativeStepIndex === before + 1
-                            ? 'completed'
-                            : this.nativeStep.nativeStepIndex === before
-                              ? 'not-completed'
-                              : 'unknown';
-            } catch {
+                const start = copyStepDiagnostics(this.#binding.stepDiagnostics(this.#token));
+                if (start.nativeStepIndex !== before)
+                    throw worldError('AIR_E_BOX3D_ABI', 'step', 'World advanced outside its owner.');
+                this.lastStepOutcome = 'unknown';
                 this.nativeObservationCurrent = false;
-                // Preserve an already-established completion; otherwise outcome remains unknown.
+                scope.advance('solving');
+                this.#binding.step(this.#token, delta, this.options.solverSubSteps);
+                scope.advance('writeback');
+                this.nativeStep = copyStepDiagnostics(this.#binding.stepDiagnostics(this.#token));
+                if (
+                    this.nativeStep.nativeStepIndex !== before + 1 ||
+                    !this.nativeStep.nativeCompleted ||
+                    !this.nativeStep.snapshotAvailable
+                )
+                    throw worldError(
+                        'AIR_E_BOX3D_ABI',
+                        'step',
+                        'Expected exactly one completed native step and snapshot.',
+                    );
+                this.lastStepOutcome = 'completed';
+                this.nativeObservationCurrent = true;
+                const snapshot = this.#binding.readStepSnapshot(this.#token);
+                if (
+                    !snapshot ||
+                    snapshot.worldId !== this.#token.id ||
+                    snapshot.stepIndex !== this.nativeStep.nativeStepIndex ||
+                    !Object.isFrozen(snapshot)
+                )
+                    throw worldError('AIR_E_BOX3D_ABI', 'step', 'Expected the current owned immutable snapshot.');
+                this.snapshot = this.pendingSnapshot = snapshot;
+                const plans = Box3DSharedBody.captureWriteback(bodies);
+                writebackSceneBatch(
+                    plans,
+                    () => {
+                        const current = Array.from(this.#sharedBodies.values());
+                        if (current.length !== bodies.length || current.some((body, i) => body !== bodies[i]))
+                            throw worldError(
+                                'AIR_E_BOX3D_CONFIG',
+                                'writeback',
+                                'World body ownership changed during the batch.',
+                            );
+                    },
+                    scope,
+                );
+                this.#writebackEpoch = nextEpoch;
+                if (this.drawFlags) this.debug = this.collectDebug(this.drawFlags, this.jointScale);
+                this.state = 'ready';
+            } catch (error) {
+                try {
+                    this.nativeStep = copyStepDiagnostics(this.#binding.stepDiagnostics(this.#token));
+                    this.nativeObservationCurrent = true;
+                    if (this.lastStepOutcome !== 'not-attempted')
+                        this.lastStepOutcome =
+                            this.nativeStep.nativeStepIndex === before + 1
+                                ? 'completed'
+                                : this.nativeStep.nativeStepIndex === before
+                                  ? 'not-completed'
+                                  : 'unknown';
+                } catch {
+                    this.nativeObservationCurrent = false;
+                    // Preserve an already-established completion; otherwise outcome remains unknown.
+                }
+                this.fault(error);
+                throw error;
             }
-            this.fault(error);
-            throw error;
+        } finally {
+            try {
+                scope.dispose();
+            } catch (error) {
+                this.ownerCleanupFailure = error;
+                this.fault(error);
+                throw error;
+            }
         }
     }
     getNativeCounts() {
-        this.assertReady('getNativeCounts');
+        this.assertCommittedRead('getNativeCounts');
         const result = this.#binding.worldCounts(this.#token);
         if (!result || result.counts.length !== 4 || typeof result.liveBytes !== 'bigint' || result.liveBytes < 0)
             throw worldError('AIR_E_BOX3D_ABI', 'getNativeCounts', 'Invalid copied world counts.');
@@ -468,6 +533,8 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
     diagnostics() {
         return Object.freeze({
             state: this.state,
+            commandOwner: this.#commandOwner.diagnostics(),
+            ownerCleanupError: this.ownerCleanupFailure === undefined ? null : String(this.ownerCleanupFailure),
             writeback: Object.freeze({
                 epoch: this.#writebackEpoch,
                 epochLimit: this.#writebackQualification.epochLimit,
@@ -493,11 +560,11 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
         });
     }
     getStepSnapshot(): Box3DStepSnapshot | null {
-        this.assertReady('getStepSnapshot');
+        this.assertCommittedRead('getStepSnapshot');
         return this.snapshot;
     }
     getDebugSnapshot(): Box3DDebugSnapshot | null {
-        this.assertReady('getDebugSnapshot');
+        this.assertCommittedRead('getDebugSnapshot');
         return this.debug;
     }
     destroy(): void {
@@ -505,6 +572,7 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
         if (this.state === 'destroy-failed') throw this.failure;
         if (this.state === 'stepping' || this.state === 'destroying')
             throw worldError('AIR_E_BOX3D_REENTRANT', 'destroy', 'Cannot destroy during native operation.');
+        if (this.state !== 'faulted') this.#commandOwner.assertConfiguration('destroy');
         this.state = 'destroying';
         this.nativeObservationCurrent = false;
         try {
@@ -520,6 +588,17 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
             this.state = 'destroy-failed';
             this.failure = error;
             throw error;
+        } finally {
+            try {
+                this.#commandOwner.closeAfterWorldTeardown(this.state === 'destroyed');
+            } catch (error) {
+                this.ownerCleanupFailure = error;
+                if (this.state !== 'destroy-failed') {
+                    this.state = 'destroy-failed';
+                    this.failure = error;
+                    throw error;
+                }
+            }
         }
     }
     raycast(..._args: Parameters<IPhysicsWorld['raycast']>): never {

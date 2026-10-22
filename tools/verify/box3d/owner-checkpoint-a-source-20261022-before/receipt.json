@@ -1,0 +1,35 @@
+{
+  "scope": "Original six AIR sources before approved checkpoint A; seventh owner module is new",
+  "files": [
+    {
+      "path": "src/air/physics/box3d/world.ts",
+      "bytes": 26694,
+      "sha256": "cae619ff46439bef664b0f1c1671b00d7b7de1f6c6b62df7bf06b4e9f86e24c0"
+    },
+    {
+      "path": "src/air/physics/box3d/shared-body.ts",
+      "bytes": 26716,
+      "sha256": "5f3d3d22b94578b05d043d3a487fdc10664ce018213711b4781d590ed6c13a81"
+    },
+    {
+      "path": "src/air/physics/box3d/registration.ts",
+      "bytes": 5083,
+      "sha256": "ddb02c7525b37246e8c661a3143db6adfa8fdd8fe9bc8ef8159bbff68211e82a"
+    },
+    {
+      "path": "src/air/physics/box3d/rigid-body.ts",
+      "bytes": 8667,
+      "sha256": "0d00792b4f66ec30fdd255041b397f6a501257b071d78bf1516b97bc32ab51b6"
+    },
+    {
+      "path": "src/air/physics/box3d/box-sphere-shape.ts",
+      "bytes": 9067,
+      "sha256": "35747ae8df33ad523e01b68f8ea1d2a771a59c4a6a0af3cf9a4c04cb7ffad6ba"
+    },
+    {
+      "path": "src/air/physics/box3d/world-writeback.ts",
+      "bytes": 11761,
+      "sha256": "3796bc4c1613506157a28ef212bc1f979bdd019b5069ebf192c9f15474effdbd"
+    }
+  ]
+}

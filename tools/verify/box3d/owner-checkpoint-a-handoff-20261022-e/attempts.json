@@ -1,0 +1,141 @@
+[
+  {
+    "attempt": "source-format-red",
+    "directory": "tools/verify/box3d/owner-checkpoint-a-source-20261022-format-red",
+    "files": [
+      "tools/verify/box3d/owner-checkpoint-a-source-20261022-format-red/exit-code.txt",
+      "tools/verify/box3d/owner-checkpoint-a-source-20261022-format-red/source-hashes.json",
+      "tools/verify/box3d/owner-checkpoint-a-source-20261022-format-red/stderr.log",
+      "tools/verify/box3d/owner-checkpoint-a-source-20261022-format-red/stdout.log"
+    ]
+  },
+  {
+    "attempt": "source-a",
+    "directory": "tools/verify/box3d/owner-checkpoint-a-source-20261022-a",
+    "files": [
+      "tools/verify/box3d/owner-checkpoint-a-source-20261022-a/source-hashes.json",
+      "tools/verify/box3d/owner-checkpoint-a-source-20261022-a/tsc.exit-code.txt",
+      "tools/verify/box3d/owner-checkpoint-a-source-20261022-a/tsc.stderr.log",
+      "tools/verify/box3d/owner-checkpoint-a-source-20261022-a/tsc.stdout.log"
+    ]
+  },
+  {
+    "attempt": "source-b",
+    "directory": "tools/verify/box3d/owner-checkpoint-a-source-20261022-b",
+    "files": [
+      "tools/verify/box3d/owner-checkpoint-a-source-20261022-b/source-hashes.json",
+      "tools/verify/box3d/owner-checkpoint-a-source-20261022-b/tsc.exit-code.txt",
+      "tools/verify/box3d/owner-checkpoint-a-source-20261022-b/tsc.stderr.log",
+      "tools/verify/box3d/owner-checkpoint-a-source-20261022-b/tsc.stdout.log"
+    ]
+  },
+  {
+    "attempt": "source-c",
+    "directory": "tools/verify/box3d/owner-checkpoint-a-source-20261022-c",
+    "files": [
+      "tools/verify/box3d/owner-checkpoint-a-source-20261022-c/source-hashes.json",
+      "tools/verify/box3d/owner-checkpoint-a-source-20261022-c/tsc.exit-code.txt",
+      "tools/verify/box3d/owner-checkpoint-a-source-20261022-c/tsc.stderr.log",
+      "tools/verify/box3d/owner-checkpoint-a-source-20261022-c/tsc.stdout.log"
+    ]
+  },
+  {
+    "attempt": "source-d",
+    "directory": "tools/verify/box3d/owner-checkpoint-a-source-20261022-d",
+    "files": [
+      "tools/verify/box3d/owner-checkpoint-a-source-20261022-d/source-hashes.json",
+      "tools/verify/box3d/owner-checkpoint-a-source-20261022-d/tsc.exit-code.txt",
+      "tools/verify/box3d/owner-checkpoint-a-source-20261022-d/tsc.stderr.log",
+      "tools/verify/box3d/owner-checkpoint-a-source-20261022-d/tsc.stdout.log"
+    ]
+  },
+  {
+    "attempt": "source-e",
+    "directory": "tools/verify/box3d/owner-checkpoint-a-source-20261022-e",
+    "files": [
+      "tools/verify/box3d/owner-checkpoint-a-source-20261022-e/source-hashes.json",
+      "tools/verify/box3d/owner-checkpoint-a-source-20261022-e/tsc.exit-code.txt",
+      "tools/verify/box3d/owner-checkpoint-a-source-20261022-e/tsc.stderr.log",
+      "tools/verify/box3d/owner-checkpoint-a-source-20261022-e/tsc.stdout.log"
+    ]
+  },
+  {
+    "attempt": "runtime-b",
+    "directory": "tools/verify/box3d/owner-checkpoint-a-evidence-20261022-b",
+    "command": "BOX3D_OWNER_RAW=\"$PWD/tools/verify/box3d/owner-checkpoint-a-evidence-20261022-b/raw.json\" node node_modules/jest/bin/jest.js --config tools/verify/box3d/owner-checkpoint-a-control.jest.cjs --runInBand",
+    "exitCode": 1,
+    "files": [
+      "tools/verify/box3d/owner-checkpoint-a-evidence-20261022-b/jest.exit-code.txt",
+      "tools/verify/box3d/owner-checkpoint-a-evidence-20261022-b/jest.stderr.log",
+      "tools/verify/box3d/owner-checkpoint-a-evidence-20261022-b/jest.stdout.log",
+      "tools/verify/box3d/owner-checkpoint-a-evidence-20261022-b/raw.json"
+    ]
+  },
+  {
+    "attempt": "runtime-c",
+    "directory": "tools/verify/box3d/owner-checkpoint-a-evidence-20261022-c",
+    "command": "BOX3D_OWNER_RAW=\"$PWD/tools/verify/box3d/owner-checkpoint-a-evidence-20261022-c/raw.json\" node node_modules/jest/bin/jest.js --config tools/verify/box3d/owner-checkpoint-a-control.jest.cjs --runInBand",
+    "exitCode": 0,
+    "files": [
+      "tools/verify/box3d/owner-checkpoint-a-evidence-20261022-c/jest.exit-code.txt",
+      "tools/verify/box3d/owner-checkpoint-a-evidence-20261022-c/jest.stderr.log",
+      "tools/verify/box3d/owner-checkpoint-a-evidence-20261022-c/jest.stdout.log",
+      "tools/verify/box3d/owner-checkpoint-a-evidence-20261022-c/raw.json"
+    ]
+  },
+  {
+    "attempt": "runtime-d-red",
+    "directory": "tools/verify/box3d/owner-checkpoint-a-evidence-20261022-d-red",
+    "command": "BOX3D_OWNER_RAW=\"$PWD/tools/verify/box3d/owner-checkpoint-a-evidence-20261022-d-red/raw.json\" node node_modules/jest/bin/jest.js --config tools/verify/box3d/owner-checkpoint-a-control.jest.cjs --runInBand",
+    "exitCode": 1,
+    "files": [
+      "tools/verify/box3d/owner-checkpoint-a-evidence-20261022-d-red/fixture-input.ts",
+      "tools/verify/box3d/owner-checkpoint-a-evidence-20261022-d-red/jest.exit-code.txt",
+      "tools/verify/box3d/owner-checkpoint-a-evidence-20261022-d-red/jest.stderr.log",
+      "tools/verify/box3d/owner-checkpoint-a-evidence-20261022-d-red/jest.stdout.log",
+      "tools/verify/box3d/owner-checkpoint-a-evidence-20261022-d-red/raw.json",
+      "tools/verify/box3d/owner-checkpoint-a-evidence-20261022-d-red/source-sha256.txt"
+    ]
+  },
+  {
+    "attempt": "runtime-d",
+    "directory": "tools/verify/box3d/owner-checkpoint-a-evidence-20261022-d",
+    "command": "BOX3D_OWNER_RAW=\"$PWD/tools/verify/box3d/owner-checkpoint-a-evidence-20261022-d/raw.json\" node node_modules/jest/bin/jest.js --config tools/verify/box3d/owner-checkpoint-a-control.jest.cjs --runInBand",
+    "exitCode": 0,
+    "files": [
+      "tools/verify/box3d/owner-checkpoint-a-evidence-20261022-d/jest.exit-code.txt",
+      "tools/verify/box3d/owner-checkpoint-a-evidence-20261022-d/jest.stderr.log",
+      "tools/verify/box3d/owner-checkpoint-a-evidence-20261022-d/jest.stdout.log",
+      "tools/verify/box3d/owner-checkpoint-a-evidence-20261022-d/raw.json"
+    ]
+  },
+  {
+    "attempt": "runtime-d2-red",
+    "directory": "tools/verify/box3d/owner-checkpoint-a-evidence-20261022-d2-red",
+    "command": "BOX3D_OWNER_RAW=\"$PWD/tools/verify/box3d/owner-checkpoint-a-evidence-20261022-d2-red/raw.json\" node node_modules/jest/bin/jest.js --config tools/verify/box3d/owner-checkpoint-a-control.jest.cjs --runInBand --testNamePattern='native world destruction failure'",
+    "exitCode": 1,
+    "files": [
+      "tools/verify/box3d/owner-checkpoint-a-evidence-20261022-d2-red/fixture-input.ts",
+      "tools/verify/box3d/owner-checkpoint-a-evidence-20261022-d2-red/jest.exit-code.txt",
+      "tools/verify/box3d/owner-checkpoint-a-evidence-20261022-d2-red/jest.stderr.log",
+      "tools/verify/box3d/owner-checkpoint-a-evidence-20261022-d2-red/jest.stdout.log",
+      "tools/verify/box3d/owner-checkpoint-a-evidence-20261022-d2-red/raw.json",
+      "tools/verify/box3d/owner-checkpoint-a-evidence-20261022-d2-red/source-sha256.txt"
+    ]
+  },
+  {
+    "attempt": "runtime-e",
+    "directory": "tools/verify/box3d/owner-checkpoint-a-evidence-20261022-e",
+    "command": "BOX3D_OWNER_RAW=\"$PWD/tools/verify/box3d/owner-checkpoint-a-evidence-20261022-e/raw.json\" node node_modules/jest/bin/jest.js --config tools/verify/box3d/owner-checkpoint-a-control.jest.cjs --runInBand",
+    "exitCode": 0,
+    "files": [
+      "tools/verify/box3d/owner-checkpoint-a-evidence-20261022-e/format.exit-code.txt",
+      "tools/verify/box3d/owner-checkpoint-a-evidence-20261022-e/format.stderr.log",
+      "tools/verify/box3d/owner-checkpoint-a-evidence-20261022-e/format.stdout.log",
+      "tools/verify/box3d/owner-checkpoint-a-evidence-20261022-e/jest.exit-code.txt",
+      "tools/verify/box3d/owner-checkpoint-a-evidence-20261022-e/jest.stderr.log",
+      "tools/verify/box3d/owner-checkpoint-a-evidence-20261022-e/jest.stdout.log",
+      "tools/verify/box3d/owner-checkpoint-a-evidence-20261022-e/raw.json"
+    ]
+  }
+]

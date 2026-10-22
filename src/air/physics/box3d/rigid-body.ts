@@ -60,11 +60,18 @@ export class Box3DRigidBody implements IRigidBody {
         return this.body.state.sleeping;
     }
     initialize(value: RigidBody): void {
+        this.#world().assertComponentConfiguration('RigidBody initialize');
         if (this.#shared) throw worldError('AIR_E_BOX3D_CONFIG', 'initialize', 'Already initialized.');
         validateRigidBodyInitial(value, this.#configuration);
-        const body = this.#world().acquireSharedBody(value.node, this, this.#configuration);
+        const body = this.#world().acquireSharedBody(value.node, this, this.#configuration, {
+            adapter: this,
+            component: value,
+            kind: 'rigid-body',
+            material: null,
+        });
         try {
             body.attachRigidBody(value, this.#configuration);
+            body.completeComponent(this);
         } catch (error) {
             try {
                 body.release(this);
@@ -85,9 +92,11 @@ export class Box3DRigidBody implements IRigidBody {
     }
     onEnable(): void {
         this.body.enableRigidBody(true);
+        this.body.componentEnabled(this, true);
     }
     onDisable(): void {
         this.body.enableRigidBody(false);
+        this.body.componentEnabled(this, false);
     }
     onDestroy(): void {
         if (!this.#shared) return;
@@ -98,52 +107,67 @@ export class Box3DRigidBody implements IRigidBody {
         this.#component = null;
     }
     setType(value: ERigidBodyType): void {
+        this.body.assertConfiguration('setType');
         this.body.setType(value);
     }
     setMass(value: number): void {
+        this.body.assertConfiguration('setMass');
         this.body.control('setBodyMass', value);
     }
     setLinearDamping(value: number): void {
+        this.body.assertConfiguration('setLinearDamping');
         this.body.control('setBodyDamping', value, this.body.state.angularDamping);
     }
     setAngularDamping(value: number): void {
+        this.body.assertConfiguration('setAngularDamping');
         this.body.control('setBodyDamping', this.body.state.linearDamping, value);
     }
     useGravity(value: boolean): void {
+        this.body.assertConfiguration('useGravity');
         if (typeof value !== 'boolean') throw worldError('AIR_E_BOX3D_CONFIG', 'useGravity', 'Expected boolean.');
         this.body.control('setBodyGravityScale', value ? 1 : 0);
     }
     setLinearFactor(value: IVec3Like): void {
+        this.body.assertConfiguration('setLinearFactor');
         this.body.control('setBodyMotionFactors', bodyVector(value, 'linearFactor'), this.body.state.angularFactor);
     }
     setAngularFactor(value: IVec3Like): void {
+        this.body.assertConfiguration('setAngularFactor');
         this.body.control('setBodyMotionFactors', this.body.state.linearFactor, bodyVector(value, 'angularFactor'));
     }
     setAllowSleep(value: boolean): void {
+        this.body.assertConfiguration('setAllowSleep');
         this.body.control('setBodySleepEnabled', value);
     }
     wakeUp(): void {
+        this.body.assertConfiguration('wakeUp');
         this.body.control('setBodyAwake', true);
     }
     sleep(): void {
+        this.body.assertConfiguration('sleep');
         this.body.control('setBodyAwake', false);
     }
     clearState(): void {
+        this.body.assertConfiguration('clearState');
         this.body.control('clearBodyState');
     }
     clearForces(): void {
+        this.body.assertConfiguration('clearForces');
         this.body.control('clearBodyForces');
     }
     clearVelocity(): void {
+        this.body.assertConfiguration('clearVelocity');
         this.body.control('clearBodyVelocity');
     }
     setSleepThreshold(value: number): void {
+        this.body.assertConfiguration('setSleepThreshold');
         this.body.control('setBodySleepThreshold', value);
     }
     getSleepThreshold(): number {
         return this.body.state.sleepThreshold;
     }
     useCCD(value: boolean): void {
+        this.body.assertConfiguration('useCCD');
         this.body.control('setBodyCCD', value);
     }
     isUsingCCD(): boolean {
@@ -156,6 +180,7 @@ export class Box3DRigidBody implements IRigidBody {
         out.z = v[2];
     }
     setLinearVelocity(value: IVec3Like): void {
+        this.body.assertConfiguration('setLinearVelocity');
         this.body.control('setBodyLinearVelocity', bodyVector(value, 'linearVelocity'));
     }
     getAngularVelocity(out: IVec3Like): void {
@@ -165,9 +190,11 @@ export class Box3DRigidBody implements IRigidBody {
         out.z = v[2];
     }
     setAngularVelocity(value: IVec3Like): void {
+        this.body.assertConfiguration('setAngularVelocity');
         this.body.control('setBodyAngularVelocity', bodyVector(value, 'angularVelocity'));
     }
     applyForce(value: IVec3Like, offset?: IVec3Like): void {
+        this.body.assertConfiguration('applyForce');
         this.body.control(
             'applyBodyForce',
             bodyVector(value, 'force'),
@@ -176,6 +203,7 @@ export class Box3DRigidBody implements IRigidBody {
         );
     }
     applyLocalForce(value: IVec3Like, offset?: IVec3Like): void {
+        this.body.assertConfiguration('applyLocalForce');
         this.body.control(
             'applyBodyForce',
             bodyVector(value, 'force'),
@@ -184,6 +212,7 @@ export class Box3DRigidBody implements IRigidBody {
         );
     }
     applyImpulse(value: IVec3Like, offset?: IVec3Like): void {
+        this.body.assertConfiguration('applyImpulse');
         this.body.control(
             'applyBodyImpulse',
             bodyVector(value, 'impulse'),
@@ -192,6 +221,7 @@ export class Box3DRigidBody implements IRigidBody {
         );
     }
     applyLocalImpulse(value: IVec3Like, offset?: IVec3Like): void {
+        this.body.assertConfiguration('applyLocalImpulse');
         this.body.control(
             'applyBodyImpulse',
             bodyVector(value, 'impulse'),
@@ -200,33 +230,41 @@ export class Box3DRigidBody implements IRigidBody {
         );
     }
     applyTorque(value: IVec3Like): void {
+        this.body.assertConfiguration('applyTorque');
         this.body.control('applyBodyTorque', bodyVector(value, 'torque'), 'world');
     }
     applyLocalTorque(value: IVec3Like): void {
+        this.body.assertConfiguration('applyLocalTorque');
         this.body.control('applyBodyTorque', bodyVector(value, 'torque'), 'local');
     }
     getGroup(): number {
         return this.body.getGroup();
     }
     setGroup(value: number): void {
+        this.body.assertConfiguration('setGroup');
         this.body.setGroup(value);
     }
     addGroup(value: number): void {
+        this.body.assertConfiguration('addGroup');
         this.setGroup(this.getGroup() | filterBits(value));
     }
     removeGroup(value: number): void {
+        this.body.assertConfiguration('removeGroup');
         this.setGroup(this.getGroup() & ~filterBits(value));
     }
     getMask(): number {
         return this.body.getMask();
     }
     setMask(value: number): void {
+        this.body.assertConfiguration('setMask');
         this.body.setMask(value);
     }
     addMask(value: number): void {
+        this.body.assertConfiguration('addMask');
         this.setMask(this.getMask() | filterBits(value));
     }
     removeMask(value: number): void {
+        this.body.assertConfiguration('removeMask');
         this.setMask(this.getMask() & ~filterBits(value));
     }
 }

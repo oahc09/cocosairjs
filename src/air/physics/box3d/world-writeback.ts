@@ -178,8 +178,21 @@ export interface Box3DWritebackBody {
     readonly writable: boolean;
     readonly assertOwner: () => void;
 }
+/** Internal exact-write authority only; never a blanket transform exemption. */
+export interface Box3DExactWriteAuthority {
+    write(
+        node: Node,
+        operation: 'setWorldPosition' | 'setWorldRotation',
+        expected: readonly number[],
+        perform: () => void,
+    ): void;
+}
 /** All immutable native origins must already be copied before calling this function. */
-export function writebackSceneBatch(bodies: readonly Box3DWritebackBody[], assertWorldOwners: () => void): void {
+export function writebackSceneBatch(
+    bodies: readonly Box3DWritebackBody[],
+    assertWorldOwners: () => void,
+    authority?: Box3DExactWriteAuthority,
+): void {
     const expected = new Map<Node, LocalRecord>();
     for (const body of bodies)
         for (const item of body.scene.records()) {
@@ -194,10 +207,13 @@ export function writebackSceneBatch(bodies: readonly Box3DWritebackBody[], asser
     owners();
     verify(expected);
     if (!expected.size) return;
-    const lease = registerNodeTransformGuard(Array.from(expected.keys()), {
-        code: 'AIR_E_BOX3D_CONFIG',
-        message: 'The current Box3D writeback batch owns this Node or its descendant',
-    });
+    const lease = authority
+        ? null
+        : registerNodeTransformGuard(Array.from(expected.keys()), {
+              code: 'AIR_E_BOX3D_CONFIG',
+              message: 'The current Box3D writeback batch owns this Node or its descendant',
+          });
+    const writer = authority ?? lease!;
     const ordered = Array.from(bodies).sort((a, b) => a.scene.records().length - b.scene.records().length);
     try {
         for (const body of ordered) {
@@ -218,7 +234,7 @@ export function writebackSceneBatch(bodies: readonly Box3DWritebackBody[], asser
                 rotation = Object.freeze(body.origin.slice(3, 7));
             // Expected locals are derived BEFORE callbacks; never adopt readback as a new baseline.
             expected.set(node, Object.freeze({ ...old, position: vector(localPosition) }));
-            lease.write(node, 'setWorldPosition', position, () =>
+            writer.write(node, 'setWorldPosition', position, () =>
                 node.setWorldPosition(position[0], position[1], position[2]),
             );
             owners();
@@ -226,7 +242,7 @@ export function writebackSceneBatch(bodies: readonly Box3DWritebackBody[], asser
             if (!near(vector(node.worldPosition), position))
                 reject('Position setter did not retain expected native origin.');
             expected.set(node, Object.freeze({ ...expected.get(node)!, rotation: quaternion(localRotation) }));
-            lease.write(node, 'setWorldRotation', rotation, () =>
+            writer.write(node, 'setWorldRotation', rotation, () =>
                 node.setWorldRotation(rotation[0], rotation[1], rotation[2], rotation[3]),
             );
             owners();
@@ -251,6 +267,6 @@ export function writebackSceneBatch(bodies: readonly Box3DWritebackBody[], asser
         // No fallible callback/getter remains between the final verification and all baseline commits.
         for (const body of bodies) body.scene.commit(expected);
     } finally {
-        lease.dispose();
+        lease?.dispose();
     }
 }

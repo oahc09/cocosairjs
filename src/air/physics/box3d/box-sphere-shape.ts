@@ -69,6 +69,7 @@ class Box3DPrimitiveShape {
         return this.body.rigidBody;
     }
     initialize(value: Collider): void {
+        this.#world().assertComponentConfiguration('Collider initialize');
         if (this.#body) throw worldError('AIR_E_BOX3D_CONFIG', 'shape initialize', 'Already initialized.');
         if (value.needCollisionEvent || value.needTriggerEvent) unsupportedBox3D('collider event listeners (T15)');
         const center = bodyVector(value.center, 'center');
@@ -76,31 +77,41 @@ class Box3DPrimitiveShape {
             this.#kind === 'box'
                 ? bodyVector((value as BoxCollider).size, 'box size')
                 : [(value as SphereCollider).radius];
-        const material = primitiveMaterial(value.sharedMaterial);
+        const asset = value.sharedMaterial;
+        const material = primitiveMaterial(asset);
         const scale = bodyVector(value.node.worldScale, 'initial shape scale');
         const geometry = primitiveGeometry(this.#kind, center, dimensions, scale, value.isTrigger, material);
         // Preserve the component for its real onDestroy listener-clearing callback if native acquisition fails.
         this.#collider = value;
-        const body = this.#world().acquireSharedBody(value.node, this, this.#configuration);
+        const body = this.#world().acquireSharedBody(value.node, this, this.#configuration, {
+            adapter: this,
+            component: value,
+            kind: 'collider',
+            material: asset,
+        });
         this.#body = body;
         this.#center = center;
         this.#dimensions = Object.freeze([...dimensions]);
         this.#material = material;
         this.#trigger = value.isTrigger;
         this.#geometry = geometry;
+        body.completeComponent(this);
     }
     onLoad(): void {
         void this.body;
     } // Geometry configuration was strictly validated during initialize.
     onEnable(): void {
+        this.assertConfiguration('onEnable');
         if (this.#active) return;
         this.body.setShape(this, this.#geometry!);
         this.#active = true;
+        this.body.componentEnabled(this, true);
     }
     onDisable(): void {
         if (!this.#active) return;
         this.body.removeShape(this);
         this.#active = false;
+        this.body.componentEnabled(this, false);
     }
     onDestroy(): void {
         if (!this.#body) return;
@@ -111,10 +122,14 @@ class Box3DPrimitiveShape {
         this.#geometry = null;
         this.#active = false;
     }
+    protected assertConfiguration(operation: string): void {
+        this.body.assertConfiguration(operation);
+    }
     private candidate(center = this.#center, dimensions = this.#dimensions, trigger = this.#trigger) {
         return primitiveGeometry(this.#kind, center, dimensions, this.body.initialScale, trigger, this.#material);
     }
     setCenter(value: IVec3Like): void {
+        this.assertConfiguration('setCenter');
         const center = bodyVector(value, 'center');
         const next = this.candidate(center);
         if (this.#active) this.body.setShape(this, next);
@@ -122,25 +137,31 @@ class Box3DPrimitiveShape {
         this.#geometry = next;
     }
     setAsTrigger(value: boolean): void {
+        this.assertConfiguration('setAsTrigger');
         const next = this.candidate(this.#center, this.#dimensions, value);
         if (this.#active) this.body.setShape(this, next);
         this.#trigger = value;
         this.#geometry = next;
     }
     setMaterial(value: PhysicsMaterial | null): void {
+        this.assertConfiguration('setMaterial');
         void this.body;
         const material = primitiveMaterial(value);
         if (this.#active) this.body.updateShapeMaterial(this, material);
+        this.body.observeMaterial(this, value);
         this.#material = material;
         this.#geometry = Object.freeze({ ...this.#geometry!, material });
     }
     protected updateDimensions(value: readonly number[]): void {
+        this.assertConfiguration('updateDimensions');
         const next = this.candidate(this.#center, value);
         if (this.#active) this.body.setShape(this, next);
         this.#dimensions = Object.freeze([...value]);
         this.#geometry = next;
     }
     updateEventListener(): void {
+        if (this.#body?.cleanupOnly && !this.collider.needCollisionEvent && !this.collider.needTriggerEvent) return;
+        this.assertConfiguration('updateEventListener');
         if (this.collider.needCollisionEvent || this.collider.needTriggerEvent)
             unsupportedBox3D('collider event listeners (T15)');
         // Every native shape is configured with real native event flags disabled at creation.
@@ -159,24 +180,30 @@ class Box3DPrimitiveShape {
         return this.body.getGroup();
     }
     setGroup(value: number): void {
+        this.assertConfiguration('setGroup');
         this.body.setGroup(value);
     }
     addGroup(value: number): void {
+        this.assertConfiguration('addGroup');
         this.setGroup(this.getGroup() | filterBits(value));
     }
     removeGroup(value: number): void {
+        this.assertConfiguration('removeGroup');
         this.setGroup(this.getGroup() & ~filterBits(value));
     }
     getMask(): number {
         return this.body.getMask();
     }
     setMask(value: number): void {
+        this.assertConfiguration('setMask');
         this.body.setMask(value);
     }
     addMask(value: number): void {
+        this.assertConfiguration('addMask');
         this.setMask(this.getMask() | filterBits(value));
     }
     removeMask(value: number): void {
+        this.assertConfiguration('removeMask');
         this.setMask(this.getMask() & ~filterBits(value));
     }
 }
@@ -184,7 +211,9 @@ export class Box3DBoxShape extends Box3DPrimitiveShape implements IBoxShape {
     constructor(world: () => Box3DPhysicsWorld, configuration: Box3DComponentConfiguration) {
         super('box', world, configuration);
     }
-    updateSize(value: IVec3Like = (this.collider as BoxCollider).size): void {
+    updateSize(value?: IVec3Like): void {
+        this.assertConfiguration('updateSize');
+        if (value === undefined) value = (this.collider as BoxCollider).size;
         this.updateDimensions(bodyVector(value, 'box size'));
     }
 }
@@ -192,7 +221,9 @@ export class Box3DSphereShape extends Box3DPrimitiveShape implements ISphereShap
     constructor(world: () => Box3DPhysicsWorld, configuration: Box3DComponentConfiguration) {
         super('sphere', world, configuration);
     }
-    updateRadius(value: number = (this.collider as SphereCollider).radius): void {
+    updateRadius(value?: number): void {
+        this.assertConfiguration('updateRadius');
+        if (value === undefined) value = (this.collider as SphereCollider).radius;
         this.updateDimensions([value]);
     }
 }

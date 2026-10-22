@@ -19,6 +19,8 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
 */
+import type { Box3DWorldOwnerEnvironment } from './world-command-owner';
+import { PhysicsSystem } from '../../../cocos/physics/framework/physics-system';
 import type { IPhysicsSelector } from '../../../cocos/physics/framework/physics-selector';
 import type { Box3DWorldAdapter } from './prepare';
 import { Box3DPhysicsWorld } from './world';
@@ -33,9 +35,15 @@ import type { Box3DWritebackQualification } from './world-writeback';
 /** Explicit factory only: module evaluation never registers a world/feature or requests assets. */
 export function createBox3DWorldAdapter(
     selector: IPhysicsSelector,
-    components?: Box3DComponentConfiguration,
-    qualification?: Box3DWritebackQualification,
+    components: Box3DComponentConfiguration | undefined,
+    qualification: Box3DWritebackQualification | undefined,
+    ownerEnvironment: Box3DWorldOwnerEnvironment,
 ): Box3DWorldAdapter {
+    if (!ownerEnvironment || typeof ownerEnvironment !== 'object')
+        throw worldError('AIR_E_BOX3D_CONFIG', 'world registration', 'Expected actual System identity reader.');
+    const systemReader = ownerEnvironment.physicsSystem;
+    if (typeof systemReader !== 'function')
+        throw worldError('AIR_E_BOX3D_CONFIG', 'world registration', 'Expected actual System identity reader.');
     const writebackQualification = copyWritebackQualification(qualification);
     return (lease, options, preparation) => {
         requireWorldBinding(lease.binding); // Fail before selector mutation and native world allocation.
@@ -85,8 +93,15 @@ export function createBox3DWorldAdapter(
                             'world construction',
                             'This preparation already constructed a world.',
                         );
+                    const system = systemReader();
+                    if (!(system instanceof PhysicsSystem))
+                        throw worldError(
+                            'AIR_E_BOX3D_CONFIG',
+                            'world construction',
+                            'Reader did not return the actual PhysicsSystem.',
+                        );
                     constructed = true;
-                    super(lease, options, preparation, writebackQualification);
+                    super(lease, options, preparation, writebackQualification, system);
                     ownedWorld = this;
                 }
             },

@@ -1,0 +1,132 @@
+{
+  "status": "PASS_FINITE_OWNER_FRAMEWORK_SOURCE_AND_TWO_REAL_RELEASE_CASES",
+  "timeUTC": "2026-10-22T14:55:37.756774+00:00",
+  "mockSourceHandoff": "tools/verify/box3d/owner-checkpoint-a-handoff-20261022-e/receipt.json",
+  "mockSourceHandoffSha256": "463ff29ef510dc5f603173f0ea45cb98569dc2be249764ae12a42cdc1b6da0a5",
+  "mockCases": 19,
+  "mockChecks": 106,
+  "postRunLoadedHashesVerified": 422,
+  "mockPreRunTransitiveSnapshot": false,
+  "actualSourceCases": [
+    {
+      "directory": "docs/physics/box3d/rebuild/owner-component-real-release-20261022-lifecycle-a",
+      "case": "lifecycle",
+      "status": "PASS_LIMITED_NODE_COMPONENTS",
+      "receiptSha256": "25e353f4c4f0125f3f6fc303a7bf87c9c3e39fab13de8412f11c4d3f6664331f",
+      "rawSha256": "6fdb6ceac31ba577dc6dc450bba7141e91b634ef009519de463db182d76776ca",
+      "nativeSteps": 63,
+      "nativeCalls": 872,
+      "sourcesUnchanged": true,
+      "beforeBindingDispose": {
+        "coreBytes": "0",
+        "bridge": {
+          "liveBytes": "0",
+          "liveAllocations": 0,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      },
+      "loaderAfter": {
+        "generation": 1,
+        "status": "DISPOSED",
+        "requests": [
+          "manifest.json",
+          "box3d-st.wasm",
+          "box3d-st.mjs"
+        ],
+        "acquired": [
+          "module-reference",
+          "binding"
+        ],
+        "cleanup": [
+          {
+            "resource": "binding",
+            "attempted": true
+          },
+          {
+            "resource": "module-reference",
+            "attempted": true
+          }
+        ],
+        "cleanupErrors": [],
+        "originalError": null
+      },
+      "checkpoints": [
+        "real-startup-and-scene",
+        "actual-orders-static-multiple-collider",
+        "native-origin-not-com-trajectory",
+        "real-component-debug-1",
+        "real-component-debug-4",
+        "disable-pending-restore-destroy-rigidbody",
+        "component-owners-released-before-world",
+        "complete-close-receipt-before-assertion",
+        "actual-owned-native-cleanup"
+      ]
+    },
+    {
+      "directory": "docs/physics/box3d/rebuild/owner-component-real-release-20261022-committed-a",
+      "case": "body-committed",
+      "status": "PASS_LIMITED_NODE_COMPONENTS",
+      "receiptSha256": "a67ed7aa2dbd8c4c34bf7ae36a1912d7e373d72d9c5553070407bb3a99a14df9",
+      "rawSha256": "e3812464fbd840284300965a9e12dc043d2f08a9818d7622e9c6d27469ed7113",
+      "nativeSteps": 1,
+      "nativeCalls": 40,
+      "sourcesUnchanged": true,
+      "beforeBindingDispose": {
+        "coreBytes": "0",
+        "bridge": {
+          "liveBytes": "0",
+          "liveAllocations": 0,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      },
+      "loaderAfter": {
+        "generation": 1,
+        "status": "DISPOSED",
+        "requests": [
+          "manifest.json",
+          "box3d-st.wasm",
+          "box3d-st.mjs"
+        ],
+        "acquired": [
+          "module-reference",
+          "binding"
+        ],
+        "cleanup": [
+          {
+            "resource": "binding",
+            "attempted": true
+          },
+          {
+            "resource": "module-reference",
+            "attempted": true
+          }
+        ],
+        "cleanupErrors": [],
+        "originalError": null
+      },
+      "checkpoints": [
+        "real-startup-and-scene",
+        "explicit-fault-injection-installed",
+        "explicit-real-module-fault-seam",
+        "complete-close-receipt-before-assertion",
+        "actual-owned-native-cleanup"
+      ]
+    }
+  ],
+  "scope": "Private actual System/Node/component identity and temporary leases; original direct immediate command semantics. Native failure/JS cleanup separated in explicit mock negative controls. Current real Release lifecycle and explicit committed-readback failure cases, not complete unified World queues, target/teleport, browser or formal acceptance.",
+  "activation": {
+    "stagedCommandsSupported": false,
+    "unifiedTransactionsSupported": false
+  },
+  "retainedFailures": [
+    "formatter syntax failure",
+    "b faulted event-listener cleanup regression and afterEach pollution",
+    "c fixture BigInt type failure",
+    "d-red destroy-failed component cleanup rejection",
+    "d2-red premature native ownership retirement"
+  ]
+}
