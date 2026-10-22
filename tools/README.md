@@ -327,3 +327,10 @@ node tools/skills/restore-route-reports.cjs --out /tmp/cocosair-route-reports
 ```
 
 The output directory must not exist. The tool checks all four archives before writing and rejects missing, corrupt, altered, oversized or unsafe inputs. The 5,553,733 original bytes occupy 437,707 gzip bytes; independent decoding must reproduce every historical byte and hash. The historical publication inventory describes the uncompressed tree `6a60ee41d9c7d480ffef54f69908da0e596a4fdc`; adding archive transport creates a different final Git tree. Skill contents and their candidate snapshot hash `7f246c153901eae7a31d0bd849904412b575e2cbd5d3cfc507eab502ff0ada41` remain unchanged.
+
+## Upstream SDK contract verification
+
+- `node tools/verify/consumer-acceptance.cjs --modern-ts=<TypeScript 5.9.3 bin/tsc>` packs and installs the candidate unchanged. It checks TS 4.9.5 legacy and optional pinned 5.9.3 declarations (33 negative cases, 11 exact-type assertions), runtime/type value-export parity, request/lifecycle signatures and the separate CPU-only `/math` boundary. No compiler is installed by the checker; missing modern tooling is NOT_RUN.
+- `node tools/verify/tarball-browser-consumer.cjs --out=<new.json> --vite=<Vite 7.1.12 package directory>` adds a seven-case installed-package import-map/minified/Vite development/production matrix, compositor screenshots and release/close assertions to existing checks. Vite is externally supplied and version-checked. Missing Vite is NOT_RUN.
+- `node tools/verify/perf-lifecycle.cjs --out=<new.json>` preserves the lifecycle assertions while allowing a new report instead of overwriting historical evidence. Both Chromium runners use `AIR_CHROMIUM_PATH` or Playwright’s matching default, with no silent fallback. Browser tooling and launch failures remain explicit.
+- `node --test tools/verify/upstream-sdk-contracts.test.cjs` validates the harness using synthetic packages; it is not evidence that the engine or a real browser passed.

@@ -15,8 +15,14 @@ const fs = require('fs');
 const path = require('path');
 const { execSync, execFileSync } = require('child_process');
 const { pathToFileURL } = require('url');
+const sha256 = (bytes) => require('node:crypto').createHash('sha256').update(bytes).digest('hex');
 const root = path.resolve(__dirname, '../..');
 const failures = [];
+const sdkChecks = require('./upstream-sdk-contracts.cjs');
+let upstreamSDK = { status: 'NOT_RUN' };
+let runtimeExports = [];
+let mathBoundary;
+let runtimeLifecycle;
 const browserOut = process.argv.find((arg) => arg.startsWith('--browser-out='))?.slice(14);
 const modernTsArg = process.argv.find((arg) => arg.startsWith('--modern-ts='))?.slice(12);
 const modernTsPath = modernTsArg && path.resolve(root, modernTsArg);
@@ -111,6 +117,7 @@ async function main() {
     )[0].filename;
     const tarballPath = path.join(packDir, tarball);
     console.log(`[t1] tarball: ${tarball} (${fs.statSync(tarballPath).size} bytes)`);
+    const tarballIdentity = { name: tarball, sha256: sha256(fs.readFileSync(tarballPath)) };
 
     // 2. Extract to a clean consumer dir (type: module — the consumer is a real ESM project)
     const consumerDir = path.join(packDir, 'consumer');
@@ -129,10 +136,16 @@ async function main() {
             2,
         ),
     );
-    run('npm install --no-audit --no-fund', { cwd: consumerDir, stdio: 'pipe' });
+    run('npm install --offline --ignore-scripts --no-audit --no-fund', { cwd: consumerDir, stdio: 'pipe' });
 
     // The installed package is used exactly as npm unpacked it (no type/field patching).
     const nodeModules = path.join(consumerDir, 'node_modules', 'cocosair');
+
+    try {
+        mathBoundary = sdkChecks.checkMathBoundary(consumerDir);
+    } catch (error) {
+        failures.push('installed /math CPU boundary: ' + String(error.stack || error));
+    }
 
     // 3. Verify installed tree
     const requiredFiles = [
@@ -254,7 +267,13 @@ async function main() {
         const boundary = await probeInstalledEntries(consumerDir);
         const mod = boundary.main;
         entryBoundaries = boundary.receipt;
-        exportCount = Object.keys(mod).length;
+        runtimeExports = Object.keys(mod).sort();
+        exportCount = runtimeExports.length;
+        try {
+            runtimeLifecycle = await sdkChecks.checkRuntimeLifecycle(mod);
+        } catch (error) {
+            failures.push('installed SDK lifecycle contract: ' + String(error.stack || error));
+        }
         if (typeof mod.AIR_BUILD_DATE !== 'string' || !/^\d{12}$/.test(mod.AIR_BUILD_DATE)) {
             failures.push('installed AIR_BUILD_DATE is not a compiled yyyyMMddHHmm timestamp');
         }
@@ -566,6 +585,44 @@ async function main() {
         }
     }
 
+    upstreamSDK = { status: 'FAIL', runtimeLifecycle, mathBoundary, tarball: tarballIdentity };
+    try {
+        Object.assign(
+            upstreamSDK,
+            sdkChecks.checkTypes({
+                root,
+                consumerDir,
+                packageDir: nodeModules,
+                modernTsPath,
+                runtimeExports,
+                mathExports: mathBoundary?.exports || [],
+            }),
+        );
+        upstreamSDK.fingerprints = Object.fromEntries(
+            [
+                'tools/verify/consumer-acceptance.cjs',
+                'tools/verify/upstream-sdk-contracts.cjs',
+                'test/fixtures/upstream-sdk/contracts.ts',
+            ].map((file) => [file, sha256(fs.readFileSync(path.join(root, file)))]),
+        );
+        upstreamSDK.installedFingerprints = Object.fromEntries(
+            [
+                'package.json',
+                'build/npm/cocosair.module.js',
+                'build/npm/cocosair.module.min.js',
+                'build/npm/cocosair.math.js',
+                'build/cocosair.module.d.ts',
+                'build/cocosair.legacy.d.ts',
+                'build/cocosair.math.d.ts',
+                'build/cocosair.math.legacy.d.ts',
+            ].map((file) => [file, sha256(fs.readFileSync(path.join(nodeModules, file)))]),
+        );
+        upstreamSDK.status = runtimeLifecycle?.status === 'PASS' && mathBoundary?.status === 'PASS' ? 'PASS' : 'FAIL';
+    } catch (error) {
+        if (error.results) upstreamSDK.results = error.results;
+        failures.push('U06 installed SDK contracts: ' + String(error.stack || error));
+    }
+
     // 6. README relative links must resolve inside the package (R7)
     const readme = fs.readFileSync(path.join(nodeModules, 'README.md'), 'utf8');
     const linkTargets = new Set();
@@ -638,7 +695,7 @@ async function main() {
     fs.rmSync(packDir, { recursive: true, force: true });
     fs.rmSync(tarballPath, { force: true });
 
-    const report = { ok: failures.length === 0, failures, exportCount, entryBoundaries };
+    const report = { ok: failures.length === 0, failures, exportCount, entryBoundaries, upstreamSDK };
     console.log(JSON.stringify(report, null, 2));
     process.exit(failures.length ? 1 : 0);
 }

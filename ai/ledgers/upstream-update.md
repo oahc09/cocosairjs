@@ -10,13 +10,13 @@ The live main branch was read on 2026-10-22 and still equals `b573be0741db9e2a13
 
 ## Milestones
 
-| Milestone | Work packages | State |
-| --- | --- | --- |
-| M0 | U00 scope, contracts, baseline and inventory | complete |
-| M1 | U01 loading, U02 material contract, U06 consumer signatures | in_progress |
-| M2 | U03 color/depth, U04 state isolation, U05 lifecycle | not_started |
-| M3 | U07 readiness, U08 experiments, U09 examples | not_started |
-| M4 | U10 integration and current-candidate evidence | not_started |
+| Milestone | Work packages                                               | State       |
+| --------- | ----------------------------------------------------------- | ----------- |
+| M0        | U00 scope, contracts, baseline and inventory                | complete    |
+| M1        | U01 loading, U02 material contract, U06 consumer signatures | in_progress |
+| M2        | U03 color/depth, U04 state isolation, U05 lifecycle         | not_started |
+| M3        | U07 readiness, U08 experiments, U09 examples                | not_started |
+| M4        | U10 integration and current-candidate evidence              | not_started |
 
 Only one milestone is in progress. At most three non-conflicting workers are used. The coordinator owns public barrels, package metadata, shared manifests, CI and publication evidence.
 
@@ -44,3 +44,14 @@ Only one milestone is in progress. At most three non-conflicting workers are use
 ## Current evidence
 
 Baseline/source/spec identities are in [source-map.json](upstream-update/source-map.json). Candidate runtime results will be collected only after source, tooling, dependencies, formatting and builds freeze. Historical evidence remains historical. No current Engine, Agent or release PASS is claimed.
+
+## M1 implementation checkpoints (not final acceptance)
+
+- `496ed900a64e498fca663e254f3dcda73fa7ba90`: U02 finite iridescence IOR >= 1 without an invented ceiling, strict malformed-input rejection, removed scalar shader clamp, native material-instance mutation contract. 31 focused tests passed after preserved red tests. GPU pixel equivalence remains unmeasured.
+- `953a466412acd61dd95127aed533935555fedfcd`: U01 request policy, isolated configured loads, cancellation and late-result disposal, parser/handler cleanup at actual asset release. 15 glTF suites / 170 tests passed, including 24 new request/cancellation tests; typecheck and scoped formatting passed. These are CPU tests, not HTTP-cache/priority/browser acceptance.
+- U06 verifier additions include actual installed-package strict-null cases, declaration/runtime value-export parity and isolated `/math` checking. The verifier's synthetic-package suite passed 6/6, including rejection of ten deliberately weakened type contracts. That harness result is not a candidate SDK result.
+- The first `build:all` failed at Node's default heap limit; the failed log is retained. A retry with `NODE_OPTIONS=--max-old-space-size=6144` succeeded, producing dev build 202 and min build 203 plus declarations and package preparation. Compiler warnings are retained. Actual tarball consumer checks and full Jest regression are still running at this checkpoint. These M1 build identities will be superseded by any later source change and must not be used as final M4 fingerprints.
+
+### Browser infrastructure result
+
+The same shell invocation can start a loopback HTTP server and fetch its response. Chromium 155 launched by Playwright nevertheless exits with `process_singleton_posix.cc: socket() failed: Operation not permitted`. The supported elevated execution attempt failed before launch while creating the execution sandbox (`bwrap`, protected read-only sessions path); that protected path was not read or changed. The existing cloud CDP browser is available, but cannot reach the separately isolated shell service. Its URL policy also rejects `file:`; that route was stopped, not worked around. Therefore browser execution in this task is currently `INFRA_BLOCKED`, not proof that WebGL2/WebGPU is unsupported and not a GPU/browser PASS. No third-party deployment, browser-policy bypass, user-computer switch or credential access was performed.
