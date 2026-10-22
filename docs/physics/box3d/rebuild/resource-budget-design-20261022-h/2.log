@@ -1,0 +1,12 @@
+✔ resource plan retains actual browser/device and first-time-user blockers (1.250988ms)
+✔ every initial budget resolves resources, remains unmeasured and has no fabricated baseline (0.59414ms)
+✔ v1.2 absolute, regression, lifecycle and cold-start budgets are retained (1.206977ms)
+✔ EX09 has separate complete-page and physics budgets and actual active-run windows (0.30021ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 173.976463

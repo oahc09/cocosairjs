@@ -36,7 +36,7 @@
     "abiVersion": 1,
     "status": "EXPERIMENTAL_FOUNDATION"
   },
-  "apiSchemaSha256": "615555d88a4cab5a82f1d37fa4c8e23f735ccdcba5b7e5c4de73a20068b42c5c",
+  "apiSchemaSha256": "3aa11fe9d3d4b0269105bddbfebd8a1d09c9a3d162d88cb416d35d4304d1f30a",
   "corePatches": [
     {
       "id": "sse2-loadv-float-alignment-v1",
@@ -70,7 +70,8 @@
     "browserNonIsolated": "BLOCKED_INFRASTRUCTURE",
     "strictCsp": "NOT_RUN",
     "completeBindingMigration": "NOT_DONE",
-    "G1": "INCOMPLETE"
+    "G1": "INCOMPLETE",
+    "contactAnchorEpoch": "BLOCKED_UNPROVEN_RECYCLED_AND_CCD_SNAPSHOT_BASIS"
   },
   "patchLock": {
     "path": "tools/physics/box3d/patches/lock.json",

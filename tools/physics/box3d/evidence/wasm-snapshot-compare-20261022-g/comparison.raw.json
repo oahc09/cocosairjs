@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "startedAt": "2026-10-22T05:52:05.995Z",
+  "command": [
+    "node",
+    "tools/physics/box3d/compare-wasm-builds.mjs",
+    "tools/physics/box3d/output/wasm-snapshot-debug-20261022-g",
+    "tools/physics/box3d/output/wasm-snapshot-release-20261022-g",
+    "tools/physics/box3d/output/wasm-snapshot-compare-20261022-g"
+  ],
+  "runnerSha256": "1b219633e3f0e77c670c8c6393128c39170ee13b2a08ab5911ef14fd2dc03846",
+  "scope": "Exact equality of these finite Debug/Release Node fixtures; not cross-platform determinism or complete G1",
+  "checks": [
+    "Both actual builds PASS under identical current source/lock input hashes",
+    "All 60 tick samples and base physics/heap-growth/snapshot contract fields match exactly",
+    "Every rejected-operation before/after state, sampled ID lifecycle and ownership observation matches exactly"
+  ],
+  "evidence": [
+    {
+      "path": "tools/physics/box3d/output/wasm-snapshot-debug-20261022-g/build-receipt.json",
+      "sha256": "351715a7a8ba5be09ea3982cfd8c6009b8998fd552542baad9a544ed06ccd65b",
+      "bytes": 25796
+    },
+    {
+      "path": "tools/physics/box3d/output/wasm-snapshot-release-20261022-g/build-receipt.json",
+      "sha256": "8fbc9cb19bed9a2270e2d7a21e49f2db263dcb68ed03c6bb1049dc1ee618e80c",
+      "bytes": 25811
+    },
+    {
+      "path": "tools/physics/box3d/output/wasm-snapshot-debug-20261022-g/manifest.json",
+      "sha256": "1f69b2d24a3e4a2f65032b5b7ad03f0d3d7e1598de8a515300ec6e08f0f27935",
+      "bytes": 1575
+    },
+    {
+      "path": "tools/physics/box3d/output/wasm-snapshot-debug-20261022-g/artifact-audit.raw.json",
+      "sha256": "7018adb3bfa1498bb5c94907aaa60b3f4efb0a55f3b1742c14aae0ad37004b7b",
+      "bytes": 14887
+    },
+    {
+      "path": "tools/physics/box3d/output/wasm-snapshot-release-20261022-g/manifest.json",
+      "sha256": "d473d72c5a30a107656d45f1b1e871c53fc4320463bb5b30bf50d244875999ed",
+      "bytes": 1574
+    },
+    {
+      "path": "tools/physics/box3d/output/wasm-snapshot-release-20261022-g/artifact-audit.raw.json",
+      "sha256": "07e7b1119fd3c1d61ba05b89af8f323bbd7b891f381c8cec1222f14d7fdef8ac",
+      "bytes": 14890
+    },
+    {
+      "path": "tools/physics/box3d/output/wasm-snapshot-debug-20261022-g/wasm-contract.raw.json",
+      "sha256": "c93251ef75ddd209cb0ebda26c5e13f4a660d0a28ce2d062c23fca5d838c8fe2",
+      "bytes": 6728
+    },
+    {
+      "path": "tools/physics/box3d/output/wasm-snapshot-release-20261022-g/wasm-contract.raw.json",
+      "sha256": "18878db87ef9e9673fdb225a26aea8cd3532b22b8f2bcffea90ab220e438b196",
+      "bytes": 6728
+    },
+    {
+      "path": "tools/physics/box3d/output/wasm-snapshot-debug-20261022-g/wasm-ownership-contract.raw.json",
+      "sha256": "8606d261dc2e115f64b75e1c464357ad33a9517cff05c6c3954d4aa8ef86db74",
+      "bytes": 881953
+    },
+    {
+      "path": "tools/physics/box3d/output/wasm-snapshot-release-20261022-g/wasm-ownership-contract.raw.json",
+      "sha256": "adc284a7994b7e25d5e9d8e0b7ddea00c0d1799c6d2a62e6f9554c76d3affedd",
+      "bytes": 881953
+    }
+  ],
+  "observations": {
+    "debugMemory": {
+      "shared": false,
+      "initialPages": 265,
+      "maximumPages": 32768
+    },
+    "releaseMemory": {
+      "shared": false,
+      "initialPages": 264,
+      "maximumPages": 32768
+    },
+    "lockSha256": "b0b7f4c44684bf7b0f803e2cd5917343e4f8ff83c0196ff337cc9202b602aae4",
+    "freefallTicks": 60,
+    "finalFreefallTick": [
+      60,
+      0.9999997019767761,
+      14.979169845581055,
+      -10.00000286102295
+    ],
+    "rejectedOperations": 122,
+    "slotReuseCycles": 128,
+    "worldLifetimeCycles": 128,
+    "rawBodyIdRevalidatedAcrossWorldLifetimes": 127
+  },
+  "completedAt": "2026-10-22T05:52:06.027Z"
+}

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "contractVersion": "box3d-build-distribution-1",
-  "status": "DESIGN_NOT_INTEGRATED",
+  "status": "PARTIAL_SOURCE_INTEGRATION",
   "feature": "physics-box3d",
   "engineBackendId": "box3d",
   "package": "cocosair.js",
@@ -167,5 +167,13 @@
     "WASM-08",
     "WASM-11-APP"
   ],
-  "implementationStatus": "Not yet wired into app-config/bootstrap/selector/feature/package. Narrow standalone foundation is not evidence of app prepare or packaging behavior."
+  "implementationStatus": "Wired into app-config/bootstrap/selector and optional ST feature/assets build path. No actual world adapter is registered yet, so explicit selection rejects before loading. Runtime bundle, variant declarations, tarball, browser/CSP and full application physics acceptance are not certified by these source changes.",
+  "implementationAcceptance": {
+    "worldAdapter": "NOT_IMPLEMENTED",
+    "runtimeBundle": "NOT_RUN",
+    "variantDeclarations": "NOT_RUN",
+    "tarball": "NOT_RUN",
+    "browserCSP": "INFRA_BLOCKED",
+    "fullApplicationPhysics": "NOT_RUN"
+  }
 }

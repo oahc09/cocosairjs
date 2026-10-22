@@ -21,5 +21,13 @@
   "_air_b3_ray_closest",
   "_malloc",
   "_free",
-  "_air_b3_patch_chain_sha"
+  "_air_b3_patch_chain_sha",
+  "_air_b3_body_transforms",
+  "_air_b3_world_event_size",
+  "_air_b3_world_events",
+  "_air_b3_body_contact_size",
+  "_air_b3_body_contacts",
+  "_air_b3_contact_valid",
+  "_air_b3_shape_events",
+  "_air_b3_shape_sphere_ex"
 ]

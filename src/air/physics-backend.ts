@@ -30,6 +30,7 @@
  * 本文件为 Air 原创（上游 cocos4 无同名文件），登记于 docs/upstream-file-map.json（Air 新增行）。
  */
 
+import { airError } from './app-config';
 import { builtinResMgr } from '../cocos/asset/asset-manager';
 import { selector } from '../cocos/physics/framework/physics-selector';
 import { PhysicsMaterial } from '../cocos/physics/framework/assets/physics-material';
@@ -39,14 +40,15 @@ import { PhysicsMaterial } from '../cocos/physics/framework/assets/physics-mater
  * - `'builtin'`：官方内置离散碰撞检测器（非完整模拟器，零外部依赖）。
  * - `'cannon'`：cannon.js 全量刚体模拟（纯 JS，来自 vendored `@cocos/cannon`）。
  */
-export type AirPhysicsBackend = 'builtin' | 'cannon';
+export type AirPhysicsBackend = 'builtin' | 'cannon' | 'box3d';
 
 const ENGINE_ID: Record<AirPhysicsBackend, string> = {
     builtin: 'builtin',
     cannon: 'cannon.js',
+    box3d: 'box3d',
 };
 
-function backendRegistry (): Record<string, unknown> {
+function backendRegistry(): Record<string, unknown> {
     return selector.backend as unknown as Record<string, unknown>;
 }
 
@@ -59,27 +61,36 @@ function backendRegistry (): Record<string, unknown> {
  *
  * @throws 当请求的后端不在当前 bundle（未编入对应 feature）时；当选得过晚（物理世界已创建）时。
  */
-export function selectPhysicsBackend (backend: AirPhysicsBackend): void {
+export function selectPhysicsBackend(backend: AirPhysicsBackend): void {
     const engineId = ENGINE_ID[backend];
     const registry = backendRegistry();
     const wrapper = registry[engineId];
     if (!wrapper) {
+        if (backend === 'box3d')
+            throw airError(
+                'AIR_E_PHYSICS_BACKEND_UNAVAILABLE',
+                'The Box3D world adapter is not registered in this runtime.',
+            );
         if (Object.keys(registry).length === 0) {
             // 源码消费图（src/index.ts）/ 测试环境不引任何物理 feature：保持既有
             // PHYSICS_NONE 行为（引擎对该空态本就容忍），仅提示，不抛错。
-            console.warn('[cocosair] no physics backend registered in this module graph;'
-                + ' running with physics disabled (PHYSICS_NONE).');
+            console.warn(
+                '[cocosair] no physics backend registered in this module graph;' +
+                    ' running with physics disabled (PHYSICS_NONE).',
+            );
             return;
         }
         const registered = Object.keys(registry);
         throw new Error(
-            `[cocosair] physics backend '${backend}' is not in this bundle.`
-            + ` Registered backends: ${registered.length ? registered.join(', ') : '(none)'}.`);
+            `[cocosair] physics backend '${backend}' is not in this bundle.` +
+                ` Registered backends: ${registered.length ? registered.join(', ') : '(none)'}.`,
+        );
     }
     if (selector.physicsWorld) {
         throw new Error(
-            '[cocosair] physics backend must be selected via createAirApp({ physics }) '
-            + 'before the physics world is created; late selection is not supported.');
+            '[cocosair] physics backend must be selected via createAirApp({ physics }) ' +
+                'before the physics world is created; late selection is not supported.',
+        );
     }
     // 官方语义：初始化前最后一次 register 胜出（同时同步 CC_PHYSICS_* legacy 宏）。
     selector.register(engineId, wrapper as never);
@@ -92,7 +103,7 @@ export function selectPhysicsBackend (backend: AirPhysicsBackend): void {
  * 对 cannon 是致命的（cannon-shape.setMaterial 读取材质字段崩溃）。这里在引擎初始化前
  * 预置一个官方同名的默认材质，走引擎原生 setDefaultPhysicsMaterial 链路，零引擎改动。
  */
-function seedDefaultPhysicsMaterial (): void {
+function seedDefaultPhysicsMaterial(): void {
     if (builtinResMgr.get<PhysicsMaterial>('default-physics-material')) return;
     const material = new PhysicsMaterial();
     material.name = 'default-physics-material';

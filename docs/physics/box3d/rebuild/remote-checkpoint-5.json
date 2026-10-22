@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "verifiedAt": "2026-10-22T05:43:00.422Z",
+  "repository": "oahc09/cocosairjs",
+  "branch": "feat/box3d-rebuild-20261022",
+  "commit": "1b97b53d80fd4f9b2a643d358be6198d3136763d",
+  "parent": "5bc901ff997a228b4e6dd60bec6df8afc8ff3c3c",
+  "tree": "e2be67936c43cc3030949a6c64d1ca8cdebd45da",
+  "url": "https://github.com/oahc09/cocosairjs/commit/1b97b53d80fd4f9b2a643d358be6198d3136763d",
+  "localSourceCommit": "0b4a0d5a80d85970829ba27860907930e2c15984",
+  "treeVerification": {
+    "status": "PASS",
+    "baseTree": "abda44979bfd894dfbf157375d86cf5cd046fce2",
+    "newTree": "e2be67936c43cc3030949a6c64d1ca8cdebd45da",
+    "expectedFiles": 237,
+    "verifiedFiles": 237,
+    "checkedEntries": 871,
+    "unchangedEntries": 595,
+    "treeReads": 60,
+    "checkedAt": "2026-10-22T05:38:50.308Z"
+  },
+  "scope": "Fifth recoverable checkpoint: explicit staged patch identity and internal ST loader with limited real Node WASM lifecycle. Not full G1/browser/app/examples."
+}

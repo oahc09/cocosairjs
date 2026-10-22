@@ -22,7 +22,7 @@ The original fixed core is unmodified. Read `abi-review.md` before extending it.
   snapshots/counters, cross-owner/module/forged tokens, 128 same-world slot-reuse
   cycles and 128 world-lifetime cycles. Partial and failed runs retain raw records.
 - `audit-artifacts.mjs`: checks a successful build against current input hashes,
-  all 54 expected compile units, link flags, actual WASM imports/memory and artifact
+  all 55 expected compile units, link flags, actual WASM imports/memory and artifact
   hashes. Writes one immutable `artifact-audit.raw.json` in the chosen build output.
 - `native/layout_probe.c` and `layout-wasm.mjs`: separate measured host/WASM32
   old/target header layouts, not an old-core physics build.
@@ -97,7 +97,7 @@ source, logs and necessary artifacts before considering the work recoverable.
   valid again after world-slot reuse, or coincide across module instances. Only
   facade-issued object tokens carry the additional ownership/lifetime checks;
   never reconstruct a token from a raw query ID or serialize it as persistent identity.
-- No contact/event ABI, cooked cache, joints, controller, recording/replay, MT,
+- No complete C21/C22 contact/event adapter, cooked cache, joints, controller, recording/replay, MT,
   application loader/prepare transaction, public adapter or legacy-backend change
   is implied. Source/native success does not make any complete plan gate PASS.
 
@@ -205,3 +205,61 @@ same 19 current input hashes; the finite physics/ownership comparison matched
 exactly. The 26 intake checks include two positive checks and 24 expected
 rejections, including real c/d stale modules. Four additional expected-manifest
 identity rejections run in each fresh e module. These are not full G1 results.
+
+## Additive copied snapshot increment (g)
+
+The current schema adds batch body poses and immediate post-step copies of native
+body/contact/sensor events plus touching raw manifolds. Wire ABI remains 1 and
+all pre-existing symbols/layouts are unchanged; the exact new schema SHA is
+`3aa11fe9d3d4b0269105bddbfebd8a1d09c9a3d162d88cb416d35d4304d1f30a`.
+An actual older e module is rejected both with its original manifest and with a
+forged current-schema manifest. The reviewed SSE2 patch chain is unchanged.
+See [snapshot-contract.md](snapshot-contract.md) for ownership, wire scope and
+exact fixed-core source references.
+
+Fresh `wasm-snapshot-debug-20261022-g` and `wasm-snapshot-release-20261022-g`
+builds each pass 55-unit artifact audits, the existing basic physics/ownership
+fixtures, and seven new real snapshot groups under the same 21 input hashes:
+
+- One native batch of 64 bodies exactly matches individual poses. Body move
+  transforms match post-step pose samples. Same-step reads are immutable and do
+  not consume events. Two actual heap grows leave copied data unchanged.
+- Foreign/forged/stale world/body/contact tokens reject. A mixed-world native
+  batch and insufficient native event/contact output capacity leave canaries
+  unchanged. Failed operations do not invalidate a valid current snapshot.
+- A real sphere/floor contact yields one begin, one hit and one fell-asleep event
+  over 600 steps. The sleeping pair remains readable without new moves/begins.
+  Actual body/shape slot reuse with changed generations is asserted; old end
+  events retain invalid old identities rather than retargeting new objects.
+- A slow, thick native sensor yields exactly one enter (tick 53) and one exit
+  (tick 128), without contact response. This is not thin/transient CCD acceptance.
+- Twelve real rotating, eccentric-COM contact snapshots retain raw normal,
+  anchors, separations and impulses with pre/post origin, rotation and COM.
+- All tested worlds return native core live bytes to zero. This is neither proof
+  of no JS/whole-heap leak nor proof that generations can never wrap.
+
+`wasm-contact-growth-contract.mjs` additionally holds simultaneous real contact,
+body and sensor data through two actual heap grows and subsequent destruction.
+Both new g2 runs pass. The original g supplemental reports retain an observation
+bug: `beforeBytes` was read from an already detached old ArrayBuffer and is 0.
+Their unchanged-snapshot assertions did run, but their size-before observations
+must not be used. The corrected fixture reads the length before growing; both
+old and corrected reports and exact fixture bytes are retained.
+
+`compare-snapshot-builds.mjs` compares every new snapshot group and diagnostic
+exactly between Debug and Release, separately reporting memory sizes. It also
+records observational COM-plus-anchor hypotheses. In the rotating fixture the
+pre-step hypothesis has 0–18.783 mm double-end coincidence gaps and the post-step
+hypothesis 4.697–23.478 mm. Neither is a validated world-point reconstruction;
+recycled cached-anchor epoch is not publicly exposed. `contactWorldPoints`
+therefore throws `AIR_E_BOX3D_UNSUPPORTED_SNAPSHOT_EPOCH`, never an empty success.
+Full C21, C22, T07 and G1 are still incomplete. g adds no browser or sanitizer
+qualification, and all earlier FAIL/BLOCKED evidence remains intact.
+
+Additional commands, after building Debug and Release into new directories:
+
+```sh
+node tools/physics/box3d/wasm-contact-growth-contract.mjs <debug-build> <new-debug-growth-output>
+node tools/physics/box3d/wasm-contact-growth-contract.mjs <release-build> <new-release-growth-output>
+node tools/physics/box3d/compare-snapshot-builds.mjs <debug-build> <release-build> <debug-growth-output> <release-growth-output> <new-comparison-output>
+```

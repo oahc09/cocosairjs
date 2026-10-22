@@ -7,7 +7,14 @@
   "precision": "float32",
   "worldId": "uint32 via b3StoreWorldId; never a pointer",
   "bodyShapeId": "two uint32 words [low, high] via official b3Store/Load ID helpers; never JS Number packed",
-  "statuses": { "0": "OK", "1": "INVALID_ID", "2": "INVALID_ARGUMENT", "3": "NATIVE_CREATION_FAILED" },
+  "statuses": {
+    "0": "OK",
+    "1": "INVALID_ID",
+    "2": "INVALID_ARGUMENT",
+    "3": "NATIVE_CREATION_FAILED",
+    "4": "INSUFFICIENT_CAPACITY",
+    "5": "ALLOCATION_FAILED"
+  },
   "bodyInput": [
     "position.xyz",
     "rotation.xyzw",
@@ -37,12 +44,91 @@
   "shapeIdWords": 2,
   "lifetime": "All returned JS snapshots own copied data. No borrowed native view may cross a public call. Caller-owned scratch storage is allocated per facade; heap views are reacquired after every native call.",
   "excluded": [
-    "contacts/events and their sampling epoch",
+    "proven same-epoch contact world/local reconstruction, full C21 and transient-sensor C22 acceptance",
     "mesh/compound cooking",
     "joints",
     "MT",
     "replay",
     "complete AIR adapter",
     "release gate PASS"
-  ]
+  ],
+  "bodyTransformBatch": {
+    "input": "count body IDs, two uint32 words each; every ID/world validated before any output write",
+    "outputFloatsPerBody": 10,
+    "output": ["origin.xyz", "rotation.xyzw", "worldCenter.xyz"]
+  },
+  "eventSnapshot": {
+    "unit": "32-bit words; float fields copied by memcpy, uint32 identity words unchanged",
+    "header": [
+      "bodyMoveCount",
+      "contactBeginCount",
+      "contactEndCount",
+      "contactHitCount",
+      "sensorBeginCount",
+      "sensorEndCount"
+    ],
+    "bodyMoveWords": 11,
+    "bodyMove": ["bodyId.low/high", "valid:u32", "fellAsleep:u32", "origin.xyz:f32", "rotation.xyzw:f32"],
+    "contactBeginEndWords": 8,
+    "contactBeginEnd": [
+      "shapeA.low/high",
+      "shapeB.low/high",
+      "contactId.index1/world0/generation",
+      "validFlags:shapeA=1,shapeB=2,contact=4"
+    ],
+    "contactHitWords": 19,
+    "contactHit": [
+      "contactBeginEnd[8]",
+      "nativeHitPoint.xyz:f32",
+      "normalAtoB.xyz:f32",
+      "approachSpeed:f32",
+      "userMaterialA.low/high",
+      "userMaterialB.low/high"
+    ],
+    "sensorWords": 5,
+    "sensor": ["sensor.low/high", "visitor.low/high", "validFlags:sensor=1,visitor=2"],
+    "lifetime": "C17 call copies current native arrays; facade step copies immediately before returning. Frozen JS snapshot repeats without consuming events and never borrows HEAP views. End IDs may already be invalid."
+  },
+  "contactSnapshot": {
+    "header": "contact count:u32",
+    "contactHeaderWords": 34,
+    "contactHeader": [
+      "contactId[3]",
+      "shapeA[2]",
+      "shapeB[2]",
+      "bodyA[2]",
+      "bodyB[2]",
+      "manifoldCount:u32",
+      "awakeA:u32",
+      "awakeB:u32",
+      "postPoseA[10]:f32",
+      "postPoseB[10]:f32"
+    ],
+    "manifoldWords": 11,
+    "manifold": [
+      "pointCount:u32",
+      "normalAtoB.xyz:f32",
+      "twistImpulse:f32",
+      "frictionImpulse.xyz:f32",
+      "rollingImpulse.xyz:f32"
+    ],
+    "pointWords": 14,
+    "point": [
+      "anchorA.xyz:f32",
+      "anchorB.xyz:f32",
+      "separation:f32",
+      "normalImpulse:f32",
+      "totalNormalImpulse:f32",
+      "normalVelocity:f32",
+      "baseSeparation:f32",
+      "featureId:u32",
+      "triangleIndex:i32",
+      "persisted:u32"
+    ],
+    "collection": "Public b3Body_GetContactData touching contacts for facade-owned bodies, deduplicated by full contact ID; includes sleeping pairs, not just begin/hit events. Native contact/manifold pointers never escape a C call.",
+    "anchorEpoch": "UNRESOLVED_CACHED_NATIVE: pre/post poses are diagnostics, NOT an asserted anchor basis. Recycling retains earlier anchors while updating separation.",
+    "worldLocalPoints": "Explicit AIR_E_BOX3D_UNSUPPORTED_SNAPSHOT_EPOCH; native hit point is a separate raw event field, not general C21 worldPoint.",
+    "handleLifetime": "Opaque facade WeakMap capability scoped to world+successful step+mutation revision. Next step, successful mutation, disposal or foreign token rejects. Returned frozen data remains unchanged."
+  },
+  "additiveSnapshotScope": "Existing ABI-1 wire/signatures retained. New schema hash must match facade/runtime; old e schema is not accepted by this facade."
 }

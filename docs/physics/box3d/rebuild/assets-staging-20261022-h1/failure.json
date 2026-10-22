@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "status": "FAIL",
+  "observedAt": "2026-10-22T05:55:54.662858+00:00",
+  "command": "BOX3D_ST_TEST_BUILD=tools/physics/box3d/output/wasm-snapshot-release-20261022-g node --test tools/verify/box3d/build-assets.test.cjs",
+  "observedProcessExitCode": 1,
+  "tests": 5,
+  "passed": 4,
+  "failed": 1,
+  "failure": "Missing expected rejection: output directory nested inside native build source",
+  "sourceSHA256": {
+    "tools/build/box3d-assets.cjs": "ee60931611ca6e429d84870e2c5b75cf21cbf10a479f6919678eebff175f2dcc",
+    "tools/verify/box3d/build-assets.test.cjs": "41bf60a3e8f3bda013ed15c55d37acd5f41fc20c3f60ca5a4a7fc881bcc90de2"
+  },
+  "evidenceOrigin": "Original PTY tool output; source snapshot taken before correction. Complete automatic stdout was not redirected in this first attempt.",
+  "cause": "Overlap guard checked source-inside-output but omitted output-inside-source. Replacement before first test did not match the formatted multi-line expression.",
+  "writes": "Created new nested physics/box3d/st copies only, no original files overwritten. Moved the new subtree outside frozen build before repair."
+}

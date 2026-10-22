@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "scope": "Actual AIR TypeScript mock lifecycle and restored main HEADLESS/JSDOM bootstrap CPU regression. Not Box3D world, browser, rendered frame, or WASM application acceptance.",
+  "commands": [
+    {
+      "command": [
+        "node",
+        "--test",
+        "tools/verify/box3d/app-preparation.test.cjs",
+        "tools/verify/box3d/build-distribution-contract.test.cjs"
+      ],
+      "startAt": "2026-10-22T06:12:54.063702+00:00",
+      "endAt": "2026-10-22T06:12:57.275278+00:00",
+      "exitCode": 0,
+      "log": {
+        "path": "docs/physics/box3d/rebuild/app-preparation-20261022-h/command-1.log",
+        "bytes": 3223,
+        "sha256": "9b46bb47bf53cde7031d288c8e58a516d898da797277c2048186e8e9698f6ba5"
+      }
+    },
+    {
+      "command": [
+        "node",
+        "node_modules/typescript/bin/tsc",
+        "-p",
+        "tsconfig.json"
+      ],
+      "startAt": "2026-10-22T06:12:57.275752+00:00",
+      "endAt": "2026-10-22T06:13:10.958122+00:00",
+      "exitCode": 0,
+      "log": {
+        "path": "docs/physics/box3d/rebuild/app-preparation-20261022-h/command-2.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "command": [
+        "node",
+        "node_modules/jest/bin/jest.js",
+        "--runInBand",
+        "--runTestsByPath",
+        "test/smoke/port-gap-bootstrap-config.test.ts",
+        "test/smoke/port-gap-bootstrap-singleton.test.ts",
+        "test/smoke/competitive-bootstrap-contract.test.ts",
+        "test/smoke/smoke-01-bootstrap.test.ts",
+        "--json",
+        "--outputFile=/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/docs/physics/box3d/rebuild/app-preparation-20261022-h/jest-result.json"
+      ],
+      "startAt": "2026-10-22T06:13:10.958496+00:00",
+      "endAt": "2026-10-22T06:13:34.431244+00:00",
+      "exitCode": 1,
+      "log": {
+        "path": "docs/physics/box3d/rebuild/app-preparation-20261022-h/command-3.log",
+        "bytes": 10525,
+        "sha256": "fb70df6563303e99c08b0a9509a74c99485063446d5057f938ce6303875a2dbe"
+      }
+    }
+  ],
+  "sourceUnchanged": true,
+  "inputCount": 1526,
+  "inputManifest": {
+    "path": "docs/physics/box3d/rebuild/app-preparation-20261022-h/input-manifest.json",
+    "bytes": 253576,
+    "sha256": "575b4c7fc95fe159a877ed9ef329da0124cbe6daa0da81eb0f21b0f2a4371412"
+  },
+  "status": "FAIL",
+  "previousAttempts": "Retained raw development logs. RED attempt 05 reproduced 3 defects; failed attempt 02 was a stale test adapter mock. Earlier source snapshots were not recorded, so those logs do not certify a source hash."
+}

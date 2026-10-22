@@ -2,7 +2,7 @@
   "meta": {
     "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
     "note": "Air Path 与 Upstream Path 一致(前缀 src/)；modified 文件另行标注 reason；upstreamPath=null 表示该行为 Air 原创文件或上游产物（仓库内无对应源文件），必须 modified:true 并在 reason 说明出处",
-    "modifiedCount": 228,
+    "modifiedCount": 236,
     "pal": {
       "revision": "9f0e30acb31f6d670f2c0bf818d61039846a2860",
       "license": "MIT",
@@ -15,7 +15,7 @@
       "upstreamPath": null,
       "baseline": "AIR original",
       "modified": true,
-      "reason": "AIR optional Box2D 3.2.0 WebAssembly backend behind original Cocos 2D component interfaces; pinned source, native compatibility bridge and separate assets. Existing extracted physics backends unchanged."
+      "reason": "AIR optional Box2D 3.2.0 WebAssembly backend behind original Cocos 2D component interfaces; pinned source, native compatibility bridge and separate assets. Existing extracted physics backends unchanged. Box3D coexistence preparation 2026-10-22: per-app module/world acquisition leases, shared in-flight load and persistent pins for existing direct consumers; a lease cannot release another consumer world."
     },
     {
       "airPath": "src/air/dom-overlay.ts",
@@ -71,14 +71,14 @@
       "upstreamPath": null,
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "AIR 原创（上游 cocos4 无 air/app.ts）。原登记 reason=\"extraction copy\" 系 V0.x tools/analyze/dep-graph.cjs 批量生成时按「去掉 src/ 前缀」臆造 upstreamPath 所致，r26 起由 tools/verify/verify-file-map.cjs 门禁检出并更正。 2026-10-06：新增 AIR_BUILD_DATE（北京时间 yyyyMMddHHmm）与 AIR_BUILD_NUMBER（每次成功运行时编译递增，从1开始）；tools/build/build-metadata.cjs 注入，tools/build/build-number.json 持久化序号，源码默认 unbuilt/1；SOURCE_DATE_EPOCH 仅固定时间，不修改版本号。"
+      "reason": "AIR 原创（上游 cocos4 无 air/app.ts）。原登记 reason=\"extraction copy\" 系 V0.x tools/analyze/dep-graph.cjs 批量生成时按「去掉 src/ 前缀」臆造 upstreamPath 所致，r26 起由 tools/verify/verify-file-map.cjs 门禁检出并更正。 2026-10-06：新增 AIR_BUILD_DATE（北京时间 yyyyMMddHHmm）与 AIR_BUILD_NUMBER（每次成功运行时编译递增，从1开始）；tools/build/build-metadata.cjs 注入，tools/build/build-number.json 持久化序号，源码默认 unbuilt/1；SOURCE_DATE_EPOCH 仅固定时间，不修改版本号。 Box3D rebuild 2026-10-22: admitted-app close independently attempts scene, owned native physics and non-physics cleanup, preserving original/cleanup diagnostics and an idempotent close promise."
     },
     {
       "airPath": "src/air/bootstrap.ts",
       "upstreamPath": null,
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "AIR 原创（上游 cocos4 无 air/bootstrap.ts）。原登记 reason=\"extraction copy\" 系 V0.x tools/analyze/dep-graph.cjs 批量生成时按「去掉 src/ 前缀」臆造 upstreamPath 所致，r26 起由 tools/verify/verify-file-map.cjs 门禁检出并更正。"
+      "reason": "AIR 原创（上游 cocos4 无 air/bootstrap.ts）。原登记 reason=\"extraction copy\" 系 V0.x tools/analyze/dep-graph.cjs 批量生成时按「去掉 src/ 前缀」臆造 upstreamPath 所致，r26 起由 tools/verify/verify-file-map.cjs 门禁检出并更正。 Box3D rebuild 2026-10-22: begin owned-resource transaction before selected 2D/3D prepare, keep PRE selection synchronous, roll back obtained resources without masking initialization errors."
     },
     {
       "airPath": "src/air/builtin/builtin-effects.ts",
@@ -8345,7 +8345,7 @@
       "upstreamPath": "cc.config.json",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
       "modified": true,
-      "reason": "V1.2（Air 修改，上游原文为基础）四处增量：① features.air = {modules:[\"air\"]}（Air 聚合出口 unit，产物 d.ts 面由此驱动）；② moduleOverrides += {test:\"true\", spine-instantiate.ts -> air-spine-instantiate-js.ts}（计划书 D2/P2：external:emscripten/spine 资产不随快照分发）；③ includes 去掉 ./editor/exports/**（Air 无编辑器闭包）；④ r43 features += marionette / procedural-animation（按上游 cc.config.json:236-247 原文逐字段登记，两者 modules:[] 只带 intrinsicFlags MARIONETTE / PROCEDURAL_ANIMATION；默认 AIR_FEATURES 不含 ⇒ 发布产物逐字节不变，变体代价实测见 docs/notes/pose-graph-notes.md §4）。其余 30 个 feature 与 16 条 moduleOverrides 与上游逐字段一致（node 深比较 0 差异）；上游另有 25 个 feature unit 未登记 = native/minigame/编辑器向排除集（计划书 §1.3、护栏 5）；V1.2 批次 E 实测 gfx-webgpu 也留在未登记之列——登记它会把未接线的 emscripten-only 后端并入发布 d.ts（类型/产物不一致），见 UPSTREAM.md Deviation-04。 2026-10-06：treeShake.noSideEffectFiles 移除四个未抽取的 pal/input/minigame/*-input.js 声明；保留九条实际存在的文件声明及全部 moduleOverrides，不引入 MiniGame 闭包。"
+      "reason": "V1.2（Air 修改，上游原文为基础）四处增量：① features.air = {modules:[\"air\"]}（Air 聚合出口 unit，产物 d.ts 面由此驱动）；② moduleOverrides += {test:\"true\", spine-instantiate.ts -> air-spine-instantiate-js.ts}（计划书 D2/P2：external:emscripten/spine 资产不随快照分发）；③ includes 去掉 ./editor/exports/**（Air 无编辑器闭包）；④ r43 features += marionette / procedural-animation（按上游 cc.config.json:236-247 原文逐字段登记，两者 modules:[] 只带 intrinsicFlags MARIONETTE / PROCEDURAL_ANIMATION；默认 AIR_FEATURES 不含 ⇒ 发布产物逐字节不变，变体代价实测见 docs/notes/pose-graph-notes.md §4）。其余 30 个 feature 与 16 条 moduleOverrides 与上游逐字段一致（node 深比较 0 差异）；上游另有 25 个 feature unit 未登记 = native/minigame/编辑器向排除集（计划书 §1.3、护栏 5）；V1.2 批次 E 实测 gfx-webgpu 也留在未登记之列——登记它会把未接线的 emscripten-only 后端并入发布 d.ts（类型/产物不一致），见 UPSTREAM.md Deviation-04。 2026-10-06：treeShake.noSideEffectFiles 移除四个未抽取的 pal/input/minigame/*-input.js 声明；保留九条实际存在的文件声明及全部 moduleOverrides，不引入 MiniGame 闭包。 2026-10-22 Box3D rebuild: add the explicit optional physics-box3d feature declaration; default AIR_FEATURES and existing backend declarations are unchanged. Experimental ST preparation only; no full adapter/browser acceptance claim."
     },
     {
       "airPath": "src/tsconfig.json",
@@ -9276,7 +9276,7 @@
       "upstreamPath": null,
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
       "modified": true,
-      "reason": "AIR 新增（r46，owner 批复 #8(a)/D12）：交付期 3D 物理后端选择 selectPhysicsBackend——官方两个 instantiate 在 Game.EVENT_PRE_SUBSYSTEM_INIT 监听器内 register（builtin 先、cannon 后），本文件在 createAirApp 内向同一事件注册第三个监听器使用户后端确定性最后胜出（默认 builtin）；并预置 default-physics-material（无 Creator 资产包时 initDefaultMaterial 的 errorID 9642 对 cannon 是致命面，材质缺失会令 cannon-shape.setMaterial 崩溃），零引擎改动。世界创建后选择显式报错（官方 switchTo 仅编辑器面放行）。"
+      "reason": "AIR 新增（r46，owner 批复 #8(a)/D12）：交付期 3D 物理后端选择 selectPhysicsBackend——官方两个 instantiate 在 Game.EVENT_PRE_SUBSYSTEM_INIT 监听器内 register（builtin 先、cannon 后），本文件在 createAirApp 内向同一事件注册第三个监听器使用户后端确定性最后胜出（默认 builtin）；并预置 default-physics-material（无 Creator 资产包时 initDefaultMaterial 的 errorID 9642 对 cannon 是致命面，材质缺失会令 cannon-shape.setMaterial 崩溃），零引擎改动。世界创建后选择显式报错（官方 switchTo 仅编辑器面放行）。 Box3D rebuild 2026-10-22: explicit registered box3d selection only; absent backend never silently falls back."
     },
     {
       "airPath": "src/pal/integrity-check.js",
@@ -9837,6 +9837,62 @@
       "baseline": "AIR Spark integration",
       "modified": true,
       "reason": "AIR: 可选 feature unit `spark` 的 bundle 入口（ccbuild 声明见 src/cc.config.json），聚合集成层与生成物 `src/air/spark/generated/spark-runtime.js`；不并入 `air` 聚合、不进默认 bundle（SPK-12）"
+    },
+    {
+      "airPath": "src/exports/physics-box3d.ts",
+      "upstreamPath": null,
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
+      "modified": true,
+      "reason": "AIR-owned optional Box3D feature export. Registers lazy preparation only; never imported by the default air barrel."
+    },
+    {
+      "airPath": "src/air/physics/box3d/feature.ts",
+      "upstreamPath": null,
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
+      "modified": true,
+      "reason": "AIR-owned lazy ST loader registration with build-injected trusted manifest/facade/native identity and runtime-relative assets. Does not create a fake world adapter."
+    },
+    {
+      "airPath": "src/air/app-config.ts",
+      "upstreamPath": null,
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
+      "modified": true,
+      "reason": "AIR-owned existing application admission/configuration module, restored from main b573be. Box3D rebuild adds copied/frozen optional native physics options and normalized equality; preserves builtin/Cannon defaults."
+    },
+    {
+      "airPath": "src/air/physics/preparation.ts",
+      "upstreamPath": null,
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
+      "modified": true,
+      "reason": "AIR-owned admitted-application native physics resource ownership ledger. Independent cleanup, dependency retention on failed releases and immutable diagnostics; not a general async cancellation controller."
+    },
+    {
+      "airPath": "src/air/physics/box3d/config.ts",
+      "upstreamPath": null,
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
+      "modified": true,
+      "reason": "AIR-owned strict optional Box3D application option normalization. ST default, explicit unavailable MT/auto until their implementation; no native side effects."
+    },
+    {
+      "airPath": "src/air/physics/box3d/prepare.ts",
+      "upstreamPath": null,
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
+      "modified": true,
+      "reason": "AIR-owned lazy feature/real world-adapter preparation registry. Rejects absent real adapter before asset requests; no fallback or no-op physics world."
+    },
+    {
+      "airPath": "src/air/physics/box3d/loader/st-loader.mjs",
+      "upstreamPath": null,
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
+      "modified": true,
+      "reason": "AIR-owned internal optional ST manifest/hash/native-identity loader with generation-owned leases and injectable transport. Browser dynamic import is not SRI-certified."
+    },
+    {
+      "airPath": "src/air/physics/box3d/loader/st-loader.d.mts",
+      "upstreamPath": null,
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
+      "modified": true,
+      "reason": "AIR-owned declarations for the internal optional ST loader; strict browser-ambient consumer validated independently of runtime declarations."
     }
   ]
 }

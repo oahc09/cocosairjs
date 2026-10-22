@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "scope": "Current g facade rejects actual old e module with old and forged-current schema manifests; no new physics qualification",
+  "oldWasmSha256": "d31920cf37e77e1597a165f55a7ec9e4f2c177fb9db42bfcb8fcd0d825351bec",
+  "facadeSha256": "8463d2f8f1d2eca546cb1a2cce6fb56466877b80e91693d6b92e0dbdf5befffe",
+  "currentSchemaSha256": "3aa11fe9d3d4b0269105bddbfebd8a1d09c9a3d162d88cb416d35d4304d1f30a",
+  "oldSchemaSha256": "615555d88a4cab5a82f1d37fa4c8e23f735ccdcba5b7e5c4de73a20068b42c5c",
+  "patchChainSha256": "20dd450a4313774e1d934df9fa9ec3458df35d9ee314beffa9d846404cdb86bf",
+  "expectedRejections": 2
+}

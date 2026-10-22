@@ -156,6 +156,17 @@ int air_b3_shape_sphere(uint32_t lo, uint32_t hi, float radius, float density, u
     split_u64(b3StoreShapeId(shape), out);
     return AIR_B3_OK;
 }
+int air_b3_shape_sphere_ex(uint32_t lo, uint32_t hi, float x, float y, float z, float radius, float density, int sensor, uint32_t* out)
+{
+    int status = valid_shape_args(lo, hi, density, out);
+    if (status) return status;
+    if (!finite3(x, y, z) || !isfinite(radius) || radius <= 0 || (sensor != 0 && sensor != 1)) return AIR_B3_ARGUMENT;
+    b3ShapeDef def = b3DefaultShapeDef(); def.density = density; def.isSensor = sensor != 0; def.enableSensorEvents = sensor != 0;
+    b3Sphere sphere = {{x, y, z}, radius};
+    b3ShapeId shape = b3CreateSphereShape(b3LoadBodyId(join_id(lo, hi)), &def, &sphere);
+    if (!b3Shape_IsValid(shape)) return AIR_B3_CREATION;
+    split_u64(b3StoreShapeId(shape), out); return AIR_B3_OK;
+}
 int air_b3_shape_box(uint32_t lo, uint32_t hi, float hx, float hy, float hz, float density, uint32_t* out)
 {
     int status = valid_shape_args(lo, hi, density, out);

@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "collectedAt": "2026-10-22T05:54:01.657345+00:00",
+  "status": "PASS_22_STATIC_DESIGN_CHECKS_ONLY",
+  "sourceSHA256": {
+    "docs/physics/box3d/contracts/gift-workshop/input-protocol.json": "f5360e5fbfb9b4029a564d1fae2c73511727ae18ace215c3ff6aa9ce6b271fc9",
+    "docs/physics/box3d/contracts/gift-workshop/abnormal-fixtures.json": "239a0cff22b8ec333e8b4db5b9b914d8759273e3308c82912316bc12897dcf3a",
+    "docs/physics/box3d/contracts/gift-workshop/FIXTURE-SPEC.md": "c4d455de62aab26d97cfa180beefb07c3a6f2f0226442ddda8be4addf00afaa2",
+    "tools/verify/box3d/gift-workshop-fixture-contract.test.cjs": "dcc32f9aea2c09a5c5ee2502965b23ad2a47b0bc7074b23bd6d5624d742ddd94"
+  },
+  "commands": [
+    {
+      "command": [
+        "node",
+        "node_modules/prettier/bin/prettier.cjs",
+        "--check",
+        "docs/physics/box3d/contracts/gift-workshop/input-protocol.json",
+        "docs/physics/box3d/contracts/gift-workshop/abnormal-fixtures.json",
+        "docs/physics/box3d/contracts/gift-workshop/FIXTURE-SPEC.md",
+        "tools/verify/box3d/gift-workshop-fixture-contract.test.cjs"
+      ],
+      "exitCode": 0,
+      "log": "docs/physics/box3d/rebuild/gift-workshop-input-design-20261022-h/command-1.txt",
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    },
+    {
+      "command": [
+        "node",
+        "--test",
+        "tools/verify/box3d/gift-workshop-contract.test.cjs",
+        "tools/verify/box3d/gift-workshop-fixture-contract.test.cjs"
+      ],
+      "exitCode": 0,
+      "log": "docs/physics/box3d/rebuild/gift-workshop-input-design-20261022-h/command-2.txt",
+      "sha256": "2ee6aff5adc85d4540c028d6712a8de748fa78240bf61d56c598198477ecbf40"
+    }
+  ],
+  "scope": "T32 public-input and abnormal fixture specification supplement; no physics/browser/business execution or successful input traces",
+  "allActualBehaviorStatus": "NOT_RUN"
+}

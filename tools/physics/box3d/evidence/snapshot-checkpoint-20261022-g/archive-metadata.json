@@ -1,0 +1,9 @@
+{
+  "path": "tools/physics/box3d/output/snapshot-validation-20261022-g.tar.gz",
+  "bytes": 2872492,
+  "sha256": "4c706343ba52ed1b3f8e5840effa6ab744c4f17557fc7517b485327671a31e8c",
+  "entries": 343,
+  "byteVerified": true,
+  "tracked": false,
+  "scope": "g exact source inputs, actual Debug/Release artifacts, all raw fixtures including original detached-buffer observation and corrected g2, staged core, build commands/logs/compile/link metadata, additive ABI review and numeric anchor hypothesis diagnostics; no intermediate objects/static libraries."
+}

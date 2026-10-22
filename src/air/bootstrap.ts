@@ -36,11 +36,16 @@ import { AirAppImpl, AIR_VERSION, AIR_REVISION, AIR_BUILD_DATE, AIR_BUILD_NUMBER
 import type { AirApp, AirAppOptions } from './app';
 import { registerBuiltinAirAssets } from './builtin/register';
 import { selectPhysicsBackend } from './physics-backend';
-import { loadBox2D3, selectPhysics2DBackend, disposeBox2D3 } from './physics-2d/box2d3';
+import { acquireBox2D3 } from './physics-2d/box2d3';
+import type { Box2D3Lease } from './physics-2d/box2d3';
+import { createAirPhysicsPreparation } from './physics/preparation';
+import { prepareBox3D } from './physics/box3d/prepare';
+import type { Box3DPreparedWorld } from './physics/box3d/prepare';
 import { attachContextHealth } from './context-health';
 import { createAirDiagnostics } from './diagnostics';
 import {
     requestAirApp,
+    airBootstrapRegistry,
     registerAirInitializer,
     AirNormalizedOptions,
     prepareAirContainer,
@@ -117,33 +122,43 @@ export function createAirApp(options: AirAppOptions): Promise<AirApp> {
 
 async function initializeAirApp(options: AirNormalizedOptions): Promise<AirApp> {
     const canvas = options.canvas;
-    if (options.physics2D === 'box2d-v3-wasm')
-        await loadBox2D3({ assetBaseUrl: options.box2d3AssetBaseUrl, subStepCount: options.box2d3SubStepCount });
-    if (options.renderer === 'webgpu') configureWebGPUAssets(options.webgpuAssetBaseUrl);
-    const exactFit = settings.querySettings(SettingsCategory.SCREEN, 'exactFitScreen');
-    validateAirScreenMode(options.screenMode, exactFit);
-    ensureCanvasDOM(canvas, options);
-    (screenAdapter as unknown as { bindCanvas: () => void }).bindCanvas();
-
-    // W01：上下文健康状态机（在引擎 init 前挂接，早于 swapchain 自身的 lost 告警监听）。
-    const contextHealth = attachContextHealth(canvas, options.contextLoss);
-    const diagnostics = createAirDiagnostics(options.diagnostics ?? 'errors');
-
-    // 3D 物理后端选择（r46，#8(a)）：官方两个 instantiate 在模块求值期向
-    // Game.EVENT_PRE_SUBSYSTEM_INIT 各挂一个 register 监听器（builtin 先、cannon 后，
-    // 故模块序默认会让 cannon 胜出）。本监听器在两个之后注册 ⇒ 同事件内最后执行，
-    // 用户后端确定性胜出；世界在该事件之后的子系统初始化期才创建，时序安全。
-    const selectBackend = (): void => {
-        selectPhysicsBackend(options.physics);
-        if (options.physics2D === 'box2d-v3-wasm') selectPhysics2DBackend(options.physics2D);
+    const preparation = createAirPhysicsPreparation();
+    let twoD: Box2D3Lease | undefined;
+    let threeD: Box3DPreparedWorld | undefined;
+    let contextHealth: ReturnType<typeof attachContextHealth> | undefined;
+    let diagnostics: ReturnType<typeof createAirDiagnostics> | undefined;
+    const cleanup = (label: string, action: () => void): void => {
+        try {
+            action();
+        } catch (error) {
+            preparation.recordCleanupError(label, error);
+        }
     };
-    game.once(Game.EVENT_PRE_SUBSYSTEM_INIT, selectBackend);
-
-    // 注册引擎同源 builtin effects/materials（glsl3 适配，见 builtin/register.ts）
-    game.once(Game.EVENT_POST_SUBSYSTEM_INIT, registerBuiltinAirAssets);
-
-    // V0.1: 无远程 settings.json；默认走 legacy 渲染管线
+    // The PRE event is synchronous: all asynchronous preparation has already completed.
+    const selectBackend = (): void => {
+        if (options.physics === 'box3d') threeD!.select();
+        selectPhysicsBackend(options.physics);
+        twoD?.select();
+    };
     try {
+        // Transaction boundary deliberately precedes the very first backend await.
+        if (options.physics2D === 'box2d-v3-wasm') {
+            twoD = await acquireBox2D3({
+                assetBaseUrl: options.box2d3AssetBaseUrl,
+                subStepCount: options.box2d3SubStepCount,
+            });
+            preparation.own('box2d-v3-wasm', 'application-lease', () => twoD!.dispose());
+        }
+        if (options.physics === 'box3d') threeD = await prepareBox3D(options.physicsOptions.box3d, preparation);
+        if (options.renderer === 'webgpu') configureWebGPUAssets(options.webgpuAssetBaseUrl);
+        const exactFit = settings.querySettings(SettingsCategory.SCREEN, 'exactFitScreen');
+        validateAirScreenMode(options.screenMode, exactFit);
+        ensureCanvasDOM(canvas, options);
+        (screenAdapter as unknown as { bindCanvas: () => void }).bindCanvas();
+        contextHealth = attachContextHealth(canvas, options.contextLoss);
+        diagnostics = createAirDiagnostics(options.diagnostics ?? 'errors');
+        game.once(Game.EVENT_PRE_SUBSYSTEM_INIT, selectBackend);
+        game.once(Game.EVENT_POST_SUBSYSTEM_INIT, registerBuiltinAirAssets);
         await game.init({
             debugMode: options.diagnostics === 'warnings' ? DebugMode.WARN : DebugMode.ERROR,
             settingsPath: '',
@@ -162,23 +177,27 @@ async function initializeAirApp(options: AirNormalizedOptions): Promise<AirApp> 
             const { width, height, policy } = options.designResolution;
             view.setDesignResolutionSize(width, height, policy);
         }
+        // Startup identity stays visible even when engine diagnostics only report errors.
+        console.info(
+            `[Cocos AIR] v${AIR_VERSION} (r${AIR_REVISION}) | Cocos Engine v${VERSION}` +
+                ` | Build ${AIR_BUILD_DATE} #${AIR_BUILD_NUMBER}`,
+        );
+        preparation.prepared();
+        return new AirAppImpl(canvas, contextHealth, diagnostics, preparation);
     } catch (error) {
-        disposeBox2D3();
-        (screenAdapter as unknown as { destroyLayoutObserver?: () => void }).destroyLayoutObserver?.();
-        contextHealth.destroy();
-        diagnostics.destroy();
+        preparation.failed(error);
+        await preparation.dispose();
+        cleanup('layout-observer', () =>
+            (screenAdapter as unknown as { destroyLayoutObserver?: () => void }).destroyLayoutObserver?.(),
+        );
+        cleanup('context-health', () => contextHealth?.destroy());
+        cleanup('diagnostics', () => diagnostics?.destroy());
         throw error;
     } finally {
-        game.off(Game.EVENT_PRE_SUBSYSTEM_INIT, selectBackend);
-        game.off(Game.EVENT_POST_SUBSYSTEM_INIT, registerBuiltinAirAssets);
+        cleanup('pre-subsystem-listener', () => game.off(Game.EVENT_PRE_SUBSYSTEM_INIT, selectBackend));
+        cleanup('post-subsystem-listener', () => game.off(Game.EVENT_POST_SUBSYSTEM_INIT, registerBuiltinAirAssets));
+        airBootstrapRegistry().physicsPreparation = preparation.diagnostics();
     }
-
-    // Startup identity stays visible even when engine diagnostics only report errors.
-    console.info(
-        `[Cocos AIR] v${AIR_VERSION} (r${AIR_REVISION}) | Cocos Engine v${VERSION}` +
-            ` | Build ${AIR_BUILD_DATE} #${AIR_BUILD_NUMBER}`,
-    );
-    return new AirAppImpl(canvas, contextHealth, diagnostics);
 }
 
 // Registration is engine-local; no canvas, wrapper or input listener is bound here.

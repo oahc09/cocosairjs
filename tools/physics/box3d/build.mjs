@@ -80,6 +80,7 @@ try {
         for (const source of [
             ...sources.map((s) => resolve(stagedCore, 'src', s)),
             'tools/physics/box3d/native/air_box3d.c',
+            'tools/physics/box3d/native/snapshot.c',
             'tools/physics/box3d/native/contract.c',
         ]) {
             const object = resolve(out, basename(source) + '.o');
@@ -163,6 +164,7 @@ try {
         );
         run(process.execPath, ['tools/physics/box3d/wasm-contract.mjs', out]);
         run(process.execPath, ['tools/physics/box3d/wasm-ownership-contract.mjs', out]);
+        run(process.execPath, ['tools/physics/box3d/wasm-snapshot-contract.mjs', out]);
         result.artifacts = artifacts;
         result.browserStatus = 'NOT_RUN';
     }
@@ -186,9 +188,11 @@ try {
         'tools/physics/box3d/patches/sse2-loadv-alignment.patch',
         'tools/physics/box3d/wasm-contract.mjs',
         'tools/physics/box3d/wasm-ownership-contract.mjs',
+        'tools/physics/box3d/wasm-snapshot-contract.mjs',
         'tools/physics/box3d/verify-sources.mjs',
         'tools/physics/box3d/verify-wasm.mjs',
         'tools/physics/box3d/native/air_box3d.c',
+        'tools/physics/box3d/native/snapshot.c',
         'tools/physics/box3d/native/air_box3d.h',
         'tools/physics/box3d/native/contract.c',
         'tools/physics/box3d/native/wasm_entry.c',

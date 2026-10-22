@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "retrievedAt": "2026-10-22T06:10:46.258870+00:00",
+  "sourceCommit": "b573be0741db9e2a13d38ce7e65870b97a1f5fbc",
+  "source": "Read-only exact Git blobs from upstream task object cache, never its changed worktree",
+  "files": [
+    {
+      "path": "test/fixtures/safe-bootstrap/index.html",
+      "bytes": 359,
+      "gitBlobSha1": "c82337a614a6dec66d83b0b970fc9c38766d6d31",
+      "sha256": "bfe97b22897e90970a27947418e8702b7b9fc83b1702f312ac7e448666281cf1"
+    },
+    {
+      "path": "test/fixtures/safe-bootstrap/main.ts",
+      "bytes": 8106,
+      "gitBlobSha1": "a62046c0a7c5a985d564920d51297201c0b310d2",
+      "sha256": "40081d95eac4c2855ab78a77fb5900db00e8905f5f6b517a79f8b2c18afb4068"
+    },
+    {
+      "path": "test/smoke/competitive-bootstrap-contract.test.ts",
+      "bytes": 2684,
+      "gitBlobSha1": "492197fbdaefc1c1b201ad2f21062f482e0bd225",
+      "sha256": "25bdad9ff5e8a7c8b13689530fe02cd7fbfecb29f885a46d440c755bee1096ab"
+    },
+    {
+      "path": "test/smoke/port-gap-bootstrap-config.test.ts",
+      "bytes": 1993,
+      "gitBlobSha1": "222f4731fc66de20a88079493f6e03803d66d267",
+      "sha256": "dab334090900426fdfccb7500ec3f221a27c1a5ad60000e30b6ba829fdcc3fb8"
+    },
+    {
+      "path": "test/smoke/port-gap-bootstrap-singleton.test.ts",
+      "bytes": 2290,
+      "gitBlobSha1": "b9a99452711e5bed199a164e21438c6001a9da38",
+      "sha256": "49d70d0dd54159520b1e94e8a7799c46710fe09def927d1e07389ea4b0302d60"
+    },
+    {
+      "path": "test/smoke/smoke-01-bootstrap.test.ts",
+      "bytes": 4605,
+      "gitBlobSha1": "85380d9df4ae14eb16aaf608527f754fe5bd8a37",
+      "sha256": "0a8d18ab5968e52299d8ea02e94e3584b7721e1dd1f9659a614b407ca256f59b"
+    }
+  ]
+}

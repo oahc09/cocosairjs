@@ -55,6 +55,20 @@ export interface Box3DFoundation {
     createBody(world: Box3DWorld, options?: Box3DBodyOptions): Box3DId;
     destroyBody(body: Box3DId): void;
     bodySnapshot(body: Box3DId): Float32Array;
+    /** One native call for the entire validated batch, ten copied floats per body. */
+    bodyTransforms(world: Box3DWorld, bodies: readonly Box3DId[]): Float32Array;
+    readStepSnapshot(world: Box3DWorld): Box3DStepSnapshot;
+    readContactSnapshot(contact: Box3DContactHandle): Box3DContactSnapshot;
+    /** Always throws until a common contact-anchor epoch is proven. */
+    contactWorldPoints(contact: Box3DContactHandle): never;
+    configureShapeEvents(shape: Box3DId, options: { sensor?: boolean; contact?: boolean; hit?: boolean }): void;
+    createOffsetSphere(
+        body: Box3DId,
+        center: ArrayLike<number>,
+        radius: number,
+        density?: number,
+        sensor?: boolean,
+    ): Box3DId;
     setLinearVelocity(body: Box3DId, velocity: ArrayLike<number>): void;
     applyCenterImpulse(body: Box3DId, impulse: ArrayLike<number>): void;
     createSphere(body: Box3DId, radius: number, density?: number): Box3DId;
@@ -70,3 +84,87 @@ export interface Box3DFoundation {
     dispose(): void;
 }
 export declare function createBox3DBinding(module: unknown, expected: Box3DIdentity): Box3DFoundation;
+
+/** Copied observational IDs are not ownership capabilities. */
+export interface Box3DContactHandle {
+    readonly contactId: readonly number[];
+}
+export interface Box3DManifoldPoint {
+    readonly anchorA: readonly number[];
+    readonly anchorB: readonly number[];
+    readonly separation: number;
+    readonly normalImpulse: number;
+    readonly totalNormalImpulse: number;
+    readonly normalVelocity: number;
+    readonly baseSeparation: number;
+    readonly featureId: number;
+    readonly triangleIndex: number;
+    readonly persisted: boolean;
+}
+export interface Box3DManifoldSnapshot {
+    readonly normalAtoB: readonly number[];
+    readonly twistImpulse: number;
+    readonly frictionImpulse: readonly number[];
+    readonly rollingImpulse: readonly number[];
+    readonly points: readonly Box3DManifoldPoint[];
+}
+export interface Box3DContactSnapshot {
+    readonly contactId: readonly number[];
+    readonly handle: Box3DContactHandle;
+    readonly shapeA: Readonly<Box3DId>;
+    readonly shapeB: Readonly<Box3DId>;
+    readonly bodyA: Readonly<Box3DId>;
+    readonly bodyB: Readonly<Box3DId>;
+    readonly awakeA: boolean;
+    readonly awakeB: boolean;
+    readonly prePoseA: readonly number[] | null;
+    readonly prePoseB: readonly number[] | null;
+    readonly postPoseA: readonly number[];
+    readonly postPoseB: readonly number[];
+    readonly manifolds: readonly Box3DManifoldSnapshot[];
+    readonly anchorEpoch: 'UNRESOLVED_CACHED_NATIVE';
+    readonly worldPointStatus: 'UNSUPPORTED_SNAPSHOT_EPOCH';
+}
+export interface Box3DContactEvent {
+    readonly shapeA: Readonly<Box3DId>;
+    readonly shapeB: Readonly<Box3DId>;
+    readonly contactId: readonly number[];
+    readonly validFlags: number;
+}
+export interface Box3DContactHitEvent extends Box3DContactEvent {
+    readonly nativeHitPoint: readonly number[];
+    readonly normalAtoB: readonly number[];
+    readonly approachSpeed: number;
+    readonly userMaterialA: Readonly<Box3DId>;
+    readonly userMaterialB: Readonly<Box3DId>;
+    readonly pointSemantics: 'NATIVE_HIT_EVENT_NOT_GENERAL_CONTACT_WORLD_POINT';
+}
+export interface Box3DSensorEvent {
+    readonly sensor: Readonly<Box3DId>;
+    readonly visitor: Readonly<Box3DId>;
+    readonly validFlags: number;
+}
+export interface Box3DBodyMoveEvent {
+    readonly body: Readonly<Box3DId>;
+    readonly valid: boolean;
+    readonly fellAsleep: boolean;
+    readonly transform: readonly number[];
+}
+export interface Box3DBodyPoseRow {
+    readonly body: Readonly<Box3DId>;
+    /** Origin.xyz, rotation.xyzw, COM.xyz; not an asserted anchor epoch. */
+    readonly pose: readonly number[];
+}
+export interface Box3DStepSnapshot {
+    readonly worldId: number;
+    readonly stepIndex: number;
+    readonly bodyMoves: readonly Box3DBodyMoveEvent[];
+    readonly contactBegins: readonly Box3DContactEvent[];
+    readonly contactEnds: readonly Box3DContactEvent[];
+    readonly contactHits: readonly Box3DContactHitEvent[];
+    readonly sensorBegins: readonly Box3DSensorEvent[];
+    readonly sensorEnds: readonly Box3DSensorEvent[];
+    readonly bodyPosesBefore: readonly Box3DBodyPoseRow[];
+    readonly bodyPosesAfter: readonly Box3DBodyPoseRow[];
+    readonly contactsOfOwnedBodies: readonly Box3DContactSnapshot[];
+}

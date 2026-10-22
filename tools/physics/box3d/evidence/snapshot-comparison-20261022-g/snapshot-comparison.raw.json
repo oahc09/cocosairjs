@@ -1,0 +1,546 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "startedAt": "2026-10-22T05:56:27.712Z",
+  "command": [
+    "node",
+    "tools/physics/box3d/compare-snapshot-builds.mjs",
+    "tools/physics/box3d/output/wasm-snapshot-debug-20261022-g",
+    "tools/physics/box3d/output/wasm-snapshot-release-20261022-g",
+    "tools/physics/box3d/output/wasm-contact-growth-debug-20261022-g2",
+    "tools/physics/box3d/output/wasm-contact-growth-release-20261022-g2",
+    "tools/physics/box3d/output/snapshot-comparison-20261022-g"
+  ],
+  "runnerSha256": "158ce88dccbcb9e9c4db1997e3a65f97a8d94fffddbdc861ac395813a3051d22",
+  "scope": "Exact finite Debug/Release copied-event and raw-manifold comparison; not C21 epoch qualification or G1",
+  "checks": [
+    "Both real builds retain identical current input hashes; every artifact hash verifies",
+    "All seven snapshot groups and every copied contact/sensor/sleep/rotation diagnostic match exactly",
+    "Live contact/body/sensor copied data survives two actual grows; destruction outputs match exactly"
+  ],
+  "evidence": [
+    {
+      "path": "tools/physics/box3d/output/wasm-snapshot-debug-20261022-g/build-receipt.json",
+      "bytes": 25796,
+      "sha256": "351715a7a8ba5be09ea3982cfd8c6009b8998fd552542baad9a544ed06ccd65b"
+    },
+    {
+      "path": "tools/physics/box3d/output/wasm-snapshot-release-20261022-g/build-receipt.json",
+      "bytes": 25811,
+      "sha256": "8fbc9cb19bed9a2270e2d7a21e49f2db263dcb68ed03c6bb1049dc1ee618e80c"
+    },
+    {
+      "path": "tools/physics/box3d/output/wasm-snapshot-debug-20261022-g/manifest.json",
+      "bytes": 1575,
+      "sha256": "1f69b2d24a3e4a2f65032b5b7ad03f0d3d7e1598de8a515300ec6e08f0f27935"
+    },
+    {
+      "path": "tools/physics/box3d/output/wasm-snapshot-debug-20261022-g/artifact-audit.raw.json",
+      "bytes": 14887,
+      "sha256": "7018adb3bfa1498bb5c94907aaa60b3f4efb0a55f3b1742c14aae0ad37004b7b"
+    },
+    {
+      "path": "tools/physics/box3d/output/wasm-snapshot-release-20261022-g/manifest.json",
+      "bytes": 1574,
+      "sha256": "d473d72c5a30a107656d45f1b1e871c53fc4320463bb5b30bf50d244875999ed"
+    },
+    {
+      "path": "tools/physics/box3d/output/wasm-snapshot-release-20261022-g/artifact-audit.raw.json",
+      "bytes": 14890,
+      "sha256": "07e7b1119fd3c1d61ba05b89af8f323bbd7b891f381c8cec1222f14d7fdef8ac"
+    },
+    {
+      "path": "tools/physics/box3d/output/wasm-snapshot-debug-20261022-g/wasm-snapshot-contract.raw.json",
+      "bytes": 93300,
+      "sha256": "b0637941b9f26910a5e7485be1d7318fadb99a87d5b7fef1e7c70e9cc5c88e64"
+    },
+    {
+      "path": "tools/physics/box3d/output/wasm-snapshot-release-20261022-g/wasm-snapshot-contract.raw.json",
+      "bytes": 93300,
+      "sha256": "3029c9c7a7028554ca41e17a97d1efc974d8d8aa2732476cc915e24b41354a64"
+    },
+    {
+      "path": "tools/physics/box3d/output/wasm-contact-growth-debug-20261022-g2/contact-growth.raw.json",
+      "bytes": 9833,
+      "sha256": "64eff35e87e764b7da450c888e8571c3e900929249cd6170ed7331dbab6c6bc5"
+    },
+    {
+      "path": "tools/physics/box3d/output/wasm-contact-growth-release-20261022-g2/contact-growth.raw.json",
+      "bytes": 9832,
+      "sha256": "c9b629b397cddc5d2722a862063fa529c1c05d1f27d76cfad2c4a41100c35e93"
+    }
+  ],
+  "memoryObservations": {
+    "debug": [
+      {
+        "beforeBytes": 17367040,
+        "afterBytes": 20840448,
+        "snapshotUnchanged": true,
+        "nativeContactStillValid": true
+      },
+      {
+        "beforeBytes": 20840448,
+        "afterBytes": 25034752,
+        "snapshotUnchanged": true,
+        "nativeContactStillValid": true
+      }
+    ],
+    "release": [
+      {
+        "beforeBytes": 17301504,
+        "afterBytes": 20774912,
+        "snapshotUnchanged": true,
+        "nativeContactStillValid": true
+      },
+      {
+        "beforeBytes": 20774912,
+        "afterBytes": 24969216,
+        "snapshotUnchanged": true,
+        "nativeContactStillValid": true
+      }
+    ]
+  },
+  "anchorDiagnostics": {
+    "status": "OBSERVATION_ONLY_UNRESOLVED_EPOCH",
+    "interpretation": "COM-plus-native-anchor hypotheses below are not valid world-point outputs. Coincidence gaps and quaternion changes expose the ambiguity; no residual threshold establishes the hidden generation/cached pose, CCD path, or C21 correctness.",
+    "samples": [
+      {
+        "stepIndex": 1,
+        "contactId": [
+          1,
+          0,
+          1
+        ],
+        "preCOMPlusAnchorA": [
+          0.2999995946884155,
+          0.009999990463256836,
+          -3.653649969237449e-7
+        ],
+        "preCOMPlusAnchorB": [
+          0.2999995946884155,
+          0.009999990463256836,
+          -3.653649969237449e-7
+        ],
+        "postCOMPlusAnchorA": [
+          0.2999995946884155,
+          0.009999990463256836,
+          -3.653649969237449e-7
+        ],
+        "postCOMPlusAnchorB": [
+          0.2999995946884155,
+          0.01826387643814087,
+          -3.653649969237449e-7
+        ],
+        "preHypothesisCoincidenceGap": 0,
+        "postHypothesisCoincidenceGap": 0.008263885974884033,
+        "bodyBQuaternionChordDelta": 0.01666637818314066,
+        "bodyBOriginCOMDistance": 0.3000000063937119,
+        "nativeSeparation": 0.019999980926513672,
+        "nativeBaseSeparation": 0.019999980926513672,
+        "persisted": false
+      },
+      {
+        "stepIndex": 2,
+        "contactId": [
+          1,
+          0,
+          1
+        ],
+        "preCOMPlusAnchorA": [
+          0.2999995946884155,
+          0.009999990463256836,
+          -3.653649969237449e-7
+        ],
+        "preCOMPlusAnchorB": [
+          0.2999995946884155,
+          0.01826387643814087,
+          -3.653649969237449e-7
+        ],
+        "postCOMPlusAnchorA": [
+          0.2999995946884155,
+          0.009999990463256836,
+          -3.653649969237449e-7
+        ],
+        "postCOMPlusAnchorB": [
+          0.2999995946884155,
+          0.023750007152557373,
+          -3.653649969237449e-7
+        ],
+        "preHypothesisCoincidenceGap": 0.008263885974884033,
+        "postHypothesisCoincidenceGap": 0.013750016689300537,
+        "bodyBQuaternionChordDelta": 0.016666378234492976,
+        "bodyBOriginCOMDistance": 0.3000000146887963,
+        "nativeSeparation": 0.02854706346988678,
+        "nativeBaseSeparation": 0.019999980926513672,
+        "persisted": true
+      },
+      {
+        "stepIndex": 8,
+        "contactId": [
+          1,
+          0,
+          1
+        ],
+        "preCOMPlusAnchorA": [
+          0.2999995946884155,
+          0.009756922721862793,
+          -3.655325144791277e-7
+        ],
+        "preCOMPlusAnchorB": [
+          0.2999995946884155,
+          0.009756922721862793,
+          -3.655325144791277e-7
+        ],
+        "postCOMPlusAnchorA": [
+          0.2999995946884155,
+          0.009756922721862793,
+          -3.655325144791277e-7
+        ],
+        "postCOMPlusAnchorB": [
+          0.2999995946884155,
+          -0.001423656940460205,
+          -3.655325144791277e-7
+        ],
+        "preHypothesisCoincidenceGap": 0,
+        "postHypothesisCoincidenceGap": 0.011180579662322998,
+        "bodyBQuaternionChordDelta": 0.01666637691505124,
+        "bodyBOriginCOMDistance": 0.3000000091045745,
+        "nativeSeparation": 0.019513964653015137,
+        "nativeBaseSeparation": 0.019513964653015137,
+        "persisted": false
+      },
+      {
+        "stepIndex": 9,
+        "contactId": [
+          1,
+          0,
+          1
+        ],
+        "preCOMPlusAnchorA": [
+          0.2999995946884155,
+          0.009756922721862793,
+          -3.655325144791277e-7
+        ],
+        "preCOMPlusAnchorB": [
+          0.2999995946884155,
+          -0.001423656940460205,
+          -3.655325144791277e-7
+        ],
+        "postCOMPlusAnchorA": [
+          0.2999995946884155,
+          0.009756922721862793,
+          -3.655325144791277e-7
+        ],
+        "postCOMPlusAnchorB": [
+          0.2968302071094513,
+          -0.010111719369888306,
+          -3.6364303368507933e-7
+        ],
+        "preHypothesisCoincidenceGap": 0.011180579662322998,
+        "postHypothesisCoincidenceGap": 0.020119839865063535,
+        "bodyBQuaternionChordDelta": 0.008588520315695826,
+        "bodyBOriginCOMDistance": 0.3000000039231046,
+        "nativeSeparation": 0.008616580627858639,
+        "nativeBaseSeparation": 0.019513964653015137,
+        "persisted": true
+      },
+      {
+        "stepIndex": 10,
+        "contactId": [
+          1,
+          0,
+          1
+        ],
+        "preCOMPlusAnchorA": [
+          0.29683008790016174,
+          -0.0001773834228515625,
+          8.943802498606601e-8
+        ],
+        "preCOMPlusAnchorB": [
+          0.29683008790016174,
+          -0.0001773834228515625,
+          8.943803053718113e-8
+        ],
+        "postCOMPlusAnchorA": [
+          0.29683008790016174,
+          -0.0001773834228515625,
+          8.943802498606601e-8
+        ],
+        "postCOMPlusAnchorB": [
+          0.29213449358940125,
+          -0.00005936622619628906,
+          9.687157387361367e-8
+        ],
+        "preHypothesisCoincidenceGap": 5.551115123125783e-15,
+        "postHypothesisCoincidenceGap": 0.004697077175223756,
+        "bodyBQuaternionChordDelta": 0.004697251944946259,
+        "bodyBOriginCOMDistance": 0.30000002294461403,
+        "nativeSeparation": -0.0003547072410583496,
+        "nativeBaseSeparation": -0.0003547072410583496,
+        "persisted": true
+      },
+      {
+        "stepIndex": 11,
+        "contactId": [
+          1,
+          0,
+          1
+        ],
+        "preCOMPlusAnchorA": [
+          0.29683008790016174,
+          -0.0001773834228515625,
+          8.943802498606601e-8
+        ],
+        "preCOMPlusAnchorB": [
+          0.29213449358940125,
+          -0.00005936622619628906,
+          9.687157387361367e-8
+        ],
+        "postCOMPlusAnchorA": [
+          0.29683008790016174,
+          -0.0001773834228515625,
+          8.943802498606601e-8
+        ],
+        "postCOMPlusAnchorB": [
+          0.28743889927864075,
+          -5.662441253662109e-7,
+          1.0401130978721085e-7
+        ],
+        "preHypothesisCoincidenceGap": 0.004697077175223756,
+        "postHypothesisCoincidenceGap": 0.009392853029824884,
+        "bodyBQuaternionChordDelta": 0.0046972428004229535,
+        "bodyBOriginCOMDistance": 0.3000000170322373,
+        "nativeSeparation": -0.00021463632583618164,
+        "nativeBaseSeparation": -0.0003547072410583496,
+        "persisted": true
+      },
+      {
+        "stepIndex": 12,
+        "contactId": [
+          1,
+          0,
+          1
+        ],
+        "preCOMPlusAnchorA": [
+          0.29683008790016174,
+          -0.0001773834228515625,
+          8.943802498606601e-8
+        ],
+        "preCOMPlusAnchorB": [
+          0.28743889927864075,
+          -5.662441253662109e-7,
+          1.0401130978721085e-7
+        ],
+        "postCOMPlusAnchorA": [
+          0.29683008790016174,
+          -0.0001773834228515625,
+          8.943802498606601e-8
+        ],
+        "postCOMPlusAnchorB": [
+          0.28274330496788025,
+          0.000005304813385009766,
+          1.1081285222758197e-7
+        ],
+        "preHypothesisCoincidenceGap": 0.009392853029824884,
+        "postHypothesisCoincidenceGap": 0.014087967503275033,
+        "bodyBQuaternionChordDelta": 0.004697242931269301,
+        "bodyBOriginCOMDistance": 0.3000000281983091,
+        "nativeSeparation": -0.0000896453857421875,
+        "nativeBaseSeparation": -0.0003547072410583496,
+        "persisted": true
+      },
+      {
+        "stepIndex": 13,
+        "contactId": [
+          1,
+          0,
+          1
+        ],
+        "preCOMPlusAnchorA": [
+          0.29683008790016174,
+          -0.0001773834228515625,
+          8.943802498606601e-8
+        ],
+        "preCOMPlusAnchorB": [
+          0.28274330496788025,
+          0.000005304813385009766,
+          1.1081285222758197e-7
+        ],
+        "postCOMPlusAnchorA": [
+          0.29683008790016174,
+          -0.0001773834228515625,
+          8.943802498606601e-8
+        ],
+        "postCOMPlusAnchorB": [
+          0.27804771065711975,
+          -0.00003355741500854492,
+          1.1727475879297344e-7
+        ],
+        "preHypothesisCoincidenceGap": 0.014087967503275033,
+        "postHypothesisCoincidenceGap": 0.018782927908642163,
+        "bodyBQuaternionChordDelta": 0.004697265480552464,
+        "bodyBOriginCOMDistance": 0.3000000143441776,
+        "nativeSeparation": 0.000026524066925048828,
+        "nativeBaseSeparation": -0.0003547072410583496,
+        "persisted": true
+      },
+      {
+        "stepIndex": 14,
+        "contactId": [
+          1,
+          0,
+          1
+        ],
+        "preCOMPlusAnchorA": [
+          0.29683008790016174,
+          -0.0001773834228515625,
+          8.943802498606601e-8
+        ],
+        "preCOMPlusAnchorB": [
+          0.27804771065711975,
+          -0.00003355741500854492,
+          1.1727475879297344e-7
+        ],
+        "postCOMPlusAnchorA": [
+          0.29683008790016174,
+          -0.0001773834228515625,
+          8.943802498606601e-8
+        ],
+        "postCOMPlusAnchorB": [
+          0.27335211634635925,
+          -0.00018787384033203125,
+          1.2340942134869692e-7
+        ],
+        "preHypothesisCoincidenceGap": 0.018782927908642163,
+        "postHypothesisCoincidenceGap": 0.023477973897488937,
+        "bodyBQuaternionChordDelta": 0.004697251321791836,
+        "bodyBOriginCOMDistance": 0.30000002307707174,
+        "nativeSeparation": 0.00014197826385498047,
+        "nativeBaseSeparation": -0.0003547072410583496,
+        "persisted": true
+      },
+      {
+        "stepIndex": 15,
+        "contactId": [
+          1,
+          0,
+          1
+        ],
+        "preCOMPlusAnchorA": [
+          0.273352712392807,
+          -0.00018256902694702148,
+          -8.945273322069625e-8
+        ],
+        "preCOMPlusAnchorB": [
+          0.273352712392807,
+          -0.00018259882926940918,
+          -8.945274743155096e-8
+        ],
+        "postCOMPlusAnchorA": [
+          0.273352712392807,
+          -0.00018256902694702148,
+          -8.945273322069625e-8
+        ],
+        "postCOMPlusAnchorB": [
+          0.2686571478843689,
+          -0.0000603795051574707,
+          -8.31010602553306e-8
+        ],
+        "preHypothesisCoincidenceGap": 2.98023223876987e-8,
+        "postHypothesisCoincidenceGap": 0.004697154067324079,
+        "bodyBQuaternionChordDelta": 0.004697286472792323,
+        "bodyBOriginCOMDistance": 0.3000000258116147,
+        "nativeSeparation": -0.00036519765853881836,
+        "nativeBaseSeparation": -0.00036519765853881836,
+        "persisted": true
+      },
+      {
+        "stepIndex": 16,
+        "contactId": [
+          1,
+          0,
+          1
+        ],
+        "preCOMPlusAnchorA": [
+          0.273352712392807,
+          -0.00018256902694702148,
+          -8.945273322069625e-8
+        ],
+        "preCOMPlusAnchorB": [
+          0.2686571478843689,
+          -0.0000603795051574707,
+          -8.31010602553306e-8
+        ],
+        "postCOMPlusAnchorA": [
+          0.273352712392807,
+          -0.00018256902694702148,
+          -8.945273322069625e-8
+        ],
+        "postCOMPlusAnchorB": [
+          0.2639615833759308,
+          0.0000010728836059570312,
+          -7.628838716300379e-8
+        ],
+        "preHypothesisCoincidenceGap": 0.004697154067324079,
+        "postHypothesisCoincidenceGap": 0.009392924388234976,
+        "bodyBQuaternionChordDelta": 0.004697277579913486,
+        "bodyBOriginCOMDistance": 0.3000000094240136,
+        "nativeSeparation": -0.00022095443273428828,
+        "nativeBaseSeparation": -0.00036519765853881836,
+        "persisted": true
+      },
+      {
+        "stepIndex": 17,
+        "contactId": [
+          1,
+          0,
+          1
+        ],
+        "preCOMPlusAnchorA": [
+          0.273352712392807,
+          -0.00018256902694702148,
+          -8.945273322069625e-8
+        ],
+        "preCOMPlusAnchorB": [
+          0.2639615833759308,
+          0.0000010728836059570312,
+          -7.628838716300379e-8
+        ],
+        "postCOMPlusAnchorA": [
+          0.273352712392807,
+          -0.00018256902694702148,
+          -8.945273322069625e-8
+        ],
+        "postCOMPlusAnchorB": [
+          0.2592660188674927,
+          0.000008463859558105469,
+          -6.899191618003897e-8
+        ],
+        "preHypothesisCoincidenceGap": 0.009392924388234976,
+        "postHypothesisCoincidenceGap": 0.01408798878620642,
+        "bodyBQuaternionChordDelta": 0.004697295970438236,
+        "bodyBOriginCOMDistance": 0.3000000154474917,
+        "nativeSeparation": -0.00009334090282209218,
+        "nativeBaseSeparation": -0.00036519765853881836,
+        "persisted": true
+      }
+    ],
+    "preHypothesisCoincidenceGapRange": [
+      0,
+      0.018782927908642163
+    ],
+    "postHypothesisCoincidenceGapRange": [
+      0.004697077175223756,
+      0.023477973897488937
+    ],
+    "bodyBQuaternionChordDeltaRange": [
+      0.0046972428004229535,
+      0.016666378234492976
+    ],
+    "bodyBOriginCOMDistanceRange": [
+      0.3000000039231046,
+      0.3000000281983091
+    ]
+  },
+  "completedAt": "2026-10-22T05:56:27.729Z"
+}

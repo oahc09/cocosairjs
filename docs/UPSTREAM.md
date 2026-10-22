@@ -1,5 +1,7 @@
 # UPSTREAM
 
+2026-10-22 Box3D reconstruction: the new AIR-owned `physics-box3d` feature is explicit and optional; the default feature list and builtin/Cannon remain unchanged. A trusted build descriptor binds the separately copied ST artifacts to the current fixed core, ABI schema, staged patch and static facade. Module evaluation only registers a lazy factory. Until a real world adapter is registered, an explicit Box3D application rejects rather than installing a no-op world. This is source integration work, not browser/CSP or complete physics acceptance. Original Box3D vendor bytes remain unchanged; the reviewed SSE2 correction is applied only to an audited staged core.
+
 2026-10-20 Box2D 3.2：`src/air/physics-2d/box2d3.ts` 在原 Cocos 2D 组件接口后新增显式选择的 WASM 后端；默认 `@cocos/box2d` 和既有上游物理源码不变。`vendor/box2d/manifest.json` 固定官方源码、案例清单及源码哈希；`tools/build/box2d/contact-material.c` 在固定版本的原始 pre-solve 流形边界补充逐接触材质兼容，不改 vendor 源码。官方案例沿用原始构造与 `Sample::Step`，浏览器替代桌面窗口、文件选择和绘制宿主。验收状态以专项记录为准。
 
 2026-10-19 Web touch cancellation: the reproducible PAL source transform checks `event.cancelable` before canceling a canvas touch event. Native non-cancelable `touchcancel` still retires its touches and dispatches the normal cancel notification; propagation, focus, coordinates and cancelable-event behavior stay unchanged. Frozen MIT vendor bytes remain intact. The Chromium mixed-input control retained two real invalid-cancellation console errors before this correction; source-unit controls do not by themselves establish the corrected browser result.

@@ -1,0 +1,2 @@
+Heap resize call from 17367040 to 20840448 took 0.18655100000000857 msecs. Success: true
+Heap resize call from 20840448 to 25034752 took 0.08743599999999674 msecs. Success: true

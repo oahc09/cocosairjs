@@ -38,6 +38,7 @@ const expectedSources = [
         .filter((name) => name.endsWith('.c'))
         .map((name) => relative(root, resolve(stagedCore, 'src', name))),
     'tools/physics/box3d/native/air_box3d.c',
+    'tools/physics/box3d/native/snapshot.c',
     'tools/physics/box3d/native/wasm_entry.c',
 ].sort();
 assert.deepEqual(commands.map((c) => relative(root, c.file)).sort(), expectedSources);
@@ -87,6 +88,9 @@ assert.equal(ownership.identity.patchChainSha256, manifest.patchChainSha256);
 assert.equal(ownership.identity.schemaSha256, sources.schemaSha256);
 assert.equal(ownership.slotReuseCycles.length, 128);
 assert.equal(ownership.worldLifetimeCycles.length, 128);
+const snapshots = json('wasm-snapshot-contract.raw.json');
+assert.equal(snapshots.status, 'PASS');
+assert.equal(snapshots.identity.schemaSha256, manifest.schemaSha256);
 const report = {
     schemaVersion: 1,
     status: 'PASS',
@@ -116,6 +120,7 @@ const report = {
         linkPath,
         'wasm-contract.raw.json',
         'wasm-ownership-contract.raw.json',
+        'wasm-snapshot-contract.raw.json',
     ].map(fileHash),
 };
 writeFileSync(reportPath, JSON.stringify(report, null, 2) + '\n');

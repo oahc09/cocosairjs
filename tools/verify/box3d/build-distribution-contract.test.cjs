@@ -31,10 +31,14 @@ test('all selected prepare work stays inside one ordered owned-resource transact
     assert.match(config.cleanup.lateAsyncCompletion, /generation invalidation/);
 });
 test('CSP, declaration identity and pack claims remain unexecuted', () => {
-    assert.equal(config.status, 'DESIGN_NOT_INTEGRATED');
+    assert.equal(config.status, 'PARTIAL_SOURCE_INTEGRATION');
+    assert.equal(config.implementationAcceptance.worldAdapter, 'NOT_IMPLEMENTED');
+    assert.equal(config.implementationAcceptance.fullApplicationPhysics, 'NOT_RUN');
+    assert.equal(config.implementationAcceptance.variantDeclarations, 'NOT_RUN');
+    assert.equal(config.implementationAcceptance.tarball, 'NOT_RUN');
     assert.ok(config.csp.forbidden.includes('unsafe-eval'));
     assert.ok(config.csp.forbidden.includes('unsafe-inline'));
     assert.match(config.packaging.variantDeclarations, /AIR_OUT_DIR/);
     assert.equal(config.packaging.publishAuthorized, false);
-    assert.match(config.implementationStatus, /Not yet wired/);
+    assert.match(config.implementationStatus, /No actual world adapter/);
 });

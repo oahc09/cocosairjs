@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "createdAtUtc": "2026-10-22T01:25:26.781006+00:00",
-  "scope": "AUTHORIZED_REBUILD_NATIVE_FOUNDATION_CHECKPOINT",
+  "scope": "AUTHORIZED_REBUILD_SNAPSHOT_AND_APP_PREPARATION_CHECKPOINT",
   "branch": "feat/box3d-rebuild-20261022",
   "upstreamSourceCommit": "b573be0741db9e2a13d38ce7e65870b97a1f5fbc",
   "localImportCommit": "730fbf2519887474e9acfd229fbb65586090bb77",
@@ -75,15 +75,17 @@
       "status": "IN_PROGRESS",
       "description": "批量读写、ID 校验、heap growth、ownership counters 与 binding contract tests",
       "dependencies": "T04、T05",
-      "completionContract": "WASM-02/09/10及接触anchor采样基准fixture、WASM-11-BINDING、WASM-12-BINDING、WASM-13-BINDING通过"
+      "completionContract": "WASM-02/09/10及接触anchor采样基准fixture、WASM-11-BINDING、WASM-12-BINDING、WASM-13-BINDING通过",
+      "implementationScope": "g actual Debug/Release copied native pose/contact/sensor snapshots and finite growth/ownership pass; cached anchor epoch unresolved, full C21/C22/T07 incomplete."
     },
     {
       "id": "T08",
       "phase": "M2",
-      "status": "TODO",
+      "status": "IN_PROGRESS",
       "description": "配置、prepare registry、feature export与选择时序接入源码",
       "dependencies": "T03、T06",
-      "completionContract": "配置/descriptor契约及异步边界实现完成；完整app运行由T09加入真实world后验证，不提前标I01通过"
+      "completionContract": "配置/descriptor契约及异步边界实现完成；完整app运行由T09加入真实world后验证，不提前标I01通过",
+      "implementationScope": "Optional ST feature, normalized app configuration, independent native leases and prepare/cleanup source implemented. 27 mocked lifecycle regressions and full TypeScript check pass. No real engine Box3D world adapter; no I01 claim."
     },
     {
       "id": "T09",
@@ -902,12 +904,12 @@
     {
       "id": "SOURCE-CLOSURE",
       "status": "BLOCKED",
-      "reason": "6783 original main paths still absent locally, mostly historical docs/assets; 13 additional build/license/test/workflow blobs recovered exactly. Full runtime build/test/package closure not yet proven."
+      "reason": "6776 original main paths absent locally. Twenty additional exact-main files restored. First actual selected ESM attempt failed before compilation because vendor/builtin-source/manifest.json is absent; build counter unchanged at 201. Complete source/package closure remains unproven."
     },
     {
       "id": "NATIVE-CLOSURE",
       "status": "BLOCKED",
-      "reason": "Fixed source closure, official toolchain and real Debug/Release ST WASM foundation/ownership/WASM32 layouts now pass. Full binding, event snapshots and adapter remain incomplete; original native sanitizer failure remains recorded; browser infrastructure blocked."
+      "reason": "Fresh g Debug/Release ST copied snapshots and finite fixtures pass. Contact geometry generation epoch remains unexposed, full binding/adapter incomplete; original sanitizer failure preserved; browser infrastructure blocked."
     },
     {
       "id": "C16-DURATION-CONTRACT",
@@ -955,20 +957,20 @@
     "deploy": false,
     "npmPublish": false
   },
-  "nextStep": "Complete fresh patched artifact verification and real Node loader cycles; persist fifth source/evidence checkpoint; continue M1 binding and pending M0 fixtures without claiming G1/browser/app completion.",
+  "nextStep": "Persist and independently restore checkpoint 6 immediately. Then restore missing exact-main build inputs, run real selected/default ESM builds and repeat the retained bootstrap regression. C21 geometry-epoch proposal is recorded, not yet implemented. No product implementation resumes before checkpoint preservation.",
   "remoteHistoryPolicy": "True upstream main parent and incremental tree; local snapshot import is backup-only and is never pushed as upstream history.",
   "remotePublication": {
     "branchCreated": true,
-    "branchHead": "5bc901ff997a228b4e6dd60bec6df8afc8ff3c3c",
-    "status": "VERIFIED_DEBUG_RELEASE_OWNERSHIP_CHECKPOINT",
-    "commitsPublished": 4,
-    "verifiedRemoteParent": "b5f8cd35afb22634d13bcc68fed912912e9d07cf",
+    "branchHead": "1b97b53d80fd4f9b2a643d358be6198d3136763d",
+    "status": "VERIFIED_PATCH_IDENTITY_AND_ST_LOADER_CHECKPOINT",
+    "commitsPublished": 5,
+    "verifiedRemoteParent": "5bc901ff997a228b4e6dd60bec6df8afc8ff3c3c",
     "verifiedAddedFiles": 17,
     "allPriorMainBlobsPreserved": true,
-    "receipt": "docs/physics/box3d/rebuild/remote-checkpoint-4.json",
-    "verifiedChangedFiles": 92
+    "receipt": "docs/physics/box3d/rebuild/remote-checkpoint-5.json",
+    "verifiedChangedFiles": 237
   },
-  "updatedAtUtc": "2026-10-22T05:31:46.022499+00:00",
+  "updatedAtUtc": "2026-10-22T06:18:33.009464+00:00",
   "currentEvidence": {
     "m0ContractTests": "PASS_6_SOURCE_DESIGN_CHECKS_ONLY",
     "nativeFoundationIndex": "tools/physics/box3d/evidence/index.json",
@@ -996,11 +998,11 @@
     "rawBodyIdReuseAcrossWorldLifetimes": 127,
     "rawIdPermanenceClaim": false,
     "stLoaderUnit": "PASS_13_TRANSPORT_LIFECYCLE_TEST_GROUPS_NOT_PHYSICS_OR_BROWSER",
-    "stLoaderDeclaration": "PASS_STRICT_INTERNAL_DECLARATION_CONSUMER_ONLY",
-    "stLoaderEvidence": "docs/physics/box3d/rebuild/loader-unit-20261022-f4/receipt.json",
+    "stLoaderDeclaration": "PASS_STRICT_EXPLICIT_BROWSER_AMBIENT_CONSUMER_G2; prior g ambient conflict retained",
+    "stLoaderEvidence": "docs/physics/box3d/rebuild/loader-unit-20261022-g2/receipt.json",
     "formalPatchIntake": "PASS_2_POSITIVE_24_EXPECTED_REJECTIONS_WITH_NEW_RUNTIME_PATCH_IDENTITY",
     "stLoaderRealWasm": "PASS_20_NEW_PATCHED_NODE_LOAD_60STEP_DISPOSE_CYCLES_FILESYSTEM_TRANSPORT",
-    "stLoaderRealWasmEvidence": "docs/physics/box3d/rebuild/loader-real-wasm-20261022-f4/loader-real-wasm.raw.json",
+    "stLoaderRealWasmEvidence": "docs/physics/box3d/rebuild/loader-real-wasm-20261022-g/loader-real-wasm.raw.json",
     "stLoaderPreviousFailures": "First format check and invalid truthy factory cleanup regression retained; all affected checks rerun under f4 input hashes.",
     "patchedNativeDebug": "PASS_NARROW_UNSANITIZED_NATIVE",
     "patchedWasmDebugRelease": "PASS_FRESH_REAL_WASM_19_SHARED_INPUTS_54_UNITS_EACH_AND_FINITE_EXACT_COMPARISON",
@@ -1008,7 +1010,16 @@
     "patchChainSha256": "20dd450a4313774e1d934df9fa9ec3458df35d9ee314beffa9d846404cdb86bf",
     "originalUBSan": "FAIL_PRESERVED_UPSTREAM_SSE2_MISALIGNED_DOUBLE_LOAD",
     "isolatedCandidateUBSan": "PASS_NARROW_FULL_NATIVE_FIXTURE_UBSAN_ONLY_NOT_DEFAULT_SANITIZER_QUALIFICATION",
-    "isolatedCandidateASanLSan": "BLOCKED_LSAN_PTRACE"
+    "isolatedCandidateASanLSan": "BLOCKED_LSAN_PTRACE",
+    "sourceScope": "Each receipt fingerprints its own source and scope. New g raw snapshots, asset staging, T08 CPU and failed runtime preflight are distinct from e/f historical results. No whole-engine Box3D physics or browser acceptance.",
+    "snapshotFoundation": "PASS_LIMITED_G_DEBUG_RELEASE_21_INPUTS_55_COMPILE_UNITS_EACH",
+    "snapshotEvidence": "tools/physics/box3d/evidence/snapshot-checkpoint-20261022-g/summary.json",
+    "contactGeometryEpoch": "BLOCKED_UNEXPOSED_ORIGINAL_GENERATION_BASIS_PROPOSAL_ONLY",
+    "appPreparation": "PASS_27_MOCKED_TYPESCRIPT_LIFECYCLE_CASES_AND_FULL_TSC",
+    "appBootstrapRegression": "14_PASS_1_FAIL_MISSING_DEFAULT_BUILD_BUNDLES_NOT_YET_BUILT",
+    "appPreparationEvidence": "docs/physics/box3d/rebuild/app-preparation-20261022-h/receipt.json",
+    "runtimeBuild": "FAIL_MISSING_EXACT_MAIN_BUILTIN_SOURCE_MANIFEST_BEFORE_COMPILATION",
+    "runtimeBuildEvidence": "docs/physics/box3d/rebuild/runtime-variants-20261022-h/receipt.json"
   },
   "contractDesign": {
     "publicSpecMembers": 166,
@@ -1019,15 +1030,19 @@
     "giftWorkshop": "docs/physics/box3d/contracts/gift-workshop/"
   },
   "persistentCheckpoint": {
-    "libraryFileId": "libfile_b6e8c6924de48191b1142d69a78fce61",
-    "sha256": "cae893201196738324b66fdf4ca6eb813aabfa13fec223de073deb66c67ef02b",
-    "localHead": "bdb618394a2115a870e82b6525f8cb696ac404d3",
-    "libraryDownloadAndIndependentRestore": "PASS_3805_FILES_6_ARCHIVE_PAYLOADS",
-    "scope": "Default c Debug/Release source and real WASM; isolated d SSE2 qualification is separately included and unapplied in this checkpoint. New patch-intake/loader source is later, not claimed in this archive."
+    "libraryFileId": "libfile_83032348a65481919fa0cab441b2db55",
+    "sha256": "37d73af403ae520798f60c82f92b94fa7756a4b637f69e6a6440091793a9b732",
+    "localHead": "0b4a0d5a80d85970829ba27860907930e2c15984",
+    "libraryDownloadAndIndependentRestore": "PASS_4024_FILES_7_ARCHIVE_PAYLOADS",
+    "scope": "Frozen fifth source checkpoint with formally staged e patch identity, internal ST loader and finite real Node WASM cycles. Historical a/b/c/d artifacts remain distinctly labelled. No current g changes or app/browser acceptance in this archive."
   },
   "additionalOriginalMainSources": {
-    "count": 13,
-    "remainingOriginalMissing": 6783,
-    "manifest": "docs/physics/box3d/rebuild/supplemental-main-source-manifest.json"
+    "count": 20,
+    "remainingOriginalMissing": 6776,
+    "manifest": "docs/physics/box3d/rebuild/supplemental-main-source-manifest.json",
+    "additionalManifests": [
+      "docs/physics/box3d/rebuild/main-file-map-source-receipt.json",
+      "docs/physics/box3d/rebuild/main-bootstrap-tests-source-receipt.json"
+    ]
   }
 }

@@ -1,0 +1,553 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "startedAt": "2026-10-22T05:53:08.909Z",
+  "scope": "Real contact/body/sensor copied snapshots across heap growth; no anchor-epoch or full C21/C22 acceptance",
+  "heapGrowth": [
+    {
+      "beforeBytes": 0,
+      "afterBytes": 20774912,
+      "snapshotUnchanged": true,
+      "nativeContactStillValid": true
+    },
+    {
+      "beforeBytes": 0,
+      "afterBytes": 24969216,
+      "snapshotUnchanged": true,
+      "nativeContactStillValid": true
+    }
+  ],
+  "inputs": {
+    "fixture": "f08a25e19ed78f8a8558c251ad5a1a619bd5f647f83c75ec7ab90ec1518e4659",
+    "manifest": "d473d72c5a30a107656d45f1b1e871c53fc4320463bb5b30bf50d244875999ed",
+    "artifacts": [
+      {
+        "path": "box3d-st.mjs",
+        "sha256": "a11f953c37777af91a0a3103e7edbf6c1836c5802bfee59bcbbd1ae66a1487cc",
+        "bytes": 38307
+      },
+      {
+        "path": "box3d-st.wasm",
+        "sha256": "42d27ac1fa484d23ef7a24db0dd6ae8bdec5c37286e325af13e81cc0191c3658",
+        "bytes": 478474
+      },
+      {
+        "path": "facade.mjs",
+        "sha256": "8463d2f8f1d2eca546cb1a2cce6fb56466877b80e91693d6b92e0dbdf5befffe",
+        "bytes": 25099
+      },
+      {
+        "path": "facade.d.mts",
+        "sha256": "fb8cc74b3de03a279cc01e4c417d5f475502b0f16902feecd254ee435ca6f211",
+        "bytes": 6927
+      }
+    ]
+  },
+  "identity": {
+    "coreSha": "efca0c184d40fd6a82016983f1601c4d23965867",
+    "schemaSha256": "3aa11fe9d3d4b0269105bddbfebd8a1d09c9a3d162d88cb416d35d4304d1f30a",
+    "patchChainSha256": "20dd450a4313774e1d934df9fa9ec3458df35d9ee314beffa9d846404cdb86bf"
+  },
+  "copiedSnapshot": {
+    "worldId": 65536,
+    "stepIndex": 1,
+    "bodyMoves": [
+      {
+        "body": {
+          "low": 1,
+          "high": 2
+        },
+        "valid": true,
+        "fellAsleep": false,
+        "transform": [
+          0,
+          0.4939485788345337,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      },
+      {
+        "body": {
+          "low": 1,
+          "high": 4
+        },
+        "valid": true,
+        "fellAsleep": false,
+        "transform": [
+          4,
+          3,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    ],
+    "contactBegins": [
+      {
+        "shapeA": {
+          "low": 1,
+          "high": 1
+        },
+        "shapeB": {
+          "low": 1,
+          "high": 2
+        },
+        "contactId": [
+          1,
+          0,
+          1
+        ],
+        "validFlags": 7
+      }
+    ],
+    "contactEnds": [],
+    "contactHits": [
+      {
+        "shapeA": {
+          "low": 1,
+          "high": 1
+        },
+        "shapeB": {
+          "low": 1,
+          "high": 2
+        },
+        "contactId": [
+          1,
+          0,
+          1
+        ],
+        "validFlags": 7,
+        "nativeHitPoint": [
+          0,
+          -0.0030257105827331543,
+          0
+        ],
+        "normalAtoB": [
+          0,
+          1,
+          0
+        ],
+        "approachSpeed": 2,
+        "userMaterialA": {
+          "low": 0,
+          "high": 0
+        },
+        "userMaterialB": {
+          "low": 0,
+          "high": 0
+        },
+        "pointSemantics": "NATIVE_HIT_EVENT_NOT_GENERAL_CONTACT_WORLD_POINT"
+      }
+    ],
+    "sensorBegins": [
+      {
+        "sensor": {
+          "low": 1,
+          "high": 3
+        },
+        "visitor": {
+          "low": 1,
+          "high": 4
+        },
+        "validFlags": 3
+      }
+    ],
+    "sensorEnds": [],
+    "bodyPosesBefore": [
+      {
+        "body": {
+          "low": 1,
+          "high": 1
+        },
+        "pose": [
+          0,
+          -0.5,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          -0.5,
+          0
+        ]
+      },
+      {
+        "body": {
+          "low": 1,
+          "high": 2
+        },
+        "pose": [
+          0,
+          0.49000000953674316,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0.49000000953674316,
+          0
+        ]
+      },
+      {
+        "body": {
+          "low": 1,
+          "high": 3
+        },
+        "pose": [
+          4,
+          3,
+          0,
+          0,
+          0,
+          0,
+          1,
+          4,
+          3,
+          0
+        ]
+      },
+      {
+        "body": {
+          "low": 1,
+          "high": 4
+        },
+        "pose": [
+          4,
+          3,
+          0,
+          0,
+          0,
+          0,
+          1,
+          4,
+          3,
+          0
+        ]
+      }
+    ],
+    "bodyPosesAfter": [
+      {
+        "body": {
+          "low": 1,
+          "high": 1
+        },
+        "pose": [
+          0,
+          -0.5,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          -0.5,
+          0
+        ]
+      },
+      {
+        "body": {
+          "low": 1,
+          "high": 2
+        },
+        "pose": [
+          0,
+          0.4939485788345337,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0.4939485788345337,
+          0
+        ]
+      },
+      {
+        "body": {
+          "low": 1,
+          "high": 3
+        },
+        "pose": [
+          4,
+          3,
+          0,
+          0,
+          0,
+          0,
+          1,
+          4,
+          3,
+          0
+        ]
+      },
+      {
+        "body": {
+          "low": 1,
+          "high": 4
+        },
+        "pose": [
+          4,
+          3,
+          0,
+          0,
+          0,
+          0,
+          1,
+          4,
+          3,
+          0
+        ]
+      }
+    ],
+    "contactsOfOwnedBodies": [
+      {
+        "contactId": [
+          1,
+          0,
+          1
+        ],
+        "shapeA": {
+          "low": 1,
+          "high": 1
+        },
+        "shapeB": {
+          "low": 1,
+          "high": 2
+        },
+        "bodyA": {
+          "low": 1,
+          "high": 1
+        },
+        "bodyB": {
+          "low": 1,
+          "high": 2
+        },
+        "awakeA": false,
+        "awakeB": true,
+        "postPoseA": [
+          0,
+          -0.5,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          -0.5,
+          0
+        ],
+        "postPoseB": [
+          0,
+          0.4939485788345337,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0.4939485788345337,
+          0
+        ],
+        "manifolds": [
+          {
+            "normalAtoB": [
+              0,
+              1,
+              0
+            ],
+            "twistImpulse": 0,
+            "frictionImpulse": [
+              0,
+              0,
+              0
+            ],
+            "rollingImpulse": [
+              0,
+              0,
+              0
+            ],
+            "points": [
+              {
+                "anchorA": [
+                  0,
+                  0.4950000047683716,
+                  0
+                ],
+                "anchorB": [
+                  0,
+                  -0.4950000047683716,
+                  0
+                ],
+                "separation": -0.009999990463256836,
+                "normalImpulse": 0,
+                "totalNormalImpulse": 1.0471975803375244,
+                "normalVelocity": -2,
+                "baseSeparation": -0.009999990463256836,
+                "featureId": 0,
+                "triangleIndex": -1,
+                "persisted": false
+              }
+            ]
+          }
+        ],
+        "anchorEpoch": "UNRESOLVED_CACHED_NATIVE",
+        "worldPointStatus": "UNSUPPORTED_SNAPSHOT_EPOCH",
+        "prePoseA": [
+          0,
+          -0.5,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          -0.5,
+          0
+        ],
+        "prePoseB": [
+          0,
+          0.49000000953674316,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0.49000000953674316,
+          0
+        ],
+        "handle": {
+          "contactId": [
+            1,
+            0,
+            1
+          ]
+        }
+      }
+    ]
+  },
+  "destructionSnapshot": {
+    "worldId": 65536,
+    "stepIndex": 3,
+    "bodyMoves": [],
+    "contactBegins": [],
+    "contactEnds": [
+      {
+        "shapeA": {
+          "low": 1,
+          "high": 1
+        },
+        "shapeB": {
+          "low": 1,
+          "high": 2
+        },
+        "contactId": [
+          1,
+          0,
+          1
+        ],
+        "validFlags": 1
+      }
+    ],
+    "contactHits": [],
+    "sensorBegins": [],
+    "sensorEnds": [
+      {
+        "sensor": {
+          "low": 1,
+          "high": 3
+        },
+        "visitor": {
+          "low": 1,
+          "high": 4
+        },
+        "validFlags": 1
+      }
+    ],
+    "bodyPosesBefore": [
+      {
+        "body": {
+          "low": 1,
+          "high": 1
+        },
+        "pose": [
+          0,
+          -0.5,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          -0.5,
+          0
+        ]
+      },
+      {
+        "body": {
+          "low": 1,
+          "high": 3
+        },
+        "pose": [
+          4,
+          3,
+          0,
+          0,
+          0,
+          0,
+          1,
+          4,
+          3,
+          0
+        ]
+      }
+    ],
+    "bodyPosesAfter": [
+      {
+        "body": {
+          "low": 1,
+          "high": 1
+        },
+        "pose": [
+          0,
+          -0.5,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          -0.5,
+          0
+        ]
+      },
+      {
+        "body": {
+          "low": 1,
+          "high": 3
+        },
+        "pose": [
+          4,
+          3,
+          0,
+          0,
+          0,
+          0,
+          1,
+          4,
+          3,
+          0
+        ]
+      }
+    ],
+    "contactsOfOwnedBodies": []
+  },
+  "completedAt": "2026-10-22T05:53:08.951Z"
+}

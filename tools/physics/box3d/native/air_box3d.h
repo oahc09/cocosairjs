@@ -7,7 +7,7 @@ extern "C" {
 #endif
 
 enum { AIR_B3_ABI_VERSION = 1, AIR_B3_BODY_INPUT_FLOATS = 16, AIR_B3_BODY_SNAPSHOT_FLOATS = 29 };
-enum { AIR_B3_OK = 0, AIR_B3_INVALID = 1, AIR_B3_ARGUMENT = 2, AIR_B3_CREATION = 3 };
+enum { AIR_B3_OK = 0, AIR_B3_INVALID = 1, AIR_B3_ARGUMENT = 2, AIR_B3_CREATION = 3, AIR_B3_CAPACITY = 4, AIR_B3_ALLOCATION = 5 };
 
 const char* air_b3_core_sha(void);
 const char* air_b3_schema_sha(void);
@@ -30,6 +30,16 @@ int air_b3_shape_box(uint32_t lo, uint32_t hi, float hx, float hy, float hz, flo
 int air_b3_shape_valid(uint32_t lo, uint32_t hi);
 int air_b3_shape_destroy(uint32_t lo, uint32_t hi);
 int air_b3_ray_closest(uint32_t world, const float* input, float* out, uint32_t* shape);
+
+/* Additive ABI-1 copied snapshot functions; see the schema for word layouts. */
+int air_b3_body_transforms(uint32_t world, const uint32_t* ids, int count, float* out);
+int air_b3_world_event_size(uint32_t world, uint32_t* out);
+int air_b3_world_events(uint32_t world, uint32_t* out, int capacity);
+int air_b3_body_contact_size(uint32_t world, uint32_t lo, uint32_t hi, uint32_t* out);
+int air_b3_body_contacts(uint32_t world, uint32_t lo, uint32_t hi, uint32_t* out, int capacity);
+int air_b3_contact_valid(uint32_t world, const uint32_t* words);
+int air_b3_shape_events(uint32_t lo, uint32_t hi, int flags);
+int air_b3_shape_sphere_ex(uint32_t lo, uint32_t hi, float x, float y, float z, float radius, float density, int sensor, uint32_t* out);
 #ifdef __cplusplus
 }
 #endif

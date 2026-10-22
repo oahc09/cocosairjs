@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "patchChainSha256": "20dd450a4313774e1d934df9fa9ec3458df35d9ee314beffa9d846404cdb86bf",
+  "coreSha": "efca0c184d40fd6a82016983f1601c4d23965867",
+  "bindingBaseSha": "5d5a3af049cccd9948b2b55bac4342414af0ef64",
+  "abiVersion": 1,
+  "schemaSha256": "3aa11fe9d3d4b0269105bddbfebd8a1d09c9a3d162d88cb416d35d4304d1f30a",
+  "variant": "st-simd",
+  "patchLockSha256": "b420fd64d38dab58eb3722682d4b4af8709a78d8acdba6b2183bbe73d1bcc6fb",
+  "appliedPatches": [
+    {
+      "id": "sse2-loadv-float-alignment-v1",
+      "path": "tools/physics/box3d/patches/sse2-loadv-alignment.patch",
+      "sha256": "e5c4e5f2ae7f015cf62dfc2de5a36af73cc15d9b0ca0118fc0259c7d1f0b1403",
+      "files": [
+        {
+          "path": "src/simd_sse2.h",
+          "beforeSha256": "cc18b1f4f90fdceebb84b57f77e04c03009851a3a4c66439169318aa22a02719",
+          "afterSha256": "2295eae13388e656dc71396530ea928ecc575c8a86009182d76a9ef69333e8f6"
+        }
+      ]
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "box3d-st.mjs",
+      "sha256": "26d0fd0c068ab0be18ba9ba27efd1d6f7868fda0f9001e7a2aa4111a4dd1dcff",
+      "bytes": 67442
+    },
+    {
+      "path": "box3d-st.wasm",
+      "sha256": "28950a38bed00e46f479eaaceae20752117e7225bdf634b03903562e31a51b50",
+      "bytes": 3830779
+    },
+    {
+      "path": "facade.mjs",
+      "sha256": "8463d2f8f1d2eca546cb1a2cce6fb56466877b80e91693d6b92e0dbdf5befffe",
+      "bytes": 25099
+    },
+    {
+      "path": "facade.d.mts",
+      "sha256": "fb8cc74b3de03a279cc01e4c417d5f475502b0f16902feecd254ee435ca6f211",
+      "bytes": 6927
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+{"status":"PASS","checks":7,"output":"/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/wasm-snapshot-debug-20261022-g/wasm-snapshot-contract.raw.json"}

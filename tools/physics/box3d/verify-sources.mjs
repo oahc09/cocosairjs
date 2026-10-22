@@ -44,6 +44,8 @@ export function verifySources() {
     ) {
         throw new Error('Fixed-core source closure is incomplete');
     }
+    const facade = readFileSync(resolve(root, 'src/air/physics/box3d/binding/facade.mjs'), 'utf8');
+    if (!facade.includes(`const SCHEMA_SHA256 = '${sha256(schema)}';`)) throw new Error('Facade schema identity stale');
     const patch = readPatchPlan();
     return {
         patchChainSha256: patch.patchChainSha256,
