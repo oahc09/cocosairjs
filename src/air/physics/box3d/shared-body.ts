@@ -57,7 +57,11 @@ export interface Box3DBodyOwner {
         shape: Box3DId | null,
         value: Readonly<Box3DSurfaceMaterial> | null,
     ): void;
-    consumeMaterialValuesPreparation(adapter: object, authority: object, value: Readonly<Box3DSurfaceMaterial>): () => void;
+    consumeMaterialValuesPreparation(
+        adapter: object,
+        authority: object,
+        value: Readonly<Box3DSurfaceMaterial>,
+    ): () => void;
     unregisterShapeMaterial(shape: Box3DId): void;
     released(node: Node, body: Box3DSharedBody, logical: object): void;
 }
@@ -295,14 +299,56 @@ export class Box3DSharedBody {
         if (state.enabled && state.type === 2 && state.massPending)
             throw worldError('AIR_E_BOX3D_MASS_PENDING', 'step preflight', 'Dynamic body needs effective geometry.');
     }
+    /** Copy and validate the complete participant inventory without native mutation. */
+    static #writebackInventory(bodies: readonly Box3DSharedBody[], resetNodes: readonly Node[]) {
+        const first = bodies[0],
+            ownedNodes = new Set<Node>(),
+            resets = new Set<Node>();
+        for (const body of bodies) {
+            if (
+                body.#closed ||
+                body.#binding !== first.#binding ||
+                body.#world !== first.#world ||
+                ownedNodes.has(body.#node)
+            )
+                throw worldError('AIR_E_BOX3D_CONFIG', 'writeback', 'Body ownership changed or is duplicated.');
+            ownedNodes.add(body.#node);
+        }
+        for (const node of resetNodes) {
+            if (!ownedNodes.has(node) || resets.has(node))
+                throw worldError('AIR_E_BOX3D_CONFIG', 'writeback', 'Reset Node is foreign or duplicated.');
+            resets.add(node);
+        }
+        const states = bodies.map((body) => body.#binding.bodyState(body.#world, body.#body));
+        for (let i = 0; i < bodies.length; ++i)
+            if (resets.has(bodies[i].#node) && states[i].type !== 1 && states[i].type !== 2)
+                throw worldError(
+                    'AIR_E_BOX3D_CONFIG',
+                    'writeback',
+                    'Reset participant is no longer dynamic or kinematic.',
+                );
+        return { states, resets };
+    }
+    /** Reserve enable-driven writes and disabled reset writes before native validation/apply. */
+    static plannedWritebackNodes(
+        bodies: readonly Box3DSharedBody[],
+        resetNodes: readonly Node[] = [],
+    ): readonly Node[] {
+        const { states, resets } = this.#writebackInventory(bodies, resetNodes);
+        return Object.freeze(
+            bodies
+                .filter((body, index) => states[index].type !== 0 && (states[index].enabled || resets.has(body.#node)))
+                .map((body) => body.#node),
+        );
+    }
     /** Full copied origin batch, without exposing native body tokens to the world or Node adapter. */
-    static captureWriteback(bodies: readonly Box3DSharedBody[]): readonly Box3DWritebackBody[] {
+    static captureWriteback(
+        bodies: readonly Box3DSharedBody[],
+        resetNodes: readonly Node[] = [],
+    ): readonly Box3DWritebackBody[] {
+        const { states, resets } = this.#writebackInventory(bodies, resetNodes);
         if (!bodies.length) return Object.freeze([]);
         const first = bodies[0];
-        for (const body of bodies)
-            if (body.#closed || body.#binding !== first.#binding || body.#world !== first.#world)
-                throw worldError('AIR_E_BOX3D_CONFIG', 'writeback', 'Body ownership changed.');
-        const states = bodies.map((body) => body.#binding.bodyState(body.#world, body.#body));
         const transforms = first.#binding.bodyTransforms(
             first.#world,
             bodies.map((body) => body.#body),
@@ -324,7 +370,7 @@ export class Box3DSharedBody {
                 return Object.freeze({
                     scene: body.#scene,
                     origin: Object.freeze(Array.from(transforms.slice(index * 10, index * 10 + 7))),
-                    writable: states[index].enabled && states[index].type !== 0,
+                    writable: states[index].type !== 0 && (states[index].enabled || resets.has(body.#node)),
                     assertOwner: () => {
                         if (
                             body.#closed ||
@@ -663,15 +709,29 @@ export class Box3DSharedBody {
         if (this.#closed || !this.#references.has(reference))
             throw worldError('AIR_E_BOX3D_DISPOSED', 'prepare shape material', 'Unknown live adapter.');
         const previous = this.#shapes.get(reference);
-        const next = previous ? { token: previous.token, geometry: Object.freeze({ ...previous.geometry, material: value }) } : undefined;
+        const next = previous
+            ? { token: previous.token, geometry: Object.freeze({ ...previous.geometry, material: value }) }
+            : undefined;
         let committed = false;
-        return Object.freeze({ shape: previous?.token ?? null, commitCaches: () => {
-            assertCurrent();
-            if (committed || this.#closed || !this.#references.has(reference) || this.#shapes.get(reference) !== previous)
-                throw worldError('AIR_E_BOX3D_REENTRANT', 'commit shape material', 'Consumed or stale prepared cache.');
-            committed = true;
-            if (next) this.#shapes.set(reference, next);
-        } });
+        return Object.freeze({
+            shape: previous?.token ?? null,
+            commitCaches: () => {
+                assertCurrent();
+                if (
+                    committed ||
+                    this.#closed ||
+                    !this.#references.has(reference) ||
+                    this.#shapes.get(reference) !== previous
+                )
+                    throw worldError(
+                        'AIR_E_BOX3D_REENTRANT',
+                        'commit shape material',
+                        'Consumed or stale prepared cache.',
+                    );
+                committed = true;
+                if (next) this.#shapes.set(reference, next);
+            },
+        });
     }
     updateShapeMaterial(reference: object, value: Box3DSurfaceMaterial | null): void {
         this.assert('updateShapeMaterial');

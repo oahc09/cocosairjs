@@ -1,0 +1,83 @@
+{
+  "schema": "box3d-teleport-fixture-source-reconstruction-v1",
+  "scope": "Source-only reconstruction, not historical runtime evidence",
+  "historical_original_source_hashes": "UNAVAILABLE",
+  "historical_raw_and_receipts": "UNAVAILABLE; not reconstructed",
+  "new_actual_AIR_N4_runtime": "NOT_RUN",
+  "new_TypeScript_typecheck": "NOT_RUN",
+  "new_JS_JSON_checks": "PASS; see stage3-static-checks.json",
+  "files": [
+    {
+      "path": "sources/owner-teleport-real-wasm-capture.cjs",
+      "bytes": 1489,
+      "sha256": "240d46e42369c44d1dc91e68314f7666e33ba170e9bf94f304137dfc28d3e02d",
+      "original_sha256": null,
+      "original_comparison": "UNKNOWN",
+      "classification": "UNVERIFIED_NEW_RECONSTRUCTION"
+    },
+    {
+      "path": "sources/owner-teleport-real-wasm-environment.cjs",
+      "bytes": 1691,
+      "sha256": "1bf3160800604f8024470ba4c0eec7af2c93af85b4e64b44f8835e217209de93",
+      "original_sha256": null,
+      "original_comparison": "UNKNOWN",
+      "classification": "UNVERIFIED_NEW_RECONSTRUCTION"
+    },
+    {
+      "path": "sources/owner-teleport-real-wasm-inputs.cjs",
+      "bytes": 6954,
+      "sha256": "5e7fdad85e015df39955d53e9ffddf86952be5585f4c60623afaaf29f89bdf93",
+      "original_sha256": null,
+      "original_comparison": "UNKNOWN",
+      "classification": "UNVERIFIED_NEW_RECONSTRUCTION"
+    },
+    {
+      "path": "sources/owner-teleport-real-wasm-preload.mjs",
+      "bytes": 8063,
+      "sha256": "2d5e6fff8cfa78fdcc03ab89b26c7db5fde5ff4ea3a9dcfbfbfbeb93dd414202",
+      "original_sha256": null,
+      "original_comparison": "UNKNOWN",
+      "classification": "UNVERIFIED_NEW_RECONSTRUCTION"
+    },
+    {
+      "path": "sources/owner-teleport-real-wasm-resolver.cjs",
+      "bytes": 321,
+      "sha256": "4901fe41be4ca4af7a7e1ceab26a9a6b6f8d1527f20c4ad9c91d8d88927368ab",
+      "original_sha256": null,
+      "original_comparison": "UNKNOWN",
+      "classification": "UNVERIFIED_NEW_RECONSTRUCTION"
+    },
+    {
+      "path": "sources/owner-teleport-real-wasm.jest.cjs",
+      "bytes": 1602,
+      "sha256": "c9e854eb52f7179721afd017491dbed3beb185ba7616a0c99f64d53e71b52db1",
+      "original_sha256": null,
+      "original_comparison": "UNKNOWN",
+      "classification": "UNVERIFIED_NEW_RECONSTRUCTION"
+    },
+    {
+      "path": "sources/owner-teleport-real-wasm.mjs",
+      "bytes": 10881,
+      "sha256": "9f46f89adc721e026a4471dba5b937d509cafac267adc75454777abc65cf6e15",
+      "original_sha256": null,
+      "original_comparison": "UNKNOWN",
+      "classification": "UNVERIFIED_NEW_RECONSTRUCTION"
+    },
+    {
+      "path": "sources/owner-teleport-real-wasm.test.ts",
+      "bytes": 24454,
+      "sha256": "17ccede009c07bfef2675d02cd03fef582806a5a10752ee3f1d98bed1d75f878",
+      "original_sha256": null,
+      "original_comparison": "UNKNOWN",
+      "classification": "UNVERIFIED_NEW_RECONSTRUCTION"
+    },
+    {
+      "path": "sources/owner-teleport-real-wasm.tsconfig.json",
+      "bytes": 160,
+      "sha256": "70ee115e8ebf392a42d97f4bbd1382a3466c87e9fa9e8670bcd2e78d7fa469cc",
+      "original_sha256": null,
+      "original_comparison": "UNKNOWN",
+      "classification": "UNVERIFIED_NEW_RECONSTRUCTION"
+    }
+  ]
+}

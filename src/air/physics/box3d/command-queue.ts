@@ -90,7 +90,11 @@ export interface CommandCandidate {
 }
 export type CommandProducer = (context: Readonly<CommandContext>) => void;
 type Phase = 'ready' | 'collecting' | 'validating' | 'committing' | 'awaiting-step' | 'paused' | 'faulted' | 'closed';
-type Body = { target: 'none' | 'active' | 'protected' };
+type Body = {
+    target: 'none' | 'active' | 'protected';
+    /** Retained after settlement for idempotency; replaced on every new acquisition. */
+    targetOwner: object | null;
+};
 
 function fail(message: string): never {
     throw new Error(`Box3D command queue: ${message}`);
@@ -256,7 +260,7 @@ export class Box3DCommandQueue {
         object(identity);
         if (this.#knownBodies.has(identity)) this.#reject('body identity already registered or retired');
         this.#knownBodies.add(identity);
-        this.#bodies.set(identity, { target: 'none' });
+        this.#bodies.set(identity, { target: 'none', targetOwner: null });
     }
     /** Owner-only notification AFTER actual disable/destroy has safely settled native
      * ownership. Never call this merely to make a protected zero disappear.
@@ -268,18 +272,59 @@ export class Box3DCommandQueue {
         this.#pending = replacement;
         this.#bodies.delete(identity);
     }
-    acquireTarget(identity: object): void {
+    /** Returns an opaque queue-local acquisition identity, not evidence of native ownership. */
+    acquireTarget(identity: object): object {
         this.#admit('ready');
         const body = this.#body(identity);
         if (body.target !== 'none') this.#reject('target ownership already held or protected');
+        const owner = Object.freeze({});
+        body.targetOwner = owner;
         body.target = 'active';
+        return owner;
+    }
+    #withoutTargetMotion(identity: object): readonly CommandRecord[] {
+        return Object.freeze(
+            this.#pending.filter(
+                (record) =>
+                    record.body !== identity ||
+                    (record.command.kind !== 'target' && record.command.kind !== 'target-clear'),
+            ),
+        );
     }
     revokeTarget(identity: object): void {
         this.#admit('ready', 'paused');
         const body = this.#body(identity);
         if (body.target === 'none') this.#reject('no target ownership');
+        // Prepare before changing ownership. Teleports and ordinary clears/effects are
+        // independent user records, retained for the owner's actual-state revalidation.
+        const replacement = this.#withoutTargetMotion(identity);
         // No user sequence allocation: exhaustion must not block a cleanup obligation.
+        this.#pending = replacement;
         body.target = 'protected';
+    }
+    /** Owner-only notification AFTER independently established paired zero or actual
+     * target-owning lifecycle teardown. Cancellation, a JS disabled/type flag, unknown
+     * delivery or a requested zero is not proof. This queue performs no native work.
+     * A faulted world permits terminal teardown only, never a guessed recovery/replay.
+     * Keep the live body registered and every unrelated user command intact. The owner
+     * must retain its persistent guards through actual receipt/writeback/tick settlement;
+     * queue finishCommit alone is not permission to release those guards.
+     */
+    settleTargetAfterCleanup(identity: object, owner: object, outcome: 'paired-zero' | 'teardown'): boolean {
+        this.#admit('ready', 'paused', 'faulted');
+        const body = this.#body(identity);
+        if (body.targetOwner === null || body.targetOwner !== owner)
+            this.#reject('foreign or stale target ownership identity');
+        if (outcome !== 'paired-zero' && outcome !== 'teardown') this.#reject('invalid target settlement outcome');
+        if (this.#phase === 'faulted' && outcome !== 'teardown')
+            this.#reject('faulted target ownership requires actual teardown');
+        // finishCommit may already have consumed this exact protected zero. A later
+        // acquisition always replaces the token, so old notifications cannot clear it.
+        if (body.target === 'none') return false;
+        const replacement = this.#withoutTargetMotion(identity);
+        this.#pending = replacement;
+        body.target = 'none';
+        return true;
     }
     submit(identity: object, input: CommandInput): number {
         return this.withSubmissionAdmission(() => ({
@@ -332,12 +377,23 @@ export class Box3DCommandQueue {
         return record.sequence;
     }
     cancelPending(identity: object): number {
+        return this.withCancellationAdmission(() => identity);
+    }
+    /** Resolve the actual owner under the same queue latch as input copying. Publish
+     * only after the reader and all nested-admission checks have completed. This
+     * operation does not allocate a sequence or remove a protected cleanup duty.
+     */
+    withCancellationAdmission(read: () => object): number {
         this.#admit('ready');
-        this.#body(identity);
-        const replacement = Object.freeze(this.#pending.filter((record) => record.body !== identity));
-        const count = this.#pending.length - replacement.length;
-        this.#pending = replacement;
-        return count;
+        const prepared = this.#copy(() => {
+            if (typeof read !== 'function') this.#reject('cancellation reader must be a function');
+            const identity = read();
+            this.#body(identity);
+            const replacement = Object.freeze(this.#pending.filter((record) => record.body !== identity));
+            return { replacement, count: this.#pending.length - replacement.length };
+        });
+        this.#pending = prepared.replacement;
+        return prepared.count;
     }
 
     #reduce(records: readonly CommandRecord[]): readonly CommandRecord[] {

@@ -1,0 +1,42 @@
+{
+  "status": "PASS_ACTUAL_LIBRARY_ROUNDTRIP_EXACT_BYTES",
+  "verifiedAtUtc": "2026-10-22T23:02:08.440981+00:00",
+  "libraryFileId": "libfile_f198997e840081918421c287d5c13b81",
+  "fileId": "file_000000009f30822f98746c493042370b",
+  "originalArchive": "/workspace/scratch/62d43a81bbde/box3d-recovery-after-2249-20261022/recovered-target-queue/box3d-target-queue-exact-source-recovery-20261022-2259.zip",
+  "downloadedArchive": "/workspace/scratch/62d43a81bbde/box3d-recovery-after-2249-20261022/recovered-target-queue/roundtrip/box3d-target-queue-exact-source-recovery-20261022-2259.zip",
+  "archiveBytes": 17644,
+  "archiveSha256": "09f4ab4f63eb2d9a5140b68374a0e07cdf7b3394f0c0330fa5e845d4848059fd",
+  "separateLocalPathsAndInodes": true,
+  "archiveByteForByteEqual": true,
+  "allMembersEqualToRecoveredFiles": true,
+  "libraryMetadataVerifiedOnBothCopies": true,
+  "members": [
+    {
+      "path": "src/air/physics/box3d/command-queue.ts",
+      "bytes": 26337,
+      "sha256": "6471dba23e1335b5e206dd0fb92acbf083b7b0bd9952187feb6784daa2dc0a87",
+      "matchesRecoveredLocalAndDownloadedArchive": true
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-control.mjs",
+      "bytes": 49792,
+      "sha256": "9d518ecb435965fbaf788056c27f9083d6c88e561a28933e9555cc5b11adc54e",
+      "matchesRecoveredLocalAndDownloadedArchive": true
+    },
+    {
+      "path": "recovery-source-receipt.json",
+      "bytes": 1261,
+      "sha256": "7689aa1883cf28e4d82db26e1f571d8877918123236937383f9d55f62d8373ff",
+      "matchesRecoveredLocalAndDownloadedArchive": true
+    },
+    {
+      "path": "RECOVERY-README.txt",
+      "bytes": 460,
+      "sha256": "30d171a77f7be473a7e2c6eaadda1be05a80b386c9965d38d4817468c5a7c5d3",
+      "matchesRecoveredLocalAndDownloadedArchive": true
+    }
+  ],
+  "testExecution": "NOT_RUN_IN_RECOVERY",
+  "historicalRawEvidence": "LOST; NOT RECREATED"
+}

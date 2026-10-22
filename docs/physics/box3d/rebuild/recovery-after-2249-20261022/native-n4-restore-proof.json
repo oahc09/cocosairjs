@@ -1,0 +1,12 @@
+{
+  "status": "PASS_DOWNLOADED_ARCHIVE_ALL_MEMBERS_AND_RESTORED_N4_ARTIFACTS",
+  "libraryFileId": "libfile_8557c7cbf30481919670a51fd1509823",
+  "archiveBytes": 6004598,
+  "archiveSha256": "80a1f8c706e9c538bc31639e21bf75a6629831453b337011fdbab9ad4c775824",
+  "archiveDataMembersRead": 610,
+  "buildInputCount": 50,
+  "currentInputMismatches": [],
+  "buildReceiptSha256": "3680689b48ec0f05c092bfc55e02f354e78f8abe35b7b52dc7cb0d3832a94349",
+  "manifestSha256": "9ab78492b56e9d64d91782cf4e151ee693ac746d087307b3114254210296f05f",
+  "runtimeNotRun": true
+}

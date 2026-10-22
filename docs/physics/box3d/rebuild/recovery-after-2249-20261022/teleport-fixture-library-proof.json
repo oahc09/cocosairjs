@@ -1,0 +1,12 @@
+{
+  "library_file_id": "libfile_60c1551163848191b8f6f52d07babd7a",
+  "file_id": "file_0000000001d081f58e9d1731d5435d89",
+  "bytes": 22746,
+  "sha256": "27010ec32a56271babeb4d5498008c7962c92e270a4c0bce68202f9d6b3320e6",
+  "actual_download_sha256_verified": true,
+  "zip_crc_verified": true,
+  "all_nine_source_sha256_verified": true,
+  "all_nine_original_comparisons": "UNKNOWN; new reconstruction only",
+  "new_actual_AIR_N4_runtime": "NOT_RUN",
+  "new_TypeScript_typecheck": "NOT_RUN"
+}

@@ -400,13 +400,14 @@ test('clear-forces alone cannot suppress an active-owner idle zero', () => {
     assert.deepEqual(kinds(c), ['clear-forces', 'target-clear']);
     assert.equal(c.operations[1].source, 'idle');
 });
-test('protected zero survives cancellation, dominates target and uses no user sequence', () => {
+test('revocation removes target records while protected zero survives cancellation and uses no sequence', () => {
     const { q, a } = setup({ counterLimit: 2 });
     q.acquireTarget(a);
     q.submit(a, { kind: 'target', pose: p() });
     q.submit(a, { kind: 'target', pose: p(2) });
     q.revokeTarget(a);
-    assert.equal(q.cancelPending(a), 2);
+    assert.equal(q.diagnostics().pending.length, 0);
+    assert.equal(q.cancelPending(a), 0);
     assert.equal(q.diagnostics().sequence, 2);
     assert.equal(q.diagnostics().protectedZeros, 1);
     rejects(() => q.submit(a, { kind: 'teleport', pose: p() }));
@@ -866,6 +867,450 @@ test('admission is queue-local, not a global bypass or a rollback of arbitrary J
         1,
     );
 });
+// Owner outcome labels below are synthetic metadata inputs, never evidence of native zero or teardown.
+test('target acquisitions issue distinct frozen queue-local logical owner identities', () => {
+    const { q, a, b } = setup();
+    const first = q.acquireTarget(a);
+    const second = q.acquireTarget(b);
+    assert.equal(typeof first, 'object');
+    assert.notEqual(first, null);
+    assert(Object.isFrozen(first));
+    assert.notEqual(first, a);
+    assert.notEqual(first, second);
+    assert.equal(q.settleTargetAfterCleanup(a, first, 'paired-zero'), true);
+    const next = q.acquireTarget(a);
+    assert.notEqual(next, first);
+});
+test('revoke removes only its original target-mode records and preserves ordered ordinary commands', () => {
+    const { q, a, b } = setup();
+    q.acquireTarget(a);
+    q.acquireTarget(b);
+    q.submit(a, { kind: 'target', pose: p(1) });
+    q.submit(b, { kind: 'target', pose: p(2) });
+    q.submit(a, { kind: 'clear-forces' });
+    q.submit(a, { kind: 'target-clear' });
+    q.submit(a, { kind: 'teleport', pose: p(3), preserveVelocity: true });
+    q.submit(a, { kind: 'clear-velocity' });
+    q.submit(a, { kind: 'clear-state' });
+    q.submit(a, { kind: 'target', pose: p(4) });
+    const before = q.diagnostics();
+    const retained = before.pending.filter(
+        (record) => record.body !== a || !['target', 'target-clear'].includes(record.command.kind),
+    );
+    q.revokeTarget(a);
+    assert.deepEqual(q.diagnostics().pending, retained);
+    assert.equal(before.pending.length, 8);
+    assert.equal(q.diagnostics().sequence, before.sequence);
+    assert.equal(q.diagnostics().protectedZeros, 1);
+    const candidate = collect(q);
+    assert.deepEqual(candidate.original, retained);
+    assert.deepEqual(kinds(candidate), [
+        'target',
+        'clear-forces',
+        'teleport',
+        'clear-velocity',
+        'clear-state',
+        'target-clear',
+    ]);
+    assert.equal(candidate.operations.at(-1).source, 'protected');
+    q.rejectCandidate(candidate);
+    q.revokeTarget(a);
+    assert.deepEqual(q.diagnostics().pending, retained);
+    assert.equal(q.cancelPending(a), 4);
+    assert.equal(q.diagnostics().protectedZeros, 1);
+    assert.equal(q.diagnostics().pending[0].body, b);
+});
+test('settlement preserves every earlier same-body ordinary effect for independent revalidation', () => {
+    const { q, a } = setup();
+    for (const kind of ['force', 'torque', 'impulse', 'angular-impulse']) q.submit(a, effect(kind));
+    const effects = q.diagnostics().pending;
+    const owner = q.acquireTarget(a);
+    q.submit(a, { kind: 'target', pose: p() });
+    q.revokeTarget(a);
+    assert.deepEqual(q.diagnostics().pending, effects);
+    rejects(() => collect(q));
+    assert.deepEqual(q.diagnostics().pending, effects);
+    assert.equal(q.diagnostics().protectedZeros, 1);
+    assert.equal(q.settleTargetAfterCleanup(a, owner, 'paired-zero'), true);
+    const candidate = collect(q);
+    assert.deepEqual(candidate.original, effects);
+    assert.deepEqual(kinds(candidate), ['force', 'torque', 'impulse', 'angular-impulse']);
+});
+test('paused revoke creates a protected obligation without resuming or retiring the body', () => {
+    const { q, a } = setup();
+    const owner = q.acquireTarget(a);
+    q.pause();
+    q.revokeTarget(a);
+    q.revokeTarget(a);
+    assert.equal(q.diagnostics().phase, 'paused');
+    assert.equal(q.diagnostics().protectedZeros, 1);
+    assert.equal(q.diagnostics().bodies, 2);
+    assert.equal(q.settleTargetAfterCleanup(a, owner, 'paired-zero'), true);
+    assert.equal(q.diagnostics().phase, 'paused');
+});
+for (const protectedOwner of [false, true])
+    for (const outcome of ['paired-zero', 'teardown'])
+        test(`known mock ${outcome} settles ${protectedOwner ? 'protected' : 'active'} target without retiring live body`, () => {
+            const { q, a, b } = setup();
+            const owner = q.acquireTarget(a);
+            q.submit(a, { kind: 'target', pose: p() });
+            q.submit(b, effect());
+            q.submit(a, { kind: 'target-clear' });
+            q.submit(a, { kind: 'teleport', pose: p(3), preserveVelocity: true });
+            q.submit(a, { kind: 'clear-forces' });
+            q.submit(a, { kind: 'clear-velocity' });
+            q.submit(a, { kind: 'clear-state' });
+            if (protectedOwner) q.revokeTarget(a);
+            const before = q.diagnostics();
+            const retained = before.pending.filter(
+                (record) => record.body !== a || !['target', 'target-clear'].includes(record.command.kind),
+            );
+            assert.equal(q.settleTargetAfterCleanup(a, owner, outcome), true);
+            assert.deepEqual(q.diagnostics().pending, retained);
+            assert.equal(q.diagnostics().bodies, before.bodies);
+            assert.equal(q.diagnostics().sequence, before.sequence);
+            assert.equal(q.diagnostics().protectedZeros, 0);
+            const settled = q.diagnostics();
+            assert.equal(q.settleTargetAfterCleanup(a, owner, outcome), false);
+            assert.equal(q.diagnostics().pending, settled.pending);
+            assert.equal(q.submit(a, effect()), before.sequence + 1);
+            const candidate = collect(q);
+            assert.equal(
+                candidate.operations.some((record) => record.source === 'idle' || record.source === 'protected'),
+                false,
+            );
+            assert.deepEqual(kinds(candidate), [
+                'impulse',
+                'teleport',
+                'clear-forces',
+                'clear-velocity',
+                'clear-state',
+                'impulse',
+            ]);
+            q.rejectCandidate(candidate);
+            const next = q.acquireTarget(a);
+            const nextPending = q.diagnostics().pending;
+            rejects(() => q.settleTargetAfterCleanup(a, owner, outcome));
+            assert.equal(q.diagnostics().pending, nextPending);
+            rejects(() => q.acquireTarget(a));
+            assert.equal(q.settleTargetAfterCleanup(a, next, outcome), true);
+        });
+for (const protectedOwner of [false, true])
+    for (const outcome of ['paired-zero', 'teardown'])
+        test(`paused mock ${outcome} settles ${protectedOwner ? 'protected' : 'active'} ownership but does not resume`, () => {
+            const { q, a } = setup();
+            const owner = q.acquireTarget(a);
+            q.submit(a, { kind: 'target', pose: p() });
+            if (protectedOwner) q.revokeTarget(a);
+            q.pause();
+            assert.equal(q.settleTargetAfterCleanup(a, owner, outcome), true);
+            assert.equal(q.diagnostics().phase, 'paused');
+            assert.equal(q.diagnostics().bodies, 2);
+            rejects(() => q.submit(a, effect()));
+            q.resume();
+            assert.equal(collect(q).operations.length, 0);
+        });
+test('wrong-body, wrong-queue, forged, absent and stale owner settlement is nonmutating', () => {
+    const { q, a, b } = setup();
+    const owner = q.acquireTarget(a);
+    const otherOwner = q.acquireTarget(b);
+    const other = setup();
+    const foreignOwner = other.q.acquireTarget(other.a);
+    q.submit(a, { kind: 'target', pose: p() });
+    const before = q.diagnostics();
+    for (const invalid of [otherOwner, foreignOwner, {}, { ...owner }, undefined, null, a]) {
+        rejects(() => q.settleTargetAfterCleanup(a, invalid, 'paired-zero'));
+        sameAccepted(q, before);
+    }
+    rejects(() => q.settleTargetAfterCleanup({}, owner, 'teardown'));
+    sameAccepted(q, before);
+    q.releaseBodyAfterTeardown(a);
+    rejects(() => q.settleTargetAfterCleanup(a, owner, 'teardown'));
+    rejects(() => q.registerBody(a));
+    q.registerBody({});
+});
+for (const outcome of ['unknown', 'not-mutated', 'committed', undefined, null, true, {}])
+    test(`unsupported settlement outcome ${String(outcome)} retains protected ownership`, () => {
+        const { q, a } = setup();
+        const owner = q.acquireTarget(a);
+        q.revokeTarget(a);
+        const before = q.diagnostics();
+        rejects(() => q.settleTargetAfterCleanup(a, owner, outcome));
+        sameAccepted(q, before);
+        assert.equal(q.diagnostics().protectedZeros, 1);
+        rejects(() => q.acquireTarget(a));
+    });
+test('known mock protected commit settles once; late old token never clears a new acquisition', () => {
+    const { q, a } = setup();
+    const owner = q.acquireTarget(a);
+    q.revokeTarget(a);
+    const candidate = collect(q);
+    mockCommit(q, candidate, false);
+    assert.equal(q.diagnostics().protectedZeros, 0);
+    rejects(() => q.settleTargetAfterCleanup(a, owner, 'paired-zero'));
+    q.completeTick(candidate);
+    assert.equal(q.settleTargetAfterCleanup(a, owner, 'paired-zero'), false);
+    const next = q.acquireTarget(a);
+    q.submit(a, { kind: 'target', pose: p(8) });
+    const before = q.diagnostics();
+    rejects(() => q.settleTargetAfterCleanup(a, owner, 'teardown'));
+    sameAccepted(q, before);
+    assert.equal(q.settleTargetAfterCleanup(a, next, 'paired-zero'), true);
+});
+test('mock unknown delivery keeps protected ownership and quarantined evidence until actual-teardown notification', () => {
+    const { q, a } = setup();
+    const owner = q.acquireTarget(a);
+    q.revokeTarget(a);
+    const candidate = collect(q);
+    q.beginCommit(candidate);
+    q.finishCommit(candidate, 'unknown');
+    const before = q.diagnostics();
+    for (const outcome of ['unknown', 'paired-zero']) {
+        rejects(() => q.settleTargetAfterCleanup(a, owner, outcome));
+        sameAccepted(q, before);
+        assert.equal(q.diagnostics().protectedZeros, 1);
+        assert.equal(q.diagnostics().quarantined, candidate);
+    }
+    assert.equal(q.settleTargetAfterCleanup(a, owner, 'teardown'), true);
+    assert.equal(q.settleTargetAfterCleanup(a, owner, 'teardown'), false);
+    assert.equal(q.diagnostics().phase, 'faulted');
+    assert.equal(q.diagnostics().bodies, 2);
+    assert.equal(q.diagnostics().quarantined, candidate);
+    assert.equal(q.diagnostics().completedTicks, 0);
+    rejects(() => q.acquireTarget(a));
+    rejects(() => q.submit(a, effect()));
+});
+for (const nativeCompleted of [false, true])
+    test(`mock committed active-target readback/step fault completed=${nativeCompleted} permits only teardown settlement`, () => {
+        const { q, a } = setup();
+        const owner = q.acquireTarget(a);
+        const candidate = collect(q);
+        mockCommit(q, candidate, false);
+        q.faultAfterCommit(candidate, nativeCompleted);
+        rejects(() => q.settleTargetAfterCleanup(a, owner, 'paired-zero'));
+        assert.equal(q.settleTargetAfterCleanup(a, owner, 'teardown'), true);
+        assert.equal(q.diagnostics().completedTicks, Number(nativeCompleted));
+        assert.equal(q.diagnostics().phase, 'faulted');
+    });
+for (const phase of ['collecting', 'validating', 'committing', 'awaiting-step', 'closed'])
+    test(`settlement refuses during ${phase} and cannot skip the candidate lifecycle`, () => {
+        const { q, a } = setup();
+        const owner = q.acquireTarget(a);
+        q.submit(a, { kind: 'target', pose: p() });
+        const attempt = () => q.settleTargetAfterCleanup(a, owner, 'paired-zero');
+        if (phase === 'collecting') {
+            const pending = q.diagnostics().pending;
+            rejects(() => collect(q, [() => void capture(attempt)]));
+            assert.equal(q.diagnostics().pending, pending);
+            assert.equal(q.diagnostics().phase, 'ready');
+            return;
+        }
+        if (phase === 'closed') {
+            q.close();
+            rejects(attempt);
+            return;
+        }
+        const candidate = collect(q);
+        if (phase === 'committing' || phase === 'awaiting-step') q.beginCommit(candidate);
+        if (phase === 'awaiting-step') q.finishCommit(candidate, 'committed');
+        const before = q.diagnostics();
+        rejects(attempt);
+        sameAccepted(q, before);
+    });
+test('prepared pause and caught nested input settlement refuse before changing ownership', () => {
+    const { q, a } = setup();
+    const owner = q.acquireTarget(a);
+    q.submit(a, { kind: 'target', pose: p() });
+    const before = q.diagnostics();
+    const pause = q.preparePauseTransition(true);
+    rejects(() => q.settleTargetAfterCleanup(a, owner, 'teardown'));
+    assert.equal(q.diagnostics().pending, before.pending);
+    pause.dispose();
+    let first;
+    const result = capture(() =>
+        q.submit(a, {
+            kind: 'target',
+            get pose() {
+                first = capture(() => q.settleTargetAfterCleanup(a, owner, 'paired-zero')).error;
+                return p();
+            },
+        }),
+    );
+    assert.equal(result.threw, true);
+    assert.equal(result.error, first);
+    sameAccepted(q, before);
+    assert.equal(q.settleTargetAfterCleanup(a, owner, 'paired-zero'), true);
+});
+for (const limit of ['sequence', 'attempt', 'tick'])
+    test(`${limit} exhaustion cannot prevent target revocation or settlement`, () => {
+        const { q, a } = setup({ counterLimit: 1 });
+        const owner = q.acquireTarget(a);
+        q.submit(a, { kind: 'target', pose: p() });
+        if (limit !== 'sequence') {
+            const candidate = collect(q);
+            if (limit === 'tick') mockCommit(q, candidate);
+            else q.rejectCandidate(candidate);
+        }
+        q.revokeTarget(a);
+        assert.equal(q.diagnostics().pending.length, 0);
+        assert.equal(q.diagnostics().protectedZeros, 1);
+        assert.equal(q.settleTargetAfterCleanup(a, owner, 'paired-zero'), true);
+        assert.equal(q.diagnostics().sequence, 1);
+        assert.equal(q.diagnostics().bodies, 2);
+    });
+for (const operation of ['revoke', 'settle'])
+    test(`injected replacement allocation failure during ${operation} retains accepted records and active owner`, () => {
+        const { q, a } = setup();
+        const owner = q.acquireTarget(a);
+        q.submit(a, { kind: 'target', pose: p() });
+        const before = q.diagnostics();
+        const failure = Error('explicit replacement allocation injection');
+        const freeze = Object.freeze;
+        let result;
+        try {
+            Object.freeze = (value) => {
+                if (Array.isArray(value)) throw failure;
+                return freeze(value);
+            };
+            result = capture(() =>
+                operation === 'revoke' ? q.revokeTarget(a) : q.settleTargetAfterCleanup(a, owner, 'paired-zero'),
+            );
+        } finally {
+            Object.freeze = freeze;
+        }
+        assert.equal(result.threw, true);
+        assert.equal(result.error, failure);
+        sameAccepted(q, before);
+        assert.equal(q.diagnostics().protectedZeros, 0);
+        rejects(() => q.acquireTarget(a));
+        assert.equal(q.settleTargetAfterCleanup(a, owner, 'paired-zero'), true);
+    });
+
+// Freshly reconstructed controls after the 22:49 transition. No historical raw is imported.
+test('cancellation admission resolves once and publishes only its accepted identity', () => {
+    const { q, a, b } = setup();
+    q.submit(a, effect());
+    q.submit(b, effect());
+    let reads = 0;
+    const sequence = q.diagnostics().sequence;
+    assert.equal(
+        q.withCancellationAdmission(() => {
+            reads++;
+            return a;
+        }),
+        1,
+    );
+    assert.equal(reads, 1);
+    assert.equal(q.diagnostics().sequence, sequence);
+    assert.equal(q.diagnostics().pending.length, 1);
+    assert.equal(q.diagnostics().pending[0].body, b);
+});
+for (const failure of [undefined, null, 0, false])
+    test(`cancellation preserves exact thrown ${String(failure)} and pending identity`, () => {
+        const { q, a } = setup();
+        q.submit(a, effect());
+        const before = q.diagnostics();
+        const observed = capture(() =>
+            q.withCancellationAdmission(() => {
+                throw failure;
+            }),
+        );
+        assert.equal(observed.threw, true);
+        assert.equal(observed.error, failure);
+        sameAccepted(q, before);
+    });
+for (const nested of ['cancel', 'submit'])
+    test(`caught nested ${nested} in cancellation reader poisons outer and preserves all pending`, () => {
+        const { q, a } = setup();
+        q.submit(a, effect());
+        const before = q.diagnostics();
+        rejects(() =>
+            q.withCancellationAdmission(() => {
+                try {
+                    if (nested === 'cancel') q.cancelPending(a);
+                    else q.submit(a, effect());
+                } catch {}
+                return a;
+            }),
+        );
+        sameAccepted(q, before);
+    });
+test('caught cancellation from original pose getter rejects outer submission without consuming a sequence', () => {
+    const { q, a } = setup();
+    q.submit(a, effect());
+    const before = q.diagnostics();
+    const pose = p();
+    Object.defineProperty(pose.position, 'x', {
+        get() {
+            try {
+                q.withCancellationAdmission(() => a);
+            } catch {}
+            return 3;
+        },
+    });
+    rejects(() => q.submit(a, { kind: 'teleport', pose }));
+    sameAccepted(q, before);
+});
+test('caught cancellation during producer collection poisons candidate without visiting owner reader', () => {
+    const { q, a } = setup();
+    q.submit(a, effect());
+    const before = q.diagnostics();
+    let reads = 0;
+    rejects(() =>
+        collect(q, [
+            () => {
+                try {
+                    q.withCancellationAdmission(() => {
+                        reads++;
+                        return a;
+                    });
+                } catch {}
+            },
+        ]),
+    );
+    assert.equal(reads, 0);
+    sameAccepted(q, before);
+    assert.equal(q.diagnostics().phase, 'ready');
+});
+test('unknown body and nonfunction cancellation retain immutable pending records', () => {
+    const { q, a } = setup();
+    q.submit(a, effect());
+    const before = q.diagnostics();
+    rejects(() => q.withCancellationAdmission(() => ({})));
+    sameAccepted(q, before);
+    rejects(() => q.withCancellationAdmission(undefined));
+    sameAccepted(q, before);
+});
+test('cancellation at exhausted sequence counter allocates no counter and retains protected zero', () => {
+    const { q, a } = setup({ counterLimit: 1 });
+    const token = q.acquireTarget(a);
+    q.submit(a, { kind: 'target', pose: p() });
+    q.revokeTarget(a);
+    assert.equal(
+        q.withCancellationAdmission(() => a),
+        0,
+    );
+    assert.equal(q.diagnostics().sequence, 1);
+    assert.equal(q.diagnostics().protectedZeros, 1);
+    assert.equal(q.settleTargetAfterCleanup(a, token, 'paired-zero'), true);
+});
+test('cancellation does not invoke resolver while a prepared pause reserves admission', () => {
+    const { q, a } = setup();
+    q.submit(a, effect());
+    const before = q.diagnostics();
+    const pause = q.preparePauseTransition(true);
+    let reads = 0;
+    rejects(() =>
+        q.withCancellationAdmission(() => {
+            reads++;
+            return a;
+        }),
+    );
+    assert.equal(reads, 0);
+    sameAccepted(q, before);
+    pause.dispose();
+});
+
 const checks = [
     [
         'tsc',

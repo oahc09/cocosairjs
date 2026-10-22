@@ -1,0 +1,16 @@
+{
+  "status": "PASS_REMOTE_SOURCE_CHECKPOINT_ONLY_NOT_TEST_QUALIFICATION",
+  "repository": "oahc09/cocosairjs",
+  "private": true,
+  "branch": "feat/box3d-rebuild-20261022",
+  "remoteParent": "be929814ae2d8b9c3d514ccb9340097b1b99a985",
+  "remoteCommit": "1b014df096adefbbc761d7df3d3cc32c78bd59d5",
+  "remoteTree": "18f6560119affe97faba3ed3899e51037497a2d1",
+  "localCommit": "7b35a6e4ae0b0b45128a7ac7fd4c7ba6ad2512f6",
+  "localTree": "277311d4ae8c7ff4ac33a4921e9f0b54df66c8cd",
+  "expectedRefNonforce": true,
+  "changedPaths": 13,
+  "verifiedDirectories": 12,
+  "allReadDirectoryEntries": 1207,
+  "scope": "Recovered neutral source and explicit raw-loss boundary; all fresh tests NOT_RUN"
+}

@@ -58,7 +58,8 @@ afterEach(() => {
 });
 
 test('capacity check is pure and repeatable at the real MAX_SAFE_INTEGER boundary', () => {
-    const node = new Node('capacity'), lease = guard(node);
+    const node = new Node('capacity'),
+        lease = guard(node);
     const before = state(node);
     for (let i = 0; i < 4; i++) lease.assertWriteCapacity(maximum);
     const reserved = lease.reserveWrites(maximum);
@@ -73,7 +74,8 @@ test('capacity check is pure and repeatable at the real MAX_SAFE_INTEGER boundar
 });
 
 test('two exact planned setters refuse before expected getters, Node writes or synthetic native apply', () => {
-    const node = new Node('pre-native'), lease = guard(node);
+    const node = new Node('pre-native'),
+        lease = guard(node);
     lease.reserveWrites(maximum - 1).dispose();
     const calls = { expected: 0, node: 0, nativeApply: 0, nativeStep: 0 };
     const before = state(node);
@@ -114,8 +116,11 @@ test('object count is refused without valueOf or toString invocation', () => {
 });
 
 test('zero reservation is legal, cannot write, and does not allocate capacity', () => {
-    const node = new Node('zero'), lease = guard(node), zero = lease.reserveWrites(0);
-    const expected = jest.fn(), perform = jest.fn();
+    const node = new Node('zero'),
+        lease = guard(node),
+        zero = lease.reserveWrites(0);
+    const expected = jest.fn(),
+        perform = jest.fn();
     expect(() => zero.write(node, 'setWorldPosition', getterArray(expected), perform)).toThrow(/reservation exhausted/);
     expect(expected).not.toHaveBeenCalled();
     expect(perform).not.toHaveBeenCalled();
@@ -125,13 +130,17 @@ test('zero reservation is legal, cannot write, and does not allocate capacity', 
 });
 
 test('unused disposed reservation never refunds sequence and never releases Node ownership', () => {
-    const node = new Node('burned range'), lease = guard(node);
+    const node = new Node('burned range'),
+        lease = guard(node);
     const burned = lease.reserveWrites(maximum - 1);
     burned.dispose();
     burned.dispose();
     expect(() => node.setWorldPosition(7, 8, 9)).toThrow(/motion is owned/);
-    const expected = jest.fn(), perform = jest.fn();
-    expect(() => burned.write(node, 'setWorldPosition', getterArray(expected), perform)).toThrow(/disposed write reservation/);
+    const expected = jest.fn(),
+        perform = jest.fn();
+    expect(() => burned.write(node, 'setWorldPosition', getterArray(expected), perform)).toThrow(
+        /disposed write reservation/,
+    );
     expect(expected).not.toHaveBeenCalled();
     expect(perform).not.toHaveBeenCalled();
     positionWrite(lease.reserveWrites(1), node);
@@ -139,7 +148,8 @@ test('unused disposed reservation never refunds sequence and never releases Node
 });
 
 test('reserved ranges survive intervening direct writes without over-allocation', () => {
-    const node = new Node('disjoint ranges'), lease = guard(node);
+    const node = new Node('disjoint ranges'),
+        lease = guard(node);
     const reserved = lease.reserveWrites(maximum - 1);
     positionWrite(lease, node);
     expect(() => positionWrite(lease, node)).toThrow(/sequence exhausted/);
@@ -149,7 +159,8 @@ test('reserved ranges survive intervening direct writes without over-allocation'
 
 for (const mode of ['direct exhausted', 'reservation exhausted', 'reservation disposed', 'lease disposed'] as const) {
     test(`${mode} rejects before expected accessors and perform callback`, () => {
-        const node = new Node(mode), lease = guard(node);
+        const node = new Node(mode),
+            lease = guard(node);
         let writer: NodeTransformWriteReservation = lease;
         if (mode === 'direct exhausted') lease.reserveWrites(maximum).dispose();
         if (mode === 'reservation exhausted') writer = lease.reserveWrites(0);
@@ -161,7 +172,9 @@ for (const mode of ['direct exhausted', 'reservation exhausted', 'reservation di
             writer = lease.reserveWrites(1);
             lease.dispose();
         }
-        const before = state(node), expected = jest.fn(), perform = jest.fn();
+        const before = state(node),
+            expected = jest.fn(),
+            perform = jest.fn();
         expect(() => writer.write(node, 'setWorldPosition', getterArray(expected), perform)).toThrow();
         expect(expected).not.toHaveBeenCalled();
         expect(perform).not.toHaveBeenCalled();
@@ -170,8 +183,10 @@ for (const mode of ['direct exhausted', 'reservation exhausted', 'reservation di
 }
 
 test('lease disposal invalidates every outstanding reservation and check/reserve/direct write', () => {
-    const node = new Node('dispose all'), lease = guard(node);
-    const a = lease.reserveWrites(1), b = lease.reserveWrites(2);
+    const node = new Node('dispose all'),
+        lease = guard(node);
+    const a = lease.reserveWrites(1),
+        b = lease.reserveWrites(2);
     lease.dispose();
     lease.dispose();
     for (const writer of [lease, a, b]) expect(() => positionWrite(writer, node)).toThrow(/disposed ownership/);
@@ -184,13 +199,25 @@ test('lease disposal invalidates every outstanding reservation and check/reserve
 for (const primary of [undefined, null, 0, false, '', new Error('primary identity')]) {
     for (const phase of ['expected getter', 'perform', 'consumed listener'] as const) {
         test(`falsy/identity primary ${String(primary)} survives ${phase}; reservation cannot retry`, () => {
-            const node = new Node('primary'), lease = guard(node), reservation = lease.reserveWrites(1);
-            const expected = phase === 'expected getter' ? getterArray(() => { throw primary; }) : position;
-            if (phase === 'consumed listener') node.on(NodeEventType.TRANSFORM_CHANGED, () => { throw primary; });
-            const result = caught(() => reservation.write(node, 'setWorldPosition', expected, () => {
-                if (phase === 'perform') throw primary;
-                node.setWorldPosition(7, 8, 9);
-            }));
+            const node = new Node('primary'),
+                lease = guard(node),
+                reservation = lease.reserveWrites(1);
+            const expected =
+                phase === 'expected getter'
+                    ? getterArray(() => {
+                          throw primary;
+                      })
+                    : position;
+            if (phase === 'consumed listener')
+                node.on(NodeEventType.TRANSFORM_CHANGED, () => {
+                    throw primary;
+                });
+            const result = caught(() =>
+                reservation.write(node, 'setWorldPosition', expected, () => {
+                    if (phase === 'perform') throw primary;
+                    node.setWorldPosition(7, 8, 9);
+                }),
+            );
             expect(result.threw).toBe(true);
             expect(result.value).toBe(primary);
             expect(() => positionWrite(reservation, node)).toThrow(/reservation exhausted/);
@@ -203,11 +230,24 @@ for (const primary of [undefined, null, 0, false, '', new Error('primary identit
 }
 
 test('failed direct expected read consumes its final sequence before getter and preserves primary', () => {
-    const node = new Node('direct failure'), lease = guard(node);
+    const node = new Node('direct failure'),
+        lease = guard(node);
     lease.reserveWrites(maximum - 1).dispose();
     const perform = jest.fn();
-    expect(caught(() => lease.write(node, 'setWorldPosition', getterArray(() => { throw 0; }), perform))).toEqual({
-        threw: true, value: 0,
+    expect(
+        caught(() =>
+            lease.write(
+                node,
+                'setWorldPosition',
+                getterArray(() => {
+                    throw 0;
+                }),
+                perform,
+            ),
+        ),
+    ).toEqual({
+        threw: true,
+        value: 0,
     });
     expect(perform).not.toHaveBeenCalled();
     expect(() => lease.assertWriteCapacity(1)).toThrow(/sequence exhausted/);
@@ -215,7 +255,9 @@ test('failed direct expected read consumes its final sequence before getter and 
 
 for (const dispose of ['reservation', 'lease'] as const) {
     test(`${dispose} disposal during expected copying prevents perform without refund`, () => {
-        const node = new Node('dispose during copy'), lease = guard(node), reservation = lease.reserveWrites(1);
+        const node = new Node('dispose during copy'),
+            lease = guard(node),
+            reservation = lease.reserveWrites(1);
         const perform = jest.fn();
         const expected = getterArray(() => (dispose === 'lease' ? lease : reservation).dispose());
         expect(() => reservation.write(node, 'setWorldPosition', expected, perform)).toThrow(/disposed while copying/);
@@ -225,19 +267,33 @@ for (const dispose of ['reservation', 'lease'] as const) {
 }
 
 test('reservation disposal during perform revokes the pending grant without releasing protection', () => {
-    const node = new Node('dispose during perform'), lease = guard(node), reservation = lease.reserveWrites(1);
+    const node = new Node('dispose during perform'),
+        lease = guard(node),
+        reservation = lease.reserveWrites(1);
     const expected = jest.fn();
-    const input = { get x() { expected(); return 7; }, y: 8, z: 9 } as Vec3;
-    expect(() => reservation.write(node, 'setWorldPosition', position, () => {
-        reservation.dispose();
-        node.setWorldPosition(input);
-    })).toThrow(/motion is owned/);
+    const input = {
+        get x() {
+            expected();
+            return 7;
+        },
+        y: 8,
+        z: 9,
+    } as Vec3;
+    expect(() =>
+        reservation.write(node, 'setWorldPosition', position, () => {
+            reservation.dispose();
+            node.setWorldPosition(input);
+        }),
+    ).toThrow(/motion is owned/);
     expect(expected).not.toHaveBeenCalled();
     expect(node.position).toEqual(new Vec3());
 });
 
 test('disposing another reservation cannot revoke the current exact grant', () => {
-    const node = new Node('separate dispose'), lease = guard(node), a = lease.reserveWrites(1), b = lease.reserveWrites(1);
+    const node = new Node('separate dispose'),
+        lease = guard(node),
+        a = lease.reserveWrites(1),
+        b = lease.reserveWrites(1);
     a.write(node, 'setWorldPosition', position, () => {
         b.dispose();
         node.setWorldPosition(7, 8, 9);
@@ -248,13 +304,19 @@ test('disposing another reservation cannot revoke the current exact grant', () =
 
 for (const phase of ['expected getter', 'perform', 'consumed listener'] as const) {
     test(`same owner direct/reserved/check/reserve reentry refused during ${phase}`, () => {
-        const node = new Node('reentry'), lease = guard(node), outer = lease.reserveWrites(1), inner = lease.reserveWrites(1);
-        const expected = jest.fn(), perform = jest.fn();
+        const node = new Node('reentry'),
+            lease = guard(node),
+            outer = lease.reserveWrites(1),
+            inner = lease.reserveWrites(1);
+        const expected = jest.fn(),
+            perform = jest.fn();
         let reentries = 0;
         const nested = () => {
             reentries++;
             for (const writer of [lease, outer, inner]) {
-                expect(() => writer.write(node, 'setWorldPosition', getterArray(expected), perform)).toThrow(/same-owner nested/);
+                expect(() => writer.write(node, 'setWorldPosition', getterArray(expected), perform)).toThrow(
+                    /same-owner nested/,
+                );
             }
             expect(() => lease.reserveWrites(0)).toThrow(/same-owner nested/);
             expect(() => lease.assertWriteCapacity(0)).toThrow(/same-owner nested/);
@@ -275,19 +337,36 @@ for (const phase of ['expected getter', 'perform', 'consumed listener'] as const
 }
 
 test('actual setters compose transaction and two persistent descendant/ancestor reservations exactly once', () => {
-    const parent = new Node('shared physics ancestor'), a = new Node('target a'), b = new Node('target b');
+    const parent = new Node('shared physics ancestor'),
+        a = new Node('target a'),
+        b = new Node('target b');
     parent.addChild(a);
     parent.addChild(b);
-    const temporary = guard(parent, a, b), persistentA = guard(parent, a), persistentB = guard(parent, b);
-    for (const [lease, count] of [[temporary, 6], [persistentA, 4], [persistentB, 4]] as const) lease.assertWriteCapacity(count);
-    const t = temporary.reserveWrites(6), pa = persistentA.reserveWrites(4), pb = persistentB.reserveWrites(4);
-    const setterCalls = { position: 0, rotation: 0 }, listeners = { events: 0, rejected: 0 };
-    for (const node of [parent, a, b]) node.on(NodeEventType.TRANSFORM_CHANGED, () => {
-        listeners.events++;
-        expect(() => node.setWorldPosition(99, 99, 99)).toThrow(/motion is owned/);
-        listeners.rejected++;
-    });
-    for (const [node, writers] of [[parent, [t, pa, pb]], [a, [t, pa]], [b, [t, pb]]] as const) {
+    const temporary = guard(parent, a, b),
+        persistentA = guard(parent, a),
+        persistentB = guard(parent, b);
+    for (const [lease, count] of [
+        [temporary, 6],
+        [persistentA, 4],
+        [persistentB, 4],
+    ] as const)
+        lease.assertWriteCapacity(count);
+    const t = temporary.reserveWrites(6),
+        pa = persistentA.reserveWrites(4),
+        pb = persistentB.reserveWrites(4);
+    const setterCalls = { position: 0, rotation: 0 },
+        listeners = { events: 0, rejected: 0 };
+    for (const node of [parent, a, b])
+        node.on(NodeEventType.TRANSFORM_CHANGED, () => {
+            listeners.events++;
+            expect(() => node.setWorldPosition(99, 99, 99)).toThrow(/motion is owned/);
+            listeners.rejected++;
+        });
+    for (const [node, writers] of [
+        [parent, [t, pa, pb]],
+        [a, [t, pa]],
+        [b, [t, pb]],
+    ] as const) {
         for (const operation of ['setWorldPosition', 'setWorldRotation'] as const) {
             const expected = operation === 'setWorldPosition' ? position : rotation;
             const write = (index: number): void => {
@@ -309,14 +388,27 @@ test('actual setters compose transaction and two persistent descendant/ancestor 
         expect(node.worldPosition).toEqual(new Vec3(7, 8, 9));
         expect(node.worldRotation).toEqual(new Quat(0, 0, 1, 0));
     }
-    for (const reservation of [t, pa, pb]) expect(() => positionWrite(reservation, parent)).toThrow(/reservation exhausted/);
+    for (const reservation of [t, pa, pb])
+        expect(() => positionWrite(reservation, parent)).toThrow(/reservation exhausted/);
 });
 
 test('foreign lease still refuses composed setter before Node argument getters', () => {
-    const node = new Node('foreign'), own = guard(node), foreign = guard(node), reserved = own.reserveWrites(1);
+    const node = new Node('foreign'),
+        own = guard(node),
+        foreign = guard(node),
+        reserved = own.reserveWrites(1);
     const read = jest.fn();
-    const input = { get x() { read(); return 7; }, y: 8, z: 9 } as Vec3;
-    expect(() => reserved.write(node, 'setWorldPosition', position, () => node.setWorldPosition(input))).toThrow(/motion is owned/);
+    const input = {
+        get x() {
+            read();
+            return 7;
+        },
+        y: 8,
+        z: 9,
+    } as Vec3;
+    expect(() => reserved.write(node, 'setWorldPosition', position, () => node.setWorldPosition(input))).toThrow(
+        /motion is owned/,
+    );
     expect(read).not.toHaveBeenCalled();
     expect(node.position).toEqual(new Vec3());
     foreign.dispose();
@@ -324,11 +416,20 @@ test('foreign lease still refuses composed setter before Node argument getters',
 });
 
 test('unconsumed, wrong-value, wrong-node and wrong-operation attempts burn only their reserved attempts', () => {
-    const node = new Node('exact'), other = new Node('other'), lease = guard(node), reserved = lease.reserveWrites(4);
+    const node = new Node('exact'),
+        other = new Node('other'),
+        lease = guard(node),
+        reserved = lease.reserveWrites(4);
     expect(() => reserved.write(node, 'setWorldPosition', position, () => {})).toThrow(/consumed permission/);
-    expect(() => reserved.write(node, 'setWorldPosition', position, () => node.setWorldPosition(1, 2, 3))).toThrow(/does not match/);
-    expect(() => reserved.write(other, 'setWorldPosition', position, () => other.setWorldPosition(7, 8, 9))).toThrow(/invalid exact/);
-    expect(() => reserved.write(node, 'setPosition' as any, position, () => node.setPosition(7, 8, 9))).toThrow(/invalid exact/);
+    expect(() => reserved.write(node, 'setWorldPosition', position, () => node.setWorldPosition(1, 2, 3))).toThrow(
+        /does not match/,
+    );
+    expect(() => reserved.write(other, 'setWorldPosition', position, () => other.setWorldPosition(7, 8, 9))).toThrow(
+        /invalid exact/,
+    );
+    expect(() => reserved.write(node, 'setPosition' as any, position, () => node.setPosition(7, 8, 9))).toThrow(
+        /invalid exact/,
+    );
     expect(() => positionWrite(reserved, node)).toThrow(/reservation exhausted/);
     expect(node.position).toEqual(new Vec3());
     expect(other.position).toEqual(new Vec3());
@@ -336,12 +437,17 @@ test('unconsumed, wrong-value, wrong-node and wrong-operation attempts burn only
 });
 
 test('multi-lease preflight finds the last exhausted owner without allocating earlier owners', () => {
-    const node = new Node('all-owner preflight'), temporary = guard(node), persistent = guard(node);
+    const node = new Node('all-owner preflight'),
+        temporary = guard(node),
+        persistent = guard(node);
     persistent.reserveWrites(maximum - 1).dispose();
-    const expected = jest.fn(), actualSetter = jest.fn(), syntheticNativeApply = jest.fn();
+    const expected = jest.fn(),
+        actualSetter = jest.fn(),
+        syntheticNativeApply = jest.fn();
     expect(() => {
         for (const lease of [temporary, persistent]) lease.assertWriteCapacity(2);
-        const t = temporary.reserveWrites(2), p = persistent.reserveWrites(2);
+        const t = temporary.reserveWrites(2),
+            p = persistent.reserveWrites(2);
         syntheticNativeApply();
         t.write(node, 'setWorldPosition', getterArray(expected), () => {
             p.write(node, 'setWorldPosition', getterArray(expected), actualSetter);
@@ -355,7 +461,9 @@ test('multi-lease preflight finds the last exhausted owner without allocating ea
 });
 
 test('disposing a consumed reservation invalidates success but preserves actual Node completion', () => {
-    const node = new Node('postwrite disposal'), lease = guard(node), reservation = lease.reserveWrites(1);
+    const node = new Node('postwrite disposal'),
+        lease = guard(node),
+        reservation = lease.reserveWrites(1);
     node.on(NodeEventType.TRANSFORM_CHANGED, () => reservation.dispose());
     expect(() => positionWrite(reservation, node)).toThrow(/valid consumed permission/);
     expect(node.worldPosition).toEqual(new Vec3(7, 8, 9));

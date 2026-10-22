@@ -29,6 +29,7 @@ import type { MutationGuardLease } from '../../../cocos/core/data/mutation-guard
 import { registerNodeTransformGuard } from '../../../cocos/scene-graph/node-transform-validation';
 import type {
     NodeTransformGuardLease,
+    NodeTransformWriteReservation,
     NodeTransformWriteOperation,
 } from '../../../cocos/scene-graph/node-transform-validation';
 import type { Box3DBodyState, Box3DId } from './binding/facade.mjs';
@@ -36,6 +37,8 @@ import { Box3DCommandQueue } from './command-queue';
 import type {
     PreparedCommandPause,
     CommandInput,
+    CommandPose,
+    CommandRecord,
     CommandCandidate,
     CommandContext,
     CommandProducer,
@@ -133,7 +136,13 @@ export interface Box3DOwnedComponentSeed {
     readonly applyMaterial?: CopiedMaterialApplication;
     readonly prepareMaterialValues?: PrepareComponentMaterial;
 }
+/** Internal finite reset options; this is not a public adapter capability. */
+export interface Box3DTeleportOptions {
+    readonly preserveVelocity?: boolean;
+    readonly wake?: boolean;
+}
 export interface Box3DCommandTick {
+    readonly teleportNodes: readonly Node[];
     readonly commands: readonly Box3DCommand[];
     readonly context: Readonly<CommandContext>;
     readonly acceptedCount: number;
@@ -144,6 +153,7 @@ export interface Box3DCommandTick {
     dispose(): void;
 }
 export interface Box3DOwnerFenceScope {
+    prepareWriteback(nodes: readonly Node[]): void;
     advance(next: 'solving' | 'writeback'): void;
     write(node: Node, operation: NodeTransformWriteOperation, expected: readonly number[], perform: () => void): void;
     dispose(): void;
@@ -363,7 +373,32 @@ export class Box3DWorldCommandOwner {
     submitAdapterCommand(adapter: object, read: () => PhysicsBodyCommandInput): number {
         return this.#submitCommand(adapter, read, true);
     }
-    #submitCommand(source: object, read: () => PhysicsBodyCommandInput, adapter: boolean): number {
+    teleportRigidBody(source: object, pose: CommandPose, options?: Box3DTeleportOptions): number {
+        return this.#submitCommand(
+            source,
+            () => {
+                if (options !== undefined && (options === null || typeof options !== 'object'))
+                    throw worldError('AIR_E_BOX3D_CONFIG', 'teleport options', 'Expected an options object.');
+                // Original getters run exactly once under both the queue latch and owner fence.
+                const preserveVelocity = options?.preserveVelocity,
+                    wake = options?.wake;
+                if (
+                    (preserveVelocity !== undefined && typeof preserveVelocity !== 'boolean') ||
+                    (wake !== undefined && typeof wake !== 'boolean')
+                )
+                    throw worldError('AIR_E_BOX3D_CONFIG', 'teleport options', 'Expected boolean options.');
+                return { kind: 'teleport', pose, preserveVelocity, wake };
+            },
+            false,
+            true,
+        );
+    }
+    #submitCommand(
+        source: object,
+        read: () => PhysicsBodyCommandInput | CommandInput,
+        adapter: boolean,
+        teleport = false,
+    ): number {
         const admission: { scope: Box3DOwnerFenceScope | null } = { scope: null };
         let failed = false,
             first: unknown;
@@ -382,6 +417,15 @@ export class Box3DWorldCommandOwner {
                     );
                 const componentSource = adapter ? this.#component(source).component : source;
                 const resolved = this.#resolveCommandSource(componentSource, false);
+                if (teleport) {
+                    const state = resolved.body.readCommitted();
+                    if (state.type !== 1 && state.type !== 2)
+                        throw worldError(
+                            'AIR_E_BOX3D_CONFIG',
+                            'teleport source',
+                            'An actual initialized dynamic or kinematic RigidBody is required.',
+                        );
+                }
                 if (typeof read !== 'function')
                     throw worldError('AIR_E_BOX3D_CONFIG', 'command submission', 'Missing copied input reader.');
                 const input = read();
@@ -398,11 +442,13 @@ export class Box3DWorldCommandOwner {
                     command = { kind, vector: input.vector, space: input.space };
                 else if (kind === 'clear-forces' || kind === 'clear-velocity' || kind === 'clear-state')
                     command = { kind };
+                else if (teleport && kind === 'teleport')
+                    command = { kind, pose: input.pose, preserveVelocity: input.preserveVelocity, wake: input.wake };
                 else
                     throw worldError(
                         'AIR_E_BOX3D_UNSUPPORTED',
                         'command submission',
-                        'Only the finite dynamic candidate is installed; target/teleport remain unavailable.',
+                        'Only finite dynamic commands and the internal teleport entry are installed; targets remain unavailable.',
                     );
                 return { body: resolved.key, command };
             });
@@ -420,20 +466,24 @@ export class Box3DWorldCommandOwner {
         }
     }
     cancelPendingCommands(source: object): number {
-        this.assertConfiguration('cancel pending commands');
-        this.assertSteppingAllowed('cancel pending commands');
-        const scope = this.#begin('admission', [source]);
+        const admission: { scope: Box3DOwnerFenceScope | null } = { scope: null };
         let failed = false,
             first: unknown;
         try {
-            return this.#queue.cancelPending(this.#resolveCommandSource(source, false).key);
+            return this.#queue.withCancellationAdmission(() => {
+                // Reentrant refusal must enter the queue latch before any owner check can throw.
+                this.assertConfiguration('cancel pending commands');
+                this.assertSteppingAllowed('cancel pending commands');
+                admission.scope = this.#begin('admission', [source]);
+                return this.#resolveCommandSource(source, false).key;
+            });
         } catch (error) {
             failed = true;
             first = error;
             throw error;
         } finally {
             try {
-                scope.dispose();
+                admission.scope?.dispose();
             } catch (error) {
                 this.#materialFault?.(failed ? first : error);
                 if (!failed) throw error;
@@ -482,8 +532,10 @@ export class Box3DWorldCommandOwner {
             this.#commandPhase = 'collecting';
             candidate = this.#queue.collect(dt, substeps, roster.callbacks);
             phase = this.#commandPhase = 'validating';
-            const tokens = new Map<object, Box3DId>();
-            for (const record of candidate.operations) {
+            const tokens = new Map<object, Box3DId>(),
+                resolvedBodies = new Map<object, { key: object; body: BodyRecord; component: ComponentRecord }>();
+            // Validate the complete accepted candidate, including rows omitted by reduction.
+            for (const record of new Set([...candidate.original, ...candidate.operations])) {
                 const component = [...this.#components.values()].find(
                     (row) => row.body === record.body && row.kind === 'rigid-body',
                 );
@@ -498,13 +550,44 @@ export class Box3DWorldCommandOwner {
                     component.component,
                     kind === 'force' || kind === 'impulse' || kind === 'torque' || kind === 'angular-impulse',
                 );
+                if (resolved.key !== record.body)
+                    throw worldError('AIR_E_BOX3D_DISPOSED', 'command final validation', 'Body identity changed.');
+                if (kind === 'teleport') {
+                    const state = resolved.body.readCommitted();
+                    if (state.type !== 1 && state.type !== 2)
+                        throw worldError(
+                            'AIR_E_BOX3D_CONFIG',
+                            'teleport final validation',
+                            'An actual dynamic or kinematic RigidBody is required.',
+                        );
+                }
                 tokens.set(record.body, resolved.body.resolveNative());
+                resolvedBodies.set(record.body, resolved);
             }
-            const commands = mapCommandCandidate(candidate, tokens);
+            const teleportNodes = new Set<Node>();
+            const effectiveOperations: readonly CommandRecord[] = Object.freeze(
+                candidate.operations.map((record) => {
+                    if (record.command.kind !== 'teleport') return record;
+                    const resolved = resolvedBodies.get(record.body)!;
+                    teleportNodes.add(resolved.body.node);
+                    // A disabled component must not request wake even if an enabled collider keeps
+                    // its native shared body enabled. Never mutate the accepted queue defaults.
+                    if (resolved.component.enabled) return record;
+                    return Object.freeze({
+                        ...record,
+                        command: Object.freeze({ ...record.command, wake: false }),
+                    });
+                }),
+            );
+            const commands = mapCommandCandidate(
+                Object.freeze({ ...candidate, operations: effectiveOperations }),
+                tokens,
+            );
             const context = candidate.context,
                 acceptedCount = candidate.original.length;
             return Object.freeze({
                 commands,
+                teleportNodes: Object.freeze(Array.from(teleportNodes)),
                 context,
                 acceptedCount,
                 beginCommit: () => {
@@ -1453,9 +1536,33 @@ export class Box3DWorldCommandOwner {
             }
             throw error;
         }
-        const owned = this;
-        let disposed = false;
+        const owned = this,
+            bodyNodes = new Set(Array.from(this.#bodies.values(), (body) => body.node)),
+            expectedWrites = new Map<Node, Set<NodeTransformWriteOperation>>();
+        let disposed = false,
+            writebackPrepared = false;
+        let reservation: NodeTransformWriteReservation | undefined;
         const scope: Box3DOwnerFenceScope = Object.freeze({
+            prepareWriteback(plannedNodes: readonly Node[]): void {
+                if (disposed || owned.#scope !== scope || owned.#phase !== 'preflight' || writebackPrepared)
+                    throw worldError('AIR_E_BOX3D_REENTRANT', 'prepare writeback', 'No unused preflight scope.');
+                if (!Array.isArray(plannedNodes))
+                    throw worldError('AIR_E_BOX3D_CONFIG', 'prepare writeback', 'Expected copied Node inventory.');
+                const planned = new Set<Node>();
+                for (const node of plannedNodes) {
+                    if (!nodes.has(node) || !bodyNodes.has(node) || planned.has(node))
+                        throw worldError('AIR_E_BOX3D_CONFIG', 'prepare writeback', 'Node is foreign or duplicated.');
+                    planned.add(node);
+                }
+                const count = planned.size * 2;
+                if (!Number.isSafeInteger(count) || count < 0 || (count > 0 && !transform))
+                    throw worldError('AIR_E_BOX3D_CONFIG', 'prepare writeback', 'Unsafe exact-write inventory.');
+                // Reserve both setters for every participant before native validation or application.
+                transform?.assertWriteCapacity(count);
+                reservation = transform?.reserveWrites(count);
+                for (const node of planned) expectedWrites.set(node, new Set(['setWorldPosition', 'setWorldRotation']));
+                writebackPrepared = true;
+            },
             advance(next: 'solving' | 'writeback'): void {
                 if (
                     disposed ||
@@ -1478,26 +1585,36 @@ export class Box3DWorldCommandOwner {
                     disposed ||
                     owned.#scope !== scope ||
                     owned.#phase !== 'writeback' ||
-                    !transform ||
-                    !nodes.has(node)
+                    !writebackPrepared ||
+                    !reservation ||
+                    !expectedWrites.get(node)?.has(operation)
                 )
                     throw worldError(
                         'AIR_E_BOX3D_REENTRANT',
                         'owned write',
                         'No active exact-write scope for this Node.',
                     );
-                transform.write(node, operation, expected, perform);
+                // Consume the exact operation before any expected-value getter or callback can run.
+                expectedWrites.get(node)!.delete(operation);
+                reservation.write(node, operation, expected, perform);
             },
             dispose(): void {
                 if (disposed) return;
                 let failed = false,
                     failure: unknown;
                 try {
+                    reservation?.dispose();
+                } catch (error) {
+                    owned.#recordCleanup('scope-write-reservation-dispose', error);
+                    failed = true;
+                    failure = error;
+                }
+                try {
                     transform?.dispose();
                 } catch (error) {
                     owned.#recordCleanup('scope-transform-dispose', error);
+                    if (!failed) failure = error;
                     failed = true;
-                    failure = error;
                 }
                 try {
                     mutation?.dispose();

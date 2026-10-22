@@ -21,7 +21,7 @@
 */
 import type { PhysicsSystem } from '../../../cocos/physics/framework/physics-system';
 import { Box3DWorldCommandOwner } from './world-command-owner';
-import type { Box3DOwnedComponentSeed } from './world-command-owner';
+import type { Box3DOwnedComponentSeed, Box3DTeleportOptions } from './world-command-owner';
 import type { Node } from '../../../cocos/scene-graph/node';
 import { Box3DSharedBody } from './shared-body';
 import type { Box3DComponentConfiguration } from './shared-body';
@@ -51,7 +51,7 @@ import type { Box3DWritebackQualification } from './world-writeback';
 
 import type { Box3DCommandTick } from './world-command-owner';
 import type { Box3DCommand, Box3DCommandBatchResult } from './binding/facade.mjs';
-import type { CommandProducer } from './command-queue';
+import type { CommandPose, CommandProducer } from './command-queue';
 import type { ContinuousDescriptor } from './command-producers';
 import type { PhysicsBodyCommandInput } from '../../../cocos/physics/framework/physics-command-submission';
 
@@ -541,6 +541,10 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
     submitAdapterCommand(adapter: object, read: () => PhysicsBodyCommandInput): number {
         return this.#commandOwner.submitAdapterCommand(adapter, read);
     }
+    /** Internal finite reset candidate only; no public target handle or adapter activation. */
+    teleportRigidBody(source: object, pose: CommandPose, options?: Box3DTeleportOptions): number {
+        return this.#commandOwner.teleportRigidBody(source, pose, options);
+    }
     cancelPendingCommands(source: object): number {
         return this.#commandOwner.cancelPendingCommands(source);
     }
@@ -707,6 +711,7 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
             tick = this.#commandOwner.prepareCommandTick(scope, delta, this.options.solverSubSteps);
             // Recheck every body after caller callbacks, not only packet participants.
             for (const body of bodies) body.preflight();
+            scope.prepareWriteback(Box3DSharedBody.plannedWritebackNodes(bodies, tick.teleportNodes));
             this.#binding.validateCommandBatch(this.#token, tick.commands, delta, this.options.solverSubSteps);
             const start = copyStepDiagnostics(this.#binding.stepDiagnostics(this.#token));
             if (start.nativeStepIndex !== before) {
@@ -805,7 +810,7 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
             )
                 throw worldError('AIR_E_BOX3D_ABI', 'step', 'Expected the current owned immutable snapshot.');
             this.snapshot = this.pendingSnapshot = snapshot;
-            const plans = Box3DSharedBody.captureWriteback(bodies);
+            const plans = Box3DSharedBody.captureWriteback(bodies, tick.teleportNodes);
             writebackSceneBatch(
                 plans,
                 () => {
