@@ -1,0 +1,367 @@
+--- /dev/null
++++ b/src/cocos/physics/framework/physics-system-control.ts
+@@ -0,0 +1,266 @@
++/*
++ Copyright (c) 2026-2027 oahc09@gmail.com
++
++ Permission is hereby granted, free of charge, to any person obtaining a copy
++ of this software and associated documentation files (the "Software"), to deal
++ in the Software without restriction, including without limitation the rights
++ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++ copies of the Software, and to permit persons to whom the Software is
++ furnished to do so, subject to the following conditions:
++
++ The above copyright notice and this permission notice shall be included in
++ all copies or substantial portions of the Software.
++
++ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
++ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
++ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
++ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
++ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
++ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
++ THE SOFTWARE.
++*/
++/** Internal System cache observation over B0. No AIR/native imports, public barrel,
++ * world lookup, native authority, queue/producers or inferred physical outcome.
++ */
++import { PhysicsStateObserverRegistry } from './physics-state-observer';
++import type {
++    PhysicsStateChangeTicket,
++    PhysicsStateChangeContext,
++    PhysicsStateEffect,
++    PhysicsStateObserver,
++    PhysicsStateSnapshot,
++} from './physics-state-observer';
++
++export type PhysicsSystemControlOperation = 'system-enable' | 'system-auto-simulation';
++export type PhysicsSystemControlState = Extract<PhysicsStateSnapshot, { kind: 'system-control' }>;
++export type PhysicsSystemDisposition = 'ready' | 'paused';
++export interface PhysicsSystemControlLease {
++    readonly initialState: PhysicsSystemControlState;
++    dispose(): void;
++}
++type Source = () => Readonly<{ enabled: boolean; autoSimulation: boolean }>;
++type Entry = {
++    readonly source: Source;
++    readonly disposition: () => PhysicsSystemDisposition;
++    ticket?: PhysicsStateChangeTicket;
++};
++type Admission = { failed: boolean; error: unknown };
++function object(value: unknown): value is object {
++    return value !== null && typeof value === 'object';
++}
++function state(source: Source): PhysicsSystemControlState {
++    const input = source();
++    if (!object(input)) throw new TypeError('System control source must return private flags.');
++    const enabled = input.enabled,
++        autoSimulation = input.autoSimulation;
++    if (typeof enabled !== 'boolean' || typeof autoSimulation !== 'boolean')
++        throw new TypeError('Observed System control flags must be boolean.');
++    return Object.freeze({ kind: 'system-control', enabled, autoSimulation });
++}
++
++/** Isolated registry for source controls. Production uses the single private instance below. */
++export class PhysicsSystemControlRegistry {
++    readonly #observer = new PhysicsStateObserverRegistry();
++    readonly #sources = new WeakMap<object, Source>();
++    readonly #entries = new WeakMap<object, Entry>();
++    #admission: Admission | undefined;
++
++    #notAdmitting(): void {
++        if (!this.#admission) return;
++        const error = new Error('System execution admission cannot re-enter.');
++        if (!this.#admission.failed) {
++            this.#admission.failed = true;
++            this.#admission.error = error;
++        }
++        throw error;
++    }
++    /** Called only by the original System constructor, with a closure over private fields. */
++    installSource(target: object, source: Source): void {
++        this.#notAdmitting();
++        if (!object(target) || typeof source !== 'function')
++            throw new TypeError('Expected System identity and source.');
++        if (this.#sources.has(target)) throw new Error('System control source already installed.');
++        this.#sources.set(target, source);
++    }
++    /** Private owner bootstrap read. It neither registers an observer nor checks selector binding. */
++    readState(target: object): PhysicsSystemControlState {
++        this.#notAdmitting();
++        const source = this.#sources.get(target);
++        if (!source) throw new Error('Original System control source is not installed.');
++        const ticket = this.#entries.get(target)?.ticket;
++        if (ticket && !ticket.diagnostics().disposed) throw new Error('System control transition is in progress.');
++        const admission: Admission = { failed: false, error: undefined };
++        this.#admission = admission;
++        try {
++            const actual = state(source);
++            if (admission.failed) throw admission.error;
++            return actual;
++        } catch (error) {
++            throw admission.failed ? admission.error : error;
++        } finally {
++            this.#admission = undefined;
++        }
++    }
++    register(
++        target: object,
++        observer: PhysicsStateObserver,
++        disposition: () => PhysicsSystemDisposition,
++    ): PhysicsSystemControlLease {
++        this.#notAdmitting();
++        const registry = this;
++        let copied!: PhysicsStateObserver, initialState!: PhysicsSystemControlState, source!: Source;
++        // B0 guards callback/source reads and rejects caught registration reentry.
++        const lease = this.#observer.register(target, {
++            get open() {
++                if (registry.#entries.has(target)) throw new Error('System already has an observed physical owner.');
++                const found = registry.#sources.get(target);
++                if (!found || !object(observer) || typeof disposition !== 'function')
++                    throw new TypeError('Expected original System source, observer and disposition reader.');
++                source = found;
++                const open = observer.open,
++                    preflight = observer.preflight,
++                    commit = observer.commit,
++                    fail = observer.fail,
++                    dispose = observer.dispose;
++                if ([open, preflight, commit, fail, dispose].some((method) => typeof method !== 'function'))
++                    throw new TypeError('System observer requires five trusted callbacks.');
++                copied = Object.freeze({ open, preflight, commit, fail, dispose });
++                initialState = state(source);
++                return (context: Readonly<PhysicsStateChangeContext>) => copied.open.call(observer, context);
++            },
++            preflight: (context, before, candidate) => copied.preflight.call(observer, context, before, candidate),
++            commit: (context, actual) => copied.commit.call(observer, context, actual),
++            fail: (context, failure) => copied.fail.call(observer, context, failure),
++            dispose: (context) => copied.dispose.call(observer, context),
++        });
++        const entry: Entry = { source, disposition };
++        const result: PhysicsSystemControlLease = Object.freeze({
++            initialState,
++            dispose(): void {
++                if (this !== result) throw new Error('Invalid System control lease receiver.');
++                registry.#notAdmitting();
++                lease.dispose(); // Open B0 tickets refuse before unregistering either registry.
++                if (registry.#entries.get(target) === entry) registry.#entries.delete(target);
++            },
++        });
++        this.#entries.set(target, entry);
++        return result;
++    }
++    begin(target: object, operation: PhysicsSystemControlOperation): PhysicsStateChangeTicket | undefined {
++        this.#notAdmitting();
++        const entry = this.#entries.get(target);
++        if (!entry) return undefined; // Preserve no-observer behavior without reading source or operation.
++        if (operation !== 'system-enable' && operation !== 'system-auto-simulation')
++            throw new TypeError('Unknown System control operation.');
++        const ticket = this.#observer.begin(target, operation)!;
++        entry.ticket = ticket;
++        const registry = this;
++        const receiver = (value: unknown): void => {
++            registry.#notAdmitting();
++            if (value !== result) throw new Error('Invalid System control ticket receiver.');
++        };
++        const unlink = (): void => {
++            if (ticket.diagnostics().disposed && entry.ticket === ticket) entry.ticket = undefined;
++        };
++        const result: PhysicsStateChangeTicket = Object.freeze({
++            prepare(reader: () => Readonly<{ before: PhysicsStateSnapshot; candidate: PhysicsStateSnapshot }>): void {
++                receiver(this);
++                try {
++                    ticket.prepare(reader);
++                } finally {
++                    unlink();
++                }
++            },
++            effect(fact: PhysicsStateEffect): void {
++                receiver(this);
++                try {
++                    ticket.effect(fact);
++                } finally {
++                    unlink();
++                }
++            },
++            commit(reader: () => PhysicsStateSnapshot): void {
++                receiver(this);
++                try {
++                    ticket.commit(reader);
++                } finally {
++                    unlink();
++                }
++            },
++            fail(error: unknown, reader?: () => PhysicsStateSnapshot): never {
++                receiver(this);
++                const diagnostic = ticket.diagnostics();
++                // prepare/effect/commit may already have notified, released and terminalized B0.
++                if (diagnostic.disposed) throw diagnostic.hasFailure ? diagnostic.error : error;
++                try {
++                    return ticket.fail(error, reader);
++                } finally {
++                    unlink();
++                }
++            },
++            dispose(): void {
++                receiver(this);
++                try {
++                    ticket.dispose();
++                } finally {
++                    unlink();
++                }
++            },
++            diagnostics() {
++                if (this !== result) throw new Error('Invalid System control ticket receiver.');
++                return ticket.diagnostics();
++            },
++        });
++        return result;
++    }
++    disposition(target: object): PhysicsSystemDisposition | undefined {
++        this.#notAdmitting();
++        const entry = this.#entries.get(target);
++        if (!entry) return undefined;
++        if (entry.ticket && !entry.ticket.diagnostics().disposed)
++            throw new Error('System control transition is in progress.');
++        const admission: Admission = { failed: false, error: undefined };
++        this.#admission = admission;
++        try {
++            const actual = state(entry.source);
++            const readDisposition = entry.disposition;
++            const disposition = readDisposition(); // No internal Entry receiver escapes to the callback.
++            if (admission.failed) throw admission.error;
++            if (disposition !== 'ready' && disposition !== 'paused') throw new TypeError('Invalid owner disposition.');
++            return actual.enabled ? disposition : 'paused';
++        } catch (error) {
++            throw admission.failed ? admission.error : error;
++        } finally {
++            this.#admission = undefined;
++        }
++    }
++    assertManualStep(target: object): void {
++        if (this.disposition(target) === 'paused') throw new Error('Observed physics owner is paused.');
++    }
++}
++const registry = new PhysicsSystemControlRegistry();
++export function installPhysicsSystemControlSource(target: object, source: Source): void {
++    registry.installSource(target, source);
++}
++export function registerPhysicsSystemControl(
++    target: object,
++    observer: PhysicsStateObserver,
++    disposition: () => PhysicsSystemDisposition,
++): PhysicsSystemControlLease {
++    return registry.register(target, observer, disposition);
++}
++export function readPhysicsSystemControl(target: object): PhysicsSystemControlState {
++    return registry.readState(target);
++}
++export function beginPhysicsSystemControl(
++    target: object,
++    operation: PhysicsSystemControlOperation,
++): PhysicsStateChangeTicket | undefined {
++    return registry.begin(target, operation);
++}
++export function getPhysicsSystemControlDisposition(target: object): PhysicsSystemDisposition | undefined {
++    return registry.disposition(target);
++}
++export function assertPhysicsSystemManualStep(target: object): void {
++    registry.assertManualStep(target);
++}
+--- a/src/cocos/physics/framework/physics-system.ts
++++ b/src/cocos/physics/framework/physics-system.ts
+@@ -23,6 +23,7 @@
+ */
+ 
+ import { beginPhysicsMaterialChange } from './physics-material-transaction';
++import { installPhysicsSystemControlSource, beginPhysicsSystemControl, getPhysicsSystemControlDisposition, assertPhysicsSystemManualStep } from './physics-system-control';
+ import { assertMutationAllowed } from '../../core/data/mutation-guard';
+ import { BUILD, EDITOR_NOT_IN_PREVIEW, LOAD_BULLET_MANUALLY, LOAD_PHYSX_MANUALLY } from 'internal:constants';
+ import { Vec3, RecyclePool, Enum, System, cclegacy, settings, geometry, warn, IQuatLike, IVec3Like, SettingsCategory, errorID, warnID } from '../../core';
+@@ -107,6 +108,23 @@
+ 
+     public set enable (value: boolean) {
+         assertMutationAllowed(this, 'PhysicsSystem.enable');
++        const change = beginPhysicsSystemControl(this, 'system-enable');
++        if (change) {
++            try {
++                change.prepare(() => ({
++                    before: { kind: 'system-control', enabled: this._enable, autoSimulation: this._autoSimulation },
++                    candidate: { kind: 'system-control', enabled: value, autoSimulation: this._autoSimulation },
++                }));
++                this._enable = value;
++                change.effect('cache-written');
++                change.commit(() => ({ kind: 'system-control', enabled: this._enable, autoSimulation: this._autoSimulation }));
++            } catch (error) {
++                const diagnostic = change.diagnostics();
++                if (diagnostic.disposed) throw diagnostic.hasFailure ? diagnostic.error : error;
++                change.fail(error, () => ({ kind: 'system-control', enabled: this._enable, autoSimulation: this._autoSimulation }));
++            } finally { change.dispose(); }
++            return;
++        }
+         this._enable = value;
+     }
+ 
+@@ -214,6 +232,23 @@
+ 
+     public set autoSimulation (value: boolean) {
+         assertMutationAllowed(this, 'PhysicsSystem.autoSimulation');
++        const change = beginPhysicsSystemControl(this, 'system-auto-simulation');
++        if (change) {
++            try {
++                change.prepare(() => ({
++                    before: { kind: 'system-control', enabled: this._enable, autoSimulation: this._autoSimulation },
++                    candidate: { kind: 'system-control', enabled: this._enable, autoSimulation: value },
++                }));
++                this._autoSimulation = value;
++                change.effect('cache-written');
++                change.commit(() => ({ kind: 'system-control', enabled: this._enable, autoSimulation: this._autoSimulation }));
++            } catch (error) {
++                const diagnostic = change.diagnostics();
++                if (diagnostic.disposed) throw diagnostic.hasFailure ? diagnostic.error : error;
++                change.fail(error, () => ({ kind: 'system-control', enabled: this._enable, autoSimulation: this._autoSimulation }));
++            } finally { change.dispose(); }
++            return;
++        }
+         this._autoSimulation = value;
+     }
+ 
+@@ -396,6 +431,7 @@
+ 
+     private constructor () {
+         super();
++        installPhysicsSystemControlSource(this, () => ({ enabled: this._enable, autoSimulation: this._autoSimulation }));
+     }
+ 
+     postUpdate (deltaTime: number): void {
+@@ -404,7 +440,9 @@
+ 
+         if (!this.physicsWorld) return;
+ 
+-        if (!this._enable) {
++        const disposition = getPhysicsSystemControlDisposition(this);
++        const observed = disposition !== undefined;
++        if (!this._enable || disposition === 'paused') {
+             this.physicsWorld.syncSceneToPhysics();
+             return;
+         }
+@@ -413,7 +451,12 @@
+             this._subStepCount = 0;
+             this._accumulator += deltaTime;
+             director.emit(DirectorEvent.BEFORE_PHYSICS);
++            if (observed && (getPhysicsSystemControlDisposition(this) !== 'ready' || !this._enable || !this._autoSimulation)) {
++                director.emit(DirectorEvent.AFTER_PHYSICS);
++                return;
++            }
+             while (this._subStepCount < this._maxSubSteps) {
++                if (observed && (getPhysicsSystemControlDisposition(this) !== 'ready' || !this._enable || !this._autoSimulation)) break;
+                 if (this._accumulator >= this._fixedTimeStep) {
+                     this.physicsWorld.syncSceneToPhysics();
+                     this.physicsWorld.step(this._fixedTimeStep);
+@@ -493,6 +536,7 @@
+      */
+     step (fixedTimeStep: number, deltaTime?: number, maxSubSteps?: number): void {
+         assertMutationAllowed(this, 'PhysicsSystem.step');
++        assertPhysicsSystemManualStep(this);
+         if (this.physicsWorld) this.physicsWorld.step(fixedTimeStep, deltaTime, maxSubSteps);
+     }
+ 

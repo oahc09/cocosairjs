@@ -1,0 +1,53 @@
+{
+  "kind": "UNCOMMITTED_FROZEN_WORKTREE_SOURCE_NOT_c2_COMMIT_CONTENT",
+  "sources": [
+    {
+      "path": "src/cocos/physics/framework/physics-system.ts",
+      "sha256": "a4890065dcb52287ec5483f2b8c14e63dcd266cd1503b5f2629716713fa504eb",
+      "bytes": 44352,
+      "currentSHA256": "a4890065dcb52287ec5483f2b8c14e63dcd266cd1503b5f2629716713fa504eb",
+      "unchangedFromRunBefore": true,
+      "actuallyLoadedByJest": true
+    },
+    {
+      "path": "src/cocos/physics/framework/physics-system-control.ts",
+      "sha256": "59ab174ab3d18840992e3e211f399a2715cab8f0a8ffdf8b0aa3ee2a1fedfb4d",
+      "bytes": 12389,
+      "currentSHA256": "59ab174ab3d18840992e3e211f399a2715cab8f0a8ffdf8b0aa3ee2a1fedfb4d",
+      "unchangedFromRunBefore": true,
+      "actuallyLoadedByJest": true
+    },
+    {
+      "path": "src/air/physics/box3d/world-command-owner.ts",
+      "sha256": "e95022ff7b4d298cc7a651db4b1c77b181bbac0bc15a536e8be2775b3aa3388a",
+      "bytes": 40631,
+      "currentSHA256": "e95022ff7b4d298cc7a651db4b1c77b181bbac0bc15a536e8be2775b3aa3388a",
+      "unchangedFromRunBefore": true,
+      "actuallyLoadedByJest": true
+    },
+    {
+      "path": "src/air/physics/box3d/world.ts",
+      "sha256": "d012587deb71c44a820ada695d598239a6bdac21abc09157307b8e3ab87cf0da",
+      "bytes": 34314,
+      "currentSHA256": "d012587deb71c44a820ada695d598239a6bdac21abc09157307b8e3ab87cf0da",
+      "unchangedFromRunBefore": true,
+      "actuallyLoadedByJest": true
+    },
+    {
+      "path": "src/air/physics/box3d/command-queue.ts",
+      "sha256": "5bd06702d08968c9545aeeafe00c074a2e50daca68a9bee148d11d09de342892",
+      "bytes": 23779,
+      "currentSHA256": "5bd06702d08968c9545aeeafe00c074a2e50daca68a9bee148d11d09de342892",
+      "unchangedFromRunBefore": true,
+      "actuallyLoadedByJest": true
+    },
+    {
+      "path": "src/air/physics/box3d/command-producers.ts",
+      "sha256": "754924a29fa5c8711f831f729a1d005a12e4d9de83fcb5746c6ae7e1e2464991",
+      "bytes": 15979,
+      "currentSHA256": "754924a29fa5c8711f831f729a1d005a12e4d9de83fcb5746c6ae7e1e2464991",
+      "unchangedFromRunBefore": true,
+      "actuallyLoadedByJest": false
+    }
+  ]
+}

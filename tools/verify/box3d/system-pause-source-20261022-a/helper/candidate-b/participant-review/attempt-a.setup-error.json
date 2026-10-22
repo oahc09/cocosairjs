@@ -1,0 +1,7 @@
+{
+  "status": "SETUP_ERROR_NOT_PRODUCT_RED",
+  "controlsExecuted": 0,
+  "cause": "Harness resolved workspace root one parent too high, so TypeScript require failed before loading either candidate.",
+  "exitCode": 1,
+  "harnessSHA256": "1682f9e8c95dbe8d031523715bebd040eefd57d49a3baf30b3f36e8f5189a5d2"
+}

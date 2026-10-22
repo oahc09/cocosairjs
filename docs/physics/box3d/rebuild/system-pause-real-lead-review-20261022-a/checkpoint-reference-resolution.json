@@ -1,0 +1,143 @@
+{
+  "status": "ALL_NEW_SOURCE_RAW_REFERENCES_RESOLVED_WITH_SIX_DECLARED_EXTERNAL_OR_DECOMPRESSED_IDENTITIES",
+  "resolvedSourceReferences": 25170,
+  "remainingIdentities": [
+    {
+      "manifest": "ai/ledgers/box3d-checkpoint-34-transport-index.json",
+      "pointer": "/originalSha256",
+      "sha256": "eec5ea2bd071be4fa9eef547726a72097f5c89fef4552d7da6ec089edd01db45"
+    },
+    {
+      "manifest": "docs/physics/box3d/rebuild/library-material-cleanup-qualified-checkpoint-20261022.json",
+      "pointer": "/archive/sha256",
+      "sha256": "209a397bbe5cf660c1917b36f085a8691e8c4758aa6473cd7d222dfdb9fa77b2"
+    },
+    {
+      "manifest": "docs/physics/box3d/rebuild/library-material-cleanup-qualified-checkpoint-20261022.json",
+      "pointer": "/bundle/sha256",
+      "sha256": "e0cdec00881a5bc01cfcaa03680ab71666d5bc5f00bcce1a320fdb5b29ed04e3"
+    },
+    {
+      "manifest": "docs/physics/box3d/rebuild/library-material-cleanup-qualified-checkpoint-20261022.json",
+      "pointer": "/priorReceiptSha256",
+      "sha256": "5ed969be3bff4a026b215376e19b55045cf89f6ab7ff2642f4eeb469c2da663f"
+    },
+    {
+      "manifest": "docs/physics/box3d/rebuild/owner-material-cleanup-release-20261022-observer-lease-pause-c/native-and-app.raw.json",
+      "pointer": "/artifact/artifacts/0/sha256",
+      "sha256": "003c79702bf41fa33f197f4786c8469a5234ee122235173970046d7dfbd7c72f"
+    },
+    {
+      "manifest": "docs/physics/box3d/rebuild/owner-material-cleanup-release-20261022-observer-lease-pause-c/native-and-app.raw.json",
+      "pointer": "/artifact/artifacts/1/sha256",
+      "sha256": "4b9494dc2d3c46b4cbacf8d12a8119df5e91a27e19f90b946d50f6467b7adf8f"
+    },
+    {
+      "manifest": "docs/physics/box3d/rebuild/owner-material-cleanup-release-20261022-observer-lease-pause-c/native-and-app.raw.json",
+      "pointer": "/checkpoints/3/data/observations/artifact/artifacts/0/sha256",
+      "sha256": "003c79702bf41fa33f197f4786c8469a5234ee122235173970046d7dfbd7c72f"
+    },
+    {
+      "manifest": "docs/physics/box3d/rebuild/owner-material-cleanup-release-20261022-observer-lease-pause-c/native-and-app.raw.json",
+      "pointer": "/checkpoints/3/data/observations/artifact/artifacts/1/sha256",
+      "sha256": "4b9494dc2d3c46b4cbacf8d12a8119df5e91a27e19f90b946d50f6467b7adf8f"
+    },
+    {
+      "manifest": "docs/physics/box3d/rebuild/owner-material-cleanup-release-20261022-observer-lease-pause-c/receipt.json",
+      "pointer": "/artifact/artifacts/0/sha256",
+      "sha256": "003c79702bf41fa33f197f4786c8469a5234ee122235173970046d7dfbd7c72f"
+    },
+    {
+      "manifest": "docs/physics/box3d/rebuild/owner-material-cleanup-release-20261022-observer-lease-pause-c/receipt.json",
+      "pointer": "/artifact/artifacts/1/sha256",
+      "sha256": "4b9494dc2d3c46b4cbacf8d12a8119df5e91a27e19f90b946d50f6467b7adf8f"
+    },
+    {
+      "manifest": "docs/physics/box3d/rebuild/owner-material-native-release-20261022-readback-pause-c/native-and-app.raw.json",
+      "pointer": "/artifact/artifacts/0/sha256",
+      "sha256": "003c79702bf41fa33f197f4786c8469a5234ee122235173970046d7dfbd7c72f"
+    },
+    {
+      "manifest": "docs/physics/box3d/rebuild/owner-material-native-release-20261022-readback-pause-c/native-and-app.raw.json",
+      "pointer": "/artifact/artifacts/1/sha256",
+      "sha256": "4b9494dc2d3c46b4cbacf8d12a8119df5e91a27e19f90b946d50f6467b7adf8f"
+    },
+    {
+      "manifest": "docs/physics/box3d/rebuild/owner-material-native-release-20261022-readback-pause-c/native-and-app.raw.json",
+      "pointer": "/checkpoints/3/data/observations/artifact/artifacts/0/sha256",
+      "sha256": "003c79702bf41fa33f197f4786c8469a5234ee122235173970046d7dfbd7c72f"
+    },
+    {
+      "manifest": "docs/physics/box3d/rebuild/owner-material-native-release-20261022-readback-pause-c/native-and-app.raw.json",
+      "pointer": "/checkpoints/3/data/observations/artifact/artifacts/1/sha256",
+      "sha256": "4b9494dc2d3c46b4cbacf8d12a8119df5e91a27e19f90b946d50f6467b7adf8f"
+    },
+    {
+      "manifest": "docs/physics/box3d/rebuild/owner-material-native-release-20261022-readback-pause-c/receipt.json",
+      "pointer": "/artifact/artifacts/0/sha256",
+      "sha256": "003c79702bf41fa33f197f4786c8469a5234ee122235173970046d7dfbd7c72f"
+    },
+    {
+      "manifest": "docs/physics/box3d/rebuild/owner-material-native-release-20261022-readback-pause-c/receipt.json",
+      "pointer": "/artifact/artifacts/1/sha256",
+      "sha256": "4b9494dc2d3c46b4cbacf8d12a8119df5e91a27e19f90b946d50f6467b7adf8f"
+    },
+    {
+      "manifest": "docs/physics/box3d/rebuild/owner-system-pause-release-20261022-a/native-and-app.raw.json",
+      "pointer": "/artifact/artifacts/0/sha256",
+      "sha256": "003c79702bf41fa33f197f4786c8469a5234ee122235173970046d7dfbd7c72f"
+    },
+    {
+      "manifest": "docs/physics/box3d/rebuild/owner-system-pause-release-20261022-a/native-and-app.raw.json",
+      "pointer": "/artifact/artifacts/1/sha256",
+      "sha256": "4b9494dc2d3c46b4cbacf8d12a8119df5e91a27e19f90b946d50f6467b7adf8f"
+    },
+    {
+      "manifest": "docs/physics/box3d/rebuild/owner-system-pause-release-20261022-a/receipt.json",
+      "pointer": "/artifact/artifacts/0/sha256",
+      "sha256": "003c79702bf41fa33f197f4786c8469a5234ee122235173970046d7dfbd7c72f"
+    },
+    {
+      "manifest": "docs/physics/box3d/rebuild/owner-system-pause-release-20261022-a/receipt.json",
+      "pointer": "/artifact/artifacts/1/sha256",
+      "sha256": "4b9494dc2d3c46b4cbacf8d12a8119df5e91a27e19f90b946d50f6467b7adf8f"
+    },
+    {
+      "manifest": "docs/physics/box3d/rebuild/system-pause-real-lead-review-20261022-a/checkpoint-evidence-scope.json",
+      "pointer": "/externalFilesRehashed/0/sha256",
+      "sha256": "003c79702bf41fa33f197f4786c8469a5234ee122235173970046d7dfbd7c72f"
+    },
+    {
+      "manifest": "docs/physics/box3d/rebuild/system-pause-real-lead-review-20261022-a/checkpoint-evidence-scope.json",
+      "pointer": "/externalFilesRehashed/1/sha256",
+      "sha256": "4b9494dc2d3c46b4cbacf8d12a8119df5e91a27e19f90b946d50f6467b7adf8f"
+    },
+    {
+      "manifest": "docs/physics/box3d/rebuild/system-pause-real-lead-review-20261022-a/checkpoint-evidence-scope.json",
+      "pointer": "/externalFilesRehashed/2/sha256",
+      "sha256": "209a397bbe5cf660c1917b36f085a8691e8c4758aa6473cd7d222dfdb9fa77b2"
+    },
+    {
+      "manifest": "docs/physics/box3d/rebuild/system-pause-real-lead-review-20261022-a/checkpoint-evidence-scope.json",
+      "pointer": "/externalFilesRehashed/3/sha256",
+      "sha256": "e0cdec00881a5bc01cfcaa03680ab71666d5bc5f00bcce1a320fdb5b29ed04e3"
+    },
+    {
+      "manifest": "docs/physics/box3d/rebuild/system-pause-real-lead-review-20261022-a/checkpoint-evidence-scope.json",
+      "pointer": "/externalFilesRehashed/4/sha256",
+      "sha256": "5ed969be3bff4a026b215376e19b55045cf89f6ab7ff2642f4eeb469c2da663f"
+    },
+    {
+      "manifest": "docs/physics/box3d/rebuild/system-pause-real-lead-review-20261022-a/checkpoint-evidence-scope.json",
+      "pointer": "/original34ExactDecompression/originalSha256",
+      "sha256": "eec5ea2bd071be4fa9eef547726a72097f5c89fef4552d7da6ec089edd01db45"
+    },
+    {
+      "manifest": "tools/verify/box3d/system-pause-source-20261022-a/lead-early-controls/evidence-gzip-control-a/original-34-equivalence.json",
+      "pointer": "/originalSha256",
+      "sha256": "eec5ea2bd071be4fa9eef547726a72097f5c89fef4552d7da6ec089edd01db45"
+    }
+  ],
+  "proof": "checkpoint-evidence-scope.json",
+  "scope": "Not all historical external reference closure. Formal Gate status unchanged."
+}

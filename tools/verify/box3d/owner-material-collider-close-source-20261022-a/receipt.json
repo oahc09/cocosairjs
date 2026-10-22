@@ -1,0 +1,41 @@
+{
+  "status": "FIXTURE_SOURCE_TYPECHECKED_NOT_EXECUTED",
+  "files": [
+    {
+      "path": "tools/verify/box3d/owner-material-collider-close-real-wasm-environment.cjs",
+      "bytes": 1721,
+      "sha256": "307016679940e6a378082470c7112e4de0af5b04451354173b698402c6bee2b4"
+    },
+    {
+      "path": "tools/verify/box3d/owner-material-collider-close-real-wasm-inputs.cjs",
+      "bytes": 6234,
+      "sha256": "00bd8e533fdd6df09154cd954035d4fd7a1f9dac148160f28d1ae90720415b55"
+    },
+    {
+      "path": "tools/verify/box3d/owner-material-collider-close-real-wasm-preload.mjs",
+      "bytes": 8422,
+      "sha256": "5336f8f16405f9562512bd35e0b24562f8cc42ccbe70d0d68cd6f5df7eb9d7f5"
+    },
+    {
+      "path": "tools/verify/box3d/owner-material-collider-close-real-wasm.jest.cjs",
+      "bytes": 1467,
+      "sha256": "7eae2c044320ae8f6839ad6226d7b0910c3ab1ae220d341443d1ce4f55ad9b52"
+    },
+    {
+      "path": "tools/verify/box3d/owner-material-collider-close-real-wasm.mjs",
+      "bytes": 6805,
+      "sha256": "e57f6d50f59d65d0199309108c23b70af3967fe830b05b6f95fed1d4bac843d0"
+    },
+    {
+      "path": "tools/verify/box3d/owner-material-collider-close-real-wasm.test.ts",
+      "bytes": 15166,
+      "sha256": "3eeaa375a75953edbcbab91740b622d8449782c9a634ec582e8940748a2f4408"
+    },
+    {
+      "path": "tools/verify/box3d/owner-material-collider-close-real-wasm.tsconfig.json",
+      "bytes": 175,
+      "sha256": "a41935c0bf31d1582f9c002b203062103813659154a9f4996f988e3d24f7f524"
+    }
+  ],
+  "scope": "Real original App.close drives component lifecycle, explicit once-only throws after original cleanup operations return. Expected close status is failure with truthful partial receipt, not successful scene release. Native world/module ownership release checked independently. No manually invoking component callback or changing flags/removal."
+}

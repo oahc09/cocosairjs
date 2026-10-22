@@ -1,0 +1,218 @@
+{
+  "scope": "Pure wrapper/B0 JS only; no actual owner, queues, producers, WASM or physics qualification.",
+  "status": "PASS_PURE_WRAPPER_ONLY",
+  "formalRequiredCells": {
+    "count": 2128,
+    "status": "NOT_RUN"
+  },
+  "stagedCommandsSupported": false,
+  "unifiedTransactionsSupported": false,
+  "rows": [
+    {
+      "name": "unobserved controls do not read source or validate operation",
+      "status": "PASS_PURE_WRAPPER_ONLY"
+    },
+    {
+      "name": "bootstrap reader uses closure without public getters, before registration or live binding",
+      "status": "PASS_PURE_WRAPPER_ONLY"
+    },
+    {
+      "name": "registration initial false pauses manual without opening owner or using selector",
+      "status": "PASS_PURE_WRAPPER_ONLY"
+    },
+    {
+      "name": "strict observed enabled rejects 0 before cache write and preserves terminal failure",
+      "status": "PASS_PURE_WRAPPER_ONLY"
+    },
+    {
+      "name": "strict observed enabled rejects 1 before cache write and preserves terminal failure",
+      "status": "PASS_PURE_WRAPPER_ONLY"
+    },
+    {
+      "name": "strict observed enabled rejects null before cache write and preserves terminal failure",
+      "status": "PASS_PURE_WRAPPER_ONLY"
+    },
+    {
+      "name": "strict observed enabled rejects undefined before cache write and preserves terminal failure",
+      "status": "PASS_PURE_WRAPPER_ONLY"
+    },
+    {
+      "name": "strict observed enabled rejects [object Object] before cache write and preserves terminal failure",
+      "status": "PASS_PURE_WRAPPER_ONLY"
+    },
+    {
+      "name": "strict observed autoSimulation rejects 0 before cache write and preserves terminal failure",
+      "status": "PASS_PURE_WRAPPER_ONLY"
+    },
+    {
+      "name": "strict observed autoSimulation rejects 1 before cache write and preserves terminal failure",
+      "status": "PASS_PURE_WRAPPER_ONLY"
+    },
+    {
+      "name": "strict observed autoSimulation rejects null before cache write and preserves terminal failure",
+      "status": "PASS_PURE_WRAPPER_ONLY"
+    },
+    {
+      "name": "strict observed autoSimulation rejects undefined before cache write and preserves terminal failure",
+      "status": "PASS_PURE_WRAPPER_ONLY"
+    },
+    {
+      "name": "strict observed autoSimulation rejects [object Object] before cache write and preserves terminal failure",
+      "status": "PASS_PURE_WRAPPER_ONLY"
+    },
+    {
+      "name": "normal cache-first commit records actual flags with one callback per phase",
+      "status": "PASS_PURE_WRAPPER_ONLY"
+    },
+    {
+      "name": "autoSimulation false alone keeps explicit manual disposition ready",
+      "status": "PASS_PURE_WRAPPER_ONLY"
+    },
+    {
+      "name": "open falsy throw undefined retains first identity through catch/finally",
+      "status": "PASS_PURE_WRAPPER_ONLY"
+    },
+    {
+      "name": "open falsy throw null retains first identity through catch/finally",
+      "status": "PASS_PURE_WRAPPER_ONLY"
+    },
+    {
+      "name": "open falsy throw 0 retains first identity through catch/finally",
+      "status": "PASS_PURE_WRAPPER_ONLY"
+    },
+    {
+      "name": "open falsy throw false retains first identity through catch/finally",
+      "status": "PASS_PURE_WRAPPER_ONLY"
+    },
+    {
+      "name": "open falsy throw  retains first identity through catch/finally",
+      "status": "PASS_PURE_WRAPPER_ONLY"
+    },
+    {
+      "name": "preflight falsy throw undefined retains first identity through catch/finally",
+      "status": "PASS_PURE_WRAPPER_ONLY"
+    },
+    {
+      "name": "preflight falsy throw null retains first identity through catch/finally",
+      "status": "PASS_PURE_WRAPPER_ONLY"
+    },
+    {
+      "name": "preflight falsy throw 0 retains first identity through catch/finally",
+      "status": "PASS_PURE_WRAPPER_ONLY"
+    },
+    {
+      "name": "preflight falsy throw false retains first identity through catch/finally",
+      "status": "PASS_PURE_WRAPPER_ONLY"
+    },
+    {
+      "name": "preflight falsy throw  retains first identity through catch/finally",
+      "status": "PASS_PURE_WRAPPER_ONLY"
+    },
+    {
+      "name": "commit falsy throw undefined retains first identity through catch/finally",
+      "status": "PASS_PURE_WRAPPER_ONLY"
+    },
+    {
+      "name": "commit falsy throw null retains first identity through catch/finally",
+      "status": "PASS_PURE_WRAPPER_ONLY"
+    },
+    {
+      "name": "commit falsy throw 0 retains first identity through catch/finally",
+      "status": "PASS_PURE_WRAPPER_ONLY"
+    },
+    {
+      "name": "commit falsy throw false retains first identity through catch/finally",
+      "status": "PASS_PURE_WRAPPER_ONLY"
+    },
+    {
+      "name": "commit falsy throw  retains first identity through catch/finally",
+      "status": "PASS_PURE_WRAPPER_ONLY"
+    },
+    {
+      "name": "dispose falsy throw undefined retains first identity through catch/finally",
+      "status": "PASS_PURE_WRAPPER_ONLY"
+    },
+    {
+      "name": "dispose falsy throw null retains first identity through catch/finally",
+      "status": "PASS_PURE_WRAPPER_ONLY"
+    },
+    {
+      "name": "dispose falsy throw 0 retains first identity through catch/finally",
+      "status": "PASS_PURE_WRAPPER_ONLY"
+    },
+    {
+      "name": "dispose falsy throw false retains first identity through catch/finally",
+      "status": "PASS_PURE_WRAPPER_ONLY"
+    },
+    {
+      "name": "dispose falsy throw  retains first identity through catch/finally",
+      "status": "PASS_PURE_WRAPPER_ONLY"
+    },
+    {
+      "name": "primary falsy plus cleanup throw retains primary and secondary independently",
+      "status": "PASS_PURE_WRAPPER_ONLY"
+    },
+    {
+      "name": "observer callbacks copied once and duplicate owner registration leaves first installed",
+      "status": "PASS_PURE_WRAPPER_ONLY"
+    },
+    {
+      "name": "active control refuses manual before private source or owner disposition reads",
+      "status": "PASS_PURE_WRAPPER_ONLY"
+    },
+    {
+      "name": "caught nested execution admission latches failure without disposing ownership",
+      "status": "PASS_PURE_WRAPPER_ONLY"
+    },
+    {
+      "name": "owner disposition fault undefined is not relabeled paused or absent",
+      "status": "PASS_PURE_WRAPPER_ONLY"
+    },
+    {
+      "name": "owner disposition fault null is not relabeled paused or absent",
+      "status": "PASS_PURE_WRAPPER_ONLY"
+    },
+    {
+      "name": "owner disposition fault 0 is not relabeled paused or absent",
+      "status": "PASS_PURE_WRAPPER_ONLY"
+    },
+    {
+      "name": "owner disposition fault false is not relabeled paused or absent",
+      "status": "PASS_PURE_WRAPPER_ONLY"
+    },
+    {
+      "name": "owner disposition fault  is not relabeled paused or absent",
+      "status": "PASS_PURE_WRAPPER_ONLY"
+    },
+    {
+      "name": "lease release attempted and caught in open fails outer admission without unregistering owner",
+      "status": "PASS_PURE_WRAPPER_ONLY"
+    },
+    {
+      "name": "stale lease cannot remove replacement owner; fabricated ticket receiver has no effect",
+      "status": "PASS_PURE_WRAPPER_ONLY"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "physics-system-control.ts",
+      "bytes": 12338,
+      "sha256": "053cb01b5e4043206d0158619c398328bd6f155ee2ad39e0223975e501cdb4e7"
+    },
+    {
+      "path": "physics-state-observer.ts",
+      "bytes": 23170,
+      "sha256": "4cf40c4f1be0d407a402e95dcdb7a898b1942cb175f869f6367a41b18c2d1d2b"
+    },
+    {
+      "path": "physics-system.ts",
+      "bytes": 44352,
+      "sha256": "a4890065dcb52287ec5483f2b8c14e63dcd266cd1503b5f2629716713fa504eb"
+    },
+    {
+      "path": "wrapper-control.cjs",
+      "bytes": 11162,
+      "sha256": "bcb66340425f948bdb6f1708980081a5e9814ec453afa25ceff45dc6eaf3f59a"
+    }
+  ]
+}

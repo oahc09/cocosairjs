@@ -1,0 +1,7 @@
+{
+  "status": "SETUP_ERROR_NOT_PRODUCT_RED",
+  "reason": "compile-b noEmitOnError produced no module; wrapper could not load compiled JS",
+  "exitCode": 1,
+  "productTestsExecuted": 0,
+  "stderr": "wrapper-a.stderr.log"
+}

@@ -24,9 +24,26 @@
  * enable/mass state, transaction fences and whole-world readiness before apply. This
  * module's logical body registration and teardown notifications prove none of those.
  */
+export interface PreparedCommandPause {
+    commit(): void;
+    dispose(): void;
+    diagnostics(): Readonly<{
+        paused: boolean;
+        committed: boolean;
+        disposed: boolean;
+    }>;
+}
 export type CommandVector = Readonly<{ x: number; y: number; z: number }>;
-export type CommandRotation = Readonly<{ x: number; y: number; z: number; w: number }>;
-export type CommandPose = Readonly<{ position: CommandVector; rotation: CommandRotation }>;
+export type CommandRotation = Readonly<{
+    x: number;
+    y: number;
+    z: number;
+    w: number;
+}>;
+export type CommandPose = Readonly<{
+    position: CommandVector;
+    rotation: CommandRotation;
+}>;
 export type CommandInput =
     | { readonly kind: 'target'; readonly pose: CommandPose }
     | {
@@ -46,7 +63,9 @@ export type CommandInput =
           readonly vector: CommandVector;
           readonly space?: 'world' | 'local';
       }
-    | { readonly kind: 'target-clear' | 'clear-forces' | 'clear-velocity' | 'clear-state' };
+    | {
+          readonly kind: 'target-clear' | 'clear-forces' | 'clear-velocity' | 'clear-state';
+      };
 export type CopiedCommand = Readonly<CommandInput>;
 export interface CommandRecord {
     readonly generation: number;
@@ -89,14 +108,23 @@ function object(value: unknown): asserts value is object {
 }
 function vector(value: CommandVector): CommandVector {
     object(value);
-    return Object.freeze({ x: finite(value.x), y: finite(value.y), z: finite(value.z) });
+    return Object.freeze({
+        x: finite(value.x),
+        y: finite(value.y),
+        z: finite(value.z),
+    });
 }
 function pose(value: CommandPose): CommandPose {
     object(value);
     const position = vector(value.position);
     const r = value.rotation;
     object(r);
-    const rotation = Object.freeze({ x: finite(r.x), y: finite(r.y), z: finite(r.z), w: finite(r.w) });
+    const rotation = Object.freeze({
+        x: finite(r.x),
+        y: finite(r.y),
+        z: finite(r.z),
+        w: finite(r.w),
+    });
     if (rotation.x === 0 && rotation.y === 0 && rotation.z === 0 && rotation.w === 0) fail('zero quaternion');
     return Object.freeze({ position, rotation });
 }
@@ -165,6 +193,7 @@ export class Box3DCommandQueue {
     #quarantine: CommandCandidate | null = null;
     #failure: unknown = undefined;
     #candidateFailed = false;
+    #pauseReservation: object | null = null;
     #reading = false;
     #readFailure = false;
     #readError: unknown = undefined;
@@ -191,6 +220,7 @@ export class Box3DCommandQueue {
         throw error;
     }
     #admit(...phases: Phase[]): void {
+        if (this.#pauseReservation) this.#reject('prepared control transition is reserved');
         if (this.#reading) this.#reject('nested admission during input copy');
         if (!phases.includes(this.#phase)) this.#reject(`operation forbidden during ${this.#phase}`);
     }
@@ -221,7 +251,8 @@ export class Box3DCommandQueue {
     }
 
     registerBody(identity: object): void {
-        this.#admit('ready');
+        // Paused non-target assembly is configuration only; never submit or acquire target.
+        this.#admit('ready', 'paused');
         object(identity);
         if (this.#knownBodies.has(identity)) this.#reject('body identity already registered or retired');
         this.#knownBodies.add(identity);
@@ -251,7 +282,10 @@ export class Box3DCommandQueue {
         body.target = 'protected';
     }
     submit(identity: object, input: CommandInput): number {
-        return this.withSubmissionAdmission(() => ({ body: identity, command: input }));
+        return this.withSubmissionAdmission(() => ({
+            body: identity,
+            command: input,
+        }));
     }
     /** Owner resolution, validation and original argument reads MUST occur inside read.
      * It returns one candidate only; calling submit from it is forbidden reentry.
@@ -394,7 +428,12 @@ export class Box3DCommandQueue {
             }
             const original = Object.freeze([...this.#pending, ...this.#provisional]);
             const operations = this.#reduce(original);
-            const candidate = Object.freeze({ generation: this.#generation, context, original, operations });
+            const candidate = Object.freeze({
+                generation: this.#generation,
+                context,
+                original,
+                operations,
+            });
             this.#candidate = candidate;
             this.#phase = 'validating';
             return candidate;
@@ -451,14 +490,51 @@ export class Box3DCommandQueue {
         this.#candidate = null;
         this.#phase = 'faulted';
     }
-    pause(): void {
+    /** Reserve before any System cache publication. Preparation changes no accepted
+     * queue/target state; all public mutation stays excluded until dispose. */
+    preparePauseTransition(paused: boolean): PreparedCommandPause {
         this.#admit('ready', 'paused');
-        this.#pending = Object.freeze([]);
-        this.#phase = 'paused';
+        if (typeof paused !== 'boolean') this.#reject('pause state must be boolean');
+        const identity = {},
+            queue = this;
+        const cleared: readonly CommandRecord[] = Object.freeze([]);
+        let committed = false,
+            disposed = false;
+        const lease: PreparedCommandPause = Object.freeze({
+            commit(): void {
+                if (this !== lease || disposed || committed || queue.#pauseReservation !== identity)
+                    queue.#reject('foreign, disposed or consumed pause transition');
+                // All fallible admission/allocation was done before publication.
+                if (paused) queue.#pending = cleared;
+                queue.#phase = paused ? 'paused' : 'ready';
+                committed = true;
+            },
+            dispose(): void {
+                if (this !== lease) queue.#reject('invalid pause transition receiver');
+                if (disposed) return;
+                disposed = true;
+                if (queue.#pauseReservation === identity) queue.#pauseReservation = null;
+            },
+            diagnostics: () => Object.freeze({ paused, committed, disposed }),
+        });
+        this.#pauseReservation = identity;
+        return lease;
+    }
+    pause(): void {
+        const transition = this.preparePauseTransition(true);
+        try {
+            transition.commit();
+        } finally {
+            transition.dispose();
+        }
     }
     resume(): void {
-        this.#admit('paused', 'ready');
-        this.#phase = 'ready';
+        const transition = this.preparePauseTransition(false);
+        try {
+            transition.commit();
+        } finally {
+            transition.dispose();
+        }
     }
     close(): void {
         this.#admit('ready', 'paused', 'faulted', 'closed');
@@ -473,6 +549,7 @@ export class Box3DCommandQueue {
         return Object.freeze({
             generation: this.#generation,
             phase: this.#phase,
+            preparedControl: this.#pauseReservation !== null,
             sequence: this.#sequence,
             tickIndex: this.#completedTicks >= this.#limit ? null : this.#completedTicks + 1,
             completedTicks: this.#completedTicks,

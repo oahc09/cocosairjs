@@ -23,6 +23,7 @@
 */
 
 import { beginPhysicsMaterialChange } from './physics-material-transaction';
+import { installPhysicsSystemControlSource, beginPhysicsSystemControl, getPhysicsSystemControlDisposition, assertPhysicsSystemManualStep } from './physics-system-control';
 import { assertMutationAllowed } from '../../core/data/mutation-guard';
 import { BUILD, EDITOR_NOT_IN_PREVIEW, LOAD_BULLET_MANUALLY, LOAD_PHYSX_MANUALLY } from 'internal:constants';
 import { Vec3, RecyclePool, Enum, System, cclegacy, settings, geometry, warn, IQuatLike, IVec3Like, SettingsCategory, errorID, warnID } from '../../core';
@@ -107,6 +108,23 @@ export class PhysicsSystem extends System implements IWorldInitData {
 
     public set enable (value: boolean) {
         assertMutationAllowed(this, 'PhysicsSystem.enable');
+        const change = beginPhysicsSystemControl(this, 'system-enable');
+        if (change) {
+            try {
+                change.prepare(() => ({
+                    before: { kind: 'system-control', enabled: this._enable, autoSimulation: this._autoSimulation },
+                    candidate: { kind: 'system-control', enabled: value, autoSimulation: this._autoSimulation },
+                }));
+                this._enable = value;
+                change.effect('cache-written');
+                change.commit(() => ({ kind: 'system-control', enabled: this._enable, autoSimulation: this._autoSimulation }));
+            } catch (error) {
+                const diagnostic = change.diagnostics();
+                if (diagnostic.disposed) throw diagnostic.hasFailure ? diagnostic.error : error;
+                change.fail(error, () => ({ kind: 'system-control', enabled: this._enable, autoSimulation: this._autoSimulation }));
+            } finally { change.dispose(); }
+            return;
+        }
         this._enable = value;
     }
 
@@ -214,6 +232,23 @@ export class PhysicsSystem extends System implements IWorldInitData {
 
     public set autoSimulation (value: boolean) {
         assertMutationAllowed(this, 'PhysicsSystem.autoSimulation');
+        const change = beginPhysicsSystemControl(this, 'system-auto-simulation');
+        if (change) {
+            try {
+                change.prepare(() => ({
+                    before: { kind: 'system-control', enabled: this._enable, autoSimulation: this._autoSimulation },
+                    candidate: { kind: 'system-control', enabled: this._enable, autoSimulation: value },
+                }));
+                this._autoSimulation = value;
+                change.effect('cache-written');
+                change.commit(() => ({ kind: 'system-control', enabled: this._enable, autoSimulation: this._autoSimulation }));
+            } catch (error) {
+                const diagnostic = change.diagnostics();
+                if (diagnostic.disposed) throw diagnostic.hasFailure ? diagnostic.error : error;
+                change.fail(error, () => ({ kind: 'system-control', enabled: this._enable, autoSimulation: this._autoSimulation }));
+            } finally { change.dispose(); }
+            return;
+        }
         this._autoSimulation = value;
     }
 
@@ -396,6 +431,7 @@ export class PhysicsSystem extends System implements IWorldInitData {
 
     private constructor () {
         super();
+        installPhysicsSystemControlSource(this, () => ({ enabled: this._enable, autoSimulation: this._autoSimulation }));
     }
 
     postUpdate (deltaTime: number): void {
@@ -404,7 +440,9 @@ export class PhysicsSystem extends System implements IWorldInitData {
 
         if (!this.physicsWorld) return;
 
-        if (!this._enable) {
+        const disposition = getPhysicsSystemControlDisposition(this);
+        const observed = disposition !== undefined;
+        if (!this._enable || disposition === 'paused') {
             this.physicsWorld.syncSceneToPhysics();
             return;
         }
@@ -413,7 +451,12 @@ export class PhysicsSystem extends System implements IWorldInitData {
             this._subStepCount = 0;
             this._accumulator += deltaTime;
             director.emit(DirectorEvent.BEFORE_PHYSICS);
+            if (observed && (getPhysicsSystemControlDisposition(this) !== 'ready' || !this._enable || !this._autoSimulation)) {
+                director.emit(DirectorEvent.AFTER_PHYSICS);
+                return;
+            }
             while (this._subStepCount < this._maxSubSteps) {
+                if (observed && (getPhysicsSystemControlDisposition(this) !== 'ready' || !this._enable || !this._autoSimulation)) break;
                 if (this._accumulator >= this._fixedTimeStep) {
                     this.physicsWorld.syncSceneToPhysics();
                     this.physicsWorld.step(this._fixedTimeStep);
@@ -493,6 +536,7 @@ export class PhysicsSystem extends System implements IWorldInitData {
      */
     step (fixedTimeStep: number, deltaTime?: number, maxSubSteps?: number): void {
         assertMutationAllowed(this, 'PhysicsSystem.step');
+        assertPhysicsSystemManualStep(this);
         if (this.physicsWorld) this.physicsWorld.step(fixedTimeStep, deltaTime, maxSubSteps);
     }
 

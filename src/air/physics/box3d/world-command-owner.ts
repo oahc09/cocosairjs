@@ -33,6 +33,12 @@ import type {
 } from '../../../cocos/scene-graph/node-transform-validation';
 import type { Box3DBodyState, Box3DId } from './binding/facade.mjs';
 import { Box3DCommandQueue } from './command-queue';
+import type { PreparedCommandPause } from './command-queue';
+import { registerPhysicsSystemControl } from '../../../cocos/physics/framework/physics-system-control';
+import type {
+    PhysicsSystemControlLease,
+    PhysicsSystemControlState,
+} from '../../../cocos/physics/framework/physics-system-control';
 import { copySurfaceMaterial, worldError } from './world-binding';
 import type { Box3DSurfaceMaterial } from './world-binding';
 import { unsupportedBox3D } from './unsupported';
@@ -75,7 +81,8 @@ export interface Box3DOwnerFenceScope {
     write(node: Node, operation: NodeTransformWriteOperation, expected: readonly number[], perform: () => void): void;
     dispose(): void;
 }
-type Phase = 'idle' | 'preflight' | 'solving' | 'writeback' | 'dispatch' | 'material' | 'faulted' | 'closed';
+type Phase =
+    'idle' | 'preflight' | 'solving' | 'writeback' | 'dispatch' | 'material' | 'control' | 'faulted' | 'closed';
 type BodyRecord = Readonly<Box3DOwnedBodySeed>;
 type ComponentRecord = {
     readonly body: object;
@@ -121,8 +128,24 @@ export class Box3DWorldCommandOwner {
     readonly #materialCleanups = new Set<() => void>();
     readonly #materialAuthorities = new WeakMap<
         object,
-        { key: object; material: Readonly<Box3DSurfaceMaterial> | null; context: Readonly<PhysicsStateChangeContext> }
+        {
+            key: object;
+            material: Readonly<Box3DSurfaceMaterial> | null;
+            context: Readonly<PhysicsStateChangeContext>;
+        }
     >();
+    #systemControlLease: PhysicsSystemControlLease | null = null;
+    #systemPaused = false;
+    readonly #controlCleanups = new Set<() => void>();
+    #lastControl: Readonly<{
+        operation: string;
+        cacheEnabled: boolean | null;
+        cacheAutoSimulation: boolean | null;
+        queueCommitEntered: boolean;
+        queueCommitReturned: boolean;
+        failed: boolean;
+        actualRead: string;
+    }> | null = null;
     #materialContext: Readonly<PhysicsStateChangeContext> | null = null;
     #materialFault: ((error: unknown) => void) | null = null;
     #lastMaterial: Readonly<{
@@ -224,7 +247,13 @@ export class Box3DWorldCommandOwner {
             resolveNative = seed.resolveNative;
         if ([preflight, readCommitted, resolveNative].some((fn) => typeof fn !== 'function'))
             throw worldError('AIR_E_BOX3D_CONFIG', 'adopt body', 'Expected private body accessors.');
-        const record = Object.freeze({ node, ancestry, preflight, readCommitted, resolveNative });
+        const record = Object.freeze({
+            node,
+            ancestry,
+            preflight,
+            readCommitted,
+            resolveNative,
+        });
         const key = Object.freeze({});
         this.#queue.registerBody(key);
         this.#bodies.set(key, record);
@@ -239,7 +268,14 @@ export class Box3DWorldCommandOwner {
             seed.adapter,
             seed,
         );
-        this.#components.set(adapter, { body, component, kind, material, initialized: false, enabled: false });
+        this.#components.set(adapter, {
+            body,
+            component,
+            kind,
+            material,
+            initialized: false,
+            enabled: false,
+        });
         if (kind === 'collider') {
             try {
                 this.#registerMaterial(adapter, component as Collider, applyMaterial!);
@@ -273,6 +309,175 @@ export class Box3DWorldCommandOwner {
         if (this.#materialFault) throw worldError('AIR_E_BOX3D_CONFIG', 'material observation', 'Already installed.');
         this.#materialFault = fault;
         this.#registerMaterial(this.#system, this.#system, applyDefault);
+    }
+    /** Register against the original System source while construction still precedes selector assignment.
+     * Only later execution/transition admission requires the live System/world binding.
+     * The queue is an actual owner participant. Producers are not yet installed and are not
+     * represented by an empty, allegedly-qualified roster.
+     */
+    installSystemControlObservation(fault: (error: unknown) => void): void {
+        if (this.#systemControlLease)
+            throw worldError('AIR_E_BOX3D_CONFIG', 'System observation', 'Already installed.');
+        let context: Readonly<PhysicsStateChangeContext> | null = null;
+        let scope: Box3DOwnerFenceScope | null = null;
+        let transition: PreparedCommandPause | null = null;
+        let expected: PhysicsSystemControlState | null = null;
+        let entered = false,
+            returned = false,
+            failed = false,
+            failure: unknown;
+        const requireContext = (value: Readonly<PhysicsStateChangeContext>): void => {
+            if (value !== context || !scope || this.#phase !== 'control')
+                throw worldError('AIR_E_BOX3D_REENTRANT', 'System observation', 'Inactive private control context.');
+        };
+        const remember = (actual: PhysicsSystemControlState | null, actualRead: string): void => {
+            this.#lastControl = Object.freeze({
+                operation: context?.operation ?? 'system-initial-state',
+                cacheEnabled: actual?.enabled ?? null,
+                cacheAutoSimulation: actual?.autoSimulation ?? null,
+                queueCommitEntered: entered,
+                queueCommitReturned: returned,
+                failed,
+                actualRead,
+            });
+        };
+        const cleanup = (): void => {
+            let cleanupFailed = false,
+                first: unknown;
+            try {
+                transition?.dispose();
+                transition = null;
+            } catch (error) {
+                this.#recordCleanup('system-control-queue-dispose', error);
+                cleanupFailed = true;
+                first = error;
+            }
+            try {
+                scope?.dispose();
+                scope = null;
+            } catch (error) {
+                // Scope records each actual leaf error itself.
+                if (!cleanupFailed) first = error;
+                cleanupFailed = true;
+            }
+            if (cleanupFailed) {
+                fault(failed ? failure : first);
+                throw first;
+            }
+            context = null;
+            expected = null;
+            this.#controlCleanups.delete(cleanup);
+        };
+        const lease = registerPhysicsSystemControl(
+            this.#system,
+            {
+                open: (value) => {
+                    context = value;
+                    entered = returned = failed = false;
+                    failure = undefined;
+                    this.#controlCleanups.add(cleanup);
+                    scope = this.#begin('control');
+                },
+                preflight: (value, before, candidate) => {
+                    requireContext(value);
+                    if (
+                        before.kind !== 'system-control' ||
+                        candidate.kind !== 'system-control' ||
+                        before.enabled === this.#systemPaused ||
+                        (value.operation === 'system-enable' && before.autoSimulation !== candidate.autoSimulation) ||
+                        (value.operation === 'system-auto-simulation' && before.enabled !== candidate.enabled)
+                    )
+                        throw worldError(
+                            'AIR_E_BOX3D_CONFIG',
+                            'System control preflight',
+                            'Inconsistent copied control state.',
+                        );
+                    expected = candidate;
+                    // Allocate and reserve every installed participant before System writes its cache.
+                    if (value.operation === 'system-enable')
+                        transition = this.#queue.preparePauseTransition(!candidate.enabled);
+                },
+                commit: (value, actual) => {
+                    requireContext(value);
+                    if (
+                        actual.kind !== 'system-control' ||
+                        !expected ||
+                        actual.enabled !== expected.enabled ||
+                        actual.autoSimulation !== expected.autoSimulation
+                    )
+                        throw worldError(
+                            'AIR_E_BOX3D_CONFIG',
+                            'System control commit',
+                            'Actual private cache does not match candidate.',
+                        );
+                    if (transition) {
+                        entered = true;
+                        transition.commit();
+                        returned = true;
+                        this.#systemPaused = !actual.enabled;
+                    }
+                    remember(actual, 'copied');
+                },
+                fail: (_value, report) => {
+                    if (!failed) {
+                        failed = true;
+                        failure = report.error;
+                    }
+                    remember(report.actual?.kind === 'system-control' ? report.actual : null, report.actualRead);
+                    // A rejected input before cache/effect entry is recoverable. Any changed/unknown
+                    // cache or entered participant commit faults; never pretend metadata was rolled back.
+                    const actual = report.actual?.kind === 'system-control' ? report.actual : null;
+                    const before = report.before?.kind === 'system-control' ? report.before : null;
+                    const actualChanged =
+                        report.actualRead === 'copied' &&
+                        (!actual ||
+                            !before ||
+                            actual.enabled !== before.enabled ||
+                            actual.autoSimulation !== before.autoSimulation);
+                    if (report.effects.length || entered || actualChanged || report.actualRead === 'failed')
+                        fault(failure);
+                },
+                dispose: () => cleanup(),
+            },
+            () => this.systemControlDisposition(),
+        );
+        this.#systemControlLease = lease;
+        const initial = lease.initialState;
+        if (!initial.enabled) {
+            // Bootstrap is an actual participant transition too: retain its lease for
+            // terminal cleanup and preserve the first error even if disposal also throws.
+            this.#controlCleanups.add(cleanup);
+            let initialFailed = false,
+                initialError: unknown;
+            try {
+                transition = this.#queue.preparePauseTransition(true);
+                entered = true;
+                transition.commit();
+                returned = true;
+                this.#systemPaused = true;
+                remember(initial, 'copied');
+            } catch (error) {
+                initialFailed = failed = true;
+                initialError = failure = error;
+                remember(initial, 'copied');
+            }
+            try {
+                cleanup();
+            } catch (error) {
+                if (!initialFailed) initialError = error;
+                initialFailed = true;
+            }
+            if (initialFailed) throw initialError;
+        }
+    }
+    systemControlDisposition(): 'ready' | 'paused' {
+        this.assertConfiguration('System execution admission');
+        this.assertSystemBinding();
+        return this.#systemPaused ? 'paused' : 'ready';
+    }
+    assertSteppingAllowed(operation: string): void {
+        if (this.systemControlDisposition() === 'paused')
+            throw worldError('AIR_E_BOX3D_CONFIG', operation, 'The observed PhysicsSystem owner is paused.');
     }
     validateDefaultMaterial(material: PhysicsMaterial): void {
         this.assertConfiguration('default material identity');
@@ -374,13 +579,20 @@ export class Box3DWorldCommandOwner {
                     if (coefficients && (coefficients[2] !== 0 || coefficients[3] !== 0))
                         unsupportedBox3D('nonzero rollingFriction/spinningFriction');
                     copied = coefficients
-                        ? copySurfaceMaterial({ friction: coefficients[0], restitution: coefficients[1] })
+                        ? copySurfaceMaterial({
+                              friction: coefficients[0],
+                              restitution: coefficients[1],
+                          })
                         : null;
                 },
                 applyCopied: (value) => {
                     requireContext(value);
                     const authority = Object.freeze({});
-                    this.#materialAuthorities.set(authority, { key, material: copied, context: value });
+                    this.#materialAuthorities.set(authority, {
+                        key,
+                        material: copied,
+                        context: value,
+                    });
                     try {
                         apply(authority, copied);
                     } finally {
@@ -485,7 +697,7 @@ export class Box3DWorldCommandOwner {
         return result;
     }
     #begin(
-        phase: 'preflight' | 'dispatch' | 'material',
+        phase: 'preflight' | 'dispatch' | 'material' | 'control',
         extraMaterials: readonly PhysicsMaterial[] = [],
     ): Box3DOwnerFenceScope {
         this.assertConfiguration('begin temporary scope');
@@ -586,6 +798,7 @@ export class Box3DWorldCommandOwner {
         return scope;
     }
     beginStep(): Box3DOwnerFenceScope {
+        this.assertSteppingAllowed('begin step');
         return this.#begin('preflight');
     }
     beginDispatch(): Box3DOwnerFenceScope {
@@ -608,6 +821,16 @@ export class Box3DWorldCommandOwner {
                 cleanupFailed = true;
             }
         };
+        for (const cleanup of [...this.#controlCleanups]) attempt(cleanup);
+        attempt(() => {
+            try {
+                this.#systemControlLease?.dispose();
+            } catch (error) {
+                this.#recordCleanup('system-control-unregister', error);
+                throw error;
+            }
+            this.#systemControlLease = null;
+        });
         for (const cleanup of [...this.#materialCleanups]) attempt(cleanup);
         for (const [key, lease] of this.#materialLeases)
             attempt(() => {
@@ -654,6 +877,15 @@ export class Box3DWorldCommandOwner {
             materials: this.#materials().size,
             activeTemporaryScopes: this.#scope ? 1 : 0,
             pendingCommands: this.#queue.diagnostics().pending.length,
+            systemControl: Object.freeze({
+                observed: !!this.#systemControlLease,
+                paused: this.#systemPaused,
+                queuePhase: this.#queue.diagnostics().phase,
+                preparedQueueControl: this.#queue.diagnostics().preparedControl,
+                unresolvedScopes: this.#controlCleanups.size,
+                lastChange: this.#lastControl,
+                producers: 'NOT_INTEGRATED',
+            }),
             stagedCommandsSupported: false,
             unifiedTransactionsSupported: false,
             materialIdentityTracking: 'actual-cache-commit',

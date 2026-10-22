@@ -1,0 +1,56 @@
+{
+  "status": "SOURCE_CONTROLS_PASS",
+  "startedAt": "2026-10-22T17:50:37.631029+00:00",
+  "finishedAt": "2026-10-22T17:50:57.036878+00:00",
+  "jestExitCode": 0,
+  "caseCounts": {
+    "PASS_SOURCE_WITH_MOCK_BINDING": 18
+  },
+  "loadedSourceCount": 424,
+  "loadedSourceDrift": [],
+  "sourceIdentityKind": "UNCOMMITTED_FROZEN_WORKTREE_HASHES",
+  "gitBaseOnlyNotTestedSource": "c2fc04359e70bdcff33bd15922befb5e4590585a",
+  "scope": "Actual source with explicitly mock native binding, not WASM or physics qualification",
+  "formalRequiredCells": {
+    "count": 2128,
+    "status": "NOT_RUN"
+  },
+  "stagedCommandsSupported": false,
+  "unifiedTransactionsSupported": false,
+  "producerOwnerConnection": "NOT_INTEGRATED",
+  "t12": "NOT_RUN",
+  "artifacts": {
+    "raw.json": {
+      "sha256": "8ffb18bb5c85ad56c162d7d5e6cf018b86b62d15900315b57fc0c9f5a1ed9bdd",
+      "bytes": 311264
+    },
+    "stderr.log": {
+      "sha256": "d218216f802eed179901a9ebcea071f0565f5dc3e7800f49521ce52bbe6ce996",
+      "bytes": 4113
+    },
+    "jest-results.json": {
+      "sha256": "ca42f98bd34560f921c2db62d76f707acb26efe1a8e12e4936781a5ea8364b0c",
+      "bytes": 5954
+    },
+    "source-before.json": {
+      "sha256": "b1077dd621cda5e07dca06a18c533b093ecf534de37794ad122844bbb8036e8a",
+      "bytes": 257238
+    },
+    "command.json": {
+      "sha256": "f9f957057baa6fe65ee45198bd649b06006b312fef67755d04609fe3da008b55",
+      "bytes": 656
+    },
+    "stdout.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "exit-code.txt": {
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    "fixture-before.json": {
+      "sha256": "a9d61f58d0e03e41715521b8b5b151c8d66c8d9ba1d4b38a0c901292988d9515",
+      "bytes": 953
+    }
+  }
+}

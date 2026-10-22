@@ -43,4 +43,31 @@ with tempfile.TemporaryDirectory(prefix='box3d-closure-control-') as d:
  cache.unlink();assert m.verify(root,manifest,manifest_name,True)['committedSnapshot'];results.append({'case':'restored checkout correctly omits excluded cache','status':'PASS'});cache.write_bytes(b'regenerable fixture cache')
  (root/'evidence/added.txt').write_text('new staged evidence\n');add('evidence/added.txt');manifest=m.freeze(root,cfg,manifest_name);(root/manifest_name).write_text(json.dumps(manifest,indent=2)+'\n');add(manifest_name);rejects('staged but absent from bundle HEAD refused',lambda:m.verify(root,manifest,manifest_name,True),'staged but not in source checkpoint HEAD')
 
+ # Compressed transport exercises the SAME file/reference/index/HEAD rules.
+ compressed_name='compressed-delivery.json.gz'
+ compressed=m.freeze(root,cfg,compressed_name)
+ representation=m.write_manifest(root/compressed_name,compressed)
+ assert m.read_json(root/compressed_name)==compressed
+ import gzip
+ exact_json=gzip.decompress((root/compressed_name).read_bytes())
+ assert hashlib.sha256(exact_json).hexdigest()==representation['jsonSha256']
+ results.append({'case':'gzip decompresses to exact recorded JSON bytes and equivalent object','status':'PASS'})
+ add(compressed_name)
+ assert m.verify(root,m.read_json(root/compressed_name),compressed_name)['files']==len(compressed['files'])
+ results.append({'case':'gzip inventory verifies all identical staged files and reference rules','status':'PASS'})
+ rejects('gzip manifest is not allowed to bypass missing HEAD',lambda:m.verify(root,m.read_json(root/compressed_name),compressed_name,True),'staged but not in source checkpoint HEAD')
+ rejects('gzip original cannot be overwritten',lambda:m.write_manifest(root/compressed_name,compressed),'File exists')
+ original_gzip=(root/compressed_name).read_bytes()
+ (root/compressed_name).write_bytes(original_gzip[:-5])
+ rejects('truncated gzip cannot qualify',lambda:m.read_json(root/compressed_name),'end-of-stream')
+ (root/compressed_name).write_bytes(original_gzip)
+ # A compressed referenced receipt is subject to the same explicit JSON pointer proof.
+ receipt_path=root/'evidence/receipt.json.gz'
+ m.write_manifest(receipt_path,{'rawSha':hashlib.sha256((root/'evidence/stdout.log').read_bytes()).hexdigest()})
+ add('evidence/receipt.json.gz')
+ cfg['manifestReferences']=[{'manifestPath':'evidence/receipt.json.gz','sha256Pointer':'/rawSha','retainedPath':'evidence/stdout.log'}]
+ compressed_reference=m.freeze(root,cfg,'another.json.gz')
+ assert len(compressed_reference['references'])==1
+ results.append({'case':'gzip receipt pointers still prove actual retained raw bytes','status':'PASS'})
+
 print(json.dumps({'status':'PASS_SCOPED_GIT_CLOSURE_CONTROLS','cases':len(results),'results':results},indent=2))

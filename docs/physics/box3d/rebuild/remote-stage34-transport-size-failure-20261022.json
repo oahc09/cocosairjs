@@ -1,0 +1,50 @@
+{
+  "schema": "box3d-remote-stage34-transport-size-failure-v1",
+  "target": "oahc09/cocosairjs",
+  "branch": "feat/box3d-rebuild-20261022",
+  "remoteParent": "26de4376f67344ffb2d58e89c2c46b5d466f3247",
+  "localSourceCommit": "c2fc04359e70bdcff33bd15922befb5e4590585a",
+  "classification": "TECHNICAL_16_MIB_REQUEST_LIMIT_NOT_PERMISSION_DENIAL",
+  "outcome": {
+    "status": "NOT_FOUND_AFTER_SCHEMA_SIZE_REJECTION",
+    "pending": {
+      "type": "blob",
+      "index": 6,
+      "sha": "48c21d6a54dfcaf7bb8408cdc200bffc668e85df"
+    },
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "tool call error: tool call failed for `codex_apps/github.create_blob`\n\nCaused by:\n    Transport send error: Transport [codex_rmcp_client::tool_list_changes::ToolListChanges<codex_rmcp_client::event_notification_transport::EventNotificationTransport<rmcp::transport::worker::WorkerTransport<rmcp::transport::streamable_http_client::StreamableHttpClientWorker<codex_rmcp_client::http_client_adapter::StreamableHttpClientAdapter>>>>] error: unexpected server response: HTTP 400: {\"detail\":\"MCP request body is invalid or exceeds the 16 MiB limit\"}"
+        }
+      ],
+      "isError": true
+    },
+    "read": {
+      "content": [
+        {
+          "type": "text",
+          "text": "GitHub API error 404: {\"message\":\"Not Found\",\"documentation_url\":\"https://docs.github.com/rest/git/blobs#get-a-blob\",\"status\":\"404\"}"
+        }
+      ],
+      "structuredContent": {
+        "error": "GitHub API error 404: {\"message\":\"Not Found\",\"documentation_url\":\"https://docs.github.com/rest/git/blobs#get-a-blob\",\"status\":\"404\"}",
+        "error_code": "NOT_FOUND",
+        "error_data": {
+          "message": "Not Found",
+          "documentation_url": "https://docs.github.com/rest/git/blobs#get-a-blob",
+          "status": "404"
+        }
+      },
+      "isError": true
+    }
+  },
+  "completed": {
+    "verifiedBlobs": 6,
+    "tree": false,
+    "commit": false,
+    "ref": false
+  },
+  "resolution": "Preserve original c2 source and Library. Independent next commit retains exact original JSON bytes in hash-addressed gzip, a semantically equivalent compact JSON, and human-readable index. New large manifests use deterministic gzip with the same evidence validation rules. Original oversized upload is not retried."
+}

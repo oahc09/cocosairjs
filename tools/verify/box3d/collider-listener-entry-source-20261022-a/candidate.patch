@@ -1,0 +1,52 @@
+--- a/src/cocos/physics/framework/components/colliders/collider.ts
++++ b/src/cocos/physics/framework/components/colliders/collider.ts
+@@ -330,6 +330,7 @@
+         target?,
+         once?: boolean,
+     ): any {
++        assertMutationAllowed(this, 'Collider.on');
+         const ret = super.on(type, callback, target, once);
+         this._updateNeedEvent(type);
+         return ret;
+@@ -345,6 +346,7 @@
+      * @param target - The event callback target.
+      */
+     public off (type: TriggerEventType | CollisionEventType | CharacterTriggerEventType, callback?: Callback, target?): void {
++        assertMutationAllowed(this, 'Collider.off');
+         super.off(type, callback, target);
+         this._updateNeedEvent();
+     }
+@@ -363,6 +365,7 @@
+         callback: TFunction,
+         target?,
+     ): any {
++        assertMutationAllowed(this, 'Collider.once');
+         // TODO: callback invoker now is a entity, after `once` will not calling the upper `off`.
+         const ret = super.once(type, callback, target);
+         this._updateNeedEvent(type);
+@@ -377,6 +380,7 @@
+      * @param typeOrTarget - The event type or target.
+      */
+     public removeAll (typeOrTarget: TriggerEventType | CollisionEventType | Record<string, unknown>): void {
++        assertMutationAllowed(this, 'Collider.removeAll');
+         super.removeAll(typeOrTarget);
+         this._updateNeedEvent();
+     }
+@@ -613,6 +617,17 @@
+     }
+ }
+ 
++// Eventify mixes in this runtime-only internal entry without declaring it in IEventified.
++// Fence it locally without broadening Collider's declared API or changing its legacy cache behavior.
++const colliderClear = Object.getOwnPropertyDescriptor(Object.getPrototypeOf(Collider.prototype), 'clear')!;
++Object.defineProperty(Collider.prototype, 'clear', {
++    ...colliderClear,
++    value (this: Collider): void {
++        assertMutationAllowed(this, 'Collider.clear');
++        colliderClear.value.call(this);
++    },
++});
++
+ export namespace Collider {
+     export type Type = EnumAlias<typeof EColliderType>;
+     export type Axis = EnumAlias<typeof EAxisDirection>;

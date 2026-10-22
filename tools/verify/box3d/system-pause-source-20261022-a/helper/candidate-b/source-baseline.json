@@ -1,0 +1,13 @@
+{
+  "sourceCommit": "4e1cb31336dee13c549d8ec94ab71e64072e93e2",
+  "files": {
+    "src/cocos/physics/framework/physics-system.ts": {
+      "sha256": "92153ad5783bf4a27271daf31075704c6ea4fc4dbac323af9e05bffc5caee988",
+      "bytes": 41473
+    },
+    "src/cocos/physics/framework/physics-state-observer.ts": {
+      "sha256": "4cf40c4f1be0d407a402e95dcdb7a898b1942cb175f869f6367a41b18c2d1d2b",
+      "bytes": 23170
+    }
+  }
+}

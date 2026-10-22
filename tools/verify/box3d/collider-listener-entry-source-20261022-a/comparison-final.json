@@ -1,0 +1,34 @@
+{
+  "status": "PASS_CANDIDATE_ACTUAL_ENGINE_OWNER_SOURCE_ONLY",
+  "completedAt": "2026-10-22T18:10:23.261482+00:00",
+  "actualCasesPerVariant": 261,
+  "candidateChecks": 1682,
+  "redFailedCases": 179,
+  "redFailedChecks": 852,
+  "greenFailedCases": 0,
+  "ordinaryCases": 80,
+  "ordinaryFullTracesIdentical": true,
+  "expectedActualChecksConsistent": true,
+  "loadedEngineSources": 400,
+  "crossVariantLoadedSourceDifferences": [
+    "src/cocos/physics/framework/components/colliders/collider.ts"
+  ],
+  "expectedSingleDifference": "src/cocos/physics/framework/components/colliders/collider.ts",
+  "frozenOwnerSha256": "2f313aae10b900e417ebea9b2b8254994fee4f7fe4e26181516c5fca74fb091f",
+  "originalColliderSha256": "2e93ecae851d1a943c00d1a5a01a3d887153dce0d9693f541b4f6be73b2a7ac9",
+  "candidateColliderSha256": "a79f2defaa82992989859097f5148385c782bec70ba2be417253807a30e7cf34",
+  "mainColliderStillOriginal": true,
+  "mainOwnerMatchesFrozenCurrent": true,
+  "candidatePatchSha256": "f02ecb01f484a29f591b1c0e15390f56edf0c81801330da34a94fa4d64fb13d7",
+  "redRawSha256": "7556abee820103b8362fdd77fa0be4d5350d3c1572c04198679077031141af05",
+  "greenRawSha256": "090adb9a541f6169421c36b8b0cf6182193f9925f3660395080ae5e1c1f933c4",
+  "notQualified": [
+    "Integrated main tree adoption",
+    "TypeScript project typecheck",
+    "Real World/native/WASM transaction",
+    "Contact event support/T15",
+    "Unified consumer readiness",
+    "Shared PhysicsMaterial all-transaction atomicity",
+    "Raw private-field/prototype tampering sandbox"
+  ]
+}

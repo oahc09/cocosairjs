@@ -1,0 +1,17 @@
+{
+  "cwd": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022",
+  "argv": [
+    "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/.bin/jest",
+    "--config",
+    "/workspace/scratch/62d43a81bbde/box3d-immediate-pause-probe-20261022/pause-control.jest.cjs",
+    "--runInBand",
+    "--no-coverage",
+    "--json",
+    "--outputFile",
+    "/workspace/scratch/62d43a81bbde/box3d-immediate-pause-probe-20261022/attempt-a/jest-results.json"
+  ],
+  "environmentOverrides": {
+    "BOX3D_PAUSE_RAW": "/workspace/scratch/62d43a81bbde/box3d-immediate-pause-probe-20261022/attempt-a/raw.json",
+    "NODE_ENV": "test"
+  }
+}

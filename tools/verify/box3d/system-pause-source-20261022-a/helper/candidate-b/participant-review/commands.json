@@ -1,0 +1,10 @@
+{
+  "cwd": "/workspace/scratch/62d43a81bbde",
+  "controls": [
+    "node",
+    "box3d-immediate-pause-probe-20261022/candidate-b/participant-review/participant-control.mjs",
+    "attempt-b"
+  ],
+  "typecheck": "box3d-rebuild-20261022/node_modules/.bin/tsc --noEmit --target ES2022 --module CommonJS --strict --skipLibCheck --types node --typeRoots box3d-rebuild-20261022/node_modules/@types box3d-pause-owner-candidate-20261022/command-queue.ts box3d-pause-owner-candidate-20261022/command-producers.ts",
+  "formatEquivalence": "prettier.format(candidate, repo config + filepath) === main source; memory only"
+}

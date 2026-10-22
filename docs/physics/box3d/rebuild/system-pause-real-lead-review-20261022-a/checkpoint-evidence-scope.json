@@ -1,0 +1,48 @@
+{
+  "externalFilesRehashed": [
+    {
+      "path": "tools/physics/box3d/output/command-wasm-release-20261022-n4/box3d-st.mjs",
+      "bytes": 46897,
+      "sha256": "003c79702bf41fa33f197f4786c8469a5234ee122235173970046d7dfbd7c72f"
+    },
+    {
+      "path": "tools/physics/box3d/output/command-wasm-release-20261022-n4/box3d-st.wasm",
+      "bytes": 584072,
+      "sha256": "4b9494dc2d3c46b4cbacf8d12a8119df5e91a27e19f90b946d50f6467b7adf8f"
+    },
+    {
+      "path": "../box3d-material-cleanup-qualified-library-roundtrip-20261022/Box3D-source-incremental-checkpoint(4).zip",
+      "bytes": 6459262,
+      "sha256": "209a397bbe5cf660c1917b36f085a8691e8c4758aa6473cd7d222dfdb9fa77b2"
+    },
+    {
+      "path": "../box3d-material-cleanup-qualified-library-roundtrip-20261022/box3d-rebuild-incremental.bundle",
+      "bytes": 5396179,
+      "sha256": "e0cdec00881a5bc01cfcaa03680ab71666d5bc5f00bcce1a320fdb5b29ed04e3"
+    },
+    {
+      "path": "../box3d-material-cleanup-source-library-roundtrip-20261022/checkpoint-receipt.json",
+      "bytes": 5572987,
+      "sha256": "5ed969be3bff4a026b215376e19b55045cf89f6ab7ff2642f4eeb469c2da663f"
+    }
+  ],
+  "original34ExactDecompression": {
+    "compressedPath": "ai/ledgers/box3d-evidence-objects/eec5ea2bd071be4fa9eef547726a72097f5c89fef4552d7da6ec089edd01db45.json.gz",
+    "compressedSha256": "be7582490c8053e4818ed3c67aa983c933bbb590ad6566af966a19cbecc72dfe",
+    "originalSha256": "eec5ea2bd071be4fa9eef547726a72097f5c89fef4552d7da6ec089edd01db45",
+    "semanticJSONEquality": true,
+    "originalBytes": 16388019
+  },
+  "externalArtifactLibrary": "libfile_8557c7cbf30481919670a51fd1509823",
+  "sourceCheckpointLibrary": "libfile_6fe0d0efa9b8819184d5dcdec7a1ae72",
+  "priorSourceLibrary": "libfile_8e87a87f81288191a6bb7c205466d4bc",
+  "scope": "Checkpoint 35 evidence references: source/raw references are resolved to retained exact bytes; only separately restored native artifacts/source archives/prior receipts and the exact decompressed original 34 manifest are outside plain-file reference matching.",
+  "colliderPreparationCorrection": {
+    "path": "tools/verify/box3d/collider-listener-entry-source-20261022-a/prepared-reference-correction-20261022-a",
+    "status": "FOUR_UNEXECUTED_PREPARATION_VERSIONS_RECOVERED_EXACT_ORIGINAL_SHA",
+    "originalCopiesWereMissing": true,
+    "originalManifestAndArchiveUnchanged": true,
+    "actualRedGreenInputsAlwaysRetained": true
+  },
+  "formalGateChange": false
+}

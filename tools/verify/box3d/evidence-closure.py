@@ -19,11 +19,28 @@
 # THE SOFTWARE.
 """Explicit completed-evidence Git closure; no build or physical acceptance."""
 from pathlib import Path
-import argparse, hashlib, json, os, subprocess, sys
+import argparse, gzip, hashlib, json, os, subprocess, sys
 
 
 def digest(data):
     return hashlib.sha256(data).hexdigest()
+
+
+def read_json(path):
+    """Lossless compressed manifests are a transport representation, not an exemption."""
+    data = path.read_bytes()
+    return json.loads(gzip.decompress(data) if path.name.endswith('.json.gz') else data)
+
+
+def write_manifest(path, value):
+    # Refuse overwrite independently of the CLI, including a prior compressed manifest.
+    data = (json.dumps(value, separators=(',', ':'), ensure_ascii=False) + '\n').encode('utf-8')
+    stored = gzip.compress(data, mtime=0) if path.name.endswith('.json.gz') else data
+    with path.open('xb') as output:
+        output.write(stored)
+    return {'storedBytes': len(stored), 'storedSha256': digest(stored),
+            'jsonBytes': len(data), 'jsonSha256': digest(data),
+            'representation': 'gzip-json' if path.name.endswith('.json.gz') else 'json'}
 
 
 def relative_path(value):
@@ -122,7 +139,7 @@ def scan(root, config, manifest_path):
         if source not in files or target not in files:
             raise ValueError('Manifest/reference not in explicit delivery inventory: ' + source + ' -> ' + target)
         if source not in documents:
-            documents[source] = json.loads((root / source).read_bytes())
+            documents[source] = read_json(root / source)
         expected = pointer(documents[source], spec['sha256Pointer'])
         if expected != files[target]['sha256']:
             raise ValueError('Manifest reference hash does not match retained bytes: ' + target)
@@ -182,10 +199,10 @@ if __name__ == '__main__':
             if out.exists():
                 raise ValueError('Never overwrite earlier delivery manifest')
             result = freeze(root, json.loads(Path(args.freeze_config).read_bytes()), args.manifest)
-            out.write_text(json.dumps(result, indent=2) + '\n')
-            print(json.dumps({'status': 'FROZEN_REQUIRES_STAGING_AND_VERIFICATION', 'files': len(result['files']), 'references': len(result['references'])}))
+            representation = write_manifest(out, result)
+            print(json.dumps({'status': 'FROZEN_REQUIRES_STAGING_AND_VERIFICATION', 'files': len(result['files']), 'references': len(result['references']), 'representation': representation}))
         else:
-            print(json.dumps(verify(root, json.loads((root / args.manifest).read_bytes()), args.manifest, args.require_commit)))
+            print(json.dumps(verify(root, read_json(root / args.manifest), args.manifest, args.require_commit)))
     except Exception as error:
         print(json.dumps({'status': 'FAIL_EVIDENCE_CLOSURE', 'error': str(error)}))
         sys.exit(1)

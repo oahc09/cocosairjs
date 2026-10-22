@@ -1,0 +1,24 @@
+{
+  "sourceRoot": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022",
+  "capturedAt": "2026-10-22T17:58:16.192267+00:00",
+  "sha256": {
+    "src/cocos/physics/framework/components/colliders/collider.ts": "2e93ecae851d1a943c00d1a5a01a3d887153dce0d9693f541b4f6be73b2a7ac9",
+    "src/cocos/core/data/mutation-guard.ts": "93758e4b5a90ff90e5cabc7d3b0b5fd71069e955d4bf64517bec27d1957774a0",
+    "src/cocos/core/event/eventify.ts": "ad59c9f8dc67f40db877b2160989b792e488b256903d6fdccaf2c7433728c7e9",
+    "src/cocos/core/event/callbacks-invoker.ts": "544780e361767d5ae79d2c20a973651b544ceee6b7bd90e6ebe876185774918a",
+    "src/air/physics/box3d/world-command-owner.ts": "e95022ff7b4d298cc7a651db4b1c77b181bbac0bc15a536e8be2775b3aa3388a",
+    "src/cocos/physics/framework/physics-system.ts": "a4890065dcb52287ec5483f2b8c14e63dcd266cd1503b5f2629716713fa504eb",
+    "src/cocos/physics/framework/physics-system-control.ts": "59ab174ab3d18840992e3e211f399a2715cab8f0a8ffdf8b0aa3ee2a1fedfb4d",
+    "src/cocos/physics/framework/physics-state-observer.ts": "4cf40c4f1be0d407a402e95dcdb7a898b1942cb175f869f6367a41b18c2d1d2b",
+    "src/cocos/physics/framework/physics-material-transaction.ts": "949426ebc03754639cf7ff2e3ce9bbb80e6c9a43e7c4a5ec671739c55cdda083",
+    "tools/verify/box3d/component-entry-fence-stage-a-control.test.ts": "4f236618ba35e67e922de7aea4227f41558a2426f0fa83b93d071d7dfeca735c",
+    "tools/verify/box3d/component-entry-fence-stage-a-control.jest.cjs": "8d401c165c135fd9ef10dd435d0274dc4874592a8de038d52a62c9b712b8ac78",
+    "tools/verify/box3d/component-entry-fence-stage-a-control.tsconfig.json": "c554fe575832d98e79b711f4b1c8085f72c0349095885430daa91bda4ab720b9",
+    "jest.config.js": "fd5a10574248f364fd15779d6ffe38068f588f1a49508cc511cdc370aac1cceb",
+    "test/setup-dom.js": "6a2f11fb94ebcad2ce48c4b53a6044bfaa682fdd9f232345cc6d25b7b0f5fcd5",
+    "test/setup-engine.js": "1c9bbf584722c35f63df80c0be298e05a03361d3e8c639eab0fb6591b88091bf",
+    "test/tsconfig.jest.json": "c20bb09b5489515b8e2e011777fa8bea5725c16e48002bc6968761bbee49e654",
+    "babel.config.js": "7eea5c4c63bb20ddaf8def8ead54f611bb5bde0d864041d5a191835db7f0b893",
+    ".prettierrc.json": "4c184df4264a37fbd7f178b505c9061f98e264fa9c6eb4f2688a4e479425ad8a"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "status": "TWO_SOURCE_FILES_COPIED_ONLY_NOT_INTEGRATION_TESTED",
+  "time": "2026-10-22T17:34:36.421524+00:00",
+  "beforeSystemSha256": "92153ad5783bf4a27271daf31075704c6ea4fc4dbac323af9e05bffc5caee988",
+  "sources": [
+    {
+      "path": "src/cocos/physics/framework/physics-system.ts",
+      "sha256": "a4890065dcb52287ec5483f2b8c14e63dcd266cd1503b5f2629716713fa504eb",
+      "bytes": 44352
+    },
+    {
+      "path": "src/cocos/physics/framework/physics-system-control.ts",
+      "sha256": "59ab174ab3d18840992e3e211f399a2715cab8f0a8ffdf8b0aa3ee2a1fedfb4d",
+      "bytes": 12389
+    }
+  ],
+  "gitWrite": false,
+  "actualSystemIntegrationRun": false,
+  "ownerWorldQueueProducersTouched": false
+}

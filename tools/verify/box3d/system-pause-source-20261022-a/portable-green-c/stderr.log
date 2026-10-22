@@ -1,0 +1,121 @@
+  console.log
+    Cannot access game frame or container.
+
+      at warnID (src/cocos/core/platform/debug.ts:314:5)
+
+  console.log
+    [PHYSICS]: register box3d.
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    [PHYSICS]: register box3d.
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    [PHYSICS]: register box3d.
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    [PHYSICS]: register box3d.
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    [PHYSICS]: register box3d.
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    [PHYSICS]: register box3d.
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    [PHYSICS]: register box3d.
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    [PHYSICS]: register box3d.
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    [PHYSICS]: register box3d.
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    [PHYSICS]: register box3d.
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    [PHYSICS]: register box3d.
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    [PHYSICS]: register box3d.
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    [PHYSICS]: register box3d.
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    [PHYSICS]: register box3d.
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    [PHYSICS]: register box3d.
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    [PHYSICS]: register box3d.
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    [PHYSICS]: register box3d.
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    [PHYSICS]: register box3d.
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+PASS tools/verify/box3d/immediate-system-pause-control.test.ts (18.037 s)
+  ✓ P01 enable=false must reject actual manual System.step before advancement (26 ms)
+  ✓ P02 BEFORE_PHYSICS disable must stop this frame and retain backlog and normal AFTER (5 ms)
+  ✓ P03 enable rejects non-booleans with actual Box3D owner registered (6 ms)
+  ✓ P03 autoSimulation rejects non-booleans with actual Box3D owner registered (4 ms)
+  ✓ C01 autoSimulation=false is enabled manual scheduling, not disabled physics (6 ms)
+  ✓ C02 disabled scene preflight and component assembly are existing positive controls (47 ms)
+  ✓ G01 autoSimulation=false in BEFORE stops automatic work, retains backlog and permits manual (6 ms)
+  ✓ G02 autoSimulation=false between completed ticks stops next automatic tick without losing backlog (4 ms)
+  ✓ G02 enable=false between completed ticks stops next automatic tick without losing backlog (3 ms)
+  ✓ G03 initially disabled System is registered paused and permits non-target component assembly (7 ms)
+  ✓ G04 strict enable invalid input leaves flags, queue, native calls and scopes unchanged (4 ms)
+  ✓ G04 strict autoSimulation invalid input leaves flags, queue, native calls and scopes unchanged (3 ms)
+  ✓ G05 actual owner fault preserves undefined first error; later System execution/control refuse without native (2 ms)
+  ✓ G05 actual owner fault preserves zero first error; later System execution/control refuse without native (2 ms)
+  ✓ G06 closed actual world rejects manual and automatic stepping with no native calls (2 ms)
+  ✓ G07 caught same-value and false enable writes during solver reject before cache mutation (3 ms)
+  ✓ G07 caught same-value and false autoSimulation writes during solver reject before cache mutation (2 ms)
+  ✓ G08 thrown BEFORE preserves original throw and backlog, emits no AFTER (3 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       18 passed, 18 total
+Snapshots:   0 total
+Time:        18.519 s
+Ran all test suites.
+Test results written to: ../box3d-pause-owner-integration-20261022/portable-green-c/jest-result.json

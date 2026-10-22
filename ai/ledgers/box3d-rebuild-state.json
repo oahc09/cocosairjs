@@ -959,7 +959,7 @@
     "deploy": false,
     "npmPublish": false
   },
-  "nextStep": "Run seven real N4 Release-WASM material cases on newly frozen first-fault/cleanup candidate; then immediate System pause and nonempty producer-roster unified tick. No formal Gate promoted.",
+  "nextStep": "Close actual Collider listener early admission and shared-material subscription/propagation; then install a nonempty real producer/queue consumer, without removing unresolved target-grant and lifecycle blockers.",
   "remoteHistoryPolicy": "True upstream main parent and incremental tree; local snapshot import is backup-only and is never pushed as upstream history.",
   "remotePublication": {
     "status": "VERIFIED_CHECKPOINT_26",
@@ -968,7 +968,7 @@
     "branch": "feat/box3d-rebuild-20261022",
     "receipt": "docs/physics/box3d/rebuild/remote-checkpoint-26.json"
   },
-  "updatedAtUtc": "2026-10-22T17:11:23.805547+00:00",
+  "updatedAtUtc": "2026-10-22T18:22:19.725707+00:00",
   "currentEvidence": {
     "m0ContractTests": "PASS_7_SOURCE_DESIGN_CHECKS_ONLY_U01_U02_INVENTORY_ADDED",
     "nativeFoundationIndex": "tools/physics/box3d/evidence/index.json",
@@ -1180,12 +1180,12 @@
   },
   "persistentCheckpoint": {
     "status": "PASS_ACTUAL_LIBRARY_DOWNLOAD_INCREMENTAL_INDEPENDENT_STORE_FULL_FILE_VERIFICATION",
-    "libraryFileId": "libfile_e59792b41b808191a53c930c8b9a1b93",
-    "commit": "35258d655a4f9099b94e18c0a9cb741474a12826",
-    "trackedFiles": 16041,
+    "libraryFileId": "libfile_6fe0d0efa9b8819184d5dcdec7a1ae72",
+    "commit": "c2fc04359e70bdcff33bd15922befb5e4590585a",
+    "trackedFiles": 18240,
     "requiresBaseLibrary": "libfile_10c86f5827f481919e3938fbb0c2670b",
     "requiresBaseCommit": "e5c5674bfe08be0c9fda72c484f4380bd0d0e2c6",
-    "receipt": "docs/physics/box3d/rebuild/library-material-observer-source-checkpoint-20261022.json"
+    "receipt": "docs/physics/box3d/rebuild/library-material-cleanup-qualified-checkpoint-20261022.json"
   },
   "additionalOriginalMainSources": {
     "count": 445,
@@ -1259,20 +1259,25 @@
     "currentOwnerComponentReceipt": "docs/physics/box3d/rebuild/owner-component-stage-a-lead-review-20261022-final/receipt.json",
     "listenerEntryFence": "NOT_IMPLEMENTED_STAGE_B",
     "materialCacheNotification": "B1_SIX_SOURCE_CANDIDATE_WIRED_12_MOCK_CASES_54_CHECKS_REAL_WASM_NOT_RUN",
-    "immediateSystemPauseNotification": "PLANNED_NOT_IMPLEMENTED",
+    "immediateSystemPauseNotification": "PASS_FINITE_CURRENT_N4_RELEASE_17_CHECKS_ACTUAL_AIR_SYSTEM_OWNER",
     "privateStateObserver": "B0_NOW_REFERENCED_BY_B1_CANDIDATE_PRIOR_76_PURE_CONTROLS_NOT_PHYSICAL_ACCEPTANCE",
     "privateStateObserverReceipt": "tools/verify/box3d/physics-state-observer-evidence-20261022-lead-e/result.json",
-    "currentMaterialIdentity": "NEW_CLEANUP_CANDIDATE_REAL_WASM_NOT_RUN_PRIOR_FOUR_CASES_REMAIN_HISTORICAL",
-    "currentMaterialIdentityReceipt": "docs/physics/box3d/rebuild/material-b1-real-four-lead-review-20261022-a/receipt.json",
+    "currentMaterialIdentity": "SIX_FINITE_MATERIAL_CLEANUP_CASES_PASS_ONE_MANUAL_CALLBACK_FIXTURE_NOT_QUALIFIED",
+    "currentMaterialIdentityReceipt": "docs/physics/box3d/rebuild/material-cleanup-real-seven-lead-review-20261022-a/receipt.json",
     "ownerLifecycleDecisions": "docs/physics/box3d/contracts/unified-owner-lifecycle-decisions-v1.md",
     "materialNativeFailure": "B1_POST_NATIVE_READBACK_THROW_NO_SETTER_REPLAY_FAULT_AND_REFUSE_STEP_FINITE_PASS",
     "materialNativeFailureReceipt": "docs/physics/box3d/rebuild/material-b1-real-four-lead-review-20261022-a/receipt.json",
     "privateMaterialBridge": "B1_NOW_WIRED_CANDIDATE_PRIOR_36_PURE_CONTROLS_REAL_WASM_NOT_RUN",
     "privateMaterialBridgeReceipt": "tools/verify/box3d/physics-material-transaction-evidence-20261022-lead-b/lead-review.json",
     "materialB1CandidateReceipt": "tools/verify/box3d/material-identity-b1-integration-20261022-a/receipt.json",
-    "materialCleanupSecondaryDiagnostics": "REPAIRED_CANDIDATE_10_ACTUAL_SOURCE_MOCK_CASES_45_CHECKS_REAL_WASM_PENDING",
-    "materialCleanupSecondaryDiagnosticsReceipt": "tools/verify/box3d/material-cleanup-repair-20261022-a/handoff-receipt.json",
-    "materialCleanupRegressionReceipt": "tools/verify/box3d/material-cleanup-lead-regression-20261022-a/independent-count-review.json"
+    "materialCleanupSecondaryDiagnostics": "SIX_FINITE_CURRENT_RELEASE_WASM_CASES_PASS_PLUS_APP_CLOSE_FAILURE_TRUTHFULNESS_13_CHECKS",
+    "materialCleanupSecondaryDiagnosticsReceipt": "docs/physics/box3d/rebuild/material-collider-close-lead-review-20261022-a/receipt.json",
+    "materialCleanupRegressionReceipt": "tools/verify/box3d/material-cleanup-lead-regression-20261022-a/independent-count-review.json",
+    "materialFullSceneRelease": "NOT_QUALIFIED_INJECTED_CLOSE_FAILED_TRUTHFULLY_NATIVE_WORLD_AND_MODULE_RELEASED",
+    "immediateSystemPauseReceipt": "docs/physics/box3d/rebuild/system-pause-real-lead-review-20261022-a/receipt.json",
+    "systemPauseMockRegression": "18_CASES_331_CHECKS_PLUS_INDEPENDENT_5_CASES_43_CHECKS",
+    "systemPauseProducerIntegration": "NOT_INTEGRATED",
+    "materialPauseRegression": "CURRENT_N4_RELEASE_POST_NATIVE_READBACK_FAILURE_8_AND_OBSERVER_CLEANUP_12_CHECKS_PASS"
   },
   "historicalCandidateSnapshots": [
     {

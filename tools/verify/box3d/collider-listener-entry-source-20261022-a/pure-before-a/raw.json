@@ -1,0 +1,1785 @@
+{
+  "scope": "Exact complete source with explicit Component, decorators, Vec3, pool, utils and validity infrastructure doubles; only explicit leases. No actual owner scopes, engine integration, adapters or WASM.",
+  "mode": "before",
+  "sourceHashes": {
+    "src/cocos/physics/framework/components/colliders/collider.ts": "2e93ecae851d1a943c00d1a5a01a3d887153dce0d9693f541b4f6be73b2a7ac9",
+    "src/cocos/core/data/mutation-guard.ts": "93758e4b5a90ff90e5cabc7d3b0b5fd71069e955d4bf64517bec27d1957774a0",
+    "src/cocos/core/event/eventify.ts": "ad59c9f8dc67f40db877b2160989b792e488b256903d6fdccaf2c7433728c7e9",
+    "src/cocos/core/event/callbacks-invoker.ts": "544780e361767d5ae79d2c20a973651b544ceee6b7bd90e6ebe876185774918a"
+  },
+  "rows": [
+    {
+      "name": "on/onTriggerEnter",
+      "before": {
+        "tableIdentity": 1,
+        "lists": [],
+        "trigger": false,
+        "collision": false,
+        "calls": {
+          "adapter": 0,
+          "offCallback": 0,
+          "callback": 0,
+          "input": 0
+        }
+      },
+      "after": {
+        "tableIdentity": 1,
+        "lists": [
+          {
+            "key": "onTriggerEnter",
+            "id": 2,
+            "infosId": 3,
+            "invoking": false,
+            "cancelled": false,
+            "entries": [
+              {
+                "id": 4,
+                "callback": 5,
+                "target": 6,
+                "once": false
+              }
+            ]
+          }
+        ],
+        "trigger": true,
+        "collision": false,
+        "calls": {
+          "adapter": 2,
+          "offCallback": 0,
+          "callback": 0,
+          "input": 0
+        }
+      },
+      "attempts": [
+        {
+          "threw": false
+        },
+        {
+          "threw": false
+        }
+      ],
+      "checks": {
+        "bothRejected": false,
+        "exactUnchanged": false,
+        "afterCatchListenersUnchanged": false
+      }
+    },
+    {
+      "name": "on/onCollisionEnter",
+      "before": {
+        "tableIdentity": 1,
+        "lists": [],
+        "trigger": false,
+        "collision": false,
+        "calls": {
+          "adapter": 0,
+          "offCallback": 0,
+          "callback": 0,
+          "input": 0
+        }
+      },
+      "after": {
+        "tableIdentity": 1,
+        "lists": [
+          {
+            "key": "onCollisionEnter",
+            "id": 2,
+            "infosId": 3,
+            "invoking": false,
+            "cancelled": false,
+            "entries": [
+              {
+                "id": 4,
+                "callback": 5,
+                "target": 6,
+                "once": false
+              }
+            ]
+          }
+        ],
+        "trigger": false,
+        "collision": true,
+        "calls": {
+          "adapter": 2,
+          "offCallback": 0,
+          "callback": 0,
+          "input": 0
+        }
+      },
+      "attempts": [
+        {
+          "threw": false
+        },
+        {
+          "threw": false
+        }
+      ],
+      "checks": {
+        "bothRejected": false,
+        "exactUnchanged": false,
+        "afterCatchListenersUnchanged": false
+      }
+    },
+    {
+      "name": "on/onControllerTriggerEnter",
+      "before": {
+        "tableIdentity": 1,
+        "lists": [],
+        "trigger": false,
+        "collision": false,
+        "calls": {
+          "adapter": 0,
+          "offCallback": 0,
+          "callback": 0,
+          "input": 0
+        }
+      },
+      "after": {
+        "tableIdentity": 1,
+        "lists": [
+          {
+            "key": "onControllerTriggerEnter",
+            "id": 2,
+            "infosId": 3,
+            "invoking": false,
+            "cancelled": false,
+            "entries": [
+              {
+                "id": 4,
+                "callback": 5,
+                "target": 6,
+                "once": false
+              }
+            ]
+          }
+        ],
+        "trigger": true,
+        "collision": false,
+        "calls": {
+          "adapter": 2,
+          "offCallback": 0,
+          "callback": 0,
+          "input": 0
+        }
+      },
+      "attempts": [
+        {
+          "threw": false
+        },
+        {
+          "threw": false
+        }
+      ],
+      "checks": {
+        "bothRejected": false,
+        "exactUnchanged": false,
+        "afterCatchListenersUnchanged": false
+      }
+    },
+    {
+      "name": "off/onTriggerEnter",
+      "before": {
+        "tableIdentity": 1,
+        "lists": [
+          {
+            "key": "onTriggerEnter",
+            "id": 2,
+            "infosId": 3,
+            "invoking": false,
+            "cancelled": false,
+            "entries": [
+              {
+                "id": 4,
+                "callback": 5,
+                "target": 6,
+                "once": false
+              }
+            ]
+          }
+        ],
+        "trigger": true,
+        "collision": false,
+        "calls": {
+          "adapter": 0,
+          "offCallback": 0,
+          "callback": 0,
+          "input": 0
+        }
+      },
+      "after": {
+        "tableIdentity": 1,
+        "lists": [
+          {
+            "key": "onTriggerEnter",
+            "id": 2,
+            "infosId": 3,
+            "invoking": false,
+            "cancelled": true,
+            "entries": []
+          }
+        ],
+        "trigger": false,
+        "collision": false,
+        "calls": {
+          "adapter": 2,
+          "offCallback": 2,
+          "callback": 0,
+          "input": 0
+        }
+      },
+      "attempts": [
+        {
+          "threw": false
+        },
+        {
+          "threw": false
+        }
+      ],
+      "checks": {
+        "bothRejected": false,
+        "exactUnchanged": false,
+        "afterCatchListenersUnchanged": false
+      }
+    },
+    {
+      "name": "off/onCollisionEnter",
+      "before": {
+        "tableIdentity": 1,
+        "lists": [
+          {
+            "key": "onCollisionEnter",
+            "id": 2,
+            "infosId": 3,
+            "invoking": false,
+            "cancelled": false,
+            "entries": [
+              {
+                "id": 4,
+                "callback": 5,
+                "target": 6,
+                "once": false
+              }
+            ]
+          }
+        ],
+        "trigger": false,
+        "collision": true,
+        "calls": {
+          "adapter": 0,
+          "offCallback": 0,
+          "callback": 0,
+          "input": 0
+        }
+      },
+      "after": {
+        "tableIdentity": 1,
+        "lists": [
+          {
+            "key": "onCollisionEnter",
+            "id": 2,
+            "infosId": 3,
+            "invoking": false,
+            "cancelled": true,
+            "entries": []
+          }
+        ],
+        "trigger": false,
+        "collision": false,
+        "calls": {
+          "adapter": 2,
+          "offCallback": 2,
+          "callback": 0,
+          "input": 0
+        }
+      },
+      "attempts": [
+        {
+          "threw": false
+        },
+        {
+          "threw": false
+        }
+      ],
+      "checks": {
+        "bothRejected": false,
+        "exactUnchanged": false,
+        "afterCatchListenersUnchanged": false
+      }
+    },
+    {
+      "name": "off/onControllerTriggerEnter",
+      "before": {
+        "tableIdentity": 1,
+        "lists": [
+          {
+            "key": "onControllerTriggerEnter",
+            "id": 2,
+            "infosId": 3,
+            "invoking": false,
+            "cancelled": false,
+            "entries": [
+              {
+                "id": 4,
+                "callback": 5,
+                "target": 6,
+                "once": false
+              }
+            ]
+          }
+        ],
+        "trigger": true,
+        "collision": false,
+        "calls": {
+          "adapter": 0,
+          "offCallback": 0,
+          "callback": 0,
+          "input": 0
+        }
+      },
+      "after": {
+        "tableIdentity": 1,
+        "lists": [
+          {
+            "key": "onControllerTriggerEnter",
+            "id": 2,
+            "infosId": 3,
+            "invoking": false,
+            "cancelled": true,
+            "entries": []
+          }
+        ],
+        "trigger": false,
+        "collision": false,
+        "calls": {
+          "adapter": 2,
+          "offCallback": 2,
+          "callback": 0,
+          "input": 0
+        }
+      },
+      "attempts": [
+        {
+          "threw": false
+        },
+        {
+          "threw": false
+        }
+      ],
+      "checks": {
+        "bothRejected": false,
+        "exactUnchanged": false,
+        "afterCatchListenersUnchanged": false
+      }
+    },
+    {
+      "name": "once/onTriggerEnter",
+      "before": {
+        "tableIdentity": 1,
+        "lists": [],
+        "trigger": false,
+        "collision": false,
+        "calls": {
+          "adapter": 0,
+          "offCallback": 0,
+          "callback": 0,
+          "input": 0
+        }
+      },
+      "after": {
+        "tableIdentity": 1,
+        "lists": [
+          {
+            "key": "onTriggerEnter",
+            "id": 2,
+            "infosId": 3,
+            "invoking": false,
+            "cancelled": false,
+            "entries": [
+              {
+                "id": 4,
+                "callback": 5,
+                "target": 6,
+                "once": true
+              }
+            ]
+          }
+        ],
+        "trigger": true,
+        "collision": false,
+        "calls": {
+          "adapter": 4,
+          "offCallback": 0,
+          "callback": 0,
+          "input": 0
+        }
+      },
+      "attempts": [
+        {
+          "threw": false
+        },
+        {
+          "threw": false
+        }
+      ],
+      "checks": {
+        "bothRejected": false,
+        "exactUnchanged": false,
+        "afterCatchListenersUnchanged": false
+      }
+    },
+    {
+      "name": "once/onCollisionEnter",
+      "before": {
+        "tableIdentity": 1,
+        "lists": [],
+        "trigger": false,
+        "collision": false,
+        "calls": {
+          "adapter": 0,
+          "offCallback": 0,
+          "callback": 0,
+          "input": 0
+        }
+      },
+      "after": {
+        "tableIdentity": 1,
+        "lists": [
+          {
+            "key": "onCollisionEnter",
+            "id": 2,
+            "infosId": 3,
+            "invoking": false,
+            "cancelled": false,
+            "entries": [
+              {
+                "id": 4,
+                "callback": 5,
+                "target": 6,
+                "once": true
+              }
+            ]
+          }
+        ],
+        "trigger": false,
+        "collision": true,
+        "calls": {
+          "adapter": 4,
+          "offCallback": 0,
+          "callback": 0,
+          "input": 0
+        }
+      },
+      "attempts": [
+        {
+          "threw": false
+        },
+        {
+          "threw": false
+        }
+      ],
+      "checks": {
+        "bothRejected": false,
+        "exactUnchanged": false,
+        "afterCatchListenersUnchanged": false
+      }
+    },
+    {
+      "name": "once/onControllerTriggerEnter",
+      "before": {
+        "tableIdentity": 1,
+        "lists": [],
+        "trigger": false,
+        "collision": false,
+        "calls": {
+          "adapter": 0,
+          "offCallback": 0,
+          "callback": 0,
+          "input": 0
+        }
+      },
+      "after": {
+        "tableIdentity": 1,
+        "lists": [
+          {
+            "key": "onControllerTriggerEnter",
+            "id": 2,
+            "infosId": 3,
+            "invoking": false,
+            "cancelled": false,
+            "entries": [
+              {
+                "id": 4,
+                "callback": 5,
+                "target": 6,
+                "once": true
+              }
+            ]
+          }
+        ],
+        "trigger": true,
+        "collision": false,
+        "calls": {
+          "adapter": 4,
+          "offCallback": 0,
+          "callback": 0,
+          "input": 0
+        }
+      },
+      "attempts": [
+        {
+          "threw": false
+        },
+        {
+          "threw": false
+        }
+      ],
+      "checks": {
+        "bothRejected": false,
+        "exactUnchanged": false,
+        "afterCatchListenersUnchanged": false
+      }
+    },
+    {
+      "name": "removeAll-type/onTriggerEnter",
+      "before": {
+        "tableIdentity": 1,
+        "lists": [
+          {
+            "key": "onTriggerEnter",
+            "id": 2,
+            "infosId": 3,
+            "invoking": false,
+            "cancelled": false,
+            "entries": [
+              {
+                "id": 4,
+                "callback": 5,
+                "target": 6,
+                "once": false
+              }
+            ]
+          }
+        ],
+        "trigger": true,
+        "collision": false,
+        "calls": {
+          "adapter": 0,
+          "offCallback": 0,
+          "callback": 0,
+          "input": 0
+        }
+      },
+      "after": {
+        "tableIdentity": 1,
+        "lists": [],
+        "trigger": false,
+        "collision": false,
+        "calls": {
+          "adapter": 2,
+          "offCallback": 0,
+          "callback": 0,
+          "input": 0
+        }
+      },
+      "attempts": [
+        {
+          "threw": false
+        },
+        {
+          "threw": false
+        }
+      ],
+      "checks": {
+        "bothRejected": false,
+        "exactUnchanged": false,
+        "afterCatchListenersUnchanged": false
+      }
+    },
+    {
+      "name": "removeAll-type/onCollisionEnter",
+      "before": {
+        "tableIdentity": 1,
+        "lists": [
+          {
+            "key": "onCollisionEnter",
+            "id": 2,
+            "infosId": 3,
+            "invoking": false,
+            "cancelled": false,
+            "entries": [
+              {
+                "id": 4,
+                "callback": 5,
+                "target": 6,
+                "once": false
+              }
+            ]
+          }
+        ],
+        "trigger": false,
+        "collision": true,
+        "calls": {
+          "adapter": 0,
+          "offCallback": 0,
+          "callback": 0,
+          "input": 0
+        }
+      },
+      "after": {
+        "tableIdentity": 1,
+        "lists": [],
+        "trigger": false,
+        "collision": false,
+        "calls": {
+          "adapter": 2,
+          "offCallback": 0,
+          "callback": 0,
+          "input": 0
+        }
+      },
+      "attempts": [
+        {
+          "threw": false
+        },
+        {
+          "threw": false
+        }
+      ],
+      "checks": {
+        "bothRejected": false,
+        "exactUnchanged": false,
+        "afterCatchListenersUnchanged": false
+      }
+    },
+    {
+      "name": "removeAll-type/onControllerTriggerEnter",
+      "before": {
+        "tableIdentity": 1,
+        "lists": [
+          {
+            "key": "onControllerTriggerEnter",
+            "id": 2,
+            "infosId": 3,
+            "invoking": false,
+            "cancelled": false,
+            "entries": [
+              {
+                "id": 4,
+                "callback": 5,
+                "target": 6,
+                "once": false
+              }
+            ]
+          }
+        ],
+        "trigger": true,
+        "collision": false,
+        "calls": {
+          "adapter": 0,
+          "offCallback": 0,
+          "callback": 0,
+          "input": 0
+        }
+      },
+      "after": {
+        "tableIdentity": 1,
+        "lists": [],
+        "trigger": false,
+        "collision": false,
+        "calls": {
+          "adapter": 2,
+          "offCallback": 0,
+          "callback": 0,
+          "input": 0
+        }
+      },
+      "attempts": [
+        {
+          "threw": false
+        },
+        {
+          "threw": false
+        }
+      ],
+      "checks": {
+        "bothRejected": false,
+        "exactUnchanged": false,
+        "afterCatchListenersUnchanged": false
+      }
+    },
+    {
+      "name": "removeAll-target/onTriggerEnter",
+      "before": {
+        "tableIdentity": 1,
+        "lists": [
+          {
+            "key": "onTriggerEnter",
+            "id": 2,
+            "infosId": 3,
+            "invoking": false,
+            "cancelled": false,
+            "entries": [
+              {
+                "id": 4,
+                "callback": 5,
+                "target": 6,
+                "once": false
+              }
+            ]
+          }
+        ],
+        "trigger": true,
+        "collision": false,
+        "calls": {
+          "adapter": 0,
+          "offCallback": 0,
+          "callback": 0,
+          "input": 0
+        }
+      },
+      "after": {
+        "tableIdentity": 1,
+        "lists": [
+          {
+            "key": "onTriggerEnter",
+            "id": 2,
+            "infosId": 3,
+            "invoking": false,
+            "cancelled": false,
+            "entries": []
+          }
+        ],
+        "trigger": false,
+        "collision": false,
+        "calls": {
+          "adapter": 2,
+          "offCallback": 0,
+          "callback": 0,
+          "input": 0
+        }
+      },
+      "attempts": [
+        {
+          "threw": false
+        },
+        {
+          "threw": false
+        }
+      ],
+      "checks": {
+        "bothRejected": false,
+        "exactUnchanged": false,
+        "afterCatchListenersUnchanged": false
+      }
+    },
+    {
+      "name": "removeAll-target/onCollisionEnter",
+      "before": {
+        "tableIdentity": 1,
+        "lists": [
+          {
+            "key": "onCollisionEnter",
+            "id": 2,
+            "infosId": 3,
+            "invoking": false,
+            "cancelled": false,
+            "entries": [
+              {
+                "id": 4,
+                "callback": 5,
+                "target": 6,
+                "once": false
+              }
+            ]
+          }
+        ],
+        "trigger": false,
+        "collision": true,
+        "calls": {
+          "adapter": 0,
+          "offCallback": 0,
+          "callback": 0,
+          "input": 0
+        }
+      },
+      "after": {
+        "tableIdentity": 1,
+        "lists": [
+          {
+            "key": "onCollisionEnter",
+            "id": 2,
+            "infosId": 3,
+            "invoking": false,
+            "cancelled": false,
+            "entries": []
+          }
+        ],
+        "trigger": false,
+        "collision": false,
+        "calls": {
+          "adapter": 2,
+          "offCallback": 0,
+          "callback": 0,
+          "input": 0
+        }
+      },
+      "attempts": [
+        {
+          "threw": false
+        },
+        {
+          "threw": false
+        }
+      ],
+      "checks": {
+        "bothRejected": false,
+        "exactUnchanged": false,
+        "afterCatchListenersUnchanged": false
+      }
+    },
+    {
+      "name": "removeAll-target/onControllerTriggerEnter",
+      "before": {
+        "tableIdentity": 1,
+        "lists": [
+          {
+            "key": "onControllerTriggerEnter",
+            "id": 2,
+            "infosId": 3,
+            "invoking": false,
+            "cancelled": false,
+            "entries": [
+              {
+                "id": 4,
+                "callback": 5,
+                "target": 6,
+                "once": false
+              }
+            ]
+          }
+        ],
+        "trigger": true,
+        "collision": false,
+        "calls": {
+          "adapter": 0,
+          "offCallback": 0,
+          "callback": 0,
+          "input": 0
+        }
+      },
+      "after": {
+        "tableIdentity": 1,
+        "lists": [
+          {
+            "key": "onControllerTriggerEnter",
+            "id": 2,
+            "infosId": 3,
+            "invoking": false,
+            "cancelled": false,
+            "entries": []
+          }
+        ],
+        "trigger": false,
+        "collision": false,
+        "calls": {
+          "adapter": 2,
+          "offCallback": 0,
+          "callback": 0,
+          "input": 0
+        }
+      },
+      "attempts": [
+        {
+          "threw": false
+        },
+        {
+          "threw": false
+        }
+      ],
+      "checks": {
+        "bothRejected": false,
+        "exactUnchanged": false,
+        "afterCatchListenersUnchanged": false
+      }
+    },
+    {
+      "name": "targetOff/onTriggerEnter",
+      "before": {
+        "tableIdentity": 1,
+        "lists": [
+          {
+            "key": "onTriggerEnter",
+            "id": 2,
+            "infosId": 3,
+            "invoking": false,
+            "cancelled": false,
+            "entries": [
+              {
+                "id": 4,
+                "callback": 5,
+                "target": 6,
+                "once": false
+              }
+            ]
+          }
+        ],
+        "trigger": true,
+        "collision": false,
+        "calls": {
+          "adapter": 0,
+          "offCallback": 0,
+          "callback": 0,
+          "input": 0
+        }
+      },
+      "after": {
+        "tableIdentity": 1,
+        "lists": [
+          {
+            "key": "onTriggerEnter",
+            "id": 2,
+            "infosId": 3,
+            "invoking": false,
+            "cancelled": false,
+            "entries": []
+          }
+        ],
+        "trigger": false,
+        "collision": false,
+        "calls": {
+          "adapter": 2,
+          "offCallback": 0,
+          "callback": 0,
+          "input": 0
+        }
+      },
+      "attempts": [
+        {
+          "threw": false
+        },
+        {
+          "threw": false
+        }
+      ],
+      "checks": {
+        "bothRejected": false,
+        "exactUnchanged": false,
+        "afterCatchListenersUnchanged": false
+      }
+    },
+    {
+      "name": "targetOff/onCollisionEnter",
+      "before": {
+        "tableIdentity": 1,
+        "lists": [
+          {
+            "key": "onCollisionEnter",
+            "id": 2,
+            "infosId": 3,
+            "invoking": false,
+            "cancelled": false,
+            "entries": [
+              {
+                "id": 4,
+                "callback": 5,
+                "target": 6,
+                "once": false
+              }
+            ]
+          }
+        ],
+        "trigger": false,
+        "collision": true,
+        "calls": {
+          "adapter": 0,
+          "offCallback": 0,
+          "callback": 0,
+          "input": 0
+        }
+      },
+      "after": {
+        "tableIdentity": 1,
+        "lists": [
+          {
+            "key": "onCollisionEnter",
+            "id": 2,
+            "infosId": 3,
+            "invoking": false,
+            "cancelled": false,
+            "entries": []
+          }
+        ],
+        "trigger": false,
+        "collision": false,
+        "calls": {
+          "adapter": 2,
+          "offCallback": 0,
+          "callback": 0,
+          "input": 0
+        }
+      },
+      "attempts": [
+        {
+          "threw": false
+        },
+        {
+          "threw": false
+        }
+      ],
+      "checks": {
+        "bothRejected": false,
+        "exactUnchanged": false,
+        "afterCatchListenersUnchanged": false
+      }
+    },
+    {
+      "name": "targetOff/onControllerTriggerEnter",
+      "before": {
+        "tableIdentity": 1,
+        "lists": [
+          {
+            "key": "onControllerTriggerEnter",
+            "id": 2,
+            "infosId": 3,
+            "invoking": false,
+            "cancelled": false,
+            "entries": [
+              {
+                "id": 4,
+                "callback": 5,
+                "target": 6,
+                "once": false
+              }
+            ]
+          }
+        ],
+        "trigger": true,
+        "collision": false,
+        "calls": {
+          "adapter": 0,
+          "offCallback": 0,
+          "callback": 0,
+          "input": 0
+        }
+      },
+      "after": {
+        "tableIdentity": 1,
+        "lists": [
+          {
+            "key": "onControllerTriggerEnter",
+            "id": 2,
+            "infosId": 3,
+            "invoking": false,
+            "cancelled": false,
+            "entries": []
+          }
+        ],
+        "trigger": false,
+        "collision": false,
+        "calls": {
+          "adapter": 2,
+          "offCallback": 0,
+          "callback": 0,
+          "input": 0
+        }
+      },
+      "attempts": [
+        {
+          "threw": false
+        },
+        {
+          "threw": false
+        }
+      ],
+      "checks": {
+        "bothRejected": false,
+        "exactUnchanged": false,
+        "afterCatchListenersUnchanged": false
+      }
+    },
+    {
+      "name": "clear/onTriggerEnter",
+      "before": {
+        "tableIdentity": 1,
+        "lists": [
+          {
+            "key": "onTriggerEnter",
+            "id": 2,
+            "infosId": 3,
+            "invoking": false,
+            "cancelled": false,
+            "entries": [
+              {
+                "id": 4,
+                "callback": 5,
+                "target": 6,
+                "once": false
+              }
+            ]
+          }
+        ],
+        "trigger": true,
+        "collision": false,
+        "calls": {
+          "adapter": 0,
+          "offCallback": 0,
+          "callback": 0,
+          "input": 0
+        }
+      },
+      "after": {
+        "tableIdentity": 1,
+        "lists": [],
+        "trigger": true,
+        "collision": false,
+        "calls": {
+          "adapter": 0,
+          "offCallback": 0,
+          "callback": 0,
+          "input": 0
+        }
+      },
+      "attempts": [
+        {
+          "threw": false
+        },
+        {
+          "threw": false
+        }
+      ],
+      "checks": {
+        "bothRejected": false,
+        "exactUnchanged": false,
+        "afterCatchListenersUnchanged": false
+      }
+    },
+    {
+      "name": "clear/onCollisionEnter",
+      "before": {
+        "tableIdentity": 1,
+        "lists": [
+          {
+            "key": "onCollisionEnter",
+            "id": 2,
+            "infosId": 3,
+            "invoking": false,
+            "cancelled": false,
+            "entries": [
+              {
+                "id": 4,
+                "callback": 5,
+                "target": 6,
+                "once": false
+              }
+            ]
+          }
+        ],
+        "trigger": false,
+        "collision": true,
+        "calls": {
+          "adapter": 0,
+          "offCallback": 0,
+          "callback": 0,
+          "input": 0
+        }
+      },
+      "after": {
+        "tableIdentity": 1,
+        "lists": [],
+        "trigger": false,
+        "collision": true,
+        "calls": {
+          "adapter": 0,
+          "offCallback": 0,
+          "callback": 0,
+          "input": 0
+        }
+      },
+      "attempts": [
+        {
+          "threw": false
+        },
+        {
+          "threw": false
+        }
+      ],
+      "checks": {
+        "bothRejected": false,
+        "exactUnchanged": false,
+        "afterCatchListenersUnchanged": false
+      }
+    },
+    {
+      "name": "clear/onControllerTriggerEnter",
+      "before": {
+        "tableIdentity": 1,
+        "lists": [
+          {
+            "key": "onControllerTriggerEnter",
+            "id": 2,
+            "infosId": 3,
+            "invoking": false,
+            "cancelled": false,
+            "entries": [
+              {
+                "id": 4,
+                "callback": 5,
+                "target": 6,
+                "once": false
+              }
+            ]
+          }
+        ],
+        "trigger": true,
+        "collision": false,
+        "calls": {
+          "adapter": 0,
+          "offCallback": 0,
+          "callback": 0,
+          "input": 0
+        }
+      },
+      "after": {
+        "tableIdentity": 1,
+        "lists": [],
+        "trigger": true,
+        "collision": false,
+        "calls": {
+          "adapter": 0,
+          "offCallback": 0,
+          "callback": 0,
+          "input": 0
+        }
+      },
+      "attempts": [
+        {
+          "threw": false
+        },
+        {
+          "threw": false
+        }
+      ],
+      "checks": {
+        "bothRejected": false,
+        "exactUnchanged": false,
+        "afterCatchListenersUnchanged": false
+      }
+    }
+  ],
+  "ordinary": [
+    {
+      "method": "on",
+      "event": "onTriggerEnter",
+      "returnedCallback": true,
+      "snapshot": {
+        "tableIdentity": 1,
+        "lists": [
+          {
+            "key": "onTriggerEnter",
+            "id": 2,
+            "infosId": 3,
+            "invoking": false,
+            "cancelled": false,
+            "entries": [
+              {
+                "id": 4,
+                "callback": 5,
+                "target": 6,
+                "once": false
+              }
+            ]
+          }
+        ],
+        "trigger": true,
+        "collision": false,
+        "calls": {
+          "adapter": 1,
+          "offCallback": 0,
+          "callback": 200,
+          "input": 0
+        }
+      }
+    },
+    {
+      "method": "on",
+      "event": "onCollisionEnter",
+      "returnedCallback": true,
+      "snapshot": {
+        "tableIdentity": 1,
+        "lists": [
+          {
+            "key": "onCollisionEnter",
+            "id": 2,
+            "infosId": 3,
+            "invoking": false,
+            "cancelled": false,
+            "entries": [
+              {
+                "id": 4,
+                "callback": 5,
+                "target": 6,
+                "once": false
+              }
+            ]
+          }
+        ],
+        "trigger": false,
+        "collision": true,
+        "calls": {
+          "adapter": 1,
+          "offCallback": 0,
+          "callback": 200,
+          "input": 0
+        }
+      }
+    },
+    {
+      "method": "on",
+      "event": "onControllerTriggerEnter",
+      "returnedCallback": true,
+      "snapshot": {
+        "tableIdentity": 1,
+        "lists": [
+          {
+            "key": "onControllerTriggerEnter",
+            "id": 2,
+            "infosId": 3,
+            "invoking": false,
+            "cancelled": false,
+            "entries": [
+              {
+                "id": 4,
+                "callback": 5,
+                "target": 6,
+                "once": false
+              }
+            ]
+          }
+        ],
+        "trigger": true,
+        "collision": false,
+        "calls": {
+          "adapter": 1,
+          "offCallback": 0,
+          "callback": 200,
+          "input": 0
+        }
+      }
+    },
+    {
+      "method": "off",
+      "event": "onTriggerEnter",
+      "returnedCallback": false,
+      "snapshot": {
+        "tableIdentity": 1,
+        "lists": [
+          {
+            "key": "onTriggerEnter",
+            "id": 2,
+            "infosId": 3,
+            "invoking": false,
+            "cancelled": false,
+            "entries": []
+          }
+        ],
+        "trigger": false,
+        "collision": false,
+        "calls": {
+          "adapter": 1,
+          "offCallback": 1,
+          "callback": 0,
+          "input": 0
+        }
+      }
+    },
+    {
+      "method": "off",
+      "event": "onCollisionEnter",
+      "returnedCallback": false,
+      "snapshot": {
+        "tableIdentity": 1,
+        "lists": [
+          {
+            "key": "onCollisionEnter",
+            "id": 2,
+            "infosId": 3,
+            "invoking": false,
+            "cancelled": false,
+            "entries": []
+          }
+        ],
+        "trigger": false,
+        "collision": false,
+        "calls": {
+          "adapter": 1,
+          "offCallback": 1,
+          "callback": 0,
+          "input": 0
+        }
+      }
+    },
+    {
+      "method": "off",
+      "event": "onControllerTriggerEnter",
+      "returnedCallback": false,
+      "snapshot": {
+        "tableIdentity": 1,
+        "lists": [
+          {
+            "key": "onControllerTriggerEnter",
+            "id": 2,
+            "infosId": 3,
+            "invoking": false,
+            "cancelled": false,
+            "entries": []
+          }
+        ],
+        "trigger": false,
+        "collision": false,
+        "calls": {
+          "adapter": 1,
+          "offCallback": 1,
+          "callback": 0,
+          "input": 0
+        }
+      }
+    },
+    {
+      "method": "once",
+      "event": "onTriggerEnter",
+      "returnedCallback": true,
+      "snapshot": {
+        "tableIdentity": 1,
+        "lists": [
+          {
+            "key": "onTriggerEnter",
+            "id": 2,
+            "infosId": 3,
+            "invoking": false,
+            "cancelled": false,
+            "entries": []
+          }
+        ],
+        "trigger": false,
+        "collision": false,
+        "calls": {
+          "adapter": 3,
+          "offCallback": 1,
+          "callback": 100,
+          "input": 0
+        }
+      }
+    },
+    {
+      "method": "once",
+      "event": "onCollisionEnter",
+      "returnedCallback": true,
+      "snapshot": {
+        "tableIdentity": 1,
+        "lists": [
+          {
+            "key": "onCollisionEnter",
+            "id": 2,
+            "infosId": 3,
+            "invoking": false,
+            "cancelled": false,
+            "entries": []
+          }
+        ],
+        "trigger": false,
+        "collision": false,
+        "calls": {
+          "adapter": 3,
+          "offCallback": 1,
+          "callback": 100,
+          "input": 0
+        }
+      }
+    },
+    {
+      "method": "once",
+      "event": "onControllerTriggerEnter",
+      "returnedCallback": true,
+      "snapshot": {
+        "tableIdentity": 1,
+        "lists": [
+          {
+            "key": "onControllerTriggerEnter",
+            "id": 2,
+            "infosId": 3,
+            "invoking": false,
+            "cancelled": false,
+            "entries": []
+          }
+        ],
+        "trigger": false,
+        "collision": false,
+        "calls": {
+          "adapter": 3,
+          "offCallback": 1,
+          "callback": 100,
+          "input": 0
+        }
+      }
+    },
+    {
+      "method": "removeAll-type",
+      "event": "onTriggerEnter",
+      "returnedCallback": false,
+      "snapshot": {
+        "tableIdentity": 1,
+        "lists": [],
+        "trigger": false,
+        "collision": false,
+        "calls": {
+          "adapter": 1,
+          "offCallback": 0,
+          "callback": 0,
+          "input": 0
+        }
+      }
+    },
+    {
+      "method": "removeAll-type",
+      "event": "onCollisionEnter",
+      "returnedCallback": false,
+      "snapshot": {
+        "tableIdentity": 1,
+        "lists": [],
+        "trigger": false,
+        "collision": false,
+        "calls": {
+          "adapter": 1,
+          "offCallback": 0,
+          "callback": 0,
+          "input": 0
+        }
+      }
+    },
+    {
+      "method": "removeAll-type",
+      "event": "onControllerTriggerEnter",
+      "returnedCallback": false,
+      "snapshot": {
+        "tableIdentity": 1,
+        "lists": [],
+        "trigger": false,
+        "collision": false,
+        "calls": {
+          "adapter": 1,
+          "offCallback": 0,
+          "callback": 0,
+          "input": 0
+        }
+      }
+    },
+    {
+      "method": "removeAll-target",
+      "event": "onTriggerEnter",
+      "returnedCallback": false,
+      "snapshot": {
+        "tableIdentity": 1,
+        "lists": [
+          {
+            "key": "onTriggerEnter",
+            "id": 2,
+            "infosId": 3,
+            "invoking": false,
+            "cancelled": false,
+            "entries": []
+          }
+        ],
+        "trigger": false,
+        "collision": false,
+        "calls": {
+          "adapter": 1,
+          "offCallback": 0,
+          "callback": 0,
+          "input": 0
+        }
+      }
+    },
+    {
+      "method": "removeAll-target",
+      "event": "onCollisionEnter",
+      "returnedCallback": false,
+      "snapshot": {
+        "tableIdentity": 1,
+        "lists": [
+          {
+            "key": "onCollisionEnter",
+            "id": 2,
+            "infosId": 3,
+            "invoking": false,
+            "cancelled": false,
+            "entries": []
+          }
+        ],
+        "trigger": false,
+        "collision": false,
+        "calls": {
+          "adapter": 1,
+          "offCallback": 0,
+          "callback": 0,
+          "input": 0
+        }
+      }
+    },
+    {
+      "method": "removeAll-target",
+      "event": "onControllerTriggerEnter",
+      "returnedCallback": false,
+      "snapshot": {
+        "tableIdentity": 1,
+        "lists": [
+          {
+            "key": "onControllerTriggerEnter",
+            "id": 2,
+            "infosId": 3,
+            "invoking": false,
+            "cancelled": false,
+            "entries": []
+          }
+        ],
+        "trigger": false,
+        "collision": false,
+        "calls": {
+          "adapter": 1,
+          "offCallback": 0,
+          "callback": 0,
+          "input": 0
+        }
+      }
+    },
+    {
+      "method": "targetOff",
+      "event": "onTriggerEnter",
+      "returnedCallback": false,
+      "snapshot": {
+        "tableIdentity": 1,
+        "lists": [
+          {
+            "key": "onTriggerEnter",
+            "id": 2,
+            "infosId": 3,
+            "invoking": false,
+            "cancelled": false,
+            "entries": []
+          }
+        ],
+        "trigger": false,
+        "collision": false,
+        "calls": {
+          "adapter": 1,
+          "offCallback": 0,
+          "callback": 0,
+          "input": 0
+        }
+      }
+    },
+    {
+      "method": "targetOff",
+      "event": "onCollisionEnter",
+      "returnedCallback": false,
+      "snapshot": {
+        "tableIdentity": 1,
+        "lists": [
+          {
+            "key": "onCollisionEnter",
+            "id": 2,
+            "infosId": 3,
+            "invoking": false,
+            "cancelled": false,
+            "entries": []
+          }
+        ],
+        "trigger": false,
+        "collision": false,
+        "calls": {
+          "adapter": 1,
+          "offCallback": 0,
+          "callback": 0,
+          "input": 0
+        }
+      }
+    },
+    {
+      "method": "targetOff",
+      "event": "onControllerTriggerEnter",
+      "returnedCallback": false,
+      "snapshot": {
+        "tableIdentity": 1,
+        "lists": [
+          {
+            "key": "onControllerTriggerEnter",
+            "id": 2,
+            "infosId": 3,
+            "invoking": false,
+            "cancelled": false,
+            "entries": []
+          }
+        ],
+        "trigger": false,
+        "collision": false,
+        "calls": {
+          "adapter": 1,
+          "offCallback": 0,
+          "callback": 0,
+          "input": 0
+        }
+      }
+    },
+    {
+      "method": "clear",
+      "event": "onTriggerEnter",
+      "returnedCallback": false,
+      "snapshot": {
+        "tableIdentity": 1,
+        "lists": [],
+        "trigger": true,
+        "collision": false,
+        "calls": {
+          "adapter": 0,
+          "offCallback": 0,
+          "callback": 0,
+          "input": 0
+        }
+      }
+    },
+    {
+      "method": "clear",
+      "event": "onCollisionEnter",
+      "returnedCallback": false,
+      "snapshot": {
+        "tableIdentity": 1,
+        "lists": [],
+        "trigger": false,
+        "collision": true,
+        "calls": {
+          "adapter": 0,
+          "offCallback": 0,
+          "callback": 0,
+          "input": 0
+        }
+      }
+    },
+    {
+      "method": "clear",
+      "event": "onControllerTriggerEnter",
+      "returnedCallback": false,
+      "snapshot": {
+        "tableIdentity": 1,
+        "lists": [],
+        "trigger": true,
+        "collision": false,
+        "calls": {
+          "adapter": 0,
+          "offCallback": 0,
+          "callback": 0,
+          "input": 0
+        }
+      }
+    }
+  ],
+  "failed": 21
+}

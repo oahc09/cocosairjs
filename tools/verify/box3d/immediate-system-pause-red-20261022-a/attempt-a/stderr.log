@@ -1,0 +1,290 @@
+  console.log
+    Cannot access game frame or container.
+
+      at warnID (src/cocos/core/platform/debug.ts:314:5)
+
+  console.log
+    [PHYSICS]: register box3d.
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    [PHYSICS]: register box3d.
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    [PHYSICS]: register box3d.
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    [PHYSICS]: register box3d.
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    [PHYSICS]: register box3d.
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    [PHYSICS]: register box3d.
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+FAIL ../box3d-immediate-pause-probe-20261022/pause-control.test.ts (17.191 s)
+  ✕ P01 enable=false must reject actual manual System.step before advancement (28 ms)
+  ✕ P02 BEFORE_PHYSICS disable must stop this frame and retain backlog and normal AFTER (7 ms)
+  ✕ P03 enable rejects non-booleans with actual Box3D owner registered (7 ms)
+  ✕ P03 autoSimulation rejects non-booleans with actual Box3D owner registered (6 ms)
+  ✓ C01 autoSimulation=false is enabled manual scheduling, not disabled physics (4 ms)
+  ✓ C02 disabled scene preflight and component assembly are existing positive controls (17 ms)
+
+  ● P01 enable=false must reject actual manual System.step before advancement
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 20
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "actual": false,
+    +     "expected": true,
+    +     "name": "manual call refused while System-disabled",
+    +     "passed": false,
+    +   },
+    +   Object {
+    +     "actual": 1,
+    +     "expected": 0,
+    +     "name": "no mock solver step",
+    +     "passed": false,
+    +   },
+    +   Object {
+    +     "actual": 1,
+    +     "expected": 0,
+    +     "name": "mock native index unchanged",
+    +     "passed": false,
+    +   },
+    + ]
+
+      187 |       ? "PASS_SOURCE_WITH_MOCK_BINDING"
+      188 |       : "RED_PRODUCT_CONTRACT_SOURCE_WITH_MOCK_BINDING";
+    > 189 |     expect(row.checks.filter((v: any) => !v.passed)).toEqual([]);
+          |                                                      ^
+      190 |   });
+      191 | }
+      192 | beforeEach(() => {
+
+      at Object.<anonymous> (../box3d-immediate-pause-probe-20261022/pause-control.test.ts:189:54)
+
+  ● P02 BEFORE_PHYSICS disable must stop this frame and retain backlog and normal AFTER
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 21
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "actual": 2,
+    +     "expected": 0,
+    +     "name": "no mock step after BEFORE pause",
+    +     "passed": false,
+    +   },
+    +   Object {
+    +     "actual": 0.008333333333333331,
+    +     "expected": 0.041666666666666664,
+    +     "name": "already-added backlog retained",
+    +     "passed": false,
+    +     "tolerance": 1e-12,
+    +   },
+    +   Object {
+    +     "actual": 2,
+    +     "expected": 0,
+    +     "name": "no successful substeps charged",
+    +     "passed": false,
+    +   },
+    + ]
+
+      187 |       ? "PASS_SOURCE_WITH_MOCK_BINDING"
+      188 |       : "RED_PRODUCT_CONTRACT_SOURCE_WITH_MOCK_BINDING";
+    > 189 |     expect(row.checks.filter((v: any) => !v.passed)).toEqual([]);
+          |                                                      ^
+      190 |   });
+      191 | }
+      192 | beforeEach(() => {
+
+      at Object.<anonymous> (../box3d-immediate-pause-probe-20261022/pause-control.test.ts:189:54)
+
+  ● P03 enable rejects non-booleans with actual Box3D owner registered
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 62
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "actual": false,
+    +     "expected": true,
+    +     "name": "strict refusal for 0",
+    +     "passed": false,
+    +   },
+    +   Object {
+    +     "actual": false,
+    +     "expected": true,
+    +     "name": "previous cache retained for 0",
+    +     "passed": false,
+    +   },
+    +   Object {
+    +     "actual": false,
+    +     "expected": true,
+    +     "name": "strict refusal for 1",
+    +     "passed": false,
+    +   },
+    +   Object {
+    +     "actual": false,
+    +     "expected": true,
+    +     "name": "previous cache retained for 1",
+    +     "passed": false,
+    +   },
+    +   Object {
+    +     "actual": false,
+    +     "expected": true,
+    +     "name": "strict refusal for null",
+    +     "passed": false,
+    +   },
+    +   Object {
+    +     "actual": false,
+    +     "expected": true,
+    +     "name": "previous cache retained for null",
+    +     "passed": false,
+    +   },
+    +   Object {
+    +     "actual": false,
+    +     "expected": true,
+    +     "name": "strict refusal for undefined",
+    +     "passed": false,
+    +   },
+    +   Object {
+    +     "actual": false,
+    +     "expected": true,
+    +     "name": "previous cache retained for undefined",
+    +     "passed": false,
+    +   },
+    +   Object {
+    +     "actual": false,
+    +     "expected": true,
+    +     "name": "strict refusal for [object Object]",
+    +     "passed": false,
+    +   },
+    +   Object {
+    +     "actual": false,
+    +     "expected": true,
+    +     "name": "previous cache retained for [object Object]",
+    +     "passed": false,
+    +   },
+    + ]
+
+      187 |       ? "PASS_SOURCE_WITH_MOCK_BINDING"
+      188 |       : "RED_PRODUCT_CONTRACT_SOURCE_WITH_MOCK_BINDING";
+    > 189 |     expect(row.checks.filter((v: any) => !v.passed)).toEqual([]);
+          |                                                      ^
+      190 |   });
+      191 | }
+      192 | beforeEach(() => {
+
+      at Object.<anonymous> (../box3d-immediate-pause-probe-20261022/pause-control.test.ts:189:54)
+
+  ● P03 autoSimulation rejects non-booleans with actual Box3D owner registered
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 62
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "actual": false,
+    +     "expected": true,
+    +     "name": "strict refusal for 0",
+    +     "passed": false,
+    +   },
+    +   Object {
+    +     "actual": false,
+    +     "expected": true,
+    +     "name": "previous cache retained for 0",
+    +     "passed": false,
+    +   },
+    +   Object {
+    +     "actual": false,
+    +     "expected": true,
+    +     "name": "strict refusal for 1",
+    +     "passed": false,
+    +   },
+    +   Object {
+    +     "actual": false,
+    +     "expected": true,
+    +     "name": "previous cache retained for 1",
+    +     "passed": false,
+    +   },
+    +   Object {
+    +     "actual": false,
+    +     "expected": true,
+    +     "name": "strict refusal for null",
+    +     "passed": false,
+    +   },
+    +   Object {
+    +     "actual": false,
+    +     "expected": true,
+    +     "name": "previous cache retained for null",
+    +     "passed": false,
+    +   },
+    +   Object {
+    +     "actual": false,
+    +     "expected": true,
+    +     "name": "strict refusal for undefined",
+    +     "passed": false,
+    +   },
+    +   Object {
+    +     "actual": false,
+    +     "expected": true,
+    +     "name": "previous cache retained for undefined",
+    +     "passed": false,
+    +   },
+    +   Object {
+    +     "actual": false,
+    +     "expected": true,
+    +     "name": "strict refusal for [object Object]",
+    +     "passed": false,
+    +   },
+    +   Object {
+    +     "actual": false,
+    +     "expected": true,
+    +     "name": "previous cache retained for [object Object]",
+    +     "passed": false,
+    +   },
+    + ]
+
+      187 |       ? "PASS_SOURCE_WITH_MOCK_BINDING"
+      188 |       : "RED_PRODUCT_CONTRACT_SOURCE_WITH_MOCK_BINDING";
+    > 189 |     expect(row.checks.filter((v: any) => !v.passed)).toEqual([]);
+          |                                                      ^
+      190 |   });
+      191 | }
+      192 | beforeEach(() => {
+
+      at Object.<anonymous> (../box3d-immediate-pause-probe-20261022/pause-control.test.ts:189:54)
+
+Test Suites: 1 failed, 1 total
+Tests:       4 failed, 2 passed, 6 total
+Snapshots:   0 total
+Time:        17.723 s
+Ran all test suites.
+Test results written to: ../box3d-immediate-pause-probe-20261022/attempt-a/jest-results.json

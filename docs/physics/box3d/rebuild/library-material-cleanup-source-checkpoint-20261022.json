@@ -1,0 +1,177 @@
+{
+  "status": "PASS_ACTUAL_LIBRARY_DOWNLOAD_INCREMENTAL_INDEPENDENT_STORE_FULL_FILE_VERIFICATION",
+  "timeUTC": "2026-10-22T17:16:33.970153+00:00",
+  "libraryFileId": "libfile_8e87a87f81288191a6bb7c205466d4bc",
+  "fileId": "file_00000000697881f5853e02e9b306d036",
+  "archive": {
+    "bytes": 6273055,
+    "sha256": "c1d63ed284503f9e477364740b1bec9cbf325ee49ec1f0dd1dbdd8d39ae3a023"
+  },
+  "commit": "4e1cb31336dee13c549d8ec94ab71e64072e93e2",
+  "tree": "670baa69731bce8381c87f1b77b13c63877456f5",
+  "bundle": {
+    "file": "box3d-rebuild-incremental.bundle",
+    "bytes": 5280974,
+    "sha256": "cac0190b36239ae392553744b9ae84e9e12f0696bc1c427e928855a40ae489a8"
+  },
+  "reusedRestoreDirectory": "/workspace/scratch/62d43a81bbde/box3d-motion-qualified-library-roundtrip-20261022/restored",
+  "previousVerifiedCommit": "0a478e33cfd06e426b04989892b8fa337042ffa9",
+  "beforeVerification": {
+    "status": "PASS",
+    "checkedFiles": 17116,
+    "independentObjectStore": true
+  },
+  "afterVerification": {
+    "status": "PASS",
+    "checkedFiles": 17273,
+    "independentObjectStore": true
+  },
+  "evidenceClosure": {
+    "status": "PASS_SCOPED_COMPLETED_EVIDENCE_CLOSURE",
+    "files": 13515,
+    "manifestReferences": 6614,
+    "observedExceptions": [],
+    "activeIncompletePaths": [],
+    "committedSnapshot": "4e1cb31336dee13c549d8ec94ab71e64072e93e2",
+    "physicalAcceptance": "NO_STATUS_CHANGE"
+  },
+  "newFullCloneCreated": false,
+  "priorReceiptPreserved": true,
+  "priorReceiptSha256": "7dcdb5dee7d18b31133cb44f67ffad6fe845445e1bc562e5ed3734654ce5d7b9",
+  "commands": [
+    {
+      "command": [
+        "git",
+        "-C",
+        "/workspace/scratch/62d43a81bbde/box3d-motion-qualified-library-roundtrip-20261022/restored",
+        "status",
+        "--porcelain",
+        "--untracked-files=all"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/workspace/scratch/62d43a81bbde/box3d-motion-qualified-library-roundtrip-20261022/restored",
+        "ls-files",
+        "--others",
+        "--ignored",
+        "--exclude-standard"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "node",
+        "-e",
+        "const fs=require('fs');const {verifyRestored}=require(process.argv[1]);console.log(JSON.stringify(verifyRestored(process.argv[3],JSON.parse(fs.readFileSync(process.argv[2])))));",
+        "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/verify/box3d/rebuild-checkpoint.cjs",
+        "/workspace/scratch/62d43a81bbde/box3d-material-b1-qualified-library-roundtrip-20261022/checkpoint-receipt.json",
+        "/workspace/scratch/62d43a81bbde/box3d-motion-qualified-library-roundtrip-20261022/restored"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"status\":\"PASS\",\"checkedFiles\":17116,\"independentObjectStore\":true}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/workspace/scratch/62d43a81bbde/box3d-motion-qualified-library-roundtrip-20261022/restored",
+        "bundle",
+        "verify",
+        "/workspace/scratch/62d43a81bbde/box3d-material-cleanup-source-library-roundtrip-20261022/box3d-rebuild-incremental.bundle"
+      ],
+      "exitCode": 0,
+      "stdout": "The bundle contains this ref:\n4e1cb31336dee13c549d8ec94ab71e64072e93e2 refs/heads/feat/box3d-rebuild-20261022\nThe bundle requires this ref:\ne5c5674bfe08be0c9fda72c484f4380bd0d0e2c6 \nThe bundle uses this hash algorithm: sha1\n",
+      "stderr": "/workspace/scratch/62d43a81bbde/box3d-material-cleanup-source-library-roundtrip-20261022/box3d-rebuild-incremental.bundle is okay\n"
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/workspace/scratch/62d43a81bbde/box3d-motion-qualified-library-roundtrip-20261022/restored",
+        "fetch",
+        "/workspace/scratch/62d43a81bbde/box3d-material-cleanup-source-library-roundtrip-20261022/box3d-rebuild-incremental.bundle",
+        "refs/heads/feat/box3d-rebuild-20261022"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": "From /workspace/scratch/62d43a81bbde/box3d-material-cleanup-source-library-roundtrip-20261022/box3d-rebuild-incremental.bundle\n * branch              feat/box3d-rebuild-20261022 -> FETCH_HEAD\n"
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/workspace/scratch/62d43a81bbde/box3d-motion-qualified-library-roundtrip-20261022/restored",
+        "merge-base",
+        "--is-ancestor",
+        "0a478e33cfd06e426b04989892b8fa337042ffa9",
+        "4e1cb31336dee13c549d8ec94ab71e64072e93e2"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/workspace/scratch/62d43a81bbde/box3d-motion-qualified-library-roundtrip-20261022/restored",
+        "checkout",
+        "--detach",
+        "4e1cb31336dee13c549d8ec94ab71e64072e93e2"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": "Previous HEAD position was 0a478e33 test(box3d): preserve real material fixes and separate cleanup diagnostic failures\nHEAD is now at 4e1cb313 fix(box3d): preserve first failure and bounded cleanup evidence\n"
+    },
+    {
+      "command": [
+        "node",
+        "-e",
+        "const fs=require('fs');const {verifyRestored}=require(process.argv[1]);console.log(JSON.stringify(verifyRestored(process.argv[3],JSON.parse(fs.readFileSync(process.argv[2])))));",
+        "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/verify/box3d/rebuild-checkpoint.cjs",
+        "/workspace/scratch/62d43a81bbde/box3d-material-cleanup-source-library-roundtrip-20261022/checkpoint-receipt.json",
+        "/workspace/scratch/62d43a81bbde/box3d-motion-qualified-library-roundtrip-20261022/restored"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"status\":\"PASS\",\"checkedFiles\":17273,\"independentObjectStore\":true}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "/workspace/scratch/62d43a81bbde/box3d-motion-qualified-library-roundtrip-20261022/restored/tools/verify/box3d/evidence-closure.py",
+        "--root",
+        "/workspace/scratch/62d43a81bbde/box3d-motion-qualified-library-roundtrip-20261022/restored",
+        "--manifest",
+        "ai/ledgers/box3d-delivery-checkpoint-33-final.json",
+        "--require-commit"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"status\": \"PASS_SCOPED_COMPLETED_EVIDENCE_CLOSURE\", \"files\": 13515, \"manifestReferences\": 6614, \"observedExceptions\": [], \"activeIncompletePaths\": [], \"committedSnapshot\": \"4e1cb31336dee13c549d8ec94ab71e64072e93e2\", \"physicalAcceptance\": \"NO_STATUS_CHANGE\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/workspace/scratch/62d43a81bbde/box3d-motion-qualified-library-roundtrip-20261022/restored",
+        "status",
+        "--porcelain",
+        "--untracked-files=all"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "scope": "Honest partial-main local Git source restoration and explicit completed evidence inventory, no physical acceptance."
+}

@@ -1,0 +1,310 @@
+{
+  "status": "SOURCE_CANDIDATE_PURE_CONTROLS_PASSED_TWO_FILES_LANDED_NOT_INTEGRATION_TESTED",
+  "time": "2026-10-22T17:35:33.270649+00:00",
+  "sourceBaseline": "4e1cb31336dee13c549d8ec94ab71e64072e93e2",
+  "wrapper": {
+    "passed": 47,
+    "failed": 0,
+    "scope": "pure wrapper/B0 only"
+  },
+  "strictBridgeTsc": "PASS",
+  "systemSyntaxTranspile": "PASS_NOT_FULL_TYPECHECK",
+  "retainedEarlierFailures": [
+    "compile-a",
+    "compile-b",
+    "wrapper-a-setup"
+  ],
+  "actualSystemIntegration": "NOT_RUN_WAITING_FOR_OWNER_WIRING",
+  "nativeBuild": false,
+  "gitWrite": false,
+  "formalRequiredCells": {
+    "count": 2128,
+    "status": "NOT_RUN"
+  },
+  "stagedCommandsSupported": false,
+  "unifiedTransactionsSupported": false,
+  "producerOwnerConnection": "NOT_INTEGRATED",
+  "t12": "NOT_RUN",
+  "artifacts": {
+    "format-d.stdout.log": {
+      "bytes": 56,
+      "sha256": "b15f8c6a60a8eba11706495417087bb50d05ac30acdc07edbd6b5823ff8e4e00"
+    },
+    "wrapper-b.stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "wrapper-control.cjs": {
+      "bytes": 11461,
+      "sha256": "8a0209f20ba52c28e886cdfd469fc46dacbf6fa9bd90e1bb823f2a705868aeea"
+    },
+    "tsc.exit-code.txt": {
+      "bytes": 2,
+      "sha256": "53c234e5e8472b6ac51c1ae1cab3fe06fad053beb8ebfd8977b010655bfdd3c3"
+    },
+    "physics-system.ts": {
+      "bytes": 44352,
+      "sha256": "a4890065dcb52287ec5483f2b8c14e63dcd266cd1503b5f2629716713fa504eb"
+    },
+    "landing-receipt.json": {
+      "bytes": 701,
+      "sha256": "89ff21468f3fc5cc53e4c64e7c0de0066caed43333e66b4de7492789ddf3ece0"
+    },
+    "physics-system-control.patch": {
+      "bytes": 17599,
+      "sha256": "56c522e9cd3f479c4823b405cb2216d4bef1446a8819e361994a517811c2f74b"
+    },
+    "wrapper-c.stdout.log": {
+      "bytes": 59,
+      "sha256": "b74477d1d5e40085a04176e31508f1d8b7e586bbe8b59e9b812aaf697e439579"
+    },
+    "wrapper-a.exit-code.txt": {
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    },
+    "system-transpile.stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "wrapper-c.exit-code.txt": {
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    "README.md": {
+      "bytes": 6984,
+      "sha256": "a235674fe352013298e61baa4db2173f88c986b95a3005ec8b65cfc90eace7d5"
+    },
+    "wrapper-c.raw.json": {
+      "bytes": 7858,
+      "sha256": "1fdc8d7257f6dd15eea011488d83ec4c1ee5530f526924170d3354ab1760c1ce"
+    },
+    "format-c.stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "physics-state-observer.ts": {
+      "bytes": 23170,
+      "sha256": "4cf40c4f1be0d407a402e95dcdb7a898b1942cb175f869f6367a41b18c2d1d2b"
+    },
+    "wrapper-b.stdout.log": {
+      "bytes": 59,
+      "sha256": "718f088857bf63c7a7aa130ad63b61ede6f1305fd5367cce9cc58ce2bb9886a5"
+    },
+    "format-b.stdout.log": {
+      "bytes": 56,
+      "sha256": "d675f2d66ba4d7b6a2ab3a149a1a6c90e7f61d4dfd75c8bb9e28f99e079e29f0"
+    },
+    "tsc.stdout.log": {
+      "bytes": 658,
+      "sha256": "2085527672e6aafa2059125219aca71a2c356bcd9e9f6cf488f678508e99f7ea"
+    },
+    "wrapper-a.setup-error.json": {
+      "bytes": 222,
+      "sha256": "be95d3236c44afd6cfee8beb841dabe026627ca1e03008100ea3824427007ae2"
+    },
+    "format-final.stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "system-transpile.stdout.log": {
+      "bytes": 19,
+      "sha256": "4470400114fad19c85110d8abab725b34bf3eba8a64e5ec0a4f4a0d31328a061"
+    },
+    "system-scheduling-supplement-v1.md": {
+      "bytes": 2303,
+      "sha256": "6ea0b8369cd3e9a6222811e364d33a80e4d67862d6965c871233fc174e999447"
+    },
+    "wrapper-a.stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "format.stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "source-baseline.json": {
+      "bytes": 424,
+      "sha256": "215bb2a6a06c9654ca7d6a980402896d6e9bfc4552eeb3fd051874ad8ebcf3dc"
+    },
+    "wrapper-b.control.cjs": {
+      "bytes": 11162,
+      "sha256": "bcb66340425f948bdb6f1708980081a5e9814ec453afa25ceff45dc6eaf3f59a"
+    },
+    "format-b.stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "format-final.stdout.log": {
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    },
+    "format-final.exit-code.txt": {
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    "commands.json": {
+      "bytes": 1428,
+      "sha256": "f67974189a3671c077f827c9fd29d6b8367092f158572836e4d321d38763ed79"
+    },
+    "format-c.stdout.log": {
+      "bytes": 44,
+      "sha256": "bc01949db051ee1088bb46a34077023f2f459274ed253172292d8226aaba5ceb"
+    },
+    "wrapper-a.stderr.log": {
+      "bytes": 1172,
+      "sha256": "80097ea7e7491be87c421acfc658a5e411817de2cdc31103deef554d497a09f7"
+    },
+    "format-d.stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "format.stdout.log": {
+      "bytes": 44,
+      "sha256": "6e08699c720c5b481b4e0a42be36c7b167103e051397522432f9d89017b6c70a"
+    },
+    "wrapper-b.raw.json": {
+      "bytes": 7731,
+      "sha256": "01bf1b9daac43d3bd0c81daf6cb89b4bc9e28d89388b6bd785543f58e60194f4"
+    },
+    "wrapper-b.exit-code.txt": {
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    "system-transpile.exit-code.txt": {
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    "system-transpile.raw.json": {
+      "bytes": 97,
+      "sha256": "3128658694021d34103e0958e047d3534c4eca0d019219c71676bf5ae6ced35a"
+    },
+    "physics-system.before.ts": {
+      "bytes": 41473,
+      "sha256": "92153ad5783bf4a27271daf31075704c6ea4fc4dbac323af9e05bffc5caee988"
+    },
+    "tsc.stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "wrapper-c.stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "physics-system-control.ts": {
+      "bytes": 12389,
+      "sha256": "59ab174ab3d18840992e3e211f399a2715cab8f0a8ffdf8b0aa3ee2a1fedfb4d"
+    },
+    "compile-c/physics-system.ts": {
+      "bytes": 44352,
+      "sha256": "a4890065dcb52287ec5483f2b8c14e63dcd266cd1503b5f2629716713fa504eb"
+    },
+    "compile-c/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "compile-c/stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "compile-c/physics-system-control.ts": {
+      "bytes": 12338,
+      "sha256": "053cb01b5e4043206d0158619c398328bd6f155ee2ad39e0223975e501cdb4e7"
+    },
+    "compile-c/exit-code.txt": {
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    "compile-d/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "compile-d/stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "compile-d/exit-code.txt": {
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    "compile-b/physics-system.ts": {
+      "bytes": 44352,
+      "sha256": "a4890065dcb52287ec5483f2b8c14e63dcd266cd1503b5f2629716713fa504eb"
+    },
+    "compile-b/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "compile-b/stdout.log": {
+      "bytes": 248,
+      "sha256": "a86de38361f80d64308a43c0ac32ecb63b8a4affc5e6a65d81a7bb4e4a6b30a4"
+    },
+    "compile-b/physics-system-control.ts": {
+      "bytes": 12270,
+      "sha256": "8eef6a85f66d99d4f2d560ac52bee28b213313dbd1f0f9ae2e2af42e3c3bfe57"
+    },
+    "compile-b/exit-code.txt": {
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    },
+    "compiled/physics-system-control.js": {
+      "bytes": 11453,
+      "sha256": "5bede1997f5ed6ddf485e15c4434a0e1734b0bf85d0dc4f1ae25e5a066e59cfa"
+    },
+    "compiled/physics-state-observer.js": {
+      "bytes": 16709,
+      "sha256": "245f5283f3875e342899bb4dca5d2dbb9a6117e833c3af23a85322fa36396fc5"
+    },
+    "compile-a/tsc.exit-code.txt": {
+      "bytes": 2,
+      "sha256": "53c234e5e8472b6ac51c1ae1cab3fe06fad053beb8ebfd8977b010655bfdd3c3"
+    },
+    "compile-a/physics-system.ts": {
+      "bytes": 44352,
+      "sha256": "a4890065dcb52287ec5483f2b8c14e63dcd266cd1503b5f2629716713fa504eb"
+    },
+    "compile-a/tsc.stdout.log": {
+      "bytes": 658,
+      "sha256": "2085527672e6aafa2059125219aca71a2c356bcd9e9f6cf488f678508e99f7ea"
+    },
+    "compile-a/tsc.stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "compile-a/physics-system-control.ts": {
+      "bytes": 12064,
+      "sha256": "5c111cfa4b3b7ef7316d3b7d7af147bbf36c9061649cd2f12192dbf7429c4635"
+    },
+    "wrapper-a-setup/wrapper-control.cjs": {
+      "bytes": 11130,
+      "sha256": "4f51f02e5a5621b43fad57ba548873e79e8c1fcec36f4d5323d18271355a462c"
+    },
+    "wrapper-a-setup/wrapper-a.exit-code.txt": {
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    },
+    "wrapper-a-setup/wrapper-a.stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "wrapper-a-setup/wrapper-a.stderr.log": {
+      "bytes": 1172,
+      "sha256": "80097ea7e7491be87c421acfc658a5e411817de2cdc31103deef554d497a09f7"
+    },
+    "compile-c/compiled/physics-system-control.js": {
+      "bytes": 11453,
+      "sha256": "5bede1997f5ed6ddf485e15c4434a0e1734b0bf85d0dc4f1ae25e5a066e59cfa"
+    },
+    "compile-c/compiled/physics-state-observer.js": {
+      "bytes": 16709,
+      "sha256": "245f5283f3875e342899bb4dca5d2dbb9a6117e833c3af23a85322fa36396fc5"
+    },
+    "compile-d/compiled/physics-system-control.js": {
+      "bytes": 11504,
+      "sha256": "c94b0b15b645515d3ad2c9182768de6e90b14ce056e78dbf6b8d0f4bf2dd1d83"
+    },
+    "compile-d/compiled/physics-state-observer.js": {
+      "bytes": 16709,
+      "sha256": "245f5283f3875e342899bb4dca5d2dbb9a6117e833c3af23a85322fa36396fc5"
+    }
+  }
+}

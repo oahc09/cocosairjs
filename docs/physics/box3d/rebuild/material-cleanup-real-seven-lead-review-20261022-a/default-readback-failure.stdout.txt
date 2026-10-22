@@ -1,0 +1,1 @@
+{"status":"PASS_LIMITED_MATERIAL_NATIVE_FAILURE","output":"docs/physics/box3d/rebuild/owner-material-native-release-20261022-readback-cleanup-b","error":null}

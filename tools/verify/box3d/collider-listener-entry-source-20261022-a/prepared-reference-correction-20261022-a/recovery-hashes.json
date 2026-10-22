@@ -1,0 +1,22 @@
+{
+  "actual-engine.test.cjs": {
+    "expected": "6dc2c776dbff9083e1dc9ac024ed58a0f0ff1c2ee386696259b7a895b686d70a",
+    "recovered": "6dc2c776dbff9083e1dc9ac024ed58a0f0ff1c2ee386696259b7a895b686d70a",
+    "match": true
+  },
+  "overlay-resolver.cjs": {
+    "expected": "246b4c97c77c264457eafa6d24037868c3cec79b52df11ebc180045a54b8afe4",
+    "recovered": "246b4c97c77c264457eafa6d24037868c3cec79b52df11ebc180045a54b8afe4",
+    "match": true
+  },
+  "run-actual.py": {
+    "expected": "21999bd2dfd3956ebc357f765570a226d3ba9cb66b1fbfe4ef0625e58b1b8ec1",
+    "recovered": "21999bd2dfd3956ebc357f765570a226d3ba9cb66b1fbfe4ef0625e58b1b8ec1",
+    "match": true
+  },
+  "DESIGN.md": {
+    "expected": "8a3bc65ef65c15f768c9f4932bfb70bcff8089fe09245aa23b2d921f4a28bb6e",
+    "recovered": "8a3bc65ef65c15f768c9f4932bfb70bcff8089fe09245aa23b2d921f4a28bb6e",
+    "match": true
+  }
+}

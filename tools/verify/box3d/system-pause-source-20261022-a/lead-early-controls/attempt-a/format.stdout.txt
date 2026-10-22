@@ -1,0 +1,4 @@
+src/air/physics/box3d/world-command-owner.ts 317ms
+src/air/physics/box3d/world.ts 132ms
+src/air/physics/box3d/command-queue.ts 100ms
+src/air/physics/box3d/command-producers.ts 73ms

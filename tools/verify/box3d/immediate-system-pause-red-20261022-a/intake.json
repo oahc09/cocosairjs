@@ -1,0 +1,102 @@
+{
+  "status": "EXACT_READONLY_ORIGINAL_RED_INTAKE",
+  "files": [
+    {
+      "originalPath": "../box3d-immediate-pause-probe-20261022/README.md",
+      "retainedPath": "tools/verify/box3d/immediate-system-pause-red-20261022-a/README.md",
+      "bytes": 7775,
+      "sha256": "3c0347b7bf1d41c2790c68804125e278421386b43e740cab2c6889c5637469a5"
+    },
+    {
+      "originalPath": "../box3d-immediate-pause-probe-20261022/pause-control.jest.cjs",
+      "retainedPath": "tools/verify/box3d/immediate-system-pause-red-20261022-a/pause-control.jest.cjs",
+      "bytes": 427,
+      "sha256": "dabfa4f479d25cf11d5d9f9d27b292d5768cc861fded226232901cae3318bdec"
+    },
+    {
+      "originalPath": "../box3d-immediate-pause-probe-20261022/mock-native-binding.ts",
+      "retainedPath": "tools/verify/box3d/immediate-system-pause-red-20261022-a/mock-native-binding.ts",
+      "bytes": 7848,
+      "sha256": "74d2c6651e21313257b482b1d7277e140f630a358cb091c3fa16671d18a2f322"
+    },
+    {
+      "originalPath": "../box3d-immediate-pause-probe-20261022/format.stderr.log",
+      "retainedPath": "tools/verify/box3d/immediate-system-pause-red-20261022-a/format.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "originalPath": "../box3d-immediate-pause-probe-20261022/pause-control.test.ts",
+      "retainedPath": "tools/verify/box3d/immediate-system-pause-red-20261022-a/pause-control.test.ts",
+      "bytes": 14432,
+      "sha256": "0135a28856d9866a462819b88d674dce70b45cf24a9069c9d3aa986ebdca020a"
+    },
+    {
+      "originalPath": "../box3d-immediate-pause-probe-20261022/format.stdout.log",
+      "retainedPath": "tools/verify/box3d/immediate-system-pause-red-20261022-a/format.stdout.log",
+      "bytes": 204,
+      "sha256": "41ddc8ef40f89257de3e3e625802185aecea5b667543ad2ce0a1f39c99137753"
+    },
+    {
+      "originalPath": "../box3d-immediate-pause-probe-20261022/run-probe.py",
+      "retainedPath": "tools/verify/box3d/immediate-system-pause-red-20261022-a/run-probe.py",
+      "bytes": 4111,
+      "sha256": "585d81660012845e4ccda3fbe63aa6f22b9a1a912cb6b03386a92e763f2d5483"
+    },
+    {
+      "originalPath": "../box3d-immediate-pause-probe-20261022/attempt-a/raw.json",
+      "retainedPath": "tools/verify/box3d/immediate-system-pause-red-20261022-a/attempt-a/raw.json",
+      "bytes": 136483,
+      "sha256": "f10d04e06c425bb02042731e666f970e70888987b0bba7100a28bee4f05e4db5"
+    },
+    {
+      "originalPath": "../box3d-immediate-pause-probe-20261022/attempt-a/stderr.log",
+      "retainedPath": "tools/verify/box3d/immediate-system-pause-red-20261022-a/attempt-a/stderr.log",
+      "bytes": 8420,
+      "sha256": "475306e785e8d2e38a914b10cb635f86454aad3940408ef03bad1ba6af8c176e"
+    },
+    {
+      "originalPath": "../box3d-immediate-pause-probe-20261022/attempt-a/jest-results.json",
+      "retainedPath": "tools/verify/box3d/immediate-system-pause-red-20261022-a/attempt-a/jest-results.json",
+      "bytes": 21069,
+      "sha256": "2f1482b660646122879b0fd4c755a23cb2d2e80d608de95c28692d6dc24e7576"
+    },
+    {
+      "originalPath": "../box3d-immediate-pause-probe-20261022/attempt-a/receipt.json",
+      "retainedPath": "tools/verify/box3d/immediate-system-pause-red-20261022-a/attempt-a/receipt.json",
+      "bytes": 1747,
+      "sha256": "5024d118143612f4c4eb70aba3d79b5e48db9a8d87acad4e4d40caf122091bde"
+    },
+    {
+      "originalPath": "../box3d-immediate-pause-probe-20261022/attempt-a/source-before.json",
+      "retainedPath": "tools/verify/box3d/immediate-system-pause-red-20261022-a/attempt-a/source-before.json",
+      "bytes": 257004,
+      "sha256": "f45daec809ac0c13e359e3175e6bfdbee8ace07656bca18ae403085f21c721ad"
+    },
+    {
+      "originalPath": "../box3d-immediate-pause-probe-20261022/attempt-a/command.json",
+      "retainedPath": "tools/verify/box3d/immediate-system-pause-red-20261022-a/attempt-a/command.json",
+      "bytes": 634,
+      "sha256": "369949c147e5dc944b61950d51535f8e00d923c3d70046c8947ef91276d32da5"
+    },
+    {
+      "originalPath": "../box3d-immediate-pause-probe-20261022/attempt-a/stdout.log",
+      "retainedPath": "tools/verify/box3d/immediate-system-pause-red-20261022-a/attempt-a/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "originalPath": "../box3d-immediate-pause-probe-20261022/attempt-a/exit-code.txt",
+      "retainedPath": "tools/verify/box3d/immediate-system-pause-red-20261022-a/attempt-a/exit-code.txt",
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    },
+    {
+      "originalPath": "../box3d-immediate-pause-probe-20261022/attempt-a/fixture-before.json",
+      "retainedPath": "tools/verify/box3d/immediate-system-pause-red-20261022-a/attempt-a/fixture-before.json",
+      "bytes": 788,
+      "sha256": "8b263871833a98d05d7bfb4af8271ec9ecfc831cdbbe175cbf9298d10d5a2e5e"
+    }
+  ],
+  "excluded": "Only reproducible jest-cache and ongoing candidate-b; no completed raw excluded. Original absolute paths/commands retained verbatim for traceability."
+}

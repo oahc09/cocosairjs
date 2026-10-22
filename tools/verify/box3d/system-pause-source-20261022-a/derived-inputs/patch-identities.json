@@ -1,0 +1,17 @@
+{
+  "status": "EXACT_CANONICAL_IDENTITY_BYTES_RETAINED",
+  "files": [
+    {
+      "sourceCommit": "641a0ca440655246c9647e6454c941615d92dd97",
+      "canonicalFunction": "tools/physics/box3d/patch-intake.mjs#canonicalPatchChain",
+      "path": "tools/verify/box3d/system-pause-source-20261022-a/derived-inputs/434fb89494867f515051d5ac0dfc0c694556ba1f0da9ac3fc895a27097b1c7c7.canonical.txt",
+      "sha256": "434fb89494867f515051d5ac0dfc0c694556ba1f0da9ac3fc895a27097b1c7c7"
+    },
+    {
+      "sourceCommit": "488b8d270e8804179c622d3f5cdeeb4c8b986fd3",
+      "canonicalFunction": "tools/physics/box3d/patch-intake.mjs#canonicalPatchChain",
+      "path": "tools/verify/box3d/system-pause-source-20261022-a/derived-inputs/20dd450a4313774e1d934df9fa9ec3458df35d9ee314beffa9d846404cdb86bf.canonical.txt",
+      "sha256": "20dd450a4313774e1d934df9fa9ec3458df35d9ee314beffa9d846404cdb86bf"
+    }
+  ]
+}

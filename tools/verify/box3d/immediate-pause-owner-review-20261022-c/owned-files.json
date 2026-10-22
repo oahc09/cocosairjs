@@ -1,0 +1,87 @@
+[
+  {
+    "path": "tools/verify/box3d/immediate-pause-owner-review-20261022-c/README.md",
+    "bytes": 3958,
+    "sha256": "1f6e9785610e075b3d0508623d7fd3525546ae8eb9e10c46102bd7b18c7f7e30"
+  },
+  {
+    "path": "tools/verify/box3d/immediate-pause-owner-review-20261022-c/format.raw.txt",
+    "bytes": 66,
+    "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+  },
+  {
+    "path": "tools/verify/box3d/immediate-pause-owner-review-20261022-c/inputs/src/air/physics/box3d/command-producers.ts",
+    "bytes": 15979,
+    "sha256": "754924a29fa5c8711f831f729a1d005a12e4d9de83fcb5746c6ae7e1e2464991"
+  },
+  {
+    "path": "tools/verify/box3d/immediate-pause-owner-review-20261022-c/inputs/src/air/physics/box3d/command-queue.ts",
+    "bytes": 23779,
+    "sha256": "5bd06702d08968c9545aeeafe00c074a2e50daca68a9bee148d11d09de342892"
+  },
+  {
+    "path": "tools/verify/box3d/immediate-pause-owner-review-20261022-c/inputs/src/air/physics/box3d/world-command-owner.ts",
+    "bytes": 41959,
+    "sha256": "2f313aae10b900e417ebea9b2b8254994fee4f7fe4e26181516c5fca74fb091f"
+  },
+  {
+    "path": "tools/verify/box3d/immediate-pause-owner-review-20261022-c/inputs/src/air/physics/box3d/world.ts",
+    "bytes": 34314,
+    "sha256": "d012587deb71c44a820ada695d598239a6bdac21abc09157307b8e3ab87cf0da"
+  },
+  {
+    "path": "tools/verify/box3d/immediate-pause-owner-review-20261022-c/inputs/src/cocos/physics/framework/physics-system-control.ts",
+    "bytes": 12389,
+    "sha256": "59ab174ab3d18840992e3e211f399a2715cab8f0a8ffdf8b0aa3ee2a1fedfb4d"
+  },
+  {
+    "path": "tools/verify/box3d/immediate-pause-owner-review-20261022-c/inputs/src/cocos/physics/framework/physics-system.ts",
+    "bytes": 44352,
+    "sha256": "a4890065dcb52287ec5483f2b8c14e63dcd266cd1503b5f2629716713fa504eb"
+  },
+  {
+    "path": "tools/verify/box3d/immediate-pause-owner-review-20261022-c/jest.cjs",
+    "bytes": 1371,
+    "sha256": "b9f22ae34d85b38e46aa3a5c63b47389396a75bc184751966dee3fa6832dd66f"
+  },
+  {
+    "path": "tools/verify/box3d/immediate-pause-owner-review-20261022-c/jest.raw.txt",
+    "bytes": 1698,
+    "sha256": "49dd5df3a1903b137bd4b3c8f6b6b8ec23642a2f51efb95cfed787e166644e36"
+  },
+  {
+    "path": "tools/verify/box3d/immediate-pause-owner-review-20261022-c/products-after.json",
+    "bytes": 1545,
+    "sha256": "d53d7600ca8fa6a51e0488bdee5c86e10f1e26cea8c826c1b8f67cf3649c8acc"
+  },
+  {
+    "path": "tools/verify/box3d/immediate-pause-owner-review-20261022-c/products-before.json",
+    "bytes": 1011,
+    "sha256": "fb5b35cdef1427eeb57d2920641b4760a9c69b57547d6d8cd494ce02fa26a802"
+  },
+  {
+    "path": "tools/verify/box3d/immediate-pause-owner-review-20261022-c/raw.json",
+    "bytes": 117197,
+    "sha256": "5326b0f0914863e560a478cc5c6222eb079a18c065973367da62bf8c5b5abcf8"
+  },
+  {
+    "path": "tools/verify/box3d/immediate-pause-owner-review-20261022-c/receipt.json",
+    "bytes": 4309,
+    "sha256": "68b995979b1085b9cb6cb2f73d9b9926ddcf349741bcaa0266de5bd4fd7a9f17"
+  },
+  {
+    "path": "tools/verify/box3d/immediate-pause-owner-review-20261022-c/review.test.ts",
+    "bytes": 33720,
+    "sha256": "817b0143d104b10925493f5ab950d78c9d2513dd4753d3e3f38214bef8c74431"
+  },
+  {
+    "path": "tools/verify/box3d/immediate-pause-owner-review-20261022-c/tsc.raw.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "tools/verify/box3d/immediate-pause-owner-review-20261022-c/tsconfig.json",
+    "bytes": 908,
+    "sha256": "0fe2d2169f624478a9be728c07f9de5d7976fa705fb1ae902d9c42127fef35b2"
+  }
+]

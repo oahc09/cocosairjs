@@ -1,0 +1,2 @@
+src/air/physics/box3d/world-command-owner.ts []
+tools/verify/box3d/owner-system-pause-real-wasm.test.ts []

@@ -1,0 +1,26 @@
+{
+  "scope": "Actual source Collider/Eventify/CallbacksInvoker/Node/PhysicsSystem/Box3DWorldCommandOwner and real owner writeback, dispatch, material-kernel and System-control scopes; resolver mapped frozen modules with only candidate Collider changed. Mock world identity and counted adapter effects. No real World transaction/native/WASM/event support/consumer qualification.",
+  "variant": "source",
+  "startedAt": "2026-10-22T18:08:48.014072+00:00",
+  "completedAt": "2026-10-22T18:09:19.218309+00:00",
+  "command": [
+    "node",
+    "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/jest/bin/jest.js",
+    "--config",
+    "/workspace/scratch/62d43a81bbde/box3d-collider-listener-entry-candidate-20261022/actual-engine.jest.cjs",
+    "--runInBand",
+    "--no-cache",
+    "--json",
+    "--outputFile",
+    "/workspace/scratch/62d43a81bbde/box3d-collider-listener-entry-candidate-20261022/actual-source-a/jest-result.json"
+  ],
+  "exitCode": 0,
+  "cases": 261,
+  "failedCases": 0,
+  "failedChecks": 0,
+  "fixtureFailures": [],
+  "loadedSources": 400,
+  "loadedSourceDrift": [],
+  "fixtureSourceDrift": [],
+  "rawSha256": "090adb9a541f6169421c36b8b0cf6182193f9925f3660395080ae5e1c1f933c4"
+}

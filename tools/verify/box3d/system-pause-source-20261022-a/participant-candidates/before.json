@@ -1,0 +1,18 @@
+[
+  {
+    "path": "src/air/physics/box3d/command-queue.ts",
+    "sha256": "42550d8487fd7ad05d142bc4b3ab764ddf8bedec140098dc35f88ae0ba786b6b"
+  },
+  {
+    "path": "src/air/physics/box3d/command-producers.ts",
+    "sha256": "b707e57f16a2a8622b70523e6cc6de7a24c80125306d4ca18e67404f2634cb81"
+  },
+  {
+    "path": "src/air/physics/box3d/world-command-owner.ts",
+    "sha256": "485a76c9b47d6b13c11240f870cd2cc9ca71ba16f143bc767cc8c4cf49ee1cbb"
+  },
+  {
+    "path": "src/air/physics/box3d/world.ts",
+    "sha256": "c31689427cbecb89dddb6effeb3ffd2ee9a36a5719e7141df08199e1d42e5ff0"
+  }
+]

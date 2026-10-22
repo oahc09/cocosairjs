@@ -1,0 +1,56 @@
+--- original-before/src/air/physics/box3d/world-command-owner.ts
++++ before-current/src/air/physics/box3d/world-command-owner.ts
+@@ -426,7 +426,16 @@
+                     remember(report.actual?.kind === 'system-control' ? report.actual : null, report.actualRead);
+                     // A rejected input before cache/effect entry is recoverable. Any changed/unknown
+                     // cache or entered participant commit faults; never pretend metadata was rolled back.
+-                    if (report.effects.length || entered) fault(failure);
++                    const actual = report.actual?.kind === 'system-control' ? report.actual : null;
++                    const before = report.before?.kind === 'system-control' ? report.before : null;
++                    const actualChanged =
++                        report.actualRead === 'copied' &&
++                        (!actual ||
++                            !before ||
++                            actual.enabled !== before.enabled ||
++                            actual.autoSimulation !== before.autoSimulation);
++                    if (report.effects.length || entered || actualChanged || report.actualRead === 'failed')
++                        fault(failure);
+                 },
+                 dispose: () => cleanup(),
+             },
+@@ -435,13 +444,30 @@
+         this.#systemControlLease = lease;
+         const initial = lease.initialState;
+         if (!initial.enabled) {
+-            const initialTransition = this.#queue.preparePauseTransition(true);
++            // Bootstrap is an actual participant transition too: retain its lease for
++            // terminal cleanup and preserve the first error even if disposal also throws.
++            this.#controlCleanups.add(cleanup);
++            let initialFailed = false,
++                initialError: unknown;
+             try {
+-                initialTransition.commit();
++                transition = this.#queue.preparePauseTransition(true);
++                entered = true;
++                transition.commit();
++                returned = true;
+                 this.#systemPaused = true;
+-            } finally {
+-                initialTransition.dispose();
+-            }
++                remember(initial, 'copied');
++            } catch (error) {
++                initialFailed = failed = true;
++                initialError = failure = error;
++                remember(initial, 'copied');
++            }
++            try {
++                cleanup();
++            } catch (error) {
++                if (!initialFailed) initialError = error;
++                initialFailed = true;
++            }
++            if (initialFailed) throw initialError;
+         }
+     }
+     systemControlDisposition(): 'ready' | 'paused' {

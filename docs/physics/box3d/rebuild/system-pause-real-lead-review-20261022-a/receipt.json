@@ -1,0 +1,102 @@
+{
+  "status": "PASS_FINITE_CURRENT_RELEASE_SYSTEM_PAUSE_AND_TWO_MATERIAL_REGRESSIONS",
+  "createdAtUtc": "2026-10-22T18:08:52.004989+00:00",
+  "productHashes": {
+    "src/air/physics/box3d/world-command-owner.ts": "2f313aae10b900e417ebea9b2b8254994fee4f7fe4e26181516c5fca74fb091f",
+    "src/air/physics/box3d/world.ts": "d012587deb71c44a820ada695d598239a6bdac21abc09157307b8e3ab87cf0da",
+    "src/air/physics/box3d/command-queue.ts": "5bd06702d08968c9545aeeafe00c074a2e50daca68a9bee148d11d09de342892",
+    "src/air/physics/box3d/command-producers.ts": "754924a29fa5c8711f831f729a1d005a12e4d9de83fcb5746c6ae7e1e2464991",
+    "src/cocos/physics/framework/physics-system.ts": "a4890065dcb52287ec5483f2b8c14e63dcd266cd1503b5f2629716713fa504eb",
+    "src/cocos/physics/framework/physics-system-control.ts": "59ab174ab3d18840992e3e211f399a2715cab8f0a8ffdf8b0aa3ee2a1fedfb4d"
+  },
+  "realCases": [
+    {
+      "name": "owner-system-pause-release-20261022-a",
+      "status": "PASS_LIMITED_SYSTEM_PAUSE",
+      "checks": 17,
+      "receipt": "docs/physics/box3d/rebuild/owner-system-pause-release-20261022-a/receipt.json",
+      "receiptSha256": "da1976ae357b06ffb377f6c7f6bc16edf3d8a5312d0aaaf29582faae8d4f2632",
+      "raw": "docs/physics/box3d/rebuild/owner-system-pause-release-20261022-a/native-and-app.raw.json",
+      "rawSha256": "b5417d8547702f98f0fc6c3aa1f62a4c32726f768a03a61ad6f9d105565540b9",
+      "sourceInputs": 111,
+      "nativeInputs": 50,
+      "sourceStableAtCollectionAndLeadReview": true,
+      "nativeBeforeDispose": {
+        "coreBytes": "0",
+        "bridge": {
+          "liveBytes": "0",
+          "liveAllocations": 0,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    {
+      "name": "owner-material-native-release-20261022-readback-pause-c",
+      "status": "PASS_LIMITED_MATERIAL_NATIVE_FAILURE",
+      "checks": 8,
+      "receipt": "docs/physics/box3d/rebuild/owner-material-native-release-20261022-readback-pause-c/receipt.json",
+      "receiptSha256": "80edfd57761b93292c72ff2f6bd3cfcd113570d18e1ef6a4e89245c30886ba5e",
+      "raw": "docs/physics/box3d/rebuild/owner-material-native-release-20261022-readback-pause-c/native-and-app.raw.json",
+      "rawSha256": "0dc54bc8dc0c6d7189b0d56578b8050f78398fc264eef0c12e7163cb91ee61f3",
+      "sourceInputs": 109,
+      "nativeInputs": 50,
+      "sourceStableAtCollectionAndLeadReview": true,
+      "nativeBeforeDispose": {
+        "coreBytes": "0",
+        "bridge": {
+          "liveBytes": "0",
+          "liveAllocations": 0,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    {
+      "name": "owner-material-cleanup-release-20261022-observer-lease-pause-c",
+      "status": "PASS_LIMITED_MATERIAL_CLEANUP",
+      "checks": 12,
+      "receipt": "docs/physics/box3d/rebuild/owner-material-cleanup-release-20261022-observer-lease-pause-c/receipt.json",
+      "receiptSha256": "829b324717c8fc0e478c49fdc17b0cf45589679df33dcdcc8ca8ab5d44577ff1",
+      "raw": "docs/physics/box3d/rebuild/owner-material-cleanup-release-20261022-observer-lease-pause-c/native-and-app.raw.json",
+      "rawSha256": "0987145ddf9124859520cbc95f730550df6ed133bb3ebb8401e43b8c7a697e8c",
+      "sourceInputs": 109,
+      "nativeInputs": 50,
+      "sourceStableAtCollectionAndLeadReview": true,
+      "nativeBeforeDispose": {
+        "coreBytes": "0",
+        "bridge": {
+          "liveBytes": "0",
+          "liveAllocations": 0,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    }
+  ],
+  "portableSourceRegression": {
+    "cases": 18,
+    "checks": 331,
+    "loadedSources": 424,
+    "allLoadedHashesCurrent": true,
+    "raw": "tools/verify/box3d/system-pause-source-20261022-a/portable-green-c/raw.json",
+    "rawSha256": "b5bde7873ea7db02d12fbf060f02ed9658bfc2131a1ed3f4bd6657ac159f71bf"
+  },
+  "independentFailureReview": {
+    "receipt": "tools/verify/box3d/immediate-pause-owner-review-20261022-c/receipt.json",
+    "sha256": "68b995979b1085b9cb6cb2f73d9b9926ddcf349741bcaa0266de5bd4fd7a9f17",
+    "scope": "Five actual-source/mock cases, 43 checks; two original RED attempts retained; sustained injected cleanup failures remain cleanup-failed, not native leaks."
+  },
+  "formalRequiredCells": {
+    "count": 2128,
+    "status": "NOT_RUN"
+  },
+  "browser": "NOT_RUN_INFRA_BLOCKED",
+  "producers": "NOT_INTEGRATED",
+  "stagedCommandsSupported": false,
+  "unifiedTransactionsSupported": false,
+  "qualification": "Finite actual AIR/System/World real N4 WASM in Node/JSDOM only; no formal Gate, browser, public targets or complete material/app lifecycle claim."
+}

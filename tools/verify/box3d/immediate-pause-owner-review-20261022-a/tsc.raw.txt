@@ -1,0 +1,48 @@
+error TS2688: Cannot find type definition file for '../../../node_modules/@cocos/cannon/CANNON'.
+  The file is in the program because:
+    Entry point of type library '../../../node_modules/@cocos/cannon/CANNON' specified in compilerOptions
+error TS2688: Cannot find type definition file for '../../../src/@types/consts'.
+  The file is in the program because:
+    Entry point of type library '../../../src/@types/consts' specified in compilerOptions
+error TS2688: Cannot find type definition file for '../../../src/@types/editor-extends'.
+  The file is in the program because:
+    Entry point of type library '../../../src/@types/editor-extends' specified in compilerOptions
+error TS2688: Cannot find type definition file for '../../../src/@types/globals'.
+  The file is in the program because:
+    Entry point of type library '../../../src/@types/globals' specified in compilerOptions
+error TS2688: Cannot find type definition file for '../../../src/@types/jsb'.
+  The file is in the program because:
+    Entry point of type library '../../../src/@types/jsb' specified in compilerOptions
+error TS2688: Cannot find type definition file for '../../../src/@types/pal/audio'.
+  The file is in the program because:
+    Entry point of type library '../../../src/@types/pal/audio' specified in compilerOptions
+error TS2688: Cannot find type definition file for '../../../src/@types/pal/env'.
+  The file is in the program because:
+    Entry point of type library '../../../src/@types/pal/env' specified in compilerOptions
+error TS2688: Cannot find type definition file for '../../../src/@types/pal/input'.
+  The file is in the program because:
+    Entry point of type library '../../../src/@types/pal/input' specified in compilerOptions
+error TS2688: Cannot find type definition file for '../../../src/@types/pal/minigame'.
+  The file is in the program because:
+    Entry point of type library '../../../src/@types/pal/minigame' specified in compilerOptions
+error TS2688: Cannot find type definition file for '../../../src/@types/pal/pacer'.
+  The file is in the program because:
+    Entry point of type library '../../../src/@types/pal/pacer' specified in compilerOptions
+error TS2688: Cannot find type definition file for '../../../src/@types/pal/screen-adapter'.
+  The file is in the program because:
+    Entry point of type library '../../../src/@types/pal/screen-adapter' specified in compilerOptions
+error TS2688: Cannot find type definition file for '../../../src/@types/pal/system-info'.
+  The file is in the program because:
+    Entry point of type library '../../../src/@types/pal/system-info' specified in compilerOptions
+error TS2688: Cannot find type definition file for '../../../src/@types/pal/wasm'.
+  The file is in the program because:
+    Entry point of type library '../../../src/@types/pal/wasm' specified in compilerOptions
+error TS2688: Cannot find type definition file for '../../../src/@types/webGL.extras'.
+  The file is in the program because:
+    Entry point of type library '../../../src/@types/webGL.extras' specified in compilerOptions
+error TS2688: Cannot find type definition file for '../../../src/@types/webGL2.extras'.
+  The file is in the program because:
+    Entry point of type library '../../../src/@types/webGL2.extras' specified in compilerOptions
+error TS2688: Cannot find type definition file for '../../../src/@types/webGPU'.
+  The file is in the program because:
+    Entry point of type library '../../../src/@types/webGPU' specified in compilerOptions

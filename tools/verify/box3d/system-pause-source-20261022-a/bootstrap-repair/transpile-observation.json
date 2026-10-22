@@ -1,0 +1,1 @@
+{"status":"NO_TRANSPILE_DIAGNOSTICS_ONLY","capture":"Exact stdout copied from executor tool result 2026-10-22T17:59:35Z, not a native or strict-type test","command":"node: TypeScript transpileModule for the two named files with ES2022/CommonJS and reportDiagnostics:true","strictTypeAndRuntimeAcceptance":"NO_STATUS_CHANGE"}

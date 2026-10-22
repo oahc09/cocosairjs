@@ -23,7 +23,13 @@
  * proves native ownership/readiness. The integrating world supplies those admissions,
  * runs one returned roster through its queue, and releases the lease in finally.
  */
-import type { CommandContext, CommandInput, CommandProducer, CommandVector } from './command-queue';
+import type {
+    CommandContext,
+    CommandInput,
+    CommandProducer,
+    CommandVector,
+    PreparedCommandPause,
+} from './command-queue';
 
 export interface ProducerHandle {
     readonly enabled: boolean;
@@ -62,7 +68,9 @@ type Entry = {
 } & ({ kind: 'hook'; callback: CommandProducer } | { kind: 'continuous'; body: object; descriptor: Descriptor });
 const zero = Object.freeze({ x: 0, y: 0, z: 0 });
 function error(message: string): Error {
-    return Object.assign(new Error(`Box3D producers: ${message}`), { code: 'AIR_E_BOX3D_CONFIG' });
+    return Object.assign(new Error(`Box3D producers: ${message}`), {
+        code: 'AIR_E_BOX3D_CONFIG',
+    });
 }
 function copyVector(input: CommandVector | undefined): CommandVector {
     if (input === undefined) return zero;
@@ -107,6 +115,7 @@ export class Box3DCommandProducers {
     #reading = false;
     #readFailed = false;
     #activeLease: object | null = null;
+    #pauseReservation: object | null = null;
 
     /** qualification.registrationLimit is an internal copied test seam, never a public API option. */
     constructor(owner: ProducerOwner, qualification?: { registrationLimit?: number }) {
@@ -132,6 +141,7 @@ export class Box3DCommandProducers {
         throw error(message);
     }
     #localAdmission(): void {
+        if (this.#pauseReservation) this.#reject('prepared control transition is reserved');
         if (this.#reading) this.#reject('nested operation during input admission');
         if (this.#activeLease) this.#reject('configuration during producer collection');
     }
@@ -240,7 +250,11 @@ export class Box3DCommandProducers {
                     if (entry.kind === 'hook') result.push({ kind: 'hook', callback: entry.callback });
                     else {
                         this.#assertBody(entry.body);
-                        result.push({ kind: 'continuous', body: entry.body, descriptor: entry.descriptor });
+                        result.push({
+                            kind: 'continuous',
+                            body: entry.body,
+                            descriptor: entry.descriptor,
+                        });
                     }
                 }
             return result;
@@ -277,14 +291,49 @@ export class Box3DCommandProducers {
         this.#activeLease = identity;
         return lease;
     }
+    /** Reserve both participants before publishing the original System cache. */
+    preparePauseTransition(paused: boolean): PreparedCommandPause {
+        this.#configuration('producer.preparePauseTransition', true);
+        if (typeof paused !== 'boolean') this.#reject('pause state must be boolean');
+        const identity = {},
+            producers = this;
+        const continuous = [...this.#entries.values()].filter((entry) => entry.kind === 'continuous');
+        let committed = false,
+            disposed = false;
+        const lease: PreparedCommandPause = Object.freeze({
+            commit(): void {
+                if (this !== lease || disposed || committed || producers.#pauseReservation !== identity)
+                    producers.#reject('foreign, disposed or consumed pause transition');
+                if (paused) for (const entry of continuous) entry.enabled = false;
+                producers.#paused = paused;
+                committed = true;
+            },
+            dispose(): void {
+                if (this !== lease) producers.#reject('invalid pause transition receiver');
+                if (disposed) return;
+                disposed = true;
+                if (producers.#pauseReservation === identity) producers.#pauseReservation = null;
+            },
+            diagnostics: () => Object.freeze({ paused, committed, disposed }),
+        });
+        this.#pauseReservation = identity;
+        return lease;
+    }
     pause(): void {
-        this.#configuration('producer.pause', true);
-        for (const entry of this.#entries.values()) if (entry.kind === 'continuous') entry.enabled = false;
-        this.#paused = true;
+        const transition = this.preparePauseTransition(true);
+        try {
+            transition.commit();
+        } finally {
+            transition.dispose();
+        }
     }
     resume(): void {
-        this.#configuration('producer.resume', true);
-        this.#paused = false;
+        const transition = this.preparePauseTransition(false);
+        try {
+            transition.commit();
+        } finally {
+            transition.dispose();
+        }
     }
     /** Internal owner notification only AFTER actual disable/type-change/teardown proof. */
     retireBody(body: object): void {
@@ -310,6 +359,7 @@ export class Box3DCommandProducers {
         return Object.freeze({
             closed: this.#closed,
             paused: this.#paused,
+            preparedControl: this.#pauseReservation !== null,
             collecting: this.#activeLease !== null,
             registrations: this.#lastRegistration,
             liveProducers: this.#entries.size,

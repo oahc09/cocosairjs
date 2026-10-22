@@ -1,0 +1,8 @@
+{
+  "status": "PASS_ORIGINAL_BYTES_AND_JSON_SEMANTICS",
+  "originalSha256": "eec5ea2bd071be4fa9eef547726a72097f5c89fef4552d7da6ec089edd01db45",
+  "compactSha256": "4cf393d025e0f57774155fd452c9221de451c1a82ec0f6df1c23d477078d71a0",
+  "originalFiles": 15612,
+  "originalReferences": 14225,
+  "newManifestTransport": "Deterministic gzip JSON. All exact inventory/reference/index/HEAD requirements unchanged. Existing manifests kept immutable in original c2 history and Library; only current representation is a separate commit."
+}

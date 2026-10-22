@@ -1,0 +1,21 @@
+{
+  "purpose": "Portable three-file copy; not executed from portable directory; intended repository placement tools/verify/box3d/.",
+  "sourceFixtureSHA256": "ed083e4d5feb2c38761ae4cb62e0609254d4a28f2abb8ffc281b5176deaf89ca",
+  "portableFixtureSHA256": "dc96e278dd2d07d4d46aed9b5197d79ce2d783112e3de13d3b263540c645b25f",
+  "source18ControlBlockSHA256": "03fa5dbff5d7644994b50b740557b78f00d6a6e158ea3dbc70b4f81749368108",
+  "portable18ControlBlockSHA256": "03fa5dbff5d7644994b50b740557b78f00d6a6e158ea3dbc70b4f81749368108",
+  "all18ControlBodiesByteIdentical": true,
+  "mockBindingByteIdentical": true,
+  "requiredEnvironment": [
+    "BOX3D_PAUSE_RAW: unique raw JSON destination"
+  ],
+  "optionalEnvironment": [
+    "BOX3D_PAUSE_JEST_CACHE: regenerateable Jest cache directory, defaults under os.tmpdir()"
+  ],
+  "testExecution": "NOT_RUN_PORTABLE_COPY_ONLY",
+  "targetPaths": [
+    "tools/verify/box3d/immediate-system-pause-control.test.ts",
+    "tools/verify/box3d/immediate-system-pause.jest.cjs",
+    "tools/verify/box3d/immediate-system-pause-mock-binding.ts"
+  ]
+}

@@ -1,0 +1,1579 @@
+  console.log
+    Cannot access game frame or container.
+
+      at warnID (src/cocos/core/platform/debug.ts:314:5)
+
+  console.log
+    The asset pm_1 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_2 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_3 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_4 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_5 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_6 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_7 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_8 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_9 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_10 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_11 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_12 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_13 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_14 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_15 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_16 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_17 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_18 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_19 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_20 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_21 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_22 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_23 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_24 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_25 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_26 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_27 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_28 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_29 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_30 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_31 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_32 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_33 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_34 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_35 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_36 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_37 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_38 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_39 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_40 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_41 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_42 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_43 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_44 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_45 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_46 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_47 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_48 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_49 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_50 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_51 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_52 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_53 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_54 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_55 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_56 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_57 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_58 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_59 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_60 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_61 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_62 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_63 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_64 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_65 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_66 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_67 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_68 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_69 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_70 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_71 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_72 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_73 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_74 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_75 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_76 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_77 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_78 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_79 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_80 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_81 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_82 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_83 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_84 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_85 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_86 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_87 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_88 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_89 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_90 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_91 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_92 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_93 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_94 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_95 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_96 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_97 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_98 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_99 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_100 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_101 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_102 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_103 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_104 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_105 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_106 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_107 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_108 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_109 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_110 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_111 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_112 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_113 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_114 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_115 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_116 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_117 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_118 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_119 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_120 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_121 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_122 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_123 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_124 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_125 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_126 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_127 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_128 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_129 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_130 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_131 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_132 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_133 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_134 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_135 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_136 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_137 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_138 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_139 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_140 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_141 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_142 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_143 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_144 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_145 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_146 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_147 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_148 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_149 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_150 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_151 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_152 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_153 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_154 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_155 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_156 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_157 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_158 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_159 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_160 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_161 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_162 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_163 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_164 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_165 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_166 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_167 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_168 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_169 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_170 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_171 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_172 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_173 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_174 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_175 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_176 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_177 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_178 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_179 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_180 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_181 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_182 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_183 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_184 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_185 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_186 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_187 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_188 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_189 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_190 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_191 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_192 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_193 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_194 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_195 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_196 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_197 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_198 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_199 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_200 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_201 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_202 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_203 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_204 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_205 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_206 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_207 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_208 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_209 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_210 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_211 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_212 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_213 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_214 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_215 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_216 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_217 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_218 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_219 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_220 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_221 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_222 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_223 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_224 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_225 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_226 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_227 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_228 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_229 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_230 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_231 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_232 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_233 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_234 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_235 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_236 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_237 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_238 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_239 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_240 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_241 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_242 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_243 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_244 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_245 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_246 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_247 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_248 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_249 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_250 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_251 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_252 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_253 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_254 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_255 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_256 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_257 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_258 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_259 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_260 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_261 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+PASS ./actual-engine.test.cjs (17.6 s)
+  ✓ writeback/on/onTriggerEnter (30 ms)
+  ✓ writeback/on/onCollisionEnter (5 ms)
+  ✓ writeback/on/onControllerTriggerEnter (3 ms)
+  ✓ writeback/on-once/onTriggerEnter (3 ms)
+  ✓ writeback/on-once/onCollisionEnter (3 ms)
+  ✓ writeback/on-once/onControllerTriggerEnter (4 ms)
+  ✓ writeback/once/onTriggerEnter (4 ms)
+  ✓ writeback/once/onCollisionEnter (3 ms)
+  ✓ writeback/once/onControllerTriggerEnter (3 ms)
+  ✓ writeback/off/onTriggerEnter (3 ms)
+  ✓ writeback/off/onCollisionEnter (3 ms)
+  ✓ writeback/off/onControllerTriggerEnter (10 ms)
+  ✓ writeback/off-type/onTriggerEnter (4 ms)
+  ✓ writeback/off-type/onCollisionEnter (1 ms)
+  ✓ writeback/off-type/onControllerTriggerEnter (1 ms)
+  ✓ writeback/removeAll-type/onTriggerEnter (1 ms)
+  ✓ writeback/removeAll-type/onCollisionEnter (2 ms)
+  ✓ writeback/removeAll-type/onControllerTriggerEnter (2 ms)
+  ✓ writeback/removeAll-target/onTriggerEnter (3 ms)
+  ✓ writeback/removeAll-target/onCollisionEnter (1 ms)
+  ✓ writeback/removeAll-target/onControllerTriggerEnter (2 ms)
+  ✓ writeback/targetOff/onTriggerEnter (2 ms)
+  ✓ writeback/targetOff/onCollisionEnter (2 ms)
+  ✓ writeback/targetOff/onControllerTriggerEnter (3 ms)
+  ✓ writeback/targetOff-type/onTriggerEnter (2 ms)
+  ✓ writeback/targetOff-type/onCollisionEnter (2 ms)
+  ✓ writeback/targetOff-type/onControllerTriggerEnter (5 ms)
+  ✓ writeback/clear/onTriggerEnter (3 ms)
+  ✓ writeback/clear/onCollisionEnter (4 ms)
+  ✓ writeback/clear/onControllerTriggerEnter (2 ms)
+  ✓ dispatch/on/onTriggerEnter (4 ms)
+  ✓ dispatch/on/onCollisionEnter (3 ms)
+  ✓ dispatch/on/onControllerTriggerEnter (2 ms)
+  ✓ dispatch/on-once/onTriggerEnter (2 ms)
+  ✓ dispatch/on-once/onCollisionEnter (2 ms)
+  ✓ dispatch/on-once/onControllerTriggerEnter (2 ms)
+  ✓ dispatch/once/onTriggerEnter (2 ms)
+  ✓ dispatch/once/onCollisionEnter (2 ms)
+  ✓ dispatch/once/onControllerTriggerEnter (3 ms)
+  ✓ dispatch/off/onTriggerEnter (2 ms)
+  ✓ dispatch/off/onCollisionEnter (2 ms)
+  ✓ dispatch/off/onControllerTriggerEnter (32 ms)
+  ✓ dispatch/off-type/onTriggerEnter (2 ms)
+  ✓ dispatch/off-type/onCollisionEnter (2 ms)
+  ✓ dispatch/off-type/onControllerTriggerEnter (2 ms)
+  ✓ dispatch/removeAll-type/onTriggerEnter (2 ms)
+  ✓ dispatch/removeAll-type/onCollisionEnter (2 ms)
+  ✓ dispatch/removeAll-type/onControllerTriggerEnter (1 ms)
+  ✓ dispatch/removeAll-target/onTriggerEnter (1 ms)
+  ✓ dispatch/removeAll-target/onCollisionEnter (5 ms)
+  ✓ dispatch/removeAll-target/onControllerTriggerEnter (3 ms)
+  ✓ dispatch/targetOff/onTriggerEnter (4 ms)
+  ✓ dispatch/targetOff/onCollisionEnter (4 ms)
+  ✓ dispatch/targetOff/onControllerTriggerEnter (3 ms)
+  ✓ dispatch/targetOff-type/onTriggerEnter (2 ms)
+  ✓ dispatch/targetOff-type/onCollisionEnter (2 ms)
+  ✓ dispatch/targetOff-type/onControllerTriggerEnter (4 ms)
+  ✓ dispatch/clear/onTriggerEnter (2 ms)
+  ✓ dispatch/clear/onCollisionEnter (3 ms)
+  ✓ dispatch/clear/onControllerTriggerEnter (1 ms)
+  ✓ material/on/onTriggerEnter (2 ms)
+  ✓ material/on/onCollisionEnter (2 ms)
+  ✓ material/on/onControllerTriggerEnter (2 ms)
+  ✓ material/on-once/onTriggerEnter (2 ms)
+  ✓ material/on-once/onCollisionEnter (2 ms)
+  ✓ material/on-once/onControllerTriggerEnter (2 ms)
+  ✓ material/once/onTriggerEnter (2 ms)
+  ✓ material/once/onCollisionEnter (3 ms)
+  ✓ material/once/onControllerTriggerEnter (2 ms)
+  ✓ material/off/onTriggerEnter (2 ms)
+  ✓ material/off/onCollisionEnter (1 ms)
+  ✓ material/off/onControllerTriggerEnter (1 ms)
+  ✓ material/off-type/onTriggerEnter (1 ms)
+  ✓ material/off-type/onCollisionEnter (2 ms)
+  ✓ material/off-type/onControllerTriggerEnter (2 ms)
+  ✓ material/removeAll-type/onTriggerEnter (2 ms)
+  ✓ material/removeAll-type/onCollisionEnter (1 ms)
+  ✓ material/removeAll-type/onControllerTriggerEnter (2 ms)
+  ✓ material/removeAll-target/onTriggerEnter (1 ms)
+  ✓ material/removeAll-target/onCollisionEnter (2 ms)
+  ✓ material/removeAll-target/onControllerTriggerEnter (2 ms)
+  ✓ material/targetOff/onTriggerEnter (2 ms)
+  ✓ material/targetOff/onCollisionEnter (2 ms)
+  ✓ material/targetOff/onControllerTriggerEnter (1 ms)
+  ✓ material/targetOff-type/onTriggerEnter (2 ms)
+  ✓ material/targetOff-type/onCollisionEnter (2 ms)
+  ✓ material/targetOff-type/onControllerTriggerEnter (2 ms)
+  ✓ material/clear/onTriggerEnter (1 ms)
+  ✓ material/clear/onCollisionEnter (1 ms)
+  ✓ material/clear/onControllerTriggerEnter (2 ms)
+  ✓ control/on/onTriggerEnter (3 ms)
+  ✓ control/on/onCollisionEnter (2 ms)
+  ✓ control/on/onControllerTriggerEnter (1 ms)
+  ✓ control/on-once/onTriggerEnter (1 ms)
+  ✓ control/on-once/onCollisionEnter (2 ms)
+  ✓ control/on-once/onControllerTriggerEnter (2 ms)
+  ✓ control/once/onTriggerEnter (2 ms)
+  ✓ control/once/onCollisionEnter (3 ms)
+  ✓ control/once/onControllerTriggerEnter (18 ms)
+  ✓ control/off/onTriggerEnter (3 ms)
+  ✓ control/off/onCollisionEnter (1 ms)
+  ✓ control/off/onControllerTriggerEnter (2 ms)
+  ✓ control/off-type/onTriggerEnter (2 ms)
+  ✓ control/off-type/onCollisionEnter (1 ms)
+  ✓ control/off-type/onControllerTriggerEnter (4 ms)
+  ✓ control/removeAll-type/onTriggerEnter (3 ms)
+  ✓ control/removeAll-type/onCollisionEnter (2 ms)
+  ✓ control/removeAll-type/onControllerTriggerEnter (1 ms)
+  ✓ control/removeAll-target/onTriggerEnter (2 ms)
+  ✓ control/removeAll-target/onCollisionEnter (2 ms)
+  ✓ control/removeAll-target/onControllerTriggerEnter (2 ms)
+  ✓ control/targetOff/onTriggerEnter (1 ms)
+  ✓ control/targetOff/onCollisionEnter (1 ms)
+  ✓ control/targetOff/onControllerTriggerEnter (2 ms)
+  ✓ control/targetOff-type/onTriggerEnter (2 ms)
+  ✓ control/targetOff-type/onCollisionEnter (1 ms)
+  ✓ control/targetOff-type/onControllerTriggerEnter (2 ms)
+  ✓ control/clear/onTriggerEnter (2 ms)
+  ✓ control/clear/onCollisionEnter (2 ms)
+  ✓ control/clear/onControllerTriggerEnter (2 ms)
+  ✓ writeback/on/inside-active-callback (2 ms)
+  ✓ writeback/on-once/inside-active-callback (1 ms)
+  ✓ writeback/once/inside-active-callback (3 ms)
+  ✓ writeback/off/inside-active-callback (2 ms)
+  ✓ writeback/off-type/inside-active-callback (2 ms)
+  ✓ writeback/removeAll-type/inside-active-callback (2 ms)
+  ✓ writeback/removeAll-target/inside-active-callback (2 ms)
+  ✓ writeback/targetOff/inside-active-callback (2 ms)
+  ✓ writeback/targetOff-type/inside-active-callback (2 ms)
+  ✓ writeback/clear/inside-active-callback (1 ms)
+  ✓ dispatch/on/inside-active-callback (2 ms)
+  ✓ dispatch/on-once/inside-active-callback (2 ms)
+  ✓ dispatch/once/inside-active-callback (3 ms)
+  ✓ dispatch/off/inside-active-callback (2 ms)
+  ✓ dispatch/off-type/inside-active-callback (3 ms)
+  ✓ dispatch/removeAll-type/inside-active-callback (6 ms)
+  ✓ dispatch/removeAll-target/inside-active-callback (4 ms)
+  ✓ dispatch/targetOff/inside-active-callback (3 ms)
+  ✓ dispatch/targetOff-type/inside-active-callback (4 ms)
+  ✓ dispatch/clear/inside-active-callback (3 ms)
+  ✓ material/on/inside-active-callback (4 ms)
+  ✓ material/on-once/inside-active-callback (1 ms)
+  ✓ material/once/inside-active-callback (2 ms)
+  ✓ material/off/inside-active-callback (3 ms)
+  ✓ material/off-type/inside-active-callback (2 ms)
+  ✓ material/removeAll-type/inside-active-callback (2 ms)
+  ✓ material/removeAll-target/inside-active-callback (2 ms)
+  ✓ material/targetOff/inside-active-callback (2 ms)
+  ✓ material/targetOff-type/inside-active-callback (2 ms)
+  ✓ material/clear/inside-active-callback (2 ms)
+  ✓ control/on/inside-active-callback (2 ms)
+  ✓ control/on-once/inside-active-callback (5 ms)
+  ✓ control/once/inside-active-callback (2 ms)
+  ✓ control/off/inside-active-callback (2 ms)
+  ✓ control/off-type/inside-active-callback (3 ms)
+  ✓ control/removeAll-type/inside-active-callback (2 ms)
+  ✓ control/removeAll-target/inside-active-callback (3 ms)
+  ✓ control/targetOff/inside-active-callback (2 ms)
+  ✓ control/targetOff-type/inside-active-callback (1 ms)
+  ✓ control/clear/inside-active-callback (1 ms)
+  ✓ on/guard-before-argument-and-cache-read (3 ms)
+  ✓ on-once/guard-before-argument-and-cache-read (3 ms)
+  ✓ once/guard-before-argument-and-cache-read (2 ms)
+  ✓ off/guard-before-argument-and-cache-read (1 ms)
+  ✓ off-type/guard-before-argument-and-cache-read (2 ms)
+  ✓ removeAll-type/guard-before-argument-and-cache-read (2 ms)
+  ✓ removeAll-target/guard-before-argument-and-cache-read (1 ms)
+  ✓ targetOff/guard-before-argument-and-cache-read (1 ms)
+  ✓ targetOff-type/guard-before-argument-and-cache-read (2 ms)
+  ✓ clear/guard-before-argument-and-cache-read (47 ms)
+  ✓ no-lease/box3d/false/on (3 ms)
+  ✓ no-lease/box3d/false/on-once (2 ms)
+  ✓ no-lease/box3d/false/once (2 ms)
+  ✓ no-lease/box3d/false/off (2 ms)
+  ✓ no-lease/box3d/false/off-type (1 ms)
+  ✓ no-lease/box3d/false/removeAll-type (2 ms)
+  ✓ no-lease/box3d/false/removeAll-target (1 ms)
+  ✓ no-lease/box3d/false/targetOff (1 ms)
+  ✓ no-lease/box3d/false/targetOff-type (2 ms)
+  ✓ no-lease/box3d/false/clear (1 ms)
+  ✓ no-lease/box3d/true/on (1 ms)
+  ✓ no-lease/box3d/true/on-once (2 ms)
+  ✓ no-lease/box3d/true/once (4 ms)
+  ✓ no-lease/box3d/true/off (2 ms)
+  ✓ no-lease/box3d/true/off-type (4 ms)
+  ✓ no-lease/box3d/true/removeAll-type (3 ms)
+  ✓ no-lease/box3d/true/removeAll-target (2 ms)
+  ✓ no-lease/box3d/true/targetOff (2 ms)
+  ✓ no-lease/box3d/true/targetOff-type (2 ms)
+  ✓ no-lease/box3d/true/clear (1 ms)
+  ✓ no-lease/builtin/false/on (2 ms)
+  ✓ no-lease/builtin/false/on-once (1 ms)
+  ✓ no-lease/builtin/false/once (4 ms)
+  ✓ no-lease/builtin/false/off (3 ms)
+  ✓ no-lease/builtin/false/off-type (1 ms)
+  ✓ no-lease/builtin/false/removeAll-type (2 ms)
+  ✓ no-lease/builtin/false/removeAll-target (2 ms)
+  ✓ no-lease/builtin/false/targetOff (1 ms)
+  ✓ no-lease/builtin/false/targetOff-type (2 ms)
+  ✓ no-lease/builtin/false/clear (2 ms)
+  ✓ no-lease/builtin/true/on (3 ms)
+  ✓ no-lease/builtin/true/on-once (2 ms)
+  ✓ no-lease/builtin/true/once (2 ms)
+  ✓ no-lease/builtin/true/off (1 ms)
+  ✓ no-lease/builtin/true/off-type (3 ms)
+  ✓ no-lease/builtin/true/removeAll-type (4 ms)
+  ✓ no-lease/builtin/true/removeAll-target (2 ms)
+  ✓ no-lease/builtin/true/targetOff (3 ms)
+  ✓ no-lease/builtin/true/targetOff-type (3 ms)
+  ✓ no-lease/builtin/true/clear (2 ms)
+  ✓ no-lease/cannon/false/on (3 ms)
+  ✓ no-lease/cannon/false/on-once (3 ms)
+  ✓ no-lease/cannon/false/once (2 ms)
+  ✓ no-lease/cannon/false/off (2 ms)
+  ✓ no-lease/cannon/false/off-type (2 ms)
+  ✓ no-lease/cannon/false/removeAll-type (1 ms)
+  ✓ no-lease/cannon/false/removeAll-target (2 ms)
+  ✓ no-lease/cannon/false/targetOff (2 ms)
+  ✓ no-lease/cannon/false/targetOff-type (1 ms)
+  ✓ no-lease/cannon/false/clear (2 ms)
+  ✓ no-lease/cannon/true/on (1 ms)
+  ✓ no-lease/cannon/true/on-once (1 ms)
+  ✓ no-lease/cannon/true/once (2 ms)
+  ✓ no-lease/cannon/true/off (2 ms)
+  ✓ no-lease/cannon/true/off-type (1 ms)
+  ✓ no-lease/cannon/true/removeAll-type (1 ms)
+  ✓ no-lease/cannon/true/removeAll-target (1 ms)
+  ✓ no-lease/cannon/true/targetOff (2 ms)
+  ✓ no-lease/cannon/true/targetOff-type (2 ms)
+  ✓ no-lease/cannon/true/clear (1 ms)
+  ✓ no-lease/physx/false/on (1 ms)
+  ✓ no-lease/physx/false/on-once (1 ms)
+  ✓ no-lease/physx/false/once (2 ms)
+  ✓ no-lease/physx/false/off (1 ms)
+  ✓ no-lease/physx/false/off-type (1 ms)
+  ✓ no-lease/physx/false/removeAll-type (1 ms)
+  ✓ no-lease/physx/false/removeAll-target (2 ms)
+  ✓ no-lease/physx/false/targetOff (2 ms)
+  ✓ no-lease/physx/false/targetOff-type (1 ms)
+  ✓ no-lease/physx/false/clear (2 ms)
+  ✓ no-lease/physx/true/on (2 ms)
+  ✓ no-lease/physx/true/on-once (1 ms)
+  ✓ no-lease/physx/true/once (2 ms)
+  ✓ no-lease/physx/true/off (2 ms)
+  ✓ no-lease/physx/true/off-type (1 ms)
+  ✓ no-lease/physx/true/removeAll-type (2 ms)
+  ✓ no-lease/physx/true/removeAll-target (1 ms)
+  ✓ no-lease/physx/true/targetOff (2 ms)
+  ✓ no-lease/physx/true/targetOff-type (2 ms)
+  ✓ no-lease/physx/true/clear (1 ms)
+  ✓ writeback/emit-once-auto-off-rejects-before-callback (2 ms)
+  ✓ writeback/emit-invalid-target-auto-off-rejects-before-removal (1 ms)
+  ✓ dispatch/emit-once-auto-off-rejects-before-callback (2 ms)
+  ✓ dispatch/emit-invalid-target-auto-off-rejects-before-removal (2 ms)
+  ✓ material/emit-once-auto-off-rejects-before-callback (2 ms)
+  ✓ material/emit-invalid-target-auto-off-rejects-before-removal (4 ms)
+  ✓ control/emit-once-auto-off-rejects-before-callback (3 ms)
+  ✓ control/emit-invalid-target-auto-off-rejects-before-removal (3 ms)
+  ✓ unrelated lease retains no-owner listener behavior (2 ms)
+  ✓ overlapping leases release independently (6 ms)
+  ✓ inheritance inventory and explicit non-listener-registration boundaries (2 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       261 passed, 261 total
+Snapshots:   0 total
+Time:        18.129 s
+Ran all test suites.
+Test results written to: actual-source-a/jest-result.json

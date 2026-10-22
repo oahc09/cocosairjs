@@ -1,0 +1,11 @@
+--- recovered-prepared/DESIGN.md
++++ tested-final/DESIGN.md
+@@ -27,7 +27,7 @@
+ 
+ `actual-engine.test.cjs` is a separate real-engine-source fixture. `overlay-resolver.cjs` maps selected original imports to immutable before snapshots and maps only Collider to the candidate in the source variant. Other dependencies are read from the engine tree and fingerprinted before/after per run. The fixture constructs actual Node, Collider, PhysicsSystem and Box3DWorldCommandOwner instances, with explicit mock world identity and counted shape effects. Owner scope control reaches actual owner `writeback`, `dispatch`, `material` and `control` phases, but this does not establish a complete actual World or native transaction.
+ 
+-The before snapshot of world-command-owner.ts predates the parent's latest B2 failure-path repair. That difference is kept explicit; fresh integrated-main verification is required after any eventual adoption.
++The first before snapshot of world-command-owner.ts predates the parent's latest B2 failure-path repair. It remains preserved with its manifest. Actual engine variants both map owner to the separately frozen before-current snapshot, whose original-to-current diff is retained. Fresh integrated-main verification is still required after any eventual adoption.
+ 
+ ## Portability
+ 

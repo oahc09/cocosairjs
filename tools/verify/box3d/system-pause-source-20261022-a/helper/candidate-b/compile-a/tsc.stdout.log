@@ -1,0 +1,6 @@
+candidate-b/physics-system-control.ts(123,25): error TS7006: Parameter 'context' implicitly has an 'any' type.
+candidate-b/physics-system-control.ts(160,21): error TS7006: Parameter 'reader' implicitly has an 'any' type.
+candidate-b/physics-system-control.ts(168,20): error TS7006: Parameter 'fact' implicitly has an 'any' type.
+candidate-b/physics-system-control.ts(176,20): error TS7006: Parameter 'reader' implicitly has an 'any' type.
+candidate-b/physics-system-control.ts(184,18): error TS7006: Parameter 'error' implicitly has an 'any' type.
+candidate-b/physics-system-control.ts(184,25): error TS7006: Parameter 'reader' implicitly has an 'any' type.

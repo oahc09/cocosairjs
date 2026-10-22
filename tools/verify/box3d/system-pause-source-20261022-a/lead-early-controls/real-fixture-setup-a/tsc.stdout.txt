@@ -1,0 +1,2 @@
+tools/verify/box3d/owner-system-pause-real-wasm.test.ts(272,13): error TS2367: This comparison appears to be unintentional because the types '"failed" | "released"' and '"closed"' have no overlap.
+tools/verify/box3d/owner-system-pause-real-wasm.test.ts(272,42): error TS18048: 'close.physicsPreparation' is possibly 'undefined'.

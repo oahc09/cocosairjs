@@ -61,7 +61,11 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
     private hasNativeDestroyFailure = false;
     private nativeDestroyFailure: unknown;
     readonly #token: Box3DWorld;
-    private readonly description: Readonly<{ backend: 'box3d'; generation: number; worldId: number }>;
+    private readonly description: Readonly<{
+        backend: 'box3d';
+        generation: number;
+        worldId: number;
+    }>;
     private state: WorldState = 'ready';
     private failure: unknown;
     private readonly options: AirNormalizedBox3DOptions;
@@ -122,7 +126,9 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
         this.#token = this.#binding.createWorld([0, -10, 0]);
         // Acquire ownership before readback/debug validation or any other fallible initialization.
         try {
-            preparation.own('box3d', 'world', () => this.destroy(), { dependsOn: ['module'] });
+            preparation.own('box3d', 'world', () => this.destroy(), {
+                dependsOn: ['module'],
+            });
         } catch (error) {
             const adopted = preparation
                 .diagnostics()
@@ -172,6 +178,10 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
                     this.fault(error);
                 },
             );
+            this.#commandOwner.installSystemControlObservation((error) => {
+                this.invalidatePending();
+                this.fault(error);
+            });
         } catch (error) {
             this.fault(error);
             throw error;
@@ -222,7 +232,11 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
         this.pendingSnapshot = null;
         this.nativeObservationCurrent = false;
     }
-    get impl(): Readonly<{ backend: 'box3d'; generation: number; worldId: number }> {
+    get impl(): Readonly<{
+        backend: 'box3d';
+        generation: number;
+        worldId: number;
+    }> {
         this.assertCommittedRead('impl');
         return this.description;
     }
@@ -477,6 +491,7 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
     }
     step(dt: number, timeSinceLastCalled?: number, maxSubSteps?: number): void {
         this.assertReady('step');
+        this.#commandOwner.assertSteppingAllowed('step');
         if (timeSinceLastCalled !== undefined || maxSubSteps !== undefined)
             unsupportedBox3D('Cannon-style manual step accumulator arguments');
         const delta = finiteFloat32(dt, 'step.dt');
@@ -588,7 +603,13 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
         const [bodies, shapes, contacts, joints] = Array.from(result.counts);
         if ([bodies, shapes, contacts, joints].some((v) => !Number.isInteger(v) || v < 0))
             throw worldError('AIR_E_BOX3D_ABI', 'getNativeCounts', 'Invalid object count.');
-        return Object.freeze({ bodies, shapes, contacts, joints, liveBytes: result.liveBytes });
+        return Object.freeze({
+            bodies,
+            shapes,
+            contacts,
+            joints,
+            liveBytes: result.liveBytes,
+        });
     }
     /** Copied diagnostics remain available after fault/close; no native call or pointer escapes. */
     diagnostics() {
@@ -596,7 +617,10 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
             state: this.state,
             commandOwner: this.#commandOwner.diagnostics(),
             ownerCleanupError: this.hasOwnerCleanupFailure ? String(this.ownerCleanupFailure) : null,
-            failure: Object.freeze({ hasFailure: this.hasFailure, error: this.failure }),
+            failure: Object.freeze({
+                hasFailure: this.hasFailure,
+                error: this.failure,
+            }),
             teardown: Object.freeze({
                 hasFailure: this.hasDestroyFailure,
                 error: this.destroyFailure,

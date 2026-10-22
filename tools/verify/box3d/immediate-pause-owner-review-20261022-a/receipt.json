@@ -1,0 +1,75 @@
+{
+  "scope": "Actual Cocos/AIR sources with explicit mock binding. No WASM or physics qualification. Original onLoad/onEnable manually called on unattached Nodes.",
+  "status": "RED_SOURCE_WITH_MOCK_BINDING_AND_FIXTURE_ERRORS",
+  "timeUTC": "2026-10-22T17:59:20.143317+00:00",
+  "commands": [
+    {
+      "command": "node node_modules/typescript/bin/tsc --noEmit -p tools/verify/box3d/immediate-pause-owner-review-20261022-a/tsconfig.json",
+      "exit": 2,
+      "raw": "tools/verify/box3d/immediate-pause-owner-review-20261022-a/tsc.raw.txt",
+      "classification": "FIXTURE_CONFIG: inherited relative types resolve one directory too shallow; no product typecheck conclusion."
+    },
+    {
+      "command": "BOX3D_PAUSE_REVIEW_RAW=tools/verify/box3d/immediate-pause-owner-review-20261022-a/raw.json node node_modules/jest/bin/jest.js --config tools/verify/box3d/immediate-pause-owner-review-20261022-a/jest.cjs --runInBand",
+      "exit": 1,
+      "raw": "tools/verify/box3d/immediate-pause-owner-review-20261022-a/jest.raw.txt",
+      "classification": "1 confirmed source RED, 1 cleanup expectation contamination, 1 limited source PASS."
+    },
+    {
+      "command": "node node_modules/prettier/bin/prettier.cjs --check tools/verify/box3d/immediate-pause-owner-review-20261022-a/review.test.ts tools/verify/box3d/immediate-pause-owner-review-20261022-a/jest.cjs tools/verify/box3d/immediate-pause-owner-review-20261022-a/tsconfig.json",
+      "exit": 0,
+      "raw": "tools/verify/box3d/immediate-pause-owner-review-20261022-a/format.raw.txt"
+    }
+  ],
+  "productsUnchanged": false,
+  "loadedEngineSources": 425,
+  "cases": [
+    {
+      "name": "Bootstrap false double JS failure preserves original commit zero and separately records cleanup undefined",
+      "classification": "CONFIRMED_SOURCE_RED_EXPLICIT_JS_DOUBLE_FAILURE",
+      "checks": 5,
+      "failedChecks": 3,
+      "facts": {
+        "firstInjectedError": "number 0",
+        "secondInjectedError": "undefined",
+        "outerRetained": "undefined",
+        "worldFirstRetained": "undefined",
+        "separateCleanupRecord": false,
+        "preparationClose": "closed"
+      }
+    },
+    {
+      "name": "Observed setter double JS failure retains zero, actual cache and independent cleanup",
+      "classification": "ASSERTIONS_PASS_CLEANUP_EXPECTATION_CONTAMINATED_BY_PERSISTENT_INJECTION",
+      "checks": 8,
+      "failedChecks": 0,
+      "facts": {
+        "firstErrorPreserved": true,
+        "realCacheCommittedFalse": true,
+        "actualQueuePaused": true,
+        "worldFaulted": true,
+        "finalClose": "cleanup-failed",
+        "cause": "Injected dispose wrapper throws undefined on EVERY call, even after real idempotent dispose. Fixture incorrectly demanded closed."
+      }
+    },
+    {
+      "name": "Initial false bootstrap permits body assembly but no manual step until resume",
+      "classification": "LIMITED_SOURCE_PASS",
+      "checks": 8,
+      "failedChecks": 0,
+      "facts": {
+        "initialFalsePaused": true,
+        "lateBodyAssembly": true,
+        "pausedManualStepCount": 0,
+        "resumedManualStepCount": 1,
+        "finalClose": "closed"
+      }
+    }
+  ],
+  "boundaries": [
+    "All native binding operations explicitly mocked; no native resource proof.",
+    "Producer NOT_INTEGRATED; stagedCommandsSupported and unifiedTransactionsSupported remain false.",
+    "No 2128 qualification or public activation.",
+    "No product modification by this review."
+  ]
+}
