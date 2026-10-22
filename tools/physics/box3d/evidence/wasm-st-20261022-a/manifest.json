@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "coreSha": "efca0c184d40fd6a82016983f1601c4d23965867",
+  "bindingBaseSha": "5d5a3af049cccd9948b2b55bac4342414af0ef64",
+  "abiVersion": 1,
+  "schemaSha256": "615555d88a4cab5a82f1d37fa4c8e23f735ccdcba5b7e5c4de73a20068b42c5c",
+  "variant": "st-simd",
+  "artifacts": [
+    {
+      "path": "box3d-st.mjs",
+      "sha256": "65d29ab011dee1983cdf059ca69e6dc04c5f14e55984d46883e0edc5e51d940a",
+      "bytes": 36136
+    },
+    {
+      "path": "box3d-st.wasm",
+      "sha256": "148af5a2d48e23d3b6a78648c7b6232263954040aa8924985ba189a24ed5ac10",
+      "bytes": 472032
+    },
+    {
+      "path": "facade.mjs",
+      "sha256": "4b1a77ef23dc45ee04187c244011888685f719e2c661c43402e0349b52e1543d",
+      "bytes": 11002
+    },
+    {
+      "path": "facade.d.mts",
+      "sha256": "48049249e6ccddde367e7ffe9cdec8fff78bd132591b06efa08c708bfc21a374",
+      "bytes": 2901
+    }
+  ]
+}

@@ -906,7 +906,7 @@
     {
       "id": "NATIVE-CLOSURE",
       "status": "BLOCKED",
-      "reason": "Fixed core and binding reference sources acquired and hash verified; narrow C17 ABI/native diagnostics exist. Full migrated binding, original C16 fixture/patch and verified emsdk remain incomplete."
+      "reason": "Fixed source closure and official emsdk6.0.2 are available. Narrow native diagnostics pass; real ST WASM compiles but Node initialization failed. Full binding migration and original C16 fixture/patch remain incomplete."
     },
     {
       "id": "C16-DURATION-CONTRACT",
@@ -954,19 +954,20 @@
     "deploy": false,
     "npmPublish": false
   },
-  "nextStep": "Persist fixed sources, native failure evidence and M0 contract design; qualify official emsdk and continue full inventory/build/prepare contracts before real ST WASM integration.",
+  "nextStep": "Persist first successful real Node ST WASM and original failing attempt; extend new Debug/WASM32/ownership negative-case diagnostics, complete M0 fixture inventory and business contracts; browser remains infra-blocked.",
   "remoteHistoryPolicy": "True upstream main parent and incremental tree; local snapshot import is backup-only and is never pushed as upstream history.",
   "remotePublication": {
     "branchCreated": true,
-    "branchHead": "8df40ffe4ee1b3106f065a4624583ce52dc261d2",
-    "status": "VERIFIED_FIRST_CHECKPOINT",
-    "commitsPublished": 1,
-    "verifiedRemoteParent": "b573be0741db9e2a13d38ce7e65870b97a1f5fbc",
+    "branchHead": "338ecaaf5a5ebd0a008d5a7a9c15af1ef33b7293",
+    "status": "VERIFIED_NATIVE_FOUNDATION_CHECKPOINT",
+    "commitsPublished": 2,
+    "verifiedRemoteParent": "8df40ffe4ee1b3106f065a4624583ce52dc261d2",
     "verifiedAddedFiles": 17,
     "allPriorMainBlobsPreserved": true,
-    "receipt": "docs/physics/box3d/rebuild/remote-checkpoint-receipt.json"
+    "receipt": "docs/physics/box3d/rebuild/remote-foundation-checkpoint-receipt.json",
+    "verifiedChangedFiles": 210
   },
-  "updatedAtUtc": "2026-10-22T01:54:07.873732+00:00",
+  "updatedAtUtc": "2026-10-22T04:06:04.612036+00:00",
   "currentEvidence": {
     "m0ContractTests": "PASS_6_SOURCE_DESIGN_CHECKS_ONLY",
     "nativeFoundationIndex": "tools/physics/box3d/evidence/index.json",
@@ -974,11 +975,17 @@
     "nativeDebug": "PASS_NARROW_DIAGNOSTIC",
     "nativeRelease": "PASS_NARROW_DIAGNOSTIC",
     "nativeSanitized": "FAIL_UPSTREAM_SSE2_MISALIGNED_DOUBLE_LOAD",
-    "wasmToolchain": "BLOCKED_EMCC_ABSENT_OFFICIAL_ROUTE_UNDER_INVESTIGATION",
-    "wasmNode": "NOT_RUN",
-    "browser": "NOT_RUN",
+    "wasmToolchain": "AVAILABLE_OFFICIAL_EMSDK_6.0.2_CMAKE_4.4.4_NINJA_1.13.2",
+    "wasmNode": "PASS_NARROW_RELEASE_FOUNDATION_NEW_ARTIFACT",
+    "browser": "INFRA_BLOCKED_CHROMIUM_SOCKET_EPERM_CLOUD_CDP_SEPARATE_HOST",
     "fullBindingMigration": "NOT_DONE",
-    "historicalResultsReused": false
+    "historicalResultsReused": false,
+    "wasmCompile": "PASS_54_COMMANDS_ST_SIMD_AND_ONE_NONSHARED_MEMORY",
+    "wasmDebug": "NOT_RUN",
+    "wasm32Layout": "NOT_RUN",
+    "strictCsp": "NOT_RUN",
+    "m0BuildDistributionContractTests": "PASS_4_DESIGN_CONSISTENCY_ONLY",
+    "successfulWasmReceipt": "tools/physics/box3d/evidence/wasm-st-20261022-b/build-receipt.json"
   },
   "contractDesign": {
     "publicSpecMembers": 166,
@@ -988,10 +995,10 @@
     "path": "docs/physics/box3d/contracts/"
   },
   "persistentCheckpoint": {
-    "libraryFileId": "libfile_09c17cc3779881919e3a2bc4f4cf5a14",
-    "sha256": "f61edb7031d304e0e6244b8844771ca91028e54cfd53c7bac7209f9446454e54",
-    "localHead": "34dc269fb63b988b67ea8bfeabef8e20f208ed0e",
-    "libraryDownloadAndIndependentRestore": "PASS_3449_FILES",
-    "scope": "Prior preparation snapshot only; new foundation is a subsequent checkpoint."
+    "libraryFileId": "libfile_202de305ab688191a2ee36d85f24fca2",
+    "sha256": "7d8d6fc1646fbe4b51930c3fd7032f76226b98b488492a953cc9be2d089a2c0e",
+    "localHead": "6ef792c524b546041469f2e3903eb1777fda5923",
+    "libraryDownloadAndIndependentRestore": "PASS_3660_FILES_44_ARCHIVE_PAYLOADS",
+    "scope": "Native foundation source checkpoint and a-round failed WASM; b-round successful fix is a subsequent checkpoint."
   }
 }

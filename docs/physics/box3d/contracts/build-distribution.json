@@ -1,0 +1,171 @@
+{
+  "schemaVersion": 1,
+  "contractVersion": "box3d-build-distribution-1",
+  "status": "DESIGN_NOT_INTEGRATED",
+  "feature": "physics-box3d",
+  "engineBackendId": "box3d",
+  "package": "cocosair.js",
+  "singleRuntime": true,
+  "moduleEvaluationAssetRequests": 0,
+  "defaultBackendsUnchanged": ["builtin", "cannon"],
+  "selectedOtherBackendBox3DRequests": 0,
+  "applicationOptions": {
+    "physics": {
+      "values": ["builtin", "cannon", "box3d"],
+      "default": "builtin"
+    },
+    "physicsOptions.box3d": {
+      "assetBaseUrl": {
+        "optional": true,
+        "base": "build-provided asset base resolved against the admitted document base, never a fixed repository URL",
+        "normalization": "absolute URL with trailing directory slash; URL parse failures rejected before fetch"
+      },
+      "threading": {
+        "values": ["single", "multi", "auto"],
+        "default": "single"
+      },
+      "workerCount": {
+        "definition": "total execution threads including caller",
+        "singleAllowed": [1],
+        "multiRangeInclusive": [2, 4],
+        "preferredMulti": 4,
+        "autoRequestedCount": "omitted means manifest preferred; explicit value must be 2..manifest max; effective ST fallback count is 1"
+      },
+      "solverSubSteps": {
+        "values": [1, 2, 4, 8],
+        "default": 4
+      }
+    }
+  },
+  "normalization": {
+    "rejectUnknownThreading": true,
+    "rejectNonFiniteOrFractionalCounts": true,
+    "rejectBeforeResourceRequests": true,
+    "freezeCopiedOptions": true,
+    "equalityFields": [
+      "physics",
+      "physics2D",
+      "normalized assetBaseUrl",
+      "requested threading",
+      "requested workerCount",
+      "solverSubSteps"
+    ],
+    "noMutationOfCallerObject": true
+  },
+  "autoFallback": {
+    "allowedReasons": [
+      "NOT_CROSS_ORIGIN_ISOLATED",
+      "SHARED_ARRAY_BUFFER_UNAVAILABLE",
+      "WORKER_UNAVAILABLE",
+      "POOL_START_FAILED"
+    ],
+    "forbiddenReasons": ["CONFIG_INVALID", "ASSET_HASH_MISMATCH", "ABI_SCHEMA_MISMATCH", "SIMULATION_FAILURE"],
+    "sameCoreAndSchemaRequired": true,
+    "neverOtherEngine": true,
+    "diagnostics": ["requestedMode", "selectedMode", "fallbackReason", "effectiveWorkerCount"]
+  },
+  "prepare": {
+    "order": [
+      "application admission",
+      "selected 2D prepare",
+      "selected 3D prepare",
+      "game.init with synchronous PRE final selection"
+    ],
+    "transactionStartsBeforeFirstPrepare": true,
+    "concurrentSameRuntimeScope": "one shared preparation promise; conflicting normalized config rejects without replacing the in-flight operation",
+    "failedPromise": "clear only after acquired resources are released and diagnostic receipt is retained; retry uses a new attempt generation",
+    "featureAbsentError": "AIR_E_PHYSICS_BACKEND_UNAVAILABLE",
+    "lateBackendSelection": "reject after engine physics world exists"
+  },
+  "cleanup": {
+    "ownership": "one acquisition receipt per selected 2D/3D backend in the admitted app attempt",
+    "twoDFailed": "do not start 3D; release only resources actually acquired by 2D",
+    "threeDFailed": "release partial 3D acquisition and acquired 2D resources",
+    "gameInitFailed": "attempt both acquired backend cleanups even if one fails",
+    "normalClose": "engine/world/handles before module/pool; release each acquired backend once; repeated close idempotent",
+    "failureReceipt": [
+      "attemptGeneration",
+      "acquired backends",
+      "cleanup attempted",
+      "cleanup result per backend",
+      "original initialization error",
+      "cleanup errors"
+    ],
+    "lateAsyncCompletion": "must self-release on generation invalidation; cannot publish native module or create world into another attempt",
+    "doNotInventReleaseForUncreatedBackend": true
+  },
+  "artifacts": {
+    "root": "build/physics/box3d/",
+    "variants": {
+      "st": "st/",
+      "mt": "mt/"
+    },
+    "requiredFields": [
+      "path",
+      "bytes",
+      "sha256",
+      "variant",
+      "coreSha",
+      "bindingBaseSha",
+      "schemaSha256",
+      "abiVersion",
+      "threading",
+      "precision",
+      "compileFlags"
+    ],
+    "relativePathsOnly": true,
+    "requiredFiles": ["loader.mjs", "core.wasm", "facade declaration", "manifest.json"],
+    "mtAdditionalFiles": ["worker resource manifest entries"],
+    "largeResourcesSeparate": true,
+    "eagerInlineBothVariants": false,
+    "integrityBoundary": "Manifest and fetched WASM bytes are verified before instance creation. Loaded facade/core identity must match. A separately fetched loader hash is build/distribution consistency evidence, not a claim that JavaScript dynamic import has a browser SRI guarantee."
+  },
+  "csp": {
+    "required": ["external same-origin script", "wasm-unsafe-eval"],
+    "forbidden": ["unsafe-eval", "unsafe-inline", "runtime new Function", "runtime eval"],
+    "browserAcceptance": "actual served page with enforced response CSP, no COOP/COEP for ST; inspect network and security policy violations",
+    "currentStatus": "INFRA_BLOCKED_BROWSER_SOCKET_EPERM"
+  },
+  "packaging": {
+    "version": "derive prerelease from actual package baseline at pack time",
+    "publishAuthorized": false,
+    "packageEntry": "one canonical main runtime containing selected feature",
+    "noSecondEnginePlugin": true,
+    "variantDeclarations": "generate declarations for the same variant; do not copy default build:dts blindly because AIR_OUT_DIR is not inherited",
+    "consumers": [
+      "root entry",
+      "documented feature extension export",
+      "assets resolved from subpath install",
+      "ST core example set EX01-EX06 and EX09",
+      "2D/3D coexistence"
+    ],
+    "negativeCases": [
+      "missing feature",
+      "wrong asset base",
+      "404",
+      "wrong MIME",
+      "corrupt wasm",
+      "wrong schema",
+      "wrong loader/core pair",
+      "duplicate runtime copy"
+    ]
+  },
+  "requiredTests": [
+    "B3-I01",
+    "B3-I02",
+    "B3-I03-COEXIST-PREPARE",
+    "B3-I04-COEXIST-LOWLEVEL",
+    "B3-I06-COEXIST-BASIC",
+    "B3-I09-ST",
+    "B3-I10-CORE",
+    "B3-I10-COEXIST-PACK",
+    "WASM-05",
+    "WASM-06-BINDING",
+    "WASM-07-BINDING",
+    "WASM-07-AIR",
+    "WASM-07-PACK-CORE",
+    "WASM-08",
+    "WASM-11-APP"
+  ],
+  "implementationStatus": "Not yet wired into app-config/bootstrap/selector/feature/package. Narrow standalone foundation is not evidence of app prepare or packaging behavior."
+}

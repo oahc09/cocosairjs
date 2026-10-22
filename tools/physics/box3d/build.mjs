@@ -101,7 +101,7 @@ try {
         result.compiler = compiler.trim();
         run('cmake', ['--version']);
         run('emcmake', ['cmake', '-S', 'tools/physics/box3d', '-B', out, `-DCMAKE_BUILD_TYPE=${result.mode}`]);
-        run('cmake', ['--build', out, '--parallel', '2']);
+        run('cmake', ['--build', out, '--parallel', '1']);
         const commands = JSON.parse(readFileSync(resolve(out, 'compile_commands.json'), 'utf8'));
         for (const command of commands) {
             const text = command.command ?? command.arguments.join(' ');
@@ -150,10 +150,14 @@ try {
         'tools/physics/box3d/CMakeLists.txt',
         'tools/physics/box3d/exports.json',
         'tools/physics/box3d/build.mjs',
+        'tools/physics/box3d/wasm-contract.mjs',
+        'tools/physics/box3d/verify-sources.mjs',
+        'tools/physics/box3d/verify-wasm.mjs',
         'tools/physics/box3d/native/air_box3d.c',
         'tools/physics/box3d/native/air_box3d.h',
         'tools/physics/box3d/native/contract.c',
         'src/air/physics/box3d/binding/facade.mjs',
+        'src/air/physics/box3d/binding/facade.d.mts',
     ];
     result.inputHashes = inputs.map((path) => ({ path, sha256: sha256(readFileSync(resolve(root, path))) }));
     receipt();

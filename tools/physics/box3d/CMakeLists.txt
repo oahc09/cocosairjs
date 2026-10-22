@@ -43,6 +43,9 @@ if(EMSCRIPTEN)
         -msimd128 -msse2 -fno-fast-math -ffp-contract=off --no-entry
         "-sEXPORTED_FUNCTIONS=@${CMAKE_CURRENT_LIST_DIR}/exports.json"
         "-sEXPORTED_RUNTIME_METHODS=['HEAPU8','HEAPU32','HEAPF32']"
+        # Explicit initialization inputs only: bytes in Node, URL resolution on Web.
+        # Emscripten 6.0.2 does not include wasmBinary in its default incoming API.
+        "-sINCOMING_MODULE_JS_API=['wasmBinary','locateFile']"
         -sMODULARIZE=1 -sEXPORT_ES6=1 -sEXPORT_NAME=createBox3DCore
         -sDYNAMIC_EXECUTION=0 -sALLOW_MEMORY_GROWTH=1 -sFILESYSTEM=0
         -sENVIRONMENT=web,node -sASSERTIONS=1

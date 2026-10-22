@@ -1,0 +1,142 @@
+{
+  "status": "all-toolchains-installed-and-version-verified",
+  "workspace": "/workspace/scratch/62d43a81bbde/box3d-toolchain-20261022",
+  "verified_at_utc": "2026-10-22T01:57:33Z",
+  "emsdk": {
+    "version": "6.0.2",
+    "official_repository": "https://github.com/emscripten-core/emsdk",
+    "tag": "6.0.2",
+    "commit": "ca38f487f28b7c3c16f8f70cd0e012099ac4b7e2",
+    "worktree_clean": true,
+    "release_build_hash": "004876f1984e18a9eb0736c5ca417ac86d386fb8",
+    "emscripten_commit": "7a2d97d627ff4945eae28847ce0387ac52b92c09",
+    "llvm_commit": "787619a4072e0eb7887357d5d284e86c17548aed",
+    "binaryen_version": "130 (version_130-66-g7ec528c26)",
+    "node_version": "22.16.0",
+    "python_version": "3.12.14"
+  },
+  "packages": [
+    {
+      "path": "emsdk/downloads/004876f1984e18a9eb0736c5ca417ac86d386fb8-wasm-binaries.tar.xz",
+      "official_url": "https://storage.googleapis.com/webassembly/emscripten-releases-builds/linux/004876f1984e18a9eb0736c5ca417ac86d386fb8/wasm-binaries.tar.xz",
+      "size_bytes": 290630564,
+      "sha256": "d574428df9ecf00790e28636bdc47027432737c31621b18cdb418123afda4ac1",
+      "md5": "6ac832a1f9f53122f925328ff3d79cc8"
+    },
+    {
+      "path": "emsdk/downloads/node-v22.16.0-linux-x64.tar.xz",
+      "official_url": "https://storage.googleapis.com/webassembly/emscripten-releases-builds/deps/node-v22.16.0-linux-x64.tar.xz",
+      "size_bytes": 30425588,
+      "sha256": "f4cb75bb036f0d0eddf6b79d9596df1aaab9ddccd6a20bf489be5abe9467e84e",
+      "md5": "63a54e53d8833f4b70d1d3256002eb89"
+    }
+  ],
+  "official_metadata": [
+    {
+      "path": "emsdk.py",
+      "sha256": "d02a15451eeda6add7dada114e86f0b54cefe1794c8f7a9a97592f38cb23c5fb",
+      "git_blob_sha1": "0b80dffcb438af800dd1878ff2adb40010343106",
+      "official_url": "https://github.com/emscripten-core/emsdk/blob/ca38f487f28b7c3c16f8f70cd0e012099ac4b7e2/emsdk.py"
+    },
+    {
+      "path": "emsdk_manifest.json",
+      "sha256": "7a7201711bd5311a17d95a3cf97329ebc5bebe35d36ab4657631a5c74662c188",
+      "git_blob_sha1": "ddea07d9dce66ffde7a56eb3b2b406790c41b7d8",
+      "official_url": "https://github.com/emscripten-core/emsdk/blob/ca38f487f28b7c3c16f8f70cd0e012099ac4b7e2/emsdk_manifest.json"
+    },
+    {
+      "path": "emscripten-releases-tags.json",
+      "sha256": "9ba434870f4421ebddbeaa7e11933d84a02c37d5a9836984a0b541a33d3632d8",
+      "git_blob_sha1": "3d335eeaabb073a6726b0b66fd0d10c1d1a7d1cd",
+      "official_url": "https://github.com/emscripten-core/emsdk/blob/ca38f487f28b7c3c16f8f70cd0e012099ac4b7e2/emscripten-releases-tags.json"
+    }
+  ],
+  "commands": [
+    "git clone --depth 1 --branch 6.0.2 https://github.com/emscripten-core/emsdk.git emsdk",
+    "EMSDK_KEEP_DOWNLOADS=1 npm_config_cache=\"$PWD/npm-cache\" python3 emsdk/emsdk.py install 6.0.2",
+    "python3 emsdk/emsdk.py activate 6.0.2",
+    "( . ./emsdk/emsdk_env.sh; emcc --version; em++ --version; ./emsdk/upstream/bin/clang --version; ./emsdk/upstream/bin/wasm-ld --version; ./emsdk/upstream/bin/wasm-opt --version; \"$EMSDK_NODE\" --version; python3 --version )",
+    "curl --fail --location --connect-timeout 15 --max-time 300 --output downloads/cmake-4.4.4-linux-x86_64.tar.gz https://github.com/Kitware/CMake/releases/download/v4.4.4/cmake-4.4.4-linux-x86_64.tar.gz",
+    "printf '%s\\n' 'e5bb807f7728cb60cd8b27ebc97a2edb469b68655f21e844a600c3575b76f5bb  downloads/cmake-4.4.4-linux-x86_64.tar.gz' | sha256sum -c -",
+    "curl --fail --location --connect-timeout 15 --max-time 120 --output downloads/ninja-1.13.2-linux.zip https://github.com/ninja-build/ninja/releases/download/v1.13.2/ninja-linux.zip",
+    "printf '%s\\n' '5749cbc4e668273514150a80e387a957f933c6ed3f5f11e03fb30955e2bbead6  downloads/ninja-1.13.2-linux.zip' | sha256sum -c -",
+    "Extract CMake with Python tarfile.extractall('auxiliary', filter='data'); extract Ninja zip only after verifying its single entry is ninja, chmod that extracted binary 0755.",
+    "./auxiliary/cmake-4.4.4-linux-x86_64/bin/cmake --version",
+    "./auxiliary/ninja-1.13.2/ninja --version",
+    "( . ./use-toolchain.sh; command -v emcc cmake ninja; emcc --version; cmake --version; ninja --version )"
+  ],
+  "verification": {
+    "install_exit": 0,
+    "activate_exit": 0,
+    "version_commands_exit": 0,
+    "wasm_archive_content_length": 290630564,
+    "wasm_archive_md5_matches_official_http_metadata": true,
+    "combined_environment_check_exit": 0
+  },
+  "scope": {
+    "global_shell_startup_files_modified": false,
+    "global_PATH_modified": false,
+    "upstream_source_branch_modified": false,
+    "box3d_worktree_modified": false,
+    "builds_run": false
+  },
+  "observations": [
+    "The first exact package HEAD probe with --connect-timeout 10 --max-time 20 completed HTTP 200, so the prior 5-second timeout did not establish a connectivity block.",
+    "Library searches for emsdk, emscripten, wasm-binaries, toolchain, 6.0.2 and clang found no indexed candidates.",
+    "The install is official code at the pinned emsdk tag, downloaded from official storage URLs, not a mirror.",
+    "Official HTTP x-goog-hash MD5 matched local archive. The SHA256 is a locally measured reproducibility digest, not independently published upstream checksum."
+  ],
+  "logs": [
+    "official-package-head.log",
+    "git-clone.log",
+    "emsdk-install.log",
+    "emsdk-activate.log",
+    "toolchain-versions.log",
+    "packages-SHA256SUMS",
+    "packages-MD5SUMS",
+    "cmake-download.log",
+    "cmake-verify.log",
+    "cmake-version.log",
+    "ninja-download.log",
+    "ninja-verify.log",
+    "ninja-version.log",
+    "combined-environment-check.log"
+  ],
+  "auxiliary_tools": [
+    {
+      "name": "cmake",
+      "version": "v4.4.4",
+      "official_release_url": "https://github.com/Kitware/CMake/releases/tag/v4.4.4",
+      "release_id": 401972172,
+      "published_at": "2026-10-02T16:18:25Z",
+      "prerelease": false,
+      "source_commit": "2e0b3aec14fe2e3e555faac4698e281749aae4b5",
+      "tag_object_sha": "569e8959d3c6d49cf77ae00d51ce18e1bceb62ea",
+      "archive_path": "downloads/cmake-4.4.4-linux-x86_64.tar.gz",
+      "archive_url": "https://github.com/Kitware/CMake/releases/download/v4.4.4/cmake-4.4.4-linux-x86_64.tar.gz",
+      "archive_size_bytes": 64865570,
+      "sha256": "e5bb807f7728cb60cd8b27ebc97a2edb469b68655f21e844a600c3575b76f5bb",
+      "official_release_digest": "sha256:e5bb807f7728cb60cd8b27ebc97a2edb469b68655f21e844a600c3575b76f5bb",
+      "hash_verified_before_extract_and_run": true,
+      "version_check_exit": 0
+    },
+    {
+      "name": "ninja",
+      "version": "v1.13.2",
+      "official_release_url": "https://github.com/ninja-build/ninja/releases/tag/v1.13.2",
+      "release_id": 264058815,
+      "published_at": "2025-11-20T16:51:20Z",
+      "prerelease": false,
+      "source_commit": "3441b633c2fe2c494e958780ba0f4227b1327634",
+      "tag_object_sha": "3441b633c2fe2c494e958780ba0f4227b1327634",
+      "archive_path": "downloads/ninja-1.13.2-linux.zip",
+      "archive_url": "https://github.com/ninja-build/ninja/releases/download/v1.13.2/ninja-linux.zip",
+      "archive_size_bytes": 134040,
+      "sha256": "5749cbc4e668273514150a80e387a957f933c6ed3f5f11e03fb30955e2bbead6",
+      "official_release_digest": "sha256:5749cbc4e668273514150a80e387a957f933c6ed3f5f11e03fb30955e2bbead6",
+      "hash_verified_before_extract_and_run": true,
+      "version_check_exit": 0
+    }
+  ],
+  "environment_entrypoint": "/workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/use-toolchain.sh"
+}

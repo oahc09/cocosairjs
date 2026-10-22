@@ -7,12 +7,13 @@
     "nativeDebug": "PASS",
     "nativeRelease": "PASS",
     "nativeSanitized": "FAIL",
-    "wasmToolchain": "BLOCKED",
-    "wasmNode": "NOT_RUN",
+    "wasmToolchain": "AVAILABLE_VERSION_VERIFIED",
+    "wasmNode": "PASS_NARROW_FOUNDATION",
     "browserNonIsolated": "NOT_RUN",
     "strictCsp": "NOT_RUN",
     "completeBindingMigration": "NOT_DONE",
-    "G1": "NOT_RUN"
+    "G1": "NOT_RUN",
+    "wasmArtifactAudit": "PASS"
   },
   "coreSha": "efca0c184d40fd6a82016983f1601c4d23965867",
   "schemaSha256": "615555d88a4cab5a82f1d37fa4c8e23f735ccdcba5b7e5c4de73a20068b42c5c",
@@ -46,6 +47,11 @@
     "contents": "All retained command receipts/stdout/stderr, compile_commands, raw contracts, layout failure source and isolated candidate header. No binaries or objects. Parent must persist this archive separately."
   },
   "files": [
+    {
+      "path": "tools/physics/box3d/evidence/incoming-api-review.json",
+      "bytes": 2252,
+      "sha256": "1f357b415e10324ea72a88f8eb619a58cc1ecbdf69e791cd34b74df8f4d996f6"
+    },
     {
       "path": "tools/physics/box3d/evidence/layout-attempt-1.json",
       "bytes": 458,
@@ -247,6 +253,11 @@
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
+      "path": "tools/physics/box3d/evidence/wasm-increment-checks.json",
+      "bytes": 2576,
+      "sha256": "035c40ddb481a8e6fb5b7b2eba38e368a4a523976883577b9053dd79ed2f06cd"
+    },
+    {
       "path": "tools/physics/box3d/evidence/wasm-preflight-a.build-receipt.json",
       "bytes": 2329,
       "sha256": "fd4444937d30a8cb3548798bb64fc739c4542185bf9914f3ac9725ad2ce8a076"
@@ -255,6 +266,250 @@
       "path": "tools/physics/box3d/evidence/wasm-preflight-b.build-receipt.json",
       "bytes": 2329,
       "sha256": "b641db831554b8f6bfa57edb6b6c113a3bd9234f7e4ee1db78632e74f125acc7"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/wasm-st-20261022-a/CMakeCache.txt",
+      "bytes": 20027,
+      "sha256": "4d541c9bdc68c4be09689f670f420dbe154c291be7457ca7658d96ca2f302b61"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/wasm-st-20261022-a/CMakeFiles/air_box3d.dir/includes_C.rsp",
+      "bytes": 292,
+      "sha256": "509b9b8b41fb380ee58b78fa2d280fb65103743ae82420934bb6dc3e67c88bea"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/wasm-st-20261022-a/CMakeFiles/air_box3d.dir/link.txt",
+      "bytes": 585,
+      "sha256": "5f8acd1586958495efdae6c2841e376ca8d1e1d07ed8510faa8d6a7da5285589"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/wasm-st-20261022-a/CMakeFiles/air_box3d.dir/linkLibs.rsp",
+      "bytes": 41,
+      "sha256": "634aa6b0a15c8726b4c681e4cd34a266e390636f6b290274dc13d26115e09266"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/wasm-st-20261022-a/CMakeFiles/air_box3d.dir/objects1.rsp",
+      "bytes": 47,
+      "sha256": "afe552715040f16fa382004b2a13441e6cf11d51af829cd55d125613b356b132"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/wasm-st-20261022-a/CMakeFiles/air_box3d_abi.dir/includes_C.rsp",
+      "bytes": 292,
+      "sha256": "509b9b8b41fb380ee58b78fa2d280fb65103743ae82420934bb6dc3e67c88bea"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/wasm-st-20261022-a/build-receipt.json",
+      "bytes": 43285,
+      "sha256": "a2eb4d59afd6fcb55f450610326e732aae97e02ae220c34812e5329033a9f7f6"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/wasm-st-20261022-a/command-1.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/wasm-st-20261022-a/command-1.stdout.txt",
+      "bytes": 330,
+      "sha256": "20c0b78ae7892fec4e2a43bcd152b5787f1d98629998f73fc53428188920b2c9"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/wasm-st-20261022-a/command-2.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/wasm-st-20261022-a/command-2.stdout.txt",
+      "bytes": 90,
+      "sha256": "4d92ce18ddf9889d463ac875608423312823ad89e7fd5178b02a21ea26a2bd3d"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/wasm-st-20261022-a/command-3.stderr.txt",
+      "bytes": 506,
+      "sha256": "d152622fb419596446ca21a5711ad5007a84e68626ff66d083e5a085ed5697b4"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/wasm-st-20261022-a/command-3.stdout.txt",
+      "bytes": 403,
+      "sha256": "d5279e02d2530839133160d7278778658cdd65e7192e8d7e1de47559e11a56a4"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/wasm-st-20261022-a/command-4.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/wasm-st-20261022-a/command-4.stdout.txt",
+      "bytes": 6007,
+      "sha256": "b9de36bd8fc554bc41044823fba7fc8a56b32e1ac4178d1a360e572b06ac8f29"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/wasm-st-20261022-a/command-5.stderr.txt",
+      "bytes": 38194,
+      "sha256": "96cb519e70b393107baf8c1b7000fedacf4930a5cb84f54d4c6514001b1733f4"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/wasm-st-20261022-a/command-5.stdout.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/wasm-st-20261022-a/compile_commands.json",
+      "bytes": 37649,
+      "sha256": "40d6c4d07c7024d1231b3da9fdea821c171aea9fa4757b8765f7d36fe3fcc910"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/wasm-st-20261022-a/core/src/CMakeFiles/box3d.dir/includes_C.rsp",
+      "bytes": 287,
+      "sha256": "5637ae86a643103eedce997300cb765759f625828d52912248e6439b066ee2ce"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/wasm-st-20261022-a/manifest.json",
+      "bytes": 887,
+      "sha256": "2d6bfccc86c75a8a1895d3d684b68856f34a933c95de822d03e39d0ac2689934"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/wasm-st-20261022-b/CMakeCache.txt",
+      "bytes": 20027,
+      "sha256": "f2613bff9e2f323ac9556c94565d2f045cb171c6d0a67fedec2fb7e34ef73f68"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/wasm-st-20261022-b/CMakeFiles/air_box3d.dir/includes_C.rsp",
+      "bytes": 292,
+      "sha256": "5657865491c98081ecd2b5ca465dc0fc4f3ab93f03233957aaca7861018202ed"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/wasm-st-20261022-b/CMakeFiles/air_box3d.dir/link.txt",
+      "bytes": 640,
+      "sha256": "8b18827b016fc40fb35901297824b30f5d702bda4cfafc04baa2983f0d4cf279"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/wasm-st-20261022-b/CMakeFiles/air_box3d.dir/linkLibs.rsp",
+      "bytes": 41,
+      "sha256": "634aa6b0a15c8726b4c681e4cd34a266e390636f6b290274dc13d26115e09266"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/wasm-st-20261022-b/CMakeFiles/air_box3d.dir/objects1.rsp",
+      "bytes": 47,
+      "sha256": "afe552715040f16fa382004b2a13441e6cf11d51af829cd55d125613b356b132"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/wasm-st-20261022-b/CMakeFiles/air_box3d_abi.dir/includes_C.rsp",
+      "bytes": 292,
+      "sha256": "5657865491c98081ecd2b5ca465dc0fc4f3ab93f03233957aaca7861018202ed"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/wasm-st-20261022-b/artifact-audit.raw.json",
+      "bytes": 11120,
+      "sha256": "6ea8cf5943c46824359e5a92605e19224ca1ffb41f5bd1deab3909edc57a79df"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/wasm-st-20261022-b/build-receipt.json",
+      "bytes": 4860,
+      "sha256": "cf1322f9373a3b455507014c3a70338c22ecf641bb87ca134ee68badcf50be4a"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/wasm-st-20261022-b/command-1.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/wasm-st-20261022-b/command-1.stdout.txt",
+      "bytes": 330,
+      "sha256": "20c0b78ae7892fec4e2a43bcd152b5787f1d98629998f73fc53428188920b2c9"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/wasm-st-20261022-b/command-2.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/wasm-st-20261022-b/command-2.stdout.txt",
+      "bytes": 90,
+      "sha256": "4d92ce18ddf9889d463ac875608423312823ad89e7fd5178b02a21ea26a2bd3d"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/wasm-st-20261022-b/command-3.stderr.txt",
+      "bytes": 506,
+      "sha256": "16f91dd0a9d7fe6052672cdae80c56e58780111c99595580621c061b284e2b6a"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/wasm-st-20261022-b/command-3.stdout.txt",
+      "bytes": 403,
+      "sha256": "062c423113e38df047851c8fac23fe89d8670e1d2a13d445c472441c651be43b"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/wasm-st-20261022-b/command-4.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/wasm-st-20261022-b/command-4.stdout.txt",
+      "bytes": 6007,
+      "sha256": "ffc0024169c71cb82fc41660fe2c39fd2651f8242a3f9a42a6e736e89bd4bd31"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/wasm-st-20261022-b/command-5.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/wasm-st-20261022-b/command-5.stdout.txt",
+      "bytes": 4119,
+      "sha256": "55cea344605fed6b52bd0cfdc43e602834a280418aa58b22ac1559739fba6bb2"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/wasm-st-20261022-b/compile_commands.json",
+      "bytes": 37649,
+      "sha256": "66479e04f6c77b6095f79fe707bafab23f5807944745d160afe9173927e1eb41"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/wasm-st-20261022-b/core/src/CMakeFiles/box3d.dir/includes_C.rsp",
+      "bytes": 287,
+      "sha256": "abb8d8d94488c2bbf3f91bdd119ba0d8d6199dad12905bc9117b9b0d4e2896df"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/wasm-st-20261022-b/manifest.json",
+      "bytes": 887,
+      "sha256": "c63da6476f448456e16b31a3b10c51f77a1596c511bb4037fe8a3255a5fa04fd"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/wasm-st-20261022-b/wasm-contract.raw.json",
+      "bytes": 6479,
+      "sha256": "4d4b5d19b4f7532ae4e2c32b5cdfe0a28b659cc85e4eaf25394e1d18b21530e5"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/wasm-toolchain-provenance.json",
+      "bytes": 7476,
+      "sha256": "797a3d86c3454dd26b2a3ef412a1a78f2fe5c9f97645c7c7241d682df3037320"
     }
-  ]
+  ],
+  "updatedAt": "2026-10-22T04:03:14.910315+00:00",
+  "latestWasmAttempt": "wasm-st-20261022-b",
+  "wasmAttempts": [
+    {
+      "name": "wasm-st-20261022-a",
+      "compile": "PASS",
+      "node": "FAIL_INITIALIZATION_INCOMING_MODULE_JS_API",
+      "receipt": "tools/physics/box3d/evidence/wasm-st-20261022-a/build-receipt.json"
+    },
+    {
+      "name": "wasm-st-20261022-b",
+      "compile": "PASS",
+      "node": "PASS_NARROW_FOUNDATION",
+      "artifactAudit": "PASS",
+      "receipt": "tools/physics/box3d/evidence/wasm-st-20261022-b/build-receipt.json"
+    }
+  ],
+  "statusScopeNotes": [
+    "Native Debug/Release/Sanitizer results are retained historical runs, not rerun or promoted by the WASM increment. Sanitizer FAIL remains unresolved.",
+    "versions.lock.json retains the initial metadata bytes used by both WASM builds, including obsolete UNVERIFIED_MISSING/NOT_RUN status fields. Current observation is in this index and exact build receipts. Refreshing that lock requires a subsequent new build receipt.",
+    "Node PASS is narrow foundation only. Browser, strict CSP, complete binding migration and full G1 are not established."
+  ],
+  "wasmRawArchive": {
+    "path": "tools/physics/box3d/output/wasm-foundation-20261022-ab.tar.gz",
+    "sha256": "f62dee07b9a406a9f6d76e117772443700bbce8672fe0d2ec10fa311d3f98f99",
+    "bytes": 457618,
+    "tracked": false,
+    "contents": "Unmodified a/b command logs, receipts, compile/link commands, response files, CMake caches, manifests, real JS/WASM/facade artifacts, b physics/audit raw, SDK provenance and incoming API source review. No objects or static archives. Parent must persist separately."
+  }
 }
