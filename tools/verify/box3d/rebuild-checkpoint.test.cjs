@@ -55,3 +55,25 @@ test('output cannot overwrite evidence or recurse inside source', () => {
     assert.throws(() => checkpoint({ root, output: path.join(root, 'output') }), /outside/);
     assert.throws(() => checkpoint({ root, output: base }), /new directory/);
 });
+test('bundle-only explicitly records unverified restoration and creates no duplicate checkout', () => {
+    const { root, base } = fixture();
+    const output = path.join(base, 'bundle-only');
+    const receipt = checkpoint({ root, output, bundleOnly: true });
+    assert.equal(receipt.bundleOnly, true);
+    assert.equal(receipt.localRestore.status, 'NOT_RUN');
+    assert.equal(receipt.libraryRoundTrip, 'PENDING_EXTERNAL_STEP');
+    assert.equal(fs.existsSync(path.join(output, 'restored-local')), false);
+    const restored = path.join(base, 'independent-restore');
+    execFileSync('git', ['clone', '--no-local', path.join(output, receipt.bundle.file), restored], {
+        stdio: 'pipe',
+    });
+    assert.equal(verifyRestored(restored, receipt).status, 'PASS');
+    assert.equal(receipt.localRestore.status, 'NOT_RUN', 'Later verification cannot rewrite an original receipt');
+});
+test('bundle-only cannot be enabled by a truthy non-boolean option', () => {
+    const { root, base } = fixture();
+    assert.throws(
+        () => checkpoint({ root, output: path.join(base, 'invalid'), bundleOnly: 'false' }),
+        /explicit boolean/,
+    );
+});

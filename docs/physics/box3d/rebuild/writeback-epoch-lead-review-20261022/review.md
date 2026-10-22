@@ -1,0 +1,13 @@
+# Lead intake: owned scene writeback repair
+
+The four product files and eleven collector files in the g handoff were independently read and hashed. All sixteen completed cases retain their actual commands, exit code zero, immutable native raw observations and matching 43 native build inputs. This is finite source-bound qualification, not a complete T11, C11, browser, GPU or B3U01 result.
+
+Independent replay on the frozen g sources reran 33 actual Node/math/policy controls and two actual AIR / PhysicsSystem / matching m2 WASM scenarios: child-before-parent and self-flush-alias. All passed. The first now preserves both native body origins; the second faults after the completed native step rather than adopting a callback-mutated local alias or replaying the tick. The native artifact was not rebuilt and no historical PASS was substituted.
+
+The implementation checks exact copied raw local TRS / parent identity before cache reads, derives scratch affine chains, captures the complete immutable native-origin batch, writes in parent-first order under union temporary Node guards, validates expected locals and the whole owner/basis set after each setter, and commits baselines only after final validation. Guard release is in finally. Its reduced internal epoch limits test the same boundary predicate, not actual MAX_SAFE_INTEGER-duration execution.
+
+Original red/red2 product failures remain unchanged. Their separate amendment records five additional destroyed-Node off cleanup failures. Candidate f retains those five FAIL results despite passing product assertions. Candidate g deletes only that incorrect post-close listener-off line and reruns the complete probes. No original evidence is rewritten.
+
+Remaining functionality gaps: per-ancestor positive-scale restriction is temporary and narrower than v1.2 mirror requirements; general shear rejects before native creation; a static child under a moving dynamic physics parent faults after native completion instead of synchronizing. Arbitrary runtime parent/scale changes, target/teleport and producer commands are not implemented by this repair. Error detection is not atomic rollback of arbitrary callback side effects, and alias mutation is not synchronously intercepted.
+
+Checkpoint creation now has an explicit bundle-only mode to avoid duplicate full clones. It records localRestore NOT_RUN until the separately downloaded Library bundle is incrementally restored into the existing independent object store and every tracked file/mode is verified. Six checkpoint-tool controls pass, including no accidental PASS and byte-exact later restoration.

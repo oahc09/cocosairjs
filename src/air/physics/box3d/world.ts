@@ -41,6 +41,8 @@ import {
 } from './world-binding';
 import type { Box3DNativeStepDiagnostics, Box3DSurfaceMaterial, Box3DWorldBinding } from './world-binding';
 import { unsupportedBox3D } from './unsupported';
+import { copyWritebackQualification, writebackSceneBatch } from './world-writeback';
+import type { Box3DWritebackQualification } from './world-writeback';
 
 type WorldState = 'ready' | 'stepping' | 'faulted' | 'destroying' | 'destroyed' | 'destroy-failed';
 /** Internal adapter only. Not registered/exported by the optional feature yet. */
@@ -72,9 +74,17 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
     private attemptedSteps = 0;
     private lastDt: number | null = null;
     private nativeObservationCurrent = true;
+    readonly #writebackQualification: Box3DWritebackQualification;
+    #writebackEpoch = 0;
     private lastStepOutcome: 'not-attempted' | 'completed' | 'not-completed' | 'unknown' = 'not-attempted';
 
-    constructor(lease: Box3DSTLease, options: AirNormalizedBox3DOptions, preparation: AirPhysicsPreparation) {
+    constructor(
+        lease: Box3DSTLease,
+        options: AirNormalizedBox3DOptions,
+        preparation: AirPhysicsPreparation,
+        qualification?: Box3DWritebackQualification,
+    ) {
+        this.#writebackQualification = copyWritebackQualification(qualification);
         this.#binding = requireWorldBinding(lease.binding);
         this.options = Object.freeze({ ...options });
         if (
@@ -372,8 +382,16 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
             unsupportedBox3D('Cannon-style manual step accumulator arguments');
         const delta = finiteFloat32(dt, 'step.dt');
         if (delta <= 0) throw worldError('AIR_E_BOX3D_CONFIG', 'step', 'dt must be positive float32.');
+        if (this.#writebackEpoch >= this.#writebackQualification.epochLimit)
+            throw worldError(
+                'AIR_E_BOX3D_CONFIG',
+                'step',
+                'Owned writeback epoch exhausted before native advancement.',
+            );
+        const nextEpoch = this.#writebackEpoch + 1;
+        const bodies = Object.freeze(Array.from(this.#sharedBodies.values()));
         // Recoverable assembly/configuration rejection precedes the fault-latched native-step region.
-        for (const body of this.#sharedBodies.values()) body.preflight();
+        for (const body of bodies) body.preflight();
         this.state = 'stepping';
         this.lastDt = delta;
         ++this.attemptedSteps;
@@ -404,7 +422,17 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
             )
                 throw worldError('AIR_E_BOX3D_ABI', 'step', 'Expected the current owned immutable snapshot.');
             this.snapshot = this.pendingSnapshot = snapshot;
-            for (const body of this.#sharedBodies.values()) body.syncPhysicsToScene();
+            const plans = Box3DSharedBody.captureWriteback(bodies);
+            writebackSceneBatch(plans, () => {
+                const current = Array.from(this.#sharedBodies.values());
+                if (current.length !== bodies.length || current.some((body, i) => body !== bodies[i]))
+                    throw worldError(
+                        'AIR_E_BOX3D_CONFIG',
+                        'writeback',
+                        'World body ownership changed during the batch.',
+                    );
+            });
+            this.#writebackEpoch = nextEpoch;
             if (this.drawFlags) this.debug = this.collectDebug(this.drawFlags, this.jointScale);
             this.state = 'ready';
         } catch (error) {
@@ -440,6 +468,10 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
     diagnostics() {
         return Object.freeze({
             state: this.state,
+            writeback: Object.freeze({
+                epoch: this.#writebackEpoch,
+                epochLimit: this.#writebackQualification.epochLimit,
+            }),
             generation: this.description?.generation ?? null,
             native: this.nativeStep,
             nativeObservationCurrent: this.nativeObservationCurrent,

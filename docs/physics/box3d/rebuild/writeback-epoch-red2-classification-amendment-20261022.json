@@ -1,0 +1,147 @@
+{
+  "status": "ADDITIONAL_FIXTURE_TEARDOWN_ERROR_DISCLOSED",
+  "createdAt": "2026-10-22T11:55:04.197Z",
+  "originalClassification": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-red2/classification.json",
+  "originalClassificationSha256": "6af4b2e1ceeac6befa46838461ba5920b957fc616c4aac23f47b53d7e6fe32ac",
+  "explanation": "Five original product-RED scenarios also terminated on an unnecessary Node.off after real app.close destroyed the event processor. Their recorded product-invariant failures, released close, native counts and zero resources remain valid observations; post-close guard probes were not reached in those five runs. No original file is edited or promoted.",
+  "rows": [
+    {
+      "case": "baseline",
+      "status": "PASS_LIMITED_WRITEBACK_EPOCH",
+      "rawSha256": "252f8c0c866e4680484332b9fe3774d4f54828159eb39ef5bf5554d05e462b8c",
+      "terminalFailure": null,
+      "productInvariantFailures": [],
+      "guardCleanupProbeReached": true
+    },
+    {
+      "case": "child-before-parent",
+      "status": "FAIL",
+      "rawSha256": "ab7834b7bd7ec6b1b89eec0a1c8416da646d76004cdb5d1692602bf808b815aa",
+      "terminalFailure": null,
+      "productInvariantFailures": [
+        "scene origin and orientation match immutable native physics-child"
+      ],
+      "guardCleanupProbeReached": true
+    },
+    {
+      "case": "epoch-exhaustion",
+      "status": "PENDING_FIXTURE_SEAM",
+      "rawSha256": "10759ca911a501eb6615481fa0d9890ef4a1210e3e8f9273f8a9f6860fca790f",
+      "terminalFailure": {
+        "message": "Error: Internal readonly epochLimit qualification seam is not implemented",
+        "code": "PENDING_FIXTURE_SEAM"
+      },
+      "productInvariantFailures": [],
+      "guardCleanupProbeReached": false
+    },
+    {
+      "case": "epoch-exhaustion-one",
+      "status": "PENDING_FIXTURE_SEAM",
+      "rawSha256": "bd10f13cf4acd5230eb9b815586c5d7f0ffac1edc160669121dd0589b34d3ecc",
+      "terminalFailure": {
+        "message": "Error: Internal readonly epochLimit qualification seam is not implemented",
+        "code": "PENDING_FIXTURE_SEAM"
+      },
+      "productInvariantFailures": [],
+      "guardCleanupProbeReached": false
+    },
+    {
+      "case": "parent-flush-alias",
+      "status": "FAIL",
+      "rawSha256": "ce378f65702165b7f208dc06bf88fd33c7e46b080dd28004bc1a8529a9bbab3a",
+      "terminalFailure": {
+        "message": "TypeError: Cannot read properties of null (reading 'off')",
+        "code": null
+      },
+      "productInvariantFailures": [
+        "post-native writeback violation faults",
+        "fault cannot replay native step"
+      ],
+      "guardCleanupProbeReached": false
+    },
+    {
+      "case": "prestep-parent-alias",
+      "status": "FAIL",
+      "rawSha256": "2d1a4bb5a657d088eb95a0a362afcf823cdab9aebd480c0ee6e76d8723c2d49d",
+      "terminalFailure": null,
+      "productInvariantFailures": [
+        "raw ancestor alias rejected before native",
+        "preflight rejection preserves world diagnostics",
+        "preflight does not rewrite body locals"
+      ],
+      "guardCleanupProbeReached": true
+    },
+    {
+      "case": "quaternion-sign",
+      "status": "PASS_LIMITED_WRITEBACK_EPOCH",
+      "rawSha256": "369c13e162b3aead5986e984df97eaac8a2151710909f20b21e7e7859110bca5",
+      "terminalFailure": null,
+      "productInvariantFailures": [],
+      "guardCleanupProbeReached": true
+    },
+    {
+      "case": "scale-dirty",
+      "status": "PASS_LIMITED_WRITEBACK_EPOCH",
+      "rawSha256": "cf7a1f29f8ba21287d3919ee8351100aa1f2334fb173a1d55d89019488463eec",
+      "terminalFailure": null,
+      "productInvariantFailures": [],
+      "guardCleanupProbeReached": true
+    },
+    {
+      "case": "self-flush-alias",
+      "status": "FAIL",
+      "rawSha256": "e620b54f2cc352c6d4b51ece3e674a050cf0db2dfba014d4699e8ee5deaad7c4",
+      "terminalFailure": {
+        "message": "TypeError: Cannot read properties of null (reading 'off')",
+        "code": null
+      },
+      "productInvariantFailures": [
+        "post-native writeback violation faults",
+        "fault cannot replay native step"
+      ],
+      "guardCleanupProbeReached": false
+    },
+    {
+      "case": "setter-caught",
+      "status": "FAIL",
+      "rawSha256": "238db79a7d39417f80d203ae91498df39479a55dc43fc556b00505db3cf418d4",
+      "terminalFailure": {
+        "message": "TypeError: Cannot read properties of null (reading 'off')",
+        "code": null
+      },
+      "productInvariantFailures": [
+        "scene origin and orientation match immutable native body-a",
+        "caught business setter rejected synchronously"
+      ],
+      "guardCleanupProbeReached": false
+    },
+    {
+      "case": "setter-uncaught",
+      "status": "FAIL",
+      "rawSha256": "782911934cb2441f63d411d8c48c5b1fc4afe28987c88e65db57975ad3dfee9f",
+      "terminalFailure": {
+        "message": "TypeError: Cannot read properties of null (reading 'off')",
+        "code": null
+      },
+      "productInvariantFailures": [
+        "post-native writeback violation faults",
+        "fault cannot replay native step"
+      ],
+      "guardCleanupProbeReached": false
+    },
+    {
+      "case": "sibling-flush-alias",
+      "status": "FAIL",
+      "rawSha256": "a1ce92322f313ceba7f8598f9fc77cd4495b4692def9ec17b7d337a9bb7243ff",
+      "terminalFailure": {
+        "message": "TypeError: Cannot read properties of null (reading 'off')",
+        "code": null
+      },
+      "productInvariantFailures": [
+        "post-native writeback violation faults",
+        "fault cannot replay native step"
+      ],
+      "guardCleanupProbeReached": false
+    }
+  ]
+}

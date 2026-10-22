@@ -1,0 +1,75 @@
+{
+  "status": "PROPOSED_EXACT_FIVE_REGENERABLE_COPIES_NO_DELETION",
+  "timeUTC": "2026-10-22T12:01:27.754832+00:00",
+  "candidates": [
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-motion-guard-checkpoint-20261022/restored-local",
+      "allocatedBytes": 236310528,
+      "head": "9dc4bc23e8859a3827763ad58fdc990f41cd30c8",
+      "clean": true,
+      "libraryFileId": "libfile_81203fdd8ff88191a3f63d374a199e5b",
+      "actualLibraryRestoreReceipt": "docs/physics/box3d/rebuild/library-motion-guard-checkpoint-20261022.json",
+      "receiptSha256": "0ca85580607b7144d01dda1aa8cd1ad5251cb4a4c4ac74f398bb62971b3e8dee",
+      "preservedArchive": "/workspace/scratch/62d43a81bbde/box3d-motion-guard-checkpoint-20261022/Box3D-motion-guard-checkpoint-20261022.zip",
+      "archiveBytes": 19999504,
+      "archiveSha256": "89891a723f77a172ef7b858ddf7c8bf6e47df7446fe3f444a6efde5ea63e02ee"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-motion-guard-library-roundtrip-20261022/restored",
+      "allocatedBytes": 236310528,
+      "head": "9dc4bc23e8859a3827763ad58fdc990f41cd30c8",
+      "clean": true,
+      "libraryFileId": "libfile_81203fdd8ff88191a3f63d374a199e5b",
+      "actualLibraryRestoreReceipt": "docs/physics/box3d/rebuild/library-motion-guard-checkpoint-20261022.json",
+      "receiptSha256": "0ca85580607b7144d01dda1aa8cd1ad5251cb4a4c4ac74f398bb62971b3e8dee",
+      "preservedArchive": "/workspace/scratch/62d43a81bbde/box3d-motion-guard-checkpoint-20261022/Box3D-motion-guard-checkpoint-20261022.zip",
+      "archiveBytes": 19999504,
+      "archiveSha256": "89891a723f77a172ef7b858ddf7c8bf6e47df7446fe3f444a6efde5ea63e02ee"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-motion-complete-checkpoint-20261022/restored-local",
+      "allocatedBytes": 237137920,
+      "head": "24c4ec977f173630009a3a42c57a0952fab1a736",
+      "clean": true,
+      "libraryFileId": "libfile_cec1d349a9ec8191849ca44a836f1be8",
+      "actualLibraryRestoreReceipt": "docs/physics/box3d/rebuild/library-motion-complete-checkpoint-20261022.json",
+      "receiptSha256": "cdb807c9093bb99179ee57bbe43f75c54b8f54eda777e50ac4ef3da8fc3ed6c5",
+      "preservedArchive": "/workspace/scratch/62d43a81bbde/box3d-motion-complete-checkpoint-20261022/Box3D-motion-complete-checkpoint-20261022.zip",
+      "archiveBytes": 20045852,
+      "archiveSha256": "2b9e350775cbf5a77a53c7f04cd4e15bea8b7465821a0ccd29d5543a90d7fe4c"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-motion-complete-library-roundtrip-20261022/restored",
+      "allocatedBytes": 237137920,
+      "head": "24c4ec977f173630009a3a42c57a0952fab1a736",
+      "clean": true,
+      "libraryFileId": "libfile_cec1d349a9ec8191849ca44a836f1be8",
+      "actualLibraryRestoreReceipt": "docs/physics/box3d/rebuild/library-motion-complete-checkpoint-20261022.json",
+      "receiptSha256": "cdb807c9093bb99179ee57bbe43f75c54b8f54eda777e50ac4ef3da8fc3ed6c5",
+      "preservedArchive": "/workspace/scratch/62d43a81bbde/box3d-motion-complete-checkpoint-20261022/Box3D-motion-complete-checkpoint-20261022.zip",
+      "archiveBytes": 20045852,
+      "archiveSha256": "2b9e350775cbf5a77a53c7f04cd4e15bea8b7465821a0ccd29d5543a90d7fe4c"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-motion-qualified-checkpoint-20261022/restored-local",
+      "allocatedBytes": 242565120,
+      "head": "67d3491b96b46d2eb5023a1c8ad8f6f8190fb80f",
+      "clean": true,
+      "libraryFileId": "libfile_75a06caec6088191a321d983f052226a",
+      "actualLibraryRestoreReceipt": "docs/physics/box3d/rebuild/library-motion-qualified-checkpoint-20261022.json",
+      "receiptSha256": "d0b50bdaa62aa36f6e11f44583f7e49cc3e781a7acdb241f244ce34c0d7858c9",
+      "preservedArchive": "/workspace/scratch/62d43a81bbde/box3d-motion-qualified-checkpoint-20261022/Box3D-motion-qualified-checkpoint-20261022.zip",
+      "archiveBytes": 20137208,
+      "archiveSha256": "09adcbed8631a7b71431c702b28373aaf50d8d7e2d87a09f13887a484a918e25"
+    }
+  ],
+  "allocatedBytesTotal": 1189462016,
+  "retain": [
+    "current source/.git",
+    "all unique raw and output",
+    "all outer bundle/ZIP/manifest/receipt",
+    "box3d-motion-qualified-library-roundtrip-20261022/restored as reusable independently verified restore workspace",
+    "new checkpoint18 original bundle and local restore"
+  ],
+  "requiredBeforeRemoval": "Reverify full tracked size/hash/mode and git fsck, no new/untracked unique files, no active cwd/fd/maps refs, outer archives still exact; only after exact path authorization."
+}

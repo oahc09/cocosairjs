@@ -1,0 +1,26 @@
+{
+  "status": "PASS_INCREMENTAL_REMOTE_CHECKPOINT_READBACK",
+  "timeUTC": "2026-10-22T12:05:30.399Z",
+  "repository": "oahc09/cocosairjs",
+  "branch": "feat/box3d-rebuild-20261022",
+  "remoteCommit": "68e039dd263f28384929fc8025aaa93a9dd24937",
+  "remoteParent": "2d4d8d1881c7a0b605e083d7a461d9ca64273a0c",
+  "remoteTree": "71f478f8831f35ae1097d0778ef308b42c000428",
+  "localBase": "67d3491b96b46d2eb5023a1c8ad8f6f8190fb80f",
+  "localHead": "ce87d33e48712f609880efaa68fef4493d7ca88c",
+  "treeVerification": {
+    "status": "PASS",
+    "verifiedAt": "2026-10-22T11:59:50.840Z",
+    "baseTree": "c10ad70ece5500555dd7d4db417396d8d6bcfbe7",
+    "newTree": "71f478f8831f35ae1097d0778ef308b42c000428",
+    "changedFiles": 1642,
+    "untouchedSiblings": 860,
+    "directories": 624,
+    "treeReads": 77,
+    "nonRecursive": true
+  },
+  "mainUnchanged": true,
+  "force": false,
+  "denialThenSingleAuthorizedRetry": true,
+  "scope": "Original finite m2 writeback failures, asset-gate and UBSan evidence. Active writeback repair not included; no full T11/Gate."
+}

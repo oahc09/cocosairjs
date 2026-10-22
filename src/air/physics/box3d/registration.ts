@@ -27,12 +27,16 @@ import { Box3DBoxShape, Box3DSphereShape } from './box-sphere-shape';
 import type { Box3DComponentConfiguration } from './shared-body';
 import { requireComponentBinding, requireWorldBinding, worldError } from './world-binding';
 import { createUnsupportedBox3DComponents } from './unsupported';
+import { copyWritebackQualification } from './world-writeback';
+import type { Box3DWritebackQualification } from './world-writeback';
 
 /** Explicit factory only: module evaluation never registers a world/feature or requests assets. */
 export function createBox3DWorldAdapter(
     selector: IPhysicsSelector,
     components?: Box3DComponentConfiguration,
+    qualification?: Box3DWritebackQualification,
 ): Box3DWorldAdapter {
+    const writebackQualification = copyWritebackQualification(qualification);
     return (lease, options, preparation) => {
         requireWorldBinding(lease.binding); // Fail before selector mutation and native world allocation.
         if (components) {
@@ -82,7 +86,7 @@ export function createBox3DWorldAdapter(
                             'This preparation already constructed a world.',
                         );
                     constructed = true;
-                    super(lease, options, preparation);
+                    super(lease, options, preparation, writebackQualification);
                     ownedWorld = this;
                 }
             },

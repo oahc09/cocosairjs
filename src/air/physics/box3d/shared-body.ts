@@ -27,6 +27,8 @@ import type { Box3DSurfaceMaterial } from './world-binding';
 import type { Box3DComponentBinding } from './world-binding';
 import { finiteFloat32, mutationNotApplied, worldError } from './world-binding';
 import { unsupportedBox3D } from './unsupported';
+import { Box3DSceneTransform } from './world-writeback';
+import type { Box3DWritebackBody } from './world-writeback';
 
 type Vec = { x: number; y: number; z: number };
 export interface Box3DComponentConfiguration {
@@ -180,7 +182,7 @@ export class Box3DSharedBody {
     #mask: number;
     #pose: readonly number[];
     readonly #scale: readonly number[];
-    readonly #parent: Node | null;
+    readonly #scene: Box3DSceneTransform;
 
     constructor(
         binding: Box3DComponentBinding,
@@ -199,7 +201,7 @@ export class Box3DSharedBody {
         rejectInitialShear(node);
         this.#scale = bodyVector(node.worldScale, 'initial scale');
         if (this.#scale.some((v) => v <= 0)) unsupportedBox3D('nonpositive initial Node scale');
-        this.#parent = node.parent;
+        this.#scene = new Box3DSceneTransform(node);
         // No dynamic, geometry-less body can enter simulation during component assembly.
         const threshold = finiteFloat32(configuration.sleepThreshold(), 'sleepThreshold');
         if (threshold < 0) throw worldError('AIR_E_BOX3D_CONFIG', 'sleepThreshold', 'Expected nonnegative threshold.');
@@ -243,35 +245,67 @@ export class Box3DSharedBody {
         const q = this.#node.worldRotation;
         return Object.freeze([p.x, p.y, p.z, q.x, q.y, q.z, q.w]);
     }
-    /** Pure scene/readback preflight. No flags, diagnostics or native state are mutated. */
-    private assertSceneUnchanged(): void {
-        if (this.#closed) throw worldError('AIR_E_BOX3D_DISPOSED', 'preflight', 'Shared body is closed.');
-        const scale = this.#node.worldScale;
-        if (
-            this.#node.parent !== this.#parent ||
-            [scale.x, scale.y, scale.z].some((v, i) => Math.fround(v) !== this.#scale[i])
-        )
-            unsupportedBox3D('runtime Node parent/scale synchronization (T11)');
-        if (this.nodePose().some((v, i) => v !== this.#pose[i]))
-            unsupportedBox3D('external Node pose/teleport/kinematic target (T11)');
-    }
+    /** Raw local/ancestor validation precedes all cache-refreshing world reads and native mutations. */
     preflight(): void {
-        this.assertSceneUnchanged();
+        if (this.#closed) throw worldError('AIR_E_BOX3D_DISPOSED', 'preflight', 'Shared body is closed.');
+        this.#scene.preflight();
         const state = this.#binding.bodyState(this.#world, this.#body);
         if (state.enabled && state.type === 2 && state.massPending)
             throw worldError('AIR_E_BOX3D_MASS_PENDING', 'step preflight', 'Dynamic body needs effective geometry.');
     }
-    /** Called only after this world's single native step; transform[0..2] is body ORIGIN, not COM. */
-    syncPhysicsToScene(): void {
-        const state = this.#binding.bodyState(this.#world, this.#body);
-        if (!state.enabled || state.type === 0) return;
-        const pose = this.#binding.bodyTransforms(this.#world, [this.#body]);
-        if (pose.length !== 10 || !pose.every(Number.isFinite))
-            throw worldError('AIR_E_BOX3D_ABI', 'bodyTransforms', 'Expected one finite copied body transform.');
-        this.#node.setWorldPosition(pose[0], pose[1], pose[2]);
-        this.#node.setWorldRotation(pose[3], pose[4], pose[5], pose[6]);
-        // Never clear hasChangedFlags or unrelated Node dirtiness.
-        this.#pose = this.nodePose();
+    /** Full copied origin batch, without exposing native body tokens to the world or Node adapter. */
+    static captureWriteback(bodies: readonly Box3DSharedBody[]): readonly Box3DWritebackBody[] {
+        if (!bodies.length) return Object.freeze([]);
+        const first = bodies[0];
+        for (const body of bodies)
+            if (body.#closed || body.#binding !== first.#binding || body.#world !== first.#world)
+                throw worldError('AIR_E_BOX3D_CONFIG', 'writeback', 'Body ownership changed.');
+        const states = bodies.map((body) => body.#binding.bodyState(body.#world, body.#body));
+        const transforms = first.#binding.bodyTransforms(
+            first.#world,
+            bodies.map((body) => body.#body),
+        );
+        if (transforms.length !== bodies.length * 10 || !transforms.every(Number.isFinite))
+            throw worldError(
+                'AIR_E_BOX3D_ABI',
+                'bodyTransforms',
+                'Expected one finite copied origin transform per body.',
+            );
+        return Object.freeze(
+            bodies.map((body, index) => {
+                const references = Array.from(body.#references);
+                const referenceState = references.map((reference) => (reference as { enabled?: unknown }).enabled);
+                const rigid = body.#rigidBody,
+                    enabled = body.#rigidEnabled,
+                    type = body.#type;
+                const active = body.#node.activeInHierarchy;
+                return Object.freeze({
+                    scene: body.#scene,
+                    origin: Object.freeze(Array.from(transforms.slice(index * 10, index * 10 + 7))),
+                    writable: states[index].enabled && states[index].type !== 0,
+                    assertOwner: () => {
+                        if (
+                            body.#closed ||
+                            body.#rigidBody !== rigid ||
+                            body.#rigidEnabled !== enabled ||
+                            body.#type !== type ||
+                            body.#node.activeInHierarchy !== active ||
+                            body.#references.size !== references.length ||
+                            references.some(
+                                (reference, i) =>
+                                    !body.#references.has(reference) ||
+                                    (reference as { enabled?: unknown }).enabled !== referenceState[i],
+                            )
+                        )
+                            throw worldError(
+                                'AIR_E_BOX3D_CONFIG',
+                                'writeback',
+                                'Component ownership changed during the batch.',
+                            );
+                    },
+                });
+            }),
+        );
     }
     retain(reference: object): void {
         this.assert('retain body');
@@ -460,7 +494,7 @@ export class Box3DSharedBody {
     }
     copiedTransform(): readonly number[] {
         this.assert('copied transform');
-        this.assertSceneUnchanged();
+        this.#scene.preflight();
         const value = this.#binding.bodyTransforms(this.#world, [this.#body]);
         if (value.length !== 10 || !value.every(Number.isFinite))
             throw worldError('AIR_E_BOX3D_ABI', 'bodyTransforms', 'Expected one finite copied transform.');
@@ -469,7 +503,7 @@ export class Box3DSharedBody {
     /** Actual native geometry allocation. A later uncertain failure is not advertised as atomic rollback. */
     setShape(reference: object, geometry: Box3DPrimitiveGeometry): void {
         this.assert('setShape');
-        this.assertSceneUnchanged();
+        this.#scene.preflight();
         if (!this.#references.has(reference))
             throw worldError('AIR_E_BOX3D_DISPOSED', 'setShape', 'Unknown component owner.');
         const previous = this.#shapes.get(reference);

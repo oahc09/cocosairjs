@@ -1,0 +1,561 @@
+{
+  "status": "PASS_LIMITED_16_REAL_WASM_CASES",
+  "completedAt": "2026-10-22T12:09:56.212Z",
+  "scope": "Actual AIR/Node/PhysicsSystem plus current m2 WASM, default and reduced epoch limits. Includes explicitly unsupported mirror/static-child controls; not C11/T11/C36/B3U01 or browser completion.",
+  "artifact": {
+    "identity": {
+      "coreSha": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "bindingBaseSha": "5d5a3af049cccd9948b2b55bac4342414af0ef64",
+      "schemaSha256": "43df81eba981c9ab5751dbe5f807e660d46cac1a5e1b4936462d5afb57a24040",
+      "patchChainSha256": "434fb89494867f515051d5ac0dfc0c694556ba1f0da9ac3fc895a27097b1c7c7",
+      "abiVersion": 1,
+      "variant": "st-simd"
+    },
+    "manifestSha256": "fe0a2b5ca84e37c31078c12588b90ea4395fbc713e61da15a13801799d27ee82",
+    "facadeSha256": "4f1bcce785ad72579a4e7ed6458a6ea838f8450be5dce926182d3db907cfc227"
+  },
+  "nativeBuildReceiptSha256": "af6447d254cf13290c8edffd10b56f45df592733cf77d44ee35863af7d584b6c",
+  "rows": [
+    {
+      "case": "baseline",
+      "status": "PASS_LIMITED_WRITEBACK_EPOCH",
+      "receiptSha256": "23bbec22c6c57ef85f89f73b3976750b684bb4689856c606e5b4c6cb456ced56",
+      "rawSha256": "8900af82aebe82ae6fbee75e9a76d173f7e2752f9c02045ef66aa65a270a1e68",
+      "inputCount": 101,
+      "inputsUnchanged": true,
+      "assertions": 15,
+      "allAssertionsPassed": true,
+      "firstWorld": "ready",
+      "firstEpoch": {
+        "epoch": 1,
+        "epochLimit": 9007199254740991
+      },
+      "firstNative": {
+        "nativeStepIndex": 1,
+        "nativeCompleted": true,
+        "snapshotAvailable": true
+      },
+      "firstSceneErrors": [
+        {
+          "name": "body-a",
+          "origin": 0,
+          "angular": 0,
+          "cachedOrigin": 0,
+          "local": 0
+        }
+      ],
+      "nativeCompletedCalls": 2,
+      "close": "released",
+      "coreReturned": true,
+      "bridgeZero": true,
+      "guardProbes": 2
+    },
+    {
+      "case": "child-before-parent",
+      "status": "PASS_LIMITED_WRITEBACK_EPOCH",
+      "receiptSha256": "efe73022ec06a5bf42d527b3ddb7b9fcded1fd177954c8a3282303a74220d00d",
+      "rawSha256": "b03f048bcf09ad28aa83d939ac8d3e6c2b9fdef9d5d4b8fbc37e84a958249956",
+      "inputCount": 101,
+      "inputsUnchanged": true,
+      "assertions": 13,
+      "allAssertionsPassed": true,
+      "firstWorld": "ready",
+      "firstEpoch": {
+        "epoch": 1,
+        "epochLimit": 9007199254740991
+      },
+      "firstNative": {
+        "nativeStepIndex": 1,
+        "nativeCompleted": true,
+        "snapshotAvailable": true
+      },
+      "firstSceneErrors": [
+        {
+          "name": "physics-child",
+          "origin": 0,
+          "angular": 0,
+          "cachedOrigin": 0,
+          "local": 0
+        },
+        {
+          "name": "physics-parent",
+          "origin": 0,
+          "angular": 0,
+          "cachedOrigin": 0,
+          "local": 0
+        }
+      ],
+      "nativeCompletedCalls": 1,
+      "close": "released",
+      "coreReturned": true,
+      "bridgeZero": true,
+      "guardProbes": 3
+    },
+    {
+      "case": "epoch-exhaustion",
+      "status": "PASS_LIMITED_WRITEBACK_EPOCH",
+      "receiptSha256": "9e3411d127acc5dd18e40ea6d5d38e37d06b8de7dd29b3c398562923d2a7ff09",
+      "rawSha256": "e2a51c0299d11699570de70b9a8b88053d30397ee0b8f619d3e6082551b7bd8f",
+      "inputCount": 101,
+      "inputsUnchanged": true,
+      "assertions": 13,
+      "allAssertionsPassed": true,
+      "firstWorld": "ready",
+      "firstEpoch": {
+        "epoch": 1,
+        "epochLimit": 2
+      },
+      "firstNative": {
+        "nativeStepIndex": 1,
+        "nativeCompleted": true,
+        "snapshotAvailable": true
+      },
+      "firstSceneErrors": [
+        {
+          "name": "body-a",
+          "origin": 0,
+          "angular": 0,
+          "cachedOrigin": 0,
+          "local": 0
+        }
+      ],
+      "nativeCompletedCalls": 2,
+      "close": "released",
+      "coreReturned": true,
+      "bridgeZero": true,
+      "guardProbes": 2
+    },
+    {
+      "case": "epoch-exhaustion-one",
+      "status": "PASS_LIMITED_WRITEBACK_EPOCH",
+      "receiptSha256": "193aeaa466b2abb09a32d5d5b9fa977549569e7f7b702fe52a8d689119cba0f3",
+      "rawSha256": "d82a208eb909f38b9067992e1332d6c05c56372ff128b7834b20e28039fb3d13",
+      "inputCount": 101,
+      "inputsUnchanged": true,
+      "assertions": 13,
+      "allAssertionsPassed": true,
+      "firstWorld": "ready",
+      "firstEpoch": {
+        "epoch": 1,
+        "epochLimit": 1
+      },
+      "firstNative": {
+        "nativeStepIndex": 1,
+        "nativeCompleted": true,
+        "snapshotAvailable": true
+      },
+      "firstSceneErrors": [
+        {
+          "name": "body-a",
+          "origin": 0,
+          "angular": 0,
+          "cachedOrigin": 0,
+          "local": 0
+        }
+      ],
+      "nativeCompletedCalls": 1,
+      "close": "released",
+      "coreReturned": true,
+      "bridgeZero": true,
+      "guardProbes": 2
+    },
+    {
+      "case": "initial-shear-rejection",
+      "status": "PASS_LIMITED_WRITEBACK_EPOCH",
+      "receiptSha256": "cf38d5a2db2155f032b1b4936a0311e9d32dff433b70a14d3c4786764d25a698",
+      "rawSha256": "eac0c9d4f5b6b2c44b9d433dcfc17e242b9baaf396e3a762fc1c50760fad5186",
+      "inputCount": 101,
+      "inputsUnchanged": true,
+      "assertions": 10,
+      "allAssertionsPassed": true,
+      "firstWorld": null,
+      "firstEpoch": null,
+      "firstNative": null,
+      "firstSceneErrors": [],
+      "nativeCompletedCalls": 0,
+      "close": "released",
+      "coreReturned": true,
+      "bridgeZero": true,
+      "guardProbes": 0
+    },
+    {
+      "case": "mirrored-ancestor-rejection",
+      "status": "PASS_LIMITED_WRITEBACK_EPOCH",
+      "receiptSha256": "330ef13844eaf06f7217a89abfd59b95800f0ee0014a25f0e952eee511ad776e",
+      "rawSha256": "b429cc9f3a1cfa5eb010e167c4ed734a5e2f1381381e317a77c48869fe6fb634",
+      "inputCount": 101,
+      "inputsUnchanged": true,
+      "assertions": 10,
+      "allAssertionsPassed": true,
+      "firstWorld": null,
+      "firstEpoch": null,
+      "firstNative": null,
+      "firstSceneErrors": [],
+      "nativeCompletedCalls": 0,
+      "close": "released",
+      "coreReturned": true,
+      "bridgeZero": true,
+      "guardProbes": 0
+    },
+    {
+      "case": "nonuniform-parent",
+      "status": "PASS_LIMITED_WRITEBACK_EPOCH",
+      "receiptSha256": "77fb977e773ab669811c582b46816333e0a8fa8964c1dc32353c4ecd86e9521e",
+      "rawSha256": "521201691937a8505615437bf34db75a1b6da01018f201dc7d8658a2add126b6",
+      "inputCount": 101,
+      "inputsUnchanged": true,
+      "assertions": 12,
+      "allAssertionsPassed": true,
+      "firstWorld": "ready",
+      "firstEpoch": {
+        "epoch": 1,
+        "epochLimit": 9007199254740991
+      },
+      "firstNative": {
+        "nativeStepIndex": 1,
+        "nativeCompleted": true,
+        "snapshotAvailable": true
+      },
+      "firstSceneErrors": [
+        {
+          "name": "shear-free-child",
+          "origin": 3.5527153728659915e-15,
+          "angular": 2.2204460492503136e-16,
+          "cachedOrigin": 3.552713678800501e-15,
+          "local": 1.2266347333466993e-18
+        }
+      ],
+      "nativeCompletedCalls": 1,
+      "close": "released",
+      "coreReturned": true,
+      "bridgeZero": true,
+      "guardProbes": 3
+    },
+    {
+      "case": "parent-flush-alias",
+      "status": "PASS_LIMITED_WRITEBACK_EPOCH",
+      "receiptSha256": "1a44e4334c07d7f7a99f1b7a708fb29ef6935d5009b9489479b141b1526ddd90",
+      "rawSha256": "485315d2783dd6a3235414be5bbb534ffee6a6ba2277f0bc21f3aab557017087",
+      "inputCount": 101,
+      "inputsUnchanged": true,
+      "assertions": 14,
+      "allAssertionsPassed": true,
+      "firstWorld": "faulted",
+      "firstEpoch": {
+        "epoch": 0,
+        "epochLimit": 9007199254740991
+      },
+      "firstNative": {
+        "nativeStepIndex": 1,
+        "nativeCompleted": true,
+        "snapshotAvailable": true
+      },
+      "firstSceneErrors": [
+        {
+          "name": "body",
+          "origin": 2,
+          "angular": 0,
+          "cachedOrigin": 0,
+          "local": 2
+        }
+      ],
+      "nativeCompletedCalls": 1,
+      "close": "released",
+      "coreReturned": true,
+      "bridgeZero": true,
+      "guardProbes": 3
+    },
+    {
+      "case": "prestep-parent-alias",
+      "status": "PASS_LIMITED_WRITEBACK_EPOCH",
+      "receiptSha256": "d76b1edb0957be7281eef8a2100d717cc93f437a1b0182bb5ae58d24e82ffeb8",
+      "rawSha256": "0eb0d636718dd1322ed2277b7d123d7228ca0fa656c09c3184d75736602bf1ef",
+      "inputCount": 101,
+      "inputsUnchanged": true,
+      "assertions": 12,
+      "allAssertionsPassed": true,
+      "firstWorld": "ready",
+      "firstEpoch": {
+        "epoch": 0,
+        "epochLimit": 9007199254740991
+      },
+      "firstNative": {
+        "nativeStepIndex": 0,
+        "nativeCompleted": false,
+        "snapshotAvailable": false
+      },
+      "firstSceneErrors": [
+        {
+          "name": "body",
+          "origin": 2,
+          "angular": 0,
+          "cachedOrigin": 0,
+          "local": 2
+        }
+      ],
+      "nativeCompletedCalls": 0,
+      "close": "released",
+      "coreReturned": true,
+      "bridgeZero": true,
+      "guardProbes": 3
+    },
+    {
+      "case": "quaternion-sign",
+      "status": "PASS_LIMITED_WRITEBACK_EPOCH",
+      "receiptSha256": "3892750718d8c771e5980b8955b85048690c1f69fe8b097dcf950fdb07531cd3",
+      "rawSha256": "df827482d7ee23ae3c7c6a755b8dc5bab96c9ec4eb645be359bdc592b159fd93",
+      "inputCount": 101,
+      "inputsUnchanged": true,
+      "assertions": 11,
+      "allAssertionsPassed": true,
+      "firstWorld": "ready",
+      "firstEpoch": {
+        "epoch": 1,
+        "epochLimit": 9007199254740991
+      },
+      "firstNative": {
+        "nativeStepIndex": 1,
+        "nativeCompleted": true,
+        "snapshotAvailable": true
+      },
+      "firstSceneErrors": [
+        {
+          "name": "body-a",
+          "origin": 0,
+          "angular": 0,
+          "cachedOrigin": 0,
+          "local": 0
+        }
+      ],
+      "nativeCompletedCalls": 1,
+      "close": "released",
+      "coreReturned": true,
+      "bridgeZero": true,
+      "guardProbes": 2
+    },
+    {
+      "case": "scale-dirty",
+      "status": "PASS_LIMITED_WRITEBACK_EPOCH",
+      "receiptSha256": "7ea4a1e97317998dea63ea3e926973ce794e2c9328d980056db271850727646d",
+      "rawSha256": "88d79f0afe7cf225d56c23551357ca90d3d2bf36ceb179df8cd2e3f90ca6b580",
+      "inputCount": 101,
+      "inputsUnchanged": true,
+      "assertions": 12,
+      "allAssertionsPassed": true,
+      "firstWorld": "ready",
+      "firstEpoch": {
+        "epoch": 1,
+        "epochLimit": 9007199254740991
+      },
+      "firstNative": {
+        "nativeStepIndex": 1,
+        "nativeCompleted": true,
+        "snapshotAvailable": true
+      },
+      "firstSceneErrors": [
+        {
+          "name": "body-a",
+          "origin": 0,
+          "angular": 0,
+          "cachedOrigin": 0,
+          "local": 0
+        }
+      ],
+      "nativeCompletedCalls": 1,
+      "close": "released",
+      "coreReturned": true,
+      "bridgeZero": true,
+      "guardProbes": 2
+    },
+    {
+      "case": "self-flush-alias",
+      "status": "PASS_LIMITED_WRITEBACK_EPOCH",
+      "receiptSha256": "9cf459345ee95eae5bc1c06de457a2b53900281f672ad6eefe2ebe0890b6bc66",
+      "rawSha256": "664338353a1739a24f18a552dba200be6ddbae182fac68ac654724f34555c897",
+      "inputCount": 101,
+      "inputsUnchanged": true,
+      "assertions": 13,
+      "allAssertionsPassed": true,
+      "firstWorld": "faulted",
+      "firstEpoch": {
+        "epoch": 0,
+        "epochLimit": 9007199254740991
+      },
+      "firstNative": {
+        "nativeStepIndex": 1,
+        "nativeCompleted": true,
+        "snapshotAvailable": true
+      },
+      "firstSceneErrors": [
+        {
+          "name": "body-a",
+          "origin": 2,
+          "angular": 0,
+          "cachedOrigin": 0,
+          "local": 2
+        }
+      ],
+      "nativeCompletedCalls": 1,
+      "close": "released",
+      "coreReturned": true,
+      "bridgeZero": true,
+      "guardProbes": 2
+    },
+    {
+      "case": "setter-caught",
+      "status": "PASS_LIMITED_WRITEBACK_EPOCH",
+      "receiptSha256": "0cd5ff7e1b9c1c1f885973c1382dfe8849726b76325ae2223a87cabe290cbde1",
+      "rawSha256": "625d8e7e1791442a0cad7ee8184c6ebb1362efe8d89e5514373915a336516c54",
+      "inputCount": 101,
+      "inputsUnchanged": true,
+      "assertions": 12,
+      "allAssertionsPassed": true,
+      "firstWorld": "ready",
+      "firstEpoch": {
+        "epoch": 1,
+        "epochLimit": 9007199254740991
+      },
+      "firstNative": {
+        "nativeStepIndex": 1,
+        "nativeCompleted": true,
+        "snapshotAvailable": true
+      },
+      "firstSceneErrors": [
+        {
+          "name": "body-a",
+          "origin": 0,
+          "angular": 0,
+          "cachedOrigin": 0,
+          "local": 0
+        }
+      ],
+      "nativeCompletedCalls": 1,
+      "close": "released",
+      "coreReturned": true,
+      "bridgeZero": true,
+      "guardProbes": 2
+    },
+    {
+      "case": "setter-uncaught",
+      "status": "PASS_LIMITED_WRITEBACK_EPOCH",
+      "receiptSha256": "9c36d0cb0857a83abaf2a175af36d9be8d62ee4040d45cce51b3d0f7cecde2c2",
+      "rawSha256": "26b4d46b9c009c450b29f1a71629be70d89dac48e4dd0eba30f5e8c3ede7258c",
+      "inputCount": 101,
+      "inputsUnchanged": true,
+      "assertions": 13,
+      "allAssertionsPassed": true,
+      "firstWorld": "faulted",
+      "firstEpoch": {
+        "epoch": 0,
+        "epochLimit": 9007199254740991
+      },
+      "firstNative": {
+        "nativeStepIndex": 1,
+        "nativeCompleted": true,
+        "snapshotAvailable": true
+      },
+      "firstSceneErrors": [
+        {
+          "name": "body-a",
+          "origin": 0,
+          "angular": 0,
+          "cachedOrigin": 0,
+          "local": 0
+        }
+      ],
+      "nativeCompletedCalls": 1,
+      "close": "released",
+      "coreReturned": true,
+      "bridgeZero": true,
+      "guardProbes": 2
+    },
+    {
+      "case": "sibling-flush-alias",
+      "status": "PASS_LIMITED_WRITEBACK_EPOCH",
+      "receiptSha256": "092bf0c95cd66a19d15b1eead9dfee4b1b3e7db274a09bb6594a9ebcfb2cbe66",
+      "rawSha256": "545731117ee5aa4ae31ff84dfc268ae13f6badf565dfe9972eac4a5517facb72",
+      "inputCount": 101,
+      "inputsUnchanged": true,
+      "assertions": 14,
+      "allAssertionsPassed": true,
+      "firstWorld": "faulted",
+      "firstEpoch": {
+        "epoch": 0,
+        "epochLimit": 9007199254740991
+      },
+      "firstNative": {
+        "nativeStepIndex": 1,
+        "nativeCompleted": true,
+        "snapshotAvailable": true
+      },
+      "firstSceneErrors": [
+        {
+          "name": "body-a",
+          "origin": 2,
+          "angular": 0,
+          "cachedOrigin": 0,
+          "local": 2
+        },
+        {
+          "name": "body-b",
+          "origin": 0,
+          "angular": 0,
+          "cachedOrigin": 0,
+          "local": 0
+        }
+      ],
+      "nativeCompletedCalls": 1,
+      "close": "released",
+      "coreReturned": true,
+      "bridgeZero": true,
+      "guardProbes": 3
+    },
+    {
+      "case": "static-child-dynamic-parent",
+      "status": "PASS_LIMITED_WRITEBACK_EPOCH",
+      "receiptSha256": "31333a5ffe0b38567e54024a368ebfa1eea70fd4a44f54f27edf7d03ce0a95fe",
+      "rawSha256": "956afe2419237e5bc102d669bac8458438223706fb84857a0bb6aeb496bb54b3",
+      "inputCount": 101,
+      "inputsUnchanged": true,
+      "assertions": 13,
+      "allAssertionsPassed": true,
+      "firstWorld": "faulted",
+      "firstEpoch": {
+        "epoch": 0,
+        "epochLimit": 9007199254740991
+      },
+      "firstNative": {
+        "nativeStepIndex": 1,
+        "nativeCompleted": true,
+        "snapshotAvailable": true
+      },
+      "firstSceneErrors": [
+        {
+          "name": "physics-child",
+          "origin": 0.01666666753590107,
+          "angular": 0,
+          "cachedOrigin": 0.01666666753590107,
+          "local": 0.01666666753590107
+        },
+        {
+          "name": "physics-parent",
+          "origin": 0,
+          "angular": 0,
+          "cachedOrigin": 0,
+          "local": 0
+        }
+      ],
+      "nativeCompletedCalls": 1,
+      "close": "released",
+      "coreReturned": true,
+      "bridgeZero": true,
+      "guardProbes": 3
+    }
+  ],
+  "totals": {
+    "cases": 16,
+    "nativeCompletedCalls": 15,
+    "assertions": 200,
+    "guardProbes": 34
+  }
+}

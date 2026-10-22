@@ -44,12 +44,13 @@ function verifyRestored(root, receipt) {
     assert.equal(fs.existsSync(path.join(root, '.git', 'objects', 'info', 'alternates')), false);
     return { status: 'PASS', checkedFiles: receipt.files.length, independentObjectStore: true };
 }
-function checkpoint({ root, output, committedOnly = false }) {
+function checkpoint({ root, output, committedOnly = false, bundleOnly = false }) {
     root = fs.realpathSync(root);
     output = path.resolve(output);
     assert(!output.startsWith(root + path.sep) && output !== root, 'Output must be outside the source repository');
     assert(!fs.existsSync(output), 'Output must be a new directory; never overwrite earlier receipts');
     assert.equal(git(root, ['rev-parse', '--show-toplevel']).trim(), root);
+    assert.equal(typeof bundleOnly, 'boolean', 'bundleOnly must be an explicit boolean');
     const dirty = git(root, ['status', '--porcelain']).trim();
     assert(
         committedOnly || !dirty,
@@ -65,6 +66,7 @@ function checkpoint({ root, output, committedOnly = false }) {
         tree: git(root, ['rev-parse', 'HEAD^{tree}']).trim(),
         branch,
         committedOnly,
+        bundleOnly,
         excludedWorkingTreeStatus: dirty ? dirty.split('\n') : [],
         refs: git(root, ['show-ref']).trim().split('\n'),
         history: git(root, ['log', '--all', '--format=%H %P %s']).trim().split('\n'),
@@ -82,9 +84,16 @@ function checkpoint({ root, output, committedOnly = false }) {
         bytes: fs.statSync(bundle).size,
         sha256: hash(fs.readFileSync(bundle)),
     };
-    const restored = path.join(output, 'restored-local');
-    git(output, ['clone', '--no-local', '--branch', branch, bundle, restored]);
-    receipt.localRestore = verifyRestored(restored, receipt);
+    if (bundleOnly) {
+        receipt.localRestore = {
+            status: 'NOT_RUN',
+            reason: 'Bundle-only checkpoint; actual Library download must be independently restored and verified.',
+        };
+    } else {
+        const restored = path.join(output, 'restored-local');
+        git(output, ['clone', '--no-local', '--branch', branch, bundle, restored]);
+        receipt.localRestore = verifyRestored(restored, receipt);
+    }
     fs.writeFileSync(path.join(output, 'checkpoint-receipt.json'), JSON.stringify(receipt, null, 2) + '\n');
     return receipt;
 }
@@ -93,12 +102,13 @@ if (require.main === module) {
     const index = args.indexOf('--output');
     assert(
         index >= 0 && args[index + 1],
-        'Usage: node rebuild-checkpoint.cjs --output /new/directory [--committed-only]',
+        'Usage: node rebuild-checkpoint.cjs --output /new/directory [--committed-only] [--bundle-only]',
     );
     const result = checkpoint({
         root: path.resolve(__dirname, '../../..'),
         output: args[index + 1],
         committedOnly: args.includes('--committed-only'),
+        bundleOnly: args.includes('--bundle-only'),
     });
     console.log(
         JSON.stringify({
