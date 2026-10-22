@@ -23,7 +23,7 @@ THE SOFTWARE.
 // Internal, limited M1 foundation. This is not the Cocos physics adapter.
 const CORE_SHA = 'efca0c184d40fd6a82016983f1601c4d23965867';
 const BINDING_BASE_SHA = '5d5a3af049cccd9948b2b55bac4342414af0ef64';
-const SCHEMA_SHA256 = '1ceb8425e1e9c4d7c2752bd2dfe7315cd383ef7f3b44f1afbc62a6a47705d81c';
+const SCHEMA_SHA256 = 'd2585ddda975c56c24a9b52a39d645c69356cdf86faf04485c97a91bd3a6d70c';
 const PATCH_CHAIN_SHA256 = '434fb89494867f515051d5ac0dfc0c694556ba1f0da9ac3fc895a27097b1c7c7';
 
 function failure(code, message) {
@@ -31,6 +31,8 @@ function failure(code, message) {
 }
 
 function nativeStatus(status) {
+    if (status === 9) throw failure('AIR_E_BOX3D_LOCKED', 'World is locked');
+    if (status === 10) throw failure('AIR_E_BOX3D_MASS_PENDING', 'Dynamic enabled body has no effective geometry');
     if (status !== 0) throw failure('AIR_E_BOX3D_NATIVE', `Box3D foundation status ${status}`);
 }
 
@@ -420,6 +422,93 @@ export function createBox3DBinding(module, expected) {
         const heap = module.HEAPU32;
         return (BigInt(heap[(ptr >>> 2) + 1]) << 32n) | BigInt(heap[ptr >>> 2]);
     }
+    function bodyOwner(world, body) {
+        const wid = worldId(world);
+        const item = handle(body, 'body');
+        if (item.world !== world) throw failure('AIR_E_BOX3D_DISPOSED', 'Body belongs to another world');
+        return { wid, item, target: item.targetMass ?? 0 };
+    }
+    function bodyState(world, body) {
+        const { wid, item, target } = bodyOwner(world, body);
+        nativeStatus(module._air_b3_body_state(wid, body.low, body.high, target, output));
+        const p = Array.from(readFloats(49));
+        if (!p.every(Number.isFinite)) throw failure('AIR_E_BOX3D_ABI', 'Nonfinite native body state');
+        return freeze({
+            type: p[0],
+            enabled: Boolean(p[1]),
+            awake: Boolean(p[2]),
+            sleeping: Boolean(p[3]),
+            sleepy: Boolean(p[4]),
+            sleepEnabled: Boolean(p[5]),
+            ccd: Boolean(p[6]),
+            sleepTime: p[7],
+            sleepVelocity: p[8],
+            sleepThreshold: p[9],
+            linearDamping: p[10],
+            angularDamping: p[11],
+            gravityScale: p[12],
+            linearVelocity: p.slice(13, 16),
+            angularVelocity: p.slice(16, 19),
+            force: p.slice(19, 22),
+            torque: p.slice(22, 25),
+            linearFactor: p.slice(25, 28),
+            angularFactor: p.slice(28, 31),
+            mass: p[31],
+            localCenter: p.slice(32, 35),
+            inertia: p.slice(35, 44),
+            worldCenter: p.slice(44, 47),
+            requestedMass: item.targetMass ?? null,
+            massPending: Boolean(p[47]),
+            sensorMassFallback: Boolean(p[48]),
+        });
+    }
+    function boolean(value, name) {
+        if (typeof value !== 'boolean') throw failure('AIR_E_BOX3D_ARGUMENT', `${name} must be boolean`);
+        return value ? 1 : 0;
+    }
+    function bodyControl(world, body, op, values) {
+        const { wid, target } = bodyOwner(world, body);
+        module.HEAPF32.set(
+            values.map((v) => finite(v, 'body control')),
+            input >>> 2,
+        );
+        nativeStatus(module._air_b3_body_control(wid, body.low, body.high, op, input, target));
+        changed(world);
+        return bodyState(world, body);
+    }
+    function bodyApply(world, body, kind, value, offset, space) {
+        const { wid, target } = bodyOwner(world, body);
+        if (space !== 'world' && space !== 'local') throw failure('AIR_E_BOX3D_ARGUMENT', 'Invalid force space');
+        const values = [...vector(value, 3, 'force/impulse'), ...vector(offset, 3, 'COM offset')];
+        nativeStatus(module._air_b3_body_mass_ready(wid, body.low, body.high, target));
+        module.HEAPF32.set(values, input >>> 2);
+        nativeStatus(module._air_b3_body_apply(wid, body.low, body.high, kind, space === 'local' ? 1 : 0, input));
+        changed(world);
+        return bodyState(world, body);
+    }
+    function massShape(body, kind, values, sensor) {
+        const item = handle(body, 'body');
+        const sensorFlag = boolean(sensor, 'sensor');
+        module.HEAPF32.set(
+            values.map((v) => finite(v, 'shape')),
+            input >>> 2,
+        );
+        nativeStatus(
+            module._air_b3_mass_shape_create(
+                worldId(item.world),
+                body.low,
+                body.high,
+                kind,
+                input,
+                sensorFlag,
+                item.targetMass ?? 0,
+                ids,
+            ),
+        );
+        const result = copiedId(item.world, 'shape', body);
+        bodyState(item.world, body);
+        return result;
+    }
     const api = {
         identity: Object.freeze({ ...expected }),
         createWorld(gravity = [0, -10, 0]) {
@@ -463,6 +552,13 @@ export function createBox3DBinding(module, expected) {
                 if (!Number.isSafeInteger(state.step) || state.step >= Number.MAX_SAFE_INTEGER)
                     throw failure('AIR_E_BOX3D_CAPACITY', 'Native step index exhausted before invocation');
                 const bodies = [...state.bodies];
+                for (const body of bodies) {
+                    const target = handles.get(body).targetMass ?? 0;
+                    const status = module._air_b3_body_mass_ready(wid, body.low, body.high, target);
+                    if (status === 10)
+                        throw failure('AIR_E_BOX3D_MASS_PENDING', `Body ${idKey(body)} has no effective geometry`);
+                    nativeStatus(status);
+                }
                 const beforeRows = poseRows(bodies, transforms(world, bodies));
                 state.completed = false;
                 state.available = false;
@@ -608,7 +704,10 @@ export function createBox3DBinding(module, expected) {
         createBody(world, options = {}) {
             return exclusive(() => {
                 const id = worldId(world);
-                const type = options.type ?? 2;
+                if (!options || typeof options !== 'object')
+                    throw failure('AIR_E_BOX3D_ARGUMENT', 'Body options must be an object');
+                if (options.enableSleep !== undefined) boolean(options.enableSleep, 'enableSleep');
+                const type = options.type === undefined ? 2 : options.type;
                 if (![0, 1, 2].includes(type)) throw failure('AIR_E_BOX3D_ARGUMENT', 'Invalid body type');
                 const values = [
                     ...vector(options.position ?? [0, 0, 0], 3, 'position'),
@@ -623,6 +722,107 @@ export function createBox3DBinding(module, expected) {
                 nativeStatus(module._air_b3_body_create(id, type, input, options.enableSleep === false ? 0 : 1, ids));
                 return copiedId(world, 'body');
             });
+        },
+        bodyState(world, body) {
+            return exclusive(() => bodyState(world, body));
+        },
+        setBodyType(world, body, type) {
+            return exclusive(() => {
+                if (![0, 1, 2].includes(type)) throw failure('AIR_E_BOX3D_ARGUMENT', 'Invalid body type');
+                return bodyControl(world, body, 1, [type]);
+            });
+        },
+        setBodyEnabled(world, body, enabled) {
+            return exclusive(() => bodyControl(world, body, 2, [boolean(enabled, 'enabled')]));
+        },
+        setBodyMass(world, body, mass) {
+            return exclusive(() => {
+                const { wid, item } = bodyOwner(world, body);
+                const value = Math.fround(finite(mass, 'mass'));
+                if (value <= 0) throw failure('AIR_E_BOX3D_ARGUMENT', 'Mass must be positive after float32 conversion');
+                nativeStatus(module._air_b3_body_mass_set(wid, body.low, body.high, value));
+                item.targetMass = value;
+                changed(world);
+                return bodyState(world, body);
+            });
+        },
+        setBodyDamping(world, body, linear, angular) {
+            return exclusive(() => {
+                finite(linear, 'linear damping');
+                finite(angular, 'angular damping');
+                if (linear < 0 || linear > 1 || angular < 0 || angular > 1)
+                    throw failure('AIR_E_BOX3D_ARGUMENT', 'Damping range is [0,1]');
+                return bodyControl(world, body, 3, [linear, angular]);
+            });
+        },
+        setBodyGravityScale(world, body, scale) {
+            return exclusive(() => bodyControl(world, body, 4, [scale]));
+        },
+        setBodySleepEnabled(world, body, enabled) {
+            return exclusive(() => bodyControl(world, body, 5, [boolean(enabled, 'sleep enabled')]));
+        },
+        setBodySleepThreshold(world, body, threshold) {
+            return exclusive(() => {
+                finite(threshold, 'sleep threshold');
+                if (threshold < 0) throw failure('AIR_E_BOX3D_ARGUMENT', 'Sleep threshold must be nonnegative');
+                return bodyControl(world, body, 6, [threshold]);
+            });
+        },
+        setBodyAwake(world, body, awake) {
+            return exclusive(() => bodyControl(world, body, 7, [boolean(awake, 'awake')]));
+        },
+        setBodyCCD(world, body, enabled) {
+            return exclusive(() => bodyControl(world, body, 8, [boolean(enabled, 'CCD')]));
+        },
+        setBodyMotionFactors(world, body, linear, angular) {
+            return exclusive(() => {
+                const values = [...vector(linear, 3, 'linear factor'), ...vector(angular, 3, 'angular factor')];
+                if (values.some((v) => v !== 0 && v !== 1))
+                    throw failure('AIR_E_BOX3D_ARGUMENT', 'Motion factors must be 0/1');
+                return bodyControl(world, body, 9, values);
+            });
+        },
+        setBodyLinearVelocity(world, body, value) {
+            return exclusive(() => bodyControl(world, body, 10, vector(value, 3, 'linear velocity')));
+        },
+        setBodyAngularVelocity(world, body, value) {
+            return exclusive(() => bodyControl(world, body, 11, vector(value, 3, 'angular velocity')));
+        },
+        clearBodyForces(world, body) {
+            return exclusive(() => bodyControl(world, body, 12, []));
+        },
+        clearBodyVelocity(world, body) {
+            return exclusive(() => bodyControl(world, body, 13, []));
+        },
+        clearBodyState(world, body) {
+            return exclusive(() => bodyControl(world, body, 14, []));
+        },
+        applyBodyForce(world, body, value, offset = [0, 0, 0], space = 'world') {
+            return exclusive(() => bodyApply(world, body, 0, value, offset, space));
+        },
+        applyBodyImpulse(world, body, value, offset = [0, 0, 0], space = 'world') {
+            return exclusive(() => bodyApply(world, body, 1, value, offset, space));
+        },
+        applyBodyTorque(world, body, value, space = 'world') {
+            return exclusive(() => bodyApply(world, body, 2, value, [0, 0, 0], space));
+        },
+        applyBodyAngularImpulse(world, body, value, space = 'world') {
+            return exclusive(() => bodyApply(world, body, 3, value, [0, 0, 0], space));
+        },
+        createOffsetBox(body, center, halfExtents, rotation = [0, 0, 0, 1], density = 1, sensor = false) {
+            return exclusive(() =>
+                massShape(
+                    body,
+                    1,
+                    [
+                        ...vector(center, 3, 'center'),
+                        ...vector(halfExtents, 3, 'halfExtents'),
+                        ...vector(rotation, 4, 'rotation'),
+                        density,
+                    ],
+                    sensor,
+                ),
+            );
         },
         destroyBody(body) {
             return exclusive(() => {
@@ -643,20 +843,19 @@ export function createBox3DBinding(module, expected) {
         setLinearVelocity(body, velocity) {
             return exclusive(() => {
                 const item = handle(body, 'body');
-                nativeStatus(module._air_b3_body_velocity(body.low, body.high, ...vector(velocity, 3, 'velocity')));
-                changed(item.world);
+                bodyControl(item.world, body, 10, vector(velocity, 3, 'velocity'));
             });
         },
         applyCenterImpulse(body, impulse) {
             return exclusive(() => {
                 const item = handle(body, 'body');
-                nativeStatus(module._air_b3_body_impulse(body.low, body.high, ...vector(impulse, 3, 'impulse')));
-                changed(item.world);
+                bodyApply(item.world, body, 1, impulse, [0, 0, 0], 'world');
             });
         },
         createSphere(body, radius, density = 1) {
             return exclusive(() => {
                 const item = handle(body, 'body');
+                if (item.targetMass !== undefined) return massShape(body, 0, [0, 0, 0, radius, density], false);
                 nativeStatus(
                     module._air_b3_shape_sphere(
                         body.low,
@@ -672,6 +871,13 @@ export function createBox3DBinding(module, expected) {
         createBox(body, halfExtents, density = 1) {
             return exclusive(() => {
                 const item = handle(body, 'body');
+                if (item.targetMass !== undefined)
+                    return massShape(
+                        body,
+                        1,
+                        [0, 0, 0, ...vector(halfExtents, 3, 'halfExtents'), 0, 0, 0, 1, density],
+                        false,
+                    );
                 nativeStatus(
                     module._air_b3_shape_box(
                         body.low,
@@ -687,9 +893,22 @@ export function createBox3DBinding(module, expected) {
         destroyShape(shape) {
             return exclusive(() => {
                 const item = handle(shape, 'shape');
-                nativeStatus(module._air_b3_shape_destroy(shape.low, shape.high));
+                const target = handles.get(item.body).targetMass;
+                if (target === undefined) nativeStatus(module._air_b3_shape_destroy(shape.low, shape.high));
+                else
+                    nativeStatus(
+                        module._air_b3_mass_shape_destroy(
+                            worldId(item.world),
+                            item.body.low,
+                            item.body.high,
+                            shape.low,
+                            shape.high,
+                            target,
+                        ),
+                    );
                 item.destroyed = true;
                 changed(item.world);
+                bodyState(item.world, item.body);
             });
         },
         bodyTransforms(world, bodies) {
@@ -741,6 +960,8 @@ export function createBox3DBinding(module, expected) {
         createOffsetSphere(body, center, radius, density = 1, sensor = false) {
             return exclusive(() => {
                 const item = handle(body, 'body');
+                if (item.targetMass !== undefined)
+                    return massShape(body, 0, [...vector(center, 3, 'center'), radius, density], sensor);
                 if (typeof sensor !== 'boolean') throw failure('AIR_E_BOX3D_ARGUMENT', 'sensor must be boolean');
                 nativeStatus(
                     module._air_b3_shape_sphere_ex(

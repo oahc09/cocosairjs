@@ -1,0 +1,207 @@
+  console.log
+    Cannot access game frame or container.
+
+      at warnID (src/cocos/core/platform/debug.ts:314:5)
+
+  console.log
+    [Physics]: The damping should be between zero to one.
+
+      at warn (src/cocos/core/platform/debug.ts:110:12)
+
+  console.log
+    [Physics]: The group should only have one bit.
+
+      at warn (src/cocos/core/platform/debug.ts:110:12)
+
+  console.log
+    [Physics]: The mass should be greater than zero.
+
+      at warn (src/cocos/core/platform/debug.ts:110:12)
+
+FAIL tools/verify/box3d/body-component-transaction.test.ts (10.889 s)
+  ✓ unmodified non-Box3D setter order remains an explicit compatibility control (1 ms)
+  ✓ existing public nonpositive mass normalization is retained without a live adapter (2 ms)
+  actual Box3D component cache rejection transaction, injected adapter only
+    ✕ type retains its last valid value after delegate rejection (11 ms)
+    ✕ mass retains its last valid value after delegate rejection (1 ms)
+    ✕ allowSleep retains its last valid value after delegate rejection (1 ms)
+    ✕ linearDamping retains its last valid value after delegate rejection (7 ms)
+    ✕ angularDamping retains its last valid value after delegate rejection (1 ms)
+    ✕ useGravity retains its last valid value after delegate rejection (1 ms)
+    ✕ group retains its last valid value after delegate rejection (2 ms)
+    ✕ linearFactor preserves its cached vector and identity on rejection (3 ms)
+    ✕ angularFactor preserves its cached vector and identity on rejection (1 ms)
+
+  ● actual Box3D component cache rejection transaction, injected adapter only › type retains its last valid value after delegate rejection
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 999
+
+      43 |         }).toThrow(rejection);
+      44 |         expect(calls).toHaveLength(1);
+    > 45 |         expect(body[key]).toBe(before);
+         |                           ^
+      46 |     });
+      47 |     test.each(['linearFactor', 'angularFactor'])('%s preserves its cached vector and identity on rejection', (key) => {
+      48 |         select('box3d');
+
+      at tools/verify/box3d/body-component-transaction.test.ts:45:27
+
+  ● actual Box3D component cache rejection transaction, injected adapter only › mass retains its last valid value after delegate rejection
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: NaN
+
+      43 |         }).toThrow(rejection);
+      44 |         expect(calls).toHaveLength(1);
+    > 45 |         expect(body[key]).toBe(before);
+         |                           ^
+      46 |     });
+      47 |     test.each(['linearFactor', 'angularFactor'])('%s preserves its cached vector and identity on rejection', (key) => {
+      48 |         select('box3d');
+
+      at tools/verify/box3d/body-component-transaction.test.ts:45:27
+
+  ● actual Box3D component cache rejection transaction, injected adapter only › allowSleep retains its last valid value after delegate rejection
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: 0
+
+      43 |         }).toThrow(rejection);
+      44 |         expect(calls).toHaveLength(1);
+    > 45 |         expect(body[key]).toBe(before);
+         |                           ^
+      46 |     });
+      47 |     test.each(['linearFactor', 'angularFactor'])('%s preserves its cached vector and identity on rejection', (key) => {
+      48 |         select('box3d');
+
+      at tools/verify/box3d/body-component-transaction.test.ts:45:27
+
+  ● actual Box3D component cache rejection transaction, injected adapter only › linearDamping retains its last valid value after delegate rejection
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0.1
+    Received: Infinity
+
+      43 |         }).toThrow(rejection);
+      44 |         expect(calls).toHaveLength(1);
+    > 45 |         expect(body[key]).toBe(before);
+         |                           ^
+      46 |     });
+      47 |     test.each(['linearFactor', 'angularFactor'])('%s preserves its cached vector and identity on rejection', (key) => {
+      48 |         select('box3d');
+
+      at tools/verify/box3d/body-component-transaction.test.ts:45:27
+
+  ● actual Box3D component cache rejection transaction, injected adapter only › angularDamping retains its last valid value after delegate rejection
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0.1
+    Received: NaN
+
+      43 |         }).toThrow(rejection);
+      44 |         expect(calls).toHaveLength(1);
+    > 45 |         expect(body[key]).toBe(before);
+         |                           ^
+      46 |     });
+      47 |     test.each(['linearFactor', 'angularFactor'])('%s preserves its cached vector and identity on rejection', (key) => {
+      48 |         select('box3d');
+
+      at tools/verify/box3d/body-component-transaction.test.ts:45:27
+
+  ● actual Box3D component cache rejection transaction, injected adapter only › useGravity retains its last valid value after delegate rejection
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: "false"
+
+      43 |         }).toThrow(rejection);
+      44 |         expect(calls).toHaveLength(1);
+    > 45 |         expect(body[key]).toBe(before);
+         |                           ^
+      46 |     });
+      47 |     test.each(['linearFactor', 'angularFactor'])('%s preserves its cached vector and identity on rejection', (key) => {
+      48 |         select('box3d');
+
+      at tools/verify/box3d/body-component-transaction.test.ts:45:27
+
+  ● actual Box3D component cache rejection transaction, injected adapter only › group retains its last valid value after delegate rejection
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: NaN
+
+      43 |         }).toThrow(rejection);
+      44 |         expect(calls).toHaveLength(1);
+    > 45 |         expect(body[key]).toBe(before);
+         |                           ^
+      46 |     });
+      47 |     test.each(['linearFactor', 'angularFactor'])('%s preserves its cached vector and identity on rejection', (key) => {
+      48 |         select('box3d');
+
+      at tools/verify/box3d/body-component-transaction.test.ts:45:27
+
+  ● actual Box3D component cache rejection transaction, injected adapter only › linearFactor preserves its cached vector and identity on rejection
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+      Array [
+        1,
+    -   1,
+    +   0.5,
+        1,
+      ]
+
+      60 |         }).toThrow(rejection);
+      61 |         expect(body[key]).toBe(reference);
+    > 62 |         expect([reference.x, reference.y, reference.z]).toEqual(before);
+         |                                                         ^
+      63 |     });
+      64 | });
+      65 |
+
+      at tools/verify/box3d/body-component-transaction.test.ts:62:57
+
+  ● actual Box3D component cache rejection transaction, injected adapter only › angularFactor preserves its cached vector and identity on rejection
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+      Array [
+        1,
+    -   1,
+    +   0.5,
+        1,
+      ]
+
+      60 |         }).toThrow(rejection);
+      61 |         expect(body[key]).toBe(reference);
+    > 62 |         expect([reference.x, reference.y, reference.z]).toEqual(before);
+         |                                                         ^
+      63 |     });
+      64 | });
+      65 |
+
+      at tools/verify/box3d/body-component-transaction.test.ts:62:57
+
+Test Suites: 1 failed, 1 total
+Tests:       9 failed, 2 passed, 11 total
+Snapshots:   0 total
+Time:        11.293 s
+Ran all test suites.
+Test results written to: docs/physics/box3d/rebuild/body-component-transaction-red-20261022/jest-result.json

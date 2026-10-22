@@ -41,6 +41,8 @@ const expectedSources = [
     'tools/physics/box3d/native/snapshot.c',
     'tools/physics/box3d/native/geometry.c',
     'tools/physics/box3d/native/world_bridge.c',
+    'tools/physics/box3d/native/body_control.c',
+    'tools/physics/box3d/native/body_contract.c',
     'tools/physics/box3d/native/world_contract.c',
     'tools/physics/box3d/native/wasm_entry.c',
     'tools/physics/box3d/native/geometry_contract.c',
@@ -157,6 +159,47 @@ assert.ok(
         (entry) => entry.args.some((arg) => arg.endsWith('air_box3d_world_contract.cjs')) && entry.exitCode === 0,
     ),
 );
+const nativeBody = json('native-body-contract.raw.json');
+assert.equal(nativeBody.status, 'PASS');
+assert.equal(nativeBody.pointerBytes, 4);
+assert.deepEqual(nativeBody, receipt.bodyContract);
+for (const name of [
+    'lockedWorldNoWrite',
+    'fullGenerationWorldNoWrite',
+    'boxMassAndAngularImpulse',
+    'clearActualForceNotImpulse',
+    'actualSleepTimerAndZeroThreshold',
+    'sensorFallbackAndMixedExclusion',
+    'pendingGeometryLifecycle',
+    'coreBytesRestored',
+    'immediateImpulseLocks',
+])
+    assert.equal(nativeBody[name], true);
+const body = json('wasm-body-contract.raw.json');
+assert.equal(body.status, 'PASS');
+for (const field of ['coreSha', 'bindingBaseSha', 'schemaSha256', 'patchChainSha256', 'abiVersion', 'variant'])
+    assert.equal(body.identity[field], manifest[field]);
+assert.equal(body.fixtureSha256, sha256(readFileSync(resolve(root, 'tools/physics/box3d/wasm-body-contract.mjs'))));
+assert.equal(body.observations.idCycles.length, 128);
+assert.equal(body.observations.damping.length, 12);
+assert.ok(body.negatives.length >= 45);
+for (const name of [
+    'bodyControlsValidationAndOldSnapshotImmutable',
+    'totalMassAnalytic',
+    'offsetCOMImpulse',
+    'sensorFallbackAndMixedExclusion',
+    'localForceAndTorque',
+    'dampingGrid',
+    'gravityDoesNotClearVelocity',
+    'sleepAndThresholdNative',
+    'axisLocks',
+    'immediateImpulseLocks',
+    'fullId128Cycles',
+    'bodyBeforeColliderAndRemoval',
+    'rotatedOffsetBox',
+    'coreAndBridgeRestored',
+])
+    assert.equal(body.checks[name], true);
 const report = {
     schemaVersion: 1,
     status: 'PASS',
@@ -194,6 +237,9 @@ const report = {
         'native-world-contract.raw.json',
         'wasm-world-contract.raw.json',
         'air_box3d_world_contract.cjs',
+        'native-body-contract.raw.json',
+        'wasm-body-contract.raw.json',
+        'air_box3d_body_contract.cjs',
     ].map(fileHash),
 };
 writeFileSync(reportPath, JSON.stringify(report, null, 2) + '\n');

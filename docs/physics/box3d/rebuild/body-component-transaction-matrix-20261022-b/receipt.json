@@ -1,0 +1,23 @@
+{
+  "status": "PASS_SCOPED_COMPONENT_CACHE_ORDER_MATRIX",
+  "command": [
+    "node",
+    "node_modules/jest/bin/jest.js",
+    "--runInBand",
+    "--config",
+    "tools/verify/box3d/body-component-transaction.jest.cjs",
+    "--json",
+    "--outputFile",
+    "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/docs/physics/box3d/rebuild/body-component-transaction-matrix-20261022-b/jest-result.json"
+  ],
+  "startedAtUtc": "2026-10-22T08:46:46.534584+00:00",
+  "completedAtUtc": "2026-10-22T08:46:50.062403+00:00",
+  "exitCode": 0,
+  "passedTests": 56,
+  "failedTests": 0,
+  "inputFiles": 1482,
+  "inputsUnchanged": true,
+  "inputsSHA256": "06fd0213f96b75e2eddaeaab1f74fc197bafa9787dc49a2cb33f026e7f313441",
+  "rawSHA256": "a37148026527f34d86d3687ec769aca562b67347d4dc43d6611d6bf2d36a1433",
+  "scope": "Actual component class with injected accepting/rejecting adapter; five selector IDs test cache ordering only, not five native physics backends."
+}

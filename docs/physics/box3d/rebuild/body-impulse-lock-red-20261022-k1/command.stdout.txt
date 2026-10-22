@@ -1,0 +1,1 @@
+{"status":"FAIL_IMMEDIATE_LOCKED_VELOCITY","immediateLinearX":0.1666666716337204,"immediateAngularX":0.1524038463830948,"angularImmediateX":0.03540924936532974}

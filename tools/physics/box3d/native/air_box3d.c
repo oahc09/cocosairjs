@@ -54,6 +54,7 @@ int air_b3_world_step(uint32_t world, float dt, int substeps)
 {
     if (!air_b3_world_valid(world)) return AIR_B3_INVALID;
     if (!isfinite(dt) || dt <= 0 || substeps < 1) return AIR_B3_ARGUMENT;
+    int locked = air_b3_world_unlocked(world); if (locked) return locked;
     b3World_Step(b3LoadWorldId(world), dt, substeps);
     return AIR_B3_OK;
 }
@@ -80,6 +81,7 @@ int air_b3_body_create(uint32_t world, int type, const float* p, int enable_slee
     if (p[13] < 0 || p[13] > 1 || p[14] < 0 || p[14] > 1) return AIR_B3_ARGUMENT;
     float q2 = p[3]*p[3] + p[4]*p[4] + p[5]*p[5] + p[6]*p[6];
     if (!isfinite(q2) || fabsf(q2 - 1.0f) > 1e-4f) return AIR_B3_ARGUMENT;
+    int locked = air_b3_world_unlocked(world); if (locked) return locked;
     b3BodyDef def = b3DefaultBodyDef();
     def.type = (b3BodyType)type;
     def.position = (b3Pos){p[0], p[1], p[2]};
@@ -99,6 +101,7 @@ int air_b3_body_valid(uint32_t lo, uint32_t hi) { return b3Body_IsValid(b3LoadBo
 int air_b3_body_destroy(uint32_t lo, uint32_t hi)
 {
     if (!air_b3_body_valid(lo, hi)) return AIR_B3_INVALID;
+    int locked = air_b3_world_unlocked(b3StoreWorldId(b3Body_GetWorld(b3LoadBodyId(join_id(lo, hi))))); if (locked) return locked;
     b3DestroyBody(b3LoadBodyId(join_id(lo, hi)));
     return AIR_B3_OK;
 }
@@ -125,6 +128,7 @@ int air_b3_body_velocity(uint32_t lo, uint32_t hi, float x, float y, float z)
 {
     if (!air_b3_body_valid(lo, hi)) return AIR_B3_INVALID;
     if (!finite3(x, y, z)) return AIR_B3_ARGUMENT;
+    int locked = air_b3_world_unlocked(b3StoreWorldId(b3Body_GetWorld(b3LoadBodyId(join_id(lo, hi))))); if (locked) return locked;
     b3Body_SetLinearVelocity(b3LoadBodyId(join_id(lo, hi)), (b3Vec3){x, y, z});
     return AIR_B3_OK;
 }
@@ -132,6 +136,7 @@ int air_b3_body_impulse(uint32_t lo, uint32_t hi, float x, float y, float z)
 {
     if (!air_b3_body_valid(lo, hi)) return AIR_B3_INVALID;
     if (!finite3(x, y, z)) return AIR_B3_ARGUMENT;
+    int locked = air_b3_world_unlocked(b3StoreWorldId(b3Body_GetWorld(b3LoadBodyId(join_id(lo, hi))))); if (locked) return locked;
     b3Body_ApplyLinearImpulseToCenter(b3LoadBodyId(join_id(lo, hi)), (b3Vec3){x, y, z}, true);
     return AIR_B3_OK;
 }
@@ -139,7 +144,7 @@ static int valid_shape_args(uint32_t lo, uint32_t hi, float density, uint32_t* o
 {
     if (!out || !isfinite(density) || density <= 0) return AIR_B3_ARGUMENT;
     if (!air_b3_body_valid(lo, hi)) return AIR_B3_INVALID;
-    return AIR_B3_OK;
+    return air_b3_world_unlocked(b3StoreWorldId(b3Body_GetWorld(b3LoadBodyId(join_id(lo, hi)))));
 }
 int air_b3_shape_sphere(uint32_t lo, uint32_t hi, float radius, float density, uint32_t* out)
 {
@@ -181,6 +186,7 @@ int air_b3_shape_valid(uint32_t lo, uint32_t hi) { return b3Shape_IsValid(b3Load
 int air_b3_shape_destroy(uint32_t lo, uint32_t hi)
 {
     if (!air_b3_shape_valid(lo, hi)) return AIR_B3_INVALID;
+    int locked = air_b3_world_unlocked(b3StoreWorldId(b3Shape_GetWorld(b3LoadShapeId(join_id(lo, hi))))); if (locked) return locked;
     b3DestroyShape(b3LoadShapeId(join_id(lo, hi)), true);
     return AIR_B3_OK;
 }

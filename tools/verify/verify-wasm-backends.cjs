@@ -67,6 +67,7 @@ const EXPECT = {
         'cocos/input/types/event/event-touch.ts',
         'cocos/input/types/touch.ts',
         'cocos/misc/camera-component.ts',
+        'cocos/physics/framework/components/rigid-body.ts',
         'cocos/physics/framework/physics-system.ts',
         'cocos/render-scene/core/pass-utils.ts',
         'cocos/render-scene/core/pass.ts',

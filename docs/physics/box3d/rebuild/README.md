@@ -4,7 +4,7 @@ This directory records the provenance of a new, partial main-source import. It i
 
 Start with [the rebuild plan](../../../../ai/plans/box3d-rebuild.md), then the [unchanged v1.2 contract](../../../../ai/plans/box3d-v1.2-reference.md) (Library identity libfile_335495eb4e208191bf8025631fdd1b33). Read [SNAPSHOT-NOTICE.md](SNAPSHOT-NOTICE.md) before using the source. The compact baseline.json records both the actual upstream identity and local import boundary. The full source/missing manifest is carried in the portable recovery checkpoint, not required for the complete remote tree.
 
-The [state ledger](../../../../ai/ledgers/box3d-rebuild-state.json) deliberately initializes all 35 implementation tasks, 9 Gates and 91 main test categories without inheriting historical PASS results. It is not the final expanded inventory. The [recovery source manifest](../recovery/source-manifest.json) preserves exact Library inputs and their limitations.
+The [state ledger](../../../../ai/ledgers/box3d-rebuild-state.json) deliberately initializes all 35 implementation tasks, 9 Gates and 91 main test categories without inheriting historical PASS results. The formal required-cell enumeration is now frozen separately; this task ledger is not an execution result importer. The [recovery source manifest](../recovery/source-manifest.json) preserves exact Library inputs and their limitations.
 
 The required recovery procedure creates a Git bundle, clones it into an independent temporary repository, verifies Git connectivity and every tracked file, and writes the recovery receipt. The Library round-trip is a separate required delivery step. Run node tools/verify/box3d/rebuild-checkpoint.cjs --output /absolute/new-directory from a clean committed snapshot. The helper has four passing recovery/negative-control tests; this is not a physical acceptance PASS. --committed-only explicitly excludes and reports ongoing uncommitted work.
 
@@ -16,7 +16,7 @@ Historical h2 runtime builds succeeded on their frozen inputs: the optional Box3
 
 The actual 41 runtime artifact files are independently preserved and download-verified in Library libfile_1bd16f266d908191b90831c71d5a2423; see library-runtime-artifacts-20261022-h2.json. Generated runtime bytes are not substituted for source or packaged-release verification. The local tracked snapshot still omits 6,351 original main paths and must not be described as a full clone.
 
-The M0 contract design in ../contracts maps 166 actual Cocos spec members and drafts 84 required child cases under 91 parent categories. The final environment/variant-expanded inventory is not frozen. C16-DURATION-1 is explicitly a new seven-endpoint/100 ms definition and must not be mistaken for recovered historical acceptance.
+The M0 contract design in ../contracts maps 166 actual Cocos spec members and drafts 84 required child cases under 91 parent categories. The formal v1 environment/variant-expanded inventory now contains 2,128 required cells across 186 execution definitions, all initialized NOT_RUN. The original candidate remains immutable. See ../contracts/inventory-freeze-v1.md for the read-only resolver and preserved device/fixture/readiness blockers. This technical denominator freeze does not pass G0. C16-DURATION-1 is explicitly a new seven-endpoint/100 ms definition and must not be mistaken for recovered historical acceptance.
 
 ## Limited actual AIR world qualification
 

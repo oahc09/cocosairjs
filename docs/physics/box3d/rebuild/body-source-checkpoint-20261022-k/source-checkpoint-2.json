@@ -1,0 +1,86 @@
+{
+  "status": "SOURCE_ONLY_NOT_COMPILED",
+  "reason": "Add real native/WASM body qualifications and strict artifact evidence gates; still not compiled.",
+  "files": [
+    {
+      "path": "tools/physics/box3d/native/body_control.c",
+      "bytes": 12954,
+      "sha256": "5de660c7f9e2f1e1ab77582871e24e318ef796c4315aa6adf5d8e90e5ff9117f"
+    },
+    {
+      "path": "tools/physics/box3d/native/body_control.h",
+      "bytes": 1221,
+      "sha256": "d7a8ee9db19b875d079a2bcbbba3be6e46519f1df39bd1d01cdc0aa7894df9e8"
+    },
+    {
+      "path": "tools/physics/box3d/native/air_box3d.c",
+      "bytes": 9973,
+      "sha256": "78bfae511a4153ea981b528577c2bfe2bd909b1cd05972da790b414e9150f8ca"
+    },
+    {
+      "path": "tools/physics/box3d/native/air_box3d.h",
+      "bytes": 3516,
+      "sha256": "b48a745047ce0d06e50a2c1bd43be90965c7cb1b8e3f86ac604be631d3280282"
+    },
+    {
+      "path": "tools/physics/box3d/CMakeLists.txt",
+      "bytes": 5684,
+      "sha256": "633e7da8e6c65bcbb2e0f9ca4001b0fd8019682978983d2848d9856b9d6e8c6d"
+    },
+    {
+      "path": "tools/physics/box3d/abi-schema.json",
+      "bytes": 11976,
+      "sha256": "7408c1ad90d971aca1331dc1a411b0c660d62b2d40d93b7670c024d8955dce28"
+    },
+    {
+      "path": "tools/physics/box3d/exports.json",
+      "bytes": 1352,
+      "sha256": "7c5664e98801e54c67384c4a01b1c709cb226d0974dcb6b0c9522cfd38c20095"
+    },
+    {
+      "path": "tools/physics/box3d/versions.lock.json",
+      "bytes": 4943,
+      "sha256": "1387e13c72fb2a0d101eb626b856286413bbe1879df3b8de5fb110d8fc1607c2"
+    },
+    {
+      "path": "tools/physics/box3d/build.mjs",
+      "bytes": 14417,
+      "sha256": "22a3254bf932bd1a5961dc954a3931df146a94533f7553026556049a11a0bc38"
+    },
+    {
+      "path": "tools/physics/box3d/audit-artifacts.mjs",
+      "bytes": 11534,
+      "sha256": "995a1af5c070787a4b38bb0456aed912b9d94c39f4c050b4f8c6f0ebe6688448"
+    },
+    {
+      "path": "tools/physics/box3d/native-geometry-ubsan.mjs",
+      "bytes": 4160,
+      "sha256": "9c7d3561d3b04682a5955df02506914a6424a2ae1c05892e20d25c8d1a738485"
+    },
+    {
+      "path": "tools/physics/box3d/body-control-contract.md",
+      "bytes": 6247,
+      "sha256": "4ee6cf0c0164bee5e5a48c952ef16274acb944a423504297623cfdf4312bfc41"
+    },
+    {
+      "path": "src/air/physics/box3d/binding/facade.mjs",
+      "bytes": 46406,
+      "sha256": "026e09c30fe7085b4cbe69deff9770c916ce1e84632a8922187d66844909348c"
+    },
+    {
+      "path": "src/air/physics/box3d/binding/facade.d.mts",
+      "bytes": 14017,
+      "sha256": "2dac3bf29ed20c4d9d21544be25b2239e1151007c59f89a8066ed553324bc494"
+    },
+    {
+      "path": "tools/physics/box3d/native/body_contract.c",
+      "bytes": 4943,
+      "sha256": "dc14f2ac1fac07959784c06779317ea288ac67c78b969d2ce69e046d6c613d2f"
+    },
+    {
+      "path": "tools/physics/box3d/wasm-body-contract.mjs",
+      "bytes": 13491,
+      "sha256": "9e2ebe0194aee6463b9a139e6b6466153e4ec50359fc874b2fabd79a34811dbf"
+    }
+  ]
+}

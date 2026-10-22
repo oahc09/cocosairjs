@@ -63,6 +63,62 @@ export interface Box3DFoundation {
     /** Facade-owned native bridge allocations only, excluding core/JS/WASM heap capacity. */
     bridgeMemory(world?: Box3DWorld): Box3DBridgeMemory;
     createBody(world: Box3DWorld, options?: Box3DBodyOptions): Box3DId;
+    /** New ABI-1 controls require both facade world and body capabilities. */
+    bodyState(world: Box3DWorld, body: Box3DId): Box3DBodyState;
+    setBodyType(world: Box3DWorld, body: Box3DId, type: 0 | 1 | 2): Box3DBodyState;
+    setBodyEnabled(world: Box3DWorld, body: Box3DId, enabled: boolean): Box3DBodyState;
+    setBodyMass(world: Box3DWorld, body: Box3DId, mass: number): Box3DBodyState;
+    setBodyDamping(world: Box3DWorld, body: Box3DId, linear: number, angular: number): Box3DBodyState;
+    setBodyGravityScale(world: Box3DWorld, body: Box3DId, scale: number): Box3DBodyState;
+    setBodySleepEnabled(world: Box3DWorld, body: Box3DId, enabled: boolean): Box3DBodyState;
+    setBodySleepThreshold(world: Box3DWorld, body: Box3DId, threshold: number): Box3DBodyState;
+    setBodyAwake(world: Box3DWorld, body: Box3DId, awake: boolean): Box3DBodyState;
+    setBodyCCD(world: Box3DWorld, body: Box3DId, enabled: boolean): Box3DBodyState;
+    setBodyMotionFactors(
+        world: Box3DWorld,
+        body: Box3DId,
+        linear: ArrayLike<number>,
+        angular: ArrayLike<number>,
+    ): Box3DBodyState;
+    setBodyLinearVelocity(world: Box3DWorld, body: Box3DId, velocity: ArrayLike<number>): Box3DBodyState;
+    setBodyAngularVelocity(world: Box3DWorld, body: Box3DId, velocity: ArrayLike<number>): Box3DBodyState;
+    applyBodyForce(
+        world: Box3DWorld,
+        body: Box3DId,
+        force: ArrayLike<number>,
+        offset?: ArrayLike<number>,
+        space?: 'world' | 'local',
+    ): Box3DBodyState;
+    applyBodyImpulse(
+        world: Box3DWorld,
+        body: Box3DId,
+        impulse: ArrayLike<number>,
+        offset?: ArrayLike<number>,
+        space?: 'world' | 'local',
+    ): Box3DBodyState;
+    applyBodyTorque(
+        world: Box3DWorld,
+        body: Box3DId,
+        torque: ArrayLike<number>,
+        space?: 'world' | 'local',
+    ): Box3DBodyState;
+    applyBodyAngularImpulse(
+        world: Box3DWorld,
+        body: Box3DId,
+        impulse: ArrayLike<number>,
+        space?: 'world' | 'local',
+    ): Box3DBodyState;
+    clearBodyForces(world: Box3DWorld, body: Box3DId): Box3DBodyState;
+    clearBodyVelocity(world: Box3DWorld, body: Box3DId): Box3DBodyState;
+    clearBodyState(world: Box3DWorld, body: Box3DId): Box3DBodyState;
+    createOffsetBox(
+        body: Box3DId,
+        center: ArrayLike<number>,
+        halfExtents: ArrayLike<number>,
+        rotation?: ArrayLike<number>,
+        density?: number,
+        sensor?: boolean,
+    ): Box3DId;
     destroyBody(body: Box3DId): void;
     bodySnapshot(body: Box3DId): Float32Array;
     /** One native call for the entire validated batch, ten copied floats per body. */
@@ -243,4 +299,35 @@ export interface Box3DBridgeMemory {
     readonly shapeHandles: number;
     readonly primitiveCapacity: number;
     readonly capturedPrimitives: number;
+}
+
+/** Copied native observations plus facade-owned requestedMass, never borrowed memory. */
+export interface Box3DBodyState {
+    readonly type: 0 | 1 | 2;
+    readonly enabled: boolean;
+    readonly awake: boolean;
+    readonly sleeping: boolean;
+    readonly sleepy: boolean;
+    readonly sleepEnabled: boolean;
+    readonly ccd: boolean;
+    readonly sleepTime: number;
+    readonly sleepVelocity: number;
+    readonly sleepThreshold: number;
+    readonly linearDamping: number;
+    readonly angularDamping: number;
+    readonly gravityScale: number;
+    readonly linearVelocity: readonly number[];
+    readonly angularVelocity: readonly number[];
+    readonly force: readonly number[];
+    readonly torque: readonly number[];
+    readonly linearFactor: readonly number[];
+    readonly angularFactor: readonly number[];
+    readonly mass: number;
+    readonly localCenter: readonly number[];
+    /** Column-major inertia about COM. Fully locked rotation has zero native inertia. */
+    readonly inertia: readonly number[];
+    readonly worldCenter: readonly number[];
+    readonly requestedMass: number | null;
+    readonly massPending: boolean;
+    readonly sensorMassFallback: boolean;
 }

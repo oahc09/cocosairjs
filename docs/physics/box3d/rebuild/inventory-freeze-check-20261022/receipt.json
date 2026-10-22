@@ -1,0 +1,28 @@
+{
+  "status": "PASS_INVENTORY_TOOLS_NOT_PHYSICS",
+  "commands": [
+    {
+      "command": [
+        "node",
+        "tools/verify/box3d/inventory-freeze-v1.cjs",
+        "--check"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "node",
+        "--test",
+        "tools/verify/box3d/inventory-freeze-v1.test.cjs",
+        "tools/verify/box3d/inventory-expansion.test.cjs",
+        "tools/verify/box3d/contracts.test.cjs",
+        "tools/verify/box3d/resource-budget-contract.test.cjs"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "inputsUnchanged": true,
+  "checkedAtUtc": "2026-10-22T08:59:11.066051+00:00",
+  "requiredCellCount": 2128,
+  "scope": "Mechanical inventory integrity only, every required cell remains NOT_RUN."
+}

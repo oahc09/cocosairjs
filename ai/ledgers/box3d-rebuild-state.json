@@ -8,8 +8,8 @@
   "sourceClosure": "PARTIAL_MAIN_SNAPSHOT_COMPLETE_SRC",
   "buildClosureVerified": false,
   "historicalPassImported": false,
-  "inventoryFrozen": false,
-  "expandedRequiredCellCount": null,
+  "inventoryFrozen": true,
+  "expandedRequiredCellCount": 2128,
   "historicalExpandedCellCountIsNotCurrentInventory": 861,
   "tasks": [
     {
@@ -961,14 +961,14 @@
   "nextStep": "Save and independently restore the current source/native evidence checkpoint; complete T09 coexistence and activation gates, then real component adapters. Full inventory and browser/device gates remain open.",
   "remoteHistoryPolicy": "True upstream main parent and incremental tree; local snapshot import is backup-only and is never pushed as upstream history.",
   "remotePublication": {
-    "status": "PUSHED_AND_READBACK_VERIFIED",
-    "commit": "0a62d60d71802d4bf9d20f7261eca5902af3b5fe",
-    "trueParent": "6061b347813b42727070dab5467b938e4cd41621",
-    "localFrozenSource": "da50d73ea2b917ec7460f0303199dab137127e64",
-    "receipt": "docs/physics/box3d/rebuild/remote-checkpoint-9.json",
-    "mainUnchanged": true
+    "status": "REMOTE_CHECKPOINT_10_READBACK_VERIFIED",
+    "commit": "ee84df30474948a11f81c4112a2dc0255ce9b156",
+    "tree": "aa456520626cb10c21172db9c11167e61fb95365",
+    "parent": "0a62d60d71802d4bf9d20f7261eca5902af3b5fe",
+    "branchUrl": "https://github.com/oahc09/cocosairjs/tree/feat/box3d-rebuild-20261022",
+    "receipt": "docs/physics/box3d/rebuild/remote-checkpoint-10.json"
   },
-  "updatedAtUtc": "2026-10-22T08:33:01.694611+00:00",
+  "updatedAtUtc": "2026-10-22T09:00:02.711438+00:00",
   "currentEvidence": {
     "m0ContractTests": "PASS_7_SOURCE_DESIGN_CHECKS_ONLY_U01_U02_INVENTORY_ADDED",
     "nativeFoundationIndex": "tools/physics/box3d/evidence/index.json",
@@ -1059,6 +1059,19 @@
       "status": "FAIL_UNEXPECTED_ACCEPTANCE",
       "evidence": "docs/physics/box3d/rebuild/body-input-probe-20261022-j2/raw.json",
       "description": "Actual j2 facade accepts 0, 1, string false and null for body enableSleep; fix and negative fixtures required in next increment."
+    },
+    "bodyComponentTransaction": {
+      "status": "PASS_SCOPED_INJECTED_ADAPTER_CACHE_ORDER",
+      "cases": 56,
+      "retainedRedCases": 9,
+      "receipt": "docs/physics/box3d/rebuild/body-component-transaction-matrix-20261022-b/receipt.json",
+      "scope": "Actual RigidBody source plus injected adapter, not native component or full C36 acceptance."
+    },
+    "bodyControlIncrement": {
+      "status": "SOURCE_ONLY_UNQUALIFIED_K2_CANDIDATE",
+      "schema": "d2585ddd",
+      "sourceReceipt": "docs/physics/box3d/rebuild/body-source-checkpoint-20261022-k/source-checkpoint-3.json",
+      "scope": "New body controls and immediate impulse axis-lock correction; qualification ongoing. k1 independent lock-axis RED retained."
     }
   },
   "contractDesign": {
@@ -1071,11 +1084,12 @@
     "auxiliaryRequiredUnitCategories": ["B3-U01", "B3-U02"]
   },
   "persistentCheckpoint": {
-    "libraryFileId": "libfile_a3a85e9e02ac81918a314a19ae80cd6f",
-    "sha256": "4b5d71cbf1bc1614fb91b582efcc3e8d3e0de2c98ed5d72161fbca8229593870",
-    "localHead": "da50d73ea2b917ec7460f0303199dab137127e64",
-    "libraryDownloadAndIndependentRestore": "PASS_5015_FILES_5_ARCHIVE_PAYLOADS",
-    "scope": "Current world bridge and limited actual AIR/PhysicsSystem Node source fixtures. Not full T09/browser acceptance."
+    "status": "PASS_ACTUAL_LIBRARY_DOWNLOAD_INDEPENDENT_GIT_RESTORE",
+    "libraryFileId": "libfile_a0592bcc8ba8819192d8d2405e2e0f19",
+    "commit": "6cb9b873e2235a9a3abbb24e66bd379dea2e7fc1",
+    "trackedFiles": 5077,
+    "receipt": "docs/physics/box3d/rebuild/library-coexist-checkpoint-20261022.json",
+    "nativeArtifactsRemainSeparatelyArchived": true
   },
   "additionalOriginalMainSources": {
     "count": 445,
@@ -1093,5 +1107,10 @@
     "requiresBaseLibrary": "libfile_6b8b759339308191be6e7fce03601308",
     "restore": "PASS_4701_FILES",
     "receipt": "docs/physics/box3d/rebuild/library-incremental-source-20261022-i.json"
-  }
+  },
+  "inventoryFreezeScope": "Required-cell enumeration only; fixtures/performance/resources and full G0 remain unfinished",
+  "inventoryVersion": "box3d-required-inventory-frozen-v1",
+  "inventoryManifest": "docs/physics/box3d/contracts/inventory-frozen-v1.json",
+  "inventoryReview": "docs/physics/box3d/contracts/inventory-freeze-review-v1.json",
+  "inventoryValidation": "docs/physics/box3d/rebuild/inventory-freeze-check-20261022/receipt.json"
 }

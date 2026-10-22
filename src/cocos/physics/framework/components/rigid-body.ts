@@ -83,6 +83,11 @@ export class RigidBody extends Component {
 
     public set group (v: number) {
         if (DEBUG && !Number.isInteger(Math.log2(v >>> 0))) warn('[Physics]: The group should only have one bit.');
+        if (selector.id === 'box3d' && this._body) {
+            if (this._body.getGroup() !== v) this._body.setGroup(v);
+            this._group = v;
+            return;
+        }
         this._group = v;
         if (this._body) {
             // The judgment is added here because the data exists in two places
@@ -105,6 +110,11 @@ export class RigidBody extends Component {
 
     public set type (v: ERigidBodyType) {
         if (this._type === v) return;
+        if (selector.id === 'box3d' && this._body) {
+            this._body.setType(v);
+            this._type = v;
+            return;
+        }
         this._type = v;
         if (this._body) this._body.setType(v);
     }
@@ -126,6 +136,11 @@ export class RigidBody extends Component {
         if (DEBUG && value <= 0) warn('[Physics]: The mass should be greater than zero.');
         if (this._mass === value) return;
         value = value <= 0 ? 0.0001 : value;
+        if (selector.id === 'box3d' && this._body) {
+            this._body.setMass(value);
+            this._mass = value;
+            return;
+        }
         this._mass = value;
         if (this._body) this._body.setMass(value);
     }
@@ -144,6 +159,11 @@ export class RigidBody extends Component {
     }
 
     public set allowSleep (v: boolean) {
+        if (selector.id === 'box3d' && this._body) {
+            this._body.setAllowSleep(v);
+            this._allowSleep = v;
+            return;
+        }
         this._allowSleep = v;
         if (this._body) this._body.setAllowSleep(v);
     }
@@ -163,6 +183,11 @@ export class RigidBody extends Component {
 
     public set linearDamping (value) {
         if (DEBUG && (value < 0 || value > 1)) warn('[Physics]: The damping should be between zero to one.');
+        if (selector.id === 'box3d' && this._body) {
+            this._body.setLinearDamping(value);
+            this._linearDamping = value;
+            return;
+        }
         this._linearDamping = value;
         if (this._body) this._body.setLinearDamping(value);
     }
@@ -182,6 +207,11 @@ export class RigidBody extends Component {
 
     public set angularDamping (value) {
         if (DEBUG && (value < 0 || value > 1)) warn('[Physics]: The damping should be between zero to one.');
+        if (selector.id === 'box3d' && this._body) {
+            this._body.setAngularDamping(value);
+            this._angularDamping = value;
+            return;
+        }
         this._angularDamping = value;
         if (this._body) this._body.setAngularDamping(value);
     }
@@ -200,6 +230,11 @@ export class RigidBody extends Component {
     }
 
     public set useGravity (value) {
+        if (selector.id === 'box3d' && this._body) {
+            this._body.useGravity(value);
+            this._useGravity = value;
+            return;
+        }
         this._useGravity = value;
         if (this._body) this._body.useGravity(value);
     }
@@ -218,6 +253,11 @@ export class RigidBody extends Component {
     }
 
     public set linearFactor (value: Vec3) {
+        if (selector.id === 'box3d' && this._body) {
+            this._body.setLinearFactor(value);
+            Vec3.copy(this._linearFactor, value);
+            return;
+        }
         Vec3.copy(this._linearFactor, value);
         if (this._body) {
             this._body.setLinearFactor(this._linearFactor);
@@ -238,6 +278,11 @@ export class RigidBody extends Component {
     }
 
     public set angularFactor (value: Vec3) {
+        if (selector.id === 'box3d' && this._body) {
+            this._body.setAngularFactor(value);
+            Vec3.copy(this._angularFactor, value);
+            return;
+        }
         Vec3.copy(this._angularFactor, value);
         if (this._body) {
             this._body.setAngularFactor(this._angularFactor);

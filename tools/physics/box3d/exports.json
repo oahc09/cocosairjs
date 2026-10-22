@@ -41,5 +41,12 @@
   "_air_b3_world_debug_capture",
   "_air_b3_world_debug_copy",
   "_air_b3_world_debug_release",
-  "_air_b3_bridge_memory"
+  "_air_b3_bridge_memory",
+  "_air_b3_body_state",
+  "_air_b3_body_control",
+  "_air_b3_body_mass_set",
+  "_air_b3_body_mass_ready",
+  "_air_b3_body_apply",
+  "_air_b3_mass_shape_create",
+  "_air_b3_mass_shape_destroy"
 ]

@@ -1,0 +1,40 @@
+  console.log
+    Cannot access game frame or container.
+
+      at warnID (src/cocos/core/platform/debug.ts:314:5)
+
+  console.log
+    [Physics]: The damping should be between zero to one.
+
+      at warn (src/cocos/core/platform/debug.ts:110:12)
+
+  console.log
+    [Physics]: The group should only have one bit.
+
+      at warn (src/cocos/core/platform/debug.ts:110:12)
+
+  console.log
+    [Physics]: The mass should be greater than zero.
+
+      at warn (src/cocos/core/platform/debug.ts:110:12)
+
+PASS tools/verify/box3d/body-component-transaction.test.ts
+  ✓ unmodified non-Box3D setter order remains an explicit compatibility control (1 ms)
+  ✓ existing public nonpositive mass normalization is retained without a live adapter (1 ms)
+  actual Box3D component cache rejection transaction, injected adapter only
+    ✓ type retains its last valid value after delegate rejection (7 ms)
+    ✓ mass retains its last valid value after delegate rejection (1 ms)
+    ✓ allowSleep retains its last valid value after delegate rejection
+    ✓ linearDamping retains its last valid value after delegate rejection (15 ms)
+    ✓ angularDamping retains its last valid value after delegate rejection (1 ms)
+    ✓ useGravity retains its last valid value after delegate rejection
+    ✓ group retains its last valid value after delegate rejection (1 ms)
+    ✓ linearFactor preserves its cached vector and identity on rejection (1 ms)
+    ✓ angularFactor preserves its cached vector and identity on rejection
+
+Test Suites: 1 passed, 1 total
+Tests:       11 passed, 11 total
+Snapshots:   0 total
+Time:        2.334 s, estimated 11 s
+Ran all test suites.
+Test results written to: docs/physics/box3d/rebuild/body-component-transaction-green-20261022/jest-result.json

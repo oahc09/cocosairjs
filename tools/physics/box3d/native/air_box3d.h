@@ -1,13 +1,14 @@
 /* Copyright (c) 2026-2027 oahc09@gmail.com. SPDX-License-Identifier: MIT */
 #pragma once
 #include <stdint.h>
+#include "body_control.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 enum { AIR_B3_ABI_VERSION = 1, AIR_B3_BODY_INPUT_FLOATS = 16, AIR_B3_BODY_SNAPSHOT_FLOATS = 29 };
-enum { AIR_B3_OK = 0, AIR_B3_INVALID = 1, AIR_B3_ARGUMENT = 2, AIR_B3_CREATION = 3, AIR_B3_CAPACITY = 4, AIR_B3_ALLOCATION = 5, AIR_B3_GEOMETRY_UNAVAILABLE = 6, AIR_B3_UNSUPPORTED_GEOMETRY = 7, AIR_B3_UNSUPPORTED = 8 };
+enum { AIR_B3_OK = 0, AIR_B3_INVALID = 1, AIR_B3_ARGUMENT = 2, AIR_B3_CREATION = 3, AIR_B3_CAPACITY = 4, AIR_B3_ALLOCATION = 5, AIR_B3_GEOMETRY_UNAVAILABLE = 6, AIR_B3_UNSUPPORTED_GEOMETRY = 7, AIR_B3_UNSUPPORTED = 8, AIR_B3_LOCKED = 9, AIR_B3_MASS_PENDING = 10 };
 
 const char* air_b3_core_sha(void);
 const char* air_b3_schema_sha(void);
