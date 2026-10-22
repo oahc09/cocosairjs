@@ -1,0 +1,234 @@
+  console.log
+    Cannot access game frame or container.
+
+      at warnID (src/cocos/core/platform/debug.ts:314:5)
+
+  console.log
+    [PHYSICS]: register box3d.
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_1 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_2 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_3 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    [PHYSICS]: register box3d.
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_4 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_5 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_6 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    [PHYSICS]: register box3d.
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_7 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_8 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_9 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    [PHYSICS]: register box3d.
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_10 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_11 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_12 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    [PHYSICS]: register box3d.
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_13 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_14 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    [PHYSICS]: register box3d.
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_15 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_16 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    [PHYSICS]: register box3d.
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_17 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_18 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_19 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_20 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    [PHYSICS]: register box3d.
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_21 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_22 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_23 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    [PHYSICS]: register box3d.
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_24 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_25 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    [PHYSICS]: register box3d.
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_26 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_27 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_28 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_29 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_30 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    [PHYSICS]: register box3d.
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_31 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+PASS tools/verify/box3d/material-identity-b1-control.test.ts (14.989 s)
+  ✓ initial listener commit completes disabled identity; replacement applies on later enable (40 ms)
+  ✓ cloned actual identity is fenced in original Node writeback callback (14 ms)
+  ✓ candidate getter reads once behind owner guards; copied delegate does not reread (11 ms)
+  ✓ Collider listener throw 0 after delegate preserves actual old cache and faults without replay (7 ms)
+  ✓ System listener throw undefined after cache write records actual candidate and fault (5 ms)
+  ✓ old world default entry post-write readback throw null never rolls back (4 ms)
+  ✓ pure unsupported candidate preserves world/cache and permits later valid retry (7 ms)
+  ✓ clone return mismatch faults with actualRead not requested, never pretends old actual proof (16 ms)
+  ✓ initial listener failure leaves allocated owner faulted and teardown possible (6 ms)
+  ✓ two actual same-id material objects are not confused (7 ms)
+  ✓ no observer leaves original unattached Collider setter and getter behavior (4 ms)
+  ✓ forged internal authority cannot use copied native route (4 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       12 passed, 12 total
+Snapshots:   0 total
+Time:        15.487 s, estimated 26 s
+Ran all test suites.

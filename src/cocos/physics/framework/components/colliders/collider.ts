@@ -23,8 +23,8 @@
  THE SOFTWARE.
 */
 
-import { beginPhysicsMaterialChange } from '../../physics-material-transaction';
-import type { PhysicsMaterialIdentity } from '../../physics-material-transaction';
+import { beginPhysicsMaterialChange, capturePhysicsMaterialCleanup } from '../../physics-material-transaction';
+import type { PhysicsMaterialIdentity, PhysicsMaterialCleanupError, PhysicsMaterialCleanupStage } from '../../physics-material-transaction';
 import { assertMutationAllowed } from '../../../../core/data/mutation-guard';
 import { ccclass, tooltip, displayOrder, displayName, readOnly, type, serializable } from 'cc.decorator';
 import { EDITOR } from 'internal:constants';
@@ -129,11 +129,12 @@ export class Collider extends Eventify(Component) {
                     const cloned = previous.clone();
                     change.acceptClone(cloned);
                     retainObservedMaterial(this, previous);
-                    retainObservedMaterial(this, cloned);
                     change.effect('listener-edit-entered');
                     previous.off(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
+                    observedMaterialAssets.get(this)!.delete(previous);
                     this._material = cloned;
                     change.effect('cache-written');
+                    retainObservedMaterial(this, cloned);
                     cloned.on(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
                     this._isSharedMaterial = false;
                     change.effect('listeners-complete');
@@ -159,9 +160,10 @@ export class Collider extends Eventify(Component) {
                 change.apply();
                 if (this._material !== value) {
                     retainObservedMaterial(this, this._material);
-                    retainObservedMaterial(this, value);
                     change.effect('listener-edit-entered');
                     this._material?.off(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
+                    if (this._material) observedMaterialAssets.get(this)!.delete(this._material);
+                    retainObservedMaterial(this, value);
                     value?.on(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
                     if (this._material && value) this._isSharedMaterial = false;
                     this._material = value;
@@ -535,23 +537,31 @@ export class Collider extends Eventify(Component) {
     protected onDestroy (): void {
         const assets = observedMaterialAssets.get(this);
         if (assets) {
-            // No native replay: JS subscriptions and adapter/world ownership clean independently.
-            let failed = false;
-            let primary: unknown;
-            const attempt = (perform: () => void): void => {
-                try { perform(); } catch (error) { if (!failed) primary = error; failed = true; }
+            // Capture before adapter unregister; the one-shot report remains readable after release.
+            const reporter = capturePhysicsMaterialCleanup(this);
+            const failures: PhysicsMaterialCleanupError[] = [];
+            const attempt = (stage: PhysicsMaterialCleanupStage, perform: () => void): void => {
+                try { perform(); } catch (error) { failures.push({ stage, error }); }
             };
-            this._needTriggerEvent = false;
-            this._needCollisionEvent = false;
-            if (this._shape) attempt(() => this._shape!.updateEventListener());
-            for (const material of assets) attempt(() => {
-                material.off(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
-                assets.delete(material);
-            });
-            if (this._shape) attempt(() => this._shape!.onDestroy!());
-            if (this._boundingSphere) attempt(() => this._boundingSphere!.destroy());
-            if (!assets.size) observedMaterialAssets.delete(this);
-            if (failed) throw primary;
+            let reportFailed = false;
+            let reportError: unknown;
+            try {
+                this._needTriggerEvent = false;
+                this._needCollisionEvent = false;
+                if (this._shape) attempt('event-listener-clear', () => this._shape!.updateEventListener());
+                for (const material of assets) attempt('material-off', () => {
+                    material.off(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
+                    assets.delete(material);
+                });
+                if (this._shape) attempt('adapter-destroy', () => this._shape!.onDestroy!());
+                if (this._boundingSphere) attempt('bounds-destroy', () => this._boundingSphere!.destroy());
+                if (!assets.size) observedMaterialAssets.delete(this);
+            } finally {
+                try { reporter?.complete(failures); }
+                catch (error) { reportFailed = true; reportError = error; }
+            }
+            if (failures.length) throw failures[0].error;
+            if (reportFailed) throw reportError;
             return;
         }
         if (this._shape) {

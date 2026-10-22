@@ -1,0 +1,9 @@
+{
+  "status": "SOURCE_CONTROL_PASS_WITH_TSC_FAILURE",
+  "jestExitCode": 0,
+  "tscExitCode": 2,
+  "caseCount": 7,
+  "checkCount": 34,
+  "physicalQualification": false,
+  "stableDirectInputs": true
+}

@@ -1,0 +1,46 @@
+{
+  "status": "FAIL",
+  "counts": {
+    "cases": 37,
+    "passed": 31
+  },
+  "stable": true,
+  "failures": [
+    {
+      "name": "proxy array invalid length NaN rejected before entry reads/delivery",
+      "status": "FAIL",
+      "error": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert(caught(() => t.complete(input)).threw)\n",
+      "stack": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert(caught(() => t.complete(input)).threw)\n\n    at file:///workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/verify/box3d/material-cleanup-reporter-control.mjs:310:9\n    at check (file:///workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/verify/box3d/material-cleanup-reporter-control.mjs:58:9)\n    at file:///workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/verify/box3d/material-cleanup-reporter-control.mjs:296:5"
+    },
+    {
+      "name": "proxy array invalid length -1 rejected before entry reads/delivery",
+      "status": "FAIL",
+      "error": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert(caught(() => t.complete(input)).threw)\n",
+      "stack": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert(caught(() => t.complete(input)).threw)\n\n    at file:///workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/verify/box3d/material-cleanup-reporter-control.mjs:310:9\n    at check (file:///workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/verify/box3d/material-cleanup-reporter-control.mjs:58:9)\n    at file:///workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/verify/box3d/material-cleanup-reporter-control.mjs:296:5"
+    },
+    {
+      "name": "proxy array invalid length 0.5 rejected before entry reads/delivery",
+      "status": "FAIL",
+      "error": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert(caught(() => t.complete(input)).threw)\n",
+      "stack": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert(caught(() => t.complete(input)).threw)\n\n    at file:///workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/verify/box3d/material-cleanup-reporter-control.mjs:310:9\n    at check (file:///workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/verify/box3d/material-cleanup-reporter-control.mjs:58:9)\n    at file:///workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/verify/box3d/material-cleanup-reporter-control.mjs:296:5"
+    },
+    {
+      "name": "proxy array invalid length 0 rejected before entry reads/delivery",
+      "status": "FAIL",
+      "error": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert(caught(() => t.complete(input)).threw)\n",
+      "stack": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert(caught(() => t.complete(input)).threw)\n\n    at file:///workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/verify/box3d/material-cleanup-reporter-control.mjs:310:9\n    at check (file:///workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/verify/box3d/material-cleanup-reporter-control.mjs:58:9)\n    at file:///workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/verify/box3d/material-cleanup-reporter-control.mjs:296:5"
+    },
+    {
+      "name": "proxy array invalid length undefined rejected before entry reads/delivery",
+      "status": "FAIL",
+      "error": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert(caught(() => t.complete(input)).threw)\n",
+      "stack": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert(caught(() => t.complete(input)).threw)\n\n    at file:///workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/verify/box3d/material-cleanup-reporter-control.mjs:310:9\n    at check (file:///workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/verify/box3d/material-cleanup-reporter-control.mjs:58:9)\n    at file:///workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/verify/box3d/material-cleanup-reporter-control.mjs:296:5"
+    },
+    {
+      "name": "proxy array invalid length null rejected before entry reads/delivery",
+      "status": "FAIL",
+      "error": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert(caught(() => t.complete(input)).threw)\n",
+      "stack": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert(caught(() => t.complete(input)).threw)\n\n    at file:///workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/verify/box3d/material-cleanup-reporter-control.mjs:310:9\n    at check (file:///workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/verify/box3d/material-cleanup-reporter-control.mjs:58:9)\n    at file:///workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/verify/box3d/material-cleanup-reporter-control.mjs:296:5"
+    }
+  ]
+}

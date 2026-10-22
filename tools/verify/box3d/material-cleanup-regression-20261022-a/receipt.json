@@ -1,0 +1,12 @@
+{
+  "status": "PASS_SOURCE_REGRESSION_ONLY",
+  "bridge36ExitCode": 0,
+  "bridgeCases": 36,
+  "b1JestExitCode": 0,
+  "b1TscExitCode": 0,
+  "b1Cases": 12,
+  "b1Checks": 54,
+  "sourceBinding": "../material-cleanup-evidence-20261022-green-b/inputs.json",
+  "sourceStable": true,
+  "physicalQualification": false
+}

@@ -1,0 +1,187 @@
+{
+  "status": "READ_ONLY_DESIGN_NOT_IMPLEMENTED_NOT_RUN",
+  "sourceCommit": "0a478e33cfd06e426b04989892b8fa337042ffa9",
+  "sourceMode": "git show exact frozen commit; no working-tree product source",
+  "contextOnlyRemoteCheckpoint32": "e1c487740c8b800102b75b84c54fd45f5be9b640",
+  "formalRequiredCells": {
+    "total": 2128,
+    "status": "NOT_RUN"
+  },
+  "stagedCommandsSupported": false,
+  "unifiedTransactionsSupported": false,
+  "productChanges": false,
+  "testRuns": false,
+  "buildRuns": false,
+  "nativeChanges": false,
+  "gitWrites": false,
+  "files": [
+    {
+      "path": "docs/physics/box3d/contracts/unified-owner-lifecycle-decisions-v1.md",
+      "gitBlob": "2b22312cbe98b567ef9a1fc62c244ada1765a19e",
+      "sha256": "6225da8e8889680609dd428f936884f72be79dee21ad2bf108324263d5231c5b",
+      "bytes": 7591,
+      "lines": 49
+    },
+    {
+      "path": "docs/physics/box3d/contracts/unified-command-decisions-v1.md",
+      "gitBlob": "f2e23db0a6273b75eb239304ea3d2b063c6de26d",
+      "sha256": "56303d162e12346729c66461c1fa9976e69c941fb549804c7a110d1887c695d6",
+      "bytes": 21614,
+      "lines": 148
+    },
+    {
+      "path": "src/cocos/physics/framework/physics-system.ts",
+      "gitBlob": "946e911df5a980e5a9685d4884da175788ca2de0",
+      "sha256": "92153ad5783bf4a27271daf31075704c6ea4fc4dbac323af9e05bffc5caee988",
+      "bytes": 41473,
+      "lines": 979
+    },
+    {
+      "path": "src/cocos/physics/framework/physics-state-observer.ts",
+      "gitBlob": "86c7e400a6b5b7517d1e42bd96a4c9383db6987b",
+      "sha256": "4cf40c4f1be0d407a402e95dcdb7a898b1942cb175f869f6367a41b18c2d1d2b",
+      "bytes": 23170,
+      "lines": 514
+    },
+    {
+      "path": "src/cocos/physics/framework/physics-material-transaction.ts",
+      "gitBlob": "3b4f323bcef19a582a17d2e811ee5424dbdc7751",
+      "sha256": "f7192588f5ef01358b6b506a80322f028975ae51df93aadba258a420fd7af518",
+      "bytes": 20083,
+      "lines": 444
+    },
+    {
+      "path": "src/cocos/physics/framework/physics-selector.ts",
+      "gitBlob": "92d44231e15572e8d7f6e6ea267b0b41d3411f39",
+      "sha256": "121956af3ad15be76e7b75ac879adaff666f67e8a3d10327b3302b9fe4efc50c",
+      "bytes": 18891,
+      "lines": 552
+    },
+    {
+      "path": "src/cocos/core/data/mutation-guard.ts",
+      "gitBlob": "72f261749fb6f60c3d5de8e8144582432f393626",
+      "sha256": "93758e4b5a90ff90e5cabc7d3b0b5fd71069e955d4bf64517bec27d1957774a0",
+      "bytes": 7193,
+      "lines": 169
+    },
+    {
+      "path": "src/air/physics/box3d/world-command-owner.ts",
+      "gitBlob": "c4d6992f7375b3ba3a263a393d70ffc82e472f40",
+      "sha256": "e557e79b1e4826a965df55d69e9efa7961aaefc72b631f4265f375e578105509",
+      "bytes": 28902,
+      "lines": 612
+    },
+    {
+      "path": "src/air/physics/box3d/world.ts",
+      "gitBlob": "761be7d8332fe58466e0b1ce17dc3c9f5e282517",
+      "sha256": "f63e83f75561fe60c19214b7691af7f1001b692277e7b5559fc4b575f7cda5a2",
+      "bytes": 31909,
+      "lines": 667
+    },
+    {
+      "path": "src/air/physics/box3d/command-queue.ts",
+      "gitBlob": "0cf8b8ad7bcf7312eed11ad8921e8570d58da956",
+      "sha256": "42550d8487fd7ad05d142bc4b3ab764ddf8bedec140098dc35f88ae0ba786b6b",
+      "bytes": 21375,
+      "lines": 487
+    },
+    {
+      "path": "src/air/physics/box3d/command-producers.ts",
+      "gitBlob": "51036df2e952ea018a99a9410d86feb01bab8086",
+      "sha256": "b707e57f16a2a8622b70523e6cc6de7a24c80125306d4ca18e67404f2634cb81",
+      "bytes": 14085,
+      "lines": 319
+    },
+    {
+      "path": "src/air/physics/box3d/command-wire.ts",
+      "gitBlob": "e0c638a8e5eb431650674009703da1140f2b52ef",
+      "sha256": "4f89d5d0aaec26d8a40e30402d1f953ddcc6bb8549fa01a762ecfae83930180c",
+      "bytes": 7938,
+      "lines": 154
+    },
+    {
+      "path": "src/air/physics/box3d/shared-body.ts",
+      "gitBlob": "0db15f1c4d7ffd5254076a1b5f017fae65f6152f",
+      "sha256": "9bf809b2e3c66b723a975cceb9725978750c0e68b57c2eb343a9788fcb89b8bc",
+      "bytes": 30006,
+      "lines": 669
+    },
+    {
+      "path": "src/air/physics/box3d/node-motion-guard.ts",
+      "gitBlob": "77609594c48d29ee2d60a184906747cfc3b29c4a",
+      "sha256": "ebd64a30eea7dcd7652ae8ca871bd4bea570fb2beaac21ec05b269eed7415ca4",
+      "bytes": 2385,
+      "lines": 48
+    },
+    {
+      "path": "src/air/physics/box3d/registration.ts",
+      "gitBlob": "7e7fde4dcc5390c146bc92810147e8b3a83006d7",
+      "sha256": "6e681518fcaf2f65bc95cbf60488dfebc9038d6bc58526554d3e0ffa928a3f43",
+      "bytes": 6070,
+      "lines": 124
+    },
+    {
+      "path": "src/air/physics/box3d/binding/facade.mjs",
+      "gitBlob": "eb18538fb1a754eb7b517c373edff9dab13f433e",
+      "sha256": "40cce3a920e67afedec5d7bbf69aae826ad08d31b51243f5e699033dd59eb899",
+      "bytes": 77896,
+      "lines": 1684
+    },
+    {
+      "path": "tools/physics/box3d/native/command_bridge.c",
+      "gitBlob": "f09edcf4bc45b9d396263b1db02757af2670ee23",
+      "sha256": "c91a3d4be10fa85fc2c50c0bba721e4e675b1e560cc8488f57f4e7396dc09bd7",
+      "bytes": 20495,
+      "lines": 290
+    },
+    {
+      "path": "tools/physics/box3d/native/motion_bridge.c",
+      "gitBlob": "84e1617759e356accab1d8d254e56ed53383b38c",
+      "sha256": "142ac35fde560a7b6f748b7eecc67b3eb99c5edefb7200c4ecef64e6d60e8573",
+      "bytes": 12718,
+      "lines": 209
+    },
+    {
+      "path": "src/air/step-clock.ts",
+      "gitBlob": "062363fb707820222b2fd5e171d37854edb163d3",
+      "sha256": "17c2ef19bd7b677384a6905c8f9af9fc5c18091993327a4119e1bb6e4f73799c",
+      "bytes": 5454,
+      "lines": 130
+    },
+    {
+      "path": "src/cocos/game/game.ts",
+      "gitBlob": "76fedf732ef1fc17c0882400983ba251cfb4a866",
+      "sha256": "66eb3ac36fa55f9608a2a1b6ae1e51a6ecb2bc7d37802a038bf5e1077feac62f",
+      "bytes": 49255,
+      "lines": 1199
+    },
+    {
+      "path": "tools/verify/box3d/owner-checkpoint-a-control.test.ts",
+      "gitBlob": "e1ed3dcaaedcbe642f0af8d629c9a6a673f8fb71",
+      "sha256": "5b0f63746462295fe03417e7e1bec9eac8beca584835e53a52e8fbf70ecaef5f",
+      "bytes": 34681,
+      "lines": 870
+    },
+    {
+      "path": "tools/verify/box3d/owner-material-real-wasm.test.ts",
+      "gitBlob": "291a4c34e0e059c20ca1cac045b348c5db66b33e",
+      "sha256": "e076d9a4b49f72a5fdcce0af8e9596aefbece85d8730529c6e83f3dd836c9ee4",
+      "bytes": 11899,
+      "lines": 265
+    },
+    {
+      "path": "tools/verify/box3d/physics-state-observer-control.mjs",
+      "gitBlob": "5a6cd7fd63cbcf591e23a2129f8040dfba231ad8",
+      "sha256": "9d3becbaa9de625ef37eac6d8cbe05490e12e4a65cb6515a0d8eab81b7ca289d",
+      "bytes": 28517,
+      "lines": 838
+    },
+    {
+      "path": "tools/verify/box3d/command-producers-control.mjs",
+      "gitBlob": "c2f91ecb72547fd16897f5e34ba13aa15dabb075",
+      "sha256": "b7cc9c2837ebd20903564fc17997429157dec40b2719d60d58ff8ebad7b31e67",
+      "bytes": 19727,
+      "lines": 535
+    }
+  ]
+}

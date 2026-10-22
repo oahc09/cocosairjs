@@ -1,0 +1,26 @@
+PASS tools/verify/box3d/owner-checkpoint-a-control.test.ts (12.36 s)
+  ✓ missing environment refuses before selector and allocation (4 ms)
+  ✓ reader must return actual System before native world creation (15 ms)
+  ✓ delayed System uniqueness and owned-world checks precede body/step (11 ms)
+  ✓ fake kind and duplicate actual component rejected before allocation (13 ms)
+  ✓ original actual components share native lifetime; disabled collider identity retained (11 ms)
+  ✓ ordinary force remains immediate; System.step owns one native step and exact writeback (7 ms)
+  ✓ actual Node/Component/System/material earliest writes reject inside writeback while reads succeed (17 ms)
+  ✓ recoverable preflight rejection releases leases and does not step/fault (5 ms)
+  ✓ uncaught writeback configuration refusal faults completed step and releases every lease (4 ms)
+  ✓ other owner lease remains after a temporary owner scope releases (6 ms)
+  ✓ owner phase forbids direct scope reentry and scope token cannot be replayed (4 ms)
+  ✓ default material fake identity rejects before shape/native mutation (3 ms)
+  ✓ failed native disable does not delete component ownership or claim disabled (3 ms)
+  ✓ unknown body destruction retains ownership until unique world teardown (4 ms)
+  ✓ native world destruction failure remains separate from cleared JS leases (3 ms)
+  ✓ solving rejects direct reads and configuration; copied read resumes after completion (13 ms)
+  ✓ no-lease ordinary Node and System configuration retain original behavior (3 ms)
+  ✓ partial lease acquisition failure removes earlier mutation lease before returning (4 ms)
+  ✓ original postUpdate keeps its one accumulator and native step (2 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       19 passed, 19 total
+Snapshots:   0 total
+Time:        12.784 s
+Ran all test suites.

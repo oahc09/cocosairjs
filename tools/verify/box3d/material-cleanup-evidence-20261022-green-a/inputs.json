@@ -1,0 +1,37 @@
+[
+  {
+    "path": "src/cocos/physics/framework/physics-material-transaction.ts",
+    "bytes": 27806,
+    "sha256": "7fa1e7d875ed4f6a602cd53af51d118834d8ff12edc18396b09369c3005de61d"
+  },
+  {
+    "path": "src/cocos/physics/framework/components/colliders/collider.ts",
+    "bytes": 24556,
+    "sha256": "2e93ecae851d1a943c00d1a5a01a3d887153dce0d9693f541b4f6be73b2a7ac9"
+  },
+  {
+    "path": "src/air/physics/box3d/world-command-owner.ts",
+    "bytes": 31869,
+    "sha256": "ea8f6f56740958910643d4f32f3d7736babdd213c827029a0cfc330292e510ed"
+  },
+  {
+    "path": "src/air/physics/box3d/world.ts",
+    "bytes": 33708,
+    "sha256": "87976470beda8aa432361e825bc97bd9e12b15ec013fbddbc7720f27e5906a0c"
+  },
+  {
+    "path": "tools/verify/box3d/material-cleanup-control-green.test.ts",
+    "bytes": 32783,
+    "sha256": "e431fc34c003c0e3091211077005ff835e86a455fd942ad990bdb71d8e832a1b"
+  },
+  {
+    "path": "tools/verify/box3d/material-cleanup-control-green.jest.cjs",
+    "bytes": 1349,
+    "sha256": "4afbab9eb2d6ca8bbe34ae4f1e0f9b69753ff4c67bbc7201bb0ab585aad26b8b"
+  },
+  {
+    "path": "tools/verify/box3d/material-cleanup-control-green.tsconfig.json",
+    "bytes": 168,
+    "sha256": "0e0fd60e986de1bb2ec76e45bfc6e84b48a8e9d63587dec5799f9d32b157dfcb"
+  }
+]

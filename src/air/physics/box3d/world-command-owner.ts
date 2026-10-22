@@ -36,7 +36,10 @@ import { Box3DCommandQueue } from './command-queue';
 import { copySurfaceMaterial, worldError } from './world-binding';
 import type { Box3DSurfaceMaterial } from './world-binding';
 import { unsupportedBox3D } from './unsupported';
-import { registerPhysicsMaterialDelegate } from '../../../cocos/physics/framework/physics-material-transaction';
+import {
+    registerPhysicsMaterialDelegate,
+    nextPhysicsMaterialCleanupGeneration,
+} from '../../../cocos/physics/framework/physics-material-transaction';
 import type {
     PhysicsMaterialCandidate,
     PhysicsMaterialDelegateLease,
@@ -106,6 +109,8 @@ export class Box3DWorldCommandOwner {
     readonly #system: PhysicsSystem;
     readonly #world: object;
     readonly #queue: Box3DCommandQueue;
+    readonly #cleanupFailures: Readonly<{ stage: string; error: unknown }>[] = [];
+    #omittedCleanupFailures = 0;
     readonly #bodies = new Map<object, BodyRecord>();
     readonly #components = new Map<object, ComponentRecord>();
     #defaultMaterial: PhysicsMaterial | null = null;
@@ -295,11 +300,18 @@ export class Box3DWorldCommandOwner {
             );
         this.#materialAuthorities.delete(authority); // consume before any native or adapter write
     }
+    #recordCleanup(stage: string, error: unknown): void {
+        // Bounded fault/teardown diagnostics, not an unbounded historical target registry.
+        if (this.#cleanupFailures.length < 4096) this.#cleanupFailures.push(Object.freeze({ stage, error }));
+        else ++this.#omittedCleanupFailures;
+    }
     #registerMaterial(key: object, target: Collider | PhysicsSystem, apply: CopiedMaterialApplication): void {
         let context: Readonly<PhysicsStateChangeContext> | null = null;
         let scope: Box3DOwnerFenceScope | null = null;
         let copied: Readonly<Box3DSurfaceMaterial> | null = null;
         const guards = new Map<object, MutationGuardLease>();
+        let hasBusinessFailure = false,
+            businessFailure: unknown;
         const cleanup = (): void => {
             let failed = false,
                 primary: unknown;
@@ -308,6 +320,7 @@ export class Box3DWorldCommandOwner {
                     guard.dispose();
                     guards.delete(asset);
                 } catch (error) {
+                    this.#recordCleanup('material-candidate-guard-dispose', error);
                     if (!failed) primary = error;
                     failed = true;
                 }
@@ -320,7 +333,7 @@ export class Box3DWorldCommandOwner {
                 failed = true;
             }
             if (failed) {
-                this.#materialFault!(primary);
+                this.#materialFault!(hasBusinessFailure ? businessFailure : primary);
                 throw primary;
             }
             if (this.#materialContext === context) this.#materialContext = null;
@@ -331,93 +344,115 @@ export class Box3DWorldCommandOwner {
             if (context !== value || this.#materialContext !== value || !scope)
                 throw worldError('AIR_E_BOX3D_REENTRANT', 'material observer', 'Inactive private material context.');
         };
-        const lease = registerPhysicsMaterialDelegate(target, {
-            open: (value) => {
-                // No asset/component getters precede the complete owner barrier.
-                context = value;
-                this.#materialCleanups.add(cleanup);
-                scope = this.#begin('material');
-                this.#materialContext = value;
+        const lease = registerPhysicsMaterialDelegate(
+            target,
+            {
+                open: (value) => {
+                    // No asset/component getters precede the complete owner barrier.
+                    context = value;
+                    hasBusinessFailure = false;
+                    businessFailure = undefined;
+                    this.#materialCleanups.add(cleanup);
+                    scope = this.#begin('material');
+                    this.#materialContext = value;
+                },
+                protectCandidate: (value, asset) => {
+                    requireContext(value);
+                    if (!(asset instanceof PhysicsMaterial))
+                        throw worldError(
+                            'AIR_E_BOX3D_CONFIG',
+                            'material candidate',
+                            'Expected actual PhysicsMaterial.',
+                        );
+                    if (!guards.has(asset)) guards.set(asset, registerMutationGuard([asset], rejection));
+                },
+                preflightCopied: (value, candidate: Readonly<PhysicsMaterialCandidate>) => {
+                    requireContext(value);
+                    if (key === this.#system && candidate.asset === null)
+                        throw worldError('AIR_E_BOX3D_CONFIG', 'default material', 'Default material cannot be null.');
+                    const coefficients = candidate.coefficients;
+                    if (coefficients && (coefficients[2] !== 0 || coefficients[3] !== 0))
+                        unsupportedBox3D('nonzero rollingFriction/spinningFriction');
+                    copied = coefficients
+                        ? copySurfaceMaterial({ friction: coefficients[0], restitution: coefficients[1] })
+                        : null;
+                },
+                applyCopied: (value) => {
+                    requireContext(value);
+                    const authority = Object.freeze({});
+                    this.#materialAuthorities.set(authority, { key, material: copied, context: value });
+                    try {
+                        apply(authority, copied);
+                    } finally {
+                        this.#materialAuthorities.delete(authority);
+                    }
+                },
+                commitActual: (value, actual) => {
+                    requireContext(value);
+                    if (actual.material !== null && !(actual.material instanceof PhysicsMaterial))
+                        throw worldError('AIR_E_BOX3D_CONFIG', 'material commit', 'Actual cache identity is invalid.');
+                    if (key === this.#system) this.#defaultMaterial = actual.material as PhysicsMaterial;
+                    else {
+                        const record = this.#component(key);
+                        record.material = actual.material as PhysicsMaterial | null;
+                        if (value.operation === 'collider-material-initialize') record.initialized = true;
+                    }
+                    this.#lastMaterial = Object.freeze({
+                        operation: value.operation,
+                        actualRead: 'copied',
+                        actualMatchesBefore: null,
+                        actualMatchesCandidate: value.operation === 'collider-material-clone' ? null : true,
+                        effects: Object.freeze([]),
+                        failed: false,
+                    });
+                },
+                fail: (value, failure: Readonly<PhysicsStateFailure>) => {
+                    if (!hasBusinessFailure) {
+                        hasBusinessFailure = true;
+                        businessFailure = failure.error;
+                    }
+                    const actual = failure.actual;
+                    const actualMaterial =
+                        actual && (actual.kind === 'collider-material' || actual.kind === 'system-default-material')
+                            ? actual.material
+                            : undefined;
+                    const identity = (snapshot: PhysicsStateFailure['actual']) =>
+                        snapshot &&
+                        (snapshot.kind === 'collider-material' || snapshot.kind === 'system-default-material')
+                            ? snapshot.material
+                            : undefined;
+                    // A copied actual cache is authoritative even when later listener/owner work failed.
+                    if (
+                        failure.actualRead === 'copied' &&
+                        (actualMaterial === null || actualMaterial instanceof PhysicsMaterial)
+                    ) {
+                        if (key === this.#system) this.#defaultMaterial = actualMaterial as PhysicsMaterial | null;
+                        else this.#component(key).material = actualMaterial as PhysicsMaterial | null;
+                    }
+                    this.#lastMaterial = Object.freeze({
+                        operation: value.operation,
+                        actualRead: failure.actualRead,
+                        actualMatchesBefore:
+                            failure.actualRead === 'copied' ? actualMaterial === identity(failure.before) : null,
+                        actualMatchesCandidate:
+                            failure.actualRead === 'copied' ? actualMaterial === identity(failure.candidate) : null,
+                        effects: Object.freeze([...failure.effects]),
+                        failed: true,
+                    });
+                    if (failure.effects.length || value.operation === 'collider-material-initialize')
+                        this.#materialFault!(failure.error);
+                },
+                dispose: () => cleanup(),
             },
-            protectCandidate: (value, asset) => {
-                requireContext(value);
-                if (!(asset instanceof PhysicsMaterial))
-                    throw worldError('AIR_E_BOX3D_CONFIG', 'material candidate', 'Expected actual PhysicsMaterial.');
-                if (!guards.has(asset)) guards.set(asset, registerMutationGuard([asset], rejection));
+            {
+                generation: nextPhysicsMaterialCleanupGeneration(target),
+                report: (report) => {
+                    for (const failure of report.errors)
+                        this.#recordCleanup(`collider-${failure.stage}`, failure.error);
+                    if (report.hasFailure) this.#materialFault!(report.firstError);
+                },
             },
-            preflightCopied: (value, candidate: Readonly<PhysicsMaterialCandidate>) => {
-                requireContext(value);
-                if (key === this.#system && candidate.asset === null)
-                    throw worldError('AIR_E_BOX3D_CONFIG', 'default material', 'Default material cannot be null.');
-                const coefficients = candidate.coefficients;
-                if (coefficients && (coefficients[2] !== 0 || coefficients[3] !== 0))
-                    unsupportedBox3D('nonzero rollingFriction/spinningFriction');
-                copied = coefficients
-                    ? copySurfaceMaterial({ friction: coefficients[0], restitution: coefficients[1] })
-                    : null;
-            },
-            applyCopied: (value) => {
-                requireContext(value);
-                const authority = Object.freeze({});
-                this.#materialAuthorities.set(authority, { key, material: copied, context: value });
-                try {
-                    apply(authority, copied);
-                } finally {
-                    this.#materialAuthorities.delete(authority);
-                }
-            },
-            commitActual: (value, actual) => {
-                requireContext(value);
-                if (actual.material !== null && !(actual.material instanceof PhysicsMaterial))
-                    throw worldError('AIR_E_BOX3D_CONFIG', 'material commit', 'Actual cache identity is invalid.');
-                if (key === this.#system) this.#defaultMaterial = actual.material as PhysicsMaterial;
-                else {
-                    const record = this.#component(key);
-                    record.material = actual.material as PhysicsMaterial | null;
-                    if (value.operation === 'collider-material-initialize') record.initialized = true;
-                }
-                this.#lastMaterial = Object.freeze({
-                    operation: value.operation,
-                    actualRead: 'copied',
-                    actualMatchesBefore: null,
-                    actualMatchesCandidate: value.operation === 'collider-material-clone' ? null : true,
-                    effects: Object.freeze([]),
-                    failed: false,
-                });
-            },
-            fail: (value, failure: Readonly<PhysicsStateFailure>) => {
-                const actual = failure.actual;
-                const actualMaterial =
-                    actual && (actual.kind === 'collider-material' || actual.kind === 'system-default-material')
-                        ? actual.material
-                        : undefined;
-                const identity = (snapshot: PhysicsStateFailure['actual']) =>
-                    snapshot && (snapshot.kind === 'collider-material' || snapshot.kind === 'system-default-material')
-                        ? snapshot.material
-                        : undefined;
-                // A copied actual cache is authoritative even when later listener/owner work failed.
-                if (
-                    failure.actualRead === 'copied' &&
-                    (actualMaterial === null || actualMaterial instanceof PhysicsMaterial)
-                ) {
-                    if (key === this.#system) this.#defaultMaterial = actualMaterial as PhysicsMaterial | null;
-                    else this.#component(key).material = actualMaterial as PhysicsMaterial | null;
-                }
-                this.#lastMaterial = Object.freeze({
-                    operation: value.operation,
-                    actualRead: failure.actualRead,
-                    actualMatchesBefore:
-                        failure.actualRead === 'copied' ? actualMaterial === identity(failure.before) : null,
-                    actualMatchesCandidate:
-                        failure.actualRead === 'copied' ? actualMaterial === identity(failure.candidate) : null,
-                    effects: Object.freeze([...failure.effects]),
-                    failed: true,
-                });
-                if (failure.effects.length || value.operation === 'collider-material-initialize')
-                    this.#materialFault!(failure.error);
-            },
-            dispose: () => cleanup(),
-        });
+        );
         this.#materialLeases.set(key, lease);
     }
     releaseComponentAfterCleanup(adapter: object): void {
@@ -473,10 +508,15 @@ export class Box3DWorldCommandOwner {
             mutation = registerMutationGuard(targets, rejection);
             if (nodes.size) transform = registerNodeTransformGuard(Object.freeze(Array.from(nodes)), rejection);
         } catch (error) {
+            let cleanupFailed = false;
             try {
                 mutation?.dispose();
+            } catch (cleanupError) {
+                cleanupFailed = true;
+                this.#recordCleanup('scope-admission-mutation-dispose', cleanupError);
+                this.#materialFault?.(error);
             } finally {
-                this.#phase = 'idle';
+                if (!cleanupFailed) this.#phase = 'idle';
             }
             throw error;
         }
@@ -522,12 +562,14 @@ export class Box3DWorldCommandOwner {
                 try {
                     transform?.dispose();
                 } catch (error) {
+                    owned.#recordCleanup('scope-transform-dispose', error);
                     failed = true;
                     failure = error;
                 }
                 try {
                     mutation?.dispose();
                 } catch (error) {
+                    owned.#recordCleanup('scope-mutation-dispose', error);
                     if (!failed) failure = error;
                     failed = true;
                 }
@@ -569,14 +611,26 @@ export class Box3DWorldCommandOwner {
         for (const cleanup of [...this.#materialCleanups]) attempt(cleanup);
         for (const [key, lease] of this.#materialLeases)
             attempt(() => {
-                lease.dispose();
+                try {
+                    lease.dispose();
+                } catch (error) {
+                    this.#recordCleanup('material-delegate-unregister', error);
+                    throw error;
+                }
                 this.#materialLeases.delete(key);
             });
         try {
             attempt(() => this.#scope?.dispose());
         } finally {
             try {
-                this.#queue.close();
+                attempt(() => {
+                    try {
+                        this.#queue.close();
+                    } catch (error) {
+                        this.#recordCleanup('command-queue-close', error);
+                        throw error;
+                    }
+                });
             } finally {
                 this.#nativeTeardown = nativeTeardownConfirmed ? 'released' : 'unresolved';
                 if (nativeTeardownConfirmed) {
@@ -606,6 +660,12 @@ export class Box3DWorldCommandOwner {
             materialObserverLeases: this.#materialLeases.size,
             unresolvedMaterialScopes: this.#materialCleanups.size,
             lastMaterialChange: this.#lastMaterial,
+            cleanup: Object.freeze({
+                hasFailure: this.#cleanupFailures.length > 0,
+                firstError: this.#cleanupFailures[0]?.error,
+                cleanupFailures: Object.freeze([...this.#cleanupFailures]),
+                omittedFailures: this.#omittedCleanupFailures,
+            }),
             activationBlockers,
         });
     }

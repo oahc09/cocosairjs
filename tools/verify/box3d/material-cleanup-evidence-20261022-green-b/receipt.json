@@ -1,0 +1,10 @@
+{
+  "status": "PASS_ACTUAL_ENGINE_SOURCE_WITH_MOCK_BINDING_ONLY",
+  "jestExitCode": 0,
+  "tscExitCode": 0,
+  "caseCount": 10,
+  "checkCount": 45,
+  "physicalQualification": false,
+  "stableDirectInputs": true,
+  "scope": "Actual original Node/Collider/System/AIR methods, explicit native mock and injected post-dispose JS exceptions. No native/WASM execution. Runtime loader reopen not qualified by same-System source control."
+}

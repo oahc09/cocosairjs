@@ -56,6 +56,37 @@ export interface PhysicsMaterialDelegate {
     fail(context: Readonly<PhysicsStateChangeContext>, failure: Readonly<PhysicsStateFailure>): void;
     dispose(context: Readonly<PhysicsStateChangeContext>): void;
 }
+export type PhysicsMaterialCleanupStage =
+    'event-listener-clear' | 'material-off' | 'adapter-destroy' | 'bounds-destroy';
+export interface PhysicsMaterialCleanupError {
+    readonly stage: PhysicsMaterialCleanupStage;
+    readonly error: unknown;
+}
+export interface PhysicsMaterialCleanupReport {
+    readonly generation: number;
+    readonly hasFailure: boolean;
+    readonly firstError: unknown;
+    readonly errors: readonly PhysicsMaterialCleanupError[];
+}
+export interface PhysicsMaterialCleanupDiagnostics {
+    readonly consumed: boolean;
+    readonly report: Readonly<PhysicsMaterialCleanupReport> | null;
+    readonly copyFailed: boolean;
+    readonly copyError: unknown;
+    readonly deliveryAttempted: boolean;
+    readonly deliveryReturned: boolean;
+    readonly deliveryFailed: boolean;
+    readonly deliveryError: unknown;
+}
+export interface PhysicsMaterialCleanupObserver {
+    readonly generation: number;
+    report(report: Readonly<PhysicsMaterialCleanupReport>): void;
+}
+/** A single post-release diagnostic submission, never physics or phase authority. */
+export interface PhysicsMaterialCleanupReporter {
+    complete(errors: readonly PhysicsMaterialCleanupError[]): void;
+    diagnostics(): Readonly<PhysicsMaterialCleanupDiagnostics>;
+}
 export interface PhysicsMaterialDelegateLease {
     dispose(): void;
 }
@@ -81,6 +112,8 @@ interface Entry {
     readonly original: PhysicsMaterialDelegate;
     readonly copied: PhysicsMaterialDelegate;
     active?: Active;
+    cleanup?: Readonly<PhysicsMaterialCleanupObserver>;
+    cleanupCaptured?: boolean;
 }
 interface Active {
     readonly operation: PhysicsMaterialOperation;
@@ -167,15 +200,35 @@ function active(entry: Entry, context: Readonly<PhysicsStateChangeContext>): Act
 export class PhysicsMaterialTransactionRegistry {
     readonly #observer = new PhysicsStateObserverRegistry();
     readonly #entries = new WeakMap<object, Entry>();
-    register(target: object, delegate: PhysicsMaterialDelegate): PhysicsMaterialDelegateLease {
+    readonly #cleanupGenerations = new WeakMap<object, number>();
+    readonly #cleanupReports = new WeakMap<object, PhysicsMaterialCleanupReporter>();
+    register(
+        target: object,
+        delegate: PhysicsMaterialDelegate,
+        cleanup?: PhysicsMaterialCleanupObserver,
+    ): PhysicsMaterialDelegateLease {
         const registry = this;
         let copied!: PhysicsMaterialDelegate;
         let entry!: Entry;
+        let copiedCleanup: Readonly<PhysicsMaterialCleanupObserver> | undefined;
         // Function copying occurs INSIDE B0 registration admission, not before it.
         const observer = this.#observer.register(target, {
             get open() {
                 if (registry.#entries.has(target)) throw new Error('Material target already has a physical delegate.');
                 copied = copyFunctions(delegate);
+                if (cleanup !== undefined) {
+                    if (!object(cleanup)) throw new TypeError('Expected cleanup observer.');
+                    const generation = cleanup.generation;
+                    const report = cleanup.report;
+                    if (!Number.isSafeInteger(generation) || generation < 1 || typeof report !== 'function')
+                        throw new TypeError(
+                            'Cleanup generation must be a positive safe integer with a report function.',
+                        );
+                    const previous = registry.#cleanupGenerations.get(target);
+                    if (previous !== undefined && generation <= previous)
+                        throw new Error('Cleanup registration requires a new target generation.');
+                    copiedCleanup = Object.freeze({ generation, report });
+                }
                 return (context: Readonly<PhysicsStateChangeContext>): void => {
                     const value = entry.active;
                     if (!value) throw new Error('No created material transaction.');
@@ -210,7 +263,8 @@ export class PhysicsMaterialTransactionRegistry {
                 }
             },
         });
-        entry = { original: delegate, copied };
+        entry = { original: delegate, copied, cleanup: copiedCleanup };
+        if (copiedCleanup) this.#cleanupGenerations.set(target, copiedCleanup.generation);
         this.#entries.set(target, entry);
         const lease: PhysicsMaterialDelegateLease = Object.freeze({
             dispose(): void {
@@ -220,6 +274,111 @@ export class PhysicsMaterialTransactionRegistry {
             },
         });
         return lease;
+    }
+    /** Pure internal admission hint; register revalidates it before publishing. */
+    nextCleanupGeneration(target: object): number {
+        const previous = this.#cleanupGenerations.get(target) ?? 0;
+        if (previous >= Number.MAX_SAFE_INTEGER) throw new RangeError('Cleanup generation exhausted.');
+        return previous + 1;
+    }
+    /** Pins this target/delegate/generation once. No new capture after unregister. */
+    captureCleanup(target: object): PhysicsMaterialCleanupReporter | undefined {
+        const entry = this.#entries.get(target);
+        if (!entry?.cleanup) return undefined;
+        if (entry.cleanupCaptured) throw new Error('Cleanup completion was already captured for this generation.');
+        entry.cleanupCaptured = true;
+        const generation = entry.cleanup.generation;
+        let deliver: PhysicsMaterialCleanupObserver['report'] | undefined = entry.cleanup.report;
+        let consumed = false,
+            copying = false,
+            rejected = false;
+        let rejection: unknown;
+        let report: Readonly<PhysicsMaterialCleanupReport> | null = null;
+        let copyFailed = false,
+            copyError: unknown;
+        let deliveryAttempted = false,
+            deliveryReturned = false,
+            deliveryFailed = false,
+            deliveryError: unknown;
+        const stages = new Set<PhysicsMaterialCleanupStage>([
+            'event-listener-clear',
+            'material-off',
+            'adapter-destroy',
+            'bounds-destroy',
+        ]);
+        const reporter: PhysicsMaterialCleanupReporter = Object.freeze({
+            complete(errors: readonly PhysicsMaterialCleanupError[]): void {
+                if (this !== reporter) throw new Error('Invalid cleanup reporter receiver.');
+                if (consumed) {
+                    const error = new Error('Cleanup completion is single use.');
+                    if (copying && !rejected) {
+                        rejected = true;
+                        rejection = error;
+                    }
+                    throw error;
+                }
+                consumed = true; // consume BEFORE any caller-controlled property read
+                copying = true;
+                try {
+                    if (!Array.isArray(errors)) throw new TypeError('Expected cleanup error array.');
+                    const length = errors.length;
+                    if (!Number.isSafeInteger(length) || length < 0 || length > 4096)
+                        throw new RangeError('Cleanup report length must be an integer in [0, 4096].');
+                    const rows: PhysicsMaterialCleanupError[] = [];
+                    for (let i = 0; i < length; i++) {
+                        const input: PhysicsMaterialCleanupError = errors[i];
+                        if (!object(input)) throw new TypeError('Expected cleanup error record.');
+                        const stage = input.stage,
+                            error = input.error;
+                        if (!stages.has(stage)) throw new TypeError('Unknown cleanup stage.');
+                        rows.push(Object.freeze({ stage, error }));
+                    }
+                    if (rejected) throw rejection;
+                    report = Object.freeze({
+                        generation,
+                        hasFailure: rows.length !== 0,
+                        firstError: rows[0]?.error,
+                        errors: Object.freeze(rows),
+                    });
+                } catch (error) {
+                    copyFailed = true;
+                    copyError = rejected ? rejection : error;
+                    deliver = undefined;
+                    throw copyError;
+                } finally {
+                    copying = false;
+                }
+                deliveryAttempted = true;
+                const callback = deliver!;
+                deliver = undefined;
+                try {
+                    callback(report);
+                    deliveryReturned = true;
+                } catch (error) {
+                    deliveryFailed = true;
+                    deliveryError = error;
+                    throw error;
+                }
+            },
+            diagnostics() {
+                if (this !== reporter) throw new Error('Invalid cleanup reporter receiver.');
+                return Object.freeze({
+                    consumed,
+                    report,
+                    copyFailed,
+                    copyError,
+                    deliveryAttempted,
+                    deliveryReturned,
+                    deliveryFailed,
+                    deliveryError,
+                });
+            },
+        });
+        this.#cleanupReports.set(target, reporter); // bounded: one latest record per weak target
+        return reporter;
+    }
+    inspectCleanup(target: object): Readonly<PhysicsMaterialCleanupDiagnostics> | undefined {
+        return this.#cleanupReports.get(target)?.diagnostics();
     }
     begin(target: object, operation: PhysicsMaterialOperation): PhysicsMaterialChange | undefined {
         // B0 admission is always first, including its no-observer fast path and reentry latch.
@@ -433,12 +592,25 @@ const registry = new PhysicsMaterialTransactionRegistry();
 export function registerPhysicsMaterialDelegate(
     target: object,
     delegate: PhysicsMaterialDelegate,
+    cleanup?: PhysicsMaterialCleanupObserver,
 ): PhysicsMaterialDelegateLease {
-    return registry.register(target, delegate);
+    return registry.register(target, delegate, cleanup);
 }
 export function beginPhysicsMaterialChange(
     target: object,
     operation: PhysicsMaterialOperation,
 ): PhysicsMaterialChange | undefined {
     return registry.begin(target, operation);
+}
+
+/** Private cleanup diagnostics remain readable after unregister; no mutation authority. */
+export function capturePhysicsMaterialCleanup(target: object): PhysicsMaterialCleanupReporter | undefined {
+    return registry.captureCleanup(target);
+}
+export function inspectPhysicsMaterialCleanup(target: object): Readonly<PhysicsMaterialCleanupDiagnostics> | undefined {
+    return registry.inspectCleanup(target);
+}
+
+export function nextPhysicsMaterialCleanupGeneration(target: object): number {
+    return registry.nextCleanupGeneration(target);
 }

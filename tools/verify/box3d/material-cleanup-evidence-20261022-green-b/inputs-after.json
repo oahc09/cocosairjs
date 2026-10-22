@@ -1,0 +1,44 @@
+[
+  {
+    "path": "src/cocos/physics/framework/physics-material-transaction.ts",
+    "bytes": 28282,
+    "sha256": "949426ebc03754639cf7ff2e3ce9bbb80e6c9a43e7c4a5ec671739c55cdda083",
+    "afterSha256": "949426ebc03754639cf7ff2e3ce9bbb80e6c9a43e7c4a5ec671739c55cdda083"
+  },
+  {
+    "path": "src/cocos/physics/framework/components/colliders/collider.ts",
+    "bytes": 24556,
+    "sha256": "2e93ecae851d1a943c00d1a5a01a3d887153dce0d9693f541b4f6be73b2a7ac9",
+    "afterSha256": "2e93ecae851d1a943c00d1a5a01a3d887153dce0d9693f541b4f6be73b2a7ac9"
+  },
+  {
+    "path": "src/air/physics/box3d/world-command-owner.ts",
+    "bytes": 31937,
+    "sha256": "485a76c9b47d6b13c11240f870cd2cc9ca71ba16f143bc767cc8c4cf49ee1cbb",
+    "afterSha256": "485a76c9b47d6b13c11240f870cd2cc9ca71ba16f143bc767cc8c4cf49ee1cbb"
+  },
+  {
+    "path": "src/air/physics/box3d/world.ts",
+    "bytes": 33886,
+    "sha256": "c31689427cbecb89dddb6effeb3ffd2ee9a36a5719e7141df08199e1d42e5ff0",
+    "afterSha256": "c31689427cbecb89dddb6effeb3ffd2ee9a36a5719e7141df08199e1d42e5ff0"
+  },
+  {
+    "path": "tools/verify/box3d/material-cleanup-control-green.test.ts",
+    "bytes": 35228,
+    "sha256": "520ad3c913501281a4dea9af75f36730c2dea7ea170ff2b8430c0b452d5d20ca",
+    "afterSha256": "520ad3c913501281a4dea9af75f36730c2dea7ea170ff2b8430c0b452d5d20ca"
+  },
+  {
+    "path": "tools/verify/box3d/material-cleanup-control-green.jest.cjs",
+    "bytes": 1349,
+    "sha256": "4afbab9eb2d6ca8bbe34ae4f1e0f9b69753ff4c67bbc7201bb0ab585aad26b8b",
+    "afterSha256": "4afbab9eb2d6ca8bbe34ae4f1e0f9b69753ff4c67bbc7201bb0ab585aad26b8b"
+  },
+  {
+    "path": "tools/verify/box3d/material-cleanup-control-green.tsconfig.json",
+    "bytes": 168,
+    "sha256": "0e0fd60e986de1bb2ec76e45bfc6e84b48a8e9d63587dec5799f9d32b157dfcb",
+    "afterSha256": "0e0fd60e986de1bb2ec76e45bfc6e84b48a8e9d63587dec5799f9d32b157dfcb"
+  }
+]

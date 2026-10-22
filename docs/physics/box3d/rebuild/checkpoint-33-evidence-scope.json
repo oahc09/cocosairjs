@@ -1,0 +1,25 @@
+{
+  "scope": "Checkpoint33 named repository evidence closure excludes backup archives/bundle/prerequisite manifest stored outside source tree. These three exact references were independently rehashed; not silently claimed as source-tree bytes. Prior checkpoint32 Library actual restore receipt retains retrieval identity; its prerequisite checkpoint31 archive contains prior full manifest.",
+  "checkpoint32Library": "libfile_93fb1c888780819198c4756a76b0d523",
+  "checkpoint31Library": "libfile_334289be9f648191898ceae41d54b400",
+  "verifiedExternalBackupReferences": [
+    {
+      "path": "../box3d-material-b1-qualified-library-roundtrip-20261022/Box3D-source-incremental-checkpoint(2).zip",
+      "bytes": 5494259,
+      "sha256": "4b5e463046e6fffb133058fa602675abb2466b76687975a64d8482c4788a9322"
+    },
+    {
+      "path": "../box3d-material-b1-qualified-library-roundtrip-20261022/box3d-rebuild-incremental.bundle",
+      "bytes": 4500268,
+      "sha256": "2e61cd5fcf86029cd0a6eb2bfdebef800fad3260c48cee3a5b3522e317395a3b"
+    },
+    {
+      "path": "../box3d-material-b1-source-library-roundtrip-20261022/checkpoint-receipt.json",
+      "bytes": 5344264,
+      "sha256": "bd084019826093f06151b3f102789bb7716522582b3a6adec145d34e7dc92e2d"
+    }
+  ],
+  "formalRequiredCells": 2128,
+  "formalCellStatus": "NOT_RUN",
+  "gatesPassed": 0
+}

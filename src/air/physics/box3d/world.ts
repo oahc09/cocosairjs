@@ -53,6 +53,13 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
     readonly #binding: Box3DWorldBinding;
     readonly #commandOwner: Box3DWorldCommandOwner;
     private ownerCleanupFailure: unknown;
+    private hasOwnerCleanupFailure = false;
+    private hasFailure = false;
+    private hasDestroyFailure = false;
+    private destroyFailure: unknown;
+    private nativeDestroyReturned = false;
+    private hasNativeDestroyFailure = false;
+    private nativeDestroyFailure: unknown;
     readonly #token: Box3DWorld;
     private readonly description: Readonly<{ backend: 'box3d'; generation: number; worldId: number }>;
     private state: WorldState = 'ready';
@@ -194,10 +201,19 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
         this.#commandOwner.assertCommittedRead(operation);
     }
     private fault(error: unknown): void {
-        this.state = 'faulted';
+        if (!['destroying', 'destroyed', 'destroy-failed'].includes(this.state)) this.state = 'faulted';
         this.#commandOwner.fault();
-        this.failure = error;
+        if (!this.hasFailure) {
+            this.hasFailure = true;
+            this.failure = error;
+        }
         this.pendingSnapshot = null;
+    }
+    private recordOwnerCleanup(error: unknown): void {
+        if (!this.hasOwnerCleanupFailure) {
+            this.hasOwnerCleanupFailure = true;
+            this.ownerCleanupFailure = error;
+        }
     }
     private collectDebug(flags: number, scale: number): Box3DDebugSnapshot {
         return copyDebugSnapshot(this.#binding.debugSnapshot(this.#token, flags, scale), flags, scale);
@@ -245,7 +261,8 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
     setDefaultMaterial(value: PhysicsMaterial): void {
         this.assertReady('setDefaultMaterial');
         const scope = this.#commandOwner.beginMaterialKernel(value);
-        let failed = false;
+        let failed = false,
+            primary: unknown;
         try {
             // Original material EVENT_UPDATE path shares the same no-replay kernel.
             const friction = value.friction,
@@ -257,14 +274,15 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
             this.#applyDefaultMaterialCopied(next);
         } catch (error) {
             failed = true;
+            primary = error;
             throw error;
         } finally {
             try {
                 scope.dispose();
             } catch (error) {
-                this.ownerCleanupFailure = error;
+                this.recordOwnerCleanup(error);
                 this.invalidatePending();
-                this.fault(error);
+                this.fault(failed ? primary : error);
                 if (!failed) throw error;
             }
         }
@@ -447,7 +465,13 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
                 this.pendingSnapshot = null;
             }
         } finally {
-            scope.dispose();
+            try {
+                scope.dispose();
+            } catch (error) {
+                this.recordOwnerCleanup(error);
+                this.fault(error);
+                throw error;
+            }
         }
         // T09 admits no collider event listeners; raw snapshots are diagnostics, not Cocos events.
     }
@@ -466,6 +490,8 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
         const nextEpoch = this.#writebackEpoch + 1;
         const bodies = Object.freeze(Array.from(this.#sharedBodies.values()));
         const scope = this.#commandOwner.beginStep();
+        let failed = false,
+            primary: unknown;
         try {
             // Recoverable assembly/configuration rejection precedes the fault-latched native-step region.
             for (const body of bodies) body.preflight();
@@ -540,13 +566,17 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
                 this.fault(error);
                 throw error;
             }
+        } catch (error) {
+            failed = true;
+            primary = error;
+            throw error;
         } finally {
             try {
                 scope.dispose();
             } catch (error) {
-                this.ownerCleanupFailure = error;
-                this.fault(error);
-                throw error;
+                this.recordOwnerCleanup(error);
+                this.fault(failed ? primary : error);
+                if (!failed) throw error;
             }
         }
     }
@@ -565,7 +595,17 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
         return Object.freeze({
             state: this.state,
             commandOwner: this.#commandOwner.diagnostics(),
-            ownerCleanupError: this.ownerCleanupFailure === undefined ? null : String(this.ownerCleanupFailure),
+            ownerCleanupError: this.hasOwnerCleanupFailure ? String(this.ownerCleanupFailure) : null,
+            failure: Object.freeze({ hasFailure: this.hasFailure, error: this.failure }),
+            teardown: Object.freeze({
+                hasFailure: this.hasDestroyFailure,
+                error: this.destroyFailure,
+                nativeReturned: this.nativeDestroyReturned,
+                nativeHasFailure: this.hasNativeDestroyFailure,
+                nativeError: this.nativeDestroyFailure,
+                cleanupHasFailure: this.hasOwnerCleanupFailure,
+                cleanupError: this.ownerCleanupFailure,
+            }),
             writeback: Object.freeze({
                 epoch: this.#writebackEpoch,
                 epochLimit: this.#writebackQualification.epochLimit,
@@ -587,7 +627,7 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
             emittedStep: this.emittedStep,
             componentEventsSupported: false,
             debugPresented: false,
-            error: this.failure === undefined ? null : String(this.failure),
+            error: this.hasFailure ? String(this.failure) : null,
         });
     }
     getStepSnapshot(): Box3DStepSnapshot | null {
@@ -600,14 +640,21 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
     }
     destroy(): void {
         if (this.state === 'destroyed') return;
-        if (this.state === 'destroy-failed') throw this.failure;
+        if (this.state === 'destroy-failed') throw this.destroyFailure;
         if (this.state === 'stepping' || this.state === 'destroying')
             throw worldError('AIR_E_BOX3D_REENTRANT', 'destroy', 'Cannot destroy during native operation.');
         if (this.state !== 'faulted') this.#commandOwner.assertConfiguration('destroy');
         this.state = 'destroying';
         this.nativeObservationCurrent = false;
         try {
-            this.#binding.destroyWorld(this.#token);
+            try {
+                this.#binding.destroyWorld(this.#token);
+                this.nativeDestroyReturned = true;
+            } catch (error) {
+                this.hasNativeDestroyFailure = true;
+                this.nativeDestroyFailure = error;
+                throw error;
+            }
             for (const body of this.#sharedBodies.values()) body.closeWithWorld();
             this.#sharedBodies.clear();
             this.#materialShapes.clear();
@@ -617,16 +664,18 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
             this.state = 'destroyed';
         } catch (error) {
             this.state = 'destroy-failed';
-            this.failure = error;
+            this.hasDestroyFailure = true;
+            this.destroyFailure = error;
             throw error;
         } finally {
             try {
                 this.#commandOwner.closeAfterWorldTeardown(this.state === 'destroyed');
             } catch (error) {
-                this.ownerCleanupFailure = error;
+                this.recordOwnerCleanup(error);
                 if (this.state !== 'destroy-failed') {
                     this.state = 'destroy-failed';
-                    this.failure = error;
+                    this.hasDestroyFailure = true;
+                    this.destroyFailure = error;
                     throw error;
                 }
             }
