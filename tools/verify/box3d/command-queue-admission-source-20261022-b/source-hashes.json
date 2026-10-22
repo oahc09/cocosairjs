@@ -1,0 +1,4 @@
+{
+  "src/air/physics/box3d/command-queue.ts": "42550d8487fd7ad05d142bc4b3ab764ddf8bedec140098dc35f88ae0ba786b6b",
+  "tools/verify/box3d/command-queue-control.mjs": "a9aff710ea1c5e686f3a6caa9f5541723fd9b40be22c703ffbedcb3e28e89f57"
+}

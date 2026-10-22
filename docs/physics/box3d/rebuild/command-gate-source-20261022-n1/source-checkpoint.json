@@ -1,0 +1,25 @@
+{
+  "status": "PASS_73_SYNTHETIC_PARSER_CONTROLS_NOT_PHYSICS",
+  "files": [
+    {
+      "path": "tools/build/box3d-assets.cjs",
+      "bytes": 23358,
+      "sha256": "de3c395dbf38387fd2691f830be8ec5da2128fd360f7ef728ccad58b73e21883"
+    },
+    {
+      "path": "tools/build/box3d-command-qualification.cjs",
+      "bytes": 12914,
+      "sha256": "58fce3bb565d6df9bf532072c0d28c4cbe1dd55667f70e35d2fea008cc010c35"
+    },
+    {
+      "path": "tools/build/box3d-command-expectations.json",
+      "bytes": 11334,
+      "sha256": "bb33d845ede55093c3d2915582008736b82c76e195e88d956c08cea7daf099f2"
+    },
+    {
+      "path": "tools/build/box3d-command-qualification.test.cjs",
+      "bytes": 12331,
+      "sha256": "41fc4f5f8228b70bf05f27d90dfb8c72db9364bad7ebc37a8fc8d4cd8e35e271"
+    }
+  ]
+}

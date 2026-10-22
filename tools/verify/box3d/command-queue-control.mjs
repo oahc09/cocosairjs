@@ -35,7 +35,7 @@ const test = (name, run) => {
         const observed = run();
         rows.push({ name, status: 'PASS_PURE_QUEUE_CONTROL', observed: observed ?? null });
     } catch (error) {
-        rows.push({ name, status: 'FAIL', error: String(error), stack: error.stack });
+        rows.push({ name, status: 'FAIL', error: String(error), stack: error?.stack ?? null });
     }
 };
 const v = (x = 1, y = 2, z = 3) => ({ x, y, z });
@@ -574,6 +574,297 @@ test('close is repeated-safe and cannot resurrect logical ownership', () => {
     rejects(() => q.registerBody(a));
     rejects(() => q.resume());
     assert.equal(q.diagnostics().phase, 'closed');
+});
+const capture = (fn) => {
+    try {
+        return { threw: false, value: fn() };
+    } catch (error) {
+        return { threw: true, error };
+    }
+};
+const sameAccepted = (q, before) => {
+    const after = q.diagnostics();
+    assert.equal(after.pending, before.pending);
+    assert.equal(after.sequence, before.sequence);
+    assert.equal(after.phase, before.phase);
+};
+test('owner reader and returned body/command accessors read once with detached payload', () => {
+    const { q, a } = setup();
+    let reads = 0;
+    const input = effect();
+    const sequence = q.withSubmissionAdmission(() => {
+        reads++;
+        return {
+            get body() {
+                reads++;
+                return a;
+            },
+            get command() {
+                reads++;
+                return input;
+            },
+        };
+    });
+    input.vector.x = 9;
+    assert.equal(reads, 3);
+    assert.equal(sequence, 1);
+    assert.equal(q.diagnostics().pending[0].command.vector.x, 1);
+});
+for (const failure of [undefined, null, 0, '', Error('owner resolver injection')]) {
+    test(`ready owner resolution throw ${String(failure)} preserves exact error and accepted state`, () => {
+        const { q, a } = setup();
+        q.submit(a, effect());
+        const before = q.diagnostics();
+        const result = capture(() =>
+            q.withSubmissionAdmission(() => {
+                throw failure;
+            }),
+        );
+        assert.equal(result.threw, true);
+        assert.equal(result.error, failure);
+        sameAccepted(q, before);
+        assert.equal(
+            q.withSubmissionAdmission(() => ({ body: a, command: effect() })),
+            2,
+        );
+    });
+    test(`caught collection owner resolution throw ${String(failure)} discards provisional and retries next attempt`, () => {
+        const { q, a } = setup();
+        q.submit(a, effect());
+        const before = q.diagnostics();
+        let later = 0;
+        const result = capture(() =>
+            collect(q, [
+                () => {
+                    q.submit(a, effect());
+                    const rejection = capture(() =>
+                        q.withSubmissionAdmission(() => {
+                            throw failure;
+                        }),
+                    );
+                    assert.equal(rejection.threw, true);
+                    assert.equal(rejection.error, failure);
+                },
+                () => {
+                    later++;
+                },
+            ]),
+        );
+        assert.equal(result.threw, true);
+        assert.equal(result.error, failure);
+        assert.equal(later, 0);
+        const after = q.diagnostics();
+        assert.equal(after.pending, before.pending);
+        assert.equal(after.sequence, 2); // Accepted provisional sequence is never reused.
+        assert.equal(after.provisionalCount, 0);
+        assert.equal(after.phase, 'ready');
+        const retry = collect(q, [() => void q.withSubmissionAdmission(() => ({ body: a, command: effect() }))]);
+        assert.equal(retry.context.tickIndex, 1);
+        assert.equal(retry.context.attemptId, 2);
+        assert.deepEqual(
+            retry.original.map((r) => r.sequence),
+            [1, 3],
+        );
+        q.rejectCandidate(retry);
+        assert.equal(q.diagnostics().pending, before.pending);
+    });
+}
+for (const at of ['resolver', 'body', 'command', 'vector'])
+    for (const kind of ['valid', 'invalid'])
+        test(`caught nested ${kind} submit from ${at} cannot enter admission or advance sequence`, () => {
+            const { q, a } = setup();
+            q.submit(a, effect());
+            const before = q.diagnostics();
+            let first;
+            let nestedRead = false;
+            const reenter = () => {
+                const result = capture(() =>
+                    q.withSubmissionAdmission(() => {
+                        nestedRead = true;
+                        return { body: kind === 'valid' ? a : {}, command: effect() };
+                    }),
+                );
+                assert.equal(result.threw, true);
+                first = result.error;
+            };
+            const result = capture(() =>
+                q.withSubmissionAdmission(() => {
+                    if (at === 'resolver') reenter();
+                    return {
+                        get body() {
+                            if (at === 'body') reenter();
+                            return a;
+                        },
+                        get command() {
+                            if (at === 'command') reenter();
+                            return {
+                                kind: 'force',
+                                get vector() {
+                                    if (at === 'vector') reenter();
+                                    return v();
+                                },
+                            };
+                        },
+                    };
+                }),
+            );
+            assert.equal(result.threw, true);
+            assert.equal(result.error, first);
+            assert.equal(nestedRead, false);
+            sameAccepted(q, before);
+        });
+for (const operation of ['cancel', 'close', 'release', 'pause', 'collect', 'register', 'acquire', 'revoke'])
+    test(`owner resolver caught nested ${operation} cannot alter queue ownership`, () => {
+        const { q, a } = setup();
+        q.submit(a, effect());
+        const before = q.diagnostics();
+        const nested = {
+            cancel: () => q.cancelPending(a),
+            close: () => q.close(),
+            release: () => q.releaseBodyAfterTeardown(a),
+            pause: () => q.pause(),
+            collect: () => collect(q),
+            register: () => q.registerBody({}),
+            acquire: () => q.acquireTarget(a),
+            revoke: () => q.revokeTarget(a),
+        }[operation];
+        let first;
+        const result = capture(() =>
+            q.withSubmissionAdmission(() => {
+                first = capture(nested).error;
+                return { body: a, command: effect() };
+            }),
+        );
+        assert.equal(result.threw, true);
+        assert.equal(result.error, first);
+        sameAccepted(q, before);
+        assert.equal(q.diagnostics().bodies, before.bodies);
+    });
+test('owner getter nested submit then later throw preserves first rejection identity', () => {
+    const { q, a } = setup();
+    const before = q.diagnostics();
+    let first;
+    const later = Error('later owner failure');
+    const result = capture(() =>
+        q.withSubmissionAdmission(() => ({
+            get body() {
+                first = capture(() => q.submit(a, effect())).error;
+                throw later;
+            },
+            command: effect(),
+        })),
+    );
+    assert.equal(result.threw, true);
+    assert.equal(result.error, first);
+    assert.notEqual(result.error, later);
+    sameAccepted(q, before);
+});
+test('ordinary submit shares admission and preserves first nested error over later vector throw', () => {
+    const { q, a } = setup();
+    let first;
+    const later = Error('later vector failure');
+    const result = capture(() =>
+        q.submit(a, {
+            kind: 'force',
+            get vector() {
+                first = capture(() => q.submit(a, effect())).error;
+                throw later;
+            },
+        }),
+    );
+    assert.equal(result.threw, true);
+    assert.equal(result.error, first);
+    assert.equal(q.diagnostics().sequence, 0);
+});
+for (const first of [undefined, null, 0])
+    test(`collection first owner error ${String(first)} survives later callback failure`, () => {
+        const { q } = setup();
+        const later = Error('later callback failure');
+        const result = capture(() =>
+            collect(q, [
+                () => {
+                    capture(() =>
+                        q.withSubmissionAdmission(() => {
+                            throw first;
+                        }),
+                    );
+                    throw later;
+                },
+            ]),
+        );
+        assert.equal(result.threw, true);
+        assert.equal(result.error, first);
+        assert.equal(q.diagnostics().phase, 'ready');
+    });
+for (const invalid of [undefined, null, 0, {}, Promise.resolve({})])
+    test(`invalid admission result ${String(invalid)} cannot append`, () => {
+        const { q, a } = setup();
+        q.submit(a, effect());
+        const before = q.diagnostics();
+        rejects(() => q.withSubmissionAdmission(() => invalid));
+        sameAccepted(q, before);
+    });
+test('non-function admission reader latches a collection command refusal', () => {
+    const { q } = setup();
+    const result = capture(() => collect(q, [() => void capture(() => q.withSubmissionAdmission(null))]));
+    assert.equal(result.threw, true);
+    assert.equal(q.diagnostics().phase, 'ready');
+});
+test('foreign logical body refuses before evaluating returned command accessor', () => {
+    const { q } = setup();
+    let read = false;
+    rejects(() =>
+        q.withSubmissionAdmission(() => ({
+            body: {},
+            get command() {
+                read = true;
+                return effect();
+            },
+        })),
+    );
+    assert.equal(read, false);
+});
+test('ready admission diagnostics are read-only observations, not forbidden mutation', () => {
+    const { q, a } = setup();
+    const before = q.diagnostics();
+    q.withSubmissionAdmission(() => {
+        sameAccepted(q, before);
+        return { body: a, command: effect() };
+    });
+    assert.equal(q.diagnostics().sequence, 1);
+});
+test('caught non-command configuration refusal does not automatically abort collection', () => {
+    const { q, a } = setup();
+    const candidate = collect(q, [
+        () => {
+            // Explicit owner configuration-refusal mock; it is not a rejected queue submission.
+            capture(() => {
+                throw Error('mock owner configuration fence refusal');
+            });
+            q.withSubmissionAdmission(() => ({ body: a, command: effect() }));
+        },
+    ]);
+    assert.equal(candidate.original.length, 1);
+    q.rejectCandidate(candidate);
+});
+test('admission is queue-local, not a global bypass or a rollback of arbitrary JavaScript', () => {
+    const { q, a } = setup();
+    const other = setup();
+    let external = 0;
+    rejects(() =>
+        q.withSubmissionAdmission(() => {
+            external++;
+            other.q.submit(other.a, effect());
+            throw Error('owner external side effect injection');
+        }),
+    );
+    assert.equal(external, 1);
+    assert.equal(other.q.diagnostics().pending.length, 1);
+    assert.equal(q.diagnostics().pending.length, 0);
+    assert.equal(
+        q.withSubmissionAdmission(() => ({ body: a, command: effect() })),
+        1,
+    );
 });
 const checks = [
     [

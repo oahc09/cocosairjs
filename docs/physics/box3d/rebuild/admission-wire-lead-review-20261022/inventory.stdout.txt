@@ -1,0 +1,136 @@
+TAP version 13
+# Subtest: formal v1 preserves the exact full denominator, definitions and original references
+ok 1 - formal v1 preserves the exact full denominator, definitions and original references
+  ---
+  duration_ms: 21.203444
+  type: 'test'
+  ...
+# Subtest: all required cells are unexecuted and no frozen state contains imported acceptance credit
+ok 2 - all required cells are unexecuted and no frozen state contains imported acceptance credit
+  ---
+  duration_ms: 6.471971
+  type: 'test'
+  ...
+# Subtest: only four denominator decisions are technically adopted, with the exact review evidence
+ok 3 - only four denominator decisions are technically adopted, with the exact review evidence
+  ---
+  duration_ms: 94.394165
+  type: 'test'
+  ...
+# Subtest: technical denominator freeze coexists with fixture/resource/participant/performance unreadiness
+ok 4 - technical denominator freeze coexists with fixture/resource/participant/performance unreadiness
+  ---
+  duration_ms: 3.866182
+  type: 'test'
+  ...
+# Subtest: positive MT, real-device, human and Debug/Release obligations remain exact
+ok 5 - positive MT, real-device, human and Debug/Release obligations remain exact
+  ---
+  duration_ms: 5.257267
+  type: 'test'
+  ...
+# Subtest: the complete fixture assertion and evidence metadata can be recovered without regeneration
+ok 6 - the complete fixture assertion and evidence metadata can be recovered without regeneration
+  ---
+  duration_ms: 41.250104
+  type: 'test'
+  ...
+# Subtest: candidate history is byte-pinned and still retains its original unapproved status
+ok 7 - candidate history is byte-pinned and still retains its original unapproved status
+  ---
+  duration_ms: 14.098617
+  type: 'test'
+  ...
+# Subtest: formal original-input digests bind actual bytes rather than newly rehashed substitutes
+ok 8 - formal original-input digests bind actual bytes rather than newly rehashed substitutes
+  ---
+  duration_ms: 3.14686
+  type: 'test'
+  ...
+# Subtest: a separate dependency-free archive mechanically restores all 2128 cells using built-in Node only
+ok 9 - a separate dependency-free archive mechanically restores all 2128 cells using built-in Node only
+  ---
+  duration_ms: 551.68036
+  type: 'test'
+  ...
+# Subtest: check and resolve are read-only, with no implicit snapshot repairs or writes
+ok 10 - check and resolve are read-only, with no implicit snapshot repairs or writes
+  ---
+  duration_ms: 976.780127
+  type: 'test'
+  ...
+# Subtest: write, regenerate, repair and unknown flags are rejected rather than altering the frozen version
+ok 11 - write, regenerate, repair and unknown flags are rejected rather than altering the frozen version
+  ---
+  duration_ms: 1455.072151
+  type: 'test'
+  ...
+# Subtest: missing, duplicate, relabeled and reordered cell identities are rejected
+ok 12 - missing, duplicate, relabeled and reordered cell identities are rejected
+  ---
+  duration_ms: 4919.580071
+  type: 'test'
+  ...
+# Subtest: an introduced PASS, nonempty evidence, execution timestamp or premature Gate PASS is rejected
+ok 13 - an introduced PASS, nonempty evidence, execution timestamp or premature Gate PASS is rejected
+  ---
+  duration_ms: 444.127802
+  type: 'test'
+  ...
+# Subtest: unresolved denominator decisions, missing technical review or fabricated user approval are rejected
+ok 14 - unresolved denominator decisions, missing technical review or fabricated user approval are rejected
+  ---
+  duration_ms: 316.448834
+  type: 'test'
+  ...
+# Subtest: D04/D05/D07 and exact resource/fixture readiness cannot be promoted with denominator adoption
+ok 15 - D04/D05/D07 and exact resource/fixture readiness cannot be promoted with denominator adoption
+  ---
+  duration_ms: 213.640686
+  type: 'test'
+  ...
+# Subtest: missing definitions, original references, altered original digests or permissive mutation policy are rejected
+ok 16 - missing definitions, original references, altered original digests or permissive mutation policy are rejected
+  ---
+  duration_ms: 325.663103
+  type: 'test'
+  ...
+# Subtest: raw formal or review byte tampering fails even when parsed JSON would be unchanged
+ok 17 - raw formal or review byte tampering fails even when parsed JSON would be unchanged
+  ---
+  duration_ms: 114.164611
+  type: 'test'
+  ...
+# Subtest: raw original plan, policy, resource and candidate changes require a new version, never auto-repair
+ok 18 - raw original plan, policy, resource and candidate changes require a new version, never auto-repair
+  ---
+  duration_ms: 429.46139
+  type: 'test'
+  ...
+# Subtest: changing candidate variants or shrinking aggregates is rejected by the original candidate byte anchor
+ok 19 - changing candidate variants or shrinking aggregates is rejected by the original candidate byte anchor
+  ---
+  duration_ms: 510.791629
+  type: 'test'
+  ...
+# Subtest: rewiring both mutable references cannot replace independently pinned v1 bytes
+ok 20 - rewiring both mutable references cannot replace independently pinned v1 bytes
+  ---
+  duration_ms: 84.965942
+  type: 'test'
+  ...
+# Subtest: formal D02 separates positive MT execution from audit/negative credit and target enumeration from support
+ok 21 - formal D02 separates positive MT execution from audit/negative credit and target enumeration from support
+  ---
+  duration_ms: 105.509224
+  type: 'test'
+  ...
+1..21
+# tests 21
+# suites 0
+# pass 21
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 11554.419856

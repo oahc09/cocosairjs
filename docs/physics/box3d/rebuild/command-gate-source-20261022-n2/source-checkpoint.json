@@ -1,0 +1,26 @@
+{
+  "status": "SYNTHETIC_PARSER_CONTROLS_75_PASS_1_FAIL_NOT_PHYSICS",
+  "reason": "Fixture changed observed opcode from clearForces to reset; injection of actionBits16 became valid. Fix the negative target, not gate semantics.",
+  "files": [
+    {
+      "path": "tools/build/box3d-assets.cjs",
+      "bytes": 23411,
+      "sha256": "f628b921891d46f5fd4e73bfdbfe6cf67ec0823dec5f56c346b929ed3692ca07"
+    },
+    {
+      "path": "tools/build/box3d-command-qualification.cjs",
+      "bytes": 15179,
+      "sha256": "63d05ad32f64e004cc2ed5a44168017daa34bb249b94258d99ce37ff1093f5c7"
+    },
+    {
+      "path": "tools/build/box3d-command-expectations.json",
+      "bytes": 9770,
+      "sha256": "62703014511167932cdec26ad9a393372ecd44e6ccb115ec474cff5ab4341921"
+    },
+    {
+      "path": "tools/build/box3d-command-qualification.test.cjs",
+      "bytes": 14767,
+      "sha256": "77935299a0df96decb393dbf38af0a4d81665aaab29f025c385c99b15e67bfb7"
+    }
+  ]
+}

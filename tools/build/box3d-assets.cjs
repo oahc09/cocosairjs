@@ -7,6 +7,8 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { createHash } = require('node:crypto');
 const { pathToFileURL } = require('node:url');
+const { verifyCommandQualification, verifyCommandSchedule } = require('./box3d-command-qualification.cjs');
+const COMMAND_EXPECTATIONS = require('./box3d-command-expectations.json');
 const ROOT = path.resolve(__dirname, '../..');
 const FEATURE = 'physics-box3d';
 const ENTRY = 'src/air/physics/box3d/feature.ts';
@@ -55,6 +57,13 @@ const INPUTS = [
     'tools/physics/box3d/native/contract.c',
     'tools/physics/box3d/native/geometry_contract.c',
     'tools/physics/box3d/native/wasm_entry.c',
+    'tools/physics/box3d/native/command_bridge.c',
+    'tools/physics/box3d/native/command_bridge.h',
+    'tools/physics/box3d/native/command_contract.c',
+    'tools/physics/box3d/wasm-command-contract.mjs',
+    'tools/physics/box3d/command-source-controls.mjs',
+    'docs/physics/box3d/contracts/unified-command-wire-v1.md',
+    'docs/physics/box3d/contracts/unified-command-decisions-v1.md',
     'src/air/physics/box3d/binding/facade.mjs',
     'src/air/physics/box3d/binding/facade.d.mts',
 ];
@@ -107,7 +116,9 @@ async function verifySTBuild(buildDirectory) {
     assert.equal(receipt.status, 'PASS', 'Native build did not pass');
     assert.equal(receipt.kind, 'st-simd-wasm');
     assert(['Debug', 'Release'].includes(receipt.mode));
-    assert(receipt.commands.length >= 18 && receipt.commands.every((row) => row.exitCode === 0 && !row.error));
+    verifyCommandSchedule(receipt);
+    assert.equal(INPUTS.length, 50);
+    assert.deepEqual(sorted(INPUTS), sorted(COMMAND_EXPECTATIONS.gate.inputs));
     assert.deepEqual(sorted(receipt.inputHashes.map((row) => row.path)), sorted(INPUTS), 'Build input inventory drift');
     for (const input of receipt.inputHashes) {
         safeRelative(input.path);
@@ -140,7 +151,7 @@ async function verifySTBuild(buildDirectory) {
     assert.equal(audit.sharedMemory, false);
     assert.equal(audit.dynamicExecutionOrWorkerConstructorFound, false);
     assert.equal(audit.compiledSourceCount, audit.compiledSourceHashes.length);
-    assert.equal(audit.compiledSourceCount, 65, 'Compile audit inventory drift');
+    assert.equal(audit.compiledSourceCount, 67, 'Compile audit inventory drift');
     assert.equal(new Set(audit.compiledSourceHashes.map((row) => row.path)).size, audit.compiledSourceCount);
     for (const name of [
         'body_control.c',
@@ -149,9 +160,21 @@ async function verifySTBuild(buildDirectory) {
         'filter_contract.c',
         'motion_bridge.c',
         'motion_contract.c',
+        'command_bridge.c',
+        'command_contract.c',
     ]) {
         assert(audit.compiledSourceHashes.some((row) => row.path === `tools/physics/box3d/native/${name}`));
     }
+    const stagedPrefix = path.relative(ROOT, path.join(directory, 'staged-core')).split(path.sep).join('/') + '/';
+    assert.deepEqual(
+        sorted(
+            audit.compiledSourceHashes.map((row) =>
+                row.path.startsWith(stagedPrefix) ? 'staged-core/' + row.path.slice(stagedPrefix.length) : row.path,
+            ),
+        ),
+        sorted(COMMAND_EXPECTATIONS.gate.compileUnits),
+        'Exact compiled source inventory',
+    );
     for (const input of audit.compiledSourceHashes) {
         safeRelative(input.path);
         assert.equal(sha256(read(fileInside(ROOT, input.path))), input.sha256, `Compiled input drift: ${input.path}`);
@@ -184,8 +207,13 @@ async function verifySTBuild(buildDirectory) {
             'wasm-motion-contract.raw.json',
             'motion-samples.raw.jsonl',
             'air_box3d_motion_contract.cjs',
+            'native-command-contract.raw.json',
+            'wasm-command-contract.raw.json',
+            'command-samples.raw.jsonl',
+            'air_box3d_command_contract.cjs',
         ]),
     );
+    assert.deepEqual(sorted(audit.evidence.map((row) => row.path)), sorted(COMMAND_EXPECTATIONS.gate.evidence));
     for (const record of audit.evidence) verifyRecord(directory, record);
     const nativeGeometry = json(fileInside(directory, 'native-geometry-contract.raw.json'));
     assert.equal(nativeGeometry.status, 'PASS', 'Native geometry qualification did not pass');
@@ -348,6 +376,16 @@ async function verifySTBuild(buildDirectory) {
                 Number.isFinite(row.max?.[key]) && row.max[key] >= 0 && row.max[key] <= 1e-4,
                 `Motion prediction budget failed: ${row.n}/${row.damping}/${key}`,
             );
+    const command = json(fileInside(directory, 'wasm-command-contract.raw.json'));
+    const commandSamples = verifyRecord(directory, command.samplesArtifact);
+    verifyCommandQualification({
+        native: json(fileInside(directory, 'native-command-contract.raw.json')),
+        wasm: command,
+        samplesBytes: commandSamples,
+        identity,
+        fixtureSha256: sha256(read(path.join(ROOT, 'tools/physics/box3d/wasm-command-contract.mjs'))),
+        receipt,
+    });
     const descriptor = freeze({
         manifestSha256: sha256(manifestBytes),
         facadeSha256: sha256(bytes.get('facade.mjs')),
@@ -361,6 +399,10 @@ async function verifySTBuild(buildDirectory) {
         bytes,
         mode: receipt.mode,
         auditSha256: sha256(read(path.join(directory, 'artifact-audit.raw.json'))),
+        qualificationGateSources: ['box3d-command-qualification.cjs', 'box3d-command-expectations.json'].map((name) => {
+            const data = read(path.join(__dirname, name));
+            return { path: 'tools/build/' + name, bytes: data.length, sha256: sha256(data) };
+        }),
     };
 }
 /** Validates every input before writing. Not selected means no source reads or output writes. */
@@ -404,6 +446,7 @@ async function stageBox3DAssets({ features, outputDirectory, buildDirectory }) {
         descriptor: verified.descriptor,
         artifactAuditSha256: verified.auditSha256,
         stagingToolSha256: sha256(read(__filename)),
+        qualificationGateSources: verified.qualificationGateSources,
         artifacts: records,
         runtimeAssetRelativeDirectory: './physics/box3d/st/',
         unusedMTAssetsCopied: 0,

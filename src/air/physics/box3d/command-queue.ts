@@ -167,6 +167,7 @@ export class Box3DCommandQueue {
     #candidateFailed = false;
     #reading = false;
     #readFailure = false;
+    #readError: unknown = undefined;
 
     constructor(options: { readonly generation: number; readonly counterLimit?: number }) {
         this.#generation = counter(options.generation, 'generation');
@@ -174,13 +175,19 @@ export class Box3DCommandQueue {
         this.#limit = counter(limit === undefined ? Number.MAX_SAFE_INTEGER : limit, 'counterLimit');
     }
 
-    #reject(message: string): never {
-        const error = new Error(`Box3D command queue: ${message}`);
-        if (this.#reading) this.#readFailure = true;
+    #latch(error: unknown): void {
+        if (this.#reading && !this.#readFailure) {
+            this.#readFailure = true;
+            this.#readError = error;
+        }
         if (this.#phase === 'collecting') {
             if (!this.#candidateFailed) this.#failure = error;
             this.#candidateFailed = true;
         }
+    }
+    #reject(message: string): never {
+        const error = new Error(`Box3D command queue: ${message}`);
+        this.#latch(error);
         throw error;
     }
     #admit(...phases: Phase[]): void {
@@ -195,18 +202,17 @@ export class Box3DCommandQueue {
     #copy<T>(read: () => T): T {
         this.#reading = true;
         this.#readFailure = false;
+        this.#readError = undefined;
         try {
             const value = read();
-            if (this.#readFailure) this.#reject('nested input admission was caught');
+            if (this.#readFailure) throw this.#readError;
             return value;
         } catch (error) {
-            if (this.#phase === 'collecting') {
-                if (!this.#candidateFailed) this.#failure = error;
-                this.#candidateFailed = true;
-            }
-            throw error;
+            this.#latch(error);
+            throw this.#readError;
         } finally {
             this.#reading = false;
+            this.#readError = undefined;
         }
     }
     #ticket(candidate: CommandCandidate, phase: Phase): void {
@@ -245,35 +251,51 @@ export class Box3DCommandQueue {
         body.target = 'protected';
     }
     submit(identity: object, input: CommandInput): number {
+        return this.withSubmissionAdmission(() => ({ body: identity, command: input }));
+    }
+    /** Owner resolution, validation and original argument reads MUST occur inside read.
+     * It returns one candidate only; calling submit from it is forbidden reentry.
+     * The owner must independently fence native/config/Node mutation before reading
+     * caller-owned data, even in ready phase, and retain that fence through this
+     * method's return/throw (not just read's return). Establish/reuse it at read's
+     * start so owner-admission refusals also latch. Queue admission guards only this
+     * queue's APIs; it proves no body state and cannot roll back callback side effects.
+     */
+    withSubmissionAdmission(read: () => { readonly body: object; readonly command: CommandInput }): number {
         this.#admit('ready', 'collecting');
         if (this.#completedTicks >= this.#limit) this.#reject('tick counter exhausted');
-        const body = this.#body(identity);
-        const command = this.#copy(() => copyCommand(input));
-        const kind = command.kind;
-        if ((kind === 'target' || kind === 'target-clear') && body.target !== 'active')
-            this.#reject('target is not active');
-        if (kind === 'teleport' && body.target === 'protected')
-            this.#reject('protected zero must settle before teleport');
-        if (['force', 'torque', 'impulse', 'angular-impulse'].includes(kind) && body.target !== 'none')
-            this.#reject('effects cannot target an owned kinematic body');
-        if (this.#sequence >= this.#limit) this.#reject('sequence exhausted');
-        const sequence = this.#sequence + 1;
-        const record: CommandRecord = Object.freeze({
-            generation: this.#generation,
-            tickIndex: this.#completedTicks + 1,
-            sequence,
-            body: identity,
-            source: this.#phase === 'collecting' ? 'producer' : 'user',
-            command,
+        const record = this.#copy(() => {
+            if (typeof read !== 'function') this.#reject('submission reader must be a function');
+            const candidate = read();
+            object(candidate);
+            const identity = candidate.body;
+            const body = this.#body(identity);
+            const command = copyCommand(candidate.command);
+            const kind = command.kind;
+            if ((kind === 'target' || kind === 'target-clear') && body.target !== 'active')
+                this.#reject('target is not active');
+            if (kind === 'teleport' && body.target === 'protected')
+                this.#reject('protected zero must settle before teleport');
+            if (['force', 'torque', 'impulse', 'angular-impulse'].includes(kind) && body.target !== 'none')
+                this.#reject('effects cannot target an owned kinematic body');
+            if (this.#sequence >= this.#limit) this.#reject('sequence exhausted');
+            return Object.freeze({
+                generation: this.#generation,
+                tickIndex: this.#completedTicks + 1,
+                sequence: this.#sequence + 1,
+                body: identity,
+                source: this.#phase === 'collecting' ? ('producer' as const) : ('user' as const),
+                command,
+            });
         });
         const replacement = Object.freeze([
             ...(this.#phase === 'collecting' ? this.#provisional : this.#pending),
             record,
         ]);
-        this.#sequence = sequence;
+        this.#sequence = record.sequence;
         if (this.#phase === 'collecting') this.#provisional = replacement;
         else this.#pending = replacement;
-        return sequence;
+        return record.sequence;
     }
     cancelPending(identity: object): number {
         this.#admit('ready');
@@ -379,7 +401,7 @@ export class Box3DCommandQueue {
         } catch (error) {
             this.#provisional = Object.freeze([]);
             this.#phase = 'ready';
-            throw error;
+            throw this.#candidateFailed ? this.#failure : error;
         }
     }
     /** A read-only planner throw/refusal also takes this path; it is not mutation. */

@@ -1,0 +1,201 @@
+{
+  "scope": "Two live source files plus new admission evidence/handoff; inventory excludes itself",
+  "files": [
+    {
+      "path": "src/air/physics/box3d/command-queue.ts",
+      "bytes": 21375,
+      "sha256": "42550d8487fd7ad05d142bc4b3ab764ddf8bedec140098dc35f88ae0ba786b6b"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-control.mjs",
+      "bytes": 34875,
+      "sha256": "a9aff710ea1c5e686f3a6caa9f5541723fd9b40be22c703ffbedcb3e28e89f57"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-admission-evidence-20261022-green-a/controls.raw.json",
+      "bytes": 17612,
+      "sha256": "6d5419dbed0432354d78517fb483d872d5a26c8db47377f76ac54c27374bf3b5"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-admission-evidence-20261022-green-a/format.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-admission-evidence-20261022-green-a/format.stdout.log",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-admission-evidence-20261022-green-a/receipt.json",
+      "bytes": 2492,
+      "sha256": "0d3aa72a479930e276533504c74958380cf701649193c4f7f707f83a5e3cd11e"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-admission-evidence-20261022-green-a/tsc.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-admission-evidence-20261022-green-a/tsc.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-admission-evidence-20261022-green-b/controls.raw.json",
+      "bytes": 17612,
+      "sha256": "6d5419dbed0432354d78517fb483d872d5a26c8db47377f76ac54c27374bf3b5"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-admission-evidence-20261022-green-b/format.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-admission-evidence-20261022-green-b/format.stdout.log",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-admission-evidence-20261022-green-b/receipt.json",
+      "bytes": 2492,
+      "sha256": "ddda1827b4f687bed538faee345251c9d16545333851281caf17d31f34f6407a"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-admission-evidence-20261022-green-b/tsc.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-admission-evidence-20261022-green-b/tsc.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-admission-evidence-20261022-red-a/exit-code.txt",
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-admission-evidence-20261022-red-a/inputs/src/air/physics/box3d/command-queue.ts",
+      "bytes": 20099,
+      "sha256": "336e3d5bec910c6f814c06bd059fb0325876e17403ae501a3e78110616915d7b"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-admission-evidence-20261022-red-a/inputs/tools/verify/box3d/command-queue-control.mjs",
+      "bytes": 24042,
+      "sha256": "8149b65f8ca3f0db29b4b1cbb76ad538726ab32e5c738a914b0a56f17cd3b31c"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-admission-evidence-20261022-red-a/probe.mjs",
+      "bytes": 5702,
+      "sha256": "7276624eed603a86c2d5ad6475f689bcd3f1cb558bcfaad5b768e66370cd588f"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-admission-evidence-20261022-red-a/raw.json",
+      "bytes": 2210,
+      "sha256": "198cbea3e612859c996a174d889a93c98a59d32682fdfdd30550624f9d26cb93"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-admission-evidence-20261022-red-a/source-before.json",
+      "bytes": 233,
+      "sha256": "4bc18e3217e97dd6f49bcf45152f2d07a6264cbed5d01d1f0d05359107246fa7"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-admission-evidence-20261022-red-a/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-admission-evidence-20261022-red-a/stdout.log",
+      "bytes": 1710,
+      "sha256": "f7ef92d930f24220ea72cfbd47b195cd2a1a438760de7f60d3e83f70a526ea19"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-admission-handoff-20261022-b/README.md",
+      "bytes": 5217,
+      "sha256": "7cc744d83b907d8d833f38ca7accfa0af9d4c6d7c0757f14cc0b0c66d1a67052"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-admission-handoff-20261022-b/reviewed-sources.json",
+      "bytes": 3914,
+      "sha256": "3aef025e3c4fd0c69aee4b4d76accc5584ba2732b2778aa052eff66f09d034e8"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-admission-handoff-20261022-b/world-integration-plan.md",
+      "bytes": 13610,
+      "sha256": "5ee912e6a9f21f5332de6ca405d4fcdb813bf1c74f507654924a19be198542f3"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-admission-source-20261022-a/changes.diff",
+      "bytes": 18029,
+      "sha256": "ea697752d235ae67a33d7657f26f883cbaaf5c5ea21ba89705324cba525df9fb"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-admission-source-20261022-a/control.exit-code.txt",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-admission-source-20261022-a/control.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-admission-source-20261022-a/control.stdout.log",
+      "bytes": 2121,
+      "sha256": "abf236257adc59fa379a8873446c7a28b92144e002bb6057ffdbaa3ca5c91604"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-admission-source-20261022-a/inputs/src/air/physics/box3d/command-queue.ts",
+      "bytes": 21206,
+      "sha256": "21078d2f5a596cdd0c99d06f4e6bdd62a09d922f0f8a9c4efeefcca509171fc3"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-admission-source-20261022-a/inputs/tools/verify/box3d/command-queue-control.mjs",
+      "bytes": 34875,
+      "sha256": "a9aff710ea1c5e686f3a6caa9f5541723fd9b40be22c703ffbedcb3e28e89f57"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-admission-source-20261022-a/source-hashes.json",
+      "bytes": 233,
+      "sha256": "89617e75471fc2f64c2e6a552c7759250a56186d462c9526a1dfcbaa5ba802da"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-admission-source-20261022-b/changes-from-a.diff",
+      "bytes": 1147,
+      "sha256": "b479a23061ac1a100ba57d6a35d13a27f140777be084b556fc51a2dd038fc6b2"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-admission-source-20261022-b/control.exit-code.txt",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-admission-source-20261022-b/control.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-admission-source-20261022-b/control.stdout.log",
+      "bytes": 2121,
+      "sha256": "1e3993afd76c820a625c977e58467a3f4352664a226cf00a55cc7fa711d3ec60"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-admission-source-20261022-b/inputs/src/air/physics/box3d/command-queue.ts",
+      "bytes": 21375,
+      "sha256": "42550d8487fd7ad05d142bc4b3ab764ddf8bedec140098dc35f88ae0ba786b6b"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-admission-source-20261022-b/inputs/tools/verify/box3d/command-queue-control.mjs",
+      "bytes": 34875,
+      "sha256": "a9aff710ea1c5e686f3a6caa9f5541723fd9b40be22c703ffbedcb3e28e89f57"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-admission-source-20261022-b/source-hashes.json",
+      "bytes": 233,
+      "sha256": "43ffd57665b29d993c1a5f246a432cf0d2c44a99fcae5879260a8c54d42f47ed"
+    }
+  ],
+  "totalBytes": 309548
+}

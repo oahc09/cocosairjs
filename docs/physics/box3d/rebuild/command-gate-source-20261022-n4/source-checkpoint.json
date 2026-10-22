@@ -1,0 +1,67 @@
+{
+  "status": "PASS_76_SYNTHETIC_PARSER_CONTROLS_NOT_PHYSICS",
+  "files": [
+    {
+      "path": "tools/build/box3d-assets.cjs",
+      "bytes": 23766,
+      "sha256": "62d678b11c3489089c33c4d9fac599b54ac6d32ba8b2490926bbaa94f58eb7d5"
+    },
+    {
+      "path": "tools/build/box3d-command-qualification.cjs",
+      "bytes": 15991,
+      "sha256": "2c5e682eb5d3d4592bc30ba26c89190d70ae16e0226aac192d5a44453685d153"
+    },
+    {
+      "path": "tools/build/box3d-command-expectations.json",
+      "bytes": 9770,
+      "sha256": "62703014511167932cdec26ad9a393372ecd44e6ccb115ec474cff5ab4341921"
+    },
+    {
+      "path": "tools/build/box3d-command-qualification.test.cjs",
+      "bytes": 15747,
+      "sha256": "24d639b3281c97a7c7e106f3b6f172891ae4be9d7f0d086957fe926226a21108"
+    }
+  ],
+  "unchangedProductInputCount": 50,
+  "noCompilationPerformed": true,
+  "currentWasmQualificationStatus": "NOT_RUN_WAITING_FOR_FRESH_ARTIFACT",
+  "historicalM2": "EXPECTED_REJECTION",
+  "gate": {
+    "inputs": 50,
+    "compileUnits": 67,
+    "evidence": 29,
+    "successfulCommands": 21
+  },
+  "checks": {
+    "tests": 76,
+    "nativeChecks": 11,
+    "nativeNegatives": 25,
+    "wasmChecks": 13,
+    "namedNegatives": 47,
+    "samples": 217,
+    "nativeInvocations": 198,
+    "injectedMechanisms": 6
+  },
+  "commands": [
+    "node node_modules/prettier/bin/prettier.cjs --ignore-path /dev/null --write tools/build/box3d-assets.cjs tools/build/box3d-command-qualification.cjs tools/build/box3d-command-expectations.json tools/build/box3d-command-qualification.test.cjs",
+    "node --test tools/build/box3d-command-qualification.test.cjs",
+    "node node_modules/prettier/bin/prettier.cjs --ignore-path /dev/null --check tools/build/box3d-assets.cjs tools/build/box3d-command-qualification.cjs tools/build/box3d-command-expectations.json tools/build/box3d-command-qualification.test.cjs"
+  ],
+  "earlierAttempts": [
+    {
+      "directory": "tools/physics/box3d/output/command-gate-source-20261022-n1",
+      "status": "73_PARSER_CONTROLS_PASS",
+      "note": "Default Prettier ignored these paths, so its empty stdout is not formatting evidence. Later explicit owned paths formatted."
+    },
+    {
+      "directory": "tools/physics/box3d/output/command-gate-source-20261022-n2",
+      "status": "75_PASS_1_FAIL",
+      "note": "Negative parser test accidentally injected reset-valid actionBits16 after test fixture changed opcode. Retained before correcting target to clearForces."
+    },
+    {
+      "directory": "tools/physics/box3d/output/command-gate-source-20261022-n3",
+      "status": "75_PASS_1_FAIL",
+      "note": "Positive synthetic fixture was missing exact pose getter-name inventory after consumer strengthening. Corrected fixture, not consumer gate."
+    }
+  ]
+}

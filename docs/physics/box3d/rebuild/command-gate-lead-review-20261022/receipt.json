@@ -1,0 +1,50 @@
+{
+  "status": "PASS_INDEPENDENT_SYNTHETIC_GATE_CONTROLS_ONLY",
+  "timeUTC": "2026-10-22T13:40:14.906148+00:00",
+  "tests": 76,
+  "commands": [
+    {
+      "argv": [
+        "node",
+        "--test",
+        "tools/build/box3d-command-qualification.test.cjs"
+      ],
+      "exitCode": 0,
+      "note": "Default reporter was spec output, not TAP; initial Python collector assertion for # tests failed. Original stdout/stderr retained; not a parser/product failure."
+    },
+    {
+      "argv": [
+        "node",
+        "--test",
+        "--test-reporter=tap",
+        "tools/build/box3d-command-qualification.test.cjs"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "frozenExpectationsMatchN4": true,
+  "sourceFiles": [
+    {
+      "path": "tools/build/box3d-assets.cjs",
+      "bytes": 23766,
+      "sha256": "62d678b11c3489089c33c4d9fac599b54ac6d32ba8b2490926bbaa94f58eb7d5"
+    },
+    {
+      "path": "tools/build/box3d-command-qualification.cjs",
+      "bytes": 15991,
+      "sha256": "2c5e682eb5d3d4592bc30ba26c89190d70ae16e0226aac192d5a44453685d153"
+    },
+    {
+      "path": "tools/build/box3d-command-expectations.json",
+      "bytes": 9770,
+      "sha256": "62703014511167932cdec26ad9a393372ecd44e6ccb115ec474cff5ab4341921"
+    },
+    {
+      "path": "tools/build/box3d-command-qualification.test.cjs",
+      "bytes": 15747,
+      "sha256": "24d639b3281c97a7c7e106f3b6f172891ae4be9d7f0d086957fe926226a21108"
+    }
+  ],
+  "stdoutSha256": "60a3f08fd6757be6df1f11716ca640501163db339807046b90dc4a84dddceeb2",
+  "scope": "Synthetic in-memory parser controls, not native/WASM simulation or complete real artifact staging. Native50 inputs unchanged."
+}

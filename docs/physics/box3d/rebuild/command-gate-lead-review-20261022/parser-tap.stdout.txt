@@ -1,0 +1,466 @@
+TAP version 13
+# Subtest: SYNTHETIC ONLY: internally coherent parser fixture is accepted without creating artifacts
+ok 1 - SYNTHETIC ONLY: internally coherent parser fixture is accepted without creating artifacts
+  ---
+  duration_ms: 47.024155
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: native status
+ok 2 - SYNTHETIC rejection: native status
+  ---
+  duration_ms: 6.881567
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: native pointer
+ok 3 - SYNTHETIC rejection: native pointer
+  ---
+  duration_ms: 3.538451
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: native count
+ok 4 - SYNTHETIC rejection: native count
+  ---
+  duration_ms: 3.093692
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: native bounds
+ok 5 - SYNTHETIC rejection: native bounds
+  ---
+  duration_ms: 3.600091
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: native schema
+ok 6 - SYNTHETIC rejection: native schema
+  ---
+  duration_ms: 2.948381
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: native receipt inconsistency
+ok 7 - SYNTHETIC rejection: native receipt inconsistency
+  ---
+  duration_ms: 5.072059
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: native truncated output
+ok 8 - SYNTHETIC rejection: native truncated output
+  ---
+  duration_ms: 2.637461
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: WASM failed
+ok 9 - SYNTHETIC rejection: WASM failed
+  ---
+  duration_ms: 3.081227
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: cleanup error
+ok 10 - SYNTHETIC rejection: cleanup error
+  ---
+  duration_ms: 2.31025
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: stale schema
+ok 11 - SYNTHETIC rejection: stale schema
+  ---
+  duration_ms: 1.466828
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: fixture drift
+ok 12 - SYNTHETIC rejection: fixture drift
+  ---
+  duration_ms: 1.631044
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: negative missing
+ok 13 - SYNTHETIC rejection: negative missing
+  ---
+  duration_ms: 5.73833
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: negative duplicate
+ok 14 - SYNTHETIC rejection: negative duplicate
+  ---
+  duration_ms: 1.992568
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: negative phase
+ok 15 - SYNTHETIC rejection: negative phase
+  ---
+  duration_ms: 1.920411
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: sample total
+ok 16 - SYNTHETIC rejection: sample total
+  ---
+  duration_ms: 1.361347
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: sample hash
+ok 17 - SYNTHETIC rejection: sample hash
+  ---
+  duration_ms: 3.460149
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: sample size
+ok 18 - SYNTHETIC rejection: sample size
+  ---
+  duration_ms: 2.228194
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: sample records
+ok 19 - SYNTHETIC rejection: sample records
+  ---
+  duration_ms: 2.02714
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: sample rehashed missing
+ok 20 - SYNTHETIC rejection: sample rehashed missing
+  ---
+  duration_ms: 9.006657
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: sample rehashed unknown kind
+ok 21 - SYNTHETIC rejection: sample rehashed unknown kind
+  ---
+  duration_ms: 7.824237
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: rejection mutation
+ok 22 - SYNTHETIC rejection: rejection mutation
+  ---
+  duration_ms: 5.355096
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: reentrant calls
+ok 23 - SYNTHETIC rejection: reentrant calls
+  ---
+  duration_ms: 2.852767
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: single read count
+ok 24 - SYNTHETIC rejection: single read count
+  ---
+  duration_ms: 16.898343
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: analytic index duplication
+ok 25 - SYNTHETIC rejection: analytic index duplication
+  ---
+  duration_ms: 9.856556
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: reuse stale generation
+ok 26 - SYNTHETIC rejection: reuse stale generation
+  ---
+  duration_ms: 6.379375
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: invocation dropped
+ok 27 - SYNTHETIC rejection: invocation dropped
+  ---
+  duration_ms: 2.545342
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: invocation summary lies
+ok 28 - SYNTHETIC rejection: invocation summary lies
+  ---
+  duration_ms: 9.844152
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: invocation duplicate index
+ok 29 - SYNTHETIC rejection: invocation duplicate index
+  ---
+  duration_ms: 2.500475
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: native unexpected throw
+ok 30 - SYNTHETIC rejection: native unexpected throw
+  ---
+  duration_ms: 2.609009
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: native unexpected status
+ok 31 - SYNTHETIC rejection: native unexpected status
+  ---
+  duration_ms: 2.415677
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: raw word not uint32
+ok 32 - SYNTHETIC rejection: raw word not uint32
+  ---
+  duration_ms: 3.383355
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: raw input mismatched count
+ok 33 - SYNTHETIC rejection: raw input mismatched count
+  ---
+  duration_ms: 2.243035
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: raw output missing
+ok 34 - SYNTHETIC rejection: raw output missing
+  ---
+  duration_ms: 2.267268
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: raw refused fabricated output
+ok 35 - SYNTHETIC rejection: raw refused fabricated output
+  ---
+  duration_ms: 9.191433
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: raw wrong header
+ok 36 - SYNTHETIC rejection: raw wrong header
+  ---
+  duration_ms: 2.261976
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: raw illegal action
+ok 37 - SYNTHETIC rejection: raw illegal action
+  ---
+  duration_ms: 2.268489
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: raw nonfinite
+ok 38 - SYNTHETIC rejection: raw nonfinite
+  ---
+  duration_ms: 2.738494
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: raw finite actual drift
+ok 39 - SYNTHETIC rejection: raw finite actual drift
+  ---
+  duration_ms: 3.569495
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: raw duplicate COM drift
+ok 40 - SYNTHETIC rejection: raw duplicate COM drift
+  ---
+  duration_ms: 2.810974
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: raw reserved data
+ok 41 - SYNTHETIC rejection: raw reserved data
+  ---
+  duration_ms: 2.41199
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: injection missing
+ok 42 - SYNTHETIC rejection: injection missing
+  ---
+  duration_ms: 7.622722
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: injection duplicate
+ok 43 - SYNTHETIC rejection: injection duplicate
+  ---
+  duration_ms: 7.955484
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: postcommit false rollback
+ok 44 - SYNTHETIC rejection: postcommit false rollback
+  ---
+  duration_ms: 9.774774
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: unknown false rollback
+ok 45 - SYNTHETIC rejection: unknown false rollback
+  ---
+  duration_ms: 6.57622
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: injection replay
+ok 46 - SYNTHETIC rejection: injection replay
+  ---
+  duration_ms: 6.506546
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: injection actual capture drift
+ok 47 - SYNTHETIC rejection: injection actual capture drift
+  ---
+  duration_ms: 8.139004
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: injection diagnostic replay
+ok 48 - SYNTHETIC rejection: injection diagnostic replay
+  ---
+  duration_ms: 7.408993
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: injection wrong actual opcode
+ok 49 - SYNTHETIC rejection: injection wrong actual opcode
+  ---
+  duration_ms: 7.409752
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: injection stale snapshot
+ok 50 - SYNTHETIC rejection: injection stale snapshot
+  ---
+  duration_ms: 7.06192
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: native check pureValidation
+ok 51 - SYNTHETIC rejection: native check pureValidation
+  ---
+  duration_ms: 1.405934
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: native check lateRejectNoMutation
+ok 52 - SYNTHETIC rejection: native check lateRejectNoMutation
+  ---
+  duration_ms: 1.702105
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: native check allocationFailures
+ok 53 - SYNTHETIC rejection: native check allocationFailures
+  ---
+  duration_ms: 2.179292
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: native check exactFloatReplay
+ok 54 - SYNTHETIC rejection: native check exactFloatReplay
+  ---
+  duration_ms: 1.54225
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: native check rotatedOffsetAndLocks
+ok 55 - SYNTHETIC rejection: native check rotatedOffsetAndLocks
+  ---
+  duration_ms: 1.375284
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: native check kinematicOffsetCOM
+ok 56 - SYNTHETIC rejection: native check kinematicOffsetCOM
+  ---
+  duration_ms: 1.14743
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: native check tinyCapStationary
+ok 57 - SYNTHETIC rejection: native check tinyCapStationary
+  ---
+  duration_ms: 1.078451
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: native check protectedSequenceZero
+ok 58 - SYNTHETIC rejection: native check protectedSequenceZero
+  ---
+  duration_ms: 1.092804
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: native check maxTransport
+ok 59 - SYNTHETIC rejection: native check maxTransport
+  ---
+  duration_ms: 1.996266
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: native check temporaryCleanup
+ok 60 - SYNTHETIC rejection: native check temporaryCleanup
+  ---
+  duration_ms: 1.005591
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: native check coreCleanup
+ok 61 - SYNTHETIC rejection: native check coreCleanup
+  ---
+  duration_ms: 1.101645
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: WASM check rejectsOldMotionSchema
+ok 62 - SYNTHETIC rejection: WASM check rejectsOldMotionSchema
+  ---
+  duration_ms: 1.623986
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: WASM check singleReadStrictAdmission
+ok 63 - SYNTHETIC rejection: WASM check singleReadStrictAdmission
+  ---
+  duration_ms: 1.487438
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: WASM check validationAndEmptyPreserveSnapshot
+ok 64 - SYNTHETIC rejection: WASM check validationAndEmptyPreserveSnapshot
+  ---
+  duration_ms: 1.777095
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: WASM check pendingRecovery
+ok 65 - SYNTHETIC rejection: WASM check pendingRecovery
+  ---
+  duration_ms: 3.196566
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: WASM check orderedAnalyticArithmetic
+ok 66 - SYNTHETIC rejection: WASM check orderedAnalyticArithmetic
+  ---
+  duration_ms: 1.078555
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: WASM check immediateLocks
+ok 67 - SYNTHETIC rejection: WASM check immediateLocks
+  ---
+  duration_ms: 1.584593
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: WASM check targetReductionBoundaries
+ok 68 - SYNTHETIC rejection: WASM check targetReductionBoundaries
+  ---
+  duration_ms: 1.653768
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: WASM check disabledAndStaticReset
+ok 69 - SYNTHETIC rejection: WASM check disabledAndStaticReset
+  ---
+  duration_ms: 2.668458
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: WASM check mutationPhasesNoReplay
+ok 70 - SYNTHETIC rejection: WASM check mutationPhasesNoReplay
+  ---
+  duration_ms: 1.547726
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: WASM check realSleepingIslandWake
+ok 71 - SYNTHETIC rejection: WASM check realSleepingIslandWake
+  ---
+  duration_ms: 2.274553
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: WASM check growthAndImmutableCopies
+ok 72 - SYNTHETIC rejection: WASM check growthAndImmutableCopies
+  ---
+  duration_ms: 6.011194
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: WASM check fullGenerationReuse
+ok 73 - SYNTHETIC rejection: WASM check fullGenerationReuse
+  ---
+  duration_ms: 6.458025
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC rejection: WASM check cleanupAndModuleIsolation
+ok 74 - SYNTHETIC rejection: WASM check cleanupAndModuleIsolation
+  ---
+  duration_ms: 5.458429
+  type: 'test'
+  ...
+# Subtest: Consumer expectations remain identical to the independently frozen n4 inventory
+ok 75 - Consumer expectations remain identical to the independently frozen n4 inventory
+  ---
+  duration_ms: 1.088716
+  type: 'test'
+  ...
+# Subtest: SYNTHETIC ONLY: exact 21-command schedule rejects omissions, additions and reordered qualifications
+ok 76 - SYNTHETIC ONLY: exact 21-command schedule rejects omissions, additions and reordered qualifications
+  ---
+  duration_ms: 2.645425
+  type: 'test'
+  ...
+1..76
+# tests 76
+# suites 0
+# pass 76
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 581.551691

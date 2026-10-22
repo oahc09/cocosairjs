@@ -8,7 +8,17 @@ The [state ledger](../../../../ai/ledgers/box3d-rebuild-state.json) deliberately
 
 The required recovery procedure creates a Git bundle, clones it into an independent temporary repository, verifies Git connectivity and every tracked file, and writes the recovery receipt. The Library round-trip is a separate required delivery step. Run node tools/verify/box3d/rebuild-checkpoint.cjs --output /absolute/new-directory from a clean committed snapshot. The helper has four passing recovery/negative-control tests; this is not a physical acceptance PASS. --committed-only explicitly excludes and reports ongoing uncommitted work.
 
-## Current preservation point, 2026-10-22
+## Current preservation point, 2026-10-22 13:38 UTC
+
+Remote checkpoint 23 is `15d18854a5e91dbf02f2f41f088bfc41e0ed334c`, corresponding to local source `9328a27e7a883cca71e3d3be8b713a592c7059e6`. Library `libfile_80e2e08b358c8191864a809d1985b84e` preserves a 1,070,589-byte incremental package. It explicitly requires full checkpoint 22, Library `libfile_10c86f5827f481919e3938fbb0c2670b`, source `e5c5674bfe08be0c9fda72c484f4380bd0d0e2c6`. Actual download and independent-object-store incremental restoration checked all 14,245 files, modes and Git connectivity. It is not a standalone bundle. See the two exact Library receipts and remote-checkpoint-23.json.
+
+The current unified command n4 schema is `e6329dce9b3e6fce69cfd5da318f1f708b95b7af834edb667de8306f9cae0a5d`. All 50 build inputs were frozen and externally restored before the first new host Debug execution. That finite run executed 78 successful commands and seven C contracts, including 25 new command refusals and 11 command checks; it is not WASM32 or browser evidence. Its future WASM qualification inventory is exactly 67 compile units, 29 audit files and 21 commands. New-schema WASM and complete real-artifact staging remain NOT_RUN. The new staging parser has only finite synthetic receipt controls so far and rejects old m2 artifacts.
+
+Actual engine mutation entry points have 32 added guard/import lines. The same immutable fixture retains 41 original RED cases and five controls, then 46/46 cases and 163/163 checks on patched sources; an independent lead rerun also passed. Delegate call counters are not native simulation. Actual World transaction leases, unified queue/producer activation, public target/teleport, lifetime settlement and pause integration are still incomplete. Earlier fixture and mutable-observation recorder failures remain immutable and are not the final evidence pair.
+
+All 2,128 formal required cells remain NOT_RUN. Historical native and AIR qualifications below belong to their frozen source/artifact identities and cannot qualify n4. No main change, merge, release or deployment was performed.
+
+## Historical checkpoint 16 and m2 qualification
 
 Remote checkpoint 16 is bde1706f2f6591cc44484fd764e2997c6e87a009. Its exact local source snapshot 24c4ec977f173630009a3a42c57a0952fab1a736 was independently restored from Library libfile_cec1d349a9ec8191849ca44a836f1be8, with all 8,009 tracked files checked.
 

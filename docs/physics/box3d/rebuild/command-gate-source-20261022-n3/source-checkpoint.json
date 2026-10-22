@@ -1,0 +1,26 @@
+{
+  "status": "SYNTHETIC_PARSER_CONTROLS_75_PASS_1_FAIL_NOT_PHYSICS",
+  "reason": "Positive synthetic fixture omitted the newly checked exact pose getter-name inventory. Negative results are not treated as an independently adequate gate proof while positive fails.",
+  "files": [
+    {
+      "path": "tools/build/box3d-assets.cjs",
+      "bytes": 23411,
+      "sha256": "f628b921891d46f5fd4e73bfdbfe6cf67ec0823dec5f56c346b929ed3692ca07"
+    },
+    {
+      "path": "tools/build/box3d-command-qualification.cjs",
+      "bytes": 15991,
+      "sha256": "2c5e682eb5d3d4592bc30ba26c89190d70ae16e0226aac192d5a44453685d153"
+    },
+    {
+      "path": "tools/build/box3d-command-expectations.json",
+      "bytes": 9770,
+      "sha256": "62703014511167932cdec26ad9a393372ecd44e6ccb115ec474cff5ab4341921"
+    },
+    {
+      "path": "tools/build/box3d-command-qualification.test.cjs",
+      "bytes": 15045,
+      "sha256": "c3288217135d5d308a7f30a302c3321818e3cab6516ceed2cf1c02918b28861a"
+    }
+  ]
+}

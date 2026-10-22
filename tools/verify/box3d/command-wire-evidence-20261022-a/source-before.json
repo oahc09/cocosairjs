@@ -1,0 +1,9 @@
+{
+  "src/air/physics/box3d/command-wire.ts": "4f89d5d0aaec26d8a40e30402d1f953ddcc6bb8549fa01a762ecfae83930180c",
+  "src/air/physics/box3d/command-queue.ts": "42550d8487fd7ad05d142bc4b3ab764ddf8bedec140098dc35f88ae0ba786b6b",
+  "src/air/physics/box3d/binding/facade.d.mts": "788057c4dd78a3ad6d6b33d846f223386f27dd393c71ee53a0245cb7414459dc",
+  "tools/verify/box3d/command-wire-control.mjs": "2b64fef257b676e8304ba1aab153fc8b0081cf11c61698a221d6b6e5cbba07a0",
+  "docs/physics/box3d/contracts/unified-command-decisions-v1.md": "56303d162e12346729c66461c1fa9976e69c941fb549804c7a110d1887c695d6",
+  "docs/physics/box3d/contracts/unified-command-wire-v1.md": "f88641a6e924ae3de4f4fe1d1cba20a1d8b82ac01bea28c221e1a6bf7d5079b9",
+  "docs/physics/box3d/contracts/unified-mutation-fence-v1.md": "22df7ace85ada59cd51610f4e3300a09de8acc97fffa0b99b4059ac767f04e18"
+}
