@@ -1,0 +1,3159 @@
+{
+  "scope": "Actual engine and AIR source. Explicit mock native binding. Manual original onLoad/onEnable callbacks on unattached Nodes, no scheduler/game.init/WASM/physics qualification.",
+  "rows": [
+    {
+      "name": "initial listener commit completes disabled identity; replacement applies on later enable",
+      "checks": [
+        {
+          "name": "disabled component retained",
+          "actual": 1,
+          "expected": 1,
+          "passed": true
+        },
+        {
+          "name": "actual cache committed",
+          "actual": true,
+          "expected": true,
+          "passed": true
+        },
+        {
+          "name": "no fake native shape",
+          "actual": 0,
+          "expected": 0,
+          "passed": true
+        },
+        {
+          "name": "later real adapter applies copied value to mock",
+          "actual": 0.800000011920929,
+          "expected": 0.800000011920929,
+          "passed": true
+        },
+        {
+          "name": "no scope remains",
+          "actual": 0,
+          "expected": 0,
+          "passed": true
+        }
+      ],
+      "attempts": [],
+      "status": "PASS_SOURCE_WITH_MOCK_BINDING",
+      "cleanup": {
+        "errors": [],
+        "receipt": {
+          "attemptGeneration": 1,
+          "status": "closed",
+          "acquired": [
+            {
+              "backend": "box3d",
+              "resource": "module",
+              "cleanup": "released",
+              "retained": []
+            },
+            {
+              "backend": "box3d",
+              "resource": "world",
+              "cleanup": "released",
+              "retained": []
+            }
+          ],
+          "originalError": null,
+          "cleanupErrors": []
+        },
+        "diagnostics": {
+          "state": "destroyed",
+          "commandOwner": {
+            "phase": "closed",
+            "bodies": 0,
+            "nativeOwnership": "released",
+            "unresolvedNativeBodies": 0,
+            "components": 0,
+            "disabledComponents": 0,
+            "materials": 0,
+            "activeTemporaryScopes": 0,
+            "pendingCommands": 0,
+            "stagedCommandsSupported": false,
+            "unifiedTransactionsSupported": false,
+            "materialIdentityTracking": "actual-cache-commit",
+            "materialObserverLeases": 0,
+            "unresolvedMaterialScopes": 0,
+            "lastMaterialChange": {
+              "operation": "collider-material-set",
+              "actualRead": "copied",
+              "actualMatchesBefore": null,
+              "actualMatchesCandidate": true,
+              "effects": [],
+              "failed": false
+            },
+            "activationBlockers": [
+              "command-consumer-not-installed",
+              "shared-material-propagation-and-subscription-integrity",
+              "immediate-system-pause-notification",
+              "complete-early-entry-qualification",
+              "persistent-target-grant-budget"
+            ]
+          },
+          "ownerCleanupError": null,
+          "writeback": {
+            "epoch": 0,
+            "epochLimit": 9007199254740991
+          },
+          "generation": 1,
+          "native": {
+            "nativeStepIndex": 0,
+            "nativeCompleted": false,
+            "snapshotAvailable": false
+          },
+          "nativeObservationCurrent": false,
+          "lastStepOutcome": "not-attempted",
+          "attemptedSteps": 0,
+          "lastDt": null,
+          "solverSubSteps": 4,
+          "gravity": [
+            0,
+            -10,
+            0
+          ],
+          "allowSleep": true,
+          "material": {
+            "friction": 0.6000000238418579,
+            "restitution": 0
+          },
+          "materialShapeCount": 0,
+          "sceneBindingCount": 0,
+          "sceneSyncCalls": 0,
+          "afterEventsCalls": 0,
+          "emittedStep": 0,
+          "componentEventsSupported": false,
+          "debugPresented": false,
+          "error": null
+        }
+      }
+    },
+    {
+      "name": "cloned actual identity is fenced in original Node writeback callback",
+      "checks": [
+        {
+          "name": "distinct clone",
+          "actual": true,
+          "expected": true,
+          "passed": true
+        },
+        {
+          "name": "explicit rejection",
+          "actual": true,
+          "expected": true,
+          "passed": true
+        },
+        {
+          "name": "explicit rejection",
+          "actual": true,
+          "expected": true,
+          "passed": true
+        },
+        {
+          "name": "callback happened",
+          "actual": true,
+          "expected": true,
+          "passed": true
+        },
+        {
+          "name": "clone cache preserved",
+          "actual": 0.6,
+          "expected": 0.6,
+          "passed": true
+        },
+        {
+          "name": "world ready",
+          "actual": "ready",
+          "expected": "ready",
+          "passed": true
+        }
+      ],
+      "attempts": [
+        {
+          "thrown": true,
+          "code": "AIR_E_BOX3D_REENTRANT",
+          "error": "Error: A Box3D-owned temporary step or dispatch scope forbids this mutation (PhysicsMaterial.friction)"
+        },
+        {
+          "thrown": true,
+          "code": "AIR_E_BOX3D_REENTRANT",
+          "error": "Error: A Box3D-owned temporary step or dispatch scope forbids this mutation (PhysicsMaterial.friction)"
+        }
+      ],
+      "status": "PASS_SOURCE_WITH_MOCK_BINDING",
+      "cleanup": {
+        "errors": [],
+        "receipt": {
+          "attemptGeneration": 2,
+          "status": "closed",
+          "acquired": [
+            {
+              "backend": "box3d",
+              "resource": "module",
+              "cleanup": "released",
+              "retained": []
+            },
+            {
+              "backend": "box3d",
+              "resource": "world",
+              "cleanup": "released",
+              "retained": []
+            }
+          ],
+          "originalError": null,
+          "cleanupErrors": []
+        },
+        "diagnostics": {
+          "state": "destroyed",
+          "commandOwner": {
+            "phase": "closed",
+            "bodies": 0,
+            "nativeOwnership": "released",
+            "unresolvedNativeBodies": 0,
+            "components": 0,
+            "disabledComponents": 0,
+            "materials": 0,
+            "activeTemporaryScopes": 0,
+            "pendingCommands": 0,
+            "stagedCommandsSupported": false,
+            "unifiedTransactionsSupported": false,
+            "materialIdentityTracking": "actual-cache-commit",
+            "materialObserverLeases": 0,
+            "unresolvedMaterialScopes": 0,
+            "lastMaterialChange": {
+              "operation": "collider-material-clone",
+              "actualRead": "copied",
+              "actualMatchesBefore": null,
+              "actualMatchesCandidate": null,
+              "effects": [],
+              "failed": false
+            },
+            "activationBlockers": [
+              "command-consumer-not-installed",
+              "shared-material-propagation-and-subscription-integrity",
+              "immediate-system-pause-notification",
+              "complete-early-entry-qualification",
+              "persistent-target-grant-budget"
+            ]
+          },
+          "ownerCleanupError": null,
+          "writeback": {
+            "epoch": 1,
+            "epochLimit": 9007199254740991
+          },
+          "generation": 2,
+          "native": {
+            "nativeStepIndex": 1,
+            "nativeCompleted": true,
+            "snapshotAvailable": true
+          },
+          "nativeObservationCurrent": false,
+          "lastStepOutcome": "completed",
+          "attemptedSteps": 1,
+          "lastDt": 0.01666666753590107,
+          "solverSubSteps": 4,
+          "gravity": [
+            0,
+            -10,
+            0
+          ],
+          "allowSleep": true,
+          "material": {
+            "friction": 0.6000000238418579,
+            "restitution": 0
+          },
+          "materialShapeCount": 0,
+          "sceneBindingCount": 0,
+          "sceneSyncCalls": 0,
+          "afterEventsCalls": 0,
+          "emittedStep": 0,
+          "componentEventsSupported": false,
+          "debugPresented": false,
+          "error": null
+        }
+      }
+    },
+    {
+      "name": "candidate getter reads once behind owner guards; copied delegate does not reread",
+      "checks": [
+        {
+          "name": "explicit rejection",
+          "actual": true,
+          "expected": true,
+          "passed": true
+        },
+        {
+          "name": "explicit rejection",
+          "actual": true,
+          "expected": true,
+          "passed": true
+        },
+        {
+          "name": "single candidate read",
+          "actual": 1,
+          "expected": 1,
+          "passed": true
+        },
+        {
+          "name": "mock receives copied value",
+          "actual": 0.699999988079071,
+          "expected": 0.699999988079071,
+          "passed": true
+        },
+        {
+          "name": "cache actual identity",
+          "actual": true,
+          "expected": true,
+          "passed": true
+        }
+      ],
+      "attempts": [
+        {
+          "thrown": true,
+          "code": "AIR_E_BOX3D_REENTRANT",
+          "error": "Error: A Box3D-owned temporary step or dispatch scope forbids this mutation (PhysicsSystem.enable)"
+        },
+        {
+          "thrown": true,
+          "code": "AIR_E_BOX3D_REENTRANT",
+          "error": "Error: A Box3D-owned temporary step or dispatch scope forbids this mutation (setPosition: motion is owned)"
+        }
+      ],
+      "status": "PASS_SOURCE_WITH_MOCK_BINDING",
+      "cleanup": {
+        "errors": [],
+        "receipt": {
+          "attemptGeneration": 3,
+          "status": "closed",
+          "acquired": [
+            {
+              "backend": "box3d",
+              "resource": "module",
+              "cleanup": "released",
+              "retained": []
+            },
+            {
+              "backend": "box3d",
+              "resource": "world",
+              "cleanup": "released",
+              "retained": []
+            }
+          ],
+          "originalError": null,
+          "cleanupErrors": []
+        },
+        "diagnostics": {
+          "state": "destroyed",
+          "commandOwner": {
+            "phase": "closed",
+            "bodies": 0,
+            "nativeOwnership": "released",
+            "unresolvedNativeBodies": 0,
+            "components": 0,
+            "disabledComponents": 0,
+            "materials": 0,
+            "activeTemporaryScopes": 0,
+            "pendingCommands": 0,
+            "stagedCommandsSupported": false,
+            "unifiedTransactionsSupported": false,
+            "materialIdentityTracking": "actual-cache-commit",
+            "materialObserverLeases": 0,
+            "unresolvedMaterialScopes": 0,
+            "lastMaterialChange": {
+              "operation": "collider-material-set",
+              "actualRead": "copied",
+              "actualMatchesBefore": null,
+              "actualMatchesCandidate": true,
+              "effects": [],
+              "failed": false
+            },
+            "activationBlockers": [
+              "command-consumer-not-installed",
+              "shared-material-propagation-and-subscription-integrity",
+              "immediate-system-pause-notification",
+              "complete-early-entry-qualification",
+              "persistent-target-grant-budget"
+            ]
+          },
+          "ownerCleanupError": null,
+          "writeback": {
+            "epoch": 0,
+            "epochLimit": 9007199254740991
+          },
+          "generation": 3,
+          "native": {
+            "nativeStepIndex": 0,
+            "nativeCompleted": false,
+            "snapshotAvailable": false
+          },
+          "nativeObservationCurrent": false,
+          "lastStepOutcome": "not-attempted",
+          "attemptedSteps": 0,
+          "lastDt": null,
+          "solverSubSteps": 4,
+          "gravity": [
+            0,
+            -10,
+            0
+          ],
+          "allowSleep": true,
+          "material": {
+            "friction": 0.6000000238418579,
+            "restitution": 0
+          },
+          "materialShapeCount": 0,
+          "sceneBindingCount": 0,
+          "sceneSyncCalls": 0,
+          "afterEventsCalls": 0,
+          "emittedStep": 0,
+          "componentEventsSupported": false,
+          "debugPresented": false,
+          "error": null
+        }
+      }
+    },
+    {
+      "name": "Collider listener throw 0 after delegate preserves actual old cache and faults without replay",
+      "checks": [
+        {
+          "name": "original falsy error",
+          "actual": true,
+          "expected": true,
+          "passed": true
+        },
+        {
+          "name": "actual old cache",
+          "actual": true,
+          "expected": true,
+          "passed": true
+        },
+        {
+          "name": "mock native committed",
+          "actual": 0.800000011920929,
+          "expected": 0.800000011920929,
+          "passed": true
+        },
+        {
+          "name": "one setter not reverse write",
+          "actual": 1,
+          "expected": 1,
+          "passed": true
+        },
+        {
+          "name": "fault",
+          "actual": "faulted",
+          "expected": "faulted",
+          "passed": true
+        },
+        {
+          "name": "actual read classification",
+          "actual": true,
+          "expected": true,
+          "passed": true
+        },
+        {
+          "name": "candidate distinction",
+          "actual": false,
+          "expected": false,
+          "passed": true
+        },
+        {
+          "name": "explicit rejection",
+          "actual": true,
+          "expected": true,
+          "passed": true
+        }
+      ],
+      "attempts": [
+        {
+          "thrown": true,
+          "code": "AIR_E_BOX3D_WORLD_FAULTED",
+          "error": "Error: [AIR_E_BOX3D_WORLD_FAULTED] step: World is faulted or closed; no native operation was attempted."
+        }
+      ],
+      "status": "PASS_SOURCE_WITH_MOCK_BINDING",
+      "cleanup": {
+        "errors": [],
+        "receipt": {
+          "attemptGeneration": 4,
+          "status": "closed",
+          "acquired": [
+            {
+              "backend": "box3d",
+              "resource": "module",
+              "cleanup": "released",
+              "retained": []
+            },
+            {
+              "backend": "box3d",
+              "resource": "world",
+              "cleanup": "released",
+              "retained": []
+            }
+          ],
+          "originalError": null,
+          "cleanupErrors": []
+        },
+        "diagnostics": {
+          "state": "destroyed",
+          "commandOwner": {
+            "phase": "closed",
+            "bodies": 0,
+            "nativeOwnership": "released",
+            "unresolvedNativeBodies": 0,
+            "components": 0,
+            "disabledComponents": 0,
+            "materials": 0,
+            "activeTemporaryScopes": 0,
+            "pendingCommands": 0,
+            "stagedCommandsSupported": false,
+            "unifiedTransactionsSupported": false,
+            "materialIdentityTracking": "actual-cache-commit",
+            "materialObserverLeases": 0,
+            "unresolvedMaterialScopes": 0,
+            "lastMaterialChange": {
+              "operation": "collider-material-set",
+              "actualRead": "copied",
+              "actualMatchesBefore": true,
+              "actualMatchesCandidate": false,
+              "effects": [
+                "delegate-entered",
+                "delegate-returned",
+                "listener-edit-entered"
+              ],
+              "failed": true
+            },
+            "activationBlockers": [
+              "command-consumer-not-installed",
+              "shared-material-propagation-and-subscription-integrity",
+              "immediate-system-pause-notification",
+              "complete-early-entry-qualification",
+              "persistent-target-grant-budget"
+            ]
+          },
+          "ownerCleanupError": null,
+          "writeback": {
+            "epoch": 0,
+            "epochLimit": 9007199254740991
+          },
+          "generation": 4,
+          "native": {
+            "nativeStepIndex": 0,
+            "nativeCompleted": false,
+            "snapshotAvailable": false
+          },
+          "nativeObservationCurrent": false,
+          "lastStepOutcome": "not-attempted",
+          "attemptedSteps": 0,
+          "lastDt": null,
+          "solverSubSteps": 4,
+          "gravity": [
+            0,
+            -10,
+            0
+          ],
+          "allowSleep": true,
+          "material": {
+            "friction": 0.6000000238418579,
+            "restitution": 0
+          },
+          "materialShapeCount": 0,
+          "sceneBindingCount": 0,
+          "sceneSyncCalls": 0,
+          "afterEventsCalls": 0,
+          "emittedStep": 0,
+          "componentEventsSupported": false,
+          "debugPresented": false,
+          "error": "0"
+        }
+      }
+    },
+    {
+      "name": "System listener throw undefined after cache write records actual candidate and fault",
+      "checks": [
+        {
+          "name": "original undefined",
+          "actual": true,
+          "expected": true,
+          "passed": true
+        },
+        {
+          "name": "System actual cache",
+          "actual": true,
+          "expected": true,
+          "passed": true
+        },
+        {
+          "name": "native value",
+          "actual": 0.800000011920929,
+          "expected": 0.800000011920929,
+          "passed": true
+        },
+        {
+          "name": "fault",
+          "actual": "faulted",
+          "expected": "faulted",
+          "passed": true
+        },
+        {
+          "name": "actual candidate",
+          "actual": true,
+          "expected": true,
+          "passed": true
+        },
+        {
+          "name": "not old",
+          "actual": false,
+          "expected": false,
+          "passed": true
+        }
+      ],
+      "attempts": [],
+      "status": "PASS_SOURCE_WITH_MOCK_BINDING",
+      "cleanup": {
+        "errors": [],
+        "receipt": {
+          "attemptGeneration": 5,
+          "status": "closed",
+          "acquired": [
+            {
+              "backend": "box3d",
+              "resource": "module",
+              "cleanup": "released",
+              "retained": []
+            },
+            {
+              "backend": "box3d",
+              "resource": "world",
+              "cleanup": "released",
+              "retained": []
+            }
+          ],
+          "originalError": null,
+          "cleanupErrors": []
+        },
+        "diagnostics": {
+          "state": "destroyed",
+          "commandOwner": {
+            "phase": "closed",
+            "bodies": 0,
+            "nativeOwnership": "released",
+            "unresolvedNativeBodies": 0,
+            "components": 0,
+            "disabledComponents": 0,
+            "materials": 0,
+            "activeTemporaryScopes": 0,
+            "pendingCommands": 0,
+            "stagedCommandsSupported": false,
+            "unifiedTransactionsSupported": false,
+            "materialIdentityTracking": "actual-cache-commit",
+            "materialObserverLeases": 0,
+            "unresolvedMaterialScopes": 0,
+            "lastMaterialChange": {
+              "operation": "system-default-material-set",
+              "actualRead": "copied",
+              "actualMatchesBefore": false,
+              "actualMatchesCandidate": true,
+              "effects": [
+                "delegate-entered",
+                "delegate-returned",
+                "listener-edit-entered",
+                "cache-written"
+              ],
+              "failed": true
+            },
+            "activationBlockers": [
+              "command-consumer-not-installed",
+              "shared-material-propagation-and-subscription-integrity",
+              "immediate-system-pause-notification",
+              "complete-early-entry-qualification",
+              "persistent-target-grant-budget"
+            ]
+          },
+          "ownerCleanupError": null,
+          "writeback": {
+            "epoch": 0,
+            "epochLimit": 9007199254740991
+          },
+          "generation": 5,
+          "native": {
+            "nativeStepIndex": 0,
+            "nativeCompleted": false,
+            "snapshotAvailable": false
+          },
+          "nativeObservationCurrent": false,
+          "lastStepOutcome": "not-attempted",
+          "attemptedSteps": 0,
+          "lastDt": null,
+          "solverSubSteps": 4,
+          "gravity": [
+            0,
+            -10,
+            0
+          ],
+          "allowSleep": true,
+          "material": {
+            "friction": 0.800000011920929,
+            "restitution": 0
+          },
+          "materialShapeCount": 0,
+          "sceneBindingCount": 0,
+          "sceneSyncCalls": 0,
+          "afterEventsCalls": 0,
+          "emittedStep": 0,
+          "componentEventsSupported": false,
+          "debugPresented": false,
+          "error": null
+        }
+      }
+    },
+    {
+      "name": "old world default entry post-write readback throw null never rolls back",
+      "checks": [
+        {
+          "name": "original null",
+          "actual": true,
+          "expected": true,
+          "passed": true
+        },
+        {
+          "name": "one setter",
+          "actual": 1,
+          "expected": 1,
+          "passed": true
+        },
+        {
+          "name": "no reverse value",
+          "actual": 0.800000011920929,
+          "expected": 0.800000011920929,
+          "passed": true
+        },
+        {
+          "name": "fault",
+          "actual": "faulted",
+          "expected": "faulted",
+          "passed": true
+        }
+      ],
+      "attempts": [],
+      "status": "PASS_SOURCE_WITH_MOCK_BINDING",
+      "cleanup": {
+        "errors": [],
+        "receipt": {
+          "attemptGeneration": 6,
+          "status": "closed",
+          "acquired": [
+            {
+              "backend": "box3d",
+              "resource": "module",
+              "cleanup": "released",
+              "retained": []
+            },
+            {
+              "backend": "box3d",
+              "resource": "world",
+              "cleanup": "released",
+              "retained": []
+            }
+          ],
+          "originalError": null,
+          "cleanupErrors": []
+        },
+        "diagnostics": {
+          "state": "destroyed",
+          "commandOwner": {
+            "phase": "closed",
+            "bodies": 0,
+            "nativeOwnership": "released",
+            "unresolvedNativeBodies": 0,
+            "components": 0,
+            "disabledComponents": 0,
+            "materials": 0,
+            "activeTemporaryScopes": 0,
+            "pendingCommands": 0,
+            "stagedCommandsSupported": false,
+            "unifiedTransactionsSupported": false,
+            "materialIdentityTracking": "actual-cache-commit",
+            "materialObserverLeases": 0,
+            "unresolvedMaterialScopes": 0,
+            "lastMaterialChange": {
+              "operation": "collider-material-initialize",
+              "actualRead": "copied",
+              "actualMatchesBefore": null,
+              "actualMatchesCandidate": true,
+              "effects": [],
+              "failed": false
+            },
+            "activationBlockers": [
+              "command-consumer-not-installed",
+              "shared-material-propagation-and-subscription-integrity",
+              "immediate-system-pause-notification",
+              "complete-early-entry-qualification",
+              "persistent-target-grant-budget"
+            ]
+          },
+          "ownerCleanupError": null,
+          "writeback": {
+            "epoch": 0,
+            "epochLimit": 9007199254740991
+          },
+          "generation": 6,
+          "native": {
+            "nativeStepIndex": 0,
+            "nativeCompleted": false,
+            "snapshotAvailable": false
+          },
+          "nativeObservationCurrent": false,
+          "lastStepOutcome": "not-attempted",
+          "attemptedSteps": 0,
+          "lastDt": null,
+          "solverSubSteps": 4,
+          "gravity": [
+            0,
+            -10,
+            0
+          ],
+          "allowSleep": true,
+          "material": {
+            "friction": 0.6000000238418579,
+            "restitution": 0
+          },
+          "materialShapeCount": 0,
+          "sceneBindingCount": 0,
+          "sceneSyncCalls": 0,
+          "afterEventsCalls": 0,
+          "emittedStep": 0,
+          "componentEventsSupported": false,
+          "debugPresented": false,
+          "error": "null"
+        }
+      }
+    },
+    {
+      "name": "pure unsupported candidate preserves world/cache and permits later valid retry",
+      "checks": [
+        {
+          "name": "rejected",
+          "actual": true,
+          "expected": true,
+          "passed": true
+        },
+        {
+          "name": "no binding calls",
+          "actual": 9,
+          "expected": 9,
+          "passed": true
+        },
+        {
+          "name": "old actual cache",
+          "actual": true,
+          "expected": true,
+          "passed": true
+        },
+        {
+          "name": "ready",
+          "actual": "ready",
+          "expected": "ready",
+          "passed": true
+        },
+        {
+          "name": "idle",
+          "actual": "idle",
+          "expected": "idle",
+          "passed": true
+        },
+        {
+          "name": "retry committed",
+          "actual": true,
+          "expected": true,
+          "passed": true
+        }
+      ],
+      "attempts": [],
+      "status": "PASS_SOURCE_WITH_MOCK_BINDING",
+      "cleanup": {
+        "errors": [],
+        "receipt": {
+          "attemptGeneration": 7,
+          "status": "closed",
+          "acquired": [
+            {
+              "backend": "box3d",
+              "resource": "module",
+              "cleanup": "released",
+              "retained": []
+            },
+            {
+              "backend": "box3d",
+              "resource": "world",
+              "cleanup": "released",
+              "retained": []
+            }
+          ],
+          "originalError": null,
+          "cleanupErrors": []
+        },
+        "diagnostics": {
+          "state": "destroyed",
+          "commandOwner": {
+            "phase": "closed",
+            "bodies": 0,
+            "nativeOwnership": "released",
+            "unresolvedNativeBodies": 0,
+            "components": 0,
+            "disabledComponents": 0,
+            "materials": 0,
+            "activeTemporaryScopes": 0,
+            "pendingCommands": 0,
+            "stagedCommandsSupported": false,
+            "unifiedTransactionsSupported": false,
+            "materialIdentityTracking": "actual-cache-commit",
+            "materialObserverLeases": 0,
+            "unresolvedMaterialScopes": 0,
+            "lastMaterialChange": {
+              "operation": "collider-material-set",
+              "actualRead": "copied",
+              "actualMatchesBefore": null,
+              "actualMatchesCandidate": true,
+              "effects": [],
+              "failed": false
+            },
+            "activationBlockers": [
+              "command-consumer-not-installed",
+              "shared-material-propagation-and-subscription-integrity",
+              "immediate-system-pause-notification",
+              "complete-early-entry-qualification",
+              "persistent-target-grant-budget"
+            ]
+          },
+          "ownerCleanupError": null,
+          "writeback": {
+            "epoch": 0,
+            "epochLimit": 9007199254740991
+          },
+          "generation": 7,
+          "native": {
+            "nativeStepIndex": 0,
+            "nativeCompleted": false,
+            "snapshotAvailable": false
+          },
+          "nativeObservationCurrent": false,
+          "lastStepOutcome": "not-attempted",
+          "attemptedSteps": 0,
+          "lastDt": null,
+          "solverSubSteps": 4,
+          "gravity": [
+            0,
+            -10,
+            0
+          ],
+          "allowSleep": true,
+          "material": {
+            "friction": 0.6000000238418579,
+            "restitution": 0
+          },
+          "materialShapeCount": 0,
+          "sceneBindingCount": 0,
+          "sceneSyncCalls": 0,
+          "afterEventsCalls": 0,
+          "emittedStep": 0,
+          "componentEventsSupported": false,
+          "debugPresented": false,
+          "error": null
+        }
+      }
+    },
+    {
+      "name": "clone return mismatch faults with actualRead not requested, never pretends old actual proof",
+      "checks": [
+        {
+          "name": "mismatch rejected",
+          "actual": true,
+          "expected": true,
+          "passed": true
+        },
+        {
+          "name": "fault",
+          "actual": "faulted",
+          "expected": "faulted",
+          "passed": true
+        },
+        {
+          "name": "no inferred actual",
+          "actual": "not-requested",
+          "expected": "not-requested",
+          "passed": true
+        },
+        {
+          "name": "actual comparison unknown",
+          "actual": null,
+          "expected": null,
+          "passed": true
+        }
+      ],
+      "attempts": [],
+      "status": "PASS_SOURCE_WITH_MOCK_BINDING",
+      "cleanup": {
+        "errors": [],
+        "receipt": {
+          "attemptGeneration": 8,
+          "status": "closed",
+          "acquired": [
+            {
+              "backend": "box3d",
+              "resource": "module",
+              "cleanup": "released",
+              "retained": []
+            },
+            {
+              "backend": "box3d",
+              "resource": "world",
+              "cleanup": "released",
+              "retained": []
+            }
+          ],
+          "originalError": null,
+          "cleanupErrors": []
+        },
+        "diagnostics": {
+          "state": "destroyed",
+          "commandOwner": {
+            "phase": "closed",
+            "bodies": 0,
+            "nativeOwnership": "released",
+            "unresolvedNativeBodies": 0,
+            "components": 0,
+            "disabledComponents": 0,
+            "materials": 0,
+            "activeTemporaryScopes": 0,
+            "pendingCommands": 0,
+            "stagedCommandsSupported": false,
+            "unifiedTransactionsSupported": false,
+            "materialIdentityTracking": "actual-cache-commit",
+            "materialObserverLeases": 0,
+            "unresolvedMaterialScopes": 0,
+            "lastMaterialChange": {
+              "operation": "collider-material-clone",
+              "actualRead": "not-requested",
+              "actualMatchesBefore": null,
+              "actualMatchesCandidate": null,
+              "effects": [
+                "clone-allocation-entered"
+              ],
+              "failed": true
+            },
+            "activationBlockers": [
+              "command-consumer-not-installed",
+              "shared-material-propagation-and-subscription-integrity",
+              "immediate-system-pause-notification",
+              "complete-early-entry-qualification",
+              "persistent-target-grant-budget"
+            ]
+          },
+          "ownerCleanupError": null,
+          "writeback": {
+            "epoch": 0,
+            "epochLimit": 9007199254740991
+          },
+          "generation": 8,
+          "native": {
+            "nativeStepIndex": 0,
+            "nativeCompleted": false,
+            "snapshotAvailable": false
+          },
+          "nativeObservationCurrent": false,
+          "lastStepOutcome": "not-attempted",
+          "attemptedSteps": 0,
+          "lastDt": null,
+          "solverSubSteps": 4,
+          "gravity": [
+            0,
+            -10,
+            0
+          ],
+          "allowSleep": true,
+          "material": {
+            "friction": 0.6000000238418579,
+            "restitution": 0
+          },
+          "materialShapeCount": 0,
+          "sceneBindingCount": 0,
+          "sceneSyncCalls": 0,
+          "afterEventsCalls": 0,
+          "emittedStep": 0,
+          "componentEventsSupported": false,
+          "debugPresented": false,
+          "error": "Error: Actual clone coefficients differ from the prepared source."
+        }
+      }
+    },
+    {
+      "name": "initial listener failure leaves allocated owner faulted and teardown possible",
+      "checks": [
+        {
+          "name": "initial primary",
+          "actual": true,
+          "expected": true,
+          "passed": true
+        },
+        {
+          "name": "fault",
+          "actual": "faulted",
+          "expected": "faulted",
+          "passed": true
+        },
+        {
+          "name": "component remains owned",
+          "actual": 1,
+          "expected": 1,
+          "passed": true
+        },
+        {
+          "name": "not enabled",
+          "actual": 1,
+          "expected": 1,
+          "passed": true
+        }
+      ],
+      "attempts": [],
+      "status": "PASS_SOURCE_WITH_MOCK_BINDING",
+      "cleanup": {
+        "errors": [],
+        "receipt": {
+          "attemptGeneration": 9,
+          "status": "closed",
+          "acquired": [
+            {
+              "backend": "box3d",
+              "resource": "module",
+              "cleanup": "released",
+              "retained": []
+            },
+            {
+              "backend": "box3d",
+              "resource": "world",
+              "cleanup": "released",
+              "retained": []
+            }
+          ],
+          "originalError": null,
+          "cleanupErrors": []
+        },
+        "diagnostics": {
+          "state": "destroyed",
+          "commandOwner": {
+            "phase": "closed",
+            "bodies": 0,
+            "nativeOwnership": "released",
+            "unresolvedNativeBodies": 0,
+            "components": 0,
+            "disabledComponents": 0,
+            "materials": 0,
+            "activeTemporaryScopes": 0,
+            "pendingCommands": 0,
+            "stagedCommandsSupported": false,
+            "unifiedTransactionsSupported": false,
+            "materialIdentityTracking": "actual-cache-commit",
+            "materialObserverLeases": 0,
+            "unresolvedMaterialScopes": 0,
+            "lastMaterialChange": {
+              "operation": "collider-material-initialize",
+              "actualRead": "copied",
+              "actualMatchesBefore": true,
+              "actualMatchesCandidate": true,
+              "effects": [
+                "listener-edit-entered"
+              ],
+              "failed": true
+            },
+            "activationBlockers": [
+              "command-consumer-not-installed",
+              "shared-material-propagation-and-subscription-integrity",
+              "immediate-system-pause-notification",
+              "complete-early-entry-qualification",
+              "persistent-target-grant-budget"
+            ]
+          },
+          "ownerCleanupError": null,
+          "writeback": {
+            "epoch": 0,
+            "epochLimit": 9007199254740991
+          },
+          "generation": 9,
+          "native": {
+            "nativeStepIndex": 0,
+            "nativeCompleted": false,
+            "snapshotAvailable": false
+          },
+          "nativeObservationCurrent": false,
+          "lastStepOutcome": "not-attempted",
+          "attemptedSteps": 0,
+          "lastDt": null,
+          "solverSubSteps": 4,
+          "gravity": [
+            0,
+            -10,
+            0
+          ],
+          "allowSleep": true,
+          "material": {
+            "friction": 0.6000000238418579,
+            "restitution": 0
+          },
+          "materialShapeCount": 0,
+          "sceneBindingCount": 0,
+          "sceneSyncCalls": 0,
+          "afterEventsCalls": 0,
+          "emittedStep": 0,
+          "componentEventsSupported": false,
+          "debugPresented": false,
+          "error": "initial-listener"
+        }
+      }
+    },
+    {
+      "name": "two actual same-id material objects are not confused",
+      "checks": [
+        {
+          "name": "identity, not id string",
+          "actual": true,
+          "expected": true,
+          "passed": true
+        },
+        {
+          "name": "copied effect",
+          "actual": 0.20000000298023224,
+          "expected": 0.20000000298023224,
+          "passed": true
+        }
+      ],
+      "attempts": [],
+      "status": "PASS_SOURCE_WITH_MOCK_BINDING",
+      "cleanup": {
+        "errors": [],
+        "receipt": {
+          "attemptGeneration": 10,
+          "status": "closed",
+          "acquired": [
+            {
+              "backend": "box3d",
+              "resource": "module",
+              "cleanup": "released",
+              "retained": []
+            },
+            {
+              "backend": "box3d",
+              "resource": "world",
+              "cleanup": "released",
+              "retained": []
+            }
+          ],
+          "originalError": null,
+          "cleanupErrors": []
+        },
+        "diagnostics": {
+          "state": "destroyed",
+          "commandOwner": {
+            "phase": "closed",
+            "bodies": 0,
+            "nativeOwnership": "released",
+            "unresolvedNativeBodies": 0,
+            "components": 0,
+            "disabledComponents": 0,
+            "materials": 0,
+            "activeTemporaryScopes": 0,
+            "pendingCommands": 0,
+            "stagedCommandsSupported": false,
+            "unifiedTransactionsSupported": false,
+            "materialIdentityTracking": "actual-cache-commit",
+            "materialObserverLeases": 0,
+            "unresolvedMaterialScopes": 0,
+            "lastMaterialChange": {
+              "operation": "collider-material-set",
+              "actualRead": "copied",
+              "actualMatchesBefore": null,
+              "actualMatchesCandidate": true,
+              "effects": [],
+              "failed": false
+            },
+            "activationBlockers": [
+              "command-consumer-not-installed",
+              "shared-material-propagation-and-subscription-integrity",
+              "immediate-system-pause-notification",
+              "complete-early-entry-qualification",
+              "persistent-target-grant-budget"
+            ]
+          },
+          "ownerCleanupError": null,
+          "writeback": {
+            "epoch": 0,
+            "epochLimit": 9007199254740991
+          },
+          "generation": 10,
+          "native": {
+            "nativeStepIndex": 0,
+            "nativeCompleted": false,
+            "snapshotAvailable": false
+          },
+          "nativeObservationCurrent": false,
+          "lastStepOutcome": "not-attempted",
+          "attemptedSteps": 0,
+          "lastDt": null,
+          "solverSubSteps": 4,
+          "gravity": [
+            0,
+            -10,
+            0
+          ],
+          "allowSleep": true,
+          "material": {
+            "friction": 0.6000000238418579,
+            "restitution": 0
+          },
+          "materialShapeCount": 0,
+          "sceneBindingCount": 0,
+          "sceneSyncCalls": 0,
+          "afterEventsCalls": 0,
+          "emittedStep": 0,
+          "componentEventsSupported": false,
+          "debugPresented": false,
+          "error": null
+        }
+      }
+    },
+    {
+      "name": "no observer leaves original unattached Collider setter and getter behavior",
+      "checks": [
+        {
+          "name": "original clone",
+          "actual": true,
+          "expected": true,
+          "passed": true
+        },
+        {
+          "name": "cache follows original getter",
+          "actual": true,
+          "expected": true,
+          "passed": true
+        }
+      ],
+      "attempts": [],
+      "status": "PASS_SOURCE_WITH_MOCK_BINDING"
+    },
+    {
+      "name": "forged internal authority cannot use copied native route",
+      "checks": [
+        {
+          "name": "explicit rejection",
+          "actual": true,
+          "expected": true,
+          "passed": true
+        },
+        {
+          "name": "ordinary world remains ready",
+          "actual": "ready",
+          "expected": "ready",
+          "passed": true
+        }
+      ],
+      "attempts": [
+        {
+          "thrown": true,
+          "code": "AIR_E_BOX3D_REENTRANT",
+          "error": "Error: [AIR_E_BOX3D_REENTRANT] copied material application: No exact private material authority."
+        }
+      ],
+      "status": "PASS_SOURCE_WITH_MOCK_BINDING",
+      "cleanup": {
+        "errors": [],
+        "receipt": {
+          "attemptGeneration": 11,
+          "status": "closed",
+          "acquired": [
+            {
+              "backend": "box3d",
+              "resource": "module",
+              "cleanup": "released",
+              "retained": []
+            },
+            {
+              "backend": "box3d",
+              "resource": "world",
+              "cleanup": "released",
+              "retained": []
+            }
+          ],
+          "originalError": null,
+          "cleanupErrors": []
+        },
+        "diagnostics": {
+          "state": "destroyed",
+          "commandOwner": {
+            "phase": "closed",
+            "bodies": 0,
+            "nativeOwnership": "released",
+            "unresolvedNativeBodies": 0,
+            "components": 0,
+            "disabledComponents": 0,
+            "materials": 0,
+            "activeTemporaryScopes": 0,
+            "pendingCommands": 0,
+            "stagedCommandsSupported": false,
+            "unifiedTransactionsSupported": false,
+            "materialIdentityTracking": "actual-cache-commit",
+            "materialObserverLeases": 0,
+            "unresolvedMaterialScopes": 0,
+            "lastMaterialChange": {
+              "operation": "system-default-material-set",
+              "actualRead": "copied",
+              "actualMatchesBefore": null,
+              "actualMatchesCandidate": true,
+              "effects": [],
+              "failed": false
+            },
+            "activationBlockers": [
+              "command-consumer-not-installed",
+              "shared-material-propagation-and-subscription-integrity",
+              "immediate-system-pause-notification",
+              "complete-early-entry-qualification",
+              "persistent-target-grant-budget"
+            ]
+          },
+          "ownerCleanupError": null,
+          "writeback": {
+            "epoch": 0,
+            "epochLimit": 9007199254740991
+          },
+          "generation": 11,
+          "native": {
+            "nativeStepIndex": 0,
+            "nativeCompleted": false,
+            "snapshotAvailable": false
+          },
+          "nativeObservationCurrent": false,
+          "lastStepOutcome": "not-attempted",
+          "attemptedSteps": 0,
+          "lastDt": null,
+          "solverSubSteps": 4,
+          "gravity": [
+            0,
+            -10,
+            0
+          ],
+          "allowSleep": true,
+          "material": {
+            "friction": 0.6000000238418579,
+            "restitution": 0
+          },
+          "materialShapeCount": 0,
+          "sceneBindingCount": 0,
+          "sceneSyncCalls": 0,
+          "afterEventsCalls": 0,
+          "emittedStep": 0,
+          "componentEventsSupported": false,
+          "debugPresented": false,
+          "error": null
+        }
+      }
+    }
+  ],
+  "loadedEngineSources": [
+    {
+      "path": "src/air/physics/box3d/box-sphere-geometry.ts",
+      "sha256": "d492ee746f95ecb93466cbd1e96054280003e501e36408c6d7d65508fd1107c5"
+    },
+    {
+      "path": "src/air/physics/box3d/box-sphere-shape.ts",
+      "sha256": "3c739b77712689e34dbbab6052de5b1649663471d59540d4c2e5bfdbf1b84c20"
+    },
+    {
+      "path": "src/air/physics/box3d/command-queue.ts",
+      "sha256": "42550d8487fd7ad05d142bc4b3ab764ddf8bedec140098dc35f88ae0ba786b6b"
+    },
+    {
+      "path": "src/air/physics/box3d/debug.ts",
+      "sha256": "57bde545085811199ff317568a1baad7b63c16665279291931fef004fd7ab980"
+    },
+    {
+      "path": "src/air/physics/box3d/registration.ts",
+      "sha256": "6e681518fcaf2f65bc95cbf60488dfebc9038d6bc58526554d3e0ffa928a3f43"
+    },
+    {
+      "path": "src/air/physics/box3d/rigid-body.ts",
+      "sha256": "b3fa18706e05c0a44b32bd696bdefabe432a28b267192436eff804b053d96fb5"
+    },
+    {
+      "path": "src/air/physics/box3d/shared-body.ts",
+      "sha256": "9bf809b2e3c66b723a975cceb9725978750c0e68b57c2eb343a9788fcb89b8bc"
+    },
+    {
+      "path": "src/air/physics/box3d/unsupported.ts",
+      "sha256": "507a760922ece07e3f5df3f0053fd69b15f2e52637e542b4cb4a6973c87695e8"
+    },
+    {
+      "path": "src/air/physics/box3d/world-binding.ts",
+      "sha256": "aece3008837da8b55c77b969b2374c6a542b5debfa7cbffe5a8b2b41ffb78de0"
+    },
+    {
+      "path": "src/air/physics/box3d/world-command-owner.ts",
+      "sha256": "e557e79b1e4826a965df55d69e9efa7961aaefc72b631f4265f375e578105509"
+    },
+    {
+      "path": "src/air/physics/box3d/world-writeback.ts",
+      "sha256": "9463203d068f7f9c9058777fa8491f74b9ac7ea32feaa5f5decab12261579ab6"
+    },
+    {
+      "path": "src/air/physics/box3d/world.ts",
+      "sha256": "f63e83f75561fe60c19214b7691af7f1001b692277e7b5559fc4b575f7cda5a2"
+    },
+    {
+      "path": "src/air/physics/preparation.ts",
+      "sha256": "5f7ba137880c7a77b0990a4c27b52cde9d826164dcf116c43f9112ce96dcac60"
+    },
+    {
+      "path": "src/cocos/2d/framework/ui-renderer-manager.ts",
+      "sha256": "389fd1807a07703e614ded5944a2769ca6744aa8d699e93ffdf736f6aaed153d"
+    },
+    {
+      "path": "src/cocos/2d/framework/ui-skew-utils.ts",
+      "sha256": "56387461e3c1333335f01c2cf6f51a1aa584bf3d1c7686f7b6fee96c0c006f1f"
+    },
+    {
+      "path": "src/cocos/3d/misc/buffer.ts",
+      "sha256": "4611d0fbd7b7ebb113931ebd580402aed29c4f808db735a20b97fe2e2afec504"
+    },
+    {
+      "path": "src/cocos/3d/reflection-probe/reflection-probe-enum.ts",
+      "sha256": "61c91c07474631360161124e0c900409e602cdcf494c0f913b8a9d45f877930e"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/asset-manager.ts",
+      "sha256": "417a48c0b42241fda54df55b25a9623809d65cbde9b445f3a85bb08849314c4a"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/bin-package-unpack.ts",
+      "sha256": "2fdbfbca2e89a6d915718b96131cc4b35410192d12e951b4829d241b93dde04d"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/builtin-res-mgr.ts",
+      "sha256": "f16e9352c42b58326d0cb41d4d119125d2a78fec1001d2bec48663cfbd83223d"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/bundle.ts",
+      "sha256": "40beb79b5547e810679747e0da221ac8771211ab58001e8f573418b26b9c1081"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/cache-manager.ts",
+      "sha256": "711dfe980ec410b5491da83dfc232165b68fe32ec9b7184d72243b7c2cf4b32b"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/cache.ts",
+      "sha256": "3f6458b78b0d83974fae5c3c1d7776360861a51140d0375756f9d6f915b723b3"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/config.ts",
+      "sha256": "5ab1010951ef50dec1b22be7d58eaffe0bbe4cce96efd148f6d98546d303697f"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/depend-maps.ts",
+      "sha256": "f1a6ce78235c2a49e5f70f1fb8e46f3d6e0fa3aa0173c8a043d6bdb3c6bed315"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/depend-util.ts",
+      "sha256": "9e193394532eb5753676515c36d5d07ac4203066042e73ce3840b0d66fcaacbf"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/deprecated.ts",
+      "sha256": "a7ce25927c90290d53a946ddb987a86520c7fbb0c36de947f114eddad48f7ae4"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/deserialize.ts",
+      "sha256": "02bdd502a96d560a6cd0aac72ec308c4d48af4c1299180ec91da81276ecd8e6f"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/download-dom-image.ts",
+      "sha256": "bd3cf76b87b5c9e0da9fdcc5704879df236cf3b13264dfecf33dcb40834fcc1e"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/download-file.ts",
+      "sha256": "5b2bb0c2b8f23ce65ff820ae019716d9b1f39b6b99848a1cbd19ce6e2fe94917"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/download-script.ts",
+      "sha256": "b31eaedf60d462531ab338bc0a01c9c428bd45e8afc8a1e91c0db204f7354d10"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/downloader.ts",
+      "sha256": "5740536b57454b5016a71b9f31d44055594ef22b359814a08ec74a16d6884283"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/editor-path-replace.ts",
+      "sha256": "d8a8af13f43c7d18ed0f75f21a29391a8ac16c87a98e7103fcdad27ed983bc35"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/factory.ts",
+      "sha256": "79c371bc9cae455d2f5b16721b47cd4e30ae7276b139d29b2f22aff38a411960"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/fetch.ts",
+      "sha256": "89c6464ab675b1ddcb18073cbe42bcbf83b272caa55c6e1b3b22b1f60ed586e8"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/helper.ts",
+      "sha256": "71ace369cfd7949835c536798ad8e2dcf81501224c05df661c8abebb4790e62c"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/index.ts",
+      "sha256": "28ed4b35d6e43d008e888f14658ebd4de186c458a35fe7db7fa711cc0d6d3362"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/load.ts",
+      "sha256": "6d780a266c09208625cc792a152cf51340e1d90fb30769216254dbf0ac2f7d67"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/pack-manager.ts",
+      "sha256": "cdf5dae3df45ed289459b09ee2b2b9434d32f0f027e0b35b5680df48b0ac84bc"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/parser.ts",
+      "sha256": "fe657c0bb005705ae9b163402a5930c23b32f1519fe5e0acd5edafb1644c3f15"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/pipeline.ts",
+      "sha256": "1d9a1bc3a60922161cc5fe3501f16c727cb8b6748bec24f2ffd39a44fbb66470"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/plist-parser.ts",
+      "sha256": "46f24e3e3af42b586566da54fc0bbadd76d6a64dcd99ba0b5db45cc666bfcba3"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/preprocess.ts",
+      "sha256": "e61bbcedefb84e142ac09346f0d7b73e4b2d7c6e01289c3059ff70c10aec8d70"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/release-manager.ts",
+      "sha256": "01f047ec218e18c8676c1a8eb2ae6dfe013953e61e53c9ee9a5f47210668322f"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/request-item.ts",
+      "sha256": "f7a0827adbf0f1482ec34e205ad3f405c87059f07ad9f82b1c94c4a24f0caddd"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/shared.ts",
+      "sha256": "de64f4201612aec364fd7104fb791bf69128f05a2c4d0930b24083a1ddcc889b"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/task.ts",
+      "sha256": "a2c02dbca2b64b014bb818bd787d93bbc35a2acf9e95ed526d0a15f4c3fb921f"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/url-transformer.ts",
+      "sha256": "dd7f2b3c65493f69564b2ff5e8adafad97a2f905b323aa7073e32bdad1a2d3de"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/utilities.ts",
+      "sha256": "d38f4e0d4025ac4717467a7428055b8abcd36904d32c10f33b285dbd17472153"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/weak-cache.ts",
+      "sha256": "23d43e9d6fe09eec586a08fd7ab41ce674106dac92a5e68ece1d6bbc146ca4a5"
+    },
+    {
+      "path": "src/cocos/asset/assets/asset-enum.ts",
+      "sha256": "06eef7b41be56eca078b356a552c2963e571bfb5f533dee6680a332f34bcffc5"
+    },
+    {
+      "path": "src/cocos/asset/assets/asset.ts",
+      "sha256": "df868c6007e5ea3b7b122b35b11c469e103c3ab9c6e5b6b7684e5d8aeda3b37b"
+    },
+    {
+      "path": "src/cocos/asset/assets/buffer-asset.ts",
+      "sha256": "82100bb49d3acb497d12f5b483709cfa7989af04bd2c9d9f2900e5d2ae80ac30"
+    },
+    {
+      "path": "src/cocos/asset/assets/deprecation.ts",
+      "sha256": "2fb55f6002b94edf6b6e456de650d83a1aff12c5f6edb8bc95d861de62f2bb5e"
+    },
+    {
+      "path": "src/cocos/asset/assets/effect-asset.ts",
+      "sha256": "9ca223dc60396b28fb45461b3545826d38426d485b40b5addd6e46d6b4539236"
+    },
+    {
+      "path": "src/cocos/asset/assets/image-asset.ts",
+      "sha256": "1e7af3e07e53cebfcbe8b8bfaf2a1a28d6b9057e89bc1635e1de5277a2337796"
+    },
+    {
+      "path": "src/cocos/asset/assets/index.ts",
+      "sha256": "7a8de402184cf62aab33194a17770da2edf7f99ae87d2bcc85836d63e7185185"
+    },
+    {
+      "path": "src/cocos/asset/assets/json-asset.ts",
+      "sha256": "ea4f8fd68cf1479665e4d211a9c6a2ca6d0e5c50485e2631be12ea643296daa5"
+    },
+    {
+      "path": "src/cocos/asset/assets/material.ts",
+      "sha256": "c1708aa798dfc44d382bdc537ec5fc0916843c31ff420682034ef00267a386ad"
+    },
+    {
+      "path": "src/cocos/asset/assets/render-texture.ts",
+      "sha256": "97f0c048214da4fe805b3a858bef80343d372cf6c3341024e7dd87101f43962b"
+    },
+    {
+      "path": "src/cocos/asset/assets/rendering-sub-mesh.ts",
+      "sha256": "a3f39fa7a08812defae96f88aec45311d44770a6cc3ed5a4ae9a0cf5cf815ce4"
+    },
+    {
+      "path": "src/cocos/asset/assets/scene-asset.ts",
+      "sha256": "c1f7f147e7899b390d6d607540a252d747d06e4ecba563d5e1c2e3653d5b333b"
+    },
+    {
+      "path": "src/cocos/asset/assets/scripts.ts",
+      "sha256": "010c30efe79a8d7fcd5fa5cb11f27ff46d3e2462e0572059ba7ef480d8dfc35d"
+    },
+    {
+      "path": "src/cocos/asset/assets/simple-texture.ts",
+      "sha256": "c8de34caaf65979b96f486d5652a541178b61989411308f5b17879315bdac5a8"
+    },
+    {
+      "path": "src/cocos/asset/assets/text-asset.ts",
+      "sha256": "6a1a49a28afe526b1deb4bce3eb4523d1a3c8abb476b8a2d959b99bbc246b53b"
+    },
+    {
+      "path": "src/cocos/asset/assets/texture-2d.ts",
+      "sha256": "1f1ace0e8694220fafe897e59f3e97c1a68529e6d0b145a16c5ba6641dfbae5a"
+    },
+    {
+      "path": "src/cocos/asset/assets/texture-base.ts",
+      "sha256": "567d24608772c0a3556be8c80f7788086f834259f4a3a8f5aa1486546d14b474"
+    },
+    {
+      "path": "src/cocos/asset/assets/texture-cube.ts",
+      "sha256": "1306e22b3eb83276d94ef41b80ebb96562bde48c471f23fdd67eca9e2b47e2ae"
+    },
+    {
+      "path": "src/cocos/core/algorithm/binary-search.ts",
+      "sha256": "a868d488be98746be07d3bb6065ba0b846f0503ccf31524db745cd08bd691bb9"
+    },
+    {
+      "path": "src/cocos/core/algorithm/easing.ts",
+      "sha256": "f9dc0c58134e2e369bbbc9315ca1b77f2951bec91e8366488fb5cb89a4ad2854"
+    },
+    {
+      "path": "src/cocos/core/algorithm/index.ts",
+      "sha256": "a9a30c330f50001a37ebffb7061ca5257f89cb36f7d353cda7079dc20bd1f315"
+    },
+    {
+      "path": "src/cocos/core/algorithm/move.ts",
+      "sha256": "4f65ec224d7f679398a0d51623d38133407493d7d88e2fb08eb282bacab1d50e"
+    },
+    {
+      "path": "src/cocos/core/algorithm/murmurhash2_gc.ts",
+      "sha256": "4d045c1307f3c9a4dbf9c959f15b28651e83822b4c8073467874bb107d86be3b"
+    },
+    {
+      "path": "src/cocos/core/curves/bezier.ts",
+      "sha256": "442ca2139bf264124033cef2841d68d83922bb40e5cea872e406d1eb4325cdc0"
+    },
+    {
+      "path": "src/cocos/core/curves/curve.ts",
+      "sha256": "e573bcb7e3e77a836bf276fc17e03647bdd59bf384b50cd4473ffc5efe77472f"
+    },
+    {
+      "path": "src/cocos/core/curves/easing-method.ts",
+      "sha256": "66318595db6bc97badff4161b4a59c0877f9fc49fc1a59e04af8e767d3e9a09a"
+    },
+    {
+      "path": "src/cocos/core/curves/gradient.ts",
+      "sha256": "dbf9b3a576de9a888c0687ab288a6ce38ca47b0319bc880d0bf63c2a6ba4b706"
+    },
+    {
+      "path": "src/cocos/core/curves/index.ts",
+      "sha256": "e3b3f0b1fb81952e4a78d59527e917560d0820493627f558461cc194cce327ab"
+    },
+    {
+      "path": "src/cocos/core/curves/keyframe-curve.ts",
+      "sha256": "32636e43f53b6a4480735c83196dd35da3aee86618b1b27b6c6e601c907bc5e1"
+    },
+    {
+      "path": "src/cocos/core/curves/object-curve.ts",
+      "sha256": "28bba303980b0f14ae226a88dd1e3c429b4f9f5e57ccfd6522ae5a1c33c45ff6"
+    },
+    {
+      "path": "src/cocos/core/curves/quat-curve.ts",
+      "sha256": "a39544182ceca376f0e80ea9724c33494c764370d84055fb66462fb540ef2b99"
+    },
+    {
+      "path": "src/cocos/core/curves/real-curve-param.ts",
+      "sha256": "2c513fbc71e925e40686d4bb1376d470773fdb957569b83c3bb2cd3e2513d943"
+    },
+    {
+      "path": "src/cocos/core/curves/solve-cubic.ts",
+      "sha256": "852eae3d4c180fa22ce74ec01978f3fa132e9ea0badd6a3761b5d8cf310669b0"
+    },
+    {
+      "path": "src/cocos/core/data/class-decorator.ts",
+      "sha256": "4a0e7a9ea34b5e3ba86f43e2a66519f2391172fbaed54d52301ca5ca5aeca69f"
+    },
+    {
+      "path": "src/cocos/core/data/class-stash.ts",
+      "sha256": "d124b7e86200e29cdde756fdc0d7796c8c9ee92ecd5c7cea8082eb8022c69a71"
+    },
+    {
+      "path": "src/cocos/core/data/class.ts",
+      "sha256": "8fd054ebe1a66bf3245579cb5819b74b9d5f15575bf2db83ed718b0335dff941"
+    },
+    {
+      "path": "src/cocos/core/data/custom-serializable.ts",
+      "sha256": "f6eaf522393245e6c97359a42a40c6eea44848c6a7aa183074ba0f4d6e6ca7f0"
+    },
+    {
+      "path": "src/cocos/core/data/decorators/ccclass.ts",
+      "sha256": "6dd1103f0799b0937d8737fff5668ca57e40c3ebc021da9c60d9628aae0e4889"
+    },
+    {
+      "path": "src/cocos/core/data/decorators/component.ts",
+      "sha256": "ff2577e2071544e3c1518295f165b9e4c6acb1a68d5e40149ae803818da224a5"
+    },
+    {
+      "path": "src/cocos/core/data/decorators/editable.ts",
+      "sha256": "3ca33877b293e55a841bc09e193d8e340b83be27b0c6f92371ed065559eb61fb"
+    },
+    {
+      "path": "src/cocos/core/data/decorators/index.ts",
+      "sha256": "9f6cb7dd6a7f2c1756d67dc197dc38e1d2ac5e9ea6581b88809e56df7a19f9f0"
+    },
+    {
+      "path": "src/cocos/core/data/decorators/override.ts",
+      "sha256": "1d7dc83b11d59a0faf2a2d7a9d858e154cf276bd402ff691f974f3c03775930a"
+    },
+    {
+      "path": "src/cocos/core/data/decorators/property.ts",
+      "sha256": "e5a0c9d4ce6daf5f4838bc99b2f78d5e5d9f1da09fbcf96937b4e7dd96ba96b9"
+    },
+    {
+      "path": "src/cocos/core/data/decorators/serializable.ts",
+      "sha256": "fce1147377eb816049b43010351060470de02e12e67a19f2b0b7a6d5fe9465a5"
+    },
+    {
+      "path": "src/cocos/core/data/decorators/type.ts",
+      "sha256": "a72b1ffb5d0071138c3cea298febd9ebd792c922909d23dd10eb81a19e839edc"
+    },
+    {
+      "path": "src/cocos/core/data/decorators/utils.ts",
+      "sha256": "a7278cf9850ef207237f186672efb9a7842e0bb14cfb21427841db4ff79b9dda"
+    },
+    {
+      "path": "src/cocos/core/data/editor-extendable.ts",
+      "sha256": "a6987847969cd5ac0588fb0c9c40d2818bc8d7e7024e940251d9c77f5dd951f3"
+    },
+    {
+      "path": "src/cocos/core/data/editor-extras-tag.ts",
+      "sha256": "638a1e7f801009cf009679caae7f36277befaebb89cb969204d762f515c2c2c1"
+    },
+    {
+      "path": "src/cocos/core/data/garbage-collection.ts",
+      "sha256": "330adcc8947ba2048f1acb2779aabb21520ff82960108bbc612a2e6f642efad0"
+    },
+    {
+      "path": "src/cocos/core/data/gc-object.ts",
+      "sha256": "82afe29b5786db7f1d9f5cc442f4087653c15aedb918816ed374f5edbf254fe1"
+    },
+    {
+      "path": "src/cocos/core/data/index.ts",
+      "sha256": "0a5d3f279c1469ce20f80a71cbf593386756a7e1f120d18e6cacdc3f0fa00d52"
+    },
+    {
+      "path": "src/cocos/core/data/mutation-guard.ts",
+      "sha256": "93758e4b5a90ff90e5cabc7d3b0b5fd71069e955d4bf64517bec27d1957774a0"
+    },
+    {
+      "path": "src/cocos/core/data/object.ts",
+      "sha256": "0caf7f9c37bd59148b60d7ad465426428006c989b32c03632a3d1eae63fc5fb6"
+    },
+    {
+      "path": "src/cocos/core/data/serialization-metadata.ts",
+      "sha256": "3bc0a386a59cbe00829633a08c2c9eed8a46111a591ee482f9775d62a09eeeaf"
+    },
+    {
+      "path": "src/cocos/core/data/utils/asserts.ts",
+      "sha256": "823637ae6638178f896c8158558c099f288c1fa8629587f2650f684a52597120"
+    },
+    {
+      "path": "src/cocos/core/data/utils/attribute-internal.ts",
+      "sha256": "29eafcf224072c005aa57616748ffcb3ae12b2f0910600c5534fc2c0d808e5d4"
+    },
+    {
+      "path": "src/cocos/core/data/utils/attribute.ts",
+      "sha256": "676309e441cf9a92860fa97b1b7e806bdab7795cb5b349d6570b504926e4ac6e"
+    },
+    {
+      "path": "src/cocos/core/data/utils/compact-value-type-array.ts",
+      "sha256": "c86540fcbe19483464ae49b7ced0c800492606789dcc069ae298a26e3a63f121"
+    },
+    {
+      "path": "src/cocos/core/data/utils/compiler.ts",
+      "sha256": "8ce3f551c821f6142cef06721ae8bdc908a1ad7090e007a05e31ce50d5f02bdd"
+    },
+    {
+      "path": "src/cocos/core/data/utils/preprocess-class.ts",
+      "sha256": "81e8bb5dadf7528a1b6fb1ad8cb6343bf2f78ca1a2565d09878f120028bd2186"
+    },
+    {
+      "path": "src/cocos/core/data/utils/requiring-frame.ts",
+      "sha256": "8e5374cfd5a1cf74edaf5fe5fa9408a897af9e2e69e65a73557e7c3d3d91b755"
+    },
+    {
+      "path": "src/cocos/core/deprecated-3.7.0.ts",
+      "sha256": "7cf1e940220463117f1b3a180035021e0d8637687406d7c240b7266fad7b579e"
+    },
+    {
+      "path": "src/cocos/core/deprecated.ts",
+      "sha256": "34624260a2b89355000a68ea8a8b0502a655b9d39805305a4ad09cbb38846d52"
+    },
+    {
+      "path": "src/cocos/core/effect-settings.ts",
+      "sha256": "e4bbb7f78ea2961922b6ec6f00f4f02d2910d54f311bbedbf1ad3114f39f7e09"
+    },
+    {
+      "path": "src/cocos/core/event/async-delegate.ts",
+      "sha256": "fddb443a197b0d1856564369941b74d8b5d8ee6014f05f9da7c41b67a027a13e"
+    },
+    {
+      "path": "src/cocos/core/event/callbacks-invoker.ts",
+      "sha256": "544780e361767d5ae79d2c20a973651b544ceee6b7bd90e6ebe876185774918a"
+    },
+    {
+      "path": "src/cocos/core/event/event-target-factory.ts",
+      "sha256": "b041796db0d77951582fdf66e6fb446088cb828b27efc3b2f3ad6bf23b3a2197"
+    },
+    {
+      "path": "src/cocos/core/event/event-target.ts",
+      "sha256": "822834ef3ab0cad0948aabd5f1796f093b0363bb80def6df63401c0d204f2df0"
+    },
+    {
+      "path": "src/cocos/core/event/eventify.ts",
+      "sha256": "ad59c9f8dc67f40db877b2160989b792e488b256903d6fdccaf2c7433728c7e9"
+    },
+    {
+      "path": "src/cocos/core/event/index.ts",
+      "sha256": "267e3e0a6b4664a317eb51920ba24fac01ee333078b48385cd288996c71ca496"
+    },
+    {
+      "path": "src/cocos/core/geometry/aabb.ts",
+      "sha256": "81e388ac3c5518688ec4ce0e4be850efe8eb89b99551696a4bc088c144fc51ec"
+    },
+    {
+      "path": "src/cocos/core/geometry/capsule.ts",
+      "sha256": "b02274a3b7cbc8d6ba9b45aa32a90c1a8021241545c6d75e01a19522e0acaf9b"
+    },
+    {
+      "path": "src/cocos/core/geometry/curve.ts",
+      "sha256": "4130148ade41e1f4a30669aa003308cb3022dcacb1f83dbcb052eb2936debae7"
+    },
+    {
+      "path": "src/cocos/core/geometry/deprecated-3.0.0.ts",
+      "sha256": "c7afe3e4dab902fdfcc7a78f786878e10ec5d195cbb4d0f62676c9bfb6119465"
+    },
+    {
+      "path": "src/cocos/core/geometry/deprecated.ts",
+      "sha256": "f4dfde198ceb0e29f4275ff1b744b123c7d2369746afd32497364ea16565f3d8"
+    },
+    {
+      "path": "src/cocos/core/geometry/distance.ts",
+      "sha256": "776fee0db71c9223dcdfbb5f4703b02b1df77dc7fbca5c78712c2b09cfba698d"
+    },
+    {
+      "path": "src/cocos/core/geometry/enums.ts",
+      "sha256": "3029ad1d1e5bbd1e76c07fc97ffde5da86ba9eaecc38c10ac4b3c4c2202697ca"
+    },
+    {
+      "path": "src/cocos/core/geometry/frustum.ts",
+      "sha256": "269ae6649cb1f8bd99f2135b153ed474cf1d08b14b763831c79498791ecdcf94"
+    },
+    {
+      "path": "src/cocos/core/geometry/geometry-native-ext.ts",
+      "sha256": "20c39098e549cd0c7141479de367df5fb47d0b0344b161f371b8e63b9ef897a2"
+    },
+    {
+      "path": "src/cocos/core/geometry/index.ts",
+      "sha256": "802c41358deb43968c6f587597adfe07272a65206f95fbff140c858b597f6f28"
+    },
+    {
+      "path": "src/cocos/core/geometry/intersect.ts",
+      "sha256": "1f091c794c40390109c3ac8c6d58a0e3b81659ba786cb573f175ee6fe63233b4"
+    },
+    {
+      "path": "src/cocos/core/geometry/line.ts",
+      "sha256": "861a138de959e79fb6d81784460a9fc7c084488ae6fd40072683033dd8e26dd1"
+    },
+    {
+      "path": "src/cocos/core/geometry/obb.ts",
+      "sha256": "39f96209f84437d8cfb539e23aec4f40f26046124723fde817df0458167f277d"
+    },
+    {
+      "path": "src/cocos/core/geometry/plane.ts",
+      "sha256": "a5c89dd4aaf1a6462ba4faa59793ccaa3bb58be12826ca8f5148ecfe5a3c5c8e"
+    },
+    {
+      "path": "src/cocos/core/geometry/ray.ts",
+      "sha256": "70956a6c921546042cc97027519152a91739ef8b268f60abe99b96469dbe00d6"
+    },
+    {
+      "path": "src/cocos/core/geometry/spec.ts",
+      "sha256": "99ea85f414518ae4d6645c0cce2af707a5cd14dc03036272db142064f5de193a"
+    },
+    {
+      "path": "src/cocos/core/geometry/sphere.ts",
+      "sha256": "26ba9df85d2a565fb5e0c3f81f38b82f36d457c144d8745b3d8924e39f158860"
+    },
+    {
+      "path": "src/cocos/core/geometry/spline.ts",
+      "sha256": "d0be03c4eb1c700ec01693308cfe20b7d50208c640a83385d82bc8e8671badef"
+    },
+    {
+      "path": "src/cocos/core/geometry/triangle.ts",
+      "sha256": "9864b18ff321e28ad962a93393bc416f88a1cf9aabe1f6eab6cd66b46fab855a"
+    },
+    {
+      "path": "src/cocos/core/global-exports.ts",
+      "sha256": "3d6e18eb21cad8982fb444f8dec824a34ff5d0976e81ab9424264a0748e33424"
+    },
+    {
+      "path": "src/cocos/core/index.ts",
+      "sha256": "29416384491060988c0f05b1bc42c0e4e0874a1ffb3c727497c6510a9e98b914"
+    },
+    {
+      "path": "src/cocos/core/internal-index.ts",
+      "sha256": "b2fbd3f99f113eb96578c46143d6d182138ce02c903b9446b25ce046a04308ec"
+    },
+    {
+      "path": "src/cocos/core/math/bits.ts",
+      "sha256": "c87018e7d42d7a3df317ffc6f8e4a2090ba8ecf79b7646bcea2e75b872e20bb7"
+    },
+    {
+      "path": "src/cocos/core/math/color.ts",
+      "sha256": "f20f3f4f3bcd4a063e02ad9b6952a6e1d51b15e259861ab23e6826eaab43551d"
+    },
+    {
+      "path": "src/cocos/core/math/deprecated.ts",
+      "sha256": "63fbc299a0ef215bb321a6110ab94c47c0bbabc5db14eb8a7d7dd6e6d3b81cb9"
+    },
+    {
+      "path": "src/cocos/core/math/index.ts",
+      "sha256": "556abb8babe8901cba2f7c8971f3abff44323bda5cc9d564f36c010396d16425"
+    },
+    {
+      "path": "src/cocos/core/math/mat3.ts",
+      "sha256": "9deda856b83baeaa0bdfe92cc563c05c779856c4a6be5c293815b742b9168358"
+    },
+    {
+      "path": "src/cocos/core/math/mat4.ts",
+      "sha256": "ce41535a34d9d1a4d0e6eb4558066d426965eda52379a99ea427785df1a70568"
+    },
+    {
+      "path": "src/cocos/core/math/math-base.ts",
+      "sha256": "1f2e0e9e0ca17bc09571b3eb25aa925bf0b069bb6ae5ac73d2db74cb0513b6ad"
+    },
+    {
+      "path": "src/cocos/core/math/math-native-ext.ts",
+      "sha256": "f64956c8831ebe742c17f2b124a796637d36cc88fa1c9cf9c5c45ffe43d0fc2f"
+    },
+    {
+      "path": "src/cocos/core/math/quat.ts",
+      "sha256": "57fd2bab3cf9336404fea2f8ae93a76d944d328b27708280049ee44d35878f6c"
+    },
+    {
+      "path": "src/cocos/core/math/rect.ts",
+      "sha256": "8f2d9531c74b4a1efa005c7aecda3413af25f5466cfd813f610c245ff10e6053"
+    },
+    {
+      "path": "src/cocos/core/math/size.ts",
+      "sha256": "ce018146fcc1519835708c04dd6283b7367a2beeb1e0d6c948c487b8173cdb4b"
+    },
+    {
+      "path": "src/cocos/core/math/type-define.ts",
+      "sha256": "2d11c987c09e1453e56ada0a810826814689220a8e78a98eae40afd2c939587a"
+    },
+    {
+      "path": "src/cocos/core/math/utils.ts",
+      "sha256": "9d3323a9fe1c911a7df9301f3f2c62c5df511df15a773e337e4fd74e9c303e37"
+    },
+    {
+      "path": "src/cocos/core/math/vec2.ts",
+      "sha256": "63446ee7def9d9e7682f40571dc73f703dc47cecc2cb303d917355d7da2b1508"
+    },
+    {
+      "path": "src/cocos/core/math/vec3.ts",
+      "sha256": "fa315c0f3f332d0c4a46136ff6e89394eed78ecf466672414e40bbde6803c87f"
+    },
+    {
+      "path": "src/cocos/core/math/vec4.ts",
+      "sha256": "c3f3332b777c3424b22e72b67c7c212f851f5bddfc3d8efc9f33f37d0f22296c"
+    },
+    {
+      "path": "src/cocos/core/memop/cached-array.ts",
+      "sha256": "bce20cac0a1fb672e0d8f78e1e5f3bb4209c3b9ea8478afe035e3f2c1186fec4"
+    },
+    {
+      "path": "src/cocos/core/memop/index.ts",
+      "sha256": "c2a34cb4a05d557fb9c980d3c8e437533a2f04e101af84d9ae28a962db9e183b"
+    },
+    {
+      "path": "src/cocos/core/memop/pool.ts",
+      "sha256": "bf79a01b085835e3f351c4103dc2f1e4d13b9b8ec8360df9cbdb6090417da77c"
+    },
+    {
+      "path": "src/cocos/core/memop/recycle-pool.ts",
+      "sha256": "c535843b914161ea6c7656a346077de2a9d2097bd91fc063bca2d576031a6997"
+    },
+    {
+      "path": "src/cocos/core/memop/scalable-container.ts",
+      "sha256": "8999070d23d75ffdb5fb743b6ff55ae3e7f11f54c9618c66b4d95e58213bf414"
+    },
+    {
+      "path": "src/cocos/core/platform/debug.ts",
+      "sha256": "5946260a6bc7708ede10f2b2c0608313cf655f3bf7b4091b8b41fe901cd736c7"
+    },
+    {
+      "path": "src/cocos/core/platform/deprecated.ts",
+      "sha256": "2b1b9f0c1a0995007eb5135caec4dfe84cb295c18c871eaee96d4b7e01dae7c4"
+    },
+    {
+      "path": "src/cocos/core/platform/index.ts",
+      "sha256": "38b59815fbc3fd233a922bbe3e41eddd88e101da59bdbef7d8979da13609c849"
+    },
+    {
+      "path": "src/cocos/core/platform/macro.ts",
+      "sha256": "b8cf10d611c8c6401838c0796053f477a637c61c91372e5110eb33758378541d"
+    },
+    {
+      "path": "src/cocos/core/platform/property-validation.ts",
+      "sha256": "96fd053e6d6a4472aad8b83d7590eed5bc22b8ea0ea060bd01dc1540d240f11a"
+    },
+    {
+      "path": "src/cocos/core/platform/screen.ts",
+      "sha256": "e5cd872fc3340860773411695c087266c772de4e1384b5435e9e63d5381be060"
+    },
+    {
+      "path": "src/cocos/core/platform/sys.ts",
+      "sha256": "8f719ecd13e3ba3af399d95e551dce30c0c777facea838db2fa63e01c4ca564a"
+    },
+    {
+      "path": "src/cocos/core/platform/visible-rect.ts",
+      "sha256": "bb1a0bb149f423a6d8da599d12eea115f30aa372384f2c7b2072bb9a411b453b"
+    },
+    {
+      "path": "src/cocos/core/scheduler.ts",
+      "sha256": "236c2b56c26b6d404cd4205424db84c175c4db4d91e6c306a11fa74a769cb877"
+    },
+    {
+      "path": "src/cocos/core/settings.ts",
+      "sha256": "b3bd90a8be079252ed30ff6789f135de57f7f90ba8ab1519bcb293e4f78a02b2"
+    },
+    {
+      "path": "src/cocos/core/system.ts",
+      "sha256": "c0130fc74d1694fd76679b9a960431512df09716bc0ccb280723d0654fb75ce1"
+    },
+    {
+      "path": "src/cocos/core/utils/array.ts",
+      "sha256": "868861ada695c1fd9a331e7d908715be3531d0c9dfe0f5a8ee335f2fa3192fb6"
+    },
+    {
+      "path": "src/cocos/core/utils/coordinates-converts-utils.ts",
+      "sha256": "de6369b7046484899bc4106d0175584ba70088d7f9ea4870253d3a748788da0f"
+    },
+    {
+      "path": "src/cocos/core/utils/decode-uuid.ts",
+      "sha256": "3c835523a41a6b343742bebaec466373a30adbc8e286fdb6dbac01071424fb90"
+    },
+    {
+      "path": "src/cocos/core/utils/deprecated-3.6.0.ts",
+      "sha256": "392d59fe558d41fdcbf78f17868362a6028cfae7f8f27c3c4ebd29ea66b59165"
+    },
+    {
+      "path": "src/cocos/core/utils/id-generator.ts",
+      "sha256": "4e7ab93a60c622b00f419bfd4abe5ddb0fa379ffadd3da096adf7fdcb5850c2d"
+    },
+    {
+      "path": "src/cocos/core/utils/index.ts",
+      "sha256": "d455c1966ec8fbdfc1027a93f4090481616c736eeb4c53d9ff673d01ca0b2d37"
+    },
+    {
+      "path": "src/cocos/core/utils/js-typed.ts",
+      "sha256": "d371e3054283677f8a015055f008aba22479a2210830ebe9724e617759eaf86f"
+    },
+    {
+      "path": "src/cocos/core/utils/js.ts",
+      "sha256": "5d93fb9dc6b8c06d195668d5bfece2229a1fd854c6838c653f46dd81d495dac4"
+    },
+    {
+      "path": "src/cocos/core/utils/jsb-utils.ts",
+      "sha256": "c2ca0e050fcfd12d87d9618dee4f231b5a4f9b73075df02ab1ff66cfa480d915"
+    },
+    {
+      "path": "src/cocos/core/utils/misc.ts",
+      "sha256": "ecd1ff815cc1dfe07c2f36fa133f7fd3811764cc51872c47c597b721a1d65df9"
+    },
+    {
+      "path": "src/cocos/core/utils/path.ts",
+      "sha256": "a97eff09f36bf43b3d9571fa34085cbb44660e6d0f038a3e77db7f97dba292a2"
+    },
+    {
+      "path": "src/cocos/core/utils/pool.ts",
+      "sha256": "df41e640634fe7333c5520dbd08a88952a3eb1cf89d0ed36e81e7bfef1b6df27"
+    },
+    {
+      "path": "src/cocos/core/utils/x-deprecated.ts",
+      "sha256": "89858625f6b60ec783f8be0a3afca06c7484d4209e279c6575cc837f3a19df7d"
+    },
+    {
+      "path": "src/cocos/core/value-types/bitmask.ts",
+      "sha256": "74386c084dc3651671ebe3bcd70bd0aa6a3417e561baa5c5dc298f3d0bbd5081"
+    },
+    {
+      "path": "src/cocos/core/value-types/enum.ts",
+      "sha256": "93d3192cd10d8e0fef8f7f4b152405b790ae2109f21bfacef4775c69a173abc3"
+    },
+    {
+      "path": "src/cocos/core/value-types/index.ts",
+      "sha256": "58c330a7747552aeaf71dcdbdcff04de96a519cb7236b611e9ada42f822da8fc"
+    },
+    {
+      "path": "src/cocos/core/value-types/value-type.ts",
+      "sha256": "66a132eba6e4009779601239bf825ea730a75ec3dafb4d4a86115d61d082e5f8"
+    },
+    {
+      "path": "src/cocos/game/deprecated.ts",
+      "sha256": "e152368fb8802130ad37932e02467f366a4766ed5a85195e7183ad9547028be2"
+    },
+    {
+      "path": "src/cocos/game/director.ts",
+      "sha256": "7b1be62cd9e84e926d1744ccc5d467a63e115f689f888a720df44511f51aa224"
+    },
+    {
+      "path": "src/cocos/game/game.ts",
+      "sha256": "66eb3ac36fa55f9608a2a1b6ae1e51a6ecb2bc7d37802a038bf5e1077feac62f"
+    },
+    {
+      "path": "src/cocos/game/index.ts",
+      "sha256": "ffa3f7ca74421ba4cbb9655c2ab2517aaf46e9ec816d68093da2da911e7a600d"
+    },
+    {
+      "path": "src/cocos/game/splash-screen.ts",
+      "sha256": "324a95d40b0110c6ea6adae284255b9c9ceb0c1a4be5c29c96dc93cb91f9b657"
+    },
+    {
+      "path": "src/cocos/gfx/base/buffer.ts",
+      "sha256": "f3863051b76c84a9e433abe3a3597a99f0d248473876cc9ef53df20d164a384a"
+    },
+    {
+      "path": "src/cocos/gfx/base/command-buffer.ts",
+      "sha256": "d924fe7b6bdc0cc74aee95fceb2b7b7e5939cb41a16ed2e2d70f7a3c61967e1f"
+    },
+    {
+      "path": "src/cocos/gfx/base/define.ts",
+      "sha256": "cc08cc3890726cd8d6227f201079b0243d98016b197033ca4adccc9d23880162"
+    },
+    {
+      "path": "src/cocos/gfx/base/descriptor-set-layout.ts",
+      "sha256": "c69c10107e9c290b7498344325ec44aad8b7b2b4b8c794edb34ea7428b37cf25"
+    },
+    {
+      "path": "src/cocos/gfx/base/descriptor-set.ts",
+      "sha256": "af1680b9f69b4570ce7bb406467ada6660908e0fbddaf7e53a6512cf74cac07d"
+    },
+    {
+      "path": "src/cocos/gfx/base/device.ts",
+      "sha256": "d38ce44360d673631a9da83d89479185cb760672d8a615655cbcd25dfea72c09"
+    },
+    {
+      "path": "src/cocos/gfx/base/framebuffer.ts",
+      "sha256": "1426980a07497215f951720883c7a5641a569fd6776cd17dd69fb2632c788dab"
+    },
+    {
+      "path": "src/cocos/gfx/base/input-assembler.ts",
+      "sha256": "82e3bea08f106d876ef5ccfc11403840958a6c9c3e3da524bd7f20e1e7775ed7"
+    },
+    {
+      "path": "src/cocos/gfx/base/pipeline-layout.ts",
+      "sha256": "fb655b5e06faa15969d076eb0492dd4faa907892bde81b9ccbb57c1fda491d9a"
+    },
+    {
+      "path": "src/cocos/gfx/base/pipeline-state.ts",
+      "sha256": "d6c00730c442fbc7eb8207931bd3e93d7e3c7ccda6b0aaf8e71defc81942a762"
+    },
+    {
+      "path": "src/cocos/gfx/base/pipeline-sub-state.ts",
+      "sha256": "e05b76d90ea33647fbe2a6d48363ff0d4d6632d1b6f97d9214ffc1fb375aee36"
+    },
+    {
+      "path": "src/cocos/gfx/base/queue.ts",
+      "sha256": "cc4d8b62279e88cc14069abd3bd7edf73838169632722fe02610a3badbbc6ce8"
+    },
+    {
+      "path": "src/cocos/gfx/base/render-pass.ts",
+      "sha256": "6df060ac0db714d86bd2234c8c25f26ba6bcf0d5fd2ccc98b1e6974d3d588fb5"
+    },
+    {
+      "path": "src/cocos/gfx/base/shader.ts",
+      "sha256": "5a6fe178d087166bab951fa3f131c38ef16ac113be66702943878d9cecc34880"
+    },
+    {
+      "path": "src/cocos/gfx/base/states/buffer-barrier.ts",
+      "sha256": "ac613745e20af419bdf4b4f167d15c1ea25faf3fa06c0816a18a706ef35592e3"
+    },
+    {
+      "path": "src/cocos/gfx/base/states/general-barrier.ts",
+      "sha256": "73a3d9bb83b7d5809827ff1d01d99b2064b1736b060e328f685a3c259e92cd57"
+    },
+    {
+      "path": "src/cocos/gfx/base/states/sampler.ts",
+      "sha256": "a6f37b440ad8ebc8378d4650ea18c70723f666a23e988fff954fe7f3beb5ea1b"
+    },
+    {
+      "path": "src/cocos/gfx/base/states/texture-barrier.ts",
+      "sha256": "1d1abe310415f0c3b4aa07fa65427d3961bc7c3bf697808b13d44313822ed25a"
+    },
+    {
+      "path": "src/cocos/gfx/base/swapchain.ts",
+      "sha256": "1f6331c267e3a7edc0da3787ea3beef2ce49f5946db70f5d828957cbde9b2c02"
+    },
+    {
+      "path": "src/cocos/gfx/base/texture.ts",
+      "sha256": "581ebfe910eb72df154b5d48c1c57bf81639afaaaffa16a003bf4af540380e98"
+    },
+    {
+      "path": "src/cocos/gfx/deprecated-3.0.0.ts",
+      "sha256": "6b57d677a8b5df1aa1ccadc30ac10323ccf17f76f1b1af6a20c03e77a9aba514"
+    },
+    {
+      "path": "src/cocos/gfx/deprecated-3.5.0.ts",
+      "sha256": "977f51a2c83d20a891293574f1f7a1625c1c032fcf76527312730e308d54856d"
+    },
+    {
+      "path": "src/cocos/gfx/device-manager.ts",
+      "sha256": "ac610ad28d7e7d4ec4d5c25813aba41048777896cdf296f1182338616bb9ff4a"
+    },
+    {
+      "path": "src/cocos/gfx/empty/empty-buffer.ts",
+      "sha256": "dc4cac1fae2ad8b549bd6ecbe255d048b2e9164e1eea98514ad57cd49f2acc8d"
+    },
+    {
+      "path": "src/cocos/gfx/empty/empty-command-buffer.ts",
+      "sha256": "b0c318d8bc89cfba05774715171a9f658d411432c975e53707622a2e4e9f4a20"
+    },
+    {
+      "path": "src/cocos/gfx/empty/empty-descriptor-set-layout.ts",
+      "sha256": "2fb2e141fb716bd0cb627d02fc7394b7848cf3b3add5cac5bd99e0d450578aa1"
+    },
+    {
+      "path": "src/cocos/gfx/empty/empty-descriptor-set.ts",
+      "sha256": "05d9dc2f733f56f87651c811f77ebe08eb97fba57eedc338688eebef1ff49c5e"
+    },
+    {
+      "path": "src/cocos/gfx/empty/empty-device.ts",
+      "sha256": "ca4ed6c14fed5c60eaacb1e0e22469a28a1063696cc7432b09cfcfae0dec1b38"
+    },
+    {
+      "path": "src/cocos/gfx/empty/empty-framebuffer.ts",
+      "sha256": "038896fa6cffa1da9138c6c72e743f048bddc0708bdd0dab99a825fa19d7fc60"
+    },
+    {
+      "path": "src/cocos/gfx/empty/empty-input-assembler.ts",
+      "sha256": "c00e60f740e78495defba1c3fb03f4855a08ec3ec2960222173c3ca16959a471"
+    },
+    {
+      "path": "src/cocos/gfx/empty/empty-pipeline-layout.ts",
+      "sha256": "e26fc55a3f84de2f39f4f322403dd10590160f5aaecb5bbcb12d389a2804a944"
+    },
+    {
+      "path": "src/cocos/gfx/empty/empty-pipeline-state.ts",
+      "sha256": "716481e42b83c9828ac0f55296e82d83391d6caef24edf7288aec4fcd9d89b90"
+    },
+    {
+      "path": "src/cocos/gfx/empty/empty-queue.ts",
+      "sha256": "898ffecd4d6030eb15fef0ba15a1ad0e4f8be6fffb6f8afa36dc3578827f86ae"
+    },
+    {
+      "path": "src/cocos/gfx/empty/empty-render-pass.ts",
+      "sha256": "3e2f06381bcf3f7b37db07bb4e1df1bdf71d6ba97686f577d9c6eee7eae8ac89"
+    },
+    {
+      "path": "src/cocos/gfx/empty/empty-shader.ts",
+      "sha256": "9e202b28ff1e886cc66277ad506d6e3b3a50ab2861fa094dea9be65fcd8d5bda"
+    },
+    {
+      "path": "src/cocos/gfx/empty/empty-swapchain.ts",
+      "sha256": "8349fe10f04620b90121f6dcfe830e52cbcf6ec1b468451a6356a0aa83f5e7d8"
+    },
+    {
+      "path": "src/cocos/gfx/empty/empty-texture.ts",
+      "sha256": "2888ffeb4ef74f1d986e9b4269758291d3eeff9433790e7dc5113abfeba2fa51"
+    },
+    {
+      "path": "src/cocos/gfx/index.ts",
+      "sha256": "93c7a2c50a63f27a2601610eb73863d5565377a67637555163c204c17c3a82bd"
+    },
+    {
+      "path": "src/cocos/gfx/polyfill-legacy-cc.ts",
+      "sha256": "bd4f09e5280ed35e0cd6c8bf98fb7aa4a919fdbd86b4f42ddb7e465adf052f7d"
+    },
+    {
+      "path": "src/cocos/input/deprecated-3.3.0.ts",
+      "sha256": "9dd0630f7b6f9e043ed166cb2cd03c98fbdc9fad3e5298d3c4b1414bb2041889"
+    },
+    {
+      "path": "src/cocos/input/deprecated-3.4.0.ts",
+      "sha256": "266a996c6b3f7cc338ef710b6ca56c2a527560c35d7f8ed75cb45f6e75140d22"
+    },
+    {
+      "path": "src/cocos/input/deprecated.ts",
+      "sha256": "9a45e10fe6eeb1c11e6ebd0754a93f1ea9779ae1ed89ea01e90997c58ad0497a"
+    },
+    {
+      "path": "src/cocos/input/index.ts",
+      "sha256": "c8006d5e4cabf22d836b2ec7cf6936df0a0b7cae0087337ae01e17a457efd275"
+    },
+    {
+      "path": "src/cocos/input/input.ts",
+      "sha256": "390a269f83bc555f416877c4d810acd465ab7c5affb5dd4b33fd41396811927d"
+    },
+    {
+      "path": "src/cocos/input/system-event.ts",
+      "sha256": "371997ed7d865d739987af4747ee1d06626aa6ad04cb964d6fc7698b0f8b4335"
+    },
+    {
+      "path": "src/cocos/input/types/acceleration.ts",
+      "sha256": "363715de4682268274bed6b8e98a340df1096b08a0c91cd7575053714f7e9278"
+    },
+    {
+      "path": "src/cocos/input/types/event-enum.ts",
+      "sha256": "9dfdfd305f1af3e47a568a01ba8fdf356dbdbcd67a6618cb7dc21c8461af8fc0"
+    },
+    {
+      "path": "src/cocos/input/types/event/event-acceleration.ts",
+      "sha256": "967ee1e7f1aa14bd6bb5006079be7e0d40fc246df0010e01d630a6e97853ccc9"
+    },
+    {
+      "path": "src/cocos/input/types/event/event-gamepad.ts",
+      "sha256": "0aea690e25f41bc79fa93e627f135ca8509c2e547b39e2060df8a28c79507805"
+    },
+    {
+      "path": "src/cocos/input/types/event/event-handheld.ts",
+      "sha256": "8b07942b4b02cd680e9275e96f13f9fd6becf5b2e59c57eab16e6cd537ce47a2"
+    },
+    {
+      "path": "src/cocos/input/types/event/event-handle.ts",
+      "sha256": "b857da19eb949a352508e117b950cc21bb1a0cc2cacb57d414ca21ab9fdce45a"
+    },
+    {
+      "path": "src/cocos/input/types/event/event-hmd.ts",
+      "sha256": "457caa3cacf8ee4648563fe0b981aa844d4a07dbec103b4bfabf9c3b23d5f2ad"
+    },
+    {
+      "path": "src/cocos/input/types/event/event-keyboard.ts",
+      "sha256": "25157581a1085a9fa8f14bcd38e3243dbe134b21cc8962a46f58f67733f677bd"
+    },
+    {
+      "path": "src/cocos/input/types/event/event-mouse.ts",
+      "sha256": "5277fb274942324b41b342c1103153d796137965830d66f12f1d81910f28593f"
+    },
+    {
+      "path": "src/cocos/input/types/event/event-touch.ts",
+      "sha256": "22953270f363f648c4bc36276c6bd64e2ae7d133c1e4131192cffaacf132d7d6"
+    },
+    {
+      "path": "src/cocos/input/types/event/event.ts",
+      "sha256": "f6c20f9d0122eca19e15df115f9d350ebcb68a3aeab2fec9c05e2ab02638aff8"
+    },
+    {
+      "path": "src/cocos/input/types/event/index.ts",
+      "sha256": "dd4a526e13be32a758b9df55e0371405fea16e5bfb76ad2e68bcf70f9c967b30"
+    },
+    {
+      "path": "src/cocos/input/types/index.ts",
+      "sha256": "9643edf99d36e144406edad6cb1008817e9b5946019b577dab00ecdb79019fce"
+    },
+    {
+      "path": "src/cocos/input/types/key-code.ts",
+      "sha256": "c2a6dba9b89efa353cb1b9aaa83fe5317173e21f3547f76fe5494b7a0f962b68"
+    },
+    {
+      "path": "src/cocos/input/types/location-output.ts",
+      "sha256": "962f7345456ee3c17d43839b5151e0d4d76ba7db669494ee5f5162d7057485da"
+    },
+    {
+      "path": "src/cocos/input/types/touch.ts",
+      "sha256": "75487bde6e2a595a908e5e39dcc2284ebfd14320ab0c2786fa92abdb23f0d230"
+    },
+    {
+      "path": "src/cocos/misc/missing-script.ts",
+      "sha256": "bc01fd3591a31368ef4a0210c4c8da3d2bb13f53914b18ee17d01215200df7e8"
+    },
+    {
+      "path": "src/cocos/physics/framework/assets/physics-material.ts",
+      "sha256": "9a780692684a65892315012879f8f597cba6bd8d22be14792d7b779a1d57bd80"
+    },
+    {
+      "path": "src/cocos/physics/framework/collision-matrix.ts",
+      "sha256": "9e6b8bf95e9f2335d004d6c72e2182381e1f2dc5e9cd1374ceecfe5387202a3c"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/colliders/box-collider.ts",
+      "sha256": "c984e32378d1424b57164c4d5c51f7cfd4b96ef837f598e05690caa48fc9b9cb"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/colliders/collider.ts",
+      "sha256": "2f1a0247fca6ec268c184b9643804f4fd6dd2cec50a58a25c76fdfbd9155bddb"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/colliders/sphere-collider.ts",
+      "sha256": "581d112c7ef6faa66b21636345e6de03a929ff69417ad8c6be61fc3078ac342d"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/rigid-body.ts",
+      "sha256": "9958f2f5df91f68bc3c4faf7803273561503762147ad791cac84802c54b783f3"
+    },
+    {
+      "path": "src/cocos/physics/framework/physics-enum.ts",
+      "sha256": "b7c0d11a8b82b6b6dcd8b8e031426315998617423f3273747a2dade95e485b02"
+    },
+    {
+      "path": "src/cocos/physics/framework/physics-material-transaction.ts",
+      "sha256": "f7192588f5ef01358b6b506a80322f028975ae51df93aadba258a420fd7af518"
+    },
+    {
+      "path": "src/cocos/physics/framework/physics-ray-result.ts",
+      "sha256": "db3bf8c0295a061b31cdd370bdd3d627c699776f2c0c7c449b3d89602c1880c2"
+    },
+    {
+      "path": "src/cocos/physics/framework/physics-selector.ts",
+      "sha256": "121956af3ad15be76e7b75ac879adaff666f67e8a3d10327b3302b9fe4efc50c"
+    },
+    {
+      "path": "src/cocos/physics/framework/physics-state-observer.ts",
+      "sha256": "4cf40c4f1be0d407a402e95dcdb7a898b1942cb175f869f6367a41b18c2d1d2b"
+    },
+    {
+      "path": "src/cocos/physics/framework/physics-system.ts",
+      "sha256": "92153ad5783bf4a27271daf31075704c6ea4fc4dbac323af9e05bffc5caee988"
+    },
+    {
+      "path": "src/cocos/physics/utils/util.ts",
+      "sha256": "401e837a5d9c2a4b59a2bd54055f9cc39251e15d8d038a5e4cc28a144b3bed14"
+    },
+    {
+      "path": "src/cocos/primitive/box.ts",
+      "sha256": "67315c85e5e08def0af77e5a901dfccb11531f0196a2acfbf9cba9c9aa90f295"
+    },
+    {
+      "path": "src/cocos/primitive/capsule.ts",
+      "sha256": "a8e4aed4aed50df63322772c5df6092081c81e130a02ec8d5ce8c4f56805cee5"
+    },
+    {
+      "path": "src/cocos/primitive/circle.ts",
+      "sha256": "3660db4bca8569f46e3f1b932b6e23eb7964f6558786e700194328f98aa84ed7"
+    },
+    {
+      "path": "src/cocos/primitive/cone.ts",
+      "sha256": "3272b299728179940b5a0e1d3dbe9b1d980aa2ba77f6eaed81676dc7f7328a24"
+    },
+    {
+      "path": "src/cocos/primitive/cylinder.ts",
+      "sha256": "3ed46797b729ee4683e39b6dcd643a2bfbca3d1991c6bce5430da4112f41359b"
+    },
+    {
+      "path": "src/cocos/primitive/define.ts",
+      "sha256": "67920a433c4f262958544d545ccd4ce7fbd8b316dd0ee2149f07921eaf28d60a"
+    },
+    {
+      "path": "src/cocos/primitive/index.ts",
+      "sha256": "66b75762dac831928011d23533f2c8d70eebed8005dc05411fd7255bedc6441b"
+    },
+    {
+      "path": "src/cocos/primitive/plane.ts",
+      "sha256": "aa21fe6f3bade46c16fa6b7d90b3ae38b0b95c9c1359db287d5d83ea10f88b80"
+    },
+    {
+      "path": "src/cocos/primitive/quad.ts",
+      "sha256": "c0a8640f70007048745c6e080a6417c6e42733d84791294899c1ab9a1b70ecdb"
+    },
+    {
+      "path": "src/cocos/primitive/sphere.ts",
+      "sha256": "0e5188e6e89b2e04d656d7ee4dbc1fcd9e95e6c9f131a8f5bedfe3bdf7d000a2"
+    },
+    {
+      "path": "src/cocos/primitive/torus.ts",
+      "sha256": "eac53f7aaa627d2a71ccb973ece50b8600b8595486b9a3ee04e7c9483aa00653"
+    },
+    {
+      "path": "src/cocos/primitive/transform.ts",
+      "sha256": "7137961228cff3daa256368c88d8d475cb58b88452d998bae4669a4a16c28a7a"
+    },
+    {
+      "path": "src/cocos/primitive/utils.ts",
+      "sha256": "574351424c3ffd053ab75fbe0b68b2b7614f404c02d3ed3a57f1a6c2abbd4e06"
+    },
+    {
+      "path": "src/cocos/render-scene/core/material-instance.ts",
+      "sha256": "2baf215c4f5161bb8b68a39d7389ca932198af304aca8e64ef9ac5d4fa683ea3"
+    },
+    {
+      "path": "src/cocos/render-scene/core/pass-instance.ts",
+      "sha256": "87674d92ad54e4f3d9cc31c6dc2fa1343c391369c3f370f37d501d0666f1c754"
+    },
+    {
+      "path": "src/cocos/render-scene/core/pass-utils.ts",
+      "sha256": "e1d4ab2375b913feb76c88a90a5b36755d7e465417b6c30d46360e8611da5177"
+    },
+    {
+      "path": "src/cocos/render-scene/core/pass.ts",
+      "sha256": "d7228ee951053220a4526852ed11c30f58afa4b027831a8a5332eb386d3a1b56"
+    },
+    {
+      "path": "src/cocos/render-scene/core/program-lib.ts",
+      "sha256": "fd58c0f823e826b1986313518ee12be4782bb7542c26a03627a6d17d66e99c29"
+    },
+    {
+      "path": "src/cocos/render-scene/core/program-utils.ts",
+      "sha256": "3cbd1d596a8db74fd0de0ce8df805f2d5fba6ec30f7dab7f4372623a86f96cd4"
+    },
+    {
+      "path": "src/cocos/render-scene/core/render-scene.ts",
+      "sha256": "1485053d92c751149dc8145710062bed65f9a04c2523d6cc771489141c512c2e"
+    },
+    {
+      "path": "src/cocos/render-scene/core/render-window.ts",
+      "sha256": "1a63bf22d26305d336306a3565fb698d1c4d928a55115c0698e4e6e50008169c"
+    },
+    {
+      "path": "src/cocos/render-scene/scene/ambient.ts",
+      "sha256": "2fa22f7f2b5d03ee4baafe8e1bc79b48f5f56e27b7a63b44fde658778043d62c"
+    },
+    {
+      "path": "src/cocos/render-scene/scene/camera.ts",
+      "sha256": "e8b8399d6f655683add3b66baf7c8213e2be283ceb882ab28a57fad4e57d8af2"
+    },
+    {
+      "path": "src/cocos/render-scene/scene/directional-light.ts",
+      "sha256": "61f5bd913d90cc6de829e7d340f21ecd6b07374f462d84791470d6b0cab9c9f4"
+    },
+    {
+      "path": "src/cocos/render-scene/scene/fog.ts",
+      "sha256": "29a0a545c798531ceed27ab8ad087ec57b6ef06353607bd8f9713d8607c640c5"
+    },
+    {
+      "path": "src/cocos/render-scene/scene/index.ts",
+      "sha256": "9a153d814cc7b29fca179a7a35b64d74b9684cfec98f2e29e5319743f0b1b03a"
+    },
+    {
+      "path": "src/cocos/render-scene/scene/light.ts",
+      "sha256": "9de9546acb1244bebeac9c26af3391aa9e30951221d0d60c09a53b2b22eabae3"
+    },
+    {
+      "path": "src/cocos/render-scene/scene/lod-group.ts",
+      "sha256": "bdc7e22032630a77ecd931a7479b253ce79dca5e8e40a25a78d429ac573c8e6a"
+    },
+    {
+      "path": "src/cocos/render-scene/scene/model.ts",
+      "sha256": "a13ea79b28e2b3ff11ad07f1df9c9fd971ded5d3186910a1712ed8d803e7f007"
+    },
+    {
+      "path": "src/cocos/render-scene/scene/octree.ts",
+      "sha256": "553c71ba241bca12f22a4783a61723778996ea15768df454c28ee44397577956"
+    },
+    {
+      "path": "src/cocos/render-scene/scene/point-light.ts",
+      "sha256": "8c77519e4e9535e80257020e4cc91e595f06852b88074e82d70f27c0b17ecf25"
+    },
+    {
+      "path": "src/cocos/render-scene/scene/post-settings.ts",
+      "sha256": "ef1246fc60ea9c1cb0feed0eb5ec49d5f783f9113f1a7bdaafead768725bfcff"
+    },
+    {
+      "path": "src/cocos/render-scene/scene/ranged-directional-light.ts",
+      "sha256": "e154078c5000531ee5f4bf6b093c1f91ed64db02db067d1741e010612ddd319e"
+    },
+    {
+      "path": "src/cocos/render-scene/scene/reflection-probe.ts",
+      "sha256": "ab78205c6e90c80de7700357ceb85a6ac826090e972e91ca8cc62ac7fbed5a62"
+    },
+    {
+      "path": "src/cocos/render-scene/scene/shadows.ts",
+      "sha256": "aafcd29aad30850ba91049fcf63fd4fbf2a4d05844a70e99fdbbf2fdbf02207a"
+    },
+    {
+      "path": "src/cocos/render-scene/scene/skin.ts",
+      "sha256": "d99f2929f67bd8b9a53cbc3e3f533dec3ffe07c2b6bcaa6f67330daf857f3617"
+    },
+    {
+      "path": "src/cocos/render-scene/scene/skybox.ts",
+      "sha256": "933cd7d40c11897b9f13c8d906e3c377f99c14da074cf60ea2050918e5318c69"
+    },
+    {
+      "path": "src/cocos/render-scene/scene/sphere-light.ts",
+      "sha256": "f616075ee68f40a31c9fac6e1a7ceaedd48149d726c589b26966c8ce7ac94431"
+    },
+    {
+      "path": "src/cocos/render-scene/scene/spot-light.ts",
+      "sha256": "dc23235e6b42f31c6525d57a7b043b86a4f76f8cbe1419f9431955d4c63f3909"
+    },
+    {
+      "path": "src/cocos/render-scene/scene/submodel.ts",
+      "sha256": "df929fbc1522648f06794d102cd3cde69f8532df801b4d692970aee370be5316"
+    },
+    {
+      "path": "src/cocos/rendering/debug-view.ts",
+      "sha256": "6fb89bdba2eff0bf7dc3c86ef86693f81dae963efd6dc5dbf470ddb365d6bded"
+    },
+    {
+      "path": "src/cocos/rendering/deferred/bloom-stage.ts",
+      "sha256": "27e6bd05e615770262984c2c97cfe180b8c0a4315887d058549e1cc620e43f5d"
+    },
+    {
+      "path": "src/cocos/rendering/deferred/deferred-pipeline-scene-data.ts",
+      "sha256": "5109c43697612115412a597495a679e80a1319fca86501a430b92608592ff4b1"
+    },
+    {
+      "path": "src/cocos/rendering/deferred/deferred-pipeline.ts",
+      "sha256": "0b8026cd71cfad053d8e077b886337cd6b3e0a666000ea6263307e62594af13f"
+    },
+    {
+      "path": "src/cocos/rendering/deferred/gbuffer-stage.ts",
+      "sha256": "a2c1c623aa7901a68aecfad7abcd4a53bcab90df4e9a4517e9f2bb8fa7ca6062"
+    },
+    {
+      "path": "src/cocos/rendering/deferred/lighting-stage.ts",
+      "sha256": "d66983aa4d3669960eb8d3389a63fb899b3ae87c4bac41400857055295b5ed25"
+    },
+    {
+      "path": "src/cocos/rendering/deferred/main-flow.ts",
+      "sha256": "c039a60e180745ceeed64ce69fc8783457a366b25dc3b48c1add5e737e82f22d"
+    },
+    {
+      "path": "src/cocos/rendering/deferred/postprocess-stage.ts",
+      "sha256": "99dced6527fc415cf634a48a806c40d7fcc46537c649629e2bda4487bfc8c0a2"
+    },
+    {
+      "path": "src/cocos/rendering/define.ts",
+      "sha256": "6a9c8b88a068ca0a7cc20d0ceaa048e24eeb2db2d42d5edc5c6798789846313a"
+    },
+    {
+      "path": "src/cocos/rendering/deprecated.ts",
+      "sha256": "c639141b065f01ee66007eb996b8af1bc11e6a15bd50d4bedb8a73a00274860f"
+    },
+    {
+      "path": "src/cocos/rendering/enum.ts",
+      "sha256": "daadb556c837deea3dca54a190b8d3f21eeb5dee602c65e2587a9f81a3a90671"
+    },
+    {
+      "path": "src/cocos/rendering/forward/forward-flow.ts",
+      "sha256": "84b0f2f87b8aa689d6944be97729e64967414d2cff30e610b8ad3b25740aba58"
+    },
+    {
+      "path": "src/cocos/rendering/forward/forward-pipeline.ts",
+      "sha256": "910eea0c3b7abf5c9e7401667459a6ec5b30d12f67073403105cc6edbf91dc34"
+    },
+    {
+      "path": "src/cocos/rendering/forward/forward-stage.ts",
+      "sha256": "a00340dde1da38dd071e86693734e1efa8e66f7138b82338492107383c3b1f0f"
+    },
+    {
+      "path": "src/cocos/rendering/global-descriptor-set-manager.ts",
+      "sha256": "1e7bc49aaab03e9da2ea243bb28969800838405ca0f1fbe3a0c92b8b3312da04"
+    },
+    {
+      "path": "src/cocos/rendering/index.ts",
+      "sha256": "781fe37995e6c8ee9cf816252ff6a19e8addf192251426b12c99d283ebd027c5"
+    },
+    {
+      "path": "src/cocos/rendering/instanced-buffer.ts",
+      "sha256": "9f28605db4b647601074626c63a7cf712be30fec6dab6be8fc547627831a864a"
+    },
+    {
+      "path": "src/cocos/rendering/legacy/index.ts",
+      "sha256": "8aadcf37595fbe67cdfbc242e565070c61353eafc2f4b49e773577560c574cc2"
+    },
+    {
+      "path": "src/cocos/rendering/pass-phase.ts",
+      "sha256": "0993ab4c337bc83dd59fa83648565bb3a888cdb555596f6c94e55f7469fe3b76"
+    },
+    {
+      "path": "src/cocos/rendering/pipeline-event.ts",
+      "sha256": "c7f37ea08267396aaacbf4e6c0eed21f0a9faa84758dba0049c981e54974faf7"
+    },
+    {
+      "path": "src/cocos/rendering/pipeline-funcs.ts",
+      "sha256": "8e34852feebd45ca44f4854b90a5a240d4f4625303bb34acdf0ec65260a4c285"
+    },
+    {
+      "path": "src/cocos/rendering/pipeline-scene-data-utils.ts",
+      "sha256": "4f992682df9986dd60a0bfca1bc5588823136555623285aa2f3d996062eb90fb"
+    },
+    {
+      "path": "src/cocos/rendering/pipeline-scene-data.ts",
+      "sha256": "499ba3ad8f3531f6d7798602d06a6c8deba060a51ae43363b9079f1cff1f8414"
+    },
+    {
+      "path": "src/cocos/rendering/pipeline-serialization.ts",
+      "sha256": "51e2ce43ddad462f4aa3ceb6decbaa318b3399a21e29ac6b000a9be40d983dd1"
+    },
+    {
+      "path": "src/cocos/rendering/pipeline-state-manager.ts",
+      "sha256": "53dbb3578621847144dc532baaffaf2fae2b73ca13fb274815ef7956fd54fb35"
+    },
+    {
+      "path": "src/cocos/rendering/pipeline-ubo.ts",
+      "sha256": "b53f5181eec991ede3c14e8c2c98570bb7c4ae1311eb8f26577e896b884bd4f1"
+    },
+    {
+      "path": "src/cocos/rendering/planar-shadow-queue.ts",
+      "sha256": "a9b67e96865533814a734097b1e90350112f3fd9a164e14d053a05bf9323304f"
+    },
+    {
+      "path": "src/cocos/rendering/reflection-probe/reflection-probe-flow.ts",
+      "sha256": "780fa5df8062df27ef9a5a8bb4756844dc7be9a366490ec473a4bf55d37c7ed4"
+    },
+    {
+      "path": "src/cocos/rendering/reflection-probe/reflection-probe-stage.ts",
+      "sha256": "3f376aaea16c839e1d86f37700bf8d0ccc804f347fe2e05a04ce044d79197a9f"
+    },
+    {
+      "path": "src/cocos/rendering/render-additive-light-queue.ts",
+      "sha256": "689ba5867cf3255e3082b840fb30c10e7f58b8435a291cc6afe73e1aaa457682"
+    },
+    {
+      "path": "src/cocos/rendering/render-flow.ts",
+      "sha256": "a43189a03aaa5823c6cc6b2ad4c51e6f1d0ab3c76da82286d94a764bcbb3c384"
+    },
+    {
+      "path": "src/cocos/rendering/render-instanced-queue.ts",
+      "sha256": "a2322e710211b5e2f3d5bc50124d381e7eb72953b5febb9102f8f1cca4fc880d"
+    },
+    {
+      "path": "src/cocos/rendering/render-pipeline.ts",
+      "sha256": "3a1648e3961d76e2708a67fe6dcc1abdbd6c070c59e936d756d2b0703de635a9"
+    },
+    {
+      "path": "src/cocos/rendering/render-queue.ts",
+      "sha256": "8b8d4a28d645984c33d23d0043fcd28e549e5e62df75eae731f3c705e804e102"
+    },
+    {
+      "path": "src/cocos/rendering/render-reflection-probe-queue.ts",
+      "sha256": "4eed2cbe7cde29ecd68fe1a65cc8a70f8b199f9ddac5c807303c2df3f733cb54"
+    },
+    {
+      "path": "src/cocos/rendering/render-shadow-map-batched-queue.ts",
+      "sha256": "224c24f42d32541d6b6f086546e466648396321bc6c16bf0dfd404d1cbfd3b04"
+    },
+    {
+      "path": "src/cocos/rendering/render-stage.ts",
+      "sha256": "f8101f09283e66b95f72d0ec2d064eb38ceff120ef56fe11a99840d41f4e6ecd"
+    },
+    {
+      "path": "src/cocos/rendering/render-types.ts",
+      "sha256": "03ecbd4bd2a34be244af090bb37fb7c7729b81846a4f28d2963de4191edfe9ef"
+    },
+    {
+      "path": "src/cocos/rendering/scene-culling.ts",
+      "sha256": "ea5972d8c2d252f6fcfb119446fae2b93b34eae2f23bb60dd109abf5cacd57ab"
+    },
+    {
+      "path": "src/cocos/rendering/shadow/csm-layers.ts",
+      "sha256": "9bf70ee2b2194b66a315de9a12d443a1a00cb1002aeccfaa220c6ef7fa0bb528"
+    },
+    {
+      "path": "src/cocos/rendering/shadow/shadow-flow.ts",
+      "sha256": "7081faa7db3e080b72935712da229ba98be4998df1f0f9fdf676a23ed956326b"
+    },
+    {
+      "path": "src/cocos/rendering/shadow/shadow-stage.ts",
+      "sha256": "5f925545a3704b93146e8550edc3c4b4deb4c0593ee157ce8c9efa39ba532099"
+    },
+    {
+      "path": "src/cocos/rendering/ui-phase.ts",
+      "sha256": "21aef4dd9429f1f7bc129c0ec1cbab12e7a348391281b76f5b292091dcc15b15"
+    },
+    {
+      "path": "src/cocos/root.ts",
+      "sha256": "5754a570a84136eede9ce547bd2f8cfeb2bf4c243a4803be9615d12229737f60"
+    },
+    {
+      "path": "src/cocos/scene-graph/component-event-handler.schema.ts",
+      "sha256": "e7d798cfeafba22ff5254829f2c9bc5add0a635082e7ab39f377a8305ff94573"
+    },
+    {
+      "path": "src/cocos/scene-graph/component-event-handler.ts",
+      "sha256": "99cd51e48899138a64f0dc4e65f32fad4972f81b7d364809ba168e5329aee397"
+    },
+    {
+      "path": "src/cocos/scene-graph/component-scheduler.ts",
+      "sha256": "c6a45d3502dd25dbb2b6e4a9aa185acd87b773d9c8576fe23abefbb46799a1f4"
+    },
+    {
+      "path": "src/cocos/scene-graph/component.ts",
+      "sha256": "3abf7f30ed88ca45105cb8241d7b8046f5c79125a490eb4345d4c2f9dca11078"
+    },
+    {
+      "path": "src/cocos/scene-graph/deprecated-3.7.0.ts",
+      "sha256": "2e436c4ef96800aa69e67c0dbf2e99199793d177eab6c8417785fa56ef964586"
+    },
+    {
+      "path": "src/cocos/scene-graph/deprecated.ts",
+      "sha256": "5b1b1c8af3089ae396e81cb1eaf4a723e7ad1e08b5f27d30602bfa1a22a73628"
+    },
+    {
+      "path": "src/cocos/scene-graph/find.ts",
+      "sha256": "880d41d2175ebcfadfa068fd22aa8cee4127feca870c2c61de811fbd424fe9f9"
+    },
+    {
+      "path": "src/cocos/scene-graph/index.ts",
+      "sha256": "8bb2143b0f054761b2b02382dd245d67791ddeb2fb8844552fc37992638d498d"
+    },
+    {
+      "path": "src/cocos/scene-graph/layers.ts",
+      "sha256": "de271865c0f52d7ad7b9ed6b1290632bd7cb0130784c074ee199ff39b39e8777"
+    },
+    {
+      "path": "src/cocos/scene-graph/node-activator.ts",
+      "sha256": "7078e8e278b5aec690ddcf30f5f2dbf7d5c4b7e2d13ce309ccb083a5e48055b0"
+    },
+    {
+      "path": "src/cocos/scene-graph/node-dev.ts",
+      "sha256": "bd2e94abd4ee51ca427a827aa634b22587963f995c9762415780c9d889f63bad"
+    },
+    {
+      "path": "src/cocos/scene-graph/node-enum.ts",
+      "sha256": "06e99b510f5ba32cab7d94cf51115362d90da079b3c2197143d180338b396c6a"
+    },
+    {
+      "path": "src/cocos/scene-graph/node-event-processor.ts",
+      "sha256": "0ae27f104e34126aa48064d52e08d0485227dda090e22ac71da520d9e8f8f57e"
+    },
+    {
+      "path": "src/cocos/scene-graph/node-event.ts",
+      "sha256": "84d965fed050a41cbae6afa0cdfd7fa8940884f0f8a6ef8f0cd4133dd712b096"
+    },
+    {
+      "path": "src/cocos/scene-graph/node-transform-validation.ts",
+      "sha256": "f849e7bc3d56407ae91ccd935a1be51c6bbedd83489bf4d74430e586760fc0f9"
+    },
+    {
+      "path": "src/cocos/scene-graph/node-ui-properties.ts",
+      "sha256": "15b944ea17acf49258b84e82e9c91fb63d50e0fe47449fdba59cfe4b0bf0ce72"
+    },
+    {
+      "path": "src/cocos/scene-graph/node.ts",
+      "sha256": "aab602a53f087718fd90e341de0d37fa83ec0f2e6214ded428b4f643c394d67b"
+    },
+    {
+      "path": "src/cocos/scene-graph/prefab/index.ts",
+      "sha256": "1c0adc2a1c08e31516740c12d167f4f03151b8cd04a47ca32b2bbc05e625723e"
+    },
+    {
+      "path": "src/cocos/scene-graph/prefab/prefab-info.ts",
+      "sha256": "99cb151090f2d15eeb3213a0bf921c6c91a6c0f309237d7776850d6953f577b6"
+    },
+    {
+      "path": "src/cocos/scene-graph/prefab/prefab.ts",
+      "sha256": "9c72745f566a0e21c046981b6455e9775387500fa4145159fd8a90be74299903"
+    },
+    {
+      "path": "src/cocos/scene-graph/prefab/utils.ts",
+      "sha256": "49df5e749200f3c59c34a2e7b7331d6da801d34ff75c2f3469f0f71f06440523"
+    },
+    {
+      "path": "src/cocos/scene-graph/scene-globals.ts",
+      "sha256": "53aacb378e11cbef106ae2fd7617f97e59773b7ba0d7541368c82ce25e712458"
+    },
+    {
+      "path": "src/cocos/scene-graph/scene.ts",
+      "sha256": "0f378e89fcfc926c7740d110f97f5ae07752a72ab5d6dd8039148654baaa85a0"
+    },
+    {
+      "path": "src/cocos/serialization/ccon.ts",
+      "sha256": "54f0f928ead75318cecc412204a19eddce282518d5d97cd5b0ca98561cfe37fe"
+    },
+    {
+      "path": "src/cocos/serialization/compiled/builtin-value-type.ts",
+      "sha256": "51e036d011560edacf454400e6bf7a398bf5f7c16768047338b67a76c475cd1e"
+    },
+    {
+      "path": "src/cocos/serialization/deserialize-dynamic.ts",
+      "sha256": "cea135a21a30e12396821a059bac483cd3396f61498c611d5f95c6ab2a5515a1"
+    },
+    {
+      "path": "src/cocos/serialization/deserialize.ts",
+      "sha256": "18d1994f81e3bbf3389e09405ec7e33104432acf00142f743344500580350f73"
+    },
+    {
+      "path": "src/cocos/serialization/instantiate-jit.ts",
+      "sha256": "0839fd67f62649060a56351089f1b1fdea98380d85e6644309324318227bfcc7"
+    },
+    {
+      "path": "src/cocos/serialization/report-missing-class.ts",
+      "sha256": "57c02271bc4b64431d4d8c5b01dc406e3effad61e4efaada8f3856ae5d17de90"
+    },
+    {
+      "path": "src/cocos/ui/view.ts",
+      "sha256": "99eaf20fdd801665ca00be6f3879e0fc1b9c9889f6360f7c0d847b1df23f5117"
+    },
+    {
+      "path": "src/cocos/xr/xr-enums.ts",
+      "sha256": "03f616b4124a06f7a30d334187ff9cff501462e59985aebe7dd972c01ccdb854"
+    },
+    {
+      "path": "src/DebugInfos.json",
+      "sha256": "28bda4f7a8c3abf73b8c6a2cbf51262852395934178f15abb5e0311f17a4a0f2"
+    },
+    {
+      "path": "src/exports/gfx-empty.ts",
+      "sha256": "b3fbc46d93b59dcf63735d4445a290b7c925f0fe0e48cf3ece55baec64c39022"
+    },
+    {
+      "path": "src/exports/legacy-pipeline.ts",
+      "sha256": "c99980e25b8b8c85f58aab3c8d9156527ade14fa46786c1537a9f616bae2008c"
+    },
+    {
+      "path": "src/external/deserialize/notepack_decode.ts",
+      "sha256": "3557fb2a0739a9a48064bb20bf9ade2195bb30a9d2cf409be3c8e1947a6fdbd1"
+    },
+    {
+      "path": "src/external/deserialize/notepack_encode.ts",
+      "sha256": "513ca1c03f13eee675fc96fa311c6ad195a54aeaba498e79f1018497d0b6e70f"
+    },
+    {
+      "path": "src/pal/env/web/env.js",
+      "sha256": "381d377cd1bd65ea6da130c3b0633a985097b1fbd176d41d40b348f663273e52"
+    },
+    {
+      "path": "src/pal/input/input-source.js",
+      "sha256": "251eea670fc9659ed91301e34ff5916c392dee56c30035a866451941d2ae7b8a"
+    },
+    {
+      "path": "src/pal/input/keycodes.js",
+      "sha256": "98e21b331dd2dcf3012c995716d6751998855f15b86d6c72ec0f6aca468bcab6"
+    },
+    {
+      "path": "src/pal/input/touch-manager.js",
+      "sha256": "28bb4d2d71e10f35ee3c43e0c78ce4ce871cfb82652eb23dbc3bbede73f4302c"
+    },
+    {
+      "path": "src/pal/input/web/accelerometer-input.js",
+      "sha256": "c77fd2af3cf889b4144d212ebef1f5ff9ed7e11276ea5b9e75d0d3f6da271cb3"
+    },
+    {
+      "path": "src/pal/input/web/gamepad-input.js",
+      "sha256": "f05efceefd931a72ba9a0a2a9e39be7a42d51d17bcc775c07628a3038757f857"
+    },
+    {
+      "path": "src/pal/input/web/handheld-input.js",
+      "sha256": "d0f9677fdcf38b665b2932c6462f51277d06902e4c3ece786f317e72cf2c43a0"
+    },
+    {
+      "path": "src/pal/input/web/handle-input.js",
+      "sha256": "628e104defb8fa3f0a33e8c719b47626a06b4104d08811ed7ce76eeb9532e00e"
+    },
+    {
+      "path": "src/pal/input/web/hmd-input.js",
+      "sha256": "c0cfcf13b20ac3f6dbf540fc4cac1ffc1abb9d348b8447152ed34e06ed198a9c"
+    },
+    {
+      "path": "src/pal/input/web/index.js",
+      "sha256": "6dba8c7da73732f37d3b40f07b948aac9b277831e14cf2a4c2800ea90042fef5"
+    },
+    {
+      "path": "src/pal/input/web/keyboard-input.js",
+      "sha256": "11008e5dbf6476eb98b3e5aa059fc89cd82ec16041a24190b55fd89a9bdacabe"
+    },
+    {
+      "path": "src/pal/input/web/mouse-input.js",
+      "sha256": "0f2f78acdf473f8efcea0aa25217238aab608c68c882d7497c8599482d4ff2f4"
+    },
+    {
+      "path": "src/pal/input/web/touch-input.js",
+      "sha256": "f6b918e33472f9a4eab37b6bb9d2211fcd361e4cb672f48d6eddfd4fc67b1355"
+    },
+    {
+      "path": "src/pal/integrity-check.js",
+      "sha256": "5cc07eb6122a88fc7fe66ddf00cf511340eb010a0a7989fc34055fc49cc88397"
+    },
+    {
+      "path": "src/pal/pacer/pacer-web.js",
+      "sha256": "171778adbb33063d20b6bdfab3003b575f4d62c2dfc7c7f65de88cfde272b5a1"
+    },
+    {
+      "path": "src/pal/screen-adapter/enum-type/index.js",
+      "sha256": "c5749d932ca23baa31045f2fa60abcaff398e6b148c0c39b472260c6d25815fb"
+    },
+    {
+      "path": "src/pal/screen-adapter/enum-type/orientation.js",
+      "sha256": "8a0cd8f6b58475940d71790bba35e4d1206a8b59e5920fd85b7ec46fa71b9434"
+    },
+    {
+      "path": "src/pal/screen-adapter/enum-type/screen-event.js",
+      "sha256": "3510fe4f4fd918e4a1145a803b4d896fbb14b31888cec6e509883856f4d1ad8a"
+    },
+    {
+      "path": "src/pal/screen-adapter/web/screen-adapter.js",
+      "sha256": "097a8c675e9cc7fda399baed5843c90932c624701e5a70d1616aec3bfe9763c4"
+    },
+    {
+      "path": "src/pal/system-info/enum-type/browser-type.js",
+      "sha256": "570e57504fea91001a6d9aae8866032a39f744c8a741db5b74fd6c12674a21d6"
+    },
+    {
+      "path": "src/pal/system-info/enum-type/event.js",
+      "sha256": "3510fe4f4fd918e4a1145a803b4d896fbb14b31888cec6e509883856f4d1ad8a"
+    },
+    {
+      "path": "src/pal/system-info/enum-type/feature.js",
+      "sha256": "0ce83a5db4d66e39f76fceb57bb8669c3f0fcf5e3086fe587fef2fc8b71dafb3"
+    },
+    {
+      "path": "src/pal/system-info/enum-type/index.js",
+      "sha256": "990a1aed23eabb9993af88bf1efc0a5107738ca25ff0917ca9e5e5cce58f95a0"
+    },
+    {
+      "path": "src/pal/system-info/enum-type/language.js",
+      "sha256": "403067729dc7c1e9d41ec1f705fa48f385447aedfd23e41d3e6d0f31765bf153"
+    },
+    {
+      "path": "src/pal/system-info/enum-type/network-type.js",
+      "sha256": "eea88dc70c45fc6be79e38135f789f04f494adab9e46133049e5d37ca623b90b"
+    },
+    {
+      "path": "src/pal/system-info/enum-type/operating-system.js",
+      "sha256": "3937606d4aa2b90965f74b40e5018bf8b35f9f52d3e3fcc63e232cb55c5f5e12"
+    },
+    {
+      "path": "src/pal/system-info/enum-type/platform.js",
+      "sha256": "69adc83be4bdc64bc40cfd1dd653bd77ea73222e5dbc5658657fde37c1c6ee20"
+    },
+    {
+      "path": "src/pal/system-info/web/system-info.js",
+      "sha256": "061a818655a5c9914e6a2af8b15aa26a55e7d61d4fba34cfc3271cfd53a4389d"
+    },
+    {
+      "path": "src/pal/utils.js",
+      "sha256": "0e68022b221217edf35c7719df997aae7c5fdd1af4dd7eb4f83a02cfc42b64ff"
+    },
+    {
+      "path": "src/predefine.ts",
+      "sha256": "2ff5ed04d4883a3bc3656d5a1e853a9a6161503c032ed862c627214b5582b112"
+    },
+    {
+      "path": "test/setup-dom.js",
+      "sha256": "6a2f11fb94ebcad2ce48c4b53a6044bfaa682fdd9f232345cc6d25b7b0f5fcd5"
+    },
+    {
+      "path": "test/setup-engine.js",
+      "sha256": "1c9bbf584722c35f63df80c0be298e05a03361d3e8c639eab0fb6591b88091bf"
+    },
+    {
+      "path": "test/stubs/internal-constants.ts",
+      "sha256": "7fa0b813c55407fa225315d02f4f3924bf11473b936c3a93d8f2ee3548a94da1"
+    }
+  ]
+}

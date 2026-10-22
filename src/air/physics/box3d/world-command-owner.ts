@@ -33,7 +33,20 @@ import type {
 } from '../../../cocos/scene-graph/node-transform-validation';
 import type { Box3DBodyState, Box3DId } from './binding/facade.mjs';
 import { Box3DCommandQueue } from './command-queue';
-import { worldError } from './world-binding';
+import { copySurfaceMaterial, worldError } from './world-binding';
+import type { Box3DSurfaceMaterial } from './world-binding';
+import { unsupportedBox3D } from './unsupported';
+import { registerPhysicsMaterialDelegate } from '../../../cocos/physics/framework/physics-material-transaction';
+import type {
+    PhysicsMaterialCandidate,
+    PhysicsMaterialDelegateLease,
+} from '../../../cocos/physics/framework/physics-material-transaction';
+import type {
+    PhysicsStateChangeContext,
+    PhysicsStateFailure,
+} from '../../../cocos/physics/framework/physics-state-observer';
+
+type CopiedMaterialApplication = (authority: object, material: Readonly<Box3DSurfaceMaterial> | null) => void;
 
 /** Internal environment only. Not an AIR app option, singleton lookup or public capability. */
 export interface Box3DWorldOwnerEnvironment {
@@ -51,13 +64,15 @@ export interface Box3DOwnedComponentSeed {
     readonly component: RigidBody | Collider;
     readonly kind: 'rigid-body' | 'collider';
     readonly material: PhysicsMaterial | null;
+    /** Captured adapter helper only; never returned on impl or a component. */
+    readonly applyMaterial?: CopiedMaterialApplication;
 }
 export interface Box3DOwnerFenceScope {
     advance(next: 'solving' | 'writeback'): void;
     write(node: Node, operation: NodeTransformWriteOperation, expected: readonly number[], perform: () => void): void;
     dispose(): void;
 }
-type Phase = 'idle' | 'preflight' | 'solving' | 'writeback' | 'dispatch' | 'faulted' | 'closed';
+type Phase = 'idle' | 'preflight' | 'solving' | 'writeback' | 'dispatch' | 'material' | 'faulted' | 'closed';
 type BodyRecord = Readonly<Box3DOwnedBodySeed>;
 type ComponentRecord = {
     readonly body: object;
@@ -73,7 +88,7 @@ const rejection = Object.freeze({
 });
 const activationBlockers = Object.freeze([
     'command-consumer-not-installed',
-    'material-cache-and-clone-identity-notifications',
+    'shared-material-propagation-and-subscription-integrity',
     'immediate-system-pause-notification',
     'complete-early-entry-qualification',
     'persistent-target-grant-budget',
@@ -97,6 +112,22 @@ export class Box3DWorldCommandOwner {
     #phase: Phase = 'idle';
     #nativeTeardown: 'owned' | 'released' | 'unresolved' = 'owned';
     #scope: Box3DOwnerFenceScope | null = null;
+    readonly #materialLeases = new Map<object, PhysicsMaterialDelegateLease>();
+    readonly #materialCleanups = new Set<() => void>();
+    readonly #materialAuthorities = new WeakMap<
+        object,
+        { key: object; material: Readonly<Box3DSurfaceMaterial> | null; context: Readonly<PhysicsStateChangeContext> }
+    >();
+    #materialContext: Readonly<PhysicsStateChangeContext> | null = null;
+    #materialFault: ((error: unknown) => void) | null = null;
+    #lastMaterial: Readonly<{
+        operation: string;
+        actualRead: string;
+        actualMatchesBefore: boolean | null;
+        actualMatchesCandidate: boolean | null;
+        effects: readonly string[];
+        failed: boolean;
+    }> | null = null;
 
     constructor(generation: number, system: PhysicsSystem, world: object) {
         if (!(system instanceof PhysicsSystem))
@@ -123,7 +154,8 @@ export class Box3DWorldCommandOwner {
         const adapter = seed.adapter,
             component = seed.component,
             kind = seed.kind,
-            material = seed.material;
+            material = seed.material,
+            applyMaterial = seed.applyMaterial;
         object(adapter, 'component adapter');
         if (
             adapter !== reference ||
@@ -146,7 +178,9 @@ export class Box3DWorldCommandOwner {
                 'component identity admission',
                 'Expected actual material identity.',
             );
-        return Object.freeze({ adapter, component, kind, material });
+        if (kind === 'collider' && typeof applyMaterial !== 'function')
+            throw worldError('AIR_E_BOX3D_CONFIG', 'component identity admission', 'Missing copied material delegate.');
+        return Object.freeze({ adapter, component, kind, material, applyMaterial });
     }
     assertConfiguration(operation: string): void {
         if (this.#phase !== 'idle')
@@ -195,8 +229,20 @@ export class Box3DWorldCommandOwner {
         this.assertConfiguration('attach component identity');
         const owned = this.#bodies.get(body);
         if (!owned) throw worldError('AIR_E_BOX3D_CONFIG', 'attach component identity', 'Unknown body.');
-        const { adapter, component, kind, material } = this.copyComponentSeed(owned.node, seed.adapter, seed);
+        const { adapter, component, kind, material, applyMaterial } = this.copyComponentSeed(
+            owned.node,
+            seed.adapter,
+            seed,
+        );
         this.#components.set(adapter, { body, component, kind, material, initialized: false, enabled: false });
+        if (kind === 'collider') {
+            try {
+                this.#registerMaterial(adapter, component as Collider, applyMaterial!);
+            } catch (error) {
+                this.#components.delete(adapter);
+                throw error;
+            }
+        }
     }
     #component(adapter: object): ComponentRecord {
         const value = this.#components.get(adapter);
@@ -217,32 +263,173 @@ export class Box3DWorldCommandOwner {
             throw worldError('AIR_E_BOX3D_CONFIG', 'component activity', 'Initialization is incomplete.');
         record.enabled = enabled;
     }
-    /** Adapter-observed input, NOT proof of the later public cache/listener commit. */
-    observeColliderMaterial(adapter: object, material: PhysicsMaterial | null): void {
-        this.assertConfiguration('observe material identity');
-        const record = this.#component(adapter);
-        if (record.kind !== 'collider')
-            throw worldError('AIR_E_BOX3D_CONFIG', 'observe material identity', 'Expected Collider.');
-        if (material !== null && !(material instanceof PhysicsMaterial))
-            throw worldError('AIR_E_BOX3D_CONFIG', 'observe material identity', 'Expected PhysicsMaterial.');
-        record.material = material;
+    /** Installed only after world construction owns and validates its native resource. */
+    installMaterialObservation(applyDefault: CopiedMaterialApplication, fault: (error: unknown) => void): void {
+        if (this.#materialFault) throw worldError('AIR_E_BOX3D_CONFIG', 'material observation', 'Already installed.');
+        this.#materialFault = fault;
+        this.#registerMaterial(this.#system, this.#system, applyDefault);
     }
     validateDefaultMaterial(material: PhysicsMaterial): void {
-        this.assertConfiguration('observe default material identity');
+        this.assertConfiguration('default material identity');
         if (!(material instanceof PhysicsMaterial))
             throw worldError('AIR_E_BOX3D_CONFIG', 'default material identity', 'Expected PhysicsMaterial.');
     }
-    observeDefaultMaterial(material: PhysicsMaterial): void {
+    /** Old IPhysicsWorld entry still uses the same copied kernel, never a cache identity notification. */
+    beginMaterialKernel(material: PhysicsMaterial): Box3DOwnerFenceScope {
         this.validateDefaultMaterial(material);
-        this.#defaultMaterial = material;
+        return this.#begin('material', [material]);
+    }
+    consumeMaterialAuthority(authority: object, key: object, material: Readonly<Box3DSurfaceMaterial> | null): void {
+        const value = this.#materialAuthorities.get(authority);
+        if (
+            !value ||
+            value.key !== key ||
+            value.material !== material ||
+            value.context !== this.#materialContext ||
+            this.#phase !== 'material'
+        )
+            throw worldError(
+                'AIR_E_BOX3D_REENTRANT',
+                'copied material application',
+                'No exact private material authority.',
+            );
+        this.#materialAuthorities.delete(authority); // consume before any native or adapter write
+    }
+    #registerMaterial(key: object, target: Collider | PhysicsSystem, apply: CopiedMaterialApplication): void {
+        let context: Readonly<PhysicsStateChangeContext> | null = null;
+        let scope: Box3DOwnerFenceScope | null = null;
+        let copied: Readonly<Box3DSurfaceMaterial> | null = null;
+        const guards = new Map<object, MutationGuardLease>();
+        const cleanup = (): void => {
+            let failed = false,
+                primary: unknown;
+            for (const [asset, guard] of guards) {
+                try {
+                    guard.dispose();
+                    guards.delete(asset);
+                } catch (error) {
+                    if (!failed) primary = error;
+                    failed = true;
+                }
+            }
+            try {
+                scope?.dispose();
+                scope = null;
+            } catch (error) {
+                if (!failed) primary = error;
+                failed = true;
+            }
+            if (failed) {
+                this.#materialFault!(primary);
+                throw primary;
+            }
+            if (this.#materialContext === context) this.#materialContext = null;
+            context = null;
+            this.#materialCleanups.delete(cleanup);
+        };
+        const requireContext = (value: Readonly<PhysicsStateChangeContext>): void => {
+            if (context !== value || this.#materialContext !== value || !scope)
+                throw worldError('AIR_E_BOX3D_REENTRANT', 'material observer', 'Inactive private material context.');
+        };
+        const lease = registerPhysicsMaterialDelegate(target, {
+            open: (value) => {
+                // No asset/component getters precede the complete owner barrier.
+                context = value;
+                this.#materialCleanups.add(cleanup);
+                scope = this.#begin('material');
+                this.#materialContext = value;
+            },
+            protectCandidate: (value, asset) => {
+                requireContext(value);
+                if (!(asset instanceof PhysicsMaterial))
+                    throw worldError('AIR_E_BOX3D_CONFIG', 'material candidate', 'Expected actual PhysicsMaterial.');
+                if (!guards.has(asset)) guards.set(asset, registerMutationGuard([asset], rejection));
+            },
+            preflightCopied: (value, candidate: Readonly<PhysicsMaterialCandidate>) => {
+                requireContext(value);
+                if (key === this.#system && candidate.asset === null)
+                    throw worldError('AIR_E_BOX3D_CONFIG', 'default material', 'Default material cannot be null.');
+                const coefficients = candidate.coefficients;
+                if (coefficients && (coefficients[2] !== 0 || coefficients[3] !== 0))
+                    unsupportedBox3D('nonzero rollingFriction/spinningFriction');
+                copied = coefficients
+                    ? copySurfaceMaterial({ friction: coefficients[0], restitution: coefficients[1] })
+                    : null;
+            },
+            applyCopied: (value) => {
+                requireContext(value);
+                const authority = Object.freeze({});
+                this.#materialAuthorities.set(authority, { key, material: copied, context: value });
+                try {
+                    apply(authority, copied);
+                } finally {
+                    this.#materialAuthorities.delete(authority);
+                }
+            },
+            commitActual: (value, actual) => {
+                requireContext(value);
+                if (actual.material !== null && !(actual.material instanceof PhysicsMaterial))
+                    throw worldError('AIR_E_BOX3D_CONFIG', 'material commit', 'Actual cache identity is invalid.');
+                if (key === this.#system) this.#defaultMaterial = actual.material as PhysicsMaterial;
+                else {
+                    const record = this.#component(key);
+                    record.material = actual.material as PhysicsMaterial | null;
+                    if (value.operation === 'collider-material-initialize') record.initialized = true;
+                }
+                this.#lastMaterial = Object.freeze({
+                    operation: value.operation,
+                    actualRead: 'copied',
+                    actualMatchesBefore: null,
+                    actualMatchesCandidate: value.operation === 'collider-material-clone' ? null : true,
+                    effects: Object.freeze([]),
+                    failed: false,
+                });
+            },
+            fail: (value, failure: Readonly<PhysicsStateFailure>) => {
+                const actual = failure.actual;
+                const actualMaterial =
+                    actual && (actual.kind === 'collider-material' || actual.kind === 'system-default-material')
+                        ? actual.material
+                        : undefined;
+                const identity = (snapshot: PhysicsStateFailure['actual']) =>
+                    snapshot && (snapshot.kind === 'collider-material' || snapshot.kind === 'system-default-material')
+                        ? snapshot.material
+                        : undefined;
+                // A copied actual cache is authoritative even when later listener/owner work failed.
+                if (
+                    failure.actualRead === 'copied' &&
+                    (actualMaterial === null || actualMaterial instanceof PhysicsMaterial)
+                ) {
+                    if (key === this.#system) this.#defaultMaterial = actualMaterial as PhysicsMaterial | null;
+                    else this.#component(key).material = actualMaterial as PhysicsMaterial | null;
+                }
+                this.#lastMaterial = Object.freeze({
+                    operation: value.operation,
+                    actualRead: failure.actualRead,
+                    actualMatchesBefore:
+                        failure.actualRead === 'copied' ? actualMaterial === identity(failure.before) : null,
+                    actualMatchesCandidate:
+                        failure.actualRead === 'copied' ? actualMaterial === identity(failure.candidate) : null,
+                    effects: Object.freeze([...failure.effects]),
+                    failed: true,
+                });
+                if (failure.effects.length || value.operation === 'collider-material-initialize')
+                    this.#materialFault!(failure.error);
+            },
+            dispose: () => cleanup(),
+        });
+        this.#materialLeases.set(key, lease);
     }
     releaseComponentAfterCleanup(adapter: object): void {
+        if (this.#phase !== 'faulted' && this.#phase !== 'closed')
+            this.assertConfiguration('release component identity');
+        this.#materialLeases.get(adapter)?.dispose();
+        this.#materialLeases.delete(adapter);
         if (this.#phase === 'closed') {
             // JS component teardown is not evidence that an unresolved native body was released.
             if (this.#nativeTeardown === 'unresolved') this.#components.delete(adapter);
             return;
         }
-        if (this.#phase !== 'faulted') this.assertConfiguration('release component identity');
         this.#components.delete(adapter);
     }
     retireBodyAfterDestroy(body: object): void {
@@ -262,7 +449,10 @@ export class Box3DWorldCommandOwner {
         for (const component of this.#components.values()) if (component.material) result.add(component.material);
         return result;
     }
-    #begin(phase: 'preflight' | 'dispatch'): Box3DOwnerFenceScope {
+    #begin(
+        phase: 'preflight' | 'dispatch' | 'material',
+        extraMaterials: readonly PhysicsMaterial[] = [],
+    ): Box3DOwnerFenceScope {
         this.assertConfiguration('begin temporary scope');
         this.assertSystemBinding();
         // Private records only: no component/material getter or caller iterator executes here.
@@ -274,6 +464,7 @@ export class Box3DWorldCommandOwner {
             ...nodes,
             ...Array.from(this.#components.values(), (value) => value.component),
             ...this.#materials(),
+            ...extraMaterials,
         ]);
         let mutation: MutationGuardLease | undefined;
         let transform: NodeTransformGuardLease | undefined;
@@ -365,8 +556,24 @@ export class Box3DWorldCommandOwner {
      * Unknown native teardown closes the terminal JS queue/fences but retains body identities.
      */
     closeAfterWorldTeardown(nativeTeardownConfirmed: boolean): void {
+        let cleanupFailed = false,
+            cleanupError: unknown;
+        const attempt = (perform: () => void): void => {
+            try {
+                perform();
+            } catch (error) {
+                if (!cleanupFailed) cleanupError = error;
+                cleanupFailed = true;
+            }
+        };
+        for (const cleanup of [...this.#materialCleanups]) attempt(cleanup);
+        for (const [key, lease] of this.#materialLeases)
+            attempt(() => {
+                lease.dispose();
+                this.#materialLeases.delete(key);
+            });
         try {
-            this.#scope?.dispose();
+            attempt(() => this.#scope?.dispose());
         } finally {
             try {
                 this.#queue.close();
@@ -380,6 +587,7 @@ export class Box3DWorldCommandOwner {
                 this.#phase = 'closed';
             }
         }
+        if (cleanupFailed) throw cleanupError;
     }
     diagnostics() {
         return Object.freeze({
@@ -394,7 +602,10 @@ export class Box3DWorldCommandOwner {
             pendingCommands: this.#queue.diagnostics().pending.length,
             stagedCommandsSupported: false,
             unifiedTransactionsSupported: false,
-            materialIdentityTracking: 'adapter-observed-only',
+            materialIdentityTracking: 'actual-cache-commit',
+            materialObserverLeases: this.#materialLeases.size,
+            unresolvedMaterialScopes: this.#materialCleanups.size,
+            lastMaterialChange: this.#lastMaterial,
             activationBlockers,
         });
     }

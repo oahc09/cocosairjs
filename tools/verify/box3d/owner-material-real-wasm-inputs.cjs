@@ -57,6 +57,8 @@ const sourcePaths = [
     'src/cocos/physics/framework/components/colliders/box-collider.ts',
     'src/cocos/physics/framework/components/colliders/sphere-collider.ts',
     'src/cocos/physics/framework/physics-system.ts',
+    'src/cocos/physics/framework/physics-state-observer.ts',
+    'src/cocos/physics/framework/physics-material-transaction.ts',
     'src/cocos/physics/framework/physics-selector.ts',
     'src/cocos/physics/framework/assets/physics-material.ts',
     'jest.config.js',

@@ -1,0 +1,32 @@
+[
+  {
+    "path": "src/cocos/physics/framework/components/colliders/collider.ts",
+    "bytes": 23759,
+    "sha256": "2f1a0247fca6ec268c184b9643804f4fd6dd2cec50a58a25c76fdfbd9155bddb"
+  },
+  {
+    "path": "src/cocos/physics/framework/physics-system.ts",
+    "bytes": 41473,
+    "sha256": "92153ad5783bf4a27271daf31075704c6ea4fc4dbac323af9e05bffc5caee988"
+  },
+  {
+    "path": "src/air/physics/box3d/world-command-owner.ts",
+    "bytes": 28850,
+    "sha256": "18d9eaea896419c00c99580043eab3edfdb838b9114ba30a24ceb09431d9854d"
+  },
+  {
+    "path": "src/air/physics/box3d/world.ts",
+    "bytes": 31919,
+    "sha256": "200ba6b5f6654d51f20052fecdc7db046ad040ee7df969ee845ea1d75dd035b8"
+  },
+  {
+    "path": "src/air/physics/box3d/shared-body.ts",
+    "bytes": 29784,
+    "sha256": "c2ed2541ebe9c4a7fbb0ef063bf708bb3e84080d8bee2833c2ff4c3350bf384c"
+  },
+  {
+    "path": "src/air/physics/box3d/box-sphere-shape.ts",
+    "bytes": 10744,
+    "sha256": "3c739b77712689e34dbbab6052de5b1649663471d59540d4c2e5bfdbf1b84c20"
+  }
+]

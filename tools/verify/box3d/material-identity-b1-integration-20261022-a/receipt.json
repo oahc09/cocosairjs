@@ -1,0 +1,52 @@
+{
+  "status": "PASS_SOURCE_WITH_MOCK_BINDING",
+  "sourceBeforeManifest": "before.json",
+  "sourceAfterManifest": "source.json",
+  "sourceAfterSha256": "05b14888eea4618b8c78ca8981671668c44d2934a615d75bfc8bf6cfa8004b55",
+  "sourceUnchanged": true,
+  "initialProductTsc": {
+    "exitCode": 2,
+    "raw": "tsc-initial.raw.txt",
+    "source": "initial-source/",
+    "qualification": false
+  },
+  "intermediateTsc": {
+    "exitCode": 0,
+    "raw": "tsc-second.raw.txt",
+    "qualification": false,
+    "reason": "Intermediate diagnostic, not the final source checkpoint"
+  },
+  "finalProductTsc": {
+    "exitCode": 0,
+    "raw": "tsc-final.raw.txt"
+  },
+  "fixtureTsc": {
+    "exitCode": 0,
+    "raw": "control-tsc.raw.txt"
+  },
+  "jest": {
+    "exitCode": 0,
+    "cases": 12,
+    "checks": 54,
+    "raw": "control-initial.raw.json",
+    "stdout": "jest-initial.stdout.txt",
+    "stderr": "jest-initial.stderr.txt",
+    "sourceHashScope": "six product files plus frozen runner; 424 engine/test hashes recorded at completion, not a full pre/post closure claim"
+  },
+  "native": "not run; current 50 build-input hashes only checked read-only",
+  "activation": false,
+  "frozenDependencies": [
+    {
+      "path": "src/cocos/physics/framework/physics-state-observer.ts",
+      "sha256": "4cf40c4f1be0d407a402e95dcdb7a898b1942cb175f869f6367a41b18c2d1d2b"
+    },
+    {
+      "path": "src/cocos/physics/framework/physics-material-transaction.ts",
+      "sha256": "f7192588f5ef01358b6b506a80322f028975ae51df93aadba258a420fd7af518"
+    }
+  ],
+  "ownedFileCount": 49,
+  "ownedBytes": 885257,
+  "ownedFilesSha256": "15b72b7d7fd56dde5421d6f1a809f806c589f0fcbe35573c4208a9f89528c16d",
+  "knownReviewGap": "Nested cleanup aggregators preserve first thrown value but currently omit their own secondary cleanup diagnostics. Parent requested read-only negative-case analysis after this frozen checkpoint; no full cleanup contract claim."
+}

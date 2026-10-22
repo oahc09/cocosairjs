@@ -23,6 +23,8 @@
  THE SOFTWARE.
 */
 
+import { beginPhysicsMaterialChange } from '../../physics-material-transaction';
+import type { PhysicsMaterialIdentity } from '../../physics-material-transaction';
 import { assertMutationAllowed } from '../../../../core/data/mutation-guard';
 import { ccclass, tooltip, displayOrder, displayName, readOnly, type, serializable } from 'cc.decorator';
 import { EDITOR } from 'internal:constants';
@@ -36,6 +38,13 @@ import { EColliderType, EAxisDirection } from '../../physics-enum';
 import { selector, createShape } from '../../physics-selector';
 
 type Callback = (...args: any[]) => any;
+// Only observed paths retain candidate listener identities for independent teardown.
+const observedMaterialAssets = new WeakMap<Collider, Set<PhysicsMaterial>>();
+function retainObservedMaterial (collider: Collider, material: PhysicsMaterial | null): void {
+    let assets = observedMaterialAssets.get(collider);
+    if (!assets) observedMaterialAssets.set(collider, assets = new Set());
+    if (material) assets.add(material);
+}
 
 /**
  * @en
@@ -111,6 +120,28 @@ export class Collider extends Eventify(Component) {
     public get material (): PhysicsMaterial | null {
         if (this._isSharedMaterial && this._material) {
             assertMutationAllowed(this, 'Collider.material.get');
+            const change = beginPhysicsMaterialChange(this, 'collider-material-clone');
+            if (change) {
+                try {
+                    change.prepare(() => ({ before: this._materialIdentity(), candidate: this._materialIdentity() }));
+                    change.effect('clone-allocation-entered');
+                    const previous = this._material;
+                    const cloned = previous.clone();
+                    change.acceptClone(cloned);
+                    retainObservedMaterial(this, previous);
+                    retainObservedMaterial(this, cloned);
+                    change.effect('listener-edit-entered');
+                    previous.off(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
+                    this._material = cloned;
+                    change.effect('cache-written');
+                    cloned.on(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
+                    this._isSharedMaterial = false;
+                    change.effect('listeners-complete');
+                    change.commit(() => this._materialIdentity());
+                } catch (error) { change.fail(error, () => this._materialIdentity()); }
+                finally { change.dispose(); }
+                return this._material;
+            }
             this._material.off(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
             this._material = this._material.clone();
             this._material.on(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
@@ -121,6 +152,27 @@ export class Collider extends Eventify(Component) {
 
     public set material (value) {
         assertMutationAllowed(this, 'Collider.material.set');
+        const change = beginPhysicsMaterialChange(this, 'collider-material-set');
+        if (change) {
+            try {
+                change.prepare(() => ({ before: this._materialIdentity(), candidate: { kind: 'collider-material', material: value, shared: this._isSharedMaterial } }));
+                change.apply();
+                if (this._material !== value) {
+                    retainObservedMaterial(this, this._material);
+                    retainObservedMaterial(this, value);
+                    change.effect('listener-edit-entered');
+                    this._material?.off(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
+                    value?.on(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
+                    if (this._material && value) this._isSharedMaterial = false;
+                    this._material = value;
+                    change.effect('cache-written');
+                    change.effect('listeners-complete');
+                }
+                change.commit(() => this._materialIdentity());
+            } catch (error) { change.fail(error, () => this._materialIdentity()); }
+            finally { change.dispose(); }
+            return;
+        }
         if (this._shape) {
             const nativeFirst = selector.id === 'box3d';
             if (nativeFirst) this._shape.setMaterial(value);
@@ -450,6 +502,20 @@ export class Collider extends Eventify(Component) {
         if (!nativeFirst) this.sharedMaterial = this._material;
         this._shape = createShape(this.type);
         this._shape.initialize(this);
+        const change = beginPhysicsMaterialChange(this, 'collider-material-initialize');
+        if (change) {
+            try {
+                change.prepare(() => ({ before: this._materialIdentity(), candidate: this._materialIdentity() }));
+                this._shape.onLoad!();
+                retainObservedMaterial(this, this._material);
+                change.effect('listener-edit-entered');
+                this._material?.on(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
+                change.effect('listeners-complete');
+                change.commit(() => this._materialIdentity());
+            } catch (error) { change.fail(error, () => this._materialIdentity()); }
+            finally { change.dispose(); }
+            return;
+        }
         this._shape.onLoad!();
         if (nativeFirst && this._material) this._material.on(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
     }
@@ -467,6 +533,27 @@ export class Collider extends Eventify(Component) {
     }
 
     protected onDestroy (): void {
+        const assets = observedMaterialAssets.get(this);
+        if (assets) {
+            // No native replay: JS subscriptions and adapter/world ownership clean independently.
+            let failed = false;
+            let primary: unknown;
+            const attempt = (perform: () => void): void => {
+                try { perform(); } catch (error) { if (!failed) primary = error; failed = true; }
+            };
+            this._needTriggerEvent = false;
+            this._needCollisionEvent = false;
+            if (this._shape) attempt(() => this._shape!.updateEventListener());
+            for (const material of assets) attempt(() => {
+                material.off(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
+                assets.delete(material);
+            });
+            if (this._shape) attempt(() => this._shape!.onDestroy!());
+            if (this._boundingSphere) attempt(() => this._boundingSphere!.destroy());
+            if (!assets.size) observedMaterialAssets.delete(this);
+            if (failed) throw primary;
+            return;
+        }
         if (this._shape) {
             this._needTriggerEvent = false;
             this._needCollisionEvent = false;
@@ -475,6 +562,10 @@ export class Collider extends Eventify(Component) {
             this._shape.onDestroy!();
         }
         if (this._boundingSphere) this._boundingSphere.destroy();
+    }
+
+    private _materialIdentity (): PhysicsMaterialIdentity {
+        return { kind: 'collider-material', material: this._material, shared: this._isSharedMaterial };
     }
 
     private _updateMaterial (): void {

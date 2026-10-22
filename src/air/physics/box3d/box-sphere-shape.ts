@@ -88,6 +88,11 @@ class Box3DPrimitiveShape {
             component: value,
             kind: 'collider',
             material: asset,
+            applyMaterial: (authority, copied) => {
+                this.body.applyCopiedMaterial(this, authority, copied);
+                this.#material = copied;
+                this.#geometry = Object.freeze({ ...this.#geometry!, material: copied });
+            },
         });
         this.#body = body;
         this.#center = center;
@@ -95,7 +100,7 @@ class Box3DPrimitiveShape {
         this.#material = material;
         this.#trigger = value.isTrigger;
         this.#geometry = geometry;
-        body.completeComponent(this);
+        // Actual Collider.onLoad listener/cache commit completes this identity.
     }
     onLoad(): void {
         void this.body;
@@ -148,7 +153,6 @@ class Box3DPrimitiveShape {
         void this.body;
         const material = primitiveMaterial(value);
         if (this.#active) this.body.updateShapeMaterial(this, material);
-        this.body.observeMaterial(this, value);
         this.#material = material;
         this.#geometry = Object.freeze({ ...this.#geometry!, material });
     }

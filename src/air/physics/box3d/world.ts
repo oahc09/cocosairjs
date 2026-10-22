@@ -152,12 +152,25 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
                     'A newly acquired world has already advanced.',
                 );
             this.debug = this.collectDebug(0, this.jointScale);
+            this.#commandOwner.installMaterialObservation(
+                (authority, material) => {
+                    this.#commandOwner.consumeMaterialAuthority(authority, system, material);
+                    this.assertReadyState('copied default material');
+                    if (!material)
+                        throw worldError('AIR_E_BOX3D_CONFIG', 'default material', 'Missing copied material.');
+                    this.#applyDefaultMaterialCopied(material);
+                },
+                (error) => {
+                    this.invalidatePending();
+                    this.fault(error);
+                },
+            );
         } catch (error) {
             this.fault(error);
             throw error;
         }
     }
-    private assertReady(operation: string): void {
+    private assertReadyState(operation: string): void {
         if (this.state === 'stepping' || this.state === 'destroying')
             throw worldError('AIR_E_BOX3D_REENTRANT', operation, 'World operation is already in progress.');
         if (this.state !== 'ready')
@@ -166,6 +179,9 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
                 operation,
                 'World is faulted or closed; no native operation was attempted.',
             );
+    }
+    private assertReady(operation: string): void {
+        this.assertReadyState(operation);
         this.#commandOwner.assertConfiguration(operation);
     }
     private assertCommittedRead(operation: string): void {
@@ -228,50 +244,59 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
     }
     setDefaultMaterial(value: PhysicsMaterial): void {
         this.assertReady('setDefaultMaterial');
-        this.#commandOwner.validateDefaultMaterial(value);
-        const next = copySurfaceMaterial(value);
-        if (value.rollingFriction !== 0 || value.spinningFriction !== 0)
-            unsupportedBox3D('nonzero rollingFriction/spinningFriction');
-        // Validate every inherited token and capture rollback values before the first write.
+        const scope = this.#commandOwner.beginMaterialKernel(value);
+        let failed = false;
+        try {
+            // Original material EVENT_UPDATE path shares the same no-replay kernel.
+            const friction = value.friction,
+                restitution = value.restitution;
+            const rolling = value.rollingFriction,
+                spinning = value.spinningFriction;
+            const next = copySurfaceMaterial({ friction, restitution });
+            if (rolling !== 0 || spinning !== 0) unsupportedBox3D('nonzero rollingFriction/spinningFriction');
+            this.#applyDefaultMaterialCopied(next);
+        } catch (error) {
+            failed = true;
+            throw error;
+        } finally {
+            try {
+                scope.dispose();
+            } catch (error) {
+                this.ownerCleanupFailure = error;
+                this.invalidatePending();
+                this.fault(error);
+                if (!failed) throw error;
+            }
+        }
+    }
+    #applyDefaultMaterialCopied(next: Readonly<Box3DSurfaceMaterial>): void {
+        // Full read-only membership/material validation precedes the first setter.
         const changes = [...this.#materialShapes]
             .filter(([, inherited]) => inherited)
-            .map(([shape]) => ({
-                shape,
-                previous: copySurfaceMaterial(this.#binding.getShapeMaterial(this.#token, shape)),
-            }));
-        let attempted = 0;
+            .map(([shape]) => {
+                copySurfaceMaterial(this.#binding.getShapeMaterial(this.#token, shape));
+                return shape;
+            });
+        let entered = false;
         try {
-            for (const item of changes) {
-                ++attempted;
+            for (const shape of changes) {
+                entered = true;
                 this.invalidatePending();
-                this.#binding.setShapeMaterial(this.#token, item.shape, next);
-                const actual = copySurfaceMaterial(this.#binding.getShapeMaterial(this.#token, item.shape));
+                this.#binding.setShapeMaterial(this.#token, shape, next);
+                const actual = copySurfaceMaterial(this.#binding.getShapeMaterial(this.#token, shape));
                 if (actual.friction !== next.friction || actual.restitution !== next.restitution)
                     throw worldError('AIR_E_BOX3D_ABI', 'setDefaultMaterial', 'Shape material readback mismatch.');
             }
-        } catch (error) {
-            try {
-                for (const item of changes.slice(0, attempted).reverse()) {
-                    this.invalidatePending();
-                    this.#binding.setShapeMaterial(this.#token, item.shape, item.previous);
-                    const actual = copySurfaceMaterial(this.#binding.getShapeMaterial(this.#token, item.shape));
-                    if (actual.friction !== item.previous.friction || actual.restitution !== item.previous.restitution)
-                        throw worldError('AIR_E_BOX3D_ABI', 'material rollback', 'Readback mismatch.');
-                }
-            } catch (rollbackError) {
-                this.fault(rollbackError);
-                throw worldError(
-                    'AIR_E_BOX3D_WORLD_FAULTED',
-                    'material rollback',
-                    `Restoration failed: ${String(rollbackError)}`,
-                );
-            }
+            this.material = next;
             this.invalidatePending();
+        } catch (error) {
+            // No reviewed not-mutated receipt exists for this setter. Never replay/reverse an unknown write.
+            if (entered) {
+                this.invalidatePending();
+                this.fault(error);
+            }
             throw error;
         }
-        this.material = next;
-        this.#commandOwner.observeDefaultMaterial(value);
-        this.invalidatePending();
     }
     /** Internal shape-owner hook for later T10. Does not create or claim ownership of native shapes. */
     registerMaterialShape(shape: Box3DId, inheritsDefault: boolean): void {
@@ -306,6 +331,9 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
     /** Internal semantic shape-owner hook; the native capability is never returned. */
     updateMaterialShape(shape: Box3DId, value: Box3DSurfaceMaterial | null): void {
         this.assertReady('updateMaterialShape');
+        this.#applyShapeMaterialCopied(shape, value);
+    }
+    #applyShapeMaterialCopied(shape: Box3DId, value: Box3DSurfaceMaterial | null): void {
         if (!this.#materialShapes.has(shape))
             throw worldError('AIR_E_BOX3D_DISPOSED', 'shape material', 'Unknown shape.');
         const next = value === null ? this.material : copySurfaceMaterial(value);
@@ -317,8 +345,8 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
             );
         copySurfaceMaterial(this.#binding.getShapeMaterial(this.#token, shape));
         try {
-            this.#binding.setShapeMaterial(this.#token, shape, next);
             this.invalidatePending();
+            this.#binding.setShapeMaterial(this.#token, shape, next);
             const actual = copySurfaceMaterial(this.#binding.getShapeMaterial(this.#token, shape));
             if (actual.friction !== next.friction || actual.restitution !== next.restitution)
                 throw worldError('AIR_E_BOX3D_ABI', 'shape material', 'Native readback mismatch.');
@@ -377,14 +405,17 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
                     attachComponent: (key, seed) => this.#commandOwner.attachComponent(key, seed),
                     completeComponent: (adapter) => this.#commandOwner.completeComponent(adapter),
                     componentEnabled: (adapter, enabled) => this.#commandOwner.commitComponentEnabled(adapter, enabled),
-                    observeMaterial: (adapter, material) =>
-                        this.#commandOwner.observeColliderMaterial(adapter, material),
                     releaseComponent: (adapter) => this.#commandOwner.releaseComponentAfterCleanup(adapter),
                     isFaulted: () => this.state === 'faulted' || this.state === 'destroy-failed',
                     invalidate: () => this.invalidatePending(),
                     fault: (error) => this.fault(error),
                     registerShapeMaterial: (shape, inherited) => this.registerMaterialShape(shape, inherited),
                     updateShapeMaterial: (shape, value) => this.updateMaterialShape(shape, value),
+                    applyCopiedMaterial: (adapter, authority, shape, value) => {
+                        this.#commandOwner.consumeMaterialAuthority(authority, adapter, value);
+                        this.assertReadyState('copied collider material');
+                        if (shape) this.#applyShapeMaterialCopied(shape, value);
+                    },
                     unregisterShapeMaterial: (shape) => this.unregisterMaterialShape(shape),
                     released: (key, value, logical) => {
                         this.#commandOwner.retireBodyAfterDestroy(logical);

@@ -45,13 +45,18 @@ export interface Box3DBodyOwner {
     attachComponent(body: object, seed: Box3DOwnedComponentSeed): void;
     completeComponent(adapter: object): void;
     componentEnabled(adapter: object, enabled: boolean): void;
-    observeMaterial(adapter: object, material: PhysicsMaterial | null): void;
     releaseComponent(adapter: object): void;
     isFaulted(): boolean;
     invalidate(): void;
     fault(error: unknown): void;
     registerShapeMaterial(shape: Box3DId, inherited: boolean): void;
     updateShapeMaterial(shape: Box3DId, value: Box3DSurfaceMaterial | null): void;
+    applyCopiedMaterial(
+        adapter: object,
+        authority: object,
+        shape: Box3DId | null,
+        value: Readonly<Box3DSurfaceMaterial> | null,
+    ): void;
     unregisterShapeMaterial(shape: Box3DId): void;
     released(node: Node, body: Box3DSharedBody, logical: object): void;
 }
@@ -276,9 +281,6 @@ export class Box3DSharedBody {
     componentEnabled(reference: object, enabled: boolean): void {
         this.#owner.componentEnabled(reference, enabled);
     }
-    observeMaterial(reference: object, material: PhysicsMaterial | null): void {
-        this.#owner.observeMaterial(reference, material);
-    }
     private nodePose(): readonly number[] {
         const p = this.#node.worldPosition;
         const q = this.#node.worldRotation;
@@ -377,7 +379,13 @@ export class Box3DSharedBody {
             throw error;
         }
         this.#owner.invalidate();
-        this.#owner.releaseComponent(reference);
+        try {
+            this.#owner.releaseComponent(reference);
+        } catch (error) {
+            // Native body destruction already returned. Do not retry it after JS lease cleanup failure.
+            this.#owner.fault(error);
+            throw error;
+        }
         this.#references.delete(reference);
         this.#closed = true;
         this.#owner.released(this.#node, this, this.#logical);
@@ -635,6 +643,18 @@ export class Box3DSharedBody {
             this.#owner.fault(error);
             throw error;
         }
+    }
+    /** Internal exact-authority route, never used by ordinary component setters. */
+    applyCopiedMaterial(reference: object, authority: object, value: Readonly<Box3DSurfaceMaterial> | null): void {
+        if (this.#closed || !this.#references.has(reference))
+            throw worldError('AIR_E_BOX3D_DISPOSED', 'copied shape material', 'Unknown live adapter.');
+        const shape = this.#shapes.get(reference);
+        this.#owner.applyCopiedMaterial(reference, authority, shape?.token ?? null, value);
+        if (shape)
+            this.#shapes.set(reference, {
+                token: shape.token,
+                geometry: Object.freeze({ ...shape.geometry, material: value }),
+            });
     }
     updateShapeMaterial(reference: object, value: Box3DSurfaceMaterial | null): void {
         this.assert('updateShapeMaterial');

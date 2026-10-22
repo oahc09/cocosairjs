@@ -22,6 +22,7 @@
  THE SOFTWARE.
 */
 
+import { beginPhysicsMaterialChange } from './physics-material-transaction';
 import { assertMutationAllowed } from '../../core/data/mutation-guard';
 import { BUILD, EDITOR_NOT_IN_PREVIEW, LOAD_BULLET_MANUALLY, LOAD_PHYSX_MANUALLY } from 'internal:constants';
 import { Vec3, RecyclePool, Enum, System, cclegacy, settings, geometry, warn, IQuatLike, IVec3Like, SettingsCategory, errorID, warnID } from '../../core';
@@ -234,6 +235,25 @@ export class PhysicsSystem extends System implements IWorldInitData {
      */
     public setDefaultPhysicsMaterial (material: PhysicsMaterial): void {
         assertMutationAllowed(this, 'PhysicsSystem.setDefaultPhysicsMaterial');
+        const change = beginPhysicsMaterialChange(this, 'system-default-material-set');
+        if (change) {
+            try {
+                change.prepare(() => ({
+                    before: { kind: 'system-default-material', material: this._material ?? null },
+                    candidate: { kind: 'system-default-material', material },
+                }));
+                change.apply();
+                change.effect('listener-edit-entered');
+                if (this._material !== material) this._material?.off(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
+                this._material = material;
+                change.effect('cache-written');
+                this._material.on(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
+                change.effect('listeners-complete');
+                change.commit(() => ({ kind: 'system-default-material', material: this._material }));
+            } catch (error) { change.fail(error, () => ({ kind: 'system-default-material', material: this._material ?? null })); }
+            finally { change.dispose(); }
+            return;
+        }
         if (selector.id === 'box3d') {
             this.physicsWorld.setDefaultMaterial(material);
             if (this._material !== material) {
