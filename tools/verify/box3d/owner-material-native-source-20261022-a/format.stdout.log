@@ -1,0 +1,7 @@
+tools/verify/box3d/owner-material-native-failure-environment.cjs 64ms (unchanged)
+tools/verify/box3d/owner-material-native-failure-inputs.cjs 50ms (unchanged)
+tools/verify/box3d/owner-material-native-failure-preload.mjs 58ms
+tools/verify/box3d/owner-material-native-failure.jest.cjs 3ms (unchanged)
+tools/verify/box3d/owner-material-native-failure.mjs 21ms
+tools/verify/box3d/owner-material-native-failure.test.ts 214ms
+tools/verify/box3d/owner-material-native-failure.tsconfig.json 3ms (unchanged)

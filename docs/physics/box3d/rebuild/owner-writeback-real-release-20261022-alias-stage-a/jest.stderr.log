@@ -1,0 +1,8 @@
+PASS tools/verify/box3d/owner-writeback-real-wasm.test.ts (19.879 s)
+  ✓ actual AIR writeback epoch qualification; one independent process per scenario (248 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       1 passed, 1 total
+Snapshots:   0 total
+Time:        20.952 s
+Ran all test suites.

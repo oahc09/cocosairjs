@@ -2,7 +2,7 @@
   "meta": {
     "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
     "note": "Air Path 与 Upstream Path 一致(前缀 src/)；modified 文件另行标注 reason；upstreamPath=null 表示该行为 Air 原创文件或上游产物（仓库内无对应源文件），必须 modified:true 并在 reason 说明出处",
-    "modifiedCount": 259,
+    "modifiedCount": 260,
     "pal": {
       "revision": "9f0e30acb31f6d670f2c0bf818d61039846a2860",
       "license": "MIT",
@@ -10005,6 +10005,13 @@
       "baseline": "AIR original",
       "modified": true,
       "reason": "2026-10-22 Box3D rebuild: private opt-in multi-owner JS state observer with created tickets, barriers before snapshot reads, actual-cache commit, exact first errors and independently retained cleanup outcomes. Not wired to existing engine/World/material entries or public exports; 76 finite pure controls do not establish native material correctness."
+    },
+    {
+      "airPath": "src/cocos/physics/framework/physics-material-transaction.ts",
+      "upstreamPath": null,
+      "baseline": "AIR original",
+      "modified": true,
+      "reason": "2026-10-22 Box3D rebuild: private typed copied-material delegate adapter over the B0 observer. Exact one-use delegate and clone handling only; not wired to World/Collider/System entries yet. Pure controls are not native material qualification."
     }
   ]
 }

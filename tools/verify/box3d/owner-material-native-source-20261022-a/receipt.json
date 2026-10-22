@@ -1,0 +1,50 @@
+{
+  "status": "FIXTURE_SOURCE_FROZEN_NOT_PHYSICAL_ACCEPTANCE",
+  "timeUTC": "2026-10-22T15:54:22.277660+00:00",
+  "baseProductCommit": "35258d655a4f9099b94e18c0a9cb741474a12826",
+  "sourceFiles": [
+    {
+      "path": "tools/verify/box3d/owner-material-native-failure-environment.cjs",
+      "bytes": 1705,
+      "sha256": "0e50dcac8b226ba40fe40d8d9bed204f0e105efc4eccd64b435656231c924809"
+    },
+    {
+      "path": "tools/verify/box3d/owner-material-native-failure-inputs.cjs",
+      "bytes": 6096,
+      "sha256": "0926c312cc1f35ed882d23bf5929572472226d32c6cec4b73fb46e98a368e830"
+    },
+    {
+      "path": "tools/verify/box3d/owner-material-native-failure-preload.mjs",
+      "bytes": 8545,
+      "sha256": "88b5cf04b7873f8ccbd9a093432105d23c3d7d9cb6b3dc828e4d669d5717f3ca"
+    },
+    {
+      "path": "tools/verify/box3d/owner-material-native-failure.jest.cjs",
+      "bytes": 1447,
+      "sha256": "c39ef28d64671a804215d858305c7cc6221648b6b90922b9071f5d49b39b0614"
+    },
+    {
+      "path": "tools/verify/box3d/owner-material-native-failure.mjs",
+      "bytes": 6449,
+      "sha256": "8a54c2a5e30e89109e46921f408f60ae8d737d8f6f3e308ee4f1954aef0bbc6c"
+    },
+    {
+      "path": "tools/verify/box3d/owner-material-native-failure.test.ts",
+      "bytes": 10261,
+      "sha256": "733e8a91a0a0444b8a8418016f70374600c52b9fd5accfd245d1ccc06b14eaa8"
+    },
+    {
+      "path": "tools/verify/box3d/owner-material-native-failure.tsconfig.json",
+      "bytes": 165,
+      "sha256": "f42b77af756157651fbae2174670b1591bad0a767606c4fd10d69ae96467461c"
+    }
+  ],
+  "formatExitCode": 0,
+  "tscExitCode": 0,
+  "commands": [
+    "node node_modules/prettier/bin/prettier.cjs --write tools/verify/box3d/owner-material-native-failure*",
+    "node node_modules/typescript/bin/tsc -p tools/verify/box3d/owner-material-native-failure.tsconfig.json --pretty false",
+    "node tools/verify/box3d/owner-material-native-failure.mjs tools/physics/box3d/output/command-wasm-release-20261022-n4 docs/physics/box3d/rebuild/owner-material-native-release-20261022-readback-red-a default-readback-failure"
+  ],
+  "scope": "One explicitly armed JS wrapper throws only after real getShapeMaterial returned following real setter. Real native values retained, no fake result. The independent real binding exposes actual post-failure values for assertions."
+}

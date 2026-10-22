@@ -1,0 +1,23 @@
+FAIL tools/verify/box3d/owner-material-native-failure.test.ts (20.316 s)
+  ✕ actual material cache identity and truthful post-effect failure (291 ms)
+
+  ● actual material cache identity and truthful post-effect failure
+
+    Material ownership invariants: unknown outcome never replays a native material mutation; post-native failure faults with truthful untouched System cache; faulted owner refuses later step without native replay
+
+      215 |     if (!failed && checks.some((row) => !row.pass)) {
+      216 |         failed = true;
+    > 217 |         failure = new Error(
+          |                   ^
+      218 |             'Material ownership invariants: ' +
+      219 |                 checks
+      220 |                     .filter((row) => !row.pass)
+
+      at tools/verify/box3d/owner-material-native-failure.test.ts:217:19
+      at fulfilled (tools/verify/box3d/owner-material-native-failure.test.ts:5:58)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 1 total
+Snapshots:   0 total
+Time:        20.944 s
+Ran all test suites.

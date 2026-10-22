@@ -1,0 +1,8 @@
+PASS tools/verify/box3d/coexist-real-wasm.test.ts (35.696 s)
+  ✓ actual source and real WASM coexistence: both (841 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       1 passed, 1 total
+Snapshots:   0 total
+Time:        36.294 s
+Ran all test suites.

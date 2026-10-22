@@ -1,0 +1,47 @@
+FAIL tools/verify/box3d/owner-checkpoint-a-control.test.ts (17.224 s)
+  ✓ missing environment refuses before selector and allocation (35 ms)
+  ✓ reader must return actual System before native world creation (126 ms)
+  ✓ delayed System uniqueness and owned-world checks precede body/step (49 ms)
+  ✓ fake kind and duplicate actual component rejected before allocation (65 ms)
+  ✓ original actual components share native lifetime; disabled collider identity retained (221 ms)
+  ✓ ordinary force remains immediate; System.step owns one native step and exact writeback (57 ms)
+  ✓ actual Node/Component/System/material earliest writes reject inside writeback while reads succeed (113 ms)
+  ✓ recoverable preflight rejection releases leases and does not step/fault (36 ms)
+  ✓ uncaught writeback configuration refusal faults completed step and releases every lease (37 ms)
+  ✓ other owner lease remains after a temporary owner scope releases (135 ms)
+  ✓ owner phase forbids direct scope reentry and scope token cannot be replayed (21 ms)
+  ✓ default material fake identity rejects before shape/native mutation (33 ms)
+  ✓ failed native disable does not delete component ownership or claim disabled (13 ms)
+  ✓ unknown body destruction retains ownership until unique world teardown (14 ms)
+  ✕ native world destruction failure remains separate from cleared JS leases (29 ms)
+  ✓ solving rejects direct reads and configuration; copied read resumes after completion (40 ms)
+  ✓ no-lease ordinary Node and System configuration retain original behavior (5 ms)
+
+  ● native world destruction failure remains separate from cleared JS leases
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "Error: [AIR_E_BOX3D_DISPOSED] bodyState: World cannot provide committed reads.",
+    + ]
+
+      356 |         jest.restoreAllMocks();
+      357 |     }
+    > 358 |     expect(failures).toEqual([]);
+          |                      ^
+      359 | });
+      360 | afterAll(() => {
+      361 |     if (process.env.BOX3D_OWNER_RAW)
+
+      at tools/verify/box3d/owner-checkpoint-a-control.test.ts:358:22
+      at fulfilled (tools/verify/box3d/owner-checkpoint-a-control.test.ts:5:58)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 16 passed, 17 total
+Snapshots:   0 total
+Time:        20.02 s
+Ran all test suites.

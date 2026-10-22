@@ -1,0 +1,29 @@
+{
+  "status": "PASS_READ_ONLY_REAL_RELEASE_COMMAND_EVIDENCE_CONSUMER",
+  "mode": "Release",
+  "commandCount": 21,
+  "samples": 217,
+  "sampleKinds": {
+    "rejection": 47,
+    "caught-reentry-zero-native-calls": 1,
+    "single-read": 1,
+    "pose-single-read": 1,
+    "mass-pending-recovery": 1,
+    "analytic-box": 32,
+    "clear-prevents-later-force-overflow": 1,
+    "locked-impulses": 1,
+    "target-is-velocity-not-arrival": 1,
+    "preserve-idle-cleanup": 1,
+    "real-contact-island-wake": 1,
+    "growth-result": 1,
+    "id-reuse": 128
+  },
+  "invocationSummary": {
+    "total": 198,
+    "validation": 4,
+    "committed": 176,
+    "empty": 1,
+    "refused": 17
+  },
+  "injectedMechanisms": 6
+}

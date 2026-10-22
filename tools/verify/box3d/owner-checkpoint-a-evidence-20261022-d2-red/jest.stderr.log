@@ -1,0 +1,105 @@
+FAIL tools/verify/box3d/owner-checkpoint-a-control.test.ts (7.777 s)
+  ✕ native world destruction failure remains separate from cleared JS leases (534 ms)
+  ○ skipped missing environment refuses before selector and allocation
+  ○ skipped reader must return actual System before native world creation
+  ○ skipped delayed System uniqueness and owned-world checks precede body/step
+  ○ skipped fake kind and duplicate actual component rejected before allocation
+  ○ skipped original actual components share native lifetime; disabled collider identity retained
+  ○ skipped ordinary force remains immediate; System.step owns one native step and exact writeback
+  ○ skipped actual Node/Component/System/material earliest writes reject inside writeback while reads succeed
+  ○ skipped recoverable preflight rejection releases leases and does not step/fault
+  ○ skipped uncaught writeback configuration refusal faults completed step and releases every lease
+  ○ skipped other owner lease remains after a temporary owner scope releases
+  ○ skipped owner phase forbids direct scope reentry and scope token cannot be replayed
+  ○ skipped default material fake identity rejects before shape/native mutation
+  ○ skipped failed native disable does not delete component ownership or claim disabled
+  ○ skipped unknown body destruction retains ownership until unique world teardown
+  ○ skipped solving rejects direct reads and configuration; copied read resumes after completion
+  ○ skipped no-lease ordinary Node and System configuration retain original behavior
+  ○ skipped partial lease acquisition failure removes earlier mutation lease before returning
+  ○ skipped original postUpdate keeps its one accumulator and native step
+
+  ● native world destruction failure remains separate from cleared JS leases
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 16
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "actual": Array [
+    +       0,
+    +       0,
+    +       null,
+    +     ],
+    +     "expected": Array [
+    +       1,
+    +       1,
+    +       1,
+    +     ],
+    +     "name": "unresolved body ownership retained before JS component cleanup",
+    +     "passed": false,
+    +   },
+    + ]
+
+      77 |             ? 'PASS_SOURCE_WITH_MOCK_BINDING'
+      78 |             : 'RED_SOURCE_WITH_MOCK_BINDING';
+    > 79 |         expect(row.checks.filter((v: any) => !v.passed)).toEqual([]);
+         |                                                          ^
+      80 |     });
+      81 | }
+      82 | function node(name = 'owner-control'): Node {
+
+      at Object.<anonymous> (tools/verify/box3d/owner-checkpoint-a-control.test.ts:79:58)
+
+  ● native world destruction failure remains separate from cleared JS leases
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 24
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "actual": Array [
+    +       0,
+    +       0,
+    +       null,
+    +     ],
+    +     "expected": Array [
+    +       1,
+    +       1,
+    +       1,
+    +     ],
+    +     "name": "unresolved body ownership retained before JS component cleanup",
+    +     "passed": false,
+    +   },
+    +   Object {
+    +     "actual": Object {
+    +       "type": "undefined",
+    +     },
+    +     "expected": 1,
+    +     "name": "unresolved native body survives JS cleanup",
+    +     "passed": false,
+    +   },
+    + ]
+
+      381 |             : 'RED_SOURCE_WITH_MOCK_BINDING';
+      382 |     expect(failures).toEqual([]);
+    > 383 |     expect(row.checks.filter((v: any) => !v.passed)).toEqual([]);
+          |                                                      ^
+      384 | });
+      385 | afterAll(() => {
+      386 |     if (process.env.BOX3D_OWNER_RAW)
+
+      at tools/verify/box3d/owner-checkpoint-a-control.test.ts:383:54
+      at fulfilled (tools/verify/box3d/owner-checkpoint-a-control.test.ts:28:58)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 18 skipped, 19 total
+Snapshots:   0 total
+Time:        8.893 s
+Ran all test suites with tests matching "native world destruction failure".

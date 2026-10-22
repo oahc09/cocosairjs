@@ -1,0 +1,23 @@
+FAIL tools/verify/box3d/writeback-epoch-real-wasm.test.ts (34.553 s)
+  ✕ actual AIR writeback epoch qualification; one independent process per scenario (375 ms)
+
+  ● actual AIR writeback epoch qualification; one independent process per scenario
+
+    Writeback invariant failure: scene origin and orientation match immutable native physics-child; temporary Node guard released by close ; temporary Node guard released by close ; temporary Node guard released by close
+
+      380 |     fixture.checkpoint('final-assertions', { checks, failure: serializeError(failure) });
+      381 |     if (!failure && checks.some((c) => !c.pass))
+    > 382 |         failure = new Error(
+          |                   ^
+      383 |             'Writeback invariant failure: ' +
+      384 |                 checks
+      385 |                     .filter((c) => !c.pass)
+
+      at tools/verify/box3d/writeback-epoch-real-wasm.test.ts:382:19
+      at fulfilled (tools/verify/box3d/writeback-epoch-real-wasm.test.ts:5:58)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 1 total
+Snapshots:   0 total
+Time:        35.175 s
+Ran all test suites.

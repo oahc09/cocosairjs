@@ -1,0 +1,69 @@
+FAIL tools/verify/box3d/owner-checkpoint-a-control.test.ts (14.431 s)
+  ✓ missing environment refuses before selector and allocation (5 ms)
+  ✓ reader must return actual System before native world creation (27 ms)
+  ✓ delayed System uniqueness and owned-world checks precede body/step (17 ms)
+  ✓ fake kind and duplicate actual component rejected before allocation (13 ms)
+  ✓ original actual components share native lifetime; disabled collider identity retained (13 ms)
+  ✓ ordinary force remains immediate; System.step owns one native step and exact writeback (28 ms)
+  ✓ actual Node/Component/System/material earliest writes reject inside writeback while reads succeed (42 ms)
+  ✓ recoverable preflight rejection releases leases and does not step/fault (13 ms)
+  ✕ uncaught writeback configuration refusal faults completed step and releases every lease (21 ms)
+  ✕ other owner lease remains after a temporary owner scope releases (6 ms)
+  ✕ owner phase forbids direct scope reentry and scope token cannot be replayed (12 ms)
+
+  ● uncaught writeback configuration refusal faults completed step and releases every lease
+
+    expect(received).toBeUndefined()
+
+    Received: [Error: [AIR_E_BOX3D_WORLD_FAULTED] updateEventListener: World is faulted or closed; no native operation was attempted.]
+
+      337 |             diagnostics: copy(f.world?.diagnostics()),
+      338 |         };
+    > 339 |         expect(error).toBeUndefined();
+          |                       ^
+      340 |         expect(receipt.status).toBe('closed');
+      341 |     }
+      342 |     fixtures.length = 0;
+
+      at tools/verify/box3d/owner-checkpoint-a-control.test.ts:339:23
+      at fulfilled (tools/verify/box3d/owner-checkpoint-a-control.test.ts:5:58)
+
+  ● other owner lease remains after a temporary owner scope releases
+
+    expect(received).toBeUndefined()
+
+    Received: [Error: [AIR_E_BOX3D_DISPOSED] updateEventListener: Shared body is closed.]
+
+      337 |             diagnostics: copy(f.world?.diagnostics()),
+      338 |         };
+    > 339 |         expect(error).toBeUndefined();
+          |                       ^
+      340 |         expect(receipt.status).toBe('closed');
+      341 |     }
+      342 |     fixtures.length = 0;
+
+      at tools/verify/box3d/owner-checkpoint-a-control.test.ts:339:23
+      at fulfilled (tools/verify/box3d/owner-checkpoint-a-control.test.ts:5:58)
+
+  ● owner phase forbids direct scope reentry and scope token cannot be replayed
+
+    expect(received).toBeUndefined()
+
+    Received: [Error: [AIR_E_BOX3D_DISPOSED] updateEventListener: Shared body is closed.]
+
+      337 |             diagnostics: copy(f.world?.diagnostics()),
+      338 |         };
+    > 339 |         expect(error).toBeUndefined();
+          |                       ^
+      340 |         expect(receipt.status).toBe('closed');
+      341 |     }
+      342 |     fixtures.length = 0;
+
+      at tools/verify/box3d/owner-checkpoint-a-control.test.ts:339:23
+      at fulfilled (tools/verify/box3d/owner-checkpoint-a-control.test.ts:5:58)
+
+Test Suites: 1 failed, 1 total
+Tests:       3 failed, 8 passed, 11 total
+Snapshots:   0 total
+Time:        14.937 s
+Ran all test suites.

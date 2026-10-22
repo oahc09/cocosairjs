@@ -1,0 +1,23 @@
+FAIL tools/verify/box3d/owner-material-real-wasm.test.ts (24.182 s)
+  ✕ actual material cache identity and truthful post-effect failure (741 ms)
+
+  ● actual material cache identity and truthful post-effect failure
+
+    Material ownership invariants: post-native listener failure faults instead of pretending no change; faulted owner refuses later step without native replay
+
+      250 |     if (!failed && checks.some((row) => !row.pass)) {
+      251 |         failed = true;
+    > 252 |         failure = new Error(
+          |                   ^
+      253 |             'Material ownership invariants: ' +
+      254 |                 checks
+      255 |                     .filter((row) => !row.pass)
+
+      at tools/verify/box3d/owner-material-real-wasm.test.ts:252:19
+      at fulfilled (tools/verify/box3d/owner-material-real-wasm.test.ts:5:58)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 1 total
+Snapshots:   0 total
+Time:        24.776 s
+Ran all test suites.

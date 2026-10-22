@@ -1,0 +1,32 @@
+FAIL tools/verify/box3d/coexist-real-wasm.test.ts (16.233 s)
+  ✕ actual source and real WASM coexistence: both (261 ms)
+
+  ● actual source and real WASM coexistence: both
+
+    expect(received).rejects.toMatchObject(expected)
+
+    - Expected  - 1
+    + Received  + 1
+
+      Object {
+    -   "code": "AIR_E_APP_CONFLICT",
+    +   "code": "AIR_E_CANVAS_CONFLICT",
+      }
+
+      174 |         const otherCanvas = document.createElement('canvas');
+      175 |         document.body.appendChild(otherCanvas);
+    > 176 |         await expect(createAirApp({ ...options, canvas: otherCanvas })).rejects.toMatchObject({
+          |                                                                                 ^
+      177 |             code: 'AIR_E_APP_CONFLICT',
+      178 |         });
+      179 |         const system = PhysicsSystem.instance,
+
+      at Object.toMatchObject (node_modules/@jest/expect/node_modules/expect/build/index.js:241:22)
+      at tools/verify/box3d/coexist-real-wasm.test.ts:176:81
+      at fulfilled (tools/verify/box3d/coexist-real-wasm.test.ts:5:58)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 1 total
+Snapshots:   0 total
+Time:        16.761 s
+Ran all test suites.

@@ -1,0 +1,1908 @@
+{
+  "status": "RAW_BYTES_RETAINED_WITHOUT_REWRITING",
+  "timeUTC": "2026-10-22T15:57:29.239002+00:00",
+  "priorLocalCommit": "ada7a57cb3912d6908049972e0cf7b7e40c0831b",
+  "reason": "The repository global *.log ignore excluded these stdout/stderr logs from earlier explicit directory adds. Existing tracked raw JSON receipts are not changed. This checkpoint adds original local log bytes and records the limitation; it does not retroactively claim earlier bundles contained ignored files.",
+  "scope": "Only .log files beneath this Box3D rebuild evidence and verification directories, each under a directory already represented in the current Git source. No product/build cache change.",
+  "files": [
+    {
+      "path": "docs/physics/box3d/rebuild/owner-component-real-release-20261022-committed-a/jest.stderr.log",
+      "bytes": 300,
+      "sha256": "f9a01f203ce8a92940fb270a8632c9e55a766bbf51faf77146a518043a27242b",
+      "gitBlobSha1": "b07904b8bd0d75521b342e8669e8cb4784b4be4b"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/owner-component-real-release-20261022-committed-a/jest.stdout.log",
+      "bytes": 2328,
+      "sha256": "5b1df0480f66e1e4ac1e92ad7fc80ec4fab55638e300bf3facc6303458945b18",
+      "gitBlobSha1": "aba48afafdaf02486e25079663c4156593136368"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/owner-component-real-release-20261022-lifecycle-a/jest.stderr.log",
+      "bytes": 301,
+      "sha256": "e4dc53c17e669506744b5ee7720abbe4369cd7e9b90b2ff1843001beea02c3f7",
+      "gitBlobSha1": "024c38c04295d238e2607bdbb7425191376b4f4f"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/owner-component-real-release-20261022-lifecycle-a/jest.stdout.log",
+      "bytes": 2330,
+      "sha256": "89e0e7d3d03e46621157d168bf77a0e3ff1cb54940116dd515d5b1dd08bc658d",
+      "gitBlobSha1": "ec45e093535e6191cd3aaaa532506cde9d40bb3b"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/owner-component-real-release-20261022-lifecycle-stage-a/jest.stderr.log",
+      "bytes": 300,
+      "sha256": "6d49f7cf4d531c127ce8f39055bcf8b789fd3dae3c251240033c872a9ae2574b",
+      "gitBlobSha1": "58436e4dea73b314b0c4712fe90602b8a49e279f"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/owner-component-real-release-20261022-lifecycle-stage-a/jest.stdout.log",
+      "bytes": 2328,
+      "sha256": "a8a7a4160a6d6975990a28261180ab78ad34d93633a12bbc20c793461e87c7ce",
+      "gitBlobSha1": "d1738068e5dd2a5fdf7beece069660ed6d3c9880"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/owner-material-native-release-20261022-readback-red-a/jest.stderr.log",
+      "bytes": 1051,
+      "sha256": "f1bb1a44fd7994991a254fb0d427d895c64d18c9cb34e08d02c87803d8c4323c",
+      "gitBlobSha1": "78299fe39956904fc7d1d5e73b1207dcbf69cd42"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/owner-material-native-release-20261022-readback-red-a/jest.stdout.log",
+      "bytes": 2328,
+      "sha256": "7e7af9d080be8a1259ec4b1cbb4d8fcd4de9f1329204516cf455fe7f35c9ba69",
+      "gitBlobSha1": "b7e54c8080654563294d9d3f2ce035ca597202b0"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/owner-material-real-release-20261022-clone-callback-red-a/collector.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/owner-material-real-release-20261022-clone-callback-red-a/collector.stdout.log",
+      "bytes": 572,
+      "sha256": "9bb5fa4cc6df05a1c7713b26029c6b5b7b0b8a9af59f22ca9e39b1eb662c9f19",
+      "gitBlobSha1": "3fc56493ae0a654f2d9581540839335e221d6444"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/owner-material-real-release-20261022-clone-callback-red-a/jest.stderr.log",
+      "bytes": 913,
+      "sha256": "83f97f1007cac0cf018e876e9840415729cc7df713363cbed185375a34792055",
+      "gitBlobSha1": "14a2b8cab39511acc954c416f9ea7b1b1a9ac6bf"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/owner-material-real-release-20261022-clone-callback-red-a/jest.stdout.log",
+      "bytes": 2328,
+      "sha256": "b6ea4c44aaed7d98a887199d5b397e26f0e99347ef9b67b1f306215bc72803b2",
+      "gitBlobSha1": "70fad97ef1133bd3db0a59a5ef823894e52fde78"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/owner-material-real-release-20261022-collider-listener-failure-red-a/collector.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/owner-material-real-release-20261022-collider-listener-failure-red-a/collector.stdout.log",
+      "bytes": 583,
+      "sha256": "11283f116513e68cccb206b5ba3e58eade387e787935071dd5eee9dcc8cfa281",
+      "gitBlobSha1": "d56388af94dcb39bba251b7182e2b309289c4ba4"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/owner-material-real-release-20261022-collider-listener-failure-red-a/jest.stderr.log",
+      "bytes": 982,
+      "sha256": "391607208d0a5e5c9fbe77f3fe569c9f7de26e3df246a5af5daa11cb1bfa9231",
+      "gitBlobSha1": "a1c1e20b7f874e541006e155b06ca4dd1a1d2954"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/owner-material-real-release-20261022-collider-listener-failure-red-a/jest.stdout.log",
+      "bytes": 2330,
+      "sha256": "3030f161956a114dfd06ad58fc1008b7055293e104262665c8c8cbff50d865df",
+      "gitBlobSha1": "9c76dae646bac0264bae1371893cacc96e384e80"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/owner-material-real-release-20261022-default-listener-failure-red-a/collector.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/owner-material-real-release-20261022-default-listener-failure-red-a/collector.stdout.log",
+      "bytes": 582,
+      "sha256": "f4543126953bea552ea2bc47eff8c7a64677034832682396dfcb9e8823a1d534",
+      "gitBlobSha1": "b250903dbf897d8a488c3965f02c4bc4d9a92a1d"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/owner-material-real-release-20261022-default-listener-failure-red-a/jest.stderr.log",
+      "bytes": 982,
+      "sha256": "a29deb4662ce8487d68a88756919341ab36ce277307da8248608a350b049475c",
+      "gitBlobSha1": "fa37a389ec5e1fea1cb59aabf7d2b57cc5590a19"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/owner-material-real-release-20261022-default-listener-failure-red-a/jest.stdout.log",
+      "bytes": 2328,
+      "sha256": "950fa30d0c8cdd00b5d7da48c6d6a35919bcfb5bd72d98f1c9e805cb09ec86c3",
+      "gitBlobSha1": "56de7c2e58b8b2fad8a5c9a15f6666b342581610"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/owner-writeback-real-release-20261022-alias-a/jest.stderr.log",
+      "bytes": 290,
+      "sha256": "1f7d74069d59c083df37a8d9b236c67c4eae664cff347fafdfa95d26de4ac256",
+      "gitBlobSha1": "68aed7af97026f724fba5b8b6a2daef17d4f3d3b"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/owner-writeback-real-release-20261022-alias-a/jest.stdout.log",
+      "bytes": 2329,
+      "sha256": "878668959d29271febffdf024e4722bff99ca2427af06969a0fa9a170de66424",
+      "gitBlobSha1": "00cd301406932fc2abe9499d758756ac7c2f0b0c"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/owner-writeback-real-release-20261022-alias-stage-a/jest.stderr.log",
+      "bytes": 290,
+      "sha256": "587d152587ad88b0d35cbb6f40141d4ad46e869fc59dd8da6069e971f35190a4",
+      "gitBlobSha1": "f50cee51fd7f1fcbe4f8fd1309cc43a2d334ed40"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/owner-writeback-real-release-20261022-alias-stage-a/jest.stdout.log",
+      "bytes": 2327,
+      "sha256": "d3064bc1e95e734dae599ed891a8a4e8944290370964216d1aafbe3c14b98c2b",
+      "gitBlobSha1": "425286a39a8c2cf138d70105dc02ef871ea980d4"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/owner-writeback-real-release-20261022-caught-a/jest.stderr.log",
+      "bytes": 289,
+      "sha256": "ad147bb58225d0583207bfe7c1e5e8e12dd5670a8ce93693cbcd097ab403eb3e",
+      "gitBlobSha1": "956c43269e2683bb1b0fb4fa7ef2c815588a2d8e"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/owner-writeback-real-release-20261022-caught-a/jest.stdout.log",
+      "bytes": 2328,
+      "sha256": "2f28bc51d7f1398266355b78cc52339c072189cbd525b4d3d9a529c876545493",
+      "gitBlobSha1": "114854351e5e95fed1554839b22d18c59e65bbc0"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/toolchain/combined-environment-check.log",
+      "bytes": 817,
+      "sha256": "665c2aab123e1f9ee40998db78cbcb5d983d0ce75c57f9790543907b7386fbd7",
+      "gitBlobSha1": "1eb1fbac32e7948d444ec44658ad17fc400390ec"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/unified-command-arithmetic-controls-20261022-n4/actual-velocity-corruption.stderr.log",
+      "bytes": 661,
+      "sha256": "6873b01ccc896df3be2cead90187650ac6591928d6a9d1fbd6b58f18c054f892",
+      "gitBlobSha1": "a7957b8025f38cc3e3cc1e1f7aa14b50d83a2244"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/unified-command-arithmetic-controls-20261022-n4/actual-velocity-corruption.stdout.log",
+      "bytes": 1020,
+      "sha256": "c52f8a723b2e0b2d11f1433160bd701e3334ddea341041f442263c730595a405",
+      "gitBlobSha1": "ad673d07956e773a5b3c74e4c0233904af78b8c5"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/unified-command-arithmetic-controls-20261022-n4/producer-predictions-unreadable.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/unified-command-arithmetic-controls-20261022-n4/producer-predictions-unreadable.stdout.log",
+      "bytes": 1052,
+      "sha256": "bd05315fa136e57d464ba3f4c17c32db70b2a22fc3199b03cb842b8eaec57b81",
+      "gitBlobSha1": "5b1308c8844a061bde60aa2d27606a908ea50649"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/unified-command-arithmetic-controls-20261022-n4/run.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/unified-command-arithmetic-controls-20261022-n4/run.stdout.log",
+      "bytes": 3110,
+      "sha256": "a048264f46a6daa5704793cd19114cf1f301d8ebbc13d8ec9bfc1d38ee183b0b",
+      "gitBlobSha1": "f12d1614308ea4015204de71b108a7563d980961"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/unified-command-independent-arithmetic-20261022-n4/run.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/unified-command-independent-arithmetic-20261022-n4/run.stdout.log",
+      "bytes": 1052,
+      "sha256": "ba9636cdb6375717317831bc289180885bfbf319ec00c8f2239481d74385c36c",
+      "gitBlobSha1": "578f9680a882b5de925f4975e9af1d154759ae1e"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/unified-debug-artifact-roundtrip-20261022-n4/restore-smoke.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/unified-debug-artifact-roundtrip-20261022-n4/restore-smoke.stdout.log",
+      "bytes": 537,
+      "sha256": "6d4c5d21abdb320f017e4e49f118d7f1d0bf39b664ae0cb2d469781cf454682e",
+      "gitBlobSha1": "ca9fb6edee35b41a29050a658a7ed2663e51e0d7"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/unified-debug-component-lifecycle-20261022-n4/jest.stderr.log",
+      "bytes": 300,
+      "sha256": "16b591f06711da0e5aacc39d218d64e888dca4f5954ca11a34db4261489e353b",
+      "gitBlobSha1": "b478e03e9fee48438bd1b135d8cf9c5df19f761f"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/unified-debug-component-lifecycle-20261022-n4/jest.stdout.log",
+      "bytes": 2328,
+      "sha256": "622125b59eca17bd99f9041e05033b6c32ffa8085b342be2275bf130e7813331",
+      "gitBlobSha1": "17d5d723511b029e76e13aee558cf0fa75de2306"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/unified-debug-world-baseline-20261022-n4/jest.stderr.log",
+      "bytes": 290,
+      "sha256": "d303c29ef1572ec972de81678a2d101bc84c43a7aff54ec8e34a930f615c3605",
+      "gitBlobSha1": "5fe5a847ec4d9caf79b037cccc44d2bc316dfb94"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/unified-debug-world-baseline-20261022-n4/jest.stdout.log",
+      "bytes": 2328,
+      "sha256": "cdea743a874bc91fdc1ab8241a1981564349f9a390020fcd514448d7ee82a6b5",
+      "gitBlobSha1": "cb36e86c8e2fe77627a4226f45ad6bb8c3fcd510"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/unified-release-artifact-roundtrip-20261022-n4/restore-smoke.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/unified-release-artifact-roundtrip-20261022-n4/restore-smoke.stdout.log",
+      "bytes": 572,
+      "sha256": "f462094b269c519ca140db17425021f123bfac952abc4f4ef589792796bf0771",
+      "gitBlobSha1": "947dbd6102527dd135d55dbbbc27d4346abd883e"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/unified-wasm-debug-lead-review-20261022-n4/command-wasm-debug-consumer-20261022-n4/audit.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/unified-wasm-debug-lead-review-20261022-n4/command-wasm-debug-consumer-20261022-n4/audit.stdout.log",
+      "bytes": 136,
+      "sha256": "13ea7134405c33f67770f3e0680cb532a85dc7ffa4a5fea7b3b11a0509f02894",
+      "gitBlobSha1": "18ba1fce5767720f9daeca40c7b6aff9118a6565"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/unified-wasm-debug-lead-review-20261022-n4/command-wasm-debug-consumer-20261022-n4/stager.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/unified-wasm-debug-lead-review-20261022-n4/command-wasm-debug-consumer-20261022-n4/stager.stdout.log",
+      "bytes": 1300,
+      "sha256": "c2d873906c1a50fc001dd3a066675f405c217bb1bbb1a8c41fab28cb56f1ab23",
+      "gitBlobSha1": "496c956fdf8218f99eb1e93dafb3e8ba3b8112f5"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/unified-wasm-debug-lead-review-20261022-n4/command-wasm-debug-consumer-20261022-n4/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/unified-wasm-debug-lead-review-20261022-n4/command-wasm-debug-consumer-20261022-n4/stdout.log",
+      "bytes": 698,
+      "sha256": "7e06ea793c6ffb153b98390e5dfcbef8cc815deabccd41b78e1dabef73a95657",
+      "gitBlobSha1": "468a478bdde344348674946a777091a5382dfcff"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/unified-wasm-debug-lead-review-20261022-n4/command-wasm-debug-monitor-20261022-n4/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/unified-wasm-debug-lead-review-20261022-n4/command-wasm-debug-monitor-20261022-n4/stdout.log",
+      "bytes": 122,
+      "sha256": "7b54c54c874588dc3894ba115a27432555deeee35f06a41886730d810cdbc238",
+      "gitBlobSha1": "4bfd8a69ae44fae0e71453c108c1f56ef859defa"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/unified-wasm-debug-lead-review-20261022-n4/command-wasm-debug-monitor-20261022-n4/toolchain.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/unified-wasm-debug-lead-review-20261022-n4/command-wasm-debug-monitor-20261022-n4/toolchain.stdout.log",
+      "bytes": 872,
+      "sha256": "02bcb4a70591149b421968ec99c7754167a794177b4e7dfbe6d313b545e36f2c",
+      "gitBlobSha1": "460e1bb3f159736ff863d55df94c2cd07bf6192d"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/unified-wasm-debug-lead-review-20261022-n4/command.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/unified-wasm-debug-lead-review-20261022-n4/command.stdout.log",
+      "bytes": 698,
+      "sha256": "7e06ea793c6ffb153b98390e5dfcbef8cc815deabccd41b78e1dabef73a95657",
+      "gitBlobSha1": "468a478bdde344348674946a777091a5382dfcff"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/unified-wasm-debug-lead-review-20261022-n4/stager.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/unified-wasm-debug-lead-review-20261022-n4/stager.stdout.log",
+      "bytes": 1300,
+      "sha256": "c2d873906c1a50fc001dd3a066675f405c217bb1bbb1a8c41fab28cb56f1ab23",
+      "gitBlobSha1": "496c956fdf8218f99eb1e93dafb3e8ba3b8112f5"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/unified-wasm-release-lead-review-20261022-n4/command-wasm-release-consumer-20261022-n4/audit.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/unified-wasm-release-lead-review-20261022-n4/command-wasm-release-consumer-20261022-n4/audit.stdout.log",
+      "bytes": 138,
+      "sha256": "ae05f8d909a17481232afd3fed2336a47505266d9d7c7c6f7813a03167f8b36a",
+      "gitBlobSha1": "6cbd25e4d57d022e96c66129fdb64e44b947a21e"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/unified-wasm-release-lead-review-20261022-n4/command-wasm-release-consumer-20261022-n4/command-consumer.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/unified-wasm-release-lead-review-20261022-n4/command-wasm-release-consumer-20261022-n4/command-consumer.stdout.log",
+      "bytes": 702,
+      "sha256": "4790e035dbcfa2cda214ec4d5f5d7f4297378c6bb12d7ccc12aaed503cb69c5d",
+      "gitBlobSha1": "48d5aed2c9b5f8b870abbe55c190467de1902906"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/unified-wasm-release-lead-review-20261022-n4/command-wasm-release-consumer-20261022-n4/monitor-controls.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/unified-wasm-release-lead-review-20261022-n4/command-wasm-release-consumer-20261022-n4/monitor-controls.stdout.log",
+      "bytes": 659,
+      "sha256": "aedbdef4c6efde89d4077f83da25686ac879636f65f88cffca183d9ab48c5e66",
+      "gitBlobSha1": "0e71d1cc83199171275b2be863bde6be268ec80c"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/unified-wasm-release-lead-review-20261022-n4/command-wasm-release-consumer-20261022-n4/stager.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/unified-wasm-release-lead-review-20261022-n4/command-wasm-release-consumer-20261022-n4/stager.stdout.log",
+      "bytes": 1304,
+      "sha256": "8a6506a9babcbda07dd3e6c960841982c80041c3bcc945d8ece71e15bbac4061",
+      "gitBlobSha1": "9ae22ec735d254b3bd8c703002d31f80a78e2b16"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/unified-wasm-release-lead-review-20261022-n4/command-wasm-release-monitor-20261022-n4/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/unified-wasm-release-lead-review-20261022-n4/command-wasm-release-monitor-20261022-n4/stdout.log",
+      "bytes": 124,
+      "sha256": "e5be715aa6a91e136e5fb6309c5e944606aa19d8cb359e3dca83fd604ad22c81",
+      "gitBlobSha1": "f50e68d8d3417dbdeb5e39e0e81732fdf65940ca"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/unified-wasm-release-lead-review-20261022-n4/command-wasm-release-monitor-20261022-n4/toolchain.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/unified-wasm-release-lead-review-20261022-n4/command-wasm-release-monitor-20261022-n4/toolchain.stdout.log",
+      "bytes": 872,
+      "sha256": "02bcb4a70591149b421968ec99c7754167a794177b4e7dfbe6d313b545e36f2c",
+      "gitBlobSha1": "460e1bb3f159736ff863d55df94c2cd07bf6192d"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/unified-wasm-release-lead-review-20261022-n4/command.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/unified-wasm-release-lead-review-20261022-n4/command.stdout.log",
+      "bytes": 702,
+      "sha256": "4790e035dbcfa2cda214ec4d5f5d7f4297378c6bb12d7ccc12aaed503cb69c5d",
+      "gitBlobSha1": "48d5aed2c9b5f8b870abbe55c190467de1902906"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/unified-wasm-release-lead-review-20261022-n4/stager.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/unified-wasm-release-lead-review-20261022-n4/stager.stdout.log",
+      "bytes": 1304,
+      "sha256": "8a6506a9babcbda07dd3e6c960841982c80041c3bcc945d8ece71e15bbac4061",
+      "gitBlobSha1": "9ae22ec735d254b3bd8c703002d31f80a78e2b16"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/world-real-wasm-coexist-j2-20261022-a/both/jest.stderr.log",
+      "bytes": 1205,
+      "sha256": "f28fa8db03b69f7ef513d3a9e83e8d85f0242d206dd58521ad497a35094d8fd9",
+      "gitBlobSha1": "a5189f0a45d62784e4ede450bcdcdea02da064f6"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/world-real-wasm-coexist-j2-20261022-a/both/jest.stdout.log",
+      "bytes": 565,
+      "sha256": "bb6b529c53671adde3206ebb15ba7a128643be09fe72f8a82aaa568378fcec70",
+      "gitBlobSha1": "5fc33f7eec0df79a790cb49b42ade2ef7b7260b2"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/world-real-wasm-coexist-j2-20261022-a/types.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/world-real-wasm-coexist-j2-20261022-a/types.stdout.log",
+      "bytes": 184,
+      "sha256": "42a8a64c96ee63388f16e79d5cdf484d6d2a2d1ef4af106ba407ab59ab441dea",
+      "gitBlobSha1": "3f06fa67ccc3e459f1dac4420d2d452ce726e368"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/world-real-wasm-coexist-j2-20261022-b/both/jest.stderr.log",
+      "bytes": 249,
+      "sha256": "d73d4da150f4c04f55d9e6ae72c50ce37e587ac223e3da51d3cd6977dc46170f",
+      "gitBlobSha1": "c4f39a3c6d7fd25d7b1fd4d95acb899ea1537e6c"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/world-real-wasm-coexist-j2-20261022-b/both/jest.stdout.log",
+      "bytes": 565,
+      "sha256": "dfba02251c59764a9a46afb77ea26392a80eb40ff47b5603052953da6e857405",
+      "gitBlobSha1": "51225942778c17c624e4250d717a877db624c65d"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/world-real-wasm-coexist-j2-20261022-c/2d-builtin/jest.stderr.log",
+      "bytes": 255,
+      "sha256": "7565c9aac68215b197f958ab8b4f1de609a0f6c8bbb73031efb7d13664d6585c",
+      "gitBlobSha1": "524e2fa25854bee050af619bf3ed33e4a3b0ea4a"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/world-real-wasm-coexist-j2-20261022-c/2d-builtin/jest.stdout.log",
+      "bytes": 565,
+      "sha256": "31fda85a7a7445643a23f0407c54a17605ae77a6e7737333745fbf04b9d49b50",
+      "gitBlobSha1": "3367f9398b3c149743295730fdd3d7a98eabb6d7"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/world-real-wasm-coexist-j2-20261022-c/2d-cannon/jest.stderr.log",
+      "bytes": 254,
+      "sha256": "7be6d6da770c9797a75adc7915b4cd3cc2d3e0553ab9413aedef0d574c31fac8",
+      "gitBlobSha1": "d538a90b80ad757af7f61e032922092da4d1de2c"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/world-real-wasm-coexist-j2-20261022-c/2d-cannon/jest.stdout.log",
+      "bytes": 565,
+      "sha256": "27a186b6f17dc6b722bf75e6b3be319aba4e58c5d3976be22b00b7555c47a2fd",
+      "gitBlobSha1": "3a6708ab6bc1d30baee4f10860da640022722884"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/world-real-wasm-coexist-j2-20261022-c/2d-failure/jest.stderr.log",
+      "bytes": 254,
+      "sha256": "140554a7b8f69d77d6a43cab23ca3ef08bbeb706e8fc36829b6aaa8ed706f78f",
+      "gitBlobSha1": "ff2a5d38072f430f849e3d30247c86754c436dec"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/world-real-wasm-coexist-j2-20261022-c/2d-failure/jest.stdout.log",
+      "bytes": 116,
+      "sha256": "02b24b0789037848dc5c18588f521f1cc707d2396215a6912fd60099c853099e",
+      "gitBlobSha1": "bbafbfd2b37deb0c10a126f6b5c5ffe244a98867"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/world-real-wasm-coexist-j2-20261022-c/3d-failure/jest.stderr.log",
+      "bytes": 254,
+      "sha256": "8b93dbd768343a2f8168b14c9bff8ae73070505b06ab712c4abdc16203b96f19",
+      "gitBlobSha1": "7ec60d471f2d55f99e8402bd3826fbc1a9d52962"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/world-real-wasm-coexist-j2-20261022-c/3d-failure/jest.stdout.log",
+      "bytes": 116,
+      "sha256": "02b24b0789037848dc5c18588f521f1cc707d2396215a6912fd60099c853099e",
+      "gitBlobSha1": "bbafbfd2b37deb0c10a126f6b5c5ffe244a98867"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/world-real-wasm-coexist-j2-20261022-c/3d-only/jest.stderr.log",
+      "bytes": 252,
+      "sha256": "015a0d841ee438bc6a65df9ee73242d2e22dfeac66ecc6a4bc3c3ab9b13e82fd",
+      "gitBlobSha1": "8322f80f771684b4e1c95771baa9a48a90d7f720"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/world-real-wasm-coexist-j2-20261022-c/3d-only/jest.stdout.log",
+      "bytes": 565,
+      "sha256": "c0e5ea773047c88de06c03a3cdd523b35688dc09b388eee1d5e0b4717ffafec3",
+      "gitBlobSha1": "f38e27491d7831b0a9a44f9a86932138bb4e1f3e"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/world-real-wasm-coexist-j2-20261022-c/both/jest.stderr.log",
+      "bytes": 247,
+      "sha256": "c816d88baa52452eda80286289a84e2d0d134822dd1d9b8322dffe58178f5842",
+      "gitBlobSha1": "b27111004f3f1703c0ce439192ed8a77fe178cb9"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/world-real-wasm-coexist-j2-20261022-c/both/jest.stdout.log",
+      "bytes": 564,
+      "sha256": "b296d17a975c8bee0873b58d13b512831ded93d4d3e7086a90beb3b74b1530aa",
+      "gitBlobSha1": "80bbd4d5827d23e690e525dabd162176c93a355c"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/world-real-wasm-coexist-j2-20261022-c/default-builtin/jest.stderr.log",
+      "bytes": 260,
+      "sha256": "5d4b4234eb149218ee644dc01c7bfcf09a8b95a3ffd0f45f9e61a665c6023dbd",
+      "gitBlobSha1": "214f1e6270c04f8517fe7866162769ebdc1b30c2"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/world-real-wasm-coexist-j2-20261022-c/default-builtin/jest.stdout.log",
+      "bytes": 565,
+      "sha256": "4c8416d8b4e0467b0fbdd6e94627eee9b6c1c4613b7f06addcf73f1ec35306cb",
+      "gitBlobSha1": "c3a10dd64814c0347da61ca93ed3dcac96c393f3"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/world-real-wasm-coexist-j2-20261022-c/default-cannon/jest.stderr.log",
+      "bytes": 259,
+      "sha256": "ce2f76cf589f6527f30321d8e6da97fdd9ee5909c3985ddabadd508573782861",
+      "gitBlobSha1": "11ca3f97c667b0ac9b319946c0ee4ce8c0fc0b02"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/world-real-wasm-coexist-j2-20261022-c/default-cannon/jest.stdout.log",
+      "bytes": 564,
+      "sha256": "2776545e6996da48955fc85d99b4acc73245190b34edc05f13b76a0c3be7bc59",
+      "gitBlobSha1": "47e34d7c703ebcff6d617481860dbb15f5fa7b26"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/world-real-wasm-coexist-j2-20261022-c/init-failure/jest.stderr.log",
+      "bytes": 257,
+      "sha256": "9ba924e60ebb869dc67acf315476e5ba8d79b2d084cad0105f4129af49792796",
+      "gitBlobSha1": "afa5ec896580031f5227786671b3db92f17b6988"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/world-real-wasm-coexist-j2-20261022-c/init-failure/jest.stdout.log",
+      "bytes": 360,
+      "sha256": "71994dde1e831e7a364ddf042a1e3cf319468fd0c23aad93d7f798c1556c0aba",
+      "gitBlobSha1": "f80f3b271ad84ad31cbb04005e4cce83e974e140"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/world-real-wasm-coexist-j2-20261022-lead/both/jest.stderr.log",
+      "bytes": 249,
+      "sha256": "8a244a22af1849047daee17316d7b9ec6c624b4f41e0708ffa8bfc30e1424670",
+      "gitBlobSha1": "a32ebaa42c1bac94b5acbcaa01b74f1d0f6bac54"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/world-real-wasm-coexist-j2-20261022-lead/both/jest.stdout.log",
+      "bytes": 565,
+      "sha256": "5f2eb7a34a620f895f4c30be34411cbe57b24914c1a0fccb6639f6eebe378174",
+      "gitBlobSha1": "5be71192c2de1030ed850dd888c4258ac7a08d2a"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/world-real-wasm-coexist-static-20261022-a/types.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/world-real-wasm-coexist-static-20261022-a/types.stdout.log",
+      "bytes": 512,
+      "sha256": "80f76b69aa12a0df6f469852282f9bee587ddccb150acf91d45859ea86ae242c",
+      "gitBlobSha1": "898bbcf16b538ac926653ee81ec73ded7fcb6b3c"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/world-real-wasm-coexist-static-20261022-b/0.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/world-real-wasm-coexist-static-20261022-b/0.stdout.log",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20",
+      "gitBlobSha1": "4aa0d16e7a0ff5c16269bf45771cebe89cc2e81d"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/world-real-wasm-coexist-static-20261022-b/1.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/world-real-wasm-coexist-static-20261022-b/1.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/world-real-wasm-coexist-static-20261022-b/2.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/world-real-wasm-coexist-static-20261022-b/2.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/world-real-wasm-coexist-static-20261022-b/3.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/world-real-wasm-coexist-static-20261022-b/3.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/world-real-wasm-coexist-static-20261022-b/4.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/world-real-wasm-coexist-static-20261022-b/4.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/world-real-wasm-coexist-static-20261022-b/5.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/world-real-wasm-coexist-static-20261022-b/5.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/world-real-wasm-coexist-static-20261022-b/6.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/world-real-wasm-coexist-static-20261022-b/6.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/world-real-wasm-coexist-static-20261022-b/7.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/world-real-wasm-coexist-static-20261022-b/7.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-lead-review-20261022/child-before-parent/jest.stderr.log",
+      "bytes": 289,
+      "sha256": "cd99fa413c8e4b29662bd200a953568fd407692c16f41e82904cad8aa12814ac",
+      "gitBlobSha1": "fa341e87f2cefcd77fbdb903647c892fc3abbae6"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-lead-review-20261022/child-before-parent/jest.stdout.log",
+      "bytes": 2327,
+      "sha256": "1dfd97d71c56b2a4f5b31ceb8e6b74e2edcb26b99baa5297ca0cc87dcb37b09b",
+      "gitBlobSha1": "f22ebb8ee8611054d3bb4b88ad2130bb3900b703"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-lead-review-20261022/self-flush-alias/jest.stderr.log",
+      "bytes": 290,
+      "sha256": "ab71cc081a91de6c5d2a4b5e03a4011a58703ed092fa15af47840a6ae7f21334",
+      "gitBlobSha1": "af8ca1af5fbf1d1452ae89ffa0d6a9a79c414784"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-lead-review-20261022/self-flush-alias/jest.stdout.log",
+      "bytes": 2328,
+      "sha256": "d886185e5a3a7aefd667b7a26527df011dc8be0b5cfe870a9ee34a2c8a6d50b1",
+      "gitBlobSha1": "8206c5a66ddf1ec1051d573002329aeb302cdbbd"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-e/baseline/jest.stderr.log",
+      "bytes": 290,
+      "sha256": "f46096415dd71586b5e6da5d13e0f610877fc1f9b16e738a46693ebb8ad14ea1",
+      "gitBlobSha1": "2c86f6478546d58d1e0ea50115ef5b09ab73ab60"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-e/baseline/jest.stdout.log",
+      "bytes": 2328,
+      "sha256": "01bc5aa186f41f2bce88821b3a779b5a2db5c59a83423b508d1498c0aff0842d",
+      "gitBlobSha1": "197fe788a9bed46216603000bb7d71669609f40a"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-e/child-before-parent/jest.stderr.log",
+      "bytes": 290,
+      "sha256": "9049adb901c3ad738b3d4095ff7ce57a6f173f97035e1301965de8fe82a80a79",
+      "gitBlobSha1": "97de5acecc7f5618d4ca3af111f3247508cc86dd"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-e/child-before-parent/jest.stdout.log",
+      "bytes": 2328,
+      "sha256": "91f7db40e57fccbcf24d298cfffb3768e201e583ba7834f830a391aa1f00dd1c",
+      "gitBlobSha1": "c5a4420b9658a00e866d247c35d4d4ca6dd6bf7d"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-f/baseline/jest.stderr.log",
+      "bytes": 290,
+      "sha256": "b3128ecaed979caf0d8a7e6f30ad52eaaa5dd71fbcbb35413ded1fb9b667dfcc",
+      "gitBlobSha1": "8ed00945f011bf155fed56f62677ebf835f209f2"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-f/baseline/jest.stdout.log",
+      "bytes": 2328,
+      "sha256": "aac7733cdfbd2fef25c3bc943cd791e249f9266448de9f7adb419068d965a2b7",
+      "gitBlobSha1": "b1f5b50a6e3a8f6fb7674a188ffa5e8a5093989d"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-f/child-before-parent/jest.stderr.log",
+      "bytes": 290,
+      "sha256": "2dd0c336364c522b933b78dc28fed0ac6b81e79d263e26e94c2c2b70d77d79e8",
+      "gitBlobSha1": "ea55fb6de5521a26caf36965399249608fb70821"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-f/child-before-parent/jest.stdout.log",
+      "bytes": 2328,
+      "sha256": "bfe61418335a83743c2a0ca841de0fa5c57185c2ce0f886f4fbd94a08d9330c5",
+      "gitBlobSha1": "e41715c7bac7d3e81a13ad93cd2d9003e22748b9"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-f/epoch-exhaustion-one/jest.stderr.log",
+      "bytes": 290,
+      "sha256": "a93ff91bb5eca670cbc314dc5ce17fd9313bb057ef2b47509865148a0afb540e",
+      "gitBlobSha1": "d5e8b0806e6952f6ee6bfd12fdc82c7d2f129747"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-f/epoch-exhaustion-one/jest.stdout.log",
+      "bytes": 2328,
+      "sha256": "da8f780c70010297e6a92ffc0500de1320f9dc8fdbf6eb43a6754eab18545d7c",
+      "gitBlobSha1": "a04fff88147b9d0a096ac3a2a0d37ba770657f6a"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-f/epoch-exhaustion/jest.stderr.log",
+      "bytes": 290,
+      "sha256": "cdaf40429b3dff4744818169425db8d55a4f3059f6df0c707d21d1bfcd4d106b",
+      "gitBlobSha1": "02a37425c89409a312c2ea31eb49c1d8d3865770"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-f/epoch-exhaustion/jest.stdout.log",
+      "bytes": 2327,
+      "sha256": "c692a53d168e65625a39109ee9a8ca05957803e89324f41465bbfbc88561d287",
+      "gitBlobSha1": "24d6abd6a756afe32cefb134d35828f24c4d9f95"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-f/initial-shear-rejection/jest.stderr.log",
+      "bytes": 290,
+      "sha256": "ca1109879adf34a95010c0e57603e62aca05e230475ccb931124349d4b87e166",
+      "gitBlobSha1": "10242f929b388e19202a39879864c3bcf29c6924"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-f/initial-shear-rejection/jest.stdout.log",
+      "bytes": 2327,
+      "sha256": "e40d5830d092143fadbdb6d0c686fa7207ea7a92811e611dbeb188700eda6600",
+      "gitBlobSha1": "3c10f596483905c1fbae6a3ae061fda96ed962bb"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-f/mirrored-ancestor-rejection/jest.stderr.log",
+      "bytes": 290,
+      "sha256": "4a605d812cf5e67fd6ebc78938b04fcc0267b8c38c694db70d8a4510e1c99e30",
+      "gitBlobSha1": "93c83c9d357a2bbbe8a480e6a6c391b181a009d2"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-f/mirrored-ancestor-rejection/jest.stdout.log",
+      "bytes": 2328,
+      "sha256": "1c10d98e0fcf37131a2c565aa8d54572f742323ee5c8e965856636a85eedaea4",
+      "gitBlobSha1": "5a3e35c03cbd765e370842a0a0f9495a774f538d"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-f/nonuniform-parent/jest.stderr.log",
+      "bytes": 290,
+      "sha256": "2616018e6d39e0a7c08d9f737e268c67e0e1ce6c85c8d997f472708c13cf8010",
+      "gitBlobSha1": "ec765b5ff8d18a7ae3c3d24bb52c6377c5ee0fdb"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-f/nonuniform-parent/jest.stdout.log",
+      "bytes": 2328,
+      "sha256": "e7c124838ba75c4a7c2b150443db11579e70443a0c3eb900650ce2a453bcbc8d",
+      "gitBlobSha1": "b28bb17eb536bb0ac029016df2213ec6d7908645"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-f/parent-flush-alias/jest.stderr.log",
+      "bytes": 1079,
+      "sha256": "dda0ab928ae8d48593f996195eb811e6a7f8c1df6f50cd09034f7518a38d9acc",
+      "gitBlobSha1": "30bcb2c0eb62801b207ea4708cc4dc2b460fdf46"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-f/parent-flush-alias/jest.stdout.log",
+      "bytes": 2328,
+      "sha256": "366ccf3766bdde042c4efb3a4598b7955da3889885609fd0a76bd57c3f75d2df",
+      "gitBlobSha1": "beaa18bc81a462671d953be1a957dc21ff582125"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-f/prestep-parent-alias/jest.stderr.log",
+      "bytes": 290,
+      "sha256": "b552a33ed7c96a355ef90215fcfa9b4eeec316ac6622237add6397b578d41f6f",
+      "gitBlobSha1": "d472c5b28ff114c926db034a1e5ee319e9c187e6"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-f/prestep-parent-alias/jest.stdout.log",
+      "bytes": 2327,
+      "sha256": "4632afc9746ed9a0c134196bb3c511cc93d124636cef8dcf546564b046751555",
+      "gitBlobSha1": "5856684ba1df1ed35c8bc8d5dbd2c8384f4bf9b1"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-f/quaternion-sign/jest.stderr.log",
+      "bytes": 289,
+      "sha256": "1b5886be8148aa7660d38ad2582037015acb4cf05e716527468dc75378b71c22",
+      "gitBlobSha1": "2c1b22dd01832ee85211e643d194a2d6183e6e0d"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-f/quaternion-sign/jest.stdout.log",
+      "bytes": 2328,
+      "sha256": "02c8d52f01b3d736e317ce0aed38165dea40e58260938c8b693f7a6001103b4f",
+      "gitBlobSha1": "7634a7c58b7788f189e99a4eb8057d40621aa0ed"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-f/scale-dirty/jest.stderr.log",
+      "bytes": 289,
+      "sha256": "dfecd8c4452d77ace6f1c6a8c71be5af8aa08d3c2879712931bd19e838c1a043",
+      "gitBlobSha1": "2270a8e9f730393c74dbb470305aa15edf657f80"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-f/scale-dirty/jest.stdout.log",
+      "bytes": 2328,
+      "sha256": "11465460329918047fe2c7ba5d93b51b6f0437a3a8bc22a825274b6c34c72285",
+      "gitBlobSha1": "c91f8a8f68c48129af48b43a69b45b0fae950a0f"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-f/self-flush-alias/jest.stderr.log",
+      "bytes": 1079,
+      "sha256": "46aa9ee8168eac77d2438222eee32cbc5e66362a5f052878ed1ca12c3f19afd7",
+      "gitBlobSha1": "69b17ac55a0a48fcbdad486fbc8a02459cfe9ccc"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-f/self-flush-alias/jest.stdout.log",
+      "bytes": 2329,
+      "sha256": "9b8fcf51b3306906b7477b26ef5b95562111c9130ccd962456114397b8836f83",
+      "gitBlobSha1": "bcca670e20cf13e1ffc0f696353bd693efc93533"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-f/setter-caught/jest.stderr.log",
+      "bytes": 1079,
+      "sha256": "335e592d2625f1f7d86a87bb327f7a9fca6f71a45ac8f24a713f49d6611f4fdc",
+      "gitBlobSha1": "8f927433ed2a0bd1a5112b5c7f8fd5790362a70f"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-f/setter-caught/jest.stdout.log",
+      "bytes": 2328,
+      "sha256": "8c2ac69eb3bd12e1b1b3f5f223bd4614d483d7b2a9c34aaf9ccff97a8e361d32",
+      "gitBlobSha1": "20672cd936cc5f3c10145df17a8f259ce49f2c00"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-f/setter-uncaught/jest.stderr.log",
+      "bytes": 1079,
+      "sha256": "1fdae115df3bce566a3f4ea919f52924c289d6d562fa9284d7b2dde4439a48c3",
+      "gitBlobSha1": "78bbfa00512c60b02b099a1ef388d34a108246fe"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-f/setter-uncaught/jest.stdout.log",
+      "bytes": 2328,
+      "sha256": "fc5032bf1a341922b5a3fe4d88f5020e419336eb4af5861ffd946ba0320ebdff",
+      "gitBlobSha1": "fe96fe2e26be7abcfb9bc778a9d7073c5a352b89"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-f/sibling-flush-alias/jest.stderr.log",
+      "bytes": 1078,
+      "sha256": "a3ac442a351fe1d55d1aee1897f99af7e757b0536b272abdc90fe7050b87ea33",
+      "gitBlobSha1": "b9bba7cf37a9ac53fc8a34cb81b3fb1140f22dc0"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-f/sibling-flush-alias/jest.stdout.log",
+      "bytes": 2327,
+      "sha256": "8c1dc3f6fa4ea587e62cfdab64177e61fce85f4af89dc20348f3c28298176936",
+      "gitBlobSha1": "f86141d0fcc4da4a0e07ac6c62eee115e4dca802"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-f/static-child-dynamic-parent/jest.stderr.log",
+      "bytes": 290,
+      "sha256": "c9f03d3868638cf084de91226b62e20461fb4d7a068a9027be491d28a4f59ec9",
+      "gitBlobSha1": "e2b87ba6aa8913c2445f19e0f7b01e36519e27e5"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-f/static-child-dynamic-parent/jest.stdout.log",
+      "bytes": 2328,
+      "sha256": "ad7e059b2a45eb2cf83bdfb3917ad150a96e93345ed0e4e8cb8704821aa15229",
+      "gitBlobSha1": "b89915fa56feaacb8c85c5a757d03f52e9db72b4"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-g/baseline/jest.stderr.log",
+      "bytes": 288,
+      "sha256": "2356c41e9ea1e571d5b918e5c8ba559313f5f9458ca042cbc5344ca85bc99efb",
+      "gitBlobSha1": "15f04ab6574105b3d0c6d32e70c71f8b5040e359"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-g/baseline/jest.stdout.log",
+      "bytes": 2328,
+      "sha256": "84fa852e15208ba2b877920f4d460e5ea5192c69b5fb3c55ec35d90bdc0846a0",
+      "gitBlobSha1": "441715123d9056c876dd5555af952e9130298677"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-g/child-before-parent/jest.stderr.log",
+      "bytes": 290,
+      "sha256": "4423140c17505e1ce41430de36592dffe27c469e14c469ebf9790e6ed33233f5",
+      "gitBlobSha1": "2b337671556dfdf7f9be611d0cdb11999a80824a"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-g/child-before-parent/jest.stdout.log",
+      "bytes": 2328,
+      "sha256": "d092a77db6611794702bbc3a39734b9d72ad9c522f58f692f69a34196bf4130a",
+      "gitBlobSha1": "1a7640c0a38db2e8e1e3d9a842debffb1b4b1a08"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-g/epoch-exhaustion-one/jest.stderr.log",
+      "bytes": 289,
+      "sha256": "ab40e0ef0482b49029a44af05340291fd1c333b60b1359a4f234fe6999a26d23",
+      "gitBlobSha1": "e9b79711f4eebde3db6b60cc5a9484a969eb6273"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-g/epoch-exhaustion-one/jest.stdout.log",
+      "bytes": 2328,
+      "sha256": "be8118fb278acda34b183a998c0689640dc3ddae6f67000f2dae8cd52f4c3598",
+      "gitBlobSha1": "dfc475463f2bc300c76a9c3ffe8a00b8718f4eb3"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-g/epoch-exhaustion/jest.stderr.log",
+      "bytes": 290,
+      "sha256": "714b50ec148c928deb54e234e5ca7b26e86e7c5b98b41db0848b6e38f9d9789d",
+      "gitBlobSha1": "0effe3a9a43990e9ea81e7d52fab9e636f45bc2d"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-g/epoch-exhaustion/jest.stdout.log",
+      "bytes": 2328,
+      "sha256": "a879977c37059a8cd19da5605a635cf38ded256209a09d24f27ff439dc0dd236",
+      "gitBlobSha1": "d8837f99b965db01d2dc0d4a046cae9b45acef69"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-g/initial-shear-rejection/jest.stderr.log",
+      "bytes": 289,
+      "sha256": "c1503344b3ceb064a5936abb96ef4fe0ce4822e0d52eb8aa68625b5cd1964538",
+      "gitBlobSha1": "17b2de93e25e80173da82b4ecd1205cf7ae56b83"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-g/initial-shear-rejection/jest.stdout.log",
+      "bytes": 2328,
+      "sha256": "832d4acefc38c7cfa67d7aa558bed186a6fb759273082117c650a0217736b28d",
+      "gitBlobSha1": "207d6f0ff3db98d82c659745182fea237851783c"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-g/mirrored-ancestor-rejection/jest.stderr.log",
+      "bytes": 290,
+      "sha256": "0fcd7115c3b746b06cb33f8cd4924054969179cde591f3a933e54ab0a91f78b6",
+      "gitBlobSha1": "ba549146f34f546f7e5692a469a873b340e02df6"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-g/mirrored-ancestor-rejection/jest.stdout.log",
+      "bytes": 2328,
+      "sha256": "d3d60046d19252dfd614928960f4759a051781954609211233b6b194e5da7aad",
+      "gitBlobSha1": "bc76c87de866bfdfdb2b3aec266b97f8f47329a3"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-g/nonuniform-parent/jest.stderr.log",
+      "bytes": 289,
+      "sha256": "a374d79e35c1c44872abbb1a2217d9f8f55a07987fcef4d46c301f2ca3921bbd",
+      "gitBlobSha1": "22f724df7997f8c9f9701bfcd1f7bf7d6af7a388"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-g/nonuniform-parent/jest.stdout.log",
+      "bytes": 2327,
+      "sha256": "ac69bb96cc3de4a07de136f9c16dd63d10e8887f64b11830dea6e8ff3fd45a19",
+      "gitBlobSha1": "a7a4382761cd47f9bce0bde519df3cc8e442692b"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-g/parent-flush-alias/jest.stderr.log",
+      "bytes": 289,
+      "sha256": "7e467296c77c59780c8bde1b343c4af3758641e16e51ab74ee7375f03a53ebff",
+      "gitBlobSha1": "32257e1a9cecc7028eefc7b3867a54e4d8be2309"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-g/parent-flush-alias/jest.stdout.log",
+      "bytes": 2328,
+      "sha256": "06001ac4a5aadb644e012a8cbe424cd247e86dc389495d91aa7d2d5e070adbb0",
+      "gitBlobSha1": "d5a69c9749b259060274cd1600550fbb759e6bf5"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-g/prestep-parent-alias/jest.stderr.log",
+      "bytes": 289,
+      "sha256": "dde375f4ff55d253909f6981fa52c0e42c8a14e56f9509e9cd67d57491c59544",
+      "gitBlobSha1": "8c3c9f4faf93f35fc8711989e0687ba97a7a514d"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-g/prestep-parent-alias/jest.stdout.log",
+      "bytes": 2328,
+      "sha256": "85e67da321378501bd0e782e7be5bbc8bad0b51e4886e1224bc899c2d886f6e3",
+      "gitBlobSha1": "5e46a927b685a127f5255b8dc46b313dbe8f33b3"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-g/quaternion-sign/jest.stderr.log",
+      "bytes": 290,
+      "sha256": "4aedea2a05bf4fc8a58616407d25ca8d17dce49ce14ac2c8a6470c5fbd223005",
+      "gitBlobSha1": "27d6e1c53379dca447aabe448832bb065b2127cd"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-g/quaternion-sign/jest.stdout.log",
+      "bytes": 2327,
+      "sha256": "ecb4ffc6d5d1ee5b7df22516d98ee6b93140376cca14fef00cf5d52a7189a00d",
+      "gitBlobSha1": "b15d6e4da680236017853bad755ae3fffe41e36f"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-g/scale-dirty/jest.stderr.log",
+      "bytes": 290,
+      "sha256": "53f12067c7dbd08b9729ab15abdf60f6ee340752bf084e34ccf8dea29ed30a32",
+      "gitBlobSha1": "239fc828009dbd6339be28cc86e4ff55aaf58329"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-g/scale-dirty/jest.stdout.log",
+      "bytes": 2327,
+      "sha256": "67b0bed87e2fa2196f49b4047ba00186c03f47aa85def84966a06b990648a6ea",
+      "gitBlobSha1": "3d43cec17a795af430e19454c9c44bfc4affd953"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-g/self-flush-alias/jest.stderr.log",
+      "bytes": 290,
+      "sha256": "ceab2a45923500c08892f0d11ace5fafb140fcabd5855f59fd8f6cd2b2d3d579",
+      "gitBlobSha1": "c9046b7ad47d25ad347c500b406b5a75d6a9aef9"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-g/self-flush-alias/jest.stdout.log",
+      "bytes": 2327,
+      "sha256": "6fb46da151f6970104bdaf64349a0e42f512cd06e3d82af3ff22c66ae27d4adf",
+      "gitBlobSha1": "a3309770c5823a0fe23465b976273874fc61a82c"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-g/setter-caught/jest.stderr.log",
+      "bytes": 290,
+      "sha256": "099e5915512cf963f656cff3a95442c0712604b5025a884e569680fc96450231",
+      "gitBlobSha1": "1b3cab9b5793fd63cfe726bdd20894b6fe49f5a7"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-g/setter-caught/jest.stdout.log",
+      "bytes": 2327,
+      "sha256": "6cdba93fd9e9164b8d8224bab972b7c63cba418a452e83abadcc158ca3ccadff",
+      "gitBlobSha1": "06bdf92b0f7ccaee90f2e255bd18ad3958fcf81d"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-g/setter-uncaught/jest.stderr.log",
+      "bytes": 290,
+      "sha256": "11742724fc318d900df2b857c1d53265b8ec434d48b5e8fb6a03e4181f0f7508",
+      "gitBlobSha1": "64bc30c6c8070b335949633c63a5cf58c82fd3d4"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-g/setter-uncaught/jest.stdout.log",
+      "bytes": 2328,
+      "sha256": "016644913cfe1a29c225e3e9e0720c514b8008347da9507b6e923c848a8fbe71",
+      "gitBlobSha1": "5578d0cace8a607e9717cbbf25e056754e710c69"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-g/sibling-flush-alias/jest.stderr.log",
+      "bytes": 289,
+      "sha256": "3866dedc3360f4a44bd8ad003e7f45271f517cc89513b5c572607f5bf245f114",
+      "gitBlobSha1": "93460d22b6531039868844c4871ac495e1e48ece"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-g/sibling-flush-alias/jest.stdout.log",
+      "bytes": 2329,
+      "sha256": "88a3afda8cfdf10bc55167b96dc0edfda80d403c09a4d6dadcd3aece68d88132",
+      "gitBlobSha1": "5b62089265680fb6c5ea83d445597b6528843684"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-g/static-child-dynamic-parent/jest.stderr.log",
+      "bytes": 290,
+      "sha256": "638ff7e85f95eb6fb9169f53fcb84bf0e7fd3c3e6ab14d2c81d97207f2b8ec2d",
+      "gitBlobSha1": "2df4697608ef793988e18b2a86a9965ac9a57526"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-g/static-child-dynamic-parent/jest.stdout.log",
+      "bytes": 2328,
+      "sha256": "fd17a6d8e2874e0b48b7fc1cefab4b2f25b5295ac3df4f0243dc64b03971210d",
+      "gitBlobSha1": "85cfc0c8976cb22d2857d01440f0cba7e7b7a030"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-red/baseline/jest.stderr.log",
+      "bytes": 1025,
+      "sha256": "ed36cabbd2f06c0e157c2771f84b9de059386840237fbb0f653105224e0d048a",
+      "gitBlobSha1": "8844631aaf0d46f4920dcd4dcfa8407b0decbe03"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-red/baseline/jest.stdout.log",
+      "bytes": 2328,
+      "sha256": "bedf2f28b83657b79e127db3eb01388ef02c0d9a521b0b9baa54b4066779b658",
+      "gitBlobSha1": "74085c4146d19356fb144846b17761632309e9c9"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-red/child-before-parent/jest.stderr.log",
+      "bytes": 1133,
+      "sha256": "4d64428213e58e8bbaa201fa8b5846c66e365de061cbf0f871c2171d32513004",
+      "gitBlobSha1": "d9d5732615c9f4df7583c55e37320c659a6ccbf2"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-red/child-before-parent/jest.stdout.log",
+      "bytes": 2328,
+      "sha256": "ba74c6af44796fb1db449a31aa5f60f6c3c87664a38cd381e5c0ca796b14731c",
+      "gitBlobSha1": "66436260a375f6a632c5e75fcce109bf4e71c5f7"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-red2/baseline/jest.stderr.log",
+      "bytes": 289,
+      "sha256": "fda6133ec8b3ac344f730857b859b715e9cebcaa5fad020dafbebbb773aebcdb",
+      "gitBlobSha1": "227f6f425c562e3d13bfe3668f0b2d3a6f407c45"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-red2/baseline/jest.stdout.log",
+      "bytes": 2328,
+      "sha256": "71d9c5d5de3776f5b8b9d13c72cf8aaf85904019d5f9dcc0724e10d6a68130e7",
+      "gitBlobSha1": "7d8998ce56215ae36a44a17aea9a45a72c77a48f"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-red2/child-before-parent/jest.stderr.log",
+      "bytes": 1011,
+      "sha256": "cc2e7a4d3aebc5cddf1e7321736808837d045908e1649f6017f37ac923818632",
+      "gitBlobSha1": "fba197fc976334b14b82459ce28c53a9a9106bbe"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-red2/child-before-parent/jest.stdout.log",
+      "bytes": 2328,
+      "sha256": "5c17fdd61425e200925b33c1bfc5fe18c6130e3c6a0dc80027305e70ca6faafa",
+      "gitBlobSha1": "89147ba5c4fed0ab6e723552d86bfb613e7081de"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-red2/epoch-exhaustion-one/jest.stderr.log",
+      "bytes": 1045,
+      "sha256": "95fa12a096e036f0f9318db3220fb61ca4ee90c6479b799e147ca274d14358f1",
+      "gitBlobSha1": "4d33de0d9d23e6b008255901efc08f3e0cdfcfc2"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-red2/epoch-exhaustion-one/jest.stdout.log",
+      "bytes": 2328,
+      "sha256": "e6d4601b3d32fd827a50fb36c18ae160b1f3fb219eb3a57d5cd1e7226c041812",
+      "gitBlobSha1": "db14cfef2856910bcab82025aa7bf81cb42def49"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-red2/epoch-exhaustion/jest.stderr.log",
+      "bytes": 1046,
+      "sha256": "42bb4fa9448344273e47ea5ef1a41eee6c94df56778d07f9835d279ea67490aa",
+      "gitBlobSha1": "a29fa7ae75ac79142a39cce6b53464d4dc0b135e"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-red2/epoch-exhaustion/jest.stdout.log",
+      "bytes": 2332,
+      "sha256": "2b86eb602bc009927684a83c4431fc3aa7ca4c64634c0182d7a09245868e5774",
+      "gitBlobSha1": "80d39c045d0efce06fac1b9abc32c4a6d088ad69"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-red2/parent-flush-alias/jest.stderr.log",
+      "bytes": 1079,
+      "sha256": "a58315531bed7637b80248422677f34cb7b116b144c47e63e85d8c433fe4e9fb",
+      "gitBlobSha1": "9d4e3f49dc677d0c21c4fb889777f354fb773c16"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-red2/parent-flush-alias/jest.stdout.log",
+      "bytes": 2331,
+      "sha256": "cc6fbae7ecde23c3ae325c36c0076d08f69ffa1570bf05617cb6fdd285b1cda5",
+      "gitBlobSha1": "4a5b12cec2dc3990d65c81b34e7b792f6ef30c88"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-red2/prestep-parent-alias/jest.stderr.log",
+      "bytes": 1076,
+      "sha256": "a8af761f9d3943b4e0bb670bb8cdad1ccb9eeb47b6c5486dd8695c8085b4977e",
+      "gitBlobSha1": "86d95ab96b4d4f410f9a2d0b0c120decf7a59477"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-red2/prestep-parent-alias/jest.stdout.log",
+      "bytes": 2328,
+      "sha256": "b4d027896548520fb5c3d3001c3f20a9a42989d3e38fa6bb6402456abd5bcff1",
+      "gitBlobSha1": "7bdfa3f205320b7cd7043d144d405a04e1e90583"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-red2/quaternion-sign/jest.stderr.log",
+      "bytes": 290,
+      "sha256": "006380fe48bdc2deb6d81591c800dc60907930840f78dd1099bc3701f6144139",
+      "gitBlobSha1": "423df0e8c359209a475810a804b53635fb1b5389"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-red2/quaternion-sign/jest.stdout.log",
+      "bytes": 2328,
+      "sha256": "66d6e9b080af61337e8919807d637172bb8b8bc76099b72077f88b83dc2e3e18",
+      "gitBlobSha1": "6cbb87c708d6d10f9c1d4ddeef9966d23289bde5"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-red2/scale-dirty/jest.stderr.log",
+      "bytes": 289,
+      "sha256": "877fed6818046c8eb6c440eb4e19f43ffe742c94cd2a32163a083ebf64ce0586",
+      "gitBlobSha1": "ea78322a3ec9e274d4adff2a2d562a29817767c2"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-red2/scale-dirty/jest.stdout.log",
+      "bytes": 2328,
+      "sha256": "c1e27f75e690fa738714276e5b5da9c972539fa161fcaae69cce9f1c6b19baa1",
+      "gitBlobSha1": "5525f1731c1981006dc0f0a4990129db4bfb32c0"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-red2/self-flush-alias/jest.stderr.log",
+      "bytes": 1079,
+      "sha256": "98e606b872283ca71a3677a44d1b94ac1d6db5ce16065281bb1df8e060f10d72",
+      "gitBlobSha1": "118bc03060ca77610d28b9c21bf73075340ff907"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-red2/self-flush-alias/jest.stdout.log",
+      "bytes": 2328,
+      "sha256": "fb3b0e7048d7ef7ab472a3f6b79a0cecdf21570586c76dafcc661fbaf70f0f15",
+      "gitBlobSha1": "37b773e712ecb24a22057040e1aa169312f938f5"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-red2/setter-caught/jest.stderr.log",
+      "bytes": 1079,
+      "sha256": "ddd2da07cc0726d90928e7080db9a3a0b15f2e3e3cd077930b7c25a6f98ccf87",
+      "gitBlobSha1": "ec2c7eb220daac6182687d321a0b1895b8bd86c6"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-red2/setter-caught/jest.stdout.log",
+      "bytes": 2328,
+      "sha256": "a34fa887446a3a08f6c22ea14d9675b2d450fd303493ed9fd46d84779244b50b",
+      "gitBlobSha1": "21f364a2376f255246a69316ed24260d2eba46b2"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-red2/setter-uncaught/jest.stderr.log",
+      "bytes": 1078,
+      "sha256": "411be91a5a0be9d717ec3aed7e44cf19b46c017f04e99ae1bdf4bdb9f88367ff",
+      "gitBlobSha1": "a049c240d9dc44747b3c9d1ed9662927172f4d71"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-red2/setter-uncaught/jest.stdout.log",
+      "bytes": 2328,
+      "sha256": "7e20fa319afc6ef449d58fc02cf95f44ca99398b08e62b3d1c8c33e0b31128ad",
+      "gitBlobSha1": "40476b438e29a0443afffbbe05813ca82233b1a8"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-red2/sibling-flush-alias/jest.stderr.log",
+      "bytes": 1079,
+      "sha256": "cca14631d8ea336f703e71dcc3abd7a8f1bc82f077b6492399160776f5213e30",
+      "gitBlobSha1": "6a84034241d6f672fad545b4b4ac973cf36b68ab"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-real-m2-20261022-red2/sibling-flush-alias/jest.stdout.log",
+      "bytes": 2328,
+      "sha256": "ebca5a9131c2f56de4c55a6fa1e796ab1df19ef474a9ad6bc1e7aa434fc2f17b",
+      "gitBlobSha1": "fc91c682cdf5a9affae86c0735cd2f64c8a18cb3"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-source-20261022-a/jest.stderr.log",
+      "bytes": 3041,
+      "sha256": "72c91fedc1fda64bf1366c4f709adf7008c125b1455fd8881aeb4f1e1c12dbe9",
+      "gitBlobSha1": "5970083d316dc2b2de13388c53ba7bb7a6615ce0"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-source-20261022-a/jest.stdout.log",
+      "bytes": 116,
+      "sha256": "02b24b0789037848dc5c18588f521f1cc707d2396215a6912fd60099c853099e",
+      "gitBlobSha1": "bbafbfd2b37deb0c10a126f6b5c5ffe244a98867"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-source-20261022-a/tsc.stdout.log",
+      "bytes": 260,
+      "sha256": "5ef09a76d144dabcc96a2cb85b4cb58eaded4171f30cb1460559cbdeeab8d1e5",
+      "gitBlobSha1": "21da49490a2e2e1de2644a13be05bd0f11a1532c"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-source-20261022-b/format.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-source-20261022-b/format.stdout.log",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20",
+      "gitBlobSha1": "4aa0d16e7a0ff5c16269bf45771cebe89cc2e81d"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-source-20261022-b/jest.stderr.log",
+      "bytes": 2285,
+      "sha256": "16aa0d26027ed033a1340a8e7fe3d1c9b74ce4feed43d77399836a7acc9b8017",
+      "gitBlobSha1": "7153c6d2ab4f30465d4b08647aae471cedecc463"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-source-20261022-b/jest.stdout.log",
+      "bytes": 116,
+      "sha256": "02b24b0789037848dc5c18588f521f1cc707d2396215a6912fd60099c853099e",
+      "gitBlobSha1": "bbafbfd2b37deb0c10a126f6b5c5ffe244a98867"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-source-20261022-b/tsc-control.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-source-20261022-b/tsc-control.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-source-20261022-b/tsc-real-fixture.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-source-20261022-b/tsc-real-fixture.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-source-20261022-c/format.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-source-20261022-c/format.stdout.log",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20",
+      "gitBlobSha1": "4aa0d16e7a0ff5c16269bf45771cebe89cc2e81d"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-source-20261022-c/tsc-real-fixture.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-source-20261022-c/tsc-real-fixture.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-source-20261022-d/tsc.stdout.log",
+      "bytes": 268,
+      "sha256": "0a3c428d47f94f7c74af1c01dcf278ccd5558dd14506203855ab5edae6c67ad8",
+      "gitBlobSha1": "0de2681bee5bc3bdb53c25dd7e3279984b80c641"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-source-20261022-e/tsc.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-source-20261022-f/jest.stderr.log",
+      "bytes": 2616,
+      "sha256": "598b28b20da70680cff224752d1af9e5df4882646d0fda7f4b958d610554d315",
+      "gitBlobSha1": "c8009ee0ed54dfcf9bdf4740fbd5f9c479ff7fb5"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-source-20261022-f/jest.stdout.log",
+      "bytes": 116,
+      "sha256": "02b24b0789037848dc5c18588f521f1cc707d2396215a6912fd60099c853099e",
+      "gitBlobSha1": "bbafbfd2b37deb0c10a126f6b5c5ffe244a98867"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-source-20261022-f/tsc-control.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-source-20261022-f/tsc-control.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-source-20261022-f/tsc.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-source-20261022-f/tsc.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-source-20261022-g/format-air.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-source-20261022-g/format-air.stdout.log",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20",
+      "gitBlobSha1": "4aa0d16e7a0ff5c16269bf45771cebe89cc2e81d"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-source-20261022-g/format.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-source-20261022-g/format.stdout.log",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20",
+      "gitBlobSha1": "4aa0d16e7a0ff5c16269bf45771cebe89cc2e81d"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-source-20261022-g/tsc.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/writeback-epoch-source-20261022-g/tsc.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "tools/verify/box3d/command-producers-admission-evidence-20261022-lead-a/format.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "tools/verify/box3d/command-producers-admission-evidence-20261022-lead-a/format.stdout.log",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20",
+      "gitBlobSha1": "4aa0d16e7a0ff5c16269bf45771cebe89cc2e81d"
+    },
+    {
+      "path": "tools/verify/box3d/command-producers-admission-evidence-20261022-lead-a/tsc.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "tools/verify/box3d/command-producers-admission-evidence-20261022-lead-a/tsc.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-admission-evidence-20261022-green-a/format.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-admission-evidence-20261022-green-a/format.stdout.log",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20",
+      "gitBlobSha1": "4aa0d16e7a0ff5c16269bf45771cebe89cc2e81d"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-admission-evidence-20261022-green-a/tsc.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-admission-evidence-20261022-green-a/tsc.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-admission-evidence-20261022-green-b/format.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-admission-evidence-20261022-green-b/format.stdout.log",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20",
+      "gitBlobSha1": "4aa0d16e7a0ff5c16269bf45771cebe89cc2e81d"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-admission-evidence-20261022-green-b/tsc.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-admission-evidence-20261022-green-b/tsc.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-admission-evidence-20261022-lead-a/format.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-admission-evidence-20261022-lead-a/format.stdout.log",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20",
+      "gitBlobSha1": "4aa0d16e7a0ff5c16269bf45771cebe89cc2e81d"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-admission-evidence-20261022-lead-a/tsc.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-admission-evidence-20261022-lead-a/tsc.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-admission-evidence-20261022-red-a/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-admission-evidence-20261022-red-a/stdout.log",
+      "bytes": 1710,
+      "sha256": "f7ef92d930f24220ea72cfbd47b195cd2a1a438760de7f60d3e83f70a526ea19",
+      "gitBlobSha1": "9a64123ffa38c553c327db2db6b7dacd65510856"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-admission-source-20261022-a/control.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-admission-source-20261022-a/control.stdout.log",
+      "bytes": 2121,
+      "sha256": "abf236257adc59fa379a8873446c7a28b92144e002bb6057ffdbaa3ca5c91604",
+      "gitBlobSha1": "df6f4faaaf45740b747369536f7ee06f88eedb32"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-admission-source-20261022-b/control.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-admission-source-20261022-b/control.stdout.log",
+      "bytes": 2121,
+      "sha256": "1e3993afd76c820a625c977e58467a3f4352664a226cf00a55cc7fa711d3ec60",
+      "gitBlobSha1": "d6fcffb9d25d1d4c1545b056606e8d3de30aa6e9"
+    },
+    {
+      "path": "tools/verify/box3d/command-wire-evidence-20261022-a/format.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "tools/verify/box3d/command-wire-evidence-20261022-a/format.stdout.log",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20",
+      "gitBlobSha1": "4aa0d16e7a0ff5c16269bf45771cebe89cc2e81d"
+    },
+    {
+      "path": "tools/verify/box3d/command-wire-evidence-20261022-a/tsc.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "tools/verify/box3d/command-wire-evidence-20261022-a/tsc.stdout.log",
+      "bytes": 105,
+      "sha256": "1ac8d572884532795fcdb40b2f4b224c7e9d0949456642fd527738d5f52c3ad4",
+      "gitBlobSha1": "04fc33e419021ce7cca82900cfe829f53bc03d06"
+    },
+    {
+      "path": "tools/verify/box3d/command-wire-evidence-20261022-b/format.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "tools/verify/box3d/command-wire-evidence-20261022-b/format.stdout.log",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20",
+      "gitBlobSha1": "4aa0d16e7a0ff5c16269bf45771cebe89cc2e81d"
+    },
+    {
+      "path": "tools/verify/box3d/command-wire-evidence-20261022-b/tsc.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "tools/verify/box3d/command-wire-evidence-20261022-b/tsc.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "tools/verify/box3d/command-wire-evidence-20261022-lead-a/format.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "tools/verify/box3d/command-wire-evidence-20261022-lead-a/format.stdout.log",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20",
+      "gitBlobSha1": "4aa0d16e7a0ff5c16269bf45771cebe89cc2e81d"
+    },
+    {
+      "path": "tools/verify/box3d/command-wire-evidence-20261022-lead-a/tsc.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "tools/verify/box3d/command-wire-evidence-20261022-lead-a/tsc.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "tools/verify/box3d/owner-checkpoint-a-evidence-20261022-b/jest.stderr.log",
+      "bytes": 3199,
+      "sha256": "75a174798ecddbd39e050825a4a286d0807df0266ec71d4c8f9e8df57b61634f",
+      "gitBlobSha1": "1bc16187f27b9b00f6b9228f5d2405809e01460d"
+    },
+    {
+      "path": "tools/verify/box3d/owner-checkpoint-a-evidence-20261022-b/jest.stdout.log",
+      "bytes": 1156,
+      "sha256": "7fa7d2581d04123c238f76ca6ccbb7f503b754749be03d79b58b9b4dc5002b0e",
+      "gitBlobSha1": "31f4d5f1d24b38d50917269667acacdb35ea1374"
+    },
+    {
+      "path": "tools/verify/box3d/owner-checkpoint-a-evidence-20261022-c/jest.stderr.log",
+      "bytes": 1704,
+      "sha256": "e00d29580978492784103e2e9465472f6ee0a5d441dccbcb89a297e904f8d3c1",
+      "gitBlobSha1": "f5e69f393f1e4609436d54016d5f8c1915e2f5c0"
+    },
+    {
+      "path": "tools/verify/box3d/owner-checkpoint-a-evidence-20261022-c/jest.stdout.log",
+      "bytes": 1780,
+      "sha256": "0579990a46b9fe0230f55c43f98d6773311665c0c039b2b6329983f004694ae8",
+      "gitBlobSha1": "004e5afa05284ae1f45e9807a9547c2ad353cc40"
+    },
+    {
+      "path": "tools/verify/box3d/owner-checkpoint-a-evidence-20261022-d-red/jest.stderr.log",
+      "bytes": 2418,
+      "sha256": "daf95e77842521d3bf41ebd1607be12422b60498f1d4cf035ac4feab537e71a2",
+      "gitBlobSha1": "881ed1375acf3c40a0188d02080dac2379ff3703"
+    },
+    {
+      "path": "tools/verify/box3d/owner-checkpoint-a-evidence-20261022-d-red/jest.stdout.log",
+      "bytes": 1780,
+      "sha256": "0579990a46b9fe0230f55c43f98d6773311665c0c039b2b6329983f004694ae8",
+      "gitBlobSha1": "004e5afa05284ae1f45e9807a9547c2ad353cc40"
+    },
+    {
+      "path": "tools/verify/box3d/owner-checkpoint-a-evidence-20261022-d/jest.stderr.log",
+      "bytes": 1871,
+      "sha256": "5d75b51e2e1c3427f0d5e2b0572631e90cfefa52938e43947e4fda5a26fdb2eb",
+      "gitBlobSha1": "fafbed24d1d115ba2ac3a4386e98276bc7af78b5"
+    },
+    {
+      "path": "tools/verify/box3d/owner-checkpoint-a-evidence-20261022-d/jest.stdout.log",
+      "bytes": 2324,
+      "sha256": "c67134b7191504ae817a0fc3e4782cb7405da48b9cc0901525e3d1bfdb491456",
+      "gitBlobSha1": "1ac552fb55b20688867bece39bea11627210d4ba"
+    },
+    {
+      "path": "tools/verify/box3d/owner-checkpoint-a-evidence-20261022-d2-red/jest.stderr.log",
+      "bytes": 4177,
+      "sha256": "28e1f17c69b0c2705dfc5c646e3bc4ab2c098c5ee348af593a4dcfa7c7b585ef",
+      "gitBlobSha1": "df908078773acd7694aec2bffaec6444cac3e7bc"
+    },
+    {
+      "path": "tools/verify/box3d/owner-checkpoint-a-evidence-20261022-d2-red/jest.stdout.log",
+      "bytes": 220,
+      "sha256": "7ba8065b31cbeba1c1209121375c349e261ab137f33f862da082404ecae26514",
+      "gitBlobSha1": "e9960378beacda5fb5db0dce0f64257f106b840b"
+    },
+    {
+      "path": "tools/verify/box3d/owner-checkpoint-a-evidence-20261022-e/format.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "tools/verify/box3d/owner-checkpoint-a-evidence-20261022-e/format.stdout.log",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20",
+      "gitBlobSha1": "4aa0d16e7a0ff5c16269bf45771cebe89cc2e81d"
+    },
+    {
+      "path": "tools/verify/box3d/owner-checkpoint-a-evidence-20261022-e/jest.stderr.log",
+      "bytes": 1887,
+      "sha256": "2e6d65dbff424775f4c67e5b648504321e475f2e46def0d76862497d83fd6e78",
+      "gitBlobSha1": "9b21ac91566f9d7822b4826c2751e0aabd609001"
+    },
+    {
+      "path": "tools/verify/box3d/owner-checkpoint-a-evidence-20261022-e/jest.stdout.log",
+      "bytes": 2324,
+      "sha256": "c67134b7191504ae817a0fc3e4782cb7405da48b9cc0901525e3d1bfdb491456",
+      "gitBlobSha1": "1ac552fb55b20688867bece39bea11627210d4ba"
+    },
+    {
+      "path": "tools/verify/box3d/owner-checkpoint-a-source-20261022-a/tsc.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "tools/verify/box3d/owner-checkpoint-a-source-20261022-a/tsc.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "tools/verify/box3d/owner-checkpoint-a-source-20261022-b/tsc.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "tools/verify/box3d/owner-checkpoint-a-source-20261022-b/tsc.stdout.log",
+      "bytes": 1399,
+      "sha256": "c9e7aa340d28e9f762d58239a7c9d0b2d90c8574036e2eb181f1dc0d3944a3aa",
+      "gitBlobSha1": "9a5e45f7155482eab9a975a7ef02fcbc8254bbd1"
+    },
+    {
+      "path": "tools/verify/box3d/owner-checkpoint-a-source-20261022-c/tsc.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "tools/verify/box3d/owner-checkpoint-a-source-20261022-c/tsc.stdout.log",
+      "bytes": 832,
+      "sha256": "09ddb6750c864733dad810f1473c04b80f493517154a7b128222c846f40d4e8e",
+      "gitBlobSha1": "52dcd37fa7eaff681fe217d10654ce3731247f3a"
+    },
+    {
+      "path": "tools/verify/box3d/owner-checkpoint-a-source-20261022-d/tsc.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "tools/verify/box3d/owner-checkpoint-a-source-20261022-d/tsc.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "tools/verify/box3d/owner-checkpoint-a-source-20261022-e/tsc.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "tools/verify/box3d/owner-checkpoint-a-source-20261022-e/tsc.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "tools/verify/box3d/owner-checkpoint-a-source-20261022-format-red/stderr.log",
+      "bytes": 911,
+      "sha256": "a5ed7f11b3a94dc58b3fac5b654c4d29e9120334651b71907d29eaaeac61bd93",
+      "gitBlobSha1": "621f7a78040a618b77eb67a0bc485036dfb878a1"
+    },
+    {
+      "path": "tools/verify/box3d/owner-checkpoint-a-source-20261022-format-red/stdout.log",
+      "bytes": 75,
+      "sha256": "fe6d5d37aa788b675fe319dd342e8082bb59d55f9c579e5dfc25fee1291876c8",
+      "gitBlobSha1": "90b4def0d886a0150efdc2cd89f7ae7518a47252"
+    },
+    {
+      "path": "tools/verify/box3d/owner-component-real-source-20261022-a/format.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "tools/verify/box3d/owner-component-real-source-20261022-a/format.stdout.log",
+      "bytes": 497,
+      "sha256": "5424bea65dd074ca68e99a1c0864c4876ce79ade1a71834f032e2c9c431263dd",
+      "gitBlobSha1": "093067df3200f6df225ffa8d66f9857fc0e70600"
+    },
+    {
+      "path": "tools/verify/box3d/owner-component-real-source-20261022-a/tsc.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "tools/verify/box3d/owner-component-real-source-20261022-a/tsc.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "tools/verify/box3d/owner-material-native-source-20261022-a/format.stdout.log",
+      "bytes": 499,
+      "sha256": "f8c514919cf781839547b26de966d28a9eb3d9b00e8becd8755868c013ca9e6b",
+      "gitBlobSha1": "a18f3665798a0027b3bb4e53035280d380ffc497"
+    },
+    {
+      "path": "tools/verify/box3d/owner-material-native-source-20261022-a/tsc.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "tools/verify/box3d/owner-writeback-real-source-20261022-a/format.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "tools/verify/box3d/owner-writeback-real-source-20261022-a/format.stdout.log",
+      "bytes": 496,
+      "sha256": "c188b8f62522e0fa50019748738ae7f2b1c280d8edf402529e61c58de8962f4e",
+      "gitBlobSha1": "dfe49d961b2b6f263f9fd293c84243fd4f90a4a2"
+    },
+    {
+      "path": "tools/verify/box3d/owner-writeback-real-source-20261022-a/tsc.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "tools/verify/box3d/owner-writeback-real-source-20261022-a/tsc.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlobSha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    }
+  ],
+  "totalBytes": 254735,
+  "untrackedDirectoryLogsExcluded": [],
+  "physicalAcceptance": "NO_STATUS_CHANGE"
+}

@@ -1,0 +1,22 @@
+{
+  "status": "PASS_14_LOCAL_GIT_CONTROLS_NOT_PHYSICS",
+  "sources": [
+    {
+      "path": "tools/verify/box3d/evidence-closure.py",
+      "sha256": "81ecff1e386a63bdd145ab21ac3c56e5561af993079515dee407ac1f7b1863f5",
+      "bytes": 9525
+    },
+    {
+      "path": "tools/verify/box3d/evidence-closure-control.py",
+      "sha256": "5b7f634353bcb6150f05323d9443b329877791ec3ffd5c0ba3aa4bac09963652",
+      "bytes": 6274
+    },
+    {
+      "path": "tools/verify/box3d/rebuild-incremental-checkpoint.py",
+      "sha256": "c13056135c1836c96c5748df7e4b114f903a096bda343a20742b67112c813a9f",
+      "bytes": 5938
+    }
+  ],
+  "originalFailure": "../evidence-closure-gate-20261022-cache-red/control.stderr.txt",
+  "correction": "Excluded regenerable caches may be absent after restoration. If present their exact declared hash is still checked; required files and all declared reference hashes remain exact. No raw exception expanded."
+}

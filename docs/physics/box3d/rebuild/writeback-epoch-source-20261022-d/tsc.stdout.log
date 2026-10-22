@@ -1,0 +1,2 @@
+src/air/physics/box3d/shared-body.ts(497,14): error TS2339: Property 'assertSceneUnchanged' does not exist on type 'Box3DSharedBody'.
+src/air/physics/box3d/shared-body.ts(506,14): error TS2339: Property 'assertSceneUnchanged' does not exist on type 'Box3DSharedBody'.

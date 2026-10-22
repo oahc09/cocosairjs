@@ -1,0 +1,16 @@
+[error] src/air/physics/box3d/rigid-body.ts: SyntaxError: Invalid character. (105:39)
+[error]   103 |     }
+[error]   104 |     setType(value: ERigidBodyType): void {
+[error] > 105 |         this.body.assertConfiguration(\'setType\');
+[error]       |                                       ^
+[error]   106 |         this.body.setType(value);
+[error]   107 |     }
+[error]   108 |     setMass(value: number): void {
+[error] src/air/physics/box3d/box-sphere-shape.ts: SyntaxError: Invalid character. (99:34)
+[error]    97 |     } // Geometry configuration was strictly validated during initialize.
+[error]    98 |     onEnable(): void {
+[error] >  99 |         this.assertConfiguration(\'onEnable\');
+[error]       |                                  ^
+[error]   100 |         if (this.#active) return;
+[error]   101 |         this.body.setShape(this, this.#geometry!);
+[error]   102 |         this.#active = true;

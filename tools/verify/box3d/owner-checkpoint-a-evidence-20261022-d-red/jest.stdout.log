@@ -1,0 +1,85 @@
+  console.log
+    Cannot access game frame or container.
+
+      at warnID (src/cocos/core/platform/debug.ts:314:5)
+
+  console.log
+    [PHYSICS]: register box3d.
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    [PHYSICS]: register box3d.
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    [PHYSICS]: register box3d.
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    [PHYSICS]: register box3d.
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    [PHYSICS]: register box3d.
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    [PHYSICS]: register box3d.
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    [PHYSICS]: register box3d.
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    [PHYSICS]: register box3d.
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    [PHYSICS]: register box3d.
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    [PHYSICS]: register box3d.
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    [PHYSICS]: register box3d.
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    [PHYSICS]: register box3d.
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    [PHYSICS]: register box3d.
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    [PHYSICS]: register box3d.
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    [PHYSICS]: register box3d.
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    [PHYSICS]: register box3d.
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+

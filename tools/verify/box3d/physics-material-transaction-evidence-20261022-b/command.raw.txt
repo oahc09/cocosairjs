@@ -1,0 +1,9 @@
+{
+  "status": "PASS_PURE_TYPED_BRIDGE_ONLY",
+  "counts": {
+    "cases": 36,
+    "passed": 36
+  },
+  "stable": true,
+  "failures": []
+}

@@ -1,0 +1,5 @@
+{
+  "status": "PASS",
+  "kind": "st-simd-wasm",
+  "output": "tools/physics/box3d/output/command-wasm-release-20261022-n4"
+}

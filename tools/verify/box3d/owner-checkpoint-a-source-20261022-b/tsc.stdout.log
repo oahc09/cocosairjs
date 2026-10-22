@@ -1,0 +1,9 @@
+tools/verify/box3d/owner-checkpoint-a-control.test.ts(144,34): error TS2737: BigInt literals are not available when targeting lower than ES2020.
+tools/verify/box3d/owner-checkpoint-a-control.test.ts(144,40): error TS2737: BigInt literals are not available when targeting lower than ES2020.
+tools/verify/box3d/owner-checkpoint-a-control.test.ts(145,108): error TS2737: BigInt literals are not available when targeting lower than ES2020.
+tools/verify/box3d/owner-checkpoint-a-control.test.ts(145,114): error TS2737: BigInt literals are not available when targeting lower than ES2020.
+tools/verify/box3d/owner-checkpoint-a-control.test.ts(187,54): error TS2550: Property 'flatMap' does not exist on type 'any[]'. Do you need to change your target library? Try changing the 'lib' compiler option to 'es2019' or later.
+tools/verify/box3d/owner-checkpoint-a-control.test.ts(291,14): error TS2339: Property 'select' does not exist on type 'Box3DPreparedWorld | Promise<Box3DPreparedWorld>'.
+  Property 'select' does not exist on type 'Promise<Box3DPreparedWorld>'.
+tools/verify/box3d/owner-checkpoint-a-control.test.ts(555,34): error TS2345: Argument of type '{ readonly x: number; y: number; z: number; }' is not assignable to parameter of type 'Vec3'.
+  Type '{ readonly x: number; y: number; z: number; }' is missing the following properties from type 'Vec3': clone, set, equals, equals3f, and 21 more.

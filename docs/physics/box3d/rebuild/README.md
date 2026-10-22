@@ -30,6 +30,12 @@ The two actual mode command streams contain 217 byte-identical samples. A separa
 
 All 2,128 formal required cells remain NOT_RUN. Historical native and AIR qualifications below belong to their frozen source/artifact identities and cannot qualify n4. No main change, merge, release publication or deployment was performed.
 
+## Additional original material readback failure
+
+Checkpoint 29 is remotely confirmed at `d572c8b9fa1a5ef623e7216dd0e921df06232fe6`. Library `libfile_e59792b41b808191a53c930c8b9a1b93` was actually downloaded and incrementally restored into the independent object store; all 16,041 resulting files were verified. No native artifact or physical Gate status is implied.
+
+A fourth current-source real N4 Release material control explicitly throws in JS only after a real native material readback returned following a real setter. The original default-material catch executes a second real setter as rollback, leaves the world ready, and allows another real step. Three invariant assertions fail while app/loader cleanup releases tracked owned resources. Original raw, 107 frozen direct input identities, 50 native build inputs, and independent review are preserved in material-native-original-defect-review-20261022-a. This is an explicitly injected JS failure, not a natural Box3D core failure. B1 plan b replaces both public/default-update and observer material application with one no-replay copied kernel; that integration is not yet qualified. Plan a is retained as a superseded design, not current behavior.
+
 ## Historical checkpoint 16 and m2 qualification
 
 Remote checkpoint 16 is bde1706f2f6591cc44484fd764e2997c6e87a009. Its exact local source snapshot 24c4ec977f173630009a3a42c57a0952fab1a736 was independently restored from Library libfile_cec1d349a9ec8191849ca44a836f1be8, with all 8,009 tracked files checked.

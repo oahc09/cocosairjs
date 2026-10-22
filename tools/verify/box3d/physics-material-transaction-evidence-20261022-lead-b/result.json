@@ -1,0 +1,204 @@
+{
+  "status": "PASS_PURE_TYPED_BRIDGE_ONLY",
+  "physicalQualification": false,
+  "inputs": {
+    "src/cocos/physics/framework/physics-material-transaction.ts": "f7192588f5ef01358b6b506a80322f028975ae51df93aadba258a420fd7af518",
+    "src/cocos/physics/framework/physics-state-observer.ts": "4cf40c4f1be0d407a402e95dcdb7a898b1942cb175f869f6367a41b18c2d1d2b",
+    "tools/verify/box3d/physics-material-transaction-control.mjs": "9da91dced368f131490597fca615a92be46242f72b0a3475b99eeace4ac610ed",
+    "tools/verify/box3d/material-identity-b1-plan-20261022-b/README.md": "7cde6c7959c8bb2c4ecb8042038b2d5e1572e070ac152db049edc1d4dc3d2d98"
+  },
+  "after": {
+    "src/cocos/physics/framework/physics-material-transaction.ts": "f7192588f5ef01358b6b506a80322f028975ae51df93aadba258a420fd7af518",
+    "src/cocos/physics/framework/physics-state-observer.ts": "4cf40c4f1be0d407a402e95dcdb7a898b1942cb175f869f6367a41b18c2d1d2b",
+    "tools/verify/box3d/physics-material-transaction-control.mjs": "9da91dced368f131490597fca615a92be46242f72b0a3475b99eeace4ac610ed",
+    "tools/verify/box3d/material-identity-b1-plan-20261022-b/README.md": "7cde6c7959c8bb2c4ecb8042038b2d5e1572e070ac152db049edc1d4dc3d2d98"
+  },
+  "stable": true,
+  "counts": {
+    "cases": 36,
+    "passed": 36
+  },
+  "rows": [
+    {
+      "name": "unregistered fastpath reads no operation or candidate",
+      "status": "PASS_PURE_TYPED_BRIDGE_CONTROL"
+    },
+    {
+      "name": "created ticket opens nothing and cancel releases reserved entry",
+      "status": "PASS_PURE_TYPED_BRIDGE_CONTROL"
+    },
+    {
+      "name": "candidate guarded before every coefficient getter, read once; copied delegate only",
+      "status": "PASS_PURE_TYPED_BRIDGE_CONTROL"
+    },
+    {
+      "name": "candidate guarded before following shared-flag accessor",
+      "status": "PASS_PURE_TYPED_BRIDGE_CONTROL"
+    },
+    {
+      "name": "later asset field edits do not alter copied candidate",
+      "status": "PASS_PURE_TYPED_BRIDGE_CONTROL"
+    },
+    {
+      "name": "null inheritance does not manufacture asset reads",
+      "status": "PASS_PURE_TYPED_BRIDGE_CONTROL"
+    },
+    {
+      "name": "default identity kind and actual cache commit",
+      "status": "PASS_PURE_TYPED_BRIDGE_CONTROL"
+    },
+    {
+      "name": "initialization commits without invented delegate execution",
+      "status": "PASS_PURE_TYPED_BRIDGE_CONTROL"
+    },
+    {
+      "name": "clone accepted only after source preflight/allocation effect, no native application",
+      "status": "PASS_PURE_TYPED_BRIDGE_CONTROL"
+    },
+    {
+      "name": "clone cannot return the original asset",
+      "status": "PASS_PURE_TYPED_BRIDGE_CONTROL"
+    },
+    {
+      "name": "clone divergent values fault, never rewrite native",
+      "status": "PASS_PURE_TYPED_BRIDGE_CONTROL"
+    },
+    {
+      "name": "clone requires recorded allocation entry",
+      "status": "PASS_PURE_TYPED_BRIDGE_CONTROL"
+    },
+    {
+      "name": "real actual-cache mismatch retained rather than candidate substitution",
+      "status": "PASS_PURE_TYPED_BRIDGE_CONTROL"
+    },
+    {
+      "name": "post-delegate external failure undefined retains original and actual cache",
+      "status": "PASS_PURE_TYPED_BRIDGE_CONTROL"
+    },
+    {
+      "name": "post-delegate external failure null retains original and actual cache",
+      "status": "PASS_PURE_TYPED_BRIDGE_CONTROL"
+    },
+    {
+      "name": "post-delegate external failure 0 retains original and actual cache",
+      "status": "PASS_PURE_TYPED_BRIDGE_CONTROL"
+    },
+    {
+      "name": "open thrown null preserves cleanup and no retry",
+      "status": "PASS_PURE_TYPED_BRIDGE_CONTROL"
+    },
+    {
+      "name": "protectCandidate thrown null preserves cleanup and no retry",
+      "status": "PASS_PURE_TYPED_BRIDGE_CONTROL"
+    },
+    {
+      "name": "preflightCopied thrown null preserves cleanup and no retry",
+      "status": "PASS_PURE_TYPED_BRIDGE_CONTROL"
+    },
+    {
+      "name": "applyCopied thrown null preserves cleanup and no retry",
+      "status": "PASS_PURE_TYPED_BRIDGE_CONTROL"
+    },
+    {
+      "name": "commitActual thrown null preserves cleanup and no retry",
+      "status": "PASS_PURE_TYPED_BRIDGE_CONTROL"
+    },
+    {
+      "name": "dispose failure after actual commit remains unresolved, not released",
+      "status": "PASS_PURE_TYPED_BRIDGE_CONTROL"
+    },
+    {
+      "name": "first primary includes later fail/dispose failures after wrapper cleanup",
+      "status": "PASS_PURE_TYPED_BRIDGE_CONTROL"
+    },
+    {
+      "name": "copied delegate functions are not looked up again",
+      "status": "PASS_PURE_TYPED_BRIDGE_CONTROL"
+    },
+    {
+      "name": "duplicate physical delegate rejected without releasing first",
+      "status": "PASS_PURE_TYPED_BRIDGE_CONTROL"
+    },
+    {
+      "name": "registration getter reentry caught still installs neither nested nor outer delegate",
+      "status": "PASS_PURE_TYPED_BRIDGE_CONTROL"
+    },
+    {
+      "name": "getters cannot switch registry ownership or start another transaction",
+      "status": "PASS_PURE_TYPED_BRIDGE_CONTROL"
+    },
+    {
+      "name": "private delegate is consumed before callback; caught nested apply cannot trigger second call",
+      "status": "PASS_PURE_TYPED_BRIDGE_CONTROL"
+    },
+    {
+      "name": "clone accessor caught nested dispose cannot release barriers while getter runs",
+      "status": "PASS_PURE_TYPED_BRIDGE_CONTROL"
+    },
+    {
+      "name": "cross-ticket and fabricated receivers do not consume either candidate",
+      "status": "PASS_PURE_TYPED_BRIDGE_CONTROL"
+    },
+    {
+      "name": "invalid coefficient NaN has no delegate effects",
+      "status": "PASS_PURE_TYPED_BRIDGE_CONTROL"
+    },
+    {
+      "name": "invalid coefficient Infinity has no delegate effects",
+      "status": "PASS_PURE_TYPED_BRIDGE_CONTROL"
+    },
+    {
+      "name": "invalid coefficient 1 has no delegate effects",
+      "status": "PASS_PURE_TYPED_BRIDGE_CONTROL"
+    },
+    {
+      "name": "invalid coefficient null has no delegate effects",
+      "status": "PASS_PURE_TYPED_BRIDGE_CONTROL"
+    },
+    {
+      "name": "commit before required apply refuses before owner cache commit",
+      "status": "PASS_PURE_TYPED_BRIDGE_CONTROL"
+    },
+    {
+      "name": "caught invocation refusal stays primary while later getter failure is retained",
+      "status": "PASS_PURE_TYPED_BRIDGE_CONTROL"
+    }
+  ],
+  "commands": [
+    {
+      "name": "format",
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "node_modules/prettier/bin/prettier.cjs",
+        "--ignore-path",
+        "/dev/null",
+        "--check",
+        "src/cocos/physics/framework/physics-material-transaction.ts",
+        "tools/verify/box3d/physics-material-transaction-control.mjs"
+      ],
+      "exitCode": 0,
+      "stdout": "Checking formatting...\nAll matched files use Prettier code style!\n",
+      "stderr": ""
+    },
+    {
+      "name": "tsc",
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "node_modules/typescript/bin/tsc",
+        "--noEmit",
+        "--strict",
+        "--target",
+        "ES2022",
+        "--module",
+        "ES2022",
+        "--lib",
+        "ES2022",
+        "--skipLibCheck",
+        "src/cocos/physics/framework/physics-material-transaction.ts"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+FAIL tools/verify/box3d/writeback-epoch-real-wasm.test.ts (17.761 s)
+  ✕ actual AIR writeback epoch qualification; one independent process per scenario (351 ms)
+
+  ● actual AIR writeback epoch qualification; one independent process per scenario
+
+    TypeError: Cannot read properties of null (reading 'off')
+
+      1276 |      */
+      1277 |     public off (type: string, callback?: AnyFunction, target?: unknown, useCapture: boolean = false): void {
+    > 1278 |         this._eventProcessor.off(type as NodeEventType, callback, target, useCapture);
+           |                              ^
+      1279 |
+      1280 |         const hasListeners = this._eventProcessor.hasEventListener(type);
+      1281 |         // All listener removed
+
+      at Node.off (src/cocos/scene-graph/node.ts:1278:30)
+      at tools/verify/box3d/writeback-epoch-real-wasm.test.ts:371:66
+      at fulfilled (tools/verify/box3d/writeback-epoch-real-wasm.test.ts:5:58)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 1 total
+Snapshots:   0 total
+Time:        18.624 s
+Ran all test suites.

@@ -1,0 +1,37 @@
+{
+  "status": "PASS_SINGLE_DEBUG_VERIFY_ST_BUILD_NO_COPY",
+  "mode": "Debug",
+  "descriptor": {
+    "manifestSha256": "e0b937f0a4d18bb6ffe57344239be708b4045a735600817b4a970916a56f893d",
+    "facadeSha256": "40cce3a920e67afedec5d7bbf69aae826ad08d31b51243f5e699033dd59eb899",
+    "identity": {
+      "coreSha": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "bindingBaseSha": "5d5a3af049cccd9948b2b55bac4342414af0ef64",
+      "patchChainSha256": "434fb89494867f515051d5ac0dfc0c694556ba1f0da9ac3fc895a27097b1c7c7",
+      "abiVersion": 1,
+      "variant": "st-simd",
+      "schemaSha256": "e6329dce9b3e6fce69cfd5da318f1f708b95b7af834edb667de8306f9cae0a5d"
+    }
+  },
+  "auditSha256": "156961f62aa719b31e3ec4f1a90b6f786aff3f8d4a21418c8087184dd00c8bda",
+  "readableAssetNames": [
+    "box3d-st.mjs",
+    "box3d-st.wasm",
+    "facade.mjs",
+    "facade.d.mts",
+    "manifest.json",
+    "LICENSE.Box3D.txt"
+  ],
+  "qualificationGateSources": [
+    {
+      "path": "tools/build/box3d-command-qualification.cjs",
+      "bytes": 15991,
+      "sha256": "2c5e682eb5d3d4592bc30ba26c89190d70ae16e0226aac192d5a44453685d153"
+    },
+    {
+      "path": "tools/build/box3d-command-expectations.json",
+      "bytes": 9770,
+      "sha256": "62703014511167932cdec26ad9a393372ecd44e6ccb115ec474cff5ab4341921"
+    }
+  ]
+}

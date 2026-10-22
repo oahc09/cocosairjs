@@ -1,0 +1,10 @@
+from pathlib import Path
+import subprocess,hashlib,json,datetime
+root=Path.cwd();out=root/'docs/physics/box3d/rebuild/evidence-log-retention-20261022';out.mkdir();paths=subprocess.check_output(['git','ls-files','--others','--ignored','--exclude-standard','docs/physics/box3d/rebuild','tools/verify/box3d']).decode().splitlines();tracked=set(subprocess.check_output(['git','ls-files']).decode().splitlines());rows=[];excluded=[]
+for name in sorted(x for x in paths if x.endswith('.log')):
+ parent=name.rsplit('/',1)[0]+'/'
+ if not any(p.startswith(parent) for p in tracked):excluded.append(name);continue
+ p=root/name;b=p.read_bytes();rows.append({'path':name,'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest(),'gitBlobSha1':hashlib.sha1(b'blob '+str(len(b)).encode()+b'\0'+b).hexdigest()})
+for r in rows:assert hashlib.sha256((root/r['path']).read_bytes()).hexdigest()==r['sha256']
+subprocess.run(['git','add','-f','--',*[r['path']for r in rows]],check=True)
+r={'status':'RAW_BYTES_RETAINED_WITHOUT_REWRITING','timeUTC':datetime.datetime.now(datetime.timezone.utc).isoformat(),'priorLocalCommit':subprocess.check_output(['git','rev-parse','HEAD']).decode().strip(),'reason':'The repository global *.log ignore excluded these stdout/stderr logs from earlier explicit directory adds. Existing tracked raw JSON receipts are not changed. This checkpoint adds original local log bytes and records the limitation; it does not retroactively claim earlier bundles contained ignored files.','scope':'Only .log files beneath this Box3D rebuild evidence and verification directories, each under a directory already represented in the current Git source. No product/build cache change.','files':rows,'totalBytes':sum(x['bytes']for x in rows),'untrackedDirectoryLogsExcluded':excluded,'physicalAcceptance':'NO_STATUS_CHANGE'};(out/'receipt.json').write_text(json.dumps(r,indent=2)+'\n');(out/'retain.py').write_bytes(Path('/tmp/box3d-retain-ignored-evidence-logs.py').read_bytes());print(json.dumps({'files':len(rows),'bytes':r['totalBytes'],'excluded':excluded}))

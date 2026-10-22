@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/verify/box3d/evidence-closure-control.py", line 43, in <module>
+    cache.unlink();assert m.verify(root,manifest,manifest_name,True)['committedSnapshot'];results.append({'case':'restored checkout correctly omits excluded cache','status':'PASS'});cache.write_bytes(b'regenerable fixture cache')
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/verify/box3d/evidence-closure.py", line 146, in verify
+    raise ValueError('Explicit inventory changed: ' + name)
+ValueError: Explicit inventory changed: exceptionsObserved
