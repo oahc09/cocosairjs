@@ -22,6 +22,7 @@
  THE SOFTWARE.
 */
 
+import { assertMutationAllowed } from '../../../../core/data/mutation-guard';
 import {
     ccclass,
     help,
@@ -64,6 +65,7 @@ export class BoxCollider extends Collider {
     }
 
     public set size (value) {
+        assertMutationAllowed(this, 'BoxCollider.size');
         if (Vec3.strictEquals(this._size, value)) return;
         if (selector.id === 'box3d' && this._shape) {
             const next = new Vec3();

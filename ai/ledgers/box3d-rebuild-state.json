@@ -959,7 +959,7 @@
     "deploy": false,
     "npmPublish": false
   },
-  "nextStep": "Finish real current-artifact owner callback and fault cleanup checks; close component earliest-entry, committed material identity, pause and protected grant-budget seams, then implement actual per-tick unified consumer. Staged public commands remain false; no historical or synthetic PASS imported.",
+  "nextStep": "Preserve Stage A source checkpoint and independently restore it. Freeze material-cache/clone and immediate-System-pause observer design, then implement narrowly with fresh failure controls before integrating the unified command consumer. No public activation or inherited formal PASS.",
   "remoteHistoryPolicy": "True upstream main parent and incremental tree; local snapshot import is backup-only and is never pushed as upstream history.",
   "remotePublication": {
     "status": "VERIFIED_CHECKPOINT_26",
@@ -968,7 +968,7 @@
     "branch": "feat/box3d-rebuild-20261022",
     "receipt": "docs/physics/box3d/rebuild/remote-checkpoint-26.json"
   },
-  "updatedAtUtc": "2026-10-22T14:55:37.759582+00:00",
+  "updatedAtUtc": "2026-10-22T15:19:35.226487+00:00",
   "currentEvidence": {
     "m0ContractTests": "PASS_7_SOURCE_DESIGN_CHECKS_ONLY_U01_U02_INVENTORY_ADDED",
     "nativeFoundationIndex": "tools/physics/box3d/evidence/index.json",
@@ -1252,7 +1252,14 @@
     "ownerReleaseReceipt": "docs/physics/box3d/rebuild/owner-framework-lead-review-20261022-e/receipt.json",
     "independentCommandArithmetic": "PASS_32_SCENES_PER_MODE_2752_VECTORS_MAX_ABSOLUTE_ERROR_3.731E-7",
     "independentCommandArithmeticReceipt": "docs/physics/box3d/rebuild/unified-command-independent-arithmetic-20261022-n4/review.json",
-    "independentCommandArithmeticSensitivity": "docs/physics/box3d/rebuild/unified-command-arithmetic-controls-20261022-n4/receipt.json"
+    "independentCommandArithmeticSensitivity": "docs/physics/box3d/rebuild/unified-command-arithmetic-controls-20261022-n4/receipt.json",
+    "componentEntryFence": "PASS_123_ACTUAL_SOURCE_CASES_1283_CHECKS_EXPLICIT_LEASES_MOCK_ADAPTERS_NOT_PUBLIC_TRANSACTIONS",
+    "componentEntryFenceReceipt": "tools/verify/box3d/component-entry-fence-stage-a-evidence-20261022-lead-a/receipt.json",
+    "currentOwnerComponentQualification": "FINITE_CURRENT_STAGE_A_RELEASE_63_LIFECYCLE_STEPS_PLUS_ONE_POST_NATIVE_ALIAS_FAULT",
+    "currentOwnerComponentReceipt": "docs/physics/box3d/rebuild/owner-component-stage-a-lead-review-20261022-final/receipt.json",
+    "listenerEntryFence": "NOT_IMPLEMENTED_STAGE_B",
+    "materialCacheNotification": "NOT_IMPLEMENTED",
+    "immediateSystemPauseNotification": "NOT_IMPLEMENTED"
   },
   "historicalCandidateSnapshots": [
     {

@@ -22,6 +22,7 @@
  THE SOFTWARE.
 */
 
+import { assertMutationAllowed } from '../../../../core/data/mutation-guard';
 import {
     ccclass,
     help,
@@ -60,6 +61,7 @@ export class SphereCollider extends Collider {
     }
 
     public set radius (value) {
+        assertMutationAllowed(this, 'SphereCollider.radius');
         if (this._radius === value) return;
         if (selector.id === 'box3d' && this._shape) {
             const next = Math.abs(value);

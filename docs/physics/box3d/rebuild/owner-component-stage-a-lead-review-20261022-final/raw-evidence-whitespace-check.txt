@@ -1,0 +1,202 @@
+docs/physics/box3d/rebuild/owner-component-real-release-20261022-lifecycle-stage-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:22: space before tab in indent.
++ 	/// The contact id. You may hold onto this to track a contact across time steps.
+docs/physics/box3d/rebuild/owner-component-real-release-20261022-lifecycle-stage-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:26: space before tab in indent.
++ 	// This is monotonically advanced when a contact is allocated in this slot
+docs/physics/box3d/rebuild/owner-component-real-release-20261022-lifecycle-stage-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:27: space before tab in indent.
++ 	// Used to check for invalid b3ContactId
+docs/physics/box3d/rebuild/owner-component-real-release-20261022-lifecycle-stage-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:28: space before tab in indent.
++ 	uint32_t generation;
+docs/physics/box3d/rebuild/owner-component-real-release-20261022-lifecycle-stage-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:34: trailing whitespace.
++ 
+docs/physics/box3d/rebuild/owner-component-real-release-20261022-lifecycle-stage-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:41: trailing whitespace.
++ 
+docs/physics/box3d/rebuild/owner-component-real-release-20261022-lifecycle-stage-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:51: space before tab in indent.
++ 	return data;
+docs/physics/box3d/rebuild/owner-component-real-release-20261022-lifecycle-stage-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:53: trailing whitespace.
++ 
+docs/physics/box3d/rebuild/owner-component-real-release-20261022-lifecycle-stage-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:77: space before tab in indent.
++ 	// b3ManifoldFcn* fcn;
+docs/physics/box3d/rebuild/owner-component-real-release-20261022-lifecycle-stage-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:81: space before tab in indent.
++ 		// This updates solid contacts
+docs/physics/box3d/rebuild/owner-component-real-release-20261022-lifecycle-stage-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:82: space before tab in indent.
++ 		bool touching = b3UpdateContact( world, workerIndex, contact, shapeA, bodySimA->localCenter, transformA, shapeB,
+docs/physics/box3d/rebuild/owner-component-real-release-20261022-lifecycle-stage-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:83: space before tab in indent.
++ 										 bodySimB->localCenter, transformB, isFast, taskContext->arena );
+docs/physics/box3d/rebuild/owner-component-real-release-20261022-lifecycle-stage-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:98: trailing whitespace.
++ 
+docs/physics/box3d/rebuild/owner-component-real-release-20261022-lifecycle-stage-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:99: space before tab in indent.
++ 		int bucketIndex = b3MinInt( contact->manifoldCount, B3_CONTACT_MANIFOLD_COUNT_BUCKETS - 1 );
+docs/physics/box3d/rebuild/owner-component-real-release-20261022-lifecycle-stage-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:100: space before tab in indent.
++ 		if ( bucketIndex > 0 )
+docs/physics/box3d/rebuild/owner-component-real-release-20261022-lifecycle-stage-a/inputs/tools/physics/box3d/patches/sse2-loadv-alignment.patch:4: trailing whitespace.
++ 
+docs/physics/box3d/rebuild/owner-component-real-release-20261022-lifecycle-stage-a/inputs/tools/physics/box3d/patches/sse2-loadv-alignment.patch:16: trailing whitespace.
++ 
+docs/physics/box3d/rebuild/owner-writeback-real-release-20261022-alias-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:22: space before tab in indent.
++ 	/// The contact id. You may hold onto this to track a contact across time steps.
+docs/physics/box3d/rebuild/owner-writeback-real-release-20261022-alias-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:26: space before tab in indent.
++ 	// This is monotonically advanced when a contact is allocated in this slot
+docs/physics/box3d/rebuild/owner-writeback-real-release-20261022-alias-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:27: space before tab in indent.
++ 	// Used to check for invalid b3ContactId
+docs/physics/box3d/rebuild/owner-writeback-real-release-20261022-alias-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:28: space before tab in indent.
++ 	uint32_t generation;
+docs/physics/box3d/rebuild/owner-writeback-real-release-20261022-alias-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:34: trailing whitespace.
++ 
+docs/physics/box3d/rebuild/owner-writeback-real-release-20261022-alias-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:41: trailing whitespace.
++ 
+docs/physics/box3d/rebuild/owner-writeback-real-release-20261022-alias-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:51: space before tab in indent.
++ 	return data;
+docs/physics/box3d/rebuild/owner-writeback-real-release-20261022-alias-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:53: trailing whitespace.
++ 
+docs/physics/box3d/rebuild/owner-writeback-real-release-20261022-alias-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:77: space before tab in indent.
++ 	// b3ManifoldFcn* fcn;
+docs/physics/box3d/rebuild/owner-writeback-real-release-20261022-alias-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:81: space before tab in indent.
++ 		// This updates solid contacts
+docs/physics/box3d/rebuild/owner-writeback-real-release-20261022-alias-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:82: space before tab in indent.
++ 		bool touching = b3UpdateContact( world, workerIndex, contact, shapeA, bodySimA->localCenter, transformA, shapeB,
+docs/physics/box3d/rebuild/owner-writeback-real-release-20261022-alias-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:83: space before tab in indent.
++ 										 bodySimB->localCenter, transformB, isFast, taskContext->arena );
+docs/physics/box3d/rebuild/owner-writeback-real-release-20261022-alias-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:98: trailing whitespace.
++ 
+docs/physics/box3d/rebuild/owner-writeback-real-release-20261022-alias-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:99: space before tab in indent.
++ 		int bucketIndex = b3MinInt( contact->manifoldCount, B3_CONTACT_MANIFOLD_COUNT_BUCKETS - 1 );
+docs/physics/box3d/rebuild/owner-writeback-real-release-20261022-alias-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:100: space before tab in indent.
++ 		if ( bucketIndex > 0 )
+docs/physics/box3d/rebuild/owner-writeback-real-release-20261022-alias-a/inputs/tools/physics/box3d/patches/sse2-loadv-alignment.patch:4: trailing whitespace.
++ 
+docs/physics/box3d/rebuild/owner-writeback-real-release-20261022-alias-a/inputs/tools/physics/box3d/patches/sse2-loadv-alignment.patch:16: trailing whitespace.
++ 
+docs/physics/box3d/rebuild/owner-writeback-real-release-20261022-alias-stage-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:22: space before tab in indent.
++ 	/// The contact id. You may hold onto this to track a contact across time steps.
+docs/physics/box3d/rebuild/owner-writeback-real-release-20261022-alias-stage-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:26: space before tab in indent.
++ 	// This is monotonically advanced when a contact is allocated in this slot
+docs/physics/box3d/rebuild/owner-writeback-real-release-20261022-alias-stage-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:27: space before tab in indent.
++ 	// Used to check for invalid b3ContactId
+docs/physics/box3d/rebuild/owner-writeback-real-release-20261022-alias-stage-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:28: space before tab in indent.
++ 	uint32_t generation;
+docs/physics/box3d/rebuild/owner-writeback-real-release-20261022-alias-stage-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:34: trailing whitespace.
++ 
+docs/physics/box3d/rebuild/owner-writeback-real-release-20261022-alias-stage-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:41: trailing whitespace.
++ 
+docs/physics/box3d/rebuild/owner-writeback-real-release-20261022-alias-stage-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:51: space before tab in indent.
++ 	return data;
+docs/physics/box3d/rebuild/owner-writeback-real-release-20261022-alias-stage-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:53: trailing whitespace.
++ 
+docs/physics/box3d/rebuild/owner-writeback-real-release-20261022-alias-stage-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:77: space before tab in indent.
++ 	// b3ManifoldFcn* fcn;
+docs/physics/box3d/rebuild/owner-writeback-real-release-20261022-alias-stage-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:81: space before tab in indent.
++ 		// This updates solid contacts
+docs/physics/box3d/rebuild/owner-writeback-real-release-20261022-alias-stage-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:82: space before tab in indent.
++ 		bool touching = b3UpdateContact( world, workerIndex, contact, shapeA, bodySimA->localCenter, transformA, shapeB,
+docs/physics/box3d/rebuild/owner-writeback-real-release-20261022-alias-stage-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:83: space before tab in indent.
++ 										 bodySimB->localCenter, transformB, isFast, taskContext->arena );
+docs/physics/box3d/rebuild/owner-writeback-real-release-20261022-alias-stage-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:98: trailing whitespace.
++ 
+docs/physics/box3d/rebuild/owner-writeback-real-release-20261022-alias-stage-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:99: space before tab in indent.
++ 		int bucketIndex = b3MinInt( contact->manifoldCount, B3_CONTACT_MANIFOLD_COUNT_BUCKETS - 1 );
+docs/physics/box3d/rebuild/owner-writeback-real-release-20261022-alias-stage-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:100: space before tab in indent.
++ 		if ( bucketIndex > 0 )
+docs/physics/box3d/rebuild/owner-writeback-real-release-20261022-alias-stage-a/inputs/tools/physics/box3d/patches/sse2-loadv-alignment.patch:4: trailing whitespace.
++ 
+docs/physics/box3d/rebuild/owner-writeback-real-release-20261022-alias-stage-a/inputs/tools/physics/box3d/patches/sse2-loadv-alignment.patch:16: trailing whitespace.
++ 
+docs/physics/box3d/rebuild/owner-writeback-real-release-20261022-caught-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:22: space before tab in indent.
++ 	/// The contact id. You may hold onto this to track a contact across time steps.
+docs/physics/box3d/rebuild/owner-writeback-real-release-20261022-caught-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:26: space before tab in indent.
++ 	// This is monotonically advanced when a contact is allocated in this slot
+docs/physics/box3d/rebuild/owner-writeback-real-release-20261022-caught-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:27: space before tab in indent.
++ 	// Used to check for invalid b3ContactId
+docs/physics/box3d/rebuild/owner-writeback-real-release-20261022-caught-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:28: space before tab in indent.
++ 	uint32_t generation;
+docs/physics/box3d/rebuild/owner-writeback-real-release-20261022-caught-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:34: trailing whitespace.
++ 
+docs/physics/box3d/rebuild/owner-writeback-real-release-20261022-caught-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:41: trailing whitespace.
++ 
+docs/physics/box3d/rebuild/owner-writeback-real-release-20261022-caught-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:51: space before tab in indent.
++ 	return data;
+docs/physics/box3d/rebuild/owner-writeback-real-release-20261022-caught-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:53: trailing whitespace.
++ 
+docs/physics/box3d/rebuild/owner-writeback-real-release-20261022-caught-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:77: space before tab in indent.
++ 	// b3ManifoldFcn* fcn;
+docs/physics/box3d/rebuild/owner-writeback-real-release-20261022-caught-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:81: space before tab in indent.
++ 		// This updates solid contacts
+docs/physics/box3d/rebuild/owner-writeback-real-release-20261022-caught-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:82: space before tab in indent.
++ 		bool touching = b3UpdateContact( world, workerIndex, contact, shapeA, bodySimA->localCenter, transformA, shapeB,
+docs/physics/box3d/rebuild/owner-writeback-real-release-20261022-caught-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:83: space before tab in indent.
++ 										 bodySimB->localCenter, transformB, isFast, taskContext->arena );
+docs/physics/box3d/rebuild/owner-writeback-real-release-20261022-caught-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:98: trailing whitespace.
++ 
+docs/physics/box3d/rebuild/owner-writeback-real-release-20261022-caught-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:99: space before tab in indent.
++ 		int bucketIndex = b3MinInt( contact->manifoldCount, B3_CONTACT_MANIFOLD_COUNT_BUCKETS - 1 );
+docs/physics/box3d/rebuild/owner-writeback-real-release-20261022-caught-a/inputs/tools/physics/box3d/patches/contact-geometry-epoch.patch:100: space before tab in indent.
++ 		if ( bucketIndex > 0 )
+docs/physics/box3d/rebuild/owner-writeback-real-release-20261022-caught-a/inputs/tools/physics/box3d/patches/sse2-loadv-alignment.patch:4: trailing whitespace.
++ 
+docs/physics/box3d/rebuild/owner-writeback-real-release-20261022-caught-a/inputs/tools/physics/box3d/patches/sse2-loadv-alignment.patch:16: trailing whitespace.
++ 
+tools/verify/box3d/component-entry-fence-stage-a-handoff-20261022-a/source.diff:6: trailing whitespace.
++ 
+tools/verify/box3d/component-entry-fence-stage-a-handoff-20261022-a/source.diff:13: trailing whitespace.
++ 
+tools/verify/box3d/component-entry-fence-stage-a-handoff-20261022-a/source.diff:21: trailing whitespace.
++ 
+tools/verify/box3d/component-entry-fence-stage-a-handoff-20261022-a/source.diff:29: trailing whitespace.
++ 
+tools/verify/box3d/component-entry-fence-stage-a-handoff-20261022-a/source.diff:37: trailing whitespace.
++ 
+tools/verify/box3d/component-entry-fence-stage-a-handoff-20261022-a/source.diff:45: trailing whitespace.
++ 
+tools/verify/box3d/component-entry-fence-stage-a-handoff-20261022-a/source.diff:53: trailing whitespace.
++ 
+tools/verify/box3d/component-entry-fence-stage-a-handoff-20261022-a/source.diff:61: trailing whitespace.
++ 
+tools/verify/box3d/component-entry-fence-stage-a-handoff-20261022-a/source.diff:69: trailing whitespace.
++ 
+tools/verify/box3d/component-entry-fence-stage-a-handoff-20261022-a/source.diff:77: trailing whitespace.
++ 
+tools/verify/box3d/component-entry-fence-stage-a-handoff-20261022-a/source.diff:85: trailing whitespace.
++ 
+tools/verify/box3d/component-entry-fence-stage-a-handoff-20261022-a/source.diff:93: trailing whitespace.
++ 
+tools/verify/box3d/component-entry-fence-stage-a-handoff-20261022-a/source.diff:101: trailing whitespace.
++ 
+tools/verify/box3d/component-entry-fence-stage-a-handoff-20261022-a/source.diff:109: trailing whitespace.
++ 
+tools/verify/box3d/component-entry-fence-stage-a-handoff-20261022-a/source.diff:117: trailing whitespace.
++ 
+tools/verify/box3d/component-entry-fence-stage-a-handoff-20261022-a/source.diff:130: trailing whitespace.
++ 
+tools/verify/box3d/component-entry-fence-stage-a-handoff-20261022-a/source.diff:138: trailing whitespace.
++ 
+tools/verify/box3d/component-entry-fence-stage-a-handoff-20261022-a/source.diff:146: trailing whitespace.
++ 
+tools/verify/box3d/component-entry-fence-stage-a-handoff-20261022-a/source.diff:154: trailing whitespace.
++ 
+tools/verify/box3d/component-entry-fence-stage-a-handoff-20261022-a/source.diff:162: trailing whitespace.
++ 
+tools/verify/box3d/component-entry-fence-stage-a-handoff-20261022-a/source.diff:170: trailing whitespace.
++ 
+tools/verify/box3d/component-entry-fence-stage-a-handoff-20261022-a/source.diff:178: trailing whitespace.
++ 
+tools/verify/box3d/component-entry-fence-stage-a-handoff-20261022-a/source.diff:186: trailing whitespace.
++ 
+tools/verify/box3d/component-entry-fence-stage-a-handoff-20261022-a/source.diff:194: trailing whitespace.
++ 
+tools/verify/box3d/component-entry-fence-stage-a-handoff-20261022-a/source.diff:207: trailing whitespace.
++ 
+tools/verify/box3d/component-entry-fence-stage-a-handoff-20261022-a/source.diff:215: trailing whitespace.
++ 
+tools/verify/box3d/component-entry-fence-stage-a-handoff-20261022-a/source.diff:223: trailing whitespace.
++ 
+tools/verify/box3d/component-entry-fence-stage-a-handoff-20261022-a/source.diff:231: trailing whitespace.
++ 
+tools/verify/box3d/component-entry-fence-stage-a-handoff-20261022-a/source.diff:238: trailing whitespace.
++ 
+tools/verify/box3d/component-entry-fence-stage-a-handoff-20261022-a/source.diff:297: trailing whitespace.
++ 
+tools/verify/box3d/component-entry-fence-stage-a-handoff-20261022-a/source.diff:304: trailing whitespace.
++ 
+tools/verify/box3d/component-entry-fence-stage-a-handoff-20261022-a/source.diff:315: trailing whitespace.
++ 
+tools/verify/box3d/component-entry-fence-stage-a-handoff-20261022-a/source.diff:322: trailing whitespace.
++ 

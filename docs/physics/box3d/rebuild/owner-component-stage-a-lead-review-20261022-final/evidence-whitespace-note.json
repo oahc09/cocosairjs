@@ -1,0 +1,6 @@
+{
+  "rawExitCode": 2,
+  "findingCount": 101,
+  "allFindings": "Exact retained patch/diff bytes only; do not reformat evidence.",
+  "activeProductSourceCheck": "separate git diff --cached --check scoped to active sources, fixtures and docs"
+}

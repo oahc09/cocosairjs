@@ -94,6 +94,7 @@ export class Collider extends Eventify(Component) {
     }
 
     public set sharedMaterial (value) {
+        assertMutationAllowed(this, 'Collider.sharedMaterial');
         if (EDITOR) {
             this._material = value;
         } else {
@@ -156,6 +157,7 @@ export class Collider extends Eventify(Component) {
     }
 
     public set isTrigger (value) {
+        assertMutationAllowed(this, 'Collider.isTrigger');
         if (selector.id === 'box3d' && this._shape) {
             this._shape.setAsTrigger(value);
             this._isTrigger = value;
@@ -181,6 +183,7 @@ export class Collider extends Eventify(Component) {
     }
 
     public set center (value: Vec3) {
+        assertMutationAllowed(this, 'Collider.center');
         if (selector.id === 'box3d' && this._shape) {
             this._shape.setCenter(value);
             Vec3.copy(this._center, value);
@@ -203,12 +206,14 @@ export class Collider extends Eventify(Component) {
     }
 
     public get worldBounds (): Readonly<geometry.AABB> {
+        assertMutationAllowed(this, 'Collider.worldBounds.get');
         if (this._aabb == null) this._aabb = new geometry.AABB();
         if (this._shape) this._shape.getAABB(this._aabb);
         return this._aabb;
     }
 
     public get boundingSphere (): Readonly<geometry.Sphere> {
+        assertMutationAllowed(this, 'Collider.boundingSphere.get');
         if (this._boundingSphere == null) this._boundingSphere = new geometry.Sphere();
         if (this._shape) this._shape.getBoundingSphere(this._boundingSphere);
         return this._boundingSphere;
@@ -346,6 +351,7 @@ export class Collider extends Eventify(Component) {
      * @param v @zh 分组值，为 32 位整数，范围为 [2^0, 2^31] @en Group value which is a 32-bits integer, the range is [2^0, 2^31]
      */
     public setGroup (v: number): void {
+        assertMutationAllowed(this, 'Collider.setGroup');
         if (this._isInitialized) {
             this._shape!.setGroup(v);
         }
@@ -359,6 +365,7 @@ export class Collider extends Eventify(Component) {
      * @param v @zh 分组值，为 32 位整数，范围为 [2^0, 2^31] @en Group value which is a 32-bits integer, the range is [2^0, 2^31]
      */
     public addGroup (v: number): void {
+        assertMutationAllowed(this, 'Collider.addGroup');
         if (this._isInitialized) {
             this._shape!.addGroup(v);
         }
@@ -372,6 +379,7 @@ export class Collider extends Eventify(Component) {
      * @param v @zh 分组值，为 32 位整数，范围为 [2^0, 2^31] @en Group value which is a 32-bits integer, the range is [2^0, 2^31]
      */
     public removeGroup (v: number): void {
+        assertMutationAllowed(this, 'Collider.removeGroup');
         if (this._isInitialized) {
             this._shape!.removeGroup(v);
         }
@@ -399,6 +407,7 @@ export class Collider extends Eventify(Component) {
      * @param v @zh 掩码值，为 32 位整数，范围为 [2^0, 2^31] @en Mask value which is a 32-bits integer, the range is [2^0, 2^31]
      */
     public setMask (v: number): void {
+        assertMutationAllowed(this, 'Collider.setMask');
         if (this._isInitialized) {
             this._shape!.setMask(v);
         }
@@ -412,6 +421,7 @@ export class Collider extends Eventify(Component) {
      * @param v @zh 掩码值，为 32 位整数，范围为 [2^0, 2^31] @en Mask value which is a 32-bits integer, the range is [2^0, 2^31]
      */
     public addMask (v: number): void {
+        assertMutationAllowed(this, 'Collider.addMask');
         if (this._isInitialized) {
             this._shape!.addMask(v);
         }
@@ -425,6 +435,7 @@ export class Collider extends Eventify(Component) {
      * @param v @zh 掩码值，为 32 位整数，范围为 [2^0, 2^31] @en Mask value which is a 32-bits integer, the range is [2^0, 2^31]
      */
     public removeMask (v: number): void {
+        assertMutationAllowed(this, 'Collider.removeMask');
         if (this._isInitialized) {
             this._shape!.removeMask(v);
         }

@@ -1,0 +1,2 @@
+tools/verify/box3d/component-entry-fence-stage-a-control.test.ts(321,14): error TS2339: Property '_callbackTable' does not exist on type 'PhysicsMaterial'.
+tools/verify/box3d/component-entry-fence-stage-a-control.test.ts(322,15): error TS2339: Property '_callbackTable' does not exist on type 'PhysicsMaterial'.
