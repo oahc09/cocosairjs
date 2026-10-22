@@ -22,6 +22,7 @@
  THE SOFTWARE.
 */
 
+import { assertMutationAllowed, assertMutationBatchAllowed } from '../core/data/mutation-guard';
 import { validateTransformValues, assertNodeTransformEntry, assertNodeTransformWrite } from './node-transform-validation';
 import { ccclass, editable, serializable, type } from 'cc.decorator';
 import { DEV, DEBUG, EDITOR, EDITOR_NOT_IN_PREVIEW, USE_UI_SKEW, NODEJS } from 'internal:constants';
@@ -194,6 +195,7 @@ export class Node extends CCObject implements ISchedulable, CustomSerializable {
         return this._active;
     }
     set active (isActive: boolean) {
+        assertMutationAllowed(this, 'Node.active');
         isActive = !!isActive;
 
         if (this._active !== isActive) {
@@ -1067,6 +1069,7 @@ export class Node extends CCObject implements ISchedulable, CustomSerializable {
     public addComponent<T extends Component>(className: string): T;
 
     public addComponent<T extends Component> (typeOrClassName: string | Constructor<T>): T {
+        assertMutationAllowed(Node.prototype, 'Node.addComponent');
         if (EDITOR && (this._objFlags & Destroying)) {
             throw Error('isDestroying');
         }
@@ -1372,6 +1375,7 @@ export class Node extends CCObject implements ISchedulable, CustomSerializable {
     }
 
     public destroy (): boolean {
+        assertMutationAllowed(this, 'Node.destroy');
         if (super.destroy()) {
             this.active = false;
             return true;
@@ -1389,7 +1393,9 @@ export class Node extends CCObject implements ISchedulable, CustomSerializable {
      * 实际销毁操作会延迟到当前帧渲染前执行。
      */
     public destroyAllChildren (): void {
+        assertMutationAllowed(this, 'Node.destroyAllChildren');
         const children = this._children;
+        assertMutationBatchAllowed(children, 'Node.destroyAllChildren');
         for (let i = 0; i < children.length; ++i) {
             children[i].destroy();
         }

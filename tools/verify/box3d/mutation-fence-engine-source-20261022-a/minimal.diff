@@ -1,0 +1,260 @@
+--- before/src/cocos/scene-graph/component.ts
++++ after/src/cocos/scene-graph/component.ts
+@@ -23,6 +23,7 @@
+  THE SOFTWARE.
+ */
+ 
++import { assertMutationAllowed } from '../core/data/mutation-guard';
+ import { ccclass, tooltip, displayName, type, serializable, disallowAnimation } from 'cc.decorator';
+ import { EDITOR, NODEJS, TEST } from 'internal:constants';
+ import { Script } from '../asset/assets/scripts';
+@@ -130,6 +131,7 @@
+         return this._enabled;
+     }
+     set enabled (value) {
++        assertMutationAllowed(this, 'Component.enabled');
+         if (this._enabled !== value) {
+             this._enabled = value;
+             if (this.node.activeInHierarchy) {
+@@ -377,6 +379,7 @@
+     // OVERRIDE
+ 
+     public destroy (): boolean {
++        assertMutationAllowed(this, 'Component.destroy');
+         if (EDITOR) {
+             // TODO: `_getDependComponent` is an injected method.
+             // issue: https://github.com/cocos/cocos-engine/issues/14643
+--- before/src/cocos/scene-graph/node.ts
++++ after/src/cocos/scene-graph/node.ts
+@@ -22,6 +22,7 @@
+  THE SOFTWARE.
+ */
+ 
++import { assertMutationAllowed, assertMutationBatchAllowed } from '../core/data/mutation-guard';
+ import { validateTransformValues, assertNodeTransformEntry, assertNodeTransformWrite } from './node-transform-validation';
+ import { ccclass, editable, serializable, type } from 'cc.decorator';
+ import { DEV, DEBUG, EDITOR, EDITOR_NOT_IN_PREVIEW, USE_UI_SKEW, NODEJS } from 'internal:constants';
+@@ -194,6 +195,7 @@
+         return this._active;
+     }
+     set active (isActive: boolean) {
++        assertMutationAllowed(this, 'Node.active');
+         isActive = !!isActive;
+ 
+         if (this._active !== isActive) {
+@@ -1067,6 +1069,7 @@
+     public addComponent<T extends Component>(className: string): T;
+ 
+     public addComponent<T extends Component> (typeOrClassName: string | Constructor<T>): T {
++        assertMutationAllowed(Node.prototype, 'Node.addComponent');
+         if (EDITOR && (this._objFlags & Destroying)) {
+             throw Error('isDestroying');
+         }
+@@ -1372,6 +1375,7 @@
+     }
+ 
+     public destroy (): boolean {
++        assertMutationAllowed(this, 'Node.destroy');
+         if (super.destroy()) {
+             this.active = false;
+             return true;
+@@ -1389,7 +1393,9 @@
+      * 实际销毁操作会延迟到当前帧渲染前执行。
+      */
+     public destroyAllChildren (): void {
++        assertMutationAllowed(this, 'Node.destroyAllChildren');
+         const children = this._children;
++        assertMutationBatchAllowed(children, 'Node.destroyAllChildren');
+         for (let i = 0; i < children.length; ++i) {
+             children[i].destroy();
+         }
+--- before/src/cocos/physics/framework/assets/physics-material.ts
++++ after/src/cocos/physics/framework/assets/physics-material.ts
+@@ -24,6 +24,7 @@
+ 
+ // @ts-check
+ 
++import { assertMutationAllowed } from '../../../core/data/mutation-guard';
+ import { ccclass, editable, range, serializable, type } from 'cc.decorator';
+ import { Asset } from '../../../asset/assets/asset';
+ import { CCFloat, math } from '../../../core';
+@@ -66,6 +67,7 @@
+     }
+ 
+     set friction (value) {
++        assertMutationAllowed(this, 'PhysicsMaterial.friction');
+         if (!math.equals(this._friction, value)) {
+             this._friction = value;
+             this.emit(PhysicsMaterial.EVENT_UPDATE);
+@@ -85,6 +87,7 @@
+     }
+ 
+     set rollingFriction (value) {
++        assertMutationAllowed(this, 'PhysicsMaterial.rollingFriction');
+         if (!math.equals(this._rollingFriction, value)) {
+             this._rollingFriction = value;
+             this.emit(PhysicsMaterial.EVENT_UPDATE);
+@@ -104,6 +107,7 @@
+     }
+ 
+     set spinningFriction (value) {
++        assertMutationAllowed(this, 'PhysicsMaterial.spinningFriction');
+         if (!math.equals(this._spinningFriction, value)) {
+             this._spinningFriction = value;
+             this.emit(PhysicsMaterial.EVENT_UPDATE);
+@@ -124,6 +128,7 @@
+     }
+ 
+     set restitution (value) {
++        assertMutationAllowed(this, 'PhysicsMaterial.restitution');
+         if (!math.equals(this._restitution, value)) {
+             this._restitution = value;
+             this.emit(PhysicsMaterial.EVENT_UPDATE);
+@@ -175,6 +180,7 @@
+      * @return 是否成功
+      */
+     public destroy (): boolean {
++        assertMutationAllowed(this, 'PhysicsMaterial.destroy');
+         if (super.destroy()) {
+             const idx = PhysicsMaterial.allMaterials.indexOf(this);
+             if (idx >= 0) {
+@@ -196,6 +202,7 @@
+      * @param restitution
+      */
+     public setValues (friction: number, rollingFriction: number, spinningFriction: number, restitution: number): void {
++        assertMutationAllowed(this, 'PhysicsMaterial.setValues');
+         const emitUpdate = this._friction !== friction || this._rollingFriction !== rollingFriction
+             || this._spinningFriction !== spinningFriction || this._restitution !== restitution;
+         this._friction = friction;
+--- before/src/cocos/physics/framework/components/colliders/collider.ts
++++ after/src/cocos/physics/framework/components/colliders/collider.ts
+@@ -23,6 +23,7 @@
+  THE SOFTWARE.
+ */
+ 
++import { assertMutationAllowed } from '../../../../core/data/mutation-guard';
+ import { ccclass, tooltip, displayOrder, displayName, readOnly, type, serializable } from 'cc.decorator';
+ import { EDITOR } from 'internal:constants';
+ import { Eventify, Vec3, error, geometry } from '../../../../core';
+@@ -108,6 +109,7 @@
+      */
+     public get material (): PhysicsMaterial | null {
+         if (this._isSharedMaterial && this._material) {
++            assertMutationAllowed(this, 'Collider.material.get');
+             this._material.off(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
+             this._material = this._material.clone();
+             this._material.on(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
+@@ -117,6 +119,7 @@
+     }
+ 
+     public set material (value) {
++        assertMutationAllowed(this, 'Collider.material.set');
+         if (this._shape) {
+             const nativeFirst = selector.id === 'box3d';
+             if (nativeFirst) this._shape.setMaterial(value);
+--- before/src/cocos/physics/framework/physics-system.ts
++++ after/src/cocos/physics/framework/physics-system.ts
+@@ -22,6 +22,7 @@
+  THE SOFTWARE.
+ */
+ 
++import { assertMutationAllowed } from '../../core/data/mutation-guard';
+ import { BUILD, EDITOR_NOT_IN_PREVIEW, LOAD_BULLET_MANUALLY, LOAD_PHYSX_MANUALLY } from 'internal:constants';
+ import { Vec3, RecyclePool, Enum, System, cclegacy, settings, geometry, warn, IQuatLike, IVec3Like, SettingsCategory, errorID, warnID } from '../../core';
+ import { IPhysicsWorld, IRaycastOptions } from '../spec/i-physics-world';
+@@ -104,6 +105,7 @@
+     }
+ 
+     public set enable (value: boolean) {
++        assertMutationAllowed(this, 'PhysicsSystem.enable');
+         this._enable = value;
+     }
+ 
+@@ -118,6 +120,7 @@
+     }
+ 
+     public set allowSleep (v: boolean) {
++        assertMutationAllowed(this, 'PhysicsSystem.allowSleep');
+         // AIR Box3D rejects invalid native changes before committing the public cache.
+         if (selector.id === 'box3d' && this.physicsWorld) {
+             this.physicsWorld.setAllowSleep(v);
+@@ -141,6 +144,7 @@
+     }
+ 
+     public set maxSubSteps (value: number) {
++        assertMutationAllowed(this, 'PhysicsSystem.maxSubSteps');
+         this._maxSubSteps = value;
+     }
+ 
+@@ -155,6 +159,7 @@
+     }
+ 
+     public set fixedTimeStep (value: number) {
++        assertMutationAllowed(this, 'PhysicsSystem.fixedTimeStep');
+         this._fixedTimeStep = value;
+     }
+ 
+@@ -169,6 +174,7 @@
+     }
+ 
+     public set gravity (gravity: Vec3) {
++        assertMutationAllowed(this, 'PhysicsSystem.gravity');
+         if (selector.id === 'box3d' && this.physicsWorld) {
+             this.physicsWorld.setGravity(gravity);
+             this._gravity.set(gravity);
+@@ -191,6 +197,7 @@
+     }
+ 
+     public set sleepThreshold (v: number) {
++        assertMutationAllowed(this, 'PhysicsSystem.sleepThreshold');
+         this._sleepThreshold = v;
+     }
+ 
+@@ -205,6 +212,7 @@
+     }
+ 
+     public set autoSimulation (value: boolean) {
++        assertMutationAllowed(this, 'PhysicsSystem.autoSimulation');
+         this._autoSimulation = value;
+     }
+ 
+@@ -225,6 +233,7 @@
+      * 设置默认物理材质。
+      */
+     public setDefaultPhysicsMaterial (material: PhysicsMaterial): void {
++        assertMutationAllowed(this, 'PhysicsSystem.setDefaultPhysicsMaterial');
+         if (selector.id === 'box3d') {
+             this.physicsWorld.setDefaultMaterial(material);
+             if (this._material !== material) {
+@@ -407,6 +416,7 @@
+      * 重置物理配置。
+      */
+     resetConfiguration (config?: IPhysicsConfig): void {
++        assertMutationAllowed(this, 'PhysicsSystem.resetConfiguration');
+         const allowSleep = config ? config.allowSleep : querySettings(SettingsCategory.PHYSICS, 'allowSleep');
+         if (typeof allowSleep === 'boolean') this._allowSleep = allowSleep;
+         const fixedTimeStep = config ? config.fixedTimeStep : querySettings(SettingsCategory.PHYSICS, 'fixedTimeStep');
+@@ -449,6 +459,7 @@
+      * 重置时间累积总量为给定值。
+      */
+     resetAccumulator (time = 0): void {
++        assertMutationAllowed(this, 'PhysicsSystem.resetAccumulator');
+         this._accumulator = time;
+     }
+ 
+@@ -499,6 +510,7 @@
+     }
+ 
+     set debugDrawFlags (v) {
++        assertMutationAllowed(this, 'PhysicsSystem.debugDrawFlags');
+         this.physicsWorld.debugDrawFlags = v;
+     }
+ 
+@@ -513,6 +525,7 @@
+     }
+ 
+     set debugDrawConstraintSize (v) {
++        assertMutationAllowed(this, 'PhysicsSystem.debugDrawConstraintSize');
+         this.physicsWorld.debugDrawConstraintSize = v;
+     }
+ 

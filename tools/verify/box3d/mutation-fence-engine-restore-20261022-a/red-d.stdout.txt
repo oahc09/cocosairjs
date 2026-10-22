@@ -1,0 +1,336 @@
+{
+  "status": "FAIL_RETAINED",
+  "commands": [
+    {
+      "name": "format",
+      "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+      "args": [
+        "node_modules/prettier/bin/prettier.cjs",
+        "--ignore-path",
+        "/dev/null",
+        "--check",
+        "tools/verify/box3d/mutation-fence-engine-control.mjs",
+        "tools/verify/box3d/mutation-fence-engine-control.test.ts",
+        "tools/verify/box3d/mutation-fence-engine-control.jest.cjs",
+        "tools/verify/box3d/mutation-fence-engine-control.tsconfig.json"
+      ],
+      "env": {},
+      "exitCode": 0,
+      "signal": null,
+      "error": null
+    },
+    {
+      "name": "tsc",
+      "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+      "args": [
+        "node_modules/typescript/bin/tsc",
+        "--noEmit",
+        "-p",
+        "tools/verify/box3d/mutation-fence-engine-control.tsconfig.json"
+      ],
+      "env": {},
+      "exitCode": 0,
+      "signal": null,
+      "error": null
+    },
+    {
+      "name": "jest",
+      "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+      "args": [
+        "node_modules/jest/bin/jest.js",
+        "--config",
+        "tools/verify/box3d/mutation-fence-engine-control.jest.cjs",
+        "--runInBand",
+        "--no-cache",
+        "--json",
+        "--outputFile",
+        "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/verify/box3d/mutation-fence-engine-evidence-20261022-red-d/jest-result.json"
+      ],
+      "env": {
+        "BOX3D_MUTATION_FENCE_RAW": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/verify/box3d/mutation-fence-engine-evidence-20261022-red-d/raw.json"
+      },
+      "exitCode": 1,
+      "signal": null,
+      "error": null
+    }
+  ],
+  "sourcesUnchanged": true,
+  "rows": [
+    {
+      "name": "Component.enabled earliest cache/scheduler refusal active=false",
+      "status": "RED_ACTUAL_ENGINE_SOURCE",
+      "checks": 3,
+      "failedChecks": 2
+    },
+    {
+      "name": "Component.enabled earliest cache/scheduler refusal active=true",
+      "status": "RED_ACTUAL_ENGINE_SOURCE",
+      "checks": 3,
+      "failedChecks": 3
+    },
+    {
+      "name": "Component enabled same-value business assignment is fenced",
+      "status": "RED_ACTUAL_ENGINE_SOURCE",
+      "checks": 1,
+      "failedChecks": 1
+    },
+    {
+      "name": "Component.destroy refusal precedes ToDestroy and actual deferred destruction",
+      "status": "RED_ACTUAL_ENGINE_SOURCE",
+      "checks": 5,
+      "failedChecks": 5
+    },
+    {
+      "name": "Node.active refusal precedes hierarchy and child lifecycle changes",
+      "status": "RED_ACTUAL_ENGINE_SOURCE",
+      "checks": 5,
+      "failedChecks": 4
+    },
+    {
+      "name": "Node.destroy refusal precedes super scheduling and active=false",
+      "status": "RED_ACTUAL_ENGINE_SOURCE",
+      "checks": 5,
+      "failedChecks": 5
+    },
+    {
+      "name": "destroyAllChildren prechecks protected later child before scheduling first",
+      "status": "RED_ACTUAL_ENGINE_SOURCE",
+      "checks": 7,
+      "failedChecks": 6
+    },
+    {
+      "name": "destroyAllChildren refuses a guarded receiver before touching unrelated children",
+      "status": "RED_ACTUAL_ENGINE_SOURCE",
+      "checks": 3,
+      "failedChecks": 3
+    },
+    {
+      "name": "nested controlled descendant is protected by explicit ancestor membership",
+      "status": "RED_ACTUAL_ENGINE_SOURCE",
+      "checks": 3,
+      "failedChecks": 3
+    },
+    {
+      "name": "Node category guard refuses custom constructor and requirement getter before either runs",
+      "status": "RED_ACTUAL_ENGINE_SOURCE",
+      "checks": 4,
+      "failedChecks": 4
+    },
+    {
+      "name": "Node category blocks original addComponent for orphan 3d",
+      "status": "RED_ACTUAL_ENGINE_SOURCE",
+      "checks": 2,
+      "failedChecks": 2
+    },
+    {
+      "name": "Node category blocks original addComponent for orphan 2d",
+      "status": "RED_ACTUAL_ENGINE_SOURCE",
+      "checks": 2,
+      "failedChecks": 2
+    },
+    {
+      "name": "Node category blocks original addComponent for orphan ui",
+      "status": "RED_ACTUAL_ENGINE_SOURCE",
+      "checks": 2,
+      "failedChecks": 2
+    },
+    {
+      "name": "Node category blocks original addComponent for orphan plain",
+      "status": "RED_ACTUAL_ENGINE_SOURCE",
+      "checks": 2,
+      "failedChecks": 2
+    },
+    {
+      "name": "Node category refuses before class-name resolution",
+      "status": "RED_ACTUAL_ENGINE_SOURCE",
+      "checks": 3,
+      "failedChecks": 3
+    },
+    {
+      "name": "Node category multi-owner release cannot bypass remaining owner",
+      "status": "RED_ACTUAL_ENGINE_SOURCE",
+      "checks": 3,
+      "failedChecks": 3
+    },
+    {
+      "name": "PhysicsMaterial friction rejects before field or event",
+      "status": "RED_ACTUAL_ENGINE_SOURCE",
+      "checks": 3,
+      "failedChecks": 3
+    },
+    {
+      "name": "PhysicsMaterial rollingFriction rejects before field or event",
+      "status": "RED_ACTUAL_ENGINE_SOURCE",
+      "checks": 3,
+      "failedChecks": 3
+    },
+    {
+      "name": "PhysicsMaterial spinningFriction rejects before field or event",
+      "status": "RED_ACTUAL_ENGINE_SOURCE",
+      "checks": 3,
+      "failedChecks": 3
+    },
+    {
+      "name": "PhysicsMaterial restitution rejects before field or event",
+      "status": "RED_ACTUAL_ENGINE_SOURCE",
+      "checks": 3,
+      "failedChecks": 3
+    },
+    {
+      "name": "PhysicsMaterial same-value assignment still refuses while fenced",
+      "status": "RED_ACTUAL_ENGINE_SOURCE",
+      "checks": 1,
+      "failedChecks": 1
+    },
+    {
+      "name": "PhysicsMaterial input coercion is not invoked before guard",
+      "status": "RED_ACTUAL_ENGINE_SOURCE",
+      "checks": 3,
+      "failedChecks": 3
+    },
+    {
+      "name": "PhysicsMaterial.setValues rejects before all four fields/events",
+      "status": "RED_ACTUAL_ENGINE_SOURCE",
+      "checks": 3,
+      "failedChecks": 3
+    },
+    {
+      "name": "PhysicsMaterial.destroy refuses before schedule and allMaterials removal",
+      "status": "RED_ACTUAL_ENGINE_SOURCE",
+      "checks": 5,
+      "failedChecks": 5
+    },
+    {
+      "name": "shared PhysicsMaterial honors two owners and actual listeners across release",
+      "status": "RED_ACTUAL_ENGINE_SOURCE",
+      "checks": 4,
+      "failedChecks": 4
+    },
+    {
+      "name": "Collider.material clone getter refuses before off/clone/on/id/cache changes",
+      "status": "RED_ACTUAL_ENGINE_SOURCE",
+      "checks": 7,
+      "failedChecks": 7
+    },
+    {
+      "name": "Collider already-unshared material getter remains a pure read while fenced",
+      "status": "PASS_ACTUAL_ENGINE_SOURCE",
+      "checks": 1,
+      "failedChecks": 0
+    },
+    {
+      "name": "Collider.material setter refuses before delegate/listener/cache change",
+      "status": "RED_ACTUAL_ENGINE_SOURCE",
+      "checks": 6,
+      "failedChecks": 6
+    },
+    {
+      "name": "Collider.material without shape rejects earliest cache branch",
+      "status": "RED_ACTUAL_ENGINE_SOURCE",
+      "checks": 2,
+      "failedChecks": 2
+    },
+    {
+      "name": "PhysicsSystem enable refuses before cache or delegate",
+      "status": "RED_ACTUAL_ENGINE_SOURCE",
+      "checks": 3,
+      "failedChecks": 2
+    },
+    {
+      "name": "PhysicsSystem maxSubSteps refuses before cache or delegate",
+      "status": "RED_ACTUAL_ENGINE_SOURCE",
+      "checks": 3,
+      "failedChecks": 2
+    },
+    {
+      "name": "PhysicsSystem fixedTimeStep refuses before cache or delegate",
+      "status": "RED_ACTUAL_ENGINE_SOURCE",
+      "checks": 3,
+      "failedChecks": 2
+    },
+    {
+      "name": "PhysicsSystem sleepThreshold refuses before cache or delegate",
+      "status": "RED_ACTUAL_ENGINE_SOURCE",
+      "checks": 3,
+      "failedChecks": 2
+    },
+    {
+      "name": "PhysicsSystem autoSimulation refuses before cache or delegate",
+      "status": "RED_ACTUAL_ENGINE_SOURCE",
+      "checks": 3,
+      "failedChecks": 2
+    },
+    {
+      "name": "PhysicsSystem allowSleep refuses before cache or delegate",
+      "status": "RED_ACTUAL_ENGINE_SOURCE",
+      "checks": 3,
+      "failedChecks": 3
+    },
+    {
+      "name": "PhysicsSystem gravity refuses before cache or delegate",
+      "status": "RED_ACTUAL_ENGINE_SOURCE",
+      "checks": 3,
+      "failedChecks": 3
+    },
+    {
+      "name": "PhysicsSystem debugDrawFlags refuses before cache or delegate",
+      "status": "RED_ACTUAL_ENGINE_SOURCE",
+      "checks": 3,
+      "failedChecks": 2
+    },
+    {
+      "name": "PhysicsSystem debugDrawConstraintSize refuses before cache or delegate",
+      "status": "RED_ACTUAL_ENGINE_SOURCE",
+      "checks": 3,
+      "failedChecks": 2
+    },
+    {
+      "name": "PhysicsSystem.setDefaultPhysicsMaterial refuses before native/listener/cache work",
+      "status": "RED_ACTUAL_ENGINE_SOURCE",
+      "checks": 4,
+      "failedChecks": 4
+    },
+    {
+      "name": "PhysicsSystem.gravity guard is earlier than candidate vector getters",
+      "status": "RED_ACTUAL_ENGINE_SOURCE",
+      "checks": 3,
+      "failedChecks": 3
+    },
+    {
+      "name": "PhysicsSystem.resetConfiguration guard is before candidate getters and cumulative writes",
+      "status": "RED_ACTUAL_ENGINE_SOURCE",
+      "checks": 4,
+      "failedChecks": 4
+    },
+    {
+      "name": "PhysicsSystem.resetAccumulator is fenced before changing the single clock",
+      "status": "RED_ACTUAL_ENGINE_SOURCE",
+      "checks": 2,
+      "failedChecks": 2
+    },
+    {
+      "name": "no lease preserves original cache/material/component behavior for builtin",
+      "status": "PASS_ACTUAL_ENGINE_SOURCE",
+      "checks": 7,
+      "failedChecks": 0
+    },
+    {
+      "name": "no lease preserves original cache/material/component behavior for cannon.js",
+      "status": "PASS_ACTUAL_ENGINE_SOURCE",
+      "checks": 7,
+      "failedChecks": 0
+    },
+    {
+      "name": "no lease preserves original cache/material/component behavior for box3d",
+      "status": "PASS_ACTUAL_ENGINE_SOURCE",
+      "checks": 7,
+      "failedChecks": 0
+    },
+    {
+      "name": "no lease preserves clone getter, lifecycle callbacks and actual deferred destruction",
+      "status": "PASS_ACTUAL_ENGINE_SOURCE",
+      "checks": 5,
+      "failedChecks": 0
+    }
+  ]
+}

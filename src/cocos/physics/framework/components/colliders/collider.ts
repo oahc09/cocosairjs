@@ -23,6 +23,7 @@
  THE SOFTWARE.
 */
 
+import { assertMutationAllowed } from '../../../../core/data/mutation-guard';
 import { ccclass, tooltip, displayOrder, displayName, readOnly, type, serializable } from 'cc.decorator';
 import { EDITOR } from 'internal:constants';
 import { Eventify, Vec3, error, geometry } from '../../../../core';
@@ -108,6 +109,7 @@ export class Collider extends Eventify(Component) {
      */
     public get material (): PhysicsMaterial | null {
         if (this._isSharedMaterial && this._material) {
+            assertMutationAllowed(this, 'Collider.material.get');
             this._material.off(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
             this._material = this._material.clone();
             this._material.on(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
@@ -117,6 +119,7 @@ export class Collider extends Eventify(Component) {
     }
 
     public set material (value) {
+        assertMutationAllowed(this, 'Collider.material.set');
         if (this._shape) {
             const nativeFirst = selector.id === 'box3d';
             if (nativeFirst) this._shape.setMaterial(value);

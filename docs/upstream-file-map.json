@@ -2,7 +2,7 @@
   "meta": {
     "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
     "note": "Air Path 与 Upstream Path 一致(前缀 src/)；modified 文件另行标注 reason；upstreamPath=null 表示该行为 Air 原创文件或上游产物（仓库内无对应源文件），必须 modified:true 并在 reason 说明出处",
-    "modifiedCount": 252,
+    "modifiedCount": 257,
     "pal": {
       "revision": "9f0e30acb31f6d670f2c0bf818d61039846a2860",
       "license": "MIT",
@@ -4928,8 +4928,8 @@
       "airPath": "src/cocos/physics/framework/assets/physics-material.ts",
       "upstreamPath": "cocos/physics/framework/assets/physics-material.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "extraction copy 2026-10-22 unified-command preparation: Opt-in identity-keyed mutation fences reject four coefficient setters, setValues and destroy before coercion, fields, events, registry removal or deferred destruction. Finite real-source lease controls only; actual World lease activation and new WASM integration remain unqualified."
     },
     {
       "airPath": "src/cocos/physics/framework/collision-matrix.ts",
@@ -4978,7 +4978,7 @@
       "upstreamPath": "cocos/physics/framework/components/colliders/collider.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "2026-10-22 Box3D-only initialized collider setter transaction: adapter validates the candidate before cache/listener replacement. Box/Sphere receive normalized candidate dimensions without changing common shape interfaces; other backend cache-first paths and upstream headers remain unchanged. Actual-source mock controls only; native shape and complete shared-material rollback remain unqualified. Initial Box3D onLoad attaches the existing shared-material update listener only after successful native shape initialization; two actual colliders, listener replacement and destruction were checked against l2 WASM. Asset mutation before EVENT_UPDATE callback and unexpected subscription failure are not transactional rollback guarantees."
+      "reason": "2026-10-22 Box3D-only initialized collider setter transaction: adapter validates the candidate before cache/listener replacement. Box/Sphere receive normalized candidate dimensions without changing common shape interfaces; other backend cache-first paths and upstream headers remain unchanged. Actual-source mock controls only; native shape and complete shared-material rollback remain unqualified. Initial Box3D onLoad attaches the existing shared-material update listener only after successful native shape initialization; two actual colliders, listener replacement and destruction were checked against l2 WASM. Asset mutation before EVENT_UPDATE callback and unexpected subscription failure are not transactional rollback guarantees. 2026-10-22 unified-command preparation: Opt-in mutation fences reject material assignment and the side-effecting shared-material clone getter before listeners, delegates or caches change. Finite real-source lease controls only; actual World lease activation and new WASM integration remain unqualified."
     },
     {
       "airPath": "src/cocos/physics/framework/components/colliders/cone-collider.ts",
@@ -5132,7 +5132,7 @@
       "upstreamPath": "cocos/physics/framework/physics-system.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "2026-10-22 Box3D-only native-first allowSleep/gravity/default material assignment: commit public cached values after native acceptance, and transfer the default-material listener only after success. All other backend branches retain original cache-first order. Mutable gravity aliases, existing material EVENT_UPDATE and resetConfiguration remain explicitly outside this narrow transaction."
+      "reason": "2026-10-22 Box3D-only native-first allowSleep/gravity/default material assignment: commit public cached values after native acceptance, and transfer the default-material listener only after success. All other backend branches retain original cache-first order. Mutable gravity aliases, existing material EVENT_UPDATE and resetConfiguration remain explicitly outside this narrow transaction. 2026-10-22 unified-command preparation: Opt-in mutation fences reject configuration setters, material replacement and resets before fields, input reads or delegation; outside a lease original behavior is retained. Finite real-source lease controls only; actual World lease activation and new WASM integration remain unqualified."
     },
     {
       "airPath": "src/cocos/physics/spec/i-character-controller.ts",
@@ -6076,8 +6076,8 @@
       "airPath": "src/cocos/scene-graph/component.ts",
       "upstreamPath": "cocos/scene-graph/component.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "extraction copy 2026-10-22 unified-command preparation: Opt-in identity-keyed mutation fences reject enabled/destroy before cached fields, scheduler callbacks or deferred-destroy flags change. Finite real-source lease controls only; actual World lease activation and new WASM integration remain unqualified."
     },
     {
       "airPath": "src/cocos/scene-graph/deprecated-3.7.0.ts",
@@ -6161,7 +6161,7 @@
       "upstreamPath": "cocos/scene-graph/node.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "ENG-08: local/world TRS and setRTS reject nonfinite/non-float32/invalid numeric overload values before mutation; valid transforms and Euler degrees unchanged. Box3D reconstruction: opt-in backend-neutral pre-mutation ownership checks for protected TRS/relative/hierarchy writes; exact single-use world-pose permits are consumed before events; unregistered Node paths retain original behavior."
+      "reason": "ENG-08: local/world TRS and setRTS reject nonfinite/non-float32/invalid numeric overload values before mutation; valid transforms and Euler degrees unchanged. Box3D reconstruction: opt-in backend-neutral pre-mutation ownership checks for protected TRS/relative/hierarchy writes; exact single-use world-pose permits are consumed before events; unregistered Node paths retain original behavior. 2026-10-22 unified-command preparation: Opt-in mutation fences reject active/destroy/destroyAllChildren before lifecycle writes; addComponent uses the frozen realm-wide Node.prototype category lease before class resolution, dependency reads or construction, including orphan/UI/2D/custom components. Finite real-source lease controls only; actual World lease activation and new WASM integration remain unqualified."
     },
     {
       "airPath": "src/cocos/scene-graph/prefab/index.ts",
@@ -9970,6 +9970,27 @@
       "baseline": "AIR original",
       "modified": true,
       "reason": "2026-10-22 Box3D rebuild: AIR-owned IBoxShape/ISphereShape candidate with real native ownership, guarded replacement, material/filter delegation and copied bounds. Unknown allocation/configuration failures fault instead of claiming rollback; public component activation and full qualification remain incomplete."
+    },
+    {
+      "airPath": "src/cocos/core/data/mutation-guard.ts",
+      "upstreamPath": null,
+      "baseline": "AIR original",
+      "modified": true,
+      "reason": "2026-10-22 Box3D rebuild: Backend-neutral opt-in identity/category mutation-lease registry with independent owners, copied inputs and reentrant admission rejection; no concrete physics import or global bypass."
+    },
+    {
+      "airPath": "src/air/physics/box3d/command-queue.ts",
+      "upstreamPath": null,
+      "baseline": "AIR original",
+      "modified": true,
+      "reason": "2026-10-22 Box3D rebuild: Internal copied unified-command queue, generation/counter identity, nondestructive reduction and explicit commit/step phases; logical controls do not establish native lifetime or World integration."
+    },
+    {
+      "airPath": "src/air/physics/box3d/command-producers.ts",
+      "upstreamPath": null,
+      "baseline": "AIR original",
+      "modified": true,
+      "reason": "2026-10-22 Box3D rebuild: Internal combined-order before-step/continuous-force producer configuration and one-shot snapshot leases; explicit owner-admission reentry guard. Not exported or wired to actual World yet."
     }
   ]
 }

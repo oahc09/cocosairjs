@@ -23,6 +23,7 @@
  THE SOFTWARE.
 */
 
+import { assertMutationAllowed } from '../core/data/mutation-guard';
 import { ccclass, tooltip, displayName, type, serializable, disallowAnimation } from 'cc.decorator';
 import { EDITOR, NODEJS, TEST } from 'internal:constants';
 import { Script } from '../asset/assets/scripts';
@@ -130,6 +131,7 @@ class Component extends CCObject {
         return this._enabled;
     }
     set enabled (value) {
+        assertMutationAllowed(this, 'Component.enabled');
         if (this._enabled !== value) {
             this._enabled = value;
             if (this.node.activeInHierarchy) {
@@ -377,6 +379,7 @@ class Component extends CCObject {
     // OVERRIDE
 
     public destroy (): boolean {
+        assertMutationAllowed(this, 'Component.destroy');
         if (EDITOR) {
             // TODO: `_getDependComponent` is an injected method.
             // issue: https://github.com/cocos/cocos-engine/issues/14643

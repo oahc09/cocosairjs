@@ -1,0 +1,189 @@
+  console.log
+    Cannot access game frame or container.
+
+      at warnID (src/cocos/core/platform/debug.ts:314:5)
+
+  console.log
+    The asset pm_1 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_2 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_3 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_4 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_5 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_6 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_7 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_8 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_9 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_10 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_11 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_12 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_13 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_14 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_15 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_16 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_17 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_18 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_19 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_20 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_21 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_22 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_23 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_24 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_25 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_26 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+PASS tools/verify/box3d/mutation-fence-engine-control.test.ts (18.585 s)
+  ✓ Component.enabled earliest cache/scheduler refusal active=false (8 ms)
+  ✓ Component.enabled earliest cache/scheduler refusal active=true (2 ms)
+  ✓ Component enabled same-value business assignment is fenced (1 ms)
+  ✓ Component.destroy refusal precedes ToDestroy and actual deferred destruction (1 ms)
+  ✓ Node.active refusal precedes hierarchy and child lifecycle changes (1 ms)
+  ✓ Node.destroy refusal precedes super scheduling and active=false (1 ms)
+  ✓ destroyAllChildren prechecks protected later child before scheduling first (1 ms)
+  ✓ destroyAllChildren refuses a guarded receiver before touching unrelated children (19 ms)
+  ✓ nested controlled descendant is protected by explicit ancestor membership (3 ms)
+  ✓ Node category guard refuses custom constructor and requirement getter before either runs (1 ms)
+  ✓ Node category blocks original addComponent for orphan 3d (2 ms)
+  ✓ Node category blocks original addComponent for orphan 2d (1 ms)
+  ✓ Node category blocks original addComponent for orphan ui
+  ✓ Node category blocks original addComponent for orphan plain
+  ✓ Node category refuses before class-name resolution
+  ✓ Node category multi-owner release cannot bypass remaining owner (2 ms)
+  ✓ PhysicsMaterial friction rejects before field or event (20 ms)
+  ✓ PhysicsMaterial rollingFriction rejects before field or event (3 ms)
+  ✓ PhysicsMaterial spinningFriction rejects before field or event (1 ms)
+  ✓ PhysicsMaterial restitution rejects before field or event (1 ms)
+  ✓ PhysicsMaterial same-value assignment still refuses while fenced (1 ms)
+  ✓ PhysicsMaterial input coercion is not invoked before guard (1 ms)
+  ✓ PhysicsMaterial.setValues rejects before all four fields/events (2 ms)
+  ✓ PhysicsMaterial.destroy refuses before schedule and allMaterials removal (2 ms)
+  ✓ shared PhysicsMaterial honors two owners and actual listeners across release (2 ms)
+  ✓ Collider.material clone getter refuses before off/clone/on/id/cache changes (5 ms)
+  ✓ Collider already-unshared material getter remains a pure read while fenced (2 ms)
+  ✓ Collider.material setter refuses before delegate/listener/cache change (3 ms)
+  ✓ Collider.material without shape rejects earliest cache branch (1 ms)
+  ✓ PhysicsSystem enable refuses before cache or delegate (2 ms)
+  ✓ PhysicsSystem maxSubSteps refuses before cache or delegate (1 ms)
+  ✓ PhysicsSystem fixedTimeStep refuses before cache or delegate
+  ✓ PhysicsSystem sleepThreshold refuses before cache or delegate (1 ms)
+  ✓ PhysicsSystem autoSimulation refuses before cache or delegate
+  ✓ PhysicsSystem allowSleep refuses before cache or delegate
+  ✓ PhysicsSystem gravity refuses before cache or delegate (1 ms)
+  ✓ PhysicsSystem debugDrawFlags refuses before cache or delegate (1 ms)
+  ✓ PhysicsSystem debugDrawConstraintSize refuses before cache or delegate
+  ✓ PhysicsSystem.setDefaultPhysicsMaterial refuses before native/listener/cache work (2 ms)
+  ✓ PhysicsSystem.gravity guard is earlier than candidate vector getters
+  ✓ PhysicsSystem.resetConfiguration guard is before candidate getters and cumulative writes (1 ms)
+  ✓ PhysicsSystem.resetAccumulator is fenced before changing the single clock
+  ✓ no lease preserves original cache/material/component behavior for builtin (4 ms)
+  ✓ no lease preserves original cache/material/component behavior for cannon.js (3 ms)
+  ✓ no lease preserves original cache/material/component behavior for box3d (6 ms)
+  ✓ no lease preserves clone getter, lifecycle callbacks and actual deferred destruction (14 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       46 passed, 46 total
+Snapshots:   0 total
+Time:        19.377 s
+Ran all test suites.
+Test results written to: tools/verify/box3d/mutation-fence-engine-evidence-20261022-green-a/jest-result.json

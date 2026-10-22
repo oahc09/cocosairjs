@@ -608,3 +608,9 @@ Spark 是本项目除 `cocos4` 之外的**第二个上游**，按只读冻结源
 ### Spark 模块拆分（2026-10-15）
 
 旧整合版 cocosair.module.spark.js 由独立 spark.module.js 替代。AIR 自有桥接层通过 src/air/spark/engine.ts 借用主入口的数学/几何值；可选构建将主引擎标记 external，并以 metafile 拒绝打包 Cocos/PAL 实现。没有改动冻结 vendor/spark、spark-rs 或引擎源码；保留 XR 排除、WASM 内联及未决转付许可边界。独立模块的生成声明引用主 SDK，sparkRuntime 原有 any 边界不变。
+
+### Box3D opt-in transaction entry fences (2026-10-22)
+
+Five existing engine files receive 32 added guard/import lines, preserving original headers and unregistered behavior. Component, Node, PhysicsMaterial, Collider and PhysicsSystem now support backend-neutral identity leases before lifecycle, configuration or shared-material side effects. The addComponent category deliberately covers every original Node.addComponent call in the realm while a lease exists, including orphan, UI/2D and custom components; it is not a physics-only filter.
+
+The same immutable actual-source fixture retained 41 original RED cases and five controls; the patched source passed 46 cases and 163 checks, with separate type/format results. Native delegates in this fixture are call-count mocks. These source results do not activate real World leases or qualify a native/WASM transaction. Earlier mutable-observation recorder failures are retained and are not the final evidence pair. See tools/verify/box3d/mutation-fence-engine-handoff-20261022-a for exact identities and scope.

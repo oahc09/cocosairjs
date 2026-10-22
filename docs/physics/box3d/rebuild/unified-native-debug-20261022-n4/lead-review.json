@@ -1,0 +1,24 @@
+{
+  "status": "PASS_HOST_DEBUG_FINITE_DIAGNOSTIC_ONLY",
+  "timeUTC": "2026-10-22T13:33:00.591048+00:00",
+  "sourceCommit": "e5c5674bfe08be0c9fda72c484f4380bd0d0e2c6",
+  "sourceCheckpointSha256": "a9d5eee5a951d097279d01aeb86127caf73c82e9c43c14c7dad71228cca42e51",
+  "commands": 78,
+  "contracts": 7,
+  "newNativeNegativeCases": 25,
+  "checks": [
+    "pureValidation",
+    "lateRejectNoMutation",
+    "allocationFailures",
+    "exactFloatReplay",
+    "rotatedOffsetAndLocks",
+    "kinematicOffsetCOM",
+    "tinyCapStationary",
+    "protectedSequenceZero",
+    "maxTransport",
+    "temporaryCleanup",
+    "coreCleanup"
+  ],
+  "sourceFilesUnchanged": 50,
+  "scope": "No WASM/browser qualification; all2128 formal cells NOT_RUN. Full output retained in original diagnostic directory; manifest binds all objects/executables, raw logs copied here."
+}

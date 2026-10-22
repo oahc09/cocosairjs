@@ -22,6 +22,7 @@
  THE SOFTWARE.
 */
 
+import { assertMutationAllowed } from '../../core/data/mutation-guard';
 import { BUILD, EDITOR_NOT_IN_PREVIEW, LOAD_BULLET_MANUALLY, LOAD_PHYSX_MANUALLY } from 'internal:constants';
 import { Vec3, RecyclePool, Enum, System, cclegacy, settings, geometry, warn, IQuatLike, IVec3Like, SettingsCategory, errorID, warnID } from '../../core';
 import { IPhysicsWorld, IRaycastOptions } from '../spec/i-physics-world';
@@ -104,6 +105,7 @@ export class PhysicsSystem extends System implements IWorldInitData {
     }
 
     public set enable (value: boolean) {
+        assertMutationAllowed(this, 'PhysicsSystem.enable');
         this._enable = value;
     }
 
@@ -118,6 +120,7 @@ export class PhysicsSystem extends System implements IWorldInitData {
     }
 
     public set allowSleep (v: boolean) {
+        assertMutationAllowed(this, 'PhysicsSystem.allowSleep');
         // AIR Box3D rejects invalid native changes before committing the public cache.
         if (selector.id === 'box3d' && this.physicsWorld) {
             this.physicsWorld.setAllowSleep(v);
@@ -141,6 +144,7 @@ export class PhysicsSystem extends System implements IWorldInitData {
     }
 
     public set maxSubSteps (value: number) {
+        assertMutationAllowed(this, 'PhysicsSystem.maxSubSteps');
         this._maxSubSteps = value;
     }
 
@@ -155,6 +159,7 @@ export class PhysicsSystem extends System implements IWorldInitData {
     }
 
     public set fixedTimeStep (value: number) {
+        assertMutationAllowed(this, 'PhysicsSystem.fixedTimeStep');
         this._fixedTimeStep = value;
     }
 
@@ -169,6 +174,7 @@ export class PhysicsSystem extends System implements IWorldInitData {
     }
 
     public set gravity (gravity: Vec3) {
+        assertMutationAllowed(this, 'PhysicsSystem.gravity');
         if (selector.id === 'box3d' && this.physicsWorld) {
             this.physicsWorld.setGravity(gravity);
             this._gravity.set(gravity);
@@ -191,6 +197,7 @@ export class PhysicsSystem extends System implements IWorldInitData {
     }
 
     public set sleepThreshold (v: number) {
+        assertMutationAllowed(this, 'PhysicsSystem.sleepThreshold');
         this._sleepThreshold = v;
     }
 
@@ -205,6 +212,7 @@ export class PhysicsSystem extends System implements IWorldInitData {
     }
 
     public set autoSimulation (value: boolean) {
+        assertMutationAllowed(this, 'PhysicsSystem.autoSimulation');
         this._autoSimulation = value;
     }
 
@@ -225,6 +233,7 @@ export class PhysicsSystem extends System implements IWorldInitData {
      * 设置默认物理材质。
      */
     public setDefaultPhysicsMaterial (material: PhysicsMaterial): void {
+        assertMutationAllowed(this, 'PhysicsSystem.setDefaultPhysicsMaterial');
         if (selector.id === 'box3d') {
             this.physicsWorld.setDefaultMaterial(material);
             if (this._material !== material) {
@@ -407,6 +416,7 @@ export class PhysicsSystem extends System implements IWorldInitData {
      * 重置物理配置。
      */
     resetConfiguration (config?: IPhysicsConfig): void {
+        assertMutationAllowed(this, 'PhysicsSystem.resetConfiguration');
         const allowSleep = config ? config.allowSleep : querySettings(SettingsCategory.PHYSICS, 'allowSleep');
         if (typeof allowSleep === 'boolean') this._allowSleep = allowSleep;
         const fixedTimeStep = config ? config.fixedTimeStep : querySettings(SettingsCategory.PHYSICS, 'fixedTimeStep');
@@ -449,6 +459,7 @@ export class PhysicsSystem extends System implements IWorldInitData {
      * 重置时间累积总量为给定值。
      */
     resetAccumulator (time = 0): void {
+        assertMutationAllowed(this, 'PhysicsSystem.resetAccumulator');
         this._accumulator = time;
     }
 
@@ -499,6 +510,7 @@ export class PhysicsSystem extends System implements IWorldInitData {
     }
 
     set debugDrawFlags (v) {
+        assertMutationAllowed(this, 'PhysicsSystem.debugDrawFlags');
         this.physicsWorld.debugDrawFlags = v;
     }
 
@@ -513,6 +525,7 @@ export class PhysicsSystem extends System implements IWorldInitData {
     }
 
     set debugDrawConstraintSize (v) {
+        assertMutationAllowed(this, 'PhysicsSystem.debugDrawConstraintSize');
         this.physicsWorld.debugDrawConstraintSize = v;
     }
 

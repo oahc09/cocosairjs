@@ -24,6 +24,7 @@
 
 // @ts-check
 
+import { assertMutationAllowed } from '../../../core/data/mutation-guard';
 import { ccclass, editable, range, serializable, type } from 'cc.decorator';
 import { Asset } from '../../../asset/assets/asset';
 import { CCFloat, math } from '../../../core';
@@ -66,6 +67,7 @@ export class PhysicsMaterial extends Asset {
     }
 
     set friction (value) {
+        assertMutationAllowed(this, 'PhysicsMaterial.friction');
         if (!math.equals(this._friction, value)) {
             this._friction = value;
             this.emit(PhysicsMaterial.EVENT_UPDATE);
@@ -85,6 +87,7 @@ export class PhysicsMaterial extends Asset {
     }
 
     set rollingFriction (value) {
+        assertMutationAllowed(this, 'PhysicsMaterial.rollingFriction');
         if (!math.equals(this._rollingFriction, value)) {
             this._rollingFriction = value;
             this.emit(PhysicsMaterial.EVENT_UPDATE);
@@ -104,6 +107,7 @@ export class PhysicsMaterial extends Asset {
     }
 
     set spinningFriction (value) {
+        assertMutationAllowed(this, 'PhysicsMaterial.spinningFriction');
         if (!math.equals(this._spinningFriction, value)) {
             this._spinningFriction = value;
             this.emit(PhysicsMaterial.EVENT_UPDATE);
@@ -124,6 +128,7 @@ export class PhysicsMaterial extends Asset {
     }
 
     set restitution (value) {
+        assertMutationAllowed(this, 'PhysicsMaterial.restitution');
         if (!math.equals(this._restitution, value)) {
             this._restitution = value;
             this.emit(PhysicsMaterial.EVENT_UPDATE);
@@ -175,6 +180,7 @@ export class PhysicsMaterial extends Asset {
      * @return 是否成功
      */
     public destroy (): boolean {
+        assertMutationAllowed(this, 'PhysicsMaterial.destroy');
         if (super.destroy()) {
             const idx = PhysicsMaterial.allMaterials.indexOf(this);
             if (idx >= 0) {
@@ -196,6 +202,7 @@ export class PhysicsMaterial extends Asset {
      * @param restitution
      */
     public setValues (friction: number, rollingFriction: number, spinningFriction: number, restitution: number): void {
+        assertMutationAllowed(this, 'PhysicsMaterial.setValues');
         const emitUpdate = this._friction !== friction || this._rollingFriction !== rollingFriction
             || this._spinningFriction !== spinningFriction || this._restitution !== restitution;
         this._friction = friction;
