@@ -1,0 +1,240 @@
+{
+  "schemaVersion": 1,
+  "status": "NOT_RUN_DESIGN_ONLY",
+  "states": {
+    "READY": ["TUTORIAL", "PACKING"],
+    "TUTORIAL": ["PACKING"],
+    "PACKING": ["SHIPPING", "RESULT"],
+    "SHIPPING": ["CLOSING", "BLOCKED", "RESULT"],
+    "BLOCKED": ["PACKING", "RESULT"],
+    "CLOSING": ["PACKING", "RESULT"],
+    "RESULT": ["READY"]
+  },
+  "pauseLayer": {
+    "pausesPhysicsAndClock": true,
+    "retainsConstraintAndPose": true,
+    "clearsInput": true,
+    "resumeRequiresFreshInput": true
+  },
+  "shipping": {
+    "commitOnlyAfterAllTwoUniqueSnapshotItems": true,
+    "keepEarlyFullCrossingEvidence": true,
+    "qualifiedDoorAngleSeenRequired": true,
+    "pendingDeliveryDoesNotConsumeInventory": true,
+    "recoverOriginalItemsNeverSpawnExtras": true,
+    "safeDestroyAfterAtomicCommit": true,
+    "finalOrderWinsAtDeliveryTick": true
+  },
+  "lifecyclePlan": {
+    "normalRounds": [
+      {
+        "id": "LIFE-N01",
+        "layout": "REBUILD-LAYOUT-01",
+        "requiredTerminal": "RESULT after all three real orders"
+      },
+      {
+        "id": "LIFE-N02",
+        "layout": "REBUILD-LAYOUT-02",
+        "requiredTerminal": "RESULT after all three real orders"
+      },
+      {
+        "id": "LIFE-N03",
+        "layout": "REBUILD-LAYOUT-03",
+        "requiredTerminal": "RESULT after all three real orders"
+      },
+      {
+        "id": "LIFE-N04",
+        "layout": "REBUILD-LAYOUT-04",
+        "requiredTerminal": "RESULT after all three real orders"
+      },
+      {
+        "id": "LIFE-N05",
+        "layout": "REBUILD-LAYOUT-05",
+        "requiredTerminal": "RESULT after all three real orders"
+      }
+    ],
+    "abnormalRounds": [
+      {
+        "id": "LIFE-A01",
+        "fixture": "reset-while-held",
+        "requiredTerminal": "declared full retry/completion or terminal timeout/scene teardown; setup ticks alone never count",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "LIFE-A02",
+        "fixture": "half-order-blocked-retry",
+        "requiredTerminal": "declared full retry/completion or terminal timeout/scene teardown; setup ticks alone never count",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "LIFE-A03",
+        "fixture": "reused-body-generation-recovery",
+        "requiredTerminal": "declared full retry/completion or terminal timeout/scene teardown; setup ticks alone never count",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "LIFE-A04",
+        "fixture": "scene-exit-while-held",
+        "requiredTerminal": "declared full retry/completion or terminal timeout/scene teardown; setup ticks alone never count",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "LIFE-A05",
+        "fixture": "invalid-sku-correction",
+        "requiredTerminal": "declared full retry/completion or terminal timeout/scene teardown; setup ticks alone never count",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "LIFE-A06",
+        "fixture": "third-item-correction",
+        "requiredTerminal": "declared full retry/completion or terminal timeout/scene teardown; setup ticks alone never count",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "LIFE-A07",
+        "fixture": "unweighed-item-rejection",
+        "requiredTerminal": "declared full retry/completion or terminal timeout/scene teardown; setup ticks alone never count",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "LIFE-A08",
+        "fixture": "partial-outside-chamber",
+        "requiredTerminal": "declared full retry/completion or terminal timeout/scene teardown; setup ticks alone never count",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "LIFE-A09",
+        "fixture": "hanging-scale-no-receipt",
+        "requiredTerminal": "declared full retry/completion or terminal timeout/scene teardown; setup ticks alone never count",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "LIFE-A10",
+        "fixture": "stacked-scale-no-receipt",
+        "requiredTerminal": "declared full retry/completion or terminal timeout/scene teardown; setup ticks alone never count",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "LIFE-A11",
+        "fixture": "early-plane-before-65degrees",
+        "requiredTerminal": "declared full retry/completion or terminal timeout/scene teardown; setup ticks alone never count",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "LIFE-A12",
+        "fixture": "duplicate-and-stale-delivery",
+        "requiredTerminal": "declared full retry/completion or terminal timeout/scene teardown; setup ticks alone never count",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "LIFE-A13",
+        "fixture": "timeout-on-shipping-deadline",
+        "requiredTerminal": "declared full retry/completion or terminal timeout/scene teardown; setup ticks alone never count",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "LIFE-A14",
+        "fixture": "recovery-under-5seconds",
+        "requiredTerminal": "declared full retry/completion or terminal timeout/scene teardown; setup ticks alone never count",
+        "status": "NOT_RUN"
+      },
+      {
+        "id": "LIFE-A15",
+        "fixture": "closing-channel-obstruction",
+        "requiredTerminal": "declared full retry/completion or terminal timeout/scene teardown; setup ticks alone never count",
+        "status": "NOT_RUN"
+      }
+    ],
+    "requiredTotal": 20,
+    "mustRecordBeforeAfterResources": [
+      "world",
+      "body",
+      "shape",
+      "joint",
+      "target handle",
+      "pair",
+      "weigh receipt",
+      "native bytes",
+      "item generations"
+    ],
+    "notReplacementForI05HundredCycles": true
+  },
+  "requiredBIZ": [
+    {
+      "id": "B3-BIZ01",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-BIZ02",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-BIZ03",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-BIZ04",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-BIZ05",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-BIZ06",
+      "required": true,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "B3-BIZ07",
+      "required": true,
+      "status": "BLOCKED_EXTERNAL_RESOURCES"
+    },
+    {
+      "id": "B3-BIZ08",
+      "required": true,
+      "status": "NOT_RUN"
+    }
+  ],
+  "external": {
+    "BIZ07": {
+      "required": [
+        "actual desktop browser",
+        "actual Android WebView device",
+        "actual iOS Safari device",
+        "3 first-time human testers"
+      ],
+      "criterion": "at least2/3 unaided first order within90s",
+      "owner": "UNASSIGNED_REQUIRES_COORDINATION",
+      "agentSubstitution": false
+    }
+  },
+  "staticFixtures": {
+    "half-order-block": "a visible predeclared blocker prevents the second snapshot item crossing; not part of normal profile",
+    "closing-obstruction": "visible nonshipped item in channel after a committed order; recovery must preserve prior ledger",
+    "events": "late/duplicate observations must come from recorded actual event/recovery lifecycle in dynamic tests, not fabricated PASS traces"
+  },
+  "mediaRequired": [
+    "complete desktop three-order round from home",
+    "complete actual touch-device round",
+    "wrong-order/half-order/recovery video",
+    "order/scale/shipping/result screenshots from same run as raw"
+  ],
+  "everyResultIdentity": [
+    "configVersion/hash",
+    "source commit",
+    "build manifest/hash",
+    "layout/input hash",
+    "roundGeneration",
+    "attemptId",
+    "itemGeneration",
+    "weigh/submit/delivery ticks",
+    "observed door angle",
+    "final ledger/score"
+  ]
+}

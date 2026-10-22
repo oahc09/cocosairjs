@@ -133,6 +133,7 @@ try {
             JSON.stringify({ schemaVersion: 1, ...identity, artifacts }, null, 2) + '\n',
         );
         run(process.execPath, ['tools/physics/box3d/wasm-contract.mjs', out]);
+        run(process.execPath, ['tools/physics/box3d/wasm-ownership-contract.mjs', out]);
         result.artifacts = artifacts;
         result.browserStatus = 'NOT_RUN';
     }
@@ -151,11 +152,13 @@ try {
         'tools/physics/box3d/exports.json',
         'tools/physics/box3d/build.mjs',
         'tools/physics/box3d/wasm-contract.mjs',
+        'tools/physics/box3d/wasm-ownership-contract.mjs',
         'tools/physics/box3d/verify-sources.mjs',
         'tools/physics/box3d/verify-wasm.mjs',
         'tools/physics/box3d/native/air_box3d.c',
         'tools/physics/box3d/native/air_box3d.h',
         'tools/physics/box3d/native/contract.c',
+        'tools/physics/box3d/native/wasm_entry.c',
         'src/air/physics/box3d/binding/facade.mjs',
         'src/air/physics/box3d/binding/facade.d.mts',
     ];

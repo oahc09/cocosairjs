@@ -1,0 +1,326 @@
+[
+{
+  "directory": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/wasm-debug-20261022-c",
+  "command": "/workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/emsdk/upstream/emscripten/emcc -DAIR_B3_SCHEMA_SHA=\\\"615555d88a4cab5a82f1d37fa4c8e23f735ccdcba5b7e5c4de73a20068b42c5c\\\" @CMakeFiles/air_box3d_abi.dir/includes_C.rsp -g -std=gnu17 -fno-fast-math -ffp-contract=off -msimd128 -msse2 -o CMakeFiles/air_box3d_abi.dir/native/air_box3d.c.o -c /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/native/air_box3d.c",
+  "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/native/air_box3d.c",
+  "output": "CMakeFiles/air_box3d_abi.dir/native/air_box3d.c.o"
+},
+{
+  "directory": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/wasm-debug-20261022-c",
+  "command": "/workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/emsdk/upstream/emscripten/emcc  @CMakeFiles/air_box3d.dir/includes_C.rsp -g -fno-fast-math -ffp-contract=off -msimd128 -msse2 -o CMakeFiles/air_box3d.dir/native/wasm_entry.c.o -c /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/native/wasm_entry.c",
+  "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/native/wasm_entry.c",
+  "output": "CMakeFiles/air_box3d.dir/native/wasm_entry.c.o"
+},
+{
+  "directory": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/wasm-debug-20261022-c/core/src",
+  "command": "/workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/emsdk/upstream/emscripten/emcc -DBOX3D_DISABLE_AVX2 -DBOX3D_VALIDATE @CMakeFiles/box3d.dir/includes_C.rsp -g -std=gnu17 -fvisibility=hidden -fno-fast-math -ffp-contract=off -msimd128 -msse2 -o CMakeFiles/box3d.dir/aabb.c.o -c /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/aabb.c",
+  "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/aabb.c",
+  "output": "core/src/CMakeFiles/box3d.dir/aabb.c.o"
+},
+{
+  "directory": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/wasm-debug-20261022-c/core/src",
+  "command": "/workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/emsdk/upstream/emscripten/emcc -DBOX3D_DISABLE_AVX2 -DBOX3D_VALIDATE @CMakeFiles/box3d.dir/includes_C.rsp -g -std=gnu17 -fvisibility=hidden -fno-fast-math -ffp-contract=off -msimd128 -msse2 -o CMakeFiles/box3d.dir/arena_allocator.c.o -c /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/arena_allocator.c",
+  "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/arena_allocator.c",
+  "output": "core/src/CMakeFiles/box3d.dir/arena_allocator.c.o"
+},
+{
+  "directory": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/wasm-debug-20261022-c/core/src",
+  "command": "/workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/emsdk/upstream/emscripten/emcc -DBOX3D_DISABLE_AVX2 -DBOX3D_VALIDATE @CMakeFiles/box3d.dir/includes_C.rsp -g -std=gnu17 -fvisibility=hidden -fno-fast-math -ffp-contract=off -msimd128 -msse2 -o CMakeFiles/box3d.dir/bitset.c.o -c /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/bitset.c",
+  "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/bitset.c",
+  "output": "core/src/CMakeFiles/box3d.dir/bitset.c.o"
+},
+{
+  "directory": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/wasm-debug-20261022-c/core/src",
+  "command": "/workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/emsdk/upstream/emscripten/emcc -DBOX3D_DISABLE_AVX2 -DBOX3D_VALIDATE @CMakeFiles/box3d.dir/includes_C.rsp -g -std=gnu17 -fvisibility=hidden -fno-fast-math -ffp-contract=off -msimd128 -msse2 -o CMakeFiles/box3d.dir/block_allocator.c.o -c /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/block_allocator.c",
+  "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/block_allocator.c",
+  "output": "core/src/CMakeFiles/box3d.dir/block_allocator.c.o"
+},
+{
+  "directory": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/wasm-debug-20261022-c/core/src",
+  "command": "/workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/emsdk/upstream/emscripten/emcc -DBOX3D_DISABLE_AVX2 -DBOX3D_VALIDATE @CMakeFiles/box3d.dir/includes_C.rsp -g -std=gnu17 -fvisibility=hidden -fno-fast-math -ffp-contract=off -msimd128 -msse2 -o CMakeFiles/box3d.dir/body.c.o -c /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/body.c",
+  "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/body.c",
+  "output": "core/src/CMakeFiles/box3d.dir/body.c.o"
+},
+{
+  "directory": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/wasm-debug-20261022-c/core/src",
+  "command": "/workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/emsdk/upstream/emscripten/emcc -DBOX3D_DISABLE_AVX2 -DBOX3D_VALIDATE @CMakeFiles/box3d.dir/includes_C.rsp -g -std=gnu17 -fvisibility=hidden -fno-fast-math -ffp-contract=off -msimd128 -msse2 -o CMakeFiles/box3d.dir/broad_phase.c.o -c /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/broad_phase.c",
+  "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/broad_phase.c",
+  "output": "core/src/CMakeFiles/box3d.dir/broad_phase.c.o"
+},
+{
+  "directory": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/wasm-debug-20261022-c/core/src",
+  "command": "/workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/emsdk/upstream/emscripten/emcc -DBOX3D_DISABLE_AVX2 -DBOX3D_VALIDATE @CMakeFiles/box3d.dir/includes_C.rsp -g -std=gnu17 -fvisibility=hidden -fno-fast-math -ffp-contract=off -msimd128 -msse2 -o CMakeFiles/box3d.dir/capsule.c.o -c /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/capsule.c",
+  "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/capsule.c",
+  "output": "core/src/CMakeFiles/box3d.dir/capsule.c.o"
+},
+{
+  "directory": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/wasm-debug-20261022-c/core/src",
+  "command": "/workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/emsdk/upstream/emscripten/emcc -DBOX3D_DISABLE_AVX2 -DBOX3D_VALIDATE @CMakeFiles/box3d.dir/includes_C.rsp -g -std=gnu17 -fvisibility=hidden -fno-fast-math -ffp-contract=off -msimd128 -msse2 -o CMakeFiles/box3d.dir/compound.c.o -c /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/compound.c",
+  "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/compound.c",
+  "output": "core/src/CMakeFiles/box3d.dir/compound.c.o"
+},
+{
+  "directory": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/wasm-debug-20261022-c/core/src",
+  "command": "/workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/emsdk/upstream/emscripten/emcc -DBOX3D_DISABLE_AVX2 -DBOX3D_VALIDATE @CMakeFiles/box3d.dir/includes_C.rsp -g -std=gnu17 -fvisibility=hidden -fno-fast-math -ffp-contract=off -msimd128 -msse2 -o CMakeFiles/box3d.dir/constraint_graph.c.o -c /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/constraint_graph.c",
+  "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/constraint_graph.c",
+  "output": "core/src/CMakeFiles/box3d.dir/constraint_graph.c.o"
+},
+{
+  "directory": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/wasm-debug-20261022-c/core/src",
+  "command": "/workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/emsdk/upstream/emscripten/emcc -DBOX3D_DISABLE_AVX2 -DBOX3D_VALIDATE @CMakeFiles/box3d.dir/includes_C.rsp -g -std=gnu17 -fvisibility=hidden -fno-fast-math -ffp-contract=off -msimd128 -msse2 -o CMakeFiles/box3d.dir/contact_solver.c.o -c /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/contact_solver.c",
+  "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/contact_solver.c",
+  "output": "core/src/CMakeFiles/box3d.dir/contact_solver.c.o"
+},
+{
+  "directory": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/wasm-debug-20261022-c/core/src",
+  "command": "/workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/emsdk/upstream/emscripten/emcc -DBOX3D_DISABLE_AVX2 -DBOX3D_VALIDATE @CMakeFiles/box3d.dir/includes_C.rsp -g -std=gnu17 -fvisibility=hidden -fno-fast-math -ffp-contract=off -msimd128 -msse2 -o CMakeFiles/box3d.dir/contact.c.o -c /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/contact.c",
+  "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/contact.c",
+  "output": "core/src/CMakeFiles/box3d.dir/contact.c.o"
+},
+{
+  "directory": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/wasm-debug-20261022-c/core/src",
+  "command": "/workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/emsdk/upstream/emscripten/emcc -DBOX3D_DISABLE_AVX2 -DBOX3D_VALIDATE @CMakeFiles/box3d.dir/includes_C.rsp -g -std=gnu17 -fvisibility=hidden -fno-fast-math -ffp-contract=off -msimd128 -msse2 -o CMakeFiles/box3d.dir/convex_manifold.c.o -c /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/convex_manifold.c",
+  "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/convex_manifold.c",
+  "output": "core/src/CMakeFiles/box3d.dir/convex_manifold.c.o"
+},
+{
+  "directory": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/wasm-debug-20261022-c/core/src",
+  "command": "/workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/emsdk/upstream/emscripten/emcc -DBOX3D_DISABLE_AVX2 -DBOX3D_VALIDATE @CMakeFiles/box3d.dir/includes_C.rsp -g -std=gnu17 -fvisibility=hidden -fno-fast-math -ffp-contract=off -msimd128 -msse2 -o CMakeFiles/box3d.dir/core.c.o -c /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/core.c",
+  "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/core.c",
+  "output": "core/src/CMakeFiles/box3d.dir/core.c.o"
+},
+{
+  "directory": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/wasm-debug-20261022-c/core/src",
+  "command": "/workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/emsdk/upstream/emscripten/emcc -DBOX3D_DISABLE_AVX2 -DBOX3D_VALIDATE @CMakeFiles/box3d.dir/includes_C.rsp -g -std=gnu17 -fvisibility=hidden -fno-fast-math -ffp-contract=off -msimd128 -msse2 -o CMakeFiles/box3d.dir/distance_joint.c.o -c /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/distance_joint.c",
+  "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/distance_joint.c",
+  "output": "core/src/CMakeFiles/box3d.dir/distance_joint.c.o"
+},
+{
+  "directory": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/wasm-debug-20261022-c/core/src",
+  "command": "/workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/emsdk/upstream/emscripten/emcc -DBOX3D_DISABLE_AVX2 -DBOX3D_VALIDATE @CMakeFiles/box3d.dir/includes_C.rsp -g -std=gnu17 -fvisibility=hidden -fno-fast-math -ffp-contract=off -msimd128 -msse2 -o CMakeFiles/box3d.dir/distance.c.o -c /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/distance.c",
+  "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/distance.c",
+  "output": "core/src/CMakeFiles/box3d.dir/distance.c.o"
+},
+{
+  "directory": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/wasm-debug-20261022-c/core/src",
+  "command": "/workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/emsdk/upstream/emscripten/emcc -DBOX3D_DISABLE_AVX2 -DBOX3D_VALIDATE @CMakeFiles/box3d.dir/includes_C.rsp -g -std=gnu17 -fvisibility=hidden -fno-fast-math -ffp-contract=off -msimd128 -msse2 -o CMakeFiles/box3d.dir/dynamic_tree.c.o -c /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/dynamic_tree.c",
+  "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/dynamic_tree.c",
+  "output": "core/src/CMakeFiles/box3d.dir/dynamic_tree.c.o"
+},
+{
+  "directory": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/wasm-debug-20261022-c/core/src",
+  "command": "/workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/emsdk/upstream/emscripten/emcc -DBOX3D_DISABLE_AVX2 -DBOX3D_VALIDATE @CMakeFiles/box3d.dir/includes_C.rsp -g -std=gnu17 -fvisibility=hidden -fno-fast-math -ffp-contract=off -msimd128 -msse2 -o CMakeFiles/box3d.dir/height_field.c.o -c /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/height_field.c",
+  "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/height_field.c",
+  "output": "core/src/CMakeFiles/box3d.dir/height_field.c.o"
+},
+{
+  "directory": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/wasm-debug-20261022-c/core/src",
+  "command": "/workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/emsdk/upstream/emscripten/emcc -DBOX3D_DISABLE_AVX2 -DBOX3D_VALIDATE @CMakeFiles/box3d.dir/includes_C.rsp -g -std=gnu17 -fvisibility=hidden -fno-fast-math -ffp-contract=off -msimd128 -msse2 -o CMakeFiles/box3d.dir/hull.c.o -c /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/hull.c",
+  "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/hull.c",
+  "output": "core/src/CMakeFiles/box3d.dir/hull.c.o"
+},
+{
+  "directory": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/wasm-debug-20261022-c/core/src",
+  "command": "/workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/emsdk/upstream/emscripten/emcc -DBOX3D_DISABLE_AVX2 -DBOX3D_VALIDATE @CMakeFiles/box3d.dir/includes_C.rsp -g -std=gnu17 -fvisibility=hidden -fno-fast-math -ffp-contract=off -msimd128 -msse2 -o CMakeFiles/box3d.dir/id_pool.c.o -c /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/id_pool.c",
+  "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/id_pool.c",
+  "output": "core/src/CMakeFiles/box3d.dir/id_pool.c.o"
+},
+{
+  "directory": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/wasm-debug-20261022-c/core/src",
+  "command": "/workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/emsdk/upstream/emscripten/emcc -DBOX3D_DISABLE_AVX2 -DBOX3D_VALIDATE @CMakeFiles/box3d.dir/includes_C.rsp -g -std=gnu17 -fvisibility=hidden -fno-fast-math -ffp-contract=off -msimd128 -msse2 -o CMakeFiles/box3d.dir/island.c.o -c /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/island.c",
+  "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/island.c",
+  "output": "core/src/CMakeFiles/box3d.dir/island.c.o"
+},
+{
+  "directory": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/wasm-debug-20261022-c/core/src",
+  "command": "/workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/emsdk/upstream/emscripten/emcc -DBOX3D_DISABLE_AVX2 -DBOX3D_VALIDATE @CMakeFiles/box3d.dir/includes_C.rsp -g -std=gnu17 -fvisibility=hidden -fno-fast-math -ffp-contract=off -msimd128 -msse2 -o CMakeFiles/box3d.dir/joint.c.o -c /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/joint.c",
+  "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/joint.c",
+  "output": "core/src/CMakeFiles/box3d.dir/joint.c.o"
+},
+{
+  "directory": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/wasm-debug-20261022-c/core/src",
+  "command": "/workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/emsdk/upstream/emscripten/emcc -DBOX3D_DISABLE_AVX2 -DBOX3D_VALIDATE @CMakeFiles/box3d.dir/includes_C.rsp -g -std=gnu17 -fvisibility=hidden -fno-fast-math -ffp-contract=off -msimd128 -msse2 -o CMakeFiles/box3d.dir/manifold.c.o -c /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/manifold.c",
+  "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/manifold.c",
+  "output": "core/src/CMakeFiles/box3d.dir/manifold.c.o"
+},
+{
+  "directory": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/wasm-debug-20261022-c/core/src",
+  "command": "/workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/emsdk/upstream/emscripten/emcc -DBOX3D_DISABLE_AVX2 -DBOX3D_VALIDATE @CMakeFiles/box3d.dir/includes_C.rsp -g -std=gnu17 -fvisibility=hidden -fno-fast-math -ffp-contract=off -msimd128 -msse2 -o CMakeFiles/box3d.dir/math_functions.c.o -c /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/math_functions.c",
+  "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/math_functions.c",
+  "output": "core/src/CMakeFiles/box3d.dir/math_functions.c.o"
+},
+{
+  "directory": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/wasm-debug-20261022-c/core/src",
+  "command": "/workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/emsdk/upstream/emscripten/emcc -DBOX3D_DISABLE_AVX2 -DBOX3D_VALIDATE @CMakeFiles/box3d.dir/includes_C.rsp -g -std=gnu17 -fvisibility=hidden -fno-fast-math -ffp-contract=off -msimd128 -msse2 -o CMakeFiles/box3d.dir/mesh_contact.c.o -c /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/mesh_contact.c",
+  "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/mesh_contact.c",
+  "output": "core/src/CMakeFiles/box3d.dir/mesh_contact.c.o"
+},
+{
+  "directory": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/wasm-debug-20261022-c/core/src",
+  "command": "/workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/emsdk/upstream/emscripten/emcc -DBOX3D_DISABLE_AVX2 -DBOX3D_VALIDATE @CMakeFiles/box3d.dir/includes_C.rsp -g -std=gnu17 -fvisibility=hidden -fno-fast-math -ffp-contract=off -msimd128 -msse2 -o CMakeFiles/box3d.dir/mesh.c.o -c /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/mesh.c",
+  "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/mesh.c",
+  "output": "core/src/CMakeFiles/box3d.dir/mesh.c.o"
+},
+{
+  "directory": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/wasm-debug-20261022-c/core/src",
+  "command": "/workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/emsdk/upstream/emscripten/emcc -DBOX3D_DISABLE_AVX2 -DBOX3D_VALIDATE @CMakeFiles/box3d.dir/includes_C.rsp -g -std=gnu17 -fvisibility=hidden -fno-fast-math -ffp-contract=off -msimd128 -msse2 -o CMakeFiles/box3d.dir/motor_joint.c.o -c /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/motor_joint.c",
+  "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/motor_joint.c",
+  "output": "core/src/CMakeFiles/box3d.dir/motor_joint.c.o"
+},
+{
+  "directory": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/wasm-debug-20261022-c/core/src",
+  "command": "/workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/emsdk/upstream/emscripten/emcc -DBOX3D_DISABLE_AVX2 -DBOX3D_VALIDATE @CMakeFiles/box3d.dir/includes_C.rsp -g -std=gnu17 -fvisibility=hidden -fno-fast-math -ffp-contract=off -msimd128 -msse2 -o CMakeFiles/box3d.dir/mover.c.o -c /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/mover.c",
+  "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/mover.c",
+  "output": "core/src/CMakeFiles/box3d.dir/mover.c.o"
+},
+{
+  "directory": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/wasm-debug-20261022-c/core/src",
+  "command": "/workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/emsdk/upstream/emscripten/emcc -DBOX3D_DISABLE_AVX2 -DBOX3D_VALIDATE @CMakeFiles/box3d.dir/includes_C.rsp -g -std=gnu17 -fvisibility=hidden -fno-fast-math -ffp-contract=off -msimd128 -msse2 -o CMakeFiles/box3d.dir/name_cache.c.o -c /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/name_cache.c",
+  "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/name_cache.c",
+  "output": "core/src/CMakeFiles/box3d.dir/name_cache.c.o"
+},
+{
+  "directory": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/wasm-debug-20261022-c/core/src",
+  "command": "/workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/emsdk/upstream/emscripten/emcc -DBOX3D_DISABLE_AVX2 -DBOX3D_VALIDATE @CMakeFiles/box3d.dir/includes_C.rsp -g -std=gnu17 -fvisibility=hidden -fno-fast-math -ffp-contract=off -msimd128 -msse2 -o CMakeFiles/box3d.dir/parallel_for.c.o -c /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/parallel_for.c",
+  "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/parallel_for.c",
+  "output": "core/src/CMakeFiles/box3d.dir/parallel_for.c.o"
+},
+{
+  "directory": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/wasm-debug-20261022-c/core/src",
+  "command": "/workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/emsdk/upstream/emscripten/emcc -DBOX3D_DISABLE_AVX2 -DBOX3D_VALIDATE @CMakeFiles/box3d.dir/includes_C.rsp -g -std=gnu17 -fvisibility=hidden -fno-fast-math -ffp-contract=off -msimd128 -msse2 -o CMakeFiles/box3d.dir/parallel_joint.c.o -c /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/parallel_joint.c",
+  "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/parallel_joint.c",
+  "output": "core/src/CMakeFiles/box3d.dir/parallel_joint.c.o"
+},
+{
+  "directory": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/wasm-debug-20261022-c/core/src",
+  "command": "/workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/emsdk/upstream/emscripten/emcc -DBOX3D_DISABLE_AVX2 -DBOX3D_VALIDATE @CMakeFiles/box3d.dir/includes_C.rsp -g -std=gnu17 -fvisibility=hidden -fno-fast-math -ffp-contract=off -msimd128 -msse2 -o CMakeFiles/box3d.dir/physics_world.c.o -c /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/physics_world.c",
+  "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/physics_world.c",
+  "output": "core/src/CMakeFiles/box3d.dir/physics_world.c.o"
+},
+{
+  "directory": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/wasm-debug-20261022-c/core/src",
+  "command": "/workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/emsdk/upstream/emscripten/emcc -DBOX3D_DISABLE_AVX2 -DBOX3D_VALIDATE @CMakeFiles/box3d.dir/includes_C.rsp -g -std=gnu17 -fvisibility=hidden -fno-fast-math -ffp-contract=off -msimd128 -msse2 -o CMakeFiles/box3d.dir/prismatic_joint.c.o -c /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/prismatic_joint.c",
+  "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/prismatic_joint.c",
+  "output": "core/src/CMakeFiles/box3d.dir/prismatic_joint.c.o"
+},
+{
+  "directory": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/wasm-debug-20261022-c/core/src",
+  "command": "/workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/emsdk/upstream/emscripten/emcc -DBOX3D_DISABLE_AVX2 -DBOX3D_VALIDATE @CMakeFiles/box3d.dir/includes_C.rsp -g -std=gnu17 -fvisibility=hidden -fno-fast-math -ffp-contract=off -msimd128 -msse2 -o CMakeFiles/box3d.dir/recording.c.o -c /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/recording.c",
+  "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/recording.c",
+  "output": "core/src/CMakeFiles/box3d.dir/recording.c.o"
+},
+{
+  "directory": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/wasm-debug-20261022-c/core/src",
+  "command": "/workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/emsdk/upstream/emscripten/emcc -DBOX3D_DISABLE_AVX2 -DBOX3D_VALIDATE @CMakeFiles/box3d.dir/includes_C.rsp -g -std=gnu17 -fvisibility=hidden -fno-fast-math -ffp-contract=off -msimd128 -msse2 -o CMakeFiles/box3d.dir/replay.c.o -c /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/replay.c",
+  "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/replay.c",
+  "output": "core/src/CMakeFiles/box3d.dir/replay.c.o"
+},
+{
+  "directory": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/wasm-debug-20261022-c/core/src",
+  "command": "/workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/emsdk/upstream/emscripten/emcc -DBOX3D_DISABLE_AVX2 -DBOX3D_VALIDATE @CMakeFiles/box3d.dir/includes_C.rsp -g -std=gnu17 -fvisibility=hidden -fno-fast-math -ffp-contract=off -msimd128 -msse2 -o CMakeFiles/box3d.dir/revolute_joint.c.o -c /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/revolute_joint.c",
+  "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/revolute_joint.c",
+  "output": "core/src/CMakeFiles/box3d.dir/revolute_joint.c.o"
+},
+{
+  "directory": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/wasm-debug-20261022-c/core/src",
+  "command": "/workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/emsdk/upstream/emscripten/emcc -DBOX3D_DISABLE_AVX2 -DBOX3D_VALIDATE @CMakeFiles/box3d.dir/includes_C.rsp -g -std=gnu17 -fvisibility=hidden -fno-fast-math -ffp-contract=off -msimd128 -msse2 -o CMakeFiles/box3d.dir/scheduler.c.o -c /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/scheduler.c",
+  "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/scheduler.c",
+  "output": "core/src/CMakeFiles/box3d.dir/scheduler.c.o"
+},
+{
+  "directory": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/wasm-debug-20261022-c/core/src",
+  "command": "/workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/emsdk/upstream/emscripten/emcc -DBOX3D_DISABLE_AVX2 -DBOX3D_VALIDATE @CMakeFiles/box3d.dir/includes_C.rsp -g -std=gnu17 -fvisibility=hidden -fno-fast-math -ffp-contract=off -msimd128 -msse2 -o CMakeFiles/box3d.dir/sensor.c.o -c /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/sensor.c",
+  "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/sensor.c",
+  "output": "core/src/CMakeFiles/box3d.dir/sensor.c.o"
+},
+{
+  "directory": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/wasm-debug-20261022-c/core/src",
+  "command": "/workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/emsdk/upstream/emscripten/emcc -DBOX3D_DISABLE_AVX2 -DBOX3D_VALIDATE @CMakeFiles/box3d.dir/includes_C.rsp -g -std=gnu17 -fvisibility=hidden -fno-fast-math -ffp-contract=off -msimd128 -msse2 -o CMakeFiles/box3d.dir/shape.c.o -c /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/shape.c",
+  "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/shape.c",
+  "output": "core/src/CMakeFiles/box3d.dir/shape.c.o"
+},
+{
+  "directory": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/wasm-debug-20261022-c/core/src",
+  "command": "/workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/emsdk/upstream/emscripten/emcc -DBOX3D_DISABLE_AVX2 -DBOX3D_VALIDATE @CMakeFiles/box3d.dir/includes_C.rsp -g -std=gnu17 -fvisibility=hidden -fno-fast-math -ffp-contract=off -msimd128 -msse2 -o CMakeFiles/box3d.dir/simd.c.o -c /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/simd.c",
+  "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/simd.c",
+  "output": "core/src/CMakeFiles/box3d.dir/simd.c.o"
+},
+{
+  "directory": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/wasm-debug-20261022-c/core/src",
+  "command": "/workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/emsdk/upstream/emscripten/emcc -DBOX3D_DISABLE_AVX2 -DBOX3D_VALIDATE @CMakeFiles/box3d.dir/includes_C.rsp -g -std=gnu17 -fvisibility=hidden -fno-fast-math -ffp-contract=off -msimd128 -msse2 -o CMakeFiles/box3d.dir/solver_set.c.o -c /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/solver_set.c",
+  "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/solver_set.c",
+  "output": "core/src/CMakeFiles/box3d.dir/solver_set.c.o"
+},
+{
+  "directory": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/wasm-debug-20261022-c/core/src",
+  "command": "/workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/emsdk/upstream/emscripten/emcc -DBOX3D_DISABLE_AVX2 -DBOX3D_VALIDATE @CMakeFiles/box3d.dir/includes_C.rsp -g -std=gnu17 -fvisibility=hidden -fno-fast-math -ffp-contract=off -msimd128 -msse2 -o CMakeFiles/box3d.dir/solver.c.o -c /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/solver.c",
+  "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/solver.c",
+  "output": "core/src/CMakeFiles/box3d.dir/solver.c.o"
+},
+{
+  "directory": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/wasm-debug-20261022-c/core/src",
+  "command": "/workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/emsdk/upstream/emscripten/emcc -DBOX3D_DISABLE_AVX2 -DBOX3D_VALIDATE @CMakeFiles/box3d.dir/includes_C.rsp -g -std=gnu17 -fvisibility=hidden -fno-fast-math -ffp-contract=off -msimd128 -msse2 -o CMakeFiles/box3d.dir/sphere.c.o -c /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/sphere.c",
+  "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/sphere.c",
+  "output": "core/src/CMakeFiles/box3d.dir/sphere.c.o"
+},
+{
+  "directory": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/wasm-debug-20261022-c/core/src",
+  "command": "/workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/emsdk/upstream/emscripten/emcc -DBOX3D_DISABLE_AVX2 -DBOX3D_VALIDATE @CMakeFiles/box3d.dir/includes_C.rsp -g -std=gnu17 -fvisibility=hidden -fno-fast-math -ffp-contract=off -msimd128 -msse2 -o CMakeFiles/box3d.dir/spherical_joint.c.o -c /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/spherical_joint.c",
+  "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/spherical_joint.c",
+  "output": "core/src/CMakeFiles/box3d.dir/spherical_joint.c.o"
+},
+{
+  "directory": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/wasm-debug-20261022-c/core/src",
+  "command": "/workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/emsdk/upstream/emscripten/emcc -DBOX3D_DISABLE_AVX2 -DBOX3D_VALIDATE @CMakeFiles/box3d.dir/includes_C.rsp -g -std=gnu17 -fvisibility=hidden -fno-fast-math -ffp-contract=off -msimd128 -msse2 -o CMakeFiles/box3d.dir/table.c.o -c /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/table.c",
+  "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/table.c",
+  "output": "core/src/CMakeFiles/box3d.dir/table.c.o"
+},
+{
+  "directory": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/wasm-debug-20261022-c/core/src",
+  "command": "/workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/emsdk/upstream/emscripten/emcc -DBOX3D_DISABLE_AVX2 -DBOX3D_VALIDATE @CMakeFiles/box3d.dir/includes_C.rsp -g -std=gnu17 -fvisibility=hidden -fno-fast-math -ffp-contract=off -msimd128 -msse2 -o CMakeFiles/box3d.dir/timer.c.o -c /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/timer.c",
+  "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/timer.c",
+  "output": "core/src/CMakeFiles/box3d.dir/timer.c.o"
+},
+{
+  "directory": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/wasm-debug-20261022-c/core/src",
+  "command": "/workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/emsdk/upstream/emscripten/emcc -DBOX3D_DISABLE_AVX2 -DBOX3D_VALIDATE @CMakeFiles/box3d.dir/includes_C.rsp -g -std=gnu17 -fvisibility=hidden -fno-fast-math -ffp-contract=off -msimd128 -msse2 -o CMakeFiles/box3d.dir/triangle_manifold.c.o -c /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/triangle_manifold.c",
+  "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/triangle_manifold.c",
+  "output": "core/src/CMakeFiles/box3d.dir/triangle_manifold.c.o"
+},
+{
+  "directory": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/wasm-debug-20261022-c/core/src",
+  "command": "/workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/emsdk/upstream/emscripten/emcc -DBOX3D_DISABLE_AVX2 -DBOX3D_VALIDATE @CMakeFiles/box3d.dir/includes_C.rsp -g -std=gnu17 -fvisibility=hidden -fno-fast-math -ffp-contract=off -msimd128 -msse2 -o CMakeFiles/box3d.dir/types.c.o -c /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/types.c",
+  "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/types.c",
+  "output": "core/src/CMakeFiles/box3d.dir/types.c.o"
+},
+{
+  "directory": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/wasm-debug-20261022-c/core/src",
+  "command": "/workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/emsdk/upstream/emscripten/emcc -DBOX3D_DISABLE_AVX2 -DBOX3D_VALIDATE @CMakeFiles/box3d.dir/includes_C.rsp -g -std=gnu17 -fvisibility=hidden -fno-fast-math -ffp-contract=off -msimd128 -msse2 -o CMakeFiles/box3d.dir/weld_joint.c.o -c /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/weld_joint.c",
+  "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/weld_joint.c",
+  "output": "core/src/CMakeFiles/box3d.dir/weld_joint.c.o"
+},
+{
+  "directory": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/wasm-debug-20261022-c/core/src",
+  "command": "/workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/emsdk/upstream/emscripten/emcc -DBOX3D_DISABLE_AVX2 -DBOX3D_VALIDATE @CMakeFiles/box3d.dir/includes_C.rsp -g -std=gnu17 -fvisibility=hidden -fno-fast-math -ffp-contract=off -msimd128 -msse2 -o CMakeFiles/box3d.dir/wheel_joint.c.o -c /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/wheel_joint.c",
+  "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/wheel_joint.c",
+  "output": "core/src/CMakeFiles/box3d.dir/wheel_joint.c.o"
+},
+{
+  "directory": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/wasm-debug-20261022-c/core/src",
+  "command": "/workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/emsdk/upstream/emscripten/emcc -DBOX3D_DISABLE_AVX2 -DBOX3D_VALIDATE @CMakeFiles/box3d.dir/includes_C.rsp -g -std=gnu17 -fvisibility=hidden -fno-fast-math -ffp-contract=off -msimd128 -msse2 -o CMakeFiles/box3d.dir/wide4.c.o -c /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/wide4.c",
+  "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/wide4.c",
+  "output": "core/src/CMakeFiles/box3d.dir/wide4.c.o"
+},
+{
+  "directory": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/wasm-debug-20261022-c/core/src",
+  "command": "/workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/emsdk/upstream/emscripten/emcc -DBOX3D_DISABLE_AVX2 -DBOX3D_VALIDATE @CMakeFiles/box3d.dir/includes_C.rsp -g -std=gnu17 -fvisibility=hidden -fno-fast-math -ffp-contract=off -msimd128 -msse2 -o CMakeFiles/box3d.dir/wide8.c.o -c /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/wide8.c",
+  "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/wide8.c",
+  "output": "core/src/CMakeFiles/box3d.dir/wide8.c.o"
+},
+{
+  "directory": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/wasm-debug-20261022-c/core/src",
+  "command": "/workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/emsdk/upstream/emscripten/emcc -DBOX3D_DISABLE_AVX2 -DBOX3D_VALIDATE @CMakeFiles/box3d.dir/includes_C.rsp -g -std=gnu17 -fvisibility=hidden -fno-fast-math -ffp-contract=off -msimd128 -msse2 -o CMakeFiles/box3d.dir/world_snapshot.c.o -c /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/world_snapshot.c",
+  "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/world_snapshot.c",
+  "output": "core/src/CMakeFiles/box3d.dir/world_snapshot.c.o"
+}
+]

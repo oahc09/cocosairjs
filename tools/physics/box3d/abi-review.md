@@ -74,9 +74,31 @@ name. This parser does not claim to audit callback typedefs or struct layouts.
     Therefore a stack `b3BoxHull` is safe for the narrow box constructor. This proof
     does not grant the same ownership semantics to every mesh/compound API.
 
-`native/layout_probe.c` produces host sizes, offsets, hash widths and selected enum
-values for both header sets. Its records explicitly identify pointer width. Host
-64-bit offsets cannot validate a WASM32 artifact; that work remains outstanding.
+`native/layout_probe.c` produces sizes, offsets, hash widths and selected enum
+values for both header sets. Host 64-bit records are retained independently.
+`layout-wasm.mjs` now compiles and executes this header-only probe on actual Node
+WASM for both pinned header sets, each reporting pointerBytes=4. No old-core
+physics implementation is linked. In `wasm32-layout-20261022-c`, old to target:
+
+- WorldDef: 104 to 116 bytes; BodyDef: 96 to 100 bytes.
+- ShapeDef remains 104 bytes, but internalValue moves from offset 96 to 100.
+  Equal total size is not evidence of layout compatibility.
+- Counters: 200 to 208 bytes; byteCount offset 44 to 0.
+- HullData: 136 to 152; BoxHull: 440 to 696; MeshData: 88 to 96.
+- MeshDef: 28 to 32; CompoundData: 120 to 96; ChildShape: 76 to 68.
+- PlaneResult: 28 to 40. ManifoldPoint stays 56 bytes, with baseSeparation offset
+  28 to 40, normalImpulse 32 to 28 and normalVelocity 40 to 36.
+- Hull/mesh/height-field hash widths: 4 to 8 bytes. World/body/shape/contact IDs
+  remain 4/8/8/12 bytes. These measurements do not authorize cooked-cache reuse.
+
+The real ownership fixture also measures a critical ID boundary. Public body and
+shape packing contains object index, world slot and object generation, but not the
+world generation (`include/box3d/id.h`). In both fresh Debug and Release runs,
+127 out of 127 subsequent world lifetimes revalidate the previous numeric body ID.
+The facade's object-token/world ownership still rejects that old handle, preserving
+the new body's snapshot and counts. Same-live-world 128-cycle reuse separately
+increments object generation and rejects old IDs. Do not treat raw IDs as durable
+collider identities, or interpret these finite samples as proof against all ABA.
 
 ## Build architecture
 
@@ -101,12 +123,13 @@ The source does not pretend to offer all old embind APIs or an engine adapter.
 - Native GCC 14.2 diagnostics can establish behavior of the exact core + C shim,
   not Emscripten, WASM32 layouts, JS facade execution, strict CSP, browser startup,
   asset integrity/loading transactions, contact sampling, or full lifecycle coverage.
-- Emscripten 6.0.2 remains a candidate. `emcc` / `em++` / `emcmake`, CMake, clang and
-  ninja were not available during the initial inspection. The WASM preflight emits
-  BLOCKED with `spawnSync emcc ENOENT`; no older artifact or fake physics replaces it.
-- A real toolchain must build Debug and Release, run real Node/WASM contract,
-  then non-isolated Chrome and strict-CSP binding fixtures. Full T04–T07/G1 cannot
-  pass merely because these source files or native test results exist.
+- The initial Emscripten preflight BLOCKED receipts remain unchanged. Official
+  SDK 6.0.2 is now locally version/provenance verified, and both fresh c Debug and
+  Release builds pass real Node physics, ownership and artifact audits under the
+  updated lock. Source and layout success is not full toolchain qualification.
+- Non-isolated browser and strict-CSP binding fixtures remain unrun in this
+  increment, with browser infrastructure blocked. Full T04–T07/G1 cannot pass
+  merely because these source files or finite Node test results exist.
 - Contacts/events, complex cooking, joints, app prepare/cleanup, browser loader,
   sensor/CCD contracts, MT/replay and complete adapter integration are not delivered
   by this foundation. The historical C16 native fix is not recovered or replicated.
@@ -119,4 +142,4 @@ load during the closest-ray test. A header-only minimal fixture reproduces it.
 See `patches/README.md` and retained raw diagnostics. An unapplied candidate passes
 only its focused UBSan test; full sanitizer acceptance stays FAIL. ASan/LSan has
 an additional ptrace limitation on this host. Neither finding changes the pinned
-core nor excuses the missing WASM/browser gates.
+core nor excuses the remaining sanitizer/browser/complete-G1 gates.

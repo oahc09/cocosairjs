@@ -271,7 +271,7 @@
     {
       "id": "T32",
       "phase": "M0",
-      "status": "TODO",
+      "status": "IN_PROGRESS",
       "description": "冻结 EX09 业务契约、SKU/订单配置、装置尺寸、状态机、输入fixture规格、BIZ inventory及业务性能预算初稿",
       "dependencies": "T00、T01、T02",
       "completionContract": "第12章参数落成版本化配置；5组初始布局完成静态可达检查，异常fixture和输入脚本规格可追溯；实际可玩性由T34验证，不在M0提前标PASS"
@@ -901,12 +901,12 @@
     {
       "id": "SOURCE-CLOSURE",
       "status": "BLOCKED",
-      "reason": "6796 upstream paths not yet available; classify and retrieve required build/test/license closure by original blob hash."
+      "reason": "6783 original main paths still absent locally, mostly historical docs/assets; 13 additional build/license/test/workflow blobs recovered exactly. Full runtime build/test/package closure not yet proven."
     },
     {
       "id": "NATIVE-CLOSURE",
       "status": "BLOCKED",
-      "reason": "Fixed source closure and official emsdk6.0.2 are available. Narrow native diagnostics pass; real ST WASM compiles but Node initialization failed. Full binding migration and original C16 fixture/patch remain incomplete."
+      "reason": "Fixed source closure, official toolchain and real Debug/Release ST WASM foundation/ownership/WASM32 layouts now pass. Full binding, event snapshots and adapter remain incomplete; original native sanitizer failure remains recorded; browser infrastructure blocked."
     },
     {
       "id": "C16-DURATION-CONTRACT",
@@ -954,20 +954,20 @@
     "deploy": false,
     "npmPublish": false
   },
-  "nextStep": "Persist first successful real Node ST WASM and original failing attempt; extend new Debug/WASM32/ownership negative-case diagnostics, complete M0 fixture inventory and business contracts; browser remains infra-blocked.",
+  "nextStep": "Persist Debug/Release, ownership and actual WASM32 evidence; independently qualify alignment patch without modifying pinned core; finish M0 required inventory and abnormal business-input specifications.",
   "remoteHistoryPolicy": "True upstream main parent and incremental tree; local snapshot import is backup-only and is never pushed as upstream history.",
   "remotePublication": {
     "branchCreated": true,
-    "branchHead": "338ecaaf5a5ebd0a008d5a7a9c15af1ef33b7293",
-    "status": "VERIFIED_NATIVE_FOUNDATION_CHECKPOINT",
-    "commitsPublished": 2,
-    "verifiedRemoteParent": "8df40ffe4ee1b3106f065a4624583ce52dc261d2",
+    "branchHead": "b5f8cd35afb22634d13bcc68fed912912e9d07cf",
+    "status": "VERIFIED_FIRST_REAL_NODE_WASM_CHECKPOINT",
+    "commitsPublished": 3,
+    "verifiedRemoteParent": "338ecaaf5a5ebd0a008d5a7a9c15af1ef33b7293",
     "verifiedAddedFiles": 17,
     "allPriorMainBlobsPreserved": true,
-    "receipt": "docs/physics/box3d/rebuild/remote-foundation-checkpoint-receipt.json",
-    "verifiedChangedFiles": 210
+    "receipt": "docs/physics/box3d/rebuild/remote-wasm-checkpoint-receipt.json",
+    "verifiedChangedFiles": 59
   },
-  "updatedAtUtc": "2026-10-22T04:06:04.612036+00:00",
+  "updatedAtUtc": "2026-10-22T04:21:18.570947+00:00",
   "currentEvidence": {
     "m0ContractTests": "PASS_6_SOURCE_DESIGN_CHECKS_ONLY",
     "nativeFoundationIndex": "tools/physics/box3d/evidence/index.json",
@@ -981,24 +981,38 @@
     "fullBindingMigration": "NOT_DONE",
     "historicalResultsReused": false,
     "wasmCompile": "PASS_54_COMMANDS_ST_SIMD_AND_ONE_NONSHARED_MEMORY",
-    "wasmDebug": "NOT_RUN",
-    "wasm32Layout": "NOT_RUN",
+    "wasmDebug": "PASS_NEW_REAL_WASM_FOUNDATION_AND_OWNERSHIP",
+    "wasm32Layout": "PASS_OLD_AND_NEW_HEADERS_ACTUAL_POINTER_BYTES_4",
     "strictCsp": "NOT_RUN",
     "m0BuildDistributionContractTests": "PASS_4_DESIGN_CONSISTENCY_ONLY",
-    "successfulWasmReceipt": "tools/physics/box3d/evidence/wasm-st-20261022-b/build-receipt.json"
+    "successfulWasmReceipt": "tools/physics/box3d/evidence/wasm-st-20261022-b/build-receipt.json",
+    "giftWorkshopStaticDesign": "PASS_7_STATIC_CHECKS_NOT_PLAYABLE_BIZ_EXECUTION",
+    "wasmRelease": "PASS_SAME_INPUT_REAL_WASM_FOUNDATION_AND_OWNERSHIP",
+    "debugReleasePhysicalComparison": "PASS_EXACT_PHYSICS_AND_OWNERSHIP_WITH_265_VS_264_MEMORY_PAGES_EXPLICIT",
+    "invalidOperationCases": 122,
+    "liveWorldSlotReuseCycles": 128,
+    "worldLifecycleCycles": 128,
+    "rawBodyIdReuseAcrossWorldLifetimes": 127,
+    "rawIdPermanenceClaim": false
   },
   "contractDesign": {
     "publicSpecMembers": 166,
     "requiredParentCategories": 91,
     "draftRequiredSubcases": 84,
     "expandedInventoryFrozen": false,
-    "path": "docs/physics/box3d/contracts/"
+    "path": "docs/physics/box3d/contracts/",
+    "giftWorkshop": "docs/physics/box3d/contracts/gift-workshop/"
   },
   "persistentCheckpoint": {
-    "libraryFileId": "libfile_202de305ab688191a2ee36d85f24fca2",
-    "sha256": "7d8d6fc1646fbe4b51930c3fd7032f76226b98b488492a953cc9be2d089a2c0e",
-    "localHead": "6ef792c524b546041469f2e3903eb1777fda5923",
-    "libraryDownloadAndIndependentRestore": "PASS_3660_FILES_44_ARCHIVE_PAYLOADS",
-    "scope": "Native foundation source checkpoint and a-round failed WASM; b-round successful fix is a subsequent checkpoint."
+    "libraryFileId": "libfile_73be4b44030c81919a0308b427307756",
+    "sha256": "3d0a2d13b5cfdc9e2d1769fe27e838889565f6da6d41a13bef2ff181e79d3341",
+    "localHead": "e106586b4e5433e7a4daffbb40dd9ae8e678784f",
+    "libraryDownloadAndIndependentRestore": "PASS_3710_FILES_5_ARCHIVE_PAYLOADS",
+    "scope": "First passing real Node WASM and original a failure; new Debug/Release/layout evidence is next checkpoint."
+  },
+  "additionalOriginalMainSources": {
+    "count": 13,
+    "remainingOriginalMissing": 6783,
+    "manifest": "docs/physics/box3d/rebuild/supplemental-main-source-manifest.json"
   }
 }

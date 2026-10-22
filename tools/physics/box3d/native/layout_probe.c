@@ -1,5 +1,5 @@
 /* Copyright (c) 2026-2027 oahc09@gmail.com. SPDX-License-Identifier: MIT */
-/* Header-only host layout evidence. Must be repeated on WASM32, not reused. */
+/* Header-only layout evidence. Run separately on each target; never reuse host layout for WASM32. */
 #include <box3d/types.h>
 #include <box3d/constants.h>
 #include <stddef.h>

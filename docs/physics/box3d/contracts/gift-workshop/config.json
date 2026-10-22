@@ -1,0 +1,235 @@
+{
+  "schemaVersion": 1,
+  "themeId": "air-gift-workshop",
+  "configVersion": "rebuild-design-20261022-1",
+  "status": "M0_DESIGN_NOT_PHYSICS_VALIDATED",
+  "sourcePlan": "ai/plans/box3d-v1.2-reference.md sections12/13",
+  "notRecoveredProduction125": true,
+  "units": {
+    "length": "m",
+    "mass": "kg",
+    "rotation": "degrees",
+    "angularSpeed": "rad/s except public Hinge motor in deg/s"
+  },
+  "skus": {
+    "A": {
+      "name": "星盒",
+      "massKg": 0.35,
+      "inventory": 4,
+      "shapes": [
+        {
+          "type": "box",
+          "center": [0, 0, 0],
+          "size": [0.32, 0.28, 0.28]
+        },
+        {
+          "type": "box",
+          "center": [0, 0.16, 0],
+          "size": [0.06, 0.04, 0.06]
+        }
+      ],
+      "attachmentPoint": [0, 0.18, 0],
+      "localBounds": {
+        "min": [-0.16, -0.14, -0.14],
+        "max": [0.16, 0.18, 0.14]
+      },
+      "massMeaning": "total rigid-body mass including attachment geometry; distribution calculated from actual shape volumes, not one mass per child"
+    },
+    "B": {
+      "name": "愿望瓶",
+      "massKg": 0.25,
+      "inventory": 4,
+      "shapes": [
+        {
+          "type": "capsule",
+          "center": [0, 0, 0],
+          "radius": 0.09,
+          "cylinderHeight": 0.18,
+          "axis": "Y"
+        },
+        {
+          "type": "box",
+          "center": [0, 0.2, 0],
+          "size": [0.06, 0.04, 0.06]
+        }
+      ],
+      "attachmentPoint": [0, 0.22, 0],
+      "localBounds": {
+        "min": [-0.09, -0.18, -0.09],
+        "max": [0.09, 0.22, 0.09]
+      },
+      "massMeaning": "total rigid-body mass including attachment geometry; distribution calculated from actual shape volumes, not one mass per child"
+    },
+    "C": {
+      "name": "小机器人",
+      "massKg": 0.6,
+      "inventory": 4,
+      "shapes": [
+        {
+          "type": "box",
+          "center": [-0.06, 0, 0],
+          "size": [0.28, 0.22, 0.3]
+        },
+        {
+          "type": "box",
+          "center": [0.1, 0.16, 0],
+          "size": [0.2, 0.1, 0.22]
+        },
+        {
+          "type": "box",
+          "center": [0.1, 0.23, 0],
+          "size": [0.06, 0.04, 0.06]
+        }
+      ],
+      "attachmentPoint": [0.1, 0.25, 0],
+      "localBounds": {
+        "min": [-0.2, -0.11, -0.15],
+        "max": [0.2, 0.25, 0.15]
+      },
+      "massMeaning": "total rigid-body mass including attachment geometry; distribution calculated from actual shape volumes, not one mass per child"
+    }
+  },
+  "orders": [
+    {
+      "id": "O1",
+      "label": "入门礼盒",
+      "skus": ["A", "B"],
+      "massKg": 0.6
+    },
+    {
+      "id": "O2",
+      "label": "收藏礼盒",
+      "skus": ["A", "C"],
+      "massKg": 0.95
+    },
+    {
+      "id": "O3",
+      "label": "惊喜礼盒",
+      "skus": ["B", "C"],
+      "massKg": 0.85
+    }
+  ],
+  "machine": {
+    "tableBoundsXZ": [-3, 3, -2, 2],
+    "tableTopY": 1.5,
+    "packing": {
+      "centerXZ": [1.65, 0],
+      "innerSize": [1, 0.6, 0.85],
+      "bottomY": 1.5,
+      "wallThickness": 0.04,
+      "doorThickness": 0.04,
+      "doorPivot": [1.65, 1.5, -0.425],
+      "hingeAxis": [1, 0, 0],
+      "openDegrees": 75,
+      "qualifiedOpenDegrees": 65,
+      "closedToleranceDegrees": 2,
+      "motorDegreesPerSecond": 90,
+      "tableOpeningRequired": true
+    },
+    "scale": {
+      "center": [0, 1.52, -0.75],
+      "supportSizeXZ": [0.65, 0.65]
+    },
+    "receiver": {
+      "planeY": 0.5,
+      "floorTopY": -0.35,
+      "chuteInnerSizeXZ": [1, 0.85],
+      "approach": "inside packing chamber downward only",
+      "candidateEventsNotSufficient": true
+    },
+    "magnet": {
+      "positionMin": [-2.8, 1.65, -1.7],
+      "positionMax": [2.4, 2.75, 1.7],
+      "safeCruiseY": 2.6,
+      "horizontalSpeedMax": 1.2,
+      "verticalSpeedMax": 0.6,
+      "accelerationMax": 2,
+      "attachmentGapMax": 0.03,
+      "rotationInput": false,
+      "ordinaryPath": "public kinematic target plus all sweep of each held subshape and initial overlap check",
+      "commodityTransformWritesAllowed": false
+    },
+    "limits": {
+      "initialInventory": 12,
+      "configuredInventoryMax": 18,
+      "dynamicBodyMax": 20,
+      "nativeShapeMax": 64,
+      "heldFixedMax": 1,
+      "doorHingeMax": 1,
+      "itemMassRange": [0.2, 0.8],
+      "itemAxisExtentMax": 0.45,
+      "itemPrimitiveMax": 3
+    }
+  },
+  "judgement": {
+    "fixedHz": 60,
+    "solverSubSteps": 4,
+    "roundTicks": 10800,
+    "normalPathReserveTicks": 1200,
+    "scaleStableTicks": 30,
+    "packingStableTicks": 45,
+    "linearSpeedMax": 0.05,
+    "angularSpeedMax": 0.1,
+    "scaleMassToleranceKg": 0.005,
+    "orderMassToleranceKg": 0.01,
+    "fullGeometryContainmentToleranceM": 0.005,
+    "shippingTimeoutTicks": 300,
+    "recoveryPenaltyTicks": 300,
+    "generationOnEveryRecovery": true,
+    "deadlineOrder": [
+      "process this tick real shipment geometry and door evidence",
+      "commit final order if eligible",
+      "then timeout if still incomplete"
+    ],
+    "receiptFields": ["roundGeneration", "itemId", "itemGeneration", "skuId", "measuredMass", "configVersion"],
+    "submissionFields": [
+      "roundGeneration",
+      "orderId",
+      "attemptId",
+      "itemRefs",
+      "masses",
+      "configVersion",
+      "submitTick"
+    ],
+    "deliveryDedupeKey": ["attemptId", "itemId", "itemGeneration"],
+    "atomicDeliveryCount": 2,
+    "score": "max(0,100*completedOrders+(won?floor(remainingTicks/60):0)-20*recoveries-5*invalidSubmits)"
+  },
+  "input": {
+    "keyboard": {
+      "XZ": ["W", "A", "S", "D"],
+      "vertical": ["Q", "E"],
+      "attachRelease": "Space"
+    },
+    "mobile": ["direction joystick", "rise", "lower", "attach/release"],
+    "sharedCommandQueue": true,
+    "consumeAt": "fixed tick before target submission",
+    "clearIntentOn": ["blur", "pointer release", "pause", "background"],
+    "minimumTouchCssPx": 48,
+    "viewports": [
+      [360, 640],
+      [844, 390]
+    ],
+    "runner": "same public input queue as human UI; may observe public state to steer, never set item pose/velocity or internal completion",
+    "audio": "only after user interaction, mutable mute setting",
+    "normalRunSetTransforms": false
+  },
+  "performanceDraft": {
+    "state": "M0_BUDGET_DRAFT_FINAL_FREEZE_M7",
+    "desktopPhysicsP95Ms": 3,
+    "mobilePhysicsP95Ms": 4,
+    "frameWorkP95Ms": 14,
+    "foregroundAverageFpsMin": 55,
+    "desktopIndependentRuns": 5,
+    "activeTicksPerRunMin": 1800,
+    "mobileSustainedMinutes": 30,
+    "lastHotWindowMinutes": 10,
+    "initialCompressedPageBytesMax": 5242880,
+    "initialInteractiveP95Ms": 4000,
+    "coldRuns": 30,
+    "physicalIncrementBytesMax": 2097152,
+    "activeStates": ["PACKING moving or settling", "SHIPPING", "BLOCKED retry activity", "CLOSING"],
+    "keepWholeRoundRaw": true,
+    "doNotDropJamsOrRetries": true
+  }
+}

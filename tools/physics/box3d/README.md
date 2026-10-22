@@ -7,9 +7,9 @@ The original fixed core is unmodified. Read `abi-review.md` before extending it.
 ## Inputs and verification
 
 - `versions.lock.json`: exact core/base/vendor revisions, candidate SDK, build
-  contract and ABI schema hash. Its status fields retain the initial pre-toolchain
-  snapshot; current results are in `evidence/index.json`. The 6.0.2 candidate now
-  passes the narrow Node contract, not full browser or G1 acceptance.
+  contract and ABI schema hash. Toolchain observations were refreshed before the
+  c Debug/Release builds. Official SDK 6.0.2 provenance and compiler identity are
+  recorded; full browser/CSP/G1 qualification remains incomplete.
 - `abi-schema.json`: explicit copied float32/uint32 wire representation.
 - `native/air_box3d.c`: target-header C17 shim for ST worlds, bodies, box/sphere,
   snapshots, center impulse, velocity, closest ray and live counters.
@@ -17,11 +17,17 @@ The original fixed core is unmodified. Read `abi-review.md` before extending it.
   tokens, disposed/reentrancy guards and post-call heap-view refresh.
 - `native/contract.c`: real fixed-core native diagnostic. It does not test JS/WASM.
 - `wasm-contract.mjs`: real newly built WASM Node contract, including actual heap
-  growth and copied snapshots. The recorded `wasm-st-20261022-b` run passes.
+  growth and copied snapshots. Both fresh c Debug/Release runs pass.
+- `wasm-ownership-contract.mjs`: 122 rejected operations with exact before/after
+  snapshots/counters, cross-owner/module/forged tokens, 128 same-world slot-reuse
+  cycles and 128 world-lifetime cycles. Partial and failed runs retain raw records.
 - `audit-artifacts.mjs`: checks a successful build against current input hashes,
   all 54 expected compile units, link flags, actual WASM imports/memory and artifact
   hashes. Writes one immutable `artifact-audit.raw.json` in the chosen build output.
-- `native/layout_probe.c`: host-only old/target header layout comparison.
+- `native/layout_probe.c` and `layout-wasm.mjs`: separate measured host/WASM32
+  old/target header layouts, not an old-core physics build.
+- `compare-wasm-builds.mjs`: current-input Debug/Release physics and ownership
+  comparison, with build-dependent memory footprints reported separately.
 
 Read-only checks, from repository root:
 
@@ -57,14 +63,19 @@ When an explicitly reviewed SDK is available on PATH:
 ```sh
 node tools/physics/box3d/build.mjs --debug --out tools/physics/box3d/output/wasm-debug
 node tools/physics/box3d/build.mjs --out tools/physics/box3d/output/wasm-release
+node tools/physics/box3d/audit-artifacts.mjs tools/physics/box3d/output/wasm-debug
 node tools/physics/box3d/audit-artifacts.mjs tools/physics/box3d/output/wasm-release
+node tools/physics/box3d/compare-wasm-builds.mjs tools/physics/box3d/output/wasm-debug tools/physics/box3d/output/wasm-release tools/physics/box3d/output/wasm-comparison
+node tools/physics/box3d/layout-wasm.mjs tools/physics/box3d/output/wasm32-layout
 ```
 
 These commands use `emcmake cmake` with the host project, compile sequentially with
 `--parallel 1`, compile fixed core as a
 subproject, inspect actual compile commands, reject dynamic JS execution/worker
 constructors, inspect actual WASM memory limits, create a hash manifest, and run
-the real Node WASM contract. A missing SDK fails with BLOCKED and a retained receipt.
+the real Node WASM physics and ownership contracts. A missing SDK fails with BLOCKED
+and a retained receipt. Audits/comparisons/layout probes also preserve previous
+outputs and require a new path for a new attempt.
 Build success still leaves non-isolated browser, strict-CSP, contact sampling,
 loader concurrency/failure cases and full T04–T07/G1 requirements outstanding.
 
@@ -82,6 +93,10 @@ source, logs and necessary artifacts before considering the work recoverable.
 - Snapshot floats, uint32 halves and bigint counters are documented in the schema;
   the API does not expose borrowed native buffers. Full raw pointer safety is not
   offered to untrusted callers.
+- Numeric body/shape IDs do not include the world generation. They can become
+  valid again after world-slot reuse, or coincide across module instances. Only
+  facade-issued object tokens carry the additional ownership/lifetime checks;
+  never reconstruct a token from a raw query ID or serialize it as persistent identity.
 - No contact/event ABI, cooked cache, joints, controller, recording/replay, MT,
   application loader/prepare transaction, public adapter or legacy-backend change
   is implied. Source/native success does not make any complete plan gate PASS.
@@ -110,7 +125,7 @@ source, logs and necessary artifacts before considering the work recoverable.
   y=14.979169845581055 and vy=-10.00000286102295. It also checks mass/impulse response,
   invalid arguments, copied snapshots, actual heap growth, closest raycast, stale
   handles and native live-byte return to zero. This is not the full physical matrix.
-- Both builds have unshared WASM memory with 264 initial pages and 32768 maximum
+- The a/b Release builds have unshared WASM memory with 264 initial pages and 32768 maximum
   pages. The unchanged WASM SHA256 is
   `148af5a2d48e23d3b6a78648c7b6232263954040aa8924985ba189a24ed5ac10`;
   only loader generation changes. The loader hash for b is
@@ -119,7 +134,7 @@ source, logs and necessary artifacts before considering the work recoverable.
   Non-isolated browser, CSP, full loader matrix and complete T04–T07/G1 remain
   NOT_RUN or incomplete. No older PASS is promoted into those gates.
 
-The precise local reproduction commands for b were:
+The historical local commands for b, using its frozen source revision, were:
 
 ```sh
 source /workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/use-toolchain.sh
@@ -130,3 +145,32 @@ node tools/physics/box3d/audit-artifacts.mjs tools/physics/box3d/output/wasm-st-
 On another machine, install the official pinned SDK described by the retained
 `evidence/wasm-toolchain-provenance.json`, activate it in that shell, and select a
 new output path. No local absolute path is a requirement of the library itself.
+
+## Fresh Debug/Release and WASM32 increment
+
+- `wasm-debug-20261022-c` and `wasm-release-20261022-c` are fresh builds under one
+  updated lock and identical source inputs. Both actual Node contracts and their
+  separate 54-unit artifact/link audits PASS. Debug uses enabled native assertions
+  and Emscripten ASSERTIONS=2; Release uses NDEBUG and ASSERTIONS=1.
+- The 60 freefall tick samples, all 122 rejected-operation before/after states,
+  128 same-world slot-reuse samples and 128 world-lifetime samples match exactly
+  between these two runs. This finite comparison does not prove cross-platform
+  determinism or the complete physics acceptance matrix.
+- `wasm-compare-20261022-c` preserves a failed comparison assumption: it required
+  identical initial memory pages, but Debug has 265 and Release 264. The corrected
+  comparison `wasm-compare-20261022-c2` compares physics/ownership exactly, reports
+  both footprints and verifies both are unshared with maximum 32768 pages. It
+  changes no physics fixture, numerical threshold or compiled artifact.
+- In 127 world-recreation samples, a stale numeric body ID becomes valid again in
+  the new world, while its facade token still rejects access without changing the
+  new snapshot/counters. Within the sampled live-world slot-reuse sequence, old
+  native IDs stay invalid. These tests do not prove that finite generations never
+  wrap. Both independent modules return core live bytes to zero, which is not proof
+  of zero JS allocations or a shrinking WASM heap.
+- `wasm32-layout-20261022-c` compiles and executes the current header-only probe
+  separately against each original pinned header set. Both report pointerBytes=4.
+  No historical core physics binary is linked or substituted. See `abi-review.md`
+  and the complete raw layout records for size/offset changes.
+- Earlier a/b evidence is unchanged. Native ASan/UBSan FAIL remains unresolved;
+  this increment does not run browsers, upload/deploy test pages, or bypass the
+  recorded browser infrastructure restrictions. Full G1 remains incomplete.

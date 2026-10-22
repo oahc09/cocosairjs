@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "kind": "STATIC_CONTRACT_VALIDATION_NOT_BIZ_EXECUTION",
+  "command": [
+    "node",
+    "--test",
+    "tools/verify/box3d/gift-workshop-contract.test.cjs"
+  ],
+  "exitCode": 0,
+  "completedAtUtc": "2026-10-22T04:21:18.568533+00:00",
+  "tests": 7,
+  "status": "PASS_STATIC_ONLY",
+  "reasonForNewRun": "README clarifies T32 design versus later T34 dynamic execution; prior receipt retained unchanged.",
+  "inputs": [
+    {
+      "path": "docs/physics/box3d/contracts/gift-workshop/config.json",
+      "sha256": "7456954e0c225c6aa4ee635645624bb3a085235f76ac3d5b1271d44c824e5827"
+    },
+    {
+      "path": "docs/physics/box3d/contracts/gift-workshop/layouts.json",
+      "sha256": "eb483a944aef54bb5c5e1d3f2d4d93ff8e015e3ba44326dc87446b9587fbf123"
+    },
+    {
+      "path": "docs/physics/box3d/contracts/gift-workshop/scenarios.json",
+      "sha256": "2d3b4c80e95e12cad9957045307bc795f8d32debd96b7e4f6521291959981bd5"
+    },
+    {
+      "path": "docs/physics/box3d/contracts/gift-workshop/README.md",
+      "sha256": "f9e1eec50831135ed36a8dfb74984e7f5da59005fe68ea3ae79f865feae3dd4e"
+    },
+    {
+      "path": "tools/verify/box3d/gift-workshop-contract.test.cjs",
+      "sha256": "4df428311079b2ceb13989d3e6e4297a2fe7a48bf32b8f692abf0c692cf0db94"
+    }
+  ],
+  "raw": {
+    "path": "docs/physics/box3d/contracts/gift-workshop/static-validation-v2.raw.txt",
+    "sha256": "632b39e7a6c5826b607b8eba2f5f04bd148baa1f453fd9b9553d5bd14d1b0cd5"
+  },
+  "BIZExecution": "NOT_RUN"
+}

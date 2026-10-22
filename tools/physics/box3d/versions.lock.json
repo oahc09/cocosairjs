@@ -15,9 +15,17 @@
   },
   "emsdk": {
     "candidateVersion": "6.0.2",
-    "status": "UNVERIFIED_MISSING",
-    "compilerVersion": null,
-    "containerDigest": null
+    "status": "LOCAL_OFFICIAL_TOOLCHAIN_VERSION_VERIFIED_G1_UNQUALIFIED",
+    "compilerVersion": "6.0.2",
+    "containerDigest": null,
+    "emsdkCommit": "ca38f487f28b7c3c16f8f70cd0e012099ac4b7e2",
+    "emscriptenCommit": "7a2d97d627ff4945eae28847ce0387ac52b92c09",
+    "releaseBuildHash": "004876f1984e18a9eb0736c5ca417ac86d386fb8",
+    "officialPackageUrl": "https://storage.googleapis.com/webassembly/emscripten-releases-builds/linux/004876f1984e18a9eb0736c5ca417ac86d386fb8/wasm-binaries.tar.xz",
+    "packageSha256": "d574428df9ecf00790e28636bdc47027432737c31621b18cdb418123afda4ac1",
+    "packageDigestScope": "Locally measured SHA256; package MD5 matched official HTTP metadata. Not an upstream published SHA256.",
+    "provenance": "tools/physics/box3d/evidence/wasm-toolchain-provenance.json",
+    "validationScope": "Version and official-source provenance verified; not complete browser/CSP/physics/G1 qualification."
   },
   "nativeDiagnostic": {
     "compilerObserved": "gcc (Debian 14.2.0-19) 14.2.0",
@@ -43,5 +51,12 @@
     "dynamicExecution": false,
     "nativeWorkerCount": 1
   },
-  "wasmGate": "NOT_RUN"
+  "wasmGate": "INCOMPLETE_G1",
+  "outstandingGates": {
+    "nativeSanitizer": "FAIL_UNRESOLVED_UNPATCHED_CORE",
+    "browserNonIsolated": "BLOCKED_INFRASTRUCTURE",
+    "strictCsp": "NOT_RUN",
+    "completeBindingMigration": "NOT_DONE",
+    "G1": "INCOMPLETE"
+  }
 }

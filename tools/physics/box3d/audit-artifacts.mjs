@@ -16,7 +16,7 @@ const fileHash = (path) => ({ path, bytes: read(path).length, sha256: sha256(rea
 const receipt = json('build-receipt.json');
 assert.equal(receipt.status, 'PASS');
 assert.equal(receipt.kind, 'st-simd-wasm');
-assert.ok(receipt.commands.length >= 5 && receipt.commands.every((c) => c.exitCode === 0 && !c.error));
+assert.ok(receipt.commands.length >= 6 && receipt.commands.every((c) => c.exitCode === 0 && !c.error));
 for (const input of receipt.inputHashes) {
     assert.equal(sha256(readFileSync(resolve(root, input.path))), input.sha256, `Build input drift: ${input.path}`);
 }
@@ -41,6 +41,7 @@ for (const command of commands) {
     assert.ok(!forbiddenFlags.test(flags), command.file);
     for (const flag of requiredFlags) assert.ok(flags.includes(flag), `${command.file}: missing ${flag}`);
     if (command.file.includes('/vendor/box3d/core/')) assert.ok(flags.includes('-DBOX3D_DISABLE_AVX2'));
+    assert.equal(flags.includes('-DNDEBUG'), receipt.mode === 'Release', `Wrong assertion mode: ${command.file}`);
 }
 const linkPath = 'CMakeFiles/air_box3d.dir/link.txt';
 const link = read(linkPath).toString();
@@ -52,7 +53,7 @@ for (const flag of [
     '-sALLOW_MEMORY_GROWTH=1',
     '-sMODULARIZE=1',
     '-sEXPORT_ES6=1',
-    '-sASSERTIONS=1',
+    receipt.mode === 'Debug' ? '-sASSERTIONS=2' : '-sASSERTIONS=1',
 ])
     assert.ok(link.includes(flag), `Missing link option ${flag}`);
 const loader = read('box3d-st.mjs').toString();
@@ -68,6 +69,12 @@ assert.equal(contract.identity.coreSha, manifest.coreSha);
 assert.equal(contract.identity.schemaSha256, sources.schemaSha256);
 assert.deepEqual(contract.memoryDeclaration, memory);
 assert.equal(contract.freefallTicks.length, 60);
+const ownership = json('wasm-ownership-contract.raw.json');
+assert.equal(ownership.status, 'PASS');
+assert.equal(ownership.identity.coreSha, manifest.coreSha);
+assert.equal(ownership.identity.schemaSha256, sources.schemaSha256);
+assert.equal(ownership.slotReuseCycles.length, 128);
+assert.equal(ownership.worldLifetimeCycles.length, 128);
 const report = {
     schemaVersion: 1,
     status: 'PASS',
@@ -87,9 +94,14 @@ const report = {
     imports,
     dynamicExecutionOrWorkerConstructorFound: false,
     artifacts: manifest.artifacts,
-    evidence: ['build-receipt.json', 'manifest.json', 'compile_commands.json', linkPath, 'wasm-contract.raw.json'].map(
-        fileHash,
-    ),
+    evidence: [
+        'build-receipt.json',
+        'manifest.json',
+        'compile_commands.json',
+        linkPath,
+        'wasm-contract.raw.json',
+        'wasm-ownership-contract.raw.json',
+    ].map(fileHash),
 };
 writeFileSync(reportPath, JSON.stringify(report, null, 2) + '\n');
 console.log(
