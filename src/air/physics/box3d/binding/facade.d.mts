@@ -49,6 +49,15 @@ export interface Box3DBodyOptions {
 }
 export interface Box3DFoundation {
     readonly identity: Readonly<Box3DIdentity>;
+    /** Pure native admission. Does not reserve a plan, consume commands or invalidate snapshots. */
+    validateMotionBatch(world: Box3DWorld, records: readonly Box3DMotionRecord[], dt: number, substeps: number): void;
+    /** Revalidates the entire batch before the first write. Unknown native traps are not rolled back. */
+    applyMotionBatch(
+        world: Box3DWorld,
+        records: readonly Box3DMotionRecord[],
+        dt: number,
+        substeps: number,
+    ): readonly Box3DMotionResult[];
     createWorld(gravity?: ArrayLike<number>): Box3DWorld;
     destroyWorld(world: Box3DWorld): void;
     step(world: Box3DWorld, dt?: number, substeps?: number): void;
@@ -346,4 +355,54 @@ export interface Box3DBodyState {
     readonly requestedMass: number | null;
     readonly massPending: boolean;
     readonly sensorMassFallback: boolean;
+}
+
+export interface Box3DOriginPose {
+    readonly position: readonly number[];
+    readonly rotation: readonly number[];
+}
+export interface Box3DMotionReset {
+    readonly pose: Box3DOriginPose;
+    /** Defaults teleport; scene is internal static-body synchronization only. */
+    readonly mode?: 'teleport' | 'scene';
+    readonly preserveVelocity?: boolean;
+    readonly wake?: boolean;
+}
+export type Box3DMotionIntent = Readonly<{ kind: 'target'; pose: Box3DOriginPose }> | Readonly<{ kind: 'clear' }>;
+export interface Box3DMotionRecord {
+    readonly body: Box3DId;
+    readonly reset?: Box3DMotionReset;
+    readonly intent?: Box3DMotionIntent;
+}
+export interface Box3DMotionResult {
+    readonly body: Box3DId;
+    /** Copied normalized request, not an observed arrival pose. */
+    readonly requested: Readonly<{
+        reset: Readonly<Required<Box3DMotionReset>> | null;
+        intent: Box3DMotionIntent | null;
+    }>;
+    readonly pose: Box3DOriginPose;
+    readonly worldCenter: readonly number[];
+    readonly state: Box3DBodyState;
+    /** Actual native velocity immediately after the operation, before the fixed step. */
+    readonly applied: Readonly<{ linearVelocity: readonly number[]; angularVelocity: readonly number[] }>;
+    readonly plan: Readonly<{
+        linearVelocity: readonly number[];
+        angularVelocity: readonly number[];
+        linearLockResidue: readonly number[];
+        angularLockResidue: readonly number[];
+        linearDamping: number;
+        angularDamping: number;
+        maximumLinearSpeed: number;
+        maximumAngularSpeed: number | null;
+        allowFastRotation: boolean;
+        fixedDt: number;
+        solverSubSteps: number;
+    }>;
+    readonly before: Readonly<{
+        pose: Box3DOriginPose;
+        worldCenter: readonly number[];
+        linearVelocity: readonly number[];
+        angularVelocity: readonly number[];
+    }>;
 }

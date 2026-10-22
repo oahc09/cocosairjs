@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.world-control.json",
+  "files": [
+    "node-motion-guard-control.test.ts",
+    "../../../src/air/physics/box3d/node-motion-guard.ts",
+    "../../../src/@types/external-modules.d.ts"
+  ],
+  "include": []
+}

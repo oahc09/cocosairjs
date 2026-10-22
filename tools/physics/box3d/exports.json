@@ -50,5 +50,6 @@
   "_air_b3_mass_shape_create",
   "_air_b3_mass_shape_destroy",
   "_air_b3_shape_filter_get",
-  "_air_b3_shape_filters_set"
+  "_air_b3_shape_filters_set",
+  "_air_b3_motion_batch"
 ]

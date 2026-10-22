@@ -43,6 +43,7 @@ const expectedSources = [
     'tools/physics/box3d/native/world_bridge.c',
     'tools/physics/box3d/native/body_control.c',
     'tools/physics/box3d/native/filter_bridge.c',
+    'tools/physics/box3d/native/motion_bridge.c',
     'tools/physics/box3d/native/filter_contract.c',
     'tools/physics/box3d/native/body_contract.c',
     'tools/physics/box3d/native/world_contract.c',

@@ -1,0 +1,8 @@
+{
+  "status": "PASS_LIMITED_MAPPING_STRUCTURE",
+  "at": "2026-10-22T11:05:57.655674+00:00",
+  "mappingRows": 1423,
+  "modifiedRows": 252,
+  "mapSha256": "ad323ba62402493f5b2aa056ba0fff312dbb2d2bfd3ee612edddc52561d93f7e",
+  "scope": "Unique paths, count and two current Node ownership reasons only. Full verify:file-map requires separately available fixed Cocos upstream; not run here."
+}

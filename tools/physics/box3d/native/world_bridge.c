@@ -11,6 +11,7 @@
 
 enum { DEBUG_FLAGS = 5, DEBUG_WORDS = 8, DEBUG_MAX_PRIMITIVES = 65536, SPHERE_SEGMENTS = 24 };
 typedef struct DebugShape { size_t bytes; int lineCount; b3Vec3 ends[]; } DebugShape;
+typedef struct BridgeTemp { struct BridgeTemp* next; size_t bytes; } BridgeTemp;
 typedef struct BridgeWorld {
     struct BridgeWorld* next;
     uint32_t id;
@@ -19,6 +20,7 @@ typedef struct BridgeWorld {
     uint32_t* wire;
     int error;
     bool captured;
+    BridgeTemp* temporary;
 } BridgeWorld;
 static BridgeWorld* worlds;
 #ifdef AIR_B3_BRIDGE_QUALIFICATION
@@ -44,6 +46,23 @@ static void* owned_alloc(BridgeWorld* w, size_t bytes) {
 }
 static void owned_free(BridgeWorld* w, void* p, size_t bytes) {
     if (p) { free(p); w->bytes -= bytes; --w->allocations; }
+}
+void* air_b3_bridge_temp_alloc(uint32_t world, size_t bytes) {
+    BridgeWorld* w=find_world(world);
+    if(!w || !bytes || bytes>SIZE_MAX-sizeof(BridgeTemp) || w->bytes>UINT64_MAX-bytes-sizeof(BridgeTemp) || w->allocations==UINT32_MAX)return NULL;
+    BridgeTemp* p=owned_alloc(w,sizeof(BridgeTemp)+bytes);if(!p)return NULL;
+    p->bytes=bytes;p->next=w->temporary;w->temporary=p;return p+1;
+}
+void air_b3_bridge_temp_free(uint32_t world, void* pointer, size_t bytes) {
+    BridgeWorld* w=find_world(world);
+    B3_ASSERT(w && pointer && w->bytes>=bytes && w->allocations>0);
+    BridgeTemp** link=&w->temporary;
+    while(*link && (void*)(*link+1)!=pointer)link=&(*link)->next;
+    B3_ASSERT(*link && (*link)->bytes==bytes);
+    BridgeTemp* p=*link;*link=p->next;owned_free(w,p,sizeof(BridgeTemp)+bytes);
+}
+static void clear_temporary(BridgeWorld* w) {
+    while(w->temporary){BridgeTemp* p=w->temporary;w->temporary=p->next;owned_free(w,p,sizeof(BridgeTemp)+p->bytes);}
 }
 static void clear_wire(BridgeWorld* w) {
     owned_free(w, w->wire, (size_t)w->capacity * DEBUG_WORDS * 4);
@@ -141,6 +160,7 @@ int air_b3_bridge_world_destroy(uint32_t world) {
     if (!w) return AIR_B3_INVALID;
     b3DestroyWorld(b3LoadWorldId(world)); /* Calls destroy_shape for every remaining userShape. */
     clear_wire(w);
+    clear_temporary(w); /* Unresolved temporary plans remain owned until world cleanup. */
     BridgeWorld** p=&worlds; while (*p != w) p=&(*p)->next; *p=w->next;
     int result=(w->shapes==0 && w->allocations==1 && w->bytes==sizeof(*w)) ? AIR_B3_OK : AIR_B3_ALLOCATION;
     free(w); return result;

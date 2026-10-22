@@ -1,0 +1,46 @@
+{
+  "status": "PASS_DESIGN_AND_INVENTORY_CONTROLS",
+  "startedAt": "2026-10-22T10:49:25.859409+00:00",
+  "completedAt": "2026-10-22T10:49:33.152679+00:00",
+  "argv": [
+    "node",
+    "--test",
+    "tools/verify/box3d/contracts.test.cjs",
+    "tools/verify/box3d/inventory-expansion.test.cjs",
+    "tools/verify/box3d/inventory-freeze-v1.test.cjs"
+  ],
+  "exitCode": 0,
+  "sourceBefore": {
+    "docs/physics/box3d/contracts/inventory-expansion-policy.json": "150d7166523a71eff7a58f76e205fd25676915639611ca76c75f523c6dcf507c",
+    "docs/physics/box3d/contracts/inventory-design.json": "f2cfac4c023ac72cfe4dcb88109e0f93d6459e143e3af26893c222d18802f965",
+    "docs/physics/box3d/contracts/acceptance-resources.json": "e28f30b27b2ab622e6110d825c19cccdd6c0706c271b2d45b175ed5f9a9fc491",
+    "docs/physics/box3d/contracts/api-contract.json": "0e53683159e025ecdf07ae495abcf54e902529b51c6938ce3717fab4dd6e7fc9",
+    "docs/physics/box3d/contracts/performance-budget-initial.json": "699a1cc64599defd7019b8f29a61f69d6dc556f53c2f0418cfde7f9d2c2c349b",
+    "docs/physics/box3d/contracts/decisions.md": "36ab9d3f818ae8632f9f5be269cbd4bc739db088e6de7ed43dab39d5761f19a9",
+    "ai/plans/box3d-v1.2-reference.md": "17b4dcf0d8acbe0ed72f81ab4d3fc53c6a51f705d573699f0d50137e4bf00c46",
+    "tools/verify/box3d/inventory-expansion.cjs": "055ec408f3098972c762532688ade2f503719ed3fdd44f32c6ef6b54aadafcd4",
+    "tools/verify/box3d/contracts.test.cjs": "e4b15fc17bfa066476410f58854cbb0f1e22a899a1458c81a5822dd1935f31e9",
+    "tools/verify/box3d/inventory-expansion.test.cjs": "022ed2e2f17b0ecf4671e4cc291afe7d5144fe30ef4945943a14dd3e55b47d59",
+    "tools/verify/box3d/inventory-freeze-v1.cjs": "dcb3719807f66de1eb99a858abedbdd5b07790ad72d9a83a0ad2920123ca1cd3",
+    "tools/verify/box3d/inventory-freeze-v1.test.cjs": "cf644bbd1788c1d06b54cfa68025ccdfcffdb47bb48e4802cb17d27ea7ad9617",
+    "docs/physics/box3d/contracts/inventory-frozen-v1.json": "c1031157b37b943d32b6cc26100b563064a16eb4225aeed6fbb7fcbbf25baaeb"
+  },
+  "sourceAfter": {
+    "docs/physics/box3d/contracts/inventory-expansion-policy.json": "150d7166523a71eff7a58f76e205fd25676915639611ca76c75f523c6dcf507c",
+    "docs/physics/box3d/contracts/inventory-design.json": "f2cfac4c023ac72cfe4dcb88109e0f93d6459e143e3af26893c222d18802f965",
+    "docs/physics/box3d/contracts/acceptance-resources.json": "e28f30b27b2ab622e6110d825c19cccdd6c0706c271b2d45b175ed5f9a9fc491",
+    "docs/physics/box3d/contracts/api-contract.json": "0e53683159e025ecdf07ae495abcf54e902529b51c6938ce3717fab4dd6e7fc9",
+    "docs/physics/box3d/contracts/performance-budget-initial.json": "699a1cc64599defd7019b8f29a61f69d6dc556f53c2f0418cfde7f9d2c2c349b",
+    "docs/physics/box3d/contracts/decisions.md": "36ab9d3f818ae8632f9f5be269cbd4bc739db088e6de7ed43dab39d5761f19a9",
+    "ai/plans/box3d-v1.2-reference.md": "17b4dcf0d8acbe0ed72f81ab4d3fc53c6a51f705d573699f0d50137e4bf00c46",
+    "tools/verify/box3d/inventory-expansion.cjs": "055ec408f3098972c762532688ade2f503719ed3fdd44f32c6ef6b54aadafcd4",
+    "tools/verify/box3d/contracts.test.cjs": "e4b15fc17bfa066476410f58854cbb0f1e22a899a1458c81a5822dd1935f31e9",
+    "tools/verify/box3d/inventory-expansion.test.cjs": "022ed2e2f17b0ecf4671e4cc291afe7d5144fe30ef4945943a14dd3e55b47d59",
+    "tools/verify/box3d/inventory-freeze-v1.cjs": "dcb3719807f66de1eb99a858abedbdd5b07790ad72d9a83a0ad2920123ca1cd3",
+    "tools/verify/box3d/inventory-freeze-v1.test.cjs": "cf644bbd1788c1d06b54cfa68025ccdfcffdb47bb48e4802cb17d27ea7ad9617",
+    "docs/physics/box3d/contracts/inventory-frozen-v1.json": "c1031157b37b943d32b6cc26100b563064a16eb4225aeed6fbb7fcbbf25baaeb"
+  },
+  "formalRequiredCells": 2128,
+  "gatePromotions": 0,
+  "scope": "Contract enumeration and tamper controls only; not target/teleport implementation or physical tests."
+}

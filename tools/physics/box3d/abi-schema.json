@@ -18,7 +18,9 @@
     "7": "UNSUPPORTED_GEOMETRY_FAMILY",
     "8": "UNSUPPORTED_WORLD_BRIDGE_CAPABILITY",
     "9": "WORLD_LOCKED",
-    "10": "BODY_MASS_PENDING"
+    "10": "BODY_MASS_PENDING",
+    "11": "MOTION_LOCK_CONFLICT",
+    "12": "MOTION_SPEED_CAP"
   },
   "bodyInput": [
     "position.xyz",
@@ -280,10 +282,58 @@
     "ownership": "full-generation IDs, exact world, unlocked, whole batch validation, duplicates rejected, capacity checked; no persistent allocation or exposed pointer"
   },
   "mutationOutcome": {
-    "scope": "reviewed body controls/mass/force and legacy velocity/center impulse plus filter setters only",
+    "scope": "reviewed body controls/mass/force and legacy velocity/center impulse plus filter setters only plus motion apply/known validation rejection; pure validation unknown throw remains unannotated without snapshot invalidation",
     "not-mutated": "known admission failure including native nonzero status before any mutation",
     "committed": "native mutator returned0 including post-call readback failure; not a numerical-change claim",
     "unknown": "missing property on native throw/trap or unreviewed path; reviewed native-call exceptions conservatively invalidate current snapshot without changing step count; never inferred from error code",
     "descriptor": "optional readonly nonconfigurable enumerable property on Error"
+  },
+  "motionBatch": {
+    "decisionContract": {
+      "path": "docs/physics/box3d/contracts/motion-command-decisions-v1.md",
+      "sha256": "30951da3f296ac17acac9ff594c91ee96db62d5b3a3a1bdaf1ec0feb8f2f7a6a"
+    },
+    "inputWords": 18,
+    "maximumBodies": 4096,
+    "inputLayout": [
+      "body.low.uint32",
+      "body.high.uint32",
+      "flags.uint32: reset1 preserve2 wake4 scene8",
+      "intent.uint32: none0 target1 clear2",
+      "reset origin.xyz rotation.xyzw float32",
+      "target origin.xyz rotation.xyzw float32"
+    ],
+    "outputFloats": 61,
+    "outputLayout": [
+      "actual origin.xyz rotation.xyzw COM.xyz [10]",
+      "actual linear/angular velocity [6]",
+      "planned linear/angular velocity [6]",
+      "projected numeric-zero linear/angular lock residue [6]",
+      "linear/angular damping [2]",
+      "native maximum linear speed",
+      "native angular cap; 0 if fast rotation",
+      "allowFastRotation",
+      "type",
+      "enabled",
+      "awake",
+      "actual force.xyz torque.xyz localCenter.xyz [9]",
+      "before origin.xyz rotation.xyzw COM.xyz [10]",
+      "before linear/angular velocity [6]"
+    ],
+    "admission": "Exact facade capabilities plus native full-ID/world/lock checks, duplicate body rejection, exact input word count, output capacity/nonoverlap, normalized quaternion, finite derived COM/inertia/AABB/dt/velocity. All records planned before first mutation; apply revalidates independently of earlier validate. No pending command ownership in native.",
+    "reset": "teleport dynamic/kinematic including disabled; scene static only; preserveVelocity false and wake true defaults; disabled stays disabled and does not wake; forces/torques preserved",
+    "target": "Enabled kinematic only; approximate fixed-core target COM/quaternion-difference formula. Actual damping unchanged, no SetTransform correction. Nonzero admitted motion wakes below sleep threshold; stationary target/clear zero both velocities without unnecessary wake. Target uses post-reset origin/COM when same record has reset.",
+    "limits": {
+      "lockedComponentAbsoluteMax": 1e-6,
+      "capMarginFloatEpsilonMultiplier": 8,
+      "capMarginScale": "max(1,nativeCap)",
+      "speedAdmission": "reject magnitude >= cap-margin before damping and before lock residue projection; angular cap omitted only for actual native allowFastRotation",
+      "substeps": "positive int32; float32 dt/h/inv_dt/inv_h and 2*inv_dt finite, dt/h positive"
+    },
+    "unusedPoseWords": "canonical uint32 zero; no NaN/negative-zero hidden in unused fields",
+    "emptyBatch": "world/dt/substeps validated, no mutation or snapshot invalidation",
+    "memory": "Native plans allocated/freed through per-world owned bridge scratch and included in bridgeMemory during the call; all known exits free scratch. Facade input/output temporary buffers freed in finally. No persistent plan/pointer. Allocator capacity need not shrink.",
+    "phases": "validate never invalidates snapshot or consumes intent. apply zero returned then readback failure=committed; native throw/trap=unknown and invalidates current observation; known nonzero status=not-mutated. No rollback claim after unknown partial apply.",
+    "scope": "Internal foundation candidate only, not public target lifetime/queue/Node synchronization or completed T11."
   }
 }

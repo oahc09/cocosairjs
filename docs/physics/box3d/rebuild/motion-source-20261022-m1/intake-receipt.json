@@ -1,0 +1,394 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-22T10:57:26.281249+00:00",
+  "status": "SOURCE_ONLY_PARTIAL_NOT_COMPILED",
+  "sourceReceiptSha256": "732e7ba0dde3bbeba94d1cf09188d05bde621c7f621d4cc588ec13a97f1b8938",
+  "sourceProducts": [
+    {
+      "path": "tools/physics/box3d/abi-schema.json",
+      "gitBlob": "c046f37cfc8ecb2d3cbf481918602326e936d192",
+      "mode": "100644",
+      "sha256": "53381d70f6955d42f7f2b83a0d35c319c743118c184fcbb705f0d3bfd9c882aa"
+    },
+    {
+      "path": "tools/physics/box3d/versions.lock.json",
+      "gitBlob": "e62ef94c71b407a18dae1e07653506e22f251b62",
+      "mode": "100644",
+      "sha256": "e3bde2f63a74911c14aaa02a59d8039ba72ab7e662d96aaa563c9b9f1f484519"
+    },
+    {
+      "path": "tools/physics/box3d/CMakeLists.txt",
+      "gitBlob": "fe7e614b0d19ff048a121171563e99498f46b66f",
+      "mode": "100644",
+      "sha256": "a74a687fa671dca112527ea8c69e1dd977e445abf063dd8e5dac810c1c19bbe1"
+    },
+    {
+      "path": "tools/physics/box3d/exports.json",
+      "gitBlob": "da509500d0cede9caed3fcb7e3cb691c5fb2f2f5",
+      "mode": "100644",
+      "sha256": "1de657f5523cb8a6c7a7c52e8cd0a7621c3ebae72a80d1b03ec06a39dff7d4a6"
+    },
+    {
+      "path": "tools/physics/box3d/build.mjs",
+      "gitBlob": "653ac4c4a5634d9e0b9d947ac6162a05f4751c02",
+      "mode": "100644",
+      "sha256": "800bcec76114707d7fcf7baa3adadf999d0b07deaed06bbb78042e4658ac17f3"
+    },
+    {
+      "path": "tools/physics/box3d/native/world_bridge.c",
+      "gitBlob": "8dc873fc3d8e00cf9b843f946ff5b1773aa90118",
+      "mode": "100644",
+      "sha256": "1331b2881410625dd5d6ec941ffc720005eaca6770cb7a76960c1e06586eeac7"
+    },
+    {
+      "path": "tools/physics/box3d/native/world_bridge.h",
+      "gitBlob": "8babce7d75d6d8bd3cd957b43f6f7e9a276294e7",
+      "mode": "100644",
+      "sha256": "8cb7bf91011b5bd24f67dfa9833f08444addb1c92d3a952901e84165d6af34d0"
+    },
+    {
+      "path": "tools/physics/box3d/native/motion_bridge.c",
+      "gitBlob": "11405e1814d5a853307e9774158c6d2593d2370f",
+      "mode": "100644",
+      "sha256": "72c5e350a294643969d56ed4d21462fcf27ffea0aab2798d31cc927d469ea791"
+    },
+    {
+      "path": "tools/physics/box3d/native/motion_bridge.h",
+      "gitBlob": "f308d1ab7eff501af44163ce0892d55a13c14329",
+      "mode": "100644",
+      "sha256": "67c486efc11775f2743992625efb15ce1ed0fe3c1fac79c8c0a82045b57de8ca"
+    },
+    {
+      "path": "tools/physics/box3d/motion-source-controls.mjs",
+      "gitBlob": "73517b4892e61de3a3e45636b692ee8f831cae86",
+      "mode": "100644",
+      "sha256": "2bfc35ed3dd1c000b998657e90a650170a2f2d9a162c7cfb265151ba6336ca0a"
+    },
+    {
+      "path": "docs/physics/box3d/contracts/motion-command-decisions-v1.md",
+      "gitBlob": "8be1425278ccdf823b92a4808fbb43968610c684",
+      "mode": "100644",
+      "sha256": "30951da3f296ac17acac9ff594c91ee96db62d5b3a3a1bdaf1ec0feb8f2f7a6a"
+    },
+    {
+      "path": "tools/physics/box3d/native/air_box3d.h",
+      "gitBlob": "c7c2138acac30ededc251707a381412994936e82",
+      "mode": "100644",
+      "sha256": "ad71b7687c5cdb3b1a05e4a10a0f8214af888344968d40f37811d390f684baf7"
+    },
+    {
+      "path": "src/air/physics/box3d/binding/facade.mjs",
+      "gitBlob": "4d95b651462432bc0575caab704275255a4d9954",
+      "mode": "100644",
+      "sha256": "e956cbb23c20700938954421b29a6a30f50b837a5f70aebf2d8f314be48a5eea"
+    },
+    {
+      "path": "src/air/physics/box3d/binding/facade.d.mts",
+      "gitBlob": "51d63a6092f22dcaabe2f35fbf4d0b845e67a562",
+      "mode": "100644",
+      "sha256": "2bc06c445a8b21c8c376f89d16288dfb81dece1cabc3d6fca92a8b408f59b3ef"
+    },
+    {
+      "path": "tools/physics/box3d/audit-artifacts.mjs",
+      "gitBlob": "5b041163bc7056c29a04f7f38ff40d08869cc256",
+      "mode": "100644",
+      "sha256": "2ace3f19ee8b1d4c3c0d73310fb4928db864b1bff33da2cb45bcd88f2f85d410"
+    }
+  ],
+  "retainedFiles": [
+    {
+      "original": "tools/physics/box3d/output/motion-checkpoint-20261022-m/inputs-1/docs/physics/box3d/contracts/motion-command-decisions-v1.md",
+      "retained": "docs/physics/box3d/rebuild/motion-source-20261022-m1/inputs-1/docs/physics/box3d/contracts/motion-command-decisions-v1.md",
+      "bytes": 6790,
+      "sha256": "30951da3f296ac17acac9ff594c91ee96db62d5b3a3a1bdaf1ec0feb8f2f7a6a"
+    },
+    {
+      "original": "tools/physics/box3d/output/motion-checkpoint-20261022-m/inputs-1/src/air/physics/box3d/binding/facade.d.mts",
+      "retained": "docs/physics/box3d/rebuild/motion-source-20261022-m1/inputs-1/src/air/physics/box3d/binding/facade.d.mts",
+      "bytes": 17108,
+      "sha256": "2bc06c445a8b21c8c376f89d16288dfb81dece1cabc3d6fca92a8b408f59b3ef"
+    },
+    {
+      "original": "tools/physics/box3d/output/motion-checkpoint-20261022-m/inputs-1/src/air/physics/box3d/binding/facade.mjs",
+      "retained": "docs/physics/box3d/rebuild/motion-source-20261022-m1/inputs-1/src/air/physics/box3d/binding/facade.mjs",
+      "bytes": 60012,
+      "sha256": "e956cbb23c20700938954421b29a6a30f50b837a5f70aebf2d8f314be48a5eea"
+    },
+    {
+      "original": "tools/physics/box3d/output/motion-checkpoint-20261022-m/inputs-1/tools/physics/box3d/CMakeLists.txt",
+      "retained": "docs/physics/box3d/rebuild/motion-source-20261022-m1/inputs-1/tools/physics/box3d/CMakeLists.txt",
+      "bytes": 6244,
+      "sha256": "a74a687fa671dca112527ea8c69e1dd977e445abf063dd8e5dac810c1c19bbe1"
+    },
+    {
+      "original": "tools/physics/box3d/output/motion-checkpoint-20261022-m/inputs-1/tools/physics/box3d/abi-schema.json",
+      "retained": "docs/physics/box3d/rebuild/motion-source-20261022-m1/inputs-1/tools/physics/box3d/abi-schema.json",
+      "bytes": 17801,
+      "sha256": "53381d70f6955d42f7f2b83a0d35c319c743118c184fcbb705f0d3bfd9c882aa"
+    },
+    {
+      "original": "tools/physics/box3d/output/motion-checkpoint-20261022-m/inputs-1/tools/physics/box3d/audit-artifacts.mjs",
+      "retained": "docs/physics/box3d/rebuild/motion-source-20261022-m1/inputs-1/tools/physics/box3d/audit-artifacts.mjs",
+      "bytes": 13102,
+      "sha256": "2ace3f19ee8b1d4c3c0d73310fb4928db864b1bff33da2cb45bcd88f2f85d410"
+    },
+    {
+      "original": "tools/physics/box3d/output/motion-checkpoint-20261022-m/inputs-1/tools/physics/box3d/build.mjs",
+      "retained": "docs/physics/box3d/rebuild/motion-source-20261022-m1/inputs-1/tools/physics/box3d/build.mjs",
+      "bytes": 16144,
+      "sha256": "800bcec76114707d7fcf7baa3adadf999d0b07deaed06bbb78042e4658ac17f3"
+    },
+    {
+      "original": "tools/physics/box3d/output/motion-checkpoint-20261022-m/inputs-1/tools/physics/box3d/exports.json",
+      "retained": "docs/physics/box3d/rebuild/motion-source-20261022-m1/inputs-1/tools/physics/box3d/exports.json",
+      "bytes": 1439,
+      "sha256": "1de657f5523cb8a6c7a7c52e8cd0a7621c3ebae72a80d1b03ec06a39dff7d4a6"
+    },
+    {
+      "original": "tools/physics/box3d/output/motion-checkpoint-20261022-m/inputs-1/tools/physics/box3d/motion-source-controls.mjs",
+      "retained": "docs/physics/box3d/rebuild/motion-source-20261022-m1/inputs-1/tools/physics/box3d/motion-source-controls.mjs",
+      "bytes": 3365,
+      "sha256": "2bfc35ed3dd1c000b998657e90a650170a2f2d9a162c7cfb265151ba6336ca0a"
+    },
+    {
+      "original": "tools/physics/box3d/output/motion-checkpoint-20261022-m/inputs-1/tools/physics/box3d/native/air_box3d.c",
+      "retained": "docs/physics/box3d/rebuild/motion-source-20261022-m1/inputs-1/tools/physics/box3d/native/air_box3d.c",
+      "bytes": 10167,
+      "sha256": "28e6e26ff7d3dc3db3fa7a257510f96da90e04e1b677e8a84da23f0c3d145468"
+    },
+    {
+      "original": "tools/physics/box3d/output/motion-checkpoint-20261022-m/inputs-1/tools/physics/box3d/native/air_box3d.h",
+      "retained": "docs/physics/box3d/rebuild/motion-source-20261022-m1/inputs-1/tools/physics/box3d/native/air_box3d.h",
+      "bytes": 3643,
+      "sha256": "ad71b7687c5cdb3b1a05e4a10a0f8214af888344968d40f37811d390f684baf7"
+    },
+    {
+      "original": "tools/physics/box3d/output/motion-checkpoint-20261022-m/inputs-1/tools/physics/box3d/native/body_contract.c",
+      "retained": "docs/physics/box3d/rebuild/motion-source-20261022-m1/inputs-1/tools/physics/box3d/native/body_contract.c",
+      "bytes": 5629,
+      "sha256": "d195a33d84834caf857757ed6ce450ac9865e4fafdac2ea4f10d8661da4f4656"
+    },
+    {
+      "original": "tools/physics/box3d/output/motion-checkpoint-20261022-m/inputs-1/tools/physics/box3d/native/body_control.c",
+      "retained": "docs/physics/box3d/rebuild/motion-source-20261022-m1/inputs-1/tools/physics/box3d/native/body_control.c",
+      "bytes": 13650,
+      "sha256": "9115c6e3fb89654042858e31819784c25c8e1ac3d09d3d7b7ad22f50789df0e9"
+    },
+    {
+      "original": "tools/physics/box3d/output/motion-checkpoint-20261022-m/inputs-1/tools/physics/box3d/native/body_control.h",
+      "retained": "docs/physics/box3d/rebuild/motion-source-20261022-m1/inputs-1/tools/physics/box3d/native/body_control.h",
+      "bytes": 1221,
+      "sha256": "d7a8ee9db19b875d079a2bcbbba3be6e46519f1df39bd1d01cdc0aa7894df9e8"
+    },
+    {
+      "original": "tools/physics/box3d/output/motion-checkpoint-20261022-m/inputs-1/tools/physics/box3d/native/contract.c",
+      "retained": "docs/physics/box3d/rebuild/motion-source-20261022-m1/inputs-1/tools/physics/box3d/native/contract.c",
+      "bytes": 5941,
+      "sha256": "873862b60b2bc22080e0055f4204afeaf32ac27273b09e268d8920433d94402d"
+    },
+    {
+      "original": "tools/physics/box3d/output/motion-checkpoint-20261022-m/inputs-1/tools/physics/box3d/native/filter_bridge.c",
+      "retained": "docs/physics/box3d/rebuild/motion-source-20261022-m1/inputs-1/tools/physics/box3d/native/filter_bridge.c",
+      "bytes": 2667,
+      "sha256": "ef5e76fa2a9e3e2bb57738b943e8bd9fb185812fb5c0df04b49fc445459688cd"
+    },
+    {
+      "original": "tools/physics/box3d/output/motion-checkpoint-20261022-m/inputs-1/tools/physics/box3d/native/filter_bridge.h",
+      "retained": "docs/physics/box3d/rebuild/motion-source-20261022-m1/inputs-1/tools/physics/box3d/native/filter_bridge.h",
+      "bytes": 709,
+      "sha256": "7b93839f91a4e828971d2a02e0d11393f5b7b944b3335cdb1d5a3fe3553d1e84"
+    },
+    {
+      "original": "tools/physics/box3d/output/motion-checkpoint-20261022-m/inputs-1/tools/physics/box3d/native/filter_contract.c",
+      "retained": "docs/physics/box3d/rebuild/motion-source-20261022-m1/inputs-1/tools/physics/box3d/native/filter_contract.c",
+      "bytes": 4680,
+      "sha256": "a557412e0f868498ce4a8d63444bfb241e7644a9d459160b1e2242e9e2fa29e2"
+    },
+    {
+      "original": "tools/physics/box3d/output/motion-checkpoint-20261022-m/inputs-1/tools/physics/box3d/native/geometry.c",
+      "retained": "docs/physics/box3d/rebuild/motion-source-20261022-m1/inputs-1/tools/physics/box3d/native/geometry.c",
+      "bytes": 2492,
+      "sha256": "0dcb3f74fa2ee34fba5f716735cba2d83f07175db55d3e344d88e6fa55ab3825"
+    },
+    {
+      "original": "tools/physics/box3d/output/motion-checkpoint-20261022-m/inputs-1/tools/physics/box3d/native/geometry_contract.c",
+      "retained": "docs/physics/box3d/rebuild/motion-source-20261022-m1/inputs-1/tools/physics/box3d/native/geometry_contract.c",
+      "bytes": 7492,
+      "sha256": "cb82c55602526b33f0125c2a0aa9e1a5c27d942e01c2bb9bcffa919f9c95885f"
+    },
+    {
+      "original": "tools/physics/box3d/output/motion-checkpoint-20261022-m/inputs-1/tools/physics/box3d/native/motion_bridge.c",
+      "retained": "docs/physics/box3d/rebuild/motion-source-20261022-m1/inputs-1/tools/physics/box3d/native/motion_bridge.c",
+      "bytes": 12616,
+      "sha256": "72c5e350a294643969d56ed4d21462fcf27ffea0aab2798d31cc927d469ea791"
+    },
+    {
+      "original": "tools/physics/box3d/output/motion-checkpoint-20261022-m/inputs-1/tools/physics/box3d/native/motion_bridge.h",
+      "retained": "docs/physics/box3d/rebuild/motion-source-20261022-m1/inputs-1/tools/physics/box3d/native/motion_bridge.h",
+      "bytes": 858,
+      "sha256": "67c486efc11775f2743992625efb15ce1ed0fe3c1fac79c8c0a82045b57de8ca"
+    },
+    {
+      "original": "tools/physics/box3d/output/motion-checkpoint-20261022-m/inputs-1/tools/physics/box3d/native/snapshot.c",
+      "retained": "docs/physics/box3d/rebuild/motion-source-20261022-m1/inputs-1/tools/physics/box3d/native/snapshot.c",
+      "bytes": 9056,
+      "sha256": "46d9ad1d6fdbe445b33d969e7fe725641ac7eb36767efcefac8e1576df24ea18"
+    },
+    {
+      "original": "tools/physics/box3d/output/motion-checkpoint-20261022-m/inputs-1/tools/physics/box3d/native/wasm_entry.c",
+      "retained": "docs/physics/box3d/rebuild/motion-source-20261022-m1/inputs-1/tools/physics/box3d/native/wasm_entry.c",
+      "bytes": 172,
+      "sha256": "9b1857c34808b0e3be4726c9df515999c1714583771813c89190d53a364e7c9f"
+    },
+    {
+      "original": "tools/physics/box3d/output/motion-checkpoint-20261022-m/inputs-1/tools/physics/box3d/native/world_bridge.c",
+      "retained": "docs/physics/box3d/rebuild/motion-source-20261022-m1/inputs-1/tools/physics/box3d/native/world_bridge.c",
+      "bytes": 11969,
+      "sha256": "1331b2881410625dd5d6ec941ffc720005eaca6770cb7a76960c1e06586eeac7"
+    },
+    {
+      "original": "tools/physics/box3d/output/motion-checkpoint-20261022-m/inputs-1/tools/physics/box3d/native/world_bridge.h",
+      "retained": "docs/physics/box3d/rebuild/motion-source-20261022-m1/inputs-1/tools/physics/box3d/native/world_bridge.h",
+      "bytes": 540,
+      "sha256": "8cb7bf91011b5bd24f67dfa9833f08444addb1c92d3a952901e84165d6af34d0"
+    },
+    {
+      "original": "tools/physics/box3d/output/motion-checkpoint-20261022-m/inputs-1/tools/physics/box3d/native/world_contract.c",
+      "retained": "docs/physics/box3d/rebuild/motion-source-20261022-m1/inputs-1/tools/physics/box3d/native/world_contract.c",
+      "bytes": 4224,
+      "sha256": "9a2067c7941a06cde240cce7a4c849a4e4271bb9f4aa767ce58744c33773577f"
+    },
+    {
+      "original": "tools/physics/box3d/output/motion-checkpoint-20261022-m/inputs-1/tools/physics/box3d/patch-intake.mjs",
+      "retained": "docs/physics/box3d/rebuild/motion-source-20261022-m1/inputs-1/tools/physics/box3d/patch-intake.mjs",
+      "bytes": 12070,
+      "sha256": "039430725aa59d74abbb9ae32b720c345d7d07297227e31ee95e76851239d7dc"
+    },
+    {
+      "original": "tools/physics/box3d/output/motion-checkpoint-20261022-m/inputs-1/tools/physics/box3d/patches/contact-geometry-epoch.patch",
+      "retained": "docs/physics/box3d/rebuild/motion-source-20261022-m1/inputs-1/tools/physics/box3d/patches/contact-geometry-epoch.patch",
+      "bytes": 3759,
+      "sha256": "4ca29eed58cd20d4134bf55bb9b9ec25fbb322b731d0a319ad2567225463d094"
+    },
+    {
+      "original": "tools/physics/box3d/output/motion-checkpoint-20261022-m/inputs-1/tools/physics/box3d/patches/lock.json",
+      "retained": "docs/physics/box3d/rebuild/motion-source-20261022-m1/inputs-1/tools/physics/box3d/patches/lock.json",
+      "bytes": 2063,
+      "sha256": "d6be04611f70223e21b1bcffc635088f49a5647739e97c2f9ce089091748ea77"
+    },
+    {
+      "original": "tools/physics/box3d/output/motion-checkpoint-20261022-m/inputs-1/tools/physics/box3d/patches/sse2-loadv-alignment.patch",
+      "retained": "docs/physics/box3d/rebuild/motion-source-20261022-m1/inputs-1/tools/physics/box3d/patches/sse2-loadv-alignment.patch",
+      "bytes": 654,
+      "sha256": "e5c4e5f2ae7f015cf62dfc2de5a36af73cc15d9b0ca0118fc0259c7d1f0b1403"
+    },
+    {
+      "original": "tools/physics/box3d/output/motion-checkpoint-20261022-m/inputs-1/tools/physics/box3d/verify-sources.mjs",
+      "retained": "docs/physics/box3d/rebuild/motion-source-20261022-m1/inputs-1/tools/physics/box3d/verify-sources.mjs",
+      "bytes": 3268,
+      "sha256": "f18ad0dc623b6b83b8a46a2abbf34a29e0400d127a85f3fc16b966493b97e171"
+    },
+    {
+      "original": "tools/physics/box3d/output/motion-checkpoint-20261022-m/inputs-1/tools/physics/box3d/verify-wasm.mjs",
+      "retained": "docs/physics/box3d/rebuild/motion-source-20261022-m1/inputs-1/tools/physics/box3d/verify-wasm.mjs",
+      "bytes": 2615,
+      "sha256": "de4dd1b4e2ae32ceb5fddc0e8fbcb0159fdd29378cf7eed33c57e3852113af6e"
+    },
+    {
+      "original": "tools/physics/box3d/output/motion-checkpoint-20261022-m/inputs-1/tools/physics/box3d/versions.lock.json",
+      "retained": "docs/physics/box3d/rebuild/motion-source-20261022-m1/inputs-1/tools/physics/box3d/versions.lock.json",
+      "bytes": 4943,
+      "sha256": "e3bde2f63a74911c14aaa02a59d8039ba72ab7e662d96aaa563c9b9f1f484519"
+    },
+    {
+      "original": "tools/physics/box3d/output/motion-checkpoint-20261022-m/inputs-1/tools/physics/box3d/wasm-body-contract.mjs",
+      "retained": "docs/physics/box3d/rebuild/motion-source-20261022-m1/inputs-1/tools/physics/box3d/wasm-body-contract.mjs",
+      "bytes": 15697,
+      "sha256": "5be306a66497feeedadd02ead703247b56822b3964828f1a23165d06f0b0d9af"
+    },
+    {
+      "original": "tools/physics/box3d/output/motion-checkpoint-20261022-m/inputs-1/tools/physics/box3d/wasm-contract.mjs",
+      "retained": "docs/physics/box3d/rebuild/motion-source-20261022-m1/inputs-1/tools/physics/box3d/wasm-contract.mjs",
+      "bytes": 4057,
+      "sha256": "4850c9ee10ce491029f209bb499e040f7a569d01991a8797d85649333877ee71"
+    },
+    {
+      "original": "tools/physics/box3d/output/motion-checkpoint-20261022-m/inputs-1/tools/physics/box3d/wasm-filter-contract.mjs",
+      "retained": "docs/physics/box3d/rebuild/motion-source-20261022-m1/inputs-1/tools/physics/box3d/wasm-filter-contract.mjs",
+      "bytes": 18876,
+      "sha256": "ab79a3a0a6a8677b250b072a6611267896419c1b06839608e58ab9747065937a"
+    },
+    {
+      "original": "tools/physics/box3d/output/motion-checkpoint-20261022-m/inputs-1/tools/physics/box3d/wasm-geometry-contract.mjs",
+      "retained": "docs/physics/box3d/rebuild/motion-source-20261022-m1/inputs-1/tools/physics/box3d/wasm-geometry-contract.mjs",
+      "bytes": 18887,
+      "sha256": "4ce3094d9919f3bc01bbd2eadc7f0811ca75a6e5e2b063de7db77955187f9348"
+    },
+    {
+      "original": "tools/physics/box3d/output/motion-checkpoint-20261022-m/inputs-1/tools/physics/box3d/wasm-ownership-contract.mjs",
+      "retained": "docs/physics/box3d/rebuild/motion-source-20261022-m1/inputs-1/tools/physics/box3d/wasm-ownership-contract.mjs",
+      "bytes": 14585,
+      "sha256": "626d09f222ef564483b0781e2d377e326d625cf3202ded40ff4e1b48149b361d"
+    },
+    {
+      "original": "tools/physics/box3d/output/motion-checkpoint-20261022-m/inputs-1/tools/physics/box3d/wasm-snapshot-contract.mjs",
+      "retained": "docs/physics/box3d/rebuild/motion-source-20261022-m1/inputs-1/tools/physics/box3d/wasm-snapshot-contract.mjs",
+      "bytes": 16858,
+      "sha256": "c704afa56d36fec985d245c67ed4f9e6ec79f93b2603d439c33c833e104bf142"
+    },
+    {
+      "original": "tools/physics/box3d/output/motion-checkpoint-20261022-m/inputs-1/tools/physics/box3d/wasm-world-contract.mjs",
+      "retained": "docs/physics/box3d/rebuild/motion-source-20261022-m1/inputs-1/tools/physics/box3d/wasm-world-contract.mjs",
+      "bytes": 15876,
+      "sha256": "b9273441def669c3150bc92081f51afdafe496fc00199a913d61b65f788a656c"
+    },
+    {
+      "original": "tools/physics/box3d/output/motion-checkpoint-20261022-m/inputs-1/vendor/box3d/source-manifest.json",
+      "retained": "docs/physics/box3d/rebuild/motion-source-20261022-m1/inputs-1/vendor/box3d/source-manifest.json",
+      "bytes": 49178,
+      "sha256": "40f2d926a3fbc84d5d31f07532b3439657ebed69630ad9e2477c84fc25754dd0"
+    },
+    {
+      "original": "tools/physics/box3d/output/motion-checkpoint-20261022-m/source-checkpoint-1.json",
+      "retained": "docs/physics/box3d/rebuild/motion-source-20261022-m1/source-checkpoint-1.json",
+      "bytes": 18178,
+      "sha256": "732e7ba0dde3bbeba94d1cf09188d05bde621c7f621d4cc588ec13a97f1b8938"
+    },
+    {
+      "original": "tools/physics/box3d/output/motion-checkpoint-20261022-m/source-controls-1.raw.json",
+      "retained": "docs/physics/box3d/rebuild/motion-source-20261022-m1/source-controls-1.raw.json",
+      "bytes": 785,
+      "sha256": "ad000f850d3a8eb168181fde0071c9ab9e6761e3b91ce33c9e20170d47d12d04"
+    },
+    {
+      "original": "tools/physics/box3d/output/motion-checkpoint-20261022-m/source-controls-initial.mjs",
+      "retained": "docs/physics/box3d/rebuild/motion-source-20261022-m1/source-controls-initial.mjs",
+      "bytes": 3367,
+      "sha256": "b0a702fb353f50d423f860a7442c507d8358bd0e6d3feebfd6eedce43da6e779"
+    },
+    {
+      "original": "tools/physics/box3d/output/motion-checkpoint-20261022-m/source-controls-initial.receipt.json",
+      "retained": "docs/physics/box3d/rebuild/motion-source-20261022-m1/source-controls-initial.receipt.json",
+      "bytes": 255,
+      "sha256": "af109a1e746c9d855d36c3f6bbb4cb16016a18ea3d69a0fd9cfc52c516e00e84"
+    },
+    {
+      "original": "tools/physics/box3d/output/motion-checkpoint-20261022-m/source-controls-initial.stderr.txt",
+      "retained": "docs/physics/box3d/rebuild/motion-source-20261022-m1/source-controls-initial.stderr.txt",
+      "bytes": 906,
+      "sha256": "fc2274bcbcc68f7d6a0d28303b7208fa478f06fd82269c025b195cef3e9200e3"
+    },
+    {
+      "original": "tools/physics/box3d/output/motion-checkpoint-20261022-m/source-controls-initial.stdout.txt",
+      "retained": "docs/physics/box3d/rebuild/motion-source-20261022-m1/source-controls-initial.stdout.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "limits": [
+    "Frozen first motion bridge source checkpoint only. Native/WASM qualification not run.",
+    "The two new motion qualification fixtures were still in progress at this checkpoint.",
+    "Historical l2 native artifacts do not qualify this changed schema or source.",
+    "Product index entries came from frozen inputs-1; concurrent helper worktree files were not overwritten."
+  ]
+}

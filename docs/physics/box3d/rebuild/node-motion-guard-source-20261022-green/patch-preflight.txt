@@ -1,0 +1,1 @@
+2026-10-22T10:54Z: First guarded Python replacement aborted before writing Node because actual setRotationFromEuler uses zOpt, not guessed z parameter. Node SHA readback remained 385eabe981cf2c20c65211a488d03a702727e895029d3743193264cf9b500a2b. Corrected exact signature from actual source; no partial Node write or permission denial occurred.

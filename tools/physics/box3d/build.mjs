@@ -85,6 +85,7 @@ try {
             'tools/physics/box3d/native/world_bridge.c',
             'tools/physics/box3d/native/body_control.c',
             'tools/physics/box3d/native/filter_bridge.c',
+            'tools/physics/box3d/native/motion_bridge.c',
             'tools/physics/box3d/native/contract.c',
         ]) {
             const object = resolve(out, basename(source) + '.o');
@@ -289,6 +290,10 @@ try {
         'tools/physics/box3d/native/body_control.h',
         'tools/physics/box3d/native/filter_bridge.c',
         'tools/physics/box3d/native/filter_bridge.h',
+        'tools/physics/box3d/native/motion_bridge.c',
+        'tools/physics/box3d/native/motion_bridge.h',
+        'tools/physics/box3d/motion-source-controls.mjs',
+        'docs/physics/box3d/contracts/motion-command-decisions-v1.md',
         'tools/physics/box3d/native/filter_contract.c',
         'tools/physics/box3d/native/body_contract.c',
         'tools/physics/box3d/native/world_contract.c',

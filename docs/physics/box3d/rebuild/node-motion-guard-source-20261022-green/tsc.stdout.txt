@@ -1,0 +1,1 @@
+tools/verify/box3d/node-motion-guard-control.test.ts(516,27): error TS2550: Property 'fromEntries' does not exist on type 'ObjectConstructor'. Do you need to change your target library? Try changing the 'lib' compiler option to 'es2019' or later.

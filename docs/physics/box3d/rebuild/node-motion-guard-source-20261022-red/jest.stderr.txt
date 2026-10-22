@@ -1,0 +1,7043 @@
+  console.log
+    Cannot access game frame or container.
+
+      at warnID (src/cocos/core/platform/debug.ts:314:5)
+
+FAIL tools/verify/box3d/node-motion-guard-control.test.ts (12.516 s)
+  ✕ protected actual Node rejects before mutation: setPosition numeric (18 ms)
+  ✕ protected actual Node rejects before mutation: setPosition object (6 ms)
+  ✕ protected actual Node rejects before mutation: setPosition omitted z (6 ms)
+  ✕ protected actual Node rejects before mutation: position property (6 ms)
+  ✕ protected actual Node rejects before mutation: x property (6 ms)
+  ✕ protected actual Node rejects before mutation: y property (5 ms)
+  ✕ protected actual Node rejects before mutation: z property (5 ms)
+  ✕ protected actual Node rejects before mutation: setWorldPosition numeric (7 ms)
+  ✕ protected actual Node rejects before mutation: setWorldPosition object (5 ms)
+  ✕ protected actual Node rejects before mutation: setWorldPosition omitted z (4 ms)
+  ✕ protected actual Node rejects before mutation: worldPosition property (4 ms)
+  ✕ protected actual Node rejects before mutation: worldPositionX property (3 ms)
+  ✕ protected actual Node rejects before mutation: worldPositionY property (6 ms)
+  ✕ protected actual Node rejects before mutation: worldPositionZ property (6 ms)
+  ✕ protected actual Node rejects before mutation: setRotation numeric (5 ms)
+  ✕ protected actual Node rejects before mutation: setRotation object (5 ms)
+  ✕ protected actual Node rejects before mutation: rotation property (5 ms)
+  ✕ protected actual Node rejects before mutation: Euler method numeric (4 ms)
+  ✕ protected actual Node rejects before mutation: Euler method object (4 ms)
+  ✕ protected actual Node rejects before mutation: Euler property (13 ms)
+  ✕ protected actual Node rejects before mutation: angle property (5 ms)
+  ✕ protected actual Node rejects before mutation: setWorldRotation numeric (7 ms)
+  ✕ protected actual Node rejects before mutation: setWorldRotation object (6 ms)
+  ✕ protected actual Node rejects before mutation: worldRotation property (6 ms)
+  ✕ protected actual Node rejects before mutation: world Euler method (5 ms)
+  ✕ protected actual Node rejects before mutation: setScale numeric (5 ms)
+  ✕ protected actual Node rejects before mutation: setScale object (4 ms)
+  ✕ protected actual Node rejects before mutation: scale property (5 ms)
+  ✕ protected actual Node rejects before mutation: setWorldScale numeric (6 ms)
+  ✕ protected actual Node rejects before mutation: setWorldScale object (4 ms)
+  ✕ protected actual Node rejects before mutation: setWorldScale missing z raw overload (4 ms)
+  ✕ protected actual Node rejects before mutation: worldScale property (4 ms)
+  ✕ protected actual Node rejects before mutation: matrix property (5 ms)
+  ✕ protected actual Node rejects before mutation: translate local (4 ms)
+  ✕ protected actual Node rejects before mutation: translate world (4 ms)
+  ✕ protected actual Node rejects before mutation: rotate local (3 ms)
+  ✕ protected actual Node rejects before mutation: rotate world (4 ms)
+  ✕ protected actual Node rejects before mutation: lookAt (5 ms)
+  ✕ protected actual Node rejects before mutation: forward property (5 ms)
+  ✕ protected actual Node rejects before mutation: setRTS combined (4 ms)
+  ✕ protected actual Node rejects before mutation: setRTS later invalid scale (9 ms)
+  ✕ protected actual Node rejects before mutation: same position request (5 ms)
+  ✕ protected actual Node rejects before mutation: parent translation (5 ms)
+  ✕ protected actual Node rejects before mutation: grandparent rotation (5 ms)
+  ✕ protected actual Node rejects before mutation: ancestor scale (5 ms)
+  ✕ protected actual Node rejects before mutation: skip-transform flag (5 ms)
+  ✕ protected actual Node rejects before mutation: setParent false (3 ms)
+  ✕ protected actual Node rejects before mutation: setParent keep world (5 ms)
+  ✕ protected actual Node rejects before mutation: same parent request (13 ms)
+  ✕ protected actual Node rejects before mutation: parent property (5 ms)
+  ✕ protected actual Node rejects before mutation: modifyParent internal (4 ms)
+  ✕ protected actual Node rejects before mutation: ancestor modifyParent (4 ms)
+  ✕ protected actual Node rejects before mutation: ancestor subtree reparent (3 ms)
+  ✕ protected actual Node rejects before mutation: addChild (3 ms)
+  ✕ protected actual Node rejects before mutation: insertChild (4 ms)
+  ✕ protected actual Node rejects before mutation: removeFromParent (4 ms)
+  ✕ protected actual Node rejects before mutation: removeChild (4 ms)
+  ✕ protected actual Node rejects before mutation: removeAllChildren preflight before unprotected sibling (4 ms)
+  ✓ truly empty setRTS remains an event-free no-op under ownership (4 ms)
+  ✓ unrelated subtree remains writable with another target ancestor lease (1 ms)
+  ✕ shared ancestor remains protected until the last independent owner releases (1 ms)
+  ✓ empty registry does not evaluate candidate getter or alter legacy validation (2 ms)
+  ✕ grant expected values are copied and an exact actual Node write consumes once (1 ms)
+  ✕ owned grant rejects before a dirty-world refresh: mismatched values (4 ms)
+  ✕ owned grant rejects before a dirty-world refresh: omitted z (6 ms)
+  ✕ owned grant rejects before a dirty-world refresh: wrong operation (4 ms)
+  ✕ complete object candidate is copied once and used for the actual owned write
+  ✕ single-use grant is consumed before synchronous user transform listener reentry (3 ms)
+  ✕ uncaught user exception is preserved and does not leave a reusable grant (1 ms)
+  ✕ input getter reentry cannot steal a pending grant (1 ms)
+  ✕ all shared ancestor leases must provide exact nested permission (7 ms)
+  ✕ mismatched second lease is rejected without consuming or mutating either Node write (1 ms)
+  ✓ same lease nested permission and unused grant fail explicitly (1 ms)
+  ✓ dispose revokes pending permission and repeated dispose is safe (1 ms)
+  ✓ invalid registration has no partial owner insertion (1 ms)
+  ✕ owned world quaternion operation and existing unrelated SCALE flags survive (1 ms)
+  ✓ raw alias bypass is explicitly outside synchronous interception, not a fake rejection (1 ms)
+  ✓ standalone write gate cannot create permission without matching entry
+  ✕ input accessor changes ownership: dispose-self cannot forge an owned Node write (6 ms)
+  ✕ input accessor changes ownership: add-owner cannot forge an owned Node write (5 ms)
+  ✕ input accessor changes ownership: replace-owner cannot forge an owned Node write (4 ms)
+  ✓ listener disposal after a real Node write is not reported as valid owned completion
+
+  ● protected actual Node rejects before mutation: setPosition numeric
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 5
+    + Received  + 7
+
+    @@ -1,8 +1,10 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "code": undefined,
+    +   "events": Array [
+    +     "body:transform-changed",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.661",
+            ],
+    @@ -394,19 +396,19 @@
+            ],
+            "local": Array [
+              Array [
+                Array [
+                  "x",
+    -             1,
+    +             8,
+                ],
+                Array [
+                  "y",
+    -             2,
+    +             9,
+                ],
+                Array [
+                  "z",
+    -             3,
+    +             10,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● protected actual Node rejects before mutation: setPosition object
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 5
+    + Received  + 7
+
+    @@ -1,8 +1,10 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "code": undefined,
+    +   "events": Array [
+    +     "body:transform-changed",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.666",
+            ],
+    @@ -394,19 +396,19 @@
+            ],
+            "local": Array [
+              Array [
+                Array [
+                  "x",
+    -             1,
+    +             8,
+                ],
+                Array [
+                  "y",
+    -             2,
+    +             9,
+                ],
+                Array [
+                  "z",
+    -             3,
+    +             10,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● protected actual Node rejects before mutation: setPosition omitted z
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 4
+    + Received  + 6
+
+    @@ -1,8 +1,10 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "code": undefined,
+    +   "events": Array [
+    +     "body:transform-changed",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.671",
+            ],
+    @@ -394,15 +396,15 @@
+            ],
+            "local": Array [
+              Array [
+                Array [
+                  "x",
+    -             1,
+    +             8,
+                ],
+                Array [
+                  "y",
+    -             2,
+    +             9,
+                ],
+                Array [
+                  "z",
+                  3,
+                ],
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● protected actual Node rejects before mutation: position property
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 5
+    + Received  + 7
+
+    @@ -1,8 +1,10 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "code": undefined,
+    +   "events": Array [
+    +     "body:transform-changed",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.676",
+            ],
+    @@ -394,19 +396,19 @@
+            ],
+            "local": Array [
+              Array [
+                Array [
+                  "x",
+    -             1,
+    +             8,
+                ],
+                Array [
+                  "y",
+    -             2,
+    +             9,
+                ],
+                Array [
+                  "z",
+    -             3,
+    +             10,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● protected actual Node rejects before mutation: x property
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 3
+    + Received  + 5
+
+    @@ -1,8 +1,10 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "code": undefined,
+    +   "events": Array [
+    +     "body:transform-changed",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.681",
+            ],
+    @@ -394,11 +396,11 @@
+            ],
+            "local": Array [
+              Array [
+                Array [
+                  "x",
+    -             1,
+    +             8,
+                ],
+                Array [
+                  "y",
+                  2,
+                ],
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● protected actual Node rejects before mutation: y property
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 3
+    + Received  + 5
+
+    @@ -1,8 +1,10 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "code": undefined,
+    +   "events": Array [
+    +     "body:transform-changed",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.686",
+            ],
+    @@ -398,11 +400,11 @@
+                  "x",
+                  1,
+                ],
+                Array [
+                  "y",
+    -             2,
+    +             8,
+                ],
+                Array [
+                  "z",
+                  3,
+                ],
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● protected actual Node rejects before mutation: z property
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 3
+    + Received  + 5
+
+    @@ -1,8 +1,10 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "code": undefined,
+    +   "events": Array [
+    +     "body:transform-changed",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.691",
+            ],
+    @@ -402,11 +404,11 @@
+                  "y",
+                  2,
+                ],
+                Array [
+                  "z",
+    -             3,
+    +             8,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● protected actual Node rejects before mutation: setWorldPosition numeric
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 16
+    + Received  + 18
+
+    @@ -1,15 +1,17 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "code": undefined,
+    +   "events": Array [
+    +     "body:transform-changed",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.696",
+            ],
+            "flags": Array [
+    -         15,
+    +         0,
+              0,
+              0,
+              false,
+              0,
+            ],
+    @@ -196,11 +198,11 @@
+            "children": Array [
+              "Node.697",
+              "Node.698",
+            ],
+            "flags": Array [
+    -         15,
+    +         0,
+              7,
+              0,
+              false,
+              0,
+            ],
+    @@ -270,19 +272,19 @@
+            "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+    -             0,
+    +             4,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             6,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    @@ -364,19 +366,19 @@
+                  "m11",
+                  0,
+                ],
+                Array [
+                  "m12",
+    -             0,
+    +             4,
+                ],
+                Array [
+                  "m13",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "m14",
+    -             0,
+    +             6,
+                ],
+                Array [
+                  "m15",
+                  1,
+                ],
+    @@ -394,19 +396,19 @@
+            ],
+            "local": Array [
+              Array [
+                Array [
+                  "x",
+    -             1,
+    +             4,
+                ],
+                Array [
+                  "y",
+    -             2,
+    +             4,
+                ],
+                Array [
+                  "z",
+    -             3,
+    +             4,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    @@ -458,19 +460,19 @@
+            "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+    -             0,
+    +             8,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             9,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             10,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● protected actual Node rejects before mutation: setWorldPosition object
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 16
+    + Received  + 18
+
+    @@ -1,15 +1,17 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "code": undefined,
+    +   "events": Array [
+    +     "body:transform-changed",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.701",
+            ],
+            "flags": Array [
+    -         15,
+    +         0,
+              0,
+              0,
+              false,
+              0,
+            ],
+    @@ -196,11 +198,11 @@
+            "children": Array [
+              "Node.702",
+              "Node.703",
+            ],
+            "flags": Array [
+    -         15,
+    +         0,
+              7,
+              0,
+              false,
+              0,
+            ],
+    @@ -270,19 +272,19 @@
+            "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+    -             0,
+    +             4,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             6,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    @@ -364,19 +366,19 @@
+                  "m11",
+                  0,
+                ],
+                Array [
+                  "m12",
+    -             0,
+    +             4,
+                ],
+                Array [
+                  "m13",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "m14",
+    -             0,
+    +             6,
+                ],
+                Array [
+                  "m15",
+                  1,
+                ],
+    @@ -394,19 +396,19 @@
+            ],
+            "local": Array [
+              Array [
+                Array [
+                  "x",
+    -             1,
+    +             4,
+                ],
+                Array [
+                  "y",
+    -             2,
+    +             4,
+                ],
+                Array [
+                  "z",
+    -             3,
+    +             4,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    @@ -458,19 +460,19 @@
+            "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+    -             0,
+    +             8,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             9,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             10,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● protected actual Node rejects before mutation: setWorldPosition omitted z
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 19
+    + Received  + 21
+
+    @@ -1,15 +1,17 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "code": undefined,
+    +   "events": Array [
+    +     "body:transform-changed",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.706",
+            ],
+            "flags": Array [
+    -         15,
+    +         0,
+              0,
+              0,
+              false,
+              0,
+            ],
+    @@ -196,11 +198,11 @@
+            "children": Array [
+              "Node.707",
+              "Node.708",
+            ],
+            "flags": Array [
+    -         15,
+    +         0,
+              7,
+              0,
+              false,
+              0,
+            ],
+    @@ -270,19 +272,19 @@
+            "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+    -             0,
+    +             4,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             6,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    @@ -364,19 +366,19 @@
+                  "m11",
+                  0,
+                ],
+                Array [
+                  "m12",
+    -             0,
+    +             4,
+                ],
+                Array [
+                  "m13",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "m14",
+    -             0,
+    +             6,
+                ],
+                Array [
+                  "m15",
+                  1,
+                ],
+    @@ -384,25 +386,25 @@
+            ],
+          },
+          Object {
+            "children": Array [],
+            "flags": Array [
+    -         15,
+    +         1,
+              7,
+              0,
+              false,
+              0,
+            ],
+            "local": Array [
+              Array [
+                Array [
+                  "x",
+    -             1,
+    +             4,
+                ],
+                Array [
+                  "y",
+    -             2,
+    +             4,
+                ],
+                Array [
+                  "z",
+                  3,
+                ],
+    @@ -458,19 +460,19 @@
+            "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+    -             0,
+    +             8,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             9,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             9,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    @@ -552,19 +554,19 @@
+                  "m11",
+                  0,
+                ],
+                Array [
+                  "m12",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "m13",
+    -             0,
+    +             7,
+                ],
+                Array [
+                  "m14",
+    -             0,
+    +             9,
+                ],
+                Array [
+                  "m15",
+                  1,
+                ],
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● protected actual Node rejects before mutation: worldPosition property
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 16
+    + Received  + 18
+
+    @@ -1,15 +1,17 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "code": undefined,
+    +   "events": Array [
+    +     "body:transform-changed",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.711",
+            ],
+            "flags": Array [
+    -         15,
+    +         0,
+              0,
+              0,
+              false,
+              0,
+            ],
+    @@ -196,11 +198,11 @@
+            "children": Array [
+              "Node.712",
+              "Node.713",
+            ],
+            "flags": Array [
+    -         15,
+    +         0,
+              7,
+              0,
+              false,
+              0,
+            ],
+    @@ -270,19 +272,19 @@
+            "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+    -             0,
+    +             4,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             6,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    @@ -364,19 +366,19 @@
+                  "m11",
+                  0,
+                ],
+                Array [
+                  "m12",
+    -             0,
+    +             4,
+                ],
+                Array [
+                  "m13",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "m14",
+    -             0,
+    +             6,
+                ],
+                Array [
+                  "m15",
+                  1,
+                ],
+    @@ -394,19 +396,19 @@
+            ],
+            "local": Array [
+              Array [
+                Array [
+                  "x",
+    -             1,
+    +             4,
+                ],
+                Array [
+                  "y",
+    -             2,
+    +             4,
+                ],
+                Array [
+                  "z",
+    -             3,
+    +             4,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    @@ -458,19 +460,19 @@
+            "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+    -             0,
+    +             8,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             9,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             10,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● protected actual Node rejects before mutation: worldPositionX property
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 14
+    + Received  + 16
+
+    @@ -1,17 +1,19 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "code": undefined,
+    +   "events": Array [
+    +     "body:transform-changed",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.716",
+            ],
+            "flags": Array [
+    -         15,
+              0,
+              0,
+    +         0,
+              false,
+              0,
+            ],
+            "local": Array [
+              Array [
+    @@ -196,11 +198,11 @@
+            "children": Array [
+              "Node.717",
+              "Node.718",
+            ],
+            "flags": Array [
+    -         15,
+    +         0,
+              7,
+              0,
+              false,
+              0,
+            ],
+    @@ -270,19 +272,19 @@
+            "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+    -             0,
+    +             4,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             6,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    @@ -364,19 +366,19 @@
+                  "m11",
+                  0,
+                ],
+                Array [
+                  "m12",
+    -             0,
+    +             4,
+                ],
+                Array [
+                  "m13",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "m14",
+    -             0,
+    +             6,
+                ],
+                Array [
+                  "m15",
+                  1,
+                ],
+    @@ -394,19 +396,19 @@
+            ],
+            "local": Array [
+              Array [
+                Array [
+                  "x",
+    -             1,
+    +             4,
+                ],
+                Array [
+                  "y",
+    -             2,
+    +             -5,
+                ],
+                Array [
+                  "z",
+    -             3,
+    +             -6,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    @@ -458,11 +460,11 @@
+            "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+    -             0,
+    +             8,
+                ],
+                Array [
+                  "y",
+                  0,
+                ],
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● protected actual Node rejects before mutation: worldPositionY property
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 14
+    + Received  + 16
+
+    @@ -1,17 +1,19 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "code": undefined,
+    +   "events": Array [
+    +     "body:transform-changed",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.721",
+            ],
+            "flags": Array [
+    -         15,
+              0,
+              0,
+    +         0,
+              false,
+              0,
+            ],
+            "local": Array [
+              Array [
+    @@ -196,11 +198,11 @@
+            "children": Array [
+              "Node.722",
+              "Node.723",
+            ],
+            "flags": Array [
+    -         15,
+    +         0,
+              7,
+              0,
+              false,
+              0,
+            ],
+    @@ -270,19 +272,19 @@
+            "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+    -             0,
+    +             4,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             6,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    @@ -364,19 +366,19 @@
+                  "m11",
+                  0,
+                ],
+                Array [
+                  "m12",
+    -             0,
+    +             4,
+                ],
+                Array [
+                  "m13",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "m14",
+    -             0,
+    +             6,
+                ],
+                Array [
+                  "m15",
+                  1,
+                ],
+    @@ -394,19 +396,19 @@
+            ],
+            "local": Array [
+              Array [
+                Array [
+                  "x",
+    -             1,
+    +             -4,
+                ],
+                Array [
+                  "y",
+    -             2,
+    +             3,
+                ],
+                Array [
+                  "z",
+    -             3,
+    +             -6,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    @@ -462,11 +464,11 @@
+                  "x",
+                  0,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             8,
+                ],
+                Array [
+                  "z",
+                  0,
+                ],
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● protected actual Node rejects before mutation: worldPositionZ property
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 14
+    + Received  + 16
+
+    @@ -1,17 +1,19 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "code": undefined,
+    +   "events": Array [
+    +     "body:transform-changed",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.726",
+            ],
+            "flags": Array [
+    -         15,
+              0,
+              0,
+    +         0,
+              false,
+              0,
+            ],
+            "local": Array [
+              Array [
+    @@ -196,11 +198,11 @@
+            "children": Array [
+              "Node.727",
+              "Node.728",
+            ],
+            "flags": Array [
+    -         15,
+    +         0,
+              7,
+              0,
+              false,
+              0,
+            ],
+    @@ -270,19 +272,19 @@
+            "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+    -             0,
+    +             4,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             6,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    @@ -364,19 +366,19 @@
+                  "m11",
+                  0,
+                ],
+                Array [
+                  "m12",
+    -             0,
+    +             4,
+                ],
+                Array [
+                  "m13",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "m14",
+    -             0,
+    +             6,
+                ],
+                Array [
+                  "m15",
+                  1,
+                ],
+    @@ -394,19 +396,19 @@
+            ],
+            "local": Array [
+              Array [
+                Array [
+                  "x",
+    -             1,
+    +             -4,
+                ],
+                Array [
+                  "y",
+    -             2,
+    +             -5,
+                ],
+                Array [
+                  "z",
+    -             3,
+    +             2,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    @@ -466,11 +468,11 @@
+                  "y",
+                  0,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             8,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● protected actual Node rejects before mutation: setRotation numeric
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 5
+    + Received  + 7
+
+    @@ -1,8 +1,10 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "code": undefined,
+    +   "events": Array [
+    +     "body:transform-changed",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.731",
+            ],
+    @@ -387,11 +389,11 @@
+            "children": Array [],
+            "flags": Array [
+              15,
+              7,
+              0,
+    -         false,
+    +         true,
+              0,
+            ],
+            "local": Array [
+              Array [
+                Array [
+    @@ -408,11 +410,11 @@
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    -             1,
+    +             0,
+                ],
+                Array [
+                  "x",
+                  0,
+                ],
+    @@ -420,11 +422,11 @@
+                  "y",
+                  0,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             1,
+                ],
+              ],
+              Array [
+                Array [
+                  "x",
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● protected actual Node rejects before mutation: setRotation object
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 5
+    + Received  + 7
+
+    @@ -1,8 +1,10 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "code": undefined,
+    +   "events": Array [
+    +     "body:transform-changed",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.736",
+            ],
+    @@ -387,11 +389,11 @@
+            "children": Array [],
+            "flags": Array [
+              15,
+              7,
+              0,
+    -         false,
+    +         true,
+              0,
+            ],
+            "local": Array [
+              Array [
+                Array [
+    @@ -408,11 +410,11 @@
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    -             1,
+    +             0,
+                ],
+                Array [
+                  "x",
+                  0,
+                ],
+    @@ -420,11 +422,11 @@
+                  "y",
+                  0,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             1,
+                ],
+              ],
+              Array [
+                Array [
+                  "x",
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● protected actual Node rejects before mutation: rotation property
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 5
+    + Received  + 7
+
+    @@ -1,8 +1,10 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "code": undefined,
+    +   "events": Array [
+    +     "body:transform-changed",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.741",
+            ],
+    @@ -387,11 +389,11 @@
+            "children": Array [],
+            "flags": Array [
+              15,
+              7,
+              0,
+    -         false,
+    +         true,
+              0,
+            ],
+            "local": Array [
+              Array [
+                Array [
+    @@ -408,11 +410,11 @@
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    -             1,
+    +             0,
+                ],
+                Array [
+                  "x",
+                  0,
+                ],
+    @@ -420,11 +422,11 @@
+                  "y",
+                  0,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             1,
+                ],
+              ],
+              Array [
+                Array [
+                  "x",
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● protected actual Node rejects before mutation: Euler method numeric
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  9
+    + Received  + 11
+
+    @@ -1,8 +1,10 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "code": undefined,
+    +   "events": Array [
+    +     "body:transform-changed",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.746",
+            ],
+    @@ -408,23 +410,23 @@
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    -             1,
+    +             0.8785122060499201,
+                ],
+                Array [
+                  "x",
+    -             0,
+    +             0.24479231586341083,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             0.29688290455629096,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             0.283114052808671,
+                ],
+              ],
+              Array [
+                Array [
+                  "x",
+    @@ -440,19 +442,19 @@
+                ],
+              ],
+              Array [
+                Array [
+                  "x",
+    -             0,
+    +             20,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             30,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             40,
+                ],
+              ],
+            ],
+            "parent": "Node.746",
+            "siblingIndex": 0,
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● protected actual Node rejects before mutation: Euler method object
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  9
+    + Received  + 11
+
+    @@ -1,8 +1,10 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "code": undefined,
+    +   "events": Array [
+    +     "body:transform-changed",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.751",
+            ],
+    @@ -408,23 +410,23 @@
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    -             1,
+    +             0.8785122060499201,
+                ],
+                Array [
+                  "x",
+    -             0,
+    +             0.24479231586341083,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             0.29688290455629096,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             0.283114052808671,
+                ],
+              ],
+              Array [
+                Array [
+                  "x",
+    @@ -440,19 +442,19 @@
+                ],
+              ],
+              Array [
+                Array [
+                  "x",
+    -             0,
+    +             20,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             30,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             40,
+                ],
+              ],
+            ],
+            "parent": "Node.751",
+            "siblingIndex": 0,
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● protected actual Node rejects before mutation: Euler property
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  9
+    + Received  + 11
+
+    @@ -1,8 +1,10 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "code": undefined,
+    +   "events": Array [
+    +     "body:transform-changed",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.756",
+            ],
+    @@ -408,23 +410,23 @@
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    -             1,
+    +             0.8785122060499201,
+                ],
+                Array [
+                  "x",
+    -             0,
+    +             0.24479231586341083,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             0.29688290455629096,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             0.283114052808671,
+                ],
+              ],
+              Array [
+                Array [
+                  "x",
+    @@ -440,19 +442,19 @@
+                ],
+              ],
+              Array [
+                Array [
+                  "x",
+    -             0,
+    +             20,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             30,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             40,
+                ],
+              ],
+            ],
+            "parent": "Node.756",
+            "siblingIndex": 0,
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● protected actual Node rejects before mutation: angle property
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 5
+    + Received  + 7
+
+    @@ -1,8 +1,10 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "code": undefined,
+    +   "events": Array [
+    +     "body:transform-changed",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.761",
+            ],
+    @@ -408,11 +410,11 @@
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    -             1,
+    +             0.9238795325112867,
+                ],
+                Array [
+                  "x",
+                  0,
+                ],
+    @@ -420,11 +422,11 @@
+                  "y",
+                  0,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             0.3826834323650898,
+                ],
+              ],
+              Array [
+                Array [
+                  "x",
+    @@ -448,11 +450,11 @@
+                  "y",
+                  0,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             45,
+                ],
+              ],
+            ],
+            "parent": "Node.761",
+            "siblingIndex": 0,
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● protected actual Node rejects before mutation: setWorldRotation numeric
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 15
+    + Received  + 17
+
+    @@ -1,15 +1,17 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "code": undefined,
+    +   "events": Array [
+    +     "body:transform-changed",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.766",
+            ],
+            "flags": Array [
+    -         15,
+    +         0,
+              0,
+              0,
+              false,
+              0,
+            ],
+    @@ -196,11 +198,11 @@
+            "children": Array [
+              "Node.767",
+              "Node.768",
+            ],
+            "flags": Array [
+    -         15,
+    +         0,
+              7,
+              0,
+              false,
+              0,
+            ],
+    @@ -270,19 +272,19 @@
+            "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+    -             0,
+    +             4,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             6,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    @@ -364,19 +366,19 @@
+                  "m11",
+                  0,
+                ],
+                Array [
+                  "m12",
+    -             0,
+    +             4,
+                ],
+                Array [
+                  "m13",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "m14",
+    -             0,
+    +             6,
+                ],
+                Array [
+                  "m15",
+                  1,
+                ],
+    @@ -387,11 +389,11 @@
+            "children": Array [],
+            "flags": Array [
+              15,
+              7,
+              0,
+    -         false,
+    +         true,
+              0,
+            ],
+            "local": Array [
+              Array [
+                Array [
+    @@ -408,11 +410,11 @@
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    -             1,
+    +             0,
+                ],
+                Array [
+                  "x",
+                  0,
+                ],
+    @@ -420,11 +422,11 @@
+                  "y",
+                  0,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             1,
+                ],
+              ],
+              Array [
+                Array [
+                  "x",
+    @@ -472,11 +474,11 @@
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    -             1,
+    +             0,
+                ],
+                Array [
+                  "x",
+                  0,
+                ],
+    @@ -484,11 +486,11 @@
+                  "y",
+                  0,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             1,
+                ],
+              ],
+              Array [
+                Array [
+                  "x",
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● protected actual Node rejects before mutation: setWorldRotation object
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 15
+    + Received  + 17
+
+    @@ -1,15 +1,17 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "code": undefined,
+    +   "events": Array [
+    +     "body:transform-changed",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.771",
+            ],
+            "flags": Array [
+    -         15,
+    +         0,
+              0,
+              0,
+              false,
+              0,
+            ],
+    @@ -196,11 +198,11 @@
+            "children": Array [
+              "Node.772",
+              "Node.773",
+            ],
+            "flags": Array [
+    -         15,
+    +         0,
+              7,
+              0,
+              false,
+              0,
+            ],
+    @@ -270,19 +272,19 @@
+            "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+    -             0,
+    +             4,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             6,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    @@ -364,19 +366,19 @@
+                  "m11",
+                  0,
+                ],
+                Array [
+                  "m12",
+    -             0,
+    +             4,
+                ],
+                Array [
+                  "m13",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "m14",
+    -             0,
+    +             6,
+                ],
+                Array [
+                  "m15",
+                  1,
+                ],
+    @@ -387,11 +389,11 @@
+            "children": Array [],
+            "flags": Array [
+              15,
+              7,
+              0,
+    -         false,
+    +         true,
+              0,
+            ],
+            "local": Array [
+              Array [
+                Array [
+    @@ -408,11 +410,11 @@
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    -             1,
+    +             0,
+                ],
+                Array [
+                  "x",
+                  0,
+                ],
+    @@ -420,11 +422,11 @@
+                  "y",
+                  0,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             1,
+                ],
+              ],
+              Array [
+                Array [
+                  "x",
+    @@ -472,11 +474,11 @@
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    -             1,
+    +             0,
+                ],
+                Array [
+                  "x",
+                  0,
+                ],
+    @@ -484,11 +486,11 @@
+                  "y",
+                  0,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             1,
+                ],
+              ],
+              Array [
+                Array [
+                  "x",
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● protected actual Node rejects before mutation: worldRotation property
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 15
+    + Received  + 17
+
+    @@ -1,15 +1,17 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "code": undefined,
+    +   "events": Array [
+    +     "body:transform-changed",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.776",
+            ],
+            "flags": Array [
+    -         15,
+    +         0,
+              0,
+              0,
+              false,
+              0,
+            ],
+    @@ -196,11 +198,11 @@
+            "children": Array [
+              "Node.777",
+              "Node.778",
+            ],
+            "flags": Array [
+    -         15,
+    +         0,
+              7,
+              0,
+              false,
+              0,
+            ],
+    @@ -270,19 +272,19 @@
+            "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+    -             0,
+    +             4,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             6,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    @@ -364,19 +366,19 @@
+                  "m11",
+                  0,
+                ],
+                Array [
+                  "m12",
+    -             0,
+    +             4,
+                ],
+                Array [
+                  "m13",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "m14",
+    -             0,
+    +             6,
+                ],
+                Array [
+                  "m15",
+                  1,
+                ],
+    @@ -387,11 +389,11 @@
+            "children": Array [],
+            "flags": Array [
+              15,
+              7,
+              0,
+    -         false,
+    +         true,
+              0,
+            ],
+            "local": Array [
+              Array [
+                Array [
+    @@ -408,11 +410,11 @@
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    -             1,
+    +             0,
+                ],
+                Array [
+                  "x",
+                  0,
+                ],
+    @@ -420,11 +422,11 @@
+                  "y",
+                  0,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             1,
+                ],
+              ],
+              Array [
+                Array [
+                  "x",
+    @@ -472,11 +474,11 @@
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    -             1,
+    +             0,
+                ],
+                Array [
+                  "x",
+                  0,
+                ],
+    @@ -484,11 +486,11 @@
+                  "y",
+                  0,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             1,
+                ],
+              ],
+              Array [
+                Array [
+                  "x",
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● protected actual Node rejects before mutation: world Euler method
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 19
+    + Received  + 21
+
+    @@ -1,15 +1,17 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "code": undefined,
+    +   "events": Array [
+    +     "body:transform-changed",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.781",
+            ],
+            "flags": Array [
+    -         15,
+    +         0,
+              0,
+              0,
+              false,
+              0,
+            ],
+    @@ -196,11 +198,11 @@
+            "children": Array [
+              "Node.782",
+              "Node.783",
+            ],
+            "flags": Array [
+    -         15,
+    +         0,
+              7,
+              0,
+              false,
+              0,
+            ],
+    @@ -270,19 +272,19 @@
+            "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+    -             0,
+    +             4,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             6,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    @@ -364,19 +366,19 @@
+                  "m11",
+                  0,
+                ],
+                Array [
+                  "m12",
+    -             0,
+    +             4,
+                ],
+                Array [
+                  "m13",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "m14",
+    -             0,
+    +             6,
+                ],
+                Array [
+                  "m15",
+                  1,
+                ],
+    @@ -387,11 +389,11 @@
+            "children": Array [],
+            "flags": Array [
+              15,
+              7,
+              0,
+    -         false,
+    +         true,
+              0,
+            ],
+            "local": Array [
+              Array [
+                Array [
+    @@ -408,23 +410,23 @@
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    -             1,
+    +             0.8785122060499201,
+                ],
+                Array [
+                  "x",
+    -             0,
+    +             0.24479231586341083,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             0.29688290455629096,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             0.283114052808671,
+                ],
+              ],
+              Array [
+                Array [
+                  "x",
+    @@ -472,23 +474,23 @@
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    -             1,
+    +             0.8785122060499201,
+                ],
+                Array [
+                  "x",
+    -             0,
+    +             0.24479231586341083,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             0.29688290455629096,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             0.283114052808671,
+                ],
+              ],
+              Array [
+                Array [
+                  "x",
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● protected actual Node rejects before mutation: setScale numeric
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 5
+    + Received  + 7
+
+    @@ -1,8 +1,10 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "code": undefined,
+    +   "events": Array [
+    +     "body:transform-changed",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.786",
+            ],
+    @@ -426,19 +428,19 @@
+                ],
+              ],
+              Array [
+                Array [
+                  "x",
+    -             1,
+    +             2,
+                ],
+                Array [
+                  "y",
+    -             1,
+    +             3,
+                ],
+                Array [
+                  "z",
+    -             1,
+    +             4,
+                ],
+              ],
+              Array [
+                Array [
+                  "x",
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● protected actual Node rejects before mutation: setScale object
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 5
+    + Received  + 7
+
+    @@ -1,8 +1,10 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "code": undefined,
+    +   "events": Array [
+    +     "body:transform-changed",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.791",
+            ],
+    @@ -426,19 +428,19 @@
+                ],
+              ],
+              Array [
+                Array [
+                  "x",
+    -             1,
+    +             2,
+                ],
+                Array [
+                  "y",
+    -             1,
+    +             3,
+                ],
+                Array [
+                  "z",
+    -             1,
+    +             4,
+                ],
+              ],
+              Array [
+                Array [
+                  "x",
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● protected actual Node rejects before mutation: scale property
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 5
+    + Received  + 7
+
+    @@ -1,8 +1,10 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "code": undefined,
+    +   "events": Array [
+    +     "body:transform-changed",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.796",
+            ],
+    @@ -426,19 +428,19 @@
+                ],
+              ],
+              Array [
+                Array [
+                  "x",
+    -             1,
+    +             2,
+                ],
+                Array [
+                  "y",
+    -             1,
+    +             3,
+                ],
+                Array [
+                  "z",
+    -             1,
+    +             4,
+                ],
+              ],
+              Array [
+                Array [
+                  "x",
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● protected actual Node rejects before mutation: setWorldScale numeric
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 23
+    + Received  + 25
+
+    @@ -1,15 +1,17 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "code": undefined,
+    +   "events": Array [
+    +     "body:transform-changed",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.801",
+            ],
+            "flags": Array [
+    -         15,
+    +         0,
+              0,
+              0,
+              false,
+              0,
+            ],
+    @@ -196,11 +198,11 @@
+            "children": Array [
+              "Node.802",
+              "Node.803",
+            ],
+            "flags": Array [
+    -         15,
+    +         0,
+              7,
+              0,
+              false,
+              0,
+            ],
+    @@ -270,19 +272,19 @@
+            "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+    -             0,
+    +             4,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             6,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    @@ -364,19 +366,19 @@
+                  "m11",
+                  0,
+                ],
+                Array [
+                  "m12",
+    -             0,
+    +             4,
+                ],
+                Array [
+                  "m13",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "m14",
+    -             0,
+    +             6,
+                ],
+                Array [
+                  "m15",
+                  1,
+                ],
+    @@ -384,11 +386,11 @@
+            ],
+          },
+          Object {
+            "children": Array [],
+            "flags": Array [
+    -         15,
+    +         4,
+              7,
+              0,
+              false,
+              0,
+            ],
+    @@ -426,19 +428,19 @@
+                ],
+              ],
+              Array [
+                Array [
+                  "x",
+    -             1,
+    +             2,
+                ],
+                Array [
+                  "y",
+    -             1,
+    +             3,
+                ],
+                Array [
+                  "z",
+    -             1,
+    +             4,
+                ],
+              ],
+              Array [
+                Array [
+                  "x",
+    @@ -458,19 +460,19 @@
+            "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             7,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             9,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    @@ -490,19 +492,19 @@
+                ],
+              ],
+              Array [
+                Array [
+                  "x",
+    -             1,
+    +             2,
+                ],
+                Array [
+                  "y",
+    -             1,
+    +             3,
+                ],
+                Array [
+                  "z",
+    -             1,
+    +             4,
+                ],
+              ],
+              Array [
+                Array [
+                  "m00",
+    @@ -552,19 +554,19 @@
+                  "m11",
+                  0,
+                ],
+                Array [
+                  "m12",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "m13",
+    -             0,
+    +             7,
+                ],
+                Array [
+                  "m14",
+    -             0,
+    +             9,
+                ],
+                Array [
+                  "m15",
+                  1,
+                ],
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● protected actual Node rejects before mutation: setWorldScale object
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 23
+    + Received  + 25
+
+    @@ -1,15 +1,17 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "code": undefined,
+    +   "events": Array [
+    +     "body:transform-changed",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.806",
+            ],
+            "flags": Array [
+    -         15,
+    +         0,
+              0,
+              0,
+              false,
+              0,
+            ],
+    @@ -196,11 +198,11 @@
+            "children": Array [
+              "Node.807",
+              "Node.808",
+            ],
+            "flags": Array [
+    -         15,
+    +         0,
+              7,
+              0,
+              false,
+              0,
+            ],
+    @@ -270,19 +272,19 @@
+            "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+    -             0,
+    +             4,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             6,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    @@ -364,19 +366,19 @@
+                  "m11",
+                  0,
+                ],
+                Array [
+                  "m12",
+    -             0,
+    +             4,
+                ],
+                Array [
+                  "m13",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "m14",
+    -             0,
+    +             6,
+                ],
+                Array [
+                  "m15",
+                  1,
+                ],
+    @@ -384,11 +386,11 @@
+            ],
+          },
+          Object {
+            "children": Array [],
+            "flags": Array [
+    -         15,
+    +         4,
+              7,
+              0,
+              false,
+              0,
+            ],
+    @@ -426,19 +428,19 @@
+                ],
+              ],
+              Array [
+                Array [
+                  "x",
+    -             1,
+    +             2,
+                ],
+                Array [
+                  "y",
+    -             1,
+    +             3,
+                ],
+                Array [
+                  "z",
+    -             1,
+    +             4,
+                ],
+              ],
+              Array [
+                Array [
+                  "x",
+    @@ -458,19 +460,19 @@
+            "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             7,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             9,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    @@ -490,19 +492,19 @@
+                ],
+              ],
+              Array [
+                Array [
+                  "x",
+    -             1,
+    +             2,
+                ],
+                Array [
+                  "y",
+    -             1,
+    +             3,
+                ],
+                Array [
+                  "z",
+    -             1,
+    +             4,
+                ],
+              ],
+              Array [
+                Array [
+                  "m00",
+    @@ -552,19 +554,19 @@
+                  "m11",
+                  0,
+                ],
+                Array [
+                  "m12",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "m13",
+    -             0,
+    +             7,
+                ],
+                Array [
+                  "m14",
+    -             0,
+    +             9,
+                ],
+                Array [
+                  "m15",
+                  1,
+                ],
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● protected actual Node rejects before mutation: setWorldScale missing z raw overload
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 23
+    + Received  + 25
+
+    @@ -1,15 +1,17 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "code": undefined,
+    +   "events": Array [
+    +     "body:transform-changed",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.811",
+            ],
+            "flags": Array [
+    -         15,
+    +         0,
+              0,
+              0,
+              false,
+              0,
+            ],
+    @@ -196,11 +198,11 @@
+            "children": Array [
+              "Node.812",
+              "Node.813",
+            ],
+            "flags": Array [
+    -         15,
+    +         0,
+              7,
+              0,
+              false,
+              0,
+            ],
+    @@ -270,19 +272,19 @@
+            "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+    -             0,
+    +             4,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             6,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    @@ -364,19 +366,19 @@
+                  "m11",
+                  0,
+                ],
+                Array [
+                  "m12",
+    -             0,
+    +             4,
+                ],
+                Array [
+                  "m13",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "m14",
+    -             0,
+    +             6,
+                ],
+                Array [
+                  "m15",
+                  1,
+                ],
+    @@ -384,11 +386,11 @@
+            ],
+          },
+          Object {
+            "children": Array [],
+            "flags": Array [
+    -         15,
+    +         4,
+              7,
+              0,
+              false,
+              0,
+            ],
+    @@ -426,19 +428,19 @@
+                ],
+              ],
+              Array [
+                Array [
+                  "x",
+    -             1,
+    +             2,
+                ],
+                Array [
+                  "y",
+    -             1,
+    +             3,
+                ],
+                Array [
+                  "z",
+    -             1,
+    +             NaN,
+                ],
+              ],
+              Array [
+                Array [
+                  "x",
+    @@ -458,19 +460,19 @@
+            "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             7,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             9,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    @@ -490,19 +492,19 @@
+                ],
+              ],
+              Array [
+                Array [
+                  "x",
+    -             1,
+    +             2,
+                ],
+                Array [
+                  "y",
+    -             1,
+    +             3,
+                ],
+                Array [
+                  "z",
+    -             1,
+    +             undefined,
+                ],
+              ],
+              Array [
+                Array [
+                  "m00",
+    @@ -552,19 +554,19 @@
+                  "m11",
+                  0,
+                ],
+                Array [
+                  "m12",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "m13",
+    -             0,
+    +             7,
+                ],
+                Array [
+                  "m14",
+    -             0,
+    +             9,
+                ],
+                Array [
+                  "m15",
+                  1,
+                ],
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● protected actual Node rejects before mutation: worldScale property
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 23
+    + Received  + 25
+
+    @@ -1,15 +1,17 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "code": undefined,
+    +   "events": Array [
+    +     "body:transform-changed",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.816",
+            ],
+            "flags": Array [
+    -         15,
+    +         0,
+              0,
+              0,
+              false,
+              0,
+            ],
+    @@ -196,11 +198,11 @@
+            "children": Array [
+              "Node.817",
+              "Node.818",
+            ],
+            "flags": Array [
+    -         15,
+    +         0,
+              7,
+              0,
+              false,
+              0,
+            ],
+    @@ -270,19 +272,19 @@
+            "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+    -             0,
+    +             4,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             6,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    @@ -364,19 +366,19 @@
+                  "m11",
+                  0,
+                ],
+                Array [
+                  "m12",
+    -             0,
+    +             4,
+                ],
+                Array [
+                  "m13",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "m14",
+    -             0,
+    +             6,
+                ],
+                Array [
+                  "m15",
+                  1,
+                ],
+    @@ -384,11 +386,11 @@
+            ],
+          },
+          Object {
+            "children": Array [],
+            "flags": Array [
+    -         15,
+    +         4,
+              7,
+              0,
+              false,
+              0,
+            ],
+    @@ -426,19 +428,19 @@
+                ],
+              ],
+              Array [
+                Array [
+                  "x",
+    -             1,
+    +             2,
+                ],
+                Array [
+                  "y",
+    -             1,
+    +             3,
+                ],
+                Array [
+                  "z",
+    -             1,
+    +             4,
+                ],
+              ],
+              Array [
+                Array [
+                  "x",
+    @@ -458,19 +460,19 @@
+            "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             7,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             9,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    @@ -490,19 +492,19 @@
+                ],
+              ],
+              Array [
+                Array [
+                  "x",
+    -             1,
+    +             2,
+                ],
+                Array [
+                  "y",
+    -             1,
+    +             3,
+                ],
+                Array [
+                  "z",
+    -             1,
+    +             4,
+                ],
+              ],
+              Array [
+                Array [
+                  "m00",
+    @@ -552,19 +554,19 @@
+                  "m11",
+                  0,
+                ],
+                Array [
+                  "m12",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "m13",
+    -             0,
+    +             7,
+                ],
+                Array [
+                  "m14",
+    -             0,
+    +             9,
+                ],
+                Array [
+                  "m15",
+                  1,
+                ],
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● protected actual Node rejects before mutation: matrix property
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 6
+    + Received  + 8
+
+    @@ -1,8 +1,10 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "code": undefined,
+    +   "events": Array [
+    +     "body:transform-changed",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.821",
+            ],
+    @@ -387,26 +389,26 @@
+            "children": Array [],
+            "flags": Array [
+              15,
+              7,
+              0,
+    -         false,
+    +         true,
+              0,
+            ],
+            "local": Array [
+              Array [
+                Array [
+                  "x",
+    -             1,
+    +             8,
+                ],
+                Array [
+                  "y",
+    -             2,
+    +             9,
+                ],
+                Array [
+                  "z",
+    -             3,
+    +             10,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● protected actual Node rejects before mutation: translate local
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 5
+    + Received  + 7
+
+    @@ -1,8 +1,10 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "code": undefined,
+    +   "events": Array [
+    +     "body:transform-changed",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.826",
+            ],
+    @@ -394,19 +396,19 @@
+            ],
+            "local": Array [
+              Array [
+                Array [
+                  "x",
+    -             1,
+    +             2,
+                ],
+                Array [
+                  "y",
+    -             2,
+    +             4,
+                ],
+                Array [
+                  "z",
+    -             3,
+    +             6,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● protected actual Node rejects before mutation: translate world
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 20
+    + Received  + 22
+
+    @@ -1,15 +1,17 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "code": undefined,
+    +   "events": Array [
+    +     "body:transform-changed",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.831",
+            ],
+            "flags": Array [
+    -         15,
+    +         0,
+              0,
+              0,
+              false,
+              0,
+            ],
+    @@ -196,11 +198,11 @@
+            "children": Array [
+              "Node.832",
+              "Node.833",
+            ],
+            "flags": Array [
+    -         15,
+    +         0,
+              7,
+              0,
+              false,
+              0,
+            ],
+    @@ -270,19 +272,19 @@
+            "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+    -             0,
+    +             4,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             6,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    @@ -364,19 +366,19 @@
+                  "m11",
+                  0,
+                ],
+                Array [
+                  "m12",
+    -             0,
+    +             4,
+                ],
+                Array [
+                  "m13",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "m14",
+    -             0,
+    +             6,
+                ],
+                Array [
+                  "m15",
+                  1,
+                ],
+    @@ -384,29 +386,29 @@
+            ],
+          },
+          Object {
+            "children": Array [],
+            "flags": Array [
+    -         15,
+    +         1,
+              7,
+              0,
+              false,
+              0,
+            ],
+            "local": Array [
+              Array [
+                Array [
+                  "x",
+    -             1,
+    +             2,
+                ],
+                Array [
+                  "y",
+    -             2,
+    +             4,
+                ],
+                Array [
+                  "z",
+    -             3,
+    +             6,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    @@ -458,19 +460,19 @@
+            "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             7,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             9,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    @@ -552,19 +554,19 @@
+                  "m11",
+                  0,
+                ],
+                Array [
+                  "m12",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "m13",
+    -             0,
+    +             7,
+                ],
+                Array [
+                  "m14",
+    -             0,
+    +             9,
+                ],
+                Array [
+                  "m15",
+                  1,
+                ],
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● protected actual Node rejects before mutation: rotate local
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 5
+    + Received  + 7
+
+    @@ -1,8 +1,10 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "code": undefined,
+    +   "events": Array [
+    +     "body:transform-changed",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.836",
+            ],
+    @@ -387,11 +389,11 @@
+            "children": Array [],
+            "flags": Array [
+              15,
+              7,
+              0,
+    -         false,
+    +         true,
+              0,
+            ],
+            "local": Array [
+              Array [
+                Array [
+    @@ -408,11 +410,11 @@
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    -             1,
+    +             0,
+                ],
+                Array [
+                  "x",
+                  0,
+                ],
+    @@ -420,11 +422,11 @@
+                  "y",
+                  0,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             1,
+                ],
+              ],
+              Array [
+                Array [
+                  "x",
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● protected actual Node rejects before mutation: rotate world
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 20
+    + Received  + 22
+
+    @@ -1,15 +1,17 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "code": undefined,
+    +   "events": Array [
+    +     "body:transform-changed",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.841",
+            ],
+            "flags": Array [
+    -         15,
+    +         0,
+              0,
+              0,
+              false,
+              0,
+            ],
+    @@ -196,11 +198,11 @@
+            "children": Array [
+              "Node.842",
+              "Node.843",
+            ],
+            "flags": Array [
+    -         15,
+    +         0,
+              7,
+              0,
+              false,
+              0,
+            ],
+    @@ -270,19 +272,19 @@
+            "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+    -             0,
+    +             4,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             6,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    @@ -364,19 +366,19 @@
+                  "m11",
+                  0,
+                ],
+                Array [
+                  "m12",
+    -             0,
+    +             4,
+                ],
+                Array [
+                  "m13",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "m14",
+    -             0,
+    +             6,
+                ],
+                Array [
+                  "m15",
+                  1,
+                ],
+    @@ -384,14 +386,14 @@
+            ],
+          },
+          Object {
+            "children": Array [],
+            "flags": Array [
+    -         15,
+    +         2,
+              7,
+              0,
+    -         false,
+    +         true,
+              0,
+            ],
+            "local": Array [
+              Array [
+                Array [
+    @@ -408,11 +410,11 @@
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    -             1,
+    +             0,
+                ],
+                Array [
+                  "x",
+                  0,
+                ],
+    @@ -420,11 +422,11 @@
+                  "y",
+                  0,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             1,
+                ],
+              ],
+              Array [
+                Array [
+                  "x",
+    @@ -458,19 +460,19 @@
+            "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             7,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             9,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    @@ -552,19 +554,19 @@
+                  "m11",
+                  0,
+                ],
+                Array [
+                  "m12",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "m13",
+    -             0,
+    +             7,
+                ],
+                Array [
+                  "m14",
+    -             0,
+    +             9,
+                ],
+                Array [
+                  "m15",
+                  1,
+                ],
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● protected actual Node rejects before mutation: lookAt
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 26
+    + Received  + 28
+
+    @@ -1,15 +1,17 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "code": undefined,
+    +   "events": Array [
+    +     "body:transform-changed",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.846",
+            ],
+            "flags": Array [
+    -         15,
+    +         0,
+              0,
+              0,
+              false,
+              0,
+            ],
+    @@ -196,11 +198,11 @@
+            "children": Array [
+              "Node.847",
+              "Node.848",
+            ],
+            "flags": Array [
+    -         15,
+    +         0,
+              7,
+              0,
+              false,
+              0,
+            ],
+    @@ -270,19 +272,19 @@
+            "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+    -             0,
+    +             4,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             6,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    @@ -364,19 +366,19 @@
+                  "m11",
+                  0,
+                ],
+                Array [
+                  "m12",
+    -             0,
+    +             4,
+                ],
+                Array [
+                  "m13",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "m14",
+    -             0,
+    +             6,
+                ],
+                Array [
+                  "m15",
+                  1,
+                ],
+    @@ -384,14 +386,14 @@
+            ],
+          },
+          Object {
+            "children": Array [],
+            "flags": Array [
+    -         15,
+    +         2,
+              7,
+              0,
+    -         false,
+    +         true,
+              0,
+            ],
+            "local": Array [
+              Array [
+                Array [
+    @@ -408,23 +410,23 @@
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    -             1,
+    +             -0.6117075733729818,
+                ],
+                Array [
+                  "x",
+    -             0,
+    +             -0.16660065158649942,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             0.7461632853228612,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             -0.20322012500066658,
+                ],
+              ],
+              Array [
+                Array [
+                  "x",
+    @@ -458,37 +460,37 @@
+            "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             7,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             9,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    -             1,
+    +             -0.6117075733729818,
+                ],
+                Array [
+                  "x",
+    -             0,
+    +             -0.16660065158649942,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             0.7461632853228612,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             -0.20322012500066658,
+                ],
+              ],
+              Array [
+                Array [
+                  "x",
+    @@ -552,19 +554,19 @@
+                  "m11",
+                  0,
+                ],
+                Array [
+                  "m12",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "m13",
+    -             0,
+    +             7,
+                ],
+                Array [
+                  "m14",
+    -             0,
+    +             9,
+                ],
+                Array [
+                  "m15",
+                  1,
+                ],
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● protected actual Node rejects before mutation: forward property
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 15
+    + Received  + 17
+
+    @@ -1,15 +1,17 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "code": undefined,
+    +   "events": Array [
+    +     "body:transform-changed",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.851",
+            ],
+            "flags": Array [
+    -         15,
+    +         0,
+              0,
+              0,
+              false,
+              0,
+            ],
+    @@ -196,11 +198,11 @@
+            "children": Array [
+              "Node.852",
+              "Node.853",
+            ],
+            "flags": Array [
+    -         15,
+    +         0,
+              7,
+              0,
+              false,
+              0,
+            ],
+    @@ -270,19 +272,19 @@
+            "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+    -             0,
+    +             4,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             6,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    @@ -364,19 +366,19 @@
+                  "m11",
+                  0,
+                ],
+                Array [
+                  "m12",
+    -             0,
+    +             4,
+                ],
+                Array [
+                  "m13",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "m14",
+    -             0,
+    +             6,
+                ],
+                Array [
+                  "m15",
+                  1,
+                ],
+    @@ -387,11 +389,11 @@
+            "children": Array [],
+            "flags": Array [
+              15,
+              7,
+              0,
+    -         false,
+    +         true,
+              0,
+            ],
+            "local": Array [
+              Array [
+                Array [
+    @@ -408,19 +410,19 @@
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    -             1,
+    +             0.7071067811865476,
+                ],
+                Array [
+                  "x",
+                  0,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             -0.7071067811865475,
+                ],
+                Array [
+                  "z",
+                  0,
+                ],
+    @@ -472,19 +474,19 @@
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    -             1,
+    +             0.7071067811865476,
+                ],
+                Array [
+                  "x",
+                  0,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             -0.7071067811865475,
+                ],
+                Array [
+                  "z",
+                  0,
+                ],
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● protected actual Node rejects before mutation: setRTS combined
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  9
+    + Received  + 11
+
+    @@ -1,8 +1,10 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "code": undefined,
+    +   "events": Array [
+    +     "body:transform-changed",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.856",
+            ],
+    @@ -387,26 +389,26 @@
+            "children": Array [],
+            "flags": Array [
+              15,
+              7,
+              0,
+    -         false,
+    +         true,
+              0,
+            ],
+            "local": Array [
+              Array [
+                Array [
+                  "x",
+    -             1,
+    +             8,
+                ],
+                Array [
+                  "y",
+    -             2,
+    +             9,
+                ],
+                Array [
+                  "z",
+    -             3,
+    +             10,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    @@ -426,19 +428,19 @@
+                ],
+              ],
+              Array [
+                Array [
+                  "x",
+    -             1,
+    +             2,
+                ],
+                Array [
+                  "y",
+    -             1,
+    +             3,
+                ],
+                Array [
+                  "z",
+    -             1,
+    +             4,
+                ],
+              ],
+              Array [
+                Array [
+                  "x",
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● protected actual Node rejects before mutation: setRTS later invalid scale
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  9
+    + Received  + 11
+
+    @@ -1,8 +1,10 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "code": undefined,
+    +   "events": Array [
+    +     "body:transform-changed",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.861",
+            ],
+    @@ -387,26 +389,26 @@
+            "children": Array [],
+            "flags": Array [
+              15,
+              7,
+              0,
+    -         false,
+    +         true,
+              0,
+            ],
+            "local": Array [
+              Array [
+                Array [
+                  "x",
+    -             1,
+    +             8,
+                ],
+                Array [
+                  "y",
+    -             2,
+    +             9,
+                ],
+                Array [
+                  "z",
+    -             3,
+    +             10,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    @@ -426,19 +428,19 @@
+                ],
+              ],
+              Array [
+                Array [
+                  "x",
+    -             1,
+    +             2,
+                ],
+                Array [
+                  "y",
+    -             1,
+    +             0,
+                ],
+                Array [
+                  "z",
+    -             1,
+    +             4,
+                ],
+              ],
+              Array [
+                Array [
+                  "x",
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● protected actual Node rejects before mutation: same position request
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 2
+    + Received  + 4
+
+    @@ -1,8 +1,10 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "code": undefined,
+    +   "events": Array [
+    +     "body:transform-changed",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.866",
+            ],
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● protected actual Node rejects before mutation: parent translation
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 5
+    + Received  + 7
+
+    @@ -1,8 +1,10 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "code": undefined,
+    +   "events": Array [
+    +     "parent:transform-changed",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.871",
+            ],
+    @@ -206,19 +208,19 @@
+            ],
+            "local": Array [
+              Array [
+                Array [
+                  "x",
+    -             4,
+    +             8,
+                ],
+                Array [
+                  "y",
+    -             5,
+    +             9,
+                ],
+                Array [
+                  "z",
+    -             6,
+    +             10,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● protected actual Node rejects before mutation: grandparent rotation
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 6
+    + Received  + 8
+
+    @@ -1,16 +1,18 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "code": undefined,
+    +   "events": Array [
+    +     "root:transform-changed",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.876",
+            ],
+            "flags": Array [
+              15,
+    -         0,
+    +         2,
+              0,
+              false,
+              0,
+            ],
+            "local": Array [
+    @@ -29,19 +31,19 @@
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    -             1,
+    +             0.9238795325112867,
+                ],
+                Array [
+                  "x",
+                  0,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             0.3826834323650898,
+                ],
+                Array [
+                  "z",
+                  0,
+                ],
+    @@ -65,11 +67,11 @@
+                  "x",
+                  0,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             45,
+                ],
+                Array [
+                  "z",
+                  0,
+                ],
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● protected actual Node rejects before mutation: ancestor scale
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 6
+    + Received  + 8
+
+    @@ -1,16 +1,18 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "code": undefined,
+    +   "events": Array [
+    +     "root:transform-changed",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.881",
+            ],
+            "flags": Array [
+              15,
+    -         0,
+    +         4,
+              0,
+              false,
+              0,
+            ],
+            "local": Array [
+    @@ -47,19 +49,19 @@
+                ],
+              ],
+              Array [
+                Array [
+                  "x",
+    -             1,
+    +             2,
+                ],
+                Array [
+                  "y",
+    -             1,
+    +             2,
+                ],
+                Array [
+                  "z",
+    -             1,
+    +             2,
+                ],
+              ],
+              Array [
+                Array [
+                  "x",
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● protected actual Node rejects before mutation: skip-transform flag
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 2
+    + Received  + 2
+
+    @@ -1,7 +1,7 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    +   "code": undefined,
+        "events": Array [],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.886",
+    @@ -388,11 +388,11 @@
+            "flags": Array [
+              15,
+              7,
+              0,
+              false,
+    -         0,
+    +         16777216,
+            ],
+            "local": Array [
+              Array [
+                Array [
+                  "x",
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● protected actual Node rejects before mutation: setParent false
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  6
+    + Received  + 11
+
+    @@ -1,8 +1,12 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "code": undefined,
+    +   "events": Array [
+    +     "body:parent-changed",
+    +     "parent:child-removed",
+    +     "other:child-added",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.891",
+            ],
+    @@ -192,11 +196,10 @@
+              ],
+            ],
+          },
+          Object {
+            "children": Array [
+    -         "Node.892",
+              "Node.893",
+            ],
+            "flags": Array [
+              15,
+              7,
+    @@ -452,11 +455,11 @@
+                  "z",
+                  0,
+                ],
+              ],
+            ],
+    -       "parent": "Node.891",
+    +       "parent": "Node.894",
+            "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+    @@ -641,11 +644,11 @@
+                  0,
+                ],
+              ],
+            ],
+            "parent": "Node.891",
+    -       "siblingIndex": 1,
+    +       "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+                  0,
+    @@ -758,11 +761,13 @@
+                ],
+              ],
+            ],
+          },
+          Object {
+    -       "children": Array [],
+    +       "children": Array [
+    +         "Node.892",
+    +       ],
+            "flags": Array [
+              15,
+              0,
+              0,
+              false,
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● protected actual Node rejects before mutation: setParent keep world
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 26
+    + Received  + 31
+
+    @@ -1,17 +1,21 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "code": undefined,
+    +   "events": Array [
+    +     "body:parent-changed",
+    +     "parent:child-removed",
+    +     "other:child-added",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.896",
+            ],
+            "flags": Array [
+    -         15,
+              0,
+              0,
+    +         0,
+              false,
+              0,
+            ],
+            "local": Array [
+              Array [
+    @@ -192,15 +196,14 @@
+              ],
+            ],
+          },
+          Object {
+            "children": Array [
+    -         "Node.897",
+              "Node.898",
+            ],
+            "flags": Array [
+    -         15,
+    +         0,
+              7,
+              0,
+              false,
+              0,
+            ],
+    @@ -270,19 +273,19 @@
+            "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+    -             0,
+    +             4,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             6,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    @@ -364,19 +367,19 @@
+                  "m11",
+                  0,
+                ],
+                Array [
+                  "m12",
+    -             0,
+    +             4,
+                ],
+                Array [
+                  "m13",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "m14",
+    -             0,
+    +             6,
+                ],
+                Array [
+                  "m15",
+                  1,
+                ],
+    @@ -384,29 +387,29 @@
+            ],
+          },
+          Object {
+            "children": Array [],
+            "flags": Array [
+    -         15,
+              7,
+    +         7,
+              0,
+    -         false,
+    +         true,
+              0,
+            ],
+            "local": Array [
+              Array [
+                Array [
+                  "x",
+    -             1,
+    +             5,
+                ],
+                Array [
+                  "y",
+    -             2,
+    +             7,
+                ],
+                Array [
+                  "z",
+    -             3,
+    +             9,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    @@ -452,25 +455,25 @@
+                  "z",
+                  0,
+                ],
+              ],
+            ],
+    -       "parent": "Node.896",
+    +       "parent": "Node.899",
+            "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             7,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             9,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    @@ -552,19 +555,19 @@
+                  "m11",
+                  0,
+                ],
+                Array [
+                  "m12",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "m13",
+    -             0,
+    +             7,
+                ],
+                Array [
+                  "m14",
+    -             0,
+    +             9,
+                ],
+                Array [
+                  "m15",
+                  1,
+                ],
+    @@ -641,11 +644,11 @@
+                  0,
+                ],
+              ],
+            ],
+            "parent": "Node.896",
+    -       "siblingIndex": 1,
+    +       "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+                  0,
+    @@ -758,13 +761,15 @@
+                ],
+              ],
+            ],
+          },
+          Object {
+    -       "children": Array [],
+    +       "children": Array [
+    +         "Node.897",
+    +       ],
+            "flags": Array [
+    -         15,
+    +         0,
+              0,
+              0,
+              false,
+              0,
+            ],
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● protected actual Node rejects before mutation: same parent request
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+    @@ -1,7 +1,7 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    +   "code": undefined,
+        "events": Array [],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.901",
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● protected actual Node rejects before mutation: parent property
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  6
+    + Received  + 11
+
+    @@ -1,8 +1,12 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "code": undefined,
+    +   "events": Array [
+    +     "body:parent-changed",
+    +     "parent:child-removed",
+    +     "other:child-added",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.906",
+            ],
+    @@ -192,11 +196,10 @@
+              ],
+            ],
+          },
+          Object {
+            "children": Array [
+    -         "Node.907",
+              "Node.908",
+            ],
+            "flags": Array [
+              15,
+              7,
+    @@ -452,11 +455,11 @@
+                  "z",
+                  0,
+                ],
+              ],
+            ],
+    -       "parent": "Node.906",
+    +       "parent": "Node.909",
+            "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+    @@ -641,11 +644,11 @@
+                  0,
+                ],
+              ],
+            ],
+            "parent": "Node.906",
+    -       "siblingIndex": 1,
+    +       "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+                  0,
+    @@ -758,11 +761,13 @@
+                ],
+              ],
+            ],
+          },
+          Object {
+    -       "children": Array [],
+    +       "children": Array [
+    +         "Node.907",
+    +       ],
+            "flags": Array [
+              15,
+              0,
+              0,
+              false,
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● protected actual Node rejects before mutation: modifyParent internal
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 2
+    + Received  + 2
+
+    @@ -1,7 +1,7 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    +   "code": undefined,
+        "events": Array [],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.911",
+    @@ -452,11 +452,11 @@
+                  "z",
+                  0,
+                ],
+              ],
+            ],
+    -       "parent": "Node.911",
+    +       "parent": "Node.914",
+            "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● protected actual Node rejects before mutation: ancestor modifyParent
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 2
+    + Received  + 2
+
+    @@ -1,7 +1,7 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    +   "code": undefined,
+        "events": Array [],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.916",
+    @@ -264,11 +264,11 @@
+                  "z",
+                  0,
+                ],
+              ],
+            ],
+    -       "parent": "Node.915",
+    +       "parent": "Node.919",
+            "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● protected actual Node rejects before mutation: ancestor subtree reparent
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  7
+    + Received  + 11
+
+    @@ -1,13 +1,15 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "code": undefined,
+    +   "events": Array [
+    +     "parent:parent-changed",
+    +     "root:child-removed",
+    +     "other:child-added",
+    +   ],
+        "state": Array [
+          Object {
+    -       "children": Array [
+    -         "Node.921",
+    -       ],
+    +       "children": Array [],
+            "flags": Array [
+              15,
+              0,
+              0,
+              false,
+    @@ -264,11 +266,11 @@
+                  "z",
+                  0,
+                ],
+              ],
+            ],
+    -       "parent": "Node.920",
+    +       "parent": "Node.924",
+            "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+    @@ -758,11 +760,13 @@
+                ],
+              ],
+            ],
+          },
+          Object {
+    -       "children": Array [],
+    +       "children": Array [
+    +         "Node.921",
+    +       ],
+            "flags": Array [
+              15,
+              0,
+              0,
+              false,
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● protected actual Node rejects before mutation: addChild
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  6
+    + Received  + 11
+
+    @@ -1,8 +1,12 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "code": undefined,
+    +   "events": Array [
+    +     "body:parent-changed",
+    +     "parent:child-removed",
+    +     "other:child-added",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.926",
+            ],
+    @@ -192,11 +196,10 @@
+              ],
+            ],
+          },
+          Object {
+            "children": Array [
+    -         "Node.927",
+              "Node.928",
+            ],
+            "flags": Array [
+              15,
+              7,
+    @@ -452,11 +455,11 @@
+                  "z",
+                  0,
+                ],
+              ],
+            ],
+    -       "parent": "Node.926",
+    +       "parent": "Node.929",
+            "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+    @@ -641,11 +644,11 @@
+                  0,
+                ],
+              ],
+            ],
+            "parent": "Node.926",
+    -       "siblingIndex": 1,
+    +       "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+                  0,
+    @@ -758,11 +761,13 @@
+                ],
+              ],
+            ],
+          },
+          Object {
+    -       "children": Array [],
+    +       "children": Array [
+    +         "Node.927",
+    +       ],
+            "flags": Array [
+              15,
+              0,
+              0,
+              false,
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● protected actual Node rejects before mutation: insertChild
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  6
+    + Received  + 11
+
+    @@ -1,8 +1,12 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "code": undefined,
+    +   "events": Array [
+    +     "body:parent-changed",
+    +     "parent:child-removed",
+    +     "other:child-added",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.931",
+            ],
+    @@ -192,11 +196,10 @@
+              ],
+            ],
+          },
+          Object {
+            "children": Array [
+    -         "Node.932",
+              "Node.933",
+            ],
+            "flags": Array [
+              15,
+              7,
+    @@ -452,11 +455,11 @@
+                  "z",
+                  0,
+                ],
+              ],
+            ],
+    -       "parent": "Node.931",
+    +       "parent": "Node.934",
+            "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+    @@ -641,11 +644,11 @@
+                  0,
+                ],
+              ],
+            ],
+            "parent": "Node.931",
+    -       "siblingIndex": 1,
+    +       "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+                  0,
+    @@ -758,11 +761,13 @@
+                ],
+              ],
+            ],
+          },
+          Object {
+    -       "children": Array [],
+    +       "children": Array [
+    +         "Node.932",
+    +       ],
+            "flags": Array [
+              15,
+              0,
+              0,
+              false,
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● protected actual Node rejects before mutation: removeFromParent
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 5
+    + Received  + 7
+
+    @@ -1,8 +1,11 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "code": undefined,
+    +   "events": Array [
+    +     "body:parent-changed",
+    +     "parent:child-removed",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.936",
+            ],
+    @@ -192,11 +195,10 @@
+              ],
+            ],
+          },
+          Object {
+            "children": Array [
+    -         "Node.937",
+              "Node.938",
+            ],
+            "flags": Array [
+              15,
+              7,
+    @@ -452,11 +454,11 @@
+                  "z",
+                  0,
+                ],
+              ],
+            ],
+    -       "parent": "Node.936",
+    +       "parent": null,
+            "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+    @@ -641,11 +643,11 @@
+                  0,
+                ],
+              ],
+            ],
+            "parent": "Node.936",
+    -       "siblingIndex": 1,
+    +       "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+                  0,
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● protected actual Node rejects before mutation: removeChild
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 5
+    + Received  + 7
+
+    @@ -1,8 +1,11 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "code": undefined,
+    +   "events": Array [
+    +     "body:parent-changed",
+    +     "parent:child-removed",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.941",
+            ],
+    @@ -192,11 +195,10 @@
+              ],
+            ],
+          },
+          Object {
+            "children": Array [
+    -         "Node.942",
+              "Node.943",
+            ],
+            "flags": Array [
+              15,
+              7,
+    @@ -452,11 +454,11 @@
+                  "z",
+                  0,
+                ],
+              ],
+            ],
+    -       "parent": "Node.941",
+    +       "parent": null,
+            "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+    @@ -641,11 +643,11 @@
+                  0,
+                ],
+              ],
+            ],
+            "parent": "Node.941",
+    -       "siblingIndex": 1,
+    +       "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+                  0,
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● protected actual Node rejects before mutation: removeAllChildren preflight before unprotected sibling
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  9
+    + Received  + 11
+
+    @@ -1,8 +1,13 @@
+      Object {
+    -   "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "code": undefined,
+    +   "events": Array [
+    +     "sibling:parent-changed",
+    +     "parent:child-removed",
+    +     "body:parent-changed",
+    +     "parent:child-removed",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.946",
+            ],
+    @@ -191,14 +196,11 @@
+                ],
+              ],
+            ],
+          },
+          Object {
+    -       "children": Array [
+    -         "Node.947",
+    -         "Node.948",
+    -       ],
+    +       "children": Array [],
+            "flags": Array [
+              15,
+              7,
+              0,
+              false,
+    @@ -452,11 +454,11 @@
+                  "z",
+                  0,
+                ],
+              ],
+            ],
+    -       "parent": "Node.946",
+    +       "parent": null,
+            "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+    @@ -640,12 +642,12 @@
+                  "z",
+                  0,
+                ],
+              ],
+            ],
+    -       "parent": "Node.946",
+    -       "siblingIndex": 1,
+    +       "parent": null,
+    +       "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+                  0,
+
+      232 |         const before = g.nodes.map(raw);
+      233 |         const error = errorOf(() => action(g));
+    > 234 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      235 |             code: 'AIR_E_BOX3D_CONFIG',
+      236 |             state: before,
+      237 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:234:82
+
+  ● shared ancestor remains protected until the last independent owner releases
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "AIR_E_BOX3D_CONFIG"
+    Received: undefined
+
+      262 |     a.dispose();
+      263 |     a.dispose();
+    > 264 |     expect(errorOf(() => g.root.setPosition(5, 6, 7))?.code).toBe('AIR_E_BOX3D_CONFIG');
+          |                                                              ^
+      265 |     g.body.setPosition(5, 6, 7);
+      266 |     b.dispose();
+      267 |     expect(() => g.root.setPosition(5, 6, 7)).not.toThrow();
+
+      at Object.<anonymous> (tools/verify/box3d/node-motion-guard-control.test.ts:264:62)
+
+  ● grant expected values are copied and an exact actual Node write consumes once
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "AIR_E_BOX3D_CONFIG"
+    Received: undefined
+
+      302 |         expected[0] = 99;
+      303 |         n.setWorldPosition(1, 2, 3);
+    > 304 |         expect(errorOf(() => n.setWorldPosition(1, 2, 3))?.code).toBe('AIR_E_BOX3D_CONFIG');
+          |                                                                  ^
+      305 |     });
+      306 |     expect(n.worldPosition).toEqual(new Vec3(1, 2, 3));
+      307 | });
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:304:66
+      at Object.write (src/cocos/scene-graph/node-transform-validation.ts:90:17)
+      at Object.<anonymous> (tools/verify/box3d/node-motion-guard-control.test.ts:301:11)
+
+  ● owned grant rejects before a dirty-world refresh: mismatched values
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 15
+    + Received  + 17
+
+    @@ -1,15 +1,17 @@
+      Object {
+        "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "events": Array [
+    +     "body:transform-changed",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.968",
+            ],
+            "flags": Array [
+    -         15,
+    +         0,
+              0,
+              0,
+              false,
+              0,
+            ],
+    @@ -196,11 +198,11 @@
+            "children": Array [
+              "Node.969",
+              "Node.970",
+            ],
+            "flags": Array [
+    -         15,
+    +         0,
+              7,
+              0,
+              false,
+              0,
+            ],
+    @@ -270,19 +272,19 @@
+            "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+    -             0,
+    +             4,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             6,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    @@ -364,19 +366,19 @@
+                  "m11",
+                  0,
+                ],
+                Array [
+                  "m12",
+    -             0,
+    +             4,
+                ],
+                Array [
+                  "m13",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "m14",
+    -             0,
+    +             6,
+                ],
+                Array [
+                  "m15",
+                  1,
+                ],
+    @@ -394,19 +396,19 @@
+            ],
+            "local": Array [
+              Array [
+                Array [
+                  "x",
+    -             1,
+    +             5,
+                ],
+                Array [
+                  "y",
+    -             2,
+    +             -3,
+                ],
+                Array [
+                  "z",
+    -             3,
+    +             -3,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    @@ -458,19 +460,19 @@
+            "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+    -             0,
+    +             9,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             2,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             3,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+
+      315 |         before = g.nodes.map(raw);
+      316 |     const error = errorOf(() => lease.write(g.body, 'setWorldPosition', [1, 2, 3], () => action(g.body)));
+    > 317 |     expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                              ^
+      318 |         code: 'AIR_E_BOX3D_CONFIG',
+      319 |         state: before,
+      320 |         events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:317:78
+
+  ● owned grant rejects before a dirty-world refresh: omitted z
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 18
+    + Received  + 20
+
+    @@ -1,15 +1,17 @@
+      Object {
+        "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "events": Array [
+    +     "body:transform-changed",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.973",
+            ],
+            "flags": Array [
+    -         15,
+    +         0,
+              0,
+              0,
+              false,
+              0,
+            ],
+    @@ -196,11 +198,11 @@
+            "children": Array [
+              "Node.974",
+              "Node.975",
+            ],
+            "flags": Array [
+    -         15,
+    +         0,
+              7,
+              0,
+              false,
+              0,
+            ],
+    @@ -270,19 +272,19 @@
+            "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+    -             0,
+    +             4,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             6,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    @@ -364,19 +366,19 @@
+                  "m11",
+                  0,
+                ],
+                Array [
+                  "m12",
+    -             0,
+    +             4,
+                ],
+                Array [
+                  "m13",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "m14",
+    -             0,
+    +             6,
+                ],
+                Array [
+                  "m15",
+                  1,
+                ],
+    @@ -384,25 +386,25 @@
+            ],
+          },
+          Object {
+            "children": Array [],
+            "flags": Array [
+    -         15,
+    +         1,
+              7,
+              0,
+              false,
+              0,
+            ],
+            "local": Array [
+              Array [
+                Array [
+                  "x",
+    -             1,
+    +             -3,
+                ],
+                Array [
+                  "y",
+    -             2,
+    +             -3,
+                ],
+                Array [
+                  "z",
+                  3,
+                ],
+    @@ -458,19 +460,19 @@
+            "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+    -             0,
+    +             1,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             2,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             9,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    @@ -552,19 +554,19 @@
+                  "m11",
+                  0,
+                ],
+                Array [
+                  "m12",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "m13",
+    -             0,
+    +             7,
+                ],
+                Array [
+                  "m14",
+    -             0,
+    +             9,
+                ],
+                Array [
+                  "m15",
+                  1,
+                ],
+
+      315 |         before = g.nodes.map(raw);
+      316 |     const error = errorOf(() => lease.write(g.body, 'setWorldPosition', [1, 2, 3], () => action(g.body)));
+    > 317 |     expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                              ^
+      318 |         code: 'AIR_E_BOX3D_CONFIG',
+      319 |         state: before,
+      320 |         events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:317:78
+
+  ● owned grant rejects before a dirty-world refresh: wrong operation
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 10
+    + Received  + 12
+
+    @@ -1,17 +1,19 @@
+      Object {
+        "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "events": Array [
+    +     "body:transform-changed",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.978",
+            ],
+            "flags": Array [
+    -         15,
+              0,
+              0,
+    +         0,
+              false,
+              0,
+            ],
+            "local": Array [
+              Array [
+    @@ -196,11 +198,11 @@
+            "children": Array [
+              "Node.979",
+              "Node.980",
+            ],
+            "flags": Array [
+    -         15,
+    +         0,
+              7,
+              0,
+              false,
+              0,
+            ],
+    @@ -270,19 +272,19 @@
+            "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+    -             0,
+    +             4,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             6,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    @@ -364,19 +366,19 @@
+                  "m11",
+                  0,
+                ],
+                Array [
+                  "m12",
+    -             0,
+    +             4,
+                ],
+                Array [
+                  "m13",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "m14",
+    -             0,
+    +             6,
+                ],
+                Array [
+                  "m15",
+                  1,
+                ],
+    @@ -387,11 +389,11 @@
+            "children": Array [],
+            "flags": Array [
+              15,
+              7,
+              0,
+    -         false,
+    +         true,
+              0,
+            ],
+            "local": Array [
+              Array [
+                Array [
+
+      315 |         before = g.nodes.map(raw);
+      316 |     const error = errorOf(() => lease.write(g.body, 'setWorldPosition', [1, 2, 3], () => action(g.body)));
+    > 317 |     expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                              ^
+      318 |         code: 'AIR_E_BOX3D_CONFIG',
+      319 |         state: before,
+      320 |         events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:317:78
+
+  ● complete object candidate is copied once and used for the actual owned write
+
+    explicit source-control owner (setWorldPosition: owned write did not retain valid consumed permission)
+
+      34 |
+      35 | function transformGuardError (owner: TransformOwner, operation: string, reason: string): Error {
+    > 36 |     return Object.assign(new Error(`${owner.message} (${operation}: ${reason})`), { code: owner.code, operation });
+         |                          ^
+      37 | }
+      38 | function sameTransformValues (a: readonly unknown[], b: readonly number[]): boolean {
+      39 |     return a.length === b.length && a.every((value, index) => Object.is(value, b[index]));
+
+      at transformGuardError (src/cocos/scene-graph/node-transform-validation.ts:36:26)
+      at Object.write (src/cocos/scene-graph/node-transform-validation.ts:92:27)
+      at Object.<anonymous> (tools/verify/box3d/node-motion-guard-control.test.ts:341:11)
+
+  ● single-use grant is consumed before synchronous user transform listener reentry
+
+    explicit source-control owner (setWorldPosition: owned write did not retain valid consumed permission)
+
+      34 |
+      35 | function transformGuardError (owner: TransformOwner, operation: string, reason: string): Error {
+    > 36 |     return Object.assign(new Error(`${owner.message} (${operation}: ${reason})`), { code: owner.code, operation });
+         |                          ^
+      37 | }
+      38 | function sameTransformValues (a: readonly unknown[], b: readonly number[]): boolean {
+      39 |     return a.length === b.length && a.every((value, index) => Object.is(value, b[index]));
+
+      at transformGuardError (src/cocos/scene-graph/node-transform-validation.ts:36:26)
+      at Object.write (src/cocos/scene-graph/node-transform-validation.ts:92:27)
+      at Object.<anonymous> (tools/verify/box3d/node-motion-guard-control.test.ts:352:11)
+
+  ● uncaught user exception is preserved and does not leave a reusable grant
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "AIR_E_BOX3D_CONFIG"
+    Received: undefined
+
+      362 |     });
+      363 |     expect(errorOf(() => lease.write(n, 'setWorldPosition', [1, 2, 3], () => n.setWorldPosition(1, 2, 3)))).toBe(cause);
+    > 364 |     expect(errorOf(() => n.setWorldPosition(4, 5, 6))?.code).toBe('AIR_E_BOX3D_CONFIG');
+          |                                                              ^
+      365 | });
+      366 | test('input getter reentry cannot steal a pending grant', () => {
+      367 |     const n = new Node('input-reentry'),
+
+      at Object.<anonymous> (tools/verify/box3d/node-motion-guard-control.test.ts:364:62)
+
+  ● input getter reentry cannot steal a pending grant
+
+    explicit source-control owner (setWorldPosition: owned write did not retain valid consumed permission)
+
+      34 |
+      35 | function transformGuardError (owner: TransformOwner, operation: string, reason: string): Error {
+    > 36 |     return Object.assign(new Error(`${owner.message} (${operation}: ${reason})`), { code: owner.code, operation });
+         |                          ^
+      37 | }
+      38 | function sameTransformValues (a: readonly unknown[], b: readonly number[]): boolean {
+      39 |     return a.length === b.length && a.every((value, index) => Object.is(value, b[index]));
+
+      at transformGuardError (src/cocos/scene-graph/node-transform-validation.ts:36:26)
+      at Object.write (src/cocos/scene-graph/node-transform-validation.ts:92:27)
+      at Object.<anonymous> (tools/verify/box3d/node-motion-guard-control.test.ts:378:11)
+
+  ● all shared ancestor leases must provide exact nested permission
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 7
+    + Received  + 7
+
+    @@ -2,13 +2,13 @@
+        Object {
+          "children": Array [
+            "Node.987",
+          ],
+          "flags": Array [
+    -       15,
+            0,
+            0,
+    +       0,
+            false,
+            0,
+          ],
+          "local": Array [
+            Array [
+    @@ -203,19 +203,19 @@
+          ],
+          "local": Array [
+            Array [
+              Array [
+                "x",
+    -           4,
+    +           1,
+              ],
+              Array [
+                "y",
+    -           5,
+    +           2,
+              ],
+              Array [
+                "z",
+    -           6,
+    +           3,
+              ],
+            ],
+            Array [
+              Array [
+                "w",
+    @@ -267,19 +267,19 @@
+          "siblingIndex": 0,
+          "world": Array [
+            Array [
+              Array [
+                "x",
+    -           0,
+    +           1,
+              ],
+              Array [
+                "y",
+    -           0,
+    +           2,
+              ],
+              Array [
+                "z",
+    -           0,
+    +           3,
+              ],
+            ],
+            Array [
+              Array [
+                "w",
+
+      387 |         errorOf(() => a.write(g.parent, 'setWorldPosition', [1, 2, 3], () => g.parent.setWorldPosition(1, 2, 3)))?.code,
+      388 |     ).toBe('AIR_E_BOX3D_CONFIG');
+    > 389 |     expect(g.nodes.map(raw)).toEqual(before);
+          |                              ^
+      390 |     a.write(g.parent, 'setWorldPosition', [1, 2, 3], () =>
+      391 |         b.write(g.parent, 'setWorldPosition', [1, 2, 3], () => g.parent.setWorldPosition(1, 2, 3)),
+      392 |     );
+
+      at Object.<anonymous> (tools/verify/box3d/node-motion-guard-control.test.ts:389:30)
+
+  ● mismatched second lease is rejected without consuming or mutating either Node write
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 7
+    + Received  + 7
+
+    @@ -1,27 +1,27 @@
+      Object {
+        "children": Array [],
+        "flags": Array [
+          15,
+    +     1,
+          0,
+    -     0,
+          false,
+          0,
+        ],
+        "local": Array [
+          Array [
+            Array [
+              "x",
+    -         0,
+    +         1,
+            ],
+            Array [
+              "y",
+    -         0,
+    +         2,
+            ],
+            Array [
+              "z",
+    -         0,
+    +         3,
+            ],
+          ],
+          Array [
+            Array [
+              "w",
+    @@ -73,19 +73,19 @@
+        "siblingIndex": 0,
+        "world": Array [
+          Array [
+            Array [
+              "x",
+    -         0,
+    +         1,
+            ],
+            Array [
+              "y",
+    -         0,
+    +         2,
+            ],
+            Array [
+              "z",
+    -         0,
+    +         3,
+            ],
+          ],
+          Array [
+            Array [
+              "w",
+
+      405 |         )?.code,
+      406 |     ).toBe('AIR_E_BOX3D_CONFIG');
+    > 407 |     expect(raw(n)).toEqual(before);
+          |                    ^
+      408 |     a.write(n, 'setWorldPosition', [1, 2, 3], () =>
+      409 |         b.write(n, 'setWorldPosition', [1, 2, 3], () => n.setWorldPosition(1, 2, 3)),
+      410 |     );
+
+      at Object.<anonymous> (tools/verify/box3d/node-motion-guard-control.test.ts:407:20)
+
+  ● owned world quaternion operation and existing unrelated SCALE flags survive
+
+    explicit source-control owner (setWorldRotation: owned write did not retain valid consumed permission)
+
+      34 |
+      35 | function transformGuardError (owner: TransformOwner, operation: string, reason: string): Error {
+    > 36 |     return Object.assign(new Error(`${owner.message} (${operation}: ${reason})`), { code: owner.code, operation });
+         |                          ^
+      37 | }
+      38 | function sameTransformValues (a: readonly unknown[], b: readonly number[]): boolean {
+      39 |     return a.length === b.length && a.every((value, index) => Object.is(value, b[index]));
+
+      at transformGuardError (src/cocos/scene-graph/node-transform-validation.ts:36:26)
+      at Object.write (src/cocos/scene-graph/node-transform-validation.ts:92:27)
+      at Object.<anonymous> (tools/verify/box3d/node-motion-guard-control.test.ts:447:7)
+
+  ● input accessor changes ownership: dispose-self cannot forge an owned Node write
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 15
+    + Received  + 17
+
+    @@ -1,15 +1,17 @@
+      Object {
+        "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "events": Array [
+    +     "body:transform-changed",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.999",
+            ],
+            "flags": Array [
+    -         15,
+    +         0,
+              0,
+              0,
+              false,
+              0,
+            ],
+    @@ -196,11 +198,11 @@
+            "children": Array [
+              "Node.1000",
+              "Node.1001",
+            ],
+            "flags": Array [
+    -         15,
+    +         0,
+              7,
+              0,
+              false,
+              0,
+            ],
+    @@ -270,19 +272,19 @@
+            "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+    -             0,
+    +             4,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             6,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    @@ -364,19 +366,19 @@
+                  "m11",
+                  0,
+                ],
+                Array [
+                  "m12",
+    -             0,
+    +             4,
+                ],
+                Array [
+                  "m13",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "m14",
+    -             0,
+    +             6,
+                ],
+                Array [
+                  "m15",
+                  1,
+                ],
+    @@ -394,19 +396,19 @@
+            ],
+            "local": Array [
+              Array [
+                Array [
+                  "x",
+    -             1,
+    +             -3,
+                ],
+                Array [
+                  "y",
+    -             2,
+    +             -3,
+                ],
+                Array [
+                  "z",
+    -             3,
+    +             -3,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    @@ -458,19 +460,19 @@
+            "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+    -             0,
+    +             1,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             2,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             3,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+
+      491 |             ),
+      492 |         );
+    > 493 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      494 |             code: 'AIR_E_BOX3D_CONFIG',
+      495 |             state: before,
+      496 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:493:82
+
+  ● input accessor changes ownership: add-owner cannot forge an owned Node write
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 15
+    + Received  + 17
+
+    @@ -1,15 +1,17 @@
+      Object {
+        "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "events": Array [
+    +     "body:transform-changed",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.1004",
+            ],
+            "flags": Array [
+    -         15,
+    +         0,
+              0,
+              0,
+              false,
+              0,
+            ],
+    @@ -196,11 +198,11 @@
+            "children": Array [
+              "Node.1005",
+              "Node.1006",
+            ],
+            "flags": Array [
+    -         15,
+    +         0,
+              7,
+              0,
+              false,
+              0,
+            ],
+    @@ -270,19 +272,19 @@
+            "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+    -             0,
+    +             4,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             6,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    @@ -364,19 +366,19 @@
+                  "m11",
+                  0,
+                ],
+                Array [
+                  "m12",
+    -             0,
+    +             4,
+                ],
+                Array [
+                  "m13",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "m14",
+    -             0,
+    +             6,
+                ],
+                Array [
+                  "m15",
+                  1,
+                ],
+    @@ -394,19 +396,19 @@
+            ],
+            "local": Array [
+              Array [
+                Array [
+                  "x",
+    -             1,
+    +             -3,
+                ],
+                Array [
+                  "y",
+    -             2,
+    +             -3,
+                ],
+                Array [
+                  "z",
+    -             3,
+    +             -3,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    @@ -458,19 +460,19 @@
+            "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+    -             0,
+    +             1,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             2,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             3,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+
+      491 |             ),
+      492 |         );
+    > 493 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      494 |             code: 'AIR_E_BOX3D_CONFIG',
+      495 |             state: before,
+      496 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:493:82
+
+  ● input accessor changes ownership: replace-owner cannot forge an owned Node write
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 15
+    + Received  + 17
+
+    @@ -1,15 +1,17 @@
+      Object {
+        "code": "AIR_E_BOX3D_CONFIG",
+    -   "events": Array [],
+    +   "events": Array [
+    +     "body:transform-changed",
+    +   ],
+        "state": Array [
+          Object {
+            "children": Array [
+              "Node.1009",
+            ],
+            "flags": Array [
+    -         15,
+    +         0,
+              0,
+              0,
+              false,
+              0,
+            ],
+    @@ -196,11 +198,11 @@
+            "children": Array [
+              "Node.1010",
+              "Node.1011",
+            ],
+            "flags": Array [
+    -         15,
+    +         0,
+              7,
+              0,
+              false,
+              0,
+            ],
+    @@ -270,19 +272,19 @@
+            "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+    -             0,
+    +             4,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             6,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    @@ -364,19 +366,19 @@
+                  "m11",
+                  0,
+                ],
+                Array [
+                  "m12",
+    -             0,
+    +             4,
+                ],
+                Array [
+                  "m13",
+    -             0,
+    +             5,
+                ],
+                Array [
+                  "m14",
+    -             0,
+    +             6,
+                ],
+                Array [
+                  "m15",
+                  1,
+                ],
+    @@ -394,19 +396,19 @@
+            ],
+            "local": Array [
+              Array [
+                Array [
+                  "x",
+    -             1,
+    +             -3,
+                ],
+                Array [
+                  "y",
+    -             2,
+    +             -3,
+                ],
+                Array [
+                  "z",
+    -             3,
+    +             -3,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+    @@ -458,19 +460,19 @@
+            "siblingIndex": 0,
+            "world": Array [
+              Array [
+                Array [
+                  "x",
+    -             0,
+    +             1,
+                ],
+                Array [
+                  "y",
+    -             0,
+    +             2,
+                ],
+                Array [
+                  "z",
+    -             0,
+    +             3,
+                ],
+              ],
+              Array [
+                Array [
+                  "w",
+
+      491 |             ),
+      492 |         );
+    > 493 |         expect({ code: error?.code, state: g.nodes.map(raw), events: g.events }).toEqual({
+          |                                                                                  ^
+      494 |             code: 'AIR_E_BOX3D_CONFIG',
+      495 |             state: before,
+      496 |             events: [],
+
+      at tools/verify/box3d/node-motion-guard-control.test.ts:493:82
+
+Test Suites: 1 failed, 1 total
+Tests:       73 failed, 9 passed, 82 total
+Snapshots:   0 total
+Time:        13.032 s
+Ran all test suites.
+Test results written to: docs/physics/box3d/rebuild/node-motion-guard-source-20261022-red/jest-results.json

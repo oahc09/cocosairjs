@@ -1,0 +1,13 @@
+{
+  "status": "RED_INPUT_FROZEN_BEFORE_NODE_GUARD_CALLS",
+  "createdAt": "2026-10-22T10:52:21.165985+00:00",
+  "files": {
+    "src/cocos/scene-graph/node.ts": "385eabe981cf2c20c65211a488d03a702727e895029d3743193264cf9b500a2b",
+    "src/cocos/scene-graph/node-transform-validation.ts": "25d2496f917bd3318789234dcb98fff988541d9142e46325f8f383b097677343",
+    "src/air/physics/box3d/node-motion-guard.ts": "ebd64a30eea7dcd7652ae8ca871bd4bea570fb2beaac21ec05b269eed7415ca4",
+    "tools/verify/box3d/node-motion-guard-control.test.ts": "a11033a30a48ab3715c7cd7c039dffa69108901b53f4fdcf649cea73bd9a89b3",
+    "tools/verify/box3d/node-motion-guard-control.jest.cjs": "eb5cab1ae1dff7dccc79e468015a909b1cca323522a2bf360f63dc3f7534312a",
+    "tools/verify/box3d/node-motion-guard-control.tsconfig.json": "f7f50b6588453ea65f585e0b9915ceee0789d6eb06a410835ecc6d40dc24319f"
+  },
+  "scope": "Actual Node source with new opt-in registry not yet wired to Node. No native/WASM claims."
+}

@@ -1,0 +1,11 @@
+{
+  "nodeBeforeSha256": "385eabe981cf2c20c65211a488d03a702727e895029d3743193264cf9b500a2b",
+  "nodeAfterSha256": "dc63aa3b55c054d395a139af9f03ee534eace4bb0659f2abe8ccb81d4c4150d1",
+  "nodeHeaderUnchanged": true,
+  "onlyRemovedOriginalLine": [
+    "import { validateTransformValues } from './node-transform-validation';"
+  ],
+  "addedLineCount": 29,
+  "originalFiniteValidatorPrefixUnchanged": true,
+  "formatScope": "Only new registry tail and AIR/tool sources formatted. Extracted Node was not globally formatted."
+}

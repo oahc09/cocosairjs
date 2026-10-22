@@ -1,0 +1,95 @@
+  console.log
+    Cannot access game frame or container.
+
+      at warnID (src/cocos/core/platform/debug.ts:314:5)
+
+PASS tools/verify/box3d/node-motion-guard-control.test.ts
+  ✓ protected actual Node rejects before mutation: setPosition numeric (10 ms)
+  ✓ protected actual Node rejects before mutation: setPosition object (8 ms)
+  ✓ protected actual Node rejects before mutation: setPosition omitted z (9 ms)
+  ✓ protected actual Node rejects before mutation: position property (4 ms)
+  ✓ protected actual Node rejects before mutation: x property (3 ms)
+  ✓ protected actual Node rejects before mutation: y property (7 ms)
+  ✓ protected actual Node rejects before mutation: z property (3 ms)
+  ✓ protected actual Node rejects before mutation: setWorldPosition numeric (3 ms)
+  ✓ protected actual Node rejects before mutation: setWorldPosition object (14 ms)
+  ✓ protected actual Node rejects before mutation: setWorldPosition omitted z (3 ms)
+  ✓ protected actual Node rejects before mutation: worldPosition property (4 ms)
+  ✓ protected actual Node rejects before mutation: worldPositionX property (2 ms)
+  ✓ protected actual Node rejects before mutation: worldPositionY property (2 ms)
+  ✓ protected actual Node rejects before mutation: worldPositionZ property (3 ms)
+  ✓ protected actual Node rejects before mutation: setRotation numeric (4 ms)
+  ✓ protected actual Node rejects before mutation: setRotation object (3 ms)
+  ✓ protected actual Node rejects before mutation: rotation property (3 ms)
+  ✓ protected actual Node rejects before mutation: Euler method numeric (3 ms)
+  ✓ protected actual Node rejects before mutation: Euler method object (4 ms)
+  ✓ protected actual Node rejects before mutation: Euler property (2 ms)
+  ✓ protected actual Node rejects before mutation: angle property (2 ms)
+  ✓ protected actual Node rejects before mutation: setWorldRotation numeric (2 ms)
+  ✓ protected actual Node rejects before mutation: setWorldRotation object (2 ms)
+  ✓ protected actual Node rejects before mutation: worldRotation property (2 ms)
+  ✓ protected actual Node rejects before mutation: world Euler method (2 ms)
+  ✓ protected actual Node rejects before mutation: setScale numeric (3 ms)
+  ✓ protected actual Node rejects before mutation: setScale object (2 ms)
+  ✓ protected actual Node rejects before mutation: scale property (2 ms)
+  ✓ protected actual Node rejects before mutation: setWorldScale numeric (2 ms)
+  ✓ protected actual Node rejects before mutation: setWorldScale object (3 ms)
+  ✓ protected actual Node rejects before mutation: setWorldScale missing z raw overload (1 ms)
+  ✓ protected actual Node rejects before mutation: worldScale property (2 ms)
+  ✓ protected actual Node rejects before mutation: matrix property (2 ms)
+  ✓ protected actual Node rejects before mutation: translate local (2 ms)
+  ✓ protected actual Node rejects before mutation: translate world (2 ms)
+  ✓ protected actual Node rejects before mutation: rotate local (3 ms)
+  ✓ protected actual Node rejects before mutation: rotate world (2 ms)
+  ✓ protected actual Node rejects before mutation: lookAt (2 ms)
+  ✓ protected actual Node rejects before mutation: forward property (5 ms)
+  ✓ protected actual Node rejects before mutation: setRTS combined (3 ms)
+  ✓ protected actual Node rejects before mutation: setRTS later invalid scale (2 ms)
+  ✓ protected actual Node rejects before mutation: same position request (2 ms)
+  ✓ protected actual Node rejects before mutation: parent translation (3 ms)
+  ✓ protected actual Node rejects before mutation: grandparent rotation (3 ms)
+  ✓ protected actual Node rejects before mutation: ancestor scale (2 ms)
+  ✓ protected actual Node rejects before mutation: skip-transform flag (2 ms)
+  ✓ protected actual Node rejects before mutation: setParent false (2 ms)
+  ✓ protected actual Node rejects before mutation: setParent keep world (2 ms)
+  ✓ protected actual Node rejects before mutation: same parent request (2 ms)
+  ✓ protected actual Node rejects before mutation: parent property (2 ms)
+  ✓ protected actual Node rejects before mutation: modifyParent internal (3 ms)
+  ✓ protected actual Node rejects before mutation: ancestor modifyParent (1 ms)
+  ✓ protected actual Node rejects before mutation: ancestor subtree reparent (2 ms)
+  ✓ protected actual Node rejects before mutation: addChild (2 ms)
+  ✓ protected actual Node rejects before mutation: insertChild (1 ms)
+  ✓ protected actual Node rejects before mutation: removeFromParent (1 ms)
+  ✓ protected actual Node rejects before mutation: removeChild (2 ms)
+  ✓ protected actual Node rejects before mutation: removeAllChildren preflight before unprotected sibling (2 ms)
+  ✓ truly empty setRTS remains an event-free no-op under ownership (2 ms)
+  ✓ unrelated subtree remains writable with another target ancestor lease (2 ms)
+  ✓ shared ancestor remains protected until the last independent owner releases (1 ms)
+  ✓ empty registry does not evaluate candidate getter or alter legacy validation (1 ms)
+  ✓ grant expected values are copied and an exact actual Node write consumes once (1 ms)
+  ✓ owned grant rejects before a dirty-world refresh: mismatched values (2 ms)
+  ✓ owned grant rejects before a dirty-world refresh: omitted z (2 ms)
+  ✓ owned grant rejects before a dirty-world refresh: wrong operation (2 ms)
+  ✓ complete object candidate is copied once and used for the actual owned write (1 ms)
+  ✓ single-use grant is consumed before synchronous user transform listener reentry (1 ms)
+  ✓ uncaught user exception is preserved and does not leave a reusable grant
+  ✓ input getter reentry cannot steal a pending grant
+  ✓ all shared ancestor leases must provide exact nested permission (2 ms)
+  ✓ mismatched second lease is rejected without consuming or mutating either Node write (1 ms)
+  ✓ same lease nested permission and unused grant fail explicitly
+  ✓ dispose revokes pending permission and repeated dispose is safe (1 ms)
+  ✓ invalid registration has no partial owner insertion (15 ms)
+  ✓ owned world quaternion operation and existing unrelated SCALE flags survive
+  ✓ raw alias bypass is explicitly outside synchronous interception, not a fake rejection
+  ✓ standalone write gate cannot create permission without matching entry (1 ms)
+  ✓ input accessor changes ownership: dispose-self cannot forge an owned Node write (2 ms)
+  ✓ input accessor changes ownership: add-owner cannot forge an owned Node write (2 ms)
+  ✓ input accessor changes ownership: replace-owner cannot forge an owned Node write (14 ms)
+  ✓ listener disposal after a real Node write is not reported as valid owned completion
+
+Test Suites: 1 passed, 1 total
+Tests:       82 passed, 82 total
+Snapshots:   0 total
+Time:        5.346 s, estimated 13 s
+Ran all test suites.
+Test results written to: docs/physics/box3d/rebuild/node-motion-guard-source-20261022-green/jest-initial-results.json

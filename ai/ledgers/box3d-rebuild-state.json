@@ -959,17 +959,17 @@
     "deploy": false,
     "npmPublish": false
   },
-  "nextStep": "Preserve actual component source checkpoints d/e and material-listener repair as the fourteenth recoverable checkpoint; qualify the frozen combined source against l2 WASM, then implement T11 from the fixed-core contract. No public activation or full gate claims.",
+  "nextStep": "Preserve narrow T11 motion-batch and pre-mutation Node guard source before any build; review exact new input/wire/evidence inventory, then run serial native and WASM qualification. Public hook/ownership/parent-scale semantics must close before public activation. All formal gate denominators unchanged.",
   "remoteHistoryPolicy": "True upstream main parent and incremental tree; local snapshot import is backup-only and is never pushed as upstream history.",
   "remotePublication": {
-    "status": "REMOTE_CHECKPOINT_13_READBACK_VERIFIED",
-    "commit": "d7d3db7db1cd6eb585e4d6eb1cef8c8209d8fe05",
-    "tree": "03f3212c2a34c7625c396518867016c14e27cfaa",
-    "parent": "d1160c008fc4d178609a290eb9668ba420084029",
+    "status": "REMOTE_CHECKPOINT_14_READBACK_VERIFIED",
+    "commit": "6efcad8a4e8515bac1bce66f2be227a7cb760d49",
+    "tree": "dbee948224f497a4f73473e949bd9dbeb15fa892",
+    "parent": "d7d3db7db1cd6eb585e4d6eb1cef8c8209d8fe05",
     "branch": "feat/box3d-rebuild-20261022",
-    "receipt": "docs/physics/box3d/rebuild/remote-checkpoint-13.json"
+    "receipt": "docs/physics/box3d/rebuild/remote-checkpoint-14.json"
   },
-  "updatedAtUtc": "2026-10-22T10:26:10.931758+00:00",
+  "updatedAtUtc": "2026-10-22T10:44:34.878904+00:00",
   "currentEvidence": {
     "m0ContractTests": "PASS_7_SOURCE_DESIGN_CHECKS_ONLY_U01_U02_INVENTORY_ADDED",
     "nativeFoundationIndex": "tools/physics/box3d/evidence/index.json",
@@ -1156,6 +1156,12 @@
       "independentRerun": "docs/physics/box3d/rebuild/body-component-real-wasm-l2-20261022-lifecycle-lead-g/receipt.json",
       "independentReview": "docs/physics/box3d/rebuild/component-independent-review-20261022-g/review.json",
       "scope": "Five actual e+f component cases and independent lifecycle rerun on l2 Release WASM. Existing-collider invalid initialization preflight/recovery, lifecycle, material update/replacement/unsubscribe, natural native rejection, committed failure cleanup. 20 final owned source/tool hashes frozen. 30 material source controls are not additional physics runs. No public activation, full T10/C36, browser/GPU or current 2D/3D coexistence claim."
+    },
+    "motionDesign": {
+      "status": "DESIGN_FROZEN_NOT_IMPLEMENTED",
+      "nativeReview": "docs/physics/box3d/rebuild/transform-bridge-contract-20261022.md",
+      "decisions": "docs/physics/box3d/contracts/motion-command-decisions-v1.md",
+      "limits": "New motion schema/source in progress, no new native build or target/teleport PASS. Node pre-mutation coverage and public hook command staging remain separate required implementation."
     }
   },
   "contractDesign": {
@@ -1172,10 +1178,10 @@
   },
   "persistentCheckpoint": {
     "status": "PASS_ACTUAL_LIBRARY_DOWNLOAD_INDEPENDENT_GIT_RESTORE",
-    "libraryFileId": "libfile_1eeb8ae6c4fc8191b3ce6dcb8d92cb07",
-    "commit": "c557e5bab13667c46118268bb826320b750d1f42",
-    "trackedFiles": 5582,
-    "receipt": "docs/physics/box3d/rebuild/library-filter-checkpoint-20261022.json"
+    "libraryFileId": "libfile_dd6dd5763a288191ba734a69bf8f89b3",
+    "commit": "e3ce7f6b7629c7550b93101b638e5c97b6e0ce6f",
+    "trackedFiles": 7806,
+    "receipt": "docs/physics/box3d/rebuild/library-component-checkpoint-20261022.json"
   },
   "additionalOriginalMainSources": {
     "count": 445,
@@ -1199,5 +1205,6 @@
   "inventoryManifest": "docs/physics/box3d/contracts/inventory-frozen-v1.json",
   "inventoryReview": "docs/physics/box3d/contracts/inventory-freeze-review-v1.json",
   "inventoryValidation": "docs/physics/box3d/rebuild/inventory-freeze-check-20261022/receipt.json",
-  "redundantRecoveryCloneCleanup": "docs/physics/box3d/rebuild/redundant-clone-cleanup-20261022/receipt.json"
+  "redundantRecoveryCloneCleanup": "docs/physics/box3d/rebuild/redundant-clone-cleanup-20261022/receipt.json",
+  "redundantRecoveryCloneCleanupAdditional": "docs/physics/box3d/rebuild/redundant-clone-cleanup-20261022-b/receipt.json"
 }

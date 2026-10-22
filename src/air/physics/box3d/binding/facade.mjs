@@ -23,7 +23,7 @@ THE SOFTWARE.
 // Internal, limited M1 foundation. This is not the Cocos physics adapter.
 const CORE_SHA = 'efca0c184d40fd6a82016983f1601c4d23965867';
 const BINDING_BASE_SHA = '5d5a3af049cccd9948b2b55bac4342414af0ef64';
-const SCHEMA_SHA256 = '78fccc27f58503178fcc824473a0e30d42fa54f19e87bd9424b83a975d45b738';
+const SCHEMA_SHA256 = '53381d70f6955d42f7f2b83a0d35c319c743118c184fcbb705f0d3bfd9c882aa';
 const PATCH_CHAIN_SHA256 = '434fb89494867f515051d5ac0dfc0c694556ba1f0da9ac3fc895a27097b1c7c7';
 
 function failure(code, message) {
@@ -31,6 +31,8 @@ function failure(code, message) {
 }
 
 function nativeStatus(status) {
+    if (status === 11) throw failure('AIR_E_BOX3D_CONFIG', 'Motion conflicts with a locked world velocity component');
+    if (status === 12) throw failure('AIR_E_BOX3D_CONFIG', 'Motion exceeds the safe native speed cap');
     if (status === 9) throw failure('AIR_E_BOX3D_LOCKED', 'World is locked');
     if (status === 10) throw failure('AIR_E_BOX3D_MASS_PENDING', 'Dynamic enabled body has no effective geometry');
     if (status !== 0) throw failure('AIR_E_BOX3D_NATIVE', `Box3D foundation status ${status}`);
@@ -564,6 +566,167 @@ export function createBox3DBinding(module, expected) {
         changed(world);
         return bodyState(world, body);
     }
+    function motionPose(pose) {
+        if (!pose || typeof pose !== 'object') throw failure('AIR_E_BOX3D_ARGUMENT', 'Origin pose required');
+        const position = vector(pose.position, 3, 'pose.position').map(Math.fround);
+        if (!pose.rotation || pose.rotation.length !== 4)
+            throw failure('AIR_E_BOX3D_ARGUMENT', 'pose.rotation needs four components');
+        const q = Array.from(pose.rotation);
+        if (q.some((v) => typeof v !== 'number' || !Number.isFinite(v)))
+            throw failure('AIR_E_BOX3D_ARGUMENT', 'Quaternion must be finite');
+        const scale = Math.max(...q.map(Math.abs));
+        if (scale === 0) throw failure('AIR_E_BOX3D_ARGUMENT', 'Quaternion must be nonzero');
+        const scaled = q.map((v) => v / scale),
+            norm = Math.hypot(...scaled);
+        const rotation = scaled.map((v) => Math.fround(v / norm));
+        return { position, rotation };
+    }
+    function motionBatch(world, records, dt, substeps, apply) {
+        const wid = worldId(world),
+            state = worldStates.get(world);
+        if (!Array.isArray(records)) throw failure('AIR_E_BOX3D_ARGUMENT', 'Motion record array required');
+        if (records.length > 4096) throw failure('AIR_E_BOX3D_CAPACITY', 'At most 4096 bodies per motion batch');
+        const delta = Math.fround(finite(dt, 'motion.dt'));
+        if (delta <= 0 || !Number.isInteger(substeps) || substeps < 1 || substeps > 2147483647)
+            throw failure('AIR_E_BOX3D_ARGUMENT', 'Positive float32 dt and positive int32 substeps required');
+        if (
+            apply &&
+            records.length &&
+            (!Number.isSafeInteger(state.revision) || state.revision >= Number.MAX_SAFE_INTEGER)
+        )
+            throw failure('AIR_E_BOX3D_CAPACITY', 'Mutation revision exhausted before motion invocation');
+        const seen = new Set();
+        const prepared = records.map((record) => {
+            if (!record || typeof record !== 'object') throw failure('AIR_E_BOX3D_ARGUMENT', 'Motion record required');
+            const body = record.body;
+            bodyOwner(world, body);
+            if (seen.has(idKey(body))) throw failure('AIR_E_BOX3D_ARGUMENT', 'Duplicate body in motion batch');
+            seen.add(idKey(body));
+            let flags = 0,
+                intent = 0,
+                reset = null,
+                target = null;
+            if (record.reset !== undefined) {
+                if (!record.reset || typeof record.reset !== 'object')
+                    throw failure('AIR_E_BOX3D_ARGUMENT', 'Reset required');
+                const { mode = 'teleport', preserveVelocity = false, wake = true } = record.reset;
+                if (mode !== 'teleport' && mode !== 'scene')
+                    throw failure('AIR_E_BOX3D_ARGUMENT', 'Invalid reset mode');
+                flags =
+                    1 |
+                    (boolean(preserveVelocity, 'preserveVelocity') << 1) |
+                    (boolean(wake, 'wake') << 2) |
+                    (mode === 'scene' ? 8 : 0);
+                reset = { pose: motionPose(record.reset.pose), mode, preserveVelocity, wake };
+            }
+            if (record.intent !== undefined) {
+                if (!record.intent || typeof record.intent !== 'object')
+                    throw failure('AIR_E_BOX3D_ARGUMENT', 'Intent required');
+                if (record.intent.kind === 'target') {
+                    intent = 1;
+                    target = motionPose(record.intent.pose);
+                } else if (record.intent.kind === 'clear') {
+                    if (record.intent.pose !== undefined) throw failure('AIR_E_BOX3D_ARGUMENT', 'Clear has no pose');
+                    intent = 2;
+                } else throw failure('AIR_E_BOX3D_ARGUMENT', 'Invalid motion intent');
+            }
+            if (!flags && !intent) throw failure('AIR_E_BOX3D_ARGUMENT', 'Empty body motion record');
+            // Read-only state admission before any member is applied. No cached plan is trusted at commit.
+            bodyState(world, body);
+            return { body, flags, intent, reset, target };
+        });
+        const inputWords = prepared.length * 18,
+            outputFloats = prepared.length * 61;
+        return withBuffer((inputWords + (apply ? outputFloats : 0)) * 4, (ptr) => {
+            const inputArray = new Uint32Array(inputWords),
+                floats = new Float32Array(inputArray.buffer);
+            for (let i = 0; i < prepared.length; ++i) {
+                const r = prepared[i],
+                    offset = i * 18;
+                inputArray.set([r.body.low, r.body.high, r.flags, r.intent], offset);
+                if (r.reset) floats.set([...r.reset.pose.position, ...r.reset.pose.rotation], offset + 4);
+                if (r.target) floats.set([...r.target.position, ...r.target.rotation], offset + 11);
+            }
+            module.HEAPU32.set(inputArray, ptr >>> 2);
+            const dst = ptr + inputWords * 4;
+            const invoke = () =>
+                module._air_b3_motion_batch(
+                    wid,
+                    ptr,
+                    prepared.length,
+                    inputWords,
+                    delta,
+                    substeps,
+                    apply ? dst : 0,
+                    apply ? outputFloats : 0,
+                    apply ? 1 : 0,
+                );
+            if (!apply || !prepared.length) {
+                // Read-only native validation: unknown throw stays unannotated; never invalidate a snapshot.
+                activeMutation.outcome = undefined;
+                const status = invoke();
+                activeMutation.outcome = 'not-mutated';
+                nativeStatus(status);
+                return apply ? freeze([]) : undefined;
+            }
+            mutatingCall(world, invoke);
+            changed(world);
+            const copied = Array.from(module.HEAPF32.slice(dst >>> 2, (dst >>> 2) + outputFloats));
+            if (copied.length !== outputFloats || !copied.every(Number.isFinite))
+                throw failure('AIR_E_BOX3D_ABI', 'Invalid copied native motion result');
+            const poseAt = (p, offset) => ({
+                position: p.slice(offset, offset + 3),
+                rotation: p.slice(offset + 3, offset + 7),
+            });
+            return freeze(
+                prepared.map((record, i) => {
+                    const p = copied.slice(i * 61, (i + 1) * 61),
+                        actualState = bodyState(world, record.body);
+                    if (
+                        p[33] !== actualState.type ||
+                        Boolean(p[34]) !== actualState.enabled ||
+                        Boolean(p[35]) !== actualState.awake
+                    )
+                        throw failure('AIR_E_BOX3D_ABI', 'Motion state/readback mismatch');
+                    return {
+                        body: record.body,
+                        requested: {
+                            reset: record.reset,
+                            intent:
+                                record.intent === 1
+                                    ? { kind: 'target', pose: record.target }
+                                    : record.intent === 2
+                                      ? { kind: 'clear' }
+                                      : null,
+                        },
+                        pose: poseAt(p, 0),
+                        worldCenter: p.slice(7, 10),
+                        state: actualState,
+                        applied: { linearVelocity: p.slice(10, 13), angularVelocity: p.slice(13, 16) },
+                        plan: {
+                            linearVelocity: p.slice(16, 19),
+                            angularVelocity: p.slice(19, 22),
+                            linearLockResidue: p.slice(22, 25),
+                            angularLockResidue: p.slice(25, 28),
+                            linearDamping: p[28],
+                            angularDamping: p[29],
+                            maximumLinearSpeed: p[30],
+                            maximumAngularSpeed: p[32] ? null : p[31],
+                            allowFastRotation: Boolean(p[32]),
+                            fixedDt: delta,
+                            solverSubSteps: substeps,
+                        },
+                        before: {
+                            pose: poseAt(p, 45),
+                            worldCenter: p.slice(52, 55),
+                            linearVelocity: p.slice(55, 58),
+                            angularVelocity: p.slice(58, 61),
+                        },
+                    };
+                }),
+            );
+        });
+    }
     function bodyApply(world, body, kind, value, offset, space) {
         const { wid, target } = bodyOwner(world, body);
         if (space !== 'world' && space !== 'local') throw failure('AIR_E_BOX3D_ARGUMENT', 'Invalid force space');
@@ -601,6 +764,12 @@ export function createBox3DBinding(module, expected) {
     }
     const api = {
         identity: Object.freeze({ ...expected }),
+        validateMotionBatch(world, records, dt, substeps) {
+            return mutate(() => motionBatch(world, records, dt, substeps, false));
+        },
+        applyMotionBatch(world, records, dt, substeps) {
+            return mutate(() => motionBatch(world, records, dt, substeps, true));
+        },
         createWorld(gravity = [0, -10, 0]) {
             return exclusive(() => {
                 const g = vector(gravity, 3, 'gravity');

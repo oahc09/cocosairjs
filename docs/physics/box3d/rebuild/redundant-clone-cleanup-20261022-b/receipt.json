@@ -1,0 +1,14 @@
+{
+  "status": "COMPLETED",
+  "timeUTC": "2026-10-22T10:41:32.039710+00:00",
+  "removedClones": [
+    "box3d-filter-checkpoint-20261022/restored-local",
+    "box3d-filter-source-library-roundtrip-20261022/restored",
+    "box3d-component-checkpoint-20261022/restored-local"
+  ],
+  "retainedOuterPayloadsUnchanged": true,
+  "freeBytesBefore": 3796008960,
+  "freeBytesAfter": 4363366400,
+  "netFreeIncreaseBytes": 567357440,
+  "scope": "Exactly three proven duplicate recovery clones. No unique raw, archive, bundle, manifest, current source or latest Library-restored clone removed."
+}

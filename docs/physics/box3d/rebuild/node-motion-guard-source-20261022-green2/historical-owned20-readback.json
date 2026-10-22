@@ -1,0 +1,27 @@
+{
+  "unchanged": true,
+  "count": 20,
+  "files": {
+    "src/air/physics/box3d/world.ts": "ec96866f6208ac987c1f0809b7259c526165df5ff8c5f081fd50ef54572beaee",
+    "src/air/physics/box3d/world-binding.ts": "aece3008837da8b55c77b969b2374c6a542b5debfa7cbffe5a8b2b41ffb78de0",
+    "src/air/physics/box3d/shared-body.ts": "b4e9665f0e688752de8689fcf992da95b50de45075a7e119161f2005995c3239",
+    "src/air/physics/box3d/rigid-body.ts": "0d00792b4f66ec30fdd255041b397f6a501257b071d78bf1516b97bc32ab51b6",
+    "src/air/physics/box3d/registration.ts": "a14fa6544069a089985ff59885f4e6ea3e09244a675c3373017b2472f4a2d704",
+    "src/air/physics/box3d/box-sphere-geometry.ts": "d492ee746f95ecb93466cbd1e96054280003e501e36408c6d7d65508fd1107c5",
+    "src/air/physics/box3d/box-sphere-shape.ts": "35747ae8df33ad523e01b68f8ea1d2a771a59c4a6a0af3cf9a4c04cb7ffad6ba",
+    "tools/verify/box3d/body-component-real-source.test.cjs": "e833337bd63e926899abadb9dc9e0d046374d204df2abd6a7e83521bb731f048",
+    "tools/verify/box3d/body-component-real-source.tsconfig.json": "d143b8c482da352511d4f214a301223043c451c45c9e3ff56b5a366a9165f558",
+    "src/cocos/physics/framework/components/colliders/collider.ts": "a47a19aabb317971c4e8d8947fa8e85730d895f1ed88a34bc17aa8a891802c8a",
+    "tools/verify/box3d/body-component-real-wasm-environment.cjs": "2eb2daa1c1eb8ce6ecd87ce4d712d95856d025a3c8fea04af9fe12be5078cf97",
+    "tools/verify/box3d/body-component-real-wasm-inputs.cjs": "70a146e701934ef0f6a88033dcf6d50e7377742346a6ad11edcb2ece164969b4",
+    "tools/verify/box3d/body-component-real-wasm-preload.mjs": "9ad3d5b977e2f4b8ccb227a4df1e9f7ca36ea47d1f759b29a99a053bc3ac8454",
+    "tools/verify/box3d/body-component-real-wasm.jest.cjs": "2d14c98ec4d1121635cbeeaf77307d0089e83f0e45b8a781294a7424497d09cb",
+    "tools/verify/box3d/body-component-real-wasm.mjs": "3cb06723e336e34e97100fc8edd48c7f4ae3d6bd3d30f79b96682112b7a1e56f",
+    "tools/verify/box3d/body-component-real-wasm.test.ts": "59cfb1847508831e0994b2a3bafd2c59ee9067def61c3999809d6389d07e7c87",
+    "tools/verify/box3d/body-component-real-wasm.tsconfig.json": "e930c738dc726dd8860ea91ca6b144ce62210b9db1f932cdbe1e96aeee63b6cd",
+    "tools/verify/box3d/body-component-real-material-initial-control.jest.cjs": "17d43a366d9b2a4eecd24e4bc924bdb9ab6fbe607f6686f239c311cfb34a8258",
+    "tools/verify/box3d/body-component-real-material-initial-control.test.ts": "fbd2085005dc9f079ca0123f1a6a3f153c10a123a763d185ea548429c06c386f",
+    "tools/verify/box3d/body-component-real-material-initial-control.tsconfig.json": "47c8ee0421c7d7d6b6e4382e37f0437e2c780003af17e3b4bf5a78eb7bdb7bf5"
+  },
+  "qualification": "Historical g owned source bytes unchanged, but Node is now different; this is not a current g physics PASS."
+}

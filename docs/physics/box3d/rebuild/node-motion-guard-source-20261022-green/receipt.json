@@ -1,0 +1,21 @@
+{
+  "status": "JEST_PASS_TSC_FIXTURE_FAIL",
+  "createdAt": "2026-10-22T11:01:29.408146+00:00",
+  "tests": {
+    "passed": 142,
+    "failed": 0,
+    "total": 142
+  },
+  "tscExit": 2,
+  "failure": "Fixture Object.fromEntries is absent from current TS library. Do not change project lib or label this static gate PASS.",
+  "sourceHashesUnchanged": true,
+  "inputReceiptSha256": "33ccdc61f41abe23b44a33532839fa419bbd66b81bdc50a185129d6fb52a6d11",
+  "outputs": {
+    "tsc.exit-code.txt": "53c234e5e8472b6ac51c1ae1cab3fe06fad053beb8ebfd8977b010655bfdd3c3",
+    "tsc.stdout.txt": "66e10b0c96f0fc82658fdb99a879295eeeaa941b791ed77ad9d6270260cfc163",
+    "jest.stderr.txt": "4461c1c9ae9ff855726426c6bf9a694c581a7005f9f6c42fc3a4754e7e362925",
+    "jest.exit-code.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "tsc.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "jest.stdout.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}
