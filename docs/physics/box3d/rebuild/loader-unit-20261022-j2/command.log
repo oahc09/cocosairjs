@@ -1,0 +1,21 @@
+✔ import and creation are lazy; normalized options are copied and frozen without touching caller (27.336415ms)
+✔ invalid options and unsupported modes reject before asset requests (4.569052ms)
+✔ identical preparation is one exact promise; conflicts do not replace it; disposal is idempotent (90.949732ms)
+✔ HTTP, MIME and integrity failures do not import or acquire a module; retry gets a new generation (42.232464ms)
+✔ trusted identity, facade identity, required assets, duplicate and traversal paths are fail-closed (18.440612ms)
+✔ a failed factory retains the original error, creates no fictitious release, and can retry (8.055923ms)
+✔ cancel during an unabortable factory waits for late acquisition and releases it before retry (4.636878ms)
+✔ binding failure still releases the acquired module, preserving original and cleanup errors separately (33.829931ms)
+✔ normal cleanup attempts both resources even if each throws; failed cleanup cannot silently restart (3.920305ms)
+✔ cancellation before manifest response acquires and releases nothing fictitious (1.62454ms)
+✔ cancellation during module import does not invoke the late factory (6.103118ms)
+✔ runtime asset resolution rejects any unlisted resource before module acquisition (2.455187ms)
+✔ an invalid factory result never becomes an acquired module (4.84895ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 703.194301

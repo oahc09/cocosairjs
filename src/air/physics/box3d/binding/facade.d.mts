@@ -52,6 +52,16 @@ export interface Box3DFoundation {
     createWorld(gravity?: ArrayLike<number>): Box3DWorld;
     destroyWorld(world: Box3DWorld): void;
     step(world: Box3DWorld, dt?: number, substeps?: number): void;
+    setGravity(world: Box3DWorld, gravity: readonly number[]): void;
+    getGravity(world: Box3DWorld): readonly number[];
+    setSleepingEnabled(world: Box3DWorld, enabled: boolean): void;
+    isSleepingEnabled(world: Box3DWorld): boolean;
+    getShapeMaterial(world: Box3DWorld, shape: Box3DId): Box3DSurfaceMaterial;
+    setShapeMaterial(world: Box3DWorld, shape: Box3DId, material: Box3DSurfaceMaterial): void;
+    stepDiagnostics(world: Box3DWorld): Box3DNativeStepDiagnostics;
+    debugSnapshot(world: Box3DWorld, flags: number, jointScale: number): Box3DDebugSnapshot;
+    /** Facade-owned native bridge allocations only, excluding core/JS/WASM heap capacity. */
+    bridgeMemory(world?: Box3DWorld): Box3DBridgeMemory;
     createBody(world: Box3DWorld, options?: Box3DBodyOptions): Box3DId;
     destroyBody(body: Box3DId): void;
     bodySnapshot(body: Box3DId): Float32Array;
@@ -207,4 +217,30 @@ export interface Box3DContactGeometry {
             readonly localPointB: readonly number[];
         }[];
     }[];
+}
+
+export interface Box3DSurfaceMaterial {
+    readonly friction: number;
+    readonly restitution: number;
+}
+export interface Box3DNativeStepDiagnostics {
+    readonly nativeStepIndex: number;
+    readonly nativeCompleted: boolean;
+    readonly snapshotAvailable: boolean;
+}
+export type Box3DDebugPrimitive =
+    | Readonly<{ kind: 'line'; from: readonly number[]; to: readonly number[]; color: number }>
+    | Readonly<{ kind: 'bounds'; lower: readonly number[]; upper: readonly number[]; color: number }>;
+export interface Box3DDebugSnapshot {
+    readonly primitives: readonly Box3DDebugPrimitive[];
+    readonly flags: number;
+    readonly jointScale: number;
+    readonly supportedFlags: number;
+}
+export interface Box3DBridgeMemory {
+    readonly liveBytes: bigint;
+    readonly liveAllocations: number;
+    readonly shapeHandles: number;
+    readonly primitiveCapacity: number;
+    readonly capturedPrimitives: number;
 }

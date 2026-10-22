@@ -1,0 +1,33 @@
+{
+  "status": "PASS",
+  "scope": "Exact finite world Debug/Release native and JS observations; heap capacity independently grows, not required equal",
+  "inputs": [
+    {
+      "path": "world-wasm-debug-20261022-j2/wasm-world-contract.raw.json",
+      "sha256": "110f72222fa9865a41617a0754d0fdd270b8a402a6ff53dd0cdc0cdc7ffac125"
+    },
+    {
+      "path": "world-wasm-release-20261022-j2/wasm-world-contract.raw.json",
+      "sha256": "5f851b1c0ce1eb0323b63b1dcbacb4895ee3c81be94e019017c62e42800ff6c0"
+    },
+    {
+      "path": "world-wasm-debug-20261022-j2/native-world-contract.raw.json",
+      "sha256": "f73a2add60a0509a8b241e216064a057a4f28dbf932ba3cfbbe01bce95e715a7"
+    },
+    {
+      "path": "world-wasm-release-20261022-j2/native-world-contract.raw.json",
+      "sha256": "f73a2add60a0509a8b241e216064a057a4f28dbf932ba3cfbbe01bce95e715a7"
+    }
+  ],
+  "checks": [
+    "real gravity setter integration and zero-gravity velocity preservation",
+    "invalid preconditions leave full body/material/world/diagnostic/counters unchanged",
+    "real sleeping solver set wakes when world sleeping is disabled",
+    "real callbacks match finite independent sphere/corner oracle, flag0, scale semantics, copied immutability and heap growth",
+    "shape/body/world cleanup, same-module facade isolation, module isolation and explicit copy/cleanup error propagation",
+    "confirmed native success increments once even when copy fails; diagnostics never re-step",
+    "isolated safe-integer boundary rejects before any native invocation",
+    "32 real debug lifetime loops finish with zero owned bridge allocations and core baseline"
+  ],
+  "scriptSha256": "53078429034d8be12da1ed95ba907895b207fc2b4bf00d308f34f731a483f22d"
+}

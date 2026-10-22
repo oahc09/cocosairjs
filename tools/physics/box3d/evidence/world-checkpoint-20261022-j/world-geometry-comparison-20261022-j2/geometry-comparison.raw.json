@@ -1,0 +1,93 @@
+{
+  "status": "FAIL",
+  "startedAt": "2026-10-22T07:57:11.302Z",
+  "checks": [
+    "exact-Debug-Release-native-geometry-and-all-617-analytic-samples"
+  ],
+  "inputs": [
+    {
+      "directory": "world-wasm-debug-20261022-j2",
+      "path": "build-receipt.json",
+      "sha256": "0722ce0413b896b540029e0afc1d5290533722555ad9c1e53360e155119cff51"
+    },
+    {
+      "directory": "world-wasm-release-20261022-j2",
+      "path": "build-receipt.json",
+      "sha256": "a9551bbc399c61eec276d601acd9506c72dd3e5b0b77a083f0e0a025106b3dc1"
+    },
+    {
+      "directory": "world-wasm-debug-20261022-j2",
+      "path": "native-geometry-contract.raw.json",
+      "sha256": "a6f0c8f945e9eb5822f912feefa9519ce47a9964c55e60de88c1849cabb47333"
+    },
+    {
+      "directory": "world-wasm-release-20261022-j2",
+      "path": "native-geometry-contract.raw.json",
+      "sha256": "a6f0c8f945e9eb5822f912feefa9519ce47a9964c55e60de88c1849cabb47333"
+    },
+    {
+      "directory": "world-wasm-debug-20261022-j2",
+      "path": "wasm-geometry-contract.raw.json",
+      "sha256": "acdf07b2e5a33433b7ba87d7e91276f3e811d51f7f490c09c8d87e25d8227030"
+    },
+    {
+      "directory": "world-wasm-release-20261022-j2",
+      "path": "wasm-geometry-contract.raw.json",
+      "sha256": "0f366f67f3e7720ef76060662b00ecd2e0f42de558aeddf4c3743b6492cc51ab"
+    },
+    {
+      "directory": "wasm-snapshot-release-20261022-g",
+      "path": "wasm-contract.raw.json",
+      "sha256": "18878db87ef9e9673fdb225a26aea8cd3532b22b8f2bcffea90ab220e438b196"
+    },
+    {
+      "directory": "world-wasm-debug-20261022-j2",
+      "path": "wasm-contract.raw.json",
+      "sha256": "cc6b1962686de8f610595319ed06e8c004d4cdb5488dfebcfebe4ad974cc463d"
+    },
+    {
+      "directory": "wasm-snapshot-release-20261022-g",
+      "path": "wasm-snapshot-contract.raw.json",
+      "sha256": "3029c9c7a7028554ca41e17a97d1efc974d8d8aa2732476cc915e24b41354a64"
+    },
+    {
+      "directory": "world-wasm-debug-20261022-j2",
+      "path": "wasm-snapshot-contract.raw.json",
+      "sha256": "1b6af72377c9845e4811053c58ecb9b9099cb438f9bf61da70bb75e31e44b603"
+    },
+    {
+      "directory": "wasm-snapshot-release-20261022-g",
+      "path": "wasm-ownership-contract.raw.json",
+      "sha256": "adc284a7994b7e25d5e9d8e0b7ddea00c0d1799c6d2a62e6f9554c76d3affedd"
+    },
+    {
+      "directory": "world-wasm-debug-20261022-j2",
+      "path": "wasm-ownership-contract.raw.json",
+      "sha256": "900b2c37ad0ad0bad9ee3c02f21adc7e7548c0a970ffb9fa23afb6849449c1e6"
+    }
+  ],
+  "memoryGrowth": {
+    "debug": [
+      {
+        "before": 17367040,
+        "after": 20840448
+      },
+      {
+        "before": 20840448,
+        "after": 25034752
+      }
+    ],
+    "release": [
+      {
+        "before": 17301504,
+        "after": 20774912
+      },
+      {
+        "before": 20774912,
+        "after": 24969216
+      }
+    ]
+  },
+  "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n+ actual - expected\n... Skipped lines\n\n  [\n    {\n      after: {\n        bodies: [\n          [\n...\n      error: {\n+       code: 'AIR_E_BOX3D_ARGUMENT',\n+       message: 'dt must be positive'\n-       code: 'AIR_E_BOX3D_NATIVE',\n-       message: 'Box3D foundation status 2'\n      },\n      name: 'nonpositive-float32-dt:1e-50'\n    },\n    {\n      after: {\n\n    at file:///workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/compare-geometry-builds.mjs:85:16\n    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)\n    at async node:internal/modules/esm/loader:643:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)",
+  "completedAt": "2026-10-22T07:57:11.581Z"
+}

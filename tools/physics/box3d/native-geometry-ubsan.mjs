@@ -62,7 +62,7 @@ try {
             .filter((f) => f.endsWith('.c'))
             .sort()
             .map((f) => resolve(core, 'src', f)),
-        ...['air_box3d.c', 'snapshot.c', 'geometry.c'].map((f) => 'tools/physics/box3d/native/' + f),
+        ...['air_box3d.c', 'snapshot.c', 'geometry.c', 'world_bridge.c'].map((f) => 'tools/physics/box3d/native/' + f),
     ];
     const objects = [];
     for (const source of sources) {
@@ -72,11 +72,18 @@ try {
         report.inputs.push({ path: source.replaceAll(root, '<repo>'), sha256: sha256(readFileSync(source)) });
     }
     report.contracts = {};
-    for (const name of ['contract', 'geometry_contract']) {
+    for (const name of ['contract', 'geometry_contract', 'world_contract']) {
         const source = `tools/physics/box3d/native/${name}.c`,
             exe = resolve(out, name);
         report.inputs.push({ path: source, sha256: sha256(readFileSync(source)) });
-        run('gcc', [...flags, source, ...objects, '-lm', '-o', exe]);
+        run('gcc', [
+            ...flags,
+            source,
+            ...objects.filter((p) => name !== 'world_contract' || !p.endsWith('/world_bridge.c.o')),
+            '-lm',
+            '-o',
+            exe,
+        ]);
         const raw = run(exe, []);
         writeFileSync(resolve(out, name + '.raw.json'), raw);
         report.contracts[name] = JSON.parse(raw);

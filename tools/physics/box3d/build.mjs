@@ -82,6 +82,7 @@ try {
             'tools/physics/box3d/native/air_box3d.c',
             'tools/physics/box3d/native/snapshot.c',
             'tools/physics/box3d/native/geometry.c',
+            'tools/physics/box3d/native/world_bridge.c',
             'tools/physics/box3d/native/contract.c',
         ]) {
             const object = resolve(out, basename(source) + '.o');
@@ -117,6 +118,20 @@ try {
         writeFileSync(resolve(out, 'native-geometry-contract.raw.json'), geometryRaw);
         result.geometryContract = JSON.parse(geometryRaw);
         if (result.geometryContract.status !== 'PASS') throw new Error('Native geometry contract failed');
+        const worldExe = resolve(out, 'native-world-contract');
+        run(cc, [
+            ...flags,
+            'tools/physics/box3d/native/world_contract.c',
+            ...objects.filter((file) => !file.endsWith('/contract.c.o') && !file.endsWith('/world_bridge.c.o')),
+            ...(sanitize ? ['-fsanitize=address,undefined'] : []),
+            '-lm',
+            '-o',
+            worldExe,
+        ]);
+        const worldRaw = run(worldExe, []);
+        writeFileSync(resolve(out, 'native-world-contract.raw.json'), worldRaw);
+        result.worldContract = JSON.parse(worldRaw);
+        if (result.worldContract.status !== 'PASS') throw new Error('Native world contract failed');
         result.artifacts = [
             { path: 'native-contract', sha256: sha256(readFileSync(exe)), bytes: readFileSync(exe).length },
         ];
@@ -182,10 +197,16 @@ try {
         result.geometryContract = JSON.parse(geometryRaw);
         if (result.geometryContract.status !== 'PASS' || result.geometryContract.pointerBytes !== 4)
             throw new Error('WASM32 geometry native contract failed');
+        const worldRaw = run(process.execPath, [resolve(out, 'air_box3d_world_contract.cjs')]);
+        writeFileSync(resolve(out, 'native-world-contract.raw.json'), worldRaw);
+        result.worldContract = JSON.parse(worldRaw);
+        if (result.worldContract.status !== 'PASS' || result.worldContract.pointerBytes !== 4)
+            throw new Error('WASM32 world native contract failed');
         run(process.execPath, ['tools/physics/box3d/wasm-contract.mjs', out]);
         run(process.execPath, ['tools/physics/box3d/wasm-ownership-contract.mjs', out]);
         run(process.execPath, ['tools/physics/box3d/wasm-snapshot-contract.mjs', out]);
         run(process.execPath, ['tools/physics/box3d/wasm-geometry-contract.mjs', out]);
+        run(process.execPath, ['tools/physics/box3d/wasm-world-contract.mjs', out]);
         result.artifacts = artifacts;
         result.browserStatus = 'NOT_RUN';
     }
@@ -212,11 +233,15 @@ try {
         'tools/physics/box3d/wasm-ownership-contract.mjs',
         'tools/physics/box3d/wasm-snapshot-contract.mjs',
         'tools/physics/box3d/wasm-geometry-contract.mjs',
+        'tools/physics/box3d/wasm-world-contract.mjs',
         'tools/physics/box3d/verify-sources.mjs',
         'tools/physics/box3d/verify-wasm.mjs',
         'tools/physics/box3d/native/air_box3d.c',
         'tools/physics/box3d/native/snapshot.c',
         'tools/physics/box3d/native/geometry.c',
+        'tools/physics/box3d/native/world_bridge.c',
+        'tools/physics/box3d/native/world_bridge.h',
+        'tools/physics/box3d/native/world_contract.c',
         'tools/physics/box3d/native/air_box3d.h',
         'tools/physics/box3d/native/contract.c',
         'tools/physics/box3d/native/geometry_contract.c',

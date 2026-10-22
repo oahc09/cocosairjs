@@ -1,0 +1,71 @@
+{
+  "status": "SOURCE_ONLY_NOT_COMPILED",
+  "scope": "Initial native world/debug bridge and facade, build runner/JS qualification still pending",
+  "files": [
+    {
+      "path": "tools/physics/box3d/native/world_bridge.c",
+      "bytes": 10795,
+      "sha256": "4c9e56e12317588b74f0907fa5d041dd10e54faf28b03a83379e257da0e79053"
+    },
+    {
+      "path": "tools/physics/box3d/native/world_bridge.h",
+      "bytes": 298,
+      "sha256": "c033ea3a334905593c5af3065f6939ff2f94e3a2a144a4298b7aed7a558ed75a"
+    },
+    {
+      "path": "tools/physics/box3d/native/world_contract.c",
+      "bytes": 4224,
+      "sha256": "9a2067c7941a06cde240cce7a4c849a4e4271bb9f4aa767ce58744c33773577f"
+    },
+    {
+      "path": "tools/physics/box3d/native/air_box3d.c",
+      "bytes": 9223,
+      "sha256": "39f8a4ecebf20fe2f952962ba7c64267b7eda1902bbb8615159faf454a2931b3"
+    },
+    {
+      "path": "tools/physics/box3d/native/air_box3d.h",
+      "bytes": 3445,
+      "sha256": "55a9880d149d00edd620f01b3eeb2126d8cee6a879e997fe125d95a6e5cfcc4b"
+    },
+    {
+      "path": "tools/physics/box3d/native/geometry_contract.c",
+      "bytes": 7492,
+      "sha256": "cb82c55602526b33f0125c2a0aa9e1a5c27d942e01c2bb9bcffa919f9c95885f"
+    },
+    {
+      "path": "tools/physics/box3d/CMakeLists.txt",
+      "bytes": 5127,
+      "sha256": "5433baff5d0781d433c4c2a1ce848fb426e9ac20961571370f9a36e08ac4bbd2"
+    },
+    {
+      "path": "tools/physics/box3d/abi-schema.json",
+      "bytes": 9189,
+      "sha256": "119468b7236fd82b8284efd65e207bab55742ccb4729d5dd2cdd3bfa543e7dc1"
+    },
+    {
+      "path": "tools/physics/box3d/exports.json",
+      "bytes": 1159,
+      "sha256": "68bb3434d1519d016f7e08515a258126447e1f582585359dfe9e59d41f9076ef"
+    },
+    {
+      "path": "tools/physics/box3d/versions.lock.json",
+      "bytes": 4943,
+      "sha256": "ae00e8ba09d8482cf044ca930d8350c8455f089f8b03d21b2fd61aa681cf281b"
+    },
+    {
+      "path": "tools/physics/box3d/world-bridge-contract.md",
+      "bytes": 4614,
+      "sha256": "9358959a39a4876dc9fe8916fe97c48280eb41c5ccbd56820cc5d969dfb09d6c"
+    },
+    {
+      "path": "src/air/physics/box3d/binding/facade.mjs",
+      "bytes": 35901,
+      "sha256": "9ec846dd6cb9d6b321985ae33eeeaa0f19d6da3e7038d5fe0980e58d1b6cb00f"
+    },
+    {
+      "path": "src/air/physics/box3d/binding/facade.d.mts",
+      "bytes": 10319,
+      "sha256": "7c4cec895f47e04fd9d85fa2905456c16aa7742862b58f0b0a2fe69b9b3e0018"
+    }
+  ]
+}

@@ -15,7 +15,8 @@
     "4": "INSUFFICIENT_CAPACITY",
     "5": "ALLOCATION_FAILED",
     "6": "GEOMETRY_BASIS_UNAVAILABLE",
-    "7": "UNSUPPORTED_GEOMETRY_FAMILY"
+    "7": "UNSUPPORTED_GEOMETRY_FAMILY",
+    "8": "UNSUPPORTED_WORLD_BRIDGE_CAPABILITY"
   },
   "bodyInput": [
     "position.xyz",
@@ -159,5 +160,43 @@
     "distanceIterations",
     "pushBackIterations",
     "rootIterations"
-  ]
+  ],
+  "worldBridge": {
+    "gravity": "copied float32 xyz; finite validation before native mutation",
+    "sleeping": "exact boolean; disabling calls real b3World_EnableSleeping and wakes sleeping solver sets",
+    "material": "exact-world shape token; finite nonnegative friction/restitution, both validated before writes; compound rejected",
+    "stepDiagnostics": {
+      "nativeStepIndex": "safe JS integer count of confirmed successful native step calls; distinct from core generationStep; exhaustion rejected before invocation",
+      "nativeCompleted": "last admitted native attempt returned success; prevalidation rejection preserves previous record",
+      "snapshotAvailable": "false after mutation or copy failure; native success increments index even when subsequent copy fails",
+      "dt": "must remain positive finite after float32 conversion; underflow to zero rejected before native attempt and preserves previous diagnostics"
+    },
+    "debug": {
+      "flags": {
+        "WIRE_FRAME": 1,
+        "CONSTRAINT": 2,
+        "AABB": 4
+      },
+      "supportedFlags": 5,
+      "unsupported": "CONSTRAINT and unknown bits fail before capture; unsupported shape callback returns error, never empty success",
+      "jointScale": "finite nonnegative float32 validated and echoed; no effect on available shape/AABB geometry, no joint qualification",
+      "primitiveWords": 8,
+      "header": ["primitiveCount"],
+      "primitive": ["kind:1 line,2 bounds", "uint32 color", "from/lower.xyz float32", "to/upper.xyz float32"],
+      "sphere": "three orthogonal 24-segment great-circle wireframes from copied native local sphere",
+      "hull": "one line per native half-edge twin pair; qualified boxes only",
+      "bounds": "real core fat broadphase AABB callback, not exact shape local extents",
+      "maximumPrimitives": 65536,
+      "ownership": "per-world copied local geometry handles owned until real core destroy callback; temporary capture buffer explicitly released in facade finally; no borrowed heap view or pointer escapes",
+      "drawingBounds": "finite float32 full range; no default +/-100 clipping"
+    },
+    "memory": [
+      "liveBytes.uint64 of bridge context/callback copies/capture capacity only",
+      "liveAllocations",
+      "shapeHandles",
+      "primitiveCapacity",
+      "capturedPrimitives"
+    ],
+    "memoryScope": "facade sums its owned worlds only; separate from core byteCount, JS objects and entire WASM heap capacity"
+  }
 }

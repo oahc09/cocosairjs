@@ -1,0 +1,7 @@
+{
+  "path": "tools/physics/box3d/output/world-validation-20261022-j.tar.gz",
+  "bytes": 38835814,
+  "sha256": "09dec6f3e5dc0df76fd49f9b4e7c0604e9adea8f3fef6c464296b29c8dcf5f19",
+  "fileCount": 2366,
+  "excluded": "Only .o/.a and rebuildable CMake intermediates; all command logs, actual product/qualification binaries, failures, source snapshots, staged core copies and full617 JSONL retained."
+}

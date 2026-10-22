@@ -1,5 +1,6 @@
 /* Copyright (c) 2026-2027 oahc09@gmail.com. SPDX-License-Identifier: MIT */
 #include "air_box3d.h"
+#include "world_bridge.h"
 #include <box3d/box3d.h>
 #include <box3d/collision.h>
 #include <math.h>
@@ -41,17 +42,13 @@ uint32_t air_b3_abi_version(void) { return AIR_B3_ABI_VERSION; }
 uint32_t air_b3_world_create(float gx, float gy, float gz)
 {
     if (!finite3(gx, gy, gz)) return 0;
-    b3WorldDef def = b3DefaultWorldDef();
-    def.gravity = (b3Vec3){gx, gy, gz};
-    def.workerCount = 1;
-    return b3StoreWorldId(b3CreateWorld(&def));
+    return air_b3_bridge_world_create(gx, gy, gz);
 }
 int air_b3_world_valid(uint32_t world) { return b3World_IsValid(b3LoadWorldId(world)); }
 int air_b3_world_destroy(uint32_t world)
 {
     if (!air_b3_world_valid(world)) return AIR_B3_INVALID;
-    b3DestroyWorld(b3LoadWorldId(world));
-    return AIR_B3_OK;
+    return air_b3_bridge_world_destroy(world);
 }
 int air_b3_world_step(uint32_t world, float dt, int substeps)
 {

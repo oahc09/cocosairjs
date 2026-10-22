@@ -1,0 +1,33 @@
+# Narrow T09 native world bridge
+
+This is a foundation increment, not complete T09/G1 or browser qualification. The original core and the two-patch chain remain byte-identical to geometry i. ABI 1 is additive; schema changes reject stale module/facade/manifest combinations.
+
+## Native source contract
+
+Fixed core `efca0c184d40fd6a82016983f1601c4d23965867` supplies the real world gravity/sleep and shape friction/restitution APIs. Setters validate every argument before native mutation. Shape access requires a valid full native ID belonging to the exact owned world; the facade additionally requires its original WeakMap capability. Compound material operations are explicitly unsupported.
+
+Cocos `src/cocos/physics/framework/physics-enum.ts:398–430` defines WIRE_FRAME=1, CONSTRAINT=2, AABB=4. The first qualified mask is **5**, not 7. Unknown bits and constraints fail. `jointScale` is a finite nonnegative float32, passed to native and echoed; it has no geometric effect with only shape/AABB drawing enabled and is not joint visualization proof.
+
+Core `physics_world.c:1220–1368` lazily creates application draw handles through `worldDef.createDebugShape` and calls `DrawShapeFcn`; it does not automatically call DrawSphere/DrawBox for physics shapes. The bridge therefore owns copied local line endpoints: three 24-segment circles for a sphere, and native half-edge twin pairs for hull edges. Finite boxes are the qualified hull subset. Unsupported callbacks fail the entire capture, never return empty success. World coordinates use the actual DrawShape callback transform. Bounds use actual core fat broadphase AABBs, not the exact physical surface. Drawing bounds cover the finite float32 range rather than silently using the core default +/-100m viewport.
+
+Core `shape.c:1030–1063` and `physics_world.c:450–466` destroy cached application draw handles on shape mutation/destruction and world destruction. The bridge counts its context, shape copies and output buffer separately from core byteCount. `bridgeMemory(world?)` returns `{liveBytes:bigint,liveAllocations,shapeHandles,primitiveCapacity,capturedPrimitives}`. No-world facade reads sum only that facade's worlds. Native qualification may read the module-wide total using world=0. This is not total WASM/JS memory accounting.
+
+Capture grows a per-world primitive buffer up to 65,536 records. Each is eight uint32 words: kind (1 line, 2 bounds), packed uint32 color, six float32 coordinates. Copy prepends count and validates capacity before writing. Every facade path releases the capture buffer in finally; shape handle copies remain owned until core destruction. Capture failures free the temporary wire, retaining only explicitly counted lazily-created shape copies. Flags=0 produces a real empty record without drawing or allocating shape handles.
+
+## Step diagnostics
+
+`nativeStepIndex` counts confirmed successful facade native calls, not core step/generation epoch. A safe-integer exhaustion check occurs before native invocation or snapshot work. `nativeCompleted` describes the last admitted native attempt. Prevalidation rejection preserves that previous record. Once native returns success, the index increments and completed is true even if event/contact copying fails. In that case snapshotAvailable is false, stale snapshots are rejected, and no retry/re-step is performed. Successful mutations invalidate snapshot availability without changing the completed-call count.
+
+## Qualification plan
+
+Every new build reruns basic physics, lifetime/invalid ownership, copied events and all 617 generation-geometry samples. New independent C qualification uses the exact collector with a **fixture-only allocator conditional**, absent from product compilation/exports, for context allocation, shape copy, growth and capacity failures. It exercises actual callbacks, buffer canaries, foreign-world shapes and shape/body/world cleanup. JS qualification covers real gravity integration, sleep wake, material round trip, invalid-before/after equality, rotated box/sphere/bounds coordinates, repeated immutable reads, actual heap growth, separate worlds/modules/facades, real-native-success followed by injected copy failure, and explicit cleanup error propagation. Fault seams are identified as error-path qualification, not synthetic physics acceptance.
+
+The existing C21 internal fixture must destroy its bridge-created worlds through `air_b3_world_destroy` rather than bypass the new callback-context owner through raw `b3DestroyWorld`; all geometric assertions remain unchanged. Historical i raw and binaries are retained unchanged.
+
+## Retained j2 observations
+
+The final j2 Debug and Release builds each pass all existing foundation/ownership/snapshot/generation-geometry contracts and eight new world-contract groups, with 29 exact build inputs, 59 compilation units and 15 hashed audit evidence items. The 617 geometry samples remain byte-identical between modes. An independent Python matrix/corner calculation checks all 144 sphere endpoints and 24 box endpoints per mode. Native Debug, Release and UBSan-only execute basic, geometry and world C qualification; UBSan-only is not an ASan/LSan pass.
+
+An additional j1 probe found a real diagnostic bug: a positive float64 dt such as 1e-100 becomes zero on the float32 ABI, causing native rejection after previous diagnostics had been cleared. j2 rounds dt to float32 before its positivity check. The retained new probe confirms completed=true/snapshotAvailable=true remain unchanged, the prior copied snapshot remains the same object, and no native step occurs. The old j1 PASS is bounded by its original tests and the supplemental FAIL remains preserved. The old g comparison's one named `nonpositive-float32-dt:1e-50` error classification intentionally changes from native status 2 to a pre-call argument error; the comparator asserts both exact errors before comparing every remaining observation.
+
+The native bridge's allocator failures and 65,536-primitive overflow are exercised in a separate executable compiling the exact collector with fixture-only allocation control. There is no product fault-control export. JS copy/cleanup faults are explicit wrapper seams around real native geometry, not fake physics. Thirty-two debug lifetime cycles, the existing 128 ownership cycles, and same-module/two-module isolation are finite evidence only. Live byte counts cover the named owners, not universal ABA safety or the entire WASM/JS heap. Historical original sanitizer failures, LSan ptrace restrictions and browser infrastructure restrictions remain unchanged. No joint, arbitrary hull feature, mesh, compound, heightfield, full T09 or full G1 completion is claimed.

@@ -1,0 +1,113 @@
+{
+  "schema": "box3d-real-world-harness-static-check-v1",
+  "scope": "collector source syntax/type/format only; real native world fixture NOT EXECUTED until matching bridge artifact",
+  "completedAt": "2026-10-22T07:54:55.848117+00:00",
+  "inputsBefore": {
+    "tools/verify/box3d/world-real-wasm-environment.cjs": "5eb467f2b960e184e2ea7fc0cd6cb4a982849f5d59748e2e38bc354a74a89f51",
+    "tools/verify/box3d/world-real-wasm-inputs.cjs": "0116d2455d9a87037669dcd10f9bf82c18c7d7b52bffef55c0fdb25f3aa4911b",
+    "tools/verify/box3d/world-real-wasm-preload.mjs": "deea51c87a46a0073faec8564a9df1b3e15dddb6fe84da92c2b2003d58e71bfe",
+    "tools/verify/box3d/world-real-wasm.jest.cjs": "044f6536036c90fd17444c7f94c22bc0ba7fede507d15bfe68d12cbf28f1381d",
+    "tools/verify/box3d/world-real-wasm.mjs": "991231547ba590cf385d6cce382c6414cee9d5f68d0c108c3347414299898eba",
+    "tools/verify/box3d/world-real-wasm.test.ts": "056ee7fd84a4498ef158840af51741327a11d2d7e5949ce1550db700e328aa23",
+    "tools/verify/box3d/world-real-wasm.tsconfig.json": "050e8a8fef7f8de76c89c81f1abaa4fdecebb991cf614d426af3646aaedc83dd"
+  },
+  "inputsAfter": {
+    "tools/verify/box3d/world-real-wasm-environment.cjs": "5eb467f2b960e184e2ea7fc0cd6cb4a982849f5d59748e2e38bc354a74a89f51",
+    "tools/verify/box3d/world-real-wasm-inputs.cjs": "0116d2455d9a87037669dcd10f9bf82c18c7d7b52bffef55c0fdb25f3aa4911b",
+    "tools/verify/box3d/world-real-wasm-preload.mjs": "deea51c87a46a0073faec8564a9df1b3e15dddb6fe84da92c2b2003d58e71bfe",
+    "tools/verify/box3d/world-real-wasm.jest.cjs": "044f6536036c90fd17444c7f94c22bc0ba7fede507d15bfe68d12cbf28f1381d",
+    "tools/verify/box3d/world-real-wasm.mjs": "991231547ba590cf385d6cce382c6414cee9d5f68d0c108c3347414299898eba",
+    "tools/verify/box3d/world-real-wasm.test.ts": "056ee7fd84a4498ef158840af51741327a11d2d7e5949ce1550db700e328aa23",
+    "tools/verify/box3d/world-real-wasm.tsconfig.json": "050e8a8fef7f8de76c89c81f1abaa4fdecebb991cf614d426af3646aaedc83dd"
+  },
+  "inputsUnchanged": true,
+  "commands": [
+    {
+      "name": "format",
+      "command": [
+        "node_modules/.bin/prettier",
+        "--check",
+        "tools/verify/box3d/world-real-wasm-environment.cjs",
+        "tools/verify/box3d/world-real-wasm-inputs.cjs",
+        "tools/verify/box3d/world-real-wasm-preload.mjs",
+        "tools/verify/box3d/world-real-wasm.jest.cjs",
+        "tools/verify/box3d/world-real-wasm.mjs",
+        "tools/verify/box3d/world-real-wasm.test.ts",
+        "tools/verify/box3d/world-real-wasm.tsconfig.json",
+        "docs/physics/box3d/rebuild/world-real-wasm-harness-20261022/README.md"
+      ],
+      "exitCode": 0,
+      "stdoutSha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "types",
+      "command": [
+        "node_modules/.bin/tsc",
+        "-p",
+        "tools/verify/box3d/world-real-wasm.tsconfig.json",
+        "--pretty",
+        "false"
+      ],
+      "exitCode": 0,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "world-real-wasm-environment.cjs-syntax",
+      "command": [
+        "node",
+        "--check",
+        "tools/verify/box3d/world-real-wasm-environment.cjs"
+      ],
+      "exitCode": 0,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "world-real-wasm-inputs.cjs-syntax",
+      "command": [
+        "node",
+        "--check",
+        "tools/verify/box3d/world-real-wasm-inputs.cjs"
+      ],
+      "exitCode": 0,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "world-real-wasm-preload.mjs-syntax",
+      "command": [
+        "node",
+        "--check",
+        "tools/verify/box3d/world-real-wasm-preload.mjs"
+      ],
+      "exitCode": 0,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "world-real-wasm.jest.cjs-syntax",
+      "command": [
+        "node",
+        "--check",
+        "tools/verify/box3d/world-real-wasm.jest.cjs"
+      ],
+      "exitCode": 0,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "world-real-wasm.mjs-syntax",
+      "command": [
+        "node",
+        "--check",
+        "tools/verify/box3d/world-real-wasm.mjs"
+      ],
+      "exitCode": 0,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "passedStaticChecks": true
+}

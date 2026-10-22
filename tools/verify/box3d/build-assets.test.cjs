@@ -20,7 +20,7 @@ const writeJSON = (directory, name, value) => fs.writeFileSync(path.join(directo
 function rehashAuditEvidence(directory, name) {
     const audit = readJSON(directory, 'artifact-audit.raw.json');
     const row = audit.evidence.find((item) => item.path === name);
-    assert(row, `Required geometry evidence is missing: ${name}`);
+    assert(row, `Required qualification evidence is missing: ${name}`);
     const bytes = fs.readFileSync(path.join(directory, name));
     Object.assign(row, { bytes: bytes.length, sha256: hash(bytes) });
     writeJSON(directory, 'artifact-audit.raw.json', audit);
@@ -258,6 +258,36 @@ test('corrupt/missing assets, stale identities, failed/incomplete inputs and aud
             'geometry-wrong-pointer-width-rehashed',
             (d) => {
                 const name = 'native-geometry-contract.raw.json';
+                const r = readJSON(d, name);
+                r.pointerBytes = 8;
+                writeJSON(d, name, r);
+                rehashAuditEvidence(d, name);
+            },
+        ],
+        [
+            'world-failed-qualification-rehashed',
+            (d) => {
+                const name = 'wasm-world-contract.raw.json';
+                const r = readJSON(d, name);
+                r.status = 'FAIL';
+                writeJSON(d, name, r);
+                rehashAuditEvidence(d, name);
+            },
+        ],
+        [
+            'world-stale-identity-rehashed',
+            (d) => {
+                const name = 'wasm-world-contract.raw.json';
+                const r = readJSON(d, name);
+                r.identity.schemaSha256 = '0'.repeat(64);
+                writeJSON(d, name, r);
+                rehashAuditEvidence(d, name);
+            },
+        ],
+        [
+            'world-wrong-pointer-width-rehashed',
+            (d) => {
+                const name = 'native-world-contract.raw.json';
                 const r = readJSON(d, name);
                 r.pointerBytes = 8;
                 writeJSON(d, name, r);

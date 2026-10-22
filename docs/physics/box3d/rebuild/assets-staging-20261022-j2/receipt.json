@@ -1,0 +1,17 @@
+{
+  "status": "PASS_SCOPED_ASSETS_AND_NODE_STAGED_LOADER",
+  "startedAt": "2026-10-22T07:58:35.162383+00:00",
+  "finishedAt": "2026-10-22T07:58:42.722353+00:00",
+  "command": [
+    "node",
+    "--test",
+    "tools/verify/box3d/build-assets.test.cjs"
+  ],
+  "exitCode": 0,
+  "sourceAndNativeReceiptUnchanged": true,
+  "buildDirectory": "tools/physics/box3d/output/world-wasm-release-20261022-j2",
+  "nativeManifestSHA256": "0a47e5ae21cf7e6e1cbed510d0a19384c73047f1015197e5622a67b2e30c2621",
+  "testGroups": 6,
+  "negativeMutations": 19,
+  "scope": "Strict asset provenance, isolated malformed input tests and one real Node WASM production-loader cycle. No engine world, browser/CSP or package acceptance."
+}

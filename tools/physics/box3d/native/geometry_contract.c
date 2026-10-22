@@ -65,7 +65,7 @@ int main(void)
     contact->geometryBasis.geometryRevision=UINT64_MAX-1;b3World_Step(wid,0,4);CHECK(basis(c.contactId).geometryRevision==UINT64_MAX);
     b3World_Step(wid,0,4);CHECK(!b3Contact_GetGeometryBasis(c.contactId,&canary));CHECK(!contact->geometryValid && contact->geometryBasis.geometryRevision==UINT64_MAX);
     b3World_Step(wid,0,4);CHECK(!b3Contact_GetGeometryBasis(c.contactId,&canary));CHECK(contact->geometryBasis.geometryRevision==UINT64_MAX);
-    CHECK(memcmp(&canary,&saved,sizeof(canary))==0);printf("\"uint64ExhaustionFailsClosed\":true,");fflush(stdout);b3DestroyWorld(wid);
+    CHECK(memcmp(&canary,&saved,sizeof(canary))==0);printf("\"uint64ExhaustionFailsClosed\":true,");fflush(stdout);CHECK(air_b3_world_destroy(w)==0);
 
     /* Existing floor manifold while a tangential sweep hits a separate wall. */
     w=air_b3_world_create(0,0,0);wid=b3LoadWorldId(w);floor=make_body(w,0,0,-0.5f,0);box(floor,10,0.5f,10);
@@ -85,11 +85,11 @@ int main(void)
         if(b3StoreShapeId(d.shapeIdA)==b3StoreShapeId(wallShape)||b3StoreShapeId(d.shapeIdB)==b3StoreShapeId(wallShape))wallSeen++;
     }
     CHECK(floorSeen==1 && wallSeen==0);
-    printf("\"ccdRetainsFloorGeneration\":true,\"ccdFinalX\":%.9g,\"ccdGeneratedPointX\":%.9g,\"toiDistanceIterations\":%d,",after.p.x,generated.x,counts.distanceIterations);fflush(stdout);b3DestroyWorld(wid);
+    printf("\"ccdRetainsFloorGeneration\":true,\"ccdFinalX\":%.9g,\"ccdGeneratedPointX\":%.9g,\"toiDistanceIterations\":%d,",after.p.x,generated.x,counts.distanceIterations);fflush(stdout);CHECK(air_b3_world_destroy(w)==0);
     /* First TOI without a persistent manifold must not fabricate one. */
     w=air_b3_world_create(0,0,0);wid=b3LoadWorldId(w);wall=make_body(w,0,1.5f,2,0);box(wall,0.1f,2,2);ball=make_body(w,2,0,2,0);sphere(ball);
     b3Body_SetLinearVelocity(ball,(b3Vec3){120,0,0});b3World_Step(wid,1.0f/60,4);counts=b3World_GetCounters(wid);after=b3Body_GetTransform(ball);
     CHECK(counts.distanceIterations>0 && after.p.x<1.0f);CHECK(b3Body_GetContactData(ball,contacts,8)==0);
     b3World_Step(wid,1.0f/60,4);c=one_contact(ball);b=basis(c.contactId);CHECK(b.geometryRevision==1 && b.generatedAfterStep==1);
-    printf("\"firstTOINoFabricatedManifold\":true,\"laterManifoldGenerationAfterStep\":%llu,\"status\":\"PASS\"}\n",(unsigned long long)b.generatedAfterStep);b3DestroyWorld(wid);return 0;
+    printf("\"firstTOINoFabricatedManifold\":true,\"laterManifoldGenerationAfterStep\":%llu,\"status\":\"PASS\"}\n",(unsigned long long)b.generatedAfterStep);CHECK(air_b3_world_destroy(w)==0);return 0;
 }

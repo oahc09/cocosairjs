@@ -23,7 +23,7 @@ THE SOFTWARE.
 // Internal, limited M1 foundation. This is not the Cocos physics adapter.
 const CORE_SHA = 'efca0c184d40fd6a82016983f1601c4d23965867';
 const BINDING_BASE_SHA = '5d5a3af049cccd9948b2b55bac4342414af0ef64';
-const SCHEMA_SHA256 = '4f9b7cb25d7144734e827bb3c40384f46124649dec3e56a9b42d034abdbae888';
+const SCHEMA_SHA256 = '1ceb8425e1e9c4d7c2752bd2dfe7315cd383ef7f3b44f1afbc62a6a47705d81c';
 const PATCH_CHAIN_SHA256 = '434fb89494867f515051d5ac0dfc0c694556ba1f0da9ac3fc895a27097b1c7c7';
 
 function failure(code, message) {
@@ -429,7 +429,14 @@ export function createBox3DBinding(module, expected) {
                 if (!id) throw failure('AIR_E_BOX3D_NATIVE', 'World creation failed');
                 const world = Object.freeze({ id });
                 worlds.set(world, id);
-                worldStates.set(world, { step: 0, revision: 0, available: false, snapshot: null, bodies: new Set() });
+                worldStates.set(world, {
+                    step: 0,
+                    completed: false,
+                    revision: 0,
+                    available: false,
+                    snapshot: null,
+                    bodies: new Set(),
+                });
                 return world;
             });
         },
@@ -449,15 +456,19 @@ export function createBox3DBinding(module, expected) {
                 if (!Number.isInteger(substeps) || substeps < 1 || substeps > 2147483647) {
                     throw failure('AIR_E_BOX3D_ARGUMENT', 'substeps must be a positive int32');
                 }
-                const value = finite(dt, 'dt');
+                const value = Math.fround(finite(dt, 'dt'));
                 if (value <= 0) throw failure('AIR_E_BOX3D_ARGUMENT', 'dt must be positive');
                 const wid = worldId(world);
                 const state = worldStates.get(world);
+                if (!Number.isSafeInteger(state.step) || state.step >= Number.MAX_SAFE_INTEGER)
+                    throw failure('AIR_E_BOX3D_CAPACITY', 'Native step index exhausted before invocation');
                 const bodies = [...state.bodies];
                 const beforeRows = poseRows(bodies, transforms(world, bodies));
+                state.completed = false;
+                state.available = false;
                 nativeStatus(module._air_b3_world_step(wid, value, substeps));
                 ++state.step;
-                state.available = false;
+                state.completed = true;
                 try {
                     captureStep(world, beforeRows);
                 } catch (error) {
@@ -466,6 +477,132 @@ export function createBox3DBinding(module, expected) {
                         `Native step ${state.step} completed but snapshot copy failed: ${error.message}`,
                     );
                 }
+            });
+        },
+        stepDiagnostics(world) {
+            return exclusive(() => {
+                worldId(world);
+                const state = worldStates.get(world);
+                return freeze({
+                    nativeStepIndex: state.step,
+                    nativeCompleted: state.completed,
+                    snapshotAvailable: state.available,
+                });
+            });
+        },
+        setGravity(world, gravity) {
+            return exclusive(() => {
+                const wid = worldId(world);
+                if (!Array.isArray(gravity))
+                    throw failure('AIR_E_BOX3D_ARGUMENT', 'gravity must be a three-component array');
+                nativeStatus(module._air_b3_world_gravity_set(wid, ...vector(gravity, 3, 'gravity')));
+                changed(world);
+            });
+        },
+        getGravity(world) {
+            return exclusive(() => {
+                nativeStatus(module._air_b3_world_gravity_get(worldId(world), output));
+                return freeze(Array.from(readFloats(3)));
+            });
+        },
+        setSleepingEnabled(world, enabled) {
+            return exclusive(() => {
+                const wid = worldId(world);
+                if (typeof enabled !== 'boolean') throw failure('AIR_E_BOX3D_ARGUMENT', 'enabled must be boolean');
+                nativeStatus(module._air_b3_world_sleep_set(wid, enabled ? 1 : 0));
+                changed(world);
+            });
+        },
+        isSleepingEnabled(world) {
+            return exclusive(() => {
+                nativeStatus(module._air_b3_world_sleep_get(worldId(world), output));
+                return Boolean(module.HEAPU32[output >>> 2]);
+            });
+        },
+        getShapeMaterial(world, shape) {
+            return exclusive(() => {
+                const wid = worldId(world);
+                if (handle(shape, 'shape').world !== world)
+                    throw failure('AIR_E_BOX3D_DISPOSED', 'Shape belongs to another world');
+                nativeStatus(module._air_b3_shape_material_get(wid, shape.low, shape.high, output));
+                const values = readFloats(2);
+                return freeze({ friction: values[0], restitution: values[1] });
+            });
+        },
+        setShapeMaterial(world, shape, material) {
+            return exclusive(() => {
+                const wid = worldId(world);
+                if (handle(shape, 'shape').world !== world)
+                    throw failure('AIR_E_BOX3D_DISPOSED', 'Shape belongs to another world');
+                if (!material || Object.keys(material).some((key) => !['friction', 'restitution'].includes(key)))
+                    throw failure('AIR_E_BOX3D_ARGUMENT', 'Only friction and restitution are supported');
+                const friction = finite(material.friction, 'friction');
+                const restitution = finite(material.restitution, 'restitution');
+                if (friction < 0 || restitution < 0)
+                    throw failure('AIR_E_BOX3D_ARGUMENT', 'Material values must be nonnegative');
+                nativeStatus(module._air_b3_shape_material_set(wid, shape.low, shape.high, friction, restitution));
+                changed(world);
+            });
+        },
+        debugSnapshot(world, flags, jointScale) {
+            return exclusive(() => {
+                const wid = worldId(world);
+                if (!Number.isInteger(flags) || flags < 0 || flags > 5 || flags & ~5)
+                    throw failure(
+                        'AIR_E_BOX3D_UNSUPPORTED',
+                        'Only WIRE_FRAME=1 and AABB=4 are qualified; constraints are unsupported',
+                    );
+                const scale = Math.fround(finite(jointScale, 'jointScale'));
+                if (jointScale < 0) throw failure('AIR_E_BOX3D_ARGUMENT', 'jointScale must be nonnegative');
+                try {
+                    nativeStatus(module._air_b3_world_debug_capture(wid, flags, scale, output));
+                    const words = module.HEAPU32[output >>> 2];
+                    return withBuffer(words * 4, (ptr) => {
+                        nativeStatus(module._air_b3_world_debug_copy(wid, ptr, words));
+                        const r = reader(module.HEAPU8.slice(ptr, ptr + words * 4));
+                        const count = r.u();
+                        const primitives = Array.from({ length: count }, () => {
+                            const kind = r.u(),
+                                color = r.u(),
+                                a = r.floats(3),
+                                b = r.floats(3);
+                            if (![...a, ...b].every(Number.isFinite))
+                                throw failure('AIR_E_BOX3D_ABI', 'Nonfinite debug geometry');
+                            if (kind === 1) return { kind: 'line', from: a, to: b, color };
+                            if (kind === 2 && a.every((value, i) => value <= b[i]))
+                                return { kind: 'bounds', lower: a, upper: b, color };
+                            throw failure('AIR_E_BOX3D_ABI', 'Invalid debug primitive');
+                        });
+                        r.done();
+                        return freeze({ primitives, flags, jointScale: scale, supportedFlags: 5 });
+                    });
+                } finally {
+                    const status = module._air_b3_world_debug_release(wid);
+                    if (status !== 0)
+                        throw failure('AIR_E_BOX3D_CLEANUP', `Debug buffer cleanup failed with status ${status}`);
+                }
+            });
+        },
+        bridgeMemory(world) {
+            return exclusive(() => {
+                const ids = world === undefined ? [...worlds.values()] : [worldId(world)];
+                const result = {
+                    liveBytes: 0n,
+                    liveAllocations: 0,
+                    shapeHandles: 0,
+                    primitiveCapacity: 0,
+                    capturedPrimitives: 0,
+                };
+                for (const id of ids) {
+                    nativeStatus(module._air_b3_bridge_memory(id, output));
+                    result.liveBytes += readU64(output);
+                    const counts = module.HEAPU32.slice((output >>> 2) + 2, (output >>> 2) + 6);
+                    result.liveAllocations += counts[0];
+                    result.shapeHandles += counts[1];
+                    result.primitiveCapacity += counts[2];
+                    result.capturedPrimitives += counts[3];
+                }
+                return freeze(result);
             });
         },
         createBody(world, options = {}) {

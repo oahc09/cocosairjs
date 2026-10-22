@@ -82,7 +82,26 @@ try {
         assert.equal(co.status, 'PASS');
         for (const operation of co.rejectedOperations) assert.deepEqual(operation.before, operation.after);
         for (const operation of bo.rejectedOperations) assert.deepEqual(operation.before, operation.after);
-        assert.deepEqual(stripAllocation(co.rejectedOperations), stripAllocation(bo.rejectedOperations));
+        const currentRejected = stripAllocation(co.rejectedOperations);
+        const baselineRejected = stripAllocation(bo.rejectedOperations);
+        // The world bridge fixes demonstrated float64-positive -> float32-zero dt validation.
+        // Permit only this exact reviewed classification change, never remove all errors.
+        const underflowName = 'nonpositive-float32-dt:1e-50';
+        const cu = currentRejected.find((entry) => entry.name === underflowName);
+        const bu = baselineRejected.find((entry) => entry.name === underflowName);
+        if (cu?.error.code === 'AIR_E_BOX3D_ARGUMENT' && bu?.error.code === 'AIR_E_BOX3D_NATIVE') {
+            assert.deepEqual(cu.error, { code: 'AIR_E_BOX3D_ARGUMENT', message: 'dt must be positive' });
+            assert.deepEqual(bu.error, { code: 'AIR_E_BOX3D_NATIVE', message: 'Box3D foundation status 2' });
+            report.reviewedErrorContractChanges ??= [];
+            report.reviewedErrorContractChanges.push({
+                build: directory.split('/').at(-1),
+                name: underflowName,
+                oldError: bu.error,
+                newError: cu.error,
+            });
+            cu.error = bu.error;
+        }
+        assert.deepEqual(currentRejected, baselineRejected);
         report.allocationObservations ??= [];
         report.allocationObservations.push({
             build: directory.split('/').at(-1),

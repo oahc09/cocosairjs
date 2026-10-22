@@ -31,5 +31,15 @@
   "_air_b3_shape_events",
   "_air_b3_shape_sphere_ex",
   "_air_b3_contact_geometry",
-  "_air_b3_world_geometry_counters"
+  "_air_b3_world_geometry_counters",
+  "_air_b3_world_gravity_get",
+  "_air_b3_world_gravity_set",
+  "_air_b3_world_sleep_get",
+  "_air_b3_world_sleep_set",
+  "_air_b3_shape_material_get",
+  "_air_b3_shape_material_set",
+  "_air_b3_world_debug_capture",
+  "_air_b3_world_debug_copy",
+  "_air_b3_world_debug_release",
+  "_air_b3_bridge_memory"
 ]

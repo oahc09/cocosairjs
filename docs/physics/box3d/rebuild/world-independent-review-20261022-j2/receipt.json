@@ -1,0 +1,33 @@
+{
+  "status": "PASS_SCOPED_INDEPENDENT_RAW_REVIEW",
+  "reviewerSHA256": "6d2506a00fb14ad2f3c93f685cade8c11ed8c05d2761e538c746a2d9c6455fd0",
+  "runs": [
+    {
+      "input": "docs/physics/box3d/rebuild/world-real-wasm-j2-20261022-a",
+      "receiptSHA256": "7ec04558b09202043d5274512000810ce79b18e738e6e2e6f7ce8fdb16c1f749",
+      "rawSHA256": "22c13c0f8e7dc99239c112844166542eef78d6707dc84b6b73c72c081e7268e4",
+      "steps": 95,
+      "trajectorySamples": 60,
+      "maximumPositionErrorMeters": 5.3914388011833125e-06,
+      "maximumVelocityErrorMetersPerSecond": 1.3828277587890625e-05,
+      "finalY": 16.98749542236328,
+      "finalVy": -6.000013828277588,
+      "sleepTick": 30,
+      "allTrackedCoreAndBridgeBytesAfterClose": 0
+    },
+    {
+      "input": "docs/physics/box3d/rebuild/world-real-wasm-j2-20261022-lead",
+      "receiptSHA256": "06711d0cdef0872076684f4c1c8b47fd170addf8307103fd7728b533a0049015",
+      "rawSHA256": "a1c97663b621adfbe05901f53f77b4c2bafc5648ab337cc62d05079efa718eab",
+      "steps": 95,
+      "trajectorySamples": 60,
+      "maximumPositionErrorMeters": 5.3914388011833125e-06,
+      "maximumVelocityErrorMetersPerSecond": 1.3828277587890625e-05,
+      "finalY": 16.98749542236328,
+      "finalVy": -6.000013828277588,
+      "sleepTick": 30,
+      "allTrackedCoreAndBridgeBytesAfterClose": 0
+    }
+  ],
+  "scope": "Finite Node/JSDOM AIR source fixture only. Known HEADLESS and missing PhysicsSystem2D diagnostics remain; no browser, coexistence, components or full T09 acceptance."
+}

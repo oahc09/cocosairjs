@@ -282,3 +282,7 @@ raw reports and the qualification single-file CJS, separately from the product's
 four artifacts. Failed setup/assertion attempts and their exact source variants
 remain retained. Consult the new evidence summary for actual statuses, not this
 capability description.
+
+### Narrow T09 world bridge (j2)
+
+The additive ABI-1 facade now exposes real gravity/sleep setters and readback, exact-world shape friction/restitution, confirmed native-step diagnostics, and copied native debug line/bounds snapshots. `WIRE_FRAME=1` and `AABB=4` are qualified for finite sphere/box fixtures; `CONSTRAINT=2` is explicitly unsupported. `bridgeMemory(world?)` accounts for bridge-owned callback copies and capture buffers separately from core allocation bytes. See [the world bridge contract](world-bridge-contract.md) for ownership, diagnostic timing, failure evidence and limits. This does not certify a complete Cocos adapter, browser/CSP execution, all T09 or G1.

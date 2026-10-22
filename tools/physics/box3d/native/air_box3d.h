@@ -7,7 +7,7 @@ extern "C" {
 #endif
 
 enum { AIR_B3_ABI_VERSION = 1, AIR_B3_BODY_INPUT_FLOATS = 16, AIR_B3_BODY_SNAPSHOT_FLOATS = 29 };
-enum { AIR_B3_OK = 0, AIR_B3_INVALID = 1, AIR_B3_ARGUMENT = 2, AIR_B3_CREATION = 3, AIR_B3_CAPACITY = 4, AIR_B3_ALLOCATION = 5, AIR_B3_GEOMETRY_UNAVAILABLE = 6, AIR_B3_UNSUPPORTED_GEOMETRY = 7 };
+enum { AIR_B3_OK = 0, AIR_B3_INVALID = 1, AIR_B3_ARGUMENT = 2, AIR_B3_CREATION = 3, AIR_B3_CAPACITY = 4, AIR_B3_ALLOCATION = 5, AIR_B3_GEOMETRY_UNAVAILABLE = 6, AIR_B3_UNSUPPORTED_GEOMETRY = 7, AIR_B3_UNSUPPORTED = 8 };
 
 const char* air_b3_core_sha(void);
 const char* air_b3_schema_sha(void);
@@ -42,6 +42,17 @@ int air_b3_shape_events(uint32_t lo, uint32_t hi, int flags);
 int air_b3_shape_sphere_ex(uint32_t lo, uint32_t hi, float x, float y, float z, float radius, float density, int sensor, uint32_t* out);
 int air_b3_contact_geometry(uint32_t world, const uint32_t* words, uint32_t* out, int capacity);
 int air_b3_world_geometry_counters(uint32_t world, uint32_t* out);
+/* Additive world/debug bridge; copied buffers only. */
+int air_b3_world_gravity_get(uint32_t world, float* out);
+int air_b3_world_gravity_set(uint32_t world, float x, float y, float z);
+int air_b3_world_sleep_get(uint32_t world, uint32_t* out);
+int air_b3_world_sleep_set(uint32_t world, int enabled);
+int air_b3_shape_material_get(uint32_t world, uint32_t lo, uint32_t hi, float* out);
+int air_b3_shape_material_set(uint32_t world, uint32_t lo, uint32_t hi, float friction, float restitution);
+int air_b3_world_debug_capture(uint32_t world, uint32_t flags, float scale, uint32_t* size);
+int air_b3_world_debug_copy(uint32_t world, uint32_t* out, int capacity);
+int air_b3_world_debug_release(uint32_t world);
+int air_b3_bridge_memory(uint32_t world, uint32_t* out);
 #ifdef __cplusplus
 }
 #endif
