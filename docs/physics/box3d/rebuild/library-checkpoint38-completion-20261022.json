@@ -1,0 +1,11 @@
+{
+  "at": "2026-10-22T21:25:43.492134+00:00",
+  "status": "PASS_ACTUAL_LIBRARY_DOWNLOAD_ALL_ARCHIVE_MEMBERS",
+  "libraryFileId": "libfile_6fbc53ea4b6c8191a5f32837994a5663",
+  "fileId": "file_000000009f9c81f5ac8db138118e7a86",
+  "archiveBytes": 1155317,
+  "archiveSha256": "321708a75f216aafe05091537ea6edd059db50024efa2f26f3b80e1c76d04dc3",
+  "dataFiles": 39,
+  "allRegularMembersIncludingManifest": 40,
+  "scope": "Checkpoint38 completion evidence: raw Git status, closure failure and exact historical remapping, bundle/restore commands and output, current inner pack verification, remote API denial/single success retry/readback and full tree verification. Source archive separately retained, not recursively duplicated."
+}

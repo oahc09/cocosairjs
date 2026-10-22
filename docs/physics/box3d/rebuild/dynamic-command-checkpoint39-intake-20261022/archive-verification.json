@@ -1,0 +1,13 @@
+{
+  "status": "PASS_ALL_OBJECTS_AND_LOGICAL_ALIASES_READ_AND_HASH_VERIFIED",
+  "files": 1938,
+  "uniqueObjects": 347,
+  "logicalBytes": 43336115,
+  "uniqueBytes": 16319688,
+  "inventorySha256": "eb42686afcb2353b981566d4a560a904f839a552579450a9e0e34f1692d26e74",
+  "scope": "Exact named directory bytes, not automatic semantic validation of every JSON reference.",
+  "archiveBytes": 2386172,
+  "archiveSha256": "a518c4528a780fd5a7921f81f5fc96b335f8456e1e118fe82ff66c70d0b6385a",
+  "excludedCacheFiles": 12786,
+  "fullVerificationGzipSha256": "ff507768fbd8c05b2d2af77c67dfd63c8a5ec105dde0f616bce93787615fba47"
+}

@@ -100,6 +100,8 @@ export function requireWorldBinding(binding: Box3DFoundation): Box3DWorldBinding
         'isSleepingEnabled',
         'debugSnapshot',
         'stepDiagnostics',
+        'validateCommandBatch',
+        'applyCommandBatch',
         'getShapeMaterial',
         'setShapeMaterial',
     ] as const;

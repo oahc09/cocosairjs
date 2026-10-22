@@ -2,7 +2,7 @@
   "meta": {
     "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
     "note": "Air Path 与 Upstream Path 一致(前缀 src/)；modified 文件另行标注 reason；upstreamPath=null 表示该行为 Air 原创文件或上游产物（仓库内无对应源文件），必须 modified:true 并在 reason 说明出处",
-    "modifiedCount": 270,
+    "modifiedCount": 271,
     "pal": {
       "revision": "9f0e30acb31f6d670f2c0bf818d61039846a2860",
       "license": "MIT",
@@ -5076,7 +5076,7 @@
       "upstreamPath": "cocos/physics/framework/components/rigid-body.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "Box3D rebuild 2026-10-22: nine initialized component setters commit cached values only after the Box3D adapter accepts; retain existing mass normalization and unchanged cache-first paths for all other backends. This does not repair direct mutable-vector alias edits or establish full native component acceptance. Stage A opt-in identity-lease assertions now precede supported property/filter/sleep/velocity mutations and mutable bounds reads before caller evaluation or cache/native work; unchanged no-lease algorithms and nine command wrappers remain delegable. Finite explicit-lease source controls and separate real Release lifecycle/alias-fault evidence do not activate unified transactions or qualify listener editing."
+      "reason": "Box3D rebuild 2026-10-22: nine initialized component setters commit cached values only after the Box3D adapter accepts; retain existing mass normalization and unchanged cache-first paths for all other backends. This does not repair direct mutable-vector alias edits or establish full native component acceptance. Stage A opt-in identity-lease assertions now precede supported property/filter/sleep/velocity mutations and mutable bounds reads before caller evaluation or cache/native work; unchanged no-lease algorithms and nine command wrappers remain delegable. Finite explicit-lease source controls and separate real Release lifecycle/alias-fault evidence do not activate unified transactions or qualify listener editing. Internal dynamic-owner candidate: nine command wrappers now offer a lazy neutral owner route before initialized-body checks; both velocity setters consult the owner configuration gate before instance state. No registered owner leaves legacy evaluation order unchanged. Registration is explicit-only and not exported as unified package activation."
     },
     {
       "airPath": "src/cocos/physics/framework/deprecated.ts",
@@ -10047,6 +10047,13 @@
       "baseline": "AIR original",
       "modified": true,
       "reason": "AIR: private constructor-installed PhysicsMaterial coefficient reader; authentic fixed cache identity for Box3D initialization, identity transactions and raw refresh, never public accessor inference"
+    },
+    {
+      "airPath": "src/cocos/physics/framework/physics-command-submission.ts",
+      "upstreamPath": null,
+      "baseline": "AIR original",
+      "modified": true,
+      "reason": "AIR-owned internal backend-neutral single-owner command routing. Captures trusted handlers under registration reentry latch; original command input is read only inside the actual owner submission admission. No owner preserves legacy paths, no native capability is published. Internal candidate, not general multi-backend or unified release qualification."
     }
   ]
 }

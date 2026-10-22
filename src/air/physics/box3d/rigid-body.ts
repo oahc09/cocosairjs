@@ -27,6 +27,8 @@ import type { Box3DPhysicsWorld } from './world';
 import type { Box3DComponentConfiguration } from './shared-body';
 import { Box3DSharedBody, bodyVector, filterBits, validateRigidBodyInitial } from './shared-body';
 import { worldError } from './world-binding';
+import { trySubmitPhysicsBodyCommand } from '../../../cocos/physics/framework/physics-command-submission';
+import type { PhysicsBodyCommandInput } from '../../../cocos/physics/framework/physics-command-submission';
 
 /** Actual Cocos IRigidBody adapter. Native ownership remains solely in the world's shared body. */
 export class Box3DRigidBody implements IRigidBody {
@@ -109,6 +111,7 @@ export class Box3DRigidBody implements IRigidBody {
     setType(value: ERigidBodyType): void {
         this.body.assertConfiguration('setType');
         this.body.setType(value);
+        this.#world().retireNonDynamicAfterCommit(this);
     }
     setMass(value: number): void {
         this.body.assertConfiguration('setMass');
@@ -147,17 +150,21 @@ export class Box3DRigidBody implements IRigidBody {
         this.body.assertConfiguration('sleep');
         this.body.control('setBodyAwake', false);
     }
+    #submitCommand(read: () => PhysicsBodyCommandInput): void {
+        // Public RigidBody.body exposes this adapter. Route through the CURRENT realm owner
+        // first so a retained old-generation adapter rejection latches that collecting queue.
+        // Private component identity is never reconstructed from caller-owned properties.
+        if (trySubmitPhysicsBodyCommand(this.#component ?? this, read)) return;
+        this.#world().submitAdapterCommand(this, read);
+    }
     clearState(): void {
-        this.body.assertConfiguration('clearState');
-        this.body.control('clearBodyState');
+        this.#submitCommand(() => ({ kind: 'clear-state' }));
     }
     clearForces(): void {
-        this.body.assertConfiguration('clearForces');
-        this.body.control('clearBodyForces');
+        this.#submitCommand(() => ({ kind: 'clear-forces' }));
     }
     clearVelocity(): void {
-        this.body.assertConfiguration('clearVelocity');
-        this.body.control('clearBodyVelocity');
+        this.#submitCommand(() => ({ kind: 'clear-velocity' }));
     }
     setSleepThreshold(value: number): void {
         this.body.assertConfiguration('setSleepThreshold');
@@ -194,48 +201,42 @@ export class Box3DRigidBody implements IRigidBody {
         this.body.control('setBodyAngularVelocity', bodyVector(value, 'angularVelocity'));
     }
     applyForce(value: IVec3Like, offset?: IVec3Like): void {
-        this.body.assertConfiguration('applyForce');
-        this.body.control(
-            'applyBodyForce',
-            bodyVector(value, 'force'),
-            offset && bodyVector(offset, 'offset'),
-            'world',
-        );
+        this.#submitCommand(() => ({
+            kind: 'force',
+            vector: value,
+            relativePoint: offset,
+            space: 'world',
+        }));
     }
     applyLocalForce(value: IVec3Like, offset?: IVec3Like): void {
-        this.body.assertConfiguration('applyLocalForce');
-        this.body.control(
-            'applyBodyForce',
-            bodyVector(value, 'force'),
-            offset && bodyVector(offset, 'offset'),
-            'local',
-        );
+        this.#submitCommand(() => ({
+            kind: 'force',
+            vector: value,
+            relativePoint: offset,
+            space: 'local',
+        }));
     }
     applyImpulse(value: IVec3Like, offset?: IVec3Like): void {
-        this.body.assertConfiguration('applyImpulse');
-        this.body.control(
-            'applyBodyImpulse',
-            bodyVector(value, 'impulse'),
-            offset && bodyVector(offset, 'offset'),
-            'world',
-        );
+        this.#submitCommand(() => ({
+            kind: 'impulse',
+            vector: value,
+            relativePoint: offset,
+            space: 'world',
+        }));
     }
     applyLocalImpulse(value: IVec3Like, offset?: IVec3Like): void {
-        this.body.assertConfiguration('applyLocalImpulse');
-        this.body.control(
-            'applyBodyImpulse',
-            bodyVector(value, 'impulse'),
-            offset && bodyVector(offset, 'offset'),
-            'local',
-        );
+        this.#submitCommand(() => ({
+            kind: 'impulse',
+            vector: value,
+            relativePoint: offset,
+            space: 'local',
+        }));
     }
     applyTorque(value: IVec3Like): void {
-        this.body.assertConfiguration('applyTorque');
-        this.body.control('applyBodyTorque', bodyVector(value, 'torque'), 'world');
+        this.#submitCommand(() => ({ kind: 'torque', vector: value, space: 'world' }));
     }
     applyLocalTorque(value: IVec3Like): void {
-        this.body.assertConfiguration('applyLocalTorque');
-        this.body.control('applyBodyTorque', bodyVector(value, 'torque'), 'local');
+        this.#submitCommand(() => ({ kind: 'torque', vector: value, space: 'local' }));
     }
     getGroup(): number {
         return this.body.getGroup();

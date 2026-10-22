@@ -45,6 +45,7 @@ import { IRigidBody } from '../../spec/i-rigid-body';
 import { selector, createRigidBody } from '../physics-selector';
 import { ERigidBodyType } from '../physics-enum';
 import { PhysicsSystem } from '../physics-system';
+import { trySubmitPhysicsBodyCommand, assertPhysicsBodyVelocityConfiguration } from '../physics-command-submission';
 
 /**
  * @en
@@ -498,6 +499,9 @@ export class RigidBody extends Component {
      * @param relativePoint @zh 作用点，相对于刚体的质心 @en The point to apply the force on, relative to the center of mass of the rigid body
      */
     public applyForce (force: Vec3, relativePoint?: Vec3): void {
+        if (trySubmitPhysicsBodyCommand(this, () => (
+            { kind: 'force', vector: force, relativePoint, space: 'world' }
+        ))) return;
         if (this._isInitialized) this._body!.applyForce(force, relativePoint);
     }
 
@@ -510,6 +514,9 @@ export class RigidBody extends Component {
      * @param localPoint @zh 作用点 @en The point to apply the force on
      */
     public applyLocalForce (force: Vec3, localPoint?: Vec3): void {
+        if (trySubmitPhysicsBodyCommand(this, () => (
+            { kind: 'force', vector: force, relativePoint: localPoint, space: 'local' }
+        ))) return;
         if (this._isInitialized) this._body!.applyLocalForce(force, localPoint);
     }
 
@@ -522,6 +529,9 @@ export class RigidBody extends Component {
      * @param relativePoint @zh 作用点，相对于刚体的中心点 @en The point to apply the impulse, relative to the center of mass of the rigid body
      */
     public applyImpulse (impulse: Vec3, relativePoint?: Vec3): void {
+        if (trySubmitPhysicsBodyCommand(this, () => (
+            { kind: 'impulse', vector: impulse, relativePoint, space: 'world' }
+        ))) return;
         if (this._isInitialized) this._body!.applyImpulse(impulse, relativePoint);
     }
 
@@ -534,6 +544,9 @@ export class RigidBody extends Component {
      * @param localPoint @zh 作用点 @en The point to apply the impulse
      */
     public applyLocalImpulse (impulse: Vec3, localPoint?: Vec3): void {
+        if (trySubmitPhysicsBodyCommand(this, () => (
+            { kind: 'impulse', vector: impulse, relativePoint: localPoint, space: 'local' }
+        ))) return;
         if (this._isInitialized) this._body!.applyLocalImpulse(impulse, localPoint);
     }
 
@@ -545,6 +558,7 @@ export class RigidBody extends Component {
      * @param torque @zh 扭矩 @en The torque applied
      */
     public applyTorque (torque: Vec3): void {
+        if (trySubmitPhysicsBodyCommand(this, () => ({ kind: 'torque', vector: torque, space: 'world' }))) return;
         if (this._isInitialized) this._body!.applyTorque(torque);
     }
 
@@ -556,6 +570,7 @@ export class RigidBody extends Component {
      * @param torque @zh 扭矩 @en The torque applied
      */
     public applyLocalTorque (torque: Vec3): void {
+        if (trySubmitPhysicsBodyCommand(this, () => ({ kind: 'torque', vector: torque, space: 'local' }))) return;
         if (this._isInitialized) this._body!.applyLocalTorque(torque);
     }
 
@@ -588,6 +603,7 @@ export class RigidBody extends Component {
      * 清除刚体受到的力和速度。
      */
     public clearState (): void {
+        if (trySubmitPhysicsBodyCommand(this, () => ({ kind: 'clear-state' }))) return;
         if (this._isInitialized) this._body!.clearState();
     }
 
@@ -598,6 +614,7 @@ export class RigidBody extends Component {
      * 清除刚体受到的力。
      */
     public clearForces (): void {
+        if (trySubmitPhysicsBodyCommand(this, () => ({ kind: 'clear-forces' }))) return;
         if (this._isInitialized) this._body!.clearForces();
     }
 
@@ -608,6 +625,7 @@ export class RigidBody extends Component {
      * 清除刚体的速度。
      */
     public clearVelocity (): void {
+        if (trySubmitPhysicsBodyCommand(this, () => ({ kind: 'clear-velocity' }))) return;
         if (this._isInitialized) this._body!.clearVelocity();
     }
 
@@ -630,6 +648,7 @@ export class RigidBody extends Component {
      * @param value @zh 速度向量 @en The velocity vector
      */
     public setLinearVelocity (value: Vec3): void {
+        assertPhysicsBodyVelocityConfiguration('RigidBody.setLinearVelocity');
         assertMutationAllowed(this, 'RigidBody.setLinearVelocity');
         if (this._isInitialized) this._body!.setLinearVelocity(value);
     }
@@ -653,6 +672,7 @@ export class RigidBody extends Component {
      * @param value @zh 角速度向量 @en The angular velocity vector
      */
     public setAngularVelocity (value: Vec3): void {
+        assertPhysicsBodyVelocityConfiguration('RigidBody.setAngularVelocity');
         assertMutationAllowed(this, 'RigidBody.setAngularVelocity');
         if (this._isInitialized) this._body!.setAngularVelocity(value);
     }

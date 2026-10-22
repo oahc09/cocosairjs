@@ -38,14 +38,24 @@ if args.prerequisite_source_receipt:
  assert library['evidenceClosure']['status']=='PASS_SCOPED_COMPLETED_EVIDENCE_CLOSURE'
  base=source['commit']
  if source['prerequisite']['commit']!='e5c5674bfe08be0c9fda72c484f4380bd0d0e2c6':
-  # Exact already Library-restored checkpoint37 is the sole newly supported chained base.
-  # Pin its complete source receipt, not only self-consistent mutable metadata.
-  assert source['commit']=='481678df9aacf8240136e5a46e726273e10ba9d6' and source['tree']=='67930c64e8b1caa9244ec30a6e5ecd9f8e42b49f'
-  assert hashlib.sha256(source_bytes).hexdigest()=='9a2945f42c70a929a2ee7befe60879cc70fffc6fc369d08d83a9ef64360839e1','Exact verified checkpoint37 source receipt required'
-  assert source['prerequisite']['commit']=='45b526f248575a0542af8eed591c0cf8c8a1ba8d'
-  assert source['prerequisite']['ancestors'][0]['commit']=='e5c5674bfe08be0c9fda72c484f4380bd0d0e2c6'
-  assert library['libraryFileId']=='libfile_c97f345e13a88191b920a9ceb3ceff37' and library['fileId']=='file_00000000b2d481f9be0fe66dffa4dee3'
-  assert library['archive']['bytes']==5043137 and library['archive']['sha256']=='33d17d0dd303bbf3b9d5e7189be4d55c457b83b3f0378988c9d3638116736e8e'
+  if source['commit']=='aac2be832b5e41c29cd171764723cae227952694':
+   # Exact independently Library-restored checkpoint38, with its original full receipt pin.
+   assert source['tree']=='02ee7159229ad0793e54c15f8b106318ffee4ffc'
+   assert hashlib.sha256(source_bytes).hexdigest()=='d9e5ce154fd6be63406ee08c13078d8a8296897f0ed488c963a8d69fcc053b7c','Exact verified checkpoint38 source receipt required'
+   assert source['prerequisite']['commit']=='481678df9aacf8240136e5a46e726273e10ba9d6'
+   assert source['prerequisite']['ancestors'][0]['commit']=='45b526f248575a0542af8eed591c0cf8c8a1ba8d'
+   assert source['prerequisite']['ancestors'][0]['ancestors'][0]['commit']=='e5c5674bfe08be0c9fda72c484f4380bd0d0e2c6'
+   assert library['libraryFileId']=='libfile_f6152f678e848191a6990f29fa13af35' and library['fileId']=='file_00000000561881f4a734026e55d1f3fe'
+   assert library['archive']['bytes']==7364183 and library['archive']['sha256']=='b6e910d0262cd4c01febea820162aa3d66295f2a0365f27af35ab8f2c42379e9'
+  else:
+   # Exact already Library-restored checkpoint37 is the sole newly supported chained base.
+   # Pin its complete source receipt, not only self-consistent mutable metadata.
+   assert source['commit']=='481678df9aacf8240136e5a46e726273e10ba9d6' and source['tree']=='67930c64e8b1caa9244ec30a6e5ecd9f8e42b49f'
+   assert hashlib.sha256(source_bytes).hexdigest()=='9a2945f42c70a929a2ee7befe60879cc70fffc6fc369d08d83a9ef64360839e1','Exact verified checkpoint37 source receipt required'
+   assert source['prerequisite']['commit']=='45b526f248575a0542af8eed591c0cf8c8a1ba8d'
+   assert source['prerequisite']['ancestors'][0]['commit']=='e5c5674bfe08be0c9fda72c484f4380bd0d0e2c6'
+   assert library['libraryFileId']=='libfile_c97f345e13a88191b920a9ceb3ceff37' and library['fileId']=='file_00000000b2d481f9be0fe66dffa4dee3'
+   assert library['archive']['bytes']==5043137 and library['archive']['sha256']=='33d17d0dd303bbf3b9d5e7189be4d55c457b83b3f0378988c9d3638116736e8e'
  prerequisite={'commit':base,'tree':source['tree'],'ancestors':[source['prerequisite']],'libraryFileId':library['libraryFileId'],'fileId':library['fileId'],'archiveBytes':library['archive']['bytes'],'archiveSha256':library['archive']['sha256'],'sourceCheckpointReceiptSha256':hashlib.sha256(source_bytes).hexdigest(),'libraryRestoreReceiptPath':str(library_path.relative_to(root)),'libraryRestoreReceiptSha256':hashlib.sha256(library_bytes).hexdigest(),'scope':'Requires this exact independently Library-restored prerequisite checkpoint and its recorded predecessor chain. Not a standalone/full repository bundle.'}
 head=git('rev-parse','HEAD').decode().strip();assert head==args.expected_head;branch='feat/box3d-rebuild-20261022';assert git('symbolic-ref','--short','HEAD').decode().strip()==branch;git('merge-base','--is-ancestor',base,head)
 out.mkdir()

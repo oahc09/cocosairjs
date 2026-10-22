@@ -33,7 +33,27 @@ import type {
 } from '../../../cocos/scene-graph/node-transform-validation';
 import type { Box3DBodyState, Box3DId } from './binding/facade.mjs';
 import { Box3DCommandQueue } from './command-queue';
-import type { PreparedCommandPause } from './command-queue';
+import type {
+    PreparedCommandPause,
+    CommandInput,
+    CommandCandidate,
+    CommandContext,
+    CommandProducer,
+} from './command-queue';
+import { Box3DCommandProducers } from './command-producers';
+import type {
+    ProducerOperationLease,
+    ProducerHandle,
+    ContinuousHandle,
+    ContinuousDescriptor,
+} from './command-producers';
+import { mapCommandCandidate } from './command-wire';
+import { registerPhysicsCommandOwner } from '../../../cocos/physics/framework/physics-command-submission';
+import type {
+    PhysicsBodyCommandInput,
+    PhysicsCommandOwnerLease,
+} from '../../../cocos/physics/framework/physics-command-submission';
+import type { Box3DCommand } from './binding/facade.mjs';
 import { registerPhysicsSystemControl } from '../../../cocos/physics/framework/physics-system-control';
 import type {
     PhysicsSystemControlLease,
@@ -113,13 +133,33 @@ export interface Box3DOwnedComponentSeed {
     readonly applyMaterial?: CopiedMaterialApplication;
     readonly prepareMaterialValues?: PrepareComponentMaterial;
 }
+export interface Box3DCommandTick {
+    readonly commands: readonly Box3DCommand[];
+    readonly context: Readonly<CommandContext>;
+    readonly acceptedCount: number;
+    beginCommit(): void;
+    finishCommit(outcome: 'not-mutated' | 'committed' | 'unknown'): void;
+    complete(): void;
+    fail(nativeCompleted: boolean): void;
+    dispose(): void;
+}
 export interface Box3DOwnerFenceScope {
     advance(next: 'solving' | 'writeback'): void;
     write(node: Node, operation: NodeTransformWriteOperation, expected: readonly number[], perform: () => void): void;
     dispose(): void;
 }
 type Phase =
-    'idle' | 'preflight' | 'solving' | 'writeback' | 'dispatch' | 'material' | 'control' | 'faulted' | 'closed';
+    | 'idle'
+    | 'admission'
+    | 'producer'
+    | 'preflight'
+    | 'solving'
+    | 'writeback'
+    | 'dispatch'
+    | 'material'
+    | 'control'
+    | 'faulted'
+    | 'closed';
 type BodyRecord = Readonly<Box3DOwnedBodySeed>;
 type ComponentRecord = {
     readonly body: object;
@@ -136,9 +176,9 @@ const rejection = Object.freeze({
     message: 'A Box3D-owned temporary step or dispatch scope forbids this mutation',
 });
 const activationBlockers = Object.freeze([
-    'command-consumer-not-installed',
+    'dynamic-command-owner-candidate-not-qualified',
     'shared-material-propagation-and-subscription-integrity',
-    'immediate-system-pause-notification',
+    'full-producer-pause-lifecycle-not-qualified',
     'complete-early-entry-qualification',
     'persistent-target-grant-budget',
 ]);
@@ -147,9 +187,9 @@ function object(value: unknown, operation: string): asserts value is object {
         throw worldError('AIR_E_BOX3D_CONFIG', operation, 'Expected object identity.');
 }
 
-/** Checkpoint A: logical ownership and temporary fences only. No command submit,
- * native execution, public handles or successful unified-transaction activation.
- * Stored native resolver closures remain private and are not called in this phase.
+/** Owns logical identity, temporary fences and the internal finite dynamic-command
+ * candidate. Native resolver capabilities remain private. Package-level unified
+ * activation still requires the complete target/lifecycle and acceptance contracts.
  */
 export class Box3DWorldCommandOwner {
     readonly #generation: number;
@@ -170,6 +210,10 @@ export class Box3DWorldCommandOwner {
     readonly #system: PhysicsSystem;
     readonly #world: object;
     readonly #queue: Box3DCommandQueue;
+    readonly #producers: Box3DCommandProducers;
+    #commandRouting: PhysicsCommandOwnerLease | null = null;
+    #initialProducerControl = false;
+    #commandPhase: 'idle' | 'collecting' | 'validating' | 'committing' | 'awaiting-step' = 'idle';
     readonly #cleanupFailures: Readonly<{ stage: string; error: unknown }>[] = [];
     #omittedCleanupFailures = 0;
     readonly #bodies = new Map<object, BodyRecord>();
@@ -197,6 +241,8 @@ export class Box3DWorldCommandOwner {
         cacheAutoSimulation: boolean | null;
         queueCommitEntered: boolean;
         queueCommitReturned: boolean;
+        producerCommitEntered: boolean;
+        producerCommitReturned: boolean;
         failed: boolean;
         actualRead: string;
     }> | null = null;
@@ -218,6 +264,315 @@ export class Box3DWorldCommandOwner {
         this.#system = system;
         this.#world = world;
         this.#queue = new Box3DCommandQueue({ generation });
+        this.#producers = new Box3DCommandProducers({
+            beginProducerOperation: (operation, allowPaused) => this.#producerAdmission(operation, allowPaused),
+            beginProducerSnapshot: () => this.#borrowProducerAdmission('preflight'),
+            beginProducerControl: () => this.#borrowProducerAdmission('control'),
+            validateContinuousBody: (body) => {
+                this.#resolveCommandSource(body, true);
+            },
+            submit: (body, command) => this.submitDynamicCommand(body, () => command as PhysicsBodyCommandInput),
+        });
+    }
+    /** Internal candidate activation. Public package capability remains unqualified. */
+    installCommandRouting(): void {
+        if (this.#commandRouting) throw worldError('AIR_E_BOX3D_CONFIG', 'command route', 'Already installed.');
+        this.#commandRouting = registerPhysicsCommandOwner(this.#world, {
+            submit: (source, read) => this.submitDynamicCommand(source, read),
+            assertConfiguration: (operation) => {
+                this.assertConfiguration(operation);
+                this.assertSystemBinding();
+            },
+        });
+    }
+    #producerAdmission(operation: string, allowPaused: boolean): ProducerOperationLease {
+        this.assertConfiguration(operation);
+        if (!allowPaused) this.assertSteppingAllowed(operation);
+        const scope = this.#begin('producer');
+        return Object.freeze({
+            assertCurrent: () => {
+                if (this.#scope !== scope || this.#phase !== 'producer')
+                    throw worldError('AIR_E_BOX3D_REENTRANT', operation, 'Producer admission is no longer current.');
+                this.assertSystemBinding();
+            },
+            dispose: () => {
+                try {
+                    scope.dispose();
+                } catch (error) {
+                    this.#materialFault?.(error);
+                    throw error;
+                }
+            },
+        });
+    }
+    #borrowProducerAdmission(phase: 'preflight' | 'control'): ProducerOperationLease {
+        const scope = this.#scope,
+            initial = phase === 'control' && this.#initialProducerControl;
+        if (!initial && (!scope || this.#phase !== phase))
+            throw worldError('AIR_E_BOX3D_REENTRANT', 'private producer admission', 'No matching owned scope.');
+        let disposed = false;
+        return Object.freeze({
+            assertCurrent: () => {
+                if (
+                    disposed ||
+                    (initial ? !this.#initialProducerControl : this.#scope !== scope || this.#phase !== phase)
+                )
+                    throw worldError('AIR_E_BOX3D_REENTRANT', 'private producer admission', 'Expired private scope.');
+                if (!initial) this.assertSystemBinding();
+            },
+            dispose: () => {
+                disposed = true;
+            },
+        });
+    }
+    #resolveCommandSource(
+        source: object,
+        dynamic: boolean,
+    ): { key: object; body: BodyRecord; component: ComponentRecord } {
+        const component = [...this.#components.values()].find(
+            (row) => row.component === source && row.kind === 'rigid-body',
+        );
+        const body = component && this.#bodies.get(component.body);
+        if (
+            !component ||
+            !component.initialized ||
+            !body ||
+            component.component._objFlags &
+                (CCObjectFlags.Destroyed | CCObjectFlags.ToDestroy | CCObjectFlags.Destroying) ||
+            body.node._objFlags & (CCObjectFlags.Destroyed | CCObjectFlags.ToDestroy | CCObjectFlags.Destroying)
+        )
+            throw worldError(
+                'AIR_E_BOX3D_DISPOSED',
+                'command source',
+                'Expected the actual live initialized RigidBody of this owner.',
+            );
+        if (dynamic) {
+            const state = body.readCommitted();
+            if (!component.enabled || !state.enabled || state.type !== 2)
+                throw worldError(
+                    'AIR_E_BOX3D_CONFIG',
+                    'dynamic command',
+                    'An enabled actual dynamic RigidBody is required.',
+                );
+        }
+        return { key: component.body, body, component };
+    }
+    submitDynamicCommand(source: object, read: () => PhysicsBodyCommandInput): number {
+        return this.#submitCommand(source, read, false);
+    }
+    submitAdapterCommand(adapter: object, read: () => PhysicsBodyCommandInput): number {
+        return this.#submitCommand(adapter, read, true);
+    }
+    #submitCommand(source: object, read: () => PhysicsBodyCommandInput, adapter: boolean): number {
+        const admission: { scope: Box3DOwnerFenceScope | null } = { scope: null };
+        let failed = false,
+            first: unknown;
+        try {
+            return this.#queue.withSubmissionAdmission(() => {
+                // Owner/source admission is inside the queue latch, including wrong/disabled sources.
+                this.assertSystemBinding();
+                if (this.#systemPaused)
+                    throw worldError('AIR_E_BOX3D_CONFIG', 'command submission', 'The actual owner is paused.');
+                if (this.#phase === 'idle') admission.scope = this.#begin('admission', [source]);
+                else if (!(this.#phase === 'preflight' && this.#commandPhase === 'collecting' && this.#scope))
+                    throw worldError(
+                        'AIR_E_BOX3D_REENTRANT',
+                        'command submission',
+                        'Not in ready or this owner collection.',
+                    );
+                const componentSource = adapter ? this.#component(source).component : source;
+                const resolved = this.#resolveCommandSource(componentSource, false);
+                if (typeof read !== 'function')
+                    throw worldError('AIR_E_BOX3D_CONFIG', 'command submission', 'Missing copied input reader.');
+                const input = read();
+                if (!input || typeof input !== 'object')
+                    throw worldError('AIR_E_BOX3D_CONFIG', 'command submission', 'Expected command input.');
+                // Read each original field once; queue performs the coordinate copy under this same fence.
+                const kind = input.kind;
+                if (kind === 'force' || kind === 'impulse' || kind === 'torque' || kind === 'angular-impulse')
+                    this.#resolveCommandSource(componentSource, true);
+                let command: CommandInput;
+                if (kind === 'force' || kind === 'impulse')
+                    command = { kind, vector: input.vector, relativePoint: input.relativePoint, space: input.space };
+                else if (kind === 'torque' || kind === 'angular-impulse')
+                    command = { kind, vector: input.vector, space: input.space };
+                else if (kind === 'clear-forces' || kind === 'clear-velocity' || kind === 'clear-state')
+                    command = { kind };
+                else
+                    throw worldError(
+                        'AIR_E_BOX3D_UNSUPPORTED',
+                        'command submission',
+                        'Only the finite dynamic candidate is installed; target/teleport remain unavailable.',
+                    );
+                return { body: resolved.key, command };
+            });
+        } catch (error) {
+            failed = true;
+            first = error;
+            throw error;
+        } finally {
+            try {
+                admission.scope?.dispose();
+            } catch (error) {
+                this.#materialFault?.(failed ? first : error);
+                if (!failed) throw error;
+            }
+        }
+    }
+    cancelPendingCommands(source: object): number {
+        this.assertConfiguration('cancel pending commands');
+        this.assertSteppingAllowed('cancel pending commands');
+        const scope = this.#begin('admission', [source]);
+        let failed = false,
+            first: unknown;
+        try {
+            return this.#queue.cancelPending(this.#resolveCommandSource(source, false).key);
+        } catch (error) {
+            failed = true;
+            first = error;
+            throw error;
+        } finally {
+            try {
+                scope.dispose();
+            } catch (error) {
+                this.#materialFault?.(failed ? first : error);
+                if (!failed) throw error;
+            }
+        }
+    }
+    registerCommandHook(callback: CommandProducer, options?: { enabled?: boolean }): ProducerHandle {
+        return this.#producers.registerBeforeStep(callback, options);
+    }
+    registerContinuousCommand(
+        source: object,
+        descriptor: ContinuousDescriptor,
+        options?: { enabled?: boolean },
+    ): ContinuousHandle {
+        return this.#producers.registerContinuous(source, descriptor, options);
+    }
+    #retireContinuous(record: ComponentRecord, discardUserCommands = false): void {
+        if (record.kind !== 'rigid-body') return;
+        this.#producers.retireBody(record.component);
+        // Type/disable changes revoke continuous ownership, not already accepted user records.
+        // Those must be revalidated at the next tick or explicitly cancelled. Component
+        // teardown alone discards records that can no longer resolve to that component.
+        if (discardUserCommands && this.#queue.diagnostics().phase === 'ready') this.#queue.cancelPending(record.body);
+    }
+    retireNonDynamicAfterCommit(adapter: object): void {
+        this.assertConfiguration('retire non-dynamic producer');
+        const record = this.#component(adapter),
+            body = this.#bodies.get(record.body);
+        if (!body) throw worldError('AIR_E_BOX3D_DISPOSED', 'retire producer', 'Missing actual owned body.');
+        if (body.readCommitted().type !== 2) this.#retireContinuous(record);
+    }
+    /** Private candidate ticket; never returned by public World diagnostics or handles. */
+    prepareCommandTick(scope: Box3DOwnerFenceScope, dt: number, substeps: 1 | 2 | 4 | 8): Box3DCommandTick {
+        if (this.#scope !== scope || this.#phase !== 'preflight' || this.#commandPhase !== 'idle')
+            throw worldError('AIR_E_BOX3D_REENTRANT', 'command tick', 'Expected the exact live preflight scope.');
+        const roster = this.#producers.snapshotWithinStep();
+        let candidate: CommandCandidate | null = null,
+            phase: 'collecting' | 'validating' | 'committing' | 'awaiting-step' | 'settled' = 'collecting';
+        let disposed = false;
+        const requirePhase = (expected: typeof phase): CommandCandidate => {
+            if (disposed || phase !== expected || !candidate || this.#scope !== scope)
+                throw worldError('AIR_E_BOX3D_REENTRANT', 'command ticket', 'Expired or wrong-phase candidate.');
+            return candidate;
+        };
+        try {
+            this.#commandPhase = 'collecting';
+            candidate = this.#queue.collect(dt, substeps, roster.callbacks);
+            phase = this.#commandPhase = 'validating';
+            const tokens = new Map<object, Box3DId>();
+            for (const record of candidate.operations) {
+                const component = [...this.#components.values()].find(
+                    (row) => row.body === record.body && row.kind === 'rigid-body',
+                );
+                if (!component)
+                    throw worldError(
+                        'AIR_E_BOX3D_DISPOSED',
+                        'command final validation',
+                        'Command lost its actual component.',
+                    );
+                const kind = record.command.kind;
+                const resolved = this.#resolveCommandSource(
+                    component.component,
+                    kind === 'force' || kind === 'impulse' || kind === 'torque' || kind === 'angular-impulse',
+                );
+                tokens.set(record.body, resolved.body.resolveNative());
+            }
+            const commands = mapCommandCandidate(candidate, tokens);
+            const context = candidate.context,
+                acceptedCount = candidate.original.length;
+            return Object.freeze({
+                commands,
+                context,
+                acceptedCount,
+                beginCommit: () => {
+                    this.#queue.beginCommit(requirePhase('validating'));
+                    phase = this.#commandPhase = 'committing';
+                },
+                finishCommit: (outcome: 'not-mutated' | 'committed' | 'unknown') => {
+                    this.#queue.finishCommit(requirePhase('committing'), outcome);
+                    phase = outcome === 'committed' ? 'awaiting-step' : 'settled';
+                    this.#commandPhase = outcome === 'committed' ? 'awaiting-step' : 'idle';
+                },
+                complete: () => {
+                    this.#queue.completeTick(requirePhase('awaiting-step'));
+                    phase = 'settled';
+                    this.#commandPhase = 'idle';
+                },
+                fail: (nativeCompleted: boolean) => {
+                    if (phase === 'validating') this.#queue.rejectCandidate(requirePhase('validating'));
+                    else if (phase === 'committing') this.#queue.finishCommit(requirePhase('committing'), 'unknown');
+                    else if (phase === 'awaiting-step')
+                        this.#queue.faultAfterCommit(requirePhase('awaiting-step'), nativeCompleted);
+                    phase = 'settled';
+                    this.#commandPhase = 'idle';
+                },
+                dispose: () => {
+                    if (disposed) return;
+                    let failed = false,
+                        first: unknown;
+                    try {
+                        if (phase === 'validating') this.#queue.rejectCandidate(requirePhase('validating'));
+                        else if (phase === 'committing')
+                            this.#queue.finishCommit(requirePhase('committing'), 'unknown');
+                        else if (phase === 'awaiting-step')
+                            this.#queue.faultAfterCommit(requirePhase('awaiting-step'), false);
+                    } catch (error) {
+                        failed = true;
+                        first = error;
+                    }
+                    try {
+                        roster.dispose();
+                    } catch (error) {
+                        if (!failed) first = error;
+                        failed = true;
+                    }
+                    phase = 'settled';
+                    this.#commandPhase = 'idle';
+                    disposed = true;
+                    if (failed) throw first;
+                },
+            });
+        } catch (error) {
+            let cleanupFailed = false;
+            try {
+                if (candidate && phase === 'validating') this.#queue.rejectCandidate(candidate);
+            } catch (cleanup) {
+                cleanupFailed = true;
+                this.#recordCleanup('candidate-reject', cleanup);
+            }
+            try {
+                roster.dispose();
+            } catch (cleanup) {
+                cleanupFailed = true;
+                this.#recordCleanup('candidate-roster-dispose', cleanup);
+            }
+            this.#commandPhase = 'idle';
+            if (cleanupFailed) this.#materialFault?.(error);
+            throw error;
+        }
     }
     /** Construction precedes selector assignment; enforce the original live owner before use. */
     assertSystemBinding(): void {
@@ -331,7 +686,12 @@ export class Box3DWorldCommandOwner {
             );
     }
     assertCommittedRead(operation: string): void {
-        if (this.#phase === 'solving' || this.#phase === 'faulted' || this.#phase === 'closed')
+        if (
+            this.#commandPhase === 'committing' ||
+            this.#phase === 'solving' ||
+            this.#phase === 'faulted' ||
+            this.#phase === 'closed'
+        )
             throw worldError(
                 this.#phase === 'faulted'
                     ? 'AIR_E_BOX3D_WORLD_FAULTED'
@@ -441,6 +801,7 @@ export class Box3DWorldCommandOwner {
         if (!record.initialized)
             throw worldError('AIR_E_BOX3D_CONFIG', 'component activity', 'Initialization is incomplete.');
         record.enabled = enabled;
+        if (!enabled) this.#retireContinuous(record);
     }
     /** Installed only after world construction owns and validates its native resource. */
     installMaterialObservation(
@@ -566,7 +927,7 @@ export class Box3DWorldCommandOwner {
     }
     /** Register against the original System source while construction still precedes selector assignment.
      * Only later execution/transition admission requires the live System/world binding.
-     * The queue is an actual owner participant. Producers are not yet installed and are not
+     * The queue and producer registry are actual prepared participants. Full qualification is not
      * represented by an empty, allegedly-qualified roster.
      */
     installSystemControlObservation(fault: (error: unknown) => void): void {
@@ -575,6 +936,9 @@ export class Box3DWorldCommandOwner {
         let context: Readonly<PhysicsStateChangeContext> | null = null;
         let scope: Box3DOwnerFenceScope | null = null;
         let transition: PreparedCommandPause | null = null;
+        let producerTransition: PreparedCommandPause | null = null;
+        let producerEntered = false,
+            producerReturned = false;
         let expected: PhysicsSystemControlState | null = null;
         let entered = false,
             returned = false,
@@ -591,6 +955,8 @@ export class Box3DWorldCommandOwner {
                 cacheAutoSimulation: actual?.autoSimulation ?? null,
                 queueCommitEntered: entered,
                 queueCommitReturned: returned,
+                producerCommitEntered: producerEntered,
+                producerCommitReturned: producerReturned,
                 failed,
                 actualRead,
             });
@@ -605,6 +971,14 @@ export class Box3DWorldCommandOwner {
                 this.#recordCleanup('system-control-queue-dispose', error);
                 cleanupFailed = true;
                 first = error;
+            }
+            try {
+                producerTransition?.dispose();
+                producerTransition = null;
+            } catch (error) {
+                this.#recordCleanup('system-control-producer-dispose', error);
+                if (!cleanupFailed) first = error;
+                cleanupFailed = true;
             }
             try {
                 scope?.dispose();
@@ -627,7 +1001,7 @@ export class Box3DWorldCommandOwner {
             {
                 open: (value) => {
                     context = value;
-                    entered = returned = failed = false;
+                    entered = returned = producerEntered = producerReturned = failed = false;
                     failure = undefined;
                     this.#controlCleanups.add(cleanup);
                     scope = this.#begin('control');
@@ -648,8 +1022,10 @@ export class Box3DWorldCommandOwner {
                         );
                     expected = candidate;
                     // Allocate and reserve every installed participant before System writes its cache.
-                    if (value.operation === 'system-enable')
+                    if (value.operation === 'system-enable') {
                         transition = this.#queue.preparePauseTransition(!candidate.enabled);
+                        producerTransition = this.#producers.preparePauseTransitionWithinControl(!candidate.enabled);
+                    }
                 },
                 commit: (value, actual) => {
                     requireContext(value);
@@ -668,6 +1044,9 @@ export class Box3DWorldCommandOwner {
                         entered = true;
                         transition.commit();
                         returned = true;
+                        producerEntered = true;
+                        producerTransition!.commit();
+                        producerReturned = true;
                         this.#systemPaused = !actual.enabled;
                     }
                     remember(actual, 'copied');
@@ -688,7 +1067,13 @@ export class Box3DWorldCommandOwner {
                             !before ||
                             actual.enabled !== before.enabled ||
                             actual.autoSimulation !== before.autoSimulation);
-                    if (report.effects.length || entered || actualChanged || report.actualRead === 'failed')
+                    if (
+                        report.effects.length ||
+                        entered ||
+                        producerEntered ||
+                        actualChanged ||
+                        report.actualRead === 'failed'
+                    )
                         fault(failure);
                 },
                 dispose: () => cleanup(),
@@ -703,11 +1088,16 @@ export class Box3DWorldCommandOwner {
             this.#controlCleanups.add(cleanup);
             let initialFailed = false,
                 initialError: unknown;
+            this.#initialProducerControl = true;
             try {
                 transition = this.#queue.preparePauseTransition(true);
+                producerTransition = this.#producers.preparePauseTransitionWithinControl(true);
                 entered = true;
                 transition.commit();
                 returned = true;
+                producerEntered = true;
+                producerTransition.commit();
+                producerReturned = true;
                 this.#systemPaused = true;
                 remember(initial, 'copied');
             } catch (error) {
@@ -721,6 +1111,7 @@ export class Box3DWorldCommandOwner {
                 if (!initialFailed) initialError = error;
                 initialFailed = true;
             }
+            this.#initialProducerControl = false;
             if (initialFailed) throw initialError;
         }
     }
@@ -998,6 +1389,7 @@ export class Box3DWorldCommandOwner {
             const source = component.materialSource;
             if (source) closeMaterialSource(source, this.#bindingOwner.confirmBindingReleased(source));
         }
+        if (component?.kind === 'rigid-body') this.#retireContinuous(component, true);
         // Faulted native cleanup is not a release proof. Keep its roster until confirmed world teardown.
         this.#materialLeases.get(adapter)?.dispose();
         this.#materialLeases.delete(adapter);
@@ -1026,7 +1418,7 @@ export class Box3DWorldCommandOwner {
         return result;
     }
     #begin(
-        phase: 'preflight' | 'dispatch' | 'material' | 'control',
+        phase: 'admission' | 'producer' | 'preflight' | 'dispatch' | 'material' | 'control',
         extraMaterials: readonly object[] = [],
     ): Box3DOwnerFenceScope {
         this.assertConfiguration('begin temporary scope');
@@ -1150,7 +1542,10 @@ export class Box3DWorldCommandOwner {
                 cleanupFailed = true;
             }
         };
+        attempt(() => this.#commandRouting?.dispose());
+        this.#commandRouting = null;
         for (const cleanup of [...this.#controlCleanups]) attempt(cleanup);
+        attempt(() => this.#producers.close());
         attempt(() => {
             try {
                 this.#systemControlLease?.dispose();
@@ -1227,7 +1622,15 @@ export class Box3DWorldCommandOwner {
                 preparedQueueControl: this.#queue.diagnostics().preparedControl,
                 unresolvedScopes: this.#controlCleanups.size,
                 lastChange: this.#lastControl,
-                producers: 'NOT_INTEGRATED',
+                producers: this.#producers.diagnostics(),
+            }),
+            dynamicCommandCandidate: this.#commandRouting !== null,
+            commandPhase: this.#commandPhase,
+            commandQueue: Object.freeze({
+                phase: this.#queue.diagnostics().phase,
+                sequence: this.#queue.diagnostics().sequence,
+                completedTicks: this.#queue.diagnostics().completedTicks,
+                attemptId: this.#queue.diagnostics().attemptId,
             }),
             stagedCommandsSupported: false,
             unifiedTransactionsSupported: false,

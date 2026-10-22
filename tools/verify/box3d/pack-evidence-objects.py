@@ -7,7 +7,7 @@ All remaining regular files, including ignored .log files and failed attempts, a
 mapped to byte-exact objects. Verification reads every object and every alias.
 """
 from pathlib import Path, PurePosixPath
-import argparse, datetime, hashlib, json, os, stat, zipfile
+import argparse, datetime, hashlib, json, os, re, stat, zipfile
 
 
 def sha(data):
@@ -61,7 +61,14 @@ def pack(config_path, output):
         excluded = {safe(row['path']): row for row in item.get('regenerableCaches', [])}
         for name, policy in excluded.items():
             assert policy['kind'] == 'JEST_TRANSFORM_CACHE' and policy['reason']
-            assert name == 'shared-jest-transforms', 'Only exact known regenerable transform cache is supported'
+            parts = Path(name).parts
+            is_attempt_cache = len(parts) == 2 and parts[1] == 'jest-cache' and re.fullmatch(r'(?:attempt[0-9]+|set[0-9]+-[a-z0-9-]+)', parts[0]) is not None
+            assert name == 'shared-jest-transforms' or is_attempt_cache, 'Only exact known Jest cache directories are supported'
+            if is_attempt_cache:
+                cache = root / name
+                assert cache.is_dir() and not cache.is_symlink()
+                assert all(child.name.startswith(('jest-transform-cache-', 'haste-map-', 'perf-cache-'))
+                           for child in cache.iterdir()), 'Attempt cache includes non-Jest data'
         for path in sorted(root.rglob('*')):
             if path.is_dir() and not path.is_symlink():
                 continue
