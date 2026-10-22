@@ -1,0 +1,56 @@
+{
+  "schema": "final-run/1",
+  "capturedAt": "2026-10-22T18:52:48.969272+00:00",
+  "qualification": "ISOLATED_PURE_PROTOCOL_ONLY",
+  "inputManifest": "evidence/final-input-manifest.json",
+  "runs": [
+    {
+      "step": "tsc",
+      "cwd": "evidence/final-inputs",
+      "command": [
+        "node",
+        "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/bin/tsc",
+        "--target",
+        "ES2022",
+        "--module",
+        "commonjs",
+        "--strict",
+        "--skipLibCheck",
+        "--noEmitOnError",
+        "--outDir",
+        "compiled",
+        "src/physics-material-values-transaction.ts"
+      ],
+      "exitCode": 0,
+      "rawLog": "evidence/final-tsc.log"
+    },
+    {
+      "step": "controls",
+      "cwd": "evidence/final-inputs",
+      "command": [
+        "node",
+        "controls.cjs",
+        "../final-controls.json"
+      ],
+      "exitCode": 0,
+      "rawLog": "evidence/final-controls.log"
+    },
+    {
+      "step": "format",
+      "cwd": "evidence/final-inputs",
+      "command": [
+        "node",
+        "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/prettier/bin/prettier.cjs",
+        "--config",
+        "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/.prettierrc.json",
+        "--check",
+        "src/physics-material-values-transaction.ts",
+        "controls.cjs"
+      ],
+      "exitCode": 0,
+      "rawLog": "evidence/final-format.log"
+    }
+  ],
+  "compiledMatchesCandidate": true,
+  "controlsReport": "evidence/final-controls.json"
+}

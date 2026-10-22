@@ -1,0 +1,167 @@
+{
+  "schema": "original-review-manifest/1",
+  "capturedAt": "2026-10-22T19:03:17.500824+00:00",
+  "scope": "Explicit original-review payloads only; a later repair-review subdirectory is independent.",
+  "files": [
+    {
+      "path": "ORIGINAL-REVIEW.md",
+      "bytes": 6544,
+      "sha256": "7c5c39285a49f2329afa16026a10a2b1974281ed11a242efb72fb74483407729"
+    },
+    {
+      "path": "build-phase-controls.py",
+      "bytes": 5065,
+      "sha256": "2fe12e32f04a6b66095ac6149d3c58137b9debe745a271e809463da418e61761"
+    },
+    {
+      "path": "build-reviewer-controls.py",
+      "bytes": 7618,
+      "sha256": "35eee6702323060f4b71c58662f47e58dc1d6baf9925a4717a0972f0138960e0"
+    },
+    {
+      "path": "evidence/frozen-nochange-commit-red.json",
+      "bytes": 2727,
+      "sha256": "0aa2de65bd65b278260a745936147e04455124b381191be6315ef6e781ca5b61"
+    },
+    {
+      "path": "evidence/frozen-nochange-commit-red.log",
+      "bytes": 3662,
+      "sha256": "80a4e10d480ff9d4efa837d11bcd3e321547ade510212793360367daa66c03a1"
+    },
+    {
+      "path": "evidence/frozen-original-controls.json",
+      "bytes": 5694,
+      "sha256": "41bb201b210d0115c9c845f72c44cc025438740a62646e82a3349f209f7fa5a6"
+    },
+    {
+      "path": "evidence/frozen-original-controls.log",
+      "bytes": 3229,
+      "sha256": "58c6cbde22b8291d0bdc1af5b984e6a72d24340effe3958bfc52c9124789db60"
+    },
+    {
+      "path": "evidence/frozen-phase-controls.json",
+      "bytes": 1078,
+      "sha256": "74a2186bf8f41f379d8ca618f4c832fadf26657ab6dceb66bfa828f0d794c9fb"
+    },
+    {
+      "path": "evidence/frozen-phase-controls.log",
+      "bytes": 623,
+      "sha256": "15a27ee07410ddf7f073e6bc8ef2224b357fa92be59df7aa034a29a4c75e4cb7"
+    },
+    {
+      "path": "evidence/frozen-reviewer-controls.json",
+      "bytes": 1965,
+      "sha256": "c12dce021599e84fd22a9068fdc13343d054a46c56648bd763bf9d69b52824f9"
+    },
+    {
+      "path": "evidence/frozen-reviewer-controls.log",
+      "bytes": 1169,
+      "sha256": "cb7d13d6152b9f06c29db0ef7d91772437be0cf8644f385bef563d40a9248bbc"
+    },
+    {
+      "path": "evidence/frozen-run.json",
+      "bytes": 2541,
+      "sha256": "aed4958286ea59db3d4e9fd9e53b9218784ae93f3a31653743012a9cb1cc38f0"
+    },
+    {
+      "path": "evidence/frozen-run.log",
+      "bytes": 2541,
+      "sha256": "aed4958286ea59db3d4e9fd9e53b9218784ae93f3a31653743012a9cb1cc38f0"
+    },
+    {
+      "path": "evidence/frozen-tsc.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "evidence/original-controls.json",
+      "bytes": 5694,
+      "sha256": "41bb201b210d0115c9c845f72c44cc025438740a62646e82a3349f209f7fa5a6"
+    },
+    {
+      "path": "evidence/original-controls.log",
+      "bytes": 3229,
+      "sha256": "58c6cbde22b8291d0bdc1af5b984e6a72d24340effe3958bfc52c9124789db60"
+    },
+    {
+      "path": "evidence/phase-controls.json",
+      "bytes": 1078,
+      "sha256": "74a2186bf8f41f379d8ca618f4c832fadf26657ab6dceb66bfa828f0d794c9fb"
+    },
+    {
+      "path": "evidence/phase-controls.log",
+      "bytes": 623,
+      "sha256": "15a27ee07410ddf7f073e6bc8ef2224b357fa92be59df7aa034a29a4c75e4cb7"
+    },
+    {
+      "path": "evidence/probe-nochange-commit.json",
+      "bytes": 2727,
+      "sha256": "0aa2de65bd65b278260a745936147e04455124b381191be6315ef6e781ca5b61"
+    },
+    {
+      "path": "evidence/probe-nochange-commit.log",
+      "bytes": 3662,
+      "sha256": "80a4e10d480ff9d4efa837d11bcd3e321547ade510212793360367daa66c03a1"
+    },
+    {
+      "path": "evidence/reviewer-controls.json",
+      "bytes": 1965,
+      "sha256": "c12dce021599e84fd22a9068fdc13343d054a46c56648bd763bf9d69b52824f9"
+    },
+    {
+      "path": "evidence/reviewer-controls.log",
+      "bytes": 1169,
+      "sha256": "cb7d13d6152b9f06c29db0ef7d91772437be0cf8644f385bef563d40a9248bbc"
+    },
+    {
+      "path": "evidence/tsc.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "inputs/candidate-README.md",
+      "bytes": 10900,
+      "sha256": "6c1488fe123edfefbd44050950e188a55cfa3de7017d8a116b9e92083eb68c0a"
+    },
+    {
+      "path": "inputs/compiled/physics-material-values-transaction.js",
+      "bytes": 29156,
+      "sha256": "af636183369f6146aaa500ce2be36493c841aa7f5baff3f196c053a08fc3cd5f"
+    },
+    {
+      "path": "inputs/controls.cjs",
+      "bytes": 30081,
+      "sha256": "b19e86c69e588ed6cd69928bdd56ab0d39117eb62a13b14915e893bf647dfaf2"
+    },
+    {
+      "path": "inputs/plan-README.md",
+      "bytes": 26493,
+      "sha256": "4fb124776c9d6e6eb96cefe2358c1067e3d73431724f266f9f6345174312441d"
+    },
+    {
+      "path": "inputs/src/physics-material-values-transaction.ts",
+      "bytes": 39342,
+      "sha256": "382c459f2116383d9acd7eddec737d7a9dd213f5a2c1371475aa024020666cd4"
+    },
+    {
+      "path": "phase-controls.cjs",
+      "bytes": 10059,
+      "sha256": "0415a244f4f28b3d981d92cd2f71aef0c5895261fcd53d30cf4e84fbe8c81e66"
+    },
+    {
+      "path": "probe-nochange-commit.cjs",
+      "bytes": 2244,
+      "sha256": "953adb5a3e8eebd21ff12afb47761e07463aea707e97f434999ee277b91ff752"
+    },
+    {
+      "path": "reproduce-original.py",
+      "bytes": 2038,
+      "sha256": "dd2d7346b6b95a8acb1bf82b496dbd871073e723169039588b2bdbc029494854"
+    },
+    {
+      "path": "reviewer-controls.cjs",
+      "bytes": 12609,
+      "sha256": "2a58cac9a92c97bf16f2424cc0b1d77e234839155c6879c40781c08e55698899"
+    }
+  ]
+}

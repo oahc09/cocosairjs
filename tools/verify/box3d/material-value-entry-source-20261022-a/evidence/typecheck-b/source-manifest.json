@@ -1,0 +1,9 @@
+{
+  "files": [
+    {
+      "path": "evidence/typecheck-b/inputs/typecheck.cjs",
+      "sha256": "68c6054e0323f13dee076254c7142bb8dabd8a0214886d73c531924fa99fbf29",
+      "bytes": 4841
+    }
+  ]
+}

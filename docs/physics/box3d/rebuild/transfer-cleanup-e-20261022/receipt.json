@@ -1,0 +1,11 @@
+{
+  "status": "COMPLETED_EXACT_APPROVED_429_FILES_ONLY",
+  "completedAtUtc": "2026-10-22T18:31:45.711733+00:00",
+  "plannedBytes": 106712606,
+  "files": 429,
+  "actualFreeSpaceIncrease": 107692032,
+  "availableBytes": 1235787776,
+  "activeFileReferences": [],
+  "preserved": "prepare.py, manifest.json, all Git/API receipts, unique raw, bundle, Library/download archives, current Git and independent restored Git",
+  "scope": "regenerable transport JSON only"
+}

@@ -1,0 +1,1 @@
+export declare const CCFloat: NumberConstructor; export declare const math: { equals(a: number, b: number): boolean };

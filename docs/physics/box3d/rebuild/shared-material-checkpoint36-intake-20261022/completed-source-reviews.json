@@ -1,0 +1,839 @@
+{
+  "status": "PASS_EXACT_FINAL_CANDIDATE_INTAKE_NOT_PRODUCT_WIRING",
+  "rows": [
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/build-reviewer-controls.py",
+      "sha256": "35eee6702323060f4b71c58662f47e58dc1d6baf9925a4717a0972f0138960e0",
+      "bytes": 7618
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/ORIGINAL-REVIEW.md",
+      "sha256": "7c5c39285a49f2329afa16026a10a2b1974281ed11a242efb72fb74483407729",
+      "bytes": 6544
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/original-review-manifest.json",
+      "sha256": "f0301ff31e7e7ef8955c638b7028e5395d3bb0eafa628d30cb079b9af8be6fbd",
+      "bytes": 5489
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/reproduce-original.py",
+      "sha256": "dd2d7346b6b95a8acb1bf82b496dbd871073e723169039588b2bdbc029494854",
+      "bytes": 2038
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/build-phase-controls.py",
+      "sha256": "2fe12e32f04a6b66095ac6149d3c58137b9debe745a271e809463da418e61761",
+      "bytes": 5065
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/probe-nochange-commit.cjs",
+      "sha256": "953adb5a3e8eebd21ff12afb47761e07463aea707e97f434999ee277b91ff752",
+      "bytes": 2244
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/phase-controls.cjs",
+      "sha256": "0415a244f4f28b3d981d92cd2f71aef0c5895261fcd53d30cf4e84fbe8c81e66",
+      "bytes": 10059
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/reviewer-controls.cjs",
+      "sha256": "2a58cac9a92c97bf16f2424cc0b1d77e234839155c6879c40781c08e55698899",
+      "bytes": 12609
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/evidence/probe-nochange-commit.json",
+      "sha256": "0aa2de65bd65b278260a745936147e04455124b381191be6315ef6e781ca5b61",
+      "bytes": 2727
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/evidence/frozen-run.log",
+      "sha256": "aed4958286ea59db3d4e9fd9e53b9218784ae93f3a31653743012a9cb1cc38f0",
+      "bytes": 2541
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/evidence/frozen-phase-controls.log",
+      "sha256": "15a27ee07410ddf7f073e6bc8ef2224b357fa92be59df7aa034a29a4c75e4cb7",
+      "bytes": 623
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/evidence/original-controls.log",
+      "sha256": "58c6cbde22b8291d0bdc1af5b984e6a72d24340effe3958bfc52c9124789db60",
+      "bytes": 3229
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/evidence/phase-controls.log",
+      "sha256": "15a27ee07410ddf7f073e6bc8ef2224b357fa92be59df7aa034a29a4c75e4cb7",
+      "bytes": 623
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/evidence/frozen-nochange-commit-red.log",
+      "sha256": "80a4e10d480ff9d4efa837d11bcd3e321547ade510212793360367daa66c03a1",
+      "bytes": 3662
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/evidence/frozen-nochange-commit-red.json",
+      "sha256": "0aa2de65bd65b278260a745936147e04455124b381191be6315ef6e781ca5b61",
+      "bytes": 2727
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/evidence/reviewer-controls.json",
+      "sha256": "c12dce021599e84fd22a9068fdc13343d054a46c56648bd763bf9d69b52824f9",
+      "bytes": 1965
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/evidence/tsc.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/evidence/frozen-original-controls.json",
+      "sha256": "41bb201b210d0115c9c845f72c44cc025438740a62646e82a3349f209f7fa5a6",
+      "bytes": 5694
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/evidence/frozen-reviewer-controls.json",
+      "sha256": "c12dce021599e84fd22a9068fdc13343d054a46c56648bd763bf9d69b52824f9",
+      "bytes": 1965
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/evidence/frozen-run.json",
+      "sha256": "aed4958286ea59db3d4e9fd9e53b9218784ae93f3a31653743012a9cb1cc38f0",
+      "bytes": 2541
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/evidence/probe-nochange-commit.log",
+      "sha256": "80a4e10d480ff9d4efa837d11bcd3e321547ade510212793360367daa66c03a1",
+      "bytes": 3662
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/evidence/reviewer-controls.log",
+      "sha256": "cb7d13d6152b9f06c29db0ef7d91772437be0cf8644f385bef563d40a9248bbc",
+      "bytes": 1169
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/evidence/frozen-reviewer-controls.log",
+      "sha256": "cb7d13d6152b9f06c29db0ef7d91772437be0cf8644f385bef563d40a9248bbc",
+      "bytes": 1169
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/evidence/phase-controls.json",
+      "sha256": "74a2186bf8f41f379d8ca618f4c832fadf26657ab6dceb66bfa828f0d794c9fb",
+      "bytes": 1078
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/evidence/frozen-original-controls.log",
+      "sha256": "58c6cbde22b8291d0bdc1af5b984e6a72d24340effe3958bfc52c9124789db60",
+      "bytes": 3229
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/evidence/frozen-phase-controls.json",
+      "sha256": "74a2186bf8f41f379d8ca618f4c832fadf26657ab6dceb66bfa828f0d794c9fb",
+      "bytes": 1078
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/evidence/frozen-tsc.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/evidence/original-controls.json",
+      "sha256": "41bb201b210d0115c9c845f72c44cc025438740a62646e82a3349f209f7fa5a6",
+      "bytes": 5694
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/repair-review/REPAIR-REVIEW.md",
+      "sha256": "c9764bee7bde5950697edeac6dde73cf71d6426b3e3ffa8f5aaa0d3e62dca71b",
+      "bytes": 4908
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/repair-review/unchanged-original-probe.cjs",
+      "sha256": "953adb5a3e8eebd21ff12afb47761e07463aea707e97f434999ee277b91ff752",
+      "bytes": 2244
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/repair-review/repair-review-manifest.json",
+      "sha256": "b5920b246ccb9b43a81e5a49b2cd31b2a7e6896b6a163526c94dcc30c8c84856",
+      "bytes": 4447
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/repair-review/repair-controls.cjs",
+      "sha256": "13884476285c28585a8b5d6fc5eb55556963a78210fd2dd072b8d6e4ded6b593",
+      "bytes": 8946
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/repair-review/probe-nochange-commit-repaired.cjs",
+      "sha256": "b7077705aa623ff39908a751019087b28ef1cb1c5d84c08dfce0ded84284faf4",
+      "bytes": 2420
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/repair-review/reproduce-repair.py",
+      "sha256": "6d5d1760048d247039f2ac2a8a9cc9926590cb543f47f6d1c8122144b38a4a7b",
+      "bytes": 1942
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/repair-review/verify-review-packages.py",
+      "sha256": "5aecfff9833f4483d5b0affef914e359716df91777ba6e8567b9f6accd637ddb",
+      "bytes": 1072
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/repair-review/phase-controls.cjs",
+      "sha256": "0415a244f4f28b3d981d92cd2f71aef0c5895261fcd53d30cf4e84fbe8c81e66",
+      "bytes": 10059
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/repair-review/reviewer-controls.cjs",
+      "sha256": "2a58cac9a92c97bf16f2424cc0b1d77e234839155c6879c40781c08e55698899",
+      "bytes": 12609
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/repair-review/build-repair-controls.py",
+      "sha256": "231b83318cc57dda6ab0f9e8309ee551488afb4bb0aa5d43ff1f7b82953e41d8",
+      "bytes": 3953
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/inputs/controls.cjs",
+      "sha256": "b19e86c69e588ed6cd69928bdd56ab0d39117eb62a13b14915e893bf647dfaf2",
+      "bytes": 30081
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/inputs/plan-README.md",
+      "sha256": "4fb124776c9d6e6eb96cefe2358c1067e3d73431724f266f9f6345174312441d",
+      "bytes": 26493
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/inputs/candidate-README.md",
+      "sha256": "6c1488fe123edfefbd44050950e188a55cfa3de7017d8a116b9e92083eb68c0a",
+      "bytes": 10900
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/repair-review/evidence/run.json",
+      "sha256": "b377bd097af31b7b043189899706b10b40935221fb6a2ae02bb633e9205d8468",
+      "bytes": 3294
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/repair-review/evidence/unchanged-original-probe-failstop.log",
+      "sha256": "408e54483ea7286d6dc21c6375a87709a2cc1ed9554eb6696c4a6c49e7cee09b",
+      "bytes": 1297
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/repair-review/evidence/run.log",
+      "sha256": "b377bd097af31b7b043189899706b10b40935221fb6a2ae02bb633e9205d8468",
+      "bytes": 3294
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/repair-review/evidence/candidate-controls.log",
+      "sha256": "381d81eb89737bbc6b54a2abc5ed5792247fcabcd792e9bd3125c8b11cc2eacd",
+      "bytes": 4151
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/repair-review/evidence/phase-controls.log",
+      "sha256": "15a27ee07410ddf7f073e6bc8ef2224b357fa92be59df7aa034a29a4c75e4cb7",
+      "bytes": 623
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/repair-review/evidence/repair-controls.json",
+      "sha256": "e9847523f4d205963a6b052c9844cfc95e86e95f5a690ef985480ae83c3f5a40",
+      "bytes": 928
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/repair-review/evidence/package-verification.json",
+      "sha256": "de9fbe1c87b31f917558b3406b5c7e623de05938671fd4f2bc8257a1ba5dbda0",
+      "bytes": 518
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/repair-review/evidence/repaired-original-regression.json",
+      "sha256": "78d42d0580a995efd9cf0e44784daed3fbe257e10c147f80db892e9e194def3d",
+      "bytes": 1685
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/repair-review/evidence/reviewer-controls.json",
+      "sha256": "c12dce021599e84fd22a9068fdc13343d054a46c56648bd763bf9d69b52824f9",
+      "bytes": 1965
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/repair-review/evidence/tsc.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/repair-review/evidence/repaired-original-regression.log",
+      "sha256": "78d42d0580a995efd9cf0e44784daed3fbe257e10c147f80db892e9e194def3d",
+      "bytes": 1685
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/repair-review/evidence/reviewer-controls.log",
+      "sha256": "cb7d13d6152b9f06c29db0ef7d91772437be0cf8644f385bef563d40a9248bbc",
+      "bytes": 1169
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/repair-review/evidence/candidate-controls.json",
+      "sha256": "546a5fa552693e5a8f4a9d4a4faa6e61c04ab40162c0105ddf2a4a99c9966ae2",
+      "bytes": 7192
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/repair-review/evidence/repair-controls.log",
+      "sha256": "b8518b6546bf6936118c49bdf7e5ae324b423a4f2e9506dad8bdc02c01a50435",
+      "bytes": 527
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/repair-review/evidence/phase-controls.json",
+      "sha256": "74a2186bf8f41f379d8ca618f4c832fadf26657ab6dceb66bfa828f0d794c9fb",
+      "bytes": 1078
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/repair-review/inputs/controls.cjs",
+      "sha256": "b975a1e37982d71552475efd95a4a1d180378fca6bcbf10fa6611292920ce1dd",
+      "bytes": 33034
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/repair-review/inputs/compiled/physics-material-values-transaction.js",
+      "sha256": "9f04cc26d0575049733b49df535e9ccc01ccd19fa228bc35eccb3563ce1f5f48",
+      "bytes": 29631
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/repair-review/inputs/src/physics-material-values-transaction.ts",
+      "sha256": "fb1be9f19ab526e8b1c0785446a387324b4d51930b90d7bfb105127fe8255b06",
+      "bytes": 39988
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/inputs/compiled/physics-material-values-transaction.js",
+      "sha256": "af636183369f6146aaa500ce2be36493c841aa7f5baff3f196c053a08fc3cd5f",
+      "bytes": 29156
+    },
+    {
+      "path": "tools/verify/box3d/material-roster-independent-review-20261022-a/inputs/src/physics-material-values-transaction.ts",
+      "sha256": "382c459f2116383d9acd7eddec737d7a9dd213f5a2c1371475aa024020666cd4",
+      "bytes": 39342
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-a/closure-manifest.json",
+      "sha256": "7d5474967c72cf058406294e32351ed4000f28c663211c3f175cac93c282e954",
+      "bytes": 8615
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-a/closure-verification.json",
+      "sha256": "b8ea653398cfd84f27ca95482ab960274f96004bf8962037b7dce8da51e41627",
+      "bytes": 73
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-a/typecheck-a.log",
+      "sha256": "77d7a628bbbdc42e79ea865da69d291c0ca74f3f5f1d192436752256e5413cbb",
+      "bytes": 47
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-a/input-manifest.json",
+      "sha256": "05c3ab39ef05acbb8d513c3609bb711d4a2a2554a33195c1bc2419f07d9dd093",
+      "bytes": 2311
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-a/controls.cjs",
+      "sha256": "d90597156963135c69124e46c43569a69625af1b6d8f0115fd4afbc656389d10",
+      "bytes": 30405
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-a/typecheck-b.log",
+      "sha256": "77d7a628bbbdc42e79ea865da69d291c0ca74f3f5f1d192436752256e5413cbb",
+      "bytes": 47
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-a/README.md",
+      "sha256": "4b7768f3bf9b2103643bd78b741c05dd37ce6d07fd64fc0e015d24d5db456b86",
+      "bytes": 5169
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-a/verify-closure.py",
+      "sha256": "8809763fb28501c3ad21f52b3c506d978e952c6b69288f334889125f4ab751dd",
+      "bytes": 1371
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-a/first-run.log",
+      "sha256": "03403a4bd3dd3a5643a08fcee23cb72b035c762b5b5474ed1f0312ba474c3da9",
+      "bytes": 78
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-a/typecheck.cjs",
+      "sha256": "68c6054e0323f13dee076254c7142bb8dabd8a0214886d73c531924fa99fbf29",
+      "bytes": 4841
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-a/run-b.log",
+      "sha256": "fba7ef25e2b4d86723827434e0ee0fb951200f0a4e4c3e806488f76975584293",
+      "bytes": 1079
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-a/asset-candidate.patch",
+      "sha256": "fa4de04ca2348c4c37dffd98538ec6975ba8f527c8a02736bd418a7af6f96747",
+      "bytes": 10021
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-a/format.log",
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20",
+      "bytes": 66
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-a/evidence/typecheck-a/result.json",
+      "sha256": "84aba019e02e300bc2b2bd5f38ed0b171247d8d3c59dca937505871cb03af2ba",
+      "bytes": 14677
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-a/evidence/typecheck-b/source-manifest.json",
+      "sha256": "d0afc407198bf703f5bbff725af5bfcbb833e1b1629233392f8055ddcae1fd6a",
+      "bytes": 196
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-a/evidence/typecheck-b/result.json",
+      "sha256": "84aba019e02e300bc2b2bd5f38ed0b171247d8d3c59dca937505871cb03af2ba",
+      "bytes": 14677
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-a/evidence/s1-known-defect/probe.json",
+      "sha256": "c5e97e4f358ea8fdd785d2aacc9e27348324ec93c2885aef7f0dab63a022db7a",
+      "bytes": 1274
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-a/evidence/run-a/guard.js",
+      "sha256": "40cf239d12e5f975bcec8037df9e8af60c72b1acd8bd4febcd1f3f7465e7f770",
+      "bytes": 5619
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-a/evidence/run-a/candidate.js",
+      "sha256": "faf4ef6fabac4a87bf5b1efe5bf8202fb26dc825797f594d786db26503bb7317",
+      "bytes": 15242
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-a/evidence/run-a/bridge.js",
+      "sha256": "ee49a43a781d67817afd5e6cd4636a09da92a5ca8f7c4760e8fd77465c050941",
+      "bytes": 2305
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-a/evidence/run-a/source-manifest.json",
+      "sha256": "ac58d0c8b4152161b6e34550ad696b77f8d47d2cfe510497390777c8d68913e9",
+      "bytes": 789
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-a/evidence/run-a/primitive.js",
+      "sha256": "af636183369f6146aaa500ce2be36493c841aa7f5baff3f196c053a08fc3cd5f",
+      "bytes": 29156
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-a/evidence/run-a/original.js",
+      "sha256": "a496e74593de5e2288357c3e0b71a4ecfe04cf849362c13453750f8c5d63efde",
+      "bytes": 7729
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-a/evidence/run-a/math-equals.js",
+      "sha256": "ffbd8a76f39117e0ff1869449dcf1a5c20effc1ef3df4bd35a69f04697067229",
+      "bytes": 231
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-a/evidence/run-a/results.json",
+      "sha256": "342956caf317a8e887829aa1b50606dd24b6fff7c5ff4bae2cbb181aa18f3528",
+      "bytes": 56831
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-a/evidence/run-b/guard.js",
+      "sha256": "40cf239d12e5f975bcec8037df9e8af60c72b1acd8bd4febcd1f3f7465e7f770",
+      "bytes": 5619
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-a/evidence/run-b/candidate.js",
+      "sha256": "faf4ef6fabac4a87bf5b1efe5bf8202fb26dc825797f594d786db26503bb7317",
+      "bytes": 15242
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-a/evidence/run-b/bridge.js",
+      "sha256": "ee49a43a781d67817afd5e6cd4636a09da92a5ca8f7c4760e8fd77465c050941",
+      "bytes": 2305
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-a/evidence/run-b/source-manifest.json",
+      "sha256": "d90ee974be7896e9d7dd0eb6a7b59f634c6bcb0f97c73ba4aa7a6cc67ce92d97",
+      "bytes": 995
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-a/evidence/run-b/primitive.js",
+      "sha256": "af636183369f6146aaa500ce2be36493c841aa7f5baff3f196c053a08fc3cd5f",
+      "bytes": 29156
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-a/evidence/run-b/original.js",
+      "sha256": "a496e74593de5e2288357c3e0b71a4ecfe04cf849362c13453750f8c5d63efde",
+      "bytes": 7729
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-a/evidence/run-b/math-equals.js",
+      "sha256": "ffbd8a76f39117e0ff1869449dcf1a5c20effc1ef3df4bd35a69f04697067229",
+      "bytes": 231
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-a/evidence/run-b/results.json",
+      "sha256": "cbe825c777787e8e4a01374ddecb152e71a700476b5e27527cd751b2dbc447eb",
+      "bytes": 72118
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-a/evidence/typecheck-b/inputs/typecheck.cjs",
+      "sha256": "68c6054e0323f13dee076254c7142bb8dabd8a0214886d73c531924fa99fbf29",
+      "bytes": 4841
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-a/evidence/run-a/inputs/input-manifest.json",
+      "sha256": "05c3ab39ef05acbb8d513c3609bb711d4a2a2554a33195c1bc2419f07d9dd093",
+      "bytes": 2311
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-a/evidence/run-a/inputs/controls.cjs",
+      "sha256": "c78d2e2ef64e3a199a23277bfd234ddb809162d798cfe699e16ccc4282441e0a",
+      "bytes": 17747
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-a/evidence/run-a/inputs/src/cocos/physics/framework/physics-material-values.ts",
+      "sha256": "435b47e6faaa861c1d584fcc3603a64735052daa2595cf3da12e3fa602305b66",
+      "bytes": 2079
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-a/evidence/run-a/inputs/src/cocos/physics/framework/assets/physics-material.ts",
+      "sha256": "47a2e4d244bab6933f8d0a65a2fdc6978a5764e8081df4b21d0b97aac83872da",
+      "bytes": 13631
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-a/evidence/run-b/inputs/input-manifest.json",
+      "sha256": "05c3ab39ef05acbb8d513c3609bb711d4a2a2554a33195c1bc2419f07d9dd093",
+      "bytes": 2311
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-a/evidence/run-b/inputs/controls.cjs",
+      "sha256": "d90597156963135c69124e46c43569a69625af1b6d8f0115fd4afbc656389d10",
+      "bytes": 30405
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-a/evidence/run-b/inputs/inputs/s1/physics-material-values-transaction.ts",
+      "sha256": "382c459f2116383d9acd7eddec737d7a9dd213f5a2c1371475aa024020666cd4",
+      "bytes": 39342
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-a/evidence/run-b/inputs/src/cocos/physics/framework/physics-material-values.ts",
+      "sha256": "435b47e6faaa861c1d584fcc3603a64735052daa2595cf3da12e3fa602305b66",
+      "bytes": 2079
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-a/evidence/run-b/inputs/src/cocos/physics/framework/assets/physics-material.ts",
+      "sha256": "47a2e4d244bab6933f8d0a65a2fdc6978a5764e8081df4b21d0b97aac83872da",
+      "bytes": 13631
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-a/inputs/s1/physics-material-values-transaction.ts",
+      "sha256": "382c459f2116383d9acd7eddec737d7a9dd213f5a2c1371475aa024020666cd4",
+      "bytes": 39342
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-a/inputs/product/AGENTS.md",
+      "sha256": "49cf8f59cfdf7798a1c5fb03f3b46f5115ff0e42faf0249880c3906a778a1072",
+      "bytes": 18480
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-a/inputs/product/.prettierrc.json",
+      "sha256": "4c184df4264a37fbd7f178b505c9061f98e264fa9c6eb4f2688a4e479425ad8a",
+      "bytes": 726
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-a/inputs/product/src/cocos/core/data/mutation-guard.ts",
+      "sha256": "93758e4b5a90ff90e5cabc7d3b0b5fd71069e955d4bf64517bec27d1957774a0",
+      "bytes": 7193
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-a/inputs/product/src/cocos/core/math/utils.ts",
+      "sha256": "9d3323a9fe1c911a7df9301f3f2c62c5df511df15a773e337e4fd74e9c303e37",
+      "bytes": 13230
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-a/inputs/product/src/cocos/physics/framework/assets/physics-material.ts",
+      "sha256": "9a780692684a65892315012879f8f597cba6bd8d22be14792d7b779a1d57bd80",
+      "bytes": 6124
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-a/inputs/product/docs/physics/box3d/contracts/shared-material-values-decisions-v1.md",
+      "sha256": "740e84c57a224c622b2d354aef06a5813004f292707d76ca6cdf31bf39089b3e",
+      "bytes": 2499
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-a/src/cocos/physics/framework/physics-material-values.ts",
+      "sha256": "435b47e6faaa861c1d584fcc3603a64735052daa2595cf3da12e3fa602305b66",
+      "bytes": 2079
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-a/src/cocos/physics/framework/assets/physics-material.ts",
+      "sha256": "47a2e4d244bab6933f8d0a65a2fdc6978a5764e8081df4b21d0b97aac83872da",
+      "bytes": 13631
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-b/closure-manifest.json",
+      "sha256": "915fff5e3aa179a7bb4d76659b54f5a1511b6fdc82f8df3e79f4e067c1721cd8",
+      "bytes": 8810
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-b/run-a.log",
+      "sha256": "c441fc3402f9bcc23f94830ca40c698db25c46fdfe7b422b5e15c1fa1645808e",
+      "bytes": 78
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-b/closure-verification.json",
+      "sha256": "6a7e520ab5eeaf4c4aa72a627fd6aa77edcc3422cf017c9793fd42c843f5d620",
+      "bytes": 73
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-b/typecheck-a.log",
+      "sha256": "77d7a628bbbdc42e79ea865da69d291c0ca74f3f5f1d192436752256e5413cbb",
+      "bytes": 47
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-b/input-manifest.json",
+      "sha256": "6a291373fcac1ef9aec4a6c97ca150650a366301e1854c012cce40e9490b3091",
+      "bytes": 2508
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-b/controls.cjs",
+      "sha256": "0fb0ce52e8bf79a0c1a0f0f9f1b04ff622ccfd935d022aff540b4296f0124fbf",
+      "bytes": 32492
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-b/README.md",
+      "sha256": "8c95cc871582eb621d9b517701a3f784ad2a3ca3e2bdeec10a532201d9bc2a00",
+      "bytes": 5000
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-b/run-b-status.json",
+      "sha256": "8e70f0e7933e9276c041ce1a1481a30091c898f9951a5220ad1072aa6031e9fe",
+      "bytes": 83
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-b/verify-closure.py",
+      "sha256": "0d0de3fe43c5cef9d1e80dcd44df3fb29de9852d6b7a4797aec46b3ca0306143",
+      "bytes": 1683
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-b/format-write.log",
+      "sha256": "a7e0f9e99a98e220e25fd0aed3fdb0b92e840a8df40eaa9f2cf3a756fea915bd",
+      "bytes": 66
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-b/typecheck.cjs",
+      "sha256": "68c6054e0323f13dee076254c7142bb8dabd8a0214886d73c531924fa99fbf29",
+      "bytes": 4841
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-b/run-b.log",
+      "sha256": "9d39ef10be069d111a8029c1c0ae3acd3dd7c47549448b2df1ffa4402bd78005",
+      "bytes": 78
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-b/asset-candidate.patch",
+      "sha256": "fa4de04ca2348c4c37dffd98538ec6975ba8f527c8a02736bd418a7af6f96747",
+      "bytes": 10021
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-b/format.log",
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20",
+      "bytes": 66
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-b/evidence/typecheck-a/source-manifest.json",
+      "sha256": "340293c40dcd7e68d87c23d1f87e9d9e6c047f7f6085dd554f2f83edc67cf6a3",
+      "bytes": 196
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-b/evidence/typecheck-a/result.json",
+      "sha256": "6abcea465c2fea476dfd3e49abdac2ed8e8729e39770e8352d1cd16b1af64d85",
+      "bytes": 14677
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-b/evidence/s1-commit-regression/probe.json",
+      "sha256": "d8a5adfc74dbdf1b560a06e6a6f6393dfe33e73b780f50011bf3c7a25c9909d4",
+      "bytes": 3413
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-b/evidence/run-a/guard.js",
+      "sha256": "40cf239d12e5f975bcec8037df9e8af60c72b1acd8bd4febcd1f3f7465e7f770",
+      "bytes": 5619
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-b/evidence/run-a/candidate.js",
+      "sha256": "faf4ef6fabac4a87bf5b1efe5bf8202fb26dc825797f594d786db26503bb7317",
+      "bytes": 15242
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-b/evidence/run-a/bridge.js",
+      "sha256": "ee49a43a781d67817afd5e6cd4636a09da92a5ca8f7c4760e8fd77465c050941",
+      "bytes": 2305
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-b/evidence/run-a/source-manifest.json",
+      "sha256": "76b5897281bd7e0b3985b54d0ac605dee72c971f3c8222db4e864870a3f42b50",
+      "bytes": 995
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-b/evidence/run-a/primitive.js",
+      "sha256": "9f04cc26d0575049733b49df535e9ccc01ccd19fa228bc35eccb3563ce1f5f48",
+      "bytes": 29631
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-b/evidence/run-a/original.js",
+      "sha256": "a496e74593de5e2288357c3e0b71a4ecfe04cf849362c13453750f8c5d63efde",
+      "bytes": 7729
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-b/evidence/run-a/math-equals.js",
+      "sha256": "ffbd8a76f39117e0ff1869449dcf1a5c20effc1ef3df4bd35a69f04697067229",
+      "bytes": 231
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-b/evidence/run-a/results.json",
+      "sha256": "aa22b08d34c6dfb33e414598d6294b81dbee4c8c6096cf66022dfa5fcee9ab99",
+      "bytes": 71253
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-b/evidence/run-b/guard.js",
+      "sha256": "40cf239d12e5f975bcec8037df9e8af60c72b1acd8bd4febcd1f3f7465e7f770",
+      "bytes": 5619
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-b/evidence/run-b/candidate.js",
+      "sha256": "faf4ef6fabac4a87bf5b1efe5bf8202fb26dc825797f594d786db26503bb7317",
+      "bytes": 15242
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-b/evidence/run-b/bridge.js",
+      "sha256": "ee49a43a781d67817afd5e6cd4636a09da92a5ca8f7c4760e8fd77465c050941",
+      "bytes": 2305
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-b/evidence/run-b/source-manifest.json",
+      "sha256": "0d7a268387322e01d9af82c21aed3f9c06f63e1adb5f5625ec20ab54e42cbc55",
+      "bytes": 995
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-b/evidence/run-b/primitive.js",
+      "sha256": "9f04cc26d0575049733b49df535e9ccc01ccd19fa228bc35eccb3563ce1f5f48",
+      "bytes": 29631
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-b/evidence/run-b/original.js",
+      "sha256": "a496e74593de5e2288357c3e0b71a4ecfe04cf849362c13453750f8c5d63efde",
+      "bytes": 7729
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-b/evidence/run-b/math-equals.js",
+      "sha256": "ffbd8a76f39117e0ff1869449dcf1a5c20effc1ef3df4bd35a69f04697067229",
+      "bytes": 231
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-b/evidence/run-b/results.json",
+      "sha256": "7dea2fd22495a4ca25597220f770967891017475cee298442051476e635f0195",
+      "bytes": 72205
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-b/evidence/typecheck-a/inputs/typecheck.cjs",
+      "sha256": "68c6054e0323f13dee076254c7142bb8dabd8a0214886d73c531924fa99fbf29",
+      "bytes": 4841
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-b/evidence/run-a/inputs/input-manifest.json",
+      "sha256": "6a291373fcac1ef9aec4a6c97ca150650a366301e1854c012cce40e9490b3091",
+      "bytes": 2508
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-b/evidence/run-a/inputs/controls.cjs",
+      "sha256": "b08f8a7b4eb7f1c6409c78c0093e6602af684da8f73382a81c72ee60c69e0bb7",
+      "bytes": 30417
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-b/evidence/run-a/inputs/inputs/s1/physics-material-values-transaction.ts",
+      "sha256": "fb1be9f19ab526e8b1c0785446a387324b4d51930b90d7bfb105127fe8255b06",
+      "bytes": 39988
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-b/evidence/run-a/inputs/src/cocos/physics/framework/physics-material-values.ts",
+      "sha256": "435b47e6faaa861c1d584fcc3603a64735052daa2595cf3da12e3fa602305b66",
+      "bytes": 2079
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-b/evidence/run-a/inputs/src/cocos/physics/framework/assets/physics-material.ts",
+      "sha256": "47a2e4d244bab6933f8d0a65a2fdc6978a5764e8081df4b21d0b97aac83872da",
+      "bytes": 13631
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-b/evidence/run-b/inputs/input-manifest.json",
+      "sha256": "6a291373fcac1ef9aec4a6c97ca150650a366301e1854c012cce40e9490b3091",
+      "bytes": 2508
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-b/evidence/run-b/inputs/controls.cjs",
+      "sha256": "0fb0ce52e8bf79a0c1a0f0f9f1b04ff622ccfd935d022aff540b4296f0124fbf",
+      "bytes": 32492
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-b/evidence/run-b/inputs/inputs/s1/physics-material-values-transaction.ts",
+      "sha256": "fb1be9f19ab526e8b1c0785446a387324b4d51930b90d7bfb105127fe8255b06",
+      "bytes": 39988
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-b/evidence/run-b/inputs/src/cocos/physics/framework/physics-material-values.ts",
+      "sha256": "435b47e6faaa861c1d584fcc3603a64735052daa2595cf3da12e3fa602305b66",
+      "bytes": 2079
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-b/evidence/run-b/inputs/src/cocos/physics/framework/assets/physics-material.ts",
+      "sha256": "47a2e4d244bab6933f8d0a65a2fdc6978a5764e8081df4b21d0b97aac83872da",
+      "bytes": 13631
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-b/inputs/s1/physics-material-values-transaction.ts",
+      "sha256": "fb1be9f19ab526e8b1c0785446a387324b4d51930b90d7bfb105127fe8255b06",
+      "bytes": 39988
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-b/inputs/product/AGENTS.md",
+      "sha256": "49cf8f59cfdf7798a1c5fb03f3b46f5115ff0e42faf0249880c3906a778a1072",
+      "bytes": 18480
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-b/inputs/product/.prettierrc.json",
+      "sha256": "4c184df4264a37fbd7f178b505c9061f98e264fa9c6eb4f2688a4e479425ad8a",
+      "bytes": 726
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-b/inputs/product/src/cocos/core/data/mutation-guard.ts",
+      "sha256": "93758e4b5a90ff90e5cabc7d3b0b5fd71069e955d4bf64517bec27d1957774a0",
+      "bytes": 7193
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-b/inputs/product/src/cocos/core/math/utils.ts",
+      "sha256": "9d3323a9fe1c911a7df9301f3f2c62c5df511df15a773e337e4fd74e9c303e37",
+      "bytes": 13230
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-b/inputs/product/src/cocos/physics/framework/assets/physics-material.ts",
+      "sha256": "9a780692684a65892315012879f8f597cba6bd8d22be14792d7b779a1d57bd80",
+      "bytes": 6124
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-b/inputs/product/docs/physics/box3d/contracts/shared-material-values-decisions-v1.md",
+      "sha256": "740e84c57a224c622b2d354aef06a5813004f292707d76ca6cdf31bf39089b3e",
+      "bytes": 2499
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-b/src/cocos/physics/framework/physics-material-values.ts",
+      "sha256": "435b47e6faaa861c1d584fcc3603a64735052daa2595cf3da12e3fa602305b66",
+      "bytes": 2079
+    },
+    {
+      "path": "tools/verify/box3d/material-value-entry-source-20261022-b/src/cocos/physics/framework/assets/physics-material.ts",
+      "sha256": "47a2e4d244bab6933f8d0a65a2fdc6978a5764e8081df4b21d0b97aac83872da",
+      "bytes": 13631
+    }
+  ],
+  "originalS1": "382c459f2116383d9acd7eddec737d7a9dd213f5a2c1371475aa024020666cd4",
+  "repairedS1": "fb1be9f19ab526e8b1c0785446a387324b4d51930b90d7bfb105127fe8255b06",
+  "review": "Original confirmed RED; repaired independent80/80 pure controls.",
+  "S3": "Original185PASS+1RED; fixed dependency192/192 actual-entry-source mock controls; no real World integration."
+}

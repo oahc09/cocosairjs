@@ -1,0 +1,240 @@
+{
+  "schema": "s1-private-material-roster-controls/1",
+  "qualification": "ISOLATED_PURE_PROTOCOL_ONLY",
+  "browserEvidence": "NONE",
+  "realNativeEvidence": "NONE",
+  "engineIntegration": false,
+  "unifiedActivation": false,
+  "formalRequiredCellsUnchanged": {
+    "NOT_RUN": 2128
+  },
+  "total": 56,
+  "passed": 56,
+  "failed": 0,
+  "results": [
+    {
+      "name": "no owner fast path has no source or property reads",
+      "status": "PASS"
+    },
+    {
+      "name": "four bindings on one owner use one scope and complete preflight before effects",
+      "status": "PASS"
+    },
+    {
+      "name": "independent owner records prepare completely before any effects (pure protocol only)",
+      "status": "PASS"
+    },
+    {
+      "name": "later foreign owner open refusal causes no reads, caches, native or public effects",
+      "status": "PASS"
+    },
+    {
+      "name": "later participant preflight refusal never applies earlier plan",
+      "status": "PASS"
+    },
+    {
+      "name": "strict numeric validation rejects coercion, unsupported axes and float32 overflow",
+      "status": "PASS"
+    },
+    {
+      "name": "native float32 copy does not replace accepted JS numbers",
+      "status": "PASS"
+    },
+    {
+      "name": "scalar equals no-change does no write/native/emit and retains before",
+      "status": "PASS"
+    },
+    {
+      "name": "setValues exact no-change still writes four fields without native/emit",
+      "status": "PASS"
+    },
+    {
+      "name": "no-change still rejects foreign owners and invalid inputs",
+      "status": "PASS"
+    },
+    {
+      "name": "source getter reentry latched even if caught",
+      "status": "PASS"
+    },
+    {
+      "name": "candidate property reentry cannot mutate membership even when caught",
+      "status": "PASS"
+    },
+    {
+      "name": "callback methods copied once before prepared plan mutation",
+      "status": "PASS"
+    },
+    {
+      "name": "duplicate shape target refuses during prepare",
+      "status": "PASS"
+    },
+    {
+      "name": "empty inactive plan return is not a native write",
+      "status": "PASS"
+    },
+    {
+      "name": "first exact native throw is unknown, later plans not entered, all owners fault",
+      "status": "PASS"
+    },
+    {
+      "name": "later native throw preserves returned/verified first operation",
+      "status": "PASS"
+    },
+    {
+      "name": "readback failure retains returned setter fact and stops future native operations",
+      "status": "PASS"
+    },
+    {
+      "name": "adapter cache failure retains native returned/verified",
+      "status": "PASS"
+    },
+    {
+      "name": "each partial actual cache assignment is retained and faulted",
+      "status": "PASS"
+    },
+    {
+      "name": "public falsy primary survives independent reporter and cleanup errors",
+      "status": "PASS"
+    },
+    {
+      "name": "cleanup-only failure faults all original owners without claiming rollback",
+      "status": "PASS"
+    },
+    {
+      "name": "partial open independently disposed even if cleanup also fails",
+      "status": "PASS"
+    },
+    {
+      "name": "actual read failure is separately retained, with no setter replay",
+      "status": "PASS"
+    },
+    {
+      "name": "private value reentry from public notification fails even if caught",
+      "status": "PASS"
+    },
+    {
+      "name": "wrong receiver, copied ticket and replay cannot execute plans",
+      "status": "PASS"
+    },
+    {
+      "name": "pending transition protects both assets and cannot publish wrong actual identity",
+      "status": "PASS"
+    },
+    {
+      "name": "cancel removes only unaccepted candidate, preserves prior live binding",
+      "status": "PASS"
+    },
+    {
+      "name": "retiring one binding does not release another owner or same-owner binding",
+      "status": "PASS"
+    },
+    {
+      "name": "provisional binding cannot execute but remains destroy blocker until initialized",
+      "status": "PASS"
+    },
+    {
+      "name": "mixed-backend blocker refuses complete transaction before opens",
+      "status": "PASS"
+    },
+    {
+      "name": "unknown teardown retains old/candidate tombstones, revokes execution and forbids replay",
+      "status": "PASS"
+    },
+    {
+      "name": "stale generations cannot be registered or operate, unknown old generation remains blocker",
+      "status": "PASS"
+    },
+    {
+      "name": "destroyed candidates refused before any lease publication",
+      "status": "PASS"
+    },
+    {
+      "name": "membership callback reentry latches and does not consume transition capacity",
+      "status": "PASS"
+    },
+    {
+      "name": "counter exhaustion is pre-effect, and cannot wrap into replay authority",
+      "status": "PASS"
+    },
+    {
+      "name": "prepared native capacity exhaustion precedes source write",
+      "status": "PASS"
+    },
+    {
+      "name": "parallel pending defaults refuse without creating duplicate owner default",
+      "status": "PASS"
+    },
+    {
+      "name": "unobserved assets preserve fast path during an owned transaction",
+      "status": "PASS"
+    },
+    {
+      "name": "cross-owner duplicate native identity is rejected before effects",
+      "status": "PASS"
+    },
+    {
+      "name": "faulted owner can confirm teardown but cannot execute or be silently replaced",
+      "status": "PASS"
+    },
+    {
+      "name": "cancelling one prepared binding preserves another same-owner reservation",
+      "status": "PASS"
+    },
+    {
+      "name": "retiring last live binding preserves pending same-asset candidate group",
+      "status": "PASS"
+    },
+    {
+      "name": "foreign existing roster reentry from public emit is latched",
+      "status": "PASS"
+    },
+    {
+      "name": "no-change owner commit failure undefined at 0 faults all and cannot replay",
+      "status": "PASS"
+    },
+    {
+      "name": "no-change owner commit failure undefined at 1 faults all and cannot replay",
+      "status": "PASS"
+    },
+    {
+      "name": "no-change owner commit failure null at 0 faults all and cannot replay",
+      "status": "PASS"
+    },
+    {
+      "name": "no-change owner commit failure null at 1 faults all and cannot replay",
+      "status": "PASS"
+    },
+    {
+      "name": "no-change owner commit failure 0 at 0 faults all and cannot replay",
+      "status": "PASS"
+    },
+    {
+      "name": "no-change owner commit failure 0 at 1 faults all and cannot replay",
+      "status": "PASS"
+    },
+    {
+      "name": "no-change owner commit failure false at 0 faults all and cannot replay",
+      "status": "PASS"
+    },
+    {
+      "name": "no-change owner commit failure false at 1 faults all and cannot replay",
+      "status": "PASS"
+    },
+    {
+      "name": "no-change owner commit failure  at 0 faults all and cannot replay",
+      "status": "PASS"
+    },
+    {
+      "name": "no-change owner commit failure  at 1 faults all and cannot replay",
+      "status": "PASS"
+    },
+    {
+      "name": "no-change commit returned after caught reentry stays a returned fact then faults",
+      "status": "PASS"
+    },
+    {
+      "name": "no-change failure during actual read before owner commit does not invent an effect",
+      "status": "PASS"
+    }
+  ]
+}

@@ -1,0 +1,238 @@
+[
+  {
+    "path": "ai/plans/box3d-v1.2-reference.md",
+    "sha256": "17b4dcf0d8acbe0ed72f81ab4d3fc53c6a51f705d573699f0d50137e4bf00c46",
+    "totalLinesRead": 1178,
+    "matches": {
+      "explicitOnceOrRetirement": [],
+      "listenerOrDispatch": [
+        {
+          "line": 79,
+          "text": "| 最终选择发生在 `Game.EVENT_PRE_SUBSYSTEM_INIT` | WASM 必须在 `game.init` 前准备好；同步事件监听器内不能临时启动未等待的异步初始化 |"
+        },
+        {
+          "line": 238,
+          "text": "这组扩展不新增场景/物理循环，也不改旧后端API。v1.2默认将target命令的消费点放在现有 `world.step` 内：scene同步完成→调用正式before-step hook→合并本tick命令→上传native→恰好一次 `b3World_Step`。同一handle同tick多次setTarget按命令序号最后一次生效；在事件回调中提交只影响下一tick。target按当前固定dt产生到达速度，不直接调用SetTransform；未提交新target的下一tick归零target速度，不无限沿用上次速度。限速/加速度由EX09控制层在提交target前约束，不能修改被持商品速度来伪造约束。"
+        },
+        {
+          "line": 318,
+          "text": "- 初版为可参与sensor的convex visitor和sensor双方启用必要native sensor事件开关，再按Cocos监听状态分发。contact事件和监听器开关也显式管理；不能依赖默认关闭的flags或只开启sensor一端。[S11]"
+        },
+        {
+          "line": 321,
+          "text": "- step 后先复制有效事件、接触点和必要身份，再进入业务回调；任何回调触发的销毁、重建、过滤变化均排到安全点。"
+        },
+        {
+          "line": 514,
+          "text": "| `B3-U02` | M2：真实最小body/shape的安全队列、重复dispose、app关闭守卫；不冒充事件回调销毁测试 |"
+        },
+        {
+          "line": 523,
+          "text": "| `WASM-12-BINDING` / `WASM-12-EVENTS` / `WASM-12-MT` | 分别M1缓冲快照/重入防护、M3公共事件回调、M6线程安全 |"
+        },
+        {
+          "line": 536,
+          "text": "| `B3-C11-TARGET-TICK-EVENTS` / `B3-C11-TARGET-LIFETIME-FULL` | M3：T15事件回调目标提交；T16复杂场景、persist与代际复用，分别随公共事件及I05/I06-FULL验收 |"
+        },
+        {
+          "line": 948,
+          "text": "记录 `commandUpload`、`coreStepWall`、`eventReadAndDispatch`、`transformSync`、`physicsTotal`、`frameWorkTotal`，并记录 awake/total bodies、contacts、joints、query次数、WASM容量、live native bytes、JS分配/GC观察。"
+        }
+      ],
+      "sourceEventBoundary": [
+        {
+          "line": 304,
+          "text": "### 6.5 查询、过滤与事件"
+        },
+        {
+          "line": 320,
+          "text": "- 完整实现IContactEquation的local/world point/normal与isBodyA。native `anchorA/B` 是相对各COM的世界向量，重建 `worldPointA=worldCOM_A+anchorA`，再用body origin与逆旋转求localPoint；B同理。**anchor、COM、origin和rotation必须属于同一接触快照时刻。** 固定core先生成manifold再积分姿态，GetData返回缓存manifold，不能据此假定所有复用/CCD路径的anchor都属于同一时刻。v1.2推荐先采集step前后native COM/origin/rotation，由T07用真实低层旋转/偏心/复用/CCD fixture确定各路径anchor的有效基准，并把已验证的采样规则写入binding契约；必要时保存接触生成时的native姿态。默认禁止拿回调时步后Node姿态直接混算缓存anchor，也不声称缓存点是步后重新求交的精确点。T15仅使用T07已证明一致的快照规则；某路径无法确定基准则该接触子例BLOCKED，不猜测补偿或把所有路径强行归为步前。normal按native A/B与self/other关系转换，local/world getter基于同一快照；双方监听方向一致。C21-SNAPSHOT覆盖非零角速度、偏心COM和双方读取，快照复制后不因下一tick/销毁改变；不能直接把anchor当localPoint或长期引用失效native contact。[S24][S37]"
+        },
+        {
+          "line": 444,
+          "text": "| T15 | contact/sensor批量事件、同一时刻接触快照、瞬时sensor命中、pair归并/过滤/重建/回调延迟修改 | T12、T13 | C21–C25含C21-SNAPSHOT/C22-SENSOR-TRANSIENT、C11-TARGET-TICK-EVENTS；WASM-12-EVENTS；重用ID不串对象 |"
+        },
+        {
+          "line": 445,
+          "text": "| T16 | raycast、三类sweep、overlap、CCD，以及M3完整生命周期集成 | T13–T15 | C01-EVENTS/C13-QUERY/C16-QUERY/C17-QUERY/C20-APP/C26–C28/C33/C34、I05-FULL/I06-FULL、C11-TARGET-LIFETIME-FULL；C19/C24回归；WASM-11-ASSETS |"
+        },
+        {
+          "line": 472,
+          "text": "| T26 | 同版本recording/replay、输入日志、状态hash、环境拒绝、独立ST诊断实例 | T07、T12、T15及ST-HOST检查点 | A08–A10、WASM-14-REPLAY；EX08；不宣称rollback |"
+        },
+        {
+          "line": 536,
+          "text": "| `B3-C11-TARGET-TICK-EVENTS` / `B3-C11-TARGET-LIFETIME-FULL` | M3：T15事件回调目标提交；T16复杂场景、persist与代际复用，分别随公共事件及I05/I06-FULL验收 |"
+        },
+        {
+          "line": 537,
+          "text": "| `B3-C21-SNAPSHOT` / `B3-C22-SENSOR-TRANSIENT` / `B3-C28-SENSOR-CCD` | M3：非零角速度同一时刻接触点、瞬时trigger生命周期、受限sensor连续检测路径/负例 |"
+        },
+        {
+          "line": 648,
+          "text": "| B3-C11-TARGET-TICK-EVENTS | T15：真实公共event回调提交目标，包含同回调多次提交 | 回调只影响下一tick，最后序号生效；本tick事件快照不被反向改写 |"
+        },
+        {
+          "line": 674,
+          "text": "| B3-C21 | 自然接触120tick后离开；睡眠/双边监听；SNAPSHOT另加非零角速度和偏心COM | 1 enter/逐有效tick stay/1 exit；local/world point/normal基于同一接触快照时刻，双边方向/isBodyA正确；下一tick/销毁不改已复制快照 |"
+        },
+        {
+          "line": 675,
+          "text": "| B3-C22 | 匀速物体进入厚trigger、保持、离开；另用SENSOR-TRANSIENT一次穿过薄sensor | 生命周期精确；保留native连续命中的瞬时enter/exit，无伪stay；sensor不反弹；无外力速度误差≤1e-3；质量符合策略 |"
+        },
+        {
+          "line": 676,
+          "text": "| B3-C23 | 接触中 solid→sensor→solid；另改尺寸但不改类型 | 旧通道结束后新通道进入；无双通道；同类型重建不凭 ID 变化制造重复 enter；速度/总质量按契约保持 |"
+        },
+        {
+          "line": 677,
+          "text": "| B3-C24 | enter 回调销毁自己/对方、重建 collider，并快速创建对象复用索引 | 安全点执行；无悬空访问；旧 end 不落入新对象；无失效 stay/exit |"
+        },
+        {
+          "line": 678,
+          "text": "| B3-C25 | group/mask 允许矩阵，bit31、-1、0；接触中更新 filter | 允许/拒绝精确；无符号映射正确；pair 结束/进入符合新规则；若开放64位扩展，额外测 bit40 |"
+        }
+      ]
+    }
+  },
+  {
+    "path": "docs/physics/box3d/contracts/unified-owner-lifecycle-decisions-v1.md",
+    "sha256": "6225da8e8889680609dd428f936884f72be79dee21ad2bf108324263d5231c5b",
+    "totalLinesRead": 49,
+    "matches": {
+      "explicitOnceOrRetirement": [],
+      "listenerOrDispatch": [
+        {
+          "line": 21,
+          "text": "A successful tick alone decrements the accumulator and advances the substep count. A failed or refused tick does not pretend that a simulation interval completed. AFTER_PHYSICS retains its original normal-return behavior, including a nonthrowing pause in BEFORE_PHYSICS; a thrown callback still propagates through the original error path. Pausing during collection, solver, writeback or dispatch is an early reentrant refusal, not a partial pause."
+        },
+        {
+          "line": 39,
+          "text": "Native coefficient input and actual PhysicsMaterial identity are separate facts. Only a successful original Collider/System cache-and-listener operation may commit the corresponding actual asset identity to the private owner roster. A cloning getter must notify its real returned clone without reading Collider.material as an ownership-discovery shortcut."
+        },
+        {
+          "line": 41,
+          "text": "The owner barrier opens before any before/candidate reader, clone allocation, listener operation or native delegate. Internal native delegation requires one private exact-operation authority, never a temporary unregistration or phase reset to idle. All affected owners are preflighted before effects. Observer tickets report delegate entry/return, cache writes and listener progress as JavaScript facts, not inferred native atomicity."
+        },
+        {
+          "line": 43,
+          "text": "Native success followed by JS listener/cache/readback failure faults the affected owner and retains committed facts. Unknown native mutation stays unknown. Retain old, candidate and actually observed identity references separately for cleanup; do not claim rollback from a candidate value or restored coefficient alone. A failure with undefined, null or zero is still a real primary failure. Shared-asset propagation and protected subscription integrity remain a later explicit boundary, not implied by clone notification."
+        },
+        {
+          "line": 49,
+          "text": "Required controls include disabled manual step refusal before native calls, manual autoSimulation mode with no queue clearing, BEFORE_PHYSICS pause with preserved backlog, caught reentrant pause with no cache change, failure between prepared commits, clone allocation/listener failures, same-object and equal-id distinct-material cases, shared ownership and native-success/JS-failure cleanup. No design document, pure observer test or Node HEADLESS run changes the 2,128 formal required cells from NOT_RUN."
+        }
+      ],
+      "sourceEventBoundary": []
+    }
+  },
+  {
+    "path": "docs/physics/box3d/contracts/unified-mutation-fence-v1.md",
+    "sha256": "22df7ace85ada59cd51610f4e3300a09de8acc97fffa0b99b4059ac767f04e18",
+    "totalLinesRead": 23,
+    "matches": {
+      "explicitOnceOrRetirement": [],
+      "listenerOrDispatch": [
+        {
+          "line": 9,
+          "text": "During any active Box3D collection, final validation, command commit, or event-dispatch transaction, all calls to the original Node.addComponent in that Cocos realm reject at entry, before class-name resolution, user constructor properties, dependency recursion or constructor execution. This includes orphan and unrelated Nodes, UI/2D components, subclasses and user components. The compatibility restriction is deliberate and bounded to these transactions. It does not claim a physics-class-only filter. Outside such transactions, with no lease, original component construction behavior remains."
+        },
+        {
+          "line": 23,
+          "text": "Import and exercise the actual engine entry points, not copied setter bodies. Verify unchanged cache/flags/arrays/material identity/listener bindings/accumulator and zero native or lifecycle callback effects at refusal. Include a protected later child, two owners sharing material, orphan/UI/2D component creation, constructor and requirement getter sentinels, and no-lease original behavior. Then qualify the actual World callback/validation/commit/release path against fresh schema-matched WASM. Until then no formal required cell is PASS."
+        }
+      ],
+      "sourceEventBoundary": []
+    }
+  },
+  {
+    "path": "docs/physics/box3d/contracts/unified-admission-fence-v1.md",
+    "sha256": "643ba65c50dcb05acb13c89d46455ac613cb8a92ce777e796db7e0b5d3cb2c91",
+    "totalLinesRead": 33,
+    "matches": {
+      "explicitOnceOrRetirement": [
+        {
+          "line": 27,
+          "text": "Do not temporarily release a target transform lease to make writeback succeed. Compose distinct owner-held exact grants for the transaction lease and every target lease covering the written Node; invoke the actual setter once at the innermost grant. All grants must refer to the same copied expected value and be consumed before listener callbacks. Preserve post-setter expected local TRS, world pose, ancestor basis, and final whole-batch verification. Foreign ownership remains a refusal."
+        }
+      ],
+      "listenerOrDispatch": [
+        {
+          "line": 27,
+          "text": "Do not temporarily release a target transform lease to make writeback succeed. Compose distinct owner-held exact grants for the transaction lease and every target lease covering the written Node; invoke the actual setter once at the innermost grant. All grants must refer to the same copied expected value and be consumed before listener callbacks. Preserve post-setter expected local TRS, world pose, ancestor basis, and final whole-batch verification. Foreign ownership remains a refusal."
+        },
+        {
+          "line": 33,
+          "text": "Use actual World ownership, real engine entry points and current-schema WASM. Exercise ready argument getters, caught rejected commands, committed reads, nested stepping, later-child destruction, shared material owners, raw-alias/cache-flush attacks, success and failure cleanup, and target grant composition. Check cache/flags/listeners/constructors/native-call counters before and after refusal. Preserve exact inputs and original failed runs. Source controls, synthetic binding failures and finite Node WASM contracts must remain separately labeled; none change the 2128 formal cells from NOT_RUN."
+        }
+      ],
+      "sourceEventBoundary": []
+    }
+  },
+  {
+    "path": "docs/physics/box3d/contracts/unified-command-decisions-v1.md",
+    "sha256": "56303d162e12346729c66461c1fa9976e69c941fb549804c7a110d1887c695d6",
+    "totalLinesRead": 148,
+    "matches": {
+      "explicitOnceOrRetirement": [
+        {
+          "line": 56,
+          "text": "All accepted user submissions have a strictly increasing safe-integer sequence within the current world generation. Queue retention stores original accepted records; target reduction is a non-destructive view until commit/cancellation. Superseded target records can therefore still be counted as accepted-but-unconsumed entries. Gaps after cancelled/failed attempts are legal; sequence reuse/wrap is not. Ordinary impulses are consumed once, including catch-up ticks. `tickIndex` denotes the next completed logical tick and does not advance on refusal; `attemptId` is a separate diagnostic-only counter, never a simulation tick or command consumption identity."
+        },
+        {
+          "line": 58,
+          "text": "Hooks and continuous handles share one stable registration order. At each candidate tick, snapshot the enabled roster and descriptor copies once. Pre-tick accepted commands precede producer contributions. Each continuous producer contributes force first, then torque, at its roster position; exact-zero components generate no command and do not wake a body. A nonzero force with an offset includes its induced torque; an explicit descriptor torque is a separate later operation. No producer runs during scene-sync-only calls or merely because a render frame elapsed."
+        },
+        {
+          "line": 72,
+          "text": "It removes every accepted, unconsumed **user** entry for that body: force/torque/linear or angular impulse, teleport, target set/target clear, and ordinary clear-force/clear-velocity/clear-state. It does not remove internal scene synchronization, automatic target idle-zero, or lifecycle-required paired-zero obligations. Count one removed accepted record per original submission, including retained superseded target records; do not count vector axes, projected native calls, already retired entries or protected cleanup. Return zero when none exist."
+        },
+        {
+          "line": 76,
+          "text": "Cancelling a target set/clear leaves the active target handle owned; with no explicit surviving intent, its next executable tick still clears paired velocity. Cancelling a teleport does not resurrect previously **retired** intent; because this operation removes all of this body's pending user entries, no older pending target is revived either. A later setTarget/teleport is a new sequence."
+        },
+        {
+          "line": 93,
+          "text": "6. Protected dispose/revoke zero dominates ordinary user intent and cannot be overwritten by a later target. Once dispose is requested, new setTarget/clear/teleport for that body rejects until the protected cleanup settles and ownership is released. A later explicit teleport after release uses ordinary admission."
+        },
+        {
+          "line": 102,
+          "text": "- `teleport R → target B`: R executes once, B plans from R's origin/COM/inertia. Target does not subsequently SetTransform to correct arrival."
+        },
+        {
+          "line": 106,
+          "text": "Queued user records and all reduction decisions retire only after a known whole-batch commit or explicit cancellation. A pure rejected reset or later command cannot destructively cancel an earlier accepted target. No command is replayed after committed/unknown failure."
+        },
+        {
+          "line": 125,
+          "text": "- Native status zero then copy/readback failure: committed; retire candidate, invalidate/fault, never replay or advance step to conceal the failure."
+        },
+        {
+          "line": 148,
+          "text": "Original plan anchors: [v1.2](../../../../ai/plans/box3d-v1.2-reference.md) lines 229–240 (public motion), 248–256 (time/one-shot/hook/continuous/ConstantForce), 263–267 (origin/COM/offsets), 350–362 (ownership), 435 (T11), 606–618 (budgets), 629–635 and 646–652 (required tests). No full T11/G1, browser, ASan/LSan or application lifecycle completion follows from adopting this source contract."
+        }
+      ],
+      "listenerOrDispatch": [
+        {
+          "line": 50,
+          "text": "Create/update/enable are configuration operations outside a callback/step/event-dispatch transaction and require an unpaused ready world. Disable/dispose may also run while paused for cleanup, but not reentrantly during a transaction. Application teardown uses its internal cleanup path, not these admission restrictions to skip cleanup."
+        },
+        {
+          "line": 70,
+          "text": "`cancelPendingBox3DCommands(body): number` is a pure queue operation allowed only in the **unpaused ready configuration phase**, not in a hook, step, event-dispatch transaction, faulted state or teardown. It validates the current initialized body/world/full-generation ownership, but does not require valid mass geometry, pose, or command arithmetic. A pending-invalid body or arithmetic-overflow queue must remain cancellable. Disabled/static bodies with still-valid ownership may return zero; stale/destroyed objects reject and their owning teardown already clears their entries."
+        }
+      ],
+      "sourceEventBoundary": []
+    }
+  },
+  {
+    "path": "docs/physics/box3d/contracts/api-contract.json",
+    "sha256": "0e53683159e025ecdf07ae495abcf54e902529b51c6938ce3717fab4dd6e7fc9",
+    "totalLinesRead": 91,
+    "matches": {
+      "explicitOnceOrRetirement": [],
+      "listenerOrDispatch": [],
+      "sourceEventBoundary": []
+    }
+  }
+]

@@ -1,0 +1,3670 @@
+{
+  "schema": "material-value-entry-controls/1",
+  "scope": "Actual asset entry and guard source; frozen S1; simulated Asset/EventTarget and owner/native callbacks; not actual World/WASM",
+  "node": "v24.19.0",
+  "typescript": "4.9.5",
+  "passed": 186,
+  "failed": 0,
+  "total": 186,
+  "sources": [
+    {
+      "role": "original",
+      "path": "inputs/product/src/cocos/physics/framework/assets/physics-material.ts",
+      "sha256": "9a780692684a65892315012879f8f597cba6bd8d22be14792d7b779a1d57bd80"
+    },
+    {
+      "role": "candidate",
+      "path": "src/cocos/physics/framework/assets/physics-material.ts",
+      "sha256": "47a2e4d244bab6933f8d0a65a2fdc6978a5764e8081df4b21d0b97aac83872da"
+    },
+    {
+      "role": "bridge",
+      "path": "src/cocos/physics/framework/physics-material-values.ts",
+      "sha256": "435b47e6faaa861c1d584fcc3603a64735052daa2595cf3da12e3fa602305b66"
+    },
+    {
+      "role": "primitive",
+      "path": "inputs/s1/physics-material-values-transaction.ts",
+      "sha256": "fb1be9f19ab526e8b1c0785446a387324b4d51930b90d7bfb105127fe8255b06"
+    },
+    {
+      "role": "guard",
+      "path": "inputs/product/src/cocos/core/data/mutation-guard.ts",
+      "sha256": "93758e4b5a90ff90e5cabc7d3b0b5fd71069e955d4bf64517bec27d1957774a0"
+    },
+    {
+      "role": "math",
+      "path": "inputs/product/src/cocos/core/math/utils.ts",
+      "sha256": "9d3323a9fe1c911a7df9301f3f2c62c5df511df15a773e337e4fd74e9c303e37"
+    }
+  ],
+  "results": [
+    {
+      "name": "unowned.original-trace.friction.0",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "friction"
+          ]
+        ]
+      },
+      "elapsedMs": 6.376981
+    },
+    {
+      "name": "unowned.original-trace.friction.1",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "friction"
+          ],
+          [
+            "write",
+            "friction",
+            "0"
+          ],
+          [
+            "emit",
+            "event_update"
+          ]
+        ]
+      },
+      "elapsedMs": 1.676318
+    },
+    {
+      "name": "unowned.original-trace.friction.2",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "friction"
+          ]
+        ]
+      },
+      "elapsedMs": 0.682447
+    },
+    {
+      "name": "unowned.original-trace.friction.3",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "friction"
+          ],
+          [
+            "write",
+            "friction",
+            "0.600002"
+          ],
+          [
+            "emit",
+            "event_update"
+          ]
+        ]
+      },
+      "elapsedMs": 0.602638
+    },
+    {
+      "name": "unowned.original-trace.friction.4",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "friction"
+          ],
+          [
+            "write",
+            "friction",
+            "-0"
+          ],
+          [
+            "emit",
+            "event_update"
+          ]
+        ]
+      },
+      "elapsedMs": 0.658881
+    },
+    {
+      "name": "unowned.original-trace.friction.5",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "friction"
+          ],
+          [
+            "write",
+            "friction",
+            "-1"
+          ],
+          [
+            "emit",
+            "event_update"
+          ]
+        ]
+      },
+      "elapsedMs": 0.498751
+    },
+    {
+      "name": "unowned.original-trace.friction.6",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "friction"
+          ],
+          [
+            "write",
+            "friction",
+            "NaN"
+          ],
+          [
+            "emit",
+            "event_update"
+          ]
+        ]
+      },
+      "elapsedMs": 0.624853
+    },
+    {
+      "name": "unowned.original-trace.friction.7",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "friction"
+          ]
+        ]
+      },
+      "elapsedMs": 0.432665
+    },
+    {
+      "name": "unowned.original-trace.friction.8",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "friction"
+          ],
+          [
+            "write",
+            "friction",
+            "string:0.8"
+          ],
+          [
+            "emit",
+            "event_update"
+          ]
+        ]
+      },
+      "elapsedMs": 0.586938
+    },
+    {
+      "name": "unowned.original-trace.friction.9",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "friction"
+          ],
+          [
+            "write",
+            "friction",
+            "object:null"
+          ],
+          [
+            "emit",
+            "event_update"
+          ]
+        ]
+      },
+      "elapsedMs": 0.596219
+    },
+    {
+      "name": "unowned.original-trace.friction.10",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "friction"
+          ],
+          [
+            "write",
+            "friction",
+            "undefined"
+          ],
+          [
+            "emit",
+            "event_update"
+          ]
+        ]
+      },
+      "elapsedMs": 0.601416
+    },
+    {
+      "name": "unowned.original-trace.friction.11",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "friction"
+          ]
+        ]
+      },
+      "elapsedMs": 0.505617
+    },
+    {
+      "name": "unowned.original-trace.restitution.0",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "restitution"
+          ],
+          [
+            "write",
+            "restitution",
+            "0.6"
+          ],
+          [
+            "emit",
+            "event_update"
+          ]
+        ]
+      },
+      "elapsedMs": 1.155624
+    },
+    {
+      "name": "unowned.original-trace.restitution.1",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "restitution"
+          ]
+        ]
+      },
+      "elapsedMs": 1.21223
+    },
+    {
+      "name": "unowned.original-trace.restitution.2",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "restitution"
+          ],
+          [
+            "write",
+            "restitution",
+            "0.6000005"
+          ],
+          [
+            "emit",
+            "event_update"
+          ]
+        ]
+      },
+      "elapsedMs": 0.524209
+    },
+    {
+      "name": "unowned.original-trace.restitution.3",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "restitution"
+          ],
+          [
+            "write",
+            "restitution",
+            "0.600002"
+          ],
+          [
+            "emit",
+            "event_update"
+          ]
+        ]
+      },
+      "elapsedMs": 0.430069
+    },
+    {
+      "name": "unowned.original-trace.restitution.4",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "restitution"
+          ]
+        ]
+      },
+      "elapsedMs": 0.41009
+    },
+    {
+      "name": "unowned.original-trace.restitution.5",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "restitution"
+          ],
+          [
+            "write",
+            "restitution",
+            "-1"
+          ],
+          [
+            "emit",
+            "event_update"
+          ]
+        ]
+      },
+      "elapsedMs": 0.936735
+    },
+    {
+      "name": "unowned.original-trace.restitution.6",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "restitution"
+          ],
+          [
+            "write",
+            "restitution",
+            "NaN"
+          ],
+          [
+            "emit",
+            "event_update"
+          ]
+        ]
+      },
+      "elapsedMs": 0.669542
+    },
+    {
+      "name": "unowned.original-trace.restitution.7",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "restitution"
+          ]
+        ]
+      },
+      "elapsedMs": 0.71326
+    },
+    {
+      "name": "unowned.original-trace.restitution.8",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "restitution"
+          ],
+          [
+            "write",
+            "restitution",
+            "string:0.8"
+          ],
+          [
+            "emit",
+            "event_update"
+          ]
+        ]
+      },
+      "elapsedMs": 0.830011
+    },
+    {
+      "name": "unowned.original-trace.restitution.9",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "restitution"
+          ]
+        ]
+      },
+      "elapsedMs": 0.807148
+    },
+    {
+      "name": "unowned.original-trace.restitution.10",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "restitution"
+          ],
+          [
+            "write",
+            "restitution",
+            "undefined"
+          ],
+          [
+            "emit",
+            "event_update"
+          ]
+        ]
+      },
+      "elapsedMs": 0.658409
+    },
+    {
+      "name": "unowned.original-trace.restitution.11",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "restitution"
+          ]
+        ]
+      },
+      "elapsedMs": 0.497384
+    },
+    {
+      "name": "unowned.original-trace.rollingFriction.0",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "rollingFriction"
+          ],
+          [
+            "write",
+            "rollingFriction",
+            "0.6"
+          ],
+          [
+            "emit",
+            "event_update"
+          ]
+        ]
+      },
+      "elapsedMs": 0.617409
+    },
+    {
+      "name": "unowned.original-trace.rollingFriction.1",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "rollingFriction"
+          ]
+        ]
+      },
+      "elapsedMs": 0.46268
+    },
+    {
+      "name": "unowned.original-trace.rollingFriction.2",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "rollingFriction"
+          ],
+          [
+            "write",
+            "rollingFriction",
+            "0.6000005"
+          ],
+          [
+            "emit",
+            "event_update"
+          ]
+        ]
+      },
+      "elapsedMs": 3.580242
+    },
+    {
+      "name": "unowned.original-trace.rollingFriction.3",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "rollingFriction"
+          ],
+          [
+            "write",
+            "rollingFriction",
+            "0.600002"
+          ],
+          [
+            "emit",
+            "event_update"
+          ]
+        ]
+      },
+      "elapsedMs": 0.62017
+    },
+    {
+      "name": "unowned.original-trace.rollingFriction.4",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "rollingFriction"
+          ]
+        ]
+      },
+      "elapsedMs": 0.545313
+    },
+    {
+      "name": "unowned.original-trace.rollingFriction.5",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "rollingFriction"
+          ],
+          [
+            "write",
+            "rollingFriction",
+            "-1"
+          ],
+          [
+            "emit",
+            "event_update"
+          ]
+        ]
+      },
+      "elapsedMs": 0.767511
+    },
+    {
+      "name": "unowned.original-trace.rollingFriction.6",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "rollingFriction"
+          ],
+          [
+            "write",
+            "rollingFriction",
+            "NaN"
+          ],
+          [
+            "emit",
+            "event_update"
+          ]
+        ]
+      },
+      "elapsedMs": 0.543339
+    },
+    {
+      "name": "unowned.original-trace.rollingFriction.7",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "rollingFriction"
+          ]
+        ]
+      },
+      "elapsedMs": 0.748313
+    },
+    {
+      "name": "unowned.original-trace.rollingFriction.8",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "rollingFriction"
+          ],
+          [
+            "write",
+            "rollingFriction",
+            "string:0.8"
+          ],
+          [
+            "emit",
+            "event_update"
+          ]
+        ]
+      },
+      "elapsedMs": 0.624539
+    },
+    {
+      "name": "unowned.original-trace.rollingFriction.9",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "rollingFriction"
+          ]
+        ]
+      },
+      "elapsedMs": 0.416353
+    },
+    {
+      "name": "unowned.original-trace.rollingFriction.10",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "rollingFriction"
+          ],
+          [
+            "write",
+            "rollingFriction",
+            "undefined"
+          ],
+          [
+            "emit",
+            "event_update"
+          ]
+        ]
+      },
+      "elapsedMs": 0.390854
+    },
+    {
+      "name": "unowned.original-trace.rollingFriction.11",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "rollingFriction"
+          ]
+        ]
+      },
+      "elapsedMs": 0.517394
+    },
+    {
+      "name": "unowned.original-trace.spinningFriction.0",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "spinningFriction"
+          ],
+          [
+            "write",
+            "spinningFriction",
+            "0.6"
+          ],
+          [
+            "emit",
+            "event_update"
+          ]
+        ]
+      },
+      "elapsedMs": 0.681019
+    },
+    {
+      "name": "unowned.original-trace.spinningFriction.1",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "spinningFriction"
+          ]
+        ]
+      },
+      "elapsedMs": 0.510514
+    },
+    {
+      "name": "unowned.original-trace.spinningFriction.2",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "spinningFriction"
+          ],
+          [
+            "write",
+            "spinningFriction",
+            "0.6000005"
+          ],
+          [
+            "emit",
+            "event_update"
+          ]
+        ]
+      },
+      "elapsedMs": 0.697155
+    },
+    {
+      "name": "unowned.original-trace.spinningFriction.3",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "spinningFriction"
+          ],
+          [
+            "write",
+            "spinningFriction",
+            "0.600002"
+          ],
+          [
+            "emit",
+            "event_update"
+          ]
+        ]
+      },
+      "elapsedMs": 0.8917
+    },
+    {
+      "name": "unowned.original-trace.spinningFriction.4",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "spinningFriction"
+          ]
+        ]
+      },
+      "elapsedMs": 0.396879
+    },
+    {
+      "name": "unowned.original-trace.spinningFriction.5",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "spinningFriction"
+          ],
+          [
+            "write",
+            "spinningFriction",
+            "-1"
+          ],
+          [
+            "emit",
+            "event_update"
+          ]
+        ]
+      },
+      "elapsedMs": 0.423144
+    },
+    {
+      "name": "unowned.original-trace.spinningFriction.6",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "spinningFriction"
+          ],
+          [
+            "write",
+            "spinningFriction",
+            "NaN"
+          ],
+          [
+            "emit",
+            "event_update"
+          ]
+        ]
+      },
+      "elapsedMs": 0.446965
+    },
+    {
+      "name": "unowned.original-trace.spinningFriction.7",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "spinningFriction"
+          ]
+        ]
+      },
+      "elapsedMs": 0.375485
+    },
+    {
+      "name": "unowned.original-trace.spinningFriction.8",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "spinningFriction"
+          ],
+          [
+            "write",
+            "spinningFriction",
+            "string:0.8"
+          ],
+          [
+            "emit",
+            "event_update"
+          ]
+        ]
+      },
+      "elapsedMs": 0.730895
+    },
+    {
+      "name": "unowned.original-trace.spinningFriction.9",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "spinningFriction"
+          ]
+        ]
+      },
+      "elapsedMs": 0.870575
+    },
+    {
+      "name": "unowned.original-trace.spinningFriction.10",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "spinningFriction"
+          ],
+          [
+            "write",
+            "spinningFriction",
+            "undefined"
+          ],
+          [
+            "emit",
+            "event_update"
+          ]
+        ]
+      },
+      "elapsedMs": 0.675369
+    },
+    {
+      "name": "unowned.original-trace.spinningFriction.11",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "spinningFriction"
+          ]
+        ]
+      },
+      "elapsedMs": 0.424446
+    },
+    {
+      "name": "unowned.original-trace.setValues.0",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "friction"
+          ],
+          [
+            "read",
+            "rollingFriction"
+          ],
+          [
+            "read",
+            "spinningFriction"
+          ],
+          [
+            "read",
+            "restitution"
+          ],
+          [
+            "write",
+            "friction",
+            "0.6"
+          ],
+          [
+            "write",
+            "rollingFriction",
+            "0"
+          ],
+          [
+            "write",
+            "spinningFriction",
+            "0"
+          ],
+          [
+            "write",
+            "restitution",
+            "0"
+          ]
+        ]
+      },
+      "elapsedMs": 0.924338
+    },
+    {
+      "name": "unowned.original-trace.setValues.1",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "friction"
+          ],
+          [
+            "write",
+            "friction",
+            "0.7"
+          ],
+          [
+            "write",
+            "rollingFriction",
+            "0.3"
+          ],
+          [
+            "write",
+            "spinningFriction",
+            "0.4"
+          ],
+          [
+            "write",
+            "restitution",
+            "0.2"
+          ],
+          [
+            "emit",
+            "event_update"
+          ]
+        ]
+      },
+      "elapsedMs": 0.833993
+    },
+    {
+      "name": "unowned.original-trace.setValues.2",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "friction"
+          ],
+          [
+            "write",
+            "friction",
+            "NaN"
+          ],
+          [
+            "write",
+            "rollingFriction",
+            "0"
+          ],
+          [
+            "write",
+            "spinningFriction",
+            "0"
+          ],
+          [
+            "write",
+            "restitution",
+            "Infinity"
+          ],
+          [
+            "emit",
+            "event_update"
+          ]
+        ]
+      },
+      "elapsedMs": 0.444812
+    },
+    {
+      "name": "unowned.original-trace.setValues.3",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "friction"
+          ],
+          [
+            "write",
+            "friction",
+            "-0"
+          ],
+          [
+            "write",
+            "rollingFriction",
+            "-0"
+          ],
+          [
+            "write",
+            "spinningFriction",
+            "-0"
+          ],
+          [
+            "write",
+            "restitution",
+            "-0"
+          ],
+          [
+            "emit",
+            "event_update"
+          ]
+        ]
+      },
+      "elapsedMs": 0.731034
+    },
+    {
+      "name": "unowned.original-trace.setValues.4",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "friction"
+          ],
+          [
+            "write",
+            "friction",
+            "object:null"
+          ],
+          [
+            "write",
+            "rollingFriction",
+            "undefined"
+          ],
+          [
+            "write",
+            "spinningFriction",
+            "string:x"
+          ],
+          [
+            "write",
+            "restitution",
+            "boolean:false"
+          ],
+          [
+            "emit",
+            "event_update"
+          ]
+        ]
+      },
+      "elapsedMs": 0.391532
+    },
+    {
+      "name": "unowned.coercion-trace.friction",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "friction"
+          ],
+          [
+            "coerce",
+            1
+          ],
+          [
+            "coerce",
+            2
+          ],
+          [
+            "write",
+            "friction",
+            "object"
+          ],
+          [
+            "emit",
+            "event_update"
+          ]
+        ]
+      },
+      "elapsedMs": 0.64586
+    },
+    {
+      "name": "unowned.coercion-trace.restitution",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "restitution"
+          ],
+          [
+            "coerce",
+            1
+          ],
+          [
+            "coerce",
+            2
+          ],
+          [
+            "write",
+            "restitution",
+            "object"
+          ],
+          [
+            "emit",
+            "event_update"
+          ]
+        ]
+      },
+      "elapsedMs": 0.462087
+    },
+    {
+      "name": "unowned.coercion-trace.rollingFriction",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "rollingFriction"
+          ],
+          [
+            "coerce",
+            1
+          ],
+          [
+            "coerce",
+            2
+          ],
+          [
+            "write",
+            "rollingFriction",
+            "object"
+          ],
+          [
+            "emit",
+            "event_update"
+          ]
+        ]
+      },
+      "elapsedMs": 0.50333
+    },
+    {
+      "name": "unowned.coercion-trace.spinningFriction",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "spinningFriction"
+          ],
+          [
+            "coerce",
+            1
+          ],
+          [
+            "coerce",
+            2
+          ],
+          [
+            "write",
+            "spinningFriction",
+            "object"
+          ],
+          [
+            "emit",
+            "event_update"
+          ]
+        ]
+      },
+      "elapsedMs": 0.54722
+    },
+    {
+      "name": "unowned.coercion-falsy.undefined",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.680286
+    },
+    {
+      "name": "unowned.coercion-falsy.object:null",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.552048
+    },
+    {
+      "name": "unowned.coercion-falsy.boolean:false",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.474798
+    },
+    {
+      "name": "unowned.coercion-falsy.0",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.670546
+    },
+    {
+      "name": "unowned.coercion-falsy.string:",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.454187
+    },
+    {
+      "name": "mutation-guard-first.friction",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 1.956794
+    },
+    {
+      "name": "mutation-guard-first.restitution",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.511535
+    },
+    {
+      "name": "mutation-guard-first.rollingFriction",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.334393
+    },
+    {
+      "name": "mutation-guard-first.spinningFriction",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.900052
+    },
+    {
+      "name": "mutation-guard-first.setValues",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.704717
+    },
+    {
+      "name": "owned.entry.friction",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "open"
+          ],
+          [
+            "read",
+            "friction"
+          ],
+          [
+            "read",
+            "restitution"
+          ],
+          [
+            "read",
+            "rollingFriction"
+          ],
+          [
+            "read",
+            "spinningFriction"
+          ],
+          [
+            "prepare"
+          ],
+          [
+            "write",
+            "friction",
+            "0.8"
+          ],
+          [
+            "native"
+          ],
+          [
+            "verify"
+          ],
+          [
+            "owner.cache"
+          ],
+          [
+            "emit",
+            "event_update"
+          ],
+          [
+            "read",
+            "friction"
+          ],
+          [
+            "read",
+            "restitution"
+          ],
+          [
+            "read",
+            "rollingFriction"
+          ],
+          [
+            "read",
+            "spinningFriction"
+          ],
+          [
+            "commit"
+          ],
+          [
+            "dispose"
+          ]
+        ],
+        "copied": {
+          "before": [
+            0.6,
+            0,
+            0,
+            0
+          ],
+          "candidate": [
+            0.8,
+            0,
+            0,
+            0
+          ],
+          "changed": true,
+          "writeOnNoChange": false,
+          "native": [
+            0.800000011920929,
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "elapsedMs": 1.820006
+    },
+    {
+      "name": "owned.entry.restitution",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "open"
+          ],
+          [
+            "read",
+            "friction"
+          ],
+          [
+            "read",
+            "restitution"
+          ],
+          [
+            "read",
+            "rollingFriction"
+          ],
+          [
+            "read",
+            "spinningFriction"
+          ],
+          [
+            "prepare"
+          ],
+          [
+            "write",
+            "restitution",
+            "0.8"
+          ],
+          [
+            "native"
+          ],
+          [
+            "verify"
+          ],
+          [
+            "owner.cache"
+          ],
+          [
+            "emit",
+            "event_update"
+          ],
+          [
+            "read",
+            "friction"
+          ],
+          [
+            "read",
+            "restitution"
+          ],
+          [
+            "read",
+            "rollingFriction"
+          ],
+          [
+            "read",
+            "spinningFriction"
+          ],
+          [
+            "commit"
+          ],
+          [
+            "dispose"
+          ]
+        ],
+        "copied": {
+          "before": [
+            0.6,
+            0,
+            0,
+            0
+          ],
+          "candidate": [
+            0.6,
+            0.8,
+            0,
+            0
+          ],
+          "changed": true,
+          "writeOnNoChange": false,
+          "native": [
+            0.6000000238418579,
+            0.800000011920929,
+            0,
+            0
+          ]
+        }
+      },
+      "elapsedMs": 0.942749
+    },
+    {
+      "name": "owned.entry.rollingFriction",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "open"
+          ],
+          [
+            "read",
+            "friction"
+          ],
+          [
+            "read",
+            "restitution"
+          ],
+          [
+            "read",
+            "rollingFriction"
+          ],
+          [
+            "read",
+            "spinningFriction"
+          ],
+          [
+            "prepare"
+          ],
+          [
+            "read",
+            "friction"
+          ],
+          [
+            "read",
+            "restitution"
+          ],
+          [
+            "read",
+            "rollingFriction"
+          ],
+          [
+            "read",
+            "spinningFriction"
+          ],
+          [
+            "commit"
+          ],
+          [
+            "dispose"
+          ]
+        ],
+        "copied": {
+          "before": [
+            0.6,
+            0,
+            0,
+            0
+          ],
+          "candidate": [
+            0.6,
+            0,
+            0,
+            0
+          ],
+          "changed": false,
+          "writeOnNoChange": false,
+          "native": [
+            0.6000000238418579,
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "elapsedMs": 1.162221
+    },
+    {
+      "name": "owned.entry.spinningFriction",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "open"
+          ],
+          [
+            "read",
+            "friction"
+          ],
+          [
+            "read",
+            "restitution"
+          ],
+          [
+            "read",
+            "rollingFriction"
+          ],
+          [
+            "read",
+            "spinningFriction"
+          ],
+          [
+            "prepare"
+          ],
+          [
+            "read",
+            "friction"
+          ],
+          [
+            "read",
+            "restitution"
+          ],
+          [
+            "read",
+            "rollingFriction"
+          ],
+          [
+            "read",
+            "spinningFriction"
+          ],
+          [
+            "commit"
+          ],
+          [
+            "dispose"
+          ]
+        ],
+        "copied": {
+          "before": [
+            0.6,
+            0,
+            0,
+            0
+          ],
+          "candidate": [
+            0.6,
+            0,
+            0,
+            0
+          ],
+          "changed": false,
+          "writeOnNoChange": false,
+          "native": [
+            0.6000000238418579,
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "elapsedMs": 0.775889
+    },
+    {
+      "name": "owned.entry.setValues",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "open"
+          ],
+          [
+            "read",
+            "friction"
+          ],
+          [
+            "read",
+            "restitution"
+          ],
+          [
+            "read",
+            "rollingFriction"
+          ],
+          [
+            "read",
+            "spinningFriction"
+          ],
+          [
+            "prepare"
+          ],
+          [
+            "write",
+            "friction",
+            "0.8"
+          ],
+          [
+            "write",
+            "rollingFriction",
+            "0"
+          ],
+          [
+            "write",
+            "spinningFriction",
+            "0"
+          ],
+          [
+            "write",
+            "restitution",
+            "0.3"
+          ],
+          [
+            "native"
+          ],
+          [
+            "verify"
+          ],
+          [
+            "owner.cache"
+          ],
+          [
+            "emit",
+            "event_update"
+          ],
+          [
+            "read",
+            "friction"
+          ],
+          [
+            "read",
+            "restitution"
+          ],
+          [
+            "read",
+            "rollingFriction"
+          ],
+          [
+            "read",
+            "spinningFriction"
+          ],
+          [
+            "commit"
+          ],
+          [
+            "dispose"
+          ]
+        ],
+        "copied": {
+          "before": [
+            0.6,
+            0,
+            0,
+            0
+          ],
+          "candidate": [
+            0.8,
+            0.3,
+            0,
+            0
+          ],
+          "changed": true,
+          "writeOnNoChange": true,
+          "native": [
+            0.800000011920929,
+            0.30000001192092896,
+            0,
+            0
+          ]
+        }
+      },
+      "elapsedMs": 0.901281
+    },
+    {
+      "name": "owned.scalar-tolerance.friction",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 1.136834
+    },
+    {
+      "name": "owned.scalar-tolerance.restitution",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.502391
+    },
+    {
+      "name": "owned.scalar-tolerance.rollingFriction",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.465098
+    },
+    {
+      "name": "owned.scalar-tolerance.spinningFriction",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.613612
+    },
+    {
+      "name": "owned.setValues-exact-small-change-and-write-order",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "open"
+          ],
+          [
+            "read",
+            "friction"
+          ],
+          [
+            "read",
+            "restitution"
+          ],
+          [
+            "read",
+            "rollingFriction"
+          ],
+          [
+            "read",
+            "spinningFriction"
+          ],
+          [
+            "prepare"
+          ],
+          [
+            "write",
+            "friction",
+            "0.6000005"
+          ],
+          [
+            "write",
+            "rollingFriction",
+            "0"
+          ],
+          [
+            "write",
+            "spinningFriction",
+            "0"
+          ],
+          [
+            "write",
+            "restitution",
+            "0"
+          ],
+          [
+            "native"
+          ],
+          [
+            "verify"
+          ],
+          [
+            "owner.cache"
+          ],
+          [
+            "emit",
+            "event_update"
+          ],
+          [
+            "read",
+            "friction"
+          ],
+          [
+            "read",
+            "restitution"
+          ],
+          [
+            "read",
+            "rollingFriction"
+          ],
+          [
+            "read",
+            "spinningFriction"
+          ],
+          [
+            "commit"
+          ],
+          [
+            "dispose"
+          ]
+        ]
+      },
+      "elapsedMs": 0.795683
+    },
+    {
+      "name": "owned.setValues-no-change-still-writes-four-and-retains-signed-zero",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "open"
+          ],
+          [
+            "read",
+            "friction"
+          ],
+          [
+            "read",
+            "restitution"
+          ],
+          [
+            "read",
+            "rollingFriction"
+          ],
+          [
+            "read",
+            "spinningFriction"
+          ],
+          [
+            "prepare"
+          ],
+          [
+            "write",
+            "friction",
+            "0.6"
+          ],
+          [
+            "write",
+            "rollingFriction",
+            "-0"
+          ],
+          [
+            "write",
+            "spinningFriction",
+            "-0"
+          ],
+          [
+            "write",
+            "restitution",
+            "-0"
+          ],
+          [
+            "read",
+            "friction"
+          ],
+          [
+            "read",
+            "restitution"
+          ],
+          [
+            "read",
+            "rollingFriction"
+          ],
+          [
+            "read",
+            "spinningFriction"
+          ],
+          [
+            "commit"
+          ],
+          [
+            "dispose"
+          ]
+        ]
+      },
+      "elapsedMs": 0.635557
+    },
+    {
+      "name": "owned.invalid.friction.NaN",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.885896
+    },
+    {
+      "name": "owned.invalid.friction.Infinity",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.426031
+    },
+    {
+      "name": "owned.invalid.friction.-Infinity",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.338423
+    },
+    {
+      "name": "owned.invalid.friction.-1",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.689124
+    },
+    {
+      "name": "owned.invalid.friction.object:null",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 2.101502
+    },
+    {
+      "name": "owned.invalid.friction.undefined",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 1.028602
+    },
+    {
+      "name": "owned.invalid.friction.string:0.7",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.480527
+    },
+    {
+      "name": "owned.invalid.friction.object",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.374642
+    },
+    {
+      "name": "owned.invalid.friction.1n",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.813997
+    },
+    {
+      "name": "owned.invalid.friction.1e+100",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.555097
+    },
+    {
+      "name": "owned.invalid.restitution.NaN",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.37045
+    },
+    {
+      "name": "owned.invalid.restitution.Infinity",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.316343
+    },
+    {
+      "name": "owned.invalid.restitution.-Infinity",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.384032
+    },
+    {
+      "name": "owned.invalid.restitution.-1",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.314724
+    },
+    {
+      "name": "owned.invalid.restitution.object:null",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.303561
+    },
+    {
+      "name": "owned.invalid.restitution.undefined",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.355143
+    },
+    {
+      "name": "owned.invalid.restitution.string:0.7",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.659541
+    },
+    {
+      "name": "owned.invalid.restitution.object",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.436457
+    },
+    {
+      "name": "owned.invalid.restitution.1n",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 1.061726
+    },
+    {
+      "name": "owned.invalid.restitution.1e+100",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.411961
+    },
+    {
+      "name": "owned.invalid.rollingFriction.NaN",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.687725
+    },
+    {
+      "name": "owned.invalid.rollingFriction.Infinity",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.424476
+    },
+    {
+      "name": "owned.invalid.rollingFriction.-Infinity",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.451583
+    },
+    {
+      "name": "owned.invalid.rollingFriction.-1",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 1.531519
+    },
+    {
+      "name": "owned.invalid.rollingFriction.object:null",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.649736
+    },
+    {
+      "name": "owned.invalid.rollingFriction.undefined",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.644682
+    },
+    {
+      "name": "owned.invalid.rollingFriction.string:0.7",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.79352
+    },
+    {
+      "name": "owned.invalid.rollingFriction.object",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.643744
+    },
+    {
+      "name": "owned.invalid.rollingFriction.1n",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.508155
+    },
+    {
+      "name": "owned.invalid.rollingFriction.1e+100",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.93861
+    },
+    {
+      "name": "owned.invalid.spinningFriction.NaN",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.392664
+    },
+    {
+      "name": "owned.invalid.spinningFriction.Infinity",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.313533
+    },
+    {
+      "name": "owned.invalid.spinningFriction.-Infinity",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.502276
+    },
+    {
+      "name": "owned.invalid.spinningFriction.-1",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.46248
+    },
+    {
+      "name": "owned.invalid.spinningFriction.object:null",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.412205
+    },
+    {
+      "name": "owned.invalid.spinningFriction.undefined",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.662306
+    },
+    {
+      "name": "owned.invalid.spinningFriction.string:0.7",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 1.220169
+    },
+    {
+      "name": "owned.invalid.spinningFriction.object",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.556408
+    },
+    {
+      "name": "owned.invalid.spinningFriction.1n",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 1.06462
+    },
+    {
+      "name": "owned.invalid.spinningFriction.1e+100",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.574037
+    },
+    {
+      "name": "owned.invalid.setValues.NaN",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.5104
+    },
+    {
+      "name": "owned.invalid.setValues.Infinity",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 3.063313
+    },
+    {
+      "name": "owned.invalid.setValues.-Infinity",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.536606
+    },
+    {
+      "name": "owned.invalid.setValues.-1",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.726506
+    },
+    {
+      "name": "owned.invalid.setValues.object:null",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.91548
+    },
+    {
+      "name": "owned.invalid.setValues.undefined",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.414507
+    },
+    {
+      "name": "owned.invalid.setValues.string:0.7",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.415164
+    },
+    {
+      "name": "owned.invalid.setValues.object",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 1.133568
+    },
+    {
+      "name": "owned.invalid.setValues.1n",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.760943
+    },
+    {
+      "name": "owned.invalid.setValues.1e+100",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 1.002498
+    },
+    {
+      "name": "owned.unsupported-positive.rollingFriction",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.892534
+    },
+    {
+      "name": "owned.unsupported-positive.spinningFriction",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.466257
+    },
+    {
+      "name": "owned.strict-validation-before-coercion.friction",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.779291
+    },
+    {
+      "name": "owned.strict-validation-before-coercion.restitution",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.589736
+    },
+    {
+      "name": "owned.strict-validation-before-coercion.rollingFriction",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.614241
+    },
+    {
+      "name": "owned.strict-validation-before-coercion.spinningFriction",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.508522
+    },
+    {
+      "name": "owned.strict-validation-before-coercion.setValues",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.702441
+    },
+    {
+      "name": "owned.ignores-public-getters.friction",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.68872
+    },
+    {
+      "name": "owned.ignores-public-getters.restitution",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.771237
+    },
+    {
+      "name": "owned.ignores-public-getters.rollingFriction",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.48537
+    },
+    {
+      "name": "owned.ignores-public-getters.spinningFriction",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.543237
+    },
+    {
+      "name": "owned.ignores-public-getters.setValues",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.895794
+    },
+    {
+      "name": "owned.private-read-reentry.false",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 1.321483
+    },
+    {
+      "name": "owned.private-read-reentry.true",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.612443
+    },
+    {
+      "name": "owned.destroy-held.live",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.772907
+    },
+    {
+      "name": "owned.destroy-held.provisional",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.695932
+    },
+    {
+      "name": "owned.destroy-held.uninitialized",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.770909
+    },
+    {
+      "name": "owned.destroy-held.blocker",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.381074
+    },
+    {
+      "name": "owned.destroy-held.closed-unknown",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.471258
+    },
+    {
+      "name": "owned.destroy-after-exact-released-close",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.565783
+    },
+    {
+      "name": "unowned.destroy-original-trace",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 4.201081
+    },
+    {
+      "name": "owned.falsy-public-and-cleanup.undefined",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "open"
+          ],
+          [
+            "open"
+          ],
+          [
+            "read",
+            "friction"
+          ],
+          [
+            "read",
+            "restitution"
+          ],
+          [
+            "read",
+            "rollingFriction"
+          ],
+          [
+            "read",
+            "spinningFriction"
+          ],
+          [
+            "prepare"
+          ],
+          [
+            "prepare"
+          ],
+          [
+            "write",
+            "friction",
+            "0.8"
+          ],
+          [
+            "native"
+          ],
+          [
+            "verify"
+          ],
+          [
+            "owner.cache"
+          ],
+          [
+            "native"
+          ],
+          [
+            "verify"
+          ],
+          [
+            "owner.cache"
+          ],
+          [
+            "emit",
+            "event_update"
+          ],
+          [
+            "read",
+            "friction"
+          ],
+          [
+            "read",
+            "restitution"
+          ],
+          [
+            "read",
+            "rollingFriction"
+          ],
+          [
+            "read",
+            "spinningFriction"
+          ],
+          [
+            "fault"
+          ],
+          [
+            "fault"
+          ],
+          [
+            "dispose"
+          ],
+          [
+            "dispose"
+          ]
+        ]
+      },
+      "elapsedMs": 2.009753
+    },
+    {
+      "name": "owned.falsy-public-and-cleanup.object:null",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "open"
+          ],
+          [
+            "open"
+          ],
+          [
+            "read",
+            "friction"
+          ],
+          [
+            "read",
+            "restitution"
+          ],
+          [
+            "read",
+            "rollingFriction"
+          ],
+          [
+            "read",
+            "spinningFriction"
+          ],
+          [
+            "prepare"
+          ],
+          [
+            "prepare"
+          ],
+          [
+            "write",
+            "friction",
+            "0.8"
+          ],
+          [
+            "native"
+          ],
+          [
+            "verify"
+          ],
+          [
+            "owner.cache"
+          ],
+          [
+            "native"
+          ],
+          [
+            "verify"
+          ],
+          [
+            "owner.cache"
+          ],
+          [
+            "emit",
+            "event_update"
+          ],
+          [
+            "read",
+            "friction"
+          ],
+          [
+            "read",
+            "restitution"
+          ],
+          [
+            "read",
+            "rollingFriction"
+          ],
+          [
+            "read",
+            "spinningFriction"
+          ],
+          [
+            "fault"
+          ],
+          [
+            "fault"
+          ],
+          [
+            "dispose"
+          ],
+          [
+            "dispose"
+          ]
+        ]
+      },
+      "elapsedMs": 0.890931
+    },
+    {
+      "name": "owned.falsy-public-and-cleanup.boolean:false",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "open"
+          ],
+          [
+            "open"
+          ],
+          [
+            "read",
+            "friction"
+          ],
+          [
+            "read",
+            "restitution"
+          ],
+          [
+            "read",
+            "rollingFriction"
+          ],
+          [
+            "read",
+            "spinningFriction"
+          ],
+          [
+            "prepare"
+          ],
+          [
+            "prepare"
+          ],
+          [
+            "write",
+            "friction",
+            "0.8"
+          ],
+          [
+            "native"
+          ],
+          [
+            "verify"
+          ],
+          [
+            "owner.cache"
+          ],
+          [
+            "native"
+          ],
+          [
+            "verify"
+          ],
+          [
+            "owner.cache"
+          ],
+          [
+            "emit",
+            "event_update"
+          ],
+          [
+            "read",
+            "friction"
+          ],
+          [
+            "read",
+            "restitution"
+          ],
+          [
+            "read",
+            "rollingFriction"
+          ],
+          [
+            "read",
+            "spinningFriction"
+          ],
+          [
+            "fault"
+          ],
+          [
+            "fault"
+          ],
+          [
+            "dispose"
+          ],
+          [
+            "dispose"
+          ]
+        ]
+      },
+      "elapsedMs": 1.195554
+    },
+    {
+      "name": "owned.falsy-public-and-cleanup.0",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "open"
+          ],
+          [
+            "open"
+          ],
+          [
+            "read",
+            "friction"
+          ],
+          [
+            "read",
+            "restitution"
+          ],
+          [
+            "read",
+            "rollingFriction"
+          ],
+          [
+            "read",
+            "spinningFriction"
+          ],
+          [
+            "prepare"
+          ],
+          [
+            "prepare"
+          ],
+          [
+            "write",
+            "friction",
+            "0.8"
+          ],
+          [
+            "native"
+          ],
+          [
+            "verify"
+          ],
+          [
+            "owner.cache"
+          ],
+          [
+            "native"
+          ],
+          [
+            "verify"
+          ],
+          [
+            "owner.cache"
+          ],
+          [
+            "emit",
+            "event_update"
+          ],
+          [
+            "read",
+            "friction"
+          ],
+          [
+            "read",
+            "restitution"
+          ],
+          [
+            "read",
+            "rollingFriction"
+          ],
+          [
+            "read",
+            "spinningFriction"
+          ],
+          [
+            "fault"
+          ],
+          [
+            "fault"
+          ],
+          [
+            "dispose"
+          ],
+          [
+            "dispose"
+          ]
+        ]
+      },
+      "elapsedMs": 1.556918
+    },
+    {
+      "name": "owned.falsy-public-and-cleanup.string:",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "open"
+          ],
+          [
+            "open"
+          ],
+          [
+            "read",
+            "friction"
+          ],
+          [
+            "read",
+            "restitution"
+          ],
+          [
+            "read",
+            "rollingFriction"
+          ],
+          [
+            "read",
+            "spinningFriction"
+          ],
+          [
+            "prepare"
+          ],
+          [
+            "prepare"
+          ],
+          [
+            "write",
+            "friction",
+            "0.8"
+          ],
+          [
+            "native"
+          ],
+          [
+            "verify"
+          ],
+          [
+            "owner.cache"
+          ],
+          [
+            "native"
+          ],
+          [
+            "verify"
+          ],
+          [
+            "owner.cache"
+          ],
+          [
+            "emit",
+            "event_update"
+          ],
+          [
+            "read",
+            "friction"
+          ],
+          [
+            "read",
+            "restitution"
+          ],
+          [
+            "read",
+            "rollingFriction"
+          ],
+          [
+            "read",
+            "spinningFriction"
+          ],
+          [
+            "fault"
+          ],
+          [
+            "fault"
+          ],
+          [
+            "dispose"
+          ],
+          [
+            "dispose"
+          ]
+        ]
+      },
+      "elapsedMs": 0.97777
+    },
+    {
+      "name": "owned.failure-boundary.open",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.591252
+    },
+    {
+      "name": "owned.failure-boundary.prepare",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.566037
+    },
+    {
+      "name": "owned.failure-boundary.invoke",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.583722
+    },
+    {
+      "name": "owned.failure-boundary.verify",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.621328
+    },
+    {
+      "name": "owned.failure-boundary.cache",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.69517
+    },
+    {
+      "name": "owned.failure-boundary.commit",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.654585
+    },
+    {
+      "name": "owned.failure-boundary.dispose",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.499383
+    },
+    {
+      "name": "owned.partial-setValues-recorder-after-each-assignment",
+      "status": "PASS",
+      "detail": {
+        "diagnostic": {
+          "phase": "applying",
+          "terminal": false,
+          "sequence": 1,
+          "hasFailure": true,
+          "error": false,
+          "secondaryErrors": [],
+          "ownerCount": 1,
+          "enteredOwners": 1,
+          "cleanupAttemptedOwners": 0,
+          "cleanupCompletedOwners": 0,
+          "cleanupUnresolvedOwners": 0,
+          "faultAttemptedOwners": 1,
+          "before": [
+            0.6,
+            0,
+            0,
+            0
+          ],
+          "candidate": [
+            0.8,
+            0.3,
+            0,
+            0
+          ],
+          "actual": [
+            0.8,
+            0,
+            0,
+            0
+          ],
+          "actualRead": "copied",
+          "cacheWriteEntered": true,
+          "cacheWrites": 2,
+          "publicEntered": false,
+          "publicReturned": false,
+          "committedOwners": 0,
+          "native": [
+            {
+              "ownerIndex": 0,
+              "operationIndex": 0,
+              "state": "not-entered",
+              "readback": "not-entered"
+            }
+          ],
+          "ownerCacheStates": [
+            "not-entered"
+          ],
+          "ownerCommitStates": [
+            "not-entered"
+          ]
+        }
+      },
+      "elapsedMs": 0.955323
+    },
+    {
+      "name": "owned.success-cannot-reuse-ticket",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.56973
+    },
+    {
+      "name": "static.original-statements-unchanged-in-unowned-path",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 8.530353
+    },
+    {
+      "name": "static.bridge-exposes-only-three-s1-wrappers",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.984382
+    },
+    {
+      "name": "unowned.private-getter-reentry-trace.friction",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "special-read",
+            "friction"
+          ],
+          [
+            "read",
+            "restitution"
+          ],
+          [
+            "write",
+            "restitution",
+            "0.25"
+          ],
+          [
+            "emit",
+            "event_update"
+          ],
+          [
+            "special-write",
+            "friction",
+            "0.8"
+          ],
+          [
+            "emit",
+            "event_update"
+          ]
+        ]
+      },
+      "elapsedMs": 1.02934
+    },
+    {
+      "name": "unowned.private-getter-reentry-trace.restitution",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "restitution"
+          ],
+          [
+            "write",
+            "restitution",
+            "0.8"
+          ],
+          [
+            "emit",
+            "event_update"
+          ]
+        ]
+      },
+      "elapsedMs": 0.524685
+    },
+    {
+      "name": "unowned.private-getter-reentry-trace.rollingFriction",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "rollingFriction"
+          ],
+          [
+            "write",
+            "rollingFriction",
+            "0.8"
+          ],
+          [
+            "emit",
+            "event_update"
+          ]
+        ]
+      },
+      "elapsedMs": 0.431688
+    },
+    {
+      "name": "unowned.private-getter-reentry-trace.spinningFriction",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "spinningFriction"
+          ],
+          [
+            "write",
+            "spinningFriction",
+            "0.8"
+          ],
+          [
+            "emit",
+            "event_update"
+          ]
+        ]
+      },
+      "elapsedMs": 0.581324
+    },
+    {
+      "name": "unowned.private-getter-reentry-trace.setValues",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "special-read",
+            "friction"
+          ],
+          [
+            "read",
+            "restitution"
+          ],
+          [
+            "write",
+            "restitution",
+            "0.25"
+          ],
+          [
+            "emit",
+            "event_update"
+          ],
+          [
+            "special-write",
+            "friction",
+            "0.7"
+          ],
+          [
+            "write",
+            "rollingFriction",
+            "0.1"
+          ],
+          [
+            "write",
+            "spinningFriction",
+            "0.2"
+          ],
+          [
+            "write",
+            "restitution",
+            "0.3"
+          ],
+          [
+            "emit",
+            "event_update"
+          ]
+        ]
+      },
+      "elapsedMs": 0.962375
+    },
+    {
+      "name": "unowned.setValues-partial-write.friction",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "special-read",
+            "friction"
+          ],
+          [
+            "throw-write",
+            "friction"
+          ]
+        ]
+      },
+      "elapsedMs": 1.103269
+    },
+    {
+      "name": "unowned.setValues-partial-write.rollingFriction",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "friction"
+          ],
+          [
+            "write",
+            "friction",
+            "0.8"
+          ],
+          [
+            "throw-write",
+            "rollingFriction"
+          ]
+        ]
+      },
+      "elapsedMs": 0.653977
+    },
+    {
+      "name": "unowned.setValues-partial-write.spinningFriction",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "friction"
+          ],
+          [
+            "write",
+            "friction",
+            "0.8"
+          ],
+          [
+            "write",
+            "rollingFriction",
+            "0.2"
+          ],
+          [
+            "throw-write",
+            "spinningFriction"
+          ]
+        ]
+      },
+      "elapsedMs": 0.520942
+    },
+    {
+      "name": "unowned.setValues-partial-write.restitution",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "friction"
+          ],
+          [
+            "write",
+            "friction",
+            "0.8"
+          ],
+          [
+            "write",
+            "rollingFriction",
+            "0.2"
+          ],
+          [
+            "write",
+            "spinningFriction",
+            "0.3"
+          ],
+          [
+            "throw-write",
+            "restitution"
+          ]
+        ]
+      },
+      "elapsedMs": 0.48446
+    },
+    {
+      "name": "unowned.coercion-reentry-trace.friction",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "friction"
+          ],
+          [
+            "coerce",
+            1
+          ],
+          [
+            "read",
+            "friction"
+          ],
+          [
+            "read",
+            "rollingFriction"
+          ],
+          [
+            "read",
+            "spinningFriction"
+          ],
+          [
+            "read",
+            "restitution"
+          ],
+          [
+            "write",
+            "friction",
+            "0.6"
+          ],
+          [
+            "write",
+            "rollingFriction",
+            "0"
+          ],
+          [
+            "write",
+            "spinningFriction",
+            "0"
+          ],
+          [
+            "write",
+            "restitution",
+            "0.1"
+          ],
+          [
+            "emit",
+            "event_update"
+          ],
+          [
+            "coerce",
+            2
+          ],
+          [
+            "read",
+            "friction"
+          ],
+          [
+            "read",
+            "rollingFriction"
+          ],
+          [
+            "read",
+            "spinningFriction"
+          ],
+          [
+            "read",
+            "restitution"
+          ],
+          [
+            "write",
+            "friction",
+            "0.6"
+          ],
+          [
+            "write",
+            "rollingFriction",
+            "0"
+          ],
+          [
+            "write",
+            "spinningFriction",
+            "0"
+          ],
+          [
+            "write",
+            "restitution",
+            "0.2"
+          ],
+          [
+            "emit",
+            "event_update"
+          ],
+          [
+            "write",
+            "friction",
+            "object"
+          ],
+          [
+            "emit",
+            "event_update"
+          ]
+        ]
+      },
+      "elapsedMs": 0.947864
+    },
+    {
+      "name": "unowned.coercion-reentry-trace.restitution",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "restitution"
+          ],
+          [
+            "coerce",
+            1
+          ],
+          [
+            "read",
+            "friction"
+          ],
+          [
+            "read",
+            "rollingFriction"
+          ],
+          [
+            "read",
+            "spinningFriction"
+          ],
+          [
+            "read",
+            "restitution"
+          ],
+          [
+            "write",
+            "friction",
+            "0.6"
+          ],
+          [
+            "write",
+            "rollingFriction",
+            "0"
+          ],
+          [
+            "write",
+            "spinningFriction",
+            "0"
+          ],
+          [
+            "write",
+            "restitution",
+            "0.1"
+          ],
+          [
+            "emit",
+            "event_update"
+          ],
+          [
+            "coerce",
+            2
+          ],
+          [
+            "read",
+            "friction"
+          ],
+          [
+            "read",
+            "rollingFriction"
+          ],
+          [
+            "read",
+            "spinningFriction"
+          ],
+          [
+            "read",
+            "restitution"
+          ],
+          [
+            "write",
+            "friction",
+            "0.6"
+          ],
+          [
+            "write",
+            "rollingFriction",
+            "0"
+          ],
+          [
+            "write",
+            "spinningFriction",
+            "0"
+          ],
+          [
+            "write",
+            "restitution",
+            "0.2"
+          ],
+          [
+            "emit",
+            "event_update"
+          ],
+          [
+            "write",
+            "restitution",
+            "object"
+          ],
+          [
+            "emit",
+            "event_update"
+          ]
+        ]
+      },
+      "elapsedMs": 0.565134
+    },
+    {
+      "name": "unowned.coercion-reentry-trace.rollingFriction",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "rollingFriction"
+          ],
+          [
+            "coerce",
+            1
+          ],
+          [
+            "read",
+            "friction"
+          ],
+          [
+            "read",
+            "rollingFriction"
+          ],
+          [
+            "read",
+            "spinningFriction"
+          ],
+          [
+            "read",
+            "restitution"
+          ],
+          [
+            "write",
+            "friction",
+            "0.6"
+          ],
+          [
+            "write",
+            "rollingFriction",
+            "0"
+          ],
+          [
+            "write",
+            "spinningFriction",
+            "0"
+          ],
+          [
+            "write",
+            "restitution",
+            "0.1"
+          ],
+          [
+            "emit",
+            "event_update"
+          ],
+          [
+            "coerce",
+            2
+          ],
+          [
+            "read",
+            "friction"
+          ],
+          [
+            "read",
+            "rollingFriction"
+          ],
+          [
+            "read",
+            "spinningFriction"
+          ],
+          [
+            "read",
+            "restitution"
+          ],
+          [
+            "write",
+            "friction",
+            "0.6"
+          ],
+          [
+            "write",
+            "rollingFriction",
+            "0"
+          ],
+          [
+            "write",
+            "spinningFriction",
+            "0"
+          ],
+          [
+            "write",
+            "restitution",
+            "0.2"
+          ],
+          [
+            "emit",
+            "event_update"
+          ],
+          [
+            "write",
+            "rollingFriction",
+            "object"
+          ],
+          [
+            "emit",
+            "event_update"
+          ]
+        ]
+      },
+      "elapsedMs": 0.950866
+    },
+    {
+      "name": "unowned.coercion-reentry-trace.spinningFriction",
+      "status": "PASS",
+      "detail": {
+        "trace": [
+          [
+            "read",
+            "spinningFriction"
+          ],
+          [
+            "coerce",
+            1
+          ],
+          [
+            "read",
+            "friction"
+          ],
+          [
+            "read",
+            "rollingFriction"
+          ],
+          [
+            "read",
+            "spinningFriction"
+          ],
+          [
+            "read",
+            "restitution"
+          ],
+          [
+            "write",
+            "friction",
+            "0.6"
+          ],
+          [
+            "write",
+            "rollingFriction",
+            "0"
+          ],
+          [
+            "write",
+            "spinningFriction",
+            "0"
+          ],
+          [
+            "write",
+            "restitution",
+            "0.1"
+          ],
+          [
+            "emit",
+            "event_update"
+          ],
+          [
+            "coerce",
+            2
+          ],
+          [
+            "read",
+            "friction"
+          ],
+          [
+            "read",
+            "rollingFriction"
+          ],
+          [
+            "read",
+            "spinningFriction"
+          ],
+          [
+            "read",
+            "restitution"
+          ],
+          [
+            "write",
+            "friction",
+            "0.6"
+          ],
+          [
+            "write",
+            "rollingFriction",
+            "0"
+          ],
+          [
+            "write",
+            "spinningFriction",
+            "0"
+          ],
+          [
+            "write",
+            "restitution",
+            "0.2"
+          ],
+          [
+            "emit",
+            "event_update"
+          ],
+          [
+            "write",
+            "spinningFriction",
+            "object"
+          ],
+          [
+            "emit",
+            "event_update"
+          ]
+        ]
+      },
+      "elapsedMs": 0.691183
+    },
+    {
+      "name": "owned.exact-role-propagation.default",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.49566
+    },
+    {
+      "name": "owned.exact-role-propagation.explicit",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.978857
+    },
+    {
+      "name": "owned.public-emit-cannot-obtain-private-propagation.friction",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.806999
+    },
+    {
+      "name": "owned.public-emit-cannot-obtain-private-propagation.restitution",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.435468
+    },
+    {
+      "name": "owned.public-emit-cannot-obtain-private-propagation.rollingFriction",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.791179
+    },
+    {
+      "name": "owned.public-emit-cannot-obtain-private-propagation.spinningFriction",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.405285
+    },
+    {
+      "name": "owned.public-emit-cannot-obtain-private-propagation.setValues",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 0.471676
+    },
+    {
+      "name": "s1-repair.scalar-nochange-commit-failure-must-fault",
+      "status": "PASS",
+      "detail": null,
+      "elapsedMs": 1.618074
+    }
+  ]
+}

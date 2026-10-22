@@ -1,0 +1,41 @@
+{
+  "status": "TYPECHECK_EXIT_0_PHYSICS_NOT_RUN",
+  "sourceCommit": "9df645b4a84e73c86ffd460b59cbd6e2ab732cbb",
+  "inputs": [
+    {
+      "path": "tools/verify/box3d/owner-shared-material-real-wasm-preload.mjs",
+      "retained": "../box3d-shared-material-source-red-setup-20261022/prepared-inputs/owner-shared-material-real-wasm-preload.mjs",
+      "sha256": "2de6ddd5e24c4459455e410cab8350f94b9e83e80dc91abd21db054eadc97b0e"
+    },
+    {
+      "path": "tools/verify/box3d/owner-shared-material-real-wasm.jest.cjs",
+      "retained": "../box3d-shared-material-source-red-setup-20261022/prepared-inputs/owner-shared-material-real-wasm.jest.cjs",
+      "sha256": "c01c92f5d8b9d2c27a4aaf53fd84cb73d0fcb9738e4734cfb716a0dfbbfaed5a"
+    },
+    {
+      "path": "tools/verify/box3d/owner-shared-material-real-wasm.tsconfig.json",
+      "retained": "../box3d-shared-material-source-red-setup-20261022/prepared-inputs/owner-shared-material-real-wasm.tsconfig.json",
+      "sha256": "98428ceb1381dfec6a639c2e6c4047740a54a01bce80896303548b8cf7fb9ccc"
+    },
+    {
+      "path": "tools/verify/box3d/owner-shared-material-real-wasm.test.ts",
+      "retained": "../box3d-shared-material-source-red-setup-20261022/prepared-inputs/owner-shared-material-real-wasm.test.ts",
+      "sha256": "d148a2c370aa007ae9d6e90c69e3eed4a5f1226506b895ac1da3612d6b3886c7"
+    },
+    {
+      "path": "tools/verify/box3d/owner-shared-material-real-wasm-inputs.cjs",
+      "retained": "../box3d-shared-material-source-red-setup-20261022/prepared-inputs/owner-shared-material-real-wasm-inputs.cjs",
+      "sha256": "497feb7289241a9d15724bdfb3e24a6cdb82559379a80c7c5fb629a24de5a003"
+    },
+    {
+      "path": "tools/verify/box3d/owner-shared-material-real-wasm.mjs",
+      "retained": "../box3d-shared-material-source-red-setup-20261022/prepared-inputs/owner-shared-material-real-wasm.mjs",
+      "sha256": "3365eff98b532e32d26b582cdd9d5ee5b7c3009fd5ca1127e92cc37f95f5b558"
+    },
+    {
+      "path": "tools/verify/box3d/owner-shared-material-real-wasm-environment.cjs",
+      "retained": "../box3d-shared-material-source-red-setup-20261022/prepared-inputs/owner-shared-material-real-wasm-environment.cjs",
+      "sha256": "5361685b74437380919cb882d213ba9c96954c2fa6172a81e12f873c9357d52a"
+    }
+  ]
+}

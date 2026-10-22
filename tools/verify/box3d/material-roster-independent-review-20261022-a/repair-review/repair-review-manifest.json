@@ -1,0 +1,137 @@
+{
+  "schema": "repair-review-manifest/1",
+  "capturedAt": "2026-10-22T19:06:13.945376+00:00",
+  "scope": "Repair-review payloads only; the frozen original review is independent.",
+  "files": [
+    {
+      "path": "REPAIR-REVIEW.md",
+      "bytes": 4908,
+      "sha256": "c9764bee7bde5950697edeac6dde73cf71d6426b3e3ffa8f5aaa0d3e62dca71b"
+    },
+    {
+      "path": "build-repair-controls.py",
+      "bytes": 3953,
+      "sha256": "231b83318cc57dda6ab0f9e8309ee551488afb4bb0aa5d43ff1f7b82953e41d8"
+    },
+    {
+      "path": "evidence/candidate-controls.json",
+      "bytes": 7192,
+      "sha256": "546a5fa552693e5a8f4a9d4a4faa6e61c04ab40162c0105ddf2a4a99c9966ae2"
+    },
+    {
+      "path": "evidence/candidate-controls.log",
+      "bytes": 4151,
+      "sha256": "381d81eb89737bbc6b54a2abc5ed5792247fcabcd792e9bd3125c8b11cc2eacd"
+    },
+    {
+      "path": "evidence/phase-controls.json",
+      "bytes": 1078,
+      "sha256": "74a2186bf8f41f379d8ca618f4c832fadf26657ab6dceb66bfa828f0d794c9fb"
+    },
+    {
+      "path": "evidence/phase-controls.log",
+      "bytes": 623,
+      "sha256": "15a27ee07410ddf7f073e6bc8ef2224b357fa92be59df7aa034a29a4c75e4cb7"
+    },
+    {
+      "path": "evidence/repair-controls.json",
+      "bytes": 928,
+      "sha256": "e9847523f4d205963a6b052c9844cfc95e86e95f5a690ef985480ae83c3f5a40"
+    },
+    {
+      "path": "evidence/repair-controls.log",
+      "bytes": 527,
+      "sha256": "b8518b6546bf6936118c49bdf7e5ae324b423a4f2e9506dad8bdc02c01a50435"
+    },
+    {
+      "path": "evidence/repaired-original-regression.json",
+      "bytes": 1685,
+      "sha256": "78d42d0580a995efd9cf0e44784daed3fbe257e10c147f80db892e9e194def3d"
+    },
+    {
+      "path": "evidence/repaired-original-regression.log",
+      "bytes": 1685,
+      "sha256": "78d42d0580a995efd9cf0e44784daed3fbe257e10c147f80db892e9e194def3d"
+    },
+    {
+      "path": "evidence/reviewer-controls.json",
+      "bytes": 1965,
+      "sha256": "c12dce021599e84fd22a9068fdc13343d054a46c56648bd763bf9d69b52824f9"
+    },
+    {
+      "path": "evidence/reviewer-controls.log",
+      "bytes": 1169,
+      "sha256": "cb7d13d6152b9f06c29db0ef7d91772437be0cf8644f385bef563d40a9248bbc"
+    },
+    {
+      "path": "evidence/run.json",
+      "bytes": 3294,
+      "sha256": "b377bd097af31b7b043189899706b10b40935221fb6a2ae02bb633e9205d8468"
+    },
+    {
+      "path": "evidence/run.log",
+      "bytes": 3294,
+      "sha256": "b377bd097af31b7b043189899706b10b40935221fb6a2ae02bb633e9205d8468"
+    },
+    {
+      "path": "evidence/tsc.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "evidence/unchanged-original-probe-failstop.log",
+      "bytes": 1297,
+      "sha256": "408e54483ea7286d6dc21c6375a87709a2cc1ed9554eb6696c4a6c49e7cee09b"
+    },
+    {
+      "path": "inputs/compiled/physics-material-values-transaction.js",
+      "bytes": 29631,
+      "sha256": "9f04cc26d0575049733b49df535e9ccc01ccd19fa228bc35eccb3563ce1f5f48"
+    },
+    {
+      "path": "inputs/controls.cjs",
+      "bytes": 33034,
+      "sha256": "b975a1e37982d71552475efd95a4a1d180378fca6bcbf10fa6611292920ce1dd"
+    },
+    {
+      "path": "inputs/src/physics-material-values-transaction.ts",
+      "bytes": 39988,
+      "sha256": "fb1be9f19ab526e8b1c0785446a387324b4d51930b90d7bfb105127fe8255b06"
+    },
+    {
+      "path": "phase-controls.cjs",
+      "bytes": 10059,
+      "sha256": "0415a244f4f28b3d981d92cd2f71aef0c5895261fcd53d30cf4e84fbe8c81e66"
+    },
+    {
+      "path": "probe-nochange-commit-repaired.cjs",
+      "bytes": 2420,
+      "sha256": "b7077705aa623ff39908a751019087b28ef1cb1c5d84c08dfce0ded84284faf4"
+    },
+    {
+      "path": "repair-controls.cjs",
+      "bytes": 8946,
+      "sha256": "13884476285c28585a8b5d6fc5eb55556963a78210fd2dd072b8d6e4ded6b593"
+    },
+    {
+      "path": "reproduce-repair.py",
+      "bytes": 1942,
+      "sha256": "6d5d1760048d247039f2ac2a8a9cc9926590cb543f47f6d1c8122144b38a4a7b"
+    },
+    {
+      "path": "reviewer-controls.cjs",
+      "bytes": 12609,
+      "sha256": "2a58cac9a92c97bf16f2424cc0b1d77e234839155c6879c40781c08e55698899"
+    },
+    {
+      "path": "unchanged-original-probe.cjs",
+      "bytes": 2244,
+      "sha256": "953adb5a3e8eebd21ff12afb47761e07463aea707e97f434999ee277b91ff752"
+    },
+    {
+      "path": "verify-review-packages.py",
+      "bytes": 1072,
+      "sha256": "5aecfff9833f4483d5b0affef914e359716df91777ba6e8567b9f6accd637ddb"
+    }
+  ]
+}

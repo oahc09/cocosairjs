@@ -1,0 +1,85 @@
+{
+  "schema": "independent-material-roster-review-run/1",
+  "capturedAt": "2026-10-22T19:02:22.142794+00:00",
+  "sourceSha256": "382c459f2116383d9acd7eddec737d7a9dd213f5a2c1371475aa024020666cd4",
+  "versions": {
+    "node": "v24.19.0",
+    "typescript": "Version 4.9.5"
+  },
+  "runs": [
+    {
+      "name": "tsc",
+      "cwd": "/workspace/scratch/62d43a81bbde/box3d-material-roster-independent-review-20261022/inputs",
+      "command": [
+        "node",
+        "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/bin/tsc",
+        "--target",
+        "ES2022",
+        "--module",
+        "commonjs",
+        "--strict",
+        "--skipLibCheck",
+        "--noEmitOnError",
+        "--outDir",
+        "compiled",
+        "src/physics-material-values-transaction.ts"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "rawLog": "evidence/frozen-tsc.log"
+    },
+    {
+      "name": "original-controls",
+      "cwd": "/workspace/scratch/62d43a81bbde/box3d-material-roster-independent-review-20261022/inputs",
+      "command": [
+        "node",
+        "controls.cjs",
+        "../evidence/frozen-original-controls.json"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "rawLog": "evidence/frozen-original-controls.log"
+    },
+    {
+      "name": "reviewer-controls",
+      "cwd": "/workspace/scratch/62d43a81bbde/box3d-material-roster-independent-review-20261022",
+      "command": [
+        "node",
+        "reviewer-controls.cjs",
+        "evidence/frozen-reviewer-controls.json"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "rawLog": "evidence/frozen-reviewer-controls.log"
+    },
+    {
+      "name": "phase-controls",
+      "cwd": "/workspace/scratch/62d43a81bbde/box3d-material-roster-independent-review-20261022",
+      "command": [
+        "node",
+        "phase-controls.cjs",
+        "evidence/frozen-phase-controls.json"
+      ],
+      "exitCode": 0,
+      "expectedExit": 0,
+      "rawLog": "evidence/frozen-phase-controls.log"
+    },
+    {
+      "name": "nochange-commit-red",
+      "cwd": "/workspace/scratch/62d43a81bbde/box3d-material-roster-independent-review-20261022",
+      "command": [
+        "node",
+        "probe-nochange-commit.cjs",
+        "evidence/frozen-nochange-commit-red.json"
+      ],
+      "exitCode": 1,
+      "expectedExit": 1,
+      "rawLog": "evidence/frozen-nochange-commit-red.log"
+    }
+  ],
+  "qualification": "ISOLATED_PURE_PROTOCOL_ONLY",
+  "engineIntegration": false,
+  "formalRequiredCellsUnchanged": {
+    "NOT_RUN": 2128
+  }
+}

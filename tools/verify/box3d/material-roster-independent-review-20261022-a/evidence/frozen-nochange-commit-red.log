@@ -1,0 +1,178 @@
+{
+  "failed": {
+    "phase": "failed",
+    "terminal": true,
+    "sequence": 1,
+    "hasFailure": true,
+    "error": null,
+    "secondaryErrors": [],
+    "ownerCount": 2,
+    "enteredOwners": 2,
+    "cleanupAttemptedOwners": 2,
+    "cleanupCompletedOwners": 2,
+    "cleanupUnresolvedOwners": 0,
+    "faultAttemptedOwners": 0,
+    "before": [
+      0.5,
+      0.1,
+      0,
+      0
+    ],
+    "candidate": [
+      0.5,
+      0.1,
+      0,
+      0
+    ],
+    "actual": [
+      0.5,
+      0.1,
+      0,
+      0
+    ],
+    "actualRead": "copied",
+    "cacheWriteEntered": false,
+    "cacheWrites": 0,
+    "publicEntered": false,
+    "publicReturned": false,
+    "committedOwners": 1,
+    "native": [],
+    "ownerCacheStates": [
+      "not-entered",
+      "not-entered"
+    ]
+  },
+  "afterFailure": [
+    {
+      "generation": 1,
+      "state": "live",
+      "bindings": 1,
+      "pending": 0
+    },
+    {
+      "generation": 1,
+      "state": "live",
+      "bindings": 1,
+      "pending": 0
+    }
+  ],
+  "next": {
+    "phase": "committed",
+    "terminal": true,
+    "sequence": 2,
+    "hasFailure": false,
+    "secondaryErrors": [],
+    "ownerCount": 2,
+    "enteredOwners": 2,
+    "cleanupAttemptedOwners": 2,
+    "cleanupCompletedOwners": 2,
+    "cleanupUnresolvedOwners": 0,
+    "faultAttemptedOwners": 0,
+    "before": [
+      0.5,
+      0.1,
+      0,
+      0
+    ],
+    "candidate": [
+      0.7,
+      0.2,
+      0,
+      0
+    ],
+    "actual": [
+      0.7,
+      0.2,
+      0,
+      0
+    ],
+    "actualRead": "copied",
+    "cacheWriteEntered": true,
+    "cacheWrites": 4,
+    "publicEntered": true,
+    "publicReturned": true,
+    "committedOwners": 2,
+    "native": [
+      {
+        "ownerIndex": 0,
+        "operationIndex": 0,
+        "state": "returned",
+        "readback": "verified"
+      },
+      {
+        "ownerIndex": 1,
+        "operationIndex": 0,
+        "state": "returned",
+        "readback": "verified"
+      }
+    ],
+    "ownerCacheStates": [
+      "returned",
+      "returned"
+    ]
+  },
+  "nativeWrites": 2,
+  "trace": [
+    {
+      "event": "owner-actual-commit",
+      "ownerIndex": 0,
+      "observedSequence": 1
+    },
+    {
+      "event": "owner-actual-commit",
+      "ownerIndex": 1,
+      "observedSequence": 1
+    },
+    {
+      "event": "owner-dispose",
+      "ownerIndex": 0
+    },
+    {
+      "event": "owner-dispose",
+      "ownerIndex": 1
+    },
+    {
+      "event": "owner-actual-commit",
+      "ownerIndex": 0,
+      "observedSequence": 2
+    },
+    {
+      "event": "owner-actual-commit",
+      "ownerIndex": 1,
+      "observedSequence": 2
+    },
+    {
+      "event": "owner-dispose",
+      "ownerIndex": 0
+    },
+    {
+      "event": "owner-dispose",
+      "ownerIndex": 1
+    }
+  ]
+}
+node:assert:152
+  throw new AssertionError(obj);
+  ^
+
+AssertionError [ERR_ASSERTION]: Any owner actual commit effect/failure must revoke every original owner, including scalar no-change
+
+0 !== 2
+
+    at Object.<anonymous> (/workspace/scratch/62d43a81bbde/box3d-material-roster-independent-review-20261022/probe-nochange-commit.cjs:46:8)
+    at Module._compile (node:internal/modules/cjs/loader:1872:14)
+    at Object..js (node:internal/modules/cjs/loader:2003:10)
+    at Module.load (node:internal/modules/cjs/loader:1594:32)
+    at Module._load (node:internal/modules/cjs/loader:1396:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 0,
+  expected: 2,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

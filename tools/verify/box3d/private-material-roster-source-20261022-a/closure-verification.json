@@ -1,0 +1,63 @@
+{
+  "schema": "candidate-closure-verification/1",
+  "status": "PASS",
+  "payloadFiles": 57,
+  "payloadBytes": 937759,
+  "verifiedManifestReferences": 21,
+  "sourceSnapshotCurrentStatus": [
+    {
+      "source": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/AGENTS.md",
+      "matchesSnapshotNow": true
+    },
+    {
+      "source": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/.prettierrc.json",
+      "matchesSnapshotNow": true
+    },
+    {
+      "source": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/cocos/physics/framework/physics-state-observer.ts",
+      "matchesSnapshotNow": true
+    },
+    {
+      "source": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/cocos/physics/framework/physics-material-transaction.ts",
+      "matchesSnapshotNow": true
+    },
+    {
+      "source": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/cocos/physics/framework/physics-system-control.ts",
+      "matchesSnapshotNow": true
+    },
+    {
+      "source": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/cocos/physics/framework/assets/physics-material.ts",
+      "matchesSnapshotNow": true
+    },
+    {
+      "source": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/cocos/physics/framework/components/colliders/collider.ts",
+      "matchesSnapshotNow": true
+    },
+    {
+      "source": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/cocos/physics/framework/physics-system.ts",
+      "matchesSnapshotNow": true
+    },
+    {
+      "source": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/air/physics/box3d/world-command-owner.ts",
+      "matchesSnapshotNow": true
+    },
+    {
+      "source": "/workspace/scratch/62d43a81bbde/box3d-shared-material-plan-20261022/README.md",
+      "matchesSnapshotNow": true
+    },
+    {
+      "source": "/workspace/scratch/62d43a81bbde/box3d-shared-material-plan-20261022/minimum-controls.json",
+      "matchesSnapshotNow": true
+    },
+    {
+      "source": "/workspace/scratch/62d43a81bbde/box3d-shared-material-plan-20261022/source-manifest.json",
+      "matchesSnapshotNow": true
+    },
+    {
+      "source": "/workspace/scratch/62d43a81bbde/box3d-shared-material-plan-20261022/review-receipt.json",
+      "matchesSnapshotNow": true
+    }
+  ],
+  "scope": "Authored code, frozen input/reference bytes, compiled output and evidence; not bundled external toolchain",
+  "errors": []
+}

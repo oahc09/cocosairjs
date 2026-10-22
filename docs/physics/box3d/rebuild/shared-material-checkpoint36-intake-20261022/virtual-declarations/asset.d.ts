@@ -1,0 +1,1 @@
+export declare class Asset { _uuid: string; emit(type: string): void; destroy(): boolean; }

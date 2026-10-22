@@ -1,0 +1,1 @@
+export declare const ccclass: any, editable: any, range: any, serializable: any, type: any;

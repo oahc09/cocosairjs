@@ -1,0 +1,22 @@
+{
+  "schema": "independent-review-package-verification/1",
+  "checks": [
+    {
+      "scope": "original",
+      "manifestSha256": "f0301ff31e7e7ef8955c638b7028e5395d3bb0eafa628d30cb079b9af8be6fbd",
+      "files": 32,
+      "bytes": 227525,
+      "errors": [],
+      "pass": true
+    },
+    {
+      "scope": "repair",
+      "manifestSha256": "b5920b246ccb9b43a81e5a49b2cd31b2a7e6896b6a163526c94dcc30c8c84856",
+      "files": 26,
+      "bytes": 179694,
+      "errors": [],
+      "pass": true
+    }
+  ],
+  "pass": true
+}

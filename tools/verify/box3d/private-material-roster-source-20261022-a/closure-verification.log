@@ -1,0 +1,9 @@
+{
+  "schema": "candidate-closure-verification/1",
+  "status": "PASS",
+  "payloadFiles": 57,
+  "payloadBytes": 937759,
+  "verifiedManifestReferences": 21,
+  "scope": "Authored code, frozen input/reference bytes, compiled output and evidence; not bundled external toolchain",
+  "errors": []
+}

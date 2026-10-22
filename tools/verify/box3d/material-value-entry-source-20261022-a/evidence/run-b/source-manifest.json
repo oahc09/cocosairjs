@@ -1,0 +1,29 @@
+{
+  "files": [
+    {
+      "path": "evidence/run-b/inputs/controls.cjs",
+      "sha256": "d90597156963135c69124e46c43569a69625af1b6d8f0115fd4afbc656389d10",
+      "bytes": 30405
+    },
+    {
+      "path": "evidence/run-b/inputs/input-manifest.json",
+      "sha256": "05c3ab39ef05acbb8d513c3609bb711d4a2a2554a33195c1bc2419f07d9dd093",
+      "bytes": 2311
+    },
+    {
+      "path": "evidence/run-b/inputs/inputs/s1/physics-material-values-transaction.ts",
+      "sha256": "382c459f2116383d9acd7eddec737d7a9dd213f5a2c1371475aa024020666cd4",
+      "bytes": 39342
+    },
+    {
+      "path": "evidence/run-b/inputs/src/cocos/physics/framework/assets/physics-material.ts",
+      "sha256": "47a2e4d244bab6933f8d0a65a2fdc6978a5764e8081df4b21d0b97aac83872da",
+      "bytes": 13631
+    },
+    {
+      "path": "evidence/run-b/inputs/src/cocos/physics/framework/physics-material-values.ts",
+      "sha256": "435b47e6faaa861c1d584fcc3603a64735052daa2595cf3da12e3fa602305b66",
+      "bytes": 2079
+    }
+  ]
+}

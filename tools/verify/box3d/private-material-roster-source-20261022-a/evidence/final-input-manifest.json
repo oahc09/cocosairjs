@@ -1,0 +1,20 @@
+{
+  "schema": "frozen-final-inputs/1",
+  "files": [
+    {
+      "path": "evidence/final-inputs/compiled/physics-material-values-transaction.js",
+      "bytes": 29156,
+      "sha256": "af636183369f6146aaa500ce2be36493c841aa7f5baff3f196c053a08fc3cd5f"
+    },
+    {
+      "path": "evidence/final-inputs/controls.cjs",
+      "bytes": 30081,
+      "sha256": "b19e86c69e588ed6cd69928bdd56ab0d39117eb62a13b14915e893bf647dfaf2"
+    },
+    {
+      "path": "evidence/final-inputs/src/physics-material-values-transaction.ts",
+      "bytes": 39342,
+      "sha256": "382c459f2116383d9acd7eddec737d7a9dd213f5a2c1371475aa024020666cd4"
+    }
+  ]
+}

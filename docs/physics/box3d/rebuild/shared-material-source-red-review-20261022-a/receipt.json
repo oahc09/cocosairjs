@@ -1,0 +1,570 @@
+{
+  "status": "FOUR_REAL_CURRENT_WASM_SOURCE_CONTRACT_FAILURES_RETAINED",
+  "sourceCommit": "9df645b4a84e73c86ffd460b59cbd6e2ab732cbb",
+  "runs": [
+    {
+      "path": "docs/physics/box3d/rebuild/owner-shared-material-source-red-20261022-detach-public-a",
+      "status": "EXPECTED_SOURCE_CONTRACT_RED_WITH_ORIGINAL_ASSERTION_FAILURE",
+      "receiptSha256": "ae95192669e576606d70f646fedbd01c427888af1be915fc824d286cd3a5dd2b",
+      "rawSha256": "cf40bf0b275a7a6737b8fe15d00ef512c2658f73c7c2845ab7a4cd8ce23b3dc1",
+      "namedInputs": 113,
+      "nativeInputs": 50,
+      "failedChecks": [
+        {
+          "id": "public notification removal cannot detach physical propagation",
+          "pass": false,
+          "actual": {
+            "result": {
+              "threw": false,
+              "message": "undefined",
+              "code": null
+            },
+            "native": [
+              {
+                "friction": 0.30000001192092896,
+                "restitution": 0
+              },
+              {
+                "friction": 0.30000001192092896,
+                "restitution": 0
+              }
+            ],
+            "actual": 0.8,
+            "owner": {
+              "state": "ready",
+              "commandOwner": {
+                "phase": "idle",
+                "bodies": 2,
+                "nativeOwnership": "owned",
+                "unresolvedNativeBodies": 0,
+                "components": 4,
+                "disabledComponents": 0,
+                "materials": 2,
+                "activeTemporaryScopes": 0,
+                "pendingCommands": 0,
+                "systemControl": {
+                  "observed": true,
+                  "paused": false,
+                  "queuePhase": "ready",
+                  "preparedQueueControl": false,
+                  "unresolvedScopes": 0,
+                  "lastChange": {
+                    "operation": "system-auto-simulation",
+                    "cacheEnabled": true,
+                    "cacheAutoSimulation": false,
+                    "queueCommitEntered": false,
+                    "queueCommitReturned": false,
+                    "failed": false,
+                    "actualRead": "copied"
+                  },
+                  "producers": "NOT_INTEGRATED"
+                },
+                "stagedCommandsSupported": false,
+                "unifiedTransactionsSupported": false,
+                "materialIdentityTracking": "actual-cache-commit",
+                "materialObserverLeases": 3,
+                "unresolvedMaterialScopes": 0,
+                "lastMaterialChange": {
+                  "operation": "collider-material-initialize",
+                  "actualRead": "copied",
+                  "actualMatchesBefore": null,
+                  "actualMatchesCandidate": true,
+                  "effects": [],
+                  "failed": false
+                },
+                "cleanup": {
+                  "hasFailure": false,
+                  "cleanupFailures": [],
+                  "omittedFailures": 0
+                },
+                "activationBlockers": [
+                  "command-consumer-not-installed",
+                  "shared-material-propagation-and-subscription-integrity",
+                  "immediate-system-pause-notification",
+                  "complete-early-entry-qualification",
+                  "persistent-target-grant-budget"
+                ]
+              },
+              "ownerCleanupError": null,
+              "failure": {
+                "hasFailure": false
+              },
+              "teardown": {
+                "hasFailure": false,
+                "nativeReturned": false,
+                "nativeHasFailure": false,
+                "cleanupHasFailure": false
+              },
+              "writeback": {
+                "epoch": 0,
+                "epochLimit": 9007199254740991
+              },
+              "generation": 1,
+              "native": {
+                "nativeStepIndex": 0,
+                "nativeCompleted": false,
+                "snapshotAvailable": false
+              },
+              "nativeObservationCurrent": false,
+              "lastStepOutcome": "not-attempted",
+              "attemptedSteps": 0,
+              "lastDt": null,
+              "solverSubSteps": 4,
+              "gravity": [
+                0,
+                -10,
+                0
+              ],
+              "allowSleep": true,
+              "material": {
+                "friction": 0.6000000238418579,
+                "restitution": 0
+              },
+              "materialShapeCount": 2,
+              "sceneBindingCount": 2,
+              "sceneSyncCalls": 0,
+              "afterEventsCalls": 0,
+              "emittedStep": 0,
+              "componentEventsSupported": false,
+              "debugPresented": false,
+              "error": null
+            }
+          }
+        }
+      ],
+      "otherChecks": 4,
+      "exitCode": 1
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/owner-shared-material-source-red-20261022-invalid-negative-a",
+      "status": "EXPECTED_SOURCE_CONTRACT_RED_WITH_ORIGINAL_ASSERTION_FAILURE",
+      "receiptSha256": "9ae7106318e6c9eacdca785556447f9b7cb37cdc47c12d0629e8eaaebc22dd0e",
+      "rawSha256": "91fe9c771846c0148d0217f4796538de9a6a7f3e46b17db0ab096907c1c7b83e",
+      "namedInputs": 113,
+      "nativeInputs": 50,
+      "failedChecks": [
+        {
+          "id": "invalid owned coefficient refused before actual asset cache changes",
+          "pass": false,
+          "actual": {
+            "result": {
+              "threw": true,
+              "message": "Error: [AIR_E_BOX3D_CONFIG] material: Friction and restitution must be nonnegative.",
+              "code": "AIR_E_BOX3D_CONFIG"
+            },
+            "before": {
+              "friction": 0.3,
+              "materials": [
+                {
+                  "friction": 0.30000001192092896,
+                  "restitution": 0
+                },
+                {
+                  "friction": 0.30000001192092896,
+                  "restitution": 0
+                }
+              ],
+              "flags": 0
+            },
+            "actual": -1,
+            "native": [
+              {
+                "friction": 0.30000001192092896,
+                "restitution": 0
+              },
+              {
+                "friction": 0.30000001192092896,
+                "restitution": 0
+              }
+            ],
+            "owner": {
+              "state": "ready",
+              "commandOwner": {
+                "phase": "idle",
+                "bodies": 2,
+                "nativeOwnership": "owned",
+                "unresolvedNativeBodies": 0,
+                "components": 4,
+                "disabledComponents": 0,
+                "materials": 2,
+                "activeTemporaryScopes": 0,
+                "pendingCommands": 0,
+                "systemControl": {
+                  "observed": true,
+                  "paused": false,
+                  "queuePhase": "ready",
+                  "preparedQueueControl": false,
+                  "unresolvedScopes": 0,
+                  "lastChange": {
+                    "operation": "system-auto-simulation",
+                    "cacheEnabled": true,
+                    "cacheAutoSimulation": false,
+                    "queueCommitEntered": false,
+                    "queueCommitReturned": false,
+                    "failed": false,
+                    "actualRead": "copied"
+                  },
+                  "producers": "NOT_INTEGRATED"
+                },
+                "stagedCommandsSupported": false,
+                "unifiedTransactionsSupported": false,
+                "materialIdentityTracking": "actual-cache-commit",
+                "materialObserverLeases": 3,
+                "unresolvedMaterialScopes": 0,
+                "lastMaterialChange": {
+                  "operation": "collider-material-initialize",
+                  "actualRead": "copied",
+                  "actualMatchesBefore": null,
+                  "actualMatchesCandidate": true,
+                  "effects": [],
+                  "failed": false
+                },
+                "cleanup": {
+                  "hasFailure": false,
+                  "cleanupFailures": [],
+                  "omittedFailures": 0
+                },
+                "activationBlockers": [
+                  "command-consumer-not-installed",
+                  "shared-material-propagation-and-subscription-integrity",
+                  "immediate-system-pause-notification",
+                  "complete-early-entry-qualification",
+                  "persistent-target-grant-budget"
+                ]
+              },
+              "ownerCleanupError": null,
+              "failure": {
+                "hasFailure": false
+              },
+              "teardown": {
+                "hasFailure": false,
+                "nativeReturned": false,
+                "nativeHasFailure": false,
+                "cleanupHasFailure": false
+              },
+              "writeback": {
+                "epoch": 0,
+                "epochLimit": 9007199254740991
+              },
+              "generation": 1,
+              "native": {
+                "nativeStepIndex": 0,
+                "nativeCompleted": false,
+                "snapshotAvailable": false
+              },
+              "nativeObservationCurrent": false,
+              "lastStepOutcome": "not-attempted",
+              "attemptedSteps": 0,
+              "lastDt": null,
+              "solverSubSteps": 4,
+              "gravity": [
+                0,
+                -10,
+                0
+              ],
+              "allowSleep": true,
+              "material": {
+                "friction": 0.6000000238418579,
+                "restitution": 0
+              },
+              "materialShapeCount": 2,
+              "sceneBindingCount": 2,
+              "sceneSyncCalls": 0,
+              "afterEventsCalls": 0,
+              "emittedStep": 0,
+              "componentEventsSupported": false,
+              "debugPresented": false,
+              "error": null
+            }
+          }
+        }
+      ],
+      "otherChecks": 4,
+      "exitCode": 1
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/owner-shared-material-source-red-20261022-notification-order-a",
+      "status": "EXPECTED_SOURCE_CONTRACT_RED_WITH_ORIGINAL_ASSERTION_FAILURE",
+      "receiptSha256": "11630e6455bea22eca38a5261407ebe235523e0edd35de6566006a8bac4e6144",
+      "rawSha256": "fdbbb5a6e91babe6e1ca1a4be4b604db14b9d50b6b64cb137cf5aa857b3f2bef",
+      "namedInputs": 113,
+      "nativeInputs": 50,
+      "failedChecks": [
+        {
+          "id": "public listener registered first sees all physical propagation already completed",
+          "pass": false,
+          "actual": {
+            "result": {
+              "threw": false,
+              "message": "undefined",
+              "code": null
+            },
+            "notifications": [
+              [
+                {
+                  "friction": 0.30000001192092896,
+                  "restitution": 0
+                },
+                {
+                  "friction": 0.30000001192092896,
+                  "restitution": 0
+                }
+              ]
+            ],
+            "actual": 0.8,
+            "finalNative": [
+              {
+                "friction": 0.800000011920929,
+                "restitution": 0
+              },
+              {
+                "friction": 0.800000011920929,
+                "restitution": 0
+              }
+            ],
+            "owner": {
+              "state": "ready",
+              "commandOwner": {
+                "phase": "idle",
+                "bodies": 2,
+                "nativeOwnership": "owned",
+                "unresolvedNativeBodies": 0,
+                "components": 4,
+                "disabledComponents": 0,
+                "materials": 2,
+                "activeTemporaryScopes": 0,
+                "pendingCommands": 0,
+                "systemControl": {
+                  "observed": true,
+                  "paused": false,
+                  "queuePhase": "ready",
+                  "preparedQueueControl": false,
+                  "unresolvedScopes": 0,
+                  "lastChange": {
+                    "operation": "system-auto-simulation",
+                    "cacheEnabled": true,
+                    "cacheAutoSimulation": false,
+                    "queueCommitEntered": false,
+                    "queueCommitReturned": false,
+                    "failed": false,
+                    "actualRead": "copied"
+                  },
+                  "producers": "NOT_INTEGRATED"
+                },
+                "stagedCommandsSupported": false,
+                "unifiedTransactionsSupported": false,
+                "materialIdentityTracking": "actual-cache-commit",
+                "materialObserverLeases": 3,
+                "unresolvedMaterialScopes": 0,
+                "lastMaterialChange": {
+                  "operation": "collider-material-initialize",
+                  "actualRead": "copied",
+                  "actualMatchesBefore": null,
+                  "actualMatchesCandidate": true,
+                  "effects": [],
+                  "failed": false
+                },
+                "cleanup": {
+                  "hasFailure": false,
+                  "cleanupFailures": [],
+                  "omittedFailures": 0
+                },
+                "activationBlockers": [
+                  "command-consumer-not-installed",
+                  "shared-material-propagation-and-subscription-integrity",
+                  "immediate-system-pause-notification",
+                  "complete-early-entry-qualification",
+                  "persistent-target-grant-budget"
+                ]
+              },
+              "ownerCleanupError": null,
+              "failure": {
+                "hasFailure": false
+              },
+              "teardown": {
+                "hasFailure": false,
+                "nativeReturned": false,
+                "nativeHasFailure": false,
+                "cleanupHasFailure": false
+              },
+              "writeback": {
+                "epoch": 0,
+                "epochLimit": 9007199254740991
+              },
+              "generation": 1,
+              "native": {
+                "nativeStepIndex": 0,
+                "nativeCompleted": false,
+                "snapshotAvailable": false
+              },
+              "nativeObservationCurrent": false,
+              "lastStepOutcome": "not-attempted",
+              "attemptedSteps": 0,
+              "lastDt": null,
+              "solverSubSteps": 4,
+              "gravity": [
+                0,
+                -10,
+                0
+              ],
+              "allowSleep": true,
+              "material": {
+                "friction": 0.6000000238418579,
+                "restitution": 0
+              },
+              "materialShapeCount": 2,
+              "sceneBindingCount": 2,
+              "sceneSyncCalls": 0,
+              "afterEventsCalls": 0,
+              "emittedStep": 0,
+              "componentEventsSupported": false,
+              "debugPresented": false,
+              "error": null
+            }
+          }
+        }
+      ],
+      "otherChecks": 4,
+      "exitCode": 1
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/owner-shared-material-source-red-20261022-owned-destroy-a",
+      "status": "EXPECTED_SOURCE_CONTRACT_RED_WITH_ORIGINAL_ASSERTION_FAILURE",
+      "receiptSha256": "d36305c447cc0c74e967e627c7ff0295a94c9cc0c275e15557ad5312a968e161",
+      "rawSha256": "c2b15cc72aaffb395dca2dcc7794f90ea26c6cc4f5a671d658bf18c6c4e59330",
+      "namedInputs": 113,
+      "nativeInputs": 50,
+      "failedChecks": [
+        {
+          "id": "still-owned asset destroy refuses before deferred flags and registry mutation",
+          "pass": false,
+          "actual": {
+            "result": {
+              "threw": false,
+              "message": "undefined",
+              "code": null
+            },
+            "returned": true,
+            "beforeFlags": 0,
+            "actualFlags": 4,
+            "remainsRegistered": false,
+            "native": [
+              {
+                "friction": 0.30000001192092896,
+                "restitution": 0
+              },
+              {
+                "friction": 0.30000001192092896,
+                "restitution": 0
+              }
+            ],
+            "owner": {
+              "state": "ready",
+              "commandOwner": {
+                "phase": "idle",
+                "bodies": 2,
+                "nativeOwnership": "owned",
+                "unresolvedNativeBodies": 0,
+                "components": 4,
+                "disabledComponents": 0,
+                "materials": 2,
+                "activeTemporaryScopes": 0,
+                "pendingCommands": 0,
+                "systemControl": {
+                  "observed": true,
+                  "paused": false,
+                  "queuePhase": "ready",
+                  "preparedQueueControl": false,
+                  "unresolvedScopes": 0,
+                  "lastChange": {
+                    "operation": "system-auto-simulation",
+                    "cacheEnabled": true,
+                    "cacheAutoSimulation": false,
+                    "queueCommitEntered": false,
+                    "queueCommitReturned": false,
+                    "failed": false,
+                    "actualRead": "copied"
+                  },
+                  "producers": "NOT_INTEGRATED"
+                },
+                "stagedCommandsSupported": false,
+                "unifiedTransactionsSupported": false,
+                "materialIdentityTracking": "actual-cache-commit",
+                "materialObserverLeases": 3,
+                "unresolvedMaterialScopes": 0,
+                "lastMaterialChange": {
+                  "operation": "collider-material-initialize",
+                  "actualRead": "copied",
+                  "actualMatchesBefore": null,
+                  "actualMatchesCandidate": true,
+                  "effects": [],
+                  "failed": false
+                },
+                "cleanup": {
+                  "hasFailure": false,
+                  "cleanupFailures": [],
+                  "omittedFailures": 0
+                },
+                "activationBlockers": [
+                  "command-consumer-not-installed",
+                  "shared-material-propagation-and-subscription-integrity",
+                  "immediate-system-pause-notification",
+                  "complete-early-entry-qualification",
+                  "persistent-target-grant-budget"
+                ]
+              },
+              "ownerCleanupError": null,
+              "failure": {
+                "hasFailure": false
+              },
+              "teardown": {
+                "hasFailure": false,
+                "nativeReturned": false,
+                "nativeHasFailure": false,
+                "cleanupHasFailure": false
+              },
+              "writeback": {
+                "epoch": 0,
+                "epochLimit": 9007199254740991
+              },
+              "generation": 1,
+              "native": {
+                "nativeStepIndex": 0,
+                "nativeCompleted": false,
+                "snapshotAvailable": false
+              },
+              "nativeObservationCurrent": false,
+              "lastStepOutcome": "not-attempted",
+              "attemptedSteps": 0,
+              "lastDt": null,
+              "solverSubSteps": 4,
+              "gravity": [
+                0,
+                -10,
+                0
+              ],
+              "allowSleep": true,
+              "material": {
+                "friction": 0.6000000238418579,
+                "restitution": 0
+              },
+              "materialShapeCount": 2,
+              "sceneBindingCount": 2,
+              "sceneSyncCalls": 0,
+              "afterEventsCalls": 0,
+              "emittedStep": 0,
+              "componentEventsSupported": false,
+              "debugPresented": false,
+              "error": null
+            }
+          }
+        }
+      ],
+      "otherChecks": 4,
+      "exitCode": 1
+    }
+  ],
+  "scope": "Original actual AIR/System/PhysicsMaterial/Collider paths, two native shapes sharing one asset. Each case failed exactly the new shared-material contract assertion; four setup/step-absence/native-close controls passed. No injected native result or native failure. These are RED, not acceptance PASS. Source hashes refer to checkpoint35 world before the separate batch-kernel candidate.",
+  "formalCells": "2128_NOT_RUN",
+  "gates": "ALL_NINE_UNPASSED"
+}

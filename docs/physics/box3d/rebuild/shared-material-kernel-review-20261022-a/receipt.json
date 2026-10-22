@@ -1,0 +1,33 @@
+{
+  "status": "PASS_THREE_FINITE_CURRENT_WASM_KERNEL_CONTROLS",
+  "worldSourceSha256": "c77920b810d6f374e3cea49dc8be80b9ba1d0c6ca22bef617ed199fa96943882",
+  "runs": [
+    {
+      "path": "docs/physics/box3d/rebuild/material-batch-kernel-readback-release-20261022-a",
+      "status": "PASS_LIMITED_MATERIAL_NATIVE_FAILURE",
+      "receiptSha256": "ba3cdb236b650cd9c43ef549a628e5d7b2557fc5e5f5ddc130c02693bb835ebd",
+      "rawSha256": "9be2b10b2b65ae0b32e98679e85bdfacaf154041842a70f45f7786856e665d2d",
+      "namedInputs": 109,
+      "nativeInputs": 50
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/material-batch-kernel-pause-release-20261022-a",
+      "status": "PASS_LIMITED_SYSTEM_PAUSE",
+      "receiptSha256": "61dee32c4da8dce61bfd6ea51c59f8e2de9d3db743ba165c212aebb1e0a65bd2",
+      "rawSha256": "795564909e8b028408b77ce7dc74d0ee9245eeed4b050358efce5e22d7a6e746",
+      "namedInputs": 111,
+      "nativeInputs": 50
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/material-batch-preflight-release-20261022-a",
+      "status": "PASS_LIMITED_MATERIAL_BATCH_PREFLIGHT",
+      "receiptSha256": "6755da3890af288881c626436aeacc3d56c1c48ce9e7cd86624767f768678adb",
+      "rawSha256": "e1ba6460f02c1867da852944b05c265d009ecaf4c87c2dbeaadb54443f649a70",
+      "namedInputs": 109,
+      "nativeInputs": 50
+    }
+  ],
+  "scope": "Prepared read-only all-shape material kernel, actual second-shape read refusal with zero setters and subsequent two-shape success, post-native/readback failure fault/no replay, original System pause. No shared asset entry/lease wiring, not all-owner qualification, no browser/full Gate.",
+  "sourceContractRED": "Four original shared-asset entry assertions remain RED; this kernel split alone does not fix them.",
+  "formalInventory": "2128_NOT_RUN_ALL_NINE_GATES_UNPASSED"
+}

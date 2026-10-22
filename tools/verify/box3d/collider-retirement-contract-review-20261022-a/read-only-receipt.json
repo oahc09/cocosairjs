@@ -1,0 +1,14 @@
+{
+  "completedAt": "2026-10-22T18:42:21.490404+00:00",
+  "status": "BLOCKED_UNINTEGRATED_CANDIDATE",
+  "reviewOnly": true,
+  "newTestsRun": false,
+  "buildsRun": false,
+  "mainProductEdits": false,
+  "oldCandidateOrTestEdits": false,
+  "inputSourceDrift": [],
+  "planLinesScanned": 1178,
+  "unsupportedAutoRetirementExpectationRows": 8,
+  "noContractAuthorizationFound": true,
+  "proposalAuthority": "Design constraints for review, not a contract amendment or integration approval"
+}
