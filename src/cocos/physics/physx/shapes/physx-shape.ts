@@ -23,6 +23,7 @@
 */
 
 /* eslint-disable @typescript-eslint/no-unsafe-return */
+import { recordMaterialAcquisitionUnknown } from '../../framework/physics-material-bindings';
 import { IVec3Like, Quat, Vec3, geometry } from '../../../core';
 import { Collider, RigidBody, PhysicsMaterial, PhysicsSystem } from '../../framework';
 import { IBaseShape } from '../../spec/i-physics-shape';
@@ -131,6 +132,8 @@ export class PhysXShape implements IBaseShape {
 
     protected getSharedMaterial (v: PhysicsMaterial | null): any {
         const v1 = (v == null) ? PhysicsSystem.instance.defaultMaterial : v;
+        // Public raw effects have no independently proven release/participation receipt.
+        recordMaterialAcquisitionUnknown(v1);
         if (!PX.CACHE_MAT[v1.id]) {
             const physics = PhysXInstance.physics;
             const mat = physics.createMaterial(v1.friction, v1.friction, v1.restitution);

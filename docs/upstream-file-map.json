@@ -2,7 +2,7 @@
   "meta": {
     "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
     "note": "Air Path 与 Upstream Path 一致(前缀 src/)；modified 文件另行标注 reason；upstreamPath=null 表示该行为 Air 原创文件或上游产物（仓库内无对应源文件），必须 modified:true 并在 reason 说明出处",
-    "modifiedCount": 260,
+    "modifiedCount": 270,
     "pal": {
       "revision": "9f0e30acb31f6d670f2c0bf818d61039846a2860",
       "license": "MIT",
@@ -4929,7 +4929,7 @@
       "upstreamPath": "cocos/physics/framework/assets/physics-material.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "extraction copy 2026-10-22 unified-command preparation: Opt-in identity-keyed mutation fences reject four coefficient setters, setValues and destroy before coercion, fields, events, registry removal or deferred destruction. Finite real-source lease controls only; actual World lease activation and new WASM integration remain unqualified."
+      "reason": "extraction copy 2026-10-22 unified-command preparation: Opt-in identity-keyed mutation fences reject four coefficient setters, setValues and destroy before coercion, fields, events, registry removal or deferred destruction. Finite real-source lease controls only; actual World lease activation and new WASM integration remain unqualified. 2026-10-22 private material integration: owned coefficient mutations and destroy use private owner/actual-binding coverage rather than public listener membership, preserving original unobserved coefficient paths. New neutral wiring is not covered by historical source PASS.; AIR: constructor registers a fixed private coefficient reader without reading values or changing foreign setter behavior"
     },
     {
       "airPath": "src/cocos/physics/framework/collision-matrix.ts",
@@ -4978,7 +4978,7 @@
       "upstreamPath": "cocos/physics/framework/components/colliders/collider.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "2026-10-22 Box3D-only initialized collider setter transaction: adapter validates the candidate before cache/listener replacement. Box/Sphere receive normalized candidate dimensions without changing common shape interfaces; other backend cache-first paths and upstream headers remain unchanged. Actual-source mock controls only; native shape and complete shared-material rollback remain unqualified. Initial Box3D onLoad attaches the existing shared-material update listener only after successful native shape initialization; two actual colliders, listener replacement and destruction were checked against l2 WASM. Asset mutation before EVENT_UPDATE callback and unexpected subscription failure are not transactional rollback guarantees. 2026-10-22 unified-command preparation: Opt-in mutation fences reject material assignment and the side-effecting shared-material clone getter before listeners, delegates or caches change. Finite real-source lease controls only; actual World lease activation and new WASM integration remain unqualified. Stage A opt-in identity-lease assertions now precede supported property/filter/sleep/velocity mutations and mutable bounds reads before caller evaluation or cache/native work; unchanged no-lease algorithms and nine command wrappers remain delegable. Finite explicit-lease source controls and separate real Release lifecycle/alias-fault evidence do not activate unified transactions or qualify listener editing."
+      "reason": "2026-10-22 Box3D-only initialized collider setter transaction: adapter validates the candidate before cache/listener replacement. Box/Sphere receive normalized candidate dimensions without changing common shape interfaces; other backend cache-first paths and upstream headers remain unchanged. Actual-source mock controls only; native shape and complete shared-material rollback remain unqualified. Initial Box3D onLoad attaches the existing shared-material update listener only after successful native shape initialization; two actual colliders, listener replacement and destruction were checked against l2 WASM. Asset mutation before EVENT_UPDATE callback and unexpected subscription failure are not transactional rollback guarantees. 2026-10-22 unified-command preparation: Opt-in mutation fences reject material assignment and the side-effecting shared-material clone getter before listeners, delegates or caches change. Finite real-source lease controls only; actual World lease activation and new WASM integration remain unqualified. Stage A opt-in identity-lease assertions now precede supported property/filter/sleep/velocity mutations and mutable bounds reads before caller evaluation or cache/native work; unchanged no-lease algorithms and nine command wrappers remain delegable. Finite explicit-lease source controls and separate real Release lifecycle/alias-fault evidence do not activate unified transactions or qualify listener editing. 2026-10-22 private material integration and neutral candidate: actual source registration precedes initialize; identity/clone transitions preserve original callback/native/cache order with exact old/candidate hazards; public notifications are not physics ownership, and teardown needs independent native release proof. This candidate remains separately qualified, not a full Gate."
     },
     {
       "airPath": "src/cocos/physics/framework/components/colliders/cone-collider.ts",
@@ -5124,15 +5124,15 @@
       "airPath": "src/cocos/physics/framework/physics-selector.ts",
       "upstreamPath": "cocos/physics/framework/physics-selector.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "extraction copy 2026-10-22 Box3D neutral material candidate: records actual constructed world/shape identities and distinguishes shared nonphysical fallback objects; failed acquisition remains opaque, never inferred released."
     },
     {
       "airPath": "src/cocos/physics/framework/physics-system.ts",
       "upstreamPath": "cocos/physics/framework/physics-system.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "2026-10-22 Box3D-only native-first allowSleep/gravity/default material assignment: commit public cached values after native acceptance, and transfer the default-material listener only after success. All other backend branches retain original cache-first order. Mutable gravity aliases, existing material EVENT_UPDATE and resetConfiguration remain explicitly outside this narrow transaction. 2026-10-22 unified-command preparation: Opt-in mutation fences reject configuration setters, material replacement and resets before fields, input reads or delegation; outside a lease original behavior is retained. Finite real-source lease controls only; actual World lease activation and new WASM integration remain unqualified. 2026-10-22 earliest System entry fence: 14 opt-in assertions precede postUpdate, explicit step/sync/events and all ray/line/sweep query cache entry work, including World lookup and caller coercion. No-lease paths retain original algorithms. Actual-source 81-case/321-check RED/GREEN and lead rerun use counted mock World delegates, not native physics."
+      "reason": "2026-10-22 Box3D-only native-first allowSleep/gravity/default material assignment: commit public cached values after native acceptance, and transfer the default-material listener only after success. All other backend branches retain original cache-first order. Mutable gravity aliases, existing material EVENT_UPDATE and resetConfiguration remain explicitly outside this narrow transaction. 2026-10-22 unified-command preparation: Opt-in mutation fences reject configuration setters, material replacement and resets before fields, input reads or delegation; outside a lease original behavior is retained. Finite real-source lease controls only; actual World lease activation and new WASM integration remain unqualified. 2026-10-22 earliest System entry fence: 14 opt-in assertions precede postUpdate, explicit step/sync/events and all ray/line/sweep query cache entry work, including World lookup and caller coercion. No-lease paths retain original algorithms. Actual-source 81-case/321-check RED/GREEN and lead rerun use counted mock World delegates, not native physics. 2026-10-22 private material integration and neutral candidate: actual default source is bound to a fixed world generation; each original default assignment branch preserves its cache/native order. An old non-null cache does not prove acceptance by a newly constructed world; unknown generations are retained."
     },
     {
       "airPath": "src/cocos/physics/spec/i-character-controller.ts",
@@ -7742,8 +7742,8 @@
       "airPath": "src/cocos/physics/cannon/cannon-world.ts",
       "upstreamPath": "cocos/physics/cannon/cannon-world.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
-      "modified": false,
-      "reason": "V1.2 批次 physics-cannon 回归抽取，官方原文"
+      "modified": true,
+      "reason": "V1.2 批次 physics-cannon 回归抽取，官方原文 2026-10-22 Box3D neutral candidate: actual raw default-material effects record an asset-scoped opaque hazard before reads/writes; ordinary foreign destroy is not release authority."
     },
     {
       "airPath": "src/cocos/physics/cannon/constraints/cannon-constraint.ts",
@@ -7819,8 +7819,8 @@
       "airPath": "src/cocos/physics/cannon/shapes/cannon-shape.ts",
       "upstreamPath": "cocos/physics/cannon/shapes/cannon-shape.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
-      "modified": false,
-      "reason": "V1.2 批次 physics-cannon 回归抽取，官方原文"
+      "modified": true,
+      "reason": "V1.2 批次 physics-cannon 回归抽取，官方原文 2026-10-22 Box3D neutral candidate: record resolved asset as opaque raw-use hazard before coefficient/global material cache/native writes, so a later shared Box3D value transaction refuses incomplete participation. No foreign coefficient validator, propagation implementation, or release inference added."
     },
     {
       "airPath": "src/cocos/physics/cannon/shapes/cannon-simplex-shape.ts",
@@ -8876,8 +8876,8 @@
       "airPath": "src/cocos/physics/bullet/shapes/bullet-shape.ts",
       "upstreamPath": "cocos/physics/bullet/shapes/bullet-shape.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
-      "modified": false,
-      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+      "modified": true,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文 2026-10-22 Box3D neutral candidate: resolved material raw-use hazard is captured before potential native writes; foreign-only value semantics retained. This conservative marker does not claim mixed-backend propagation or native release."
     },
     {
       "airPath": "src/cocos/physics/bullet/shapes/bullet-simplex-shape.ts",
@@ -9065,8 +9065,8 @@
       "airPath": "src/cocos/physics/physx/shapes/physx-shape.ts",
       "upstreamPath": "cocos/physics/physx/shapes/physx-shape.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
-      "modified": false,
-      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+      "modified": true,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文 2026-10-22 Box3D neutral candidate: shared-material helper records resolved asset opaque use before native/global cache effects, covering existing terrain/trimesh delegates through this helper. No mixed-backend propagation or release proof claimed."
     },
     {
       "airPath": "src/cocos/physics/physx/shapes/physx-sphere-shape.ts",
@@ -10011,7 +10011,42 @@
       "upstreamPath": null,
       "baseline": "AIR original",
       "modified": true,
-      "reason": "2026-10-22 Box3D rebuild: private typed copied-material delegate adapter over the B0 observer. Exact one-use delegate and clone handling only; not wired to World/Collider/System entries yet. Pure controls are not native material qualification."
+      "reason": "2026-10-22 Box3D rebuild: private typed copied-material delegate adapter over the B0 observer. Exact one-use delegate and clone handling only; not wired to World/Collider/System entries yet. Pure controls are not native material qualification. 2026-10-22 checkpoint37 actual Box3D identity/value ownership is wired through Collider/System/World. Earlier unwired description is historical; privateSubscriptions capability separates public notifications from private physical propagation. Mixed neutral coverage is a subsequent candidate.; AIR: explicit copied candidate-value reader capability selected by Box3D, with no missing-authentication fallback to public accessors"
+    },
+    {
+      "airPath": "src/cocos/physics/framework/physics-material-values-transaction.ts",
+      "upstreamPath": null,
+      "baseline": "AIR Box3D integration",
+      "modified": true,
+      "reason": "2026-10-22 Box3D rebuild: Private copied-coefficient value transaction registry, owner membership and truthful entered/returned/readback/cache phases; no rollback or replay. Neutral coverage checks actual binding roster before callbacks and through transaction boundaries."
+    },
+    {
+      "airPath": "src/cocos/physics/framework/physics-material-values.ts",
+      "upstreamPath": null,
+      "baseline": "AIR Box3D integration",
+      "modified": true,
+      "reason": "2026-10-22 Box3D rebuild: Private shared production value registry and actual-binding coverage admission. Not a public barrel API."
+    },
+    {
+      "airPath": "src/cocos/physics/framework/physics-material-bindings.ts",
+      "upstreamPath": null,
+      "baseline": "AIR Box3D integration",
+      "modified": true,
+      "reason": "2026-10-22 Box3D rebuild: Private backend-neutral actual source/world-generation ledger, exact owner claims and one-use independent cleanup proofs. Unknown/unclaimed bindings reject covered Box3D value mutations; no foreign propagation implementation."
+    },
+    {
+      "airPath": "src/cocos/physics/framework/physics-material-binding-source.ts",
+      "upstreamPath": null,
+      "baseline": "AIR Box3D integration",
+      "modified": true,
+      "reason": "2026-10-22 Box3D rebuild: Private real factory/source glue binds Collider/System fixed cache readers to original constructed adapter/world identities; no later selector inference or listener-based ownership."
+    },
+    {
+      "airPath": "src/cocos/physics/framework/physics-material-cache.ts",
+      "upstreamPath": null,
+      "baseline": "AIR original",
+      "modified": true,
+      "reason": "AIR: private constructor-installed PhysicsMaterial coefficient reader; authentic fixed cache identity for Box3D initialization, identity transactions and raw refresh, never public accessor inference"
     }
   ]
 }

@@ -25,6 +25,7 @@
 import { beginPhysicsMaterialChange } from './physics-material-transaction';
 import { installPhysicsSystemControlSource, beginPhysicsSystemControl, getPhysicsSystemControlDisposition, assertPhysicsSystemManualStep } from './physics-system-control';
 import { assertMutationAllowed } from '../../core/data/mutation-guard';
+import { ensurePhysicsMaterialSource, beginPhysicsMaterialSourceIdentity, initializePhysicsMaterialSource } from './physics-material-binding-source';
 import { BUILD, EDITOR_NOT_IN_PREVIEW, LOAD_BULLET_MANUALLY, LOAD_PHYSX_MANUALLY } from 'internal:constants';
 import { Vec3, RecyclePool, Enum, System, cclegacy, settings, geometry, warn, IQuatLike, IVec3Like, SettingsCategory, errorID, warnID } from '../../core';
 import { IPhysicsWorld, IRaycastOptions } from '../spec/i-physics-world';
@@ -270,6 +271,9 @@ export class PhysicsSystem extends System implements IWorldInitData {
      */
     public setDefaultPhysicsMaterial (material: PhysicsMaterial): void {
         assertMutationAllowed(this, 'PhysicsSystem.setDefaultPhysicsMaterial');
+        ensurePhysicsMaterialSource(this, this.physicsWorld, 'default', () => this._material ?? null);
+        const identity = beginPhysicsMaterialSourceIdentity(this, this._material ?? null, material, 'system-default-material-set');
+        try {
         const change = beginPhysicsMaterialChange(this, 'system-default-material-set');
         if (change) {
             try {
@@ -277,6 +281,7 @@ export class PhysicsSystem extends System implements IWorldInitData {
                     before: { kind: 'system-default-material', material: this._material ?? null },
                     candidate: { kind: 'system-default-material', material },
                 }));
+                identity?.recordEntered('copied-native-delegate');
                 change.apply();
                 if (!change.privateSubscriptions) {
                     change.effect('listener-edit-entered');
@@ -289,10 +294,13 @@ export class PhysicsSystem extends System implements IWorldInitData {
                     change.effect('listeners-complete');
                 }
                 change.commit(() => ({ kind: 'system-default-material', material: this._material }));
+                identity?.publishActual(this._material);
+                initializePhysicsMaterialSource(this);
             } catch (error) { change.fail(error, () => ({ kind: 'system-default-material', material: this._material ?? null })); }
             finally { change.dispose(); }
             return;
         }
+        identity?.recordEntered('legacy-default-material');
         if (selector.id === 'box3d') {
             this.physicsWorld.setDefaultMaterial(material);
             if (this._material !== material) {
@@ -300,16 +308,28 @@ export class PhysicsSystem extends System implements IWorldInitData {
             }
             this._material = material;
             this._material.on(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
+            identity?.publishActual(this._material);
+            initializePhysicsMaterialSource(this);
             return;
         }
         this._material = material;
         this.physicsWorld.setDefaultMaterial(this._material);
         this._material.on(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
+        identity?.publishActual(this._material);
+        initializePhysicsMaterialSource(this);
+        } catch (error) {
+            try { identity?.fail(this._material ?? null); } catch { /* Preserve original failure. */ }
+            throw error;
+        }
     }
 
     // eslint-disable-next-line consistent-return
     private initDefaultMaterial (): Promise<void> {
-        if (this._material != null) return Promise.resolve();
+        if (this._material != null) {
+            // A non-null old cache is not acceptance by a new actual world generation.
+            ensurePhysicsMaterialSource(this, this.physicsWorld, 'default', () => this._material ?? null);
+            return Promise.resolve();
+        }
 
         const builtinMaterial = builtinResMgr.get<PhysicsMaterial>('default-physics-material');
         if (!builtinMaterial) {

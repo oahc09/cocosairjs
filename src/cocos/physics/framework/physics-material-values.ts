@@ -29,6 +29,7 @@ import {
     MaterialValuesOwnerLease,
     MaterialValuesTicket,
 } from './physics-material-values-transaction';
+import { lockMaterialValuesCoverage, assertMaterialBindingDestroyable } from './physics-material-bindings';
 
 const values = new PhysicsMaterialValuesTransactionRegistry();
 
@@ -41,9 +42,52 @@ export function registerPhysicsMaterialValuesOwner(
 }
 
 export function beginPhysicsMaterialValuesChange(asset: object): MaterialValuesTicket | undefined {
-    return values.begin(asset);
+    const coverage = lockMaterialValuesCoverage(asset);
+    let ticket: MaterialValuesTicket | undefined;
+    try {
+        ticket = values.begin(asset, coverage);
+    } catch (error) {
+        coverage.close();
+        throw error;
+    }
+    if (!ticket) {
+        coverage.close();
+        return undefined;
+    }
+    const original = ticket;
+    const receiver = (value: unknown): void => {
+        if (value !== wrapped) {
+            const error = new Error('Invalid covered material ticket receiver.');
+            coverage.fail(error);
+            throw error;
+        }
+    };
+    const wrapped: MaterialValuesTicket = Object.freeze({
+        prepare(source): void {
+            receiver(this);
+            original.prepare(source);
+        },
+        apply(): void {
+            receiver(this);
+            original.apply();
+        },
+        dispose(): void {
+            receiver(this);
+            try {
+                original.dispose();
+            } finally {
+                coverage.close();
+            }
+        },
+        diagnostics() {
+            receiver(this);
+            return original.diagnostics();
+        },
+    });
+    return wrapped;
 }
 
 export function assertPhysicsMaterialDestroyable(asset: object): void {
+    assertMaterialBindingDestroyable(asset);
     values.assertDestroyable(asset);
 }

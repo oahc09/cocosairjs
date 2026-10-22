@@ -71,52 +71,79 @@ class Box3DPrimitiveShape {
     initialize(value: Collider): void {
         this.#world().assertComponentConfiguration('Collider initialize');
         if (this.#body) throw worldError('AIR_E_BOX3D_CONFIG', 'shape initialize', 'Already initialized.');
-        if (value.needCollisionEvent || value.needTriggerEvent) unsupportedBox3D('collider event listeners (T15)');
-        const center = bodyVector(value.center, 'center');
-        const dimensions =
-            this.#kind === 'box'
-                ? bodyVector((value as BoxCollider).size, 'box size')
-                : [(value as SphereCollider).radius];
-        const asset = value.sharedMaterial;
-        const material = primitiveMaterial(asset);
-        const scale = bodyVector(value.node.worldScale, 'initial shape scale');
-        const geometry = primitiveGeometry(this.#kind, center, dimensions, scale, value.isTrigger, material);
-        // Preserve the component for its real onDestroy listener-clearing callback if native acquisition fails.
-        this.#collider = value;
-        const body = this.#world().acquireSharedBody(value.node, this, this.#configuration, {
-            adapter: this,
-            component: value,
-            kind: 'collider',
-            material: asset,
-            applyMaterial: (authority, copied) => {
-                this.body.applyCopiedMaterial(this, authority, copied);
-                this.#material = copied;
-                this.#geometry = Object.freeze({ ...this.#geometry!, material: copied });
-            },
-            prepareMaterialValues: (authority, copied) => {
-                const body = this.body;
-                const plan = body.prepareMaterialValues(this, authority, copied);
-                const previous = this.#geometry;
-                if (!previous) throw worldError('AIR_E_BOX3D_CONFIG', 'prepare material geometry', 'Missing initialized geometry.');
-                const next = Object.freeze({ ...previous, material: copied });
-                let committed = false;
-                return Object.freeze({ shape: plan.shape, commitCaches: () => {
-                    if (committed || this.#body !== body || this.#geometry !== previous)
-                        throw worldError('AIR_E_BOX3D_REENTRANT', 'commit material geometry', 'Consumed or stale geometry.');
-                    committed = true;
-                    plan.commitCaches();
-                    this.#material = copied;
-                    this.#geometry = next;
-                } });
-            },
+        const prepared = this.#world().prepareInitialShapeMaterial(this, value, (asset) => {
+            if (value.needCollisionEvent || value.needTriggerEvent) unsupportedBox3D('collider event listeners (T15)');
+            const center = bodyVector(value.center, 'center');
+            const dimensions =
+                this.#kind === 'box'
+                    ? bodyVector((value as BoxCollider).size, 'box size')
+                    : [(value as SphereCollider).radius];
+            const material = primitiveMaterial(asset);
+            const scale = bodyVector(value.node.worldScale, 'initial shape scale');
+            const trigger = value.isTrigger;
+            const geometry = primitiveGeometry(this.#kind, center, dimensions, scale, trigger, material);
+            return Object.freeze({ center, dimensions, material, trigger, geometry });
         });
-        this.#body = body;
-        this.#center = center;
-        this.#dimensions = Object.freeze([...dimensions]);
-        this.#material = material;
-        this.#trigger = value.isTrigger;
-        this.#geometry = geometry;
-        // Actual Collider.onLoad listener/cache commit completes this identity.
+        const { material: asset, initialization } = prepared;
+        const { center, dimensions, material, trigger, geometry } = prepared.copied;
+        try {
+            initialization.assertValid();
+            // Preserve the component for its real onDestroy listener-clearing callback if native acquisition fails.
+            this.#collider = value;
+            const body = this.#world().acquireSharedBody(value.node, this, this.#configuration, {
+                adapter: this,
+                component: value,
+                kind: 'collider',
+                material: asset,
+                applyMaterial: (authority, copied) => {
+                    this.body.applyCopiedMaterial(this, authority, copied);
+                    this.#material = copied;
+                    this.#geometry = Object.freeze({ ...this.#geometry!, material: copied });
+                },
+                prepareMaterialValues: (authority, copied) => {
+                    const body = this.body;
+                    const plan = body.prepareMaterialValues(this, authority, copied);
+                    const previous = this.#geometry;
+                    if (!previous)
+                        throw worldError(
+                            'AIR_E_BOX3D_CONFIG',
+                            'prepare material geometry',
+                            'Missing initialized geometry.',
+                        );
+                    const next = Object.freeze({ ...previous, material: copied });
+                    let committed = false;
+                    return Object.freeze({
+                        shape: plan.shape,
+                        commitCaches: () => {
+                            if (committed || this.#body !== body || this.#geometry !== previous)
+                                throw worldError(
+                                    'AIR_E_BOX3D_REENTRANT',
+                                    'commit material geometry',
+                                    'Consumed or stale geometry.',
+                                );
+                            committed = true;
+                            plan.commitCaches();
+                            this.#material = copied;
+                            this.#geometry = next;
+                        },
+                    });
+                },
+            });
+            // Retain the actual acquired body before validation can throw, so onDestroy can clean it.
+            this.#body = body;
+            initialization.assertValid();
+            this.#center = center;
+            this.#dimensions = Object.freeze([...dimensions]);
+            this.#material = material;
+            this.#trigger = trigger;
+            this.#geometry = geometry;
+            initialization.complete();
+            // Actual Collider.onLoad listener/cache commit completes this identity.
+        } catch (error) {
+            throw initialization.fail(error);
+        } finally {
+            initialization.close();
+        }
     }
     onLoad(): void {
         void this.body;
@@ -166,6 +193,7 @@ class Box3DPrimitiveShape {
     }
     setMaterial(value: PhysicsMaterial | null): void {
         this.assertConfiguration('setMaterial');
+        this.#world().assertAcceptedShapeMaterialIdentity(this, value);
         void this.body;
         const material = primitiveMaterial(value);
         if (this.#active) this.body.updateShapeMaterial(this, material);

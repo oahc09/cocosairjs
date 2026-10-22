@@ -37,7 +37,15 @@ if args.prerequisite_source_receipt:
  assert library['afterVerification']['status']=='PASS' and library['afterVerification']['checkedFiles']==len(source['files'])
  assert library['evidenceClosure']['status']=='PASS_SCOPED_COMPLETED_EVIDENCE_CLOSURE'
  base=source['commit']
- assert source['prerequisite']['commit']=='e5c5674bfe08be0c9fda72c484f4380bd0d0e2c6','This bounded chain currently supports an exact base22 cumulative prerequisite only'
+ if source['prerequisite']['commit']!='e5c5674bfe08be0c9fda72c484f4380bd0d0e2c6':
+  # Exact already Library-restored checkpoint37 is the sole newly supported chained base.
+  # Pin its complete source receipt, not only self-consistent mutable metadata.
+  assert source['commit']=='481678df9aacf8240136e5a46e726273e10ba9d6' and source['tree']=='67930c64e8b1caa9244ec30a6e5ecd9f8e42b49f'
+  assert hashlib.sha256(source_bytes).hexdigest()=='9a2945f42c70a929a2ee7befe60879cc70fffc6fc369d08d83a9ef64360839e1','Exact verified checkpoint37 source receipt required'
+  assert source['prerequisite']['commit']=='45b526f248575a0542af8eed591c0cf8c8a1ba8d'
+  assert source['prerequisite']['ancestors'][0]['commit']=='e5c5674bfe08be0c9fda72c484f4380bd0d0e2c6'
+  assert library['libraryFileId']=='libfile_c97f345e13a88191b920a9ceb3ceff37' and library['fileId']=='file_00000000b2d481f9be0fe66dffa4dee3'
+  assert library['archive']['bytes']==5043137 and library['archive']['sha256']=='33d17d0dd303bbf3b9d5e7189be4d55c457b83b3f0378988c9d3638116736e8e'
  prerequisite={'commit':base,'tree':source['tree'],'ancestors':[source['prerequisite']],'libraryFileId':library['libraryFileId'],'fileId':library['fileId'],'archiveBytes':library['archive']['bytes'],'archiveSha256':library['archive']['sha256'],'sourceCheckpointReceiptSha256':hashlib.sha256(source_bytes).hexdigest(),'libraryRestoreReceiptPath':str(library_path.relative_to(root)),'libraryRestoreReceiptSha256':hashlib.sha256(library_bytes).hexdigest(),'scope':'Requires this exact independently Library-restored prerequisite checkpoint and its recorded predecessor chain. Not a standalone/full repository bundle.'}
 head=git('rev-parse','HEAD').decode().strip();assert head==args.expected_head;branch='feat/box3d-rebuild-20261022';assert git('symbolic-ref','--short','HEAD').decode().strip()==branch;git('merge-base','--is-ancestor',base,head)
 out.mkdir()

@@ -1,0 +1,75 @@
+{
+  "roots": [
+    {
+      "alias": "integration",
+      "directory": "/workspace/scratch/62d43a81bbde/box3d-neutral-material-integration-20261022"
+    },
+    {
+      "alias": "ledger",
+      "directory": "/tmp/box3d-neutral-material-ledger-20261022"
+    },
+    {
+      "alias": "initialization",
+      "directory": "/tmp/box3d-neutral-material-initialization-20261022"
+    },
+    {
+      "alias": "review",
+      "directory": "/tmp/box3d-neutral-material-wiring-review-20261022"
+    },
+    {
+      "alias": "s1",
+      "directory": "/tmp/box3d-neutral-s1-regression-20261022"
+    },
+    {
+      "alias": "actual-private",
+      "directory": "/tmp/box3d-neutral-material-real-20261022",
+      "regenerableCaches": [
+        {
+          "path": "shared-jest-transforms",
+          "kind": "JEST_TRANSFORM_CACHE",
+          "reason": "Regenerable Jest transform cache, never test raw or stdout/stderr. Source snapshots, original harness inputs, commands and native artifacts retained separately."
+        }
+      ]
+    },
+    {
+      "alias": "actual-foreign",
+      "directory": "/tmp/box3d-foreign-material-real-20261022",
+      "regenerableCaches": [
+        {
+          "path": "shared-jest-transforms",
+          "kind": "JEST_TRANSFORM_CACHE",
+          "reason": "Regenerable Jest transform cache, never test raw or stdout/stderr. Source snapshots, original harness inputs, commands and native artifacts retained separately."
+        }
+      ]
+    },
+    {
+      "alias": "pack-controls",
+      "directory": "/tmp/box3d-evidence-pack-control-20261022"
+    },
+    {
+      "alias": "recovery-controls",
+      "directory": "/tmp/box3d-incremental-chain37-control-20261022"
+    },
+    {
+      "alias": "evidence-review",
+      "directory": "/tmp/box3d-checkpoint38-evidence-review-20261022"
+    },
+    {
+      "alias": "final-checks",
+      "directory": "/tmp/box3d-neutral-material-integration-final-checks-20261022"
+    },
+    {
+      "alias": "evidence-review-final",
+      "directory": "/tmp/box3d-checkpoint38-evidence-review-final-20261022"
+    }
+  ],
+  "scope": "All regular bytes under these exact current work directories, including failed attempts, ignored .log and empty stderr. Deduplicated without deleting originals. Semantic named actual-run input/raw closure independently checked by evidence-review; not a claim of all historical external references or every transitive engine input.",
+  "knownEvidenceGaps": [
+    {
+      "sha256": "7609a897cb411baf36b50f78eeb283314b18ccc1719fecf1b74c12d131d81a7f",
+      "kind": "UNRECOVERABLE_HISTORICAL_AUXILIARY_GIT_STATUS_STDOUT",
+      "receipt": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/known-auxiliary-raw-gap.json",
+      "notRecreated": true
+    }
+  ]
+}

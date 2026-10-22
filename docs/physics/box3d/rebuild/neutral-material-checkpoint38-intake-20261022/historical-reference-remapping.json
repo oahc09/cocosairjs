@@ -1,0 +1,133 @@
+{
+  "scope": "Only closure retained byte locations change when live product sources advance. Original historical manifests and raw values remain byte-identical; no prior PASS promoted.",
+  "changes": [
+    {
+      "manifestPath": "tools/verify/box3d/immediate-system-pause-red-20261022-a/attempt-a/source-before.json",
+      "sha256Pointer": "/files/src~1cocos~1physics~1bullet~1shapes~1bullet-shape.ts/sha256",
+      "oldRetainedPath": "src/cocos/physics/bullet/shapes/bullet-shape.ts",
+      "exactHistoricalRetainedPath": "docs/physics/box3d/rebuild/neutral-material-checkpoint38-intake-20261022/historical-reference-preimages/src/cocos/physics/bullet/shapes/bullet-shape.ts",
+      "sha256": "c3eca6b33194b033877b50270b440bc5076e8e89208c0095f6cd8581a6e0270c",
+      "originalManifestUnchanged": true
+    },
+    {
+      "manifestPath": "tools/verify/box3d/immediate-system-pause-red-20261022-a/attempt-a/source-before.json",
+      "sha256Pointer": "/files/src~1cocos~1physics~1cannon~1cannon-world.ts/sha256",
+      "oldRetainedPath": "src/cocos/physics/cannon/cannon-world.ts",
+      "exactHistoricalRetainedPath": "docs/physics/box3d/rebuild/neutral-material-checkpoint38-intake-20261022/historical-reference-preimages/src/cocos/physics/cannon/cannon-world.ts",
+      "sha256": "53d5ff1803f98af7bd1a1cabf96be5a1d6ef976098f0b0e9b205d7de08616ea3",
+      "originalManifestUnchanged": true
+    },
+    {
+      "manifestPath": "tools/verify/box3d/immediate-system-pause-red-20261022-a/attempt-a/source-before.json",
+      "sha256Pointer": "/files/src~1cocos~1physics~1cannon~1shapes~1cannon-shape.ts/sha256",
+      "oldRetainedPath": "src/cocos/physics/cannon/shapes/cannon-shape.ts",
+      "exactHistoricalRetainedPath": "docs/physics/box3d/rebuild/neutral-material-checkpoint38-intake-20261022/historical-reference-preimages/src/cocos/physics/cannon/shapes/cannon-shape.ts",
+      "sha256": "0d318ea85990de2fafe7ae07cc9abd9886af573ffd13ded2a0f1b12454534a5d",
+      "originalManifestUnchanged": true
+    },
+    {
+      "manifestPath": "tools/verify/box3d/immediate-system-pause-red-20261022-a/attempt-a/source-before.json",
+      "sha256Pointer": "/files/src~1cocos~1physics~1physx~1shapes~1physx-shape.ts/sha256",
+      "oldRetainedPath": "src/cocos/physics/physx/shapes/physx-shape.ts",
+      "exactHistoricalRetainedPath": "docs/physics/box3d/rebuild/neutral-material-checkpoint38-intake-20261022/historical-reference-preimages/src/cocos/physics/physx/shapes/physx-shape.ts",
+      "sha256": "a9a7fafb3aaf6edc691c0c137f2da50df72e133afd70e83e176fcb6e9f1b5e61",
+      "originalManifestUnchanged": true
+    },
+    {
+      "manifestPath": "tools/verify/box3d/collider-listener-entry-source-20261022-a/actual-before-a/inputs-before.json",
+      "sha256Pointer": "/~1workspace~1scratch~162d43a81bbde~1box3d-rebuild-20261022~1src~1cocos~1physics~1cannon~1cannon-world.ts",
+      "oldRetainedPath": "src/cocos/physics/cannon/cannon-world.ts",
+      "exactHistoricalRetainedPath": "docs/physics/box3d/rebuild/neutral-material-checkpoint38-intake-20261022/historical-reference-preimages/src/cocos/physics/cannon/cannon-world.ts",
+      "sha256": "53d5ff1803f98af7bd1a1cabf96be5a1d6ef976098f0b0e9b205d7de08616ea3",
+      "originalManifestUnchanged": true
+    },
+    {
+      "manifestPath": "tools/verify/box3d/collider-listener-entry-source-20261022-a/actual-before-a/inputs-before.json",
+      "sha256Pointer": "/~1workspace~1scratch~162d43a81bbde~1box3d-rebuild-20261022~1src~1cocos~1physics~1cannon~1shapes~1cannon-shape.ts",
+      "oldRetainedPath": "src/cocos/physics/cannon/shapes/cannon-shape.ts",
+      "exactHistoricalRetainedPath": "docs/physics/box3d/rebuild/neutral-material-checkpoint38-intake-20261022/historical-reference-preimages/src/cocos/physics/cannon/shapes/cannon-shape.ts",
+      "sha256": "0d318ea85990de2fafe7ae07cc9abd9886af573ffd13ded2a0f1b12454534a5d",
+      "originalManifestUnchanged": true
+    },
+    {
+      "manifestPath": "tools/verify/box3d/collider-listener-entry-source-20261022-a/actual-before-a/inputs-before.json",
+      "sha256Pointer": "/~1workspace~1scratch~162d43a81bbde~1box3d-rebuild-20261022~1src~1cocos~1physics~1physx~1shapes~1physx-shape.ts",
+      "oldRetainedPath": "src/cocos/physics/physx/shapes/physx-shape.ts",
+      "exactHistoricalRetainedPath": "docs/physics/box3d/rebuild/neutral-material-checkpoint38-intake-20261022/historical-reference-preimages/src/cocos/physics/physx/shapes/physx-shape.ts",
+      "sha256": "a9a7fafb3aaf6edc691c0c137f2da50df72e133afd70e83e176fcb6e9f1b5e61",
+      "originalManifestUnchanged": true
+    },
+    {
+      "manifestPath": "tools/verify/box3d/collider-listener-entry-source-20261022-a/actual-before-a/inputs-before.json",
+      "sha256Pointer": "/~1workspace~1scratch~162d43a81bbde~1box3d-rebuild-20261022~1src~1cocos~1physics~1bullet~1shapes~1bullet-shape.ts",
+      "oldRetainedPath": "src/cocos/physics/bullet/shapes/bullet-shape.ts",
+      "exactHistoricalRetainedPath": "docs/physics/box3d/rebuild/neutral-material-checkpoint38-intake-20261022/historical-reference-preimages/src/cocos/physics/bullet/shapes/bullet-shape.ts",
+      "sha256": "c3eca6b33194b033877b50270b440bc5076e8e89208c0095f6cd8581a6e0270c",
+      "originalManifestUnchanged": true
+    },
+    {
+      "manifestPath": "tools/verify/box3d/collider-listener-entry-source-20261022-a/actual-source-a/inputs-before.json",
+      "sha256Pointer": "/~1workspace~1scratch~162d43a81bbde~1box3d-rebuild-20261022~1src~1cocos~1physics~1cannon~1cannon-world.ts",
+      "oldRetainedPath": "src/cocos/physics/cannon/cannon-world.ts",
+      "exactHistoricalRetainedPath": "docs/physics/box3d/rebuild/neutral-material-checkpoint38-intake-20261022/historical-reference-preimages/src/cocos/physics/cannon/cannon-world.ts",
+      "sha256": "53d5ff1803f98af7bd1a1cabf96be5a1d6ef976098f0b0e9b205d7de08616ea3",
+      "originalManifestUnchanged": true
+    },
+    {
+      "manifestPath": "tools/verify/box3d/collider-listener-entry-source-20261022-a/actual-source-a/inputs-before.json",
+      "sha256Pointer": "/~1workspace~1scratch~162d43a81bbde~1box3d-rebuild-20261022~1src~1cocos~1physics~1cannon~1shapes~1cannon-shape.ts",
+      "oldRetainedPath": "src/cocos/physics/cannon/shapes/cannon-shape.ts",
+      "exactHistoricalRetainedPath": "docs/physics/box3d/rebuild/neutral-material-checkpoint38-intake-20261022/historical-reference-preimages/src/cocos/physics/cannon/shapes/cannon-shape.ts",
+      "sha256": "0d318ea85990de2fafe7ae07cc9abd9886af573ffd13ded2a0f1b12454534a5d",
+      "originalManifestUnchanged": true
+    },
+    {
+      "manifestPath": "tools/verify/box3d/collider-listener-entry-source-20261022-a/actual-source-a/inputs-before.json",
+      "sha256Pointer": "/~1workspace~1scratch~162d43a81bbde~1box3d-rebuild-20261022~1src~1cocos~1physics~1physx~1shapes~1physx-shape.ts",
+      "oldRetainedPath": "src/cocos/physics/physx/shapes/physx-shape.ts",
+      "exactHistoricalRetainedPath": "docs/physics/box3d/rebuild/neutral-material-checkpoint38-intake-20261022/historical-reference-preimages/src/cocos/physics/physx/shapes/physx-shape.ts",
+      "sha256": "a9a7fafb3aaf6edc691c0c137f2da50df72e133afd70e83e176fcb6e9f1b5e61",
+      "originalManifestUnchanged": true
+    },
+    {
+      "manifestPath": "tools/verify/box3d/collider-listener-entry-source-20261022-a/actual-source-a/inputs-before.json",
+      "sha256Pointer": "/~1workspace~1scratch~162d43a81bbde~1box3d-rebuild-20261022~1src~1cocos~1physics~1bullet~1shapes~1bullet-shape.ts",
+      "oldRetainedPath": "src/cocos/physics/bullet/shapes/bullet-shape.ts",
+      "exactHistoricalRetainedPath": "docs/physics/box3d/rebuild/neutral-material-checkpoint38-intake-20261022/historical-reference-preimages/src/cocos/physics/bullet/shapes/bullet-shape.ts",
+      "sha256": "c3eca6b33194b033877b50270b440bc5076e8e89208c0095f6cd8581a6e0270c",
+      "originalManifestUnchanged": true
+    },
+    {
+      "manifestPath": "tools/verify/box3d/system-pause-source-20261022-a/helper/green-b/attempt-b/source-before.json",
+      "sha256Pointer": "/files/src~1cocos~1physics~1bullet~1shapes~1bullet-shape.ts/sha256",
+      "oldRetainedPath": "src/cocos/physics/bullet/shapes/bullet-shape.ts",
+      "exactHistoricalRetainedPath": "docs/physics/box3d/rebuild/neutral-material-checkpoint38-intake-20261022/historical-reference-preimages/src/cocos/physics/bullet/shapes/bullet-shape.ts",
+      "sha256": "c3eca6b33194b033877b50270b440bc5076e8e89208c0095f6cd8581a6e0270c",
+      "originalManifestUnchanged": true
+    },
+    {
+      "manifestPath": "tools/verify/box3d/system-pause-source-20261022-a/helper/green-b/attempt-b/source-before.json",
+      "sha256Pointer": "/files/src~1cocos~1physics~1cannon~1cannon-world.ts/sha256",
+      "oldRetainedPath": "src/cocos/physics/cannon/cannon-world.ts",
+      "exactHistoricalRetainedPath": "docs/physics/box3d/rebuild/neutral-material-checkpoint38-intake-20261022/historical-reference-preimages/src/cocos/physics/cannon/cannon-world.ts",
+      "sha256": "53d5ff1803f98af7bd1a1cabf96be5a1d6ef976098f0b0e9b205d7de08616ea3",
+      "originalManifestUnchanged": true
+    },
+    {
+      "manifestPath": "tools/verify/box3d/system-pause-source-20261022-a/helper/green-b/attempt-b/source-before.json",
+      "sha256Pointer": "/files/src~1cocos~1physics~1cannon~1shapes~1cannon-shape.ts/sha256",
+      "oldRetainedPath": "src/cocos/physics/cannon/shapes/cannon-shape.ts",
+      "exactHistoricalRetainedPath": "docs/physics/box3d/rebuild/neutral-material-checkpoint38-intake-20261022/historical-reference-preimages/src/cocos/physics/cannon/shapes/cannon-shape.ts",
+      "sha256": "0d318ea85990de2fafe7ae07cc9abd9886af573ffd13ded2a0f1b12454534a5d",
+      "originalManifestUnchanged": true
+    },
+    {
+      "manifestPath": "tools/verify/box3d/system-pause-source-20261022-a/helper/green-b/attempt-b/source-before.json",
+      "sha256Pointer": "/files/src~1cocos~1physics~1physx~1shapes~1physx-shape.ts/sha256",
+      "oldRetainedPath": "src/cocos/physics/physx/shapes/physx-shape.ts",
+      "exactHistoricalRetainedPath": "docs/physics/box3d/rebuild/neutral-material-checkpoint38-intake-20261022/historical-reference-preimages/src/cocos/physics/physx/shapes/physx-shape.ts",
+      "sha256": "a9a7fafb3aaf6edc691c0c137f2da50df72e133afd70e83e176fcb6e9f1b5e61",
+      "originalManifestUnchanged": true
+    }
+  ]
+}

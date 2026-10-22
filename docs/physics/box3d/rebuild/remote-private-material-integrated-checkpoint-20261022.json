@@ -1,0 +1,44 @@
+{
+  "status": "PASS_REMOTE_FEATURE_CHECKPOINT_READBACK",
+  "checkpoint": 37,
+  "at": "2026-10-22T20:16:34.987Z",
+  "repository": "oahc09/cocosairjs",
+  "branch": "feat/box3d-rebuild-20261022",
+  "private": true,
+  "localHead": "481678df9aacf8240136e5a46e726273e10ba9d6",
+  "parent": "a9cbcd0992689c8021f7e4815a99bd959c3ac55e",
+  "tree": "6bfe6df1c9998f6de0f3866de937c7ef96186be8",
+  "commit": "2d4b422bc0149af5e609fde056ecbf90eaf87918",
+  "force": false,
+  "changedFiles": 888,
+  "untouchedSiblingEntries": 1231,
+  "treeVerification": {
+    "status": "PASS",
+    "verifiedAt": "2026-10-22T20:08:21.497Z",
+    "baseTree": "c528af1ed5056db03742c4938244b683f22593e6",
+    "newTree": "6bfe6df1c9998f6de0f3866de937c7ef96186be8",
+    "changedFiles": 888,
+    "untouchedSiblings": 1231,
+    "directories": 320,
+    "treeReads": 141,
+    "nonRecursive": true
+  },
+  "initialCommitOutcome": "DENIED_KNOWN_NOT_EXECUTED",
+  "singleRetrySucceeded": true,
+  "libraryFileId": "libfile_c97f345e13a88191b920a9ceb3ceff37",
+  "archiveSha256": "33d17d0dd303bbf3b9d5e7189be4d55c457b83b3f0378988c9d3638116736e8e",
+  "availableEvidenceFiles": 18442,
+  "knownEvidenceGaps": [
+    {
+      "kind": "auxiliary-git-status-stdout",
+      "path": "docs/physics/box3d/rebuild/unified-owner-wiring-review-20261022-a/review-receipt.json#/gitStatusAtEndSummary/sha256",
+      "sha256": "7609a897cb411baf36b50f78eeb283314b18ccc1719fecf1b74c12d131d81a7f",
+      "scope": "Historical raw stdout unavailable; explicit gap retained, not regenerated.",
+      "gapReceipt": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/known-auxiliary-raw-gap.json"
+    }
+  ],
+  "formalCellsNotRun": 2128,
+  "formalGatesPassed": 0,
+  "unifiedTransactionsSupported": false,
+  "stagedCommandsSupported": false
+}

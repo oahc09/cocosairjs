@@ -23,6 +23,8 @@
  * Trusted adapters supply barriers, actual-private-cache readers and read-only preparation.
  * This protocol cannot prove callback purity, singleton ownership or native release itself.
  */
+import type { MaterialValuesCoverage, MaterialExpectedBinding } from './physics-material-bindings';
+
 export type MaterialValues = readonly [number, number, number, number];
 export type MaterialBindingRole = 'default' | 'explicit' | 'blocker';
 export interface MaterialBindingSnapshot {
@@ -198,6 +200,7 @@ interface Participant {
     commitState: 'not-entered' | 'entered-unknown' | 'returned';
 }
 interface Change extends Errors {
+    readonly coverage?: MaterialValuesCoverage;
     readonly asset: object;
     readonly roster: AssetRoster;
     readonly participants: readonly Participant[];
@@ -522,9 +525,12 @@ export class PhysicsMaterialValuesTransactionRegistry {
         if (roster && (roster.bindings.size || roster.pending.size))
             throw new Error('Material retains physical ownership.');
     }
-    begin(asset: object): MaterialValuesTicket | undefined {
+    begin(asset: object, coverage?: MaterialValuesCoverage): MaterialValuesTicket | undefined {
         const roster = this.#assets.get(asset);
-        if (!roster || (!roster.bindings.size && !roster.pending.size)) return undefined;
+        if (!roster || (!roster.bindings.size && !roster.pending.size)) {
+            coverage?.compare([]);
+            return undefined;
+        }
         this.#idle();
         this.#unlocked(roster);
         if (roster.pending.size) throw new Error('Material membership is provisional or unresolved.');
@@ -532,6 +538,23 @@ export class PhysicsMaterialValuesTransactionRegistry {
             this.#live(owner);
             if ([...bindings].some((b) => b.tombstone || !b.initialized || b.role === 'blocker'))
                 throw new Error('Material has provisional, unresolved or nonparticipating physical binding.');
+        }
+        if (coverage) {
+            const actual: MaterialExpectedBinding[] = [];
+            for (const [owner, bindings] of roster.bindings)
+                for (const binding of bindings) {
+                    if (binding.role === 'blocker') throw new Error('Nonparticipating material membership.');
+                    actual.push(
+                        Object.freeze({
+                            owner: owner.identity,
+                            generation: owner.generation,
+                            binding: binding.identity,
+                            role: binding.role,
+                            initialized: binding.initialized,
+                        }),
+                    );
+                }
+            coverage.compare(Object.freeze(actual));
         }
         this.#capacity(this.#sequences);
         const sequence = ++this.#sequences;
@@ -563,6 +586,7 @@ export class PhysicsMaterialValuesTransactionRegistry {
             }),
         );
         const change: Change = {
+            coverage,
             asset,
             roster,
             participants,
@@ -614,6 +638,7 @@ export class PhysicsMaterialValuesTransactionRegistry {
     }
     #check(change: Change): void {
         if (change.failed) throw change.primary;
+        change.coverage?.assertValid();
         if (
             this.#assets.get(change.asset) !== change.roster ||
             change.roster.ticket !== change ||
@@ -798,9 +823,11 @@ export class PhysicsMaterialValuesTransactionRegistry {
     }
     #diagnostics(change: Change): MaterialValuesDiagnostics {
         const native: Array<MaterialValuesDiagnostics['native'][number]> = [];
-        change.participants.forEach((p, ownerIndex) => p.operations.forEach((o, operationIndex) => {
-            native.push(Object.freeze({ ownerIndex, operationIndex, state: o.state, readback: o.readback }));
-        }));
+        change.participants.forEach((p, ownerIndex) =>
+            p.operations.forEach((o, operationIndex) => {
+                native.push(Object.freeze({ ownerIndex, operationIndex, state: o.state, readback: o.readback }));
+            }),
+        );
         return Object.freeze({
             phase: change.phase,
             terminal: change.terminal,
@@ -849,10 +876,18 @@ export class PhysicsMaterialValuesTransactionRegistry {
             } catch (error) {
                 record(change, error);
             }
+            // Disposal can reject and swallow a neutral identity/raw reentry. Preserve that
+            // failure while still independently attempting every remaining owner cleanup.
+            try {
+                change.coverage?.assertValid();
+            } catch (error) {
+                record(change, error);
+            }
         }
     }
     #finish(change: Change, phase: 'committed' | 'cancelled'): void {
         if (change.failed) throw change.primary;
+        change.coverage?.assertValid();
         change.phase = phase;
         change.terminal = true;
         change.roster.ticket = undefined;

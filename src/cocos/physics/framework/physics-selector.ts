@@ -38,6 +38,8 @@ import { IBoxCharacterController, ICapsuleCharacterController } from '../spec/i-
 import { errorID, IVec3Like, warn, cclegacy, debug } from '../../core';
 import { EColliderType, EConstraintType, ECharacterControllerType } from './physics-enum';
 import { PhysicsMaterial } from '.';
+import { recordPhysicsMaterialWorld, recordPhysicsMaterialAdapter } from './physics-material-binding-source';
+import { recordMaterialAcquisitionUnknown } from './physics-material-bindings';
 
 // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
 export type IPhysicsEngineId = 'builtin' | 'cannon.js' | 'bullet' | 'physx' | string;
@@ -255,9 +257,17 @@ function check (obj: any, type: ECheckType): boolean {
 
 export function createPhysicsWorld (): IPhysicsWorld {
     if (check(selector.wrapper.PhysicsWorld, ECheckType.World)) {
+        recordPhysicsMaterialWorld(ENTIRE_WORLD, false);
         return ENTIRE_WORLD;
     }
-    return new selector.wrapper.PhysicsWorld!();
+    try {
+        const world = new selector.wrapper.PhysicsWorld!();
+        recordPhysicsMaterialWorld(world, true);
+        return world;
+    } catch (error) {
+        try { recordMaterialAcquisitionUnknown(); } catch { /* Preserve original acquisition failure. */ }
+        throw error;
+    }
 }
 
 const ENTIRE_RIGID_BODY: IRigidBody = {
@@ -359,7 +369,15 @@ const ENTIRE_SHAPE: IEntireShape = {
 
 export function createShape (type: EColliderType): IBaseShape {
     initColliderProxy();
-    return CREATE_COLLIDER_PROXY[type]();
+    const world = selector.physicsWorld;
+    try {
+        const shape = CREATE_COLLIDER_PROXY[type]();
+        recordPhysicsMaterialAdapter(shape, world, shape !== ENTIRE_SHAPE);
+        return shape;
+    } catch (error) {
+        try { recordMaterialAcquisitionUnknown(); } catch { /* Preserve original acquisition failure. */ }
+        throw error;
+    }
 }
 
 function initColliderProxy (): void {

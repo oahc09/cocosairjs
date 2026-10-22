@@ -1,0 +1,12 @@
+{
+  "status": "PASS_ACTUAL_LIBRARY_DOWNLOAD_ALL_COMPLETION_MEMBERS",
+  "at": "2026-10-22T20:19:50.813515+00:00",
+  "libraryFileId": "libfile_920aa6d3e5a08191a2aee2cfba9cf5d3",
+  "fileId": "file_000000006d8481f5977a696d40a09ea3",
+  "archiveBytes": 77960,
+  "archiveSha256": "82284cd82765a8b5075c7096403d072227a735a3102906de91a8ea2b04df0f80",
+  "verifiedDataFiles": 42,
+  "manifestSha256": "689ec2772b3eabfe3504608101ac8b5e337b6e883e7b30bb28f9a191da90a1bc",
+  "scope": "Completion raw+safe Git API receipts+explicit22/36/37source recovery chain+unwired neutral design only, not a new full source restore; prior actual37upgrade proof embedded.",
+  "knownMissingAuxiliaryRaw": true
+}

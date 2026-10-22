@@ -20,6 +20,7 @@
  THE SOFTWARE.
 */
 import type { PhysicsMaterial } from '../../../cocos/physics/framework/assets/physics-material';
+import { readPhysicsMaterialPrivateValues } from '../../../cocos/physics/framework/physics-material-cache';
 import type { Box3DSurfaceMaterial } from './world-binding';
 import { copySurfaceMaterial, finiteFloat32, worldError } from './world-binding';
 import { unsupportedBox3D } from './unsupported';
@@ -34,9 +35,9 @@ export interface Box3DPrimitiveGeometry {
 }
 export function primitiveMaterial(value: PhysicsMaterial | null): Readonly<Box3DSurfaceMaterial> | null {
     if (value === null) return null;
-    const result = copySurfaceMaterial(value);
-    if (value.rollingFriction !== 0 || value.spinningFriction !== 0)
-        unsupportedBox3D('nonzero rollingFriction/spinningFriction');
+    const [friction, restitution, rollingFriction, spinningFriction] = readPhysicsMaterialPrivateValues(value);
+    const result = copySurfaceMaterial({ friction, restitution });
+    if (rollingFriction !== 0 || spinningFriction !== 0) unsupportedBox3D('nonzero rollingFriction/spinningFriction');
     return result;
 }
 export function primitiveGeometry(

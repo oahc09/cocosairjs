@@ -41,6 +41,8 @@ export type PhysicsMaterialIdentity = Extract<
     PhysicsStateSnapshot,
     { kind: 'collider-material' | 'system-default-material' }
 >;
+/** Explicit trusted registration capability; private subscriptions alone do not grant cache authority. */
+export type PhysicsMaterialCandidateValuesReader = (asset: object) => readonly [number, number, number, number];
 export interface PhysicsMaterialCandidate {
     readonly asset: object | null;
     /** friction, restitution, rollingFriction, spinningFriction; copied once. */
@@ -115,6 +117,7 @@ interface Entry {
     readonly original: PhysicsMaterialDelegate;
     readonly copied: PhysicsMaterialDelegate;
     readonly privateSubscriptions: boolean;
+    readonly candidateValuesReader?: PhysicsMaterialCandidateValuesReader;
     active?: Active;
     cleanup?: Readonly<PhysicsMaterialCleanupObserver>;
     cleanupCaptured?: boolean;
@@ -177,7 +180,10 @@ function copyIdentity(
     if (typeof shared !== 'boolean') throw new TypeError('Material shared flag must be boolean.');
     return Object.freeze({ kind, material, shared });
 }
-function copyCandidate(asset: object | null): Readonly<PhysicsMaterialCandidate> {
+function copyCandidate(
+    asset: object | null,
+    reader?: PhysicsMaterialCandidateValuesReader,
+): Readonly<PhysicsMaterialCandidate> {
     if (asset === null) return Object.freeze({ asset, coefficients: null });
     const values = asset as {
         friction: number;
@@ -185,12 +191,12 @@ function copyCandidate(asset: object | null): Readonly<PhysicsMaterialCandidate>
         rollingFriction: number;
         spinningFriction: number;
     };
-    const copied: [number, number, number, number] = [
-        values.friction,
-        values.restitution,
-        values.rollingFriction,
-        values.spinningFriction,
-    ];
+    const privateValues = reader?.(asset);
+    if (reader && (!Array.isArray(privateValues) || privateValues.length !== 4))
+        throw new TypeError('Trusted material candidate reader must return exactly four coefficients.');
+    const copied: [number, number, number, number] = reader
+        ? [privateValues![0], privateValues![1], privateValues![2], privateValues![3]]
+        : [values.friction, values.restitution, values.rollingFriction, values.spinningFriction];
     if (copied.some((v) => typeof v !== 'number' || !Number.isFinite(v)))
         throw new TypeError('Material coefficients must be finite numbers.');
     return Object.freeze({ asset, coefficients: Object.freeze(copied) });
@@ -211,6 +217,7 @@ export class PhysicsMaterialTransactionRegistry {
         delegate: PhysicsMaterialDelegate,
         cleanup?: PhysicsMaterialCleanupObserver,
         subscriptionMode?: PhysicsMaterialSubscriptionMode,
+        candidateValuesReader?: PhysicsMaterialCandidateValuesReader,
     ): PhysicsMaterialDelegateLease {
         const registry = this;
         let copied!: PhysicsMaterialDelegate;
@@ -225,6 +232,8 @@ export class PhysicsMaterialTransactionRegistry {
                 if (mode !== 'private' && mode !== 'legacy')
                     throw new TypeError('Expected private or legacy material subscription mode.');
                 privateSubscriptions = mode === 'private';
+                if (candidateValuesReader !== undefined && typeof candidateValuesReader !== 'function')
+                    throw new TypeError('Material candidate-values authority must be an explicit function.');
                 copied = copyFunctions(delegate);
                 if (cleanup !== undefined) {
                     if (!object(cleanup)) throw new TypeError('Expected cleanup observer.');
@@ -273,7 +282,7 @@ export class PhysicsMaterialTransactionRegistry {
                 }
             },
         });
-        entry = { original: delegate, copied, privateSubscriptions, cleanup: copiedCleanup };
+        entry = { original: delegate, copied, privateSubscriptions, candidateValuesReader, cleanup: copiedCleanup };
         if (copiedCleanup) this.#cleanupGenerations.set(target, copiedCleanup.generation);
         this.#entries.set(target, entry);
         const lease: PhysicsMaterialDelegateLease = Object.freeze({
@@ -459,7 +468,7 @@ export class PhysicsMaterialTransactionRegistry {
                         const candidate = copyIdentity(input.candidate, operation, (asset) => {
                             entry.copied.protectCandidate.call(entry.original, state.context!, asset);
                         });
-                        state.candidate = copyCandidate(candidate.material);
+                        state.candidate = copyCandidate(candidate.material, entry.candidateValuesReader);
                         return { before, candidate };
                     });
                 } finally {
@@ -520,7 +529,7 @@ export class PhysicsMaterialTransactionRegistry {
                     state.invoking = true;
                     try {
                         entry.copied.protectCandidate.call(entry.original, c, asset);
-                        clone = copyCandidate(asset);
+                        clone = copyCandidate(asset, entry.candidateValuesReader);
                     } catch (error) {
                         failed = true;
                         failure = error;
@@ -605,8 +614,9 @@ export function registerPhysicsMaterialDelegate(
     delegate: PhysicsMaterialDelegate,
     cleanup?: PhysicsMaterialCleanupObserver,
     subscriptionMode?: PhysicsMaterialSubscriptionMode,
+    candidateValuesReader?: PhysicsMaterialCandidateValuesReader,
 ): PhysicsMaterialDelegateLease {
-    return registry.register(target, delegate, cleanup, subscriptionMode);
+    return registry.register(target, delegate, cleanup, subscriptionMode, candidateValuesReader);
 }
 export function beginPhysicsMaterialChange(
     target: object,

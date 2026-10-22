@@ -27,6 +27,8 @@ import { Box3DSharedBody } from './shared-body';
 import type { Box3DComponentConfiguration } from './shared-body';
 import type { IPhysicsWorld } from '../../../cocos/physics/spec/i-physics-world';
 import type { PhysicsMaterial } from '../../../cocos/physics/framework/assets/physics-material';
+import type { Collider } from '../../../cocos/physics/framework/components/colliders/collider';
+import { readPhysicsMaterialPrivateValues } from '../../../cocos/physics/framework/physics-material-cache';
 import type { Box3DId, Box3DWorld, Box3DStepSnapshot } from './binding/facade.mjs';
 import type { Box3DSTLease } from './loader/st-loader.mjs';
 import type { AirNormalizedBox3DOptions } from './config';
@@ -178,16 +180,20 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
                     this.fault(error);
                 },
                 (material, includeDefault, components) => {
-                    const updates = components.filter((component) => component.shape !== null)
+                    const updates = components
+                        .filter((component) => component.shape !== null)
                         .map((component) => ({ shape: component.shape!, material, inheritsDefault: false }));
                     if (includeDefault)
                         for (const [shape, inherited] of this.#materialShapes)
                             if (inherited) updates.push({ shape, material, inheritsDefault: true });
                     const plan = this.#prepareMaterialBatch(updates, includeDefault ? material : undefined);
-                    return Object.freeze({ native: plan.native, commitCaches: () => {
-                        plan.commitCaches();
-                        for (const component of components) component.commitCaches();
-                    } });
+                    return Object.freeze({
+                        native: plan.native,
+                        commitCaches: () => {
+                            plan.commitCaches();
+                            for (const component of components) component.commitCaches();
+                        },
+                    });
                 },
             );
             this.#commandOwner.installSystemControlObservation((error) => {
@@ -284,17 +290,26 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
             throw error;
         }
     }
+    prepareInitialShapeMaterial<T>(
+        adapter: object,
+        component: Collider,
+        copy: (material: PhysicsMaterial | null) => T,
+    ) {
+        this.assertReady('prepare initial shape material');
+        return this.#commandOwner.prepareInitialShapeMaterial(adapter, component, copy);
+    }
+    assertAcceptedShapeMaterialIdentity(adapter: object, value: PhysicsMaterial | null): void {
+        this.#commandOwner.assertAcceptedMaterialIdentity(adapter, value);
+    }
     setDefaultMaterial(value: PhysicsMaterial): void {
         this.assertReady('setDefaultMaterial');
+        this.#commandOwner.assertAcceptedMaterialIdentity(null, value);
         const scope = this.#commandOwner.beginMaterialKernel(value);
         let failed = false,
             primary: unknown;
         try {
             // Original material EVENT_UPDATE path shares the same no-replay kernel.
-            const friction = value.friction,
-                restitution = value.restitution;
-            const rolling = value.rollingFriction,
-                spinning = value.spinningFriction;
+            const [friction, restitution, rolling, spinning] = readPhysicsMaterialPrivateValues(value);
             const next = copySurfaceMaterial({ friction, restitution });
             if (rolling !== 0 || spinning !== 0) unsupportedBox3D('nonzero rollingFriction/spinningFriction');
             this.#applyDefaultMaterialCopied(next);
@@ -334,8 +349,13 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
             const previousInheritance = this.#materialShapes.get(shape)!;
             const next = copySurfaceMaterial(update.material);
             copySurfaceMaterial(this.#binding.getShapeMaterial(this.#token, shape));
-            return { shape, next, previousInheritance, inheritsDefault: update.inheritsDefault,
-                state: 'prepared' as 'prepared' | 'entered' | 'returned' | 'verified' };
+            return {
+                shape,
+                next,
+                previousInheritance,
+                inheritsDefault: update.inheritsDefault,
+                state: 'prepared' as 'prepared' | 'entered' | 'returned' | 'verified',
+            };
         });
         const defaultValue = nextDefault === undefined ? undefined : copySurfaceMaterial(nextDefault);
         let cacheCommitted = false;
@@ -343,34 +363,58 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
             this.assertReadyState('prepared material batch');
             for (const item of prepared)
                 if (this.#materialShapes.get(item.shape) !== item.previousInheritance)
-                    throw worldError('AIR_E_BOX3D_CONFIG', 'prepared material batch', 'Shape membership changed after preparation.');
+                    throw worldError(
+                        'AIR_E_BOX3D_CONFIG',
+                        'prepared material batch',
+                        'Shape membership changed after preparation.',
+                    );
         };
-        const native = Object.freeze(prepared.map((item) => Object.freeze({
-            target: item.shape,
-            invoke: () => {
-                if (cacheCommitted || item.state !== 'prepared')
-                    throw worldError('AIR_E_BOX3D_REENTRANT', 'prepared material setter', 'Operation already consumed.');
-                assertMembership();
-                item.state = 'entered'; // Never retry an unknown or completed setter.
-                this.invalidatePending();
-                this.#binding.setShapeMaterial(this.#token, item.shape, item.next);
-                item.state = 'returned';
-            },
-            verify: () => {
-                if (cacheCommitted || item.state !== 'returned')
-                    throw worldError('AIR_E_BOX3D_REENTRANT', 'prepared material readback', 'Setter did not return exactly once.');
-                assertMembership();
-                const actual = copySurfaceMaterial(this.#binding.getShapeMaterial(this.#token, item.shape));
-                if (actual.friction !== item.next.friction || actual.restitution !== item.next.restitution)
-                    throw worldError('AIR_E_BOX3D_ABI', 'prepared material readback', 'Native readback mismatch.');
-                item.state = 'verified';
-            },
-        })));
+        const native = Object.freeze(
+            prepared.map((item) =>
+                Object.freeze({
+                    target: item.shape,
+                    invoke: () => {
+                        if (cacheCommitted || item.state !== 'prepared')
+                            throw worldError(
+                                'AIR_E_BOX3D_REENTRANT',
+                                'prepared material setter',
+                                'Operation already consumed.',
+                            );
+                        assertMembership();
+                        item.state = 'entered'; // Never retry an unknown or completed setter.
+                        this.invalidatePending();
+                        this.#binding.setShapeMaterial(this.#token, item.shape, item.next);
+                        item.state = 'returned';
+                    },
+                    verify: () => {
+                        if (cacheCommitted || item.state !== 'returned')
+                            throw worldError(
+                                'AIR_E_BOX3D_REENTRANT',
+                                'prepared material readback',
+                                'Setter did not return exactly once.',
+                            );
+                        assertMembership();
+                        const actual = copySurfaceMaterial(this.#binding.getShapeMaterial(this.#token, item.shape));
+                        if (actual.friction !== item.next.friction || actual.restitution !== item.next.restitution)
+                            throw worldError(
+                                'AIR_E_BOX3D_ABI',
+                                'prepared material readback',
+                                'Native readback mismatch.',
+                            );
+                        item.state = 'verified';
+                    },
+                }),
+            ),
+        );
         return Object.freeze({
             native,
             commitCaches: () => {
                 if (cacheCommitted || prepared.some((item) => item.state !== 'verified'))
-                    throw worldError('AIR_E_BOX3D_REENTRANT', 'prepared material caches', 'Unverified or consumed plan.');
+                    throw worldError(
+                        'AIR_E_BOX3D_REENTRANT',
+                        'prepared material caches',
+                        'Unverified or consumed plan.',
+                    );
                 assertMembership();
                 cacheCommitted = true;
                 for (const item of prepared) this.#materialShapes.set(item.shape, item.inheritsDefault);
@@ -379,7 +423,9 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
             },
         });
     }
-    #executePreparedMaterialBatch(plan: Readonly<{ native: readonly Readonly<{ invoke(): void; verify(): void }>[]; commitCaches(): void }>): void {
+    #executePreparedMaterialBatch(
+        plan: Readonly<{ native: readonly Readonly<{ invoke(): void; verify(): void }>[]; commitCaches(): void }>,
+    ): void {
         let effectEntered = false;
         try {
             for (const operation of plan.native) {
@@ -391,14 +437,20 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
             plan.commitCaches();
         } catch (error) {
             // No reviewed not-mutated receipt exists. Keep the actual phase; never rollback/replay.
-            if (effectEntered) { this.invalidatePending(); this.fault(error); }
+            if (effectEntered) {
+                this.invalidatePending();
+                this.fault(error);
+            }
             throw error;
         }
     }
     #applyDefaultMaterialCopied(next: Readonly<Box3DSurfaceMaterial>): void {
         const plan = this.#prepareMaterialBatch(
-            [...this.#materialShapes].filter(([, inherited]) => inherited)
-                .map(([shape]) => ({ shape, material: next, inheritsDefault: true })), next);
+            [...this.#materialShapes]
+                .filter(([, inherited]) => inherited)
+                .map(([shape]) => ({ shape, material: next, inheritsDefault: true })),
+            next,
+        );
         this.#executePreparedMaterialBatch(plan);
     }
     /** Internal shape-owner hook for later T10. Does not create or claim ownership of native shapes. */
@@ -441,7 +493,11 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
             throw worldError('AIR_E_BOX3D_DISPOSED', 'shape material', 'Unknown shape.');
         const next = value === null ? this.material : copySurfaceMaterial(value);
         if (!next)
-            throw worldError('AIR_E_BOX3D_CONFIG', 'shape material', 'PhysicsSystem default material is not configured.');
+            throw worldError(
+                'AIR_E_BOX3D_CONFIG',
+                'shape material',
+                'PhysicsSystem default material is not configured.',
+            );
         const plan = this.#prepareMaterialBatch([{ shape, material: next, inheritsDefault: value === null }]);
         this.#executePreparedMaterialBatch(plan);
     }

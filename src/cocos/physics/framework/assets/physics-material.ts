@@ -26,6 +26,7 @@
 
 import { beginPhysicsMaterialValuesChange, assertPhysicsMaterialDestroyable } from '../physics-material-values';
 import { MaterialValues } from '../physics-material-values-transaction';
+import { registerPhysicsMaterialPrivateCache } from '../physics-material-cache';
 import { assertMutationAllowed } from '../../../core/data/mutation-guard';
 import { ccclass, editable, range, serializable, type } from 'cc.decorator';
 import { Asset } from '../../../asset/assets/asset';
@@ -266,6 +267,7 @@ export class PhysicsMaterial extends Asset {
 
     constructor () {
         super();
+        registerPhysicsMaterialPrivateCache(this, () => [this._friction, this._restitution, this._rollingFriction, this._spinningFriction]);
         PhysicsMaterial.allMaterials.push(this);
         this.id = PhysicsMaterial._idCounter++;
         if (!this._uuid) this._uuid = `pm_${this.id}`;
