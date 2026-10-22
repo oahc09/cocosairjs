@@ -58,6 +58,15 @@ export interface Box3DFoundation {
         dt: number,
         substeps: number,
     ): readonly Box3DMotionResult[];
+    /** Pure complete-stream admission. Never reserves a plan or consumes an AIR queue. */
+    validateCommandBatch(world: Box3DWorld, commands: readonly Box3DCommand[], dt: number, substeps: number): void;
+    /** Replans all operations. A post-commit copy error is committed, not rolled back. */
+    applyCommandBatch(
+        world: Box3DWorld,
+        commands: readonly Box3DCommand[],
+        dt: number,
+        substeps: number,
+    ): Box3DCommandBatchResult;
     createWorld(gravity?: ArrayLike<number>): Box3DWorld;
     destroyWorld(world: Box3DWorld): void;
     step(world: Box3DWorld, dt?: number, substeps?: number): void;
@@ -322,6 +331,8 @@ export interface Box3DBridgeMemory {
 export interface Box3DMutationFailure extends Error {
     readonly code: string;
     readonly mutationOutcome?: 'not-mutated' | 'committed';
+    /** Present only for the additive unified command native return protocol. */
+    readonly nativeStatus?: number;
 }
 export interface Box3DShapeFilter {
     readonly group: number;
@@ -405,4 +416,78 @@ export interface Box3DMotionResult {
         linearVelocity: readonly number[];
         angularVelocity: readonly number[];
     }>;
+}
+
+/** Internal canonical stream. Positive safe sequence for users; zero only for flagged lifecycle commands. */
+export type Box3DCommand = Readonly<{ body: Box3DId; sequence: number }> &
+    (
+        | Readonly<{
+              kind: 'force' | 'linearImpulse';
+              value: readonly number[];
+              offset?: readonly number[];
+              space?: 'world' | 'local';
+          }>
+        | Readonly<{ kind: 'torque' | 'angularImpulse'; value: readonly number[]; space?: 'world' | 'local' }>
+        | Readonly<{ kind: 'clearForces' | 'clearVelocity' | 'clearState' }>
+        | (Readonly<{ kind: 'reset' }> & Box3DMotionReset)
+        | Readonly<{ kind: 'target'; pose: Box3DOriginPose }>
+        | Readonly<{ kind: 'pairedClear'; reason: 'user' | 'idle' | 'cleanup' }>
+    );
+export interface Box3DCommandBodyResult {
+    readonly body: Box3DId;
+    readonly executedOperationCount: number;
+    readonly lastSequence: number;
+    readonly before: Readonly<{ pose: Box3DOriginPose; worldCenter: readonly number[]; state: Box3DBodyState }>;
+    readonly actual: Readonly<{ pose: Box3DOriginPose; worldCenter: readonly number[]; state: Box3DBodyState }>;
+    readonly plan: Readonly<{
+        pose: Box3DOriginPose;
+        worldCenter: readonly number[];
+        linearVelocity: readonly number[];
+        angularVelocity: readonly number[];
+        force: readonly number[];
+        torque: readonly number[];
+        inverseInertiaWorld: readonly number[];
+        inverseMass: number;
+        requestedMass: number;
+        maximumLinearSpeed: number;
+        maximumAngularSpeed: number | null;
+        allowFastRotation: boolean;
+    }>;
+}
+export interface Box3DCommandOperationResult {
+    readonly body: Box3DId;
+    readonly kind: Box3DCommand['kind'];
+    readonly flags: number;
+    readonly sequence: number;
+    /** Scheduled action bits, never a prediction of exact island awake flags. */
+    readonly plannerActionBits: number;
+    readonly plan: Readonly<{
+        basisPose: Box3DOriginPose;
+        basisWorldCenter: readonly number[];
+        worldVector: readonly number[];
+        applicationPoint: readonly number[];
+        actualOffset: readonly number[];
+        angularEffect: readonly number[];
+        linearVelocity: readonly number[];
+        angularVelocity: readonly number[];
+        force: readonly number[];
+        torque: readonly number[];
+        linearLockResidue: readonly number[];
+        angularLockResidue: readonly number[];
+    }>;
+    readonly actual: Readonly<{
+        pose: Box3DOriginPose;
+        worldCenter: readonly number[];
+        linearVelocity: readonly number[];
+        angularVelocity: readonly number[];
+        force: readonly number[];
+        torque: readonly number[];
+        awake: boolean;
+        enabled: boolean;
+    }>;
+}
+export interface Box3DCommandBatchResult {
+    readonly bodies: readonly Box3DCommandBodyResult[];
+    readonly operations: readonly Box3DCommandOperationResult[];
+    readonly executedOperationCount: number;
 }

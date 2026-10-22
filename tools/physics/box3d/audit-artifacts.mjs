@@ -17,10 +17,11 @@ const fileHash = (path) => ({ path, bytes: read(path).length, sha256: sha256(rea
 const receipt = json('build-receipt.json');
 assert.equal(receipt.status, 'PASS');
 assert.equal(receipt.kind, 'st-simd-wasm');
-assert.ok(receipt.commands.length >= 18 && receipt.commands.every((c) => c.exitCode === 0 && !c.error));
-assert.equal(receipt.inputHashes.length, 43);
-assert.equal(new Set(receipt.inputHashes.map((input) => input.path)).size, 43);
+assert.ok(receipt.commands.length >= 21 && receipt.commands.every((c) => c.exitCode === 0 && !c.error));
+assert.equal(receipt.inputHashes.length, 50);
+assert.equal(new Set(receipt.inputHashes.map((input) => input.path)).size, 50);
 assert.equal(receipt.motionSourceControls.status, 'PASS_SOURCE_CONTROLS_ONLY');
+assert.equal(receipt.commandSourceControls.status, 'PASS_SOURCE_CONTROLS_ONLY');
 for (const input of receipt.inputHashes) {
     assert.equal(sha256(readFileSync(resolve(root, input.path))), input.sha256, `Build input drift: ${input.path}`);
 }
@@ -47,6 +48,8 @@ const expectedSources = [
     'tools/physics/box3d/native/body_control.c',
     'tools/physics/box3d/native/filter_bridge.c',
     'tools/physics/box3d/native/motion_bridge.c',
+    'tools/physics/box3d/native/command_bridge.c',
+    'tools/physics/box3d/native/command_contract.c',
     'tools/physics/box3d/native/filter_contract.c',
     'tools/physics/box3d/native/motion_contract.c',
     'tools/physics/box3d/native/body_contract.c',
@@ -299,6 +302,195 @@ for (const filename of ['air_box3d_motion_contract.cjs', 'wasm-motion-contract.m
     assert.ok(
         receipt.commands.some((entry) => entry.args.some((arg) => arg.endsWith(filename)) && entry.exitCode === 0),
     );
+const nativeCommand = json('native-command-contract.raw.json');
+assert.equal(nativeCommand.status, 'PASS');
+assert.equal(nativeCommand.pointerBytes, 4);
+assert.equal(nativeCommand.schemaSha256, manifest.schemaSha256);
+assert.equal(nativeCommand.patchChainSha256, manifest.patchChainSha256);
+for (const name of [
+    'pureValidation',
+    'lateRejectNoMutation',
+    'allocationFailures',
+    'exactFloatReplay',
+    'rotatedOffsetAndLocks',
+    'kinematicOffsetCOM',
+    'tinyCapStationary',
+    'protectedSequenceZero',
+    'maxTransport',
+    'temporaryCleanup',
+    'coreCleanup',
+])
+    assert.equal(nativeCommand.checks[name], true);
+assert.equal(nativeCommand.negativeCases, 25);
+assert.deepEqual(nativeCommand.limits, { bodies: 4096, operations: 16384, inputWords: 278540, outputWords: 1966092 });
+const command = json('wasm-command-contract.raw.json');
+assert.equal(command.status, 'PASS');
+for (const key of ['coreSha', 'bindingBaseSha', 'schemaSha256', 'patchChainSha256', 'abiVersion', 'variant'])
+    assert.equal(command.identity[key], manifest[key]);
+assert.equal(
+    command.fixtureSha256,
+    sha256(readFileSync(resolve(root, 'tools/physics/box3d/wasm-command-contract.mjs'))),
+);
+for (const name of [
+    'rejectsOldMotionSchema',
+    'singleReadStrictAdmission',
+    'validationAndEmptyPreserveSnapshot',
+    'pendingRecovery',
+    'orderedAnalyticArithmetic',
+    'immediateLocks',
+    'targetReductionBoundaries',
+    'disabledAndStaticReset',
+    'mutationPhasesNoReplay',
+    'realSleepingIslandWake',
+    'growthAndImmutableCopies',
+    'fullGenerationReuse',
+    'cleanupAndModuleIsolation',
+])
+    assert.equal(command.checks[name], true);
+assert.equal(command.observations.idCycles.length, 128);
+assert.deepEqual(
+    command.negatives.map((row) => row.name),
+    [
+        'foreign-world',
+        'foreign-module',
+        'forged-token',
+        'later-static-force',
+        'later-target-type',
+        'NaN',
+        'Infinity',
+        'float32-overflow',
+        'accumulation-overflow',
+        'sequence-duplicate',
+        'sequence-zero-user',
+        'sequence-unsafe',
+        'sequence-reversal',
+        'target-then-reset',
+        'target-then-clear-velocity',
+        'duplicate-target',
+        'idle-with-reset',
+        'cleanup-not-last',
+        'zero-quaternion',
+        'bad-quaternion',
+        'scene-dynamic',
+        'public-static',
+        'unknown-opcode',
+        'unused-offset',
+        'explicit-null-space',
+        'explicit-null-offset',
+        'explicit-null-mode',
+        'explicit-null-wake',
+        'explicit-null-preserveVelocity',
+        'strict-wake-0',
+        'strict-wake-1',
+        'strict-wake-false',
+        'dt-0',
+        'dt--1',
+        'dt-1e-50',
+        'dt-NaN',
+        'dt-Infinity',
+        'dt-1e-40',
+        'substeps-0',
+        'substeps-3',
+        'substeps-16',
+        'substeps-4',
+        'caught-reentry',
+        'caught-reentry-no-native-control',
+        'caught-reentry-zero-all-native-exports',
+        'target-native-speed-cap',
+        'target-native-lock-conflict',
+    ],
+);
+assert.equal(command.sampleCount, 217);
+assert.equal(command.nativeCommandInvocations.length, 198);
+const invocations = command.nativeCommandInvocations;
+assert.deepEqual(
+    {
+        total: invocations.length,
+        validation: invocations.filter((r) => r.apply === 0).length,
+        committed: invocations.filter((r) => r.apply === 1 && r.operationCount > 0 && r.nativeStatus === 0).length,
+        empty: invocations.filter((r) => r.apply === 1 && r.operationCount === 0 && r.nativeStatus === 0).length,
+        refused: invocations.filter((r) => r.nativeStatus !== 0).length,
+    },
+    { total: 198, validation: 4, committed: 176, empty: 1, refused: 17 },
+);
+for (const [index, row] of invocations.entries()) {
+    assert.equal(row.index, index);
+    assert.equal(row.throwMessage, undefined);
+    assert.ok([0, 1].includes(row.apply));
+    assert.ok([0, 1, 2, 4, 5, 8, 9, 10, 11, 12].includes(row.nativeStatus));
+    assert.equal(row.input.length, row.inputWords);
+    assert.equal(row.input[0], 0x314d4355);
+    assert.equal(row.input[1], 1);
+    assert.equal(row.input[2], row.inputWords);
+    assert.equal(row.input[3], row.bodyCount);
+    assert.equal(row.input[4], row.operationCount);
+    assert.equal(row.inputWords, 12 + row.bodyCount * 4 + row.operationCount * 16);
+    if (row.apply === 1 && row.operationCount > 0 && row.nativeStatus === 0) {
+        assert.equal(row.actualOutput.length, 12 + row.bodyCount * 160 + row.operationCount * 80);
+        assert.deepEqual(row.actualOutput.slice(0, 12), [
+            0x31524355,
+            1,
+            row.actualOutput.length,
+            row.bodyCount,
+            row.operationCount,
+            160,
+            80,
+            12,
+            12 + row.bodyCount * 160,
+            1,
+            0,
+            0,
+        ]);
+    } else assert.equal(row.actualOutput, undefined);
+}
+const commandSamples = read('command-samples.raw.jsonl')
+    .toString()
+    .trim()
+    .split('\n')
+    .map((line) => JSON.parse(line));
+const commandSampleKinds = {};
+for (const row of commandSamples) commandSampleKinds[row.kind] = (commandSampleKinds[row.kind] ?? 0) + 1;
+assert.deepEqual(commandSampleKinds, {
+    rejection: 47,
+    'caught-reentry-zero-native-calls': 1,
+    'single-read': 1,
+    'pose-single-read': 1,
+    'mass-pending-recovery': 1,
+    'analytic-box': 32,
+    'clear-prevents-later-force-overflow': 1,
+    'locked-impulses': 1,
+    'target-is-velocity-not-arrival': 1,
+    'preserve-idle-cleanup': 1,
+    'real-contact-island-wake': 1,
+    'growth-result': 1,
+    'id-reuse': 128,
+});
+assert.deepEqual(
+    commandSamples.filter((row) => row.kind === 'rejection').map((row) => row.name),
+    command.negatives.map((row) => row.name),
+);
+assert.deepEqual(
+    commandSamples.filter((row) => row.kind === 'analytic-box').map((row) => row.scene),
+    Array.from({ length: 32 }, (_, i) => i),
+);
+assert.deepEqual(
+    commandSamples.filter((row) => row.kind === 'id-reuse').map((row) => row.index),
+    Array.from({ length: 128 }, (_, i) => i),
+);
+
+assert.equal(command.negatives.length, 47);
+assert.equal(command.injectedMechanisms.length, 6);
+assert.deepEqual(fileHash('command-samples.raw.jsonl'), {
+    path: command.samplesArtifact.path,
+    bytes: command.samplesArtifact.bytes,
+    sha256: command.samplesArtifact.sha256,
+});
+assert.equal(read('command-samples.raw.jsonl').toString().trim().split('\n').length, command.sampleCount);
+assert.equal(command.samplesArtifact.records, command.sampleCount);
+for (const filename of ['air_box3d_command_contract.cjs', 'wasm-command-contract.mjs'])
+    assert.ok(
+        receipt.commands.some((entry) => entry.args.some((arg) => arg.endsWith(filename)) && entry.exitCode === 0),
+    );
 const report = {
     schemaVersion: 1,
     status: 'PASS',
@@ -346,6 +538,10 @@ const report = {
         'wasm-motion-contract.raw.json',
         'air_box3d_motion_contract.cjs',
         'motion-samples.raw.jsonl',
+        'native-command-contract.raw.json',
+        'wasm-command-contract.raw.json',
+        'air_box3d_command_contract.cjs',
+        'command-samples.raw.jsonl',
     ].map(fileHash),
 };
 writeFileSync(reportPath, JSON.stringify(report, null, 2) + '\n');

@@ -139,7 +139,7 @@ export class Box3DCommandProducers {
         this.#localAdmission();
         if (this.#closed) this.#reject('owner closed');
         if (this.#paused && !allowPaused) this.#reject('owner paused');
-        this.#owner.assertConfiguration(operation, allowPaused);
+        this.#copy(() => this.#owner.assertConfiguration(operation, allowPaused));
     }
     #copy<T>(read: () => T): T {
         this.#reading = true;

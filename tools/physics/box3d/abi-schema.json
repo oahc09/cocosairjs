@@ -335,5 +335,110 @@
     "memory": "Native plans allocated/freed through per-world owned bridge scratch, including allocation header, and included in bridgeMemory during the call; all known exits free scratch. World destruction reclaims tracked orphan scratch if teardown remains possible after unknown failure; no universal cleanup claim for corrupted/locked core. Facade input/output temporary buffers freed in finally. No persistent plan/pointer. Allocator capacity need not shrink.",
     "phases": "validate never invalidates snapshot or consumes intent, even on unknown validation status-delivery throw. Empty apply is likewise nonmutating. Nonempty apply status zero then copy/readback failure=committed; native throw/trap=unknown and invalidates current observation; known nonzero status=not-mutated. No rollback claim after unknown partial apply.",
     "scope": "Internal foundation candidate only, not public target lifetime/queue/Node synchronization or completed T11."
+  },
+  "commandBatch": {
+    "status": "SOURCE_CONTRACT_NOT_RUNTIME_QUALIFIED",
+    "export": "_air_b3_command_batch",
+    "wireVersion": 1,
+    "wireContract": {
+      "path": "docs/physics/box3d/contracts/unified-command-wire-v1.md",
+      "sha256": "f88641a6e924ae3de4f4fe1d1cba20a1d8b82ac01bea28c221e1a6bf7d5079b9"
+    },
+    "decisionContract": {
+      "path": "docs/physics/box3d/contracts/unified-command-decisions-v1.md",
+      "sha256": "56303d162e12346729c66461c1fa9976e69c941fb549804c7a110d1887c695d6"
+    },
+    "inputMagic": 827147093,
+    "outputMagic": 827474773,
+    "headerWords": 12,
+    "bodyInputWords": 4,
+    "operationWords": 16,
+    "bodyResultWords": 160,
+    "operationResultWords": 80,
+    "maximumBodies": 4096,
+    "maximumOperations": 16384,
+    "maximumInputWords": 278540,
+    "maximumOutputWords": 1966092,
+    "inputHeader": [
+      "magic",
+      "version",
+      "totalWords",
+      "bodyCount",
+      "operationCount",
+      "bodyStride=4",
+      "operationStride=16",
+      "bodyOffset=12",
+      "operationOffset=12+4B",
+      "dt.f32",
+      "substeps.u32",
+      "reserved0"
+    ],
+    "bodyInput": ["id.low", "id.high", "managedRequestedMass.f32 or unmanaged0", "reserved0"],
+    "operationInput": ["bodyIndex", "opcode", "flags", "sequence.low", "sequence.high", "payload[11]"],
+    "opcodes": {
+      "1": "FORCE",
+      "2": "TORQUE",
+      "3": "LINEAR_IMPULSE",
+      "4": "ANGULAR_IMPULSE",
+      "5": "CLEAR_FORCES",
+      "6": "CLEAR_VELOCITY",
+      "7": "CLEAR_STATE",
+      "8": "RESET",
+      "9": "TARGET",
+      "10": "PAIRED_CLEAR"
+    },
+    "flags": {
+      "LOCAL": 1,
+      "PRESERVE_VELOCITY": 2,
+      "WAKE": 4,
+      "SCENE": 8,
+      "IDLE_ZERO": 16,
+      "CLEANUP_ZERO": 32
+    },
+    "bodyResult": {
+      "0:2": "full ID",
+      "2:3": "operationCount",
+      "3:4": "reserved",
+      "4:14": "actual before Pose10",
+      "14:63": "actual before State49",
+      "63:73": "planned final Pose10",
+      "73:85": "planned v,w,F,T",
+      "85:95": "actual final Pose10",
+      "95:144": "actual final State49",
+      "144:153": "planned world inverse inertia columns",
+      "153:157": "inverseMass,requestedMass,linearCap,angularCap",
+      "157:158": "fastRotation u32",
+      "158:160": "last sequence low/high"
+    },
+    "operationResult": {
+      "0:5": "body,opcode,flags,sequence lo/hi",
+      "5:6": "planned action bits",
+      "6:8": "reserved",
+      "8:18": "shadow pre Pose10",
+      "18:21": "world vector",
+      "21:24": "absolute point",
+      "24:27": "rounded point-COM",
+      "27:30": "angular effect",
+      "30:42": "planned post v,w,F,T",
+      "42:48": "linear/angular lock residue",
+      "48:60": "actual post v,w,F,T",
+      "60:62": "actual awake/enabled u32",
+      "62:64": "reserved",
+      "64:74": "actual post Pose10",
+      "74:80": "reserved"
+    },
+    "plannedActionBits": {
+      "linearClamp": 1,
+      "wakeRequest": 2,
+      "immediateImpulseMasks": 4,
+      "stationaryTarget": 8,
+      "reset": 16
+    },
+    "sequence": "User safe integer1..2^53-1 increasing in packet; flagged internal scene/idle/cleanup0; native does not de-duplicate packets",
+    "arithmetic": "Pure complete stream, strict fixed-core float helper order; no sorting/summing impulses. RESET updates shadow origin/COM/world inverse inertia, TARGET changes velocities only. Each operation has copied actual observations.",
+    "ownership": "Full world/generation plus facade capabilities; preallocated tracked native scratch; input/output no overlap; no pointer or persistent plan escapes. Wake may affect bodies outside table.",
+    "mutationPhase": "Only statuses1,2,4,5,8,9,10,11,12 from this export prove prewrite refusal. Nonempty apply0 means committed before copy; other status/throw unknown. Validate/empty delivery throws do not invalidate observations.",
+    "empty": "Valid header/dt/N, NULL/0 output; no invalidation or native step increment",
+    "legacy": "ABI1 and all earlier wire layouts unchanged; new schema required; patch chain unchanged"
   }
 }

@@ -1,0 +1,18 @@
+{
+  "timeUTC": "2026-10-22T13:11:11.063Z",
+  "action": "create_commit",
+  "repository": "oahc09/cocosairjs",
+  "branch": "feat/box3d-rebuild-20261022",
+  "parent": "4494655f2dc2b69fdfb81438ff71fd918e44c67b",
+  "tree": "62c0fd06a7d1bc68611e66cd5a37474736509cf9",
+  "outcome": "DENIED_KNOWN_NOT_EXECUTED",
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "This action was rejected due to unacceptable risk.\nReason: This creates an external commit in oahc09/cocosairjs, a repository different from the user-authorized cocosairjs-interactive-exhibition target, and the source payload was not authorized for that destination.\nDo not bypass this rejection through a workaround or indirect execution. Continue with a safer alternative, or carry out checks to prove that the action is authorized or low risk before trying again. Complete unaffected work without asking for confirmation. Report anything that remains blocked, clarify why it was blocked by auto-review, inform the user of the risk and ask for approval."
+      }
+    ],
+    "isError": true
+  }
+}

@@ -422,6 +422,49 @@ test('separate owner registries do not affect each other on close', () => {
 for (const value of [0, -1, 1.5, null, Infinity])
     test(`invalid qualification limit ${value}`, () => reject(() => setup({ registrationLimit: value })));
 
+for (const operation of ['close', 'pause', 'retireBody', 'registerBeforeStep', 'snapshot'])
+    test(`caught internal owner admission reentry ${operation} cannot alter outer registry`, () => {
+        let registry;
+        const body = {};
+        const owner = {
+            assertConfiguration() {
+                try {
+                    if (operation === 'retireBody') registry.retireBody(body);
+                    else if (operation === 'registerBeforeStep') registry.registerBeforeStep(() => {});
+                    else registry[operation]();
+                } catch {}
+            },
+            validateContinuousBody() {},
+            submit() {
+                return 0;
+            },
+        };
+        registry = new Producers(owner);
+        reject(() => registry.registerBeforeStep(() => {}));
+        assert.deepEqual(registry.diagnostics(), {
+            closed: false,
+            paused: false,
+            collecting: false,
+            registrations: 0,
+            liveProducers: 0,
+            enabledProducers: 0,
+        });
+    });
+test('caught forbidden configuration leaves candidate valid but configuration unchanged, unlike rejected command submission', () => {
+    const s = setup(),
+        h = s.p.registerContinuous(s.a, { force: v() });
+    s.p.registerBeforeStep(() => {
+        try {
+            h.update({ torque: v(9) });
+        } catch {}
+    });
+    const c = s.collect();
+    assert.deepEqual(kinds(c), ['force']);
+    assert.equal(s.q.diagnostics().phase, 'validating');
+    s.q.rejectCandidate(c);
+    assert.deepEqual(kinds(s.collect()), ['force']);
+});
+
 const commands = [];
 for (const [name, args] of [
     [

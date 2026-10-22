@@ -23,7 +23,9 @@ THE SOFTWARE.
 // Internal, limited M1 foundation. This is not the Cocos physics adapter.
 const CORE_SHA = 'efca0c184d40fd6a82016983f1601c4d23965867';
 const BINDING_BASE_SHA = '5d5a3af049cccd9948b2b55bac4342414af0ef64';
-const SCHEMA_SHA256 = '43df81eba981c9ab5751dbe5f807e660d46cac1a5e1b4936462d5afb57a24040';
+const SCHEMA_SHA256 = 'e6329dce9b3e6fce69cfd5da318f1f708b95b7af834edb667de8306f9cae0a5d';
+const commandIsArray = Array.isArray;
+const commandKeys = Object.keys;
 const PATCH_CHAIN_SHA256 = '434fb89494867f515051d5ac0dfc0c694556ba1f0da9ac3fc895a27097b1c7c7';
 
 function failure(code, message) {
@@ -90,6 +92,7 @@ export function createBox3DBinding(module, expected) {
     const output = scratch + 160;
     let disposed = false;
     let busy = false;
+    let commandAdmission;
     const worlds = new Map();
     const handles = new WeakMap();
     const worldStates = new WeakMap();
@@ -389,7 +392,10 @@ export function createBox3DBinding(module, expected) {
     }
     function exclusive(action) {
         alive();
-        if (busy) throw failure('AIR_E_BOX3D_REENTRANT', 'Binding scratch is already in use');
+        if (busy) {
+            if (commandAdmission) commandAdmission.reentered = true;
+            throw failure('AIR_E_BOX3D_REENTRANT', 'Binding scratch is already in use');
+        }
         busy = true;
         try {
             return action();
@@ -443,6 +449,9 @@ export function createBox3DBinding(module, expected) {
         nativeStatus(module._air_b3_body_state(wid, body.low, body.high, target, output));
         const p = Array.from(readFloats(49));
         if (!p.every(Number.isFinite)) throw failure('AIR_E_BOX3D_ABI', 'Nonfinite native body state');
+        return decodeBodyState(p, item.targetMass ?? null);
+    }
+    function decodeBodyState(p, requestedMass) {
         return freeze({
             type: p[0],
             enabled: Boolean(p[1]),
@@ -467,7 +476,7 @@ export function createBox3DBinding(module, expected) {
             localCenter: p.slice(32, 35),
             inertia: p.slice(35, 44),
             worldCenter: p.slice(44, 47),
-            requestedMass: item.targetMass ?? null,
+            requestedMass,
             massPending: Boolean(p[47]),
             sensorMassFallback: Boolean(p[48]),
         });
@@ -727,6 +736,381 @@ export function createBox3DBinding(module, expected) {
             );
         });
     }
+    function commandStatus(status) {
+        const codes = {
+            1: 'NATIVE',
+            2: 'NATIVE',
+            4: 'CAPACITY',
+            5: 'NATIVE',
+            8: 'UNSUPPORTED',
+            9: 'LOCKED',
+            10: 'MASS_PENDING',
+            11: 'CONFIG',
+            12: 'CONFIG',
+        };
+        if (status === 0) return;
+        const code = typeof status === 'number' && Object.hasOwn(codes, status) ? codes[status] : 'ABI';
+        const error = failure(`AIR_E_BOX3D_${code}`, `Unified command native status ${status}`);
+        Object.defineProperty(error, 'nativeStatus', { value: status, enumerable: true });
+        throw error;
+    }
+    function commandTransaction(action) {
+        return mutate(() => {
+            commandAdmission = { reentered: false };
+            try {
+                return action();
+            } finally {
+                commandAdmission = undefined;
+            }
+        });
+    }
+    // Read each caller-owned field/index once. Never invoke its map/iterator or reuse m2's reader.
+    function commandVector(value, count, name, normalize = false) {
+        if (value === null || value === undefined) throw failure('AIR_E_BOX3D_ARGUMENT', `${name} required`);
+        const length = value.length;
+        if (length !== count) throw failure('AIR_E_BOX3D_ARGUMENT', `${name} needs ${count} components`);
+        const copied = [];
+        for (let i = 0; i < count; ++i) {
+            const component = value[i];
+            if (normalize) {
+                if (typeof component !== 'number' || !Number.isFinite(component))
+                    throw failure('AIR_E_BOX3D_ARGUMENT', `${name} must be finite`);
+                copied.push(component);
+            } else copied.push(Math.fround(finite(component, name)));
+        }
+        if (!normalize) return copied;
+        const scale = Math.max(Math.abs(copied[0]), Math.abs(copied[1]), Math.abs(copied[2]), Math.abs(copied[3]));
+        if (scale === 0) throw failure('AIR_E_BOX3D_ARGUMENT', 'Quaternion must be nonzero');
+        const scaled = copied.map((v) => v / scale),
+            norm = Math.hypot(...scaled);
+        return scaled.map((v) => Math.fround(v / norm));
+    }
+    function commandPose(value) {
+        if (!value || typeof value !== 'object') throw failure('AIR_E_BOX3D_ARGUMENT', 'Origin pose required');
+        const position = value.position,
+            rotation = value.rotation;
+        return [...commandVector(position, 3, 'pose.position'), ...commandVector(rotation, 4, 'pose.rotation', true)];
+    }
+    function commandBatch(world, commands, dt, substeps, apply) {
+        const wid = worldId(world),
+            state = worldStates.get(world);
+        if (!commandIsArray(commands)) throw failure('AIR_E_BOX3D_ARGUMENT', 'Command array required');
+        const length = commands.length;
+        if (!Number.isInteger(length) || length < 0 || length > 16384)
+            throw failure('AIR_E_BOX3D_CAPACITY', 'At most 16384 commands');
+        const delta = Math.fround(finite(dt, 'command.dt'));
+        if (delta <= 0 || ![1, 2, 4, 8].includes(substeps))
+            throw failure('AIR_E_BOX3D_ARGUMENT', 'Positive float32 dt and AIR substeps 1, 2, 4 or 8 required');
+        if (apply && length && (!Number.isSafeInteger(state.revision) || state.revision >= Number.MAX_SAFE_INTEGER))
+            throw failure('AIR_E_BOX3D_CAPACITY', 'Mutation revision exhausted before command invocation');
+        const kinds = [
+            'force',
+            'torque',
+            'linearImpulse',
+            'angularImpulse',
+            'clearForces',
+            'clearVelocity',
+            'clearState',
+            'reset',
+            'target',
+            'pairedClear',
+        ];
+        const bodies = [],
+            bodyMap = new Map(),
+            records = [];
+        for (let n = 0; n < length; ++n) {
+            const command = commands[n];
+            if (!command || typeof command !== 'object') throw failure('AIR_E_BOX3D_ARGUMENT', 'Command required');
+            const body = command.body,
+                kind = command.kind,
+                sequence = command.sequence;
+            const owner = bodyOwner(world, body),
+                opcode = kinds.indexOf(kind) + 1;
+            if (!opcode) throw failure('AIR_E_BOX3D_ARGUMENT', 'Unknown command kind');
+            if (!Number.isSafeInteger(sequence) || sequence < 0)
+                throw failure('AIR_E_BOX3D_ARGUMENT', 'Command sequence must be a nonnegative safe integer');
+            let flags = 0,
+                payload = [],
+                allowed = ['body', 'kind', 'sequence'];
+            if (opcode <= 4) {
+                const givenSpace = command.space,
+                    givenValue = command.value;
+                const space = givenSpace === undefined ? 'world' : givenSpace;
+                if (space !== 'world' && space !== 'local')
+                    throw failure('AIR_E_BOX3D_ARGUMENT', 'Invalid command space');
+                flags = space === 'local' ? 1 : 0;
+                payload = commandVector(givenValue, 3, 'command.value');
+                allowed.push('value', 'space');
+                if (opcode === 1 || opcode === 3) {
+                    const offset = command.offset;
+                    payload.push(...commandVector(offset === undefined ? [0, 0, 0] : offset, 3, 'command.offset'));
+                    allowed.push('offset');
+                }
+            } else if (opcode === 8 || opcode === 9) {
+                const pose = command.pose;
+                payload = commandPose(pose);
+                allowed.push('pose');
+                if (opcode === 8) {
+                    const givenMode = command.mode,
+                        givenPreserve = command.preserveVelocity,
+                        givenWake = command.wake;
+                    const mode = givenMode === undefined ? 'teleport' : givenMode;
+                    if (mode !== 'teleport' && mode !== 'scene')
+                        throw failure('AIR_E_BOX3D_ARGUMENT', 'Invalid reset mode');
+                    flags =
+                        (boolean(givenPreserve === undefined ? false : givenPreserve, 'preserveVelocity') << 1) |
+                        (boolean(givenWake === undefined ? true : givenWake, 'wake') << 2) |
+                        (mode === 'scene' ? 8 : 0);
+                    allowed.push('mode', 'preserveVelocity', 'wake');
+                }
+            } else if (opcode === 10) {
+                const reason = command.reason;
+                if (!['user', 'idle', 'cleanup'].includes(reason))
+                    throw failure('AIR_E_BOX3D_ARGUMENT', 'Invalid paired-clear reason');
+                flags = reason === 'idle' ? 16 : reason === 'cleanup' ? 32 : 0;
+                allowed.push('reason');
+            }
+            for (const key of commandKeys(command))
+                if (!allowed.includes(key)) throw failure('AIR_E_BOX3D_ARGUMENT', `Unused command field ${key}`);
+            let index = bodyMap.get(body);
+            if (index === undefined) {
+                if (bodies.length === 4096) throw failure('AIR_E_BOX3D_CAPACITY', 'At most 4096 command bodies');
+                index = bodies.length;
+                bodyMap.set(body, index);
+                bodies.push({ body, target: owner.target, count: 0, lastSequence: 0 });
+            }
+            bodies[index].count++;
+            bodies[index].lastSequence = sequence;
+            records.push({ body, index, kind, opcode, flags, sequence, payload });
+        }
+        if (commandAdmission.reentered) throw failure('AIR_E_BOX3D_REENTRANT', 'Reentry during command input copy');
+        const inputWords = 12 + 4 * bodies.length + 16 * records.length;
+        const outputWords = apply && records.length ? 12 + 160 * bodies.length + 80 * records.length : 0;
+        return withBuffer((inputWords + outputWords) * 4, (ptr) => {
+            const wire = new Uint32Array(inputWords),
+                floats = new Float32Array(wire.buffer);
+            wire.set([
+                0x314d4355,
+                1,
+                inputWords,
+                bodies.length,
+                records.length,
+                4,
+                16,
+                12,
+                12 + 4 * bodies.length,
+                0,
+                substeps,
+                0,
+            ]);
+            floats[9] = delta;
+            bodies.forEach((entry, i) => {
+                const at = 12 + 4 * i;
+                wire[at] = entry.body.low;
+                wire[at + 1] = entry.body.high;
+                floats[at + 2] = entry.target;
+            });
+            records.forEach((entry, i) => {
+                const at = 12 + 4 * bodies.length + 16 * i;
+                wire.set(
+                    [
+                        entry.index,
+                        entry.opcode,
+                        entry.flags,
+                        entry.sequence >>> 0,
+                        Math.floor(entry.sequence / 4294967296),
+                    ],
+                    at,
+                );
+                floats.set(entry.payload, at + 5);
+            });
+            module.HEAPU32.set(wire, ptr >>> 2);
+            const dst = outputWords ? ptr + inputWords * 4 : 0,
+                writing = apply && records.length !== 0;
+            if (commandAdmission.reentered) throw failure('AIR_E_BOX3D_REENTRANT', 'Reentry during command allocation');
+            commandAdmission = undefined;
+            activeMutation.outcome = undefined;
+            let status;
+            try {
+                status = module._air_b3_command_batch(wid, ptr, inputWords, dst, outputWords, apply ? 1 : 0);
+            } catch (error) {
+                if (writing) changed(world);
+                throw error;
+            }
+            const knownFailure = [1, 2, 4, 5, 8, 9, 10, 11, 12].includes(status);
+            if (status === 0) {
+                activeMutation.outcome = writing ? 'committed' : 'not-mutated';
+                if (writing) changed(world);
+            } else if (knownFailure) activeMutation.outcome = 'not-mutated';
+            else if (writing) changed(world);
+            commandStatus(status);
+            if (!apply) return;
+            if (!writing) return freeze({ bodies: [], operations: [], executedOperationCount: 0 });
+            // Refresh views after allocation and native growth, then own every word before parsing.
+            const copied = module.HEAPU32.slice(dst >>> 2, (dst >>> 2) + outputWords);
+            if (copied.length !== outputWords) throw failure('AIR_E_BOX3D_ABI', 'Truncated command output');
+            return decodeCommandResult(copied, bodies, records);
+        });
+    }
+    function decodeCommandResult(words, bodies, records) {
+        const floats = new Float32Array(words.buffer, words.byteOffset, words.length);
+        const reject = () => {
+            throw failure('AIR_E_BOX3D_ABI', 'Invalid copied command result');
+        };
+        const expected = [
+            0x31524355,
+            1,
+            words.length,
+            bodies.length,
+            records.length,
+            160,
+            80,
+            12,
+            12 + 160 * bodies.length,
+            1,
+            0,
+            0,
+        ];
+        expected.forEach((value, i) => {
+            if (words[i] !== value) reject();
+        });
+        const take = (at, count) => {
+            const value = Array.from(floats.slice(at, at + count));
+            if (value.length !== count || !value.every(Number.isFinite)) reject();
+            return value;
+        };
+        const zero = (at, count) => {
+            for (let i = at; i < at + count; ++i) if (words[i] !== 0) reject();
+        };
+        const pose = (at) => {
+            const p = take(at, 7),
+                q2 = p.slice(3).reduce((sum, x) => sum + x * x, 0);
+            if (Math.abs(q2 - 1) > 1e-4) reject();
+            return { position: p.slice(0, 3), rotation: p.slice(3) };
+        };
+        const booleanWord = (at) => {
+            if (words[at] !== 0 && words[at] !== 1) reject();
+            return words[at] === 1;
+        };
+        const stateAt = (at, mass) => {
+            const p = take(at, 49);
+            if (![0, 1, 2].includes(p[0])) reject();
+            for (const i of [1, 2, 3, 4, 5, 6, 25, 26, 27, 28, 29, 30, 47, 48]) if (p[i] !== 0 && p[i] !== 1) reject();
+            return decodeBodyState(p, mass || null);
+        };
+        const observation = (at, stateOffset, mass) => {
+            const result = { pose: pose(at), worldCenter: take(at + 7, 3), state: stateAt(stateOffset, mass) };
+            if (result.worldCenter.some((value, i) => !Object.is(value, result.state.worldCenter[i]))) reject();
+            return result;
+        };
+        const decodedBodies = bodies.map((entry, i) => {
+            const at = 12 + i * 160;
+            if (
+                words[at] !== entry.body.low ||
+                words[at + 1] !== entry.body.high ||
+                words[at + 2] !== entry.count ||
+                words[at + 158] !== entry.lastSequence >>> 0 ||
+                words[at + 159] !== Math.floor(entry.lastSequence / 4294967296)
+            )
+                reject();
+            zero(at + 3, 1);
+            const fast = booleanWord(at + 157),
+                limits = take(at + 153, 4);
+            if (
+                limits[0] < 0 ||
+                limits[1] !== Math.fround(entry.target) ||
+                limits[2] <= 0 ||
+                (fast ? limits[3] !== 0 : limits[3] <= 0)
+            )
+                reject();
+            return {
+                body: entry.body,
+                executedOperationCount: entry.count,
+                lastSequence: entry.lastSequence,
+                before: observation(at + 4, at + 14, entry.target),
+                plan: {
+                    pose: pose(at + 63),
+                    worldCenter: take(at + 70, 3),
+                    linearVelocity: take(at + 73, 3),
+                    angularVelocity: take(at + 76, 3),
+                    force: take(at + 79, 3),
+                    torque: take(at + 82, 3),
+                    inverseInertiaWorld: take(at + 144, 9),
+                    inverseMass: limits[0],
+                    requestedMass: limits[1],
+                    maximumLinearSpeed: limits[2],
+                    maximumAngularSpeed: fast ? null : limits[3],
+                    allowFastRotation: fast,
+                },
+                actual: observation(at + 85, at + 95, entry.target),
+            };
+        });
+        const operations = records.map((entry, i) => {
+            const at = 12 + bodies.length * 160 + i * 80;
+            [
+                entry.index,
+                entry.opcode,
+                entry.flags,
+                entry.sequence >>> 0,
+                Math.floor(entry.sequence / 4294967296),
+            ].forEach((x, j) => {
+                if (words[at + j] !== x) reject();
+            });
+            const actionBits = words[at + 5];
+            const allowedActions =
+                entry.opcode <= 2
+                    ? [2]
+                    : entry.opcode === 3
+                      ? [6, 7]
+                      : entry.opcode === 4
+                        ? [6]
+                        : entry.opcode === 8
+                          ? [16, 18]
+                          : entry.opcode === 9
+                            ? [2, 8]
+                            : [0];
+            if (!allowedActions.includes(actionBits)) reject();
+            zero(at + 6, 2);
+            zero(at + 62, 2);
+            zero(at + 74, 6);
+            // Even unused vectors must be canonical zero, not hidden payloads.
+            if (entry.opcode > 4) zero(at + 18, 12);
+            else if (entry.opcode === 2 || entry.opcode === 4) zero(at + 21, 6);
+            if (entry.opcode !== 8 && entry.opcode !== 9) zero(at + 42, 6);
+            return {
+                body: entry.body,
+                kind: entry.kind,
+                flags: entry.flags,
+                sequence: entry.sequence,
+                plannerActionBits: words[at + 5],
+                plan: {
+                    basisPose: pose(at + 8),
+                    basisWorldCenter: take(at + 15, 3),
+                    worldVector: take(at + 18, 3),
+                    applicationPoint: take(at + 21, 3),
+                    actualOffset: take(at + 24, 3),
+                    angularEffect: take(at + 27, 3),
+                    linearVelocity: take(at + 30, 3),
+                    angularVelocity: take(at + 33, 3),
+                    force: take(at + 36, 3),
+                    torque: take(at + 39, 3),
+                    linearLockResidue: take(at + 42, 3),
+                    angularLockResidue: take(at + 45, 3),
+                },
+                actual: {
+                    pose: pose(at + 64),
+                    worldCenter: take(at + 71, 3),
+                    linearVelocity: take(at + 48, 3),
+                    angularVelocity: take(at + 51, 3),
+                    force: take(at + 54, 3),
+                    torque: take(at + 57, 3),
+                    awake: booleanWord(at + 60),
+                    enabled: booleanWord(at + 61),
+                },
+            };
+        });
+        return freeze({ bodies: decodedBodies, operations, executedOperationCount: records.length });
+    }
     function bodyApply(world, body, kind, value, offset, space) {
         const { wid, target } = bodyOwner(world, body);
         if (space !== 'world' && space !== 'local') throw failure('AIR_E_BOX3D_ARGUMENT', 'Invalid force space');
@@ -764,6 +1148,12 @@ export function createBox3DBinding(module, expected) {
     }
     const api = {
         identity: Object.freeze({ ...expected }),
+        validateCommandBatch(world, commands, dt, substeps) {
+            return commandTransaction(() => commandBatch(world, commands, dt, substeps, false));
+        },
+        applyCommandBatch(world, commands, dt, substeps) {
+            return commandTransaction(() => commandBatch(world, commands, dt, substeps, true));
+        },
         validateMotionBatch(world, records, dt, substeps) {
             return mutate(() => motionBatch(world, records, dt, substeps, false));
         },

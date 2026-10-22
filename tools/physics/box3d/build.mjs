@@ -46,6 +46,10 @@ try {
     result.motionSourceControls = JSON.parse(motionSources);
     if (result.motionSourceControls.status !== 'PASS_SOURCE_CONTROLS_ONLY')
         throw new Error('Motion source controls failed');
+    const commandSources = run(process.execPath, ['tools/physics/box3d/command-source-controls.mjs']);
+    result.commandSourceControls = JSON.parse(commandSources);
+    if (result.commandSourceControls.status !== 'PASS_SOURCE_CONTROLS_ONLY')
+        throw new Error('Command source controls failed');
     const lock = JSON.parse(readFileSync(resolve(root, 'tools/physics/box3d/versions.lock.json'), 'utf8'));
     const patchPlan = readPatchPlan();
     const stagedCore = resolve(out, 'staged-core');
@@ -90,6 +94,7 @@ try {
             'tools/physics/box3d/native/body_control.c',
             'tools/physics/box3d/native/filter_bridge.c',
             'tools/physics/box3d/native/motion_bridge.c',
+            'tools/physics/box3d/native/command_bridge.c',
             'tools/physics/box3d/native/contract.c',
         ]) {
             const object = resolve(out, basename(source) + '.o');
@@ -181,6 +186,20 @@ try {
         writeFileSync(resolve(out, 'native-motion-contract.raw.json'), motionRaw);
         result.motionContract = JSON.parse(motionRaw);
         if (result.motionContract.status !== 'PASS') throw new Error('Native motion contract failed');
+        const commandExe = resolve(out, 'native-command-contract');
+        run(cc, [
+            ...flags,
+            'tools/physics/box3d/native/command_contract.c',
+            ...objects.filter((file) => !file.endsWith('/contract.c.o') && !file.endsWith('/world_bridge.c.o')),
+            ...(sanitize ? ['-fsanitize=address,undefined'] : []),
+            '-lm',
+            '-o',
+            commandExe,
+        ]);
+        const commandRaw = run(commandExe, []);
+        writeFileSync(resolve(out, 'native-command-contract.raw.json'), commandRaw);
+        result.commandContract = JSON.parse(commandRaw);
+        if (result.commandContract.status !== 'PASS') throw new Error('Native command contract failed');
         result.artifacts = [
             { path: 'native-contract', sha256: sha256(readFileSync(exe)), bytes: readFileSync(exe).length },
         ];
@@ -266,6 +285,11 @@ try {
         result.motionContract = JSON.parse(motionRaw);
         if (result.motionContract.status !== 'PASS' || result.motionContract.pointerBytes !== 4)
             throw new Error('WASM32 motion native contract failed');
+        const commandRaw = run(process.execPath, [resolve(out, 'air_box3d_command_contract.cjs')]);
+        writeFileSync(resolve(out, 'native-command-contract.raw.json'), commandRaw);
+        result.commandContract = JSON.parse(commandRaw);
+        if (result.commandContract.status !== 'PASS' || result.commandContract.pointerBytes !== 4)
+            throw new Error('WASM32 command native contract failed');
         run(process.execPath, ['tools/physics/box3d/wasm-contract.mjs', out]);
         run(process.execPath, ['tools/physics/box3d/wasm-ownership-contract.mjs', out]);
         run(process.execPath, ['tools/physics/box3d/wasm-snapshot-contract.mjs', out]);
@@ -274,6 +298,7 @@ try {
         run(process.execPath, ['tools/physics/box3d/wasm-body-contract.mjs', out]);
         run(process.execPath, ['tools/physics/box3d/wasm-filter-contract.mjs', out]);
         run(process.execPath, ['tools/physics/box3d/wasm-motion-contract.mjs', out]);
+        run(process.execPath, ['tools/physics/box3d/wasm-command-contract.mjs', out]);
         result.artifacts = artifacts;
         result.browserStatus = 'NOT_RUN';
     }
@@ -327,6 +352,13 @@ try {
         'tools/physics/box3d/native/contract.c',
         'tools/physics/box3d/native/geometry_contract.c',
         'tools/physics/box3d/native/wasm_entry.c',
+        'tools/physics/box3d/native/command_bridge.c',
+        'tools/physics/box3d/native/command_bridge.h',
+        'tools/physics/box3d/native/command_contract.c',
+        'tools/physics/box3d/wasm-command-contract.mjs',
+        'tools/physics/box3d/command-source-controls.mjs',
+        'docs/physics/box3d/contracts/unified-command-wire-v1.md',
+        'docs/physics/box3d/contracts/unified-command-decisions-v1.md',
         'src/air/physics/box3d/binding/facade.mjs',
         'src/air/physics/box3d/binding/facade.d.mts',
     ];

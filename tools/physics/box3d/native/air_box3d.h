@@ -4,6 +4,7 @@
 #include "body_control.h"
 #include "filter_bridge.h"
 #include "motion_bridge.h"
+#include "command_bridge.h"
 
 #ifdef __cplusplus
 extern "C" {

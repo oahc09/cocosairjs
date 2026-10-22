@@ -1,0 +1,87 @@
+{
+  "status": "PASS_ACTUAL_LIBRARY_DOWNLOAD_INCREMENTAL_INDEPENDENT_STORE_FULL_FILE_VERIFICATION",
+  "timeUTC": "2026-10-22T13:13:22.214725+00:00",
+  "libraryFileId": "libfile_9ae87ebba6188191b663a068c4c4ca19",
+  "fileId": "file_0000000040b081f590be367989e259c1",
+  "archive": {
+    "bytes": 20955189,
+    "sha256": "b8e29c23b21a5245633450e34fc92608926bb83536232ddbf18a19042f2aef42"
+  },
+  "commit": "37552f97c6285e427f7f4bcd8f28236b40dd5283",
+  "tree": "62a1ff7b25f3e204a30aac21685d6077f9057a4c",
+  "bundle": {
+    "file": "box3d-rebuild.bundle",
+    "bytes": 21163543,
+    "sha256": "dee24e5506db550663d6a9b286e10580b87389ff71a03553455c3b2c1cddf7ed"
+  },
+  "reusedRestoreDirectory": "/workspace/scratch/62d43a81bbde/box3d-motion-qualified-library-roundtrip-20261022/restored",
+  "previousVerifiedCommit": "c6cab1d0b26bdeeed3144a944f1716fd3e5c0488",
+  "beforeVerification": {
+    "status": "PASS",
+    "checkedFiles": 13774,
+    "independentObjectStore": true
+  },
+  "afterVerification": {
+    "status": "PASS",
+    "checkedFiles": 13828,
+    "independentObjectStore": true
+  },
+  "newFullCloneCreated": false,
+  "priorReceiptPreserved": true,
+  "commands": [
+    {
+      "command": [
+        "git",
+        "-C",
+        "/workspace/scratch/62d43a81bbde/box3d-motion-qualified-library-roundtrip-20261022/restored",
+        "bundle",
+        "verify",
+        "/workspace/scratch/62d43a81bbde/box3d-producer-fence-library-roundtrip-20261022/box3d-rebuild.bundle"
+      ],
+      "exitCode": 0,
+      "stdout": "The bundle contains these 8 refs:\n37552f97c6285e427f7f4bcd8f28236b40dd5283 refs/heads/feat/box3d-rebuild-20261022\nbdb618394a2115a870e82b6525f8cb696ac404d3 refs/tags/box3d-debug-release-ownership-20261022\ne106586b4e5433e7a4daffbb40dd9ae8e678784f refs/tags/box3d-first-node-wasm-20261022\n6ef792c524b546041469f2e3903eb1777fda5923 refs/tags/box3d-native-foundation-20261022\n7fc60c18dc6a8f00c63b656b5097b83a19af0504 refs/tags/box3d-rebuild-preparation-20261022\n34dc269fb63b988b67ea8bfeabef8e20f208ed0e refs/tags/box3d-rebuild-remote-confirmed-20261022\n730fbf2519887474e9acfd229fbb65586090bb77 refs/tags/upstream-main-snapshot-20261022\n37552f97c6285e427f7f4bcd8f28236b40dd5283 HEAD\nThe bundle records a complete history.\nThe bundle uses this hash algorithm: sha1\n",
+      "stderr": "/workspace/scratch/62d43a81bbde/box3d-producer-fence-library-roundtrip-20261022/box3d-rebuild.bundle is okay\n"
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/workspace/scratch/62d43a81bbde/box3d-motion-qualified-library-roundtrip-20261022/restored",
+        "fetch",
+        "/workspace/scratch/62d43a81bbde/box3d-producer-fence-library-roundtrip-20261022/box3d-rebuild.bundle",
+        "refs/heads/feat/box3d-rebuild-20261022"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": "From /workspace/scratch/62d43a81bbde/box3d-producer-fence-library-roundtrip-20261022/box3d-rebuild.bundle\n * branch              feat/box3d-rebuild-20261022 -> FETCH_HEAD\n"
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/workspace/scratch/62d43a81bbde/box3d-motion-qualified-library-roundtrip-20261022/restored",
+        "merge-base",
+        "--is-ancestor",
+        "c6cab1d0b26bdeeed3144a944f1716fd3e5c0488",
+        "37552f97c6285e427f7f4bcd8f28236b40dd5283"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/workspace/scratch/62d43a81bbde/box3d-motion-qualified-library-roundtrip-20261022/restored",
+        "checkout",
+        "--detach",
+        "37552f97c6285e427f7f4bcd8f28236b40dd5283"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": "Previous HEAD position was c6cab1d0 feat(box3d): freeze unified command wire and add failure-aware pure queue\nHEAD is now at 37552f97 docs(box3d): freeze bounded component-creation transaction fence scope\n"
+    }
+  ],
+  "scope": "Honest partial-main local Git source restoration, no physical acceptance."
+}
