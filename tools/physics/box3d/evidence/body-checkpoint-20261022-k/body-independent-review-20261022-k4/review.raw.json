@@ -1,0 +1,1260 @@
+{
+  "status": "PASS",
+  "supersedesInterpretation": "k3 review repeated the same Release-only analytic observations under both mode labels; this review counts them once. No new product run.",
+  "scope": "Independent Python analytic finite box/sphere mass tensors, impulses, damping and real torque/offset-force integration. Does not read runner expected fields; no browser/full T10 claim.",
+  "inputs": [
+    {
+      "path": "tools/physics/box3d/output/body-wasm-debug-20261022-k3/wasm-body-contract.raw.json",
+      "sha256": "80d8873492ec6e18c40d26ec9262548474a61379b065e88ba28d867fa3f55143"
+    },
+    {
+      "path": "tools/physics/box3d/output/body-wasm-release-20261022-k3/wasm-body-contract.raw.json",
+      "sha256": "d5fe59439cbdf635bd4c770c6716e4c725c8c52838529bd599f1411c83f3bf1a"
+    },
+    {
+      "path": "tools/physics/box3d/output/body-analytic-20261022-k3/raw.json",
+      "sha256": "7bd4a251f9eb5618aec15a7aec3b7879017976063124623b60694864379a7e30"
+    },
+    {
+      "path": "tools/physics/box3d/output/body-effects-20261022-k3/raw.json",
+      "sha256": "3fdd5ad54ee42eec311f9467e3e50f00721b43b4be878e849106b4f340617044"
+    }
+  ],
+  "checks": [
+    {
+      "label": "debug:box-inertia:0",
+      "actual": 52,
+      "expected": 52.0,
+      "absoluteError": 0.0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "debug:box-inertia:1",
+      "actual": 0,
+      "expected": 0,
+      "absoluteError": 0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "debug:box-inertia:2",
+      "actual": 0,
+      "expected": 0,
+      "absoluteError": 0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "debug:box-inertia:3",
+      "actual": 0,
+      "expected": 0,
+      "absoluteError": 0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "debug:box-inertia:4",
+      "actual": 40,
+      "expected": 40.0,
+      "absoluteError": 0.0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "debug:box-inertia:5",
+      "actual": 0,
+      "expected": 0,
+      "absoluteError": 0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "debug:box-inertia:6",
+      "actual": 0,
+      "expected": 0,
+      "absoluteError": 0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "debug:box-inertia:7",
+      "actual": 0,
+      "expected": 0,
+      "absoluteError": 0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "debug:box-inertia:8",
+      "actual": 20,
+      "expected": 20.0,
+      "absoluteError": 0.0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "debug:box-mass",
+      "actual": 12,
+      "expected": 12,
+      "absoluteError": 0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "debug:offset-spheres-inertia:0",
+      "actual": 0.20000000298023224,
+      "expected": 0.2,
+      "absoluteError": 2.980232227667301e-09,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "debug:offset-spheres-inertia:1",
+      "actual": 0,
+      "expected": 0,
+      "absoluteError": 0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "debug:offset-spheres-inertia:2",
+      "actual": 0,
+      "expected": 0,
+      "absoluteError": 0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "debug:offset-spheres-inertia:3",
+      "actual": 0,
+      "expected": 0,
+      "absoluteError": 0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "debug:offset-spheres-inertia:4",
+      "actual": 2.200000047683716,
+      "expected": 2.2,
+      "absoluteError": 4.7683715642676816e-08,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "debug:offset-spheres-inertia:5",
+      "actual": 0,
+      "expected": 0,
+      "absoluteError": 0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "debug:offset-spheres-inertia:6",
+      "actual": 0,
+      "expected": 0,
+      "absoluteError": 0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "debug:offset-spheres-inertia:7",
+      "actual": 0,
+      "expected": 0,
+      "absoluteError": 0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "debug:offset-spheres-inertia:8",
+      "actual": 2.200000047683716,
+      "expected": 2.2,
+      "absoluteError": 4.7683715642676816e-08,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "debug:offset-COM:0",
+      "actual": 0,
+      "expected": 0,
+      "absoluteError": 0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "debug:offset-COM:1",
+      "actual": 0,
+      "expected": 0,
+      "absoluteError": 0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "debug:offset-COM:2",
+      "actual": 0,
+      "expected": 0,
+      "absoluteError": 0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "debug:rotated-box-inertia:0",
+      "actual": 39.99999237060547,
+      "expected": 40.0,
+      "absoluteError": 7.62939453125e-06,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "debug:rotated-box-inertia:1",
+      "actual": 7.152557373046875e-07,
+      "expected": 0,
+      "absoluteError": 7.152557373046875e-07,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "debug:rotated-box-inertia:2",
+      "actual": 0,
+      "expected": 0,
+      "absoluteError": 0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "debug:rotated-box-inertia:3",
+      "actual": 7.152557373046875e-07,
+      "expected": 0,
+      "absoluteError": 7.152557373046875e-07,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "debug:rotated-box-inertia:4",
+      "actual": 51.99999237060547,
+      "expected": 52.0,
+      "absoluteError": 7.62939453125e-06,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "debug:rotated-box-inertia:5",
+      "actual": 0,
+      "expected": 0,
+      "absoluteError": 0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "debug:rotated-box-inertia:6",
+      "actual": 0,
+      "expected": 0,
+      "absoluteError": 0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "debug:rotated-box-inertia:7",
+      "actual": 0,
+      "expected": 0,
+      "absoluteError": 0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "debug:rotated-box-inertia:8",
+      "actual": 20,
+      "expected": 20.0,
+      "absoluteError": 0.0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "debug:damping-linear:0.0:60",
+      "actual": 1,
+      "expected": 1.0,
+      "absoluteError": 0.0,
+      "tolerance": 0.001
+    },
+    {
+      "label": "debug:damping-angular:0.0:60",
+      "actual": 1,
+      "expected": 1.0,
+      "absoluteError": 0.0,
+      "tolerance": 0.001
+    },
+    {
+      "label": "debug:coefficient:0.0",
+      "actual": 0,
+      "expected": 0.0,
+      "absoluteError": 0.0,
+      "tolerance": 0
+    },
+    {
+      "label": "debug:damping-linear:0.0:240",
+      "actual": 1,
+      "expected": 1.0,
+      "absoluteError": 0.0,
+      "tolerance": 0.001
+    },
+    {
+      "label": "debug:damping-angular:0.0:240",
+      "actual": 1,
+      "expected": 1.0,
+      "absoluteError": 0.0,
+      "tolerance": 0.001
+    },
+    {
+      "label": "debug:coefficient:0.0",
+      "actual": 0,
+      "expected": 0.0,
+      "absoluteError": 0.0,
+      "tolerance": 0
+    },
+    {
+      "label": "debug:damping-linear:0.0:480",
+      "actual": 1,
+      "expected": 1.0,
+      "absoluteError": 0.0,
+      "tolerance": 0.001
+    },
+    {
+      "label": "debug:damping-angular:0.0:480",
+      "actual": 1,
+      "expected": 1.0,
+      "absoluteError": 0.0,
+      "tolerance": 0.001
+    },
+    {
+      "label": "debug:coefficient:0.0",
+      "actual": 0,
+      "expected": 0.0,
+      "absoluteError": 0.0,
+      "tolerance": 0
+    },
+    {
+      "label": "debug:damping-linear:0.10000000149011612:60",
+      "actual": 0.904914140701294,
+      "expected": 0.9049127392662061,
+      "absoluteError": 1.4014350878666093e-06,
+      "tolerance": 0.001
+    },
+    {
+      "label": "debug:damping-angular:0.10000000149011612:60",
+      "actual": 0.904914140701294,
+      "expected": 0.9049127392662061,
+      "absoluteError": 1.4014350878666093e-06,
+      "tolerance": 0.001
+    },
+    {
+      "label": "debug:coefficient:0.10000000149011612",
+      "actual": 0.10000000149011612,
+      "expected": 0.10000000149011612,
+      "absoluteError": 0.0,
+      "tolerance": 0
+    },
+    {
+      "label": "debug:damping-linear:0.10000000149011612:240",
+      "actual": 0.9048640131950378,
+      "expected": 0.9048562624292725,
+      "absoluteError": 7.750765765313083e-06,
+      "tolerance": 0.001
+    },
+    {
+      "label": "debug:damping-angular:0.10000000149011612:240",
+      "actual": 0.9048640131950378,
+      "expected": 0.9048562624292725,
+      "absoluteError": 7.750765765313083e-06,
+      "tolerance": 0.001
+    },
+    {
+      "label": "debug:coefficient:0.10000000149011612",
+      "actual": 0.10000000149011612,
+      "expected": 0.10000000149011612,
+      "absoluteError": 0.0,
+      "tolerance": 0
+    },
+    {
+      "label": "debug:damping-linear:0.10000000149011612:480",
+      "actual": 0.9048337936401367,
+      "expected": 0.9048468408178716,
+      "absoluteError": 1.304717773487063e-05,
+      "tolerance": 0.001
+    },
+    {
+      "label": "debug:damping-angular:0.10000000149011612:480",
+      "actual": 0.9048337936401367,
+      "expected": 0.9048468408178716,
+      "absoluteError": 1.304717773487063e-05,
+      "tolerance": 0.001
+    },
+    {
+      "label": "debug:coefficient:0.10000000149011612",
+      "actual": 0.10000000149011612,
+      "expected": 0.10000000149011612,
+      "absoluteError": 0.0,
+      "tolerance": 0
+    },
+    {
+      "label": "debug:damping-linear:0.8999999761581421:60",
+      "actual": 0.4092961847782135,
+      "expected": 0.40929597633401726,
+      "absoluteError": 2.0844419623688992e-07,
+      "tolerance": 0.001
+    },
+    {
+      "label": "debug:damping-angular:0.8999999761581421:60",
+      "actual": 0.4092961847782135,
+      "expected": 0.40929597633401726,
+      "absoluteError": 2.0844419623688992e-07,
+      "tolerance": 0.001
+    },
+    {
+      "label": "debug:coefficient:0.8999999761581421",
+      "actual": 0.8999999761581421,
+      "expected": 0.8999999761581421,
+      "absoluteError": 0.0,
+      "tolerance": 0
+    },
+    {
+      "label": "debug:damping-linear:0.8999999761581421:240",
+      "actual": 0.4072573184967041,
+      "expected": 0.40725462163464,
+      "absoluteError": 2.6968620641110164e-06,
+      "tolerance": 0.001
+    },
+    {
+      "label": "debug:damping-angular:0.8999999761581421:240",
+      "actual": 0.4072573184967041,
+      "expected": 0.40725462163464,
+      "absoluteError": 2.6968620641110164e-06,
+      "tolerance": 0.001
+    },
+    {
+      "label": "debug:coefficient:0.8999999761581421",
+      "actual": 0.8999999761581421,
+      "expected": 0.8999999761581421,
+      "absoluteError": 0.0,
+      "tolerance": 0
+    },
+    {
+      "label": "debug:damping-linear:0.8999999761581421:480",
+      "actual": 0.40690553188323975,
+      "expected": 0.40691242877340017,
+      "absoluteError": 6.89689016042383e-06,
+      "tolerance": 0.001
+    },
+    {
+      "label": "debug:damping-angular:0.8999999761581421:480",
+      "actual": 0.40690553188323975,
+      "expected": 0.40691242877340017,
+      "absoluteError": 6.89689016042383e-06,
+      "tolerance": 0.001
+    },
+    {
+      "label": "debug:coefficient:0.8999999761581421",
+      "actual": 0.8999999761581421,
+      "expected": 0.8999999761581421,
+      "absoluteError": 0.0,
+      "tolerance": 0
+    },
+    {
+      "label": "debug:damping-linear:1.0:60",
+      "actual": 0.3709244430065155,
+      "expected": 0.37092398962862355,
+      "absoluteError": 4.5337789195132316e-07,
+      "tolerance": 0.001
+    },
+    {
+      "label": "debug:damping-angular:1.0:60",
+      "actual": 0.3709244430065155,
+      "expected": 0.37092398962862355,
+      "absoluteError": 4.5337789195132316e-07,
+      "tolerance": 0.001
+    },
+    {
+      "label": "debug:coefficient:1.0",
+      "actual": 1,
+      "expected": 1.0,
+      "absoluteError": 0.0,
+      "tolerance": 0
+    },
+    {
+      "label": "debug:damping-linear:1.0:240",
+      "actual": 0.3686392307281494,
+      "expected": 0.3686445288569905,
+      "absoluteError": 5.298128841091376e-06,
+      "tolerance": 0.001
+    },
+    {
+      "label": "debug:damping-angular:1.0:240",
+      "actual": 0.3686392307281494,
+      "expected": 0.3686445288569905,
+      "absoluteError": 5.298128841091376e-06,
+      "tolerance": 0.001
+    },
+    {
+      "label": "debug:coefficient:1.0",
+      "actual": 1,
+      "expected": 1.0,
+      "absoluteError": 0.0,
+      "tolerance": 0
+    },
+    {
+      "label": "debug:damping-linear:1.0:480",
+      "actual": 0.36827123165130615,
+      "expected": 0.3682623166231278,
+      "absoluteError": 8.915028178346773e-06,
+      "tolerance": 0.001
+    },
+    {
+      "label": "debug:damping-angular:1.0:480",
+      "actual": 0.36827123165130615,
+      "expected": 0.3682623166231278,
+      "absoluteError": 8.915028178346773e-06,
+      "tolerance": 0.001
+    },
+    {
+      "label": "debug:coefficient:1.0",
+      "actual": 1,
+      "expected": 1.0,
+      "absoluteError": 0.0,
+      "tolerance": 0
+    },
+    {
+      "label": "release:box-inertia:0",
+      "actual": 52,
+      "expected": 52.0,
+      "absoluteError": 0.0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "release:box-inertia:1",
+      "actual": 0,
+      "expected": 0,
+      "absoluteError": 0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "release:box-inertia:2",
+      "actual": 0,
+      "expected": 0,
+      "absoluteError": 0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "release:box-inertia:3",
+      "actual": 0,
+      "expected": 0,
+      "absoluteError": 0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "release:box-inertia:4",
+      "actual": 40,
+      "expected": 40.0,
+      "absoluteError": 0.0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "release:box-inertia:5",
+      "actual": 0,
+      "expected": 0,
+      "absoluteError": 0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "release:box-inertia:6",
+      "actual": 0,
+      "expected": 0,
+      "absoluteError": 0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "release:box-inertia:7",
+      "actual": 0,
+      "expected": 0,
+      "absoluteError": 0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "release:box-inertia:8",
+      "actual": 20,
+      "expected": 20.0,
+      "absoluteError": 0.0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "release:box-mass",
+      "actual": 12,
+      "expected": 12,
+      "absoluteError": 0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "release:offset-spheres-inertia:0",
+      "actual": 0.20000000298023224,
+      "expected": 0.2,
+      "absoluteError": 2.980232227667301e-09,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "release:offset-spheres-inertia:1",
+      "actual": 0,
+      "expected": 0,
+      "absoluteError": 0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "release:offset-spheres-inertia:2",
+      "actual": 0,
+      "expected": 0,
+      "absoluteError": 0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "release:offset-spheres-inertia:3",
+      "actual": 0,
+      "expected": 0,
+      "absoluteError": 0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "release:offset-spheres-inertia:4",
+      "actual": 2.200000047683716,
+      "expected": 2.2,
+      "absoluteError": 4.7683715642676816e-08,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "release:offset-spheres-inertia:5",
+      "actual": 0,
+      "expected": 0,
+      "absoluteError": 0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "release:offset-spheres-inertia:6",
+      "actual": 0,
+      "expected": 0,
+      "absoluteError": 0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "release:offset-spheres-inertia:7",
+      "actual": 0,
+      "expected": 0,
+      "absoluteError": 0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "release:offset-spheres-inertia:8",
+      "actual": 2.200000047683716,
+      "expected": 2.2,
+      "absoluteError": 4.7683715642676816e-08,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "release:offset-COM:0",
+      "actual": 0,
+      "expected": 0,
+      "absoluteError": 0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "release:offset-COM:1",
+      "actual": 0,
+      "expected": 0,
+      "absoluteError": 0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "release:offset-COM:2",
+      "actual": 0,
+      "expected": 0,
+      "absoluteError": 0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "release:rotated-box-inertia:0",
+      "actual": 39.99999237060547,
+      "expected": 40.0,
+      "absoluteError": 7.62939453125e-06,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "release:rotated-box-inertia:1",
+      "actual": 7.152557373046875e-07,
+      "expected": 0,
+      "absoluteError": 7.152557373046875e-07,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "release:rotated-box-inertia:2",
+      "actual": 0,
+      "expected": 0,
+      "absoluteError": 0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "release:rotated-box-inertia:3",
+      "actual": 7.152557373046875e-07,
+      "expected": 0,
+      "absoluteError": 7.152557373046875e-07,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "release:rotated-box-inertia:4",
+      "actual": 51.99999237060547,
+      "expected": 52.0,
+      "absoluteError": 7.62939453125e-06,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "release:rotated-box-inertia:5",
+      "actual": 0,
+      "expected": 0,
+      "absoluteError": 0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "release:rotated-box-inertia:6",
+      "actual": 0,
+      "expected": 0,
+      "absoluteError": 0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "release:rotated-box-inertia:7",
+      "actual": 0,
+      "expected": 0,
+      "absoluteError": 0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "release:rotated-box-inertia:8",
+      "actual": 20,
+      "expected": 20.0,
+      "absoluteError": 0.0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "release:damping-linear:0.0:60",
+      "actual": 1,
+      "expected": 1.0,
+      "absoluteError": 0.0,
+      "tolerance": 0.001
+    },
+    {
+      "label": "release:damping-angular:0.0:60",
+      "actual": 1,
+      "expected": 1.0,
+      "absoluteError": 0.0,
+      "tolerance": 0.001
+    },
+    {
+      "label": "release:coefficient:0.0",
+      "actual": 0,
+      "expected": 0.0,
+      "absoluteError": 0.0,
+      "tolerance": 0
+    },
+    {
+      "label": "release:damping-linear:0.0:240",
+      "actual": 1,
+      "expected": 1.0,
+      "absoluteError": 0.0,
+      "tolerance": 0.001
+    },
+    {
+      "label": "release:damping-angular:0.0:240",
+      "actual": 1,
+      "expected": 1.0,
+      "absoluteError": 0.0,
+      "tolerance": 0.001
+    },
+    {
+      "label": "release:coefficient:0.0",
+      "actual": 0,
+      "expected": 0.0,
+      "absoluteError": 0.0,
+      "tolerance": 0
+    },
+    {
+      "label": "release:damping-linear:0.0:480",
+      "actual": 1,
+      "expected": 1.0,
+      "absoluteError": 0.0,
+      "tolerance": 0.001
+    },
+    {
+      "label": "release:damping-angular:0.0:480",
+      "actual": 1,
+      "expected": 1.0,
+      "absoluteError": 0.0,
+      "tolerance": 0.001
+    },
+    {
+      "label": "release:coefficient:0.0",
+      "actual": 0,
+      "expected": 0.0,
+      "absoluteError": 0.0,
+      "tolerance": 0
+    },
+    {
+      "label": "release:damping-linear:0.10000000149011612:60",
+      "actual": 0.904914140701294,
+      "expected": 0.9049127392662061,
+      "absoluteError": 1.4014350878666093e-06,
+      "tolerance": 0.001
+    },
+    {
+      "label": "release:damping-angular:0.10000000149011612:60",
+      "actual": 0.904914140701294,
+      "expected": 0.9049127392662061,
+      "absoluteError": 1.4014350878666093e-06,
+      "tolerance": 0.001
+    },
+    {
+      "label": "release:coefficient:0.10000000149011612",
+      "actual": 0.10000000149011612,
+      "expected": 0.10000000149011612,
+      "absoluteError": 0.0,
+      "tolerance": 0
+    },
+    {
+      "label": "release:damping-linear:0.10000000149011612:240",
+      "actual": 0.9048640131950378,
+      "expected": 0.9048562624292725,
+      "absoluteError": 7.750765765313083e-06,
+      "tolerance": 0.001
+    },
+    {
+      "label": "release:damping-angular:0.10000000149011612:240",
+      "actual": 0.9048640131950378,
+      "expected": 0.9048562624292725,
+      "absoluteError": 7.750765765313083e-06,
+      "tolerance": 0.001
+    },
+    {
+      "label": "release:coefficient:0.10000000149011612",
+      "actual": 0.10000000149011612,
+      "expected": 0.10000000149011612,
+      "absoluteError": 0.0,
+      "tolerance": 0
+    },
+    {
+      "label": "release:damping-linear:0.10000000149011612:480",
+      "actual": 0.9048337936401367,
+      "expected": 0.9048468408178716,
+      "absoluteError": 1.304717773487063e-05,
+      "tolerance": 0.001
+    },
+    {
+      "label": "release:damping-angular:0.10000000149011612:480",
+      "actual": 0.9048337936401367,
+      "expected": 0.9048468408178716,
+      "absoluteError": 1.304717773487063e-05,
+      "tolerance": 0.001
+    },
+    {
+      "label": "release:coefficient:0.10000000149011612",
+      "actual": 0.10000000149011612,
+      "expected": 0.10000000149011612,
+      "absoluteError": 0.0,
+      "tolerance": 0
+    },
+    {
+      "label": "release:damping-linear:0.8999999761581421:60",
+      "actual": 0.4092961847782135,
+      "expected": 0.40929597633401726,
+      "absoluteError": 2.0844419623688992e-07,
+      "tolerance": 0.001
+    },
+    {
+      "label": "release:damping-angular:0.8999999761581421:60",
+      "actual": 0.4092961847782135,
+      "expected": 0.40929597633401726,
+      "absoluteError": 2.0844419623688992e-07,
+      "tolerance": 0.001
+    },
+    {
+      "label": "release:coefficient:0.8999999761581421",
+      "actual": 0.8999999761581421,
+      "expected": 0.8999999761581421,
+      "absoluteError": 0.0,
+      "tolerance": 0
+    },
+    {
+      "label": "release:damping-linear:0.8999999761581421:240",
+      "actual": 0.4072573184967041,
+      "expected": 0.40725462163464,
+      "absoluteError": 2.6968620641110164e-06,
+      "tolerance": 0.001
+    },
+    {
+      "label": "release:damping-angular:0.8999999761581421:240",
+      "actual": 0.4072573184967041,
+      "expected": 0.40725462163464,
+      "absoluteError": 2.6968620641110164e-06,
+      "tolerance": 0.001
+    },
+    {
+      "label": "release:coefficient:0.8999999761581421",
+      "actual": 0.8999999761581421,
+      "expected": 0.8999999761581421,
+      "absoluteError": 0.0,
+      "tolerance": 0
+    },
+    {
+      "label": "release:damping-linear:0.8999999761581421:480",
+      "actual": 0.40690553188323975,
+      "expected": 0.40691242877340017,
+      "absoluteError": 6.89689016042383e-06,
+      "tolerance": 0.001
+    },
+    {
+      "label": "release:damping-angular:0.8999999761581421:480",
+      "actual": 0.40690553188323975,
+      "expected": 0.40691242877340017,
+      "absoluteError": 6.89689016042383e-06,
+      "tolerance": 0.001
+    },
+    {
+      "label": "release:coefficient:0.8999999761581421",
+      "actual": 0.8999999761581421,
+      "expected": 0.8999999761581421,
+      "absoluteError": 0.0,
+      "tolerance": 0
+    },
+    {
+      "label": "release:damping-linear:1.0:60",
+      "actual": 0.3709244430065155,
+      "expected": 0.37092398962862355,
+      "absoluteError": 4.5337789195132316e-07,
+      "tolerance": 0.001
+    },
+    {
+      "label": "release:damping-angular:1.0:60",
+      "actual": 0.3709244430065155,
+      "expected": 0.37092398962862355,
+      "absoluteError": 4.5337789195132316e-07,
+      "tolerance": 0.001
+    },
+    {
+      "label": "release:coefficient:1.0",
+      "actual": 1,
+      "expected": 1.0,
+      "absoluteError": 0.0,
+      "tolerance": 0
+    },
+    {
+      "label": "release:damping-linear:1.0:240",
+      "actual": 0.3686392307281494,
+      "expected": 0.3686445288569905,
+      "absoluteError": 5.298128841091376e-06,
+      "tolerance": 0.001
+    },
+    {
+      "label": "release:damping-angular:1.0:240",
+      "actual": 0.3686392307281494,
+      "expected": 0.3686445288569905,
+      "absoluteError": 5.298128841091376e-06,
+      "tolerance": 0.001
+    },
+    {
+      "label": "release:coefficient:1.0",
+      "actual": 1,
+      "expected": 1.0,
+      "absoluteError": 0.0,
+      "tolerance": 0
+    },
+    {
+      "label": "release:damping-linear:1.0:480",
+      "actual": 0.36827123165130615,
+      "expected": 0.3682623166231278,
+      "absoluteError": 8.915028178346773e-06,
+      "tolerance": 0.001
+    },
+    {
+      "label": "release:damping-angular:1.0:480",
+      "actual": 0.36827123165130615,
+      "expected": 0.3682623166231278,
+      "absoluteError": 8.915028178346773e-06,
+      "tolerance": 0.001
+    },
+    {
+      "label": "release:coefficient:1.0",
+      "actual": 1,
+      "expected": 1.0,
+      "absoluteError": 0.0,
+      "tolerance": 0
+    },
+    {
+      "label": "release-only-analytic:box-angular:mass",
+      "actual": 12,
+      "expected": 12,
+      "absoluteError": 0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "release-only-analytic:box-angular:omega:0",
+      "actual": 0,
+      "expected": 0,
+      "absoluteError": 0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "release-only-analytic:box-angular:omega:1",
+      "actual": 0,
+      "expected": 0,
+      "absoluteError": 0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "release-only-analytic:box-angular:omega:2",
+      "actual": 1,
+      "expected": 1.0,
+      "absoluteError": 0.0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "release-only-analytic:spheres-center:mass",
+      "actual": 2,
+      "expected": 2,
+      "absoluteError": 0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "release-only-analytic:spheres-center:v:0",
+      "actual": 0,
+      "expected": 0.0,
+      "absoluteError": 0.0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "release-only-analytic:spheres-center:v:1",
+      "actual": 0.5,
+      "expected": 0.5,
+      "absoluteError": 0.0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "release-only-analytic:spheres-center:v:2",
+      "actual": 0,
+      "expected": 0.0,
+      "absoluteError": 0.0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "release-only-analytic:spheres-center:omega:0",
+      "actual": 0,
+      "expected": 0.0,
+      "absoluteError": 0.0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "release-only-analytic:spheres-center:omega:1",
+      "actual": 0,
+      "expected": 0.0,
+      "absoluteError": 0.0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "release-only-analytic:spheres-center:omega:2",
+      "actual": 0,
+      "expected": 0.0,
+      "absoluteError": 0.0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "release-only-analytic:spheres-offset:mass",
+      "actual": 2,
+      "expected": 2,
+      "absoluteError": 0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "release-only-analytic:spheres-offset:v:0",
+      "actual": 0,
+      "expected": 0.0,
+      "absoluteError": 0.0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "release-only-analytic:spheres-offset:v:1",
+      "actual": 0.5,
+      "expected": 0.5,
+      "absoluteError": 0.0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "release-only-analytic:spheres-offset:v:2",
+      "actual": 0,
+      "expected": 0.0,
+      "absoluteError": 0.0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "release-only-analytic:spheres-offset:omega:0",
+      "actual": 0,
+      "expected": 0.0,
+      "absoluteError": 0.0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "release-only-analytic:spheres-offset:omega:1",
+      "actual": 0,
+      "expected": 0.0,
+      "absoluteError": 0.0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "release-only-analytic:spheres-offset:omega:2",
+      "actual": 0.4545454680919647,
+      "expected": 0.45454545454545453,
+      "absoluteError": 1.3546510191364547e-08,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "torque:world:integrated-v:0",
+      "actual": 0,
+      "expected": 0.0,
+      "absoluteError": 0.0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "torque:world:integrated-v:1",
+      "actual": 0,
+      "expected": 0.0,
+      "absoluteError": 0.0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "torque:world:integrated-v:2",
+      "actual": 0,
+      "expected": 0.0,
+      "absoluteError": 0.0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "torque:world:integrated-omega:0",
+      "actual": 0,
+      "expected": 0.0,
+      "absoluteError": 0.0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "torque:world:integrated-omega:1",
+      "actual": 0,
+      "expected": 0.0,
+      "absoluteError": 0.0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "torque:world:integrated-omega:2",
+      "actual": 0.1666666716337204,
+      "expected": 0.16666666666666666,
+      "absoluteError": 4.967053740534411e-09,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "torque:local:integrated-v:0",
+      "actual": 0,
+      "expected": 0.0,
+      "absoluteError": 0.0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "torque:local:integrated-v:1",
+      "actual": 0,
+      "expected": 0.0,
+      "absoluteError": 0.0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "torque:local:integrated-v:2",
+      "actual": 0,
+      "expected": 0.0,
+      "absoluteError": 0.0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "torque:local:integrated-omega:0",
+      "actual": 9.934105982267738e-09,
+      "expected": 5.704756963117082e-09,
+      "absoluteError": 4.229349019150656e-09,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "torque:local:integrated-omega:1",
+      "actual": 0.16666662693023682,
+      "expected": 0.1666666609619097,
+      "absoluteError": 3.403167289639519e-08,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "torque:local:integrated-omega:2",
+      "actual": 0,
+      "expected": 0.0,
+      "absoluteError": 0.0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "force:world:integrated-v:0",
+      "actual": 0,
+      "expected": 0.0,
+      "absoluteError": 0.0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "force:world:integrated-v:1",
+      "actual": 0.01666666753590107,
+      "expected": 0.016666666666666666,
+      "absoluteError": 8.692344032057431e-10,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "force:world:integrated-v:2",
+      "actual": 0,
+      "expected": 0.0,
+      "absoluteError": 0.0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "force:world:integrated-omega:0",
+      "actual": 0,
+      "expected": 0.0,
+      "absoluteError": 0.0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "force:world:integrated-omega:1",
+      "actual": 0,
+      "expected": 0.0,
+      "absoluteError": 0.0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "force:world:integrated-omega:2",
+      "actual": 0.1666666716337204,
+      "expected": 0.16666666666666666,
+      "absoluteError": 4.967053740534411e-09,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "force:local:integrated-v:0",
+      "actual": 9.934107980669182e-10,
+      "expected": 5.704756963117082e-10,
+      "absoluteError": 4.2293510175521003e-10,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "force:local:integrated-v:1",
+      "actual": 0.01666666567325592,
+      "expected": 0.016666666096190972,
+      "absoluteError": 4.2293505156387745e-10,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "force:local:integrated-v:2",
+      "actual": 0,
+      "expected": 0.0,
+      "absoluteError": 0.0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "force:local:integrated-omega:0",
+      "actual": 0,
+      "expected": 0.0,
+      "absoluteError": 0.0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "force:local:integrated-omega:1",
+      "actual": 0,
+      "expected": 0.0,
+      "absoluteError": 0.0,
+      "tolerance": 0.0001
+    },
+    {
+      "label": "force:local:integrated-omega:2",
+      "actual": -0.1666666567325592,
+      "expected": -0.16666665525715313,
+      "absoluteError": 1.4754060750910014e-09,
+      "tolerance": 0.0001
+    }
+  ],
+  "checkCount": 176,
+  "maxAbsoluteError": 1.304717773487063e-05,
+  "scriptSha256": "8f53ecd1cc75f969056732cf5329e6188b52e5108fb0ff73576b2bd9ee23ee6e"
+}

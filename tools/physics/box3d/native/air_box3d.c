@@ -3,6 +3,7 @@
 #include "world_bridge.h"
 #include <box3d/box3d.h>
 #include <box3d/collision.h>
+#include <box3d/constants.h>
 #include <math.h>
 #include <stddef.h>
 
@@ -173,7 +174,7 @@ int air_b3_shape_box(uint32_t lo, uint32_t hi, float hx, float hy, float hz, flo
 {
     int status = valid_shape_args(lo, hi, density, out);
     if (status) return status;
-    if (!finite3(hx, hy, hz) || hx <= 0 || hy <= 0 || hz <= 0) return AIR_B3_ARGUMENT;
+    if (!finite3(hx, hy, hz) || hx < 0.2f*B3_LINEAR_SLOP || hy < 0.2f*B3_LINEAR_SLOP || hz < 0.2f*B3_LINEAR_SLOP) return AIR_B3_ARGUMENT;
     b3ShapeDef def = b3DefaultShapeDef(); def.density = density;
     b3BoxHull hull = b3MakeBoxHull(hx, hy, hz);
     /* b3CreateHullShape copies hull data. The stack hull is not retained. */

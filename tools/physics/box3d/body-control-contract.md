@@ -10,7 +10,7 @@ Every new method takes the exact owned `world, body` capabilities. C also valida
 
 Shape creation/destruction, type transitions and motion locks precompute the complete new mass plan before mutation, then apply it. Deleting the last shape enters pending-invalid; restoring geometry resolves it. Shape mass changes preserve body origin pose, COM linear velocity and angular velocity, not momentum. Public `b3Body_SetMassData` changes velocity for its COM shift, so the bridge explicitly restores the previously validated velocity through the exact private state after that call. Locks zero their constrained velocity components. Changing type follows native transition rules; static/disabled bodies do not retain a hidden velocity state.
 
-The additive box helper takes local center, half extents and unit quaternion and uses the real `b3MakeTransformedBoxHull`. Sphere center and box orientation therefore participate in COM/inertia. This is finite box/sphere qualification, not arbitrary hull/T18 qualification. Existing unbound-density foundation bodies retain old behavior unless requested mass is configured.
+The additive box helper takes local center, half extents and unit quaternion and uses the real `b3MakeTransformedBoxHull`. Sphere center and box orientation therefore participate in COM/inertia. Box half extents below the pinned core minimum `0.2f * B3_LINEAR_SLOP` (0.001m) reject before mutation; they are not silently enlarged by the native helper. The k2 real boundary probe demonstrating a 100-fold inertia error is retained. This is finite box/sphere qualification, not arbitrary hull/T18 qualification. Existing unbound-density foundation bodies retain old behavior unless requested mass is configured.
 
 ## Controls and readback
 

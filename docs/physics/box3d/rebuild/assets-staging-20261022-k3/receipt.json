@@ -1,0 +1,15 @@
+{
+  "status": "PASS_SCOPED",
+  "command": [
+    "node",
+    "--test",
+    "tools/verify/box3d/build-assets.test.cjs"
+  ],
+  "buildDirectory": "tools/physics/box3d/output/body-wasm-release-20261022-k3",
+  "startedAt": "2026-10-22T09:14:34.891514+00:00",
+  "durationSeconds": 2.4712586470013775,
+  "exitCode": 0,
+  "inputsUnchanged": true,
+  "inputCount": 112,
+  "scope": "Real Node WASM staged loader + byte/provenance and fail-before-copy controls; no browser or complete distribution/Gate acceptance."
+}

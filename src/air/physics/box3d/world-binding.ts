@@ -109,3 +109,54 @@ export function requireWorldBinding(binding: Box3DFoundation): Box3DWorldBinding
         throw worldError('AIR_E_BOX3D_ABI', 'world preparation', 'Expected the verified ST ABI-1 binding.');
     return binding as Box3DWorldBinding;
 }
+
+/** Additive T10 bridge. Presence is admission only, never native qualification. */
+export interface Box3DShapeFilter {
+    readonly group: number;
+    readonly mask: number;
+}
+export interface Box3DComponentBinding extends Box3DWorldBinding {
+    getShapeFilter(world: Box3DWorld, shape: Box3DId): Readonly<Box3DShapeFilter>;
+    setShapeFilter(world: Box3DWorld, shape: Box3DId, value: Box3DShapeFilter): Readonly<Box3DShapeFilter>;
+}
+export function requireComponentBinding(binding: Box3DFoundation): Box3DComponentBinding {
+    const candidate = requireWorldBinding(binding) as unknown as Record<string, unknown>;
+    const names = [
+        'createBody',
+        'destroyBody',
+        'bodyState',
+        'bodyTransforms',
+        'setBodyType',
+        'setBodyEnabled',
+        'setBodyMass',
+        'setBodyDamping',
+        'setBodyGravityScale',
+        'setBodySleepEnabled',
+        'setBodySleepThreshold',
+        'setBodyAwake',
+        'setBodyCCD',
+        'setBodyMotionFactors',
+        'setBodyLinearVelocity',
+        'setBodyAngularVelocity',
+        'applyBodyForce',
+        'applyBodyImpulse',
+        'applyBodyTorque',
+        'clearBodyForces',
+        'clearBodyVelocity',
+        'clearBodyState',
+        'createOffsetBox',
+        'createOffsetSphere',
+        'destroyShape',
+        'configureShapeEvents',
+        'getShapeFilter',
+        'setShapeFilter',
+    ];
+    const missing = names.filter((name) => typeof candidate[name] !== 'function');
+    if (missing.length)
+        throw worldError(
+            'AIR_E_BOX3D_UNSUPPORTED',
+            'components',
+            `Required native component bridge unavailable: ${missing.join(', ')}.`,
+        );
+    return binding as Box3DComponentBinding;
+}

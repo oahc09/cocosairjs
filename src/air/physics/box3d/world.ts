@@ -19,6 +19,9 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
 */
+import type { Node } from '../../../cocos/scene-graph/node';
+import { Box3DSharedBody } from './shared-body';
+import type { Box3DComponentConfiguration } from './shared-body';
 import type { IPhysicsWorld } from '../../../cocos/physics/spec/i-physics-world';
 import type { PhysicsMaterial } from '../../../cocos/physics/framework/assets/physics-material';
 import type { Box3DId, Box3DWorld, Box3DStepSnapshot } from './binding/facade.mjs';
@@ -33,6 +36,7 @@ import {
     copyVector,
     finiteFloat32,
     requireWorldBinding,
+    requireComponentBinding,
     worldError,
 } from './world-binding';
 import type { Box3DNativeStepDiagnostics, Box3DSurfaceMaterial, Box3DWorldBinding } from './world-binding';
@@ -53,6 +57,7 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
     private jointScale = Math.fround(0.3);
     private debug: Box3DDebugSnapshot | null = null;
     private material: Readonly<Box3DSurfaceMaterial> | null = null;
+    readonly #sharedBodies = new Map<Node, Box3DSharedBody>();
     private readonly materialShapes = new Map<Box3DId, boolean>();
     private nativeStep: Readonly<Box3DNativeStepDiagnostics> = Object.freeze({
         nativeStepIndex: 0,
@@ -290,8 +295,33 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
         this.jointScale = next;
         this.debug = snapshot;
     }
+    /** Internal component acquisition; never returns a native token or binding. */
+    acquireSharedBody(node: Node, reference: object, configuration: Box3DComponentConfiguration): Box3DSharedBody {
+        this.assertReady('acquire shared body');
+        let body = this.#sharedBodies.get(node);
+        if (!body) {
+            body = new Box3DSharedBody(
+                requireComponentBinding(this.#binding),
+                this.#token,
+                node,
+                {
+                    assertReady: (operation) => this.assertReady(operation),
+                    invalidate: () => this.invalidatePending(),
+                    fault: (error) => this.fault(error),
+                    released: (key, value) => {
+                        if (this.#sharedBodies.get(key) === value) this.#sharedBodies.delete(key);
+                    },
+                },
+                configuration,
+            );
+            this.#sharedBodies.set(node, body);
+        }
+        body.retain(reference);
+        return body;
+    }
     syncSceneToPhysics(): void {
         this.assertReady('syncSceneToPhysics');
+        for (const body of this.#sharedBodies.values()) body.preflight();
         ++this.sceneSyncCalls;
     }
     syncAfterEvents(): void {
@@ -312,6 +342,8 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
             unsupportedBox3D('Cannon-style manual step accumulator arguments');
         const delta = finiteFloat32(dt, 'step.dt');
         if (delta <= 0) throw worldError('AIR_E_BOX3D_CONFIG', 'step', 'dt must be positive float32.');
+        // Recoverable assembly/configuration rejection precedes the fault-latched native-step region.
+        for (const body of this.#sharedBodies.values()) body.preflight();
         this.state = 'stepping';
         this.lastDt = delta;
         ++this.attemptedSteps;
@@ -342,6 +374,7 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
             )
                 throw worldError('AIR_E_BOX3D_ABI', 'step', 'Expected the current owned immutable snapshot.');
             this.snapshot = this.pendingSnapshot = snapshot;
+            for (const body of this.#sharedBodies.values()) body.syncPhysicsToScene();
             if (this.drawFlags) this.debug = this.collectDebug(this.drawFlags, this.jointScale);
             this.state = 'ready';
         } catch (error) {
@@ -388,7 +421,7 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
             allowSleep: this.sleeping,
             material: this.material,
             materialShapeCount: this.materialShapes.size,
-            sceneBindingCount: 0,
+            sceneBindingCount: this.#sharedBodies.size,
             sceneSyncCalls: this.sceneSyncCalls,
             afterEventsCalls: this.afterEventsCalls,
             emittedStep: this.emittedStep,
@@ -414,6 +447,8 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
         this.nativeObservationCurrent = false;
         try {
             this.#binding.destroyWorld(this.#token);
+            for (const body of this.#sharedBodies.values()) body.closeWithWorld();
+            this.#sharedBodies.clear();
             this.materialShapes.clear();
             this.pendingSnapshot = null;
             this.snapshot = null;

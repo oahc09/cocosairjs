@@ -1,0 +1,25 @@
+✔ MOCK: Cocos/native type mapping and 32-bit filter domain are explicit (2.033721ms)
+✔ MOCK: absent body/filter bridge rejects, not a successful component world (0.457086ms)
+✔ MOCK: constructor owns one disabled native static body at initial origin (1.332952ms)
+✔ MOCK: actual IRigidBody lifecycle retains/owns/releases one body (1.668267ms)
+✔ MOCK: last owner, not first owner, destroys the shared body (0.26529ms)
+✔ MOCK: enabled pending geometry preflight rejects without mutations and can recover (0.756596ms)
+✔ MOCK: post-step Node write uses origin, not COM, without clearing other dirty flags (0.872396ms)
+✔ MOCK: external Node pose/scale/parent is unsupported before any native change (0.491722ms)
+✔ MOCK: setters use incoming candidate, never precommit component cache (0.874735ms)
+✔ MOCK: local forces/impulses forward COM-relative offsets and real native method (0.666176ms)
+✔ MOCK: dynamic method names cannot escape the fixed body-control allowlist (0.880953ms)
+✔ MOCK: state copy failure faults owner; specified native argument rejection does not (0.349922ms)
+✔ MOCK: after world close, component destroy cannot double-free native body (0.577648ms)
+✔ MOCK/actual world RED: rejected native argument preserves completed snapshot and diagnostics (138.041494ms)
+✔ MOCK/actual world RED: unclassified native error after mutation is faulted, never assumed pure (0.486438ms)
+✔ MOCK/actual world: native destroy failure faults; world destruction remains the cleanup owner (0.455044ms)
+✔ MOCK/actual world: mass pending is rejected before stepping state/counters and resolves without fault (1.059102ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 846.089825

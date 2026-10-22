@@ -173,6 +173,7 @@ for (const name of [
     'pendingGeometryLifecycle',
     'coreBytesRestored',
     'immediateImpulseLocks',
+    'smallBoxNoSilentClamp',
 ])
     assert.equal(nativeBody[name], true);
 const body = json('wasm-body-contract.raw.json');
@@ -194,6 +195,7 @@ for (const name of [
     'sleepAndThresholdNative',
     'axisLocks',
     'immediateImpulseLocks',
+    'smallBoxNoSilentClamp',
     'fullId128Cycles',
     'bodyBeforeColliderAndRemoval',
     'rotatedOffsetBox',

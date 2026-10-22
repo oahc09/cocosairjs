@@ -23,7 +23,7 @@ THE SOFTWARE.
 // Internal, limited M1 foundation. This is not the Cocos physics adapter.
 const CORE_SHA = 'efca0c184d40fd6a82016983f1601c4d23965867';
 const BINDING_BASE_SHA = '5d5a3af049cccd9948b2b55bac4342414af0ef64';
-const SCHEMA_SHA256 = 'd2585ddda975c56c24a9b52a39d645c69356cdf86faf04485c97a91bd3a6d70c';
+const SCHEMA_SHA256 = '3491202780428c1844359d149efed3be259681678486d51886e03de00d516700';
 const PATCH_CHAIN_SHA256 = '434fb89494867f515051d5ac0dfc0c694556ba1f0da9ac3fc895a27097b1c7c7';
 
 function failure(code, message) {
@@ -46,6 +46,14 @@ function finite(value, name) {
 function vector(value, count, name) {
     if (!value || value.length !== count) throw failure('AIR_E_BOX3D_ARGUMENT', `${name} needs ${count} values`);
     return Array.from(value, (v) => finite(v, name));
+}
+
+function boxExtents(value) {
+    const values = vector(value, 3, 'halfExtents');
+    // Fixed core b3MakeTransformedBoxHull clamps smaller values. Reject, never silently enlarge geometry.
+    if (values.some((v) => Math.fround(v) < Math.fround(0.001)))
+        throw failure('AIR_E_BOX3D_ARGUMENT', 'Box half extents must be at least 0.001m for this fixed core');
+    return values;
 }
 
 export function createBox3DBinding(module, expected) {
@@ -816,7 +824,7 @@ export function createBox3DBinding(module, expected) {
                     1,
                     [
                         ...vector(center, 3, 'center'),
-                        ...vector(halfExtents, 3, 'halfExtents'),
+                        ...boxExtents(halfExtents),
                         ...vector(rotation, 4, 'rotation'),
                         density,
                     ],
@@ -872,17 +880,12 @@ export function createBox3DBinding(module, expected) {
             return exclusive(() => {
                 const item = handle(body, 'body');
                 if (item.targetMass !== undefined)
-                    return massShape(
-                        body,
-                        1,
-                        [0, 0, 0, ...vector(halfExtents, 3, 'halfExtents'), 0, 0, 0, 1, density],
-                        false,
-                    );
+                    return massShape(body, 1, [0, 0, 0, ...boxExtents(halfExtents), 0, 0, 0, 1, density], false);
                 nativeStatus(
                     module._air_b3_shape_box(
                         body.low,
                         body.high,
-                        ...vector(halfExtents, 3, 'halfExtents'),
+                        ...boxExtents(halfExtents),
                         finite(density, 'density'),
                         ids,
                     ),

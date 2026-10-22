@@ -2,7 +2,7 @@
   "meta": {
     "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
     "note": "Air Path 与 Upstream Path 一致(前缀 src/)；modified 文件另行标注 reason；upstreamPath=null 表示该行为 Air 原创文件或上游产物（仓库内无对应源文件），必须 modified:true 并在 reason 说明出处",
-    "modifiedCount": 245,
+    "modifiedCount": 250,
     "pal": {
       "revision": "9f0e30acb31f6d670f2c0bf818d61039846a2860",
       "license": "MIT",
@@ -4963,8 +4963,8 @@
       "airPath": "src/cocos/physics/framework/components/colliders/box-collider.ts",
       "upstreamPath": "cocos/physics/framework/components/colliders/box-collider.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "2026-10-22 Box3D-only initialized collider setter transaction: adapter validates the candidate before cache/listener replacement. Box/Sphere receive normalized candidate dimensions without changing common shape interfaces; other backend cache-first paths and upstream headers remain unchanged. Actual-source mock controls only; native shape and complete shared-material rollback remain unqualified."
     },
     {
       "airPath": "src/cocos/physics/framework/components/colliders/capsule-collider.ts",
@@ -4977,8 +4977,8 @@
       "airPath": "src/cocos/physics/framework/components/colliders/collider.ts",
       "upstreamPath": "cocos/physics/framework/components/colliders/collider.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "2026-10-22 Box3D-only initialized collider setter transaction: adapter validates the candidate before cache/listener replacement. Box/Sphere receive normalized candidate dimensions without changing common shape interfaces; other backend cache-first paths and upstream headers remain unchanged. Actual-source mock controls only; native shape and complete shared-material rollback remain unqualified."
     },
     {
       "airPath": "src/cocos/physics/framework/components/colliders/cone-collider.ts",
@@ -5019,8 +5019,8 @@
       "airPath": "src/cocos/physics/framework/components/colliders/sphere-collider.ts",
       "upstreamPath": "cocos/physics/framework/components/colliders/sphere-collider.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "2026-10-22 Box3D-only initialized collider setter transaction: adapter validates the candidate before cache/listener replacement. Box/Sphere receive normalized candidate dimensions without changing common shape interfaces; other backend cache-first paths and upstream headers remain unchanged. Actual-source mock controls only; native shape and complete shared-material rollback remain unqualified."
     },
     {
       "airPath": "src/cocos/physics/framework/components/colliders/terrain-collider.ts",
@@ -9942,6 +9942,20 @@
       "baseline": "AIR original",
       "modified": true,
       "reason": "2026-10-22 Box3D rebuild: Typed AIR original scalar WASM facade and immutable contact geometry generation-basis contract."
+    },
+    {
+      "airPath": "src/air/physics/box3d/shared-body.ts",
+      "upstreamPath": null,
+      "baseline": "AIR original",
+      "modified": true,
+      "reason": "2026-10-22 Box3D rebuild: Private world-scoped Node/shared-body ownership and typed native control forwarding; pre-mutation rejection preserves observations. Initial candidate, no public component activation or filter/pose success claim."
+    },
+    {
+      "airPath": "src/air/physics/box3d/rigid-body.ts",
+      "upstreamPath": null,
+      "baseline": "AIR original",
+      "modified": true,
+      "reason": "2026-10-22 Box3D rebuild: AIR-owned IRigidBody forwarding candidate with private shared-body ownership, copied readback and explicit unsupported filtering pending qualified bridge."
     }
   ]
 }

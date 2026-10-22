@@ -1,0 +1,17 @@
+{
+  "status": "PASS_ACTUAL_LIBRARY_DOWNLOAD_INDEPENDENT_GIT_RESTORE",
+  "libraryFileId": "libfile_0d1e44092bb481918c7a3aa31d09d7ba",
+  "fileName": "Box3D-body-contract-checkpoint-20261022.zip",
+  "bytes": 19250037,
+  "sha256": "db0662953d749ea61c3c8d2349be58e784a9a790a342c5c653737ff2ad6e06f6",
+  "commit": "3b3fce34abe385b8bbcfc2c382119f06f59953a2",
+  "tree": "dc175972497b5768abe514919384e603cc9b8ed6",
+  "verifiedAt": "2026-10-22T09:10:06.185Z",
+  "payloads": 3,
+  "restore": {
+    "status": "PASS",
+    "checkedFiles": 5127,
+    "independentObjectStore": true
+  },
+  "scope": "Source recovery only. Frozen source predates final k3 qualification and current AIR component integration. No acceptance credit implied."
+}

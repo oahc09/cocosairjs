@@ -1,0 +1,7 @@
+{
+  "path": "tools/physics/box3d/output/body-validation-20261022-k.tar.gz",
+  "bytes": 63090591,
+  "sha256": "76fa15b3064ec5d996fc9441b7b0dd51c633f59cf5a7abf8372f5cb0ccf14594",
+  "fileCount": 2908,
+  "excluded": "Only .o/.a and rebuildable CMake intermediates; all original logs, actual product/qualification binaries, failed source variants, staged core copies and full617 JSONL retained."
+}

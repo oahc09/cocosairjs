@@ -72,6 +72,8 @@ try {
     let pending = api.setBodyMass(w, b, 12);
     assert.equal(pending.massPending, true);
     rejection('pending-before-collider-step', w, b, () => api.step(w));
+    rejection('box-below-native-minimum', w, b, () => api.createBox(b, [1e-4, 1e-4, 1e-4]));
+    rejection('offset-box-below-native-minimum', w, b, () => api.createOffsetBox(b, [0, 0, 0], [1e-4, 1e-4, 1e-4]));
     const box = api.createBox(b, [1, 2, 3]);
     o.boxMass = state(w, b);
     near(o.boxMass.mass, 12);
@@ -279,6 +281,29 @@ try {
     o.immediateImpulseLocks = { offsetImmediate, offsetAfter, angularImmediate };
     api.destroyWorld(w);
     report.checks.immediateImpulseLocks = true;
+    [w, b] = make({ type: 1 });
+    api.createSphere(b, 0.5);
+    api.setBodySleepThreshold(w, b, 0);
+    api.step(w);
+    const sleepyKinematic = state(w, b);
+    assert.equal(
+        sleepyKinematic.sleepy,
+        sleepyKinematic.enabled && sleepyKinematic.awake && sleepyKinematic.sleepTime > 0,
+    );
+    for (let i = 0; i < 60; ++i) api.step(w);
+    o.kinematicSleep = { afterOne: sleepyKinematic, after61: state(w, b) };
+    api.setBodyEnabled(w, b, false);
+    assert.equal(state(w, b).sleepy, false);
+    api.setBodyType(w, b, 0);
+    assert.equal(state(w, b).sleepy, false);
+    api.destroyWorld(w);
+    [w, b] = make();
+    api.setBodyMass(w, b, 1);
+    api.createOffsetBox(b, [0, 0, 0], [0.001, 0.001, 0.001]);
+    o.minimumBox = state(w, b);
+    near(o.minimumBox.inertia[0], (2 / 3) * 1e-6, 1e-10);
+    api.destroyWorld(w);
+    report.checks.smallBoxNoSilentClamp = true;
     o.idCycles = [];
     w = api.createWorld([0, 0, 0]);
     for (let i = 0; i < 128; ++i) {

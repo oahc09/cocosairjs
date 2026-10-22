@@ -1,0 +1,8597 @@
+{
+  "status": "PASS",
+  "identity": {
+    "schemaVersion": 1,
+    "patchChainSha256": "434fb89494867f515051d5ac0dfc0c694556ba1f0da9ac3fc895a27097b1c7c7",
+    "coreSha": "efca0c184d40fd6a82016983f1601c4d23965867",
+    "bindingBaseSha": "5d5a3af049cccd9948b2b55bac4342414af0ef64",
+    "abiVersion": 1,
+    "schemaSha256": "3491202780428c1844359d149efed3be259681678486d51886e03de00d516700",
+    "variant": "st-simd",
+    "patchLockSha256": "d6be04611f70223e21b1bcffc635088f49a5647739e97c2f9ce089091748ea77",
+    "appliedPatches": [
+      {
+        "id": "sse2-loadv-float-alignment-v1",
+        "path": "tools/physics/box3d/patches/sse2-loadv-alignment.patch",
+        "sha256": "e5c4e5f2ae7f015cf62dfc2de5a36af73cc15d9b0ca0118fc0259c7d1f0b1403",
+        "files": [
+          {
+            "path": "src/simd_sse2.h",
+            "beforeSha256": "cc18b1f4f90fdceebb84b57f77e04c03009851a3a4c66439169318aa22a02719",
+            "afterSha256": "2295eae13388e656dc71396530ea928ecc575c8a86009182d76a9ef69333e8f6"
+          }
+        ]
+      },
+      {
+        "id": "contact-generation-geometry-v2",
+        "path": "tools/physics/box3d/patches/contact-geometry-epoch.patch",
+        "sha256": "4ca29eed58cd20d4134bf55bb9b9ec25fbb322b731d0a319ad2567225463d094",
+        "files": [
+          {
+            "path": "include/box3d/types.h",
+            "beforeSha256": "7f888e6a75dff5fd6b79f9e0dad79c9b5a769f47caedb19d71e027a751fd3664",
+            "afterSha256": "15a99589d8a54d80ff600ade7dc48ba56b02a4468e518e6de54b65d31f674f68"
+          },
+          {
+            "path": "src/contact.h",
+            "beforeSha256": "691d5c92e12c090f75f42310a7299aea1c044ab0f195fda9a2161e615191f895",
+            "afterSha256": "c70b270b50770c60bab6d20f2d17e7eb26e85edf8a8ba6b314c8c0982dd69db3"
+          },
+          {
+            "path": "include/box3d/box3d.h",
+            "beforeSha256": "3edb719e280ae09ff6fd225dbab6642ab7f5d68207aebd1a81a7d19827a22574",
+            "afterSha256": "0a1dbc372cbca9d30eee09a7571d20991ef84e8f3d91fb46dfdd21e5e1c42632"
+          },
+          {
+            "path": "src/contact.c",
+            "beforeSha256": "6d13719b6de73d8d2d2b5a7749fa1c4180480191b28afdd2e872aee6fedc9cbe",
+            "afterSha256": "25d910b2c9e99cd2b9b571a45ec9c0161d4681faf04375ca770d4c138402b42b"
+          },
+          {
+            "path": "src/physics_world.c",
+            "beforeSha256": "f96c0a3a11d3b9818ad81df8c44be26bf069a9f11335d7fbcbcbf0d45bcff454",
+            "afterSha256": "c7d679cf8051b59fee54c8b76ee63131f9c8c7d1d01a71f241827e53775939da"
+          }
+        ]
+      }
+    ],
+    "artifacts": [
+      {
+        "path": "box3d-st.mjs",
+        "sha256": "d3f86081ecbe468b3b961a2b1b32758c3a156a684bb2798b66a4da0a7e2341d8",
+        "bytes": 74958
+      },
+      {
+        "path": "box3d-st.wasm",
+        "sha256": "765c38d7faace7952e3e6aaa63b0a5abca0b4291c7291bcac041a032cc760396",
+        "bytes": 4128559
+      },
+      {
+        "path": "facade.mjs",
+        "sha256": "c01c0f05c46a6bbe0c669989cb47838482e0fca51b44f5369d7476a8fedea1a3",
+        "bytes": 46487
+      },
+      {
+        "path": "facade.d.mts",
+        "sha256": "2dac3bf29ed20c4d9d21544be25b2239e1151007c59f89a8066ed553324bc494",
+        "bytes": 14017
+      }
+    ]
+  },
+  "fixtureSha256": "5be306a66497feeedadd02ead703247b56822b3964828f1a23165d06f0b0d9af",
+  "observations": {
+    "boxMass": {
+      "type": 2,
+      "enabled": true,
+      "awake": true,
+      "sleeping": false,
+      "sleepy": false,
+      "sleepEnabled": true,
+      "ccd": false,
+      "sleepTime": 0,
+      "sleepVelocity": 0,
+      "sleepThreshold": 0.05000000074505806,
+      "linearDamping": 0,
+      "angularDamping": 0,
+      "gravityScale": 1,
+      "linearVelocity": [
+        0,
+        0,
+        0
+      ],
+      "angularVelocity": [
+        0,
+        0,
+        0
+      ],
+      "force": [
+        0,
+        0,
+        0
+      ],
+      "torque": [
+        0,
+        0,
+        0
+      ],
+      "linearFactor": [
+        1,
+        1,
+        1
+      ],
+      "angularFactor": [
+        1,
+        1,
+        1
+      ],
+      "mass": 12,
+      "localCenter": [
+        0,
+        0,
+        0
+      ],
+      "inertia": [
+        52,
+        0,
+        0,
+        0,
+        40,
+        0,
+        0,
+        0,
+        20
+      ],
+      "worldCenter": [
+        0,
+        0,
+        0
+      ],
+      "requestedMass": 12,
+      "massPending": false,
+      "sensorMassFallback": false
+    },
+    "offsetMass": {
+      "type": 2,
+      "enabled": true,
+      "awake": true,
+      "sleeping": false,
+      "sleepy": false,
+      "sleepEnabled": true,
+      "ccd": false,
+      "sleepTime": 0,
+      "sleepVelocity": 0,
+      "sleepThreshold": 0.05000000074505806,
+      "linearDamping": 0,
+      "angularDamping": 0,
+      "gravityScale": 1,
+      "linearVelocity": [
+        0,
+        0,
+        0
+      ],
+      "angularVelocity": [
+        0,
+        0,
+        0
+      ],
+      "force": [
+        0,
+        0,
+        0
+      ],
+      "torque": [
+        0,
+        0,
+        0
+      ],
+      "linearFactor": [
+        1,
+        1,
+        1
+      ],
+      "angularFactor": [
+        1,
+        1,
+        1
+      ],
+      "mass": 2,
+      "localCenter": [
+        0,
+        0,
+        0
+      ],
+      "inertia": [
+        0.20000000298023224,
+        0,
+        0,
+        0,
+        2.200000047683716,
+        0,
+        0,
+        0,
+        2.200000047683716
+      ],
+      "worldCenter": [
+        0,
+        0,
+        0
+      ],
+      "requestedMass": 2,
+      "massPending": false,
+      "sensorMassFallback": false
+    },
+    "sensorFallback": {
+      "type": 2,
+      "enabled": true,
+      "awake": true,
+      "sleeping": false,
+      "sleepy": false,
+      "sleepEnabled": true,
+      "ccd": false,
+      "sleepTime": 0,
+      "sleepVelocity": 0,
+      "sleepThreshold": 0.05000000074505806,
+      "linearDamping": 0,
+      "angularDamping": 0,
+      "gravityScale": 1,
+      "linearVelocity": [
+        0,
+        0.5,
+        0
+      ],
+      "angularVelocity": [
+        0,
+        0,
+        0.4545454680919647
+      ],
+      "force": [
+        0,
+        0,
+        0
+      ],
+      "torque": [
+        0,
+        0,
+        0
+      ],
+      "linearFactor": [
+        1,
+        1,
+        1
+      ],
+      "angularFactor": [
+        1,
+        1,
+        1
+      ],
+      "mass": 2,
+      "localCenter": [
+        2,
+        0,
+        0
+      ],
+      "inertia": [
+        0.20000000298023224,
+        0,
+        0,
+        0,
+        0.20000000298023224,
+        0,
+        0,
+        0,
+        0.20000000298023224
+      ],
+      "worldCenter": [
+        2,
+        0,
+        0
+      ],
+      "requestedMass": 2,
+      "massPending": false,
+      "sensorMassFallback": true
+    },
+    "localImpulse": {
+      "type": 2,
+      "enabled": true,
+      "awake": true,
+      "sleeping": false,
+      "sleepy": false,
+      "sleepEnabled": true,
+      "ccd": false,
+      "sleepTime": 0,
+      "sleepVelocity": 0,
+      "sleepThreshold": 0.05000000074505806,
+      "linearDamping": 0,
+      "angularDamping": 0,
+      "gravityScale": 1,
+      "linearVelocity": [
+        2.9802322387695312e-8,
+        0.4999999701976776,
+        0
+      ],
+      "angularVelocity": [
+        0,
+        0,
+        -4.999999523162842
+      ],
+      "force": [
+        0,
+        0,
+        0
+      ],
+      "torque": [
+        0,
+        0,
+        0
+      ],
+      "linearFactor": [
+        1,
+        1,
+        1
+      ],
+      "angularFactor": [
+        1,
+        1,
+        1
+      ],
+      "mass": 2,
+      "localCenter": [
+        0,
+        0,
+        0
+      ],
+      "inertia": [
+        0.20000000298023224,
+        0,
+        0,
+        0,
+        0.20000000298023224,
+        0,
+        0,
+        0,
+        0.20000000298023224
+      ],
+      "worldCenter": [
+        0,
+        0,
+        0
+      ],
+      "requestedMass": 2,
+      "massPending": false,
+      "sensorMassFallback": false
+    },
+    "damping": [
+      {
+        "c": 0,
+        "substeps": 1,
+        "expected": 1,
+        "state": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": false,
+          "sleepEnabled": false,
+          "ccd": false,
+          "sleepTime": 0,
+          "sleepVelocity": 1.7071068286895752,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0,
+          "angularDamping": 0,
+          "gravityScale": 1,
+          "linearVelocity": [
+            1,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            1
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 2,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            0.20000000298023224,
+            0,
+            0,
+            0,
+            0.20000000298023224,
+            0,
+            0,
+            0,
+            0.20000000298023224
+          ],
+          "worldCenter": [
+            0.9999997019767761,
+            0,
+            0
+          ],
+          "requestedMass": 2,
+          "massPending": false,
+          "sensorMassFallback": false
+        }
+      },
+      {
+        "c": 0,
+        "substeps": 4,
+        "expected": 1,
+        "state": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": false,
+          "sleepEnabled": false,
+          "ccd": false,
+          "sleepTime": 0,
+          "sleepVelocity": 1.7071068286895752,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0,
+          "angularDamping": 0,
+          "gravityScale": 1,
+          "linearVelocity": [
+            1,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            1
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 2,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            0.20000000298023224,
+            0,
+            0,
+            0,
+            0.20000000298023224,
+            0,
+            0,
+            0,
+            0.20000000298023224
+          ],
+          "worldCenter": [
+            0.9999997019767761,
+            0,
+            0
+          ],
+          "requestedMass": 2,
+          "massPending": false,
+          "sensorMassFallback": false
+        }
+      },
+      {
+        "c": 0,
+        "substeps": 8,
+        "expected": 1,
+        "state": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": false,
+          "sleepEnabled": false,
+          "ccd": false,
+          "sleepTime": 0,
+          "sleepVelocity": 1.7071068286895752,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0,
+          "angularDamping": 0,
+          "gravityScale": 1,
+          "linearVelocity": [
+            1,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            1
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 2,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            0.20000000298023224,
+            0,
+            0,
+            0,
+            0.20000000298023224,
+            0,
+            0,
+            0,
+            0.20000000298023224
+          ],
+          "worldCenter": [
+            0.9999997019767761,
+            0,
+            0
+          ],
+          "requestedMass": 2,
+          "massPending": false,
+          "sensorMassFallback": false
+        }
+      },
+      {
+        "c": 0.1,
+        "substeps": 1,
+        "expected": 0.9049127392662062,
+        "state": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": false,
+          "sleepEnabled": false,
+          "ccd": false,
+          "sleepTime": 0,
+          "sleepVelocity": 1.5447850227355957,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0.10000000149011612,
+          "angularDamping": 0.10000000149011612,
+          "gravityScale": 1,
+          "linearVelocity": [
+            0.904914140701294,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0.904914140701294
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 2,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            0.20000000298023224,
+            0,
+            0,
+            0,
+            0.20000000298023224,
+            0,
+            0,
+            0,
+            0.20000000298023224
+          ],
+          "worldCenter": [
+            0.9508734345436096,
+            0,
+            0
+          ],
+          "requestedMass": 2,
+          "massPending": false,
+          "sensorMassFallback": false
+        }
+      },
+      {
+        "c": 0.1,
+        "substeps": 4,
+        "expected": 0.9048562624292725,
+        "state": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": false,
+          "sleepEnabled": false,
+          "ccd": false,
+          "sleepTime": 0,
+          "sleepVelocity": 1.5446994304656982,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0.10000000149011612,
+          "angularDamping": 0.10000000149011612,
+          "gravityScale": 1,
+          "linearVelocity": [
+            0.9048640131950378,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0.9048640131950378
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 2,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            0.20000000298023224,
+            0,
+            0,
+            0,
+            0.20000000298023224,
+            0,
+            0,
+            0,
+            0.20000000298023224
+          ],
+          "worldCenter": [
+            0.9514415264129639,
+            0,
+            0
+          ],
+          "requestedMass": 2,
+          "massPending": false,
+          "sensorMassFallback": false
+        }
+      },
+      {
+        "c": 0.1,
+        "substeps": 8,
+        "expected": 0.9048468408178716,
+        "state": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": false,
+          "sleepEnabled": false,
+          "ccd": false,
+          "sleepTime": 0,
+          "sleepVelocity": 1.5446479320526123,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0.10000000149011612,
+          "angularDamping": 0.10000000149011612,
+          "gravityScale": 1,
+          "linearVelocity": [
+            0.9048337936401367,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0.9048337936401367
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 2,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            0.20000000298023224,
+            0,
+            0,
+            0,
+            0.20000000298023224,
+            0,
+            0,
+            0,
+            0.20000000298023224
+          ],
+          "worldCenter": [
+            0.9515250325202942,
+            0,
+            0
+          ],
+          "requestedMass": 2,
+          "massPending": false,
+          "sensorMassFallback": false
+        }
+      },
+      {
+        "c": 0.9,
+        "substeps": 1,
+        "expected": 0.40929597633401726,
+        "state": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": false,
+          "sleepEnabled": false,
+          "ccd": false,
+          "sleepTime": 0,
+          "sleepVelocity": 0.6987122893333435,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0.8999999761581421,
+          "angularDamping": 0.8999999761581421,
+          "gravityScale": 1,
+          "linearVelocity": [
+            0.4092961847782135,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0.4092961847782135
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 2,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            0.20000000298023224,
+            0,
+            0,
+            0,
+            0.20000000298023224,
+            0,
+            0,
+            0,
+            0.20000000298023224
+          ],
+          "worldCenter": [
+            0.6563379168510437,
+            0,
+            0
+          ],
+          "requestedMass": 2,
+          "massPending": false,
+          "sensorMassFallback": false
+        }
+      },
+      {
+        "c": 0.9,
+        "substeps": 4,
+        "expected": 0.40725462163464,
+        "state": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": false,
+          "sleepEnabled": false,
+          "ccd": false,
+          "sleepTime": 0,
+          "sleepVelocity": 0.6952317357063293,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0.8999999761581421,
+          "angularDamping": 0.8999999761581421,
+          "gravityScale": 1,
+          "linearVelocity": [
+            0.4072573184967041,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0.4072573184967041
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 2,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            0.20000000298023224,
+            0,
+            0,
+            0,
+            0.20000000298023224,
+            0,
+            0,
+            0,
+            0.20000000298023224
+          ],
+          "worldCenter": [
+            0.6586079597473145,
+            0,
+            0
+          ],
+          "requestedMass": 2,
+          "massPending": false,
+          "sensorMassFallback": false
+        }
+      },
+      {
+        "c": 0.9,
+        "substeps": 8,
+        "expected": 0.40691242877340017,
+        "state": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": false,
+          "sleepEnabled": false,
+          "ccd": false,
+          "sleepTime": 0,
+          "sleepVelocity": 0.6946312189102173,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0.8999999761581421,
+          "angularDamping": 0.8999999761581421,
+          "gravityScale": 1,
+          "linearVelocity": [
+            0.40690553188323975,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0.40690553188323975
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 2,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            0.20000000298023224,
+            0,
+            0,
+            0,
+            0.20000000298023224,
+            0,
+            0,
+            0,
+            0.20000000298023224
+          ],
+          "worldCenter": [
+            0.6589815616607666,
+            0,
+            0
+          ],
+          "requestedMass": 2,
+          "massPending": false,
+          "sensorMassFallback": false
+        }
+      },
+      {
+        "c": 1,
+        "substeps": 1,
+        "expected": 0.3709239896286236,
+        "state": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": false,
+          "sleepEnabled": false,
+          "ccd": false,
+          "sleepTime": 0,
+          "sleepVelocity": 0.6332076191902161,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 1,
+          "angularDamping": 1,
+          "gravityScale": 1,
+          "linearVelocity": [
+            0.3709244430065155,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0.3709244430065155
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 2,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            0.20000000298023224,
+            0,
+            0,
+            0,
+            0.20000000298023224,
+            0,
+            0,
+            0,
+            0.20000000298023224
+          ],
+          "worldCenter": [
+            0.629076361656189,
+            0,
+            0
+          ],
+          "requestedMass": 2,
+          "massPending": false,
+          "sensorMassFallback": false
+        }
+      },
+      {
+        "c": 1,
+        "substeps": 4,
+        "expected": 0.3686445288569905,
+        "state": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": false,
+          "sleepEnabled": false,
+          "ccd": false,
+          "sleepTime": 0,
+          "sleepVelocity": 0.6293065547943115,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 1,
+          "angularDamping": 1,
+          "gravityScale": 1,
+          "linearVelocity": [
+            0.3686392307281494,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0.3686392307281494
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 2,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            0.20000000298023224,
+            0,
+            0,
+            0,
+            0.20000000298023224,
+            0,
+            0,
+            0,
+            0.20000000298023224
+          ],
+          "worldCenter": [
+            0.6313516497612,
+            0,
+            0
+          ],
+          "requestedMass": 2,
+          "massPending": false,
+          "sensorMassFallback": false
+        }
+      },
+      {
+        "c": 1,
+        "substeps": 8,
+        "expected": 0.3682623166231278,
+        "state": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": false,
+          "sleepEnabled": false,
+          "ccd": false,
+          "sleepTime": 0,
+          "sleepVelocity": 0.6286783218383789,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 1,
+          "angularDamping": 1,
+          "gravityScale": 1,
+          "linearVelocity": [
+            0.36827123165130615,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0.36827123165130615
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 2,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            0.20000000298023224,
+            0,
+            0,
+            0,
+            0.20000000298023224,
+            0,
+            0,
+            0,
+            0.20000000298023224
+          ],
+          "worldCenter": [
+            0.6317441463470459,
+            0,
+            0
+          ],
+          "requestedMass": 2,
+          "massPending": false,
+          "sensorMassFallback": false
+        }
+      }
+    ],
+    "sleepZeroThreshold": [
+      {
+        "type": 2,
+        "enabled": true,
+        "awake": true,
+        "sleeping": false,
+        "sleepy": true,
+        "sleepEnabled": true,
+        "ccd": false,
+        "sleepTime": 0.01666666753590107,
+        "sleepVelocity": 0,
+        "sleepThreshold": 0,
+        "linearDamping": 0,
+        "angularDamping": 0,
+        "gravityScale": 1,
+        "linearVelocity": [
+          0,
+          0,
+          0
+        ],
+        "angularVelocity": [
+          0,
+          0,
+          0
+        ],
+        "force": [
+          0,
+          0,
+          0
+        ],
+        "torque": [
+          0,
+          0,
+          0
+        ],
+        "linearFactor": [
+          1,
+          1,
+          1
+        ],
+        "angularFactor": [
+          1,
+          1,
+          1
+        ],
+        "mass": 2,
+        "localCenter": [
+          0,
+          0,
+          0
+        ],
+        "inertia": [
+          0.20000000298023224,
+          0,
+          0,
+          0,
+          0.20000000298023224,
+          0,
+          0,
+          0,
+          0.20000000298023224
+        ],
+        "worldCenter": [
+          0,
+          0.2524304687976837,
+          0
+        ],
+        "requestedMass": 2,
+        "massPending": false,
+        "sensorMassFallback": false
+      },
+      {
+        "type": 2,
+        "enabled": true,
+        "awake": false,
+        "sleeping": true,
+        "sleepy": false,
+        "sleepEnabled": true,
+        "ccd": false,
+        "sleepTime": 0.5000001788139343,
+        "sleepVelocity": 0,
+        "sleepThreshold": 0,
+        "linearDamping": 0,
+        "angularDamping": 0,
+        "gravityScale": 1,
+        "linearVelocity": [
+          0,
+          0,
+          0
+        ],
+        "angularVelocity": [
+          0,
+          0,
+          0
+        ],
+        "force": [
+          0,
+          0,
+          0
+        ],
+        "torque": [
+          0,
+          0,
+          0
+        ],
+        "linearFactor": [
+          1,
+          1,
+          1
+        ],
+        "angularFactor": [
+          1,
+          1,
+          1
+        ],
+        "mass": 2,
+        "localCenter": [
+          0,
+          0,
+          0
+        ],
+        "inertia": [
+          0.20000000298023224,
+          0,
+          0,
+          0,
+          0.20000000298023224,
+          0,
+          0,
+          0,
+          0.20000000298023224
+        ],
+        "worldCenter": [
+          0,
+          0.2524304687976837,
+          0
+        ],
+        "requestedMass": 2,
+        "massPending": false,
+        "sensorMassFallback": false
+      }
+    ],
+    "locks": {
+      "type": 2,
+      "enabled": true,
+      "awake": true,
+      "sleeping": false,
+      "sleepy": false,
+      "sleepEnabled": true,
+      "ccd": false,
+      "sleepTime": 0,
+      "sleepVelocity": 4.1213202476501465,
+      "sleepThreshold": 0.5,
+      "linearDamping": 0,
+      "angularDamping": 0,
+      "gravityScale": 1,
+      "linearVelocity": [
+        0,
+        2,
+        0
+      ],
+      "angularVelocity": [
+        0,
+        0,
+        3
+      ],
+      "force": [
+        0,
+        0,
+        0
+      ],
+      "torque": [
+        0,
+        0,
+        0
+      ],
+      "linearFactor": [
+        0,
+        1,
+        0
+      ],
+      "angularFactor": [
+        0,
+        0,
+        1
+      ],
+      "mass": 2,
+      "localCenter": [
+        0,
+        0,
+        0
+      ],
+      "inertia": [
+        0.20000000298023224,
+        0,
+        0,
+        0,
+        0.20000000298023224,
+        0,
+        0,
+        0,
+        0.20000000298023224
+      ],
+      "worldCenter": [
+        0.29999980330467224,
+        0.5857638716697693,
+        0
+      ],
+      "requestedMass": 2,
+      "massPending": false,
+      "sensorMassFallback": false
+    },
+    "immediateImpulseLocks": {
+      "offsetImmediate": {
+        "type": 2,
+        "enabled": true,
+        "awake": true,
+        "sleeping": false,
+        "sleepy": false,
+        "sleepEnabled": true,
+        "ccd": false,
+        "sleepTime": 0,
+        "sleepVelocity": 0,
+        "sleepThreshold": 0.05000000074505806,
+        "linearDamping": 0,
+        "angularDamping": 0,
+        "gravityScale": 1,
+        "linearVelocity": [
+          0,
+          0.25,
+          0.3333333432674408
+        ],
+        "angularVelocity": [
+          0,
+          -0.08509615063667297,
+          -0.050000011920928955
+        ],
+        "force": [
+          0,
+          0,
+          0
+        ],
+        "torque": [
+          0,
+          0,
+          0
+        ],
+        "linearFactor": [
+          0,
+          1,
+          1
+        ],
+        "angularFactor": [
+          0,
+          1,
+          1
+        ],
+        "mass": 12,
+        "localCenter": [
+          0.30000001192092896,
+          -0.20000000298023224,
+          0.4000000059604645
+        ],
+        "inertia": [
+          46,
+          5.999998092651367,
+          0,
+          5.999998092651367,
+          46,
+          0,
+          0,
+          0,
+          20
+        ],
+        "worldCenter": [
+          0.30000001192092896,
+          -0.20000000298023224,
+          0.4000000059604645
+        ],
+        "requestedMass": 12,
+        "massPending": false,
+        "sensorMassFallback": false
+      },
+      "offsetAfter": {
+        "type": 2,
+        "enabled": true,
+        "awake": true,
+        "sleeping": false,
+        "sleepy": false,
+        "sleepEnabled": true,
+        "ccd": false,
+        "sleepTime": 0,
+        "sleepVelocity": 0.8342604637145996,
+        "sleepThreshold": 0.05000000074505806,
+        "linearDamping": 0,
+        "angularDamping": 0,
+        "gravityScale": 1,
+        "linearVelocity": [
+          0,
+          0.25,
+          0.3333333432674408
+        ],
+        "angularVelocity": [
+          0,
+          -0.08511088788509369,
+          -0.049963776022195816
+        ],
+        "force": [
+          0,
+          0,
+          0
+        ],
+        "torque": [
+          0,
+          0,
+          0
+        ],
+        "linearFactor": [
+          0,
+          1,
+          1
+        ],
+        "angularFactor": [
+          0,
+          1,
+          1
+        ],
+        "mass": 12,
+        "localCenter": [
+          0.30000001192092896,
+          -0.20000000298023224,
+          0.4000000059604645
+        ],
+        "inertia": [
+          46,
+          5.999998092651367,
+          0,
+          5.999998092651367,
+          46,
+          0,
+          0,
+          0,
+          20
+        ],
+        "worldCenter": [
+          0.30000001192092896,
+          -0.19583334028720856,
+          0.4055555760860443
+        ],
+        "requestedMass": 12,
+        "massPending": false,
+        "sensorMassFallback": false
+      },
+      "angularImmediate": {
+        "type": 2,
+        "enabled": true,
+        "awake": true,
+        "sleeping": false,
+        "sleepy": false,
+        "sleepEnabled": true,
+        "ccd": false,
+        "sleepTime": 0,
+        "sleepVelocity": 0.8342604637145996,
+        "sleepThreshold": 0.05000000074505806,
+        "linearDamping": 0,
+        "angularDamping": 0,
+        "gravityScale": 1,
+        "linearVelocity": [
+          0,
+          0,
+          0
+        ],
+        "angularVelocity": [
+          0,
+          0.060575056821107864,
+          0.19990845024585724
+        ],
+        "force": [
+          0,
+          0,
+          0
+        ],
+        "torque": [
+          0,
+          0,
+          0
+        ],
+        "linearFactor": [
+          0,
+          1,
+          1
+        ],
+        "angularFactor": [
+          0,
+          1,
+          1
+        ],
+        "mass": 12,
+        "localCenter": [
+          0.30000001192092896,
+          -0.20000000298023224,
+          0.4000000059604645
+        ],
+        "inertia": [
+          46,
+          5.999998092651367,
+          0,
+          5.999998092651367,
+          46,
+          0,
+          0,
+          0,
+          20
+        ],
+        "worldCenter": [
+          0.30000001192092896,
+          -0.19583334028720856,
+          0.4055555760860443
+        ],
+        "requestedMass": 12,
+        "massPending": false,
+        "sensorMassFallback": false
+      }
+    },
+    "kinematicSleep": {
+      "afterOne": {
+        "type": 1,
+        "enabled": true,
+        "awake": true,
+        "sleeping": false,
+        "sleepy": true,
+        "sleepEnabled": true,
+        "ccd": false,
+        "sleepTime": 0.01666666753590107,
+        "sleepVelocity": 0,
+        "sleepThreshold": 0,
+        "linearDamping": 0,
+        "angularDamping": 0,
+        "gravityScale": 1,
+        "linearVelocity": [
+          0,
+          0,
+          0
+        ],
+        "angularVelocity": [
+          0,
+          0,
+          0
+        ],
+        "force": [
+          0,
+          0,
+          0
+        ],
+        "torque": [
+          0,
+          0,
+          0
+        ],
+        "linearFactor": [
+          1,
+          1,
+          1
+        ],
+        "angularFactor": [
+          1,
+          1,
+          1
+        ],
+        "mass": 0,
+        "localCenter": [
+          0,
+          0,
+          0
+        ],
+        "inertia": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "worldCenter": [
+          0,
+          0,
+          0
+        ],
+        "requestedMass": null,
+        "massPending": false,
+        "sensorMassFallback": false
+      },
+      "after61": {
+        "type": 1,
+        "enabled": true,
+        "awake": false,
+        "sleeping": true,
+        "sleepy": false,
+        "sleepEnabled": true,
+        "ccd": false,
+        "sleepTime": 0.5000001788139343,
+        "sleepVelocity": 0,
+        "sleepThreshold": 0,
+        "linearDamping": 0,
+        "angularDamping": 0,
+        "gravityScale": 1,
+        "linearVelocity": [
+          0,
+          0,
+          0
+        ],
+        "angularVelocity": [
+          0,
+          0,
+          0
+        ],
+        "force": [
+          0,
+          0,
+          0
+        ],
+        "torque": [
+          0,
+          0,
+          0
+        ],
+        "linearFactor": [
+          1,
+          1,
+          1
+        ],
+        "angularFactor": [
+          1,
+          1,
+          1
+        ],
+        "mass": 0,
+        "localCenter": [
+          0,
+          0,
+          0
+        ],
+        "inertia": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "worldCenter": [
+          0,
+          0,
+          0
+        ],
+        "requestedMass": null,
+        "massPending": false,
+        "sensorMassFallback": false
+      }
+    },
+    "minimumBox": {
+      "type": 2,
+      "enabled": true,
+      "awake": true,
+      "sleeping": false,
+      "sleepy": false,
+      "sleepEnabled": true,
+      "ccd": false,
+      "sleepTime": 0,
+      "sleepVelocity": 0,
+      "sleepThreshold": 0.05000000074505806,
+      "linearDamping": 0,
+      "angularDamping": 0,
+      "gravityScale": 1,
+      "linearVelocity": [
+        0,
+        0,
+        0
+      ],
+      "angularVelocity": [
+        0,
+        0,
+        0
+      ],
+      "force": [
+        0,
+        0,
+        0
+      ],
+      "torque": [
+        0,
+        0,
+        0
+      ],
+      "linearFactor": [
+        1,
+        1,
+        1
+      ],
+      "angularFactor": [
+        1,
+        1,
+        1
+      ],
+      "mass": 1,
+      "localCenter": [
+        0,
+        0,
+        0
+      ],
+      "inertia": [
+        6.66666721826914e-7,
+        0,
+        0,
+        0,
+        6.66666721826914e-7,
+        0,
+        0,
+        0,
+        6.66666721826914e-7
+      ],
+      "worldCenter": [
+        0,
+        0,
+        0
+      ],
+      "requestedMass": 1,
+      "massPending": false,
+      "sensorMassFallback": false
+    },
+    "idCycles": [
+      {
+        "old": {
+          "low": 1,
+          "high": 1
+        },
+        "fresh": {
+          "low": 2,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 3,
+          "high": 1
+        },
+        "fresh": {
+          "low": 4,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 5,
+          "high": 1
+        },
+        "fresh": {
+          "low": 6,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 7,
+          "high": 1
+        },
+        "fresh": {
+          "low": 8,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 9,
+          "high": 1
+        },
+        "fresh": {
+          "low": 10,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 11,
+          "high": 1
+        },
+        "fresh": {
+          "low": 12,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 13,
+          "high": 1
+        },
+        "fresh": {
+          "low": 14,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 15,
+          "high": 1
+        },
+        "fresh": {
+          "low": 16,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 17,
+          "high": 1
+        },
+        "fresh": {
+          "low": 18,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 19,
+          "high": 1
+        },
+        "fresh": {
+          "low": 20,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 21,
+          "high": 1
+        },
+        "fresh": {
+          "low": 22,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 23,
+          "high": 1
+        },
+        "fresh": {
+          "low": 24,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 25,
+          "high": 1
+        },
+        "fresh": {
+          "low": 26,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 27,
+          "high": 1
+        },
+        "fresh": {
+          "low": 28,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 29,
+          "high": 1
+        },
+        "fresh": {
+          "low": 30,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 31,
+          "high": 1
+        },
+        "fresh": {
+          "low": 32,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 33,
+          "high": 1
+        },
+        "fresh": {
+          "low": 34,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 35,
+          "high": 1
+        },
+        "fresh": {
+          "low": 36,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 37,
+          "high": 1
+        },
+        "fresh": {
+          "low": 38,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 39,
+          "high": 1
+        },
+        "fresh": {
+          "low": 40,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 41,
+          "high": 1
+        },
+        "fresh": {
+          "low": 42,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 43,
+          "high": 1
+        },
+        "fresh": {
+          "low": 44,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 45,
+          "high": 1
+        },
+        "fresh": {
+          "low": 46,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 47,
+          "high": 1
+        },
+        "fresh": {
+          "low": 48,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 49,
+          "high": 1
+        },
+        "fresh": {
+          "low": 50,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 51,
+          "high": 1
+        },
+        "fresh": {
+          "low": 52,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 53,
+          "high": 1
+        },
+        "fresh": {
+          "low": 54,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 55,
+          "high": 1
+        },
+        "fresh": {
+          "low": 56,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 57,
+          "high": 1
+        },
+        "fresh": {
+          "low": 58,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 59,
+          "high": 1
+        },
+        "fresh": {
+          "low": 60,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 61,
+          "high": 1
+        },
+        "fresh": {
+          "low": 62,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 63,
+          "high": 1
+        },
+        "fresh": {
+          "low": 64,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 65,
+          "high": 1
+        },
+        "fresh": {
+          "low": 66,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 67,
+          "high": 1
+        },
+        "fresh": {
+          "low": 68,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 69,
+          "high": 1
+        },
+        "fresh": {
+          "low": 70,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 71,
+          "high": 1
+        },
+        "fresh": {
+          "low": 72,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 73,
+          "high": 1
+        },
+        "fresh": {
+          "low": 74,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 75,
+          "high": 1
+        },
+        "fresh": {
+          "low": 76,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 77,
+          "high": 1
+        },
+        "fresh": {
+          "low": 78,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 79,
+          "high": 1
+        },
+        "fresh": {
+          "low": 80,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 81,
+          "high": 1
+        },
+        "fresh": {
+          "low": 82,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 83,
+          "high": 1
+        },
+        "fresh": {
+          "low": 84,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 85,
+          "high": 1
+        },
+        "fresh": {
+          "low": 86,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 87,
+          "high": 1
+        },
+        "fresh": {
+          "low": 88,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 89,
+          "high": 1
+        },
+        "fresh": {
+          "low": 90,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 91,
+          "high": 1
+        },
+        "fresh": {
+          "low": 92,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 93,
+          "high": 1
+        },
+        "fresh": {
+          "low": 94,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 95,
+          "high": 1
+        },
+        "fresh": {
+          "low": 96,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 97,
+          "high": 1
+        },
+        "fresh": {
+          "low": 98,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 99,
+          "high": 1
+        },
+        "fresh": {
+          "low": 100,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 101,
+          "high": 1
+        },
+        "fresh": {
+          "low": 102,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 103,
+          "high": 1
+        },
+        "fresh": {
+          "low": 104,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 105,
+          "high": 1
+        },
+        "fresh": {
+          "low": 106,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 107,
+          "high": 1
+        },
+        "fresh": {
+          "low": 108,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 109,
+          "high": 1
+        },
+        "fresh": {
+          "low": 110,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 111,
+          "high": 1
+        },
+        "fresh": {
+          "low": 112,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 113,
+          "high": 1
+        },
+        "fresh": {
+          "low": 114,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 115,
+          "high": 1
+        },
+        "fresh": {
+          "low": 116,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 117,
+          "high": 1
+        },
+        "fresh": {
+          "low": 118,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 119,
+          "high": 1
+        },
+        "fresh": {
+          "low": 120,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 121,
+          "high": 1
+        },
+        "fresh": {
+          "low": 122,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 123,
+          "high": 1
+        },
+        "fresh": {
+          "low": 124,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 125,
+          "high": 1
+        },
+        "fresh": {
+          "low": 126,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 127,
+          "high": 1
+        },
+        "fresh": {
+          "low": 128,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 129,
+          "high": 1
+        },
+        "fresh": {
+          "low": 130,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 131,
+          "high": 1
+        },
+        "fresh": {
+          "low": 132,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 133,
+          "high": 1
+        },
+        "fresh": {
+          "low": 134,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 135,
+          "high": 1
+        },
+        "fresh": {
+          "low": 136,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 137,
+          "high": 1
+        },
+        "fresh": {
+          "low": 138,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 139,
+          "high": 1
+        },
+        "fresh": {
+          "low": 140,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 141,
+          "high": 1
+        },
+        "fresh": {
+          "low": 142,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 143,
+          "high": 1
+        },
+        "fresh": {
+          "low": 144,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 145,
+          "high": 1
+        },
+        "fresh": {
+          "low": 146,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 147,
+          "high": 1
+        },
+        "fresh": {
+          "low": 148,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 149,
+          "high": 1
+        },
+        "fresh": {
+          "low": 150,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 151,
+          "high": 1
+        },
+        "fresh": {
+          "low": 152,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 153,
+          "high": 1
+        },
+        "fresh": {
+          "low": 154,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 155,
+          "high": 1
+        },
+        "fresh": {
+          "low": 156,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 157,
+          "high": 1
+        },
+        "fresh": {
+          "low": 158,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 159,
+          "high": 1
+        },
+        "fresh": {
+          "low": 160,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 161,
+          "high": 1
+        },
+        "fresh": {
+          "low": 162,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 163,
+          "high": 1
+        },
+        "fresh": {
+          "low": 164,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 165,
+          "high": 1
+        },
+        "fresh": {
+          "low": 166,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 167,
+          "high": 1
+        },
+        "fresh": {
+          "low": 168,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 169,
+          "high": 1
+        },
+        "fresh": {
+          "low": 170,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 171,
+          "high": 1
+        },
+        "fresh": {
+          "low": 172,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 173,
+          "high": 1
+        },
+        "fresh": {
+          "low": 174,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 175,
+          "high": 1
+        },
+        "fresh": {
+          "low": 176,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 177,
+          "high": 1
+        },
+        "fresh": {
+          "low": 178,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 179,
+          "high": 1
+        },
+        "fresh": {
+          "low": 180,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 181,
+          "high": 1
+        },
+        "fresh": {
+          "low": 182,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 183,
+          "high": 1
+        },
+        "fresh": {
+          "low": 184,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 185,
+          "high": 1
+        },
+        "fresh": {
+          "low": 186,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 187,
+          "high": 1
+        },
+        "fresh": {
+          "low": 188,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 189,
+          "high": 1
+        },
+        "fresh": {
+          "low": 190,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 191,
+          "high": 1
+        },
+        "fresh": {
+          "low": 192,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 193,
+          "high": 1
+        },
+        "fresh": {
+          "low": 194,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 195,
+          "high": 1
+        },
+        "fresh": {
+          "low": 196,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 197,
+          "high": 1
+        },
+        "fresh": {
+          "low": 198,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 199,
+          "high": 1
+        },
+        "fresh": {
+          "low": 200,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 201,
+          "high": 1
+        },
+        "fresh": {
+          "low": 202,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 203,
+          "high": 1
+        },
+        "fresh": {
+          "low": 204,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 205,
+          "high": 1
+        },
+        "fresh": {
+          "low": 206,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 207,
+          "high": 1
+        },
+        "fresh": {
+          "low": 208,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 209,
+          "high": 1
+        },
+        "fresh": {
+          "low": 210,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 211,
+          "high": 1
+        },
+        "fresh": {
+          "low": 212,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 213,
+          "high": 1
+        },
+        "fresh": {
+          "low": 214,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 215,
+          "high": 1
+        },
+        "fresh": {
+          "low": 216,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 217,
+          "high": 1
+        },
+        "fresh": {
+          "low": 218,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 219,
+          "high": 1
+        },
+        "fresh": {
+          "low": 220,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 221,
+          "high": 1
+        },
+        "fresh": {
+          "low": 222,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 223,
+          "high": 1
+        },
+        "fresh": {
+          "low": 224,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 225,
+          "high": 1
+        },
+        "fresh": {
+          "low": 226,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 227,
+          "high": 1
+        },
+        "fresh": {
+          "low": 228,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 229,
+          "high": 1
+        },
+        "fresh": {
+          "low": 230,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 231,
+          "high": 1
+        },
+        "fresh": {
+          "low": 232,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 233,
+          "high": 1
+        },
+        "fresh": {
+          "low": 234,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 235,
+          "high": 1
+        },
+        "fresh": {
+          "low": 236,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 237,
+          "high": 1
+        },
+        "fresh": {
+          "low": 238,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 239,
+          "high": 1
+        },
+        "fresh": {
+          "low": 240,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 241,
+          "high": 1
+        },
+        "fresh": {
+          "low": 242,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 243,
+          "high": 1
+        },
+        "fresh": {
+          "low": 244,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 245,
+          "high": 1
+        },
+        "fresh": {
+          "low": 246,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 247,
+          "high": 1
+        },
+        "fresh": {
+          "low": 248,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 249,
+          "high": 1
+        },
+        "fresh": {
+          "low": 250,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 251,
+          "high": 1
+        },
+        "fresh": {
+          "low": 252,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 253,
+          "high": 1
+        },
+        "fresh": {
+          "low": 254,
+          "high": 1
+        }
+      },
+      {
+        "old": {
+          "low": 255,
+          "high": 1
+        },
+        "fresh": {
+          "low": 256,
+          "high": 1
+        }
+      }
+    ],
+    "rotatedOffsetBox": {
+      "type": 2,
+      "enabled": true,
+      "awake": true,
+      "sleeping": false,
+      "sleepy": false,
+      "sleepEnabled": true,
+      "ccd": false,
+      "sleepTime": 0,
+      "sleepVelocity": 0,
+      "sleepThreshold": 0.05000000074505806,
+      "linearDamping": 0,
+      "angularDamping": 0,
+      "gravityScale": 1,
+      "linearVelocity": [
+        0,
+        0,
+        0
+      ],
+      "angularVelocity": [
+        0,
+        0,
+        0
+      ],
+      "force": [
+        0,
+        0,
+        0
+      ],
+      "torque": [
+        0,
+        0,
+        0
+      ],
+      "linearFactor": [
+        1,
+        1,
+        1
+      ],
+      "angularFactor": [
+        1,
+        1,
+        1
+      ],
+      "mass": 12,
+      "localCenter": [
+        2,
+        0,
+        0
+      ],
+      "inertia": [
+        39.99999237060547,
+        7.152557373046875e-7,
+        0,
+        7.152557373046875e-7,
+        51.99999237060547,
+        0,
+        0,
+        0,
+        20
+      ],
+      "worldCenter": [
+        2,
+        0,
+        0
+      ],
+      "requestedMass": 12,
+      "massPending": false,
+      "sensorMassFallback": false
+    }
+  },
+  "checks": {
+    "bodyControlsValidationAndOldSnapshotImmutable": true,
+    "immediateImpulseLocks": true,
+    "smallBoxNoSilentClamp": true,
+    "totalMassAnalytic": true,
+    "offsetCOMImpulse": true,
+    "sensorFallbackAndMixedExclusion": true,
+    "localForceAndTorque": true,
+    "dampingGrid": true,
+    "gravityDoesNotClearVelocity": true,
+    "sleepAndThresholdNative": true,
+    "axisLocks": true,
+    "fullId128Cycles": true,
+    "bodyBeforeColliderAndRemoval": true,
+    "rotatedOffsetBox": true,
+    "coreAndBridgeRestored": true
+  },
+  "negatives": [
+    {
+      "label": "createBody.enableSleep=0",
+      "error": {
+        "code": "AIR_E_BOX3D_ARGUMENT",
+        "message": "enableSleep must be boolean"
+      },
+      "before": {
+        "body": null,
+        "counts": {
+          "counts": {
+            "0": 1,
+            "1": 0,
+            "2": 0,
+            "3": 0
+          },
+          "liveBytes": "36136"
+        },
+        "diagnostics": {
+          "nativeStepIndex": 0,
+          "nativeCompleted": false,
+          "snapshotAvailable": false
+        },
+        "bridge": {
+          "liveBytes": "48",
+          "liveAllocations": 1,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    {
+      "label": "createBody.enableSleep=1",
+      "error": {
+        "code": "AIR_E_BOX3D_ARGUMENT",
+        "message": "enableSleep must be boolean"
+      },
+      "before": {
+        "body": null,
+        "counts": {
+          "counts": {
+            "0": 1,
+            "1": 0,
+            "2": 0,
+            "3": 0
+          },
+          "liveBytes": "36136"
+        },
+        "diagnostics": {
+          "nativeStepIndex": 0,
+          "nativeCompleted": false,
+          "snapshotAvailable": false
+        },
+        "bridge": {
+          "liveBytes": "48",
+          "liveAllocations": 1,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    {
+      "label": "createBody.enableSleep=\"false\"",
+      "error": {
+        "code": "AIR_E_BOX3D_ARGUMENT",
+        "message": "enableSleep must be boolean"
+      },
+      "before": {
+        "body": null,
+        "counts": {
+          "counts": {
+            "0": 1,
+            "1": 0,
+            "2": 0,
+            "3": 0
+          },
+          "liveBytes": "36136"
+        },
+        "diagnostics": {
+          "nativeStepIndex": 0,
+          "nativeCompleted": false,
+          "snapshotAvailable": false
+        },
+        "bridge": {
+          "liveBytes": "48",
+          "liveAllocations": 1,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    {
+      "label": "createBody.enableSleep=null",
+      "error": {
+        "code": "AIR_E_BOX3D_ARGUMENT",
+        "message": "enableSleep must be boolean"
+      },
+      "before": {
+        "body": null,
+        "counts": {
+          "counts": {
+            "0": 1,
+            "1": 0,
+            "2": 0,
+            "3": 0
+          },
+          "liveBytes": "36136"
+        },
+        "diagnostics": {
+          "nativeStepIndex": 0,
+          "nativeCompleted": false,
+          "snapshotAvailable": false
+        },
+        "bridge": {
+          "liveBytes": "48",
+          "liveAllocations": 1,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    {
+      "label": "pending-before-collider-step",
+      "error": {
+        "code": "AIR_E_BOX3D_MASS_PENDING",
+        "message": "Body 1:1 has no effective geometry"
+      },
+      "before": {
+        "body": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": false,
+          "sleepEnabled": true,
+          "ccd": false,
+          "sleepTime": 0,
+          "sleepVelocity": 0,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0,
+          "angularDamping": 0,
+          "gravityScale": 1,
+          "linearVelocity": [
+            0,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 0,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "worldCenter": [
+            0,
+            0,
+            0
+          ],
+          "requestedMass": 12,
+          "massPending": true,
+          "sensorMassFallback": false
+        },
+        "counts": {
+          "counts": {
+            "0": 1,
+            "1": 0,
+            "2": 0,
+            "3": 0
+          },
+          "liveBytes": "36136"
+        },
+        "diagnostics": {
+          "nativeStepIndex": 0,
+          "nativeCompleted": false,
+          "snapshotAvailable": false
+        },
+        "bridge": {
+          "liveBytes": "48",
+          "liveAllocations": 1,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    {
+      "label": "box-below-native-minimum",
+      "error": {
+        "code": "AIR_E_BOX3D_ARGUMENT",
+        "message": "Box half extents must be at least 0.001m for this fixed core"
+      },
+      "before": {
+        "body": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": false,
+          "sleepEnabled": true,
+          "ccd": false,
+          "sleepTime": 0,
+          "sleepVelocity": 0,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0,
+          "angularDamping": 0,
+          "gravityScale": 1,
+          "linearVelocity": [
+            0,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 0,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "worldCenter": [
+            0,
+            0,
+            0
+          ],
+          "requestedMass": 12,
+          "massPending": true,
+          "sensorMassFallback": false
+        },
+        "counts": {
+          "counts": {
+            "0": 1,
+            "1": 0,
+            "2": 0,
+            "3": 0
+          },
+          "liveBytes": "36136"
+        },
+        "diagnostics": {
+          "nativeStepIndex": 0,
+          "nativeCompleted": false,
+          "snapshotAvailable": false
+        },
+        "bridge": {
+          "liveBytes": "48",
+          "liveAllocations": 1,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    {
+      "label": "offset-box-below-native-minimum",
+      "error": {
+        "code": "AIR_E_BOX3D_ARGUMENT",
+        "message": "Box half extents must be at least 0.001m for this fixed core"
+      },
+      "before": {
+        "body": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": false,
+          "sleepEnabled": true,
+          "ccd": false,
+          "sleepTime": 0,
+          "sleepVelocity": 0,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0,
+          "angularDamping": 0,
+          "gravityScale": 1,
+          "linearVelocity": [
+            0,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 0,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "worldCenter": [
+            0,
+            0,
+            0
+          ],
+          "requestedMass": 12,
+          "massPending": true,
+          "sensorMassFallback": false
+        },
+        "counts": {
+          "counts": {
+            "0": 1,
+            "1": 0,
+            "2": 0,
+            "3": 0
+          },
+          "liveBytes": "36136"
+        },
+        "diagnostics": {
+          "nativeStepIndex": 0,
+          "nativeCompleted": false,
+          "snapshotAvailable": false
+        },
+        "bridge": {
+          "liveBytes": "48",
+          "liveAllocations": 1,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    {
+      "label": "setBodyEnabled:0",
+      "error": {
+        "code": "AIR_E_BOX3D_ARGUMENT",
+        "message": "enabled must be boolean"
+      },
+      "before": {
+        "body": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": true,
+          "sleepEnabled": true,
+          "ccd": false,
+          "sleepTime": 0.03333333507180214,
+          "sleepVelocity": 0.01666666939854622,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0,
+          "angularDamping": 0,
+          "gravityScale": 0,
+          "linearVelocity": [
+            0.01666666939854622,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 12,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            52,
+            0,
+            0,
+            0,
+            40,
+            0,
+            0,
+            0,
+            20
+          ],
+          "worldCenter": [
+            0.00017361115897074342,
+            0,
+            0
+          ],
+          "requestedMass": 12,
+          "massPending": false,
+          "sensorMassFallback": false
+        },
+        "counts": {
+          "counts": {
+            "0": 1,
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "liveBytes": "38020"
+        },
+        "diagnostics": {
+          "nativeStepIndex": 2,
+          "nativeCompleted": true,
+          "snapshotAvailable": false
+        },
+        "bridge": {
+          "liveBytes": "48",
+          "liveAllocations": 1,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    {
+      "label": "setBodyEnabled:1",
+      "error": {
+        "code": "AIR_E_BOX3D_ARGUMENT",
+        "message": "enabled must be boolean"
+      },
+      "before": {
+        "body": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": true,
+          "sleepEnabled": true,
+          "ccd": false,
+          "sleepTime": 0.03333333507180214,
+          "sleepVelocity": 0.01666666939854622,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0,
+          "angularDamping": 0,
+          "gravityScale": 0,
+          "linearVelocity": [
+            0.01666666939854622,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 12,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            52,
+            0,
+            0,
+            0,
+            40,
+            0,
+            0,
+            0,
+            20
+          ],
+          "worldCenter": [
+            0.00017361115897074342,
+            0,
+            0
+          ],
+          "requestedMass": 12,
+          "massPending": false,
+          "sensorMassFallback": false
+        },
+        "counts": {
+          "counts": {
+            "0": 1,
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "liveBytes": "38020"
+        },
+        "diagnostics": {
+          "nativeStepIndex": 2,
+          "nativeCompleted": true,
+          "snapshotAvailable": false
+        },
+        "bridge": {
+          "liveBytes": "48",
+          "liveAllocations": 1,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    {
+      "label": "setBodyEnabled:\"false\"",
+      "error": {
+        "code": "AIR_E_BOX3D_ARGUMENT",
+        "message": "enabled must be boolean"
+      },
+      "before": {
+        "body": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": true,
+          "sleepEnabled": true,
+          "ccd": false,
+          "sleepTime": 0.03333333507180214,
+          "sleepVelocity": 0.01666666939854622,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0,
+          "angularDamping": 0,
+          "gravityScale": 0,
+          "linearVelocity": [
+            0.01666666939854622,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 12,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            52,
+            0,
+            0,
+            0,
+            40,
+            0,
+            0,
+            0,
+            20
+          ],
+          "worldCenter": [
+            0.00017361115897074342,
+            0,
+            0
+          ],
+          "requestedMass": 12,
+          "massPending": false,
+          "sensorMassFallback": false
+        },
+        "counts": {
+          "counts": {
+            "0": 1,
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "liveBytes": "38020"
+        },
+        "diagnostics": {
+          "nativeStepIndex": 2,
+          "nativeCompleted": true,
+          "snapshotAvailable": false
+        },
+        "bridge": {
+          "liveBytes": "48",
+          "liveAllocations": 1,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    {
+      "label": "setBodyEnabled:null",
+      "error": {
+        "code": "AIR_E_BOX3D_ARGUMENT",
+        "message": "enabled must be boolean"
+      },
+      "before": {
+        "body": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": true,
+          "sleepEnabled": true,
+          "ccd": false,
+          "sleepTime": 0.03333333507180214,
+          "sleepVelocity": 0.01666666939854622,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0,
+          "angularDamping": 0,
+          "gravityScale": 0,
+          "linearVelocity": [
+            0.01666666939854622,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 12,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            52,
+            0,
+            0,
+            0,
+            40,
+            0,
+            0,
+            0,
+            20
+          ],
+          "worldCenter": [
+            0.00017361115897074342,
+            0,
+            0
+          ],
+          "requestedMass": 12,
+          "massPending": false,
+          "sensorMassFallback": false
+        },
+        "counts": {
+          "counts": {
+            "0": 1,
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "liveBytes": "38020"
+        },
+        "diagnostics": {
+          "nativeStepIndex": 2,
+          "nativeCompleted": true,
+          "snapshotAvailable": false
+        },
+        "bridge": {
+          "liveBytes": "48",
+          "liveAllocations": 1,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    {
+      "label": "setBodySleepEnabled:0",
+      "error": {
+        "code": "AIR_E_BOX3D_ARGUMENT",
+        "message": "sleep enabled must be boolean"
+      },
+      "before": {
+        "body": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": true,
+          "sleepEnabled": true,
+          "ccd": false,
+          "sleepTime": 0.03333333507180214,
+          "sleepVelocity": 0.01666666939854622,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0,
+          "angularDamping": 0,
+          "gravityScale": 0,
+          "linearVelocity": [
+            0.01666666939854622,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 12,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            52,
+            0,
+            0,
+            0,
+            40,
+            0,
+            0,
+            0,
+            20
+          ],
+          "worldCenter": [
+            0.00017361115897074342,
+            0,
+            0
+          ],
+          "requestedMass": 12,
+          "massPending": false,
+          "sensorMassFallback": false
+        },
+        "counts": {
+          "counts": {
+            "0": 1,
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "liveBytes": "38020"
+        },
+        "diagnostics": {
+          "nativeStepIndex": 2,
+          "nativeCompleted": true,
+          "snapshotAvailable": false
+        },
+        "bridge": {
+          "liveBytes": "48",
+          "liveAllocations": 1,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    {
+      "label": "setBodySleepEnabled:1",
+      "error": {
+        "code": "AIR_E_BOX3D_ARGUMENT",
+        "message": "sleep enabled must be boolean"
+      },
+      "before": {
+        "body": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": true,
+          "sleepEnabled": true,
+          "ccd": false,
+          "sleepTime": 0.03333333507180214,
+          "sleepVelocity": 0.01666666939854622,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0,
+          "angularDamping": 0,
+          "gravityScale": 0,
+          "linearVelocity": [
+            0.01666666939854622,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 12,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            52,
+            0,
+            0,
+            0,
+            40,
+            0,
+            0,
+            0,
+            20
+          ],
+          "worldCenter": [
+            0.00017361115897074342,
+            0,
+            0
+          ],
+          "requestedMass": 12,
+          "massPending": false,
+          "sensorMassFallback": false
+        },
+        "counts": {
+          "counts": {
+            "0": 1,
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "liveBytes": "38020"
+        },
+        "diagnostics": {
+          "nativeStepIndex": 2,
+          "nativeCompleted": true,
+          "snapshotAvailable": false
+        },
+        "bridge": {
+          "liveBytes": "48",
+          "liveAllocations": 1,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    {
+      "label": "setBodySleepEnabled:\"false\"",
+      "error": {
+        "code": "AIR_E_BOX3D_ARGUMENT",
+        "message": "sleep enabled must be boolean"
+      },
+      "before": {
+        "body": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": true,
+          "sleepEnabled": true,
+          "ccd": false,
+          "sleepTime": 0.03333333507180214,
+          "sleepVelocity": 0.01666666939854622,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0,
+          "angularDamping": 0,
+          "gravityScale": 0,
+          "linearVelocity": [
+            0.01666666939854622,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 12,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            52,
+            0,
+            0,
+            0,
+            40,
+            0,
+            0,
+            0,
+            20
+          ],
+          "worldCenter": [
+            0.00017361115897074342,
+            0,
+            0
+          ],
+          "requestedMass": 12,
+          "massPending": false,
+          "sensorMassFallback": false
+        },
+        "counts": {
+          "counts": {
+            "0": 1,
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "liveBytes": "38020"
+        },
+        "diagnostics": {
+          "nativeStepIndex": 2,
+          "nativeCompleted": true,
+          "snapshotAvailable": false
+        },
+        "bridge": {
+          "liveBytes": "48",
+          "liveAllocations": 1,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    {
+      "label": "setBodySleepEnabled:null",
+      "error": {
+        "code": "AIR_E_BOX3D_ARGUMENT",
+        "message": "sleep enabled must be boolean"
+      },
+      "before": {
+        "body": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": true,
+          "sleepEnabled": true,
+          "ccd": false,
+          "sleepTime": 0.03333333507180214,
+          "sleepVelocity": 0.01666666939854622,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0,
+          "angularDamping": 0,
+          "gravityScale": 0,
+          "linearVelocity": [
+            0.01666666939854622,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 12,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            52,
+            0,
+            0,
+            0,
+            40,
+            0,
+            0,
+            0,
+            20
+          ],
+          "worldCenter": [
+            0.00017361115897074342,
+            0,
+            0
+          ],
+          "requestedMass": 12,
+          "massPending": false,
+          "sensorMassFallback": false
+        },
+        "counts": {
+          "counts": {
+            "0": 1,
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "liveBytes": "38020"
+        },
+        "diagnostics": {
+          "nativeStepIndex": 2,
+          "nativeCompleted": true,
+          "snapshotAvailable": false
+        },
+        "bridge": {
+          "liveBytes": "48",
+          "liveAllocations": 1,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    {
+      "label": "setBodyAwake:0",
+      "error": {
+        "code": "AIR_E_BOX3D_ARGUMENT",
+        "message": "awake must be boolean"
+      },
+      "before": {
+        "body": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": true,
+          "sleepEnabled": true,
+          "ccd": false,
+          "sleepTime": 0.03333333507180214,
+          "sleepVelocity": 0.01666666939854622,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0,
+          "angularDamping": 0,
+          "gravityScale": 0,
+          "linearVelocity": [
+            0.01666666939854622,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 12,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            52,
+            0,
+            0,
+            0,
+            40,
+            0,
+            0,
+            0,
+            20
+          ],
+          "worldCenter": [
+            0.00017361115897074342,
+            0,
+            0
+          ],
+          "requestedMass": 12,
+          "massPending": false,
+          "sensorMassFallback": false
+        },
+        "counts": {
+          "counts": {
+            "0": 1,
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "liveBytes": "38020"
+        },
+        "diagnostics": {
+          "nativeStepIndex": 2,
+          "nativeCompleted": true,
+          "snapshotAvailable": false
+        },
+        "bridge": {
+          "liveBytes": "48",
+          "liveAllocations": 1,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    {
+      "label": "setBodyAwake:1",
+      "error": {
+        "code": "AIR_E_BOX3D_ARGUMENT",
+        "message": "awake must be boolean"
+      },
+      "before": {
+        "body": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": true,
+          "sleepEnabled": true,
+          "ccd": false,
+          "sleepTime": 0.03333333507180214,
+          "sleepVelocity": 0.01666666939854622,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0,
+          "angularDamping": 0,
+          "gravityScale": 0,
+          "linearVelocity": [
+            0.01666666939854622,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 12,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            52,
+            0,
+            0,
+            0,
+            40,
+            0,
+            0,
+            0,
+            20
+          ],
+          "worldCenter": [
+            0.00017361115897074342,
+            0,
+            0
+          ],
+          "requestedMass": 12,
+          "massPending": false,
+          "sensorMassFallback": false
+        },
+        "counts": {
+          "counts": {
+            "0": 1,
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "liveBytes": "38020"
+        },
+        "diagnostics": {
+          "nativeStepIndex": 2,
+          "nativeCompleted": true,
+          "snapshotAvailable": false
+        },
+        "bridge": {
+          "liveBytes": "48",
+          "liveAllocations": 1,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    {
+      "label": "setBodyAwake:\"false\"",
+      "error": {
+        "code": "AIR_E_BOX3D_ARGUMENT",
+        "message": "awake must be boolean"
+      },
+      "before": {
+        "body": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": true,
+          "sleepEnabled": true,
+          "ccd": false,
+          "sleepTime": 0.03333333507180214,
+          "sleepVelocity": 0.01666666939854622,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0,
+          "angularDamping": 0,
+          "gravityScale": 0,
+          "linearVelocity": [
+            0.01666666939854622,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 12,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            52,
+            0,
+            0,
+            0,
+            40,
+            0,
+            0,
+            0,
+            20
+          ],
+          "worldCenter": [
+            0.00017361115897074342,
+            0,
+            0
+          ],
+          "requestedMass": 12,
+          "massPending": false,
+          "sensorMassFallback": false
+        },
+        "counts": {
+          "counts": {
+            "0": 1,
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "liveBytes": "38020"
+        },
+        "diagnostics": {
+          "nativeStepIndex": 2,
+          "nativeCompleted": true,
+          "snapshotAvailable": false
+        },
+        "bridge": {
+          "liveBytes": "48",
+          "liveAllocations": 1,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    {
+      "label": "setBodyAwake:null",
+      "error": {
+        "code": "AIR_E_BOX3D_ARGUMENT",
+        "message": "awake must be boolean"
+      },
+      "before": {
+        "body": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": true,
+          "sleepEnabled": true,
+          "ccd": false,
+          "sleepTime": 0.03333333507180214,
+          "sleepVelocity": 0.01666666939854622,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0,
+          "angularDamping": 0,
+          "gravityScale": 0,
+          "linearVelocity": [
+            0.01666666939854622,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 12,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            52,
+            0,
+            0,
+            0,
+            40,
+            0,
+            0,
+            0,
+            20
+          ],
+          "worldCenter": [
+            0.00017361115897074342,
+            0,
+            0
+          ],
+          "requestedMass": 12,
+          "massPending": false,
+          "sensorMassFallback": false
+        },
+        "counts": {
+          "counts": {
+            "0": 1,
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "liveBytes": "38020"
+        },
+        "diagnostics": {
+          "nativeStepIndex": 2,
+          "nativeCompleted": true,
+          "snapshotAvailable": false
+        },
+        "bridge": {
+          "liveBytes": "48",
+          "liveAllocations": 1,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    {
+      "label": "setBodyCCD:0",
+      "error": {
+        "code": "AIR_E_BOX3D_ARGUMENT",
+        "message": "CCD must be boolean"
+      },
+      "before": {
+        "body": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": true,
+          "sleepEnabled": true,
+          "ccd": false,
+          "sleepTime": 0.03333333507180214,
+          "sleepVelocity": 0.01666666939854622,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0,
+          "angularDamping": 0,
+          "gravityScale": 0,
+          "linearVelocity": [
+            0.01666666939854622,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 12,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            52,
+            0,
+            0,
+            0,
+            40,
+            0,
+            0,
+            0,
+            20
+          ],
+          "worldCenter": [
+            0.00017361115897074342,
+            0,
+            0
+          ],
+          "requestedMass": 12,
+          "massPending": false,
+          "sensorMassFallback": false
+        },
+        "counts": {
+          "counts": {
+            "0": 1,
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "liveBytes": "38020"
+        },
+        "diagnostics": {
+          "nativeStepIndex": 2,
+          "nativeCompleted": true,
+          "snapshotAvailable": false
+        },
+        "bridge": {
+          "liveBytes": "48",
+          "liveAllocations": 1,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    {
+      "label": "setBodyCCD:1",
+      "error": {
+        "code": "AIR_E_BOX3D_ARGUMENT",
+        "message": "CCD must be boolean"
+      },
+      "before": {
+        "body": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": true,
+          "sleepEnabled": true,
+          "ccd": false,
+          "sleepTime": 0.03333333507180214,
+          "sleepVelocity": 0.01666666939854622,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0,
+          "angularDamping": 0,
+          "gravityScale": 0,
+          "linearVelocity": [
+            0.01666666939854622,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 12,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            52,
+            0,
+            0,
+            0,
+            40,
+            0,
+            0,
+            0,
+            20
+          ],
+          "worldCenter": [
+            0.00017361115897074342,
+            0,
+            0
+          ],
+          "requestedMass": 12,
+          "massPending": false,
+          "sensorMassFallback": false
+        },
+        "counts": {
+          "counts": {
+            "0": 1,
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "liveBytes": "38020"
+        },
+        "diagnostics": {
+          "nativeStepIndex": 2,
+          "nativeCompleted": true,
+          "snapshotAvailable": false
+        },
+        "bridge": {
+          "liveBytes": "48",
+          "liveAllocations": 1,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    {
+      "label": "setBodyCCD:\"false\"",
+      "error": {
+        "code": "AIR_E_BOX3D_ARGUMENT",
+        "message": "CCD must be boolean"
+      },
+      "before": {
+        "body": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": true,
+          "sleepEnabled": true,
+          "ccd": false,
+          "sleepTime": 0.03333333507180214,
+          "sleepVelocity": 0.01666666939854622,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0,
+          "angularDamping": 0,
+          "gravityScale": 0,
+          "linearVelocity": [
+            0.01666666939854622,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 12,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            52,
+            0,
+            0,
+            0,
+            40,
+            0,
+            0,
+            0,
+            20
+          ],
+          "worldCenter": [
+            0.00017361115897074342,
+            0,
+            0
+          ],
+          "requestedMass": 12,
+          "massPending": false,
+          "sensorMassFallback": false
+        },
+        "counts": {
+          "counts": {
+            "0": 1,
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "liveBytes": "38020"
+        },
+        "diagnostics": {
+          "nativeStepIndex": 2,
+          "nativeCompleted": true,
+          "snapshotAvailable": false
+        },
+        "bridge": {
+          "liveBytes": "48",
+          "liveAllocations": 1,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    {
+      "label": "setBodyCCD:null",
+      "error": {
+        "code": "AIR_E_BOX3D_ARGUMENT",
+        "message": "CCD must be boolean"
+      },
+      "before": {
+        "body": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": true,
+          "sleepEnabled": true,
+          "ccd": false,
+          "sleepTime": 0.03333333507180214,
+          "sleepVelocity": 0.01666666939854622,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0,
+          "angularDamping": 0,
+          "gravityScale": 0,
+          "linearVelocity": [
+            0.01666666939854622,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 12,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            52,
+            0,
+            0,
+            0,
+            40,
+            0,
+            0,
+            0,
+            20
+          ],
+          "worldCenter": [
+            0.00017361115897074342,
+            0,
+            0
+          ],
+          "requestedMass": 12,
+          "massPending": false,
+          "sensorMassFallback": false
+        },
+        "counts": {
+          "counts": {
+            "0": 1,
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "liveBytes": "38020"
+        },
+        "diagnostics": {
+          "nativeStepIndex": 2,
+          "nativeCompleted": true,
+          "snapshotAvailable": false
+        },
+        "bridge": {
+          "liveBytes": "48",
+          "liveAllocations": 1,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    {
+      "label": "mass:NaN",
+      "error": {
+        "code": "AIR_E_BOX3D_ARGUMENT",
+        "message": "mass must be a finite float32"
+      },
+      "before": {
+        "body": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": true,
+          "sleepEnabled": true,
+          "ccd": false,
+          "sleepTime": 0.03333333507180214,
+          "sleepVelocity": 0.01666666939854622,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0,
+          "angularDamping": 0,
+          "gravityScale": 0,
+          "linearVelocity": [
+            0.01666666939854622,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 12,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            52,
+            0,
+            0,
+            0,
+            40,
+            0,
+            0,
+            0,
+            20
+          ],
+          "worldCenter": [
+            0.00017361115897074342,
+            0,
+            0
+          ],
+          "requestedMass": 12,
+          "massPending": false,
+          "sensorMassFallback": false
+        },
+        "counts": {
+          "counts": {
+            "0": 1,
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "liveBytes": "38020"
+        },
+        "diagnostics": {
+          "nativeStepIndex": 2,
+          "nativeCompleted": true,
+          "snapshotAvailable": false
+        },
+        "bridge": {
+          "liveBytes": "48",
+          "liveAllocations": 1,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    {
+      "label": "linear:NaN",
+      "error": {
+        "code": "AIR_E_BOX3D_ARGUMENT",
+        "message": "linear velocity must be a finite float32"
+      },
+      "before": {
+        "body": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": true,
+          "sleepEnabled": true,
+          "ccd": false,
+          "sleepTime": 0.03333333507180214,
+          "sleepVelocity": 0.01666666939854622,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0,
+          "angularDamping": 0,
+          "gravityScale": 0,
+          "linearVelocity": [
+            0.01666666939854622,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 12,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            52,
+            0,
+            0,
+            0,
+            40,
+            0,
+            0,
+            0,
+            20
+          ],
+          "worldCenter": [
+            0.00017361115897074342,
+            0,
+            0
+          ],
+          "requestedMass": 12,
+          "massPending": false,
+          "sensorMassFallback": false
+        },
+        "counts": {
+          "counts": {
+            "0": 1,
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "liveBytes": "38020"
+        },
+        "diagnostics": {
+          "nativeStepIndex": 2,
+          "nativeCompleted": true,
+          "snapshotAvailable": false
+        },
+        "bridge": {
+          "liveBytes": "48",
+          "liveAllocations": 1,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    {
+      "label": "force:NaN",
+      "error": {
+        "code": "AIR_E_BOX3D_ARGUMENT",
+        "message": "force/impulse must be a finite float32"
+      },
+      "before": {
+        "body": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": true,
+          "sleepEnabled": true,
+          "ccd": false,
+          "sleepTime": 0.03333333507180214,
+          "sleepVelocity": 0.01666666939854622,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0,
+          "angularDamping": 0,
+          "gravityScale": 0,
+          "linearVelocity": [
+            0.01666666939854622,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 12,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            52,
+            0,
+            0,
+            0,
+            40,
+            0,
+            0,
+            0,
+            20
+          ],
+          "worldCenter": [
+            0.00017361115897074342,
+            0,
+            0
+          ],
+          "requestedMass": 12,
+          "massPending": false,
+          "sensorMassFallback": false
+        },
+        "counts": {
+          "counts": {
+            "0": 1,
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "liveBytes": "38020"
+        },
+        "diagnostics": {
+          "nativeStepIndex": 2,
+          "nativeCompleted": true,
+          "snapshotAvailable": false
+        },
+        "bridge": {
+          "liveBytes": "48",
+          "liveAllocations": 1,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    {
+      "label": "threshold:NaN",
+      "error": {
+        "code": "AIR_E_BOX3D_ARGUMENT",
+        "message": "sleep threshold must be a finite float32"
+      },
+      "before": {
+        "body": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": true,
+          "sleepEnabled": true,
+          "ccd": false,
+          "sleepTime": 0.03333333507180214,
+          "sleepVelocity": 0.01666666939854622,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0,
+          "angularDamping": 0,
+          "gravityScale": 0,
+          "linearVelocity": [
+            0.01666666939854622,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 12,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            52,
+            0,
+            0,
+            0,
+            40,
+            0,
+            0,
+            0,
+            20
+          ],
+          "worldCenter": [
+            0.00017361115897074342,
+            0,
+            0
+          ],
+          "requestedMass": 12,
+          "massPending": false,
+          "sensorMassFallback": false
+        },
+        "counts": {
+          "counts": {
+            "0": 1,
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "liveBytes": "38020"
+        },
+        "diagnostics": {
+          "nativeStepIndex": 2,
+          "nativeCompleted": true,
+          "snapshotAvailable": false
+        },
+        "bridge": {
+          "liveBytes": "48",
+          "liveAllocations": 1,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    {
+      "label": "mass:Infinity",
+      "error": {
+        "code": "AIR_E_BOX3D_ARGUMENT",
+        "message": "mass must be a finite float32"
+      },
+      "before": {
+        "body": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": true,
+          "sleepEnabled": true,
+          "ccd": false,
+          "sleepTime": 0.03333333507180214,
+          "sleepVelocity": 0.01666666939854622,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0,
+          "angularDamping": 0,
+          "gravityScale": 0,
+          "linearVelocity": [
+            0.01666666939854622,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 12,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            52,
+            0,
+            0,
+            0,
+            40,
+            0,
+            0,
+            0,
+            20
+          ],
+          "worldCenter": [
+            0.00017361115897074342,
+            0,
+            0
+          ],
+          "requestedMass": 12,
+          "massPending": false,
+          "sensorMassFallback": false
+        },
+        "counts": {
+          "counts": {
+            "0": 1,
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "liveBytes": "38020"
+        },
+        "diagnostics": {
+          "nativeStepIndex": 2,
+          "nativeCompleted": true,
+          "snapshotAvailable": false
+        },
+        "bridge": {
+          "liveBytes": "48",
+          "liveAllocations": 1,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    {
+      "label": "linear:Infinity",
+      "error": {
+        "code": "AIR_E_BOX3D_ARGUMENT",
+        "message": "linear velocity must be a finite float32"
+      },
+      "before": {
+        "body": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": true,
+          "sleepEnabled": true,
+          "ccd": false,
+          "sleepTime": 0.03333333507180214,
+          "sleepVelocity": 0.01666666939854622,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0,
+          "angularDamping": 0,
+          "gravityScale": 0,
+          "linearVelocity": [
+            0.01666666939854622,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 12,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            52,
+            0,
+            0,
+            0,
+            40,
+            0,
+            0,
+            0,
+            20
+          ],
+          "worldCenter": [
+            0.00017361115897074342,
+            0,
+            0
+          ],
+          "requestedMass": 12,
+          "massPending": false,
+          "sensorMassFallback": false
+        },
+        "counts": {
+          "counts": {
+            "0": 1,
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "liveBytes": "38020"
+        },
+        "diagnostics": {
+          "nativeStepIndex": 2,
+          "nativeCompleted": true,
+          "snapshotAvailable": false
+        },
+        "bridge": {
+          "liveBytes": "48",
+          "liveAllocations": 1,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    {
+      "label": "force:Infinity",
+      "error": {
+        "code": "AIR_E_BOX3D_ARGUMENT",
+        "message": "force/impulse must be a finite float32"
+      },
+      "before": {
+        "body": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": true,
+          "sleepEnabled": true,
+          "ccd": false,
+          "sleepTime": 0.03333333507180214,
+          "sleepVelocity": 0.01666666939854622,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0,
+          "angularDamping": 0,
+          "gravityScale": 0,
+          "linearVelocity": [
+            0.01666666939854622,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 12,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            52,
+            0,
+            0,
+            0,
+            40,
+            0,
+            0,
+            0,
+            20
+          ],
+          "worldCenter": [
+            0.00017361115897074342,
+            0,
+            0
+          ],
+          "requestedMass": 12,
+          "massPending": false,
+          "sensorMassFallback": false
+        },
+        "counts": {
+          "counts": {
+            "0": 1,
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "liveBytes": "38020"
+        },
+        "diagnostics": {
+          "nativeStepIndex": 2,
+          "nativeCompleted": true,
+          "snapshotAvailable": false
+        },
+        "bridge": {
+          "liveBytes": "48",
+          "liveAllocations": 1,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    {
+      "label": "threshold:Infinity",
+      "error": {
+        "code": "AIR_E_BOX3D_ARGUMENT",
+        "message": "sleep threshold must be a finite float32"
+      },
+      "before": {
+        "body": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": true,
+          "sleepEnabled": true,
+          "ccd": false,
+          "sleepTime": 0.03333333507180214,
+          "sleepVelocity": 0.01666666939854622,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0,
+          "angularDamping": 0,
+          "gravityScale": 0,
+          "linearVelocity": [
+            0.01666666939854622,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 12,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            52,
+            0,
+            0,
+            0,
+            40,
+            0,
+            0,
+            0,
+            20
+          ],
+          "worldCenter": [
+            0.00017361115897074342,
+            0,
+            0
+          ],
+          "requestedMass": 12,
+          "massPending": false,
+          "sensorMassFallback": false
+        },
+        "counts": {
+          "counts": {
+            "0": 1,
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "liveBytes": "38020"
+        },
+        "diagnostics": {
+          "nativeStepIndex": 2,
+          "nativeCompleted": true,
+          "snapshotAvailable": false
+        },
+        "bridge": {
+          "liveBytes": "48",
+          "liveAllocations": 1,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    {
+      "label": "mass:-Infinity",
+      "error": {
+        "code": "AIR_E_BOX3D_ARGUMENT",
+        "message": "mass must be a finite float32"
+      },
+      "before": {
+        "body": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": true,
+          "sleepEnabled": true,
+          "ccd": false,
+          "sleepTime": 0.03333333507180214,
+          "sleepVelocity": 0.01666666939854622,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0,
+          "angularDamping": 0,
+          "gravityScale": 0,
+          "linearVelocity": [
+            0.01666666939854622,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 12,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            52,
+            0,
+            0,
+            0,
+            40,
+            0,
+            0,
+            0,
+            20
+          ],
+          "worldCenter": [
+            0.00017361115897074342,
+            0,
+            0
+          ],
+          "requestedMass": 12,
+          "massPending": false,
+          "sensorMassFallback": false
+        },
+        "counts": {
+          "counts": {
+            "0": 1,
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "liveBytes": "38020"
+        },
+        "diagnostics": {
+          "nativeStepIndex": 2,
+          "nativeCompleted": true,
+          "snapshotAvailable": false
+        },
+        "bridge": {
+          "liveBytes": "48",
+          "liveAllocations": 1,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    {
+      "label": "linear:-Infinity",
+      "error": {
+        "code": "AIR_E_BOX3D_ARGUMENT",
+        "message": "linear velocity must be a finite float32"
+      },
+      "before": {
+        "body": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": true,
+          "sleepEnabled": true,
+          "ccd": false,
+          "sleepTime": 0.03333333507180214,
+          "sleepVelocity": 0.01666666939854622,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0,
+          "angularDamping": 0,
+          "gravityScale": 0,
+          "linearVelocity": [
+            0.01666666939854622,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 12,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            52,
+            0,
+            0,
+            0,
+            40,
+            0,
+            0,
+            0,
+            20
+          ],
+          "worldCenter": [
+            0.00017361115897074342,
+            0,
+            0
+          ],
+          "requestedMass": 12,
+          "massPending": false,
+          "sensorMassFallback": false
+        },
+        "counts": {
+          "counts": {
+            "0": 1,
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "liveBytes": "38020"
+        },
+        "diagnostics": {
+          "nativeStepIndex": 2,
+          "nativeCompleted": true,
+          "snapshotAvailable": false
+        },
+        "bridge": {
+          "liveBytes": "48",
+          "liveAllocations": 1,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    {
+      "label": "force:-Infinity",
+      "error": {
+        "code": "AIR_E_BOX3D_ARGUMENT",
+        "message": "force/impulse must be a finite float32"
+      },
+      "before": {
+        "body": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": true,
+          "sleepEnabled": true,
+          "ccd": false,
+          "sleepTime": 0.03333333507180214,
+          "sleepVelocity": 0.01666666939854622,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0,
+          "angularDamping": 0,
+          "gravityScale": 0,
+          "linearVelocity": [
+            0.01666666939854622,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 12,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            52,
+            0,
+            0,
+            0,
+            40,
+            0,
+            0,
+            0,
+            20
+          ],
+          "worldCenter": [
+            0.00017361115897074342,
+            0,
+            0
+          ],
+          "requestedMass": 12,
+          "massPending": false,
+          "sensorMassFallback": false
+        },
+        "counts": {
+          "counts": {
+            "0": 1,
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "liveBytes": "38020"
+        },
+        "diagnostics": {
+          "nativeStepIndex": 2,
+          "nativeCompleted": true,
+          "snapshotAvailable": false
+        },
+        "bridge": {
+          "liveBytes": "48",
+          "liveAllocations": 1,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    {
+      "label": "threshold:-Infinity",
+      "error": {
+        "code": "AIR_E_BOX3D_ARGUMENT",
+        "message": "sleep threshold must be a finite float32"
+      },
+      "before": {
+        "body": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": true,
+          "sleepEnabled": true,
+          "ccd": false,
+          "sleepTime": 0.03333333507180214,
+          "sleepVelocity": 0.01666666939854622,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0,
+          "angularDamping": 0,
+          "gravityScale": 0,
+          "linearVelocity": [
+            0.01666666939854622,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 12,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            52,
+            0,
+            0,
+            0,
+            40,
+            0,
+            0,
+            0,
+            20
+          ],
+          "worldCenter": [
+            0.00017361115897074342,
+            0,
+            0
+          ],
+          "requestedMass": 12,
+          "massPending": false,
+          "sensorMassFallback": false
+        },
+        "counts": {
+          "counts": {
+            "0": 1,
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "liveBytes": "38020"
+        },
+        "diagnostics": {
+          "nativeStepIndex": 2,
+          "nativeCompleted": true,
+          "snapshotAvailable": false
+        },
+        "bridge": {
+          "liveBytes": "48",
+          "liveAllocations": 1,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    {
+      "label": "mass:1.7976931348623157e+308",
+      "error": {
+        "code": "AIR_E_BOX3D_ARGUMENT",
+        "message": "mass must be a finite float32"
+      },
+      "before": {
+        "body": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": true,
+          "sleepEnabled": true,
+          "ccd": false,
+          "sleepTime": 0.03333333507180214,
+          "sleepVelocity": 0.01666666939854622,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0,
+          "angularDamping": 0,
+          "gravityScale": 0,
+          "linearVelocity": [
+            0.01666666939854622,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 12,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            52,
+            0,
+            0,
+            0,
+            40,
+            0,
+            0,
+            0,
+            20
+          ],
+          "worldCenter": [
+            0.00017361115897074342,
+            0,
+            0
+          ],
+          "requestedMass": 12,
+          "massPending": false,
+          "sensorMassFallback": false
+        },
+        "counts": {
+          "counts": {
+            "0": 1,
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "liveBytes": "38020"
+        },
+        "diagnostics": {
+          "nativeStepIndex": 2,
+          "nativeCompleted": true,
+          "snapshotAvailable": false
+        },
+        "bridge": {
+          "liveBytes": "48",
+          "liveAllocations": 1,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    {
+      "label": "linear:1.7976931348623157e+308",
+      "error": {
+        "code": "AIR_E_BOX3D_ARGUMENT",
+        "message": "linear velocity must be a finite float32"
+      },
+      "before": {
+        "body": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": true,
+          "sleepEnabled": true,
+          "ccd": false,
+          "sleepTime": 0.03333333507180214,
+          "sleepVelocity": 0.01666666939854622,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0,
+          "angularDamping": 0,
+          "gravityScale": 0,
+          "linearVelocity": [
+            0.01666666939854622,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 12,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            52,
+            0,
+            0,
+            0,
+            40,
+            0,
+            0,
+            0,
+            20
+          ],
+          "worldCenter": [
+            0.00017361115897074342,
+            0,
+            0
+          ],
+          "requestedMass": 12,
+          "massPending": false,
+          "sensorMassFallback": false
+        },
+        "counts": {
+          "counts": {
+            "0": 1,
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "liveBytes": "38020"
+        },
+        "diagnostics": {
+          "nativeStepIndex": 2,
+          "nativeCompleted": true,
+          "snapshotAvailable": false
+        },
+        "bridge": {
+          "liveBytes": "48",
+          "liveAllocations": 1,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    {
+      "label": "force:1.7976931348623157e+308",
+      "error": {
+        "code": "AIR_E_BOX3D_ARGUMENT",
+        "message": "force/impulse must be a finite float32"
+      },
+      "before": {
+        "body": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": true,
+          "sleepEnabled": true,
+          "ccd": false,
+          "sleepTime": 0.03333333507180214,
+          "sleepVelocity": 0.01666666939854622,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0,
+          "angularDamping": 0,
+          "gravityScale": 0,
+          "linearVelocity": [
+            0.01666666939854622,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 12,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            52,
+            0,
+            0,
+            0,
+            40,
+            0,
+            0,
+            0,
+            20
+          ],
+          "worldCenter": [
+            0.00017361115897074342,
+            0,
+            0
+          ],
+          "requestedMass": 12,
+          "massPending": false,
+          "sensorMassFallback": false
+        },
+        "counts": {
+          "counts": {
+            "0": 1,
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "liveBytes": "38020"
+        },
+        "diagnostics": {
+          "nativeStepIndex": 2,
+          "nativeCompleted": true,
+          "snapshotAvailable": false
+        },
+        "bridge": {
+          "liveBytes": "48",
+          "liveAllocations": 1,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    {
+      "label": "threshold:1.7976931348623157e+308",
+      "error": {
+        "code": "AIR_E_BOX3D_ARGUMENT",
+        "message": "sleep threshold must be a finite float32"
+      },
+      "before": {
+        "body": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": true,
+          "sleepEnabled": true,
+          "ccd": false,
+          "sleepTime": 0.03333333507180214,
+          "sleepVelocity": 0.01666666939854622,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0,
+          "angularDamping": 0,
+          "gravityScale": 0,
+          "linearVelocity": [
+            0.01666666939854622,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 12,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            52,
+            0,
+            0,
+            0,
+            40,
+            0,
+            0,
+            0,
+            20
+          ],
+          "worldCenter": [
+            0.00017361115897074342,
+            0,
+            0
+          ],
+          "requestedMass": 12,
+          "massPending": false,
+          "sensorMassFallback": false
+        },
+        "counts": {
+          "counts": {
+            "0": 1,
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "liveBytes": "38020"
+        },
+        "diagnostics": {
+          "nativeStepIndex": 2,
+          "nativeCompleted": true,
+          "snapshotAvailable": false
+        },
+        "bridge": {
+          "liveBytes": "48",
+          "liveAllocations": 1,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    {
+      "label": "mass-boundary:-1",
+      "error": {
+        "code": "AIR_E_BOX3D_ARGUMENT",
+        "message": "Mass must be positive after float32 conversion"
+      },
+      "before": {
+        "body": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": true,
+          "sleepEnabled": true,
+          "ccd": false,
+          "sleepTime": 0.03333333507180214,
+          "sleepVelocity": 0.01666666939854622,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0,
+          "angularDamping": 0,
+          "gravityScale": 0,
+          "linearVelocity": [
+            0.01666666939854622,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 12,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            52,
+            0,
+            0,
+            0,
+            40,
+            0,
+            0,
+            0,
+            20
+          ],
+          "worldCenter": [
+            0.00017361115897074342,
+            0,
+            0
+          ],
+          "requestedMass": 12,
+          "massPending": false,
+          "sensorMassFallback": false
+        },
+        "counts": {
+          "counts": {
+            "0": 1,
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "liveBytes": "38020"
+        },
+        "diagnostics": {
+          "nativeStepIndex": 2,
+          "nativeCompleted": true,
+          "snapshotAvailable": false
+        },
+        "bridge": {
+          "liveBytes": "48",
+          "liveAllocations": 1,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    {
+      "label": "mass-boundary:0",
+      "error": {
+        "code": "AIR_E_BOX3D_ARGUMENT",
+        "message": "Mass must be positive after float32 conversion"
+      },
+      "before": {
+        "body": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": true,
+          "sleepEnabled": true,
+          "ccd": false,
+          "sleepTime": 0.03333333507180214,
+          "sleepVelocity": 0.01666666939854622,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0,
+          "angularDamping": 0,
+          "gravityScale": 0,
+          "linearVelocity": [
+            0.01666666939854622,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 12,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            52,
+            0,
+            0,
+            0,
+            40,
+            0,
+            0,
+            0,
+            20
+          ],
+          "worldCenter": [
+            0.00017361115897074342,
+            0,
+            0
+          ],
+          "requestedMass": 12,
+          "massPending": false,
+          "sensorMassFallback": false
+        },
+        "counts": {
+          "counts": {
+            "0": 1,
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "liveBytes": "38020"
+        },
+        "diagnostics": {
+          "nativeStepIndex": 2,
+          "nativeCompleted": true,
+          "snapshotAvailable": false
+        },
+        "bridge": {
+          "liveBytes": "48",
+          "liveAllocations": 1,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    {
+      "label": "mass-boundary:1e-100",
+      "error": {
+        "code": "AIR_E_BOX3D_ARGUMENT",
+        "message": "Mass must be positive after float32 conversion"
+      },
+      "before": {
+        "body": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": true,
+          "sleepEnabled": true,
+          "ccd": false,
+          "sleepTime": 0.03333333507180214,
+          "sleepVelocity": 0.01666666939854622,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0,
+          "angularDamping": 0,
+          "gravityScale": 0,
+          "linearVelocity": [
+            0.01666666939854622,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 12,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            52,
+            0,
+            0,
+            0,
+            40,
+            0,
+            0,
+            0,
+            20
+          ],
+          "worldCenter": [
+            0.00017361115897074342,
+            0,
+            0
+          ],
+          "requestedMass": 12,
+          "massPending": false,
+          "sensorMassFallback": false
+        },
+        "counts": {
+          "counts": {
+            "0": 1,
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "liveBytes": "38020"
+        },
+        "diagnostics": {
+          "nativeStepIndex": 2,
+          "nativeCompleted": true,
+          "snapshotAvailable": false
+        },
+        "bridge": {
+          "liveBytes": "48",
+          "liveAllocations": 1,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    {
+      "label": "mass-boundary:1e-40",
+      "error": {
+        "code": "AIR_E_BOX3D_NATIVE",
+        "message": "Box3D foundation status 2"
+      },
+      "before": {
+        "body": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": true,
+          "sleepEnabled": true,
+          "ccd": false,
+          "sleepTime": 0.03333333507180214,
+          "sleepVelocity": 0.01666666939854622,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0,
+          "angularDamping": 0,
+          "gravityScale": 0,
+          "linearVelocity": [
+            0.01666666939854622,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 12,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            52,
+            0,
+            0,
+            0,
+            40,
+            0,
+            0,
+            0,
+            20
+          ],
+          "worldCenter": [
+            0.00017361115897074342,
+            0,
+            0
+          ],
+          "requestedMass": 12,
+          "massPending": false,
+          "sensorMassFallback": false
+        },
+        "counts": {
+          "counts": {
+            "0": 1,
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "liveBytes": "38020"
+        },
+        "diagnostics": {
+          "nativeStepIndex": 2,
+          "nativeCompleted": true,
+          "snapshotAvailable": false
+        },
+        "bridge": {
+          "liveBytes": "48",
+          "liveAllocations": 1,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    {
+      "label": "damping:-0.1,0",
+      "error": {
+        "code": "AIR_E_BOX3D_ARGUMENT",
+        "message": "Damping range is [0,1]"
+      },
+      "before": {
+        "body": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": true,
+          "sleepEnabled": true,
+          "ccd": false,
+          "sleepTime": 0.03333333507180214,
+          "sleepVelocity": 0.01666666939854622,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0,
+          "angularDamping": 0,
+          "gravityScale": 0,
+          "linearVelocity": [
+            0.01666666939854622,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 12,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            52,
+            0,
+            0,
+            0,
+            40,
+            0,
+            0,
+            0,
+            20
+          ],
+          "worldCenter": [
+            0.00017361115897074342,
+            0,
+            0
+          ],
+          "requestedMass": 12,
+          "massPending": false,
+          "sensorMassFallback": false
+        },
+        "counts": {
+          "counts": {
+            "0": 1,
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "liveBytes": "38020"
+        },
+        "diagnostics": {
+          "nativeStepIndex": 2,
+          "nativeCompleted": true,
+          "snapshotAvailable": false
+        },
+        "bridge": {
+          "liveBytes": "48",
+          "liveAllocations": 1,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    {
+      "label": "damping:0,1.1",
+      "error": {
+        "code": "AIR_E_BOX3D_ARGUMENT",
+        "message": "Damping range is [0,1]"
+      },
+      "before": {
+        "body": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": true,
+          "sleepEnabled": true,
+          "ccd": false,
+          "sleepTime": 0.03333333507180214,
+          "sleepVelocity": 0.01666666939854622,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0,
+          "angularDamping": 0,
+          "gravityScale": 0,
+          "linearVelocity": [
+            0.01666666939854622,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 12,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            52,
+            0,
+            0,
+            0,
+            40,
+            0,
+            0,
+            0,
+            20
+          ],
+          "worldCenter": [
+            0.00017361115897074342,
+            0,
+            0
+          ],
+          "requestedMass": 12,
+          "massPending": false,
+          "sensorMassFallback": false
+        },
+        "counts": {
+          "counts": {
+            "0": 1,
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "liveBytes": "38020"
+        },
+        "diagnostics": {
+          "nativeStepIndex": 2,
+          "nativeCompleted": true,
+          "snapshotAvailable": false
+        },
+        "bridge": {
+          "liveBytes": "48",
+          "liveAllocations": 1,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    {
+      "label": "damping:NaN,0",
+      "error": {
+        "code": "AIR_E_BOX3D_ARGUMENT",
+        "message": "linear damping must be a finite float32"
+      },
+      "before": {
+        "body": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": true,
+          "sleepEnabled": true,
+          "ccd": false,
+          "sleepTime": 0.03333333507180214,
+          "sleepVelocity": 0.01666666939854622,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0,
+          "angularDamping": 0,
+          "gravityScale": 0,
+          "linearVelocity": [
+            0.01666666939854622,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 12,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            52,
+            0,
+            0,
+            0,
+            40,
+            0,
+            0,
+            0,
+            20
+          ],
+          "worldCenter": [
+            0.00017361115897074342,
+            0,
+            0
+          ],
+          "requestedMass": 12,
+          "massPending": false,
+          "sensorMassFallback": false
+        },
+        "counts": {
+          "counts": {
+            "0": 1,
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "liveBytes": "38020"
+        },
+        "diagnostics": {
+          "nativeStepIndex": 2,
+          "nativeCompleted": true,
+          "snapshotAvailable": false
+        },
+        "bridge": {
+          "liveBytes": "48",
+          "liveAllocations": 1,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    {
+      "label": "damping:0,Infinity",
+      "error": {
+        "code": "AIR_E_BOX3D_ARGUMENT",
+        "message": "angular damping must be a finite float32"
+      },
+      "before": {
+        "body": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": true,
+          "sleepEnabled": true,
+          "ccd": false,
+          "sleepTime": 0.03333333507180214,
+          "sleepVelocity": 0.01666666939854622,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0,
+          "angularDamping": 0,
+          "gravityScale": 0,
+          "linearVelocity": [
+            0.01666666939854622,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 12,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            52,
+            0,
+            0,
+            0,
+            40,
+            0,
+            0,
+            0,
+            20
+          ],
+          "worldCenter": [
+            0.00017361115897074342,
+            0,
+            0
+          ],
+          "requestedMass": 12,
+          "massPending": false,
+          "sensorMassFallback": false
+        },
+        "counts": {
+          "counts": {
+            "0": 1,
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "liveBytes": "38020"
+        },
+        "diagnostics": {
+          "nativeStepIndex": 2,
+          "nativeCompleted": true,
+          "snapshotAvailable": false
+        },
+        "bridge": {
+          "liveBytes": "48",
+          "liveAllocations": 1,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    {
+      "label": "nonbinary-factor",
+      "error": {
+        "code": "AIR_E_BOX3D_ARGUMENT",
+        "message": "Motion factors must be 0/1"
+      },
+      "before": {
+        "body": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": true,
+          "sleepEnabled": true,
+          "ccd": false,
+          "sleepTime": 0.03333333507180214,
+          "sleepVelocity": 0.01666666939854622,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0,
+          "angularDamping": 0,
+          "gravityScale": 0,
+          "linearVelocity": [
+            0.01666666939854622,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 12,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            52,
+            0,
+            0,
+            0,
+            40,
+            0,
+            0,
+            0,
+            20
+          ],
+          "worldCenter": [
+            0.00017361115897074342,
+            0,
+            0
+          ],
+          "requestedMass": 12,
+          "massPending": false,
+          "sensorMassFallback": false
+        },
+        "counts": {
+          "counts": {
+            "0": 1,
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "liveBytes": "38020"
+        },
+        "diagnostics": {
+          "nativeStepIndex": 2,
+          "nativeCompleted": true,
+          "snapshotAvailable": false
+        },
+        "bridge": {
+          "liveBytes": "48",
+          "liveAllocations": 1,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    {
+      "label": "type-enum",
+      "error": {
+        "code": "AIR_E_BOX3D_ARGUMENT",
+        "message": "Invalid body type"
+      },
+      "before": {
+        "body": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": true,
+          "sleepEnabled": true,
+          "ccd": false,
+          "sleepTime": 0.03333333507180214,
+          "sleepVelocity": 0.01666666939854622,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0,
+          "angularDamping": 0,
+          "gravityScale": 0,
+          "linearVelocity": [
+            0.01666666939854622,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 12,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            52,
+            0,
+            0,
+            0,
+            40,
+            0,
+            0,
+            0,
+            20
+          ],
+          "worldCenter": [
+            0.00017361115897074342,
+            0,
+            0
+          ],
+          "requestedMass": 12,
+          "massPending": false,
+          "sensorMassFallback": false
+        },
+        "counts": {
+          "counts": {
+            "0": 1,
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "liveBytes": "38020"
+        },
+        "diagnostics": {
+          "nativeStepIndex": 2,
+          "nativeCompleted": true,
+          "snapshotAvailable": false
+        },
+        "bridge": {
+          "liveBytes": "48",
+          "liveAllocations": 1,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    {
+      "label": "invalid-space",
+      "error": {
+        "code": "AIR_E_BOX3D_ARGUMENT",
+        "message": "Invalid force space"
+      },
+      "before": {
+        "body": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": true,
+          "sleepEnabled": true,
+          "ccd": false,
+          "sleepTime": 0.03333333507180214,
+          "sleepVelocity": 0.01666666939854622,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0,
+          "angularDamping": 0,
+          "gravityScale": 0,
+          "linearVelocity": [
+            0.01666666939854622,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 12,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            52,
+            0,
+            0,
+            0,
+            40,
+            0,
+            0,
+            0,
+            20
+          ],
+          "worldCenter": [
+            0.00017361115897074342,
+            0,
+            0
+          ],
+          "requestedMass": 12,
+          "massPending": false,
+          "sensorMassFallback": false
+        },
+        "counts": {
+          "counts": {
+            "0": 1,
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "liveBytes": "38020"
+        },
+        "diagnostics": {
+          "nativeStepIndex": 2,
+          "nativeCompleted": true,
+          "snapshotAvailable": false
+        },
+        "bridge": {
+          "liveBytes": "48",
+          "liveAllocations": 1,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    {
+      "label": "cross-world",
+      "error": {
+        "code": "AIR_E_BOX3D_DISPOSED",
+        "message": "Body belongs to another world"
+      },
+      "before": {
+        "body": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": true,
+          "sleepEnabled": true,
+          "ccd": false,
+          "sleepTime": 0.03333333507180214,
+          "sleepVelocity": 0.01666666939854622,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0,
+          "angularDamping": 0,
+          "gravityScale": 0,
+          "linearVelocity": [
+            0.01666666939854622,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 12,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            52,
+            0,
+            0,
+            0,
+            40,
+            0,
+            0,
+            0,
+            20
+          ],
+          "worldCenter": [
+            0.00017361115897074342,
+            0,
+            0
+          ],
+          "requestedMass": 12,
+          "massPending": false,
+          "sensorMassFallback": false
+        },
+        "counts": {
+          "counts": {
+            "0": 1,
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "liveBytes": "38020"
+        },
+        "diagnostics": {
+          "nativeStepIndex": 2,
+          "nativeCompleted": true,
+          "snapshotAvailable": false
+        },
+        "bridge": {
+          "liveBytes": "48",
+          "liveAllocations": 1,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    {
+      "label": "forged-body",
+      "error": {
+        "code": "AIR_E_BOX3D_DISPOSED",
+        "message": "body is foreign or disposed"
+      },
+      "before": {
+        "body": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": true,
+          "sleepEnabled": true,
+          "ccd": false,
+          "sleepTime": 0.03333333507180214,
+          "sleepVelocity": 0.01666666939854622,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0,
+          "angularDamping": 0,
+          "gravityScale": 0,
+          "linearVelocity": [
+            0.01666666939854622,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 12,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            52,
+            0,
+            0,
+            0,
+            40,
+            0,
+            0,
+            0,
+            20
+          ],
+          "worldCenter": [
+            0.00017361115897074342,
+            0,
+            0
+          ],
+          "requestedMass": 12,
+          "massPending": false,
+          "sensorMassFallback": false
+        },
+        "counts": {
+          "counts": {
+            "0": 1,
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "liveBytes": "38020"
+        },
+        "diagnostics": {
+          "nativeStepIndex": 2,
+          "nativeCompleted": true,
+          "snapshotAvailable": false
+        },
+        "bridge": {
+          "liveBytes": "48",
+          "liveAllocations": 1,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    {
+      "label": "foreign-facade",
+      "error": {
+        "code": "AIR_E_BOX3D_DISPOSED",
+        "message": "World is foreign or disposed"
+      },
+      "before": {
+        "body": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": true,
+          "sleepEnabled": true,
+          "ccd": false,
+          "sleepTime": 0.03333333507180214,
+          "sleepVelocity": 0.01666666939854622,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0,
+          "angularDamping": 0,
+          "gravityScale": 0,
+          "linearVelocity": [
+            0.01666666939854622,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 12,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            52,
+            0,
+            0,
+            0,
+            40,
+            0,
+            0,
+            0,
+            20
+          ],
+          "worldCenter": [
+            0.00017361115897074342,
+            0,
+            0
+          ],
+          "requestedMass": 12,
+          "massPending": false,
+          "sensorMassFallback": false
+        },
+        "counts": {
+          "counts": {
+            "0": 1,
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "liveBytes": "38020"
+        },
+        "diagnostics": {
+          "nativeStepIndex": 2,
+          "nativeCompleted": true,
+          "snapshotAvailable": false
+        },
+        "bridge": {
+          "liveBytes": "48",
+          "liveAllocations": 1,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    {
+      "label": "static-velocity-explicit-unsupported",
+      "error": {
+        "code": "AIR_E_BOX3D_NATIVE",
+        "message": "Box3D foundation status 8"
+      },
+      "before": {
+        "body": {
+          "type": 0,
+          "enabled": true,
+          "awake": false,
+          "sleeping": false,
+          "sleepy": false,
+          "sleepEnabled": true,
+          "ccd": false,
+          "sleepTime": 0,
+          "sleepVelocity": 1,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0,
+          "angularDamping": 0,
+          "gravityScale": 0,
+          "linearVelocity": [
+            0,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 0,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "worldCenter": [
+            0.01684027910232544,
+            0,
+            0
+          ],
+          "requestedMass": 12,
+          "massPending": false,
+          "sensorMassFallback": false
+        },
+        "counts": {
+          "counts": {
+            "0": 1,
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "liveBytes": "39088"
+        },
+        "diagnostics": {
+          "nativeStepIndex": 3,
+          "nativeCompleted": true,
+          "snapshotAvailable": false
+        },
+        "bridge": {
+          "liveBytes": "48",
+          "liveAllocations": 1,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    {
+      "label": "disabled-impulse-explicit-unsupported",
+      "error": {
+        "code": "AIR_E_BOX3D_NATIVE",
+        "message": "Box3D foundation status 8"
+      },
+      "before": {
+        "body": {
+          "type": 2,
+          "enabled": false,
+          "awake": false,
+          "sleeping": false,
+          "sleepy": false,
+          "sleepEnabled": true,
+          "ccd": false,
+          "sleepTime": 0,
+          "sleepVelocity": 1,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0,
+          "angularDamping": 0,
+          "gravityScale": 0,
+          "linearVelocity": [
+            0,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 12,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            52,
+            0,
+            0,
+            0,
+            40,
+            0,
+            0,
+            0,
+            20
+          ],
+          "worldCenter": [
+            0.01684027910232544,
+            0,
+            0
+          ],
+          "requestedMass": 12,
+          "massPending": false,
+          "sensorMassFallback": false
+        },
+        "counts": {
+          "counts": {
+            "0": 1,
+            "1": 1,
+            "2": 0,
+            "3": 0
+          },
+          "liveBytes": "43120"
+        },
+        "diagnostics": {
+          "nativeStepIndex": 3,
+          "nativeCompleted": true,
+          "snapshotAvailable": false
+        },
+        "bridge": {
+          "liveBytes": "48",
+          "liveAllocations": 1,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    },
+    {
+      "label": "last-collider-removed-step",
+      "error": {
+        "code": "AIR_E_BOX3D_MASS_PENDING",
+        "message": "Body 1:1 has no effective geometry"
+      },
+      "before": {
+        "body": {
+          "type": 2,
+          "enabled": true,
+          "awake": true,
+          "sleeping": false,
+          "sleepy": false,
+          "sleepEnabled": true,
+          "ccd": false,
+          "sleepTime": 0,
+          "sleepVelocity": 1,
+          "sleepThreshold": 0.05000000074505806,
+          "linearDamping": 0,
+          "angularDamping": 0,
+          "gravityScale": 0,
+          "linearVelocity": [
+            0,
+            0,
+            0
+          ],
+          "angularVelocity": [
+            0,
+            0,
+            0
+          ],
+          "force": [
+            0,
+            0,
+            0
+          ],
+          "torque": [
+            0,
+            0,
+            0
+          ],
+          "linearFactor": [
+            1,
+            1,
+            1
+          ],
+          "angularFactor": [
+            1,
+            1,
+            1
+          ],
+          "mass": 0,
+          "localCenter": [
+            0,
+            0,
+            0
+          ],
+          "inertia": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "worldCenter": [
+            0.01684027910232544,
+            0,
+            0
+          ],
+          "requestedMass": 12,
+          "massPending": true,
+          "sensorMassFallback": false
+        },
+        "counts": {
+          "counts": {
+            "0": 1,
+            "1": 0,
+            "2": 0,
+            "3": 0
+          },
+          "liveBytes": "42456"
+        },
+        "diagnostics": {
+          "nativeStepIndex": 3,
+          "nativeCompleted": true,
+          "snapshotAvailable": false
+        },
+        "bridge": {
+          "liveBytes": "48",
+          "liveAllocations": 1,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      }
+    }
+  ]
+}

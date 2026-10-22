@@ -15,6 +15,8 @@ static int near(float a,float b){return fabsf(a-b)<1e-4f;}
 int main(void){
  uint32_t baseline[2];air_b3_live_bytes(baseline);uint32_t w=air_b3_world_create(0,0,0),other=air_b3_world_create(0,0,0),id[2],shape[2];CHECK(w&&other);create(w,2,id);
  float state[49],before[49],p[11]={0};CHECK(!air_b3_body_mass_set(w,id[0],id[1],12));CHECK(air_b3_body_mass_ready(w,id[0],id[1],12)==AIR_B3_MASS_PENDING);
+ CHECK(air_b3_shape_box(id[0],id[1],.0001f,.0001f,.0001f,1,shape)==AIR_B3_ARGUMENT);
+ p[3]=p[4]=p[5]=.0001f;p[9]=1;p[10]=1;CHECK(air_b3_mass_shape_create(w,id[0],id[1],1,p,0,12,shape)==AIR_B3_ARGUMENT);
  p[3]=1;p[4]=2;p[5]=3;p[9]=1;p[10]=1;CHECK(!air_b3_mass_shape_create(w,id[0],id[1],1,p,0,12,shape));CHECK(!air_b3_body_state(w,id[0],id[1],12,state));
  CHECK(near(state[31],12)&&near(state[35],52)&&near(state[39],40)&&near(state[43],20));
  float impulse[6]={0,0,20,0,0,0};CHECK(!air_b3_body_apply(w,id[0],id[1],3,0,impulse));CHECK(!air_b3_body_state(w,id[0],id[1],12,state));CHECK(near(state[18],1));
@@ -49,5 +51,5 @@ int main(void){
  CHECK(!air_b3_mass_shape_destroy(w,id[0],id[1],solid[0],solid[1],2));CHECK(!air_b3_body_state(w,id[0],id[1],2,state));CHECK(state[48]==1&&state[32]==1);
  CHECK(!air_b3_mass_shape_destroy(w,id[0],id[1],shape[0],shape[1],2));CHECK(air_b3_body_mass_ready(w,id[0],id[1],2)==AIR_B3_MASS_PENDING);
  CHECK(!air_b3_world_destroy(w));CHECK(!air_b3_world_destroy(other));uint32_t after[2];air_b3_live_bytes(after);CHECK(!memcmp(after,baseline,sizeof(after)));
- printf("{\"status\":\"PASS\",\"pointerBytes\":%zu,\"privateLayout\":{\"bodyBytes\":%zu,\"simBytes\":%zu,\"sleepTimeOffset\":%zu,\"sleepVelocityOffset\":%zu,\"forceOffset\":%zu,\"torqueOffset\":%zu},\"lockedWorldNoWrite\":true,\"fullGenerationWorldNoWrite\":true,\"boxMassAndAngularImpulse\":true,\"clearActualForceNotImpulse\":true,\"actualSleepTimerAndZeroThreshold\":true,\"sensorFallbackAndMixedExclusion\":true,\"pendingGeometryLifecycle\":true,\"immediateImpulseLocks\":true,\"coreBytesRestored\":true}\n",sizeof(void*),sizeof(b3Body),sizeof(b3BodySim),offsetof(b3Body,sleepTime),offsetof(b3Body,sleepVelocity),offsetof(b3BodySim,force),offsetof(b3BodySim,torque));
+ printf("{\"status\":\"PASS\",\"pointerBytes\":%zu,\"privateLayout\":{\"bodyBytes\":%zu,\"simBytes\":%zu,\"sleepTimeOffset\":%zu,\"sleepVelocityOffset\":%zu,\"forceOffset\":%zu,\"torqueOffset\":%zu},\"lockedWorldNoWrite\":true,\"fullGenerationWorldNoWrite\":true,\"boxMassAndAngularImpulse\":true,\"clearActualForceNotImpulse\":true,\"actualSleepTimerAndZeroThreshold\":true,\"sensorFallbackAndMixedExclusion\":true,\"pendingGeometryLifecycle\":true,\"immediateImpulseLocks\":true,\"smallBoxNoSilentClamp\":true,\"coreBytesRestored\":true}\n",sizeof(void*),sizeof(b3Body),sizeof(b3BodySim),offsetof(b3Body,sleepTime),offsetof(b3Body,sleepVelocity),offsetof(b3BodySim,force),offsetof(b3BodySim,torque));
 }

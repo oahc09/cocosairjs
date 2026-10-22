@@ -1,0 +1,63 @@
+{
+  "status": "ACTUAL_COMPONENT_CONTROL_ONLY",
+  "timeUTC": "2026-10-22T09:28:10.806790+00:00",
+  "beforeEdit": {
+    "src/cocos/physics/framework/components/colliders/collider.ts": "9935f116e643095562a02e80b01821b4fa790e6cbb93164c6f67afd38ea9253f",
+    "src/cocos/physics/framework/components/colliders/box-collider.ts": "86cd8bbef650977c491344317bc107b80cfa12c6d3271422cce3378f8a0f5016",
+    "src/cocos/physics/framework/components/colliders/sphere-collider.ts": "003803a53848f16905058d44c1688063554d78c1d91e0b8789beb46330ccb6e5",
+    "tools/verify/box3d/body-component-real-collider-control.test.ts": "9acd75ec4457e9a5acd6f681e6679ac4c532a9408500ba403b500901efdbdcae",
+    "tools/verify/box3d/body-component-real-collider-control.jest.cjs": "d3c55a125ddfa958c3ab2289993f0e630c59d7bb3a1e5173b3ea533d8d15ce80"
+  },
+  "sourceBeforeChecks": {
+    "src/cocos/physics/framework/components/colliders/collider.ts": "7822cefedbf6c8fbf0861fb05949589b2f4a81462c01d0e23d3ba556fec3b2be",
+    "src/cocos/physics/framework/components/colliders/box-collider.ts": "9957d3a6b789798560ed32913d22efff16e42bcc4d4592414a3082e572e6da13",
+    "src/cocos/physics/framework/components/colliders/sphere-collider.ts": "a54b0edc6af5ed9b9a81be221ae38b94ba400ae0b9ad2ee17253a290c9107a3e",
+    "tools/verify/box3d/body-component-real-collider-control.test.ts": "8a00bfd6964862eedeb6ecadb7f22848e8fd6530e9e08ab00a73d83b6fef36b0",
+    "tools/verify/box3d/body-component-real-collider-control.jest.cjs": "d3c55a125ddfa958c3ab2289993f0e630c59d7bb3a1e5173b3ea533d8d15ce80",
+    "tools/verify/box3d/body-component-real-collider-control.tsconfig.json": "11c1cd8185797c42e060aa7290c33be0315204a015664f8c00c11228db6638f5"
+  },
+  "sourceAfterChecks": {
+    "src/cocos/physics/framework/components/colliders/collider.ts": "7822cefedbf6c8fbf0861fb05949589b2f4a81462c01d0e23d3ba556fec3b2be",
+    "src/cocos/physics/framework/components/colliders/box-collider.ts": "9957d3a6b789798560ed32913d22efff16e42bcc4d4592414a3082e572e6da13",
+    "src/cocos/physics/framework/components/colliders/sphere-collider.ts": "a54b0edc6af5ed9b9a81be221ae38b94ba400ae0b9ad2ee17253a290c9107a3e",
+    "tools/verify/box3d/body-component-real-collider-control.test.ts": "8a00bfd6964862eedeb6ecadb7f22848e8fd6530e9e08ab00a73d83b6fef36b0",
+    "tools/verify/box3d/body-component-real-collider-control.jest.cjs": "d3c55a125ddfa958c3ab2289993f0e630c59d7bb3a1e5173b3ea533d8d15ce80",
+    "tools/verify/box3d/body-component-real-collider-control.tsconfig.json": "11c1cd8185797c42e060aa7290c33be0315204a015664f8c00c11228db6638f5"
+  },
+  "unchangedDuringChecks": true,
+  "checks": [
+    {
+      "argv": [
+        "./node_modules/.bin/prettier",
+        "--check",
+        "tools/verify/box3d/body-component-real-collider-control.test.ts",
+        "tools/verify/box3d/body-component-real-collider-control.jest.cjs",
+        "tools/verify/box3d/body-component-real-collider-control.tsconfig.json"
+      ],
+      "exitCode": 0
+    },
+    {
+      "argv": [
+        "./node_modules/.bin/tsc",
+        "-p",
+        "tools/verify/box3d/body-component-real-collider-control.tsconfig.json",
+        "--pretty",
+        "false"
+      ],
+      "exitCode": 0
+    },
+    {
+      "argv": [
+        "node",
+        "node_modules/jest/bin/jest.js",
+        "--config",
+        "tools/verify/box3d/body-component-real-collider-control.jest.cjs",
+        "--runInBand",
+        "--no-cache"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "nativePhysicsQualification": false,
+  "publicComponentsRegistered": false
+}

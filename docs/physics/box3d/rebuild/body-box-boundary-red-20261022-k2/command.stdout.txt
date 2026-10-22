@@ -1,0 +1,1 @@
+{"status":"FAIL_UNANNOUNCED_CORE_BOX_CLAMP","intendedInertia":6.666666666666667e-9,"actualInertia":6.66666721826914e-7}

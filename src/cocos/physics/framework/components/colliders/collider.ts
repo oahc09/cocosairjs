@@ -118,6 +118,8 @@ export class Collider extends Eventify(Component) {
 
     public set material (value) {
         if (this._shape) {
+            const nativeFirst = selector.id === 'box3d';
+            if (nativeFirst) this._shape.setMaterial(value);
             if (value && this._material) {
                 if (this._material.id !== value.id) {
                     this._material.off(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
@@ -132,7 +134,7 @@ export class Collider extends Eventify(Component) {
                 this._material.off(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
                 this._material = value;
             }
-            this._updateMaterial();
+            if (!nativeFirst) this._updateMaterial();
         } else {
             this._material = value;
         }
@@ -151,6 +153,11 @@ export class Collider extends Eventify(Component) {
     }
 
     public set isTrigger (value) {
+        if (selector.id === 'box3d' && this._shape) {
+            this._shape.setAsTrigger(value);
+            this._isTrigger = value;
+            return;
+        }
         this._isTrigger = value;
         if (this._shape) {
             this._shape.setAsTrigger(this._isTrigger);
@@ -171,6 +178,11 @@ export class Collider extends Eventify(Component) {
     }
 
     public set center (value: Vec3) {
+        if (selector.id === 'box3d' && this._shape) {
+            this._shape.setCenter(value);
+            Vec3.copy(this._center, value);
+            return;
+        }
         Vec3.copy(this._center, value);
         if (this._shape) {
             this._shape.setCenter(this._center);

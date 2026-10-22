@@ -1,0 +1,37 @@
+{
+  "extends": "../../../tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "types": [
+      "jest",
+      "../../../node_modules/@cocos/cannon/CANNON",
+      "../../../src/@types/globals",
+      "../../../src/@types/consts",
+      "../../../src/@types/jsb",
+      "../../../src/@types/editor-extends",
+      "../../../src/@types/webGL.extras",
+      "../../../src/@types/webGL2.extras",
+      "../../../src/@types/webGPU",
+      "../../../src/@types/pal/system-info",
+      "../../../src/@types/pal/screen-adapter",
+      "../../../src/@types/pal/minigame",
+      "../../../src/@types/pal/audio",
+      "../../../src/@types/pal/input",
+      "../../../src/@types/pal/env",
+      "../../../src/@types/pal/pacer",
+      "../../../src/@types/pal/wasm"
+    ]
+  },
+  "files": [
+    "../../../src/air/physics/box3d/world.ts",
+    "../../../src/air/physics/box3d/world-binding.ts",
+    "../../../src/air/physics/box3d/registration.ts",
+    "../../../src/air/physics/box3d/debug.ts",
+    "../../../src/air/physics/box3d/unsupported.ts",
+    "../../../src/@types/external-modules.d.ts",
+    "../../../src/air/physics/box3d/shared-body.ts",
+    "../../../src/air/physics/box3d/rigid-body.ts",
+    "body-component-real-collider-control.test.ts"
+  ],
+  "include": []
+}

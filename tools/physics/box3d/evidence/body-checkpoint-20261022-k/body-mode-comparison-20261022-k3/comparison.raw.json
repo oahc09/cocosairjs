@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "scope": "Exact Debug/Release body observations, checks and invalid-input records; identity/artifact metadata separately audited",
+  "inputs": [
+    {
+      "path": "tools/physics/box3d/output/body-wasm-debug-20261022-k3/wasm-body-contract.raw.json",
+      "sha256": "80d8873492ec6e18c40d26ec9262548474a61379b065e88ba28d867fa3f55143"
+    },
+    {
+      "path": "tools/physics/box3d/output/body-wasm-release-20261022-k3/wasm-body-contract.raw.json",
+      "sha256": "d5fe59439cbdf635bd4c770c6716e4c725c8c52838529bd599f1411c83f3bf1a"
+    }
+  ],
+  "negativeRecords": 56,
+  "dampingCases": 12,
+  "idCycles": 128
+}

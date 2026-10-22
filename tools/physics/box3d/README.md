@@ -286,3 +286,35 @@ capability description.
 ### Narrow T09 world bridge (j2)
 
 The additive ABI-1 facade now exposes real gravity/sleep setters and readback, exact-world shape friction/restitution, confirmed native-step diagnostics, and copied native debug line/bounds snapshots. `WIRE_FRAME=1` and `AABB=4` are qualified for finite sphere/box fixtures; `CONSTRAINT=2` is explicitly unsupported. `bridgeMemory(world?)` accounts for bridge-owned callback copies and capture buffers separately from core allocation bytes. See [the world bridge contract](world-bridge-contract.md) for ownership, diagnostic timing, failure evidence and limits. This does not certify a complete Cocos adapter, browser/CSP execution, all T09 or G1.
+
+### Narrow T10 body controls (k3)
+
+The [body control contract](body-control-contract.md) specifies actual native
+body type/enabled/sleep/velocity/force/impulse controls, world-axis 0/1 motion
+locks, total-mass inertia recomputation and copied 49-float state readback. ABI 1
+and the old 29-float body snapshot remain unchanged. Sensor-only dynamic bodies
+use valid same-body sensor geometry for mass; mixed bodies exclude sensors.
+Assembly without valid geometry is explicitly pending and rejects the whole
+step before diagnostics or snapshots change. It can recover after adding geometry.
+
+Fresh k3 host Debug/Release, independent UBSan-only and Node WASM Debug/Release
+runs pass their finite contracts. Each WASM artifact audit binds 33 inputs,
+61 compilation units and 18 evidence files. Actual immediate locked-axis impulse
+leakage and silently clamped tiny boxes were discovered after earlier suites
+passed; their original k1/k2 failures and source snapshots are retained. The k3
+bridge masks locked velocity components immediately after impulse, and rejects
+box half extents below the fixed core's 0.001 m minimum before any mutation.
+
+The unchanged historical geometry comparator still records FAIL for nine exact
+parameter-error differences. A separate reviewed comparison asserts those nine
+old/new pairs and then compares every remaining observation; it does not remove
+errors globally or relabel the original report. Actual old-j2/forged identity
+rejection, finite body lifetime/growth tests, and independent analytic
+box/sphere checks are retained separately from build qualification.
+
+This is not full T10, C36, G1 or browser acceptance. Body pose/scale synchronization
+and shape group/mask filtering are not implemented by this increment. CCD is
+actual native set/readback, not complete CCD qualification. Arbitrary hull,
+compound, heightfield and mesh mass behavior are not qualified. Existing
+ASan/LSan and browser limitations remain unchanged. See the frozen body evidence
+summary for exact scope, all failed attempts and artifact archive identity.

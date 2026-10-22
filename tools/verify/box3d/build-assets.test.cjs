@@ -294,6 +294,82 @@ test('corrupt/missing assets, stale identities, failed/incomplete inputs and aud
                 rehashAuditEvidence(d, name);
             },
         ],
+        ...[
+            [
+                'body-failed-rehashed',
+                'wasm-body-contract.raw.json',
+                (r) => {
+                    r.status = 'FAIL';
+                },
+            ],
+            [
+                'body-stale-identity-rehashed',
+                'wasm-body-contract.raw.json',
+                (r) => {
+                    r.identity.schemaSha256 = '0'.repeat(64);
+                },
+            ],
+            [
+                'body-stale-fixture-rehashed',
+                'wasm-body-contract.raw.json',
+                (r) => {
+                    r.fixtureSha256 = '0'.repeat(64);
+                },
+            ],
+            [
+                'body-missing-lock-check-rehashed',
+                'wasm-body-contract.raw.json',
+                (r) => {
+                    delete r.checks.immediateImpulseLocks;
+                },
+            ],
+            [
+                'body-missing-small-box-check-rehashed',
+                'wasm-body-contract.raw.json',
+                (r) => {
+                    r.checks.smallBoxNoSilentClamp = false;
+                },
+            ],
+            [
+                'body-native-failed-rehashed',
+                'native-body-contract.raw.json',
+                (r) => {
+                    r.status = 'FAIL';
+                },
+            ],
+            [
+                'body-native-wrong-pointer-width-rehashed',
+                'native-body-contract.raw.json',
+                (r) => {
+                    r.pointerBytes = 8;
+                },
+            ],
+            [
+                'body-native-missing-preflight-check-rehashed',
+                'native-body-contract.raw.json',
+                (r) => {
+                    delete r.pendingGeometryLifecycle;
+                },
+            ],
+        ].map(([label, name, mutate]) => [
+            label,
+            (d) => {
+                const r = readJSON(d, name);
+                mutate(r);
+                writeJSON(d, name, r);
+                rehashAuditEvidence(d, name);
+            },
+        ]),
+        [
+            'body-compile-source-omitted',
+            (d) => {
+                const r = readJSON(d, 'artifact-audit.raw.json');
+                const index = r.compiledSourceHashes.findIndex((row) => row.path.endsWith('/body_control.c'));
+                assert(index >= 0);
+                r.compiledSourceHashes[index] = r.compiledSourceHashes[0];
+                writeJSON(d, 'artifact-audit.raw.json', r);
+            },
+        ],
     ];
     for (const [name, mutate] of mutations) {
         const directory = copyInputs(name),

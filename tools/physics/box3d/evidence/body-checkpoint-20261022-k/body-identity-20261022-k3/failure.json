@@ -1,0 +1,8 @@
+{
+  "status": "FAIL_FIXTURE_SYNTAX_BEFORE_MODULE_EXECUTION",
+  "error": "SyntaxError: Unexpected end of input",
+  "node": "v24.19.0",
+  "scriptSha256": "7fe1d8f50e95cf8dd9f108fbfba1829cb375f294645be03098215df88c2d34d9",
+  "replacementDirectory": "tools/physics/box3d/output/body-identity-20261022-k4",
+  "productInputsChanged": false
+}

@@ -1,0 +1,11 @@
+test_positive (__main__.ReviewerControls.test_positive) ... ok
+test_reject_changed_inertia (__main__.ReviewerControls.test_reject_changed_inertia) ... ok
+test_reject_false_formula_even_when_expected_is_rewritten (__main__.ReviewerControls.test_reject_false_formula_even_when_expected_is_rewritten) ... ok
+test_reject_incomplete_grid (__main__.ReviewerControls.test_reject_incomplete_grid) ... ok
+test_reject_nonfinite_json (__main__.ReviewerControls.test_reject_nonfinite_json) ... ok
+test_reject_unreviewed_fixture (__main__.ReviewerControls.test_reject_unreviewed_fixture) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.018s
+
+OK

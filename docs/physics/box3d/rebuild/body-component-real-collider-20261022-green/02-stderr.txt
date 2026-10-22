@@ -1,0 +1,34 @@
+PASS tools/verify/box3d/body-component-real-collider-control.test.ts (13.602 s)
+  ✓ Box3D rejected box size preserves cached identity and values (2 ms)
+  ✓ Box3D box size forwards normalized candidate before commit (1 ms)
+  ✓ Box3D rejected sphere radius preserves cache
+  ✓ Box3D sphere radius forwards normalized candidate before commit (1 ms)
+  ✓ builtin retains zero-argument size callbacks with updated cache (2 ms)
+  ✓ cannon.js retains zero-argument size callbacks with updated cache
+  ✓ without live shape, original negative size/radius normalization remains (1 ms)
+  ✓ documented boundary: unexpected material.on throw after native commit is not a full rollback (6 ms)
+  ✓ documented boundary: material EVENT_UPDATE observes an already mutated material asset (1 ms)
+  BoxCollider: actual component with injected delegate
+    ✓ Box3D rejected trigger candidate preserves cache (13 ms)
+    ✓ Box3D rejected center preserves vector identity and values (2 ms)
+    ✓ Box3D rejected replacement material preserves cache and listeners (2 ms)
+    ✓ Box3D rejected null material preserves cache (1 ms)
+    ✓ Box3D accepted trigger/center candidates are delegated before cache commit (1 ms)
+    ✓ Box3D accepted material delegates before cache/listener changes (1 ms)
+    ✓ builtin retains existing cache-first order (1 ms)
+    ✓ cannon.js retains existing cache-first order
+  SphereCollider: actual component with injected delegate
+    ✓ Box3D rejected trigger candidate preserves cache
+    ✓ Box3D rejected center preserves vector identity and values (1 ms)
+    ✓ Box3D rejected replacement material preserves cache and listeners (1 ms)
+    ✓ Box3D rejected null material preserves cache
+    ✓ Box3D accepted trigger/center candidates are delegated before cache commit (1 ms)
+    ✓ Box3D accepted material delegates before cache/listener changes (1 ms)
+    ✓ builtin retains existing cache-first order (1 ms)
+    ✓ cannon.js retains existing cache-first order (1 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       25 passed, 25 total
+Snapshots:   0 total
+Time:        14.299 s
+Ran all test suites.

@@ -260,6 +260,7 @@
     "massVelocityRule": "Geometry/mass changes preserve body origin, COM linear velocity and angular velocity, not momentum; locks zero locked components. Static/disabled transitions use native state semantics.",
     "strictBoolean": "All new booleans and createBody.enableSleep reject numbers/strings/null before native mutation.",
     "qualificationScope": "Finite box/sphere only; arbitrary hull, mesh/compound, replay, full CCD/T10/G1 not implied.",
-    "motionLocks": "Immediate world-axis velocity constraints: velocity setters and successful linear/angular impulses mask locked components before readback. Real force/torque accumulators remain pending until native solve. Legacy facade velocity/center-impulse methods route through these checks; C signatures unchanged."
+    "motionLocks": "Immediate world-axis velocity constraints: velocity setters and successful linear/angular impulses mask locked components before readback. Real force/torque accumulators remain pending until native solve. Legacy facade velocity/center-impulse methods route through these checks; C signatures unchanged.",
+    "boxMinimumHalfExtent": "Each half extent must be >= 0.2f * B3_LINEAR_SLOP (0.001m in this pinned core). Reject smaller values before core helper silently enlarges them; applies both legacy and additive box facade/native creation."
   }
 }

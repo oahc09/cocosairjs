@@ -29,6 +29,7 @@ const INPUTS = [
     'tools/physics/box3d/wasm-snapshot-contract.mjs',
     'tools/physics/box3d/wasm-geometry-contract.mjs',
     'tools/physics/box3d/wasm-world-contract.mjs',
+    'tools/physics/box3d/wasm-body-contract.mjs',
     'tools/physics/box3d/verify-sources.mjs',
     'tools/physics/box3d/verify-wasm.mjs',
     'tools/physics/box3d/native/air_box3d.c',
@@ -36,10 +37,13 @@ const INPUTS = [
     'tools/physics/box3d/native/geometry.c',
     'tools/physics/box3d/native/world_bridge.c',
     'tools/physics/box3d/native/world_bridge.h',
+    'tools/physics/box3d/native/body_control.c',
+    'tools/physics/box3d/native/body_control.h',
     'tools/physics/box3d/native/air_box3d.h',
     'tools/physics/box3d/native/contract.c',
     'tools/physics/box3d/native/geometry_contract.c',
     'tools/physics/box3d/native/world_contract.c',
+    'tools/physics/box3d/native/body_contract.c',
     'tools/physics/box3d/native/wasm_entry.c',
     'src/air/physics/box3d/binding/facade.mjs',
     'src/air/physics/box3d/binding/facade.d.mts',
@@ -93,7 +97,7 @@ async function verifySTBuild(buildDirectory) {
     assert.equal(receipt.status, 'PASS', 'Native build did not pass');
     assert.equal(receipt.kind, 'st-simd-wasm');
     assert(['Debug', 'Release'].includes(receipt.mode));
-    assert(receipt.commands.length >= 11 && receipt.commands.every((row) => row.exitCode === 0 && !row.error));
+    assert(receipt.commands.length >= 13 && receipt.commands.every((row) => row.exitCode === 0 && !row.error));
     assert.deepEqual(sorted(receipt.inputHashes.map((row) => row.path)), sorted(INPUTS), 'Build input inventory drift');
     for (const input of receipt.inputHashes) {
         safeRelative(input.path);
@@ -126,7 +130,11 @@ async function verifySTBuild(buildDirectory) {
     assert.equal(audit.sharedMemory, false);
     assert.equal(audit.dynamicExecutionOrWorkerConstructorFound, false);
     assert.equal(audit.compiledSourceCount, audit.compiledSourceHashes.length);
-    assert(audit.compiledSourceCount >= 59, 'Incomplete compile audit');
+    assert(audit.compiledSourceCount >= 61, 'Incomplete compile audit');
+    assert.equal(new Set(audit.compiledSourceHashes.map((row) => row.path)).size, audit.compiledSourceCount);
+    for (const name of ['body_control.c', 'body_contract.c']) {
+        assert(audit.compiledSourceHashes.some((row) => row.path === `tools/physics/box3d/native/${name}`));
+    }
     for (const input of audit.compiledSourceHashes) {
         safeRelative(input.path);
         assert.equal(sha256(read(fileInside(ROOT, input.path))), input.sha256, `Compiled input drift: ${input.path}`);
@@ -149,6 +157,9 @@ async function verifySTBuild(buildDirectory) {
             'native-world-contract.raw.json',
             'wasm-world-contract.raw.json',
             'air_box3d_world_contract.cjs',
+            'native-body-contract.raw.json',
+            'wasm-body-contract.raw.json',
+            'air_box3d_body_contract.cjs',
         ]),
     );
     for (const record of audit.evidence) verifyRecord(directory, record);
@@ -171,6 +182,51 @@ async function verifySTBuild(buildDirectory) {
     );
     for (const [key, value] of Object.entries(identity))
         assert.equal(world.identity?.[key], value, `World qualification identity mismatch: ${key}`);
+    const nativeBody = json(fileInside(directory, 'native-body-contract.raw.json'));
+    assert.equal(nativeBody.status, 'PASS', 'Native body qualification did not pass');
+    assert.equal(nativeBody.pointerBytes, 4, 'Body qualification must execute WASM32');
+    for (const key of [
+        'lockedWorldNoWrite',
+        'fullGenerationWorldNoWrite',
+        'boxMassAndAngularImpulse',
+        'clearActualForceNotImpulse',
+        'actualSleepTimerAndZeroThreshold',
+        'sensorFallbackAndMixedExclusion',
+        'pendingGeometryLifecycle',
+        'immediateImpulseLocks',
+        'smallBoxNoSilentClamp',
+        'coreBytesRestored',
+    ]) {
+        assert.equal(nativeBody[key], true, `Native body qualification missing: ${key}`);
+    }
+    const body = json(fileInside(directory, 'wasm-body-contract.raw.json'));
+    assert.equal(body.status, 'PASS', 'Real WASM body qualification did not pass');
+    assert.equal(
+        body.fixtureSha256,
+        sha256(read(path.join(ROOT, 'tools/physics/box3d/wasm-body-contract.mjs'))),
+        'Body fixture input drift',
+    );
+    for (const [key, value] of Object.entries(identity))
+        assert.equal(body.identity?.[key], value, `Body qualification identity mismatch: ${key}`);
+    for (const key of [
+        'bodyControlsValidationAndOldSnapshotImmutable',
+        'immediateImpulseLocks',
+        'smallBoxNoSilentClamp',
+        'totalMassAnalytic',
+        'offsetCOMImpulse',
+        'sensorFallbackAndMixedExclusion',
+        'localForceAndTorque',
+        'dampingGrid',
+        'gravityDoesNotClearVelocity',
+        'sleepAndThresholdNative',
+        'axisLocks',
+        'fullId128Cycles',
+        'bodyBeforeColliderAndRemoval',
+        'rotatedOffsetBox',
+        'coreAndBridgeRestored',
+    ]) {
+        assert.equal(body.checks?.[key], true, `Body qualification missing: ${key}`);
+    }
     const descriptor = freeze({
         manifestSha256: sha256(manifestBytes),
         facadeSha256: sha256(bytes.get('facade.mjs')),

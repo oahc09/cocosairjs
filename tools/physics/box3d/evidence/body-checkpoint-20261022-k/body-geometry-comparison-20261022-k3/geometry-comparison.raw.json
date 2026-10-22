@@ -1,0 +1,107 @@
+{
+  "status": "FAIL",
+  "startedAt": "2026-10-22T09:12:53.028Z",
+  "checks": [
+    "exact-Debug-Release-native-geometry-and-all-617-analytic-samples"
+  ],
+  "inputs": [
+    {
+      "directory": "body-wasm-debug-20261022-k3",
+      "path": "build-receipt.json",
+      "sha256": "1a59e83a665dbd7a9650e685be00eb5f629d024d5c78a7021a75563aa2fbf41c"
+    },
+    {
+      "directory": "body-wasm-release-20261022-k3",
+      "path": "build-receipt.json",
+      "sha256": "2d9e1974faea56ff5681d7fc6aaafd17f0c0334ef7cd350d50ae2056ba14fa7c"
+    },
+    {
+      "directory": "body-wasm-debug-20261022-k3",
+      "path": "native-geometry-contract.raw.json",
+      "sha256": "a6f0c8f945e9eb5822f912feefa9519ce47a9964c55e60de88c1849cabb47333"
+    },
+    {
+      "directory": "body-wasm-release-20261022-k3",
+      "path": "native-geometry-contract.raw.json",
+      "sha256": "a6f0c8f945e9eb5822f912feefa9519ce47a9964c55e60de88c1849cabb47333"
+    },
+    {
+      "directory": "body-wasm-debug-20261022-k3",
+      "path": "wasm-geometry-contract.raw.json",
+      "sha256": "31b8aee62250f9ce4ab300160e55a3aad45f05906e462a1fffc3cd5defa214c3"
+    },
+    {
+      "directory": "body-wasm-release-20261022-k3",
+      "path": "wasm-geometry-contract.raw.json",
+      "sha256": "54d2d27e31994e920229864f5471a9aeba2aa64def00e70b99018e72459be890"
+    },
+    {
+      "directory": "wasm-snapshot-release-20261022-g",
+      "path": "wasm-contract.raw.json",
+      "sha256": "18878db87ef9e9673fdb225a26aea8cd3532b22b8f2bcffea90ab220e438b196"
+    },
+    {
+      "directory": "body-wasm-debug-20261022-k3",
+      "path": "wasm-contract.raw.json",
+      "sha256": "81766aa841ac34ac7ff3e420d3cfdfe0c61b29323f0ea83bb28721e0e41885dd"
+    },
+    {
+      "directory": "wasm-snapshot-release-20261022-g",
+      "path": "wasm-snapshot-contract.raw.json",
+      "sha256": "3029c9c7a7028554ca41e17a97d1efc974d8d8aa2732476cc915e24b41354a64"
+    },
+    {
+      "directory": "body-wasm-debug-20261022-k3",
+      "path": "wasm-snapshot-contract.raw.json",
+      "sha256": "22f39890aacdd23cbf0b5edb98874a75fbc2a05ccf0ea591a4162e0f8e853544"
+    },
+    {
+      "directory": "wasm-snapshot-release-20261022-g",
+      "path": "wasm-ownership-contract.raw.json",
+      "sha256": "adc284a7994b7e25d5e9d8e0b7ddea00c0d1799c6d2a62e6f9554c76d3affedd"
+    },
+    {
+      "directory": "body-wasm-debug-20261022-k3",
+      "path": "wasm-ownership-contract.raw.json",
+      "sha256": "8a1f1a75ecc3566527b1a0b0a26582f225cea06aefcb64cd850471bc3d0c5460"
+    }
+  ],
+  "memoryGrowth": {
+    "debug": [
+      {
+        "before": 17367040,
+        "after": 20840448
+      },
+      {
+        "before": 20840448,
+        "after": 25034752
+      }
+    ],
+    "release": [
+      {
+        "before": 17301504,
+        "after": 20774912
+      },
+      {
+        "before": 20774912,
+        "after": 24969216
+      }
+    ]
+  },
+  "reviewedErrorContractChanges": [
+    {
+      "build": "body-wasm-debug-20261022-k3",
+      "name": "nonpositive-float32-dt:1e-50",
+      "oldError": {
+        "code": "AIR_E_BOX3D_NATIVE",
+        "message": "Box3D foundation status 2"
+      },
+      "newError": {
+        "code": "AIR_E_BOX3D_ARGUMENT",
+        "message": "dt must be positive"
+      }
+    }
+  ],
+  "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n+ actual - expected\n... Skipped lines\n\n  [\n    {\n      after: {\n        bodies: [\n          [\n...\n        code: 'AIR_E_BOX3D_ARGUMENT',\n+       message: 'force/impulse must be a finite float32'\n-       message: 'impulse must be a finite float32'\n      },\n      name: 'NaN:impulse'\n    },\n    {\n      after: {\n...\n        code: 'AIR_E_BOX3D_ARGUMENT',\n+       message: 'force/impulse must be a finite float32'\n-       message: 'impulse must be a finite float32'\n      },\n      name: 'positive-infinity:impulse'\n    },\n    {\n      after: {\n...\n        code: 'AIR_E_BOX3D_ARGUMENT',\n+       message: 'force/impulse must be a finite float32'\n-       message: 'impulse must be a finite float32'\n      },\n      name: 'negative-infinity:impulse'\n    },\n    {\n      after: {\n...\n        code: 'AIR_E_BOX3D_ARGUMENT',\n+       message: 'force/impulse must be a finite float32'\n-       message: 'impulse must be a finite float32'\n      },\n      name: 'float32-overflow:impulse'\n    },\n    {\n      after: {\n...\n        code: 'AIR_E_BOX3D_ARGUMENT',\n+       message: 'force/impulse must be a finite float32'\n-       message: 'impulse must be a finite float32'\n      },\n      name: 'negative-float32-overflow:impulse'\n    },\n    {\n      after: {\n...\n      error: {\n+       code: 'AIR_E_BOX3D_ARGUMENT',\n+       message: 'Box half extents must be at least 0.001m for this fixed core'\n-       code: 'AIR_E_BOX3D_NATIVE',\n-       message: 'Box3D foundation status 2'\n      },\n      name: 'nonpositive-float32-box:0'\n    },\n    {\n      after: {\n...\n      error: {\n+       code: 'AIR_E_BOX3D_ARGUMENT',\n+       message: 'Box half extents must be at least 0.001m for this fixed core'\n-       code: 'AIR_E_BOX3D_NATIVE',\n-       message: 'Box3D foundation status 2'\n      },\n      name: 'nonpositive-float32-box:-1'\n    },\n    {\n      after: {\n...\n      error: {\n+       code: 'AIR_E_BOX3D_ARGUMENT',\n+       message: 'Box half extents must be at least 0.001m for this fixed core'\n-       code: 'AIR_E_BOX3D_NATIVE',\n-       message: 'Box3D foundation status 2'\n      },\n      name: 'nonpositive-float32-box:1e-50'\n    },\n    {\n      after: {\n\n    at file:///workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/compare-geometry-builds.mjs:104:16\n    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)\n    at async node:internal/modules/esm/loader:643:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)",
+  "completedAt": "2026-10-22T09:12:53.164Z"
+}

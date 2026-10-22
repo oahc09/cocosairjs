@@ -1,0 +1,36 @@
+{
+  "status": "PASS_INDEPENDENT_RETAINED_OBSERVATION_REVIEW",
+  "reviewedAt": "2026-10-22T09:19:07.842011+00:00",
+  "reviewerSha256": "a8a9ed60ad9e55373bd68a942cd6fabbef032b24b6068f75d5a38461c33a87c6",
+  "fixtureSha256": "5be306a66497feeedadd02ead703247b56822b3964828f1a23165d06f0b0d9af",
+  "builds": [
+    {
+      "directory": "tools/physics/box3d/output/body-wasm-debug-20261022-k3",
+      "rawSha256": "80d8873492ec6e18c40d26ec9262548474a61379b065e88ba28d867fa3f55143",
+      "manifestSha256": "8afb3ae2e7e2d2ff282567093b3629931b288b8a95352d555d53bed3b1fef78e",
+      "mode": "Debug",
+      "metrics": {
+        "analyticMassCases": 5,
+        "dampingCases": 12,
+        "maxDampingError": 1.3047177747749217e-05,
+        "observedLifecyclePairs": 128,
+        "negativeLabels": 56
+      }
+    },
+    {
+      "directory": "tools/physics/box3d/output/body-wasm-release-20261022-k3",
+      "rawSha256": "d5fe59439cbdf635bd4c770c6716e4c725c8c52838529bd599f1411c83f3bf1a",
+      "manifestSha256": "12c9c92244bb481dba6ac60655f727448ab4053b038c4d804358cfbca0336f23",
+      "mode": "Release",
+      "metrics": {
+        "analyticMassCases": 5,
+        "dampingCases": 12,
+        "maxDampingError": 1.3047177747749217e-05,
+        "observedLifecyclePairs": 128,
+        "negativeLabels": 56
+      }
+    }
+  ],
+  "modeComparison": "EXACT_OBSERVATIONS_CHECKS_NEGATIVES",
+  "scope": "Independent analytic review of retained Node WASM data. Not a new simulation, browser/component acceptance, full C04/C06/C08/C12 or Gate PASS."
+}

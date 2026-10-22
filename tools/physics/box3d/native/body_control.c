@@ -6,6 +6,7 @@
 #include "physics_world.h"
 #include "shape.h"
 #include <box3d/box3d.h>
+#include <box3d/constants.h>
 #include <math.h>
 #include <string.h>
 #include <stddef.h>
@@ -173,7 +174,7 @@ int air_b3_mass_shape_create(uint32_t wid,uint32_t lo,uint32_t hi,int kind,const
  float density=p[count-1];if(density<=0)return AIR_B3_ARGUMENT;
  b3Shape candidate={0};candidate.id=B3_NULL_INDEX;candidate.density=density;candidate.sensorIndex=sensor?0:B3_NULL_INDEX;b3BoxHull hull;
  if(kind==0){if(p[3]<=0)return AIR_B3_ARGUMENT;candidate.type=b3_sphereShape;candidate.sphere=(b3Sphere){get(p),p[3]};}
- else {if(p[3]<=0||p[4]<=0||p[5]<=0)return AIR_B3_ARGUMENT;float q2=p[6]*p[6]+p[7]*p[7]+p[8]*p[8]+p[9]*p[9];if(!isfinite(q2)||fabsf(q2-1)>1e-4f)return AIR_B3_ARGUMENT;
+ else {if(p[3]<0.2f*B3_LINEAR_SLOP||p[4]<0.2f*B3_LINEAR_SLOP||p[5]<0.2f*B3_LINEAR_SLOP)return AIR_B3_ARGUMENT;float q2=p[6]*p[6]+p[7]*p[7]+p[8]*p[8]+p[9]*p[9];if(!isfinite(q2)||fabsf(q2-1)>1e-4f)return AIR_B3_ARGUMENT;
   b3Transform xf={get(p),{{p[6],p[7],p[8]},p[9]}};hull=b3MakeTransformedBoxHull(p[3],p[4],p[5],xf);candidate.type=b3_hullShape;candidate.hull=&hull.base;}
  b3MassData single=b3ComputeShapeMass(&candidate);if(!isfinite(single.mass)||single.mass<=0||!matrix_ok(single.inertia))return AIR_B3_ARGUMENT;
  b3MassData plan;int f,n;if(target>0){s=mass_plan(w,b,target,B3_NULL_INDEX,&candidate,&plan,&f,&n);if(s)return s;}
