@@ -1,0 +1,26 @@
+{
+  "status": "PASS_FINITE_N4_RELEASE_LEAD_READ_ONLY_REVIEW",
+  "timeUTC": "2026-10-22T14:35:05.449982+00:00",
+  "handoff": "tools/physics/box3d/output/command-wasm-release-consumer-20261022-n4/handoff.json",
+  "handoffSha256": "0a3de322f57bce4497c58dbc09c674e591614897bfccf98fb9bbd754f8a8c217",
+  "verifiedFilesBeforeAndAfter": 494,
+  "commands": [
+    {
+      "name": "stager",
+      "command": [
+        "node",
+        "tools/physics/box3d/output/command-wasm-release-consumer-20261022-n4/consume-stager.cjs"
+      ],
+      "exitCode": 0
+    },
+    {
+      "name": "command",
+      "command": [
+        "node",
+        "tools/physics/box3d/output/command-wasm-release-consumer-20261022-n4/consume-command.cjs"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "scope": "All 494 handoff files byte/hash verified and actual audit/command consumers independently rerun. No rebuild, AIR owner qualification, browser or formal gate claim. Earlier inspection guessed nonexistent summary.json and nested smoke path; that read-only path error produced no evidence or product changes."
+}

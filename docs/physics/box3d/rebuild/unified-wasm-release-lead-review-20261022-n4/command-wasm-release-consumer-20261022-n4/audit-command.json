@@ -1,0 +1,5 @@
+[
+  "node",
+  "tools/physics/box3d/audit-artifacts.mjs",
+  "tools/physics/box3d/output/command-wasm-release-20261022-n4"
+]

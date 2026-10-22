@@ -1,0 +1,9 @@
+{
+  "archive": "/workspace/scratch/62d43a81bbde/box3d-unified-release-artifacts-20261022-n4/Box3D-unified-release-artifacts-20261022-n4.tar.gz",
+  "bytes": 6004598,
+  "sha256": "80a1f8c706e9c538bc31639e21bf75a6629831453b337011fdbab9ad4c775824",
+  "members": 611,
+  "dataFiles": 610,
+  "dataBytes": 45573716,
+  "scope": "Exact finite n4 ST SIMD WASM Release output, full .o/.a, 50-input source freeze, monitors, audit and read-only lead consumers. Not SDK staging, unified AIR World, browser or formal acceptance. Debug/host outputs archived separately."
+}

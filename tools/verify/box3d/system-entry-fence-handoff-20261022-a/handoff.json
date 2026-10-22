@@ -1,0 +1,133 @@
+{
+  "status": "PASS_LIMITED_OPT_IN_ACTUAL_SYSTEM_ENTRY_FENCE_NOT_WORLD_OR_NATIVE",
+  "completedAt": "2026-10-22T14:21:03.787634+00:00",
+  "sourceAudit": {
+    "path": "src/cocos/physics/framework/physics-system.ts",
+    "beforeSha256": "12e789c0f18285116ea29ade7f6977958c4575eefc1be29782bcf2664326ec74",
+    "afterSha256": "f4b3bf9c035fd3cbf77ceb229bcf47c7f8e5bc3437666aecb84adebf27a295d5",
+    "headerIdentical": true,
+    "addedLines": 14,
+    "removedLines": 0,
+    "addedLinesOnlyExactGuardAssertions": true,
+    "sites": [
+      {
+        "operation": "PhysicsSystem.postUpdate",
+        "line": 382
+      },
+      {
+        "operation": "PhysicsSystem.step",
+        "line": 475
+      },
+      {
+        "operation": "PhysicsSystem.syncSceneToPhysics",
+        "line": 486
+      },
+      {
+        "operation": "PhysicsSystem.emitEvents",
+        "line": 497
+      },
+      {
+        "operation": "PhysicsSystem.raycast",
+        "line": 549
+      },
+      {
+        "operation": "PhysicsSystem.raycastClosest",
+        "line": 573
+      },
+      {
+        "operation": "PhysicsSystem.lineStripCast",
+        "line": 595
+      },
+      {
+        "operation": "PhysicsSystem.lineStripCastClosest",
+        "line": 646
+      },
+      {
+        "operation": "PhysicsSystem.sweepBox",
+        "line": 698
+      },
+      {
+        "operation": "PhysicsSystem.sweepBoxClosest",
+        "line": 738
+      },
+      {
+        "operation": "PhysicsSystem.sweepSphere",
+        "line": 773
+      },
+      {
+        "operation": "PhysicsSystem.sweepSphereClosest",
+        "line": 810
+      },
+      {
+        "operation": "PhysicsSystem.sweepCapsule",
+        "line": 850
+      },
+      {
+        "operation": "PhysicsSystem.sweepCapsuleClosest",
+        "line": 895
+      }
+    ]
+  },
+  "ownedFiles": {
+    "src/cocos/physics/framework/physics-system.ts": "f4b3bf9c035fd3cbf77ceb229bcf47c7f8e5bc3437666aecb84adebf27a295d5",
+    "tools/verify/box3d/system-entry-fence-control.py": "6413bcc437349dfd625f5e417961bc6534515bba835fe6590598b243a9e6b787",
+    "tools/verify/box3d/system-entry-fence-control.test.ts": "02a9e4ef6feea510ce7830855668b222861921cbf1163b716d71d34c1ba7bf08",
+    "tools/verify/box3d/system-entry-fence-control.jest.cjs": "5b198e0061697684c433cf18bb418009b4094a4714459ac97c1624c56dd3cc6c",
+    "tools/verify/box3d/system-entry-fence-control.tsconfig.json": "9135468a5e8c8582294f516e30093dc949d1cbaa086a640b4c7cc6c49c1d2e7b"
+  },
+  "immutableFixtureAndRunnerIdenticalAcrossRedGreen": true,
+  "actualLoadedEngineModules": 391,
+  "actualLoadedSourceChangesBetweenRuns": [
+    "src/cocos/physics/framework/physics-system.ts"
+  ],
+  "originalRed": {
+    "directory": "tools/verify/box3d/system-entry-fence-evidence-20261022-red-a",
+    "receiptSha256": "976adce34a06d7af663b377fc5344b2ccbd0bbd15b10817e94bb0ea95b2cf22a",
+    "rawSha256": "132f57df4e30eb9efdf7784be8b8ca8cf16b1e68588b0a2e3d9b2eb7e01a20c0",
+    "cases": 81,
+    "failingCases": 55,
+    "checks": 321,
+    "failedChecks": 130,
+    "commands": {
+      "format": 0,
+      "tsc": 0,
+      "jest": 1
+    }
+  },
+  "patchedGreen": {
+    "directory": "tools/verify/box3d/system-entry-fence-evidence-20261022-green-a",
+    "receiptSha256": "a0387164d167332cf6bb87bd5692cfd67077cb3b468e2aea80b2e567c1e8db9e",
+    "rawSha256": "644bc6e6789115cb06c847a2e241ac3e8c0e49ff34c1d0898a61993085a94802",
+    "cases": 81,
+    "checks": 321,
+    "failedChecks": 0,
+    "commands": {
+      "format": 0,
+      "tsc": 0,
+      "jest": 0
+    }
+  },
+  "snapshotStore": "tools/verify/box3d/system-entry-fence-source-20261022-a",
+  "snapshotIntegrityVerified": true,
+  "runnerPythonSyntaxVerified": true,
+  "controls": [
+    "All 14 actual instance entry points reject under explicit System/World leases with exact System operation before caches, flags, accumulator, pools, results, events, delegate calls or counted native boundary.",
+    "Actual RecyclePool and result values and identities, actual director BEFORE_PHYSICS/AFTER_PHYSICS listener effects, and ordinary simulation order.",
+    "Poison and caught-nested caller coercion/length accessors, and poisoned World lookup, remain untouched during refusal.",
+    "Disabled, manual, missing-world and ordinary no-lease branches remain unchanged; cached committed getters remain readable.",
+    "Independent leases on the same System survive first-owner release; unrelated System remains usable; final release restores ordinary entry.",
+    "Caught registry-copy reentry cannot mutate query caches and leaves no installed guard."
+  ],
+  "limitations": [
+    "This is explicit opt-in actual-engine source control, not actual Box3D World lease registration or transaction integration.",
+    "World delegates are explicit call-count mocks. The nativeCallCount field counts passage through those mocks, not a WASM/native call.",
+    "No native/WASM/SDK build, physics trajectory, browser, public feature activation or formal cell qualification is claimed.",
+    "Static singleton creation only constructs an as-yet absent instance and otherwise no-ops; it has no existing instance identity to fence. Private material callbacks, inherited System setters and direct public field/vector/array aliases are not changed by this instance-method patch.",
+    "Transitive loaded src/test dependencies are hashed before/after each run and compared across RED/GREEN; only owned/runtime configuration inputs are copied into deduplicated snapshots.",
+    "No Git or external operations were performed; upstream mapping/docs/commit remain the lead agent responsibility."
+  ],
+  "upstreamMapAction": {
+    "path": "src/cocos/physics/framework/physics-system.ts",
+    "reason": "Opt-in backend-neutral earliest admission for postUpdate, explicit stepping/sync/events and all ray/line/sweep mutable query cache entries; asserts before World lookup, caller-controlled input coercion or engine side effects. No lease preserves original algorithms. Actual-source controls only; no World/native qualification."
+  }
+}

@@ -1,0 +1,51 @@
+[
+  {
+    "name": "format",
+    "command": [
+      "node",
+      "node_modules/prettier/bin/prettier.cjs",
+      "--check",
+      "tools/verify/box3d/system-entry-fence-control.test.ts",
+      "tools/verify/box3d/system-entry-fence-control.jest.cjs",
+      "tools/verify/box3d/system-entry-fence-control.tsconfig.json"
+    ],
+    "extraEnv": {},
+    "startedAt": "2026-10-22T14:16:58.557638+00:00",
+    "completedAt": "2026-10-22T14:16:59.954356+00:00",
+    "exitCode": 0
+  },
+  {
+    "name": "tsc",
+    "command": [
+      "node",
+      "node_modules/typescript/bin/tsc",
+      "--noEmit",
+      "-p",
+      "tools/verify/box3d/system-entry-fence-control.tsconfig.json"
+    ],
+    "extraEnv": {},
+    "startedAt": "2026-10-22T14:16:59.954889+00:00",
+    "completedAt": "2026-10-22T14:17:19.183561+00:00",
+    "exitCode": 0
+  },
+  {
+    "name": "jest",
+    "command": [
+      "node",
+      "node_modules/jest/bin/jest.js",
+      "--config",
+      "tools/verify/box3d/system-entry-fence-control.jest.cjs",
+      "--runInBand",
+      "--no-cache",
+      "--json",
+      "--outputFile",
+      "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/verify/box3d/system-entry-fence-evidence-20261022-red-a/jest-result.json"
+    ],
+    "extraEnv": {
+      "BOX3D_SYSTEM_ENTRY_RAW": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/verify/box3d/system-entry-fence-evidence-20261022-red-a/raw.json"
+    },
+    "startedAt": "2026-10-22T14:17:19.191422+00:00",
+    "completedAt": "2026-10-22T14:17:54.791229+00:00",
+    "exitCode": 1
+  }
+]

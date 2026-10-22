@@ -1,0 +1,15 @@
+{
+  "command": [
+    "python3",
+    "tools/verify/box3d/run-resource-bounded-wasm-release.py",
+    "--source-checkpoint",
+    "tools/physics/box3d/output/command-checkpoint-20261022-n/source-checkpoint-4.json",
+    "--out",
+    "tools/physics/box3d/output/command-wasm-release-20261022-n4",
+    "--monitor-out",
+    "tools/physics/box3d/output/command-wasm-release-monitor-20261022-n4"
+  ],
+  "exitCode": 0,
+  "recordedAfterCompletion": true,
+  "terminalReceiptSha256": "8d4c230353c247487f2a1b583f6d17ee9f61692d1b81aab78deddf65bf9d9222"
+}

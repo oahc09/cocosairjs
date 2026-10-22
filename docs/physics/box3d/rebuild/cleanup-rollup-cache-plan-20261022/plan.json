@@ -1,0 +1,37 @@
+{
+  "status": "PROPOSED_ONLY_NO_DELETION",
+  "timeUTC": "2026-10-22T14:21:20.775132+00:00",
+  "files": [
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/build/.tmp-rollup-cache/cache.json",
+      "bytes": 250003591,
+      "sha256": "1bd1bdd94c367857372ababfde818e42d05f814c1745b8f2999abe39ef0cf24a",
+      "mtimeNs": 1792650752435141753
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/build/.tmp-rollup-cache/last-build.json",
+      "bytes": 105,
+      "sha256": "2ed3ed92a9c57724df37eaa7af9dfa9178f25b023e6b7e82c540d9a182a64322",
+      "mtimeNs": 1792650752587140077
+    }
+  ],
+  "totalBytes": 250003696,
+  "ignoredNotTracked": [
+    "build/.tmp-rollup-cache/cache.json",
+    "build/.tmp-rollup-cache/last-build.json"
+  ],
+  "observedOpenReferences": [],
+  "procEnumerationPermissionDenied": [],
+  "lockPresent": false,
+  "preservedOriginalStats": "last-build.original.json",
+  "regeneration": "tools/build/incremental.cjs lines35-83 treats cache absence as cold and regenerates from the original source/build pipeline. This is an expendable performance cache, not raw qualification evidence, source or deliverable. Exact cache JSON byte reproduction is NOT promised.",
+  "preservedSourceCheckpoint": "local91eeaf3e4e29dbf96ce09e3d7a19d1789b62f741; full22 plus latest Library24 source restoration verified",
+  "generatedRuntimeArchive": "libfile_1bd16f266d908191b90831c71d5a2423; docs/physics/box3d/rebuild/library-runtime-artifacts-20261022-h2.json",
+  "retain": [
+    "all current build runtime/decoder outputs",
+    "all native/WASM .o/.a and raw outputs",
+    "all outer Library archives/bundles/receipts",
+    "current Git and independent incremental restoration store"
+  ],
+  "deletionScopeRequested": "Only these two regular files; leave directory and all other paths unchanged."
+}

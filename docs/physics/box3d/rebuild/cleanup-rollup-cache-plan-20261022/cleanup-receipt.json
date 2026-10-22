@@ -1,0 +1,13 @@
+{
+  "status": "REMOVED_ONLY_TWO_AUTHORIZED_REGENERABLE_CACHE_FILES",
+  "timeUTC": "2026-10-22T14:22:49.469954+00:00",
+  "logicalBytesRemoved": 250003696,
+  "allocatedBytesRemoved": 250015744,
+  "freeBeforeBytes": 2113601536,
+  "freeAfterBytes": 2363617280,
+  "observedDeltaFreeBytes": 250015744,
+  "remainingDirectoryEntries": [],
+  "originalStatsPreserved": true,
+  "originalPlanSha256": "76a725ca153c733819225d2c4cf4614f771aa451302462c0ff90b8efe827e071",
+  "scope": "Cold-build cache regeneration supported, no exact JSON reproduction claim; no artifact/source/raw/native object/archive or other project was removed."
+}

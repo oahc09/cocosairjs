@@ -1,0 +1,5 @@
+[
+  "python3",
+  "tools/verify/box3d/run-resource-bounded-wasm-release.py",
+  "--self-test"
+]

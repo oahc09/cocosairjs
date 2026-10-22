@@ -379,6 +379,7 @@ export class PhysicsSystem extends System implements IWorldInitData {
     }
 
     postUpdate (deltaTime: number): void {
+        assertMutationAllowed(this, 'PhysicsSystem.postUpdate');
         if (EDITOR_NOT_IN_PREVIEW && !this._executeInEditMode && !selector.runInEditor) return;
 
         if (!this.physicsWorld) return;
@@ -471,6 +472,7 @@ export class PhysicsSystem extends System implements IWorldInitData {
      * @param fixedTimeStep
      */
     step (fixedTimeStep: number, deltaTime?: number, maxSubSteps?: number): void {
+        assertMutationAllowed(this, 'PhysicsSystem.step');
         if (this.physicsWorld) this.physicsWorld.step(fixedTimeStep, deltaTime, maxSubSteps);
     }
 
@@ -481,6 +483,7 @@ export class PhysicsSystem extends System implements IWorldInitData {
      * 同步场景世界的变化信息到物理世界中。
      */
     syncSceneToPhysics (): void {
+        assertMutationAllowed(this, 'PhysicsSystem.syncSceneToPhysics');
         if (this.physicsWorld) this.physicsWorld.syncSceneToPhysics();
     }
 
@@ -491,6 +494,7 @@ export class PhysicsSystem extends System implements IWorldInitData {
      * 触发`trigger`和`collision`事件。
      */
     emitEvents (): void {
+        assertMutationAllowed(this, 'PhysicsSystem.emitEvents');
         if (this.physicsWorld) this.physicsWorld.emitEvents();
     }
 
@@ -542,6 +546,7 @@ export class PhysicsSystem extends System implements IWorldInitData {
      * @return {boolean} @zh 表示是否有检测到碰撞 @en Indicates whether a collision has been detected
      */
     raycast (worldRay: geometry.Ray, mask = 0xffffffff, maxDistance = 10000000, queryTrigger = true): boolean {
+        assertMutationAllowed(this, 'PhysicsSystem.raycast');
         if (!this.physicsWorld) return false;
         this.raycastResultPool.reset();
         this.raycastResults.length = 0;
@@ -565,6 +570,7 @@ export class PhysicsSystem extends System implements IWorldInitData {
      * @return {boolean} @zh 表示是否有检测到碰撞 @en Indicates whether a collision has been detected
      */
     raycastClosest (worldRay: geometry.Ray, mask = 0xffffffff, maxDistance = 10000000, queryTrigger = true): boolean {
+        assertMutationAllowed(this, 'PhysicsSystem.raycastClosest');
         if (!this.physicsWorld) return false;
         this.raycastOptions.mask = mask >>> 0;
         this.raycastOptions.maxDistance = maxDistance;
@@ -586,6 +592,7 @@ export class PhysicsSystem extends System implements IWorldInitData {
     * @return {boolean} @zh 表示是否有检测到碰撞 @en Indicates whether a collision has been detected
     */
     lineStripCast (samplePointsWorldSpace: Array<Vec3>, mask = 0xffffffff, maxDistance = 10000000, queryTrigger = true): boolean {
+        assertMutationAllowed(this, 'PhysicsSystem.lineStripCast');
         if (samplePointsWorldSpace.length < 2) return false;
         this.lineStripCastResults = [];
         let distance = 0;
@@ -636,6 +643,7 @@ export class PhysicsSystem extends System implements IWorldInitData {
      * @return {boolean} @zh 表示是否有检测到碰撞 @en Indicates whether a collision has been detected
      */
     lineStripCastClosest (samplePointsWorldSpace: Array<Vec3>, mask = 0xffffffff, maxDistance = 10000000, queryTrigger = true): boolean {
+        assertMutationAllowed(this, 'PhysicsSystem.lineStripCastClosest');
         if (samplePointsWorldSpace.length < 2) { return false; }
         let distance = 0;
         const worldRay = new geometry.Ray();
@@ -687,6 +695,7 @@ export class PhysicsSystem extends System implements IWorldInitData {
         maxDistance = 10000000,
         queryTrigger = true,
     ): boolean {
+        assertMutationAllowed(this, 'PhysicsSystem.sweepBox');
         if (!this.physicsWorld) return false;
         this.sweepResultPool.reset();
         this.sweepCastResults.length = 0;
@@ -726,6 +735,7 @@ export class PhysicsSystem extends System implements IWorldInitData {
         maxDistance = 10000000,
         queryTrigger = true,
     ): boolean {
+        assertMutationAllowed(this, 'PhysicsSystem.sweepBoxClosest');
         if (!this.physicsWorld) return false;
         this.raycastOptions.mask = mask >>> 0;
         this.raycastOptions.maxDistance = maxDistance;
@@ -760,6 +770,7 @@ export class PhysicsSystem extends System implements IWorldInitData {
         maxDistance = 10000000,
         queryTrigger = true,
     ): boolean {
+        assertMutationAllowed(this, 'PhysicsSystem.sweepSphere');
         if (!this.physicsWorld) return false;
         this.sweepResultPool.reset();
         this.sweepCastResults.length = 0;
@@ -796,6 +807,7 @@ export class PhysicsSystem extends System implements IWorldInitData {
         maxDistance = 10000000,
         queryTrigger = true,
     ): boolean {
+        assertMutationAllowed(this, 'PhysicsSystem.sweepSphereClosest');
         if (!this.physicsWorld) return false;
         this.raycastOptions.mask = mask >>> 0;
         this.raycastOptions.maxDistance = maxDistance;
@@ -835,6 +847,7 @@ export class PhysicsSystem extends System implements IWorldInitData {
         maxDistance = 10000000,
         queryTrigger = true,
     ): boolean {
+        assertMutationAllowed(this, 'PhysicsSystem.sweepCapsule');
         if (!this.physicsWorld) return false;
         this.sweepResultPool.reset();
         this.sweepCastResults.length = 0;
@@ -879,6 +892,7 @@ export class PhysicsSystem extends System implements IWorldInitData {
         maxDistance = 10000000,
         queryTrigger = true,
     ): boolean {
+        assertMutationAllowed(this, 'PhysicsSystem.sweepCapsuleClosest');
         if (!this.physicsWorld) return false;
         this.raycastOptions.mask = mask >>> 0;
         this.raycastOptions.maxDistance = maxDistance;
