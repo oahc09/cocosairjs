@@ -1,0 +1,335 @@
+{
+  "scope": "Actual TypeScript queue source; no native execution. All commit notifications are explicit mock control inputs, not physics evidence.",
+  "rows": [
+    {
+      "name": "copies and deeply freezes numeric payloads, never retains input vectors",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "pose getters read once and copies are detached",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "invalid coordinate NaN preserves accepted queue and sequence",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "invalid coordinate Infinity preserves accepted queue and sequence",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "invalid coordinate -Infinity preserves accepted queue and sequence",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "invalid coordinate 1 preserves accepted queue and sequence",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "invalid coordinate null preserves accepted queue and sequence",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "invalid coordinate undefined preserves accepted queue and sequence",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "strict teleport boolean 0",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "strict teleport boolean 1",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "strict teleport boolean false",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "strict teleport boolean null",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "null space is not omitted default",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "zero quaternion is rejected without enqueue",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "input getter throw preserves exact prior queue",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "caught nested submit during getter aborts outer admission",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "caught nested cancel during getter aborts outer admission",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "caught nested close during getter aborts outer admission",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "caught nested release during getter aborts outer admission",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "caught nested pause during getter aborts outer admission",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "caught falsy getter throw undefined latches candidate",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "caught falsy getter throw null latches candidate",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "caught falsy getter throw 0 latches candidate",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "caught falsy getter throw  latches candidate",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "producer roster accessor nested admission is rejected before attempt",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "prequeue precedes stable callback contributions and retained context is historical",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "throw discards all provisional but preserves prequeue and does not replay callbacks",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "non-undefined callback result 1 aborts",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "non-undefined callback result null aborts",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "non-undefined callback result [object Object] aborts",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "non-undefined callback result [object Promise] aborts",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "caught callback input latches whole candidate",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "caught callback getter latches whole candidate",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "caught callback cancel latches whole candidate",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "caught callback recursive-collect latches whole candidate",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "caught callback close latches whole candidate",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "caught callback foreign-body latches whole candidate",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "target reductions retain raw accepted records for exact cancellation count",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "target then clear-forces exact reduction",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "target then clear-velocity exact reduction",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "target then clear-state exact reduction",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "target then target-clear exact reduction",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "later target replaces target-clear but never removes ordinary clear/reset",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "target then preserve teleport cancels only target and suppresses same-tick idle zero",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "impulse/reset/impulse and force/reset/force retain exact order and payload",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "target plus effect refuses and latches callback without executing other-body prequeue",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "effect queued before target ownership is rechecked without destructive reduction",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "clear-forces alone cannot suppress an active-owner idle zero",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "protected zero survives cancellation, dominates target and uses no user sequence",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "protected zero follows retained reset and cannot be removed by ordinary user intent",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "pure validation refusal and mock not-mutated retain prequeue, discard provisional",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "known mock commit retires original records before tick completion",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "known mock commit then failure completed=false never replays",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "known mock commit then failure completed=true never replays",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "mock unknown apply quarantines originals and forbids replay or cancellation",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "foreign/forged/stale candidates refuse without disturbing live candidate",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "pause clears pending user commands, retains protected zero, requires explicit resume",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "logical teardown only clears its owned records and invalidates old identity",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "sequence exhaustion does not block cancellation or protected obligation",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "tick exhaustion never emits unsafe next-tick index and rejects new submission",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "attempt exhaustion preserves unconsumed pending records and recovery cancellation",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "strict generation/qualification {\"generation\":0}",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "strict generation/qualification {\"generation\":1.5}",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "strict generation/qualification {\"generation\":9007199254740992}",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "strict generation/qualification {\"generation\":1,\"counterLimit\":null}",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    },
+    {
+      "name": "close is repeated-safe and cannot resurrect logical ownership",
+      "status": "PASS_PURE_QUEUE_CONTROL",
+      "observed": null
+    }
+  ]
+}

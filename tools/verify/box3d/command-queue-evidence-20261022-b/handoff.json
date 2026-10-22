@@ -1,0 +1,104 @@
+{
+  "status": "PASS_PURE_SOURCE_CONTROLS_NOT_PHYSICS",
+  "createdAt": "2026-10-22T12:48:41.077070+00:00",
+  "ownedSources": [
+    {
+      "path": "src/air/physics/box3d/command-queue.ts",
+      "sha256": "336e3d5bec910c6f814c06bd059fb0325876e17403ae501a3e78110616915d7b"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-control.mjs",
+      "sha256": "8149b65f8ca3f0db29b4b1cbb76ad538726ab32e5c738a914b0a56f17cd3b31c"
+    }
+  ],
+  "receipt": {
+    "path": "tools/verify/box3d/command-queue-evidence-20261022-b/receipt.json",
+    "sha256": "fcda43ae7be2f0e37b23df10fed257ac9d326ff147e78dd4a7397bf9d2953517"
+  },
+  "raw": {
+    "path": "tools/verify/box3d/command-queue-evidence-20261022-b/controls.raw.json",
+    "sha256": "680e749a05665bb6bfca4e3d08f548011ac321ff3dae318cb630b351ee2b7436"
+  },
+  "checks": {
+    "pureActualSourceControls": 66,
+    "passed": 66,
+    "tscExitCode": 0,
+    "formatExitCode": 0
+  },
+  "command": "node tools/verify/box3d/command-queue-control.mjs <NEW evidence directory>",
+  "retainedFailure": {
+    "directory": "tools/verify/box3d/command-queue-evidence-20261022-a",
+    "status": "57/62 controls passed; tsc and format passed",
+    "sourceSnapshots": "inputs/src/air/physics/box3d/command-queue.ts and inputs/tools/verify/box3d/command-queue-control.mjs",
+    "productFailures": [
+      "null space treated as omitted",
+      "null qualification limit treated as omitted",
+      "released logical identity reusable",
+      "exhausted tick reports next index instead of null"
+    ],
+    "fixtureFailure": "undefined vector test accidentally invoked helper default; corrected to explicit coordinate property. Original failure retained."
+  },
+  "ownershipAndIntegrationRequirements": [
+    "No native calls, global world lookup, app config, public exports, accumulator or RAF. Existing integration and native sources were not edited.",
+    "Actual owner must supply an opaque JS identity per shared-body generation, not a native token; registerBody only registers logical identity and proves no actual native validity.",
+    "Actual owner/native must validate backend/full world and body generations, type/enabled/mass/pose/locks/arithmetic, capacities, unrelated-world-body readiness and counter readiness before apply; the queue only copies finite inputs and checks internal ownership/reduction.",
+    "collect receives an already-snapshotted stable callback roster. Continuous descriptor expansion/defaults/update and producer lifecycle remain future owner work; this module does not claim to implement public producer handles.",
+    "All input values copied once before enqueue. Same-queue nested mutating admission rejects; collection rejected submission stays latched even when callback/getter catches it or throws a falsy value.",
+    "Original accepted prequeue survives callback, read-only validation and known not-mutated apply refusal; provisional records are discarded. Sequence gaps are legal, never reused.",
+    "Known whole-batch commit retires all consumed records before a native tick completion notification. Postcommit readback/step/writeback failure cannot restore commands. Unknown apply quarantines immutable candidate and permanently faults queue until close.",
+    "CounterLimit is internal-only qualification input, default MAX_SAFE_INTEGER. Diagnostics tickIndex becomes null at exhaustion. Protected zero uses no user sequence; cancellation consumes no sequence.",
+    "releaseBodyAfterTeardown is an owner-only notification requiring actual disabled/destroyed cleanup proof from future integration. Pure notification tests are NOT native lifetime evidence.",
+    "Pause clears accepted user records and keeps protected obligations. Future owner must separately suspend hooks/disable continuous producers and enforce transaction/event-dispatch/Node/material/component mutation fences."
+  ],
+  "readonlyMutationFenceAudit": [
+    {
+      "path": "src/cocos/scene-graph/component.ts",
+      "lines": "132-141;379-399",
+      "risk": "enabled cache precedes scheduler/adapter callback; destroy schedules via super before disable callback",
+      "required": "Pre-write owner fence before _enabled assignment and before super.destroy; no claim of rollback from adapter rejection.",
+      "sha256": "a7132692a0e2636b7fe9cb37ef6d79b9cf471710c4107a3a9f7970842de715a8"
+    },
+    {
+      "path": "src/cocos/core/data/object.ts",
+      "lines": "300-309",
+      "risk": "super.destroy sets ToDestroy and appends deferred destruction queue",
+      "required": "Relevant caller must fence before super; do not globally change other backends.",
+      "sha256": "0caf7f9c37bd59148b60d7ad465426428006c989b32c03632a3d1eae63fc5fb6"
+    },
+    {
+      "path": "src/cocos/physics/framework/assets/physics-material.ts",
+      "lines": "68-72;87-91;106-110;126-130;177-184;198-205",
+      "risk": "Four scalar setters and setValues mutate before EVENT_UPDATE; destroy changes shared ownership",
+      "required": "Pre-write guard for all active Box3D holders, including shared/default material across worlds; snapshot listeners or adapter assertReady alone is too late.",
+      "sha256": "6d0bc3e3d83ee723e5bec3a86cb9b36f908d5761f32fbed4be6856fae615ed85"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/colliders/collider.ts",
+      "lines": "109-115",
+      "risk": "material getter mutates listener registration, creates cloned asset and commits material/cache without shape callback",
+      "required": "Guard side-effecting getter before off/clone; clean read path may stay read-only when no clone needed.",
+      "sha256": "a47a19aabb317971c4e8d8947fa8e85730d895f1ed88a34bc17aa8a891802c8a"
+    },
+    {
+      "path": "src/cocos/physics/framework/physics-system.ts",
+      "lines": "106-108;143-145;157-159;193-195;207-209;409-442;451-453",
+      "risk": "enable/maxSubSteps/fixedTimeStep/sleepThreshold/autoSimulation cache-only; resetConfiguration commits caches and matrix before world calls; resetAccumulator directly changes unique clock accumulator",
+      "required": "Box3D-owner pre-mutation fence at each public entry; pause queue/producer protocol must be coordinated before public enable cache commit. Vec3/matrix aliases remain a separate detection boundary.",
+      "sha256": "e9bda693fa27efc373c4fe4cfdc9f5bc4a4a1d277ba0e8f43b6e28d165f58953"
+    },
+    {
+      "path": "src/cocos/scene-graph/node.ts",
+      "lines": "196-205;1374-1395",
+      "risk": "active changes cache before component activation; destroy calls super first; destroyAllChildren can partially destroy earlier children",
+      "required": "Owner-aware pre-write lifecycle fence and complete bulk precheck; current transform registry alone does not cover these entry points.",
+      "sha256": "dc63aa3b55c054d395a139af9f03ee534eace4bb0659f2abe8ccb81d4c4150d1"
+    }
+  ],
+  "boundaries": [
+    "No real WASM/PhysicsSystem or runtime integration qualification",
+    "No public target/teleport/before-step/continuous API implementation",
+    "No native planner arithmetic or native commit proof",
+    "No current T11/C11/C36/B3U01 completion claim"
+  ],
+  "next": "Lead independent source review/replay, then separately authorize owner integration and mutation fences; these two source files remain frozen."
+}

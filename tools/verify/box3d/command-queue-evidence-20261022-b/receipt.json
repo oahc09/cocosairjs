@@ -1,0 +1,57 @@
+{
+  "status": "PASS_PURE_SOURCE_CONTROLS_NOT_PHYSICS",
+  "startedAt": "2026-10-22T12:45:04.845Z",
+  "completedAt": "2026-10-22T12:45:07.179Z",
+  "sourceHashesBefore": {
+    "src/air/physics/box3d/command-queue.ts": "336e3d5bec910c6f814c06bd059fb0325876e17403ae501a3e78110616915d7b",
+    "tools/verify/box3d/command-queue-control.mjs": "8149b65f8ca3f0db29b4b1cbb76ad538726ab32e5c738a914b0a56f17cd3b31c",
+    "docs/physics/box3d/contracts/unified-command-decisions-v1.md": "56303d162e12346729c66461c1fa9976e69c941fb549804c7a110d1887c695d6",
+    "docs/physics/box3d/contracts/unified-command-api-v1.json": "5768f4487d574aac3622dc25224200f13a4c23d82a7cd10311cdabc3578aa09f",
+    "docs/physics/box3d/contracts/unified-command-api-v1.d.ts": "845ea78f81da613499e615e4576a5cc152916467bb7a79e1cf81fe5ec54ed09e"
+  },
+  "sourceHashesAfter": {
+    "src/air/physics/box3d/command-queue.ts": "336e3d5bec910c6f814c06bd059fb0325876e17403ae501a3e78110616915d7b",
+    "tools/verify/box3d/command-queue-control.mjs": "8149b65f8ca3f0db29b4b1cbb76ad538726ab32e5c738a914b0a56f17cd3b31c",
+    "docs/physics/box3d/contracts/unified-command-decisions-v1.md": "56303d162e12346729c66461c1fa9976e69c941fb549804c7a110d1887c695d6",
+    "docs/physics/box3d/contracts/unified-command-api-v1.json": "5768f4487d574aac3622dc25224200f13a4c23d82a7cd10311cdabc3578aa09f",
+    "docs/physics/box3d/contracts/unified-command-api-v1.d.ts": "845ea78f81da613499e615e4576a5cc152916467bb7a79e1cf81fe5ec54ed09e"
+  },
+  "rawSha256": "680e749a05665bb6bfca4e3d08f548011ac321ff3dae318cb630b351ee2b7436",
+  "tests": 66,
+  "passed": 66,
+  "commands": [
+    {
+      "name": "tsc",
+      "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+      "args": [
+        "node_modules/typescript/bin/tsc",
+        "--strict",
+        "--target",
+        "ES2022",
+        "--module",
+        "ES2022",
+        "--skipLibCheck",
+        "--noEmit",
+        "src/air/physics/box3d/command-queue.ts"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "error": null
+    },
+    {
+      "name": "format",
+      "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+      "args": [
+        "node_modules/prettier/bin/prettier.cjs",
+        "--ignore-path",
+        "/dev/null",
+        "--check",
+        "src/air/physics/box3d/command-queue.ts",
+        "tools/verify/box3d/command-queue-control.mjs"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "error": null
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+✔ all 91 original categories remain required and no historical PASS is imported (2.052128ms)
+✔ fixed subcase references retain parents and the distinct real-device requirement (0.7684ms)
+✔ every explicit v1.2 acceptance ID is retained, including the two independent world fixtures (7.66034ms)
+✔ engine methods have target capabilities and test references, never an implementation PASS (0.865238ms)
+✔ unsupported box controller, D6 and infinite plane are not advertised as implemented (0.685635ms)
+✔ C16 new duration contract counts seven endpoints for six 60Hz intervals (0.261803ms)
+✔ movement, damping and initialization defaults stay explicit (0.407697ms)
+✔ formal v1 preserves the exact full denominator, definitions and original references (4.682307ms)
+✔ all required cells are unexecuted and no frozen state contains imported acceptance credit (1.959866ms)
+✔ only four denominator decisions are technically adopted, with the exact review evidence (29.778532ms)
+✔ technical denominator freeze coexists with fixture/resource/participant/performance unreadiness (17.115742ms)
+✔ positive MT, real-device, human and Debug/Release obligations remain exact (1.042111ms)
+✔ the complete fixture assertion and evidence metadata can be recovered without regeneration (23.050448ms)
+✔ candidate history is byte-pinned and still retains its original unapproved status (15.596095ms)
+✔ formal original-input digests bind actual bytes rather than newly rehashed substitutes (1.951716ms)
+✔ a separate dependency-free archive mechanically restores all 2128 cells using built-in Node only (4434.115736ms)
+✔ check and resolve are read-only, with no implicit snapshot repairs or writes (774.171702ms)
+✔ write, regenerate, repair and unknown flags are rejected rather than altering the frozen version (772.149317ms)
+✔ missing, duplicate, relabeled and reordered cell identities are rejected (6105.453126ms)
+✔ an introduced PASS, nonempty evidence, execution timestamp or premature Gate PASS is rejected (499.865314ms)
+✔ unresolved denominator decisions, missing technical review or fabricated user approval are rejected (235.971131ms)
+✔ D04/D05/D07 and exact resource/fixture readiness cannot be promoted with denominator adoption (130.887991ms)
+✔ missing definitions, original references, altered original digests or permissive mutation policy are rejected (158.871672ms)
+✔ raw formal or review byte tampering fails even when parsed JSON would be unchanged (109.784689ms)
+✔ raw original plan, policy, resource and candidate changes require a new version, never auto-repair (260.651804ms)
+✔ changing candidate variants or shrinking aggregates is rejected by the original candidate byte anchor (393.613595ms)
+✔ rewiring both mutable references cannot replace independently pinned v1 bytes (53.61098ms)
+✔ formal D02 separates positive MT execution from audit/negative credit and target enumeration from support (50.64379ms)
+✔ additive contract binds exact retained API, decisions, declarations and frozen inventory (15.876595ms)
+✔ contract-only declarations expose the exact three new signatures without implementation (1.593657ms)
+✔ all new API test mappings resolve existing original required identities (0.930512ms)
+✔ handles are explicit and copied metadata carries no native capability or fake expiry (0.696146ms)
+✔ defaults, temporal migration and protected cleanup are not implicit (0.547521ms)
+ℹ tests 33
+ℹ suites 0
+ℹ pass 33
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 15384.272595

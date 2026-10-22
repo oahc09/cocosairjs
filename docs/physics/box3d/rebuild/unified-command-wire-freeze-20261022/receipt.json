@@ -1,0 +1,29 @@
+{
+  "status": "FROZEN_SOURCE_CONTRACT_NOT_IMPLEMENTED",
+  "timeUTC": "2026-10-22T12:48:01.827964+00:00",
+  "wire": {
+    "path": "docs/physics/box3d/contracts/unified-command-wire-v1.md",
+    "bytes": 36116,
+    "sha256": "f88641a6e924ae3de4f4fe1d1cba20a1d8b82ac01bea28c221e1a6bf7d5079b9"
+  },
+  "reviewedDraftSha256": "b716457061a437a74914321df794056e0d645beddec3d5da84b3cbc4805b5a4b",
+  "decisionsSha256": "56303d162e12346729c66461c1fa9976e69c941fb549804c7a110d1887c695d6",
+  "sourceReview": [
+    "Exact input/output offsets cover 12/4/16 and 12/160/80 word records without overlap",
+    "Maximum 4096 bodies and 16384 operations derive exactly 278540 input and 1966092 output words",
+    "Canonical reduction preserves reset/ordinary effects ordering and distinguishes protected/idle zero",
+    "Plan values and actual per-operation/body observations remain separate; wake-island flags are not fabricated predictions",
+    "Known documented precommit status, unknown completion and committed readback failure remain distinct",
+    "Host pointer allocation validity explicitly remains caller precondition; wasm heap regions and all arithmetic checked before dereference",
+    "No old ABI layouts or vendor bytes changed; future implementation inventory/schema/evidence freeze required before compiling"
+  ],
+  "maximumBytes": {
+    "input": 1114160,
+    "output": 7864368
+  },
+  "runtimeQualification": "NOT_RUN",
+  "formalRequiredCells": {
+    "count": 2128,
+    "status": "NOT_RUN"
+  }
+}

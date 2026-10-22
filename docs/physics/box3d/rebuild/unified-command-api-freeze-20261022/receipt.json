@@ -1,0 +1,38 @@
+{
+  "status": "PASS_DESIGN_INTEGRITY_ONLY",
+  "completedAt": "2026-10-22T12:34:21.176235+00:00",
+  "command": [
+    "node",
+    "--test",
+    "tools/verify/box3d/unified-command-api-contract.test.cjs",
+    "tools/verify/box3d/contracts.test.cjs",
+    "tools/verify/box3d/inventory-freeze-v1.test.cjs"
+  ],
+  "exitCode": 0,
+  "tests": 33,
+  "rawSha256": "8dc32d2d0f91ca15108261ced43ac29b6a7fe43e630a624be4f3c71853c1acb7",
+  "sources": [
+    {
+      "path": "docs/physics/box3d/contracts/unified-command-decisions-v1.md",
+      "bytes": 21614,
+      "sha256": "56303d162e12346729c66461c1fa9976e69c941fb549804c7a110d1887c695d6"
+    },
+    {
+      "path": "docs/physics/box3d/contracts/unified-command-api-v1.json",
+      "bytes": 3887,
+      "sha256": "5768f4487d574aac3622dc25224200f13a4c23d82a7cd10311cdabc3578aa09f"
+    },
+    {
+      "path": "docs/physics/box3d/contracts/unified-command-api-v1.d.ts",
+      "bytes": 1481,
+      "sha256": "845ea78f81da613499e615e4576a5cc152916467bb7a79e1cf81fe5ec54ed09e"
+    },
+    {
+      "path": "tools/verify/box3d/unified-command-api-contract.test.cjs",
+      "bytes": 5324,
+      "sha256": "0a40f03e675dd64346de0f778435640c6c4a2370c640fdb5984e5bfddbc3b1f4"
+    }
+  ],
+  "originalApiPreservedSha256": "0e53683159e025ecdf07ae495abcf54e902529b51c6938ce3717fab4dd6e7fc9",
+  "scope": "Five additive API design tests plus seven original contract and twenty-one immutable inventory controls. No implementation/native/browser qualification. All 2128 formal cells remain NOT_RUN."
+}
