@@ -1,0 +1,132 @@
+{
+  "status": "PASS_FINITE_SOURCE_ONLY_NOT_ENGINE_OR_NATIVE",
+  "source": {
+    "path": "src/cocos/physics/framework/physics-state-observer.ts",
+    "bytes": 23170,
+    "sha256": "4cf40c4f1be0d407a402e95dcdb7a898b1942cb175f869f6367a41b18c2d1d2b"
+  },
+  "runner": {
+    "path": "tools/verify/box3d/physics-state-observer-control.mjs",
+    "bytes": 28517,
+    "sha256": "9d3becbaa9de625ef37eac6d8cbe05490e12e4a65cb6515a0d8eab81b7ca289d"
+  },
+  "dToE": "control MIT header only; source unchanged; full rerun",
+  "headerOnlyVerified": true,
+  "attempts": [
+    {
+      "suffix": "red",
+      "command": [
+        "node",
+        "tools/verify/box3d/physics-state-observer-control.mjs",
+        "tools/verify/box3d/physics-state-observer-evidence-20261022-red"
+      ],
+      "exitCode": 1,
+      "status": "MISSING_IMPLEMENTATION_RED_NOT_ENGINE_DEFECT",
+      "counts": null,
+      "raw": "tools/verify/box3d/physics-state-observer-evidence-20261022-red/command.raw.txt",
+      "resultSha256": "868f4fe7ec17b459bc46cb01acefb7274e46fe38ac83fd234195c208b18fe32b"
+    },
+    {
+      "suffix": "a",
+      "command": [
+        "node",
+        "tools/verify/box3d/physics-state-observer-control.mjs",
+        "tools/verify/box3d/physics-state-observer-evidence-20261022-a"
+      ],
+      "exitCode": 1,
+      "status": "FAIL",
+      "counts": {
+        "cases": 67,
+        "passed": 66
+      },
+      "raw": "tools/verify/box3d/physics-state-observer-evidence-20261022-a/command.raw.txt",
+      "resultSha256": "5bab2fedc9422ec8ca0a4fbfa671f56bcbda2ad95f9529f07fd9daf75926c7b8"
+    },
+    {
+      "suffix": "b",
+      "command": [
+        "node",
+        "tools/verify/box3d/physics-state-observer-control.mjs",
+        "tools/verify/box3d/physics-state-observer-evidence-20261022-b"
+      ],
+      "exitCode": 1,
+      "status": "FAIL",
+      "counts": {
+        "cases": 73,
+        "passed": 71
+      },
+      "raw": "tools/verify/box3d/physics-state-observer-evidence-20261022-b/command.raw.txt",
+      "resultSha256": "a38fc0246c21bfa5b1b53fd3a4f2efda37e039c51ef6cce03aa796b3b0b5778c"
+    },
+    {
+      "suffix": "c-red",
+      "command": [
+        "node",
+        "tools/verify/box3d/physics-state-observer-control.mjs",
+        "tools/verify/box3d/physics-state-observer-evidence-20261022-c-red"
+      ],
+      "exitCode": 1,
+      "status": "FAIL",
+      "counts": {
+        "cases": 76,
+        "passed": 71
+      },
+      "raw": "tools/verify/box3d/physics-state-observer-evidence-20261022-c-red/command.raw.txt",
+      "resultSha256": "f66429de65654fa65744dc9fec06c836687528c7e434640039df8d01a1405710"
+    },
+    {
+      "suffix": "c",
+      "command": [
+        "node",
+        "tools/verify/box3d/physics-state-observer-control.mjs",
+        "tools/verify/box3d/physics-state-observer-evidence-20261022-c"
+      ],
+      "exitCode": 1,
+      "status": "FAIL",
+      "counts": {
+        "cases": 76,
+        "passed": 75
+      },
+      "raw": "tools/verify/box3d/physics-state-observer-evidence-20261022-c/command.raw.txt",
+      "resultSha256": "73f2385001c1d38d8e4cb3b25839c8a70f3a07ccf83764c0c6fa60928983046d"
+    },
+    {
+      "suffix": "d",
+      "command": [
+        "node",
+        "tools/verify/box3d/physics-state-observer-control.mjs",
+        "tools/verify/box3d/physics-state-observer-evidence-20261022-d"
+      ],
+      "exitCode": 0,
+      "status": "PASS_PURE_OBSERVER_CONTROL_ONLY",
+      "counts": {
+        "cases": 76,
+        "passed": 76
+      },
+      "raw": "tools/verify/box3d/physics-state-observer-evidence-20261022-d/command.raw.txt",
+      "resultSha256": "bfccc70ac736752345dd20104ab2ea690ee60a51ddc28cd60814b84d07e6ccf8"
+    },
+    {
+      "suffix": "e",
+      "command": [
+        "node",
+        "tools/verify/box3d/physics-state-observer-control.mjs",
+        "tools/verify/box3d/physics-state-observer-evidence-20261022-e"
+      ],
+      "exitCode": 0,
+      "status": "PASS_PURE_OBSERVER_CONTROL_ONLY",
+      "counts": {
+        "cases": 76,
+        "passed": 76
+      },
+      "raw": "tools/verify/box3d/physics-state-observer-evidence-20261022-e/command.raw.txt",
+      "resultSha256": "0e3194f0bf3080c9eba72d6a43155f73a9c654f615bb77545f68a1fcb5e8f8b7"
+    }
+  ],
+  "ownedFilesSha256": "08c1362a6655e5d1665d4f21f26fcaacb58d5c64ed71a877f8683f6cad8ee4cb",
+  "ownedFileCount": 61,
+  "ownedBytesExcludingManifestAndReceipt": 524021,
+  "existingProductWrites": [],
+  "nativeInputsWritten": [],
+  "publicActivation": false
+}

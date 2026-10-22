@@ -1,0 +1,1108 @@
+===== 0def94d0dc3a0ceedf1120145ec84705694312b2:src/cocos/physics/framework/components/colliders/collider.ts SHA256 14ec6146b64a327584e439bcd52c5c15fc15d77d08663ead1d1374f1a17f8333 =====
+--- lines 84-160 ---
+   84      * Gets or sets the physical material for this collider.
+   85      * @zh
+   86      * 获取或设置此碰撞器的物理材质。
+   87      */
+   88     @type(PhysicsMaterial)
+   89     @displayName('Material')
+   90     @displayOrder(-1)
+   91     @tooltip('i18n:physics3d.collider.sharedMaterial')
+   92     public get sharedMaterial (): PhysicsMaterial | null {
+   93         return this._material;
+   94     }
+   95 
+   96     public set sharedMaterial (value) {
+   97         if (EDITOR) {
+   98             this._material = value;
+   99         } else {
+  100             this.material = value;
+  101         }
+  102     }
+  103 
+  104     /**
+  105      * @en
+  106      * Gets or sets the physics material for this collider, which in Shared state will generate a new instance.
+  107      * @zh
+  108      * 获取或设置此碰撞器的物理材质，共享状态下获取将会生成新的实例。
+  109      */
+  110     public get material (): PhysicsMaterial | null {
+  111         if (this._isSharedMaterial && this._material) {
+  112             assertMutationAllowed(this, 'Collider.material.get');
+  113             this._material.off(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
+  114             this._material = this._material.clone();
+  115             this._material.on(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
+  116             this._isSharedMaterial = false;
+  117         }
+  118         return this._material;
+  119     }
+  120 
+  121     public set material (value) {
+  122         assertMutationAllowed(this, 'Collider.material.set');
+  123         if (this._shape) {
+  124             const nativeFirst = selector.id === 'box3d';
+  125             if (nativeFirst) this._shape.setMaterial(value);
+  126             if (value && this._material) {
+  127                 if (this._material.id !== value.id) {
+  128                     this._material.off(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
+  129                     value.on(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
+  130                     this._isSharedMaterial = false;
+  131                     this._material = value;
+  132                 }
+  133             } else if (value && !this._material) {
+  134                 value.on(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
+  135                 this._material = value;
+  136             } else if (!value && this._material) {
+  137                 this._material.off(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
+  138                 this._material = value;
+  139             }
+  140             if (!nativeFirst) this._updateMaterial();
+  141         } else {
+  142             this._material = value;
+  143         }
+  144     }
+  145 
+  146     /**
+  147      * @en
+  148      * Gets or sets the collider is trigger, this will be always trigger if using builtin.
+  149      * @zh
+  150      * 获取或设置碰撞器是否为触发器。(builtin 中无论真假都为触发器)
+  151      */
+  152     @displayOrder(0)
+  153     @tooltip('i18n:physics3d.collider.isTrigger')
+  154     public get isTrigger (): boolean {
+  155         return this._isTrigger;
+  156     }
+  157 
+  158     public set isTrigger (value) {
+  159         if (selector.id === 'box3d' && this._shape) {
+  160             this._shape.setAsTrigger(value);
+--- lines 268-323 ---
+  268     public on<TFunction extends Callback> (
+  269         type: TriggerEventType | CollisionEventType | CharacterTriggerEventType,
+  270         callback: TFunction,
+  271         target?,
+  272         once?: boolean,
+  273     ): any {
+  274         const ret = super.on(type, callback, target, once);
+  275         this._updateNeedEvent(type);
+  276         return ret;
+  277     }
+  278 
+  279     /**
+  280      * @en
+  281      * Unregisters callbacks associated with trigger or collision events that have been registered.
+  282      * @zh
+  283      * 取消已经注册的触发或碰撞事件相关的回调。
+  284      * @param type - The event type, onTriggerEnter|onTriggerStay|onTriggerExit|onCollisionEnter|onCollisionStay|onCollisionExit;
+  285      * @param callback - The event callback, signature:`(event?:ICollisionEvent|ITriggerEvent)=>void`.
+  286      * @param target - The event callback target.
+  287      */
+  288     public off (type: TriggerEventType | CollisionEventType | CharacterTriggerEventType, callback?: Callback, target?): void {
+  289         super.off(type, callback, target);
+  290         this._updateNeedEvent();
+  291     }
+  292 
+  293     /**
+  294      * @en
+  295      * Registers a callback associated with a trigger or collision event, which is automatically unregistered once executed.
+  296      * @zh
+  297      * 注册触发或碰撞事件相关的回调，执行一次后会自动取消注册。
+  298      * @param type - The event type, onTriggerEnter|onTriggerStay|onTriggerExit|onCollisionEnter|onCollisionStay|onCollisionExit;
+  299      * @param callback - The event callback, signature:`(event?:ICollisionEvent|ITriggerEvent)=>void`.
+  300      * @param target - The event callback target.
+  301      */
+  302     public once<TFunction extends Callback> (
+  303         type: TriggerEventType | CollisionEventType | CharacterTriggerEventType,
+  304         callback: TFunction,
+  305         target?,
+  306     ): any {
+  307         // TODO: callback invoker now is a entity, after `once` will not calling the upper `off`.
+  308         const ret = super.once(type, callback, target);
+  309         this._updateNeedEvent(type);
+  310         return ret;
+  311     }
+  312 
+  313     /**
+  314      * @en
+  315      * Removes all registered events of the specified target or type.
+  316      * @zh
+  317      * 移除所有指定目标或类型的注册事件。
+  318      * @param typeOrTarget - The event type or target.
+  319      */
+  320     public removeAll (typeOrTarget: TriggerEventType | CollisionEventType | Record<string, unknown>): void {
+  321         super.removeAll(typeOrTarget);
+  322         this._updateNeedEvent();
+  323     }
+--- lines 435-500 ---
+  435     protected onLoad (): void {
+  436         if (!selector.runInEditor) return;
+  437 
+  438         const nativeFirst = selector.id === 'box3d';
+  439         if (!nativeFirst) this.sharedMaterial = this._material;
+  440         this._shape = createShape(this.type);
+  441         this._shape.initialize(this);
+  442         this._shape.onLoad!();
+  443         if (nativeFirst && this._material) this._material.on(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
+  444     }
+  445 
+  446     protected onEnable (): void {
+  447         if (this._shape) {
+  448             this._shape.onEnable!();
+  449         }
+  450     }
+  451 
+  452     protected onDisable (): void {
+  453         if (this._shape) {
+  454             this._shape.onDisable!();
+  455         }
+  456     }
+  457 
+  458     protected onDestroy (): void {
+  459         if (this._shape) {
+  460             this._needTriggerEvent = false;
+  461             this._needCollisionEvent = false;
+  462             this._shape.updateEventListener();
+  463             if (this._material) this._material.off(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
+  464             this._shape.onDestroy!();
+  465         }
+  466         if (this._boundingSphere) this._boundingSphere.destroy();
+  467     }
+  468 
+  469     private _updateMaterial (): void {
+  470         if (this._shape) this._shape.setMaterial(this._material);
+  471     }
+  472 
+  473     private _updateNeedEvent (type?: string): void {
+  474         if (this.isValid) {
+  475             if (type !== undefined) {
+  476                 if (type === 'onCollisionEnter' || type === 'onCollisionStay' || type === 'onCollisionExit') {
+  477                     this._needCollisionEvent = true;
+  478                 }
+  479                 if (type === 'onTriggerEnter' || type === 'onTriggerStay' || type === 'onTriggerExit'
+  480                     || type === 'onControllerTriggerEnter' || type === 'onControllerTriggerStay' || type === 'onControllerTriggerExit') {
+  481                     this._needTriggerEvent = true;
+  482                 }
+  483             } else {
+  484                 if (!(this.hasEventListener('onTriggerEnter')
+  485                     || this.hasEventListener('onTriggerStay')
+  486                     || this.hasEventListener('onTriggerExit')
+  487                     || this.hasEventListener('onControllerTriggerEnter')
+  488                     || this.hasEventListener('onControllerTriggerStay')
+  489                     || this.hasEventListener('onControllerTriggerExit')
+  490                 )) {
+  491                     this._needTriggerEvent = false;
+  492                 }
+  493                 if (!(this.hasEventListener('onCollisionEnter')
+  494                     || this.hasEventListener('onCollisionStay')
+  495                     || this.hasEventListener('onCollisionExit'))) {
+  496                     this._needCollisionEvent = false;
+  497                 }
+  498             }
+  499             if (this._shape) this._shape.updateEventListener();
+  500         }
+===== 0def94d0dc3a0ceedf1120145ec84705694312b2:src/cocos/physics/framework/physics-system.ts SHA256 f4b3bf9c035fd3cbf77ceb229bcf47c7f8e5bc3437666aecb84adebf27a295d5 =====
+--- lines 93-112 ---
+   93     public static get instance (): PhysicsSystem {
+   94         return PhysicsSystem._instance!;
+   95     }
+   96 
+   97     /**
+   98      * @en
+   99      * Gets or sets whether the physical system is enabled, which can be used to pause or continue running the physical system.
+  100      * @zh
+  101      * 获取或设置是否启用物理系统，可以用于暂停或继续运行物理系统。
+  102      */
+  103     public get enable (): boolean {
+  104         return this._enable;
+  105     }
+  106 
+  107     public set enable (value: boolean) {
+  108         assertMutationAllowed(this, 'PhysicsSystem.enable');
+  109         this._enable = value;
+  110     }
+  111 
+  112     /**
+--- lines 207-248 ---
+  207      * @zh
+  208      * 获取或设置是否自动模拟。
+  209      */
+  210     public get autoSimulation (): boolean {
+  211         return this._autoSimulation;
+  212     }
+  213 
+  214     public set autoSimulation (value: boolean) {
+  215         assertMutationAllowed(this, 'PhysicsSystem.autoSimulation');
+  216         this._autoSimulation = value;
+  217     }
+  218 
+  219     /**
+  220      * @en
+  221      * Gets the global default physical material.
+  222      * @zh
+  223      * 获取全局的默认物理材质。
+  224      */
+  225     public get defaultMaterial (): PhysicsMaterial {
+  226         return this._material;
+  227     }
+  228 
+  229     /**
+  230      * @en
+  231      * Set the default physics material.
+  232      * @zh
+  233      * 设置默认物理材质。
+  234      */
+  235     public setDefaultPhysicsMaterial (material: PhysicsMaterial): void {
+  236         assertMutationAllowed(this, 'PhysicsSystem.setDefaultPhysicsMaterial');
+  237         if (selector.id === 'box3d') {
+  238             this.physicsWorld.setDefaultMaterial(material);
+  239             if (this._material !== material) {
+  240                 this._material?.off(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
+  241             }
+  242             this._material = material;
+  243             this._material.on(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
+  244             return;
+  245         }
+  246         this._material = material;
+  247         this.physicsWorld.setDefaultMaterial(this._material);
+  248         this._material.on(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
+--- lines 377-478 ---
+  377     private constructor () {
+  378         super();
+  379     }
+  380 
+  381     postUpdate (deltaTime: number): void {
+  382         assertMutationAllowed(this, 'PhysicsSystem.postUpdate');
+  383         if (EDITOR_NOT_IN_PREVIEW && !this._executeInEditMode && !selector.runInEditor) return;
+  384 
+  385         if (!this.physicsWorld) return;
+  386 
+  387         if (!this._enable) {
+  388             this.physicsWorld.syncSceneToPhysics();
+  389             return;
+  390         }
+  391 
+  392         if (this._autoSimulation) {
+  393             this._subStepCount = 0;
+  394             this._accumulator += deltaTime;
+  395             director.emit(DirectorEvent.BEFORE_PHYSICS);
+  396             while (this._subStepCount < this._maxSubSteps) {
+  397                 if (this._accumulator >= this._fixedTimeStep) {
+  398                     this.physicsWorld.syncSceneToPhysics();
+  399                     this.physicsWorld.step(this._fixedTimeStep);
+  400                     this.physicsWorld.emitEvents();
+  401                     this.physicsWorld.syncAfterEvents();
+  402                     this._accumulator -= this._fixedTimeStep;
+  403                     this._subStepCount++;
+  404                 } else {
+  405                     this.physicsWorld.syncSceneToPhysics();
+  406                     break;
+  407                 }
+  408             }
+  409             director.emit(DirectorEvent.AFTER_PHYSICS);
+  410         }
+  411     }
+  412 
+  413     /**
+  414      * @en
+  415      * Reset the physics configuration.
+  416      * @zh
+  417      * 重置物理配置。
+  418      */
+  419     resetConfiguration (config?: IPhysicsConfig): void {
+  420         assertMutationAllowed(this, 'PhysicsSystem.resetConfiguration');
+  421         const allowSleep = config ? config.allowSleep : querySettings(SettingsCategory.PHYSICS, 'allowSleep');
+  422         if (typeof allowSleep === 'boolean') this._allowSleep = allowSleep;
+  423         const fixedTimeStep = config ? config.fixedTimeStep : querySettings(SettingsCategory.PHYSICS, 'fixedTimeStep');
+  424         if (typeof fixedTimeStep === 'number') this._fixedTimeStep = fixedTimeStep;
+  425         const maxSubSteps = config ? config.maxSubSteps : querySettings(SettingsCategory.PHYSICS, 'maxSubSteps');
+  426         if (typeof maxSubSteps === 'number') this._maxSubSteps = maxSubSteps;
+  427         const sleepThreshold = config ? config.sleepThreshold : querySettings(SettingsCategory.PHYSICS, 'sleepThreshold');
+  428         if (typeof sleepThreshold === 'number') this._sleepThreshold = sleepThreshold;
+  429         const autoSimulation = config ? config.autoSimulation : querySettings(SettingsCategory.PHYSICS, 'autoSimulation');
+  430         if (typeof autoSimulation === 'boolean') this.autoSimulation = autoSimulation;
+  431 
+  432         const gravity = config ? config.gravity : querySettings(SettingsCategory.PHYSICS, 'gravity');
+  433         if (gravity) Vec3.copy(this._gravity, gravity);
+  434 
+  435         const collisionMatrix = config ? config.collisionMatrix : querySettings(SettingsCategory.PHYSICS, 'collisionMatrix');
+  436         if (collisionMatrix) {
+  437             for (const i in collisionMatrix) {
+  438                 this.collisionMatrix[`${1 << parseInt(i)}`] = collisionMatrix[i];
+  439             }
+  440         }
+  441         const collisionGroups = config ? config.collisionGroups : querySettings<Array<{ name: string, index: number }>>(SettingsCategory.PHYSICS, 'collisionGroups');
+  442         if (collisionGroups) {
+  443             const cg = collisionGroups;
+  444             if (cg instanceof Array) {
+  445                 cg.forEach((v): void => { PhysicsGroup[v.name] = 1 << v.index; });
+  446                 Enum.update(PhysicsGroup);
+  447             }
+  448         }
+  449 
+  450         if (this.physicsWorld) {
+  451             this.physicsWorld.setGravity(this._gravity);
+  452             this.physicsWorld.setAllowSleep(this._allowSleep);
+  453         }
+  454     }
+  455 
+  456     /**
+  457      * @en
+  458      * Reset the accumulator of time to given value.
+  459      * @zh
+  460      * 重置时间累积总量为给定值。
+  461      */
+  462     resetAccumulator (time = 0): void {
+  463         assertMutationAllowed(this, 'PhysicsSystem.resetAccumulator');
+  464         this._accumulator = time;
+  465     }
+  466 
+  467     /**
+  468      * @en
+  469      * Perform simulation steps for the physics world.
+  470      * @zh
+  471      * 执行物理世界的模拟步进。
+  472      * @param fixedTimeStep
+  473      */
+  474     step (fixedTimeStep: number, deltaTime?: number, maxSubSteps?: number): void {
+  475         assertMutationAllowed(this, 'PhysicsSystem.step');
+  476         if (this.physicsWorld) this.physicsWorld.step(fixedTimeStep, deltaTime, maxSubSteps);
+  477     }
+  478 
+--- lines 910-913 ---
+  910     private _updateMaterial (): void {
+  911         if (this.physicsWorld) this.physicsWorld.setDefaultMaterial(this._material);
+  912     }
+  913 
+--- lines 944-954 ---
+  944             // Construct physics world and physics system only once
+  945             const sys = new PhysicsSystem();
+  946             (PhysicsSystem._instance as unknown as PhysicsSystem) = sys;
+  947             sys.resetConfiguration();
+  948             constructDefaultWorld(sys);
+  949             director.registerSystem(PhysicsSystem.ID, sys, sys.priority);
+  950         }
+  951         return PhysicsSystem._instance;
+  952     }
+  953 }
+  954 
+===== 0def94d0dc3a0ceedf1120145ec84705694312b2:src/cocos/physics/framework/assets/physics-material.ts SHA256 9a780692684a65892315012879f8f597cba6bd8d22be14792d7b779a1d57bd80 =====
+--- lines 65-75 ---
+   65     get friction (): number {
+   66         return this._friction;
+   67     }
+   68 
+   69     set friction (value) {
+   70         assertMutationAllowed(this, 'PhysicsMaterial.friction');
+   71         if (!math.equals(this._friction, value)) {
+   72             this._friction = value;
+   73             this.emit(PhysicsMaterial.EVENT_UPDATE);
+   74         }
+   75     }
+--- lines 85-95 ---
+   85     get rollingFriction (): number {
+   86         return this._rollingFriction;
+   87     }
+   88 
+   89     set rollingFriction (value) {
+   90         assertMutationAllowed(this, 'PhysicsMaterial.rollingFriction');
+   91         if (!math.equals(this._rollingFriction, value)) {
+   92             this._rollingFriction = value;
+   93             this.emit(PhysicsMaterial.EVENT_UPDATE);
+   94         }
+   95     }
+--- lines 105-115 ---
+  105     get spinningFriction (): number {
+  106         return this._spinningFriction;
+  107     }
+  108 
+  109     set spinningFriction (value) {
+  110         assertMutationAllowed(this, 'PhysicsMaterial.spinningFriction');
+  111         if (!math.equals(this._spinningFriction, value)) {
+  112             this._spinningFriction = value;
+  113             this.emit(PhysicsMaterial.EVENT_UPDATE);
+  114         }
+  115     }
+--- lines 126-135 ---
+  126     get restitution (): number {
+  127         return this._restitution;
+  128     }
+  129 
+  130     set restitution (value) {
+  131         assertMutationAllowed(this, 'PhysicsMaterial.restitution');
+  132         if (!math.equals(this._restitution, value)) {
+  133             this._restitution = value;
+  134             this.emit(PhysicsMaterial.EVENT_UPDATE);
+  135         }
+--- lines 153-173 ---
+  153     constructor () {
+  154         super();
+  155         PhysicsMaterial.allMaterials.push(this);
+  156         this.id = PhysicsMaterial._idCounter++;
+  157         if (!this._uuid) this._uuid = `pm_${this.id}`;
+  158     }
+  159 
+  160     /**
+  161      * @en
+  162      * clone.
+  163      * @zh
+  164      * 克隆。
+  165      */
+  166     public clone (): PhysicsMaterial {
+  167         const c = new PhysicsMaterial();
+  168         c._friction = this._friction;
+  169         c._restitution = this._restitution;
+  170         c._rollingFriction = this._rollingFriction;
+  171         c._spinningFriction = this._spinningFriction;
+  172         return c;
+  173     }
+--- lines 182-213 ---
+  182     public destroy (): boolean {
+  183         assertMutationAllowed(this, 'PhysicsMaterial.destroy');
+  184         if (super.destroy()) {
+  185             const idx = PhysicsMaterial.allMaterials.indexOf(this);
+  186             if (idx >= 0) {
+  187                 PhysicsMaterial.allMaterials.splice(idx, 1);
+  188             }
+  189             return true;
+  190         }
+  191         return false;
+  192     }
+  193 
+  194     /**
+  195      * @en
+  196      * Sets the coefficients values.
+  197      * @zh
+  198      * 设置材质相关的系数。
+  199      * @param friction
+  200      * @param rollingFriction
+  201      * @param spinningFriction
+  202      * @param restitution
+  203      */
+  204     public setValues (friction: number, rollingFriction: number, spinningFriction: number, restitution: number): void {
+  205         assertMutationAllowed(this, 'PhysicsMaterial.setValues');
+  206         const emitUpdate = this._friction !== friction || this._rollingFriction !== rollingFriction
+  207             || this._spinningFriction !== spinningFriction || this._restitution !== restitution;
+  208         this._friction = friction;
+  209         this._rollingFriction = rollingFriction;
+  210         this._spinningFriction = spinningFriction;
+  211         this._restitution = restitution;
+  212         if (emitUpdate) this.emit(PhysicsMaterial.EVENT_UPDATE);
+  213     }
+===== 0def94d0dc3a0ceedf1120145ec84705694312b2:src/cocos/core/event/eventify.ts SHA256 ad59c9f8dc67f40db877b2160989b792e488b256903d6fdccaf2c7433728c7e9 =====
+--- lines 152-187 ---
+  152 export function Eventify<TBase> (base: Constructor<TBase>): Constructor<TBase & IEventified> {
+  153     class Eventified extends (base as unknown as any) {
+  154         /**
+  155          * @dontmangle
+  156          * NOTE: Eventified mixins all properties from CallbacksInvoker.prototype in the following code.
+  157          * After invoking `Eventify` for a class, CallbacksInvoker's constructor will not be called,
+  158          * but its functions may invoke `this._callbackTable` which is declared as `public` in CallbacksInvoker.
+  159          * Marking it as dontmangle is a workaround to avoid the issue that `this._callbackTable` is not defined.
+  160          */
+  161         protected _callbackTable = createMap(true);
+  162 
+  163         public once<Callback extends (...any) => void> (type: EventType, callback: Callback, target?: any): Callback {
+  164             return this.on(type, callback, target, true) as Callback;
+  165         }
+  166 
+  167         public targetOff (typeOrTarget: any): void {
+  168             this.removeAll(typeOrTarget);
+  169         }
+  170     }
+  171 
+  172     // Mixin with `CallbacksInvokers`'s prototype
+  173     const callbacksInvokerPrototype = CallbacksInvoker.prototype;
+  174     const propertyKeys: (string | symbol)[] = (Object.getOwnPropertyNames(callbacksInvokerPrototype) as (string | symbol)[]).concat(
+  175         Object.getOwnPropertySymbols(callbacksInvokerPrototype),
+  176     );
+  177     for (let iPropertyKey = 0; iPropertyKey < propertyKeys.length; ++iPropertyKey) {
+  178         const propertyKey = propertyKeys[iPropertyKey];
+  179         if (!(propertyKey in Eventified.prototype)) {
+  180             const propertyDescriptor = Object.getOwnPropertyDescriptor(callbacksInvokerPrototype, propertyKey);
+  181             if (propertyDescriptor) {
+  182                 Object.defineProperty(Eventified.prototype, propertyKey, propertyDescriptor);
+  183             }
+  184         }
+  185     }
+  186 
+  187     return Eventified as unknown as Constructor<TBase & IEventified>;
+===== 0def94d0dc3a0ceedf1120145ec84705694312b2:src/cocos/core/event/callbacks-invoker.ts SHA256 544780e361767d5ae79d2c20a973651b544ceee6b7bd90e6ebe876185774918a =====
+--- lines 300-374 ---
+  300     public off (key: EventTypeClass, callback?: AnyFunction, target?: unknown): void {
+  301         const list = this._callbackTable && this._callbackTable[key];
+  302         if (list) {
+  303             const infos = list.callbackInfos;
+  304             if (callback) {
+  305                 for (let i = 0; i < infos.length; ++i) {
+  306                     const info = infos[i];
+  307                     if (info && info.callback === callback && info.target === target) {
+  308                         list.cancel(i);
+  309                         break;
+  310                     }
+  311                 }
+  312             } else {
+  313                 this.removeAll(key);
+  314             }
+  315         }
+  316         this._offCallback?.();
+  317     }
+  318 
+  319     /**
+  320      * @zh 派发一个指定事件，并传递需要的参数
+  321      * @en Trigger an event directly with the event name and necessary arguments.
+  322      * @param key - event type
+  323      * @param arg0 - The first argument to be passed to the callback
+  324      * @param arg1 - The second argument to be passed to the callback
+  325      * @param arg2 - The third argument to be passed to the callback
+  326      * @param arg3 - The fourth argument to be passed to the callback
+  327      * @param arg4 - The fifth argument to be passed to the callback
+  328      */
+  329     public emit (key: EventTypeClass, arg0?: any, arg1?: any, arg2?: any, arg3?: any, arg4?: any): void {
+  330         const list: CallbackList = this._callbackTable && this._callbackTable[key]!;
+  331         if (list) {
+  332             const rootInvoker = !list.isInvoking;
+  333             list.isInvoking = true;
+  334 
+  335             const infos = list.callbackInfos;
+  336             try {
+  337                 for (let i = 0, len = infos.length; i < len; ++i) {
+  338                     const info = infos[i];
+  339                     if (info) {
+  340                         const callback = info.callback;
+  341                         const target = info.target;
+  342                         // Pre off once callbacks to avoid influence on logic in callback
+  343                         if (info.once) {
+  344                             this.off(key, callback, target);
+  345                         }
+  346                         // Lazy check validity of callback target,
+  347                         // if target is CCObject and is no longer valid, then remove the callback info directly
+  348                         if (!info.check()) {
+  349                             this.off(key, callback, target);
+  350                         } else {
+  351                             this._invokeCallback(key, callback, target, arg0, arg1, arg2, arg3, arg4);
+  352                         }
+  353                     }
+  354                 }
+  355             } finally {
+  356                 if (rootInvoker) {
+  357                     list.isInvoking = false;
+  358                     if (list.containCanceled) {
+  359                         list.purgeCanceled();
+  360                     }
+  361                 }
+  362             }
+  363         }
+  364     }
+  365 
+  366     /** Internal policy hook. Ordinary event targets retain synchronous exception propagation. */
+  367     protected _invokeCallback (key: EventTypeClass, callback: AnyFunction, target: unknown,
+  368         arg0?: any, arg1?: any, arg2?: any, arg3?: any, arg4?: any): void {
+  369         if (target) {
+  370             callback.call(target, arg0, arg1, arg2, arg3, arg4);
+  371         } else {
+  372             callback(arg0, arg1, arg2, arg3, arg4);
+  373         }
+  374     }
+===== 0def94d0dc3a0ceedf1120145ec84705694312b2:src/air/physics/box3d/world-command-owner.ts SHA256 85d6f8403fe722e0b35fc54e2ec7c3a7b37ff47a1cee7398bf91a9649fd8ec8a =====
+--- lines 220-277 ---
+  220     /** Adapter-observed input, NOT proof of the later public cache/listener commit. */
+  221     observeColliderMaterial(adapter: object, material: PhysicsMaterial | null): void {
+  222         this.assertConfiguration('observe material identity');
+  223         const record = this.#component(adapter);
+  224         if (record.kind !== 'collider')
+  225             throw worldError('AIR_E_BOX3D_CONFIG', 'observe material identity', 'Expected Collider.');
+  226         if (material !== null && !(material instanceof PhysicsMaterial))
+  227             throw worldError('AIR_E_BOX3D_CONFIG', 'observe material identity', 'Expected PhysicsMaterial.');
+  228         record.material = material;
+  229     }
+  230     validateDefaultMaterial(material: PhysicsMaterial): void {
+  231         this.assertConfiguration('observe default material identity');
+  232         if (!(material instanceof PhysicsMaterial))
+  233             throw worldError('AIR_E_BOX3D_CONFIG', 'default material identity', 'Expected PhysicsMaterial.');
+  234     }
+  235     observeDefaultMaterial(material: PhysicsMaterial): void {
+  236         this.validateDefaultMaterial(material);
+  237         this.#defaultMaterial = material;
+  238     }
+  239     releaseComponentAfterCleanup(adapter: object): void {
+  240         if (this.#phase === 'closed') {
+  241             // JS component teardown is not evidence that an unresolved native body was released.
+  242             if (this.#nativeTeardown === 'unresolved') this.#components.delete(adapter);
+  243             return;
+  244         }
+  245         if (this.#phase !== 'faulted') this.assertConfiguration('release component identity');
+  246         this.#components.delete(adapter);
+  247     }
+  248     retireBodyAfterDestroy(body: object): void {
+  249         this.assertConfiguration('retire body identity');
+  250         if (!this.#bodies.has(body) || [...this.#components.values()].some((value) => value.body === body))
+  251             throw worldError(
+  252                 'AIR_E_BOX3D_CONFIG',
+  253                 'retire body identity',
+  254                 'Body is foreign or still has component ownership.',
+  255             );
+  256         this.#queue.releaseBodyAfterTeardown(body);
+  257         this.#bodies.delete(body);
+  258     }
+  259     #materials(): Set<PhysicsMaterial> {
+  260         const result = new Set<PhysicsMaterial>();
+  261         if (this.#defaultMaterial) result.add(this.#defaultMaterial);
+  262         for (const component of this.#components.values()) if (component.material) result.add(component.material);
+  263         return result;
+  264     }
+  265     #begin(phase: 'preflight' | 'dispatch'): Box3DOwnerFenceScope {
+  266         this.assertConfiguration('begin temporary scope');
+  267         this.assertSystemBinding();
+  268         // Private records only: no component/material getter or caller iterator executes here.
+  269         const nodes = new Set<Node>();
+  270         for (const body of this.#bodies.values()) for (const node of body.ancestry) nodes.add(node);
+  271         const targets = Object.freeze([
+  272             this.#system,
+  273             Node.prototype,
+  274             ...nodes,
+  275             ...Array.from(this.#components.values(), (value) => value.component),
+  276             ...this.#materials(),
+  277         ]);
+--- lines 367-401 ---
+  367     closeAfterWorldTeardown(nativeTeardownConfirmed: boolean): void {
+  368         try {
+  369             this.#scope?.dispose();
+  370         } finally {
+  371             try {
+  372                 this.#queue.close();
+  373             } finally {
+  374                 this.#nativeTeardown = nativeTeardownConfirmed ? 'released' : 'unresolved';
+  375                 if (nativeTeardownConfirmed) {
+  376                     this.#components.clear();
+  377                     this.#bodies.clear();
+  378                 }
+  379                 this.#defaultMaterial = null;
+  380                 this.#phase = 'closed';
+  381             }
+  382         }
+  383     }
+  384     diagnostics() {
+  385         return Object.freeze({
+  386             phase: this.#phase,
+  387             bodies: this.#bodies.size,
+  388             nativeOwnership: this.#nativeTeardown,
+  389             unresolvedNativeBodies: this.#nativeTeardown === 'unresolved' ? this.#bodies.size : 0,
+  390             components: this.#components.size,
+  391             disabledComponents: [...this.#components.values()].filter((value) => !value.enabled).length,
+  392             materials: this.#materials().size,
+  393             activeTemporaryScopes: this.#scope ? 1 : 0,
+  394             pendingCommands: this.#queue.diagnostics().pending.length,
+  395             stagedCommandsSupported: false,
+  396             unifiedTransactionsSupported: false,
+  397             materialIdentityTracking: 'adapter-observed-only',
+  398             activationBlockers,
+  399         });
+  400     }
+  401 }
+===== 0def94d0dc3a0ceedf1120145ec84705694312b2:src/air/physics/box3d/world.ts SHA256 d3d13fdb3df197ee4dad03dddb21c5d4115f198371c5ee857bee650deaf030ad =====
+--- lines 229-275 ---
+  229     setDefaultMaterial(value: PhysicsMaterial): void {
+  230         this.assertReady('setDefaultMaterial');
+  231         this.#commandOwner.validateDefaultMaterial(value);
+  232         const next = copySurfaceMaterial(value);
+  233         if (value.rollingFriction !== 0 || value.spinningFriction !== 0)
+  234             unsupportedBox3D('nonzero rollingFriction/spinningFriction');
+  235         // Validate every inherited token and capture rollback values before the first write.
+  236         const changes = [...this.#materialShapes]
+  237             .filter(([, inherited]) => inherited)
+  238             .map(([shape]) => ({
+  239                 shape,
+  240                 previous: copySurfaceMaterial(this.#binding.getShapeMaterial(this.#token, shape)),
+  241             }));
+  242         let attempted = 0;
+  243         try {
+  244             for (const item of changes) {
+  245                 ++attempted;
+  246                 this.invalidatePending();
+  247                 this.#binding.setShapeMaterial(this.#token, item.shape, next);
+  248                 const actual = copySurfaceMaterial(this.#binding.getShapeMaterial(this.#token, item.shape));
+  249                 if (actual.friction !== next.friction || actual.restitution !== next.restitution)
+  250                     throw worldError('AIR_E_BOX3D_ABI', 'setDefaultMaterial', 'Shape material readback mismatch.');
+  251             }
+  252         } catch (error) {
+  253             try {
+  254                 for (const item of changes.slice(0, attempted).reverse()) {
+  255                     this.invalidatePending();
+  256                     this.#binding.setShapeMaterial(this.#token, item.shape, item.previous);
+  257                     const actual = copySurfaceMaterial(this.#binding.getShapeMaterial(this.#token, item.shape));
+  258                     if (actual.friction !== item.previous.friction || actual.restitution !== item.previous.restitution)
+  259                         throw worldError('AIR_E_BOX3D_ABI', 'material rollback', 'Readback mismatch.');
+  260                 }
+  261             } catch (rollbackError) {
+  262                 this.fault(rollbackError);
+  263                 throw worldError(
+  264                     'AIR_E_BOX3D_WORLD_FAULTED',
+  265                     'material rollback',
+  266                     `Restoration failed: ${String(rollbackError)}`,
+  267                 );
+  268             }
+  269             this.invalidatePending();
+  270             throw error;
+  271         }
+  272         this.material = next;
+  273         this.#commandOwner.observeDefaultMaterial(value);
+  274         this.invalidatePending();
+  275     }
+--- lines 410-435 ---
+  410     emitEvents(): void {
+  411         this.assertReady('emitEvents');
+  412         const scope = this.#commandOwner.beginDispatch();
+  413         try {
+  414             if (this.pendingSnapshot) {
+  415                 this.emittedStep = this.pendingSnapshot.stepIndex;
+  416                 this.pendingSnapshot = null;
+  417             }
+  418         } finally {
+  419             scope.dispose();
+  420         }
+  421         // T09 admits no collider event listeners; raw snapshots are diagnostics, not Cocos events.
+  422     }
+  423     step(dt: number, timeSinceLastCalled?: number, maxSubSteps?: number): void {
+  424         this.assertReady('step');
+  425         if (timeSinceLastCalled !== undefined || maxSubSteps !== undefined)
+  426             unsupportedBox3D('Cannon-style manual step accumulator arguments');
+  427         const delta = finiteFloat32(dt, 'step.dt');
+  428         if (delta <= 0) throw worldError('AIR_E_BOX3D_CONFIG', 'step', 'dt must be positive float32.');
+  429         if (this.#writebackEpoch >= this.#writebackQualification.epochLimit)
+  430             throw worldError(
+  431                 'AIR_E_BOX3D_CONFIG',
+  432                 'step',
+  433                 'Owned writeback epoch exhausted before native advancement.',
+  434             );
+  435         const nextEpoch = this.#writebackEpoch + 1;
+===== 0def94d0dc3a0ceedf1120145ec84705694312b2:src/air/physics/box3d/box-sphere-shape.ts SHA256 344602fc16737ed184cd57936d155bd36632a8c2c75183d6b2dfa76b69b51a9e =====
+--- lines 71-102 ---
+   71     initialize(value: Collider): void {
+   72         this.#world().assertComponentConfiguration('Collider initialize');
+   73         if (this.#body) throw worldError('AIR_E_BOX3D_CONFIG', 'shape initialize', 'Already initialized.');
+   74         if (value.needCollisionEvent || value.needTriggerEvent) unsupportedBox3D('collider event listeners (T15)');
+   75         const center = bodyVector(value.center, 'center');
+   76         const dimensions =
+   77             this.#kind === 'box'
+   78                 ? bodyVector((value as BoxCollider).size, 'box size')
+   79                 : [(value as SphereCollider).radius];
+   80         const asset = value.sharedMaterial;
+   81         const material = primitiveMaterial(asset);
+   82         const scale = bodyVector(value.node.worldScale, 'initial shape scale');
+   83         const geometry = primitiveGeometry(this.#kind, center, dimensions, scale, value.isTrigger, material);
+   84         // Preserve the component for its real onDestroy listener-clearing callback if native acquisition fails.
+   85         this.#collider = value;
+   86         const body = this.#world().acquireSharedBody(value.node, this, this.#configuration, {
+   87             adapter: this,
+   88             component: value,
+   89             kind: 'collider',
+   90             material: asset,
+   91         });
+   92         this.#body = body;
+   93         this.#center = center;
+   94         this.#dimensions = Object.freeze([...dimensions]);
+   95         this.#material = material;
+   96         this.#trigger = value.isTrigger;
+   97         this.#geometry = geometry;
+   98         body.completeComponent(this);
+   99     }
+  100     onLoad(): void {
+  101         void this.body;
+  102     } // Geometry configuration was strictly validated during initialize.
+--- lines 146-168 ---
+  146     setMaterial(value: PhysicsMaterial | null): void {
+  147         this.assertConfiguration('setMaterial');
+  148         void this.body;
+  149         const material = primitiveMaterial(value);
+  150         if (this.#active) this.body.updateShapeMaterial(this, material);
+  151         this.body.observeMaterial(this, value);
+  152         this.#material = material;
+  153         this.#geometry = Object.freeze({ ...this.#geometry!, material });
+  154     }
+  155     protected updateDimensions(value: readonly number[]): void {
+  156         this.assertConfiguration('updateDimensions');
+  157         const next = this.candidate(this.#center, value);
+  158         if (this.#active) this.body.setShape(this, next);
+  159         this.#dimensions = Object.freeze([...value]);
+  160         this.#geometry = next;
+  161     }
+  162     updateEventListener(): void {
+  163         if (this.#body?.cleanupOnly && !this.collider.needCollisionEvent && !this.collider.needTriggerEvent) return;
+  164         this.assertConfiguration('updateEventListener');
+  165         if (this.collider.needCollisionEvent || this.collider.needTriggerEvent)
+  166             unsupportedBox3D('collider event listeners (T15)');
+  167         // Every native shape is configured with real native event flags disabled at creation.
+  168     }
+===== 0def94d0dc3a0ceedf1120145ec84705694312b2:src/air/physics/box3d/command-queue.ts SHA256 42550d8487fd7ad05d142bc4b3ab764ddf8bedec140098dc35f88ae0ba786b6b =====
+--- lines 454-485 ---
+  454     pause(): void {
+  455         this.#admit('ready', 'paused');
+  456         this.#pending = Object.freeze([]);
+  457         this.#phase = 'paused';
+  458     }
+  459     resume(): void {
+  460         this.#admit('paused', 'ready');
+  461         this.#phase = 'ready';
+  462     }
+  463     close(): void {
+  464         this.#admit('ready', 'paused', 'faulted', 'closed');
+  465         this.#pending = Object.freeze([]);
+  466         this.#provisional = Object.freeze([]);
+  467         this.#candidate = null;
+  468         this.#quarantine = null;
+  469         this.#bodies.clear();
+  470         this.#phase = 'closed';
+  471     }
+  472     diagnostics() {
+  473         return Object.freeze({
+  474             generation: this.#generation,
+  475             phase: this.#phase,
+  476             sequence: this.#sequence,
+  477             tickIndex: this.#completedTicks >= this.#limit ? null : this.#completedTicks + 1,
+  478             completedTicks: this.#completedTicks,
+  479             attemptId: this.#attempt,
+  480             pending: this.#pending,
+  481             provisionalCount: this.#provisional.length,
+  482             quarantined: this.#quarantine,
+  483             bodies: this.#bodies.size,
+  484             protectedZeros: [...this.#bodies.values()].filter((body) => body.target === 'protected').length,
+  485         });
+===== 0def94d0dc3a0ceedf1120145ec84705694312b2:src/air/physics/box3d/command-producers.ts SHA256 b707e57f16a2a8622b70523e6cc6de7a24c80125306d4ca18e67404f2634cb81 =====
+--- lines 280-308 ---
+  280     pause(): void {
+  281         this.#configuration('producer.pause', true);
+  282         for (const entry of this.#entries.values()) if (entry.kind === 'continuous') entry.enabled = false;
+  283         this.#paused = true;
+  284     }
+  285     resume(): void {
+  286         this.#configuration('producer.resume', true);
+  287         this.#paused = false;
+  288     }
+  289     /** Internal owner notification only AFTER actual disable/type-change/teardown proof. */
+  290     retireBody(body: object): void {
+  291         this.#localAdmission();
+  292         for (const [id, entry] of this.#entries)
+  293             if (entry.kind === 'continuous' && entry.body === body) {
+  294                 entry.enabled = false;
+  295                 entry.disposed = true;
+  296                 this.#entries.delete(id);
+  297             }
+  298     }
+  299     /** Internal teardown: unlike public configuration this remains usable after owner fault. */
+  300     close(): void {
+  301         this.#localAdmission();
+  302         for (const entry of this.#entries.values()) {
+  303             entry.enabled = false;
+  304             entry.disposed = true;
+  305         }
+  306         this.#entries.clear();
+  307         this.#closed = true;
+  308     }
+===== 0def94d0dc3a0ceedf1120145ec84705694312b2:src/air/physics/box3d/binding/facade.mjs SHA256 40cce3a920e67afedec5d7bbf69aae826ad08d31b51243f5e699033dd59eb899 =====
+--- lines 1281-1305 ---
+ 1281         getShapeMaterial(world, shape) {
+ 1282             return exclusive(() => {
+ 1283                 const wid = worldId(world);
+ 1284                 if (handle(shape, 'shape').world !== world)
+ 1285                     throw failure('AIR_E_BOX3D_DISPOSED', 'Shape belongs to another world');
+ 1286                 nativeStatus(module._air_b3_shape_material_get(wid, shape.low, shape.high, output));
+ 1287                 const values = readFloats(2);
+ 1288                 return freeze({ friction: values[0], restitution: values[1] });
+ 1289             });
+ 1290         },
+ 1291         setShapeMaterial(world, shape, material) {
+ 1292             return exclusive(() => {
+ 1293                 const wid = worldId(world);
+ 1294                 if (handle(shape, 'shape').world !== world)
+ 1295                     throw failure('AIR_E_BOX3D_DISPOSED', 'Shape belongs to another world');
+ 1296                 if (!material || Object.keys(material).some((key) => !['friction', 'restitution'].includes(key)))
+ 1297                     throw failure('AIR_E_BOX3D_ARGUMENT', 'Only friction and restitution are supported');
+ 1298                 const friction = finite(material.friction, 'friction');
+ 1299                 const restitution = finite(material.restitution, 'restitution');
+ 1300                 if (friction < 0 || restitution < 0)
+ 1301                     throw failure('AIR_E_BOX3D_ARGUMENT', 'Material values must be nonnegative');
+ 1302                 nativeStatus(module._air_b3_shape_material_set(wid, shape.low, shape.high, friction, restitution));
+ 1303                 changed(world);
+ 1304             });
+ 1305         },
+===== 0def94d0dc3a0ceedf1120145ec84705694312b2:src/air/step-clock.ts SHA256 17c2ef19bd7b677384a6905c8f9af9fc5c18091993327a4119e1bb6e4f73799c =====
+--- lines 89-128 ---
+   89     function assertPaused (): void {
+   90         const paused = (game as unknown as { _paused?: boolean })._paused;
+   91         if (paused !== true) {
+   92             throw new Error(
+   93                 '[cocosair] step(): real clock is running — call begin() (game.pause()) first.'
+   94                 + ' Running rAF and manual stepping at the same time is forbidden (dual clock).');
+   95         }
+   96     }
+   97 
+   98     return {
+   99         get stepping () { return stepping; },
+  100         get stepped () { return stepped; },
+  101         begin (): void {
+  102             if (stepping) { return; }
+  103             game.pause();
+  104             stepping = true;
+  105         },
+  106         step (dt: number = 1 / frameRate): Promise<AirStepFrame> {
+  107             assertPaused();
+  108             const index = stepped + 1;
+  109             return new Promise<AirStepFrame>((resolve, reject) => {
+  110                 const timer = setTimeout(() => {
+  111                     director.off(Director.EVENT_AFTER_DRAW, onDraw);
+  112                     reject(new Error(`[cocosair] step(): no AFTER_DRAW within ${stepTimeoutMs}ms`));
+  113                 }, stepTimeoutMs);
+  114                 function onDraw (): void {
+  115                     director.off(Director.EVENT_AFTER_DRAW, onDraw);
+  116                     clearTimeout(timer);
+  117                     stepped = index;
+  118                     resolve({ step: index, dt, afterDraw: true });
+  119                 }
+  120                 director.on(Director.EVENT_AFTER_DRAW, onDraw);
+  121                 director.tick(dt);
+  122             });
+  123         },
+  124         end (): void {
+  125             if (!stepping) { return; }
+  126             stepping = false;
+  127             game.resume();
+  128         },
+===== 0def94d0dc3a0ceedf1120145ec84705694312b2:src/cocos/game/game.ts SHA256 66eb3ac36fa55f9608a2a1b6ae1e51a6ecb2bc7d37802a038bf5e1077feac62f =====
+--- lines 591-617 ---
+  591     public pause (): void {
+  592         if (this._paused) { return; }
+  593         this._paused = true;
+  594         this._pacer?.stop();
+  595         this.emit(Game.EVENT_PAUSE);
+  596     }
+  597 
+  598     /**
+  599      * @en Resume the game from pause. This will resume:<br>
+  600      * game logic execution, rendering process, event manager, background music and all audio effects.<br>
+  601      * @zh 恢复游戏主循环。包含：游戏逻辑，渲染，事件处理，背景音乐和所有音效。
+  602      */
+  603     public resume (): void {
+  604         if (!this._paused) { return; }
+  605         input._clearEvents();
+  606         this._paused = false;
+  607         this._pacer?.start();
+  608         this.emit(Game.EVENT_RESUME);
+  609     }
+  610 
+  611     /**
+  612      * @en Check whether the game is paused.
+  613      * @zh 判断游戏是否暂停。
+  614      */
+  615     public isPaused (): boolean {
+  616         return this._paused;
+  617     }
+===== 0def94d0dc3a0ceedf1120145ec84705694312b2:src/air/app.ts SHA256 8d97bf3248b14bac0d02604a282a5d117ef968b63ea956073719f4a5b00d2953 =====
+--- lines 188-201 ---
+  188         if (this._started || this._needsResume || this.getScene()) {
+  189             this._scope.deactivate('replaced');
+  190             void this._scope.dispose();
+  191             this._scope = createSessionScope();
+  192         }
+  193         this._scope.activate();
+  194         director.runSceneImmediate(scene);
+  195         if (!this._started) {
+  196             this._started = true;
+  197             game.run();
+  198         } else if (this._needsResume) {
+  199             game.resume();
+  200         }
+  201         this._needsResume = false;
+--- lines 271-274 ---
+  271         scope.deactivate('release');
+  272         game.pause();
+  273         this._needsResume = true;
+  274         return this._release!;
+===== 0def94d0dc3a0ceedf1120145ec84705694312b2:docs/physics/box3d/contracts/unified-command-decisions-v1.md SHA256 56303d162e12346729c66461c1fa9976e69c941fb549804c7a110d1887c695d6 =====
+--- lines 46-78 ---
+   46 Registration defaults to `enabled=true`; boolean options are strict. Force/torque default to zero, relativePoint to zero COM offset, space to world. Units are N, N·m and m. Local force/torque/offset rotate with the command's body basis; offset is never scaled or translated by body origin. Descriptor update is **complete replacement**: omitted fields reset to defaults, never preserve old fields. Validate and copy the entire replacement before changing the stored descriptor. A failed update keeps the previous descriptor and enabled state.
+   47 
+   48 Continuous registration requires a valid initialized enabled dynamic body, and remains body/world/scene-generation-bound. Its descriptor is immutable internally after copying; each successful update installs a new copy. Enable/disable/dispose are idempotent while applicable; enable/update after disposal reject, repeated dispose is safe. Readonly enabled/disposed metadata remains readable after disposal. Disposed enable cannot resurrect ownership.
+   49 
+   50 Create/update/enable are configuration operations outside a callback/step/event-dispatch transaction and require an unpaused ready world. Disable/dispose may also run while paused for cleanup, but not reentrantly during a transaction. Application teardown uses its internal cleanup path, not these admission restrictions to skip cleanup.
+   51 
+   52 ## 2. Queue and callback contract
+   53 
+   54 Ordinary Box3D force, torque and impulse calls become copied **next-executable-fixed-tick** commands, including local variants. Ordinary clear-force/clear-velocity/clear-state calls join the same ordered stream. Component/native velocity getters report last committed native state, not a speculative queued impulse. The underlying immediate binding APIs remain internal; callbacks cannot bypass staging through them.
+   55 
+   56 All accepted user submissions have a strictly increasing safe-integer sequence within the current world generation. Queue retention stores original accepted records; target reduction is a non-destructive view until commit/cancellation. Superseded target records can therefore still be counted as accepted-but-unconsumed entries. Gaps after cancelled/failed attempts are legal; sequence reuse/wrap is not. Ordinary impulses are consumed once, including catch-up ticks. `tickIndex` denotes the next completed logical tick and does not advance on refusal; `attemptId` is a separate diagnostic-only counter, never a simulation tick or command consumption identity.
+   57 
+   58 Hooks and continuous handles share one stable registration order. At each candidate tick, snapshot the enabled roster and descriptor copies once. Pre-tick accepted commands precede producer contributions. Each continuous producer contributes force first, then torque, at its roster position; exact-zero components generate no command and do not wake a body. A nonzero force with an offset includes its induced torque; an explicit descriptor torque is a separate later operation. No producer runs during scene-sync-only calls or merely because a render frame elapsed.
+   59 
+   60 Callbacks are synchronous; normal return is `undefined`. Throw, other return value/thenable, or **any rejected command submission even if caught by callback code** latches failure of the whole provisional candidate. No earlier callback can have written native state. Discard all provisional contributions; preserve the accepted pre-tick queue, native state, snapshots and step counters. Do not internally replay callbacks. A later explicit call to step is a new attempt for the same uncompleted tick, with a new attemptId. User JavaScript side effects are not rollback-capable.
+   61 
+   62 Context is copied frozen metadata, not a command capability; it can be retained and read as historical data, with no invented expiry. Async callbacks are unsupported. Rejected async functions may still schedule JavaScript continuations; the engine cannot sandbox those. An API call made later outside collection is a new submission under then-current admission, never a late append to the old candidate.
+   63 
+   64 During collection/final validation/commit, reject configuration, mass/type/enable, shape/filter/material, Node/ancestor/reparent, world-setting, registration/update/lifecycle changes and recursive step through all reachable Box3D adapter paths. Public velocity setters are **not included in this hook batch** and reject there, even on unowned bodies; outside collection they retain their existing behavior unless target ownership forbids them. The fence is an owner state, not `world->locked=true`.
+   65 
+   66 Pause clears accepted user pending commands and pending target motion, suspends hook invocation, and disables continuous handles. Resume does not re-enable continuous handles; explicit enable is required. Hook enabled configuration survives pause but cannot execute while paused. Paused submissions reject. Body disable/non-dynamic type change revokes body-bound continuous ownership; target lifetime remains the original contract. Scene/app cleanup removes only its owned queues/handles, preserving actual persist ownership.
+   67 
+   68 ## 3. Cancellation and recoverability
+   69 
+   70 `cancelPendingBox3DCommands(body): number` is a pure queue operation allowed only in the **unpaused ready configuration phase**, not in a hook, step, event-dispatch transaction, faulted state or teardown. It validates the current initialized body/world/full-generation ownership, but does not require valid mass geometry, pose, or command arithmetic. A pending-invalid body or arithmetic-overflow queue must remain cancellable. Disabled/static bodies with still-valid ownership may return zero; stale/destroyed objects reject and their owning teardown already clears their entries.
+   71 
+   72 It removes every accepted, unconsumed **user** entry for that body: force/torque/linear or angular impulse, teleport, target set/target clear, and ordinary clear-force/clear-velocity/clear-state. It does not remove internal scene synchronization, automatic target idle-zero, or lifecycle-required paired-zero obligations. Count one removed accepted record per original submission, including retained superseded target records; do not count vector axes, projected native calls, already retired entries or protected cleanup. Return zero when none exist.
+   73 
+   74 Cancellation is all-or-nothing for this body's queue. It does not allocate a new command sequence, so sequence exhaustion cannot prevent queue recovery. If preparing the replacement queue fails, retain the original queue. It never changes native state, snapshot availability, native step count, producer configuration or target ownership. It does not undo already accumulated native forces or committed impulses. Repeated cancellation returns zero after the first removal.
+   75 
+   76 Cancelling a target set/clear leaves the active target handle owned; with no explicit surviving intent, its next executable tick still clears paired velocity. Cancelling a teleport does not resurrect previously **retired** intent; because this operation removes all of this body's pending user entries, no older pending target is revived either. A later setTarget/teleport is a new sequence.
+   77 
+   78 Target dispose/revoke immediately makes further submissions through that handle invalid and creates a separate protected, generation-bound paired-zero obligation. Cancellation cannot remove it or release control. New ownership/velocity control remains refused until known zero commit; on committed readback failure or unknown completion the world faults, not transfers ownership. Disabled/destroyed teardown must explicitly settle the obligation using actual lifecycle state, never send an old zero to a reused ID. Such settlement is not claimed merely because user entries were cancelled.
+===== 0def94d0dc3a0ceedf1120145ec84705694312b2:docs/physics/box3d/contracts/unified-admission-fence-v1.md SHA256 643ba65c50dcb05acb13c89d46455ac613cb8a92ce777e796db7e0b5d3cb2c91 =====
+--- lines 9-31 ---
+    9 The owner also fences the actual PhysicsSystem, referenced RigidBody and Collider components, body Nodes and raw ancestry, shared/default material assets, and Node transforms covered by those identities. It obtains these identities from already-held private owner records, not a side-effecting component getter or caller-provided iterator. Multiple owners remain independent. There is no global bypass, monkeypatch, native lock used as a JavaScript fence, or authority carried by an exposed token.
+   10 
+   11 ## Atomic owner admission
+   12 
+   13 The public adapter enters queue.withSubmissionAdmission before owner validation or any original argument inspection that could reject. The reader's first owner action acquires or reuses the required private leases. This placement ensures a caught owner-admission refusal during collection poisons that candidate, even when the thrown value is undefined, null or zero. Preserve the first rejected-command value by identity; a later error must not replace it.
+   14 
+   15 The reader returns only a logical body identity and original command input. Queue copying can still invoke getters after the reader returns, so the owner holds its temporary leases until the outer withSubmissionAdmission call returns or throws. Release newly acquired temporary leases in an outer finally on every path; do not release reused collection leases or persistent target leases there. Acquire no lease using untrusted data before the queue admission guard.
+   16 
+   17 A refusal installs no record, advances no sequence, and does not change accepted prequeue or native state through an admitted engine entry. A caught nested queue operation must still reject the entire current admission. During collection it also invalidates the candidate and drops provisional records, without replaying callbacks. Queue code alone cannot guarantee the owner or native obligations.
+   18 
+   19 ## Reads, side effects and scope
+   20 
+   21 Last-committed state and velocity reads remain available during callbacks. Configuration, lifecycle, recursive manual or automatic stepping, and mutable cache operations are distinct admissions and must reject before their first engine mutation or caller-controlled coercion. In particular, a World-only guard is too late for PhysicsSystem.postUpdate accumulator changes and for component setters that read input before reaching an adapter.
+   22 
+   23 Direct JavaScript field aliases, arbitrary constructors, overridden methods and external side effects are not sandboxed and are not rolled back. Before accepting a candidate, the owner repeats raw local TRS, world pose and ancestor-basis checks against the original expected snapshots, not against a newly flushed cache. Detection must reject without adopting the changed state as a baseline. A native mutation already completed before a later readback or writeback error must be classified committed or unknown, quarantined as required, and never represented as not-mutated or replayed.
+   24 
+   25 ## Persistent protection and resource counters
+   26 
+   27 Do not temporarily release a target transform lease to make writeback succeed. Compose distinct owner-held exact grants for the transaction lease and every target lease covering the written Node; invoke the actual setter once at the innermost grant. All grants must refer to the same copied expected value and be consumed before listener callbacks. Preserve post-setter expected local TRS, world pose, ancestor basis, and final whole-batch verification. Foreign ownership remains a refusal.
+   28 
+   29 Before native mutation, prove sufficient capacity for every sequence/attempt/tick/native-step and exact-grant counter used by that transaction. World epoch headroom alone does not prove the capacity of a persistent lease that grants multiple writes per tick. Until a pure grant-capacity preflight or continuously protected renewal is implemented and controlled, persistent-target activation remains unavailable.
+   30 
+   31 ## Required integration evidence
+===== 0def94d0dc3a0ceedf1120145ec84705694312b2:docs/physics/box3d/contracts/unified-mutation-fence-v1.md SHA256 22df7ace85ada59cd51610f4e3300a09de8acc97fffa0b99b4059ac767f04e18 =====
+--- lines 7-23 ---
+    7 ## Explicit temporary category restriction
+    8 
+    9 During any active Box3D collection, final validation, command commit, or event-dispatch transaction, all calls to the original Node.addComponent in that Cocos realm reject at entry, before class-name resolution, user constructor properties, dependency recursion or constructor execution. This includes orphan and unrelated Nodes, UI/2D components, subclasses and user components. The compatibility restriction is deliberate and bounded to these transactions. It does not claim a physics-class-only filter. Outside such transactions, with no lease, original component construction behavior remains.
+   10 
+   11 Each owner registers Node.prototype as an independent identity in the same private multi-owner lease registry. One owner cannot release another's prohibition. The key is not modified and carries no release authority. A new orphan is not assumed to belong to a known scene; guarding only existing bodies or scene roots is insufficient. Arbitrary direct constructors, overridden engine methods and private field edits are not sandboxed.
+   12 
+   13 ## Object-scoped early admission
+   14 
+   15 Wire the reviewed primitive at the earliest public mutation points in Component.enabled/destroy, Node.active/destroy/destroyAllChildren, PhysicsMaterial scalar setters/setValues/destroy, Collider.material side-effecting getter/setter, and PhysicsSystem cached configuration setters/resetConfiguration/resetAccumulator. Existing native-first paths still require the actual owner transaction phase. Batch destruction copies and prechecks the full affected child list before the first destroy call, without promising rollback of arbitrary subsequent user lifecycle callbacks.
+   16 
+   17 The actual world later owns leases over its bodies, components, Node ancestry, shared/default materials and PhysicsSystem. Shared objects may have multiple owner leases. Registration is before user callbacks; release is in finally on every exit. No global bypass, no native lock held as a fence and no native-cleanup claim follows from releasing a lease. Expected-pose writeback continues to use exact Node transform grants and immutable native-origin verification, not a blanket mutation exemption.
+   18 
+   19 Pause/continuous disable, target disposal and actual native lifetime settlement remain separate owner obligations. Direct vector/internal aliases not passing an entry remain an explicit detection or unsupported-side-effect boundary; public-entry guards do not intercept arbitrary JavaScript memory writes.
+   20 
+   21 ## Qualification before activation
+   22 
+   23 Import and exercise the actual engine entry points, not copied setter bodies. Verify unchanged cache/flags/arrays/material identity/listener bindings/accumulator and zero native or lifecycle callback effects at refusal. Include a protected later child, two owners sharing material, orphan/UI/2D component creation, constructor and requirement getter sentinels, and no-lease original behavior. Then qualify the actual World callback/validation/commit/release path against fresh schema-matched WASM. Until then no formal required cell is PASS.
+===== 0def94d0dc3a0ceedf1120145ec84705694312b2:ai/plans/box3d-v1.2-reference.md SHA256 17b4dcf0d8acbe0ed72f81ab4d3fc53c6a51f705d573699f0d50137e4bf00c46 =====
+--- lines 238-240 ---
+  238 这组扩展不新增场景/物理循环，也不改旧后端API。v1.2默认将target命令的消费点放在现有 `world.step` 内：scene同步完成→调用正式before-step hook→合并本tick命令→上传native→恰好一次 `b3World_Step`。同一handle同tick多次setTarget按命令序号最后一次生效；在事件回调中提交只影响下一tick。target按当前固定dt产生到达速度，不直接调用SetTransform；未提交新target的下一tick归零target速度，不无限沿用上次速度。限速/加速度由EX09控制层在提交target前约束，不能修改被持商品速度来伪造约束。
+  239 
+  240 活动target handle独占该kinematic body的运动控制：公共setLinearVelocity/setAngularVelocity和直接Node姿态修改与target模式冲突时，默认返回AIR_E_BOX3D_CONFIG，组件/native保持最后有效状态；clear仅取消目标并保留target控制权；必须dispose后才转入速度模式，显式teleport是唯一允许的重置通道并取消pending target。适配层内部设置到达速度不经业务冲突入口。body禁用、切为非kinematic、所属scene释放或app关闭时撤销pending命令并使handle失效；pause清空pending目标及移动意图，恢复后须重新提交。paused时新target默认拒绝而非积压。persist body按其真实所有权保留，不因其他scene释放误失效。T01必须对照现行Node同步可实现性冻结上述处理路径，不能在T33临时绕过。
+--- lines 624-626 ---
+  624 | B3-C01 | 同一输入分别按 30/60/120 Hz 调度，明确配置足够 catch-up，完成 600 固定 tick | tick 数为 600，状态与事件 tick hash 一致；不比较插值画面 |
+  625 | B3-C02 | 无重力 vx=1，substeps 分别 1/4/8，各执行 60 次固定步 | x≈1 m，误差≤1e-4；0/-1/NaN 等配置调用前拒绝 |
+  626 | B3-C03 | 给 postUpdate 输入 0.5 s，再输入可控 dt；切换 enable/autoSimulation；显式 resetAccumulator | 每帧 step 数受现有上限约束，余量按旧规则保留；没有私自丢时或重置；手动 step 不冒充完整事件周期 |

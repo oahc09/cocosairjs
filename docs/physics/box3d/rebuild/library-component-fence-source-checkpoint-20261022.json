@@ -1,0 +1,87 @@
+{
+  "status": "PASS_ACTUAL_LIBRARY_DOWNLOAD_INCREMENTAL_INDEPENDENT_STORE_FULL_FILE_VERIFICATION",
+  "timeUTC": "2026-10-22T15:27:56.707271+00:00",
+  "libraryFileId": "libfile_6060c3cda95881919e0e01dc520624db",
+  "fileId": "file_000000009ac081f4b1306b0dda3d7410",
+  "archive": {
+    "bytes": 2416292,
+    "sha256": "74b0f5f6f65c89e183f8bf9ab9b65f8adcbd2eb388a9696f860956e6cad9bc7c"
+  },
+  "commit": "a9be35d68f5cad1f18eca2be813f216dc04cdc4b",
+  "tree": "7068e2bbea72fe3c34b9b79537b125dc28afc1d2",
+  "bundle": {
+    "file": "box3d-rebuild-incremental.bundle",
+    "bytes": 1491023,
+    "sha256": "ad51c6e0074b9f657d0bf9631315f44144434d0be98fd9be2f7dc98f14920fe9"
+  },
+  "reusedRestoreDirectory": "/workspace/scratch/62d43a81bbde/box3d-motion-qualified-library-roundtrip-20261022/restored",
+  "previousVerifiedCommit": "0def94d0dc3a0ceedf1120145ec84705694312b2",
+  "beforeVerification": {
+    "status": "PASS",
+    "checkedFiles": 15071,
+    "independentObjectStore": true
+  },
+  "afterVerification": {
+    "status": "PASS",
+    "checkedFiles": 15604,
+    "independentObjectStore": true
+  },
+  "newFullCloneCreated": false,
+  "priorReceiptPreserved": true,
+  "commands": [
+    {
+      "command": [
+        "git",
+        "-C",
+        "/workspace/scratch/62d43a81bbde/box3d-motion-qualified-library-roundtrip-20261022/restored",
+        "bundle",
+        "verify",
+        "/workspace/scratch/62d43a81bbde/box3d-component-fence-source-library-roundtrip-20261022/box3d-rebuild-incremental.bundle"
+      ],
+      "exitCode": 0,
+      "stdout": "The bundle contains this ref:\na9be35d68f5cad1f18eca2be813f216dc04cdc4b refs/heads/feat/box3d-rebuild-20261022\nThe bundle requires this ref:\ne5c5674bfe08be0c9fda72c484f4380bd0d0e2c6 \nThe bundle uses this hash algorithm: sha1\n",
+      "stderr": "/workspace/scratch/62d43a81bbde/box3d-component-fence-source-library-roundtrip-20261022/box3d-rebuild-incremental.bundle is okay\n"
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/workspace/scratch/62d43a81bbde/box3d-motion-qualified-library-roundtrip-20261022/restored",
+        "fetch",
+        "/workspace/scratch/62d43a81bbde/box3d-component-fence-source-library-roundtrip-20261022/box3d-rebuild-incremental.bundle",
+        "refs/heads/feat/box3d-rebuild-20261022"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": "From /workspace/scratch/62d43a81bbde/box3d-component-fence-source-library-roundtrip-20261022/box3d-rebuild-incremental.bundle\n * branch              feat/box3d-rebuild-20261022 -> FETCH_HEAD\n"
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/workspace/scratch/62d43a81bbde/box3d-motion-qualified-library-roundtrip-20261022/restored",
+        "merge-base",
+        "--is-ancestor",
+        "0def94d0dc3a0ceedf1120145ec84705694312b2",
+        "a9be35d68f5cad1f18eca2be813f216dc04cdc4b"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/workspace/scratch/62d43a81bbde/box3d-motion-qualified-library-roundtrip-20261022/restored",
+        "checkout",
+        "--detach",
+        "a9be35d68f5cad1f18eca2be813f216dc04cdc4b"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": "Previous HEAD position was 0def94d0 Box3D: preserve private world ownership and current Release component qualification\nHEAD is now at a9be35d6 fix(box3d): fence component entry mutations and qualify current owner writeback\n"
+    }
+  ],
+  "scope": "Honest partial-main local Git source restoration, no physical acceptance."
+}

@@ -1,0 +1,89 @@
+{
+  "status": "REVIEW_COMPLETE_PRODUCT_DEFECTS_REMAIN_OPEN",
+  "timeUTC": "2026-10-22T15:42:29.893557+00:00",
+  "productBase": "a9be35d68f5cad1f18eca2be813f216dc04cdc4b",
+  "actualWasmScenarios": [
+    {
+      "case": "clone-callback",
+      "status": "CONFIRMED_CURRENT_PRODUCT_RED",
+      "receipt": "docs/physics/box3d/rebuild/owner-material-real-release-20261022-clone-callback-red-a/receipt.json",
+      "receiptSha256": "671e7b740a04f26b8fd876ddc8cc0afd2e915f88b918007b50f12bc6922e8c25",
+      "rawSha256": "8ed7c9a47b3416ba5db09aaaae9bfdc3ea9c418d1ba9ea8ae93e86e4280f8586",
+      "namedSources": 107,
+      "failedAssertions": [
+        "cloned material refuses before coefficient cache write"
+      ],
+      "facts": {
+        "cloneFriction": 0.8,
+        "originalFriction": 0.3,
+        "actualNativeFriction": 0.30000001192092896,
+        "worldState": "ready"
+      },
+      "realNativeSteps": 1,
+      "finalOwnedCountersZero": true
+    },
+    {
+      "case": "collider-listener-failure",
+      "status": "CONFIRMED_CURRENT_PRODUCT_RED",
+      "receipt": "docs/physics/box3d/rebuild/owner-material-real-release-20261022-collider-listener-failure-red-a/receipt.json",
+      "receiptSha256": "7a8ebdf0bd227fbef628d5b679da8da1e56056dc97c6829e8825b352a40c2a7d",
+      "rawSha256": "4e9b5c1de03cbbf90b9a21c1f395798d13e19613f887de6f70aac5b235f6450f",
+      "namedSources": 107,
+      "failedAssertions": [
+        "post-native listener failure faults instead of pretending no change",
+        "faulted owner refuses later step without native replay"
+      ],
+      "facts": {
+        "native": {
+          "friction": 0.800000011920929,
+          "restitution": 0
+        },
+        "colliderStillOriginal": true,
+        "colliderIsCandidate": false,
+        "systemStillOld": true,
+        "systemIsCandidate": false,
+        "worldState": "ready"
+      },
+      "realNativeSteps": 1,
+      "finalOwnedCountersZero": true
+    },
+    {
+      "case": "default-listener-failure",
+      "status": "CONFIRMED_CURRENT_PRODUCT_RED",
+      "receipt": "docs/physics/box3d/rebuild/owner-material-real-release-20261022-default-listener-failure-red-a/receipt.json",
+      "receiptSha256": "a60cc3153f0652f739989e1b7b1b070bb228c0a80f06ce07781a39b57c54874a",
+      "rawSha256": "6a3ece2c23ca31267df0731808d232821416065ca9240679703fbbb2a6d308a1",
+      "namedSources": 107,
+      "failedAssertions": [
+        "post-native listener failure faults instead of pretending no change",
+        "faulted owner refuses later step without native replay"
+      ],
+      "facts": {
+        "native": {
+          "friction": 0.800000011920929,
+          "restitution": 0
+        },
+        "colliderStillOriginal": false,
+        "colliderIsCandidate": false,
+        "systemStillOld": false,
+        "systemIsCandidate": true,
+        "worldState": "ready"
+      },
+      "realNativeSteps": 1,
+      "finalOwnedCountersZero": true
+    }
+  ],
+  "newUnwiredObserver": {
+    "status": "PASS_PURE_OBSERVER_CONTROL_ONLY",
+    "cases": 76,
+    "resultSha256": "0e3194f0bf3080c9eba72d6a43155f73a9c654f615bb77545f68a1fcb5e8f8b7",
+    "sourceSha256": "4cf40c4f1be0d407a402e95dcdb7a898b1942cb175f869f6367a41b18c2d1d2b",
+    "unwired": true
+  },
+  "limits": [
+    "Listener on failures are explicitly injected, native material updates are real",
+    "No browser, full material, public unified command or formal Gate acceptance",
+    "Current B0 observer is unreferenced by these real-engine tests and does not fix these product defects",
+    "All 2128 formal cells remain NOT_RUN"
+  ]
+}

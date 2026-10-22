@@ -1,0 +1,38 @@
+{
+  "timeUTC": "2026-10-22T15:39:03.191073+00:00",
+  "status": "FIXTURE_FORMAT_AND_TSC_ONLY",
+  "localProductBase": "a9be35d68f5cad1f18eca2be813f216dc04cdc4b",
+  "fixtureFiles": {
+    "tools/verify/box3d/owner-material-real-wasm.mjs": {
+      "bytes": 5398,
+      "sha256": "0003300b34aee4b1491b8d993142752fe1412ecbfe8cfb30868446b7824412a0"
+    },
+    "tools/verify/box3d/owner-material-real-wasm.jest.cjs": {
+      "bytes": 427,
+      "sha256": "c76a0a5abf334d95eb4edb51d02f8875ebb9d4576f501174af4616c606567866"
+    },
+    "tools/verify/box3d/owner-material-real-wasm-preload.mjs": {
+      "bytes": 6324,
+      "sha256": "8a39cc97afa380a7babe3597ea0001dfab7426b214fcdce12d1aea063c51a0cd"
+    },
+    "tools/verify/box3d/owner-material-real-wasm.tsconfig.json": {
+      "bytes": 160,
+      "sha256": "ec6dc0a6699ec54b0d2fe567bbc0b4bb82039c5f8a09ca80c8213afc7f9d46a1"
+    },
+    "tools/verify/box3d/owner-material-real-wasm.test.ts": {
+      "bytes": 11899,
+      "sha256": "e076d9a4b49f72a5fdcce0af8e9596aefbece85d8730529c6e83f3dd836c9ee4"
+    },
+    "tools/verify/box3d/owner-material-real-wasm-environment.cjs": {
+      "bytes": 693,
+      "sha256": "b4bd57ad90648661c7223e94e027f3fc4ed0192b9f0d9bcb9db88e2db71aa061"
+    },
+    "tools/verify/box3d/owner-material-real-wasm-inputs.cjs": {
+      "bytes": 5164,
+      "sha256": "8fad7f1738b6de9f78233b937885382335a33c10b0b2a758f67a36d4095cd3dd"
+    }
+  },
+  "formatExitCode": 0,
+  "tscExitCode": 0,
+  "scope": "New named material clone and explicit post-native listener-failure scenarios; not executed or physics qualified by this receipt. No product or native input changed. Prior generic writeback fixture unchanged."
+}

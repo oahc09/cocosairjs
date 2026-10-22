@@ -1,0 +1,16 @@
+{
+  "status": "FAIL",
+  "counts": {
+    "cases": 76,
+    "passed": 75
+  },
+  "stable": true,
+  "failures": [
+    {
+      "name": "unresolved callback cleanup is not reported as confirmed release",
+      "status": "FAIL",
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n0 !== 1\n",
+      "stack": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n0 !== 1\n\n    at file:///workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/verify/box3d/physics-state-observer-control.mjs:629:12\n    at check (file:///workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/verify/box3d/physics-state-observer-control.mjs:43:9)\n    at file:///workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/verify/box3d/physics-state-observer-control.mjs:612:1"
+    }
+  ]
+}

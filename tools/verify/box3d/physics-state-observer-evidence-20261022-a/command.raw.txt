@@ -1,0 +1,16 @@
+{
+  "status": "FAIL",
+  "counts": {
+    "cases": 67,
+    "passed": 66
+  },
+  "stable": true,
+  "failures": [
+    {
+      "name": "caught nested registration poisons admission without partial install",
+      "status": "FAIL",
+      "error": "AssertionError [ERR_ASSERTION]: Values have same structure but are not reference-equal:\n\n[Error: Physics state observer admission cannot re-enter.]\n",
+      "stack": "AssertionError [ERR_ASSERTION]: Values have same structure but are not reference-equal:\n\n[Error: Physics state observer admission cannot re-enter.]\n\n    at sameThrow (file:///workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/verify/box3d/physics-state-observer-control.mjs:59:12)\n    at file:///workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/verify/box3d/physics-state-observer-control.mjs:255:5\n    at check (file:///workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/verify/box3d/physics-state-observer-control.mjs:42:9)\n    at file:///workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/verify/box3d/physics-state-observer-control.mjs:243:1"
+    }
+  ]
+}

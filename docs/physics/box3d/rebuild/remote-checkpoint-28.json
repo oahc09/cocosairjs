@@ -1,0 +1,313 @@
+{
+  "schema": "box3d-remote-checkpoint-v1",
+  "checkpoint": 28,
+  "recordedAt": "2026-10-22T15:29:51.621Z",
+  "repository": "oahc09/cocosairjs",
+  "branch": "feat/box3d-rebuild-20261022",
+  "localHead": "a9be35d68f5cad1f18eca2be813f216dc04cdc4b",
+  "remoteParent": "a7dc52ae8f056bc02c400df5a6feae258412f509",
+  "remoteCommit": "aa6d9bb7cb5a31dc2094f6728da55afdc4d7cb7c",
+  "remoteTree": "b338be21a4b01dab8edac46737f5c79a371c159b",
+  "mainUnchanged": "b573be0741db9e2a13d38ce7e65870b97a1f5fbc",
+  "treeVerification": {
+    "status": "PASS",
+    "verifiedAt": "2026-10-22T15:28:24.858Z",
+    "baseTree": "d3b107c015331c32429a67a3536f023cd08bef0d",
+    "newTree": "b338be21a4b01dab8edac46737f5c79a371c159b",
+    "changedFiles": 541,
+    "untouchedSiblings": 950,
+    "directories": 175,
+    "treeReads": 51,
+    "nonRecursive": true
+  },
+  "url": "https://github.com/oahc09/cocosairjs/commit/aa6d9bb7cb5a31dc2094f6728da55afdc4d7cb7c",
+  "createCommitInitialDenial": {
+    "content": [
+      {
+        "type": "text",
+        "text": "This action was rejected due to unacceptable risk.\nReason: This creates a remote commit in oahc09/cocosairjs, but the user authorized work on the different repository oahc09/cocosairjs-interactive-exhibition; the exact external target is not authorized.\nDo not bypass this rejection through a workaround or indirect execution. Continue with a safer alternative, or carry out checks to prove that the action is authorized or low risk before trying again. Complete unaffected work without asking for confirmation. Report anything that remains blocked, clarify why it was blocked by auto-review, inform the user of the risk and ask for approval."
+      }
+    ],
+    "isError": true
+  },
+  "singleRetryCount": 1,
+  "createCommit": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Action completed."
+      }
+    ],
+    "structuredContent": {
+      "sha": "aa6d9bb7cb5a31dc2094f6728da55afdc4d7cb7c"
+    },
+    "isError": false
+  },
+  "commitRead": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Action completed."
+      }
+    ],
+    "structuredContent": {
+      "content": "{\"sha\":\"aa6d9bb7cb5a31dc2094f6728da55afdc4d7cb7c\",\"node_id\":\"C_kwDOVHk0vNoAKGFhNmQ5YmI3Y2I1YTMxZGMyMDk0ZjY3MjhkYTU1YWZkYzRkN2NiN2M\",\"url\":\"https://api.github.com/repos/oahc09/cocosairjs/git/commits/aa6d9bb7cb5a31dc2094f6728da55afdc4d7cb7c\",\"html_url\":\"https://github.com/oahc09/cocosairjs/commit/aa6d9bb7cb5a31dc2094f6728da55afdc4d7cb7c\",\"author\":{\"name\":\"oahc09\",\"email\":\"caoshen1990@163.com\",\"date\":\"2026-10-22T15:29:29Z\"},\"committer\":{\"name\":\"oahc09\",\"email\":\"caoshen1990@163.com\",\"date\":\"2026-10-22T15:29:29Z\"},\"tree\":{\"sha\":\"b338be21a4b01dab8edac46737f5c79a371c159b\",\"url\":\"https://api.github.com/repos/oahc09/cocosairjs/git/trees/b338be21a4b01dab8edac46737f5c79a371c159b\"},\"message\":\"fix(box3d): fence component entry mutations and qualify current owner writeback\\n\\nPreserve original refusal controls, independent source rerun, and finite real Release lifecycle/local-alias failure evidence. Keep nine command wrappers available for later queue admission; public unified transactions and formal Gates remain unqualified.\",\"parents\":[{\"sha\":\"a7dc52ae8f056bc02c400df5a6feae258412f509\",\"url\":\"https://api.github.com/repos/oahc09/cocosairjs/git/commits/a7dc52ae8f056bc02c400df5a6feae258412f509\",\"html_url\":\"https://github.com/oahc09/cocosairjs/commit/a7dc52ae8f056bc02c400df5a6feae258412f509\"}],\"verification\":{\"verified\":false,\"reason\":\"unsigned\",\"signature\":null,\"payload\":null,\"verified_at\":null}}",
+      "title": "aa6d9bb7cb5a31dc2094f6728da55afdc4d7cb7c",
+      "modified_date": null,
+      "url": "https://api.github.com/repos/oahc09/cocosairjs/git/commits/aa6d9bb7cb5a31dc2094f6728da55afdc4d7cb7c",
+      "display_url": "https://api.github.com/repos/oahc09/cocosairjs/git/commits/aa6d9bb7cb5a31dc2094f6728da55afdc4d7cb7c",
+      "display_title": "aa6d9bb7cb5a31dc2094f6728da55afdc4d7cb7c",
+      "structuredContent": {
+        "title": "aa6d9bb7cb5a31dc2094f6728da55afdc4d7cb7c",
+        "content": "{\"sha\":\"aa6d9bb7cb5a31dc2094f6728da55afdc4d7cb7c\",\"node_id\":\"C_kwDOVHk0vNoAKGFhNmQ5YmI3Y2I1YTMxZGMyMDk0ZjY3MjhkYTU1YWZkYzRkN2NiN2M\",\"url\":\"https://api.github.com/repos/oahc09/cocosairjs/git/commits/aa6d9bb7cb5a31dc2094f6728da55afdc4d7cb7c\",\"html_url\":\"https://github.com/oahc09/cocosairjs/commit/aa6d9bb7cb5a31dc2094f6728da55afdc4d7cb7c\",\"author\":{\"name\":\"oahc09\",\"email\":\"caoshen1990@163.com\",\"date\":\"2026-10-22T15:29:29Z\"},\"committer\":{\"name\":\"oahc09\",\"email\":\"caoshen1990@163.com\",\"date\":\"2026-10-22T15:29:29Z\"},\"tree\":{\"sha\":\"b338be21a4b01dab8edac46737f5c79a371c159b\",\"url\":\"https://api.github.com/repos/oahc09/cocosairjs/git/trees/b338be21a4b01dab8edac46737f5c79a371c159b\"},\"message\":\"fix(box3d): fence component entry mutations and qualify current owner writeback\\n\\nPreserve original refusal controls, independent source rerun, and finite real Release lifecycle/local-alias failure evidence. Keep nine command wrappers available for later queue admission; public unified transactions and formal Gates remain unqualified.\",\"parents\":[{\"sha\":\"a7dc52ae8f056bc02c400df5a6feae258412f509\",\"url\":\"https://api.github.com/repos/oahc09/cocosairjs/git/commits/a7dc52ae8f056bc02c400df5a6feae258412f509\",\"html_url\":\"https://github.com/oahc09/cocosairjs/commit/a7dc52ae8f056bc02c400df5a6feae258412f509\"}],\"verification\":{\"verified\":false,\"reason\":\"unsigned\",\"signature\":null,\"payload\":null,\"verified_at\":null}}",
+        "display_url": "https://api.github.com/repos/oahc09/cocosairjs/git/commits/aa6d9bb7cb5a31dc2094f6728da55afdc4d7cb7c"
+      }
+    },
+    "isError": false
+  },
+  "updateRef": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Action completed."
+      }
+    ],
+    "structuredContent": {
+      "success": true
+    },
+    "isError": false
+  },
+  "refRead": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Action completed."
+      }
+    ],
+    "structuredContent": {
+      "content": "{\"ref\":\"refs/heads/feat/box3d-rebuild-20261022\",\"node_id\":\"REF_kwDOVHk0vNoAJnJlZnMvaGVhZHMvZmVhdC9ib3gzZC1yZWJ1aWxkLTIwMjYxMDIy\",\"url\":\"https://api.github.com/repos/oahc09/cocosairjs/git/refs/heads/feat/box3d-rebuild-20261022\",\"object\":{\"sha\":\"aa6d9bb7cb5a31dc2094f6728da55afdc4d7cb7c\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/oahc09/cocosairjs/git/commits/aa6d9bb7cb5a31dc2094f6728da55afdc4d7cb7c\"}}",
+      "title": "box3d-rebuild-20261022",
+      "modified_date": null,
+      "url": "https://api.github.com/repos/oahc09/cocosairjs/git/ref/heads/feat/box3d-rebuild-20261022",
+      "display_url": "https://api.github.com/repos/oahc09/cocosairjs/git/ref/heads/feat/box3d-rebuild-20261022",
+      "display_title": "box3d-rebuild-20261022",
+      "structuredContent": {
+        "title": "box3d-rebuild-20261022",
+        "content": "{\"ref\":\"refs/heads/feat/box3d-rebuild-20261022\",\"node_id\":\"REF_kwDOVHk0vNoAJnJlZnMvaGVhZHMvZmVhdC9ib3gzZC1yZWJ1aWxkLTIwMjYxMDIy\",\"url\":\"https://api.github.com/repos/oahc09/cocosairjs/git/refs/heads/feat/box3d-rebuild-20261022\",\"object\":{\"sha\":\"aa6d9bb7cb5a31dc2094f6728da55afdc4d7cb7c\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/oahc09/cocosairjs/git/commits/aa6d9bb7cb5a31dc2094f6728da55afdc4d7cb7c\"}}",
+        "display_url": "https://api.github.com/repos/oahc09/cocosairjs/git/ref/heads/feat/box3d-rebuild-20261022"
+      }
+    },
+    "isError": false
+  },
+  "mainRead": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Action completed."
+      }
+    ],
+    "structuredContent": {
+      "content": "{\"ref\":\"refs/heads/main\",\"node_id\":\"REF_kwDOVHk0vK9yZWZzL2hlYWRzL21haW4\",\"url\":\"https://api.github.com/repos/oahc09/cocosairjs/git/refs/heads/main\",\"object\":{\"sha\":\"b573be0741db9e2a13d38ce7e65870b97a1f5fbc\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/oahc09/cocosairjs/git/commits/b573be0741db9e2a13d38ce7e65870b97a1f5fbc\"}}",
+      "title": "main",
+      "modified_date": null,
+      "url": "https://api.github.com/repos/oahc09/cocosairjs/git/ref/heads/main",
+      "display_url": "https://api.github.com/repos/oahc09/cocosairjs/git/ref/heads/main",
+      "display_title": "main",
+      "structuredContent": {
+        "title": "main",
+        "content": "{\"ref\":\"refs/heads/main\",\"node_id\":\"REF_kwDOVHk0vK9yZWZzL2hlYWRzL21haW4\",\"url\":\"https://api.github.com/repos/oahc09/cocosairjs/git/refs/heads/main\",\"object\":{\"sha\":\"b573be0741db9e2a13d38ce7e65870b97a1f5fbc\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/oahc09/cocosairjs/git/commits/b573be0741db9e2a13d38ce7e65870b97a1f5fbc\"}}",
+        "display_url": "https://api.github.com/repos/oahc09/cocosairjs/git/ref/heads/main"
+      }
+    },
+    "isError": false
+  },
+  "treeParts": [
+    {
+      "start": 0,
+      "count": 50,
+      "baseTree": "d3b107c015331c32429a67a3536f023cd08bef0d",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "e0f4bc691ed6c50c8464a6325fd0288b89085dda"
+        },
+        "isError": false
+      }
+    },
+    {
+      "start": 50,
+      "count": 50,
+      "baseTree": "e0f4bc691ed6c50c8464a6325fd0288b89085dda",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "6a29d014b762e9ae7cb7462187310c7bcb17e474"
+        },
+        "isError": false
+      }
+    },
+    {
+      "start": 100,
+      "count": 50,
+      "baseTree": "6a29d014b762e9ae7cb7462187310c7bcb17e474",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "aaa8603fdef41c900a27aa682117c5e534264a78"
+        },
+        "isError": false
+      }
+    },
+    {
+      "start": 150,
+      "count": 50,
+      "baseTree": "aaa8603fdef41c900a27aa682117c5e534264a78",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "a74baddca108d0417a6e4262d078f7c125efb65a"
+        },
+        "isError": false
+      }
+    },
+    {
+      "start": 200,
+      "count": 50,
+      "baseTree": "a74baddca108d0417a6e4262d078f7c125efb65a",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "e96a3384f1439db9a713db726546df3f8629ecf4"
+        },
+        "isError": false
+      }
+    },
+    {
+      "start": 250,
+      "count": 50,
+      "baseTree": "e96a3384f1439db9a713db726546df3f8629ecf4",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "888264c32116a6310128d0d4785b3e25b85d59de"
+        },
+        "isError": false
+      }
+    },
+    {
+      "start": 300,
+      "count": 50,
+      "baseTree": "888264c32116a6310128d0d4785b3e25b85d59de",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "c6754e32e10ce27624cb29125d35f9e4c8c94e00"
+        },
+        "isError": false
+      }
+    },
+    {
+      "start": 350,
+      "count": 50,
+      "baseTree": "c6754e32e10ce27624cb29125d35f9e4c8c94e00",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "ad794f91515cf733f112edc591bdbc49499b0b4c"
+        },
+        "isError": false
+      }
+    },
+    {
+      "start": 400,
+      "count": 50,
+      "baseTree": "ad794f91515cf733f112edc591bdbc49499b0b4c",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "3ded389a1e0809c316becfff0951a5a402a3dd55"
+        },
+        "isError": false
+      }
+    },
+    {
+      "start": 450,
+      "count": 50,
+      "baseTree": "3ded389a1e0809c316becfff0951a5a402a3dd55",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "789e1b843dbc06ef6643d2e1555417799f3a8cbd"
+        },
+        "isError": false
+      }
+    },
+    {
+      "start": 500,
+      "count": 41,
+      "baseTree": "789e1b843dbc06ef6643d2e1555417799f3a8cbd",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "b338be21a4b01dab8edac46737f5c79a371c159b"
+        },
+        "isError": false
+      }
+    }
+  ]
+}
