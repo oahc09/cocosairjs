@@ -1,0 +1,966 @@
+{
+  "schemaVersion": 1,
+  "createdAtUtc": "2026-10-22T01:25:26.781006+00:00",
+  "scope": "AUTHORIZED_REBUILD_INITIAL_CHECKPOINT",
+  "branch": "feat/box3d-rebuild-20261022",
+  "upstreamSourceCommit": "b573be0741db9e2a13d38ce7e65870b97a1f5fbc",
+  "localImportCommit": "730fbf2519887474e9acfd229fbb65586090bb77",
+  "sourceClosure": "PARTIAL_MAIN_SNAPSHOT_COMPLETE_SRC",
+  "buildClosureVerified": false,
+  "historicalPassImported": false,
+  "inventoryFrozen": false,
+  "expandedRequiredCellCount": null,
+  "historicalExpandedCellCountIsNotCurrentInventory": 861,
+  "tasks": [
+    {
+      "id": "T00",
+      "phase": "M0",
+      "status": "IN_PROGRESS",
+      "description": "检查AGENTS/HEAD/用户差异；固定工作区、版本锁、来源与MIT notice；核对02261af基线的2D/3D共存及上游变化",
+      "dependencies": "无",
+      "completionContract": "baseline.json和差异说明可追溯；不自动升级Box3D；无覆盖；明确根目录、命令与prepare/cleanup所有权"
+    },
+    {
+      "id": "T01",
+      "phase": "M0",
+      "status": "TODO",
+      "description": "建立capability-to-API-to-test矩阵；冻结质量/阻尼/重力睡眠setter、缩放、材质、事件快照/sensor边界、query与错误；落定§5.3公开运动扩展及EX09接合/自过滤路径",
+      "dependencies": "T00",
+      "completionContract": "API签名/模式时序/ownership和required子例成文；采用v1.2推荐默认或记录有依据的修订；每个公开方法有映射或明确unsupported"
+    },
+    {
+      "id": "T02",
+      "phase": "M0",
+      "status": "TODO",
+      "description": "冻结浏览器/真机、fixture、容差和预算初版；设计schema/inventory；落实设备与BIZ07真人协调责任",
+      "dependencies": "T00",
+      "completionContract": "required环境/子例/预算有版本；设备型号、访问方式、负责人/获取时间或明确阻塞台账；M0可冻结清单，缺真机不阻塞独立代码工作"
+    },
+    {
+      "id": "T03",
+      "phase": "M0",
+      "status": "TODO",
+      "description": "冻结feature、asset URL、d.ts、tarball、公开运动扩展导出与2D/3D独立prepare/cleanup事务",
+      "dependencies": "T00、T01",
+      "completionContract": "时序与失败清理评审通过；单runtime/按需加载/并存子例有明确断言"
+    },
+    {
+      "id": "T04",
+      "phase": "M1",
+      "status": "TODO",
+      "description": "对旧 vendor 与目标 core 做 header / ABI 差异审查，迁移 binding 源码",
+      "dependencies": "T01",
+      "completionContract": "差异、函数、字段、enum、默认值处置及静态完整性完成；真实运行留T05/T07，不提前标PASS"
+    },
+    {
+      "id": "T05",
+      "phase": "M1",
+      "status": "TODO",
+      "description": "宿主 CMake、可重建 ST SIMD、静态 reader、CSP 支持、产物 manifest",
+      "dependencies": "T03、T04",
+      "completionContract": "真实非隔离页面运行；WASM-01/03、WASM-06-BINDING、WASM-07-BINDING"
+    },
+    {
+      "id": "T06",
+      "phase": "M1",
+      "status": "TODO",
+      "description": "Loader：并发去重、路径定位、hash/schema、失败清理、诊断信息",
+      "dependencies": "T03、T05",
+      "completionContract": "loader scope的WASM-08通过；AIR准入结果由T08/T12验证"
+    },
+    {
+      "id": "T07",
+      "phase": "M1",
+      "status": "TODO",
+      "description": "批量读写、ID 校验、heap growth、ownership counters 与 binding contract tests",
+      "dependencies": "T04、T05",
+      "completionContract": "WASM-02/09/10及接触anchor采样基准fixture、WASM-11-BINDING、WASM-12-BINDING、WASM-13-BINDING通过"
+    },
+    {
+      "id": "T08",
+      "phase": "M2",
+      "status": "TODO",
+      "description": "配置、prepare registry、feature export与选择时序接入源码",
+      "dependencies": "T03、T06",
+      "completionContract": "配置/descriptor契约及异步边界实现完成；完整app运行由T09加入真实world后验证，不提前标I01通过"
+    },
+    {
+      "id": "T09",
+      "phase": "M2",
+      "status": "TODO",
+      "description": "IPhysicsWorld基础、时序/重力/睡眠/debug/tick诊断，并完成应用联调",
+      "dependencies": "T07、T08",
+      "completionContract": "I01/I02、I03既有路径及COEXIST-PREPARE、I04旧后端及COEXIST-LOWLEVEL、WASM-07-AIR、B3-U01真实低层body；无第二累计器/RAF；组件路径由T10/T11验证"
+    },
+    {
+      "id": "T10",
+      "phase": "M2",
+      "status": "TODO",
+      "description": "RigidBody及最小box/sphere、总质量/惯量；模式、力/冲量、非零阻尼映射、gravity/sleep运行时setter、速度与axis lock",
+      "dependencies": "T09",
+      "completionContract": "C04/C05/C06/C08/C12含GRAVITY/SLEEP/DAMPING子例；C36-SETTER-ROLLBACK；支持body先于collider；仅用真实box/sphere路径"
+    },
+    {
+      "id": "T11",
+      "phase": "M2",
+      "status": "TODO",
+      "description": "基础compound的COM/Node同步、§5.3公开target/teleport及before-step消费、parent/scale",
+      "dependencies": "T10",
+      "completionContract": "C01-TIME/C02/C03/C07/C09–C11的M2子例，含TARGET-CREATE/TICK-BASIC/LIFETIME-BASIC及TELEPORT；公开签名可用；APP生命周期留T12，事件与复杂生命周期留M3"
+    },
+    {
+      "id": "T12",
+      "phase": "M2",
+      "status": "TODO",
+      "description": "app级teardown、基础所有权/安全队列/场景代际与失败receipt",
+      "dependencies": "T08–T11",
+      "completionContract": "B3-U02、I05-BASIC/I06-BASIC/I06-COEXIST-BASIC、C11-TARGET-LIFETIME-APP、WASM-11-APP；事件/复杂资产完整销毁留M3"
+    },
+    {
+      "id": "T13",
+      "phase": "M3",
+      "status": "TODO",
+      "description": "在最小box/sphere上补capsule/convex/cylinder/尖cone，扩展尺度/质量与材质",
+      "dependencies": "T10、T11",
+      "completionContract": "C08–C12已完成的M2子例回归、C13-GEOMETRY/C14/C15/C32/C36；尺寸通过真实native读回/低层cast，公共query留T16"
+    },
+    {
+      "id": "T14",
+      "phase": "M3",
+      "status": "TODO",
+      "description": "static mesh / heightfield / baked compound cooking，多子网格与共享缓存",
+      "dependencies": "T07、T12、T13",
+      "completionContract": "C16-GEOMETRY/C17-GEOMETRY/C18/C19/C20-LOWLEVEL；真实低层查询与引用安全，公共路径留T16"
+    },
+    {
+      "id": "T15",
+      "phase": "M3",
+      "status": "TODO",
+      "description": "contact/sensor批量事件、同一时刻接触快照、瞬时sensor命中、pair归并/过滤/重建/回调延迟修改",
+      "dependencies": "T12、T13",
+      "completionContract": "C21–C25含C21-SNAPSHOT/C22-SENSOR-TRANSIENT、C11-TARGET-TICK-EVENTS；WASM-12-EVENTS；重用ID不串对象"
+    },
+    {
+      "id": "T16",
+      "phase": "M3",
+      "status": "TODO",
+      "description": "raycast、三类sweep、overlap、CCD，以及M3完整生命周期集成",
+      "dependencies": "T13–T15",
+      "completionContract": "C01-EVENTS/C13-QUERY/C16-QUERY/C17-QUERY/C20-APP/C26–C28/C33/C34、I05-FULL/I06-FULL、C11-TARGET-LIFETIME-FULL；C19/C24回归；WASM-11-ASSETS"
+    },
+    {
+      "id": "T17",
+      "phase": "M4",
+      "status": "TODO",
+      "description": "PointToPoint/Hinge/Fixed；公开参数、轴/anchor/motor/limit与Fixed安全接合当前相对姿态",
+      "dependencies": "T10–T13",
+      "completionContract": "C29含ATTACH-POSE、C30-PUBLIC；degree/degree-s正确；disabled配置后enable不产生临时错误joint"
+    },
+    {
+      "id": "T18",
+      "phase": "M4",
+      "status": "TODO",
+      "description": "其他原生joint及revolute spring的AIR扩展、dispose、类型声明",
+      "dependencies": "T17",
+      "completionContract": "C35、C30-EXT；各类独立fixture；不虚构现有Hinge的spring属性"
+    },
+    {
+      "id": "T19",
+      "phase": "M4",
+      "status": "TODO",
+      "description": "unsupported 注册与负例：D6、plane、退化 simplex、动态 mesh、无映射材质",
+      "dependencies": "T01、T13–T18",
+      "completionContract": "C14/C16/C31/C36；native 创建前失败；capability 表一致"
+    },
+    {
+      "id": "T20",
+      "phase": "M5",
+      "status": "TODO",
+      "description": "完成 EX01–EX06，接入现有 example/gallery 链路与 UI",
+      "dependencies": "T13–T18",
+      "completionContract": "每个有明确玩法、交互、断言、截图和运行记录；不是同一落球模板换标题"
+    },
+    {
+      "id": "T21",
+      "phase": "M5",
+      "status": "TODO",
+      "description": "ST Node / 浏览器 suite、默认 builtin/Cannon 回归、源码来源及 Web-only 检查",
+      "dependencies": "T12–T20及BIZ-AUTO检查点",
+      "completionContract": "WASM-06-AIR-ST、WASM-13-AIR-ST、WASM-14-ST、I04-COEXIST-COMPONENT/I06-COEXIST-FULL及I07/I08；包含EX09"
+    },
+    {
+      "id": "T22",
+      "phase": "M5",
+      "status": "TODO",
+      "description": "ST核心variant、d.ts、asset manifest、npm pack空白消费者",
+      "dependencies": "T20及ST-HOST检查点",
+      "completionContract": "I09-ST/I10-CORE/I10-COEXIST-PACK、WASM-07-PACK-CORE；核心集合 EX01–EX06、EX09 的根/子路径入口可运行"
+    },
+    {
+      "id": "T23",
+      "phase": "M5",
+      "status": "TODO",
+      "description": "核心预览文档、能力和限制、迁移范例、故障定位",
+      "dependencies": "T19/T20/T22及ST-HOST检查点",
+      "completionContract": "核心文档与产物一致；未过设备/真人/高级项明确标注，不提前宣称G5通过"
+    },
+    {
+      "id": "T24",
+      "phase": "M6",
+      "status": "TODO",
+      "description": "MT构建、pool ready、配置选择、隔离检测、失败回退、销毁",
+      "dependencies": "T05–T12及ST-HOST检查点",
+      "completionContract": "WASM-04/05、WASM-06-AIR-MT、WASM-11-MT、WASM-12-MT、WASM-13-AIR-MT、WASM-14-MT、I09-MT、A06/A07"
+    },
+    {
+      "id": "T25",
+      "phase": "M6",
+      "status": "TODO",
+      "description": "胶囊角色移动：grounding、slope、step、overlap recovery、平台跟随、push 策略",
+      "dependencies": "T11–T16",
+      "completionContract": "A01–A05；EX07；参数对应现有 controller spec，box controller 不伪装支持"
+    },
+    {
+      "id": "T26",
+      "phase": "M6",
+      "status": "TODO",
+      "description": "同版本recording/replay、输入日志、状态hash、环境拒绝、独立ST诊断实例",
+      "dependencies": "T07、T12、T15及ST-HOST检查点",
+      "completionContract": "A08–A10、WASM-14-REPLAY；EX08；不宣称rollback"
+    },
+    {
+      "id": "T27",
+      "phase": "M7",
+      "status": "TODO",
+      "description": "设备/场景预算最终冻结，真实发布构建建立第一份正确性合格 baseline",
+      "dependencies": "T02、T21、T24",
+      "completionContract": "冻结文件有提交/产物 hash；无 TBD 阈值；P01"
+    },
+    {
+      "id": "T28",
+      "phase": "M7",
+      "status": "TODO",
+      "description": "逐阶段性能、GC、live memory、下载量与初始化测试；增加 EX09 真实业务负载；定向优化",
+      "dependencies": "T22、T24–T27",
+      "completionContract": "P02–P07、WASM-15；每次优化重跑受影响正确性测试"
+    },
+    {
+      "id": "T29",
+      "phase": "M7",
+      "status": "TODO",
+      "description": "新Agent从正式文档独立完成五项任务，含EX09改版，记录失败与文档修复",
+      "dependencies": "AG01–03依赖T23与所需T24宿主诊断产物；AG04依赖T25/T26；AG05依赖T23/T33及BIZ-AUTO",
+      "completionContract": "AG01–AG05；改版通过对应BIZ路径；可在BIZ07真人排期待定时推进独立任务，但不冒充T34/G5完成"
+    },
+    {
+      "id": "T30",
+      "phase": "M8",
+      "status": "TODO",
+      "description": "在同一最终build/source fingerprint重跑required inventory、完整消费者及回归",
+      "dependencies": "T24–T29",
+      "completionContract": "I10-FULL、WASM-07-PACK-FULL与所有required Gate通过；不复用历史PASS"
+    },
+    {
+      "id": "T31",
+      "phase": "M8",
+      "status": "TODO",
+      "description": "文档/来源/许可证/能力清单、迁移与维护、风险与证据索引完整交付",
+      "dependencies": "T30",
+      "completionContract": "文件与包一致；所有限制有入口；发布审批材料可审阅"
+    },
+    {
+      "id": "T32",
+      "phase": "M0",
+      "status": "TODO",
+      "description": "冻结 EX09 业务契约、SKU/订单配置、装置尺寸、状态机、输入fixture规格、BIZ inventory及业务性能预算初稿",
+      "dependencies": "T00、T01、T02",
+      "completionContract": "第12章参数落成版本化配置；5组初始布局完成静态可达检查，异常fixture和输入脚本规格可追溯；实际可玩性由T34验证，不在M0提前标PASS"
+    },
+    {
+      "id": "T33",
+      "phase": "M5",
+      "status": "TODO",
+      "description": "制作 EX09 礼物工坊：场景与原创简模、磁吸搬运、称重/装箱/出货、完整 UI、桌面/触屏输入、配置和恢复流程",
+      "dependencies": "T16、T17、T32",
+      "completionContract": "从公开 API 完成一局3单；配置校验、业务事件日志和自动输入路径齐备；无私有 native handle、第二物理循环或脚本搬运商品"
+    },
+    {
+      "id": "T34",
+      "phase": "M5",
+      "status": "TODO",
+      "description": "EX09业务/真机/真人验收、录像与结果；修复后冻结配置；环境缺失记录负责人和恢复条件",
+      "dependencies": "T33",
+      "completionContract": "BIZ01–BIZ08真实ST通过才DONE；BIZ07不能由Agent替代；缺设备/参与者相应项BLOCKED，其他可执行子项继续；不依赖P07/AG05"
+    }
+  ],
+  "gates": [
+    {
+      "id": "G0",
+      "phase": "M0",
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "G1",
+      "phase": "M1",
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "G2",
+      "phase": "M2",
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "G3",
+      "phase": "M3",
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "G4",
+      "phase": "M4",
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "G5",
+      "phase": "M5",
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "G6",
+      "phase": "M6",
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "G7",
+      "phase": "M7",
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "G8",
+      "phase": "M8",
+      "status": "NOT_RUN",
+      "evidence": []
+    }
+  ],
+  "mainTestCategories": [
+    {
+      "id": "B3-C01",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C02",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C03",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C04",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C05",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C06",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C07",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C08",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C09",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C10",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C11",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C12",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C13",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C14",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C15",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C16",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C17",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C18",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C19",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C20",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C21",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C22",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C23",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C24",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C25",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C26",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C27",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C28",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C29",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C30",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C31",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C32",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C33",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C34",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C35",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-C36",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "WASM-01",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "WASM-02",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "WASM-03",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "WASM-04",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "WASM-05",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "WASM-06",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "WASM-07",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "WASM-08",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "WASM-09",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "WASM-10",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "WASM-11",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "WASM-12",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "WASM-13",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "WASM-14",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "WASM-15",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-I01",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-I02",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-I03",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-I04",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-I05",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-I06",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-I07",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-I08",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-I09",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-I10",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-A01",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-A02",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-A03",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-A04",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-A05",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-A06",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-A07",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-A08",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-A09",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-A10",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-BIZ01",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-BIZ02",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-BIZ03",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-BIZ04",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-BIZ05",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-BIZ06",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-BIZ07",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-BIZ08",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-P01",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-P02",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-P03",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-P04",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-P05",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-P06",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-P07",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-AG01",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-AG02",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-AG03",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-AG04",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "B3-AG05",
+      "required": true,
+      "status": "NOT_RUN",
+      "evidence": []
+    }
+  ],
+  "preImplementationBlockers": [
+    {
+      "id": "SOURCE-CLOSURE",
+      "status": "BLOCKED",
+      "reason": "6796 upstream paths not yet available; classify and retrieve required build/test/license closure by original blob hash."
+    },
+    {
+      "id": "NATIVE-CLOSURE",
+      "status": "BLOCKED",
+      "reason": "Fixed core, migrated binding, final C16 native patch and verified emsdk toolchain not recovered."
+    },
+    {
+      "id": "C16-DURATION-CONTRACT",
+      "status": "BLOCKED",
+      "reason": "Historical 20mm sustained penetration criterion lacks an original time-window definition; freeze before new acceptance."
+    },
+    {
+      "id": "INVENTORY-EXPANSION",
+      "status": "NOT_RUN",
+      "reason": "Expand all v1.2 required subcases by environment/variant in M0; do not reuse historical 861-cell total."
+    }
+  ],
+  "externalAcceptanceResources": [
+    {
+      "id": "HOST-CHROME",
+      "owner": "UNASSIGNED",
+      "status": "BLOCKED",
+      "recoveryCondition": "Verify an actual required Chrome host and collector before corresponding acceptance."
+    },
+    {
+      "id": "ANDROID",
+      "owner": "UNASSIGNED",
+      "status": "BLOCKED",
+      "recoveryCondition": "Record actual device, OS/WebView, access and tester."
+    },
+    {
+      "id": "IOS-SAFARI",
+      "owner": "UNASSIGNED",
+      "status": "BLOCKED",
+      "recoveryCondition": "Record actual iPhone/iPad, Safari, access and tester; WebKit simulation is not a substitute."
+    },
+    {
+      "id": "BIZ07-HUMANS",
+      "owner": "UNASSIGNED",
+      "status": "BLOCKED",
+      "recoveryCondition": "Arrange three first-time users not involved in implementation and record real observations."
+    }
+  ],
+  "permissionBoundary": {
+    "localGitCommits": true,
+    "remotePush": true,
+    "createPullRequest": false,
+    "merge": false,
+    "deploy": false,
+    "npmPublish": false
+  },
+  "nextStep": "Continue M0 source/build closure and contracts, then fixed-core real ST WASM vertical slice; implementation and branch checkpoints are authorized.",
+  "remoteHistoryPolicy": "True upstream main parent and incremental tree; local snapshot import is backup-only and is never pushed as upstream history.",
+  "remotePublication": {
+    "branchCreated": true,
+    "branchHead": "b573be0741db9e2a13d38ce7e65870b97a1f5fbc",
+    "status": "AUTHORIZED_CHECKPOINT_PREPARING",
+    "commitsPublished": 0,
+    "reason": "User explicitly confirmed Box3D code and plans may be committed and pushed to oahc09/cocosairjs branch feat/box3d-rebuild-20261022.",
+    "recoveryCondition": "Publish incremental commit on true main parent and verify remote branch head."
+  }
+}
