@@ -1,0 +1,229 @@
+{
+  "scope": "Pure actual-source registry controls; no engine entry-point wiring or native physics qualification",
+  "rows": [
+    {
+      "name": "only three runtime entry points; no dispose-by-owner/token or global bypass",
+      "status": "PASS_PURE_SOURCE_CONTROL"
+    },
+    {
+      "name": "no guard fast path does not inspect poisoned batch input or operation",
+      "status": "PASS_PURE_SOURCE_CONTROL"
+    },
+    {
+      "name": "one lease protects exactly its copied object identities",
+      "status": "PASS_PURE_SOURCE_CONTROL"
+    },
+    {
+      "name": "two owners release independently on the same target",
+      "status": "PASS_PURE_SOURCE_CONTROL"
+    },
+    {
+      "name": "reverse owner release preserves first rejection until it releases",
+      "status": "PASS_PURE_SOURCE_CONTROL"
+    },
+    {
+      "name": "overlapping multi-target leases never release another owner",
+      "status": "PASS_PURE_SOURCE_CONTROL"
+    },
+    {
+      "name": "duplicate identities are deduplicated and repeated disposal is safe",
+      "status": "PASS_PURE_SOURCE_CONTROL"
+    },
+    {
+      "name": "changing original target list or descriptor after registration cannot retarget policy",
+      "status": "PASS_PURE_SOURCE_CONTROL"
+    },
+    {
+      "name": "descriptor getters and target element getter are each read exactly once",
+      "status": "PASS_PURE_SOURCE_CONTROL"
+    },
+    {
+      "name": "descriptor getter mutation of original target array cannot change already copied targets",
+      "status": "PASS_PURE_SOURCE_CONTROL"
+    },
+    {
+      "name": "target object property getters are never read or frozen",
+      "status": "PASS_PURE_SOURCE_CONTROL"
+    },
+    {
+      "name": "invalid targets  leave no partial registration",
+      "status": "PASS_PURE_SOURCE_CONTROL"
+    },
+    {
+      "name": "invalid targets [object Object] leave no partial registration",
+      "status": "PASS_PURE_SOURCE_CONTROL"
+    },
+    {
+      "name": "invalid targets null leave no partial registration",
+      "status": "PASS_PURE_SOURCE_CONTROL"
+    },
+    {
+      "name": "invalid targets undefined leave no partial registration",
+      "status": "PASS_PURE_SOURCE_CONTROL"
+    },
+    {
+      "name": "invalid targets  leave no partial registration",
+      "status": "PASS_PURE_SOURCE_CONTROL"
+    },
+    {
+      "name": "invalid targets  leave no partial registration",
+      "status": "PASS_PURE_SOURCE_CONTROL"
+    },
+    {
+      "name": "invalid targets 1 leave no partial registration",
+      "status": "PASS_PURE_SOURCE_CONTROL"
+    },
+    {
+      "name": "invalid targets () => {} leave no partial registration",
+      "status": "PASS_PURE_SOURCE_CONTROL"
+    },
+    {
+      "name": "invalid targets  leave no partial registration",
+      "status": "PASS_PURE_SOURCE_CONTROL"
+    },
+    {
+      "name": "invalid rejection null leaves no membership",
+      "status": "PASS_PURE_SOURCE_CONTROL"
+    },
+    {
+      "name": "invalid rejection undefined leaves no membership",
+      "status": "PASS_PURE_SOURCE_CONTROL"
+    },
+    {
+      "name": "invalid rejection [object Object] leaves no membership",
+      "status": "PASS_PURE_SOURCE_CONTROL"
+    },
+    {
+      "name": "invalid rejection [object Object] leaves no membership",
+      "status": "PASS_PURE_SOURCE_CONTROL"
+    },
+    {
+      "name": "invalid rejection [object Object] leaves no membership",
+      "status": "PASS_PURE_SOURCE_CONTROL"
+    },
+    {
+      "name": "invalid rejection [object Object] leaves no membership",
+      "status": "PASS_PURE_SOURCE_CONTROL"
+    },
+    {
+      "name": "invalid rejection [object Object] leaves no membership",
+      "status": "PASS_PURE_SOURCE_CONTROL"
+    },
+    {
+      "name": "throwing target getter undefined leaves no earlier target installed",
+      "status": "PASS_PURE_SOURCE_CONTROL"
+    },
+    {
+      "name": "throwing target getter null leaves no earlier target installed",
+      "status": "PASS_PURE_SOURCE_CONTROL"
+    },
+    {
+      "name": "throwing target getter 0 leaves no earlier target installed",
+      "status": "PASS_PURE_SOURCE_CONTROL"
+    },
+    {
+      "name": "throwing target getter  leaves no earlier target installed",
+      "status": "PASS_PURE_SOURCE_CONTROL"
+    },
+    {
+      "name": "throwing target getter Error: explicit getter failure leaves no earlier target installed",
+      "status": "PASS_PURE_SOURCE_CONTROL"
+    },
+    {
+      "name": "throwing rejection code leaves no membership and preserves existing owner",
+      "status": "PASS_PURE_SOURCE_CONTROL"
+    },
+    {
+      "name": "throwing rejection message leaves no membership and preserves existing owner",
+      "status": "PASS_PURE_SOURCE_CONTROL"
+    },
+    {
+      "name": "caught nested register in target getter aborts both registrations",
+      "status": "PASS_PURE_SOURCE_CONTROL"
+    },
+    {
+      "name": "caught nested register in code getter aborts both registrations",
+      "status": "PASS_PURE_SOURCE_CONTROL"
+    },
+    {
+      "name": "caught nested register in message getter aborts both registrations",
+      "status": "PASS_PURE_SOURCE_CONTROL"
+    },
+    {
+      "name": "caught release in registration getter preserves existing lease and aborts new owner",
+      "status": "PASS_PURE_SOURCE_CONTROL"
+    },
+    {
+      "name": "nested single admission in registration getter is rejected even on unguarded targets",
+      "status": "PASS_PURE_SOURCE_CONTROL"
+    },
+    {
+      "name": "nested batch admission in registration getter is rejected even on unguarded targets",
+      "status": "PASS_PURE_SOURCE_CONTROL"
+    },
+    {
+      "name": "lease is frozen with only a closure release capability, fake object cannot release",
+      "status": "PASS_PURE_SOURCE_CONTROL"
+    },
+    {
+      "name": "rejection callbacks are never installed or invoked",
+      "status": "PASS_PURE_SOURCE_CONTROL"
+    },
+    {
+      "name": "guarded operation rejects without coercing an arbitrary operation object",
+      "status": "PASS_PURE_SOURCE_CONTROL"
+    },
+    {
+      "name": "unguarded object fast path still works while another owner is registered",
+      "status": "PASS_PURE_SOURCE_CONTROL"
+    },
+    {
+      "name": "batch succeeds for unrelated copied targets and empty array",
+      "status": "PASS_PURE_SOURCE_CONTROL"
+    },
+    {
+      "name": "batch rejects any protected later member without running an operation callback",
+      "status": "PASS_PURE_SOURCE_CONTROL"
+    },
+    {
+      "name": "batch reads full target list before reporting a protected first member",
+      "status": "PASS_PURE_SOURCE_CONTROL"
+    },
+    {
+      "name": "batch later invalid member is rejected before membership result, without changing owners",
+      "status": "PASS_PURE_SOURCE_CONTROL"
+    },
+    {
+      "name": "batch later throwing getter is retained as original input error and leaves owners intact",
+      "status": "PASS_PURE_SOURCE_CONTROL"
+    },
+    {
+      "name": "caught nested register during batch copy aborts with no registry changes",
+      "status": "PASS_PURE_SOURCE_CONTROL"
+    },
+    {
+      "name": "caught nested release during batch copy aborts with no registry changes",
+      "status": "PASS_PURE_SOURCE_CONTROL"
+    },
+    {
+      "name": "caught nested single during batch copy aborts with no registry changes",
+      "status": "PASS_PURE_SOURCE_CONTROL"
+    },
+    {
+      "name": "caught nested batch during batch copy aborts with no registry changes",
+      "status": "PASS_PURE_SOURCE_CONTROL"
+    },
+    {
+      "name": "failure does not poison a later valid registration or batch admission",
+      "status": "PASS_PURE_SOURCE_CONTROL"
+    },
+    {
+      "name": "independent target leases can be released and re-registered without old lease authority",
+      "status": "PASS_PURE_SOURCE_CONTROL"
+    },
+    {
+      "name": "final release restores zero-guard fast path and no input objects gained properties",
+      "status": "PASS_PURE_SOURCE_CONTROL"
+    }
+  ]
+}

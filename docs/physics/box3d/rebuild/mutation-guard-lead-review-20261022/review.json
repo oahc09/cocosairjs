@@ -1,0 +1,18 @@
+{
+  "status": "PASS_LIMITED_SOURCE_REVIEW_AND_56_REPLAY_CONTROLS",
+  "timeUTC": "2026-10-22T13:04:58.924147+00:00",
+  "sourceSha256": "93758e4b5a90ff90e5cabc7d3b0b5fd71069e955d4bf64517bec27d1957774a0",
+  "checks": [
+    "Copied identity/description before any membership",
+    "Getter reentry latch protects register/release/assert admission",
+    "WeakMap multi-owner lease release cannot clear other owners",
+    "Complete batch copies before checking any owner; no executable policy callback",
+    "Rollback removes only partial membership if synchronous registry allocation fails",
+    "No-guard path does not inspect operation/target properties"
+  ],
+  "notEstablished": [
+    "No existing Component/Node/Material/PhysicsSystem early-write hook installed",
+    "No real World callback transaction lease installed",
+    "No native physics or lifecycle cleanup proof"
+  ]
+}

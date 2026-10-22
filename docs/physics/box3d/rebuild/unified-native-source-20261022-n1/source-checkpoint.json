@@ -1,0 +1,17 @@
+{
+  "status": "SOURCE_ONLY_PARTIAL_NOT_COMPILED",
+  "scope": "First additive native UCM1/UCR1 planner and entry; not build-wired, facade and qualification pending",
+  "wireSha256": "f88641a6e924ae3de4f4fe1d1cba20a1d8b82ac01bea28c221e1a6bf7d5079b9",
+  "files": [
+    {
+      "path": "tools/physics/box3d/native/command_bridge.c",
+      "bytes": 20472,
+      "sha256": "18056bff29e1dbefef16517f5c591ac8da447758f30bff38d6060bed3e8dac61"
+    },
+    {
+      "path": "tools/physics/box3d/native/command_bridge.h",
+      "bytes": 1579,
+      "sha256": "51b5dbc6c437c593172b2bcf055de242998c001ce14900d9819005e5d53b4ee0"
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "status": "PASS_ACTUAL_LIBRARY_DOWNLOAD_LOG_BYTES",
+  "archiveLibraryFileId": "libfile_f3d676bd7bd08191ad63ced2dfbdfce0",
+  "rows": [
+    {
+      "path": "tools/verify/box3d/command-queue-evidence-20261022-a/format.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-evidence-20261022-a/format.stdout.log",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-evidence-20261022-a/tsc.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-evidence-20261022-a/tsc.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-evidence-20261022-b/format.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-evidence-20261022-b/format.stdout.log",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-evidence-20261022-b/tsc.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tools/verify/box3d/command-queue-evidence-20261022-b/tsc.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/command-queue-lead-review-20261022/format.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/command-queue-lead-review-20261022/format.stdout.log",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/command-queue-lead-review-20261022/tsc.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/command-queue-lead-review-20261022/tsc.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "localReceiptCorrection": "First post-restore log comparison used Path(\".\").parent instead of resolved cwd and raised FileNotFoundError; no Library/GitHub operation repeated. Underlying tracked-source restore had already passed; corrected absolute-path comparison passed. Raw command logs were committed separately before this receipt."
+}

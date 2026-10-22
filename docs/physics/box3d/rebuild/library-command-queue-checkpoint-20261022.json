@@ -1,0 +1,87 @@
+{
+  "status": "PASS_ACTUAL_LIBRARY_DOWNLOAD_INCREMENTAL_INDEPENDENT_STORE_FULL_FILE_VERIFICATION",
+  "timeUTC": "2026-10-22T12:52:41.227008+00:00",
+  "libraryFileId": "libfile_f3d676bd7bd08191ad63ced2dfbdfce0",
+  "fileId": "file_00000000719482308785c483ea78682d",
+  "archive": {
+    "bytes": 20935773,
+    "sha256": "493d69e8fc337ce6e399b267ce0bec55c4fe5d4762f378b3e39525e6e0b4ac1c"
+  },
+  "commit": "c6cab1d0b26bdeeed3144a944f1716fd3e5c0488",
+  "tree": "76d1cfc96a421d247f9ac93ce3e1c6d5776451f3",
+  "bundle": {
+    "file": "box3d-rebuild.bundle",
+    "bytes": 21145070,
+    "sha256": "9ac2919ca53c96c6ea6acfd4c0f163dee1c0b1071d6b09d793ced7cbb0ae879d"
+  },
+  "reusedRestoreDirectory": "/workspace/scratch/62d43a81bbde/box3d-motion-qualified-library-roundtrip-20261022/restored",
+  "previousVerifiedCommit": "0e0dc8c49905991efaed712e17f8e56d65d79587",
+  "beforeVerification": {
+    "status": "PASS",
+    "checkedFiles": 13749,
+    "independentObjectStore": true
+  },
+  "afterVerification": {
+    "status": "PASS",
+    "checkedFiles": 13774,
+    "independentObjectStore": true
+  },
+  "newFullCloneCreated": false,
+  "priorReceiptPreserved": true,
+  "commands": [
+    {
+      "command": [
+        "git",
+        "-C",
+        "/workspace/scratch/62d43a81bbde/box3d-motion-qualified-library-roundtrip-20261022/restored",
+        "bundle",
+        "verify",
+        "/workspace/scratch/62d43a81bbde/box3d-command-queue-library-roundtrip-20261022/box3d-rebuild.bundle"
+      ],
+      "exitCode": 0,
+      "stdout": "The bundle contains these 8 refs:\nc6cab1d0b26bdeeed3144a944f1716fd3e5c0488 refs/heads/feat/box3d-rebuild-20261022\nbdb618394a2115a870e82b6525f8cb696ac404d3 refs/tags/box3d-debug-release-ownership-20261022\ne106586b4e5433e7a4daffbb40dd9ae8e678784f refs/tags/box3d-first-node-wasm-20261022\n6ef792c524b546041469f2e3903eb1777fda5923 refs/tags/box3d-native-foundation-20261022\n7fc60c18dc6a8f00c63b656b5097b83a19af0504 refs/tags/box3d-rebuild-preparation-20261022\n34dc269fb63b988b67ea8bfeabef8e20f208ed0e refs/tags/box3d-rebuild-remote-confirmed-20261022\n730fbf2519887474e9acfd229fbb65586090bb77 refs/tags/upstream-main-snapshot-20261022\nc6cab1d0b26bdeeed3144a944f1716fd3e5c0488 HEAD\nThe bundle records a complete history.\nThe bundle uses this hash algorithm: sha1\n",
+      "stderr": "/workspace/scratch/62d43a81bbde/box3d-command-queue-library-roundtrip-20261022/box3d-rebuild.bundle is okay\n"
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/workspace/scratch/62d43a81bbde/box3d-motion-qualified-library-roundtrip-20261022/restored",
+        "fetch",
+        "/workspace/scratch/62d43a81bbde/box3d-command-queue-library-roundtrip-20261022/box3d-rebuild.bundle",
+        "refs/heads/feat/box3d-rebuild-20261022"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": "From /workspace/scratch/62d43a81bbde/box3d-command-queue-library-roundtrip-20261022/box3d-rebuild.bundle\n * branch              feat/box3d-rebuild-20261022 -> FETCH_HEAD\n"
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/workspace/scratch/62d43a81bbde/box3d-motion-qualified-library-roundtrip-20261022/restored",
+        "merge-base",
+        "--is-ancestor",
+        "0e0dc8c49905991efaed712e17f8e56d65d79587",
+        "c6cab1d0b26bdeeed3144a944f1716fd3e5c0488"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/workspace/scratch/62d43a81bbde/box3d-motion-qualified-library-roundtrip-20261022/restored",
+        "checkout",
+        "--detach",
+        "c6cab1d0b26bdeeed3144a944f1716fd3e5c0488"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": "Previous HEAD position was 0e0dc8c4 fix(box3d): verify whole scene writeback epochs against immutable native origins\nHEAD is now at c6cab1d0 feat(box3d): freeze unified command wire and add failure-aware pure queue\n"
+    }
+  ],
+  "scope": "Honest partial-main local Git source restoration, no physical acceptance."
+}
