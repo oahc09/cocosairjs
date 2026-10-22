@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "createdAtUtc": "2026-10-22T01:25:26.781006+00:00",
-  "scope": "AUTHORIZED_REBUILD_INITIAL_CHECKPOINT",
+  "scope": "AUTHORIZED_REBUILD_NATIVE_FOUNDATION_CHECKPOINT",
   "branch": "feat/box3d-rebuild-20261022",
   "upstreamSourceCommit": "b573be0741db9e2a13d38ce7e65870b97a1f5fbc",
   "localImportCommit": "730fbf2519887474e9acfd229fbb65586090bb77",
@@ -23,7 +23,7 @@
     {
       "id": "T01",
       "phase": "M0",
-      "status": "TODO",
+      "status": "IN_PROGRESS",
       "description": "建立capability-to-API-to-test矩阵；冻结质量/阻尼/重力睡眠setter、缩放、材质、事件快照/sensor边界、query与错误；落定§5.3公开运动扩展及EX09接合/自过滤路径",
       "dependencies": "T00",
       "completionContract": "API签名/模式时序/ownership和required子例成文；采用v1.2推荐默认或记录有依据的修订；每个公开方法有映射或明确unsupported"
@@ -31,7 +31,7 @@
     {
       "id": "T02",
       "phase": "M0",
-      "status": "TODO",
+      "status": "IN_PROGRESS",
       "description": "冻结浏览器/真机、fixture、容差和预算初版；设计schema/inventory；落实设备与BIZ07真人协调责任",
       "dependencies": "T00",
       "completionContract": "required环境/子例/预算有版本；设备型号、访问方式、负责人/获取时间或明确阻塞台账；M0可冻结清单，缺真机不阻塞独立代码工作"
@@ -39,7 +39,7 @@
     {
       "id": "T03",
       "phase": "M0",
-      "status": "TODO",
+      "status": "IN_PROGRESS",
       "description": "冻结feature、asset URL、d.ts、tarball、公开运动扩展导出与2D/3D独立prepare/cleanup事务",
       "dependencies": "T00、T01",
       "completionContract": "时序与失败清理评审通过；单runtime/按需加载/并存子例有明确断言"
@@ -47,7 +47,7 @@
     {
       "id": "T04",
       "phase": "M1",
-      "status": "TODO",
+      "status": "IN_PROGRESS",
       "description": "对旧 vendor 与目标 core 做 header / ABI 差异审查，迁移 binding 源码",
       "dependencies": "T01",
       "completionContract": "差异、函数、字段、enum、默认值处置及静态完整性完成；真实运行留T05/T07，不提前标PASS"
@@ -55,7 +55,7 @@
     {
       "id": "T05",
       "phase": "M1",
-      "status": "TODO",
+      "status": "IN_PROGRESS",
       "description": "宿主 CMake、可重建 ST SIMD、静态 reader、CSP 支持、产物 manifest",
       "dependencies": "T03、T04",
       "completionContract": "真实非隔离页面运行；WASM-01/03、WASM-06-BINDING、WASM-07-BINDING"
@@ -71,7 +71,7 @@
     {
       "id": "T07",
       "phase": "M1",
-      "status": "TODO",
+      "status": "IN_PROGRESS",
       "description": "批量读写、ID 校验、heap growth、ownership counters 与 binding contract tests",
       "dependencies": "T04、T05",
       "completionContract": "WASM-02/09/10及接触anchor采样基准fixture、WASM-11-BINDING、WASM-12-BINDING、WASM-13-BINDING通过"
@@ -906,12 +906,13 @@
     {
       "id": "NATIVE-CLOSURE",
       "status": "BLOCKED",
-      "reason": "Fixed core, migrated binding, final C16 native patch and verified emsdk toolchain not recovered."
+      "reason": "Fixed core and binding reference sources acquired and hash verified; narrow C17 ABI/native diagnostics exist. Full migrated binding, original C16 fixture/patch and verified emsdk remain incomplete."
     },
     {
       "id": "C16-DURATION-CONTRACT",
-      "status": "BLOCKED",
-      "reason": "Historical 20mm sustained penetration criterion lacks an original time-window definition; freeze before new acceptance."
+      "status": "RESOLVED_NEW_CONTRACT",
+      "reason": "C16-DURATION-1 freezes seven consecutive fixed-tick endpoints over 0.1 seconds. This is a new acceptance definition, not recovered historical evidence.",
+      "evidence": "docs/physics/box3d/contracts/api-contract.json"
     },
     {
       "id": "INVENTORY-EXPANSION",
@@ -953,14 +954,44 @@
     "deploy": false,
     "npmPublish": false
   },
-  "nextStep": "Continue M0 source/build closure and contracts, then fixed-core real ST WASM vertical slice; implementation and branch checkpoints are authorized.",
+  "nextStep": "Persist fixed sources, native failure evidence and M0 contract design; qualify official emsdk and continue full inventory/build/prepare contracts before real ST WASM integration.",
   "remoteHistoryPolicy": "True upstream main parent and incremental tree; local snapshot import is backup-only and is never pushed as upstream history.",
   "remotePublication": {
     "branchCreated": true,
-    "branchHead": "b573be0741db9e2a13d38ce7e65870b97a1f5fbc",
-    "status": "AUTHORIZED_CHECKPOINT_PREPARING",
-    "commitsPublished": 0,
-    "reason": "User explicitly confirmed Box3D code and plans may be committed and pushed to oahc09/cocosairjs branch feat/box3d-rebuild-20261022.",
-    "recoveryCondition": "Publish incremental commit on true main parent and verify remote branch head."
+    "branchHead": "8df40ffe4ee1b3106f065a4624583ce52dc261d2",
+    "status": "VERIFIED_FIRST_CHECKPOINT",
+    "commitsPublished": 1,
+    "verifiedRemoteParent": "b573be0741db9e2a13d38ce7e65870b97a1f5fbc",
+    "verifiedAddedFiles": 17,
+    "allPriorMainBlobsPreserved": true,
+    "receipt": "docs/physics/box3d/rebuild/remote-checkpoint-receipt.json"
+  },
+  "updatedAtUtc": "2026-10-22T01:54:07.873732+00:00",
+  "currentEvidence": {
+    "m0ContractTests": "PASS_6_SOURCE_DESIGN_CHECKS_ONLY",
+    "nativeFoundationIndex": "tools/physics/box3d/evidence/index.json",
+    "sourceIntegrity": "PASS_130_FIXED_SOURCE_FILES",
+    "nativeDebug": "PASS_NARROW_DIAGNOSTIC",
+    "nativeRelease": "PASS_NARROW_DIAGNOSTIC",
+    "nativeSanitized": "FAIL_UPSTREAM_SSE2_MISALIGNED_DOUBLE_LOAD",
+    "wasmToolchain": "BLOCKED_EMCC_ABSENT_OFFICIAL_ROUTE_UNDER_INVESTIGATION",
+    "wasmNode": "NOT_RUN",
+    "browser": "NOT_RUN",
+    "fullBindingMigration": "NOT_DONE",
+    "historicalResultsReused": false
+  },
+  "contractDesign": {
+    "publicSpecMembers": 166,
+    "requiredParentCategories": 91,
+    "draftRequiredSubcases": 84,
+    "expandedInventoryFrozen": false,
+    "path": "docs/physics/box3d/contracts/"
+  },
+  "persistentCheckpoint": {
+    "libraryFileId": "libfile_09c17cc3779881919e3a2bc4f4cf5a14",
+    "sha256": "f61edb7031d304e0e6244b8844771ca91028e54cfd53c7bac7209f9446454e54",
+    "localHead": "34dc269fb63b988b67ea8bfeabef8e20f208ed0e",
+    "libraryDownloadAndIndependentRestore": "PASS_3449_FILES",
+    "scope": "Prior preparation snapshot only; new foundation is a subsequent checkpoint."
   }
 }

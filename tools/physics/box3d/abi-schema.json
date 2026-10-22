@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "status": "EXPERIMENTAL_FOUNDATION_NOT_FULL_BINDING",
+  "coreSha": "efca0c184d40fd6a82016983f1601c4d23965867",
+  "abiVersion": 1,
+  "byteOrder": "little-endian",
+  "precision": "float32",
+  "worldId": "uint32 via b3StoreWorldId; never a pointer",
+  "bodyShapeId": "two uint32 words [low, high] via official b3Store/Load ID helpers; never JS Number packed",
+  "statuses": { "0": "OK", "1": "INVALID_ID", "2": "INVALID_ARGUMENT", "3": "NATIVE_CREATION_FAILED" },
+  "bodyInput": [
+    "position.xyz",
+    "rotation.xyzw",
+    "linearVelocity.xyz",
+    "angularVelocity.xyz",
+    "linearDamping",
+    "angularDamping",
+    "gravityScale"
+  ],
+  "bodyInputFloats": 16,
+  "bodySnapshot": [
+    "origin.xyz",
+    "rotation.xyzw",
+    "linearVelocity.xyz",
+    "angularVelocity.xyz",
+    "worldCenter.xyz",
+    "mass",
+    "localCenter.xyz",
+    "inertia.cx.xyz",
+    "inertia.cy.xyz",
+    "inertia.cz.xyz"
+  ],
+  "bodySnapshotFloats": 29,
+  "worldCountsUint32": ["bodyCount", "shapeCount", "contactCount", "jointCount", "byteCount.low", "byteCount.high"],
+  "rayInputFloats": ["origin.x", "origin.y", "origin.z", "translation.x", "translation.y", "translation.z"],
+  "rayOutputFloats": ["hit", "point.x", "point.y", "point.z", "normal.x", "normal.y", "normal.z", "fraction"],
+  "shapeIdWords": 2,
+  "lifetime": "All returned JS snapshots own copied data. No borrowed native view may cross a public call. Caller-owned scratch storage is allocated per facade; heap views are reacquired after every native call.",
+  "excluded": [
+    "contacts/events and their sampling epoch",
+    "mesh/compound cooking",
+    "joints",
+    "MT",
+    "replay",
+    "complete AIR adapter",
+    "release gate PASS"
+  ]
+}

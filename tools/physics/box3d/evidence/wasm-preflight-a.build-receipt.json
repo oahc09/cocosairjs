@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "kind": "st-simd-wasm",
+  "mode": "Release",
+  "status": "BLOCKED",
+  "startedAt": "2026-10-22T01:38:22.026Z",
+  "commands": [
+    {
+      "command": "emcc",
+      "args": [
+        "--version"
+      ],
+      "exitCode": null,
+      "error": "spawnSync emcc ENOENT"
+    }
+  ],
+  "sources": {
+    "verifiedFiles": 130,
+    "fixedCoreFiles": 111,
+    "schemaSha256": "c427f25976672d08d02215b0e69699b915ee24e74f37c4e70eddd7c0c0c6af09"
+  },
+  "identity": {
+    "coreSha": "efca0c184d40fd6a82016983f1601c4d23965867",
+    "bindingBaseSha": "5d5a3af049cccd9948b2b55bac4342414af0ef64",
+    "abiVersion": 1,
+    "schemaSha256": "c427f25976672d08d02215b0e69699b915ee24e74f37c4e70eddd7c0c0c6af09"
+  },
+  "error": "emcc failed: spawnSync emcc ENOENT",
+  "completedAt": "2026-10-22T01:38:22.058Z",
+  "inputHashes": [
+    {
+      "path": "tools/physics/box3d/abi-schema.json",
+      "sha256": "c427f25976672d08d02215b0e69699b915ee24e74f37c4e70eddd7c0c0c6af09"
+    },
+    {
+      "path": "tools/physics/box3d/versions.lock.json",
+      "sha256": "0d55e79f4004f719ba6210f76bcf254b4520b7344d990c5af12169fae02795c0"
+    },
+    {
+      "path": "vendor/box3d/source-manifest.json",
+      "sha256": "40f2d926a3fbc84d5d31f07532b3439657ebed69630ad9e2477c84fc25754dd0"
+    },
+    {
+      "path": "tools/physics/box3d/CMakeLists.txt",
+      "sha256": "b1689f33cc2ccffd7c6c2e140a5dfd88dfcc9bbe9d38010f53204ffaf1b6d464"
+    },
+    {
+      "path": "tools/physics/box3d/exports.json",
+      "sha256": "614565d79e646f080c7f6195d58bf616644a3df3d1cd3fb0a93dea032f0ee4af"
+    },
+    {
+      "path": "tools/physics/box3d/build.mjs",
+      "sha256": "cd30d65b3327d4cadbd43d3fd04f3981eee97bc0479a1b0b008892e0f8a8c86e"
+    },
+    {
+      "path": "tools/physics/box3d/native/air_box3d.c",
+      "sha256": "f8ec0a4ab28d747f8b9d9b30f209937df7045e22c4daf584a5a7091905b6f15d"
+    },
+    {
+      "path": "tools/physics/box3d/native/air_box3d.h",
+      "sha256": "3b761f12db0a241f395f58fcf37d9c212897a4901d196bef00a397d4b765c1a2"
+    },
+    {
+      "path": "tools/physics/box3d/native/contract.c",
+      "sha256": "d12eccb3695f0c368e68a56e77022a1d1c4a8a6552b250097acff5868b8f543c"
+    },
+    {
+      "path": "src/air/physics/box3d/binding/facade.mjs",
+      "sha256": "81a3133eb03414d375c27629a952842505d96be150e08ece6a5c4d02faa9a2ad"
+    }
+  ]
+}

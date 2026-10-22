@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "core": {
+    "repository": "https://github.com/erincatto/box3d",
+    "commit": "efca0c184d40fd6a82016983f1601c4d23965867",
+    "sourceRoot": "vendor/box3d/core",
+    "status": "SOURCE_BLOB_VERIFIED"
+  },
+  "bindingBase": {
+    "repository": "https://github.com/isaac-mason/box3d.js",
+    "commit": "5d5a3af049cccd9948b2b55bac4342414af0ef64",
+    "vendorCoreCommit": "8441b4a06d6d09dcfb0b0f704df4d847d1437b92",
+    "sourceRoot": "vendor/box3d/binding-base",
+    "status": "REFERENCE_ONLY_NOT_MIGRATED"
+  },
+  "emsdk": {
+    "candidateVersion": "6.0.2",
+    "status": "UNVERIFIED_MISSING",
+    "compilerVersion": null,
+    "containerDigest": null
+  },
+  "nativeDiagnostic": {
+    "compilerObserved": "gcc (Debian 14.2.0-19) 14.2.0",
+    "isWasmEvidence": false
+  },
+  "implementation": {
+    "strategy": "New narrow explicit C17 wire ABI; community source retained unchanged for audit. Not a complete embind migration.",
+    "abiVersion": 1,
+    "status": "EXPERIMENTAL_FOUNDATION"
+  },
+  "apiSchemaSha256": "615555d88a4cab5a82f1d37fa4c8e23f735ccdcba5b7e5c4de73a20068b42c5c",
+  "corePatches": [],
+  "compileContract": {
+    "coreStandard": "C17 with upstream GNU extensions",
+    "bindingStandard": "C17",
+    "precision": "float32",
+    "variant": "st-simd",
+    "simdFlags": ["-msimd128", "-msse2"],
+    "determinismFlags": ["-fno-fast-math", "-ffp-contract=off"],
+    "pthread": false,
+    "sharedMemory": false,
+    "workerPool": false,
+    "dynamicExecution": false,
+    "nativeWorkerCount": 1
+  },
+  "wasmGate": "NOT_RUN"
+}

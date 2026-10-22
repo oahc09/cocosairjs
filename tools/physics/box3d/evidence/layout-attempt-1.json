@@ -1,0 +1,7 @@
+{
+  "status": "FAIL",
+  "command": "gcc -std=gnu17 -Ivendor/box3d/old-core-review/include tools/physics/box3d/native/layout_probe.c -o tools/physics/box3d/output/layout-host-20261022/old-core-review",
+  "sourceSha256": "511176a16c87c4344a60fcd8639a30e8935a9fec0c6bf35fc430fc285725fc38",
+  "exitCode": 1,
+  "error": "layout_probe.c:13:32: error: \u2018b3CompoundChild\u2019 undeclared (first use in this function); did you mean \u2018b3CompoundHull\u2019?"
+}

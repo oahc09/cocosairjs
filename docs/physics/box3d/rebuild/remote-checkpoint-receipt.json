@@ -1,0 +1,116 @@
+{
+  "verifiedAtUtc": "2026-10-22T01:38:55.961Z",
+  "repository": "oahc09/cocosairjs",
+  "branch": "feat/box3d-rebuild-20261022",
+  "commit": "8df40ffe4ee1b3106f065a4624583ce52dc261d2",
+  "tree": "9dfd08ade02b48e06e913ba5ed0c4d79354efd73",
+  "parent": "b573be0741db9e2a13d38ce7e65870b97a1f5fbc",
+  "url": "https://github.com/oahc09/cocosairjs/commit/8df40ffe4ee1b3106f065a4624583ce52dc261d2",
+  "addedFiles": 17,
+  "allPriorMainBlobsPreserved": true,
+  "verifiedTreeEntries": 511,
+  "entries": [
+    {
+      "path": "ai/plans/box3d-rebuild.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2689b5cfcfdc9a474b9c2515dad00f38b1e2f757"
+    },
+    {
+      "path": "ai/ledgers/box3d-rebuild-state.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9d053d0992707449c03389b75e27c87a10bb73c4"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/baseline.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5609b0ffda1600e5ee6c980657bededbf82492d1"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/README.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "08de7bae7bd772c379b541105f6bcf85a671ef30"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/SNAPSHOT-NOTICE.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "529dfb99e491b71b0478e445acfb1f0a56be0002"
+    },
+    {
+      "path": "docs/physics/box3d/recovery/c14-initial-input-provenance.txt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b2fa2d04fde6969e5589ca552cc49e8e7d6bcd07"
+    },
+    {
+      "path": "docs/physics/box3d/recovery/README.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ecc400f907d45527d20603a0a86c77630ba54d87"
+    },
+    {
+      "path": "docs/physics/box3d/recovery/source-manifest.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "508ae0b3de5d44fe9b0013a9fe42c244e48b9b2c"
+    },
+    {
+      "path": "docs/physics/box3d/recovery/c14-recovered.patch",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1cc1d330e4b6075d275f40f405425669f7c1d007"
+    },
+    {
+      "path": "docs/physics/box3d/recovery/recovery-boundaries.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "381a556ba23582993da07795488e261da895be49"
+    },
+    {
+      "path": "docs/physics/box3d/recovery/c14-initial-input.cjs",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "bf78a6907179df7c86b64e20804786e26728b5e4"
+    },
+    {
+      "path": "docs/physics/box3d/recovery/runtime226-historical-summary.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "52e87ac1fd8eb23f9e1dfc70285989b68903ea73"
+    },
+    {
+      "path": "tools/verify/box3d/rebuild-checkpoint.cjs",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "628ed37d76834796113df6ec6651ee158e2ce44e"
+    },
+    {
+      "path": "tools/verify/box3d/rebuild-checkpoint.test.cjs",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "921dae4469879a4eb289717082967c7c63e2d1ec"
+    },
+    {
+      "path": "ai/plans/box3d-v1.2-reference.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5228b9e972e23e9d584c306a8a90e5ff713ebeff"
+    },
+    {
+      "path": "docs/physics/box3d/recovery/recovery-round2.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ecc14fcb8d85d8c427d938948fb1fbb16037fac2"
+    },
+    {
+      "path": "docs/physics/box3d/recovery/pr8-verified-main-source-manifest.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5d0686b70b51d91c17819fc462ef16ebf8285c5f"
+    }
+  ]
+}

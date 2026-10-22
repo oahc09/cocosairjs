@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "scope": "Public B3_API declarations only; review also includes structs/enums/callbacks in abi-review.md. Not compile/runtime proof.",
+  "oldCommit": "8441b4a06d6d09dcfb0b0f704df4d847d1437b92",
+  "targetCommit": "efca0c184d40fd6a82016983f1601c4d23965867",
+  "aheadCommits": 40,
+  "headerInputHashes": {
+    "old": "a54c228d4b08724147eb0bcc9819072dbe4c93d7e0199f6c616467155bc9b113",
+    "target": "1b434cb9a3960507996dbc4cc71bd6fa4fa97f86faa0f12867b25cbe2118c3f1",
+    "binding": "6b1cb2385c33a289e7f85dc03fa725464cad641f01b160e47da0c50c764ec476"
+  },
+  "removed": [
+    "b3WriteBinaryFile",
+    "b3ReadBinaryFile",
+    "b3World_RebuildStaticTree",
+    "b3World_DumpAwake",
+    "b3World_Dump",
+    "b3RecPlayer_Create",
+    "b3RecPlayer_Destroy",
+    "b3Body_GetLocalCenterOfMass",
+    "b3Body_GetWorldCenterOfMass",
+    "b3CreateCompoundShape",
+    "b3DynamicTree_ValidateNoEnlarged",
+    "b3ConvertCompoundToBytes",
+    "b3ConvertBytesToCompound",
+    "b3CollideCapsuleAndTriangle",
+    "b3CollideHullAndTriangle",
+    "b3CollideSphereAndTriangle",
+    "b3SetStallThreshold",
+    "b3GetStallThreshold"
+  ],
+  "added": [
+    "b3GetMaxManifoldPoints",
+    "b3IsAVX2Available",
+    "b3World_SetRestitutionIterations",
+    "b3World_GetRestitutionIterations",
+    "b3World_EnableRestitutionPropagation",
+    "b3World_IsRestitutionPropagationEnabled",
+    "b3World_SetIsotropicInertiaTolerance",
+    "b3World_GetIsotropicInertiaTolerance",
+    "b3World_EnableSSE2Fallback",
+    "b3CreatePlayer",
+    "b3DestroyPlayer",
+    "b3RecPlayer_SubStepFrame",
+    "b3RecPlayer_IsAtPreStep",
+    "b3Body_GetLocalCenter",
+    "b3Body_GetWorldCenter",
+    "b3Body_SetSafetyFactor",
+    "b3Body_GetSafetyFactor",
+    "b3Body_AllowFastRotation",
+    "b3Body_IsFastRotationAllowed",
+    "b3Body_GetMinExtent",
+    "b3Body_GetMaxExtent",
+    "b3Body_GetMaxExtentOrigin",
+    "b3Body_TimeOfImpactMover",
+    "b3CreateBakedCompoundShape",
+    "b3Shape_SetName",
+    "b3Shape_GetName",
+    "b3Shape_GetCompound",
+    "b3Joint_IsAwake",
+    "b3DynamicTree_ValidateNoMoved",
+    "b3CreateComplexHull",
+    "b3ValidateCompound",
+    "b3CollideTriangleAndCapsule",
+    "b3CollideTriangleAndHull",
+    "b3CollideTriangleAndSphere",
+    "b3Hull2D",
+    "b3SimplifyHull2D"
+  ],
+  "changed": [
+    {
+      "name": "b3GetByteCount",
+      "old": "int32_t b3GetByteCount( void );",
+      "target": "int64_t b3GetByteCount( void );"
+    },
+    {
+      "name": "b3Body_EnableHitEvents",
+      "old": "void b3Body_EnableHitEvents( b3BodyId bodyId, bool enableHitEvents );",
+      "target": "void b3Body_EnableHitEvents( b3BodyId bodyId, bool flag );"
+    }
+  ],
+  "removedSymbolsReferencedByOldBinding": [
+    "b3World_RebuildStaticTree",
+    "b3RecPlayer_Create",
+    "b3RecPlayer_Destroy",
+    "b3Body_GetLocalCenterOfMass",
+    "b3Body_GetWorldCenterOfMass",
+    "b3CreateCompoundShape",
+    "b3CollideCapsuleAndTriangle",
+    "b3CollideHullAndTriangle",
+    "b3CollideSphereAndTriangle"
+  ]
+}
