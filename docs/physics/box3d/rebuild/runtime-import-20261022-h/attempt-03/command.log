@@ -1,0 +1,18 @@
+(node:25) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ default actual ESM bundle: import, zero attempted resources (851.443284ms)
+✔ default actual ESM bundle: single, zero attempted resources (668.721035ms)
+✔ selected actual ESM bundle: import, zero attempted resources (636.103202ms)
+✔ selected actual ESM bundle: single, zero attempted resources (508.950681ms)
+✔ selected actual ESM bundle: multi, zero attempted resources (539.648344ms)
+✔ selected actual ESM bundle: auto, zero attempted resources (528.394641ms)
+✔ min actual ESM bundle: import, zero attempted resources (554.585899ms)
+✔ min actual ESM bundle: single, zero attempted resources (657.368686ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6165.508947

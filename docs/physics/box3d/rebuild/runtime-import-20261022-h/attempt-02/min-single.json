@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "caseId": "min-single",
+  "toolIdentity": {
+    "path": "tools/verify/box3d/runtime-feature-import.test.cjs",
+    "bytes": 10344,
+    "sha256": "5ac8f98133a8aa29eb9725305e7ff0b2e5a6413877c96cf4414d61f5268aa93b"
+  },
+  "limits": {
+    "environment": "Node VM SourceTextModule + JSDOM",
+    "proves": "actual bundle evaluation and pre-engine Box3D rejection paths without intercepted resource requests",
+    "doesNotProve": [
+      "browser execution",
+      "CSP enforcement",
+      "HTTP serving",
+      "real physics",
+      "successful app initialization"
+    ],
+    "canvasContext": "JSDOM does not provide real canvas contexts; getContext is a recorded null-returning stub"
+  },
+  "startedAt": "2026-10-22T06:37:29.511Z",
+  "status": "PASS",
+  "requests": [],
+  "logs": [
+    {
+      "stage": "module-evaluation",
+      "event": "jsdomError",
+      "text": "Error: Not implemented: HTMLCanvasElement.prototype.toDataURL (without installing the canvas npm package)\n    at module.exports (/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/jsdom/lib/jsdom/browser/not-implemented.js:9:17)\n    at HTMLCanvasElementImpl.toDataURL (/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/jsdom/lib/jsdom/living/nodes/HTMLCanvasElement-impl.js:55:5)\n    at HTMLCanvasElement.toDataURL (/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/jsdom/lib/jsdom/living/generated/HTMLCanvasElement.js:162:34)\n    at new <anonymous> (https://box3d-import.invalid/min/cocosair.module.js:1:82961)\n    at https://box3d-import.invalid/min/cocosair.module.js:1:80521\n    at SourceTextModule.evaluate (node:internal/vm/module:233:26)\n    at runCase (/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/verify/box3d/runtime-feature-import.test.cjs:179:22)\n    at async Test.run (node:internal/test_runner/test:1389:7)\n    at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)"
+    },
+    {
+      "stage": "module-evaluation",
+      "event": "log",
+      "text": "Cannot access game frame or container."
+    }
+  ],
+  "canvasContexts": [
+    {
+      "stage": "module-evaluation",
+      "kind": "2d"
+    },
+    {
+      "stage": "module-evaluation",
+      "kind": "2d"
+    }
+  ],
+  "gameInitCalls": 0,
+  "bundle": {
+    "path": "build/cocosair.module.min.js",
+    "bytes": 5438360,
+    "sha256": "13894f1a17fc6adcf569ba0a42261031e7de5b37a2476d3f5201e8205155b24d"
+  },
+  "moduleEvaluationCounts": {
+    "fetch": 0,
+    "dynamicImport": 0,
+    "xhrSend": 0,
+    "worker": 0,
+    "sharedWorker": 0,
+    "jsdomResourceLoader": 0,
+    "staticImport": 0
+  },
+  "applicationRejection": {
+    "code": "AIR_E_PHYSICS_BACKEND_UNAVAILABLE",
+    "name": "Error",
+    "message": "[AIR_E_PHYSICS_BACKEND_UNAVAILABLE] This runtime does not include the physics-box3d feature.",
+    "stack": "Error: [AIR_E_PHYSICS_BACKEND_UNAVAILABLE] This runtime does not include the physics-box3d feature.\n    at eGe (https://box3d-import.invalid/min/cocosair.module.js:1:4831286)\n    at MVe (https://box3d-import.invalid/min/cocosair.module.js:1:4919647)\n    at https://box3d-import.invalid/min/cocosair.module.js:1:2817815\n    at async runCase (/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/verify/box3d/runtime-feature-import.test.cjs:193:17)\n    at async Test.run (node:internal/test_runner/test:1389:7)\n    at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)"
+  },
+  "expectedErrorCode": "AIR_E_PHYSICS_BACKEND_UNAVAILABLE",
+  "finalCounts": {
+    "fetch": 0,
+    "dynamicImport": 0,
+    "xhrSend": 0,
+    "worker": 0,
+    "sharedWorker": 0,
+    "jsdomResourceLoader": 0,
+    "staticImport": 0
+  },
+  "finishedAt": "2026-10-22T06:37:29.870Z"
+}

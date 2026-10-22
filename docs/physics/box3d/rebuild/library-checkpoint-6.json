@@ -1,0 +1,15 @@
+{
+  "libraryFileId": "libfile_322991e6ac988191b1da3e5e1e481e46",
+  "archiveSHA256": "69572d107fd042d5f4cf73d2f69019b496d5e19ba59af67bf2e78fc086ae6661",
+  "verifiedAt": "2026-10-22T06:21:01.338Z",
+  "archivePayloads": 5,
+  "restore": {
+    "status": "PASS",
+    "checkedFiles": 4176,
+    "independentObjectStore": true
+  },
+  "sourceCommit": "e20606593e715992155a78f2c97614ab7cce7bbf",
+  "archiveName": "Box3D-snapshot-app-checkpoint-20261022.zip",
+  "archiveBytes": 18541192,
+  "scope": "Recoverable partial source and g real artifacts; current app/build failures retained, not full engine/browser acceptance"
+}

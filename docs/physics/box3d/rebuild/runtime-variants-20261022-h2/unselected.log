@@ -1,0 +1,192 @@
+[build] cocosair moduleFormat=esm min=false
+[build] AIR_BUILD_DATE=202610221431 AIR_BUILD_NUMBER=203
+Module source "internal-constants":
+function tryDefineGlobal (name, value) {
+    const _global = typeof window === 'undefined' ? global : window;
+    if (typeof _global[name] === 'undefined') {
+        return (_global[name] = value);
+    } else {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+        return _global[name];
+    }
+}
+export const HTML5 = true;
+
+export const NATIVE = false;
+
+export const ANDROID = false;
+
+export const IOS = false;
+
+export const MAC = false;
+
+export const WINDOWS = false;
+
+export const LINUX = false;
+
+export const OHOS = false;
+
+export const OPEN_HARMONY = false;
+
+export const WECHAT = false;
+tryDefineGlobal('CC_WECHAT', false);
+
+export const WECHAT_MINI_PROGRAM = false;
+
+export const XIAOMI = false;
+tryDefineGlobal('CC_XIAOMI', false);
+
+export const ALIPAY = false;
+tryDefineGlobal('CC_ALIPAY', false);
+
+export const TAOBAO = false;
+
+export const TAOBAO_MINIGAME = false;
+
+export const BYTEDANCE = false;
+tryDefineGlobal('CC_BYTEDANCE', false);
+
+export const OPPO = false;
+tryDefineGlobal('CC_OPPO', false);
+
+export const VIVO = false;
+tryDefineGlobal('CC_VIVO', false);
+
+export const HUAWEI = false;
+tryDefineGlobal('CC_HUAWEI', false);
+
+export const MIGU = false;
+tryDefineGlobal('CC_MIGU', false);
+
+export const HONOR = false;
+tryDefineGlobal('CC_HONOR', false);
+
+export const COCOS_RUNTIME = false;
+tryDefineGlobal('CC_COCOS_RUNTIME', false);
+
+export const SUD = false;
+tryDefineGlobal('CC_SUD', false);
+
+export const SUDV2 = false;
+tryDefineGlobal('CC_SUDV2', false);
+
+export const NODEJS = false;
+tryDefineGlobal('CC_NODEJS', false);
+
+export const EDITOR = false;
+tryDefineGlobal('CC_EDITOR', false);
+
+export const EDITOR_NOT_IN_PREVIEW = false;
+
+export const PREVIEW = false;
+tryDefineGlobal('CC_PREVIEW', false);
+
+export const BUILD = true;
+tryDefineGlobal('CC_BUILD', true);
+
+export const TEST = false;
+tryDefineGlobal('CC_TEST', false);
+
+export const DEBUG = true;
+tryDefineGlobal('CC_DEBUG', true);
+
+export const SERVER_MODE = false;
+
+export const DEV = false;
+tryDefineGlobal('CC_DEV', false);
+
+export const MINIGAME = false;
+tryDefineGlobal('CC_MINIGAME', false);
+
+export const RUNTIME_BASED = false;
+tryDefineGlobal('CC_RUNTIME_BASED', false);
+
+export const SUPPORT_JIT = false;
+tryDefineGlobal('CC_SUPPORT_JIT', false);
+
+export const JSB = false;
+tryDefineGlobal('CC_JSB', false);
+
+export const NOT_PACK_PHYSX_LIBS = false;
+
+export const NET_MODE = 0;
+
+export const WEBGPU = false;
+
+export const NATIVE_CODE_BUNDLE_MODE = 2;
+
+export const WASM_SUBPACKAGE = false;
+
+export const CULL_MESHOPT = true;
+
+export const LOAD_SPINE_MANUALLY = false;
+
+export const LOAD_BOX2D_MANUALLY = false;
+
+export const LOAD_BULLET_MANUALLY = false;
+
+export const LOAD_PHYSX_MANUALLY = false;
+
+export const USE_3D = true;
+
+export const USE_UI_SKEW = false;
+
+export const USE_XR = false;
+
+export const USE_SORTING_2D = false;
+
+
+Module source "cc":
+export * from '/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/exports/air.ts';
+export * from '/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/exports/base.ts';
+export * from '/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/exports/gfx-webgl2.ts';
+export * from '/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/exports/gfx-webgpu.ts';
+export * from '/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/exports/gfx-empty.ts';
+export * from '/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/exports/3d.ts';
+export * from '/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/exports/animation.ts';
+export * from '/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/exports/skeletal-animation.ts';
+export * from '/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/exports/primitive.ts';
+export * from '/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/exports/tween.ts';
+export * from '/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/exports/custom-pipeline.ts';
+export * from '/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/exports/legacy-pipeline.ts';
+export * from '/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/exports/profiler.ts';
+export * from '/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/exports/video.ts';
+export * from '/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/exports/webview.ts';
+export * from '/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/exports/2d.ts';
+export * from '/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/exports/sorting.ts';
+export * from '/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/exports/physics-2d-framework.ts';
+export * from '/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/exports/particle-2d.ts';
+export * from '/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/exports/tiled-map.ts';
+export * from '/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/exports/ui.ts';
+export * from '/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/exports/spine.ts';
+export * from '/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/exports/dragon-bones.ts';
+export * from '/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/exports/physics-2d-box2d.ts';
+export * from '/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/exports/physics-builtin.ts';
+export * from '/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/exports/physics-framework.ts';
+export * from '/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/exports/physics-cannon.ts';
+export * from '/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/exports/custom-pipeline-post-process.ts';
+Redirect module pal/system-info to /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/pal/system-info/web/system-info.js
+Redirect module /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/cocos/spine/lib/spine-version.ts to /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/cocos/spine/lib/spine-version-dynamic.ts
+Redirect module internal:native to /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/cocos/native-binding/impl.ts
+Redirect module pal/screen-adapter to /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/pal/screen-adapter/web/screen-adapter.js
+Redirect module /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/cocos/2d/renderer/native-2d.ts to /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/cocos/2d/renderer/native-2d-empty.ts
+Redirect module /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/cocos/animation/marionette/runtime-exports.ts to /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/cocos/animation/marionette/index-empty.ts
+Redirect module pal/minigame to /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/pal/minigame/non-minigame.js
+Redirect module /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/cocos/spine/lib/spine-instantiate.ts to /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/cocos/spine/lib/air-spine-instantiate-js.ts
+Redirect module pal/env to /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/pal/env/web/env.js
+Redirect module pal/pacer to /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/pal/pacer/pacer-web.js
+Redirect module pal/input to /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/pal/input/web/index.js
+[BABEL] Note: The code generator has deoptimised the styling of /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/air/builtin/builtin-effects.ts as it exceeds the max of 500KB.
+[BABEL] Note: The code generator has deoptimised the styling of /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/air/builtin/builtin-glsl4.ts as it exceeds the max of 500KB.
+Redirect module pal/audio to /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/pal/audio/web/player.js
+Redirect module pal/wasm to /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/pal/wasm/wasm-web.js
+==== Performance ====
+{"# BUILD":[59076.319503,3292372344,3503512088],"## initialize":[26001.283376,690845624,901995344],"- plugin 11 (node-resolve) - buildStart":[0.25303500000018175,7688,211168416],"- plugin 13 (commonjs) - buildStart":[0.7941160000000309,12312,211182176],"- plugin 14 (@cocos/typescript) - buildStart":[25999.737403,690809112,901991832],"## generate module graph":[26830.472167,2402451080,3304454248],"- plugin 0 (commonjs--resolver) - resolveId":[71.57170799977757,22158680,3309694536],"- plugin 6 (@cocos/ccbuild|external-loader) - resolveId":[32.51570899975923,2909632,3309697656],"- plugin 7 (@cocos/ccbuild|module-overrides) - resolveId":[48.13717899999392,1729288,3309709720],"- plugin 8 (virtual) - resolveId":[59.497128999890265,7423384,3309711792],"- plugin 6 (@cocos/ccbuild|external-loader) - load":[9.445107999952597,555936,3300189424],"- plugin 7 (@cocos/ccbuild|module-overrides) - load":[16.921931999982917,1030920,3300190896],"- plugin 8 (virtual) - load":[8.688099999995757,518528,3300191736],"- plugin 1 (air-line-endings) - transform":[391.41375800001697,155156224,3300200992],"- plugin 2 (air-webgpu-assets) - transform":[10.712342999890097,1965488,3300204912],"- plugin 3 (air-box2d-assets) - transform":[16.49894699990182,8290392,3300209840],"- plugin 4 (air-build-metadata) - transform":[10.181890999949246,3484184,3300213760],"- plugin 5 (air-esm-helpers) - transform":[117.85063699993043,67507544,3300217664],"- plugin 12 (json) - transform":[9.711887999950704,1146632,3300219928],"- plugin 13 (commonjs) - transform":[376.0432350000556,51550984,3300222280],"- plugin 15 (babel) - transform":[278.9186509999927,-27119856,3309757784],"- plugin 16 (air-transform-count) - transform":[11.886173000009876,360456,3310735768],"generate ast":[3215.5473660001007,931601944,3310813536],"- plugin 9 (@cocos/ccbuild|module-query-plugin) - resolveId":[45.81711800021367,5881496,3309779744],"- plugin 10 (ts-paths) - resolveId":[30.51277399986793,646384,3309933824],"- plugin 14 (@cocos/typescript) - resolveId":[373.98529999963284,76917656,3310025304],"- plugin 15 (babel) - resolveId":[5.991337999934331,-69280,3310031824],"- plugin 11 (node-resolve) - resolveId":[14.757365999998001,1685768,2965123928],"- plugin 11 (node-resolve) - load":[5.733070999802294,429536,3300192592],"- plugin 13 (commonjs) - load":[10.28832399989551,385240,3300194472],"- plugin 14 (@cocos/typescript) - load":[131.70833399999538,-20276016,2957208408],"- plugin 15 (babel) - load":[511.6997640000227,17308632,2957209568],"## sort and bind modules":[563.2617939999982,24216272,3328670624],"## mark included statements":[5648.864996000004,173356448,3502027104],"treeshaking pass 1":[1583.523340000007,147227504,3476563232],"treeshaking pass 2":[1350.949066000001,24906528,3501469792],"treeshaking pass 3":[588.3767529999968,10182816,3511652640],"treeshaking pass 4":[466.88907300000574,-14175824,3497476848],"treeshaking pass 5":[294.02027599999565,36678704,3534155584],"treeshaking pass 6":[270.81440199999633,11954016,3546109632],"treeshaking pass 7":[236.65274299999874,1809680,3547919344],"treeshaking pass 8":[224.3596250000046,-9302000,3538617376],"treeshaking pass 9":[218.38291999999637,-10703408,3527914000],"treeshaking pass 10":[204.78946500000166,-12749472,3515164560],"treeshaking pass 11":[203.25696200000675,-13137920,3502026672],"- plugin 13 (commonjs) - buildEnd":[0.1769510000012815,1528,3502033464],"- plugin 14 (@cocos/typescript) - buildEnd":[31.181477000005543,1477808,3503511304]}
+====             ====
+[cache] {"reused":false,"reason":"cold","transformed":1074,"modules":1074,"elapsedMs":66945}
+[build] ccbuild done in 73.8s
+[build] output: build/cocosair.module.js.map (source map)
+[build] output: build/cocosair.module.js
+[build] output: build/package.json (type: module)
+[build] output: build/gltf-decoders/package.json (type: commonjs)
+[build] cleaned: build/.tmp-dev-1792650678719

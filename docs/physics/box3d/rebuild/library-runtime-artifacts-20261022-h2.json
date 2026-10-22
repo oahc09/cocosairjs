@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS_LIBRARY_DOWNLOAD_AND_41_RUNTIME_ARTIFACT_BYTES",
+  "libraryFileId": "libfile_1bd16f266d908191b90831c71d5a2423",
+  "archiveName": "Box3D-runtime-variants-20261022-h2.tar.gz",
+  "archiveBytes": 19327874,
+  "archiveSha256": "22abfe52d1d7556c6d1869c3c7ad2ca69a320fbffe7b660d9929e6cee98a4499",
+  "verifiedAt": "2026-10-22T06:40:37.146792+00:00",
+  "artifactFiles": 41,
+  "archiveMembers": 43,
+  "scope": "Actual selected dev and default dev/min engine build artifacts. Includes generated ST assets only for selected variant. Not a package/declaration/browser or physical acceptance release."
+}

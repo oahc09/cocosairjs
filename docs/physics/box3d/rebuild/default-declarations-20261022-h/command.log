@@ -1,0 +1,14 @@
+[dts] bundling type declarations (this may take a few minutes) ...
+Typescript version: 4.9.5
+With index: true
+With exports: false
+With editor exports: true
+Unbundled will write to: /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/src/__dts_before_bundle
+Generating...
+It's 10/22/2026, 2:40:24 PM, we're still doing the hack for spine-core.d.ts
+Bundling...
+DeprecationWarning: 'createIndexSignature' has been deprecated since v4.8.0. Decorators are no longer supported for this function. Callers should switch to an overload that does not accept a 'decorators' parameter.
+DeprecationWarning: '' has been deprecated since v4.0.0. Use the appropriate method on 'ts.factory' or the 'factory' supplied by your transformation context instead.
+Don't know how to handle type `${x}`(Syntax Kind: TemplateLiteralType)
+Don't know how to handle type `${x}`(Syntax Kind: TemplateLiteralType)
+[dts] done in 67.5s → build/cocosair.module.d.ts

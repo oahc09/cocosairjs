@@ -1,0 +1,192 @@
+[
+  {
+    "path": "build/.tmp-rollup-cache/cache.json",
+    "bytes": 250003591,
+    "sha256": "1bd1bdd94c367857372ababfde818e42d05f814c1745b8f2999abe39ef0cf24a"
+  },
+  {
+    "path": "build/.tmp-rollup-cache/last-build.json",
+    "bytes": 105,
+    "sha256": "2ed3ed92a9c57724df37eaa7af9dfa9178f25b023e6b7e82c540d9a182a64322"
+  },
+  {
+    "path": "build/box2d3/LICENSE.Box2D.txt",
+    "bytes": 1067,
+    "sha256": "68a3e676d7e94093b102d5cba0d4e04af812040d6f230c3db67a6664574e43d2"
+  },
+  {
+    "path": "build/box2d3/air-box2d.mjs",
+    "bytes": 56143,
+    "sha256": "5a7d80e036a41ce9921daed74c31d7a30d1a7f41c103e207576991d1db126485"
+  },
+  {
+    "path": "build/box2d3/air-box2d.wasm",
+    "bytes": 371639,
+    "sha256": "3391e2ace476adba36297ff8ce66766a0a09d9365caec8079b6843d1dd4219ec"
+  },
+  {
+    "path": "build/box2d3/receipt.json",
+    "bytes": 974,
+    "sha256": "5540911a20a2c624629de1c6f155c43a6cf8e28c91fa0cb6f4cabfb54dfcfbf4"
+  },
+  {
+    "path": "build/cocosair.legacy.d.ts",
+    "bytes": 367,
+    "sha256": "6dd42c6a064b17f923568bce9e3befce5ff0e33d7b0af19bed965a9e1a86aed2"
+  },
+  {
+    "path": "build/cocosair.module.js",
+    "bytes": 8512239,
+    "sha256": "ad7f171b7633600e975bce959f2a106ce446743e7745bc933a7b2e5774794df0"
+  },
+  {
+    "path": "build/cocosair.module.js.map",
+    "bytes": 24315255,
+    "sha256": "5119d5aabab1124e96acd07215f4763f5e630b8041c61b3189fe62056fae6e80"
+  },
+  {
+    "path": "build/fflate/package.json",
+    "bytes": 23,
+    "sha256": "3ca9d4afd21425087cf31893b8f9f63c81b0b8408db5e343ca76e5f8aa26ab9a"
+  },
+  {
+    "path": "build/gltf-decoders/MANIFEST.md",
+    "bytes": 4612,
+    "sha256": "7793310bdfc07da95dd3ed25082686e2c1ce1629f2bfe18edd2a99352b8787e8"
+  },
+  {
+    "path": "build/gltf-decoders/basis/LICENSE.md",
+    "bytes": 12400,
+    "sha256": "08155e638b63603f65012c64ee1ca7dc947934b408ffaaea0f75669160792b9e"
+  },
+  {
+    "path": "build/gltf-decoders/basis/basis_transcoder.js",
+    "bytes": 62337,
+    "sha256": "48a0ef319a28bf0224ee88ded34f74eaf97c175bba9eb18b47fb9720510ad6c4"
+  },
+  {
+    "path": "build/gltf-decoders/basis/basis_transcoder.wasm",
+    "bytes": 499935,
+    "sha256": "79ae97d781e10a566659c689b7bb1de91726453f55f9f5e3bcc07a4e3904070f"
+  },
+  {
+    "path": "build/gltf-decoders/draco/LICENSE.md",
+    "bytes": 12203,
+    "sha256": "e09df5ca32827edf0aa4d9c94a8852cad7353eae00e709204c03ca91db4699b9"
+  },
+  {
+    "path": "build/gltf-decoders/draco/draco3d.js",
+    "bytes": 246,
+    "sha256": "7bb70f3edb3c32a21fbd3ea90d85f6f816a3394061c445ac4e867d23fa2f9dca"
+  },
+  {
+    "path": "build/gltf-decoders/draco/draco_decoder.wasm",
+    "bytes": 285948,
+    "sha256": "2516a4e43526d71787bf2f678f951329f7f858f8f15f42d4bc9e370b31a0da3a"
+  },
+  {
+    "path": "build/gltf-decoders/draco/draco_decoder_nodejs.js",
+    "bytes": 58763,
+    "sha256": "e8049906ef3f8f75d3456c22a3f31bfdfe5b5b5bd09ccdec613b9e9a49d554d8"
+  },
+  {
+    "path": "build/gltf-decoders/draco/draco_encoder.wasm",
+    "bytes": 370188,
+    "sha256": "d2a3ac80c91980d5d321c116454834ff36264825c6d1794cc84e42288f158958"
+  },
+  {
+    "path": "build/gltf-decoders/draco/draco_encoder_nodejs.js",
+    "bytes": 49007,
+    "sha256": "8434adecd1446459601763e499be3697546056bca90b286a538ae0483a00845a"
+  },
+  {
+    "path": "build/gltf-decoders/meshopt/LICENSE.md",
+    "bytes": 1079,
+    "sha256": "f03037ca7bad1e3eb7f4a63fa6084a8baabd5ba30d3c239a9a7f35705d873e26"
+  },
+  {
+    "path": "build/gltf-decoders/meshopt/index.js",
+    "bytes": 199,
+    "sha256": "0afb975db2733391c2d0cabfbe707ee6d9a9651dddc221aeda5d819379958a89"
+  },
+  {
+    "path": "build/gltf-decoders/meshopt/meshopt_decoder.cjs",
+    "bytes": 29400,
+    "sha256": "fedf06f101ff2ba59d66335578230b7e8f5fac5057dee084be64c67444ac6c12"
+  },
+  {
+    "path": "build/gltf-decoders/meshopt/meshopt_decoder.mjs",
+    "bytes": 29059,
+    "sha256": "cb08bf53ad8ad9693d8bb759b2dbade350eb38bcce63d005385e225b564c5f6a"
+  },
+  {
+    "path": "build/gltf-decoders/meshopt/meshopt_encoder.js",
+    "bytes": 24348,
+    "sha256": "f82f201a778333291ba1ca63035321f1c6d2770ef52d219e69e13f6cb2098429"
+  },
+  {
+    "path": "build/gltf-decoders/meshopt/meshopt_encoder.mjs",
+    "bytes": 24348,
+    "sha256": "f82f201a778333291ba1ca63035321f1c6d2770ef52d219e69e13f6cb2098429"
+  },
+  {
+    "path": "build/gltf-decoders/package.json",
+    "bytes": 25,
+    "sha256": "8005a3491db7d92f36ac66369861589f9c47123d3a7c71e643fc2c06168cd45a"
+  },
+  {
+    "path": "build/package.json",
+    "bytes": 23,
+    "sha256": "3ca9d4afd21425087cf31893b8f9f63c81b0b8408db5e343ca76e5f8aa26ab9a"
+  },
+  {
+    "path": "build/spark-types/generated/spark-runtime.d.ts",
+    "bytes": 5987,
+    "sha256": "962ce04342907d82cb0fff4fca1c462ab82713ebba497b31c90aa56ab194ecaa"
+  },
+  {
+    "path": "build/webgpu/LICENSE-apache.txt",
+    "bytes": 9226,
+    "sha256": "9362ea9ea17cb221a20cbbd63f404710834cc273d2a9a7b60314fd68ab702cd6"
+  },
+  {
+    "path": "build/webgpu/LICENSE-dawn.txt",
+    "bytes": 11829,
+    "sha256": "0493f897193af1796d5054659f45ec7d4c5af648fa67a99f01d30e55cc805abc"
+  },
+  {
+    "path": "build/webgpu/LICENSE-glslang.txt",
+    "bytes": 55719,
+    "sha256": "373bb541d74f5a2854e4b752c57952dd8155cca535124176de90c94efc67ef85"
+  },
+  {
+    "path": "build/webgpu/NOTICE-babylon.md",
+    "bytes": 793,
+    "sha256": "7f85d099ce3c6e1900a45ee8d5b8fa405e760c746af687b3ee2081416e48f183"
+  },
+  {
+    "path": "build/webgpu/glslang.js",
+    "bytes": 12829,
+    "sha256": "7937463b384ded16e10da2c1d64cb63a0894e56e8d8167cce636be5635caef59"
+  },
+  {
+    "path": "build/webgpu/glslang.wasm",
+    "bytes": 1192271,
+    "sha256": "2746e37cbb52ff99f21a836e56e72e5771873a83a032faec2ed860941b23768e"
+  },
+  {
+    "path": "build/webgpu/manifest.json",
+    "bytes": 1816,
+    "sha256": "84161a92c5469819bab8a3ddc6512bf8e6e88c1bb67c1fd4c873be84ce0e6df9"
+  },
+  {
+    "path": "build/webgpu/twgsl.js",
+    "bytes": 74129,
+    "sha256": "e5664e33a74d064118769636440a5b09121db31370d6fe54b778deb17cd0e4f5"
+  },
+  {
+    "path": "build/webgpu/twgsl.wasm",
+    "bytes": 1702916,
+    "sha256": "a434c2decdbb38caadf5f486d806384a1543554828c983c77922b2d92579914c"
+  }
+]

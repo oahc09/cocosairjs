@@ -1,0 +1,31 @@
+✔ Box3D options are copied/frozen and canonical; all legal request modes normalize (375.356589ms)
+✔ invalid Box3D configuration rejects before initialization and requests (216.800393ms)
+✔ requestAirApp exact-promise dedupe and conflicts preserve the admitted request (506.276824ms)
+✔ feature absent explicitly rejects Box3D even when no engine backend registered (501.8783ms)
+✔ unimplemented world and unavailable variants fail without invoking lazy loader (1628.945378ms)
+✔ default builtin and explicit Cannon never invoke Box3D loading (478.212116ms)
+✔ 2D rejection is inside initialization transaction; 3D and game never start (366.572486ms)
+✔ 3D rejection releases only acquired 2D and preserves original even when cleanup throws (131.430864ms)
+✔ init order is selected 2D, selected 3D, game.init, synchronous PRE selection (134.113798ms)
+✔ game.init failure independently cleans both backends without masking original (130.563901ms)
+✔ DOM setup failure after prepare rolls back both acquisitions before game.init (109.404548ms)
+✔ double close shares promise; failed world retains module but still releases independent 2D and diagnostics (108.423423ms)
+✔ actual 2D lease code shares in-flight load and pins a late direct consumer (205.331882ms)
+✔ actual 2D acquire conflict preserves pending load; failure retry creates fresh generation (155.880116ms)
+✔ actual 2D lease disposes only its owned world and old disposal cannot clear a newer generation (136.449404ms)
+✔ actual 2D lease release does not destroy a direct-consumer world (109.677481ms)
+✔ actual 2D world cleanup failure retains references, rejects further acquire and is not retried by double dispose (100.177655ms)
+✔ actual 2D partially constructed world is captured before ground-body creation fails (117.355064ms)
+✔ actual 2D pending second acquisition prevents premature drop by an earlier fulfilled lease (94.307906ms)
+✔ auto omitted count is distinct from explicit count in admission equality (28.030791ms)
+✔ failed resource retains only explicit dependencies; independent same-backend resources still clean (23.90538ms)
+✔ defensive late acquisition self-releases; terminal attempt never becomes prepared (18.613696ms)
+✔ late self-release before the dispose microtask is still invoked exactly once (13.983039ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7429.459418

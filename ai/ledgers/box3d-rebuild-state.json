@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "createdAtUtc": "2026-10-22T01:25:26.781006+00:00",
-  "scope": "AUTHORIZED_REBUILD_SNAPSHOT_AND_APP_PREPARATION_CHECKPOINT",
+  "scope": "AUTHORIZED_REBUILD_RUNTIME_BUILD_AND_APP_PREPARATION_CHECKPOINT",
   "branch": "feat/box3d-rebuild-20261022",
   "upstreamSourceCommit": "b573be0741db9e2a13d38ce7e65870b97a1f5fbc",
   "localImportCommit": "730fbf2519887474e9acfd229fbb65586090bb77",
@@ -85,7 +85,7 @@
       "description": "配置、prepare registry、feature export与选择时序接入源码",
       "dependencies": "T03、T06",
       "completionContract": "配置/descriptor契约及异步边界实现完成；完整app运行由T09加入真实world后验证，不提前标I01通过",
-      "implementationScope": "Optional ST feature, normalized app configuration, independent native leases and prepare/cleanup source implemented. 27 mocked lifecycle regressions and full TypeScript check pass. No real engine Box3D world adapter; no I01 claim."
+      "implementationScope": "Optional ST feature, normalized app configuration, independent native leases and prepare/cleanup source implemented. Fresh 31 lifecycle/design cases, full source tsc and 15 restored HEADLESS bootstrap tests pass. Three runtime builds and 8 actual ESM VM import/rejection cases pass. No real Box3D world adapter, browser or I01 completion claim."
     },
     {
       "id": "T09",
@@ -93,7 +93,8 @@
       "status": "TODO",
       "description": "IPhysicsWorld基础、时序/重力/睡眠/debug/tick诊断，并完成应用联调",
       "dependencies": "T07、T08",
-      "completionContract": "I01/I02、I03既有路径及COEXIST-PREPARE、I04旧后端及COEXIST-LOWLEVEL、WASM-07-AIR、B3-U01真实低层body；无第二累计器/RAF；组件路径由T10/T11验证"
+      "completionContract": "I01/I02、I03既有路径及COEXIST-PREPARE、I04旧后端及COEXIST-LOWLEVEL、WASM-07-AIR、B3-U01真实低层body；无第二累计器/RAF；组件路径由T10/T11验证",
+      "implementationScope": "Read-only world-adapter-integration-proposal.md completed. Required live native gravity/sleep/debug bridges, actual adapter and real engine/WASM integration are not yet implemented."
     },
     {
       "id": "T10",
@@ -904,7 +905,7 @@
     {
       "id": "SOURCE-CLOSURE",
       "status": "BLOCKED",
-      "reason": "6776 original main paths absent locally. Twenty additional exact-main files restored. First actual selected ESM attempt failed before compilation because vendor/builtin-source/manifest.json is absent; build counter unchanged at 201. Complete source/package closure remains unproven."
+      "reason": "6351 original main paths remain absent from the tracked local snapshot. 445 exact-main files restored after the initial import. Actual selected dev and default dev/min runtime builds and default declaration generation now complete. Full source, package and variant declaration closure is not established."
     },
     {
       "id": "NATIVE-CLOSURE",
@@ -957,20 +958,20 @@
     "deploy": false,
     "npmPublish": false
   },
-  "nextStep": "Persist and independently restore checkpoint 6 immediately. Then restore missing exact-main build inputs, run real selected/default ESM builds and repeat the retained bootstrap regression. C21 geometry-epoch proposal is recorded, not yet implemented. No product implementation resumes before checkpoint preservation.",
+  "nextStep": "Preserve checkpoint 7 source and actual runtime artifacts, then implement the reviewed C21 geometry-only staged patch and required live-world bridges. T09 proposal is inspected but the real adapter is not implemented. Browser/device and full inventory gates remain open.",
   "remoteHistoryPolicy": "True upstream main parent and incremental tree; local snapshot import is backup-only and is never pushed as upstream history.",
   "remotePublication": {
     "branchCreated": true,
-    "branchHead": "1b97b53d80fd4f9b2a643d358be6198d3136763d",
-    "status": "VERIFIED_PATCH_IDENTITY_AND_ST_LOADER_CHECKPOINT",
-    "commitsPublished": 5,
-    "verifiedRemoteParent": "5bc901ff997a228b4e6dd60bec6df8afc8ff3c3c",
+    "branchHead": "e3ccf2acb088cd6a127de1079e28b3de9ad9a603",
+    "status": "VERIFIED_COPIED_SNAPSHOT_AND_APP_PREPARATION_CHECKPOINT",
+    "commitsPublished": 6,
+    "verifiedRemoteParent": "1b97b53d80fd4f9b2a643d358be6198d3136763d",
     "verifiedAddedFiles": 17,
     "allPriorMainBlobsPreserved": true,
-    "receipt": "docs/physics/box3d/rebuild/remote-checkpoint-5.json",
-    "verifiedChangedFiles": 237
+    "receipt": "docs/physics/box3d/rebuild/remote-checkpoint-6.json",
+    "verifiedChangedFiles": 171
   },
-  "updatedAtUtc": "2026-10-22T06:18:33.009464+00:00",
+  "updatedAtUtc": "2026-10-22T06:48:01.860914+00:00",
   "currentEvidence": {
     "m0ContractTests": "PASS_6_SOURCE_DESIGN_CHECKS_ONLY",
     "nativeFoundationIndex": "tools/physics/box3d/evidence/index.json",
@@ -1011,15 +1012,20 @@
     "originalUBSan": "FAIL_PRESERVED_UPSTREAM_SSE2_MISALIGNED_DOUBLE_LOAD",
     "isolatedCandidateUBSan": "PASS_NARROW_FULL_NATIVE_FIXTURE_UBSAN_ONLY_NOT_DEFAULT_SANITIZER_QUALIFICATION",
     "isolatedCandidateASanLSan": "BLOCKED_LSAN_PTRACE",
-    "sourceScope": "Each receipt fingerprints its own source and scope. New g raw snapshots, asset staging, T08 CPU and failed runtime preflight are distinct from e/f historical results. No whole-engine Box3D physics or browser acceptance.",
+    "sourceScope": "Each receipt fingerprints its own source and scope. Real g WASM, 3 h2 runtime builds, 15 HEADLESS bootstrap tests and 8 VM bundle cases are separate limited results. Prior failed missing-vendor/bundle/declaration attempts remain retained. No engine Box3D world or browser physics acceptance.",
     "snapshotFoundation": "PASS_LIMITED_G_DEBUG_RELEASE_21_INPUTS_55_COMPILE_UNITS_EACH",
     "snapshotEvidence": "tools/physics/box3d/evidence/snapshot-checkpoint-20261022-g/summary.json",
     "contactGeometryEpoch": "BLOCKED_UNEXPOSED_ORIGINAL_GENERATION_BASIS_PROPOSAL_ONLY",
     "appPreparation": "PASS_27_MOCKED_TYPESCRIPT_LIFECYCLE_CASES_AND_FULL_TSC",
-    "appBootstrapRegression": "14_PASS_1_FAIL_MISSING_DEFAULT_BUILD_BUNDLES_NOT_YET_BUILT",
-    "appPreparationEvidence": "docs/physics/box3d/rebuild/app-preparation-20261022-h/receipt.json",
-    "runtimeBuild": "FAIL_MISSING_EXACT_MAIN_BUILTIN_SOURCE_MANIFEST_BEFORE_COMPILATION",
-    "runtimeBuildEvidence": "docs/physics/box3d/rebuild/runtime-variants-20261022-h/receipt.json"
+    "appBootstrapRegression": "PASS_15_OF_15_ACTUAL_RESTORED_MAIN_HEADLESS_JSDOM_TESTS",
+    "appPreparationEvidence": "docs/physics/box3d/rebuild/app-preparation-20261022-h3/receipt.json",
+    "runtimeBuild": "PASS_SELECTED_DEV_AND_DEFAULT_DEV_MIN_3_ACTUAL_BUILDS",
+    "runtimeBuildEvidence": "docs/physics/box3d/rebuild/runtime-variants-20261022-h2/receipt.json",
+    "defaultDeclarations": "GENERATED_EXIT_ZERO_WARNINGS_RETAINED_NOT_PUBLIC_COMPATIBILITY_ACCEPTANCE",
+    "defaultDeclarationsEvidence": "docs/physics/box3d/rebuild/default-declarations-20261022-h/receipt.json",
+    "actualRuntimeImport": "PASS_8_ACTUAL_NODE_VM_ESM_CASES_ZERO_INTERCEPTED_REQUESTS_NOT_BROWSER",
+    "actualRuntimeImportEvidence": "docs/physics/box3d/rebuild/runtime-import-20261022-h/review-receipt.json",
+    "runtimeArtifactsLibrary": "libfile_1bd16f266d908191b90831c71d5a2423"
   },
   "contractDesign": {
     "publicSpecMembers": 166,
@@ -1030,19 +1036,20 @@
     "giftWorkshop": "docs/physics/box3d/contracts/gift-workshop/"
   },
   "persistentCheckpoint": {
-    "libraryFileId": "libfile_83032348a65481919fa0cab441b2db55",
-    "sha256": "37d73af403ae520798f60c82f92b94fa7756a4b637f69e6a6440091793a9b732",
-    "localHead": "0b4a0d5a80d85970829ba27860907930e2c15984",
-    "libraryDownloadAndIndependentRestore": "PASS_4024_FILES_7_ARCHIVE_PAYLOADS",
-    "scope": "Frozen fifth source checkpoint with formally staged e patch identity, internal ST loader and finite real Node WASM cycles. Historical a/b/c/d artifacts remain distinctly labelled. No current g changes or app/browser acceptance in this archive."
+    "libraryFileId": "libfile_322991e6ac988191b1da3e5e1e481e46",
+    "sha256": "69572d107fd042d5f4cf73d2f69019b496d5e19ba59af67bf2e78fc086ae6661",
+    "localHead": "e20606593e715992155a78f2c97614ab7cce7bbf",
+    "libraryDownloadAndIndependentRestore": "PASS_4176_FILES_5_ARCHIVE_PAYLOADS",
+    "scope": "g raw snapshots and application preparation; current build failures and C21 proposal preserved, not full physics acceptance."
   },
   "additionalOriginalMainSources": {
-    "count": 20,
-    "remainingOriginalMissing": 6776,
+    "count": 445,
+    "remainingOriginalMissing": 6351,
     "manifest": "docs/physics/box3d/rebuild/supplemental-main-source-manifest.json",
     "additionalManifests": [
       "docs/physics/box3d/rebuild/main-file-map-source-receipt.json",
-      "docs/physics/box3d/rebuild/main-bootstrap-tests-source-receipt.json"
+      "docs/physics/box3d/rebuild/main-bootstrap-tests-source-receipt.json",
+      "docs/physics/box3d/rebuild/main-vendor-source-receipt.json"
     ]
   }
 }

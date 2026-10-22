@@ -1,0 +1,169 @@
+{
+  "status": "PASS_8_ACTUAL_ESM_VM_CASES_NO_RESOURCE_REQUESTS",
+  "attemptsRetained": 3,
+  "independentReviewAttempt": "attempt-03",
+  "files": [
+    {
+      "path": "attempt-01/selected-auto.json",
+      "bytes": 3728,
+      "sha256": "427d0e483e037f2e9d9dd4d0dfed6aaf87db68f486e27590cf256315bb6de5ab"
+    },
+    {
+      "path": "attempt-01/selected-import.json",
+      "bytes": 2716,
+      "sha256": "39d8a4df6155bde3d65f3b2c3bb1d258eafb9d2ffe4e2119046d3f4c056cd3b1"
+    },
+    {
+      "path": "attempt-01/selected-multi.json",
+      "bytes": 3729,
+      "sha256": "c036daa7c5bb394b40971340280df0a666bd1733066922ae21babcad4aaaabd3"
+    },
+    {
+      "path": "attempt-01/selected-single.json",
+      "bytes": 3711,
+      "sha256": "b87273ef3253d1979f9005c7be35735fe558dc30c174cf799a952c031718992b"
+    },
+    {
+      "path": "attempt-01/summary.json",
+      "bytes": 1891,
+      "sha256": "a13b979e90a96df832ff018dc9e7341d120758d3f3df257ea6aecb77aedb72a8"
+    },
+    {
+      "path": "attempt-01/tool-identity.json",
+      "bytes": 268,
+      "sha256": "f4779b675c34b7ca0de0770e5be365d1faa4a9be7a31791d597d03642fe3e878"
+    },
+    {
+      "path": "attempt-01/tool-source.cjs",
+      "bytes": 9805,
+      "sha256": "f4fb927dd7d054a5a18025949cd8803a829797dd88e7854b5e8ce52b7fcc30b4"
+    },
+    {
+      "path": "attempt-02/default-import.json",
+      "bytes": 2869,
+      "sha256": "73c08d91f3b0d6a72c682b2d24874c21a3fc56ab3566f951ca04db7473691937"
+    },
+    {
+      "path": "attempt-02/default-single.json",
+      "bytes": 3880,
+      "sha256": "3a1f5f23d085c773eaf9c999a09bb77f1317514b79e3d51e6b599c75577c3d19"
+    },
+    {
+      "path": "attempt-02/min-import.json",
+      "bytes": 2860,
+      "sha256": "4a0c0bb869004ab15ebc8bf90104342021e66136cf96d303c3d0400b4a453c00"
+    },
+    {
+      "path": "attempt-02/min-single.json",
+      "bytes": 3752,
+      "sha256": "0c463d15db267cba4ddff0bb283219ab1a0b8c1f529bf1f4db45ee0dcac6f981"
+    },
+    {
+      "path": "attempt-02/selected-auto.json",
+      "bytes": 3920,
+      "sha256": "61e44e2d728ba1e7b6fe80e6089b7d63f92e9ce3bfe118f8117f7876f1735920"
+    },
+    {
+      "path": "attempt-02/selected-import.json",
+      "bytes": 2906,
+      "sha256": "66f0bf2d6851f33a70ed5661feeeac512a9e8c3a0a003ff1619340854638a16d"
+    },
+    {
+      "path": "attempt-02/selected-multi.json",
+      "bytes": 3921,
+      "sha256": "66aed98962114c853694527360db377324697e31a8a3f98f49e551a205a66cf9"
+    },
+    {
+      "path": "attempt-02/selected-single.json",
+      "bytes": 3903,
+      "sha256": "c0f5ef12025e66d9b4084d1a6d081107c1e63892d72576013a22c1284cd9622b"
+    },
+    {
+      "path": "attempt-02/summary.json",
+      "bytes": 3253,
+      "sha256": "18f7c3717e9ab3f9eb60de8900d4f2cf08deeff5b56edeb4d37edc17d75b83b3"
+    },
+    {
+      "path": "attempt-02/tool-identity.json",
+      "bytes": 165,
+      "sha256": "84c58d54f373fad3cfcc1e7dac43d0572234cafcfc4884e162ce7e59852b75d0"
+    },
+    {
+      "path": "attempt-02/tool-source.cjs",
+      "bytes": 10344,
+      "sha256": "5ac8f98133a8aa29eb9725305e7ff0b2e5a6413877c96cf4414d61f5268aa93b"
+    },
+    {
+      "path": "attempt-03/command.log",
+      "bytes": 911,
+      "sha256": "71d2413827196764afc3ebe0c1122f142cfc5eb627e4d7db1779d33b728d2c63"
+    },
+    {
+      "path": "attempt-03/default-import.json",
+      "bytes": 2869,
+      "sha256": "2e106c78d3b22c8331fcb7504d93961b06a93e5ca9a14e550303ac314fd87483"
+    },
+    {
+      "path": "attempt-03/default-single.json",
+      "bytes": 3880,
+      "sha256": "9d3b3df48bd7584dd5cd542256ac874aaf44d8bc830f0d4072a17c2ee0a8e58c"
+    },
+    {
+      "path": "attempt-03/min-import.json",
+      "bytes": 2860,
+      "sha256": "446f7fc520f6d5d3627e8d0fb02d460dcb827d35355a6e00de745670f421cfb6"
+    },
+    {
+      "path": "attempt-03/min-single.json",
+      "bytes": 3752,
+      "sha256": "1f13760cf69c1a5ff2b480e783651917e17aa2733b97354fc9908bd19cec69e1"
+    },
+    {
+      "path": "attempt-03/selected-auto.json",
+      "bytes": 3920,
+      "sha256": "4a40c0b91308477d7fdec5e68783fa22ead43ed66b780abca5adcfc13589eac1"
+    },
+    {
+      "path": "attempt-03/selected-import.json",
+      "bytes": 2906,
+      "sha256": "0ca5de62baf35ff262932bed9179f7081967141237b84782cde0bc05e8d55b96"
+    },
+    {
+      "path": "attempt-03/selected-multi.json",
+      "bytes": 3921,
+      "sha256": "f84418304637dd91764b22a7eafdf9b505130d2acd9ef97a3ba64340f757ecad"
+    },
+    {
+      "path": "attempt-03/selected-single.json",
+      "bytes": 3903,
+      "sha256": "2a9c10e61c7e658886ca716302ef1d447dd1d585efafd7b4dacd695abd1925c1"
+    },
+    {
+      "path": "attempt-03/summary.json",
+      "bytes": 3253,
+      "sha256": "18f7c3717e9ab3f9eb60de8900d4f2cf08deeff5b56edeb4d37edc17d75b83b3"
+    },
+    {
+      "path": "attempt-03/tool-identity.json",
+      "bytes": 165,
+      "sha256": "84c58d54f373fad3cfcc1e7dac43d0572234cafcfc4884e162ce7e59852b75d0"
+    },
+    {
+      "path": "attempt-03/tool-source.cjs",
+      "bytes": 10344,
+      "sha256": "5ac8f98133a8aa29eb9725305e7ff0b2e5a6413877c96cf4414d61f5268aa93b"
+    }
+  ],
+  "scope": {
+    "environment": "Node VM SourceTextModule + JSDOM",
+    "proves": "actual bundle evaluation and pre-engine Box3D rejection paths without intercepted resource requests",
+    "doesNotProve": [
+      "browser execution",
+      "CSP enforcement",
+      "HTTP serving",
+      "real physics",
+      "successful app initialization"
+    ],
+    "canvasContext": "JSDOM does not provide real canvas contexts; getContext is a recorded null-returning stub"
+  }
+}

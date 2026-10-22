@@ -1,0 +1,39 @@
+✔ Box3D options are copied/frozen and canonical; all legal request modes normalize (258.52308ms)
+✔ invalid Box3D configuration rejects before initialization and requests (80.321584ms)
+✔ requestAirApp exact-promise dedupe and conflicts preserve the admitted request (92.934836ms)
+✔ feature absent explicitly rejects Box3D even when no engine backend registered (271.552053ms)
+✔ unimplemented world and unavailable variants fail without invoking lazy loader (624.18801ms)
+✔ default builtin and explicit Cannon never invoke Box3D loading (366.68233ms)
+✔ 2D rejection is inside initialization transaction; 3D and game never start (105.811265ms)
+✔ 3D rejection releases only acquired 2D and preserves original even when cleanup throws (580.711698ms)
+✔ init order is selected 2D, selected 3D, game.init, synchronous PRE selection (182.235163ms)
+✔ game.init failure independently cleans both backends without masking original (207.25701ms)
+✔ DOM setup failure after prepare rolls back both acquisitions before game.init (127.932653ms)
+✔ double close shares promise; failed world retains module but still releases independent 2D and diagnostics (226.709686ms)
+✔ actual 2D lease code shares in-flight load and pins a late direct consumer (248.432695ms)
+✔ actual 2D acquire conflict preserves pending load; failure retry creates fresh generation (163.052338ms)
+✔ actual 2D lease disposes only its owned world and old disposal cannot clear a newer generation (255.138575ms)
+✔ actual 2D lease release does not destroy a direct-consumer world (142.789871ms)
+✔ actual 2D world cleanup failure retains references, rejects further acquire and is not retried by double dispose (144.592955ms)
+✔ actual 2D partially constructed world is captured before ground-body creation fails (129.194927ms)
+✔ actual 2D pending second acquisition prevents premature drop by an earlier fulfilled lease (146.405343ms)
+✔ auto omitted count is distinct from explicit count in admission equality (52.749753ms)
+✔ failed resource retains only explicit dependencies; independent same-backend resources still clean (14.365522ms)
+✔ defensive late acquisition self-releases; terminal attempt never becomes prepared (22.982517ms)
+✔ late self-release before the dispose microtask is still invoked exactly once (16.198805ms)
+✔ final 3D selection never masks missing Box3D and rejects selection after world creation (52.807468ms)
+✔ actual 2D lease may reselect before world creation, but another lease cannot take ownership (114.451778ms)
+✔ preparation resource keys are unique for the whole attempt, including during and after close (20.414267ms)
+✔ distinct late acquisition is self-released once and cannot be re-owned under its existing key (12.981218ms)
+✔ default runtime and unused backend remain free of Box3D resource requests (1.984949ms)
+✔ thread and substep normalization cannot silently choose another engine (0.382749ms)
+✔ all selected prepare work stays inside one ordered owned-resource transaction (0.417521ms)
+✔ CSP, declaration identity and pack claims remain unexecuted (0.153895ms)
+ℹ tests 31
+ℹ suites 0
+ℹ pass 31
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5163.250842

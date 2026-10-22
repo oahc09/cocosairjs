@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "exitCode": 0,
+  "limits": {
+    "environment": "Node VM SourceTextModule + JSDOM",
+    "proves": "actual bundle evaluation and pre-engine Box3D rejection paths without intercepted resource requests",
+    "doesNotProve": [
+      "browser execution",
+      "CSP enforcement",
+      "HTTP serving",
+      "real physics",
+      "successful app initialization"
+    ],
+    "canvasContext": "JSDOM does not provide real canvas contexts; getContext is a recorded null-returning stub"
+  },
+  "nodeVersion": "v24.19.0",
+  "variants": [
+    "selected"
+  ],
+  "results": [
+    {
+      "caseId": "selected-import",
+      "status": "PASS",
+      "raw": "selected-import.json",
+      "bundle": {
+        "path": "output/box3d-runtime-selected-20261022-h2/cocosair.module.js",
+        "bytes": 8553954,
+        "sha256": "f8d6d84382a9e294a2b6add1ba314616bd5760f6920aaa0a01da1b01ee02f492"
+      }
+    },
+    {
+      "caseId": "selected-single",
+      "status": "PASS",
+      "raw": "selected-single.json",
+      "bundle": {
+        "path": "output/box3d-runtime-selected-20261022-h2/cocosair.module.js",
+        "bytes": 8553954,
+        "sha256": "f8d6d84382a9e294a2b6add1ba314616bd5760f6920aaa0a01da1b01ee02f492"
+      }
+    },
+    {
+      "caseId": "selected-multi",
+      "status": "PASS",
+      "raw": "selected-multi.json",
+      "bundle": {
+        "path": "output/box3d-runtime-selected-20261022-h2/cocosair.module.js",
+        "bytes": 8553954,
+        "sha256": "f8d6d84382a9e294a2b6add1ba314616bd5760f6920aaa0a01da1b01ee02f492"
+      }
+    },
+    {
+      "caseId": "selected-auto",
+      "status": "PASS",
+      "raw": "selected-auto.json",
+      "bundle": {
+        "path": "output/box3d-runtime-selected-20261022-h2/cocosair.module.js",
+        "bytes": 8553954,
+        "sha256": "f8d6d84382a9e294a2b6add1ba314616bd5760f6920aaa0a01da1b01ee02f492"
+      }
+    }
+  ]
+}

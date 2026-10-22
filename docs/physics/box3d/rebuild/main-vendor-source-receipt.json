@@ -1,0 +1,2984 @@
+{
+  "schemaVersion": 1,
+  "retrievedAt": "2026-10-22T06:29:09.009623+00:00",
+  "sourceCommit": "b573be0741db9e2a13d38ce7e65870b97a1f5fbc",
+  "source": "Read-only exact Git blobs from independently fixed main object cache; never changed upstream task worktree.",
+  "files": [
+    {
+      "path": "vendor/box2d/README.md",
+      "bytes": 1818,
+      "gitBlobSha1": "5624b172bd9007044008f040b76d155dc0f68e5b",
+      "mode": "100644",
+      "sha256": "5e6c14dfdc7d7be19504d3e44628aea43c26e938b2d85cf4e1b8f24a27a532f4"
+    },
+    {
+      "path": "vendor/box2d/imgui/LICENSE.txt",
+      "bytes": 1104,
+      "gitBlobSha1": "2c7b5ac9c95236d89e32f63e2bac72c8844c821b",
+      "mode": "100644",
+      "sha256": "f20418b409e53c8c9f4e90917ff395554a60320d4dfbf833da89b339cad8628a"
+    },
+    {
+      "path": "vendor/box2d/imgui/imconfig.h",
+      "bytes": 12320,
+      "gitBlobSha1": "48ca93fa478b13196031a33a957bb21401ec0fa5",
+      "mode": "100644",
+      "sha256": "6e46e4e949b57c82a581e88a5eaba2d70980039911af8322daa5cfe494e8d739"
+    },
+    {
+      "path": "vendor/box2d/imgui/imgui.cpp",
+      "bytes": 976518,
+      "gitBlobSha1": "bae24e2fdc687d57aef6c2cf37ed5ab95fc6f75d",
+      "mode": "100644",
+      "sha256": "a6beae86d25852a0e42684362006e7093ebbfe79748c458aef07205119552391"
+    },
+    {
+      "path": "vendor/box2d/imgui/imgui.h",
+      "bytes": 428436,
+      "gitBlobSha1": "ab7a70161721c38e9c77feab001380470b5f55c0",
+      "mode": "100644",
+      "sha256": "2a2d7ece01bf40fe56a75f787d9eec205c6e129af39bbecbd77ebbac7b1d49ac"
+    },
+    {
+      "path": "vendor/box2d/imgui/imgui_draw.cpp",
+      "bytes": 384016,
+      "gitBlobSha1": "e1deca932a6674ed51a346f154c256cab77874c9",
+      "mode": "100644",
+      "sha256": "a4b21db4b40e989fc7e76051f4362588be60150d4a12087474b5f8e14e7dba87"
+    },
+    {
+      "path": "vendor/box2d/imgui/imgui_internal.h",
+      "bytes": 306342,
+      "gitBlobSha1": "cb22490c44a46187056ad7586159d1dac19f5554",
+      "mode": "100644",
+      "sha256": "f5136d556253aa897029e06328b07a7f5d142906348eafc398690af898ec3c17"
+    },
+    {
+      "path": "vendor/box2d/imgui/imgui_tables.cpp",
+      "bytes": 260689,
+      "gitBlobSha1": "24e7a18388a9e13940e4de686051cceecd603e84",
+      "mode": "100644",
+      "sha256": "53d2473c7275b43655fa7ba7dbb496cac7bcbb837bd12ad3e84ee5f0ae911873"
+    },
+    {
+      "path": "vendor/box2d/imgui/imgui_widgets.cpp",
+      "bytes": 552208,
+      "gitBlobSha1": "31c7d43e697752d47a87ec80692c89972db556d8",
+      "mode": "100644",
+      "sha256": "154cfc80e36599bb1ff1bb8d184650c13342eb9e947c1d7c19c77bf1a4e70184"
+    },
+    {
+      "path": "vendor/box2d/imgui/imstb_rectpack.h",
+      "bytes": 20973,
+      "gitBlobSha1": "fa5dd8ae04b7bb4299bc93afca83639365504e9e",
+      "mode": "100644",
+      "sha256": "7f9bffb8ac5e79d20787fdc20d29d29f7474dca673f64d4a9a8a9f9373e40972"
+    },
+    {
+      "path": "vendor/box2d/imgui/imstb_textedit.h",
+      "bytes": 61638,
+      "gitBlobSha1": "4054533917455ee0a0edf0fb03ddbbd0667b1581",
+      "mode": "100644",
+      "sha256": "24a8db00354af8f4057417841635a1b6dfd8986f1608336fe6f10d6fd9769aaa"
+    },
+    {
+      "path": "vendor/box2d/imgui/imstb_truetype.h",
+      "bytes": 204588,
+      "gitBlobSha1": "ae262ca130b141f80ac54af1104bc4dd8b45dcbd",
+      "mode": "100644",
+      "sha256": "a4131c7a2e324c0625250830af6976adb5732b453f0fc6e8bc5ad70065bc2b79"
+    },
+    {
+      "path": "vendor/box2d/implot/LICENSE",
+      "bytes": 1068,
+      "gitBlobSha1": "3995ef7c575125d09f59634c850c41a88ad532bc",
+      "mode": "100644",
+      "sha256": "38bd30c2111fe7e3d8fb86d8607491239659eff1df1b1004b9a8349e20a91967"
+    },
+    {
+      "path": "vendor/box2d/implot/implot.cpp",
+      "bytes": 274645,
+      "gitBlobSha1": "5550d03130a67eb5d83e682d4a382094b494ae8d",
+      "mode": "100644",
+      "sha256": "9eeba30e78edf439d38f2eb62645486eb424080f19fabca3fa9a20d871ad8ddd"
+    },
+    {
+      "path": "vendor/box2d/implot/implot.h",
+      "bytes": 80709,
+      "gitBlobSha1": "2ab2f4012b51568d9d7fef4399e05e5ec8e6e26f",
+      "mode": "100644",
+      "sha256": "8b5f27fb7344ddd6ed200b51ed65fb5a95b49498972c020ae32d9d930b8f291a"
+    },
+    {
+      "path": "vendor/box2d/implot/implot_internal.h",
+      "bytes": 69021,
+      "gitBlobSha1": "46dfaa5eba5da35cf987828a2b860f9ec76f264d",
+      "mode": "100644",
+      "sha256": "063b951626d47fcf574c7123aa56a768199a245958a85e0851f7ea57540a711a"
+    },
+    {
+      "path": "vendor/box2d/implot/implot_items.cpp",
+      "bytes": 124734,
+      "gitBlobSha1": "af03bf164dd8acefe43b2dd1ecdab2007757546d",
+      "mode": "100644",
+      "sha256": "e03e18b9aefd0c8cd5b075d24a1b2dfb91be9a838da6cc1efa2e280fb0cf5356"
+    },
+    {
+      "path": "vendor/box2d/manifest.json",
+      "bytes": 46669,
+      "gitBlobSha1": "adb86ce5570d1b404ff7492963c4fa134831d517",
+      "mode": "100644",
+      "sha256": "a6ddaa79883b819e664e349c696845e9cdff38f9b2bf3f96ddb5f69782a4480f"
+    },
+    {
+      "path": "vendor/box2d/runtime/LICENSE.Box2D.txt",
+      "bytes": 1067,
+      "gitBlobSha1": "e32198ea937cdcfb5028c149b97ea211d8064da6",
+      "mode": "100644",
+      "sha256": "68a3e676d7e94093b102d5cba0d4e04af812040d6f230c3db67a6664574e43d2"
+    },
+    {
+      "path": "vendor/box2d/runtime/air-box2d.mjs",
+      "bytes": 56143,
+      "gitBlobSha1": "c19dbabb5d8bcacb084946b35d3b7eed2f615da9",
+      "mode": "100644",
+      "sha256": "5a7d80e036a41ce9921daed74c31d7a30d1a7f41c103e207576991d1db126485"
+    },
+    {
+      "path": "vendor/box2d/runtime/air-box2d.wasm",
+      "bytes": 371639,
+      "gitBlobSha1": "079ea54f79c1d59af558dd1605da8725a2170c5e",
+      "mode": "100644",
+      "sha256": "3391e2ace476adba36297ff8ce66766a0a09d9365caec8079b6843d1dd4219ec"
+    },
+    {
+      "path": "vendor/box2d/runtime/receipt.json",
+      "bytes": 974,
+      "gitBlobSha1": "f6a4893fa0767bf11584b1450d355312fae3c0ee",
+      "mode": "100644",
+      "sha256": "5540911a20a2c624629de1c6f155c43a6cf8e28c91fa0cb6f4cabfb54dfcfbf4"
+    },
+    {
+      "path": "vendor/box2d/source/CMakeLists.txt",
+      "bytes": 6594,
+      "gitBlobSha1": "4cec1ee8d56ba02b7af68935135d4f0790fd8dcf",
+      "mode": "100644",
+      "sha256": "c3617da58c1fc6689f1190d2c2df8584babdd5aa7b082edd010ed2e35e15c0c6"
+    },
+    {
+      "path": "vendor/box2d/source/LICENSE",
+      "bytes": 1067,
+      "gitBlobSha1": "e32198ea937cdcfb5028c149b97ea211d8064da6",
+      "mode": "100644",
+      "sha256": "68a3e676d7e94093b102d5cba0d4e04af812040d6f230c3db67a6664574e43d2"
+    },
+    {
+      "path": "vendor/box2d/source/README.md",
+      "bytes": 6543,
+      "gitBlobSha1": "b60c7606114946a36b2bb339d5a743ef7f1758ab",
+      "mode": "100644",
+      "sha256": "49bee2e2c091343e0fcaba9dbff3d243c8496fc4d7f8f25849a7f499ca41011a"
+    },
+    {
+      "path": "vendor/box2d/source/api/README.md",
+      "bytes": 1909,
+      "gitBlobSha1": "7eae9d85970eb571cd446926bf4e399ead9e7616",
+      "mode": "100644",
+      "sha256": "63ccb57666bf94ee198f0755e174f9021ca13131c8ed717d4672c9403df60f88"
+    },
+    {
+      "path": "vendor/box2d/source/api/api_dump.py",
+      "bytes": 18167,
+      "gitBlobSha1": "6a3de084ed10efc7bb22d9e910808cc62fa193b8",
+      "mode": "100644",
+      "sha256": "df4d0b5ebc8da5866a99c0badb8648bbc83e015ba87157a1fcd63dc1c3dac7d1"
+    },
+    {
+      "path": "vendor/box2d/source/api/box2d_api.json",
+      "bytes": 419256,
+      "gitBlobSha1": "c297248a5b107a6aa63c4d8bbbb7909a2c314f16",
+      "mode": "100644",
+      "sha256": "4e7fb059a4cb1b06cc15f5bb9c89c208797027c0c721d532224b9cdc22aa24e0"
+    },
+    {
+      "path": "vendor/box2d/source/api/box2d_api_double.json",
+      "bytes": 420541,
+      "gitBlobSha1": "f0dd94e636db3fd9f5e093c5b9d8b5cbf9b5046e",
+      "mode": "100644",
+      "sha256": "d8e03fc4df75025a3a5e45e69749fe43dc752583d967cdaa9ddeda54b2aeff4e"
+    },
+    {
+      "path": "vendor/box2d/source/extern/glad/include/KHR/khrplatform.h",
+      "bytes": 11131,
+      "gitBlobSha1": "01646449caedc958effc3b450360aefd260671ab",
+      "mode": "100644",
+      "sha256": "7b1e01aaa7ad8f6fc34b5c7bdf79ebf5189bb09e2c4d2e79fc5d350623d11e83"
+    },
+    {
+      "path": "vendor/box2d/source/extern/glad/include/glad/glad.h",
+      "bytes": 283844,
+      "gitBlobSha1": "0e064ffd052cfcc391498ee7866e25e818d1065f",
+      "mode": "100644",
+      "sha256": "92101e60456b6e5b71f6715a45fe3b0388dac0fc88bf00108e8c352880ec49cf"
+    },
+    {
+      "path": "vendor/box2d/source/extern/glad/src/glad.c",
+      "bytes": 152452,
+      "gitBlobSha1": "2db1765bc7f909f3324e709f78349ec0672073cf",
+      "mode": "100644",
+      "sha256": "0482bb9e5db1aad89e7eee845751d689e2f9b2f9cc79e85e604b49f198ffb091"
+    },
+    {
+      "path": "vendor/box2d/source/extern/jsmn/jsmn.h",
+      "bytes": 12145,
+      "gitBlobSha1": "8ac14c1bdec9d1600ae5217550902eecce0f56e1",
+      "mode": "100644",
+      "sha256": "c04533e9181e1e33baceb0f55ac449b05145bb936e8c68cc77dfe0d8277514fb"
+    },
+    {
+      "path": "vendor/box2d/source/include/box2d/base.h",
+      "bytes": 5836,
+      "gitBlobSha1": "ff0ab7c98b1ad7f7c42213d6fb779fb50dbbda44",
+      "mode": "100644",
+      "sha256": "8227e2709817bb7bd90e1b5eaa158a4b03d0a529de3911485eddd49efe1cf567"
+    },
+    {
+      "path": "vendor/box2d/source/include/box2d/box2d.h",
+      "bytes": 75513,
+      "gitBlobSha1": "64d77f244e098aa6177ffbea996f99d649f06c69",
+      "mode": "100644",
+      "sha256": "1478d258e626cbe90c357bc59b5679e40096d50e20e5ef03b54fbf0dc0d828e1"
+    },
+    {
+      "path": "vendor/box2d/source/include/box2d/collision.h",
+      "bytes": 32597,
+      "gitBlobSha1": "1fe93d0b40c552d87b67bcd372c174afc7113a2d",
+      "mode": "100644",
+      "sha256": "04c799e94a8cba81bf5f4d6ea26ad701cbd08da0d0c7474163c64b949366a30d"
+    },
+    {
+      "path": "vendor/box2d/source/include/box2d/config.h",
+      "bytes": 1147,
+      "gitBlobSha1": "4c7277771a50146316de935c2b89d4f6e81f3d56",
+      "mode": "100644",
+      "sha256": "c1f83c86511df37426d7c632de8addf795d76973461ebf7443999f20c6c5c0a0"
+    },
+    {
+      "path": "vendor/box2d/source/include/box2d/constants.h",
+      "bytes": 3905,
+      "gitBlobSha1": "b07688e8a73cee7e712b1abe424105f9786782a6",
+      "mode": "100644",
+      "sha256": "6d08bfdf905b107a86144cbc825dacda0d8799008f06088166a4d8857cd7154b"
+    },
+    {
+      "path": "vendor/box2d/source/include/box2d/id.h",
+      "bytes": 5518,
+      "gitBlobSha1": "0f2dfb76cfad7d0962763d58cf62dc1df0546298",
+      "mode": "100644",
+      "sha256": "d0f088e548a146718837c94e1b4989ddb932e56990857ba9309fba207b92d697"
+    },
+    {
+      "path": "vendor/box2d/source/include/box2d/math_functions.h",
+      "bytes": 24021,
+      "gitBlobSha1": "4c2a860ec0312b1f9d880a5cba74ad3b590b06a6",
+      "mode": "100644",
+      "sha256": "e99086f074bd6e14d0ed7803198167298945ba5fa401454404f93ec7eb196d7a"
+    },
+    {
+      "path": "vendor/box2d/source/include/box2d/math_types.h",
+      "bytes": 2175,
+      "gitBlobSha1": "ce5a2e66308c5c436c28b5789a8e37fe1125b2ec",
+      "mode": "100644",
+      "sha256": "d023f0f686dba961d0c26ffca5d69f59c3f85c817a9d791181b7f6115759c2b7"
+    },
+    {
+      "path": "vendor/box2d/source/include/box2d/types.h",
+      "bytes": 55954,
+      "gitBlobSha1": "678b045a381c4752da7b7ecd419a2713a66e7a1a",
+      "mode": "100644",
+      "sha256": "2d7672b1ec93db45f60fb4f24e560e3e40f15fa28c459865f86bbd9743707125"
+    },
+    {
+      "path": "vendor/box2d/source/samples/CMakeLists.txt",
+      "bytes": 5961,
+      "gitBlobSha1": "dbeb1e3b0b6244c00983317069cacb1cf3ac4af7",
+      "mode": "100644",
+      "sha256": "d0379b5f7691b6293f1f4458ca96509ea36693eb4846e39169226090f3e39735"
+    },
+    {
+      "path": "vendor/box2d/source/samples/car.cpp",
+      "bytes": 9260,
+      "gitBlobSha1": "84f8b3d8f13c26bb344c51da0bfbdf06881c5e58",
+      "mode": "100644",
+      "sha256": "67194202aa8b1b949239e7aa6f7c68de5cfeeb67247680a7aece41230493cdf2"
+    },
+    {
+      "path": "vendor/box2d/source/samples/car.h",
+      "bytes": 1062,
+      "gitBlobSha1": "c986289b185077d563aa331cabbbd379b55348a0",
+      "mode": "100644",
+      "sha256": "cf44c427d3cf2cd64152483c2a9dfcfc7cd64c47f87d247f5b8f4e2f0f32eec4"
+    },
+    {
+      "path": "vendor/box2d/source/samples/container.c",
+      "bytes": 489,
+      "gitBlobSha1": "98d2648d6cc540e468ecc0f7f65e09d51246bcfe",
+      "mode": "100644",
+      "sha256": "0f651f7a5e74b7b4cfa7bc222bf8a4cfe1a90fb957b4eeb4b2e9a832c497a603"
+    },
+    {
+      "path": "vendor/box2d/source/samples/container.h",
+      "bytes": 12069,
+      "gitBlobSha1": "1f849c09131fb2283db24532cf9b6bc583ef2b46",
+      "mode": "100644",
+      "sha256": "8335ef5129b0a9a333b901de7112b2525dc348af71ce807567d23be12269b800"
+    },
+    {
+      "path": "vendor/box2d/source/samples/data/background.fs",
+      "bytes": 711,
+      "gitBlobSha1": "326ded28fd4f6abb80888ebe13ed317306ba4151",
+      "mode": "100644",
+      "sha256": "c712506c3d1a0ba2f4d7cb9dcc3352b1a7cb967baf7352518e6888683669ca93"
+    },
+    {
+      "path": "vendor/box2d/source/samples/data/background.vs",
+      "bytes": 199,
+      "gitBlobSha1": "1ea9a85021e4ccbb184308e09b92b5b96b900151",
+      "mode": "100644",
+      "sha256": "c57be536213b449d11be3fd4a6304814db407d1bfa282bd802f6718ee38329d7"
+    },
+    {
+      "path": "vendor/box2d/source/samples/data/circle.fs",
+      "bytes": 417,
+      "gitBlobSha1": "7586a2a8bc850b273e6dc79e160df565c65ebae4",
+      "mode": "100644",
+      "sha256": "1087673050d478717ddde2b5a8cadfbd021655c52c62cfba886c93795f0335fc"
+    },
+    {
+      "path": "vendor/box2d/source/samples/data/circle.vs",
+      "bytes": 765,
+      "gitBlobSha1": "df10674bce0a04e66b8e7e4d5eab56d2491b43be",
+      "mode": "100644",
+      "sha256": "b4f5d63820fec14a73a23e268db8779706d5b79fc92f58d71178352bd66f05e0"
+    },
+    {
+      "path": "vendor/box2d/source/samples/data/line.fs",
+      "bytes": 165,
+      "gitBlobSha1": "3899c1a7f0c972d2127618bb8417032fe570b616",
+      "mode": "100644",
+      "sha256": "08a72edcf08673e5864176d9f0c477cdb7f485afe82c0713355daae7c6f6f11a"
+    },
+    {
+      "path": "vendor/box2d/source/samples/data/line.vs",
+      "bytes": 330,
+      "gitBlobSha1": "967d1acd0f9a0cd3389419b06d28a15e4b022ddb",
+      "mode": "100644",
+      "sha256": "ca1165d85fbfa909707322ab2cc527dced1b05aea07e231e46c8a4ff4e3e46bd"
+    },
+    {
+      "path": "vendor/box2d/source/samples/data/map02.svg",
+      "bytes": 2218,
+      "gitBlobSha1": "aa34029500f5a0a79f9c581d446bfc6fba911cb6",
+      "mode": "100644",
+      "sha256": "daaed7c9967d9aa82e46d446aa4adf301dc2e374eae09c0800f3d66fdeb83e7e"
+    },
+    {
+      "path": "vendor/box2d/source/samples/data/map03.svg",
+      "bytes": 2492,
+      "gitBlobSha1": "733d3e8a190371adb9e64f6a4927cde809afbd65",
+      "mode": "100644",
+      "sha256": "8e4d47b5314e985500665d44b7d432337473fa57d4f47ba5d27170b48277f9dc"
+    },
+    {
+      "path": "vendor/box2d/source/samples/data/map04.svg",
+      "bytes": 1950,
+      "gitBlobSha1": "4044de8b16e07a5594b87bb7222d03c219d220ab",
+      "mode": "100644",
+      "sha256": "67f10ee2dd0742cb0e3796d8958388fb68bc869e4e70289d2c6b96d5cc4fd765"
+    },
+    {
+      "path": "vendor/box2d/source/samples/data/map_left.svg",
+      "bytes": 2643,
+      "gitBlobSha1": "13261dc057967146cce63b7e85f26be5d64a2747",
+      "mode": "100644",
+      "sha256": "27f9d275d616532c848e53698124a4134f7abc58bbbeb2fd6280a9d68f2bb06e"
+    },
+    {
+      "path": "vendor/box2d/source/samples/data/map_right.svg",
+      "bytes": 2516,
+      "gitBlobSha1": "5376313aa521b49287fdcb40fbb44c475a5c6663",
+      "mode": "100644",
+      "sha256": "1dbe0ba3452941e2e436a8ec3ee802485291b4a7b6df92f8697e168cd81168c5"
+    },
+    {
+      "path": "vendor/box2d/source/samples/data/point.fs",
+      "bytes": 165,
+      "gitBlobSha1": "3899c1a7f0c972d2127618bb8417032fe570b616",
+      "mode": "100644",
+      "sha256": "08a72edcf08673e5864176d9f0c477cdb7f485afe82c0713355daae7c6f6f11a"
+    },
+    {
+      "path": "vendor/box2d/source/samples/data/point.vs",
+      "bytes": 386,
+      "gitBlobSha1": "0260cdbea979287d623fdff2ba2ac4ae33a193bc",
+      "mode": "100644",
+      "sha256": "60e52fc2ed50e4ab7280ac708b4adf7ede64cbcf5698d6ee463a5d43a5f5e426"
+    },
+    {
+      "path": "vendor/box2d/source/samples/data/ramp.svg",
+      "bytes": 2127,
+      "gitBlobSha1": "5529d242c5cfab637148db2d4c02f35c28787fea",
+      "mode": "100644",
+      "sha256": "760e21205d5b846f0bf8385e9b4a897f67edd7c9e48e65c7bf5bca8d32436dcb"
+    },
+    {
+      "path": "vendor/box2d/source/samples/data/solid_capsule.fs",
+      "bytes": 1630,
+      "gitBlobSha1": "ba5abe2b47def995d36823f96907bfdd3d703c33",
+      "mode": "100644",
+      "sha256": "5ebf91f9c7dc006e7d4fbfc0edba6396ff46f081004775f23afe9b4e8e1f34f8"
+    },
+    {
+      "path": "vendor/box2d/source/samples/data/solid_capsule.vs",
+      "bytes": 1253,
+      "gitBlobSha1": "c592fcce30f7fb3c9bbaad1338b02a56f762a236",
+      "mode": "100644",
+      "sha256": "621e4d7dc6dbc81efea18290eb14a4344acb98d54bcc4caeb77042b8454478b0"
+    },
+    {
+      "path": "vendor/box2d/source/samples/data/solid_circle.fs",
+      "bytes": 1397,
+      "gitBlobSha1": "695c884df804478938c1581da04dcf1f701814e4",
+      "mode": "100644",
+      "sha256": "e15a94dbd011a0e6395a4f531305e89e9218c37a6d787dba672ada36c7511ffe"
+    },
+    {
+      "path": "vendor/box2d/source/samples/data/solid_circle.vs",
+      "bytes": 961,
+      "gitBlobSha1": "69d14e1cc6d57ee118d583a012ede2375b87e4dd",
+      "mode": "100644",
+      "sha256": "5ffd354f0f2373b34f8a3597c77ca197d1dd11ce9f1289b33f8f728f984318c8"
+    },
+    {
+      "path": "vendor/box2d/source/samples/data/solid_polygon.fs",
+      "bytes": 2509,
+      "gitBlobSha1": "021c9f3185c5adf98e48b9000300056e8cfc893e",
+      "mode": "100644",
+      "sha256": "81f3351beb5e0f3fc1c85900180d9977af2c03a3587b2a814be2d09a98f0a037"
+    },
+    {
+      "path": "vendor/box2d/source/samples/data/solid_polygon.vs",
+      "bytes": 2336,
+      "gitBlobSha1": "62dce44313615046c94278479b1d74a41bc44161",
+      "mode": "100644",
+      "sha256": "652f7177468bfe7c2c82c2a0d469bac937660522da72f057bd5af48a1d53428b"
+    },
+    {
+      "path": "vendor/box2d/source/samples/donut.cpp",
+      "bytes": 2443,
+      "gitBlobSha1": "dcfbd7f3c02351160fe5e3c2ea239fb2c916a92b",
+      "mode": "100644",
+      "sha256": "3c794c1936ecb11fb0a6d700685420651587449ad4b7eefd47ea62c5f29c56dc"
+    },
+    {
+      "path": "vendor/box2d/source/samples/donut.h",
+      "bytes": 407,
+      "gitBlobSha1": "088df3a7808507d772f8fa0278ce9589b74e8f08",
+      "mode": "100644",
+      "sha256": "39277c946599a1ee2b8278e5bba7c04844147d2e81f5b05c3b46d28a6530a76c"
+    },
+    {
+      "path": "vendor/box2d/source/samples/doohickey.cpp",
+      "bytes": 3112,
+      "gitBlobSha1": "c1fb349c18e553ef5f333e33a4442d0418dcd0ed",
+      "mode": "100644",
+      "sha256": "1e5a89d7a405d0d680c7ecadd8b4a858ca5051b75a06bac8dfb3ec18109c0733"
+    },
+    {
+      "path": "vendor/box2d/source/samples/doohickey.h",
+      "bytes": 413,
+      "gitBlobSha1": "5160cd40b44298c0b6d295a6952041b4155bc99c",
+      "mode": "100644",
+      "sha256": "6f7e12e1bb1fc031cc982448fec949355c0be1b736ebb4df8bf3538570bfb3e7"
+    },
+    {
+      "path": "vendor/box2d/source/samples/draw.c",
+      "bytes": 34776,
+      "gitBlobSha1": "4764602e14863f16a7dec34aaa7ba3eff2b7b687",
+      "mode": "100644",
+      "sha256": "150c17c22fe9df018b11478c1416b6155ee83e43e0b988d6dcb553ba3bfa1263"
+    },
+    {
+      "path": "vendor/box2d/source/samples/draw.h",
+      "bytes": 2182,
+      "gitBlobSha1": "89ff9420286d486267303d313fd427709fa17772",
+      "mode": "100644",
+      "sha256": "ba74a6b2d689ec55ee515ae0274004b0009e7060f5aa20334981aa31b163b30c"
+    },
+    {
+      "path": "vendor/box2d/source/samples/draw_text.cpp",
+      "bytes": 1395,
+      "gitBlobSha1": "d7dca0cd60adeafc2ed0a8adeef5f6dca9bfd26e",
+      "mode": "100644",
+      "sha256": "ea35432934f287d8369c15028a1e1015080779510b2e46941284719a947adf71"
+    },
+    {
+      "path": "vendor/box2d/source/samples/dynamic_mover.cpp",
+      "bytes": 9606,
+      "gitBlobSha1": "5da920c892e6b91d84ef76c5175e748b4f34a5ae",
+      "mode": "100644",
+      "sha256": "7ac717352bf0065ec42e86decfbf84e097c6121444200d2173b5152a44929d01"
+    },
+    {
+      "path": "vendor/box2d/source/samples/dynamic_mover.h",
+      "bytes": 3259,
+      "gitBlobSha1": "14787011af99d951e09e0ed37923042cb1f0c70e",
+      "mode": "100644",
+      "sha256": "ad9080e95b63c4924acc83645f81e19ca900a1591edad2d1ae065db71f03f618"
+    },
+    {
+      "path": "vendor/box2d/source/samples/geometric_mover.cpp",
+      "bytes": 8271,
+      "gitBlobSha1": "99ffb54abf395d69412f39fe3f7370e94dd1a5d8",
+      "mode": "100644",
+      "sha256": "05278633f892530f196448ee517565cfdb5821ddedfd43ffe2d7b384df9bfa6b"
+    },
+    {
+      "path": "vendor/box2d/source/samples/geometric_mover.h",
+      "bytes": 3305,
+      "gitBlobSha1": "22c1b24907732860cd6f77724375389ae5890a64",
+      "mode": "100644",
+      "sha256": "8d1a3dce01fe881083bd2c4f8c90367c12be19f1c5d3b1ec29bcbef5788b48dc"
+    },
+    {
+      "path": "vendor/box2d/source/samples/main.cpp",
+      "bytes": 20793,
+      "gitBlobSha1": "cbcc3869ff7658c060ac65fba01e31d4c720f19f",
+      "mode": "100644",
+      "sha256": "06e5e32fb7cfe894c8f63c42518d08001feb2364ae16ea9a00df322bc6545d39"
+    },
+    {
+      "path": "vendor/box2d/source/samples/sample.cpp",
+      "bytes": 56323,
+      "gitBlobSha1": "f5bd1e1c9cd6e40a02639aea039afd274f028a9b",
+      "mode": "100644",
+      "sha256": "1f7a90e10225d07edda528f77b98794d0736e3a89d5560a345972bad7da54fdf"
+    },
+    {
+      "path": "vendor/box2d/source/samples/sample.h",
+      "bytes": 5658,
+      "gitBlobSha1": "6e978e594e97efee77fcf01e109e55742d7a567e",
+      "mode": "100644",
+      "sha256": "efdb0fd94f1c0171a7a97e4987d232ab730b97d1a6b93d9d184e15d158771d99"
+    },
+    {
+      "path": "vendor/box2d/source/samples/sample_benchmark.cpp",
+      "bytes": 53250,
+      "gitBlobSha1": "3b312b8b1355d05ee4aceb2668b20c57640562bd",
+      "mode": "100644",
+      "sha256": "98a32f19237f88d2c40c81ccaedd7e3bccf74ebff65cceb9040907a64424a68e"
+    },
+    {
+      "path": "vendor/box2d/source/samples/sample_bodies.cpp",
+      "bytes": 29818,
+      "gitBlobSha1": "9ae546c1aed60ee4ace6b605f9172d18549da358",
+      "mode": "100644",
+      "sha256": "ec0049599d4db29f166c4913e14975b15f6faab45cffc8ba275f8e8639a57c29"
+    },
+    {
+      "path": "vendor/box2d/source/samples/sample_character.cpp",
+      "bytes": 31067,
+      "gitBlobSha1": "67e6cb35956eacb6f2c96721b4dff8752c932c5b",
+      "mode": "100644",
+      "sha256": "cdfd35eb3bc007976823f8aa50f3f25802d3a71f4ada3b0d2689470bf559bf2d"
+    },
+    {
+      "path": "vendor/box2d/source/samples/sample_collision.cpp",
+      "bytes": 97670,
+      "gitBlobSha1": "d2e9fda31acf87e3037424703a6021675e0f07eb",
+      "mode": "100644",
+      "sha256": "20f6dcc87dbe1d7b3e1e4bca306f612ca096a5c5f33231eb273dc1d2e51172bc"
+    },
+    {
+      "path": "vendor/box2d/source/samples/sample_continuous.cpp",
+      "bytes": 48244,
+      "gitBlobSha1": "ec70b3f0e227dd204e459122a31e5565f19944b4",
+      "mode": "100644",
+      "sha256": "5a5c00b71968175a926891780155b0fe2925c75462137b4cf7de88f866efeba8"
+    },
+    {
+      "path": "vendor/box2d/source/samples/sample_determinism.cpp",
+      "bytes": 7245,
+      "gitBlobSha1": "01b17388c8d524b3dc3b950f77eab33268b75086",
+      "mode": "100644",
+      "sha256": "6ba1fe1aae3da28c21203b0b8a83b7074019b5c065423f9a51c572011cdf77b6"
+    },
+    {
+      "path": "vendor/box2d/source/samples/sample_events.cpp",
+      "bytes": 64665,
+      "gitBlobSha1": "a4297e57599735f165cb15889ce5e165030751d3",
+      "mode": "100644",
+      "sha256": "4dfbd6fd4e428b6785f13c82ef1336e534d3143878db5930b6e8506b7148a1d3"
+    },
+    {
+      "path": "vendor/box2d/source/samples/sample_geometry.cpp",
+      "bytes": 4349,
+      "gitBlobSha1": "e97409160a914f9bce748d52c8bb31c6540b4309",
+      "mode": "100644",
+      "sha256": "5916b3488f71684b69a30cc742702915e1cf8d23827349295f59ed633414a2a7"
+    },
+    {
+      "path": "vendor/box2d/source/samples/sample_issues.cpp",
+      "bytes": 5542,
+      "gitBlobSha1": "d95c97a09ed398238a752389228574dbdbdc057b",
+      "mode": "100644",
+      "sha256": "792f7158b7d5403110ea7ac1a0a3b4d5e176fe8865af29b5c5e2abb3a8733b99"
+    },
+    {
+      "path": "vendor/box2d/source/samples/sample_joints.cpp",
+      "bytes": 117506,
+      "gitBlobSha1": "227b9ef26e905b6ea4846d63f352f0d8f9f2809f",
+      "mode": "100644",
+      "sha256": "87e698d3e4ee4da85d545f2009323dd8c8d3b727fdc7b5e9fc38bb7f154dadcc"
+    },
+    {
+      "path": "vendor/box2d/source/samples/sample_replay.cpp",
+      "bytes": 38266,
+      "gitBlobSha1": "3a0a9cd460353850aef7138cd37bce458e9b67f3",
+      "mode": "100644",
+      "sha256": "b3b360e5a4451f1827811a4f2bb64454afa9c5a2a5f43860efb5ed18398ad5a0"
+    },
+    {
+      "path": "vendor/box2d/source/samples/sample_restitution.cpp",
+      "bytes": 31346,
+      "gitBlobSha1": "6b30673453037f3149766a79a5970539339a1212",
+      "mode": "100644",
+      "sha256": "e4b923383573fcfbd4eb4d5106ea70e6cf7942cd26d42f6718b0f42a2e2b79f5"
+    },
+    {
+      "path": "vendor/box2d/source/samples/sample_robustness.cpp",
+      "bytes": 17118,
+      "gitBlobSha1": "33e7fd306327badc614076722af438319ebd383d",
+      "mode": "100644",
+      "sha256": "394c026643a0d6967204e0744c469b82fc0b2a5df49e483053a2bbcb32bab415"
+    },
+    {
+      "path": "vendor/box2d/source/samples/sample_shapes.cpp",
+      "bytes": 53189,
+      "gitBlobSha1": "caa4f5112608538b9be6e984baf2fe2e7bea8db4",
+      "mode": "100644",
+      "sha256": "e8b7c4dbd2a65e181faf945d32bc341b0ab6988e81f112b04bd68f654fba7f28"
+    },
+    {
+      "path": "vendor/box2d/source/samples/sample_stacking.cpp",
+      "bytes": 25137,
+      "gitBlobSha1": "423246da38882ba54185010f555d6a688473b949",
+      "mode": "100644",
+      "sha256": "1335e18ed07f96985dc9b3e6b4650e1d868330743da4d3db83ee7ab7a4057e6c"
+    },
+    {
+      "path": "vendor/box2d/source/samples/sample_world.cpp",
+      "bytes": 21552,
+      "gitBlobSha1": "0785acf14b54b71508b3fb9dc6b2d78ea84394f7",
+      "mode": "100644",
+      "sha256": "5cf75045cdbd5c8d1b640e2f112c22396f81882f9c6b10a7ddeade295c7a2db8"
+    },
+    {
+      "path": "vendor/box2d/source/samples/shader.c",
+      "bytes": 3186,
+      "gitBlobSha1": "bbf70e81ae6538e003c24f047e9db802ea5fbf84",
+      "mode": "100644",
+      "sha256": "44fcb7c1dac26bc50859d237673ccb19cb3b04016cccc55001e95b9945f40093"
+    },
+    {
+      "path": "vendor/box2d/source/samples/shader.h",
+      "bytes": 347,
+      "gitBlobSha1": "d696df4bd92072cf5d726a2bcd176fd18b6b3771",
+      "mode": "100644",
+      "sha256": "0c30500b21c2cd847f1438a98d96f2ce4f114cc42bb1298ad30dfa39075894bb"
+    },
+    {
+      "path": "vendor/box2d/source/samples/stb_image_write.h",
+      "bytes": 71238,
+      "gitBlobSha1": "151eacaacd23dcc2450373439298ec5172775bdb",
+      "mode": "100644",
+      "sha256": "bdbaa2c548ac9bde2913b6b46c4d315a04d2624c81ee1553390eb8fb2de2835d"
+    },
+    {
+      "path": "vendor/box2d/source/shared/CMakeLists.txt",
+      "bytes": 602,
+      "gitBlobSha1": "e17b091b3eff478a04b69877005b6d88455f130f",
+      "mode": "100644",
+      "sha256": "3c604ceddbb394453079ad5d04b749104b2b53c9f510c2e2697c9ac9c5f69b71"
+    },
+    {
+      "path": "vendor/box2d/source/shared/benchmarks.c",
+      "bytes": 51157,
+      "gitBlobSha1": "54810745e94530875619e94ca2a73bc753620817",
+      "mode": "100644",
+      "sha256": "46cf1bfd0d479fc3b544700578183c63198c8709a5beb5b8802e434704511442"
+    },
+    {
+      "path": "vendor/box2d/source/shared/benchmarks.h",
+      "bytes": 2197,
+      "gitBlobSha1": "883ca84ecb5d482fb675c0a71c4b8d383aa2c90a",
+      "mode": "100644",
+      "sha256": "cce0b969946c0e63a4578309ccdd4011aeff2e0c9eb53b6cfbe8a2bbc3aff31f"
+    },
+    {
+      "path": "vendor/box2d/source/shared/determinism.c",
+      "bytes": 3339,
+      "gitBlobSha1": "2169f3782f8e42ada3a59ee2b3abf160b8a095e6",
+      "mode": "100644",
+      "sha256": "b7bf1d59dd8641c8d9e1b63637fc0f63a51a41dc379ca528b6bb31cfc3615138"
+    },
+    {
+      "path": "vendor/box2d/source/shared/determinism.h",
+      "bytes": 707,
+      "gitBlobSha1": "3ec982ab88fdc8e864bc14d6a1e1c2d84c99abfc",
+      "mode": "100644",
+      "sha256": "8702986b15cafde1bc597fe826c450c30b6f532fb593a4e4edf95ababe2efc9a"
+    },
+    {
+      "path": "vendor/box2d/source/shared/human.c",
+      "bytes": 22553,
+      "gitBlobSha1": "3538afb5fa99299a380b8d17c8b9f49dfeee3c14",
+      "mode": "100644",
+      "sha256": "404a09b3e173687b797c553b576db92ca4a400d10359e215552a619129e1a045"
+    },
+    {
+      "path": "vendor/box2d/source/shared/human.h",
+      "bytes": 1402,
+      "gitBlobSha1": "f2aacadd1219d3e88cdfe2521cc406744c7b7430",
+      "mode": "100644",
+      "sha256": "edf3fbd7a5e06ab1adc6daec3213200c6900abce0ce5004e5c9a089767429447"
+    },
+    {
+      "path": "vendor/box2d/source/shared/utils.c",
+      "bytes": 1134,
+      "gitBlobSha1": "6dce72fba1f977acdf7c68283d71b7072d75a624",
+      "mode": "100644",
+      "sha256": "56a1d9391d16aa469283a4b9a335095a618b5dea34b79154cdec56d7654219b3"
+    },
+    {
+      "path": "vendor/box2d/source/shared/utils.h",
+      "bytes": 1850,
+      "gitBlobSha1": "3fc1a56e43eb7886c5f51589f65d000a664c80bd",
+      "mode": "100644",
+      "sha256": "9fd604fe818f1d9cc3a2f9063f64d549473f82c6b75db7cb47e6029fbe027a3a"
+    },
+    {
+      "path": "vendor/box2d/source/src/CMakeLists.txt",
+      "bytes": 8352,
+      "gitBlobSha1": "bafb6280f45dd72cc9dcf98b9c96d7a6263aad9a",
+      "mode": "100644",
+      "sha256": "87495dba5cb3986ce4105113db2005b2fd0cbc4c095e82c7d0f919efe74b323d"
+    },
+    {
+      "path": "vendor/box2d/source/src/aabb.c",
+      "bytes": 2258,
+      "gitBlobSha1": "9341faf5c1d54770a30a6b40e8c466649d494c4d",
+      "mode": "100644",
+      "sha256": "83f7c1360b7302b288688bd862bf1892066ed3db6419e4358e5dd39b6d661562"
+    },
+    {
+      "path": "vendor/box2d/source/src/aabb.h",
+      "bytes": 1805,
+      "gitBlobSha1": "9a9042ea8f3b2daaa62903d5b59d3e2f6084eb41",
+      "mode": "100644",
+      "sha256": "058642427581ea31d49f56ed0c21afb4933e7c9eaee963c77a1f5b1cb1e60983"
+    },
+    {
+      "path": "vendor/box2d/source/src/arena_allocator.c",
+      "bytes": 2370,
+      "gitBlobSha1": "4a9f0a149cdd43728e9e7477a705099ba1ac732d",
+      "mode": "100644",
+      "sha256": "95f634ea951b53370eaa5762980f621bd4be5b8255b10d3b3e2ce30405dbe801"
+    },
+    {
+      "path": "vendor/box2d/source/src/arena_allocator.h",
+      "bytes": 1139,
+      "gitBlobSha1": "761f2b6865739cfcb7401fcef13ab2a88797c938",
+      "mode": "100644",
+      "sha256": "9421451cea20a26a4ba980b4100942322279627635cd877d6ded709170fc3b80"
+    },
+    {
+      "path": "vendor/box2d/source/src/bitset.c",
+      "bytes": 2019,
+      "gitBlobSha1": "a30464c6703739c8bcaa0132c92d946b2d1559da",
+      "mode": "100644",
+      "sha256": "8dbaa9c8c20ed67482f5bdb3686206de3a21ac8f34d65003997569b7a05e28cd"
+    },
+    {
+      "path": "vendor/box2d/source/src/bitset.h",
+      "bytes": 1722,
+      "gitBlobSha1": "8d3d0bf326311328d6d28faf41ea4ed9a360c46d",
+      "mode": "100644",
+      "sha256": "1d944d15a56349a949493d94f4e285e5b87ed00a94a343541e41aab1b779caa7"
+    },
+    {
+      "path": "vendor/box2d/source/src/body.c",
+      "bytes": 60675,
+      "gitBlobSha1": "d70078e8fc9fe20de49bff9efc99c1380c17b22c",
+      "mode": "100644",
+      "sha256": "8bd5017706f7177cd7d1e5b936e700dd1e5801e5ac440fb49990d23bd00da678"
+    },
+    {
+      "path": "vendor/box2d/source/src/body.h",
+      "bytes": 8897,
+      "gitBlobSha1": "0edec2cb6d2a132d8359f7e00962ee62ec58ab00",
+      "mode": "100644",
+      "sha256": "f58d9138507e1fddf31b6979423c6734b2eaf9f2b283c6bb94e946bec2f53651"
+    },
+    {
+      "path": "vendor/box2d/source/src/box2d.natvis",
+      "bytes": 4933,
+      "gitBlobSha1": "f6dbe1c72e55139dbde051637702246886d03f45",
+      "mode": "100644",
+      "sha256": "867c1c869169a489c829e3a1bfa1fd80b1cf3d24a91fabea2f60108eeb93830d"
+    },
+    {
+      "path": "vendor/box2d/source/src/box2d.pc.in",
+      "bytes": 374,
+      "gitBlobSha1": "01a507b87e39f241d89c6be462c9337f1687ec57",
+      "mode": "100644",
+      "sha256": "281b683d907511d7e29c89e86e00c4b131c6c345edf2668ac4eeb9440ac45e71"
+    },
+    {
+      "path": "vendor/box2d/source/src/broad_phase.c",
+      "bytes": 20813,
+      "gitBlobSha1": "229b804ceefd94c23b264663a692c29da8d98257",
+      "mode": "100644",
+      "sha256": "8bbe862b0b56e66ddeb4ce95b276b68d6690def5d63ceb641de44f4a80dfca44"
+    },
+    {
+      "path": "vendor/box2d/source/src/broad_phase.h",
+      "bytes": 2251,
+      "gitBlobSha1": "a25263a96a6a2a9abe0c244a51d32d4818b44812",
+      "mode": "100644",
+      "sha256": "df48d18b63f0912b101fe2de2d43fbd548dc0b3bab1e8c64fa5c52b1fa7c87f0"
+    },
+    {
+      "path": "vendor/box2d/source/src/constraint_graph.c",
+      "bytes": 12067,
+      "gitBlobSha1": "f80d22f29c335ffa385af772edeb821ac0f1f868",
+      "mode": "100644",
+      "sha256": "81b599fe23e2f124b8f37f15a4bb19bb449023acb778607d5ca02add72dc4d29"
+    },
+    {
+      "path": "vendor/box2d/source/src/constraint_graph.h",
+      "bytes": 2300,
+      "gitBlobSha1": "ad2dc009c5fed75fd481597fc6edfbb246158c13",
+      "mode": "100644",
+      "sha256": "16b9c087e6267a26fabee867081890c30a21bf9435fffc54972c064ad423cf80"
+    },
+    {
+      "path": "vendor/box2d/source/src/contact.c",
+      "bytes": 24481,
+      "gitBlobSha1": "75efca200a8d2745f9bd521bb333ef3cce4e4571",
+      "mode": "100644",
+      "sha256": "6d5823b6777cc955349351a6f974d2b2f1077ae8afed5f9ca788fa5a63ab6c1f"
+    },
+    {
+      "path": "vendor/box2d/source/src/contact.h",
+      "bytes": 4050,
+      "gitBlobSha1": "4f04c37fc8f341c03d0514207f52cdd2b43de6e0",
+      "mode": "100644",
+      "sha256": "768ef99f46ac74a19f89a0edd9d5d284305cbca258816e36ca4a5009d9fdda52"
+    },
+    {
+      "path": "vendor/box2d/source/src/contact_solver.c",
+      "bytes": 25030,
+      "gitBlobSha1": "f7576574914743c0283d09ca2c5a1898429522db",
+      "mode": "100644",
+      "sha256": "3968fc50be3dc7706d89d7c2b3041fb7329918361e940e1840f3967c793cc994"
+    },
+    {
+      "path": "vendor/box2d/source/src/contact_solver.h",
+      "bytes": 2986,
+      "gitBlobSha1": "0fd39e6f2af8ca7512e8774f4073de982235b0f1",
+      "mode": "100644",
+      "sha256": "2d89217a932b03b3e969f58c7146448743b830b7ad34cf3a257945afe0cb29ab"
+    },
+    {
+      "path": "vendor/box2d/source/src/contact_solver_w4.c",
+      "bytes": 135,
+      "gitBlobSha1": "c834065c0accee741bc1d34344234883ca006121",
+      "mode": "100644",
+      "sha256": "0b95b7ffd6a79f354f0cfef3d3f0143f1cf9c8967d9c0fe3817dbe097397b06a"
+    },
+    {
+      "path": "vendor/box2d/source/src/contact_solver_w8.c",
+      "bytes": 408,
+      "gitBlobSha1": "dd0c68662bba91c43469a4ae648a68cb9e4b0c64",
+      "mode": "100644",
+      "sha256": "a618037dbca172437edf941d91ebfe1c3205542e9a424e70976a11c31604cd4b"
+    },
+    {
+      "path": "vendor/box2d/source/src/contact_solver_wide.inl",
+      "bytes": 77329,
+      "gitBlobSha1": "7cc14fc64eb81d42f1df28a52b855942ea238da4",
+      "mode": "100644",
+      "sha256": "a1723f33f4dfa5358b7d1f8573905d980442e1165f604b2085a6eaa30623c86b"
+    },
+    {
+      "path": "vendor/box2d/source/src/container.h",
+      "bytes": 13425,
+      "gitBlobSha1": "1eeae676d8b09bec88d8e1638243469c2d4d24cb",
+      "mode": "100644",
+      "sha256": "1498f3d025fcf04927153f74333d93ec34b3712beb049ca32162b46e445ad9f8"
+    },
+    {
+      "path": "vendor/box2d/source/src/core.c",
+      "bytes": 4803,
+      "gitBlobSha1": "38c8f24db2341b602851d25ba164a81c0eac3b45",
+      "mode": "100644",
+      "sha256": "066a683df4b1e9b1491c6b7051c79c9f56ec2b979e4eae3308946893c0eb6b67"
+    },
+    {
+      "path": "vendor/box2d/source/src/core.h",
+      "bytes": 9149,
+      "gitBlobSha1": "c1a89b12e6a944c310519b26a910ce1064b8712b",
+      "mode": "100644",
+      "sha256": "ff5d8424b8df95fa6b72f71e49c1828002246bbc751776632b8389d87d8720b0"
+    },
+    {
+      "path": "vendor/box2d/source/src/distance.c",
+      "bytes": 37484,
+      "gitBlobSha1": "9666a721bf4e09e78f463763a8a7690b0e083cfe",
+      "mode": "100644",
+      "sha256": "f45bd980961518eeac8a765e54b1922c2679925b720f5e27fc9a11ab10df0b3d"
+    },
+    {
+      "path": "vendor/box2d/source/src/distance_joint.c",
+      "bytes": 20604,
+      "gitBlobSha1": "19675f61840696fa086fd31f3f7d372cfa4ec3a1",
+      "mode": "100644",
+      "sha256": "8d6b93f0aac3dc443bb08bbae5baae8fe0d408ec13b3869e76b68065107182b9"
+    },
+    {
+      "path": "vendor/box2d/source/src/dynamic_tree.c",
+      "bytes": 56113,
+      "gitBlobSha1": "a4c2eccce4463fa3db80a7eba9430c4efe5c73d6",
+      "mode": "100644",
+      "sha256": "6b60afde80543954a23f5d531579be0b7c4234187257e789478089a78c248639"
+    },
+    {
+      "path": "vendor/box2d/source/src/dynamic_tree.h",
+      "bytes": 5566,
+      "gitBlobSha1": "b4c85752a1fbe531692357741da65f8e865449e1",
+      "mode": "100644",
+      "sha256": "4b85e12bc7661a44598727f032798ac432bc566c15158d6be682da9f036c9da1"
+    },
+    {
+      "path": "vendor/box2d/source/src/geometry.c",
+      "bytes": 30326,
+      "gitBlobSha1": "5c7463bb01b08b010b65b387f802bf3e42a4b689",
+      "mode": "100644",
+      "sha256": "5c62e22490fd76890a7c7a692619c574aaa5fc46b99a144447de86e8e5c745d0"
+    },
+    {
+      "path": "vendor/box2d/source/src/hull.c",
+      "bytes": 6918,
+      "gitBlobSha1": "767b40f96de5a12ad1bdb4ffb46e5ea82a57223b",
+      "mode": "100644",
+      "sha256": "61f59f649c6ee4ed1e1024852e8338d2a2be6de35f72fdbde27ca2f25d7d47d0"
+    },
+    {
+      "path": "vendor/box2d/source/src/id_pool.c",
+      "bytes": 1314,
+      "gitBlobSha1": "a99b90dc12927fc56d1bf7eb6be43f8c22d44c5b",
+      "mode": "100644",
+      "sha256": "e8f01c799c422c35418dec38e5ada44ef57ccc00ab26065e76435ce27bee51c8"
+    },
+    {
+      "path": "vendor/box2d/source/src/id_pool.h",
+      "bytes": 727,
+      "gitBlobSha1": "d4149b8e574de5e5dace135a75c0c4dea339811d",
+      "mode": "100644",
+      "sha256": "1f791e3895cd9cbf383c6ac140014a9b36239dc3fcfbc1d8b21dd66036296511"
+    },
+    {
+      "path": "vendor/box2d/source/src/island.c",
+      "bytes": 23760,
+      "gitBlobSha1": "6ee3d422a0f3cebdf69c0908ae85fcea0bad33d1",
+      "mode": "100644",
+      "sha256": "80ee0d56743e8ff905f11c7d5027070103be647966ea4a537b554f54fd654051"
+    },
+    {
+      "path": "vendor/box2d/source/src/island.h",
+      "bytes": 3206,
+      "gitBlobSha1": "ef5f27680db3171bc2d5d2fdaebb71baa93f3895",
+      "mode": "100644",
+      "sha256": "52d5ebd8c5126c2c353c3347b76b353606c6c171ee2e17f61dbf413a18e57fa8"
+    },
+    {
+      "path": "vendor/box2d/source/src/joint.c",
+      "bytes": 54130,
+      "gitBlobSha1": "26bf078890fffcf1abf41b1ae475ef95c3229de7",
+      "mode": "100644",
+      "sha256": "a91d23906ec3771b6d399f64fceb17f08b400b3fb2713d2ff46667f9c8f0d54e"
+    },
+    {
+      "path": "vendor/box2d/source/src/joint.h",
+      "bytes": 10260,
+      "gitBlobSha1": "6963e1ab3535be0f2624a21aa798d94a834a8522",
+      "mode": "100644",
+      "sha256": "614b44f26a072719e778388215e13e98acc566bdaa9bc70a5a68b10ce9d7b7ee"
+    },
+    {
+      "path": "vendor/box2d/source/src/manifold.c",
+      "bytes": 45152,
+      "gitBlobSha1": "38fab65800ab90292b9e97f14a84e8861385420c",
+      "mode": "100644",
+      "sha256": "4afb5131ac07ca0e49cdd3c94d88c11d2137969a85a5dc8af870c5ce9c4a32c5"
+    },
+    {
+      "path": "vendor/box2d/source/src/math_functions.c",
+      "bytes": 3560,
+      "gitBlobSha1": "c56adca01cc8143485711bfda567e11463262e1e",
+      "mode": "100644",
+      "sha256": "2154664afb22fdb0b8c722a79cd57ac872f8cf39cfd1b08b5906329dc1e47a38"
+    },
+    {
+      "path": "vendor/box2d/source/src/motor_joint.c",
+      "bytes": 15385,
+      "gitBlobSha1": "ee924565247744262c457bd6d73250ad67d29787",
+      "mode": "100644",
+      "sha256": "c066489c395cd323d2dfeefac9b0d8ce4520327bd5868da1b1a71894faa733e2"
+    },
+    {
+      "path": "vendor/box2d/source/src/mover.c",
+      "bytes": 1667,
+      "gitBlobSha1": "695811743f360167b7b72823b6cd449b5cc36046",
+      "mode": "100644",
+      "sha256": "570fcc34b323f04936fa0488e3c37451255ad25e8500f00624dca90f11d230fc"
+    },
+    {
+      "path": "vendor/box2d/source/src/mover_joint.c",
+      "bytes": 5102,
+      "gitBlobSha1": "906c9d5fc07ebf18fef6c26289a8eb643ed2f6bf",
+      "mode": "100644",
+      "sha256": "bf1eebdc567619e35e1c83714e7a73b903afdcf87c74b48b7b9bc5d208cbcba3"
+    },
+    {
+      "path": "vendor/box2d/source/src/parallel_for.c",
+      "bytes": 3246,
+      "gitBlobSha1": "4c99c6ffb5398a29fda00783447ef915f1c1f82b",
+      "mode": "100644",
+      "sha256": "99d18ada0335e403f7e9b6c24fef2916ff91c2b3668424e01153de8e7dcb0c51"
+    },
+    {
+      "path": "vendor/box2d/source/src/parallel_for.h",
+      "bytes": 1221,
+      "gitBlobSha1": "537c7d31232c6607f4117baf21e6eb5ddc7b4412",
+      "mode": "100644",
+      "sha256": "172acebcbe6461a0479c8db11149508330aec866e35991b7a151791e2da67df6"
+    },
+    {
+      "path": "vendor/box2d/source/src/physics_world.c",
+      "bytes": 113804,
+      "gitBlobSha1": "6b001ffb2d83c137370bd38d96342ff0567c582d",
+      "mode": "100644",
+      "sha256": "a59a6501364337efae0dbe6fb7512f79a9b1ef8c63b31bf48a0ee670afaf2a6f"
+    },
+    {
+      "path": "vendor/box2d/source/src/physics_world.h",
+      "bytes": 6981,
+      "gitBlobSha1": "15c55ae6230d1e150b82ff48696c6d68a9e2d65c",
+      "mode": "100644",
+      "sha256": "2e9f092210c44c2b21133146ba1f4547b42795b0435105e3cf62d7180cb8896e"
+    },
+    {
+      "path": "vendor/box2d/source/src/platform.h",
+      "bytes": 8882,
+      "gitBlobSha1": "2034726838339d0d266d3cd97b6e7a30350fc3a2",
+      "mode": "100644",
+      "sha256": "67bc31be8354b59b17408fd0b8ff1f0ea2a41e42d73fa5d56f0fc085f5d68a89"
+    },
+    {
+      "path": "vendor/box2d/source/src/pogo_joint.c",
+      "bytes": 9397,
+      "gitBlobSha1": "242df047e8790b54dfe3434c6eae80966efdf673",
+      "mode": "100644",
+      "sha256": "8f9f6066bd7cf321f7acdacddba0bd66956137f5789e869f0c8f7a5097042e5f"
+    },
+    {
+      "path": "vendor/box2d/source/src/prismatic_joint.c",
+      "bytes": 24123,
+      "gitBlobSha1": "39d8b863e049ec0487125226510650f8823d6624",
+      "mode": "100644",
+      "sha256": "518610795f46e96e9b9f516699e4bcff31e63488403d1fa11af8fd1560a623de"
+    },
+    {
+      "path": "vendor/box2d/source/src/recording.c",
+      "bytes": 27580,
+      "gitBlobSha1": "434e088ae6cc550cb4b18e00bcc1503039284051",
+      "mode": "100644",
+      "sha256": "b4c5ab4084b18bda702109ffd89b836cfeccacf105aa3f52e2f8c615c1c9b585"
+    },
+    {
+      "path": "vendor/box2d/source/src/recording.h",
+      "bytes": 15162,
+      "gitBlobSha1": "5ee030410a3e0d00ee92f544f4e861ecc3df8055",
+      "mode": "100644",
+      "sha256": "baa8d4ae0cfd83ec87f2cc0f82155b4477173a4996811f38e8b0b4dde6490fde"
+    },
+    {
+      "path": "vendor/box2d/source/src/recording_ops.inl",
+      "bytes": 17106,
+      "gitBlobSha1": "419eaf04338c7b0223cf76baa44d90160da27bf3",
+      "mode": "100644",
+      "sha256": "2735064e283ca05c231140ffd78a3839798cfc0ab05c5a4398df0d9652d1c6da"
+    },
+    {
+      "path": "vendor/box2d/source/src/replay.c",
+      "bytes": 91731,
+      "gitBlobSha1": "efe6bdb16816a6a8e02f1e28e1090e6ce8f7a5e1",
+      "mode": "100644",
+      "sha256": "3fc71a865a0284ae0b635bd3a0d4f23694f856358e14d36ffe7a7181414bd563"
+    },
+    {
+      "path": "vendor/box2d/source/src/replay.h",
+      "bytes": 7534,
+      "gitBlobSha1": "8f869f7d4f46dbe6673082d881445627bf872904",
+      "mode": "100644",
+      "sha256": "c35e2128adff2cf0e10fee304ae058f497097d29b51d8c36f7e1f69d6f438779"
+    },
+    {
+      "path": "vendor/box2d/source/src/revolute_joint.c",
+      "bytes": 19654,
+      "gitBlobSha1": "a2b847a87a2882f997d3343ef1770e54ea1a1d96",
+      "mode": "100644",
+      "sha256": "de502885f7c93ba96e82d1c372c005c2c4fa1f4a5759395ece5d1cee2753af1f"
+    },
+    {
+      "path": "vendor/box2d/source/src/scheduler.c",
+      "bytes": 6310,
+      "gitBlobSha1": "047408aa48a987114aeaf9e6a2a68218ca75df97",
+      "mode": "100644",
+      "sha256": "690f5755c2b826564b5fbaeae107ee8b5998f88849bca7fb67ecdfa867a33ca9"
+    },
+    {
+      "path": "vendor/box2d/source/src/scheduler.h",
+      "bytes": 556,
+      "gitBlobSha1": "d7e50141164801f98e217e8a8920e92f6453a5c2",
+      "mode": "100644",
+      "sha256": "8771df8967de695f967760449d862cf10f3b7b7ec641dea37d533598242660ca"
+    },
+    {
+      "path": "vendor/box2d/source/src/sensor.c",
+      "bytes": 11717,
+      "gitBlobSha1": "4457612555a4169975cd8af3904177138ce5fede",
+      "mode": "100644",
+      "sha256": "41788c59f412dbb94a5da38cd6f0ef0a2aca8146ed1e1919bd4b7617adc46708"
+    },
+    {
+      "path": "vendor/box2d/source/src/sensor.h",
+      "bytes": 912,
+      "gitBlobSha1": "40c72d7fb0f2b3974125a0c77b53dd25d48d5518",
+      "mode": "100644",
+      "sha256": "d923fea5172bcf5bbdcaa99fb7ef01c0e36e9d534d4837494c50ea2388b012a0"
+    },
+    {
+      "path": "vendor/box2d/source/src/shape.c",
+      "bytes": 57396,
+      "gitBlobSha1": "7d40992ab100ca319e7388ad27503152d236292c",
+      "mode": "100644",
+      "sha256": "bcb2485d244cfd46656fde31bd434cb80dadddba91de3959e0092d82c70b34dd"
+    },
+    {
+      "path": "vendor/box2d/source/src/shape.h",
+      "bytes": 4054,
+      "gitBlobSha1": "4453c630d6501c7e842a04401ba3320ea3bf9c48",
+      "mode": "100644",
+      "sha256": "7724c6ab907d8a2bdfc58125076e35a52f57fc5a074bd77cee6d56e8ff234bc8"
+    },
+    {
+      "path": "vendor/box2d/source/src/simd.c",
+      "bytes": 2368,
+      "gitBlobSha1": "3f8271ed21fc61952908f17523246f7580f519eb",
+      "mode": "100644",
+      "sha256": "afacb9fd17e4cc15c6020c1b1815760a0923bf26a4f54133e3d16d17ebeec248"
+    },
+    {
+      "path": "vendor/box2d/source/src/simd.h",
+      "bytes": 9636,
+      "gitBlobSha1": "62da44bb8dc9bc4a21acfb322ddc51f637f66a7c",
+      "mode": "100644",
+      "sha256": "ef148b78609e92f6aaa47dc466d0fba9c15480d9d50bbe072ba13005744675d3"
+    },
+    {
+      "path": "vendor/box2d/source/src/snapshot.c",
+      "bytes": 41086,
+      "gitBlobSha1": "1c2da08cf4e012b81515599cf356c545a8074642",
+      "mode": "100644",
+      "sha256": "79ddfef9fd1466c2d5eba999ad284b6e432f66912fd9dd5512288fe2d0967ed1"
+    },
+    {
+      "path": "vendor/box2d/source/src/snapshot.h",
+      "bytes": 523,
+      "gitBlobSha1": "c0c8890d9903972b742e3afbef0c2273e8e8ffaa",
+      "mode": "100644",
+      "sha256": "a60c04cd436b86bc4c11486304bbb35135c7dc702e4961be6399951a31b94707"
+    },
+    {
+      "path": "vendor/box2d/source/src/solver.c",
+      "bytes": 68355,
+      "gitBlobSha1": "64cdae08256d28d90826ce84a477c29166482385",
+      "mode": "100644",
+      "sha256": "3e4128edaf7f48d65c3ec564653e077da6ccbb86dae95efdf69abf5ccdf170d3"
+    },
+    {
+      "path": "vendor/box2d/source/src/solver.h",
+      "bytes": 8534,
+      "gitBlobSha1": "58647ddc973538c87205cf97b5a4922fe128b1cb",
+      "mode": "100644",
+      "sha256": "120a2247cffe9df7f1f6647ea503a55a0bad54a884fe901a2b15defc42842823"
+    },
+    {
+      "path": "vendor/box2d/source/src/solver_set.c",
+      "bytes": 22181,
+      "gitBlobSha1": "df4fa02015a2032ea0ff37bd3d6b38b46c05bd10",
+      "mode": "100644",
+      "sha256": "814704e39e0e357335d967c5a2e25281af9f8cd3e398b2219dab6f7b6e498c0b"
+    },
+    {
+      "path": "vendor/box2d/source/src/solver_set.h",
+      "bytes": 3060,
+      "gitBlobSha1": "99a6d175176650f8e6ad9b526b30b27c8cc05fec",
+      "mode": "100644",
+      "sha256": "fe3de0b7918ed8bc1786f58e220750999e212a09093ca37642aa4c826fd78cfa"
+    },
+    {
+      "path": "vendor/box2d/source/src/table.c",
+      "bytes": 4800,
+      "gitBlobSha1": "b2009d88917fa7b1a21111a1af2d2075f2e81c2b",
+      "mode": "100644",
+      "sha256": "0a73d3f3db52beacfad5fb9bdc391b195c910220ad7998b2c3002961c7be8669"
+    },
+    {
+      "path": "vendor/box2d/source/src/table.h",
+      "bytes": 2390,
+      "gitBlobSha1": "b67eacea34df6d691a534d702985cfe84dd33eda",
+      "mode": "100644",
+      "sha256": "615adbd6f57973e7ad81695351a0cd47db142da43f8d0035419bdd6c835338ad"
+    },
+    {
+      "path": "vendor/box2d/source/src/timer.c",
+      "bytes": 13019,
+      "gitBlobSha1": "fff118c982b1f36b5539039cc02ed7927340e9ca",
+      "mode": "100644",
+      "sha256": "2875a670c9e6096b125021f078df66652e8e064bf5a775821f5b0b87e351445d"
+    },
+    {
+      "path": "vendor/box2d/source/src/types.c",
+      "bytes": 4676,
+      "gitBlobSha1": "62e136c4661a9ae0db2161d0cd3573cd53b13798",
+      "mode": "100644",
+      "sha256": "ab9416c99fcfdfa8df282222f3408c4e90b704c7cb7610adac6577494a30f709"
+    },
+    {
+      "path": "vendor/box2d/source/src/weld_joint.c",
+      "bytes": 14679,
+      "gitBlobSha1": "64e6c43af66ff7ad79dc6fb4aa01bf4c9ef8a4aa",
+      "mode": "100644",
+      "sha256": "838a15c5ac3221367742ce45cfa726b6ac4b2ec7f4766e3b069d2551ec5e929b"
+    },
+    {
+      "path": "vendor/box2d/source/src/wheel_joint.c",
+      "bytes": 19545,
+      "gitBlobSha1": "8fbc18022292db6c6d8354286d9a3452335cf14d",
+      "mode": "100644",
+      "sha256": "324734f4c3c64c6fab7a95a1bc459f4fb8054b1665a305e6d01dab32465a4cea"
+    },
+    {
+      "path": "vendor/box2d/source/test/CMakeLists.txt",
+      "bytes": 1235,
+      "gitBlobSha1": "00e2ad903a653f122dfad8dfb921b8b0bf591ade",
+      "mode": "100644",
+      "sha256": "1cea2d8014aa28da4da6d5eea69a93187bd25af7e4a34a423a8383fcd1a63eb3"
+    },
+    {
+      "path": "vendor/box2d/source/test/main.c",
+      "bytes": 4095,
+      "gitBlobSha1": "077f1d12dd18f7e78b0f1e43f017ddb726b32836",
+      "mode": "100644",
+      "sha256": "c677d7523926298192cecd25308011cc0ab5f400215fc6813710a5103b63c340"
+    },
+    {
+      "path": "vendor/box2d/source/test/swift/test_world.swift",
+      "bytes": 1246,
+      "gitBlobSha1": "07e6b72d1b7202ef3f9b81ef07abdc9173271d55",
+      "mode": "100644",
+      "sha256": "5ebc7a55a33ade40fd9607da47ef8bdd0ac0a9c03bf66e77a405c57f72911466"
+    },
+    {
+      "path": "vendor/box2d/source/test/test_bitset.c",
+      "bytes": 646,
+      "gitBlobSha1": "e01f782444f487d5fbd638327980a895163111ef",
+      "mode": "100644",
+      "sha256": "a8405a4e48843287cbb47fef8cf35b460f3f31cd2ff0db1d2e42eb5c5d99158b"
+    },
+    {
+      "path": "vendor/box2d/source/test/test_chain.c",
+      "bytes": 10491,
+      "gitBlobSha1": "1a58ed474c2b526f29c1293653f2a394bec23f2f",
+      "mode": "100644",
+      "sha256": "7bbb605dcbea753eb3573ba12355ced6d12d5f8cdb1943d2d8708872a5e21c27"
+    },
+    {
+      "path": "vendor/box2d/source/test/test_collision.c",
+      "bytes": 9692,
+      "gitBlobSha1": "8113235310cf832cf997da2add627d0c04197f50",
+      "mode": "100644",
+      "sha256": "87054ad31354f811c7c5744cf0fc7946cbab5ff9d40fa7af52639ff0b856a211"
+    },
+    {
+      "path": "vendor/box2d/source/test/test_container.c",
+      "bytes": 9693,
+      "gitBlobSha1": "efd7eb4da56b28167601d6f3a4e046cf41729a78",
+      "mode": "100644",
+      "sha256": "e079b831d3758930c1e5876e482813efe32ef5e137f0163e068ca321c1bf8835"
+    },
+    {
+      "path": "vendor/box2d/source/test/test_determinism.c",
+      "bytes": 6833,
+      "gitBlobSha1": "0b768bc32ae6ba0cfbcdb8a4309b665a3c70ebe9",
+      "mode": "100644",
+      "sha256": "9efb200b7bd664729b2fc773194cbb3ac2652074fd50c4b50f2b58c093bdc3e9"
+    },
+    {
+      "path": "vendor/box2d/source/test/test_distance.c",
+      "bytes": 6212,
+      "gitBlobSha1": "02f3c35f891c60c8badc6c416fce3d0fcad3f2fa",
+      "mode": "100644",
+      "sha256": "7b2bb0ee5b52cafbefd048433a5e7aeacd15517f098535bcbda9a9e2007a1d09"
+    },
+    {
+      "path": "vendor/box2d/source/test/test_dynamic_tree.c",
+      "bytes": 37734,
+      "gitBlobSha1": "b43f4a30b7d4f5fd3c4417d79d4a87139a430743",
+      "mode": "100644",
+      "sha256": "9b2538854a94ee185a6721a34136cac922bef1edd6aae4fb02f8aa070ad3c432"
+    },
+    {
+      "path": "vendor/box2d/source/test/test_id.c",
+      "bytes": 726,
+      "gitBlobSha1": "732d7dbe233c3439e835b4622162f0d700ea6eff",
+      "mode": "100644",
+      "sha256": "2ac399463405a75ec5c6be0ed9fed74e0cc7fb89daf8baf9aca612e813879891"
+    },
+    {
+      "path": "vendor/box2d/source/test/test_invalid_input.c",
+      "bytes": 18544,
+      "gitBlobSha1": "b36e5fa96206238daa704c3c539b685b5920b5d3",
+      "mode": "100644",
+      "sha256": "be425841fbf924a458ea37a685b5209c3213e4197a2e8a99adfdf0c0e26dd893"
+    },
+    {
+      "path": "vendor/box2d/source/test/test_large_world.c",
+      "bytes": 15546,
+      "gitBlobSha1": "df4da09a71b64203249f7ff159349bf2138f5a16",
+      "mode": "100644",
+      "sha256": "55344f244ea3d76c51f5cdb2370e9f72975a25d60d37b5957d8692cf305d1a66"
+    },
+    {
+      "path": "vendor/box2d/source/test/test_macros.h",
+      "bytes": 8085,
+      "gitBlobSha1": "511aba13a410b7a011ff7c405602d514527c5ed3",
+      "mode": "100644",
+      "sha256": "bb2406894e135a067390f33428fc606a77cb111e7ca10c5f9115d99c8d74e55f"
+    },
+    {
+      "path": "vendor/box2d/source/test/test_math.c",
+      "bytes": 6453,
+      "gitBlobSha1": "c074ec3d94ba788c310caa1d22b30fe8c57eecf3",
+      "mode": "100644",
+      "sha256": "0fc0868bb1f675d374f46e82822b5ea61148f81bac8668449d3f3d986e79c302"
+    },
+    {
+      "path": "vendor/box2d/source/test/test_mover.c",
+      "bytes": 3912,
+      "gitBlobSha1": "9f9e008ad29459862d940b88d10e761e02ba8cb0",
+      "mode": "100644",
+      "sha256": "3cbfc188465507069adb0d827396e7b8a5fcccd5796dda84534fd7d31c3a7ae7"
+    },
+    {
+      "path": "vendor/box2d/source/test/test_recording.c",
+      "bytes": 43884,
+      "gitBlobSha1": "eaa9bf25a3a5f6aa98334efb8300589013ed499d",
+      "mode": "100644",
+      "sha256": "3054baf25543e07552c28b7a5e42f0585e8eba6b52d0bfd9f5bbffb3ceb280f6"
+    },
+    {
+      "path": "vendor/box2d/source/test/test_restitution.c",
+      "bytes": 42791,
+      "gitBlobSha1": "938104cf27f8759c1c67539c8cc540d7413c7bff",
+      "mode": "100644",
+      "sha256": "f68ae502127d34fc7c37da56ae62d92f265665d3ded5ef1d56d062c746f98458"
+    },
+    {
+      "path": "vendor/box2d/source/test/test_shape.c",
+      "bytes": 4972,
+      "gitBlobSha1": "6f563fe636efd831a2bb08b709f6299895684736",
+      "mode": "100644",
+      "sha256": "1fe046bad2a29522d312f4a9a204d6799f7ad29a3ddf70ffb353105f5a1f3de9"
+    },
+    {
+      "path": "vendor/box2d/source/test/test_snapshot.c",
+      "bytes": 22218,
+      "gitBlobSha1": "43691ff1039918a8b2bff737edaddece3f1ca452",
+      "mode": "100644",
+      "sha256": "10ec03f13066a975b3e9c4a0ecdba0a236c5dbcf1633b098edab8476a95acf15"
+    },
+    {
+      "path": "vendor/box2d/source/test/test_sort.c",
+      "bytes": 3143,
+      "gitBlobSha1": "772bceef0c4d41edbcbf684e05eb63c5b7796f71",
+      "mode": "100644",
+      "sha256": "4cac67fb326a958905f0b0241e1925e40cf557e045400c26db52a47651400dbc"
+    },
+    {
+      "path": "vendor/box2d/source/test/test_table.c",
+      "bytes": 10537,
+      "gitBlobSha1": "2ce078f628debd121d15a012967ddc5fdcbf7765",
+      "mode": "100644",
+      "sha256": "1d22db0b85360669d874d18a773d04d1e5a12c5bd3c8549337fe7f560b90c207"
+    },
+    {
+      "path": "vendor/box2d/source/test/test_thread.c",
+      "bytes": 2565,
+      "gitBlobSha1": "6a716a73cd992cb23fa737c0c616cee614843b62",
+      "mode": "100644",
+      "sha256": "3a7581e2e99b7facbb14107a16ba9917cf4c00ab594e5316a93959b263bdc4b3"
+    },
+    {
+      "path": "vendor/box2d/source/test/test_world.c",
+      "bytes": 55897,
+      "gitBlobSha1": "c2df98330c8451e51b53e54113060fd41eb1aec4",
+      "mode": "100644",
+      "sha256": "bd3cac3c327b11c7a0ff2d899de1462c2f65aec29326d137539648c1f48a90dc"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/builtin/functionalities/fog.chunk",
+      "bytes": 1008,
+      "gitBlobSha1": "36d7c71d7be7f513de5695ec95f9e8d53617ada0",
+      "mode": "100644",
+      "sha256": "7c6a691b9ad36e90a075bde22c9fe8c8503af99f000db1078c9d0288f7b71b0b"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/builtin/functionalities/morph-animation.chunk",
+      "bytes": 3676,
+      "gitBlobSha1": "a3614bbea3e5a0a2b02ba62571cc1b017533dd01",
+      "mode": "100644",
+      "sha256": "f2f13d331445c514ab86c9214afa528eac9f8541655950c0047f20c8b88bb5c3"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/builtin/functionalities/probe.chunk",
+      "bytes": 3624,
+      "gitBlobSha1": "4c03326a98765d5880857d1cd2814e616d273a66",
+      "mode": "100644",
+      "sha256": "ee044e46379f1a8c2e9d862abd7359eddad7800721c958b78e9c755f1492a40a"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/builtin/functionalities/sh.chunk",
+      "bytes": 1200,
+      "gitBlobSha1": "a7782e7d4c8f6d96c46df6d57abd28f90ce99479",
+      "mode": "100644",
+      "sha256": "7ebfa34b59b39b6a200ca5eca6fdb7038b4fcbd33b0a00a4139148865444bac6"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/builtin/functionalities/shadow-map.chunk",
+      "bytes": 18006,
+      "gitBlobSha1": "8d77ed8b1bdea1642df11d42c22fac6945dc7908",
+      "mode": "100644",
+      "sha256": "15ae137f9206b292fe8286ca77ab2b504ac52201df2ae23deff4c9ff84945b6f"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/builtin/functionalities/skinning-animation-lbs.chunk",
+      "bytes": 4591,
+      "gitBlobSha1": "91799f39e023782f70886bd291b425ad141ba8c7",
+      "mode": "100644",
+      "sha256": "c84ab5f88c601a1a69ddcfaecb25f1707403ba549b9a1b7b8d609332a853ddc8"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/builtin/functionalities/world-transform.chunk",
+      "bytes": 1081,
+      "gitBlobSha1": "c2205db529e3075dc80223373880941d2f6e046d",
+      "mode": "100644",
+      "sha256": "14f0d3d066a04424360d94d8123a0a64f1fa13245cce4c812a42bdbee32d2bf8"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/builtin/internal/alpha-test.chunk",
+      "bytes": 349,
+      "gitBlobSha1": "c36726b58d8f9528d1d0a72a99162d1a3b4b9be2",
+      "mode": "100644",
+      "sha256": "3b1ced51ca4b448a9d81bc6aac74b44d8e6e32288e980ba9679e2bb82a33385c"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/builtin/internal/embedded-alpha.chunk",
+      "bytes": 259,
+      "gitBlobSha1": "1a9aac6af22eb950f3feb59b5fde7ccd940a54e3",
+      "mode": "100644",
+      "sha256": "b0deec0f3ae368ec2c1f9a2dd93af4ec36d5949e4b2e885752b590e9fbd2f593"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/builtin/internal/particle-common.chunk",
+      "bytes": 2726,
+      "gitBlobSha1": "4aba5d57da4decb476ab6d0f1adf158efdaed34d",
+      "mode": "100644",
+      "sha256": "56f37ad649e11e16fdd9873eff4dcb530e9b0d65e0de346a0113bf6686fb13f1"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/builtin/internal/particle-trail.chunk",
+      "bytes": 864,
+      "gitBlobSha1": "c8935315da507fc2f1374d1a635073a1972b5435",
+      "mode": "100644",
+      "sha256": "503c2cb5ee5e89a507ed2efcb15874c6aa7c30c7d4f96657827fd9ee7adebb04"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/builtin/internal/particle-vs-gpu.chunk",
+      "bytes": 11886,
+      "gitBlobSha1": "16e06edc48793065114e93d746c4156a60551ca5",
+      "mode": "100644",
+      "sha256": "b86f398676c7325d4d8780e43ea0385c8c7579872ae2f4a38afa6772b0d30274"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/builtin/internal/particle-vs-legacy.chunk",
+      "bytes": 3714,
+      "gitBlobSha1": "1747a5620278645a7d7f468fb2b151c6b3890e29",
+      "mode": "100644",
+      "sha256": "cf6fc602a5e2d125e2dff284f7e0d816fa043784c2fb81c081694adca358ac10"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/builtin/uniforms/cc-csm.chunk",
+      "bytes": 622,
+      "gitBlobSha1": "ed1a70a3c529a90519f9d114217b6fd557ad3915",
+      "mode": "100644",
+      "sha256": "cd4c797461cb3f8d1ddc782de766a30635c115c299afe024e1c2b8f5145a8637"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/builtin/uniforms/cc-diffusemap.chunk",
+      "bytes": 200,
+      "gitBlobSha1": "4b678a409c8f100dda1ca45bd3cf1528bc6f2f60",
+      "mode": "100644",
+      "sha256": "95f990873b3d2b3801db1af8d00df263a10e6a62e89835a01a705c7b18117404"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/builtin/uniforms/cc-environment.chunk",
+      "bytes": 246,
+      "gitBlobSha1": "6bc653525d5dfe5fdbd321555cd1ada0055e007f",
+      "mode": "100644",
+      "sha256": "8273b6ec59dd18b67fe67b8410145fc747ad4a0232084643cc1fe2109f26d755"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/builtin/uniforms/cc-forward-light.chunk",
+      "bytes": 889,
+      "gitBlobSha1": "7de497903b5aa47f23f0c6d588049ee42b6b2934",
+      "mode": "100644",
+      "sha256": "a61051ee880a67f5e857b470d4117e9e9208e9618ad56ba430874d18a192720f"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/builtin/uniforms/cc-global.chunk",
+      "bytes": 2207,
+      "gitBlobSha1": "4cf88e7b8fc01805e6484cef3aa19f77909f116f",
+      "mode": "100644",
+      "sha256": "4036cab1daf2dbaa906ac5b934a608ac66836478a96c9e94d51025f44a5f75b6"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/builtin/uniforms/cc-light-map.chunk",
+      "bytes": 87,
+      "gitBlobSha1": "4df72e6744170ece07b6671fc81200ed0884236b",
+      "mode": "100644",
+      "sha256": "4922961861969acc4f87991219fcc20575c0c15d5ccd07b00a83e9e8391318d1"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/builtin/uniforms/cc-local-batched.chunk",
+      "bytes": 125,
+      "gitBlobSha1": "a9a65b757680822dd96b9d0d082570d52790d5ff",
+      "mode": "100644",
+      "sha256": "763a6b0ad0b26f1ad6114fe15d444de2cc82ae0115057a862d6ee5a608c77503"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/builtin/uniforms/cc-local.chunk",
+      "bytes": 761,
+      "gitBlobSha1": "b44350d7cd87a4b031dc760b903fbdadd1c7924a",
+      "mode": "100644",
+      "sha256": "e7ee504b5dd91c441574490e1b27d63c04fdb198b7703d175692f05c5710aceb"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/builtin/uniforms/cc-morph.chunk",
+      "bytes": 677,
+      "gitBlobSha1": "11dbfa2d9b3bb8449d4f06d39bae5768fd74ba46",
+      "mode": "100644",
+      "sha256": "cf38599aedbf9db4b9edcc168a2e6a94bcda0c385858f067447f93d59df0a265"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/builtin/uniforms/cc-reflection-probe.chunk",
+      "bytes": 506,
+      "gitBlobSha1": "2524b3a69901c4fb9f3934facae1e1e6082f4d28",
+      "mode": "100644",
+      "sha256": "754861e6eb899fb07b2f1c56aede3844214070ec36312ff8b30ec3b0a515d143"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/builtin/uniforms/cc-sh.chunk",
+      "bytes": 320,
+      "gitBlobSha1": "6f1e80e27fdf2e28286c2f90d91ac475e9afdd7d",
+      "mode": "100644",
+      "sha256": "8d742b86e4e92aea1482740960f2619e92a5a317ba14882e4862eb285002207f"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/builtin/uniforms/cc-shadow-map.chunk",
+      "bytes": 187,
+      "gitBlobSha1": "b1ec0587ed82e0e5b67cef5018283efadf1e3507",
+      "mode": "100644",
+      "sha256": "dba252944aa1589d5fb297eed39ea67b9d9cfd2fe42b329b3211d90ce9dc13bd"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/builtin/uniforms/cc-shadow.chunk",
+      "bytes": 1271,
+      "gitBlobSha1": "c26340e9e1610d1a835f43516a222aa7b09c1970",
+      "mode": "100644",
+      "sha256": "3218d3d2787d46938df66bebb40148a9660d2a9884656a86b1252e332d0a8bb5"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/builtin/uniforms/cc-skinning.chunk",
+      "bytes": 1719,
+      "gitBlobSha1": "c013c898ec91daf96397480d43051d7dfee5de3d",
+      "mode": "100644",
+      "sha256": "b1429c387d5c556ea6af3cba2707fb745a6efd82273645746d9688bb97ede49f"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/builtin/uniforms/cc-world-bound.chunk",
+      "bytes": 210,
+      "gitBlobSha1": "acb3dc2951e4b7e4ccc78ce1cdda27f55d7ecac0",
+      "mode": "100644",
+      "sha256": "58b4eb61a01feca319b75a0855910986d9481d21fc75164a93004d71054bdc58"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/common/color/aces.chunk",
+      "bytes": 282,
+      "gitBlobSha1": "9ba137ef8c81e89eef85c850caddec0b74a86c9c",
+      "mode": "100644",
+      "sha256": "9ab59a61959926d87c20a4efbb180616ad7961f51b07885abd5cff9207e7ab5a"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/common/color/gamma.chunk",
+      "bytes": 773,
+      "gitBlobSha1": "bdb8ff0c8cb7ccd7d925057b1cd3b086fe5363d5",
+      "mode": "100644",
+      "sha256": "58e8a46747db5c2e15fa88bd9e383aa3d693fd550a56486b8eb3c26f7b3b62a6"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/common/color/tone-mapping.chunk",
+      "bytes": 510,
+      "gitBlobSha1": "5b7229601938b8254c0330508bccde1599ab35d2",
+      "mode": "100644",
+      "sha256": "e45c1d411bf7f58cdb24cc0e662d689a906ca8d2534def88853188c8aaee85e7"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/common/common-define.chunk",
+      "bytes": 4088,
+      "gitBlobSha1": "198e3a257706206e4401e0f18eb251a6b521355a",
+      "mode": "100644",
+      "sha256": "178b39f8ac2980f9d2823ebeeb33cf83437b141a98dc8a4329485feef45e0390"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/common/data/packing.chunk",
+      "bytes": 3140,
+      "gitBlobSha1": "447864054a9068087dc03ffb71ee00859707627b",
+      "mode": "100644",
+      "sha256": "d7f8da3964692ffccf098c79ed4b513dc7f7a15aad2a4dfe04fef878152ed2e8"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/common/data/unpack.chunk",
+      "bytes": 1116,
+      "gitBlobSha1": "c765bca2f70026881a15a7990fe4cc8480068ac9",
+      "mode": "100644",
+      "sha256": "88fe68850825ca851211642b08fcbf0089f2cce0a62a4940b6bb7dfbbbae7910"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/common/debug/debug-view-define.chunk",
+      "bytes": 7513,
+      "gitBlobSha1": "1cb6feffbeda937d4d1dd432277d7242ef49045a",
+      "mode": "100644",
+      "sha256": "42578e90386d6231e3700493de2b87f9c3c71681f8c76b5bcdcc51eccea1dd55"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/common/effect/fog.chunk",
+      "bytes": 2311,
+      "gitBlobSha1": "c871416b369a502f93c93de73ec005280d29f3b3",
+      "mode": "100644",
+      "sha256": "17a3ecec65eaa1b153888b315e2655f2b223000faaaaac221f13c7fab55a9f40"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/common/lighting/attenuation.chunk",
+      "bytes": 2577,
+      "gitBlobSha1": "69799fa6a9f9f342b7831ecc9a554aa8c057c895",
+      "mode": "100644",
+      "sha256": "abcb360a79c1ae1cf3b04b524bb31928f9f5b732ba16a3b350885a760e7647d4"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/common/lighting/brdf.chunk",
+      "bytes": 5448,
+      "gitBlobSha1": "79405c200ab74737c16871fc4d6a735e4d0ec0b8",
+      "mode": "100644",
+      "sha256": "69d8dcd452cc85b393efa91ebb2c49297031c70aedace92d2c5749c08d17d747"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/common/lighting/bxdf.chunk",
+      "bytes": 2451,
+      "gitBlobSha1": "478b535caf6fa8df8c3de5f492e4e8fd4b9980b6",
+      "mode": "100644",
+      "sha256": "df7eab11df3fe2d0aa7503d146612c99115e464eebc2ed903b7c08e09b952579"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/common/lighting/functions.chunk",
+      "bytes": 3878,
+      "gitBlobSha1": "018ca9f1cbc87844ec8a2ec021577b92f0433f83",
+      "mode": "100644",
+      "sha256": "f654e4850bcedf9759a6b763d28fa7d6338c6983a60d1e95824e35d0d2d65331"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/common/lighting/light-map.chunk",
+      "bytes": 1221,
+      "gitBlobSha1": "1e31b5db4b8d94170bf9b2ea06f9d840e00b23c4",
+      "mode": "100644",
+      "sha256": "cdd34736f19da1da08eb7e9f2b7489826bb24dca82b73bf30b6ce2c13566c9b3"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/common/math/coordinates.chunk",
+      "bytes": 4931,
+      "gitBlobSha1": "e338ec6c4da34e58c80140e39bce5073b6d50a09",
+      "mode": "100644",
+      "sha256": "984e1e396e790966f4598c7517ec32f8c04c5809ada5174fc592df141b952893"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/common/math/number.chunk",
+      "bytes": 2444,
+      "gitBlobSha1": "f4a840be9430810e14dd41a3200640263e8137a0",
+      "mode": "100644",
+      "sha256": "59cd37ed1c432759fac91723f3b39d6755b0e56d2cec5a75556759c07c35bf0c"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/common/math/octahedron-transform.chunk",
+      "bytes": 657,
+      "gitBlobSha1": "d86cf23bbf3738904198dd15757b291eab81f693",
+      "mode": "100644",
+      "sha256": "b8a5b6c7410ffba5aa862bde9922f02b1f913a849e03b0577976eafa95c19f35"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/common/math/transform.chunk",
+      "bytes": 8058,
+      "gitBlobSha1": "c5d906c4ce3118bce37766252274af5cdff19ba2",
+      "mode": "100644",
+      "sha256": "a997290d72ab1a73e1279d18ffa70488d3d65207b0b929cc09baee7ee3081c9c"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/common/mesh/material.chunk",
+      "bytes": 2134,
+      "gitBlobSha1": "435f31a76e73d1e696396a6790c57b8dbd7214fe",
+      "mode": "100644",
+      "sha256": "c96e09a30a66b3f332deefb774000f5b0c2d1f5f8d6495970ff29cd4b7bc5502"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/common/shadow/native-pcf.chunk",
+      "bytes": 14780,
+      "gitBlobSha1": "06047508535aba1fc80e8c15f5a04963de0f40d6",
+      "mode": "100644",
+      "sha256": "e41499c6ab669db86341125ba319e5964f69072c4841d1918d6a2cee6d98ef35"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/common/texture/cubemap.chunk",
+      "bytes": 2408,
+      "gitBlobSha1": "4d310f151ac5f4da81004870d6b2b83c293ff493",
+      "mode": "100644",
+      "sha256": "74c66c2eb242dbe4c9ef3d9302b72f00a99153ab2df1358826b27b75f8aed751"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/common/texture/texture-lod.chunk",
+      "bytes": 1537,
+      "gitBlobSha1": "8b74d573936125fad50d3a46812f774e56ab63cb",
+      "mode": "100644",
+      "sha256": "6002cd8d8c959ded09be7074355c5f2d48ebe4c5118972ff56a8041832cada78"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/legacy/decode-base.chunk",
+      "bytes": 1861,
+      "gitBlobSha1": "d23b9596dd977fcea815571b1fd3662348450efa",
+      "mode": "100644",
+      "sha256": "4787a7db395b6bf2cf701008fe6814518cd2f177c6487b940be195a38912fd82"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/legacy/decode-standard.chunk",
+      "bytes": 252,
+      "gitBlobSha1": "7deecee12a308cf2c6bbed33279b20384ffb1011",
+      "mode": "100644",
+      "sha256": "01545a317c907fa9f89f14a27498dd6db7e1e0fec92d254e69c5f63d31fad49c"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/legacy/decode.chunk",
+      "bytes": 160,
+      "gitBlobSha1": "faf433592f73e3a0bb6f9810bb14fb6a89f9e4c9",
+      "mode": "100644",
+      "sha256": "6a832281b0726fb99fd5f210aee137d063cfb734afff104a1c98a27d6dcd4f46"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/legacy/fog-base.chunk",
+      "bytes": 39,
+      "gitBlobSha1": "f34d4229343251cdeb85c7d2760e0ebcd96a0851",
+      "mode": "100644",
+      "sha256": "54160468d055bd3cc0b832e550556e2ba98ac216a16aa84654ff5993f4f4cec7"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/legacy/fog-fs.chunk",
+      "bytes": 628,
+      "gitBlobSha1": "68b60847de0b78464135483c574114aa0ce246c1",
+      "mode": "100644",
+      "sha256": "7ea30cdaea20423a1db8951c3a35c87e02890b1cac64106300ae81d4acf944dd"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/legacy/fog-vs.chunk",
+      "bytes": 308,
+      "gitBlobSha1": "1201e721e8040a8ca3529126a31c6a40737d08c6",
+      "mode": "100644",
+      "sha256": "a065cc2a528dad0fba466ec0149b8ead4898fbe2aa64bfc9ee82aa95a774112d"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/legacy/input-standard.chunk",
+      "bytes": 465,
+      "gitBlobSha1": "351ae47a8de208b87785c20329f2f0a8267a754a",
+      "mode": "100644",
+      "sha256": "ca34ef850015792f54254aa0cbe9a99d2f45477c03130d176f2a8654c456f719"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/legacy/input.chunk",
+      "bytes": 379,
+      "gitBlobSha1": "75faa0511bfa4772b7a0e3527db950d099bfb20d",
+      "mode": "100644",
+      "sha256": "5485099486c3100a31a190031077b03f99780dc2fa2928ca4d78cbc8f3b96104"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/legacy/lighting.chunk",
+      "bytes": 325,
+      "gitBlobSha1": "0eab4437f9eca14a581a4a79f2b7e852d0e65959",
+      "mode": "100644",
+      "sha256": "09afb193e321842621fd5594e6570aa6c20985a99107b206c6295f741e52650d"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/legacy/lightingmap-fs.chunk",
+      "bytes": 93,
+      "gitBlobSha1": "e95b0cfe0ab01464b124931c15ddb875a7929621",
+      "mode": "100644",
+      "sha256": "7d8d9be77516bb55fa21483c47bc7fd5c605e82d65bcae348dd512230c8c7129"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/legacy/lightingmap-vs.chunk",
+      "bytes": 309,
+      "gitBlobSha1": "d4767f72730a76ff8582c418db3c535c3dd2d45c",
+      "mode": "100644",
+      "sha256": "fb78a6d7cb4c74102d888d36bd769893a311091a031e8cd38869d3e0a9357ba8"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/legacy/local-batch.chunk",
+      "bytes": 95,
+      "gitBlobSha1": "00d87548417d72cbc54777ae824c885812a4bcc2",
+      "mode": "100644",
+      "sha256": "2058a68d2d97b365a02bbc25c440fbf1311544f707b0a35bf94c428392b207fa"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/legacy/morph.chunk",
+      "bytes": 51,
+      "gitBlobSha1": "f57a3e62ad4aa8b5cfd01829a99604940a4f6016",
+      "mode": "100644",
+      "sha256": "c4e352252c261a0534a43b88fe3baaaa87eff731bc42961766ce4b4eb406859a"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/legacy/output-standard.chunk",
+      "bytes": 454,
+      "gitBlobSha1": "52cb818e9aa11b0b3864d0c4c9ac62e0a502cd4a",
+      "mode": "100644",
+      "sha256": "ef59a9b732bc25f1ddd5504684c6d32c787a5c5fe9d462b0391d69a59027df1f"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/legacy/output.chunk",
+      "bytes": 178,
+      "gitBlobSha1": "4e06fa945057c95d522e7a0c0ab5532c4cd09d99",
+      "mode": "100644",
+      "sha256": "89a57d193d446477e5db77d20e51b0b879dc781815317296caf6c1a53a867ebc"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/legacy/sh-fs.chunk",
+      "bytes": 269,
+      "gitBlobSha1": "57d226b31afe5968b9126e3ec7e845d33b40d9be",
+      "mode": "100644",
+      "sha256": "29d7472ebdf8f5640c6d728eab080ff63f67be63969798da957ec8d3bd836f33"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/legacy/sh-vs.chunk",
+      "bytes": 446,
+      "gitBlobSha1": "f0cdaed5017e78be87c366227fe7e5c9839da3b1",
+      "mode": "100644",
+      "sha256": "83aafd0e87a4b225edcd25d692f9d55e6417e5c6d6f0b0c7037cd2523bf307b4"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/legacy/shading-cluster-additive.chunk",
+      "bytes": 4806,
+      "gitBlobSha1": "ba4c16be3a7bc614fb9dc08a39241eb4cf684ef5",
+      "mode": "100644",
+      "sha256": "38b835ac011041530a2443cc006c0a65bc18418fe9079be4b155f41885684780"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/legacy/shading-standard-additive.chunk",
+      "bytes": 2844,
+      "gitBlobSha1": "bb5c4a4de0b5bcbd7be5c0f59a64c8a4cbe572d1",
+      "mode": "100644",
+      "sha256": "c8708afdc0121f0965baaadcf30c96e36dadc7db70c0a7db487eebdea72d8922"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/legacy/shading-standard-base.chunk",
+      "bytes": 11626,
+      "gitBlobSha1": "07dfac14da03e425352ebc7a97110b9abc4f73b0",
+      "mode": "100644",
+      "sha256": "65492c535a1ad8006688784535a72ec05c2d734ead548446dc1aaf3e6281cffb"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/legacy/shadow-map-base.chunk",
+      "bytes": 140,
+      "gitBlobSha1": "f1f7562f853f6b682ee16bca659bc21f31bb4e40",
+      "mode": "100644",
+      "sha256": "f688e8696b55f4ccbd8394d8758d2a38498099a275328f68f7065e5a72ab74a9"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/legacy/shadow-map-fs.chunk",
+      "bytes": 812,
+      "gitBlobSha1": "1ad503d1f06f4f6a1cf62e7f54d36cc484caba47",
+      "mode": "100644",
+      "sha256": "e451820916d0d6bf7755b859c098b28302ca488fec8b5d4e9b69c76a0f1398f2"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/legacy/shadow-map-vs.chunk",
+      "bytes": 621,
+      "gitBlobSha1": "85c5209302d1a4d73eaf8bb4a2ea2d8bc36ea245",
+      "mode": "100644",
+      "sha256": "254623c4ac0f07675777160f42a47347dd9c4ad49f1ba268fa55763f603ef8a5"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/legacy/skinning.chunk",
+      "bytes": 231,
+      "gitBlobSha1": "80cd123b96255615ae92a40a9a9f8be6fa990028",
+      "mode": "100644",
+      "sha256": "88661202838911530e1b5d1e51fc3142bc0230b72256a47508ca8287adbe5fc5"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/legacy/standard-surface-entry.chunk",
+      "bytes": 3820,
+      "gitBlobSha1": "5266ffb212976f58b96cb1f477e7c36fa02760ef",
+      "mode": "100644",
+      "sha256": "d6e7e77661bb155b5a19d4f0488a987427f1cce51ab93e39ba2b31bb72764df3"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/lighting-models/data-structures/lighting-intermediate-data.chunk",
+      "bytes": 3401,
+      "gitBlobSha1": "66a9d556070356e677533b9007719a384949197e",
+      "mode": "100644",
+      "sha256": "7a85b10b4bcc078abb81e4af581f118d16d3c30983000d5a73192508fd4745da"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/lighting-models/data-structures/lighting-misc-data.chunk",
+      "bytes": 325,
+      "gitBlobSha1": "23de8fb57ab7304df900815fd5b205a646a2e6b9",
+      "mode": "100644",
+      "sha256": "a61f8505766cf26d8ed712c0a5c3633f3034577f61ce6d605aafc123651961b6"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/lighting-models/data-structures/lighting-result.chunk",
+      "bytes": 1631,
+      "gitBlobSha1": "11e5a19c7419a72d75278e89c315bdbd4fc127a1",
+      "mode": "100644",
+      "sha256": "f4e5f9ca84f0244b6b5f989bd98dcd747ed8c0a0f901a6d020a27fe512b49a56"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/lighting-models/default-functions/standard.chunk",
+      "bytes": 754,
+      "gitBlobSha1": "2a5a8492dfd9963790ed4f2a13e0cb5112794507",
+      "mode": "100644",
+      "sha256": "e8fc6d6d06ba213db1cd6aa76c9c12fb8ba00fc6b466fb4d5ab475ce0ca7874a"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/lighting-models/includes/common.chunk",
+      "bytes": 226,
+      "gitBlobSha1": "fa0b70b11aa9ec3312dc1f8c1d343070fd3a9629",
+      "mode": "100644",
+      "sha256": "c5b3adebb90a245dba17c2180bd74964d8e7d5067c883b0747d1bd305873aebf"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/lighting-models/includes/standard.chunk",
+      "bytes": 176,
+      "gitBlobSha1": "a1911caef291d475daf9d8b73856677130ed108d",
+      "mode": "100644",
+      "sha256": "337f4a9ead48994d5042a2cab1df992c50a3b0575feb78a97509899cee379fd0"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/lighting-models/lighting-flow/common-flow.chunk",
+      "bytes": 17971,
+      "gitBlobSha1": "a2f768508fb8ea33a4aa9d62045b238f3311bd56",
+      "mode": "100644",
+      "sha256": "101914ad2940887a2aa457951619d6fe397cdfef1690defa6a47ca958a02d4f8"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/lighting-models/model-functions/standard-common.chunk",
+      "bytes": 10868,
+      "gitBlobSha1": "8ebedf1c713507544c249285fd1c6f5f469f404d",
+      "mode": "100644",
+      "sha256": "7433a9b3104d46c7e32577736aa0d1ff4bd274c2e2f2b58bf4f9151e65764a2a"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/lighting-models/model-functions/standard.chunk",
+      "bytes": 17322,
+      "gitBlobSha1": "b89b29fa11c430eb02c9d4e7c79d7c251ddf0564",
+      "mode": "100644",
+      "sha256": "498a036bb3d133afbd69e8c4301bde003e11d3108ea17cdaa27ab1aa1ebf91ea"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/post-process/anti-aliasing.chunk",
+      "bytes": 196,
+      "gitBlobSha1": "6e84354b7b2806e7846834182a6d0980fe12194a",
+      "mode": "100644",
+      "sha256": "e26e6d9fdf1de4ca2e7c5fe5c44832deb2429ffe4af5fa7897e5939fc2346f15"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/post-process/fxaa-hq.chunk",
+      "bytes": 9971,
+      "gitBlobSha1": "96a148f8f893e155085a134b353fff9e9973cef3",
+      "mode": "100644",
+      "sha256": "32c342d97098e79f867f47f3560c9c131413c70d8e4ea8cba704ec8e73274a96"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/post-process/fxaa.chunk",
+      "bytes": 2126,
+      "gitBlobSha1": "99b1df130aca52a894c0e7946f1192e627f3a1df",
+      "mode": "100644",
+      "sha256": "7840731cf822b65b75950cb279822907cb3f06612ea8ab03d0dd84e3db7bca20"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/shading-entries/data-structures/fs-input.chunk",
+      "bytes": 2049,
+      "gitBlobSha1": "c038209b09124e826f7186c11e14d97796528766",
+      "mode": "100644",
+      "sha256": "995b752f957f5f3cca1b8a57df59382794f441b2175ac28669fee220bef2aa36"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/shading-entries/data-structures/vs-fs.chunk",
+      "bytes": 1357,
+      "gitBlobSha1": "76ce2d1fa9afbf77f3c3a042bbea4ccc47bb704e",
+      "mode": "100644",
+      "sha256": "3a076ee47223e6f7f759a229ad31d7175089a1e8c9a4a5694cb4650a524f4b1e"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/shading-entries/data-structures/vs-input.chunk",
+      "bytes": 1600,
+      "gitBlobSha1": "d709284f991fe0c6eb3e009afb23fd1bc8eb5fd7",
+      "mode": "100644",
+      "sha256": "c84c67245ced137ea249bc5d9bfd2b5aadf151d90ea0583b16d674b510f31bcc"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/shading-entries/data-structures/vs-intermediate.chunk",
+      "bytes": 941,
+      "gitBlobSha1": "f464e8da10dfb2face875e163074ee56ebe4d365",
+      "mode": "100644",
+      "sha256": "8a0fcf62e848919a050c823e0495ee00ff01e25b2f3611f890be7d2dd1297f59"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/shading-entries/data-structures/vs-output.chunk",
+      "bytes": 1482,
+      "gitBlobSha1": "11f42bd5d0bad1023d4752033a68c44f5ea04afe",
+      "mode": "100644",
+      "sha256": "9ab2e433c61026ac063191d41759b7f7fe9fa70ff2c3d583600eaebe161960d4"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/shading-entries/main-functions/render-planar-shadow/fs.chunk",
+      "bytes": 310,
+      "gitBlobSha1": "7661fed59adf679bfa52d858f9a622201d29349e",
+      "mode": "100644",
+      "sha256": "a06e89e9818841ff1fb2ae587e8a6ae8ca24708456bed7dc3f5e174e59a222ad"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/shading-entries/main-functions/render-planar-shadow/vs.chunk",
+      "bytes": 1084,
+      "gitBlobSha1": "ab365ea57daeadbe3b338e5d9ef1dcf4559102b5",
+      "mode": "100644",
+      "sha256": "b6ad1bfadaa6a15e5d02151a649fdbc40dd33ece27aa6886b368e693a6c867ba"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/shading-entries/main-functions/render-to-reflectmap/fs.chunk",
+      "bytes": 1414,
+      "gitBlobSha1": "4e31ab6d6da8956a210b639ae2b040fa86e09ae9",
+      "mode": "100644",
+      "sha256": "74c3d7908066e1ab72636487f8349a5737ccaa75859aa78f99f3159705ab8ec4"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/shading-entries/main-functions/render-to-scene/fs.chunk",
+      "bytes": 299,
+      "gitBlobSha1": "044efb76765a11d24287c66936b6065dd566ece2",
+      "mode": "100644",
+      "sha256": "9ba87797005f8cd9627e167db653a7516805bdea92c58351a53eb9d1bcd74280"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/shading-entries/main-functions/render-to-scene/pipeline/deferred-fs.chunk",
+      "bytes": 864,
+      "gitBlobSha1": "4ce3131d2e68e146a98dd3d0f01e347a3d7d42fc",
+      "mode": "100644",
+      "sha256": "508352ad87c47a8a3d2c80e9e1fb023bca3125dbc99cc1d9185218f48bfc53e0"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/shading-entries/main-functions/render-to-scene/pipeline/forward-fs.chunk",
+      "bytes": 5373,
+      "gitBlobSha1": "386daaf09082d67574d4e5403e44cbd2001ebb7b",
+      "mode": "100644",
+      "sha256": "b762e534a956c23fdae7f86becc4f00edfcd28be30337ad883a25a99b2dc1de9"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/shading-entries/main-functions/render-to-scene/vs.chunk",
+      "bytes": 1387,
+      "gitBlobSha1": "434767878d4b7b01c50cd3cdb9edb15226baeb1a",
+      "mode": "100644",
+      "sha256": "74972dbfc363b74a76567e54bc2228ded3fc1f1d69d0aec7972df1502f6cfa41"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/shading-entries/main-functions/render-to-shadowmap/fs.chunk",
+      "bytes": 663,
+      "gitBlobSha1": "66d34b7e7940cb617a3d92f55f908a033d647ad4",
+      "mode": "100644",
+      "sha256": "77e44602ee517346904f0bec1df0bd55321593a605d2fdf8a900dfc0688591bc"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/shading-entries/main-functions/render-to-shadowmap/vs.chunk",
+      "bytes": 817,
+      "gitBlobSha1": "9af5e4626bc59239c555177aa471ab4b1ce7605b",
+      "mode": "100644",
+      "sha256": "e95c046330092d1bd363a6f56a0a92a672214801ea8d9128d7ea14c898e42b28"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/surfaces/data-structures/standard.chunk",
+      "bytes": 1549,
+      "gitBlobSha1": "d7148f6d3e4434e415ea7f7896a79d76f37db0c3",
+      "mode": "100644",
+      "sha256": "8e6a22b7560cc48cdbe7c9ec0e721ca2f431f8122becd03c3ffaffefc4171ec9"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/surfaces/default-functions/common-vs.chunk",
+      "bytes": 2795,
+      "gitBlobSha1": "5012c296968ec2294ae1e9da07041e3337afb182",
+      "mode": "100644",
+      "sha256": "3816422a99462eb6c11bf925b5beabc363c6a5708b3ef5756248a24b65fbedb6"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/surfaces/default-functions/standard-fs.chunk",
+      "bytes": 8338,
+      "gitBlobSha1": "8229737b289aac16ddae2f0f558d187c3e3d50e5",
+      "mode": "100644",
+      "sha256": "70d61a2431f32da069cb256733176ff6f646d662e53e8d18ba2fb19eff1dcbc8"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/surfaces/effect-macros/common-macros.chunk",
+      "bytes": 3608,
+      "gitBlobSha1": "dd8d5c245ca136131bcfb8e2531d80790474ea19",
+      "mode": "100644",
+      "sha256": "baddb21a7b13cde39cbcfd121a24fb821cbf547a0a356fe54f4390d27160cae3"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/surfaces/effect-macros/render-planar-shadow.chunk",
+      "bytes": 162,
+      "gitBlobSha1": "604d2946ce9a04803afdbd178bd9b17fa4e78076",
+      "mode": "100644",
+      "sha256": "5ddabeb45426125e9d4c4b45334cc1355b3202a3a59fe63006013dbfc0bd8f93"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/surfaces/effect-macros/render-to-shadowmap.chunk",
+      "bytes": 162,
+      "gitBlobSha1": "604d2946ce9a04803afdbd178bd9b17fa4e78076",
+      "mode": "100644",
+      "sha256": "5ddabeb45426125e9d4c4b45334cc1355b3202a3a59fe63006013dbfc0bd8f93"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/surfaces/effect-macros/terrain.chunk",
+      "bytes": 499,
+      "gitBlobSha1": "7c4818d748740fbbd987616beb3b0cffce10455e",
+      "mode": "100644",
+      "sha256": "a62c0c1093edeed260394d237b94fa546907321df15c7dd4175dc710d57d026d"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/surfaces/includes/common-fs.chunk",
+      "bytes": 1939,
+      "gitBlobSha1": "26677dfded3ca652180f578e4d295f4d087951de",
+      "mode": "100644",
+      "sha256": "6124e7fdd2555e70197b2af27c543721f270dbdebd24d3f8d44d1117380696b4"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/surfaces/includes/common-vs.chunk",
+      "bytes": 698,
+      "gitBlobSha1": "03c9689b459f08cfea63ab37a58452b370acfd31",
+      "mode": "100644",
+      "sha256": "d66289523ec0459f438ccb230d88d94771ac33bec3011c19ab108f25dcb60dd8"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/surfaces/includes/standard-fs.chunk",
+      "bytes": 212,
+      "gitBlobSha1": "625767bbb12167227b11ba881d55d4db514179df",
+      "mode": "100644",
+      "sha256": "3e5083504fae0dda0e742dc95d47d0a025ee1a83ce9209232344e448991158af"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/surfaces/includes/standard-vs.chunk",
+      "bytes": 95,
+      "gitBlobSha1": "56e839422a1c97ea509e1caba692d86428adbd76",
+      "mode": "100644",
+      "sha256": "4b487388f4e0d00c568420c4e48dc4f50fc0db042a57d26705381896f6a76ea4"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/surfaces/module-functions/common-vs.chunk",
+      "bytes": 4645,
+      "gitBlobSha1": "a6a68d053afdf896f2d0deaca7173d1c6a079dd8",
+      "mode": "100644",
+      "sha256": "8bf84c1301545e31a8149257f0cb6a633d39b8bdda54614e3968f7c11f351788"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/surfaces/module-functions/debug-view.chunk",
+      "bytes": 10359,
+      "gitBlobSha1": "49845f038aa9b9db6a3f8153fc1bf29d1b47b780",
+      "mode": "100644",
+      "sha256": "b63e7f25646619416517c1b2fee9b62fc355134f71d62a81718a70d52fa25441"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/chunks/surfaces/module-functions/standard-fs.chunk",
+      "bytes": 21128,
+      "gitBlobSha1": "d3deafc53c4e520a9782aad6ec867c0746e9c0ef",
+      "mode": "100644",
+      "sha256": "148cc255567d47af937d32ac24b93b0f778a4ef825fda339e2e5057f39dbd494"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/effects/builtin-standard.effect",
+      "bytes": 16756,
+      "gitBlobSha1": "396c0e4ce835a7ce272345218b6472f8bdd4867b",
+      "mode": "100644",
+      "sha256": "36877f415fee4712f54127651f9566b9c0136e98beb699b1aa5f1307d3cf2efa"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/effects/builtin-terrain.effect",
+      "bytes": 9527,
+      "gitBlobSha1": "6cfe26d234193e96ac67af4635006fea9a18ddff",
+      "mode": "100644",
+      "sha256": "0e1fcba76743b66d27ad8d72ba74208fe6d0572c8511c39eb7cca405bc3bdf94"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/effects/builtin-unlit.effect",
+      "bytes": 6320,
+      "gitBlobSha1": "4091c0ceebf17be9e6ed9227f1c43a1e217ecc25",
+      "mode": "100644",
+      "sha256": "c71f5ed4e878e0fe3bd670a456bc814912674800ad32c0942b442525ec3345dd"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/effects/for2d/builtin-spine.effect",
+      "bytes": 1803,
+      "gitBlobSha1": "eeddef1f187c41eaca3c18779698aae2599d8000",
+      "mode": "100644",
+      "sha256": "1ffe08e459a6402f47b76a44a99189f0d55283b6ad5bea041f5cc925ed73b1d2"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/effects/for2d/builtin-sprite.effect",
+      "bytes": 1877,
+      "gitBlobSha1": "c3ce0e2d6e1c05c198bc23081429fd625fbb197f",
+      "mode": "100644",
+      "sha256": "c96f9d8b9f06c7b7d79f881a39eebfac712d0a9cde7ed7cd88d26e42bc2098f1"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/effects/internal/builtin-clear-stencil.effect",
+      "bytes": 595,
+      "gitBlobSha1": "b4369502819efdbb356a969154ccb3994786c973",
+      "mode": "100644",
+      "sha256": "e2d86abfc32c12ae6fa906d513b72fa22a2d522ef74e326afcfaa55a14f9030a"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/effects/internal/builtin-debug-renderer.effect",
+      "bytes": 1895,
+      "gitBlobSha1": "d58588debbba6f6de64213024874e93e2ba7686e",
+      "mode": "100644",
+      "sha256": "066b2901f000b8ae3d1bf14a00106bffe000df0ab3a722c48f9345e4cb6cc569"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/effects/internal/builtin-geometry-renderer.effect",
+      "bytes": 5038,
+      "gitBlobSha1": "9fac791a46f9021c2ab0eb0d6b1607df16f2ce58",
+      "mode": "100644",
+      "sha256": "63cf53132839995b87d71b4cf62ce650975c6a917c58d77127b6eb93cb4fd600"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/effects/internal/builtin-graphics.effect",
+      "bytes": 1425,
+      "gitBlobSha1": "4eb6f75d338916af44e81131c836e2e015d816f4",
+      "mode": "100644",
+      "sha256": "a67956e09e15b56eb8e8d3f1580f52e6657ff7041c74522ff449a0692c7ed768"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/effects/internal/builtin-occlusion-query.effect",
+      "bytes": 884,
+      "gitBlobSha1": "71d50e9502aeeb290daaeed19e0fe820953f3401",
+      "mode": "100644",
+      "sha256": "db6f3b678dcfddb2c35a17cb8c745b77b205e39e9cae05ac0caa5bde9d4fdf5a"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/effects/legacy/standard.effect",
+      "bytes": 14647,
+      "gitBlobSha1": "fad8a813644a277a0a16757c88882a1aab3b9571",
+      "mode": "100644",
+      "sha256": "ea28617c6a2b9707f3e46911a3c5037a79103516b8e40f0d558c9c83ef8ea440"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/effects/particles/builtin-billboard.effect",
+      "bytes": 4378,
+      "gitBlobSha1": "eafef0b3d547487620fc72ff79b4ae2034ec81e2",
+      "mode": "100644",
+      "sha256": "cd30ddc2f5bd32fc8c565b4caa114dea38151eeba52ba43e594ef38d5874cbd6"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/effects/particles/builtin-particle-gpu.effect",
+      "bytes": 4128,
+      "gitBlobSha1": "fb77ad4b5b5c1f1cc681ca7c1cc1b9aec70b1c3d",
+      "mode": "100644",
+      "sha256": "5b5185a9118ba3b8168277098a7c3e82af0e1a594b7fb8f52e0fba83b8d0e974"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/effects/particles/builtin-particle-trail.effect",
+      "bytes": 4350,
+      "gitBlobSha1": "1bd0598d2be47e673ad5a72b2cbaa87dbd0bd80b",
+      "mode": "100644",
+      "sha256": "75e1b3be682be97287edf0199df17633fadec667a98a61c1e9963adea0caecb6"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/effects/particles/builtin-particle.effect",
+      "bytes": 4157,
+      "gitBlobSha1": "0be49d999753e474b76f5c65dcb7f83cfe41fb19",
+      "mode": "100644",
+      "sha256": "81440f68c74a2bd1179d3ce21b3d12ba8ca99eca4309745f8a22ef6312ea73bd"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/effects/pipeline/deferred-lighting.effect",
+      "bytes": 5447,
+      "gitBlobSha1": "7e7da0e4f095cc4413dfb01823e392c4b99776f8",
+      "mode": "100644",
+      "sha256": "1b593fc07b20d84b7f6829340b90777040591208ac5ff77499968ecefd8f9054"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/effects/pipeline/float-output-process.effect",
+      "bytes": 2479,
+      "gitBlobSha1": "153ce534f7d1ee8362582d57ab75cb3b153dbc65",
+      "mode": "100644",
+      "sha256": "8697bdf661f3cad7c72cdc85988f2c1c104ec9216672f4da11a967d582b8c358"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/effects/pipeline/planar-shadow.effect",
+      "bytes": 1694,
+      "gitBlobSha1": "da8f851bb0f83387c911e52057bec35ba2a8b513",
+      "mode": "100644",
+      "sha256": "7d142b4b90015d269ba85f64e79f57f13bbefb61fdb9fdfc2c2284a2142df6f2"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/effects/pipeline/post-process.effect",
+      "bytes": 2353,
+      "gitBlobSha1": "aa9ca7056d0fb19705520118ebae6bb4e81c3c1b",
+      "mode": "100644",
+      "sha256": "8f042984af660cba711a36f61b4a1dbb8585e8139fa87d57e556d7921ff732ab"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/effects/pipeline/post-process/blit-screen.effect",
+      "bytes": 836,
+      "gitBlobSha1": "dd8073e738f96c97d066099287e2a036a724f7a4",
+      "mode": "100644",
+      "sha256": "2c7105f4bbe79b1bf0f62186642fa44949a60c19023299fbd659c785efb0b68a"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/effects/pipeline/post-process/bloom.effect",
+      "bytes": 6732,
+      "gitBlobSha1": "7cc9929da5461220ebf8431bd8b28974f4324ba7",
+      "mode": "100644",
+      "sha256": "855b0a930d25c48a1b78af178fdc9e9102b4231616cc11ad2916879bfde7c9c6"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/effects/pipeline/post-process/chunks/fsr.chunk",
+      "bytes": 11390,
+      "gitBlobSha1": "c630fb10c184bda73f1214c1e44d4ab47c6bc674",
+      "mode": "100644",
+      "sha256": "628ae251cfeee207177e1a649e7894d37389f122874b99bb37b1d408d2fd5ac1"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/effects/pipeline/post-process/chunks/hbao.chunk",
+      "bytes": 11523,
+      "gitBlobSha1": "19ec83a76190031473da10b55b770b4300ed2704",
+      "mode": "100644",
+      "sha256": "e0916bdb78419963489df95bba4ce706571e046d44815dbf2726a0a2da6e6ea5"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/effects/pipeline/post-process/chunks/vs.chunk",
+      "bytes": 297,
+      "gitBlobSha1": "19c5544f3051d3b6798d464293e3e0f51dc0857c",
+      "mode": "100644",
+      "sha256": "6775bfd5e46a15035e3640337c244079ea59bdf93b7d5a8c56f845822ed1c463"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/effects/pipeline/post-process/color-grading.effect",
+      "bytes": 2834,
+      "gitBlobSha1": "38195b66a06db681bd1186fee26a2166a9e7a0a5",
+      "mode": "100644",
+      "sha256": "caa0bff7b19ad132a05919ab6bb2298ee279a482d473d872c138572d4a98e273"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/effects/pipeline/post-process/dof.effect",
+      "bytes": 7066,
+      "gitBlobSha1": "6e29134e8fb41c726dc4c9884b32ada53e7d89b9",
+      "mode": "100644",
+      "sha256": "ee2b7a60b702ebf088525a0e782653f1a850a736e4e3a4b57996a90b0bab3e9d"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/effects/pipeline/post-process/fsr.effect",
+      "bytes": 2554,
+      "gitBlobSha1": "5a088ede8c5cbc2a2a6ffb853fa57a18765dffbc",
+      "mode": "100644",
+      "sha256": "47eb6265d1bab00d335e73c6129035d5ef1371721e7d8744df3deec1e36f1342"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/effects/pipeline/post-process/fxaa-hq.effect",
+      "bytes": 1135,
+      "gitBlobSha1": "eeaa0105459620cee68de46c14eb21a23434aab0",
+      "mode": "100644",
+      "sha256": "09e399225db039b2c4503add352aba8109b9514a5e79e4dfb50ce842dd41d71a"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/effects/pipeline/post-process/hbao.effect",
+      "bytes": 2151,
+      "gitBlobSha1": "e82faf6a450b312f4f71481bef4bfb0bfc9d05ea",
+      "mode": "100644",
+      "sha256": "5a837000194c07c9b2a7237717795e9c97db165dbd3d32cbed939101e3374513"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/effects/pipeline/post-process/post-final.effect",
+      "bytes": 610,
+      "gitBlobSha1": "3d8aa313f3745abb981fe7e20f9c5723a82d8cd9",
+      "mode": "100644",
+      "sha256": "8b21e5e815718d71c28a7ce8ce1bd888dacb7b49ef495f4772b9449f893877cd"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/effects/pipeline/post-process/taa.effect",
+      "bytes": 6941,
+      "gitBlobSha1": "a9f9e49ec023b89074a82e2812e0ec5a9840bb93",
+      "mode": "100644",
+      "sha256": "0e7ba9a19a78e37cd57113822f177d998048392a9239ae2d0e8c4b2417a4dd28"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/effects/pipeline/skybox.effect",
+      "bytes": 2592,
+      "gitBlobSha1": "d9b90812ab1e96cd4b40ef40f43ff15088cc1967",
+      "mode": "100644",
+      "sha256": "1308ea42b6fce840c27645a1f62f1fbe442194b640297afef20d4d585d2d9534"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/effects/util/profiler.effect",
+      "bytes": 1658,
+      "gitBlobSha1": "cd3be3a9445519350b1ffa416bf43d97b47fc035",
+      "mode": "100644",
+      "sha256": "7e15bdccbeb3f52d6a5484ff9fd17b3aea0cfc105aceb854c6e2495698662167"
+    },
+    {
+      "path": "vendor/builtin-source/editor/assets/effects/util/splash-screen.effect",
+      "bytes": 1726,
+      "gitBlobSha1": "5bb9064451ad29372d5b22395b2c2c8804399151",
+      "mode": "100644",
+      "sha256": "48662170dcea6d32901cd7bf0decb46ffeca56ea3a4f38a07a7ebeee4f92f340"
+    },
+    {
+      "path": "vendor/builtin-source/editor/exports/offline-mappings.ts",
+      "bytes": 11576,
+      "gitBlobSha1": "8fd9989787e7011597ba7a680ca7799e164c00da",
+      "mode": "100644",
+      "sha256": "29980c0996a5c8a593b4c23a2681e8c627d6f133b09315c98966f6e42e722217"
+    },
+    {
+      "path": "vendor/builtin-source/generated/custom-effects.json",
+      "bytes": 1133588,
+      "gitBlobSha1": "a94626c2bef6bfd491739e78d3d07e439cd98641",
+      "mode": "100644",
+      "sha256": "1e55d0cb9538c0ce5321030536c689cd5e1322dcde3c0f3e61c46520304d041a"
+    },
+    {
+      "path": "vendor/builtin-source/generated/custom-layout.bin",
+      "bytes": 4537,
+      "gitBlobSha1": "ea05c73e8670d50acd855abb41584d861ef522f9",
+      "mode": "100644",
+      "sha256": "85fc7cdc491f6b0aefb5e8528ad60826d3de515433fbc774720d4a5ed8a644ad"
+    },
+    {
+      "path": "vendor/builtin-source/manifest.json",
+      "bytes": 24697,
+      "gitBlobSha1": "301fb9b1098a60f119781d4121a5fa466b1e1e11",
+      "mode": "100644",
+      "sha256": "eb687d0b1a9def076c2d695a7ec339f4ffe8e7f6b23a24f44d23630c016ea4a7"
+    },
+    {
+      "path": "vendor/spark-rs/LICENSE",
+      "bytes": 1088,
+      "gitBlobSha1": "ee2b4276c116e9df0127555c812dd11b29f0bb30",
+      "mode": "100644",
+      "sha256": "51829693e5dccd9ca1daa093991faac3aaa93238eb8fd5f5cb4130af85791d64"
+    },
+    {
+      "path": "vendor/spark-rs/MANIFEST.md",
+      "bytes": 3620,
+      "gitBlobSha1": "bff10293fd0fd3cd0ae8d9853b061fdd57a5b688",
+      "mode": "100644",
+      "sha256": "a639adc8474f60c7cf2413e379a74c8d60c15f8656dcbaeffe05e099caa4f31f"
+    },
+    {
+      "path": "vendor/spark-rs/spark_rs.js",
+      "bytes": 47694,
+      "gitBlobSha1": "cc0a6da18f2bbcba265767ea0197a076e02aa6ec",
+      "mode": "100644",
+      "sha256": "a4b2cc7226f2e4c9bf397b56da3520e6c6f7d65b55e486783ef9bffac3b4bf72"
+    },
+    {
+      "path": "vendor/spark-rs/spark_rs_bg.wasm",
+      "bytes": 1554721,
+      "gitBlobSha1": "cf135c99c3069799241ea464826b33b196c7f36d",
+      "mode": "100644",
+      "sha256": "974320be5859f426967a2d9cc237e5eae1aca98b55e35087022d6d884b2dcce7"
+    },
+    {
+      "path": "vendor/spark/CHANGELOG.md",
+      "bytes": 17326,
+      "gitBlobSha1": "6a25277f9507552943ced50e704b11fd0556eca9",
+      "mode": "100644",
+      "sha256": "fe4423414873dee9e832eae302d00e012832c8caa67b41a66bef9c6045c8881e"
+    },
+    {
+      "path": "vendor/spark/LICENSE",
+      "bytes": 1088,
+      "gitBlobSha1": "ee2b4276c116e9df0127555c812dd11b29f0bb30",
+      "mode": "100644",
+      "sha256": "51829693e5dccd9ca1daa093991faac3aaa93238eb8fd5f5cb4130af85791d64"
+    },
+    {
+      "path": "vendor/spark/README.md",
+      "bytes": 6320,
+      "gitBlobSha1": "6c3f8fd43e7be8a26901bab6ed32c0a26cece344",
+      "mode": "100644",
+      "sha256": "ec54a48d4f7db7c99dc338b476eb0b80ee41b3d6eabf7372c10bcaa64b75daba"
+    },
+    {
+      "path": "vendor/spark/package.json",
+      "bytes": 3338,
+      "gitBlobSha1": "f15dd3f56832669676a6874a4c4de4b5bceda8f4",
+      "mode": "100644",
+      "sha256": "3450c33d888664b9b5fcf7607dcae8faf4f7d6c62cf98404f4596f872c49369f"
+    },
+    {
+      "path": "vendor/spark/rust/.cargo/config.toml",
+      "bytes": 91,
+      "gitBlobSha1": "c7de34c2c4fb50c3d58b0513b136a4c7fa8c41cc",
+      "mode": "100644",
+      "sha256": "76ffc9d846732c56f0de7afb566b9dd7c6273db733918787ad57d402b16e83a4"
+    },
+    {
+      "path": "vendor/spark/rust/.gitignore",
+      "bytes": 22,
+      "gitBlobSha1": "d572a24f21441536a7297b1c029dc174876328ee",
+      "mode": "100644",
+      "sha256": "972f9a44fc3b430ac592947c8437976d5c73b94414431efc0c7c219607b2026f"
+    },
+    {
+      "path": "vendor/spark/rust/Cargo.lock",
+      "bytes": 40120,
+      "gitBlobSha1": "625c7b67e24624e9f30ef68342cb33fb2524a53a",
+      "mode": "100644",
+      "sha256": "cf6154b3925f929dbad307ddda2b13235e7ba7f44787d65e87e00a392454d3c9"
+    },
+    {
+      "path": "vendor/spark/rust/Cargo.toml",
+      "bytes": 1628,
+      "gitBlobSha1": "9c49a898075ccfda6ce12235b3b1feeea7882f75",
+      "mode": "100644",
+      "sha256": "2a1b91f6cef6c314bfb0c2af816e0208e2497b446dc068fa6bab2671055d18b3"
+    },
+    {
+      "path": "vendor/spark/rust/build-lod/Cargo.toml",
+      "bytes": 592,
+      "gitBlobSha1": "8e53d0477204dede7126a2da3a6e51371d1bd8b4",
+      "mode": "100644",
+      "sha256": "a3172b0898875269d4e28923894c426d8e6c0eec26c2ea2be4c332d034e0cd0d"
+    },
+    {
+      "path": "vendor/spark/rust/build-lod/src/gpu_sh_clustering.rs",
+      "bytes": 14005,
+      "gitBlobSha1": "eaf6f2e28810741fb319184e87f402489dc151f5",
+      "mode": "100644",
+      "sha256": "a01aedb8590fbe64bcf2ce098ca120713b3b96e48573336580131ac9edc43350"
+    },
+    {
+      "path": "vendor/spark/rust/build-lod/src/main.rs",
+      "bytes": 27171,
+      "gitBlobSha1": "7b93ec78241510c72f63c6c33620cbae6bec2fc5",
+      "mode": "100644",
+      "sha256": "8857ab528ff7072a9cdfcef98e83bf5a9117e63125ba6b2520efa5e6b1cfd65d"
+    },
+    {
+      "path": "vendor/spark/rust/build_rust_wasm.ps1",
+      "bytes": 860,
+      "gitBlobSha1": "bd53c342d33cf4c883a77203b9bff812bc58ced1",
+      "mode": "100644",
+      "sha256": "3b13f2547a16acc7cff4e6a1851bfad51a406479bf7f0530b9e3ba0b2871bc0c"
+    },
+    {
+      "path": "vendor/spark/rust/build_rust_wasm.sh",
+      "bytes": 1121,
+      "gitBlobSha1": "9f6bd546106964dab87842524e71dbbea692aba1",
+      "mode": "100644",
+      "sha256": "976c0ac79ef8dfab29a9f44a45bcf08aab6be465074f6407316f338551853aff"
+    },
+    {
+      "path": "vendor/spark/rust/build_wasm.js",
+      "bytes": 492,
+      "gitBlobSha1": "8a5d607ff94baf9a60875297a28d4b152457b412",
+      "mode": "100644",
+      "sha256": "1570f817a6adfda3cb9a470c4045c2088f2774b3c29c9bf65c75de9ba0271017"
+    },
+    {
+      "path": "vendor/spark/rust/spark-lib/Cargo.toml",
+      "bytes": 976,
+      "gitBlobSha1": "7f20eeff89833df5ef59d3f1f63a236789acb9e0",
+      "mode": "100644",
+      "sha256": "58c56166291b3f2775ecfe055075521343a5fcc78cc86ff1f93abd1210338984"
+    },
+    {
+      "path": "vendor/spark/rust/spark-lib/src/antisplat.rs",
+      "bytes": 7343,
+      "gitBlobSha1": "456e52a49722cfa620aa5afbe0be605dcddc5769",
+      "mode": "100644",
+      "sha256": "7a6458e8b9f063a03f695903eebb5cb3bcf2bfe97c1f845da03fe8a73b11985e"
+    },
+    {
+      "path": "vendor/spark/rust/spark-lib/src/bhatt_lod.rs",
+      "bytes": 9501,
+      "gitBlobSha1": "c448d9d828c769bd5d9444d6f1085ea9739bd455",
+      "mode": "100644",
+      "sha256": "38c1d9a77f97ace56588b804d50dc712aaf49ab219a7202d0c855c1699326420"
+    },
+    {
+      "path": "vendor/spark/rust/spark-lib/src/chunk_tree.rs",
+      "bytes": 23225,
+      "gitBlobSha1": "1ac19ec526315da54ba691a08865b4ebe5c8eeb1",
+      "mode": "100644",
+      "sha256": "44c3f250a4cf65e12d7a5531946a8987789b3504d2761d5c2a9160be3c9b9921"
+    },
+    {
+      "path": "vendor/spark/rust/spark-lib/src/csplat.rs",
+      "bytes": 27653,
+      "gitBlobSha1": "63f549f581be7b88d31f949218e7463ddef49aa1",
+      "mode": "100644",
+      "sha256": "ba58a3e1413d6f3f6edcfed01e43a89a8ada849fc2d4b033b9739150208a1614"
+    },
+    {
+      "path": "vendor/spark/rust/spark-lib/src/decoder.rs",
+      "bytes": 24454,
+      "gitBlobSha1": "ba5ace5d19f0c69d6ea16f4f9918b90699ef4e2c",
+      "mode": "100644",
+      "sha256": "4e5fbe37675d549bcb6faeeba13dd971b922ae079facc185a5472fca27290f3a"
+    },
+    {
+      "path": "vendor/spark/rust/spark-lib/src/gsplat.rs",
+      "bytes": 33989,
+      "gitBlobSha1": "52358401662176cfca96c9036d5453328a9c4574",
+      "mode": "100644",
+      "sha256": "115c5da7f1db9922c74cce3acd366eeb871c829ba562977137196e7baea57165"
+    },
+    {
+      "path": "vendor/spark/rust/spark-lib/src/ksplat.rs",
+      "bytes": 26062,
+      "gitBlobSha1": "2243728348fd5b9c99f23b946320284dd49a633b",
+      "mode": "100644",
+      "sha256": "56e5daba0fa35cff3f6a09c958ef199da75c3114d234789bdbff138fca2f16ae"
+    },
+    {
+      "path": "vendor/spark/rust/spark-lib/src/lib.rs",
+      "bytes": 14622,
+      "gitBlobSha1": "4783ee5398429147fa6f5d4e1a7cd88b40c4404e",
+      "mode": "100644",
+      "sha256": "b908ab754c3e6635ec3ee3ddd071a44a1568fbf97c21c5d5af129231ba252be1"
+    },
+    {
+      "path": "vendor/spark/rust/spark-lib/src/ordering.rs",
+      "bytes": 11360,
+      "gitBlobSha1": "3cb7cd64d115784ec52ee59dca63ed97b8ad623a",
+      "mode": "100644",
+      "sha256": "43fe146645ced12aec1c933cd0daaa2ae1e0c25ef877cd77785595c197142ab4"
+    },
+    {
+      "path": "vendor/spark/rust/spark-lib/src/ply.rs",
+      "bytes": 53965,
+      "gitBlobSha1": "42f972ee2d94bd9dac8178df681fa0e0422120f6",
+      "mode": "100644",
+      "sha256": "9c5a73e7109e0c90367a0ea1c952723db99f6544d074bff304d3054db9bb0bd7"
+    },
+    {
+      "path": "vendor/spark/rust/spark-lib/src/quick_lod.rs",
+      "bytes": 10424,
+      "gitBlobSha1": "a33be7744c35c7e1db5cf62d764c81dd2f79fc32",
+      "mode": "100644",
+      "sha256": "e66ad8cda89df142ee0aeae6b5a9ff2ac0c0f2e4fb7a5789f9d050be895e091b"
+    },
+    {
+      "path": "vendor/spark/rust/spark-lib/src/rad.rs",
+      "bytes": 67478,
+      "gitBlobSha1": "20e7046c2b80c0ae08a590b2ab31f37869c79558",
+      "mode": "100644",
+      "sha256": "7abd343feb746183560e75a137ccc2a170fe6fff85eaac8c18f3468a411cddb7"
+    },
+    {
+      "path": "vendor/spark/rust/spark-lib/src/sh_clustering.rs",
+      "bytes": 7977,
+      "gitBlobSha1": "411d7bf7aef59397fdfd3b613ad97302d5059187",
+      "mode": "100644",
+      "sha256": "13dd1dc1540b6f4af97891f0bd82acaf9384c4553ddf3c45afd52a1736ece759"
+    },
+    {
+      "path": "vendor/spark/rust/spark-lib/src/sogs.rs",
+      "bytes": 20890,
+      "gitBlobSha1": "5cae3c3c37ab84315b18cc16c6f2a2cd98b23407",
+      "mode": "100644",
+      "sha256": "0d82ea3d7b90c23bad8a3c15d2cafa0eefa067e46cf50ab95fe40c3c1d812774"
+    },
+    {
+      "path": "vendor/spark/rust/spark-lib/src/splat_encode.rs",
+      "bytes": 20062,
+      "gitBlobSha1": "bd92c0d79e491282179c26c1d56b2366ada445b3",
+      "mode": "100644",
+      "sha256": "b6ad44a5c3654965da2b6c6223c117593ed12f098e30f4918fb9dc20761cbe97"
+    },
+    {
+      "path": "vendor/spark/rust/spark-lib/src/spz.rs",
+      "bytes": 38576,
+      "gitBlobSha1": "87b2472987218ce6c965a29e52c73cb4257e520b",
+      "mode": "100644",
+      "sha256": "159c93e1ec601543f5e2a2de16bdeebb7ec47d7e5bddb8b9761091bfe278b640"
+    },
+    {
+      "path": "vendor/spark/rust/spark-lib/src/symmat3.rs",
+      "bytes": 9369,
+      "gitBlobSha1": "46f1e0a72b2df7054b1b33952be96c366ce72936",
+      "mode": "100644",
+      "sha256": "d09b06b648909426613748e40eb5cf64b1d503e5c35ddad47d97e06d18ca8611"
+    },
+    {
+      "path": "vendor/spark/rust/spark-lib/src/tiny_lod.rs",
+      "bytes": 8919,
+      "gitBlobSha1": "178077c9f4c3803b33f1a7fce7e6a0d2aa21b7f2",
+      "mode": "100644",
+      "sha256": "a84612f58986e04aba63fe6ce7429b516ac3c60b2324bf0933d097e4f899e1b7"
+    },
+    {
+      "path": "vendor/spark/rust/spark-lib/src/tsplat.rs",
+      "bytes": 6512,
+      "gitBlobSha1": "dfb4102d29a44da7e6d135111970a4c147f15d2a",
+      "mode": "100644",
+      "sha256": "b94edf0a5ceccbdeb8ded57f0f201ba252fa5359f6f91fc3e5c0b3316dc10bef"
+    },
+    {
+      "path": "vendor/spark/rust/spark-rs/Cargo.toml",
+      "bytes": 1253,
+      "gitBlobSha1": "8db313ade81d56d714ae07e0c20417f71ce24565",
+      "mode": "100644",
+      "sha256": "e2c8e4deace1a9ac77f36eaf2c8fcde13e3765048c4f5798b554cf27b0c96fcf"
+    },
+    {
+      "path": "vendor/spark/rust/spark-rs/README.md",
+      "bytes": 907,
+      "gitBlobSha1": "a9891d6ee4fca4db80420aaf0defb6750ad4628e",
+      "mode": "100644",
+      "sha256": "585dd663290799a88a71756050d2c45e1b78f8888227aca3f7388bd00eb22ac0"
+    },
+    {
+      "path": "vendor/spark/rust/spark-rs/src/decoder.rs",
+      "bytes": 1802,
+      "gitBlobSha1": "b32e70508d782dd474b3ce408964ebf4d3dfeeb6",
+      "mode": "100644",
+      "sha256": "6d653d17463fd4da22c010e7d1abba46cbe83c10fdb3e446db313762bb701850"
+    },
+    {
+      "path": "vendor/spark/rust/spark-rs/src/ext_splats.rs",
+      "bytes": 42941,
+      "gitBlobSha1": "0073b773bf7c4b4fec6cccb260a0d200dc442859",
+      "mode": "100644",
+      "sha256": "c7740df9ec994f7fbb44edd18e349a651ad4ba6b4f2b14a3afd9ab4559109642"
+    },
+    {
+      "path": "vendor/spark/rust/spark-rs/src/lib.rs",
+      "bytes": 25533,
+      "gitBlobSha1": "22cb265e69c2e08fc85ec25c9a69f8ae3b18c124",
+      "mode": "100644",
+      "sha256": "cdd7f0711031078612e8c102653c23a15f24e5d8e9768814ccc9edd87bdb5696"
+    },
+    {
+      "path": "vendor/spark/rust/spark-rs/src/lod_tree.rs",
+      "bytes": 32299,
+      "gitBlobSha1": "4f4e153c592d218816b5a7cb75c2c7788b90f6ae",
+      "mode": "100644",
+      "sha256": "b2dfd4d5902dc42ec868e2d26dfdc5ec25706c2ba670aa4befce47a4697c83a5"
+    },
+    {
+      "path": "vendor/spark/rust/spark-rs/src/packed_splats.rs",
+      "bytes": 37741,
+      "gitBlobSha1": "66b7d418d102b953bab7796f6d8256da33ae1c5c",
+      "mode": "100644",
+      "sha256": "55b8428b50a794e2b9231fc6da1fbf48597bd5ad621f049e798a8b941ba5a35e"
+    },
+    {
+      "path": "vendor/spark/rust/spark-rs/src/raycast.rs",
+      "bytes": 4989,
+      "gitBlobSha1": "b9dac7c43ee5d687731d97e0dc6204163dd9e732",
+      "mode": "100644",
+      "sha256": "75f06f1821dba5b5029ce78df0717d9e222cc9133852efe3a50a5815d41a9667"
+    },
+    {
+      "path": "vendor/spark/rust/spark-rs/src/sort.rs",
+      "bytes": 7831,
+      "gitBlobSha1": "8ee1423af616d54822aed03bf5ff293eeba6c5db",
+      "mode": "100644",
+      "sha256": "6cdaa718d33e5e764aa742230795f006e909ef181d79a704756e2815fe259442"
+    },
+    {
+      "path": "vendor/spark/rust/spark-rs/src/transform.rs",
+      "bytes": 2490,
+      "gitBlobSha1": "ead6124c2e01bc4a0ced1bf1453fd01f88ccddaa",
+      "mode": "100644",
+      "sha256": "f29becd23eab9f125ecba10ff4ecc5fdd00c74f9762896e54cd545062ead24da"
+    },
+    {
+      "path": "vendor/spark/src/shaders/computeUvec4.glsl",
+      "bytes": 817,
+      "gitBlobSha1": "e25ae6f070bfec7e55bef51088b2f422dcf99d4f",
+      "mode": "100644",
+      "sha256": "bfe93583faa4b0e1f46150592167db6679b374dcd4513ce9a8a2ead06ec394c2"
+    },
+    {
+      "path": "vendor/spark/src/shaders/computeUvec4_Vec4.glsl",
+      "bytes": 998,
+      "gitBlobSha1": "061b4c9ad6eb48d2db420585fc6d2ce3ca23d5a1",
+      "mode": "100644",
+      "sha256": "b67f11881562eb786476dbf0119733341798f1794b9271d5a8d53fddb1af0315"
+    },
+    {
+      "path": "vendor/spark/src/shaders/computeUvec4x2.glsl",
+      "bytes": 915,
+      "gitBlobSha1": "91f6a5b341e7911b187f3fd9648a3b2227a36397",
+      "mode": "100644",
+      "sha256": "c92717cd0dcd2d58fabf65b3860bf1414c93a45798514643e72cd45042c46f5b"
+    },
+    {
+      "path": "vendor/spark/src/shaders/computeUvec4x2_Vec4.glsl",
+      "bytes": 1199,
+      "gitBlobSha1": "e5b6f40864a87af0f1b0876091f4bc179b125d5b",
+      "mode": "100644",
+      "sha256": "ed9bfec88e51e3d79ae0e8daddeadf57c196c6364f1a783c5624e660bb7955e1"
+    },
+    {
+      "path": "vendor/spark/src/shaders/computeVec4.glsl",
+      "bytes": 842,
+      "gitBlobSha1": "0731075e019885e704efd4414508e73be7f1db24",
+      "mode": "100644",
+      "sha256": "1ea2bbc1c05ee89f916a29dbe1e6775c0dd7574e94637030e1cd77b79687029c"
+    },
+    {
+      "path": "vendor/spark/src/shaders/splatDefines.glsl",
+      "bytes": 19628,
+      "gitBlobSha1": "b9a8f3204a87753d556721bc8ac67b5d2ac6a12e",
+      "mode": "100644",
+      "sha256": "502befc014af640911208c33fda2f6babd28431a04f6ad5d05ff4b41a4f07f0f"
+    },
+    {
+      "path": "vendor/spark/src/shaders/splatFragment.glsl",
+      "bytes": 1561,
+      "gitBlobSha1": "6a15a0d2905056379f2bdd68770ebc2cdb3bb1fe",
+      "mode": "100644",
+      "sha256": "d1ba1bfb9dee652fe751975407af4db81bccc8bb60f864baae9582b425281c94"
+    },
+    {
+      "path": "vendor/spark/src/shaders/splatVertex.glsl",
+      "bytes": 8995,
+      "gitBlobSha1": "1ad7c1b6db61720451fface352bf5572aeaf3746",
+      "mode": "100644",
+      "sha256": "efc2683b5409a9cafaa6b94dfcb5e8fb723e685bac18f9fa48a98a1721d06f60"
+    },
+    {
+      "path": "vendor/spark/tsconfig.json",
+      "bytes": 620,
+      "gitBlobSha1": "ba65bdfc663bde34f773f832ce25329bd778909f",
+      "mode": "100644",
+      "sha256": "55e3a5420aee77d9f847ac372ec41aa888070942633b8eaa19ac0719f2dce638"
+    },
+    {
+      "path": "vendor/webgpu/LICENSE-apache.txt",
+      "bytes": 9226,
+      "gitBlobSha1": "7853ac1b7b32819fb9b2182d65649e3f7d488566",
+      "mode": "100644",
+      "sha256": "9362ea9ea17cb221a20cbbd63f404710834cc273d2a9a7b60314fd68ab702cd6"
+    },
+    {
+      "path": "vendor/webgpu/LICENSE-dawn.txt",
+      "bytes": 11829,
+      "gitBlobSha1": "08e7ccc4f95d780198170d8fa50aece5826b71c7",
+      "mode": "100644",
+      "sha256": "0493f897193af1796d5054659f45ec7d4c5af648fa67a99f01d30e55cc805abc"
+    },
+    {
+      "path": "vendor/webgpu/NOTICE-babylon.md",
+      "bytes": 793,
+      "gitBlobSha1": "5cbecd3257d61382a9d30aa6355aaa42b4e720c1",
+      "mode": "100644",
+      "sha256": "7f85d099ce3c6e1900a45ee8d5b8fa405e760c746af687b3ee2081416e48f183"
+    },
+    {
+      "path": "vendor/webgpu/glslang.js",
+      "bytes": 12829,
+      "gitBlobSha1": "f0c0a9a8993bfca9b356677398536cd099ddce12",
+      "mode": "100644",
+      "sha256": "7937463b384ded16e10da2c1d64cb63a0894e56e8d8167cce636be5635caef59"
+    },
+    {
+      "path": "vendor/webgpu/glslang.wasm",
+      "bytes": 1192271,
+      "gitBlobSha1": "afeef3e37a9f118fa340c8bf6ea603f0333e9391",
+      "mode": "100644",
+      "sha256": "2746e37cbb52ff99f21a836e56e72e5771873a83a032faec2ed860941b23768e"
+    },
+    {
+      "path": "vendor/webgpu/manifest.json",
+      "bytes": 1816,
+      "gitBlobSha1": "93b08c70da119a3ba4c06206849d0bb250cb2b1d",
+      "mode": "100644",
+      "sha256": "84161a92c5469819bab8a3ddc6512bf8e6e88c1bb67c1fd4c873be84ce0e6df9"
+    },
+    {
+      "path": "vendor/webgpu/twgsl.js",
+      "bytes": 74129,
+      "gitBlobSha1": "d0c7fe7b33f5fecf5e91bcf5788433d52c86915c",
+      "mode": "100644",
+      "sha256": "e5664e33a74d064118769636440a5b09121db31370d6fe54b778deb17cd0e4f5"
+    },
+    {
+      "path": "vendor/webgpu/twgsl.wasm",
+      "bytes": 1702916,
+      "gitBlobSha1": "03e28fc3b294b99d811e443318e8b21a14447036",
+      "mode": "100644",
+      "sha256": "a434c2decdbb38caadf5f486d806384a1543554828c983c77922b2d92579914c"
+    }
+  ],
+  "unavailable": []
+}
