@@ -13,8 +13,8 @@ The live main branch was read on 2026-10-22 and still equals `b573be0741db9e2a13
 | Milestone | Work packages                                               | State       |
 | --------- | ----------------------------------------------------------- | ----------- |
 | M0        | U00 scope, contracts, baseline and inventory                | complete    |
-| M1        | U01 loading, U02 material contract, U06 consumer signatures | in_progress |
-| M2        | U03 color/depth, U04 state isolation, U05 lifecycle         | not_started |
+| M1        | U01 loading, U02 material contract, U06 consumer signatures | implemented |
+| M2        | U03 color/depth, U04 state isolation, U05 lifecycle         | in_progress |
 | M3        | U07 readiness, U08 experiments, U09 examples                | not_started |
 | M4        | U10 integration and current-candidate evidence              | not_started |
 
@@ -55,3 +55,11 @@ Baseline/source/spec identities are in [source-map.json](upstream-update/source-
 ### Browser infrastructure result
 
 The same shell invocation can start a loopback HTTP server and fetch its response. Chromium 155 launched by Playwright nevertheless exits with `process_singleton_posix.cc: socket() failed: Operation not permitted`. The supported elevated execution attempt failed before launch while creating the execution sandbox (`bwrap`, protected read-only sessions path); that protected path was not read or changed. The existing cloud CDP browser is available, but cannot reach the separately isolated shell service. Its URL policy also rejects `file:`; that route was stopped, not worked around. Therefore browser execution in this task is currently `INFRA_BLOCKED`, not proof that WebGL2/WebGPU is unsupported and not a GPU/browser PASS. No third-party deployment, browser-policy bypass, user-computer switch or credential access was performed.
+
+### M1 SDK generator repair and current CPU result
+
+The real installed consumer exposed 11 false declaration values and 39 missing runtime values. The source exports were not expanded to silence the check. The runtime and declaration builders now share the existing default feature list, the declaration bridge is scoped to one invocation, and the TypeScript entry surface restores type-only exports and already-public runtime exports without admitting the optional Spark unit. Installed dependencies and package output are never patched by the consumer. Generator failures fail closed; recovery is limited to a verified completed declaration stage followed by the known temporary-directory cleanup error.
+
+On 2026-10-22, the final M1 `build:dts`, `prepare-package` and real npm tarball consumer all exited zero. TS 4.9.5 node/node16 and TS 5.9.3 node16/bundler passed 33 negative cases and 11 exact-type assertions per mode. Bidirectional value-export parity passed for 648 main and 47 math values. The isolated math and CPU lifecycle probes passed. Generator/cache tests passed 6/6 and verifier tests passed 6/6. These are CPU/package results; browser import maps, Vite runtime, GPU rendering, mobile and real Agent Gate remain unverified or blocked as stated above.
+
+M1 is implemented, not a declaration of full acceptance. M2 is now the only active milestone. Final M4 builds and fingerprints must supersede M1 outputs after all source and tooling changes. The exploratory full Jest attempt was interrupted, so its 89 passing suites are not a full-suite PASS; prerequisite and legacy-fixture failures are retained for diagnosis.
