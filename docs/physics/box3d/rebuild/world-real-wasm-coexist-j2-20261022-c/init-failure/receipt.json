@@ -1,0 +1,23 @@
+{
+  "scenario": "init-failure",
+  "expected": "EXPECTED_REJECTION",
+  "status": "EXPECTED_REJECTION",
+  "command": {
+    "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "argv": [
+      "--import",
+      "file:///workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/verify/box3d/coexist-real-wasm-preload.mjs",
+      "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/jest/bin/jest.js",
+      "--config",
+      "tools/verify/box3d/coexist-real-wasm.jest.cjs",
+      "--runInBand",
+      "--no-cache"
+    ]
+  },
+  "child": {
+    "exitCode": 0,
+    "signal": null,
+    "error": null
+  },
+  "rawSha256": "04d58af3fec20ff192466e36320858d2111df42fb24662b75f2dfbba3cf5b5f2"
+}

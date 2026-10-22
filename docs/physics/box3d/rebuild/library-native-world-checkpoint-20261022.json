@@ -1,0 +1,18 @@
+{
+  "status": "PASS_ACTUAL_LIBRARY_DOWNLOAD_INDEPENDENT_GIT_RESTORE",
+  "libraryFileId": "libfile_a3a85e9e02ac81918a314a19ae80cd6f",
+  "fileName": "Box3D-native-world-checkpoint-20261022.zip",
+  "bytes": 18882878,
+  "sha256": "4b5d71cbf1bc1614fb91b582efcc3e8d3e0de2c98ed5d72161fbca8229593870",
+  "commit": "da50d73ea2b917ec7460f0303199dab137127e64",
+  "tree": "1bbbfef0cd8ce2a3750253045c733f49b333e93d",
+  "verifiedAt": "2026-10-22T08:12:50.084Z",
+  "payloads": 5,
+  "restore": {
+    "status": "PASS",
+    "checkedFiles": 5015,
+    "independentObjectStore": true
+  },
+  "nativeArtifactLibrary": "libfile_dcc41e02d3e48191a79e7aa8b2ec18e4",
+  "scope": "Source recovery only; limited physical results retain their original input-bound receipts."
+}

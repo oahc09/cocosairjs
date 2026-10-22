@@ -1,0 +1,23 @@
+{
+  "scenario": "both",
+  "expected": "PASS_LIMITED_NODE_COEXIST",
+  "status": "PASS_LIMITED_NODE_COEXIST",
+  "command": {
+    "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "argv": [
+      "--import",
+      "file:///workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/verify/box3d/coexist-real-wasm-preload.mjs",
+      "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/jest/bin/jest.js",
+      "--config",
+      "tools/verify/box3d/coexist-real-wasm.jest.cjs",
+      "--runInBand",
+      "--no-cache"
+    ]
+  },
+  "child": {
+    "exitCode": 0,
+    "signal": null,
+    "error": null
+  },
+  "rawSha256": "21b808c1c6e1316956feefb54f809f4d2fab6a2b5c6bed2cb488fc06fc9cb930"
+}

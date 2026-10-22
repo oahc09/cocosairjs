@@ -1,0 +1,60 @@
+{
+  "status": "PASS_SCOPED_INDEPENDENT_RAW_REVIEW",
+  "reviewerSHA256": "51ddd7fbb54246f8048607306ae8d90b7216e51ecf45aa833a77a4432fa1f860",
+  "runs": [
+    {
+      "input": "docs/physics/box3d/rebuild/world-real-wasm-coexist-j2-20261022-c",
+      "allNineCasesPresent": true,
+      "caseCount": 9,
+      "cases": [
+        {
+          "scenario": "both",
+          "status": "PASS_LIMITED_NODE_COEXIST",
+          "rawSHA256": "21b808c1c6e1316956feefb54f809f4d2fab6a2b5c6bed2cb488fc06fc9cb930",
+          "maximumDiscreteFreefallPositionErrorMeters": 5.3914388011833125e-06
+        },
+        {
+          "scenario": "2d-failure",
+          "status": "EXPECTED_REJECTION",
+          "rawSHA256": "d069c7b3f47e255ca2b44277f92de0b85f359566375896ddc3a80b0e7b7bef33"
+        },
+        {
+          "scenario": "3d-failure",
+          "status": "EXPECTED_REJECTION",
+          "rawSHA256": "0b2448cd2f98f081f02542b3dcf395a47c41ac5dd051a2e202d014a00cdd5964"
+        },
+        {
+          "scenario": "init-failure",
+          "status": "EXPECTED_REJECTION",
+          "rawSHA256": "04d58af3fec20ff192466e36320858d2111df42fb24662b75f2dfbba3cf5b5f2"
+        },
+        {
+          "scenario": "3d-only",
+          "status": "PASS_LIMITED_NODE_COEXIST",
+          "rawSHA256": "614ed6de8a51423d266e8f5306c9e08f5fdaccbeaf7222f38dbfef300970e301"
+        },
+        {
+          "scenario": "2d-builtin",
+          "status": "PASS_LIMITED_NODE_COEXIST",
+          "rawSHA256": "8d2c8988266fd4a7f41c314202d4a011ed36935910346ce21f077b6524f1164f"
+        },
+        {
+          "scenario": "2d-cannon",
+          "status": "PASS_LIMITED_NODE_COEXIST",
+          "rawSHA256": "c1670cae1f67abd7da70070c3641e2df52b0b461ba0a41236ce50e6ccd30ff62"
+        },
+        {
+          "scenario": "default-builtin",
+          "status": "PASS_LIMITED_NODE_COEXIST",
+          "rawSHA256": "558a85c85b8d4f992600b1afc04230246d6f43fa11b33a962e939c7342b6f3d9"
+        },
+        {
+          "scenario": "default-cannon",
+          "status": "PASS_LIMITED_NODE_COEXIST",
+          "rawSHA256": "497323ac5b3708a02cad3a9dc8fc913dee19290c9a7cdb567862c965bdbe1d2a"
+        }
+      ]
+    }
+  ],
+  "scope": "Actual Node/JSDOM source fixtures and real native artifacts only; no browser, public components, package or complete T09 Gate."
+}

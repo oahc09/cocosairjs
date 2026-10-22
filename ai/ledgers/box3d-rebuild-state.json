@@ -85,7 +85,7 @@
       "description": "配置、prepare registry、feature export与选择时序接入源码",
       "dependencies": "T03、T06",
       "completionContract": "配置/descriptor契约及异步边界实现完成；完整app运行由T09加入真实world后验证，不提前标I01通过",
-      "implementationScope": "Optional ST feature, normalized app configuration, independent native leases and prepare/cleanup source implemented. Fresh 31 lifecycle/design cases, full source tsc and 15 restored HEADLESS bootstrap tests pass. Three runtime builds and 8 actual ESM VM import/rejection cases pass. No real Box3D world adapter, browser or I01 completion claim."
+      "implementationScope": "Optional ST configuration and independent prepare/cleanup source exist; historical runtime h2 qualification is retained separately. Actual source worlds and nine coexistence cases are now qualified in Node/JSDOM with private registration. Public activation/browser/I01 complete acceptance remains open."
     },
     {
       "id": "T09",
@@ -94,7 +94,7 @@
       "description": "IPhysicsWorld基础、时序/重力/睡眠/debug/tick诊断，并完成应用联调",
       "dependencies": "T07、T08",
       "completionContract": "I01/I02、I03既有路径及COEXIST-PREPARE、I04旧后端及COEXIST-LOWLEVEL、WASM-07-AIR、B3-U01真实低层body；无第二累计器/RAF；组件路径由T10/T11验证",
-      "implementationScope": "Unregistered AIR world control source with 34 mock-native cases and target TypeScript check passes. Required real native controls/debug bridges, public registration and actual engine/WASM integration remain open."
+      "implementationScope": "Actual private world adapter and two source integration invocations qualified against j2. Nine real 2D/3D preparation/coexistence cases match expectations, with independent both-world rerun. Full T09, public component activation, browser and built runtime remain incomplete."
     },
     {
       "id": "T10",
@@ -961,16 +961,14 @@
   "nextStep": "Save and independently restore the current source/native evidence checkpoint; complete T09 coexistence and activation gates, then real component adapters. Full inventory and browser/device gates remain open.",
   "remoteHistoryPolicy": "True upstream main parent and incremental tree; local snapshot import is backup-only and is never pushed as upstream history.",
   "remotePublication": {
-    "branchCreated": true,
-    "branchHead": "6061b347813b42727070dab5467b938e4cd41621",
-    "status": "VERIFIED_GEOMETRY_AND_UNREGISTERED_WORLD_CHECKPOINT",
-    "commitsPublished": 8,
-    "verifiedRemoteParent": "1dabac863fb5bdfadb72a3a6e4fffdf2cf828676",
-    "allPriorMainBlobsPreserved": true,
-    "receipt": "docs/physics/box3d/rebuild/remote-checkpoint-8.json",
-    "verifiedChangedFiles": 210
+    "status": "PUSHED_AND_READBACK_VERIFIED",
+    "commit": "0a62d60d71802d4bf9d20f7261eca5902af3b5fe",
+    "trueParent": "6061b347813b42727070dab5467b938e4cd41621",
+    "localFrozenSource": "da50d73ea2b917ec7460f0303199dab137127e64",
+    "receipt": "docs/physics/box3d/rebuild/remote-checkpoint-9.json",
+    "mainUnchanged": true
   },
-  "updatedAtUtc": "2026-10-22T08:05:11.661544+00:00",
+  "updatedAtUtc": "2026-10-22T08:33:01.694611+00:00",
   "currentEvidence": {
     "m0ContractTests": "PASS_7_SOURCE_DESIGN_CHECKS_ONLY_U01_U02_INVENTORY_ADDED",
     "nativeFoundationIndex": "tools/physics/box3d/evidence/index.json",
@@ -1042,7 +1040,26 @@
       "docs/physics/box3d/rebuild/world-real-wasm-j2-20261022-a/receipt.json",
       "docs/physics/box3d/rebuild/world-real-wasm-j2-20261022-lead/receipt.json"
     ],
-    "actualWorldIndependentReview": "docs/physics/box3d/rebuild/world-independent-review-20261022-j2/receipt.json"
+    "actualWorldIndependentReview": "docs/physics/box3d/rebuild/world-independent-review-20261022-j2/receipt.json",
+    "currentWorldNativeArtifactsLibrary": "libfile_dcc41e02d3e48191a79e7aa8b2ec18e4",
+    "currentWorldNativeEvidence": "tools/physics/box3d/evidence/world-checkpoint-20261022-j/summary.json",
+    "currentWorldNativeQualification": "PASS_SCOPED_J2_NATIVE_DEBUG_RELEASE_UBSAN_ONLY_AND_WASM_DEBUG_RELEASE",
+    "currentWorldFullSanitizers": "NOT_PASSED_ASAN_LSAN_PREVIOUS_ENVIRONMENT_BLOCK_RETAINED",
+    "currentGeometryArtifactsLibraryIsHistoricalI8": true,
+    "actualNodeCoexistence": {
+      "status": "PASS_LIMITED_NODE_COEXIST",
+      "nineCaseReceipt": "docs/physics/box3d/rebuild/world-real-wasm-coexist-j2-20261022-c/receipt.json",
+      "independentBothRun": "docs/physics/box3d/rebuild/world-real-wasm-coexist-j2-20261022-lead/receipt.json",
+      "independentRawReview": "docs/physics/box3d/rebuild/coexist-independent-review-20261022-j2/receipt-b.json",
+      "normalCases": 6,
+      "expectedRejections": 3,
+      "scope": "Actual source AIR app/PhysicsSystem2D/PhysicsSystem with real frozen Box2D and j2 Box3D WASM, Node/JSDOM only. No public Box3D component activation, browser, package or full T09 acceptance."
+    },
+    "bodyInputSleepBoolean": {
+      "status": "FAIL_UNEXPECTED_ACCEPTANCE",
+      "evidence": "docs/physics/box3d/rebuild/body-input-probe-20261022-j2/raw.json",
+      "description": "Actual j2 facade accepts 0, 1, string false and null for body enableSleep; fix and negative fixtures required in next increment."
+    }
   },
   "contractDesign": {
     "publicSpecMembers": 166,
@@ -1051,17 +1068,14 @@
     "expandedInventoryFrozen": false,
     "path": "docs/physics/box3d/contracts/",
     "giftWorkshop": "docs/physics/box3d/contracts/gift-workshop/",
-    "auxiliaryRequiredUnitCategories": [
-      "B3-U01",
-      "B3-U02"
-    ]
+    "auxiliaryRequiredUnitCategories": ["B3-U01", "B3-U02"]
   },
   "persistentCheckpoint": {
-    "libraryFileId": "libfile_2396ec8dac7c8191b0055e8e36579e54",
-    "sha256": "03550a4cedaee8a50457f6ea3de75ec40aa48ebf6bc2afc112f5ef503956f1fd",
-    "localHead": "88dee6f893cf10f233dd8ad23b4cc9e6236c2840",
-    "libraryDownloadAndIndependentRestore": "PASS_4864_FILES_5_ARCHIVE_PAYLOADS",
-    "scope": "Frozen i8 geometry and unregistered AIR/mock world controls, not full engine/browser acceptance."
+    "libraryFileId": "libfile_a3a85e9e02ac81918a314a19ae80cd6f",
+    "sha256": "4b5d71cbf1bc1614fb91b582efcc3e8d3e0de2c98ed5d72161fbca8229593870",
+    "localHead": "da50d73ea2b917ec7460f0303199dab137127e64",
+    "libraryDownloadAndIndependentRestore": "PASS_5015_FILES_5_ARCHIVE_PAYLOADS",
+    "scope": "Current world bridge and limited actual AIR/PhysicsSystem Node source fixtures. Not full T09/browser acceptance."
   },
   "additionalOriginalMainSources": {
     "count": 445,
