@@ -1,0 +1,8 @@
+{
+  "command": [
+    "node",
+    "tools/physics/box3d/output/motion-comparison-20261022-m2/compare.mjs"
+  ],
+  "exitCode": 0,
+  "at": "2026-10-22T11:28:14.264515+00:00"
+}

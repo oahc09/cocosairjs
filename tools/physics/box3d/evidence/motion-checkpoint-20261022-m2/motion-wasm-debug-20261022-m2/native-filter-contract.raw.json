@@ -1,0 +1,1 @@
+{"status":"PASS","pointerBytes":4,"acceptedBitsets":[0,2147483648,4294967295],"nativeUpperBitsAndGroupReject":true,"batchNoPartialMutation":true,"lockedCapacityOverlapCanaries":true,"fullGenerationWorld":true,"defaultAllCreationPaths":true,"coreBytesRestored":true}

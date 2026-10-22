@@ -1,0 +1,9 @@
+{
+  "command": [
+    "node",
+    "tools/physics/box3d/audit-artifacts.mjs",
+    "tools/physics/box3d/output/motion-wasm-release-20261022-m2"
+  ],
+  "exitCode": 0,
+  "at": "2026-10-22T11:28:13.447995+00:00"
+}

@@ -348,3 +348,41 @@ comparison retains those capacities and exact source identities, verifies their
 own contracts, and compares all remaining observations. All 617 geometry samples
 are byte-identical to retained k3 samples; current physics contracts were still
 actually rerun. No full T10/C36/G1, complex-collider or browser claim is made.
+
+### Narrow atomic motion batch (m2)
+
+The additive ABI1 `validateMotionBatch` / `applyMotionBatch` bridge accepts unique
+full-generation bodies with an optional origin reset followed by a target or
+paired velocity clear. Whole-batch validation precedes mutation; apply repeats
+validation instead of trusting an earlier plan. Empty apply and pure validation
+retain the current snapshot. Nonempty success invalidates only current observation
+availability, never increments the step index or rewrites retained copies.
+
+Target is the fixed core's approximate one-tick COM/quaternion velocity intent,
+not exact arrival. Actual damping, world-axis locks and native caps remain active;
+conflicts reject before mutation. There is no SetTransform arrival correction.
+Results separate requested pose, actual native pose/state/velocities and planned
+velocity/basis. Teleport preserves force/torque, optionally preserves world COM
+velocity and angular velocity, and does not enable disabled bodies. Static reset
+is an internal scene operation. Substeps are limited to AIR's 1/2/4/8 domain.
+
+Fresh m2 host Debug/Release and Node WASM Debug/Release pass all current limited
+contracts. Each WASM audit binds 43 inputs, 65 units and 25 evidence files across
+18 successful commands. Motion qualification retains 37 admission negatives,
+128 finite body-slot reuse cycles and 7201 analytic samples per mode. All sample
+bytes match between modes. Separate retained-l2 comparisons preserve all selected
+physics/error fields, with actual heap capacities and source identities audited
+separately. Actual native-only qualification also covers a nonzero kinematic COM
+set through the core's public mass-data API; ordinary managed kinematic geometry
+currently uses COM zero, so no new managed kinematic mass setter is claimed.
+
+Three explicit wrappers test real pure validation followed by delivery failure,
+real mutation followed by readback failure, and real mutation followed by unknown
+delivery failure. They are controlled failure mechanisms, not spontaneous core
+failures. Native scratch is tracked by bridge ownership; known exits free it and
+world teardown reclaims tracked orphan allocations when teardown remains possible.
+This is not proof of whole JS/WASM heap leak freedom or recovery from arbitrary
+native corruption. Public target ownership, queues, Node synchronization and
+complete T11/G1/browser acceptance remain separate. This m2 package has no new
+UBSan/ASan/LSan result; historical sanitizer failures and infrastructure blockers
+remain preserved. See the motion evidence summary for the exact scope and archive.

@@ -1,0 +1,10 @@
+Retained asset test output: /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/output/box3d-assets-tests-a6hoh7
+✔ actual audited native input produces trusted descriptor and exact separate ST files (368.052302ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 654.710735

@@ -10,9 +10,13 @@ The required recovery procedure creates a Git bundle, clones it into an independ
 
 ## Current preservation point, 2026-10-22
 
-Remote checkpoint 15 is dc02008402631dd64a261cf08f84f6e0e0242d0c. Its exact local source snapshot 9dc4bc23e8859a3827763ad58fdc990f41cd30c8 was independently restored from Library libfile_81203fdd8ff88191a3f63d374a199e5b, with 7,945 tracked files checked. It includes 142 actual Node ownership controls, their original RED and the retained test-source typechecking failure, plus the first uncompiled motion source candidate.
+Remote checkpoint 16 is bde1706f2f6591cc44484fd764e2997c6e87a009. Its exact local source snapshot 24c4ec977f173630009a3a42c57a0952fab1a736 was independently restored from Library libfile_cec1d349a9ec8191849ca44a836f1be8, with all 8,009 tracked files checked.
 
-The later complete motion source candidate has 43 fixed build inputs, 65 expected compile units and 25 expected audit items, but has not been compiled or qualified. Historical l2 artifacts cannot qualify its changed schema. Node control does not establish target motion, native trajectories, browser support or T11/C36 acceptance. Whole-world expected-pose/owned-epoch writeback is the next separate source and actual-WASM experiment. The dated j2/h2 and other records below describe their own historical snapshots, not the current candidate.
+The complete m2 native motion candidate now has four fresh successful host/WASM Debug/Release builds: 43 fixed inputs, 65 WASM compile units, 25 audit items and 18 WASM commands per mode. Both WASM modes retain the same 7,201 physical motion samples. An independent Python scalar reviewer recomputes the target and damped normalized-Euler model without reading producer predictions. Desired-to-observed shortfall is explicit, not a promise of exact arrival. The complete native artifact/raw archive is Library libfile_ff409b9f300881919347058fc27be297; actual download verified all 1,844 archive members and independently restored Release files, followed by a real Node loader/60-step/dispose run.
+
+The staging gate accepts the new schema. Six test groups and all 52 existing rejection mutations pass, including exact mutation reconstruction and identical rejection replay with full raw/commands retained. Motion-specific staging negatives are still pending. See motion-staging-20261022-m2/receipt.json. The 142 actual Node ownership controls remain limited to their frozen source.
+
+Actual m2 AIR collection has exposed a child-before-parent writeback mismatch; complete RED collection and owned-pose epoch repair are in progress. Public target queue/teleport integration, browser/device checks and full T11/C36/Gates are not complete. Historical l2/j2/h2 records below remain bound to their original sources, not current qualifications.
 
 ## Reconstructed native foundation
 

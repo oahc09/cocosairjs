@@ -1,0 +1,574 @@
+{
+  "status": "PASS_FROZEN_M2_HANDOFF_BYTE_INTAKE",
+  "timeUTC": "2026-10-22T11:39:52.825729+00:00",
+  "files": [
+    {
+      "path": "src/air/physics/box3d/binding/facade.d.mts",
+      "bytes": 17108,
+      "sha256": "2bc06c445a8b21c8c376f89d16288dfb81dece1cabc3d6fca92a8b408f59b3ef"
+    },
+    {
+      "path": "src/air/physics/box3d/binding/facade.mjs",
+      "bytes": 59978,
+      "sha256": "4f1bcce785ad72579a4e7ed6458a6ea838f8450be5dce926182d3db907cfc227"
+    },
+    {
+      "path": "tools/physics/box3d/CMakeLists.txt",
+      "bytes": 6860,
+      "sha256": "ab40983646244b0bd26496a9ba30dba7b9db793d7fb09e1c7e0c21c1ddb4f124"
+    },
+    {
+      "path": "tools/physics/box3d/README.md",
+      "bytes": 25241,
+      "sha256": "5e4ca4b188e7b967fb665a43fe6f5c91d2c85bda948e6318d57dc47925933d55"
+    },
+    {
+      "path": "tools/physics/box3d/abi-schema.json",
+      "bytes": 18271,
+      "sha256": "43df81eba981c9ab5751dbe5f807e660d46cac1a5e1b4936462d5afb57a24040"
+    },
+    {
+      "path": "tools/physics/box3d/audit-artifacts.mjs",
+      "bytes": 15893,
+      "sha256": "3628bf23f65a03d14656fde71487a80bb3165bf95d630669fb0547019fc7e1b9"
+    },
+    {
+      "path": "tools/physics/box3d/build.mjs",
+      "bytes": 17745,
+      "sha256": "ca868d9a43c0df18e983d291c9e6b70d612fc634224cc19c17ff9afd0b19bdfd"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/index.json",
+      "bytes": 225947,
+      "sha256": "8762773850eba674e6c620bf39c272e15597a2196b3079b214ce8a991f2b3781"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/archive-metadata.json",
+      "bytes": 619,
+      "sha256": "bc3a1ff989642391e6169b1376149db44a6bbe4992f4902ace636a01dc665737"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-comparison-20261022-m2/command.receipt.json",
+      "bytes": 171,
+      "sha256": "7fd5cec3faa574f7cffd0a307f4ff27ab839e9744ee19bb4dace18306e8d85b1"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-comparison-20261022-m2/comparison.raw.json",
+      "bytes": 18906,
+      "sha256": "30a1b7d89bea0315c5616032985d309eb3cce3f72f050d00279ed1c2a604001e"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-full-intake-20261022-m2/patch-intake.raw.json",
+      "bytes": 10052,
+      "sha256": "bec3812cd246117621b362d8d1b2f8427011839601373e82bc89d3eaf432c9ee"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-geometry-intake-20261022-m2/geometry-intake.raw.json",
+      "bytes": 1944,
+      "sha256": "233a85dc74c284fa4fb5312c49c87002d29589894bcc674c0f1310e0d39cab3b"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-geometry-intake-20261022-m2/staged-core.receipt.json",
+      "bytes": 19031,
+      "sha256": "89d5394bffa108880287fbc8cd4dc18736b5a83ade9165fb4e19169d7858c6d8"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-native-debug-20261022-m2/build-receipt.json",
+      "bytes": 131945,
+      "sha256": "2860791b54cf6579eea0e387df2bd5dc5b6b1158990a952ac56a077dd31e97d7"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-native-debug-20261022-m2/compile_commands.json",
+      "bytes": 74881,
+      "sha256": "b6c9cac3d69f9a20e457846d8a7508b37b3eca1733f0725d02ba4d5252ba3f65"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-native-debug-20261022-m2/contract.raw.json",
+      "bytes": 2946,
+      "sha256": "38d43b2ea433dc88f26b1d1edbf8533fcb2427ca7714630b73f8dbcd9eadf91b"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-native-debug-20261022-m2/native-body-contract.raw.json",
+      "bytes": 486,
+      "sha256": "e2d759daaea018cd9ed38111aaa095d4e08bbf9268296aaf712257ed5d814dfe"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-native-debug-20261022-m2/native-filter-contract.raw.json",
+      "bytes": 266,
+      "sha256": "bf4708948a19f18539ceba01a845731f334825ce87c1fa90282bd8ab16b6f035"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-native-debug-20261022-m2/native-geometry-contract.raw.json",
+      "bytes": 460,
+      "sha256": "b1d67302d0ba58631db07ea4767ded19ce597f74da4d668fb2f137f16cf202ad"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-native-debug-20261022-m2/native-motion-contract.raw.json",
+      "bytes": 485,
+      "sha256": "4ef8efe1da1bd9d6c3e08ecdb631b0e39410820c6c2211975dcae75a10f28fcd"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-native-debug-20261022-m2/native-world-contract.raw.json",
+      "bytes": 289,
+      "sha256": "51e09bfdce6e1d61e093b3c2b1a709579b39d9948090e0add73c3d55bcce5a83"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-native-debug-20261022-m2/staged-core.receipt.json",
+      "bytes": 19031,
+      "sha256": "89d5394bffa108880287fbc8cd4dc18736b5a83ade9165fb4e19169d7858c6d8"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-native-release-20261022-m2/build-receipt.json",
+      "bytes": 133551,
+      "sha256": "e0152dd414eab3730739f70b9202da79e9a10c5905881b63409063c1899d9ed0"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-native-release-20261022-m2/compile_commands.json",
+      "bytes": 75809,
+      "sha256": "b8f78c5d9d8d7b12312d7077d7ba8954f373dcb1bef628bbe04a7e1f8e0d63a8"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-native-release-20261022-m2/contract.raw.json",
+      "bytes": 2946,
+      "sha256": "38d43b2ea433dc88f26b1d1edbf8533fcb2427ca7714630b73f8dbcd9eadf91b"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-native-release-20261022-m2/native-body-contract.raw.json",
+      "bytes": 486,
+      "sha256": "e2d759daaea018cd9ed38111aaa095d4e08bbf9268296aaf712257ed5d814dfe"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-native-release-20261022-m2/native-filter-contract.raw.json",
+      "bytes": 266,
+      "sha256": "bf4708948a19f18539ceba01a845731f334825ce87c1fa90282bd8ab16b6f035"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-native-release-20261022-m2/native-geometry-contract.raw.json",
+      "bytes": 460,
+      "sha256": "b1d67302d0ba58631db07ea4767ded19ce597f74da4d668fb2f137f16cf202ad"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-native-release-20261022-m2/native-motion-contract.raw.json",
+      "bytes": 485,
+      "sha256": "4ef8efe1da1bd9d6c3e08ecdb631b0e39410820c6c2211975dcae75a10f28fcd"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-native-release-20261022-m2/native-world-contract.raw.json",
+      "bytes": 289,
+      "sha256": "51e09bfdce6e1d61e093b3c2b1a709579b39d9948090e0add73c3d55bcce5a83"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-native-release-20261022-m2/staged-core.receipt.json",
+      "bytes": 19031,
+      "sha256": "89d5394bffa108880287fbc8cd4dc18736b5a83ade9165fb4e19169d7858c6d8"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-wasm-debug-20261022-m2/artifact-audit.raw.json",
+      "bytes": 19211,
+      "sha256": "80aa6707f996bb7b98f496a1f0330fe71b4124001b331c58314a0590c26918c6"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-wasm-debug-20261022-m2/audit-command.receipt.json",
+      "bytes": 206,
+      "sha256": "24392bcf490800a86cb21af4a7a3074d77b07348654efddc36ee6a746ea9c694"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-wasm-debug-20261022-m2/build-receipt.json",
+      "bytes": 37323,
+      "sha256": "31b2853025523827f62db71ac8f05131a5c2ab65a17696fadb5e3f8a0382353b"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-wasm-debug-20261022-m2/compile_commands.json",
+      "bytes": 51901,
+      "sha256": "73a0eea37e2ca42a01b0d87bd9f95a0d4182d3f9d1153410ddf14b5d69cca7f2"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-wasm-debug-20261022-m2/geometry-samples-audit.raw.json",
+      "bytes": 3869,
+      "sha256": "1e051ae28899ad6458ed54062813191f8dad9882708d6e9e32fccf57d0e4d723"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-wasm-debug-20261022-m2/manifest.json",
+      "bytes": 3049,
+      "sha256": "c7c8601a1bba7c81bbce80afcc38d7dffbbfa189e0308ee49a6efda7a8bc0292"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-wasm-debug-20261022-m2/native-body-contract.raw.json",
+      "bytes": 486,
+      "sha256": "d00544df0e82dfdb149659799e0f854621628b735d46da45084af025a832bcef"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-wasm-debug-20261022-m2/native-filter-contract.raw.json",
+      "bytes": 266,
+      "sha256": "fdd38cf8512d70c77e92c9a3cf1b9ef91b52eb90a4a9c48d6d177d01bdcf0923"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-wasm-debug-20261022-m2/native-geometry-contract.raw.json",
+      "bytes": 460,
+      "sha256": "a6f0c8f945e9eb5822f912feefa9519ce47a9964c55e60de88c1849cabb47333"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-wasm-debug-20261022-m2/native-motion-contract.raw.json",
+      "bytes": 485,
+      "sha256": "de7503975778783efde1452ccf3ec7f5db75a74bf9722bb7226bc2d6e0a86f71"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-wasm-debug-20261022-m2/native-world-contract.raw.json",
+      "bytes": 289,
+      "sha256": "f73a2add60a0509a8b241e216064a057a4f28dbf932ba3cfbbe01bce95e715a7"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-wasm-debug-20261022-m2/staged-core.receipt.json",
+      "bytes": 19031,
+      "sha256": "89d5394bffa108880287fbc8cd4dc18736b5a83ade9165fb4e19169d7858c6d8"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-wasm-debug-20261022-m2/wasm-body-contract.raw.json",
+      "bytes": 175164,
+      "sha256": "447652d27e20f3460a32a387e34b92a647db9d200915b822bedeb18483d6bf95"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-wasm-debug-20261022-m2/wasm-contract.raw.json",
+      "bytes": 6728,
+      "sha256": "8260ff300c9bed4349b563b4a5374d3b2a769f62ecfae77fb0cc54388e5b6e68"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-wasm-debug-20261022-m2/wasm-filter-contract.raw.json",
+      "bytes": 336516,
+      "sha256": "fff34d9cb275d00f50dcc014c7bd7592c9d97fd97afd12d6a32cce55840ceb62"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-wasm-debug-20261022-m2/wasm-geometry-contract.raw.json",
+      "bytes": 111773,
+      "sha256": "c85f4916b6bb147b2b47a3b29aa315b6385e8ebdf68332b1a28b86dc3ebca9ed"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-wasm-debug-20261022-m2/wasm-motion-contract.raw.json",
+      "bytes": 255652,
+      "sha256": "91e0d302094a1bca7ad178c6663197867a6189eb4beb24745cd5d8e1de72c40b"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-wasm-debug-20261022-m2/wasm-ownership-contract.raw.json",
+      "bytes": 882090,
+      "sha256": "e338bc4fefa0355e2efc91dca960262745aa079392383674372ca8f67f4d9af7"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-wasm-debug-20261022-m2/wasm-snapshot-contract.raw.json",
+      "bytes": 140802,
+      "sha256": "9cd878d48e7f14a3b5d2cfdfcb9914c377c1a572bb509c3437a90f6d03ffa7e3"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-wasm-debug-20261022-m2/wasm-world-contract.raw.json",
+      "bytes": 62543,
+      "sha256": "4184a002bdf32c8921c90f22edcbd4ee78b6247475ec4302ab8d7cafa6aaa14e"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-wasm-release-20261022-m2/artifact-audit.raw.json",
+      "bytes": 19209,
+      "sha256": "8d1cc16161cd6316c183094be8417ba67f67b00b155575c817ac0f9432e3c29a"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-wasm-release-20261022-m2/audit-command.receipt.json",
+      "bytes": 208,
+      "sha256": "7bbcfecc81761040cb9894717a01ff5388f0447bf324e27ba39b133d94255ea0"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-wasm-release-20261022-m2/build-receipt.json",
+      "bytes": 37358,
+      "sha256": "af6447d254cf13290c8edffd10b56f45df592733cf77d44ee35863af7d584b6c"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-wasm-release-20261022-m2/compile_commands.json",
+      "bytes": 52889,
+      "sha256": "a4c25320a960305b1bc54d94f71b0a7237ce88012b6750a8767ab751e38abac8"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-wasm-release-20261022-m2/geometry-samples-audit.raw.json",
+      "bytes": 3868,
+      "sha256": "a2fe46e61132f494f8abb2a9c7e86908be646fea607e3763e2243babd9d8d45d"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-wasm-release-20261022-m2/manifest.json",
+      "bytes": 3048,
+      "sha256": "fe0a2b5ca84e37c31078c12588b90ea4395fbc713e61da15a13801799d27ee82"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-wasm-release-20261022-m2/native-body-contract.raw.json",
+      "bytes": 486,
+      "sha256": "d00544df0e82dfdb149659799e0f854621628b735d46da45084af025a832bcef"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-wasm-release-20261022-m2/native-filter-contract.raw.json",
+      "bytes": 266,
+      "sha256": "fdd38cf8512d70c77e92c9a3cf1b9ef91b52eb90a4a9c48d6d177d01bdcf0923"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-wasm-release-20261022-m2/native-geometry-contract.raw.json",
+      "bytes": 460,
+      "sha256": "a6f0c8f945e9eb5822f912feefa9519ce47a9964c55e60de88c1849cabb47333"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-wasm-release-20261022-m2/native-motion-contract.raw.json",
+      "bytes": 485,
+      "sha256": "de7503975778783efde1452ccf3ec7f5db75a74bf9722bb7226bc2d6e0a86f71"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-wasm-release-20261022-m2/native-world-contract.raw.json",
+      "bytes": 289,
+      "sha256": "f73a2add60a0509a8b241e216064a057a4f28dbf932ba3cfbbe01bce95e715a7"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-wasm-release-20261022-m2/staged-core.receipt.json",
+      "bytes": 19031,
+      "sha256": "89d5394bffa108880287fbc8cd4dc18736b5a83ade9165fb4e19169d7858c6d8"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-wasm-release-20261022-m2/wasm-body-contract.raw.json",
+      "bytes": 175163,
+      "sha256": "df0340638199f50bcb43fe29eadc3fa5fc999b7c2148270e65ebf2e523cb3b70"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-wasm-release-20261022-m2/wasm-contract.raw.json",
+      "bytes": 6728,
+      "sha256": "dbf2b0dbc4d23e29f92b92d2e5d538d87c4f5b508b003dd73c668f76302dd309"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-wasm-release-20261022-m2/wasm-filter-contract.raw.json",
+      "bytes": 336515,
+      "sha256": "c75d91bbdbdc51cd8fcaf5f27d0ab0a7df0b00a6c4ecbffd46fa1e2b8481f218"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-wasm-release-20261022-m2/wasm-geometry-contract.raw.json",
+      "bytes": 111772,
+      "sha256": "e5bea8a3d69ea30a7c86619398f7221c4fb3cda0482036fd81bb9ea0e7a48ab6"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-wasm-release-20261022-m2/wasm-motion-contract.raw.json",
+      "bytes": 255651,
+      "sha256": "791d835a6a9658ed2ac624d628f244ad09299d82f049be61bba3592fa1efcc2f"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-wasm-release-20261022-m2/wasm-ownership-contract.raw.json",
+      "bytes": 882090,
+      "sha256": "d3f899235b4f5d29a3cb09b26702486ea04315fc4056f9dadb468becae4808ff"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-wasm-release-20261022-m2/wasm-snapshot-contract.raw.json",
+      "bytes": 140802,
+      "sha256": "c88fece8bdf824f2c67482914b6d46084b9804227bd40598dc05ca2c6bd886d0"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/motion-wasm-release-20261022-m2/wasm-world-contract.raw.json",
+      "bytes": 62542,
+      "sha256": "f03536ff4cb7fffda5143f68487d89e29f2b90d7427ecfbf6af80c13478c62b1"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/native-mode-comparison-m2.raw.json",
+      "bytes": 2824,
+      "sha256": "0d32d7a8de69d6a2b515a118abdfc26671a7bf14fd88f5a643434cc13f362853"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/source-check-2-command-1.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/source-check-2-command-1.stdout.txt",
+      "bytes": 785,
+      "sha256": "73db6f1f27ded247dd3d7bcab1d465a4fce1ce7b828988716aa47c0c0a9aa4ce"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/source-check-2-command-2.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/source-check-2-command-2.stdout.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/source-check-2-command-3.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/source-check-2-command-3.stdout.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/source-check-2-command-4.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/source-check-2-command-4.stdout.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/source-check-2-command-5.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/source-check-2-command-5.stdout.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/source-check-2-command-6.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/source-check-2-command-6.stdout.txt",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/source-checkpoint-1.json",
+      "bytes": 18178,
+      "sha256": "732e7ba0dde3bbeba94d1cf09188d05bde621c7f621d4cc588ec13a97f1b8938"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/source-checkpoint-2.json",
+      "bytes": 29854,
+      "sha256": "adf9aedf111f1ea796cc7b490bb4df6b6ae3823b8c59273b1fee61c13970378f"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/source-controls-1.raw.json",
+      "bytes": 785,
+      "sha256": "ad000f850d3a8eb168181fde0071c9ab9e6761e3b91ce33c9e20170d47d12d04"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/source-controls-2.raw.json",
+      "bytes": 785,
+      "sha256": "73db6f1f27ded247dd3d7bcab1d465a4fce1ce7b828988716aa47c0c0a9aa4ce"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/source-controls-initial.mjs",
+      "bytes": 3367,
+      "sha256": "b0a702fb353f50d423f860a7442c507d8358bd0e6d3feebfd6eedce43da6e779"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/source-controls-initial.receipt.json",
+      "bytes": 255,
+      "sha256": "af109a1e746c9d855d36c3f6bbb4cb16016a18ea3d69a0fd9cfc52c516e00e84"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/source-controls-initial.stderr.txt",
+      "bytes": 906,
+      "sha256": "fc2274bcbcc68f7d6a0d28303b7208fa478f06fd82269c025b195cef3e9200e3"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/source-controls-initial.stdout.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/source-preservation.raw.json",
+      "bytes": 7710,
+      "sha256": "2913542067617ad2ddefa681b42fd1d19677d109a798406afd58c03269c9a825"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/summary.json",
+      "bytes": 25416,
+      "sha256": "3b3cb3597dfc32b992b8521278cde5a527593f06914c5370dce16cc8532b92a4"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/types-isolated-m2.json",
+      "bytes": 317,
+      "sha256": "6944960444f91f931753d7b091cbd2a0964f5c1fc6a483b5e5429a553e196365"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/types-isolated-m2.receipt.json",
+      "bytes": 426,
+      "sha256": "06249c8fe1fb2e405d8e2b3999874c5b36c89b4b8d8be54cbc05f83795bf68f0"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/types-isolated-m2.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/types-isolated-m2.stdout.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/types-m2.receipt.json",
+      "bytes": 433,
+      "sha256": "90319c1e87047c28f591bec51287e322d85097e71dd139d60d110617266aa1a9"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/types-m2.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/motion-checkpoint-20261022-m2/types-m2.stdout.txt",
+      "bytes": 358,
+      "sha256": "4ca4eac48615e684a0426bf91b106260979900fba17766e22a1f2c07b72e0443"
+    },
+    {
+      "path": "tools/physics/box3d/exports.json",
+      "bytes": 1439,
+      "sha256": "1de657f5523cb8a6c7a7c52e8cd0a7621c3ebae72a80d1b03ec06a39dff7d4a6"
+    },
+    {
+      "path": "tools/physics/box3d/motion-source-controls.mjs",
+      "bytes": 4162,
+      "sha256": "c144da8e2ca24fd44d4881e9a85a61eb2af4f704ccb234b825db51604d1f488a"
+    },
+    {
+      "path": "tools/physics/box3d/native/air_box3d.h",
+      "bytes": 3643,
+      "sha256": "ad71b7687c5cdb3b1a05e4a10a0f8214af888344968d40f37811d390f684baf7"
+    },
+    {
+      "path": "tools/physics/box3d/native/motion_bridge.c",
+      "bytes": 12718,
+      "sha256": "142ac35fde560a7b6f748b7eecc67b3eb99c5edefb7200c4ecef64e6d60e8573"
+    },
+    {
+      "path": "tools/physics/box3d/native/motion_bridge.h",
+      "bytes": 858,
+      "sha256": "67c486efc11775f2743992625efb15ce1ed0fe3c1fac79c8c0a82045b57de8ca"
+    },
+    {
+      "path": "tools/physics/box3d/native/motion_contract.c",
+      "bytes": 9452,
+      "sha256": "30d1ca6ed0e1f8b1c47b0b1c2c2ce4cd89cdd6be68efad5037c926d7a849e046"
+    },
+    {
+      "path": "tools/physics/box3d/native/world_bridge.c",
+      "bytes": 11969,
+      "sha256": "1331b2881410625dd5d6ec941ffc720005eaca6770cb7a76960c1e06586eeac7"
+    },
+    {
+      "path": "tools/physics/box3d/native/world_bridge.h",
+      "bytes": 540,
+      "sha256": "8cb7bf91011b5bd24f67dfa9833f08444addb1c92d3a952901e84165d6af34d0"
+    },
+    {
+      "path": "tools/physics/box3d/versions.lock.json",
+      "bytes": 4943,
+      "sha256": "c5f1afb128ff9bbdd4dd1fee6b20a1c4757f98bedc728302f133add1bf779c18"
+    },
+    {
+      "path": "tools/physics/box3d/wasm-motion-contract.mjs",
+      "bytes": 25170,
+      "sha256": "e058daf79278bbaa7d31545db743851cade1dca4fc9833953d17b3216366c814"
+    },
+    {
+      "path": "tools/physics/box3d/owned-files.json",
+      "bytes": 241572,
+      "sha256": "b9fb39ce1b752e78e43f34226914acc3200c66d782dfe233e3c1f723bcc8580d"
+    }
+  ],
+  "fixedInputCount": 43,
+  "handoffSha256": "b9302e93e1caeb967291e67dc7343e103ce7f67d78963ae8e858b2223293ebde",
+  "scope": "Finite qualification only; no full T11 or Gate claim."
+}

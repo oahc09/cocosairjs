@@ -7,6 +7,8 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { pathToFileURL } = require('node:url');
 const { createHash } = require('node:crypto');
+const { spawnSync } = require('node:child_process');
+const { createRetainedFixtures } = require('./retained-negative-fixture.cjs');
 const { verifySTBuild, stageBox3DAssets, box3DAssetsPlugin } = require('../../build/box3d-assets.cjs');
 const root = path.resolve(__dirname, '../../..');
 assert(process.env.BOX3D_ST_TEST_BUILD, 'Set BOX3D_ST_TEST_BUILD to a fresh audited actual ST output');
@@ -25,17 +27,49 @@ function rehashAuditEvidence(directory, name) {
     Object.assign(row, { bytes: bytes.length, sha256: hash(bytes) });
     writeJSON(directory, 'artifact-audit.raw.json', audit);
 }
-function copyInputs(name) {
-    const directory = path.join(output, name);
-    fs.mkdirSync(directory);
-    for (const file of fs.readdirSync(source)) {
-        if (fs.statSync(path.join(source, file)).isFile())
-            fs.copyFileSync(path.join(source, file), path.join(directory, file));
-    }
-    const link = 'CMakeFiles/air_box3d.dir/link.txt';
-    fs.mkdirSync(path.dirname(path.join(directory, link)), { recursive: true });
-    fs.copyFileSync(path.join(source, link), path.join(directory, link));
-    return directory;
+const fixtureFiles = fs.readdirSync(source).filter((name) => fs.lstatSync(path.join(source, name)).isFile());
+fixtureFiles.push('CMakeFiles/air_box3d.dir/link.txt');
+const fixtures = createRetainedFixtures({
+    source,
+    output: path.join(output, 'negative-fixtures'),
+    files: fixtureFiles,
+});
+console.log('Retained asset test output: ' + output);
+function runRejection(name, directory, retained, phase) {
+    const target = path.join(output, `${name}-${phase}-rejected`);
+    const args = [path.join(__dirname, 'verify-assets-negative-case.cjs'), directory, target];
+    const result = spawnSync(process.execPath, args, { cwd: root, encoding: 'utf8', maxBuffer: 4 * 1024 * 1024 });
+    fs.writeFileSync(path.join(retained, phase + '.stdout.raw.txt'), result.stdout ?? '');
+    fs.writeFileSync(path.join(retained, phase + '.stderr.raw.txt'), result.stderr ?? '');
+    writeJSON(retained, phase + '.command.json', {
+        command: [process.execPath, ...args],
+        cwd: root,
+        exitCode: result.status,
+        signal: result.signal,
+        error: result.error ? String(result.error) : null,
+        nodeVersion: process.version,
+        gate: {
+            path: 'tools/build/box3d-assets.cjs',
+            sha256: hash(fs.readFileSync(path.join(root, 'tools/build/box3d-assets.cjs'))),
+        },
+        collector: {
+            path: 'tools/verify/box3d/verify-assets-negative-case.cjs',
+            sha256: hash(fs.readFileSync(args[0])),
+        },
+    });
+    assert.equal(result.status, 0, `${name}/${phase}: ${result.stderr}`);
+    const observed = JSON.parse(result.stdout);
+    assert.equal(observed.status, 'EXPECTED_REJECTION_NO_OUTPUT');
+    assert.equal(observed.targetAbsent, true);
+    assert.equal(fs.existsSync(target), false);
+    return {
+        exitCode: result.status,
+        rejection: {
+            name: observed.error.name,
+            code: observed.error.code,
+            message: observed.error.message.split(directory).join('<fixture>').split(target).join('<target>'),
+        },
+    };
 }
 test('unselected builds do not read absent native inputs or create output/assets', async () => {
     const target = path.join(output, 'unselected');
@@ -465,26 +499,46 @@ test('corrupt/missing assets, stale identities, failed/incomplete inputs and aud
             },
         ]),
     ];
-    for (const [name, mutate] of mutations) {
-        const directory = copyInputs(name),
-            target = path.join(output, name + '-rejected');
-        mutate(directory);
-        await assert.rejects(
-            stageBox3DAssets({ features: ['physics-box3d'], outputDirectory: target, buildDirectory: directory }),
-            undefined,
-            name,
-        );
-        assert.equal(fs.existsSync(target), false, `${name} wrote output before validation`);
-    }
     assert.equal(mutations.length, 52, 'Keep the independently enumerated rejection inventory complete');
-    fs.writeFileSync(
-        path.join(output, 'rejection-inventory.json'),
-        JSON.stringify(
-            mutations.map(([name]) => name),
-            null,
-            2,
-        ) + '\n',
-    );
+    const limitText = process.env.BOX3D_ASSET_NEGATIVE_LIMIT;
+    const limit = limitText === undefined ? mutations.length : Number(limitText);
+    assert(Number.isSafeInteger(limit) && limit >= 1 && limit <= mutations.length);
+    const selected = mutations.slice(0, limit);
+    writeJSON(output, 'rejection-inventory.json', {
+        status: limit === mutations.length ? 'RUNNING_FULL_52' : 'RUNNING_BOUNDED_LIFECYCLE_PROOF_NOT_FULL_SUITE',
+        planned: mutations.map(([name]) => name),
+        selected: selected.map(([name]) => name),
+    });
+    for (const [name, mutate] of selected) {
+        const directory = fixtures.create(name);
+        mutate(directory);
+        const { replay, retained } = fixtures.retainAndReconstruct(name);
+        const original = runRejection(name, directory, retained, 'original');
+        const reconstructed = runRejection(name, replay, retained, 'replay');
+        assert.deepEqual(reconstructed.rejection, original.rejection, `${name}: rejection replay mismatch`);
+        fixtures.retire(name, {
+            sameExpectedRejection: true,
+            originalExitCode: original.exitCode,
+            replayExitCode: reconstructed.exitCode,
+            rejection: original.rejection,
+            rawFilesRetained: [
+                'original.stdout.raw.txt',
+                'original.stderr.raw.txt',
+                'original.command.json',
+                'replay.stdout.raw.txt',
+                'replay.stderr.raw.txt',
+                'replay.command.json',
+            ],
+        });
+    }
+    writeJSON(output, 'rejection-inventory.json', {
+        status:
+            limit === mutations.length
+                ? 'PASS_ALL_52_RECONSTRUCTED_AND_REPEAT_REJECTED'
+                : 'PASS_BOUNDED_LIFECYCLE_PROOF_NOT_FULL_SUITE',
+        planned: mutations.map(([name]) => name),
+        completed: selected.map(([name]) => name),
+    });
 });
 test('existing old schema and symlink/overlap destinations cannot be silently distributed', async () => {
     await assert.rejects(verifySTBuild(path.join(root, 'tools/physics/box3d/output/wasm-patch-release-20261022-e')));

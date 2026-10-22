@@ -1,0 +1,8 @@
+{
+  "path": "output/motion-staging-retained-20261022-m2.tar.gz",
+  "bytes": 1808064,
+  "sha256": "725fa282342028f9dff6579f5f4a476e86da4b78e307a0e7d1c8fb9c08ca82e8",
+  "members": 619,
+  "baselineArtifactLibrary": "libfile_ff409b9f300881919347058fc27be297",
+  "baselineScope": "All immutable native qualification inputs are in the separate m2 artifact Library. This archive stores test source, proof, raw and exact changed bytes/deletions, not redundant unmodified copies."
+}

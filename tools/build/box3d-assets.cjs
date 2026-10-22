@@ -31,6 +31,7 @@ const INPUTS = [
     'tools/physics/box3d/wasm-world-contract.mjs',
     'tools/physics/box3d/wasm-body-contract.mjs',
     'tools/physics/box3d/wasm-filter-contract.mjs',
+    'tools/physics/box3d/wasm-motion-contract.mjs',
     'tools/physics/box3d/verify-sources.mjs',
     'tools/physics/box3d/verify-wasm.mjs',
     'tools/physics/box3d/native/air_box3d.c',
@@ -42,12 +43,17 @@ const INPUTS = [
     'tools/physics/box3d/native/body_control.h',
     'tools/physics/box3d/native/filter_bridge.c',
     'tools/physics/box3d/native/filter_bridge.h',
+    'tools/physics/box3d/native/motion_bridge.c',
+    'tools/physics/box3d/native/motion_bridge.h',
+    'tools/physics/box3d/motion-source-controls.mjs',
+    'docs/physics/box3d/contracts/motion-command-decisions-v1.md',
     'tools/physics/box3d/native/filter_contract.c',
+    'tools/physics/box3d/native/motion_contract.c',
+    'tools/physics/box3d/native/body_contract.c',
+    'tools/physics/box3d/native/world_contract.c',
     'tools/physics/box3d/native/air_box3d.h',
     'tools/physics/box3d/native/contract.c',
     'tools/physics/box3d/native/geometry_contract.c',
-    'tools/physics/box3d/native/world_contract.c',
-    'tools/physics/box3d/native/body_contract.c',
     'tools/physics/box3d/native/wasm_entry.c',
     'src/air/physics/box3d/binding/facade.mjs',
     'src/air/physics/box3d/binding/facade.d.mts',
@@ -101,7 +107,7 @@ async function verifySTBuild(buildDirectory) {
     assert.equal(receipt.status, 'PASS', 'Native build did not pass');
     assert.equal(receipt.kind, 'st-simd-wasm');
     assert(['Debug', 'Release'].includes(receipt.mode));
-    assert(receipt.commands.length >= 15 && receipt.commands.every((row) => row.exitCode === 0 && !row.error));
+    assert(receipt.commands.length >= 18 && receipt.commands.every((row) => row.exitCode === 0 && !row.error));
     assert.deepEqual(sorted(receipt.inputHashes.map((row) => row.path)), sorted(INPUTS), 'Build input inventory drift');
     for (const input of receipt.inputHashes) {
         safeRelative(input.path);
@@ -134,9 +140,16 @@ async function verifySTBuild(buildDirectory) {
     assert.equal(audit.sharedMemory, false);
     assert.equal(audit.dynamicExecutionOrWorkerConstructorFound, false);
     assert.equal(audit.compiledSourceCount, audit.compiledSourceHashes.length);
-    assert(audit.compiledSourceCount >= 63, 'Incomplete compile audit');
+    assert.equal(audit.compiledSourceCount, 65, 'Compile audit inventory drift');
     assert.equal(new Set(audit.compiledSourceHashes.map((row) => row.path)).size, audit.compiledSourceCount);
-    for (const name of ['body_control.c', 'body_contract.c', 'filter_bridge.c', 'filter_contract.c']) {
+    for (const name of [
+        'body_control.c',
+        'body_contract.c',
+        'filter_bridge.c',
+        'filter_contract.c',
+        'motion_bridge.c',
+        'motion_contract.c',
+    ]) {
         assert(audit.compiledSourceHashes.some((row) => row.path === `tools/physics/box3d/native/${name}`));
     }
     for (const input of audit.compiledSourceHashes) {
@@ -167,6 +180,10 @@ async function verifySTBuild(buildDirectory) {
             'native-filter-contract.raw.json',
             'wasm-filter-contract.raw.json',
             'air_box3d_filter_contract.cjs',
+            'native-motion-contract.raw.json',
+            'wasm-motion-contract.raw.json',
+            'motion-samples.raw.jsonl',
+            'air_box3d_motion_contract.cjs',
         ]),
     );
     for (const record of audit.evidence) verifyRecord(directory, record);
@@ -271,6 +288,65 @@ async function verifySTBuild(buildDirectory) {
     ]) {
         assert.equal(filter.checks?.[key], true, `Filter qualification missing: ${key}`);
     }
+    const nativeMotion = json(fileInside(directory, 'native-motion-contract.raw.json'));
+    assert.equal(nativeMotion.status, 'PASS', 'Native motion qualification did not pass');
+    assert.equal(nativeMotion.pointerBytes, 4, 'Motion qualification must execute WASM32');
+    for (const key of [
+        'batchPreflightNoPartialMutation',
+        'capacityOverlapLockedCanaries',
+        'strictQuaternionAndOverflow',
+        'disabledResetForcePreserve',
+        'tinyTargetWakeAndStationaryCap',
+        'postResetCOMTarget',
+        'worldAxisLockAndCaps',
+        'fullGenerationWorld',
+        'scratchTrackedAndCleanup',
+        'substepDomain',
+        'emptyNoOutputWrite',
+        'coreBytesRestored',
+    ])
+        assert.equal(nativeMotion[key], true, `Native motion qualification missing: ${key}`);
+    const motion = json(fileInside(directory, 'wasm-motion-contract.raw.json'));
+    assert.equal(motion.status, 'PASS', 'Real WASM motion qualification did not pass');
+    assert.equal(
+        motion.fixtureSha256,
+        sha256(read(path.join(ROOT, 'tools/physics/box3d/wasm-motion-contract.mjs'))),
+        'Motion fixture input drift',
+    );
+    for (const [key, value] of Object.entries(identity))
+        assert.equal(motion.identity?.[key], value, `Motion qualification identity mismatch: ${key}`);
+    for (const key of [
+        'admissionAndEmptyValidate',
+        'lockAndCapRejection',
+        'teleportOptionsCOMAndForces',
+        'mergedResetTargetAndClear',
+        'immutableCopiesAndHeapGrowth',
+        'fullId128Cycles',
+        'independentDampedTargetGrid',
+        'modeledShortfallNotTeleport',
+        'realContactAndSensorTiming',
+        'mutationPhasesNoReplay',
+        'cleanup',
+    ])
+        assert.equal(motion.checks?.[key], true, `Motion qualification missing: ${key}`);
+    assert.equal(motion.sampleCount, 7201, 'Motion finite sample inventory drift');
+    const motionSamples = verifyRecord(directory, motion.samplesArtifact);
+    assert.equal(motion.samplesArtifact.path, 'motion-samples.raw.jsonl');
+    assert.equal(motion.samplesArtifact.records, motion.sampleCount);
+    assert.equal(motionSamples.toString('utf8').trim().split('\n').length, motion.sampleCount);
+    const grid = motion.observations?.grid;
+    assert(Array.isArray(grid), 'Motion grid missing');
+    assert.deepEqual(
+        sorted(grid.map((row) => `${row.n}:${row.damping}:${row.ticks}`)),
+        sorted([1, 2, 4, 8].flatMap((n) => [0, 0.25, 1].map((damping) => `${n}:${damping}:600`))),
+        'Motion finite qualification grid drift',
+    );
+    for (const row of grid)
+        for (const key of ['origin', 'center', 'angle'])
+            assert(
+                Number.isFinite(row.max?.[key]) && row.max[key] >= 0 && row.max[key] <= 1e-4,
+                `Motion prediction budget failed: ${row.n}/${row.damping}/${key}`,
+            );
     const descriptor = freeze({
         manifestSha256: sha256(manifestBytes),
         facadeSha256: sha256(bytes.get('facade.mjs')),
