@@ -26,6 +26,27 @@ test('fixed subcase references retain parents and the distinct real-device requi
     assert(!cases.has('WASM-07-PACK'), 'Do not backtrack a token at a hyphen before adjacent Chinese text');
     for (const item of inventory.requiredSubcaseDesign) assert(parents.has(item.parent), item.id);
 });
+test('every explicit v1.2 acceptance ID is retained, including the two independent world fixtures', () => {
+    const source = fs.readFileSync(path.join(root, 'ai/plans/box3d-v1.2-reference.md'), 'utf8');
+    // A word boundary after an ASCII suffix can backtrack before adjacent Chinese prose.
+    const mentioned = new Set(
+        source.match(/\b(?:B3-(?:C|I|U|A|P|AG|BIZ)\d{2}|WASM-\d{2})(?:-[A-Z0-9]+)*(?![A-Z0-9-])/g),
+    );
+    const auxiliary = inventory.auxiliaryRequiredTests ?? [];
+    assert.deepEqual(auxiliary.map((row) => row.id).sort(), ['B3-U01', 'B3-U02']);
+    for (const row of auxiliary) {
+        assert.equal(row.required, true);
+        assert.equal(row.status, 'NOT_RUN');
+        assert.equal(row.firstPhase, 'M2');
+        assert.equal(row.realNativeRequired, true);
+        assert.equal(row.countedAsNewParentCategory, false);
+    }
+    const retained = new Set(
+        [...inventory.parentCategories, ...inventory.requiredSubcaseDesign, ...auxiliary].map((row) => row.id),
+    );
+    for (const id of mentioned) assert(retained.has(id), `Missing fixed acceptance ID: ${id}`);
+    assert.equal(mentioned.has('WASM-07-PACK'), false);
+});
 test('engine methods have target capabilities and test references, never an implementation PASS', () => {
     assert.equal(mapping.members.length, 166);
     const keys = new Set();

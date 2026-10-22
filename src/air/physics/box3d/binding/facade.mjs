@@ -23,8 +23,8 @@ THE SOFTWARE.
 // Internal, limited M1 foundation. This is not the Cocos physics adapter.
 const CORE_SHA = 'efca0c184d40fd6a82016983f1601c4d23965867';
 const BINDING_BASE_SHA = '5d5a3af049cccd9948b2b55bac4342414af0ef64';
-const SCHEMA_SHA256 = '3aa11fe9d3d4b0269105bddbfebd8a1d09c9a3d162d88cb416d35d4304d1f30a';
-const PATCH_CHAIN_SHA256 = '20dd450a4313774e1d934df9fa9ec3458df35d9ee314beffa9d846404cdb86bf';
+const SCHEMA_SHA256 = '4f9b7cb25d7144734e827bb3c40384f46124649dec3e56a9b42d034abdbae888';
+const PATCH_CHAIN_SHA256 = '434fb89494867f515051d5ac0dfc0c694556ba1f0da9ac3fc895a27097b1c7c7';
 
 function failure(code, message) {
     return Object.assign(new Error(message), { code });
@@ -246,6 +246,77 @@ export function createBox3DBinding(module, expected) {
         r.done();
         return result;
     }
+    function geometryCounters(world) {
+        nativeStatus(module._air_b3_world_geometry_counters(worldId(world), output));
+        const values = module.HEAPU32.slice(output >>> 2, (output >>> 2) + 5);
+        return Object.fromEntries(
+            [
+                'awakeContactCount',
+                'recycledContactCount',
+                'distanceIterations',
+                'pushBackIterations',
+                'rootIterations',
+            ].map((name, i) => [name, values[i]]),
+        );
+    }
+    function readGeometry(world, contact) {
+        module.HEAPU32.set(contact.contactId, ids >>> 2);
+        const status = module._air_b3_contact_geometry(worldId(world), ids, output, 25);
+        if (status === 6 || status === 7)
+            return { status: status === 6 ? 'GEOMETRY_UNAVAILABLE' : 'UNSUPPORTED_GEOMETRY_FAMILY' };
+        nativeStatus(status);
+        const r = reader(module.HEAPU8.slice(output, output + 100));
+        if (r.u() !== 1) throw failure('AIR_E_BOX3D_ABI', 'Unknown contact geometry source');
+        const geometryRevision = r.id();
+        const generatedAfterStep = r.id();
+        const generationPoseA = r.floats(10);
+        const generationPoseB = r.floats(10);
+        r.done();
+        const add = (a, b) => a.map((v, i) => v + b[i]);
+        const sub = (a, b) => a.map((v, i) => v - b[i]);
+        const inverseRotate = (q, v) => {
+            const [x, y, z, w] = q;
+            const t = [2 * (-y * v[2] + z * v[1]), 2 * (-z * v[0] + x * v[2]), 2 * (-x * v[1] + y * v[0])];
+            return [
+                v[0] + w * t[0] - y * t[2] + z * t[1],
+                v[1] + w * t[1] - z * t[0] + x * t[2],
+                v[2] + w * t[2] - x * t[1] + y * t[0],
+            ];
+        };
+        const local = (pose, worldPoint) => inverseRotate(pose.slice(3, 7), sub(worldPoint, pose.slice(0, 3)));
+        const state = worldStates.get(world);
+        return {
+            status: 'AVAILABLE',
+            source: 'CACHED_MANIFOLD_GENERATION',
+            contactId: [...contact.contactId],
+            shapeA: contact.shapeA,
+            shapeB: contact.shapeB,
+            bodyA: contact.bodyA,
+            bodyB: contact.bodyB,
+            geometryRevision,
+            generatedAfterStep,
+            generationPoseA,
+            generationPoseB,
+            readStepIndex: state.step,
+            readMutationRevision: state.revision,
+            manifolds: contact.manifolds.map((manifold) => ({
+                normalAtoB: [...manifold.normalAtoB],
+                normalBtoA: manifold.normalAtoB.map((v) => -v),
+                localNormalAtoB_A: inverseRotate(generationPoseA.slice(3, 7), manifold.normalAtoB),
+                localNormalAtoB_B: inverseRotate(generationPoseB.slice(3, 7), manifold.normalAtoB),
+                points: manifold.points.map((point) => {
+                    const worldPointA = add(generationPoseA.slice(7, 10), point.anchorA);
+                    const worldPointB = add(generationPoseB.slice(7, 10), point.anchorB);
+                    return {
+                        worldPointA,
+                        worldPointB,
+                        localPointA: local(generationPoseA, worldPointA),
+                        localPointB: local(generationPoseB, worldPointB),
+                    };
+                }),
+            })),
+        };
+    }
     function poseRows(bodies, values) {
         return bodies.map((body, i) => ({
             body: { low: body.low, high: body.high },
@@ -266,6 +337,7 @@ export function createBox3DBinding(module, expected) {
                 contact.prePoseB = beforeRows.find((row) => idKey(row.body) === idKey(contact.bodyB))?.pose ?? null;
                 const token = Object.freeze({ contactId: Object.freeze([...contact.contactId]) });
                 contact.handle = token;
+                contact.geometry = readGeometry(world, contact);
                 snapshotHandles.set(token, { world, step: state.step, revision: state.revision, contact });
                 contacts.set(key, contact);
             }
@@ -276,6 +348,7 @@ export function createBox3DBinding(module, expected) {
             bodyPosesBefore: beforeRows,
             bodyPosesAfter: afterRows,
             contactsOfOwnedBodies: [...contacts.values()],
+            geometryCounters: geometryCounters(world),
         });
         state.snapshot = snapshot;
         state.available = true;
@@ -499,12 +572,19 @@ export function createBox3DBinding(module, expected) {
         },
         contactWorldPoints(token) {
             return exclusive(() => {
-                snapshotHandle(token);
-                throw failure(
-                    'AIR_E_BOX3D_UNSUPPORTED_SNAPSHOT_EPOCH',
-                    'Cached native anchor epoch is not proven; world/local point reconstruction is unavailable',
-                );
+                const geometry = snapshotHandle(token).contact.geometry;
+                if (geometry.status !== 'AVAILABLE')
+                    throw failure(
+                        geometry.status === 'UNSUPPORTED_GEOMETRY_FAMILY'
+                            ? 'AIR_E_BOX3D_UNSUPPORTED_GEOMETRY'
+                            : 'AIR_E_BOX3D_UNSUPPORTED_SNAPSHOT_EPOCH',
+                        `Generation geometry unavailable: ${geometry.status}`,
+                    );
+                return geometry;
             });
+        },
+        geometryCounters(world) {
+            return exclusive(() => freeze(geometryCounters(world)));
         },
         configureShapeEvents(shape, options) {
             return exclusive(() => {

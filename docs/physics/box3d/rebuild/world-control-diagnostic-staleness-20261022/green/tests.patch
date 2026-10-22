@@ -1,0 +1,88 @@
+--- a/tools/verify/box3d/world-control.test.cjs
++++ b/tools/verify/box3d/world-control.test.cjs
+@@ -295,6 +295,7 @@
+     const world = f.construct();
+     assert.throws(() => world.step(1 / 60), code('AIR_E_BOX3D_SNAPSHOT_UNAVAILABLE'));
+     assert.equal(world.diagnostics().native.nativeStepIndex, 1);
++    assert.equal(world.diagnostics().nativeObservationCurrent, true);
+     assert.equal(world.diagnostics().native.nativeCompleted, true);
+     assert.equal(world.diagnostics().native.snapshotAvailable, false);
+     assert.equal(world.diagnostics().state, 'faulted');
+@@ -513,6 +514,7 @@
+     };
+     assert.throws(() => world.step(1 / 60), /native rejected before step/);
+     assert.equal(world.diagnostics().lastStepOutcome, 'not-completed');
++    assert.equal(world.diagnostics().nativeObservationCurrent, true);
+     assert.equal(world.diagnostics().native.nativeStepIndex, 0);
+ });
+ test('native reentrancy cannot destroy a world during its step', () => {
+@@ -566,3 +568,69 @@
+     assert.equal(world.diagnostics().materialShapeCount, 0);
+     assert.equal(world.diagnostics().state, 'faulted');
+ });
++
++for (const kind of ['gravity', 'sleep']) {
++    test(`post-step ${kind} mutation plus readback failure marks native observation stale`, () => {
++        const f = fixture();
++        const world = f.construct();
++        world.step(1 / 60);
++        assert.equal(world.diagnostics().nativeObservationCurrent, true);
++        assert.equal(world.diagnostics().native.snapshotAvailable, true);
++        if (kind === 'gravity')
++            f.binding.getGravity = () => {
++                throw new Error('readback failed');
++            };
++        else
++            f.binding.isSleepingEnabled = () => {
++                throw new Error('readback failed');
++            };
++        assert.throws(
++            () => (kind === 'gravity' ? world.setGravity({ x: 1, y: 2, z: 3 }) : world.setAllowSleep(false)),
++            /readback failed/,
++        );
++        assert.equal([...f.worlds.values()][0].snapshot, false);
++        assert.equal(world.diagnostics().state, 'faulted');
++        assert.equal(world.diagnostics().lastStepOutcome, 'completed');
++        assert.equal(world.diagnostics().nativeObservationCurrent, false);
++    });
++}
++test('post-step inherited-shape adoption failure marks native observation stale', () => {
++    const f = fixture();
++    const world = f.construct();
++    world.setDefaultMaterial(material(0.25));
++    const shape = f.shape();
++    world.step(1 / 60);
++    const read = f.binding.getShapeMaterial,
++        write = f.binding.setShapeMaterial;
++    let mutated = false;
++    f.binding.setShapeMaterial = (...args) => {
++        write(...args);
++        [...f.worlds.values()][0].snapshot = false;
++        mutated = true;
++    };
++    f.binding.getShapeMaterial = (...args) => {
++        if (mutated) throw new Error('adoption readback failed');
++        return read(...args);
++    };
++    assert.throws(() => world.registerMaterialShape(shape, true), /adoption readback failed/);
++    assert.equal(world.diagnostics().state, 'faulted');
++    assert.equal(world.diagnostics().nativeObservationCurrent, false);
++    assert.equal(world.diagnostics().lastStepOutcome, 'completed');
++});
++test('post-step material rollback failure marks native observation stale', () => {
++    const f = fixture();
++    const world = f.construct();
++    const shape = f.shape();
++    world.registerMaterialShape(shape, true);
++    world.step(1 / 60);
++    const write = f.binding.setShapeMaterial;
++    f.binding.setShapeMaterial = (...args) => {
++        write(...args);
++        [...f.worlds.values()][0].snapshot = false;
++        throw new Error('mutated before failure');
++    };
++    assert.throws(() => world.setDefaultMaterial(material(0.25)), code('AIR_E_BOX3D_WORLD_FAULTED'));
++    assert.equal(world.diagnostics().state, 'faulted');
++    assert.equal(world.diagnostics().nativeObservationCurrent, false);
++    assert.equal(world.diagnostics().lastStepOutcome, 'completed');
++});

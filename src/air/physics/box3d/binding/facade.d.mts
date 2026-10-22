@@ -59,8 +59,9 @@ export interface Box3DFoundation {
     bodyTransforms(world: Box3DWorld, bodies: readonly Box3DId[]): Float32Array;
     readStepSnapshot(world: Box3DWorld): Box3DStepSnapshot;
     readContactSnapshot(contact: Box3DContactHandle): Box3DContactSnapshot;
-    /** Always throws until a common contact-anchor epoch is proven. */
-    contactWorldPoints(contact: Box3DContactHandle): never;
+    /** Generation-epoch cached geometry only; explicitly rejects unsupported families/basis. */
+    contactWorldPoints(contact: Box3DContactHandle): Box3DContactGeometry;
+    geometryCounters(world: Box3DWorld): Box3DGeometryCounters;
     configureShapeEvents(shape: Box3DId, options: { sensor?: boolean; contact?: boolean; hit?: boolean }): void;
     createOffsetSphere(
         body: Box3DId,
@@ -124,6 +125,9 @@ export interface Box3DContactSnapshot {
     readonly manifolds: readonly Box3DManifoldSnapshot[];
     readonly anchorEpoch: 'UNRESOLVED_CACHED_NATIVE';
     readonly worldPointStatus: 'UNSUPPORTED_SNAPSHOT_EPOCH';
+    /** Separate additive extension; the preceding g raw wire remains unmodified. */
+    readonly geometry:
+        Box3DContactGeometry | { readonly status: 'GEOMETRY_UNAVAILABLE' | 'UNSUPPORTED_GEOMETRY_FAMILY' };
 }
 export interface Box3DContactEvent {
     readonly shapeA: Readonly<Box3DId>;
@@ -167,4 +171,40 @@ export interface Box3DStepSnapshot {
     readonly bodyPosesBefore: readonly Box3DBodyPoseRow[];
     readonly bodyPosesAfter: readonly Box3DBodyPoseRow[];
     readonly contactsOfOwnedBodies: readonly Box3DContactSnapshot[];
+    readonly geometryCounters: Box3DGeometryCounters;
+}
+
+export interface Box3DGeometryCounters {
+    readonly awakeContactCount: number;
+    readonly recycledContactCount: number;
+    readonly distanceIterations: number;
+    readonly pushBackIterations: number;
+    readonly rootIterations: number;
+}
+export interface Box3DContactGeometry {
+    readonly status: 'AVAILABLE';
+    readonly source: 'CACHED_MANIFOLD_GENERATION';
+    readonly contactId: readonly number[];
+    readonly shapeA: Readonly<Box3DId>;
+    readonly shapeB: Readonly<Box3DId>;
+    readonly bodyA: Readonly<Box3DId>;
+    readonly bodyB: Readonly<Box3DId>;
+    readonly geometryRevision: Readonly<Box3DId>;
+    readonly generatedAfterStep: Readonly<Box3DId>;
+    readonly generationPoseA: readonly number[];
+    readonly generationPoseB: readonly number[];
+    readonly readStepIndex: number;
+    readonly readMutationRevision: number;
+    readonly manifolds: readonly {
+        readonly normalAtoB: readonly number[];
+        readonly normalBtoA: readonly number[];
+        readonly localNormalAtoB_A: readonly number[];
+        readonly localNormalAtoB_B: readonly number[];
+        readonly points: readonly {
+            readonly worldPointA: readonly number[];
+            readonly worldPointB: readonly number[];
+            readonly localPointA: readonly number[];
+            readonly localPointB: readonly number[];
+        }[];
+    }[];
 }

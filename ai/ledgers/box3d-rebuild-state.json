@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "createdAtUtc": "2026-10-22T01:25:26.781006+00:00",
-  "scope": "AUTHORIZED_REBUILD_RUNTIME_BUILD_AND_APP_PREPARATION_CHECKPOINT",
+  "scope": "AUTHORIZED_REBUILD_CONTACT_GEOMETRY_AND_UNREGISTERED_WORLD_CHECKPOINT",
   "branch": "feat/box3d-rebuild-20261022",
   "upstreamSourceCommit": "b573be0741db9e2a13d38ce7e65870b97a1f5fbc",
   "localImportCommit": "730fbf2519887474e9acfd229fbb65586090bb77",
@@ -76,7 +76,7 @@
       "description": "批量读写、ID 校验、heap growth、ownership counters 与 binding contract tests",
       "dependencies": "T04、T05",
       "completionContract": "WASM-02/09/10及接触anchor采样基准fixture、WASM-11-BINDING、WASM-12-BINDING、WASM-13-BINDING通过",
-      "implementationScope": "g actual Debug/Release copied native pose/contact/sensor snapshots and finite growth/ownership pass; cached anchor epoch unresolved, full C21/C22/T07 incomplete."
+      "implementationScope": "Fresh i8 Debug/Release copied native snapshots and explicit generation-basis geometry have 617 retained analytic samples per mode, exact cross-mode comparison and scoped native diagnostics. Full binding, C21/C22 and T07 remain incomplete."
     },
     {
       "id": "T08",
@@ -90,11 +90,11 @@
     {
       "id": "T09",
       "phase": "M2",
-      "status": "TODO",
+      "status": "IN_PROGRESS",
       "description": "IPhysicsWorld基础、时序/重力/睡眠/debug/tick诊断，并完成应用联调",
       "dependencies": "T07、T08",
       "completionContract": "I01/I02、I03既有路径及COEXIST-PREPARE、I04旧后端及COEXIST-LOWLEVEL、WASM-07-AIR、B3-U01真实低层body；无第二累计器/RAF；组件路径由T10/T11验证",
-      "implementationScope": "Read-only world-adapter-integration-proposal.md completed. Required live native gravity/sleep/debug bridges, actual adapter and real engine/WASM integration are not yet implemented."
+      "implementationScope": "Unregistered AIR world control source with 34 mock-native cases and target TypeScript check passes. Required real native controls/debug bridges, public registration and actual engine/WASM integration remain open."
     },
     {
       "id": "T10",
@@ -910,7 +910,7 @@
     {
       "id": "NATIVE-CLOSURE",
       "status": "BLOCKED",
-      "reason": "Fresh g Debug/Release ST copied snapshots and finite fixtures pass. Contact geometry generation epoch remains unexposed, full binding/adapter incomplete; original sanitizer failure preserved; browser infrastructure blocked."
+      "reason": "Fresh i8 Debug/Release cached geometry fixtures pass, but full binding/adapter remains incomplete. Original SSE2 sanitizer failure and separate corrected UBSan-only result are retained; ASan/LSan and browser infrastructure are not qualified."
     },
     {
       "id": "C16-DURATION-CONTRACT",
@@ -958,22 +958,21 @@
     "deploy": false,
     "npmPublish": false
   },
-  "nextStep": "Preserve checkpoint 7 source and actual runtime artifacts, then implement the reviewed C21 geometry-only staged patch and required live-world bridges. T09 proposal is inspected but the real adapter is not implemented. Browser/device and full inventory gates remain open.",
+  "nextStep": "Preserve eighth source/native geometry checkpoint, then implement and qualify required native world controls before public registration and real PhysicsSystem integration. Keep immutable raw failures and scoped results.",
   "remoteHistoryPolicy": "True upstream main parent and incremental tree; local snapshot import is backup-only and is never pushed as upstream history.",
   "remotePublication": {
     "branchCreated": true,
-    "branchHead": "e3ccf2acb088cd6a127de1079e28b3de9ad9a603",
-    "status": "VERIFIED_COPIED_SNAPSHOT_AND_APP_PREPARATION_CHECKPOINT",
-    "commitsPublished": 6,
-    "verifiedRemoteParent": "1b97b53d80fd4f9b2a643d358be6198d3136763d",
-    "verifiedAddedFiles": 17,
+    "branchHead": "1dabac863fb5bdfadb72a3a6e4fffdf2cf828676",
+    "status": "VERIFIED_RUNTIME_AND_APP_CPU_CHECKPOINT",
+    "commitsPublished": 7,
+    "verifiedRemoteParent": "e3ccf2acb088cd6a127de1079e28b3de9ad9a603",
     "allPriorMainBlobsPreserved": true,
-    "receipt": "docs/physics/box3d/rebuild/remote-checkpoint-6.json",
-    "verifiedChangedFiles": 171
+    "receipt": "docs/physics/box3d/rebuild/remote-checkpoint-7.json",
+    "verifiedChangedFiles": 82
   },
-  "updatedAtUtc": "2026-10-22T06:48:01.860914+00:00",
+  "updatedAtUtc": "2026-10-22T07:34:57.779614+00:00",
   "currentEvidence": {
-    "m0ContractTests": "PASS_6_SOURCE_DESIGN_CHECKS_ONLY",
+    "m0ContractTests": "PASS_7_SOURCE_DESIGN_CHECKS_ONLY_U01_U02_INVENTORY_ADDED",
     "nativeFoundationIndex": "tools/physics/box3d/evidence/index.json",
     "sourceIntegrity": "PASS_130_FIXED_SOURCE_FILES",
     "nativeDebug": "PASS_NARROW_DIAGNOSTIC",
@@ -1002,20 +1001,20 @@
     "stLoaderDeclaration": "PASS_STRICT_EXPLICIT_BROWSER_AMBIENT_CONSUMER_G2; prior g ambient conflict retained",
     "stLoaderEvidence": "docs/physics/box3d/rebuild/loader-unit-20261022-g2/receipt.json",
     "formalPatchIntake": "PASS_2_POSITIVE_24_EXPECTED_REJECTIONS_WITH_NEW_RUNTIME_PATCH_IDENTITY",
-    "stLoaderRealWasm": "PASS_20_NEW_PATCHED_NODE_LOAD_60STEP_DISPOSE_CYCLES_FILESYSTEM_TRANSPORT",
-    "stLoaderRealWasmEvidence": "docs/physics/box3d/rebuild/loader-real-wasm-20261022-g/loader-real-wasm.raw.json",
+    "stLoaderRealWasm": "PASS_20_CURRENT_I8_NODE_LOAD_60STEP_DISPOSE_CYCLES_FILESYSTEM_TRANSPORT",
+    "stLoaderRealWasmEvidence": "docs/physics/box3d/rebuild/loader-real-wasm-20261022-i/loader-real-wasm.raw.json",
     "stLoaderPreviousFailures": "First format check and invalid truthy factory cleanup regression retained; all affected checks rerun under f4 input hashes.",
     "patchedNativeDebug": "PASS_NARROW_UNSANITIZED_NATIVE",
     "patchedWasmDebugRelease": "PASS_FRESH_REAL_WASM_19_SHARED_INPUTS_54_UNITS_EACH_AND_FINITE_EXACT_COMPARISON",
     "patchedEvidence": "tools/physics/box3d/evidence/patch-staged-checkpoint-20261022-e/summary.json",
-    "patchChainSha256": "20dd450a4313774e1d934df9fa9ec3458df35d9ee314beffa9d846404cdb86bf",
+    "patchChainSha256": "434fb89494867f515051d5ac0dfc0c694556ba1f0da9ac3fc895a27097b1c7c7",
     "originalUBSan": "FAIL_PRESERVED_UPSTREAM_SSE2_MISALIGNED_DOUBLE_LOAD",
     "isolatedCandidateUBSan": "PASS_NARROW_FULL_NATIVE_FIXTURE_UBSAN_ONLY_NOT_DEFAULT_SANITIZER_QUALIFICATION",
     "isolatedCandidateASanLSan": "BLOCKED_LSAN_PTRACE",
-    "sourceScope": "Each receipt fingerprints its own source and scope. Real g WASM, 3 h2 runtime builds, 15 HEADLESS bootstrap tests and 8 VM bundle cases are separate limited results. Prior failed missing-vendor/bundle/declaration attempts remain retained. No engine Box3D world or browser physics acceptance.",
+    "sourceScope": "Receipts bind each result to its own source. Earlier g/e raw and runtime h builds are historical to their identities, not current i8 physics or AIR world results. No full engine world/browser acceptance.",
     "snapshotFoundation": "PASS_LIMITED_G_DEBUG_RELEASE_21_INPUTS_55_COMPILE_UNITS_EACH",
     "snapshotEvidence": "tools/physics/box3d/evidence/snapshot-checkpoint-20261022-g/summary.json",
-    "contactGeometryEpoch": "BLOCKED_UNEXPOSED_ORIGINAL_GENERATION_BASIS_PROPOSAL_ONLY",
+    "contactGeometryEpoch": "PASS_SCOPED_I8_GENERATION_BASIS_617_SAMPLES_EACH_DEBUG_RELEASE_NOT_FULL_C21",
     "appPreparation": "PASS_27_MOCKED_TYPESCRIPT_LIFECYCLE_CASES_AND_FULL_TSC",
     "appBootstrapRegression": "PASS_15_OF_15_ACTUAL_RESTORED_MAIN_HEADLESS_JSDOM_TESTS",
     "appPreparationEvidence": "docs/physics/box3d/rebuild/app-preparation-20261022-h3/receipt.json",
@@ -1025,7 +1024,19 @@
     "defaultDeclarationsEvidence": "docs/physics/box3d/rebuild/default-declarations-20261022-h/receipt.json",
     "actualRuntimeImport": "PASS_8_ACTUAL_NODE_VM_ESM_CASES_ZERO_INTERCEPTED_REQUESTS_NOT_BROWSER",
     "actualRuntimeImportEvidence": "docs/physics/box3d/rebuild/runtime-import-20261022-h/review-receipt.json",
-    "runtimeArtifactsLibrary": "libfile_1bd16f266d908191b90831c71d5a2423"
+    "runtimeArtifactsLibrary": "libfile_1bd16f266d908191b90831c71d5a2423",
+    "contactGeometryIndependentReview": "docs/physics/box3d/rebuild/geometry-independent-review-20261022-i/receipt.json",
+    "worldControl": "PASS_34_MOCK_NATIVE_CASES_NOT_REAL_ENGINE_OR_WASM",
+    "worldControlEvidence": "docs/physics/box3d/rebuild/world-control-diagnostic-staleness-20261022/green/receipt.json",
+    "currentStaging": "PASS_I8_25_INPUTS_57_UNITS_12_EVIDENCE_16_NEGATIVE_CASES_ONE_REAL_NODE_LOADER_CYCLE",
+    "currentStagingEvidence": "docs/physics/box3d/rebuild/assets-staging-20261022-i/receipt.json",
+    "historicalGPatchChainSha256": "20dd450a4313774e1d934df9fa9ec3458df35d9ee314beffa9d846404cdb86bf",
+    "currentSchemaSha256": "4f9b7cb25d7144734e827bb3c40384f46124649dec3e56a9b42d034abdbae888",
+    "stLoaderCurrentUnitEvidence": "docs/physics/box3d/rebuild/loader-unit-20261022-i/receipt.json",
+    "contactGeometryEvidence": "tools/physics/box3d/evidence/geometry-checkpoint-20261022-i/summary.json",
+    "currentGeometryArtifactsLibrary": "libfile_7fd34247547c8191b9e121f5226fdb21",
+    "physicsSystemAssignments": "PASS_20_ACTUAL_ENGINE_CLASS_MOCK_WORLD_CASES_NOT_FULL_C36",
+    "physicsSystemAssignmentEvidence": "docs/physics/box3d/rebuild/physics-system-control-20261022/green/receipt.json"
   },
   "contractDesign": {
     "publicSpecMembers": 166,
@@ -1033,14 +1044,18 @@
     "draftRequiredSubcases": 84,
     "expandedInventoryFrozen": false,
     "path": "docs/physics/box3d/contracts/",
-    "giftWorkshop": "docs/physics/box3d/contracts/gift-workshop/"
+    "giftWorkshop": "docs/physics/box3d/contracts/gift-workshop/",
+    "auxiliaryRequiredUnitCategories": [
+      "B3-U01",
+      "B3-U02"
+    ]
   },
   "persistentCheckpoint": {
-    "libraryFileId": "libfile_322991e6ac988191b1da3e5e1e481e46",
-    "sha256": "69572d107fd042d5f4cf73d2f69019b496d5e19ba59af67bf2e78fc086ae6661",
-    "localHead": "e20606593e715992155a78f2c97614ab7cce7bbf",
-    "libraryDownloadAndIndependentRestore": "PASS_4176_FILES_5_ARCHIVE_PAYLOADS",
-    "scope": "g raw snapshots and application preparation; current build failures and C21 proposal preserved, not full physics acceptance."
+    "libraryFileId": "libfile_6b8b759339308191be6e7fce03601308",
+    "sha256": "25adde1e5a9467a24dd482e57e80adf6044a6ae696c967d2717a4ca1b3eb0045",
+    "localHead": "37a74a767a1f3ec504e06aec940f985bf0206b02",
+    "libraryDownloadAndIndependentRestore": "PASS_4680_FILES_4_ARCHIVE_PAYLOADS",
+    "scope": "Actual runtime/CPU evidence and source, not real Box3D engine world/browser acceptance."
   },
   "additionalOriginalMainSources": {
     "count": 445,
@@ -1051,5 +1066,12 @@
       "docs/physics/box3d/rebuild/main-bootstrap-tests-source-receipt.json",
       "docs/physics/box3d/rebuild/main-vendor-source-receipt.json"
     ]
+  },
+  "incrementalSourceCheckpoint": {
+    "libraryFileId": "libfile_b6f41dffaabc8191bdf12c5a735785e3",
+    "sourceCommit": "fc279c0f37598b194ef828c6caf5421008f647fd",
+    "requiresBaseLibrary": "libfile_6b8b759339308191be6e7fce03601308",
+    "restore": "PASS_4701_FILES",
+    "receipt": "docs/physics/box3d/rebuild/library-incremental-source-20261022-i.json"
   }
 }

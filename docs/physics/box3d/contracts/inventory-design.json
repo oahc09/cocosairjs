@@ -1067,5 +1067,29 @@
   ],
   "debugReleaseCriticalCoverage": "Freeze explicit critical cases in final expanded inventory; no native-GCC substitution.",
   "historical861CellsImported": false,
-  "expandedRequiredCellCount": null
+  "expandedRequiredCellCount": null,
+  "auxiliaryRequiredTests": [
+    {
+      "id": "B3-U01",
+      "required": true,
+      "status": "NOT_RUN",
+      "firstPhase": "M2",
+      "firstTask": "T09",
+      "realNativeRequired": true,
+      "countedAsNewParentCategory": false,
+      "contract": "Actual binding body under the real PhysicsSystem: call order, one native step per fixed tick, dt, pause and accumulator. No dependency on unimplemented Collider/event adapters.",
+      "sourceSection": "v1.2 §9.1 fixed subcases"
+    },
+    {
+      "id": "B3-U02",
+      "required": true,
+      "status": "NOT_RUN",
+      "firstPhase": "M2",
+      "firstTask": "T12",
+      "realNativeRequired": true,
+      "countedAsNewParentCategory": false,
+      "contract": "Actual minimal native body/shape ownership, safe queue, repeated disposal and app-close guards. Not a substitute for later event-callback destruction cases.",
+      "sourceSection": "v1.2 §9.1 fixed subcases"
+    }
+  ]
 }

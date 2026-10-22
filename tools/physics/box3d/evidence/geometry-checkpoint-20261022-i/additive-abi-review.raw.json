@@ -1,0 +1,53 @@
+{
+  "status": "PASS_ADDITIVE_SOURCE_REVIEW",
+  "scope": "Source/schema preservation and new symbols; core b3Contact/native snapshot layout intentionally differs",
+  "preservedDeclarations": [
+    "const char* air_b3_core_sha(void);",
+    "const char* air_b3_schema_sha(void);",
+    "const char* air_b3_patch_chain_sha(void);",
+    "uint32_t air_b3_abi_version(void);",
+    "uint32_t air_b3_world_create(float gx, float gy, float gz);",
+    "int air_b3_world_valid(uint32_t world);",
+    "int air_b3_world_destroy(uint32_t world);",
+    "int air_b3_world_step(uint32_t world, float dt, int substeps);",
+    "int air_b3_world_counts(uint32_t world, uint32_t* out);",
+    "void air_b3_live_bytes(uint32_t* out);",
+    "int air_b3_body_create(uint32_t world, int type, const float* input, int enable_sleep, uint32_t* out);",
+    "int air_b3_body_valid(uint32_t lo, uint32_t hi);",
+    "int air_b3_body_destroy(uint32_t lo, uint32_t hi);",
+    "int air_b3_body_snapshot(uint32_t lo, uint32_t hi, float* out);",
+    "int air_b3_body_velocity(uint32_t lo, uint32_t hi, float x, float y, float z);",
+    "int air_b3_body_impulse(uint32_t lo, uint32_t hi, float x, float y, float z);",
+    "int air_b3_shape_sphere(uint32_t lo, uint32_t hi, float radius, float density, uint32_t* out);",
+    "int air_b3_shape_box(uint32_t lo, uint32_t hi, float hx, float hy, float hz, float density, uint32_t* out);",
+    "int air_b3_shape_valid(uint32_t lo, uint32_t hi);",
+    "int air_b3_shape_destroy(uint32_t lo, uint32_t hi);",
+    "int air_b3_ray_closest(uint32_t world, const float* input, float* out, uint32_t* shape);",
+    "int air_b3_body_transforms(uint32_t world, const uint32_t* ids, int count, float* out);",
+    "int air_b3_world_event_size(uint32_t world, uint32_t* out);",
+    "int air_b3_world_events(uint32_t world, uint32_t* out, int capacity);",
+    "int air_b3_body_contact_size(uint32_t world, uint32_t lo, uint32_t hi, uint32_t* out);",
+    "int air_b3_body_contacts(uint32_t world, uint32_t lo, uint32_t hi, uint32_t* out, int capacity);",
+    "int air_b3_contact_valid(uint32_t world, const uint32_t* words);",
+    "int air_b3_shape_events(uint32_t lo, uint32_t hi, int flags);",
+    "int air_b3_shape_sphere_ex(uint32_t lo, uint32_t hi, float x, float y, float z, float radius, float density, int sensor, uint32_t* out);"
+  ],
+  "preservedStatuses": {
+    "0": "OK",
+    "1": "INVALID_ID",
+    "2": "INVALID_ARGUMENT",
+    "3": "NATIVE_CREATION_FAILED",
+    "4": "INSUFFICIENT_CAPACITY",
+    "5": "ALLOCATION_FAILED"
+  },
+  "allOldSchemaFieldsPreserved": true,
+  "oldShimAndSnapshotCBytesPreserved": true,
+  "preservedExports": 31,
+  "addedExports": [
+    "_air_b3_contact_geometry",
+    "_air_b3_world_geometry_counters"
+  ],
+  "oldSchemaSha256": "3aa11fe9d3d4b0269105bddbfebd8a1d09c9a3d162d88cb416d35d4304d1f30a",
+  "currentSchemaSha256": "4f9b7cb25d7144734e827bb3c40384f46124649dec3e56a9b42d034abdbae888",
+  "scriptSha256": "2456303d29b57a29fba09df4dcd0e6c8e6e0b072cb2ba6b8290820aacf6db2bb"
+}

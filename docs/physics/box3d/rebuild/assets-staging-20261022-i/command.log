@@ -1,0 +1,14 @@
+✔ unselected builds do not read absent native inputs or create output/assets (2.321224ms)
+✔ actual audited native input produces trusted descriptor and exact separate ST files (295.705575ms)
+✔ build injection is exact and lazy, leaves other modules untouched and resolves assets from runtime URL (50.364635ms)
+✔ corrupt/missing assets, stale identities, failed/incomplete inputs and audit tampering fail before copy (651.576593ms)
+✔ existing old schema and symlink/overlap destinations cannot be silently distributed (93.701087ms)
+✔ all existing destination entries are checked before any output bytes change (103.779147ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1422.519252

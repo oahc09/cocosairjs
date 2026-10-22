@@ -1,0 +1,33 @@
+PASS tools/verify/box3d/physics-system-control.test.ts (11.512 s)
+  Box3D native-first assignments on actual PhysicsSystem source
+    ✓ sleep commits only after the native setter returns (4 ms)
+    ✓ rejected sleep assignment preserves public cached value (18 ms)
+    ✓ gravity commits a copy after native success without replacing the cached Vec3 (3 ms)
+    ✓ rejected non-aliased gravity preserves the last public value and identity (2 ms)
+    ✓ successful material replacement commits after native acceptance and transfers only the system listener (3 ms)
+    ✓ failed material replacement leaves the old pointer/listener and never attaches the rejected material (2 ms)
+    ✓ repeated assignment of the same accepted material keeps one actual event listener (2 ms)
+    ✓ pre-world sleep/gravity still stage initialization; material cannot commit without a world (1 ms)
+  unchanged legacy backend builtin ordering
+    ✓ success preserves cache-first observations and the existing old-material listener behavior (1 ms)
+    ✓ backend rejection retains the original cache-first failure behavior (3 ms)
+  unchanged legacy backend cannon.js ordering
+    ✓ success preserves cache-first observations and the existing old-material listener behavior (25 ms)
+    ✓ backend rejection retains the original cache-first failure behavior (2 ms)
+  unchanged legacy backend bullet ordering
+    ✓ success preserves cache-first observations and the existing old-material listener behavior
+    ✓ backend rejection retains the original cache-first failure behavior (2 ms)
+  unchanged legacy backend physx ordering
+    ✓ success preserves cache-first observations and the existing old-material listener behavior (1 ms)
+    ✓ backend rejection retains the original cache-first failure behavior (2 ms)
+  explicit unchanged non-transactional boundaries, not C36 acceptance
+    ✓ mutating the getter Vec3 changes the cache before an aliased rejected assignment (1 ms)
+    ✓ actual material EVENT_UPDATE occurs after mutation; native rejection does not undo the material (4 ms)
+    ✓ resetConfiguration still mutates caches before native calls and is not a transaction (2 ms)
+    ✓ an unexpectedly throwing material.on is not claimed as a native rollback (1 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       20 passed, 20 total
+Snapshots:   0 total
+Time:        12.005 s
+Ran all test suites.

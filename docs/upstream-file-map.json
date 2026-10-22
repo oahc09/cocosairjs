@@ -2,7 +2,7 @@
   "meta": {
     "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
     "note": "Air Path 与 Upstream Path 一致(前缀 src/)；modified 文件另行标注 reason；upstreamPath=null 表示该行为 Air 原创文件或上游产物（仓库内无对应源文件），必须 modified:true 并在 reason 说明出处",
-    "modifiedCount": 236,
+    "modifiedCount": 244,
     "pal": {
       "revision": "9f0e30acb31f6d670f2c0bf818d61039846a2860",
       "license": "MIT",
@@ -5131,8 +5131,8 @@
       "airPath": "src/cocos/physics/framework/physics-system.ts",
       "upstreamPath": "cocos/physics/framework/physics-system.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "2026-10-22 Box3D-only native-first allowSleep/gravity/default material assignment: commit public cached values after native acceptance, and transfer the default-material listener only after success. All other backend branches retain original cache-first order. Mutable gravity aliases, existing material EVENT_UPDATE and resetConfiguration remain explicitly outside this narrow transaction."
     },
     {
       "airPath": "src/cocos/physics/spec/i-character-controller.ts",
@@ -9893,6 +9893,55 @@
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
       "modified": true,
       "reason": "AIR-owned declarations for the internal optional ST loader; strict browser-ambient consumer validated independently of runtime declarations."
+    },
+    {
+      "airPath": "src/air/physics/box3d/world.ts",
+      "upstreamPath": null,
+      "baseline": "AIR original",
+      "modified": true,
+      "reason": "2026-10-22 Box3D rebuild: Internal unregistered IPhysicsWorld control adapter with native ownership, one-step diagnostics, copied debug primitives, material rollback and explicit unsupported operations; not yet a real qualified engine/WASM integration."
+    },
+    {
+      "airPath": "src/air/physics/box3d/world-binding.ts",
+      "upstreamPath": null,
+      "baseline": "AIR original",
+      "modified": true,
+      "reason": "2026-10-22 Box3D rebuild: Fail-closed runtime admission contract for required live native world controls; g/i8 foundation alone is insufficient."
+    },
+    {
+      "airPath": "src/air/physics/box3d/registration.ts",
+      "upstreamPath": null,
+      "baseline": "AIR original",
+      "modified": true,
+      "reason": "2026-10-22 Box3D rebuild: Explicit factory/selector registration helper, not yet activated from public feature."
+    },
+    {
+      "airPath": "src/air/physics/box3d/debug.ts",
+      "upstreamPath": null,
+      "baseline": "AIR original",
+      "modified": true,
+      "reason": "2026-10-22 Box3D rebuild: Copied and validated native debug primitives; no fake renderer or presentation success."
+    },
+    {
+      "airPath": "src/air/physics/box3d/unsupported.ts",
+      "upstreamPath": null,
+      "baseline": "AIR original",
+      "modified": true,
+      "reason": "2026-10-22 Box3D rebuild: Explicit error constructors for unsupported component/query paths rather than selector no-op fallbacks."
+    },
+    {
+      "airPath": "src/air/physics/box3d/binding/facade.mjs",
+      "upstreamPath": null,
+      "baseline": "AIR original",
+      "modified": true,
+      "reason": "2026-10-22 Box3D rebuild: AIR original scalar WASM facade with ownership tokens and copied native snapshots; reviewed staged generation-basis geometry is exposed separately from unresolved old anchor fields."
+    },
+    {
+      "airPath": "src/air/physics/box3d/binding/facade.d.mts",
+      "upstreamPath": null,
+      "baseline": "AIR original",
+      "modified": true,
+      "reason": "2026-10-22 Box3D rebuild: Typed AIR original scalar WASM facade and immutable contact geometry generation-basis contract."
     }
   ]
 }

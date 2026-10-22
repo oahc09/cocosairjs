@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS_TRUE_PARENT_NONFORCE_REMOTE_CHECKPOINT",
+  "verifiedAt": "2026-10-22T06:53:27.037Z",
+  "repository": "oahc09/cocosairjs",
+  "branch": "feat/box3d-rebuild-20261022",
+  "commit": "1dabac863fb5bdfadb72a3a6e4fffdf2cf828676",
+  "parent": "e3ccf2acb088cd6a127de1079e28b3de9ad9a603",
+  "tree": "ed9310c7410943157d9ea1e8a6278241249f478f",
+  "unchangedMain": "b573be0741db9e2a13d38ce7e65870b97a1f5fbc",
+  "localSourceCommit": "37a74a767a1f3ec504e06aec940f985bf0206b02",
+  "localHistoryPushed": false,
+  "treeVerification": {
+    "status": "PASS_EXACT_DELTA_AND_UNCHANGED_SIBLINGS",
+    "deltaFiles": 82,
+    "unchangedEntries": 546,
+    "directories": 21,
+    "apiReads": 31,
+    "verifiedAt": "2026-10-22T06:52:52.902Z"
+  },
+  "exactMainFilesNotReuploaded": 425,
+  "sourceLibrary": "libfile_6b8b759339308191be6e7fce03601308",
+  "sourceLibrarySha256": "25adde1e5a9467a24dd482e57e80adf6044a6ae696c967d2717a4ca1b3eb0045",
+  "artifactLibrary": "libfile_1bd16f266d908191b90831c71d5a2423",
+  "scope": "Actual runtime builds and finite CPU/bootstrap evidence; no real engine Box3D world adapter or browser acceptance.",
+  "merge": false,
+  "deployment": false
+}

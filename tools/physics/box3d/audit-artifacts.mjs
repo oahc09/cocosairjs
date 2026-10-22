@@ -39,7 +39,9 @@ const expectedSources = [
         .map((name) => relative(root, resolve(stagedCore, 'src', name))),
     'tools/physics/box3d/native/air_box3d.c',
     'tools/physics/box3d/native/snapshot.c',
+    'tools/physics/box3d/native/geometry.c',
     'tools/physics/box3d/native/wasm_entry.c',
+    'tools/physics/box3d/native/geometry_contract.c',
 ].sort();
 assert.deepEqual(commands.map((c) => relative(root, c.file)).sort(), expectedSources);
 const requiredFlags = ['-msimd128', '-msse2', '-fno-fast-math', '-ffp-contract=off'];
@@ -91,6 +93,42 @@ assert.equal(ownership.worldLifetimeCycles.length, 128);
 const snapshots = json('wasm-snapshot-contract.raw.json');
 assert.equal(snapshots.status, 'PASS');
 assert.equal(snapshots.identity.schemaSha256, manifest.schemaSha256);
+const geometry = json('wasm-geometry-contract.raw.json');
+assert.equal(geometry.status, 'PASS');
+assert.deepEqual(fileHash('geometry-samples.raw.jsonl'), {
+    path: geometry.samplesArtifact.path,
+    bytes: geometry.samplesArtifact.bytes,
+    sha256: geometry.samplesArtifact.sha256,
+});
+assert.equal(read('geometry-samples.raw.jsonl').toString().trim().split('\n').length, geometry.samplesArtifact.records);
+for (const field of ['coreSha', 'bindingBaseSha', 'schemaSha256', 'patchChainSha256', 'abiVersion', 'variant'])
+    assert.equal(geometry.identity[field], manifest[field]);
+assert.equal(
+    geometry.fixtureSha256,
+    sha256(readFileSync(resolve(root, 'tools/physics/box3d/wasm-geometry-contract.mjs'))),
+);
+assert.equal(
+    geometry.samplesArtifact.records,
+    Object.values(geometry.observations).reduce((sum, item) => sum + (item.contactSamples ?? 0), 0),
+);
+const nativeGeometry = json('native-geometry-contract.raw.json');
+assert.equal(nativeGeometry.status, 'PASS');
+assert.equal(nativeGeometry.pointerBytes, 4);
+for (const field of [
+    'zeroDtDistinctRevision',
+    'invalidLockedCOMNoWrite',
+    'actualContactSlotReuseInitialized',
+    'uint64ExhaustionFailsClosed',
+    'ccdRetainsFloorGeneration',
+    'firstTOINoFabricatedManifold',
+])
+    assert.equal(nativeGeometry[field], true, `Missing native geometry assertion: ${field}`);
+assert.deepEqual(nativeGeometry, receipt.geometryContract);
+assert.ok(
+    receipt.commands.some(
+        (entry) => entry.args.some((arg) => arg.endsWith('air_box3d_geometry_contract.cjs')) && entry.exitCode === 0,
+    ),
+);
 const report = {
     schemaVersion: 1,
     status: 'PASS',
@@ -121,6 +159,10 @@ const report = {
         'wasm-contract.raw.json',
         'wasm-ownership-contract.raw.json',
         'wasm-snapshot-contract.raw.json',
+        'wasm-geometry-contract.raw.json',
+        'native-geometry-contract.raw.json',
+        'air_box3d_geometry_contract.cjs',
+        'geometry-samples.raw.jsonl',
     ].map(fileHash),
 };
 writeFileSync(reportPath, JSON.stringify(report, null, 2) + '\n');

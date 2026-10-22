@@ -263,3 +263,22 @@ node tools/physics/box3d/wasm-contact-growth-contract.mjs <debug-build> <new-deb
 node tools/physics/box3d/wasm-contact-growth-contract.mjs <release-build> <new-release-growth-output>
 node tools/physics/box3d/compare-snapshot-builds.mjs <debug-build> <release-build> <debug-growth-output> <release-growth-output> <new-comparison-output>
 ```
+
+## Geometry-only generation epoch candidate
+
+The [generation geometry contract](geometry-epoch-contract.md) describes the later
+strictly staged five-file core patch, separate 25-word wire, fail-closed uint64
+exhaustion, copied geometry facade and independent sphere/finite-box oracle.
+Earlier g raw fields and results above remain historical and unchanged. The new
+`contact.geometry` extension can provide generation world/local points for its
+admitted narrow families; it does not reinterpret current COM as an old anchor
+basis, qualify arbitrary hull features/mesh/compound/heightfield, or close full C21.
+
+Fresh Debug/Release builds run both `native/geometry_contract.c` as a separate
+Node/WASM32 executable and `wasm-geometry-contract.mjs` against the actual product
+module. `geometry-intake-contract.mjs <new-output>` verifies the second exact patch
+and real stale-g/forged identity rejection. Artifact audit now hashes both geometry
+raw reports and the qualification single-file CJS, separately from the product's
+four artifacts. Failed setup/assertion attempts and their exact source variants
+remain retained. Consult the new evidence summary for actual statuses, not this
+capability description.

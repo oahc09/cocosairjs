@@ -1,0 +1,17 @@
+{
+  "recordedAt": "2026-10-22T07:26:21.022723+00:00",
+  "checks": [
+    {
+      "mode": "debug",
+      "currentSourceInputsMatch": 25,
+      "allNineCommandsExitZero": true,
+      "buildReceiptSHA256": "6ea03c6676de29d23c1d7dad410f86ad7f49be4375a954e1ef9d0881ee482d30"
+    },
+    {
+      "mode": "release",
+      "currentSourceInputsMatch": 25,
+      "allNineCommandsExitZero": true,
+      "buildReceiptSHA256": "9189ce9441dcb7b47e2184ecb9791402645cc47cdc21ae44366fdf80ea031332"
+    }
+  ]
+}

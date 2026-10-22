@@ -29,5 +29,7 @@
   "_air_b3_body_contacts",
   "_air_b3_contact_valid",
   "_air_b3_shape_events",
-  "_air_b3_shape_sphere_ex"
+  "_air_b3_shape_sphere_ex",
+  "_air_b3_contact_geometry",
+  "_air_b3_world_geometry_counters"
 ]

@@ -1,0 +1,592 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS_NARROW_GENERATION_GEOMETRY_CANDIDATE",
+  "createdAt": "2026-10-22T07:23:22.579022+00:00",
+  "scope": "Cached manifold generation epoch only. Finite sphere/sphere and finite box interior face; not complete C21/T07/T15/G1.",
+  "identity": {
+    "patchChainSha256": "434fb89494867f515051d5ac0dfc0c694556ba1f0da9ac3fc895a27097b1c7c7",
+    "coreSha": "efca0c184d40fd6a82016983f1601c4d23965867",
+    "bindingBaseSha": "5d5a3af049cccd9948b2b55bac4342414af0ef64",
+    "abiVersion": 1,
+    "schemaSha256": "4f9b7cb25d7144734e827bb3c40384f46124649dec3e56a9b42d034abdbae888"
+  },
+  "currentBuildInputCount": 25,
+  "compiledSourceCountPerWasmMode": 57,
+  "statuses": {
+    "nativeDebug": "PASS_CURRENT_SOURCE",
+    "nativeRelease": "PASS_CURRENT_SOURCE",
+    "wasmDebug": "PASS_CURRENT_SOURCE",
+    "wasmRelease": "PASS_CURRENT_SOURCE",
+    "artifactAudit": "PASS_12_EVIDENCE_ITEMS_PER_MODE",
+    "independentAnalyticOracle": "PASS_617_SAMPLES_PER_MODE",
+    "offlineMatrixOracle": "PASS_617_SAMPLES_PER_MODE",
+    "exactDebugReleaseGeometry": "PASS_ALL_617_JSONL_ROWS_BYTE_IDENTICAL",
+    "gPhysicsOwnershipRegression": "PASS_FINITE_EXACT_PHYSICS_ALLOCATION_SIZES_DIFFER_SEPARATELY",
+    "intake": "PASS_26_EXISTING_PLUS_10_GEOMETRY_CASES",
+    "layout": "PASS_NATIVE_AND_REAL_WASM32_ADDITIVE_OLD_OFFSETS",
+    "nativeUBSanOnly": "PASS_DIAGNOSTIC_ONLY",
+    "ASanLSanCurrentIncrement": "NOT_RUN_HISTORICAL_BLOCKED_LSAN_PTRACE_PRESERVED",
+    "originalSanitizer": "FAIL_PRESERVED",
+    "browser": "BLOCKED_INFRASTRUCTURE",
+    "strictCsp": "NOT_RUN",
+    "nativeSnapshotMigration": "NOT_IMPLEMENTED_NEW_LAYOUT_INCOMPATIBLE",
+    "fullC21": "IN_PROGRESS",
+    "C22": "INCOMPLETE",
+    "T07": "INCOMPLETE",
+    "T09WorldBridges": "NOT_IMPLEMENTED_THIS_INCREMENT",
+    "G1": "INCOMPLETE"
+  },
+  "finalBuilds": {
+    "debug": {
+      "directory": "tools/physics/box3d/output/geometry-wasm-debug-20261022-i8",
+      "receipt": {
+        "path": "tools/physics/box3d/output/geometry-wasm-debug-20261022-i8/build-receipt.json",
+        "bytes": 29146,
+        "sha256": "6ea03c6676de29d23c1d7dad410f86ad7f49be4375a954e1ef9d0881ee482d30"
+      },
+      "manifest": {
+        "path": "tools/physics/box3d/output/geometry-wasm-debug-20261022-i8/manifest.json",
+        "bytes": 3048,
+        "sha256": "7934a76dd4813e545bc21c0c66729a1318aaf4d646599c612f78c1cd4c49e79d"
+      },
+      "artifactAudit": {
+        "path": "tools/physics/box3d/output/geometry-wasm-debug-20261022-i8/artifact-audit.raw.json",
+        "bytes": 15920,
+        "sha256": "45a2e8f1025793046d23f8c059f931890b37b4ab588e81ca5822efde2528908c"
+      },
+      "artifacts": [
+        {
+          "path": "box3d-st.mjs",
+          "sha256": "f5e28d388a877b9a46e5e38aa7e80fc9ec9b57e863688b46b7a63a08d190acd7",
+          "bytes": 68299
+        },
+        {
+          "path": "box3d-st.wasm",
+          "sha256": "d363fd0e1d6fe80510b0c4233f0b6de61750685e56642ce9eb7e817bf749cbe0",
+          "bytes": 3843097
+        },
+        {
+          "path": "facade.mjs",
+          "sha256": "f2be11fadb9fa7ced6274b3f57431c5787825349031c8c0284381271697ae320",
+          "bytes": 28917
+        },
+        {
+          "path": "facade.d.mts",
+          "sha256": "253bc08e000f2ff017618fd64346d14077c1ad1abb3c6f19294e005145d852c2",
+          "bytes": 8665
+        }
+      ]
+    },
+    "release": {
+      "directory": "tools/physics/box3d/output/geometry-wasm-release-20261022-i8",
+      "receipt": {
+        "path": "tools/physics/box3d/output/geometry-wasm-release-20261022-i8/build-receipt.json",
+        "bytes": 29165,
+        "sha256": "9189ce9441dcb7b47e2184ecb9791402645cc47cdc21ae44366fdf80ea031332"
+      },
+      "manifest": {
+        "path": "tools/physics/box3d/output/geometry-wasm-release-20261022-i8/manifest.json",
+        "bytes": 3047,
+        "sha256": "4e5931a285b33b8041d6b15c2ce2cd2be04b9bf6a7ac811fd771702a1860b3fb"
+      },
+      "artifactAudit": {
+        "path": "tools/physics/box3d/output/geometry-wasm-release-20261022-i8/artifact-audit.raw.json",
+        "bytes": 15922,
+        "sha256": "2c7aed304103e439adce7ceaca097d74ad159c5f4e6468a459fd10bc64fe3623"
+      },
+      "artifacts": [
+        {
+          "path": "box3d-st.mjs",
+          "sha256": "2daa5dacff939ebae919f68cbbcd7bbf5d080c848df06471d439aa4e36fd14ab",
+          "bytes": 39124
+        },
+        {
+          "path": "box3d-st.wasm",
+          "sha256": "19b7d9bcab27b331b757659d2f373bc29180b6c27ba0cf8e6a12f41021214752",
+          "bytes": 479596
+        },
+        {
+          "path": "facade.mjs",
+          "sha256": "f2be11fadb9fa7ced6274b3f57431c5787825349031c8c0284381271697ae320",
+          "bytes": 28917
+        },
+        {
+          "path": "facade.d.mts",
+          "sha256": "253bc08e000f2ff017618fd64346d14077c1ad1abb3c6f19294e005145d852c2",
+          "bytes": 8665
+        }
+      ]
+    }
+  },
+  "samples": {
+    "debug": {
+      "artifact": {
+        "path": "tools/physics/box3d/output/geometry-wasm-debug-20261022-i8/geometry-samples.raw.jsonl",
+        "bytes": 2434215,
+        "sha256": "cbb48189c1211e650e30185aa7202e3b8865178b718b80be47caadbdc7f74bb6"
+      },
+      "offlineAudit": {
+        "status": "PASS",
+        "startedAt": "2026-10-22T07:11:26.341Z",
+        "records": 617,
+        "points": 617,
+        "maxPointError": 1.7714655501377408e-06,
+        "maxNormalError": 3.5486439173837425e-06,
+        "maxSeparationError": 2.4005519788650176e-07,
+        "branches": {
+          "generated": 136,
+          "recycled": 481,
+          "sleeping": 86
+        },
+        "inputs": {
+          "sampleSha256": "cbb48189c1211e650e30185aa7202e3b8865178b718b80be47caadbdc7f74bb6",
+          "contractSha256": "c18c699b047bf4b1dbb54f318ca956449da0cbe32b5b18a4c1ad70f3f8c416da",
+          "scriptSha256": "fe3800e621b45e34a030e45800e900e5c213e5697e26fa6611fad27aae2ac680"
+        },
+        "identity": {
+          "schemaVersion": 1,
+          "patchChainSha256": "434fb89494867f515051d5ac0dfc0c694556ba1f0da9ac3fc895a27097b1c7c7",
+          "coreSha": "efca0c184d40fd6a82016983f1601c4d23965867",
+          "bindingBaseSha": "5d5a3af049cccd9948b2b55bac4342414af0ef64",
+          "abiVersion": 1,
+          "schemaSha256": "4f9b7cb25d7144734e827bb3c40384f46124649dec3e56a9b42d034abdbae888",
+          "variant": "st-simd",
+          "patchLockSha256": "d6be04611f70223e21b1bcffc635088f49a5647739e97c2f9ce089091748ea77",
+          "appliedPatches": [
+            {
+              "id": "sse2-loadv-float-alignment-v1",
+              "path": "tools/physics/box3d/patches/sse2-loadv-alignment.patch",
+              "sha256": "e5c4e5f2ae7f015cf62dfc2de5a36af73cc15d9b0ca0118fc0259c7d1f0b1403",
+              "files": [
+                {
+                  "path": "src/simd_sse2.h",
+                  "beforeSha256": "cc18b1f4f90fdceebb84b57f77e04c03009851a3a4c66439169318aa22a02719",
+                  "afterSha256": "2295eae13388e656dc71396530ea928ecc575c8a86009182d76a9ef69333e8f6"
+                }
+              ]
+            },
+            {
+              "id": "contact-generation-geometry-v2",
+              "path": "tools/physics/box3d/patches/contact-geometry-epoch.patch",
+              "sha256": "4ca29eed58cd20d4134bf55bb9b9ec25fbb322b731d0a319ad2567225463d094",
+              "files": [
+                {
+                  "path": "include/box3d/types.h",
+                  "beforeSha256": "7f888e6a75dff5fd6b79f9e0dad79c9b5a769f47caedb19d71e027a751fd3664",
+                  "afterSha256": "15a99589d8a54d80ff600ade7dc48ba56b02a4468e518e6de54b65d31f674f68"
+                },
+                {
+                  "path": "src/contact.h",
+                  "beforeSha256": "691d5c92e12c090f75f42310a7299aea1c044ab0f195fda9a2161e615191f895",
+                  "afterSha256": "c70b270b50770c60bab6d20f2d17e7eb26e85edf8a8ba6b314c8c0982dd69db3"
+                },
+                {
+                  "path": "include/box3d/box3d.h",
+                  "beforeSha256": "3edb719e280ae09ff6fd225dbab6642ab7f5d68207aebd1a81a7d19827a22574",
+                  "afterSha256": "0a1dbc372cbca9d30eee09a7571d20991ef84e8f3d91fb46dfdd21e5e1c42632"
+                },
+                {
+                  "path": "src/contact.c",
+                  "beforeSha256": "6d13719b6de73d8d2d2b5a7749fa1c4180480191b28afdd2e872aee6fedc9cbe",
+                  "afterSha256": "25d910b2c9e99cd2b9b571a45ec9c0161d4681faf04375ca770d4c138402b42b"
+                },
+                {
+                  "path": "src/physics_world.c",
+                  "beforeSha256": "f96c0a3a11d3b9818ad81df8c44be26bf069a9f11335d7fbcbcbf0d45bcff454",
+                  "afterSha256": "c7d679cf8051b59fee54c8b76ee63131f9c8c7d1d01a71f241827e53775939da"
+                }
+              ]
+            }
+          ],
+          "artifacts": [
+            {
+              "path": "box3d-st.mjs",
+              "sha256": "f5e28d388a877b9a46e5e38aa7e80fc9ec9b57e863688b46b7a63a08d190acd7",
+              "bytes": 68299
+            },
+            {
+              "path": "box3d-st.wasm",
+              "sha256": "d363fd0e1d6fe80510b0c4233f0b6de61750685e56642ce9eb7e817bf749cbe0",
+              "bytes": 3843097
+            },
+            {
+              "path": "facade.mjs",
+              "sha256": "f2be11fadb9fa7ced6274b3f57431c5787825349031c8c0284381271697ae320",
+              "bytes": 28917
+            },
+            {
+              "path": "facade.d.mts",
+              "sha256": "253bc08e000f2ff017618fd64346d14077c1ad1abb3c6f19294e005145d852c2",
+              "bytes": 8665
+            }
+          ]
+        },
+        "completedAt": "2026-10-22T07:11:26.388Z"
+      }
+    },
+    "release": {
+      "artifact": {
+        "path": "tools/physics/box3d/output/geometry-wasm-release-20261022-i8/geometry-samples.raw.jsonl",
+        "bytes": 2434215,
+        "sha256": "cbb48189c1211e650e30185aa7202e3b8865178b718b80be47caadbdc7f74bb6"
+      },
+      "offlineAudit": {
+        "status": "PASS",
+        "startedAt": "2026-10-22T07:12:58.476Z",
+        "records": 617,
+        "points": 617,
+        "maxPointError": 1.7714655501377408e-06,
+        "maxNormalError": 3.5486439173837425e-06,
+        "maxSeparationError": 2.4005519788650176e-07,
+        "branches": {
+          "generated": 136,
+          "recycled": 481,
+          "sleeping": 86
+        },
+        "inputs": {
+          "sampleSha256": "cbb48189c1211e650e30185aa7202e3b8865178b718b80be47caadbdc7f74bb6",
+          "contractSha256": "4be1fbaa1d82beff6efb17fe0c981656eb72216ce50cf124e78c553f025fd7ba",
+          "scriptSha256": "fe3800e621b45e34a030e45800e900e5c213e5697e26fa6611fad27aae2ac680"
+        },
+        "identity": {
+          "schemaVersion": 1,
+          "patchChainSha256": "434fb89494867f515051d5ac0dfc0c694556ba1f0da9ac3fc895a27097b1c7c7",
+          "coreSha": "efca0c184d40fd6a82016983f1601c4d23965867",
+          "bindingBaseSha": "5d5a3af049cccd9948b2b55bac4342414af0ef64",
+          "abiVersion": 1,
+          "schemaSha256": "4f9b7cb25d7144734e827bb3c40384f46124649dec3e56a9b42d034abdbae888",
+          "variant": "st-simd",
+          "patchLockSha256": "d6be04611f70223e21b1bcffc635088f49a5647739e97c2f9ce089091748ea77",
+          "appliedPatches": [
+            {
+              "id": "sse2-loadv-float-alignment-v1",
+              "path": "tools/physics/box3d/patches/sse2-loadv-alignment.patch",
+              "sha256": "e5c4e5f2ae7f015cf62dfc2de5a36af73cc15d9b0ca0118fc0259c7d1f0b1403",
+              "files": [
+                {
+                  "path": "src/simd_sse2.h",
+                  "beforeSha256": "cc18b1f4f90fdceebb84b57f77e04c03009851a3a4c66439169318aa22a02719",
+                  "afterSha256": "2295eae13388e656dc71396530ea928ecc575c8a86009182d76a9ef69333e8f6"
+                }
+              ]
+            },
+            {
+              "id": "contact-generation-geometry-v2",
+              "path": "tools/physics/box3d/patches/contact-geometry-epoch.patch",
+              "sha256": "4ca29eed58cd20d4134bf55bb9b9ec25fbb322b731d0a319ad2567225463d094",
+              "files": [
+                {
+                  "path": "include/box3d/types.h",
+                  "beforeSha256": "7f888e6a75dff5fd6b79f9e0dad79c9b5a769f47caedb19d71e027a751fd3664",
+                  "afterSha256": "15a99589d8a54d80ff600ade7dc48ba56b02a4468e518e6de54b65d31f674f68"
+                },
+                {
+                  "path": "src/contact.h",
+                  "beforeSha256": "691d5c92e12c090f75f42310a7299aea1c044ab0f195fda9a2161e615191f895",
+                  "afterSha256": "c70b270b50770c60bab6d20f2d17e7eb26e85edf8a8ba6b314c8c0982dd69db3"
+                },
+                {
+                  "path": "include/box3d/box3d.h",
+                  "beforeSha256": "3edb719e280ae09ff6fd225dbab6642ab7f5d68207aebd1a81a7d19827a22574",
+                  "afterSha256": "0a1dbc372cbca9d30eee09a7571d20991ef84e8f3d91fb46dfdd21e5e1c42632"
+                },
+                {
+                  "path": "src/contact.c",
+                  "beforeSha256": "6d13719b6de73d8d2d2b5a7749fa1c4180480191b28afdd2e872aee6fedc9cbe",
+                  "afterSha256": "25d910b2c9e99cd2b9b571a45ec9c0161d4681faf04375ca770d4c138402b42b"
+                },
+                {
+                  "path": "src/physics_world.c",
+                  "beforeSha256": "f96c0a3a11d3b9818ad81df8c44be26bf069a9f11335d7fbcbcbf0d45bcff454",
+                  "afterSha256": "c7d679cf8051b59fee54c8b76ee63131f9c8c7d1d01a71f241827e53775939da"
+                }
+              ]
+            }
+          ],
+          "artifacts": [
+            {
+              "path": "box3d-st.mjs",
+              "sha256": "2daa5dacff939ebae919f68cbbcd7bbf5d080c848df06471d439aa4e36fd14ab",
+              "bytes": 39124
+            },
+            {
+              "path": "box3d-st.wasm",
+              "sha256": "19b7d9bcab27b331b757659d2f373bc29180b6c27ba0cf8e6a12f41021214752",
+              "bytes": 479596
+            },
+            {
+              "path": "facade.mjs",
+              "sha256": "f2be11fadb9fa7ced6274b3f57431c5787825349031c8c0284381271697ae320",
+              "bytes": 28917
+            },
+            {
+              "path": "facade.d.mts",
+              "sha256": "253bc08e000f2ff017618fd64346d14077c1ad1abb3c6f19294e005145d852c2",
+              "bytes": 8665
+            }
+          ]
+        },
+        "completedAt": "2026-10-22T07:12:58.526Z"
+      }
+    }
+  },
+  "nativeGeometry": {
+    "pointerBytes": 4,
+    "contactBytes": 304,
+    "basisBytes": 96,
+    "manifoldPointBytes": 56,
+    "zeroDtDistinctRevision": true,
+    "invalidLockedCOMNoWrite": true,
+    "actualContactSlotReuseInitialized": true,
+    "oldContactGeneration": 1,
+    "newContactGeneration": 2,
+    "uint64ExhaustionFailsClosed": true,
+    "ccdRetainsFloorGeneration": true,
+    "ccdFinalX": 0.904999971,
+    "ccdGeneratedPointX": 0,
+    "toiDistanceIterations": 2,
+    "firstTOINoFabricatedManifold": true,
+    "laterManifoldGenerationAfterStep": 1,
+    "status": "PASS"
+  },
+  "layouts": {
+    "oldNative": {
+      "pointerBytes": 8,
+      "contactBytes": 216,
+      "manifoldBytes": 268,
+      "manifoldPointBytes": 56,
+      "contactGenerationOffset": 212,
+      "contactManifoldsOffset": 72
+    },
+    "oldWasm": {
+      "pointerBytes": 4,
+      "contactBytes": 204,
+      "manifoldBytes": 268,
+      "manifoldPointBytes": 56,
+      "contactGenerationOffset": 200,
+      "contactManifoldsOffset": 72
+    },
+    "newNative": {
+      "pointerBytes": 8,
+      "contactBytes": 320,
+      "manifoldBytes": 268,
+      "manifoldPointBytes": 56,
+      "contactGenerationOffset": 212,
+      "contactManifoldsOffset": 72,
+      "basisBytes": 96,
+      "validOffset": 216,
+      "basisOffset": 224
+    },
+    "newWasm": {
+      "pointerBytes": 4,
+      "contactBytes": 304,
+      "manifoldBytes": 268,
+      "manifoldPointBytes": 56,
+      "contactGenerationOffset": 200,
+      "contactManifoldsOffset": 72,
+      "basisBytes": 96,
+      "validOffset": 204,
+      "basisOffset": 208
+    }
+  },
+  "failuresPreserved": [
+    {
+      "directory": "geometry-wasm-debug-20261022-i2",
+      "classification": "FIXTURE_SCENE_DID_NOT_REGENERATE",
+      "productGeometryMismatchObserved": false
+    },
+    {
+      "directory": "geometry-wasm-debug-20261022-i3",
+      "classification": "FIXTURE_FINITE_FACE_DOMAIN_TOO_SMALL",
+      "productGeometryMismatchObserved": false
+    },
+    {
+      "directory": "geometry-oracle-20261022-i4",
+      "classification": "NEW_FIXTURE_REVERSED_NATIVE_ID_WORD_ASSERTION_NOT_PRODUCT_FIX",
+      "productGeometryMismatchObserved": false
+    },
+    {
+      "directory": "geometry-comparison-20261022-i8",
+      "classification": "COMPARATOR_INCORRECTLY_REQUIRED_DEBUG_RELEASE_MEMORY_CAPACITY_EQUAL"
+    },
+    {
+      "directory": "geometry-comparison-20261022-i9",
+      "classification": "COMPARATOR_INCORRECTLY_REQUIRED_OLD_NEW_CONTACT_ALLOCATION_BYTES_EQUAL"
+    },
+    {
+      "directory": "geometry-comparison-20261022-i10",
+      "classification": "COMPARATOR_OMITTED_CORE_BYTES_AFTER_FROM_ALLOCATION_CLASSIFICATION"
+    }
+  ],
+  "sourceInputs": [
+    {
+      "path": "tools/physics/box3d/abi-schema.json",
+      "sha256": "4f9b7cb25d7144734e827bb3c40384f46124649dec3e56a9b42d034abdbae888"
+    },
+    {
+      "path": "tools/physics/box3d/versions.lock.json",
+      "sha256": "5e76f74a3577e9ec0b44778b83abd9e36d9d18dd07a3a0268e5788a1289079fc"
+    },
+    {
+      "path": "vendor/box3d/source-manifest.json",
+      "sha256": "40f2d926a3fbc84d5d31f07532b3439657ebed69630ad9e2477c84fc25754dd0"
+    },
+    {
+      "path": "tools/physics/box3d/CMakeLists.txt",
+      "sha256": "892cb1aa68fbbb48c549bcf08433662ca6c2a56fe5cc241e0a60120ce954c4b3"
+    },
+    {
+      "path": "tools/physics/box3d/exports.json",
+      "sha256": "27e072838307e46ae9da9addde6d2c0f206d20add6364bce30fc26e0d5619b98"
+    },
+    {
+      "path": "tools/physics/box3d/build.mjs",
+      "sha256": "8931a73f58ca193974a4a78396a331737cd712f9e1ca013030e0ff686e81d29d"
+    },
+    {
+      "path": "tools/physics/box3d/patch-intake.mjs",
+      "sha256": "039430725aa59d74abbb9ae32b720c345d7d07297227e31ee95e76851239d7dc"
+    },
+    {
+      "path": "tools/physics/box3d/patches/lock.json",
+      "sha256": "d6be04611f70223e21b1bcffc635088f49a5647739e97c2f9ce089091748ea77"
+    },
+    {
+      "path": "tools/physics/box3d/patches/sse2-loadv-alignment.patch",
+      "sha256": "e5c4e5f2ae7f015cf62dfc2de5a36af73cc15d9b0ca0118fc0259c7d1f0b1403"
+    },
+    {
+      "path": "tools/physics/box3d/patches/contact-geometry-epoch.patch",
+      "sha256": "4ca29eed58cd20d4134bf55bb9b9ec25fbb322b731d0a319ad2567225463d094"
+    },
+    {
+      "path": "tools/physics/box3d/wasm-contract.mjs",
+      "sha256": "4850c9ee10ce491029f209bb499e040f7a569d01991a8797d85649333877ee71"
+    },
+    {
+      "path": "tools/physics/box3d/wasm-ownership-contract.mjs",
+      "sha256": "626d09f222ef564483b0781e2d377e326d625cf3202ded40ff4e1b48149b361d"
+    },
+    {
+      "path": "tools/physics/box3d/wasm-snapshot-contract.mjs",
+      "sha256": "c704afa56d36fec985d245c67ed4f9e6ec79f93b2603d439c33c833e104bf142"
+    },
+    {
+      "path": "tools/physics/box3d/wasm-geometry-contract.mjs",
+      "sha256": "4ce3094d9919f3bc01bbd2eadc7f0811ca75a6e5e2b063de7db77955187f9348"
+    },
+    {
+      "path": "tools/physics/box3d/verify-sources.mjs",
+      "sha256": "f18ad0dc623b6b83b8a46a2abbf34a29e0400d127a85f3fc16b966493b97e171"
+    },
+    {
+      "path": "tools/physics/box3d/verify-wasm.mjs",
+      "sha256": "de4dd1b4e2ae32ceb5fddc0e8fbcb0159fdd29378cf7eed33c57e3852113af6e"
+    },
+    {
+      "path": "tools/physics/box3d/native/air_box3d.c",
+      "sha256": "023924641b13ef4462c780a7c3aab1990d58a9b0e85e3385d6c0a6e50f082524"
+    },
+    {
+      "path": "tools/physics/box3d/native/snapshot.c",
+      "sha256": "46d9ad1d6fdbe445b33d969e7fe725641ac7eb36767efcefac8e1576df24ea18"
+    },
+    {
+      "path": "tools/physics/box3d/native/geometry.c",
+      "sha256": "0dcb3f74fa2ee34fba5f716735cba2d83f07175db55d3e344d88e6fa55ab3825"
+    },
+    {
+      "path": "tools/physics/box3d/native/air_box3d.h",
+      "sha256": "6d498ff5fa0b6e2020355cb36db672cfc02774103355f5d69bb861a84baff136"
+    },
+    {
+      "path": "tools/physics/box3d/native/contract.c",
+      "sha256": "873862b60b2bc22080e0055f4204afeaf32ac27273b09e268d8920433d94402d"
+    },
+    {
+      "path": "tools/physics/box3d/native/geometry_contract.c",
+      "sha256": "9e3b653d5a04a083663592203804577217f64721820bc6970fe00741d0839e20"
+    },
+    {
+      "path": "tools/physics/box3d/native/wasm_entry.c",
+      "sha256": "9b1857c34808b0e3be4726c9df515999c1714583771813c89190d53a364e7c9f"
+    },
+    {
+      "path": "src/air/physics/box3d/binding/facade.mjs",
+      "sha256": "f2be11fadb9fa7ced6274b3f57431c5787825349031c8c0284381271697ae320"
+    },
+    {
+      "path": "src/air/physics/box3d/binding/facade.d.mts",
+      "sha256": "253bc08e000f2ff017618fd64346d14077c1ad1abb3c6f19294e005145d852c2"
+    }
+  ],
+  "sourceAdditiveReview": {
+    "status": "PASS_ADDITIVE_SOURCE_REVIEW",
+    "scope": "Source/schema preservation and new symbols; core b3Contact/native snapshot layout intentionally differs",
+    "preservedDeclarations": [
+      "const char* air_b3_core_sha(void);",
+      "const char* air_b3_schema_sha(void);",
+      "const char* air_b3_patch_chain_sha(void);",
+      "uint32_t air_b3_abi_version(void);",
+      "uint32_t air_b3_world_create(float gx, float gy, float gz);",
+      "int air_b3_world_valid(uint32_t world);",
+      "int air_b3_world_destroy(uint32_t world);",
+      "int air_b3_world_step(uint32_t world, float dt, int substeps);",
+      "int air_b3_world_counts(uint32_t world, uint32_t* out);",
+      "void air_b3_live_bytes(uint32_t* out);",
+      "int air_b3_body_create(uint32_t world, int type, const float* input, int enable_sleep, uint32_t* out);",
+      "int air_b3_body_valid(uint32_t lo, uint32_t hi);",
+      "int air_b3_body_destroy(uint32_t lo, uint32_t hi);",
+      "int air_b3_body_snapshot(uint32_t lo, uint32_t hi, float* out);",
+      "int air_b3_body_velocity(uint32_t lo, uint32_t hi, float x, float y, float z);",
+      "int air_b3_body_impulse(uint32_t lo, uint32_t hi, float x, float y, float z);",
+      "int air_b3_shape_sphere(uint32_t lo, uint32_t hi, float radius, float density, uint32_t* out);",
+      "int air_b3_shape_box(uint32_t lo, uint32_t hi, float hx, float hy, float hz, float density, uint32_t* out);",
+      "int air_b3_shape_valid(uint32_t lo, uint32_t hi);",
+      "int air_b3_shape_destroy(uint32_t lo, uint32_t hi);",
+      "int air_b3_ray_closest(uint32_t world, const float* input, float* out, uint32_t* shape);",
+      "int air_b3_body_transforms(uint32_t world, const uint32_t* ids, int count, float* out);",
+      "int air_b3_world_event_size(uint32_t world, uint32_t* out);",
+      "int air_b3_world_events(uint32_t world, uint32_t* out, int capacity);",
+      "int air_b3_body_contact_size(uint32_t world, uint32_t lo, uint32_t hi, uint32_t* out);",
+      "int air_b3_body_contacts(uint32_t world, uint32_t lo, uint32_t hi, uint32_t* out, int capacity);",
+      "int air_b3_contact_valid(uint32_t world, const uint32_t* words);",
+      "int air_b3_shape_events(uint32_t lo, uint32_t hi, int flags);",
+      "int air_b3_shape_sphere_ex(uint32_t lo, uint32_t hi, float x, float y, float z, float radius, float density, int sensor, uint32_t* out);"
+    ],
+    "preservedStatuses": {
+      "0": "OK",
+      "1": "INVALID_ID",
+      "2": "INVALID_ARGUMENT",
+      "3": "NATIVE_CREATION_FAILED",
+      "4": "INSUFFICIENT_CAPACITY",
+      "5": "ALLOCATION_FAILED"
+    },
+    "allOldSchemaFieldsPreserved": true,
+    "oldShimAndSnapshotCBytesPreserved": true,
+    "preservedExports": 31,
+    "addedExports": [
+      "_air_b3_contact_geometry",
+      "_air_b3_world_geometry_counters"
+    ],
+    "oldSchemaSha256": "3aa11fe9d3d4b0269105bddbfebd8a1d09c9a3d162d88cb416d35d4304d1f30a",
+    "currentSchemaSha256": "4f9b7cb25d7144734e827bb3c40384f46124649dec3e56a9b42d034abdbae888",
+    "scriptSha256": "2456303d29b57a29fba09df4dcd0e6c8e6e0b072cb2ba6b8290820aacf6db2bb"
+  },
+  "limitations": [
+    "Sphere-hull is structurally admitted, but only sphere/finite-box-face qualified. No arbitrary hull feature, capsule, mesh, compound or heightfield qualification.",
+    "No current surface/TOI geometry or same-epoch impulse claim.",
+    "Finite lifetime loops do not prove universal no-ABA. Core bytes are not entire WASM heap/JS leak proof.",
+    "Appending b3Contact changes native snapshot layout; no replay compatibility claim.",
+    "ASan/LSan and browser limitations unchanged."
+  ],
+  "commands": [
+    "source /workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/use-toolchain.sh",
+    "node tools/physics/box3d/build.mjs --debug --out tools/physics/box3d/output/geometry-wasm-debug-20261022-i8",
+    "node tools/physics/box3d/build.mjs --out tools/physics/box3d/output/geometry-wasm-release-20261022-i8",
+    "node tools/physics/box3d/build.mjs --native --debug --out tools/physics/box3d/output/geometry-native-debug-20261022-i8",
+    "node tools/physics/box3d/build.mjs --native --out tools/physics/box3d/output/geometry-native-release-20261022-i8",
+    "node tools/physics/box3d/native-geometry-ubsan.mjs tools/physics/box3d/output/geometry-native-ubsan-20261022-i8",
+    "node tools/physics/box3d/compare-geometry-builds.mjs tools/physics/box3d/output/geometry-wasm-debug-20261022-i8 tools/physics/box3d/output/geometry-wasm-release-20261022-i8 tools/physics/box3d/output/wasm-snapshot-release-20261022-g tools/physics/box3d/output/geometry-comparison-20261022-i11"
+  ]
+}

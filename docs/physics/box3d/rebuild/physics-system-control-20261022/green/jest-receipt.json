@@ -1,0 +1,24 @@
+{
+  "scope": "actual engine classes, mock world setters; no real WASM or full C36",
+  "at": "2026-10-22T07:28:23.584278+00:00",
+  "command": [
+    "node_modules/.bin/jest",
+    "--config",
+    "jest.config.js",
+    "--runInBand",
+    "--no-cache",
+    "--testMatch",
+    "**/tools/verify/box3d/physics-system-control.test.ts"
+  ],
+  "exitCode": 0,
+  "inputHashesBefore": {
+    "src/cocos/physics/framework/physics-system.ts": "e9bda693fa27efc373c4fe4cfdc9f5bc4a4a1d277ba0e8f43b6e28d165f58953",
+    "tools/verify/box3d/physics-system-control.test.ts": "e25c8af3968c3f62045bc178303f6c3336bc6a194dd933be40e9e646be1cb845",
+    "tools/verify/box3d/physics-system-control.tsconfig.json": "00bace989a6b3be2540d51f6f40079db5f3e96f6481d2bc0ebd7e0d3bf53a3f3"
+  },
+  "inputHashesAfter": {
+    "src/cocos/physics/framework/physics-system.ts": "e9bda693fa27efc373c4fe4cfdc9f5bc4a4a1d277ba0e8f43b6e28d165f58953",
+    "tools/verify/box3d/physics-system-control.test.ts": "e25c8af3968c3f62045bc178303f6c3336bc6a194dd933be40e9e646be1cb845",
+    "tools/verify/box3d/physics-system-control.tsconfig.json": "00bace989a6b3be2540d51f6f40079db5f3e96f6481d2bc0ebd7e0d3bf53a3f3"
+  }
+}

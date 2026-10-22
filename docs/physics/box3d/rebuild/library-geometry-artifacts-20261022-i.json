@@ -1,0 +1,11 @@
+{
+  "status": "PASS_LIBRARY_DOWNLOADED_ARCHIVE_BYTES",
+  "libraryFileId": "libfile_7fd34247547c8191b9e121f5226fdb21",
+  "bytes": 42971237,
+  "sha256": "3f1a2746619cfb8ba549edf52c8b777d7d25fb253a4d0f417ccf62e1578b2191",
+  "restoredAt": "2026-10-22T07:29:11.666708+00:00",
+  "members": 2969,
+  "verifiedPayloads": 2968,
+  "restoredBytes": 147119019,
+  "scope": "All 2968 listed payloads plus manifest independently downloaded, hashed and safely restored. Does not claim rebuild or new physical acceptance."
+}

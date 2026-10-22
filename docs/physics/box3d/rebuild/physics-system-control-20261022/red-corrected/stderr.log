@@ -1,0 +1,442 @@
+FAIL tools/verify/box3d/physics-system-control.test.ts (13.583 s)
+  Box3D native-first assignments on actual PhysicsSystem source
+    ✕ sleep commits only after the native setter returns (9 ms)
+    ✕ rejected sleep assignment preserves public cached value (10 ms)
+    ✕ gravity commits a copy after native success without replacing the cached Vec3 (1 ms)
+    ✕ rejected non-aliased gravity preserves the last public value and identity (2 ms)
+    ✕ successful material replacement commits after native acceptance and transfers only the system listener (11 ms)
+    ✕ failed material replacement leaves the old pointer/listener and never attaches the rejected material (5 ms)
+    ✓ repeated assignment of the same accepted material keeps one actual event listener (2 ms)
+    ✕ pre-world sleep/gravity still stage initialization; material cannot commit without a world (2 ms)
+  unchanged legacy backend builtin ordering
+    ✓ success preserves cache-first observations and the existing old-material listener behavior (2 ms)
+    ✓ backend rejection retains the original cache-first failure behavior (2 ms)
+  unchanged legacy backend cannon.js ordering
+    ✓ success preserves cache-first observations and the existing old-material listener behavior (1 ms)
+    ✓ backend rejection retains the original cache-first failure behavior (2 ms)
+  unchanged legacy backend bullet ordering
+    ✓ success preserves cache-first observations and the existing old-material listener behavior (1 ms)
+    ✓ backend rejection retains the original cache-first failure behavior (2 ms)
+  unchanged legacy backend physx ordering
+    ✓ success preserves cache-first observations and the existing old-material listener behavior
+    ✓ backend rejection retains the original cache-first failure behavior (2 ms)
+  explicit unchanged non-transactional boundaries, not C36 acceptance
+    ✓ mutating the getter Vec3 changes the cache before an aliased rejected assignment (1 ms)
+    ✓ actual material EVENT_UPDATE occurs after mutation; native rejection does not undo the material (4 ms)
+    ✓ resetConfiguration still mutates caches before native calls and is not a transaction (1 ms)
+    ✓ an unexpectedly throwing material.on is not claimed as a native rollback (2 ms)
+
+  ● Box3D native-first assignments on actual PhysicsSystem source › sleep commits only after the native setter returns
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+      Array [
+    -   true,
+    +   false,
+      ]
+
+      53 |         });
+      54 |         system.allowSleep = false;
+    > 55 |         expect(observed).toEqual([true]);
+         |                          ^
+      56 |         expect(system.allowSleep).toBe(false);
+      57 |         expect(world.setAllowSleep).toHaveBeenCalledTimes(1);
+      58 |     });
+
+      at Object.<anonymous> (tools/verify/box3d/physics-system-control.test.ts:55:26)
+
+  ● Box3D native-first assignments on actual PhysicsSystem source › rejected sleep assignment preserves public cached value
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      65 |             system.allowSleep = false;
+      66 |         }).toThrow('sleep rejected');
+    > 67 |         expect(system.allowSleep).toBe(true);
+         |                                   ^
+      68 |     });
+      69 |     test('gravity commits a copy after native success without replacing the cached Vec3', () => {
+      70 |         const { system, world } = fixture();
+
+      at Object.<anonymous> (tools/verify/box3d/physics-system-control.test.ts:67:35)
+
+  ● Box3D native-first assignments on actual PhysicsSystem source › gravity commits a copy after native success without replacing the cached Vec3
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 3
+    + Received  + 3
+
+      Array [
+        Array [
+    -     0,
+    -     -10,
+    -     0,
+    +     1,
+    +     2,
+    +     3,
+        ],
+      ]
+
+      76 |         });
+      77 |         system.gravity = next;
+    > 78 |         expect(observed).toEqual([[0, -10, 0]]);
+         |                          ^
+      79 |         expect(world.setGravity).toHaveBeenCalledWith(next);
+      80 |         expect(system.gravity).toBe(original);
+      81 |         expect(system.gravity).not.toBe(next);
+
+      at Object.<anonymous> (tools/verify/box3d/physics-system-control.test.ts:78:26)
+
+  ● Box3D native-first assignments on actual PhysicsSystem source › rejected non-aliased gravity preserves the last public value and identity
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+      Array [
+    +   NaN,
+        0,
+    -   -10,
+        0,
+      ]
+
+       96 |         }).toThrow('gravity rejected');
+       97 |         expect(system.gravity).toBe(original);
+    >  98 |         expect(vector(system.gravity)).toEqual([0, -10, 0]);
+          |                                        ^
+       99 |     });
+      100 |     test('successful material replacement commits after native acceptance and transfers only the system listener', () => {
+      101 |         const { system, world } = fixture();
+
+      at Object.<anonymous> (tools/verify/box3d/physics-system-control.test.ts:98:40)
+
+  ● Box3D native-first assignments on actual PhysicsSystem source › successful material replacement commits after native acceptance and transfers only the system listener
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 33
+    + Received  +  2
+
+    @@ -17,37 +17,11 @@
+                      "x": 0,
+                      "y": -10,
+                      "z": 0,
+                    },
+                    "_id": "",
+    -               "_material": PhysicsMaterial {
+    -                 "_callbackTable": Object {
+    -                   "event_update": CallbackList {
+    -                     "callbackInfos": Array [
+    -                       CallbackInfo {
+    -                         "callback": [Function _updateMaterial],
+    -                         "once": false,
+    -                         "target": [Circular],
+    -                       },
+    -                     ],
+    -                     "containCanceled": false,
+    -                     "isInvoking": false,
+    -                   },
+    -                 },
+    -                 "_file": null,
+    -                 "_friction": 0.6,
+    -                 "_name": "",
+    -                 "_native": "",
+    -                 "_nativeUrl": "",
+    -                 "_objFlags": 0,
+    -                 "_ref": 0,
+    -                 "_restitution": 0,
+    -                 "_rollingFriction": 0,
+    -                 "_spinningFriction": 0,
+    -                 "id": 2,
+    -                 "loaded": true,
+    -               },
+    +               "_material": [Circular],
+                    "_maxSubSteps": 1,
+                    "_priority": 0,
+                    "_sleepThreshold": 0.1,
+                    "_subStepCount": 0,
+                    "collisionMatrix": CollisionMatrix {
+    @@ -188,16 +162,11 @@
+                      "_fn": [Function anonymous],
+                      "_initSize": 1,
+                      "_poolHandle": 14,
+                    },
+                    "useNodeChains": false,
+    -             },
+                  },
+    -           CallbackInfo {
+    -             "callback": [Function mockConstructor],
+    -             "once": false,
+    -             "target": undefined,
+                },
+              ],
+              "containCanceled": false,
+              "isInvoking": false,
+            },
+    @@ -210,9 +179,9 @@
+          "_objFlags": 0,
+          "_ref": 0,
+          "_restitution": 0,
+          "_rollingFriction": 0,
+          "_spinningFriction": 0,
+    -     "id": 1,
+    +     "id": 2,
+          "loaded": true,
+        },
+      ]
+
+      110 |         });
+      111 |         system.setDefaultPhysicsMaterial(next);
+    > 112 |         expect(observed).toEqual([previous]);
+          |                          ^
+      113 |         expect(system.defaultMaterial).toBe(next);
+      114 |         world.setDefaultMaterial.mockClear();
+      115 |         previous.friction = 0.25;
+
+      at Object.<anonymous> (tools/verify/box3d/physics-system-control.test.ts:112:26)
+
+  ● Box3D native-first assignments on actual PhysicsSystem source › failed material replacement leaves the old pointer/listener and never attaches the rejected material
+
+    expect(received).toBe(expected) // Object.is equality
+
+    - Expected  - 184
+    + Received  +   0
+
+    @@ -1,26 +1,6 @@
+      PhysicsMaterial {
+    -   "_callbackTable": Object {
+    -     "event_update": CallbackList {
+    -       "callbackInfos": Array [
+    -         CallbackInfo {
+    -           "callback": [Function _updateMaterial],
+    -           "once": false,
+    -           "target": PhysicsSystem {
+    -             "_accumulator": 0,
+    -             "_allowSleep": true,
+    -             "_autoSimulation": true,
+    -             "_enable": true,
+    -             "_executeInEditMode": false,
+    -             "_fixedTimeStep": 0.016666666666666666,
+    -             "_gravity": Vec3 {
+    -               "x": 0,
+    -               "y": -10,
+    -               "z": 0,
+    -             },
+    -             "_id": "",
+    -             "_material": PhysicsMaterial {
+        "_callbackTable": Object {},
+        "_file": null,
+        "_friction": 0.6,
+        "_name": "",
+        "_native": "",
+    @@ -29,171 +9,7 @@
+        "_ref": 0,
+        "_restitution": 0,
+        "_rollingFriction": 0,
+        "_spinningFriction": 0,
+        "id": 4,
+    -               "loaded": true,
+    -             },
+    -             "_maxSubSteps": 1,
+    -             "_priority": 0,
+    -             "_sleepThreshold": 0.1,
+    -             "_subStepCount": 0,
+    -             "collisionMatrix": CollisionMatrix {
+    -               "_-2147483648": 0,
+    -               "_1": 1,
+    -               "_1024": 0,
+    -               "_1048576": 0,
+    -               "_1073741824": 0,
+    -               "_128": 0,
+    -               "_131072": 0,
+    -               "_134217728": 0,
+    -               "_16": 0,
+    -               "_16384": 0,
+    -               "_16777216": 0,
+    -               "_2": 0,
+    -               "_2048": 0,
+    -               "_2097152": 0,
+    -               "_256": 0,
+    -               "_262144": 0,
+    -               "_268435456": 0,
+    -               "_32": 0,
+    -               "_32768": 0,
+    -               "_33554432": 0,
+    -               "_4": 0,
+    -               "_4096": 0,
+    -               "_4194304": 0,
+    -               "_512": 0,
+    -               "_524288": 0,
+    -               "_536870912": 0,
+    -               "_64": 0,
+    -               "_65536": 0,
+    -               "_67108864": 0,
+    -               "_8": 0,
+    -               "_8192": 0,
+    -               "_8388608": 0,
+    -               "updateArray": Array [],
+    -             },
+    -             "lineStripCastClosestResult": PhysicsLineStripCastResult {
+    -               "_closestHitFraction": 0,
+    -               "_collider": null,
+    -               "_distance": 0,
+    -               "_hitNormal": Vec3 {
+    -                 "x": 0,
+    -                 "y": 0,
+    -                 "z": 0,
+    -               },
+    -               "_hitPoint": Vec3 {
+    -                 "x": 0,
+    -                 "y": 0,
+    -                 "z": 0,
+    -               },
+    -               "_id": 0,
+    -             },
+    -             "lineStripCastResults": Array [],
+    -             "minVolumeSize": 0.00001,
+    -             "raycastClosestResult": PhysicsRayResult {
+    -               "_closestHitFraction": 0,
+    -               "_collider": null,
+    -               "_distance": 0,
+    -               "_hitNormal": Vec3 {
+    -                 "x": 0,
+    -                 "y": 0,
+    -                 "z": 0,
+    -               },
+    -               "_hitPoint": Vec3 {
+    -                 "x": 0,
+    -                 "y": 0,
+    -                 "z": 0,
+    -               },
+    -             },
+    -             "raycastOptions": Object {
+    -               "group": -1,
+    -               "mask": -1,
+    -               "maxDistance": 10000000,
+    -               "queryTrigger": true,
+    -             },
+    -             "raycastResultPool": RecyclePool {
+    -               "_count": 0,
+    -               "_data": Array [
+    -                 PhysicsRayResult {
+    -                   "_closestHitFraction": 0,
+    -                   "_collider": null,
+    -                   "_distance": 0,
+    -                   "_hitNormal": Vec3 {
+    -                     "x": 0,
+    -                     "y": 0,
+    -                     "z": 0,
+    -                   },
+    -                   "_hitPoint": Vec3 {
+    -                     "x": 0,
+    -                     "y": 0,
+    -                     "z": 0,
+    -                   },
+    -                 },
+    -               ],
+    -               "_dtor": null,
+    -               "_fn": [Function anonymous],
+    -               "_initSize": 1,
+    -               "_poolHandle": 15,
+    -             },
+    -             "raycastResults": Array [],
+    -             "sweepCastClosestResult": PhysicsRayResult {
+    -               "_closestHitFraction": 0,
+    -               "_collider": null,
+    -               "_distance": 0,
+    -               "_hitNormal": Vec3 {
+    -                 "x": 0,
+    -                 "y": 0,
+    -                 "z": 0,
+    -               },
+    -               "_hitPoint": Vec3 {
+    -                 "x": 0,
+    -                 "y": 0,
+    -                 "z": 0,
+    -               },
+    -             },
+    -             "sweepCastResults": Array [],
+    -             "sweepResultPool": RecyclePool {
+    -               "_count": 0,
+    -               "_data": Array [
+    -                 PhysicsRayResult {
+    -                   "_closestHitFraction": 0,
+    -                   "_collider": null,
+    -                   "_distance": 0,
+    -                   "_hitNormal": Vec3 {
+    -                     "x": 0,
+    -                     "y": 0,
+    -                     "z": 0,
+    -                   },
+    -                   "_hitPoint": Vec3 {
+    -                     "x": 0,
+    -                     "y": 0,
+    -                     "z": 0,
+    -                   },
+    -                 },
+    -               ],
+    -               "_dtor": null,
+    -               "_fn": [Function anonymous],
+    -               "_initSize": 1,
+    -               "_poolHandle": 16,
+    -             },
+    -             "useNodeChains": false,
+    -           },
+    -         },
+    -       ],
+    -       "containCanceled": false,
+    -       "isInvoking": false,
+    -     },
+    -   },
+    -   "_file": null,
+    -   "_friction": 0.6,
+    -   "_name": "",
+    -   "_native": "",
+    -   "_nativeUrl": "",
+    -   "_objFlags": 0,
+    -   "_ref": 0,
+    -   "_restitution": 0,
+    -   "_rollingFriction": 0,
+    -   "_spinningFriction": 0,
+    -   "id": 3,
+        "loaded": true,
+      }
+
+      129 |         });
+      130 |         expect(() => system.setDefaultPhysicsMaterial(next)).toThrow('material rejected');
+    > 131 |         expect(system.defaultMaterial).toBe(previous);
+          |                                        ^
+      132 |         world.setDefaultMaterial.mockClear();
+      133 |         next.friction = 0.2;
+      134 |         expect(world.setDefaultMaterial).not.toHaveBeenCalled();
+
+      at Object.<anonymous> (tools/verify/box3d/physics-system-control.test.ts:131:40)
+
+  ● Box3D native-first assignments on actual PhysicsSystem source › pre-world sleep/gravity still stage initialization; material cannot commit without a world
+
+    expect(received).toBeUndefined()
+
+    Received: {"_callbackTable": {}, "_file": null, "_friction": 0.6, "_name": "", "_native": "", "_nativeUrl": "", "_objFlags": 0, "_ref": 0, "_restitution": 0, "_rollingFriction": 0, "_spinningFriction": 0, "id": 6, "loaded": true}
+
+      154 |         expect(vector(system.gravity)).toEqual([1, 2, 3]);
+      155 |         expect(() => system.setDefaultPhysicsMaterial(createMaterial())).toThrow();
+    > 156 |         expect(system.defaultMaterial).toBeUndefined();
+          |                                        ^
+      157 |     });
+      158 | });
+      159 |
+
+      at Object.<anonymous> (tools/verify/box3d/physics-system-control.test.ts:156:40)
+
+Test Suites: 1 failed, 1 total
+Tests:       7 failed, 13 passed, 20 total
+Snapshots:   0 total
+Time:        14.048 s
+Ran all test suites.

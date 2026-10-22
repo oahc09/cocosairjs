@@ -1,0 +1,85 @@
+{
+  "status": "NATIVE_DEBUG_SUBSET_PASS_WASM_PENDING",
+  "files": [
+    {
+      "path": "tools/physics/box3d/patches/contact-geometry-epoch.patch",
+      "bytes": 3759,
+      "sha256": "4ca29eed58cd20d4134bf55bb9b9ec25fbb322b731d0a319ad2567225463d094"
+    },
+    {
+      "path": "tools/physics/box3d/patches/lock.json",
+      "bytes": 2063,
+      "sha256": "d6be04611f70223e21b1bcffc635088f49a5647739e97c2f9ce089091748ea77"
+    },
+    {
+      "path": "tools/physics/box3d/versions.lock.json",
+      "bytes": 4943,
+      "sha256": "5e76f74a3577e9ec0b44778b83abd9e36d9d18dd07a3a0268e5788a1289079fc"
+    },
+    {
+      "path": "tools/physics/box3d/abi-schema.json",
+      "bytes": 6827,
+      "sha256": "4f9b7cb25d7144734e827bb3c40384f46124649dec3e56a9b42d034abdbae888"
+    },
+    {
+      "path": "tools/physics/box3d/exports.json",
+      "bytes": 852,
+      "sha256": "27e072838307e46ae9da9addde6d2c0f206d20add6364bce30fc26e0d5619b98"
+    },
+    {
+      "path": "tools/physics/box3d/CMakeLists.txt",
+      "bytes": 4597,
+      "sha256": "892cb1aa68fbbb48c549bcf08433662ca6c2a56fe5cc241e0a60120ce954c4b3"
+    },
+    {
+      "path": "tools/physics/box3d/build.mjs",
+      "bytes": 11592,
+      "sha256": "8931a73f58ca193974a4a78396a331737cd712f9e1ca013030e0ff686e81d29d"
+    },
+    {
+      "path": "tools/physics/box3d/audit-artifacts.mjs",
+      "bytes": 6698,
+      "sha256": "079cd91c406d850a74d23a0f6af413381691d24eb25c8eadae2672e6616c5e07"
+    },
+    {
+      "path": "tools/physics/box3d/native/geometry.c",
+      "bytes": 2492,
+      "sha256": "0dcb3f74fa2ee34fba5f716735cba2d83f07175db55d3e344d88e6fa55ab3825"
+    },
+    {
+      "path": "tools/physics/box3d/native/air_box3d.h",
+      "bytes": 2653,
+      "sha256": "6d498ff5fa0b6e2020355cb36db672cfc02774103355f5d69bb861a84baff136"
+    },
+    {
+      "path": "src/air/physics/box3d/binding/facade.mjs",
+      "bytes": 28917,
+      "sha256": "f2be11fadb9fa7ced6274b3f57431c5787825349031c8c0284381271697ae320"
+    },
+    {
+      "path": "src/air/physics/box3d/binding/facade.d.mts",
+      "bytes": 8665,
+      "sha256": "253bc08e000f2ff017618fd64346d14077c1ad1abb3c6f19294e005145d852c2"
+    },
+    {
+      "path": "tools/physics/box3d/wasm-snapshot-contract.mjs",
+      "bytes": 16858,
+      "sha256": "c704afa56d36fec985d245c67ed4f9e6ec79f93b2603d439c33c833e104bf142"
+    },
+    {
+      "path": "tools/physics/box3d/native/geometry_contract.c",
+      "bytes": 7450,
+      "sha256": "9e3b653d5a04a083663592203804577217f64721820bc6970fe00741d0839e20"
+    },
+    {
+      "path": "tools/physics/box3d/wasm-geometry-contract.mjs",
+      "bytes": 17178,
+      "sha256": "110a8c022197d33690e45c312b5b91070d99b2129fa4df852a975c287ce360cc"
+    },
+    {
+      "path": "tools/physics/box3d/geometry-intake-contract.mjs",
+      "bytes": 3901,
+      "sha256": "98d679522fad425933435df89a8e2c0ad08c7547a67301e991a9f65ec9863059"
+    }
+  ]
+}

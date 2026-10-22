@@ -118,6 +118,12 @@ export class PhysicsSystem extends System implements IWorldInitData {
     }
 
     public set allowSleep (v: boolean) {
+        // AIR Box3D rejects invalid native changes before committing the public cache.
+        if (selector.id === 'box3d' && this.physicsWorld) {
+            this.physicsWorld.setAllowSleep(v);
+            this._allowSleep = v;
+            return;
+        }
         this._allowSleep = v;
         if (this.physicsWorld) {
             this.physicsWorld.setAllowSleep(v);
@@ -163,6 +169,11 @@ export class PhysicsSystem extends System implements IWorldInitData {
     }
 
     public set gravity (gravity: Vec3) {
+        if (selector.id === 'box3d' && this.physicsWorld) {
+            this.physicsWorld.setGravity(gravity);
+            this._gravity.set(gravity);
+            return;
+        }
         this._gravity.set(gravity);
         if (this.physicsWorld) {
             this.physicsWorld.setGravity(gravity);
@@ -214,6 +225,15 @@ export class PhysicsSystem extends System implements IWorldInitData {
      * 设置默认物理材质。
      */
     public setDefaultPhysicsMaterial (material: PhysicsMaterial): void {
+        if (selector.id === 'box3d') {
+            this.physicsWorld.setDefaultMaterial(material);
+            if (this._material !== material) {
+                this._material?.off(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
+            }
+            this._material = material;
+            this._material.on(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
+            return;
+        }
         this._material = material;
         this.physicsWorld.setDefaultMaterial(this._material);
         this._material.on(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);

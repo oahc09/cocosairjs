@@ -17,6 +17,14 @@ const output = fs.mkdtempSync(path.join(base, 'box3d-assets-tests-'));
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const readJSON = (directory, name) => JSON.parse(fs.readFileSync(path.join(directory, name)));
 const writeJSON = (directory, name, value) => fs.writeFileSync(path.join(directory, name), JSON.stringify(value));
+function rehashAuditEvidence(directory, name) {
+    const audit = readJSON(directory, 'artifact-audit.raw.json');
+    const row = audit.evidence.find((item) => item.path === name);
+    assert(row, `Required geometry evidence is missing: ${name}`);
+    const bytes = fs.readFileSync(path.join(directory, name));
+    Object.assign(row, { bytes: bytes.length, sha256: hash(bytes) });
+    writeJSON(directory, 'artifact-audit.raw.json', audit);
+}
 function copyInputs(name) {
     const directory = path.join(output, name);
     fs.mkdirSync(directory);
@@ -224,6 +232,36 @@ test('corrupt/missing assets, stale identities, failed/incomplete inputs and aud
                 const r = readJSON(d, 'artifact-audit.raw.json');
                 r.evidence[0].sha256 = '0'.repeat(64);
                 writeJSON(d, 'artifact-audit.raw.json', r);
+            },
+        ],
+        [
+            'geometry-failed-rehashed',
+            (d) => {
+                const name = 'wasm-geometry-contract.raw.json';
+                const r = readJSON(d, name);
+                r.status = 'FAIL';
+                writeJSON(d, name, r);
+                rehashAuditEvidence(d, name);
+            },
+        ],
+        [
+            'geometry-stale-identity-rehashed',
+            (d) => {
+                const name = 'wasm-geometry-contract.raw.json';
+                const r = readJSON(d, name);
+                r.identity.schemaSha256 = '0'.repeat(64);
+                writeJSON(d, name, r);
+                rehashAuditEvidence(d, name);
+            },
+        ],
+        [
+            'geometry-wrong-pointer-width-rehashed',
+            (d) => {
+                const name = 'native-geometry-contract.raw.json';
+                const r = readJSON(d, name);
+                r.pointerBytes = 8;
+                writeJSON(d, name, r);
+                rehashAuditEvidence(d, name);
             },
         ],
     ];

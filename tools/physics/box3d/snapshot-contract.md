@@ -90,3 +90,12 @@ minimal upstream patch review. A proper extension must expose a verified cached
 basis or perform native normalization, cover regeneration/recycling/CCD/sleep
 paths, and get a new patch-chain/schema identity. It may not substitute hit.point
 or use inverse-formula round trips as independent geometric verification.
+
+## Separate generation-basis extension
+
+The g raw wire described above remains unchanged, including its unresolved-basis
+labels when considered alone. The later [generation geometry extension](geometry-epoch-contract.md)
+adds an independent 25-word basis reader and a separately copied `contact.geometry`
+record. Only that record's status authorizes `contactWorldPoints`. It is explicitly
+cached generation geometry, not a post-step intersection or same-epoch impulse
+claim. Historical g artifacts still reject through their old schema/patch identity.

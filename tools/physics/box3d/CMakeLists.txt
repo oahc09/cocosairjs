@@ -43,7 +43,7 @@ if(NOT AIR_PATCH_CHAIN_SHA STREQUAL AIR_VERIFIED_PATCH_SHA)
 endif()
 add_subdirectory("${AIR_STAGED_CORE}" "core")
 file(SHA256 "${CMAKE_CURRENT_LIST_DIR}/abi-schema.json" AIR_SCHEMA_SHA)
-add_library(air_box3d_abi STATIC native/air_box3d.c native/snapshot.c)
+add_library(air_box3d_abi STATIC native/air_box3d.c native/snapshot.c native/geometry.c)
 set_target_properties(air_box3d_abi PROPERTIES C_STANDARD 17 C_STANDARD_REQUIRED YES)
 target_include_directories(air_box3d_abi PUBLIC native)
 target_compile_definitions(air_box3d_abi PRIVATE "AIR_B3_SCHEMA_SHA=\"${AIR_SCHEMA_SHA}\"")
@@ -51,6 +51,13 @@ target_compile_definitions(air_box3d_abi PRIVATE "AIR_B3_PATCH_CHAIN_SHA=\"${AIR
 target_link_libraries(air_box3d_abi PUBLIC box3d)
 
 if(EMSCRIPTEN)
+    # Qualification executable, never an application/module artifact.
+    add_executable(air_box3d_geometry_contract native/geometry_contract.c)
+    target_include_directories(air_box3d_geometry_contract PRIVATE "${AIR_STAGED_CORE}/src")
+    target_link_libraries(air_box3d_geometry_contract PRIVATE air_box3d_abi)
+    set_target_properties(air_box3d_geometry_contract PROPERTIES SUFFIX ".cjs")
+    target_link_options(air_box3d_geometry_contract PRIVATE -msimd128 -msse2 -fno-fast-math -ffp-contract=off
+        -sENVIRONMENT=node -sSINGLE_FILE=1 -sEXIT_RUNTIME=1 -sFILESYSTEM=0 -sASSERTIONS=2)
     add_executable(air_box3d native/wasm_entry.c)
     target_link_libraries(air_box3d PRIVATE air_box3d_abi)
     set_target_properties(air_box3d PROPERTIES OUTPUT_NAME "box3d-st" SUFFIX ".mjs")

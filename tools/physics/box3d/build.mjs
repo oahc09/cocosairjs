@@ -81,6 +81,7 @@ try {
             ...sources.map((s) => resolve(stagedCore, 'src', s)),
             'tools/physics/box3d/native/air_box3d.c',
             'tools/physics/box3d/native/snapshot.c',
+            'tools/physics/box3d/native/geometry.c',
             'tools/physics/box3d/native/contract.c',
         ]) {
             const object = resolve(out, basename(source) + '.o');
@@ -102,6 +103,20 @@ try {
         )
             throw new Error('Native contract did not pass current schema');
         result.contract = contract;
+        const geometryExe = resolve(out, 'native-geometry-contract');
+        run(cc, [
+            ...flags,
+            'tools/physics/box3d/native/geometry_contract.c',
+            ...objects.filter((file) => !file.endsWith('/contract.c.o')),
+            ...(sanitize ? ['-fsanitize=address,undefined'] : []),
+            '-lm',
+            '-o',
+            geometryExe,
+        ]);
+        const geometryRaw = run(geometryExe, []);
+        writeFileSync(resolve(out, 'native-geometry-contract.raw.json'), geometryRaw);
+        result.geometryContract = JSON.parse(geometryRaw);
+        if (result.geometryContract.status !== 'PASS') throw new Error('Native geometry contract failed');
         result.artifacts = [
             { path: 'native-contract', sha256: sha256(readFileSync(exe)), bytes: readFileSync(exe).length },
         ];
@@ -162,9 +177,15 @@ try {
                 2,
             ) + '\n',
         );
+        const geometryRaw = run(process.execPath, [resolve(out, 'air_box3d_geometry_contract.cjs')]);
+        writeFileSync(resolve(out, 'native-geometry-contract.raw.json'), geometryRaw);
+        result.geometryContract = JSON.parse(geometryRaw);
+        if (result.geometryContract.status !== 'PASS' || result.geometryContract.pointerBytes !== 4)
+            throw new Error('WASM32 geometry native contract failed');
         run(process.execPath, ['tools/physics/box3d/wasm-contract.mjs', out]);
         run(process.execPath, ['tools/physics/box3d/wasm-ownership-contract.mjs', out]);
         run(process.execPath, ['tools/physics/box3d/wasm-snapshot-contract.mjs', out]);
+        run(process.execPath, ['tools/physics/box3d/wasm-geometry-contract.mjs', out]);
         result.artifacts = artifacts;
         result.browserStatus = 'NOT_RUN';
     }
@@ -186,15 +207,19 @@ try {
         'tools/physics/box3d/patch-intake.mjs',
         'tools/physics/box3d/patches/lock.json',
         'tools/physics/box3d/patches/sse2-loadv-alignment.patch',
+        'tools/physics/box3d/patches/contact-geometry-epoch.patch',
         'tools/physics/box3d/wasm-contract.mjs',
         'tools/physics/box3d/wasm-ownership-contract.mjs',
         'tools/physics/box3d/wasm-snapshot-contract.mjs',
+        'tools/physics/box3d/wasm-geometry-contract.mjs',
         'tools/physics/box3d/verify-sources.mjs',
         'tools/physics/box3d/verify-wasm.mjs',
         'tools/physics/box3d/native/air_box3d.c',
         'tools/physics/box3d/native/snapshot.c',
+        'tools/physics/box3d/native/geometry.c',
         'tools/physics/box3d/native/air_box3d.h',
         'tools/physics/box3d/native/contract.c',
+        'tools/physics/box3d/native/geometry_contract.c',
         'tools/physics/box3d/native/wasm_entry.c',
         'src/air/physics/box3d/binding/facade.mjs',
         'src/air/physics/box3d/binding/facade.d.mts',

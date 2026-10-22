@@ -23,15 +23,19 @@ const INPUTS = [
     'tools/physics/box3d/patch-intake.mjs',
     'tools/physics/box3d/patches/lock.json',
     'tools/physics/box3d/patches/sse2-loadv-alignment.patch',
+    'tools/physics/box3d/patches/contact-geometry-epoch.patch',
     'tools/physics/box3d/wasm-contract.mjs',
     'tools/physics/box3d/wasm-ownership-contract.mjs',
     'tools/physics/box3d/wasm-snapshot-contract.mjs',
+    'tools/physics/box3d/wasm-geometry-contract.mjs',
     'tools/physics/box3d/verify-sources.mjs',
     'tools/physics/box3d/verify-wasm.mjs',
     'tools/physics/box3d/native/air_box3d.c',
     'tools/physics/box3d/native/snapshot.c',
+    'tools/physics/box3d/native/geometry.c',
     'tools/physics/box3d/native/air_box3d.h',
     'tools/physics/box3d/native/contract.c',
+    'tools/physics/box3d/native/geometry_contract.c',
     'tools/physics/box3d/native/wasm_entry.c',
     'src/air/physics/box3d/binding/facade.mjs',
     'src/air/physics/box3d/binding/facade.d.mts',
@@ -85,7 +89,7 @@ async function verifySTBuild(buildDirectory) {
     assert.equal(receipt.status, 'PASS', 'Native build did not pass');
     assert.equal(receipt.kind, 'st-simd-wasm');
     assert(['Debug', 'Release'].includes(receipt.mode));
-    assert(receipt.commands.length >= 7 && receipt.commands.every((row) => row.exitCode === 0 && !row.error));
+    assert(receipt.commands.length >= 9 && receipt.commands.every((row) => row.exitCode === 0 && !row.error));
     assert.deepEqual(sorted(receipt.inputHashes.map((row) => row.path)), sorted(INPUTS), 'Build input inventory drift');
     for (const input of receipt.inputHashes) {
         safeRelative(input.path);
@@ -118,7 +122,7 @@ async function verifySTBuild(buildDirectory) {
     assert.equal(audit.sharedMemory, false);
     assert.equal(audit.dynamicExecutionOrWorkerConstructorFound, false);
     assert.equal(audit.compiledSourceCount, audit.compiledSourceHashes.length);
-    assert(audit.compiledSourceCount >= 55, 'Incomplete compile audit');
+    assert(audit.compiledSourceCount >= 57, 'Incomplete compile audit');
     for (const input of audit.compiledSourceHashes) {
         safeRelative(input.path);
         assert.equal(sha256(read(fileInside(ROOT, input.path))), input.sha256, `Compiled input drift: ${input.path}`);
@@ -134,9 +138,20 @@ async function verifySTBuild(buildDirectory) {
             'wasm-contract.raw.json',
             'wasm-ownership-contract.raw.json',
             'wasm-snapshot-contract.raw.json',
+            'native-geometry-contract.raw.json',
+            'wasm-geometry-contract.raw.json',
+            'geometry-samples.raw.jsonl',
+            'air_box3d_geometry_contract.cjs',
         ]),
     );
     for (const record of audit.evidence) verifyRecord(directory, record);
+    const nativeGeometry = json(fileInside(directory, 'native-geometry-contract.raw.json'));
+    assert.equal(nativeGeometry.status, 'PASS', 'Native geometry qualification did not pass');
+    assert.equal(nativeGeometry.pointerBytes, 4, 'Geometry qualification must execute WASM32');
+    const geometry = json(fileInside(directory, 'wasm-geometry-contract.raw.json'));
+    assert.equal(geometry.status, 'PASS', 'Independent geometry oracle did not pass');
+    for (const [key, value] of Object.entries(identity))
+        assert.equal(geometry.identity?.[key], value, `Geometry qualification identity mismatch: ${key}`);
     const descriptor = freeze({
         manifestSha256: sha256(manifestBytes),
         facadeSha256: sha256(bytes.get('facade.mjs')),

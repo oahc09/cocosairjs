@@ -15,7 +15,7 @@ const report = {
     startedAt: new Date().toISOString(),
     scope: 'Finite copied batch/event/raw-manifold contract, not complete T07/C21/C22/G1',
     limitations: [
-        'Generic contact world/local-point reconstruction remains explicitly unsupported: cached anchor epoch is unproven.',
+        'This raw snapshot regression is not the separate independent generation-geometry oracle.',
         'Rotating/eccentric diagnostics record pre/post poses without asserting either as a universal anchor basis.',
         'Sensor fixture is a slow thick-sensor crossing, not transient CCD acceptance.',
         'Sleeping pairs are real b3Body_GetContactData touching contacts, not synthetic stay events.',
@@ -148,9 +148,8 @@ try {
             firstContact = snapshot;
             const contact = snapshot.contactsOfOwnedBodies[0];
             assert.equal(a.readContactSnapshot(contact.handle), contact);
-            assert.throws(() => a.contactWorldPoints(contact.handle), {
-                code: 'AIR_E_BOX3D_UNSUPPORTED_SNAPSHOT_EPOCH',
-            });
+            assert.equal(a.contactWorldPoints(contact.handle), contact.geometry);
+            assert.equal(contact.geometry.source, 'CACHED_MANIFOLD_GENERATION');
             assert.throws(() => a.readContactSnapshot({ ...contact.handle }), { code: 'AIR_E_BOX3D_STALE_SNAPSHOT' });
             assert.throws(() => other.readContactSnapshot(contact.handle), { code: 'AIR_E_BOX3D_STALE_SNAPSHOT' });
             assert.ok(contact.manifolds.length > 0 && contact.manifolds[0].points.length > 0);
