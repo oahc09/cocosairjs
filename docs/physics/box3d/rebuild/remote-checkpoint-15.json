@@ -1,0 +1,27 @@
+{
+  "status": "PASS",
+  "timeUTC": "2026-10-22T11:11:38.764Z",
+  "repository": "oahc09/cocosairjs",
+  "branch": "feat/box3d-rebuild-20261022",
+  "remoteCommit": "dc02008402631dd64a261cf08f84f6e0e0242d0c",
+  "remoteParent": "6efcad8a4e8515bac1bce66f2be227a7cb760d49",
+  "remoteTree": "ab17e71754c6f91556b268cf6f75873804b2103e",
+  "localBase": "e3ce7f6b7629c7550b93101b638e5c97b6e0ce6f",
+  "localHead": "9dc4bc23e8859a3827763ad58fdc990f41cd30c8",
+  "treeVerification": {
+    "status": "PASS",
+    "verifiedAt": "2026-10-22T11:09:29.616Z",
+    "baseTree": "dbee948224f497a4f73473e949bd9dbeb15fa892",
+    "newTree": "ab17e71754c6f91556b268cf6f75873804b2103e",
+    "changedFiles": 155,
+    "untouchedSiblings": 864,
+    "directories": 84,
+    "treeReads": 66,
+    "nonRecursive": true
+  },
+  "mainUnchanged": "b573be0741db9e2a13d38ce7e65870b97a1f5fbc",
+  "force": false,
+  "denialKnownNotExecuted": true,
+  "singleRetryAfterSpecificAuthorization": true,
+  "scope": "Node control and uncompiled motion source preservation only; no native motion/Gate/public activation claim."
+}

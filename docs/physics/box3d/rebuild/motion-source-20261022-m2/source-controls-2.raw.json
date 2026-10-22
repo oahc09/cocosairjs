@@ -1,0 +1,18 @@
+{
+  "status": "PASS_SOURCE_CONTROLS_ONLY",
+  "scope": "Source identity/layout/wiring inspection; no native compiler, WASM instantiation, or simulated physics",
+  "sources": {
+    "patchChainSha256": "434fb89494867f515051d5ac0dfc0c694556ba1f0da9ac3fc895a27097b1c7c7",
+    "patchLockSha256": "d6be04611f70223e21b1bcffc635088f49a5647739e97c2f9ce089091748ea77",
+    "verifiedFiles": 130,
+    "fixedCoreFiles": 111,
+    "schemaSha256": "43df81eba981c9ab5751dbe5f807e660d46cac1a5e1b4936462d5afb57a24040"
+  },
+  "decision": {
+    "path": "docs/physics/box3d/contracts/motion-command-decisions-v1.md",
+    "sha256": "30951da3f296ac17acac9ff594c91ee96db62d5b3a3a1bdaf1ec0feb8f2f7a6a"
+  },
+  "nativeQualification": "NOT_RUN",
+  "wasmQualification": "NOT_RUN",
+  "publicT11": "NOT_IMPLEMENTED"
+}

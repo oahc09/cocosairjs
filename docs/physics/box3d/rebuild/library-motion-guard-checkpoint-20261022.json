@@ -1,0 +1,21 @@
+{
+  "status": "PASS_ACTUAL_LIBRARY_DOWNLOAD_INDEPENDENT_GIT_RESTORE",
+  "timeUTC": "2026-10-22T11:12:48.732Z",
+  "libraryFileId": "libfile_81203fdd8ff88191a3f63d374a199e5b",
+  "fileName": "Box3D-motion-guard-checkpoint-20261022.zip",
+  "bytes": 19999504,
+  "sha256": "89891a723f77a172ef7b858ddf7c8bf6e47df7446fe3f444a6efde5ea63e02ee",
+  "commit": "9dc4bc23e8859a3827763ad58fdc990f41cd30c8",
+  "tree": "7a45788ee934484bca76243b9073ac6b7670ed9d",
+  "bundle": {
+    "file": "box3d-rebuild.bundle",
+    "bytes": 20647680,
+    "sha256": "492b56d8448bfae27eabee4e36c4151fe49730512e47e1dc727786ee6bbc2571"
+  },
+  "verified": {
+    "status": "PASS",
+    "checkedFiles": 7945,
+    "independentObjectStore": true
+  },
+  "scope": "Source restoration only; Node controls do not qualify uncompiled motion or full build/browser/formal Gate."
+}

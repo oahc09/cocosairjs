@@ -17,7 +17,10 @@ const fileHash = (path) => ({ path, bytes: read(path).length, sha256: sha256(rea
 const receipt = json('build-receipt.json');
 assert.equal(receipt.status, 'PASS');
 assert.equal(receipt.kind, 'st-simd-wasm');
-assert.ok(receipt.commands.length >= 6 && receipt.commands.every((c) => c.exitCode === 0 && !c.error));
+assert.ok(receipt.commands.length >= 18 && receipt.commands.every((c) => c.exitCode === 0 && !c.error));
+assert.equal(receipt.inputHashes.length, 43);
+assert.equal(new Set(receipt.inputHashes.map((input) => input.path)).size, 43);
+assert.equal(receipt.motionSourceControls.status, 'PASS_SOURCE_CONTROLS_ONLY');
 for (const input of receipt.inputHashes) {
     assert.equal(sha256(readFileSync(resolve(root, input.path))), input.sha256, `Build input drift: ${input.path}`);
 }
@@ -45,6 +48,7 @@ const expectedSources = [
     'tools/physics/box3d/native/filter_bridge.c',
     'tools/physics/box3d/native/motion_bridge.c',
     'tools/physics/box3d/native/filter_contract.c',
+    'tools/physics/box3d/native/motion_contract.c',
     'tools/physics/box3d/native/body_contract.c',
     'tools/physics/box3d/native/world_contract.c',
     'tools/physics/box3d/native/wasm_entry.c',
@@ -239,6 +243,62 @@ for (const check of [
     'coreBytesRestored',
 ])
     assert.equal(nativeFilter[check], true, check);
+const nativeMotion = json('native-motion-contract.raw.json');
+assert.equal(nativeMotion.status, 'PASS');
+assert.equal(nativeMotion.pointerBytes, 4);
+assert.deepEqual(nativeMotion, receipt.motionContract);
+for (const check of [
+    'batchPreflightNoPartialMutation',
+    'capacityOverlapLockedCanaries',
+    'strictQuaternionAndOverflow',
+    'disabledResetForcePreserve',
+    'tinyTargetWakeAndStationaryCap',
+    'postResetCOMTarget',
+    'worldAxisLockAndCaps',
+    'actualFastRotationFlag',
+    'fullGenerationWorld',
+    'scratchTrackedAndCleanup',
+    'substepDomain',
+    'emptyNoOutputWrite',
+    'coreBytesRestored',
+])
+    assert.equal(nativeMotion[check], true, check);
+const motion = json('wasm-motion-contract.raw.json');
+assert.equal(motion.status, 'PASS');
+for (const field of ['coreSha', 'bindingBaseSha', 'schemaSha256', 'patchChainSha256', 'abiVersion', 'variant'])
+    assert.equal(motion.identity[field], manifest[field]);
+assert.equal(motion.fixtureSha256, sha256(readFileSync(resolve(root, 'tools/physics/box3d/wasm-motion-contract.mjs'))));
+for (const check of [
+    'admissionAndEmptyValidate',
+    'lockAndCapRejection',
+    'teleportOptionsCOMAndForces',
+    'mergedResetTargetAndClear',
+    'immutableCopiesAndHeapGrowth',
+    'fullId128Cycles',
+    'independentDampedTargetGrid',
+    'modeledShortfallNotTeleport',
+    'realContactAndSensorTiming',
+    'mutationPhasesNoReplay',
+    'cleanup',
+])
+    assert.equal(motion.checks[check], true, check);
+assert.equal(motion.observations.idCycles.length, 128);
+assert.equal(motion.observations.grid.length, 12);
+assert.ok(motion.observations.grid.every((entry) => entry.ticks === 600));
+assert.equal(motion.injectedMechanisms.length, 3);
+assert.ok(motion.negatives.length >= 35);
+assert.equal(motion.sampleCount, 7201);
+assert.equal(motion.samplesArtifact.records, motion.sampleCount);
+assert.deepEqual(fileHash('motion-samples.raw.jsonl'), {
+    path: motion.samplesArtifact.path,
+    bytes: motion.samplesArtifact.bytes,
+    sha256: motion.samplesArtifact.sha256,
+});
+assert.equal(read('motion-samples.raw.jsonl').toString().trim().split('\n').length, motion.sampleCount);
+for (const filename of ['air_box3d_motion_contract.cjs', 'wasm-motion-contract.mjs'])
+    assert.ok(
+        receipt.commands.some((entry) => entry.args.some((arg) => arg.endsWith(filename)) && entry.exitCode === 0),
+    );
 const report = {
     schemaVersion: 1,
     status: 'PASS',
@@ -282,6 +342,10 @@ const report = {
         'native-filter-contract.raw.json',
         'wasm-filter-contract.raw.json',
         'air_box3d_filter_contract.cjs',
+        'native-motion-contract.raw.json',
+        'wasm-motion-contract.raw.json',
+        'air_box3d_motion_contract.cjs',
+        'motion-samples.raw.jsonl',
     ].map(fileHash),
 };
 writeFileSync(reportPath, JSON.stringify(report, null, 2) + '\n');

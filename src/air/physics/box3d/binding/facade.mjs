@@ -23,7 +23,7 @@ THE SOFTWARE.
 // Internal, limited M1 foundation. This is not the Cocos physics adapter.
 const CORE_SHA = 'efca0c184d40fd6a82016983f1601c4d23965867';
 const BINDING_BASE_SHA = '5d5a3af049cccd9948b2b55bac4342414af0ef64';
-const SCHEMA_SHA256 = '53381d70f6955d42f7f2b83a0d35c319c743118c184fcbb705f0d3bfd9c882aa';
+const SCHEMA_SHA256 = '43df81eba981c9ab5751dbe5f807e660d46cac1a5e1b4936462d5afb57a24040';
 const PATCH_CHAIN_SHA256 = '434fb89494867f515051d5ac0dfc0c694556ba1f0da9ac3fc895a27097b1c7c7';
 
 function failure(code, message) {
@@ -587,8 +587,8 @@ export function createBox3DBinding(module, expected) {
         if (!Array.isArray(records)) throw failure('AIR_E_BOX3D_ARGUMENT', 'Motion record array required');
         if (records.length > 4096) throw failure('AIR_E_BOX3D_CAPACITY', 'At most 4096 bodies per motion batch');
         const delta = Math.fround(finite(dt, 'motion.dt'));
-        if (delta <= 0 || !Number.isInteger(substeps) || substeps < 1 || substeps > 2147483647)
-            throw failure('AIR_E_BOX3D_ARGUMENT', 'Positive float32 dt and positive int32 substeps required');
+        if (delta <= 0 || ![1, 2, 4, 8].includes(substeps))
+            throw failure('AIR_E_BOX3D_ARGUMENT', 'Positive float32 dt and AIR substeps 1, 2, 4 or 8 required');
         if (
             apply &&
             records.length &&

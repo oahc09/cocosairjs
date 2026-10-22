@@ -76,6 +76,13 @@ if(EMSCRIPTEN)
     set_target_properties(air_box3d_filter_contract PROPERTIES SUFFIX ".cjs")
     target_link_options(air_box3d_filter_contract PRIVATE -msimd128 -msse2 -fno-fast-math -ffp-contract=off
         -sENVIRONMENT=node -sSINGLE_FILE=1 -sEXIT_RUNTIME=1 -sFILESYSTEM=0 -sASSERTIONS=2)
+    # motion_contract.c includes the exact world collector only for allocation-failure qualification.
+    add_executable(air_box3d_motion_contract native/motion_contract.c)
+    target_include_directories(air_box3d_motion_contract PRIVATE "${AIR_STAGED_CORE}/src")
+    target_link_libraries(air_box3d_motion_contract PRIVATE air_box3d_abi)
+    set_target_properties(air_box3d_motion_contract PROPERTIES SUFFIX ".cjs")
+    target_link_options(air_box3d_motion_contract PRIVATE -msimd128 -msse2 -fno-fast-math -ffp-contract=off
+        -sENVIRONMENT=node -sSINGLE_FILE=1 -sEXIT_RUNTIME=1 -sFILESYSTEM=0 -sASSERTIONS=2)
     add_executable(air_box3d native/wasm_entry.c)
     target_link_libraries(air_box3d PRIVATE air_box3d_abi)
     set_target_properties(air_box3d PROPERTIES OUTPUT_NAME "box3d-st" SUFFIX ".mjs")

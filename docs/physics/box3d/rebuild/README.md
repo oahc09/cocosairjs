@@ -8,6 +8,12 @@ The [state ledger](../../../../ai/ledgers/box3d-rebuild-state.json) deliberately
 
 The required recovery procedure creates a Git bundle, clones it into an independent temporary repository, verifies Git connectivity and every tracked file, and writes the recovery receipt. The Library round-trip is a separate required delivery step. Run node tools/verify/box3d/rebuild-checkpoint.cjs --output /absolute/new-directory from a clean committed snapshot. The helper has four passing recovery/negative-control tests; this is not a physical acceptance PASS. --committed-only explicitly excludes and reports ongoing uncommitted work.
 
+## Current preservation point, 2026-10-22
+
+Remote checkpoint 15 is dc02008402631dd64a261cf08f84f6e0e0242d0c. Its exact local source snapshot 9dc4bc23e8859a3827763ad58fdc990f41cd30c8 was independently restored from Library libfile_81203fdd8ff88191a3f63d374a199e5b, with 7,945 tracked files checked. It includes 142 actual Node ownership controls, their original RED and the retained test-source typechecking failure, plus the first uncompiled motion source candidate.
+
+The later complete motion source candidate has 43 fixed build inputs, 65 expected compile units and 25 expected audit items, but has not been compiled or qualified. Historical l2 artifacts cannot qualify its changed schema. Node control does not establish target motion, native trajectories, browser support or T11/C36 acceptance. Whole-world expected-pose/owned-epoch writeback is the next separate source and actual-WASM experiment. The dated j2/h2 and other records below describe their own historical snapshots, not the current candidate.
+
 ## Reconstructed native foundation
 
 The fixed core and binding-reference sources are preserved under vendor/box3d with exact upstream blob and SHA-256 identities. The original SSE2 load alignment defect remains recorded. Its reviewed patch is applied only to a verified build-stage copy; vendor originals remain unchanged. The official Emscripten 6.0.2 toolchain produced fresh Debug/Release ST artifacts. Current j2 fixtures add native world controls, copied real-core debug geometry and completion diagnostics. Finite contact geometry records carry their actual generation basis, not a claim of current-time surface coordinates. The actual AIR World/PhysicsSystem source drives the new WASM through fixture-internal registration; public activation and full T09 remain open. ASan/LSan and real browser limitations are recorded separately.

@@ -959,17 +959,17 @@
     "deploy": false,
     "npmPublish": false
   },
-  "nextStep": "Preserve narrow T11 motion-batch and pre-mutation Node guard source before any build; review exact new input/wire/evidence inventory, then run serial native and WASM qualification. Public hook/ownership/parent-scale semantics must close before public activation. All formal gate denominators unchanged.",
+  "nextStep": "Externally preserve the complete m2 motion source candidate, then run serial native/real WASM qualification. Prepare actual AIR writeback-epoch RED with the new matched artifact before editing world synchronization. Formal 2128 required cells and all Gate outcomes remain unchanged.",
   "remoteHistoryPolicy": "True upstream main parent and incremental tree; local snapshot import is backup-only and is never pushed as upstream history.",
   "remotePublication": {
-    "status": "REMOTE_CHECKPOINT_14_READBACK_VERIFIED",
-    "commit": "6efcad8a4e8515bac1bce66f2be227a7cb760d49",
-    "tree": "dbee948224f497a4f73473e949bd9dbeb15fa892",
-    "parent": "d7d3db7db1cd6eb585e4d6eb1cef8c8209d8fe05",
+    "status": "REMOTE_CHECKPOINT_15_READBACK_VERIFIED",
+    "commit": "dc02008402631dd64a261cf08f84f6e0e0242d0c",
+    "tree": "ab17e71754c6f91556b268cf6f75873804b2103e",
+    "parent": "6efcad8a4e8515bac1bce66f2be227a7cb760d49",
     "branch": "feat/box3d-rebuild-20261022",
-    "receipt": "docs/physics/box3d/rebuild/remote-checkpoint-14.json"
+    "receipt": "docs/physics/box3d/rebuild/remote-checkpoint-15.json"
   },
-  "updatedAtUtc": "2026-10-22T10:44:34.878904+00:00",
+  "updatedAtUtc": "2026-10-22T11:16:35.029574+00:00",
   "currentEvidence": {
     "m0ContractTests": "PASS_7_SOURCE_DESIGN_CHECKS_ONLY_U01_U02_INVENTORY_ADDED",
     "nativeFoundationIndex": "tools/physics/box3d/evidence/index.json",
@@ -1178,10 +1178,10 @@
   },
   "persistentCheckpoint": {
     "status": "PASS_ACTUAL_LIBRARY_DOWNLOAD_INDEPENDENT_GIT_RESTORE",
-    "libraryFileId": "libfile_dd6dd5763a288191ba734a69bf8f89b3",
-    "commit": "e3ce7f6b7629c7550b93101b638e5c97b6e0ce6f",
-    "trackedFiles": 7806,
-    "receipt": "docs/physics/box3d/rebuild/library-component-checkpoint-20261022.json"
+    "libraryFileId": "libfile_81203fdd8ff88191a3f63d374a199e5b",
+    "commit": "9dc4bc23e8859a3827763ad58fdc990f41cd30c8",
+    "trackedFiles": 7945,
+    "receipt": "docs/physics/box3d/rebuild/library-motion-guard-checkpoint-20261022.json"
   },
   "additionalOriginalMainSources": {
     "count": 445,
@@ -1206,5 +1206,20 @@
   "inventoryReview": "docs/physics/box3d/contracts/inventory-freeze-review-v1.json",
   "inventoryValidation": "docs/physics/box3d/rebuild/inventory-freeze-check-20261022/receipt.json",
   "redundantRecoveryCloneCleanup": "docs/physics/box3d/rebuild/redundant-clone-cleanup-20261022/receipt.json",
-  "redundantRecoveryCloneCleanupAdditional": "docs/physics/box3d/rebuild/redundant-clone-cleanup-20261022-b/receipt.json"
+  "redundantRecoveryCloneCleanupAdditional": "docs/physics/box3d/rebuild/redundant-clone-cleanup-20261022-b/receipt.json",
+  "currentCandidate": {
+    "motion": "SOURCE_ONLY_NOT_COMPILED",
+    "sourceCommit": "72a25c5578ba959602a0b8fb0fa4ff4b087472c4",
+    "schemaSha256": "43df81eba981c9ab5751dbe5f807e660d46cac1a5e1b4936462d5afb57a24040",
+    "buildInputs": 43,
+    "expectedCompiledSources": 65,
+    "expectedAuditEvidence": 25,
+    "minimumSuccessfulWasmCommands": 18,
+    "sourceReceipt": "docs/physics/box3d/rebuild/motion-source-20261022-m2/intake-receipt.json",
+    "nodeOwnership": "PASS_142_ACTUAL_NODE_SOURCE_CONTROLS_NOT_PHYSICS",
+    "nodeReceipt": "docs/physics/box3d/rebuild/node-motion-guard-source-20261022-green2/receipt.json",
+    "worldWriteback": "EXPECTED_POSE_EPOCH_ALIAS_FIXTURE_PREPARATION_ONLY",
+    "publicTargetTeleport": "NOT_IMPLEMENTED",
+    "nativeArtifactStatus": "Historical l2 is not qualified for current changed schema; a fresh build and all affected qualifications are required."
+  }
 }

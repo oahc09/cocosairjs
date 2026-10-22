@@ -327,13 +327,13 @@
       "lockedComponentAbsoluteMax": 1e-6,
       "capMarginFloatEpsilonMultiplier": 8,
       "capMarginScale": "max(1,nativeCap)",
-      "speedAdmission": "reject magnitude >= cap-margin before damping and before lock residue projection; angular cap omitted only for actual native allowFastRotation",
-      "substeps": "positive int32; float32 dt/h/inv_dt/inv_h and 2*inv_dt finite, dt/h positive"
+      "speedAdmission": "nonzero velocity rejects magnitude >= cap-margin before damping and before lock residue projection; exactly zero velocity is admitted for any valid native positive cap, even cap < margin; angular cap omitted only for actual native allowFastRotation",
+      "substeps": "AIR integer 1, 2, 4 or 8; float32 dt/h/inv_dt/inv_h and 2*inv_dt finite, dt/h positive; this is a subset of legacy foundation.step positive-int32 admission"
     },
     "unusedPoseWords": "canonical uint32 zero; no NaN/negative-zero hidden in unused fields",
     "emptyBatch": "world/dt/substeps validated, no mutation or snapshot invalidation",
-    "memory": "Native plans allocated/freed through per-world owned bridge scratch and included in bridgeMemory during the call; all known exits free scratch. Facade input/output temporary buffers freed in finally. No persistent plan/pointer. Allocator capacity need not shrink.",
-    "phases": "validate never invalidates snapshot or consumes intent. apply zero returned then readback failure=committed; native throw/trap=unknown and invalidates current observation; known nonzero status=not-mutated. No rollback claim after unknown partial apply.",
+    "memory": "Native plans allocated/freed through per-world owned bridge scratch, including allocation header, and included in bridgeMemory during the call; all known exits free scratch. World destruction reclaims tracked orphan scratch if teardown remains possible after unknown failure; no universal cleanup claim for corrupted/locked core. Facade input/output temporary buffers freed in finally. No persistent plan/pointer. Allocator capacity need not shrink.",
+    "phases": "validate never invalidates snapshot or consumes intent, even on unknown validation status-delivery throw. Empty apply is likewise nonmutating. Nonempty apply status zero then copy/readback failure=committed; native throw/trap=unknown and invalidates current observation; known nonzero status=not-mutated. No rollback claim after unknown partial apply.",
     "scope": "Internal foundation candidate only, not public target lifetime/queue/Node synchronization or completed T11."
   }
 }

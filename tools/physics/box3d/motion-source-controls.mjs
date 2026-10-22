@@ -42,6 +42,20 @@ for (const name of ['validateMotionBatch', 'applyMotionBatch']) {
 const build = read('tools/physics/box3d/build.mjs');
 assert.ok(build.includes("'tools/physics/box3d/native/motion_bridge.c'"));
 assert.ok(build.includes(`'${decision.path}'`));
+const inputBlock = build.match(/const inputs = \[([\s\S]*?)\];/)[1];
+const inputs = [...inputBlock.matchAll(/'([^']+)'/g)].map((match) => match[1]);
+assert.equal(inputs.length, 43);
+assert.equal(new Set(inputs).size, 43);
+for (const path of ['tools/physics/box3d/native/motion_contract.c', 'tools/physics/box3d/wasm-motion-contract.mjs'])
+    assert.ok(inputs.includes(path));
+assert.ok(
+    read('tools/physics/box3d/CMakeLists.txt').includes(
+        'add_executable(air_box3d_motion_contract native/motion_contract.c)',
+    ),
+);
+assert.match(source, /substeps!=1&&substeps!=2&&substeps!=4&&substeps!=8/);
+assert.match(source, /if\(v.x==0 && v.y==0 && v.z==0\)return AIR_B3_OK/);
+assert.match(read('tools/physics/box3d/native/motion_contract.c'), /b3Body_AllowFastRotation\(kinematic,true\)/);
 const sources = verifySources();
 assert.equal(sources.patchChainSha256, '434fb89494867f515051d5ac0dfc0c694556ba1f0da9ac3fc895a27097b1c7c7');
 console.log(

@@ -42,6 +42,10 @@ function run(command, args) {
 }
 try {
     result.sources = verifySources();
+    const motionSources = run(process.execPath, ['tools/physics/box3d/motion-source-controls.mjs']);
+    result.motionSourceControls = JSON.parse(motionSources);
+    if (result.motionSourceControls.status !== 'PASS_SOURCE_CONTROLS_ONLY')
+        throw new Error('Motion source controls failed');
     const lock = JSON.parse(readFileSync(resolve(root, 'tools/physics/box3d/versions.lock.json'), 'utf8'));
     const patchPlan = readPatchPlan();
     const stagedCore = resolve(out, 'staged-core');
@@ -163,6 +167,20 @@ try {
         writeFileSync(resolve(out, 'native-filter-contract.raw.json'), filterRaw);
         result.filterContract = JSON.parse(filterRaw);
         if (result.filterContract.status !== 'PASS') throw new Error('Native filter contract failed');
+        const motionExe = resolve(out, 'native-motion-contract');
+        run(cc, [
+            ...flags,
+            'tools/physics/box3d/native/motion_contract.c',
+            ...objects.filter((file) => !file.endsWith('/contract.c.o') && !file.endsWith('/world_bridge.c.o')),
+            ...(sanitize ? ['-fsanitize=address,undefined'] : []),
+            '-lm',
+            '-o',
+            motionExe,
+        ]);
+        const motionRaw = run(motionExe, []);
+        writeFileSync(resolve(out, 'native-motion-contract.raw.json'), motionRaw);
+        result.motionContract = JSON.parse(motionRaw);
+        if (result.motionContract.status !== 'PASS') throw new Error('Native motion contract failed');
         result.artifacts = [
             { path: 'native-contract', sha256: sha256(readFileSync(exe)), bytes: readFileSync(exe).length },
         ];
@@ -243,6 +261,11 @@ try {
         result.filterContract = JSON.parse(filterRaw);
         if (result.filterContract.status !== 'PASS' || result.filterContract.pointerBytes !== 4)
             throw new Error('WASM32 filter native contract failed');
+        const motionRaw = run(process.execPath, [resolve(out, 'air_box3d_motion_contract.cjs')]);
+        writeFileSync(resolve(out, 'native-motion-contract.raw.json'), motionRaw);
+        result.motionContract = JSON.parse(motionRaw);
+        if (result.motionContract.status !== 'PASS' || result.motionContract.pointerBytes !== 4)
+            throw new Error('WASM32 motion native contract failed');
         run(process.execPath, ['tools/physics/box3d/wasm-contract.mjs', out]);
         run(process.execPath, ['tools/physics/box3d/wasm-ownership-contract.mjs', out]);
         run(process.execPath, ['tools/physics/box3d/wasm-snapshot-contract.mjs', out]);
@@ -250,6 +273,7 @@ try {
         run(process.execPath, ['tools/physics/box3d/wasm-world-contract.mjs', out]);
         run(process.execPath, ['tools/physics/box3d/wasm-body-contract.mjs', out]);
         run(process.execPath, ['tools/physics/box3d/wasm-filter-contract.mjs', out]);
+        run(process.execPath, ['tools/physics/box3d/wasm-motion-contract.mjs', out]);
         result.artifacts = artifacts;
         result.browserStatus = 'NOT_RUN';
     }
@@ -279,6 +303,7 @@ try {
         'tools/physics/box3d/wasm-world-contract.mjs',
         'tools/physics/box3d/wasm-body-contract.mjs',
         'tools/physics/box3d/wasm-filter-contract.mjs',
+        'tools/physics/box3d/wasm-motion-contract.mjs',
         'tools/physics/box3d/verify-sources.mjs',
         'tools/physics/box3d/verify-wasm.mjs',
         'tools/physics/box3d/native/air_box3d.c',
@@ -295,6 +320,7 @@ try {
         'tools/physics/box3d/motion-source-controls.mjs',
         'docs/physics/box3d/contracts/motion-command-decisions-v1.md',
         'tools/physics/box3d/native/filter_contract.c',
+        'tools/physics/box3d/native/motion_contract.c',
         'tools/physics/box3d/native/body_contract.c',
         'tools/physics/box3d/native/world_contract.c',
         'tools/physics/box3d/native/air_box3d.h',

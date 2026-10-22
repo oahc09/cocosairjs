@@ -79,6 +79,7 @@ static int speed(b3Vec3 v,float cap,int capped) {
     if(!vec_ok(v) || !isfinite(b3LengthSquared(v)))return AIR_B3_ARGUMENT;
     if(!capped)return AIR_B3_OK;
     if(!isfinite(cap) || cap<=0 || !isfinite(cap*cap))return AIR_B3_ARGUMENT;
+    if(v.x==0 && v.y==0 && v.z==0)return AIR_B3_OK;
     double margin=8.0*FLT_EPSILON*fmax(1.0,cap);
     double magnitude=hypot(hypot((double)v.x,v.y),v.z);
     return magnitude>=(double)cap-margin?AIR_B3_MOTION_SPEED_CAP:AIR_B3_OK;
@@ -177,7 +178,8 @@ static void read_result(b3World* world,const MotionPlan* plan,float* out) {
 int air_b3_motion_batch(uint32_t wid,const uint32_t* records,int count,int inputWords,
     float dt,int substeps,float* out,int capacityFloats,int apply) {
     int status=air_b3_world_unlocked(wid);if(status)return status;
-    if((apply!=0&&apply!=1)||count<0||inputWords<0||capacityFloats<0||!isfinite(dt)||dt<=0||substeps<1)return AIR_B3_ARGUMENT;
+    if((apply!=0&&apply!=1)||count<0||inputWords<0||capacityFloats<0||!isfinite(dt)||dt<=0||
+       (substeps!=1&&substeps!=2&&substeps!=4&&substeps!=8))return AIR_B3_ARGUMENT;
     float inverse=1.0f/dt,h=dt/substeps;
     if(!isfinite(inverse)||!isfinite(2.0f*inverse)||!isfinite(substeps*inverse)||!isfinite(h)||h<=0)return AIR_B3_ARGUMENT;
     if(count>AIR_B3_MOTION_MAX_BODIES || inputWords!=count*AIR_B3_MOTION_INPUT_WORDS ||
