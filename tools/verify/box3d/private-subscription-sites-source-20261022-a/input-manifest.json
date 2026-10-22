@@ -1,0 +1,49 @@
+{
+  "baseHead": "9df645b4a84e73c86ffd460b59cbd6e2ab732cbb",
+  "inputs": {
+    "src/cocos/physics/framework/physics-material-transaction.ts": {
+      "sha256": "949426ebc03754639cf7ff2e3ce9bbb80e6c9a43e7c4a5ec671739c55cdda083",
+      "bytes": 28282
+    },
+    "src/cocos/physics/framework/components/colliders/collider.ts": {
+      "sha256": "2e93ecae851d1a943c00d1a5a01a3d887153dce0d9693f541b4f6be73b2a7ac9",
+      "bytes": 24556
+    },
+    "src/cocos/physics/framework/physics-system.ts": {
+      "sha256": "a4890065dcb52287ec5483f2b8c14e63dcd266cd1503b5f2629716713fa504eb",
+      "bytes": 44352
+    },
+    "src/cocos/physics/framework/physics-state-observer.ts": {
+      "sha256": "4cf40c4f1be0d407a402e95dcdb7a898b1942cb175f869f6367a41b18c2d1d2b",
+      "bytes": 23170
+    },
+    "src/cocos/core/data/mutation-guard.ts": {
+      "sha256": "93758e4b5a90ff90e5cabc7d3b0b5fd71069e955d4bf64517bec27d1957774a0",
+      "bytes": 7193
+    },
+    "src/cocos/core/event/eventify.ts": {
+      "sha256": "ad59c9f8dc67f40db877b2160989b792e488b256903d6fdccaf2c7433728c7e9",
+      "bytes": 9132
+    },
+    "src/cocos/core/event/callbacks-invoker.ts": {
+      "sha256": "544780e361767d5ae79d2c20a973651b544ceee6b7bd90e6ebe876185774918a",
+      "bytes": 14205
+    },
+    "AGENTS.md": {
+      "sha256": "49cf8f59cfdf7798a1c5fb03f3b46f5115ff0e42faf0249880c3906a778a1072",
+      "bytes": 18480
+    },
+    ".prettierrc.json": {
+      "sha256": "4c184df4264a37fbd7f178b505c9061f98e264fa9c6eb4f2688a4e479425ad8a",
+      "bytes": 726
+    },
+    ".prettierignore": {
+      "sha256": "a121a84d7d629c671a1f1efdb4d9e4b3e52b7f8cad7a1dc0f026de9bd521ea16",
+      "bytes": 1024
+    },
+    "docs/physics/box3d/contracts/shared-material-values-decisions-v1.md": {
+      "sha256": "740e84c57a224c622b2d354aef06a5813004f292707d76ca6cdf31bf39089b3e",
+      "bytes": 2499
+    }
+  }
+}

@@ -278,12 +278,16 @@ export class PhysicsSystem extends System implements IWorldInitData {
                     candidate: { kind: 'system-default-material', material },
                 }));
                 change.apply();
-                change.effect('listener-edit-entered');
-                if (this._material !== material) this._material?.off(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
+                if (!change.privateSubscriptions) {
+                    change.effect('listener-edit-entered');
+                    if (this._material !== material) this._material?.off(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
+                }
                 this._material = material;
                 change.effect('cache-written');
-                this._material.on(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
-                change.effect('listeners-complete');
+                if (!change.privateSubscriptions) {
+                    this._material.on(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
+                    change.effect('listeners-complete');
+                }
                 change.commit(() => ({ kind: 'system-default-material', material: this._material }));
             } catch (error) { change.fail(error, () => ({ kind: 'system-default-material', material: this._material ?? null })); }
             finally { change.dispose(); }

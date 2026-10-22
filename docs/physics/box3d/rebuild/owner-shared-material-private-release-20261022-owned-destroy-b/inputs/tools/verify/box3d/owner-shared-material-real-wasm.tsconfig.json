@@ -1,0 +1,5 @@
+{
+  "extends": "./tsconfig.world-control.json",
+  "files": ["owner-shared-material-real-wasm.test.ts", "../../../src/@types/external-modules.d.ts"],
+  "include": []
+}

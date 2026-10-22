@@ -959,7 +959,7 @@
     "deploy": false,
     "npmPublish": false
   },
-  "nextStep": "Wire independently reviewed private shared-material asset entries and lifecycle owner membership, then rerun the four preserved real-WASM source RED assertions and failure/cleanup controls; real nonempty unified producer consumption remains blocked until those contracts close.",
+  "nextStep": "Qualify actual private shared-material lifecycle and failure paths beyond four finite cases; then wire actual nonempty unified producer consumption only after owner completeness and phase prerequisites close.",
   "remoteHistoryPolicy": "True upstream main parent and incremental tree; local snapshot import is backup-only and is never pushed as upstream history.",
   "remotePublication": {
     "status": "VERIFIED_CHECKPOINT_26",
@@ -968,7 +968,7 @@
     "branch": "feat/box3d-rebuild-20261022",
     "receipt": "docs/physics/box3d/rebuild/remote-checkpoint-26.json"
   },
-  "updatedAtUtc": "2026-10-22T19:09:32.405932+00:00",
+  "updatedAtUtc": "2026-10-22T19:58:03.879254+00:00",
   "currentEvidence": {
     "m0ContractTests": "PASS_7_SOURCE_DESIGN_CHECKS_ONLY_U01_U02_INVENTORY_ADDED",
     "nativeFoundationIndex": "tools/physics/box3d/evidence/index.json",
@@ -1180,12 +1180,12 @@
   },
   "persistentCheckpoint": {
     "status": "PASS_ACTUAL_LIBRARY_DOWNLOAD_INCREMENTAL_INDEPENDENT_STORE_FULL_FILE_VERIFICATION",
-    "libraryFileId": "libfile_c699e73516648191ad3152ffed9981a5",
-    "commit": "9df645b4a84e73c86ffd460b59cbd6e2ab732cbb",
-    "trackedFiles": 18971,
+    "libraryFileId": "libfile_5cb4dd1de5e881919a6aadd5c986b3da",
+    "commit": "45b526f248575a0542af8eed591c0cf8c8a1ba8d",
+    "trackedFiles": 20147,
     "requiresBaseLibrary": "libfile_10c86f5827f481919e3938fbb0c2670b",
     "requiresBaseCommit": "e5c5674bfe08be0c9fda72c484f4380bd0d0e2c6",
-    "receipt": "docs/physics/box3d/rebuild/library-system-pause-qualified-checkpoint-20261022.json"
+    "receipt": "docs/physics/box3d/rebuild/library-shared-material-kernel-checkpoint-20261022.json"
   },
   "additionalOriginalMainSources": {
     "count": 445,
@@ -1278,13 +1278,14 @@
     "systemPauseMockRegression": "18_CASES_331_CHECKS_PLUS_INDEPENDENT_5_CASES_43_CHECKS",
     "systemPauseProducerIntegration": "NOT_INTEGRATED",
     "materialPauseRegression": "CURRENT_N4_RELEASE_POST_NATIVE_READBACK_FAILURE_8_AND_OBSERVER_CLEANUP_12_CHECKS_PASS",
-    "sharedMaterialSourceDefects": "FOUR_REAL_CURRENT_N4_RELEASE_SOURCE_CONTRACT_RED_PRESERVED_NOT_FIXED_BY_KERNEL_ALONE",
-    "sharedMaterialSourceDefectsReceipt": "docs/physics/box3d/rebuild/shared-material-source-red-review-20261022-a/receipt.json",
+    "sharedMaterialSourceDefects": "FOUR_ORIGINAL_RED_RETAINED_NEW_COMPOSITE_PASSES_SAME_FOUR_REAL_N4_RELEASE_CASES_LIMITED",
+    "sharedMaterialSourceDefectsReceipt": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/four-real-cases-review.json",
     "preparedMaterialBatchKernel": "PASS_THREE_FINITE_CURRENT_WASM_KERNEL_CONTROLS_NOT_PRIVATE_ASSET_ROSTER_INTEGRATED",
     "preparedMaterialBatchKernelReceipt": "docs/physics/box3d/rebuild/shared-material-kernel-review-20261022-a/receipt.json",
-    "privateMaterialValueRoster": "ISOLATED_PURE_PROTOCOL_CANDIDATE_WITH_INDEPENDENT_NO_CHANGE_COMMIT_DEFECT_AND_REPAIR_NOT_ENGINE_INTEGRATED",
+    "privateMaterialValueRoster": "ACTUAL_BOX3D_OWNER_LIFECYCLE_AND_FIVE_ASSET_ENTRIES_INTEGRATED_FINITE_REAL_CASES_NOT_ALL_OWNER_QUALIFIED",
     "colliderListenerCandidate": "BLOCKED_NOT_ADOPTED_AUTOMATIC_ONCE_RETIREMENT_SEMANTICS",
-    "colliderListenerCandidateReceipt": "docs/physics/box3d/rebuild/collider-listener-candidate-blocked-20261022.json"
+    "colliderListenerCandidateReceipt": "docs/physics/box3d/rebuild/collider-listener-candidate-blocked-20261022.json",
+    "privateMaterialSubscriptions": "ACTUAL_BOX3D_PRIVATE_LANE_PUBLIC_NOTIFICATION_INDEPENDENT_LEGACY_OTHER_BACKEND_UNCHANGED"
   },
   "historicalCandidateSnapshots": [
     {

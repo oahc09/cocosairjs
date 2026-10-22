@@ -38,7 +38,7 @@ import { EColliderType, EAxisDirection } from '../../physics-enum';
 import { selector, createShape } from '../../physics-selector';
 
 type Callback = (...args: any[]) => any;
-// Only observed paths retain candidate listener identities for independent teardown.
+// Observed paths retain legacy listeners; an empty set also selects independent private teardown.
 const observedMaterialAssets = new WeakMap<Collider, Set<PhysicsMaterial>>();
 function retainObservedMaterial (collider: Collider, material: PhysicsMaterial | null): void {
     let assets = observedMaterialAssets.get(collider);
@@ -123,21 +123,26 @@ export class Collider extends Eventify(Component) {
             const change = beginPhysicsMaterialChange(this, 'collider-material-clone');
             if (change) {
                 try {
+                    if (change.privateSubscriptions) retainObservedMaterial(this, null);
                     change.prepare(() => ({ before: this._materialIdentity(), candidate: this._materialIdentity() }));
                     change.effect('clone-allocation-entered');
                     const previous = this._material;
                     const cloned = previous.clone();
                     change.acceptClone(cloned);
-                    retainObservedMaterial(this, previous);
-                    change.effect('listener-edit-entered');
-                    previous.off(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
-                    observedMaterialAssets.get(this)!.delete(previous);
+                    if (!change.privateSubscriptions) {
+                        retainObservedMaterial(this, previous);
+                        change.effect('listener-edit-entered');
+                        previous.off(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
+                        observedMaterialAssets.get(this)!.delete(previous);
+                    }
                     this._material = cloned;
                     change.effect('cache-written');
-                    retainObservedMaterial(this, cloned);
-                    cloned.on(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
+                    if (!change.privateSubscriptions) {
+                        retainObservedMaterial(this, cloned);
+                        cloned.on(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
+                    }
                     this._isSharedMaterial = false;
-                    change.effect('listeners-complete');
+                    if (!change.privateSubscriptions) change.effect('listeners-complete');
                     change.commit(() => this._materialIdentity());
                 } catch (error) { change.fail(error, () => this._materialIdentity()); }
                 finally { change.dispose(); }
@@ -156,19 +161,22 @@ export class Collider extends Eventify(Component) {
         const change = beginPhysicsMaterialChange(this, 'collider-material-set');
         if (change) {
             try {
+                if (change.privateSubscriptions) retainObservedMaterial(this, null);
                 change.prepare(() => ({ before: this._materialIdentity(), candidate: { kind: 'collider-material', material: value, shared: this._isSharedMaterial } }));
                 change.apply();
                 if (this._material !== value) {
-                    retainObservedMaterial(this, this._material);
-                    change.effect('listener-edit-entered');
-                    this._material?.off(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
-                    if (this._material) observedMaterialAssets.get(this)!.delete(this._material);
-                    retainObservedMaterial(this, value);
-                    value?.on(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
+                    if (!change.privateSubscriptions) {
+                        retainObservedMaterial(this, this._material);
+                        change.effect('listener-edit-entered');
+                        this._material?.off(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
+                        if (this._material) observedMaterialAssets.get(this)!.delete(this._material);
+                        retainObservedMaterial(this, value);
+                        value?.on(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
+                    }
                     if (this._material && value) this._isSharedMaterial = false;
                     this._material = value;
                     change.effect('cache-written');
-                    change.effect('listeners-complete');
+                    if (!change.privateSubscriptions) change.effect('listeners-complete');
                 }
                 change.commit(() => this._materialIdentity());
             } catch (error) { change.fail(error, () => this._materialIdentity()); }
@@ -507,12 +515,15 @@ export class Collider extends Eventify(Component) {
         const change = beginPhysicsMaterialChange(this, 'collider-material-initialize');
         if (change) {
             try {
+                if (change.privateSubscriptions) retainObservedMaterial(this, null);
                 change.prepare(() => ({ before: this._materialIdentity(), candidate: this._materialIdentity() }));
                 this._shape.onLoad!();
-                retainObservedMaterial(this, this._material);
-                change.effect('listener-edit-entered');
-                this._material?.on(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
-                change.effect('listeners-complete');
+                if (!change.privateSubscriptions) {
+                    retainObservedMaterial(this, this._material);
+                    change.effect('listener-edit-entered');
+                    this._material?.on(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
+                    change.effect('listeners-complete');
+                }
                 change.commit(() => this._materialIdentity());
             } catch (error) { change.fail(error, () => this._materialIdentity()); }
             finally { change.dispose(); }

@@ -1,0 +1,17 @@
+{
+  "scope": "Whole-file AST equality after constant folding only the new copied capability to false. Comments ignored; no other transform.",
+  "results": [
+    {
+      "file": "src/cocos/physics/framework/components/colliders/collider.ts",
+      "copiedPrivateFalseReducesToOriginalWholeFileAST": true,
+      "positiveBranches": 3,
+      "negativeBranches": 6
+    },
+    {
+      "file": "src/cocos/physics/framework/physics-system.ts",
+      "copiedPrivateFalseReducesToOriginalWholeFileAST": true,
+      "positiveBranches": 0,
+      "negativeBranches": 2
+    }
+  ]
+}

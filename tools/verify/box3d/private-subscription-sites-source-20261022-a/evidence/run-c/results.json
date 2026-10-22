@@ -1,0 +1,890 @@
+{
+  "schema": "private-subscription-sites-controls/1",
+  "scope": "Complete source with explicit infrastructure/asset/owner/native doubles. Actual production owners NOT_INTEGRATED; all formal 2128 cells NOT_RUN; staged=false; unified=false.",
+  "sources": {
+    "original": {
+      "src/cocos/core/event/eventify.ts": {
+        "sha256": "ad59c9f8dc67f40db877b2160989b792e488b256903d6fdccaf2c7433728c7e9",
+        "bytes": 9132
+      },
+      "src/cocos/core/event/callbacks-invoker.ts": {
+        "sha256": "544780e361767d5ae79d2c20a973651b544ceee6b7bd90e6ebe876185774918a",
+        "bytes": 14205
+      },
+      "src/cocos/physics/framework/components/colliders/collider.ts": {
+        "sha256": "2e93ecae851d1a943c00d1a5a01a3d887153dce0d9693f541b4f6be73b2a7ac9",
+        "bytes": 24556
+      },
+      "src/cocos/physics/framework/physics-material-transaction.ts": {
+        "sha256": "949426ebc03754639cf7ff2e3ce9bbb80e6c9a43e7c4a5ec671739c55cdda083",
+        "bytes": 28282
+      },
+      "src/cocos/physics/framework/physics-state-observer.ts": {
+        "sha256": "4cf40c4f1be0d407a402e95dcdb7a898b1942cb175f869f6367a41b18c2d1d2b",
+        "bytes": 23170
+      },
+      "src/cocos/core/data/mutation-guard.ts": {
+        "sha256": "93758e4b5a90ff90e5cabc7d3b0b5fd71069e955d4bf64517bec27d1957774a0",
+        "bytes": 7193
+      },
+      "src/cocos/physics/framework/physics-system.ts": {
+        "sha256": "a4890065dcb52287ec5483f2b8c14e63dcd266cd1503b5f2629716713fa504eb",
+        "bytes": 44352
+      }
+    },
+    "candidate": {
+      "src/cocos/core/event/eventify.ts": {
+        "sha256": "ad59c9f8dc67f40db877b2160989b792e488b256903d6fdccaf2c7433728c7e9",
+        "bytes": 9132
+      },
+      "src/cocos/core/event/callbacks-invoker.ts": {
+        "sha256": "544780e361767d5ae79d2c20a973651b544ceee6b7bd90e6ebe876185774918a",
+        "bytes": 14205
+      },
+      "src/cocos/physics/framework/components/colliders/collider.ts": {
+        "sha256": "53a0d357c2483e64bf2015c54911099e0d08cdbf68bdeeddc5ad5a469deea718",
+        "bytes": 25264
+      },
+      "src/cocos/physics/framework/physics-material-transaction.ts": {
+        "sha256": "e5fd0efdac79228970560a0bca6c9dde31e5436a69d9b499cb02867f27c8ab8c",
+        "bytes": 29093
+      },
+      "src/cocos/physics/framework/physics-state-observer.ts": {
+        "sha256": "4cf40c4f1be0d407a402e95dcdb7a898b1942cb175f869f6367a41b18c2d1d2b",
+        "bytes": 23170
+      },
+      "src/cocos/core/data/mutation-guard.ts": {
+        "sha256": "93758e4b5a90ff90e5cabc7d3b0b5fd71069e955d4bf64517bec27d1957774a0",
+        "bytes": 7193
+      },
+      "src/cocos/physics/framework/physics-system.ts": {
+        "sha256": "3726b321e4936d4a991ee2bfb027b61344781164ff1e42510f9f311da27dee63",
+        "bytes": 44508
+      }
+    }
+  },
+  "results": [
+    {
+      "name": "legacy-equivalence/none/set/normal",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy-equivalence/none/set/on-throw",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy-equivalence/none/set/off-throw",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy-equivalence/none/set/same",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy-equivalence/none/set/initial-null",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy-equivalence/none/set/set-null",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy-equivalence/none/clone/normal",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy-equivalence/none/clone/on-throw",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy-equivalence/none/clone/off-throw",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy-equivalence/none/load/normal",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy-equivalence/none/load/on-throw",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy-equivalence/none/load/off-throw",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy-equivalence/none/system/normal",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy-equivalence/none/system/on-throw",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy-equivalence/none/system/off-throw",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy-equivalence/none/system/same",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy-equivalence/none/system/initial-null",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy-equivalence/default/set/normal",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy-equivalence/default/set/on-throw",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy-equivalence/default/set/off-throw",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy-equivalence/default/set/same",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy-equivalence/default/set/initial-null",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy-equivalence/default/set/set-null",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy-equivalence/default/clone/normal",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy-equivalence/default/clone/on-throw",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy-equivalence/default/clone/off-throw",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy-equivalence/default/load/normal",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy-equivalence/default/load/on-throw",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy-equivalence/default/load/off-throw",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy-equivalence/default/system/normal",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy-equivalence/default/system/on-throw",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy-equivalence/default/system/off-throw",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy-equivalence/default/system/same",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy-equivalence/default/system/initial-null",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy-equivalence/legacy/set/normal",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy-equivalence/legacy/set/on-throw",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy-equivalence/legacy/set/off-throw",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy-equivalence/legacy/set/same",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy-equivalence/legacy/set/initial-null",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy-equivalence/legacy/set/set-null",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy-equivalence/legacy/clone/normal",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy-equivalence/legacy/clone/on-throw",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy-equivalence/legacy/clone/off-throw",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy-equivalence/legacy/load/normal",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy-equivalence/legacy/load/on-throw",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy-equivalence/legacy/load/off-throw",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy-equivalence/legacy/system/normal",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy-equivalence/legacy/system/on-throw",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy-equivalence/legacy/system/off-throw",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy-equivalence/legacy/system/same",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy-equivalence/legacy/system/initial-null",
+      "status": "PASS"
+    },
+    {
+      "name": "private/no-public-getters/set",
+      "status": "PASS"
+    },
+    {
+      "name": "private/no-public-methods/set",
+      "status": "PASS"
+    },
+    {
+      "name": "private/no-public-getters/clone",
+      "status": "PASS"
+    },
+    {
+      "name": "private/no-public-methods/clone",
+      "status": "PASS"
+    },
+    {
+      "name": "private/no-public-getters/load",
+      "status": "PASS"
+    },
+    {
+      "name": "private/no-public-methods/load",
+      "status": "PASS"
+    },
+    {
+      "name": "private/no-public-getters/system",
+      "status": "PASS"
+    },
+    {
+      "name": "private/no-public-methods/system",
+      "status": "PASS"
+    },
+    {
+      "name": "private/set/same",
+      "status": "PASS"
+    },
+    {
+      "name": "private/set/initial-null",
+      "status": "PASS"
+    },
+    {
+      "name": "private/set/set-null",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/set/open/0",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/set/open/1",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/set/open/2",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/set/open/3",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/set/open/4",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/set/preflight/0",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/set/preflight/1",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/set/preflight/2",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/set/preflight/3",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/set/preflight/4",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/set/commit/0",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/set/commit/1",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/set/commit/2",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/set/commit/3",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/set/commit/4",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/clone/open/0",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/clone/open/1",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/clone/open/2",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/clone/open/3",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/clone/open/4",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/clone/preflight/0",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/clone/preflight/1",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/clone/preflight/2",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/clone/preflight/3",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/clone/preflight/4",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/clone/commit/0",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/clone/commit/1",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/clone/commit/2",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/clone/commit/3",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/clone/commit/4",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/load/open/0",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/load/open/1",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/load/open/2",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/load/open/3",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/load/open/4",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/load/preflight/0",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/load/preflight/1",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/load/preflight/2",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/load/preflight/3",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/load/preflight/4",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/load/commit/0",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/load/commit/1",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/load/commit/2",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/load/commit/3",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/load/commit/4",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/system/open/0",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/system/open/1",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/system/open/2",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/system/open/3",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/system/open/4",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/system/preflight/0",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/system/preflight/1",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/system/preflight/2",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/system/preflight/3",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/system/preflight/4",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/system/commit/0",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/system/commit/1",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/system/commit/2",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/system/commit/3",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-primary/system/commit/4",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-native/set/0",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-native/set/1",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-native/set/2",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-native/set/3",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-native/set/4",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-native/system/0",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-native/system/1",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-native/system/2",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-native/system/3",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-native/system/4",
+      "status": "PASS"
+    },
+    {
+      "name": "private/independent-destroy/set/0",
+      "status": "PASS"
+    },
+    {
+      "name": "private/independent-destroy/set/1",
+      "status": "PASS"
+    },
+    {
+      "name": "private/independent-destroy/set/2",
+      "status": "PASS"
+    },
+    {
+      "name": "private/independent-destroy/set/3",
+      "status": "PASS"
+    },
+    {
+      "name": "private/independent-destroy/set/4",
+      "status": "PASS"
+    },
+    {
+      "name": "private/independent-destroy/clone/0",
+      "status": "PASS"
+    },
+    {
+      "name": "private/independent-destroy/clone/1",
+      "status": "PASS"
+    },
+    {
+      "name": "private/independent-destroy/clone/2",
+      "status": "PASS"
+    },
+    {
+      "name": "private/independent-destroy/clone/3",
+      "status": "PASS"
+    },
+    {
+      "name": "private/independent-destroy/clone/4",
+      "status": "PASS"
+    },
+    {
+      "name": "private/independent-destroy/load/0",
+      "status": "PASS"
+    },
+    {
+      "name": "private/independent-destroy/load/1",
+      "status": "PASS"
+    },
+    {
+      "name": "private/independent-destroy/load/2",
+      "status": "PASS"
+    },
+    {
+      "name": "private/independent-destroy/load/3",
+      "status": "PASS"
+    },
+    {
+      "name": "private/independent-destroy/load/4",
+      "status": "PASS"
+    },
+    {
+      "name": "private/clone-accept-before-cache-reject-bad-copy",
+      "status": "PASS"
+    },
+    {
+      "name": "registration/copied-frozen/undefined",
+      "status": "PASS"
+    },
+    {
+      "name": "registration/copied-frozen/legacy",
+      "status": "PASS"
+    },
+    {
+      "name": "registration/copied-frozen/private",
+      "status": "PASS"
+    },
+    {
+      "name": "registration/reject-mode/null",
+      "status": "PASS"
+    },
+    {
+      "name": "registration/reject-mode/false",
+      "status": "PASS"
+    },
+    {
+      "name": "registration/reject-mode/0",
+      "status": "PASS"
+    },
+    {
+      "name": "registration/reject-mode/PRIVATE",
+      "status": "PASS"
+    },
+    {
+      "name": "registration/reject-mode/",
+      "status": "PASS"
+    },
+    {
+      "name": "registration/reject-mode/[object Object]",
+      "status": "PASS"
+    },
+    {
+      "name": "registration/reject-mode/private",
+      "status": "PASS"
+    },
+    {
+      "name": "registration/admission-reentry-remains-rejected",
+      "status": "PASS"
+    },
+    {
+      "name": "private/no-selector-owner-discovery",
+      "status": "PASS"
+    },
+    {
+      "name": "private/clone-accept-cache-shared-exact-order",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-clone-cache-write/0",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-clone-cache-write/1",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-clone-cache-write/2",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-clone-cache-write/3",
+      "status": "PASS"
+    },
+    {
+      "name": "private/falsy-clone-cache-write/4",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy/access-order/none/set/box3d",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy/access-order/none/set/cannon.js",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy/access-order/none/clone/box3d",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy/access-order/none/clone/cannon.js",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy/access-order/none/load/box3d",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy/access-order/none/load/cannon.js",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy/access-order/none/system/box3d",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy/access-order/none/system/cannon.js",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy/access-order/default/set/box3d",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy/access-order/default/set/cannon.js",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy/access-order/default/clone/box3d",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy/access-order/default/clone/cannon.js",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy/access-order/default/load/box3d",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy/access-order/default/load/cannon.js",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy/access-order/default/system/box3d",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy/access-order/default/system/cannon.js",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy/access-order/legacy/set/box3d",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy/access-order/legacy/set/cannon.js",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy/access-order/legacy/clone/box3d",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy/access-order/legacy/clone/cannon.js",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy/access-order/legacy/load/box3d",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy/access-order/legacy/load/cannon.js",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy/access-order/legacy/system/box3d",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy/access-order/legacy/system/cannon.js",
+      "status": "PASS"
+    },
+    {
+      "name": "unobserved/falsy-input-order/box3d/0",
+      "status": "PASS"
+    },
+    {
+      "name": "unobserved/falsy-input-order/box3d/1",
+      "status": "PASS"
+    },
+    {
+      "name": "unobserved/falsy-input-order/box3d/2",
+      "status": "PASS"
+    },
+    {
+      "name": "unobserved/falsy-input-order/box3d/3",
+      "status": "PASS"
+    },
+    {
+      "name": "unobserved/falsy-input-order/box3d/4",
+      "status": "PASS"
+    },
+    {
+      "name": "unobserved/falsy-input-order/box3d/5",
+      "status": "PASS"
+    },
+    {
+      "name": "unobserved/falsy-input-order/cannon.js/0",
+      "status": "PASS"
+    },
+    {
+      "name": "unobserved/falsy-input-order/cannon.js/1",
+      "status": "PASS"
+    },
+    {
+      "name": "unobserved/falsy-input-order/cannon.js/2",
+      "status": "PASS"
+    },
+    {
+      "name": "unobserved/falsy-input-order/cannon.js/3",
+      "status": "PASS"
+    },
+    {
+      "name": "unobserved/falsy-input-order/cannon.js/4",
+      "status": "PASS"
+    },
+    {
+      "name": "unobserved/falsy-input-order/cannon.js/5",
+      "status": "PASS"
+    },
+    {
+      "name": "private/system-no-selector-owner-discovery",
+      "status": "PASS"
+    },
+    {
+      "name": "private/no-public-listener-guard-candidate-adopted",
+      "status": "PASS"
+    },
+    {
+      "name": "registration/cleanup-third-argument-copy-is-unchanged",
+      "status": "PASS"
+    }
+  ],
+  "passed": 205,
+  "failed": 0
+}

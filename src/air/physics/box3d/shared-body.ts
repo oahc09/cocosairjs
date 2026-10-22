@@ -57,6 +57,7 @@ export interface Box3DBodyOwner {
         shape: Box3DId | null,
         value: Readonly<Box3DSurfaceMaterial> | null,
     ): void;
+    consumeMaterialValuesPreparation(adapter: object, authority: object, value: Readonly<Box3DSurfaceMaterial>): () => void;
     unregisterShapeMaterial(shape: Box3DId): void;
     released(node: Node, body: Box3DSharedBody, logical: object): void;
 }
@@ -655,6 +656,22 @@ export class Box3DSharedBody {
                 token: shape.token,
                 geometry: Object.freeze({ ...shape.geometry, material: value }),
             });
+    }
+    /** Private read-only preparation. The returned cache commit contains no native setter. */
+    prepareMaterialValues(reference: object, authority: object, value: Readonly<Box3DSurfaceMaterial>) {
+        const assertCurrent = this.#owner.consumeMaterialValuesPreparation(reference, authority, value);
+        if (this.#closed || !this.#references.has(reference))
+            throw worldError('AIR_E_BOX3D_DISPOSED', 'prepare shape material', 'Unknown live adapter.');
+        const previous = this.#shapes.get(reference);
+        const next = previous ? { token: previous.token, geometry: Object.freeze({ ...previous.geometry, material: value }) } : undefined;
+        let committed = false;
+        return Object.freeze({ shape: previous?.token ?? null, commitCaches: () => {
+            assertCurrent();
+            if (committed || this.#closed || !this.#references.has(reference) || this.#shapes.get(reference) !== previous)
+                throw worldError('AIR_E_BOX3D_REENTRANT', 'commit shape material', 'Consumed or stale prepared cache.');
+            committed = true;
+            if (next) this.#shapes.set(reference, next);
+        } });
     }
     updateShapeMaterial(reference: object, value: Box3DSurfaceMaterial | null): void {
         this.assert('updateShapeMaterial');

@@ -93,6 +93,22 @@ class Box3DPrimitiveShape {
                 this.#material = copied;
                 this.#geometry = Object.freeze({ ...this.#geometry!, material: copied });
             },
+            prepareMaterialValues: (authority, copied) => {
+                const body = this.body;
+                const plan = body.prepareMaterialValues(this, authority, copied);
+                const previous = this.#geometry;
+                if (!previous) throw worldError('AIR_E_BOX3D_CONFIG', 'prepare material geometry', 'Missing initialized geometry.');
+                const next = Object.freeze({ ...previous, material: copied });
+                let committed = false;
+                return Object.freeze({ shape: plan.shape, commitCaches: () => {
+                    if (committed || this.#body !== body || this.#geometry !== previous)
+                        throw worldError('AIR_E_BOX3D_REENTRANT', 'commit material geometry', 'Consumed or stale geometry.');
+                    committed = true;
+                    plan.commitCaches();
+                    this.#material = copied;
+                    this.#geometry = next;
+                } });
+            },
         });
         this.#body = body;
         this.#center = center;

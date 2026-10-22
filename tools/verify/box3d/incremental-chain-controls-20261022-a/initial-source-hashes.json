@@ -1,0 +1,16 @@
+{
+  "frozenToolSha256": {
+    "rebuild-incremental-checkpoint.py": "aec4b5ff179416e9294c3f56c765e5df357322fae9533451b22a9a7d682b8be1",
+    "restore-library-checkpoint.py": "4eec06ded94298aca767e6e9a9fcf886dfc6f94beef413a4238d6e1d32e602fb"
+  },
+  "sourceReceipt": {
+    "path": "/workspace/scratch/62d43a81bbde/box3d-shared-material-kernel-library-roundtrip-20261022/checkpoint-receipt.json",
+    "bytes": 6564358,
+    "sha256": "216f38b052a0728227ee336d06aaf6574bb52e6dc276410f6c60a8e1a051f998"
+  },
+  "actual36LibraryReceipt": {
+    "path": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/docs/physics/box3d/rebuild/library-shared-material-kernel-checkpoint-20261022.json",
+    "bytes": 7203,
+    "sha256": "b22a226acad9b8b68e6cda96ec2f0c72eed0a5b252c676f9c3e833043e21e16d"
+  }
+}

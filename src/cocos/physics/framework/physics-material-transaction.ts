@@ -90,7 +90,10 @@ export interface PhysicsMaterialCleanupReporter {
 export interface PhysicsMaterialDelegateLease {
     dispose(): void;
 }
+export type PhysicsMaterialSubscriptionMode = 'private' | 'legacy';
 export interface PhysicsMaterialChange {
+    /** Copied trusted registration capability, never inferred from public state. */
+    readonly privateSubscriptions: boolean;
     prepare(reader: () => Readonly<{ before: PhysicsMaterialIdentity; candidate: PhysicsMaterialIdentity }>): void;
     /** No execution callback or new candidate is accepted here. Exactly one delegate. */
     apply(): void;
@@ -111,6 +114,7 @@ export interface PhysicsMaterialChange {
 interface Entry {
     readonly original: PhysicsMaterialDelegate;
     readonly copied: PhysicsMaterialDelegate;
+    readonly privateSubscriptions: boolean;
     active?: Active;
     cleanup?: Readonly<PhysicsMaterialCleanupObserver>;
     cleanupCaptured?: boolean;
@@ -206,15 +210,21 @@ export class PhysicsMaterialTransactionRegistry {
         target: object,
         delegate: PhysicsMaterialDelegate,
         cleanup?: PhysicsMaterialCleanupObserver,
+        subscriptionMode?: PhysicsMaterialSubscriptionMode,
     ): PhysicsMaterialDelegateLease {
         const registry = this;
         let copied!: PhysicsMaterialDelegate;
+        let privateSubscriptions = false;
         let entry!: Entry;
         let copiedCleanup: Readonly<PhysicsMaterialCleanupObserver> | undefined;
         // Function copying occurs INSIDE B0 registration admission, not before it.
         const observer = this.#observer.register(target, {
             get open() {
                 if (registry.#entries.has(target)) throw new Error('Material target already has a physical delegate.');
+                const mode = subscriptionMode === undefined ? 'legacy' : subscriptionMode;
+                if (mode !== 'private' && mode !== 'legacy')
+                    throw new TypeError('Expected private or legacy material subscription mode.');
+                privateSubscriptions = mode === 'private';
                 copied = copyFunctions(delegate);
                 if (cleanup !== undefined) {
                     if (!object(cleanup)) throw new TypeError('Expected cleanup observer.');
@@ -263,7 +273,7 @@ export class PhysicsMaterialTransactionRegistry {
                 }
             },
         });
-        entry = { original: delegate, copied, cleanup: copiedCleanup };
+        entry = { original: delegate, copied, privateSubscriptions, cleanup: copiedCleanup };
         if (copiedCleanup) this.#cleanupGenerations.set(target, copiedCleanup.generation);
         this.#entries.set(target, entry);
         const lease: PhysicsMaterialDelegateLease = Object.freeze({
@@ -433,6 +443,7 @@ export class PhysicsMaterialTransactionRegistry {
             return state.context;
         };
         const result: PhysicsMaterialChange = Object.freeze({
+            privateSubscriptions: entry.privateSubscriptions,
             prepare(
                 reader: () => Readonly<{ before: PhysicsMaterialIdentity; candidate: PhysicsMaterialIdentity }>,
             ): void {
@@ -593,8 +604,9 @@ export function registerPhysicsMaterialDelegate(
     target: object,
     delegate: PhysicsMaterialDelegate,
     cleanup?: PhysicsMaterialCleanupObserver,
+    subscriptionMode?: PhysicsMaterialSubscriptionMode,
 ): PhysicsMaterialDelegateLease {
-    return registry.register(target, delegate, cleanup);
+    return registry.register(target, delegate, cleanup, subscriptionMode);
 }
 export function beginPhysicsMaterialChange(
     target: object,

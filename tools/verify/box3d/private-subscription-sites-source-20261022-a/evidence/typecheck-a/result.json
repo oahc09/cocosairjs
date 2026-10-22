@@ -1,0 +1,346 @@
+{
+  "schema": "private-subscription-typecheck/1",
+  "scope": "strict=true on complete transaction/observer/guard and byte-exact affected Collider/System members against controlled declarations; not full SDK",
+  "options": {
+    "strict": true,
+    "noEmit": true,
+    "target": 9,
+    "module": 1,
+    "skipLibCheck": false,
+    "types": []
+  },
+  "typescript": "4.9.5",
+  "compiler": {
+    "path": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/typescript.js",
+    "sha256": "2e78d8d8d3b631646830e478dbee1ca109474840fe5ed7ca6c5b418f2e20b1a2"
+  },
+  "inputs": {
+    "src/cocos/physics/framework/components/colliders/collider.ts": {
+      "sha256": "53a0d357c2483e64bf2015c54911099e0d08cdbf68bdeeddc5ad5a469deea718",
+      "bytes": 25264
+    },
+    "src/cocos/physics/framework/physics-system.ts": {
+      "sha256": "3726b321e4936d4a991ee2bfb027b61344781164ff1e42510f9f311da27dee63",
+      "bytes": 44508
+    },
+    "src/cocos/physics/framework/physics-material-transaction.ts": {
+      "sha256": "e5fd0efdac79228970560a0bca6c9dde31e5436a69d9b499cb02867f27c8ab8c",
+      "bytes": 29093
+    },
+    "inputs/product/src/cocos/physics/framework/physics-state-observer.ts": {
+      "sha256": "4cf40c4f1be0d407a402e95dcdb7a898b1942cb175f869f6367a41b18c2d1d2b",
+      "bytes": 23170
+    },
+    "inputs/product/src/cocos/core/data/mutation-guard.ts": {
+      "sha256": "93758e4b5a90ff90e5cabc7d3b0b5fd71069e955d4bf64517bec27d1957774a0",
+      "bytes": 7193
+    }
+  },
+  "slices": [
+    {
+      "logical": "src/cocos/physics/framework/components/colliders/collider.ts",
+      "start": 2337,
+      "end": 2414,
+      "sha256": "f2dd5cd1ad1780483f853e19452bf28db4451f3bd44505ef08a15a351db241de"
+    },
+    {
+      "logical": "src/cocos/physics/framework/components/colliders/collider.ts",
+      "start": 2415,
+      "end": 2681,
+      "sha256": "582b91007df51972f1f964a6165c14118107ebb855a0d1865ab615d745a03ff5"
+    },
+    {
+      "logical": "src/cocos/physics/framework/components/colliders/collider.ts",
+      "start": 4336,
+      "end": 6495,
+      "sha256": "e4c9180e931d1b7f169fe2b3f7883dd47d36e2516fcfbadfaebb3b7ab20ca03b"
+    },
+    {
+      "logical": "src/cocos/physics/framework/components/colliders/collider.ts",
+      "start": 6501,
+      "end": 9163,
+      "sha256": "41428a955c7fdb36d6199e8e02fe518ce4945a24ce4f9d182301d2044cbee7e3"
+    },
+    {
+      "logical": "src/cocos/physics/framework/components/colliders/collider.ts",
+      "start": 18570,
+      "end": 19937,
+      "sha256": "519a87e31cfa8a7c308c645b0bf4c9051c931917138731ded56d0003f1d125f6"
+    },
+    {
+      "logical": "src/cocos/physics/framework/components/colliders/collider.ts",
+      "start": 20175,
+      "end": 22222,
+      "sha256": "c4b854043dc10b5b7bdf254013f9f4298d733ef70a3ccceaf612a5217b3f187e"
+    },
+    {
+      "logical": "src/cocos/physics/framework/components/colliders/collider.ts",
+      "start": 22228,
+      "end": 22393,
+      "sha256": "a4b2b04cf66bdd8e0107516fe9450cee53cb5fa8345ef82f183db49c8f80ee30"
+    },
+    {
+      "logical": "src/cocos/physics/framework/components/colliders/collider.ts",
+      "start": 22399,
+      "end": 22505,
+      "sha256": "6d4999a9031bff3a54723e13f3c7db469922b76973a257f4c579c07ae876ac08"
+    },
+    {
+      "logical": "src/cocos/physics/framework/physics-system.ts",
+      "start": 9211,
+      "end": 11240,
+      "sha256": "ec9c010f3627f939ce64e25621bbc639227a9129a956c3f544a607eadf61e73e"
+    }
+  ],
+  "compilerReads": [
+    {
+      "file": "/virtual-private-subscription/physics-material-transaction.ts",
+      "sha256": "e5fd0efdac79228970560a0bca6c9dde31e5436a69d9b499cb02867f27c8ab8c"
+    },
+    {
+      "file": "/virtual-private-subscription/physics-state-observer.ts",
+      "sha256": "4cf40c4f1be0d407a402e95dcdb7a898b1942cb175f869f6367a41b18c2d1d2b"
+    },
+    {
+      "file": "/virtual-private-subscription/mutation-guard.ts",
+      "sha256": "93758e4b5a90ff90e5cabc7d3b0b5fd71069e955d4bf64517bec27d1957774a0"
+    },
+    {
+      "file": "/virtual-private-subscription/affected.ts",
+      "sha256": "115a546e02e6ead6c8912e42d19d2a089cca0b63af3b80c7defee89d75c68455"
+    },
+    {
+      "file": "/virtual-private-subscription/contract-types.ts",
+      "sha256": "24c2dc799babfdfea82ef05431483b37859a715af871cf55138333789f75758c"
+    },
+    {
+      "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/lib.es2022.full.d.ts",
+      "sha256": "2c339adcd35b01e3115c7ebe980b935b30093ac2dbe46dff36fed112e462afd2"
+    },
+    {
+      "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/lib.es2022.d.ts",
+      "sha256": "d11a03592451da2d1065e09e61f4e2a9bf68f780f4f6623c18b57816a9679d17"
+    },
+    {
+      "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/lib.es2021.d.ts",
+      "sha256": "746d62152361558ea6d6115cf0da4dd10ede041d14882ede3568bce5dc4b4f1f"
+    },
+    {
+      "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/lib.es2020.d.ts",
+      "sha256": "1fc5ab7a764205c68fa10d381b08417795fc73111d6dd16b5b1ed36badb743d9"
+    },
+    {
+      "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/lib.es2019.d.ts",
+      "sha256": "4b421cbfb3a38a27c279dec1e9112c3d1da296f77a1a85ddadf7e7a425d45d18"
+    },
+    {
+      "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/lib.es2018.d.ts",
+      "sha256": "5f4e733ced4e129482ae2186aae29fde948ab7182844c3a5a51dd346182c7b06"
+    },
+    {
+      "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/lib.es2017.d.ts",
+      "sha256": "8a12173c586e95f4433e0c6dc446bc88346be73ffe9ca6eec7aa63c8f3dca7f9"
+    },
+    {
+      "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/lib.es2016.d.ts",
+      "sha256": "7a387c58583dfca701b6c85e0adaf43fb17d590fb16d5b2dc0a2fbd89f35c467"
+    },
+    {
+      "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/lib.es2015.d.ts",
+      "sha256": "dc47c4fa66b9b9890cf076304de2a9c5201e94b740cffdf09f87296d877d71f6"
+    },
+    {
+      "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/lib.es5.d.ts",
+      "sha256": "8730f4bf322026ff5229336391a18bcaa1f94d4f82416c8b2f3954e2ccaae2ba"
+    },
+    {
+      "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/lib.es2015.core.d.ts",
+      "sha256": "adb996790133eb33b33aadb9c09f15c2c575e71fb57a62de8bf74dbf59ec7dfb"
+    },
+    {
+      "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/lib.es2015.collection.d.ts",
+      "sha256": "8cc8c5a3bac513368b0157f3d8b31cfdcfe78b56d3724f30f80ed9715e404af8"
+    },
+    {
+      "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/lib.es2015.iterable.d.ts",
+      "sha256": "c5c05907c02476e4bde6b7e76a79ffcd948aedd14b6a8f56e4674221b0417398"
+    },
+    {
+      "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/lib.es2015.symbol.d.ts",
+      "sha256": "3013574108c36fd3aaca79764002b3717da09725a36a6fc02eac386593110f93"
+    },
+    {
+      "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/lib.es2015.generator.d.ts",
+      "sha256": "cdccba9a388c2ee3fd6ad4018c640a471a6c060e96f1232062223063b0a5ac6a"
+    },
+    {
+      "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/lib.es2015.promise.d.ts",
+      "sha256": "5f406584aef28a331c36523df688ca3650288d14f39c5d2e555c95f0d2ff8f6f"
+    },
+    {
+      "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/lib.es2015.proxy.d.ts",
+      "sha256": "22f230e544b35349cfb3bd9110b6ef37b41c6d6c43c3314a31bd0d9652fcec72"
+    },
+    {
+      "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/lib.es2015.reflect.d.ts",
+      "sha256": "7ea0b55f6b315cf9ac2ad622b0a7813315bb6e97bf4bb3fbf8f8affbca7dc695"
+    },
+    {
+      "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/lib.es2015.symbol.wellknown.d.ts",
+      "sha256": "eb26de841c52236d8222f87e9e6a235332e0788af8c87a71e9e210314300410a"
+    },
+    {
+      "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/lib.es2016.array.include.d.ts",
+      "sha256": "3be5a1453daa63e031d266bf342f3943603873d890ab8b9ada95e22389389006"
+    },
+    {
+      "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/lib.es2017.object.d.ts",
+      "sha256": "17bb1fc99591b00515502d264fa55dc8370c45c5298f4a5c2083557dccba5a2a"
+    },
+    {
+      "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/lib.es2017.sharedmemory.d.ts",
+      "sha256": "7ce9f0bde3307ca1f944119f6365f2d776d281a393b576a18a2f2893a2d75c98"
+    },
+    {
+      "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/lib.es2017.string.d.ts",
+      "sha256": "6a6b173e739a6a99629a8594bfb294cc7329bfb7b227f12e1f7c11bc163b8577"
+    },
+    {
+      "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/lib.es2017.intl.d.ts",
+      "sha256": "81cac4cbc92c0c839c70f8ffb94eb61e2d32dc1c3cf6d95844ca099463cf37ea"
+    },
+    {
+      "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/lib.es2017.typedarrays.d.ts",
+      "sha256": "b0124885ef82641903d232172577f2ceb5d3e60aed4da1153bab4221e1f6dd4e"
+    },
+    {
+      "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/lib.es2018.asynciterable.d.ts",
+      "sha256": "da233fc1c8a377ba9e0bed690a73c290d843c2c3d23a7bd7ec5cd3d7d73ba1e0"
+    },
+    {
+      "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/lib.es2018.asyncgenerator.d.ts",
+      "sha256": "0eb85d6c590b0d577919a79e0084fa1744c1beba6fd0d4e951432fa1ede5510a"
+    },
+    {
+      "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/lib.es2018.promise.d.ts",
+      "sha256": "bb2d3fb05a1d2ffbca947cc7cbc95d23e1d053d6595391bd325deb265a18d36c"
+    },
+    {
+      "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/lib.es2018.regexp.d.ts",
+      "sha256": "c80df75850fea5caa2afe43b9949338ce4e2de086f91713e9af1a06f973872b8"
+    },
+    {
+      "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/lib.es2018.intl.d.ts",
+      "sha256": "d154ea5bb7f7f9001ed9153e876b2d5b8f5c2bb9ec02b3ae0d239ec769f1f2ae"
+    },
+    {
+      "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/lib.es2019.array.d.ts",
+      "sha256": "9d57b2b5d15838ed094aa9ff1299eecef40b190722eb619bac4616657a05f951"
+    },
+    {
+      "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/lib.es2019.object.d.ts",
+      "sha256": "6c51b5dd26a2c31dbf37f00cfc32b2aa6a92e19c995aefb5b97a3a64f1ac99de"
+    },
+    {
+      "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/lib.es2019.string.d.ts",
+      "sha256": "6e7997ef61de3132e4d4b2250e75343f487903ddf5370e7ce33cf1b9db9a63ed"
+    },
+    {
+      "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/lib.es2019.symbol.d.ts",
+      "sha256": "2ad234885a4240522efccd77de6c7d99eecf9b4de0914adb9a35c0c22433f993"
+    },
+    {
+      "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/lib.es2019.intl.d.ts",
+      "sha256": "5e5e095c4470c8bab227dbbc61374878ecead104c74ab9960d3adcccfee23205"
+    },
+    {
+      "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/lib.es2020.bigint.d.ts",
+      "sha256": "09aa50414b80c023553090e2f53827f007a301bc34b0495bfb2c3c08ab9ad1eb"
+    },
+    {
+      "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/lib.es2020.intl.d.ts",
+      "sha256": "2768ef564cfc0689a1b76106c421a2909bdff0acbe87da010785adab80efdd5c"
+    },
+    {
+      "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/lib.es2020.date.d.ts",
+      "sha256": "d7f680a43f8cd12a6b6122c07c54ba40952b0c8aa140dcfcf32eb9e6cb028596"
+    },
+    {
+      "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/lib.es2020.number.d.ts",
+      "sha256": "b248e32ca52e8f5571390a4142558ae4f203ae2f94d5bac38a3084d529ef4e58"
+    },
+    {
+      "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/lib.es2020.promise.d.ts",
+      "sha256": "3787b83e297de7c315d55d4a7c546ae28e5f6c0a361b7a1dcec1f1f50a54ef11"
+    },
+    {
+      "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/lib.es2020.sharedmemory.d.ts",
+      "sha256": "e7e8e1d368290e9295ef18ca23f405cf40d5456fa9f20db6373a61ca45f75f40"
+    },
+    {
+      "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/lib.es2020.string.d.ts",
+      "sha256": "faf0221ae0465363c842ce6aa8a0cbda5d9296940a8e26c86e04cc4081eea21e"
+    },
+    {
+      "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/lib.es2020.symbol.wellknown.d.ts",
+      "sha256": "06393d13ea207a1bfe08ec8d7be562549c5e2da8983f2ee074e00002629d1871"
+    },
+    {
+      "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/lib.es2021.promise.d.ts",
+      "sha256": "6c55633c733c8378db65ac3da7a767c3cf2cf3057f0565a9124a16a3a2019e87"
+    },
+    {
+      "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/lib.es2021.string.d.ts",
+      "sha256": "fb4416144c1bf0323ccbc9afb0ab289c07312214e8820ad17d709498c865a3fe"
+    },
+    {
+      "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/lib.es2021.weakref.d.ts",
+      "sha256": "5b0ca94ec819d68d33da516306c15297acec88efeb0ae9e2b39f71dbd9685ef7"
+    },
+    {
+      "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/lib.es2021.intl.d.ts",
+      "sha256": "34c839eaaa6d78c8674ae2c37af2236dee6831b13db7b4ef4df3ec889a04d4f2"
+    },
+    {
+      "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/lib.es2022.array.d.ts",
+      "sha256": "34478567f8a80171f88f2f30808beb7da15eac0538ae91282dd33dce928d98ed"
+    },
+    {
+      "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/lib.es2022.error.d.ts",
+      "sha256": "ab7d58e6161a550ff92e5aff755dc37fe896245348332cd5f1e1203479fe0ed1"
+    },
+    {
+      "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/lib.es2022.intl.d.ts",
+      "sha256": "6bda95ea27a59a276e46043b7065b55bd4b316c25e70e29b572958fa77565d43"
+    },
+    {
+      "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/lib.es2022.object.d.ts",
+      "sha256": "aedb8de1abb2ff1095c153854a6df7deae4a5709c37297f9d6e9948b6806fa66"
+    },
+    {
+      "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/lib.es2022.sharedmemory.d.ts",
+      "sha256": "a4da0551fd39b90ca7ce5f68fb55d4dc0c1396d589b612e1902f68ee090aaada"
+    },
+    {
+      "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/lib.es2022.string.d.ts",
+      "sha256": "11ffe3c281f375fff9ffdde8bbec7669b4dd671905509079f866f2354a788064"
+    },
+    {
+      "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/lib.dom.d.ts",
+      "sha256": "3aafcb693fe5b5c3bd277bd4c3a617b53db474fe498fc5df067c5603b1eebde7"
+    },
+    {
+      "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/lib.webworker.importscripts.d.ts",
+      "sha256": "7fac8cb5fc820bc2a59ae11ef1c5b38d3832c6d0dfaec5acdb5569137d09a481"
+    },
+    {
+      "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/lib.scripthost.d.ts",
+      "sha256": "097a57355ded99c68e6df1b738990448e0bf170e606707df5a7c0481ff2427cd"
+    },
+    {
+      "file": "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/node_modules/typescript/lib/lib.dom.iterable.d.ts",
+      "sha256": "f3d4da15233e593eacb3965cde7960f3fddf5878528d882bcedd5cbaba0193c7"
+    }
+  ],
+  "diagnostics": []
+}

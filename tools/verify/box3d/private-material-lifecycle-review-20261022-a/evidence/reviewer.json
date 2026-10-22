@@ -1,0 +1,61 @@
+{
+  "schema": "independent-protocol-review-controls/1",
+  "qualification": "ISOLATED_PURE_PROTOCOL_ONLY",
+  "total": 13,
+  "passed": 13,
+  "failed": 0,
+  "results": [
+    {
+      "name": "review: unobserved Proxy has zero reads during source copy, write, emit and cleanup",
+      "status": "PASS"
+    },
+    {
+      "name": "review: full roster opens before any source getter, including later partial failure",
+      "status": "PASS"
+    },
+    {
+      "name": "review: later owner plan getter caught foreign-asset reentry stops all native effects",
+      "status": "PASS"
+    },
+    {
+      "name": "review: copied ticket diagnostic wrong receiver poisons only nonterminal exact ticket",
+      "status": "PASS"
+    },
+    {
+      "name": "review: repeated prepare consumes no extra scope or native authority",
+      "status": "PASS"
+    },
+    {
+      "name": "review: actual membership identity uses no Proxy reads and no object id coercion",
+      "status": "PASS"
+    },
+    {
+      "name": "review: cancel and publish permutations preserve remaining pending same-owner groups",
+      "status": "PASS"
+    },
+    {
+      "name": "review: release one owner with old and two pending assets preserves other owner pending",
+      "status": "PASS"
+    },
+    {
+      "name": "review: unknown teardown retains pending-only asset after newer generation and cannot cancel",
+      "status": "PASS"
+    },
+    {
+      "name": "review: native return retained when setter catches registry reentry but verify never enters",
+      "status": "PASS"
+    },
+    {
+      "name": "review: verified native retained when readback catches reentry, owner cache stays unentered",
+      "status": "PASS"
+    },
+    {
+      "name": "review: first falsy failure from setter survives actual read, reporter and every disposal",
+      "status": "PASS"
+    },
+    {
+      "name": "review: expired cache recorder cannot increment counters or replay writes",
+      "status": "PASS"
+    }
+  ]
+}

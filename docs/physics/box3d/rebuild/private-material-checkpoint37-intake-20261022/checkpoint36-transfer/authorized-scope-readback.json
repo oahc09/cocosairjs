@@ -1,0 +1,13 @@
+{
+  "status": "PASS_CHANGED_PATH_SCOPE_AND_CREDENTIAL_PATTERN_SCREEN",
+  "rows": 1178,
+  "productPaths": [
+    "src/air/physics/box3d/world.ts"
+  ],
+  "remainingScope": "Box3D contract/ledger/actual raw/source candidate evidence only",
+  "sensitivePatternHits": [],
+  "claimLimit": "Bounded pattern screening plus authored-path review, not proof of universal secret detection. No account/session files or credential paths included.",
+  "localHead": "45b526f248575a0542af8eed591c0cf8c8a1ba8d",
+  "parent": "9d7a4040ccf9e70b404d484ae741982f4a101074",
+  "tree": "c528af1ed5056db03742c4938244b683f22593e6"
+}

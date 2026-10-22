@@ -1,0 +1,43 @@
+{
+  "status": "PASS_EXACT_SOURCE_JOINT_INCREMENTAL_CHAIN_GUARD_CONTROLS",
+  "timeUTC": "2026-10-22T19:53:10.435947+00:00",
+  "frozenToolSha256": {
+    "rebuild-incremental-checkpoint.py": "aec4b5ff179416e9294c3f56c765e5df357322fae9533451b22a9a7d682b8be1",
+    "restore-library-checkpoint.py": "0f32f52b2a50c79d69a486e3b524669b19bf6d49de7f4a621a175e2e01dba273"
+  },
+  "frozenSourcesStillCurrent": {
+    "rebuild-incremental-checkpoint.py": true,
+    "restore-library-checkpoint.py": true
+  },
+  "sourceReceiptSha256": "216f38b052a0728227ee336d06aaf6574bb52e6dc276410f6c60a8e1a051f998",
+  "actual36LibraryReceiptSha256": "b22a226acad9b8b68e6cda96ec2f0c72eed0a5b252c676f9c3e833043e21e16d",
+  "base36Commit": "45b526f248575a0542af8eed591c0cf8c8a1ba8d",
+  "base36Tree": "f8bb7ba61604c61253f3a1f0497612da726e093e",
+  "base22Commit": "e5c5674bfe08be0c9fda72c484f4380bd0d0e2c6",
+  "synthetic37Head": "7777777777777777777777777777777777777777",
+  "synthetic37IsActualCommit": false,
+  "cases": 47,
+  "acceptedPositiveCases": 3,
+  "rejectedNegativeCases": 44,
+  "allCasesPassed": true,
+  "staticOrdering": {
+    "status": "PASS_AST_ORDER_AND_SAME_BLOCK_DOMINANCE",
+    "priorSourceReadLine": 76,
+    "prerequisiteGuardLine": 79,
+    "bundleHeaderGuardLine": 81,
+    "firstExtractionWriteLine": 87,
+    "gitFetchCheckoutLoopLine": 100,
+    "builderPairAndPrerequisiteBlockEndLine": 41,
+    "builderOutputMkdirLine": 43,
+    "builderBundleCreateLine": 44,
+    "dynamicNegativeControlsReachNoInMemoryExtractionWrites": true,
+    "noSubprocessInExtractedNodes": true
+  },
+  "initialRedEvidenceRetained": "initial-red-receipt.json",
+  "actualStoreReadOrModified": false,
+  "gitCommandsRun": 0,
+  "networkCalls": 0,
+  "actualBundleReadOrCopied": false,
+  "physicalExtractionWrites": 0,
+  "scope": "Pure exact-AST guards and static ordering only. Source inventory remains partial-main. Actual checkpoint37 Library download and independent-store full-file verification are separate lead-owned work. No standalone/full-repository, build-closure or physical-acceptance claim."
+}

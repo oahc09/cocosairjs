@@ -1,0 +1,43 @@
+{
+  "status": "READ_ONLY_SOURCE_REVIEW_COMPLETE",
+  "timestampUtc": "2026-10-22T19:50:34.912015+00:00",
+  "headAtStart": "45b526f248575a0542af8eed591c0cf8c8a1ba8d",
+  "headAtEnd": "45b526f248575a0542af8eed591c0cf8c8a1ba8d",
+  "headUnchanged": true,
+  "inventories": [
+    {
+      "inventory": "inspected-before.sha256",
+      "count": 37,
+      "drift": []
+    },
+    {
+      "inventory": "n4-hash-only-inputs.sha256",
+      "count": 58,
+      "drift": []
+    }
+  ],
+  "productAndTestSourceModifiedByReviewer": false,
+  "buildsRun": 0,
+  "testsRun": 0,
+  "browserNetworkCredentialsUsed": false,
+  "qualificationClaimed": false,
+  "formalCells": {
+    "denominator": 2128,
+    "status": "NOT_RUN"
+  },
+  "gatesMarked": 0,
+  "gitStatusAtEndSummary": {
+    "sha256": "7609a897cb411baf36b50f78eeb283314b18ccc1719fecf1b74c12d131d81a7f",
+    "lineCount": 837,
+    "untrackedLineCount": 18,
+    "note": "Only inspected-path Git statuses retained; all inspected SHA-256 values were rechecked independently.",
+    "trackedChangedLineCount": 819,
+    "inspectedPathTrackedChanges": [
+      "M  src/air/physics/box3d/shared-body.ts",
+      "M  src/air/physics/box3d/world-command-owner.ts",
+      "M  src/air/physics/box3d/world.ts",
+      "M  src/cocos/physics/framework/physics-system.ts",
+      "M  tools/verify/box3d/owner-shared-material-real-wasm-inputs.cjs"
+    ]
+  }
+}

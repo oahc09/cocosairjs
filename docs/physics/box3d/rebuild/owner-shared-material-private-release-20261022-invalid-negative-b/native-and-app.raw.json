@@ -1,0 +1,4406 @@
+{
+  "status": "PASS_LIMITED_SHARED_MATERIAL",
+  "expected": "invalid-negative",
+  "artifact": {
+    "buildReceiptSha256": "3680689b48ec0f05c092bfc55e02f354e78f8abe35b7b52dc7cb0d3832a94349",
+    "buildInputHashes": [
+      {
+        "path": "tools/physics/box3d/abi-schema.json",
+        "sha256": "e6329dce9b3e6fce69cfd5da318f1f708b95b7af834edb667de8306f9cae0a5d"
+      },
+      {
+        "path": "tools/physics/box3d/versions.lock.json",
+        "sha256": "dc6cefaf533363bea1d80835807d758332e2a65b6633ac3b9edfb2fc3ff29656"
+      },
+      {
+        "path": "vendor/box3d/source-manifest.json",
+        "sha256": "40f2d926a3fbc84d5d31f07532b3439657ebed69630ad9e2477c84fc25754dd0"
+      },
+      {
+        "path": "tools/physics/box3d/CMakeLists.txt",
+        "sha256": "8cb528cc936ca85f69e31ff051077813aff0084e7ebdeb0caa65b484deb20c21"
+      },
+      {
+        "path": "tools/physics/box3d/exports.json",
+        "sha256": "b6dbf75e39a62d9d79e65b7db89664ef4f8f8fb4905916b63df06d2316a21f92"
+      },
+      {
+        "path": "tools/physics/box3d/build.mjs",
+        "sha256": "1fc3085e131d9f795b2bd99e86ea38fa51e241d0ab80c82081268a7c01bdd759"
+      },
+      {
+        "path": "tools/physics/box3d/patch-intake.mjs",
+        "sha256": "039430725aa59d74abbb9ae32b720c345d7d07297227e31ee95e76851239d7dc"
+      },
+      {
+        "path": "tools/physics/box3d/patches/lock.json",
+        "sha256": "d6be04611f70223e21b1bcffc635088f49a5647739e97c2f9ce089091748ea77"
+      },
+      {
+        "path": "tools/physics/box3d/patches/sse2-loadv-alignment.patch",
+        "sha256": "e5c4e5f2ae7f015cf62dfc2de5a36af73cc15d9b0ca0118fc0259c7d1f0b1403"
+      },
+      {
+        "path": "tools/physics/box3d/patches/contact-geometry-epoch.patch",
+        "sha256": "4ca29eed58cd20d4134bf55bb9b9ec25fbb322b731d0a319ad2567225463d094"
+      },
+      {
+        "path": "tools/physics/box3d/wasm-contract.mjs",
+        "sha256": "4850c9ee10ce491029f209bb499e040f7a569d01991a8797d85649333877ee71"
+      },
+      {
+        "path": "tools/physics/box3d/wasm-ownership-contract.mjs",
+        "sha256": "626d09f222ef564483b0781e2d377e326d625cf3202ded40ff4e1b48149b361d"
+      },
+      {
+        "path": "tools/physics/box3d/wasm-snapshot-contract.mjs",
+        "sha256": "c704afa56d36fec985d245c67ed4f9e6ec79f93b2603d439c33c833e104bf142"
+      },
+      {
+        "path": "tools/physics/box3d/wasm-geometry-contract.mjs",
+        "sha256": "4ce3094d9919f3bc01bbd2eadc7f0811ca75a6e5e2b063de7db77955187f9348"
+      },
+      {
+        "path": "tools/physics/box3d/wasm-world-contract.mjs",
+        "sha256": "b9273441def669c3150bc92081f51afdafe496fc00199a913d61b65f788a656c"
+      },
+      {
+        "path": "tools/physics/box3d/wasm-body-contract.mjs",
+        "sha256": "5be306a66497feeedadd02ead703247b56822b3964828f1a23165d06f0b0d9af"
+      },
+      {
+        "path": "tools/physics/box3d/wasm-filter-contract.mjs",
+        "sha256": "ab79a3a0a6a8677b250b072a6611267896419c1b06839608e58ab9747065937a"
+      },
+      {
+        "path": "tools/physics/box3d/wasm-motion-contract.mjs",
+        "sha256": "e058daf79278bbaa7d31545db743851cade1dca4fc9833953d17b3216366c814"
+      },
+      {
+        "path": "tools/physics/box3d/verify-sources.mjs",
+        "sha256": "f18ad0dc623b6b83b8a46a2abbf34a29e0400d127a85f3fc16b966493b97e171"
+      },
+      {
+        "path": "tools/physics/box3d/verify-wasm.mjs",
+        "sha256": "de4dd1b4e2ae32ceb5fddc0e8fbcb0159fdd29378cf7eed33c57e3852113af6e"
+      },
+      {
+        "path": "tools/physics/box3d/native/air_box3d.c",
+        "sha256": "28e6e26ff7d3dc3db3fa7a257510f96da90e04e1b677e8a84da23f0c3d145468"
+      },
+      {
+        "path": "tools/physics/box3d/native/snapshot.c",
+        "sha256": "46d9ad1d6fdbe445b33d969e7fe725641ac7eb36767efcefac8e1576df24ea18"
+      },
+      {
+        "path": "tools/physics/box3d/native/geometry.c",
+        "sha256": "0dcb3f74fa2ee34fba5f716735cba2d83f07175db55d3e344d88e6fa55ab3825"
+      },
+      {
+        "path": "tools/physics/box3d/native/world_bridge.c",
+        "sha256": "1331b2881410625dd5d6ec941ffc720005eaca6770cb7a76960c1e06586eeac7"
+      },
+      {
+        "path": "tools/physics/box3d/native/world_bridge.h",
+        "sha256": "8cb7bf91011b5bd24f67dfa9833f08444addb1c92d3a952901e84165d6af34d0"
+      },
+      {
+        "path": "tools/physics/box3d/native/body_control.c",
+        "sha256": "9115c6e3fb89654042858e31819784c25c8e1ac3d09d3d7b7ad22f50789df0e9"
+      },
+      {
+        "path": "tools/physics/box3d/native/body_control.h",
+        "sha256": "d7a8ee9db19b875d079a2bcbbba3be6e46519f1df39bd1d01cdc0aa7894df9e8"
+      },
+      {
+        "path": "tools/physics/box3d/native/filter_bridge.c",
+        "sha256": "ef5e76fa2a9e3e2bb57738b943e8bd9fb185812fb5c0df04b49fc445459688cd"
+      },
+      {
+        "path": "tools/physics/box3d/native/filter_bridge.h",
+        "sha256": "7b93839f91a4e828971d2a02e0d11393f5b7b944b3335cdb1d5a3fe3553d1e84"
+      },
+      {
+        "path": "tools/physics/box3d/native/motion_bridge.c",
+        "sha256": "142ac35fde560a7b6f748b7eecc67b3eb99c5edefb7200c4ecef64e6d60e8573"
+      },
+      {
+        "path": "tools/physics/box3d/native/motion_bridge.h",
+        "sha256": "67c486efc11775f2743992625efb15ce1ed0fe3c1fac79c8c0a82045b57de8ca"
+      },
+      {
+        "path": "tools/physics/box3d/motion-source-controls.mjs",
+        "sha256": "31bb0a993107b8f6b073cc1878cad27216a22b3f65e3bdac4746742c1777b3ac"
+      },
+      {
+        "path": "docs/physics/box3d/contracts/motion-command-decisions-v1.md",
+        "sha256": "30951da3f296ac17acac9ff594c91ee96db62d5b3a3a1bdaf1ec0feb8f2f7a6a"
+      },
+      {
+        "path": "tools/physics/box3d/native/filter_contract.c",
+        "sha256": "a557412e0f868498ce4a8d63444bfb241e7644a9d459160b1e2242e9e2fa29e2"
+      },
+      {
+        "path": "tools/physics/box3d/native/motion_contract.c",
+        "sha256": "30d1ca6ed0e1f8b1c47b0b1c2c2ce4cd89cdd6be68efad5037c926d7a849e046"
+      },
+      {
+        "path": "tools/physics/box3d/native/body_contract.c",
+        "sha256": "d195a33d84834caf857757ed6ce450ac9865e4fafdac2ea4f10d8661da4f4656"
+      },
+      {
+        "path": "tools/physics/box3d/native/world_contract.c",
+        "sha256": "9a2067c7941a06cde240cce7a4c849a4e4271bb9f4aa767ce58744c33773577f"
+      },
+      {
+        "path": "tools/physics/box3d/native/air_box3d.h",
+        "sha256": "7fdfe74a50f27bb4d3aa3cf2ada7a5684eeedfe2200d9cea2b4f3b31ded2208c"
+      },
+      {
+        "path": "tools/physics/box3d/native/contract.c",
+        "sha256": "873862b60b2bc22080e0055f4204afeaf32ac27273b09e268d8920433d94402d"
+      },
+      {
+        "path": "tools/physics/box3d/native/geometry_contract.c",
+        "sha256": "cb82c55602526b33f0125c2a0aa9e1a5c27d942e01c2bb9bcffa919f9c95885f"
+      },
+      {
+        "path": "tools/physics/box3d/native/wasm_entry.c",
+        "sha256": "9b1857c34808b0e3be4726c9df515999c1714583771813c89190d53a364e7c9f"
+      },
+      {
+        "path": "tools/physics/box3d/native/command_bridge.c",
+        "sha256": "c91a3d4be10fa85fc2c50c0bba721e4e675b1e560cc8488f57f4e7396dc09bd7"
+      },
+      {
+        "path": "tools/physics/box3d/native/command_bridge.h",
+        "sha256": "51b5dbc6c437c593172b2bcf055de242998c001ce14900d9819005e5d53b4ee0"
+      },
+      {
+        "path": "tools/physics/box3d/native/command_contract.c",
+        "sha256": "7ff53423ed00b51cc31c809450f41593bc4cfc419bdbeee9578837701977cac3"
+      },
+      {
+        "path": "tools/physics/box3d/wasm-command-contract.mjs",
+        "sha256": "878403967d14ba19ba09ebe222f5c3e59d0c8b6021cc9fb14c650feff2608a7c"
+      },
+      {
+        "path": "tools/physics/box3d/command-source-controls.mjs",
+        "sha256": "7d74868e016bf48eac6170e2221f590e3643c6e04d4ca857cfccbac89f6d18bc"
+      },
+      {
+        "path": "docs/physics/box3d/contracts/unified-command-wire-v1.md",
+        "sha256": "f88641a6e924ae3de4f4fe1d1cba20a1d8b82ac01bea28c221e1a6bf7d5079b9"
+      },
+      {
+        "path": "docs/physics/box3d/contracts/unified-command-decisions-v1.md",
+        "sha256": "56303d162e12346729c66461c1fa9976e69c941fb549804c7a110d1887c695d6"
+      },
+      {
+        "path": "src/air/physics/box3d/binding/facade.mjs",
+        "sha256": "40cce3a920e67afedec5d7bbf69aae826ad08d31b51243f5e699033dd59eb899"
+      },
+      {
+        "path": "src/air/physics/box3d/binding/facade.d.mts",
+        "sha256": "788057c4dd78a3ad6d6b33d846f223386f27dd393c71ee53a0245cb7414459dc"
+      }
+    ],
+    "artifacts": [
+      {
+        "path": "box3d-st.mjs",
+        "sha256": "003c79702bf41fa33f197f4786c8469a5234ee122235173970046d7dfbd7c72f",
+        "bytes": 46897
+      },
+      {
+        "path": "box3d-st.wasm",
+        "sha256": "4b9494dc2d3c46b4cbacf8d12a8119df5e91a27e19f90b946d50f6467b7adf8f",
+        "bytes": 584072
+      },
+      {
+        "path": "facade.mjs",
+        "sha256": "40cce3a920e67afedec5d7bbf69aae826ad08d31b51243f5e699033dd59eb899",
+        "bytes": 77896
+      },
+      {
+        "path": "facade.d.mts",
+        "sha256": "788057c4dd78a3ad6d6b33d846f223386f27dd393c71ee53a0245cb7414459dc",
+        "bytes": 20717
+      }
+    ],
+    "descriptor": {
+      "identity": {
+        "coreSha": "efca0c184d40fd6a82016983f1601c4d23965867",
+        "bindingBaseSha": "5d5a3af049cccd9948b2b55bac4342414af0ef64",
+        "schemaSha256": "e6329dce9b3e6fce69cfd5da318f1f708b95b7af834edb667de8306f9cae0a5d",
+        "patchChainSha256": "434fb89494867f515051d5ac0dfc0c694556ba1f0da9ac3fc895a27097b1c7c7",
+        "abiVersion": 1,
+        "variant": "st-simd"
+      },
+      "manifestSha256": "9ab78492b56e9d64d91782cf4e151ee693ac746d087307b3114254210296f05f",
+      "facadeSha256": "40cce3a920e67afedec5d7bbf69aae826ad08d31b51243f5e699033dd59eb899"
+    }
+  },
+  "sourceHashesBefore": {
+    "docs/physics/box3d/contracts/motion-command-decisions-v1.md": "30951da3f296ac17acac9ff594c91ee96db62d5b3a3a1bdaf1ec0feb8f2f7a6a",
+    "docs/physics/box3d/contracts/shared-material-values-decisions-v1.md": "740e84c57a224c622b2d354aef06a5813004f292707d76ca6cdf31bf39089b3e",
+    "docs/physics/box3d/contracts/unified-command-decisions-v1.md": "56303d162e12346729c66461c1fa9976e69c941fb549804c7a110d1887c695d6",
+    "docs/physics/box3d/contracts/unified-command-wire-v1.md": "f88641a6e924ae3de4f4fe1d1cba20a1d8b82ac01bea28c221e1a6bf7d5079b9",
+    "docs/physics/box3d/rebuild/writeback-epoch-contract-20261022.md": "02f0796f637fecd98e64f176852c885340ff4b0647e9b297b65dfda095bda62d",
+    "jest.config.js": "fd5a10574248f364fd15779d6ffe38068f588f1a49508cc511cdc370aac1cceb",
+    "package-lock.json": "69d2f4480314c9a4630a72ff608d1b83fbf7d10a9d2ed8e3b3dc8590e5ff2e47",
+    "src/air/app-config.ts": "079c87bc289e3bb28447bf7f0932f344644b8f28d67aa3cbe0268f2d6fbff157",
+    "src/air/app.ts": "8d97bf3248b14bac0d02604a282a5d117ef968b63ea956073719f4a5b00d2953",
+    "src/air/bootstrap.ts": "6e57640ff7c193e7578c29ee15514272e083f9743d93b22bbbb908f096162fc5",
+    "src/air/physics-backend.ts": "df1aba9a9f1025f796b2622b7a9c61febd88d937685f6770795b5e3dab5037c7",
+    "src/air/physics/box3d/binding/facade.d.mts": "788057c4dd78a3ad6d6b33d846f223386f27dd393c71ee53a0245cb7414459dc",
+    "src/air/physics/box3d/binding/facade.mjs": "40cce3a920e67afedec5d7bbf69aae826ad08d31b51243f5e699033dd59eb899",
+    "src/air/physics/box3d/box-sphere-geometry.ts": "d492ee746f95ecb93466cbd1e96054280003e501e36408c6d7d65508fd1107c5",
+    "src/air/physics/box3d/box-sphere-shape.ts": "22e5a5239aca00f6d192e753fe423cbc1555483adcab3b075601179492a8a0e2",
+    "src/air/physics/box3d/command-producers.ts": "754924a29fa5c8711f831f729a1d005a12e4d9de83fcb5746c6ae7e1e2464991",
+    "src/air/physics/box3d/command-queue.ts": "5bd06702d08968c9545aeeafe00c074a2e50daca68a9bee148d11d09de342892",
+    "src/air/physics/box3d/config.ts": "19ff83570f24fd2e24eb7dc6753cabe5efa25225973722d7d8c3001f704ec949",
+    "src/air/physics/box3d/debug.ts": "57bde545085811199ff317568a1baad7b63c16665279291931fef004fd7ab980",
+    "src/air/physics/box3d/loader/st-loader.d.mts": "f010a42c2e990167ebb0d83b10812e60fd4a3cda4f2481026a1f1bde9fff86c2",
+    "src/air/physics/box3d/loader/st-loader.mjs": "56d5b5053777c0e7f16cee4fe12c21932f74c6ada0025f5a1bbfb5178ee531a7",
+    "src/air/physics/box3d/node-motion-guard.ts": "ebd64a30eea7dcd7652ae8ca871bd4bea570fb2beaac21ec05b269eed7415ca4",
+    "src/air/physics/box3d/prepare.ts": "9c33571077808920ccd17a9875ee02499b9d6a9dfada82a0f94472ead5e17dcc",
+    "src/air/physics/box3d/registration.ts": "6e681518fcaf2f65bc95cbf60488dfebc9038d6bc58526554d3e0ffa928a3f43",
+    "src/air/physics/box3d/rigid-body.ts": "b3fa18706e05c0a44b32bd696bdefabe432a28b267192436eff804b053d96fb5",
+    "src/air/physics/box3d/shared-body.ts": "8638e41fd4d5380ee7f972d46fed8e25ed017e5ceb9242cdd95e5d15a0f7eee7",
+    "src/air/physics/box3d/unsupported.ts": "507a760922ece07e3f5df3f0053fd69b15f2e52637e542b4cb4a6973c87695e8",
+    "src/air/physics/box3d/world-binding.ts": "aece3008837da8b55c77b969b2374c6a542b5debfa7cbffe5a8b2b41ffb78de0",
+    "src/air/physics/box3d/world-command-owner.ts": "ed0297c4faabb20544d31660bc8d29527734f5cf448eb33627c15cb4e3ee11b4",
+    "src/air/physics/box3d/world-writeback.ts": "9463203d068f7f9c9058777fa8491f74b9ac7ea32feaa5f5decab12261579ab6",
+    "src/air/physics/box3d/world.ts": "4fc3cb5c927aab15a2aa0488118843d95ee7cdf971ddd28b013f503659bddf44",
+    "src/air/physics/preparation.ts": "5f7ba137880c7a77b0990a4c27b52cde9d826164dcf116c43f9112ce96dcac60",
+    "src/cocos/core/data/mutation-guard.ts": "93758e4b5a90ff90e5cabc7d3b0b5fd71069e955d4bf64517bec27d1957774a0",
+    "src/cocos/core/data/object.ts": "0caf7f9c37bd59148b60d7ad465426428006c989b32c03632a3d1eae63fc5fb6",
+    "src/cocos/core/event/callbacks-invoker.ts": "544780e361767d5ae79d2c20a973651b544ceee6b7bd90e6ebe876185774918a",
+    "src/cocos/core/event/eventify.ts": "ad59c9f8dc67f40db877b2160989b792e488b256903d6fdccaf2c7433728c7e9",
+    "src/cocos/core/math/mat4.ts": "ce41535a34d9d1a4d0e6eb4558066d426965eda52379a99ea427785df1a70568",
+    "src/cocos/core/math/quat.ts": "57fd2bab3cf9336404fea2f8ae93a76d944d328b27708280049ee44d35878f6c",
+    "src/cocos/core/math/vec3.ts": "fa315c0f3f332d0c4a46136ff6e89394eed78ecf466672414e40bbde6803c87f",
+    "src/cocos/game/director.ts": "7b1be62cd9e84e926d1744ccc5d467a63e115f689f888a720df44511f51aa224",
+    "src/cocos/physics/framework/assets/physics-material.ts": "47a2e4d244bab6933f8d0a65a2fdc6978a5764e8081df4b21d0b97aac83872da",
+    "src/cocos/physics/framework/components/colliders/box-collider.ts": "c984e32378d1424b57164c4d5c51f7cfd4b96ef837f598e05690caa48fc9b9cb",
+    "src/cocos/physics/framework/components/colliders/collider.ts": "53a0d357c2483e64bf2015c54911099e0d08cdbf68bdeeddc5ad5a469deea718",
+    "src/cocos/physics/framework/components/colliders/sphere-collider.ts": "581d112c7ef6faa66b21636345e6de03a929ff69417ad8c6be61fc3078ac342d",
+    "src/cocos/physics/framework/components/rigid-body.ts": "9958f2f5df91f68bc3c4faf7803273561503762147ad791cac84802c54b783f3",
+    "src/cocos/physics/framework/physics-material-transaction.ts": "e5fd0efdac79228970560a0bca6c9dde31e5436a69d9b499cb02867f27c8ab8c",
+    "src/cocos/physics/framework/physics-material-values-transaction.ts": "06ac7eada947bc565868f9dffa0eda6e68dfeee337a34fb4912d890f7f7e2682",
+    "src/cocos/physics/framework/physics-material-values.ts": "435b47e6faaa861c1d584fcc3603a64735052daa2595cf3da12e3fa602305b66",
+    "src/cocos/physics/framework/physics-selector.ts": "121956af3ad15be76e7b75ac879adaff666f67e8a3d10327b3302b9fe4efc50c",
+    "src/cocos/physics/framework/physics-state-observer.ts": "4cf40c4f1be0d407a402e95dcdb7a898b1942cb175f869f6367a41b18c2d1d2b",
+    "src/cocos/physics/framework/physics-system-control.ts": "59ab174ab3d18840992e3e211f399a2715cab8f0a8ffdf8b0aa3ee2a1fedfb4d",
+    "src/cocos/physics/framework/physics-system.ts": "3726b321e4936d4a991ee2bfb027b61344781164ff1e42510f9f311da27dee63",
+    "src/cocos/render-scene/index.ts": "7a06524337ccd129a6b3978646756bdd38ee6ae65360006c2132506bba4ad8ee",
+    "src/cocos/scene-graph/component.ts": "3abf7f30ed88ca45105cb8241d7b8046f5c79125a490eb4345d4c2f9dca11078",
+    "src/cocos/scene-graph/node-activator.ts": "7078e8e278b5aec690ddcf30f5f2dbf7d5c4b7e2d13ce309ccb083a5e48055b0",
+    "src/cocos/scene-graph/node-transform-validation.ts": "f849e7bc3d56407ae91ccd935a1be51c6bbedd83489bf4d74430e586760fc0f9",
+    "src/cocos/scene-graph/node.ts": "aab602a53f087718fd90e341de0d37fa83ec0f2e6214ded428b4f643c394d67b",
+    "src/cocos/scene-graph/scene.ts": "0f378e89fcfc926c7740d110f97f5ae07752a72ab5d6dd8039148654baaa85a0",
+    "src/exports/base.ts": "b060d82e23c1cbcc1e92c62a4f283fce9fde636e0b61224049293b02734809f4",
+    "test/setup-dom.js": "6a2f11fb94ebcad2ce48c4b53a6044bfaa682fdd9f232345cc6d25b7b0f5fcd5",
+    "test/setup-engine.js": "1c9bbf584722c35f63df80c0be298e05a03361d3e8c639eab0fb6591b88091bf",
+    "test/stubs/internal-constants.ts": "7fa0b813c55407fa225315d02f4f3924bf11473b936c3a93d8f2ee3548a94da1",
+    "test/tsconfig.jest.json": "c20bb09b5489515b8e2e011777fa8bea5725c16e48002bc6968761bbee49e654",
+    "tools/physics/box3d/CMakeLists.txt": "8cb528cc936ca85f69e31ff051077813aff0084e7ebdeb0caa65b484deb20c21",
+    "tools/physics/box3d/abi-schema.json": "e6329dce9b3e6fce69cfd5da318f1f708b95b7af834edb667de8306f9cae0a5d",
+    "tools/physics/box3d/build.mjs": "1fc3085e131d9f795b2bd99e86ea38fa51e241d0ab80c82081268a7c01bdd759",
+    "tools/physics/box3d/command-source-controls.mjs": "7d74868e016bf48eac6170e2221f590e3643c6e04d4ca857cfccbac89f6d18bc",
+    "tools/physics/box3d/exports.json": "b6dbf75e39a62d9d79e65b7db89664ef4f8f8fb4905916b63df06d2316a21f92",
+    "tools/physics/box3d/motion-source-controls.mjs": "31bb0a993107b8f6b073cc1878cad27216a22b3f65e3bdac4746742c1777b3ac",
+    "tools/physics/box3d/native/air_box3d.c": "28e6e26ff7d3dc3db3fa7a257510f96da90e04e1b677e8a84da23f0c3d145468",
+    "tools/physics/box3d/native/air_box3d.h": "7fdfe74a50f27bb4d3aa3cf2ada7a5684eeedfe2200d9cea2b4f3b31ded2208c",
+    "tools/physics/box3d/native/body_contract.c": "d195a33d84834caf857757ed6ce450ac9865e4fafdac2ea4f10d8661da4f4656",
+    "tools/physics/box3d/native/body_control.c": "9115c6e3fb89654042858e31819784c25c8e1ac3d09d3d7b7ad22f50789df0e9",
+    "tools/physics/box3d/native/body_control.h": "d7a8ee9db19b875d079a2bcbbba3be6e46519f1df39bd1d01cdc0aa7894df9e8",
+    "tools/physics/box3d/native/command_bridge.c": "c91a3d4be10fa85fc2c50c0bba721e4e675b1e560cc8488f57f4e7396dc09bd7",
+    "tools/physics/box3d/native/command_bridge.h": "51b5dbc6c437c593172b2bcf055de242998c001ce14900d9819005e5d53b4ee0",
+    "tools/physics/box3d/native/command_contract.c": "7ff53423ed00b51cc31c809450f41593bc4cfc419bdbeee9578837701977cac3",
+    "tools/physics/box3d/native/contract.c": "873862b60b2bc22080e0055f4204afeaf32ac27273b09e268d8920433d94402d",
+    "tools/physics/box3d/native/filter_bridge.c": "ef5e76fa2a9e3e2bb57738b943e8bd9fb185812fb5c0df04b49fc445459688cd",
+    "tools/physics/box3d/native/filter_bridge.h": "7b93839f91a4e828971d2a02e0d11393f5b7b944b3335cdb1d5a3fe3553d1e84",
+    "tools/physics/box3d/native/filter_contract.c": "a557412e0f868498ce4a8d63444bfb241e7644a9d459160b1e2242e9e2fa29e2",
+    "tools/physics/box3d/native/geometry.c": "0dcb3f74fa2ee34fba5f716735cba2d83f07175db55d3e344d88e6fa55ab3825",
+    "tools/physics/box3d/native/geometry_contract.c": "cb82c55602526b33f0125c2a0aa9e1a5c27d942e01c2bb9bcffa919f9c95885f",
+    "tools/physics/box3d/native/motion_bridge.c": "142ac35fde560a7b6f748b7eecc67b3eb99c5edefb7200c4ecef64e6d60e8573",
+    "tools/physics/box3d/native/motion_bridge.h": "67c486efc11775f2743992625efb15ce1ed0fe3c1fac79c8c0a82045b57de8ca",
+    "tools/physics/box3d/native/motion_contract.c": "30d1ca6ed0e1f8b1c47b0b1c2c2ce4cd89cdd6be68efad5037c926d7a849e046",
+    "tools/physics/box3d/native/snapshot.c": "46d9ad1d6fdbe445b33d969e7fe725641ac7eb36767efcefac8e1576df24ea18",
+    "tools/physics/box3d/native/wasm_entry.c": "9b1857c34808b0e3be4726c9df515999c1714583771813c89190d53a364e7c9f",
+    "tools/physics/box3d/native/world_bridge.c": "1331b2881410625dd5d6ec941ffc720005eaca6770cb7a76960c1e06586eeac7",
+    "tools/physics/box3d/native/world_bridge.h": "8cb7bf91011b5bd24f67dfa9833f08444addb1c92d3a952901e84165d6af34d0",
+    "tools/physics/box3d/native/world_contract.c": "9a2067c7941a06cde240cce7a4c849a4e4271bb9f4aa767ce58744c33773577f",
+    "tools/physics/box3d/patch-intake.mjs": "039430725aa59d74abbb9ae32b720c345d7d07297227e31ee95e76851239d7dc",
+    "tools/physics/box3d/patches/contact-geometry-epoch.patch": "4ca29eed58cd20d4134bf55bb9b9ec25fbb322b731d0a319ad2567225463d094",
+    "tools/physics/box3d/patches/lock.json": "d6be04611f70223e21b1bcffc635088f49a5647739e97c2f9ce089091748ea77",
+    "tools/physics/box3d/patches/sse2-loadv-alignment.patch": "e5c4e5f2ae7f015cf62dfc2de5a36af73cc15d9b0ca0118fc0259c7d1f0b1403",
+    "tools/physics/box3d/verify-sources.mjs": "f18ad0dc623b6b83b8a46a2abbf34a29e0400d127a85f3fc16b966493b97e171",
+    "tools/physics/box3d/verify-wasm.mjs": "de4dd1b4e2ae32ceb5fddc0e8fbcb0159fdd29378cf7eed33c57e3852113af6e",
+    "tools/physics/box3d/versions.lock.json": "dc6cefaf533363bea1d80835807d758332e2a65b6633ac3b9edfb2fc3ff29656",
+    "tools/physics/box3d/wasm-body-contract.mjs": "5be306a66497feeedadd02ead703247b56822b3964828f1a23165d06f0b0d9af",
+    "tools/physics/box3d/wasm-command-contract.mjs": "878403967d14ba19ba09ebe222f5c3e59d0c8b6021cc9fb14c650feff2608a7c",
+    "tools/physics/box3d/wasm-contract.mjs": "4850c9ee10ce491029f209bb499e040f7a569d01991a8797d85649333877ee71",
+    "tools/physics/box3d/wasm-filter-contract.mjs": "ab79a3a0a6a8677b250b072a6611267896419c1b06839608e58ab9747065937a",
+    "tools/physics/box3d/wasm-geometry-contract.mjs": "4ce3094d9919f3bc01bbd2eadc7f0811ca75a6e5e2b063de7db77955187f9348",
+    "tools/physics/box3d/wasm-motion-contract.mjs": "e058daf79278bbaa7d31545db743851cade1dca4fc9833953d17b3216366c814",
+    "tools/physics/box3d/wasm-ownership-contract.mjs": "626d09f222ef564483b0781e2d377e326d625cf3202ded40ff4e1b48149b361d",
+    "tools/physics/box3d/wasm-snapshot-contract.mjs": "c704afa56d36fec985d245c67ed4f9e6ec79f93b2603d439c33c833e104bf142",
+    "tools/physics/box3d/wasm-world-contract.mjs": "b9273441def669c3150bc92081f51afdafe496fc00199a913d61b65f788a656c",
+    "tools/verify/box3d/owner-shared-material-real-wasm-environment.cjs": "5361685b74437380919cb882d213ba9c96954c2fa6172a81e12f873c9357d52a",
+    "tools/verify/box3d/owner-shared-material-real-wasm-inputs.cjs": "74cd78eb6191ca16fa6f4eb74cf27e348f1bc69af324b5ec521f9e6b0738cd7a",
+    "tools/verify/box3d/owner-shared-material-real-wasm-preload.mjs": "2de6ddd5e24c4459455e410cab8350f94b9e83e80dc91abd21db054eadc97b0e",
+    "tools/verify/box3d/owner-shared-material-real-wasm.jest.cjs": "c01c92f5d8b9d2c27a4aaf53fd84cb73d0fcb9738e4734cfb716a0dfbbfaed5a",
+    "tools/verify/box3d/owner-shared-material-real-wasm.mjs": "3365eff98b532e32d26b582cdd9d5ee5b7c3009fd5ca1127e92cc37f95f5b558",
+    "tools/verify/box3d/owner-shared-material-real-wasm.test.ts": "d148a2c370aa007ae9d6e90c69e3eed4a5f1226506b895ac1da3612d6b3886c7",
+    "tools/verify/box3d/owner-shared-material-real-wasm.tsconfig.json": "98428ceb1381dfec6a639c2e6c4047740a54a01bce80896303548b8cf7fb9ccc",
+    "tsconfig.json": "5c4a22033ef4f69a7ba4f19feb7f76fe6f8cdd851a1fa2bc823dfcf584022487",
+    "vendor/box3d/source-manifest.json": "40f2d926a3fbc84d5d31f07532b3439657ebed69630ad9e2477c84fc25754dd0"
+  },
+  "transport": [
+    "manifest.json",
+    "box3d-st.wasm",
+    "box3d-st.mjs"
+  ],
+  "calls": [
+    {
+      "name": "createWorld",
+      "args": [
+        [
+          0,
+          -10,
+          0
+        ]
+      ],
+      "returned": true,
+      "result": {
+        "id": 65536
+      }
+    },
+    {
+      "name": "getGravity",
+      "args": [
+        {
+          "id": 65536
+        }
+      ],
+      "returned": true,
+      "result": [
+        0,
+        -10,
+        0
+      ]
+    },
+    {
+      "name": "isSleepingEnabled",
+      "args": [
+        {
+          "id": 65536
+        }
+      ],
+      "returned": true,
+      "result": true
+    },
+    {
+      "name": "stepDiagnostics",
+      "args": [
+        {
+          "id": 65536
+        }
+      ],
+      "returned": true,
+      "result": {
+        "nativeStepIndex": 0,
+        "nativeCompleted": false,
+        "snapshotAvailable": false
+      }
+    },
+    {
+      "name": "debugSnapshot",
+      "args": [
+        {
+          "id": 65536
+        },
+        0,
+        0.30000001192092896
+      ],
+      "returned": true,
+      "result": {
+        "primitives": [],
+        "flags": 0,
+        "jointScale": 0.30000001192092896,
+        "supportedFlags": 5
+      }
+    },
+    {
+      "name": "setGravity",
+      "args": [
+        {
+          "id": 65536
+        },
+        [
+          0,
+          -10,
+          0
+        ]
+      ],
+      "returned": true,
+      "result": null
+    },
+    {
+      "name": "getGravity",
+      "args": [
+        {
+          "id": 65536
+        }
+      ],
+      "returned": true,
+      "result": [
+        0,
+        -10,
+        0
+      ]
+    },
+    {
+      "name": "setSleepingEnabled",
+      "args": [
+        {
+          "id": 65536
+        },
+        true
+      ],
+      "returned": true,
+      "result": null
+    },
+    {
+      "name": "isSleepingEnabled",
+      "args": [
+        {
+          "id": 65536
+        }
+      ],
+      "returned": true,
+      "result": true
+    },
+    {
+      "name": "createBody",
+      "args": [
+        {
+          "id": 65536
+        },
+        {
+          "type": 0,
+          "position": [
+            0,
+            10,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
+      ],
+      "returned": true,
+      "result": {
+        "low": 1,
+        "high": 1
+      }
+    },
+    {
+      "name": "setBodyEnabled",
+      "args": [
+        {
+          "id": 65536
+        },
+        {
+          "low": 1,
+          "high": 1
+        },
+        false
+      ],
+      "returned": true,
+      "result": {
+        "type": 0,
+        "enabled": false,
+        "awake": false,
+        "sleeping": false,
+        "sleepy": false,
+        "sleepEnabled": true,
+        "ccd": false,
+        "sleepTime": 0,
+        "sleepVelocity": 0,
+        "sleepThreshold": 0.05000000074505806,
+        "linearDamping": 0,
+        "angularDamping": 0,
+        "gravityScale": 1,
+        "linearVelocity": [
+          0,
+          0,
+          0
+        ],
+        "angularVelocity": [
+          0,
+          0,
+          0
+        ],
+        "force": [
+          0,
+          0,
+          0
+        ],
+        "torque": [
+          0,
+          0,
+          0
+        ],
+        "linearFactor": [
+          1,
+          1,
+          1
+        ],
+        "angularFactor": [
+          1,
+          1,
+          1
+        ],
+        "mass": 0,
+        "localCenter": [
+          0,
+          0,
+          0
+        ],
+        "inertia": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "worldCenter": [
+          0,
+          10,
+          0
+        ],
+        "requestedMass": null,
+        "massPending": false,
+        "sensorMassFallback": false
+      }
+    },
+    {
+      "name": "setBodySleepThreshold",
+      "args": [
+        {
+          "id": 65536
+        },
+        {
+          "low": 1,
+          "high": 1
+        },
+        0.10000000149011612
+      ],
+      "returned": true,
+      "result": {
+        "type": 0,
+        "enabled": false,
+        "awake": false,
+        "sleeping": false,
+        "sleepy": false,
+        "sleepEnabled": true,
+        "ccd": false,
+        "sleepTime": 0,
+        "sleepVelocity": 0,
+        "sleepThreshold": 0.10000000149011612,
+        "linearDamping": 0,
+        "angularDamping": 0,
+        "gravityScale": 1,
+        "linearVelocity": [
+          0,
+          0,
+          0
+        ],
+        "angularVelocity": [
+          0,
+          0,
+          0
+        ],
+        "force": [
+          0,
+          0,
+          0
+        ],
+        "torque": [
+          0,
+          0,
+          0
+        ],
+        "linearFactor": [
+          1,
+          1,
+          1
+        ],
+        "angularFactor": [
+          1,
+          1,
+          1
+        ],
+        "mass": 0,
+        "localCenter": [
+          0,
+          0,
+          0
+        ],
+        "inertia": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "worldCenter": [
+          0,
+          10,
+          0
+        ],
+        "requestedMass": null,
+        "massPending": false,
+        "sensorMassFallback": false
+      }
+    },
+    {
+      "name": "setBodyMass",
+      "args": [
+        {
+          "id": 65536
+        },
+        {
+          "low": 1,
+          "high": 1
+        },
+        1
+      ],
+      "returned": true,
+      "result": {
+        "type": 0,
+        "enabled": false,
+        "awake": false,
+        "sleeping": false,
+        "sleepy": false,
+        "sleepEnabled": true,
+        "ccd": false,
+        "sleepTime": 0,
+        "sleepVelocity": 0,
+        "sleepThreshold": 0.10000000149011612,
+        "linearDamping": 0,
+        "angularDamping": 0,
+        "gravityScale": 1,
+        "linearVelocity": [
+          0,
+          0,
+          0
+        ],
+        "angularVelocity": [
+          0,
+          0,
+          0
+        ],
+        "force": [
+          0,
+          0,
+          0
+        ],
+        "torque": [
+          0,
+          0,
+          0
+        ],
+        "linearFactor": [
+          1,
+          1,
+          1
+        ],
+        "angularFactor": [
+          1,
+          1,
+          1
+        ],
+        "mass": 0,
+        "localCenter": [
+          0,
+          0,
+          0
+        ],
+        "inertia": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "worldCenter": [
+          0,
+          10,
+          0
+        ],
+        "requestedMass": 1,
+        "massPending": true,
+        "sensorMassFallback": false
+      }
+    },
+    {
+      "name": "setBodyDamping",
+      "args": [
+        {
+          "id": 65536
+        },
+        {
+          "low": 1,
+          "high": 1
+        },
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "returned": true,
+      "result": {
+        "type": 0,
+        "enabled": false,
+        "awake": false,
+        "sleeping": false,
+        "sleepy": false,
+        "sleepEnabled": true,
+        "ccd": false,
+        "sleepTime": 0,
+        "sleepVelocity": 0,
+        "sleepThreshold": 0.10000000149011612,
+        "linearDamping": 0.10000000149011612,
+        "angularDamping": 0.10000000149011612,
+        "gravityScale": 1,
+        "linearVelocity": [
+          0,
+          0,
+          0
+        ],
+        "angularVelocity": [
+          0,
+          0,
+          0
+        ],
+        "force": [
+          0,
+          0,
+          0
+        ],
+        "torque": [
+          0,
+          0,
+          0
+        ],
+        "linearFactor": [
+          1,
+          1,
+          1
+        ],
+        "angularFactor": [
+          1,
+          1,
+          1
+        ],
+        "mass": 0,
+        "localCenter": [
+          0,
+          0,
+          0
+        ],
+        "inertia": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "worldCenter": [
+          0,
+          10,
+          0
+        ],
+        "requestedMass": 1,
+        "massPending": true,
+        "sensorMassFallback": false
+      }
+    },
+    {
+      "name": "setBodyGravityScale",
+      "args": [
+        {
+          "id": 65536
+        },
+        {
+          "low": 1,
+          "high": 1
+        },
+        1
+      ],
+      "returned": true,
+      "result": {
+        "type": 0,
+        "enabled": false,
+        "awake": false,
+        "sleeping": false,
+        "sleepy": false,
+        "sleepEnabled": true,
+        "ccd": false,
+        "sleepTime": 0,
+        "sleepVelocity": 0,
+        "sleepThreshold": 0.10000000149011612,
+        "linearDamping": 0.10000000149011612,
+        "angularDamping": 0.10000000149011612,
+        "gravityScale": 1,
+        "linearVelocity": [
+          0,
+          0,
+          0
+        ],
+        "angularVelocity": [
+          0,
+          0,
+          0
+        ],
+        "force": [
+          0,
+          0,
+          0
+        ],
+        "torque": [
+          0,
+          0,
+          0
+        ],
+        "linearFactor": [
+          1,
+          1,
+          1
+        ],
+        "angularFactor": [
+          1,
+          1,
+          1
+        ],
+        "mass": 0,
+        "localCenter": [
+          0,
+          0,
+          0
+        ],
+        "inertia": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "worldCenter": [
+          0,
+          10,
+          0
+        ],
+        "requestedMass": 1,
+        "massPending": true,
+        "sensorMassFallback": false
+      }
+    },
+    {
+      "name": "setBodySleepEnabled",
+      "args": [
+        {
+          "id": 65536
+        },
+        {
+          "low": 1,
+          "high": 1
+        },
+        true
+      ],
+      "returned": true,
+      "result": {
+        "type": 0,
+        "enabled": false,
+        "awake": false,
+        "sleeping": false,
+        "sleepy": false,
+        "sleepEnabled": true,
+        "ccd": false,
+        "sleepTime": 0,
+        "sleepVelocity": 0,
+        "sleepThreshold": 0.10000000149011612,
+        "linearDamping": 0.10000000149011612,
+        "angularDamping": 0.10000000149011612,
+        "gravityScale": 1,
+        "linearVelocity": [
+          0,
+          0,
+          0
+        ],
+        "angularVelocity": [
+          0,
+          0,
+          0
+        ],
+        "force": [
+          0,
+          0,
+          0
+        ],
+        "torque": [
+          0,
+          0,
+          0
+        ],
+        "linearFactor": [
+          1,
+          1,
+          1
+        ],
+        "angularFactor": [
+          1,
+          1,
+          1
+        ],
+        "mass": 0,
+        "localCenter": [
+          0,
+          0,
+          0
+        ],
+        "inertia": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "worldCenter": [
+          0,
+          10,
+          0
+        ],
+        "requestedMass": 1,
+        "massPending": true,
+        "sensorMassFallback": false
+      }
+    },
+    {
+      "name": "setBodyMotionFactors",
+      "args": [
+        {
+          "id": 65536
+        },
+        {
+          "low": 1,
+          "high": 1
+        },
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1
+        ]
+      ],
+      "returned": true,
+      "result": {
+        "type": 0,
+        "enabled": false,
+        "awake": false,
+        "sleeping": false,
+        "sleepy": false,
+        "sleepEnabled": true,
+        "ccd": false,
+        "sleepTime": 0,
+        "sleepVelocity": 0,
+        "sleepThreshold": 0.10000000149011612,
+        "linearDamping": 0.10000000149011612,
+        "angularDamping": 0.10000000149011612,
+        "gravityScale": 1,
+        "linearVelocity": [
+          0,
+          0,
+          0
+        ],
+        "angularVelocity": [
+          0,
+          0,
+          0
+        ],
+        "force": [
+          0,
+          0,
+          0
+        ],
+        "torque": [
+          0,
+          0,
+          0
+        ],
+        "linearFactor": [
+          1,
+          1,
+          1
+        ],
+        "angularFactor": [
+          1,
+          1,
+          1
+        ],
+        "mass": 0,
+        "localCenter": [
+          0,
+          0,
+          0
+        ],
+        "inertia": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "worldCenter": [
+          0,
+          10,
+          0
+        ],
+        "requestedMass": 1,
+        "massPending": true,
+        "sensorMassFallback": false
+      }
+    },
+    {
+      "name": "setBodyType",
+      "args": [
+        {
+          "id": 65536
+        },
+        {
+          "low": 1,
+          "high": 1
+        },
+        2
+      ],
+      "returned": true,
+      "result": {
+        "type": 2,
+        "enabled": false,
+        "awake": false,
+        "sleeping": false,
+        "sleepy": false,
+        "sleepEnabled": true,
+        "ccd": false,
+        "sleepTime": 0,
+        "sleepVelocity": 0,
+        "sleepThreshold": 0.10000000149011612,
+        "linearDamping": 0.10000000149011612,
+        "angularDamping": 0.10000000149011612,
+        "gravityScale": 1,
+        "linearVelocity": [
+          0,
+          0,
+          0
+        ],
+        "angularVelocity": [
+          0,
+          0,
+          0
+        ],
+        "force": [
+          0,
+          0,
+          0
+        ],
+        "torque": [
+          0,
+          0,
+          0
+        ],
+        "linearFactor": [
+          1,
+          1,
+          1
+        ],
+        "angularFactor": [
+          1,
+          1,
+          1
+        ],
+        "mass": 0,
+        "localCenter": [
+          0,
+          0,
+          0
+        ],
+        "inertia": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "worldCenter": [
+          0,
+          10,
+          0
+        ],
+        "requestedMass": 1,
+        "massPending": true,
+        "sensorMassFallback": false
+      }
+    },
+    {
+      "name": "setShapeFilters",
+      "args": [
+        {
+          "id": 65536
+        },
+        [],
+        {
+          "group": 1,
+          "mask": 1
+        }
+      ],
+      "returned": true,
+      "result": []
+    },
+    {
+      "name": "bodyState",
+      "args": [
+        {
+          "id": 65536
+        },
+        {
+          "low": 1,
+          "high": 1
+        }
+      ],
+      "returned": true,
+      "result": {
+        "type": 2,
+        "enabled": false,
+        "awake": false,
+        "sleeping": false,
+        "sleepy": false,
+        "sleepEnabled": true,
+        "ccd": false,
+        "sleepTime": 0,
+        "sleepVelocity": 0,
+        "sleepThreshold": 0.10000000149011612,
+        "linearDamping": 0.10000000149011612,
+        "angularDamping": 0.10000000149011612,
+        "gravityScale": 1,
+        "linearVelocity": [
+          0,
+          0,
+          0
+        ],
+        "angularVelocity": [
+          0,
+          0,
+          0
+        ],
+        "force": [
+          0,
+          0,
+          0
+        ],
+        "torque": [
+          0,
+          0,
+          0
+        ],
+        "linearFactor": [
+          1,
+          1,
+          1
+        ],
+        "angularFactor": [
+          1,
+          1,
+          1
+        ],
+        "mass": 0,
+        "localCenter": [
+          0,
+          0,
+          0
+        ],
+        "inertia": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "worldCenter": [
+          0,
+          10,
+          0
+        ],
+        "requestedMass": 1,
+        "massPending": true,
+        "sensorMassFallback": false
+      }
+    },
+    {
+      "name": "setBodyEnabled",
+      "args": [
+        {
+          "id": 65536
+        },
+        {
+          "low": 1,
+          "high": 1
+        },
+        true
+      ],
+      "returned": true,
+      "result": {
+        "type": 2,
+        "enabled": true,
+        "awake": true,
+        "sleeping": false,
+        "sleepy": false,
+        "sleepEnabled": true,
+        "ccd": false,
+        "sleepTime": 0,
+        "sleepVelocity": 0,
+        "sleepThreshold": 0.10000000149011612,
+        "linearDamping": 0.10000000149011612,
+        "angularDamping": 0.10000000149011612,
+        "gravityScale": 1,
+        "linearVelocity": [
+          0,
+          0,
+          0
+        ],
+        "angularVelocity": [
+          0,
+          0,
+          0
+        ],
+        "force": [
+          0,
+          0,
+          0
+        ],
+        "torque": [
+          0,
+          0,
+          0
+        ],
+        "linearFactor": [
+          1,
+          1,
+          1
+        ],
+        "angularFactor": [
+          1,
+          1,
+          1
+        ],
+        "mass": 0,
+        "localCenter": [
+          0,
+          0,
+          0
+        ],
+        "inertia": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "worldCenter": [
+          0,
+          10,
+          0
+        ],
+        "requestedMass": 1,
+        "massPending": true,
+        "sensorMassFallback": false
+      }
+    },
+    {
+      "name": "createOffsetBox",
+      "args": [
+        {
+          "low": 1,
+          "high": 1
+        },
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0.5,
+          0.5,
+          0.5
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        1,
+        false
+      ],
+      "returned": true,
+      "result": {
+        "low": 1,
+        "high": 1
+      }
+    },
+    {
+      "name": "configureShapeEvents",
+      "args": [
+        {
+          "low": 1,
+          "high": 1
+        },
+        {
+          "sensor": false,
+          "contact": false,
+          "hit": false
+        }
+      ],
+      "returned": true,
+      "result": null
+    },
+    {
+      "name": "setShapeFilters",
+      "args": [
+        {
+          "id": 65536
+        },
+        [
+          {
+            "low": 1,
+            "high": 1
+          }
+        ],
+        {
+          "group": 1,
+          "mask": 1
+        }
+      ],
+      "returned": true,
+      "result": [
+        {
+          "group": 1,
+          "mask": 1
+        }
+      ]
+    },
+    {
+      "name": "setShapeMaterial",
+      "args": [
+        {
+          "id": 65536
+        },
+        {
+          "low": 1,
+          "high": 1
+        },
+        {
+          "friction": 0.30000001192092896,
+          "restitution": 0
+        }
+      ],
+      "returned": true,
+      "result": null
+    },
+    {
+      "name": "getShapeMaterial",
+      "args": [
+        {
+          "id": 65536
+        },
+        {
+          "low": 1,
+          "high": 1
+        }
+      ],
+      "returned": true,
+      "result": {
+        "friction": 0.30000001192092896,
+        "restitution": 0
+      }
+    },
+    {
+      "name": "getShapeMaterial",
+      "args": [
+        {
+          "id": 65536
+        },
+        {
+          "low": 1,
+          "high": 1
+        }
+      ],
+      "returned": true,
+      "result": {
+        "friction": 0.30000001192092896,
+        "restitution": 0
+      }
+    },
+    {
+      "name": "bodyState",
+      "args": [
+        {
+          "id": 65536
+        },
+        {
+          "low": 1,
+          "high": 1
+        }
+      ],
+      "returned": true,
+      "result": {
+        "type": 2,
+        "enabled": true,
+        "awake": true,
+        "sleeping": false,
+        "sleepy": false,
+        "sleepEnabled": true,
+        "ccd": false,
+        "sleepTime": 0,
+        "sleepVelocity": 0,
+        "sleepThreshold": 0.10000000149011612,
+        "linearDamping": 0.10000000149011612,
+        "angularDamping": 0.10000000149011612,
+        "gravityScale": 1,
+        "linearVelocity": [
+          0,
+          0,
+          0
+        ],
+        "angularVelocity": [
+          0,
+          0,
+          0
+        ],
+        "force": [
+          0,
+          0,
+          0
+        ],
+        "torque": [
+          0,
+          0,
+          0
+        ],
+        "linearFactor": [
+          1,
+          1,
+          1
+        ],
+        "angularFactor": [
+          1,
+          1,
+          1
+        ],
+        "mass": 1,
+        "localCenter": [
+          0,
+          0,
+          0
+        ],
+        "inertia": [
+          0.1666666716337204,
+          0,
+          0,
+          0,
+          0.1666666716337204,
+          0,
+          0,
+          0,
+          0.1666666716337204
+        ],
+        "worldCenter": [
+          0,
+          10,
+          0
+        ],
+        "requestedMass": 1,
+        "massPending": false,
+        "sensorMassFallback": false
+      }
+    },
+    {
+      "name": "createBody",
+      "args": [
+        {
+          "id": 65536
+        },
+        {
+          "type": 0,
+          "position": [
+            4,
+            10,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
+      ],
+      "returned": true,
+      "result": {
+        "low": 1,
+        "high": 2
+      }
+    },
+    {
+      "name": "setBodyEnabled",
+      "args": [
+        {
+          "id": 65536
+        },
+        {
+          "low": 1,
+          "high": 2
+        },
+        false
+      ],
+      "returned": true,
+      "result": {
+        "type": 0,
+        "enabled": false,
+        "awake": false,
+        "sleeping": false,
+        "sleepy": false,
+        "sleepEnabled": true,
+        "ccd": false,
+        "sleepTime": 0,
+        "sleepVelocity": 0,
+        "sleepThreshold": 0.05000000074505806,
+        "linearDamping": 0,
+        "angularDamping": 0,
+        "gravityScale": 1,
+        "linearVelocity": [
+          0,
+          0,
+          0
+        ],
+        "angularVelocity": [
+          0,
+          0,
+          0
+        ],
+        "force": [
+          0,
+          0,
+          0
+        ],
+        "torque": [
+          0,
+          0,
+          0
+        ],
+        "linearFactor": [
+          1,
+          1,
+          1
+        ],
+        "angularFactor": [
+          1,
+          1,
+          1
+        ],
+        "mass": 0,
+        "localCenter": [
+          0,
+          0,
+          0
+        ],
+        "inertia": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "worldCenter": [
+          4,
+          10,
+          0
+        ],
+        "requestedMass": null,
+        "massPending": false,
+        "sensorMassFallback": false
+      }
+    },
+    {
+      "name": "setBodySleepThreshold",
+      "args": [
+        {
+          "id": 65536
+        },
+        {
+          "low": 1,
+          "high": 2
+        },
+        0.10000000149011612
+      ],
+      "returned": true,
+      "result": {
+        "type": 0,
+        "enabled": false,
+        "awake": false,
+        "sleeping": false,
+        "sleepy": false,
+        "sleepEnabled": true,
+        "ccd": false,
+        "sleepTime": 0,
+        "sleepVelocity": 0,
+        "sleepThreshold": 0.10000000149011612,
+        "linearDamping": 0,
+        "angularDamping": 0,
+        "gravityScale": 1,
+        "linearVelocity": [
+          0,
+          0,
+          0
+        ],
+        "angularVelocity": [
+          0,
+          0,
+          0
+        ],
+        "force": [
+          0,
+          0,
+          0
+        ],
+        "torque": [
+          0,
+          0,
+          0
+        ],
+        "linearFactor": [
+          1,
+          1,
+          1
+        ],
+        "angularFactor": [
+          1,
+          1,
+          1
+        ],
+        "mass": 0,
+        "localCenter": [
+          0,
+          0,
+          0
+        ],
+        "inertia": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "worldCenter": [
+          4,
+          10,
+          0
+        ],
+        "requestedMass": null,
+        "massPending": false,
+        "sensorMassFallback": false
+      }
+    },
+    {
+      "name": "setBodyMass",
+      "args": [
+        {
+          "id": 65536
+        },
+        {
+          "low": 1,
+          "high": 2
+        },
+        1
+      ],
+      "returned": true,
+      "result": {
+        "type": 0,
+        "enabled": false,
+        "awake": false,
+        "sleeping": false,
+        "sleepy": false,
+        "sleepEnabled": true,
+        "ccd": false,
+        "sleepTime": 0,
+        "sleepVelocity": 0,
+        "sleepThreshold": 0.10000000149011612,
+        "linearDamping": 0,
+        "angularDamping": 0,
+        "gravityScale": 1,
+        "linearVelocity": [
+          0,
+          0,
+          0
+        ],
+        "angularVelocity": [
+          0,
+          0,
+          0
+        ],
+        "force": [
+          0,
+          0,
+          0
+        ],
+        "torque": [
+          0,
+          0,
+          0
+        ],
+        "linearFactor": [
+          1,
+          1,
+          1
+        ],
+        "angularFactor": [
+          1,
+          1,
+          1
+        ],
+        "mass": 0,
+        "localCenter": [
+          0,
+          0,
+          0
+        ],
+        "inertia": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "worldCenter": [
+          4,
+          10,
+          0
+        ],
+        "requestedMass": 1,
+        "massPending": true,
+        "sensorMassFallback": false
+      }
+    },
+    {
+      "name": "setBodyDamping",
+      "args": [
+        {
+          "id": 65536
+        },
+        {
+          "low": 1,
+          "high": 2
+        },
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "returned": true,
+      "result": {
+        "type": 0,
+        "enabled": false,
+        "awake": false,
+        "sleeping": false,
+        "sleepy": false,
+        "sleepEnabled": true,
+        "ccd": false,
+        "sleepTime": 0,
+        "sleepVelocity": 0,
+        "sleepThreshold": 0.10000000149011612,
+        "linearDamping": 0.10000000149011612,
+        "angularDamping": 0.10000000149011612,
+        "gravityScale": 1,
+        "linearVelocity": [
+          0,
+          0,
+          0
+        ],
+        "angularVelocity": [
+          0,
+          0,
+          0
+        ],
+        "force": [
+          0,
+          0,
+          0
+        ],
+        "torque": [
+          0,
+          0,
+          0
+        ],
+        "linearFactor": [
+          1,
+          1,
+          1
+        ],
+        "angularFactor": [
+          1,
+          1,
+          1
+        ],
+        "mass": 0,
+        "localCenter": [
+          0,
+          0,
+          0
+        ],
+        "inertia": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "worldCenter": [
+          4,
+          10,
+          0
+        ],
+        "requestedMass": 1,
+        "massPending": true,
+        "sensorMassFallback": false
+      }
+    },
+    {
+      "name": "setBodyGravityScale",
+      "args": [
+        {
+          "id": 65536
+        },
+        {
+          "low": 1,
+          "high": 2
+        },
+        1
+      ],
+      "returned": true,
+      "result": {
+        "type": 0,
+        "enabled": false,
+        "awake": false,
+        "sleeping": false,
+        "sleepy": false,
+        "sleepEnabled": true,
+        "ccd": false,
+        "sleepTime": 0,
+        "sleepVelocity": 0,
+        "sleepThreshold": 0.10000000149011612,
+        "linearDamping": 0.10000000149011612,
+        "angularDamping": 0.10000000149011612,
+        "gravityScale": 1,
+        "linearVelocity": [
+          0,
+          0,
+          0
+        ],
+        "angularVelocity": [
+          0,
+          0,
+          0
+        ],
+        "force": [
+          0,
+          0,
+          0
+        ],
+        "torque": [
+          0,
+          0,
+          0
+        ],
+        "linearFactor": [
+          1,
+          1,
+          1
+        ],
+        "angularFactor": [
+          1,
+          1,
+          1
+        ],
+        "mass": 0,
+        "localCenter": [
+          0,
+          0,
+          0
+        ],
+        "inertia": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "worldCenter": [
+          4,
+          10,
+          0
+        ],
+        "requestedMass": 1,
+        "massPending": true,
+        "sensorMassFallback": false
+      }
+    },
+    {
+      "name": "setBodySleepEnabled",
+      "args": [
+        {
+          "id": 65536
+        },
+        {
+          "low": 1,
+          "high": 2
+        },
+        true
+      ],
+      "returned": true,
+      "result": {
+        "type": 0,
+        "enabled": false,
+        "awake": false,
+        "sleeping": false,
+        "sleepy": false,
+        "sleepEnabled": true,
+        "ccd": false,
+        "sleepTime": 0,
+        "sleepVelocity": 0,
+        "sleepThreshold": 0.10000000149011612,
+        "linearDamping": 0.10000000149011612,
+        "angularDamping": 0.10000000149011612,
+        "gravityScale": 1,
+        "linearVelocity": [
+          0,
+          0,
+          0
+        ],
+        "angularVelocity": [
+          0,
+          0,
+          0
+        ],
+        "force": [
+          0,
+          0,
+          0
+        ],
+        "torque": [
+          0,
+          0,
+          0
+        ],
+        "linearFactor": [
+          1,
+          1,
+          1
+        ],
+        "angularFactor": [
+          1,
+          1,
+          1
+        ],
+        "mass": 0,
+        "localCenter": [
+          0,
+          0,
+          0
+        ],
+        "inertia": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "worldCenter": [
+          4,
+          10,
+          0
+        ],
+        "requestedMass": 1,
+        "massPending": true,
+        "sensorMassFallback": false
+      }
+    },
+    {
+      "name": "setBodyMotionFactors",
+      "args": [
+        {
+          "id": 65536
+        },
+        {
+          "low": 1,
+          "high": 2
+        },
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1
+        ]
+      ],
+      "returned": true,
+      "result": {
+        "type": 0,
+        "enabled": false,
+        "awake": false,
+        "sleeping": false,
+        "sleepy": false,
+        "sleepEnabled": true,
+        "ccd": false,
+        "sleepTime": 0,
+        "sleepVelocity": 0,
+        "sleepThreshold": 0.10000000149011612,
+        "linearDamping": 0.10000000149011612,
+        "angularDamping": 0.10000000149011612,
+        "gravityScale": 1,
+        "linearVelocity": [
+          0,
+          0,
+          0
+        ],
+        "angularVelocity": [
+          0,
+          0,
+          0
+        ],
+        "force": [
+          0,
+          0,
+          0
+        ],
+        "torque": [
+          0,
+          0,
+          0
+        ],
+        "linearFactor": [
+          1,
+          1,
+          1
+        ],
+        "angularFactor": [
+          1,
+          1,
+          1
+        ],
+        "mass": 0,
+        "localCenter": [
+          0,
+          0,
+          0
+        ],
+        "inertia": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "worldCenter": [
+          4,
+          10,
+          0
+        ],
+        "requestedMass": 1,
+        "massPending": true,
+        "sensorMassFallback": false
+      }
+    },
+    {
+      "name": "setBodyType",
+      "args": [
+        {
+          "id": 65536
+        },
+        {
+          "low": 1,
+          "high": 2
+        },
+        2
+      ],
+      "returned": true,
+      "result": {
+        "type": 2,
+        "enabled": false,
+        "awake": false,
+        "sleeping": false,
+        "sleepy": false,
+        "sleepEnabled": true,
+        "ccd": false,
+        "sleepTime": 0,
+        "sleepVelocity": 0,
+        "sleepThreshold": 0.10000000149011612,
+        "linearDamping": 0.10000000149011612,
+        "angularDamping": 0.10000000149011612,
+        "gravityScale": 1,
+        "linearVelocity": [
+          0,
+          0,
+          0
+        ],
+        "angularVelocity": [
+          0,
+          0,
+          0
+        ],
+        "force": [
+          0,
+          0,
+          0
+        ],
+        "torque": [
+          0,
+          0,
+          0
+        ],
+        "linearFactor": [
+          1,
+          1,
+          1
+        ],
+        "angularFactor": [
+          1,
+          1,
+          1
+        ],
+        "mass": 0,
+        "localCenter": [
+          0,
+          0,
+          0
+        ],
+        "inertia": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "worldCenter": [
+          4,
+          10,
+          0
+        ],
+        "requestedMass": 1,
+        "massPending": true,
+        "sensorMassFallback": false
+      }
+    },
+    {
+      "name": "setShapeFilters",
+      "args": [
+        {
+          "id": 65536
+        },
+        [],
+        {
+          "group": 1,
+          "mask": 1
+        }
+      ],
+      "returned": true,
+      "result": []
+    },
+    {
+      "name": "bodyState",
+      "args": [
+        {
+          "id": 65536
+        },
+        {
+          "low": 1,
+          "high": 2
+        }
+      ],
+      "returned": true,
+      "result": {
+        "type": 2,
+        "enabled": false,
+        "awake": false,
+        "sleeping": false,
+        "sleepy": false,
+        "sleepEnabled": true,
+        "ccd": false,
+        "sleepTime": 0,
+        "sleepVelocity": 0,
+        "sleepThreshold": 0.10000000149011612,
+        "linearDamping": 0.10000000149011612,
+        "angularDamping": 0.10000000149011612,
+        "gravityScale": 1,
+        "linearVelocity": [
+          0,
+          0,
+          0
+        ],
+        "angularVelocity": [
+          0,
+          0,
+          0
+        ],
+        "force": [
+          0,
+          0,
+          0
+        ],
+        "torque": [
+          0,
+          0,
+          0
+        ],
+        "linearFactor": [
+          1,
+          1,
+          1
+        ],
+        "angularFactor": [
+          1,
+          1,
+          1
+        ],
+        "mass": 0,
+        "localCenter": [
+          0,
+          0,
+          0
+        ],
+        "inertia": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "worldCenter": [
+          4,
+          10,
+          0
+        ],
+        "requestedMass": 1,
+        "massPending": true,
+        "sensorMassFallback": false
+      }
+    },
+    {
+      "name": "setBodyEnabled",
+      "args": [
+        {
+          "id": 65536
+        },
+        {
+          "low": 1,
+          "high": 2
+        },
+        true
+      ],
+      "returned": true,
+      "result": {
+        "type": 2,
+        "enabled": true,
+        "awake": true,
+        "sleeping": false,
+        "sleepy": false,
+        "sleepEnabled": true,
+        "ccd": false,
+        "sleepTime": 0,
+        "sleepVelocity": 0,
+        "sleepThreshold": 0.10000000149011612,
+        "linearDamping": 0.10000000149011612,
+        "angularDamping": 0.10000000149011612,
+        "gravityScale": 1,
+        "linearVelocity": [
+          0,
+          0,
+          0
+        ],
+        "angularVelocity": [
+          0,
+          0,
+          0
+        ],
+        "force": [
+          0,
+          0,
+          0
+        ],
+        "torque": [
+          0,
+          0,
+          0
+        ],
+        "linearFactor": [
+          1,
+          1,
+          1
+        ],
+        "angularFactor": [
+          1,
+          1,
+          1
+        ],
+        "mass": 0,
+        "localCenter": [
+          0,
+          0,
+          0
+        ],
+        "inertia": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "worldCenter": [
+          4,
+          10,
+          0
+        ],
+        "requestedMass": 1,
+        "massPending": true,
+        "sensorMassFallback": false
+      }
+    },
+    {
+      "name": "createOffsetBox",
+      "args": [
+        {
+          "low": 1,
+          "high": 2
+        },
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0.5,
+          0.5,
+          0.5
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        1,
+        false
+      ],
+      "returned": true,
+      "result": {
+        "low": 1,
+        "high": 2
+      }
+    },
+    {
+      "name": "configureShapeEvents",
+      "args": [
+        {
+          "low": 1,
+          "high": 2
+        },
+        {
+          "sensor": false,
+          "contact": false,
+          "hit": false
+        }
+      ],
+      "returned": true,
+      "result": null
+    },
+    {
+      "name": "setShapeFilters",
+      "args": [
+        {
+          "id": 65536
+        },
+        [
+          {
+            "low": 1,
+            "high": 2
+          }
+        ],
+        {
+          "group": 1,
+          "mask": 1
+        }
+      ],
+      "returned": true,
+      "result": [
+        {
+          "group": 1,
+          "mask": 1
+        }
+      ]
+    },
+    {
+      "name": "setShapeMaterial",
+      "args": [
+        {
+          "id": 65536
+        },
+        {
+          "low": 1,
+          "high": 2
+        },
+        {
+          "friction": 0.30000001192092896,
+          "restitution": 0
+        }
+      ],
+      "returned": true,
+      "result": null
+    },
+    {
+      "name": "getShapeMaterial",
+      "args": [
+        {
+          "id": 65536
+        },
+        {
+          "low": 1,
+          "high": 2
+        }
+      ],
+      "returned": true,
+      "result": {
+        "friction": 0.30000001192092896,
+        "restitution": 0
+      }
+    },
+    {
+      "name": "getShapeMaterial",
+      "args": [
+        {
+          "id": 65536
+        },
+        {
+          "low": 1,
+          "high": 2
+        }
+      ],
+      "returned": true,
+      "result": {
+        "friction": 0.30000001192092896,
+        "restitution": 0
+      }
+    },
+    {
+      "name": "bodyState",
+      "args": [
+        {
+          "id": 65536
+        },
+        {
+          "low": 1,
+          "high": 2
+        }
+      ],
+      "returned": true,
+      "result": {
+        "type": 2,
+        "enabled": true,
+        "awake": true,
+        "sleeping": false,
+        "sleepy": false,
+        "sleepEnabled": true,
+        "ccd": false,
+        "sleepTime": 0,
+        "sleepVelocity": 0,
+        "sleepThreshold": 0.10000000149011612,
+        "linearDamping": 0.10000000149011612,
+        "angularDamping": 0.10000000149011612,
+        "gravityScale": 1,
+        "linearVelocity": [
+          0,
+          0,
+          0
+        ],
+        "angularVelocity": [
+          0,
+          0,
+          0
+        ],
+        "force": [
+          0,
+          0,
+          0
+        ],
+        "torque": [
+          0,
+          0,
+          0
+        ],
+        "linearFactor": [
+          1,
+          1,
+          1
+        ],
+        "angularFactor": [
+          1,
+          1,
+          1
+        ],
+        "mass": 1,
+        "localCenter": [
+          0,
+          0,
+          0
+        ],
+        "inertia": [
+          0.1666666716337204,
+          0,
+          0,
+          0,
+          0.1666666716337204,
+          0,
+          0,
+          0,
+          0.1666666716337204
+        ],
+        "worldCenter": [
+          4,
+          10,
+          0
+        ],
+        "requestedMass": 1,
+        "massPending": false,
+        "sensorMassFallback": false
+      }
+    },
+    {
+      "name": "bodyState",
+      "args": [
+        {
+          "id": 65536
+        },
+        {
+          "low": 1,
+          "high": 1
+        }
+      ],
+      "returned": true,
+      "result": {
+        "type": 2,
+        "enabled": true,
+        "awake": true,
+        "sleeping": false,
+        "sleepy": false,
+        "sleepEnabled": true,
+        "ccd": false,
+        "sleepTime": 0,
+        "sleepVelocity": 0,
+        "sleepThreshold": 0.10000000149011612,
+        "linearDamping": 0.10000000149011612,
+        "angularDamping": 0.10000000149011612,
+        "gravityScale": 1,
+        "linearVelocity": [
+          0,
+          0,
+          0
+        ],
+        "angularVelocity": [
+          0,
+          0,
+          0
+        ],
+        "force": [
+          0,
+          0,
+          0
+        ],
+        "torque": [
+          0,
+          0,
+          0
+        ],
+        "linearFactor": [
+          1,
+          1,
+          1
+        ],
+        "angularFactor": [
+          1,
+          1,
+          1
+        ],
+        "mass": 1,
+        "localCenter": [
+          0,
+          0,
+          0
+        ],
+        "inertia": [
+          0.1666666716337204,
+          0,
+          0,
+          0,
+          0.1666666716337204,
+          0,
+          0,
+          0,
+          0.1666666716337204
+        ],
+        "worldCenter": [
+          0,
+          10,
+          0
+        ],
+        "requestedMass": 1,
+        "massPending": false,
+        "sensorMassFallback": false
+      }
+    },
+    {
+      "name": "destroyShape",
+      "args": [
+        {
+          "low": 1,
+          "high": 1
+        }
+      ],
+      "returned": true,
+      "result": null
+    },
+    {
+      "name": "bodyState",
+      "args": [
+        {
+          "id": 65536
+        },
+        {
+          "low": 1,
+          "high": 1
+        }
+      ],
+      "returned": true,
+      "result": {
+        "type": 2,
+        "enabled": true,
+        "awake": true,
+        "sleeping": false,
+        "sleepy": false,
+        "sleepEnabled": true,
+        "ccd": false,
+        "sleepTime": 0,
+        "sleepVelocity": 0,
+        "sleepThreshold": 0.10000000149011612,
+        "linearDamping": 0.10000000149011612,
+        "angularDamping": 0.10000000149011612,
+        "gravityScale": 1,
+        "linearVelocity": [
+          0,
+          0,
+          0
+        ],
+        "angularVelocity": [
+          0,
+          0,
+          0
+        ],
+        "force": [
+          0,
+          0,
+          0
+        ],
+        "torque": [
+          0,
+          0,
+          0
+        ],
+        "linearFactor": [
+          1,
+          1,
+          1
+        ],
+        "angularFactor": [
+          1,
+          1,
+          1
+        ],
+        "mass": 0,
+        "localCenter": [
+          0,
+          0,
+          0
+        ],
+        "inertia": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "worldCenter": [
+          0,
+          10,
+          0
+        ],
+        "requestedMass": 1,
+        "massPending": true,
+        "sensorMassFallback": false
+      }
+    },
+    {
+      "name": "setBodyEnabled",
+      "args": [
+        {
+          "id": 65536
+        },
+        {
+          "low": 1,
+          "high": 1
+        },
+        false
+      ],
+      "returned": true,
+      "result": {
+        "type": 2,
+        "enabled": false,
+        "awake": false,
+        "sleeping": false,
+        "sleepy": false,
+        "sleepEnabled": true,
+        "ccd": false,
+        "sleepTime": 0,
+        "sleepVelocity": 0,
+        "sleepThreshold": 0.10000000149011612,
+        "linearDamping": 0.10000000149011612,
+        "angularDamping": 0.10000000149011612,
+        "gravityScale": 1,
+        "linearVelocity": [
+          0,
+          0,
+          0
+        ],
+        "angularVelocity": [
+          0,
+          0,
+          0
+        ],
+        "force": [
+          0,
+          0,
+          0
+        ],
+        "torque": [
+          0,
+          0,
+          0
+        ],
+        "linearFactor": [
+          1,
+          1,
+          1
+        ],
+        "angularFactor": [
+          1,
+          1,
+          1
+        ],
+        "mass": 0,
+        "localCenter": [
+          0,
+          0,
+          0
+        ],
+        "inertia": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "worldCenter": [
+          0,
+          10,
+          0
+        ],
+        "requestedMass": 1,
+        "massPending": true,
+        "sensorMassFallback": false
+      }
+    },
+    {
+      "name": "bodyState",
+      "args": [
+        {
+          "id": 65536
+        },
+        {
+          "low": 1,
+          "high": 2
+        }
+      ],
+      "returned": true,
+      "result": {
+        "type": 2,
+        "enabled": true,
+        "awake": true,
+        "sleeping": false,
+        "sleepy": false,
+        "sleepEnabled": true,
+        "ccd": false,
+        "sleepTime": 0,
+        "sleepVelocity": 0,
+        "sleepThreshold": 0.10000000149011612,
+        "linearDamping": 0.10000000149011612,
+        "angularDamping": 0.10000000149011612,
+        "gravityScale": 1,
+        "linearVelocity": [
+          0,
+          0,
+          0
+        ],
+        "angularVelocity": [
+          0,
+          0,
+          0
+        ],
+        "force": [
+          0,
+          0,
+          0
+        ],
+        "torque": [
+          0,
+          0,
+          0
+        ],
+        "linearFactor": [
+          1,
+          1,
+          1
+        ],
+        "angularFactor": [
+          1,
+          1,
+          1
+        ],
+        "mass": 1,
+        "localCenter": [
+          0,
+          0,
+          0
+        ],
+        "inertia": [
+          0.1666666716337204,
+          0,
+          0,
+          0,
+          0.1666666716337204,
+          0,
+          0,
+          0,
+          0.1666666716337204
+        ],
+        "worldCenter": [
+          4,
+          10,
+          0
+        ],
+        "requestedMass": 1,
+        "massPending": false,
+        "sensorMassFallback": false
+      }
+    },
+    {
+      "name": "destroyShape",
+      "args": [
+        {
+          "low": 1,
+          "high": 2
+        }
+      ],
+      "returned": true,
+      "result": null
+    },
+    {
+      "name": "bodyState",
+      "args": [
+        {
+          "id": 65536
+        },
+        {
+          "low": 1,
+          "high": 2
+        }
+      ],
+      "returned": true,
+      "result": {
+        "type": 2,
+        "enabled": true,
+        "awake": true,
+        "sleeping": false,
+        "sleepy": false,
+        "sleepEnabled": true,
+        "ccd": false,
+        "sleepTime": 0,
+        "sleepVelocity": 0,
+        "sleepThreshold": 0.10000000149011612,
+        "linearDamping": 0.10000000149011612,
+        "angularDamping": 0.10000000149011612,
+        "gravityScale": 1,
+        "linearVelocity": [
+          0,
+          0,
+          0
+        ],
+        "angularVelocity": [
+          0,
+          0,
+          0
+        ],
+        "force": [
+          0,
+          0,
+          0
+        ],
+        "torque": [
+          0,
+          0,
+          0
+        ],
+        "linearFactor": [
+          1,
+          1,
+          1
+        ],
+        "angularFactor": [
+          1,
+          1,
+          1
+        ],
+        "mass": 0,
+        "localCenter": [
+          0,
+          0,
+          0
+        ],
+        "inertia": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "worldCenter": [
+          4,
+          10,
+          0
+        ],
+        "requestedMass": 1,
+        "massPending": true,
+        "sensorMassFallback": false
+      }
+    },
+    {
+      "name": "setBodyEnabled",
+      "args": [
+        {
+          "id": 65536
+        },
+        {
+          "low": 1,
+          "high": 2
+        },
+        false
+      ],
+      "returned": true,
+      "result": {
+        "type": 2,
+        "enabled": false,
+        "awake": false,
+        "sleeping": false,
+        "sleepy": false,
+        "sleepEnabled": true,
+        "ccd": false,
+        "sleepTime": 0,
+        "sleepVelocity": 0,
+        "sleepThreshold": 0.10000000149011612,
+        "linearDamping": 0.10000000149011612,
+        "angularDamping": 0.10000000149011612,
+        "gravityScale": 1,
+        "linearVelocity": [
+          0,
+          0,
+          0
+        ],
+        "angularVelocity": [
+          0,
+          0,
+          0
+        ],
+        "force": [
+          0,
+          0,
+          0
+        ],
+        "torque": [
+          0,
+          0,
+          0
+        ],
+        "linearFactor": [
+          1,
+          1,
+          1
+        ],
+        "angularFactor": [
+          1,
+          1,
+          1
+        ],
+        "mass": 0,
+        "localCenter": [
+          0,
+          0,
+          0
+        ],
+        "inertia": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "worldCenter": [
+          4,
+          10,
+          0
+        ],
+        "requestedMass": 1,
+        "massPending": true,
+        "sensorMassFallback": false
+      }
+    },
+    {
+      "name": "setBodyType",
+      "args": [
+        {
+          "id": 65536
+        },
+        {
+          "low": 1,
+          "high": 1
+        },
+        0
+      ],
+      "returned": true,
+      "result": {
+        "type": 0,
+        "enabled": false,
+        "awake": false,
+        "sleeping": false,
+        "sleepy": false,
+        "sleepEnabled": true,
+        "ccd": false,
+        "sleepTime": 0,
+        "sleepVelocity": 0,
+        "sleepThreshold": 0.10000000149011612,
+        "linearDamping": 0.10000000149011612,
+        "angularDamping": 0.10000000149011612,
+        "gravityScale": 1,
+        "linearVelocity": [
+          0,
+          0,
+          0
+        ],
+        "angularVelocity": [
+          0,
+          0,
+          0
+        ],
+        "force": [
+          0,
+          0,
+          0
+        ],
+        "torque": [
+          0,
+          0,
+          0
+        ],
+        "linearFactor": [
+          1,
+          1,
+          1
+        ],
+        "angularFactor": [
+          1,
+          1,
+          1
+        ],
+        "mass": 0,
+        "localCenter": [
+          0,
+          0,
+          0
+        ],
+        "inertia": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "worldCenter": [
+          0,
+          10,
+          0
+        ],
+        "requestedMass": 1,
+        "massPending": true,
+        "sensorMassFallback": false
+      }
+    },
+    {
+      "name": "bodyState",
+      "args": [
+        {
+          "id": 65536
+        },
+        {
+          "low": 1,
+          "high": 1
+        }
+      ],
+      "returned": true,
+      "result": {
+        "type": 0,
+        "enabled": false,
+        "awake": false,
+        "sleeping": false,
+        "sleepy": false,
+        "sleepEnabled": true,
+        "ccd": false,
+        "sleepTime": 0,
+        "sleepVelocity": 0,
+        "sleepThreshold": 0.10000000149011612,
+        "linearDamping": 0.10000000149011612,
+        "angularDamping": 0.10000000149011612,
+        "gravityScale": 1,
+        "linearVelocity": [
+          0,
+          0,
+          0
+        ],
+        "angularVelocity": [
+          0,
+          0,
+          0
+        ],
+        "force": [
+          0,
+          0,
+          0
+        ],
+        "torque": [
+          0,
+          0,
+          0
+        ],
+        "linearFactor": [
+          1,
+          1,
+          1
+        ],
+        "angularFactor": [
+          1,
+          1,
+          1
+        ],
+        "mass": 0,
+        "localCenter": [
+          0,
+          0,
+          0
+        ],
+        "inertia": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "worldCenter": [
+          0,
+          10,
+          0
+        ],
+        "requestedMass": 1,
+        "massPending": true,
+        "sensorMassFallback": false
+      }
+    },
+    {
+      "name": "destroyBody",
+      "args": [
+        {
+          "low": 1,
+          "high": 1
+        }
+      ],
+      "returned": true,
+      "result": null
+    },
+    {
+      "name": "setBodyType",
+      "args": [
+        {
+          "id": 65536
+        },
+        {
+          "low": 1,
+          "high": 2
+        },
+        0
+      ],
+      "returned": true,
+      "result": {
+        "type": 0,
+        "enabled": false,
+        "awake": false,
+        "sleeping": false,
+        "sleepy": false,
+        "sleepEnabled": true,
+        "ccd": false,
+        "sleepTime": 0,
+        "sleepVelocity": 0,
+        "sleepThreshold": 0.10000000149011612,
+        "linearDamping": 0.10000000149011612,
+        "angularDamping": 0.10000000149011612,
+        "gravityScale": 1,
+        "linearVelocity": [
+          0,
+          0,
+          0
+        ],
+        "angularVelocity": [
+          0,
+          0,
+          0
+        ],
+        "force": [
+          0,
+          0,
+          0
+        ],
+        "torque": [
+          0,
+          0,
+          0
+        ],
+        "linearFactor": [
+          1,
+          1,
+          1
+        ],
+        "angularFactor": [
+          1,
+          1,
+          1
+        ],
+        "mass": 0,
+        "localCenter": [
+          0,
+          0,
+          0
+        ],
+        "inertia": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "worldCenter": [
+          4,
+          10,
+          0
+        ],
+        "requestedMass": 1,
+        "massPending": true,
+        "sensorMassFallback": false
+      }
+    },
+    {
+      "name": "bodyState",
+      "args": [
+        {
+          "id": 65536
+        },
+        {
+          "low": 1,
+          "high": 2
+        }
+      ],
+      "returned": true,
+      "result": {
+        "type": 0,
+        "enabled": false,
+        "awake": false,
+        "sleeping": false,
+        "sleepy": false,
+        "sleepEnabled": true,
+        "ccd": false,
+        "sleepTime": 0,
+        "sleepVelocity": 0,
+        "sleepThreshold": 0.10000000149011612,
+        "linearDamping": 0.10000000149011612,
+        "angularDamping": 0.10000000149011612,
+        "gravityScale": 1,
+        "linearVelocity": [
+          0,
+          0,
+          0
+        ],
+        "angularVelocity": [
+          0,
+          0,
+          0
+        ],
+        "force": [
+          0,
+          0,
+          0
+        ],
+        "torque": [
+          0,
+          0,
+          0
+        ],
+        "linearFactor": [
+          1,
+          1,
+          1
+        ],
+        "angularFactor": [
+          1,
+          1,
+          1
+        ],
+        "mass": 0,
+        "localCenter": [
+          0,
+          0,
+          0
+        ],
+        "inertia": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "worldCenter": [
+          4,
+          10,
+          0
+        ],
+        "requestedMass": 1,
+        "massPending": true,
+        "sensorMassFallback": false
+      }
+    },
+    {
+      "name": "destroyBody",
+      "args": [
+        {
+          "low": 1,
+          "high": 2
+        }
+      ],
+      "returned": true,
+      "result": null
+    },
+    {
+      "name": "destroyWorld",
+      "args": [
+        {
+          "id": 65536
+        }
+      ],
+      "returned": true,
+      "result": null
+    },
+    {
+      "name": "dispose",
+      "args": [],
+      "returned": true,
+      "result": null
+    }
+  ],
+  "checkpoints": [
+    {
+      "name": "source-contract-verdict-before-close",
+      "data": {
+        "expected": "invalid-negative",
+        "checks": [
+          {
+            "id": "two actual active native shapes share exact asset identity",
+            "pass": true,
+            "actual": {
+              "shapes": 2,
+              "materials": [
+                {
+                  "friction": 0.30000001192092896,
+                  "restitution": 0
+                },
+                {
+                  "friction": 0.30000001192092896,
+                  "restitution": 0
+                }
+              ]
+            }
+          },
+          {
+            "id": "invalid owned coefficient refused before actual asset cache changes",
+            "pass": true,
+            "actual": {
+              "result": {
+                "threw": true,
+                "message": "RangeError: Unsupported Box3D material coefficients.",
+                "code": null
+              },
+              "before": {
+                "friction": 0.3,
+                "materials": [
+                  {
+                    "friction": 0.30000001192092896,
+                    "restitution": 0
+                  },
+                  {
+                    "friction": 0.30000001192092896,
+                    "restitution": 0
+                  }
+                ],
+                "flags": 0
+              },
+              "actual": 0.3,
+              "native": [
+                {
+                  "friction": 0.30000001192092896,
+                  "restitution": 0
+                },
+                {
+                  "friction": 0.30000001192092896,
+                  "restitution": 0
+                }
+              ],
+              "owner": {
+                "state": "ready",
+                "commandOwner": {
+                  "phase": "idle",
+                  "bodies": 2,
+                  "nativeOwnership": "owned",
+                  "unresolvedNativeBodies": 0,
+                  "components": 4,
+                  "disabledComponents": 0,
+                  "materials": 2,
+                  "activeTemporaryScopes": 0,
+                  "pendingCommands": 0,
+                  "privateMaterialValues": {
+                    "observed": true,
+                    "roster": {
+                      "generation": 1,
+                      "state": "live",
+                      "bindings": 3,
+                      "pending": 0
+                    },
+                    "last": null
+                  },
+                  "systemControl": {
+                    "observed": true,
+                    "paused": false,
+                    "queuePhase": "ready",
+                    "preparedQueueControl": false,
+                    "unresolvedScopes": 0,
+                    "lastChange": {
+                      "operation": "system-auto-simulation",
+                      "cacheEnabled": true,
+                      "cacheAutoSimulation": false,
+                      "queueCommitEntered": false,
+                      "queueCommitReturned": false,
+                      "failed": false,
+                      "actualRead": "copied"
+                    },
+                    "producers": "NOT_INTEGRATED"
+                  },
+                  "stagedCommandsSupported": false,
+                  "unifiedTransactionsSupported": false,
+                  "materialIdentityTracking": "actual-cache-commit",
+                  "materialObserverLeases": 3,
+                  "unresolvedMaterialScopes": 0,
+                  "lastMaterialChange": {
+                    "operation": "collider-material-initialize",
+                    "actualRead": "copied",
+                    "actualMatchesBefore": null,
+                    "actualMatchesCandidate": true,
+                    "effects": [],
+                    "failed": false
+                  },
+                  "cleanup": {
+                    "hasFailure": false,
+                    "cleanupFailures": [],
+                    "omittedFailures": 0
+                  },
+                  "activationBlockers": [
+                    "command-consumer-not-installed",
+                    "shared-material-propagation-and-subscription-integrity",
+                    "immediate-system-pause-notification",
+                    "complete-early-entry-qualification",
+                    "persistent-target-grant-budget"
+                  ]
+                },
+                "ownerCleanupError": null,
+                "failure": {
+                  "hasFailure": false
+                },
+                "teardown": {
+                  "hasFailure": false,
+                  "nativeReturned": false,
+                  "nativeHasFailure": false,
+                  "cleanupHasFailure": false
+                },
+                "writeback": {
+                  "epoch": 0,
+                  "epochLimit": 9007199254740991
+                },
+                "generation": 1,
+                "native": {
+                  "nativeStepIndex": 0,
+                  "nativeCompleted": false,
+                  "snapshotAvailable": false
+                },
+                "nativeObservationCurrent": false,
+                "lastStepOutcome": "not-attempted",
+                "attemptedSteps": 0,
+                "lastDt": null,
+                "solverSubSteps": 4,
+                "gravity": [
+                  0,
+                  -10,
+                  0
+                ],
+                "allowSleep": true,
+                "material": {
+                  "friction": 0.6000000238418579,
+                  "restitution": 0
+                },
+                "materialShapeCount": 2,
+                "sceneBindingCount": 2,
+                "sceneSyncCalls": 0,
+                "afterEventsCalls": 0,
+                "emittedStep": 0,
+                "componentEventsSupported": false,
+                "debugPresented": false,
+                "error": null
+              }
+            }
+          },
+          {
+            "id": "no hidden physics step or unified activation",
+            "pass": true,
+            "actual": {
+              "state": "ready",
+              "commandOwner": {
+                "phase": "idle",
+                "bodies": 2,
+                "nativeOwnership": "owned",
+                "unresolvedNativeBodies": 0,
+                "components": 4,
+                "disabledComponents": 0,
+                "materials": 2,
+                "activeTemporaryScopes": 0,
+                "pendingCommands": 0,
+                "privateMaterialValues": {
+                  "observed": true,
+                  "roster": {
+                    "generation": 1,
+                    "state": "live",
+                    "bindings": 3,
+                    "pending": 0
+                  },
+                  "last": null
+                },
+                "systemControl": {
+                  "observed": true,
+                  "paused": false,
+                  "queuePhase": "ready",
+                  "preparedQueueControl": false,
+                  "unresolvedScopes": 0,
+                  "lastChange": {
+                    "operation": "system-auto-simulation",
+                    "cacheEnabled": true,
+                    "cacheAutoSimulation": false,
+                    "queueCommitEntered": false,
+                    "queueCommitReturned": false,
+                    "failed": false,
+                    "actualRead": "copied"
+                  },
+                  "producers": "NOT_INTEGRATED"
+                },
+                "stagedCommandsSupported": false,
+                "unifiedTransactionsSupported": false,
+                "materialIdentityTracking": "actual-cache-commit",
+                "materialObserverLeases": 3,
+                "unresolvedMaterialScopes": 0,
+                "lastMaterialChange": {
+                  "operation": "collider-material-initialize",
+                  "actualRead": "copied",
+                  "actualMatchesBefore": null,
+                  "actualMatchesCandidate": true,
+                  "effects": [],
+                  "failed": false
+                },
+                "cleanup": {
+                  "hasFailure": false,
+                  "cleanupFailures": [],
+                  "omittedFailures": 0
+                },
+                "activationBlockers": [
+                  "command-consumer-not-installed",
+                  "shared-material-propagation-and-subscription-integrity",
+                  "immediate-system-pause-notification",
+                  "complete-early-entry-qualification",
+                  "persistent-target-grant-budget"
+                ]
+              },
+              "ownerCleanupError": null,
+              "failure": {
+                "hasFailure": false
+              },
+              "teardown": {
+                "hasFailure": false,
+                "nativeReturned": false,
+                "nativeHasFailure": false,
+                "cleanupHasFailure": false
+              },
+              "writeback": {
+                "epoch": 0,
+                "epochLimit": 9007199254740991
+              },
+              "generation": 1,
+              "native": {
+                "nativeStepIndex": 0,
+                "nativeCompleted": false,
+                "snapshotAvailable": false
+              },
+              "nativeObservationCurrent": false,
+              "lastStepOutcome": "not-attempted",
+              "attemptedSteps": 0,
+              "lastDt": null,
+              "solverSubSteps": 4,
+              "gravity": [
+                0,
+                -10,
+                0
+              ],
+              "allowSleep": true,
+              "material": {
+                "friction": 0.6000000238418579,
+                "restitution": 0
+              },
+              "materialShapeCount": 2,
+              "sceneBindingCount": 2,
+              "sceneSyncCalls": 0,
+              "afterEventsCalls": 0,
+              "emittedStep": 0,
+              "componentEventsSupported": false,
+              "debugPresented": false,
+              "error": null
+            }
+          }
+        ]
+      },
+      "at": "2026-10-22T19:33:20.428Z"
+    },
+    {
+      "name": "source-contract-final-verdict",
+      "data": {
+        "expected": "invalid-negative",
+        "checks": [
+          {
+            "id": "two actual active native shapes share exact asset identity",
+            "pass": true,
+            "actual": {
+              "shapes": 2,
+              "materials": [
+                {
+                  "friction": 0.30000001192092896,
+                  "restitution": 0
+                },
+                {
+                  "friction": 0.30000001192092896,
+                  "restitution": 0
+                }
+              ]
+            }
+          },
+          {
+            "id": "invalid owned coefficient refused before actual asset cache changes",
+            "pass": true,
+            "actual": {
+              "result": {
+                "threw": true,
+                "message": "RangeError: Unsupported Box3D material coefficients.",
+                "code": null
+              },
+              "before": {
+                "friction": 0.3,
+                "materials": [
+                  {
+                    "friction": 0.30000001192092896,
+                    "restitution": 0
+                  },
+                  {
+                    "friction": 0.30000001192092896,
+                    "restitution": 0
+                  }
+                ],
+                "flags": 0
+              },
+              "actual": 0.3,
+              "native": [
+                {
+                  "friction": 0.30000001192092896,
+                  "restitution": 0
+                },
+                {
+                  "friction": 0.30000001192092896,
+                  "restitution": 0
+                }
+              ],
+              "owner": {
+                "state": "ready",
+                "commandOwner": {
+                  "phase": "idle",
+                  "bodies": 2,
+                  "nativeOwnership": "owned",
+                  "unresolvedNativeBodies": 0,
+                  "components": 4,
+                  "disabledComponents": 0,
+                  "materials": 2,
+                  "activeTemporaryScopes": 0,
+                  "pendingCommands": 0,
+                  "privateMaterialValues": {
+                    "observed": true,
+                    "roster": {
+                      "generation": 1,
+                      "state": "live",
+                      "bindings": 3,
+                      "pending": 0
+                    },
+                    "last": null
+                  },
+                  "systemControl": {
+                    "observed": true,
+                    "paused": false,
+                    "queuePhase": "ready",
+                    "preparedQueueControl": false,
+                    "unresolvedScopes": 0,
+                    "lastChange": {
+                      "operation": "system-auto-simulation",
+                      "cacheEnabled": true,
+                      "cacheAutoSimulation": false,
+                      "queueCommitEntered": false,
+                      "queueCommitReturned": false,
+                      "failed": false,
+                      "actualRead": "copied"
+                    },
+                    "producers": "NOT_INTEGRATED"
+                  },
+                  "stagedCommandsSupported": false,
+                  "unifiedTransactionsSupported": false,
+                  "materialIdentityTracking": "actual-cache-commit",
+                  "materialObserverLeases": 3,
+                  "unresolvedMaterialScopes": 0,
+                  "lastMaterialChange": {
+                    "operation": "collider-material-initialize",
+                    "actualRead": "copied",
+                    "actualMatchesBefore": null,
+                    "actualMatchesCandidate": true,
+                    "effects": [],
+                    "failed": false
+                  },
+                  "cleanup": {
+                    "hasFailure": false,
+                    "cleanupFailures": [],
+                    "omittedFailures": 0
+                  },
+                  "activationBlockers": [
+                    "command-consumer-not-installed",
+                    "shared-material-propagation-and-subscription-integrity",
+                    "immediate-system-pause-notification",
+                    "complete-early-entry-qualification",
+                    "persistent-target-grant-budget"
+                  ]
+                },
+                "ownerCleanupError": null,
+                "failure": {
+                  "hasFailure": false
+                },
+                "teardown": {
+                  "hasFailure": false,
+                  "nativeReturned": false,
+                  "nativeHasFailure": false,
+                  "cleanupHasFailure": false
+                },
+                "writeback": {
+                  "epoch": 0,
+                  "epochLimit": 9007199254740991
+                },
+                "generation": 1,
+                "native": {
+                  "nativeStepIndex": 0,
+                  "nativeCompleted": false,
+                  "snapshotAvailable": false
+                },
+                "nativeObservationCurrent": false,
+                "lastStepOutcome": "not-attempted",
+                "attemptedSteps": 0,
+                "lastDt": null,
+                "solverSubSteps": 4,
+                "gravity": [
+                  0,
+                  -10,
+                  0
+                ],
+                "allowSleep": true,
+                "material": {
+                  "friction": 0.6000000238418579,
+                  "restitution": 0
+                },
+                "materialShapeCount": 2,
+                "sceneBindingCount": 2,
+                "sceneSyncCalls": 0,
+                "afterEventsCalls": 0,
+                "emittedStep": 0,
+                "componentEventsSupported": false,
+                "debugPresented": false,
+                "error": null
+              }
+            }
+          },
+          {
+            "id": "no hidden physics step or unified activation",
+            "pass": true,
+            "actual": {
+              "state": "ready",
+              "commandOwner": {
+                "phase": "idle",
+                "bodies": 2,
+                "nativeOwnership": "owned",
+                "unresolvedNativeBodies": 0,
+                "components": 4,
+                "disabledComponents": 0,
+                "materials": 2,
+                "activeTemporaryScopes": 0,
+                "pendingCommands": 0,
+                "privateMaterialValues": {
+                  "observed": true,
+                  "roster": {
+                    "generation": 1,
+                    "state": "live",
+                    "bindings": 3,
+                    "pending": 0
+                  },
+                  "last": null
+                },
+                "systemControl": {
+                  "observed": true,
+                  "paused": false,
+                  "queuePhase": "ready",
+                  "preparedQueueControl": false,
+                  "unresolvedScopes": 0,
+                  "lastChange": {
+                    "operation": "system-auto-simulation",
+                    "cacheEnabled": true,
+                    "cacheAutoSimulation": false,
+                    "queueCommitEntered": false,
+                    "queueCommitReturned": false,
+                    "failed": false,
+                    "actualRead": "copied"
+                  },
+                  "producers": "NOT_INTEGRATED"
+                },
+                "stagedCommandsSupported": false,
+                "unifiedTransactionsSupported": false,
+                "materialIdentityTracking": "actual-cache-commit",
+                "materialObserverLeases": 3,
+                "unresolvedMaterialScopes": 0,
+                "lastMaterialChange": {
+                  "operation": "collider-material-initialize",
+                  "actualRead": "copied",
+                  "actualMatchesBefore": null,
+                  "actualMatchesCandidate": true,
+                  "effects": [],
+                  "failed": false
+                },
+                "cleanup": {
+                  "hasFailure": false,
+                  "cleanupFailures": [],
+                  "omittedFailures": 0
+                },
+                "activationBlockers": [
+                  "command-consumer-not-installed",
+                  "shared-material-propagation-and-subscription-integrity",
+                  "immediate-system-pause-notification",
+                  "complete-early-entry-qualification",
+                  "persistent-target-grant-budget"
+                ]
+              },
+              "ownerCleanupError": null,
+              "failure": {
+                "hasFailure": false
+              },
+              "teardown": {
+                "hasFailure": false,
+                "nativeReturned": false,
+                "nativeHasFailure": false,
+                "cleanupHasFailure": false
+              },
+              "writeback": {
+                "epoch": 0,
+                "epochLimit": 9007199254740991
+              },
+              "generation": 1,
+              "native": {
+                "nativeStepIndex": 0,
+                "nativeCompleted": false,
+                "snapshotAvailable": false
+              },
+              "nativeObservationCurrent": false,
+              "lastStepOutcome": "not-attempted",
+              "attemptedSteps": 0,
+              "lastDt": null,
+              "solverSubSteps": 4,
+              "gravity": [
+                0,
+                -10,
+                0
+              ],
+              "allowSleep": true,
+              "material": {
+                "friction": 0.6000000238418579,
+                "restitution": 0
+              },
+              "materialShapeCount": 2,
+              "sceneBindingCount": 2,
+              "sceneSyncCalls": 0,
+              "afterEventsCalls": 0,
+              "emittedStep": 0,
+              "componentEventsSupported": false,
+              "debugPresented": false,
+              "error": null
+            }
+          },
+          {
+            "id": "actual App close releases native preparation",
+            "pass": true,
+            "actual": {
+              "status": "released",
+              "scene": "Node.484",
+              "completed": [],
+              "pending": [],
+              "failures": [],
+              "retained": [
+                "runtime",
+                "scheduler",
+                "builtin-resources",
+                "shared-asset-caches"
+              ],
+              "measurements": {
+                "gpuMemory": "unavailable",
+                "reason": "WebGL provides no portable complete GPU allocation measurement; scene destruction is not proof of zero leaks."
+              },
+              "physicsPreparation": {
+                "attemptGeneration": 1,
+                "status": "closed",
+                "acquired": [
+                  {
+                    "backend": "box3d",
+                    "resource": "module",
+                    "cleanup": "released",
+                    "retained": []
+                  },
+                  {
+                    "backend": "box3d",
+                    "resource": "world",
+                    "cleanup": "released",
+                    "retained": []
+                  }
+                ],
+                "originalError": null,
+                "cleanupErrors": []
+              }
+            }
+          },
+          {
+            "id": "actual core and bridge allocations reach zero",
+            "pass": true,
+            "actual": {
+              "coreBytes": "0",
+              "bridge": {
+                "liveBytes": "0",
+                "liveAllocations": 0,
+                "shapeHandles": 0,
+                "primitiveCapacity": 0,
+                "capturedPrimitives": 0
+              }
+            }
+          }
+        ],
+        "close": {
+          "status": "released",
+          "scene": "Node.484",
+          "completed": [],
+          "pending": [],
+          "failures": [],
+          "retained": [
+            "runtime",
+            "scheduler",
+            "builtin-resources",
+            "shared-asset-caches"
+          ],
+          "measurements": {
+            "gpuMemory": "unavailable",
+            "reason": "WebGL provides no portable complete GPU allocation measurement; scene destruction is not proof of zero leaks."
+          },
+          "physicsPreparation": {
+            "attemptGeneration": 1,
+            "status": "closed",
+            "acquired": [
+              {
+                "backend": "box3d",
+                "resource": "module",
+                "cleanup": "released",
+                "retained": []
+              },
+              {
+                "backend": "box3d",
+                "resource": "world",
+                "cleanup": "released",
+                "retained": []
+              }
+            ],
+            "originalError": null,
+            "cleanupErrors": []
+          }
+        }
+      },
+      "at": "2026-10-22T19:33:20.455Z"
+    }
+  ],
+  "observationErrors": [],
+  "moduleCreated": true,
+  "moduleHeapBytes": 17301504,
+  "initialCoreBytes": "0",
+  "initialBridge": {
+    "liveBytes": "0",
+    "liveAllocations": 0,
+    "shapeHandles": 0,
+    "primitiveCapacity": 0,
+    "capturedPrimitives": 0
+  },
+  "beforeBindingDispose": {
+    "coreBytes": "0",
+    "bridge": {
+      "liveBytes": "0",
+      "liveAllocations": 0,
+      "shapeHandles": 0,
+      "primitiveCapacity": 0,
+      "capturedPrimitives": 0
+    }
+  },
+  "loaderAfter": {
+    "generation": 1,
+    "status": "DISPOSED",
+    "requests": [
+      "manifest.json",
+      "box3d-st.wasm",
+      "box3d-st.mjs"
+    ],
+    "acquired": [
+      "module-reference",
+      "binding"
+    ],
+    "cleanup": [
+      {
+        "resource": "binding",
+        "attempted": true
+      },
+      {
+        "resource": "module-reference",
+        "attempted": true
+      }
+    ],
+    "cleanupErrors": [],
+    "originalError": null
+  },
+  "sourceHashesAfter": {
+    "docs/physics/box3d/contracts/motion-command-decisions-v1.md": "30951da3f296ac17acac9ff594c91ee96db62d5b3a3a1bdaf1ec0feb8f2f7a6a",
+    "docs/physics/box3d/contracts/shared-material-values-decisions-v1.md": "740e84c57a224c622b2d354aef06a5813004f292707d76ca6cdf31bf39089b3e",
+    "docs/physics/box3d/contracts/unified-command-decisions-v1.md": "56303d162e12346729c66461c1fa9976e69c941fb549804c7a110d1887c695d6",
+    "docs/physics/box3d/contracts/unified-command-wire-v1.md": "f88641a6e924ae3de4f4fe1d1cba20a1d8b82ac01bea28c221e1a6bf7d5079b9",
+    "docs/physics/box3d/rebuild/writeback-epoch-contract-20261022.md": "02f0796f637fecd98e64f176852c885340ff4b0647e9b297b65dfda095bda62d",
+    "jest.config.js": "fd5a10574248f364fd15779d6ffe38068f588f1a49508cc511cdc370aac1cceb",
+    "package-lock.json": "69d2f4480314c9a4630a72ff608d1b83fbf7d10a9d2ed8e3b3dc8590e5ff2e47",
+    "src/air/app-config.ts": "079c87bc289e3bb28447bf7f0932f344644b8f28d67aa3cbe0268f2d6fbff157",
+    "src/air/app.ts": "8d97bf3248b14bac0d02604a282a5d117ef968b63ea956073719f4a5b00d2953",
+    "src/air/bootstrap.ts": "6e57640ff7c193e7578c29ee15514272e083f9743d93b22bbbb908f096162fc5",
+    "src/air/physics-backend.ts": "df1aba9a9f1025f796b2622b7a9c61febd88d937685f6770795b5e3dab5037c7",
+    "src/air/physics/box3d/binding/facade.d.mts": "788057c4dd78a3ad6d6b33d846f223386f27dd393c71ee53a0245cb7414459dc",
+    "src/air/physics/box3d/binding/facade.mjs": "40cce3a920e67afedec5d7bbf69aae826ad08d31b51243f5e699033dd59eb899",
+    "src/air/physics/box3d/box-sphere-geometry.ts": "d492ee746f95ecb93466cbd1e96054280003e501e36408c6d7d65508fd1107c5",
+    "src/air/physics/box3d/box-sphere-shape.ts": "22e5a5239aca00f6d192e753fe423cbc1555483adcab3b075601179492a8a0e2",
+    "src/air/physics/box3d/command-producers.ts": "754924a29fa5c8711f831f729a1d005a12e4d9de83fcb5746c6ae7e1e2464991",
+    "src/air/physics/box3d/command-queue.ts": "5bd06702d08968c9545aeeafe00c074a2e50daca68a9bee148d11d09de342892",
+    "src/air/physics/box3d/config.ts": "19ff83570f24fd2e24eb7dc6753cabe5efa25225973722d7d8c3001f704ec949",
+    "src/air/physics/box3d/debug.ts": "57bde545085811199ff317568a1baad7b63c16665279291931fef004fd7ab980",
+    "src/air/physics/box3d/loader/st-loader.d.mts": "f010a42c2e990167ebb0d83b10812e60fd4a3cda4f2481026a1f1bde9fff86c2",
+    "src/air/physics/box3d/loader/st-loader.mjs": "56d5b5053777c0e7f16cee4fe12c21932f74c6ada0025f5a1bbfb5178ee531a7",
+    "src/air/physics/box3d/node-motion-guard.ts": "ebd64a30eea7dcd7652ae8ca871bd4bea570fb2beaac21ec05b269eed7415ca4",
+    "src/air/physics/box3d/prepare.ts": "9c33571077808920ccd17a9875ee02499b9d6a9dfada82a0f94472ead5e17dcc",
+    "src/air/physics/box3d/registration.ts": "6e681518fcaf2f65bc95cbf60488dfebc9038d6bc58526554d3e0ffa928a3f43",
+    "src/air/physics/box3d/rigid-body.ts": "b3fa18706e05c0a44b32bd696bdefabe432a28b267192436eff804b053d96fb5",
+    "src/air/physics/box3d/shared-body.ts": "8638e41fd4d5380ee7f972d46fed8e25ed017e5ceb9242cdd95e5d15a0f7eee7",
+    "src/air/physics/box3d/unsupported.ts": "507a760922ece07e3f5df3f0053fd69b15f2e52637e542b4cb4a6973c87695e8",
+    "src/air/physics/box3d/world-binding.ts": "aece3008837da8b55c77b969b2374c6a542b5debfa7cbffe5a8b2b41ffb78de0",
+    "src/air/physics/box3d/world-command-owner.ts": "ed0297c4faabb20544d31660bc8d29527734f5cf448eb33627c15cb4e3ee11b4",
+    "src/air/physics/box3d/world-writeback.ts": "9463203d068f7f9c9058777fa8491f74b9ac7ea32feaa5f5decab12261579ab6",
+    "src/air/physics/box3d/world.ts": "4fc3cb5c927aab15a2aa0488118843d95ee7cdf971ddd28b013f503659bddf44",
+    "src/air/physics/preparation.ts": "5f7ba137880c7a77b0990a4c27b52cde9d826164dcf116c43f9112ce96dcac60",
+    "src/cocos/core/data/mutation-guard.ts": "93758e4b5a90ff90e5cabc7d3b0b5fd71069e955d4bf64517bec27d1957774a0",
+    "src/cocos/core/data/object.ts": "0caf7f9c37bd59148b60d7ad465426428006c989b32c03632a3d1eae63fc5fb6",
+    "src/cocos/core/event/callbacks-invoker.ts": "544780e361767d5ae79d2c20a973651b544ceee6b7bd90e6ebe876185774918a",
+    "src/cocos/core/event/eventify.ts": "ad59c9f8dc67f40db877b2160989b792e488b256903d6fdccaf2c7433728c7e9",
+    "src/cocos/core/math/mat4.ts": "ce41535a34d9d1a4d0e6eb4558066d426965eda52379a99ea427785df1a70568",
+    "src/cocos/core/math/quat.ts": "57fd2bab3cf9336404fea2f8ae93a76d944d328b27708280049ee44d35878f6c",
+    "src/cocos/core/math/vec3.ts": "fa315c0f3f332d0c4a46136ff6e89394eed78ecf466672414e40bbde6803c87f",
+    "src/cocos/game/director.ts": "7b1be62cd9e84e926d1744ccc5d467a63e115f689f888a720df44511f51aa224",
+    "src/cocos/physics/framework/assets/physics-material.ts": "47a2e4d244bab6933f8d0a65a2fdc6978a5764e8081df4b21d0b97aac83872da",
+    "src/cocos/physics/framework/components/colliders/box-collider.ts": "c984e32378d1424b57164c4d5c51f7cfd4b96ef837f598e05690caa48fc9b9cb",
+    "src/cocos/physics/framework/components/colliders/collider.ts": "53a0d357c2483e64bf2015c54911099e0d08cdbf68bdeeddc5ad5a469deea718",
+    "src/cocos/physics/framework/components/colliders/sphere-collider.ts": "581d112c7ef6faa66b21636345e6de03a929ff69417ad8c6be61fc3078ac342d",
+    "src/cocos/physics/framework/components/rigid-body.ts": "9958f2f5df91f68bc3c4faf7803273561503762147ad791cac84802c54b783f3",
+    "src/cocos/physics/framework/physics-material-transaction.ts": "e5fd0efdac79228970560a0bca6c9dde31e5436a69d9b499cb02867f27c8ab8c",
+    "src/cocos/physics/framework/physics-material-values-transaction.ts": "06ac7eada947bc565868f9dffa0eda6e68dfeee337a34fb4912d890f7f7e2682",
+    "src/cocos/physics/framework/physics-material-values.ts": "435b47e6faaa861c1d584fcc3603a64735052daa2595cf3da12e3fa602305b66",
+    "src/cocos/physics/framework/physics-selector.ts": "121956af3ad15be76e7b75ac879adaff666f67e8a3d10327b3302b9fe4efc50c",
+    "src/cocos/physics/framework/physics-state-observer.ts": "4cf40c4f1be0d407a402e95dcdb7a898b1942cb175f869f6367a41b18c2d1d2b",
+    "src/cocos/physics/framework/physics-system-control.ts": "59ab174ab3d18840992e3e211f399a2715cab8f0a8ffdf8b0aa3ee2a1fedfb4d",
+    "src/cocos/physics/framework/physics-system.ts": "3726b321e4936d4a991ee2bfb027b61344781164ff1e42510f9f311da27dee63",
+    "src/cocos/render-scene/index.ts": "7a06524337ccd129a6b3978646756bdd38ee6ae65360006c2132506bba4ad8ee",
+    "src/cocos/scene-graph/component.ts": "3abf7f30ed88ca45105cb8241d7b8046f5c79125a490eb4345d4c2f9dca11078",
+    "src/cocos/scene-graph/node-activator.ts": "7078e8e278b5aec690ddcf30f5f2dbf7d5c4b7e2d13ce309ccb083a5e48055b0",
+    "src/cocos/scene-graph/node-transform-validation.ts": "f849e7bc3d56407ae91ccd935a1be51c6bbedd83489bf4d74430e586760fc0f9",
+    "src/cocos/scene-graph/node.ts": "aab602a53f087718fd90e341de0d37fa83ec0f2e6214ded428b4f643c394d67b",
+    "src/cocos/scene-graph/scene.ts": "0f378e89fcfc926c7740d110f97f5ae07752a72ab5d6dd8039148654baaa85a0",
+    "src/exports/base.ts": "b060d82e23c1cbcc1e92c62a4f283fce9fde636e0b61224049293b02734809f4",
+    "test/setup-dom.js": "6a2f11fb94ebcad2ce48c4b53a6044bfaa682fdd9f232345cc6d25b7b0f5fcd5",
+    "test/setup-engine.js": "1c9bbf584722c35f63df80c0be298e05a03361d3e8c639eab0fb6591b88091bf",
+    "test/stubs/internal-constants.ts": "7fa0b813c55407fa225315d02f4f3924bf11473b936c3a93d8f2ee3548a94da1",
+    "test/tsconfig.jest.json": "c20bb09b5489515b8e2e011777fa8bea5725c16e48002bc6968761bbee49e654",
+    "tools/physics/box3d/CMakeLists.txt": "8cb528cc936ca85f69e31ff051077813aff0084e7ebdeb0caa65b484deb20c21",
+    "tools/physics/box3d/abi-schema.json": "e6329dce9b3e6fce69cfd5da318f1f708b95b7af834edb667de8306f9cae0a5d",
+    "tools/physics/box3d/build.mjs": "1fc3085e131d9f795b2bd99e86ea38fa51e241d0ab80c82081268a7c01bdd759",
+    "tools/physics/box3d/command-source-controls.mjs": "7d74868e016bf48eac6170e2221f590e3643c6e04d4ca857cfccbac89f6d18bc",
+    "tools/physics/box3d/exports.json": "b6dbf75e39a62d9d79e65b7db89664ef4f8f8fb4905916b63df06d2316a21f92",
+    "tools/physics/box3d/motion-source-controls.mjs": "31bb0a993107b8f6b073cc1878cad27216a22b3f65e3bdac4746742c1777b3ac",
+    "tools/physics/box3d/native/air_box3d.c": "28e6e26ff7d3dc3db3fa7a257510f96da90e04e1b677e8a84da23f0c3d145468",
+    "tools/physics/box3d/native/air_box3d.h": "7fdfe74a50f27bb4d3aa3cf2ada7a5684eeedfe2200d9cea2b4f3b31ded2208c",
+    "tools/physics/box3d/native/body_contract.c": "d195a33d84834caf857757ed6ce450ac9865e4fafdac2ea4f10d8661da4f4656",
+    "tools/physics/box3d/native/body_control.c": "9115c6e3fb89654042858e31819784c25c8e1ac3d09d3d7b7ad22f50789df0e9",
+    "tools/physics/box3d/native/body_control.h": "d7a8ee9db19b875d079a2bcbbba3be6e46519f1df39bd1d01cdc0aa7894df9e8",
+    "tools/physics/box3d/native/command_bridge.c": "c91a3d4be10fa85fc2c50c0bba721e4e675b1e560cc8488f57f4e7396dc09bd7",
+    "tools/physics/box3d/native/command_bridge.h": "51b5dbc6c437c593172b2bcf055de242998c001ce14900d9819005e5d53b4ee0",
+    "tools/physics/box3d/native/command_contract.c": "7ff53423ed00b51cc31c809450f41593bc4cfc419bdbeee9578837701977cac3",
+    "tools/physics/box3d/native/contract.c": "873862b60b2bc22080e0055f4204afeaf32ac27273b09e268d8920433d94402d",
+    "tools/physics/box3d/native/filter_bridge.c": "ef5e76fa2a9e3e2bb57738b943e8bd9fb185812fb5c0df04b49fc445459688cd",
+    "tools/physics/box3d/native/filter_bridge.h": "7b93839f91a4e828971d2a02e0d11393f5b7b944b3335cdb1d5a3fe3553d1e84",
+    "tools/physics/box3d/native/filter_contract.c": "a557412e0f868498ce4a8d63444bfb241e7644a9d459160b1e2242e9e2fa29e2",
+    "tools/physics/box3d/native/geometry.c": "0dcb3f74fa2ee34fba5f716735cba2d83f07175db55d3e344d88e6fa55ab3825",
+    "tools/physics/box3d/native/geometry_contract.c": "cb82c55602526b33f0125c2a0aa9e1a5c27d942e01c2bb9bcffa919f9c95885f",
+    "tools/physics/box3d/native/motion_bridge.c": "142ac35fde560a7b6f748b7eecc67b3eb99c5edefb7200c4ecef64e6d60e8573",
+    "tools/physics/box3d/native/motion_bridge.h": "67c486efc11775f2743992625efb15ce1ed0fe3c1fac79c8c0a82045b57de8ca",
+    "tools/physics/box3d/native/motion_contract.c": "30d1ca6ed0e1f8b1c47b0b1c2c2ce4cd89cdd6be68efad5037c926d7a849e046",
+    "tools/physics/box3d/native/snapshot.c": "46d9ad1d6fdbe445b33d969e7fe725641ac7eb36767efcefac8e1576df24ea18",
+    "tools/physics/box3d/native/wasm_entry.c": "9b1857c34808b0e3be4726c9df515999c1714583771813c89190d53a364e7c9f",
+    "tools/physics/box3d/native/world_bridge.c": "1331b2881410625dd5d6ec941ffc720005eaca6770cb7a76960c1e06586eeac7",
+    "tools/physics/box3d/native/world_bridge.h": "8cb7bf91011b5bd24f67dfa9833f08444addb1c92d3a952901e84165d6af34d0",
+    "tools/physics/box3d/native/world_contract.c": "9a2067c7941a06cde240cce7a4c849a4e4271bb9f4aa767ce58744c33773577f",
+    "tools/physics/box3d/patch-intake.mjs": "039430725aa59d74abbb9ae32b720c345d7d07297227e31ee95e76851239d7dc",
+    "tools/physics/box3d/patches/contact-geometry-epoch.patch": "4ca29eed58cd20d4134bf55bb9b9ec25fbb322b731d0a319ad2567225463d094",
+    "tools/physics/box3d/patches/lock.json": "d6be04611f70223e21b1bcffc635088f49a5647739e97c2f9ce089091748ea77",
+    "tools/physics/box3d/patches/sse2-loadv-alignment.patch": "e5c4e5f2ae7f015cf62dfc2de5a36af73cc15d9b0ca0118fc0259c7d1f0b1403",
+    "tools/physics/box3d/verify-sources.mjs": "f18ad0dc623b6b83b8a46a2abbf34a29e0400d127a85f3fc16b966493b97e171",
+    "tools/physics/box3d/verify-wasm.mjs": "de4dd1b4e2ae32ceb5fddc0e8fbcb0159fdd29378cf7eed33c57e3852113af6e",
+    "tools/physics/box3d/versions.lock.json": "dc6cefaf533363bea1d80835807d758332e2a65b6633ac3b9edfb2fc3ff29656",
+    "tools/physics/box3d/wasm-body-contract.mjs": "5be306a66497feeedadd02ead703247b56822b3964828f1a23165d06f0b0d9af",
+    "tools/physics/box3d/wasm-command-contract.mjs": "878403967d14ba19ba09ebe222f5c3e59d0c8b6021cc9fb14c650feff2608a7c",
+    "tools/physics/box3d/wasm-contract.mjs": "4850c9ee10ce491029f209bb499e040f7a569d01991a8797d85649333877ee71",
+    "tools/physics/box3d/wasm-filter-contract.mjs": "ab79a3a0a6a8677b250b072a6611267896419c1b06839608e58ab9747065937a",
+    "tools/physics/box3d/wasm-geometry-contract.mjs": "4ce3094d9919f3bc01bbd2eadc7f0811ca75a6e5e2b063de7db77955187f9348",
+    "tools/physics/box3d/wasm-motion-contract.mjs": "e058daf79278bbaa7d31545db743851cade1dca4fc9833953d17b3216366c814",
+    "tools/physics/box3d/wasm-ownership-contract.mjs": "626d09f222ef564483b0781e2d377e326d625cf3202ded40ff4e1b48149b361d",
+    "tools/physics/box3d/wasm-snapshot-contract.mjs": "c704afa56d36fec985d245c67ed4f9e6ec79f93b2603d439c33c833e104bf142",
+    "tools/physics/box3d/wasm-world-contract.mjs": "b9273441def669c3150bc92081f51afdafe496fc00199a913d61b65f788a656c",
+    "tools/verify/box3d/owner-shared-material-real-wasm-environment.cjs": "5361685b74437380919cb882d213ba9c96954c2fa6172a81e12f873c9357d52a",
+    "tools/verify/box3d/owner-shared-material-real-wasm-inputs.cjs": "74cd78eb6191ca16fa6f4eb74cf27e348f1bc69af324b5ec521f9e6b0738cd7a",
+    "tools/verify/box3d/owner-shared-material-real-wasm-preload.mjs": "2de6ddd5e24c4459455e410cab8350f94b9e83e80dc91abd21db054eadc97b0e",
+    "tools/verify/box3d/owner-shared-material-real-wasm.jest.cjs": "c01c92f5d8b9d2c27a4aaf53fd84cb73d0fcb9738e4734cfb716a0dfbbfaed5a",
+    "tools/verify/box3d/owner-shared-material-real-wasm.mjs": "3365eff98b532e32d26b582cdd9d5ee5b7c3009fd5ca1127e92cc37f95f5b558",
+    "tools/verify/box3d/owner-shared-material-real-wasm.test.ts": "d148a2c370aa007ae9d6e90c69e3eed4a5f1226506b895ac1da3612d6b3886c7",
+    "tools/verify/box3d/owner-shared-material-real-wasm.tsconfig.json": "98428ceb1381dfec6a639c2e6c4047740a54a01bce80896303548b8cf7fb9ccc",
+    "tsconfig.json": "5c4a22033ef4f69a7ba4f19feb7f76fe6f8cdd851a1fa2bc823dfcf584022487",
+    "vendor/box3d/source-manifest.json": "40f2d926a3fbc84d5d31f07532b3439657ebed69630ad9e2477c84fc25754dd0"
+  },
+  "completedAt": "2026-10-22T19:33:20.476Z"
+}

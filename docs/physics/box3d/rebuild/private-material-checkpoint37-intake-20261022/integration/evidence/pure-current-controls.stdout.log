@@ -1,0 +1,56 @@
+PASS no owner fast path has no source or property reads
+PASS four bindings on one owner use one scope and complete preflight before effects
+PASS independent owner records prepare completely before any effects (pure protocol only)
+PASS later foreign owner open refusal causes no reads, caches, native or public effects
+PASS later participant preflight refusal never applies earlier plan
+PASS strict numeric validation rejects coercion, unsupported axes and float32 overflow
+PASS native float32 copy does not replace accepted JS numbers
+PASS scalar equals no-change does no write/native/emit and retains before
+PASS setValues exact no-change still writes four fields without native/emit
+PASS no-change still rejects foreign owners and invalid inputs
+PASS source getter reentry latched even if caught
+PASS candidate property reentry cannot mutate membership even when caught
+PASS callback methods copied once before prepared plan mutation
+PASS duplicate shape target refuses during prepare
+PASS empty inactive plan return is not a native write
+PASS first exact native throw is unknown, later plans not entered, all owners fault
+PASS later native throw preserves returned/verified first operation
+PASS readback failure retains returned setter fact and stops future native operations
+PASS adapter cache failure retains native returned/verified
+PASS each partial actual cache assignment is retained and faulted
+PASS public falsy primary survives independent reporter and cleanup errors
+PASS cleanup-only failure faults all original owners without claiming rollback
+PASS partial open independently disposed even if cleanup also fails
+PASS actual read failure is separately retained, with no setter replay
+PASS private value reentry from public notification fails even if caught
+PASS wrong receiver, copied ticket and replay cannot execute plans
+PASS pending transition protects both assets and cannot publish wrong actual identity
+PASS cancel removes only unaccepted candidate, preserves prior live binding
+PASS retiring one binding does not release another owner or same-owner binding
+PASS provisional binding cannot execute but remains destroy blocker until initialized
+PASS mixed-backend blocker refuses complete transaction before opens
+PASS unknown teardown retains old/candidate tombstones, revokes execution and forbids replay
+PASS stale generations cannot be registered or operate, unknown old generation remains blocker
+PASS destroyed candidates refused before any lease publication
+PASS membership callback reentry latches and does not consume transition capacity
+PASS counter exhaustion is pre-effect, and cannot wrap into replay authority
+PASS prepared native capacity exhaustion precedes source write
+PASS parallel pending defaults refuse without creating duplicate owner default
+PASS unobserved assets preserve fast path during an owned transaction
+PASS cross-owner duplicate native identity is rejected before effects
+PASS faulted owner can confirm teardown but cannot execute or be silently replaced
+PASS cancelling one prepared binding preserves another same-owner reservation
+PASS retiring last live binding preserves pending same-asset candidate group
+PASS foreign existing roster reentry from public emit is latched
+PASS no-change owner commit failure undefined at 0 faults all and cannot replay
+PASS no-change owner commit failure undefined at 1 faults all and cannot replay
+PASS no-change owner commit failure null at 0 faults all and cannot replay
+PASS no-change owner commit failure null at 1 faults all and cannot replay
+PASS no-change owner commit failure 0 at 0 faults all and cannot replay
+PASS no-change owner commit failure 0 at 1 faults all and cannot replay
+PASS no-change owner commit failure false at 0 faults all and cannot replay
+PASS no-change owner commit failure false at 1 faults all and cannot replay
+PASS no-change owner commit failure  at 0 faults all and cannot replay
+PASS no-change owner commit failure  at 1 faults all and cannot replay
+PASS no-change commit returned after caught reentry stays a returned fact then faults
+PASS no-change failure during actual read before owner commit does not invent an effect

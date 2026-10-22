@@ -1,0 +1,1674 @@
+{
+  "status": "EXACT_COMPLETED_INPUTS_AND_RAW_COPIED",
+  "timeUtc": "2026-10-22T19:43:56.826709+00:00",
+  "files": [
+    {
+      "source": "../box3d-private-material-integration-20261022/attempt-a-inputs/src/air/physics/box3d/box-sphere-shape.ts",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/attempt-a-inputs/src/air/physics/box3d/box-sphere-shape.ts",
+      "bytes": 11725,
+      "sha256": "22e5a5239aca00f6d192e753fe423cbc1555483adcab3b075601179492a8a0e2"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/attempt-a-inputs/src/air/physics/box3d/shared-body.ts",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/attempt-a-inputs/src/air/physics/box3d/shared-body.ts",
+      "bytes": 31292,
+      "sha256": "8638e41fd4d5380ee7f972d46fed8e25ed017e5ceb9242cdd95e5d15a0f7eee7"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/attempt-a-inputs/src/air/physics/box3d/world-command-owner.ts",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/attempt-a-inputs/src/air/physics/box3d/world-command-owner.ts",
+      "bytes": 52145,
+      "sha256": "ed0297c4faabb20544d31660bc8d29527734f5cf448eb33627c15cb4e3ee11b4"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/attempt-a-inputs/src/air/physics/box3d/world.ts",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/attempt-a-inputs/src/air/physics/box3d/world.ts",
+      "bytes": 38229,
+      "sha256": "4fc3cb5c927aab15a2aa0488118843d95ee7cdf971ddd28b013f503659bddf44"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/attempt-a-inputs/src/cocos/physics/framework/assets/physics-material.ts",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/attempt-a-inputs/src/cocos/physics/framework/assets/physics-material.ts",
+      "bytes": 13631,
+      "sha256": "47a2e4d244bab6933f8d0a65a2fdc6978a5764e8081df4b21d0b97aac83872da"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/attempt-a-inputs/src/cocos/physics/framework/components/colliders/collider.ts",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/attempt-a-inputs/src/cocos/physics/framework/components/colliders/collider.ts",
+      "bytes": 25264,
+      "sha256": "53a0d357c2483e64bf2015c54911099e0d08cdbf68bdeeddc5ad5a469deea718"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/attempt-a-inputs/src/cocos/physics/framework/physics-material-transaction.ts",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/attempt-a-inputs/src/cocos/physics/framework/physics-material-transaction.ts",
+      "bytes": 29093,
+      "sha256": "e5fd0efdac79228970560a0bca6c9dde31e5436a69d9b499cb02867f27c8ab8c"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/attempt-a-inputs/src/cocos/physics/framework/physics-material-values-transaction.ts",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/attempt-a-inputs/src/cocos/physics/framework/physics-material-values-transaction.ts",
+      "bytes": 39988,
+      "sha256": "fb1be9f19ab526e8b1c0785446a387324b4d51930b90d7bfb105127fe8255b06"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/attempt-a-inputs/src/cocos/physics/framework/physics-material-values.ts",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/attempt-a-inputs/src/cocos/physics/framework/physics-material-values.ts",
+      "bytes": 2079,
+      "sha256": "435b47e6faaa861c1d584fcc3603a64735052daa2595cf3da12e3fa602305b66"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/attempt-a-inputs/src/cocos/physics/framework/physics-system.ts",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/attempt-a-inputs/src/cocos/physics/framework/physics-system.ts",
+      "bytes": 44508,
+      "sha256": "3726b321e4936d4a991ee2bfb027b61344781164ff1e42510f9f311da27dee63"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/attempt-a-inputs.json",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/attempt-a-inputs.json",
+      "bytes": 2411,
+      "sha256": "5846d35e8781f447df48784e00f7e0a189a302e63d7d1183c30e5ca63ad186eb"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/attempt-b-inputs/src/air/physics/box3d/box-sphere-shape.ts",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/attempt-b-inputs/src/air/physics/box3d/box-sphere-shape.ts",
+      "bytes": 11725,
+      "sha256": "22e5a5239aca00f6d192e753fe423cbc1555483adcab3b075601179492a8a0e2"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/attempt-b-inputs/src/air/physics/box3d/shared-body.ts",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/attempt-b-inputs/src/air/physics/box3d/shared-body.ts",
+      "bytes": 31292,
+      "sha256": "8638e41fd4d5380ee7f972d46fed8e25ed017e5ceb9242cdd95e5d15a0f7eee7"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/attempt-b-inputs/src/air/physics/box3d/world-command-owner.ts",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/attempt-b-inputs/src/air/physics/box3d/world-command-owner.ts",
+      "bytes": 52145,
+      "sha256": "ed0297c4faabb20544d31660bc8d29527734f5cf448eb33627c15cb4e3ee11b4"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/attempt-b-inputs/src/air/physics/box3d/world.ts",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/attempt-b-inputs/src/air/physics/box3d/world.ts",
+      "bytes": 38229,
+      "sha256": "4fc3cb5c927aab15a2aa0488118843d95ee7cdf971ddd28b013f503659bddf44"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/attempt-b-inputs/src/cocos/physics/framework/assets/physics-material.ts",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/attempt-b-inputs/src/cocos/physics/framework/assets/physics-material.ts",
+      "bytes": 13631,
+      "sha256": "47a2e4d244bab6933f8d0a65a2fdc6978a5764e8081df4b21d0b97aac83872da"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/attempt-b-inputs/src/cocos/physics/framework/components/colliders/collider.ts",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/attempt-b-inputs/src/cocos/physics/framework/components/colliders/collider.ts",
+      "bytes": 25264,
+      "sha256": "53a0d357c2483e64bf2015c54911099e0d08cdbf68bdeeddc5ad5a469deea718"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/attempt-b-inputs/src/cocos/physics/framework/physics-material-transaction.ts",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/attempt-b-inputs/src/cocos/physics/framework/physics-material-transaction.ts",
+      "bytes": 29093,
+      "sha256": "e5fd0efdac79228970560a0bca6c9dde31e5436a69d9b499cb02867f27c8ab8c"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/attempt-b-inputs/src/cocos/physics/framework/physics-material-values-transaction.ts",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/attempt-b-inputs/src/cocos/physics/framework/physics-material-values-transaction.ts",
+      "bytes": 40010,
+      "sha256": "06ac7eada947bc565868f9dffa0eda6e68dfeee337a34fb4912d890f7f7e2682"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/attempt-b-inputs/src/cocos/physics/framework/physics-material-values.ts",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/attempt-b-inputs/src/cocos/physics/framework/physics-material-values.ts",
+      "bytes": 2079,
+      "sha256": "435b47e6faaa861c1d584fcc3603a64735052daa2595cf3da12e3fa602305b66"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/attempt-b-inputs/src/cocos/physics/framework/physics-system.ts",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/attempt-b-inputs/src/cocos/physics/framework/physics-system.ts",
+      "bytes": 44508,
+      "sha256": "3726b321e4936d4a991ee2bfb027b61344781164ff1e42510f9f311da27dee63"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/attempt-b-inputs/tools/verify/box3d/owner-shared-material-real-wasm-inputs.cjs",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/attempt-b-inputs/tools/verify/box3d/owner-shared-material-real-wasm-inputs.cjs",
+      "bytes": 6616,
+      "sha256": "74cd78eb6191ca16fa6f4eb74cf27e348f1bc69af324b5ec521f9e6b0738cd7a"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/attempt-b-inputs.json",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/attempt-b-inputs.json",
+      "bytes": 2676,
+      "sha256": "fc0ce2e7f5627d206342bfdbf1821bb659a94b3bb42f4a33835eb24487f8b293"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/before/src/air/physics/box3d/box-sphere-shape.ts",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/before/src/air/physics/box3d/box-sphere-shape.ts",
+      "bytes": 10744,
+      "sha256": "3c739b77712689e34dbbab6052de5b1649663471d59540d4c2e5bfdbf1b84c20"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/before/src/air/physics/box3d/shared-body.ts",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/before/src/air/physics/box3d/shared-body.ts",
+      "bytes": 30006,
+      "sha256": "9bf809b2e3c66b723a975cceb9725978750c0e68b57c2eb343a9788fcb89b8bc"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/before/src/air/physics/box3d/world-command-owner.ts",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/before/src/air/physics/box3d/world-command-owner.ts",
+      "bytes": 41959,
+      "sha256": "2f313aae10b900e417ebea9b2b8254994fee4f7fe4e26181516c5fca74fb091f"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/before/src/air/physics/box3d/world.ts",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/before/src/air/physics/box3d/world.ts",
+      "bytes": 37184,
+      "sha256": "c77920b810d6f374e3cea49dc8be80b9ba1d0c6ca22bef617ed199fa96943882"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/before/src/cocos/physics/framework/assets/physics-material.ts",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/before/src/cocos/physics/framework/assets/physics-material.ts",
+      "bytes": 6124,
+      "sha256": "9a780692684a65892315012879f8f597cba6bd8d22be14792d7b779a1d57bd80"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/before/src/cocos/physics/framework/components/colliders/collider.ts",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/before/src/cocos/physics/framework/components/colliders/collider.ts",
+      "bytes": 24556,
+      "sha256": "2e93ecae851d1a943c00d1a5a01a3d887153dce0d9693f541b4f6be73b2a7ac9"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/before/src/cocos/physics/framework/physics-material-transaction.ts",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/before/src/cocos/physics/framework/physics-material-transaction.ts",
+      "bytes": 28282,
+      "sha256": "949426ebc03754639cf7ff2e3ce9bbb80e6c9a43e7c4a5ec671739c55cdda083"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/before/src/cocos/physics/framework/physics-system.ts",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/before/src/cocos/physics/framework/physics-system.ts",
+      "bytes": 44352,
+      "sha256": "a4890065dcb52287ec5483f2b8c14e63dcd266cd1503b5f2629716713fa504eb"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/before/tools/verify/box3d/owner-shared-material-real-wasm-inputs.cjs",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/before/tools/verify/box3d/owner-shared-material-real-wasm-inputs.cjs",
+      "bytes": 6405,
+      "sha256": "497feb7289241a9d15724bdfb3e24a6cdb82559379a80c7c5fb629a24de5a003"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/before-inputs.json",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/before-inputs.json",
+      "bytes": 1530,
+      "sha256": "dbe4cc1b156f640a0f19f11bb3a53d895ecf5dbd0f3373ea40aff62969352786"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/evidence/detach-public-b.exit",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/evidence/detach-public-b.exit",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/evidence/detach-public-b.stderr.log",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/evidence/detach-public-b.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/evidence/detach-public-b.stdout.log",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/evidence/detach-public-b.stdout.log",
+      "bytes": 156,
+      "sha256": "b39c94d4c3a4e7f62cdcfe044a7bbff0a6d6dde08a82af10d45bb563b77c5038"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/evidence/format-a.exit",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/evidence/format-a.exit",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/evidence/format-a.stderr.log",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/evidence/format-a.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/evidence/format-a.stdout.log",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/evidence/format-a.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/evidence/format-b.exit",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/evidence/format-b.exit",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/evidence/format-b.stderr.log",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/evidence/format-b.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/evidence/format-b.stdout.log",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/evidence/format-b.stdout.log",
+      "bytes": 80,
+      "sha256": "b48f27fa40dd883939c7c40d7492cfed8953805b555674859c28ab7ff09f12bb"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/evidence/invalid-negative-b.exit",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/evidence/invalid-negative-b.exit",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/evidence/invalid-negative-b.stderr.log",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/evidence/invalid-negative-b.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/evidence/invalid-negative-b.stdout.log",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/evidence/invalid-negative-b.stdout.log",
+      "bytes": 159,
+      "sha256": "eb27002d0ba078a633d316fd6f7bdff91bfa633de975b40e9ffa2b0735ea38b8"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/evidence/notification-order-b.exit",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/evidence/notification-order-b.exit",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/evidence/notification-order-b.stderr.log",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/evidence/notification-order-b.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/evidence/notification-order-b.stdout.log",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/evidence/notification-order-b.stdout.log",
+      "bytes": 161,
+      "sha256": "3de66902a010ec80ea1a3b3cb67b9ed76b722f78ebb9a73fc1c50097ddc780a3"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/evidence/owned-destroy-b.exit",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/evidence/owned-destroy-b.exit",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/evidence/owned-destroy-b.stderr.log",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/evidence/owned-destroy-b.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/evidence/owned-destroy-b.stdout.log",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/evidence/owned-destroy-b.stdout.log",
+      "bytes": 156,
+      "sha256": "38692f319b9aa3a704e2fc7eaadd7b4cd0791b7604ffc29e8b729c466adac8e7"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/evidence/pure-current-controls.exit",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/evidence/pure-current-controls.exit",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/evidence/pure-current-controls.json",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/evidence/pure-current-controls.json",
+      "bytes": 7192,
+      "sha256": "546a5fa552693e5a8f4a9d4a4faa6e61c04ab40162c0105ddf2a4a99c9966ae2"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/evidence/pure-current-controls.stderr.log",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/evidence/pure-current-controls.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/evidence/pure-current-controls.stdout.log",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/evidence/pure-current-controls.stdout.log",
+      "bytes": 4151,
+      "sha256": "381d81eb89737bbc6b54a2abc5ed5792247fcabcd792e9bd3125c8b11cc2eacd"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/evidence/pure-current-tsc.exit",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/evidence/pure-current-tsc.exit",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/evidence/pure-current-tsc.stderr.log",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/evidence/pure-current-tsc.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/evidence/pure-current-tsc.stdout.log",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/evidence/pure-current-tsc.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/evidence/three-following-runs-b.json",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/evidence/three-following-runs-b.json",
+      "bytes": 1505,
+      "sha256": "f1db8ce8f4b69a90111d8f52bc4476e89ae1d9b99d6250d7c6c32cc49f7519e3"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/evidence/tsc-a.exit",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/evidence/tsc-a.exit",
+      "bytes": 2,
+      "sha256": "53c234e5e8472b6ac51c1ae1cab3fe06fad053beb8ebfd8977b010655bfdd3c3"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/evidence/tsc-a.stderr.log",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/evidence/tsc-a.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/evidence/tsc-a.stdout.log",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/evidence/tsc-a.stdout.log",
+      "bytes": 158,
+      "sha256": "8b2081890ca7320bfe7b83925d1f7abcc5c333e25853996ad956ccb2694b5136"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/evidence/tsc-b.exit",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/evidence/tsc-b.exit",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/evidence/tsc-b.stderr.log",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/evidence/tsc-b.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/evidence/tsc-b.stdout.log",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/evidence/tsc-b.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/intake-path-correction.json",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/intake-path-correction.json",
+      "bytes": 339,
+      "sha256": "1f1a5f80ed21a1822b43d8d83fbbc90cb6e356bc6f9e97f4fad839c3dd279c08"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/prepare-integration.py",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/prepare-integration.py",
+      "bytes": 19385,
+      "sha256": "d1bb1e6c8dc38e2b29c5191dab51f868f4983d8bf57a7970763fc66c64119461"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/pure-current/compiled/physics-material-values-transaction.js",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/pure-current/compiled/physics-material-values-transaction.js",
+      "bytes": 29716,
+      "sha256": "c5668ee2e41494b8cc1dabbcf1ccde13e3c1c4c92882fe2130167e1bb5fb71f2"
+    },
+    {
+      "source": "../box3d-private-material-integration-20261022/pure-current/controls.cjs",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/integration/pure-current/controls.cjs",
+      "bytes": 33034,
+      "sha256": "b975a1e37982d71552475efd95a4a1d180378fca6bcbf10fa6611292920ce1dd"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/README.md",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/README.md",
+      "bytes": 7534,
+      "sha256": "f5891d6d1d7f66c61238d37d72be43fb2e74b4e4ea0e0a9025cb296868e202cf"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/candidate.patch",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/candidate.patch",
+      "bytes": 11017,
+      "sha256": "7c00ae4836131e1d90a78ffa5c385075b3184e3d5dfc6cef0c152d8878c106f0"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/closure-manifest.json",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/closure-manifest.json",
+      "bytes": 32151,
+      "sha256": "3c7a23640064e174025258e75379f5d22db100930d8f27d6f90a6e65ea216783"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/closure-verification.json",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/closure-verification.json",
+      "bytes": 297,
+      "sha256": "41209d7925fabd9ba3c334630088259bf318e85ed92c86239a74e3be07fea157"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/closure.exitcode",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/closure.exitcode",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/closure.receipt.json",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/closure.receipt.json",
+      "bytes": 448,
+      "sha256": "2ead92abea2cf39431da9431933be59efe122c5ede51d8864730f57335124f83"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/closure.stderr.txt",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/closure.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/closure.stdout.txt",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/closure.stdout.txt",
+      "bytes": 297,
+      "sha256": "41209d7925fabd9ba3c334630088259bf318e85ed92c86239a74e3be07fea157"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/controls.cjs",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/controls.cjs",
+      "bytes": 33259,
+      "sha256": "db568a8f3220707d261f3ba654a34b7a767529ecdce827c783b50058487c4065"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/legacy-structure.json",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/legacy-structure.json",
+      "bytes": 569,
+      "sha256": "8c1678af6b5d057c5540522d3957eca314f356cf3115c3bc583129dc4f8965f4"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-a/candidate/src/cocos/core/data/mutation-guard.js",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-a/candidate/src/cocos/core/data/mutation-guard.js",
+      "bytes": 5619,
+      "sha256": "40cf239d12e5f975bcec8037df9e8af60c72b1acd8bd4febcd1f3f7465e7f770"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-a/candidate/src/cocos/core/event/callbacks-invoker.js",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-a/candidate/src/cocos/core/event/callbacks-invoker.js",
+      "bytes": 13725,
+      "sha256": "7eac6fa7a56d237be453754109bf0530c5e59a439ca84785d23b4b81d123cfaf"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-a/candidate/src/cocos/core/event/eventify.js",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-a/candidate/src/cocos/core/event/eventify.js",
+      "bytes": 3632,
+      "sha256": "545c342a37e7232381c2021fadb9b4c48eb432e2cc9d079305881f67ba8e82c4"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-a/candidate/src/cocos/physics/framework/components/colliders/collider.js",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-a/candidate/src/cocos/physics/framework/components/colliders/collider.js",
+      "bytes": 26627,
+      "sha256": "264b092734e25c9f9855223c111dcac93a7aa9773f82eccd1a9105cbbb958394"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-a/candidate/src/cocos/physics/framework/physics-material-transaction.js",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-a/candidate/src/cocos/physics/framework/physics-material-transaction.js",
+      "bytes": 23550,
+      "sha256": "9dc70006c045560de7ca06b6892a6751884bc0885881f4f4fc747cc5d3d7177a"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-a/candidate/src/cocos/physics/framework/physics-state-observer.js",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-a/candidate/src/cocos/physics/framework/physics-state-observer.js",
+      "bytes": 16802,
+      "sha256": "f499db4fcf59df2d83c0c7c3ba93468f4c5497486a7e12a0dd5817d182ba5fbc"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-a/candidate/src/cocos/physics/framework/physics-system.js",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-a/candidate/src/cocos/physics/framework/physics-system.js",
+      "bytes": 44521,
+      "sha256": "e99c5a6c1666165d363d75022ad5a19c30fe274f5a451450c40e263333c34685"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-a/controls-used.cjs",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-a/controls-used.cjs",
+      "bytes": 20096,
+      "sha256": "1ba1e3101c9c139957abaf911025be28df31aa55a211ddee7a6f1585e13d761a"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-a/original/src/cocos/core/data/mutation-guard.js",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-a/original/src/cocos/core/data/mutation-guard.js",
+      "bytes": 5619,
+      "sha256": "40cf239d12e5f975bcec8037df9e8af60c72b1acd8bd4febcd1f3f7465e7f770"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-a/original/src/cocos/core/event/callbacks-invoker.js",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-a/original/src/cocos/core/event/callbacks-invoker.js",
+      "bytes": 13725,
+      "sha256": "7eac6fa7a56d237be453754109bf0530c5e59a439ca84785d23b4b81d123cfaf"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-a/original/src/cocos/core/event/eventify.js",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-a/original/src/cocos/core/event/eventify.js",
+      "bytes": 3632,
+      "sha256": "545c342a37e7232381c2021fadb9b4c48eb432e2cc9d079305881f67ba8e82c4"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-a/original/src/cocos/physics/framework/components/colliders/collider.js",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-a/original/src/cocos/physics/framework/components/colliders/collider.js",
+      "bytes": 25803,
+      "sha256": "6b8608070a64682113813815916877950c436ac13d15c53ebc5be69bbfe83bb5"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-a/original/src/cocos/physics/framework/physics-material-transaction.js",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-a/original/src/cocos/physics/framework/physics-material-transaction.js",
+      "bytes": 23060,
+      "sha256": "188a168b2ed33194623a9a0826b2be1deaf21382c9cce73b4e36b0ae4bb9e720"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-a/original/src/cocos/physics/framework/physics-state-observer.js",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-a/original/src/cocos/physics/framework/physics-state-observer.js",
+      "bytes": 16802,
+      "sha256": "f499db4fcf59df2d83c0c7c3ba93468f4c5497486a7e12a0dd5817d182ba5fbc"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-a/original/src/cocos/physics/framework/physics-system.js",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-a/original/src/cocos/physics/framework/physics-system.js",
+      "bytes": 44361,
+      "sha256": "5629f30d9b0bff22e92270b148518b9b5c9c02b826cfe74950ac1761b594865f"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-a/results.json",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-a/results.json",
+      "bytes": 17141,
+      "sha256": "04e3b524d1d9315f793218d02fd9f13ecdd7adb7f4cd0f331a374e274e8a2ff3"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-b/candidate/src/cocos/core/data/mutation-guard.js",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-b/candidate/src/cocos/core/data/mutation-guard.js",
+      "bytes": 5619,
+      "sha256": "40cf239d12e5f975bcec8037df9e8af60c72b1acd8bd4febcd1f3f7465e7f770"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-b/candidate/src/cocos/core/data/mutation-guard.ts",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-b/candidate/src/cocos/core/data/mutation-guard.ts",
+      "bytes": 7193,
+      "sha256": "93758e4b5a90ff90e5cabc7d3b0b5fd71069e955d4bf64517bec27d1957774a0"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-b/candidate/src/cocos/core/event/callbacks-invoker.js",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-b/candidate/src/cocos/core/event/callbacks-invoker.js",
+      "bytes": 13725,
+      "sha256": "7eac6fa7a56d237be453754109bf0530c5e59a439ca84785d23b4b81d123cfaf"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-b/candidate/src/cocos/core/event/callbacks-invoker.ts",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-b/candidate/src/cocos/core/event/callbacks-invoker.ts",
+      "bytes": 14205,
+      "sha256": "544780e361767d5ae79d2c20a973651b544ceee6b7bd90e6ebe876185774918a"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-b/candidate/src/cocos/core/event/eventify.js",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-b/candidate/src/cocos/core/event/eventify.js",
+      "bytes": 3632,
+      "sha256": "545c342a37e7232381c2021fadb9b4c48eb432e2cc9d079305881f67ba8e82c4"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-b/candidate/src/cocos/core/event/eventify.ts",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-b/candidate/src/cocos/core/event/eventify.ts",
+      "bytes": 9132,
+      "sha256": "ad59c9f8dc67f40db877b2160989b792e488b256903d6fdccaf2c7433728c7e9"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-b/candidate/src/cocos/physics/framework/components/colliders/collider.js",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-b/candidate/src/cocos/physics/framework/components/colliders/collider.js",
+      "bytes": 26627,
+      "sha256": "264b092734e25c9f9855223c111dcac93a7aa9773f82eccd1a9105cbbb958394"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-b/candidate/src/cocos/physics/framework/components/colliders/collider.ts",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-b/candidate/src/cocos/physics/framework/components/colliders/collider.ts",
+      "bytes": 25264,
+      "sha256": "53a0d357c2483e64bf2015c54911099e0d08cdbf68bdeeddc5ad5a469deea718"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-b/candidate/src/cocos/physics/framework/physics-material-transaction.js",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-b/candidate/src/cocos/physics/framework/physics-material-transaction.js",
+      "bytes": 23550,
+      "sha256": "9dc70006c045560de7ca06b6892a6751884bc0885881f4f4fc747cc5d3d7177a"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-b/candidate/src/cocos/physics/framework/physics-material-transaction.ts",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-b/candidate/src/cocos/physics/framework/physics-material-transaction.ts",
+      "bytes": 29093,
+      "sha256": "e5fd0efdac79228970560a0bca6c9dde31e5436a69d9b499cb02867f27c8ab8c"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-b/candidate/src/cocos/physics/framework/physics-state-observer.js",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-b/candidate/src/cocos/physics/framework/physics-state-observer.js",
+      "bytes": 16802,
+      "sha256": "f499db4fcf59df2d83c0c7c3ba93468f4c5497486a7e12a0dd5817d182ba5fbc"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-b/candidate/src/cocos/physics/framework/physics-state-observer.ts",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-b/candidate/src/cocos/physics/framework/physics-state-observer.ts",
+      "bytes": 23170,
+      "sha256": "4cf40c4f1be0d407a402e95dcdb7a898b1942cb175f869f6367a41b18c2d1d2b"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-b/candidate/src/cocos/physics/framework/physics-system.js",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-b/candidate/src/cocos/physics/framework/physics-system.js",
+      "bytes": 44521,
+      "sha256": "e99c5a6c1666165d363d75022ad5a19c30fe274f5a451450c40e263333c34685"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-b/candidate/src/cocos/physics/framework/physics-system.ts",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-b/candidate/src/cocos/physics/framework/physics-system.ts",
+      "bytes": 44508,
+      "sha256": "3726b321e4936d4a991ee2bfb027b61344781164ff1e42510f9f311da27dee63"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-b/controls-used.cjs",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-b/controls-used.cjs",
+      "bytes": 24724,
+      "sha256": "dde2efdbca909acbcadf266c6bc097a4e8a8fdce5934b8c3b7c08767bfdb2496"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-b/original/src/cocos/core/data/mutation-guard.js",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-b/original/src/cocos/core/data/mutation-guard.js",
+      "bytes": 5619,
+      "sha256": "40cf239d12e5f975bcec8037df9e8af60c72b1acd8bd4febcd1f3f7465e7f770"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-b/original/src/cocos/core/data/mutation-guard.ts",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-b/original/src/cocos/core/data/mutation-guard.ts",
+      "bytes": 7193,
+      "sha256": "93758e4b5a90ff90e5cabc7d3b0b5fd71069e955d4bf64517bec27d1957774a0"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-b/original/src/cocos/core/event/callbacks-invoker.js",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-b/original/src/cocos/core/event/callbacks-invoker.js",
+      "bytes": 13725,
+      "sha256": "7eac6fa7a56d237be453754109bf0530c5e59a439ca84785d23b4b81d123cfaf"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-b/original/src/cocos/core/event/callbacks-invoker.ts",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-b/original/src/cocos/core/event/callbacks-invoker.ts",
+      "bytes": 14205,
+      "sha256": "544780e361767d5ae79d2c20a973651b544ceee6b7bd90e6ebe876185774918a"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-b/original/src/cocos/core/event/eventify.js",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-b/original/src/cocos/core/event/eventify.js",
+      "bytes": 3632,
+      "sha256": "545c342a37e7232381c2021fadb9b4c48eb432e2cc9d079305881f67ba8e82c4"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-b/original/src/cocos/core/event/eventify.ts",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-b/original/src/cocos/core/event/eventify.ts",
+      "bytes": 9132,
+      "sha256": "ad59c9f8dc67f40db877b2160989b792e488b256903d6fdccaf2c7433728c7e9"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-b/original/src/cocos/physics/framework/components/colliders/collider.js",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-b/original/src/cocos/physics/framework/components/colliders/collider.js",
+      "bytes": 25803,
+      "sha256": "6b8608070a64682113813815916877950c436ac13d15c53ebc5be69bbfe83bb5"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-b/original/src/cocos/physics/framework/components/colliders/collider.ts",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-b/original/src/cocos/physics/framework/components/colliders/collider.ts",
+      "bytes": 24556,
+      "sha256": "2e93ecae851d1a943c00d1a5a01a3d887153dce0d9693f541b4f6be73b2a7ac9"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-b/original/src/cocos/physics/framework/physics-material-transaction.js",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-b/original/src/cocos/physics/framework/physics-material-transaction.js",
+      "bytes": 23060,
+      "sha256": "188a168b2ed33194623a9a0826b2be1deaf21382c9cce73b4e36b0ae4bb9e720"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-b/original/src/cocos/physics/framework/physics-material-transaction.ts",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-b/original/src/cocos/physics/framework/physics-material-transaction.ts",
+      "bytes": 28282,
+      "sha256": "949426ebc03754639cf7ff2e3ce9bbb80e6c9a43e7c4a5ec671739c55cdda083"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-b/original/src/cocos/physics/framework/physics-state-observer.js",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-b/original/src/cocos/physics/framework/physics-state-observer.js",
+      "bytes": 16802,
+      "sha256": "f499db4fcf59df2d83c0c7c3ba93468f4c5497486a7e12a0dd5817d182ba5fbc"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-b/original/src/cocos/physics/framework/physics-state-observer.ts",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-b/original/src/cocos/physics/framework/physics-state-observer.ts",
+      "bytes": 23170,
+      "sha256": "4cf40c4f1be0d407a402e95dcdb7a898b1942cb175f869f6367a41b18c2d1d2b"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-b/original/src/cocos/physics/framework/physics-system.js",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-b/original/src/cocos/physics/framework/physics-system.js",
+      "bytes": 44361,
+      "sha256": "5629f30d9b0bff22e92270b148518b9b5c9c02b826cfe74950ac1761b594865f"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-b/original/src/cocos/physics/framework/physics-system.ts",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-b/original/src/cocos/physics/framework/physics-system.ts",
+      "bytes": 44352,
+      "sha256": "a4890065dcb52287ec5483f2b8c14e63dcd266cd1503b5f2629716713fa504eb"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-b/results.json",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-b/results.json",
+      "bytes": 21322,
+      "sha256": "53e458a7b87c7e7fb16327f0ef6031617508cb21f5ad3999465fb153c95115e4"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-c/candidate/src/cocos/core/data/mutation-guard.js",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-c/candidate/src/cocos/core/data/mutation-guard.js",
+      "bytes": 5619,
+      "sha256": "40cf239d12e5f975bcec8037df9e8af60c72b1acd8bd4febcd1f3f7465e7f770"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-c/candidate/src/cocos/core/data/mutation-guard.ts",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-c/candidate/src/cocos/core/data/mutation-guard.ts",
+      "bytes": 7193,
+      "sha256": "93758e4b5a90ff90e5cabc7d3b0b5fd71069e955d4bf64517bec27d1957774a0"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-c/candidate/src/cocos/core/event/callbacks-invoker.js",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-c/candidate/src/cocos/core/event/callbacks-invoker.js",
+      "bytes": 13725,
+      "sha256": "7eac6fa7a56d237be453754109bf0530c5e59a439ca84785d23b4b81d123cfaf"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-c/candidate/src/cocos/core/event/callbacks-invoker.ts",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-c/candidate/src/cocos/core/event/callbacks-invoker.ts",
+      "bytes": 14205,
+      "sha256": "544780e361767d5ae79d2c20a973651b544ceee6b7bd90e6ebe876185774918a"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-c/candidate/src/cocos/core/event/eventify.js",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-c/candidate/src/cocos/core/event/eventify.js",
+      "bytes": 3632,
+      "sha256": "545c342a37e7232381c2021fadb9b4c48eb432e2cc9d079305881f67ba8e82c4"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-c/candidate/src/cocos/core/event/eventify.ts",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-c/candidate/src/cocos/core/event/eventify.ts",
+      "bytes": 9132,
+      "sha256": "ad59c9f8dc67f40db877b2160989b792e488b256903d6fdccaf2c7433728c7e9"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-c/candidate/src/cocos/physics/framework/components/colliders/collider.js",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-c/candidate/src/cocos/physics/framework/components/colliders/collider.js",
+      "bytes": 26627,
+      "sha256": "264b092734e25c9f9855223c111dcac93a7aa9773f82eccd1a9105cbbb958394"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-c/candidate/src/cocos/physics/framework/components/colliders/collider.ts",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-c/candidate/src/cocos/physics/framework/components/colliders/collider.ts",
+      "bytes": 25264,
+      "sha256": "53a0d357c2483e64bf2015c54911099e0d08cdbf68bdeeddc5ad5a469deea718"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-c/candidate/src/cocos/physics/framework/physics-material-transaction.js",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-c/candidate/src/cocos/physics/framework/physics-material-transaction.js",
+      "bytes": 23550,
+      "sha256": "9dc70006c045560de7ca06b6892a6751884bc0885881f4f4fc747cc5d3d7177a"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-c/candidate/src/cocos/physics/framework/physics-material-transaction.ts",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-c/candidate/src/cocos/physics/framework/physics-material-transaction.ts",
+      "bytes": 29093,
+      "sha256": "e5fd0efdac79228970560a0bca6c9dde31e5436a69d9b499cb02867f27c8ab8c"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-c/candidate/src/cocos/physics/framework/physics-state-observer.js",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-c/candidate/src/cocos/physics/framework/physics-state-observer.js",
+      "bytes": 16802,
+      "sha256": "f499db4fcf59df2d83c0c7c3ba93468f4c5497486a7e12a0dd5817d182ba5fbc"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-c/candidate/src/cocos/physics/framework/physics-state-observer.ts",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-c/candidate/src/cocos/physics/framework/physics-state-observer.ts",
+      "bytes": 23170,
+      "sha256": "4cf40c4f1be0d407a402e95dcdb7a898b1942cb175f869f6367a41b18c2d1d2b"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-c/candidate/src/cocos/physics/framework/physics-system.js",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-c/candidate/src/cocos/physics/framework/physics-system.js",
+      "bytes": 44521,
+      "sha256": "e99c5a6c1666165d363d75022ad5a19c30fe274f5a451450c40e263333c34685"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-c/candidate/src/cocos/physics/framework/physics-system.ts",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-c/candidate/src/cocos/physics/framework/physics-system.ts",
+      "bytes": 44508,
+      "sha256": "3726b321e4936d4a991ee2bfb027b61344781164ff1e42510f9f311da27dee63"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-c/controls-used.cjs",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-c/controls-used.cjs",
+      "bytes": 33259,
+      "sha256": "db568a8f3220707d261f3ba654a34b7a767529ecdce827c783b50058487c4065"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-c/original/src/cocos/core/data/mutation-guard.js",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-c/original/src/cocos/core/data/mutation-guard.js",
+      "bytes": 5619,
+      "sha256": "40cf239d12e5f975bcec8037df9e8af60c72b1acd8bd4febcd1f3f7465e7f770"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-c/original/src/cocos/core/data/mutation-guard.ts",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-c/original/src/cocos/core/data/mutation-guard.ts",
+      "bytes": 7193,
+      "sha256": "93758e4b5a90ff90e5cabc7d3b0b5fd71069e955d4bf64517bec27d1957774a0"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-c/original/src/cocos/core/event/callbacks-invoker.js",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-c/original/src/cocos/core/event/callbacks-invoker.js",
+      "bytes": 13725,
+      "sha256": "7eac6fa7a56d237be453754109bf0530c5e59a439ca84785d23b4b81d123cfaf"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-c/original/src/cocos/core/event/callbacks-invoker.ts",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-c/original/src/cocos/core/event/callbacks-invoker.ts",
+      "bytes": 14205,
+      "sha256": "544780e361767d5ae79d2c20a973651b544ceee6b7bd90e6ebe876185774918a"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-c/original/src/cocos/core/event/eventify.js",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-c/original/src/cocos/core/event/eventify.js",
+      "bytes": 3632,
+      "sha256": "545c342a37e7232381c2021fadb9b4c48eb432e2cc9d079305881f67ba8e82c4"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-c/original/src/cocos/core/event/eventify.ts",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-c/original/src/cocos/core/event/eventify.ts",
+      "bytes": 9132,
+      "sha256": "ad59c9f8dc67f40db877b2160989b792e488b256903d6fdccaf2c7433728c7e9"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-c/original/src/cocos/physics/framework/components/colliders/collider.js",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-c/original/src/cocos/physics/framework/components/colliders/collider.js",
+      "bytes": 25803,
+      "sha256": "6b8608070a64682113813815916877950c436ac13d15c53ebc5be69bbfe83bb5"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-c/original/src/cocos/physics/framework/components/colliders/collider.ts",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-c/original/src/cocos/physics/framework/components/colliders/collider.ts",
+      "bytes": 24556,
+      "sha256": "2e93ecae851d1a943c00d1a5a01a3d887153dce0d9693f541b4f6be73b2a7ac9"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-c/original/src/cocos/physics/framework/physics-material-transaction.js",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-c/original/src/cocos/physics/framework/physics-material-transaction.js",
+      "bytes": 23060,
+      "sha256": "188a168b2ed33194623a9a0826b2be1deaf21382c9cce73b4e36b0ae4bb9e720"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-c/original/src/cocos/physics/framework/physics-material-transaction.ts",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-c/original/src/cocos/physics/framework/physics-material-transaction.ts",
+      "bytes": 28282,
+      "sha256": "949426ebc03754639cf7ff2e3ce9bbb80e6c9a43e7c4a5ec671739c55cdda083"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-c/original/src/cocos/physics/framework/physics-state-observer.js",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-c/original/src/cocos/physics/framework/physics-state-observer.js",
+      "bytes": 16802,
+      "sha256": "f499db4fcf59df2d83c0c7c3ba93468f4c5497486a7e12a0dd5817d182ba5fbc"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-c/original/src/cocos/physics/framework/physics-state-observer.ts",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-c/original/src/cocos/physics/framework/physics-state-observer.ts",
+      "bytes": 23170,
+      "sha256": "4cf40c4f1be0d407a402e95dcdb7a898b1942cb175f869f6367a41b18c2d1d2b"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-c/original/src/cocos/physics/framework/physics-system.js",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-c/original/src/cocos/physics/framework/physics-system.js",
+      "bytes": 44361,
+      "sha256": "5629f30d9b0bff22e92270b148518b9b5c9c02b826cfe74950ac1761b594865f"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-c/original/src/cocos/physics/framework/physics-system.ts",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-c/original/src/cocos/physics/framework/physics-system.ts",
+      "bytes": 44352,
+      "sha256": "a4890065dcb52287ec5483f2b8c14e63dcd266cd1503b5f2629716713fa504eb"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/run-c/results.json",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/run-c/results.json",
+      "bytes": 21322,
+      "sha256": "53e458a7b87c7e7fb16327f0ef6031617508cb21f5ad3999465fb153c95115e4"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/typecheck-a/affected.ts",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/typecheck-a/affected.ts",
+      "bytes": 12414,
+      "sha256": "115a546e02e6ead6c8912e42d19d2a089cca0b63af3b80c7defee89d75c68455"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/typecheck-a/contract-types.ts",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/typecheck-a/contract-types.ts",
+      "bytes": 1085,
+      "sha256": "24c2dc799babfdfea82ef05431483b37859a715af871cf55138333789f75758c"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/typecheck-a/mutation-guard.ts",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/typecheck-a/mutation-guard.ts",
+      "bytes": 7193,
+      "sha256": "93758e4b5a90ff90e5cabc7d3b0b5fd71069e955d4bf64517bec27d1957774a0"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/typecheck-a/physics-material-transaction.ts",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/typecheck-a/physics-material-transaction.ts",
+      "bytes": 29093,
+      "sha256": "e5fd0efdac79228970560a0bca6c9dde31e5436a69d9b499cb02867f27c8ab8c"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/typecheck-a/physics-state-observer.ts",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/typecheck-a/physics-state-observer.ts",
+      "bytes": 23170,
+      "sha256": "4cf40c4f1be0d407a402e95dcdb7a898b1942cb175f869f6367a41b18c2d1d2b"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/typecheck-a/result.json",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/typecheck-a/result.json",
+      "bytes": 16800,
+      "sha256": "5a8d022bc53fab0396588b27edf8e0a8a4613afe3427ba0e832acd6ccb13eefd"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/typecheck-a/typecheck-used.cjs",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/typecheck-a/typecheck-used.cjs",
+      "bytes": 7258,
+      "sha256": "281c3f6601cf171d7c852952345ec7b58cc94c346e1db0fd56d4563100991cd3"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/typecheck-b/affected.ts",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/typecheck-b/affected.ts",
+      "bytes": 12414,
+      "sha256": "115a546e02e6ead6c8912e42d19d2a089cca0b63af3b80c7defee89d75c68455"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/typecheck-b/contract-types.ts",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/typecheck-b/contract-types.ts",
+      "bytes": 1085,
+      "sha256": "24c2dc799babfdfea82ef05431483b37859a715af871cf55138333789f75758c"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/typecheck-b/mutation-guard.ts",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/typecheck-b/mutation-guard.ts",
+      "bytes": 7193,
+      "sha256": "93758e4b5a90ff90e5cabc7d3b0b5fd71069e955d4bf64517bec27d1957774a0"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/typecheck-b/physics-material-transaction.ts",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/typecheck-b/physics-material-transaction.ts",
+      "bytes": 29093,
+      "sha256": "e5fd0efdac79228970560a0bca6c9dde31e5436a69d9b499cb02867f27c8ab8c"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/typecheck-b/physics-state-observer.ts",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/typecheck-b/physics-state-observer.ts",
+      "bytes": 23170,
+      "sha256": "4cf40c4f1be0d407a402e95dcdb7a898b1942cb175f869f6367a41b18c2d1d2b"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/typecheck-b/result.json",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/typecheck-b/result.json",
+      "bytes": 16800,
+      "sha256": "5a8d022bc53fab0396588b27edf8e0a8a4613afe3427ba0e832acd6ccb13eefd"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/evidence/typecheck-b/typecheck-used.cjs",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/evidence/typecheck-b/typecheck-used.cjs",
+      "bytes": 8119,
+      "sha256": "ebbc06bcd1b355a325a6c7338aefa6458c7e07382f613464042297fd0709d7ce"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/expand-controls.exitcode",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/expand-controls.exitcode",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/expand-controls.py",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/expand-controls.py",
+      "bytes": 5112,
+      "sha256": "339dc99154baaa3a3fd403284ab0cad52a6deea891abfe33da31777a83686634"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/expand-controls.receipt.json",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/expand-controls.receipt.json",
+      "bytes": 424,
+      "sha256": "bd976cf6900183eb0643f8917265ca73b268310f233c26ed29a67f62063b8027"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/expand-controls.stderr.txt",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/expand-controls.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/expand-controls.stdout.txt",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/expand-controls.stdout.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/format-check.exitcode",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/format-check.exitcode",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/format-check.receipt.json",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/format-check.receipt.json",
+      "bytes": 694,
+      "sha256": "e2c6ccfacd8d20cdafc58d1a006f2cc20d2df4ed7dd60c37981f4380089e63ad"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/format-check.stderr.txt",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/format-check.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/format-check.stdout.txt",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/format-check.stdout.txt",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/format-final-check.exitcode",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/format-final-check.exitcode",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/format-final-check.receipt.json",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/format-final-check.receipt.json",
+      "bytes": 746,
+      "sha256": "5dc33fbc91d4dba588d0d3e194f8fe8a477fdc38d0fafe0481833d9cb167c269"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/format-final-check.stderr.txt",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/format-final-check.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/format-final-check.stdout.txt",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/format-final-check.stdout.txt",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/format-final-write.exitcode",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/format-final-write.exitcode",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/format-final-write.receipt.json",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/format-final-write.receipt.json",
+      "bytes": 603,
+      "sha256": "43ef8ca30da74f144adda14897b2ba39ee1dd6ded304269ac60859c49218f43e"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/format-final-write.stderr.txt",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/format-final-write.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/format-final-write.stdout.txt",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/format-final-write.stdout.txt",
+      "bytes": 30,
+      "sha256": "c1e1ca0e6a69ee0f7a722787c6f27a0ddf2d8fcbe09905c0cbfc4953a6de6290"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/format-structure-write.exitcode",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/format-structure-write.exitcode",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/format-structure-write.receipt.json",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/format-structure-write.receipt.json",
+      "bytes": 621,
+      "sha256": "63f723f3cbe971e84cdb1e967245714a8d19f7a29757f76403df8a4a43f6332c"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/format-structure-write.stderr.txt",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/format-structure-write.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/format-structure-write.stdout.txt",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/format-structure-write.stdout.txt",
+      "bytes": 33,
+      "sha256": "64793d4ec5c55cb01938703e4b6c75f272c7872050ac4e34324097c39000ecca"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/format-write.exitcode",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/format-write.exitcode",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/format-write.receipt.json",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/format-write.receipt.json",
+      "bytes": 694,
+      "sha256": "3ae92028a2b6e569c23262bc139749ae62bb756fd606535d370fc5a9512ebb63"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/format-write.stderr.txt",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/format-write.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/format-write.stdout.txt",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/format-write.stdout.txt",
+      "bytes": 116,
+      "sha256": "cb6f3e80715aa765ca66d2b60dfb0704e652387c11ef34aaf8d10a86a77b8042"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/input-manifest.json",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/input-manifest.json",
+      "bytes": 1849,
+      "sha256": "c4542d8fefd045879ac320cc69e17fc7ae414687f3721a25673e15263b0356d0"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/inputs/product/.prettierignore",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/inputs/product/.prettierignore",
+      "bytes": 1024,
+      "sha256": "a121a84d7d629c671a1f1efdb4d9e4b3e52b7f8cad7a1dc0f026de9bd521ea16"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/inputs/product/.prettierrc.json",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/inputs/product/.prettierrc.json",
+      "bytes": 726,
+      "sha256": "4c184df4264a37fbd7f178b505c9061f98e264fa9c6eb4f2688a4e479425ad8a"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/inputs/product/AGENTS.md",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/inputs/product/AGENTS.md",
+      "bytes": 18480,
+      "sha256": "49cf8f59cfdf7798a1c5fb03f3b46f5115ff0e42faf0249880c3906a778a1072"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/inputs/product/docs/physics/box3d/contracts/shared-material-values-decisions-v1.md",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/inputs/product/docs/physics/box3d/contracts/shared-material-values-decisions-v1.md",
+      "bytes": 2499,
+      "sha256": "740e84c57a224c622b2d354aef06a5813004f292707d76ca6cdf31bf39089b3e"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/inputs/product/src/cocos/core/data/mutation-guard.ts",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/inputs/product/src/cocos/core/data/mutation-guard.ts",
+      "bytes": 7193,
+      "sha256": "93758e4b5a90ff90e5cabc7d3b0b5fd71069e955d4bf64517bec27d1957774a0"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/inputs/product/src/cocos/core/event/callbacks-invoker.ts",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/inputs/product/src/cocos/core/event/callbacks-invoker.ts",
+      "bytes": 14205,
+      "sha256": "544780e361767d5ae79d2c20a973651b544ceee6b7bd90e6ebe876185774918a"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/inputs/product/src/cocos/core/event/eventify.ts",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/inputs/product/src/cocos/core/event/eventify.ts",
+      "bytes": 9132,
+      "sha256": "ad59c9f8dc67f40db877b2160989b792e488b256903d6fdccaf2c7433728c7e9"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/inputs/product/src/cocos/physics/framework/components/colliders/collider.ts",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/inputs/product/src/cocos/physics/framework/components/colliders/collider.ts",
+      "bytes": 24556,
+      "sha256": "2e93ecae851d1a943c00d1a5a01a3d887153dce0d9693f541b4f6be73b2a7ac9"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/inputs/product/src/cocos/physics/framework/physics-material-transaction.ts",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/inputs/product/src/cocos/physics/framework/physics-material-transaction.ts",
+      "bytes": 28282,
+      "sha256": "949426ebc03754639cf7ff2e3ce9bbb80e6c9a43e7c4a5ec671739c55cdda083"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/inputs/product/src/cocos/physics/framework/physics-state-observer.ts",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/inputs/product/src/cocos/physics/framework/physics-state-observer.ts",
+      "bytes": 23170,
+      "sha256": "4cf40c4f1be0d407a402e95dcdb7a898b1942cb175f869f6367a41b18c2d1d2b"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/inputs/product/src/cocos/physics/framework/physics-system.ts",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/inputs/product/src/cocos/physics/framework/physics-system.ts",
+      "bytes": 44352,
+      "sha256": "a4890065dcb52287ec5483f2b8c14e63dcd266cd1503b5f2629716713fa504eb"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/prepare.exitcode",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/prepare.exitcode",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/prepare.py",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/prepare.py",
+      "bytes": 9118,
+      "sha256": "401879a34205e5693cd1bc02640902edaec2bd2fc1d40d92f2cdaa5d127f34ac"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/prepare.receipt.json",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/prepare.receipt.json",
+      "bytes": 416,
+      "sha256": "b9adb5398b1488d38d93e8c9d9b089df65b61da3ec9fef7cb3c0831819a4ab4d"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/prepare.stderr.txt",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/prepare.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/prepare.stdout.txt",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/prepare.stdout.txt",
+      "bytes": 1841,
+      "sha256": "baa582889d636d9317f64d6785a7c2666790f65563116a19c2363ed07b9a1e5a"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/run-a.exitcode",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/run-a.exitcode",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/run-a.receipt.json",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/run-a.receipt.json",
+      "bytes": 437,
+      "sha256": "97d99fd41e76b2bfdcbd8d999671cb678e011a327e916cfe3db8bade8bb36b51"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/run-a.stderr.txt",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/run-a.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/run-a.stdout.txt",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/run-a.stdout.txt",
+      "bytes": 52,
+      "sha256": "ef7a6222cbdacad6b1f3d4eac2135e28318e3e4fa97c64cd97fa58f8670b137c"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/run-b.exitcode",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/run-b.exitcode",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/run-b.receipt.json",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/run-b.receipt.json",
+      "bytes": 437,
+      "sha256": "7d80b35f33d0aecc27121b0620413226cc949c633aae70c1df886193218fe88b"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/run-b.stderr.txt",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/run-b.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/run-b.stdout.txt",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/run-b.stdout.txt",
+      "bytes": 52,
+      "sha256": "46e32beb13f5d62a143b4f06fb66d982572ef1c785ee7c80b328595f2b985a47"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/run-c.exitcode",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/run-c.exitcode",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/run-c.receipt.json",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/run-c.receipt.json",
+      "bytes": 448,
+      "sha256": "cf988a370589a91657b62c7a4b6eb5896dc92fc7a509d0b0189df63fcbf9d408"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/run-c.stderr.txt",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/run-c.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/run-c.stdout.txt",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/run-c.stdout.txt",
+      "bytes": 52,
+      "sha256": "90855485ff80016b0d97e6e4526760dbe3fc105cc66dfc9416705e4a2765175b"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/run.py",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/run.py",
+      "bytes": 1036,
+      "sha256": "a611ea2421b8431635ecb2e547370b36fd8632d0d7a91d7025b0529388b9a2b9"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/src/cocos/physics/framework/components/colliders/collider.ts",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/src/cocos/physics/framework/components/colliders/collider.ts",
+      "bytes": 25264,
+      "sha256": "53a0d357c2483e64bf2015c54911099e0d08cdbf68bdeeddc5ad5a469deea718"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/src/cocos/physics/framework/physics-material-transaction.ts",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/src/cocos/physics/framework/physics-material-transaction.ts",
+      "bytes": 29093,
+      "sha256": "e5fd0efdac79228970560a0bca6c9dde31e5436a69d9b499cb02867f27c8ab8c"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/src/cocos/physics/framework/physics-system.ts",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/src/cocos/physics/framework/physics-system.ts",
+      "bytes": 44508,
+      "sha256": "3726b321e4936d4a991ee2bfb027b61344781164ff1e42510f9f311da27dee63"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/structure-a.exitcode",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/structure-a.exitcode",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/structure-a.receipt.json",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/structure-a.receipt.json",
+      "bytes": 441,
+      "sha256": "39b43cce92353d8d24870158c0a3e95bd06f919264f587f7ffc64461d9f2928c"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/structure-a.stderr.txt",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/structure-a.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/structure-a.stdout.txt",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/structure-a.stdout.txt",
+      "bytes": 95,
+      "sha256": "0a75293ee43d2a739437a75f58e0be1f64746a4f51eff6978d0b697f120ca0db"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/structure-b.exitcode",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/structure-b.exitcode",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/structure-b.receipt.json",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/structure-b.receipt.json",
+      "bytes": 441,
+      "sha256": "0531566d6b8bd6947fb07f6d6c2cd66759447ea73383fd5b212e6d16b1b424aa"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/structure-b.stderr.txt",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/structure-b.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/structure-b.stdout.txt",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/structure-b.stdout.txt",
+      "bytes": 95,
+      "sha256": "0a75293ee43d2a739437a75f58e0be1f64746a4f51eff6978d0b697f120ca0db"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/typecheck-a.exitcode",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/typecheck-a.exitcode",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/typecheck-a.receipt.json",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/typecheck-a.receipt.json",
+      "bytes": 444,
+      "sha256": "68d9e933bb8183358b80b5261c5850f03a634f09e330e06b8e899d74d64f6d36"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/typecheck-a.stderr.txt",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/typecheck-a.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/typecheck-a.stdout.txt",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/typecheck-a.stdout.txt",
+      "bytes": 76,
+      "sha256": "345d36df89bfba30d2a9829c7cb34bcdd2b774607a052de359e53c2434209776"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/typecheck-b.exitcode",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/typecheck-b.exitcode",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/typecheck-b.receipt.json",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/typecheck-b.receipt.json",
+      "bytes": 455,
+      "sha256": "44e8425b57706159cee0caa6907ff88f444d716772fbb3ec7162924f1bd317ab"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/typecheck-b.stderr.txt",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/typecheck-b.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/typecheck-b.stdout.txt",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/typecheck-b.stdout.txt",
+      "bytes": 76,
+      "sha256": "345d36df89bfba30d2a9829c7cb34bcdd2b774607a052de359e53c2434209776"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/typecheck.cjs",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/typecheck.cjs",
+      "bytes": 8119,
+      "sha256": "ebbc06bcd1b355a325a6c7338aefa6458c7e07382f613464042297fd0709d7ce"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/validate.py",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/validate.py",
+      "bytes": 3456,
+      "sha256": "a3068beb2f5ed1eabdd643d34b81eb52a4a22bc4154f1c59b2a25cf326ef67a9"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/validation.exitcode",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/validation.exitcode",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/validation.json",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/validation.json",
+      "bytes": 3537,
+      "sha256": "5681f6ef47bdcc326e7955993890ce2b853840f0a598d1c588485cc46de88cc5"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/validation.receipt.json",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/validation.receipt.json",
+      "bytes": 428,
+      "sha256": "13752cfdbe0aa6a44062ad3c7fc8cd99191c39f6e91b53f0d4a95312a0dfe4c6"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/validation.stderr.txt",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/validation.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/validation.stdout.txt",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/validation.stdout.txt",
+      "bytes": 1024,
+      "sha256": "ea7306568ba66b90304bf824980f272ad69bc66aac5d80c2554a114a647f97d9"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/verify-closure.py",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/verify-closure.py",
+      "bytes": 1714,
+      "sha256": "6cd291a54f6ded0ddd5c9d83f283e8a0fdb6b77445ebb9320a9ec089db58c1a0"
+    },
+    {
+      "source": "../box3d-private-subscription-sites-20261022/verify-legacy-structure.cjs",
+      "retained": "tools/verify/box3d/private-subscription-sites-source-20261022-a/verify-legacy-structure.cjs",
+      "bytes": 2771,
+      "sha256": "3f64bc805e8d3ca8e3672bf810feb71d86212988160de3dd39f50b598d101cb3"
+    },
+    {
+      "source": "../box3d-checkpoint36-finalization-20261022/all-files-diff-check.exit",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/checkpoint36-finalization/all-files-diff-check.exit",
+      "bytes": 2,
+      "sha256": "53c234e5e8472b6ac51c1ae1cab3fe06fad053beb8ebfd8977b010655bfdd3c3"
+    },
+    {
+      "source": "../box3d-checkpoint36-finalization-20261022/all-files-diff-check.log",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/checkpoint36-finalization/all-files-diff-check.log",
+      "bytes": 32389,
+      "sha256": "d9c4d0acb951d3e167bc4290551fa70117f7a678f4fe0a8232c1855dda1549b5"
+    },
+    {
+      "source": "../box3d-checkpoint36-finalization-20261022/bundle.exit",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/checkpoint36-finalization/bundle.exit",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "source": "../box3d-checkpoint36-finalization-20261022/bundle.stderr.log",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/checkpoint36-finalization/bundle.stderr.log",
+      "bytes": 122,
+      "sha256": "bb6e92770b070f5445ac427fc089deadec32389a8a80b6c264e4fd23b885c6a4"
+    },
+    {
+      "source": "../box3d-checkpoint36-finalization-20261022/bundle.stdout.log",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/checkpoint36-finalization/bundle.stdout.log",
+      "bytes": 355,
+      "sha256": "32ccc8b54bd7ded09ea659cf1fb9f7e671ecd017b167f03281ff055e8d8992db"
+    },
+    {
+      "source": "../box3d-checkpoint36-finalization-20261022/commit.exit",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/checkpoint36-finalization/commit.exit",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "source": "../box3d-checkpoint36-finalization-20261022/commit.stderr.log",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/checkpoint36-finalization/commit.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "../box3d-checkpoint36-finalization-20261022/commit.stdout.log",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/checkpoint36-finalization/commit.stdout.log",
+      "bytes": 163609,
+      "sha256": "9dfc4b0acced8901bafb18f6e8a2b88e578348df9f5901fcb36bbc40a5a9a48e"
+    },
+    {
+      "source": "../box3d-checkpoint36-finalization-20261022/evidence-verify.exit",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/checkpoint36-finalization/evidence-verify.exit",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "source": "../box3d-checkpoint36-finalization-20261022/evidence-verify.stderr.log",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/checkpoint36-finalization/evidence-verify.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "../box3d-checkpoint36-finalization-20261022/evidence-verify.stdout.log",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/checkpoint36-finalization/evidence-verify.stdout.log",
+      "bytes": 1883,
+      "sha256": "ccf1a6a29c465666bbef25629b83250f0043b20e57fcc18bc73c62bf078fdad6"
+    },
+    {
+      "source": "../box3d-checkpoint36-finalization-20261022/product-diff-check.exit",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/checkpoint36-finalization/product-diff-check.exit",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "source": "../box3d-checkpoint36-finalization-20261022/product-diff-check.log",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/checkpoint36-finalization/product-diff-check.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "../box3d-checkpoint36-finalization-20261022/restore.exit",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/checkpoint36-finalization/restore.exit",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "source": "../box3d-checkpoint36-finalization-20261022/restore.stderr.log",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/checkpoint36-finalization/restore.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "../box3d-checkpoint36-finalization-20261022/restore.stdout.log",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/checkpoint36-finalization/restore.stdout.log",
+      "bytes": 598,
+      "sha256": "3723ea45407026274021209207ae5c5f23f272b820a0cab640a0379419671166"
+    },
+    {
+      "source": "../box3d-checkpoint36-finalization-20261022/transport-interruption-191743.json",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/checkpoint36-finalization/transport-interruption-191743.json",
+      "bytes": 682,
+      "sha256": "73b91cd65abcc3fca382e57ed73e8649a495690809748768313826c316652d2b"
+    },
+    {
+      "source": "../box3d-remote-stage36-transfer/api-status-before-commit-retry.json",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/checkpoint36-transfer/api-status-before-commit-retry.json",
+      "bytes": 30129,
+      "sha256": "56b486ba3b168cfd809f0b661114655428a9559adec6162a2ccb2c85bc7c9396"
+    },
+    {
+      "source": "../box3d-remote-stage36-transfer/authorized-scope-readback.json",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/checkpoint36-transfer/authorized-scope-readback.json",
+      "bytes": 604,
+      "sha256": "2a3ea527f2840f0f3e1f5493fee641047818e658fbea6cfc1db088045b3749ed"
+    },
+    {
+      "source": "../box3d-remote-stage36-transfer/manifest.json",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/checkpoint36-transfer/manifest.json",
+      "bytes": 324,
+      "sha256": "0c3fa740f720190c1cc09b0b8a2c48e729a5600a7c65e765f826b0128d4724d8"
+    },
+    {
+      "source": "../box3d-remote-stage36-transfer/metadata.json",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/checkpoint36-transfer/metadata.json",
+      "bytes": 334187,
+      "sha256": "ac7744dff954eb7e6aad8ca1a8065ca28d789ae48806bcbf1bf326c54c54d52f"
+    },
+    {
+      "source": "../box3d-remote-stage36-transfer/prepare.py",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/checkpoint36-transfer/prepare.py",
+      "bytes": 2801,
+      "sha256": "272bf55abd5de063a8c2bd333191c069e952d9fbbd0f3d6042bef230e9764423"
+    },
+    {
+      "source": "../box3d-remote-stage36-transfer/read.py",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/checkpoint36-transfer/read.py",
+      "bytes": 886,
+      "sha256": "1ea3441c13995fb52f46326527cc1addfbd6ec187afb6c1acfaebcaa0aa05700"
+    },
+    {
+      "source": "../box3d-native-cache-reclaim-plan-f-20261022/native-cache-readonly-audit.json",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/native-cache-audit-f/native-cache-readonly-audit.json",
+      "bytes": 89074,
+      "sha256": "3c37f19bbc6b0a5a3af601dd86e095445175c3a68f91598a9e21b8d6c1a20b08"
+    },
+    {
+      "source": "../box3d-duplicate-download-reclaim-plan-g-20261022/deletion-receipt.json",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/duplicate-download-reclaim-g/deletion-receipt.json",
+      "bytes": 16376,
+      "sha256": "892daa36720abbee72b9def24065f71f1812a4ef9c86983bacfc8860355d5995"
+    },
+    {
+      "source": "../box3d-duplicate-download-reclaim-plan-g-20261022/plan.json",
+      "retained": "docs/physics/box3d/rebuild/private-material-checkpoint37-intake-20261022/duplicate-download-reclaim-g/plan.json",
+      "bytes": 7359,
+      "sha256": "0a4ac17921c9f31261722112781d38daef147028d6cea9f4a8f3147d101c3abd"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "status": "RED_LEGACY_METADATA_DOWNGRADE_ACCEPTED_BY_INITIAL_GUARD",
+  "valid36": "PASS",
+  "priorCommit": "45b526f248575a0542af8eed591c0cf8c8a1ba8d",
+  "sourceHashes": {
+    "rebuild-incremental-checkpoint.py": "aec4b5ff179416e9294c3f56c765e5df357322fae9533451b22a9a7d682b8be1",
+    "restore-library-checkpoint.py": "4eec06ded94298aca767e6e9a9fcf886dfc6f94beef413a4238d6e1d32e602fb"
+  }
+}

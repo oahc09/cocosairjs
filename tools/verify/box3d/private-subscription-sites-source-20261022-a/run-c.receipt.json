@@ -1,0 +1,13 @@
+{
+  "argv": [
+    "node",
+    "controls.cjs",
+    "evidence/run-c"
+  ],
+  "cwd": "/workspace/scratch/62d43a81bbde/box3d-private-subscription-sites-20261022",
+  "startedAt": "2026-10-22T19:16:14.079028+00:00",
+  "endedAt": "2026-10-22T19:16:15.678707+00:00",
+  "exitCode": 0,
+  "stdoutSha256": "90855485ff80016b0d97e6e4526760dbe3fc105cc66dfc9416705e4a2765175b",
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

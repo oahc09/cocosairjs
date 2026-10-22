@@ -177,6 +177,18 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
                     this.invalidatePending();
                     this.fault(error);
                 },
+                (material, includeDefault, components) => {
+                    const updates = components.filter((component) => component.shape !== null)
+                        .map((component) => ({ shape: component.shape!, material, inheritsDefault: false }));
+                    if (includeDefault)
+                        for (const [shape, inherited] of this.#materialShapes)
+                            if (inherited) updates.push({ shape, material, inheritsDefault: true });
+                    const plan = this.#prepareMaterialBatch(updates, includeDefault ? material : undefined);
+                    return Object.freeze({ native: plan.native, commitCaches: () => {
+                        plan.commitCaches();
+                        for (const component of components) component.commitCaches();
+                    } });
+                },
             );
             this.#commandOwner.installSystemControlObservation((error) => {
                 this.invalidatePending();
@@ -492,6 +504,8 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
                         this.assertReadyState('copied collider material');
                         if (shape) this.#applyShapeMaterialCopied(shape, value);
                     },
+                    consumeMaterialValuesPreparation: (adapter, authority, value) =>
+                        this.#commandOwner.consumeMaterialValuesPreparation(authority, adapter, value),
                     unregisterShapeMaterial: (shape) => this.unregisterMaterialShape(shape),
                     released: (key, value, logical) => {
                         this.#commandOwner.retireBodyAfterDestroy(logical);

@@ -1,0 +1,189 @@
+--- a/src/cocos/physics/framework/components/colliders/collider.ts
++++ b/src/cocos/physics/framework/components/colliders/collider.ts
+@@ -38,7 +38,7 @@
+ import { selector, createShape } from '../../physics-selector';
+ 
+ type Callback = (...args: any[]) => any;
+-// Only observed paths retain candidate listener identities for independent teardown.
++// Observed paths retain legacy listeners; an empty set also selects independent private teardown.
+ const observedMaterialAssets = new WeakMap<Collider, Set<PhysicsMaterial>>();
+ function retainObservedMaterial (collider: Collider, material: PhysicsMaterial | null): void {
+     let assets = observedMaterialAssets.get(collider);
+@@ -123,21 +123,26 @@
+             const change = beginPhysicsMaterialChange(this, 'collider-material-clone');
+             if (change) {
+                 try {
++                    if (change.privateSubscriptions) retainObservedMaterial(this, null);
+                     change.prepare(() => ({ before: this._materialIdentity(), candidate: this._materialIdentity() }));
+                     change.effect('clone-allocation-entered');
+                     const previous = this._material;
+                     const cloned = previous.clone();
+                     change.acceptClone(cloned);
+-                    retainObservedMaterial(this, previous);
+-                    change.effect('listener-edit-entered');
+-                    previous.off(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
+-                    observedMaterialAssets.get(this)!.delete(previous);
++                    if (!change.privateSubscriptions) {
++                        retainObservedMaterial(this, previous);
++                        change.effect('listener-edit-entered');
++                        previous.off(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
++                        observedMaterialAssets.get(this)!.delete(previous);
++                    }
+                     this._material = cloned;
+                     change.effect('cache-written');
+-                    retainObservedMaterial(this, cloned);
+-                    cloned.on(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
++                    if (!change.privateSubscriptions) {
++                        retainObservedMaterial(this, cloned);
++                        cloned.on(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
++                    }
+                     this._isSharedMaterial = false;
+-                    change.effect('listeners-complete');
++                    if (!change.privateSubscriptions) change.effect('listeners-complete');
+                     change.commit(() => this._materialIdentity());
+                 } catch (error) { change.fail(error, () => this._materialIdentity()); }
+                 finally { change.dispose(); }
+@@ -156,19 +161,22 @@
+         const change = beginPhysicsMaterialChange(this, 'collider-material-set');
+         if (change) {
+             try {
++                if (change.privateSubscriptions) retainObservedMaterial(this, null);
+                 change.prepare(() => ({ before: this._materialIdentity(), candidate: { kind: 'collider-material', material: value, shared: this._isSharedMaterial } }));
+                 change.apply();
+                 if (this._material !== value) {
+-                    retainObservedMaterial(this, this._material);
+-                    change.effect('listener-edit-entered');
+-                    this._material?.off(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
+-                    if (this._material) observedMaterialAssets.get(this)!.delete(this._material);
+-                    retainObservedMaterial(this, value);
+-                    value?.on(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
++                    if (!change.privateSubscriptions) {
++                        retainObservedMaterial(this, this._material);
++                        change.effect('listener-edit-entered');
++                        this._material?.off(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
++                        if (this._material) observedMaterialAssets.get(this)!.delete(this._material);
++                        retainObservedMaterial(this, value);
++                        value?.on(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
++                    }
+                     if (this._material && value) this._isSharedMaterial = false;
+                     this._material = value;
+                     change.effect('cache-written');
+-                    change.effect('listeners-complete');
++                    if (!change.privateSubscriptions) change.effect('listeners-complete');
+                 }
+                 change.commit(() => this._materialIdentity());
+             } catch (error) { change.fail(error, () => this._materialIdentity()); }
+@@ -507,12 +515,15 @@
+         const change = beginPhysicsMaterialChange(this, 'collider-material-initialize');
+         if (change) {
+             try {
++                if (change.privateSubscriptions) retainObservedMaterial(this, null);
+                 change.prepare(() => ({ before: this._materialIdentity(), candidate: this._materialIdentity() }));
+                 this._shape.onLoad!();
+-                retainObservedMaterial(this, this._material);
+-                change.effect('listener-edit-entered');
+-                this._material?.on(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
+-                change.effect('listeners-complete');
++                if (!change.privateSubscriptions) {
++                    retainObservedMaterial(this, this._material);
++                    change.effect('listener-edit-entered');
++                    this._material?.on(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
++                    change.effect('listeners-complete');
++                }
+                 change.commit(() => this._materialIdentity());
+             } catch (error) { change.fail(error, () => this._materialIdentity()); }
+             finally { change.dispose(); }
+--- a/src/cocos/physics/framework/physics-material-transaction.ts
++++ b/src/cocos/physics/framework/physics-material-transaction.ts
+@@ -90,7 +90,10 @@
+ export interface PhysicsMaterialDelegateLease {
+     dispose(): void;
+ }
++export type PhysicsMaterialSubscriptionMode = 'private' | 'legacy';
+ export interface PhysicsMaterialChange {
++    /** Copied trusted registration capability, never inferred from public state. */
++    readonly privateSubscriptions: boolean;
+     prepare(reader: () => Readonly<{ before: PhysicsMaterialIdentity; candidate: PhysicsMaterialIdentity }>): void;
+     /** No execution callback or new candidate is accepted here. Exactly one delegate. */
+     apply(): void;
+@@ -111,6 +114,7 @@
+ interface Entry {
+     readonly original: PhysicsMaterialDelegate;
+     readonly copied: PhysicsMaterialDelegate;
++    readonly privateSubscriptions: boolean;
+     active?: Active;
+     cleanup?: Readonly<PhysicsMaterialCleanupObserver>;
+     cleanupCaptured?: boolean;
+@@ -206,15 +210,21 @@
+         target: object,
+         delegate: PhysicsMaterialDelegate,
+         cleanup?: PhysicsMaterialCleanupObserver,
++        subscriptionMode?: PhysicsMaterialSubscriptionMode,
+     ): PhysicsMaterialDelegateLease {
+         const registry = this;
+         let copied!: PhysicsMaterialDelegate;
++        let privateSubscriptions = false;
+         let entry!: Entry;
+         let copiedCleanup: Readonly<PhysicsMaterialCleanupObserver> | undefined;
+         // Function copying occurs INSIDE B0 registration admission, not before it.
+         const observer = this.#observer.register(target, {
+             get open() {
+                 if (registry.#entries.has(target)) throw new Error('Material target already has a physical delegate.');
++                const mode = subscriptionMode === undefined ? 'legacy' : subscriptionMode;
++                if (mode !== 'private' && mode !== 'legacy')
++                    throw new TypeError('Expected private or legacy material subscription mode.');
++                privateSubscriptions = mode === 'private';
+                 copied = copyFunctions(delegate);
+                 if (cleanup !== undefined) {
+                     if (!object(cleanup)) throw new TypeError('Expected cleanup observer.');
+@@ -263,7 +273,7 @@
+                 }
+             },
+         });
+-        entry = { original: delegate, copied, cleanup: copiedCleanup };
++        entry = { original: delegate, copied, privateSubscriptions, cleanup: copiedCleanup };
+         if (copiedCleanup) this.#cleanupGenerations.set(target, copiedCleanup.generation);
+         this.#entries.set(target, entry);
+         const lease: PhysicsMaterialDelegateLease = Object.freeze({
+@@ -433,6 +443,7 @@
+             return state.context;
+         };
+         const result: PhysicsMaterialChange = Object.freeze({
++            privateSubscriptions: entry.privateSubscriptions,
+             prepare(
+                 reader: () => Readonly<{ before: PhysicsMaterialIdentity; candidate: PhysicsMaterialIdentity }>,
+             ): void {
+@@ -593,8 +604,9 @@
+     target: object,
+     delegate: PhysicsMaterialDelegate,
+     cleanup?: PhysicsMaterialCleanupObserver,
++    subscriptionMode?: PhysicsMaterialSubscriptionMode,
+ ): PhysicsMaterialDelegateLease {
+-    return registry.register(target, delegate, cleanup);
++    return registry.register(target, delegate, cleanup, subscriptionMode);
+ }
+ export function beginPhysicsMaterialChange(
+     target: object,
+--- a/src/cocos/physics/framework/physics-system.ts
++++ b/src/cocos/physics/framework/physics-system.ts
+@@ -278,12 +278,16 @@
+                     candidate: { kind: 'system-default-material', material },
+                 }));
+                 change.apply();
+-                change.effect('listener-edit-entered');
+-                if (this._material !== material) this._material?.off(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
++                if (!change.privateSubscriptions) {
++                    change.effect('listener-edit-entered');
++                    if (this._material !== material) this._material?.off(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
++                }
+                 this._material = material;
+                 change.effect('cache-written');
+-                this._material.on(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
+-                change.effect('listeners-complete');
++                if (!change.privateSubscriptions) {
++                    this._material.on(PhysicsMaterial.EVENT_UPDATE, this._updateMaterial, this);
++                    change.effect('listeners-complete');
++                }
+                 change.commit(() => ({ kind: 'system-default-material', material: this._material }));
+             } catch (error) { change.fail(error, () => ({ kind: 'system-default-material', material: this._material ?? null })); }
+             finally { change.dispose(); }

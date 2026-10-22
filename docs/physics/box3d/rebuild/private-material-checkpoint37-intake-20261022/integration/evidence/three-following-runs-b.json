@@ -1,0 +1,41 @@
+[
+  {
+    "case": "detach-public",
+    "command": [
+      "node",
+      "tools/verify/box3d/owner-shared-material-real-wasm.mjs",
+      "tools/physics/box3d/output/command-wasm-release-20261022-n4",
+      "docs/physics/box3d/rebuild/owner-shared-material-private-release-20261022-detach-public-b",
+      "detach-public"
+    ],
+    "exitCode": 0,
+    "output": "docs/physics/box3d/rebuild/owner-shared-material-private-release-20261022-detach-public-b",
+    "startAvailableBytes": 1020030976
+  },
+  {
+    "case": "owned-destroy",
+    "command": [
+      "node",
+      "tools/verify/box3d/owner-shared-material-real-wasm.mjs",
+      "tools/physics/box3d/output/command-wasm-release-20261022-n4",
+      "docs/physics/box3d/rebuild/owner-shared-material-private-release-20261022-owned-destroy-b",
+      "owned-destroy"
+    ],
+    "exitCode": 0,
+    "output": "docs/physics/box3d/rebuild/owner-shared-material-private-release-20261022-owned-destroy-b",
+    "startAvailableBytes": 1017405440
+  },
+  {
+    "case": "notification-order",
+    "command": [
+      "node",
+      "tools/verify/box3d/owner-shared-material-real-wasm.mjs",
+      "tools/physics/box3d/output/command-wasm-release-20261022-n4",
+      "docs/physics/box3d/rebuild/owner-shared-material-private-release-20261022-notification-order-b",
+      "notification-order"
+    ],
+    "exitCode": 0,
+    "output": "docs/physics/box3d/rebuild/owner-shared-material-private-release-20261022-notification-order-b",
+    "startAvailableBytes": 1014681600
+  }
+]

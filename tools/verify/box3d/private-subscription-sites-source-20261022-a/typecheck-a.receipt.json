@@ -1,0 +1,13 @@
+{
+  "argv": [
+    "node",
+    "box3d-private-subscription-sites-20261022/typecheck.cjs",
+    "evidence/typecheck-a"
+  ],
+  "cwd": "/workspace/scratch/62d43a81bbde",
+  "exitCode": 0,
+  "stdoutSha256": "345d36df89bfba30d2a9829c7cb34bcdd2b774607a052de359e53c2434209776",
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "reconstructedFromExactIssuedCommand": true,
+  "subprocessTimestamps": "NOT_CAPTURED"
+}

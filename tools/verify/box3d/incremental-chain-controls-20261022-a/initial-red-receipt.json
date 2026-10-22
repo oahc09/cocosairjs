@@ -1,0 +1,30 @@
+{
+  "status": "RED_LEGACY_METADATA_DOWNGRADE_ACCEPTED_BY_INITIAL_GUARD",
+  "timeUTC": "2026-10-22T19:51:49.490351+00:00",
+  "sourceHashes": {
+    "rebuild-incremental-checkpoint.py": "aec4b5ff179416e9294c3f56c765e5df357322fae9533451b22a9a7d682b8be1",
+    "restore-library-checkpoint.py": "4eec06ded94298aca767e6e9a9fcf886dfc6f94beef413a4238d6e1d32e602fb"
+  },
+  "exactFunctionLines": [
+    26,
+    42
+  ],
+  "validExact36PrerequisiteAccepted": true,
+  "downgradedCandidateAccepted": {
+    "commit": "SYNTHETIC_CHECKPOINT37_METADATA_ONLY",
+    "prerequisite": {
+      "commit": "e5c5674bfe08be0c9fda72c484f4380bd0d0e2c6",
+      "libraryFileId": "libfile_10c86f5827f481919e3938fbb0c2670b"
+    }
+  },
+  "priorCommit": "45b526f248575a0542af8eed591c0cf8c8a1ba8d",
+  "missing36SourcePinAndLibraryProofAccepted": true,
+  "findings": [
+    "The branch selector is presence of sourceCheckpointReceiptSha256. A declared legacy22 prerequisite bypasses exact36 identity checks.",
+    "Initial restore code does not compare the actual Git bundle prerequisite header to the receipt prerequisite.",
+    "This is a metadata consistency boundary, not proof of incorrect normally generated paired-receipt output."
+  ],
+  "noBundleReadOrCopied": true,
+  "noGitCommandsOrActualRestore": true,
+  "scope": "Exact-AST guard unit control only. Not actual checkpoint37 Library download, full-file restoration, standalone/full-repository restoration, build closure or physical acceptance."
+}

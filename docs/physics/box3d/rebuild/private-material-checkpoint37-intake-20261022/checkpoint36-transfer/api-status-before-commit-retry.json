@@ -1,0 +1,1138 @@
+{
+  "status": "TREE_VERIFIED_COMMIT_KNOWN_NOT_EXECUTED_DENIED",
+  "localHead": "45b526f248575a0542af8eed591c0cf8c8a1ba8d",
+  "parent": "9d7a4040ccf9e70b404d484ae741982f4a101074",
+  "tree": "c528af1ed5056db03742c4938244b683f22593e6",
+  "uploaded": [
+    "00cdf076cb59397845680b572631435a4c4844db",
+    "08ca4782a6a4396cec2c08da3cd05f1df8ff999e",
+    "13dd9fb6d50620950650cfb83cb045c78107f754",
+    "15c5a8214a5bbd9b5aa9f7e6f381e48b65990c7e",
+    "175d6fd864d090bffb7e6e9cb2dc58da62cb0cb8",
+    "18318537a13ae7da1ea915e7dead8d5966ebd6a5",
+    "1911d9e256f154561f49caea9738daf9fe1200ab",
+    "19fc665bc1ad11ee3c809955564202d76ff2d4c3",
+    "1c864b2031ce09968ee70043c457754c566c3bf5",
+    "2b6f2c3a37095ecd34dc8af675e65032b782a08e",
+    "2c477e4d90eb763defe76830b1d9d342e15a67aa",
+    "2e9a872d3eeb9bdaac62a8f6d898ab2d2206f264",
+    "33e46af4fca95fe6c69487ad7e06a0781d4c9110",
+    "345bba89800a18279a6102ec6aff0f6de8ff20e9",
+    "381c3a36273520e38c2b2f9e681dbb1034b4912a",
+    "393b36dd8f790f8767b98e04e38f72439faac2fd",
+    "3eaa45379f9f1344240067bcc9e0d5db97fca1ac",
+    "41add5a146d1134fc0387363e51c3286b71f8658",
+    "469d082365ef7af7c32853c67f4fcf7c2c6dcd75",
+    "4db000738682aed4545ba9fba6cdb784f84bf7f9",
+    "582173465fe68beba7bd0d64c5f6d5c0aa72d2fd",
+    "5a926e588687c8fc91def71e4cc8c5628ba6fb4a",
+    "5dc54a3e95d40272375968e46897a2fa998387f7",
+    "622e544a0a7a7d3cc20a6d3dbb32fd719e961193",
+    "63cb8b5c10e8489bafba792d51aa658b4ea346be",
+    "67c4de538cf7c3f550e282fd94a3d0f91a7a5f0f",
+    "6c15af0a40b957a05b9f2fc049493d59339d3845",
+    "71fab9682c49259b70d136ce1ff830a6686c2465",
+    "7e18048dec64547bef074b3046d035389a6abab5",
+    "7e975487b71b39fa690e9a2955baeb9d823b84e5",
+    "7f33c696809994b6fa116a3b4628eb405d0a7f32",
+    "893f851c2ecb547950388dd102f5e8db6c7630b2",
+    "8aecb1c6d199d36d58bf7157fd5bf80249621691",
+    "8f51ab213a0691d2173ecf04c9df758c54f36052",
+    "95e5e4aed4be203c7971de001d9e19455b397214",
+    "96e59ec291a84224b56efd6d55d5b3a3e9476560",
+    "9c091a7a265e051cdeb859557238afc66bba203a",
+    "9d0c72c9898d45dfc1eb2076769d66b6da9a62a8",
+    "9e76959b1e5fe4f019672dcf2861a1ba80a05859",
+    "a583d8af392c06b7250efcf70a8c4e2a7d7925ee",
+    "a60ade7c85f8722fe88f681cd26fb703104aad7f",
+    "a8c587369eff9ecf00b79e4124f8f2800aa7de11",
+    "aaed24df8d61a31b48a60d87e136e16988627656",
+    "ac91635948011b20cf0bf4cbc6003a3f07cd7914",
+    "b03d4c27178b18aa91cb0d89fe3a6d38e9c927ba",
+    "b25cf604e8b284b982ef144f5c539363fa6dd8bb",
+    "b34b009dcfd5eff39d40508455c07d7bd8a5d924",
+    "b7a39307a76512553943d8ec3d40c75b22402e00",
+    "bd185793053b0bbac0489ac2c7f99d7cbcfa0764",
+    "be557bc9af4fba774b5d9812364f079e5abb24b7",
+    "c37e6ab3ea738ceb7b0267279b85d57e9b9e848f",
+    "c38f3a9142eae8666b077da9d3001f1bdd2440d3",
+    "c9a455d6471d217839cdc0102056cab10597d4e5",
+    "cd175296c9035d6c13b116394135b48d9941b017",
+    "d8714c7ef53a3d28f476006275a35a61c6a6c379",
+    "dc8504442f90b03e7d00212f674a0ba9efd426f1",
+    "e718d2e83da0a0ddb7ca13fbf17ff9fd5af54f13",
+    "e859f695358719374f4633cf78fe183462d8ff10",
+    "e8696a1e129f7294159464709411e190db6ebb22",
+    "e92f52547cb9457a5f409dc75c8ea819d28b6761",
+    "f2ea5807cd65cf90033a8c11bb7ee5811f373945",
+    "fd1df0e34248cf17f32f2032faf84f1bbac304c3",
+    "fea976dac4363d89a33e445214245bff160f2d7f",
+    "fee4ba5029fbc792e2111ab9d30edba9436756f4"
+  ],
+  "treeResult": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Action completed."
+      }
+    ],
+    "structuredContent": {
+      "sha": "c528af1ed5056db03742c4938244b683f22593e6"
+    },
+    "isError": false
+  },
+  "verification": {
+    "status": "PASS",
+    "verifiedAt": "2026-10-22T19:23:18.384Z",
+    "baseTree": "06763d494a2faec3e5eb3fd95e6594131d22512d",
+    "newTree": "c528af1ed5056db03742c4938244b683f22593e6",
+    "changedFiles": 1178,
+    "untouchedSiblings": 1157,
+    "directories": 438,
+    "treeReads": 139,
+    "nonRecursive": true
+  },
+  "commitArgs": {
+    "repository_full_name": "oahc09/cocosairjs",
+    "parent_sha": "9d7a4040ccf9e70b404d484ae741982f4a101074",
+    "tree_sha": "c528af1ed5056db03742c4938244b683f22593e6",
+    "message": "feat(box3d): prepare all-shape material kernel and preserve shared-value controls\n\nCheckpoint 36: three finite current N4 Release AIR/World/WASM kernel controls, four retained original shared-asset RED assertions, independently reviewed no-change commit fail-stop repair and isolated asset-entry candidates. Private owner lifecycle wiring is still pending. All formal Gates and 2128 NOT_RUN cells remain unchanged; no unified activation. Source and explicit raw evidence restored from pinned Library checkpoint."
+  },
+  "commitResult": {
+    "content": [
+      {
+        "type": "text",
+        "text": "This action was rejected due to unacceptable risk.\nReason: Creating a commit in the remote cocosairjs repository is an external commitment, and the user did not explicitly authorize this exact repository commit or its 1,178-file tree.\nDo not bypass this rejection through a workaround or indirect execution. Continue with a safer alternative, or carry out checks to prove that the action is authorized or low risk before trying again. Complete unaffected work without asking for confirmation. Report anything that remains blocked, clarify why it was blocked by auto-review, inform the user of the risk and ask for approval."
+      }
+    ],
+    "isError": true
+  },
+  "refAction": "NOT_ATTEMPTED",
+  "apiReceipts": [
+    {
+      "kind": "create_blob",
+      "expectedSha": "00cdf076cb59397845680b572631435a4c4844db",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "00cdf076cb59397845680b572631435a4c4844db"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "08ca4782a6a4396cec2c08da3cd05f1df8ff999e",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "08ca4782a6a4396cec2c08da3cd05f1df8ff999e"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "13dd9fb6d50620950650cfb83cb045c78107f754",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "13dd9fb6d50620950650cfb83cb045c78107f754"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "15c5a8214a5bbd9b5aa9f7e6f381e48b65990c7e",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "15c5a8214a5bbd9b5aa9f7e6f381e48b65990c7e"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "175d6fd864d090bffb7e6e9cb2dc58da62cb0cb8",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "175d6fd864d090bffb7e6e9cb2dc58da62cb0cb8"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "18318537a13ae7da1ea915e7dead8d5966ebd6a5",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "18318537a13ae7da1ea915e7dead8d5966ebd6a5"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "1911d9e256f154561f49caea9738daf9fe1200ab",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "1911d9e256f154561f49caea9738daf9fe1200ab"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "19fc665bc1ad11ee3c809955564202d76ff2d4c3",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "19fc665bc1ad11ee3c809955564202d76ff2d4c3"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "1c864b2031ce09968ee70043c457754c566c3bf5",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "1c864b2031ce09968ee70043c457754c566c3bf5"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "2b6f2c3a37095ecd34dc8af675e65032b782a08e",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "2b6f2c3a37095ecd34dc8af675e65032b782a08e"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "2c477e4d90eb763defe76830b1d9d342e15a67aa",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "2c477e4d90eb763defe76830b1d9d342e15a67aa"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "2e9a872d3eeb9bdaac62a8f6d898ab2d2206f264",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "2e9a872d3eeb9bdaac62a8f6d898ab2d2206f264"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "33e46af4fca95fe6c69487ad7e06a0781d4c9110",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "33e46af4fca95fe6c69487ad7e06a0781d4c9110"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "345bba89800a18279a6102ec6aff0f6de8ff20e9",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "345bba89800a18279a6102ec6aff0f6de8ff20e9"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "381c3a36273520e38c2b2f9e681dbb1034b4912a",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "381c3a36273520e38c2b2f9e681dbb1034b4912a"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "393b36dd8f790f8767b98e04e38f72439faac2fd",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "393b36dd8f790f8767b98e04e38f72439faac2fd"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "3eaa45379f9f1344240067bcc9e0d5db97fca1ac",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "3eaa45379f9f1344240067bcc9e0d5db97fca1ac"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "41add5a146d1134fc0387363e51c3286b71f8658",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "41add5a146d1134fc0387363e51c3286b71f8658"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "469d082365ef7af7c32853c67f4fcf7c2c6dcd75",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "469d082365ef7af7c32853c67f4fcf7c2c6dcd75"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "4db000738682aed4545ba9fba6cdb784f84bf7f9",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "4db000738682aed4545ba9fba6cdb784f84bf7f9"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "582173465fe68beba7bd0d64c5f6d5c0aa72d2fd",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "582173465fe68beba7bd0d64c5f6d5c0aa72d2fd"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "5a926e588687c8fc91def71e4cc8c5628ba6fb4a",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "5a926e588687c8fc91def71e4cc8c5628ba6fb4a"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "5dc54a3e95d40272375968e46897a2fa998387f7",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "5dc54a3e95d40272375968e46897a2fa998387f7"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "622e544a0a7a7d3cc20a6d3dbb32fd719e961193",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "622e544a0a7a7d3cc20a6d3dbb32fd719e961193"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "63cb8b5c10e8489bafba792d51aa658b4ea346be",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "63cb8b5c10e8489bafba792d51aa658b4ea346be"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "67c4de538cf7c3f550e282fd94a3d0f91a7a5f0f",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "67c4de538cf7c3f550e282fd94a3d0f91a7a5f0f"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "6c15af0a40b957a05b9f2fc049493d59339d3845",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "6c15af0a40b957a05b9f2fc049493d59339d3845"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "71fab9682c49259b70d136ce1ff830a6686c2465",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "71fab9682c49259b70d136ce1ff830a6686c2465"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "7e18048dec64547bef074b3046d035389a6abab5",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "7e18048dec64547bef074b3046d035389a6abab5"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "7e975487b71b39fa690e9a2955baeb9d823b84e5",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "7e975487b71b39fa690e9a2955baeb9d823b84e5"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "7f33c696809994b6fa116a3b4628eb405d0a7f32",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "7f33c696809994b6fa116a3b4628eb405d0a7f32"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "893f851c2ecb547950388dd102f5e8db6c7630b2",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "893f851c2ecb547950388dd102f5e8db6c7630b2"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "8aecb1c6d199d36d58bf7157fd5bf80249621691",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "8aecb1c6d199d36d58bf7157fd5bf80249621691"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "8f51ab213a0691d2173ecf04c9df758c54f36052",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "8f51ab213a0691d2173ecf04c9df758c54f36052"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "95e5e4aed4be203c7971de001d9e19455b397214",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "95e5e4aed4be203c7971de001d9e19455b397214"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "96e59ec291a84224b56efd6d55d5b3a3e9476560",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "96e59ec291a84224b56efd6d55d5b3a3e9476560"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "9c091a7a265e051cdeb859557238afc66bba203a",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "9c091a7a265e051cdeb859557238afc66bba203a"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "9d0c72c9898d45dfc1eb2076769d66b6da9a62a8",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "9d0c72c9898d45dfc1eb2076769d66b6da9a62a8"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "9e76959b1e5fe4f019672dcf2861a1ba80a05859",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "9e76959b1e5fe4f019672dcf2861a1ba80a05859"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "a583d8af392c06b7250efcf70a8c4e2a7d7925ee",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "a583d8af392c06b7250efcf70a8c4e2a7d7925ee"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "a60ade7c85f8722fe88f681cd26fb703104aad7f",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "a60ade7c85f8722fe88f681cd26fb703104aad7f"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "a8c587369eff9ecf00b79e4124f8f2800aa7de11",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "a8c587369eff9ecf00b79e4124f8f2800aa7de11"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "aaed24df8d61a31b48a60d87e136e16988627656",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "aaed24df8d61a31b48a60d87e136e16988627656"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "ac91635948011b20cf0bf4cbc6003a3f07cd7914",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "ac91635948011b20cf0bf4cbc6003a3f07cd7914"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "b03d4c27178b18aa91cb0d89fe3a6d38e9c927ba",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "b03d4c27178b18aa91cb0d89fe3a6d38e9c927ba"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "b25cf604e8b284b982ef144f5c539363fa6dd8bb",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "b25cf604e8b284b982ef144f5c539363fa6dd8bb"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "b34b009dcfd5eff39d40508455c07d7bd8a5d924",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "b34b009dcfd5eff39d40508455c07d7bd8a5d924"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "b7a39307a76512553943d8ec3d40c75b22402e00",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "b7a39307a76512553943d8ec3d40c75b22402e00"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "bd185793053b0bbac0489ac2c7f99d7cbcfa0764",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "bd185793053b0bbac0489ac2c7f99d7cbcfa0764"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "be557bc9af4fba774b5d9812364f079e5abb24b7",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "be557bc9af4fba774b5d9812364f079e5abb24b7"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "c37e6ab3ea738ceb7b0267279b85d57e9b9e848f",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "c37e6ab3ea738ceb7b0267279b85d57e9b9e848f"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "c38f3a9142eae8666b077da9d3001f1bdd2440d3",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "c38f3a9142eae8666b077da9d3001f1bdd2440d3"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "c9a455d6471d217839cdc0102056cab10597d4e5",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "c9a455d6471d217839cdc0102056cab10597d4e5"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "cd175296c9035d6c13b116394135b48d9941b017",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "cd175296c9035d6c13b116394135b48d9941b017"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "d8714c7ef53a3d28f476006275a35a61c6a6c379",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "d8714c7ef53a3d28f476006275a35a61c6a6c379"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "dc8504442f90b03e7d00212f674a0ba9efd426f1",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "dc8504442f90b03e7d00212f674a0ba9efd426f1"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "e718d2e83da0a0ddb7ca13fbf17ff9fd5af54f13",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "e718d2e83da0a0ddb7ca13fbf17ff9fd5af54f13"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "e859f695358719374f4633cf78fe183462d8ff10",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "e859f695358719374f4633cf78fe183462d8ff10"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "e8696a1e129f7294159464709411e190db6ebb22",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "e8696a1e129f7294159464709411e190db6ebb22"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "e92f52547cb9457a5f409dc75c8ea819d28b6761",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "e92f52547cb9457a5f409dc75c8ea819d28b6761"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "f2ea5807cd65cf90033a8c11bb7ee5811f373945",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "f2ea5807cd65cf90033a8c11bb7ee5811f373945"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "fd1df0e34248cf17f32f2032faf84f1bbac304c3",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "fd1df0e34248cf17f32f2032faf84f1bbac304c3"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "fea976dac4363d89a33e445214245bff160f2d7f",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "fea976dac4363d89a33e445214245bff160f2d7f"
+        },
+        "isError": false
+      }
+    },
+    {
+      "kind": "create_blob",
+      "expectedSha": "fee4ba5029fbc792e2111ab9d30edba9436756f4",
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "sha": "fee4ba5029fbc792e2111ab9d30edba9436756f4"
+        },
+        "isError": false
+      }
+    }
+  ],
+  "scope": "Previously authorized feature branch only; no retry after rejection pending materially relevant evidence."
+}

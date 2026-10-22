@@ -1,0 +1,13 @@
+PASS review: unobserved Proxy has zero reads during source copy, write, emit and cleanup
+PASS review: full roster opens before any source getter, including later partial failure
+PASS review: later owner plan getter caught foreign-asset reentry stops all native effects
+PASS review: copied ticket diagnostic wrong receiver poisons only nonterminal exact ticket
+PASS review: repeated prepare consumes no extra scope or native authority
+PASS review: actual membership identity uses no Proxy reads and no object id coercion
+PASS review: cancel and publish permutations preserve remaining pending same-owner groups
+PASS review: release one owner with old and two pending assets preserves other owner pending
+PASS review: unknown teardown retains pending-only asset after newer generation and cannot cancel
+PASS review: native return retained when setter catches registry reentry but verify never enters
+PASS review: verified native retained when readback catches reentry, owner cache stays unentered
+PASS review: first falsy failure from setter survives actual read, reporter and every disposal
+PASS review: expired cache recorder cannot increment counters or replay writes

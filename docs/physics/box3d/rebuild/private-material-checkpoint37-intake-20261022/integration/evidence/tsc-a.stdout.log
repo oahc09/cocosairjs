@@ -1,0 +1,1 @@
+src/cocos/physics/framework/physics-material-values-transaction.ts(823,37): error TS2339: Property 'flatMap' does not exist on type 'readonly Participant[]'.

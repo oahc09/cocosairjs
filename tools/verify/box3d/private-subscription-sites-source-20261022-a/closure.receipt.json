@@ -1,0 +1,13 @@
+{
+  "argv": [
+    "python3",
+    "verify-closure.py",
+    "--seal"
+  ],
+  "cwd": "/workspace/scratch/62d43a81bbde/box3d-private-subscription-sites-20261022",
+  "startedAt": "2026-10-22T19:20:56.850301+00:00",
+  "endedAt": "2026-10-22T19:21:08.057530+00:00",
+  "exitCode": 0,
+  "stdoutSha256": "41209d7925fabd9ba3c334630088259bf318e85ed92c86239a74e3be07fea157",
+  "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

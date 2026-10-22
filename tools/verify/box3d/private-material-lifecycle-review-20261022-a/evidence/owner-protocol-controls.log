@@ -1,0 +1,61 @@
+{
+  "schema": "exact-source-owner-protocol-controls/1",
+  "qualification": "ACTUAL_OWNER_AND_REGISTRIES_WITH_MOCK_ENGINE_ENVIRONMENT_NO_NATIVE",
+  "limitations": [
+    "Not actual World construction",
+    "No native read/write",
+    "Queue, transform barrier, engine classes and material-copy helpers mocked",
+    "JavaScript transpile only, not typecheck"
+  ],
+  "sourceHashes": {
+    "src/air/physics/box3d/world-command-owner.ts": "ed0297c4faabb20544d31660bc8d29527734f5cf448eb33627c15cb4e3ee11b4",
+    "src/cocos/core/data/mutation-guard.ts": "93758e4b5a90ff90e5cabc7d3b0b5fd71069e955d4bf64517bec27d1957774a0",
+    "src/cocos/physics/framework/physics-material-transaction.ts": "e5fd0efdac79228970560a0bca6c9dde31e5436a69d9b499cb02867f27c8ab8c",
+    "src/cocos/physics/framework/physics-state-observer.ts": "4cf40c4f1be0d407a402e95dcdb7a898b1942cb175f869f6367a41b18c2d1d2b",
+    "src/cocos/physics/framework/physics-material-values.ts": "435b47e6faaa861c1d584fcc3603a64735052daa2595cf3da12e3fa602305b66",
+    "src/cocos/physics/framework/physics-material-values-transaction.ts": "06ac7eada947bc565868f9dffa0eda6e68dfeee337a34fb4912d890f7f7e2682"
+  },
+  "total": 8,
+  "passed": 8,
+  "results": [
+    {
+      "name": "provisional explicit membership refuses value admission and destruction",
+      "status": "PASS"
+    },
+    {
+      "name": "actual initialize publication permits inactive prepared caches without native operation",
+      "status": "PASS"
+    },
+    {
+      "name": "same asset default plus explicit uses one value owner scope and two cache roles",
+      "status": "PASS"
+    },
+    {
+      "name": "clone candidate accepted then failure retains both assets after component cleanup",
+      "status": "PASS"
+    },
+    {
+      "name": "successful clone switches exact membership only after actual identity publication",
+      "status": "PASS"
+    },
+    {
+      "name": "world teardown unknown retains initialized and pending asset blockers",
+      "status": "PASS"
+    },
+    {
+      "name": "foreign System world binding refuses before source value read or write",
+      "status": "PASS"
+    },
+    {
+      "name": "idle component release removes only exact explicit membership and leaves default owner",
+      "status": "PASS"
+    }
+  ],
+  "formalRequiredCellsUnchanged": {
+    "NOT_RUN": 2128
+  },
+  "passedGates": 0,
+  "realProducer": "NOT_INTEGRATED",
+  "stagedCommandsSupported": false,
+  "unifiedTransactionsSupported": false
+}

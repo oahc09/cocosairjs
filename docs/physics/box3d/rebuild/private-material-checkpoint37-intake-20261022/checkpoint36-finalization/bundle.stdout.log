@@ -1,0 +1,1 @@
+{"commit": "45b526f248575a0542af8eed591c0cf8c8a1ba8d", "files": 20147, "uniqueBlobs": 6515, "archive": {"bytes": 15573955, "sha256": "febb963e7375adcf9d48de7fd7e6de666b0014c03243972434e71e9d2daf8235"}, "bundle": {"file": "box3d-rebuild-incremental.bundle", "bytes": 14400104, "sha256": "8ae5592e4af35fc1f96bd51b712c58e1b95d824adf04c236c991e6f4f0658928"}}

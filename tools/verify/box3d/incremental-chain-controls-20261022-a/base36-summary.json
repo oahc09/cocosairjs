@@ -1,0 +1,19 @@
+{
+  "commit": "45b526f248575a0542af8eed591c0cf8c8a1ba8d",
+  "tree": "f8bb7ba61604c61253f3a1f0497612da726e093e",
+  "branch": "feat/box3d-rebuild-20261022",
+  "committedOnly": true,
+  "prerequisite": {
+    "commit": "e5c5674bfe08be0c9fda72c484f4380bd0d0e2c6",
+    "libraryFileId": "libfile_10c86f5827f481919e3938fbb0c2670b",
+    "archive": "Box3D-unified-native-source-checkpoint-20261022.zip",
+    "archiveBytes": 21016077,
+    "archiveSha256": "9d8f9c238864c24fe97b43d6120575d0f694009c0973b0653dfa6a11d2c4871a",
+    "scope": "Requires independently verified full checkpoint22 object store; cannot restore standalone."
+  },
+  "bundle": {
+    "file": "box3d-rebuild-incremental.bundle",
+    "bytes": 14400104,
+    "sha256": "8ae5592e4af35fc1f96bd51b712c58e1b95d824adf04c236c991e6f4f0658928"
+  }
+}
