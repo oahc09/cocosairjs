@@ -1,0 +1,60 @@
+  console.log
+    Cannot access game frame or container.
+
+      at warnID (src/cocos/core/platform/debug.ts:314:5)
+
+  console.log
+    [PHYSICS]: register box3d.
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_1 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_2 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_3 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    [PHYSICS]: register box3d.
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_4 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_5 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_6 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    [PHYSICS]: register box3d.
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_7 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+
+  console.log
+    The asset pm_8 has been destroyed!
+
+      at debug (src/cocos/core/platform/debug.ts:147:12)
+

@@ -1,0 +1,91 @@
+{
+  "status": "PASS_REMOTE_BRANCH_CHECKPOINT_READBACK",
+  "timeUTC": "2026-10-22T16:39:48.043Z",
+  "repository": "oahc09/cocosairjs",
+  "branch": "feat/box3d-rebuild-20261022",
+  "remoteCommit": "a8e27bd9c66cf56bae3edc7ecfa270d1dcc06a60",
+  "remoteTree": "941be8cddbc6905b31429126e54ec3822d2aab5a",
+  "remoteParent": "10988cc646fe82d80392f24e2ff2595edfdc770d",
+  "localSourceCommit": "15fe9fdd5b6ecd602c39cad503143932a10bad4f",
+  "localSourceBase": "4981678aec8ee64c0eeb31551a6cc551ac42d1c2",
+  "changedFiles": 52,
+  "treeVerification": {
+    "status": "PASS",
+    "verifiedAt": "2026-10-22T16:39:03.207Z",
+    "baseTree": "e87225fc39d12d892c4e6cb68007edfd91bad327",
+    "newTree": "941be8cddbc6905b31429126e54ec3822d2aab5a",
+    "changedFiles": 52,
+    "untouchedSiblings": 1093,
+    "directories": 42,
+    "treeReads": 42,
+    "nonRecursive": true
+  },
+  "commitRead": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Action completed."
+      }
+    ],
+    "structuredContent": {
+      "content": "{\"sha\":\"a8e27bd9c66cf56bae3edc7ecfa270d1dcc06a60\",\"node_id\":\"C_kwDOVHk0vNoAKGE4ZTI3YmQ5YzY2Y2Y1NmJhZTNlZGM3ZWNmYTI3MGQxZGNjMDZhNjA\",\"url\":\"https://api.github.com/repos/oahc09/cocosairjs/git/commits/a8e27bd9c66cf56bae3edc7ecfa270d1dcc06a60\",\"html_url\":\"https://github.com/oahc09/cocosairjs/commit/a8e27bd9c66cf56bae3edc7ecfa270d1dcc06a60\",\"author\":{\"name\":\"oahc09\",\"email\":\"caoshen1990@163.com\",\"date\":\"2026-10-22T16:39:16Z\"},\"committer\":{\"name\":\"oahc09\",\"email\":\"caoshen1990@163.com\",\"date\":\"2026-10-22T16:39:16Z\"},\"tree\":{\"sha\":\"941be8cddbc6905b31429126e54ec3822d2aab5a\",\"url\":\"https://api.github.com/repos/oahc09/cocosairjs/git/trees/941be8cddbc6905b31429126e54ec3822d2aab5a\"},\"message\":\"feat(box3d): checkpoint guarded material identity integration candidate\\n\\nWire private actual-cache material transactions into Collider and PhysicsSystem using guarded copied inputs and native mutation failure boundaries. Preserve 12 actual-source mock-binding controls and the explicit 1291-reference evidence inventory. Real-WASM qualification and secondary cleanup diagnostic gaps remain separate; no formal Gate promotion.\",\"parents\":[{\"sha\":\"10988cc646fe82d80392f24e2ff2595edfdc770d\",\"url\":\"https://api.github.com/repos/oahc09/cocosairjs/git/commits/10988cc646fe82d80392f24e2ff2595edfdc770d\",\"html_url\":\"https://github.com/oahc09/cocosairjs/commit/10988cc646fe82d80392f24e2ff2595edfdc770d\"}],\"verification\":{\"verified\":false,\"reason\":\"unsigned\",\"signature\":null,\"payload\":null,\"verified_at\":null}}",
+      "title": "a8e27bd9c66cf56bae3edc7ecfa270d1dcc06a60",
+      "modified_date": null,
+      "url": "https://api.github.com/repos/oahc09/cocosairjs/git/commits/a8e27bd9c66cf56bae3edc7ecfa270d1dcc06a60",
+      "display_url": "https://api.github.com/repos/oahc09/cocosairjs/git/commits/a8e27bd9c66cf56bae3edc7ecfa270d1dcc06a60",
+      "display_title": "a8e27bd9c66cf56bae3edc7ecfa270d1dcc06a60",
+      "structuredContent": {
+        "title": "a8e27bd9c66cf56bae3edc7ecfa270d1dcc06a60",
+        "content": "{\"sha\":\"a8e27bd9c66cf56bae3edc7ecfa270d1dcc06a60\",\"node_id\":\"C_kwDOVHk0vNoAKGE4ZTI3YmQ5YzY2Y2Y1NmJhZTNlZGM3ZWNmYTI3MGQxZGNjMDZhNjA\",\"url\":\"https://api.github.com/repos/oahc09/cocosairjs/git/commits/a8e27bd9c66cf56bae3edc7ecfa270d1dcc06a60\",\"html_url\":\"https://github.com/oahc09/cocosairjs/commit/a8e27bd9c66cf56bae3edc7ecfa270d1dcc06a60\",\"author\":{\"name\":\"oahc09\",\"email\":\"caoshen1990@163.com\",\"date\":\"2026-10-22T16:39:16Z\"},\"committer\":{\"name\":\"oahc09\",\"email\":\"caoshen1990@163.com\",\"date\":\"2026-10-22T16:39:16Z\"},\"tree\":{\"sha\":\"941be8cddbc6905b31429126e54ec3822d2aab5a\",\"url\":\"https://api.github.com/repos/oahc09/cocosairjs/git/trees/941be8cddbc6905b31429126e54ec3822d2aab5a\"},\"message\":\"feat(box3d): checkpoint guarded material identity integration candidate\\n\\nWire private actual-cache material transactions into Collider and PhysicsSystem using guarded copied inputs and native mutation failure boundaries. Preserve 12 actual-source mock-binding controls and the explicit 1291-reference evidence inventory. Real-WASM qualification and secondary cleanup diagnostic gaps remain separate; no formal Gate promotion.\",\"parents\":[{\"sha\":\"10988cc646fe82d80392f24e2ff2595edfdc770d\",\"url\":\"https://api.github.com/repos/oahc09/cocosairjs/git/commits/10988cc646fe82d80392f24e2ff2595edfdc770d\",\"html_url\":\"https://github.com/oahc09/cocosairjs/commit/10988cc646fe82d80392f24e2ff2595edfdc770d\"}],\"verification\":{\"verified\":false,\"reason\":\"unsigned\",\"signature\":null,\"payload\":null,\"verified_at\":null}}",
+        "display_url": "https://api.github.com/repos/oahc09/cocosairjs/git/commits/a8e27bd9c66cf56bae3edc7ecfa270d1dcc06a60"
+      }
+    },
+    "isError": false
+  },
+  "branchRead": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Action completed."
+      }
+    ],
+    "structuredContent": {
+      "content": "{\"ref\":\"refs/heads/feat/box3d-rebuild-20261022\",\"node_id\":\"REF_kwDOVHk0vNoAJnJlZnMvaGVhZHMvZmVhdC9ib3gzZC1yZWJ1aWxkLTIwMjYxMDIy\",\"url\":\"https://api.github.com/repos/oahc09/cocosairjs/git/refs/heads/feat/box3d-rebuild-20261022\",\"object\":{\"sha\":\"a8e27bd9c66cf56bae3edc7ecfa270d1dcc06a60\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/oahc09/cocosairjs/git/commits/a8e27bd9c66cf56bae3edc7ecfa270d1dcc06a60\"}}",
+      "title": "box3d-rebuild-20261022",
+      "modified_date": null,
+      "url": "https://api.github.com/repos/oahc09/cocosairjs/git/ref/heads/feat/box3d-rebuild-20261022",
+      "display_url": "https://api.github.com/repos/oahc09/cocosairjs/git/ref/heads/feat/box3d-rebuild-20261022",
+      "display_title": "box3d-rebuild-20261022",
+      "structuredContent": {
+        "title": "box3d-rebuild-20261022",
+        "content": "{\"ref\":\"refs/heads/feat/box3d-rebuild-20261022\",\"node_id\":\"REF_kwDOVHk0vNoAJnJlZnMvaGVhZHMvZmVhdC9ib3gzZC1yZWJ1aWxkLTIwMjYxMDIy\",\"url\":\"https://api.github.com/repos/oahc09/cocosairjs/git/refs/heads/feat/box3d-rebuild-20261022\",\"object\":{\"sha\":\"a8e27bd9c66cf56bae3edc7ecfa270d1dcc06a60\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/oahc09/cocosairjs/git/commits/a8e27bd9c66cf56bae3edc7ecfa270d1dcc06a60\"}}",
+        "display_url": "https://api.github.com/repos/oahc09/cocosairjs/git/ref/heads/feat/box3d-rebuild-20261022"
+      }
+    },
+    "isError": false
+  },
+  "mainRead": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Action completed."
+      }
+    ],
+    "structuredContent": {
+      "content": "{\"ref\":\"refs/heads/main\",\"node_id\":\"REF_kwDOVHk0vK9yZWZzL2hlYWRzL21haW4\",\"url\":\"https://api.github.com/repos/oahc09/cocosairjs/git/refs/heads/main\",\"object\":{\"sha\":\"b573be0741db9e2a13d38ce7e65870b97a1f5fbc\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/oahc09/cocosairjs/git/commits/b573be0741db9e2a13d38ce7e65870b97a1f5fbc\"}}",
+      "title": "main",
+      "modified_date": null,
+      "url": "https://api.github.com/repos/oahc09/cocosairjs/git/ref/heads/main",
+      "display_url": "https://api.github.com/repos/oahc09/cocosairjs/git/ref/heads/main",
+      "display_title": "main",
+      "structuredContent": {
+        "title": "main",
+        "content": "{\"ref\":\"refs/heads/main\",\"node_id\":\"REF_kwDOVHk0vK9yZWZzL2hlYWRzL21haW4\",\"url\":\"https://api.github.com/repos/oahc09/cocosairjs/git/refs/heads/main\",\"object\":{\"sha\":\"b573be0741db9e2a13d38ce7e65870b97a1f5fbc\",\"type\":\"commit\",\"url\":\"https://api.github.com/repos/oahc09/cocosairjs/git/commits/b573be0741db9e2a13d38ce7e65870b97a1f5fbc\"}}",
+        "display_url": "https://api.github.com/repos/oahc09/cocosairjs/git/ref/heads/main"
+      }
+    },
+    "isError": false
+  },
+  "libraryFileId": "libfile_334289be9f648191898ceae41d54b400",
+  "scope": "B1 six-source candidate plus 12/54 mock binding controls and explicit evidence closure. Later actual-WASM four-case results and cleanup diagnostics RED not in this source snapshot. Main unchanged; Gates unpassed."
+}

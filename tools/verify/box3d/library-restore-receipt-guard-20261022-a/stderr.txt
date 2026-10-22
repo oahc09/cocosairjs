@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/verify/box3d/restore-library-checkpoint.py", line 34, in <module>
+    assert not output.exists(),'Receipt already exists; never overwrite prior restore evidence'
+           ^^^^^^^^^^^^^^^^^^^
+AssertionError: Receipt already exists; never overwrite prior restore evidence

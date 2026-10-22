@@ -1,0 +1,67 @@
+[
+  {
+    "path": "src/cocos/physics/framework/components/colliders/collider.ts",
+    "expected": "2f1a0247fca6ec268c184b9643804f4fd6dd2cec50a58a25c76fdfbd9155bddb",
+    "actual": "2f1a0247fca6ec268c184b9643804f4fd6dd2cec50a58a25c76fdfbd9155bddb"
+  },
+  {
+    "path": "src/cocos/physics/framework/physics-system.ts",
+    "expected": "92153ad5783bf4a27271daf31075704c6ea4fc4dbac323af9e05bffc5caee988",
+    "actual": "92153ad5783bf4a27271daf31075704c6ea4fc4dbac323af9e05bffc5caee988"
+  },
+  {
+    "path": "src/air/physics/box3d/world-command-owner.ts",
+    "expected": "e557e79b1e4826a965df55d69e9efa7961aaefc72b631f4265f375e578105509",
+    "actual": "e557e79b1e4826a965df55d69e9efa7961aaefc72b631f4265f375e578105509"
+  },
+  {
+    "path": "src/air/physics/box3d/world.ts",
+    "expected": "f63e83f75561fe60c19214b7691af7f1001b692277e7b5559fc4b575f7cda5a2",
+    "actual": "f63e83f75561fe60c19214b7691af7f1001b692277e7b5559fc4b575f7cda5a2"
+  },
+  {
+    "path": "src/air/physics/box3d/shared-body.ts",
+    "expected": "9bf809b2e3c66b723a975cceb9725978750c0e68b57c2eb343a9788fcb89b8bc",
+    "actual": "9bf809b2e3c66b723a975cceb9725978750c0e68b57c2eb343a9788fcb89b8bc"
+  },
+  {
+    "path": "src/air/physics/box3d/box-sphere-shape.ts",
+    "expected": "3c739b77712689e34dbbab6052de5b1649663471d59540d4c2e5bfdbf1b84c20",
+    "actual": "3c739b77712689e34dbbab6052de5b1649663471d59540d4c2e5bfdbf1b84c20"
+  },
+  {
+    "path": "src/cocos/physics/framework/physics-state-observer.ts",
+    "expected": "4cf40c4f1be0d407a402e95dcdb7a898b1942cb175f869f6367a41b18c2d1d2b",
+    "actual": "4cf40c4f1be0d407a402e95dcdb7a898b1942cb175f869f6367a41b18c2d1d2b"
+  },
+  {
+    "path": "src/cocos/physics/framework/physics-material-transaction.ts",
+    "expected": "f7192588f5ef01358b6b506a80322f028975ae51df93aadba258a420fd7af518",
+    "actual": "f7192588f5ef01358b6b506a80322f028975ae51df93aadba258a420fd7af518"
+  },
+  {
+    "path": "src/cocos/core/data/mutation-guard.ts",
+    "expected": "93758e4b5a90ff90e5cabc7d3b0b5fd71069e955d4bf64517bec27d1957774a0",
+    "actual": "93758e4b5a90ff90e5cabc7d3b0b5fd71069e955d4bf64517bec27d1957774a0"
+  },
+  {
+    "path": "src/cocos/scene-graph/node-transform-validation.ts",
+    "expected": "f849e7bc3d56407ae91ccd935a1be51c6bbedd83489bf4d74430e586760fc0f9",
+    "actual": "f849e7bc3d56407ae91ccd935a1be51c6bbedd83489bf4d74430e586760fc0f9"
+  },
+  {
+    "path": "tools/verify/box3d/material-cleanup-control-red.jest.cjs",
+    "expected": "5a30d560c66df16a46f24d73aafe89360fca8827e8187919fca5a2743ef3cbba",
+    "actual": "5a30d560c66df16a46f24d73aafe89360fca8827e8187919fca5a2743ef3cbba"
+  },
+  {
+    "path": "tools/verify/box3d/material-cleanup-control-red.test.ts",
+    "expected": "a1ee313bb2b6c88ea1ab1027a8ed41b6b1ef05eb16fa695fafe23d20c52ae4e4",
+    "actual": "a1ee313bb2b6c88ea1ab1027a8ed41b6b1ef05eb16fa695fafe23d20c52ae4e4"
+  },
+  {
+    "path": "tools/verify/box3d/material-cleanup-control-red.tsconfig.json",
+    "expected": "56a9e0f39a0c2fb39977eabde12b9c09182401c1171a408caad42e40986e5ac4",
+    "actual": "56a9e0f39a0c2fb39977eabde12b9c09182401c1171a408caad42e40986e5ac4"
+  }
+]

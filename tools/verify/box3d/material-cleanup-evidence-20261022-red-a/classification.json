@@ -1,0 +1,111 @@
+{
+  "status": "FIXTURE_ERROR_WITH_ONE_VALID_COLLIDER_OBSERVATION",
+  "jestExit": 1,
+  "tscExit": 2,
+  "fixtureErrors": [
+    "Nonexistent NodeTransformGuardLease.assertWriteCapacity called before the two owner scenarios could establish their intended barriers",
+    "Two explicit callback this annotations missing in fixture only"
+  ],
+  "rows": [
+    {
+      "name": "RED Collider cleanup retains thrown first falsy but drops later independent errors",
+      "failedChecks": [
+        {
+          "name": "secondary cleanup values have an explicit reachable diagnostic channel",
+          "actual": false,
+          "expected": true,
+          "passed": false
+        }
+      ]
+    },
+    {
+      "name": "RED observed listener primary zero plus lease cleanup failures overwrites world error and loses secondary",
+      "failedChecks": [
+        {
+          "name": "original business zero still thrown",
+          "actual": false,
+          "expected": true,
+          "passed": false
+        },
+        {
+          "name": "all genuine lease disposers were called",
+          "actual": [
+            "scope-mutation"
+          ],
+          "expected": [
+            "candidate-mutation",
+            "scope-transform",
+            "scope-mutation"
+          ],
+          "passed": false
+        },
+        {
+          "name": "B0 primary exact zero",
+          "actual": false,
+          "expected": true,
+          "passed": false
+        },
+        {
+          "name": "world first error must not be replaced by cleanup undefined",
+          "actual": null,
+          "expected": "0",
+          "passed": false
+        },
+        {
+          "name": "all three cleanup failures reachable, not just merged first",
+          "actual": 0,
+          "expected": 3,
+          "passed": false
+        },
+        {
+          "name": "separate owner cleanup channel retains omitted failures",
+          "actual": false,
+          "expected": true,
+          "passed": false
+        }
+      ]
+    },
+    {
+      "name": "RED original public default readback zero plus scope cleanup preserves throw but overwrites world first error",
+      "failedChecks": [
+        {
+          "name": "public original zero thrown",
+          "actual": false,
+          "expected": true,
+          "passed": false
+        },
+        {
+          "name": "no native replay in mocked binding",
+          "actual": 0,
+          "expected": 1,
+          "passed": false
+        },
+        {
+          "name": "both original lease disposers ran",
+          "actual": [
+            "scope-mutation"
+          ],
+          "expected": [
+            "scope-transform",
+            "scope-mutation"
+          ],
+          "passed": false
+        },
+        {
+          "name": "world retains primary zero, not cleanup null",
+          "actual": null,
+          "expected": "0",
+          "passed": false
+        },
+        {
+          "name": "separate cleanup secondary channel exists",
+          "actual": false,
+          "expected": true,
+          "passed": false
+        }
+      ]
+    }
+  ],
+  "noProductChange": true,
+  "notQualifiedAsThreeProductREDs": true
+}

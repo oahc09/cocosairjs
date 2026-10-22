@@ -1,0 +1,10 @@
+{
+  "status": "RESTORE_RECEIPT_FILENAME_CORRECTION_NO_SOURCE_OR_RAW_RESULT_CHANGED",
+  "timeUTC": "2026-10-22T16:41:46.211046+00:00",
+  "cause": "Adapted checkpoint31 recovery script accidentally wrote its new receipt under checkpoint30 filename. The original checkpoint30 receipt was already safely committed and externally restored.",
+  "checkpoint30ReceiptRestoredByteExactFromGit": "15fe9fdd5b6ecd602c39cad503143932a10bad4f:docs/physics/box3d/rebuild/library-material-native-closed-source-checkpoint-20261022.json",
+  "checkpoint30Sha256": "b47e3359b051edea0e86a7112a5faa2754a5979e059aff828f313b563c959d57",
+  "checkpoint31ReceiptMovedTo": "docs/physics/box3d/rebuild/library-material-b1-source-checkpoint-20261022.json",
+  "checkpoint31Sha256": "c8a76988f5df928a26455f8c5bc430dca7956843e8cb9d2edac212e37e7289ac",
+  "scriptCorrected": true
+}

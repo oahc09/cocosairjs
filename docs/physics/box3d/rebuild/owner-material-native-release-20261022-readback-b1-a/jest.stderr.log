@@ -1,0 +1,8 @@
+PASS tools/verify/box3d/owner-material-native-failure.test.ts (17.395 s)
+  ✓ actual material cache identity and truthful post-effect failure (259 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       1 passed, 1 total
+Snapshots:   0 total
+Time:        17.849 s
+Ran all test suites.

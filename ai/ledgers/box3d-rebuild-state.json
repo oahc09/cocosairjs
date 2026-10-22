@@ -959,7 +959,7 @@
     "deploy": false,
     "npmPublish": false
   },
-  "nextStep": "Preserve B1 six-source candidate and evidence closure; run four unchanged real-WASM material failure cases with expanded direct input identity. Remote checkpoint30 tree outcome remains uncertain; only read reconciliation, no duplicate write.",
+  "nextStep": "Repair separately confirmed first-fault/secondary cleanup diagnostic gaps after preserving original RED. Four finite B1 material Release-WASM cases passed; full material lifecycle and public transaction activation remain unqualified.",
   "remoteHistoryPolicy": "True upstream main parent and incremental tree; local snapshot import is backup-only and is never pushed as upstream history.",
   "remotePublication": {
     "status": "VERIFIED_CHECKPOINT_26",
@@ -968,7 +968,7 @@
     "branch": "feat/box3d-rebuild-20261022",
     "receipt": "docs/physics/box3d/rebuild/remote-checkpoint-26.json"
   },
-  "updatedAtUtc": "2026-10-22T16:31:29.421944+00:00",
+  "updatedAtUtc": "2026-10-22T16:46:04.810007+00:00",
   "currentEvidence": {
     "m0ContractTests": "PASS_7_SOURCE_DESIGN_CHECKS_ONLY_U01_U02_INVENTORY_ADDED",
     "nativeFoundationIndex": "tools/physics/box3d/evidence/index.json",
@@ -1262,15 +1262,16 @@
     "immediateSystemPauseNotification": "NOT_IMPLEMENTED",
     "privateStateObserver": "B0_NOW_REFERENCED_BY_B1_CANDIDATE_PRIOR_76_PURE_CONTROLS_NOT_PHYSICAL_ACCEPTANCE",
     "privateStateObserverReceipt": "tools/verify/box3d/physics-state-observer-evidence-20261022-lead-e/result.json",
-    "currentMaterialIdentity": "THREE_REAL_WASM_RED_CASES_OPEN_CLONE_CACHE_AND_POST_NATIVE_LISTENER_FAILURE",
-    "currentMaterialIdentityReceipt": "docs/physics/box3d/rebuild/material-original-defects-review-20261022-a/receipt.json",
+    "currentMaterialIdentity": "FOUR_FINITE_B1_RELEASE_WASM_CASES_PASS_CLEANUP_DIAGNOSTICS_REMAIN_RED",
+    "currentMaterialIdentityReceipt": "docs/physics/box3d/rebuild/material-b1-real-four-lead-review-20261022-a/receipt.json",
     "ownerLifecycleDecisions": "docs/physics/box3d/contracts/unified-owner-lifecycle-decisions-v1.md",
-    "materialNativeFailure": "ORIGINAL_REAL_WASM_READBACK_FAILURE_REPLAYS_DEFAULT_SETTER_AND_LEAVES_WORLD_READY",
-    "materialNativeFailureReceipt": "docs/physics/box3d/rebuild/material-native-original-defect-review-20261022-a/receipt.json",
+    "materialNativeFailure": "B1_POST_NATIVE_READBACK_THROW_NO_SETTER_REPLAY_FAULT_AND_REFUSE_STEP_FINITE_PASS",
+    "materialNativeFailureReceipt": "docs/physics/box3d/rebuild/material-b1-real-four-lead-review-20261022-a/receipt.json",
     "privateMaterialBridge": "B1_NOW_WIRED_CANDIDATE_PRIOR_36_PURE_CONTROLS_REAL_WASM_NOT_RUN",
     "privateMaterialBridgeReceipt": "tools/verify/box3d/physics-material-transaction-evidence-20261022-lead-b/lead-review.json",
     "materialB1CandidateReceipt": "tools/verify/box3d/material-identity-b1-integration-20261022-a/receipt.json",
-    "materialCleanupSecondaryDiagnostics": "KNOWN_REVIEW_GAP_FIRST_ERROR_RETAINED_SECONDARY_AGGREGATOR_ERRORS_NOT_YET_RETAINED"
+    "materialCleanupSecondaryDiagnostics": "THREE_ACTUAL_ENGINE_MOCK_BINDING_CASES_SIX_FAILED_DIAGNOSTIC_CHECKS",
+    "materialCleanupSecondaryDiagnosticsReceipt": "tools/verify/box3d/material-cleanup-evidence-20261022-red-b/receipt.json"
   },
   "historicalCandidateSnapshots": [
     {
