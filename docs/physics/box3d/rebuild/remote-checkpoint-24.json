@@ -1,0 +1,27 @@
+{
+  "status": "PASS_REMOTE_FEATURE_CHECKPOINT_VERIFIED",
+  "timeUTC": "2026-10-22T14:03:21.785Z",
+  "repository": "oahc09/cocosairjs",
+  "branch": "feat/box3d-rebuild-20261022",
+  "localBase": "9328a27e7a883cca71e3d3be8b713a592c7059e6",
+  "localHead": "4f78e0f02e454588695691dc4d27960f53453fbc",
+  "remoteCommit": "493619f133e75681c9192c842d8347774acdaa1c",
+  "remoteParent": "15d18854a5e91dbf02f2f41f088bfc41e0ed334c",
+  "tree": "e3b7274f6bd7e2877ca04dc52c963da34edf69f0",
+  "treeVerification": {
+    "status": "PASS",
+    "verifiedAt": "2026-10-22T14:01:21.553Z",
+    "baseTree": "9c66e963d68d2db98c8b57a064fd87e6e2b8f316",
+    "newTree": "e3b7274f6bd7e2877ca04dc52c963da34edf69f0",
+    "changedFiles": 134,
+    "untouchedSiblings": 911,
+    "directories": 108,
+    "treeReads": 83,
+    "nonRecursive": true
+  },
+  "mainUnchanged": "b573be0741db9e2a13d38ce7e65870b97a1f5fbc",
+  "force": false,
+  "scope": "Source-only atomic admission, command mapper and strict staging parser controls, all formal required cells NOT_RUN.",
+  "initialCommitDeniedKnownNotExecuted": true,
+  "singleRetryAfterExactTargetAuthorizationSucceeded": true
+}

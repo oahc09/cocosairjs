@@ -1,0 +1,3 @@
+All 901 data members were streamed from the actual Library download and SHA/bytes/mode verified. Five runtime files were physically restored and executed for a limited one-step smoke. No duplicate 109 MB extraction was created. The smoke coreBytesAfter field repeats the asserted expected baseline; the script calls liveBytes after destroy and asserts that equality before disposing. This is not an independent post-dispose native allocation counter.
+
+A local receipt copy first used Path(".").parent and failed before copying any files; the absolute workspace parent was then used. No existing evidence was overwritten.

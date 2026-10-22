@@ -1,0 +1,13 @@
+{
+  "originalInventorySha256": "a8f6a0bf77f3ecc43deadd79a7bbfc7890662a5fcec378e0579ea8400eedbb01",
+  "originalFilesMatchedAfter": 453,
+  "added": [
+    {
+      "path": "artifact-audit.raw.json",
+      "bytes": 20246,
+      "sha256": "156961f62aa719b31e3ec4f1a90b6f786aff3f8d4a21418c8087184dd00c8bda"
+    }
+  ],
+  "totalFilesAfter": 454,
+  "auditExitCode": 0
+}

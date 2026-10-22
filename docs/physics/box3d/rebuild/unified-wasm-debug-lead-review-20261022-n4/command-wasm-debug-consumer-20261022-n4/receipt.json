@@ -1,0 +1,133 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS_FINITE_N4_DEBUG_BUILD_AND_READ_ONLY_CONSUMPTION",
+  "completedAt": "2026-10-22T14:06:47.883251+00:00",
+  "scope": "One ST SIMD WASM Debug build, real finite Node fixtures, artifact audit and read-only asset gate; no Release, browser, full public World/T11 or G1 claim. No artifact copying/SDK staging.",
+  "buildDirectory": "tools/physics/box3d/output/command-wasm-debug-20261022-n4",
+  "monitorDirectory": "tools/physics/box3d/output/command-wasm-debug-monitor-20261022-n4",
+  "consumerDirectory": "tools/physics/box3d/output/command-wasm-debug-consumer-20261022-n4",
+  "buildExitCode": 0,
+  "resource": {
+    "samples": 87,
+    "minimumSampledFreeBytes": 2241523712,
+    "startFreeBytes": 2318024704,
+    "endFreeBytes": 2241429504,
+    "originalOutputBytes": 71338092,
+    "limitHit": null
+  },
+  "originalOutputFileCount": 453,
+  "auditAddedFileCount": 1,
+  "finalOutputFileCount": 454,
+  "originalOutputFilesMatchedAfterAllConsumers": 453,
+  "buildInputsMatchedAfterAllConsumers": 50,
+  "compileSourceCount": 67,
+  "auditEvidenceCount": 29,
+  "successfulBuildCommands": 21,
+  "fixtureStatuses": {
+    "native-body-contract.raw.json": "PASS",
+    "native-command-contract.raw.json": "PASS",
+    "native-filter-contract.raw.json": "PASS",
+    "native-geometry-contract.raw.json": "PASS",
+    "native-motion-contract.raw.json": "PASS",
+    "native-world-contract.raw.json": "PASS",
+    "wasm-body-contract.raw.json": "PASS",
+    "wasm-command-contract.raw.json": "PASS",
+    "wasm-contract.raw.json": "PASS",
+    "wasm-filter-contract.raw.json": "PASS",
+    "wasm-geometry-contract.raw.json": "PASS",
+    "wasm-motion-contract.raw.json": "PASS",
+    "wasm-ownership-contract.raw.json": "PASS",
+    "wasm-snapshot-contract.raw.json": "PASS",
+    "wasm-world-contract.raw.json": "PASS"
+  },
+  "commandConsumer": {
+    "status": "PASS_READ_ONLY_REAL_DEBUG_COMMAND_EVIDENCE_CONSUMER",
+    "mode": "Debug",
+    "commandCount": 21,
+    "samples": 217,
+    "sampleKinds": {
+      "rejection": 47,
+      "caught-reentry-zero-native-calls": 1,
+      "single-read": 1,
+      "pose-single-read": 1,
+      "mass-pending-recovery": 1,
+      "analytic-box": 32,
+      "clear-prevents-later-force-overflow": 1,
+      "locked-impulses": 1,
+      "target-is-velocity-not-arrival": 1,
+      "preserve-idle-cleanup": 1,
+      "real-contact-island-wake": 1,
+      "growth-result": 1,
+      "id-reuse": 128
+    },
+    "invocationSummary": {
+      "total": 198,
+      "validation": 4,
+      "committed": 176,
+      "empty": 1,
+      "refused": 17
+    },
+    "injectedMechanisms": 6
+  },
+  "stagerConsumer": {
+    "status": "PASS_SINGLE_DEBUG_VERIFY_ST_BUILD_NO_COPY",
+    "mode": "Debug",
+    "descriptor": {
+      "manifestSha256": "e0b937f0a4d18bb6ffe57344239be708b4045a735600817b4a970916a56f893d",
+      "facadeSha256": "40cce3a920e67afedec5d7bbf69aae826ad08d31b51243f5e699033dd59eb899",
+      "identity": {
+        "coreSha": "efca0c184d40fd6a82016983f1601c4d23965867",
+        "bindingBaseSha": "5d5a3af049cccd9948b2b55bac4342414af0ef64",
+        "patchChainSha256": "434fb89494867f515051d5ac0dfc0c694556ba1f0da9ac3fc895a27097b1c7c7",
+        "abiVersion": 1,
+        "variant": "st-simd",
+        "schemaSha256": "e6329dce9b3e6fce69cfd5da318f1f708b95b7af834edb667de8306f9cae0a5d"
+      }
+    },
+    "auditSha256": "156961f62aa719b31e3ec4f1a90b6f786aff3f8d4a21418c8087184dd00c8bda",
+    "readableAssetNames": [
+      "box3d-st.mjs",
+      "box3d-st.wasm",
+      "facade.mjs",
+      "facade.d.mts",
+      "manifest.json",
+      "LICENSE.Box3D.txt"
+    ],
+    "qualificationGateSources": [
+      {
+        "path": "tools/build/box3d-command-qualification.cjs",
+        "bytes": 15991,
+        "sha256": "2c5e682eb5d3d4592bc30ba26c89190d70ae16e0226aac192d5a44453685d153"
+      },
+      {
+        "path": "tools/build/box3d-command-expectations.json",
+        "bytes": 9770,
+        "sha256": "62703014511167932cdec26ad9a393372ecd44e6ccb115ec474cff5ab4341921"
+      }
+    ]
+  },
+  "sourceCheckpoint": {
+    "path": "tools/physics/box3d/output/command-checkpoint-20261022-n/source-checkpoint-4.json",
+    "bytes": 15596,
+    "sha256": "a9d5eee5a951d097279d01aeb86127caf73c82e9c43c14c7dad71228cca42e51"
+  },
+  "auditIncrement": {
+    "originalInventorySha256": "a8f6a0bf77f3ecc43deadd79a7bbfc7890662a5fcec378e0579ea8400eedbb01",
+    "originalFilesMatchedAfter": 453,
+    "added": [
+      {
+        "path": "artifact-audit.raw.json",
+        "bytes": 20246,
+        "sha256": "156961f62aa719b31e3ec4f1a90b6f786aff3f8d4a21418c8087184dd00c8bda"
+      }
+    ],
+    "totalFilesAfter": 454,
+    "auditExitCode": 0
+  },
+  "frozenRunner": {
+    "path": "tools/verify/box3d/run-resource-bounded-wasm.py",
+    "bytes": 11551,
+    "sha256": "ae80c5c3f7dcd7da6fb5a8b2895a673bf29900fd5ad0186ede173f91351a73ec"
+  },
+  "currentFreeBytes": 2227118080
+}

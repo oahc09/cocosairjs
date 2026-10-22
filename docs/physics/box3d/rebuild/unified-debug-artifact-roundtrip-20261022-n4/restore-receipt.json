@@ -1,0 +1,20 @@
+{
+  "status": "PASS_ACTUAL_LIBRARY_DOWNLOAD_ALL_MEMBERS_VERIFIED_RUNTIME_EXTRACTED",
+  "timeUTC": "2026-10-22T14:11:12.999985+00:00",
+  "libraryFileId": "libfile_094466b816808191a16e5b463a8b54f6",
+  "fileId": "file_00000000c7a081f5bd65f47237638c7c",
+  "archiveBytes": 30400132,
+  "archiveSha256": "6bf0e8bb3e38cb6e3faf4f2cd8549233415256f217328934851d4034f52a632c",
+  "members": 902,
+  "verifiedDataFiles": 901,
+  "runtimeRestoredFiles": [
+    "box3d-st.mjs",
+    "box3d-st.wasm",
+    "facade.d.mts",
+    "facade.mjs",
+    "manifest.json"
+  ],
+  "fullOutputExtractionPerformed": false,
+  "nativeObjectsIncluded": true,
+  "scope": "All archived members streamed and hash/mode checked; only five runtime files physically extracted to avoid a redundant 109MB tree. Runtime smoke is a separate next step, not implied by archive verification."
+}

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "createdAtUtc": "2026-10-22T01:25:26.781006+00:00",
-  "scope": "AUTHORIZED_REBUILD_UNIFIED_COMMAND_SOURCE_HOST_DEBUG_NOT_CURRENT_WASM",
+  "scope": "AUTHORIZED_REBUILD_UNIFIED_N4_FINITE_DEBUG_NOT_FULL_ACCEPTANCE",
   "branch": "feat/box3d-rebuild-20261022",
   "upstreamSourceCommit": "b573be0741db9e2a13d38ce7e65870b97a1f5fbc",
   "localImportCommit": "730fbf2519887474e9acfd229fbb65586090bb77",
@@ -959,7 +959,7 @@
     "deploy": false,
     "npmPublish": false
   },
-  "nextStep": "Close owner admission atomicity and source-level World lease/queue/lifecycle integration in small saved steps. Await a safe shared-resource window before one new-schema WASM Debug run. Do not reuse historical m2 artifact qualifications for n4.",
+  "nextStep": "Implement private actual World/System/component identity and temporary lease framework; preserve stagedCommandsSupported=false until material identity, earliest entry, pause and grant-counter seams close, then current-WASM unified command consumer. No new heavy build below resource thresholds.",
   "remoteHistoryPolicy": "True upstream main parent and incremental tree; local snapshot import is backup-only and is never pushed as upstream history.",
   "remotePublication": {
     "status": "VERIFIED_CHECKPOINT_17",
@@ -1180,12 +1180,12 @@
   },
   "persistentCheckpoint": {
     "status": "PASS_ACTUAL_LIBRARY_DOWNLOAD_INCREMENTAL_INDEPENDENT_STORE_FULL_FILE_VERIFICATION",
-    "libraryFileId": "libfile_80e2e08b358c8191864a809d1985b84e",
-    "commit": "9328a27e7a883cca71e3d3be8b713a592c7059e6",
-    "trackedFiles": 14245,
+    "libraryFileId": "libfile_5c4641f633708191ab6e960c14249c83",
+    "commit": "4f78e0f02e454588695691dc4d27960f53453fbc",
+    "trackedFiles": 14372,
     "requiresBaseLibrary": "libfile_10c86f5827f481919e3938fbb0c2670b",
     "requiresBaseCommit": "e5c5674bfe08be0c9fda72c484f4380bd0d0e2c6",
-    "receipt": "docs/physics/box3d/rebuild/library-engine-fence-checkpoint-20261022.json"
+    "receipt": "docs/physics/box3d/rebuild/library-admission-wire-checkpoint-20261022.json"
   },
   "additionalOriginalMainSources": {
     "count": 445,
@@ -1212,7 +1212,7 @@
   "redundantRecoveryCloneCleanup": "docs/physics/box3d/rebuild/redundant-clone-cleanup-20261022/receipt.json",
   "redundantRecoveryCloneCleanupAdditional": "docs/physics/box3d/rebuild/redundant-clone-cleanup-20261022-b/receipt.json",
   "currentCandidate": {
-    "kind": "UNIFIED_COMMAND_N4_SOURCE_AND_FINITE_HOST_DEBUG",
+    "kind": "UNIFIED_COMMAND_N4_SOURCE_FINITE_HOST_AND_WASM_DEBUG",
     "sourceCommit": "e5c5674bfe08be0c9fda72c484f4380bd0d0e2c6",
     "schemaSha256": "e6329dce9b3e6fce69cfd5da318f1f708b95b7af834edb667de8306f9cae0a5d",
     "buildInputs": 50,
@@ -1221,9 +1221,9 @@
     "expectedWasmCommands": 21,
     "hostDebug": "PASS_78_COMMANDS_SEVEN_C_CONTRACTS_ONLY",
     "hostDebugReceipt": "docs/physics/box3d/rebuild/unified-native-debug-20261022-n4/lead-review.json",
-    "newSchemaWasm": "NOT_RUN",
-    "newSchemaStaging": "NOT_RUN_REAL_ARTIFACTS_76_SYNTHETIC_PARSER_CONTROLS_ONLY",
-    "worldTransactionLease": "NOT_IMPLEMENTED",
+    "newSchemaWasm": "PASS_FINITE_DEBUG_21_COMMANDS_ONLY_RELEASE_NOT_RUN",
+    "newSchemaStaging": "PASS_SINGLE_DEBUG_VERIFY_NO_SDK_COPY_RELEASE_NOT_RUN",
+    "worldTransactionLease": "IN_PROGRESS_UNQUALIFIED_NEW_SOURCE_AFTER_BASELINE",
     "publicTargetTeleport": "NOT_IMPLEMENTED",
     "queueProducerIntegration": "IN_PROGRESS_SOURCE_MODULES_ONLY",
     "engineEntryFence": "PASS_46_ACTUAL_SOURCE_CASES_163_CHECKS_WITH_EXPLICIT_LEASES_NOT_WORLD_ACTIVATION",
@@ -1236,7 +1236,12 @@
     "queueAdmission": "PASS_108_PURE_SOURCE_CONTROLS_WITH_FIRST_FAILURE_IDENTITY_NOT_WORLD",
     "queueAdmissionReceipt": "tools/verify/box3d/command-queue-admission-evidence-20261022-lead-a/receipt.json",
     "wireMapper": "PASS_100_PURE_SOURCE_CONTROLS_NOT_NATIVE_OR_OWNERSHIP",
-    "wireMapperReceipt": "tools/verify/box3d/command-wire-evidence-20261022-lead-a/receipt.json"
+    "wireMapperReceipt": "tools/verify/box3d/command-wire-evidence-20261022-lead-a/receipt.json",
+    "newSchemaWasmReceipt": "docs/physics/box3d/rebuild/unified-wasm-debug-lead-review-20261022-n4/receipt.json",
+    "nativeDebugArtifactLibrary": "libfile_094466b816808191a16e5b463a8b54f6",
+    "nativeDebugArtifactRoundtrip": "docs/physics/box3d/rebuild/unified-debug-artifact-roundtrip-20261022-n4/restore-receipt.json",
+    "currentArtifactActualAirBaseline": "PASS_TWO_FINITE_HEADLESS_CASES_2_AND_63_STEPS_ON_PRE_OWNER_SOURCE_ONLY",
+    "actualAirReceipt": "docs/physics/box3d/rebuild/unified-wasm-debug-lead-review-20261022-n4/actual-component-review.json"
   },
   "historicalCandidateSnapshots": [
     {

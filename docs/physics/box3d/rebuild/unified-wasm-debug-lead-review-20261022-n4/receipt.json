@@ -1,0 +1,24 @@
+{
+  "status": "PASS_INDEPENDENT_FINITE_DEBUG_ARTIFACT_CONSUMPTION",
+  "timeUTC": "2026-10-22T14:09:26.958867+00:00",
+  "handoffFilesChecked": 488,
+  "inputHashesUnchanged": true,
+  "singleDebugGate": {
+    "command": "node tools/physics/box3d/output/command-wasm-debug-consumer-20261022-n4/consume-stager.cjs",
+    "exitCode": 0
+  },
+  "strictCommandParser": {
+    "command": "node tools/physics/box3d/output/command-wasm-debug-consumer-20261022-n4/consume-command.cjs",
+    "exitCode": 0
+  },
+  "physicalScope": "Finite C/WASM Debug command fixture only, not a full test matrix or application command consumer.",
+  "formalRequiredCells": 2128,
+  "formalCellStatus": "NOT_RUN",
+  "scopeExclusions": [
+    "Release",
+    "Browser/GPU",
+    "Real command queue plus World transaction integration",
+    "Full T11 target/teleport",
+    "MT"
+  ]
+}
