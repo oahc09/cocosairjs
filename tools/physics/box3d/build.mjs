@@ -5,6 +5,7 @@ import { mkdirSync, readFileSync, readdirSync, writeFileSync, existsSync, copyFi
 import { resolve, relative, basename } from 'node:path';
 import { root, sha256, verifySources } from './verify-sources.mjs';
 import { inspectWasmMemory } from './verify-wasm.mjs';
+import { readPatchPlan, stageCore, verifyStagedCore } from './patch-intake.mjs';
 
 const native = process.argv.includes('--native');
 const debug = process.argv.includes('--debug');
@@ -42,13 +43,17 @@ function run(command, args) {
 try {
     result.sources = verifySources();
     const lock = JSON.parse(readFileSync(resolve(root, 'tools/physics/box3d/versions.lock.json'), 'utf8'));
+    const patchPlan = readPatchPlan();
+    const stagedCore = resolve(out, 'staged-core');
+    result.stagedCore = stageCore(stagedCore, patchPlan);
     result.identity = {
+        patchChainSha256: patchPlan.patchChainSha256,
         coreSha: lock.core.commit,
         bindingBaseSha: lock.bindingBase.commit,
         abiVersion: 1,
         schemaSha256: result.sources.schemaSha256,
     };
-    const sources = readdirSync(resolve(root, 'vendor/box3d/core/src'))
+    const sources = readdirSync(resolve(stagedCore, 'src'))
         .filter((x) => x.endsWith('.c'))
         .sort();
     if (native) {
@@ -64,15 +69,16 @@ try {
             ...(sanitize
                 ? ['-fsanitize=address,undefined', '-fno-sanitize-recover=all', '-fno-omit-frame-pointer']
                 : []),
-            '-Ivendor/box3d/core/include',
-            '-Ivendor/box3d/core/src',
+            `-I${stagedCore}/include`,
+            `-I${stagedCore}/src`,
             '-Itools/physics/box3d/native',
             `-DAIR_B3_SCHEMA_SHA="${result.sources.schemaSha256}"`,
+            `-DAIR_B3_PATCH_CHAIN_SHA="${patchPlan.patchChainSha256}"`,
         ];
         const objects = [];
         const commands = [];
         for (const source of [
-            ...sources.map((s) => `vendor/box3d/core/src/${s}`),
+            ...sources.map((s) => resolve(stagedCore, 'src', s)),
             'tools/physics/box3d/native/air_box3d.c',
             'tools/physics/box3d/native/contract.c',
         ]) {
@@ -88,7 +94,11 @@ try {
         const raw = run(exe, []);
         writeFileSync(resolve(out, 'contract.raw.json'), raw);
         const contract = JSON.parse(raw);
-        if (contract.status !== 'PASS' || contract.schemaSha256 !== result.sources.schemaSha256)
+        if (
+            contract.status !== 'PASS' ||
+            contract.schemaSha256 !== result.sources.schemaSha256 ||
+            contract.patchChainSha256 !== patchPlan.patchChainSha256
+        )
             throw new Error('Native contract did not pass current schema');
         result.contract = contract;
         result.artifacts = [
@@ -100,7 +110,16 @@ try {
             throw new Error('Emscripten differs from the reviewed candidate; review before changing the lock');
         result.compiler = compiler.trim();
         run('cmake', ['--version']);
-        run('emcmake', ['cmake', '-S', 'tools/physics/box3d', '-B', out, `-DCMAKE_BUILD_TYPE=${result.mode}`]);
+        run('emcmake', [
+            'cmake',
+            '-S',
+            'tools/physics/box3d',
+            '-B',
+            out,
+            `-DCMAKE_BUILD_TYPE=${result.mode}`,
+            `-DAIR_STAGED_CORE=${stagedCore}`,
+            `-DAIR_PATCH_CHAIN_SHA=${patchPlan.patchChainSha256}`,
+        ]);
         run('cmake', ['--build', out, '--parallel', '1']);
         const commands = JSON.parse(readFileSync(resolve(out, 'compile_commands.json'), 'utf8'));
         for (const command of commands) {
@@ -130,13 +149,24 @@ try {
         });
         writeFileSync(
             resolve(out, 'manifest.json'),
-            JSON.stringify({ schemaVersion: 1, ...identity, artifacts }, null, 2) + '\n',
+            JSON.stringify(
+                {
+                    schemaVersion: 1,
+                    ...identity,
+                    patchLockSha256: patchPlan.patchLockSha256,
+                    appliedPatches: patchPlan.lock.patches,
+                    artifacts,
+                },
+                null,
+                2,
+            ) + '\n',
         );
         run(process.execPath, ['tools/physics/box3d/wasm-contract.mjs', out]);
         run(process.execPath, ['tools/physics/box3d/wasm-ownership-contract.mjs', out]);
         result.artifacts = artifacts;
         result.browserStatus = 'NOT_RUN';
     }
+    verifyStagedCore(stagedCore, patchPlan);
     result.status = 'PASS';
 } catch (error) {
     result.status = result.commands.some((c) => c.error?.includes('ENOENT')) ? 'BLOCKED' : 'FAIL';
@@ -151,6 +181,9 @@ try {
         'tools/physics/box3d/CMakeLists.txt',
         'tools/physics/box3d/exports.json',
         'tools/physics/box3d/build.mjs',
+        'tools/physics/box3d/patch-intake.mjs',
+        'tools/physics/box3d/patches/lock.json',
+        'tools/physics/box3d/patches/sse2-loadv-alignment.patch',
         'tools/physics/box3d/wasm-contract.mjs',
         'tools/physics/box3d/wasm-ownership-contract.mjs',
         'tools/physics/box3d/verify-sources.mjs',

@@ -1,29 +1,41 @@
-# Unapplied SSE2 alignment candidate
+# Strict staged SSE2 alignment patch
 
-`sse2-loadv-alignment.candidate.patch` targets the pinned core only. It is NOT
-applied to `vendor/box3d/core`, is not used by the default build, and is not listed
-as an applied patch in the version lock.
+The default foundation build now uses the reviewed patch from `lock.json`. It does
+not edit `vendor/box3d/core`. `patch-intake.mjs` copies the complete verified core
+closure into a fresh build-local `staged-core`, matches the patch SHA and every
+before/after SHA, and applies exact unified-diff hunk positions and context. No
+fuzz, offsets, renames, symlinks, extra files or missing files are accepted.
+CMake independently checks staging before configuring, and the build checks it
+again after compilation. These checks detect drift, not malicious compiler tools.
 
-The full real-native ASan/UBSan diagnostic fails in `b3LoadV` at
-`src/simd_sse2.h:261`: `_mm_load_sd((const double*)src)` dereferences a double whose
-address can legally have only four-byte alignment for a three-float input. The
-observed call stack is closest-ray query → dynamic-tree ray cast → `b3LoadV`.
-The upstream GCC 14 intrinsic implementation dereferences `const double*`.
+The chain identity is SHA-256 of UTF-8 compact JSON in this precise key order:
+`{schemaVersion,baseCoreCommit,patches:[{id,sha256,files:[{path,beforeSha256,afterSha256}]}]}`.
+Array order is significant. `canonicalPatchChain` defines the serialization.
+Patch source paths are recorded in the lock, but not part of this content identity.
+The version lock separately anchors the complete patch-lock bytes.
 
-`native/sse2_alignment_repro.c` reproduces this independently with an explicitly
-8-byte-aligned float array and an input beginning one float into it. The unmodified
-header exits 1 under UBSan. The isolated candidate keeps SIMD and reads exactly the
-three float objects with `_mm_setr_ps`; the same UBSan-only diagnostic exits 0 with
-lanes `[1,2,3,0]`. This is only a narrow candidate check, not full core acceptance,
-performance proof, compiler matrix coverage or WASM proof.
+Current `patchChainSha256`:
+`20dd450a4313774e1d934df9fa9ec3458df35d9ee314beffa9d846404cdb86bf`.
+It is compiled into `air_b3_patch_chain_sha`, checked by the static facade, and
+recorded in the manifest and receipts. Wire ABI version remains 1: its layouts
+have not changed. Old unpatched and qualification-only artifacts lack the formal
+export and are rejected even if a manifest is rewritten to claim the new chain.
+A trusted loader must additionally authenticate artifact hashes; exported identity
+strings alone do not prove that arbitrary WASM executes the listed source.
 
-The ASan+UBSan candidate attempt also encounters a LeakSanitizer environment error
-at exit: LSan does not work under ptrace. That failure is retained, not suppressed
-or relabelled PASS. A preceding linker attempt used the existing candidate source
-directory as its executable name; its error is also retained before the corrected
-executable-name retry.
+The original core `b3LoadV` casts a float pointer to `const double*` for
+`_mm_load_sd`, but a valid three-float input need only have four-byte alignment.
+The patch uses `_mm_setr_ps` to read those three floats and zero the fourth lane.
+It changes only `src/simd_sse2.h`; SIMD and float32 remain enabled.
 
-Before applying the patch, review it explicitly, bind its hash and input blob to
-the build identity, then rerun the complete native diagnostic and both real WASM
-variants. Do not change original vendored bytes or mark the prior failed build as
-passing. The reconstruction's initial sanitizer status remains FAIL.
+The earlier `sse2-loadv-alignment.candidate.patch` and all prior raw failures stay
+unchanged. Isolated d qualification ran the complete native fixture: original
+UBSan-only FAIL, candidate UBSan-only PASS. The full candidate ASan/UBSan attempt
+remains `BLOCKED_LSAN_PTRACE`, with leak detection enabled. d also compared real
+candidate/control WASM physics and finite ownership fixtures successfully. Those
+results are candidate qualification, not a claim that a new build already ran.
+
+Formal staged build results belong to their own e receipts. Neither this intake
+nor finite fixtures establish full sanitizer, performance, browser/CSP or G1
+acceptance. Never suppress LSan, rewrite earlier failures, or replace the upstream
+vendor bytes to make a gate green.

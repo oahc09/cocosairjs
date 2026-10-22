@@ -20,5 +20,6 @@
   "_air_b3_shape_destroy",
   "_air_b3_ray_closest",
   "_malloc",
-  "_free"
+  "_free",
+  "_air_b3_patch_chain_sha"
 ]

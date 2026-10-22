@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "baseCoreCommit": "efca0c184d40fd6a82016983f1601c4d23965867",
+  "patches": [
+    {
+      "id": "sse2-loadv-float-alignment-v1",
+      "path": "tools/physics/box3d/patches/sse2-loadv-alignment.patch",
+      "sha256": "e5c4e5f2ae7f015cf62dfc2de5a36af73cc15d9b0ca0118fc0259c7d1f0b1403",
+      "files": [
+        {
+          "path": "src/simd_sse2.h",
+          "beforeSha256": "cc18b1f4f90fdceebb84b57f77e04c03009851a3a4c66439169318aa22a02719",
+          "afterSha256": "2295eae13388e656dc71396530ea928ecc575c8a86009182d76a9ef69333e8f6"
+        }
+      ]
+    }
+  ]
+}

@@ -20,6 +20,19 @@ const { default: createModule } = await import(pathToFileURL(resolve(dir, 'box3d
 const { createBox3DBinding } = await import(pathToFileURL(resolve(dir, 'facade.mjs')).href);
 const module = await createModule({ wasmBinary: wasm });
 assert.throws(() => createBox3DBinding(module, { ...manifest, schemaSha256: '0'.repeat(64) }), /identity mismatch/);
+const identityRejections = [];
+for (const [name, change] of [
+    ['missing-patch-chain', { patchChainSha256: undefined }],
+    ['forged-patch-chain', { patchChainSha256: '0'.repeat(64) }],
+    [
+        'stale-candidate-patch-sha-not-chain',
+        { patchChainSha256: 'e5c4e5f2ae7f015cf62dfc2de5a36af73cc15d9b0ca0118fc0259c7d1f0b1403' },
+    ],
+    ['wrong-binding-reference', { bindingBaseSha: '0'.repeat(40) }],
+]) {
+    assert.throws(() => createBox3DBinding(module, { ...manifest, ...change }), /identity mismatch/);
+    identityRejections.push(name);
+}
 const binding = createBox3DBinding(module, manifest);
 const before = binding.liveBytes();
 const world = binding.createWorld();
@@ -61,7 +74,12 @@ const report = {
     schemaVersion: 1,
     status: 'PASS',
     scope: 'Node real-WASM foundation only; browser and full G1 remain NOT_RUN',
-    identity: { coreSha: manifest.coreSha, schemaSha256: manifest.schemaSha256 },
+    identity: {
+        coreSha: manifest.coreSha,
+        schemaSha256: manifest.schemaSha256,
+        patchChainSha256: manifest.patchChainSha256,
+    },
+    identityRejections,
     memoryDeclaration,
     memoryGrowth: true,
     freefallTicks: ticks,

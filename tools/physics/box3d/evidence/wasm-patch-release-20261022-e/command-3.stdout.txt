@@ -1,0 +1,10 @@
+-- CMake C compiler: Clang
+-- CMake C++ compiler: Clang
+-- CMake system name: Emscripten
+-- CMake host system processor: x86_64
+-- Box3D validation ON (debug builds)
+-- Box3D AVX2 disabled
+-- Box3D on Emscripten
+-- Configuring done (0.7s)
+-- Generating done (0.0s)
+-- Build files have been written to: /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/wasm-patch-release-20261022-e

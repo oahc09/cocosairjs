@@ -11,6 +11,7 @@ enum { AIR_B3_OK = 0, AIR_B3_INVALID = 1, AIR_B3_ARGUMENT = 2, AIR_B3_CREATION =
 
 const char* air_b3_core_sha(void);
 const char* air_b3_schema_sha(void);
+const char* air_b3_patch_chain_sha(void);
 uint32_t air_b3_abi_version(void);
 uint32_t air_b3_world_create(float gx, float gy, float gz);
 int air_b3_world_valid(uint32_t world);

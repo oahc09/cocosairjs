@@ -1,0 +1,9 @@
+{
+  "path": "tools/physics/box3d/output/patch-staged-validation-20261022-e.tar.gz",
+  "bytes": 7563334,
+  "sha256": "2847b0b90c354ef83153f57598de690eb6122167bcb4db59d410ae48781feec6",
+  "entries": 1222,
+  "byteVerified": true,
+  "tracked": false,
+  "scope": "e source input snapshot, all negative intake stage trees, native binary, real Debug/Release WASM/facade artifacts, receipts, logs, staged cores, comparison and focused checks; no intermediate objects or static archives."
+}

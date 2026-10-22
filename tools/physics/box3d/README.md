@@ -174,3 +174,34 @@ new output path. No local absolute path is a requirement of the library itself.
 - Earlier a/b evidence is unchanged. Native ASan/UBSan FAIL remains unresolved;
   this increment does not run browsers, upload/deploy test pages, or bypass the
   recorded browser infrastructure restrictions. Full G1 remains incomplete.
+
+## Staged patch identity increment (e)
+
+The current build uses a strictly staged alignment patch, with upstream vendor
+bytes preserved. See `patches/README.md` and `patches/lock.json`. The original
+unpatched c and isolated-candidate d results remain historical evidence and are
+not interchangeable with current artifacts. `patchChainSha256` is now required
+by manifests and the static facade; missing, old or forged identities fail closed.
+Wire ABI remains version 1. `build.mjs` stages the 111-file core in each fresh output
+and CMake refuses direct use of the original vendor tree.
+
+Lightweight intake and real stale-artifact rejection (no new physics build):
+
+```sh
+node tools/physics/box3d/patch-intake-contract.mjs tools/physics/box3d/output/<new-intake-run>
+```
+
+This checks patch/base/before/after hashes, exact hunks, closure tampering, and
+rejection of actual historical unpatched/candidate modules. It requires the c/d
+artifacts named in the fixture. Those artifacts are used only as negative inputs,
+never as a substitute for a current physics build. Full ASan/LSan and browser/CSP
+remain blocked/unrun independently of these passing narrow checks.
+
+The fresh e runs now completed independently: staged native Debug PASS; staged
+WASM Release and Debug PASS for the actual Node physics and finite ownership
+contracts. Each WASM artifact audit checked all 54 compilation units, link flags,
+staging hashes, runtime patch identity and unshared memory. Both builds used the
+same 19 current input hashes; the finite physics/ownership comparison matched
+exactly. The 26 intake checks include two positive checks and 24 expected
+rejections, including real c/d stale modules. Four additional expected-manifest
+identity rejections run in each fresh e module. These are not full G1 results.

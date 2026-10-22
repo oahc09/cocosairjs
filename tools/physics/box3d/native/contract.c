@@ -35,7 +35,7 @@ int main(void)
     CHECK(air_b3_body_velocity(body[0], body[1], NAN, 0, 0) == AIR_B3_ARGUMENT);
     CHECK(air_b3_body_snapshot(body[0], body[1], snapshot) == 0);
     NEAR(snapshot[7], 1, 1e-4);
-    printf("{\"schemaVersion\":1,\"scope\":\"native-foundation-only\",\"coreSha\":\"%s\",\"schemaSha256\":\"%s\",\"freefallTicks\":[", air_b3_core_sha(), air_b3_schema_sha());
+    printf("{\"schemaVersion\":1,\"scope\":\"native-foundation-only\",\"coreSha\":\"%s\",\"schemaSha256\":\"%s\",\"patchChainSha256\":\"%s\",\"freefallTicks\":[", air_b3_core_sha(), air_b3_schema_sha(), air_b3_patch_chain_sha());
     for (int tick = 1; tick <= 60; ++tick) {
         CHECK(air_b3_world_step(world, 1.0f/60, 4) == 0);
         CHECK(air_b3_body_snapshot(body[0], body[1], snapshot) == 0);

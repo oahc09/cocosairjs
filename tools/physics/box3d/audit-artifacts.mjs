@@ -6,6 +6,7 @@ import { resolve, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { root, sha256, verifySources } from './verify-sources.mjs';
 import { inspectWasmMemory } from './verify-wasm.mjs';
+import { readPatchPlan, verifyStagedCore } from './patch-intake.mjs';
 
 const dir = resolve(process.argv[2]);
 const reportPath = resolve(dir, 'artifact-audit.raw.json');
@@ -22,13 +23,20 @@ for (const input of receipt.inputHashes) {
 }
 const sources = verifySources();
 const manifest = json('manifest.json');
+const patchPlan = readPatchPlan();
+const stagedCore = resolve(dir, 'staged-core');
+const staged = verifyStagedCore(stagedCore, patchPlan);
+assert.equal(manifest.patchChainSha256, patchPlan.patchChainSha256);
+assert.equal(manifest.patchLockSha256, patchPlan.patchLockSha256);
+assert.deepEqual(manifest.appliedPatches, patchPlan.lock.patches);
+assert.deepEqual(receipt.stagedCore, staged);
 assert.deepEqual(manifest.artifacts, receipt.artifacts);
 for (const artifact of manifest.artifacts) assert.deepEqual(fileHash(artifact.path), artifact);
 const commands = json('compile_commands.json');
 const expectedSources = [
-    ...readdirSync(resolve(root, 'vendor/box3d/core/src'))
+    ...readdirSync(resolve(stagedCore, 'src'))
         .filter((name) => name.endsWith('.c'))
-        .map((name) => `vendor/box3d/core/src/${name}`),
+        .map((name) => relative(root, resolve(stagedCore, 'src', name))),
     'tools/physics/box3d/native/air_box3d.c',
     'tools/physics/box3d/native/wasm_entry.c',
 ].sort();
@@ -40,7 +48,9 @@ for (const command of commands) {
     const flags = command.command ?? command.arguments.join(' ');
     assert.ok(!forbiddenFlags.test(flags), command.file);
     for (const flag of requiredFlags) assert.ok(flags.includes(flag), `${command.file}: missing ${flag}`);
-    if (command.file.includes('/vendor/box3d/core/')) assert.ok(flags.includes('-DBOX3D_DISABLE_AVX2'));
+    if (command.file.startsWith(stagedCore + '/')) assert.ok(flags.includes('-DBOX3D_DISABLE_AVX2'));
+    if (command.file.endsWith('/native/air_box3d.c'))
+        assert.ok(flags.includes(patchPlan.patchChainSha256), 'Compiled patch identity missing');
     assert.equal(flags.includes('-DNDEBUG'), receipt.mode === 'Release', `Wrong assertion mode: ${command.file}`);
 }
 const linkPath = 'CMakeFiles/air_box3d.dir/link.txt';
@@ -66,12 +76,14 @@ assert.ok(!imports.some((entry) => /pthread|worker|atomic/i.test(entry.name)));
 const contract = json('wasm-contract.raw.json');
 assert.equal(contract.status, 'PASS');
 assert.equal(contract.identity.coreSha, manifest.coreSha);
+assert.equal(contract.identity.patchChainSha256, manifest.patchChainSha256);
 assert.equal(contract.identity.schemaSha256, sources.schemaSha256);
 assert.deepEqual(contract.memoryDeclaration, memory);
 assert.equal(contract.freefallTicks.length, 60);
 const ownership = json('wasm-ownership-contract.raw.json');
 assert.equal(ownership.status, 'PASS');
 assert.equal(ownership.identity.coreSha, manifest.coreSha);
+assert.equal(ownership.identity.patchChainSha256, manifest.patchChainSha256);
 assert.equal(ownership.identity.schemaSha256, sources.schemaSha256);
 assert.equal(ownership.slotReuseCycles.length, 128);
 assert.equal(ownership.worldLifetimeCycles.length, 128);
@@ -84,6 +96,8 @@ const report = {
     nodeVersion: process.version,
     scope: 'Current-input artifact/compile/link audit only; not browser, sanitizer or full G1 acceptance',
     sources,
+    patchChainSha256: patchPlan.patchChainSha256,
+    stagedCoreFiles: staged.files.length,
     buildInputHashesMatched: receipt.inputHashes.length,
     compiledSourceCount: commands.length,
     compiledSourceHashes: expectedSources.map((path) => ({ path, sha256: sha256(readFileSync(resolve(root, path))) })),
@@ -97,6 +111,7 @@ const report = {
     evidence: [
         'build-receipt.json',
         'manifest.json',
+        'staged-core.receipt.json',
         'compile_commands.json',
         linkPath,
         'wasm-contract.raw.json',

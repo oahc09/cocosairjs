@@ -1,0 +1,15 @@
+/usr/lib/gcc/x86_64-linux-gnu/14/include/emmintrin.h:148:10: runtime error: load of misaligned address 0x7ffc82db6f8c for type 'const double', which requires 8 byte alignment
+0x7ffc82db6f8c: note: pointer points here
+  00 00 00 00 fb ff 7f 3f  57 d5 87 41 00 00 00 00  00 00 00 00 00 00 00 00  60 76 66 71 7d 55 00 00
+              ^ 
+    #0 0x557d37f0a92b in _mm_load_sd /usr/lib/gcc/x86_64-linux-gnu/14/include/emmintrin.h:148
+    #1 0x557d37f0a92b in b3LoadV /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/simd_sse2.h:261
+    #2 0x557d37f19ba4 in b3RayCastTreeView /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/dynamic_tree.c:1089
+    #3 0x557d37f19ba4 in b3DynamicTree_RayCast /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/dynamic_tree.c:1381
+    #4 0x557d3802224d in b3World_CastRayClosest /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/vendor/box3d/core/src/physics_world.c:3120
+    #5 0x557d381bff52 in air_b3_ray_closest /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/native/air_box3d.c:180
+    #6 0x557d381c0e4a in main /workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/native/contract.c:47
+    #7 0x7fb12f50eca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: 5e5b51f4c39af9ac589408c1dc432ba390a273cc)
+    #8 0x7fb12f50ed64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: 5e5b51f4c39af9ac589408c1dc432ba390a273cc)
+    #9 0x557d37e623b0 in _start (/workspace/scratch/62d43a81bbde/box3d-rebuild-20261022/tools/physics/box3d/output/sse2-qualification-20261022-d/original-ubsan/native-contract+0x1c53b0) (BuildId: 01f72a2ee784023853853ce07bcf7ebb46fdad2b)
+

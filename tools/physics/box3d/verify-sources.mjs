@@ -3,6 +3,7 @@ import { createHash } from 'node:crypto';
 import { readFileSync, readdirSync } from 'node:fs';
 import { dirname, resolve, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { readPatchPlan } from './patch-intake.mjs';
 
 export const root = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 export const sha256 = (bytes) => createHash('sha256').update(bytes).digest('hex');
@@ -43,7 +44,14 @@ export function verifySources() {
     ) {
         throw new Error('Fixed-core source closure is incomplete');
     }
-    return { verifiedFiles: manifest.files.length, fixedCoreFiles: actual.length, schemaSha256: sha256(schema) };
+    const patch = readPatchPlan();
+    return {
+        patchChainSha256: patch.patchChainSha256,
+        patchLockSha256: patch.patchLockSha256,
+        verifiedFiles: manifest.files.length,
+        fixedCoreFiles: actual.length,
+        schemaSha256: sha256(schema),
+    };
 }
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
     console.log(JSON.stringify(verifySources(), null, 2));

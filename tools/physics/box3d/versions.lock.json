@@ -37,7 +37,20 @@
     "status": "EXPERIMENTAL_FOUNDATION"
   },
   "apiSchemaSha256": "615555d88a4cab5a82f1d37fa4c8e23f735ccdcba5b7e5c4de73a20068b42c5c",
-  "corePatches": [],
+  "corePatches": [
+    {
+      "id": "sse2-loadv-float-alignment-v1",
+      "path": "tools/physics/box3d/patches/sse2-loadv-alignment.patch",
+      "sha256": "e5c4e5f2ae7f015cf62dfc2de5a36af73cc15d9b0ca0118fc0259c7d1f0b1403",
+      "files": [
+        {
+          "path": "src/simd_sse2.h",
+          "beforeSha256": "cc18b1f4f90fdceebb84b57f77e04c03009851a3a4c66439169318aa22a02719",
+          "afterSha256": "2295eae13388e656dc71396530ea928ecc575c8a86009182d76a9ef69333e8f6"
+        }
+      ]
+    }
+  ],
   "compileContract": {
     "coreStandard": "C17 with upstream GNU extensions",
     "bindingStandard": "C17",
@@ -53,10 +66,15 @@
   },
   "wasmGate": "INCOMPLETE_G1",
   "outstandingGates": {
-    "nativeSanitizer": "FAIL_UNRESOLVED_UNPATCHED_CORE",
+    "nativeSanitizer": "ORIGINAL_UBSAN_FAIL_PATCHED_ASAN_LSAN_BLOCKED_PTRACE",
     "browserNonIsolated": "BLOCKED_INFRASTRUCTURE",
     "strictCsp": "NOT_RUN",
     "completeBindingMigration": "NOT_DONE",
     "G1": "INCOMPLETE"
+  },
+  "patchLock": {
+    "path": "tools/physics/box3d/patches/lock.json",
+    "sha256": "b420fd64d38dab58eb3722682d4b4af8709a78d8acdba6b2183bbe73d1bcc6fb",
+    "patchChainSha256": "20dd450a4313774e1d934df9fa9ec3458df35d9ee314beffa9d846404cdb86bf"
   }
 }

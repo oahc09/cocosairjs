@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "frozenOwnedFileCount": 320,
+  "files": [
+    {
+      "source": "tools/physics/box3d/owned-files.json",
+      "snapshot": "inputs/tools/physics/box3d/owned-files.json",
+      "sha256": "d10ff9a99a9d2fe79ecae70ee2ad8330f9345dfad25158116e5378f8a49a7377"
+    },
+    {
+      "source": "tools/physics/box3d/versions.lock.json",
+      "snapshot": "inputs/tools/physics/box3d/versions.lock.json",
+      "sha256": "e177a3988619efe22efdcb2fdd45a4031ca568527b80e96d704ea74ff96b96aa"
+    },
+    {
+      "source": "vendor/box3d/source-manifest.json",
+      "snapshot": "inputs/vendor/box3d/source-manifest.json",
+      "sha256": "40f2d926a3fbc84d5d31f07532b3439657ebed69630ad9e2477c84fc25754dd0"
+    },
+    {
+      "source": "vendor/box3d/core/src/simd_sse2.h",
+      "snapshot": "inputs/vendor/box3d/core/src/simd_sse2.h",
+      "sha256": "cc18b1f4f90fdceebb84b57f77e04c03009851a3a4c66439169318aa22a02719"
+    },
+    {
+      "source": "tools/physics/box3d/patches/sse2-loadv-alignment.candidate.patch",
+      "snapshot": "inputs/tools/physics/box3d/patches/sse2-loadv-alignment.candidate.patch",
+      "sha256": "e5c4e5f2ae7f015cf62dfc2de5a36af73cc15d9b0ca0118fc0259c7d1f0b1403"
+    },
+    {
+      "source": "tools/physics/box3d/native/air_box3d.c",
+      "snapshot": "inputs/tools/physics/box3d/native/air_box3d.c",
+      "sha256": "f8ec0a4ab28d747f8b9d9b30f209937df7045e22c4daf584a5a7091905b6f15d"
+    },
+    {
+      "source": "tools/physics/box3d/native/air_box3d.h",
+      "snapshot": "inputs/tools/physics/box3d/native/air_box3d.h",
+      "sha256": "3b761f12db0a241f395f58fcf37d9c212897a4901d196bef00a397d4b765c1a2"
+    },
+    {
+      "source": "tools/physics/box3d/native/contract.c",
+      "snapshot": "inputs/tools/physics/box3d/native/contract.c",
+      "sha256": "d12eccb3695f0c368e68a56e77022a1d1c4a8a6552b250097acff5868b8f543c"
+    },
+    {
+      "source": "tools/physics/box3d/native/wasm_entry.c",
+      "snapshot": "inputs/tools/physics/box3d/native/wasm_entry.c",
+      "sha256": "9b1857c34808b0e3be4726c9df515999c1714583771813c89190d53a364e7c9f"
+    },
+    {
+      "source": "tools/physics/box3d/CMakeLists.txt",
+      "snapshot": "inputs/tools/physics/box3d/CMakeLists.txt",
+      "sha256": "29b1a9243be801c6fc4cb4f4590c608c0da0521fc9434f33573e2ce9247e38cd"
+    },
+    {
+      "source": "tools/physics/box3d/exports.json",
+      "snapshot": "inputs/tools/physics/box3d/exports.json",
+      "sha256": "614565d79e646f080c7f6195d58bf616644a3df3d1cd3fb0a93dea032f0ee4af"
+    },
+    {
+      "source": "tools/physics/box3d/abi-schema.json",
+      "snapshot": "inputs/tools/physics/box3d/abi-schema.json",
+      "sha256": "615555d88a4cab5a82f1d37fa4c8e23f735ccdcba5b7e5c4de73a20068b42c5c"
+    },
+    {
+      "source": "tools/physics/box3d/wasm-contract.mjs",
+      "snapshot": "inputs/tools/physics/box3d/wasm-contract.mjs",
+      "sha256": "cafb4ff50d71f8c42316ca20357033e32e91d9df943982edde31fd4a4fe3412e"
+    },
+    {
+      "source": "tools/physics/box3d/wasm-ownership-contract.mjs",
+      "snapshot": "inputs/tools/physics/box3d/wasm-ownership-contract.mjs",
+      "sha256": "e61057c6ef103fbfc8a87a3b1bcbd3109e6b70629db92f3571360281dcf57425"
+    },
+    {
+      "source": "tools/physics/box3d/verify-sources.mjs",
+      "snapshot": "inputs/tools/physics/box3d/verify-sources.mjs",
+      "sha256": "4270d7db1dd8ba8c28991ea0f82fc2f7da61e6ea2c90d8203fbaca73e37376b6"
+    },
+    {
+      "source": "tools/physics/box3d/verify-wasm.mjs",
+      "snapshot": "inputs/tools/physics/box3d/verify-wasm.mjs",
+      "sha256": "de4dd1b4e2ae32ceb5fddc0e8fbcb0159fdd29378cf7eed33c57e3852113af6e"
+    },
+    {
+      "source": "src/air/physics/box3d/binding/facade.mjs",
+      "snapshot": "inputs/src/air/physics/box3d/binding/facade.mjs",
+      "sha256": "4b1a77ef23dc45ee04187c244011888685f719e2c661c43402e0349b52e1543d"
+    },
+    {
+      "source": "src/air/physics/box3d/binding/facade.d.mts",
+      "snapshot": "inputs/src/air/physics/box3d/binding/facade.d.mts",
+      "sha256": "48049249e6ccddde367e7ffe9cdec8fff78bd132591b06efa08c708bfc21a374"
+    }
+  ]
+}

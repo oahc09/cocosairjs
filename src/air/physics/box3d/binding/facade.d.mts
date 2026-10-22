@@ -23,6 +23,8 @@ THE SOFTWARE.
 /** Internal foundation API, not a public Cocos adapter or a completed M1 gate. */
 export interface Box3DIdentity {
     coreSha: string;
+    bindingBaseSha: string;
+    patchChainSha256: string;
     abiVersion: 1;
     variant: 'st-simd';
     schemaSha256: string;

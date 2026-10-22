@@ -35,7 +35,11 @@ const persist = () => writeFileSync(output, JSON.stringify(report, null, 2) + '\
 persist();
 try {
     const manifest = JSON.parse(read('manifest.json'));
-    report.identity = { coreSha: manifest.coreSha, schemaSha256: manifest.schemaSha256 };
+    report.identity = {
+        coreSha: manifest.coreSha,
+        schemaSha256: manifest.schemaSha256,
+        patchChainSha256: manifest.patchChainSha256,
+    };
     for (const artifact of manifest.artifacts) {
         assert.equal(read(artifact.path).length, artifact.bytes);
         assert.equal(sha256(read(artifact.path)), artifact.sha256);

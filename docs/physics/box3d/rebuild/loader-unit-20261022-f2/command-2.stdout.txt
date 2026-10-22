@@ -1,0 +1,82 @@
+TAP version 13
+# Subtest: import and creation are lazy; normalized options are copied and frozen without touching caller
+ok 1 - import and creation are lazy; normalized options are copied and frozen without touching caller
+  ---
+  duration_ms: 6.589883
+  type: 'test'
+  ...
+# Subtest: invalid options and unsupported modes reject before asset requests
+ok 2 - invalid options and unsupported modes reject before asset requests
+  ---
+  duration_ms: 2.219594
+  type: 'test'
+  ...
+# Subtest: identical preparation is one exact promise; conflicts do not replace it; disposal is idempotent
+ok 3 - identical preparation is one exact promise; conflicts do not replace it; disposal is idempotent
+  ---
+  duration_ms: 31.142244
+  type: 'test'
+  ...
+# Subtest: HTTP, MIME and integrity failures do not import or acquire a module; retry gets a new generation
+ok 4 - HTTP, MIME and integrity failures do not import or acquire a module; retry gets a new generation
+  ---
+  duration_ms: 13.772262
+  type: 'test'
+  ...
+# Subtest: trusted identity, facade identity, required assets, duplicate and traversal paths are fail-closed
+ok 5 - trusted identity, facade identity, required assets, duplicate and traversal paths are fail-closed
+  ---
+  duration_ms: 10.711406
+  type: 'test'
+  ...
+# Subtest: a failed factory retains the original error, creates no fictitious release, and can retry
+ok 6 - a failed factory retains the original error, creates no fictitious release, and can retry
+  ---
+  duration_ms: 3.752975
+  type: 'test'
+  ...
+# Subtest: cancel during an unabortable factory waits for late acquisition and releases it before retry
+ok 7 - cancel during an unabortable factory waits for late acquisition and releases it before retry
+  ---
+  duration_ms: 3.314185
+  type: 'test'
+  ...
+# Subtest: binding failure still releases the acquired module, preserving original and cleanup errors separately
+ok 8 - binding failure still releases the acquired module, preserving original and cleanup errors separately
+  ---
+  duration_ms: 3.670133
+  type: 'test'
+  ...
+# Subtest: normal cleanup attempts both resources even if each throws; failed cleanup cannot silently restart
+ok 9 - normal cleanup attempts both resources even if each throws; failed cleanup cannot silently restart
+  ---
+  duration_ms: 3.284276
+  type: 'test'
+  ...
+# Subtest: cancellation before manifest response acquires and releases nothing fictitious
+ok 10 - cancellation before manifest response acquires and releases nothing fictitious
+  ---
+  duration_ms: 1.788854
+  type: 'test'
+  ...
+# Subtest: cancellation during module import does not invoke the late factory
+ok 11 - cancellation during module import does not invoke the late factory
+  ---
+  duration_ms: 2.951136
+  type: 'test'
+  ...
+# Subtest: runtime asset resolution rejects any unlisted resource before module acquisition
+ok 12 - runtime asset resolution rejects any unlisted resource before module acquisition
+  ---
+  duration_ms: 6.494877
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 12
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 284.127488

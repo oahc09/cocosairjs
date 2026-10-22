@@ -22,6 +22,8 @@ THE SOFTWARE.
 
 // Internal, limited M1 foundation. This is not the Cocos physics adapter.
 const CORE_SHA = 'efca0c184d40fd6a82016983f1601c4d23965867';
+const BINDING_BASE_SHA = '5d5a3af049cccd9948b2b55bac4342414af0ef64';
+const PATCH_CHAIN_SHA256 = '20dd450a4313774e1d934df9fa9ec3458df35d9ee314beffa9d846404cdb86bf';
 
 function failure(code, message) {
     return Object.assign(new Error(message), { code });
@@ -54,6 +56,10 @@ export function createBox3DBinding(module, expected) {
     if (
         !expected ||
         expected.coreSha !== CORE_SHA ||
+        expected.bindingBaseSha !== BINDING_BASE_SHA ||
+        expected.patchChainSha256 !== PATCH_CHAIN_SHA256 ||
+        typeof module?._air_b3_patch_chain_sha !== 'function' ||
+        text(module._air_b3_patch_chain_sha()) !== PATCH_CHAIN_SHA256 ||
         expected.abiVersion !== 1 ||
         expected.variant !== 'st-simd' ||
         !/^[a-f0-9]{64}$/.test(expected.schemaSha256) ||
@@ -62,7 +68,7 @@ export function createBox3DBinding(module, expected) {
         text(module._air_b3_schema_sha()) !== expected.schemaSha256 ||
         (typeof SharedArrayBuffer !== 'undefined' && module.HEAPU8.buffer instanceof SharedArrayBuffer)
     )
-        throw failure('AIR_E_BOX3D_ABI', 'Core/schema/variant identity mismatch');
+        throw failure('AIR_E_BOX3D_ABI', 'Core/schema/variant/patch-chain identity mismatch');
 
     const scratch = module._malloc(512);
     if (!scratch) throw failure('AIR_E_BOX3D_NATIVE', 'Cannot allocate binding scratch');

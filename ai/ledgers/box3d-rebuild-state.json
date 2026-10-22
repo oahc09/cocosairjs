@@ -63,10 +63,11 @@
     {
       "id": "T06",
       "phase": "M1",
-      "status": "TODO",
+      "status": "IN_PROGRESS",
       "description": "Loader：并发去重、路径定位、hash/schema、失败清理、诊断信息",
       "dependencies": "T03、T05",
-      "completionContract": "loader scope的WASM-08通过；AIR准入结果由T08/T12验证"
+      "completionContract": "loader scope的WASM-08通过；AIR准入结果由T08/T12验证",
+      "implementationScope": "Internal ST manager source and lifecycle tests only. Complete loader WASM-08, browser and application integration are not passed."
     },
     {
       "id": "T07",
@@ -954,20 +955,20 @@
     "deploy": false,
     "npmPublish": false
   },
-  "nextStep": "Persist Debug/Release, ownership and actual WASM32 evidence; independently qualify alignment patch without modifying pinned core; finish M0 required inventory and abnormal business-input specifications.",
+  "nextStep": "Complete fresh patched artifact verification and real Node loader cycles; persist fifth source/evidence checkpoint; continue M1 binding and pending M0 fixtures without claiming G1/browser/app completion.",
   "remoteHistoryPolicy": "True upstream main parent and incremental tree; local snapshot import is backup-only and is never pushed as upstream history.",
   "remotePublication": {
     "branchCreated": true,
-    "branchHead": "b5f8cd35afb22634d13bcc68fed912912e9d07cf",
-    "status": "VERIFIED_FIRST_REAL_NODE_WASM_CHECKPOINT",
-    "commitsPublished": 3,
-    "verifiedRemoteParent": "338ecaaf5a5ebd0a008d5a7a9c15af1ef33b7293",
+    "branchHead": "5bc901ff997a228b4e6dd60bec6df8afc8ff3c3c",
+    "status": "VERIFIED_DEBUG_RELEASE_OWNERSHIP_CHECKPOINT",
+    "commitsPublished": 4,
+    "verifiedRemoteParent": "b5f8cd35afb22634d13bcc68fed912912e9d07cf",
     "verifiedAddedFiles": 17,
     "allPriorMainBlobsPreserved": true,
-    "receipt": "docs/physics/box3d/rebuild/remote-wasm-checkpoint-receipt.json",
-    "verifiedChangedFiles": 59
+    "receipt": "docs/physics/box3d/rebuild/remote-checkpoint-4.json",
+    "verifiedChangedFiles": 92
   },
-  "updatedAtUtc": "2026-10-22T04:21:18.570947+00:00",
+  "updatedAtUtc": "2026-10-22T05:31:46.022499+00:00",
   "currentEvidence": {
     "m0ContractTests": "PASS_6_SOURCE_DESIGN_CHECKS_ONLY",
     "nativeFoundationIndex": "tools/physics/box3d/evidence/index.json",
@@ -993,7 +994,21 @@
     "liveWorldSlotReuseCycles": 128,
     "worldLifecycleCycles": 128,
     "rawBodyIdReuseAcrossWorldLifetimes": 127,
-    "rawIdPermanenceClaim": false
+    "rawIdPermanenceClaim": false,
+    "stLoaderUnit": "PASS_13_TRANSPORT_LIFECYCLE_TEST_GROUPS_NOT_PHYSICS_OR_BROWSER",
+    "stLoaderDeclaration": "PASS_STRICT_INTERNAL_DECLARATION_CONSUMER_ONLY",
+    "stLoaderEvidence": "docs/physics/box3d/rebuild/loader-unit-20261022-f4/receipt.json",
+    "formalPatchIntake": "PASS_2_POSITIVE_24_EXPECTED_REJECTIONS_WITH_NEW_RUNTIME_PATCH_IDENTITY",
+    "stLoaderRealWasm": "PASS_20_NEW_PATCHED_NODE_LOAD_60STEP_DISPOSE_CYCLES_FILESYSTEM_TRANSPORT",
+    "stLoaderRealWasmEvidence": "docs/physics/box3d/rebuild/loader-real-wasm-20261022-f4/loader-real-wasm.raw.json",
+    "stLoaderPreviousFailures": "First format check and invalid truthy factory cleanup regression retained; all affected checks rerun under f4 input hashes.",
+    "patchedNativeDebug": "PASS_NARROW_UNSANITIZED_NATIVE",
+    "patchedWasmDebugRelease": "PASS_FRESH_REAL_WASM_19_SHARED_INPUTS_54_UNITS_EACH_AND_FINITE_EXACT_COMPARISON",
+    "patchedEvidence": "tools/physics/box3d/evidence/patch-staged-checkpoint-20261022-e/summary.json",
+    "patchChainSha256": "20dd450a4313774e1d934df9fa9ec3458df35d9ee314beffa9d846404cdb86bf",
+    "originalUBSan": "FAIL_PRESERVED_UPSTREAM_SSE2_MISALIGNED_DOUBLE_LOAD",
+    "isolatedCandidateUBSan": "PASS_NARROW_FULL_NATIVE_FIXTURE_UBSAN_ONLY_NOT_DEFAULT_SANITIZER_QUALIFICATION",
+    "isolatedCandidateASanLSan": "BLOCKED_LSAN_PTRACE"
   },
   "contractDesign": {
     "publicSpecMembers": 166,
@@ -1004,11 +1019,11 @@
     "giftWorkshop": "docs/physics/box3d/contracts/gift-workshop/"
   },
   "persistentCheckpoint": {
-    "libraryFileId": "libfile_73be4b44030c81919a0308b427307756",
-    "sha256": "3d0a2d13b5cfdc9e2d1769fe27e838889565f6da6d41a13bef2ff181e79d3341",
-    "localHead": "e106586b4e5433e7a4daffbb40dd9ae8e678784f",
-    "libraryDownloadAndIndependentRestore": "PASS_3710_FILES_5_ARCHIVE_PAYLOADS",
-    "scope": "First passing real Node WASM and original a failure; new Debug/Release/layout evidence is next checkpoint."
+    "libraryFileId": "libfile_b6e8c6924de48191b1142d69a78fce61",
+    "sha256": "cae893201196738324b66fdf4ca6eb813aabfa13fec223de073deb66c67ef02b",
+    "localHead": "bdb618394a2115a870e82b6525f8cb696ac404d3",
+    "libraryDownloadAndIndependentRestore": "PASS_3805_FILES_6_ARCHIVE_PAYLOADS",
+    "scope": "Default c Debug/Release source and real WASM; isolated d SSE2 qualification is separately included and unapplied in this checkpoint. New patch-intake/loader source is later, not claimed in this archive."
   },
   "additionalOriginalMainSources": {
     "count": 13,

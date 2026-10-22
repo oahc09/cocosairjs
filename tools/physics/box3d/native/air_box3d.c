@@ -8,6 +8,9 @@
 #ifndef AIR_B3_SCHEMA_SHA
 #error "Build must bind the schema SHA-256 to the compiled module"
 #endif
+#ifndef AIR_B3_PATCH_CHAIN_SHA
+#error "Build must bind the reviewed staged patch-chain SHA-256"
+#endif
 #ifdef BOX3D_DOUBLE_PRECISION
 #error "The initial AIR Box3D wire ABI requires float32"
 #endif
@@ -32,6 +35,7 @@ static void write_vec(float* out, b3Vec3 v) { out[0] = v.x; out[1] = v.y; out[2]
 
 const char* air_b3_core_sha(void) { return "efca0c184d40fd6a82016983f1601c4d23965867"; }
 const char* air_b3_schema_sha(void) { return AIR_B3_SCHEMA_SHA; }
+const char* air_b3_patch_chain_sha(void) { return AIR_B3_PATCH_CHAIN_SHA; }
 uint32_t air_b3_abi_version(void) { return AIR_B3_ABI_VERSION; }
 
 uint32_t air_b3_world_create(float gx, float gy, float gz)
