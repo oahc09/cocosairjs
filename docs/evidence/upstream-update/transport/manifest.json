@@ -1,0 +1,226 @@
+{
+  "schema": "cocosairjs-evidence-transport-v1",
+  "source_commit": "e40a9cf779400c317abdc9350dbe984b37d2b5e4",
+  "source_tree": "5d28c75644a22ec700d931e867d79a6e3e691dc9",
+  "source_status": "BLOCKED",
+  "encoding": "raw-byte-slices",
+  "chunk_bytes": 1048576,
+  "archives": [
+    {
+      "path": "docs/evidence/upstream-update/m4-final-attempts.tar.gz",
+      "bytes": 10614256,
+      "sha256": "0d22c547bcf17dfdd9dc9b60d7f736b9d3a7ec80c906b7c52f9c09fb35f43d5e",
+      "git_blob_sha1": "a6c49ec2ddf9eba0fdae0aa4aa12f9df85b7e600",
+      "chunks": [
+        {
+          "index": 1,
+          "offset": 0,
+          "path": "chunks/m4-final-attempts.tar.gz.part-0001",
+          "bytes": 1048576,
+          "sha256": "d53c82fd4f71268aa8d472e01d9e01a7d106a905f4f2ec245923f98d0d380d9a",
+          "git_blob_sha1": "4332b6a5b3579c21bbcf0d6f238bc462c8f079c0"
+        },
+        {
+          "index": 2,
+          "offset": 1048576,
+          "path": "chunks/m4-final-attempts.tar.gz.part-0002",
+          "bytes": 1048576,
+          "sha256": "5562a517a46d8c7cc3498f027510a05712a877ee369e715e4be5eab83900290c",
+          "git_blob_sha1": "1ece9a7f76c1fe0e50d86b87bb9b2eeac5a9ec38"
+        },
+        {
+          "index": 3,
+          "offset": 2097152,
+          "path": "chunks/m4-final-attempts.tar.gz.part-0003",
+          "bytes": 1048576,
+          "sha256": "d1d5e148960b78ef34e808320c3f04b94a49b7837469b5931acc0c6ac66abbd9",
+          "git_blob_sha1": "607ac758ab8ad3f5683a3ace4de739ed6607957d"
+        },
+        {
+          "index": 4,
+          "offset": 3145728,
+          "path": "chunks/m4-final-attempts.tar.gz.part-0004",
+          "bytes": 1048576,
+          "sha256": "1b872fa1e8545e8d0b6667a31644af68b49dc8ed97e1d63e12fa507c91f873e8",
+          "git_blob_sha1": "75b75430b2b9bba397cf2bace508425dafe66fdc"
+        },
+        {
+          "index": 5,
+          "offset": 4194304,
+          "path": "chunks/m4-final-attempts.tar.gz.part-0005",
+          "bytes": 1048576,
+          "sha256": "1466eb3da38cb86eb08ddea5931469e3b88793c0a5c4efa3bd247fc198e34ce6",
+          "git_blob_sha1": "9c07e6b126dd253eff423484e92930604f44d1ec"
+        },
+        {
+          "index": 6,
+          "offset": 5242880,
+          "path": "chunks/m4-final-attempts.tar.gz.part-0006",
+          "bytes": 1048576,
+          "sha256": "01a4da6de49ef40413825f3daacc1e209f5120e491e055fb7a9bfbecef8c9822",
+          "git_blob_sha1": "6e8aa9a675bf8e002e8b52496f5a177e1c4b7e3d"
+        },
+        {
+          "index": 7,
+          "offset": 6291456,
+          "path": "chunks/m4-final-attempts.tar.gz.part-0007",
+          "bytes": 1048576,
+          "sha256": "29a4dfec7cff45b4718ca84eb0c601f37798e50ca8168cd91c7cceb99e283b15",
+          "git_blob_sha1": "9101f8c16e5245a868de1eb50664e7628d243e04"
+        },
+        {
+          "index": 8,
+          "offset": 7340032,
+          "path": "chunks/m4-final-attempts.tar.gz.part-0008",
+          "bytes": 1048576,
+          "sha256": "3ddc2f6762e24a38dc7bdfd202d4d252177cb5bbbe29b213f582fa828fd24d5d",
+          "git_blob_sha1": "dc64c3313eb433ea82f64d69e301d51555866611"
+        },
+        {
+          "index": 9,
+          "offset": 8388608,
+          "path": "chunks/m4-final-attempts.tar.gz.part-0009",
+          "bytes": 1048576,
+          "sha256": "9c2333f5c7883ee2bebada09986c6819298bffc936b02245bab134d09550ee84",
+          "git_blob_sha1": "c17235ad3a6174f6301ec42285a500d3e8f46686"
+        },
+        {
+          "index": 10,
+          "offset": 9437184,
+          "path": "chunks/m4-final-attempts.tar.gz.part-0010",
+          "bytes": 1048576,
+          "sha256": "0e72fe56416a041a2c94da8491ddd1142a2d108f1a379f2850a3fdbfe91137ee",
+          "git_blob_sha1": "64ac156a908795f34a2d00f70d42a003cf198354"
+        },
+        {
+          "index": 11,
+          "offset": 10485760,
+          "path": "chunks/m4-final-attempts.tar.gz.part-0011",
+          "bytes": 128496,
+          "sha256": "8293638b0b9573100ef87e0567789a6f4f4027f69e3962b9b8ee9238d0428969",
+          "git_blob_sha1": "54a63b6f68202084dd13aa85f00f356bbc027d41"
+        }
+      ]
+    },
+    {
+      "path": "docs/evidence/upstream-update/m4-sdk-compatibility-audit.tar.gz",
+      "bytes": 14077710,
+      "sha256": "4e5b0831f31a08a77c4cb4857989d043392793fbcc7541b4b233044b186b43a8",
+      "git_blob_sha1": "71cb923b1d9a54e28830e2e1ae9c2166dc2efb0c",
+      "chunks": [
+        {
+          "index": 1,
+          "offset": 0,
+          "path": "chunks/m4-sdk-compatibility-audit.tar.gz.part-0001",
+          "bytes": 1048576,
+          "sha256": "210c93c2d05e98c374dd0319373c11ae05865500e15ab65b87f11ec553abc293",
+          "git_blob_sha1": "9eb557f46f46527e42a9478b482b7a5967a0f7b9"
+        },
+        {
+          "index": 2,
+          "offset": 1048576,
+          "path": "chunks/m4-sdk-compatibility-audit.tar.gz.part-0002",
+          "bytes": 1048576,
+          "sha256": "d2ce0da04ec7e617584cf92579634ec298e813b88a500e4a4c246962157a4882",
+          "git_blob_sha1": "c3403cc6d037d6c8e506a2b79c8c343e49f2ad64"
+        },
+        {
+          "index": 3,
+          "offset": 2097152,
+          "path": "chunks/m4-sdk-compatibility-audit.tar.gz.part-0003",
+          "bytes": 1048576,
+          "sha256": "c6476b3ddde1fcf8087020425cda5513dc7676888db9c2d4bf4305ec8581ee2f",
+          "git_blob_sha1": "b873993029718fd3cea68c564397d614fb0199ab"
+        },
+        {
+          "index": 4,
+          "offset": 3145728,
+          "path": "chunks/m4-sdk-compatibility-audit.tar.gz.part-0004",
+          "bytes": 1048576,
+          "sha256": "8058a56ad602594a09348fc4eeb471daa8ac76890d3bd7fb1207ad67069942b4",
+          "git_blob_sha1": "7aabc7cdce26998ed12d411428bcdcebc398dfd7"
+        },
+        {
+          "index": 5,
+          "offset": 4194304,
+          "path": "chunks/m4-sdk-compatibility-audit.tar.gz.part-0005",
+          "bytes": 1048576,
+          "sha256": "51c9378463506412430ae4f9d2317f1910a59897e8cd93f1e914d908534e0fb6",
+          "git_blob_sha1": "3e3785add969c2f12fac411ce2a987228b77f080"
+        },
+        {
+          "index": 6,
+          "offset": 5242880,
+          "path": "chunks/m4-sdk-compatibility-audit.tar.gz.part-0006",
+          "bytes": 1048576,
+          "sha256": "2cd87a345e43dad528edb864d1b82e9b655e3ec3ca2a731f6890869e66af3dec",
+          "git_blob_sha1": "a94dfd5c1fbb3e9be9aefd235380ee15449f7fda"
+        },
+        {
+          "index": 7,
+          "offset": 6291456,
+          "path": "chunks/m4-sdk-compatibility-audit.tar.gz.part-0007",
+          "bytes": 1048576,
+          "sha256": "9e1e24d63c85a1af3c5cabbd5c879ea6a3ac292c38148562cb9cf9a8e3fcb52c",
+          "git_blob_sha1": "dac8838e26fbc2c5db56ddb85d18e642f9d24ad4"
+        },
+        {
+          "index": 8,
+          "offset": 7340032,
+          "path": "chunks/m4-sdk-compatibility-audit.tar.gz.part-0008",
+          "bytes": 1048576,
+          "sha256": "66d9c300e8680f90fb42b1b5c0a94d9ae5239945e88469b19f037c8607a1966c",
+          "git_blob_sha1": "16a8058f268f67d6df5879f377aa0763cb16bab2"
+        },
+        {
+          "index": 9,
+          "offset": 8388608,
+          "path": "chunks/m4-sdk-compatibility-audit.tar.gz.part-0009",
+          "bytes": 1048576,
+          "sha256": "65af3232587b17f7c2368a250b4a146bfe42e697dd17ed53d0863a20bfc655ac",
+          "git_blob_sha1": "fb647c68182b3e3d66cbf404d7189a0c9fa6b000"
+        },
+        {
+          "index": 10,
+          "offset": 9437184,
+          "path": "chunks/m4-sdk-compatibility-audit.tar.gz.part-0010",
+          "bytes": 1048576,
+          "sha256": "ad2ed89530ad8e62f6d7a1730e9ad3b29d484a33cfb7085578020b9dd32537b7",
+          "git_blob_sha1": "c7898e2c181ff35d6bab93453f9858e25479bd0a"
+        },
+        {
+          "index": 11,
+          "offset": 10485760,
+          "path": "chunks/m4-sdk-compatibility-audit.tar.gz.part-0011",
+          "bytes": 1048576,
+          "sha256": "bf576b1917f5fe70caa09dc3bcb339218e396279d8cc391b525e2d5a00f36fde",
+          "git_blob_sha1": "18f707ddc77a558b4a9c8a36fbac05aa7b599245"
+        },
+        {
+          "index": 12,
+          "offset": 11534336,
+          "path": "chunks/m4-sdk-compatibility-audit.tar.gz.part-0012",
+          "bytes": 1048576,
+          "sha256": "12d527bb56993f9d1f0555d149619b3d2040c71dce8eb4ab90a47d4d1ddab367",
+          "git_blob_sha1": "1cdd82f7ed525369726b76ecb8c290f6ae64da7d"
+        },
+        {
+          "index": 13,
+          "offset": 12582912,
+          "path": "chunks/m4-sdk-compatibility-audit.tar.gz.part-0013",
+          "bytes": 1048576,
+          "sha256": "e74854aa29ea25f1953672115e996df94a789149b75c8fc8f23306ff1b2ced2b",
+          "git_blob_sha1": "a88cee0117435b3f1eb4ef90b61867ab21f0c4e3"
+        },
+        {
+          "index": 14,
+          "offset": 13631488,
+          "path": "chunks/m4-sdk-compatibility-audit.tar.gz.part-0014",
+          "bytes": 446222,
+          "sha256": "d99143112501653aeb3d66d04a0565986e6e82c95be1497cd432d7f023eb73e7",
+          "git_blob_sha1": "b36221dead1dfa4a97cd46455023a2c7b0a629be"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "schema": "cocosairjs-evidence-transport-validation-v1",
+  "validated_at_utc": "2026-10-23T03:05:26.910294+00:00",
+  "transport_result": "PASS",
+  "source_status": "BLOCKED",
+  "source_commit": "e40a9cf779400c317abdc9350dbe984b37d2b5e4",
+  "source_tree": "5d28c75644a22ec700d931e867d79a6e3e691dc9",
+  "python": "3.12.14",
+  "regression_tests": {
+    "run": 35,
+    "passed": 35,
+    "failed": 0,
+    "skipped": 0,
+    "command": "python3 docs/evidence/upstream-update/transport/test_reassemble.py",
+    "required_negative_cases": [
+      "missing chunks",
+      "corrupt chunks",
+      "reordered chunk records",
+      "reordered chunk bytes",
+      "duplicate chunk records",
+      "duplicate chunk bytes",
+      "unexpected duplicate files",
+      "existing output files/directories/symlinks"
+    ],
+    "additional_negative_cases": [
+      "archive identity/source status pins",
+      "manifest duplicate keys",
+      "path traversal",
+      "symlink inputs and output parents",
+      "late-stage corruption cleanup",
+      "publication failure rollback",
+      "interruption immediately after link",
+      "staging cleanup failure rollback",
+      "interruption after staging cleanup",
+      "concurrent output preserved"
+    ],
+    "log": "docs/evidence/upstream-update/transport/validation-tests.log",
+    "default_output_root_original_paths": "PASS"
+  },
+  "independent_reassembly": [
+    {
+      "path": "docs/evidence/upstream-update/m4-final-attempts.tar.gz",
+      "bytes": 10614256,
+      "sha256": "0d22c547bcf17dfdd9dc9b60d7f736b9d3a7ec80c906b7c52f9c09fb35f43d5e",
+      "git_blob_sha1": "a6c49ec2ddf9eba0fdae0aa4aa12f9df85b7e600",
+      "independent_method": "explicit ordered cat of chunk files; no source-file copy",
+      "byte_comparison_to_immutable_source": "PASS (cmp)",
+      "sha256sum": "PASS",
+      "git_hash_object": "PASS",
+      "gzip_integrity": "PASS"
+    },
+    {
+      "path": "docs/evidence/upstream-update/m4-sdk-compatibility-audit.tar.gz",
+      "bytes": 14077710,
+      "sha256": "4e5b0831f31a08a77c4cb4857989d043392793fbcc7541b4b233044b186b43a8",
+      "git_blob_sha1": "71cb923b1d9a54e28830e2e1ae9c2166dc2efb0c",
+      "independent_method": "explicit ordered cat of chunk files; no source-file copy",
+      "byte_comparison_to_immutable_source": "PASS (cmp)",
+      "sha256sum": "PASS",
+      "git_hash_object": "PASS",
+      "gzip_integrity": "PASS"
+    }
+  ],
+  "implementation_identities": {
+    "reassemble.py": {
+      "bytes": 11214,
+      "sha256": "d1958b3c9f2782a05c3934f665a9a87a4f0d8c87d78abed6e99d3e3f10696da0",
+      "git_blob_sha1": "2ec0aca079cab72369edf80a38d661f7c6fe0c10"
+    },
+    "test_reassemble.py": {
+      "bytes": 13032,
+      "sha256": "6a5e8795c8b37a3bef20521a47f419f127faef11010b2051973cbcaef2eb2e2b",
+      "git_blob_sha1": "36bdc3534c66810a89885c071f3c6cb11afc9198"
+    },
+    "manifest.json": {
+      "bytes": 9014,
+      "sha256": "bf98a208d82ef13d84ce9be76cad8e00ba93e63cb17f796ad4874b74dcce87bf",
+      "git_blob_sha1": "9cd4bebd6ae096450d6f63d9ebddb7a4974a1282"
+    },
+    "validation-tests.log": {
+      "bytes": 3594,
+      "sha256": "05ecd8b3c0c080df457ae7d37cb0fcf98f75e9820c754fe6382a296f91e8db6b",
+      "git_blob_sha1": "8e7e1f04c9680f96fd3f98b0ae7be352fc72d9d6"
+    }
+  },
+  "scope": "Transport validation only; original project gates and overall BLOCKED status are unchanged.",
+  "formatting": {
+    "formatter": "Prettier 3.9.9",
+    "config": "source candidate .prettierrc.json",
+    "ignore_handling": "Original .prettierignore excludes docs/evidence; checked only new Markdown/JSON explicitly with empty ignore rules.",
+    "result": "PASS"
+  },
+  "read_only_review": {
+    "result": "No remaining archive-integrity, overwrite, or manifest path-escape blocker under documented trusted-directory assumptions.",
+    "resolved_findings": [
+      "Record destination inode identity before hard-link publication.",
+      "Finish staging cleanup before success; roll back via stored inode identities after partial staging cleanup."
+    ],
+    "limitation": "Interruption in the directory-creation bookkeeping window can leave an empty directory; no archive integrity or overwrite impact. Abrupt process death/power loss is not a two-file crash-atomic transaction."
+  },
+  "python_3_8_syntax": "PASS (both scripts parsed with Python 3.8 grammar)",
+  "raw_chunk_bytes": 1048576,
+  "chunk_count": 25,
+  "transport_revision": "one-mib-v2",
+  "retained_prior_attempts": {
+    "previous_adaptation_commit": "24731b2ec7028ef34d08e6ed39860e4e37a548d8",
+    "previous_validation": "docs/evidence/upstream-update/transport/history/6mib-validation.json",
+    "previous_test_log": "docs/evidence/upstream-update/transport/history/6mib-validation-tests.log",
+    "failed_network_attempts": "docs/evidence/upstream-update/transport/history/transport-attempts.json",
+    "reason": "Reduce only raw chunk size after confirmed technical transport failures; archive identities unchanged."
+  }
+}
