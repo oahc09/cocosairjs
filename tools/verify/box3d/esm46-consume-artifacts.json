@@ -1,0 +1,598 @@
+{
+  "schema": "box3d-esm46-continuation-artifacts-v1",
+  "status": "BUILT_ARTIFACTS_FROM_FAILED_ATTEMPT_C_NOT_CONSUMER_PASS",
+  "generatedSourceCommit": "86c0882e78e969f86162832e2536f979adfdfb76",
+  "archiveLibraryFileId": "libfile_3d9cd9bcc9788191a303c2bfba57d850",
+  "archiveSHA256": "626179bd42f4340089141862581a957d1d0c8356d3dceb4406d1fda9ade78f51",
+  "archiveBytes": 45084448,
+  "baselineManifestSHA256": "731b5a98e5ce30552eadcbe06ef93d5cfda7e8ce9e5ee9b320c12281f65316d8",
+  "members": [
+    {
+      "path": "attempt-c/attempt.raw.json",
+      "bytes": 17255,
+      "sha256": "6cffc091fff56e11f4f9f80332d20e5a2789c0586eea64c9012d0c5a466616a4",
+      "mode": 420,
+      "role": "evidence",
+      "destination": "prior-build-evidence/attempt.raw.json"
+    },
+    {
+      "path": "attempt-c/disposable-source/build/cocosair.legacy.d.ts",
+      "bytes": 367,
+      "sha256": "6dd42c6a064b17f923568bce9e3befce5ff0e33d7b0af19bed965a9e1a86aed2",
+      "mode": 420,
+      "role": "dts",
+      "destination": "dts/cocosair.legacy.d.ts"
+    },
+    {
+      "path": "attempt-c/disposable-source/build/cocosair.module.d.ts",
+      "bytes": 3439339,
+      "sha256": "20e32b58f4f633cd25bcd4e114cc4bbc8a961a0fcf4e341abdc4f51f70a92406",
+      "mode": 420,
+      "role": "dts",
+      "destination": "dts/cocosair.module.d.ts"
+    },
+    {
+      "path": "attempt-c/disposable-source/tools/verify/box3d/esm45-README.md",
+      "bytes": 9601,
+      "sha256": "909eb308a36c891f5d045f994501171c2b87bf289c79d54e990a2030f6fc097c",
+      "mode": 420,
+      "role": "fixture",
+      "destination": "prior-fixtures/esm45-README.md"
+    },
+    {
+      "path": "attempt-c/disposable-source/tools/verify/box3d/esm45-baseline.json",
+      "bytes": 3151545,
+      "sha256": "731b5a98e5ce30552eadcbe06ef93d5cfda7e8ce9e5ee9b320c12281f65316d8",
+      "mode": 420,
+      "role": "fixture",
+      "destination": "prior-fixtures/esm45-baseline.json"
+    },
+    {
+      "path": "attempt-c/disposable-source/tools/verify/box3d/esm45-build.cjs",
+      "bytes": 9242,
+      "sha256": "07fd8888d7dd43b288ac4a31a8a636a0e0264c8365fe0a1cf12fb5e60b4cdce2",
+      "mode": 420,
+      "role": "fixture",
+      "destination": "prior-fixtures/esm45-build.cjs"
+    },
+    {
+      "path": "attempt-c/disposable-source/tools/verify/box3d/esm45-capture.py",
+      "bytes": 1836,
+      "sha256": "b5ba1d1ae9733c84709e313e2568c02d627a48c3bc725768b3526f6bb618d4e5",
+      "mode": 420,
+      "role": "fixture",
+      "destination": "prior-fixtures/esm45-capture.py"
+    },
+    {
+      "path": "attempt-c/disposable-source/tools/verify/box3d/esm45-consume.mjs",
+      "bytes": 13664,
+      "sha256": "6e25e23133fa60ff5091aedd1ccb6655e96558b1e85e2940fc856dcfff0373f2",
+      "mode": 420,
+      "role": "fixture",
+      "destination": "prior-fixtures/esm45-consume.mjs"
+    },
+    {
+      "path": "attempt-c/disposable-source/tools/verify/box3d/esm45-contract.json",
+      "bytes": 2576,
+      "sha256": "d48ee527c66c208df28886a10a5e21a51b9e16e7e87402ee9333bd260b9f030c",
+      "mode": 420,
+      "role": "fixture",
+      "destination": "prior-fixtures/esm45-contract.json"
+    },
+    {
+      "path": "attempt-c/disposable-source/tools/verify/box3d/esm45-dts-diagnostics.cjs",
+      "bytes": 1136,
+      "sha256": "57e328a03fe0233e2adeab5876d4bf2012a92bb70fd8871729abb886bb6917bf",
+      "mode": 420,
+      "role": "fixture",
+      "destination": "prior-fixtures/esm45-dts-diagnostics.cjs"
+    },
+    {
+      "path": "attempt-c/disposable-source/tools/verify/box3d/esm45-package-consumer.mjs",
+      "bytes": 207,
+      "sha256": "9364d28c88c77b865412cc8e1c39ef9c8cb006748008e2b5b12b9b7f2100cb44",
+      "mode": 420,
+      "role": "fixture",
+      "destination": "prior-fixtures/esm45-package-consumer.mjs"
+    },
+    {
+      "path": "attempt-c/disposable-source/tools/verify/box3d/esm45-run.py",
+      "bytes": 17624,
+      "sha256": "64ea088bf126421b00642ab0d046a56204ffec67e1ed78b969fbcff14a42a640",
+      "mode": 420,
+      "role": "fixture",
+      "destination": "prior-fixtures/esm45-run.py"
+    },
+    {
+      "path": "attempt-c/disposable-source/tools/verify/box3d/esm45-source-controls.cjs",
+      "bytes": 6410,
+      "sha256": "e5ae5e64f6001a2510c6e5bb28175c552200ccc4eb0ce5d7990efbbfbcde5f78",
+      "mode": 420,
+      "role": "fixture",
+      "destination": "prior-fixtures/esm45-source-controls.cjs"
+    },
+    {
+      "path": "attempt-c/disposable-source/tools/verify/box3d/esm45-test-only-entry.mjs",
+      "bytes": 1269,
+      "sha256": "6fa6d6710f8e244b918215ab2c1563c18973a0d08f0142d57a6dc3c9f0480f04",
+      "mode": 420,
+      "role": "fixture",
+      "destination": "prior-fixtures/esm45-test-only-entry.mjs"
+    },
+    {
+      "path": "attempt-c/disposable-source/tools/verify/box3d/esm45-typed-consumer.ts",
+      "bytes": 1709,
+      "sha256": "f80960f66a9271de34f7b4eea8ebfc70ff55f96906b11da132f55dd3007f2fd6",
+      "mode": 420,
+      "role": "fixture",
+      "destination": "prior-fixtures/esm45-typed-consumer.ts"
+    },
+    {
+      "path": "attempt-c/esm-artifacts/TEST-ONLY-explicit-adapter/box2d3/LICENSE.Box2D.txt",
+      "bytes": 1067,
+      "sha256": "68a3e676d7e94093b102d5cba0d4e04af812040d6f230c3db67a6664574e43d2",
+      "mode": 420,
+      "role": "esm",
+      "destination": "esm-artifacts/TEST-ONLY-explicit-adapter/box2d3/LICENSE.Box2D.txt"
+    },
+    {
+      "path": "attempt-c/esm-artifacts/TEST-ONLY-explicit-adapter/box2d3/air-box2d.mjs",
+      "bytes": 56143,
+      "sha256": "5a7d80e036a41ce9921daed74c31d7a30d1a7f41c103e207576991d1db126485",
+      "mode": 420,
+      "role": "esm",
+      "destination": "esm-artifacts/TEST-ONLY-explicit-adapter/box2d3/air-box2d.mjs"
+    },
+    {
+      "path": "attempt-c/esm-artifacts/TEST-ONLY-explicit-adapter/box2d3/air-box2d.wasm",
+      "bytes": 371639,
+      "sha256": "3391e2ace476adba36297ff8ce66766a0a09d9365caec8079b6843d1dd4219ec",
+      "mode": 420,
+      "role": "esm",
+      "destination": "esm-artifacts/TEST-ONLY-explicit-adapter/box2d3/air-box2d.wasm"
+    },
+    {
+      "path": "attempt-c/esm-artifacts/TEST-ONLY-explicit-adapter/box2d3/receipt.json",
+      "bytes": 974,
+      "sha256": "5540911a20a2c624629de1c6f155c43a6cf8e28c91fa0cb6f4cabfb54dfcfbf4",
+      "mode": 420,
+      "role": "esm",
+      "destination": "esm-artifacts/TEST-ONLY-explicit-adapter/box2d3/receipt.json"
+    },
+    {
+      "path": "attempt-c/esm-artifacts/TEST-ONLY-explicit-adapter/cc.js",
+      "bytes": 9152168,
+      "sha256": "83a15800c2143b4332ebca5ca6fc142866e28254a2b7bb0e229100cab1495a0d",
+      "mode": 420,
+      "role": "esm",
+      "destination": "esm-artifacts/TEST-ONLY-explicit-adapter/cc.js"
+    },
+    {
+      "path": "attempt-c/esm-artifacts/TEST-ONLY-explicit-adapter/cc.js.map",
+      "bytes": 25771901,
+      "sha256": "588c669cf3342db1cd03c73f76aac516695aee6ed4643eab08627cee31f3db22",
+      "mode": 420,
+      "role": "esm",
+      "destination": "esm-artifacts/TEST-ONLY-explicit-adapter/cc.js.map"
+    },
+    {
+      "path": "attempt-c/esm-artifacts/TEST-ONLY-explicit-adapter/package.json",
+      "bytes": 18,
+      "sha256": "1239d4d885dcad42201a27ed9324f8f0f760b78700d8db9ced39a511cffe7eae",
+      "mode": 420,
+      "role": "esm",
+      "destination": "esm-artifacts/TEST-ONLY-explicit-adapter/package.json"
+    },
+    {
+      "path": "attempt-c/esm-artifacts/TEST-ONLY-explicit-adapter/physics/box3d/st/LICENSE.Box3D.txt",
+      "bytes": 1067,
+      "sha256": "da5e31a26bf3cfd5ba5c96d6823e480128c81e76c107ef9d3ee5d94789184b90",
+      "mode": 420,
+      "role": "esm",
+      "destination": "esm-artifacts/TEST-ONLY-explicit-adapter/physics/box3d/st/LICENSE.Box3D.txt"
+    },
+    {
+      "path": "attempt-c/esm-artifacts/TEST-ONLY-explicit-adapter/physics/box3d/st/box3d-st.mjs",
+      "bytes": 46897,
+      "sha256": "003c79702bf41fa33f197f4786c8469a5234ee122235173970046d7dfbd7c72f",
+      "mode": 420,
+      "role": "esm",
+      "destination": "esm-artifacts/TEST-ONLY-explicit-adapter/physics/box3d/st/box3d-st.mjs"
+    },
+    {
+      "path": "attempt-c/esm-artifacts/TEST-ONLY-explicit-adapter/physics/box3d/st/box3d-st.wasm",
+      "bytes": 584072,
+      "sha256": "4b9494dc2d3c46b4cbacf8d12a8119df5e91a27e19f90b946d50f6467b7adf8f",
+      "mode": 420,
+      "role": "esm",
+      "destination": "esm-artifacts/TEST-ONLY-explicit-adapter/physics/box3d/st/box3d-st.wasm"
+    },
+    {
+      "path": "attempt-c/esm-artifacts/TEST-ONLY-explicit-adapter/physics/box3d/st/distribution-receipt.json",
+      "bytes": 2313,
+      "sha256": "f45617d10e3634afb341c201849e9895fea35750a2e6315a88fe4304022106e0",
+      "mode": 420,
+      "role": "esm",
+      "destination": "esm-artifacts/TEST-ONLY-explicit-adapter/physics/box3d/st/distribution-receipt.json"
+    },
+    {
+      "path": "attempt-c/esm-artifacts/TEST-ONLY-explicit-adapter/physics/box3d/st/facade.d.mts",
+      "bytes": 20717,
+      "sha256": "788057c4dd78a3ad6d6b33d846f223386f27dd393c71ee53a0245cb7414459dc",
+      "mode": 420,
+      "role": "esm",
+      "destination": "esm-artifacts/TEST-ONLY-explicit-adapter/physics/box3d/st/facade.d.mts"
+    },
+    {
+      "path": "attempt-c/esm-artifacts/TEST-ONLY-explicit-adapter/physics/box3d/st/facade.mjs",
+      "bytes": 77896,
+      "sha256": "40cce3a920e67afedec5d7bbf69aae826ad08d31b51243f5e699033dd59eb899",
+      "mode": 420,
+      "role": "esm",
+      "destination": "esm-artifacts/TEST-ONLY-explicit-adapter/physics/box3d/st/facade.mjs"
+    },
+    {
+      "path": "attempt-c/esm-artifacts/TEST-ONLY-explicit-adapter/physics/box3d/st/manifest.json",
+      "bytes": 3048,
+      "sha256": "9ab78492b56e9d64d91782cf4e151ee693ac746d087307b3114254210296f05f",
+      "mode": 420,
+      "role": "esm",
+      "destination": "esm-artifacts/TEST-ONLY-explicit-adapter/physics/box3d/st/manifest.json"
+    },
+    {
+      "path": "attempt-c/esm-artifacts/TEST-ONLY-explicit-adapter/webgpu/LICENSE-apache.txt",
+      "bytes": 9226,
+      "sha256": "9362ea9ea17cb221a20cbbd63f404710834cc273d2a9a7b60314fd68ab702cd6",
+      "mode": 420,
+      "role": "esm",
+      "destination": "esm-artifacts/TEST-ONLY-explicit-adapter/webgpu/LICENSE-apache.txt"
+    },
+    {
+      "path": "attempt-c/esm-artifacts/TEST-ONLY-explicit-adapter/webgpu/LICENSE-dawn.txt",
+      "bytes": 11829,
+      "sha256": "0493f897193af1796d5054659f45ec7d4c5af648fa67a99f01d30e55cc805abc",
+      "mode": 420,
+      "role": "esm",
+      "destination": "esm-artifacts/TEST-ONLY-explicit-adapter/webgpu/LICENSE-dawn.txt"
+    },
+    {
+      "path": "attempt-c/esm-artifacts/TEST-ONLY-explicit-adapter/webgpu/LICENSE-glslang.txt",
+      "bytes": 55719,
+      "sha256": "373bb541d74f5a2854e4b752c57952dd8155cca535124176de90c94efc67ef85",
+      "mode": 420,
+      "role": "esm",
+      "destination": "esm-artifacts/TEST-ONLY-explicit-adapter/webgpu/LICENSE-glslang.txt"
+    },
+    {
+      "path": "attempt-c/esm-artifacts/TEST-ONLY-explicit-adapter/webgpu/NOTICE-babylon.md",
+      "bytes": 793,
+      "sha256": "7f85d099ce3c6e1900a45ee8d5b8fa405e760c746af687b3ee2081416e48f183",
+      "mode": 420,
+      "role": "esm",
+      "destination": "esm-artifacts/TEST-ONLY-explicit-adapter/webgpu/NOTICE-babylon.md"
+    },
+    {
+      "path": "attempt-c/esm-artifacts/TEST-ONLY-explicit-adapter/webgpu/glslang.js",
+      "bytes": 12829,
+      "sha256": "7937463b384ded16e10da2c1d64cb63a0894e56e8d8167cce636be5635caef59",
+      "mode": 420,
+      "role": "esm",
+      "destination": "esm-artifacts/TEST-ONLY-explicit-adapter/webgpu/glslang.js"
+    },
+    {
+      "path": "attempt-c/esm-artifacts/TEST-ONLY-explicit-adapter/webgpu/glslang.wasm",
+      "bytes": 1192271,
+      "sha256": "2746e37cbb52ff99f21a836e56e72e5771873a83a032faec2ed860941b23768e",
+      "mode": 420,
+      "role": "esm",
+      "destination": "esm-artifacts/TEST-ONLY-explicit-adapter/webgpu/glslang.wasm"
+    },
+    {
+      "path": "attempt-c/esm-artifacts/TEST-ONLY-explicit-adapter/webgpu/manifest.json",
+      "bytes": 1816,
+      "sha256": "84161a92c5469819bab8a3ddc6512bf8e6e88c1bb67c1fd4c873be84ce0e6df9",
+      "mode": 420,
+      "role": "esm",
+      "destination": "esm-artifacts/TEST-ONLY-explicit-adapter/webgpu/manifest.json"
+    },
+    {
+      "path": "attempt-c/esm-artifacts/TEST-ONLY-explicit-adapter/webgpu/twgsl.js",
+      "bytes": 74129,
+      "sha256": "e5664e33a74d064118769636440a5b09121db31370d6fe54b778deb17cd0e4f5",
+      "mode": 420,
+      "role": "esm",
+      "destination": "esm-artifacts/TEST-ONLY-explicit-adapter/webgpu/twgsl.js"
+    },
+    {
+      "path": "attempt-c/esm-artifacts/TEST-ONLY-explicit-adapter/webgpu/twgsl.wasm",
+      "bytes": 1702916,
+      "sha256": "a434c2decdbb38caadf5f486d806384a1543554828c983c77922b2d92579914c",
+      "mode": 420,
+      "role": "esm",
+      "destination": "esm-artifacts/TEST-ONLY-explicit-adapter/webgpu/twgsl.wasm"
+    },
+    {
+      "path": "attempt-c/esm-artifacts/build.raw.json",
+      "bytes": 664098,
+      "sha256": "613b4a8535e07e759e6086c42e7058121441ef7b1272fe4ad1c6455f4b3df8c8",
+      "mode": 420,
+      "role": "esm",
+      "destination": "esm-artifacts/build.raw.json"
+    },
+    {
+      "path": "attempt-c/esm-artifacts/production-selected/box2d3/LICENSE.Box2D.txt",
+      "bytes": 1067,
+      "sha256": "68a3e676d7e94093b102d5cba0d4e04af812040d6f230c3db67a6664574e43d2",
+      "mode": 420,
+      "role": "esm",
+      "destination": "esm-artifacts/production-selected/box2d3/LICENSE.Box2D.txt"
+    },
+    {
+      "path": "attempt-c/esm-artifacts/production-selected/box2d3/air-box2d.mjs",
+      "bytes": 56143,
+      "sha256": "5a7d80e036a41ce9921daed74c31d7a30d1a7f41c103e207576991d1db126485",
+      "mode": 420,
+      "role": "esm",
+      "destination": "esm-artifacts/production-selected/box2d3/air-box2d.mjs"
+    },
+    {
+      "path": "attempt-c/esm-artifacts/production-selected/box2d3/air-box2d.wasm",
+      "bytes": 371639,
+      "sha256": "3391e2ace476adba36297ff8ce66766a0a09d9365caec8079b6843d1dd4219ec",
+      "mode": 420,
+      "role": "esm",
+      "destination": "esm-artifacts/production-selected/box2d3/air-box2d.wasm"
+    },
+    {
+      "path": "attempt-c/esm-artifacts/production-selected/box2d3/receipt.json",
+      "bytes": 974,
+      "sha256": "5540911a20a2c624629de1c6f155c43a6cf8e28c91fa0cb6f4cabfb54dfcfbf4",
+      "mode": 420,
+      "role": "esm",
+      "destination": "esm-artifacts/production-selected/box2d3/receipt.json"
+    },
+    {
+      "path": "attempt-c/esm-artifacts/production-selected/cc.js",
+      "bytes": 8817787,
+      "sha256": "b540a337b77b3c722c79957ea7a5d87a7995b8e3e3b3bda9a70ec021c5ef1684",
+      "mode": 420,
+      "role": "esm",
+      "destination": "esm-artifacts/production-selected/cc.js"
+    },
+    {
+      "path": "attempt-c/esm-artifacts/production-selected/cc.js.map",
+      "bytes": 25073971,
+      "sha256": "e48697adac1dc1ed207157a2df157c76ec53a499318599429f2430ce538c6e2c",
+      "mode": 420,
+      "role": "esm",
+      "destination": "esm-artifacts/production-selected/cc.js.map"
+    },
+    {
+      "path": "attempt-c/esm-artifacts/production-selected/package.json",
+      "bytes": 18,
+      "sha256": "1239d4d885dcad42201a27ed9324f8f0f760b78700d8db9ced39a511cffe7eae",
+      "mode": 420,
+      "role": "esm",
+      "destination": "esm-artifacts/production-selected/package.json"
+    },
+    {
+      "path": "attempt-c/esm-artifacts/production-selected/physics/box3d/st/LICENSE.Box3D.txt",
+      "bytes": 1067,
+      "sha256": "da5e31a26bf3cfd5ba5c96d6823e480128c81e76c107ef9d3ee5d94789184b90",
+      "mode": 420,
+      "role": "esm",
+      "destination": "esm-artifacts/production-selected/physics/box3d/st/LICENSE.Box3D.txt"
+    },
+    {
+      "path": "attempt-c/esm-artifacts/production-selected/physics/box3d/st/box3d-st.mjs",
+      "bytes": 46897,
+      "sha256": "003c79702bf41fa33f197f4786c8469a5234ee122235173970046d7dfbd7c72f",
+      "mode": 420,
+      "role": "esm",
+      "destination": "esm-artifacts/production-selected/physics/box3d/st/box3d-st.mjs"
+    },
+    {
+      "path": "attempt-c/esm-artifacts/production-selected/physics/box3d/st/box3d-st.wasm",
+      "bytes": 584072,
+      "sha256": "4b9494dc2d3c46b4cbacf8d12a8119df5e91a27e19f90b946d50f6467b7adf8f",
+      "mode": 420,
+      "role": "esm",
+      "destination": "esm-artifacts/production-selected/physics/box3d/st/box3d-st.wasm"
+    },
+    {
+      "path": "attempt-c/esm-artifacts/production-selected/physics/box3d/st/distribution-receipt.json",
+      "bytes": 2313,
+      "sha256": "f45617d10e3634afb341c201849e9895fea35750a2e6315a88fe4304022106e0",
+      "mode": 420,
+      "role": "esm",
+      "destination": "esm-artifacts/production-selected/physics/box3d/st/distribution-receipt.json"
+    },
+    {
+      "path": "attempt-c/esm-artifacts/production-selected/physics/box3d/st/facade.d.mts",
+      "bytes": 20717,
+      "sha256": "788057c4dd78a3ad6d6b33d846f223386f27dd393c71ee53a0245cb7414459dc",
+      "mode": 420,
+      "role": "esm",
+      "destination": "esm-artifacts/production-selected/physics/box3d/st/facade.d.mts"
+    },
+    {
+      "path": "attempt-c/esm-artifacts/production-selected/physics/box3d/st/facade.mjs",
+      "bytes": 77896,
+      "sha256": "40cce3a920e67afedec5d7bbf69aae826ad08d31b51243f5e699033dd59eb899",
+      "mode": 420,
+      "role": "esm",
+      "destination": "esm-artifacts/production-selected/physics/box3d/st/facade.mjs"
+    },
+    {
+      "path": "attempt-c/esm-artifacts/production-selected/physics/box3d/st/manifest.json",
+      "bytes": 3048,
+      "sha256": "9ab78492b56e9d64d91782cf4e151ee693ac746d087307b3114254210296f05f",
+      "mode": 420,
+      "role": "esm",
+      "destination": "esm-artifacts/production-selected/physics/box3d/st/manifest.json"
+    },
+    {
+      "path": "attempt-c/esm-artifacts/production-selected/webgpu/LICENSE-apache.txt",
+      "bytes": 9226,
+      "sha256": "9362ea9ea17cb221a20cbbd63f404710834cc273d2a9a7b60314fd68ab702cd6",
+      "mode": 420,
+      "role": "esm",
+      "destination": "esm-artifacts/production-selected/webgpu/LICENSE-apache.txt"
+    },
+    {
+      "path": "attempt-c/esm-artifacts/production-selected/webgpu/LICENSE-dawn.txt",
+      "bytes": 11829,
+      "sha256": "0493f897193af1796d5054659f45ec7d4c5af648fa67a99f01d30e55cc805abc",
+      "mode": 420,
+      "role": "esm",
+      "destination": "esm-artifacts/production-selected/webgpu/LICENSE-dawn.txt"
+    },
+    {
+      "path": "attempt-c/esm-artifacts/production-selected/webgpu/LICENSE-glslang.txt",
+      "bytes": 55719,
+      "sha256": "373bb541d74f5a2854e4b752c57952dd8155cca535124176de90c94efc67ef85",
+      "mode": 420,
+      "role": "esm",
+      "destination": "esm-artifacts/production-selected/webgpu/LICENSE-glslang.txt"
+    },
+    {
+      "path": "attempt-c/esm-artifacts/production-selected/webgpu/NOTICE-babylon.md",
+      "bytes": 793,
+      "sha256": "7f85d099ce3c6e1900a45ee8d5b8fa405e760c746af687b3ee2081416e48f183",
+      "mode": 420,
+      "role": "esm",
+      "destination": "esm-artifacts/production-selected/webgpu/NOTICE-babylon.md"
+    },
+    {
+      "path": "attempt-c/esm-artifacts/production-selected/webgpu/glslang.js",
+      "bytes": 12829,
+      "sha256": "7937463b384ded16e10da2c1d64cb63a0894e56e8d8167cce636be5635caef59",
+      "mode": 420,
+      "role": "esm",
+      "destination": "esm-artifacts/production-selected/webgpu/glslang.js"
+    },
+    {
+      "path": "attempt-c/esm-artifacts/production-selected/webgpu/glslang.wasm",
+      "bytes": 1192271,
+      "sha256": "2746e37cbb52ff99f21a836e56e72e5771873a83a032faec2ed860941b23768e",
+      "mode": 420,
+      "role": "esm",
+      "destination": "esm-artifacts/production-selected/webgpu/glslang.wasm"
+    },
+    {
+      "path": "attempt-c/esm-artifacts/production-selected/webgpu/manifest.json",
+      "bytes": 1816,
+      "sha256": "84161a92c5469819bab8a3ddc6512bf8e6e88c1bb67c1fd4c873be84ce0e6df9",
+      "mode": 420,
+      "role": "esm",
+      "destination": "esm-artifacts/production-selected/webgpu/manifest.json"
+    },
+    {
+      "path": "attempt-c/esm-artifacts/production-selected/webgpu/twgsl.js",
+      "bytes": 74129,
+      "sha256": "e5664e33a74d064118769636440a5b09121db31370d6fe54b778deb17cd0e4f5",
+      "mode": 420,
+      "role": "esm",
+      "destination": "esm-artifacts/production-selected/webgpu/twgsl.js"
+    },
+    {
+      "path": "attempt-c/esm-artifacts/production-selected/webgpu/twgsl.wasm",
+      "bytes": 1702916,
+      "sha256": "a434c2decdbb38caadf5f486d806384a1543554828c983c77922b2d92579914c",
+      "mode": 420,
+      "role": "esm",
+      "destination": "esm-artifacts/production-selected/webgpu/twgsl.wasm"
+    },
+    {
+      "path": "attempt-c/freeze-receipt.json",
+      "bytes": 1205,
+      "sha256": "916782abbea5e9935b7d35c2b1a019e3124569cfd0331f7c619b8f5236db455c",
+      "mode": 420,
+      "role": "evidence",
+      "destination": "prior-build-evidence/freeze-receipt.json"
+    },
+    {
+      "path": "attempt-c/input-roundtrip-proof.json",
+      "bytes": 9637,
+      "sha256": "ca980c9b0cd9717abd33ea372a317bc6c866f2a899f646643c0c5cfcd8eaa7dd",
+      "mode": 420,
+      "role": "evidence",
+      "destination": "prior-build-evidence/input-roundtrip-proof.json"
+    },
+    {
+      "path": "attempt-c/raw/actual-dts-build.exit.json",
+      "bytes": 1294,
+      "sha256": "fef16f458d7ec786911b9d927d419dd29fbcb04ba6d3415a0700d917ca5fcb0e",
+      "mode": 420,
+      "role": "evidence",
+      "destination": "prior-build-evidence/raw/actual-dts-build.exit.json"
+    },
+    {
+      "path": "attempt-c/raw/actual-dts-build.launch.json",
+      "bytes": 642,
+      "sha256": "db107afb5c377e5c78e15ba5ffca731a83ad58f1450fe6c32af331fe463ac379",
+      "mode": 420,
+      "role": "evidence",
+      "destination": "prior-build-evidence/raw/actual-dts-build.launch.json"
+    },
+    {
+      "path": "attempt-c/raw/actual-dts-build.stderr.log",
+      "bytes": 523,
+      "sha256": "39499484092f9f819846c022fd2eb98355435b47abcc253eb3c03b98e722326a",
+      "mode": 420,
+      "role": "evidence",
+      "destination": "prior-build-evidence/raw/actual-dts-build.stderr.log"
+    },
+    {
+      "path": "attempt-c/raw/actual-dts-build.stdout.log",
+      "bytes": 480,
+      "sha256": "130faee24a8c4b4228147f389cebfa3be990c5465eb437c23d38ca56147b866b",
+      "mode": 420,
+      "role": "evidence",
+      "destination": "prior-build-evidence/raw/actual-dts-build.stdout.log"
+    },
+    {
+      "path": "attempt-c/raw/actual-dts-diagnostics.json",
+      "bytes": 149,
+      "sha256": "f6bf4356f302f9e3767df9c6fd52fc2f1f4ad585737271e2437b407c9a924392",
+      "mode": 420,
+      "role": "evidence",
+      "destination": "prior-build-evidence/raw/actual-dts-diagnostics.json"
+    },
+    {
+      "path": "attempt-c/raw/actual-esm-build.exit.json",
+      "bytes": 1187,
+      "sha256": "d283187e826f5768620414d6a920780e17063430f08858be49aa03ef17566ac5",
+      "mode": 420,
+      "role": "evidence",
+      "destination": "prior-build-evidence/raw/actual-esm-build.exit.json"
+    },
+    {
+      "path": "attempt-c/raw/actual-esm-build.launch.json",
+      "bytes": 714,
+      "sha256": "2d5c8a03da2391398ec0e8e16f5e6ee3f3516fd568b1c8c9bf8e60e63a4066df",
+      "mode": 420,
+      "role": "evidence",
+      "destination": "prior-build-evidence/raw/actual-esm-build.launch.json"
+    },
+    {
+      "path": "attempt-c/raw/actual-esm-build.stderr.log",
+      "bytes": 1630,
+      "sha256": "3f4c26dd5f6a741aeeef18f772e58ce62f17a150d61276fa34b9a9d7bf362277",
+      "mode": 420,
+      "role": "evidence",
+      "destination": "prior-build-evidence/raw/actual-esm-build.stderr.log"
+    },
+    {
+      "path": "attempt-c/raw/actual-esm-build.stdout.log",
+      "bytes": 28790,
+      "sha256": "298ccecd2a11a6bca231ea590cf2b5da8c73557b1ecceb0cd519719f60edaaed",
+      "mode": 420,
+      "role": "evidence",
+      "destination": "prior-build-evidence/raw/actual-esm-build.stdout.log"
+    }
+  ],
+  "priorAttemptOutcome": "FAIL",
+  "continuationOnly": "No buildEngine or DTS invocation; original failed report is immutable",
+  "dtsWarningBoundary": "Original stderr includes two deprecated-API warnings and two TemplateLiteralType handling warnings; zero console.error is not zero diagnostics or complete SDK correctness."
+}

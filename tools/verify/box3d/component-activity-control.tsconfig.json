@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.world-control.json",
+  "files": [
+    "./component-activity-control.test.ts",
+    "./component-activity-source.test.ts",
+    "../../../src/air/physics/box3d/world.ts",
+    "../../../src/@types/external-modules.d.ts"
+  ],
+  "include": []
+}

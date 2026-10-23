@@ -1,0 +1,174 @@
+{
+  "schema": "box3d.source53.external-artifacts.v1",
+  "note": "The primary archives list records previously downloaded and verified source53 delivery objects. Historical harness inputs and source-history locators have their own verification scope below. This index is not browser or full-matrix acceptance; original failures and documented auxiliary gaps remain unchanged.",
+  "archives": [
+    {
+      "role": "source52",
+      "libraryFileId": "libfile_1b5bb9be4e108191b817524c975480b3",
+      "fileName": "Box3D-query-spring-scene-source52.zip",
+      "bytes": 131061,
+      "sha256": "49e1fa5a7320bb899a1502b17b9380be9a133948c55d7878edeebc75afb91b95"
+    },
+    {
+      "role": "native Release two attempts full raw and input closure",
+      "libraryFileId": "libfile_34a69a75ca108191be471f978c42a27d",
+      "fileName": "Box3D-query-Release-builds50-full-evidence.tar.gz",
+      "bytes": 9004848,
+      "sha256": "ab86925859b180016165de39104cf4bcbdb437cd54256d30695d68fbc64af534"
+    },
+    {
+      "role": "actual Cocos query/force attempts and raw",
+      "libraryFileId": "libfile_3a23e2a8c8d08191875adaee1a9a5714",
+      "fileName": "query50-cocos-results-final.tar.gz",
+      "bytes": 2788144,
+      "sha256": "7386b6220960aeb85b749fa5b7f8037040ba8dd0d4322be317b66efc4babb775"
+    },
+    {
+      "role": "normal runtime52 full outputs/raw",
+      "libraryFileId": "libfile_3eed9c08e090819189e97b068876df4a",
+      "fileName": "Box3D-query-spring-normal-runtime52.tar.gz",
+      "bytes": 7736708,
+      "sha256": "06ae5402cf1b7b27d9eca876e0a3cd21889c1bbff5c8943047d2552743dea0ff"
+    },
+    {
+      "role": "DTS build/raw, exact declaration and scene consumer/static review",
+      "libraryFileId": "libfile_20bc48d73330819198249969c7b49f46",
+      "fileName": "box3d-ex01-dts52-consumer-static-review.zip",
+      "bytes": 730572,
+      "sha256": "cd0d8777125be6fa3c648342fba9da7f1effd10d17e5d672198f14f0cdd31afa"
+    },
+    {
+      "role": "user runnable candidate, source recovery chain and runtime verification diagnostics",
+      "libraryFileId": "libfile_1359c388b89c81918db119aa9c00e044",
+      "fileName": "Box3D-EX01-query-drag-candidate52b-Windows.zip",
+      "bytes": 8472141,
+      "sha256": "33642c92c06510992dd00717f4c237a790b4c679f0646a6ee696a8e8bd3f9a40"
+    },
+    {
+      "role": "Complete source53 Git increment with ordered recovery-chain identifiers",
+      "libraryFileId": "libfile_6f57697fee14819186861fe095ad9547",
+      "fileName": "Box3D-query-spring-runtime-checkpoint53.zip",
+      "bytes": 57033,
+      "sha256": "005f77a9ae27d13691f667d572ee8f90af5d88e20aa179717b358ebe76d8ceb8"
+    },
+    {
+      "role": "Full delivery index and source53 independent recovery receipts",
+      "libraryFileId": "libfile_f9f2dc2237f88191b355b6fd58375eae",
+      "fileName": "Box3D-checkpoint53-delivery-receipts.zip",
+      "bytes": 69485,
+      "sha256": "4aa7385426d5d9177d8f8b7fd366f9a8f1d2bb498abce8c648cb725e98b8f9e6"
+    }
+  ],
+  "primaryArchivesActuallyDownloadedAndVerified": true,
+  "historicalHarnessRecovery": {
+    "status": "HISTORICAL_REPRODUCTION_INPUTS_NOT_CURRENT_SOURCE53_ACCEPTANCE",
+    "baseline": {
+      "manifestPath": "tools/verify/box3d/esm45-baseline.json",
+      "manifestSHA256": "731b5a98e5ce30552eadcbe06ef93d5cfda7e8ce9e5ee9b320c12281f65316d8",
+      "productSourceCommit": "7d0fd0c65473fea3e98ac79910c78b54b6d7eccd",
+      "fileCount": 15843,
+      "installedDependencyPaths": 13045,
+      "n4ArtifactInputRows": 454,
+      "nodeExpected": "v24.19.0",
+      "typescriptExpected": "4.9.5",
+      "meaning": "Fixed input identities, not execution raw. Original byte archives remain separate and must be restored in an isolated historical checkout."
+    },
+    "inputArchives": [
+      {
+        "libraryFileId": "libfile_1465f9e7210081918c2b95faf04de298",
+        "fileName": "Box3D-esm45-exact-build-inputs.zip",
+        "bytes": 79580241,
+        "sha256": "38b7cc3978319718d8284dc64da808c32a48223d4fbfbc85b73f3def4aabd3bd",
+        "memberPrefix": "inputs/",
+        "role": "Original frozen ESM45 product/dependency/N4 input bytes; required together with the two-input delta"
+      },
+      {
+        "libraryFileId": "libfile_67ea8508793c8191b21a0d1883dd6c75",
+        "fileName": "Box3D-esm46b-two-input-delta.zip",
+        "bytes": 1601,
+        "sha256": "6de046a4665915c30d915d191ab64fbe3489f24675d8e16423bfe2809634484d",
+        "memberPrefix": "inputs/",
+        "role": "Exact existing babel.config.js and licenses/LICENSE_builtin_source.txt bytes completing the 15843-row baseline"
+      },
+      {
+        "libraryFileId": "libfile_3d9cd9bcc9788191a303c2bfba57d850",
+        "fileName": "Box3D-esm46-attempt-c-failure.zip",
+        "bytes": 45084448,
+        "sha256": "626179bd42f4340089141862581a957d1d0c8356d3dceb4406d1fda9ade78f51",
+        "role": "Exact failed attempt-c outputs and 73 member lock; includes necessary prior raw, kept external"
+      }
+    ],
+    "selectedRelevantSourceArchives": [
+      {
+        "checkpoint": "44",
+        "libraryFileId": "libfile_26fa58730a9481919f188582cd61003c",
+        "fileName": "Box3D-target-clock44-source.zip",
+        "bytes": 562841,
+        "sha256": "7f30cdfc45d845b655295abfcad831d4caf52941ece2a2c668fa6b899a06461f",
+        "sourceCommit": "7d0fd0c65473fea3e98ac79910c78b54b6d7eccd",
+        "sourceTree": "ac572df0be1090e801cdae1ce6ce34f2f423edbc",
+        "baseCommit": "b78dca0529b9e475b848a7314de305148dc5f4bb"
+      },
+      {
+        "checkpoint": "46b",
+        "libraryFileId": "libfile_479f3fc48d488191837fd9b36f145859",
+        "fileName": "Box3D-built-esm46b-input-fix-source.zip",
+        "bytes": 1909279,
+        "sha256": "81d8c15e59bdd2c4ac49d59fc2d718ef52d7988b89d120f1d590d63c16209963",
+        "sourceCommit": "df197e0672399eef4d382fec09a688d65a84f548",
+        "sourceTree": "5d12f5aeda79e480b6f9dc74a1b15f65df9905d3",
+        "baseCommit": "c24ab3291ad9f171fa7ef4c668fbd0b41ec71941"
+      },
+      {
+        "checkpoint": "46c",
+        "libraryFileId": "libfile_077134f2f07081919bd2dd7cd4d41bf0",
+        "fileName": "Box3D-built-esm46c-metadata-fix-source.zip",
+        "bytes": 955312,
+        "sha256": "18b0e2449ae67c7fb2e8f14f83f061b3f42b75fdca261a5bae1e12284693a8d6",
+        "sourceCommit": "86c0882e78e969f86162832e2536f979adfdfb76",
+        "sourceTree": "95d7e853035c9aad90960718d1ca6025248d16cc",
+        "baseCommit": "df197e0672399eef4d382fec09a688d65a84f548"
+      },
+      {
+        "checkpoint": "46d",
+        "libraryFileId": "libfile_53321aec591481919afe3b4e1743aa95",
+        "fileName": "Box3D-built-esm46d-consumer-continuation-source.zip",
+        "bytes": 1007064,
+        "sha256": "d4330d59ef86108fc8a0a9b6116263db04df92b9a1bfd8fc80b63891ee99a331",
+        "sourceCommit": "eded565ff75f4d05d187726ff43c15b3e3024a19",
+        "sourceTree": "e205077a1addde45db67a914a4af125f72951c4f",
+        "baseCommit": "86c0882e78e969f86162832e2536f979adfdfb76"
+      }
+    ],
+    "requiredSourceHistory": {
+      "source53ArchiveLibraryFileId": "libfile_6f57697fee14819186861fe095ad9547",
+      "member": "base-chain.json",
+      "orderedPredecessorArchives": 31,
+      "restoreOrderRequired": true,
+      "historicalProducerCommitRequiredByGitShow": "86c0882e78e969f86162832e2536f979adfdfb76",
+      "note": "The selected source archives are increments, not standalone full checkouts. Follow every ordered prerequisite in base-chain.json and preserve original Git objects. The new remote snapshot commits do not replace historical git show inputs."
+    },
+    "historicalOutcomeBoundary": {
+      "n4WasmSHA256": "4b9494dc2d3c46b4cbacf8d12a8119df5e91a27e19f90b946d50f6467b7adf8f",
+      "attemptC": "FAIL_UNCHANGED; exact original archive retained",
+      "historicalInternalConsumer": "Original 7/8 result unchanged",
+      "currentSource53": "Do not substitute latest product files or the new Release WASM into frozen historical qualification, relax hash assertions or infer a current PASS."
+    },
+    "verificationScope": {
+      "existingDownloadedInputCopiesRehashed": true,
+      "baselineArchiveMembersChecked": 15843,
+      "baselineDecompressedBytesChecked": 349984250,
+      "attemptCLockedMembersChecked": 73,
+      "sourceArchiveLocators": "Read from the existing source53 base-chain identity record; these source archives were not freshly fetched by this static audit.",
+      "freshRemoteAvailabilityCheck": false,
+      "buildOrRuntimeExecuted": false
+    },
+    "restorationRequirements": [
+      "Download the named Library objects and verify archive size, SHA256 and required member identities before use.",
+      "Restore original source-history bundles and input bytes in an isolated directory; retain baseline symlink identities.",
+      "Use the exact baseline plus both input ZIPs for ESM45/ESM46. Use the exact failed attempt-c archive for the no-rebuild continuation.",
+      "Bind local proof paths to actual restored files only after verification. Do not copy obsolete machine paths or fabricate verification flags.",
+      "Preserve original failure outputs and source-specific qualification checks. New source53 qualification is separate work."
+    ]
+  }
+}

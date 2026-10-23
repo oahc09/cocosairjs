@@ -1,0 +1,27 @@
+{
+  "schema": "box3d-actual-game-clock-roster-v1",
+  "status": "SOURCE_DRAFT_NOT_RUN",
+  "cases": [
+    "application-pause-fresh-input",
+    "owned-clock-entry-and-late-error",
+    "background-overlap",
+    "before-physics-and-caught-reentry",
+    "system-overlap-and-producers",
+    "terminal-close-owned-clock"
+  ],
+  "nativeWasmSha256": "4b9494dc2d3c46b4cbacf8d12a8119df5e91a27e19f90b946d50f6467b7adf8f",
+  "formalCells": {
+    "total": 2128,
+    "status": "NOT_RUN"
+  },
+  "gates": {
+    "total": 9,
+    "status": "NOT_RUN"
+  },
+  "notCovered": [
+    "Real browser visibility or WebGL presentation",
+    "Persist scene migration and cross-generation ownership",
+    "General multi-app lifetime and restart",
+    "Formal numerical, geometry, constraints and 2128-cell/nine-Gate qualification"
+  ]
+}
