@@ -1,0 +1,30 @@
+{
+  "schema": "upstream-webkit-environment-probe/1",
+  "recordedAt": "2026-10-23T16:15:14.577Z",
+  "scope": "environment-only; no Cocos runtime, full matrix, physical-device or engine acceptance claim",
+  "node": "v24.19.0",
+  "platform": "linux",
+  "fixtureSha256": "824e749803ec0aae1a2e0a5d2f14da58db2b4138f32f077c98e4d257f5333aac",
+  "probeSha256": "2b5c399bb7a23d81d2e1355678291785511cecb92a97d01055fb4b75bca08516",
+  "launchOptions": {
+    "headless": true,
+    "timeout": 15000
+  },
+  "status": "BROWSER_STARTUP_BLOCKED",
+  "launched": false,
+  "pageLoaded": false,
+  "browserCloseAcknowledged": false,
+  "serverClosed": true,
+  "pageErrors": [],
+  "playwright": "1.62.1",
+  "selectedExecutable": "/workspace/scratch/62d43a81bbde/browser-runtime/browsers/webkit-2336/pw_run.sh",
+  "executableExists": true,
+  "executableSha256": "a85baad3d8c07173ac387a59b41500c382b21ed692afe0964d29aac247ccc63b",
+  "sameProcessHttp": {
+    "status": 200,
+    "sha256": "824e749803ec0aae1a2e0a5d2f14da58db2b4138f32f077c98e4d257f5333aac",
+    "matchesFixture": true
+  },
+  "error": "browserType.launch: \n╔══════════════════════════════════════════════════════╗\n║ Host system is missing dependencies to run browsers. ║\n║ Missing libraries:                                   ║\n║     libgtk-4.so.1                                    ║\n║     libgraphene-1.0.so.0                             ║\n║     libharfbuzz-icu.so.0                             ║\n║     libmanette-0.2.so.0                              ║\n║     libhyphen.so.0                                   ║\n║     libGLESv2.so.2                                   ║\n╚══════════════════════════════════════════════════════╝\n    at main (/workspace/scratch/62d43a81bbde/upstream-restored-e40a9cf-20261023-inputs/continuation-20261023/webkit-environment-probe.cjs:74:32)",
+  "finishedAt": "2026-10-23T16:15:14.958Z"
+}

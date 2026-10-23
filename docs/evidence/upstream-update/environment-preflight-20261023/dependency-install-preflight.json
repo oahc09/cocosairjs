@@ -1,0 +1,26 @@
+{
+  "schema": "upstream-webkit-dependency-install-preflight/1",
+  "recordedAtUtc": "2026-10-23T16:20:09.533Z",
+  "requestedPackages": [
+    "libgtk-4-1",
+    "libgraphene-1.0-0",
+    "libharfbuzz-icu0",
+    "libmanette-0.2-0",
+    "libhyphen0",
+    "libgles2"
+  ],
+  "scope": "read-only configured-source host listing and apt-get simulation; no installation authorized by this command",
+  "operation": "exec_command sandbox_permissions=require_escalated",
+  "command": "apt-get --simulate --no-install-recommends install libgtk-4-1 libgraphene-1.0-0 libharfbuzz-icu0 libmanette-0.2-0 libhyphen0 libgles2",
+  "exitCode": 1,
+  "rawError": "bwrap: Can't create file at /home/agent/.codex/sessions: Read-only file system",
+  "outcome": "EXECUTOR_STARTUP_FAILED_BEFORE_COMMAND",
+  "sourceVerification": "NOT_EXECUTED",
+  "packageSimulation": "NOT_EXECUTED",
+  "dependencyClosure": "UNKNOWN",
+  "diskIncrementBytes": null,
+  "packagesInstalled": 0,
+  "systemChanges": 0,
+  "forbiddenPathRead": false,
+  "retried": false
+}
