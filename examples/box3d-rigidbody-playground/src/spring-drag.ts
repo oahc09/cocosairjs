@@ -4,6 +4,7 @@ import {
     Collider,
     BoxCollider,
     SphereCollider,
+    CapsuleCollider,
     RigidBody,
     ERigidBodyType,
     Vec3,
@@ -98,7 +99,11 @@ export function createSpringDrag(
                 return;
             // Explicit simple-shape domain, not a fabricated COM getter for arbitrary compounds.
             if (
-                !(collider instanceof BoxCollider || collider instanceof SphereCollider) ||
+                !(
+                    collider instanceof BoxCollider ||
+                    collider instanceof SphereCollider ||
+                    collider instanceof CapsuleCollider
+                ) ||
                 collider.node !== body.node ||
                 body.node.getComponentsInChildren(Collider).length !== 1 ||
                 collider.isTrigger ||
@@ -226,7 +231,7 @@ export function createSpringDrag(
             lastSubmission: lastSubmission ? { ...lastSubmission } : null,
             lastSubmissionIsNativeCompletion: false,
             lastInputError,
-            scope: 'single centered BoxCollider/SphereCollider only; not compound or arbitrary COM',
+            scope: 'single centered BoxCollider/SphereCollider/CapsuleCollider only; not compound or arbitrary COM',
             parameters: { ...config },
         }),
     });

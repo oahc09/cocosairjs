@@ -9,6 +9,7 @@ const { createHash } = require('node:crypto');
 const { pathToFileURL } = require('node:url');
 const { verifyCommandQualification, verifyCommandSchedule } = require('./box3d-command-qualification.cjs');
 const { verifyQueryQualification } = require('./box3d-query-qualification.cjs');
+const { verifyCapsuleQualification } = require('./box3d-capsule-qualification.cjs');
 const COMMAND_EXPECTATIONS = require('./box3d-command-expectations.json');
 const ROOT = path.resolve(__dirname, '../..');
 const FEATURE = 'physics-box3d';
@@ -60,6 +61,8 @@ const INPUTS = [
     'tools/physics/box3d/native/wasm_entry.c',
     'tools/physics/box3d/native/query_bridge.c',
     'tools/physics/box3d/native/query_bridge.h',
+    'tools/physics/box3d/capsule-bridge-contract.md',
+    'tools/physics/box3d/native/capsule_contract.c',
     'tools/physics/box3d/native/query_contract.c',
     'tools/physics/box3d/wasm-query-contract.mjs',
     'tools/physics/box3d/query-admission-contract.mjs',
@@ -123,7 +126,7 @@ async function verifySTBuild(buildDirectory) {
     assert.equal(receipt.kind, 'st-simd-wasm');
     assert(['Debug', 'Release'].includes(receipt.mode));
     verifyCommandSchedule(receipt);
-    assert.equal(INPUTS.length, 55);
+    assert.equal(INPUTS.length, 57);
     assert.deepEqual(sorted(INPUTS), sorted(COMMAND_EXPECTATIONS.gate.inputs));
     assert.deepEqual(sorted(receipt.inputHashes.map((row) => row.path)), sorted(INPUTS), 'Build input inventory drift');
     for (const input of receipt.inputHashes) {
@@ -157,7 +160,7 @@ async function verifySTBuild(buildDirectory) {
     assert.equal(audit.sharedMemory, false);
     assert.equal(audit.dynamicExecutionOrWorkerConstructorFound, false);
     assert.equal(audit.compiledSourceCount, audit.compiledSourceHashes.length);
-    assert.equal(audit.compiledSourceCount, 69, 'Compile audit inventory drift');
+    assert.equal(audit.compiledSourceCount, 70, 'Compile audit inventory drift');
     assert.equal(new Set(audit.compiledSourceHashes.map((row) => row.path)).size, audit.compiledSourceCount);
     for (const name of [
         'body_control.c',
@@ -170,6 +173,7 @@ async function verifySTBuild(buildDirectory) {
         'command_contract.c',
         'query_bridge.c',
         'query_contract.c',
+        'capsule_contract.c',
     ]) {
         assert(audit.compiledSourceHashes.some((row) => row.path === `tools/physics/box3d/native/${name}`));
     }
@@ -215,6 +219,8 @@ async function verifySTBuild(buildDirectory) {
             'wasm-motion-contract.raw.json',
             'motion-samples.raw.jsonl',
             'air_box3d_motion_contract.cjs',
+            'native-capsule-contract.raw.json',
+            'air_box3d_capsule_contract.cjs',
             'native-query-contract.raw.json',
             'wasm-query-contract.raw.json',
             'air_box3d_query_contract.cjs',
@@ -226,6 +232,10 @@ async function verifySTBuild(buildDirectory) {
     );
     assert.deepEqual(sorted(audit.evidence.map((row) => row.path)), sorted(COMMAND_EXPECTATIONS.gate.evidence));
     for (const record of audit.evidence) verifyRecord(directory, record);
+    verifyCapsuleQualification({
+        native: json(fileInside(directory, 'native-capsule-contract.raw.json')),
+        receipt,
+    });
     verifyQueryQualification({
         native: json(fileInside(directory, 'native-query-contract.raw.json')),
         wasm: json(fileInside(directory, 'wasm-query-contract.raw.json')),
@@ -421,6 +431,7 @@ async function verifySTBuild(buildDirectory) {
             'box3d-command-qualification.cjs',
             'box3d-command-expectations.json',
             'box3d-query-qualification.cjs',
+            'box3d-capsule-qualification.cjs',
         ].map((name) => {
             const data = read(path.join(__dirname, name));
             return { path: 'tools/build/' + name, bytes: data.length, sha256: sha256(data) };

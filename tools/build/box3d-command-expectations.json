@@ -176,7 +176,9 @@
       "tools/physics/box3d/native/query_bridge.h",
       "tools/physics/box3d/native/query_contract.c",
       "tools/physics/box3d/wasm-query-contract.mjs",
-      "tools/physics/box3d/query-admission-contract.mjs"
+      "tools/physics/box3d/query-admission-contract.mjs",
+      "tools/physics/box3d/capsule-bridge-contract.md",
+      "tools/physics/box3d/native/capsule_contract.c"
     ],
     "compileUnits": [
       "staged-core/src/aabb.c",
@@ -247,7 +249,8 @@
       "tools/physics/box3d/native/world_bridge.c",
       "tools/physics/box3d/native/world_contract.c",
       "tools/physics/box3d/native/query_bridge.c",
-      "tools/physics/box3d/native/query_contract.c"
+      "tools/physics/box3d/native/query_contract.c",
+      "tools/physics/box3d/native/capsule_contract.c"
     ],
     "evidence": [
       "build-receipt.json",
@@ -281,9 +284,11 @@
       "command-samples.raw.jsonl",
       "native-query-contract.raw.json",
       "wasm-query-contract.raw.json",
-      "air_box3d_query_contract.cjs"
+      "air_box3d_query_contract.cjs",
+      "native-capsule-contract.raw.json",
+      "air_box3d_capsule_contract.cjs"
     ],
-    "commands": 24
+    "commands": 25
   },
   "queryExtension": {
     "status": "ADDITIVE_SOURCE_GENERATION_NOT_FORMAL_ACCEPTANCE",
@@ -294,14 +299,7 @@
       "tools/physics/box3d/wasm-query-contract.mjs",
       "tools/physics/box3d/query-admission-contract.mjs"
     ],
-    "compileUnits": [
-      "tools/physics/box3d/native/query_bridge.c",
-      "tools/physics/box3d/native/query_contract.c"
-    ],
-    "evidence": [
-      "native-query-contract.raw.json",
-      "wasm-query-contract.raw.json",
-      "air_box3d_query_contract.cjs"
-    ]
+    "compileUnits": ["tools/physics/box3d/native/query_bridge.c", "tools/physics/box3d/native/query_contract.c"],
+    "evidence": ["native-query-contract.raw.json", "wasm-query-contract.raw.json", "air_box3d_query_contract.cjs"]
   }
 }

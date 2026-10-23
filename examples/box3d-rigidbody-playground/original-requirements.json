@@ -25,7 +25,7 @@
     },
     {
       "requirement": "Capsule",
-      "source": "UNFINISHED; current backend unsupported",
+      "source": "source-integrated real public CapsuleCollider projectile option and automatic demo; centered Y-axis mesh r=0.42, cylinderHeight=1, totalHeight=1.84; fresh native/browser verification PENDING",
       "acceptance": "NOT_RUN"
     },
     {
@@ -35,12 +35,12 @@
     },
     {
       "requirement": "Raycast picking matches visible position",
-      "source": "source-integrated formal PhysicsSystem.raycastClosest consumer for single centered Box/Sphere; world/native integration and visual alignment proof PENDING",
+      "source": "source-integrated formal PhysicsSystem.raycastClosest consumer for single centered Box/Sphere/Capsule; current-build native/browser and visual alignment proof PENDING",
       "acceptance": "NOT_RUN"
     },
     {
       "requirement": "Dragging and throwing selected bodies",
-      "source": "source-integrated proposed public fixed-tick hook + bounded spring force + real momentum release for single centered Box/Sphere only; arbitrary COM/compound/other shapes UNFINISHED; native verification PENDING",
+      "source": "source-integrated public fixed-tick hook + bounded spring force + real momentum release for single centered Box/Sphere/Capsule only; arbitrary COM/compound/other shapes UNFINISHED; current-build native/browser verification PENDING",
       "acceptance": "NOT_RUN"
     },
     {
@@ -65,7 +65,7 @@
     },
     {
       "requirement": "Automatic demonstration",
-      "source": "implemented with real impulse submission",
+      "source": "implemented with real impulse submission; fixed sequence sphere then Capsule, scheduled by presentation dt only; physics remains owner fixed-tick driven",
       "acceptance": "NOT_RUN"
     },
     {

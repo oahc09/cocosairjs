@@ -1,17 +1,67 @@
 {
   "schema": "cocosair.box3d.ex01.source-identity.v1",
   "status": "IN_PROGRESS",
-  "createdAt": "2026-10-23T13:34:51.234877+00:00",
-  "baseCommit": "8b7b6aaddc1eabfae2f0e16134244cdfb21abb8c",
+  "createdAt": "2026-10-23T17:07:58.736741+00:00",
+  "baseCommit": "d839ba11cdcc51dd7a1cac9c1a7f4a20706a72bb",
   "runtimeExecuted": false,
-  "previousSourceIdentitySha256": "7e60a82c4930c6054665965cbd53f8e3ceda4bf14b4a529d6d04c07d89bafae4",
-  "increment": "Actual world-owned public fixed-tick hook and generic native ray query source integrated with restricted spring-drag example",
+  "previousSourceIdentitySha256": "fd27585679d4952defb5792e6b013a0e5aecb2e8d9a2779e6733a23d22413ffa",
+  "increment": "Centered real CapsuleCollider/mesh projectile and restricted spring-drag source integration; matching Capsule WASM/public components qualified separately, EX01/browser not run",
   "reference": {
     "path": "ai/plans/box3d-v1.2-reference.md",
     "sha256": "17b4dcf0d8acbe0ed72f81ab4d3fc53c6a51f705d573699f0d50137e4bf00c46",
     "section": "12"
   },
   "files": [
+    {
+      "path": "docs/physics/box3d/contracts/before-step-api-v1.md",
+      "bytes": 7641,
+      "sha256": "8788b4fab41d50f1e709da6c7a3aa2754b76dcad69db492cd840d9e4857be997"
+    },
+    {
+      "path": "examples/box3d-rigidbody-playground/README.md",
+      "bytes": 13233,
+      "sha256": "f8e57420fc328a19df8e5cfb1a0e0df2e9bc238af1cff2ffcb8f12b9b28c95cc"
+    },
+    {
+      "path": "examples/box3d-rigidbody-playground/index.html",
+      "bytes": 11992,
+      "sha256": "5b6bcb8ddd40d6f779bf905bea6d0fdf7e9513f137a3d9e22eae2dec5c547d4a"
+    },
+    {
+      "path": "examples/box3d-rigidbody-playground/original-requirements.json",
+      "bytes": 5751,
+      "sha256": "9de2c21d46462864ab69ded921ca746d4c2b666c675a9e1f651a6b0932973b63"
+    },
+    {
+      "path": "examples/box3d-rigidbody-playground/src/backend-observation.ts",
+      "bytes": 7060,
+      "sha256": "61f0560cd64062687f137d0db3cda01b8a1b41229c550fa80605552c6e195887"
+    },
+    {
+      "path": "examples/box3d-rigidbody-playground/src/capsule-geometry.ts",
+      "bytes": 652,
+      "sha256": "3700b801954662284f9691dde3c60c193e8c7d734f48582a546e28db70ef3c3d"
+    },
+    {
+      "path": "examples/box3d-rigidbody-playground/src/drag-spring-math.ts",
+      "bytes": 2513,
+      "sha256": "783e28343167418c0a08cadc36a133140ac7ee9405bcdd863c6cbdbb572e5f0a"
+    },
+    {
+      "path": "examples/box3d-rigidbody-playground/src/main.ts",
+      "bytes": 37069,
+      "sha256": "4417b999411a3f7789c8ad3400729ccf1ab37ab2ff4365556a912f516c101e61"
+    },
+    {
+      "path": "examples/box3d-rigidbody-playground/src/spring-drag.ts",
+      "bytes": 9856,
+      "sha256": "3abc83869ffcb1bc2fdd726e9b0c27c9a2ac9df8eb4651973fe3a0db1b93b596"
+    },
+    {
+      "path": "examples/box3d-rigidbody-playground/style.css",
+      "bytes": 9954,
+      "sha256": "8f87865e0e288ca2e513e3ee4a0c8defb905e078d84ec6401b83311e0a4241eb"
+    },
     {
       "path": "src/air/box3d-controls.ts",
       "bytes": 3053,
@@ -28,49 +78,14 @@
       "sha256": "956897d2f3f5f67316fbfac11828debb7089641b64aabca81bae3c2fa4f58b2e"
     },
     {
-      "path": "examples/box3d-rigidbody-playground/README.md",
-      "bytes": 11606,
-      "sha256": "87766dfb64a0e8d8e1468e9dc03860de68e7e948fc82f387860f02983b201457"
-    },
-    {
-      "path": "examples/box3d-rigidbody-playground/index.html",
-      "bytes": 11147,
-      "sha256": "21d32fc752c423e6bd5653f76848e1937cbd403c4132eda5db02c5bf6f069314"
-    },
-    {
-      "path": "examples/box3d-rigidbody-playground/original-requirements.json",
-      "bytes": 5455,
-      "sha256": "f508554a578b1c7bd0e564fdf9020b0e6537db57a99a50087ac389765e92e5af"
-    },
-    {
-      "path": "examples/box3d-rigidbody-playground/src/backend-observation.ts",
-      "bytes": 7060,
-      "sha256": "61f0560cd64062687f137d0db3cda01b8a1b41229c550fa80605552c6e195887"
-    },
-    {
-      "path": "examples/box3d-rigidbody-playground/src/drag-spring-math.ts",
-      "bytes": 2513,
-      "sha256": "783e28343167418c0a08cadc36a133140ac7ee9405bcdd863c6cbdbb572e5f0a"
-    },
-    {
-      "path": "examples/box3d-rigidbody-playground/src/main.ts",
-      "bytes": 35145,
-      "sha256": "c4a2b14b3ce6b39fa0568d6d36ef1f3c9b041e2522cb5928d7a929204e73782b"
-    },
-    {
-      "path": "examples/box3d-rigidbody-playground/src/spring-drag.ts",
-      "bytes": 9702,
-      "sha256": "bf8bc154e24c237137917a540798f7bef5fc0b255acfb43d23bc42fe80e3181d"
-    },
-    {
-      "path": "examples/box3d-rigidbody-playground/style.css",
-      "bytes": 9954,
-      "sha256": "8f87865e0e288ca2e513e3ee4a0c8defb905e078d84ec6401b83311e0a4241eb"
-    },
-    {
       "path": "src/air/physics/box3d/query.ts",
       "bytes": 7400,
       "sha256": "f7e53ccdd67abd86a2a50e93a6baaadf3bc24deaca265acb8ccaa8584955d3c6"
+    },
+    {
+      "path": "src/air/physics/box3d/shared-body.ts",
+      "bytes": 46630,
+      "sha256": "7c2e33b66975268716f50acc92cae5c86950ba219fdd63d0a460b885ba63041b"
     },
     {
       "path": "src/air/physics/box3d/world.ts",
@@ -78,19 +93,19 @@
       "sha256": "446081ca41881529d97b20402a181e468e1eb66b324ec2e4d1f057bd2b864b96"
     },
     {
-      "path": "src/air/physics/box3d/shared-body.ts",
-      "bytes": 45855,
-      "sha256": "a1949d191dd66266ec615a356461af5f9adbcc2323d458578a25b409089a3b12"
-    },
-    {
-      "path": "docs/physics/box3d/contracts/before-step-api-v1.md",
-      "bytes": 7641,
-      "sha256": "8788b4fab41d50f1e709da6c7a3aa2754b76dcad69db492cd840d9e4857be997"
+      "path": "tools/verify/box3d/ex01-capsule-scene.test.cjs",
+      "bytes": 7768,
+      "sha256": "e2c18fb2e7d8326bebabe8fbe2aa80e3fe05230130424656b42ea60948dde35c"
     }
   ],
   "scope": "Authored source candidate only. Native/browser effect proofs and full original EX01 acceptance NOT_RUN; no alternative solver, private step or frame-driven spring.",
-  "observedWorktreeHead": "a9197dd1981ef6b85549814c933104eb9b1bbd78",
-  "notIntegrated": [],
+  "observedWorktreeHead": "d839ba11cdcc51dd7a1cac9c1a7f4a20706a72bb",
+  "notIntegrated": [
+    "Hull collider backend and EX01 hull shape",
+    "Multi-thread configuration",
+    "Native debug drawing in EX01",
+    "Formal100 add/remove resource-restoration scene path"
+  ],
   "previousDraftSourceIdentitySha256": "06b2ccc08918a4742256d9238a3dd5f7cbb001dd60ad110e1e5f216787c25f5d",
   "sourceIntegratedButUnverified": [
     "current normal production ESM and declaration rebuild",
@@ -98,8 +113,15 @@
     "full original EX01 and formal Gates"
   ],
   "nativeGeneration": {
-    "schemaSha256": "0df007cd748883621f89836b55f1c09437c04d6d7e6253914577b21455a11bd5",
-    "releaseBuildEvidenceLibrary": "libfile_34a69a75ca108191be471f978c42a27d",
+    "schemaSha256": "82b508fe8852caeb5ee4013d96480fc33b789fe98a95517b85455b660c709428",
+    "producerCommit": "6e228ccf3692e2cb4663a75be8bcedaa934c0817",
+    "releaseBuildEvidenceLibrary": "libfile_b034b967479c8191b5b52627287647b6",
+    "releaseArchiveBytes": 5319970,
+    "releaseArchiveSha256": "871a8aff191fea9a2b4f0c856028de90235b4001ba6aebf537133e123e99f15b",
+    "artifactManifestSha256": "7ebdb6c22d61679a36e2cec611d1162b368e931d6f2902a12ae75cf705b256bd",
+    "wasmSha256": "110afb3a2c5006b82e6b1fc3fb91fea0a121befabf033d7064caa92e74fc8e30",
+    "limitedPublicComponentsEvidenceLibrary": "libfile_a1f30f4ef56c81919e8e1d43c3732403",
+    "qualification": "Real native/WASM/public source components only; not compiled EX01/browser/formal acceptance",
     "browserExecuted": false
   }
 }

@@ -21,6 +21,8 @@ import {
     ERigidBodyType,
     BoxCollider,
     SphereCollider,
+    CapsuleCollider,
+    EAxisDirection,
     Color,
     Vec3,
     Layers,
@@ -29,6 +31,7 @@ import {
     physics,
     isValid,
 } from 'cocosair';
+import { CAPSULE_DIMENSIONS, capsuleVerticalExtent } from './capsule-geometry.js';
 import { createSpringDrag } from './spring-drag.js';
 import { readBackendObservation } from './backend-observation.js';
 import type { BackendObservation } from './backend-observation.js';
@@ -45,13 +48,20 @@ const CONFIG = Object.freeze({
     gravity: [0, -10, 0],
     wall: { rows: 10, columns: 10, width: 0.9, height: 0.45, depth: 0.48, gap: 0.025, mass: 1.2 },
     ball: { radius: 0.62, mass: 12, impulse: [0, 14, -168], spawn: [0, 2.6, 6.5], maximum: 12 },
+    capsule: CAPSULE_DIMENSIONS,
     material: { friction: 0.45, restitution: 0.1 },
     floor: { width: 36, height: 1, depth: 36 },
     drag: { stiffness: 180, dampingRatio: 0.85, maxForce: 600, maxStretch: 3 },
-    demo: { firstShotAfterSeconds: 1.8, secondShotAfterSeconds: 4.2, stopAfterSeconds: 8 },
+    demo: {
+        firstShotAfterSeconds: 1.8,
+        secondShotAfterSeconds: 4.2,
+        stopAfterSeconds: 8,
+        projectileOrder: ['sphere', 'capsule'] as const,
+    },
 });
 
-type BodyEntry = { node: Node; body: RigidBody; kind: 'brick' | 'sphere'; index: number };
+type ProjectileKind = 'sphere' | 'capsule';
+type BodyEntry = { node: Node; body: RigidBody; kind: 'brick' | ProjectileKind; index: number };
 type Intent = 'toggle' | 'reset' | 'launch' | 'demo' | 'parameters';
 type Phase = 'boot' | 'ready' | 'running' | 'paused' | 'resetting' | 'closing' | 'closed' | 'error';
 const byId = <T extends HTMLElement>(id: string): T => {
@@ -73,7 +83,13 @@ const intentQueue: Intent[] = [];
 const observations: Record<string, unknown>[] = [];
 const errors: string[] = [];
 const eventLog: { frame: number; action: string; detail: unknown }[] = [];
+const selectedProjectile = (): ProjectileKind => {
+    const kind = byId<HTMLSelectElement>('projectile-shape').value;
+    if (kind !== 'sphere' && kind !== 'capsule') throw new Error(`Unsupported EX01 projectile: ${kind}`);
+    return kind;
+};
 const readParameters = () => ({
+    projectileShape: selectedProjectile(),
     mass: Number(params.mass.value),
     friction: Number(params.friction.value),
     restitution: Number(params.restitution.value),
@@ -91,7 +107,7 @@ let springDrag: ReturnType<typeof createSpringDrag> | null = null;
 let closeReceipt: unknown = null;
 let system: typeof physics.PhysicsSystem.instance;
 let bricks: BodyEntry[] = [];
-let balls: BodyEntry[] = [];
+let projectiles: BodyEntry[] = [];
 let retired: Node[] = [];
 let resetFrame = 0;
 let restartAfterReset = false;
@@ -107,6 +123,7 @@ let identityError: string | null = null;
 let nativeIdentity: unknown = null;
 let diagnosticWorld: unknown = null;
 let backendObservation: BackendObservation | null = null;
+let capsuleMesh: ReturnType<typeof utils.createMesh>;
 let ballMesh: ReturnType<typeof utils.createMesh>;
 let brickMesh: ReturnType<typeof utils.createMesh>;
 let ballMaterial: Material;
@@ -258,8 +275,8 @@ function startSimulation(): void {
     system.enable = true;
     phase = 'running';
     value('toggle', '暂停模拟');
-    byId<HTMLButtonElement>('launch').disabled = balls.length >= CONFIG.ball.maximum;
-    value('scene-status', '真实刚体模拟中 · 球与砖均由 Box3D 驱动');
+    byId<HTMLButtonElement>('launch').disabled = projectiles.length >= CONFIG.ball.maximum;
+    value('scene-status', '真实刚体模拟中 · 投射物与砖均由 Box3D 驱动');
 }
 function pauseSimulation(): void {
     springDrag?.cancel();
@@ -272,53 +289,62 @@ function pauseSimulation(): void {
     byId<HTMLButtonElement>('launch').disabled = true;
     value('scene-status', '模拟已暂停 · 渲染仍在运行');
 }
-function launchBall(): void {
+function launchProjectile(kind: ProjectileKind = selectedProjectile()): void {
     if (phase !== 'running') {
-        tell('请先开始模拟，再发射球体。');
+        tell('请先开始模拟，再发射投射物。');
         return;
     }
-    if (balls.length >= CONFIG.ball.maximum) {
-        tell('已保留 12 个球体。请重置后继续，避免无界增加资源。');
+    if (projectiles.length >= CONFIG.ball.maximum) {
+        tell('已保留 12 个投射物。请重置后继续，避免无界增加资源。');
         return;
     }
     springDrag?.cancel();
     const spawn = CONFIG.ball.spawn;
     const offsets = [0, -1.7, 1.7];
     const node = nodeAt(
-        `Sphere-${generation}-${shotCount}`,
+        `${kind === 'capsule' ? 'Capsule' : 'Sphere'}-${generation}-${shotCount}`,
         spawn[0] + offsets[shotCount % offsets.length],
         spawn[1],
         spawn[2],
     );
-    visual(node, ballMesh, ballMaterial);
+    visual(node, kind === 'capsule' ? capsuleMesh : ballMesh, ballMaterial);
     const body = node.addComponent(RigidBody);
     body.type = ERigidBodyType.DYNAMIC;
     body.mass = readParameters().mass;
     body.allowSleep = true;
     body.linearDamping = 0.01;
     body.angularDamping = 0.03;
-    const collider = node.addComponent(SphereCollider);
-    collider.radius = CONFIG.ball.radius;
-    collider.sharedMaterial = surface;
+    if (kind === 'capsule') {
+        const collider = node.addComponent(CapsuleCollider);
+        collider.radius = CONFIG.capsule.radius;
+        collider.cylinderHeight = CONFIG.capsule.cylinderHeight;
+        collider.direction = EAxisDirection.Y_AXIS;
+        collider.sharedMaterial = surface;
+    } else {
+        const collider = node.addComponent(SphereCollider);
+        collider.radius = CONFIG.ball.radius;
+        collider.sharedMaterial = surface;
+    }
     activate(node);
-    const entry: BodyEntry = { node, body, kind: 'sphere', index: shotCount++ };
-    balls.push(entry);
+    const entry: BodyEntry = { node, body, kind, index: shotCount++ };
+    projectiles.push(entry);
     pendingImpulses.push({ entry, frame });
     totalShots++;
-    byId<HTMLButtonElement>('launch').disabled = balls.length >= CONFIG.ball.maximum;
-    log('spawn-sphere', {
+    byId<HTMLButtonElement>('launch').disabled = projectiles.length >= CONFIG.ball.maximum;
+    log(`spawn-${kind}`, {
+        kind,
         name: node.name,
         mass: body.mass,
         position: [node.position.x, node.position.y, node.position.z],
     });
-    tell(`球体 ${shotCount} 已创建。下一引擎更新提交一次冲量，固定步消费。`);
+    tell(`${kind === 'capsule' ? '胶囊' : '球体'} ${shotCount} 已创建。下一引擎更新提交一次冲量，固定步消费。`);
 }
 function updateParameters(): void {
     springDrag?.cancel();
     updateDragReadout();
     const requested = readParameters();
     // These setters target the real native ownership path. No transform changes are used.
-    for (const entry of balls) if (isValid(entry.node)) entry.body.mass = requested.mass;
+    for (const entry of projectiles) if (isValid(entry.node)) entry.body.mass = requested.mass;
     surface.friction = requested.friction;
     surface.restitution = requested.restitution;
     log('parameters', requested);
@@ -335,11 +361,11 @@ function requestReset(runAfter: boolean, demoAfter: boolean): void {
     phase = 'resetting';
     pendingImpulses.length = 0;
     intentQueue.length = 0;
-    retired = [...bricks, ...balls].map((entry) => entry.node);
+    retired = [...bricks, ...projectiles].map((entry) => entry.node);
     // Leave parentage and poses intact. Deferred Cocos destruction releases native ownership.
     for (const node of retired) node.destroy();
     bricks = [];
-    balls = [];
+    projectiles = [];
     resetFrame = frame;
     buttons.forEach((button) => {
         button.disabled = button.id !== 'export';
@@ -364,7 +390,7 @@ function finishResetIfReady(): void {
     if (restartAfterReset) startSimulation();
     demoActive = demoAfterReset;
     log('reset-completed', { generation, resetCount, oldNodesDestroyed: true, newBricks: bricks.length });
-    tell(demoActive ? '自动演示：砖墙沉降后发射两次真实冲量球。' : '砖墙已重建。点击开始模拟。');
+    tell(demoActive ? '自动演示：砖墙沉降后依次发射球体和胶囊。' : '砖墙已重建。点击开始模拟。');
 }
 function enableControls(): void {
     buttons.forEach((button) => {
@@ -389,13 +415,14 @@ function processIntent(intent: Intent): void {
     else if (intent === 'demo') requestReset(true, true);
     else if (intent === 'launch') {
         demoActive = false;
-        launchBall();
+        launchProjectile();
     } else if (intent === 'parameters') updateParameters();
 }
 function minimumY(entry: BodyEntry): number {
     const position = entry.node.worldPosition;
     if (entry.kind === 'sphere') return position.y - CONFIG.ball.radius;
     const q = entry.node.worldRotation;
+    if (entry.kind === 'capsule') return position.y - capsuleVerticalExtent(q);
     const wall = CONFIG.wall;
     // Vertical extent of the actual rotated box, not a center-only ground check.
     const extent =
@@ -416,7 +443,7 @@ function updateBackendReadouts(): BackendObservation {
         'native-counts',
         observation.counts ? `${observation.counts.bodies} / ${observation.counts.shapes}` : 'unavailable',
     );
-    value('native-bytes', observation.counts ? observation.counts.liveBytes : 'unavailable');
+    value('native-bytes', observation.counts ? `${observation.counts.liveBytes} B` : 'unavailable');
     value(
         'native-capabilities',
         `events: ${String(observation.componentEventsSupported)} · debug: ${String(observation.debugPresented)}`,
@@ -436,8 +463,8 @@ function updateDragReadout(): void {
                 : !drag?.enabled
                   ? '拖拽已关闭'
                   : phase === 'running'
-                    ? '按住砖块或球体拖动；松手保留真实动量'
-                    : '开始模拟后可拾取砖块或球体',
+                    ? '按住砖块、球体或胶囊拖动；松手保留真实动量'
+                    : '开始模拟后可拾取砖块、球体或胶囊',
     );
     value(
         'drag-tick',
@@ -483,7 +510,7 @@ async function closePlayground(): Promise<void> {
 }
 function sample(): void {
     updateDragReadout();
-    const entries = [...bricks, ...balls].filter((entry) => isValid(entry.node));
+    const entries = [...bricks, ...projectiles].filter((entry) => isValid(entry.node));
     const awake = entries.filter((entry) => entry.body.isAwake).length;
     const displaced = bricks.filter((entry) => {
         const q = entry.node.worldRotation;
@@ -502,7 +529,8 @@ function sample(): void {
         phase,
         dynamicBodies: entries.length,
         bricks: bricks.length,
-        spheres: balls.length,
+        spheres: projectiles.filter((entry) => entry.kind === 'sphere').length,
+        capsules: projectiles.filter((entry) => entry.kind === 'capsule').length,
         awake,
         displaced,
         finiteTransforms: finite,
@@ -564,7 +592,7 @@ class PlaygroundController extends Component {
                     const time =
                         demoShotIndex === 0 ? CONFIG.demo.firstShotAfterSeconds : CONFIG.demo.secondShotAfterSeconds;
                     if (demoShotIndex < 2 && demoElapsed >= time) {
-                        launchBall();
+                        launchProjectile(CONFIG.demo.projectileOrder[demoShotIndex]);
                         demoShotIndex++;
                     }
                     if (demoElapsed >= CONFIG.demo.stopAfterSeconds) {
@@ -618,7 +646,7 @@ function snapshot(): Record<string, unknown> {
         observations: observations.slice(),
         events: eventLog.slice(),
         errors: errors.slice(),
-        bodyPoses: [...bricks, ...balls]
+        bodyPoses: [...bricks, ...projectiles]
             .filter((entry) => isValid(entry.node))
             .map((entry) => {
                 const p = entry.node.worldPosition;
@@ -639,10 +667,10 @@ function snapshot(): Record<string, unknown> {
             'same-build replay',
         ],
         unfinishedOriginalRequirements: [
-            'capsule',
+            'capsule: source integrated; current-build native/browser verification pending',
             'hull',
             'raycast pick/visible alignment: source integrated, native/browser verification pending',
-            'fixed-tick spring/release: zero-center single Box/Sphere candidate only, unverified',
+            'fixed-tick spring/release: zero-center single Box/Sphere/Capsule candidate only, unverified',
             'arbitrary body/compound/nonzero-COM dragging and throwing',
             'component contact events',
             'multi/auto thread modes',
@@ -739,7 +767,12 @@ async function main(): Promise<void> {
         primitives.box({ width: CONFIG.wall.width, height: CONFIG.wall.height, length: CONFIG.wall.depth }),
     );
     ballMesh = utils.createMesh(primitives.sphere(CONFIG.ball.radius));
-    assets.push(brickMesh, ballMesh);
+    // primitive.capsule takes total height; CapsuleCollider takes cylinderHeight separately.
+    // Both are centered along Y at unit scale. No post-activation pose/scale repair is used.
+    capsuleMesh = utils.createMesh(
+        primitives.capsule(CONFIG.capsule.radius, CONFIG.capsule.radius, CONFIG.capsule.totalHeight),
+    );
+    assets.push(brickMesh, ballMesh, capsuleMesh);
     for (const color of [
         [204, 122, 85],
         [223, 147, 100],
@@ -826,7 +859,7 @@ async function main(): Promise<void> {
         onSelect(name) {
             demoActive = false;
             bootDemoPending = false;
-            log('drag-selected', { name, scope: 'single centered Box/Sphere' });
+            log('drag-selected', { name, scope: 'single centered Box/Sphere/Capsule' });
         },
         onError(error) {
             errors.push(String(error));
