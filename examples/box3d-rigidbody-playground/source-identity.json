@@ -1,11 +1,11 @@
 {
   "schema": "cocosair.box3d.ex01.source-identity.v1",
   "status": "IN_PROGRESS",
-  "createdAt": "2026-10-23T17:07:58.736741+00:00",
-  "baseCommit": "d839ba11cdcc51dd7a1cac9c1a7f4a20706a72bb",
+  "createdAt": "2026-10-23T17:22:37.797514+00:00",
+  "baseCommit": "38a00916cbf173969d09ef1324df4d556caaaf44",
   "runtimeExecuted": false,
-  "previousSourceIdentitySha256": "fd27585679d4952defb5792e6b013a0e5aecb2e8d9a2779e6733a23d22413ffa",
-  "increment": "Centered real CapsuleCollider/mesh projectile and restricted spring-drag source integration; matching Capsule WASM/public components qualified separately, EX01/browser not run",
+  "previousSourceIdentitySha256": "dc6a0876283cc6fe61774087963875b921758ed930d800ebbfe4bb7caa5b2bef",
+  "increment": "Fixed-buffer native identity decoding; original Firefox60/61 RED preserved. Matching new WASM built; actual corrected browser and production ESM pending.",
   "reference": {
     "path": "ai/plans/box3d-v1.2-reference.md",
     "sha256": "17b4dcf0d8acbe0ed72f81ab4d3fc53c6a51f705d573699f0d50137e4bf00c46",
@@ -49,8 +49,8 @@
     },
     {
       "path": "examples/box3d-rigidbody-playground/src/main.ts",
-      "bytes": 37069,
-      "sha256": "4417b999411a3f7789c8ad3400729ccf1ab37ab2ff4365556a912f516c101e61"
+      "bytes": 37320,
+      "sha256": "9570d1baef8ee589543f7fdf42d55e6ad829fcec1b8726af0fbc16931c5c506d"
     },
     {
       "path": "examples/box3d-rigidbody-playground/src/spring-drag.ts",
@@ -98,8 +98,8 @@
       "sha256": "e2c18fb2e7d8326bebabe8fbe2aa80e3fe05230130424656b42ea60948dde35c"
     }
   ],
-  "scope": "Authored source candidate only. Native/browser effect proofs and full original EX01 acceptance NOT_RUN; no alternative solver, private step or frame-driven spring.",
-  "observedWorktreeHead": "d839ba11cdcc51dd7a1cac9c1a7f4a20706a72bb",
+  "scope": "Authored EX01 candidate; first Firefox actual run RED retained. Corrected browser acceptance pending. No alternative solver, private step or frame-driven spring.",
+  "observedWorktreeHead": "38a00916cbf173969d09ef1324df4d556caaaf44",
   "notIntegrated": [
     "Hull collider backend and EX01 hull shape",
     "Multi-thread configuration",
@@ -114,14 +114,28 @@
   ],
   "nativeGeneration": {
     "schemaSha256": "82b508fe8852caeb5ee4013d96480fc33b789fe98a95517b85455b660c709428",
-    "producerCommit": "6e228ccf3692e2cb4663a75be8bcedaa934c0817",
-    "releaseBuildEvidenceLibrary": "libfile_b034b967479c8191b5b52627287647b6",
-    "releaseArchiveBytes": 5319970,
-    "releaseArchiveSha256": "871a8aff191fea9a2b4f0c856028de90235b4001ba6aebf537133e123e99f15b",
-    "artifactManifestSha256": "7ebdb6c22d61679a36e2cec611d1162b368e931d6f2902a12ae75cf705b256bd",
+    "producerCommit": "38a00916cbf173969d09ef1324df4d556caaaf44",
+    "releaseBuildEvidenceLibrary": "libfile_12b4d4da0e008191b668984f31ed4623",
+    "releaseArchiveBytes": 5298026,
+    "releaseArchiveSha256": "ebb6084de183b8fc576c03c392943e5605a64f28b791ca28fdcad813eb2d4ed1",
+    "artifactManifestSha256": "2c07b52457dd69db109fc354339713fd658036e8dbaa4ee5d234f33a235f0f52",
     "wasmSha256": "110afb3a2c5006b82e6b1fc3fb91fea0a121befabf033d7064caa92e74fc8e30",
-    "limitedPublicComponentsEvidenceLibrary": "libfile_a1f30f4ef56c81919e8e1d43c3732403",
-    "qualification": "Real native/WASM/public source components only; not compiled EX01/browser/formal acceptance",
-    "browserExecuted": false
+    "qualification": "New real native/WASM Release contracts and full artifact gate; prior source58 public evidence is historical only, corrected EX01/browser still pending",
+    "browserExecuted": false,
+    "facadeSha256": "5c4b40195fa3d08950dbcc566e148dfc02caf547d5dc433ecc0867f380745bd7",
+    "priorGenerationPublicEvidenceLibrary": "libfile_a1f30f4ef56c81919e8e1d43c3732403",
+    "requiredArtifactAuditSupplement": {
+      "libraryFileId": "libfile_e57444b18800819181efe2302fccb37b",
+      "archiveBytes": 266653,
+      "archiveSha256": "12a6f7523f83a1be9aeb594bcaa8374a9661deb2eb916c9a9ff7307c90197d5a",
+      "note": "Native base archive predates standalone artifact audit; read both. First missing-audit ESM failure retained."
+    }
+  },
+  "currentRuntimeCandidate": {
+    "producerCommit": "20af8ec2ea38a61b9cabc5ef2d12ea3dfa914d4d",
+    "buildNumber": 208,
+    "libraryFileId": "libfile_10d819f6d7e88191836300ec178def6f",
+    "archiveSha256": "9f3836190ccee53b7bb5fbde3f2f9f756120c59db720e4876a0f9183c1a69576",
+    "status": "NORMAL_PRODUCTION_ESM_STATIC_INSPECTION_PASS_BROWSER_PENDING"
   }
 }

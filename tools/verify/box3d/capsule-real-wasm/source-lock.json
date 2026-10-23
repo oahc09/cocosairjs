@@ -1,7 +1,7 @@
 {
   "status": "FROZEN_CAPSULE_SOURCE_ONLY_NOT_TEST_RESULT",
-  "generatedAt": "2026-10-23T17:05:05.873Z",
-  "head": "6e228ccf3692e2cb4663a75be8bcedaa934c0817",
+  "generatedAt": "2026-10-23T17:28:57.847Z",
+  "head": "38a00916cbf173969d09ef1324df4d556caaaf44",
   "sources": [
     {
       "scope": "fixture",
@@ -561,7 +561,7 @@
     {
       "scope": "product",
       "path": "src/air/physics/box3d/binding/facade.mjs",
-      "sha256": "9b8750fdfed6d1bcaba56f0905ffebe0375172fd73a8c02a0d2d709eecfb68d6"
+      "sha256": "5c4b40195fa3d08950dbcc566e148dfc02caf547d5dc433ecc0867f380745bd7"
     },
     {
       "scope": "product",

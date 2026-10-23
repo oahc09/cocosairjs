@@ -143,6 +143,9 @@ function log(action: string, detail: unknown): void {
     if (eventLog.length > 500) eventLog.shift();
 }
 function fail(error: unknown): void {
+    // Preserve the original browser stack before any cleanup can obscure the failure.
+    console.error('[Box3D EX01] Original failure', error);
+    log('failure', { message: String(error), stack: error instanceof Error ? error.stack : undefined });
     try {
         springDrag?.cancel();
     } catch {

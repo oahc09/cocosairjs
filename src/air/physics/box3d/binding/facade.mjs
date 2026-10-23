@@ -66,7 +66,11 @@ export function createBox3DBinding(module, expected) {
         let end = ptr;
         while (end < heap.length && heap[end]) ++end;
         if (end === heap.length) throw failure('AIR_E_BOX3D_ABI', 'Unterminated native identity');
-        return new TextDecoder().decode(heap.subarray(ptr, end));
+        // Emscripten may expose a resizable WebAssembly.Memory buffer. TextDecoder
+        // implementations can reject RAB-backed views, so decode an owned fixed buffer.
+        // Copy bytes only: native identity checks and failure behavior stay intact.
+        const bytes = new Uint8Array(heap.subarray(ptr, end));
+        return new TextDecoder().decode(bytes);
     };
     if (
         !expected ||

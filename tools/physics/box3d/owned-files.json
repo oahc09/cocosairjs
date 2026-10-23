@@ -17,8 +17,8 @@
     },
     {
       "path": "src/air/physics/box3d/binding/facade.mjs",
-      "bytes": 82725,
-      "sha256": "9b8750fdfed6d1bcaba56f0905ffebe0375172fd73a8c02a0d2d709eecfb68d6"
+      "bytes": 83028,
+      "sha256": "5c4b40195fa3d08950dbcc566e148dfc02caf547d5dc433ecc0867f380745bd7"
     },
     {
       "path": "tools/physics/box3d/.gitignore",
