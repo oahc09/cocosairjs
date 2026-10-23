@@ -1,11 +1,11 @@
 {
   "schema": "cocosair.box3d.ex01.source-identity.v1",
   "status": "IN_PROGRESS",
-  "createdAt": "2026-10-23T19:26:29.815854+00:00",
-  "baseCommit": "7aa47f04f70ebbfc9811ab969742ffb60e45076a",
-  "runtimeExecuted": false,
-  "previousSourceIdentitySha256": "acb38a7b50d9c3eec2a86dea88ba35d81cde6b38bf6c0fc2e7b21b01994a8e15",
-  "increment": "Real Hull source has finite source73 Node component evidence and matching production ESM/DTS build209; current preview/browser acceptance pending, formal Gates unchanged. Prior63 Firefox evidence remains historical.",
+  "createdAt": "2026-10-23T19:38:06.636977+00:00",
+  "baseCommit": "ce491b0d412b7d5dd6361db1c4caca25a95f1cd4",
+  "runtimeExecuted": true,
+  "previousSourceIdentitySha256": "cf18121f8e95c7c4551a598b365641d9f18fa6868fe0a7053b84ac283660afb9",
+  "increment": "Metadata-only correction after source74 actual limited Firefox Hull observation. Runtime and scene JS/WASM are unchanged; original source74 metadata/raw bytes are preserved.",
   "reference": {
     "path": "ai/plans/box3d-v1.2-reference.md",
     "sha256": "17b4dcf0d8acbe0ed72f81ab4d3fc53c6a51f705d573699f0d50137e4bf00c46",
@@ -19,8 +19,8 @@
     },
     {
       "path": "examples/box3d-rigidbody-playground/README.md",
-      "bytes": 14037,
-      "sha256": "2b38230ec03ed4eb2b95d93f5bc9807fd03eea1fbce2b8ea9c3bbe0614c11df9"
+      "bytes": 14744,
+      "sha256": "b6a6f6e6c8b2f6f396bb3f2777058f17c32889a4170e3adea30cab996a07d039"
     },
     {
       "path": "examples/box3d-rigidbody-playground/index.html",
@@ -118,44 +118,83 @@
       "sha256": "7449e0d3e2a04a4b7232ac4842042c0f506e8c78a6a8b0edd72d181ab482bc18"
     }
   ],
-  "scope": "Authored EX01 candidate; first Firefox actual run RED retained. Corrected browser acceptance pending. No alternative solver, private step or frame-driven spring.",
-  "observedWorktreeHead": "38a00916cbf173969d09ef1324df4d556caaaf44",
+  "scope": "LIMITED_BROWSER_OBSERVED for the source74 runtime209 candidate only: 100-brick settlement, one real tetrahedral Hull launch/impact/rest, pause and normal close. Not full EX01 or formal Gates; source75 metadata wrapper itself is not rerun.",
+  "observedWorktreeHead": "ce491b0d412b7d5dd6361db1c4caca25a95f1cd4",
   "notIntegrated": [
-    "Hull collider backend and EX01 hull shape",
-    "Multi-thread configuration",
+    "Hull picking/dragging and arbitrary compound COM handling",
+    "Multi-thread/auto configuration",
     "Native debug drawing in EX01",
-    "Formal100 add/remove resource-restoration scene path"
+    "Formal100 add/remove resource-restoration scene path",
+    "Public collider contact/trigger event delivery"
   ],
   "previousDraftSourceIdentitySha256": "06b2ccc08918a4742256d9238a3dd5f7cbb001dd60ad110e1e5f216787c25f5d",
   "sourceIntegratedButUnverified": [
-    "current normal production ESM and declaration rebuild",
-    "actual browser picking/drag/throw and visible physics",
-    "full original EX01 and formal Gates"
+    "Full original EX01 numerical and video acceptance",
+    "100-cycle resource proof and continuous penetration checks",
+    "All associated formal2128 cells and nine Gates"
   ],
   "nativeGeneration": {
-    "schemaSha256": "82b508fe8852caeb5ee4013d96480fc33b789fe98a95517b85455b660c709428",
-    "producerCommit": "38a00916cbf173969d09ef1324df4d556caaaf44",
-    "releaseBuildEvidenceLibrary": "libfile_12b4d4da0e008191b668984f31ed4623",
-    "releaseArchiveBytes": 5298026,
-    "releaseArchiveSha256": "ebb6084de183b8fc576c03c392943e5605a64f28b791ca28fdcad813eb2d4ed1",
-    "artifactManifestSha256": "2c07b52457dd69db109fc354339713fd658036e8dbaa4ee5d234f33a235f0f52",
-    "wasmSha256": "110afb3a2c5006b82e6b1fc3fb91fea0a121befabf033d7064caa92e74fc8e30",
-    "qualification": "New real native/WASM Release contracts and full artifact gate; prior source58 public evidence is historical only, corrected EX01/browser still pending",
-    "browserExecuted": false,
-    "facadeSha256": "5c4b40195fa3d08950dbcc566e148dfc02caf547d5dc433ecc0867f380745bd7",
-    "priorGenerationPublicEvidenceLibrary": "libfile_a1f30f4ef56c81919e8e1d43c3732403",
-    "requiredArtifactAuditSupplement": {
-      "libraryFileId": "libfile_e57444b18800819181efe2302fccb37b",
-      "archiveBytes": 266653,
-      "archiveSha256": "12a6f7523f83a1be9aeb594bcaa8374a9661deb2eb916c9a9ff7307c90197d5a",
-      "note": "Native base archive predates standalone artifact audit; read both. First missing-audit ESM failure retained."
-    }
+    "schemaSha256": "96c2e532652d1f1d76f62852b2b269cebe37e30ba4615f47c80b9ed92844ba63",
+    "producerCommit": "ce69f582115411a35f55680d29a9b2df0d15ef46",
+    "releaseBuildEvidenceLibrary": "libfile_3542ec08be6c8191a03541f6555ac89d",
+    "releaseArchiveBytes": 6082860,
+    "releaseArchiveSha256": "28eade1757034442ebe8bd1c646bbabd2e290ca0d276bff6055e9cf6ac0c54a0",
+    "artifactManifestSha256": "b3bfe615326b168744b37e06cdc0792e237a5d84e45eed8973a6bea8f4dd5174",
+    "wasmSha256": "75cf5c280426cd25f3184646c7b43d473ff52b26990067894dd10e147891d048",
+    "facadeSha256": "1d910108b5a7570250bed070bf3529fbf2153346e7cbc8dd0f7cb54faca95ef4",
+    "patchChainSha256": "4c9d057fe6d7403f6f2c7672c4a7abe38041d845942540a6b5c5abbc6f4bc45c",
+    "qualification": "Finite real native/WASM Release contracts, full artifact gate and source73 actual Cocos component cases; LIMITED_BROWSER_OBSERVED source74. Not formal qualification.",
+    "browserExecuted": true,
+    "browserByteIdentityBoundary": "Exact served candidate and native artifact hashes are preserved. Browser export identifies actual Box3D runtime209 and fetched JS, not an independent hash of already-instantiated WASM memory."
   },
   "currentRuntimeCandidate": {
-    "producerCommit": "20af8ec2ea38a61b9cabc5ef2d12ea3dfa914d4d",
-    "buildNumber": 208,
-    "libraryFileId": "libfile_10d819f6d7e88191836300ec178def6f",
-    "archiveSha256": "9f3836190ccee53b7bb5fbde3f2f9f756120c59db720e4876a0f9183c1a69576",
-    "status": "NORMAL_PRODUCTION_ESM_STATIC_INSPECTION_PASS_BROWSER_PENDING"
+    "producerCommit": "7aa47f04f70ebbfc9811ab969742ffb60e45076a",
+    "producerTree": "a7f7a45a92596b054d1cf2c12c79095728aa156c",
+    "buildNumber": 209,
+    "moduleBytes": 9200216,
+    "moduleSha256": "5c742107861a815688cff3f0953e8e81b714cc0a54dc450e76a5ac6d2046e4a7",
+    "libraryFileId": "libfile_19da37c08e508191a59f78fc09f7b8c9",
+    "archiveBytes": 9146017,
+    "archiveSha256": "df56c8fd483943dec742eded76c8ff19e9294d91ec277aea97f893e4b367f634",
+    "status": "LIMITED_BROWSER_OBSERVED_NORMAL_PRODUCTION_ESM_DTS"
+  },
+  "browserObservation": {
+    "status": "LIMITED_BROWSER_OBSERVED",
+    "observedSourceCommit": "ce491b0d412b7d5dd6361db1c4caca25a95f1cd4",
+    "browser": "Cloud Firefox 158.0.1 WebGL2",
+    "origin": "http://127.0.0.1:8769",
+    "freshOriginOperatorObservation": true,
+    "runtimeBuildNumber": 209,
+    "rawLibraryFileId": "libfile_2a713730dab48191b42f88f056483520",
+    "rawArchiveBytes": 160370,
+    "rawArchiveSha256": "0cbc28ad7b1f137ae388bc5a2e2efa0ade6d22dc722464c4cc30074172b7612d",
+    "actions": [
+      "start",
+      "wall settlement",
+      "one Hull launch",
+      "impact and rest",
+      "pause",
+      "normal close"
+    ],
+    "samplesUnique": 1056,
+    "minimumObservedGeometryY": -0.0093,
+    "samplesBelowMinus015": 0,
+    "errorsReported": 0,
+    "closeStatus": "released",
+    "retained": [
+      "runtime",
+      "scheduler",
+      "builtin-resources",
+      "shared-asset-caches"
+    ],
+    "notEstablished": [
+      "Hull dragging",
+      "continuous no-penetration",
+      "100-cycle zero-leak result",
+      "full browser console capture",
+      "formal video",
+      "formal2128/nine Gates"
+    ],
+    "identityCorrection": "Original source74 sourceIdentity mistakenly retained pre-Hull native generation and runtime208 metadata. Its original JSON/static bytes remain unmodified in the archived raw and preview74. This new metadata points to the actual runtime209 candidate; it does not rewrite history."
   }
 }

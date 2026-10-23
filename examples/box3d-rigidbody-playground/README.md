@@ -70,3 +70,8 @@ The drag readout's tick/attempt identifies a submitted hook call, not successful
 ## New Hull source candidate
 
 The Hull option uses an actual convex MeshCollider over the exact rendered tetrahedron POSITION stream, never a box. New matching native/public/runtime/browser evidence is still required. Hull dragging is deliberately not admitted by the existing symmetric-primitive spring handler; no guessed arbitrary COM is used. All original EX01 requirements, including full shape interaction, 100 lifecycle cycles and recording, remain unchanged and incomplete.
+
+
+## Limited actual Hull browser observation and metadata correction
+
+The source74 runtime209 candidate was actually observed in Firefox158.0.1: ordinary start, wall settlement, one real tetrahedron launch/impact/rest, pause and normal close. This finite scope is LIMITED_BROWSER_OBSERVED, not full EX01. Source75 corrects the new delivery's stale runtime208/pre-Hull identity metadata without changing scene JS or native bytes. Original74 JSON/static bytes remain unchanged. Exact raw hashes, close retained resources, sampled minimumY and remaining limits are in `docs/physics/box3d/rebuild/hull-browser-observation-20261023.md`. Hull dragging remains unfinished and formal2128/nine Gates remain NOT_RUN.

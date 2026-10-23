@@ -158,3 +158,11 @@ No native rebuild was needed for fixture-only source72/source73. The new Hull
 preview still requires actual browser inspection; source63 Firefox observations
 are historical and cannot qualify this new runtime. All original EX01 gaps and
 formal acceptance remain explicitly incomplete.
+
+
+## Actual source74 Firefox observation, metadata-only source75 correction
+
+See `hull-browser-observation-20261023.md` for the bounded real browser result and
+exact raw closure. One Hull launch/impact/rest, pause and normal close were
+observed; no full EX01 or formal Gate is promoted. Source75 corrects stale nested
+identity metadata only, preserving all original74 bytes and the same runtime209.
