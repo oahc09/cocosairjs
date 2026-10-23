@@ -50,11 +50,19 @@ target_compile_definitions(air_box3d_abi PRIVATE "AIR_B3_SCHEMA_SHA=\"${AIR_SCHE
 target_compile_definitions(air_box3d_abi PRIVATE "AIR_B3_PATCH_CHAIN_SHA=\"${AIR_VERIFIED_PATCH_SHA}\"")
 target_link_libraries(air_box3d_abi PUBLIC box3d)
 
+# Capsule fixture includes exact world_bridge.c with executable-only allocation control.
+add_executable(air_box3d_capsule_contract native/capsule_contract.c)
+target_include_directories(air_box3d_capsule_contract PRIVATE "${AIR_STAGED_CORE}/src")
+target_link_libraries(air_box3d_capsule_contract PRIVATE air_box3d_abi)
+
 add_executable(air_box3d_query_contract native/query_contract.c)
 target_include_directories(air_box3d_query_contract PRIVATE "${AIR_STAGED_CORE}/src")
 target_link_libraries(air_box3d_query_contract PRIVATE air_box3d_abi)
 
 if(EMSCRIPTEN)
+    set_target_properties(air_box3d_capsule_contract PROPERTIES SUFFIX ".cjs")
+    target_link_options(air_box3d_capsule_contract PRIVATE -msimd128 -msse2 -fno-fast-math -ffp-contract=off
+        -sENVIRONMENT=node -sSINGLE_FILE=1 -sEXIT_RUNTIME=1 -sFILESYSTEM=0 -sASSERTIONS=2)
     set_target_properties(air_box3d_query_contract PROPERTIES SUFFIX ".cjs")
     target_link_options(air_box3d_query_contract PRIVATE -msimd128 -msse2 -fno-fast-math -ffp-contract=off
         -sENVIRONMENT=node -sSINGLE_FILE=1 -sEXIT_RUNTIME=1 -sFILESYSTEM=0 -sASSERTIONS=2)
@@ -117,4 +125,5 @@ else()
     enable_testing()
     add_test(NAME native-foundation COMMAND air_box3d_contract)
     add_test(NAME native-query COMMAND air_box3d_query_contract)
+    add_test(NAME native-capsule COMMAND air_box3d_capsule_contract)
 endif()

@@ -60,7 +60,7 @@ static int pose_safe(b3World* world,const b3Body* body,const b3BodySim* sim,b3Wo
     if(!matrix_ok(b3MulMM(b3MulMM(r,sim->invInertiaLocal),b3Transpose(r))))return AIR_B3_ARGUMENT;
     for(int i=body->headShapeId;i!=B3_NULL_INDEX;){
         const b3Shape* shape=b3Array_Get(world->shapes,i);i=shape->nextShapeId;
-        if(shape->type!=b3_sphereShape && shape->type!=b3_hullShape)return AIR_B3_UNSUPPORTED;
+        if(shape->type!=b3_sphereShape && shape->type!=b3_hullShape && shape->type!=b3_capsuleShape)return AIR_B3_UNSUPPORTED;
         if(!isfinite(shape->aabbMargin) || shape->aabbMargin<0)return AIR_B3_ARGUMENT;
         b3AABB box=b3ComputeFatShapeAABB(shape,pose,B3_SPECULATIVE_DISTANCE);
         if(!b3IsValidAABB(box) || !b3IsValidAABB(b3AABB_Inflate(box,shape->aabbMargin)))return AIR_B3_ARGUMENT;

@@ -44,11 +44,13 @@ assert.ok(build.includes("'tools/physics/box3d/native/motion_bridge.c'"));
 assert.ok(build.includes(`'${decision.path}'`));
 const inputBlock = build.match(/const inputs = \[([\s\S]*?)\];/)[1];
 const inputs = [...inputBlock.matchAll(/'([^']+)'/g)].map((match) => match[1]);
-assert.equal(inputs.length, 55);
-assert.equal(new Set(inputs).size, 55);
+assert.equal(inputs.length, 57);
+assert.equal(new Set(inputs).size, 57);
 for (const path of [
     'tools/physics/box3d/native/query_bridge.c',
     'tools/physics/box3d/native/query_bridge.h',
+    'tools/physics/box3d/capsule-bridge-contract.md',
+    'tools/physics/box3d/native/capsule_contract.c',
     'tools/physics/box3d/native/query_contract.c',
     'tools/physics/box3d/wasm-query-contract.mjs',
     'tools/physics/box3d/query-admission-contract.mjs',

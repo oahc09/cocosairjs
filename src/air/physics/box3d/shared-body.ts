@@ -884,13 +884,23 @@ export class Box3DSharedBody {
                           1,
                           geometry.trigger,
                       )
-                    : this.#binding.createOffsetSphere(
-                          this.#body,
-                          geometry.center,
-                          geometry.dimensions[0],
-                          1,
-                          geometry.trigger,
-                      );
+                    : geometry.kind === 'capsule'
+                      ? this.#binding.createOffsetCapsule(
+                            this.#body,
+                            geometry.center,
+                            geometry.dimensions[0],
+                            geometry.dimensions[1],
+                            geometry.dimensions[2],
+                            1,
+                            geometry.trigger,
+                        )
+                      : this.#binding.createOffsetSphere(
+                            this.#body,
+                            geometry.center,
+                            geometry.dimensions[0],
+                            1,
+                            geometry.trigger,
+                        );
             this.#owner.invalidate();
             this.#binding.configureShapeEvents(token, { sensor: false, contact: false, hit: false });
             const filter = this.#binding.setShapeFilters(this.#world, [token], {
@@ -917,6 +927,9 @@ export class Box3DSharedBody {
             this.#shapes.set(reference, { token, geometry });
             if (!this.state.enabled) this.control('setBodyEnabled', true);
         } catch (error) {
+            // Only the reviewed creation preflight can prove that the old shape and mass were untouched.
+            // Never reuse this exemption after a token returned or any configuration/destruction began.
+            if (geometry.kind === 'capsule' && !token && mutationNotApplied(error)) throw error;
             // Candidate cleanup does not restore native contact history. The whole world is conservatively faulted.
             let failure = error;
             try {

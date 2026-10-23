@@ -192,7 +192,8 @@
       "bounds": "real core fat broadphase AABB callback, not exact shape local extents",
       "maximumPrimitives": 65536,
       "ownership": "per-world copied local geometry handles owned until real core destroy callback; temporary capture buffer explicitly released in facade finally; no borrowed heap view or pointer escapes",
-      "drawingBounds": "finite float32 full range; no default +/-100 clipping"
+      "drawingBounds": "finite float32 full range; no default +/-100 clipping",
+      "capsule": "Candidate: two 24-segment end rings, four cylinder generators and four 12-segment outward hemisphere arcs, 100 surface lines total; exact zero-segment shape uses native sphere callback."
     },
     "memory": [
       "liveBytes.uint64 of bridge context/callback copies/capture capacity only",
@@ -263,7 +264,23 @@
     "strictBoolean": "All new booleans and createBody.enableSleep reject numbers/strings/null before native mutation.",
     "qualificationScope": "Finite box/sphere only; arbitrary hull, mesh/compound, replay, full CCD/T10/G1 not implied.",
     "motionLocks": "Immediate world-axis velocity constraints: velocity setters and successful linear/angular impulses mask locked components before readback. Real force/torque accumulators remain pending until native solve. Legacy facade velocity/center-impulse methods route through these checks; C signatures unchanged.",
-    "boxMinimumHalfExtent": "Each half extent must be >= 0.2f * B3_LINEAR_SLOP (0.001m in this pinned core). Reject smaller values before core helper silently enlarges them; applies both legacy and additive box facade/native creation."
+    "boxMinimumHalfExtent": "Each half extent must be >= 0.2f * B3_LINEAR_SLOP (0.001m in this pinned core). Reject smaller values before core helper silently enlarges them; applies both legacy and additive box facade/native creation.",
+    "capsuleCreation": {
+      "status": "SOURCE_CANDIDATE_NOT_FORMALLY_QUALIFIED",
+      "operation": "air_b3_mass_shape_create kind=2; no new export; schema identity changes",
+      "inputFloats": ["center.x", "center.y", "center.z", "radius", "halfSegment", "direction", "density"],
+      "direction": "Exact 0/X, 1/Y or 2/Z",
+      "dimensions": "radius>0, halfSegment>=0; cylinderHeight=2*halfSegment, totalHeight=cylinderHeight+2*radius",
+      "zero": "Exact zero segment explicitly creates actual sphere geometry and sphere mass",
+      "shortPositive": "Actual float32 endpoint squared distance <= B3_LINEAR_SLOP squared returns UNSUPPORTED before creation. No clamping or sphere fallback for positive segment.",
+      "preflight": "Finite derived endpoints/mass/COM/inertia/transformed AABB/extents; requested-mass plan or native density-based added-first aggregation validated before native create.",
+      "replacement": "Old shape is retained until new candidate is successfully created. Native or JS post-create failure is not described as rollback.",
+      "scope": "Capsule creation/mass/motion/command and debug source support only; capsule contact snapshot, full EX01 family acceptance, browser and formal Gates remain unqualified.",
+      "decisionContract": {
+        "path": "tools/physics/box3d/capsule-bridge-contract.md",
+        "sha256": "e6bf95eae06a2e469890bdd14ff1db2133be115d339376eaca3942adb1d64193"
+      }
+    }
   },
   "shapeFilters": {
     "resultWords": 2,

@@ -23,7 +23,7 @@ THE SOFTWARE.
 // Internal, limited M1 foundation. This is not the Cocos physics adapter.
 const CORE_SHA = 'efca0c184d40fd6a82016983f1601c4d23965867';
 const BINDING_BASE_SHA = '5d5a3af049cccd9948b2b55bac4342414af0ef64';
-const SCHEMA_SHA256 = '0df007cd748883621f89836b55f1c09437c04d6d7e6253914577b21455a11bd5';
+const SCHEMA_SHA256 = '82b508fe8852caeb5ee4013d96480fc33b789fe98a95517b85455b660c709428';
 const commandIsArray = Array.isArray;
 const commandKeys = Object.keys;
 const PATCH_CHAIN_SHA256 = '434fb89494867f515051d5ac0dfc0c694556ba1f0da9ac3fc895a27097b1c7c7';
@@ -1123,16 +1123,19 @@ export function createBox3DBinding(module, expected) {
         changed(world);
         return bodyState(world, body);
     }
-    function massShape(body, kind, values, sensor) {
+    function massShape(body, kind, values, sensor, reviewedCapsule = false) {
         const item = handle(body, 'body');
         const sensorFlag = boolean(sensor, 'sensor');
         module.HEAPF32.set(
             values.map((v) => finite(v, 'shape')),
             input >>> 2,
         );
-        nativeStatus(
-            module._air_b3_mass_shape_create(
-                worldId(item.world),
+        const wid = worldId(item.world);
+        if (reviewedCapsule) activeMutation.outcome = undefined;
+        let status;
+        try {
+            status = module._air_b3_mass_shape_create(
+                wid,
                 body.low,
                 body.high,
                 kind,
@@ -1140,8 +1143,21 @@ export function createBox3DBinding(module, expected) {
                 sensorFlag,
                 item.targetMass ?? 0,
                 ids,
-            ),
-        );
+            );
+        } catch (error) {
+            if (reviewedCapsule) changed(item.world);
+            throw error;
+        }
+        if (reviewedCapsule) {
+            // Reviewed kind-2 bridge: these statuses return before b3Create*Shape.
+            // CREATION/unknown statuses and native traps do not prove rollback.
+            if (status === 0) activeMutation.outcome = 'committed';
+            else if ([1, 2, 8, 9].includes(status)) activeMutation.outcome = 'not-mutated';
+            else changed(item.world);
+            if (status === 8)
+                throw failure('AIR_E_BOX3D_UNSUPPORTED', 'Capsule geometry is unsupported by the fixed native core');
+        }
+        nativeStatus(status);
         const result = copiedId(item.world, 'shape', body);
         bodyState(item.world, body);
         return result;
@@ -1633,6 +1649,26 @@ export function createBox3DBinding(module, expected) {
                     ),
                 );
                 return copiedId(item.world, 'shape', body);
+            });
+        },
+        createOffsetCapsule(body, center, radius, halfSegment, direction, density = 1, sensor = false) {
+            return mutate(() => {
+                const c = vector(center, 3, 'capsule center').map(Math.fround);
+                const r = Math.fround(finite(radius, 'capsule radius'));
+                const h = Math.fround(finite(halfSegment, 'capsule halfSegment'));
+                const d = Math.fround(finite(density, 'capsule density'));
+                if (direction !== 0 && direction !== 1 && direction !== 2)
+                    throw failure('AIR_E_BOX3D_ARGUMENT', 'Capsule direction must be exact axis 0, 1 or 2');
+                if (r <= 0 || halfSegment < 0 || d <= 0)
+                    throw failure(
+                        'AIR_E_BOX3D_ARGUMENT',
+                        'Capsule radius/density must be positive and halfSegment nonnegative',
+                    );
+                if (halfSegment > 0 && h === 0)
+                    throw failure('AIR_E_BOX3D_UNSUPPORTED', 'A positive capsule segment may not round to a sphere');
+                // Native derives and validates the F32 endpoints, slop, AABB and aggregate mass before creation.
+                // Exactly h=0 deliberately creates a native sphere with sphere mass/identity.
+                return massShape(body, 2, [...c, r, h, direction, d], sensor, true);
             });
         },
         rayAllRaw(world, origin, translation, options) {

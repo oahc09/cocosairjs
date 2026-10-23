@@ -27,7 +27,7 @@ static int context(uint32_t wid,b3BodyId id,b3World** w,b3Body** b){
  if(!b3Body_IsValid(id)||b3StoreWorldId(b3Body_GetWorld(id))!=wid)return AIR_B3_INVALID;
  *w=b3GetWorldFromId(b3LoadWorldId(wid));*b=b3GetBodyFullId(*w,id);return 0;
 }
-static int supported(const b3Shape* s){return s->type==b3_sphereShape||s->type==b3_hullShape;}
+static int supported(const b3Shape* s){return s->type==b3_sphereShape||s->type==b3_hullShape||s->type==b3_capsuleShape;}
 /* Non-sensors win. Sensor-only bodies explicitly fall back to sensor geometry. */
 static int mass_plan(b3World* w,b3Body* b,float target,int skip,const b3Shape* added,b3MassData* plan,int* fallback,int* pending){
  if(!isfinite(target)||target<=0||!isfinite(1.0f/target))return AIR_B3_ARGUMENT;
@@ -167,19 +167,78 @@ int air_b3_body_apply(uint32_t wid,uint32_t lo,uint32_t hi,int kind,int local,co
  }}
  return 0;
 }
+/* Capsule ABI: center.xyz, radius, halfSegment, exact axis 0/1/2, density.
+   The pinned core collapses short capsules to spheres. Only an explicitly zero
+   segment may take that path; test the actual float32 endpoints before creation. */
+static int capsule_candidate(const float* p,b3Shape* candidate){
+ if(p[3]<=0||p[4]<0||(p[5]!=0&&p[5]!=1&&p[5]!=2))return AIR_B3_ARGUMENT;
+ if(p[4]==0){candidate->type=b3_sphereShape;candidate->sphere=(b3Sphere){get(p),p[3]};return 0;}
+ float a[3]={p[0],p[1],p[2]},z[3]={p[0],p[1],p[2]};int axis=(int)p[5];a[axis]-=p[4];z[axis]+=p[4];
+ b3Vec3 c1=get(a),c2=get(z);if(!vec_ok(c1)||!vec_ok(c2))return AIR_B3_ARGUMENT;
+ float length2=b3DistanceSquared(c1,c2);if(!isfinite(length2))return AIR_B3_ARGUMENT;
+ if(length2<=B3_LINEAR_SLOP*B3_LINEAR_SLOP)return AIR_B3_UNSUPPORTED;
+ candidate->type=b3_capsuleShape;candidate->capsule=(b3Capsule){c1,c2,p[3]};return 0;
+}
+static int capsule_bounds_safe(b3World* w,b3Body* b,const b3Shape* candidate){
+ b3BodySim* sim=b3GetBodySim(w,b);
+ float extent=candidate->type==b3_capsuleShape?0.5f*b3Distance(candidate->capsule.center1,candidate->capsule.center2)+candidate->capsule.radius:candidate->sphere.radius;
+ if(!isfinite(extent))return AIR_B3_ARGUMENT;
+ float margin=b->type==b3_staticBody?B3_SPECULATIVE_DISTANCE:b3MinFloat(B3_MAX_AABB_MARGIN,B3_AABB_MARGIN_FRACTION*extent);
+ b3AABB box=b3ComputeFatShapeAABB(candidate,sim->transform,B3_SPECULATIVE_DISTANCE);
+ if(!b3IsValidAABB(box)||!b3IsValidAABB(b3AABB_Inflate(box,margin)))return AIR_B3_ARGUMENT;
+ return 0;
+}
+static int capsule_extents_safe(b3World* w,b3Body* b,const b3Shape* added,b3Vec3 center){
+ for(int i=b->headShapeId,extra=0;i!=B3_NULL_INDEX||!extra;){
+  const b3Shape* s;if(!extra){extra=1;s=added;}else{s=b3Array_Get(w->shapes,i);i=s->nextShapeId;}
+  b3ShapeExtent extent=b3ComputeShapeExtent(s,center);
+  if(!isfinite(extent.minExtent)||!vec_ok(extent.maxExtent))return AIR_B3_ARGUMENT;
+ }
+ return 0;
+}
+/* target==0 preserves the existing density-based core semantics, including
+   sensors. Reproduce the core's added-first float32 accumulation without writes,
+   so finite individual capsules cannot overflow aggregate mass/COM/inertia. */
+static int capsule_automatic_mass_safe(b3World* w,b3Body* b,const b3Shape* added){
+ if(b->type!=b3_dynamicBody)return capsule_extents_safe(w,b,added,b3Vec3_zero);
+ float mass=0;b3Vec3 center=b3Vec3_zero;b3Matrix3 inertia=b3Mat3_zero;
+ for(int pass=0;pass<2;++pass){
+  for(int i=b->headShapeId,extra=0;i!=B3_NULL_INDEX||!extra;){
+   const b3Shape* s;if(!extra){extra=1;s=added;}else{s=b3Array_Get(w->shapes,i);i=s->nextShapeId;}
+   if(!supported(s))return AIR_B3_UNSUPPORTED;if(s->density==0)continue;
+   b3MassData m=b3ComputeShapeMass(s);
+   if(!isfinite(m.mass)||m.mass<=0||!vec_ok(m.center)||!matrix_ok(m.inertia))return AIR_B3_ARGUMENT;
+   if(pass==0){mass+=m.mass;center=b3MulAdd(center,m.mass,m.center);if(!isfinite(mass)||!vec_ok(center))return AIR_B3_ARGUMENT;}
+   else{b3Vec3 d=b3Sub(center,m.center);b3Matrix3 term=b3AddMM(m.inertia,b3Steiner(m.mass,d));inertia=b3AddMM(inertia,term);
+    if(!vec_ok(d)||!matrix_ok(term)||!matrix_ok(inertia))return AIR_B3_ARGUMENT;}
+  }
+  if(pass==0){float inverse=1.0f/mass;if(!isfinite(inverse))return AIR_B3_ARGUMENT;center=b3MulSV(inverse,center);if(!vec_ok(center))return AIR_B3_ARGUMENT;}
+ }
+ float det=b3Det(inertia);if(!isfinite(det)||det<=0)return AIR_B3_ARGUMENT;
+ b3Matrix3 inverse=b3InvertT(inertia);if(!matrix_ok(inverse))return AIR_B3_ARGUMENT;
+ b3BodySim* sim=b3GetBodySim(w,b);b3Matrix3 rotation=b3MakeMatrixFromQuat(sim->transform.q);
+ if(!matrix_ok(b3MulMM(b3MulMM(rotation,inverse),b3Transpose(rotation))))return AIR_B3_ARGUMENT;
+ b3Pos worldCenter=b3TransformWorldPoint(sim->transform,center);if(!vec_ok(worldCenter))return AIR_B3_ARGUMENT;
+ b3BodyState* state=b3GetBodyState(w,b);
+ if(state&&!vec_ok(b3Add(state->linearVelocity,b3Cross(state->angularVelocity,b3SubPos(worldCenter,sim->center)))))return AIR_B3_ARGUMENT;
+ return capsule_extents_safe(w,b,added,center);
+}
 int air_b3_mass_shape_create(uint32_t wid,uint32_t lo,uint32_t hi,int kind,const float* p,int sensor,float target,uint32_t* out){
  b3World* w;b3Body* b;b3BodyId id=bid(lo,hi);int s=context(wid,id,&w,&b);if(s)return s;
- if(!p||!out||(kind!=0&&kind!=1)||(sensor!=0&&sensor!=1)||!isfinite(target)||target<0)return AIR_B3_ARGUMENT;
- int count=kind==0?5:11;for(int i=0;i<count;++i)if(!isfinite(p[i]))return AIR_B3_ARGUMENT;
+ if(!p||!out||(kind!=0&&kind!=1&&kind!=2)||(sensor!=0&&sensor!=1)||!isfinite(target)||target<0)return AIR_B3_ARGUMENT;
+ int count=kind==0?5:kind==1?11:AIR_B3_CAPSULE_INPUT_FLOATS;for(int i=0;i<count;++i)if(!isfinite(p[i]))return AIR_B3_ARGUMENT;
  float density=p[count-1];if(density<=0)return AIR_B3_ARGUMENT;
  b3Shape candidate={0};candidate.id=B3_NULL_INDEX;candidate.density=density;candidate.sensorIndex=sensor?0:B3_NULL_INDEX;b3BoxHull hull;
  if(kind==0){if(p[3]<=0)return AIR_B3_ARGUMENT;candidate.type=b3_sphereShape;candidate.sphere=(b3Sphere){get(p),p[3]};}
+ else if(kind==2){s=capsule_candidate(p,&candidate);if(s)return s;}
  else {if(p[3]<0.2f*B3_LINEAR_SLOP||p[4]<0.2f*B3_LINEAR_SLOP||p[5]<0.2f*B3_LINEAR_SLOP)return AIR_B3_ARGUMENT;float q2=p[6]*p[6]+p[7]*p[7]+p[8]*p[8]+p[9]*p[9];if(!isfinite(q2)||fabsf(q2-1)>1e-4f)return AIR_B3_ARGUMENT;
   b3Transform xf={get(p),{{p[6],p[7],p[8]},p[9]}};hull=b3MakeTransformedBoxHull(p[3],p[4],p[5],xf);candidate.type=b3_hullShape;candidate.hull=&hull.base;}
- b3MassData single=b3ComputeShapeMass(&candidate);if(!isfinite(single.mass)||single.mass<=0||!matrix_ok(single.inertia))return AIR_B3_ARGUMENT;
+ b3MassData single=b3ComputeShapeMass(&candidate);if(!isfinite(single.mass)||single.mass<=0||!vec_ok(single.center)||!matrix_ok(single.inertia))return AIR_B3_ARGUMENT;
  b3MassData plan;int f,n;if(target>0){s=mass_plan(w,b,target,B3_NULL_INDEX,&candidate,&plan,&f,&n);if(s)return s;}
+ if(kind==2){s=capsule_bounds_safe(w,b,&candidate);if(s)return s;
+  s=target>0?capsule_extents_safe(w,b,&candidate,b->type==b3_dynamicBody?plan.center:b3Vec3_zero):capsule_automatic_mass_safe(w,b,&candidate);if(s)return s;}
  b3ShapeDef def=b3DefaultShapeDef();def.filter=air_b3_default_filter();def.density=density;def.isSensor=sensor!=0;def.enableSensorEvents=sensor!=0;def.updateBodyMass=target==0;
- b3ShapeId shape=kind==0?b3CreateSphereShape(id,&def,&candidate.sphere):b3CreateHullShape(id,&def,candidate.hull);
+ b3ShapeId shape=candidate.type==b3_sphereShape?b3CreateSphereShape(id,&def,&candidate.sphere):candidate.type==b3_capsuleShape?b3CreateCapsuleShape(id,&def,&candidate.capsule):b3CreateHullShape(id,&def,candidate.hull);
  if(!b3Shape_IsValid(shape))return AIR_B3_CREATION;
  if(target>0)apply_mass(w,b,id,plan);
  uint64_t value=b3StoreShapeId(shape);out[0]=(uint32_t)value;out[1]=(uint32_t)(value>>32);return 0;

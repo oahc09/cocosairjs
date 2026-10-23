@@ -2,7 +2,7 @@
   "meta": {
     "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
     "note": "Air Path 与 Upstream Path 一致(前缀 src/)；modified 文件另行标注 reason；upstreamPath=null 表示该行为 Air 原创文件或上游产物（仓库内无对应源文件），必须 modified:true 并在 reason 说明出处",
-    "modifiedCount": 279,
+    "modifiedCount": 280,
     "pal": {
       "revision": "9f0e30acb31f6d670f2c0bf818d61039846a2860",
       "license": "MIT",
@@ -4970,8 +4970,8 @@
       "airPath": "src/cocos/physics/framework/components/colliders/capsule-collider.ts",
       "upstreamPath": "cocos/physics/framework/components/colliders/capsule-collider.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "2026-10-23 Box3D-only CapsuleCollider mutation guard and candidate-before-public-field setter transaction. Existing Cocos radius/height normalization and direction normalization, and every other backend path, remain unchanged. Source candidate requires fresh native/public validation."
     },
     {
       "airPath": "src/cocos/physics/framework/components/colliders/collider.ts",
@@ -9906,14 +9906,14 @@
       "upstreamPath": null,
       "baseline": "AIR original",
       "modified": true,
-      "reason": "2026-10-22 Box3D rebuild: Fail-closed runtime admission contract for required live native world controls; g/i8 foundation alone is insufficient."
+      "reason": "2026-10-22 Box3D rebuild: Fail-closed runtime admission contract for required live native world controls; g/i8 foundation alone is insufficient. 2026-10-23 additive true native Capsule source candidate, three-axis geometry and reviewed no-write/preflight versus committed failure phases; existing Box/Sphere boundaries preserved. Fresh Capsule validation pending."
     },
     {
       "airPath": "src/air/physics/box3d/registration.ts",
       "upstreamPath": null,
       "baseline": "AIR original",
       "modified": true,
-      "reason": "2026-10-22 Box3D rebuild: Explicit factory/selector registration helper, not yet activated from public feature."
+      "reason": "2026-10-22 Box3D rebuild: Explicit factory/selector registration helper, not yet activated from public feature. 2026-10-23 additive true native Capsule source candidate, three-axis geometry and reviewed no-write/preflight versus committed failure phases; existing Box/Sphere boundaries preserved. Fresh Capsule validation pending."
     },
     {
       "airPath": "src/air/physics/box3d/debug.ts",
@@ -9934,21 +9934,21 @@
       "upstreamPath": null,
       "baseline": "AIR original",
       "modified": true,
-      "reason": "2026-10-22 Box3D rebuild: AIR original scalar WASM facade with ownership tokens and copied native snapshots; reviewed staged generation-basis geometry is exposed separately from unresolved old anchor fields."
+      "reason": "2026-10-22 Box3D rebuild: AIR original scalar WASM facade with ownership tokens and copied native snapshots; reviewed staged generation-basis geometry is exposed separately from unresolved old anchor fields. 2026-10-23 additive true native Capsule source candidate, three-axis geometry and reviewed no-write/preflight versus committed failure phases; existing Box/Sphere boundaries preserved. Fresh Capsule validation pending."
     },
     {
       "airPath": "src/air/physics/box3d/binding/facade.d.mts",
       "upstreamPath": null,
       "baseline": "AIR original",
       "modified": true,
-      "reason": "2026-10-22 Box3D rebuild: Typed AIR original scalar WASM facade and immutable contact geometry generation-basis contract."
+      "reason": "2026-10-22 Box3D rebuild: Typed AIR original scalar WASM facade and immutable contact geometry generation-basis contract. 2026-10-23 additive true native Capsule source candidate, three-axis geometry and reviewed no-write/preflight versus committed failure phases; existing Box/Sphere boundaries preserved. Fresh Capsule validation pending."
     },
     {
       "airPath": "src/air/physics/box3d/shared-body.ts",
       "upstreamPath": null,
       "baseline": "AIR original",
       "modified": true,
-      "reason": "2026-10-22 Box3D rebuild: Private world-scoped Node/shared-body and primitive-shape ownership. Only immutable explicit not-mutated errors preserve observations; committed or unknown native outcomes fault. Qualified l2 batch filters are used without fake per-shape atomicity; public activation and T11 pose/scale remain incomplete. Checkpoint42 candidate: exact private Component.enabled activity owner wiring; queue-backed no-sequence admission, retained control/target guards through original callback and actual scheduler/native readback, no replay after committed or unknown failure."
+      "reason": "2026-10-22 Box3D rebuild: Private world-scoped Node/shared-body and primitive-shape ownership. Only immutable explicit not-mutated errors preserve observations; committed or unknown native outcomes fault. Qualified l2 batch filters are used without fake per-shape atomicity; public activation and T11 pose/scale remain incomplete. Checkpoint42 candidate: exact private Component.enabled activity owner wiring; queue-backed no-sequence admission, retained control/target guards through original callback and actual scheduler/native readback, no replay after committed or unknown failure. 2026-10-23 additive true native Capsule source candidate, three-axis geometry and reviewed no-write/preflight versus committed failure phases; existing Box/Sphere boundaries preserved. Fresh Capsule validation pending."
     },
     {
       "airPath": "src/air/physics/box3d/rigid-body.ts",
@@ -9962,14 +9962,14 @@
       "upstreamPath": null,
       "baseline": "AIR original",
       "modified": true,
-      "reason": "2026-10-22 Box3D rebuild: AIR-owned strict initial primitive geometry/material admission and analytic bounds from copied native origin/rotation. Positive initial scale only; external parent/pose/scale and event integration remain unsupported pending later contracts."
+      "reason": "2026-10-22 Box3D rebuild: AIR-owned strict initial primitive geometry/material admission and analytic bounds from copied native origin/rotation. Positive initial scale only; external parent/pose/scale and event integration remain unsupported pending later contracts. 2026-10-23 additive true native Capsule source candidate, three-axis geometry and reviewed no-write/preflight versus committed failure phases; existing Box/Sphere boundaries preserved. Fresh Capsule validation pending."
     },
     {
       "airPath": "src/air/physics/box3d/box-sphere-shape.ts",
       "upstreamPath": null,
       "baseline": "AIR original",
       "modified": true,
-      "reason": "2026-10-22 Box3D rebuild: AIR-owned IBoxShape/ISphereShape candidate with real native ownership, guarded replacement, material/filter delegation and copied bounds. Unknown allocation/configuration failures fault instead of claiming rollback; public component activation and full qualification remain incomplete. Persistent-target candidate makes the internal shared-body accessor ECMAScript-private, closing the TypeScript-private runtime escape to raw SharedBody.control without changing public adapter interfaces."
+      "reason": "2026-10-22 Box3D rebuild: AIR-owned IBoxShape/ISphereShape candidate with real native ownership, guarded replacement, material/filter delegation and copied bounds. Unknown allocation/configuration failures fault instead of claiming rollback; public component activation and full qualification remain incomplete. Persistent-target candidate makes the internal shared-body accessor ECMAScript-private, closing the TypeScript-private runtime escape to raw SharedBody.control without changing public adapter interfaces. 2026-10-23 additive true native Capsule source candidate, three-axis geometry and reviewed no-write/preflight versus committed failure phases; existing Box/Sphere boundaries preserved. Fresh Capsule validation pending."
     },
     {
       "airPath": "src/cocos/core/data/mutation-guard.ts",

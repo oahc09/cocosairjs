@@ -73,7 +73,16 @@ static void* create_shape(const b3DebugShape* shape, void* context) {
     if (w->error) return NULL;
     int lines = 0;
     if (shape->type == b3_sphereShape) lines = 3 * SPHERE_SEGMENTS;
-    else if (shape->type == b3_hullShape) {
+    else if (shape->type == b3_capsuleShape) {
+        const b3Capsule* c = shape->capsule;
+        float length2 = b3DistanceSquared(c->center1,c->center2);
+        if (!isfinite(length2) || length2 <= 0 || !isfinite(c->radius) || c->radius <= 0) {
+            w->error = AIR_B3_ARGUMENT; return NULL;
+        }
+        /* Two end rings, four cylinder generators and two meridian planes of
+           outward hemispheres. No hidden full spheres or box substitute. */
+        lines = 4 * SPHERE_SEGMENTS + 4;
+    } else if (shape->type == b3_hullShape) {
         const b3HullData* h = shape->hull;
         if (h->edgeCount <= 0 || h->edgeCount > 254 || h->edgeCount % 2 || h->vertexCount <= 0 || h->vertexCount > 255) {
             w->error = AIR_B3_UNSUPPORTED; return NULL;
@@ -92,6 +101,32 @@ static void* create_shape(const b3DebugShape* shape, void* context) {
             p[(axis+1)%3] += sphere.radius * cosf(a); p[(axis+2)%3] += sphere.radius * sinf(a);
             result->ends[2*(axis*SPHERE_SEGMENTS+i)+end] = (b3Vec3){p[0],p[1],p[2]};
         }
+    } else if (shape->type == b3_capsuleShape) {
+        const b3Capsule* c = shape->capsule;
+        b3Vec3 axis = b3Normalize(b3Sub(c->center2,c->center1));
+        b3Vec3 perpendicular[2] = {b3Perp(axis),b3Vec3_zero};
+        perpendicular[1] = b3Cross(axis,perpendicular[0]);
+        int n = 0;
+        for (int cap = 0; cap < 2; ++cap) {
+            b3Vec3 center = cap ? c->center2 : c->center1;
+            for (int i = 0; i < SPHERE_SEGMENTS; ++i, ++n) for (int end = 0; end < 2; ++end) {
+                float angle = (float)(i+end) * (6.2831853071795864769f / SPHERE_SEGMENTS);
+                b3Vec3 radial = b3Add(b3MulSV(cosf(angle),perpendicular[0]),b3MulSV(sinf(angle),perpendicular[1]));
+                result->ends[2*n+end] = b3MulAdd(center,c->radius,radial);
+            }
+            for (int plane = 0; plane < 2; ++plane)
+                for (int i = 0; i < SPHERE_SEGMENTS/2; ++i, ++n) for (int end = 0; end < 2; ++end) {
+                    float angle = -1.5707963267948966192f + (float)(i+end) * (6.2831853071795864769f / SPHERE_SEGMENTS);
+                    b3Vec3 radial = b3Add(b3MulSV((cap?1.0f:-1.0f)*cosf(angle),axis),b3MulSV(sinf(angle),perpendicular[plane]));
+                    result->ends[2*n+end] = b3MulAdd(center,c->radius,radial);
+                }
+        }
+        for (int plane = 0; plane < 2; ++plane) for (int side = -1; side <= 1; side += 2, ++n) {
+            b3Vec3 radial = b3MulSV(side*c->radius,perpendicular[plane]);
+            result->ends[2*n] = b3Add(c->center1,radial);
+            result->ends[2*n+1] = b3Add(c->center2,radial);
+        }
+        B3_ASSERT(n == lines);
     } else {
         const b3HullData* h = shape->hull;
         const b3Vec3* p = b3GetHullPoints(h);

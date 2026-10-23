@@ -25,7 +25,7 @@ import type { IPhysicsSelector } from '../../../cocos/physics/framework/physics-
 import type { Box3DWorldAdapter } from './prepare';
 import { Box3DPhysicsWorld } from './world';
 import { Box3DRigidBody } from './rigid-body';
-import { Box3DBoxShape, Box3DSphereShape } from './box-sphere-shape';
+import { Box3DBoxShape, Box3DSphereShape, Box3DCapsuleShape } from './box-sphere-shape';
 import type { Box3DComponentConfiguration } from './shared-body';
 import { requireComponentBinding, requireWorldBinding, worldError } from './world-binding';
 import { createUnsupportedBox3DComponents } from './unsupported';
@@ -71,6 +71,11 @@ export function createBox3DWorldAdapter(
                       }
                   },
                   BoxShape: class extends Box3DBoxShape {
+                      constructor() {
+                          super(getWorld, components!);
+                      }
+                  },
+                  CapsuleShape: class extends Box3DCapsuleShape {
                       constructor() {
                           super(getWorld, components!);
                       }

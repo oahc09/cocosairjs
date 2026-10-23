@@ -161,6 +161,16 @@ export interface Box3DFoundation {
         density?: number,
         sensor?: boolean,
     ): Box3DId;
+    /** Axis-aligned native capsule in body-local coordinates; zero halfSegment is a native sphere. */
+    createOffsetCapsule(
+        body: Box3DId,
+        center: ArrayLike<number>,
+        radius: number,
+        halfSegment: number,
+        direction: number,
+        density?: number,
+        sensor?: boolean,
+    ): Box3DId;
     setLinearVelocity(body: Box3DId, velocity: ArrayLike<number>): void;
     applyCenterImpulse(body: Box3DId, impulse: ArrayLike<number>): void;
     createSphere(body: Box3DId, radius: number, density?: number): Box3DId;

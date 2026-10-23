@@ -21,9 +21,10 @@
 */
 import type { Collider } from '../../../cocos/physics/framework/components/colliders/collider';
 import type { BoxCollider } from '../../../cocos/physics/framework/components/colliders/box-collider';
+import type { CapsuleCollider } from '../../../cocos/physics/framework/components/colliders/capsule-collider';
 import type { SphereCollider } from '../../../cocos/physics/framework/components/colliders/sphere-collider';
 import type { PhysicsMaterial } from '../../../cocos/physics/framework/assets/physics-material';
-import type { IBoxShape, ISphereShape } from '../../../cocos/physics/spec/i-physics-shape';
+import type { IBoxShape, ISphereShape, ICapsuleShape } from '../../../cocos/physics/spec/i-physics-shape';
 import type { IVec3Like } from '../../../cocos/core/math/type-define';
 import type { AABB } from '../../../cocos/core/geometry/aabb';
 import type { Sphere } from '../../../cocos/core/geometry/sphere';
@@ -39,7 +40,7 @@ import { unsupportedBox3D } from './unsupported';
 class Box3DPrimitiveShape {
     readonly #world: () => Box3DPhysicsWorld;
     readonly #configuration: Box3DComponentConfiguration;
-    readonly #kind: 'box' | 'sphere';
+    readonly #kind: 'box' | 'sphere' | 'capsule';
     #collider: Collider | null = null;
     #shared: Box3DSharedBody | null = null;
     #center: readonly number[] = Object.freeze([0, 0, 0]);
@@ -48,7 +49,11 @@ class Box3DPrimitiveShape {
     #trigger = false;
     #active = false;
     #geometry: Box3DPrimitiveGeometry | null = null;
-    constructor(kind: 'box' | 'sphere', world: () => Box3DPhysicsWorld, configuration: Box3DComponentConfiguration) {
+    constructor(
+        kind: 'box' | 'sphere' | 'capsule',
+        world: () => Box3DPhysicsWorld,
+        configuration: Box3DComponentConfiguration,
+    ) {
         this.#kind = kind;
         this.#world = world;
         this.#configuration = configuration;
@@ -77,7 +82,13 @@ class Box3DPrimitiveShape {
             const dimensions =
                 this.#kind === 'box'
                     ? bodyVector((value as BoxCollider).size, 'box size')
-                    : [(value as SphereCollider).radius];
+                    : this.#kind === 'sphere'
+                      ? [(value as SphereCollider).radius]
+                      : [
+                            (value as CapsuleCollider).radius,
+                            (value as CapsuleCollider).cylinderHeight,
+                            (value as CapsuleCollider).direction,
+                        ];
             const material = primitiveMaterial(asset);
             const scale = bodyVector(value.node.worldScale, 'initial shape scale');
             const trigger = value.isTrigger;
@@ -207,6 +218,11 @@ class Box3DPrimitiveShape {
         this.#dimensions = Object.freeze([...value]);
         this.#geometry = next;
     }
+    protected updateDimension(index: number, value: number): void {
+        const dimensions = [...this.#dimensions];
+        dimensions[index] = value;
+        this.updateDimensions(dimensions);
+    }
     updateEventListener(): void {
         if (this.#shared?.cleanupOnly && !this.collider.needCollisionEvent && !this.collider.needTriggerEvent) return;
         this.assertConfiguration('updateEventListener');
@@ -273,5 +289,22 @@ export class Box3DSphereShape extends Box3DPrimitiveShape implements ISphereShap
         this.assertConfiguration('updateRadius');
         if (value === undefined) value = (this.collider as SphereCollider).radius;
         this.updateDimensions([value]);
+    }
+}
+export class Box3DCapsuleShape extends Box3DPrimitiveShape implements ICapsuleShape {
+    constructor(world: () => Box3DPhysicsWorld, configuration: Box3DComponentConfiguration) {
+        super('capsule', world, configuration);
+    }
+    setRadius(value: number): void {
+        this.assertConfiguration('setRadius');
+        this.updateDimension(0, value);
+    }
+    setCylinderHeight(value: number): void {
+        this.assertConfiguration('setCylinderHeight');
+        this.updateDimension(1, value);
+    }
+    setDirection(value: number): void {
+        this.assertConfiguration('setDirection');
+        this.updateDimension(2, value);
     }
 }

@@ -26,9 +26,9 @@ import { copySurfaceMaterial, finiteFloat32, worldError } from './world-binding'
 import { unsupportedBox3D } from './unsupported';
 
 export interface Box3DPrimitiveGeometry {
-    readonly kind: 'box' | 'sphere';
+    readonly kind: 'box' | 'sphere' | 'capsule';
     readonly center: readonly number[];
-    /** Box half extents, or one sphere radius, already transformed by initial Node scale. */
+    /** Scaled box half extents, sphere radius, or capsule [radius, halfSegment, direction]. */
     readonly dimensions: readonly number[];
     readonly trigger: boolean;
     readonly material: Readonly<Box3DSurfaceMaterial> | null;
@@ -41,7 +41,7 @@ export function primitiveMaterial(value: PhysicsMaterial | null): Readonly<Box3D
     return result;
 }
 export function primitiveGeometry(
-    kind: 'box' | 'sphere',
+    kind: 'box' | 'sphere' | 'capsule',
     center: readonly number[],
     dimensions: readonly number[],
     scale: readonly number[],
@@ -49,20 +49,45 @@ export function primitiveGeometry(
     material: Readonly<Box3DSurfaceMaterial> | null,
 ): Box3DPrimitiveGeometry {
     if (typeof trigger !== 'boolean') throw worldError('AIR_E_BOX3D_CONFIG', 'isTrigger', 'Expected boolean.');
-    if (center.length !== 3 || scale.length !== 3 || dimensions.length !== (kind === 'box' ? 3 : 1))
+    if (center.length !== 3 || scale.length !== 3 || dimensions.length !== (kind === 'sphere' ? 1 : 3))
         throw worldError('AIR_E_BOX3D_CONFIG', 'shape geometry', 'Invalid geometry dimensions.');
     const s = scale.map((v) => finiteFloat32(v, 'shape scale'));
     if (s.some((v) => v <= 0)) unsupportedBox3D('nonpositive initial primitive scale');
     const c = center.map((v, i) => finiteFloat32(finiteFloat32(v, 'center') * s[i], 'scaled center'));
-    const d = dimensions.map((v, i) =>
-        finiteFloat32(finiteFloat32(v, 'size') * (kind === 'box' ? 0.5 * s[i] : Math.max(...s)), 'scaled size'),
-    );
-    if (d.some((v) => v <= 0 || (kind === 'box' && v < Math.fround(0.001))))
-        throw worldError(
-            'AIR_E_BOX3D_CONFIG',
-            'shape geometry',
-            'Sphere radius must be positive; box half extents must be at least 0.001m.',
+    let d: number[];
+    if (kind === 'capsule') {
+        const radius = finiteFloat32(dimensions[0], 'capsule radius');
+        const height = finiteFloat32(dimensions[1], 'capsule cylinderHeight');
+        const direction = dimensions[2];
+        if (direction !== 0 && direction !== 1 && direction !== 2)
+            throw worldError('AIR_E_BOX3D_CONFIG', 'capsule direction', 'Expected exact axis 0, 1 or 2.');
+        if (radius <= 0 || dimensions[1] < 0)
+            throw worldError(
+                'AIR_E_BOX3D_CONFIG',
+                'capsule geometry',
+                'Expected positive radius and nonnegative height.',
+            );
+        const absoluteScale = s.map(Math.abs);
+        const radialScale = Math.max(...absoluteScale.filter((_, i) => i !== direction));
+        const scaledRadius = finiteFloat32(radius * radialScale, 'scaled capsule radius');
+        const halfSegment = finiteFloat32(height * 0.5 * absoluteScale[direction], 'scaled capsule halfSegment');
+        if (scaledRadius <= 0)
+            throw worldError('AIR_E_BOX3D_CONFIG', 'capsule radius', 'Scaled radius must remain positive.');
+        // Only an explicitly zero height is a sphere. A positive segment may not disappear through F32 rounding.
+        if (dimensions[1] > 0 && halfSegment === 0) unsupportedBox3D('positive capsule segment rounded to zero');
+        capsuleSegment(c[direction], halfSegment);
+        d = [scaledRadius, halfSegment, direction];
+    } else {
+        d = dimensions.map((v, i) =>
+            finiteFloat32(finiteFloat32(v, 'size') * (kind === 'box' ? 0.5 * s[i] : Math.max(...s)), 'scaled size'),
         );
+        if (d.some((v) => v <= 0 || (kind === 'box' && v < Math.fround(0.001))))
+            throw worldError(
+                'AIR_E_BOX3D_CONFIG',
+                'shape geometry',
+                'Sphere radius must be positive; box half extents must be at least 0.001m.',
+            );
+    }
     return Object.freeze({
         kind,
         center: Object.freeze(c),
@@ -70,6 +95,18 @@ export function primitiveGeometry(
         trigger,
         material: material === null ? null : copySurfaceMaterial(material),
     });
+}
+/** Match the pinned native capsule endpoint/slop preflight, including F32 cancellation at large centers. */
+function capsuleSegment(center: number, halfSegment: number): readonly [number, number] {
+    if (halfSegment === 0) return [center, center];
+    const start = finiteFloat32(center - halfSegment, 'capsule first endpoint');
+    const end = finiteFloat32(center + halfSegment, 'capsule second endpoint');
+    const distance = finiteFloat32(end - start, 'capsule endpoint distance');
+    const lengthSquared = finiteFloat32(distance * distance, 'capsule segment length squared');
+    const slop = Math.fround(0.005);
+    if (lengthSquared <= Math.fround(slop * slop))
+        unsupportedBox3D('positive capsule segment is at or below native linear slop after F32 endpoint rounding');
+    return [start, end];
 }
 /** Analytic primitive bounds from the copied native body-origin transform, not a fake native debug snapshot. */
 export function primitiveBounds(value: Box3DPrimitiveGeometry, pose: readonly number[]) {
@@ -85,12 +122,28 @@ export function primitiveBounds(value: Box3DPrimitiveGeometry, pose: readonly nu
         [2 * (x * y + z * w), 1 - 2 * (x * x + z * z), 2 * (y * z - x * w)],
         [2 * (x * z - y * w), 2 * (y * z + x * w), 1 - 2 * (x * x + y * y)],
     ];
-    const center = rotation.map((row, i) => pose[i] + row.reduce((sum, n, j) => sum + n * value.center[j], 0));
+    const localCenter = [...value.center];
+    let capsuleHalfSegment = 0;
+    if (value.kind === 'capsule') {
+        const axis = value.dimensions[2];
+        const [start, end] = capsuleSegment(value.center[axis], value.dimensions[1]);
+        // Native endpoints are rounded independently. Their actual midpoint may differ from the requested center.
+        localCenter[axis] = 0.5 * start + 0.5 * end;
+        capsuleHalfSegment = 0.5 * (end - start);
+    }
+    const center = rotation.map((row, i) => pose[i] + row.reduce((sum, n, j) => sum + n * localCenter[j], 0));
     const halfExtents =
         value.kind === 'sphere'
             ? [value.dimensions[0], value.dimensions[0], value.dimensions[0]]
-            : rotation.map((row) => row.reduce((sum, n, j) => sum + Math.abs(n) * value.dimensions[j], 0));
-    const radius = value.kind === 'sphere' ? value.dimensions[0] : Math.hypot(...value.dimensions);
+            : value.kind === 'capsule'
+              ? rotation.map((row) => Math.abs(row[value.dimensions[2]]) * capsuleHalfSegment + value.dimensions[0])
+              : rotation.map((row) => row.reduce((sum, n, j) => sum + Math.abs(n) * value.dimensions[j], 0));
+    const radius =
+        value.kind === 'sphere'
+            ? value.dimensions[0]
+            : value.kind === 'capsule'
+              ? value.dimensions[0] + capsuleHalfSegment
+              : Math.hypot(...value.dimensions);
     if ([...center, ...halfExtents, radius].some((v) => !Number.isFinite(v)))
         throw worldError('AIR_E_BOX3D_CONFIG', 'primitive bounds', 'Bounds overflow.');
     return { center, halfExtents, radius };

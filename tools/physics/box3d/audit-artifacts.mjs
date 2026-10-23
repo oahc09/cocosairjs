@@ -18,8 +18,8 @@ const receipt = json('build-receipt.json');
 assert.equal(receipt.status, 'PASS');
 assert.equal(receipt.kind, 'st-simd-wasm');
 assert.ok(receipt.commands.length >= 21 && receipt.commands.every((c) => c.exitCode === 0 && !c.error));
-assert.equal(receipt.inputHashes.length, 55);
-assert.equal(new Set(receipt.inputHashes.map((input) => input.path)).size, 55);
+assert.equal(receipt.inputHashes.length, 57);
+assert.equal(new Set(receipt.inputHashes.map((input) => input.path)).size, 57);
 assert.equal(receipt.motionSourceControls.status, 'PASS_SOURCE_CONTROLS_ONLY');
 assert.equal(receipt.commandSourceControls.status, 'PASS_SOURCE_CONTROLS_ONLY');
 for (const input of receipt.inputHashes) {
@@ -50,6 +50,7 @@ const expectedSources = [
     'tools/physics/box3d/native/motion_bridge.c',
     'tools/physics/box3d/native/command_bridge.c',
     'tools/physics/box3d/native/query_bridge.c',
+    'tools/physics/box3d/native/capsule_contract.c',
     'tools/physics/box3d/native/query_contract.c',
     'tools/physics/box3d/native/command_contract.c',
     'tools/physics/box3d/native/filter_contract.c',
@@ -235,6 +236,24 @@ for (const check of [
     'cleanup',
 ])
     assert.equal(filters.checks[check], true, check);
+const nativeCapsule = json('native-capsule-contract.raw.json');
+assert.equal(nativeCapsule.status, 'PASS');
+assert.equal(nativeCapsule.pointerBytes, 4);
+assert.deepEqual(nativeCapsule, receipt.capsuleContract);
+for (const check of [
+    'allThreeAxes',
+    'analyticMassAndImpulse',
+    'exactZeroSphere',
+    'shortPositiveRejectNoWrite',
+    'finiteDerivedAndAutomaticMassPreflight',
+    'commandAndMotion',
+    'trueCapsuleDebugSurface',
+    'sensorMassLifecycle',
+    'debugAllocationFailures',
+    'lifecycle128',
+    'coreAndBridgeBytesRestored',
+])
+    assert.equal(nativeCapsule[check], true, check);
 const nativeQuery = json('native-query-contract.raw.json');
 assert.equal(nativeQuery.status, 'PASS');
 assert.equal(nativeQuery.pointerBytes, 4);
@@ -571,6 +590,8 @@ const report = {
         'wasm-motion-contract.raw.json',
         'air_box3d_motion_contract.cjs',
         'motion-samples.raw.jsonl',
+        'native-capsule-contract.raw.json',
+        'air_box3d_capsule_contract.cjs',
         'native-query-contract.raw.json',
         'wasm-query-contract.raw.json',
         'air_box3d_query_contract.cjs',

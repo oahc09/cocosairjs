@@ -217,6 +217,20 @@ try {
         writeFileSync(resolve(out, 'native-query-contract.raw.json'), queryRaw);
         result.queryContract = JSON.parse(queryRaw);
         if (result.queryContract.status !== 'PASS') throw new Error('Native query contract failed');
+        const capsuleExe = resolve(out, 'native-capsule-contract');
+        run(cc, [
+            ...flags,
+            'tools/physics/box3d/native/capsule_contract.c',
+            ...objects.filter((file) => !file.endsWith('/contract.c.o') && !file.endsWith('/world_bridge.c.o')),
+            ...(sanitize ? ['-fsanitize=address,undefined'] : []),
+            '-lm',
+            '-o',
+            capsuleExe,
+        ]);
+        const capsuleRaw = run(capsuleExe, []);
+        writeFileSync(resolve(out, 'native-capsule-contract.raw.json'), capsuleRaw);
+        result.capsuleContract = JSON.parse(capsuleRaw);
+        if (result.capsuleContract.status !== 'PASS') throw new Error('Native capsule contract failed');
         result.artifacts = [
             { path: 'native-contract', sha256: sha256(readFileSync(exe)), bytes: readFileSync(exe).length },
         ];
@@ -312,6 +326,11 @@ try {
         result.queryContract = JSON.parse(queryRaw);
         if (result.queryContract.status !== 'PASS' || result.queryContract.pointerBytes !== 4)
             throw new Error('WASM32 query native contract failed');
+        const capsuleRaw = run(process.execPath, [resolve(out, 'air_box3d_capsule_contract.cjs')]);
+        writeFileSync(resolve(out, 'native-capsule-contract.raw.json'), capsuleRaw);
+        result.capsuleContract = JSON.parse(capsuleRaw);
+        if (result.capsuleContract.status !== 'PASS' || result.capsuleContract.pointerBytes !== 4)
+            throw new Error('WASM32 capsule native contract failed');
         run(process.execPath, ['tools/physics/box3d/wasm-contract.mjs', out]);
         run(process.execPath, ['tools/physics/box3d/wasm-ownership-contract.mjs', out]);
         run(process.execPath, ['tools/physics/box3d/wasm-snapshot-contract.mjs', out]);
@@ -377,6 +396,8 @@ try {
         'tools/physics/box3d/native/wasm_entry.c',
         'tools/physics/box3d/native/query_bridge.c',
         'tools/physics/box3d/native/query_bridge.h',
+        'tools/physics/box3d/capsule-bridge-contract.md',
+        'tools/physics/box3d/native/capsule_contract.c',
         'tools/physics/box3d/native/query_contract.c',
         'tools/physics/box3d/wasm-query-contract.mjs',
         'tools/physics/box3d/query-admission-contract.mjs',
