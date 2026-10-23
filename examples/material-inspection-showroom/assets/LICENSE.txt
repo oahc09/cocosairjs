@@ -1,0 +1,5 @@
+Original procedural checker and two-joint glTF fixture, Copyright (c) 2026-2027 oahc09@gmail.com.
+MIT License, see ../../../LICENSE.
+inspection-rig.gltf derives from this repository's original U05 test fixture, not an external model.
+crystal.gltf derives from examples/glass-refraction/src/gem-gltf.ts, original procedural geometry.
+No external asset requests or redistribution restrictions.

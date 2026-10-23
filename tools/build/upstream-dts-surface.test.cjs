@@ -8,8 +8,12 @@ const gift = require('@cocos/tfig');
 const { DEFAULT_FEATURES } = require('./default-features.cjs');
 const {
     prepareGiftOptions,
+    prepareCompatibleGiftOptions,
     collectEntrySurface,
     reconcileExports,
+    normalizeSdkSelfReferences,
+    collectPrivateAliasCandidates,
+    restorePrivateTypeAliases,
     runDeclarationBuild,
     isCleanupOnlyError,
 } = require('./upstream-dts-surface.cjs');
@@ -225,6 +229,205 @@ test('existing output never recovers a semantic/false generator failure; only ve
             { encoding: 'utf8' },
         );
         assert.equal(child.status, 1, 'semantic failure must remain a failed process even if output already exists');
+    } finally {
+        fs.rmSync(directory, { recursive: true, force: true });
+    }
+});
+
+test('legacy optional root types and generated private return dependencies remain legal types, never phantom values', () => {
+    const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'air-dts-compatibility-test-'));
+    try {
+        const runtimeEntry = path.join(directory, 'main.d.ts');
+        const optional = path.join(directory, 'optional.d.ts');
+        const entry = path.join(directory, 'virtual-cc.d.ts');
+        fs.writeFileSync(runtimeEntry, 'export declare class Actual { value: number; }');
+        fs.writeFileSync(optional, 'export declare class OptionalSpark { width: number; }');
+        const original = 'export * from "./main"; export * from "./optional";';
+        fs.writeFileSync(entry, original);
+        const { surface, configured } = prepareCompatibleGiftOptions(
+            { rootDir: directory, entries: { cc: entry }, input: [runtimeEntry, optional, entry] },
+            [runtimeEntry],
+        );
+        assert.equal(fs.readFileSync(entry, 'utf8'), original);
+        assert.equal(configured.entries.cc, entry);
+        assert.deepEqual(surface.values, ['Actual']);
+        assert.equal(surface.names.includes('OptionalSpark'), false);
+        const emitted = `export class Actual { value: number; }
+export class OptionalSpark { width: number; }
+export namespace sparkMath { class Matrix { readonly elements: number[]; } }
+export namespace __private { class Returned { readonly owner: Actual; readonly count: number; } }
+export function getReturned(): __private.Returned | null;`;
+        const sdk = reconcileExports(emitted, {
+            ...surface,
+            values: [...surface.values, 'getReturned'],
+            names: [...surface.names, 'getReturned'],
+        });
+        fs.writeFileSync(path.join(directory, 'sdk.d.ts'), sdk);
+        const consumer = path.join(directory, 'consumer.ts');
+        fs.writeFileSync(
+            consumer,
+            `import { Actual, getReturned } from './sdk';
+import type { OptionalSpark, sparkMath, __private } from './sdk';
+declare const optional: OptionalSpark;
+const width: number = optional.width;
+declare const matrix: sparkMath.Matrix;
+const elements: number[] = matrix.elements;
+const result = getReturned();
+if (result) { const owner: Actual = result.owner; const count: number = result.count; const explicit: __private.Returned = result;
+// @ts-expect-error typed private return must not degrade to any
+const wrong: string = result.count;
+// @ts-expect-error nonexistent member must stay rejected
+result.missing;
+void [owner, count, explicit, wrong]; }
+// @ts-expect-error optional runtime does not exist in default SDK
+new OptionalSpark();
+// @ts-expect-error optional namespace is not a default runtime object
+new sparkMath.Matrix();
+void [width, elements];`,
+        );
+        const program = ts.createProgram([consumer], {
+            strict: true,
+            skipLibCheck: false,
+            noEmit: true,
+            types: [],
+            target: ts.ScriptTarget.ES2020,
+            moduleResolution: ts.ModuleResolutionKind.NodeJs,
+        });
+        const diagnostics = ts.getPreEmitDiagnostics(program);
+        assert.deepEqual(
+            diagnostics.map((d) => ts.flattenDiagnosticMessageText(d.messageText, '\n')),
+            [],
+        );
+        assert.deepEqual(declaredValueExports(ts, program, './sdk', consumer), ['Actual', 'getReturned']);
+    } finally {
+        fs.rmSync(directory, { recursive: true, force: true });
+    }
+});
+
+test('node16 self-references retain exact function types under the published skipLibCheck contract', () => {
+    const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'air-dts-node16-self-'));
+    try {
+        fs.writeFileSync(path.join(directory, 'package.json'), JSON.stringify({ type: 'module' }));
+        const input = `export function isCCClassOrFastDefined(ctor: Function): boolean;
+import { isCCClassOrFastDefined as alias } from "cc";
+export namespace CCClass { export { alias as isCCClassOrFastDefined }; }`;
+        const fixed = normalizeSdkSelfReferences(input);
+        assert.match(fixed, /from "\.\/cocosair\.module\.js"/);
+        const sdk = path.join(directory, 'cocosair.module.d.ts');
+        const consumer = path.join(directory, 'consumer.ts');
+        fs.writeFileSync(
+            consumer,
+            `import { CCClass } from './cocosair.module.js';
+type IsAny<T> = 0 extends (1 & T) ? true : false;
+const precise: IsAny<typeof CCClass.isCCClassOrFastDefined> = false;
+const result: boolean = CCClass.isCCClassOrFastDefined(class Actual {});
+// @ts-expect-error a numeric input must remain rejected
+CCClass.isCCClassOrFastDefined(42);
+// @ts-expect-error return must not silently become any
+const invalid: string = CCClass.isCCClassOrFastDefined(class Actual {});
+void [precise, result, invalid];`,
+        );
+        const options = {
+            strict: true,
+            noEmit: true,
+            skipLibCheck: true,
+            types: [],
+            target: ts.ScriptTarget.ES2020,
+            module: ts.ModuleKind.Node16,
+            moduleResolution: ts.ModuleResolutionKind.Node16,
+        };
+        fs.writeFileSync(sdk, fixed.replace('cocosair.module.js', 'cocosair.module'));
+        const before = ts.getPreEmitDiagnostics(ts.createProgram([consumer], options));
+        assert(
+            before.some((d) => d.code === 2322),
+            'negative control must expose any',
+        );
+        assert(
+            before.some((d) => d.code === 2578),
+            'negative controls must become unused for any',
+        );
+        fs.writeFileSync(sdk, fixed);
+        const after = ts.getPreEmitDiagnostics(ts.createProgram([consumer], options));
+        assert.deepEqual(
+            after.map((d) => ts.flattenDiagnosticMessageText(d.messageText, '\n')),
+            [],
+        );
+    } finally {
+        fs.rmSync(directory, { recursive: true, force: true });
+    }
+});
+
+test('moved engineInternal types retain source-qualified aliases and nominal identity without historical declarations', () => {
+    const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'air-dts-private-alias-'));
+    try {
+        for (const name of ['left', 'right'])
+            fs.writeFileSync(
+                path.join(directory, name + '.d.ts'),
+                `/** @engineInternal */\nexport declare class Internal<T> { protected brand: void; readonly origin: "${name}"; value: T; }\nexport declare function get(): Internal<string>;`,
+            );
+        const entry = path.join(directory, 'virtual-cc.d.ts');
+        fs.writeFileSync(entry, `export * as left from './left'; export * as right from './right';`);
+        const options = {
+            rootDir: directory,
+            input: ['left.d.ts', 'right.d.ts', 'virtual-cc.d.ts'].map((name) => path.join(directory, name)),
+            entries: { cc: entry },
+            name: 'cc',
+            rootModule: 'index',
+            priority: [entry],
+            privateJsDocTag: 'engineInternal',
+            groups: [{ test: /^cc$/, path: path.join(directory, 'cc.d.ts') }],
+            nonExportedSymbolDistribution: [{ sourceModule: /.*/, targetModule: 'cc' }],
+        };
+        const original = gift.bundle(options).groups[0].code;
+        const current = gift.bundle({ ...options, privateJsDocTag: undefined }).groups[0].code;
+        const restored = restorePrivateTypeAliases(current, original, collectPrivateAliasCandidates(options));
+        assert.deepEqual(
+            restored.retained.map(({ name, target }) => [name, target]),
+            [
+                ['_left__Internal', ['left', 'Internal']],
+                ['_right__Internal', ['right', 'Internal']],
+            ],
+        );
+        const code = normalizeSdkSelfReferences(
+            restored.code.replace(/^\s*declare module "cc" \{\s*/, '').replace(/\}\s*$/, ''),
+        );
+        const sdk = reconcileExports(code, {
+            names: ['left', 'right'],
+            values: ['left', 'right'],
+            preserveDeclaredTypeExports: true,
+        });
+        fs.writeFileSync(path.join(directory, 'cocosair.module.d.ts'), sdk);
+        fs.writeFileSync(path.join(directory, 'package.json'), '{"type":"module"}');
+        const caller = path.join(directory, 'caller.ts');
+        fs.writeFileSync(
+            caller,
+            `import { left, right } from './cocosair.module.js'; import type { __private } from './cocosair.module.js';
+const a: __private._left__Internal<string> = left.get();
+const b: left.Internal<string> = a;
+// @ts-expect-error different source classes must keep distinct nominal identity
+const wrong: __private._left__Internal<string> = right.get();
+// @ts-expect-error private compatibility types do not create a runtime namespace
+new __private._left__Internal();
+void [a,b,wrong];`,
+        );
+        const program = ts.createProgram([caller], {
+            strict: true,
+            skipLibCheck: false,
+            noEmit: true,
+            types: [],
+            target: ts.ScriptTarget.ES2020,
+            module: ts.ModuleKind.Node16,
+            moduleResolution: ts.ModuleResolutionKind.Node16,
+        });
+        assert.deepEqual(
+            ts.getPreEmitDiagnostics(program).map((d) => ({
+                message: ts.flattenDiagnosticMessageText(d.messageText, '\n'),
+                line: d.file && d.file.getLineAndCharacterOfPosition(d.start).line + 1,
+            })),
+            [],
+        );
+        assert.deepEqual(declaredValueExports(ts, program, './cocosair.module.js', caller), ['left', 'right']);
+        assert.throws(() => restorePrivateTypeAliases(current, original, new Map()), /unresolved moved private/);
     } finally {
         fs.rmSync(directory, { recursive: true, force: true });
     }

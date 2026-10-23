@@ -19,7 +19,12 @@ const { join } = require('path');
 const fs = require('fs');
 const { existsSync, renameSync } = require('fs-extra');
 const { dtsBundler } = require('@cocos/ccbuild');
-const { withMainDeclarations, reconcileExports, runDeclarationBuild } = require('./upstream-dts-surface.cjs');
+const {
+    withMainDeclarations,
+    reconcileExports,
+    normalizeSdkSelfReferences,
+    runDeclarationBuild,
+} = require('./upstream-dts-surface.cjs');
 
 const ROOT = join(__dirname, '..', '..');
 const ENGINE = join(ROOT, 'src');
@@ -46,10 +51,9 @@ function copyOutput(outDir, receipt) {
             if (!/^\s*declare module "cc" \{/.test(declarations) || !/\}\s*$/.test(declarations)) {
                 throw new Error('Unexpected ccbuild declaration format');
             }
-            const sdk = declarations
-                .replace(/^\s*declare module "cc" \{\s*/, '')
-                .replace(/\}\s*$/, '')
-                .replace(/(["'])cc\1/g, '"./cocosair.module"');
+            const sdk = normalizeSdkSelfReferences(
+                declarations.replace(/^\s*declare module "cc" \{\s*/, '').replace(/\}\s*$/, ''),
+            );
             if (!receipt.surface) throw new Error('Missing main declaration export contract');
             const normalized = reconcileExports(sdk, receipt.surface);
             fs.writeFileSync(join(ROOT, 'build', 'cocosair.module.d.ts'), normalized);

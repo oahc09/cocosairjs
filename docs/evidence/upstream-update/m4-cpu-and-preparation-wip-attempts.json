@@ -1,0 +1,407 @@
+{
+  "status": "FULL_CPU_FAIL_13_PREPARATION_IN_PROGRESS",
+  "createdAt": "2026-10-22T04:36:48.503495+00:00",
+  "archiveSha256": "79031981ad00ddb595825d0f90970703ac3bde5f04d35838145c6fb261f881a2",
+  "files": [
+    {
+      "path": "output/upstream-update/license-origin-recovery/01-original-repository-commit-redirect.json",
+      "sha256": "0b3cd9c43174b49b6c20c250642320473d43ee34b9a66c1e9602aa45a39e32da"
+    },
+    {
+      "path": "output/upstream-update/license-origin-recovery/02-canonical-repository.json",
+      "sha256": "ba74d9a572ebb98b7169475fdb4b116aeaa5e8e67b7bb526934f68b6156b6f67"
+    },
+    {
+      "path": "output/upstream-update/license-origin-recovery/03-pinned-git-commit-not-found.json",
+      "sha256": "c8b6acd22e80711c3c03fdf522e894f30769641bd3bc5a1666260eb96a1dedca"
+    },
+    {
+      "path": "output/upstream-update/license-origin-recovery/04-pinned-rest-commit-not-found.json",
+      "sha256": "0fbddcb9884667ff34fab8edb86f42864eab1bc0a621b427c27a4ecd757848e0"
+    },
+    {
+      "path": "output/upstream-update/license-origin-recovery/05-pinned-glslang-content-not-found.json",
+      "sha256": "1518413275da33bfac357f977666311b10f1ef723102583cbedcee810190945d"
+    },
+    {
+      "path": "output/upstream-update/license-origin-recovery/README.md",
+      "sha256": "f15362b4774372179d9788ba7a16184f247806d19c2ba6e25742469e6eee8e42"
+    },
+    {
+      "path": "output/upstream-update/license-origin-recovery/SHA256SUMS",
+      "sha256": "f4e4ffa20260b50bdb375632fa08ec28a7c892731778524a2c06b123074539fc"
+    },
+    {
+      "path": "output/upstream-update/license-origin-recovery/recovery-attempt-manifest.json",
+      "sha256": "a8b9f055ec9943924b04721541fafb39133058490f77b271d9c78b54b19ce3ee"
+    },
+    {
+      "path": "output/upstream-update/m4-admission/agent-report.json",
+      "sha256": "ba30340bd3b57379d6d83f301ad942b459b3ccf2be6aa607fb2aaa270454102b"
+    },
+    {
+      "path": "output/upstream-update/m4-admission/candidate-snapshot.json",
+      "sha256": "9659ab129f6a58dd6a5d7b503183cd2063f58257ff843e8d4999022b42d83f4f"
+    },
+    {
+      "path": "output/upstream-update/m4-admission/current-benchmark-inventory.json",
+      "sha256": "401bc35721151387f05763bbb6b2c40f600131344549954b750690622064e4d2"
+    },
+    {
+      "path": "output/upstream-update/m4-admission/engine-report.json",
+      "sha256": "3e796f1ec7aa6a3cdfd3e55d8894a16f0015cc4e8b7e9297a025447cff045f3b"
+    },
+    {
+      "path": "output/upstream-update/m4-admission/gates.exit",
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    },
+    {
+      "path": "output/upstream-update/m4-admission/gates.json",
+      "sha256": "702de1476110f46a0458cb115e6f8a19f46faaff0455bb9f8e412dc14c7b9c4d"
+    },
+    {
+      "path": "output/upstream-update/m4-admission/gates.log",
+      "sha256": "702de1476110f46a0458cb115e6f8a19f46faaff0455bb9f8e412dc14c7b9c4d"
+    },
+    {
+      "path": "output/upstream-update/m4-admission/limitations.json",
+      "sha256": "aac91d372611e401c18bac6bd2c6c69cd31685e275fa1cbe33746966ce354f0c"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/batch-001.json",
+      "sha256": "eaea376a6a14f633a74d09e8cad2ec2cbd41b7ef44d790fb0ec928ce124da205"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/batch-001.log",
+      "sha256": "690d04ae5e30bbae4f12679488430c51b08352e89cb79de9845dd2cc220f4d3a"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/batch-002.json",
+      "sha256": "808495bb978d570c3ac8dd737fa5e934cc4d2448db9ad6bf31565504baffd6be"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/batch-002.log",
+      "sha256": "86393e9b0d900e3c99dc6456c85e45379d315355b465afb82c6d30d49dc51b5f"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/batch-003.json",
+      "sha256": "709289565c743833c16dab91fc259bd17a5d777c47cb2ae7fa3c69cfb92d3fec"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/batch-003.log",
+      "sha256": "edca498a58a203ca108cabe074daa926669bc0b9082353fa32490b00a208b993"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/batch-004.json",
+      "sha256": "802fa87a019def5fa5ae1aba823eb7b463d85d46f398685bb1f0be9d1556eb84"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/batch-004.log",
+      "sha256": "6051544f378d387cca5d47830a9dcf2b9ac7ee1a9f332bc56752063efaadbca3"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/batch-005.json",
+      "sha256": "b1bd0eaf05c4683c8cb7c577744122af5ba4dedf7183eec8d3fbdfb914401b10"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/batch-005.log",
+      "sha256": "c4cd6e0e985cf95e5b6d2563450f167ca114c502291ac1774581453b30aa01b1"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/batch-006.json",
+      "sha256": "37ef44a764876333f796b9276c6d691e667bc1beded976f2ed34a01ceaeb0189"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/batch-006.log",
+      "sha256": "5e6c8afa4002069313b464204bb98c3b83b9931bac3c673a4abef530b094a2a4"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/batch-007.json",
+      "sha256": "7894344e122c5deafc8e4165bee42bd48c351f1229916073e45415521e43d586"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/batch-007.log",
+      "sha256": "fdc91b00892236cc9fa3d9f2fee6308a71de028139f440007ab6d1186b5279f2"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/batch-008.json",
+      "sha256": "abc9b613b8aadd79c9bc558b810831c06327664c68ca399de62d7dc18ae6de32"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/batch-008.log",
+      "sha256": "b115dfc7151edc1be5fe220c77136818a2b71115d4be17a69244b0d52ca062f5"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/batch-009.json",
+      "sha256": "a60beae0f75e4acabb86bf48ff7d6bdd799147fc8f46fae33d75cc163922062d"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/batch-009.log",
+      "sha256": "fc51c90e119ea4cca89f28922dd00d6e5a8aa69a8353a16ed031861216dcac85"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/batch-010.json",
+      "sha256": "2f14b32008098112473e5e6d7784fcaad70014a985553b326b93313121979e22"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/batch-010.log",
+      "sha256": "13e0839fb3bb5dd0a441d225d4442e30bc7863566c5e4873960127bcb493cf07"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/batch-011.json",
+      "sha256": "994763f5bca253f5ada65394e329a3da36ced6b7f57277741160140758c510b7"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/batch-011.log",
+      "sha256": "cced78fac802b0a8b350f94a4d7ea89c2ccdeb42c97dbbd92441d9415c0f18b3"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/batch-012.json",
+      "sha256": "48d3daa5a3dbde4622b82797ac2d927291472d14cd7221bbc7d9acb5bbf183e1"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/batch-012.log",
+      "sha256": "bbbbe82d53dca28efc76b7ccf9a7f43aee19ba5058283019b7a36d64a1361cf4"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/batch-013.json",
+      "sha256": "1a8f760ae124ca93f30ccf9c790a2b37330f14bb1059b436b37fe95d5db718f6"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/batch-013.log",
+      "sha256": "df7eb7841c3ccabb94f6c757cb2f9984ddc76f006c45f5da5ebee4a2f06cb1ca"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/batch-014.json",
+      "sha256": "5540c7958305876f8c035f0ec7baf4eb8e1efde7fe67b6807f2b3155d70383e9"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/batch-014.log",
+      "sha256": "1791253c3ec70abd3ee0cb976c4af31dc81edfc84bbaa99f1d97bfa67418d12a"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/batch-015.json",
+      "sha256": "da1fe1e1065efb8f204319bdada3708c6e4f23379c1ebbf82b35a6e1eb55ca05"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/batch-015.log",
+      "sha256": "cec9fefb910f20e04b8b3e67d24b24574c3c092a3df45d735d072c7f7ace0427"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/batch-016.json",
+      "sha256": "e0d49f6b6eebc5ecf31f6f5a508ffcdf7a98f5e33c6508470c2c668672e3ba2e"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/batch-016.log",
+      "sha256": "52c3ff1f0e0763dc6fb8c8bc890c26bebaeec0d13a8b07fa8f1087f00e04b604"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/batch-017.json",
+      "sha256": "6f8f07a217f55ffe60ab435f9d58e2b054cdd5f19d8ededb78d669a1b9b9b45f"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/batch-017.log",
+      "sha256": "87f3f422aefc25613de6746ec27d85970792f61468cf79ac19de186d58ccad0e"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/batch-018.json",
+      "sha256": "670cf90849087269cc464277f5d94b92ed5abe76390221ce6d7d5034cee5c657"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/batch-018.log",
+      "sha256": "21d7f0e23719d7f4ff4b4c3229b8981495616663a8df524cb6564920cbef9c8a"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/batch-019.json",
+      "sha256": "c3038ba3e28a5dc8b74ebdcfe1cc917b3d20d35c493bf2adb24a309373445d57"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/batch-019.log",
+      "sha256": "74a5e29001409b53ccd0121c86e424022bba5b9fbd7b398084107ca2d3bdd2fb"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/batch-020.json",
+      "sha256": "5e6fc2882db6061a59ce46f610bbb4930c327f8d39a66e40a5abd2a55d70fefd"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/batch-020.log",
+      "sha256": "03abe74fc3ba915d88703b563ee5c5e60af0b95a19e4bac3f1dcc0007d74fc93"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/batch-021.json",
+      "sha256": "2728c93a21ec3ec025847f2eb54143816d67d21c5370cc3af12eac7a09eacda4"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/batch-021.log",
+      "sha256": "a289da86b5b3921c67f7a2cf43b552bbc9f9a76d1f589907863fce104ff6752c"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/batch-022.json",
+      "sha256": "32333f5611fdd7444a1e5a8e0745bdcc92a9ffe018c6822e05b739b4615fc9e5"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/batch-022.log",
+      "sha256": "28bb4bc55b4b1df20889388a334bbc482ab165244f89cbe22fe81861f9e6e2e2"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/batch-023.json",
+      "sha256": "6fa8fa9208f71b44cd574a3a13d500b3aebab9313279a978a0f21ec175023845"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/batch-023.log",
+      "sha256": "62f88e7a77dd459e6fdf3232e7220463acb22506efa918f662abfa3dc03ba165"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/batch-024.json",
+      "sha256": "df8fa3eb37fd7dce97f70c200314a87312947debec116d8f24a5fe524b6ceab1"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/batch-024.log",
+      "sha256": "91e105f6c70f755899cd8032c673dc29eaee65a5db7550273e91ebe59cdeaf6a"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/batch-025.json",
+      "sha256": "ba769192dc575f0d4c3f409ed213be46c62171ad19250414e91f99e833d6734e"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/batch-025.log",
+      "sha256": "6a93a6d1c24d0f517fde5973d4064e2780e579ea4accfd4aa333c7b367b667ef"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/batch-026.json",
+      "sha256": "c778e61b49c8f39325cb99c20420412a823e67a49aa1943ce291c64ddafae2d0"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/batch-026.log",
+      "sha256": "e30468e533b3251bdaa276246d8b968b812528249888fb173d5c4fbf94516f23"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/batch-027.json",
+      "sha256": "a840e313cdb29d2140ac85de2eb29ba2ed3ff4b8ba76b88284244967936f2aac"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/batch-027.log",
+      "sha256": "800c545c1c2bac02cf694007cdfd40672a50cc7333f34fc2d3e97287041cfad7"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/batch-028.json",
+      "sha256": "a2e184610374a74f297c676ed9111c4f3d36347fdad8b7d0c08d184bd813fce8"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/batch-028.log",
+      "sha256": "a0423ac4b121b3091edc6a35b2e1b0102b392350aab864c1dc9150c599c71fdf"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/frozen-inventory.json",
+      "sha256": "99cc7f6085fa323133f1be552cae1b63327b6616e49d33391bdeda09c2fd6e47"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/observed-inventory.json",
+      "sha256": "eaf600c3d24f6544c5a5f43d4943586015e4f24113b52b57a0df1a2d0af4ebd1"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/progress.json",
+      "sha256": "11354d932aebb5bab18b440888224e3434e484bed8e687ceb8b3856f8d594a69"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-frozen/report.json",
+      "sha256": "af2bf45e5ef1fbe56efb3f19f742dd58ef41f95c9fc93702a95ab961b6b2feac"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-repairs/ci-scope-correction.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-repairs/ci-scope-correction.json",
+      "sha256": "a802404e9b6485f1d2972e2088e963425f7eef5dd2114f88079118268fa97697"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-repairs/ci-scope-correction.log",
+      "sha256": "37e4a17f1194f1e2ba6174c59637ff739a3f786685cffc934966a6eb6390ea5e"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-repairs/full-failure-classification-v1.json",
+      "sha256": "1baf36ed9e2193096903e261962ff8102024a734c34b71061fdddda2cb075dff"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-repairs/lifecycle-all.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-repairs/lifecycle-all.json",
+      "sha256": "f2225ed204fa5f5c8a7a6d5e2231bf48c9b4281f0de6237b5749ff82101d91cf"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-repairs/lifecycle-all.log",
+      "sha256": "cc011e59f1a276911a07d153623927b9fe5a17b851d2b1070ffcecfd9852c7fa"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-repairs/lifecycle.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-repairs/lifecycle.json",
+      "sha256": "98ddf67f6b513d7384a3d03aacb6414960df1d80c3bcb502ca84d928bb593685"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-repairs/lifecycle.log",
+      "sha256": "4e19e70e6a43de5690436dcd686a43aeb56865820ccbf2f17f5cac5d1d344ecb"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-repairs/manifest-ci-prerequisites.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-repairs/manifest-ci-prerequisites.json",
+      "sha256": "16362b875e1d5fad917dccb782e26b904cd0e79b956b9d6e40f52fab3bfddc3e"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-repairs/manifest-ci-prerequisites.log",
+      "sha256": "79e1c10b7b3b410e04980470e3d8c05a6b4b04fd882ba1515e504967c0814567"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-repairs/original-attempt-summary.json",
+      "sha256": "6b7aac3dfc21ee72813e431c74373ea4b727b63e1f6d7c77c8d2afc6fe335349"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-repairs/recipes-original-input.json",
+      "sha256": "3bb6435ae8b1441761531a75f225c0a7ed4b0d6ab3b12714216cc1659138257d"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-repairs/spec-anchors-check.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-repairs/spec-anchors-check.log",
+      "sha256": "77b903d4ce006c1bd42f56023b479e7aaebfd124e9f733566861f2deb77386fe"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-repairs/spec-canonical-current.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-repairs/spec-canonical-current.log",
+      "sha256": "8b7b7f9730a8f8728b1d68270a062f98ffe5146d0b48f3329e0f69b6d4dcd1e4"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-repairs/spec-freeze-corrections.json",
+      "sha256": "da8c97856caf4ed5a31e32cd2b1b8da2ce05b26702d81166455dd7185853014d"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-repairs/spec-freeze-format.log",
+      "sha256": "65c81f70ae5cd5b18c050108f73cd4bb00d8e39a58828f7c360ee11a80a07cf1"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-repairs/spec-freeze-full.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-repairs/spec-freeze-full.json",
+      "sha256": "f063fd484142ac7227ed1382d0ef4ae396ad8b3502a1e359279ccd40e999b865"
+    },
+    {
+      "path": "output/upstream-update/m4-cpu-repairs/spec-freeze-full.log",
+      "sha256": "885ff333724d5a5729b1d62e42ee2286350c7f96ab022885377ea62e2887e602"
+    }
+  ]
+}

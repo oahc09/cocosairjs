@@ -1,5 +1,7 @@
 # UPSTREAM
 
+2026-10-22 上游更新 U05：固定双骨骼 glTF 的位置 Morph 顶点在旧 bounds 外（独立 CPU 顶点 y=1.875、旧 maxY=1.25），因此在 Mesh 的可选实例权重路径中先应用 Morph 再计算骨空间包围盒，SkinningModel 仅缓存本实例最近权重并保守包含基底；共享 Mesh 基底缓存及原生裁剪保持。另修复 MeshRenderer 销毁时遗漏其自己拥有的 MaterialInstance passes/buffers，保留共享模板与外借实例。三处源码及原因已登记，冻结上游基线不变。CPU 回归与原始失败见本轮证据；真实浏览器裁剪/渲染仍待验收，不据此声明 GPU 或发布通过。
+
 2026-10-20 Box2D 3.2：`src/air/physics-2d/box2d3.ts` 在原 Cocos 2D 组件接口后新增显式选择的 WASM 后端；默认 `@cocos/box2d` 和既有上游物理源码不变。`vendor/box2d/manifest.json` 固定官方源码、案例清单及源码哈希；`tools/build/box2d/contact-material.c` 在固定版本的原始 pre-solve 流形边界补充逐接触材质兼容，不改 vendor 源码。官方案例沿用原始构造与 `Sample::Step`，浏览器替代桌面窗口、文件选择和绘制宿主。验收状态以专项记录为准。
 
 2026-10-19 Web touch cancellation: the reproducible PAL source transform checks `event.cancelable` before canceling a canvas touch event. Native non-cancelable `touchcancel` still retires its touches and dispatches the normal cancel notification; propagation, focus, coordinates and cancelable-event behavior stay unchanged. Frozen MIT vendor bytes remain intact. The Chromium mixed-input control retained two real invalid-cancellation console errors before this correction; source-unit controls do not by themselves establish the corrected browser result.

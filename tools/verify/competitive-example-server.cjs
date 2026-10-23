@@ -6,6 +6,7 @@ const esbuild = require('esbuild');
 const mime = {
     '.html': 'text/html',
     '.js': 'text/javascript',
+    '.mjs': 'text/javascript',
     '.ts': 'text/javascript',
     '.json': 'application/json',
     '.css': 'text/css',
@@ -39,7 +40,10 @@ exports.startExampleServer = async (root) => {
             res.end(String(error));
         }
     });
-    await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
+    await new Promise((resolve, reject) => {
+        server.once('error', reject);
+        server.listen(0, '127.0.0.1', resolve);
+    });
     return {
         origin: `http://127.0.0.1:${server.address().port}`,
         close: () => new Promise((resolve) => server.close(resolve)),

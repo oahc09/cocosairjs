@@ -42,6 +42,7 @@ const EXPECT = {
         'cocos/2d/event/pointer-event-dispatcher.ts',
         'cocos/2d/framework/canvas.ts',
         'cocos/3d/assets/mesh.ts',
+        'cocos/3d/framework/mesh-renderer.ts',
         'cocos/3d/lights/light-component.ts',
         'cocos/3d/misc/create-mesh.ts',
         'cocos/3d/models/baked-skinning-model.ts',

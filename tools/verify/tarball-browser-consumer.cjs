@@ -8,7 +8,7 @@
  * node_modules/cocosair.js/ → Chromium 打开消费页（importmap 指 安装产物）→ 断言
  * createAirApp 启动、Scene/Node/Camera/MeshRenderer API 往返、canvas 有非零像素帧。
  *
- * 执行：node tools/verify/tarball-browser-consumer.cjs [--out=<new.json>] [--vite=<installed-vite-package>]
+ * 执行：node tools/verify/tarball-browser-consumer.cjs [--out=<new.json>] [--vite=<installed-vite-package>] [--browser=chromium|firefox|webkit]
  * Chromium: AIR_CHROMIUM_PATH or Playwright's matching default; no silent fallback.
  * Vite, when selected, must be externally installed version 7.1.12.
  * 产物：docs/evidence/tarball-browser-consumer.json
@@ -23,6 +23,8 @@ const REPO = path.resolve(__dirname, '..', '..');
 const outArg = process.argv.find((arg) => arg.startsWith('--out='))?.slice(6);
 const OUT = outArg ? path.resolve(REPO, outArg) : path.join(REPO, 'docs', 'evidence', 'tarball-browser-consumer.json');
 if (outArg && fs.existsSync(OUT)) throw new Error('--out must name a new report');
+const browserName = process.argv.find((arg) => arg.startsWith('--browser='))?.slice(10) || 'chromium';
+if (!['chromium', 'firefox', 'webkit'].includes(browserName)) throw Error('Unsupported --browser');
 const viteRoot = process.argv.find((arg) => arg.startsWith('--vite='))?.slice(7);
 const { verifyInstalledBrowser, vitePackage } = require('./upstream-sdk-browser.cjs');
 if (viteRoot) vitePackage(viteRoot);
@@ -100,7 +102,14 @@ const artifacts = OUT.replace(/\.json$/, '') + '-artifacts';
 
         // 3) Native import-map, nested CSP, minified, and optional pinned Vite dev/production.
         // All HTML/fixtures live outside the installed package; no package bytes are changed.
-        report.browserMatrix = await verifyInstalledBrowser({ root: REPO, pkgDir, consumerDir, artifacts, viteRoot });
+        report.browserMatrix = await verifyInstalledBrowser({
+            root: REPO,
+            pkgDir,
+            consumerDir,
+            artifacts,
+            viteRoot,
+            browserName,
+        });
         const baseline = report.browserMatrix.results.find((entry) => entry.id === 'importmap-unminified');
         const nested = report.browserMatrix.results.find((entry) => entry.id === 'importmap-nested-csp');
         report.booted = baseline?.booted === true;

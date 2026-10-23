@@ -8,6 +8,8 @@ const http = require('node:http');
 const crypto = require('node:crypto');
 const { pathToFileURL } = require('node:url');
 const { chromiumOptions } = require('./upstream-sdk-browser-options.cjs');
+const { launchOptions } = require('./browser-engines.cjs');
+const { launchOwnedBrowser, bounded } = require('./upstream-browser-lifecycle.cjs');
 const sha256 = (bytes) => crypto.createHash('sha256').update(bytes).digest('hex');
 const PINNED_VITE = '7.1.12';
 
@@ -149,13 +151,14 @@ async function probe(browser, url, id, artifacts) {
     } catch (error) {
         result.error = String(error.stack || error);
     } finally {
-        await context.close();
+        await bounded(() => context.close(), 4000, 'context close');
         result.contextClosed = true;
     }
     return result;
 }
 
-async function verifyInstalledBrowser({ root, pkgDir, consumerDir, artifacts, viteRoot }) {
+async function verifyInstalledBrowser({ root, pkgDir, consumerDir, artifacts, viteRoot, browserName = 'chromium' }) {
+    assert(['chromium', 'firefox', 'webkit'].includes(browserName), 'Unsupported browser');
     fs.mkdirSync(artifacts, { recursive: true });
     const source = fs.readFileSync(path.join(root, 'test/fixtures/upstream-sdk/browser-main.js'), 'utf8');
     const before = Object.fromEntries(
@@ -168,19 +171,22 @@ async function verifyInstalledBrowser({ root, pkgDir, consumerDir, artifacts, vi
         fixtureSha256: sha256(source),
         installedBundles: before,
         shutdownScope:
-            'Playwright close acknowledgment and disconnected transport; not an ECHILD process-reaping proof',
+            'Owned Playwright browser child close event plus transport/server acknowledgments; bounded failure remains FAIL',
         results: [],
         vite: viteRoot ? PINNED_VITE : 'NOT_RUN (supply --vite=<Vite 7.1.12 package directory>)',
     };
-    const { chromium } = require('playwright');
-    let browser;
+    const engine = require('playwright')[browserName];
+    let browser, owned;
     let staticServer;
     try {
-        const options = chromiumOptions();
-        browser = await chromium.launch(options);
+        const options =
+            browserName === 'chromium' ? chromiumOptions() : { headless: true, ...launchOptions(browserName) };
+        owned = await launchOwnedBrowser(engine, options, report);
+        browser = owned.browser;
         report.browser = {
+            name: browserName,
             version: browser.version(),
-            executable: options.executablePath || chromium.executablePath(),
+            executable: options.executablePath || engine.executablePath(),
             args: options.args,
         };
         staticServer = await serveInstalled(pkgDir, source);
@@ -282,7 +288,7 @@ async function verifyInstalledBrowser({ root, pkgDir, consumerDir, artifacts, vi
     } finally {
         if (browser) {
             try {
-                await browser.close();
+                await owned.close();
                 report.browserClosed = !browser.isConnected();
                 assert(report.browserClosed, 'browser remains connected after close');
             } catch (error) {
@@ -290,7 +296,7 @@ async function verifyInstalledBrowser({ root, pkgDir, consumerDir, artifacts, vi
                 report.results.push({ id: 'browser-shutdown', status: 'FAIL', error: String(error.stack || error) });
             }
         }
-        if (staticServer) await staticServer.close();
+        if (staticServer) await bounded(() => staticServer.close(), 4000, 'server close');
     }
     for (const [name, digest] of Object.entries(before))
         assert.equal(

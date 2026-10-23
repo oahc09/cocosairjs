@@ -1,7 +1,7 @@
 {
-  "measuredAt": "2026-10-16T15:38:44.209Z",
-  "total": 188,
-  "frozen": 188,
+  "measuredAt": "2026-10-22T05:53:23.262Z",
+  "total": 196,
+  "frozen": 196,
   "draft": 0,
   "blocked": 0,
   "examples": [
@@ -17,6 +17,11 @@
     },
     {
       "id": "animated-character-showcase",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "asset-request-policy",
       "specStatus": "frozen",
       "issues": []
     },
@@ -121,6 +126,11 @@
       "issues": []
     },
     {
+      "id": "depth-precision-lab",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
       "id": "directional-light-face",
       "specStatus": "frozen",
       "issues": []
@@ -132,6 +142,11 @@
     },
     {
       "id": "dragonbones-basic",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "first-frame-readiness",
       "specStatus": "frozen",
       "issues": []
     },
@@ -307,6 +322,16 @@
     },
     {
       "id": "material-color",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "material-contract-lab",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "material-inspection-showroom",
       "specStatus": "frozen",
       "issues": []
     },
@@ -686,6 +711,11 @@
       "issues": []
     },
     {
+      "id": "probe-sh-lab",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
       "id": "product-viewer",
       "specStatus": "frozen",
       "issues": []
@@ -717,6 +747,11 @@
     },
     {
       "id": "render-composite",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "render-state-isolation",
       "specStatus": "frozen",
       "issues": []
     },
@@ -832,6 +867,11 @@
     },
     {
       "id": "skinned-animation",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "skinned-instance-lifecycle",
       "specStatus": "frozen",
       "issues": []
     },

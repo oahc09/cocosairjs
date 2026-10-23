@@ -656,6 +656,11 @@ export class MeshRenderer extends ModelRenderer {
         if (this._morphInstance) {
             this._morphInstance.destroy();
         }
+        // Renderer-created variants own passes/buffers; shared assets and borrowed instances do not.
+        for (const instance of this._materialInstances) {
+            if (instance?.owner === this) { instance.destroy(); }
+        }
+        this._materialInstances.length = 0;
     }
 
     public onGeometryChanged (): void {

@@ -54,3 +54,17 @@ packed-splat 编码面由 `verify:spark-cpu-parity` 在浏览器内把本仓变�
 `verify:spark-assets`（对账 WASM **字节身份**）、`verify:spark-data-parity`（复跑 WASM **解码行为**）是三件不同的事。
 像素面另分两条：`verify:spark-pixel-parity` 用双回环源做零容差 RGBA 对账（`deviceScaleFactor` 与页面请求比例相等的档位矩阵），
 `verify:spark-dpr-mismatch` 只读复用同一批探针、但每行让这两个比例**故意不一致**，补的是缩放错配路径。上游基线和有意差异见 [UPSTREAM.md](../UPSTREAM.md)，API 兼容约定见 [稳定性登记](api-stability.md)。
+
+## 上游更新候选边界
+
+| 能力                 | 当前实现/验证边界                                                                       |
+| -------------------- | --------------------------------------------------------------------------------------- |
+| glTF 请求策略与取消  | 加法选项、隔离与晚到清理已有 CPU 回归；浏览器 priority/cache/CORS 实测仍需对应证据      |
+| 虹彩与蒙皮 bounds    | IOR 规范及 instance-owned 清理已修正；独立 CPU oracle 不代替真实像素/裁剪验收           |
+| 同尺寸离屏目标       | 默认 WebGL2 原生目标路径；不推导 WebGPU 等价支持                                        |
+| First-frame observer | tools/debug 内显式验证协议；不是运行时稳定 ready/warmCompile API                        |
+| Reverse-Z / OIT      | 不更改默认深度；已有默认路径是 sorted alpha，不是 OIT。实验支持按真实格式和路径逐项判定 |
+| SH / probe           | 数学参考与 opt-in 捕获实验；不提供已验收的 Web probe baker，不虚报 atlas 性能/显存      |
+| 新展台与八主题       | draft 候选，196条live manifest中的8条；静态规格通过不等于浏览器、移动GPU或发布通过      |
+
+细节和未完成环境见[验证说明](upstream-update-verification.md)与[请求/材质 Recipe](../guides/upstream-material-recipe.md)。

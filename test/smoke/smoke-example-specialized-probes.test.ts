@@ -119,10 +119,21 @@ describe('ordinary Driver Pilot specialized proof contract (synthetic CPU only)'
                 .split('\n')
                 .find((line: string) => line.includes('npx jest --runInBand --no-cache --runTestsByPath'));
             expect(command).toContain('test/smoke/smoke-example-specialized-probes.test.ts');
-            expect(text).toContain('EXAMPLE_EVIDENCE_CPU_OUT="$RUNNER_TEMP/example-evidence-cpu"');
-            expect(text).toMatch(
-                /if: always\(\)[\s\S]*?name: example-evidence-cpu-receipts[\s\S]*?path: \$\{\{ runner.temp \}\}\/example-evidence-cpu\//,
-            );
+            // AGENTS.md and docs/reference/ci-scopes.md reserve the full supervisor campaign
+            // for the explicit milestone workflow. Ordinary CI retains focused CPU originals.
+            if (workflow === 'example-evidence') {
+                expect(text).toContain('EXAMPLE_EVIDENCE_CPU_OUT="$RUNNER_TEMP/example-evidence-cpu"');
+                expect(text).toContain('node tools/verify/example-evidence-supervisor.test.cjs');
+                expect(text).toMatch(
+                    /if: always\(\)[\s\S]*?name: example-evidence-cpu-receipts[\s\S]*?path: \$\{\{ runner.temp \}\}\/example-evidence-cpu\//,
+                );
+            } else {
+                expect(text).not.toContain('example-evidence-supervisor.test.cjs');
+                expect(text).toContain('example-evidence-shutdown-policy.test.cjs');
+                expect(text).toContain('example-evidence-status.test.cjs');
+                expect(text).toMatch(/if: always\(\)[\s\S]*?actions\/upload-artifact@v4[\s\S]*?core-cpu\//);
+                expect(text).toMatch(/if: always\(\)[\s\S]*?actions\/upload-artifact@v4[\s\S]*?core-example-smoke\//);
+            }
         }
     });
     test('recomputes a complete primary proof and accepts real assets with empty UUIDs', () => {

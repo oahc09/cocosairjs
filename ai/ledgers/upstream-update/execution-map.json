@@ -1,0 +1,383 @@
+{
+  "schemaVersion": 1,
+  "manifest": "ai/ledgers/upstream-update/acceptance-manifest.json",
+  "policy": "Bindings do not change frozen dimensions, thresholds, scope or initial statuses. Prepared collectors are not execution evidence. Remaining harness coverage is disclosed separately from infrastructure.",
+  "cases": [
+    {
+      "caseId": "T01",
+      "workPackage": "U01",
+      "cpu": ["test/smoke/upstream-request-policy.test.ts"],
+      "fixture": "test/fixtures/upstream-request-policy/index.html",
+      "collector": "tools/verify/upstream-request-policy-browser.cjs",
+      "coverage": "prepared-not-executed",
+      "remaining": "18 real HTTP/provider/concurrency/cancellation cases prepared for three explicit browsers; not executed. Injected decoder ownership is not a claim of every native codec implementation."
+    },
+    {
+      "caseId": "T02",
+      "workPackage": "U01",
+      "cpu": ["test/smoke/upstream-request-policy.test.ts"],
+      "fixture": "test/fixtures/upstream-request-policy/index.html",
+      "collector": "tools/verify/upstream-request-policy-browser.cjs",
+      "coverage": "prepared-not-executed",
+      "remaining": "18 real HTTP/provider/concurrency/cancellation cases prepared for three explicit browsers; not executed. Injected decoder ownership is not a claim of every native codec implementation."
+    },
+    {
+      "caseId": "T03",
+      "workPackage": "U01",
+      "cpu": ["test/smoke/upstream-request-policy.test.ts"],
+      "fixture": "test/fixtures/upstream-request-policy/index.html",
+      "collector": "tools/verify/upstream-request-policy-browser.cjs",
+      "coverage": "prepared-not-executed",
+      "remaining": "18 real HTTP/provider/concurrency/cancellation cases prepared for three explicit browsers; not executed. Injected decoder ownership is not a claim of every native codec implementation."
+    },
+    {
+      "caseId": "T04",
+      "workPackage": "U01",
+      "cpu": ["test/smoke/upstream-request-policy.test.ts"],
+      "fixture": "test/fixtures/upstream-request-policy/index.html",
+      "collector": "tools/verify/upstream-request-policy-browser.cjs",
+      "coverage": "prepared-not-executed",
+      "remaining": "18 real HTTP/provider/concurrency/cancellation cases prepared for three explicit browsers; not executed. Injected decoder ownership is not a claim of every native codec implementation."
+    },
+    {
+      "caseId": "T05",
+      "workPackage": "U01",
+      "cpu": ["test/smoke/upstream-request-policy.test.ts"],
+      "fixture": "test/fixtures/upstream-request-policy/index.html",
+      "collector": "tools/verify/upstream-request-policy-browser.cjs",
+      "coverage": "prepared-not-executed",
+      "remaining": "18 real HTTP/provider/concurrency/cancellation cases prepared for three explicit browsers; not executed. Injected decoder ownership is not a claim of every native codec implementation."
+    },
+    {
+      "caseId": "T06",
+      "workPackage": "U01",
+      "cpu": ["test/smoke/upstream-request-policy.test.ts"],
+      "fixture": "test/fixtures/upstream-request-policy/index.html",
+      "collector": "tools/verify/upstream-request-policy-browser.cjs",
+      "coverage": "prepared-not-executed",
+      "remaining": "18 real HTTP/provider/concurrency/cancellation cases prepared for three explicit browsers; not executed. Injected decoder ownership is not a claim of every native codec implementation."
+    },
+    {
+      "caseId": "T07",
+      "workPackage": "U02",
+      "cpu": ["test/smoke/smoke-18-gltf-iridescence.test.ts"],
+      "fixture": "test/fixtures/upstream-material-transitions/index.html",
+      "collector": "tools/verify/upstream-material-transitions.cjs",
+      "coverage": "prepared-not-executed",
+      "remaining": "Ten IOR/texture mutation-versus-rebuild pixel pairs plus three independent texture/volume semantic pairs are executable for three browsers; no GPU observations yet."
+    },
+    {
+      "caseId": "T08",
+      "workPackage": "U02",
+      "cpu": ["test/smoke/smoke-18-gltf-iridescence.test.ts"],
+      "fixture": "test/fixtures/upstream-material-transitions/index.html",
+      "collector": "tools/verify/upstream-material-transitions.cjs",
+      "coverage": "prepared-not-executed",
+      "remaining": "Ten IOR/texture mutation-versus-rebuild pixel pairs plus three independent texture/volume semantic pairs are executable for three browsers; no GPU observations yet."
+    },
+    {
+      "caseId": "T09",
+      "workPackage": "U02",
+      "cpu": ["test/smoke/smoke-18-gltf-iridescence.test.ts"],
+      "fixture": "test/fixtures/upstream-material-transitions/index.html",
+      "collector": "tools/verify/upstream-material-transitions.cjs",
+      "coverage": "prepared-not-executed",
+      "remaining": "Ten IOR/texture mutation-versus-rebuild pixel pairs plus three independent texture/volume semantic pairs are executable for three browsers; no GPU observations yet."
+    },
+    {
+      "caseId": "T10",
+      "workPackage": "U03",
+      "cpu": [
+        "test/smoke/upstream-color-contract.test.ts",
+        "test/smoke/upstream-color-evidence.test.ts",
+        "test/smoke/upstream-depth-precision.test.ts"
+      ],
+      "fixture": "test/fixtures/upstream-color-contract/index.html",
+      "collector": "tools/verify/upstream-color-gpu.cjs",
+      "coverage": "prepared-not-executed",
+      "remaining": "Actual final-program, framebuffer/readback, depth-control and browser-specific rendering observations required."
+    },
+    {
+      "caseId": "T11",
+      "workPackage": "U03",
+      "cpu": [
+        "test/smoke/upstream-color-contract.test.ts",
+        "test/smoke/upstream-color-evidence.test.ts",
+        "test/smoke/upstream-depth-precision.test.ts"
+      ],
+      "fixture": "test/fixtures/upstream-color-contract/index.html",
+      "collector": "tools/verify/upstream-color-gpu.cjs",
+      "coverage": "prepared-not-executed",
+      "remaining": "Actual final-program, framebuffer/readback, depth-control and browser-specific rendering observations required."
+    },
+    {
+      "caseId": "T12",
+      "workPackage": "U03",
+      "cpu": [
+        "test/smoke/upstream-color-contract.test.ts",
+        "test/smoke/upstream-color-evidence.test.ts",
+        "test/smoke/upstream-depth-precision.test.ts"
+      ],
+      "fixture": "test/fixtures/upstream-color-contract/index.html",
+      "collector": "tools/verify/upstream-color-gpu.cjs",
+      "coverage": "prepared-not-executed",
+      "remaining": "Actual final-program, framebuffer/readback, depth-control and browser-specific rendering observations required."
+    },
+    {
+      "caseId": "T13",
+      "workPackage": "U04",
+      "cpu": ["test/smoke/upstream-state-isolation.test.ts", "test/smoke/render-dx-target-options.test.ts"],
+      "fixture": "test/fixtures/upstream-state-isolation/index.html",
+      "collector": "tools/verify/upstream-state-isolation.cjs",
+      "coverage": "prepared-not-executed",
+      "remaining": "Actual native browser results required. T16 transmission pixel/binding restoration is not covered by the ordinary target collector."
+    },
+    {
+      "caseId": "T14",
+      "workPackage": "U04",
+      "cpu": ["test/smoke/upstream-state-isolation.test.ts", "test/smoke/render-dx-target-options.test.ts"],
+      "fixture": "test/fixtures/upstream-state-isolation/index.html",
+      "collector": "tools/verify/upstream-state-isolation.cjs",
+      "coverage": "prepared-not-executed",
+      "remaining": "Actual native browser results required. T16 transmission pixel/binding restoration is not covered by the ordinary target collector."
+    },
+    {
+      "caseId": "T15",
+      "workPackage": "U04",
+      "cpu": ["test/smoke/upstream-state-isolation.test.ts", "test/smoke/render-dx-target-options.test.ts"],
+      "fixture": "test/fixtures/upstream-state-isolation/index.html",
+      "collector": "tools/verify/upstream-state-isolation.cjs",
+      "coverage": "prepared-not-executed",
+      "remaining": "Actual native browser results required. T16 transmission pixel/binding restoration is not covered by the ordinary target collector."
+    },
+    {
+      "caseId": "T16",
+      "workPackage": "U04",
+      "cpu": ["test/smoke/upstream-state-isolation.test.ts", "test/smoke/render-dx-target-options.test.ts"],
+      "fixture": "test/fixtures/upstream-material-transitions/index.html",
+      "collector": "tools/verify/upstream-material-transitions.cjs",
+      "coverage": "prepared-not-executed",
+      "remaining": "Disable/re-enable/destroy/recreate pixel pairs, exact bindings/layers restoration and native second-capture rejection are executable; no GPU observations yet."
+    },
+    {
+      "caseId": "T17",
+      "workPackage": "U05",
+      "cpu": [
+        "test/smoke/upstream-skinning-instance-lifecycle.test.ts",
+        "test/smoke/upstream-skinning-oracle.test.ts",
+        "test/smoke/upstream-lifecycle-settlement-protocol.test.ts"
+      ],
+      "fixture": "test/fixtures/upstream-skinning/index.html",
+      "collector": "tools/verify/upstream-skinning-browser.cjs",
+      "coverage": "prepared-not-executed",
+      "remaining": "Dedicated three-browser checkpoints, native GL handle lifetime and terminal cleanup collector has passed focused CPU/protocol checks; not browser-executed."
+    },
+    {
+      "caseId": "T18",
+      "workPackage": "U05",
+      "cpu": [
+        "test/smoke/upstream-skinning-instance-lifecycle.test.ts",
+        "test/smoke/upstream-skinning-oracle.test.ts",
+        "test/smoke/upstream-lifecycle-settlement-protocol.test.ts"
+      ],
+      "fixture": "test/fixtures/upstream-skinning/index.html",
+      "collector": "tools/verify/upstream-skinning-browser.cjs",
+      "coverage": "prepared-not-executed",
+      "remaining": "Dedicated three-browser checkpoints, native GL handle lifetime and terminal cleanup collector has passed focused CPU/protocol checks; not browser-executed."
+    },
+    {
+      "caseId": "T19",
+      "workPackage": "U05",
+      "cpu": [
+        "test/smoke/upstream-skinning-instance-lifecycle.test.ts",
+        "test/smoke/upstream-skinning-oracle.test.ts",
+        "test/smoke/upstream-lifecycle-settlement-protocol.test.ts"
+      ],
+      "fixture": "test/fixtures/upstream-skinning/index.html",
+      "collector": "tools/verify/upstream-skinning-browser.cjs",
+      "coverage": "prepared-not-executed",
+      "remaining": "Dedicated three-browser checkpoints, native GL handle lifetime and terminal cleanup collector has passed focused CPU/protocol checks; not browser-executed."
+    },
+    {
+      "caseId": "T20",
+      "workPackage": "U05",
+      "cpu": [
+        "test/smoke/upstream-skinning-instance-lifecycle.test.ts",
+        "test/smoke/upstream-skinning-oracle.test.ts",
+        "test/smoke/upstream-lifecycle-settlement-protocol.test.ts"
+      ],
+      "fixture": "test/fixtures/upstream-skinning/index.html",
+      "collector": "tools/verify/upstream-skinning-browser.cjs",
+      "coverage": "prepared-not-executed",
+      "remaining": "Dedicated three-browser checkpoints, native GL handle lifetime and terminal cleanup collector has passed focused CPU/protocol checks; not browser-executed."
+    },
+    {
+      "caseId": "T21",
+      "workPackage": "U05",
+      "cpu": [
+        "test/smoke/upstream-skinning-instance-lifecycle.test.ts",
+        "test/smoke/upstream-skinning-oracle.test.ts",
+        "test/smoke/upstream-lifecycle-settlement-protocol.test.ts"
+      ],
+      "fixture": "test/fixtures/upstream-skinning/index.html",
+      "collector": "tools/verify/upstream-skinning-browser.cjs",
+      "coverage": "prepared-not-executed",
+      "remaining": "Dedicated three-browser checkpoints, native GL handle lifetime and terminal cleanup collector has passed focused CPU/protocol checks; not browser-executed."
+    },
+    {
+      "caseId": "T22",
+      "workPackage": "U06",
+      "cpu": ["tools/verify/consumer-acceptance.cjs", "tools/verify/upstream-sdk-contracts.test.cjs"],
+      "fixture": "test/fixtures/upstream-sdk/browser-main.js",
+      "collector": "tools/verify/tarball-browser-consumer.cjs",
+      "coverage": "prepared-not-executed",
+      "remaining": "Installed package import-map, CSP/nested/minified and pinned Vite development/production support three explicit browsers; CPU strict-type/math reports remain separate, no browser observations yet."
+    },
+    {
+      "caseId": "T23",
+      "workPackage": "U06",
+      "cpu": ["tools/verify/consumer-acceptance.cjs", "tools/verify/upstream-sdk-contracts.test.cjs"],
+      "fixture": "test/fixtures/upstream-sdk/browser-main.js",
+      "collector": "tools/verify/tarball-browser-consumer.cjs",
+      "coverage": "prepared-not-executed",
+      "remaining": "Installed package import-map, CSP/nested/minified and pinned Vite development/production support three explicit browsers; CPU strict-type/math reports remain separate, no browser observations yet."
+    },
+    {
+      "caseId": "T24",
+      "workPackage": "U06",
+      "cpu": ["tools/verify/consumer-acceptance.cjs", "tools/verify/upstream-sdk-contracts.test.cjs"],
+      "fixture": "test/fixtures/upstream-sdk/browser-main.js",
+      "collector": "tools/verify/tarball-browser-consumer.cjs",
+      "coverage": "prepared-not-executed",
+      "remaining": "Installed package import-map, CSP/nested/minified and pinned Vite development/production support three explicit browsers; CPU strict-type/math reports remain separate, no browser observations yet."
+    },
+    {
+      "caseId": "T25",
+      "workPackage": "U06",
+      "cpu": ["tools/verify/consumer-acceptance.cjs", "tools/verify/upstream-sdk-contracts.test.cjs"],
+      "fixture": "test/fixtures/upstream-sdk/browser-main.js",
+      "collector": "tools/verify/tarball-browser-consumer.cjs",
+      "coverage": "prepared-not-executed",
+      "remaining": "Installed package import-map, CSP/nested/minified and pinned Vite development/production support three explicit browsers; CPU strict-type/math reports remain separate, no browser observations yet."
+    },
+    {
+      "caseId": "T26",
+      "workPackage": "U06",
+      "cpu": ["tools/verify/consumer-acceptance.cjs", "tools/verify/upstream-sdk-contracts.test.cjs"],
+      "fixture": "test/fixtures/upstream-sdk/browser-main.js",
+      "collector": "tools/verify/tarball-browser-consumer.cjs",
+      "coverage": "prepared-not-executed",
+      "remaining": "Installed package import-map, CSP/nested/minified and pinned Vite development/production support three explicit browsers; CPU strict-type/math reports remain separate, no browser observations yet."
+    },
+    {
+      "caseId": "T27",
+      "workPackage": "U07",
+      "cpu": ["test/smoke/upstream-readiness-observer.test.ts"],
+      "fixture": "test/fixtures/upstream-readiness/index.html",
+      "collector": "tools/verify/upstream-readiness.cjs",
+      "coverage": "prepared-not-executed",
+      "remaining": "All five contexts need real first-compositor receipts, program/submission observations, timeout/failure cleanup and frozen business state."
+    },
+    {
+      "caseId": "T28",
+      "workPackage": "U07",
+      "cpu": ["test/smoke/upstream-readiness-observer.test.ts"],
+      "fixture": "test/fixtures/upstream-readiness/index.html",
+      "collector": "tools/verify/upstream-readiness.cjs",
+      "coverage": "prepared-not-executed",
+      "remaining": "All five contexts need real first-compositor receipts, program/submission observations, timeout/failure cleanup and frozen business state."
+    },
+    {
+      "caseId": "T29",
+      "workPackage": "U07",
+      "cpu": ["test/smoke/upstream-readiness-observer.test.ts"],
+      "fixture": "test/fixtures/upstream-readiness/index.html",
+      "collector": "tools/verify/upstream-readiness.cjs",
+      "coverage": "prepared-not-executed",
+      "remaining": "All five contexts need real first-compositor receipts, program/submission observations, timeout/failure cleanup and frozen business state."
+    },
+    {
+      "caseId": "T30",
+      "workPackage": "U08",
+      "cpu": [
+        "tools/verify/upstream-depth-experiments.test.cjs",
+        "tools/verify/upstream-probe-sh-reference.test.cjs",
+        "test/smoke/upstream-experiments-contract.test.ts",
+        "test/smoke/upstream-probe-sh-storage.test.ts"
+      ],
+      "fixture": "test/fixtures/upstream-depth-experiments/index.html",
+      "collector": "tools/verify/upstream-experiment-browser.cjs",
+      "coverage": "prepared-not-executed",
+      "remaining": "Real depth/native-depth/serial-atlas fixture execution protocol has passed focused CPU/protocol checks; GPU and performance still unexecuted. CPU SH convolution is not labelled GPU convolution. Source-only N/A decisions do not complete other research."
+    },
+    {
+      "caseId": "T31",
+      "workPackage": "U08",
+      "cpu": [
+        "tools/verify/upstream-depth-experiments.test.cjs",
+        "tools/verify/upstream-probe-sh-reference.test.cjs",
+        "test/smoke/upstream-experiments-contract.test.ts",
+        "test/smoke/upstream-probe-sh-storage.test.ts"
+      ],
+      "fixture": "test/fixtures/upstream-depth-experiments/index.html",
+      "collector": "tools/verify/upstream-experiment-browser.cjs",
+      "coverage": "prepared-not-executed",
+      "remaining": "Real depth/native-depth/serial-atlas fixture execution protocol has passed focused CPU/protocol checks; GPU and performance still unexecuted. CPU SH convolution is not labelled GPU convolution. Source-only N/A decisions do not complete other research."
+    },
+    {
+      "caseId": "T32",
+      "workPackage": "U08",
+      "cpu": [
+        "tools/verify/upstream-depth-experiments.test.cjs",
+        "tools/verify/upstream-probe-sh-reference.test.cjs",
+        "test/smoke/upstream-experiments-contract.test.ts",
+        "test/smoke/upstream-probe-sh-storage.test.ts"
+      ],
+      "fixture": "test/fixtures/upstream-experiments-transparency/index.html",
+      "collector": "tools/verify/upstream-experiment-browser.cjs",
+      "coverage": "prepared-not-executed",
+      "remaining": "Real depth/native-depth/serial-atlas fixture execution protocol has passed focused CPU/protocol checks; GPU and performance still unexecuted. CPU SH convolution is not labelled GPU convolution. Source-only N/A decisions do not complete other research."
+    },
+    {
+      "caseId": "T33",
+      "workPackage": "U08",
+      "cpu": [
+        "tools/verify/upstream-depth-experiments.test.cjs",
+        "tools/verify/upstream-probe-sh-reference.test.cjs",
+        "test/smoke/upstream-experiments-contract.test.ts",
+        "test/smoke/upstream-probe-sh-storage.test.ts"
+      ],
+      "fixture": "test/fixtures/upstream-probe-capture/upstream-probe-capture.html",
+      "collector": "tools/verify/upstream-experiment-browser.cjs",
+      "coverage": "prepared-not-executed",
+      "remaining": "Real depth/native-depth/serial-atlas fixture execution protocol has passed focused CPU/protocol checks; GPU and performance still unexecuted. CPU SH convolution is not labelled GPU convolution. Source-only N/A decisions do not complete other research."
+    },
+    {
+      "caseId": "T34",
+      "workPackage": "U09",
+      "cpu": ["test/smoke/upstream-showroom-contract.test.ts"],
+      "fixture": "examples/material-inspection-showroom/index.html",
+      "collector": "tools/verify/upstream-showroom.cjs",
+      "coverage": "prepared-not-executed",
+      "remaining": "Three real pointer/DPR profiles, rendering, cancellation/retry, 30 cycles and terminal cleanup remain unexecuted. Mobile viewport is not physical Android acceptance."
+    },
+    {
+      "caseId": "T35",
+      "workPackage": "U09",
+      "cpu": ["test/smoke/upstream-showroom-contract.test.ts"],
+      "fixture": "examples/material-inspection-showroom/index.html",
+      "collector": "tools/verify/upstream-showroom.cjs",
+      "coverage": "prepared-not-executed",
+      "remaining": "Three real pointer/DPR profiles, rendering, cancellation/retry, 30 cycles and terminal cleanup remain unexecuted. Mobile viewport is not physical Android acceptance."
+    },
+    {
+      "caseId": "T36",
+      "workPackage": "U10",
+      "cpu": ["tools/verify/upstream-gates.test.cjs"],
+      "fixture": "tools/verify/upstream-gates.test.cjs",
+      "collector": "tools/verify/upstream-gates.cjs",
+      "coverage": "cpu-validator-only",
+      "remaining": "Synthetic negative admission tests validate the tool, not rendering/real model performance or full campaign completion."
+    }
+  ]
+}

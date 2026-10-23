@@ -131,6 +131,7 @@ jobs:
           node tools/verify/ci-scope.cjs time-start typecheck
           trap 'status=$?; node tools/verify/ci-scope.cjs time-end typecheck "$status"; exit "$status"' EXIT
           npm run typecheck
+          npx tsc -p tools/verify/upstream-update.tsconfig.json
           npx tsc -p tools/verify/sdk-recipes.tsconfig.json
           if [ "$TIMELINE" = true ]; then npx tsc -p tools/verify/interactive-timeline-browser.tsconfig.json; fi
           if [ "$EVIDENCE" = true ]; then npx tsc -p tools/verify/interactive-improvement-browser.tsconfig.json; fi
@@ -150,7 +151,10 @@ jobs:
           node --test tools/verify/example-asset-lifecycle.test.cjs 2>&1 | tee "$RUNNER_TEMP/core-cpu/asset-lifecycle.log"
           node --test tools/verify/example-evidence-status.test.cjs 2>&1 | tee "$RUNNER_TEMP/core-cpu/status-admission.log"
           EXAMPLE_SHUTDOWN_CPU_OUT="$RUNNER_TEMP/core-cpu/shutdown-policy" node --test tools/verify/example-evidence-shutdown-policy.test.cjs 2>&1 | tee "$RUNNER_TEMP/core-cpu/shutdown-policy.log"
-          npx jest --runInBand --no-cache --runTestsByPath test/smoke/webgl2-state-audit.test.ts test/smoke/webgl2-gfx-command-contracts.test.ts test/smoke/smoke-01-bootstrap.test.ts test/smoke/smoke-02-scene.test.ts test/smoke/smoke-03-runtime-asset.test.ts test/smoke/audio-cancellation.test.ts test/smoke/audio-readiness.test.ts test/smoke/dynamic-atlas-ownership.test.ts test/smoke/audio-cancellation-harness.test.ts test/smoke/smoke-example-evidence-integration.test.ts 2>&1 | tee "$RUNNER_TEMP/core-cpu/unit-tests.log"
+          npx jest --runInBand --no-cache --runTestsByPath test/smoke/webgl2-state-audit.test.ts test/smoke/webgl2-gfx-command-contracts.test.ts test/smoke/smoke-01-bootstrap.test.ts test/smoke/smoke-02-scene.test.ts test/smoke/smoke-03-runtime-asset.test.ts test/smoke/audio-cancellation.test.ts test/smoke/audio-readiness.test.ts test/smoke/dynamic-atlas-ownership.test.ts test/smoke/audio-cancellation-harness.test.ts test/smoke/smoke-example-evidence-integration.test.ts test/smoke/smoke-example-specialized-probes.test.ts 2>&1 | tee "$RUNNER_TEMP/core-cpu/unit-tests.log"
+          # Focused upstream contracts stay CPU-only here; research GPU campaigns remain opt-in.
+          node --test tools/benchmark/upstream/prepare-inputs.test.cjs tools/benchmark/upstream/reference-contracts.test.cjs tools/benchmark/upstream/references/request-reference.test.cjs tools/benchmark/upstream/references/three-runner.test.cjs tools/verify/upstream-sdk-compatibility.test.cjs tools/verify/upstream-browser-lifecycle.test.cjs tools/examples/type-only-class-exports.test.cjs tools/build/upstream-dts-cache.test.cjs tools/build/upstream-dts-surface.test.cjs tools/verify/upstream-sdk-contracts.test.cjs tools/verify/upstream-skinning-observations.test.cjs tools/verify/upstream-skinning-browser.test.cjs tools/verify/upstream-experiment-browser.test.cjs tools/verify/upstream-depth-experiments.test.cjs tools/verify/upstream-experiments-observations.test.cjs tools/verify/upstream-probe-sh-reference.test.cjs tools/verify/upstream-gates.test.cjs tools/verify/upstream-ci-contract.test.cjs tools/verify/upstream-material-transitions-observations.test.cjs tools/verify/upstream-request-policy-browser.test.cjs 2>&1 | tee "$RUNNER_TEMP/core-cpu/upstream-node.log"
+          npx jest --runInBand --runTestsByPath test/smoke/upstream-request-policy.test.ts test/smoke/smoke-18-gltf-iridescence.test.ts test/smoke/upstream-color-contract.test.ts test/smoke/upstream-color-evidence.test.ts test/smoke/upstream-depth-precision.test.ts test/smoke/upstream-state-isolation.test.ts test/smoke/upstream-skinning-instance-lifecycle.test.ts test/smoke/upstream-skinning-oracle.test.ts test/smoke/upstream-lifecycle-settlement-protocol.test.ts test/smoke/upstream-readiness-observer.test.ts test/smoke/upstream-experiments-contract.test.ts test/smoke/upstream-probe-sh-storage.test.ts test/smoke/upstream-showroom-contract.test.ts --json --outputFile="$RUNNER_TEMP/core-cpu/upstream-jest.json" 2>&1 | tee "$RUNNER_TEMP/core-cpu/upstream-jest.log"
       - name: Run SDK and math CPU regressions before builds
         id: sdk_cpu
         if: steps.classify.outputs.code == 'true'
@@ -314,6 +318,7 @@ jobs:
             fi
             timeout --signal=TERM --kill-after=4s 174s node tools/verify/run-example-evidence-campaign.cjs --freeze="$campaign/freeze.json" --id="$id" --out="$campaign/attempts/$id/1" --execute-authorized 2>&1 | tee "$campaign/$id.log"
           done
+          timeout --signal=TERM --kill-after=4s 120s node tools/verify/upstream-state-isolation.cjs --out="$campaign/upstream-state" 2>&1 | tee "$campaign/upstream-state.log"
           echo 'Five core examples passed. This is partial smoke coverage; no full campaign was published.' >> "$GITHUB_STEP_SUMMARY"
       - name: Verify real browser recipes and math-first bootstrap
         id: recipes
