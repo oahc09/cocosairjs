@@ -1,11 +1,11 @@
 {
   "schema": "cocosair.box3d.ex01.source-identity.v1",
   "status": "IN_PROGRESS",
-  "createdAt": "2026-10-23T18:39:06.379723+00:00",
-  "baseCommit": "ce69f582115411a35f55680d29a9b2df0d15ef46",
+  "createdAt": "2026-10-23T19:26:29.815854+00:00",
+  "baseCommit": "7aa47f04f70ebbfc9811ab969742ffb60e45076a",
   "runtimeExecuted": false,
-  "previousSourceIdentitySha256": "aae10dfec1f129f8aee13811c8a4b5f6ca1e97173c4e5ae73be40b9ef340b5d9",
-  "increment": "Real convex MeshCollider tetrahedron source and byteOffset-aware geometry; current public runtime/browser qualification pending. Prior63 Firefox observations remain separate historical evidence.",
+  "previousSourceIdentitySha256": "acb38a7b50d9c3eec2a86dea88ba35d81cde6b38bf6c0fc2e7b21b01994a8e15",
+  "increment": "Real Hull source has finite source73 Node component evidence and matching production ESM/DTS build209; current preview/browser acceptance pending, formal Gates unchanged. Prior63 Firefox evidence remains historical.",
   "reference": {
     "path": "ai/plans/box3d-v1.2-reference.md",
     "sha256": "17b4dcf0d8acbe0ed72f81ab4d3fc53c6a51f705d573699f0d50137e4bf00c46",
@@ -19,8 +19,8 @@
     },
     {
       "path": "examples/box3d-rigidbody-playground/README.md",
-      "bytes": 13716,
-      "sha256": "d5421105400932a2973123536933917ae3a92675d801a617ec863073498ea43f"
+      "bytes": 14037,
+      "sha256": "2b38230ec03ed4eb2b95d93f5bc9807fd03eea1fbce2b8ea9c3bbe0614c11df9"
     },
     {
       "path": "examples/box3d-rigidbody-playground/index.html",
