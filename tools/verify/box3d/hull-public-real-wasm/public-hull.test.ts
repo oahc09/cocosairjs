@@ -573,7 +573,7 @@ test(`actual Cocos Hull ${fixture.case}: real geometry and explicit fault-bounda
             expect(close.status).toBe('failed');
             expect(close.failures).toHaveLength(1);
             expect(close.failures[0].label).toBe('game-clock-terminal');
-            expect(close.failures[0].message).toContain('operation forbidden during faulted');
+            expect(close.failures[0].message).toMatch(/^Error: \[AIR_E_BOX3D_WORLD_FAULTED\]/);
         }
         expect(close.physicsPreparation?.status).toBe('closed');
         expect(observed.calls.filter((row: any) => row.name === 'destroyWorld' && row.returned)).toHaveLength(1);
@@ -583,9 +583,21 @@ test(`actual Cocos Hull ${fixture.case}: real geometry and explicit fault-bounda
         expect(loader.status).toBe('DISPOSED');
         expect(loader.cleanupErrors).toHaveLength(0);
         expect(observed.fallbackCleanup).toBeUndefined();
+        expect(owner.phase).toBe('closed');
+        expect(owner.bodies).toBe(0);
+        expect(owner.unresolvedNativeBodies).toBe(0);
+        expect(owner.components).toBe(0);
+        expect(owner.componentActivityObservers).toBe(0);
+        expect(owner.materials).toBe(0);
+        expect(owner.materialObserverLeases).toBe(0);
+        expect(owner.unresolvedMaterialScopes).toBe(0);
+        expect(owner.activeTemporaryScopes).toBe(0);
+        expect(owner.pendingCommands).toBe(0);
         expect(owner.targets.guards).toBe(0);
         expect(owner.targets.active).toBe(0);
         expect(owner.targets.protected).toBe(0);
+        expect(owner.targets.unresolved).toBe(0);
+        expect(owner.cleanup.hasFailure).toBe(false);
         expect(owner.nativeOwnership).toBe('released');
         fixture.checkpoint('N6/N7-actual-app-close-zero-native-core-and-bridge-resources', {
             close,
