@@ -36,6 +36,22 @@ function reject(name, action, pattern) {
 try {
     report.sourcesBefore = verifySources();
     const plan = readPatchPlan();
+    const accumulated = new Map();
+    for (const item of plan.lock.patches) {
+        const changedFiles = applyExactPatch(
+            readFileSync(resolve(root, item.path)),
+            item.files,
+            (path) => accumulated.get(path) ?? readFileSync(resolve(root, 'vendor/box3d/core', path)),
+        );
+        for (const [path, bytes] of changedFiles) accumulated.set(path, bytes);
+        report.checks.push({
+            name: `all-chain-exact-application:${item.id}`,
+            expected: 'PASS',
+            observed: 'PASS',
+            patchSha256: item.sha256,
+            files: item.files.map(({ path, afterSha256 }) => ({ path, afterSha256 })),
+        });
+    }
     const patch = plan.lock.patches[0];
     const read = (path) => readFileSync(resolve(root, path));
     const source = read(`vendor/box3d/core/${patch.files[0].path}`);
@@ -260,7 +276,7 @@ try {
     report.inputHashes = [
         'tools/physics/box3d/versions.lock.json',
         'tools/physics/box3d/patches/lock.json',
-        patch.path,
+        ...plan.lock.patches.map((item) => item.path),
         'tools/physics/box3d/patch-intake.mjs',
         'tools/physics/box3d/verify-sources.mjs',
         'src/air/physics/box3d/binding/facade.mjs',

@@ -22,13 +22,16 @@ try {
     report.before = verifySources();
     const plan = readPatchPlan();
     const patch = plan.lock.patches[1];
-    assert.equal(plan.lock.patches.length, 2);
+    assert.deepEqual(
+        plan.lock.patches.map((item) => item.id),
+        ['sse2-loadv-float-alignment-v1', 'contact-generation-geometry-v2', 'checked-hull-cooking-v1'],
+    );
     const read = (path) => readFileSync(resolve(root, path));
     const source = (path) => read('vendor/box3d/core/' + path);
     check('exact-second-patch-five-file-intake', () =>
         assert.equal(applyExactPatch(read(patch.path), patch.files, source).size, 5),
     );
-    check('complete-two-patch-staging', () => stageCore(resolve(out, 'staged-core')));
+    check('complete-three-patch-staging', () => stageCore(resolve(out, 'staged-core')));
     for (const kind of ['patch', 'before', 'after', 'base', 'order'])
         check(
             `reject-${kind}`,

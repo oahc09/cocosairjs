@@ -22,6 +22,7 @@ import {
     BoxCollider,
     SphereCollider,
     CapsuleCollider,
+    MeshCollider,
     EAxisDirection,
     Color,
     Vec3,
@@ -32,6 +33,7 @@ import {
     isValid,
 } from 'cocosair';
 import { CAPSULE_DIMENSIONS, capsuleVerticalExtent } from './capsule-geometry.js';
+import { hullMeshGeometry, hullMinimumOffsetY } from './hull-geometry.js';
 import { createSpringDrag } from './spring-drag.js';
 import { readBackendObservation } from './backend-observation.js';
 import type { BackendObservation } from './backend-observation.js';
@@ -60,7 +62,7 @@ const CONFIG = Object.freeze({
     },
 });
 
-type ProjectileKind = 'sphere' | 'capsule';
+type ProjectileKind = 'sphere' | 'capsule' | 'hull';
 type BodyEntry = { node: Node; body: RigidBody; kind: 'brick' | ProjectileKind; index: number };
 type Intent = 'toggle' | 'reset' | 'launch' | 'demo' | 'parameters';
 type Phase = 'boot' | 'ready' | 'running' | 'paused' | 'resetting' | 'closing' | 'closed' | 'error';
@@ -85,7 +87,8 @@ const errors: string[] = [];
 const eventLog: { frame: number; action: string; detail: unknown }[] = [];
 const selectedProjectile = (): ProjectileKind => {
     const kind = byId<HTMLSelectElement>('projectile-shape').value;
-    if (kind !== 'sphere' && kind !== 'capsule') throw new Error(`Unsupported EX01 projectile: ${kind}`);
+    if (kind !== 'sphere' && kind !== 'capsule' && kind !== 'hull')
+        throw new Error(`Unsupported EX01 projectile: ${kind}`);
     return kind;
 };
 const readParameters = () => ({
@@ -124,6 +127,7 @@ let nativeIdentity: unknown = null;
 let diagnosticWorld: unknown = null;
 let backendObservation: BackendObservation | null = null;
 let capsuleMesh: ReturnType<typeof utils.createMesh>;
+let hullMesh: ReturnType<typeof utils.createMesh>;
 let ballMesh: ReturnType<typeof utils.createMesh>;
 let brickMesh: ReturnType<typeof utils.createMesh>;
 let ballMaterial: Material;
@@ -305,19 +309,24 @@ function launchProjectile(kind: ProjectileKind = selectedProjectile()): void {
     const spawn = CONFIG.ball.spawn;
     const offsets = [0, -1.7, 1.7];
     const node = nodeAt(
-        `${kind === 'capsule' ? 'Capsule' : 'Sphere'}-${generation}-${shotCount}`,
+        `${kind === 'hull' ? 'Hull' : kind === 'capsule' ? 'Capsule' : 'Sphere'}-${generation}-${shotCount}`,
         spawn[0] + offsets[shotCount % offsets.length],
         spawn[1],
         spawn[2],
     );
-    visual(node, kind === 'capsule' ? capsuleMesh : ballMesh, ballMaterial);
+    visual(node, kind === 'hull' ? hullMesh : kind === 'capsule' ? capsuleMesh : ballMesh, ballMaterial);
     const body = node.addComponent(RigidBody);
     body.type = ERigidBodyType.DYNAMIC;
     body.mass = readParameters().mass;
     body.allowSleep = true;
     body.linearDamping = 0.01;
     body.angularDamping = 0.03;
-    if (kind === 'capsule') {
+    if (kind === 'hull') {
+        const collider = node.addComponent(MeshCollider);
+        collider.convex = true;
+        collider.mesh = hullMesh;
+        collider.sharedMaterial = surface;
+    } else if (kind === 'capsule') {
         const collider = node.addComponent(CapsuleCollider);
         collider.radius = CONFIG.capsule.radius;
         collider.cylinderHeight = CONFIG.capsule.cylinderHeight;
@@ -340,7 +349,9 @@ function launchProjectile(kind: ProjectileKind = selectedProjectile()): void {
         mass: body.mass,
         position: [node.position.x, node.position.y, node.position.z],
     });
-    tell(`${kind === 'capsule' ? '胶囊' : '球体'} ${shotCount} 已创建。下一引擎更新提交一次冲量，固定步消费。`);
+    tell(
+        `${kind === 'hull' ? '凸包' : kind === 'capsule' ? '胶囊' : '球体'} ${shotCount} 已创建。下一引擎更新提交一次冲量，固定步消费。`,
+    );
 }
 function updateParameters(): void {
     springDrag?.cancel();
@@ -426,6 +437,7 @@ function minimumY(entry: BodyEntry): number {
     if (entry.kind === 'sphere') return position.y - CONFIG.ball.radius;
     const q = entry.node.worldRotation;
     if (entry.kind === 'capsule') return position.y - capsuleVerticalExtent(q);
+    if (entry.kind === 'hull') return position.y + hullMinimumOffsetY(q);
     const wall = CONFIG.wall;
     // Vertical extent of the actual rotated box, not a center-only ground check.
     const extent =
@@ -534,6 +546,7 @@ function sample(): void {
         bricks: bricks.length,
         spheres: projectiles.filter((entry) => entry.kind === 'sphere').length,
         capsules: projectiles.filter((entry) => entry.kind === 'capsule').length,
+        hulls: projectiles.filter((entry) => entry.kind === 'hull').length,
         awake,
         displaced,
         finiteTransforms: finite,
@@ -671,7 +684,8 @@ function snapshot(): Record<string, unknown> {
         ],
         unfinishedOriginalRequirements: [
             'capsule: source integrated; current-build native/browser verification pending',
-            'hull',
+            'hull: actual MeshCollider source integrated; current candidate runtime/browser verification pending',
+            'Hull dragging: not yet enabled; no assumed arbitrary hull COM',
             'raycast pick/visible alignment: source integrated, native/browser verification pending',
             'fixed-tick spring/release: zero-center single Box/Sphere/Capsule candidate only, unverified',
             'arbitrary body/compound/nonzero-COM dragging and throwing',
@@ -775,7 +789,8 @@ async function main(): Promise<void> {
     capsuleMesh = utils.createMesh(
         primitives.capsule(CONFIG.capsule.radius, CONFIG.capsule.radius, CONFIG.capsule.totalHeight),
     );
-    assets.push(brickMesh, ballMesh, capsuleMesh);
+    hullMesh = utils.createMesh(hullMeshGeometry());
+    assets.push(brickMesh, ballMesh, capsuleMesh, hullMesh);
     for (const color of [
         [204, 122, 85],
         [223, 147, 100],

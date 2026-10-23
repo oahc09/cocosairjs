@@ -76,9 +76,17 @@ assert.ok(
 );
 const build = read('tools/physics/box3d/build.mjs'),
     inputs = [...build.match(/const inputs = \[([\s\S]*?)\];/)[1].matchAll(/'([^']+)'/g)].map((m) => m[1]);
-assert.equal(inputs.length, 57);
-assert.equal(new Set(inputs).size, 57);
+assert.equal(inputs.length, 65);
+assert.equal(new Set(inputs).size, 65);
 for (const path of [
+    'tools/physics/box3d/native/hull_bridge.c',
+    'tools/physics/box3d/native/hull_bridge.h',
+    'tools/physics/box3d/native/hull_contract.c',
+    'tools/physics/box3d/native/hull_core_contract.c',
+    'tools/physics/box3d/native/hull_legacy_fingerprint.c',
+    'tools/physics/box3d/hull-bridge-contract.md',
+    'tools/physics/box3d/hull-legacy-contract.mjs',
+    'tools/physics/box3d/patches/checked-hull-cooking.patch',
     'tools/physics/box3d/native/query_bridge.c',
     'tools/physics/box3d/native/query_bridge.h',
     'tools/physics/box3d/capsule-bridge-contract.md',

@@ -6,6 +6,7 @@
 #include "motion_bridge.h"
 #include "command_bridge.h"
 #include "query_bridge.h"
+#include "hull_bridge.h"
 
 #ifdef __cplusplus
 extern "C" {

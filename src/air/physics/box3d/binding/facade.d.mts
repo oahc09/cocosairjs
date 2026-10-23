@@ -171,6 +171,10 @@ export interface Box3DFoundation {
         density?: number,
         sensor?: boolean,
     ): Box3DId;
+    /** Actual temporary native cook/topology validation without creating body or shape. */
+    validateHull(world: Box3DWorld, positions: ArrayLike<number>): void;
+    /** Native convex envelope of all copied body-local XYZ points; no box or reduced-hull fallback. */
+    createHull(body: Box3DId, positions: ArrayLike<number>, density?: number, sensor?: boolean): Box3DId;
     setLinearVelocity(body: Box3DId, velocity: ArrayLike<number>): void;
     applyCenterImpulse(body: Box3DId, impulse: ArrayLike<number>): void;
     createSphere(body: Box3DId, radius: number, density?: number): Box3DId;

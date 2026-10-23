@@ -160,6 +160,8 @@ export function requireComponentBinding(binding: Box3DFoundation): Box3DComponen
         'createOffsetBox',
         'createOffsetSphere',
         'createOffsetCapsule',
+        'createHull',
+        'validateHull',
         'destroyShape',
         'configureShapeEvents',
         'getShapeFilter',

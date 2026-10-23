@@ -6,7 +6,7 @@ import { resolve, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { root, sha256, verifySources } from './verify-sources.mjs';
 import { inspectWasmMemory } from './verify-wasm.mjs';
-import { readPatchPlan, verifyStagedCore } from './patch-intake.mjs';
+import { readPatchPlan, validatePatchLock, verifyStagedCore } from './patch-intake.mjs';
 
 const dir = resolve(process.argv[2]);
 const reportPath = resolve(dir, 'artifact-audit.raw.json');
@@ -18,8 +18,8 @@ const receipt = json('build-receipt.json');
 assert.equal(receipt.status, 'PASS');
 assert.equal(receipt.kind, 'st-simd-wasm');
 assert.ok(receipt.commands.length >= 21 && receipt.commands.every((c) => c.exitCode === 0 && !c.error));
-assert.equal(receipt.inputHashes.length, 57);
-assert.equal(new Set(receipt.inputHashes.map((input) => input.path)).size, 57);
+assert.equal(receipt.inputHashes.length, 65);
+assert.equal(new Set(receipt.inputHashes.map((input) => input.path)).size, 65);
 assert.equal(receipt.motionSourceControls.status, 'PASS_SOURCE_CONTROLS_ONLY');
 assert.equal(receipt.commandSourceControls.status, 'PASS_SOURCE_CONTROLS_ONLY');
 for (const input of receipt.inputHashes) {
@@ -50,6 +50,10 @@ const expectedSources = [
     'tools/physics/box3d/native/motion_bridge.c',
     'tools/physics/box3d/native/command_bridge.c',
     'tools/physics/box3d/native/query_bridge.c',
+    'tools/physics/box3d/native/hull_bridge.c',
+    'tools/physics/box3d/native/hull_contract.c',
+    'tools/physics/box3d/native/hull_core_contract.c',
+    'tools/physics/box3d/native/hull_legacy_fingerprint.c',
     'tools/physics/box3d/native/capsule_contract.c',
     'tools/physics/box3d/native/query_contract.c',
     'tools/physics/box3d/native/command_contract.c',
@@ -543,6 +547,93 @@ for (const filename of ['air_box3d_command_contract.cjs', 'wasm-command-contract
     assert.ok(
         receipt.commands.some((entry) => entry.args.some((arg) => arg.endsWith(filename)) && entry.exitCode === 0),
     );
+const nativeHull = json('native-hull-contract.raw.json');
+assert.equal(nativeHull.status, 'PASS');
+assert.equal(nativeHull.pointerBytes, 4);
+assert.deepEqual(nativeHull, receipt.hullContract);
+for (const check of [
+    'pureGeometryValidation',
+    'trueTetraMassInertia',
+    'nonBoxRayAndDebug',
+    'ordinaryFailureNoWrite',
+    'finiteAndDegenerateInputs',
+    'copiedInputLifetime',
+    'commandMotionCompatibility',
+    'raw256Points',
+    'exact128EdgeBoundary',
+    'derivedCapacityBoundary',
+    'sensor128Lifetimes',
+    'coreCleanup',
+])
+    assert.equal(nativeHull.checks[check], true, check);
+const nativeHullCore = json('native-hull-core-contract.raw.json');
+assert.equal(nativeHullCore.status, 'PASS');
+assert.equal(nativeHullCore.pointerBytes, 4);
+assert.deepEqual(nativeHullCore, receipt.hullCoreContract);
+for (const check of [
+    'realHullEquivalence',
+    'budgetSpikeRejected',
+    'strictMinOutsideBoundary',
+    'exactWorkspaceBoundary',
+])
+    assert.equal(nativeHullCore.checks[check], true, check);
+assert.ok(nativeHullCore.maximumPointCount > 128 && nativeHullCore.workBytes <= 2147483647);
+const legacyHull = json('hull-legacy-baseline/comparison.raw.json');
+assert.equal(legacyHull.status, 'PASS');
+assert.equal(legacyHull.kind, 'st-simd-wasm');
+assert.equal(legacyHull.mode, receipt.mode);
+assert.equal(
+    legacyHull.fixtureSha256,
+    sha256(readFileSync(resolve(root, 'tools/physics/box3d/native/hull_legacy_fingerprint.c'))),
+);
+assert.equal(legacyHull.patchedIdentity.patchChainSha256, manifest.patchChainSha256);
+assert.equal(legacyHull.patchedIdentity.schemaSha256, manifest.schemaSha256);
+assert.deepEqual(legacyHull.baselineIdentity.appliedPatches, manifest.appliedPatches.slice(0, -1));
+assert.ok(legacyHull.commands.length > 2 && legacyHull.commands.every((c) => c.exitCode === 0 && !c.error));
+assert.equal(legacyHull.outputs.byteEqual, true);
+assert.deepEqual(legacyHull.outputs.cases, ['tetra', 'prism', 'duplicates256']);
+assert.equal(sha256(read('hull-legacy-baseline/baseline.raw.txt')), legacyHull.outputs.baselineSha256);
+assert.equal(sha256(read('hull-legacy-baseline/patched.raw.txt')), legacyHull.outputs.patchedSha256);
+assert.equal(legacyHull.outputs.baselineSha256, legacyHull.outputs.patchedSha256);
+assert.equal(sha256(read('air_box3d_hull_legacy_fingerprint.cjs')), legacyHull.outputs.patchedExecutableSha256);
+assert.equal(sha256(read('hull-legacy-baseline/legacy-fingerprint.cjs')), legacyHull.outputs.baselineExecutableSha256);
+const legacyPlan = {
+    lock: json('hull-legacy-baseline/prefix-lock.json'),
+    patchChainSha256: legacyHull.baselineIdentity.patchChainSha256,
+    patchLockSha256: legacyHull.baselineIdentity.patchLockSha256,
+};
+assert.equal(sha256(read('hull-legacy-baseline/prefix-lock.json')), legacyPlan.patchLockSha256);
+assert.deepEqual(legacyPlan.lock.patches, manifest.appliedPatches.slice(0, -1));
+assert.equal(
+    validatePatchLock(legacyPlan.lock, manifest.coreSha, (path) => readFileSync(resolve(root, path))),
+    legacyPlan.patchChainSha256,
+);
+const legacyCoreDir = resolve(dir, 'hull-legacy-baseline/staged-core');
+const legacyCommands = json('hull-legacy-baseline/compile_commands.json');
+assert.deepEqual(
+    legacyCommands.map((c) => c.file).sort(),
+    [
+        ...readdirSync(resolve(legacyCoreDir, 'src'))
+            .filter((name) => name.endsWith('.c'))
+            .map((name) => resolve(legacyCoreDir, 'src', name)),
+        resolve(root, 'tools/physics/box3d/native/hull_legacy_fingerprint.c'),
+    ].sort(),
+);
+for (const command of legacyCommands) {
+    const flags = command.arguments.join(' ');
+    for (const flag of requiredFlags) assert.ok(flags.includes(flag), `Legacy baseline missing ${flag}`);
+    assert.ok(!forbiddenFlags.test(flags), command.file);
+    assert.equal(flags.includes('-DNDEBUG'), receipt.mode === 'Release', command.file);
+}
+
+assert.deepEqual(
+    verifyStagedCore(resolve(dir, 'hull-legacy-baseline/staged-core'), legacyPlan),
+    legacyHull.baselineStage,
+);
+for (const filename of ['air_box3d_hull_contract.cjs', 'air_box3d_hull_core_contract.cjs', 'hull-legacy-contract.mjs'])
+    assert.ok(
+        receipt.commands.some((entry) => entry.args.some((arg) => arg.endsWith(filename)) && entry.exitCode === 0),
+    );
 const report = {
     schemaVersion: 1,
     status: 'PASS',
@@ -590,6 +681,15 @@ const report = {
         'wasm-motion-contract.raw.json',
         'air_box3d_motion_contract.cjs',
         'motion-samples.raw.jsonl',
+        'native-hull-contract.raw.json',
+        'native-hull-core-contract.raw.json',
+        'air_box3d_hull_contract.cjs',
+        'air_box3d_hull_core_contract.cjs',
+        'air_box3d_hull_legacy_fingerprint.cjs',
+        'hull-legacy-baseline/comparison.raw.json',
+        'hull-legacy-baseline/compile_commands.json',
+        'hull-legacy-baseline/baseline.raw.txt',
+        'hull-legacy-baseline/patched.raw.txt',
         'native-capsule-contract.raw.json',
         'air_box3d_capsule_contract.cjs',
         'native-query-contract.raw.json',

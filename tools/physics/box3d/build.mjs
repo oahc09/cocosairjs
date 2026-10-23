@@ -98,6 +98,7 @@ try {
             'tools/physics/box3d/native/motion_bridge.c',
             'tools/physics/box3d/native/command_bridge.c',
             'tools/physics/box3d/native/query_bridge.c',
+            'tools/physics/box3d/native/hull_bridge.c',
             'tools/physics/box3d/native/contract.c',
         ]) {
             const object = resolve(out, basename(source) + '.o');
@@ -231,6 +232,45 @@ try {
         writeFileSync(resolve(out, 'native-capsule-contract.raw.json'), capsuleRaw);
         result.capsuleContract = JSON.parse(capsuleRaw);
         if (result.capsuleContract.status !== 'PASS') throw new Error('Native capsule contract failed');
+        // Real point-cloud tests, including exact private core workspace/containment.
+        for (const [name, omitted, field] of [
+            ['hull', ['world_bridge.c.o'], 'hullContract'],
+            ['hull-core', ['hull.c.o'], 'hullCoreContract'],
+            ['hull-legacy-fingerprint', [], null],
+        ]) {
+            const source =
+                name === 'hull-legacy-fingerprint'
+                    ? 'hull_legacy_fingerprint.c'
+                    : `${name.replaceAll('-', '_')}_contract.c`;
+            const executable = resolve(out, `native-${name}${field ? '-contract' : ''}`);
+            run(cc, [
+                ...flags,
+                `tools/physics/box3d/native/${source}`,
+                ...objects.filter(
+                    (file) => !file.endsWith('/contract.c.o') && !omitted.some((suffix) => file.endsWith('/' + suffix)),
+                ),
+                ...(sanitize ? ['-fsanitize=address,undefined'] : []),
+                '-lm',
+                '-o',
+                executable,
+            ]);
+            if (field) {
+                const raw = run(executable, []);
+                writeFileSync(resolve(out, `native-${name}-contract.raw.json`), raw);
+                result[field] = JSON.parse(raw);
+                if (result[field].status !== 'PASS') throw new Error(`Native ${name} contract failed`);
+            }
+        }
+        const legacyRaw = run(process.execPath, [
+            'tools/physics/box3d/hull-legacy-contract.mjs',
+            out,
+            '--native',
+            ...(debug ? ['--debug'] : []),
+            ...(sanitize ? ['--sanitize'] : []),
+        ]);
+        result.hullLegacyComparison = JSON.parse(legacyRaw);
+        if (result.hullLegacyComparison.status !== 'PASS')
+            throw new Error('Independent old/new native Hull comparison failed');
         result.artifacts = [
             { path: 'native-contract', sha256: sha256(readFileSync(exe)), bytes: readFileSync(exe).length },
         ];
@@ -331,6 +371,24 @@ try {
         result.capsuleContract = JSON.parse(capsuleRaw);
         if (result.capsuleContract.status !== 'PASS' || result.capsuleContract.pointerBytes !== 4)
             throw new Error('WASM32 capsule native contract failed');
+        for (const [name, field] of [
+            ['hull', 'hullContract'],
+            ['hull-core', 'hullCoreContract'],
+        ]) {
+            const raw = run(process.execPath, [resolve(out, `air_box3d_${name.replaceAll('-', '_')}_contract.cjs`)]);
+            writeFileSync(resolve(out, `native-${name}-contract.raw.json`), raw);
+            result[field] = JSON.parse(raw);
+            if (result[field].status !== 'PASS' || result[field].pointerBytes !== 4)
+                throw new Error(`WASM32 ${name} native contract failed`);
+        }
+        const legacyRaw = run(process.execPath, [
+            'tools/physics/box3d/hull-legacy-contract.mjs',
+            out,
+            ...(debug ? ['--debug'] : []),
+        ]);
+        result.hullLegacyComparison = JSON.parse(legacyRaw);
+        if (result.hullLegacyComparison.status !== 'PASS')
+            throw new Error('Independent old/new WASM Hull comparison failed');
         run(process.execPath, ['tools/physics/box3d/wasm-contract.mjs', out]);
         run(process.execPath, ['tools/physics/box3d/wasm-ownership-contract.mjs', out]);
         run(process.execPath, ['tools/physics/box3d/wasm-snapshot-contract.mjs', out]);
@@ -396,6 +454,14 @@ try {
         'tools/physics/box3d/native/wasm_entry.c',
         'tools/physics/box3d/native/query_bridge.c',
         'tools/physics/box3d/native/query_bridge.h',
+        'tools/physics/box3d/native/hull_bridge.c',
+        'tools/physics/box3d/native/hull_bridge.h',
+        'tools/physics/box3d/native/hull_contract.c',
+        'tools/physics/box3d/native/hull_core_contract.c',
+        'tools/physics/box3d/native/hull_legacy_fingerprint.c',
+        'tools/physics/box3d/hull-bridge-contract.md',
+        'tools/physics/box3d/hull-legacy-contract.mjs',
+        'tools/physics/box3d/patches/checked-hull-cooking.patch',
         'tools/physics/box3d/capsule-bridge-contract.md',
         'tools/physics/box3d/native/capsule_contract.c',
         'tools/physics/box3d/native/query_contract.c',

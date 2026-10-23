@@ -4,6 +4,7 @@
 #include "world_bridge.h"
 #include <box3d/box3d.h>
 #include <box3d/collision.h>
+#include <box3d/constants.h>
 #include <float.h>
 #include <math.h>
 #include <stdlib.h>
@@ -84,7 +85,8 @@ static void* create_shape(const b3DebugShape* shape, void* context) {
         lines = 4 * SPHERE_SEGMENTS + 4;
     } else if (shape->type == b3_hullShape) {
         const b3HullData* h = shape->hull;
-        if (h->edgeCount <= 0 || h->edgeCount > 254 || h->edgeCount % 2 || h->vertexCount <= 0 || h->vertexCount > 255) {
+        if (h->edgeCount <= 0 || h->edgeCount > 2 * B3_MAX_HULL_EDGES || h->edgeCount % 2 ||
+            h->vertexCount <= 0 || h->vertexCount > B3_MAX_HULL_VERTICES) {
             w->error = AIR_B3_UNSUPPORTED; return NULL;
         }
         lines = h->edgeCount / 2;

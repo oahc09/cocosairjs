@@ -53,5 +53,7 @@
   "_air_b3_shape_filters_set",
   "_air_b3_motion_batch",
   "_air_b3_command_batch",
-  "_air_b3_ray_query"
+  "_air_b3_ray_query",
+  "_air_b3_mass_hull_create",
+  "_air_b3_hull_validate"
 ]

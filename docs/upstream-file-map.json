@@ -4998,8 +4998,8 @@
       "airPath": "src/cocos/physics/framework/components/colliders/mesh-collider.ts",
       "upstreamPath": "cocos/physics/framework/components/colliders/mesh-collider.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "2026-10-23 Box3D-only MeshCollider mutation guards and candidate-before-field mesh/convex transactions. Legacy backends retain their original callback and cache order. Hull-only integration keeps null pending and rejects nonconvex geometry without fallback; fresh native/public validation required."
     },
     {
       "airPath": "src/cocos/physics/framework/components/colliders/plane-collider.ts",
@@ -5173,8 +5173,8 @@
       "airPath": "src/cocos/physics/spec/i-physics-shape.ts",
       "upstreamPath": "cocos/physics/spec/i-physics-shape.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "2026-10-23 Optional ITrimeshShape.setConvex candidate setter for the Box3D-only transactional branch. Other backend interfaces and dispatch remain compatible."
     },
     {
       "airPath": "src/cocos/physics/spec/i-physics-world.ts",

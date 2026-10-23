@@ -1,0 +1,399 @@
+--- a/src/hull.c
++++ b/src/hull.c
+@@ -15,6 +15,8 @@
+ #include "box3d/math_functions.h"
+ 
+ #include <float.h>
++#include <limits.h>
++#include <math.h>
+ #include <stdbool.h>
+ #include <stddef.h>
+ #include <stdint.h>
+@@ -407,6 +409,7 @@
+ 	// Compares against (2 * tolerance)^2
+ 	b3Vec3 ab = b3Sub( b, a );
+ 	float abLengthSqr = b3Dot( ab, ab );
++    if ( !isfinite( abLengthSqr ) || abLengthSqr <= 0.0f || !isfinite( 1.0f / abLengthSqr ) ) return B3_NULL_INDEX;
+ 	B3_ASSERT( abLengthSqr > 0.0f );
+ 
+ 	float invAbLengthSqr = 1.0f / abLengthSqr;
+@@ -629,7 +632,7 @@
+ }
+ #endif
+ 
+-static void b3HullBuilder_ComputeTolerance( b3HullBuilder* b, int pointCount, const b3Vec3* points )
++static bool b3HullBuilder_ComputeTolerance( b3HullBuilder* b, int pointCount, const b3Vec3* points )
+ {
+ 	b3AABB bounds = b3BuildBounds( pointCount, points );
+ 	b3Vec3 maxAbs = b3Max( b3Abs( bounds.lowerBound ), b3Abs( bounds.upperBound ) );
+@@ -643,7 +646,9 @@
+ 	b->tolerance = tolerance;
+ 	b->minRadius = 4.0f * b->tolerance;
+ 	b->minOutside = 2.0f * b->minRadius;
++    if ( !isfinite( b->tolerance ) || !isfinite( b->minRadius ) || !isfinite( b->minOutside ) ) return false;
+ 	B3_ASSERT( b->minRadius < b->minOutside + 3.0f * FLT_EPSILON );
++    return true;
+ }
+ 
+ static bool b3HullBuilder_BuildInitialHull( b3HullBuilder* b, int pointCount, const b3Vec3* points )
+@@ -1426,9 +1431,48 @@
+ 	return v - e + f == 2 && f >= 4;
+ }
+ 
++/* The same scalar plane separation and strict > minOutside boundary used
++   by conflict assignment, evaluated before origin restoration loses precision.
++   This does not infer final topology from the point-addition budget. */
++static bool b3HullBuilder_CheckAllPoints( const b3HullBuilder* b, const b3Vec3* shiftedPoints,
++                                        int pointCount, b3HullCookInfo* info )
++{
++    info->tolerance = b->tolerance;
++    info->minOutside = b->minOutside;
++    info->maximumSeparation = -FLT_MAX;
++    info->firstOutsidePoint = -1;
++    for ( b3QHListNode* node = b->faceList.link.next; node != &b->faceList.link; node = node->next )
++    {
++        const b3QHFace* face = (const b3QHFace*)node;
++        if ( !isfinite( face->plane.normal.x ) || !isfinite( face->plane.normal.y ) ||
++             !isfinite( face->plane.normal.z ) || !isfinite( face->plane.offset ) )
++        {
++            info->status = b3_hullCookNumeric;
++            return false;
++        }
++        for ( int i = 0; i < pointCount; ++i )
++        {
++            float separation = b3PlaneSeparation( face->plane, shiftedPoints[i] );
++            if ( !isfinite( separation ) )
++            {
++                info->status = b3_hullCookNumeric;
++                return false;
++            }
++            info->maximumSeparation = b3MaxFloat( info->maximumSeparation, separation );
++            if ( separation > b->minOutside && info->firstOutsidePoint < 0 ) info->firstOutsidePoint = i;
++        }
++    }
++    if ( info->firstOutsidePoint >= 0 )
++    {
++        info->status = b3_hullCookIncomplete;
++        return false;
++    }
++    return true;
++}
++
+ // Build the entire hull. Returns true iff the result satisfies Euler's identity.
+ static bool b3HullBuilder_Construct( b3HullBuilder* b, const b3Vec3* points, int pointCount, int maxVertexCount, b3Vec3 origin,
+-									 b3Vec3* shiftedPoints )
++									 b3Vec3* shiftedPoints, b3HullCookInfo* info )
+ {
+ 	if ( pointCount < 4 )
+ 	{
+@@ -1438,9 +1482,19 @@
+ 	for ( int i = 0; i < pointCount; ++i )
+ 	{
+ 		shiftedPoints[i] = b3Sub( points[i], origin );
+-	}
+-
+-	b3HullBuilder_ComputeTolerance( b, pointCount, shiftedPoints );
++        if ( info && ( !isfinite( points[i].x ) || !isfinite( points[i].y ) || !isfinite( points[i].z ) ||
++                       !isfinite( shiftedPoints[i].x ) || !isfinite( shiftedPoints[i].y ) || !isfinite( shiftedPoints[i].z ) ) )
++        {
++            info->status = b3_hullCookNumeric;
++            return false;
++        }
++	}
++
++    if ( !b3HullBuilder_ComputeTolerance( b, pointCount, shiftedPoints ) )
++    {
++        if ( info ) info->status = b3_hullCookNumeric;
++        return false;
++    }
+ 	bool haveInitialHull = b3HullBuilder_BuildInitialHull( b, pointCount, shiftedPoints );
+ 	if ( haveInitialHull == false )
+ 	{
+@@ -1457,6 +1511,11 @@
+ 		budget -= 1;
+ 	}
+ 
++    if ( info )
++    {
++        info->budgetExhausted = vertex != NULL && budget == 0;
++        if ( !b3HullBuilder_CheckAllPoints( b, shiftedPoints, pointCount, info ) ) return false;
++    }
+ 	b3HullBuilder_CleanHull( b, origin );
+ 
+ #if B3_DEBUG
+@@ -1491,9 +1550,23 @@
+ 	size_t offsetShiftedPoints;
+ } b3HullWorkSizes;
+ 
+-static b3HullWorkSizes b3ComputeHullWorkSizes( int pointCount, int clampedMaxCount )
+-{
+-	b3HullWorkSizes s;
++static bool b3HullWorkAppend( size_t* offset, size_t count, size_t itemSize, bool align )
++{
++    if ( count > ( SIZE_MAX - *offset ) / itemSize ) return false;
++    size_t next = *offset + count * itemSize;
++    if ( align )
++    {
++        if ( next > SIZE_MAX - 7 ) return false;
++        next = ( next + 7 ) & ~(size_t)7;
++    }
++    *offset = next;
++    return true;
++}
++
++static bool b3ComputeHullWorkSizesChecked( int pointCount, int clampedMaxCount, b3HullWorkSizes* out )
++{
++	if ( pointCount < 4 || pointCount > INT_MAX - 4 || clampedMaxCount < 4 || clampedMaxCount > B3_MAX_HULL_VERTICES ) return false;
++	b3HullWorkSizes s = { 0 };
+ 	s.N = pointCount;
+ 	s.M = clampedMaxCount;
+ 
+@@ -1516,33 +1589,35 @@
+ 	s.horizonStackCapacity = b3MaxInt( 4, 2 * s.M - 4 );
+ 
+ 	size_t offset = 0;
+-
+-	s.offsetVertex = offset;
+-	offset = b3AlignUp8( offset + (size_t)s.vertexCapacity * sizeof( b3QHVertex ) );
+-
+-	s.offsetEdge = offset;
+-	offset = b3AlignUp8( offset + (size_t)s.edgeCapacity * sizeof( b3QHHalfEdge ) );
+-
+-	s.offsetFace = offset;
+-	offset = b3AlignUp8( offset + (size_t)s.faceCapacity * sizeof( b3QHFace ) );
+-
+-	s.offsetHorizon = offset;
+-	offset = b3AlignUp8( offset + (size_t)s.horizonCapacity * sizeof( b3QHHalfEdge* ) );
+-
+-	s.offsetCone = offset;
+-	offset = b3AlignUp8( offset + (size_t)s.coneCapacity * sizeof( b3QHFace* ) );
+-
+-	s.offsetMergedFaces = offset;
+-	offset = b3AlignUp8( offset + (size_t)s.mergedFacesCapacity * sizeof( b3QHFace* ) );
+-
+-	s.offsetHorizonStack = offset;
+-	offset = b3AlignUp8( offset + (size_t)s.horizonStackCapacity * sizeof( b3HorizonFrame ) );
+-
+-	s.offsetShiftedPoints = offset;
+-	offset += (size_t)pointCount * sizeof( b3Vec3 );
+-
+-	s.totalBytes = offset;
+-	return s;
++    s.offsetVertex = offset;
++    if ( !b3HullWorkAppend( &offset, (size_t)s.vertexCapacity, sizeof( b3QHVertex ), true ) ) return false;
++    s.offsetEdge = offset;
++    if ( !b3HullWorkAppend( &offset, (size_t)s.edgeCapacity, sizeof( b3QHHalfEdge ), true ) ) return false;
++    s.offsetFace = offset;
++    if ( !b3HullWorkAppend( &offset, (size_t)s.faceCapacity, sizeof( b3QHFace ), true ) ) return false;
++    s.offsetHorizon = offset;
++    if ( !b3HullWorkAppend( &offset, (size_t)s.horizonCapacity, sizeof( b3QHHalfEdge* ), true ) ) return false;
++    s.offsetCone = offset;
++    if ( !b3HullWorkAppend( &offset, (size_t)s.coneCapacity, sizeof( b3QHFace* ), true ) ) return false;
++    s.offsetMergedFaces = offset;
++    if ( !b3HullWorkAppend( &offset, (size_t)s.mergedFacesCapacity, sizeof( b3QHFace* ), true ) ) return false;
++    s.offsetHorizonStack = offset;
++    if ( !b3HullWorkAppend( &offset, (size_t)s.horizonStackCapacity, sizeof( b3HorizonFrame ), true ) ) return false;
++    s.offsetShiftedPoints = offset;
++    if ( !b3HullWorkAppend( &offset, (size_t)pointCount, sizeof( b3Vec3 ), false ) ) return false;
++    /* b3Alloc/b3Free account each allocation using an int-sized byte count. */
++    if ( offset > INT_MAX ) return false;
++    s.totalBytes = offset;
++    *out = s;
++    return true;
++}
++
++bool b3GetHullWorkspaceSize( int pointCount, int maxVertexCount, size_t* outBytes )
++{
++    b3HullWorkSizes sizes;
++    if ( outBytes == NULL || !b3ComputeHullWorkSizesChecked( pointCount, maxVertexCount, &sizes ) ) return false;
++    *outBytes = sizes.totalBytes;
++    return true;
+ }
+ 
+ static void b3HullBuilder_Init( b3HullBuilder* b, char* mem, const b3HullWorkSizes* s )
+@@ -2066,16 +2141,21 @@
+ 		while ( edge1 != edge3 );
+ 	}
+ 
++    if ( !isfinite( volume ) || !isfinite( area ) || !b3IsValidVec3( center ) ||
++         !isfinite( xx ) || !isfinite( xy ) || !isfinite( yy ) ||
++         !isfinite( xz ) || !isfinite( zz ) || !isfinite( yz ) || volume <= 0.0f ) return false;
+ 	B3_VALIDATE( volume > 0.0f );
+ 
+ 	b3Vec3 localCenter = volume > 0.0f ? b3MulSV( 0.25f / volume, center ) : b3Vec3_zero;
+ 	center = b3Add( localCenter, origin );
++    if ( !b3IsValidVec3( localCenter ) || !b3IsValidVec3( center ) ) return false;
+ 
+ 	float radius = FLT_MAX;
+ 	for ( int faceIndex = 0; faceIndex < faceCount; ++faceIndex )
+ 	{
+ 		b3Plane plane = planes[faceIndex];
+ 		float distance = b3PlaneSeparation( plane, center );
++        if ( !isfinite( distance ) || distance >= 0.0f ) return false;
+ 		B3_VALIDATE( distance < 0.0f );
+ 
+ 		radius = b3MinFloat( radius, -distance );
+@@ -2128,7 +2208,8 @@
+ 	return true;
+ }
+ 
+-b3HullData* b3CreateHull( const b3Vec3* points, int pointCount, int maxVertexCount )
++static b3HullData* b3CreateHullInternal( const b3Vec3* points, int pointCount, int maxVertexCount,
++                                       void* externalWork, size_t externalBytes, b3HullCookInfo* info )
+ {
+ 	if ( pointCount < 4 )
+ 	{
+@@ -2139,40 +2220,49 @@
+ 	int clampedMaxCount = b3ClampInt( maxVertexCount, 4, B3_MAX_HULL_VERTICES );
+ 
+ 	// Single allocation for all working memory.
+-	b3HullWorkSizes sizes = b3ComputeHullWorkSizes( pointCount, clampedMaxCount );
+-	char* work = b3Alloc( sizes.totalBytes );
++	b3HullWorkSizes sizes;
++    if ( !b3ComputeHullWorkSizesChecked( pointCount, clampedMaxCount, &sizes ) ||
++         ( externalWork && externalBytes < sizes.totalBytes ) )
++    {
++        if ( info ) info->status = b3_hullCookCapacity;
++        return NULL;
++    }
++    char* work = externalWork ? (char*)externalWork : b3Alloc( sizes.totalBytes );
+ 
+ 	b3HullBuilder builder;
+ 	b3HullBuilder_Init( &builder, work, &sizes );
+ 
+ 	b3Vec3* shiftedPoints = (b3Vec3*)( work + sizes.offsetShiftedPoints );
+ 
+-	bool ok = b3HullBuilder_Construct( &builder, points, pointCount, clampedMaxCount, origin, shiftedPoints );
++	bool ok = b3HullBuilder_Construct( &builder, points, pointCount, clampedMaxCount, origin, shiftedPoints, info );
+ 	if ( ok == false )
+ 	{
+-		b3Free( work, sizes.totalBytes );
++		if ( !externalWork ) b3Free( work, sizes.totalBytes );
+ 		return NULL;
+ 	}
+ 
+ 	if ( builder.finalVertexCount > B3_MAX_HULL_VERTICES )
+ 	{
++        if ( info ) info->status = b3_hullCookTopology;
+ 		b3Log( "hull final vertex count of %d exceeds limit of %d", builder.finalVertexCount, B3_MAX_HULL_VERTICES );
+-		b3Free( work, sizes.totalBytes );
++		if ( !externalWork ) b3Free( work, sizes.totalBytes );
+ 		return NULL;
+ 	}
+ 
+ 	if ( builder.finalFaceCount > B3_MAX_HULL_FACES )
+ 	{
++        if ( info ) info->status = b3_hullCookTopology;
+ 		b3Log( "hull final face count of %d exceeds limit of %d", builder.finalFaceCount, B3_MAX_HULL_FACES );
+-		b3Free( work, sizes.totalBytes );
++		if ( !externalWork ) b3Free( work, sizes.totalBytes );
+ 		return NULL;
+ 	}
+ 
+ 	int maxHalfEdgeCount = 2 * B3_MAX_HULL_EDGES;
+ 	if ( builder.finalHalfEdgeCount > maxHalfEdgeCount )
+ 	{
++        if ( info ) info->status = b3_hullCookTopology;
+ 		b3Log( "hull final half edge count of %d exceeds limit of %d", builder.finalHalfEdgeCount, maxHalfEdgeCount );
+-		b3Free( work, sizes.totalBytes );
++		if ( !externalWork ) b3Free( work, sizes.totalBytes );
+ 		return NULL;
+ 	}
+ 
+@@ -2333,7 +2423,7 @@
+ 	}
+ 
+ 	// All builder pointers are dead from here on.
+-	b3Free( work, sizes.totalBytes );
++	if ( !externalWork ) b3Free( work, sizes.totalBytes );
+ 
+ 	b3UpdateHullEdgeCosines( hull );
+ 
+@@ -2345,6 +2435,15 @@
+ 		return NULL;
+ 	}
+ 
++    if ( info && ( !isfinite( hull->volume ) || !isfinite( hull->surfaceArea ) ||
++                   !isfinite( hull->innerRadius ) || !b3IsValidVec3( hull->center ) ||
++                   !b3IsValidVec3( hull->centralInertia.cx ) || !b3IsValidVec3( hull->centralInertia.cy ) ||
++                   !b3IsValidVec3( hull->centralInertia.cz ) ) )
++    {
++        info->status = b3_hullCookNumeric;
++        b3DestroyHull( hull );
++        return NULL;
++    }
+ 	if ( b3IsValidHull( hull ) == false )
+ 	{
+ 		b3DestroyHull( hull );
+@@ -2354,7 +2453,34 @@
+ 	hull->hash = 0;
+ 	hull->hash = b3Hash64NonZero( (uint8_t*)hull, hull->byteCount );
+ 
++	if ( info ) info->status = b3_hullCookSuccess;
+ 	return hull;
++}
++
++b3HullData* b3CreateHull( const b3Vec3* points, int pointCount, int maxVertexCount )
++{
++    return b3CreateHullInternal( points, pointCount, maxVertexCount, NULL, 0, NULL );
++}
++
++b3HullData* b3CreateHullChecked( const b3Vec3* points, int pointCount, int maxVertexCount,
++                               void* workspace, size_t workspaceBytes, b3HullCookInfo* info )
++{
++    if ( info == NULL ) return NULL;
++    *info = (b3HullCookInfo){ .status = b3_hullCookArgument, .firstOutsidePoint = -1 };
++    if ( points == NULL || workspace == NULL || (uintptr_t)workspace % 8 || pointCount < 4 ||
++         maxVertexCount < 4 || maxVertexCount > B3_MAX_HULL_VERTICES ) return NULL;
++    size_t required;
++    if ( !b3GetHullWorkspaceSize( pointCount, maxVertexCount, &required ) || workspaceBytes < required )
++    {
++        info->status = b3_hullCookCapacity;
++        return NULL;
++    }
++    for ( int i = 0; i < pointCount; ++i )
++    {
++        if ( !b3IsValidVec3( points[i] ) ) return NULL;
++    }
++    info->status = b3_hullCookDegenerate;
++    return b3CreateHullInternal( points, pointCount, maxVertexCount, workspace, workspaceBytes, info );
+ }
+ 
+ b3HullData* b3CloneHull( const b3HullData* hull )
+--- a/include/box3d/collision.h
++++ b/include/box3d/collision.h
+@@ -239,6 +239,34 @@
+ /// or B3_MAX_HULL_EDGES is exceeded.
+ B3_API b3HullData* b3CreateHull( const b3Vec3* points, int pointCount, int maxVertexCount );
+ 
++/* AIR reviewed additive checked cooker. Not a change to legacy hull reduction.
++   Workspace is supplied/owned by the caller. Final hull still uses b3Alloc,
++   whose failure is not a recoverable allocation status. */
++typedef enum b3HullCookStatus
++{
++    b3_hullCookSuccess = 0,
++    b3_hullCookArgument,
++    b3_hullCookCapacity,
++    b3_hullCookDegenerate,
++    b3_hullCookTopology,
++    b3_hullCookIncomplete,
++    b3_hullCookNumeric
++} b3HullCookStatus;
++typedef struct b3HullCookInfo
++{
++    b3HullCookStatus status;
++    float tolerance;
++    float minOutside;
++    float maximumSeparation;
++    int firstOutsidePoint;
++    int budgetExhausted;
++} b3HullCookInfo;
++/* Exact private-layout bytes; false leaves outBytes unchanged. */
++B3_API bool b3GetHullWorkspaceSize( int pointCount, int maxVertexCount, size_t* outBytes );
++B3_API b3HullData* b3CreateHullChecked( const b3Vec3* points, int pointCount, int maxVertexCount,
++                                     void* workspace, size_t workspaceBytes, b3HullCookInfo* info );
++
++
+ /// Deep clone a hull.
+ B3_API b3HullData* b3CloneHull( const b3HullData* hull );
+ 

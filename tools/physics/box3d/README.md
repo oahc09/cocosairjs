@@ -137,7 +137,7 @@ source, logs and necessary artifacts before considering the work recoverable.
 The historical local commands for b, using its frozen source revision, were:
 
 ```sh
-source /workspace/scratch/62d43a81bbde/box3d-toolchain-20261022/use-toolchain.sh
+# Activate the official pinned SDK in this shell before running these commands.
 node tools/physics/box3d/build.mjs --out tools/physics/box3d/output/wasm-st-20261022-b
 node tools/physics/box3d/audit-artifacts.mjs tools/physics/box3d/output/wasm-st-20261022-b
 ```
@@ -386,3 +386,17 @@ native corruption. Public target ownership, queues, Node synchronization and
 complete T11/G1/browser acceptance remain separate. This m2 package has no new
 UBSan/ASan/LSan result; historical sanitizer failures and infrastructure blockers
 remain preserved. See the motion evidence summary for the exact scope and archive.
+
+## Native convex Hull increment
+
+The additive point-cloud cooker and geometry-only disabled-collider admission are
+now source integrated through the strict third core patch, without vendor edits.
+See [Hull contract](hull-bridge-contract.md) for exact workspace/resource limits,
+all-original-point minOutside containment, no-write refusals and UNKNOWN traps.
+This source integration is not a Cocos MeshCollider or EX01 completion claim.
+
+Builds now include native bridge/core Hull fixtures and an independently rebuilt
+pre-Hull patch-prefix core fingerprint comparison in `hull-legacy-baseline/`.
+Both host and WASM paths run one compiler process at a time and retain failed
+attempts. Artifact auditing requires the new source/compile/result inventory.
+All original C14 categories and earlier regressions remain in the denominator.

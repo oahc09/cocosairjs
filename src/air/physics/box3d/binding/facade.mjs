@@ -23,10 +23,10 @@ THE SOFTWARE.
 // Internal, limited M1 foundation. This is not the Cocos physics adapter.
 const CORE_SHA = 'efca0c184d40fd6a82016983f1601c4d23965867';
 const BINDING_BASE_SHA = '5d5a3af049cccd9948b2b55bac4342414af0ef64';
-const SCHEMA_SHA256 = '82b508fe8852caeb5ee4013d96480fc33b789fe98a95517b85455b660c709428';
+const SCHEMA_SHA256 = '96c2e532652d1f1d76f62852b2b269cebe37e30ba4615f47c80b9ed92844ba63';
 const commandIsArray = Array.isArray;
 const commandKeys = Object.keys;
-const PATCH_CHAIN_SHA256 = '434fb89494867f515051d5ac0dfc0c694556ba1f0da9ac3fc895a27097b1c7c7';
+const PATCH_CHAIN_SHA256 = '4c9d057fe6d7403f6f2c7672c4a7abe38041d845942540a6b5c5abbc6f4bc45c';
 
 function failure(code, message) {
     return Object.assign(new Error(message), { code });
@@ -1127,6 +1127,31 @@ export function createBox3DBinding(module, expected) {
         changed(world);
         return bodyState(world, body);
     }
+    function hullPoints(positions) {
+        const count = positions?.length;
+        if (!Number.isSafeInteger(count) || count < 12 || count % 3 !== 0)
+            throw failure(
+                'AIR_E_BOX3D_ARGUMENT',
+                'Hull positions require complete XYZ triples for at least four points',
+            );
+        // Existing signed byte-buffer ABI boundary, not an input-point geometry cap.
+        // The native cooker checks actual workspace capacity and output topology.
+        if (count > Math.floor(0x7ffffffc / 4))
+            throw failure('AIR_E_BOX3D_CAPACITY', 'Hull input exceeds the supported byte-buffer capacity');
+        const points = new Float32Array(count);
+        for (let index = 0; index < count; ++index)
+            points[index] = Math.fround(finite(positions[index], 'hull position'));
+        return points;
+    }
+    function hullStatus(status) {
+        if (status === 4) throw failure('AIR_E_BOX3D_CAPACITY', 'Hull native workspace exceeds target capacity');
+        if (status === 8)
+            throw failure(
+                'AIR_E_BOX3D_UNSUPPORTED',
+                'Hull is degenerate, incomplete or exceeds native output topology',
+            );
+        nativeStatus(status);
+    }
     function massShape(body, kind, values, sensor, reviewedCapsule = false) {
         const item = handle(body, 'body');
         const sensorFlag = boolean(sensor, 'sensor');
@@ -1569,23 +1594,36 @@ export function createBox3DBinding(module, expected) {
             });
         },
         destroyShape(shape) {
-            return exclusive(() => {
+            return mutate(() => {
                 const item = handle(shape, 'shape');
                 const target = handles.get(item.body).targetMass;
-                if (target === undefined) nativeStatus(module._air_b3_shape_destroy(shape.low, shape.high));
-                else
-                    nativeStatus(
-                        module._air_b3_mass_shape_destroy(
-                            worldId(item.world),
-                            item.body.low,
-                            item.body.high,
-                            shape.low,
-                            shape.high,
-                            target,
-                        ),
-                    );
-                item.destroyed = true;
-                changed(item.world);
+                activeMutation.outcome = undefined;
+                let status;
+                try {
+                    status =
+                        target === undefined
+                            ? module._air_b3_shape_destroy(shape.low, shape.high)
+                            : module._air_b3_mass_shape_destroy(
+                                  worldId(item.world),
+                                  item.body.low,
+                                  item.body.high,
+                                  shape.low,
+                                  shape.high,
+                                  target,
+                              );
+                } catch (error) {
+                    changed(item.world); // Native may already have destroyed the shape. Never replay a trap.
+                    throw error;
+                }
+                // These exports return ordinary validation/mass-plan errors before b3DestroyShape.
+                // An unexpected status or a native boundary throw does not establish rollback.
+                if (status === 0) {
+                    activeMutation.outcome = 'committed';
+                    item.destroyed = true;
+                    changed(item.world); // Mark before any JS/native body-state readback can fail.
+                } else if ([1, 2, 4, 5, 8, 9].includes(status)) activeMutation.outcome = 'not-mutated';
+                else changed(item.world);
+                nativeStatus(status);
                 bodyState(item.world, item.body);
             });
         },
@@ -1673,6 +1711,71 @@ export function createBox3DBinding(module, expected) {
                 // Native derives and validates the F32 endpoints, slop, AABB and aggregate mass before creation.
                 // Exactly h=0 deliberately creates a native sphere with sphere mass/identity.
                 return massShape(body, 2, [...c, r, h, direction, d], sensor, true);
+            });
+        },
+        validateHull(world, positions) {
+            return mutate(() => {
+                const wid = worldId(world);
+                const points = hullPoints(positions);
+                return withBuffer(points.byteLength, (ptr) => {
+                    module.HEAPF32.set(points, ptr >>> 2);
+                    activeMutation.outcome = undefined;
+                    let status;
+                    try {
+                        status = module._air_b3_hull_validate(wid, ptr, points.length / 3, points.length);
+                    } catch (error) {
+                        changed(world);
+                        throw error;
+                    }
+                    // Pure cook has no world shape/body commit; a trap is still UNKNOWN.
+                    if ([0, 1, 2, 4, 5, 8, 9].includes(status)) activeMutation.outcome = 'not-mutated';
+                    else changed(world);
+                    hullStatus(status);
+                });
+            });
+        },
+        createHull(body, positions, density = 1, sensor = false) {
+            return mutate(() => {
+                const item = handle(body, 'body');
+                const wid = worldId(item.world);
+                const sensorFlag = boolean(sensor, 'sensor');
+                const d = Math.fround(finite(density, 'hull density'));
+                if (d <= 0) throw failure('AIR_E_BOX3D_ARGUMENT', 'Hull density must be positive');
+                const points = hullPoints(positions);
+                const count = points.length;
+                return withBuffer(points.byteLength, (ptr) => {
+                    module.HEAPF32.set(points, ptr >>> 2);
+                    activeMutation.outcome = undefined;
+                    let status;
+                    try {
+                        status = module._air_b3_mass_hull_create(
+                            wid,
+                            body.low,
+                            body.high,
+                            ptr,
+                            count / 3,
+                            count,
+                            d,
+                            sensorFlag,
+                            item.targetMass ?? 0,
+                            ids,
+                        );
+                    } catch (error) {
+                        changed(item.world);
+                        throw error;
+                    }
+                    // These statuses are verified pre-world-write exits of this specific export.
+                    // CREATION, unexpected status and a trap are not evidence of rollback.
+                    if (status === 0) {
+                        activeMutation.outcome = 'committed';
+                        changed(item.world); // Invalidate before any potentially failing JS ID/state readback.
+                    } else if ([1, 2, 4, 5, 8, 9].includes(status)) activeMutation.outcome = 'not-mutated';
+                    else changed(item.world);
+                    hullStatus(status);
+                    const result = copiedId(item.world, 'shape', body);
+                    bodyState(item.world, body);
+                    return result;
+                });
             });
         },
         rayAllRaw(world, origin, translation, options) {

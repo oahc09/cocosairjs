@@ -26,6 +26,7 @@ import type { Node } from '../../../cocos/scene-graph/node';
 import type { RigidBody } from '../../../cocos/physics/framework/components/rigid-body';
 import type { Box3DBodyState, Box3DId, Box3DWorld } from './binding/facade.mjs';
 import type { Box3DPrimitiveGeometry } from './box-sphere-geometry';
+import type { Box3DHullGeometry } from './hull-geometry';
 import type { Box3DSurfaceMaterial } from './world-binding';
 import type { Box3DComponentBinding } from './world-binding';
 import { finiteFloat32, mutationNotApplied, worldError } from './world-binding';
@@ -33,6 +34,7 @@ import { unsupportedBox3D } from './unsupported';
 import { Box3DSceneTransform } from './world-writeback';
 import type { Box3DWritebackBody } from './world-writeback';
 
+type Box3DShapeGeometry = Box3DPrimitiveGeometry | Box3DHullGeometry;
 type Vec = { x: number; y: number; z: number };
 export interface Box3DComponentConfiguration {
     /** Must read the actual PhysicsSystem, not a separate collision matrix. */
@@ -202,7 +204,7 @@ export class Box3DSharedBody {
     readonly #node: Node;
     readonly #references = new Set<object>();
     readonly #queryColliders = new Map<object, Collider>();
-    readonly #shapes = new Map<object, { token: Box3DId; geometry: Box3DPrimitiveGeometry }>();
+    readonly #shapes = new Map<object, { token: Box3DId; geometry: Box3DShapeGeometry }>();
     #closed = false;
     #rigidBody: RigidBody | null = null;
     #rigidEnabled = false;
@@ -864,8 +866,23 @@ export class Box3DSharedBody {
             throw worldError('AIR_E_BOX3D_ABI', 'bodyTransforms', 'Expected one finite copied transform.');
         return Object.freeze(Array.from(value));
     }
+    /** Read-only native cook/free preflight for initialized or disabled hull candidates. */
+    validateHull(positions: readonly number[]): void {
+        this.assert('validateHull');
+        this.#scene.preflight();
+        try {
+            this.#binding.validateHull(this.#world, positions);
+        } catch (error) {
+            // Reviewed statuses prove clean no-write failure; a trap/unknown result still faults ownership.
+            if (!mutationNotApplied(error)) {
+                this.#owner.invalidate();
+                this.#owner.fault(error);
+            }
+            throw error;
+        }
+    }
     /** Actual native geometry allocation. A later uncertain failure is not advertised as atomic rollback. */
-    setShape(reference: object, geometry: Box3DPrimitiveGeometry): void {
+    setShape(reference: object, geometry: Box3DShapeGeometry): void {
         this.assert('setShape');
         this.#scene.preflight();
         if (!this.#references.has(reference))
@@ -875,32 +892,34 @@ export class Box3DSharedBody {
         let registered = false;
         try {
             token =
-                geometry.kind === 'box'
-                    ? this.#binding.createOffsetBox(
-                          this.#body,
-                          geometry.center,
-                          geometry.dimensions,
-                          [0, 0, 0, 1],
-                          1,
-                          geometry.trigger,
-                      )
-                    : geometry.kind === 'capsule'
-                      ? this.#binding.createOffsetCapsule(
+                geometry.kind === 'hull'
+                    ? this.#binding.createHull(this.#body, geometry.positions, 1, geometry.trigger)
+                    : geometry.kind === 'box'
+                      ? this.#binding.createOffsetBox(
                             this.#body,
                             geometry.center,
-                            geometry.dimensions[0],
-                            geometry.dimensions[1],
-                            geometry.dimensions[2],
+                            geometry.dimensions,
+                            [0, 0, 0, 1],
                             1,
                             geometry.trigger,
                         )
-                      : this.#binding.createOffsetSphere(
-                            this.#body,
-                            geometry.center,
-                            geometry.dimensions[0],
-                            1,
-                            geometry.trigger,
-                        );
+                      : geometry.kind === 'capsule'
+                        ? this.#binding.createOffsetCapsule(
+                              this.#body,
+                              geometry.center,
+                              geometry.dimensions[0],
+                              geometry.dimensions[1],
+                              geometry.dimensions[2],
+                              1,
+                              geometry.trigger,
+                          )
+                        : this.#binding.createOffsetSphere(
+                              this.#body,
+                              geometry.center,
+                              geometry.dimensions[0],
+                              1,
+                              geometry.trigger,
+                          );
             this.#owner.invalidate();
             this.#binding.configureShapeEvents(token, { sensor: false, contact: false, hit: false });
             const filter = this.#binding.setShapeFilters(this.#world, [token], {
@@ -929,7 +948,8 @@ export class Box3DSharedBody {
         } catch (error) {
             // Only the reviewed creation preflight can prove that the old shape and mass were untouched.
             // Never reuse this exemption after a token returned or any configuration/destruction began.
-            if (geometry.kind === 'capsule' && !token && mutationNotApplied(error)) throw error;
+            if ((geometry.kind === 'capsule' || geometry.kind === 'hull') && !token && mutationNotApplied(error))
+                throw error;
             // Candidate cleanup does not restore native contact history. The whole world is conservatively faulted.
             let failure = error;
             try {
@@ -943,6 +963,18 @@ export class Box3DSharedBody {
                     { cause: error, cleanupError },
                 );
             }
+            if (geometry.kind === 'hull' && token) {
+                const committed = Object.assign(
+                    worldError(
+                        'AIR_E_BOX3D_WORLD_FAULTED',
+                        'hull creation',
+                        'Native creation committed before later shape setup failed.',
+                    ),
+                    { cause: failure },
+                );
+                Object.defineProperty(committed, 'mutationOutcome', { value: 'committed', enumerable: true });
+                failure = committed;
+            }
             this.#owner.invalidate();
             this.#owner.fault(failure);
             throw failure;
@@ -953,17 +985,31 @@ export class Box3DSharedBody {
         this.assert('removeShape');
         const value = this.#shapes.get(reference);
         if (!value) return;
+        let destroyed = false;
         try {
             this.#binding.destroyShape(value.token);
+            destroyed = true;
             this.#owner.invalidate();
             this.#owner.unregisterShapeMaterial(value.token);
             this.#shapes.delete(reference);
             const active = this.#rigidEnabled || this.#shapes.size > 0;
             if (this.state.enabled !== active) this.control('setBodyEnabled', active);
         } catch (error) {
+            let failure = error;
+            if (value.geometry.kind === 'hull' && destroyed) {
+                failure = Object.assign(
+                    worldError(
+                        'AIR_E_BOX3D_WORLD_FAULTED',
+                        'hull removal',
+                        'Native destruction committed before later owner setup failed.',
+                    ),
+                    { cause: error },
+                );
+                Object.defineProperty(failure, 'mutationOutcome', { value: 'committed', enumerable: true });
+            }
             this.#owner.invalidate();
-            this.#owner.fault(error);
-            throw error;
+            this.#owner.fault(failure);
+            throw failure;
         }
     }
     /** Internal exact-authority route, never used by ordinary component setters. */

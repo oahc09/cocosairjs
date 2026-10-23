@@ -66,3 +66,7 @@ The staging task performed formatting, source parsing, full example consumer Typ
 The capsule scene option requires the current CapsuleCollider-enabled Box3D registration, native capsule create/update/query binding, public `registerBox3DBeforeStep`, and native `PhysicsSystem.raycastClosest` route. Do not serve this page with an older bundle or a pre-capsule WASM asset. No test adapter, internal-world cast, synthetic ray or alternate physics backend is provided. Capsule source wiring does not establish native/browser behavior. The lead must refresh the derived source identity only after all source changes and the matching build are finalized.
 
 The drag readout's tick/attempt identifies a submitted hook call, not successful native completion. Native completed step remains the separately guarded backend observation. All EX01 checks stay `NOT_RUN`; joints, component collision events and native debug presentation are not promoted.
+
+## New Hull source candidate
+
+The Hull option uses an actual convex MeshCollider over the exact rendered tetrahedron POSITION stream, never a box. New matching native/public/runtime/browser evidence is still required. Hull dragging is deliberately not admitted by the existing symmetric-primitive spring handler; no guessed arbitrary COM is used. All original EX01 requirements, including full shape interaction, 100 lifecycle cycles and recording, remain unchanged and incomplete.

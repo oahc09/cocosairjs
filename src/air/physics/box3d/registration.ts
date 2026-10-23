@@ -26,6 +26,7 @@ import type { Box3DWorldAdapter } from './prepare';
 import { Box3DPhysicsWorld } from './world';
 import { Box3DRigidBody } from './rigid-body';
 import { Box3DBoxShape, Box3DSphereShape, Box3DCapsuleShape } from './box-sphere-shape';
+import { Box3DHullShape } from './hull-shape';
 import type { Box3DComponentConfiguration } from './shared-body';
 import { requireComponentBinding, requireWorldBinding, worldError } from './world-binding';
 import { createUnsupportedBox3DComponents } from './unsupported';
@@ -76,6 +77,11 @@ export function createBox3DWorldAdapter(
                       }
                   },
                   CapsuleShape: class extends Box3DCapsuleShape {
+                      constructor() {
+                          super(getWorld, components!);
+                      }
+                  },
+                  TrimeshShape: class extends Box3DHullShape {
                       constructor() {
                           super(getWorld, components!);
                       }

@@ -11,6 +11,13 @@ int air_b3_body_control(uint32_t world,uint32_t lo,uint32_t hi,int op,const floa
 int air_b3_body_mass_set(uint32_t world,uint32_t lo,uint32_t hi,float target);
 int air_b3_body_mass_ready(uint32_t world,uint32_t lo,uint32_t hi,float target);
 int air_b3_body_apply(uint32_t world,uint32_t lo,uint32_t hi,int kind,int local,const float* values);
+/* Internal C-only helper. hull must be a real, topology-checked b3CreateHull
+   result from the pinned core, never an external serialized pointer. Caller
+   retains ownership on every normal return and releases with b3DestroyHull.
+   This symbol is intentionally absent from exports.json. */
+struct b3HullData;
+int air_b3_mass_cooked_hull_create(uint32_t world,uint32_t lo,uint32_t hi,
+ const struct b3HullData* hull,float density,int sensor,float target,uint32_t* out);
 /* kind 2: center.xyz, radius > 0, halfSegment >= 0, exact direction 0/1/2,
    density > 0. halfSegment is cylinderHeight / 2, not total capsule height.
    Zero segment explicitly creates a sphere. Positive float32 endpoint distance

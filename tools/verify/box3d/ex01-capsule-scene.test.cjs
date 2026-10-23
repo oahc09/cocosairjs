@@ -129,15 +129,18 @@ check('capsule follows retained projectile cap, mass changes, impulse submission
         assert.ok(main.includes(expected), expected);
     assert.match(main, /maximum: 12/);
     assert.match(main, /bricks\.length !== 100/);
-    assert.match(main, /if \(kind !== 'sphere' && kind !== 'capsule'\) throw new Error/);
+    assert.match(main, /if \(kind !== 'sphere' && kind !== 'capsule' && kind !== 'hull'\)\s*throw new Error/);
 });
-check('Hull and full EX01 acceptance remain explicitly unsupported/unverified', () => {
+check('Hull drag and full EX01 acceptance remain explicitly unfinished/unverified', () => {
     const requirements = JSON.parse(read('original-requirements.json'));
     assert.equal(requirements.status, 'IN_PROGRESS');
     assert.ok(requirements.checks.every((item) => item.acceptance === 'NOT_RUN'));
-    assert.match(requirements.checks.find((item) => item.requirement === 'Hull').source, /UNFINISHED/);
+    assert.match(
+        requirements.checks.find((item) => item.requirement === 'Hull').source,
+        /Hull dragging still unfinished/,
+    );
     assert.match(html, /<option value="capsule">Capsule/);
-    assert.match(html, /<option value="hull" disabled>Hull/);
+    assert.match(html, /<option value="hull">Hull/);
     assert.match(main, /acceptancePassed: false/);
     const reference = fs.readFileSync(path.join(engineRoot, 'ai/plans/box3d-v1.2-reference.md'), 'utf8');
     for (const key of [

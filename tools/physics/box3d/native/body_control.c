@@ -223,6 +223,60 @@ static int capsule_automatic_mass_safe(b3World* w,b3Body* b,const b3Shape* added
  if(state&&!vec_ok(b3Add(state->linearVelocity,b3Cross(state->angularVelocity,b3SubPos(worldCenter,sim->center)))))return AIR_B3_ARGUMENT;
  return capsule_extents_safe(w,b,added,center);
 }
+/* Internal-only admission of a real core-owned cooked hull. This is NOT a
+   serialized-hull reader or the variable-length JavaScript point-cloud ABI.
+   Caller retains and must release the cooked hull after this function returns;
+   b3CreateHullShape clones/interns it in the world's reference-counted database.
+   No hull pointer may escape through the facade. */
+int air_b3_mass_cooked_hull_create(uint32_t wid,uint32_t lo,uint32_t hi,
+ const b3HullData* hull,float density,int sensor,float target,uint32_t* out){
+ b3World* w;b3Body* b;b3BodyId id=bid(lo,hi);int s=context(wid,id,&w,&b);if(s)return s;
+ if(!hull||!out||!isfinite(density)||density<=0||(sensor!=0&&sensor!=1)||!isfinite(target)||target<0)return AIR_B3_ARGUMENT;
+ /* The caller supplies only a successfully cooked, topology-checked hull from
+    this exact core. Do not rely on b3IsValidHull: release builds may stub it. */
+ if(hull->version!=B3_HULL_VERSION||hull->hash==0||
+    hull->vertexCount<4||hull->vertexCount>B3_MAX_HULL_VERTICES||
+    hull->faceCount<4||hull->faceCount>B3_MAX_HULL_FACES||
+    hull->edgeCount<12||hull->edgeCount>2*B3_MAX_HULL_EDGES||hull->edgeCount%2||
+    hull->vertexCount-hull->edgeCount/2+hull->faceCount!=2)return AIR_B3_UNSUPPORTED;
+ if(!isfinite(hull->volume)||hull->volume<=0||!isfinite(hull->surfaceArea)||hull->surfaceArea<=0||
+    !isfinite(hull->innerRadius)||hull->innerRadius<=0||!vec_ok(hull->center)||
+    !matrix_ok(hull->centralInertia)||!b3IsValidAABB(hull->aabb))return AIR_B3_ARGUMENT;
+ const b3Vec3* points=b3GetHullPoints(hull);const b3Plane* planes=b3GetHullPlanes(hull);
+ if(!points||!planes)return AIR_B3_ARGUMENT;
+ float radiusSquared=0;
+ for(int i=0;i<hull->vertexCount;++i){
+  if(!vec_ok(points[i]))return AIR_B3_ARGUMENT;
+  float distanceSquared=b3DistanceSquared(points[i],hull->center);
+  if(!isfinite(distanceSquared))return AIR_B3_ARGUMENT;
+  radiusSquared=b3MaxFloat(radiusSquared,distanceSquared);
+ }
+ for(int i=0;i<hull->faceCount;++i)if(!vec_ok(planes[i].normal)||!isfinite(planes[i].offset))return AIR_B3_ARGUMENT;
+ b3Shape candidate={0};candidate.id=B3_NULL_INDEX;candidate.type=b3_hullShape;
+ candidate.hull=hull;candidate.density=density;candidate.sensorIndex=sensor?0:B3_NULL_INDEX;
+ b3MassData single=b3ComputeShapeMass(&candidate);
+ if(!isfinite(single.mass)||single.mass<=0||!vec_ok(single.center)||!matrix_ok(single.inertia))return AIR_B3_ARGUMENT;
+ /* Match pinned shape.c's hull margin rather than a box extent approximation. */
+ float margin=b->type==b3_staticBody?B3_SPECULATIVE_DISTANCE:
+  b3MinFloat(B3_MAX_AABB_MARGIN,B3_AABB_MARGIN_FRACTION*sqrtf(radiusSquared));
+ b3BodySim* sim=b3GetBodySim(w,b);
+ b3AABB bounds=b3ComputeFatShapeAABB(&candidate,sim->transform,B3_SPECULATIVE_DISTANCE);
+ if(!b3IsValidAABB(bounds)||!b3IsValidAABB(b3AABB_Inflate(bounds,margin)))return AIR_B3_ARGUMENT;
+ b3MassData plan;int fallback,pending;
+ if(target>0){
+  s=mass_plan(w,b,target,B3_NULL_INDEX,&candidate,&plan,&fallback,&pending);if(s)return s;
+  s=capsule_extents_safe(w,b,&candidate,b->type==b3_dynamicBody?plan.center:b3Vec3_zero);
+ }else s=capsule_automatic_mass_safe(w,b,&candidate);
+ if(s)return s;
+ b3ShapeDef def=b3DefaultShapeDef();def.filter=air_b3_default_filter();def.density=density;
+ def.isSensor=sensor!=0;def.enableSensorEvents=sensor!=0;def.updateBodyMass=target==0;
+ /* Mutation starts here. CREATION/trap is not rollback evidence. All status
+    INVALID/ARGUMENT/UNSUPPORTED/LOCKED returns above are before world writes. */
+ b3ShapeId shape=b3CreateHullShape(id,&def,hull);
+ if(!b3Shape_IsValid(shape))return AIR_B3_CREATION;
+ if(target>0)apply_mass(w,b,id,plan);
+ uint64_t value=b3StoreShapeId(shape);out[0]=(uint32_t)value;out[1]=(uint32_t)(value>>32);return 0;
+}
 int air_b3_mass_shape_create(uint32_t wid,uint32_t lo,uint32_t hi,int kind,const float* p,int sensor,float target,uint32_t* out){
  b3World* w;b3Body* b;b3BodyId id=bid(lo,hi);int s=context(wid,id,&w,&b);if(s)return s;
  if(!p||!out||(kind!=0&&kind!=1&&kind!=2)||(sensor!=0&&sensor!=1)||!isfinite(target)||target<0)return AIR_B3_ARGUMENT;

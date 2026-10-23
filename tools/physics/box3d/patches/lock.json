@@ -45,6 +45,23 @@
           "afterSha256": "c7d679cf8051b59fee54c8b76ee63131f9c8c7d1d01a71f241827e53775939da"
         }
       ]
+    },
+    {
+      "id": "checked-hull-cooking-v1",
+      "path": "tools/physics/box3d/patches/checked-hull-cooking.patch",
+      "sha256": "846a7ae09fc5f6f34627ac7e8f7b1ba4eb26356f5f2ba885043b99bfc6953290",
+      "files": [
+        {
+          "path": "src/hull.c",
+          "beforeSha256": "9e062f54d79981d21c0a0bad25c9f995e1d47c8c1b31f01cbf840cc3dacdbde7",
+          "afterSha256": "eba549da27ccc49ebf2759a69077d6b3dc91fc77ccfdc432c84d2461e2bb222c"
+        },
+        {
+          "path": "include/box3d/collision.h",
+          "beforeSha256": "c1da165f20285470075e1a9bed55faae7f29a06c54e0353f95d2ca7a0365242a",
+          "afterSha256": "3d1d298ef76557d9491b25b4376730e6c5213ab5c9bfe2f8941089c64ddce69b"
+        }
+      ]
     }
   ]
 }

@@ -1,4 +1,4 @@
-# Strict staged SSE2 alignment patch
+# Strict staged fixed-core patches
 
 The default foundation build now uses the reviewed patch from `lock.json`. It does
 not edit `vendor/box3d/core`. `patch-intake.mjs` copies the complete verified core
@@ -15,7 +15,7 @@ Patch source paths are recorded in the lock, but not part of this content identi
 The version lock separately anchors the complete patch-lock bytes.
 
 Current `patchChainSha256`:
-`20dd450a4313774e1d934df9fa9ec3458df35d9ee314beffa9d846404cdb86bf`.
+`4c9d057fe6d7403f6f2c7672c4a7abe38041d845942540a6b5c5abbc6f4bc45c`.
 It is compiled into `air_b3_patch_chain_sha`, checked by the static facade, and
 recorded in the manifest and receipts. Wire ABI version remains 1: its layouts
 have not changed. Old unpatched and qualification-only artifacts lack the formal
@@ -39,3 +39,18 @@ Formal staged build results belong to their own e receipts. Neither this intake
 nor finite fixtures establish full sanitizer, performance, browser/CSP or G1
 acceptance. Never suppress LSan, rewrite earlier failures, or replace the upstream
 vendor bytes to make a gate green.
+
+## Checked Hull cooking increment
+
+`checked-hull-cooking-v1` appends an additive caller-workspace checked cooker and
+exact private-layout size planner in collision.h/hull.c. It preserves legacy
+normal construction and emission while refusing strict-path hulls that exclude
+any original point beyond the existing core minOutside. Output constants and
+tolerance are unchanged. Narrow numeric guards do not make all core allocations
+or assertion paths recoverable. Vendor bytes remain untouched.
+
+The schema adds separate Hull creation and geometry-only validation exports. The
+new source identities invalidate prior module/build receipts. See
+`../hull-bridge-contract.md` for resource/mutation semantics and the independently
+compiled pre-Hull patch-prefix fixture. At source integration, execution is
+pending; no earlier result qualifies this patch or C14/EX01.

@@ -44,9 +44,17 @@ assert.ok(build.includes("'tools/physics/box3d/native/motion_bridge.c'"));
 assert.ok(build.includes(`'${decision.path}'`));
 const inputBlock = build.match(/const inputs = \[([\s\S]*?)\];/)[1];
 const inputs = [...inputBlock.matchAll(/'([^']+)'/g)].map((match) => match[1]);
-assert.equal(inputs.length, 57);
-assert.equal(new Set(inputs).size, 57);
+assert.equal(inputs.length, 65);
+assert.equal(new Set(inputs).size, 65);
 for (const path of [
+    'tools/physics/box3d/native/hull_bridge.c',
+    'tools/physics/box3d/native/hull_bridge.h',
+    'tools/physics/box3d/native/hull_contract.c',
+    'tools/physics/box3d/native/hull_core_contract.c',
+    'tools/physics/box3d/native/hull_legacy_fingerprint.c',
+    'tools/physics/box3d/hull-bridge-contract.md',
+    'tools/physics/box3d/hull-legacy-contract.mjs',
+    'tools/physics/box3d/patches/checked-hull-cooking.patch',
     'tools/physics/box3d/native/query_bridge.c',
     'tools/physics/box3d/native/query_bridge.h',
     'tools/physics/box3d/capsule-bridge-contract.md',
@@ -67,7 +75,7 @@ assert.match(source, /substeps!=1&&substeps!=2&&substeps!=4&&substeps!=8/);
 assert.match(source, /if\(v.x==0 && v.y==0 && v.z==0\)return AIR_B3_OK/);
 assert.match(read('tools/physics/box3d/native/motion_contract.c'), /b3Body_AllowFastRotation\(kinematic,true\)/);
 const sources = verifySources();
-assert.equal(sources.patchChainSha256, '434fb89494867f515051d5ac0dfc0c694556ba1f0da9ac3fc895a27097b1c7c7');
+assert.equal(sources.patchChainSha256, '4c9d057fe6d7403f6f2c7672c4a7abe38041d845942540a6b5c5abbc6f4bc45c');
 console.log(
     JSON.stringify(
         {

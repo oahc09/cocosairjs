@@ -30,7 +30,7 @@
     },
     {
       "requirement": "Hull",
-      "source": "UNFINISHED; current backend unsupported",
+      "source": "source-integrated real convex MeshCollider tetrahedron, shared exact rendered Mesh POSITION stream; fresh matching native/public/runtime/browser proof PENDING; Hull dragging still unfinished",
       "acceptance": "NOT_RUN"
     },
     {

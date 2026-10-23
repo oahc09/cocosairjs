@@ -76,6 +76,8 @@ export interface IConeShape extends IBaseShape {
 
 export interface ITrimeshShape extends IBaseShape {
     setMesh: (v: Mesh | null) => void;
+    /** Optional candidate-first convex configuration used by Box3D; legacy backends keep setMesh. */
+    setConvex?: (v: boolean) => void;
 }
 
 export interface ITerrainShape extends IBaseShape {

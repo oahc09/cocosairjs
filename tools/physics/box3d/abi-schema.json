@@ -52,7 +52,7 @@
   "lifetime": "All returned JS snapshots own copied data. No borrowed native view may cross a public call. Caller-owned scratch storage is allocated per facade; heap views are reacquired after every native call.",
   "excluded": [
     "proven same-epoch contact world/local reconstruction, full C21 and transient-sensor C22 acceptance",
-    "mesh/compound cooking",
+    "non-convex triangle mesh/compound cooking",
     "joints",
     "MT",
     "replay",
@@ -188,7 +188,7 @@
       "header": ["primitiveCount"],
       "primitive": ["kind:1 line,2 bounds", "uint32 color", "from/lower.xyz float32", "to/upper.xyz float32"],
       "sphere": "three orthogonal 24-segment great-circle wireframes from copied native local sphere",
-      "hull": "one line per native half-edge twin pair; qualified boxes only",
+      "hull": "One line per native half-edge twin pair; up to 256 half-edges / 128 full edges. Arbitrary cooked hull source integrated; execution qualification pending.",
       "bounds": "real core fat broadphase AABB callback, not exact shape local extents",
       "maximumPrimitives": 65536,
       "ownership": "per-world copied local geometry handles owned until real core destroy callback; temporary capture buffer explicitly released in facade finally; no borrowed heap view or pointer escapes",
@@ -482,5 +482,51 @@
     "ownership": "Exact unlocked world, full-generation copied shape observations, not ownership tokens; copied immutable arrays, no linear-memory views",
     "adapter": "Owns input normalization/maxDistance, logicalColliderID lookup, nearest-per-collider dedup and distance/logicalID sort; both all and closest use this same result stream",
     "legacy": "Legacy rayClosest and ABI1 unchanged. New schema requires a new module; not compatible with N4 and not a promotion."
+  },
+  "hullCooking": {
+    "status": "NATIVE_SOURCE_INTEGRATED_NOT_RUNTIME_QUALIFIED",
+    "abiVersion": 1,
+    "newExport": "_air_b3_mass_hull_create",
+    "signature": [
+      "world.u32",
+      "bodyLo.u32",
+      "bodyHi.u32",
+      "positions.ptr",
+      "pointCount.i32",
+      "positionFloatCount.i32",
+      "density.f32",
+      "sensor.bool-int",
+      "requestedMass.f32",
+      "outId.ptr"
+    ],
+    "input": "Exactly 3*N finite float32 body-local XYZ positions. N>=4, checked N*3 and N*sizeof(b3Vec3). No raw count 128 cap. Convex envelope, not triangle mesh.",
+    "output": "Two uint32 full shape ID words; unchanged on all known prewrite refusals.",
+    "limits": {
+      "topology": {
+        "vertices": 128,
+        "faces": 128,
+        "fullEdges": 128,
+        "halfEdges": 256
+      },
+      "workspace": "Exact checked actual private sizeof arrays with align8, pointCount+4 int safety, each multiply/add/align and total<=INT_MAX accounting limit.",
+      "wasmCapacity": "Input bytes + align8(input bytes) + exact core work bytes + output 8 bytes <= emscripten_get_heap_max(); current heap ranges validated before reading. Necessary address-space condition, not free-memory promise.",
+      "hostCapacity": "Same checked formula with SIZE_MAX address limit and INT_MAX core-accounting/workspace cap.",
+      "allocations": "Bridge scratch malloc may return ALLOCATION before world mutation. Core final hull, world database clone/map and body/shape allocations retain assert/trap semantics; no all-OOM recovery claim."
+    },
+    "containment": "All points vs final builder planes before origin restoration using identical core b3PlaneSeparation and exact minOutside; equality accepted, next representable value above rejected. Then final restored planes checked against original copied points with same bound. No added epsilon.",
+    "statuses": {
+      "notMutated": [1, 2, 4, 5, 8, 9],
+      "committed": 0,
+      "notRollbackEvidence": [3, "unexpected status", "native trap"]
+    },
+    "memory": "Point scratch and exact workspace in one per-world tracked temporary allocation. Core cooked hull always destroyed on normal exit. No native hull pointer or borrowed buffer escapes; world clones/interns on success.",
+    "validation": {
+      "export": "_air_b3_hull_validate",
+      "signature": ["world.u32", "positions.ptr", "pointCount.i32", "positionFloatCount.i32"],
+      "behavior": "Same real cook, topology and all-input containment path as create; releases all temporary resources on ordinary return. Never creates a body or shape. World only supplies lock and tracked temporary ownership. Does not preflight body-specific mass/inertia aggregation.",
+      "success": "Status0 validates geometry only; no world/body mutation and no cached native hull survives.",
+      "capacity": "Uses the same creation scratch planner, including its 8-byte wire-result reservation, so disabled admission matches create capacity.",
+      "failure": "Known statuses1,2,4,5,8,9 are prewrite refusals. Unexpected status3/native trap is UNKNOWN and must fault the facade world; cleanup after trap is not promised."
+    }
   }
 }
