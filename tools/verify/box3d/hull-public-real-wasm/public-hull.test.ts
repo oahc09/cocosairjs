@@ -7,6 +7,7 @@ import type { AirApp } from '../../../../src/air/app';
 import { registerBox3DBeforeStep } from '../../../../src/air/box3d-controls';
 import { registerBox3DFeature, registerBox3DWorldAdapter } from '../../../../src/air/physics/box3d/prepare';
 import { createBox3DWorldAdapter } from '../../../../src/air/physics/box3d/registration';
+import type { Box3DPhysicsWorld } from '../../../../src/air/physics/box3d/world';
 import { PhysicsSystem } from '../../../../src/cocos/physics/framework/physics-system';
 import { PhysicsMaterial } from '../../../../src/cocos/physics/framework/assets/physics-material';
 import { RigidBody } from '../../../../src/cocos/physics/framework/components/rigid-body';
@@ -153,6 +154,7 @@ test(`actual Cocos Hull ${fixture.case}: real geometry and explicit fault-bounda
         });
         const clock = createStepClock({ frameRate: 10, stepTimeoutMs: 2000 });
         const system = PhysicsSystem.instance;
+        const world = system.physicsWorld as Box3DPhysicsWorld;
         system.autoSimulation = false;
         system.gravity = new Vec3(0, 0, 0);
         const scene = new Scene('hull70-real-cocos');
@@ -549,14 +551,46 @@ test(`actual Cocos Hull ${fixture.case}: real geometry and explicit fault-bounda
         }
         const close = await app.close!();
         closed = true;
-        expect(close.status).toBe('released');
-        expect(close.physicsPreparation?.status).toBe('closed');
+        // Retain the complete actual receipt BEFORE any close-status or cleanup assertion can fail.
+        fixture.checkpoint('N6/N7-raw-app-close-before-assertions', { case: fixture.case, close });
         const observed = observations();
+        const owner = world.diagnostics().commandOwner;
+        const loader = fixture.loader.diagnostics();
+        fixture.checkpoint('N6/N7-raw-post-close-ownership-before-assertions', {
+            owner,
+            loader,
+            beforeDispose: observed.beforeDispose,
+        });
+        if (fixture.case === 'physics') {
+            expect(close.status).toBe('released');
+            expect(close.failures).toHaveLength(0);
+        } else {
+            expect(['committed-readback', 'unknown-after-native', 'destroy-committed-readback']).toContain(
+                fixture.case,
+            );
+            // Same deliberate-fault Game contract as the retained owner-target/clock fixtures.
+            // A truthful terminal pacing failure is required, not relabeled as a clean release.
+            expect(close.status).toBe('failed');
+            expect(close.failures).toHaveLength(1);
+            expect(close.failures[0].label).toBe('game-clock-terminal');
+            expect(close.failures[0].message).toContain('operation forbidden during faulted');
+        }
+        expect(close.physicsPreparation?.status).toBe('closed');
         expect(observed.calls.filter((row: any) => row.name === 'destroyWorld' && row.returned)).toHaveLength(1);
         expect(observed.beforeDispose.coreBytes).toBe('0');
         expect(observed.beforeDispose.bridge.liveBytes).toBe('0');
+        expect(observed.beforeDispose.bridge.liveAllocations).toBe(0);
+        expect(loader.status).toBe('DISPOSED');
+        expect(loader.cleanupErrors).toHaveLength(0);
+        expect(observed.fallbackCleanup).toBeUndefined();
+        expect(owner.targets.guards).toBe(0);
+        expect(owner.targets.active).toBe(0);
+        expect(owner.targets.protected).toBe(0);
+        expect(owner.nativeOwnership).toBe('released');
         fixture.checkpoint('N6/N7-actual-app-close-zero-native-core-and-bridge-resources', {
             close,
+            owner,
+            loader,
             beforeDispose: observed.beforeDispose,
         });
         fixture.complete();
