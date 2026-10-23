@@ -45,6 +45,7 @@ const gfx = load(
         .map((n) => n.getText(gfxSource))
         .join('\n'),
 );
+gfx.FormatInfos = {};
 const geometry = load('src/air/physics/box3d/hull-geometry.ts', {
     '../../../cocos/gfx/base/define': gfx,
     './world-binding': binding,
@@ -103,10 +104,36 @@ const shapes = load('src/air/physics/box3d/hull-shape.ts', {
     './unsupported': unsupported,
 });
 const tetra = [0, 0, 0, 2, 0, 0, 0, 3, 0, 0, 0, 4];
+let nextFormat = 0;
 function mesh(parts = [tetra], format = { count: 3, size: 12, type: gfx.FormatType.FLOAT }) {
     const values = parts.map((p) => [...p]);
+    const formatId = nextFormat++;
+    gfx.FormatInfos[formatId] = format;
+    const bytes = format.size / format.count || 4;
+    const data = new Uint8Array(parts.reduce((sum, p) => sum + p.length * bytes, 0));
+    const view = new DataView(data.buffer);
+    let offset = 0;
+    const vertexBundles = parts.map((part) => {
+        const start = offset;
+        for (const value of part) {
+            if (format.type === gfx.FormatType.FLOAT && bytes === 4) view.setFloat32(offset, value, true);
+            else if ([gfx.FormatType.INT, gfx.FormatType.SNORM].includes(format.type)) {
+                if (bytes === 1) view.setInt8(offset, value);
+                else if (bytes === 2) view.setInt16(offset, value, true);
+                else view.setInt32(offset, value, true);
+            } else if (bytes === 1) view.setUint8(offset, value);
+            else if (bytes === 2) view.setUint16(offset, value, true);
+            else view.setUint32(offset, value, true);
+            offset += bytes;
+        }
+        return {
+            view: { offset: start, length: part.length * bytes, count: part.length / 3, stride: 3 * bytes },
+            attributes: [{ name: gfx.AttributeName.ATTR_POSITION, format: formatId }],
+        };
+    });
     return {
-        struct: { primitives: parts.map(() => ({})) },
+        struct: { vertexBundles, primitives: parts.map((_, i) => ({ vertexBundelIndices: [i] })) },
+        data,
         values,
         readAttributeFormat: () => format,
         readAttribute: (i, name) => {
@@ -115,6 +142,7 @@ function mesh(parts = [tetra], format = { count: 3, size: 12, type: gfx.FormatTy
         },
     };
 }
+
 function harness(enabled = true) {
     selector.id = 'box3d';
     const collider = new component.MeshCollider();
@@ -307,8 +335,47 @@ test('copies all POSITION streams, preserves more than 128 inputs, and never rea
     const points = geometry.copyHullPoints(m);
     assert.equal(points.length, 612);
     assert(Object.isFrozen(points));
-    m.values[0][0] = 99;
+    new DataView(m.data.buffer).setFloat32(0, 99, true);
     assert.equal(points[0], 0);
+});
+test('POSITION subarray uses actual byteOffset, bundle offset, stride and attribute offset, not valid prefix hull', () => {
+    const m = mesh();
+    const a = tetra.map((n) => 2 * n),
+        prefix = new Uint8Array(48),
+        view = new DataView(prefix.buffer);
+    a.forEach((n, i) => view.setFloat32(i * 4, n, true));
+    const backing = new Uint8Array(48 + 8 + 4 * 20);
+    backing.set(prefix);
+    const v = new DataView(backing.buffer);
+    for (let vertex = 0; vertex < 4; ++vertex)
+        for (let axis = 0; axis < 3; ++axis)
+            v.setFloat32(48 + 8 + vertex * 20 + 4 + axis * 4, tetra[vertex * 3 + axis], true);
+    m.data = backing.subarray(48);
+    gfx.FormatInfos[nextFormat] = { count: 1, size: 4, type: gfx.FormatType.FLOAT };
+    m.struct.vertexBundles[0] = {
+        view: { offset: 8, length: 80, count: 4, stride: 20 },
+        attributes: [{ name: 'a_padding', format: nextFormat++ }, ...m.struct.vertexBundles[0].attributes],
+    };
+    m.readAttribute = () => a; // Old upstream-style reader silently sees another valid hull from backing prefix.
+    assert.deepEqual(geometry.copyHullPoints(m), tetra);
+    for (const mutate of [
+        (x) => {
+            x.struct.vertexBundles[0].view.length = 71;
+        },
+        (x) => {
+            x.struct.vertexBundles[0].view.count = 4.5;
+        },
+        (x) => {
+            x.struct.vertexBundles[0].view.stride = 8;
+        },
+        (x) => {
+            x.struct.vertexBundles[0].view.offset = 49;
+        },
+    ]) {
+        const broken = mesh();
+        mutate(broken);
+        assert.throws(() => geometry.copyHullPoints(broken), { code: 'AIR_E_BOX3D_GEOMETRY' });
+    }
 });
 test('center and nonuniform scale are baked exactly once; rotation and body origin are not rebaked', () => {
     const value = geometry.hullGeometry(tetra, true, [1, 2, 3], [2, 3, 4], false, null);

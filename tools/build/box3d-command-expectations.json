@@ -178,7 +178,15 @@
       "tools/physics/box3d/wasm-query-contract.mjs",
       "tools/physics/box3d/query-admission-contract.mjs",
       "tools/physics/box3d/capsule-bridge-contract.md",
-      "tools/physics/box3d/native/capsule_contract.c"
+      "tools/physics/box3d/native/capsule_contract.c",
+      "tools/physics/box3d/native/hull_bridge.c",
+      "tools/physics/box3d/native/hull_bridge.h",
+      "tools/physics/box3d/native/hull_contract.c",
+      "tools/physics/box3d/native/hull_core_contract.c",
+      "tools/physics/box3d/native/hull_legacy_fingerprint.c",
+      "tools/physics/box3d/hull-bridge-contract.md",
+      "tools/physics/box3d/hull-legacy-contract.mjs",
+      "tools/physics/box3d/patches/checked-hull-cooking.patch"
     ],
     "compileUnits": [
       "staged-core/src/aabb.c",
@@ -250,7 +258,11 @@
       "tools/physics/box3d/native/world_contract.c",
       "tools/physics/box3d/native/query_bridge.c",
       "tools/physics/box3d/native/query_contract.c",
-      "tools/physics/box3d/native/capsule_contract.c"
+      "tools/physics/box3d/native/capsule_contract.c",
+      "tools/physics/box3d/native/hull_bridge.c",
+      "tools/physics/box3d/native/hull_contract.c",
+      "tools/physics/box3d/native/hull_core_contract.c",
+      "tools/physics/box3d/native/hull_legacy_fingerprint.c"
     ],
     "evidence": [
       "build-receipt.json",
@@ -286,9 +298,18 @@
       "wasm-query-contract.raw.json",
       "air_box3d_query_contract.cjs",
       "native-capsule-contract.raw.json",
-      "air_box3d_capsule_contract.cjs"
+      "air_box3d_capsule_contract.cjs",
+      "native-hull-contract.raw.json",
+      "native-hull-core-contract.raw.json",
+      "air_box3d_hull_contract.cjs",
+      "air_box3d_hull_core_contract.cjs",
+      "air_box3d_hull_legacy_fingerprint.cjs",
+      "hull-legacy-baseline/comparison.raw.json",
+      "hull-legacy-baseline/compile_commands.json",
+      "hull-legacy-baseline/baseline.raw.txt",
+      "hull-legacy-baseline/patched.raw.txt"
     ],
-    "commands": 25
+    "commands": 28
   },
   "queryExtension": {
     "status": "ADDITIVE_SOURCE_GENERATION_NOT_FORMAL_ACCEPTANCE",
@@ -301,5 +322,48 @@
     ],
     "compileUnits": ["tools/physics/box3d/native/query_bridge.c", "tools/physics/box3d/native/query_contract.c"],
     "evidence": ["native-query-contract.raw.json", "wasm-query-contract.raw.json", "air_box3d_query_contract.cjs"]
+  },
+  "hullExtension": {
+    "status": "ADDITIVE_SOURCE_GENERATION_NOT_FORMAL_ACCEPTANCE",
+    "inputs": [
+      "tools/physics/box3d/native/hull_bridge.c",
+      "tools/physics/box3d/native/hull_bridge.h",
+      "tools/physics/box3d/native/hull_contract.c",
+      "tools/physics/box3d/native/hull_core_contract.c",
+      "tools/physics/box3d/native/hull_legacy_fingerprint.c",
+      "tools/physics/box3d/hull-bridge-contract.md",
+      "tools/physics/box3d/hull-legacy-contract.mjs",
+      "tools/physics/box3d/patches/checked-hull-cooking.patch"
+    ],
+    "compileUnits": [
+      "tools/physics/box3d/native/hull_bridge.c",
+      "tools/physics/box3d/native/hull_contract.c",
+      "tools/physics/box3d/native/hull_core_contract.c",
+      "tools/physics/box3d/native/hull_legacy_fingerprint.c"
+    ],
+    "evidence": [
+      "native-hull-contract.raw.json",
+      "native-hull-core-contract.raw.json",
+      "air_box3d_hull_contract.cjs",
+      "air_box3d_hull_core_contract.cjs",
+      "air_box3d_hull_legacy_fingerprint.cjs",
+      "hull-legacy-baseline/comparison.raw.json",
+      "hull-legacy-baseline/compile_commands.json",
+      "hull-legacy-baseline/baseline.raw.txt",
+      "hull-legacy-baseline/patched.raw.txt"
+    ],
+    "commands": ["air_box3d_hull_contract.cjs", "air_box3d_hull_core_contract.cjs", "hull-legacy-contract.mjs"],
+    "qualificationSource": "tools/build/box3d-hull-qualification.cjs",
+    "provenance": {
+      "inputs": "tools/physics/box3d/build.mjs",
+      "compileUnits": "tools/physics/box3d/CMakeLists.txt",
+      "evidence": "tools/physics/box3d/audit-artifacts.mjs",
+      "nativeChecks": "tools/physics/box3d/native/hull_contract.c",
+      "coreChecks": "tools/physics/box3d/native/hull_core_contract.c",
+      "legacyComparison": "tools/physics/box3d/hull-legacy-contract.mjs"
+    },
+    "formalC14": "NOT_RUN",
+    "formal2128": "NOT_RUN",
+    "nineGates": "NOT_RUN"
   }
 }

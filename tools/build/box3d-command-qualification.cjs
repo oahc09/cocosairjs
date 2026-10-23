@@ -1,5 +1,5 @@
 /* Copyright (c) 2026-2027 oahc09@gmail.com. SPDX-License-Identifier: MIT
- * Read-only consumer retaining frozen n4 command qualification plus additive query/Capsule schedule. This is not a physics oracle.
+ * Read-only consumer retaining frozen n4 command qualification plus additive query/Capsule/Hull schedule. This is not a physics oracle.
  * Expected inventories are consumer-owned, never supplied by the inspected artifact.
  */
 const assert = require('node:assert/strict');
@@ -118,7 +118,7 @@ function outputPacket(input, output) {
     }
 }
 function verifyCommandSchedule(receipt) {
-    assert.equal(EXPECTED.gate.commands, 25, 'Exact consumer-owned WASM command count');
+    assert.equal(EXPECTED.gate.commands, 28, 'Exact consumer-owned WASM command count');
     assert.equal(receipt.commands.length, EXPECTED.gate.commands, 'Exact successful WASM command inventory');
     assert(receipt.commands.every((row) => row.exitCode === 0 && !row.error));
     assert.equal(receipt.motionSourceControls?.status, 'PASS_SOURCE_CONTROLS_ONLY');
@@ -133,9 +133,10 @@ function verifyCommandSchedule(receipt) {
         null,
         null,
         null,
-        ...['geometry', 'world', 'body', 'filter', 'motion', 'command', 'query', 'capsule'].map(
+        ...['geometry', 'world', 'body', 'filter', 'motion', 'command', 'query', 'capsule', 'hull', 'hull_core'].map(
             (n) => `air_box3d_${n}_contract.cjs`,
         ),
+        'hull-legacy-contract.mjs',
         ...[
             '',
             'ownership-',
@@ -149,6 +150,7 @@ function verifyCommandSchedule(receipt) {
             'query-',
         ].map((n) => `wasm-${n}contract.mjs`),
     ];
+    assert.equal(scripts.length, EXPECTED.gate.commands, 'Exact consumer-owned command schedule length');
     scripts.forEach((script, i) => {
         const row = receipt.commands[i];
         assert(Array.isArray(row.args) && row.args.every((arg) => typeof arg === 'string'));

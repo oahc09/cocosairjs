@@ -1,11 +1,11 @@
 {
   "schema": "cocosair.box3d.ex01.source-identity.v1",
   "status": "IN_PROGRESS",
-  "createdAt": "2026-10-23T17:22:37.797514+00:00",
-  "baseCommit": "38a00916cbf173969d09ef1324df4d556caaaf44",
+  "createdAt": "2026-10-23T18:39:06.379723+00:00",
+  "baseCommit": "ce69f582115411a35f55680d29a9b2df0d15ef46",
   "runtimeExecuted": false,
-  "previousSourceIdentitySha256": "dc6a0876283cc6fe61774087963875b921758ed930d800ebbfe4bb7caa5b2bef",
-  "increment": "Fixed-buffer native identity decoding; original Firefox60/61 RED preserved. Matching new WASM built; actual corrected browser and production ESM pending.",
+  "previousSourceIdentitySha256": "aae10dfec1f129f8aee13811c8a4b5f6ca1e97173c4e5ae73be40b9ef340b5d9",
+  "increment": "Real convex MeshCollider tetrahedron source and byteOffset-aware geometry; current public runtime/browser qualification pending. Prior63 Firefox observations remain separate historical evidence.",
   "reference": {
     "path": "ai/plans/box3d-v1.2-reference.md",
     "sha256": "17b4dcf0d8acbe0ed72f81ab4d3fc53c6a51f705d573699f0d50137e4bf00c46",
@@ -19,18 +19,18 @@
     },
     {
       "path": "examples/box3d-rigidbody-playground/README.md",
-      "bytes": 13233,
-      "sha256": "f8e57420fc328a19df8e5cfb1a0e0df2e9bc238af1cff2ffcb8f12b9b28c95cc"
+      "bytes": 13716,
+      "sha256": "d5421105400932a2973123536933917ae3a92675d801a617ec863073498ea43f"
     },
     {
       "path": "examples/box3d-rigidbody-playground/index.html",
-      "bytes": 11992,
-      "sha256": "5b6bcb8ddd40d6f779bf905bea6d0fdf7e9513f137a3d9e22eae2dec5c547d4a"
+      "bytes": 12038,
+      "sha256": "11b81e030796223dd3763ec7f188277b3c9af880a32ba2f41a8e975c6f5f3448"
     },
     {
       "path": "examples/box3d-rigidbody-playground/original-requirements.json",
-      "bytes": 5751,
-      "sha256": "9de2c21d46462864ab69ded921ca746d4c2b666c675a9e1f651a6b0932973b63"
+      "bytes": 5902,
+      "sha256": "ba877c681330634213878b0d298262cabf5554c543e9734d5169a57f987f7c3f"
     },
     {
       "path": "examples/box3d-rigidbody-playground/src/backend-observation.ts",
@@ -48,9 +48,14 @@
       "sha256": "783e28343167418c0a08cadc36a133140ac7ee9405bcdd863c6cbdbb572e5f0a"
     },
     {
+      "path": "examples/box3d-rigidbody-playground/src/hull-geometry.ts",
+      "bytes": 1916,
+      "sha256": "5e639aa72054f9a889f25c02db51818b2587ac364233c2b22da852a2a4a4a0f1"
+    },
+    {
       "path": "examples/box3d-rigidbody-playground/src/main.ts",
-      "bytes": 37320,
-      "sha256": "9570d1baef8ee589543f7fdf42d55e6ad829fcec1b8726af0fbc16931c5c506d"
+      "bytes": 38186,
+      "sha256": "4251ac1ac136128d51147f38155f9f200b31f083c9d1e860d3243ad32a5ed828"
     },
     {
       "path": "examples/box3d-rigidbody-playground/src/spring-drag.ts",
@@ -78,14 +83,24 @@
       "sha256": "956897d2f3f5f67316fbfac11828debb7089641b64aabca81bae3c2fa4f58b2e"
     },
     {
+      "path": "src/air/physics/box3d/hull-geometry.ts",
+      "bytes": 10112,
+      "sha256": "f02b31452a8f5d99357d47a673ad5e56e1d05e90b6300d75c20873ddf4ae848e"
+    },
+    {
+      "path": "src/air/physics/box3d/hull-shape.ts",
+      "bytes": 13108,
+      "sha256": "595b4c330f7c66b57820ebea7599c9c9692ebc386dbe6b25d948f1f0344c21a7"
+    },
+    {
       "path": "src/air/physics/box3d/query.ts",
       "bytes": 7400,
       "sha256": "f7e53ccdd67abd86a2a50e93a6baaadf3bc24deaca265acb8ccaa8584955d3c6"
     },
     {
       "path": "src/air/physics/box3d/shared-body.ts",
-      "bytes": 46630,
-      "sha256": "7c2e33b66975268716f50acc92cae5c86950ba219fdd63d0a460b885ba63041b"
+      "bytes": 48786,
+      "sha256": "b912758e699bd6dfb9254eb4056f604eab3f9695bd75c83d6a338ab909bb82ee"
     },
     {
       "path": "src/air/physics/box3d/world.ts",
@@ -94,8 +109,13 @@
     },
     {
       "path": "tools/verify/box3d/ex01-capsule-scene.test.cjs",
-      "bytes": 7768,
-      "sha256": "e2c18fb2e7d8326bebabe8fbe2aa80e3fe05230130424656b42ea60948dde35c"
+      "bytes": 7827,
+      "sha256": "eb67700e094e4cb322694a6e129d430b9053b31b024d56bff372391977842a73"
+    },
+    {
+      "path": "tools/verify/box3d/ex01-hull-scene.test.cjs",
+      "bytes": 4491,
+      "sha256": "7449e0d3e2a04a4b7232ac4842042c0f506e8c78a6a8b0edd72d181ab482bc18"
     }
   ],
   "scope": "Authored EX01 candidate; first Firefox actual run RED retained. Corrected browser acceptance pending. No alternative solver, private step or frame-driven spring.",

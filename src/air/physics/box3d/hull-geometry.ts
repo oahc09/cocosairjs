@@ -20,7 +20,7 @@
  THE SOFTWARE.
 */
 import type { Mesh } from '../../../cocos/3d/assets/mesh';
-import { AttributeName, FormatType } from '../../../cocos/gfx/base/define';
+import { AttributeName, FormatInfos, FormatType } from '../../../cocos/gfx/base/define';
 import type { Box3DSurfaceMaterial } from './world-binding';
 import { copySurfaceMaterial, finiteFloat32, worldError } from './world-binding';
 import { unsupportedBox3D } from './unsupported';
@@ -48,15 +48,22 @@ export function copyHullPoints(mesh: Mesh | null): readonly number[] | null {
     if (!mesh || !mesh.struct || !mesh.struct.primitives.length)
         throw worldError('AIR_E_BOX3D_GEOMETRY', 'hull source', 'Mesh contains no submeshes.');
     const points: number[] = [];
-    for (let i = 0; i < mesh.struct.primitives.length; ++i) {
-        const format = mesh.readAttributeFormat(i, AttributeName.ATTR_POSITION);
-        const data = mesh.readAttribute(i, AttributeName.ATTR_POSITION);
-        if (!format || format.count !== 3 || !data || data.length === 0 || data.length % 3 !== 0)
-            throw worldError(
-                'AIR_E_BOX3D_GEOMETRY',
-                'hull source',
-                'Every submesh needs a readable XYZ POSITION stream.',
-            );
+    for (const primitive of mesh.struct.primitives) {
+        let bundle: Mesh.IVertexBundle | undefined;
+        let attributeIndex = -1;
+        for (const index of primitive.vertexBundelIndices) {
+            const candidate = mesh.struct.vertexBundles[index];
+            if (!candidate) throw worldError('AIR_E_BOX3D_GEOMETRY', 'hull source', 'Missing vertex bundle.');
+            const found = candidate.attributes.findIndex((a) => a.name === AttributeName.ATTR_POSITION);
+            if (found >= 0) {
+                bundle = candidate;
+                attributeIndex = found;
+                break;
+            }
+        }
+        const format = bundle && FormatInfos[bundle.attributes[attributeIndex].format];
+        if (!bundle || !format || format.count !== 3)
+            throw worldError('AIR_E_BOX3D_GEOMETRY', 'hull source', 'Every submesh needs an XYZ POSITION stream.');
         const bytes = format.size / format.count;
         if (
             format.isCompressed ||
@@ -67,15 +74,41 @@ export function copyHullPoints(mesh: Mesh | null): readonly number[] | null {
             (format.type === FormatType.FLOAT && bytes !== 2 && bytes !== 4)
         )
             unsupportedBox3D('packed or unreadable MeshCollider POSITION format');
-        // Mesh.readAttribute returns raw normalized integers and raw float16 bits, not GPU-decoded positions.
-        // Decode those formats explicitly rather than cooking the encoded storage values as coordinates.
-        for (let j = 0; j < data.length; ++j) {
-            let value = data[j];
-            if (format.type === FormatType.FLOAT && bytes === 2) value = decodeHalf(value);
-            else if (format.type === FormatType.UNORM) value /= 2 ** (8 * bytes) - 1;
-            else if (format.type === FormatType.SNORM) value = Math.max(-1, value / (2 ** (8 * bytes - 1) - 1));
-            // Do not clamp to core output limits or silently decimate input; native owns those limits.
-            points.push(finiteFloat32(value, 'hull POSITION'));
+        let attributeOffset = 0;
+        for (let i = 0; i < attributeIndex; ++i) {
+            const preceding = FormatInfos[bundle.attributes[i].format];
+            if (!preceding || preceding.isCompressed)
+                unsupportedBox3D('packed or unreadable MeshCollider vertex layout');
+            attributeOffset += preceding.size;
+        }
+        const { offset, length, count, stride } = bundle.view;
+        const data = mesh.data;
+        const end = (count - 1) * stride + attributeOffset + format.size;
+        if (
+            ![offset, length, count, stride, attributeOffset, end].every((n) => Number.isSafeInteger(n) && n >= 0) ||
+            count === 0 ||
+            attributeOffset + format.size > stride ||
+            end > length ||
+            offset + length > data.byteLength
+        )
+            throw worldError('AIR_E_BOX3D_GEOMETRY', 'hull source', 'POSITION stream exceeds its vertex buffer.');
+        // Mesh.readAttribute currently omits data.byteOffset. Use only the actual Mesh data view, not its backing prefix.
+        const view = new DataView(data.buffer, data.byteOffset + offset, length);
+        const signed = format.type === FormatType.INT || format.type === FormatType.SNORM;
+        for (let vertex = 0; vertex < count; ++vertex) {
+            for (let axis = 0; axis < 3; ++axis) {
+                const at = vertex * stride + attributeOffset + axis * bytes;
+                let value: number;
+                if (format.type === FormatType.FLOAT)
+                    value = bytes === 4 ? view.getFloat32(at, true) : decodeHalf(view.getUint16(at, true));
+                else if (bytes === 1) value = signed ? view.getInt8(at) : view.getUint8(at);
+                else if (bytes === 2) value = signed ? view.getInt16(at, true) : view.getUint16(at, true);
+                else value = signed ? view.getInt32(at, true) : view.getUint32(at, true);
+                if (format.type === FormatType.UNORM) value /= 2 ** (8 * bytes) - 1;
+                else if (format.type === FormatType.SNORM) value = Math.max(-1, value / (2 ** (8 * bytes - 1) - 1));
+                // Do not clamp to core output limits or silently decimate input; native owns those limits.
+                points.push(finiteFloat32(value, 'hull POSITION'));
+            }
         }
     }
     if (points.length < 12)

@@ -68,3 +68,24 @@ The facade now marks successful native shape destruction COMMITTED before body
 state readback, and retires the destroyed token. The added real-native failure
 injection fixture is frozen but NOT_RUN for this updated source yet. A native
 throw remains UNKNOWN and is never automatically replayed.
+
+## Source71 follow-on correction
+
+The nonzero-offset Mesh reader now uses the actual data view offset, interleaved
+stride and attribute layout with explicit bounds checks. The original two-valid-
+tetrahedra control failed before the fix and passes afterward (21/21 source
+controls). The fresh real Cocos N1–N7 fixture is frozen but NOT_RUN at this source
+checkpoint. Its full artifact gate now requires the exact 65 inputs, 74 compile
+units, 28 commands and 43 evidence records, including independent legacy Hull
+comparison. Existing command qualification assertions remain intact.
+
+Matching source70 WASM Release subsequently passed 12 facade checks (six real
+WASM, two pure injected statuses, four real native mutations plus boundary fault
+injection). It is archived as Library `libfile_3542ec08be6c8191a03541f6555ac89d`,
+6082860 bytes, SHA256
+`28eade1757034442ebe8bd1c646bbabd2e290ca0d276bff6055e9cf6ac0c54a0`;
+all 787 downloaded members were verified. Its facade SHA256 is
+`1d910108b5a7570250bed070bf3529fbf2153346e7cbc8dd0f7cb54faca95ef4`.
+The 65 native build input bytes remain unchanged by the public offset/gate update,
+but admission must revalidate them rather than rely on this prose. No public or
+browser PASS is claimed at this freeze.
