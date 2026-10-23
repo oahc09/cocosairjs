@@ -20,11 +20,16 @@
  THE SOFTWARE.
 */
 import { Node } from '../../../cocos/scene-graph/node';
+import { game } from '../../../cocos/game/game';
+import { registerGameClockObserver, gameClockSemanticPause } from '../../../cocos/game/game-clock-control';
+import type { GameClockState, GameClockObservation, GameClockDiagnostics, GameClockPlan, GameClockFailure } from '../../../cocos/game/game-clock-control';
 import { PhysicsSystem } from '../../../cocos/physics/framework/physics-system';
 import { RigidBody } from '../../../cocos/physics/framework/components/rigid-body';
 import { Collider } from '../../../cocos/physics/framework/components/colliders/collider';
 import { PhysicsMaterial } from '../../../cocos/physics/framework/assets/physics-material';
 import { registerMutationGuard } from '../../../cocos/core/data/mutation-guard';
+import { registerComponentActivityObserver } from '../../../cocos/scene-graph/component-activity-control';
+import type { ActivityState, ActivityPlan, ActivityFailureReport, ComponentActivityLease } from '../../../cocos/scene-graph/component-activity-control';
 import type { MutationGuardLease } from '../../../cocos/core/data/mutation-guard';
 import { registerNodeTransformGuard } from '../../../cocos/scene-graph/node-transform-validation';
 import type {
@@ -34,6 +39,12 @@ import type {
 } from '../../../cocos/scene-graph/node-transform-validation';
 import type { Box3DBodyState, Box3DId } from './binding/facade.mjs';
 import { Box3DCommandQueue } from './command-queue';
+import {
+    registerBox3DCurrentMotionOwner,
+    submitBox3DCurrentTarget,
+    revokeBox3DCurrentTarget,
+} from './current-motion-route';
+import type { Box3DCurrentMotionLease } from './current-motion-route';
 import type {
     PreparedCommandPause,
     CommandInput,
@@ -120,12 +131,21 @@ type CopiedMaterialApplication = (authority: object, material: Readonly<Box3DSur
 export interface Box3DWorldOwnerEnvironment {
     readonly physicsSystem: () => PhysicsSystem;
 }
+export interface Box3DPreparedRigidActivity {
+    apply(authority: object): void;
+    delegate(authority: object): void;
+    verify(authority: object, requireZero: boolean, effective: boolean): void;
+    dispose(): void;
+}
 export interface Box3DOwnedBodySeed {
     readonly node: Node;
     readonly ancestry: readonly Node[];
     readonly preflight: () => void;
     readonly readCommitted: () => Readonly<Box3DBodyState>;
     readonly resolveNative: () => Box3DId;
+    /** Captured paired-zero kernel only. Never exposed on an adapter or component. */
+    readonly clearTargetVelocity: () => void;
+    readonly prepareRigidActivity: (adapter: object, authority: object, enabled: boolean, previousEnabled: boolean) => Box3DPreparedRigidActivity;
 }
 export interface Box3DOwnedComponentSeed {
     readonly adapter: object;
@@ -135,6 +155,12 @@ export interface Box3DOwnedComponentSeed {
     /** Captured adapter helper only; never returned on impl or a component. */
     readonly applyMaterial?: CopiedMaterialApplication;
     readonly prepareMaterialValues?: PrepareComponentMaterial;
+}
+/** Internal candidate only; no public helper export or native capability. */
+export interface Box3DKinematicTarget {
+    setTarget(pose: CommandPose): void;
+    clear(): void;
+    dispose(): void;
 }
 /** Internal finite reset options; this is not a public adapter capability. */
 export interface Box3DTeleportOptions {
@@ -181,6 +207,21 @@ type ComponentRecord = {
     initialized: boolean;
     enabled: boolean;
 };
+type TargetRecord = {
+    readonly generation: number;
+    readonly identity: object;
+    readonly body: object;
+    readonly adapter: object;
+    readonly component: ComponentRecord;
+    readonly ancestry: readonly Node[];
+    readonly token: object;
+    guard: NodeTransformGuardLease | null;
+    state: 'active' | 'protected' | 'settled' | 'unresolved';
+};
+const targetRejection = Object.freeze({
+    code: 'AIR_E_BOX3D_CONFIG',
+    message: 'Box3D target ownership protects this Node or an affected descendant; use the motion API',
+});
 const rejection = Object.freeze({
     code: 'AIR_E_BOX3D_REENTRANT',
     message: 'A Box3D-owned temporary step or dispatch scope forbids this mutation',
@@ -190,16 +231,18 @@ const activationBlockers = Object.freeze([
     'shared-material-propagation-and-subscription-integrity',
     'full-producer-pause-lifecycle-not-qualified',
     'complete-early-entry-qualification',
-    'persistent-target-grant-budget',
+    'persistent-target-owner-not-qualified',
+    'persist-scene-transfer-not-integrated',
+    'game-pause-manual-clock-reason-not-integrated',
 ]);
 function object(value: unknown, operation: string): asserts value is object {
     if (!value || typeof value !== 'object')
         throw worldError('AIR_E_BOX3D_CONFIG', operation, 'Expected object identity.');
 }
 
-/** Owns logical identity, temporary fences and the internal finite dynamic-command
- * candidate. Native resolver capabilities remain private. Package-level unified
- * activation still requires the complete target/lifecycle and acceptance contracts.
+/** Owns exact logical/component identity, temporary fences, persistent target leases
+ * and the internal command candidate. Native resolver capabilities remain private.
+ * Public activation still requires complete lifetime and acceptance contracts.
  */
 export class Box3DWorldCommandOwner {
     readonly #generation: number;
@@ -222,12 +265,18 @@ export class Box3DWorldCommandOwner {
     readonly #queue: Box3DCommandQueue;
     readonly #producers: Box3DCommandProducers;
     #commandRouting: PhysicsCommandOwnerLease | null = null;
+    #motionRouting: Box3DCurrentMotionLease | null = null;
+    readonly #targets = new Map<object, TargetRecord>();
     #initialProducerControl = false;
     #commandPhase: 'idle' | 'collecting' | 'validating' | 'committing' | 'awaiting-step' = 'idle';
     readonly #cleanupFailures: Readonly<{ stage: string; error: unknown }>[] = [];
     #omittedCleanupFailures = 0;
     readonly #bodies = new Map<object, BodyRecord>();
     readonly #components = new Map<object, ComponentRecord>();
+    readonly #activityLeases = new Map<object, ComponentActivityLease>();
+    readonly #activityCleanups = new Set<() => void>();
+    readonly #activityAuthorities = new WeakMap<object, { adapter: object; context: object; scope: Box3DOwnerFenceScope; stage: 'prepare' | 'apply' | 'delegate' | 'verify' }>();
+    #lastActivity: Readonly<{ cacheWriteEntered: boolean; callbackReturned: boolean; schedulerReturned: boolean; cleanupCommitted: boolean; nativeApplied: boolean; delegated: boolean; actual: ActivityState | null; actualReadStatus: string; schedulerUnchanged: boolean | null }> | null = null;
     #defaultMaterial: PhysicsMaterial | null = null;
     #phase: Phase = 'idle';
     #nativeTeardown: 'owned' | 'released' | 'unresolved' = 'owned';
@@ -244,6 +293,20 @@ export class Box3DWorldCommandOwner {
     >();
     #systemControlLease: PhysicsSystemControlLease | null = null;
     #systemPaused = false;
+    #gamePaused = false;
+    #gameControlLease: GameClockObservation | null = null;
+    #gameState: GameClockState | null = null;
+    #gameClockSnapshot: GameClockDiagnostics | null = null;
+    #clockReentry: { error: unknown } | null = null;
+    #lastGameControl: Readonly<{
+        before: GameClockState;
+        actual: GameClockState;
+        queueCommitEntered: boolean;
+        queueCommitReturned: boolean;
+        producerCommitEntered: boolean;
+        producerCommitReturned: boolean;
+        failure: GameClockFailure | null;
+    }> | null = null;
     readonly #controlCleanups = new Set<() => void>();
     #lastControl: Readonly<{
         operation: string;
@@ -289,11 +352,28 @@ export class Box3DWorldCommandOwner {
         if (this.#commandRouting) throw worldError('AIR_E_BOX3D_CONFIG', 'command route', 'Already installed.');
         this.#commandRouting = registerPhysicsCommandOwner(this.#world, {
             submit: (source, read) => this.submitDynamicCommand(source, read),
-            assertConfiguration: (operation) => {
-                this.assertConfiguration(operation);
-                this.assertSystemBinding();
-            },
+            assertConfiguration: (operation, source) => this.assertVelocityConfiguration(source, operation),
         });
+        try {
+            this.#motionRouting = registerBox3DCurrentMotionOwner(this.#world, {
+                submit: (owner, handle, read) => this.#submitTarget(owner, handle, read),
+                revoke: (owner, handle) => this.#revokeTarget(owner, handle),
+            });
+        } catch (error) {
+            this.#commandRouting.dispose();
+            this.#commandRouting = null;
+            throw error;
+        }
+    }
+    assertVelocityConfiguration(source: object, operation: string): void {
+        this.assertConfiguration(operation);
+        this.assertSystemBinding();
+        // Preserve legacy unowned/uninitialized ready behavior; inspect no input vector.
+        const component = [...this.#components.values()].find(
+            (record) => record.kind === 'rigid-body' && record.component === source,
+        );
+        if (component && this.#targets.has(component.body))
+            throw worldError('AIR_E_BOX3D_CONFIG', operation, 'Target ownership still controls paired velocity.');
     }
     #producerAdmission(operation: string, allowPaused: boolean): ProducerOperationLease {
         this.assertConfiguration(operation);
@@ -367,6 +447,230 @@ export class Box3DWorldCommandOwner {
         }
         return { key: component.body, body, component };
     }
+    #targetFromHandle(owner: object, identity: object, active: boolean): TargetRecord {
+        const target = [...this.#targets.values()].find((record) => record.identity === identity);
+        if (
+            owner !== this.#world ||
+            !target ||
+            target.generation !== this.#generation ||
+            this.#components.get(target.adapter) !== target.component ||
+            !this.#bodies.has(target.body) ||
+            (active && target.state !== 'active')
+        )
+            throw worldError('AIR_E_BOX3D_DISPOSED', 'target handle', 'Stale or foreign target ownership.');
+        return target;
+    }
+    #assertTargetBody(target: TargetRecord): BodyRecord {
+        const resolved = this.#resolveCommandSource(target.component.component, false);
+        if (resolved.key !== target.body || resolved.component !== target.component)
+            throw worldError('AIR_E_BOX3D_DISPOSED', 'target body', 'Actual component identity changed.');
+        const state = resolved.body.readCommitted();
+        if (!resolved.component.enabled || !state.enabled || state.type !== 1)
+            throw worldError('AIR_E_BOX3D_CONFIG', 'target body', 'An enabled actual kinematic body is required.');
+        return resolved.body;
+    }
+    #withTargetAdmission<T>(perform: (admission: { scope: Box3DOwnerFenceScope | null }) => T): T {
+        const admission: { scope: Box3DOwnerFenceScope | null } = { scope: null };
+        let failed = false,
+            first: unknown;
+        try {
+            return perform(admission);
+        } catch (error) {
+            failed = true;
+            first = error;
+            throw error;
+        } finally {
+            try {
+                admission.scope?.dispose();
+            } catch (error) {
+                this.#materialFault?.(failed ? first : error);
+                if (!failed) throw error;
+            }
+        }
+    }
+    createKinematicTarget(source: object): Box3DKinematicTarget {
+        const provisional: {
+            guard: NodeTransformGuardLease | null;
+            acquired: { body: object; token: object } | null;
+            published: TargetRecord | null;
+        } = { guard: null, acquired: null, published: null };
+        try {
+            return this.#withTargetAdmission((admission) => {
+                const staged: {
+                    prepared?: {
+                        body: object;
+                        adapter: object;
+                        component: ComponentRecord;
+                        ancestry: readonly Node[];
+                        identity: object;
+                    };
+                } = {};
+                const token = this.#queue.withTargetAcquisitionAdmission(() => {
+                    this.assertConfiguration('create kinematic target');
+                    this.assertSteppingAllowed('create kinematic target');
+                    admission.scope = this.#begin('admission', [source]);
+                    const resolved = this.#resolveCommandSource(source, false),
+                        state = resolved.body.readCommitted();
+                    if (!resolved.component.enabled || !state.enabled || state.type !== 1)
+                        throw worldError(
+                            'AIR_E_BOX3D_CONFIG',
+                            'create target',
+                            'An enabled kinematic body is required.',
+                        );
+                    if (this.#targets.has(resolved.key))
+                        throw worldError('AIR_E_BOX3D_CONFIG', 'create target', 'Target ownership is still held.');
+                    resolved.body.preflight();
+                    const ancestry = Object.freeze([...resolved.body.ancestry]),
+                        adapter = [...this.#components].find(([, record]) => record === resolved.component)![0];
+                    provisional.guard = registerNodeTransformGuard(ancestry, targetRejection);
+                    staged.prepared = {
+                        body: resolved.key,
+                        adapter,
+                        component: resolved.component,
+                        ancestry,
+                        identity: Object.freeze({}),
+                    };
+                    return resolved.key;
+                });
+                const ready = staged.prepared!;
+                provisional.acquired = { body: ready.body, token };
+                const record: TargetRecord = {
+                    ...ready,
+                    generation: this.#generation,
+                    token,
+                    guard: provisional.guard,
+                    state: 'active',
+                };
+                const handle = Object.freeze({
+                    setTarget: (pose: CommandPose): void => {
+                        submitBox3DCurrentTarget(this.#world, record.identity, () => ({ kind: 'target', pose }));
+                    },
+                    clear: (): void => {
+                        submitBox3DCurrentTarget(this.#world, record.identity, () => ({ kind: 'target-clear' }));
+                    },
+                    dispose: (): void => {
+                        // Only an actually revoked/terminal handle is an idempotent no-op.
+                        if (record.state !== 'active') return;
+                        revokeBox3DCurrentTarget(this.#world, record.identity);
+                    },
+                });
+                this.#targets.set(record.body, record);
+                provisional.published = record;
+                return handle;
+            });
+        } catch (error) {
+            // Even a fence-disposal failure precedes delivery of this handle. No native
+            // motion occurred, so unwind this unpublished acquisition without inventing zero.
+            let abandoned = false;
+            try {
+                const acquired = provisional.acquired;
+                if (acquired) this.#queue.releaseUnpublishedTarget(acquired.body, acquired.token);
+                abandoned = true;
+            } catch (cleanup) {
+                this.#recordCleanup('unpublished-target-queue-dispose', cleanup);
+                this.#materialFault?.(error);
+            }
+            try {
+                provisional.guard?.dispose();
+                if (provisional.published) {
+                    provisional.published.state = abandoned ? 'settled' : 'unresolved';
+                    provisional.published.guard = null;
+                    if (abandoned) this.#targets.delete(provisional.published.body);
+                }
+            } catch (cleanup) {
+                this.#recordCleanup('unpublished-target-guard-dispose', cleanup);
+                this.#materialFault?.(error);
+            }
+            throw error;
+        }
+    }
+    #submitTarget(owner: object, identity: object, read: () => CommandInput): void {
+        this.#withTargetAdmission((admission) => {
+            this.#queue.withSubmissionAdmission(() => {
+                this.assertSystemBinding();
+                if (this.#aggregatePaused())
+                    throw worldError('AIR_E_BOX3D_CONFIG', 'target submission', 'The actual owner is paused.');
+                if (this.#phase === 'idle') admission.scope = this.#begin('admission');
+                else if (!(this.#phase === 'preflight' && this.#commandPhase === 'collecting' && this.#scope))
+                    throw worldError('AIR_E_BOX3D_REENTRANT', 'target submission', 'Not in ready or collection.');
+                const target = this.#targetFromHandle(owner, identity, true);
+                this.#assertTargetBody(target);
+                const command = read();
+                if (!command || (command.kind !== 'target' && command.kind !== 'target-clear'))
+                    throw worldError('AIR_E_BOX3D_CONFIG', 'target submission', 'Expected target motion.');
+                return { body: target.body, command };
+            });
+        });
+    }
+    #revokeTarget(owner: object, identity: object): void {
+        this.#withTargetAdmission((admission) => {
+            const selected: { target?: TargetRecord } = {};
+            this.#queue.withTargetRevocationAdmission(() => {
+                this.assertConfiguration('dispose target');
+                this.assertSystemBinding();
+                admission.scope = this.#begin('admission');
+                const target = this.#targetFromHandle(owner, identity, true);
+                selected.target = target;
+                return { body: target.body, owner: target.token };
+            });
+            selected.target!.state = 'protected';
+        });
+    }
+    #releaseTargetGuard(target: TargetRecord): void {
+        target.guard?.dispose();
+        target.guard = null;
+    }
+    #settleTarget(target: TargetRecord, outcome: 'paired-zero' | 'teardown'): void {
+        if (this.#targets.get(target.body) !== target)
+            throw worldError('AIR_E_BOX3D_DISPOSED', 'settle target', 'Target ownership changed.');
+        this.#queue.settleTargetAfterCleanup(target.body, target.token, outcome);
+        this.#releaseTargetGuard(target);
+        target.state = 'settled';
+        this.#targets.delete(target.body);
+    }
+    /** Private pre-transition hook. No component disabled/type cache is native zero proof. */
+    prepareTargetTransition(body: object): boolean {
+        const target = this.#targets.get(body);
+        if (!target) return false;
+        if (this.#phase === 'faulted' || this.#phase === 'closed') {
+            // Terminal JS cleanup releases ancestry guards, but never claims native settlement.
+            this.#releaseTargetGuard(target);
+            target.state = 'unresolved';
+            return false;
+        }
+        this.assertConfiguration('target lifecycle cleanup');
+        this.assertSystemBinding();
+        if (target.state === 'active') {
+            this.#queue.withTargetRevocationAdmission(() => ({ body, owner: target.token }));
+            target.state = 'protected';
+        }
+        const owned = this.#bodies.get(body);
+        if (!owned || target.state !== 'protected')
+            throw worldError('AIR_E_BOX3D_DISPOSED', 'target lifecycle cleanup', 'Missing protected owned body.');
+        const scope = this.#begin('control');
+        let committed = false,
+            failed = false,
+            first: unknown;
+        try {
+            // This captured callback calls only native op13; no mass/geometry preflight or solver.
+            owned.clearTargetVelocity();
+            committed = true;
+            this.#settleTarget(target, 'paired-zero');
+            return true;
+        } catch (error) {
+            failed = true;
+            first = error;
+            if (committed) this.#materialFault?.(error);
+            throw error;
+        } finally {
+            try {
+                scope.dispose();
+            } catch (error) {
+                this.#materialFault?.(failed ? first : error);
+                if (!failed) throw error;
+            }
+        }
+    }
     submitDynamicCommand(source: object, read: () => PhysicsBodyCommandInput): number {
         return this.#submitCommand(source, read, false);
     }
@@ -406,7 +710,7 @@ export class Box3DWorldCommandOwner {
             return this.#queue.withSubmissionAdmission(() => {
                 // Owner/source admission is inside the queue latch, including wrong/disabled sources.
                 this.assertSystemBinding();
-                if (this.#systemPaused)
+                if (this.#aggregatePaused())
                     throw worldError('AIR_E_BOX3D_CONFIG', 'command submission', 'The actual owner is paused.');
                 if (this.#phase === 'idle') admission.scope = this.#begin('admission', [source]);
                 else if (!(this.#phase === 'preflight' && this.#commandPhase === 'collecting' && this.#scope))
@@ -448,7 +752,7 @@ export class Box3DWorldCommandOwner {
                     throw worldError(
                         'AIR_E_BOX3D_UNSUPPORTED',
                         'command submission',
-                        'Only finite dynamic commands and the internal teleport entry are installed; targets remain unavailable.',
+                        'This route accepts finite dynamic commands and teleport; targets require their private handle.',
                     );
                 return { body: resolved.key, command };
             });
@@ -552,6 +856,19 @@ export class Box3DWorldCommandOwner {
                 );
                 if (resolved.key !== record.body)
                     throw worldError('AIR_E_BOX3D_DISPOSED', 'command final validation', 'Body identity changed.');
+                if (kind === 'target' || kind === 'target-clear') {
+                    const target = this.#targets.get(record.body);
+                    if (
+                        !target ||
+                        (record.source === 'protected' ? target.state !== 'protected' : target.state !== 'active')
+                    )
+                        throw worldError(
+                            'AIR_E_BOX3D_DISPOSED',
+                            'target final validation',
+                            'Target ownership changed.',
+                        );
+                    this.#assertTargetBody(target);
+                }
                 if (kind === 'teleport') {
                     const state = resolved.body.readCommitted();
                     if (state.type !== 1 && state.type !== 2)
@@ -584,13 +901,17 @@ export class Box3DWorldCommandOwner {
                 tokens,
             );
             const context = candidate.context,
-                acceptedCount = candidate.original.length;
+                acceptedCount = candidate.original.length,
+                protectedTargets = candidate.operations
+                    .filter((record) => record.source === 'protected')
+                    .map((record) => this.#targets.get(record.body)!);
             return Object.freeze({
                 commands,
                 teleportNodes: Object.freeze(Array.from(teleportNodes)),
                 context,
                 acceptedCount,
                 beginCommit: () => {
+                    this.#assertNoClockReentry();
                     this.#queue.beginCommit(requirePhase('validating'));
                     phase = this.#commandPhase = 'committing';
                 },
@@ -600,7 +921,28 @@ export class Box3DWorldCommandOwner {
                     this.#commandPhase = outcome === 'committed' ? 'awaiting-step' : 'idle';
                 },
                 complete: () => {
-                    this.#queue.completeTick(requirePhase('awaiting-step'));
+                    this.#assertNoClockReentry();
+                    const current = requirePhase('awaiting-step');
+                    // Protected idle is paired zero, not a fresh target trajectory. Kinematic
+                    // bodies do not acquire contact/force velocity. Verify actual settled zero
+                    // after receipt, solver and Node writeback before releasing control.
+                    for (const target of protectedTargets) {
+                        const state = this.#assertTargetBody(target).readCommitted();
+                        if (
+                            !Object.isFrozen(state) ||
+                            state.linearVelocity.length !== 3 ||
+                            state.angularVelocity.length !== 3 ||
+                            state.linearVelocity.some((value) => value !== 0) ||
+                            state.angularVelocity.some((value) => value !== 0)
+                        )
+                            throw worldError(
+                                'AIR_E_BOX3D_ABI',
+                                'target settlement',
+                                'Protected paired zero was not observed after the completed tick.',
+                            );
+                    }
+                    this.#queue.completeTick(current);
+                    for (const target of protectedTargets) this.#settleTarget(target, 'paired-zero');
                     phase = 'settled';
                     this.#commandPhase = 'idle';
                 },
@@ -795,8 +1137,10 @@ export class Box3DWorldCommandOwner {
             throw worldError('AIR_E_BOX3D_CONFIG', 'adopt body', 'Invalid ancestor identity.');
         const preflight = seed.preflight,
             readCommitted = seed.readCommitted,
-            resolveNative = seed.resolveNative;
-        if ([preflight, readCommitted, resolveNative].some((fn) => typeof fn !== 'function'))
+            resolveNative = seed.resolveNative,
+            clearTargetVelocity = seed.clearTargetVelocity,
+            prepareRigidActivity = seed.prepareRigidActivity;
+        if ([preflight, readCommitted, resolveNative, clearTargetVelocity, prepareRigidActivity].some((fn) => typeof fn !== 'function'))
             throw worldError('AIR_E_BOX3D_CONFIG', 'adopt body', 'Expected private body accessors.');
         const record = Object.freeze({
             node,
@@ -804,6 +1148,8 @@ export class Box3DWorldCommandOwner {
             preflight,
             readCommitted,
             resolveNative,
+            clearTargetVelocity,
+            prepareRigidActivity,
         });
         const key = Object.freeze({});
         this.#queue.registerBody(key);
@@ -873,8 +1219,155 @@ export class Box3DWorldCommandOwner {
     }
     completeComponent(adapter: object): void {
         this.assertConfiguration('complete component identity');
-        this.#component(adapter).initialized = true;
+        const record = this.#component(adapter);
+        if (record.kind === 'rigid-body') this.#installComponentActivity(adapter, record);
+        record.initialized = true;
     }
+    /** Exact component source owns cache/scheduler publication; this observer retains
+     * one control scope through original callback and actual scheduler completion.
+     */
+    #installComponentActivity(adapter: object, record: ComponentRecord): void {
+        const owned = this.#bodies.get(record.body)!;
+        const lease = registerComponentActivityObserver(record.component, this.#world, {
+            delegateIdentity: adapter,
+            admit: () => this.#queue.withConfigurationAdmission(() => {
+                this.assertConfiguration('Component.enabled admission');
+                this.assertSystemBinding();
+                if (this.#components.get(adapter) !== record || !record.initialized ||
+                    record.component.node !== owned.node)
+                    throw worldError('AIR_E_BOX3D_DISPOSED', 'Component.enabled', 'Actual component generation changed.');
+            }),
+            open: (context: object): ActivityPlan => {
+                const scope = this.#begin('control');
+                let prepared: Box3DPreparedRigidActivity | null = null,
+                    before: ActivityState | null = null,
+                    expected = false, effective = false,
+                    cleanupCommitted = false, nativeApplied = false, delegated = false,
+                    cleanedTarget: TargetRecord | null = null,
+                    failed = false, first: unknown, disposed = false;
+                const tokens = new Set<object>();
+                const authority = (stage: 'prepare' | 'apply' | 'delegate' | 'verify'): object => {
+                    const token = Object.freeze({});
+                    this.#activityAuthorities.set(token, { adapter, context, scope, stage });
+                    tokens.add(token);
+                    return token;
+                };
+                const current = (): void => {
+                    if (disposed || this.#scope !== scope || this.#phase !== 'control' ||
+                        this.#components.get(adapter) !== record || this.#bodies.get(record.body) !== owned ||
+                        record.component.node !== owned.node)
+                        throw worldError('AIR_E_BOX3D_REENTRANT', 'component activity', 'Expired exact activity scope.');
+                };
+                const cleanup = (): void => {
+                    if (disposed) return;
+                    disposed = true;
+                    let cleanupFailed = false, cleanupError: unknown;
+                    try { prepared?.dispose(); } catch (error) { cleanupFailed = true; cleanupError = error; }
+                    for (const token of tokens) this.#activityAuthorities.delete(token);
+                    try { scope.dispose(); } catch (error) {
+                        if (!cleanupFailed) cleanupError = error;
+                        cleanupFailed = true;
+                    }
+                    this.#activityCleanups.delete(cleanup);
+                    if (cleanupFailed) {
+                        this.#recordCleanup('component-activity-dispose', cleanupError);
+                        this.#materialFault?.(failed ? first : cleanupError);
+                        throw cleanupError;
+                    }
+                };
+                this.#activityCleanups.add(cleanup);
+                return Object.freeze({
+                    prepare: (actual: ActivityState, next: boolean): void => {
+                        current();
+                        before = actual;
+                        expected = next;
+                        if (record.enabled !== actual.scheduled ||
+                            (actual.scheduled && (!actual.active || !actual.enabled)))
+                        {
+                            const error = worldError('AIR_E_BOX3D_CONFIG', 'component activity', 'Owner component/scheduler state disagrees.');
+                            this.#materialFault?.(error);
+                            throw error;
+                        }
+                        effective = actual.active && actual.enabled !== next && actual.scheduled !== next;
+                        prepared = owned.prepareRigidActivity(adapter, authority('prepare'),
+                            effective ? next : actual.scheduled, actual.scheduled);
+                    },
+                    apply: (): void => {
+                        current();
+                        if (!before) throw worldError('AIR_E_BOX3D_CONFIG', 'component activity', 'Not prepared.');
+                        if (!effective) return;
+                        if (!expected) {
+                            const target = this.#targets.get(record.body);
+                            if (target) {
+                                if (target.state === 'active') {
+                                    this.#queue.withTargetRevocationAdmission(() => ({ body: record.body, owner: target.token }));
+                                    target.state = 'protected';
+                                }
+                                if (target.state !== 'protected')
+                                    throw worldError('AIR_E_BOX3D_DISPOSED', 'component activity', 'Unsettled target identity.');
+                                // Known not-mutated refusal leaves this revocation/protection intact.
+                                owned.clearTargetVelocity();
+                                cleanupCommitted = true;
+                                cleanedTarget = target;
+                            }
+                        }
+                        prepared!.apply(authority('apply'));
+                        nativeApplied = true;
+                    },
+                    delegate: (): void => {
+                        current();
+                        if (!effective || !nativeApplied || delegated)
+                            throw worldError('AIR_E_BOX3D_REENTRANT', 'component activity', 'Unexpected adapter delegation.');
+                        prepared!.delegate(authority('delegate'));
+                        delegated = true;
+                    },
+                    complete: (actual: ActivityState): void => {
+                        current();
+                        if (!before || actual.enabled !== expected || actual.active !== before.active ||
+                            actual.scheduled !== (effective ? expected : before.scheduled) || (effective && !delegated))
+                            throw worldError('AIR_E_BOX3D_CONFIG', 'component activity', 'Original callback/scheduler did not complete.');
+                        prepared!.verify(authority('verify'), cleanedTarget !== null, effective);
+                        if (effective) {
+                            if (cleanedTarget) this.#settleTarget(cleanedTarget, 'paired-zero');
+                            record.enabled = expected;
+                            if (!expected) this.#retireContinuous(record);
+                        }
+                    },
+                    fail: (report: ActivityFailureReport): void => {
+                        if (!failed) { failed = true; first = report.error; }
+                        this.#lastActivity = Object.freeze({
+                            cacheWriteEntered: report.cacheWriteEntered,
+                            callbackReturned: report.callbackReturned,
+                            schedulerReturned: report.schedulerReturned,
+                            cleanupCommitted, nativeApplied, delegated,
+                            actual: report.actual, actualReadStatus: report.actualReadStatus,
+                            schedulerUnchanged: report.schedulerUnchanged,
+                        });
+                        // A pre-cache not-mutated cleanup can remain ready, but its old handle
+                        // has already been revoked. Any later partial fact is not rollback.
+                        if (!before || cleanupCommitted || nativeApplied || delegated || report.cacheWriteEntered ||
+                            report.appliedCount > 0 || report.schedulerUnchanged === false || (before && report.actual &&
+                                (before.enabled !== report.actual.enabled || before.active !== report.actual.active ||
+                                    before.scheduled !== report.actual.scheduled)) || report.actualReadStatus === 'threw' ||
+                            report.actualReadStatus === 'invalid') this.#materialFault?.(first);
+                    },
+                    dispose: cleanup,
+                });
+            },
+        });
+        this.#activityLeases.set(adapter, lease);
+    }
+    consumeActivityAuthority(
+        adapter: object, authority: object, stage: 'prepare' | 'apply' | 'delegate' | 'verify',
+    ): void {
+        const expected = this.#activityAuthorities.get(authority);
+        if (!expected || expected.adapter !== adapter || expected.stage !== stage ||
+            this.#scope !== expected.scope || this.#phase !== 'control')
+            throw worldError('AIR_E_BOX3D_REENTRANT', 'component activity authority', 'Foreign, expired or consumed token.');
+        this.#activityAuthorities.delete(authority);
+    }
+
+
     commitComponentEnabled(adapter: object, enabled: boolean): void {
         if (!enabled && (this.#phase === 'faulted' || this.#phase === 'closed')) return;
         this.assertConfiguration('component activity');
@@ -1087,6 +1580,7 @@ export class Box3DWorldCommandOwner {
                     entered = returned = producerEntered = producerReturned = failed = false;
                     failure = undefined;
                     this.#controlCleanups.add(cleanup);
+                    this.#admitClockControl(false);
                     scope = this.#begin('control');
                 },
                 preflight: (value, before, candidate) => {
@@ -1106,8 +1600,8 @@ export class Box3DWorldCommandOwner {
                     expected = candidate;
                     // Allocate and reserve every installed participant before System writes its cache.
                     if (value.operation === 'system-enable') {
-                        transition = this.#queue.preparePauseTransition(!candidate.enabled);
-                        producerTransition = this.#producers.preparePauseTransitionWithinControl(!candidate.enabled);
+                        transition = this.#queue.preparePauseTransition(!candidate.enabled || this.#gamePaused);
+                        producerTransition = this.#producers.preparePauseTransitionWithinControl(!candidate.enabled || this.#gamePaused);
                     }
                 },
                 commit: (value, actual) => {
@@ -1198,10 +1692,116 @@ export class Box3DWorldCommandOwner {
             if (initialFailed) throw initialError;
         }
     }
+    /** Queue admission comes first so a caught producer request poisons its collecting candidate. */
+    #admitClockControl(initial: boolean): void {
+        try {
+            this.#queue.withConfigurationAdmission(() => undefined);
+            if (!initial) {
+                this.assertConfiguration('Game/System clock control');
+                this.assertSystemBinding();
+            }
+        } catch (error) {
+            // A writeback callback may catch the refusal. Keep that refusal on the exact outer scope.
+            if (this.#scope && ['preflight', 'solving', 'writeback', 'dispatch'].includes(this.#phase) &&
+                !this.#clockReentry) this.#clockReentry = { error };
+            throw error;
+        }
+    }
+    #assertNoClockReentry(): void {
+        if (this.#clockReentry) throw this.#clockReentry.error;
+    }
+    /** Register before selector binding, with the original Game's copied startup reasons. */
+    installGameControlObservation(fault: (error: unknown) => void): void {
+        if (this.#gameControlLease)
+            throw worldError('AIR_E_BOX3D_CONFIG', 'Game observation', 'Already installed.');
+        this.#gameControlLease = registerGameClockObserver(game, {
+            admit: (initial) => this.#admitClockControl(initial),
+            assertLive: () => {
+                this.assertConfiguration('Game frame admission');
+                this.assertSystemBinding();
+            },
+            prepare: (before, candidate, initial): GameClockPlan => {
+                let scope: Box3DOwnerFenceScope | null = null;
+                let queue: PreparedCommandPause | null = null, producers: PreparedCommandPause | null = null;
+                let entered = false, returned = false, producerEntered = false, producerReturned = false;
+                let failed = false, first: unknown, disposed = false;
+                let failure: GameClockFailure | null = null;
+                const remember = (actual: GameClockState): void => {
+                    this.#lastGameControl = Object.freeze({ before, actual, queueCommitEntered: entered,
+                        queueCommitReturned: returned, producerCommitEntered: producerEntered,
+                        producerCommitReturned: producerReturned, failure });
+                };
+                const cleanup = (): void => {
+                    if (disposed) return;
+                    let cleanupFailed = false, cleanupError: unknown;
+                    const attempt = (label: string, action: () => void): void => {
+                        try { action(); } catch (error) {
+                            this.#recordCleanup(label, error);
+                            if (!cleanupFailed) cleanupError = error;
+                            cleanupFailed = true;
+                        }
+                    };
+                    attempt('game-control-queue-dispose', () => { queue?.dispose(); queue = null; });
+                    attempt('game-control-producer-dispose', () => { producers?.dispose(); producers = null; });
+                    attempt('game-control-scope-dispose', () => { scope?.dispose(); scope = null; });
+                    if (initial) this.#initialProducerControl = false;
+                    if (cleanupFailed) { fault(failed ? first : cleanupError); throw cleanupError; }
+                    disposed = true;
+                    this.#controlCleanups.delete(cleanup);
+                };
+                this.#controlCleanups.add(cleanup);
+                try {
+                    if (initial) this.#initialProducerControl = true;
+                    else {
+                        scope = this.#begin('control');
+                        if (!this.#gameState || this.#gameState.applicationPaused !== before.applicationPaused ||
+                            this.#gameState.backgroundPaused !== before.backgroundPaused ||
+                            this.#gameState.terminal !== before.terminal || this.#gameState.manual !== before.manual)
+                            throw worldError('AIR_E_BOX3D_CONFIG', 'Game control', 'Owner/source reasons disagree.');
+                    }
+                    const paused = this.#systemPaused || gameClockSemanticPause(candidate);
+                    queue = this.#queue.preparePauseTransition(paused);
+                    producers = this.#producers.preparePauseTransitionWithinControl(paused);
+                } catch (error) {
+                    failed = true; first = error;
+                    try { cleanup(); } catch { /* Keep the original preparation error. */ }
+                    throw error;
+                }
+                const plan: GameClockPlan = Object.freeze({
+                    commit: (): void => {
+                        if (disposed || !queue || !producers)
+                            throw worldError('AIR_E_BOX3D_REENTRANT', 'Game control commit', 'Expired prepared plan.');
+                        this.#gameState = candidate;
+                        this.#gamePaused = gameClockSemanticPause(candidate);
+                        entered = true; queue.commit(); returned = true;
+                        producerEntered = true; producers.commit(); producerReturned = true;
+                        remember(candidate);
+                    },
+                    fail: (report): void => {
+                        if (!failed) { failed = true; first = report.error; }
+                        failure = report;
+                        remember(report.actual);
+                        if (report.reasonCommitted || report.effectEntered || entered || producerEntered) fault(first);
+                    },
+                    dispose: cleanup,
+                });
+                return plan;
+            },
+        });
+    }
+    assertNativeClockFrame(): void {
+        if (!this.#gameControlLease)
+            throw worldError('AIR_E_BOX3D_DISPOSED', 'native Game frame', 'No observed original Game owner.');
+        this.#gameControlLease.assertNativeAdvance();
+    }
+    #aggregatePaused(): boolean {
+        // Terminal source truth survives a refused/faulted owner preparation.
+        return this.#systemPaused || this.#gamePaused || !!this.#gameControlLease?.diagnostics().terminal;
+    }
     systemControlDisposition(): 'ready' | 'paused' {
         this.assertConfiguration('System execution admission');
         this.assertSystemBinding();
-        return this.#systemPaused ? 'paused' : 'ready';
+        return this.#aggregatePaused() ? 'paused' : 'ready';
     }
     assertSteppingAllowed(operation: string): void {
         if (this.systemControlDisposition() === 'paused')
@@ -1472,7 +2072,18 @@ export class Box3DWorldCommandOwner {
             const source = component.materialSource;
             if (source) closeMaterialSource(source, this.#bindingOwner.confirmBindingReleased(source));
         }
-        if (component?.kind === 'rigid-body') this.#retireContinuous(component, true);
+        if (component?.kind === 'rigid-body') {
+            const target = this.#targets.get(component.body);
+            if (target) {
+                if (this.#phase !== 'faulted' && this.#phase !== 'closed')
+                    throw worldError('AIR_E_BOX3D_CONFIG', 'release component', 'Target native cleanup is unsettled.');
+                this.#releaseTargetGuard(target);
+                target.state = 'unresolved';
+            }
+            this.#retireContinuous(component, true);
+        }
+        this.#activityLeases.get(adapter)?.dispose();
+        this.#activityLeases.delete(adapter);
         // Faulted native cleanup is not a release proof. Keep its roster until confirmed world teardown.
         this.#materialLeases.get(adapter)?.dispose();
         this.#materialLeases.delete(adapter);
@@ -1520,6 +2131,7 @@ export class Box3DWorldCommandOwner {
         let mutation: MutationGuardLease | undefined;
         let transform: NodeTransformGuardLease | undefined;
         this.#phase = phase;
+        this.#clockReentry = null;
         try {
             mutation = registerMutationGuard(targets, rejection);
             if (nodes.size) transform = registerNodeTransformGuard(Object.freeze(Array.from(nodes)), rejection);
@@ -1542,8 +2154,10 @@ export class Box3DWorldCommandOwner {
         let disposed = false,
             writebackPrepared = false;
         let reservation: NodeTransformWriteReservation | undefined;
+        const persistentReservations = new Map<TargetRecord, NodeTransformWriteReservation>();
         const scope: Box3DOwnerFenceScope = Object.freeze({
             prepareWriteback(plannedNodes: readonly Node[]): void {
+                owned.#assertNoClockReentry();
                 if (disposed || owned.#scope !== scope || owned.#phase !== 'preflight' || writebackPrepared)
                     throw worldError('AIR_E_BOX3D_REENTRANT', 'prepare writeback', 'No unused preflight scope.');
                 if (!Array.isArray(plannedNodes))
@@ -1558,12 +2172,24 @@ export class Box3DWorldCommandOwner {
                 if (!Number.isSafeInteger(count) || count < 0 || (count > 0 && !transform))
                     throw worldError('AIR_E_BOX3D_CONFIG', 'prepare writeback', 'Unsafe exact-write inventory.');
                 // Reserve both setters for every participant before native validation or application.
+                const covering = [...owned.#targets.values()]
+                    .filter((target) => target.guard !== null)
+                    .map((target) => ({
+                        target,
+                        count: [...planned].filter((node) => target.ancestry.includes(node)).length * 2,
+                    }))
+                    .filter((row) => row.count > 0);
+                // Check EVERY capacity first; no earlier owner may burn a reservation on later refusal.
                 transform?.assertWriteCapacity(count);
+                for (const row of covering) row.target.guard!.assertWriteCapacity(row.count);
                 reservation = transform?.reserveWrites(count);
+                for (const row of covering)
+                    persistentReservations.set(row.target, row.target.guard!.reserveWrites(row.count));
                 for (const node of planned) expectedWrites.set(node, new Set(['setWorldPosition', 'setWorldRotation']));
                 writebackPrepared = true;
             },
             advance(next: 'solving' | 'writeback'): void {
+                owned.#assertNoClockReentry();
                 if (
                     disposed ||
                     owned.#scope !== scope ||
@@ -1596,7 +2222,16 @@ export class Box3DWorldCommandOwner {
                     );
                 // Consume the exact operation before any expected-value getter or callback can run.
                 expectedWrites.get(node)!.delete(operation);
-                reservation.write(node, operation, expected, perform);
+                const grants = [...persistentReservations]
+                    .filter(([target]) => target.ancestry.includes(node))
+                    .map(([, grant]) => grant);
+                const write = (index: number): void => {
+                    if (index === grants.length) perform();
+                    else grants[index].write(node, operation, expected, () => write(index + 1));
+                };
+                owned.#assertNoClockReentry();
+                reservation.write(node, operation, expected, () => write(0));
+                owned.#assertNoClockReentry();
             },
             dispose(): void {
                 if (disposed) return;
@@ -1609,6 +2244,16 @@ export class Box3DWorldCommandOwner {
                     failed = true;
                     failure = error;
                 }
+                for (const grant of persistentReservations.values()) {
+                    try {
+                        grant.dispose();
+                    } catch (error) {
+                        owned.#recordCleanup('persistent-write-reservation-dispose', error);
+                        if (!failed) failure = error;
+                        failed = true;
+                    }
+                }
+                persistentReservations.clear();
                 try {
                     transform?.dispose();
                 } catch (error) {
@@ -1637,6 +2282,7 @@ export class Box3DWorldCommandOwner {
     }
     beginStep(): Box3DOwnerFenceScope {
         this.assertSteppingAllowed('begin step');
+        this.assertNativeClockFrame();
         return this.#begin('preflight');
     }
     beginDispatch(): Box3DOwnerFenceScope {
@@ -1659,9 +2305,16 @@ export class Box3DWorldCommandOwner {
                 cleanupFailed = true;
             }
         };
+        attempt(() => this.#motionRouting?.dispose());
+        this.#motionRouting = null;
         attempt(() => this.#commandRouting?.dispose());
         this.#commandRouting = null;
         for (const cleanup of [...this.#controlCleanups]) attempt(cleanup);
+        for (const cleanup of [...this.#activityCleanups]) attempt(cleanup);
+        for (const [adapter, lease] of this.#activityLeases) attempt(() => {
+            lease.dispose();
+            this.#activityLeases.delete(adapter);
+        });
         attempt(() => this.#producers.close());
         attempt(() => {
             try {
@@ -1671,6 +2324,11 @@ export class Box3DWorldCommandOwner {
                 throw error;
             }
             this.#systemControlLease = null;
+        });
+        attempt(() => {
+            this.#gameClockSnapshot = this.#gameControlLease?.diagnostics() ?? this.#gameClockSnapshot;
+            this.#gameControlLease?.dispose();
+            this.#gameControlLease = null;
         });
         for (const cleanup of [...this.#materialCleanups]) attempt(cleanup);
         attempt(() => {
@@ -1706,7 +2364,12 @@ export class Box3DWorldCommandOwner {
                 });
             } finally {
                 this.#nativeTeardown = nativeTeardownConfirmed ? 'released' : 'unresolved';
+                for (const target of this.#targets.values()) {
+                    attempt(() => this.#releaseTargetGuard(target));
+                    target.state = nativeTeardownConfirmed ? 'settled' : 'unresolved';
+                }
                 if (nativeTeardownConfirmed) {
+                    this.#targets.clear();
                     this.#components.clear();
                     this.#bodies.clear();
                 }
@@ -1717,12 +2380,15 @@ export class Box3DWorldCommandOwner {
         if (cleanupFailed) throw cleanupError;
     }
     diagnostics() {
+        const gameControl = this.#gameControlLease?.diagnostics() ?? this.#gameClockSnapshot;
         return Object.freeze({
             phase: this.#phase,
             bodies: this.#bodies.size,
             nativeOwnership: this.#nativeTeardown,
             unresolvedNativeBodies: this.#nativeTeardown === 'unresolved' ? this.#bodies.size : 0,
             components: this.#components.size,
+            componentActivityObservers: this.#activityLeases.size,
+            lastComponentActivityFailure: this.#lastActivity,
             disabledComponents: [...this.#components.values()].filter((value) => !value.enabled).length,
             materials: this.#materials().size,
             activeTemporaryScopes: this.#scope ? 1 : 0,
@@ -1741,7 +2407,21 @@ export class Box3DWorldCommandOwner {
                 lastChange: this.#lastControl,
                 producers: this.#producers.diagnostics(),
             }),
+            gameControl: Object.freeze({
+                ...gameControl,
+                observed: this.#gameControlLease !== null,
+                aggregatePaused: this.#systemPaused || this.#gamePaused || !!gameControl?.terminal,
+                unresolvedScopes: this.#controlCleanups.size,
+                lastTransition: this.#lastGameControl,
+            }),
             dynamicCommandCandidate: this.#commandRouting !== null,
+            persistentTargetCandidate: this.#motionRouting !== null,
+            targets: Object.freeze({
+                active: [...this.#targets.values()].filter((target) => target.state === 'active').length,
+                protected: [...this.#targets.values()].filter((target) => target.state === 'protected').length,
+                unresolved: [...this.#targets.values()].filter((target) => target.state === 'unresolved').length,
+                guards: [...this.#targets.values()].filter((target) => target.guard !== null).length,
+            }),
             commandPhase: this.#commandPhase,
             commandQueue: Object.freeze({
                 phase: this.#queue.diagnostics().phase,

@@ -19,8 +19,9 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
 */
+import type { Collider } from '../../../cocos/physics/framework/components/colliders/collider';
 import type { PhysicsMaterial } from '../../../cocos/physics/framework/assets/physics-material';
-import type { Box3DOwnedBodySeed, Box3DOwnedComponentSeed } from './world-command-owner';
+import type { Box3DOwnedBodySeed, Box3DOwnedComponentSeed, Box3DPreparedRigidActivity } from './world-command-owner';
 import type { Node } from '../../../cocos/scene-graph/node';
 import type { RigidBody } from '../../../cocos/physics/framework/components/rigid-body';
 import type { Box3DBodyState, Box3DId, Box3DWorld } from './binding/facade.mjs';
@@ -46,6 +47,13 @@ export interface Box3DBodyOwner {
     completeComponent(adapter: object): void;
     componentEnabled(adapter: object, enabled: boolean): void;
     releaseComponent(adapter: object): void;
+    /** Returns true only after captured native paired-zero cleanup completed. */
+    prepareTargetTransition(body: object): boolean;
+    consumeActivityAuthority(
+        adapter: object,
+        authority: object,
+        stage: 'prepare' | 'apply' | 'delegate' | 'verify',
+    ): void;
     isFaulted(): boolean;
     invalidate(): void;
     fault(error: unknown): void;
@@ -193,6 +201,7 @@ export class Box3DSharedBody {
     readonly #owner: Box3DBodyOwner;
     readonly #node: Node;
     readonly #references = new Set<object>();
+    readonly #queryColliders = new Map<object, Collider>();
     readonly #shapes = new Map<object, { token: Box3DId; geometry: Box3DPrimitiveGeometry }>();
     #closed = false;
     #rigidBody: RigidBody | null = null;
@@ -248,6 +257,9 @@ export class Box3DSharedBody {
                     this.assertRead('private native identity resolution');
                     return this.#body;
                 },
+                clearTargetVelocity: () => this.#clearTargetVelocity(),
+                prepareRigidActivity: (reference, authority, enabled, previousEnabled) =>
+                    this.#prepareRigidActivity(reference, authority, enabled, previousEnabled),
             });
         } catch (error) {
             // Creation has no reviewed phase contract. A lost token may still own a real native body.
@@ -395,11 +407,26 @@ export class Box3DSharedBody {
             }),
         );
     }
+    /** Internal copied observational IDs only; native ownership tokens never leave this class. */
+    static queryColliderRecords(bodies: readonly Box3DSharedBody[]) {
+        const records: { low: number; high: number; collider: Collider }[] = [];
+        for (const body of bodies) {
+            body.assertRead('ray collider roster');
+            for (const [reference, shape] of body.#shapes) {
+                const collider = body.#queryColliders.get(reference);
+                if (!collider || !body.#references.has(reference))
+                    throw worldError('AIR_E_BOX3D_ABI', 'ray collider roster', 'Active shape has no owned collider.');
+                records.push(Object.freeze({ low: shape.token.low, high: shape.token.high, collider }));
+            }
+        }
+        return Object.freeze(records);
+    }
     retain(reference: object, component: Box3DOwnedComponentSeed): void {
         this.assert('retain body');
         if (this.#references.has(reference)) throw worldError('AIR_E_BOX3D_CONFIG', 'retain body', 'Duplicate owner.');
         this.#owner.attachComponent(this.#logical, component);
         this.#references.add(reference);
+        if (component.kind === 'collider') this.#queryColliders.set(reference, component.component as Collider);
     }
     release(reference: object): void {
         if (this.#closed) return; // World destruction already invalidated every component reference.
@@ -407,6 +434,7 @@ export class Box3DSharedBody {
             // Cleanup-only: remove JS owners, never retry unknown native mutations or remove world ownership.
             this.#owner.releaseComponent(reference);
             this.#references.delete(reference);
+            this.#queryColliders.delete(reference);
             this.#shapes.delete(reference);
             return;
         }
@@ -416,6 +444,7 @@ export class Box3DSharedBody {
         if (this.#references.size > 1) {
             this.#owner.releaseComponent(reference);
             this.#references.delete(reference);
+            this.#queryColliders.delete(reference);
             return;
         }
         try {
@@ -434,12 +463,14 @@ export class Box3DSharedBody {
             throw error;
         }
         this.#references.delete(reference);
+        this.#queryColliders.delete(reference);
         this.#closed = true;
         this.#owner.released(this.#node, this, this.#logical);
     }
     closeWithWorld(): void {
         this.#closed = true;
         this.#references.clear();
+        this.#queryColliders.clear();
         this.#shapes.clear();
         this.#rigidBody = null;
     }
@@ -517,32 +548,263 @@ export class Box3DSharedBody {
         this.#mask = next.mask;
         this.#rigidBody = value;
     }
+    /** Only the captured owner seed reaches this kernel under its exact control fence.
+     * Never delegate to an exposed adapter setter or relax ordinary configuration admission.
+     */
+    #clearTargetVelocity(): void {
+        if (this.#closed) throw worldError('AIR_E_BOX3D_DISPOSED', 'target cleanup', 'Shared body is closed.');
+        let before: Box3DBodyState, tick: number;
+        try {
+            before = this.#binding.bodyState(this.#world, this.#body);
+            tick = this.#binding.stepDiagnostics(this.#world).nativeStepIndex;
+            if (
+                !before ||
+                !Object.isFrozen(before) ||
+                !before.enabled ||
+                before.type !== 1 ||
+                !Number.isSafeInteger(tick) ||
+                tick < 0
+            )
+                throw worldError(
+                    'AIR_E_BOX3D_CONFIG',
+                    'target cleanup',
+                    'Expected actual enabled kinematic ownership.',
+                );
+        } catch (error) {
+            // A failed actual-owner read is not an op13 known-not-mutated delivery proof.
+            // No clear was attempted here, and no cleanupCommitted fact is manufactured.
+            this.#owner.invalidate();
+            this.#owner.fault(error);
+            throw error;
+        }
+        let returned = false;
+        try {
+            const result = this.#binding.clearBodyVelocity(this.#world, this.#body);
+            returned = true;
+            this.#owner.invalidate();
+            const actual = this.#binding.bodyState(this.#world, this.#body),
+                afterTick = this.#binding.stepDiagnostics(this.#world).nativeStepIndex;
+            const same = (a: readonly number[], b: readonly number[]): boolean =>
+                a.length === 3 && b.length === 3 && a.every((value, index) => value === b[index]);
+            for (const state of [result, actual]) {
+                if (
+                    !state ||
+                    !Object.isFrozen(state) ||
+                    state.enabled !== before.enabled ||
+                    state.type !== before.type ||
+                    state.awake !== before.awake ||
+                    state.linearVelocity.length !== 3 ||
+                    state.angularVelocity.length !== 3 ||
+                    state.linearVelocity.some((value) => value !== 0) ||
+                    state.angularVelocity.some((value) => value !== 0) ||
+                    !same(state.force, before.force) ||
+                    !same(state.torque, before.torque) ||
+                    afterTick !== tick
+                )
+                    throw worldError(
+                        'AIR_E_BOX3D_ABI',
+                        'target cleanup',
+                        'Paired zero/force/wake/tick readback mismatch.',
+                    );
+            }
+        } catch (error) {
+            // A successful op13 followed by bad/lost readback is already committed.
+            // The reviewed binding tags throws before return; unknown outcomes never permit replay.
+            if (returned || !mutationNotApplied(error)) {
+                this.#owner.invalidate();
+                this.#owner.fault(error);
+            }
+            throw error;
+        }
+    }
+    #afterTargetCleanupFailure(committed: boolean, error: unknown): never {
+        if (committed) {
+            this.#owner.invalidate();
+            this.#owner.fault(error);
+        }
+        throw error;
+    }
+    /** Only the captured body seed reaches this path; no shared-body capability escapes.
+     * Native enable is prepared before Component's cache. The original adapter callback
+     * later consumes a different exact token to commit only private activity metadata.
+     */
+    #prepareRigidActivity(
+        reference: object,
+        authority: object,
+        enabled: boolean,
+        previousEnabled: boolean,
+    ): Box3DPreparedRigidActivity {
+        this.#owner.consumeActivityAuthority(reference, authority, 'prepare');
+        if (
+            this.#closed ||
+            !this.#rigidBody ||
+            !this.#references.has(reference) ||
+            this.#rigidEnabled !== previousEnabled
+        ) {
+            const error = worldError('AIR_E_BOX3D_DISPOSED', 'prepare component activity', 'Lost actual rigid owner.');
+            this.#owner.fault(error);
+            throw error;
+        }
+        const rigid = this.#rigidBody,
+            type = this.#type,
+            shapes = [...this.#shapes.values()].map((entry) => entry.token),
+            active = enabled || shapes.length > 0;
+        let actualBefore: Box3DBodyState;
+        try {
+            actualBefore = this.#binding.bodyState(this.#world, this.#body);
+        } catch (error) {
+            // Failed actual read is not a verified before-native delivery refusal.
+            this.#owner.fault(error);
+            throw error;
+        }
+        if (
+            !Object.isFrozen(actualBefore) ||
+            actualBefore.type !== type ||
+            actualBefore.enabled !== (previousEnabled || shapes.length > 0)
+        ) {
+            const error = worldError(
+                'AIR_E_BOX3D_ABI',
+                'prepare component activity',
+                'Actual native activity disagrees.',
+            );
+            this.#owner.fault(error);
+            throw error;
+        }
+        let applied = false,
+            delegated = false,
+            disposed = false;
+        const current = (): void => {
+            if (
+                disposed ||
+                this.#closed ||
+                !this.#references.has(reference) ||
+                this.#rigidBody !== rigid ||
+                this.#type !== type ||
+                this.#rigidEnabled !== (delegated ? enabled : previousEnabled) ||
+                shapes.length !== this.#shapes.size ||
+                [...this.#shapes.values()].some((entry, index) => entry.token !== shapes[index])
+            )
+                throw worldError('AIR_E_BOX3D_CONFIG', 'component activity', 'Prepared ownership changed.');
+        };
+        const plan: Box3DPreparedRigidActivity = Object.freeze({
+            apply: (token: object): void => {
+                this.#owner.consumeActivityAuthority(reference, token, 'apply');
+                current();
+                if (applied) throw worldError('AIR_E_BOX3D_REENTRANT', 'component activity', 'Already applied.');
+                let returned = false;
+                try {
+                    const before = this.#binding.bodyState(this.#world, this.#body);
+                    if (before.type !== type)
+                        throw worldError('AIR_E_BOX3D_ABI', 'component activity', 'Actual body type changed.');
+                    if (before.enabled !== active) {
+                        const result = this.#binding.setBodyEnabled(this.#world, this.#body, active);
+                        returned = true;
+                        this.#owner.invalidate();
+                        const actual = this.#binding.bodyState(this.#world, this.#body);
+                        if (
+                            !Object.isFrozen(result) ||
+                            !Object.isFrozen(actual) ||
+                            result.enabled !== active ||
+                            actual.enabled !== active ||
+                            result.type !== type ||
+                            actual.type !== type
+                        )
+                            throw worldError('AIR_E_BOX3D_ABI', 'component activity', 'Enable readback mismatch.');
+                    }
+                    applied = true;
+                } catch (error) {
+                    if (returned || !mutationNotApplied(error)) {
+                        this.#owner.invalidate();
+                        this.#owner.fault(error);
+                    }
+                    throw error;
+                }
+            },
+            delegate: (token: object): void => {
+                this.#owner.consumeActivityAuthority(reference, token, 'delegate');
+                current();
+                if (!applied || delegated)
+                    throw worldError(
+                        'AIR_E_BOX3D_REENTRANT',
+                        'component activity',
+                        'Missing or consumed native preparation.',
+                    );
+                delegated = true;
+                this.#rigidEnabled = enabled;
+            },
+            verify: (token: object, requireZero: boolean, effective: boolean): void => {
+                this.#owner.consumeActivityAuthority(reference, token, 'verify');
+                current();
+                if (effective ? !applied || !delegated : applied || delegated)
+                    throw worldError('AIR_E_BOX3D_CONFIG', 'component activity', 'Actual delegate incomplete.');
+                const actual = this.#binding.bodyState(this.#world, this.#body);
+                if (
+                    !Object.isFrozen(actual) ||
+                    actual.type !== type ||
+                    actual.enabled !== active ||
+                    (requireZero &&
+                        (actual.linearVelocity.length !== 3 ||
+                            actual.angularVelocity.length !== 3 ||
+                            actual.linearVelocity.some((value) => value !== 0) ||
+                            actual.angularVelocity.some((value) => value !== 0)))
+                )
+                    throw worldError('AIR_E_BOX3D_ABI', 'component activity', 'Post-scheduler native state mismatch.');
+            },
+            dispose: (): void => {
+                disposed = true;
+            },
+        });
+        return plan;
+    }
+
     enableRigidBody(enabled: boolean): void {
         if (!enabled && (this.#closed || this.#owner.isFaulted())) {
+            this.#owner.prepareTargetTransition(this.#logical);
             this.#rigidEnabled = false;
             return; // Terminal cleanup only; native state is retained for world destruction, not reported disabled.
         }
-        const active = enabled || this.#shapes.size > 0;
-        if (this.state.enabled !== active) this.control('setBodyEnabled', active);
-        this.#rigidEnabled = enabled;
+        this.assert('enable RigidBody');
+        const cleaned = !enabled && this.#owner.prepareTargetTransition(this.#logical);
+        try {
+            const active = enabled || this.#shapes.size > 0;
+            if (this.state.enabled !== active) this.control('setBodyEnabled', active);
+            this.#rigidEnabled = enabled;
+        } catch (error) {
+            this.#afterTargetCleanupFailure(cleaned, error);
+        }
     }
     detachRigidBody(): void {
         if (this.#closed || this.#owner.isFaulted()) {
+            this.#owner.prepareTargetTransition(this.#logical);
             this.#rigidBody = null;
             this.#rigidEnabled = false;
             return;
         }
-        this.control('setBodyType', 0);
-        const active = this.#shapes.size > 0;
-        if (this.state.enabled !== active) this.control('setBodyEnabled', active);
-        this.#rigidEnabled = false;
-        this.#type = 0;
-        this.#rigidBody = null;
+        this.assert('detach RigidBody');
+        const cleaned = this.#owner.prepareTargetTransition(this.#logical);
+        let changedType = false;
+        try {
+            this.control('setBodyType', 0);
+            changedType = true;
+            const active = this.#shapes.size > 0;
+            if (this.state.enabled !== active) this.control('setBodyEnabled', active);
+            this.#rigidEnabled = false;
+            this.#type = 0;
+            this.#rigidBody = null;
+        } catch (error) {
+            this.#afterTargetCleanupFailure(cleaned || changedType, error);
+        }
     }
     setType(value: number): void {
-        const next = nativeBodyType(value);
-        this.control('setBodyType', next);
-        this.#type = next;
+        this.assert('setType');
+        const next = nativeBodyType(value),
+            cleaned = next !== 1 && this.#owner.prepareTargetTransition(this.#logical);
+        try {
+            this.control('setBodyType', next);
+            this.#type = next;
+        } catch (error) {
+            this.#afterTargetCleanupFailure(cleaned, error);
+        }
     }
     private readFilter(): { group: number; mask: number } {
         for (const { token } of this.#shapes.values()) {

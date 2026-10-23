@@ -648,7 +648,7 @@ export class RigidBody extends Component {
      * @param value @zh 速度向量 @en The velocity vector
      */
     public setLinearVelocity (value: Vec3): void {
-        assertPhysicsBodyVelocityConfiguration('RigidBody.setLinearVelocity');
+        assertPhysicsBodyVelocityConfiguration('RigidBody.setLinearVelocity', this);
         assertMutationAllowed(this, 'RigidBody.setLinearVelocity');
         if (this._isInitialized) this._body!.setLinearVelocity(value);
     }
@@ -672,7 +672,7 @@ export class RigidBody extends Component {
      * @param value @zh 角速度向量 @en The angular velocity vector
      */
     public setAngularVelocity (value: Vec3): void {
-        assertPhysicsBodyVelocityConfiguration('RigidBody.setAngularVelocity');
+        assertPhysicsBodyVelocityConfiguration('RigidBody.setAngularVelocity', this);
         assertMutationAllowed(this, 'RigidBody.setAngularVelocity');
         if (this._isInitialized) this._body!.setAngularVelocity(value);
     }

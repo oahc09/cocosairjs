@@ -23,6 +23,7 @@
 */
 
 import { assertMutationAllowed, assertMutationBatchAllowed } from '../core/data/mutation-guard';
+import { installComponentActivityNodeSource } from './component-activity-control';
 import { validateTransformValues, assertNodeTransformEntry, assertNodeTransformWrite } from './node-transform-validation';
 import { ccclass, editable, serializable, type } from 'cc.decorator';
 import { DEV, DEBUG, EDITOR, EDITOR_NOT_IN_PREVIEW, USE_UI_SKEW, NODEJS } from 'internal:constants';
@@ -1665,6 +1666,7 @@ export class Node extends CCObject implements ISchedulable, CustomSerializable {
     constructor (name?: string) {
         if (name === undefined) name = 'New Node';
         super(name);
+        installComponentActivityNodeSource(this, () => this._activeInHierarchy);
 
         this._pos = new Vec3();
         this._rot = new Quat();

@@ -42,6 +42,8 @@ function run(command, args) {
 }
 try {
     result.sources = verifySources();
+    result.queryAdmission = JSON.parse(run(process.execPath, ['tools/physics/box3d/query-admission-contract.mjs']));
+    if (result.queryAdmission.status !== 'PASS_ADMISSION_NO_NATIVE_CALLS') throw new Error('Query admission failed');
     const motionSources = run(process.execPath, ['tools/physics/box3d/motion-source-controls.mjs']);
     result.motionSourceControls = JSON.parse(motionSources);
     if (result.motionSourceControls.status !== 'PASS_SOURCE_CONTROLS_ONLY')
@@ -95,6 +97,7 @@ try {
             'tools/physics/box3d/native/filter_bridge.c',
             'tools/physics/box3d/native/motion_bridge.c',
             'tools/physics/box3d/native/command_bridge.c',
+            'tools/physics/box3d/native/query_bridge.c',
             'tools/physics/box3d/native/contract.c',
         ]) {
             const object = resolve(out, basename(source) + '.o');
@@ -200,6 +203,20 @@ try {
         writeFileSync(resolve(out, 'native-command-contract.raw.json'), commandRaw);
         result.commandContract = JSON.parse(commandRaw);
         if (result.commandContract.status !== 'PASS') throw new Error('Native command contract failed');
+        const queryExe = resolve(out, 'native-query-contract');
+        run(cc, [
+            ...flags,
+            'tools/physics/box3d/native/query_contract.c',
+            ...objects.filter((file) => !file.endsWith('/contract.c.o')),
+            ...(sanitize ? ['-fsanitize=address,undefined'] : []),
+            '-lm',
+            '-o',
+            queryExe,
+        ]);
+        const queryRaw = run(queryExe, []);
+        writeFileSync(resolve(out, 'native-query-contract.raw.json'), queryRaw);
+        result.queryContract = JSON.parse(queryRaw);
+        if (result.queryContract.status !== 'PASS') throw new Error('Native query contract failed');
         result.artifacts = [
             { path: 'native-contract', sha256: sha256(readFileSync(exe)), bytes: readFileSync(exe).length },
         ];
@@ -290,6 +307,11 @@ try {
         result.commandContract = JSON.parse(commandRaw);
         if (result.commandContract.status !== 'PASS' || result.commandContract.pointerBytes !== 4)
             throw new Error('WASM32 command native contract failed');
+        const queryRaw = run(process.execPath, [resolve(out, 'air_box3d_query_contract.cjs')]);
+        writeFileSync(resolve(out, 'native-query-contract.raw.json'), queryRaw);
+        result.queryContract = JSON.parse(queryRaw);
+        if (result.queryContract.status !== 'PASS' || result.queryContract.pointerBytes !== 4)
+            throw new Error('WASM32 query native contract failed');
         run(process.execPath, ['tools/physics/box3d/wasm-contract.mjs', out]);
         run(process.execPath, ['tools/physics/box3d/wasm-ownership-contract.mjs', out]);
         run(process.execPath, ['tools/physics/box3d/wasm-snapshot-contract.mjs', out]);
@@ -299,6 +321,7 @@ try {
         run(process.execPath, ['tools/physics/box3d/wasm-filter-contract.mjs', out]);
         run(process.execPath, ['tools/physics/box3d/wasm-motion-contract.mjs', out]);
         run(process.execPath, ['tools/physics/box3d/wasm-command-contract.mjs', out]);
+        run(process.execPath, ['tools/physics/box3d/wasm-query-contract.mjs', out]);
         result.artifacts = artifacts;
         result.browserStatus = 'NOT_RUN';
     }
@@ -352,6 +375,11 @@ try {
         'tools/physics/box3d/native/contract.c',
         'tools/physics/box3d/native/geometry_contract.c',
         'tools/physics/box3d/native/wasm_entry.c',
+        'tools/physics/box3d/native/query_bridge.c',
+        'tools/physics/box3d/native/query_bridge.h',
+        'tools/physics/box3d/native/query_contract.c',
+        'tools/physics/box3d/wasm-query-contract.mjs',
+        'tools/physics/box3d/query-admission-contract.mjs',
         'tools/physics/box3d/native/command_bridge.c',
         'tools/physics/box3d/native/command_bridge.h',
         'tools/physics/box3d/native/command_contract.c',

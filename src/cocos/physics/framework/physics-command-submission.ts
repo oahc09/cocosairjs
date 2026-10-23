@@ -40,7 +40,7 @@ export type PhysicsBodyCommandInput =
     | { readonly kind: 'clear-state' | 'clear-forces' | 'clear-velocity' };
 export interface PhysicsCommandOwnerHandlers {
     submit(source: object, read: () => PhysicsBodyCommandInput): number;
-    assertConfiguration(operation: string): void;
+    assertConfiguration(operation: string, source: object): void;
 }
 export interface PhysicsCommandOwnerLease {
     dispose(): void;
@@ -135,14 +135,14 @@ export function trySubmitPhysicsBodyCommand(source: object, read: () => PhysicsB
 /** Velocity setters remain configuration, not queued commands. This early gate
  * covers unowned/uninitialized components too; existing instance guards still run.
  */
-export function assertPhysicsBodyVelocityConfiguration(operation: string): void {
+export function assertPhysicsBodyVelocityConfiguration(operation: string, source: object): void {
     rejectRegistrationReentry();
     const owner = current;
     if (!owner) return;
     const assertConfiguration = owner.assertConfiguration;
     ++activeCalls;
     try {
-        assertConfiguration(operation);
+        assertConfiguration(operation, source);
     } finally {
         --activeCalls;
     }

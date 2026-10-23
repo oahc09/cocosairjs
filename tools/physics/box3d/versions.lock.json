@@ -36,7 +36,7 @@
     "abiVersion": 1,
     "status": "EXPERIMENTAL_FOUNDATION"
   },
-  "apiSchemaSha256": "e6329dce9b3e6fce69cfd5da318f1f708b95b7af834edb667de8306f9cae0a5d",
+  "apiSchemaSha256": "0df007cd748883621f89836b55f1c09437c04d6d7e6253914577b21455a11bd5",
   "corePatches": [
     {
       "id": "sse2-loadv-float-alignment-v1",

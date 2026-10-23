@@ -21,10 +21,14 @@
 */
 import type { PhysicsSystem } from '../../../cocos/physics/framework/physics-system';
 import { Box3DWorldCommandOwner } from './world-command-owner';
-import type { Box3DOwnedComponentSeed, Box3DTeleportOptions } from './world-command-owner';
+import type { Box3DOwnedComponentSeed, Box3DTeleportOptions, Box3DKinematicTarget } from './world-command-owner';
 import type { Node } from '../../../cocos/scene-graph/node';
 import { Box3DSharedBody } from './shared-body';
 import type { Box3DComponentConfiguration } from './shared-body';
+import { PhysicsRayResult } from '../../../cocos/physics/framework/physics-ray-result';
+import { copyBox3DRay, resolveBox3DRayHits } from './query';
+import { installBox3DBeforeStepSource } from './before-step-source';
+import type { Box3DQueryCollider } from './query';
 import type { IPhysicsWorld } from '../../../cocos/physics/spec/i-physics-world';
 import type { PhysicsMaterial } from '../../../cocos/physics/framework/assets/physics-material';
 import type { Collider } from '../../../cocos/physics/framework/components/colliders/collider';
@@ -84,6 +88,9 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
     private debug: Box3DDebugSnapshot | null = null;
     private material: Readonly<Box3DSurfaceMaterial> | null = null;
     readonly #sharedBodies = new Map<Node, Box3DSharedBody>();
+    readonly #queryLogicalIds = new WeakMap<Collider, number>();
+    #queryLogicalSequence = 0;
+    #beforeStepSource: { dispose(): void } | undefined;
     readonly #materialShapes = new Map<Box3DId, boolean>();
     private nativeStep: Readonly<Box3DNativeStepDiagnostics> = Object.freeze({
         nativeStepIndex: 0,
@@ -207,8 +214,17 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
                 this.invalidatePending();
                 this.fault(error);
             });
+            this.#commandOwner.installGameControlObservation((error) => {
+                this.invalidatePending();
+                this.fault(error);
+            });
             this.#commandOwner.installCommandRouting();
+            this.#beforeStepSource = installBox3DBeforeStepSource(this, (callback, options) =>
+                this.registerCommandHook(callback, options),
+            );
         } catch (error) {
+            this.#beforeStepSource?.dispose();
+            this.#beforeStepSource = undefined;
             this.fault(error);
             throw error;
         }
@@ -541,7 +557,11 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
     submitAdapterCommand(adapter: object, read: () => PhysicsBodyCommandInput): number {
         return this.#commandOwner.submitAdapterCommand(adapter, read);
     }
-    /** Internal finite reset candidate only; no public target handle or adapter activation. */
+    /** Internal persistent-target candidate. No package helper is exported or activated. */
+    createKinematicTarget(source: object): Box3DKinematicTarget {
+        return this.#commandOwner.createKinematicTarget(source);
+    }
+    /** Internal finite reset candidate only; no public adapter activation. */
     teleportRigidBody(source: object, pose: CommandPose, options?: Box3DTeleportOptions): number {
         return this.#commandOwner.teleportRigidBody(source, pose, options);
     }
@@ -628,6 +648,9 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
                     completeComponent: (adapter) => this.#commandOwner.completeComponent(adapter),
                     componentEnabled: (adapter, enabled) => this.#commandOwner.commitComponentEnabled(adapter, enabled),
                     releaseComponent: (adapter) => this.#commandOwner.releaseComponentAfterCleanup(adapter),
+                    prepareTargetTransition: (logical) => this.#commandOwner.prepareTargetTransition(logical),
+                    consumeActivityAuthority: (adapter, authority, stage) =>
+                        this.#commandOwner.consumeActivityAuthority(adapter, authority, stage),
                     isFaulted: () => this.state === 'faulted' || this.state === 'destroy-failed',
                     invalidate: () => this.invalidatePending(),
                     fault: (error) => this.fault(error),
@@ -684,6 +707,7 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
     step(dt: number, timeSinceLastCalled?: number, maxSubSteps?: number): void {
         this.assertReady('step');
         this.#commandOwner.assertSteppingAllowed('step');
+        this.#commandOwner.assertNativeClockFrame();
         if (timeSinceLastCalled !== undefined || maxSubSteps !== undefined)
             unsupportedBox3D('Cannon-style manual step accumulator arguments');
         const delta = finiteFloat32(dt, 'step.dt');
@@ -986,16 +1010,70 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
                     this.destroyFailure = error;
                     throw error;
                 }
+            } finally {
+                // Source lookup must not survive terminal owner/native teardown, even when cleanup fails.
+                this.#beforeStepSource?.dispose();
+                this.#beforeStepSource = undefined;
             }
         }
     }
-    raycast(..._args: Parameters<IPhysicsWorld['raycast']>): never {
-        this.assertReady('raycast');
-        return unsupportedBox3D('raycast');
+    /** One complete generic callback query feeds both public routes. */
+    #raycastHits(
+        worldRay: Parameters<IPhysicsWorld['raycastClosest']>[0],
+        options: Parameters<IPhysicsWorld['raycastClosest']>[1],
+    ) {
+        this.assertCommittedRead('ray query');
+        const copied = copyBox3DRay(worldRay, options);
+        this.assertCommittedRead('ray query copied admission');
+        if (copied.empty) return Object.freeze([]);
+        const query = this.#binding.rayAllRaw;
+        if (typeof query !== 'function') return unsupportedBox3D('generic callback ray query ABI');
+        const roster = new Map<string, Box3DQueryCollider>();
+        for (const record of Box3DSharedBody.queryColliderRecords([...this.#sharedBodies.values()])) {
+            let logicalId = this.#queryLogicalIds.get(record.collider);
+            if (logicalId === undefined) {
+                if (this.#queryLogicalSequence >= Number.MAX_SAFE_INTEGER)
+                    throw worldError(
+                        'AIR_E_BOX3D_CONFIG',
+                        'ray collider identity',
+                        'Logical collider identity exhausted.',
+                    );
+                logicalId = ++this.#queryLogicalSequence;
+                this.#queryLogicalIds.set(record.collider, logicalId);
+            }
+            const key = `${record.low}:${record.high}`;
+            if (roster.has(key))
+                throw worldError('AIR_E_BOX3D_ABI', 'ray collider identity', 'Duplicate full native shape identity.');
+            roster.set(key, Object.freeze({ collider: record.collider, logicalId }));
+        }
+        const raw = query.call(this.#binding, this.#token, copied.origin, copied.translation, copied.options);
+        this.assertCommittedRead('ray query result');
+        return resolveBox3DRayHits(raw, copied, (low, high) => roster.get(`${low}:${high}`));
     }
-    raycastClosest(..._args: Parameters<IPhysicsWorld['raycastClosest']>): never {
-        this.assertReady('raycastClosest');
-        return unsupportedBox3D('raycastClosest');
+    raycast(
+        worldRay: Parameters<IPhysicsWorld['raycast']>[0],
+        options: Parameters<IPhysicsWorld['raycast']>[1],
+        pool: Parameters<IPhysicsWorld['raycast']>[2],
+        results: Parameters<IPhysicsWorld['raycast']>[3],
+    ): boolean {
+        results.length = 0;
+        const hits = this.#raycastHits(worldRay, options);
+        for (const hit of hits) {
+            const out = pool.add();
+            PhysicsRayResult.prototype._assign.call(out, hit.point, hit.distance, hit.collider, hit.normal);
+            results.push(out);
+        }
+        return results.length !== 0;
+    }
+    raycastClosest(
+        worldRay: Parameters<IPhysicsWorld['raycastClosest']>[0],
+        options: Parameters<IPhysicsWorld['raycastClosest']>[1],
+        out: PhysicsRayResult,
+    ): boolean {
+        const hit = this.#raycastHits(worldRay, options)[0];
+        if (!hit) return false; // Existing Cocos contract: callers must inspect this boolean, not stale out fields.
+        PhysicsRayResult.prototype._assign.call(out, hit.point, hit.distance, hit.collider, hit.normal);
+        return true;
     }
     sweepBox(..._args: Parameters<IPhysicsWorld['sweepBox']>): never {
         this.assertReady('sweepBox');

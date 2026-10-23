@@ -76,8 +76,16 @@ assert.ok(
 );
 const build = read('tools/physics/box3d/build.mjs'),
     inputs = [...build.match(/const inputs = \[([\s\S]*?)\];/)[1].matchAll(/'([^']+)'/g)].map((m) => m[1]);
-assert.equal(inputs.length, 50);
-assert.equal(new Set(inputs).size, 50);
+assert.equal(inputs.length, 55);
+assert.equal(new Set(inputs).size, 55);
+for (const path of [
+    'tools/physics/box3d/native/query_bridge.c',
+    'tools/physics/box3d/native/query_bridge.h',
+    'tools/physics/box3d/native/query_contract.c',
+    'tools/physics/box3d/wasm-query-contract.mjs',
+    'tools/physics/box3d/query-admission-contract.mjs',
+])
+    assert.ok(inputs.includes(path));
 for (const path of [
     'tools/physics/box3d/native/command_bridge.c',
     'tools/physics/box3d/native/command_bridge.h',

@@ -41,7 +41,7 @@ class Box3DPrimitiveShape {
     readonly #configuration: Box3DComponentConfiguration;
     readonly #kind: 'box' | 'sphere';
     #collider: Collider | null = null;
-    #body: Box3DSharedBody | null = null;
+    #shared: Box3DSharedBody | null = null;
     #center: readonly number[] = Object.freeze([0, 0, 0]);
     #dimensions: readonly number[] = Object.freeze([]);
     #material: Readonly<Box3DSurfaceMaterial> | null = null;
@@ -57,20 +57,20 @@ class Box3DPrimitiveShape {
         if (!this.#collider) throw worldError('AIR_E_BOX3D_DISPOSED', 'collider', 'Shape component is not live.');
         return this.#collider;
     }
-    private get body(): Box3DSharedBody {
-        if (!this.#body) throw worldError('AIR_E_BOX3D_DISPOSED', 'shape body', 'Shape component is not live.');
-        return this.#body;
+    get #body(): Box3DSharedBody {
+        if (!this.#shared) throw worldError('AIR_E_BOX3D_DISPOSED', 'shape body', 'Shape component is not live.');
+        return this.#shared;
     }
     get impl() {
-        void this.body.impl;
+        void this.#body.impl;
         return Object.freeze({ backend: 'box3d', kind: this.#kind + '-shape', active: this.#active });
     }
     get attachedRigidBody() {
-        return this.body.rigidBody;
+        return this.#body.rigidBody;
     }
     initialize(value: Collider): void {
         this.#world().assertComponentConfiguration('Collider initialize');
-        if (this.#body) throw worldError('AIR_E_BOX3D_CONFIG', 'shape initialize', 'Already initialized.');
+        if (this.#shared) throw worldError('AIR_E_BOX3D_CONFIG', 'shape initialize', 'Already initialized.');
         const prepared = this.#world().prepareInitialShapeMaterial(this, value, (asset) => {
             if (value.needCollisionEvent || value.needTriggerEvent) unsupportedBox3D('collider event listeners (T15)');
             const center = bodyVector(value.center, 'center');
@@ -96,12 +96,12 @@ class Box3DPrimitiveShape {
                 kind: 'collider',
                 material: asset,
                 applyMaterial: (authority, copied) => {
-                    this.body.applyCopiedMaterial(this, authority, copied);
+                    this.#body.applyCopiedMaterial(this, authority, copied);
                     this.#material = copied;
                     this.#geometry = Object.freeze({ ...this.#geometry!, material: copied });
                 },
                 prepareMaterialValues: (authority, copied) => {
-                    const body = this.body;
+                    const body = this.#body;
                     const plan = body.prepareMaterialValues(this, authority, copied);
                     const previous = this.#geometry;
                     if (!previous)
@@ -115,7 +115,7 @@ class Box3DPrimitiveShape {
                     return Object.freeze({
                         shape: plan.shape,
                         commitCaches: () => {
-                            if (committed || this.#body !== body || this.#geometry !== previous)
+                            if (committed || this.#shared !== body || this.#geometry !== previous)
                                 throw worldError(
                                     'AIR_E_BOX3D_REENTRANT',
                                     'commit material geometry',
@@ -130,7 +130,7 @@ class Box3DPrimitiveShape {
                 },
             });
             // Retain the actual acquired body before validation can throw, so onDestroy can clean it.
-            this.#body = body;
+            this.#shared = body;
             initialization.assertValid();
             this.#center = center;
             this.#dimensions = Object.freeze([...dimensions]);
@@ -146,90 +146,90 @@ class Box3DPrimitiveShape {
         }
     }
     onLoad(): void {
-        void this.body;
+        void this.#body;
     } // Geometry configuration was strictly validated during initialize.
     onEnable(): void {
         this.assertConfiguration('onEnable');
         if (this.#active) return;
-        this.body.setShape(this, this.#geometry!);
+        this.#body.setShape(this, this.#geometry!);
         this.#active = true;
-        this.body.componentEnabled(this, true);
+        this.#body.componentEnabled(this, true);
     }
     onDisable(): void {
         if (!this.#active) return;
-        this.body.removeShape(this);
+        this.#body.removeShape(this);
         this.#active = false;
-        this.body.componentEnabled(this, false);
+        this.#body.componentEnabled(this, false);
     }
     onDestroy(): void {
-        if (!this.#body) return;
-        this.#body.removeShape(this);
-        this.#body.release(this);
-        this.#body = null;
+        if (!this.#shared) return;
+        this.#shared.removeShape(this);
+        this.#shared.release(this);
+        this.#shared = null;
         this.#collider = null;
         this.#geometry = null;
         this.#active = false;
     }
     protected assertConfiguration(operation: string): void {
-        this.body.assertConfiguration(operation);
+        this.#body.assertConfiguration(operation);
     }
     private candidate(center = this.#center, dimensions = this.#dimensions, trigger = this.#trigger) {
-        return primitiveGeometry(this.#kind, center, dimensions, this.body.initialScale, trigger, this.#material);
+        return primitiveGeometry(this.#kind, center, dimensions, this.#body.initialScale, trigger, this.#material);
     }
     setCenter(value: IVec3Like): void {
         this.assertConfiguration('setCenter');
         const center = bodyVector(value, 'center');
         const next = this.candidate(center);
-        if (this.#active) this.body.setShape(this, next);
+        if (this.#active) this.#body.setShape(this, next);
         this.#center = center;
         this.#geometry = next;
     }
     setAsTrigger(value: boolean): void {
         this.assertConfiguration('setAsTrigger');
         const next = this.candidate(this.#center, this.#dimensions, value);
-        if (this.#active) this.body.setShape(this, next);
+        if (this.#active) this.#body.setShape(this, next);
         this.#trigger = value;
         this.#geometry = next;
     }
     setMaterial(value: PhysicsMaterial | null): void {
         this.assertConfiguration('setMaterial');
         this.#world().assertAcceptedShapeMaterialIdentity(this, value);
-        void this.body;
+        void this.#body;
         const material = primitiveMaterial(value);
-        if (this.#active) this.body.updateShapeMaterial(this, material);
+        if (this.#active) this.#body.updateShapeMaterial(this, material);
         this.#material = material;
         this.#geometry = Object.freeze({ ...this.#geometry!, material });
     }
     protected updateDimensions(value: readonly number[]): void {
         this.assertConfiguration('updateDimensions');
         const next = this.candidate(this.#center, value);
-        if (this.#active) this.body.setShape(this, next);
+        if (this.#active) this.#body.setShape(this, next);
         this.#dimensions = Object.freeze([...value]);
         this.#geometry = next;
     }
     updateEventListener(): void {
-        if (this.#body?.cleanupOnly && !this.collider.needCollisionEvent && !this.collider.needTriggerEvent) return;
+        if (this.#shared?.cleanupOnly && !this.collider.needCollisionEvent && !this.collider.needTriggerEvent) return;
         this.assertConfiguration('updateEventListener');
         if (this.collider.needCollisionEvent || this.collider.needTriggerEvent)
             unsupportedBox3D('collider event listeners (T15)');
         // Every native shape is configured with real native event flags disabled at creation.
     }
     getAABB(out: AABB): void {
-        const value = primitiveBounds(this.#geometry!, this.body.copiedTransform());
+        const value = primitiveBounds(this.#geometry!, this.#body.copiedTransform());
         [out.center.x, out.center.y, out.center.z] = value.center;
         [out.halfExtents.x, out.halfExtents.y, out.halfExtents.z] = value.halfExtents;
     }
     getBoundingSphere(out: Sphere): void {
-        const value = primitiveBounds(this.#geometry!, this.body.copiedTransform());
+        const value = primitiveBounds(this.#geometry!, this.#body.copiedTransform());
         [out.center.x, out.center.y, out.center.z] = value.center;
         out.radius = value.radius;
     }
     getGroup(): number {
-        return this.body.getGroup();
+        return this.#body.getGroup();
     }
     setGroup(value: number): void {
         this.assertConfiguration('setGroup');
-        this.body.setGroup(value);
+        this.#body.setGroup(value);
     }
     addGroup(value: number): void {
         this.assertConfiguration('addGroup');
@@ -240,11 +240,11 @@ class Box3DPrimitiveShape {
         this.setGroup(this.getGroup() & ~filterBits(value));
     }
     getMask(): number {
-        return this.body.getMask();
+        return this.#body.getMask();
     }
     setMask(value: number): void {
         this.assertConfiguration('setMask');
-        this.body.setMask(value);
+        this.#body.setMask(value);
     }
     addMask(value: number): void {
         this.assertConfiguration('addMask');

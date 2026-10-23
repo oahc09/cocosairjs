@@ -73,3 +73,6 @@ export * from './ui-glyph-tags';
 export * from './ui-glyph-text';
 export * from './ui-glyph-icons';
 export * from './ui-typewriter';
+
+export { registerBox3DBeforeStep } from './box3d-controls';
+export type { Box3DBeforeStepContext, Box3DBeforeStepHandle, Box3DBeforeStepCallback } from './box3d-controls';

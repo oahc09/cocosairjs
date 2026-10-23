@@ -24,11 +24,18 @@
 
 import { EDITOR, SUPPORT_JIT, DEV, TEST, NODEJS } from 'internal:constants';
 import { CCObjectFlags } from '../core/data/object';
-import { js } from '../core';
+import * as js from '../core/utils/js';
 import { tryCatchFunctor_EDITOR } from '../core/utils/misc';
 import { legacyCC } from '../core/global-exports';
 import { warn, assert } from '../core/platform/debug';
 import type { Component } from './component';
+import { installComponentActivitySchedulerSource, readComponentActivityNodeActive, readComponentActivityTimerState } from './component-activity-control';
+
+const activitySchedulerInstances = new WeakSet<object>();
+/** Read-only original-constructor brand; no registration authority is exported. */
+export function isOriginalComponentActivityScheduler (value: object): boolean {
+    return activitySchedulerInstances.has(value);
+}
 
 const fastRemoveAt = js.array.fastRemoveAt;
 
@@ -88,6 +95,8 @@ function stableRemoveInactive (iterator, flagToClear): void {
 export type InvokeFunc = (...args: unknown[]) => void;
 
 // This class contains some queues used to invoke life-cycle methods by script execution order
+const activityInvokerSources = new WeakMap<object, (component: object) => boolean>();
+
 export class LifeCycleInvoker {
     public static stableRemoveInactive = stableRemoveInactive;
 
@@ -126,6 +135,8 @@ export class LifeCycleInvoker {
             assert(typeof invokeFunc === 'function', 'invokeFunc must be type function');
         }
         this._invoke = invokeFunc;
+        activityInvokerSources.set(this, (component) => this._zero.array.includes(component)
+            || this._neg.array.includes(component) || this._pos.array.includes(component));
     }
 }
 
@@ -370,6 +381,110 @@ export class ComponentScheduler {
 
     constructor () {
         this.unscheduleAll();
+        const contains = (invoker: object, comp: Component): boolean => {
+            const read = activityInvokerSources.get(invoker);
+            if (!read) throw new Error('Observed lifecycle invoker is not an original instance.');
+            return read(comp);
+        };
+        const read = (identity: object) => {
+            const comp = identity as Component;
+            // Original Director storage, not a replaceable getScheduler() readback.
+            // It is still a mutable TS field; before/after exact identity must agree.
+            const timerScheduler = legacyCC.director._scheduler;
+            return Object.freeze({
+                timerScheduler, timer: readComponentActivityTimerState(timerScheduler, comp),
+                start: this.startInvoker, update: this.updateInvoker, late: this.lateUpdateInvoker,
+                updating: this._updating, deferred: this._deferredComps.includes(comp),
+                hasStart: contains(this.startInvoker, comp), hasUpdate: contains(this.updateInvoker, comp),
+                hasLate: contains(this.lateUpdateInvoker, comp),
+            });
+        };
+        type Facts = ReturnType<typeof read>;
+        const capture = (identity: object) => Object.freeze({
+            initial: read(identity), completion: { current: null as Facts | null },
+        });
+        type Snapshot = ReturnType<typeof capture>;
+        const sameOwner = (before: Facts, after: Facts): void => {
+            if (after.timerScheduler !== before.timerScheduler || after.start !== before.start ||
+                after.update !== before.update || after.late !== before.late || after.updating !== before.updating ||
+                after.timer.containerIdentities.some((entry, index) => entry !== before.timer.containerIdentities[index]))
+                throw new Error('Observed scheduler/container ownership changed during callback.');
+        };
+        const verify = (identity: object, enabled: boolean | null, value: unknown): void => {
+            const comp = identity as Component, snapshot = value as Snapshot;
+            const before = enabled === null ? snapshot.initial : snapshot.completion.current;
+            if (!before) throw new Error('Observed scheduler has no actual callback-completion baseline.');
+            const after = read(comp), a = after.timer, b = before.timer;
+            sameOwner(snapshot.initial, after);
+            if (a.timerIdentity !== b.timerIdentity || a.updateIdentity !== b.updateIdentity ||
+                a.updateEntryIdentity !== b.updateEntryIdentity ||
+                a.timerPaused !== (enabled === null || b.timerIdentity === null ? b.timerPaused : !enabled) ||
+                a.updatePaused !== (enabled === null || b.updateIdentity === null ? b.updatePaused : !enabled))
+                throw new Error('Observed scheduler ownership or timer pause state did not match.');
+            if (enabled === null) {
+                if (after.deferred !== before.deferred || after.hasStart !== before.hasStart ||
+                    after.hasUpdate !== before.hasUpdate || after.hasLate !== before.hasLate)
+                    throw new Error('Observed invoker membership changed before original completion.');
+            } else if (!enabled) {
+                if (after.deferred || after.hasStart || after.hasUpdate || after.hasLate)
+                    throw new Error('Observed disable did not remove actual invoker membership.');
+            } else if (after.updating) {
+                if (!after.deferred || after.hasStart !== before.hasStart || after.hasUpdate !== before.hasUpdate ||
+                    after.hasLate !== before.hasLate)
+                    throw new Error('Observed enable did not defer actual invoker scheduling.');
+            } else if (after.deferred || after.hasStart !== (!!comp.internalStart && !(comp._objFlags & IsStartCalled)) ||
+                after.hasUpdate !== (typeof comp.internalUpdate === 'function') ||
+                after.hasLate !== (typeof comp.internalLateUpdate === 'function')) {
+                throw new Error('Observed enable did not establish actual invoker membership.');
+            }
+        };
+        activitySchedulerInstances.add(this);
+        try {
+            installComponentActivitySchedulerSource(this, Object.freeze({
+                readTimerScheduler: (): object => legacyCC.director._scheduler,
+                capture,
+                verify,
+                run: (identity: object, enabled: boolean, before: unknown, invoke: (callback: () => void, complete: () => void) => void): void => {
+                    const comp = identity as Component;
+                    verify(comp, null, before);
+                    if ((EDITOR || NODEJS) && !(legacyCC.GAME_VIEW || (comp.constructor as any)._executeInEditMode))
+                        throw new Error('Observed component is outside the active scheduler context.');
+                    // Original enableComp/disableComp may legitimately have no callback work.
+                    // The ticket's independent expected-callback check still rejects changed flags.
+                    if (!!(comp._objFlags & IsOnEnableCalled) === enabled) return;
+                    invoke(() => {
+                        if (enabled) {
+                            if (comp.internalOnEnable) comp.internalOnEnable();
+                            if (!readComponentActivityNodeActive(comp.node))
+                                throw new Error('Observed component was deactivated during onEnable.');
+                        } else if (comp.internalOnDisable) {
+                            comp.internalOnDisable();
+                        }
+                    }, () => {
+                        // A real callback may legitimately schedule/unschedule its own timers.
+                        // After its secret-bearing delegate, capture all current entries and verify
+                        // original completion against those, while retaining original owner/containers.
+                        const snapshot = before as Snapshot, current = read(comp);
+                        sameOwner(snapshot.initial, current);
+                        snapshot.completion.current = current;
+                        if (enabled) {
+                            activityOnEnabled.call(this, comp);
+                            if (EDITOR || NODEJS) enableInEditor(comp);
+                        } else {
+                            activityOnDisabled.call(this, comp);
+                            if ((EDITOR || NODEJS) && (comp._objFlags & IsEditorOnEnableCalled)) {
+                                legacyCC.engine.emit('component-disabled', comp.uuid);
+                                comp._objFlags &= ~IsEditorOnEnableCalled;
+                            }
+                        }
+                        verify(comp, enabled, before);
+                    });
+                },
+            }));
+        } catch (error) {
+            activitySchedulerInstances.delete(this);
+            throw error;
+        }
     }
 
     /**
@@ -549,6 +664,10 @@ export class ComponentScheduler {
         comps.length = 0;
     }
 }
+
+// Original completion functions are captured before EDITOR/NODEJS overrides.
+const activityOnEnabled = ComponentScheduler.prototype._onEnabled;
+const activityOnDisabled = ComponentScheduler.prototype._onDisabled;
 
 if (EDITOR || NODEJS) {
     ComponentScheduler.prototype.enableComp = function (comp, invoker): void {

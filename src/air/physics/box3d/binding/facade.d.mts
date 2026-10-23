@@ -166,6 +166,13 @@ export interface Box3DFoundation {
     createSphere(body: Box3DId, radius: number, density?: number): Box3DId;
     createBox(body: Box3DId, halfExtents: ArrayLike<number>, density?: number): Box3DId;
     destroyShape(shape: Box3DId): void;
+    /** Unordered copied hits. Adapter deduplicates/sorts by logical collider and selects closest from these same hits. */
+    rayAllRaw(
+        world: Box3DWorld,
+        origin: ArrayLike<number>,
+        translation: ArrayLike<number>,
+        options: Readonly<Box3DRayQueryOptions>,
+    ): readonly Readonly<Box3DRawRayHit>[];
     rayClosest(
         world: Box3DWorld,
         origin: ArrayLike<number>,
@@ -490,4 +497,19 @@ export interface Box3DCommandBatchResult {
     readonly bodies: readonly Box3DCommandBodyResult[];
     readonly operations: readonly Box3DCommandOperationResult[];
     readonly executedOperationCount: number;
+}
+
+export interface Box3DRayQueryOptions {
+    readonly group: number;
+    readonly mask: number;
+    readonly queryTrigger: boolean;
+}
+/** Full copied shape identity is observational data, not an ownership capability. */
+export interface Box3DRawRayHit {
+    readonly shape: Readonly<Box3DId>;
+    readonly fraction: number;
+    readonly point: readonly number[];
+    readonly normal: readonly number[];
+    readonly triangleIndex: number;
+    readonly childIndex: number;
 }

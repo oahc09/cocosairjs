@@ -22,7 +22,10 @@
 /** Optional feature registration only. No fetch, module construction or world creation at import. */
 import { createBox3DSTLoader } from './loader/st-loader.mjs';
 import type { Box3DBuildDescriptor } from './loader/st-loader.mjs';
-import { registerBox3DFeature } from './prepare';
+import { registerBox3DFeature, registerBox3DWorldAdapter } from './prepare';
+import { createBox3DWorldAdapter } from './registration';
+import { selector } from '../../../cocos/physics/framework/physics-selector';
+import { PhysicsSystem } from '../../../cocos/physics/framework/physics-system';
 
 // Only the explicit Box3D build plugin replaces these trusted build markers.
 const descriptor = '__AIR_BOX3D_ST_DESCRIPTOR__' as unknown as Box3DBuildDescriptor;
@@ -35,3 +38,19 @@ registerBox3DFeature({
             documentBaseUrl: typeof document === 'undefined' ? undefined : document.baseURI,
         }),
 });
+
+// Bind the optional feature to the canonical engine graph, not a second selector or world.
+// All singleton reads stay lazy: PhysicsSystem exists only after PRE_SUBSYSTEM_INIT
+// has selected this preparation. The adapter retains the shared native world and
+// its preparation-owned rollback; feature evaluation never acquires native resources.
+registerBox3DWorldAdapter(
+    createBox3DWorldAdapter(
+        selector,
+        {
+            collisionMask: (group) => PhysicsSystem.instance.collisionMatrix[group],
+            sleepThreshold: () => PhysicsSystem.instance.sleepThreshold,
+        },
+        undefined,
+        { physicsSystem: () => PhysicsSystem.instance },
+    ),
+);

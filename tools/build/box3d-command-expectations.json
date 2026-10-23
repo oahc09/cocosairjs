@@ -116,7 +116,7 @@
     "idCycles": 128
   },
   "provenance": {
-    "path": "tools/physics/box3d/output/command-checkpoint-20261022-n/qualification-expectations-4.json",
+    "path": "docs/physics/box3d/rebuild/unified-native-source-20261022-n4/qualification-expectations-4.json",
     "sha256": "079d77edf0a0edd9c0e0566fa1ae8dba2b88d80712e15c808589baf21f576c5d",
     "meaning": "Consumer-owned fixed expectations; not read from the artifact being validated."
   },
@@ -171,7 +171,12 @@
       "docs/physics/box3d/contracts/unified-command-wire-v1.md",
       "docs/physics/box3d/contracts/unified-command-decisions-v1.md",
       "src/air/physics/box3d/binding/facade.mjs",
-      "src/air/physics/box3d/binding/facade.d.mts"
+      "src/air/physics/box3d/binding/facade.d.mts",
+      "tools/physics/box3d/native/query_bridge.c",
+      "tools/physics/box3d/native/query_bridge.h",
+      "tools/physics/box3d/native/query_contract.c",
+      "tools/physics/box3d/wasm-query-contract.mjs",
+      "tools/physics/box3d/query-admission-contract.mjs"
     ],
     "compileUnits": [
       "staged-core/src/aabb.c",
@@ -240,7 +245,9 @@
       "tools/physics/box3d/native/snapshot.c",
       "tools/physics/box3d/native/wasm_entry.c",
       "tools/physics/box3d/native/world_bridge.c",
-      "tools/physics/box3d/native/world_contract.c"
+      "tools/physics/box3d/native/world_contract.c",
+      "tools/physics/box3d/native/query_bridge.c",
+      "tools/physics/box3d/native/query_contract.c"
     ],
     "evidence": [
       "build-receipt.json",
@@ -271,8 +278,30 @@
       "native-command-contract.raw.json",
       "wasm-command-contract.raw.json",
       "air_box3d_command_contract.cjs",
-      "command-samples.raw.jsonl"
+      "command-samples.raw.jsonl",
+      "native-query-contract.raw.json",
+      "wasm-query-contract.raw.json",
+      "air_box3d_query_contract.cjs"
     ],
-    "commands": 21
+    "commands": 24
+  },
+  "queryExtension": {
+    "status": "ADDITIVE_SOURCE_GENERATION_NOT_FORMAL_ACCEPTANCE",
+    "inputs": [
+      "tools/physics/box3d/native/query_bridge.c",
+      "tools/physics/box3d/native/query_bridge.h",
+      "tools/physics/box3d/native/query_contract.c",
+      "tools/physics/box3d/wasm-query-contract.mjs",
+      "tools/physics/box3d/query-admission-contract.mjs"
+    ],
+    "compileUnits": [
+      "tools/physics/box3d/native/query_bridge.c",
+      "tools/physics/box3d/native/query_contract.c"
+    ],
+    "evidence": [
+      "native-query-contract.raw.json",
+      "wasm-query-contract.raw.json",
+      "air_box3d_query_contract.cjs"
+    ]
   }
 }

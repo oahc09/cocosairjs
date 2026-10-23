@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "contractVersion": "box3d-rebuild-contract-1",
+  "contractVersion": "box3d-rebuild-contract-2",
   "status": "DESIGN_CONTRACT_NOT_IMPLEMENTATION",
   "primaryMainCommit": "b573be0741db9e2a13d38ce7e65870b97a1f5fbc",
   "apiSpecMap": "public-spec-map.json",
@@ -39,6 +39,13 @@
       "name": "getPhysicsBackendInfo",
       "signature": "getPhysicsBackendInfo(): Readonly<PhysicsBackendInfo>",
       "tests": ["B3-I01", "WASM-05", "WASM-07-AIR"]
+    },
+    {
+      "name": "registerBox3DBeforeStep",
+      "signature": "registerBox3DBeforeStep(callback: Box3DBeforeStepCallback, options?: { enabled?: boolean }): Box3DBeforeStepHandle",
+      "status": "SOURCE_INTEGRATED_NOT_QUALIFIED",
+      "tests": ["B3-C01", "B3-C03", "B3-C06"],
+      "qualification": "Original formal inventory and denominator unchanged; new finite source/Node checks do not pass these cells."
     }
   ],
   "c16Duration": {
@@ -87,5 +94,6 @@
     "old core/WASM substitution",
     "historical PASS import",
     "raw pointer exposure"
-  ]
+  ],
+  "beforeStepDecision": "before-step-api-v1.md"
 }

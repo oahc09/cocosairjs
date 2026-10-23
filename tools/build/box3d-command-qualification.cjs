@@ -1,5 +1,5 @@
 /* Copyright (c) 2026-2027 oahc09@gmail.com. SPDX-License-Identifier: MIT
- * Read-only consumer of frozen n4 qualification evidence. This is not a physics oracle.
+ * Read-only consumer retaining frozen n4 command qualification plus additive query schedule. This is not a physics oracle.
  * Expected inventories are consumer-owned, never supplied by the inspected artifact.
  */
 const assert = require('node:assert/strict');
@@ -118,36 +118,50 @@ function outputPacket(input, output) {
     }
 }
 function verifyCommandSchedule(receipt) {
-    assert.equal(receipt.commands.length, 21, 'Exact successful WASM command inventory');
+    assert.equal(receipt.commands.length, 24, 'Exact successful WASM command inventory');
     assert(receipt.commands.every((row) => row.exitCode === 0 && !row.error));
     assert.equal(receipt.motionSourceControls?.status, 'PASS_SOURCE_CONTROLS_ONLY');
     assert.equal(receipt.commandSourceControls?.status, 'PASS_SOURCE_CONTROLS_ONLY');
+    assert.equal(receipt.queryAdmission?.status, 'PASS_ADMISSION_NO_NATIVE_CALLS');
+    assert.equal(receipt.queryAdmission?.nativeQueryCalls, 0);
     const scripts = [
+        'query-admission-contract.mjs',
         'motion-source-controls.mjs',
         'command-source-controls.mjs',
         null,
         null,
         null,
         null,
-        ...['geometry', 'world', 'body', 'filter', 'motion', 'command'].map((n) => `air_box3d_${n}_contract.cjs`),
-        ...['', 'ownership-', 'snapshot-', 'geometry-', 'world-', 'body-', 'filter-', 'motion-', 'command-'].map(
-            (n) => `wasm-${n}contract.mjs`,
+        ...['geometry', 'world', 'body', 'filter', 'motion', 'command', 'query'].map(
+            (n) => `air_box3d_${n}_contract.cjs`,
         ),
+        ...[
+            '',
+            'ownership-',
+            'snapshot-',
+            'geometry-',
+            'world-',
+            'body-',
+            'filter-',
+            'motion-',
+            'command-',
+            'query-',
+        ].map((n) => `wasm-${n}contract.mjs`),
     ];
     scripts.forEach((script, i) => {
         const row = receipt.commands[i];
         assert(Array.isArray(row.args) && row.args.every((arg) => typeof arg === 'string'));
         if (script) assert(row.args[0]?.endsWith('/' + script), `Command ${i + 1}: ${script}`);
     });
-    assert.equal(receipt.commands[2].command, 'emcc');
-    assert.deepEqual(receipt.commands[2].args, ['--version']);
-    assert.equal(receipt.commands[3].command, 'cmake');
+    assert.equal(receipt.commands[3].command, 'emcc');
     assert.deepEqual(receipt.commands[3].args, ['--version']);
-    assert.equal(receipt.commands[4].command, 'emcmake');
-    assert.equal(receipt.commands[4].args[0], 'cmake');
-    assert.equal(receipt.commands[5].command, 'cmake');
-    assert.equal(receipt.commands[5].args[0], '--build');
-    assert.deepEqual(receipt.commands[5].args.slice(-2), ['--parallel', '1']);
+    assert.equal(receipt.commands[4].command, 'cmake');
+    assert.deepEqual(receipt.commands[4].args, ['--version']);
+    assert.equal(receipt.commands[5].command, 'emcmake');
+    assert.equal(receipt.commands[5].args[0], 'cmake');
+    assert.equal(receipt.commands[6].command, 'cmake');
+    assert.equal(receipt.commands[6].args[0], '--build');
+    assert.deepEqual(receipt.commands[6].args.slice(-2), ['--parallel', '1']);
 }
 function verifyCommandQualification({ native, wasm, samplesBytes, identity, fixtureSha256, receipt }) {
     assert.equal(native.status, 'PASS');

@@ -2,7 +2,7 @@
   "meta": {
     "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
     "note": "Air Path 与 Upstream Path 一致(前缀 src/)；modified 文件另行标注 reason；upstreamPath=null 表示该行为 Air 原创文件或上游产物（仓库内无对应源文件），必须 modified:true 并在 reason 说明出处",
-    "modifiedCount": 271,
+    "modifiedCount": 279,
     "pal": {
       "revision": "9f0e30acb31f6d670f2c0bf818d61039846a2860",
       "license": "MIT",
@@ -3052,8 +3052,8 @@
       "airPath": "src/cocos/core/index.ts",
       "upstreamPath": "cocos/core/index.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "extraction copy Checkpoint42 candidate: preserve the existing public Scheduler and type ISchedulable set with explicit re-exports, preventing the new internal constructor-brand predicate from escaping through the previous scheduler export-star."
     },
     {
       "airPath": "src/cocos/core/internal-index.ts",
@@ -3276,8 +3276,8 @@
       "airPath": "src/cocos/core/scheduler.ts",
       "upstreamPath": "cocos/core/scheduler.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "extraction copy Checkpoint42 candidate: original constructor captures exact-target copied timer/update inventory reader with opaque container/entry identities. No writable entries/functions escape; no public uuid/id getters are ownership authority. Original CRLF and extracted header preserved. Original-constructor private brand gates source installation; failed construction removes the brand. The read-only predicate is not re-exported by core/index."
     },
     {
       "airPath": "src/cocos/core/settings.ts",
@@ -3529,14 +3529,14 @@
       "upstreamPath": "cocos/game/director.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "PG-30: internal scene-only immediate detach/drain retaining runtime, shared caches and persistent nodes, usable while paused or context lost"
+      "reason": "PG-30: internal scene-only immediate detach/drain retaining runtime, shared caches and persistent nodes, usable while paused or context lost; internal Game clock candidate 2026-10-23: exact observed frame entry before BEGIN_FRAME/input, independent synchronous scope disposal after END_FRAME; no new loop or accumulator."
     },
     {
       "airPath": "src/cocos/game/game.ts",
       "upstreamPath": "cocos/game/game.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "Internal Game clock candidate 2026-10-23: original-constructor captured reason/effect source; opt-in application/background prepared admission before early returns and public notifications; exact manual Game.step entry before dt. Unobserved original cache/pacer/event bodies retained."
     },
     {
       "airPath": "src/cocos/game/index.ts",
@@ -5076,7 +5076,7 @@
       "upstreamPath": "cocos/physics/framework/components/rigid-body.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "Box3D rebuild 2026-10-22: nine initialized component setters commit cached values only after the Box3D adapter accepts; retain existing mass normalization and unchanged cache-first paths for all other backends. This does not repair direct mutable-vector alias edits or establish full native component acceptance. Stage A opt-in identity-lease assertions now precede supported property/filter/sleep/velocity mutations and mutable bounds reads before caller evaluation or cache/native work; unchanged no-lease algorithms and nine command wrappers remain delegable. Finite explicit-lease source controls and separate real Release lifecycle/alias-fault evidence do not activate unified transactions or qualify listener editing. Internal dynamic-owner candidate: nine command wrappers now offer a lazy neutral owner route before initialized-body checks; both velocity setters consult the owner configuration gate before instance state. No registered owner leaves legacy evaluation order unchanged. Registration is explicit-only and not exported as unified package activation."
+      "reason": "Box3D rebuild 2026-10-22: nine initialized component setters commit cached values only after the Box3D adapter accepts; retain existing mass normalization and unchanged cache-first paths for all other backends. This does not repair direct mutable-vector alias edits or establish full native component acceptance. Stage A opt-in identity-lease assertions now precede supported property/filter/sleep/velocity mutations and mutable bounds reads before caller evaluation or cache/native work; unchanged no-lease algorithms and nine command wrappers remain delegable. Finite explicit-lease source controls and separate real Release lifecycle/alias-fault evidence do not activate unified transactions or qualify listener editing. Internal dynamic-owner candidate: nine command wrappers now offer a lazy neutral owner route before initialized-body checks; both velocity setters consult the owner configuration gate before instance state. No registered owner leaves legacy evaluation order unchanged. Registration is explicit-only and not exported as unified package activation. Internal persistent-target candidate: velocity admission now receives the exact source before reading vectors and rejects active/protected target ownership; unowned ready-phase behavior remains unchanged."
     },
     {
       "airPath": "src/cocos/physics/framework/deprecated.ts",
@@ -6069,15 +6069,15 @@
       "airPath": "src/cocos/scene-graph/component-scheduler.ts",
       "upstreamPath": "cocos/scene-graph/component-scheduler.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "extraction copy Checkpoint42 candidate: original constructor captures opt-in actual callback/completion and invoker readers; exact source-bound invocation verifies timer/container/entry/invoker facts. Existing Web/EDITOR/NODEJS legacy enableComp/disableComp bodies unchanged; only observed callbacks bypass exception-swallowing functors. Constructor-local branding is removed on installation failure. Direct utils/js import avoids the new core-barrel cycle. Actual callback schedule/unschedule changes use a private post-callback completion baseline; initialized pre-onEnable cache-only transitions remain no-op scheduler calls. The observer registration anchors the exact component/timer scheduler pair; later genuine replacements reject before publication without claiming ownership migration."
     },
     {
       "airPath": "src/cocos/scene-graph/component.ts",
       "upstreamPath": "cocos/scene-graph/component.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "extraction copy 2026-10-22 unified-command preparation: Opt-in identity-keyed mutation fences reject enabled/destroy before cached fields, scheduler callbacks or deferred-destroy flags change. Finite real-source lease controls only; actual World lease activation and new WASM integration remain unqualified."
+      "reason": "extraction copy 2026-10-22 unified-command preparation: Opt-in identity-keyed mutation fences reject enabled/destroy before cached fields, scheduler callbacks or deferred-destroy flags change. Finite real-source lease controls only; actual World lease activation and new WASM integration remain unqualified. Checkpoint42 candidate: observed enabled changes run original mutation guard before owner fences, then constructor-captured cache/scheduler publication only after all owners prepare/apply; no-observer legacy setter body unchanged. Runtime-visible fields are not represented as tamper-proof."
     },
     {
       "airPath": "src/cocos/scene-graph/deprecated-3.7.0.ts",
@@ -6161,7 +6161,7 @@
       "upstreamPath": "cocos/scene-graph/node.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "ENG-08: local/world TRS and setRTS reject nonfinite/non-float32/invalid numeric overload values before mutation; valid transforms and Euler degrees unchanged. Box3D reconstruction: opt-in backend-neutral pre-mutation ownership checks for protected TRS/relative/hierarchy writes; exact single-use world-pose permits are consumed before events; unregistered Node paths retain original behavior. 2026-10-22 unified-command preparation: Opt-in mutation fences reject active/destroy/destroyAllChildren before lifecycle writes; addComponent uses the frozen realm-wide Node.prototype category lease before class resolution, dependency reads or construction, including orphan/UI/2D/custom components. Finite real-source lease controls only; actual World lease activation and new WASM integration remain unqualified."
+      "reason": "ENG-08: local/world TRS and setRTS reject nonfinite/non-float32/invalid numeric overload values before mutation; valid transforms and Euler degrees unchanged. Box3D reconstruction: opt-in backend-neutral pre-mutation ownership checks for protected TRS/relative/hierarchy writes; exact single-use world-pose permits are consumed before events; unregistered Node paths retain original behavior. 2026-10-22 unified-command preparation: Opt-in mutation fences reject active/destroy/destroyAllChildren before lifecycle writes; addComponent uses the frozen realm-wide Node.prototype category lease before class resolution, dependency reads or construction, including orphan/UI/2D/custom components. Finite real-source lease controls only; actual World lease activation and new WASM integration remain unqualified. Checkpoint42 candidate: original constructor installs only a captured _activeInHierarchy reader for the opt-in Component.enabled source; no hierarchy/scene lifecycle changes."
     },
     {
       "airPath": "src/cocos/scene-graph/prefab/index.ts",
@@ -9899,7 +9899,7 @@
       "upstreamPath": null,
       "baseline": "AIR original",
       "modified": true,
-      "reason": "2026-10-22 Box3D rebuild: Internal unregistered IPhysicsWorld control adapter with native ownership, one-step diagnostics, copied debug primitives, material rollback and explicit unsupported operations; not yet a real qualified engine/WASM integration."
+      "reason": "2026-10-22 Box3D rebuild: Internal unregistered IPhysicsWorld control adapter with native ownership, one-step diagnostics, copied debug primitives, material rollback and explicit unsupported operations; not yet a real qualified engine/WASM integration. Checkpoint42 candidate: exact private Component.enabled activity owner wiring; queue-backed no-sequence admission, retained control/target guards through original callback and actual scheduler/native readback, no replay after committed or unknown failure."
     },
     {
       "airPath": "src/air/physics/box3d/world-binding.ts",
@@ -9948,14 +9948,14 @@
       "upstreamPath": null,
       "baseline": "AIR original",
       "modified": true,
-      "reason": "2026-10-22 Box3D rebuild: Private world-scoped Node/shared-body and primitive-shape ownership. Only immutable explicit not-mutated errors preserve observations; committed or unknown native outcomes fault. Qualified l2 batch filters are used without fake per-shape atomicity; public activation and T11 pose/scale remain incomplete."
+      "reason": "2026-10-22 Box3D rebuild: Private world-scoped Node/shared-body and primitive-shape ownership. Only immutable explicit not-mutated errors preserve observations; committed or unknown native outcomes fault. Qualified l2 batch filters are used without fake per-shape atomicity; public activation and T11 pose/scale remain incomplete. Checkpoint42 candidate: exact private Component.enabled activity owner wiring; queue-backed no-sequence admission, retained control/target guards through original callback and actual scheduler/native readback, no replay after committed or unknown failure."
     },
     {
       "airPath": "src/air/physics/box3d/rigid-body.ts",
       "upstreamPath": null,
       "baseline": "AIR original",
       "modified": true,
-      "reason": "2026-10-22 Box3D rebuild: AIR-owned IRigidBody forwarding with whole initial-candidate preflight, private shared ownership, copied real native readback and 32-bit filters. Source controls are limited; current actual component qualification is separate, public activation and T11 pose/scale remain incomplete."
+      "reason": "2026-10-22 Box3D rebuild: AIR-owned IRigidBody forwarding with whole initial-candidate preflight, private shared ownership, copied real native readback and 32-bit filters. Source controls are limited; current actual component qualification is separate, public activation and T11 pose/scale remain incomplete. Persistent-target candidate makes the internal shared-body accessor ECMAScript-private, closing the TypeScript-private runtime escape to raw SharedBody.control without changing public adapter interfaces. Checkpoint42 candidate: exact private Component.enabled activity owner wiring; queue-backed no-sequence admission, retained control/target guards through original callback and actual scheduler/native readback, no replay after committed or unknown failure."
     },
     {
       "airPath": "src/air/physics/box3d/box-sphere-geometry.ts",
@@ -9969,7 +9969,7 @@
       "upstreamPath": null,
       "baseline": "AIR original",
       "modified": true,
-      "reason": "2026-10-22 Box3D rebuild: AIR-owned IBoxShape/ISphereShape candidate with real native ownership, guarded replacement, material/filter delegation and copied bounds. Unknown allocation/configuration failures fault instead of claiming rollback; public component activation and full qualification remain incomplete."
+      "reason": "2026-10-22 Box3D rebuild: AIR-owned IBoxShape/ISphereShape candidate with real native ownership, guarded replacement, material/filter delegation and copied bounds. Unknown allocation/configuration failures fault instead of claiming rollback; public component activation and full qualification remain incomplete. Persistent-target candidate makes the internal shared-body accessor ECMAScript-private, closing the TypeScript-private runtime escape to raw SharedBody.control without changing public adapter interfaces."
     },
     {
       "airPath": "src/cocos/core/data/mutation-guard.ts",
@@ -9983,7 +9983,7 @@
       "upstreamPath": null,
       "baseline": "AIR original",
       "modified": true,
-      "reason": "2026-10-22 Box3D rebuild: Internal copied unified-command queue, generation/counter identity, nondestructive reduction and explicit commit/step phases; logical controls do not establish native lifetime or World integration."
+      "reason": "2026-10-22 Box3D rebuild: Internal copied unified-command queue, generation/counter identity, nondestructive reduction and explicit commit/step phases; logical controls do not establish native lifetime or World integration. Checkpoint42 candidate: exact private Component.enabled activity owner wiring; queue-backed no-sequence admission, retained control/target guards through original callback and actual scheduler/native readback, no replay after committed or unknown failure."
     },
     {
       "airPath": "src/air/physics/box3d/command-producers.ts",
@@ -10053,7 +10053,35 @@
       "upstreamPath": null,
       "baseline": "AIR original",
       "modified": true,
-      "reason": "AIR-owned internal backend-neutral single-owner command routing. Captures trusted handlers under registration reentry latch; original command input is read only inside the actual owner submission admission. No owner preserves legacy paths, no native capability is published. Internal candidate, not general multi-backend or unified release qualification."
+      "reason": "AIR-owned internal backend-neutral single-owner command routing. Captures trusted handlers under registration reentry latch; original command input is read only inside the actual owner submission admission. No owner preserves legacy paths, no native capability is published. Internal candidate, not general multi-backend or unified release qualification. Internal persistent-target candidate: velocity admission now receives the exact source before reading vectors and rejects active/protected target ownership; unowned ready-phase behavior remains unchanged."
+    },
+    {
+      "airPath": "src/air/physics/box3d/current-motion-route.ts",
+      "upstreamPath": null,
+      "baseline": "AIR Box3D integration",
+      "modified": true,
+      "reason": "AIR-owned private realm-current target route captures handlers under a registration reentry latch and forbids route changes during admitted calls. Retained stale handles reach the current collecting queue before owner/generation checks; no package export or native capability."
+    },
+    {
+      "airPath": "src/cocos/scene-graph/component-activity-control.ts",
+      "upstreamPath": null,
+      "baseline": "AIR original",
+      "modified": true,
+      "reason": "AIR original private backend-neutral Component.enabled seam. Constructor-captured cache/source/scheduler controls, exact observer generations and private adapter-secret delegation; actual timer/invoker verification and latched first-error cleanup. Only original-source brand predicates are imported; deliberate initialization cycles are unexecuted. No public barrel export or test blessing hook. The observer registration anchors the exact component/timer scheduler pair; later genuine replacements reject before publication without claiming ownership migration."
+    },
+    {
+      "airPath": "src/air/physics/box3d/world-command-owner.ts",
+      "upstreamPath": null,
+      "baseline": "AIR original",
+      "modified": true,
+      "reason": "Checkpoint42 candidate: exact private Component.enabled activity owner wiring; queue-backed no-sequence admission, retained control/target guards through original callback and actual scheduler/native readback, no replay after committed or unknown failure."
+    },
+    {
+      "airPath": "src/cocos/game/game-clock-control.ts",
+      "upstreamPath": null,
+      "baseline": "AIR original",
+      "modified": true,
+      "reason": "Internal neutral original-Game reason source, prepared owner observation and exact owned synchronous Director frame leases. No AIR/physics import, public barrel export or native authority. Terminal state survives owner disposal; legacy active adoption fails closed. Candidate NOT_RUN."
     }
   ]
 }

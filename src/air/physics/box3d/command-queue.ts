@@ -254,6 +254,15 @@ export class Box3DCommandQueue {
         if (candidate !== this.#candidate) this.#reject('foreign, stale or consumed candidate');
     }
 
+    /** Configuration admission does not consume commands or allocate a sequence. */
+    withConfigurationAdmission<T>(read: () => T): T {
+        this.#admit('ready', 'paused');
+        return this.#copy(() => {
+            if (typeof read !== 'function') this.#reject('configuration reader must be a function');
+            return read();
+        });
+    }
+
     registerBody(identity: object): void {
         // Paused non-target assembly is configuration only; never submit or acquire target.
         this.#admit('ready', 'paused');
@@ -274,13 +283,36 @@ export class Box3DCommandQueue {
     }
     /** Returns an opaque queue-local acquisition identity, not evidence of native ownership. */
     acquireTarget(identity: object): object {
+        return this.withTargetAcquisitionAdmission(() => identity);
+    }
+    /** Owner/source resolution stays inside the latch. Acquisition allocates no command sequence. */
+    withTargetAcquisitionAdmission(read: () => object): object {
+        this.#admit('ready');
+        const prepared = this.#copy(() => {
+            if (typeof read !== 'function') this.#reject('target acquisition reader must be a function');
+            const body = this.#body(read());
+            if (body.target !== 'none') this.#reject('target ownership already held or protected');
+            return { body, owner: Object.freeze({}) };
+        });
+        prepared.body.targetOwner = prepared.owner;
+        prepared.body.target = 'active';
+        return prepared.owner;
+    }
+    /** Abort only an unpublished, motion-free acquisition; never a live handle cleanup. */
+    releaseUnpublishedTarget(identity: object, owner: object): void {
         this.#admit('ready');
         const body = this.#body(identity);
-        if (body.target !== 'none') this.#reject('target ownership already held or protected');
-        const owner = Object.freeze({});
-        body.targetOwner = owner;
-        body.target = 'active';
-        return owner;
+        if (
+            body.target !== 'active' ||
+            body.targetOwner !== owner ||
+            this.#pending.some(
+                (record) =>
+                    record.body === identity &&
+                    (record.command.kind === 'target' || record.command.kind === 'target-clear'),
+            )
+        )
+            this.#reject('cannot abort published or stale target acquisition');
+        body.target = 'none';
     }
     #withoutTargetMotion(identity: object): readonly CommandRecord[] {
         return Object.freeze(
@@ -292,15 +324,30 @@ export class Box3DCommandQueue {
         );
     }
     revokeTarget(identity: object): void {
+        this.withTargetRevocationAdmission(() => {
+            const body = this.#body(identity);
+            if (body.target === 'none') this.#reject('no target ownership');
+            return { body: identity, owner: body.targetOwner };
+        });
+    }
+    /** Exact-token owner revocation. A caught admission failure poisons collection;
+     * no native work or command sequence is performed by this metadata operation.
+     */
+    withTargetRevocationAdmission(read: () => { readonly body: object; readonly owner: object | null }): void {
         this.#admit('ready', 'paused');
-        const body = this.#body(identity);
-        if (body.target === 'none') this.#reject('no target ownership');
-        // Prepare before changing ownership. Teleports and ordinary clears/effects are
-        // independent user records, retained for the owner's actual-state revalidation.
-        const replacement = this.#withoutTargetMotion(identity);
-        // No user sequence allocation: exhaustion must not block a cleanup obligation.
-        this.#pending = replacement;
-        body.target = 'protected';
+        const prepared = this.#copy(() => {
+            if (typeof read !== 'function') this.#reject('target revocation reader must be a function');
+            const value = read();
+            object(value);
+            const identity = value.body,
+                body = this.#body(identity),
+                owner = value.owner;
+            if (owner === null || body.targetOwner !== owner || body.target === 'none')
+                this.#reject('foreign, stale or released target ownership');
+            return { body, replacement: this.#withoutTargetMotion(identity) };
+        });
+        this.#pending = prepared.replacement;
+        prepared.body.target = 'protected';
     }
     /** Owner-only notification AFTER independently established paired zero or actual
      * target-owning lifecycle teardown. Cancellation, a JS disabled/type flag, unknown

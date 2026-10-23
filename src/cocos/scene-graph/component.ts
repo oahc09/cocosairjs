@@ -38,6 +38,7 @@ import { legacyCC } from '../core/global-exports';
 import { errorID, warnID, assertID } from '../core/platform/debug';
 import { CompPrefabInfo } from './prefab/prefab-info';
 import { EventHandler } from './component-event-handler';
+import { installComponentActivitySource, readComponentActivityNodeActive, runComponentActivityScheduler, trySetComponentEnabled } from './component-activity-control';
 
 const idGenerator = new IDGenerator('Comp');
 const IsOnLoadCalled = CCObjectFlags.IsOnLoadCalled;
@@ -71,6 +72,19 @@ class Component extends CCObject {
 
     constructor () {
         super();
+        installComponentActivitySource(this, () => ({
+            enabled: this._enabled,
+            active: this.node ? readComponentActivityNodeActive(this.node) : false,
+            scheduled: !!(this._objFlags & CCObjectFlags.IsOnEnableCalled),
+        }), () => assertMutationAllowed(this, 'Component.enabled'), (value) => {
+            if (this._enabled !== value) {
+                this._enabled = value;
+                if (readComponentActivityNodeActive(this.node)) {
+                    const compScheduler = legacyCC.director._compScheduler;
+                    runComponentActivityScheduler(this, compScheduler, value);
+                }
+            }
+        }, () => legacyCC.director._compScheduler);
     }
 
     get name (): string {
@@ -131,6 +145,7 @@ class Component extends CCObject {
         return this._enabled;
     }
     set enabled (value) {
+        if (trySetComponentEnabled(this, value)) return;
         assertMutationAllowed(this, 'Component.enabled');
         if (this._enabled !== value) {
             this._enabled = value;

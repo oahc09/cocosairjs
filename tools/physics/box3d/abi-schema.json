@@ -440,5 +440,30 @@
     "mutationPhase": "Only statuses1,2,4,5,8,9,10,11,12 from this export prove prewrite refusal. Nonempty apply0 means committed before copy; other status/throw unknown. Validate/empty delivery throws do not invalidate observations.",
     "empty": "Valid header/dt/N, NULL/0 output; no invalidation or native step increment",
     "legacy": "ABI1 and all earlier wire layouts unchanged; new schema required; patch chain unchanged"
+  },
+  "rayQuery": {
+    "status": "SOURCE_CONTRACT_NOT_RUNTIME_QUALIFIED",
+    "export": "_air_b3_ray_query",
+    "facade": "rayAllRaw",
+    "inputFloats": 6,
+    "inputLayout": ["origin.xyz", "translation.xyz"],
+    "hitWords": 11,
+    "hitLayout": [
+      "shape.low.u32",
+      "shape.high.u32",
+      "point.xyz.f32",
+      "normal.xyz.f32",
+      "fraction.f32",
+      "triangle.i32",
+      "child.i32"
+    ],
+    "call": "world, input, group.u32, mask.u32, queryTrigger.bool-int, outWords, capacityWords, countOut",
+    "collector": "b3World_CastRay generic callback; no clipping; sensors ignored before collection when queryTrigger=false; fraction in [0,1); zero fraction/normal retained",
+    "capacity": "NULL output and zero capacity sizes hits; copied output requires complete capacity. Count pass before writes, no native allocation, no persistent state. Invalid/capacity admission leaves output/count unchanged.",
+    "filter": "signed32 or unsigned32 facade bitsets normalized >>>0, zero-extended to native uint64; bilateral category/mask semantics",
+    "zero": "Zero float32 translation or zero group/mask returns empty without core cast; facade avoids native ABI call too",
+    "ownership": "Exact unlocked world, full-generation copied shape observations, not ownership tokens; copied immutable arrays, no linear-memory views",
+    "adapter": "Owns input normalization/maxDistance, logicalColliderID lookup, nearest-per-collider dedup and distance/logicalID sort; both all and closest use this same result stream",
+    "legacy": "Legacy rayClosest and ABI1 unchanged. New schema requires a new module; not compatible with N4 and not a promotion."
   }
 }

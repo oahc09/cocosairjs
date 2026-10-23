@@ -23,7 +23,7 @@ THE SOFTWARE.
 // Internal, limited M1 foundation. This is not the Cocos physics adapter.
 const CORE_SHA = 'efca0c184d40fd6a82016983f1601c4d23965867';
 const BINDING_BASE_SHA = '5d5a3af049cccd9948b2b55bac4342414af0ef64';
-const SCHEMA_SHA256 = 'e6329dce9b3e6fce69cfd5da318f1f708b95b7af834edb667de8306f9cae0a5d';
+const SCHEMA_SHA256 = '0df007cd748883621f89836b55f1c09437c04d6d7e6253914577b21455a11bd5';
 const commandIsArray = Array.isArray;
 const commandKeys = Object.keys;
 const PATCH_CHAIN_SHA256 = '434fb89494867f515051d5ac0dfc0c694556ba1f0da9ac3fc895a27097b1c7c7';
@@ -1633,6 +1633,47 @@ export function createBox3DBinding(module, expected) {
                     ),
                 );
                 return copiedId(item.world, 'shape', body);
+            });
+        },
+        rayAllRaw(world, origin, translation, options) {
+            return exclusive(() => {
+                const id = worldId(world);
+                const start = vector(origin, 3, 'origin');
+                const delta = vector(translation, 3, 'translation').map(Math.fround);
+                if (!options || typeof options !== 'object')
+                    throw failure('AIR_E_BOX3D_ARGUMENT', 'Query options are required');
+                const group = filterBits(options.group, 'group');
+                const mask = filterBits(options.mask, 'mask');
+                const queryTrigger = boolean(options.queryTrigger, 'queryTrigger');
+                for (let i = 0; i < 3; ++i) finite(Math.fround(start[i]) + delta[i], 'ray endpoint');
+                // A zero segment is not an overlap query. Do not call native.
+                if (delta.every((value) => value === 0) || group === 0 || mask === 0) return Object.freeze([]);
+                module.HEAPF32.set([...start, ...delta], input >>> 2);
+                nativeStatus(module._air_b3_ray_query(id, input, group, mask, queryTrigger, 0, 0, output));
+                const count = module.HEAPU32[output >>> 2];
+                if (!count) return Object.freeze([]);
+                const words = count * 11;
+                return withBuffer(words * 4, (ptr) => {
+                    nativeStatus(module._air_b3_ray_query(id, input, group, mask, queryTrigger, ptr, words, output));
+                    if (module.HEAPU32[output >>> 2] !== count)
+                        throw failure('AIR_E_BOX3D_ABI', 'Query count changed during a synchronous read');
+                    // Copy before decoding. These full IDs are observations, never ownership capabilities.
+                    const data = module.HEAPU32.slice(ptr >>> 2, (ptr >>> 2) + words);
+                    const floats = new Float32Array(data.buffer);
+                    return freeze(
+                        Array.from({ length: count }, (_, index) => {
+                            const at = index * 11;
+                            return {
+                                shape: { low: data[at], high: data[at + 1] },
+                                point: Array.from(floats.slice(at + 2, at + 5)),
+                                normal: Array.from(floats.slice(at + 5, at + 8)),
+                                fraction: floats[at + 8],
+                                triangleIndex: data[at + 9] | 0,
+                                childIndex: data[at + 10] | 0,
+                            };
+                        }),
+                    );
+                });
             });
         },
         rayClosest(world, origin, translation) {

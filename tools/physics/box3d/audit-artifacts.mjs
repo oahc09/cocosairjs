@@ -18,8 +18,8 @@ const receipt = json('build-receipt.json');
 assert.equal(receipt.status, 'PASS');
 assert.equal(receipt.kind, 'st-simd-wasm');
 assert.ok(receipt.commands.length >= 21 && receipt.commands.every((c) => c.exitCode === 0 && !c.error));
-assert.equal(receipt.inputHashes.length, 50);
-assert.equal(new Set(receipt.inputHashes.map((input) => input.path)).size, 50);
+assert.equal(receipt.inputHashes.length, 55);
+assert.equal(new Set(receipt.inputHashes.map((input) => input.path)).size, 55);
 assert.equal(receipt.motionSourceControls.status, 'PASS_SOURCE_CONTROLS_ONLY');
 assert.equal(receipt.commandSourceControls.status, 'PASS_SOURCE_CONTROLS_ONLY');
 for (const input of receipt.inputHashes) {
@@ -49,6 +49,8 @@ const expectedSources = [
     'tools/physics/box3d/native/filter_bridge.c',
     'tools/physics/box3d/native/motion_bridge.c',
     'tools/physics/box3d/native/command_bridge.c',
+    'tools/physics/box3d/native/query_bridge.c',
+    'tools/physics/box3d/native/query_contract.c',
     'tools/physics/box3d/native/command_contract.c',
     'tools/physics/box3d/native/filter_contract.c',
     'tools/physics/box3d/native/motion_contract.c',
@@ -233,6 +235,37 @@ for (const check of [
     'cleanup',
 ])
     assert.equal(filters.checks[check], true, check);
+const nativeQuery = json('native-query-contract.raw.json');
+assert.equal(nativeQuery.status, 'PASS');
+assert.equal(nativeQuery.pointerBytes, 4);
+assert.deepEqual(nativeQuery, receipt.queryContract);
+for (const check of [
+    'genericAll',
+    'triggerContinuation',
+    'insideZero',
+    'halfOpenEndpoint',
+    'unsigned32Filters',
+    'capacityAlignmentCanaries',
+    'worldLockGeneration',
+    'coreBytesRestored',
+])
+    assert.equal(nativeQuery[check], true, check);
+assert.equal(receipt.queryAdmission.status, 'PASS_ADMISSION_NO_NATIVE_CALLS');
+assert.equal(receipt.queryAdmission.nativeQueryCalls, 0);
+const query = json('wasm-query-contract.raw.json');
+assert.equal(query.status, 'PASS');
+for (const field of ['coreSha', 'bindingBaseSha', 'schemaSha256', 'patchChainSha256', 'abiVersion', 'variant'])
+    assert.equal(query.identity[field], manifest[field]);
+assert.equal(query.fixtureSha256, sha256(readFileSync(resolve(root, 'tools/physics/box3d/wasm-query-contract.mjs'))));
+for (const check of [
+    'triggerContinuationAndZero',
+    'unsigned32AndDynamicMask',
+    'halfOpenEndpoint',
+    'copiedFrozenNonOwningIdsAndHeapGrowth',
+    'noNativeForZeroInvalid',
+    'cleanup',
+])
+    assert.equal(query.checks[check], true, check);
 const nativeFilter = json('native-filter-contract.raw.json');
 assert.equal(nativeFilter.status, 'PASS');
 assert.equal(nativeFilter.pointerBytes, 4);
@@ -538,6 +571,9 @@ const report = {
         'wasm-motion-contract.raw.json',
         'air_box3d_motion_contract.cjs',
         'motion-samples.raw.jsonl',
+        'native-query-contract.raw.json',
+        'wasm-query-contract.raw.json',
+        'air_box3d_query_contract.cjs',
         'native-command-contract.raw.json',
         'wasm-command-contract.raw.json',
         'air_box3d_command_contract.cjs',

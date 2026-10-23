@@ -27,6 +27,7 @@
  * 不承担：资源系统抽象 / Scene DSL / Renderer 配置框架 / Plugin 管理。
  */
 
+import { terminateGameClock, isGameClockTerminal } from '../cocos/game/game-clock-control';
 import { game, director } from '../cocos/game';
 import { screenAdapter } from 'pal/screen-adapter';
 import { Scene } from '../cocos/scene-graph/scene';
@@ -150,6 +151,7 @@ export class AirAppImpl implements AirApp {
     private _started = false;
     private _scope = createSessionScope();
     private _release: Promise<AirSceneReleaseReceipt> | undefined;
+    private _terminalGameClock = false;
     private _close: Promise<AirSceneReleaseReceipt> | undefined;
     private _releaseFailed = false;
     private _needsResume = false;
@@ -269,7 +271,8 @@ export class AirAppImpl implements AirApp {
                 },
             );
         scope.deactivate('release');
-        game.pause();
+        // close already installed sticky terminal pacing before any teardown callback.
+        if (!this._terminalGameClock) game.pause();
         this._needsResume = true;
         return this._release!;
     }
@@ -325,8 +328,12 @@ export class AirAppImpl implements AirApp {
                 physicsPreparation: physics,
             });
         });
+        attempt('game-clock-terminal', () => {
+            try { terminateGameClock(game); }
+            finally { this._terminalGameClock = isGameClockTerminal(game); }
+        });
         attempt('session-deactivate', () => this._scope.deactivate('close'));
-        attempt('game-pause', () => game.pause());
+        if (!this._terminalGameClock) attempt('game-pause', () => game.pause());
         return this._close;
     }
 }

@@ -299,7 +299,7 @@ for (const [name, mutate] of mutations)
         if (name !== 'native receipt inconsistency') data.receipt.commandContract = structuredClone(data.native);
         assert.throws(() => verifyCommandQualification(data));
     });
-test('Consumer expectations remain identical to the independently frozen n4 inventory', () => {
+test('Consumer preserves every n4 expectation and adds exact query inventory', () => {
     const root = path.resolve(__dirname, '../..');
     const original = fs.readFileSync(path.join(root, expected.provenance.path));
     assert.equal(hash(original), expected.provenance.sha256);
@@ -307,38 +307,70 @@ test('Consumer expectations remain identical to the independently frozen n4 inve
     assert.deepEqual(expected.native, e.native);
     assert.deepEqual(expected.wasm, e.wasm);
     const inventory = JSON.parse(
-        fs.readFileSync(path.join(root, 'tools/physics/box3d/output/command-checkpoint-20261022-n/inventory-4.json')),
+        fs.readFileSync(path.join(root, 'docs/physics/box3d/rebuild/unified-native-source-20261022-n4/inventory-4.json')),
     );
-    assert.deepEqual(expected.gate.inputs, inventory.inputs);
-    assert.deepEqual(expected.gate.compileUnits, inventory.expectedCompileUnits);
-    assert.deepEqual(expected.gate.evidence, inventory.expectedEvidence);
-    assert.equal(expected.gate.inputs.length, 50);
-    assert.equal(expected.gate.compileUnits.length, 67);
-    assert.equal(expected.gate.evidence.length, 29);
+    const additions = {
+        inputs: [
+            'tools/physics/box3d/native/query_bridge.c',
+            'tools/physics/box3d/native/query_bridge.h',
+            'tools/physics/box3d/native/query_contract.c',
+            'tools/physics/box3d/wasm-query-contract.mjs',
+            'tools/physics/box3d/query-admission-contract.mjs',
+        ],
+        compileUnits: ['tools/physics/box3d/native/query_bridge.c', 'tools/physics/box3d/native/query_contract.c'],
+        evidence: ['native-query-contract.raw.json', 'wasm-query-contract.raw.json', 'air_box3d_query_contract.cjs'],
+    };
+    for (const key of Object.keys(additions)) {
+        assert.deepEqual(expected.queryExtension[key], additions[key]);
+        assert.deepEqual(
+            expected.gate[key].filter((name) => !additions[key].includes(name)),
+            key === 'inputs'
+                ? inventory.inputs
+                : key === 'compileUnits'
+                  ? inventory.expectedCompileUnits
+                  : inventory.expectedEvidence,
+        );
+    }
+    assert.equal(expected.gate.inputs.length, 55);
+    assert.equal(expected.gate.compileUnits.length, 69);
+    assert.equal(expected.gate.evidence.length, 32);
 });
-test('SYNTHETIC ONLY: exact 21-command schedule rejects omissions, additions and reordered qualifications', () => {
+test('SYNTHETIC ONLY: exact 24-command schedule rejects omissions, additions and reordered qualifications', () => {
     const scripts = [
+        'query-admission-contract.mjs',
         'motion-source-controls.mjs',
         'command-source-controls.mjs',
         null,
         null,
         null,
         null,
-        ...['geometry', 'world', 'body', 'filter', 'motion', 'command'].map((n) => `air_box3d_${n}_contract.cjs`),
-        ...['', 'ownership-', 'snapshot-', 'geometry-', 'world-', 'body-', 'filter-', 'motion-', 'command-'].map(
-            (n) => `wasm-${n}contract.mjs`,
+        ...['geometry', 'world', 'body', 'filter', 'motion', 'command', 'query'].map(
+            (n) => `air_box3d_${n}_contract.cjs`,
         ),
+        ...[
+            '',
+            'ownership-',
+            'snapshot-',
+            'geometry-',
+            'world-',
+            'body-',
+            'filter-',
+            'motion-',
+            'command-',
+            'query-',
+        ].map((n) => `wasm-${n}contract.mjs`),
     ];
     const r = {
         commands: scripts.map((n) => ({ command: 'node', args: ['synthetic/' + n], exitCode: 0, error: null })),
+        queryAdmission: { status: 'PASS_ADMISSION_NO_NATIVE_CALLS', nativeQueryCalls: 0 },
         motionSourceControls: { status: 'PASS_SOURCE_CONTROLS_ONLY' },
         commandSourceControls: { status: 'PASS_SOURCE_CONTROLS_ONLY' },
     };
     const set = (i, command, args) => Object.assign(r.commands[i], { command, args });
-    set(2, 'emcc', ['--version']);
-    set(3, 'cmake', ['--version']);
-    set(4, 'emcmake', ['cmake']);
-    set(5, 'cmake', ['--build', 'synthetic', '--parallel', '1']);
+    set(3, 'emcc', ['--version']);
+    set(4, 'cmake', ['--version']);
+    set(5, 'emcmake', ['cmake']);
+    set(6, 'cmake', ['--build', 'synthetic', '--parallel', '1']);
     verifyCommandSchedule(r);
     for (const alter of [
         (x) => x.commands.pop(),
