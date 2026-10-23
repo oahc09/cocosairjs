@@ -1,0 +1,109 @@
+{
+  "schema": "box3d-exact-restored-base-chain-v1",
+  "orderedLibraryDownloads": [
+    {
+      "checkpoint": 22,
+      "archive": "Box3D-unified-native-source-checkpoint-20261022.zip",
+      "bytes": 21016077,
+      "sha256": "9d8f9c238864c24fe97b43d6120575d0f694009c0973b0653dfa6a11d2c4871a",
+      "members": 4,
+      "libraryFileId": "libfile_10c86f5827f481919e3938fbb0c2670b",
+      "fileId": "file_00000000cf2c820d916b4d36581d2991",
+      "commit": "e5c5674bfe08be0c9fda72c484f4380bd0d0e2c6",
+      "tree": "68cc2e16d24160e37b0aa9264e4da56612388425",
+      "bundle": {
+        "file": "box3d-rebuild.bundle",
+        "bytes": 21218681,
+        "sha256": "820b5c5a43e3693a9fc3563aded0f6390c54792321045e873a27510d59e508bc"
+      }
+    },
+    {
+      "checkpoint": 36,
+      "archive": "Box3D-source-incremental-checkpoint(6).zip",
+      "bytes": 15573955,
+      "sha256": "febb963e7375adcf9d48de7fd7e6de666b0014c03243972434e71e9d2daf8235",
+      "members": 3,
+      "libraryFileId": "libfile_5cb4dd1de5e881919a6aadd5c986b3da",
+      "fileId": "file_000000001830820daf78ee199dd718e5",
+      "commit": "45b526f248575a0542af8eed591c0cf8c8a1ba8d",
+      "tree": "f8bb7ba61604c61253f3a1f0497612da726e093e",
+      "bundle": {
+        "file": "box3d-rebuild-incremental.bundle",
+        "bytes": 14400104,
+        "sha256": "8ae5592e4af35fc1f96bd51b712c58e1b95d824adf04c236c991e6f4f0658928"
+      }
+    },
+    {
+      "checkpoint": 37,
+      "archive": "Box3D-source-incremental-checkpoint(7).zip",
+      "bytes": 5043137,
+      "sha256": "33d17d0dd303bbf3b9d5e7189be4d55c457b83b3f0378988c9d3638116736e8e",
+      "members": 3,
+      "libraryFileId": "libfile_c97f345e13a88191b920a9ceb3ceff37",
+      "fileId": "file_00000000b2d481f9be0fe66dffa4dee3",
+      "commit": "481678df9aacf8240136e5a46e726273e10ba9d6",
+      "tree": "67930c64e8b1caa9244ec30a6e5ecd9f8e42b49f",
+      "bundle": {
+        "file": "box3d-rebuild-incremental.bundle",
+        "bytes": 3682945,
+        "sha256": "bfb94e268d1873038943367185bf71c934c7d0d9467f8f894ce47eb6e9093900"
+      }
+    },
+    {
+      "checkpoint": 38,
+      "archive": "Box3D-source-incremental-checkpoint(8).zip",
+      "bytes": 7364183,
+      "sha256": "b6e910d0262cd4c01febea820162aa3d66295f2a0365f27af35ab8f2c42379e9",
+      "members": 3,
+      "libraryFileId": "libfile_f6152f678e848191a6990f29fa13af35",
+      "fileId": "file_00000000561881f4a734026e55d1f3fe",
+      "commit": "aac2be832b5e41c29cd171764723cae227952694",
+      "tree": "02ee7159229ad0793e54c15f8b106318ffee4ffc",
+      "bundle": {
+        "file": "box3d-rebuild-incremental.bundle",
+        "bytes": 5997188,
+        "sha256": "4a1bf1ab2800979dc6e071ce05ee0f2abf3f5d1f58995583181594e9572997ff"
+      }
+    },
+    {
+      "checkpoint": 39,
+      "archive": "Box3D-source-incremental-checkpoint(9).zip",
+      "bytes": 7423516,
+      "sha256": "47442d94c2323e2449c531bf808fce8f41fdf93a58fd983f7bfdc72d89b2bd36",
+      "members": 3,
+      "libraryFileId": "libfile_291804edf98481918aede59f230482fa",
+      "fileId": "file_00000000d54081f5acf7e9443dc732c8",
+      "commit": "2e4bd93b36a2f0cf529267a8c6386a71c437bed8",
+      "tree": "dfe95363b418461438690d25456e24e0742ac14a",
+      "bundle": {
+        "file": "box3d-rebuild-incremental.bundle",
+        "bytes": 6054036,
+        "sha256": "080e1afde8c31d80e9755a3402f6c222e4040bc4b9d65d0bced664f0ddf48a5a"
+      }
+    },
+    {
+      "checkpoint": "40a",
+      "libraryFileId": "libfile_8fbfeb13c7ac8191856588380d64ff90",
+      "fileId": "file_000000008d1c81f5ad2ca5bd569423bf",
+      "archive": "Box3D-recovered-source40a-qualified-20261022.zip",
+      "bytes": 17975,
+      "sha256": "830f89e962b71a06a854e01a2753f50d5bb47d4b4c696d1f7b6f502b21d78884",
+      "commit": "7b35a6e4ae0b0b45128a7ac7fd4c7ba6ad2512f6",
+      "tree": "277311d4ae8c7ff4ac33a4921e9f0b54df66c8cd"
+    },
+    {
+      "checkpoint": "40b",
+      "archive": "Box3D-reconstructed-source40b-qualified-20261022.zip",
+      "bytes": 141013,
+      "sha256": "4a0b2b4159d502204138e052a4a6f2e19ddcfdb19cb084810bd505460ec81c78",
+      "libraryFileId": "libfile_86ff2482adfc8191a18208b643007ff0",
+      "fileId": "file_000000007de881f5bc3da72ef1f6f215",
+      "commit": "38e18167135d9e4be1d6d8e22d7b936afc8ebc13",
+      "tree": "152ec488446d42746764ab544c90e62aee86e653",
+      "baseCommit": "7b35a6e4ae0b0b45128a7ac7fd4c7ba6ad2512f6"
+    }
+  ],
+  "restoreProofLibraryFileId": "libfile_75763db189388191ba04458be037cd8a",
+  "restoreProofArchiveSha256": "172ce5f87e2009f06bcb9b456a9a83d2d2c05d6895b6ab6ff830787a53d5e3cd",
+  "restoreInstruction": "Verify each archive SHA; clone checkpoint22 bundle into empty directory; for36,37,38,39 verify prerequisites then fetch exact bundle and checkout exact commit; verify source-receipt all file hashes/modes, fsck and checkpoint39 evidence closure before this small increment. See save-source-increment.py and independent restore39.py in proof archive."
+}

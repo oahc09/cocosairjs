@@ -1,0 +1,493 @@
+{
+  "scope": "New40c Git deliverables plus current repository ignored/untracked scan. External raw paths are explicitly enumerated and hash-linked by the Library indices, not claimed tracked in Git.",
+  "headBefore": "38e18167135d9e4be1d6d8e22d7b936afc8ebc13",
+  "newGitDeliverables": [
+    {
+      "path": "docs/physics/box3d/rebuild/fresh40b-validation-20261022/teleport-archive-layout.json",
+      "bytes": 2260,
+      "sha256": "f32c3bd5de6adb757e1a840206dd0ff817eb42ed7225d1d8622f5207e1efbe4f"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/fresh40b-validation-20261022/exact-source-recovery-chain.json",
+      "bytes": 4915,
+      "sha256": "30966b944907f88558dbe104f40622d1c5d71e6765c02fecb89366ee9f5370b8"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/fresh40b-validation-20261022/README.md",
+      "bytes": 4602,
+      "sha256": "5e170bb6ce3f06f84c37807c640febb94030eaef3cdb0b75f5cb6bac3c58f593"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/fresh40b-validation-20261022/teleport-index.json",
+      "bytes": 49847,
+      "sha256": "248f3ddaf62a51eb7edb5e7f0b2223bb5839ab53da1edb35e78aa5f5b9dfdb3c"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/fresh40b-validation-20261022/teleport-verify-plan.json",
+      "bytes": 1244,
+      "sha256": "bdb2764f35d5f76695f40241d31dff0d4f84826b60877165e80c3be674986038"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/fresh40b-validation-20261022/source40b-remote-library-compact.json",
+      "bytes": 1496,
+      "sha256": "14dc1c602f55ebfa498e0a6d0ae9ccc424fa4c5095ecd66f441c6e68b711849f"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/fresh40b-validation-20261022/teleport-closure-review.md",
+      "bytes": 6336,
+      "sha256": "8fb8e4c454a082b0a3569ac749dcac6547f685bed76dca9b059f56f30e4aa7ee"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/fresh40b-validation-20261022/dynamic-index.json",
+      "bytes": 64708,
+      "sha256": "bdc3b2d19cb0e70b85f8114af653203347505442685f2fe8ffdc3c6b9b98ac7c"
+    },
+    {
+      "path": "docs/physics/box3d/rebuild/fresh40b-validation-20261022/external-evidence-index.json",
+      "bytes": 13602,
+      "sha256": "78712a6fb898dafbc36eedcac66efa836840d526620f4225960d7be2f34b56ef"
+    },
+    {
+      "path": "tools/verify/box3d/verify-teleport-batch-closure.py",
+      "bytes": 30813,
+      "sha256": "d44fbbca59d2bff30c0c825ed511d60371350cd286e0510f2b58bbf89e3a9e5a"
+    }
+  ],
+  "unexpectedUntracked": [],
+  "ignoredCount": 13499,
+  "ignoredRawLikePaths": [
+    "node_modules/nwsapi/dist/lint.log",
+    "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-1.stderr.txt",
+    "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-1.stdout.txt",
+    "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-10.stderr.txt",
+    "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-10.stdout.txt",
+    "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-11.stderr.txt",
+    "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-11.stdout.txt",
+    "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-12.stderr.txt",
+    "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-12.stdout.txt",
+    "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-13.stderr.txt",
+    "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-13.stdout.txt",
+    "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-14.stderr.txt",
+    "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-14.stdout.txt",
+    "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-15.stderr.txt",
+    "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-15.stdout.txt",
+    "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-16.stderr.txt",
+    "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-16.stdout.txt",
+    "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-17.stderr.txt",
+    "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-17.stdout.txt",
+    "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-18.stderr.txt",
+    "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-18.stdout.txt",
+    "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-19.stderr.txt",
+    "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-19.stdout.txt",
+    "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-2.stderr.txt",
+    "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-2.stdout.txt",
+    "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-20.stderr.txt",
+    "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-20.stdout.txt",
+    "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-21.stderr.txt",
+    "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-21.stdout.txt",
+    "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-3.stderr.txt",
+    "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-3.stdout.txt",
+    "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-4.stderr.txt",
+    "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-4.stdout.txt",
+    "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-5.stderr.txt",
+    "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-5.stdout.txt",
+    "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-6.stderr.txt",
+    "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-6.stdout.txt",
+    "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-7.stderr.txt",
+    "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-7.stdout.txt",
+    "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-8.stderr.txt",
+    "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-8.stdout.txt",
+    "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-9.stderr.txt",
+    "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-9.stdout.txt"
+  ],
+  "ignoredExceptions": [
+    "node_modules is an independently official-lock-installed dependency tree; installed metadata comparison archived, not claimed per-file registry tarball verification.",
+    "tools/physics/box3d/output is exact actually downloaded N4 artifact restoration, hash-closed by shared input package/native restoration proof."
+  ],
+  "historicalOrAuxiliaryGaps": "See external-evidence-index and dynamic-index; no zero-gap claim.",
+  "ignoredRawDisposition": [
+    {
+      "path": "node_modules/nwsapi/dist/lint.log",
+      "classification": "REGISTRY_INSTALLED_DEPENDENCY_DIST_LOG_NOT_NEW_TASK_RAW",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-1.stderr.txt",
+      "archiveMember": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-1.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "libraryFileId": "libfile_8557c7cbf30481919670a51fd1509823",
+      "archiveSha256": "80a1f8c706e9c538bc31639e21bf75a6629831453b337011fdbab9ad4c775824",
+      "classification": "EXACT_ACTUAL_LIBRARY_DOWNLOAD_MEMBER"
+    },
+    {
+      "path": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-1.stdout.txt",
+      "archiveMember": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-1.stdout.txt",
+      "bytes": 785,
+      "sha256": "598387d1b607137c52adb06601f3ad732cc4a3636df402a859e5b242c4877e24",
+      "libraryFileId": "libfile_8557c7cbf30481919670a51fd1509823",
+      "archiveSha256": "80a1f8c706e9c538bc31639e21bf75a6629831453b337011fdbab9ad4c775824",
+      "classification": "EXACT_ACTUAL_LIBRARY_DOWNLOAD_MEMBER"
+    },
+    {
+      "path": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-10.stderr.txt",
+      "archiveMember": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-10.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "libraryFileId": "libfile_8557c7cbf30481919670a51fd1509823",
+      "archiveSha256": "80a1f8c706e9c538bc31639e21bf75a6629831453b337011fdbab9ad4c775824",
+      "classification": "EXACT_ACTUAL_LIBRARY_DOWNLOAD_MEMBER"
+    },
+    {
+      "path": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-10.stdout.txt",
+      "archiveMember": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-10.stdout.txt",
+      "bytes": 266,
+      "sha256": "fdd38cf8512d70c77e92c9a3cf1b9ef91b52eb90a4a9c48d6d177d01bdcf0923",
+      "libraryFileId": "libfile_8557c7cbf30481919670a51fd1509823",
+      "archiveSha256": "80a1f8c706e9c538bc31639e21bf75a6629831453b337011fdbab9ad4c775824",
+      "classification": "EXACT_ACTUAL_LIBRARY_DOWNLOAD_MEMBER"
+    },
+    {
+      "path": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-11.stderr.txt",
+      "archiveMember": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-11.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "libraryFileId": "libfile_8557c7cbf30481919670a51fd1509823",
+      "archiveSha256": "80a1f8c706e9c538bc31639e21bf75a6629831453b337011fdbab9ad4c775824",
+      "classification": "EXACT_ACTUAL_LIBRARY_DOWNLOAD_MEMBER"
+    },
+    {
+      "path": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-11.stdout.txt",
+      "archiveMember": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-11.stdout.txt",
+      "bytes": 485,
+      "sha256": "de7503975778783efde1452ccf3ec7f5db75a74bf9722bb7226bc2d6e0a86f71",
+      "libraryFileId": "libfile_8557c7cbf30481919670a51fd1509823",
+      "archiveSha256": "80a1f8c706e9c538bc31639e21bf75a6629831453b337011fdbab9ad4c775824",
+      "classification": "EXACT_ACTUAL_LIBRARY_DOWNLOAD_MEMBER"
+    },
+    {
+      "path": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-12.stderr.txt",
+      "archiveMember": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-12.stderr.txt",
+      "bytes": 89,
+      "sha256": "c16713b481f66858dd2146d3e78810260e13caf7df7299a85b21480cb66bf4ed",
+      "libraryFileId": "libfile_8557c7cbf30481919670a51fd1509823",
+      "archiveSha256": "80a1f8c706e9c538bc31639e21bf75a6629831453b337011fdbab9ad4c775824",
+      "classification": "EXACT_ACTUAL_LIBRARY_DOWNLOAD_MEMBER"
+    },
+    {
+      "path": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-12.stdout.txt",
+      "archiveMember": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-12.stdout.txt",
+      "bytes": 6894,
+      "sha256": "8a35e1e6b041ecec278036c046719992405431e895ee3b0bb03a0b95bca29797",
+      "libraryFileId": "libfile_8557c7cbf30481919670a51fd1509823",
+      "archiveSha256": "80a1f8c706e9c538bc31639e21bf75a6629831453b337011fdbab9ad4c775824",
+      "classification": "EXACT_ACTUAL_LIBRARY_DOWNLOAD_MEMBER"
+    },
+    {
+      "path": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-13.stderr.txt",
+      "archiveMember": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-13.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "libraryFileId": "libfile_8557c7cbf30481919670a51fd1509823",
+      "archiveSha256": "80a1f8c706e9c538bc31639e21bf75a6629831453b337011fdbab9ad4c775824",
+      "classification": "EXACT_ACTUAL_LIBRARY_DOWNLOAD_MEMBER"
+    },
+    {
+      "path": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-13.stdout.txt",
+      "archiveMember": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-13.stdout.txt",
+      "bytes": 4335,
+      "sha256": "b04e0aa947f7343ee080e5eb34c7c11ecd750bf55e3541410df18eac48d2dafa",
+      "libraryFileId": "libfile_8557c7cbf30481919670a51fd1509823",
+      "archiveSha256": "80a1f8c706e9c538bc31639e21bf75a6629831453b337011fdbab9ad4c775824",
+      "classification": "EXACT_ACTUAL_LIBRARY_DOWNLOAD_MEMBER"
+    },
+    {
+      "path": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-14.stderr.txt",
+      "archiveMember": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-14.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "libraryFileId": "libfile_8557c7cbf30481919670a51fd1509823",
+      "archiveSha256": "80a1f8c706e9c538bc31639e21bf75a6629831453b337011fdbab9ad4c775824",
+      "classification": "EXACT_ACTUAL_LIBRARY_DOWNLOAD_MEMBER"
+    },
+    {
+      "path": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-14.stdout.txt",
+      "archiveMember": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-14.stdout.txt",
+      "bytes": 91,
+      "sha256": "ca8dce75961e205b21dbf5067e795721b148984eb7a47871f33a6af50e9af80e",
+      "libraryFileId": "libfile_8557c7cbf30481919670a51fd1509823",
+      "archiveSha256": "80a1f8c706e9c538bc31639e21bf75a6629831453b337011fdbab9ad4c775824",
+      "classification": "EXACT_ACTUAL_LIBRARY_DOWNLOAD_MEMBER"
+    },
+    {
+      "path": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-15.stderr.txt",
+      "archiveMember": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-15.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "libraryFileId": "libfile_8557c7cbf30481919670a51fd1509823",
+      "archiveSha256": "80a1f8c706e9c538bc31639e21bf75a6629831453b337011fdbab9ad4c775824",
+      "classification": "EXACT_ACTUAL_LIBRARY_DOWNLOAD_MEMBER"
+    },
+    {
+      "path": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-15.stdout.txt",
+      "archiveMember": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-15.stdout.txt",
+      "bytes": 187,
+      "sha256": "00f02bd24288f4a4684697ad14e45a43d829a870647610c3c3c529e29e7d0121",
+      "libraryFileId": "libfile_8557c7cbf30481919670a51fd1509823",
+      "archiveSha256": "80a1f8c706e9c538bc31639e21bf75a6629831453b337011fdbab9ad4c775824",
+      "classification": "EXACT_ACTUAL_LIBRARY_DOWNLOAD_MEMBER"
+    },
+    {
+      "path": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-16.stderr.txt",
+      "archiveMember": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-16.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "libraryFileId": "libfile_8557c7cbf30481919670a51fd1509823",
+      "archiveSha256": "80a1f8c706e9c538bc31639e21bf75a6629831453b337011fdbab9ad4c775824",
+      "classification": "EXACT_ACTUAL_LIBRARY_DOWNLOAD_MEMBER"
+    },
+    {
+      "path": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-16.stdout.txt",
+      "archiveMember": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-16.stdout.txt",
+      "bytes": 184,
+      "sha256": "9904f38860e3789d0dc3e683e0b9532d3a884612a3a8f78925bbf202e91b17dd",
+      "libraryFileId": "libfile_8557c7cbf30481919670a51fd1509823",
+      "archiveSha256": "80a1f8c706e9c538bc31639e21bf75a6629831453b337011fdbab9ad4c775824",
+      "classification": "EXACT_ACTUAL_LIBRARY_DOWNLOAD_MEMBER"
+    },
+    {
+      "path": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-17.stderr.txt",
+      "archiveMember": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-17.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "libraryFileId": "libfile_8557c7cbf30481919670a51fd1509823",
+      "archiveSha256": "80a1f8c706e9c538bc31639e21bf75a6629831453b337011fdbab9ad4c775824",
+      "classification": "EXACT_ACTUAL_LIBRARY_DOWNLOAD_MEMBER"
+    },
+    {
+      "path": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-17.stdout.txt",
+      "archiveMember": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-17.stdout.txt",
+      "bytes": 181,
+      "sha256": "926df38bea108c3522cd1f2c1cedc58826f165e8c19ea568df857ee3d49b9147",
+      "libraryFileId": "libfile_8557c7cbf30481919670a51fd1509823",
+      "archiveSha256": "80a1f8c706e9c538bc31639e21bf75a6629831453b337011fdbab9ad4c775824",
+      "classification": "EXACT_ACTUAL_LIBRARY_DOWNLOAD_MEMBER"
+    },
+    {
+      "path": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-18.stderr.txt",
+      "archiveMember": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-18.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "libraryFileId": "libfile_8557c7cbf30481919670a51fd1509823",
+      "archiveSha256": "80a1f8c706e9c538bc31639e21bf75a6629831453b337011fdbab9ad4c775824",
+      "classification": "EXACT_ACTUAL_LIBRARY_DOWNLOAD_MEMBER"
+    },
+    {
+      "path": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-18.stdout.txt",
+      "archiveMember": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-18.stdout.txt",
+      "bytes": 37,
+      "sha256": "fabbe28d972870a824da70232aedb4f33d8bf0055169d6a90b12a0ec75cc5b61",
+      "libraryFileId": "libfile_8557c7cbf30481919670a51fd1509823",
+      "archiveSha256": "80a1f8c706e9c538bc31639e21bf75a6629831453b337011fdbab9ad4c775824",
+      "classification": "EXACT_ACTUAL_LIBRARY_DOWNLOAD_MEMBER"
+    },
+    {
+      "path": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-19.stderr.txt",
+      "archiveMember": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-19.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "libraryFileId": "libfile_8557c7cbf30481919670a51fd1509823",
+      "archiveSha256": "80a1f8c706e9c538bc31639e21bf75a6629831453b337011fdbab9ad4c775824",
+      "classification": "EXACT_ACTUAL_LIBRARY_DOWNLOAD_MEMBER"
+    },
+    {
+      "path": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-19.stdout.txt",
+      "archiveMember": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-19.stdout.txt",
+      "bytes": 273,
+      "sha256": "11a743b3227b60c869b323b7aac29ae7a3cd28f6a7f9189146fe22297b149f2c",
+      "libraryFileId": "libfile_8557c7cbf30481919670a51fd1509823",
+      "archiveSha256": "80a1f8c706e9c538bc31639e21bf75a6629831453b337011fdbab9ad4c775824",
+      "classification": "EXACT_ACTUAL_LIBRARY_DOWNLOAD_MEMBER"
+    },
+    {
+      "path": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-2.stderr.txt",
+      "archiveMember": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-2.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "libraryFileId": "libfile_8557c7cbf30481919670a51fd1509823",
+      "archiveSha256": "80a1f8c706e9c538bc31639e21bf75a6629831453b337011fdbab9ad4c775824",
+      "classification": "EXACT_ACTUAL_LIBRARY_DOWNLOAD_MEMBER"
+    },
+    {
+      "path": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-2.stdout.txt",
+      "archiveMember": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-2.stdout.txt",
+      "bytes": 891,
+      "sha256": "4bcf5d41e4feac96e82cded8dfc93f125a80c45f4bf1a773b67bef17e6cf5921",
+      "libraryFileId": "libfile_8557c7cbf30481919670a51fd1509823",
+      "archiveSha256": "80a1f8c706e9c538bc31639e21bf75a6629831453b337011fdbab9ad4c775824",
+      "classification": "EXACT_ACTUAL_LIBRARY_DOWNLOAD_MEMBER"
+    },
+    {
+      "path": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-20.stderr.txt",
+      "archiveMember": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-20.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "libraryFileId": "libfile_8557c7cbf30481919670a51fd1509823",
+      "archiveSha256": "80a1f8c706e9c538bc31639e21bf75a6629831453b337011fdbab9ad4c775824",
+      "classification": "EXACT_ACTUAL_LIBRARY_DOWNLOAD_MEMBER"
+    },
+    {
+      "path": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-20.stdout.txt",
+      "archiveMember": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-20.stdout.txt",
+      "bytes": 380,
+      "sha256": "7311e5655062405cd2371ac1f7bd90693cc4608b500d980fc787626c8462fafd",
+      "libraryFileId": "libfile_8557c7cbf30481919670a51fd1509823",
+      "archiveSha256": "80a1f8c706e9c538bc31639e21bf75a6629831453b337011fdbab9ad4c775824",
+      "classification": "EXACT_ACTUAL_LIBRARY_DOWNLOAD_MEMBER"
+    },
+    {
+      "path": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-21.stderr.txt",
+      "archiveMember": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-21.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "libraryFileId": "libfile_8557c7cbf30481919670a51fd1509823",
+      "archiveSha256": "80a1f8c706e9c538bc31639e21bf75a6629831453b337011fdbab9ad4c775824",
+      "classification": "EXACT_ACTUAL_LIBRARY_DOWNLOAD_MEMBER"
+    },
+    {
+      "path": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-21.stdout.txt",
+      "archiveMember": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-21.stdout.txt",
+      "bytes": 441,
+      "sha256": "4cb8c2cd432bee9d44f3954bc9cf28d659d6e8c1b4625400f84ecdaa0ee7c73c",
+      "libraryFileId": "libfile_8557c7cbf30481919670a51fd1509823",
+      "archiveSha256": "80a1f8c706e9c538bc31639e21bf75a6629831453b337011fdbab9ad4c775824",
+      "classification": "EXACT_ACTUAL_LIBRARY_DOWNLOAD_MEMBER"
+    },
+    {
+      "path": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-3.stderr.txt",
+      "archiveMember": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-3.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "libraryFileId": "libfile_8557c7cbf30481919670a51fd1509823",
+      "archiveSha256": "80a1f8c706e9c538bc31639e21bf75a6629831453b337011fdbab9ad4c775824",
+      "classification": "EXACT_ACTUAL_LIBRARY_DOWNLOAD_MEMBER"
+    },
+    {
+      "path": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-3.stdout.txt",
+      "archiveMember": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-3.stdout.txt",
+      "bytes": 330,
+      "sha256": "20c0b78ae7892fec4e2a43bcd152b5787f1d98629998f73fc53428188920b2c9",
+      "libraryFileId": "libfile_8557c7cbf30481919670a51fd1509823",
+      "archiveSha256": "80a1f8c706e9c538bc31639e21bf75a6629831453b337011fdbab9ad4c775824",
+      "classification": "EXACT_ACTUAL_LIBRARY_DOWNLOAD_MEMBER"
+    },
+    {
+      "path": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-4.stderr.txt",
+      "archiveMember": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-4.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "libraryFileId": "libfile_8557c7cbf30481919670a51fd1509823",
+      "archiveSha256": "80a1f8c706e9c538bc31639e21bf75a6629831453b337011fdbab9ad4c775824",
+      "classification": "EXACT_ACTUAL_LIBRARY_DOWNLOAD_MEMBER"
+    },
+    {
+      "path": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-4.stdout.txt",
+      "archiveMember": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-4.stdout.txt",
+      "bytes": 90,
+      "sha256": "4d92ce18ddf9889d463ac875608423312823ad89e7fd5178b02a21ea26a2bd3d",
+      "libraryFileId": "libfile_8557c7cbf30481919670a51fd1509823",
+      "archiveSha256": "80a1f8c706e9c538bc31639e21bf75a6629831453b337011fdbab9ad4c775824",
+      "classification": "EXACT_ACTUAL_LIBRARY_DOWNLOAD_MEMBER"
+    },
+    {
+      "path": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-5.stderr.txt",
+      "archiveMember": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-5.stderr.txt",
+      "bytes": 752,
+      "sha256": "64122a9b88a298dbb87dac39a8bdd60c58ae80b14255500884b5bfbe33b220cb",
+      "libraryFileId": "libfile_8557c7cbf30481919670a51fd1509823",
+      "archiveSha256": "80a1f8c706e9c538bc31639e21bf75a6629831453b337011fdbab9ad4c775824",
+      "classification": "EXACT_ACTUAL_LIBRARY_DOWNLOAD_MEMBER"
+    },
+    {
+      "path": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-5.stdout.txt",
+      "archiveMember": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-5.stdout.txt",
+      "bytes": 417,
+      "sha256": "ecd104e6ed0f9e78dd64281f6d9949cd35af67867f8bc95c12efa64c4cff6cb2",
+      "libraryFileId": "libfile_8557c7cbf30481919670a51fd1509823",
+      "archiveSha256": "80a1f8c706e9c538bc31639e21bf75a6629831453b337011fdbab9ad4c775824",
+      "classification": "EXACT_ACTUAL_LIBRARY_DOWNLOAD_MEMBER"
+    },
+    {
+      "path": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-6.stderr.txt",
+      "archiveMember": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-6.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "libraryFileId": "libfile_8557c7cbf30481919670a51fd1509823",
+      "archiveSha256": "80a1f8c706e9c538bc31639e21bf75a6629831453b337011fdbab9ad4c775824",
+      "classification": "EXACT_ACTUAL_LIBRARY_DOWNLOAD_MEMBER"
+    },
+    {
+      "path": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-6.stdout.txt",
+      "archiveMember": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-6.stdout.txt",
+      "bytes": 7731,
+      "sha256": "81f90fa162d9e5189d10f03a06b77d687a1361a85e4a58729a0fbebbcb784161",
+      "libraryFileId": "libfile_8557c7cbf30481919670a51fd1509823",
+      "archiveSha256": "80a1f8c706e9c538bc31639e21bf75a6629831453b337011fdbab9ad4c775824",
+      "classification": "EXACT_ACTUAL_LIBRARY_DOWNLOAD_MEMBER"
+    },
+    {
+      "path": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-7.stderr.txt",
+      "archiveMember": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-7.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "libraryFileId": "libfile_8557c7cbf30481919670a51fd1509823",
+      "archiveSha256": "80a1f8c706e9c538bc31639e21bf75a6629831453b337011fdbab9ad4c775824",
+      "classification": "EXACT_ACTUAL_LIBRARY_DOWNLOAD_MEMBER"
+    },
+    {
+      "path": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-7.stdout.txt",
+      "archiveMember": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-7.stdout.txt",
+      "bytes": 460,
+      "sha256": "a6f0c8f945e9eb5822f912feefa9519ce47a9964c55e60de88c1849cabb47333",
+      "libraryFileId": "libfile_8557c7cbf30481919670a51fd1509823",
+      "archiveSha256": "80a1f8c706e9c538bc31639e21bf75a6629831453b337011fdbab9ad4c775824",
+      "classification": "EXACT_ACTUAL_LIBRARY_DOWNLOAD_MEMBER"
+    },
+    {
+      "path": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-8.stderr.txt",
+      "archiveMember": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-8.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "libraryFileId": "libfile_8557c7cbf30481919670a51fd1509823",
+      "archiveSha256": "80a1f8c706e9c538bc31639e21bf75a6629831453b337011fdbab9ad4c775824",
+      "classification": "EXACT_ACTUAL_LIBRARY_DOWNLOAD_MEMBER"
+    },
+    {
+      "path": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-8.stdout.txt",
+      "archiveMember": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-8.stdout.txt",
+      "bytes": 289,
+      "sha256": "f73a2add60a0509a8b241e216064a057a4f28dbf932ba3cfbbe01bce95e715a7",
+      "libraryFileId": "libfile_8557c7cbf30481919670a51fd1509823",
+      "archiveSha256": "80a1f8c706e9c538bc31639e21bf75a6629831453b337011fdbab9ad4c775824",
+      "classification": "EXACT_ACTUAL_LIBRARY_DOWNLOAD_MEMBER"
+    },
+    {
+      "path": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-9.stderr.txt",
+      "archiveMember": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-9.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "libraryFileId": "libfile_8557c7cbf30481919670a51fd1509823",
+      "archiveSha256": "80a1f8c706e9c538bc31639e21bf75a6629831453b337011fdbab9ad4c775824",
+      "classification": "EXACT_ACTUAL_LIBRARY_DOWNLOAD_MEMBER"
+    },
+    {
+      "path": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-9.stdout.txt",
+      "archiveMember": "tools/physics/box3d/output/command-wasm-release-20261022-n4/command-9.stdout.txt",
+      "bytes": 486,
+      "sha256": "d00544df0e82dfdb149659799e0f854621628b735d46da45084af025a832bcef",
+      "libraryFileId": "libfile_8557c7cbf30481919670a51fd1509823",
+      "archiveSha256": "80a1f8c706e9c538bc31639e21bf75a6629831453b337011fdbab9ad4c775824",
+      "classification": "EXACT_ACTUAL_LIBRARY_DOWNLOAD_MEMBER"
+    }
+  ]
+}

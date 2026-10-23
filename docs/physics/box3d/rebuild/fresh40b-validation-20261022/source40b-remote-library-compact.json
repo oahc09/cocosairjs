@@ -1,0 +1,29 @@
+{
+  "localCommit": "38e18167135d9e4be1d6d8e22d7b936afc8ebc13",
+  "localTree": "152ec488446d42746764ab544c90e62aee86e653",
+  "remoteCommit": "180ea5e2761eba1defa760549dac262cead10188",
+  "remoteTree": "fdc0361eb52f69e982d35e3d0d2716cf5e605ce6",
+  "remoteParent": "1b014df096adefbbc761d7df3d3cc32c78bd59d5",
+  "sourceLibraryProof": {
+    "status": "PASS_ACTUAL_LIBRARY_INCREMENT_FETCH_AND_ALL_CHANGED_BLOBS",
+    "libraryFileId": "libfile_86ff2482adfc8191a18208b643007ff0",
+    "fileId": "file_000000007de881f5bc3da72ef1f6f215",
+    "archiveBytes": 141013,
+    "archiveSha256": "4a0b2b4159d502204138e052a4a6f2e19ddcfdb19cb084810bd505460ec81c78",
+    "commit": "38e18167135d9e4be1d6d8e22d7b936afc8ebc13",
+    "tree": "152ec488446d42746764ab544c90e62aee86e653",
+    "baseCommit": "7b35a6e4ae0b0b45128a7ac7fd4c7ba6ad2512f6",
+    "checkedChangedFiles": 24,
+    "unchangedFiles": "Exact Git tree diff and previously restored40a/39; not another full-worktree reread.",
+    "original39CheckoutUnchanged": true,
+    "tests": "NOT_RUN"
+  },
+  "completionArchive": {
+    "status": "PASS_ACTUAL_LIBRARY_DOWNLOAD_ALL31_DATA_MEMBERS",
+    "libraryFileId": "libfile_6ee2f69eddd081918ce429246d8df597",
+    "fileId": "file_00000000c8b481f5859ba1957015a88c",
+    "bytes": 481193,
+    "sha256": "5791509385960d89bcb803655664aa2845b1d925c8bddcfa90312f316c89c837",
+    "scope": "Source40a/b remote, exact Library delta restoration and official locked dependency install metadata; not full physics qualification"
+  }
+}

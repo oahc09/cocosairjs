@@ -1,0 +1,41 @@
+{
+  "expected_head": "38e18167135d9e4be1d6d8e22d7b936afc8ebc13",
+  "shared": {
+    "path": "archive-0.zip",
+    "sha256": "2046889c6dc8455248e4c9b0816008e659db41e976b3d0cd64fa284f64eccf68"
+  },
+  "batches": [
+    {
+      "path": "archive-1.zip",
+      "sha256": "e4a5f278772d40192cbc8f356015dd9cd861bc0eb7085c8684b27546d576d0be"
+    },
+    {
+      "path": "archive-2.zip",
+      "sha256": "986e6518675e873bfeacd65235a0635fe50386483645726ce589a4bd05046629"
+    },
+    {
+      "path": "archive-3.zip",
+      "sha256": "154ec4c1e9678c303026ab1f5fbd9657917046f7d730bc7d358a789033995124"
+    },
+    {
+      "path": "archive-4.zip",
+      "sha256": "3cc86b09dd874c03cd4120878ba9640e1fc6ab6e831bf0725aee14d3f35921e0"
+    },
+    {
+      "path": "archive-5.zip",
+      "sha256": "13343e53138c5ed9512d57401b21bb6163db41ecb212a4156038fd1d8364be12"
+    },
+    {
+      "path": "archive-6.zip",
+      "sha256": "30e126a3139d3f598825b8633af39cceeb6033d1bb792ccc590c3dc6d3d7ae2b"
+    }
+  ],
+  "final_index": {
+    "path": "archive-8.zip",
+    "sha256": "dd9d8368e3165b2949f49b32b4230ed46e716794faa06ab0ba823eab37e342f2"
+  },
+  "lock_control": {
+    "path": "archive-7.zip",
+    "sha256": "0c07198cec94cc51b0f26f391dda05be1dd48604d7382d19ad44ec4652342ac3"
+  }
+}

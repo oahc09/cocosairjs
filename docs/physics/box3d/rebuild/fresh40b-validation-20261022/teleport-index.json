@@ -1,0 +1,1285 @@
+{
+  "schema": "box3d-fresh40b-teleport-index-v1",
+  "head": "38e18167135d9e4be1d6d8e22d7b936afc8ebc13",
+  "status": "PASS_LIMITED_TELEPORT",
+  "scope": "New serial actual createAirApp/Scene/RigidBody/BoxCollider/PhysicsSystem consumer runs using unchanged N4 WASM; no rebuild, mocks, browser, public feature activation, formal cells or Gates qualification. Source-only reconstructed fixtures were freshly executed, not equated to unknown original fixture bytes.",
+  "historical_evidence": "Pre-executor-loss raw and original fixture per-file hashes remain unavailable; none are reused or reconstructed here.",
+  "created_at": "2026-10-22T23:19:41.084126+00:00",
+  "counts": {
+    "actual_cases": 11,
+    "actual_checks": 145,
+    "source_files": 1596,
+    "runtime_unique_paths_per_case": [
+      2744
+    ],
+    "runtime_content_objects": 2239,
+    "negative_controls": 1
+  },
+  "formal_cells": {
+    "total": 2128,
+    "status": "NOT_RUN"
+  },
+  "gates": {
+    "total": 9,
+    "status": "NOT_RUN"
+  },
+  "source_manifest_sha256": "aad5092940b314ace9fe3cf2f261d83c1926866b528b12b6b7a10fb6d0bd0438",
+  "frozen_archive_sha256": "7b8b1579d6558dfa825263f24d4c66b58f73e0cf2b49b17e349c7594fd97ca90",
+  "current_source_hashes_equal_shared_manifest": true,
+  "git_status_porcelain": "",
+  "shared_input_archive": {
+    "library_file_id": "libfile_3695d2f901d88191b2d916bee61c53bb",
+    "file_id": "file_000000007bdc822f91541c8a99d3d4bf",
+    "file_name": "Box3D-fresh40b-teleport-shared-inputs.zip",
+    "bytes": 12707724,
+    "sha256": "2046889c6dc8455248e4c9b0816008e659db41e976b3d0cd64fa284f64eccf68",
+    "actual_download_verified": true,
+    "zip_crc_verified": true,
+    "source_files_verified": 1596,
+    "runtime_objects_verified": 2239
+  },
+  "raw_archives": [
+    {
+      "library_file_id": "libfile_77bd58f7c1c0819185e9863eaa03e2de",
+      "file_id": "file_00000000fd24822f96947471ee5f5427",
+      "file_name": "Box3D-fresh40b-teleport-raw-01.zip",
+      "sha256": "e4a5f278772d40192cbc8f356015dd9cd861bc0eb7085c8684b27546d576d0be",
+      "bytes": 506938,
+      "actual_download_verified": true,
+      "zip_crc_verified": true,
+      "member_hashes_verified": 14,
+      "batch": "01",
+      "download_path": "/workspace/scratch/62d43a81bbde/box3d-recovery-after-2249-20261022/fresh-teleport-40b-20261022/roundtrip-raw01/Box3D-fresh40b-teleport-raw-01.zip",
+      "manifest_sha256": "b1ca1fd653b313d08ac968e594e7666b6ea62c9467ef4170fefb079b99391477"
+    },
+    {
+      "library_file_id": "libfile_ae95e669a8f081919db5d8b24d605db7",
+      "file_id": "file_00000000d9b4822f852159e1964304b5",
+      "file_name": "Box3D-fresh40b-teleport-raw-02-03.zip",
+      "sha256": "986e6518675e873bfeacd65235a0635fe50386483645726ce589a4bd05046629",
+      "bytes": 1005347,
+      "actual_download_verified": true,
+      "zip_crc_verified": true,
+      "member_hashes_verified": 25,
+      "batch": "02-03",
+      "download_path": "/workspace/scratch/62d43a81bbde/box3d-recovery-after-2249-20261022/fresh-teleport-40b-20261022/roundtrip-raw02-03/Box3D-fresh40b-teleport-raw-02-03.zip",
+      "manifest_sha256": "c240f923e8e277bff57160c5c28b4b8fad6bfe1e5cd0f35c572ab95ae286e704"
+    },
+    {
+      "library_file_id": "libfile_ee6c7ef8d7d48191a88231d68b311a46",
+      "file_id": "file_00000000de9081f5b7c4aa7cacf13254",
+      "file_name": "Box3D-fresh40b-teleport-raw-04-05.zip",
+      "sha256": "154ec4c1e9678c303026ab1f5fbd9657917046f7d730bc7d358a789033995124",
+      "bytes": 1002559,
+      "actual_download_verified": true,
+      "zip_crc_verified": true,
+      "member_hashes_verified": 25,
+      "batch": "04-05",
+      "download_path": "/workspace/scratch/62d43a81bbde/box3d-recovery-after-2249-20261022/fresh-teleport-40b-20261022/roundtrip-raw04-05/Box3D-fresh40b-teleport-raw-04-05.zip",
+      "manifest_sha256": "a6bb889cdc01199bd42bea33a1b2ea5ca5484f2ab4e3b9482b2b32e74ffadd3b"
+    },
+    {
+      "library_file_id": "libfile_5fadeda8839c8191b1e6ddaeae09aeaf",
+      "file_id": "file_000000005e3481f597646cf29a5a5cdd",
+      "file_name": "Box3D-fresh40b-teleport-raw-06-07.zip",
+      "sha256": "3cc86b09dd874c03cd4120878ba9640e1fc6ab6e831bf0725aee14d3f35921e0",
+      "bytes": 1009727,
+      "actual_download_verified": true,
+      "zip_crc_verified": true,
+      "member_hashes_verified": 25,
+      "batch": "06-07",
+      "download_path": "/workspace/scratch/62d43a81bbde/box3d-recovery-after-2249-20261022/fresh-teleport-40b-20261022/roundtrip-raw06-07/Box3D-fresh40b-teleport-raw-06-07.zip",
+      "manifest_sha256": "4bd2507b027282f73d0c71d6e120ebc4eadc957e3e793522681edae264ba9fb7"
+    },
+    {
+      "library_file_id": "libfile_2d40ae0037408191882d83134c909483",
+      "file_id": "file_0000000005e0820db3c139674c124df9",
+      "file_name": "Box3D-fresh40b-teleport-raw-08-09.zip",
+      "sha256": "13343e53138c5ed9512d57401b21bb6163db41ecb212a4156038fd1d8364be12",
+      "bytes": 1010659,
+      "actual_download_verified": true,
+      "zip_crc_verified": true,
+      "member_hashes_verified": 25,
+      "batch": "08-09",
+      "download_path": "/workspace/scratch/62d43a81bbde/box3d-recovery-after-2249-20261022/fresh-teleport-40b-20261022/roundtrip-raw08-09/Box3D-fresh40b-teleport-raw-08-09.zip",
+      "manifest_sha256": "2f96616e6d701fd5a6d2bcddb8fc7ce84adccd11aaf9a6564753d5b2b62dc7bc"
+    },
+    {
+      "library_file_id": "libfile_53b78db26898819193faef328aa345f9",
+      "file_id": "file_000000009f5081f5b1e925e6f32bac54",
+      "file_name": "Box3D-fresh40b-teleport-raw-10-11.zip",
+      "sha256": "30e126a3139d3f598825b8633af39cceeb6033d1bb792ccc590c3dc6d3d7ae2b",
+      "bytes": 994209,
+      "actual_download_verified": true,
+      "zip_crc_verified": true,
+      "member_hashes_verified": 25,
+      "batch": "10-11",
+      "download_path": "/workspace/scratch/62d43a81bbde/box3d-recovery-after-2249-20261022/fresh-teleport-40b-20261022/roundtrip-raw10-11/Box3D-fresh40b-teleport-raw-10-11.zip",
+      "manifest_sha256": "46cb2085adc906b2f251ff16b9a76b6fd064ac93bf4d21712b253277a0a97d6c"
+    },
+    {
+      "library_file_id": "libfile_f7d7a742478c8191a06d87432e718fb4",
+      "file_id": "file_000000005054822fbaced5cff5e5e2ce",
+      "file_name": "Box3D-fresh40b-teleport-raw-12-lock-control.zip",
+      "sha256": "0c07198cec94cc51b0f26f391dda05be1dd48604d7382d19ad44ec4652342ac3",
+      "bytes": 82625,
+      "actual_download_verified": true,
+      "zip_crc_verified": true,
+      "member_hashes_verified": 13,
+      "batch": "12-lock-control",
+      "download_path": "/workspace/scratch/62d43a81bbde/box3d-recovery-after-2249-20261022/fresh-teleport-40b-20261022/roundtrip-raw12-lock-control/Box3D-fresh40b-teleport-raw-12-lock-control.zip",
+      "manifest_sha256": "204153cbcc98f34c40a90ddcc5f3902b78f5fc3e159c59d0801d0985e2bb3e82"
+    }
+  ],
+  "cases": [
+    {
+      "case": "enabled-default-order",
+      "directory": "01-enabled-default-order",
+      "batch": "01",
+      "status": "PASS_LIMITED_TELEPORT",
+      "check_count": 12,
+      "checks": [
+        "accepted reset is staged without native apply or Node mutation",
+        "sync and autoSimulation false frame do not consume reset or emit writeback",
+        "one real tick performs ordered validate, apply, native step exactly once",
+        "reset defaults/options and normalized copied pose reach native batch",
+        "native post-apply velocity, world force and torque match reset ordering",
+        "reset recomputes COM according to body type and retained geometry",
+        "awake enabled body remains awake including wake false preserve case",
+        "actual Node writeback follows completed native step and matches native pose",
+        "successful tick retires original queue and releases all temporary owner scopes",
+        "later empty tick never replays reset or earlier user command",
+        "no broad staged/unified feature activation follows finite reset candidate",
+        "actual app teardown is released with zero tracked native allocations"
+      ],
+      "collector_exit": 0,
+      "jest_exit": 0,
+      "started_at": "2026-10-22T23:10:40.145928+00:00",
+      "completed_at": "2026-10-22T23:10:55.369699+00:00",
+      "receipt_sha256": "c2bc156fd17e999e8456955a28037bd10241b9c9b32dfe9f5c633d271af6eb2b",
+      "raw_sha256": "a9c871548a712e26f85ef82f67c9e97ab0add04f60c9de782d914f85f2a74f72",
+      "source_manifest_sha256": "aad5092940b314ace9fe3cf2f261d83c1926866b528b12b6b7a10fb6d0bd0438",
+      "archive_actual_sha256": "7b8b1579d6558dfa825263f24d4c66b58f73e0cf2b49b17e349c7594fd97ca90",
+      "source_before_after_equal": true,
+      "runtime_unique_paths": 2744,
+      "runtime_manifest_sha256": "f2d1473798ac31042cfbe60f7c2dc653ec70840902c298d9912c5fd754f52524",
+      "teardown": {
+        "coreBytes": "0",
+        "bridge": {
+          "liveBytes": "0",
+          "liveAllocations": 0,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      },
+      "wake_observation": {
+        "callerWake": true,
+        "componentEnabled": true,
+        "nativeEnabledBefore": true,
+        "nativeAwakeBefore": false,
+        "canonicalReset": {
+          "body": {
+            "low": 1,
+            "high": 1
+          },
+          "sequence": 2,
+          "kind": "reset",
+          "pose": {
+            "position": [
+              3,
+              12,
+              -1
+            ],
+            "rotation": [
+              0,
+              0,
+              2,
+              2
+            ]
+          },
+          "mode": "teleport",
+          "preserveVelocity": false,
+          "wake": true
+        },
+        "nativePlannerActionBits": 18,
+        "nativeAwakeAfterApply": true,
+        "nativeAwakeAfterStep": true
+      },
+      "caught_cancel_observation": null
+    },
+    {
+      "case": "native-disabled-dynamic-clear",
+      "directory": "02-native-disabled-dynamic-clear",
+      "batch": "02-03",
+      "status": "PASS_LIMITED_TELEPORT",
+      "check_count": 15,
+      "checks": [
+        "native-disabled precondition is observed before teleport submission",
+        "accepted reset is staged without native apply or Node mutation",
+        "sync and autoSimulation false frame do not consume reset or emit writeback",
+        "one real tick performs ordered validate, apply, native step exactly once",
+        "reset defaults/options and normalized copied pose reach native batch",
+        "native post-apply velocity, world force and torque match reset ordering",
+        "reset recomputes COM according to body type and retained geometry",
+        "native-disabled reset carries no native wake action despite default request",
+        "disabled component reset preserves native enable state and requests no native wake",
+        "actual Node writeback follows completed native step and matches native pose",
+        "successful tick retires original queue and releases all temporary owner scopes",
+        "later empty tick never replays reset or earlier user command",
+        "native-disabled reset Node is not written again on empty tick",
+        "no broad staged/unified feature activation follows finite reset candidate",
+        "actual app teardown is released with zero tracked native allocations"
+      ],
+      "collector_exit": 0,
+      "jest_exit": 0,
+      "started_at": "2026-10-22T23:12:56.019162+00:00",
+      "completed_at": "2026-10-22T23:13:10.374856+00:00",
+      "receipt_sha256": "ec03973d9a9cd165a5d71a0ddfc062d5343e8cf16e8f6be0c50567b5b8fa524e",
+      "raw_sha256": "f1833244dda07d945cfa18db091dd7569f8971b8250fb71554b9a10e525fbe48",
+      "source_manifest_sha256": "aad5092940b314ace9fe3cf2f261d83c1926866b528b12b6b7a10fb6d0bd0438",
+      "archive_actual_sha256": "7b8b1579d6558dfa825263f24d4c66b58f73e0cf2b49b17e349c7594fd97ca90",
+      "source_before_after_equal": true,
+      "runtime_unique_paths": 2744,
+      "runtime_manifest_sha256": "f2d1473798ac31042cfbe60f7c2dc653ec70840902c298d9912c5fd754f52524",
+      "teardown": {
+        "coreBytes": "0",
+        "bridge": {
+          "liveBytes": "0",
+          "liveAllocations": 0,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      },
+      "wake_observation": {
+        "callerWake": true,
+        "componentEnabled": false,
+        "nativeEnabledBefore": false,
+        "nativeAwakeBefore": false,
+        "canonicalReset": {
+          "body": {
+            "low": 1,
+            "high": 1
+          },
+          "sequence": 1,
+          "kind": "reset",
+          "pose": {
+            "position": [
+              3,
+              12,
+              -1
+            ],
+            "rotation": [
+              0,
+              0,
+              2,
+              2
+            ]
+          },
+          "mode": "teleport",
+          "preserveVelocity": false,
+          "wake": false
+        },
+        "nativePlannerActionBits": 16,
+        "nativeAwakeAfterApply": false,
+        "nativeAwakeAfterStep": false
+      },
+      "caught_cancel_observation": null
+    },
+    {
+      "case": "native-disabled-kinematic-preserve",
+      "directory": "03-native-disabled-kinematic-preserve",
+      "batch": "02-03",
+      "status": "PASS_LIMITED_TELEPORT",
+      "check_count": 15,
+      "checks": [
+        "native-disabled precondition is observed before teleport submission",
+        "accepted reset is staged without native apply or Node mutation",
+        "sync and autoSimulation false frame do not consume reset or emit writeback",
+        "one real tick performs ordered validate, apply, native step exactly once",
+        "reset defaults/options and normalized copied pose reach native batch",
+        "native post-apply velocity, world force and torque match reset ordering",
+        "reset recomputes COM according to body type and retained geometry",
+        "native-disabled reset carries no native wake action despite default request",
+        "disabled component reset preserves native enable state and requests no native wake",
+        "actual Node writeback follows completed native step and matches native pose",
+        "successful tick retires original queue and releases all temporary owner scopes",
+        "later empty tick never replays reset or earlier user command",
+        "native-disabled reset Node is not written again on empty tick",
+        "no broad staged/unified feature activation follows finite reset candidate",
+        "actual app teardown is released with zero tracked native allocations"
+      ],
+      "collector_exit": 0,
+      "jest_exit": 0,
+      "started_at": "2026-10-22T23:13:10.403985+00:00",
+      "completed_at": "2026-10-22T23:13:25.361643+00:00",
+      "receipt_sha256": "749ea5af90cdc36354e11ae00d9bc8e5cd9153ccae7021c907474fc802a95976",
+      "raw_sha256": "8379e1acbc4821b82e37c4b567c5bc0a786ca7a38096f158a78cf539bc5d57a7",
+      "source_manifest_sha256": "aad5092940b314ace9fe3cf2f261d83c1926866b528b12b6b7a10fb6d0bd0438",
+      "archive_actual_sha256": "7b8b1579d6558dfa825263f24d4c66b58f73e0cf2b49b17e349c7594fd97ca90",
+      "source_before_after_equal": true,
+      "runtime_unique_paths": 2744,
+      "runtime_manifest_sha256": "f2d1473798ac31042cfbe60f7c2dc653ec70840902c298d9912c5fd754f52524",
+      "teardown": {
+        "coreBytes": "0",
+        "bridge": {
+          "liveBytes": "0",
+          "liveAllocations": 0,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      },
+      "wake_observation": {
+        "callerWake": true,
+        "componentEnabled": false,
+        "nativeEnabledBefore": false,
+        "nativeAwakeBefore": false,
+        "canonicalReset": {
+          "body": {
+            "low": 1,
+            "high": 1
+          },
+          "sequence": 1,
+          "kind": "reset",
+          "pose": {
+            "position": [
+              3,
+              12,
+              -1
+            ],
+            "rotation": [
+              0,
+              0,
+              2,
+              2
+            ]
+          },
+          "mode": "teleport",
+          "preserveVelocity": true,
+          "wake": false
+        },
+        "nativePlannerActionBits": 16,
+        "nativeAwakeAfterApply": false,
+        "nativeAwakeAfterStep": false
+      },
+      "caught_cancel_observation": null
+    },
+    {
+      "case": "disabled-dynamic-clear",
+      "directory": "04-disabled-dynamic-clear",
+      "batch": "04-05",
+      "status": "PASS_LIMITED_TELEPORT",
+      "check_count": 12,
+      "checks": [
+        "accepted reset is staged without native apply or Node mutation",
+        "sync and autoSimulation false frame do not consume reset or emit writeback",
+        "one real tick performs ordered validate, apply, native step exactly once",
+        "reset defaults/options and normalized copied pose reach native batch",
+        "native post-apply velocity, world force and torque match reset ordering",
+        "reset recomputes COM according to body type and retained geometry",
+        "disabled component reset preserves native enable state and requests no native wake",
+        "actual Node writeback follows completed native step and matches native pose",
+        "successful tick retires original queue and releases all temporary owner scopes",
+        "later empty tick never replays reset or earlier user command",
+        "no broad staged/unified feature activation follows finite reset candidate",
+        "actual app teardown is released with zero tracked native allocations"
+      ],
+      "collector_exit": 0,
+      "jest_exit": 0,
+      "started_at": "2026-10-22T23:14:05.265464+00:00",
+      "completed_at": "2026-10-22T23:14:19.986247+00:00",
+      "receipt_sha256": "a4caf11fd80c5d004a0fbc0958c6165a67e37bff10bebe8c4414623c38a399d6",
+      "raw_sha256": "024a2c2c0dd4ea01a496b2da2e1686abd072571994195e81debad7f953a0176e",
+      "source_manifest_sha256": "aad5092940b314ace9fe3cf2f261d83c1926866b528b12b6b7a10fb6d0bd0438",
+      "archive_actual_sha256": "7b8b1579d6558dfa825263f24d4c66b58f73e0cf2b49b17e349c7594fd97ca90",
+      "source_before_after_equal": true,
+      "runtime_unique_paths": 2744,
+      "runtime_manifest_sha256": "f2d1473798ac31042cfbe60f7c2dc653ec70840902c298d9912c5fd754f52524",
+      "teardown": {
+        "coreBytes": "0",
+        "bridge": {
+          "liveBytes": "0",
+          "liveAllocations": 0,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      },
+      "wake_observation": {
+        "callerWake": true,
+        "componentEnabled": false,
+        "nativeEnabledBefore": true,
+        "nativeAwakeBefore": false,
+        "canonicalReset": {
+          "body": {
+            "low": 1,
+            "high": 1
+          },
+          "sequence": 1,
+          "kind": "reset",
+          "pose": {
+            "position": [
+              3,
+              12,
+              -1
+            ],
+            "rotation": [
+              0,
+              0,
+              2,
+              2
+            ]
+          },
+          "mode": "teleport",
+          "preserveVelocity": false,
+          "wake": false
+        },
+        "nativePlannerActionBits": 16,
+        "nativeAwakeAfterApply": false,
+        "nativeAwakeAfterStep": false
+      },
+      "caught_cancel_observation": null
+    },
+    {
+      "case": "disabled-kinematic-preserve",
+      "directory": "05-disabled-kinematic-preserve",
+      "batch": "04-05",
+      "status": "PASS_LIMITED_TELEPORT",
+      "check_count": 12,
+      "checks": [
+        "accepted reset is staged without native apply or Node mutation",
+        "sync and autoSimulation false frame do not consume reset or emit writeback",
+        "one real tick performs ordered validate, apply, native step exactly once",
+        "reset defaults/options and normalized copied pose reach native batch",
+        "native post-apply velocity, world force and torque match reset ordering",
+        "reset recomputes COM according to body type and retained geometry",
+        "disabled component reset preserves native enable state and requests no native wake",
+        "actual Node writeback follows completed native step and matches native pose",
+        "successful tick retires original queue and releases all temporary owner scopes",
+        "later empty tick never replays reset or earlier user command",
+        "no broad staged/unified feature activation follows finite reset candidate",
+        "actual app teardown is released with zero tracked native allocations"
+      ],
+      "collector_exit": 0,
+      "jest_exit": 0,
+      "started_at": "2026-10-22T23:14:20.027009+00:00",
+      "completed_at": "2026-10-22T23:14:34.555400+00:00",
+      "receipt_sha256": "24518802e25637734d2c2bbd520806281cc4504366f518300d2fce0ec4a87822",
+      "raw_sha256": "a2956ceda9e6df10bb0f8b2b5b8bcefe79ed605ea34dd245db969df67c46ce72",
+      "source_manifest_sha256": "aad5092940b314ace9fe3cf2f261d83c1926866b528b12b6b7a10fb6d0bd0438",
+      "archive_actual_sha256": "7b8b1579d6558dfa825263f24d4c66b58f73e0cf2b49b17e349c7594fd97ca90",
+      "source_before_after_equal": true,
+      "runtime_unique_paths": 2744,
+      "runtime_manifest_sha256": "f2d1473798ac31042cfbe60f7c2dc653ec70840902c298d9912c5fd754f52524",
+      "teardown": {
+        "coreBytes": "0",
+        "bridge": {
+          "liveBytes": "0",
+          "liveAllocations": 0,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      },
+      "wake_observation": {
+        "callerWake": true,
+        "componentEnabled": false,
+        "nativeEnabledBefore": true,
+        "nativeAwakeBefore": false,
+        "canonicalReset": {
+          "body": {
+            "low": 1,
+            "high": 1
+          },
+          "sequence": 1,
+          "kind": "reset",
+          "pose": {
+            "position": [
+              3,
+              12,
+              -1
+            ],
+            "rotation": [
+              0,
+              0,
+              2,
+              2
+            ]
+          },
+          "mode": "teleport",
+          "preserveVelocity": true,
+          "wake": false
+        },
+        "nativePlannerActionBits": 16,
+        "nativeAwakeAfterApply": false,
+        "nativeAwakeAfterStep": false
+      },
+      "caught_cancel_observation": null
+    },
+    {
+      "case": "enabled-preserve-forces",
+      "directory": "06-enabled-preserve-forces",
+      "batch": "06-07",
+      "status": "PASS_LIMITED_TELEPORT",
+      "check_count": 12,
+      "checks": [
+        "accepted reset is staged without native apply or Node mutation",
+        "sync and autoSimulation false frame do not consume reset or emit writeback",
+        "one real tick performs ordered validate, apply, native step exactly once",
+        "reset defaults/options and normalized copied pose reach native batch",
+        "native post-apply velocity, world force and torque match reset ordering",
+        "reset recomputes COM according to body type and retained geometry",
+        "awake enabled body remains awake including wake false preserve case",
+        "actual Node writeback follows completed native step and matches native pose",
+        "successful tick retires original queue and releases all temporary owner scopes",
+        "later empty tick never replays reset or earlier user command",
+        "no broad staged/unified feature activation follows finite reset candidate",
+        "actual app teardown is released with zero tracked native allocations"
+      ],
+      "collector_exit": 0,
+      "jest_exit": 0,
+      "started_at": "2026-10-22T23:15:12.262533+00:00",
+      "completed_at": "2026-10-22T23:15:27.084066+00:00",
+      "receipt_sha256": "67dae68e66985c8841cf3c10cdf338792d9127f05d5d3db7021bae8643286402",
+      "raw_sha256": "04b751b739d82059abee9637d3c4b08b7e25208364e7400d787670c3d663d3b5",
+      "source_manifest_sha256": "aad5092940b314ace9fe3cf2f261d83c1926866b528b12b6b7a10fb6d0bd0438",
+      "archive_actual_sha256": "7b8b1579d6558dfa825263f24d4c66b58f73e0cf2b49b17e349c7594fd97ca90",
+      "source_before_after_equal": true,
+      "runtime_unique_paths": 2744,
+      "runtime_manifest_sha256": "f2d1473798ac31042cfbe60f7c2dc653ec70840902c298d9912c5fd754f52524",
+      "teardown": {
+        "coreBytes": "0",
+        "bridge": {
+          "liveBytes": "0",
+          "liveAllocations": 0,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      },
+      "wake_observation": {
+        "callerWake": false,
+        "componentEnabled": true,
+        "nativeEnabledBefore": true,
+        "nativeAwakeBefore": true,
+        "canonicalReset": {
+          "body": {
+            "low": 1,
+            "high": 1
+          },
+          "sequence": 3,
+          "kind": "reset",
+          "pose": {
+            "position": [
+              3,
+              12,
+              -1
+            ],
+            "rotation": [
+              0,
+              0,
+              2,
+              2
+            ]
+          },
+          "mode": "teleport",
+          "preserveVelocity": true,
+          "wake": false
+        },
+        "nativePlannerActionBits": 16,
+        "nativeAwakeAfterApply": true,
+        "nativeAwakeAfterStep": true
+      },
+      "caught_cancel_observation": null
+    },
+    {
+      "case": "enabled-wake-false",
+      "directory": "07-enabled-wake-false",
+      "batch": "06-07",
+      "status": "PASS_LIMITED_TELEPORT",
+      "check_count": 12,
+      "checks": [
+        "accepted reset is staged without native apply or Node mutation",
+        "sync and autoSimulation false frame do not consume reset or emit writeback",
+        "one real tick performs ordered validate, apply, native step exactly once",
+        "reset defaults/options and normalized copied pose reach native batch",
+        "native post-apply velocity, world force and torque match reset ordering",
+        "reset recomputes COM according to body type and retained geometry",
+        "wake false preserves sleep instead of waking enabled body",
+        "actual Node writeback follows completed native step and matches native pose",
+        "successful tick retires original queue and releases all temporary owner scopes",
+        "later empty tick never replays reset or earlier user command",
+        "no broad staged/unified feature activation follows finite reset candidate",
+        "actual app teardown is released with zero tracked native allocations"
+      ],
+      "collector_exit": 0,
+      "jest_exit": 0,
+      "started_at": "2026-10-22T23:15:27.117303+00:00",
+      "completed_at": "2026-10-22T23:15:42.217902+00:00",
+      "receipt_sha256": "a9ea054fafa2d97bebb41be890c61db7033fdb82f71c39d9129aa4c8e7929d3c",
+      "raw_sha256": "9f3731fad7e5133225590ed811dd5033f31f810e91cb8e69f0c33ea570b16d08",
+      "source_manifest_sha256": "aad5092940b314ace9fe3cf2f261d83c1926866b528b12b6b7a10fb6d0bd0438",
+      "archive_actual_sha256": "7b8b1579d6558dfa825263f24d4c66b58f73e0cf2b49b17e349c7594fd97ca90",
+      "source_before_after_equal": true,
+      "runtime_unique_paths": 2744,
+      "runtime_manifest_sha256": "f2d1473798ac31042cfbe60f7c2dc653ec70840902c298d9912c5fd754f52524",
+      "teardown": {
+        "coreBytes": "0",
+        "bridge": {
+          "liveBytes": "0",
+          "liveAllocations": 0,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      },
+      "wake_observation": {
+        "callerWake": false,
+        "componentEnabled": true,
+        "nativeEnabledBefore": true,
+        "nativeAwakeBefore": false,
+        "canonicalReset": {
+          "body": {
+            "low": 1,
+            "high": 1
+          },
+          "sequence": 1,
+          "kind": "reset",
+          "pose": {
+            "position": [
+              3,
+              12,
+              -1
+            ],
+            "rotation": [
+              0,
+              0,
+              2,
+              2
+            ]
+          },
+          "mode": "teleport",
+          "preserveVelocity": false,
+          "wake": false
+        },
+        "nativePlannerActionBits": 16,
+        "nativeAwakeAfterApply": false,
+        "nativeAwakeAfterStep": false
+      },
+      "caught_cancel_observation": null
+    },
+    {
+      "case": "invalid-quaternion",
+      "directory": "08-invalid-quaternion",
+      "batch": "08-09",
+      "status": "PASS_LIMITED_TELEPORT",
+      "check_count": 15,
+      "checks": [
+        "invalid quaternion {\"x\":0,\"y\":0,\"z\":0,\"w\":0} rejects without cancellation or native mutation",
+        "invalid quaternion {\"x\":null,\"y\":0,\"z\":0,\"w\":1} rejects without cancellation or native mutation",
+        "invalid quaternion {\"x\":0,\"y\":null,\"z\":0,\"w\":1} rejects without cancellation or native mutation",
+        "accepted reset is staged without native apply or Node mutation",
+        "sync and autoSimulation false frame do not consume reset or emit writeback",
+        "one real tick performs ordered validate, apply, native step exactly once",
+        "reset defaults/options and normalized copied pose reach native batch",
+        "native post-apply velocity, world force and torque match reset ordering",
+        "reset recomputes COM according to body type and retained geometry",
+        "awake enabled body remains awake including wake false preserve case",
+        "actual Node writeback follows completed native step and matches native pose",
+        "successful tick retires original queue and releases all temporary owner scopes",
+        "later empty tick never replays reset or earlier user command",
+        "no broad staged/unified feature activation follows finite reset candidate",
+        "actual app teardown is released with zero tracked native allocations"
+      ],
+      "collector_exit": 0,
+      "jest_exit": 0,
+      "started_at": "2026-10-22T23:16:08.770649+00:00",
+      "completed_at": "2026-10-22T23:16:23.387469+00:00",
+      "receipt_sha256": "18d4bd7ec120e6d728eb1cfda16c683f131e900a2d118de66f15ce47b48c122a",
+      "raw_sha256": "0ab02721d42e9a691f947124f387ae4885443fd8cb7fd7f5fd6a84d0b2508195",
+      "source_manifest_sha256": "aad5092940b314ace9fe3cf2f261d83c1926866b528b12b6b7a10fb6d0bd0438",
+      "archive_actual_sha256": "7b8b1579d6558dfa825263f24d4c66b58f73e0cf2b49b17e349c7594fd97ca90",
+      "source_before_after_equal": true,
+      "runtime_unique_paths": 2744,
+      "runtime_manifest_sha256": "f2d1473798ac31042cfbe60f7c2dc653ec70840902c298d9912c5fd754f52524",
+      "teardown": {
+        "coreBytes": "0",
+        "bridge": {
+          "liveBytes": "0",
+          "liveAllocations": 0,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      },
+      "wake_observation": {
+        "callerWake": true,
+        "componentEnabled": true,
+        "nativeEnabledBefore": true,
+        "nativeAwakeBefore": true,
+        "canonicalReset": {
+          "body": {
+            "low": 1,
+            "high": 1
+          },
+          "sequence": 2,
+          "kind": "reset",
+          "pose": {
+            "position": [
+              3,
+              12,
+              -1
+            ],
+            "rotation": [
+              0,
+              0,
+              2,
+              2
+            ]
+          },
+          "mode": "teleport",
+          "preserveVelocity": false,
+          "wake": true
+        },
+        "nativePlannerActionBits": 18,
+        "nativeAwakeAfterApply": true,
+        "nativeAwakeAfterStep": true
+      },
+      "caught_cancel_observation": null
+    },
+    {
+      "case": "invalid-options",
+      "directory": "09-invalid-options",
+      "batch": "08-09",
+      "status": "PASS_LIMITED_TELEPORT",
+      "check_count": 17,
+      "checks": [
+        "invalid options null rejects without cancellation or native mutation",
+        "invalid options 1 rejects without cancellation or native mutation",
+        "invalid options \"x\" rejects without cancellation or native mutation",
+        "invalid options {\"preserveVelocity\":1} rejects without cancellation or native mutation",
+        "invalid options {\"wake\":\"yes\"} rejects without cancellation or native mutation",
+        "accepted reset is staged without native apply or Node mutation",
+        "sync and autoSimulation false frame do not consume reset or emit writeback",
+        "one real tick performs ordered validate, apply, native step exactly once",
+        "reset defaults/options and normalized copied pose reach native batch",
+        "native post-apply velocity, world force and torque match reset ordering",
+        "reset recomputes COM according to body type and retained geometry",
+        "awake enabled body remains awake including wake false preserve case",
+        "actual Node writeback follows completed native step and matches native pose",
+        "successful tick retires original queue and releases all temporary owner scopes",
+        "later empty tick never replays reset or earlier user command",
+        "no broad staged/unified feature activation follows finite reset candidate",
+        "actual app teardown is released with zero tracked native allocations"
+      ],
+      "collector_exit": 0,
+      "jest_exit": 0,
+      "started_at": "2026-10-22T23:16:23.420902+00:00",
+      "completed_at": "2026-10-22T23:16:38.043323+00:00",
+      "receipt_sha256": "00000e2d63aaffb13652fdffb6b10b947c659b48e6038aa795f3c3e1055135e4",
+      "raw_sha256": "6a516b610d80fc7e3d75debd9c1a1365aa777f8a637032cb015402a28fd2393f",
+      "source_manifest_sha256": "aad5092940b314ace9fe3cf2f261d83c1926866b528b12b6b7a10fb6d0bd0438",
+      "archive_actual_sha256": "7b8b1579d6558dfa825263f24d4c66b58f73e0cf2b49b17e349c7594fd97ca90",
+      "source_before_after_equal": true,
+      "runtime_unique_paths": 2744,
+      "runtime_manifest_sha256": "f2d1473798ac31042cfbe60f7c2dc653ec70840902c298d9912c5fd754f52524",
+      "teardown": {
+        "coreBytes": "0",
+        "bridge": {
+          "liveBytes": "0",
+          "liveAllocations": 0,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      },
+      "wake_observation": {
+        "callerWake": true,
+        "componentEnabled": true,
+        "nativeEnabledBefore": true,
+        "nativeAwakeBefore": true,
+        "canonicalReset": {
+          "body": {
+            "low": 1,
+            "high": 1
+          },
+          "sequence": 2,
+          "kind": "reset",
+          "pose": {
+            "position": [
+              3,
+              12,
+              -1
+            ],
+            "rotation": [
+              0,
+              0,
+              2,
+              2
+            ]
+          },
+          "mode": "teleport",
+          "preserveVelocity": false,
+          "wake": true
+        },
+        "nativePlannerActionBits": 18,
+        "nativeAwakeAfterApply": true,
+        "nativeAwakeAfterStep": true
+      },
+      "caught_cancel_observation": null
+    },
+    {
+      "case": "invalid-getter",
+      "directory": "10-invalid-getter",
+      "batch": "10-11",
+      "status": "PASS_LIMITED_TELEPORT",
+      "check_count": 18,
+      "checks": [
+        "throwing pose getter rejects without cancellation or native mutation",
+        "original thrown pose getter identity survives",
+        "falsy throwing option getter rejects without cancellation or native mutation",
+        "original falsy option getter throw survives",
+        "caught nested component submission poisons the outer getter admission rejects without cancellation or native mutation",
+        "nested actual component submission rejects inside admission",
+        "accepted reset is staged without native apply or Node mutation",
+        "sync and autoSimulation false frame do not consume reset or emit writeback",
+        "one real tick performs ordered validate, apply, native step exactly once",
+        "reset defaults/options and normalized copied pose reach native batch",
+        "native post-apply velocity, world force and torque match reset ordering",
+        "reset recomputes COM according to body type and retained geometry",
+        "awake enabled body remains awake including wake false preserve case",
+        "actual Node writeback follows completed native step and matches native pose",
+        "successful tick retires original queue and releases all temporary owner scopes",
+        "later empty tick never replays reset or earlier user command",
+        "no broad staged/unified feature activation follows finite reset candidate",
+        "actual app teardown is released with zero tracked native allocations"
+      ],
+      "collector_exit": 0,
+      "jest_exit": 0,
+      "started_at": "2026-10-22T23:17:04.385999+00:00",
+      "completed_at": "2026-10-22T23:17:19.104219+00:00",
+      "receipt_sha256": "027ec551905823717067a427d8eb65b9b13d8c7b1c69163b15e008e42e32dc99",
+      "raw_sha256": "40fe6768e3a845917ff1fab40d0e6e289e546251df887d8a337531d33e35e526",
+      "source_manifest_sha256": "aad5092940b314ace9fe3cf2f261d83c1926866b528b12b6b7a10fb6d0bd0438",
+      "archive_actual_sha256": "7b8b1579d6558dfa825263f24d4c66b58f73e0cf2b49b17e349c7594fd97ca90",
+      "source_before_after_equal": true,
+      "runtime_unique_paths": 2744,
+      "runtime_manifest_sha256": "f2d1473798ac31042cfbe60f7c2dc653ec70840902c298d9912c5fd754f52524",
+      "teardown": {
+        "coreBytes": "0",
+        "bridge": {
+          "liveBytes": "0",
+          "liveAllocations": 0,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      },
+      "wake_observation": {
+        "callerWake": true,
+        "componentEnabled": true,
+        "nativeEnabledBefore": true,
+        "nativeAwakeBefore": true,
+        "canonicalReset": {
+          "body": {
+            "low": 1,
+            "high": 1
+          },
+          "sequence": 2,
+          "kind": "reset",
+          "pose": {
+            "position": [
+              3,
+              12,
+              -1
+            ],
+            "rotation": [
+              0,
+              0,
+              2,
+              2
+            ]
+          },
+          "mode": "teleport",
+          "preserveVelocity": false,
+          "wake": true
+        },
+        "nativePlannerActionBits": 18,
+        "nativeAwakeAfterApply": true,
+        "nativeAwakeAfterStep": true
+      },
+      "caught_cancel_observation": null
+    },
+    {
+      "case": "invalid-getter-cancel",
+      "directory": "11-invalid-getter-cancel",
+      "batch": "10-11",
+      "status": "PASS_LIMITED_TELEPORT",
+      "check_count": 5,
+      "checks": [
+        "caught cancel getter still aborts outer teleport and retains original impulse",
+        "no-tick sync after rejected cancel getter retains original queue",
+        "fresh actual tick consumes only the retained original impulse",
+        "retained impulse never replays on following tick",
+        "cancel-getter case closes actual app with zero native allocations"
+      ],
+      "collector_exit": 0,
+      "jest_exit": 0,
+      "started_at": "2026-10-22T23:17:19.136520+00:00",
+      "completed_at": "2026-10-22T23:17:33.461610+00:00",
+      "receipt_sha256": "35a42f74cd3a116133ba80d2dd3dbfac147782997d17076e4c058867c8b54588",
+      "raw_sha256": "df06289e314cbd535246073dea7309bd728c8685ff036d41e31849bf6d14e26d",
+      "source_manifest_sha256": "aad5092940b314ace9fe3cf2f261d83c1926866b528b12b6b7a10fb6d0bd0438",
+      "archive_actual_sha256": "7b8b1579d6558dfa825263f24d4c66b58f73e0cf2b49b17e349c7594fd97ca90",
+      "source_before_after_equal": true,
+      "runtime_unique_paths": 2744,
+      "runtime_manifest_sha256": "f2d1473798ac31042cfbe60f7c2dc653ec70840902c298d9912c5fd754f52524",
+      "teardown": {
+        "coreBytes": "0",
+        "bridge": {
+          "liveBytes": "0",
+          "liveAllocations": 0,
+          "shapeHandles": 0,
+          "primitiveCapacity": 0,
+          "capturedPrimitives": 0
+        }
+      },
+      "wake_observation": null,
+      "caught_cancel_observation": {
+        "checks": [
+          {
+            "id": "caught cancel getter still aborts outer teleport and retains original impulse",
+            "pass": true,
+            "actual": {
+              "outer": {
+                "threw": true,
+                "error": "Error: Box3D command queue: nested admission during input copy",
+                "code": null
+              },
+              "nested": {
+                "threw": true,
+                "error": "Error: Box3D command queue: nested admission during input copy",
+                "code": null
+              },
+              "baseline": {
+                "pending": 1,
+                "state": {
+                  "type": 2,
+                  "enabled": true,
+                  "awake": true,
+                  "sleeping": false,
+                  "sleepy": false,
+                  "sleepEnabled": true,
+                  "ccd": false,
+                  "sleepTime": 0,
+                  "sleepVelocity": 0,
+                  "sleepThreshold": 0.10000000149011612,
+                  "linearDamping": 0,
+                  "angularDamping": 0,
+                  "gravityScale": 0,
+                  "linearVelocity": [
+                    0,
+                    0,
+                    0
+                  ],
+                  "angularVelocity": [
+                    0,
+                    0,
+                    0
+                  ],
+                  "force": [
+                    0,
+                    0,
+                    0
+                  ],
+                  "torque": [
+                    0,
+                    0,
+                    0
+                  ],
+                  "linearFactor": [
+                    1,
+                    1,
+                    1
+                  ],
+                  "angularFactor": [
+                    1,
+                    1,
+                    1
+                  ],
+                  "mass": 1,
+                  "localCenter": [
+                    1,
+                    0.5,
+                    0
+                  ],
+                  "inertia": [
+                    0.1666666716337204,
+                    0,
+                    0,
+                    0,
+                    0.1666666716337204,
+                    0,
+                    0,
+                    0,
+                    0.1666666716337204
+                  ],
+                  "worldCenter": [
+                    1,
+                    10.5,
+                    0
+                  ],
+                  "requestedMass": 1,
+                  "massPending": false,
+                  "sensorMassFallback": false
+                },
+                "pose": [
+                  0,
+                  10,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "node": [
+                  0,
+                  10,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1
+                ]
+              },
+              "pending": 1,
+              "state": {
+                "type": 2,
+                "enabled": true,
+                "awake": true,
+                "sleeping": false,
+                "sleepy": false,
+                "sleepEnabled": true,
+                "ccd": false,
+                "sleepTime": 0,
+                "sleepVelocity": 0,
+                "sleepThreshold": 0.10000000149011612,
+                "linearDamping": 0,
+                "angularDamping": 0,
+                "gravityScale": 0,
+                "linearVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "angularVelocity": [
+                  0,
+                  0,
+                  0
+                ],
+                "force": [
+                  0,
+                  0,
+                  0
+                ],
+                "torque": [
+                  0,
+                  0,
+                  0
+                ],
+                "linearFactor": [
+                  1,
+                  1,
+                  1
+                ],
+                "angularFactor": [
+                  1,
+                  1,
+                  1
+                ],
+                "mass": 1,
+                "localCenter": [
+                  1,
+                  0.5,
+                  0
+                ],
+                "inertia": [
+                  0.1666666716337204,
+                  0,
+                  0,
+                  0,
+                  0.1666666716337204,
+                  0,
+                  0,
+                  0,
+                  0.1666666716337204
+                ],
+                "worldCenter": [
+                  1,
+                  10.5,
+                  0
+                ],
+                "requestedMass": 1,
+                "massPending": false,
+                "sensorMassFallback": false
+              },
+              "calls": []
+            }
+          }
+        ],
+        "outer": {
+          "threw": true,
+          "error": "Error: Box3D command queue: nested admission during input copy",
+          "code": null
+        },
+        "nested": {
+          "threw": true,
+          "error": "Error: Box3D command queue: nested admission during input copy",
+          "code": null
+        },
+        "world": {
+          "lastCommand": null,
+          "state": "ready",
+          "commandOwner": {
+            "phase": "idle",
+            "bodies": 1,
+            "nativeOwnership": "owned",
+            "unresolvedNativeBodies": 0,
+            "components": 2,
+            "disabledComponents": 0,
+            "materials": 1,
+            "activeTemporaryScopes": 0,
+            "pendingCommands": 1,
+            "privateMaterialValues": {
+              "observed": true,
+              "roster": {
+                "generation": 1,
+                "state": "live",
+                "bindings": 1,
+                "pending": 0
+              },
+              "last": null
+            },
+            "systemControl": {
+              "observed": true,
+              "paused": false,
+              "queuePhase": "ready",
+              "preparedQueueControl": false,
+              "unresolvedScopes": 0,
+              "lastChange": {
+                "operation": "system-auto-simulation",
+                "cacheEnabled": true,
+                "cacheAutoSimulation": false,
+                "queueCommitEntered": false,
+                "queueCommitReturned": false,
+                "producerCommitEntered": false,
+                "producerCommitReturned": false,
+                "failed": false,
+                "actualRead": "copied"
+              },
+              "producers": {
+                "closed": false,
+                "paused": false,
+                "preparedControl": false,
+                "collecting": false,
+                "registrations": 0,
+                "liveProducers": 0,
+                "enabledProducers": 0
+              }
+            },
+            "dynamicCommandCandidate": true,
+            "commandPhase": "idle",
+            "commandQueue": {
+              "phase": "ready",
+              "sequence": 1,
+              "completedTicks": 0,
+              "attemptId": 0
+            },
+            "stagedCommandsSupported": false,
+            "unifiedTransactionsSupported": false,
+            "materialIdentityTracking": "actual-cache-commit",
+            "materialObserverLeases": 2,
+            "unresolvedMaterialScopes": 0,
+            "lastMaterialChange": {
+              "operation": "collider-material-initialize",
+              "actualRead": "copied",
+              "actualMatchesBefore": null,
+              "actualMatchesCandidate": true,
+              "effects": [],
+              "failed": false
+            },
+            "cleanup": {
+              "hasFailure": false,
+              "cleanupFailures": [],
+              "omittedFailures": 0
+            },
+            "activationBlockers": [
+              "dynamic-command-owner-candidate-not-qualified",
+              "shared-material-propagation-and-subscription-integrity",
+              "full-producer-pause-lifecycle-not-qualified",
+              "complete-early-entry-qualification",
+              "persistent-target-grant-budget"
+            ]
+          },
+          "ownerCleanupError": null,
+          "failure": {
+            "hasFailure": false
+          },
+          "teardown": {
+            "hasFailure": false,
+            "nativeReturned": false,
+            "nativeHasFailure": false,
+            "cleanupHasFailure": false
+          },
+          "writeback": {
+            "epoch": 0,
+            "epochLimit": 9007199254740991
+          },
+          "generation": 1,
+          "native": {
+            "nativeStepIndex": 0,
+            "nativeCompleted": false,
+            "snapshotAvailable": false
+          },
+          "nativeObservationCurrent": false,
+          "lastStepOutcome": "not-attempted",
+          "attemptedSteps": 0,
+          "lastDt": null,
+          "solverSubSteps": 4,
+          "gravity": [
+            0,
+            0,
+            0
+          ],
+          "allowSleep": true,
+          "material": {
+            "friction": 0.6000000238418579,
+            "restitution": 0
+          },
+          "materialShapeCount": 1,
+          "sceneBindingCount": 1,
+          "sceneSyncCalls": 0,
+          "afterEventsCalls": 0,
+          "emittedStep": 0,
+          "componentEventsSupported": false,
+          "debugPresented": false,
+          "error": null
+        }
+      }
+    }
+  ],
+  "controls": [
+    {
+      "name": "exclusive parent lock",
+      "status": "PASS_EXPECTED_COLLECTOR_BUSY",
+      "receipt_status": "COLLECTOR_BUSY",
+      "exit_code": 1,
+      "no_native_startup": true,
+      "sentinel_unchanged": true,
+      "batch": "12-lock-control"
+    }
+  ],
+  "review_status": "Independent sibling review pending; this index verifies actual downloaded ZIP contents and current source bytes."
+}
