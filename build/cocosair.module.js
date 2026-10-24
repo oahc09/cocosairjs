@@ -137507,12 +137507,14 @@ class Box2D3World {
     this.drawFlags = 0;
     this.bodies = new Set();
     this.shapes = new Map();
+    this.shapeWrappers = new Set();
     this.joints = new Set();
     this.contacts = new Map();
     this.seen = new Set();
     this.disabledStep = new Set();
     this.deferred = [];
     this.stepping = false;
+    this.flushing = false;
     this.debug = void 0;
     this.impl = api().createWorld({
       x: 0,
@@ -137523,7 +137525,20 @@ class Box2D3World {
     });
   }
   mutate(action) {
-    if (this.stepping) this.deferred.push(action);else action();
+    this.deferred.push(action);
+    this.flushMutations();
+  }
+  flushMutations() {
+    if (this.stepping || this.flushing) return;
+    this.flushing = true;
+    try {
+      while (this.deferred.length) {
+        const actions = this.deferred.splice(0);
+        for (const action of actions) action();
+      }
+    } finally {
+      this.flushing = false;
+    }
   }
   stats() {
     return this.impl ? api().stats(this.impl) : {
@@ -137607,8 +137622,7 @@ class Box2D3World {
     } finally {
       this.stepping = false;
     }
-    const actions = this.deferred.splice(0);
-    for (const action of actions) action();
+    this.flushMutations();
   }
   end(key) {
     const c = this.contacts.get(key);
@@ -137619,13 +137633,13 @@ class Box2D3World {
     }
   }
   removeShape(id) {
-    for (const [key, c] of this.contacts) if (c.observation.a === id || c.observation.b === id) this.end(key);
     this.shapes.delete(id);
     api().destroyShape(id);
+    for (const [key, c] of this.contacts) if (c.observation.a === id || c.observation.b === id) this.end(key);
   }
   syncSceneToPhysics() {
     for (const b of this.bodies) b.syncSceneToPhysics();
-    for (const s of new Set(this.shapes.values())) s.sync();
+    for (const s of this.shapeWrappers) s.sync();
   }
   syncPhysicsToScene() {
     for (const b of this.bodies) b.syncPhysicsToScene();
@@ -137786,10 +137800,11 @@ class Box2D3World {
     this.impl = 0;
     this.groundBodyImpl = 0;
     for (const b of this.bodies) b.impl = 0;
-    for (const s of new Set(this.shapes.values())) s.impl = [];
+    for (const s of this.shapeWrappers) s.impl = [];
     for (const j of this.joints) j.impl = 0;
     this.bodies.clear();
     this.shapes.clear();
+    this.shapeWrappers.clear();
     this.joints.clear();
     this.deferred = [];
   }
@@ -138072,13 +138087,19 @@ class Box2D3Shape {
     this.collider = c;
   }
   onEnable() {
-    world().mutate(() => this.create());
+    world().mutate(() => {
+      world().shapeWrappers.add(this);
+      this.create();
+    });
   }
   onDisable() {
-    world().mutate(() => this.destroy());
+    world().mutate(() => {
+      world().shapeWrappers.delete(this);
+      this.destroy();
+    });
   }
   onDestroy() {
-    world().mutate(() => this.destroy());
+    this.onDisable();
   }
   apply() {
     world().mutate(() => {
@@ -138103,6 +138124,10 @@ class Box2D3Shape {
     if (this.impl.length || !this.collider.isValid || !this.collider.enabledInHierarchy) return;
     const c = this.collider;
     this.body = (_c$getComponent = c.getComponent(RigidBody2D)) == null ? void 0 : _c$getComponent.impl;
+    this.signature = this.transformSignature();
+    const sx = c.node.worldScale.x,
+      sy = c.node.worldScale.y;
+    if (Math.abs(sx) < 1e-8 || Math.abs(sy) < 1e-8) return;
     const p = c.node.worldPosition;
     if (!((_this$body = this.body) != null && _this$body.impl)) this.ownBody = api().createBody(world().impl, {
       type: 0,
@@ -138120,9 +138145,6 @@ class Box2D3Shape {
       category,
       mask
     };
-    const sx = c.node.worldScale.x,
-      sy = c.node.worldScale.y;
-    if (Math.abs(sx) < 1e-8 || Math.abs(sy) < 1e-8) return;
     if (c instanceof CircleCollider2D) this.impl.push(api().createShape(body, 'circle', {
       ...config,
       x: c.offset.x * sx / PTM,
@@ -138157,12 +138179,12 @@ class Box2D3Shape {
     this.signature = this.transformSignature();
   }
   destroy() {
-    for (const h of this.impl) world().removeShape(h);
+    const handles = this.impl,
+      ownBody = this.ownBody;
     this.impl = [];
-    if (this.ownBody) {
-      api().destroyBody(this.ownBody);
-      this.ownBody = 0;
-    }
+    this.ownBody = 0;
+    for (const h of handles) world().removeShape(h);
+    if (ownBody) api().destroyBody(ownBody);
   }
   transformSignature() {
     const c = this.collider.node,
@@ -138171,7 +138193,7 @@ class Box2D3Shape {
     return `${p.x}:${p.y}:${angle(c)}:${s.x}:${s.y}`;
   }
   sync() {
-    if (!this.body && this.ownBody && this.signature !== this.transformSignature()) this.apply();
+    if (!this.body && this.signature !== this.transformSignature()) this.apply();
   }
   toWorld(p) {
     const node = this.collider.node,
@@ -138623,8 +138645,8 @@ class MouseJoint extends BaseJoint {
 
 const AIR_VERSION = '1.0.0';
 const AIR_REVISION = 100;
-const AIR_BUILD_DATE = "202610211000";
-const AIR_BUILD_NUMBER = 200;
+const AIR_BUILD_DATE = "202610240832";
+const AIR_BUILD_NUMBER = 202;
 class AirAppImpl {
   get session() {
     return this._scope;

@@ -90,7 +90,8 @@ Selection job failure or missing output also selects acceptance unless cancelled
 
 Selection includes all src/vendor/build inputs, build/dev tooling, Box2D
 collectors, shared browser launch policy, published-artifact verification,
-Box2D lab, dependency manifests/lockfile and runtime/package configuration.
+Box2D lab and the starter used by the default-backend check, dependency
+manifests/lockfile and runtime/package configuration.
 All src changes intentionally count: physics uses shared scene, scheduling,
 math, PAL, graphics and package entry points. Markdown/text prose is excluded;
 other examples, Skills and unrelated workflows/tools do not select the expensive

@@ -6,6 +6,8 @@
 
 `node tools/verify/box2d3.cjs --engine=chromium --scope=all` 在真实浏览器运行全部 147 个官方注册案例及 AIR 组件集成断言，分别检查模拟结果、截图、原生资源释放和浏览器物理退出。支持 `firefox`、`webkit`；要求匹配的 Playwright 依赖与二进制，只写新的 `output/box2d/acceptance/` 目录，不更新 canonical example evidence。`--limit=N` 是不能通过完整验收的诊断子集。部署和兼容约定见 [Box2D 指南](../docs/guides/box2d3.md)。
 
+`node --test tools/verify/box2d3-adapter.test.cjs` 使用实际冻结 WASM 与内存转译的 AIR 适配器，检查零缩放恢复和 END 回调重建时的形状释放；只替代 Cocos 组件环境，不模拟物理。不写证据或运行时产物，不替代真实浏览器集成验收。
+
 `node tools/verify/box2d3-archive.cjs --index=<artifacts.json> --out=<new-directory>` 核验索引中的全部原件，
 使用系统 `tar` 写入新的分卷归档目录及 `archive.json`，不覆盖已有目录。每卷原始数据最多 40 MiB。
 `--check=<archive-directory>` 在临时目录中解包，逐项核验路径、大小和 SHA-256 后删除临时目录，不改仓库。
