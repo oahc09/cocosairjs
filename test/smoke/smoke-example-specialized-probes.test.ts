@@ -117,12 +117,29 @@ describe('ordinary Driver Pilot specialized proof contract (synthetic CPU only)'
             const text = fs.readFileSync(path.resolve('.github/workflows/' + workflow + '.yml'), 'utf8');
             const command = text
                 .split('\n')
-                .find((line: string) => line.includes('npx jest --runInBand --no-cache --runTestsByPath'));
+                .find(
+                    (line: string) =>
+                        line.includes('npx jest --runInBand --no-cache --runTestsByPath') &&
+                        line.includes('test/smoke/smoke-example-specialized-probes.test.ts'),
+                );
             expect(command).toContain('test/smoke/smoke-example-specialized-probes.test.ts');
-            expect(text).toContain('EXAMPLE_EVIDENCE_CPU_OUT="$RUNNER_TEMP/example-evidence-cpu"');
-            expect(text).toMatch(
-                /if: always\(\)[\s\S]*?name: example-evidence-cpu-receipts[\s\S]*?path: \$\{\{ runner.temp \}\}\/example-evidence-cpu\//,
+            const capture = text.indexOf(
+                workflow === 'format' ? 'id: core_browser' : 'node tools/verify/run-example-evidence-campaign.cjs',
             );
+            expect(capture).toBeGreaterThan(0);
+            expect(text.indexOf(command!)).toBeLessThan(capture);
+            if (workflow === 'format') {
+                expect(command).toContain('$RUNNER_TEMP/core-cpu/unit-tests.log');
+                expect(text).toContain('${{ runner.temp }}/core-cpu/');
+                expect(text).toMatch(
+                    /name: Retain exact-head originals, failures and timings\s+if: always\(\)\s+uses: actions\/upload-artifact@v4/,
+                );
+            } else {
+                expect(text).toContain('EXAMPLE_EVIDENCE_CPU_OUT="$RUNNER_TEMP/example-evidence-cpu"');
+                expect(text).toMatch(
+                    /if: always\(\)[\s\S]*?name: example-evidence-cpu-receipts[\s\S]*?path: \$\{\{ runner.temp \}\}\/example-evidence-cpu\//,
+                );
+            }
         }
     });
     test('recomputes a complete primary proof and accepts real assets with empty UUIDs', () => {

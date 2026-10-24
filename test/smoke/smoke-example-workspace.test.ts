@@ -130,23 +130,27 @@ describe('Example browser workspace dependency and byte closure', () => {
             );
         },
     );
-    test('rejects file and directory symlinks even when their targets are inside the allowed tree', () => {
+    test('rejects supported symbolic links even when their targets are inside the allowed tree', () => {
         const f = fixture();
         const link = path.join(f.repo, 'examples/a/link.ts');
-        fs.symlinkSync(path.join(f.repo, 'examples/shared/helper.ts'), link);
-        expect(() => workspaceTools.listWorkspaceInputs(f.repo)).toThrow('WORKSPACE_SYMLINK');
-        fs.unlinkSync(link);
-        fs.symlinkSync(path.join(f.repo, 'examples/shared'), link, 'dir');
+        // Keep the file-link control on Linux; Windows junctions exercise the real lstat rejection without elevation.
+        if (process.platform !== 'win32') {
+            fs.symlinkSync(path.join(f.repo, 'examples/shared/helper.ts'), link, 'file');
+            expect(() => workspaceTools.listWorkspaceInputs(f.repo)).toThrow('WORKSPACE_SYMLINK');
+            fs.unlinkSync(link);
+        }
+        fs.symlinkSync(path.join(f.repo, 'examples/shared'), link, process.platform === 'win32' ? 'junction' : 'dir');
+        expect(fs.lstatSync(link).isSymbolicLink()).toBe(true);
         expect(() => workspaceTools.listWorkspaceInputs(f.repo)).toThrow('WORKSPACE_SYMLINK');
     });
     test('rejects symlink roots and destinations without following them', () => {
         const f = fixture();
         const repoLink = path.join(f.root, 'repo-link');
-        fs.symlinkSync(f.repo, repoLink, 'dir');
+        fs.symlinkSync(f.repo, repoLink, process.platform === 'win32' ? 'junction' : 'dir');
         expect(() => workspaceTools.listWorkspaceInputs(repoLink)).toThrow('WORKSPACE_SYMLINK');
         const elsewhere = path.join(f.root, 'elsewhere');
         fs.mkdirSync(elsewhere);
-        fs.symlinkSync(elsewhere, f.stage, 'dir');
+        fs.symlinkSync(elsewhere, f.stage, process.platform === 'win32' ? 'junction' : 'dir');
         expect(() => workspaceTools.prepareExampleWorkspace(f.repo, 'a', f.stage)).toThrow('WORKSPACE_SYMLINK');
         expect(fs.readdirSync(elsewhere)).toEqual([]);
     });
@@ -189,7 +193,10 @@ describe('Example browser workspace dependency and byte closure', () => {
         );
         write(f.root, 'outside.js', 'external secret must not be read');
         fs.mkdirSync(path.join(f.repo, 'build'));
-        fs.symlinkSync(path.join(f.root, 'outside.js'), path.join(f.repo, 'build/main.js'));
+        if (process.platform === 'win32') {
+            fs.mkdirSync(path.join(f.root, 'outside-build'));
+            fs.symlinkSync(path.join(f.root, 'outside-build'), path.join(f.repo, 'build/main.js'), 'junction');
+        } else fs.symlinkSync(path.join(f.root, 'outside.js'), path.join(f.repo, 'build/main.js'), 'file');
         expect(() => workspaceTools.prepareExampleWorkspace(f.repo, 'a', f.stage)).toThrow('WORKSPACE_SYMLINK');
         expect(fs.existsSync(f.stage)).toBe(false);
     });
@@ -225,42 +232,41 @@ describe('Example browser workspace dependency and byte closure', () => {
         for (const example of entries)
             expect(() => workspaceTools.validateReferences(REPO, example, inputs)).not.toThrow();
     });
-    test('real shader driver compiles with both sibling effects; HTML and Spark still compile without launching a browser', () => {
-        const { execFileSync } = nodeRequire('child_process') as typeof import('child_process');
-        const stageRoot = temp();
-        // esbuild requires Node's native Uint8Array realm, so use a CPU-only Node child rather than jsdom.
-        const script = `
+    test.each(['shader-driver-pilot', 'html-texture-experimental', 'spark-splats'])(
+        '%s compiles its preserved dependencies without launching a browser',
+        (example) => {
+            const { execFileSync } = nodeRequire('child_process') as typeof import('child_process');
+            const stageRoot = temp();
+            // esbuild requires Node's native Uint8Array realm, so use a CPU-only Node child rather than jsdom.
+            const script = `
             const path = require('path');
             const fs = require('fs');
-            const repo = process.argv[1], root = process.argv[2];
+            const repo = process.argv[1], root = process.argv[2], dir = process.argv[3];
             const W = require(path.join(repo, 'tools/verify/example-workspace.cjs'));
             const { BrowserRuntime } = require(path.join(repo, 'tools/benchmark/runner/browser-runtime.cjs'));
             const esbuild = require(path.join(repo, 'node_modules/esbuild'));
             (async () => {
-                const rows = [];
-                for (const dir of ['shader-driver-pilot', 'html-texture-experimental', 'spark-splats']) {
                     const result = W.prepareExampleWorkspace(repo, { dir }, path.join(root, dir));
                     const runtime = new BrowserRuntime({ esbuild, repo });
                     const built = await runtime.build({ paths: { workspace: result.workspace, serveRoot: result.serveRoot } });
-                    rows.push({ dir, built, browser: runtime.browser, server: runtime.server,
-                        unchanged: fs.readFileSync(path.join(result.workspace, 'src/main.ts')).equals(fs.readFileSync(path.join(repo, 'examples', dir, 'src/main.ts'))) });
-                }
-                console.log(JSON.stringify(rows));
+                    const row = { dir, built, browser: runtime.browser, server: runtime.server,
+                        unchanged: fs.readFileSync(path.join(result.workspace, 'src/main.ts')).equals(fs.readFileSync(path.join(repo, 'examples', dir, 'src/main.ts'))) };
+                console.log(JSON.stringify(row));
             })().catch((error) => { console.error(error.stack); process.exitCode = 1; });
         `;
-        const rows = JSON.parse(
-            execFileSync(process.execPath, ['-e', script, REPO, stageRoot], {
-                cwd: REPO,
-                encoding: 'utf8',
-                timeout: 25000,
-            }),
-        );
-        expect(rows).toHaveLength(3);
-        for (const row of rows) {
+            const row = JSON.parse(
+                execFileSync(process.execPath, ['-e', script, REPO, stageRoot, example], {
+                    cwd: REPO,
+                    encoding: 'utf8',
+                    timeout: 25000,
+                }),
+            );
+            expect(row.dir).toBe(example);
             expect(row.built).toEqual({ success: true, diagnostics: [] });
             expect(row.browser).toBe(null);
             expect(row.server).toBe(null);
             expect(row.unchanged).toBe(true);
-        }
-    }, 30000);
+        },
+        30000,
+    );
 });

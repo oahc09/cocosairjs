@@ -272,10 +272,15 @@ describe('Evidence collector integration safeguards', () => {
         fs.writeFileSync(first.path, 'wrong');
         expect(() => runtime.persistResponseBody(temp, 'body')).toThrow('response body store drift');
     });
-    test('response body symlink is rejected even when its target has identical bytes', () => {
+    test('response body store rejects symbolic links, including identical file targets on Linux', () => {
         const first = runtime.persistResponseBody(temp, 'body');
         fs.unlinkSync(first.path);
-        fs.symlinkSync(put('other', 'body'), first.path);
+        if (nodeProcess.platform === 'win32') {
+            const target = path.join(temp, 'other-directory');
+            fs.mkdirSync(target);
+            fs.symlinkSync(target, first.path, 'junction');
+        } else fs.symlinkSync(put('other', 'body'), first.path, 'file');
+        expect(fs.lstatSync(first.path).isSymbolicLink()).toBe(true);
         expect(() => runtime.persistResponseBody(temp, 'body')).toThrow('response body store drift');
     });
     test('physical HTTP server closes even when context cleanup rejects', async () => {

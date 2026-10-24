@@ -1,18 +1,26 @@
 import { installAssetLifecycle } from '../../examples/shared/asset-lifecycle';
 import { CCObject } from '../../src/cocos/core/data/object';
+import { director, Director } from '../../src/cocos/game/director';
 
 describe('native asset lifecycle release predicates', () => {
+    let frame: number;
     beforeEach(() => {
         jest.useFakeTimers();
+        frame = 0;
+        jest.spyOn(director, 'getTotalFrames').mockImplementation(() => frame);
     });
     afterEach(() => {
+        jest.restoreAllMocks();
         jest.useRealTimers();
     });
     async function settle(run: Promise<any>): Promise<any> {
-        // The pinned Jest exposes synchronous timer controls; alternate native Promise jobs and RAF/timers.
+        // The predicate fixture supplies complete update/draw cycles; RAF/timers alone are not settlement.
         for (let i = 0; i < 20; i++) {
             await Promise.resolve();
-            jest.runOnlyPendingTimers();
+            director.emit(Director.EVENT_AFTER_UPDATE);
+            director.emit(Director.EVENT_AFTER_DRAW);
+            frame++;
+            jest.runAllTicks();
             await Promise.resolve();
         }
         return run;

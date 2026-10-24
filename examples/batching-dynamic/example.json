@@ -24,19 +24,19 @@
         "api": "Material.initialize",
         "source": "shared/batching-routes.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L104"
+        "sourceLocation": "L105"
       },
       {
         "api": "utils.MeshUtils.createDynamicMesh",
         "source": "shared/batching-routes.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L131"
+        "sourceLocation": "L132"
       },
       {
         "api": "Mesh.updateSubMesh",
         "source": "shared/batching-routes.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L91"
+        "sourceLocation": "L92"
       }
     ]
   },

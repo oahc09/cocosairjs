@@ -1,7 +1,7 @@
 {
   "source": "build/cocosair.module.d.ts",
-  "sourceFingerprint": "6978166bb3097ac5",
-  "apiInventoryRevision": "ea1b49839cbbb83d",
+  "sourceFingerprint": "6611b5faef4c53b7",
+  "apiInventoryRevision": "76b234a0d6eddf68",
   "units": {
     "MeshBuffer": {
       "kind": "class",
@@ -53215,6 +53215,24 @@
       "coverageRequired": false,
       "parent": "AudioPCMDataView"
     },
+    "loadBox2D3": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "selectPhysics2DBackend": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "getBox2D3Stats": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
     "createSessionScope": {
       "kind": "function",
       "tier": "supporting",
@@ -82102,9 +82120,9 @@
     "core": 964,
     "important": 283,
     "advanced": 192,
-    "supporting": 8826,
+    "supporting": 8829,
     "internal": 3256
   },
-  "totalUnits": 13521,
+  "totalUnits": 13524,
   "coverageRequiredUnits": 1439
 }
