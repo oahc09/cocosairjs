@@ -1240,7 +1240,7 @@ function appendObjectsAt(array, objects, index) {
 function contains$1(array, value) {
   return array.indexOf(value) >= 0;
 }
-function copy(array) {
+function copy$1(array) {
   const len = array.length;
   const cloned = new Array(len);
   for (let i = 0; i < len; i += 1) {
@@ -1259,7 +1259,7 @@ var array = /*#__PURE__*/Object.freeze({
     MutableForwardIterator: MutableForwardIterator,
     appendObjectsAt: appendObjectsAt,
     contains: contains$1,
-    copy: copy,
+    copy: copy$1,
     fastRemove: fastRemove,
     fastRemoveAt: fastRemoveAt$2,
     fillItems: fillItems,
@@ -28724,6 +28724,89 @@ const getPhaseID$1 = (() => {
   };
 })();
 
+const arrays = ['defines', 'attributes', 'blocks', 'samplerTextures', 'samplers', 'textures', 'buffers', 'images', 'subpassInputs', 'descriptors'];
+const automaticHashes = new WeakMap();
+function invalid$3(effect, shader, path, expected, missing = false) {
+  const code = missing ? 'AIR_E_EFFECT_JSON_MISSING_FIELD' : 'AIR_E_EFFECT_JSON_TYPE';
+  throw Object.assign(new TypeError(`[${code}] effect '${effect}', shader '${shader}', ${path}: expected ${expected}`), {
+    code,
+    effect,
+    shader,
+    path,
+    expected
+  });
+}
+function record(value, effect, shader, path) {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) invalid$3(effect, shader, path, 'object');
+  return value;
+}
+function copy(value) {
+  if (Array.isArray(value)) return value.map(copy);
+  if (value && typeof value === 'object') {
+    const out = Object.create(null);
+    for (const key of Object.keys(value)) out[key] = copy(value[key]);
+    return out;
+  }
+  return value;
+}
+function effectShaderSignature(shader) {
+  const stable = value => {
+    if (Array.isArray(value)) return value.map(stable);
+    if (value && typeof value === 'object') {
+      const out = Object.create(null);
+      for (const key of Object.keys(value).sort()) out[key] = stable(value[key]);
+      return out;
+    }
+    return value;
+  };
+  const {
+    hash,
+    name,
+    ...content
+  } = shader;
+  return JSON.stringify(stable(content));
+}
+function normalizeEffectShader(input, effect = '<direct>', path = 'shader') {
+  const source = record(input, effect, '<unnamed>', path);
+  const name = source.name;
+  if (typeof name !== 'string' || !name) invalid$3(effect, '<unnamed>', `${path}.name`, 'non-empty string', name === undefined);
+  for (const key of arrays) {
+    if (source[key] !== undefined && !Array.isArray(source[key])) invalid$3(effect, name, `${path}.${key}`, 'array');
+  }
+  if (source.hash !== undefined && !Number.isSafeInteger(source.hash)) invalid$3(effect, name, `${path}.hash`, 'finite safe integer');
+  const normalized = copy(source);
+  for (const key of arrays) {
+    var _normalized$key;
+    (_normalized$key = normalized[key]) !== null && _normalized$key !== void 0 ? _normalized$key : normalized[key] = [];
+  }
+  const builtins = source.builtins === undefined ? {} : record(source.builtins, effect, name, `${path}.builtins`);
+  normalized.builtins = {
+    ...normalized.builtins
+  };
+  for (const group of ['globals', 'locals']) {
+    const members = builtins[group] === undefined ? {} : record(builtins[group], effect, name, `${path}.builtins.${group}`);
+    normalized.builtins[group] = copy(members);
+    for (const key of ['blocks', 'samplerTextures', 'buffers', 'images']) {
+      var _normalized$builtins$, _normalized$builtins$2;
+      if (members[key] !== undefined && !Array.isArray(members[key])) invalid$3(effect, name, `${path}.builtins.${group}.${key}`, 'array');
+      (_normalized$builtins$2 = (_normalized$builtins$ = normalized.builtins[group])[key]) !== null && _normalized$builtins$2 !== void 0 ? _normalized$builtins$2 : _normalized$builtins$[key] = [];
+    }
+  }
+  normalized.builtins.statistics = copy(builtins.statistics === undefined ? {} : record(builtins.statistics, effect, name, `${path}.builtins.statistics`));
+  if (normalized.hash === undefined || automaticHashes.get(source) === normalized.hash) {
+    const signature = effectShaderSignature(normalized);
+    let hash = 2166136261;
+    for (let i = 0; i < signature.length; ++i) hash = Math.imul(hash ^ signature.charCodeAt(i), 16777619);
+    normalized.hash = hash >>> 0;
+    automaticHashes.set(normalized, normalized.hash);
+  }
+  return normalized;
+}
+function normalizeEffectShaders(shaders, effect) {
+  if (!Array.isArray(shaders)) invalid$3(effect, '<unnamed>', 'shaders', 'array');
+  return shaders.map((shader, index) => normalizeEffectShader(shader, effect, `shaders[${index}]`));
+}
+
 function propertyTypeError(code, property, expected, example) {
   return Object.assign(new TypeError(`[${code}] ${property}: expected ${expected}. Example: ${example}`), {
     code,
@@ -29251,8 +29334,16 @@ class ProgramLib {
     this._templates = {};
     this._cache = {};
     this._templateInfos = {};
+    this._templateSignatures = new Map();
   }
   register(effect) {
+    const shaders = normalizeEffectShaders(effect.shaders, effect.name);
+    const signatures = new Map(this._templateSignatures);
+    for (const shader of shaders) {
+      this._checkShaderIdentity(shader, signatures);
+      signatures.set(shader.hash, effectShaderSignature(shader));
+    }
+    effect.shaders = shaders;
     for (let i = 0; i < effect.shaders.length; i++) {
       const tmpl = this.define(effect.shaders[i]);
       tmpl.effectName = effect.name;
@@ -29268,6 +29359,9 @@ class ProgramLib {
     }
   }
   define(shader) {
+    shader = normalizeEffectShader(shader);
+    this._checkShaderIdentity(shader, this._templateSignatures);
+    const sourceSignature = effectShaderSignature(shader);
     const curTmpl = this._templates[shader.name];
     if (curTmpl && curTmpl.hash === shader.hash) {
       return curTmpl;
@@ -29276,7 +29370,6 @@ class ProgramLib {
       ...shader
     };
     populateMacros(tmpl);
-    this._templates[shader.name] = tmpl;
     if (!this._templateInfos[tmpl.hash]) {
       const tmplInfo = {};
       tmplInfo.samplerStartBinding = tmpl.blocks.length;
@@ -29333,7 +29426,19 @@ class ProgramLib {
       tmplInfo.setLayouts = [];
       this._templateInfos[tmpl.hash] = tmplInfo;
     }
+    this._templates[shader.name] = tmpl;
+    this._templateSignatures.set(tmpl.hash, sourceSignature);
     return tmpl;
+  }
+  _checkShaderIdentity(shader, signatures) {
+    const signature = signatures.get(shader.hash);
+    if (signature !== undefined && signature !== effectShaderSignature(shader)) {
+      throw Object.assign(new Error(`[AIR_E_EFFECT_HASH_COLLISION] shader '${shader.name}': hash ${shader.hash} already identifies different source or resource layout; omit hash to derive it from content`), {
+        code: 'AIR_E_EFFECT_HASH_COLLISION',
+        shader: shader.name,
+        hash: shader.hash
+      });
+    }
   }
   getTemplate(name) {
     return this._templates[name];
@@ -30535,6 +30640,7 @@ var _dec$2Y, _class$2Z, _class2$2l, _initializer$2h, _initializer2$1R, _initiali
 const legacyBuiltinEffectNames = ['planar-shadow', 'skybox', 'deferred-lighting', 'bloom', 'hbao', 'copy-pass', 'post-process', 'profiler', 'splash-screen', 'unlit', 'sprite', 'particle', 'particle-gpu', 'particle-trail', 'billboard', 'terrain', 'graphics', 'clear-stencil', 'spine', 'occlusion-query', 'geometry-renderer', 'debug-renderer', 'ssss-blur', 'float-output-process'];
 let EffectAsset = (_dec$2Y = ccclass$w('cc.EffectAsset'), _dec$2Y(_class$2Z = (_class2$2l = (_EffectAsset = class EffectAsset extends Asset {
   static register(asset) {
+    asset.shaders = normalizeEffectShaders(asset.shaders, asset.name);
     EffectAsset._effects[asset.name] = asset;
     EffectAsset._layoutValid = false;
   }
@@ -30589,13 +30695,22 @@ let EffectAsset = (_dec$2Y = ccclass$w('cc.EffectAsset'), _dec$2Y(_class$2Z = (_
     this.hideInEditor = _initializer4$15 && _initializer4$15();
   }
   onLoaded() {
+    const previous = EffectAsset._effects[this.name];
     EffectAsset.register(this);
     if (!deviceManager.gfxDevice) {
       cclegacy.game.off(cclegacy.Game.EVENT_RENDERER_INITED, this._onRendererReady, this);
       cclegacy.game.once(cclegacy.Game.EVENT_RENDERER_INITED, this._onRendererReady, this);
       return;
     }
-    this._registerPrograms();
+    try {
+      this._registerPrograms();
+    } catch (error) {
+      EffectAsset.remove(this);
+      if (previous) {
+        EffectAsset._effects[this.name] = previous;
+      }
+      throw error;
+    }
     {
       cclegacy.game.once(cclegacy.Game.EVENT_RENDERER_INITED, this._precompile, this);
     }
@@ -48980,7 +49095,7 @@ _p.Inflate = _p["Inflate"];
 _p.Inflate.BufferType = _p.Inflate["BufferType"];
 _p.Inflate.prototype.decompress = _p.Inflate.prototype["decompress"];
 
-var _dec$2I, _class$2J, _class2$28, _initializer$24, _initializer2$1I, _initializer3$1c;
+var _dec$2I, _class$2J, _class2$28, _initializer$24, _initializer2$1I, _initializer3$1c, _Mesh;
 const vec3Add = Vec3.add;
 const vec3MultiplyScalar = Vec3.multiplyScalar;
 const vec3Subtract = Vec3.subtract;
@@ -49005,7 +49120,7 @@ function getIndexStrideCtor(stride) {
 const v3_1$5 = new Vec3();
 const v3_2$1 = new Vec3();
 const globalEmptyMeshBuffer = new Uint8Array();
-let Mesh = (_dec$2I = ccclass$w('cc.Mesh'), _dec$2I(_class$2J = (_class2$28 = class Mesh extends Asset {
+let Mesh = (_dec$2I = ccclass$w('cc.Mesh'), _dec$2I(_class$2J = (_class2$28 = (_Mesh = class Mesh extends Asset {
   get _nativeAsset() {
     return this._data.buffer;
   }
@@ -49273,6 +49388,7 @@ let Mesh = (_dec$2I = ccclass$w('cc.Mesh'), _dec$2I(_class$2J = (_class2$28 = cl
     this._boneSpaceBounds = new WeakMap();
     this._hash = 0;
     subMesh.invalidateGeometricInfo();
+    this.emit(Mesh.EVENT_GEOMETRY_CHANGED, this, primitiveIndex);
   }
   destroy() {
     this._boneSpaceBounds = new WeakMap();
@@ -49834,7 +49950,7 @@ let Mesh = (_dec$2I = ccclass$w('cc.Mesh'), _dec$2I(_class$2J = (_class2$28 = cl
   releaseData() {
     this._data = globalEmptyMeshBuffer;
   }
-}, (_initializer$24 = applyDecoratedInitializer(_class2$28.prototype, "_struct", [serializable$c], function () {
+}, _Mesh.EVENT_GEOMETRY_CHANGED = 'air-geometry-changed', _Mesh), (_initializer$24 = applyDecoratedInitializer(_class2$28.prototype, "_struct", [serializable$c], function () {
   return {
     vertexBundles: [],
     primitives: []
@@ -50732,6 +50848,7 @@ let MeshRenderer = (_dec8$k = ccclass$r('cc.MeshRenderer'), _dec9$h = executionO
     const old = this._mesh;
     const mesh = this._mesh = val;
     mesh == null ? void 0 : mesh.initialize();
+    this._watchGeometryInMesh();
     this._initSubMeshShapesWeights();
     this._watchMorphInMesh();
     this._onMeshChanged(old);
@@ -50768,6 +50885,7 @@ let MeshRenderer = (_dec8$k = ccclass$r('cc.MeshRenderer'), _dec9$h = executionO
     super();
     this.bakeSettings = _initializer11$k && _initializer11$k();
     this._mesh = _initializer12$h && _initializer12$h();
+    this._geometryEventMesh = null;
     this._shadowCastingMode = _initializer13$e && _initializer13$e();
     this._shadowReceivingMode = _initializer14$c && _initializer14$c();
     this._shadowBias = _initializer15$9 && _initializer15$9();
@@ -50793,6 +50911,7 @@ let MeshRenderer = (_dec8$k = ccclass$r('cc.MeshRenderer'), _dec9$h = executionO
     if (this._mesh) {
       this._mesh.initialize();
     }
+    this._watchGeometryInMesh();
     if (!this._validateShapeWeights()) {
       this._initSubMeshShapesWeights();
     }
@@ -50809,6 +50928,7 @@ let MeshRenderer = (_dec8$k = ccclass$r('cc.MeshRenderer'), _dec9$h = executionO
     this._updateStandardSkin();
   }
   onRestore() {
+    this._watchGeometryInMesh();
     this._updateModels();
     if (this.enabledInHierarchy) {
       this._attachToScene();
@@ -50825,6 +50945,7 @@ let MeshRenderer = (_dec8$k = ccclass$r('cc.MeshRenderer'), _dec9$h = executionO
   }
   onEnable() {
     super.onEnable();
+    this._watchGeometryInMesh();
     this.node.on(NodeEventType.MOBILITY_CHANGED, this.onMobilityChanged, this);
     this.node.on(NodeEventType.LIGHT_PROBE_BAKING_CHANGED, this.onLightProbeBakingChanged, this);
     this.bakeSettings.on(ModelBakeSettingsEvent.USE_LIGHT_PROBE_CHANGED, this.onUseLightProbeChanged, this);
@@ -50858,6 +50979,12 @@ let MeshRenderer = (_dec8$k = ccclass$r('cc.MeshRenderer'), _dec9$h = executionO
     this.bakeSettings.off(ModelBakeSettingsEvent.REFLECTION_PROBE_CHANGED, this.onReflectionProbeChanged, this);
     this.bakeSettings.off(ModelBakeSettingsEvent.BAKE_TO_REFLECTION_PROBE_CHANGED, this.onBakeToReflectionProbeChanged, this);
   }
+  _onPreDestroy() {
+    var _this$_geometryEventM;
+    (_this$_geometryEventM = this._geometryEventMesh) == null ? void 0 : _this$_geometryEventM.off(Mesh.EVENT_GEOMETRY_CHANGED, this._onMeshGeometryChanged, this);
+    this._geometryEventMesh = null;
+    super._onPreDestroy();
+  }
   onDestroy() {
     if (this._model) {
       cclegacy.director.root.destroyModel(this._model);
@@ -50866,6 +50993,17 @@ let MeshRenderer = (_dec8$k = ccclass$r('cc.MeshRenderer'), _dec9$h = executionO
     }
     if (this._morphInstance) {
       this._morphInstance.destroy();
+    }
+  }
+  _watchGeometryInMesh() {
+    var _this$_geometryEventM2, _this$_geometryEventM3;
+    (_this$_geometryEventM2 = this._geometryEventMesh) == null ? void 0 : _this$_geometryEventM2.off(Mesh.EVENT_GEOMETRY_CHANGED, this._onMeshGeometryChanged, this);
+    this._geometryEventMesh = this._mesh;
+    (_this$_geometryEventM3 = this._geometryEventMesh) == null ? void 0 : _this$_geometryEventM3.on(Mesh.EVENT_GEOMETRY_CHANGED, this._onMeshGeometryChanged, this);
+  }
+  _onMeshGeometryChanged(mesh) {
+    if (mesh === this._mesh && isValid(this, true) && isValid(this.node, true)) {
+      this.onGeometryChanged();
     }
   }
   onGeometryChanged() {
@@ -138645,8 +138783,8 @@ class MouseJoint extends BaseJoint {
 
 const AIR_VERSION = '1.0.0';
 const AIR_REVISION = 100;
-const AIR_BUILD_DATE = "202610240832";
-const AIR_BUILD_NUMBER = 202;
+const AIR_BUILD_DATE = "202610241349";
+const AIR_BUILD_NUMBER = 207;
 class AirAppImpl {
   get session() {
     return this._scope;
@@ -152651,6 +152789,21 @@ function createAirUnlitFogEffect() {
   return effect;
 }
 
+function shaderDiagnostic(code, shader, stage, source, driverLog) {
+  const clean = source.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\/\/[^\n]*/g, '');
+  const hint = stage === 'fragment' && /\bgl_FragColor\b/.test(clean) ? 'ESSL 300 has no gl_FragColor: declare out vec4 fragColor; and write fragColor in the supplied glsl3 fragment variant.' : 'Check the supplied GLSL variant and resource interfaces against the numbered submitted source; WebGL2 adds #version 300 es.';
+  const numberedSource = source.split('\n').map((line, i) => `${i + 1}: ${line}`).join('\n');
+  return Object.assign(new Error(`[${code}] shader '${shader}', ${stage}: ${driverLog || 'driver returned no log'}\n${hint}`), {
+    code,
+    shader,
+    stage,
+    source,
+    numberedSource,
+    driverLog: driverLog || '',
+    hint
+  });
+}
+
 let WebGL2EXT;
 (function (WebGL2EXT) {
   WebGL2EXT[WebGL2EXT["COMPRESSED_RGB_S3TC_DXT1_EXT"] = 33776] = "COMPRESSED_RGB_S3TC_DXT1_EXT";
@@ -154907,17 +155060,18 @@ function WebGL2CmdFuncCreateShader(device, gpuShader) {
       gl.shaderSource(gpuStage.glShader, `#version 300 es\n${gpuStage.source}`);
       gl.compileShader(gpuStage.glShader);
       if (!gl.getShaderParameter(gpuStage.glShader, WebGLConstants.COMPILE_STATUS)) {
+        const diagnostic = shaderDiagnostic('AIR_E_SHADER_COMPILE', gpuShader.name, gpuStage.type === ShaderStageFlagBit.FRAGMENT ? 'fragment' : 'vertex', `#version 300 es\n${gpuStage.source}`, gl.getShaderInfoLog(gpuStage.glShader));
         errorID(16323, shaderTypeStr, gpuShader.name);
         errorID(16324, gpuStage.source.replace(/^|\n/g, () => `\n${lineNumber++} `));
         error(gl.getShaderInfoLog(gpuStage.glShader));
         for (let l = 0; l < gpuShader.gpuStages.length; l++) {
-          const stage = gpuShader.gpuStages[k];
+          const stage = gpuShader.gpuStages[l];
           if (stage.glShader) {
             gl.deleteShader(stage.glShader);
             stage.glShader = null;
           }
         }
-        return;
+        throw diagnostic;
       }
     }
   }
@@ -154944,8 +155098,11 @@ function WebGL2CmdFuncCreateShader(device, gpuShader) {
     debugID(16325, gpuShader.name);
   } else {
     errorID(16326, gpuShader.name);
-    error(gl.getProgramInfoLog(gpuShader.glProgram));
-    return;
+    const log = gl.getProgramInfoLog(gpuShader.glProgram);
+    error(log);
+    gl.deleteProgram(gpuShader.glProgram);
+    gpuShader.glProgram = null;
+    throw shaderDiagnostic('AIR_E_SHADER_LINK', gpuShader.name, 'link', gpuShader.gpuStages.map(stage => `// stage ${stage.type}\n#version 300 es\n${stage.source}`).join('\n'), log);
   }
   const activeAttribCount = gl.getProgramParameter(gpuShader.glProgram, WebGLConstants.ACTIVE_ATTRIBUTES);
   gpuShader.glInputs = new Array(activeAttribCount);

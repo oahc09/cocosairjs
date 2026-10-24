@@ -1,7 +1,7 @@
 {
   "source": "build/cocosair.module.d.ts",
-  "sourceFingerprint": "6611b5faef4c53b7",
-  "apiInventoryRevision": "76b234a0d6eddf68",
+  "sourceFingerprint": "fe43ca6b269a1ac5",
+  "apiInventoryRevision": "6396c6b1a45ef2d1",
   "units": {
     "MeshBuffer": {
       "kind": "class",
@@ -3925,6 +3925,12 @@
       "kind": "method",
       "tier": "core",
       "coverageRequired": true,
+      "parent": "MeshRenderer"
+    },
+    "MeshRenderer._onPreDestroy": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
       "parent": "MeshRenderer"
     },
     "MeshRenderer.onDestroy": {
@@ -82121,8 +82127,8 @@
     "important": 283,
     "advanced": 192,
     "supporting": 8829,
-    "internal": 3256
+    "internal": 3257
   },
-  "totalUnits": 13524,
+  "totalUnits": 13525,
   "coverageRequiredUnits": 1439
 }

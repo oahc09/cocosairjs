@@ -86,6 +86,33 @@ Material set (`:88-97`): per shader entry, every `samplerTextures[i]` whose `set
 
 No chunk includes: every variant must be self-contained (`docs/manual/custom-shaders.md:76`).
 
+### Runtime registration safeguards (2026-10-24)
+
+The current registration boundary normalizes compiled JSON in both `EffectAsset.register/onLoaded()`
+and the legacy `ProgramLib` entry. This does not compile `.effect` YAML or derive GLSL variants.
+
+| Field                                                                                     | Current runtime contract                                                                                                                                                                                                                                                                                                                         |
+| ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `shaders[].samplerTextures`, `samplers`, `textures`, `buffers`, `images`, `subpassInputs` | Omission means `[]`. Explicit `null` or a non-array throws `AIR_E_EFFECT_JSON_TYPE` with `effect`, `shader` and `path`.                                                                                                                                                                                                                          |
+| `shaders[].defines`, `attributes`, `blocks`, `descriptors`                                | Omission also means `[]`; provide actual attributes and blocks required by the shader.                                                                                                                                                                                                                                                           |
+| `shaders[].hash`                                                                          | Omit to generate a stable content hash from shader variants, macros and resource/attribute metadata. Source/layout changes change the generated hash; object key order does not. Explicit hashes must be safe integers and must identify the same content when sharing a library cache. A conflicting hash throws `AIR_E_EFFECT_HASH_COLLISION`. |
+| `shaders[].name`                                                                          | Required non-empty string; absence throws `AIR_E_EFFECT_JSON_MISSING_FIELD` with the field path. The pass `program` still has to match it.                                                                                                                                                                                                       |
+
+Caller shader JSON is copied before macro preparation. Batch shape checks run before inserting shader
+templates, so a later shader's invalid resource-array type cannot partially register earlier templates.
+Automatic hashes are cache identities, not cryptographic asset-integrity proofs. Keep explicit compiler
+hashes only when you also maintain their source/layout identity.
+
+On a real WebGL2 compile failure, `AIR_E_SHADER_COMPILE` carries `shader`, `stage`, `driverLog`,
+`source`, `numberedSource` and `hint`. `source` is the actual submitted source, including the backend's
+`#version 300 es` line. ESSL 300 does not support `gl_FragColor`: declare `out vec4 fragColor;` and write
+that output in the hand-written `glsl3` variant. A fragment shader without a colour output is not
+automatically invalid (for example, a depth-only shader). Link failures use `AIR_E_SHADER_LINK`.
+Failed stages/programs are released before the exception; correct the source before retrying.
+
+See `src/air/rendering/effect-json-contract.ts`, `src/air/rendering/shader-diagnostics.ts`,
+`test/smoke/effect-json-contract.test.ts` and `test/smoke/shader-driver-diagnostics.test.ts`.
+
 ## Registration sequence and timing
 
 ```text

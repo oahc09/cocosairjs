@@ -4448,6 +4448,7 @@
         onRestore(): void;
         onEnable(): void;
         onDisable(): void;
+        _onPreDestroy(): void;
         onDestroy(): void;
         onGeometryChanged(): void;
         /**

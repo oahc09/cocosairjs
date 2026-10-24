@@ -70,7 +70,7 @@ function parseArgs(argv) {
     const result = {};
     for (let index = 0; index < argv.length; index++) {
         const argument = argv[index];
-        assert(['--source', '--out'].includes(argument), `Unknown option: ${argument}`);
+        assert(['--source', '--out', '--candidate-loads'].includes(argument), `Unknown option: ${argument}`);
         const key = argument.slice(2);
         assert(!Object.hasOwn(result, key), `Duplicate option: ${argument}`);
         assert(argv[index + 1] && !argv[index + 1].startsWith('--'), `Missing value: ${argument}`);
@@ -79,6 +79,19 @@ function parseArgs(argv) {
     assert(result.source, '--source is required: use the immutable original Git checkout');
     assert(result.out, 'Explicit --out is required');
     return result;
+}
+
+function candidateLoadPath(repoRoot, override) {
+    const relative = override === undefined ? `${RECOVERY}/reading-candidate-B1/events.jsonl` : override;
+    assert(typeof relative === 'string' && !path.isAbsolute(relative), 'Candidate loads must be repository-relative');
+    const target = path.resolve(repoRoot, relative);
+    const evidenceRoot = path.resolve(repoRoot, 'ai/plans/skills-token-evidence');
+    assert(
+        target !== evidenceRoot && inside(evidenceRoot, target),
+        'Candidate loads must stay within skills-token-evidence',
+    );
+    assert(target.endsWith('.jsonl'), 'Candidate loads must be a JSONL evidence file');
+    return target;
 }
 
 function validateManifestIdentity(manifest, expectedHash) {
@@ -215,7 +228,8 @@ async function run(options, repoRoot = REPO_ROOT) {
             'Final ledger must start at the approved prerequisite',
         );
         const originalLoads = input(`${RECOVERY}/reading-original-B1/events-audited.jsonl`);
-        const candidateLoads = input(`${RECOVERY}/reading-candidate-B1/events.jsonl`);
+        const candidateLoads = candidateLoadPath(repoRoot, options['candidate-loads']);
+        report.candidate_loads = path.relative(repoRoot, candidateLoads).replace(/\\/g, '/');
         validateB1Log(originalLoads);
         validateB1Log(candidateLoads);
         const rawHashes = [originalLoads, candidateLoads, ledger].map((filename) => ({
@@ -395,6 +409,7 @@ module.exports = {
     readFile,
     validateOutput,
     parseArgs,
+    candidateLoadPath,
     validateManifestIdentity,
     exactReplacement,
     validateB1Log,

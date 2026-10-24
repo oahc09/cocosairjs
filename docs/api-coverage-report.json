@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-18T02:51:10.401Z",
+  "generatedAt": "2026-10-24T05:54:29.185Z",
   "evidenceSources": [
     {
       "path": "docs/evidence/examples-verified.json",
@@ -24,11 +24,11 @@
     "verifiedChannels": "verified 再按观察通道拆分：call=被当作函数/构造器执行；read=仅观察到顶层导出的成员读取（命名空间用法）；unknown=证据行未记录通道。门禁数字含 read，引用时必须一并给出 call/read 拆分",
     "denominator": "门禁分母 = docs/example-api-inventory.json 的 coverageRequired=true 单元；required=0 的 tier 记 NOT_APPLICABLE"
   },
-  "candidateFingerprint": "f59f8388a8b9477a",
-  "inventoryFingerprint": "d00ad5fa1b550461",
-  "apiInventoryRevision": "ea1b49839cbbb83d",
+  "candidateFingerprint": "96a0f9fb5304d199",
+  "inventoryFingerprint": "c1c78b414b7b9d21",
+  "apiInventoryRevision": "6396c6b1a45ef2d1",
   "inventoryConsistency": [],
-  "totalUnits": 13521,
+  "totalUnits": 13525,
   "totalRequired": 1439,
   "totalClaimed": 1691,
   "totalAttested": 0,
@@ -3793,6 +3793,26 @@
       }
     },
     {
+      "id": "webgpu-basic",
+      "result": "no-evidence",
+      "fresh": false,
+      "binding": {
+        "spec": false,
+        "source": false,
+        "candidate": false
+      },
+      "hasApiProof": false,
+      "instrumentation": null,
+      "claims": 6,
+      "tally": {
+        "verified": 0,
+        "attested": 0,
+        "claimedOnly": 6,
+        "verifiedCall": 0,
+        "verifiedRead": 0
+      }
+    },
+    {
       "id": "webview-basic",
       "result": "no-evidence",
       "fresh": false,
@@ -4070,6 +4090,7 @@
         "utils-family",
         "video-basic",
         "water-multipass",
+        "webgpu-basic",
         "webview-basic"
       ]
     },
@@ -4221,6 +4242,7 @@
         "ui-layout",
         "utils-family",
         "video-basic",
+        "webgpu-basic",
         "webview-basic"
       ]
     },
@@ -4383,6 +4405,7 @@
         "ui-layout",
         "utils-family",
         "video-basic",
+        "webgpu-basic",
         "webview-basic"
       ]
     },
@@ -4524,7 +4547,8 @@
         "texture2d-serialization",
         "transform",
         "tween-basic",
-        "utils-family"
+        "utils-family",
+        "webgpu-basic"
       ]
     },
     {
@@ -4684,6 +4708,7 @@
         "utils-family",
         "video-basic",
         "water-multipass",
+        "webgpu-basic",
         "webview-basic"
       ]
     },
@@ -4807,7 +4832,8 @@
         "texture2d-ops",
         "texture2d-serialization",
         "tween-basic",
-        "utils-family"
+        "utils-family",
+        "webgpu-basic"
       ]
     },
     {

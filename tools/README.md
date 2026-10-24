@@ -83,6 +83,8 @@ PAL 的运行时来源固定在 `vendor/pal-source/` 的公开 MIT 快照；
 
 ## 程序化场景与独立验收工具
 
+Effect 注册、真实 shader 驱动错误和动态网格通知的局部回归：`node tools/verify/effect-runtime-contracts.cjs --bundle=build/cocosair.module.js --out=output/effect-contracts/new-attempt`。需要可解析的 Playwright 和 Chromium（可用 `AIR_EVIDENCE_BROWSER_EXECUTABLE` 指定已安装浏览器）。只读候选 JS，写新的报告/截图目录；保留失败，不重建、不修改 manifest 或正典验收证据。动态网格控制检查初次绑定、移出视锥、无需手动通知自动恢复，以及索引计数 6→3→0→6 的画面和 IA 状态；不能据此归因缺失的 E02/E04 原始源码。
+
 音频加载与所有权局部回归：`node tools/verify/audio-ownership-browser.cjs --bundle=build/cocosair.module.js --browser=chromium --out=output/audio-ownership/new-run`。需要可解析 Playwright 与匹配浏览器；只读 bundle，写新的报告/截图目录，保留失败，不更新正典证据。独立诊断模块 `tools/debug/resource-ownership.ts` 区分清理回调、排队销毁、对象有效性、GFX 与共享缓存状态；不在默认 runtime 内。
 
 WebGL2 图形合同：`node tools/verify/webgl2-gfx-contracts.cjs --browser=all --out=<new.json>` 使用现有 SDK 和 public gfx 验证格式能力、sampler、depth bias、整数 clear/attribute、分层附件及读回。必须指定未存在的报告路径；写相邻截图及原始数值，自动关闭自有服务和浏览器，不构建、安装或下载。可用 `--playwright=<existing-module-path>` 指定已有工具；`--sdk=<bundle-relative-path>`、`--cases=<comma-separated-case-ids>`、`--variant=<name>` 选择明确候选/子集/撤销控制，子集不等于九项完整验收。合同与支持边界见 [WebGL2 gfx 合同](../docs/reference/webgl2-gfx-contracts.md)，执行及证据见 [专项台账](../ai/ledgers/webgl2-gfx-contract-remediation.md)。
@@ -314,6 +316,8 @@ The six tools under `tools/skills/` share the Markdown/YAML parser in `lib/md-pa
 - `node tools/skills/measure-tokens.cjs --json --diff ai/plans/skills-token-baseline.json --source-snapshot <original>`: static bytes, Unicode characters and rough token estimates; estimates are not model billing tokens.
 - `node tools/skills/measure-tokens.cjs --loads <actual-events.jsonl> --snapshot <candidate> --source-snapshot <original> --scenarios tools/skills/fixtures/load-scenarios.json --diff ai/plans/skills-token-evidence/recovery/original-B1.json --baseline-loads ai/plans/skills-token-evidence/recovery/reading-original-B1/events-audited.jsonl`: reaggregate genuine same-protocol B1 records and compare against re-read original logs. This command does not perform or invent a reading trial.
 - `node tools/skills/check-p1.cjs --source <immutable-original-checkout> --out <new-temp-directory>`: deterministic CI orchestration; writes only the new directory below the OS temporary root (or RUNNER_TEMP). It reconstructs and checks original/prerequisite/candidate manifests, retains the original path FAIL, runs final gates and checks a complete isolated skills copy. It never executes snapshot code or synthesizes real reading events.
+
+`check-p1.cjs` additionally accepts `--candidate-loads ai/plans/skills-token-evidence/<new-reading>/events.jsonl` to select a fresh real B1 record explicitly. The default still reads the historical recovery record. The selected JSONL must stay inside the repository's skills evidence tree; all existing snapshot, protocol, receipt, answer and cost checks still apply. Selecting a path does not collect a reading trial or make a stale record valid. The 2026-10-24 candidate manifest and L0 are preparation only until a cold reader supplies the actual receipts and sealed answer.
 
 The original immutable source is commit `66d11fd0c3c189b7dfa6d20645222e237352f9f3`. The focused Skills P1 workflow checks it out separately and verifies all source bytes against the retained manifest. Existing Code quality and browser-smoke gates remain unchanged. Phase two is not part of these tools' acceptance claim.
 

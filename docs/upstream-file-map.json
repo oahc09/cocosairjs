@@ -2,7 +2,7 @@
   "meta": {
     "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
     "note": "Air Path 与 Upstream Path 一致(前缀 src/)；modified 文件另行标注 reason；upstreamPath=null 表示该行为 Air 原创文件或上游产物（仓库内无对应源文件），必须 modified:true 并在 reason 说明出处",
-    "modifiedCount": 228,
+    "modifiedCount": 229,
     "pal": {
       "revision": "9f0e30acb31f6d670f2c0bf818d61039846a2860",
       "license": "MIT",
@@ -743,7 +743,7 @@
       "upstreamPath": "cocos/3d/assets/mesh.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "PG-18/21: bone-space bounds use weak skeleton identity plus full bindpose data instead of trusting cached skeleton.hash; reset, dynamic data updates and destroy invalidate the cache. Weighted joint indices, attribute layout, weights, positions and bindposes reject invalid input with actionable AIR_E_SKINNING_* diagnostics. Unweighted/unused joints remain legal null bounds; only complete calculations enter the cache. Native mesh/model abstractions and upstream baseline are preserved.; ENG-01..04: native dynamic preflight, semantic partial streams, retained index validation, bounds refresh, retryable buffer allocation and cleanup. Invalid inputs commit no CPU/GPU update."
+      "reason": "PG-18/21: bone-space bounds use weak skeleton identity plus full bindpose data instead of trusting cached skeleton.hash; reset, dynamic data updates and destroy invalidate the cache. Weighted joint indices, attribute layout, weights, positions and bindposes reject invalid input with actionable AIR_E_SKINNING_* diagnostics. Unweighted/unused joints remain legal null bounds; only complete calculations enter the cache. Native mesh/model abstractions and upstream baseline are preserved.; ENG-01..04: native dynamic preflight, semantic partial streams, retained index validation, bounds refresh, retryable buffer allocation and cleanup. Invalid inputs commit no CPU/GPU update.  2026-10-24 A4: emit a geometry-commit event only after successful dynamic buffer/count/bounds updates."
     },
     {
       "airPath": "src/cocos/3d/assets/morph-rendering.ts",
@@ -791,8 +791,8 @@
       "airPath": "src/cocos/3d/framework/mesh-renderer.ts",
       "upstreamPath": "cocos/3d/framework/mesh-renderer.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "extraction copy AIR A4: subscribe to bound mesh geometry commits and reuse native onGeometryChanged to refresh transformed bounds and draw info for all sharing renderers. Rebind/restore/enable are deduplicated; pre-destroy unsubscribes even never-loaded components; pending destruction ignores updates."
     },
     {
       "airPath": "src/cocos/3d/index.ts",
@@ -2409,7 +2409,7 @@
       "upstreamPath": "cocos/asset/assets/effect-asset.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "CB-07 preserve immediate effect metadata registration, defer device-dependent program registration before renderer init, select the actual legacy/custom library after game.init, and remove pending listeners on destroy."
+      "reason": "CB-07 preserve immediate effect metadata registration, defer device-dependent program registration before renderer init, select the actual legacy/custom library after game.init, and remove pending listeners on destroy. 2026-10-24: normalize optional shader arrays and generate missing content hashes before publishing effect metadata."
     },
     {
       "airPath": "src/cocos/asset/assets/image-asset.ts",
@@ -3998,7 +3998,7 @@
       "upstreamPath": "cocos/gfx/webgl2/webgl2-commands.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "AIR: integer external formats/clear/attributes, sampler destruction, depth bias enable/order, selected layer attachments and validated native-layout readback with GL state/resource recovery (WGL-02/04/05/06/07/08/09). Audit 2026-10-19: recover program independently of PSO identity; restore partial stencil masks; validate vertex streams/locations; reset scratch blit attachments and buffer selection."
+      "reason": "AIR: integer external formats/clear/attributes, sampler destruction, depth bias enable/order, selected layer attachments and validated native-layout readback with GL state/resource recovery (WGL-02/04/05/06/07/08/09). Audit 2026-10-19: recover program independently of PSO identity; restore partial stencil masks; validate vertex streams/locations; reset scratch blit attachments and buffer selection. 2026-10-24: structured compile/link errors with exact submitted sources and driver logs; release all shader stages on compile failure and failed programs on link failure."
     },
     {
       "airPath": "src/cocos/gfx/webgl2/webgl2-define.ts",
@@ -5377,7 +5377,7 @@
       "upstreamPath": "cocos/render-scene/core/program-lib.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "AIR: choose WebGPU binding preparation from actual device rather than a build-wide constant"
+      "reason": "AIR: choose WebGPU binding preparation from actual device rather than a build-wide constant 2026-10-24: validate/clone compiled shader JSON at direct and batch boundaries, derive missing hashes from source/layout, reject hash/content conflicts and delay template insertion until preparation succeeds."
     },
     {
       "airPath": "src/cocos/render-scene/core/program-utils.ts",

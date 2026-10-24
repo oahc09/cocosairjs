@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "task_id": "reading-candidate-B1-20261024",
+  "scenario_id": "B1",
+  "metric_version": "air-document-input-1",
+  "snapshot_hash": "6ce532bd33abac3aea5d0c3897a0583dd908ccab5179e66982c14d1690eec3fa",
+  "source_snapshot_hash": "1e9c6637a512b819e822d8d06ea64d444c1e5640f35c48134f70fe80a5363e19",
+  "scenario_fixture_hash": "37604a27b0a77e634dbfac285bdbaa8c84a10c2c84229b9fd7fe1e23a76c3a85",
+  "question_hash": "56e885d6561733e853ec6a075cfb7824c3fe15a55f4745b1a354ce37d0f26796",
+  "read_protocol_hash": "15cb41ae79f3c5e9ac24b3812f0f89713e282803479c9f1e4f1f7f74fb6edb0b",
+  "l0_hash": "edb212a52a1b299130ad9597d31acd59a32838893327a8995c4783a75ed42d44",
+  "question": "场景亮度不符合预期，而且方向光没有阴影。应检查哪些光照单位、阴影支持条件和开关？",
+  "read_protocol": {
+    "version": "air-reading-recovery-1",
+    "operator": "Independent cold native assistant reader; inherited same model deployment with no override. The runtime does not expose an exact model build identifier.",
+    "reading_method": "Manual document reading in a fresh context. First receive the entire frozen host-minimal L0, then the full router exactly once. Independently select the owner and only the necessary references. Return whole UTF-8 file payloads; record every repeated read.",
+    "stop_condition": "Stop when the unchanged frozen question can be answered completely. Seal the answer before revealing completion checks; do not read more or edit the sealed answer after seeing them.",
+    "field_rendering": "host-minimal: serialize each of 22 name+description records in lexical name order using air-routing-1, joined by one newline; count exactly once.",
+    "tool_text_scope": "Count actual document payload Unicode code points, UTF-8 bytes and uniform rough token estimate; exclude fixed tool wrappers, the question and answer. Count repeated actual reads. Never substitute internal file output for a truncated reader-visible response.",
+    "clean_context": true,
+    "profile": "A",
+    "router": "skills/cocosair/SKILL.md",
+    "receipts": "The actual reader attests untruncated L0 and every document payload, with tool call receipts. Set both inner command and outer function output budgets to 30000. A truncated response with unrecoverable exact received text invalidates cost and must be preserved as a failure.",
+    "answer_review": "After sealing, completion-check evidence must quote exact text in the sealed answer; record failure honestly. No source execution or browsing beyond the frozen snapshot."
+  },
+  "source_commit": "b72804e44195ce6043bb11340db1ec4480209a55",
+  "status": "FROZEN_AWAITING_COLD_READER"
+}
