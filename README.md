@@ -22,6 +22,8 @@
 
 [观看或下载宣传视频（MP4）](assets/cocosairjs-promotion.mp4)
 
+https://github.com/user-attachments/assets/96d60025-3a34-44ee-a81e-37f8ecae88ce
+
 ## 先选择使用方式
 
 | 你的目标                                    | 使用方式                                      | 是否需要引擎源码                            |
