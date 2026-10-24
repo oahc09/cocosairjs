@@ -114,23 +114,23 @@
 
 ## Solutions（实战方案）
 
-| 篇目                                                                             | 状态    | 示例                        |
-| -------------------------------------------------------------------------------- | ------- | --------------------------- |
-| [Load an .OBJ file 加载 OBJ 文件](./load-obj.md)                                 | N/A     | –                           |
-| [Load a .GLTF file 加载 glTF 文件](./load-gltf.md)                               | FULL    | ▶ `manual-load-gltf`        |
-| [Add a Background or Skybox 背景与天空盒](./backgrounds.md)                      | PARTIAL | ▶ `manual-backgrounds`      |
-| [How to Draw Transparent Objects 绘制透明对象](./transparency.md)                | FULL    | ▶ `manual-transparent`      |
-| [Multiple Canvases, Multiple Scenes 多画布多场景](./multiple-scenes.md)          | PARTIAL | ▶ `manual-multi-canvas`     |
-| [Picking Objects with the mouse 鼠标拾取](./picking.md)                          | FULL    | ▶ `manual-picking`          |
-| [Post Processing 后处理](./post-processing.md)                                   | N/A     | –                           |
-| [Using Shadertoy shaders 使用 Shadertoy 着色器](./shadertoy.md)                  | N/A     | –                           |
-| [Aligning HTML Elements to 3D HTML 元素对齐 3D](./align-html-elements-to-3d.md)  | FULL    | ▶ `manual-align-html`       |
-| [Using Indexed Textures for Picking and Color 索引纹理](./indexed-textures.md)   | PARTIAL | ▶ `manual-indexed-textures` |
-| [Using A Canvas for Dynamic Textures 用 Canvas 做动态纹理](./canvas-textures.md) | PARTIAL | ▶ `manual-dynamic-texture`  |
-| [Billboards and Facades 公告板](./billboards.md)                                 | PARTIAL | ▶ `manual-billboards`       |
-| [Freeing Resources 释放资源](./cleanup.md)                                       | FULL    | ▶ `manual-cleanup`          |
-| [Making Voxel Geometry (Minecraft) 体素几何](./voxel-geometry.md)                | FULL    | ▶ `manual-voxel`            |
-| [Start making a Game 开始做游戏](./game.md)                                      | FULL    | ▶ `manual-mini-game`        |
+| 篇目                                                                             | 状态    | 示例                          |
+| -------------------------------------------------------------------------------- | ------- | ----------------------------- |
+| [Load an .OBJ file 加载 OBJ 文件](./load-obj.md)                                 | N/A     | –                             |
+| [Load a .GLTF file 加载 glTF 文件](./load-gltf.md)                               | FULL    | ▶ `manual-load-gltf`          |
+| [Add a Background or Skybox 背景与天空盒](./backgrounds.md)                      | PARTIAL | ▶ `manual-backgrounds`        |
+| [How to Draw Transparent Objects 绘制透明对象](./transparency.md)                | FULL    | ▶ `manual-transparent`        |
+| [Multiple Canvases, Multiple Scenes 多画布多场景](./multiple-scenes.md)          | PARTIAL | ▶ `manual-multi-canvas`       |
+| [Picking Objects with the mouse 鼠标拾取](./picking.md)                          | FULL    | ▶ `manual-picking`            |
+| [Post Processing 后处理](./post-processing.md)                                   | PARTIAL | HDR 链；仓库 `neon-city` 示例 |
+| [Using Shadertoy shaders 使用 Shadertoy 着色器](./shadertoy.md)                  | N/A     | –                             |
+| [Aligning HTML Elements to 3D HTML 元素对齐 3D](./align-html-elements-to-3d.md)  | FULL    | ▶ `manual-align-html`         |
+| [Using Indexed Textures for Picking and Color 索引纹理](./indexed-textures.md)   | PARTIAL | ▶ `manual-indexed-textures`   |
+| [Using A Canvas for Dynamic Textures 用 Canvas 做动态纹理](./canvas-textures.md) | PARTIAL | ▶ `manual-dynamic-texture`    |
+| [Billboards and Facades 公告板](./billboards.md)                                 | PARTIAL | ▶ `manual-billboards`         |
+| [Freeing Resources 释放资源](./cleanup.md)                                       | FULL    | ▶ `manual-cleanup`            |
+| [Making Voxel Geometry (Minecraft) 体素几何](./voxel-geometry.md)                | FULL    | ▶ `manual-voxel`              |
+| [Start making a Game 开始做游戏](./game.md)                                      | FULL    | ▶ `manual-mini-game`          |
 
 ## WebGPU
 

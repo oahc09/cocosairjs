@@ -1,0 +1,330 @@
+{
+  "id": "neon-city",
+  "version": "1.0.0",
+  "status": "draft",
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "title": "Neon City: Instanced Night Metropolis",
+  "category": "rendering",
+  "apiClaims": [
+    "createAirApp",
+    "Scene",
+    "Node",
+    "Node.addChild",
+    "Node.setPosition",
+    "Node.setScale",
+    "Node.addComponent",
+    "Node.lookAt",
+    "Camera",
+    "MeshRenderer",
+    "Renderer.setSharedMaterial",
+    "Material",
+    "Material.initialize",
+    "Material.setProperty",
+    "EffectAsset",
+    "EffectAsset.register",
+    "Layers",
+    "Layers.Enum",
+    "math.Color",
+    "math.Vec3",
+    "math.Vec4",
+    "utils.createMesh",
+    "primitives.box",
+    "SceneGlobals.fog",
+    "DirectionalLight",
+    "director",
+    "Director.EVENT_AFTER_DRAW",
+    "Billboard",
+    "Texture2D",
+    "ImageAsset"
+  ],
+  "capabilities": ["rendering", "custom-shader", "instancing"],
+  "validation": {
+    "functional": ["node-exists", "no-runtime-error"],
+    "interaction": [],
+    "visual": ["visible-frame"],
+    "lifecycle": [],
+    "capability": []
+  },
+  "specStatus": "draft",
+  "learning": {
+    "goal": "以霓虹夜城复合场景打通「自定义 GLSL × GPU 实例化 × 场景雾」的组合链路：~340 楼 1 draw、420 条顶点动画雨零 CPU 成本、加法混合光效、60fps",
+    "points": [
+      "USE_INSTANCING 宏必须在共享材质 initialize defines 中声明，且 renderer 一律 setSharedMaterial（renderer.material 会实例化 Pass 并把宏重置为 false）",
+      "实例化顶点从 a_matWorld0/1/2 拼装世界矩阵（与引擎 CCGetWorldMatrixFull 同构），实例分组键为 mesh+material，>1024 实例自动拆组",
+      "运行期手写 effect JSON 的 blendState 必须用数值枚举（BlendFactor.ONE=1），字符串枚举被静默忽略会退化为不透明渲染",
+      "自定义着色器每个使用 UBO 的阶段都要显式声明该块；ESSL 片元必须首行 precision；glsl3 由 glsl4 去布局限定符得到",
+      "雨/闪烁等周期动画可完全放在顶点着色器（cc_time + 实例平移 hash 相位），静态实例 + GPU 动画 = CPU 零每帧成本",
+      "场景雾（scene.globals.fog，EXP）只作用于内建材质；自定义着色器用同参数手动距离雾保持画面一致"
+    ]
+  },
+  "effect": {
+    "functional": "createAirApp 启动后注册两个自定义效果（neon-facade / neon-glow），构建 424 栋实例化楼体（共享 unit box + USE_INSTANCING 共享材质）、72 辆双向车流光条（两个实例化 glow 材质）、800 条 RAIN_MODE 顶点动画雨丝、14 块加法混合霓虹招牌与中央光柱、两条大道发光标线；scene.globals.fog EXP 雾密度 0.004；EVENT_AFTER_DRAW 计帧 FPS。window.__appReady 首帧置位；window.__bench.getState() 返回 {fps, buildings, cars, rainDrops, billboards, frames}，reset() 以新种子重建城市（共享 mesh/材质不销毁）。楼顶 26 个航空警示灯与 72 个车头柔光点为 builtin-billboard 摄像机朝向面片（程序化径向纹理，警示灯宽度随时间呼吸）；MSAA 经证实无法从 createAirApp 公开面开启（bootstrap 不透传），已记录为缺口。实测 Chromium 60fps，双帧差分 0.43% 像素持续变化（车流/雨/窗灯闪烁）。",
+    "visual": "深紫星空穹顶（程序星点+地平线光污染）下俯瞰霓虹城市：424 栋楼按层供电点亮青/品红/琥珀/冷白窗格（远景 LOD 退化为柔和光柱），楼顶红色航空警示灯脉冲、最高楼群立白色天线、中央青色光柱；中央十字大道一青一品红光带上 72 辆车流双向移动，800 条蓝白雨丝持续下落，14 块霓虹招牌呼吸脉冲并不时断电闪烁、地面同色光池模拟湿路反射；右下 HUD 实测 fps/楼数/车数/雨丝数；拖拽环绕、滚轮缩放。"
+  },
+  "api": {
+    "primary": ["EffectAsset.register", "Renderer.setSharedMaterial", "SceneGlobals.fog"],
+    "supporting": [
+      "createAirApp",
+      "Scene",
+      "Node",
+      "Node.setPosition",
+      "Node.setScale",
+      "Camera",
+      "MeshRenderer",
+      "Material.setProperty",
+      "utils.createMesh",
+      "primitives.box",
+      "math.Color",
+      "math.Vec4",
+      "DirectionalLight",
+      "director",
+      "Director.EVENT_AFTER_DRAW",
+      "Layers",
+      "Layers.Enum",
+      "Billboard",
+      "Texture2D",
+      "ImageAsset"
+    ],
+    "claims": [
+      "createAirApp",
+      "Scene",
+      "Node",
+      "Node.addChild",
+      "Node.setPosition",
+      "Node.setScale",
+      "Node.addComponent",
+      "Node.lookAt",
+      "Camera",
+      "MeshRenderer",
+      "Renderer.setSharedMaterial",
+      "Material",
+      "Material.initialize",
+      "Material.setProperty",
+      "EffectAsset",
+      "EffectAsset.register",
+      "Layers",
+      "Layers.Enum",
+      "math.Color",
+      "math.Vec3",
+      "math.Vec4",
+      "utils.createMesh",
+      "primitives.box",
+      "SceneGlobals.fog",
+      "DirectionalLight",
+      "director",
+      "Director.EVENT_AFTER_DRAW",
+      "Billboard",
+      "Texture2D",
+      "ImageAsset"
+    ],
+    "forbiddenShortcut": [
+      "用 DOM/CSS 动画冒充引擎内粒子：雨/车流/窗灯必须来自 WebGL 帧缓冲（HUD 文字除外，其为 DOM 覆盖层）",
+      "为省事用 renderer.material 实例化材质导致 USE_INSTANCING 失效回退逐物 draw——实例化必须共享材质",
+      "把 FPS 写成固定值或 requestAnimationFrame 计数（那是浏览器回调不是渲染帧）：必须以 Director.EVENT_AFTER_DRAW 实测"
+    ],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L1009"
+      },
+      {
+        "api": "Scene",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L1011"
+      },
+      {
+        "api": "Node",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L675"
+      },
+      {
+        "api": "Node.addChild",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L807"
+      },
+      {
+        "api": "Node.setPosition",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L678"
+      },
+      {
+        "api": "Node.setScale",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L770"
+      },
+      {
+        "api": "Node.addComponent",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L679"
+      },
+      {
+        "api": "Node.lookAt",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L905"
+      },
+      {
+        "api": "Camera",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L1023"
+      },
+      {
+        "api": "MeshRenderer",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L771"
+      },
+      {
+        "api": "Renderer.setSharedMaterial",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L773"
+      },
+      {
+        "api": "Material",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L631"
+      },
+      {
+        "api": "Material.initialize",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L632"
+      },
+      {
+        "api": "Material.setProperty",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L1000"
+      },
+      {
+        "api": "EffectAsset",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L920"
+      },
+      {
+        "api": "EffectAsset.register",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L914"
+      },
+      {
+        "api": "Layers",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L676"
+      },
+      {
+        "api": "Layers.Enum",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L676"
+      },
+      {
+        "api": "math.Color",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L539"
+      },
+      {
+        "api": "math.Vec3",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L787"
+      },
+      {
+        "api": "math.Vec4",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L1000"
+      },
+      {
+        "api": "utils.createMesh",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L1066"
+      },
+      {
+        "api": "primitives.box",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L1066"
+      },
+      {
+        "api": "SceneGlobals.fog",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L1015"
+      },
+      {
+        "api": "DirectionalLight",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L1056"
+      },
+      {
+        "api": "director",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L1138"
+      },
+      {
+        "api": "Director.EVENT_AFTER_DRAW",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L1163"
+      },
+      {
+        "api": "Billboard",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L679"
+      },
+      {
+        "api": "Texture2D",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L656"
+      },
+      {
+        "api": "ImageAsset",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L657"
+      }
+    ]
+  },
+  "ready": {
+    "validators": ["scene-ready"]
+  },
+  "assets": [],
+  "interaction": {
+    "steps": []
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "scene": {
+    "expectedGraph": {
+      "nodes": ["Main Camera", "Moon", "Ground", "street-x", "street-z", "City"]
+    }
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "无第三方资产（程序化场景，代码随仓库 MIT 授权）"
+  }
+}

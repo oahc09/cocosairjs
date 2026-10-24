@@ -25,6 +25,8 @@ renderer.shadowCastingMode = MeshRenderer.ShadowCastingMode.ON;     // default O
 
 ### [HIGH] Importing the custom pipeline namespace and expecting post-processing to run
 
+For the current default Code First HDR/Bloom path, use `createAirPostProcess(camera, options)` from the main entry; see [HDR output](pipeline-reachability.md#code-first-hdr-output). The native-setting example below concerns a separate pipeline path. It is not a requirement to hand-build Bloom in app code.
+
 Wrong:
 
 ```js

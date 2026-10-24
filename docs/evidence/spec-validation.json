@@ -1,10 +1,15 @@
 {
-  "measuredAt": "2026-10-16T15:38:44.209Z",
-  "total": 188,
+  "measuredAt": "2026-10-24T12:24:56.625Z",
+  "total": 190,
   "frozen": 188,
-  "draft": 0,
+  "draft": 2,
   "blocked": 0,
   "examples": [
+    {
+      "id": "afterlight",
+      "specStatus": "draft",
+      "issues": []
+    },
     {
       "id": "anim-position",
       "specStatus": "frozen",
@@ -583,6 +588,11 @@
     {
       "id": "model-character-interaction",
       "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "neon-city",
+      "specStatus": "draft",
       "issues": []
     },
     {

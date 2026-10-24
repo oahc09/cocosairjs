@@ -64,6 +64,7 @@ export { createAirUnlitFogEffect } from './effects/unlit-fog';
 export * from './rendering/render-target';
 export * from './rendering/screen-effect';
 export * from './rendering/screen-pass';
+export * from './rendering/post-process';
 export * from './effects/vignette';
 export * from './effects/bloom';
 export * from './rendering/color-contract';

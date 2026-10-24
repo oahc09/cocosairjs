@@ -596,3 +596,7 @@ Spark 是本项目除 `cocos4` 之外的**第二个上游**，按只读冻结源
 ### Spark 模块拆分（2026-10-15）
 
 旧整合版 cocosair.module.spark.js 由独立 spark.module.js 替代。AIR 自有桥接层通过 src/air/spark/engine.ts 借用主入口的数学/几何值；可选构建将主引擎标记 external，并以 metafile 拒绝打包 Cocos/PAL 实现。没有改动冻结 vendor/spark、spark-rs 或引擎源码；保留 XR 排除、WASM 内联及未决转付许可边界。独立模块的生成声明引用主 SDK，sparkRuntime 原有 any 边界不变。
+
+### Code First HDR output (2026-10-24)
+
+AIR adds `createAirPostProcess` in `src/air/rendering/`, using the existing forward command buffer and render-target ownership. Three extracted files change minimally: `rendering/render-pipeline.ts` scopes linear output to the selected camera and restores it in `finally`; `render-scene/scene/submodel.ts` caches HDR variants without mutating ordinary-camera materials or instancing buffers; `render-scene/core/pass.ts` restores transient macro values even when variant lookup throws. Existing standard/unlit output functions receive an opt-in shader macro through the AIR effect normalizer. Default cameras and the existing LDR Bloom helper retain their behavior. The pinned upstream baseline is unchanged; the file-map records these deviations.

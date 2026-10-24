@@ -57809,6 +57809,61 @@
         syncViewport(): void;
         dispose(): void;
     }
+    /** Linear RGBA16F capture → multiscale Bloom → exposure → tone mapping → one display encoding.
+     * Call after createAirApp; the camera may be in a scene which has not run yet. Custom shaders
+     * must output linear radiance. Native standard/unlit output conversion is scoped to this camera.
+     * WebGL2 default forward only; unsupported HDR attachments fail explicitly, without an LDR fallback.
+     */
+    export function createAirPostProcess(camera: Camera, options?: AirPostProcessOptions): AirPostProcess;
+    export interface AirPostProcessOptions extends AirPostProcessSettings {
+        levels?: number;
+        resolutionScale?: number;
+        samples?: 1 | 2 | 4 | 8;
+    }
+    export interface AirPostProcessSettings {
+        exposure?: number;
+        toneMapping?: AirToneMapping;
+        bloom?: {
+            enabled?: boolean;
+            intensity?: number;
+            threshold?: number;
+            softKnee?: number;
+            scatter?: number;
+        };
+    }
+    export interface AirPostProcessState {
+        exposure: number;
+        toneMapping: AirToneMapping;
+        bloom: {
+            enabled: boolean;
+            intensity: number;
+            threshold: number;
+            softKnee: number;
+            scatter: number;
+        };
+    }
+    export type AirToneMapping = "aces" | "reinhard" | "none";
+    export interface AirPostProcessInfo {
+        readonly enabled: boolean;
+        readonly disposed: boolean;
+        readonly width: number;
+        readonly height: number;
+        readonly levels: number;
+        readonly samples: number;
+        readonly intermediateFormat: "rgba16f";
+        readonly ownedTargets: number;
+        readonly ownedMaterials: number;
+        readonly settings: Readonly<AirPostProcessState>;
+    }
+    export interface AirPostProcess {
+        /** Owned linear HDR capture. Readback is diagnostic; do not dispose it separately. */
+        readonly source: AirRenderTarget;
+        readonly enabled: boolean;
+        readonly info: Readonly<AirPostProcessInfo>;
+        setOptions(options: AirPostProcessSettings): void;
+        setEnabled(enabled: boolean): void;
+        dispose(): void;
+    }
     /**
      * @en Post-process one camera with a full-screen vignette.
      * @zh 给一个相机接上全屏暗角。返回句柄持有 effect、材质、节点与 render target，`dispose()`

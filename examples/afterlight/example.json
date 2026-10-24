@@ -1,0 +1,94 @@
+{
+  "id": "afterlight",
+  "version": "1.0.0",
+  "status": "draft",
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "title": "AFTERLIGHT — A Study in Radiance",
+  "category": "rendering",
+  "apiClaims": ["createAirPostProcess", "createAirRenderTarget", "Camera", "MeshRenderer", "Material"],
+  "capabilities": ["rendering"],
+  "specStatus": "draft",
+  "learning": {
+    "goal": "用真实原生网格、镜像相机与 HDR 输出设计有视觉层次的光学装置",
+    "points": [
+      "线性辐射亮度与曝光分离",
+      "多级 Bloom、ACES/Reinhard 与单次输出编码",
+      "镜像相机与投影纹理采样",
+      "同一时刻的画面对照与资源释放"
+    ]
+  },
+  "effect": {
+    "functional": "主相机经 createAirPostProcess 输出 HDR；更早的镜像相机捕获 sculpture，并通过世界坐标投影采样到地面。独立控件切换 Bloom、曲线、曝光、暂停和视角。",
+    "visual": "暗色钛合金光环围绕液体玻璃核心（可切换黑曜石），冷暖发光体在湿润地面形成真实倒影；支持拖拽、Bloom/曲线/曝光切换。"
+  },
+  "api": {
+    "primary": ["createAirPostProcess", "createAirRenderTarget"],
+    "supporting": ["Camera", "MeshRenderer", "Material"],
+    "claims": ["createAirPostProcess", "createAirRenderTarget", "Camera", "MeshRenderer", "Material"],
+    "evidence": [
+      {
+        "api": "createAirPostProcess",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L250"
+      },
+      {
+        "api": "createAirRenderTarget",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L193"
+      },
+      {
+        "api": "Camera",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L175"
+      },
+      {
+        "api": "MeshRenderer",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L64"
+      },
+      {
+        "api": "Material",
+        "source": "src/materials.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L215"
+      }
+    ],
+    "forbiddenShortcut": [
+      "不得用 DOM 背景或静态截图代替真实原生网格、HDR 输出和镜像/玻璃背景捕获。",
+      "不得仅凭字段或控件变化认定光学效果成功；必须检查固定时间的场景像素和实际纹理释放。"
+    ]
+  },
+  "ready": {
+    "validators": ["scene-ready"]
+  },
+  "validation": {
+    "functional": ["scene-ready", "no-runtime-error"],
+    "visual": ["visible-frame"],
+    "interaction": [],
+    "lifecycle": [],
+    "capability": []
+  },
+  "assets": [],
+  "scene": {
+    "expectedGraph": {
+      "nodes": ["Main Camera", "Reflection Camera", "Light sculpture", "Wet basalt", "Glass background camera"]
+    }
+  },
+  "interaction": {
+    "steps": []
+  },
+  "screenshot": {},
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "license": {
+    "assets": "Original procedural geometry and shaders, repository MIT license; no third-party asset downloads."
+  }
+}

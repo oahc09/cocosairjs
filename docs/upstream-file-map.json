@@ -2,7 +2,7 @@
   "meta": {
     "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
     "note": "Air Path 与 Upstream Path 一致(前缀 src/)；modified 文件另行标注 reason；upstreamPath=null 表示该行为 Air 原创文件或上游产物（仓库内无对应源文件），必须 modified:true 并在 reason 说明出处",
-    "modifiedCount": 229,
+    "modifiedCount": 230,
     "pal": {
       "revision": "9f0e30acb31f6d670f2c0bf818d61039846a2860",
       "license": "MIT",
@@ -5370,7 +5370,7 @@
       "upstreamPath": "cocos/render-scene/core/pass.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "CB-02 validate direct uniform and uniform-array writes before staging GPU state."
+      "reason": "CB-02 validate direct uniform and uniform-array writes before staging GPU state. HDR post-process transient shader patches restore original macro values, including failures."
     },
     {
       "airPath": "src/cocos/render-scene/core/program-lib.ts",
@@ -5551,8 +5551,8 @@
       "airPath": "src/cocos/render-scene/scene/submodel.ts",
       "upstreamPath": "cocos/render-scene/scene/submodel.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "Cache opt-in camera-scoped linear HDR shader variants without mutating ordinary-camera materials."
     },
     {
       "airPath": "src/cocos/render-scene/utils.ts",
@@ -5965,7 +5965,7 @@
       "upstreamPath": "cocos/rendering/render-pipeline.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "AIR rendering contracts: create camera render passes with actual framebuffer samples, support absent depth, and preserve sampled depth/stencil attachments for later resolve/reconstruction; ordinary unsampled depth keeps discard."
+      "reason": "AIR rendering contracts: create camera render passes with actual framebuffer samples, support absent depth, and preserve sampled depth/stencil attachments for later resolve/reconstruction; ordinary unsampled depth keeps discard. Scope linear HDR output around the selected camera and restore context in finally."
     },
     {
       "airPath": "src/cocos/rendering/render-queue.ts",

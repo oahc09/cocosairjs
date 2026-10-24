@@ -1,7 +1,7 @@
 {
   "source": "build/cocosair.module.d.ts",
-  "sourceFingerprint": "fe43ca6b269a1ac5",
-  "apiInventoryRevision": "6396c6b1a45ef2d1",
+  "sourceFingerprint": "5c6c387a01b67e30",
+  "apiInventoryRevision": "af89ca48dde8070f",
   "units": {
     "MeshBuffer": {
       "kind": "class",
@@ -54655,6 +54655,12 @@
       "coverageRequired": false,
       "parent": null
     },
+    "createAirPostProcess": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
     "attachAirVignette": {
       "kind": "function",
       "tier": "supporting",
@@ -82126,9 +82132,9 @@
     "core": 964,
     "important": 283,
     "advanced": 192,
-    "supporting": 8829,
+    "supporting": 8830,
     "internal": 3257
   },
-  "totalUnits": 13525,
+  "totalUnits": 13526,
   "coverageRequiredUnits": 1439
 }

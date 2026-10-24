@@ -23,6 +23,7 @@
 */
 
 import { RenderingSubMesh } from '../../asset/assets/rendering-sub-mesh';
+import { isAirLinearHDRRendering } from '../../../air/rendering/hdr-context';
 import { RenderPriority,
     INST_MAT_WORLD, INST_SH,
     UBOSHEnum } from '../../rendering/define';
@@ -52,6 +53,8 @@ export class SubModel {
     protected _device: Device | null = null;
     protected _passes: Pass[] | null = null;
     protected _shaders: Shader[] | null = null;
+    private _linearHDRShaders: Shader[] | null = null;
+    private _linearHDRBase: Shader[] | null = null;
     protected _subMesh: RenderingSubMesh | null = null;
     protected _patches: IMacroPatch[] | null = null;
     protected _priority: RenderPriority = RenderPriority.DEFAULT;
@@ -102,6 +105,15 @@ export class SubModel {
      * @zh 子模型的着色器程序列表，每个着色器程序对应其中一个渲染 [[passes]]
      */
     get shaders (): Shader[] {
+        if (isAirLinearHDRRendering() && this._shaders && this._passes) {
+            if (!this._linearHDRBase || this._linearHDRBase.length !== this._shaders.length
+                || this._linearHDRBase.some((shader, i) => shader !== this._shaders![i])) {
+                const patches = [...(this._patches || []), { name: 'CC_AIR_LINEAR_HDR', value: true }];
+                this._linearHDRShaders = this._passes.map((pass) => pass.getShaderVariant(patches)!);
+                this._linearHDRBase = this._shaders.slice();
+            }
+            return this._linearHDRShaders!;
+        }
         return this._shaders!;
     }
 
@@ -263,6 +275,7 @@ export class SubModel {
 
         this._passes = null;
         this._shaders = null;
+        this._linearHDRShaders = this._linearHDRBase = null;
     }
 
     /**

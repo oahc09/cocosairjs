@@ -579,6 +579,8 @@ export class Pass {
         }
 
         const { pipeline } = this._root;
+        const previous = patches.map((patch) => ({ name: patch.name,
+            own: Object.prototype.hasOwnProperty.call(this._defines, patch.name), value: this._defines[patch.name] }));
         for (let i = 0; i < patches.length; i++) {
             const patch = patches[i];
             this._defines[patch.name] = patch.value;
@@ -589,19 +591,22 @@ export class Pass {
         }
 
         let shader: Shader | null = null;
-        if (cclegacy.rendering && cclegacy.rendering.enableEffectImport) {
-            const program = (cclegacy.rendering.programLib as ProgramLibrary)
-                .getProgramVariant(this._device, this._phaseID, this._programName, this._defines);
-            if (program) {
-                shader = program.shader;
+        try {
+            if (cclegacy.rendering && cclegacy.rendering.enableEffectImport) {
+                const program = (cclegacy.rendering.programLib as ProgramLibrary)
+                    .getProgramVariant(this._device, this._phaseID, this._programName, this._defines);
+                if (program) {
+                    shader = program.shader;
+                }
+            } else {
+                shader = programLib.getGFXShader(this._device, this._programName, this._defines, pipeline);
             }
-        } else {
-            shader = programLib.getGFXShader(this._device, this._programName, this._defines, pipeline);
-        }
 
-        for (let i = 0; i < patches.length; i++) {
-            const patch = patches[i];
-            delete this._defines[patch.name];
+        } finally {
+            for (const patch of previous) {
+                if (patch.own) this._defines[patch.name] = patch.value;
+                else delete this._defines[patch.name];
+            }
         }
         return shader;
     }

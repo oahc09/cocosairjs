@@ -103,6 +103,33 @@ export function normalizeEffectShader<T>(input: T, effect = '<direct>', path = '
             ? {}
             : record(builtins.statistics, effect, name, `${path}.builtins.statistics`),
     );
+    // Native output helpers keep their old behaviour unless a camera explicitly captures linear HDR.
+    let hdrOutput = false;
+    for (const variant of ['glsl3', 'glsl4']) {
+        const frag = normalized[variant]?.frag;
+        if (typeof frag !== 'string') continue;
+        if (frag.includes('CC_AIR_LINEAR_HDR')) {
+            hdrOutput = true;
+            continue;
+        }
+        let patched = frag.replace(
+            /(vec4\s+CCFragOutput\s*\(\s*vec4\s+color\s*\)\s*\{)/,
+            '$1\n#if CC_AIR_LINEAR_HDR\nreturn color;\n#endif',
+        );
+        if (frag.includes('HDRToLDR') && frag.includes('LinearToSRGB')) {
+            patched = patched.replace(
+                /#if\s+(!CC_USE_FLOAT_OUTPUT(?:\s*\|\|\s*CC_IS_TRANSPARENCY_PASS)?)(?=\s*\n)/g,
+                '#if ($1) && !CC_AIR_LINEAR_HDR',
+            );
+        }
+        if (patched !== frag) {
+            normalized[variant].frag = patched;
+            hdrOutput = true;
+        }
+    }
+    if (hdrOutput && !normalized.defines.some((define: JsonRecord) => define.name === 'CC_AIR_LINEAR_HDR')) {
+        normalized.defines.push({ name: 'CC_AIR_LINEAR_HDR', type: 'boolean' });
+    }
     if (normalized.hash === undefined || automaticHashes.get(source) === normalized.hash) {
         const signature = effectShaderSignature(normalized);
         let hash = 2166136261;

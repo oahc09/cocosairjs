@@ -35,6 +35,8 @@ Environment: use package imports in apps; source paths require an AIR checkout. 
 
 For complete setup and teardown, read [Quick Start](references/quick-start.md).
 
+For Code First HDR, multiscale Bloom, ACES/Reinhard and exposure, use [the HDR output recipe](references/pipeline-reachability.md#code-first-hdr-output). It also covers cinematic light studies and mirrored-camera capture.
+
 Siblings: [direct dependencies](references/context.md#related-skills); reuse loaded skills.
 
 ## Triggers
@@ -52,6 +54,8 @@ Exact API and symptom mappings: [triggers](references/triggers.md).
 ## Contracts
 
 Legacy forward uses one effective main directional light. Check the shadow support matrix and all cast/receive switches. Report requested versus effective MSAA and verify actual pixels.
+
+In diagnostic answers, cite the specific reference paths or links actually read and tie conclusions to those sources. Distinguish documented support, historical browser evidence and verification of the current scene; a configuration snippet is not a current runtime PASS.
 
 Read [references/contracts.md](references/contracts.md) only when the task needs exact option rules, limits, error behavior or source annotations. Prefer the topic references below for a narrower question.
 

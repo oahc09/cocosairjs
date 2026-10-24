@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "reviewed_at": "2026-10-24T13:02:13.835Z",
+  "reviewer": "parent independent review after seal",
+  "trial": "ai/plans/skills-token-evidence/reading-hdr-candidate-B1-20261024T125742383",
+  "snapshot_hash": "14243e1628a737a34aa81def1dbead6c7db128de83f91d68b24181ea8fab0aac",
+  "answer_hash": "d7a5493573c66f445e5a7f4829e6b07f25f95dfec4c281ad778bed2d39b635a8",
+  "events_hash": "e7b98bdce04db6c77120bd7c928b62f2d02c7d7f338882ca60b09257439d9455",
+  "decision": "FAIL_RETAINED",
+  "reason": "The sealed answer covers technical criteria but lacks explicit locatable document references for evidence-limits. Answer and failed events remain unchanged.",
+  "retry": {
+    "authorized": true,
+    "bound": 1,
+    "trial": "ai/plans/skills-token-evidence/reading-hdr-candidate-B1-20261024T125742383-retry1",
+    "conditions": "Same frozen snapshot, question, read protocol and no model override; new independent fork with no context inherited and no failure/check feedback. No changes to skills or old evidence."
+  },
+  "retry_result": {
+    "trial": "ai/plans/skills-token-evidence/reading-hdr-candidate-B1-20261024T125742383-retry1",
+    "outcome": "failure",
+    "answer_hash": "ad226a0fe99dcf77cf086258a344a9c9eb293220d5a729f2134d94a91b2a71dc",
+    "events_hash": "62e50afb04b70ca627db80d8e7c62f9e1a10669e24003811413f701c5f4c5e54",
+    "reason": "Second independent sealed answer lacks locatable document references; failed stream is retained verbatim (not used for successful cost aggregation)."
+  },
+  "refinement": {
+    "change": "Add one general diagnostic source-citation and evidence-scoping requirement to rendering SKILL Contracts. No question, fixture, protocol or old answer is changed.",
+    "reason": "Both independently observed failures exposed absent output guidance. Source refinement precedes the next candidate trial; no unreviewed retry of identical bytes."
+  }
+}

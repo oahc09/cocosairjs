@@ -22,10 +22,7 @@
 
 [观看或下载宣传视频（MP4）](assets/cocosairjs-promotion.mp4)
 
-
 https://github.com/user-attachments/assets/689ea4e1-de14-47dd-a104-564cf1005c06
-
-
 
 ## 先选择使用方式
 
@@ -34,10 +31,10 @@ https://github.com/user-attachments/assets/689ea4e1-de14-47dd-a104-564cf1005c06
 | 在自己的 TypeScript/JavaScript 项目开发应用 | 推荐安装本地 SDK tarball，或正式发布的 npm 包 | 应用不需要 src/、tools/、引擎 node_modules/ |
 | 不用打包器，直接在网页运行                  | 复制主 JS，通过 import map 加载               | 不需要                                      |
 | 修改引擎或运行仓库示例                      | 在本仓库安装开发依赖、构建并启动 dev server   | 需要                                        |
-| 只做数学计算（含 Node/Worker）              | 从 `cocosair.js/math` 导入                    | 不需要浏览器或主
+| 只做数学计算（含 Node/Worker）              | 从 `cocosair.js/math` 导入                    | 不需要浏览器或主                            |
 
-引擎启动                    |
-| 使用 Gaussian Splatting                     | 额外构建独立 Spark 模块，复用同一主引擎       | 本地构建需要；运行应用不需要                |
+引擎启动 |
+| 使用 Gaussian Splatting | 额外构建独立 Spark 模块，复用同一主引擎 | 本地构建需要；运行应用不需要 |
 
 ## 方式一：在自己的项目中依赖 SDK（推荐）
 
@@ -240,6 +237,10 @@ npm run dev -- --example hello-cube --port 7454
 普通应用不需要额外加载 bootstrap.js 或 html-source.js；这些独立入口已移除，相关 API 保留在主引擎。
 
 显式 WebGPU 还需部署主 JS 旁的 `webgpu/` shader 翻译资产；Box2D 3.2 WASM 需部署 `box2d3/` 的 ESM、WASM、许可和 receipt。构建分别复制到 `build/webgpu/`、`build/box2d3/`，npm 发布副本位于 `build/npm/` 对应子目录。打包器移动主 JS 时，应按各指南显式配置 `assetBaseUrl`。
+
+## 默认 HDR 后处理
+
+主入口提供 `createAirPostProcess(camera, { levels: 5, toneMapping: 'aces', exposure: 1 })`，开箱即用的线性 HDR 捕获、多级 Bloom、ACES/Reinhard 和统一 sRGB 输出。先创建 app，再装配相机；参见 [用法与边界](docs/guides/hdr-post-processing.md) 、[AFTERLIGHT 光环装置](examples/afterlight/index.html) 和 [霓虹夜城示例](examples/neon-city/index.html)。当前支持默认 WebGL2 ForwardPipeline。
 
 ## 可选：Spark 独立模块
 
