@@ -6,6 +6,24 @@
 
 2D 物理默认使用现有 JavaScript 后端；可显式选择 [Box2D 3.2 WASM 后端](docs/guides/box2d3.md)，继续使用 Cocos 刚体、碰撞体和关节组件。WASM 资产独立部署、按需加载。
 
+## 视觉展示
+
+以下为项目概念视觉与宣传素材，非引擎实机截图。
+
+| 从想法到可见反馈                                                         | 三维交互创意                                                                                  |
+| ------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------- |
+| ![从想法到可见反馈](assets/cocosairjs-from-idea-to-visible-feedback.png) | ![三维交互创意](assets/cocosairjs-three-dimensional-interactive-creativity.png)               |
+| **代码雕塑舞台**                                                         | **流动的光影与材质之环**                                                                      |
+| ![代码雕塑舞台](assets/cocosairjs-code-sculpture-stage.png)              | ![流动的光影与材质之环](assets/cocosairjs-the-flowing-ring-of-light-and-shadow-materials.png) |
+
+### 宣传视频
+
+<video controls preload="none" width="100%" poster="assets/cocosairjs-from-idea-to-visible-feedback.png">
+  <source src="assets/cocosairjs-promotion.mp4" type="video/mp4" />
+</video>
+
+[观看或下载宣传视频（MP4）](assets/cocosairjs-promotion.mp4)
+
 ## 先选择使用方式
 
 | 你的目标                                    | 使用方式                                      | 是否需要引擎源码                            |
@@ -218,6 +236,7 @@ Spark 只借用该主引擎，不再打包第二份 Cocos。应用与 Spark 必�
 
 ```
 cocosair.js/
+├── assets/         # README 概念图片与宣传视频
 ├── build/          # 产物：cocosair.module.js / cocosair.module.min.js（ESM）
 ├── docs/           # 分析与设计文档（含验收报告与证据截图）
 ├── examples/       # 可运行示例
