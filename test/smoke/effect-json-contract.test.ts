@@ -1,6 +1,9 @@
-import { EffectAsset, createAirApp } from '../../src';
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { EffectAsset, Material, Vec4, createAirApp } from '../../src';
 import { ProgramLib } from '../../src/cocos/render-scene/core/program-lib';
 import { normalizeEffectShader } from '../../src/air/rendering/effect-json-contract';
+import { prepareEffectForRegistration } from '../../tools/debug/effect-layout';
 
 const optionalArrays = ['samplerTextures', 'samplers', 'textures', 'buffers', 'images', 'subpassInputs'];
 function shader(name = 'test-effect') {
@@ -18,6 +21,30 @@ describe('compiled effect registration contract', () => {
     beforeAll(async () => {
         document.body.innerHTML = '<canvas id="GameCanvas"></canvas>';
         await createAirApp({ canvas: '#GameCanvas', renderMode: 3 });
+    });
+    test('shipped complete effect template passes preflight and creates a live editable material', () => {
+        const json = JSON.parse(
+            readFileSync(
+                join(process.cwd(), 'skills/cocosair-materials-effects/references/minimal-effect.json'),
+                'utf8',
+            ),
+        );
+        const prepared = prepareEffectForRegistration(json).effect;
+        const effect = Object.assign(new EffectAsset(), prepared);
+        const material = new Material();
+        try {
+            effect.onLoaded();
+            material.initialize({ effectAsset: effect });
+            const tint = new Vec4(0, 0.5, 1, 1);
+            material.setProperty('tint', tint);
+            expect(material.passes).toHaveLength(1);
+            expect(material.getProperty('tint')).toEqual(tint);
+            expect(material.passes[0].getHandle('tint')).toBeDefined();
+        } finally {
+            material.destroy();
+            EffectAsset.remove(effect);
+            effect.destroy();
+        }
     });
     test('six omitted resource arrays register and do not mutate caller JSON', () => {
         const source = shader();

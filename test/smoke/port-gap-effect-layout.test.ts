@@ -1,5 +1,5 @@
 import { execFileSync } from 'node:child_process';
-import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
+import { existsSync, mkdtempSync, readFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { prepareEffectForRegistration, AirEffectLayoutError } from '../../tools/debug/effect-layout';
@@ -29,6 +29,10 @@ describe('port effect layout preflight on actual generated JSON', () => {
         } catch (error) {
             expect(error).toBeInstanceOf(AirEffectLayoutError);
             expect((error as AirEffectLayoutError).issues.some((i) => i.code === code)).toBe(true);
+            const diagnostic = error as AirEffectLayoutError;
+            expect(diagnostic.skillDoc).toBe('skills/cocosair-materials-effects/references/custom-glsl.md');
+            expect(diagnostic.message).toContain('\nsee ' + diagnostic.skillDoc);
+            expect(existsSync(join(process.cwd(), diagnostic.skillDoc))).toBe(true);
         }
     }
     test('generated two-sampler UBO shader passes; implicit allocation avoids explicit UBO/peer slots without mutating input', () => {

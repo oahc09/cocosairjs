@@ -8,7 +8,7 @@
       "layer": "router",
       "family": "runtime-core",
       "path": "cocosair/SKILL.md",
-      "description": "Route Cocos AIR tasks across subsystem skills and direct dependencies. Use to choose a primary owner, adapt Creator knowledge, or apply Code First and capability-evidence rules.",
+      "description": "Route AIR tasks by subsystem or visual symptom; choose direct dependencies and check capabilities.",
       "owns": ["skill-routing", "primary-owner", "direct-dependencies", "code-first", "capability-layers"],
       "when_to_use": [
         "which skill owns this AIR task",
@@ -21,6 +21,7 @@
         "description_zh": "为 Cocos AIR 任务选择主技能和直接依赖，并遵循原生 API、启动时序与能力证据分层。用于开始 AIR 开发、定位能力归属或选择技能。"
       },
       "refs": [
+        { "file": "references/visual-feedback.md", "answers": "" },
         { "file": "references/context.md#related-skills", "answers": "Direct dependencies" },
         { "file": "references/environment.md", "answers": "Roots and prerequisites" },
         { "file": "references/skill-index.md", "answers": "Compatibility index" }
@@ -117,6 +118,7 @@
         "description_zh": "使用 AnimationClip、Animation 和 tween，管理播放模式、组合及单一时钟。用于动画播放、补间回收或确定性步进问题。"
       },
       "refs": [
+        { "file": "references/quick-start.md#per-frame-geometry-updates", "answers": "Component.update(dt)" },
         { "file": "references/animation-clip.md", "answers": "Tracks and wrap modes" },
         { "file": "references/tween-ops.md", "answers": "Chains, ownership and defects" },
         { "file": "references/step-clock.md", "answers": "One clock and proof limits" }
@@ -340,7 +342,7 @@
       "layer": "subsystem",
       "family": "scene-3d",
       "path": "cocosair-materials-effects/SKILL.md",
-      "description": "Configure materials, effects, uniforms, defines and GLSL. Use for setProperty, missing textures, AIR_E_MATERIAL_NOT_READY, AIR_E_MATERIAL_TYPE or uniform buffer too small.",
+      "description": "Configure materials, effects, uniforms, defines and GLSL. Diagnose black/invisible effects, missing textures, setProperty, AIR_E_MATERIAL_NOT_READY or AIR_E_MATERIAL_TYPE.",
       "owns": ["material", "effect", "uniform-types", "shader-defines", "custom-glsl", "material-instance"],
       "when_to_use": [
         "setProperty changes nothing",
@@ -361,7 +363,15 @@
         { "file": "references/builtin-effects.md", "answers": "Registration and instances" },
         { "file": "references/property-types.md", "answers": "Types, aliases and color" },
         { "file": "references/custom-glsl.md", "answers": "Variants and binding layouts" },
-        { "file": "references/defines.md", "answers": "Map gates and diagnostics" }
+        { "file": "references/defines.md", "answers": "Map gates and diagnostics" },
+        {
+          "file": "references/custom-glsl.md#runtime-state-and-empty-block-traps",
+          "answers": "Numeric states and block omission"
+        },
+        {
+          "file": "references/custom-glsl.md#complete-minimal-effect-template",
+          "answers": "JSON, registration and version traps"
+        }
       ],
       "last_updated": "2026-10-13"
     },
@@ -478,7 +488,11 @@
       "refs": [
         { "file": "references/primitive-shapes.md", "answers": "Signatures and defaults" },
         { "file": "references/mesh-attributes.md", "answers": "Formats and reads" },
-        { "file": "references/create-primitive-geometry.md", "answers": "Descriptor limits" }
+        { "file": "references/create-primitive-geometry.md", "answers": "Descriptor limits" },
+        {
+          "file": "references/common-mistakes.md#dynamic-mesh-creation-and-update-checklist",
+          "answers": "Creation, updates and visibility"
+        }
       ],
       "last_updated": "2026-10-13"
     },

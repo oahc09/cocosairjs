@@ -135,3 +135,35 @@ const pos = mesh.readAttribute(0, gfx.AttributeName.ATTR_POSITION);   // 'a_posi
 ```
 
 `readAttribute` matches `attributes.findIndex(a => a.name === attributeName)` (`src/cocos/3d/assets/mesh.ts:1309`), so an `undefined` name finds nothing and returns `null` rather than throwing. Attribute names are the string enum values `gfx.AttributeName.ATTR_*` (`src/cocos/gfx/base/define.ts:2074-2095`); `examples/mesh-attributes-indices/src/main.ts:80` reaches for the non-existent `gfx.ATTRIB_POSITION`, so its probe lands on the null branch.
+
+## Dynamic mesh creation and update checklist
+
+中文检索：动态网格不渲染、updateSubMesh 后看不见、onGeometryChanged。
+
+1. Initialize the app/device first. Call `utils.MeshUtils.createDynamicMesh`, not a nonexistent `utils.createDynamicMesh`; `mesh.updateSubMesh` is the update method, not `updateSubMesh` on MeshUtils.
+2. Create finite `Float32Array` positions in XYZ triples, matching initial channel vertex counts, and `Uint16Array` / `Uint32Array` indices through `indices16` / `indices32`. Do not pass the static geometry key `indices`. Reserve enough capacity; when supplying options, provide all three fields `maxSubMeshes`, `maxSubMeshVertices`, `maxSubMeshIndices`.
+3. Creation fixes the channel layout and indexed/non-indexed route. Update existing streams and use the same index width; new attributes require a compatible mesh recreation. Keep index values below the committed vertex count. An intentional zero draw count renders no pixels.
+4. Attach the mesh and a compatible material to an active MeshRenderer under the intended camera. Match mesh and pass topology, required shader attributes, camera layer mask, clip range and bounds. Data upload success alone does not establish visibility.
+5. Use `mesh.updateSubMesh(0, geometry)` for changes. On current AIR, successful updates commit buffers, counts and bounds and automatically notify all bound renderers. Positions derive bounds when explicit `minPos/maxPos` are absent; if supplying bounds, provide both finite ordered endpoints. Direct writes to buffers or `mesh.struct` bypass this update/synchronization contract.
+6. If a deployed older SDK requires the historical manual notification above, call `renderer.onGeometryChanged()` after a successful update for every sharing renderer. Verify that version first. Do not prescribe it as a required extra call for current AIR or assume its omission proves the E02/E04 failure cause.
+
+Minimal current sequence, after app initialization and with `node` attached to the intended scene:
+
+```ts
+const geometry = {
+    positions: new Float32Array([-0.5, -0.5, 0, 0.5, -0.5, 0, 0, 0.5, 0]),
+    indices16: new Uint16Array([0, 1, 2]),
+};
+const mesh = utils.MeshUtils.createDynamicMesh(0, geometry, undefined, {
+    maxSubMeshes: 1,
+    maxSubMeshVertices: 3,
+    maxSubMeshIndices: 3,
+});
+const renderer = node.addComponent(MeshRenderer);
+renderer.mesh = mesh;
+renderer.setSharedMaterial(material, 0); // An initialized compatible material.
+geometry.positions[0] = -0.25;
+mesh.updateSubMesh(0, geometry); // Current AIR synchronizes the attached renderer here.
+```
+
+When pixels are still missing, compare actual vertex/index draw counts and world bounds before editing the shader. Out-of-capacity, wrong-key and malformed-channel input on current AIR raises `AIR_E_MESH_*` before mutation; stale SDKs can behave differently. Detach consumers before releasing owned mesh/material resources. See the [buffer layout reference](mesh-attributes.md) and the current synchronization contract at the top of this file.

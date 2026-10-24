@@ -1,0 +1,7 @@
+{
+  "name": "air-minimal-tint",
+  "attributes": [{ "name": "a_position", "type": "vec3", "location": 0 }],
+  "uniforms": [{ "name": "tint", "type": "vec4", "value": [0, 1, 0, 1] }],
+  "vertex": "void main() { gl_Position = cc_matViewProj * cc_matWorld * vec4(a_position, 1.0); }",
+  "fragment": "void main() { cc_FragColor = tint; }"
+}

@@ -83,6 +83,11 @@ WebGL2 驱动编译失败会抛 `AIR_E_SHADER_COMPILE`，包含 `shader/stage/dr
 `gl_FragColor`，应声明并写入 `out vec4 fragColor`。不以“缺少颜色输出”单独判错，以保留合法的深度专用 shader。
 链接失败使用 `AIR_E_SHADER_LINK`。修正源码后再重试；失败时已创建的阶段和失败 program 会清理。
 
+`AIR_E_SHADER_COMPILE`、`AIR_E_SHADER_LINK` 和显式 effect 预检的 `AIR_E_EFFECT_LAYOUT`
+都会在错误文本末尾附上 `see skills/cocosair-materials-effects/references/custom-glsl.md`，
+并提供同值的结构化 `skillDoc` 字段，便于 Agent 直接读取对应技能。路径相对仓库或安装后的
+`cocosair.js` 包根目录；技能文件随 npm 包提供。该提示不自动读取文档，也不代表已定位根因。
+
 运行期 `program-lib` 按设备选源码（`getDeviceShaderVersion`）：**WebGL2 → glsl3**。
 无 chunk include——每个变体必须自包含。浏览器必须成功初始化 WebGL2Device，
 否则启动失败；不会调用 `getContext('webgl')` 降级。下表的 `glsl1` 是保留的上游

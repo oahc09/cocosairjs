@@ -94,3 +94,21 @@ Parent transforms are respected because all reads/writes are world-space (`world
 4. `scale = 2.0 / denominator`, rewrite the projection's third ROW (`m02/m06/m10/m14`, `:1411-1414`) - in this `mNN` naming the second digit is the row, so these four entries are column 0..3 at row 2 (`mat4.ts:107, :109` document `m00`/`m02` as "column 0, row 0"/"column 0, row 2") and they are exactly the coefficients `Vec3.transformMat4` uses to build `out.z` (`src/cocos/core/math/vec3.ts:481`); recompute `_matProjInv`, `_matViewProj`, `_matViewProjInv` and the frustum (`camera.ts:1415-1418`).
 
 `getClipSpaceMinz()` returns `device.capabilities.clipSpaceMinZ` (`camera.ts:1421-1422`). Base WebGL/GL capabilities default: `clipSpaceMinZ = -1`, `screenSpaceSignY = 1`, `clipSpaceSignY = 1` (`src/cocos/gfx/base/define.ts:774-776`); the WebGPU device sets `clipSpaceMinZ = 0` and `screenSpaceSignY = -1` (`src/cocos/gfx/webgpu/webgpu-device.ts:544-545`) and never assigns `clipSpaceSignY`, so that one stays at the base default `1`. WebGPU is not a shipped AIR target: WebGL 2 is the only rendering target this runtime builds for, and a non-WebGL-2 context rejects startup with `WEBGL2_REQUIRED` (`docs/webgl2-only.md`); no claim in this file is browser-verified against the current candidate. minZ enters the projection only as the `minClipZ` argument of `Mat4.perspective` (`mat4.ts:1175`, used at `:1194`/`:1198`) and of `Mat4.ortho` (`mat4.ts:1221`, used at `:1243`/`:1247`), fed from `device.capabilities.clipSpaceMinZ` at `camera.ts:1073`/`:1089`. Separately, `getClipSpaceMinz()` itself has exactly two readers, both UBO writers that pack it next to `nearClip`/`farClip` (`src/cocos/rendering/custom/web-pipeline-types.ts:151`, `src/cocos/rendering/pipeline-ubo.ts:198`); there is no separate per-material clip-range input in this runtime.
+
+## Framing a generated scene before tuning its appearance
+
+For a city, particle field or other generated scene, fit the whole intended subject before tuning fog, bloom or detail. A camera orbit radius chosen without scene bounds can place the camera inside the subject. Being outside its bounds is still insufficient: FOV, aspect ratio, target center and clip planes determine whether it fits. Prefer the existing `frameObject(camera, root)` path above when MeshRenderer bounds represent the subject. Billboard, procedural shader displacement and other bounds not represented there need explicit conservative extents; the helper does not infer them.
+
+Inspect the resulting viewport at the requested size. For responsive work also inspect the narrowest supported layout; the horizontal field of view may become limiting. Check both a representative wide view and the closest intended camera position if motion is part of the task. Fix framing before compensating with brightness or density. Camera distance, fog density and repeated window spacing from another scene are starting guesses, not reusable acceptance values. Use the [visual feedback loop](../../cocosair/references/visual-feedback.md) when the frame is technically valid but composition or readability remains poor.
+
+### frameObject moves the camera but an orthographic subject stays cropped
+
+A hand-authored static mesh created from positions/indices does not calculate bounds by default. If both the model bounds and mesh `struct.minPosition/maxPosition` are absent, `frameObject` falls back to distance and target position; it cannot derive `orthoHeight`. Moving an orthographic camera does not zoom out. Supply real `geometry.minPos/maxPos`, or request bounds at creation:
+
+```ts
+const mesh = utils.MeshUtils.createMesh(geometry, undefined, { calculateBounds: true });
+renderer.mesh = mesh;
+frameObject(camera, renderer.node);
+```
+
+Check that the mesh now has finite nonzero bounds before using automatic framing. The `calculateBounds` option belongs to static `createMesh`; dynamic `updateSubMesh` derives bounds from positions under its own contract. This prerequisite was observed in the bounded template walkthrough: an unbounded triangle remained fully cropped after the helper call; calculating bounds allowed the same helper to restore the full silhouette and margins. This is a caller/data prerequisite, not proof that arbitrary procedural shader displacement is included in bounds.

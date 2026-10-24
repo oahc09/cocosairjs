@@ -12,8 +12,13 @@ export interface AirEffectLayoutIssue {
 }
 export class AirEffectLayoutError extends Error {
     readonly code = 'AIR_E_EFFECT_LAYOUT';
+    readonly skillDoc = 'skills/cocosair-materials-effects/references/custom-glsl.md';
     constructor(readonly issues: readonly AirEffectLayoutIssue[]) {
-        super('[AIR_E_EFFECT_LAYOUT] ' + issues.map((issue) => issue.code + ': ' + issue.message).join('; '));
+        super(
+            '[AIR_E_EFFECT_LAYOUT] ' +
+                issues.map((issue) => issue.code + ': ' + issue.message).join('; ') +
+                '\nsee skills/cocosair-materials-effects/references/custom-glsl.md',
+        );
         this.name = 'AirEffectLayoutError';
     }
 }

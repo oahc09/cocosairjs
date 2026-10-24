@@ -27,6 +27,7 @@ export function shaderDiagnostic(
     source: string,
     driverLog: string | null,
 ): Error {
+    const skillDoc = 'skills/cocosair-materials-effects/references/custom-glsl.md';
     const clean = source.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\/\/[^\n]*/g, '');
     const hint =
         stage === 'fragment' && /\bgl_FragColor\b/.test(clean)
@@ -37,7 +38,9 @@ export function shaderDiagnostic(
         .map((line, i) => `${i + 1}: ${line}`)
         .join('\n');
     return Object.assign(
-        new Error(`[${code}] shader '${shader}', ${stage}: ${driverLog || 'driver returned no log'}\n${hint}`),
-        { code, shader, stage, source, numberedSource, driverLog: driverLog || '', hint },
+        new Error(
+            `[${code}] shader '${shader}', ${stage}: ${driverLog || 'driver returned no log'}\n${hint}\nsee ${skillDoc}`,
+        ),
+        { code, shader, stage, source, numberedSource, driverLog: driverLog || '', hint, skillDoc },
     );
 }

@@ -1,3 +1,5 @@
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
 import { WebGL2CmdFuncCreateShader } from '../../src/cocos/gfx/webgl2/webgl2-commands';
 import { ShaderStageFlagBit } from '../../src/cocos/gfx/base/define';
 import { WebGLConstants } from '../../src/cocos/gfx/gl-constants';
@@ -48,6 +50,8 @@ describe('shader driver failure diagnostics', () => {
                 hint: expect.stringContaining('out vec4'),
                 driverLog: expect.stringContaining('undeclared identifier'),
                 numberedSource: expect.stringContaining('3: void main'),
+                skillDoc: 'skills/cocosair-materials-effects/references/custom-glsl.md',
+                message: expect.stringContaining('\nsee skills/cocosair-materials-effects/references/custom-glsl.md'),
             }),
         );
         expect(gl.deleteShader.mock.calls.map(([handle]) => handle.id)).toEqual([1, 2]);
@@ -55,7 +59,11 @@ describe('shader driver failure diagnostics', () => {
         gl.getShaderParameter.mockReturnValue(true);
         gl.getProgramParameter.mockReturnValue(false);
         expect(() => WebGL2CmdFuncCreateShader(device as any, shader as any)).toThrow(
-            expect.objectContaining({ code: 'AIR_E_SHADER_LINK' }),
+            expect.objectContaining({
+                code: 'AIR_E_SHADER_LINK',
+                skillDoc: 'skills/cocosair-materials-effects/references/custom-glsl.md',
+                message: expect.stringContaining('\nsee skills/cocosair-materials-effects/references/custom-glsl.md'),
+            }),
         );
         expect(gl.createShader).toHaveBeenCalledTimes(4);
         expect(shader.glProgram).toBeNull();
@@ -71,6 +79,7 @@ describe('shader driver failure diagnostics', () => {
             'unrelated failure',
         ) as any;
         expect(error.hint).not.toContain('declare out vec4');
+        expect(existsSync(join(process.cwd(), error.skillDoc))).toBe(true);
         const commented = shaderDiagnostic(
             'AIR_E_SHADER_COMPILE',
             'comment',

@@ -167,3 +167,77 @@ Compile errors surface as a three-part `console.error` (shader name, source dump
 - Vertex-stage `#define`s do not reach the fragment stage - each variant is preprocessed separately; macros shared across both stages must go through the effect `defines` metadata plus `Material.initialize({ defines })` (`docs/manual/custom-shaders.md:174`).
 - `POINT_LIST` is enum value 0 and is preserved by both static and dynamic `createMesh`; omitting the primitive keeps the `TRIANGLE_LIST` default. The PSO takes `pass.primitive`, so `geometry.primitiveMode` and the effect pass `primitive` must both be set (`docs/manual/custom-shaders.md:212-218`).
 - Point shaders must write `gl_PointSize`; line width is not `gl_PointSize` and the portable value is the default 1 pixel (`docs/manual/custom-shaders.md:219-220`).
+
+## Runtime state and empty block traps
+
+Verified against the current checkout on 2026-10-24; source locations below are provenance, not additional files required by an installed skill.
+
+### Black additive effect: enum numbers, not compiler strings
+
+Runtime effect JSON is already the compile product. `blendSrc`, `blendDst`, `blendSrcAlpha`, `blendDstAlpha` and blend equations consume numeric `gfx.BlendFactor` / `gfx.BlendOp` values. Creator source spellings such as `'one'` and `'src_alpha'` are not converted here. In an application object use the exported enums; in a serialized JSON file write their numeric values for that SDK.
+
+```js
+// Wrong: these strings are not runtime enum values.
+const wrongTarget = { blend: true, blendSrc: 'one', blendDst: 'one' };
+// Additive RGB; alpha is also added here. Choose alpha factors for your compositing contract.
+const additiveTarget = {
+    blend: true,
+    blendSrc: gfx.BlendFactor.ONE,
+    blendDst: gfx.BlendFactor.ONE,
+    blendEq: gfx.BlendOp.ADD,
+    blendSrcAlpha: gfx.BlendFactor.ONE,
+    blendDstAlpha: gfx.BlendFactor.ONE,
+    blendAlphaEq: gfx.BlendOp.ADD,
+};
+```
+
+Place the target in `techniques[].passes[].blendState.targets` before material initialization. Current `BlendFactor.ONE = 1`, `SRC_ALPHA = 2`, `ONE_MINUS_SRC_ALPHA = 4` and `BlendOp.ADD = 0` (`src/cocos/gfx/base/define.ts`, enum declarations). The WebGL2 backend indexes `WebGLBlendFactors[target0.blendSrc]` and its sibling fields directly in `WebGL2CmdFuncBindStates` (`src/cocos/gfx/webgl2/webgl2-commands.ts`); a string does not select the intended GL constant. Do not assume an AIR exception will explain the resulting pixels. Compare one object with blending disabled and a known unlit color, then restore the intended state and inspect an actual screenshot. A black object alone does not prove a blend error; macros, exposure, depth and visibility remain separate hypotheses.
+
+### No material uniforms: omit Constants rather than declaring it empty
+
+When a shader has no material constants, omit that material block from both GLSL and the effect's block metadata. Keep any required engine/global/local blocks and sampler declarations. Do not emit `Constants {}` or a `Constants` metadata record with `members: []` as a placeholder. If constants are needed, use real declared members with matching metadata and layout; follow the aligned `vec4` / `mat4` generator contract above.
+
+`Pass._buildUniformBlocks` and `_buildMaterialUniformBlocks` (`src/cocos/render-scene/core/pass.ts`) allocate the root buffer conditionally on total size, then create views for declared blocks. A zero-sized block can therefore reach buffer-view creation without a valid backing allocation. An empty `blocks` list is different from a list containing an empty block. After omission, keep sampler bindings consistent between metadata and GLSL; do not reserve a nonexistent Constants slot or renumber unrelated engine bindings blindly.
+
+## Complete minimal effect template
+
+中文入口：完整 effect JSON、六数组缺失、hash 碰撞和 gl_FragColor 编译失败。
+
+Copy the complete [minimal-effect.json](minimal-effect.json), not a partial field table. It contains one pass, both GLSL variants, the six resource arrays, `defines/attributes/blocks`, builtin reflection, a real vec4 Constants member, and a generated program name/hash. It paints ordinary MeshRenderer geometry green using the world/view/projection matrices. The fragment declares and writes `cc_FragColor`; the identifier need not be `fragColor`, but it must be a declared output, not the removed `gl_FragColor` builtin. It uses no texture, lighting, instancing or post-processing.
+
+After `await createAirApp(...)`, parse the JSON into `json` and use the native registration path:
+
+```ts
+import { EffectAsset, Material, Vec4 } from 'cocosair.js';
+// json is the complete parsed minimal-effect.json object.
+const effect = Object.assign(new EffectAsset(), json);
+effect.onLoaded();
+const material = new Material();
+material.initialize({ effectAsset: effect });
+renderer.setSharedMaterial(material, 0);
+material.setProperty('tint', new Vec4(0, 1, 0, 1));
+// Keep this material shared deliberately; do not read renderer.material and then write the old asset.
+```
+
+The renderer still needs real mesh geometry, an active node and a visible camera; JSON registration alone is not a draw. Detach all consumers before destroying the owned material and effect; follow the release path above. This template is a starting point, not a promise that an arbitrary older installed bundle has the same registration contract.
+
+For hand-authored static positions/indices that will be framed automatically, create the mesh with `utils.MeshUtils.createMesh(geometry, undefined, { calculateBounds: true })` or supply real `minPos/maxPos`. Otherwise the effect can render correctly while `frameObject` has no bounds from which to fit an orthographic view. See the [framing prerequisite](../../cocosair-camera/references/camera-projection.md#frameobject-moves-the-camera-but-an-orthographic-subject-stays-cropped).
+
+Edit [minimal-effect.spec.json](minimal-effect.spec.json), then regenerate the complete JSON with the existing checkout tool:
+
+```bash
+node tools/build/effect-json.mjs skills/cocosair-materials-effects/references/minimal-effect.spec.json skills/cocosair-materials-effects/references/minimal-effect.json
+```
+
+The generator is checkout tooling, not installed by copying this skill. Package consumers can copy the compiled JSON as-is. When hand-editing compiled shader source/layouts, use a new program identity and omit the explicit hash on the current runtime so registration derives it from content; do not retain the template's old hash or substitute a random constant. Older bundles lacking normalization need output generated for their matching contract.
+
+### Failure signatures and version boundary
+
+| Failure signature                                                                   | Current contract / first check                                                                                                                         | Repair                                                                                                                                                        |
+| ----------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Cannot read properties of undefined (reading 'length')` during effect registration | Current registration normalizes omitted resource arrays to `[]`; this historical signature alone does not identify which field or bundle failed        | Inspect the stack and actual loaded SDK. Start with the complete template; do not document the six arrays as universally mandatory on current AIR             |
+| `AIR_E_EFFECT_JSON_TYPE` with a resource-array `path`                               | Missing is accepted; explicit `null` or a non-array is rejected                                                                                        | Supply a real array or omit the optional field; preserve actual resources rather than emptying all declarations                                               |
+| Second effect gets the wrong properties; `AIR_E_EFFECT_HASH_COLLISION`              | Current AIR derives missing hashes and rejects conflicting explicit identities; names/programs must also distinguish different live shader definitions | Regenerate changed effects, or use a new name/program and omit the hash. Do not claim every historical second-effect failure is proven to be a hash collision |
+| `AIR_E_SHADER_COMPILE` and driver log names `gl_FragColor`                          | WebGL2 consumes the supplied glsl3 source, not the readable glsl4 variant                                                                              | Declare `out vec4 fragColor;` and write it, or use the template's declared `cc_FragColor`; inspect `numberedSource`                                           |
+
+For the runtime field rules, use the safeguard table above. For pixel failures without an exception, use the [symptom index](common-mistakes.md#failure-signature-index). Confirm the loaded runtime before applying a historical workaround; current source and an older deployed bundle are different candidates.
