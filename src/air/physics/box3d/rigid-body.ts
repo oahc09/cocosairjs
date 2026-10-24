@@ -19,6 +19,10 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
 */
+import { PhysicsSystem } from '../../../cocos/physics/framework/physics-system';
+import { CCObjectFlags } from '../../../cocos/core/data/object';
+import type { Box3DBodyMotion, Box3DBodyMotionVector } from '../../box3d-controls';
+import { installBox3DBodyMotionSource } from './body-motion-source';
 import type { RigidBody } from '../../../cocos/physics/framework/components/rigid-body';
 import type { IRigidBody } from '../../../cocos/physics/spec/i-rigid-body';
 import type { IVec3Like } from '../../../cocos/core/math/type-define';
@@ -32,7 +36,10 @@ import {
     trySubmitPhysicsBodyCommand,
 } from '../../../cocos/physics/framework/physics-command-submission';
 import type { PhysicsBodyCommandInput } from '../../../cocos/physics/framework/physics-command-submission';
-import { installComponentActivityDelegateSource, tryDelegateComponentActivity } from '../../../cocos/scene-graph/component-activity-control';
+import {
+    installComponentActivityDelegateSource,
+    tryDelegateComponentActivity,
+} from '../../../cocos/scene-graph/component-activity-control';
 
 /** Actual Cocos IRigidBody adapter. Native ownership remains solely in the world's shared body. */
 export class Box3DRigidBody implements IRigidBody {
@@ -41,6 +48,7 @@ export class Box3DRigidBody implements IRigidBody {
     readonly #activityDelegateIdentity = Object.freeze({});
     #component: RigidBody | null = null;
     #shared: Box3DSharedBody | null = null;
+    #motionSource: { dispose(): void } | null = null;
     constructor(world: () => Box3DPhysicsWorld, configuration: Box3DComponentConfiguration) {
         installComponentActivityDelegateSource(this, this.#activityDelegateIdentity);
         this.#world = world;
@@ -68,10 +76,13 @@ export class Box3DRigidBody implements IRigidBody {
         return this.#body.state.sleeping;
     }
     initialize(value: RigidBody): void {
-        this.#world().assertComponentConfiguration('RigidBody initialize');
+        const world = this.#world();
+        const system = PhysicsSystem.instance;
+        world.assertComponentConfiguration('RigidBody initialize');
         if (this.#shared) throw worldError('AIR_E_BOX3D_CONFIG', 'initialize', 'Already initialized.');
         validateRigidBodyInitial(value, this.#configuration);
-        const body = this.#world().acquireSharedBody(value.node, this, this.#configuration, {
+        const node = value.node;
+        const body = world.acquireSharedBody(node, this, this.#configuration, {
             adapter: this,
             component: value,
             kind: 'rigid-body',
@@ -80,6 +91,50 @@ export class Box3DRigidBody implements IRigidBody {
         try {
             body.attachRigidBody(value, this.#configuration);
             body.completeComponent(this);
+            this.#motionSource = installBox3DBodyMotionSource(value, world, () => {
+                const assertCurrent = () => {
+                    if (PhysicsSystem.instance !== system || system?.physicsWorld !== world)
+                        throw worldError(
+                            'AIR_E_BOX3D_DISPOSED',
+                            'readBox3DBodyMotion',
+                            'The owning System/world changed.',
+                        );
+                };
+                assertCurrent();
+                const dead = CCObjectFlags.Destroyed | CCObjectFlags.ToDestroy | CCObjectFlags.Destroying;
+                if (
+                    this.#component !== value ||
+                    this.#shared !== body ||
+                    body.rigidBody !== value ||
+                    value.node !== node ||
+                    value._objFlags & dead ||
+                    node._objFlags & dead
+                )
+                    throw worldError(
+                        'AIR_E_BOX3D_DISPOSED',
+                        'readBox3DBodyMotion',
+                        'Body ownership is no longer live.',
+                    );
+                // Both reads use the existing committed-read guard. Native origin pose
+                // precedes body state; no user callback or native mutation separates them.
+                const transform = body.copiedTransform();
+                assertCurrent();
+                const state = body.state;
+                const vector = (v: readonly number[], offset = 0): Box3DBodyMotionVector =>
+                    Object.freeze({ x: v[offset], y: v[offset + 1], z: v[offset + 2] });
+                return Object.freeze({
+                    position: vector(transform),
+                    rotation: Object.freeze({ x: transform[3], y: transform[4], z: transform[5], w: transform[6] }),
+                    worldCOM: vector(state.worldCenter),
+                    localCenter: vector(state.localCenter),
+                    linearVelocity: vector(state.linearVelocity),
+                    angularVelocity: vector(state.angularVelocity),
+                    mass: state.mass,
+                    enabled: state.enabled,
+                    type: state.type,
+                    massPending: state.massPending,
+                }) satisfies Box3DBodyMotion;
+            });
         } catch (error) {
             try {
                 body.release(this);
@@ -99,12 +154,20 @@ export class Box3DRigidBody implements IRigidBody {
         this.#shared = body;
     }
     onEnable(): void {
-        if (this.#component && tryDelegateComponentActivity(this.#component, this, this.#activityDelegateIdentity, true)) return;
+        if (
+            this.#component &&
+            tryDelegateComponentActivity(this.#component, this, this.#activityDelegateIdentity, true)
+        )
+            return;
         this.#body.enableRigidBody(true);
         this.#body.componentEnabled(this, true);
     }
     onDisable(): void {
-        if (this.#component && tryDelegateComponentActivity(this.#component, this, this.#activityDelegateIdentity, false)) return;
+        if (
+            this.#component &&
+            tryDelegateComponentActivity(this.#component, this, this.#activityDelegateIdentity, false)
+        )
+            return;
         this.#body.enableRigidBody(false);
         this.#body.componentEnabled(this, false);
     }
@@ -113,6 +176,8 @@ export class Box3DRigidBody implements IRigidBody {
         const body = this.#shared;
         body.detachRigidBody();
         body.release(this);
+        this.#motionSource?.dispose();
+        this.#motionSource = null;
         this.#shared = null;
         this.#component = null;
     }

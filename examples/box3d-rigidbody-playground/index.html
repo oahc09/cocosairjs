@@ -70,13 +70,13 @@
                         ><input id="drag-enabled" type="checkbox" checked />启用拖拽</label
                     >
                     <p id="drag-scope" class="control-note">
-                        仅单个、center = 0 的 Box / Sphere / Capsule 动态刚体。非零中心、复合形状与 Hull 拖拽
-                        不支持。真实射线与逐固定步施力仍待当前构建验证。
+                        Box / Sphere / Capsule / Hull 与同刚体复合形状。逐固定步读取真实原生质心施力，
+                        不直接移动节点。当前候选仍待有限实测，不代表正式验收。
                     </p>
                     <p id="drag-status" class="drag-status" role="status" aria-live="polite">等待引擎启动</p>
                     <button id="release-drag" class="text-button" disabled>松开选中物 <kbd>ESC</kbd></button>
                     <p class="control-note">
-                        按住画面中的砖块、球体或胶囊拖动，松手只停止弹簧力，保留真实动量。暂停、重置与关闭会清除拖拽意图。
+                        按住画面中的动态物体拖动，松手只停止弹簧力，保留真实动量。暂停、重置与关闭会清除拖拽意图。
                     </p>
                 </fieldset>
                 <fieldset id="parameters" disabled>
@@ -85,10 +85,12 @@
                     <select id="projectile-shape" aria-describedby="projectile-note">
                         <option value="sphere">Sphere · 球体</option>
                         <option value="capsule">Capsule · 胶囊</option>
-                        <option value="hull">Hull · 凸四面体（新候选）</option>
+                        <option value="hull">Hull · 凸四面体</option>
+                        <option value="compound">Compound · 偏心盒球复合体</option>
                     </select>
                     <p id="projectile-note" class="control-note">
-                        只影响下一次发射。胶囊半径 0.42 m、圆柱段 1 m、总高 1.84 m；盒形用于砖墙。
+                        只影响下一次发射。胶囊半径 0.42 m、圆柱段 1 m、总高 1.84
+                        m；盒形用于砖墙；复合体使用同一真实刚体的偏心盒与球。
                     </p>
                     <label class="range-label" for="mass"
                         >投射物质量 <output id="mass-value" for="mass">12 kg</output></label
@@ -156,6 +158,8 @@
                             <dd id="resets">0</dd>
                         </div>
                         <div>
+                            <dt>选中物原生质心 X / Y / Z</dt>
+                            <dd id="drag-com">尚未拾取</dd>
                             <dt>最近拖拽 tick / attempt</dt>
                             <dd id="drag-tick">尚无力提交</dd>
                         </div>
@@ -181,8 +185,10 @@
                     <p>本页是原始 EX01 的进行中实现，不替换或缩减原始验收范围。</p>
                     <ul>
                         <li>球体 / 胶囊 / 真实凸四面体可选，盒形用于砖墙；Hull 新候选待本轮实屏</li>
-                        <li>受限 Box / Sphere / Capsule 拾取、逐固定步拖拽与松手动量：已接源码，实际验证未完成</li>
-                        <li>任意形状、非零中心与复合刚体的拖拽 / 投掷</li>
+                        <li>
+                            Box / Sphere / Capsule / Hull / 复合体拾取、逐固定步拖拽与松手动量：已接源码，实际验证未完成
+                        </li>
+                        <li>所有关联拖拽 / 投掷正式验收与可视对齐</li>
                         <li>公共碰撞事件与事件级 contacts 面板</li>
                         <li>多线程 / auto 模式及重载切换验证</li>
                         <li>100 次增删资源恢复、完整数值断言</li>

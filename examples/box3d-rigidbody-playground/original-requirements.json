@@ -30,17 +30,17 @@
     },
     {
       "requirement": "Hull",
-      "source": "source-integrated real convex MeshCollider tetrahedron, shared exact rendered Mesh POSITION stream; fresh matching native/public/runtime/browser proof PENDING; Hull dragging still unfinished",
+      "source": "source-integrated real convex MeshCollider tetrahedron; prior stage74 LIMITED_BROWSER_OBSERVED is historical, new native-COM dragging candidate requires fresh matching verification",
       "acceptance": "NOT_RUN"
     },
     {
       "requirement": "Raycast picking matches visible position",
-      "source": "source-integrated formal PhysicsSystem.raycastClosest consumer for single centered Box/Sphere/Capsule; current-build native/browser and visual alignment proof PENDING",
+      "source": "source-integrated formal PhysicsSystem.raycastClosest consumer for real owned dynamic Box/Sphere/Capsule/Hull and same-body compounds; current-build native/browser alignment PENDING",
       "acceptance": "NOT_RUN"
     },
     {
       "requirement": "Dragging and throwing selected bodies",
-      "source": "source-integrated public fixed-tick hook + bounded spring force + real momentum release for single centered Box/Sphere/Capsule only; arbitrary COM/compound/other shapes UNFINISHED; current-build native/browser verification PENDING",
+      "source": "source-integrated native origin/worldCOM/velocity snapshot with public fixed-tick spring and momentum release; no COM approximation or pose animation; current-build runtime/browser verification PENDING",
       "acceptance": "NOT_RUN"
     },
     {

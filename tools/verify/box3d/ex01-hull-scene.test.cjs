@@ -84,11 +84,15 @@ check('real public MeshCollider consumes the same visible mesh, without primitiv
 });
 check('full original requirements remain visible and unqualified', () => {
     assert.ok(
-        requirements.checks.some((x) => x.requirement === 'Hull' && /Hull dragging still unfinished/.test(x.source)),
+        requirements.checks.some(
+            (x) =>
+                x.requirement === 'Hull' &&
+                /new native-COM dragging candidate requires fresh matching verification/.test(x.source),
+        ),
     );
     assert.ok(requirements.checks.some((x) => /100 add\/remove/.test(x.requirement)));
     assert.ok(requirements.checks.every((x) => x.acceptance === 'NOT_RUN'));
-    assert.match(main, /Hull dragging: not yet enabled/);
+    assert.match(main, /Hull\/compound dragging: native-COM source candidate/);
 });
 console.log(
     JSON.stringify({

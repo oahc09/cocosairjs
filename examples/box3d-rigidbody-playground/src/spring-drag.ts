@@ -2,18 +2,17 @@
 import {
     Camera,
     Collider,
-    BoxCollider,
-    SphereCollider,
-    CapsuleCollider,
     RigidBody,
     ERigidBodyType,
     Vec3,
+    Quat,
     geometry,
     physics,
     isValid,
     registerBox3DBeforeStep,
+    readBox3DBodyMotion,
 } from 'cocosair';
-import type { Box3DBeforeStepHandle } from 'cocosair';
+import type { Box3DBeforeStepHandle, Box3DBodyMotion } from 'cocosair';
 import { copyPoint, springForce } from './drag-spring-math.js';
 import type { Triple, SpringParameters } from './drag-spring-math.js';
 
@@ -29,7 +28,7 @@ export function createSpringDrag(
     callbacks: { onSelect?: (name: string) => void; onError?: (error: unknown) => void } = {},
 ) {
     const config = Object.freeze({ ...parameters });
-    let selected: { collider: Collider; body: RigidBody; localPoint: Vec3; center: Vec3 } | null = null;
+    let selected: { collider: Collider; body: RigidBody; localPoint: Vec3 } | null = null;
     let pointerId: number | null = null;
     let target: Triple | null = null;
     let planePoint: Triple | null = null;
@@ -39,10 +38,10 @@ export function createSpringDrag(
     let enabled = true;
     let lastInputError: string | null = null;
     let lastSubmission: { tickIndex: number; attemptId: number } | null = null;
-    const point = new Vec3(),
-        com = new Vec3(),
-        velocity = new Vec3(),
-        angular = new Vec3();
+    const point = new Vec3();
+    let lastMotion: Box3DBodyMotion | null = null;
+    let selectedCollider: string | null = null;
+    let submissions = 0;
     const lifetime = new AbortController();
     const system = physics.PhysicsSystem.instance;
     const rayFor = (event: PointerEvent): geometry.Ray => {
@@ -97,30 +96,18 @@ export function createSpringDrag(
                 !collider.enabledInHierarchy
             )
                 return;
-            // Explicit simple-shape domain, not a fabricated COM getter for arbitrary compounds.
-            if (
-                !(
-                    collider instanceof BoxCollider ||
-                    collider instanceof SphereCollider ||
-                    collider instanceof CapsuleCollider
-                ) ||
-                collider.node !== body.node ||
-                body.node.getComponentsInChildren(Collider).length !== 1 ||
-                collider.isTrigger ||
-                collider.center.x !== 0 ||
-                collider.center.y !== 0 ||
-                collider.center.z !== 0
-            )
-                return;
+            if (collider.isTrigger) return;
+            const motion = readBox3DBodyMotion(body);
+            if (!motion.enabled || motion.type !== 2 || motion.massPending) return;
             const hitPoint = new Vec3(hit.hitPoint.x, hit.hitPoint.y, hit.hitPoint.z);
-            const localPoint = new Vec3();
-            body.node.inverseTransformPoint(localPoint, hitPoint);
-            selected = {
-                collider,
-                body,
-                localPoint,
-                center: new Vec3(collider.center.x, collider.center.y, collider.center.z),
-            };
+            // Physics geometry is already scaled in native local space. Do NOT apply Node scale twice.
+            const localPoint = Vec3.subtract(new Vec3(), hitPoint, motion.position);
+            const inverseRotation = new Quat();
+            Quat.conjugate(inverseRotation, motion.rotation);
+            Vec3.transformQuat(localPoint, localPoint, inverseRotation);
+            selected = { collider, body, localPoint };
+            selectedCollider = collider.constructor.name;
+            lastMotion = motion;
             target = copyPoint(hitPoint);
             planePoint = copyPoint(hitPoint);
             planeNormal = copyPoint(ray.d);
@@ -136,24 +123,18 @@ export function createSpringDrag(
                     drag.body.type !== ERigidBodyType.DYNAMIC
                 )
                     return;
-                // Current EX01 admits one centered symmetric primitive: actual local COM is zero.
-                // Reject later geometry roster/center changes rather than using a stale assumption.
-                if (
-                    drag.body.node.getComponentsInChildren(Collider).length !== 1 ||
-                    !Vec3.strictEquals(drag.collider.center, drag.center)
-                )
-                    throw new Error('Drag geometry changed; cancel before changing the body.');
-                Vec3.transformMat4(point, drag.localPoint, drag.body.node.worldMatrix);
-                Vec3.transformMat4(com, drag.center, drag.body.node.worldMatrix);
-                drag.body.getLinearVelocity(velocity);
-                drag.body.getAngularVelocity(angular);
+                const motion = readBox3DBodyMotion(drag.body);
+                if (!motion.enabled || motion.type !== 2 || motion.massPending) return;
+                Vec3.transformQuat(point, drag.localPoint, motion.rotation);
+                Vec3.add(point, point, motion.position);
+                lastMotion = motion;
                 const command = springForce({
                     target: desired,
                     point,
-                    worldCOM: com,
-                    linearVelocity: velocity,
-                    angularVelocity: angular,
-                    mass: drag.body.mass,
+                    worldCOM: motion.worldCOM,
+                    linearVelocity: motion.linearVelocity,
+                    angularVelocity: motion.angularVelocity,
+                    mass: motion.mass,
                     parameters: config,
                 });
                 // Exactly one public force submission per invoked fixed-tick hook, never per render frame.
@@ -161,6 +142,7 @@ export function createSpringDrag(
                     new Vec3(command.force.x, command.force.y, command.force.z),
                     new Vec3(command.relativePoint.x, command.relativePoint.y, command.relativePoint.z),
                 );
+                submissions++;
                 lastSubmission = { tickIndex: context.tickIndex, attemptId: context.attemptId };
             });
             lastInputError = null;
@@ -227,11 +209,14 @@ export function createSpringDrag(
             disposed,
             active: pointerId !== null,
             selected: selected?.body.node.name ?? null,
+            selectedCollider: selected ? selectedCollider : null,
+            nativeMotion: lastMotion,
+            submissions,
             target: target ? { ...target } : null,
             lastSubmission: lastSubmission ? { ...lastSubmission } : null,
             lastSubmissionIsNativeCompletion: false,
             lastInputError,
-            scope: 'single centered BoxCollider/SphereCollider/CapsuleCollider only; not compound or arbitrary COM',
+            scope: 'owned dynamic Box/Sphere/Capsule/Hull and same-body compounds; actual native COM and origin frame; not a joint',
             parameters: { ...config },
         }),
     });

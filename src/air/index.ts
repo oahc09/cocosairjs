@@ -74,5 +74,12 @@ export * from './ui-glyph-text';
 export * from './ui-glyph-icons';
 export * from './ui-typewriter';
 
-export { registerBox3DBeforeStep } from './box3d-controls';
-export type { Box3DBeforeStepContext, Box3DBeforeStepHandle, Box3DBeforeStepCallback } from './box3d-controls';
+export { registerBox3DBeforeStep, readBox3DBodyMotion } from './box3d-controls';
+export type {
+    Box3DBeforeStepContext,
+    Box3DBeforeStepHandle,
+    Box3DBeforeStepCallback,
+    Box3DBodyMotion,
+    Box3DBodyMotionVector,
+    Box3DBodyMotionRotation,
+} from './box3d-controls';

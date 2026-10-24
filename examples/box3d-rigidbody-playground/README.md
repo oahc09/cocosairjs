@@ -71,7 +71,12 @@ The drag readout's tick/attempt identifies a submitted hook call, not successful
 
 The Hull option uses an actual convex MeshCollider over the exact rendered tetrahedron POSITION stream, never a box. New matching native/public/runtime/browser evidence is still required. Hull dragging is deliberately not admitted by the existing symmetric-primitive spring handler; no guessed arbitrary COM is used. All original EX01 requirements, including full shape interaction, 100 lifecycle cycles and recording, remain unchanged and incomplete.
 
-
 ## Limited actual Hull browser observation and metadata correction
 
 The source74 runtime209 candidate was actually observed in Firefox158.0.1: ordinary start, wall settlement, one real tetrahedron launch/impact/rest, pause and normal close. This finite scope is LIMITED_BROWSER_OBSERVED, not full EX01. Source75 corrects the new delivery's stale runtime208/pre-Hull identity metadata without changing scene JS or native bytes. Original74 JSON/static bytes remain unchanged. Exact raw hashes, close retained resources, sampled minimumY and remaining limits are in `docs/physics/box3d/rebuild/hull-browser-observation-20261023.md`. Hull dragging remains unfinished and formal2128/nine Gates remain NOT_RUN.
+
+## Native-COM drag candidate (source76, not yet qualified)
+
+The new controller uses `readBox3DBodyMotion(RigidBody)` for actual committed native origin, world center of mass, COM/angular velocity and mass. It retains the picked point in native body-origin coordinates; shape scale is already baked into geometry, so no Node matrix or second scaling is applied. One public `applyForce` submission is made per before-step callback, and pointer release only retires future spring input. It is not a joint.
+
+Hull and same-body compounds no longer need a centered-primitive COM assumption. The Compound projectile contains one RigidBody with an offset BoxCollider and SphereCollider plus exactly matching child visuals. A disabled/destroyed selected collider submits no further force. Pause/reset/parameter changes/close cancel the input. Current candidate native and browser validation remain PENDING; the historical stage74/75 observations and all formal NOT_RUN states retain their original scope.

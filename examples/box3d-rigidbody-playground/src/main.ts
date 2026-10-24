@@ -62,7 +62,7 @@ const CONFIG = Object.freeze({
     },
 });
 
-type ProjectileKind = 'sphere' | 'capsule' | 'hull';
+type ProjectileKind = 'sphere' | 'capsule' | 'hull' | 'compound';
 type BodyEntry = { node: Node; body: RigidBody; kind: 'brick' | ProjectileKind; index: number };
 type Intent = 'toggle' | 'reset' | 'launch' | 'demo' | 'parameters';
 type Phase = 'boot' | 'ready' | 'running' | 'paused' | 'resetting' | 'closing' | 'closed' | 'error';
@@ -87,7 +87,7 @@ const errors: string[] = [];
 const eventLog: { frame: number; action: string; detail: unknown }[] = [];
 const selectedProjectile = (): ProjectileKind => {
     const kind = byId<HTMLSelectElement>('projectile-shape').value;
-    if (kind !== 'sphere' && kind !== 'capsule' && kind !== 'hull')
+    if (kind !== 'sphere' && kind !== 'capsule' && kind !== 'hull' && kind !== 'compound')
         throw new Error(`Unsupported EX01 projectile: ${kind}`);
     return kind;
 };
@@ -128,6 +128,7 @@ let diagnosticWorld: unknown = null;
 let backendObservation: BackendObservation | null = null;
 let capsuleMesh: ReturnType<typeof utils.createMesh>;
 let hullMesh: ReturnType<typeof utils.createMesh>;
+let compoundBoxMesh: ReturnType<typeof utils.createMesh>;
 let ballMesh: ReturnType<typeof utils.createMesh>;
 let brickMesh: ReturnType<typeof utils.createMesh>;
 let ballMaterial: Material;
@@ -309,19 +310,40 @@ function launchProjectile(kind: ProjectileKind = selectedProjectile()): void {
     const spawn = CONFIG.ball.spawn;
     const offsets = [0, -1.7, 1.7];
     const node = nodeAt(
-        `${kind === 'hull' ? 'Hull' : kind === 'capsule' ? 'Capsule' : 'Sphere'}-${generation}-${shotCount}`,
+        `${kind === 'compound' ? 'Compound' : kind === 'hull' ? 'Hull' : kind === 'capsule' ? 'Capsule' : 'Sphere'}-${generation}-${shotCount}`,
         spawn[0] + offsets[shotCount % offsets.length],
         spawn[1],
         spawn[2],
     );
-    visual(node, kind === 'hull' ? hullMesh : kind === 'capsule' ? capsuleMesh : ballMesh, ballMaterial);
+    if (kind !== 'compound')
+        visual(node, kind === 'hull' ? hullMesh : kind === 'capsule' ? capsuleMesh : ballMesh, ballMaterial);
+    else {
+        const boxVisual = nodeAt('Compound box visual', -0.7, 0, 0);
+        visual(boxVisual, compoundBoxMesh, ballMaterial);
+        node.addChild(boxVisual);
+        boxVisual.active = true;
+        const sphereVisual = nodeAt('Compound sphere visual', 0.5, 0, 0);
+        visual(sphereVisual, ballMesh, ballMaterial);
+        node.addChild(sphereVisual);
+        sphereVisual.active = true;
+    }
     const body = node.addComponent(RigidBody);
     body.type = ERigidBodyType.DYNAMIC;
     body.mass = readParameters().mass;
     body.allowSleep = true;
     body.linearDamping = 0.01;
     body.angularDamping = 0.03;
-    if (kind === 'hull') {
+    if (kind === 'compound') {
+        // One real body with two offset colliders. Children are visuals only.
+        const box = node.addComponent(BoxCollider);
+        box.size = new Vec3(0.6, 0.8, 0.6);
+        box.center = new Vec3(-0.7, 0, 0);
+        box.sharedMaterial = surface;
+        const sphere = node.addComponent(SphereCollider);
+        sphere.radius = CONFIG.ball.radius;
+        sphere.center = new Vec3(0.5, 0, 0);
+        sphere.sharedMaterial = surface;
+    } else if (kind === 'hull') {
         const collider = node.addComponent(MeshCollider);
         collider.convex = true;
         collider.mesh = hullMesh;
@@ -350,7 +372,7 @@ function launchProjectile(kind: ProjectileKind = selectedProjectile()): void {
         position: [node.position.x, node.position.y, node.position.z],
     });
     tell(
-        `${kind === 'hull' ? '凸包' : kind === 'capsule' ? '胶囊' : '球体'} ${shotCount} 已创建。下一引擎更新提交一次冲量，固定步消费。`,
+        `${kind === 'compound' ? '复合刚体' : kind === 'hull' ? '凸包' : kind === 'capsule' ? '胶囊' : '球体'} ${shotCount} 已创建。下一引擎更新提交一次冲量，固定步消费。`,
     );
 }
 function updateParameters(): void {
@@ -438,6 +460,14 @@ function minimumY(entry: BodyEntry): number {
     const q = entry.node.worldRotation;
     if (entry.kind === 'capsule') return position.y - capsuleVerticalExtent(q);
     if (entry.kind === 'hull') return position.y + hullMinimumOffsetY(q);
+    if (entry.kind === 'compound') {
+        const yx = 2 * (q.x * q.y + q.z * q.w);
+        const yy = 1 - 2 * (q.x * q.x + q.z * q.z);
+        const yz = 2 * (q.y * q.z - q.x * q.w);
+        const boxY = -0.7 * yx - (Math.abs(yx) * 0.6 + Math.abs(yy) * 0.8 + Math.abs(yz) * 0.6) / 2;
+        const sphereY = 0.5 * yx - CONFIG.ball.radius;
+        return position.y + Math.min(boxY, sphereY);
+    }
     const wall = CONFIG.wall;
     // Vertical extent of the actual rotated box, not a center-only ground check.
     const extent =
@@ -478,14 +508,19 @@ function updateDragReadout(): void {
                 : !drag?.enabled
                   ? '拖拽已关闭'
                   : phase === 'running'
-                    ? '按住砖块、球体或胶囊拖动；松手保留真实动量'
-                    : '开始模拟后可拾取砖块、球体或胶囊',
+                    ? '按住砖块、球体、胶囊、凸包或复合体拖动；松手保留真实动量'
+                    : '开始模拟后可拾取动态刚体',
     );
     value(
         'drag-tick',
         drag?.lastSubmission
             ? `${drag.lastSubmission.tickIndex} / ${drag.lastSubmission.attemptId}（提交，非完成证明）`
             : '尚无力提交',
+    );
+    const motion = drag?.nativeMotion;
+    value(
+        'drag-com',
+        motion ? [motion.worldCOM.x, motion.worldCOM.y, motion.worldCOM.z].map(round).join(' / ') : '尚未拾取',
     );
     byId<HTMLButtonElement>('release-drag').disabled = !drag?.active;
 }
@@ -547,6 +582,7 @@ function sample(): void {
         spheres: projectiles.filter((entry) => entry.kind === 'sphere').length,
         capsules: projectiles.filter((entry) => entry.kind === 'capsule').length,
         hulls: projectiles.filter((entry) => entry.kind === 'hull').length,
+        compounds: projectiles.filter((entry) => entry.kind === 'compound').length,
         awake,
         displaced,
         finiteTransforms: finite,
@@ -685,10 +721,10 @@ function snapshot(): Record<string, unknown> {
         unfinishedOriginalRequirements: [
             'capsule: source integrated; current-build native/browser verification pending',
             'hull: actual MeshCollider source integrated; current candidate runtime/browser verification pending',
-            'Hull dragging: not yet enabled; no assumed arbitrary hull COM',
+            'Hull/compound dragging: native-COM source candidate; current-build browser verification pending',
             'raycast pick/visible alignment: source integrated, native/browser verification pending',
-            'fixed-tick spring/release: zero-center single Box/Sphere/Capsule candidate only, unverified',
-            'arbitrary body/compound/nonzero-COM dragging and throwing',
+            'fixed-tick spring/release: actual native origin and COM candidate, unverified',
+            'all associated formal dragging/throwing acceptance cells',
             'component contact events',
             'multi/auto thread modes',
         ],
@@ -783,6 +819,8 @@ async function main(): Promise<void> {
     brickMesh = utils.createMesh(
         primitives.box({ width: CONFIG.wall.width, height: CONFIG.wall.height, length: CONFIG.wall.depth }),
     );
+    compoundBoxMesh = utils.createMesh(primitives.box({ width: 0.6, height: 0.8, length: 0.6 }));
+    assets.push(compoundBoxMesh);
     ballMesh = utils.createMesh(primitives.sphere(CONFIG.ball.radius));
     // primitive.capsule takes total height; CapsuleCollider takes cylinderHeight separately.
     // Both are centered along Y at unit scale. No post-activation pose/scale repair is used.
@@ -877,7 +915,7 @@ async function main(): Promise<void> {
         onSelect(name) {
             demoActive = false;
             bootDemoPending = false;
-            log('drag-selected', { name, scope: 'single centered Box/Sphere/Capsule' });
+            log('drag-selected', { name, scope: 'native-COM Box/Sphere/Capsule/Hull and same-body compound' });
         },
         onError(error) {
             errors.push(String(error));
