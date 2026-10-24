@@ -22,7 +22,10 @@
 
 [观看或下载宣传视频（MP4）](assets/cocosairjs-promotion.mp4)
 
-https://github.com/user-attachments/assets/96d60025-3a34-44ee-a81e-37f8ecae88ce
+
+https://github.com/user-attachments/assets/689ea4e1-de14-47dd-a104-564cf1005c06
+
+
 
 ## 先选择使用方式
 
@@ -31,7 +34,9 @@ https://github.com/user-attachments/assets/96d60025-3a34-44ee-a81e-37f8ecae88ce
 | 在自己的 TypeScript/JavaScript 项目开发应用 | 推荐安装本地 SDK tarball，或正式发布的 npm 包 | 应用不需要 src/、tools/、引擎 node_modules/ |
 | 不用打包器，直接在网页运行                  | 复制主 JS，通过 import map 加载               | 不需要                                      |
 | 修改引擎或运行仓库示例                      | 在本仓库安装开发依赖、构建并启动 dev server   | 需要                                        |
-| 只做数学计算（含 Node/Worker）              | 从 `cocosair.js/math` 导入                    | 不需要浏览器或主引擎启动                    |
+| 只做数学计算（含 Node/Worker）              | 从 `cocosair.js/math` 导入                    | 不需要浏览器或主
+
+引擎启动                    |
 | 使用 Gaussian Splatting                     | 额外构建独立 Spark 模块，复用同一主引擎       | 本地构建需要；运行应用不需要                |
 
 ## 方式一：在自己的项目中依赖 SDK（推荐）
@@ -48,6 +53,10 @@ cd cocosair.js
 npm ci
 $env:NODE_OPTIONS = '--max-old-space-size=6144'
 npm run build:all
+
+https://github.com/user-attachments/assets/fb91e5d7-f39a-4182-a49c-5047bf190f1b
+
+
 npm pack
 ```
 
