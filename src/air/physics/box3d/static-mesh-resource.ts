@@ -27,6 +27,9 @@ import { worldError } from './world-binding';
 
 export interface Box3DStaticMeshGeometry {
     readonly kind: 'mesh';
+    readonly publicKind?: 'terrain';
+    readonly provenance?: 'heightfield-cooked-static-triangle-mesh';
+    readonly terrain?: Readonly<{ countX: number; countZ: number; tileSize: number }>;
     readonly positions: readonly number[];
     readonly intake: StaticMeshIntake;
     readonly trigger: false;
@@ -105,13 +108,18 @@ export class Box3DStaticMeshResources {
     }
     readDiagnostics() {
         if (this.#closed) return Object.freeze([]);
-        const result = [] as Readonly<ReturnType<Box3DFoundation['staticMeshState']> & { users: number; bucketHash: string }>[];
+        const result = [] as Readonly<
+            ReturnType<Box3DFoundation['staticMeshState']> & { users: number; bucketHash: string }
+        >[];
         for (const bucket of this.#buckets.values()) {
-            for (const entry of bucket) result.push(Object.freeze({
-                users: entry.uses,
-                bucketHash: entry.intake.key.bucketHash,
-                ...this.binding.staticMeshState(entry.native),
-            }));
+            for (const entry of bucket)
+                result.push(
+                    Object.freeze({
+                        users: entry.uses,
+                        bucketHash: entry.intake.key.bucketHash,
+                        ...this.binding.staticMeshState(entry.native),
+                    }),
+                );
         }
         return Object.freeze(result);
     }

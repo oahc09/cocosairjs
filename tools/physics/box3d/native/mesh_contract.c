@@ -8,8 +8,13 @@
 #include <stdio.h>
 #include <limits.h>
 static int checks;
+static uint64_t run_cooks, run_destroys;
 #define CHECK(x) do { ++checks; if (!(x)) { fprintf(stderr,"FAIL %s:%d %s\n",__FILE__,__LINE__,#x); exit(1); } } while(0)
 static uint64_t full(const uint32_t* id) { return ((uint64_t)id[1]<<32)|id[0]; }
+static void lifetime(unsigned cooks, unsigned destroys) {
+ uint32_t words[4];CHECK(!air_b3_mesh_lifetime_counters(words));
+ CHECK(full(words)-run_cooks==cooks);CHECK(full(words+2)-run_destroys==destroys);
+}
 static void body(uint32_t w,int type,uint32_t* out,float x) {
  float p[16]={x,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1}; CHECK(!air_b3_body_create(w,type,p,1,out));
 }
@@ -37,10 +42,12 @@ static void rays(uint32_t w,const uint32_t* shape,const float* p,const int32_t* 
  b3RayResult gap=b3World_CastRayClosest(b3LoadWorldId(w),(b3Pos){1.5f,2,0},(b3Vec3){0,-4,0},b3DefaultQueryFilter());CHECK(!gap.hit);
 }
 static void run(int order) {
+ uint32_t start[4];CHECK(!air_b3_mesh_lifetime_counters(start));run_cooks=full(start);run_destroys=full(start+2);
+ CHECK(air_b3_mesh_lifetime_counters(NULL)==AIR_B3_ARGUMENT);
  uint32_t baseline[2];air_b3_live_bytes(baseline);
  uint32_t w=air_b3_world_create(0,-10,0),other=air_b3_world_create(0,0,0);CHECK(w&&other&&w!=other);
  float p[36];int32_t ix[18];geometry(p,ix);uint32_t r[2]={0},b[3][2],sh[3][2];
- CHECK(!air_b3_mesh_cook(w,p,12,36,ix,6,18,r));CHECK(full(r)!=0);state(w,r,1,0);
+ CHECK(!air_b3_mesh_cook(w,p,12,36,ix,6,18,r));CHECK(full(r)!=0);state(w,r,1,0);lifetime(1,0);
  CHECK(air_b3_mesh_retain(other,r[0],r[1])==AIR_B3_INVALID);CHECK(!air_b3_mesh_retain(w,r[0],r[1]));state(w,r,2,0);CHECK(!air_b3_mesh_release(w,r[0],r[1]));
  for(int i=0;i<3;++i){body(w,0,b[i],i*20.0f);CHECK(!air_b3_mesh_shape_create(w,b[i][0],b[i][1],r[0],r[1],sh[i]));state(w,r,1,i+1);}
  rays(w,sh[0],p,ix);
@@ -63,12 +70,12 @@ static void run(int order) {
  float t[1]={0};CHECK(!air_b3_body_control(w,b[0][0],b[0][1],AIR_B3_CTL_TYPE,t,2));
  /* Native allocation owns a copy, not this original source array. */
  p[0]=999;float original[36];geometry(original,bad);rays(w,sh[0],original,ix);p[0]=saved;
- if(order==0){CHECK(!air_b3_mesh_release(w,r[0],r[1]));state(w,r,0,3);CHECK(air_b3_mesh_release(w,r[0],r[1])==AIR_B3_INVALID);
-  CHECK(!air_b3_shape_destroy(sh[1][0],sh[1][1]));state(w,r,0,2);CHECK(!air_b3_body_destroy(b[2][0],b[2][1]));state(w,r,0,1);rays(w,sh[0],p,ix);
-  CHECK(!air_b3_mass_shape_destroy(w,b[0][0],b[0][1],sh[0][0],sh[0][1],2));CHECK(air_b3_mesh_state(w,r[0],r[1],memory)==AIR_B3_INVALID);}
- else if(order==1){for(int i=2;i>=0;--i){CHECK(!air_b3_body_destroy(b[i][0],b[i][1]));state(w,r,1,i);}CHECK(!air_b3_mesh_release(w,r[0],r[1]));CHECK(air_b3_mesh_state(w,r[0],r[1],memory)==AIR_B3_INVALID);}
- else if(order==2){CHECK(!air_b3_shape_destroy(sh[0][0],sh[0][1]));state(w,r,1,2);CHECK(!air_b3_mesh_release(w,r[0],r[1]));state(w,r,0,2);}
- CHECK(!air_b3_world_destroy(w));CHECK(air_b3_mesh_release(w,r[0],r[1])==AIR_B3_INVALID);CHECK(!air_b3_world_destroy(other));
+ if(order==0){CHECK(!air_b3_mesh_release(w,r[0],r[1]));state(w,r,0,3);lifetime(1,0);CHECK(air_b3_mesh_release(w,r[0],r[1])==AIR_B3_INVALID);
+  CHECK(!air_b3_shape_destroy(sh[1][0],sh[1][1]));state(w,r,0,2);lifetime(1,0);CHECK(!air_b3_body_destroy(b[2][0],b[2][1]));state(w,r,0,1);lifetime(1,0);rays(w,sh[0],p,ix);
+  CHECK(!air_b3_mass_shape_destroy(w,b[0][0],b[0][1],sh[0][0],sh[0][1],2));CHECK(air_b3_mesh_state(w,r[0],r[1],memory)==AIR_B3_INVALID);lifetime(1,1);}
+ else if(order==1){for(int i=2;i>=0;--i){CHECK(!air_b3_body_destroy(b[i][0],b[i][1]));state(w,r,1,i);lifetime(1,0);}CHECK(!air_b3_mesh_release(w,r[0],r[1]));CHECK(air_b3_mesh_state(w,r[0],r[1],memory)==AIR_B3_INVALID);lifetime(1,1);}
+ else if(order==2){CHECK(!air_b3_shape_destroy(sh[0][0],sh[0][1]));state(w,r,1,2);CHECK(!air_b3_mesh_release(w,r[0],r[1]));state(w,r,0,2);lifetime(1,0);}
+ CHECK(!air_b3_world_destroy(w));lifetime(1,1);CHECK(air_b3_mesh_release(w,r[0],r[1])==AIR_B3_INVALID);CHECK(!air_b3_world_destroy(other));
  uint32_t bytes[2],bridge[6];air_b3_live_bytes(bytes);CHECK(!memcmp(bytes,baseline,sizeof bytes));CHECK(!air_b3_bridge_memory(0,bridge));CHECK(bridge[0]==0&&bridge[1]==0&&bridge[2]==0);
  fprintf(stderr,"releaseOrder=%d PASS checks=%d\n",order,checks);
 }

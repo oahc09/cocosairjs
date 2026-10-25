@@ -23,7 +23,7 @@ THE SOFTWARE.
 // Internal, limited M1 foundation. This is not the Cocos physics adapter.
 const CORE_SHA = 'efca0c184d40fd6a82016983f1601c4d23965867';
 const BINDING_BASE_SHA = '5d5a3af049cccd9948b2b55bac4342414af0ef64';
-const SCHEMA_SHA256 = 'd0a917e85e800605295296ca0820fbcb54847ea5d00f6bfc296a3ce527243551';
+const SCHEMA_SHA256 = 'ce98aca1a40c4999df838c1eaab2b08b0533c85adca9866eb48180c6190575d6';
 const commandIsArray = Array.isArray;
 const commandKeys = Object.keys;
 const PATCH_CHAIN_SHA256 = '4c9d057fe6d7403f6f2c7672c4a7abe38041d845942540a6b5c5abbc6f4bc45c';
@@ -82,6 +82,7 @@ export function createBox3DBinding(module, expected) {
         expected.abiVersion !== 1 ||
         expected.variant !== 'st-simd' ||
         expected.schemaSha256 !== SCHEMA_SHA256 ||
+        typeof module?._air_b3_mesh_lifetime_counters !== 'function' ||
         module._air_b3_abi_version() !== 1 ||
         text(module._air_b3_core_sha()) !== CORE_SHA ||
         text(module._air_b3_schema_sha()) !== expected.schemaSha256 ||
@@ -1580,6 +1581,13 @@ export function createBox3DBinding(module, expected) {
                     status === 0 ? 'committed' : [1, 9].includes(status) ? 'not-mutated' : undefined;
                 nativeStatus(status);
                 item.released = true;
+            });
+        },
+        /** Actual core cook/destroy calls, including rollback; not allocator free counts. */
+        meshLifetimeCounters() {
+            return exclusive(() => {
+                nativeStatus(module._air_b3_mesh_lifetime_counters(output));
+                return Object.freeze({ cooks: readU64(output), destroys: readU64(output + 8) });
             });
         },
         staticMeshState(resource) {

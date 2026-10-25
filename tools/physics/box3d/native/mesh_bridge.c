@@ -35,6 +35,16 @@ typedef struct MeshResource {
 typedef struct FaceKey { int v[3], face; } FaceKey;
 static MeshResource* resources;
 static uint64_t sequence;
+/* ST module-local diagnostics, not ownership, handles, or allocator-call counts.
+ * No reset/tombstones/pointers escape. Includes successful temporary cooks that
+ * subsequently roll back. Saturation never prevents required destruction. */
+static uint64_t mesh_cooks, mesh_destroys;
+static int mesh_counter_overflow;
+static void destroy_mesh_counted(b3MeshData* mesh) {
+    b3DestroyMesh(mesh);
+    if (mesh_destroys == UINT64_MAX) mesh_counter_overflow = 1;
+    else ++mesh_destroys;
+}
 
 static uint64_t join(uint32_t lo, uint32_t hi) { return ((uint64_t)hi << 32) | lo; }
 static int region(const void* p, size_t bytes) {
@@ -57,7 +67,7 @@ static void unlink_and_free(MeshResource* resource) {
     MeshResource** at = &resources;
     while (*at != resource) at = &(*at)->next;
     *at = resource->next;
-    b3DestroyMesh(resource->mesh);
+    destroy_mesh_counted(resource->mesh);
     air_b3_bridge_temp_free(resource->world, resource, resource->bytes);
 }
 static void collect(MeshResource* resource) {
@@ -88,7 +98,7 @@ int air_b3_mesh_cook(uint32_t world, const float* positions, int vertexCount,
        This is an address bound, not a recoverable core-OOM guarantee. */
     uint64_t packed = sizeof(b3MeshData) + 64ull + (uint64_t)vertexCount * sizeof(b3Vec3)
         + (uint64_t)triangleCount * (2 * sizeof(b3MeshNode) + sizeof(b3MeshTriangle) + 16);
-    if (packed > INT_MAX || sequence == UINT64_MAX) return AIR_B3_CAPACITY;
+    if (packed > INT_MAX || sequence == UINT64_MAX || mesh_cooks == UINT64_MAX || mesh_counter_overflow) return AIR_B3_CAPACITY;
     size_t xyzBytes = (size_t)floatCount * sizeof(float), indexBytes = (size_t)indexCount * sizeof(int32_t);
     if (!region(positions, xyzBytes) || !region(indices, indexBytes) || !region(out, 8)
         || overlap(positions, xyzBytes, indices, indexBytes) || overlap(positions, xyzBytes, out, 8)
@@ -133,6 +143,7 @@ int air_b3_mesh_cook(uint32_t world, const float* positions, int vertexCount,
     def.identifyEdges = true; def.clockWiseWinding = false;
     mesh = b3CreateMesh(&def, NULL, 0);
     if (!mesh) { status = AIR_B3_CREATION; goto done; }
+    ++mesh_cooks;
     if (mesh->version != B3_MESH_VERSION || mesh->hash == 0 || mesh->triangleCount != triangleCount
         || mesh->vertexCount != vertexCount || mesh->degenerateCount != 0) {
         status = AIR_B3_UNSUPPORTED; goto done;
@@ -151,7 +162,7 @@ int air_b3_mesh_cook(uint32_t world, const float* positions, int vertexCount,
     out[0] = (uint32_t)resource->token; out[1] = (uint32_t)(resource->token >> 32);
     resource = NULL; mesh = NULL;
 done:
-    if (mesh) b3DestroyMesh(mesh);
+    if (mesh) destroy_mesh_counted(mesh);
     if (resource) air_b3_bridge_temp_free(world, resource, resourceBytes);
     air_b3_bridge_temp_free(world, keys, keysBytes);
     return status;
@@ -234,7 +245,7 @@ void air_b3_mesh_world_destroyed(uint32_t world) {
         MeshResource* r = *at;
         if (r->world == world) {
             *at = r->next;
-            b3DestroyMesh(r->mesh);
+            destroy_mesh_counted(r->mesh);
             r->mesh = NULL;
             r->references = r->leases = 0;
             /* Core world is already invalid, so public world-validated temp_free
@@ -267,4 +278,16 @@ int air_b3_mesh_face_read(uint32_t world, uint32_t lo, uint32_t hi, int cooked, 
     int value; status = air_b3_mesh_source_face(world,join(lo,hi),cooked,&value);
     if (!status) *out = value;
     return status;
+}
+
+/* Exact module-wide diagnostic snapshot. Caller must serialize ST module use.
+ * Four copied uint32 words, independent of live resources/worlds; no tombstones.
+ * Invalid output or saturated diagnostics leave caller storage unchanged. */
+int air_b3_mesh_lifetime_counters(uint32_t* out) {
+    if (!region(out, 4*sizeof(uint32_t))) return AIR_B3_ARGUMENT;
+    if (mesh_counter_overflow) return AIR_B3_CAPACITY;
+    uint32_t copy[4] = {(uint32_t)mesh_cooks, (uint32_t)(mesh_cooks >> 32),
+        (uint32_t)mesh_destroys, (uint32_t)(mesh_destroys >> 32)};
+    memcpy(out, copy, sizeof(copy));
+    return AIR_B3_OK;
 }

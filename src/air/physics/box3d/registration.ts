@@ -29,6 +29,7 @@ import type { Box3DWorldAdapter } from './prepare';
 import { Box3DPhysicsWorld } from './world';
 import { Box3DRigidBody } from './rigid-body';
 import { Box3DBoxShape, Box3DSphereShape, Box3DCapsuleShape } from './box-sphere-shape';
+import { Box3DTerrainShape } from './terrain-shape';
 import { Box3DHullShape } from './hull-shape';
 import { Box3DRoundHullShape } from './round-hull-shape';
 import type { Box3DComponentConfiguration } from './shared-body';
@@ -108,6 +109,11 @@ export function createBox3DWorldAdapter(
                   ConeShape: class extends Box3DRoundHullShape {
                       constructor() {
                           super('cone', getWorld, components!);
+                      }
+                  },
+                  TerrainShape: class extends Box3DTerrainShape {
+                      constructor() {
+                          super(getWorld, components!);
                       }
                   },
                   TrimeshShape: class extends Box3DHullShape {

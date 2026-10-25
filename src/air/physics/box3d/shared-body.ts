@@ -41,6 +41,7 @@ import type { Box3DPrimitiveGeometry } from './box-sphere-geometry';
 import type { Box3DHullGeometry } from './hull-geometry';
 import type { Box3DStaticMeshGeometry, Box3DMeshResourceUse } from './static-mesh-resource';
 import type { StaticMeshIntake } from './static-mesh-intake';
+import { TerrainCollider } from '../../../cocos/physics/framework/components/colliders/terrain-collider';
 import { MeshCollider } from '../../../cocos/physics/framework/components/colliders/mesh-collider';
 import type { Box3DSurfaceMaterial } from './world-binding';
 import type { Box3DComponentBinding } from './world-binding';
@@ -938,7 +939,8 @@ export class Box3DSharedBody {
         const next = validateRigidBodyInitial(value, configuration);
         if (
             next.type !== 0 &&
-            ((this.#signedStaticMesh && this.#scene.records().some((record) => record.signedStaticMesh)) ||
+            (this.hasTerrainOwner() ||
+                (this.#signedStaticMesh && this.#scene.records().some((record) => record.signedStaticMesh)) ||
                 [...this.#shapes.values()].some((s) => s.geometry.kind === 'mesh'))
         )
             unsupportedBox3D('nonstatic RigidBody with static Mesh geometry');
@@ -1224,7 +1226,8 @@ export class Box3DSharedBody {
         const next = nativeBodyType(value);
         if (
             next !== 0 &&
-            ((this.#signedStaticMesh && this.#scene.records().some((record) => record.signedStaticMesh)) ||
+            (this.hasTerrainOwner() ||
+                (this.#signedStaticMesh && this.#scene.records().some((record) => record.signedStaticMesh)) ||
                 [...this.#shapes.values()].some((s) => s.geometry.kind === 'mesh'))
         )
             unsupportedBox3D('nonstatic RigidBody with static Mesh geometry');
@@ -1308,6 +1311,9 @@ export class Box3DSharedBody {
             }
             throw error;
         }
+    }
+    private hasTerrainOwner(): boolean {
+        return [...this.#queryColliders.values()].some((component) => component instanceof TerrainCollider);
     }
     assertStaticMesh(): void {
         this.assert('static Mesh admission');

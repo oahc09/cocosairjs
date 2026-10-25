@@ -311,6 +311,9 @@ export interface Box3DFoundation {
     cookStaticMesh(world: Box3DWorld, positions: ArrayLike<number>, indices: ArrayLike<number>): Box3DStaticMeshLease;
     retainStaticMesh(resource: Box3DStaticMeshLease): Box3DStaticMeshLease;
     releaseStaticMesh(resource: Box3DStaticMeshLease): void;
+    /** ST module cumulative successful cook/completed destroy calls, including rollback.
+     * Not allocator free counts. Exclusive diagnostic deltas; no ownership capability. */
+    meshLifetimeCounters(): Readonly<{ cooks: bigint; destroys: bigint }>;
     staticMeshState(resource: Box3DStaticMeshLease): Readonly<Box3DStaticMeshState>;
     createStaticMeshShape(body: Box3DId, resource: Box3DStaticMeshLease): Box3DId;
     staticMeshSourceFace(shape: Box3DId, cookedTriangle: number): number;

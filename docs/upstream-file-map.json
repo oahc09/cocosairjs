@@ -2,7 +2,7 @@
   "meta": {
     "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
     "note": "Air Path 与 Upstream Path 一致(前缀 src/)；modified 文件另行标注 reason；upstreamPath=null 表示该行为 Air 原创文件或上游产物（仓库内无对应源文件），必须 modified:true 并在 reason 说明出处",
-    "modifiedCount": 282,
+    "modifiedCount": 285,
     "pal": {
       "revision": "9f0e30acb31f6d670f2c0bf818d61039846a2860",
       "license": "MIT",
@@ -5026,8 +5026,8 @@
       "airPath": "src/cocos/physics/framework/components/colliders/terrain-collider.ts",
       "upstreamPath": "cocos/physics/framework/components/colliders/terrain-collider.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "2026-10-25 Box3D-only TerrainCollider.terrain mutation admission and candidate-before-component-cache setter, including same-object resnapshot. Other backend cache-first behavior and upstream header preserved. Explicit mesh-cooked Terrain adapter is a source candidate; real C17/C19/WASM qualification is pending."
     },
     {
       "airPath": "src/cocos/physics/framework/components/constant-force.ts",
@@ -10222,6 +10222,20 @@
       "baseline": "AIR original",
       "modified": true,
       "reason": "Box3D backend internal implementation: deferred-destroy-control. Restored SDK222 source checkpoint 2026-10-25; not a new full acceptance claim."
+    },
+    {
+      "airPath": "src/air/physics/box3d/terrain-intake.ts",
+      "upstreamPath": null,
+      "baseline": "AIR original",
+      "modified": true,
+      "reason": "Explicit heightfield-cooked-static-triangle-mesh TerrainCollider terrain-intake source candidate; native kind remains mesh and real C17/C19/WASM qualification is pending."
+    },
+    {
+      "airPath": "src/air/physics/box3d/terrain-shape.ts",
+      "upstreamPath": null,
+      "baseline": "AIR original",
+      "modified": true,
+      "reason": "Explicit heightfield-cooked-static-triangle-mesh TerrainCollider terrain-shape source candidate; native kind remains mesh and real C17/C19/WASM qualification is pending."
     }
   ]
 }

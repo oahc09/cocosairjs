@@ -22,6 +22,8 @@
  THE SOFTWARE.
 */
 
+import { assertMutationAllowed } from '../../../../core/data/mutation-guard';
+import { selector } from '../../physics-selector';
 import {
     ccclass,
     help,
@@ -65,6 +67,12 @@ export class TerrainCollider extends Collider {
     }
 
     set terrain (value) {
+        if (selector.id === 'box3d') {
+            assertMutationAllowed(this, 'TerrainCollider.terrain');
+            if (this._shape) this.shape.setTerrain(value);
+            this._terrain = value;
+            return;
+        }
         this._terrain = value;
         if (this._shape) this.shape.setTerrain(this._terrain);
     }

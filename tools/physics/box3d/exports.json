@@ -74,6 +74,7 @@
   "_air_b3_mesh_retain",
   "_air_b3_mesh_release",
   "_air_b3_mesh_state",
+  "_air_b3_mesh_lifetime_counters",
   "_air_b3_mesh_shape_create",
   "_air_b3_mesh_face_read"
 ]

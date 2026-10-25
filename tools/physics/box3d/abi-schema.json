@@ -666,6 +666,7 @@
       "_air_b3_mesh_retain",
       "_air_b3_mesh_release",
       "_air_b3_mesh_state",
+      "_air_b3_mesh_lifetime_counters",
       "_air_b3_mesh_shape_create",
       "_air_b3_mesh_face_read"
     ],
@@ -674,6 +675,9 @@
     "cook": "copied body-local float32 XYZ / int32 triangle list; CCW normalized once; no welding; SAH/adjacency; reject degenerate and duplicate oriented indices",
     "lifetime": "cache leases and native shape borrows separately counted; free once after both zero; world destroys core shapes before freeing data",
     "stateWords": ["cacheLeases", "nativeShapeBorrows", "vertexCount", "triangleCount", "coreMeshBytes", "fullWorldId"],
+    "lifetimeCounterWords": ["successfulCookLow", "successfulCookHigh", "completedDestroyLow", "completedDestroyHigh"],
+    "lifetimeCounterScope": "ST module cumulative uint64; b3CreateMesh nonnull returns and completed b3DestroyMesh calls including rollback; not allocator free counts; no reset/tombstone/pointer; separate liveBytes baseline required; exclusive fixture takes deltas",
+    "lifetimeCounterOverflow": "cook refuses CAPACITY before native creation at UINT64_MAX or sticky overflow; destroy always proceeds and sets sticky on overflow; snapshot returns CAPACITY without output write if sticky",
     "sourceFace": "read cooked triangle index -> original flattened source ordinal; preserve existing query 11-word cooked index ABI",
     "admission": "static only; nonstatic create or SetType rejected before native mutation; sensor/contact not qualified",
     "copiedDebug": "actual cooked triangle edges; bounded debug allocation, no Hull substitution"

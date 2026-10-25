@@ -32,3 +32,8 @@ int air_b3_mesh_source_face(uint32_t world, uint64_t fullShapeId,
 /* Checked wire read; copied original flattened face ordinal, no native pointer. */
 int air_b3_mesh_face_read(uint32_t world, uint32_t shapeLo, uint32_t shapeHi,
     int cookedFace, int32_t* outSourceFace);
+
+/* ST module counters: successful b3CreateMesh / completed b3DestroyMesh calls,
+ * including rollback; NOT malloc/free counts. [cookLo,cookHi,destroyLo,destroyHi].
+ * No reset, allocation, or raw pointer result. Overflow returns CAPACITY. */
+int air_b3_mesh_lifetime_counters(uint32_t* outFour);
