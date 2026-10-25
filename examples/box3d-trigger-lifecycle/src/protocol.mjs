@@ -21,12 +21,39 @@ export function assertClock(row) {
 export class PairLedger {
     constructor(generation) {
         this.generation = generation;
-        this.registered = new Set(); this.lastTick = new Map(); this.live = new Set(); this.pairs = new Set(); this.seen = new Set();
+        this.channels = new Map(); this.registered = new Set(); this.lastTick = new Map(); this.live = new Set(); this.pairs = new Set(); this.seen = new Set();
         this.rows = []; this.counts = { enter: 0, stay: 0, exit: 0 };
     }
     register(id) {
         if (!id || id.includes('|') || this.registered.has(id)) throw Error('Reused application identity');
-        this.registered.add(id); this.live.add(id);
+        this.registered.add(id); this.live.add(id); this.channels.set(id,{epoch:0,enabled:true});
+    }
+    channelEpoch(id) { return this.channels.get(id)?.epoch; }
+    /** Application listener epoch only; NOT an exposed native channel token. */
+    applyEnabled(id, value, read, write, context) {
+        const channel = this.channels.get(id);
+        if (!this.live.has(id) || !channel || typeof value !== 'boolean' ||
+            context.generation !== this.generation || !Number.isInteger(context.hookTick) || context.hookTick < -1 ||
+            !Number.isInteger(context.hookAttempt) || context.hookAttempt < -1 ||
+            (context.hookTick === -1) !== (context.hookAttempt === -1))
+            throw Error('Invalid enabled transition');
+        const before = read();
+        if (before !== channel.enabled) throw Error('Untracked enabled state');
+        write(value); // A throwing setter must not retire application channels.
+        const after = read();
+        if (after !== value) throw Error('Enabled getter mismatch');
+        if (before === after) return false;
+        const previousEpoch = channel.epoch;
+        const removed = before === true && after === false
+            ? [...this.pairs].filter(pair => pair.split('|').includes(id)) : [];
+        if (after === false) { removed.forEach(pair => this.pairs.delete(pair)); channel.epoch++; }
+        channel.enabled = after;
+        this.rows.push({kind:after ? 'application-channel-resumed' : 'application-channel-invalidated',
+            id, generation:this.generation, hookTick:context.hookTick, hookAttempt:context.hookAttempt,
+            source:'successful-public-collider-enabled-setter-and-getter',
+            clockAssociation:context.hookTick === -1 ? 'PRE_FIRST_HOOK_NO_NATIVE_TICK' : 'LAST_OBSERVED_HOOK', before, after,
+            previousEpoch, channelEpoch:channel.epoch, removed, nativeEvent:false});
+        return after === false;
     }
     retire(id) {
         this.live.delete(id);
@@ -40,12 +67,15 @@ export class PairLedger {
         const reject = reason => { row.reason = reason; this.rows.push(row); return row; };
         if (event.generation !== this.generation) return reject('wrong-generation');
         if (!this.live.has(event.self) || !this.live.has(event.other)) return reject('retired-or-unknown-identity');
+        const channel = this.channels.get(event.self);
+        if (event.channelEpoch !== channel.epoch) return reject('stale-application-channel');
+        if (!channel.enabled) return reject('disabled-application-channel');
         if (event.self === event.other || !['enter', 'stay', 'exit'].includes(event.kind) ||
             !Number.isInteger(event.hookTick) || event.hookTick < 0 || !Number.isInteger(event.hookAttempt)) return reject('invalid-event');
         const pair = [event.self, event.other].sort().join('|');
         // Only zone-side callbacks feed this ledger; opposite-side listeners are intentionally absent.
         if (event.hookTick < (this.lastTick.get(pair) ?? -1)) return reject('out-of-order');
-        const key = `${pair}:${event.kind}:${event.hookTick}:${event.hookAttempt}`;
+        const key = `${pair}:${event.channelEpoch}:${event.kind}:${event.hookTick}:${event.hookAttempt}`;
         if (this.seen.has(key)) return reject('duplicate');
         if (event.kind === 'enter' && this.pairs.has(pair)) return reject('duplicate-enter');
         if (event.kind !== 'enter' && !this.pairs.has(pair)) return reject('orphan-' + event.kind);

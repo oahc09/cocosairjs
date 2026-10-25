@@ -106,16 +106,27 @@ function retire(actor: Actor) {
     actor.alive = false; ledger.retire(actor.id); actor.node.destroy();
     // Keep object mapping until scene release: late callbacks retain OLD identity, never new identity.
 }
-function onZone(zone: Actor, event: physics.ITriggerEvent, token: number, registry: ReadonlyMap<physics.Collider, Actor>) {
+const zoneListeners = new WeakMap<physics.Collider, (event:physics.ITriggerEvent)=>void>();
+function bindZone(zone:Actor) {
+    const previous = zoneListeners.get(zone.collider);
+    const token=generation, registry=actors, channelEpoch=ledger.channelEpoch(zone.id);
+    const listener=(event:physics.ITriggerEvent)=>onZone(zone,event,token,registry,channelEpoch);
+    for(const type of ['onTriggerEnter','onTriggerStay','onTriggerExit'] as const) {
+        if(previous) zone.collider.off(type,previous);
+        zone.collider.on(type,listener);
+    }
+    zoneListeners.set(zone.collider,listener);
+}
+function onZone(zone: Actor, event: physics.ITriggerEvent, token: number, registry: ReadonlyMap<physics.Collider, Actor>, channelEpoch:number) {
     const other = registry.get(event.otherCollider);
     if(selectedMode!=='lifecycle' && token===generation && other!==visitor) unexpectedPeer=true;
     const kind = event.type === 'onTriggerEnter' ? 'enter' : event.type === 'onTriggerStay' ? 'stay' : 'exit';
-    const raw = { kind, self: zone.id, other: other?.id ?? 'unknown', generation: token,
+    const raw = { kind, channelEpoch, self: zone.id, other: other?.id ?? 'unknown', generation: token,
         hookTick: tick, hookAttempt: attempt, identityVerified: event.selfCollider === zone.collider && !!other };
     if (!raw.identityVerified) { log.push({kind:'identity-mismatch', raw}); fault(Error('Unmapped callback object'),'trigger'); return; }
     const row = ledger.accept(raw);
     if (!row.accepted) {
-        if (!['wrong-generation','retired-or-unknown-identity'].includes(row.reason)) fault(Error(row.reason),'trigger-policy');
+        if (!['wrong-generation','retired-or-unknown-identity','stale-application-channel'].includes(row.reason)) fault(Error(row.reason),'trigger-policy');
         ui(); return;
     }
     if (kind === 'enter' && other === visitor) {
@@ -198,8 +209,7 @@ function mount(mode: Mode, presetKind?: PresetKind) {
         const z = makeActor(['count-zone','door-zone','spawn-zone'][i],position,new Vec3(c.thickness,1,.8),
             movingSensor(mode) && i===0 ? ERigidBodyType.KINEMATIC : ERigidBodyType.STATIC,true,
             [[65,140,155],[180,140,65],[145,95,165]][i]);
-        const token = generation, registry = actors;
-        for (const type of ['onTriggerEnter','onTriggerStay','onTriggerExit'] as const) z.collider.on(type,(event: physics.ITriggerEvent) => onZone(z,event,token,registry));
+        bindZone(z);
         return z;
     });
     visitor = makeActor('visitor',new Vec3(movingSensor(mode) ? 0 : c.start,0,0),
@@ -241,7 +251,13 @@ function readZoneControl(kind:PresetKind) {
 function changeZoneControl(kind:PresetKind,value:number|boolean) {
     if(kind==='mask') {if(typeof value!=='number')throw Error('Mask must be numeric');zones[0].body.setMask(value);zoneState.mask=zones[0].body.getMask();}
     else {if(typeof value!=='boolean')throw Error('Collider flag must be boolean');
-        if(kind==='enabled'){zones[0].collider.enabled=value;zoneState.enabled=zones[0].collider.enabled;}
+        if(kind==='enabled'){
+            const zone=zones[0];
+            const invalidated=ledger.applyEnabled(zone.id,value,()=>zone.collider.enabled,
+                (next:boolean)=>{zone.collider.enabled=next;},{generation,hookTick:tick,hookAttempt:attempt});
+            zoneState.enabled=zone.collider.enabled;
+            if(invalidated)bindZone(zone);
+        }
         else {zones[0].collider.isTrigger=value;zoneState.trigger=zones[0].collider.isTrigger;}}
 }
 function manualControl(kind:PresetKind) {

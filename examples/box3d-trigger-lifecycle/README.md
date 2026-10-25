@@ -150,3 +150,40 @@ are not established by CPU tests or by exported body motion alone.
    C24 reuse/rebuild, C25 bit31/filter matrix, C26 full ray/sweep/overlap edge matrix, C27 speed trials and
    C28 event-flags/occlusion/capacity/dual-speed. All are **NOT_RUN for this candidate**. This EX03 UI is not
    a replacement for their acceptance gates and never emits a full acceptance PASS.
+
+### Enabled channel boundary correction (source-only candidate)
+
+The preserved 4b41209 enabled-preset run (`ex03-trigger-lifecycle(15).json`)
+observed enter at hook 609, stays 610/611, successful disable at idle 611,
+no exit at 612/613, successful restore at idle 613 while still overlapping,
+and enter at 614. The old example incorrectly blocked that final callback as
+`duplicate-enter`. This was an application ledger assumption failure, not evidence
+of an engine duplicate: SDK223 `trigger-events.ts` explicitly silently retires
+removed/disabled channels and emits enter on a non-continuous restored channel.
+
+The corrected ledger records `application-channel-invalidated` only after a
+successful public `enabled=true→false` setter and matching getter. It removes
+active application pairs without incrementing native exit counts, suspends the
+channel, and advances an **application listener epoch**. Restore records
+`application-channel-resumed`; the next real enter creates the new pair. No-op,
+throwing setter, and mismatched getter do not advance the epoch. Setter faults
+remain terminal to the current run even if the setter partially mutated state.
+Mask and trigger toggles retain their distinct native exit semantics.
+
+Callbacks retain their original scene generation and a captured application
+listener epoch. On successful disable the example rebinds its own public
+listeners; an obsolete closure is rejected, as are callbacks while disabled.
+This epoch is **not a native event/channel token**: the public callback does not
+expose one, so an arbitrary delayed native dispatch into a new listener cannot
+be conclusively authenticated by this mechanism. Same-epoch duplicate enter,
+duplicate callback and orphan stay/exit checks remain strict. Native rows and
+application invalidation rows are separately identified; no exit is synthesized.
+
+48 CPU tests (including CLI tests) and SDK223 strict noEmit pass. Corrected enabled
+preset browser/physics run: **NOT_RUN**. Old evidence/source remain immutable;
+only an independent new fingerprint run can validate the corrected integration.
+
+Manual changes before the first hook retain the explicit `hookTick=-1`,
+`hookAttempt=-1`, `PRE_FIRST_HOOK_NO_NATIVE_TICK` sentinel. They do not claim a
+native tick. Partial or lower sentinel clocks are rejected; preset actions still
+require their real accepted-enter anchor and scheduled idle hook ticks.
