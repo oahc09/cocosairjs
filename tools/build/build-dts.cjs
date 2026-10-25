@@ -20,6 +20,7 @@ const fs = require('fs');
 const { existsSync, renameSync } = require('fs-extra');
 const { dtsBundler } = require('@cocos/ccbuild');
 const { withDeclarationInputs } = require('./dts-inputs.cjs');
+const { stageExternalDeclarationTypes } = require('./dts-external-types.cjs');
 
 const ROOT = join(__dirname, '..', '..');
 const ENGINE = join(ROOT, 'src');
@@ -66,7 +67,11 @@ function copyOutput(outDir) {
     const started = Date.now();
     let buildOk = false;
     try {
-        await withDeclarationInputs(ENGINE, () => dtsBundler.build({ engine: ENGINE, outDir }));
+        await withDeclarationInputs(
+            ENGINE,
+            () => dtsBundler.build({ engine: ENGINE, outDir }),
+            (options) => stageExternalDeclarationTypes(options, ROOT),
+        );
         buildOk = true;
     } catch (e) {
         // dtsBundler 内部清理被 safe-delete shim 拦截时会 throw；产物此时通常已写出

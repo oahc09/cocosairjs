@@ -32,12 +32,12 @@ function relocateDeclarationInputs(options, engine) {
 // The dependency exposes no input-transform option. Scope the adapter to this
 // standalone build invocation, resolve the exact tfig used by ccbuild, and always
 // restore its public function. No installed dependency files are modified.
-async function withDeclarationInputs(engine, build) {
+async function withDeclarationInputs(engine, build, transform = (options) => options) {
     const { createRequire } = require('node:module');
     const ccbuildRequire = createRequire(require.resolve('@cocos/ccbuild'));
     const gift = ccbuildRequire('@cocos/tfig');
     const original = gift.bundle;
-    gift.bundle = (options) => original(relocateDeclarationInputs(options, engine));
+    gift.bundle = (options) => original(transform(relocateDeclarationInputs(options, engine)));
     try {
         return await build();
     } finally {

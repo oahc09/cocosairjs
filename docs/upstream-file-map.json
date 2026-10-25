@@ -2,7 +2,7 @@
   "meta": {
     "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
     "note": "Air Path 与 Upstream Path 一致(前缀 src/)；modified 文件另行标注 reason；upstreamPath=null 表示该行为 Air 原创文件或上游产物（仓库内无对应源文件），必须 modified:true 并在 reason 说明出处",
-    "modifiedCount": 280,
+    "modifiedCount": 282,
     "pal": {
       "revision": "9f0e30acb31f6d670f2c0bf818d61039846a2860",
       "license": "MIT",
@@ -6370,8 +6370,8 @@
       "airPath": "src/cocos/spine/lib/spine-core.d.ts",
       "upstreamPath": "cocos/spine/lib/spine-core.d.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
-      "modified": false,
-      "reason": "V1.2 批次 c1-spine 回归抽取，官方原文"
+      "modified": true,
+      "reason": "V1.2 批次 c1-spine 回归抽取，官方原文; 2026-10-25 declaration-only repair: explicit Spine WASM return/coordinate types from frozen cocos4 native bindings; structural borrowed vector/model/debug views, with nullable pre-init animation state. No JS/WASM changes."
     },
     {
       "airPath": "src/cocos/spine/lib/spine-core.js",
@@ -6475,8 +6475,8 @@
       "airPath": "src/cocos/spine/skeleton.ts",
       "upstreamPath": "cocos/spine/skeleton.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
-      "modified": false,
-      "reason": "V1.2 批次 c1-spine 回归抽取，官方原文"
+      "modified": true,
+      "reason": "V1.2 批次 c1-spine 回归抽取，官方原文; 2026-10-25 declaration contract: assert initialized AnimationState only immediately after successful initSkeleton; public getAnimationState remains nullable before initialization. Type-only assertion, not a runtime change."
     },
     {
       "airPath": "src/cocos/spine/track-entry-listeners.ts",
