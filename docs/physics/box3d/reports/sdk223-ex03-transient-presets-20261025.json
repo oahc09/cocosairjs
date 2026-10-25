@@ -1,0 +1,313 @@
+{
+  "schema": "box3d-sdk223-ex03-transient-presets-v1",
+  "status": "FINITE_OBSERVATIONS_THEN_FAILED_FIXTURE_POLICY_BLOCKED",
+  "identityBeforeAfterFrozenAndFiveRawMatch": true,
+  "freshnessReceiptsVerified": true,
+  "sourceCommit": "4b41209d104860cd2fc5f1d99a23946d8f5e8b74",
+  "runtimeProducer": "b089d223aad1bb4be4a81f187eceb341510d766a",
+  "runtimeBuild": 223,
+  "runs": [
+    {
+      "generation": 1,
+      "mode": "fast-solid-transient120",
+      "preset": null,
+      "attemptedClocks": 24,
+      "postFrames": 24,
+      "counts": {
+        "enter": 1,
+        "stay": 0,
+        "exit": 1
+      },
+      "status": "OBSERVATION_WINDOW_ENDED_NOT_ACCEPTANCE",
+      "acceptedEvents": 2,
+      "rejectedEvents": []
+    },
+    {
+      "generation": 2,
+      "mode": "moving-sensor-transient120",
+      "preset": null,
+      "attemptedClocks": 24,
+      "postFrames": 24,
+      "counts": {
+        "enter": 0,
+        "stay": 0,
+        "exit": 0
+      },
+      "status": "OBSERVATION_WINDOW_ENDED_NOT_ACCEPTANCE",
+      "acceptedEvents": 0,
+      "rejectedEvents": []
+    },
+    {
+      "generation": 3,
+      "mode": "lifecycle",
+      "preset": {
+        "kind": "mask",
+        "generation": 3,
+        "self": "g3:count-zone#11",
+        "other": "g3:visitor#14",
+        "originalValue": 1,
+        "state": "COMPLETE",
+        "anchorTick": 129,
+        "actions": [
+          {
+            "index": 0,
+            "requestTick": 129,
+            "dueTick": 131,
+            "value": 0,
+            "status": "APPLIED"
+          },
+          {
+            "index": 1,
+            "requestTick": 129,
+            "dueTick": 133,
+            "value": 1,
+            "status": "APPLIED"
+          }
+        ]
+      },
+      "attemptedClocks": 480,
+      "postFrames": 480,
+      "counts": {
+        "enter": 4,
+        "stay": 231,
+        "exit": 4
+      },
+      "status": "OBSERVATION_WINDOW_ENDED_NOT_ACCEPTANCE",
+      "acceptedEvents": 239,
+      "rejectedEvents": []
+    },
+    {
+      "generation": 4,
+      "mode": "lifecycle",
+      "preset": {
+        "kind": "enabled",
+        "generation": 4,
+        "self": "g4:count-zone#17",
+        "other": "g4:visitor#20",
+        "originalValue": true,
+        "state": "COMPLETE",
+        "anchorTick": 609,
+        "actions": [
+          {
+            "index": 0,
+            "requestTick": 609,
+            "dueTick": 611,
+            "value": false,
+            "status": "APPLIED"
+          },
+          {
+            "index": 1,
+            "requestTick": 609,
+            "dueTick": 613,
+            "value": true,
+            "status": "APPLIED"
+          }
+        ]
+      },
+      "attemptedClocks": 86,
+      "postFrames": 85,
+      "counts": {
+        "enter": 1,
+        "stay": 2,
+        "exit": 0
+      },
+      "status": "NO_TERMINAL_RUN_STATUS_FIELD",
+      "acceptedEvents": 3,
+      "rejectedEvents": [
+        {
+          "kind": "enter",
+          "self": "g4:count-zone#17",
+          "other": "g4:visitor#20",
+          "generation": 4,
+          "hookTick": 614,
+          "hookAttempt": 614,
+          "identityVerified": true,
+          "accepted": false,
+          "reason": "duplicate-enter"
+        }
+      ]
+    }
+  ],
+  "transient": {
+    "speedMps": 120,
+    "ticksEach": 24,
+    "qualificationRowsEach": 24,
+    "fastSolidNativeCounts": [
+      1,
+      0,
+      1
+    ],
+    "movingSensorNativeCounts": [
+      0,
+      0,
+      0
+    ],
+    "queryHitsEach": 1,
+    "boundary": "Query hits are not native trigger callbacks; source-model96internal substeps are not measured native substeps."
+  },
+  "mask": {
+    "anchorTick": 129,
+    "anchorCount": 1,
+    "disableTick": 131,
+    "restoreTick": 133,
+    "maskValues": [
+      1,
+      0,
+      1
+    ],
+    "overlapBoth": true,
+    "exitTick": 132,
+    "reenterTick": 134,
+    "finalExitTick": 208,
+    "counts": [
+      4,
+      231,
+      4
+    ],
+    "rearm": false
+  },
+  "failure": {
+    "generation": 4,
+    "firstTerminalObservationSeconds": 13.086,
+    "status": "BLOCKED",
+    "error": "duplicate-enter",
+    "source": "trigger-policy",
+    "enterTick": 609,
+    "stayTicks": [
+      610,
+      611
+    ],
+    "disableTick": 611,
+    "disableExitObserved": false,
+    "restoreTick": 613,
+    "overlapAtRestore": true,
+    "rejectedNativeEnterTick": 614,
+    "attemptedClocks": 86,
+    "completePostFrames": 85,
+    "diagnosis": "Source and SDK223 code comparison identifies disabled-channel silent retirement versus application-ledger state assumptions; re-enable enter rejected by stale ledger. Not fixed or requalified in this report.",
+    "notRunAfterFailure": [
+      "trigger preset",
+      "reset preset",
+      "close-during-motion"
+    ]
+  },
+  "close": {
+    "kind": "close",
+    "receipt": {
+      "status": "released",
+      "scene": null,
+      "completed": [],
+      "pending": [],
+      "failures": [],
+      "retained": [
+        "runtime",
+        "scheduler",
+        "builtin-resources",
+        "shared-asset-caches"
+      ],
+      "measurements": {
+        "gpuMemory": "unavailable",
+        "reason": "WebGL provides no portable complete GPU allocation measurement; scene destruction is not proof of zero leaks."
+      },
+      "physicsPreparation": {
+        "attemptGeneration": 1,
+        "status": "closed",
+        "acquired": [
+          {
+            "backend": "box3d",
+            "resource": "module",
+            "cleanup": "released",
+            "retained": []
+          },
+          {
+            "backend": "box3d",
+            "resource": "world",
+            "cleanup": "released",
+            "retained": []
+          }
+        ],
+        "originalError": null,
+        "cleanupErrors": []
+      }
+    }
+  },
+  "closeBoundary": "Normal application close after application fault only; not injected SDK-close failure/retry qualification or zero-leak proof.",
+  "limitations": [
+    "FullEX03/C22/C28/G5 NOT_PASSED.",
+    "All outcomes are finite observations, not universal sensor/CCD support.",
+    "Native callbacks and committed query predictions remain separate.",
+    "No480tick completion for failed generation4.",
+    "GPU memory unavailable; retained resources remain.",
+    "No repair or rerun included; future candidates cannot be backfilled.",
+    "Duplicate Close, clean reopen and narrow viewport NOT_RUN."
+  ],
+  "evidencePolicy": "Artifact paths relative to retained transient/preset evidence root. Originals are not included in this commit; hash summary is not a self-contained replay bundle.",
+  "retainedEvidence": [
+    {
+      "artifact": "download-copy-receipt.json",
+      "bytes": 2120,
+      "sha256": "968e66c3e1ba8c99d7b7a04e4b84386deebc03e8421f479fcf8c335f52e5cf75"
+    },
+    {
+      "artifact": "evidence-manifest.json",
+      "bytes": 5017,
+      "sha256": "304dc17079de33ebb0169b498e9819e0af93a2888f281e6879c9672933413972"
+    },
+    {
+      "artifact": "frozen-identity.json",
+      "bytes": 1613,
+      "sha256": "fd6dd1b775a76a0e1178f852c41a839ea99ddccc9362e0e631492ebc8fb85b79"
+    },
+    {
+      "artifact": "identity-after.json",
+      "bytes": 1405,
+      "sha256": "0408eeec52c372cba55832d37ec57cace4186b15cf5c39ce15483b732dea1308"
+    },
+    {
+      "artifact": "identity-before.json",
+      "bytes": 1405,
+      "sha256": "0408eeec52c372cba55832d37ec57cace4186b15cf5c39ce15483b732dea1308"
+    },
+    {
+      "artifact": "physical-close-windows.json",
+      "bytes": 2219,
+      "sha256": "1d579d68bc44ecfd7dc9d9dd26c6a863e7ed7c99b90f143bb6c2874761914e26"
+    },
+    {
+      "artifact": "predeclared-plan.json",
+      "bytes": 2634,
+      "sha256": "bc431aecc804267d77fb29f636e8a2e7a29056b7a0bd37988f3a1ba59d460816"
+    },
+    {
+      "artifact": "result.json",
+      "bytes": 3988,
+      "sha256": "f046ead75eda241a9c3f8566fb2d3c448b3dcd7c91bbd2f69dc3397610f4a5e2"
+    },
+    {
+      "artifact": "downloads/ex03-trigger-lifecycle(12).json",
+      "bytes": 448896,
+      "sha256": "03b9d8f13f8ccf4ce5029d4b60324867d3b52e5d35c1e2bfb6877a72a7d95431"
+    },
+    {
+      "artifact": "downloads/ex03-trigger-lifecycle(13).json",
+      "bytes": 964646,
+      "sha256": "77edd7fdf3e84a7bc8b339a2b0e058de99b9971223d925fbbddc24cd8f97fa58"
+    },
+    {
+      "artifact": "downloads/ex03-trigger-lifecycle(14).json",
+      "bytes": 7750225,
+      "sha256": "419aa87b953c5688a91c14cd68214f8a370de8cca212029ac65c11e6db01f136"
+    },
+    {
+      "artifact": "downloads/ex03-trigger-lifecycle(15).json",
+      "bytes": 8864198,
+      "sha256": "b4660152a6a1a5868c849f6cb1b178a7f8de9a8441d154008700b4155b411023"
+    },
+    {
+      "artifact": "downloads/ex03-trigger-lifecycle(16).json",
+      "bytes": 8867345,
+      "sha256": "2243c3b114b5427a461f3b6c03073c16d11edf158f9dc65213a188fb0512f084"
+    }
+  ],
+  "console": "generateMipmap and WASM source-map warnings retained; application fault retained in raw/UI; no blanket no-console-error claim."
+}
