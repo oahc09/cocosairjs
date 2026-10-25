@@ -59,6 +59,8 @@ interface GameClockSource {
     readPaused(): boolean;
     /** Captured in the original Game constructor; never call public pause/resume here. */
     applyPaused(paused: boolean, background: boolean): void;
+    /** Captured optional cleanup for this Game's platform event subscriptions. */
+    disposeEvents?(): void;
 }
 interface Frame {
     readonly owner: object;
@@ -118,14 +120,18 @@ export class GameClockControlRegistry {
         if (!target || !director || this.#sources.has(target) || typeof initiallyPaused !== 'boolean')
             throw new Error('Expected an unregistered original Game source.');
         const readPaused = source.readPaused,
-            applyPaused = source.applyPaused;
+            applyPaused = source.applyPaused,
+            disposeEvents = source.disposeEvents;
         if (typeof readPaused !== 'function' || typeof applyPaused !== 'function')
             throw new TypeError('Expected captured Game source callbacks.');
+        if (disposeEvents !== undefined && typeof disposeEvents !== 'function')
+            throw new TypeError('Expected an optional captured Game event disposer.');
         this.#sources.set(target, {
             director,
             source: Object.freeze({
                 readPaused: () => readPaused.call(source),
                 applyPaused: (paused, background) => applyPaused.call(source, paused, background),
+                disposeEvents: disposeEvents ? () => disposeEvents.call(source) : undefined,
             }),
             applicationPaused: initiallyPaused,
             backgroundPaused: false,
@@ -485,7 +491,14 @@ export class GameClockControlRegistry {
             failed = true;
             first = error;
         }
-        // Pacer stop is independent of owner failure and is never postponed to a user callback.
+        // Terminal was latched first: detach exactly once, even if owner admission failed.
+        try {
+            entry.source.disposeEvents?.();
+        } catch (error) {
+            if (!failed) first = error;
+            failed = true;
+        }
+        // Pacer stop is independent of owner or event-detach failure, before user teardown.
         try {
             effectEntered = true;
             entry.source.applyPaused(true, entry.backgroundPaused);

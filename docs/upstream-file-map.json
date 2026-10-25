@@ -3536,7 +3536,7 @@
       "upstreamPath": "cocos/game/game.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "Internal Game clock candidate 2026-10-23: original-constructor captured reason/effect source; opt-in application/background prepared admission before early returns and public notifications; exact manual Game.step entry before dt. Unobserved original cache/pacer/event bodies retained."
+      "reason": "Internal Game clock candidate 2026-10-23: original-constructor captured reason/effect source; opt-in application/background prepared admission before early returns and public notifications; exact manual Game.step entry before dt. Unobserved original cache/pacer/event bodies retained. Closed-game visibility fix candidate 2026-10-24: exact per-Game systemInfo show/hide/close listener detachment and terminal guards for queued callbacks and late event initialization; never-observed listeners remain unchanged."
     },
     {
       "airPath": "src/cocos/game/index.ts",
@@ -10081,7 +10081,7 @@
       "upstreamPath": null,
       "baseline": "AIR original",
       "modified": true,
-      "reason": "Internal neutral original-Game reason source, prepared owner observation and exact owned synchronous Director frame leases. No AIR/physics import, public barrel export or native authority. Terminal state survives owner disposal; legacy active adoption fails closed. Candidate NOT_RUN."
+      "reason": "Internal neutral original-Game reason source, prepared owner observation and exact owned synchronous Director frame leases. No AIR/physics import, public barrel export or native authority. Terminal state survives owner disposal; legacy active adoption fails closed. Captured optional event disposal runs exactly once for observed termination despite owner failure; pacer stop remains independently attempted and detach errors fail close. Candidate source/CPU controls are separate from browser NOT_RUN."
     }
   ]
 }
