@@ -1,0 +1,17 @@
+{
+  "previousConsumer": "cases/cohort-v2/query/consumer.mjs",
+  "previousConsumerSha256": "5ac8f1437f0b621043bb8b7df425da4e457cf2345b49a0793d147d06af375ac2",
+  "publicReferenceCommit": "28e34b2",
+  "productCommit": "1cba562f7abc9c80c29d9b932d73840c812dd563",
+  "policyFiles": [
+    {
+      "path": "examples/box3d-gift-workshop/src/box-support-policy.mjs",
+      "sha256": "051920f3db4d6c0ee163deb2b6dd505284c79abf12a1cb8bd0e1ac00a190f62c"
+    },
+    {
+      "path": "examples/box3d-gift-workshop/src/stations.mjs",
+      "sha256": "c79a7c4e113bd7c66055f51358d860826c23de2883c2fa50a3509913c02b96fa"
+    }
+  ],
+  "scope": "Only adds actual positive1.52mm Box gap observations and independent unchanged-tolerance proof checks; no physics writes after initial setup."
+}

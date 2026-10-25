@@ -1,0 +1,40 @@
+/* Copyright (c) 2026-2027 oahc09@gmail.com. SPDX-License-Identifier: MIT */
+// Authoring-time numerical contract. These values must be frozen before the first real execution.
+// A failed attempt is evidence, not permission to loosen this contract or omit the case.
+export const thresholds = Object.freeze({
+    fixedDtSeconds: 1 / 60,
+    solverSubSteps: 4,
+    enduranceTicks: 600,
+    separationMetres: 0.02,
+    axisAlignmentRadians: 0.02,
+    independentAngleAgreementRadians: 0.02,
+    captureMetres: 0.0001,
+    captureRadians: 0.0001,
+    nativeScalarTolerance: 0.000001,
+    freeTwistMinimumRadians: 0.2,
+    translationMinimumMetres: 0.05,
+    positiveMotorTicks: 30,
+    motorAngleErrorRadians: 0.12,
+    motorSpeedErrorRadiansPerSecond: 0.15,
+    limitTravelTicks: 100,
+    limitOvershootRadians: 0.05,
+    limitArrivalRadians: 0.1,
+    torqueCapNm: 0.125,
+    drivenTorqueMinimumNm: 0.01,
+    coastTicks: 20,
+    coastSpeedRetentionMinimum: 0.8,
+    coastSpeedRetentionMaximum: 1.2,
+    movingAngularSpeedMinimum: 0.1,
+    disabledTranslationMinimumMetres: 0.05,
+});
+export const unrunGates = Object.freeze({
+    ordinaryBrowserLoading: 'NOT_RUN',
+    browserGraphicsAndShutdown: 'NOT_RUN',
+    nativeAllocationAccounting: 'NOT_RUN',
+    fullT17: 'NOT_RUN',
+    fullEX09: 'NOT_RUN',
+    full2128CellMatrix: 'NOT_RUN',
+    nineFormalGates: 'NOT_RUN',
+    pointToPoint: 'NOT_RUN',
+    liveScaleMutationAndRecreation: 'NOT_RUN',
+});

@@ -1,0 +1,34 @@
+{
+  "sourceCommit": "fc796747bb48fd011ba2f11458eaedf52c9a9980",
+  "files": [
+    {
+      "path": "tools/verify/box3d/public-trigger-events/ex09-sku-v2/consumer.mjs",
+      "sha256": "2a8b91c84d2ded03ed8010d124564a9f5195d24e023fef5fa5f9bffd2162e668"
+    },
+    {
+      "path": "tools/verify/box3d/public-trigger-events/ex09-sku-v2/scenario.mjs",
+      "sha256": "1c367fdb3272080c94da9fad76710a0d9b7a69161f9183290ece285eaa3c85a3"
+    },
+    {
+      "path": "tools/verify/box3d/public-trigger-events/ex09-sku-v2/assertions.mjs",
+      "sha256": "4673ba34f8e5d733d4b150632d573e4888f965018d8f5f97cc0a26a5d54d4ab7"
+    },
+    {
+      "path": "tools/verify/box3d/public-trigger-events/ex09-sku-v2/frozen/FIXTURE-SPEC.md",
+      "sha256": "c4d455de62aab26d97cfa180beefb07c3a6f2f0226442ddda8be4addf00afaa2"
+    },
+    {
+      "path": "tools/verify/box3d/public-trigger-events/ex09-sku-v2/frozen/config.json",
+      "sha256": "7456954e0c225c6aa4ee635645624bb3a085235f76ac3d5b1271d44c824e5827"
+    },
+    {
+      "path": "tools/verify/box3d/public-trigger-events/ex09-sku-v2/frozen/config.mjs",
+      "sha256": "cb3683e9dfbbec190a59810b3e6e00fdb1bc0fe5f846b2c1a258692384a86bbd"
+    },
+    {
+      "path": "tools/verify/box3d/public-trigger-events/ex09-sku-v2/frozen/main.ts",
+      "sha256": "b8a94ad7383ba7e46e37eb844da5f5c723a2d55ad90d1a85fb75cc16cafaeb48"
+    }
+  ],
+  "changes": ["Cohort identity/input adapter", "Public phase helper reuse", "Resolve frozen config from fixture URL"]
+}
