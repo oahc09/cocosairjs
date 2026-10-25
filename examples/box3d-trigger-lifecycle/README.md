@@ -47,13 +47,40 @@ identity with every export and do not overwrite failed attempts.
 - `app.run(scene)` performs synchronous onLoad before useCCD and velocity access. Actual CCD and velocity
   getters are recorded before validation; CPU call-order doubles reject premature access or mismatched readbacks.
 - Public diagnostics, window errors and unhandled rejections are retained. Faults stop the observation,
-  never select another backend, and leave Close enabled. Reset/release/close are serialized; a failed queued
-  operation does not strand later Close. Duplicate close clicks are ignored, failed close may be retried.
+  never select another backend, and leave Close enabled until the SDK close is invoked. Reset/release/close
+  are serialized; preparation failures retain owned identities and may retry preparation. Duplicate clicks
+  are ignored. **SDK223 permanently caches close(): after invocation, failure is terminal, not retryable.**
+  The page then disables Close and instructs export/reload; a cached failed receipt is never called success.
   Native release promises remain native responsibilities; there is no fabricated timeout-success receipt.
+
+## Public lifecycle cleanup (source/CPU checked; native fault injection NOT_RUN)
+
+Actual SDK223 `AirAppImpl` matches the referenced source: completed `releaseScene()` clears its in-flight
+Promise and performs the final deferred flush even without a current scene; `close()` permanently caches
+its Promise. This candidate invokes **releaseScene → owned assets destroy → second awaited releaseScene →
+close**, with no private flush. Both receipts and remaining live allocations are retained and checked.
+
+Every Scene, Node, Material and Mesh allocation is tracked immediately, before component setup, material
+initialization or mesh creation into the tracked Mesh. Construction/onLoad failure immediately attempts
+public cleanup: an unowned candidate Scene and orphan Nodes receive public destroy requests, followed by
+releaseScene flush. An app-owned Scene is left to public release. Assets are destroyed only after the first
+receipt and invalid-scene/node checks; second release flushes asset destruction before final SDK close.
+Failure retains identities and original/cleanup errors rather than dropping them. Refused handle disposal
+is recorded but cannot skip the other stops or public teardown attempts. No engine `_deferredDestroy` or
+other private method is called. All of this still requires actual native fault/lifecycle QA.
 
 ## Thin-mode comparison — not complete sensor CCD support
 
-Both thin modes freeze thickness=.01 m, speed=30 m/s, 24 ticks, sphere radius=.15 m. The other two zones
+**New controlled diagnostics and full CPU/source derivation:** [TRANSIENT-PROOF.md](TRANSIENT-PROOF.md).
+The sealed 3b/30 m/s results remain historical, not evidence for this new source revision.
+Two additional explicitly named 120 m/s modes use x₀=-8.25; they do not overwrite the original defaults.
+Every new mode remains browser/native **NOT_RUN**. Actual before/after endpoint/velocity/config/geometry qualification, including initial conditions,
+committed origin/rotation and a failure latch across the run, is separate from native callbacks and never declares CCD PASS.
+
+Original baseline modes:
+
+Both original baseline modes freeze thickness=.01 m, speed=30 m/s, 24 ticks, sphere radius=.15 m.
+They are explicitly endpoint/substep-confounded and cannot establish pure transient CCD. The other two zones
 remain visible in a separate lane z=-2 and do not intersect this experiment.
 
 | Mode | Moving source | Stationary target | Meaning |
@@ -68,6 +95,15 @@ worldGeneration/tickIndex/attemptId/nativeStepIndex/nativeMutationRevision and c
 creates enter/stay/exit, changes pose, or counts as native detection. No blanket “sensors have no CCD” claim;
 no event-flags, occlusion, >8-candidate capacity, dual-fast, hull or mesh support claim. False useCCD is not
 world continuous=false. SDK or capability errors fail closed, rather than synthesizing a positive outcome.
+
+## Fixed control-window diagnostics
+
+The three visible **New run · in-zone … round trip** presets retain original lifecycle physics. A real
+accepted count-zone enter anchors one sequence at +2/+4 hook ticks, applied through the same idle mutation
+path as manual controls. They record requested/due/actual tick, public getters and real visitor pose/intersection.
+Reset/Close/retirement cancel pending work; re-entry cannot rearm; conflicting manual controls are disabled.
+Trigger→solid can change the physical path, so restoration never promises a new enter. See the proof document
+for exact semantics and the fresh-run acceptance requirements. No browser script injection or manual step API.
 
 ## Event identity and evidence
 
@@ -98,12 +134,16 @@ are not established by CPU tests or by exported body motion alone.
    no post-retirement accepted stay/exit, no identity reuse, and no stale callbacks counted in a new generation.
    Observe spawned cube creation and 30-tick retirement separately. C24 full self/other/rebuild/reused-index
    engine matrix remains separate, not proven by application IDs alone.
-5. Run both thin modes separately. Freeze config; retain native callback sequences AND committed sweeps with
+5. Run both original 30 m/s baselines and both explicitly named 120 m/s diagnostics separately.
+   For the new diagnostics require 24/24 endpoint qualification rows, inspect both-object poses/velocities,
+   committed geometry and same-epoch sweep stamps. Any mismatch is INCONCLUSIVE, not eligible transient evidence.
+   The CPU/source substep model is not a direct native substep measurement. Freeze config; retain native callback sequences AND committed sweeps with
    matching hook epoch, actual post-step poses and screenshots. Fast-solid transient enter must not be deleted
    merely because end pose is outside; do not fabricate stay. Moving-sensor missing native hits are boundary
    observations, not a reason to synthesize events from sweep hits. No blanket expected hit count for unpromised paths.
 6. Exercise reset during motion, close during release, duplicate close and injected public diagnostic/window
-   errors. Ensure pending queue work settles, fresh mount is cancelled when closing, Close remains available,
+   errors. Ensure pending queue work settles, fresh mount is cancelled when closing, Close remains available
+   before SDK invocation (terminal SDK failure requires export/reload, never retry),
    failed receipts remain failures, and final release receipt is retained. Confirm actual browser close and
    resource baselines externally; app Close alone is not browser physical-close evidence.
 7. Run associated C21–C28 expanded inventory separately: C21-SNAPSHOT, C22-SENSOR-TRANSIENT, C23 channels,

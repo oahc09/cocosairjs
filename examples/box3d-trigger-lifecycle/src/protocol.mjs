@@ -3,9 +3,11 @@ export const FIXED_DT = 1 / 60;
 export const NATIVE_DT = Math.fround(FIXED_DT);
 export const SUBSTEPS = 4;
 export const MODES = Object.freeze({
-    lifecycle: Object.freeze({ speed: 1, thickness: 1, ticks: 480 }),
-    'fast-solid': Object.freeze({ speed: 30, thickness: 0.01, ticks: 24 }),
-    'moving-sensor': Object.freeze({ speed: 30, thickness: 0.01, ticks: 24 }),
+    lifecycle: Object.freeze({ speed: 1, thickness: 1, ticks: 480, start: -4, mover: 'solid', diagnostic: false }),
+    'fast-solid': Object.freeze({ speed: 30, thickness: 0.01, ticks: 24, start: -2, mover: 'solid', diagnostic: false }),
+    'moving-sensor': Object.freeze({ speed: 30, thickness: 0.01, ticks: 24, start: -2, mover: 'sensor', diagnostic: false }),
+    'fast-solid-transient120': Object.freeze({ speed: 120, thickness: 0.01, ticks: 24, start: -8.25, mover: 'solid', diagnostic: true }),
+    'moving-sensor-transient120': Object.freeze({ speed: 120, thickness: 0.01, ticks: 24, start: -8.25, mover: 'sensor', diagnostic: true }),
 });
 export function clock(context) {
     return { tickIndex: context.tickIndex, attemptId: context.attemptId,
