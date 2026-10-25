@@ -21,6 +21,7 @@ const { existsSync, renameSync } = require('fs-extra');
 const { dtsBundler } = require('@cocos/ccbuild');
 const { withDeclarationInputs } = require('./dts-inputs.cjs');
 const { stageExternalDeclarationTypes } = require('./dts-external-types.cjs');
+const { withSymbolDeclarations, stageSymbolDeclarations } = require('./dts-symbols.cjs');
 
 const ROOT = join(__dirname, '..', '..');
 const ENGINE = join(ROOT, 'src');
@@ -67,10 +68,12 @@ function copyOutput(outDir) {
     const started = Date.now();
     let buildOk = false;
     try {
-        await withDeclarationInputs(
-            ENGINE,
-            () => dtsBundler.build({ engine: ENGINE, outDir }),
-            (options) => stageExternalDeclarationTypes(options, ROOT),
+        await withSymbolDeclarations(ENGINE, (virtual) =>
+            withDeclarationInputs(
+                ENGINE,
+                () => dtsBundler.build({ engine: ENGINE, outDir }),
+                (options) => stageExternalDeclarationTypes(stageSymbolDeclarations(options, ENGINE, virtual), ROOT),
+            ),
         );
         buildOk = true;
     } catch (e) {

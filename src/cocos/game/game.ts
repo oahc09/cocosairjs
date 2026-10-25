@@ -1133,7 +1133,7 @@ export class Game extends EventTarget {
     private _disposeEvents (): void {
         let failed = false;
         let first: unknown;
-        const remove = (type: string, callback: () => void): void => {
+        const remove = (type: 'show' | 'hide' | 'close', callback: () => void): void => {
             try {
                 systemInfo.off(type, callback, this);
             } catch (error) {
