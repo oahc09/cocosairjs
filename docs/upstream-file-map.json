@@ -2,7 +2,7 @@
   "meta": {
     "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
     "note": "Air Path 与 Upstream Path 一致(前缀 src/)；modified 文件另行标注 reason；upstreamPath=null 表示该行为 Air 原创文件或上游产物（仓库内无对应源文件），必须 modified:true 并在 reason 说明出处",
-    "modifiedCount": 230,
+    "modifiedCount": 234,
     "pal": {
       "revision": "9f0e30acb31f6d670f2c0bf818d61039846a2860",
       "license": "MIT",
@@ -4529,8 +4529,8 @@
       "airPath": "src/cocos/particle/animator/texture-animation.ts",
       "upstreamPath": "cocos/particle/animator/texture-animation.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR F02 Code First: numTilesX/Y retain their values before a renderer target is bound and defer material updates to native initialization; use optional target access instead of dereferencing null. Baseline and copyright unchanged."
     },
     {
       "airPath": "src/cocos/particle/animator/velocity-overtime.ts",
@@ -4627,8 +4627,8 @@
       "airPath": "src/cocos/particle/particle-system.ts",
       "upstreamPath": "cocos/particle/particle-system.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR F02 late trail enable: move the existing lazy CPU trail initialization before simulation, so updateParticles cannot access an unbound trail owner/pool. Preserve native simulation, culling, material and buffer lifecycle; baseline and copyright unchanged."
     },
     {
       "airPath": "src/cocos/particle/particle-utils.ts",
@@ -4662,8 +4662,8 @@
       "airPath": "src/cocos/particle/renderer/particle-system-renderer-data.ts",
       "upstreamPath": "cocos/particle/renderer/particle-system-renderer-data.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR F02 Code First: alignment setter retains configuration before ParticleSystem/processor binding; onInit applies the stored alignment as before. Baseline and copyright unchanged."
     },
     {
       "airPath": "src/cocos/particle/renderer/particle-system-renderer-gpu.ts",
@@ -4676,8 +4676,8 @@
       "airPath": "src/cocos/particle/renderer/trail.ts",
       "upstreamPath": "cocos/particle/renderer/trail.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR F02 Code First: TrailModule.enable stores the requested state before ParticleSystem.onLoad/onInit, avoiding a null particle-system dereference. Native onInit synchronizes the renderer trail material after binding, including initially disabled trails enabled at runtime, then resolves it before rebuilding so the model transform/submodel is initialized. Native simulation and buffer allocation remain; upstream baseline and copyright unchanged."
     },
     {
       "airPath": "src/cocos/physics-2d/builtin/builtin-contact.ts",

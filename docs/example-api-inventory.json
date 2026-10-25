@@ -1,7 +1,7 @@
 {
   "source": "build/cocosair.module.d.ts",
-  "sourceFingerprint": "5c6c387a01b67e30",
-  "apiInventoryRevision": "af89ca48dde8070f",
+  "sourceFingerprint": "adc8b2c22cbfcfb5",
+  "apiInventoryRevision": "4d50b334c5539dea",
   "units": {
     "MeshBuffer": {
       "kind": "class",
@@ -53339,6 +53339,18 @@
       "coverageRequired": false,
       "parent": null
     },
+    "createAirInstanceMaterial": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "AIR_INSTANCE_ATTRIBUTES": {
+      "kind": "constant",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
     "AIR_VERSION": {
       "kind": "constant",
       "tier": "supporting",
@@ -54113,6 +54125,1770 @@
       "coverageRequired": false,
       "parent": null
     },
+    "createAirParticleSystem": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "ParticleSystem": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "ParticleSystem.capacity": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.startColor": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.scaleSpace": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.startSize3D": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.startSizeX": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.startSizeY": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.startSizeZ": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.startSpeed": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.startRotation3D": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.startRotationX": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.startRotationY": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.startRotationZ": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.startDelay": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.startLifetime": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.duration": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.loop": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.prewarm": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.simulationSpace": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.simulationSpeed": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.playOnAwake": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.gravityModifier": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.rateOverTime": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.rateOverDistance": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.bursts": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.renderCulling": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.cullingMode": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem._cullingMode": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.CullingMode": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.aabbHalfX": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.aabbHalfY": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.aabbHalfZ": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.dataCulling": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.sharedMaterials": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem._colorOverLifetimeModule": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.colorOverLifetimeModule": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem._shapeModule": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.shapeModule": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem._sizeOvertimeModule": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.sizeOvertimeModule": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem._velocityOvertimeModule": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.velocityOvertimeModule": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem._forceOvertimeModule": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.forceOvertimeModule": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem._limitVelocityOvertimeModule": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.limitVelocityOvertimeModule": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem._rotationOvertimeModule": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.rotationOvertimeModule": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem._textureAnimationModule": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.textureAnimationModule": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.noiseModule": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem._trailModule": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.trailModule": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.renderer": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.processor": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.constructor": {
+      "kind": "constructor",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.onFocusInEditor": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.onLoad": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem._onMaterialModified": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem._onRebuildPSO": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem._collectModels": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.play": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.pause": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.stopEmitting": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.stop": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.clear": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.getParticleCount": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.setCustomData1": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.setCustomData2": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.isPlaying": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.isPaused": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.isStopped": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.isEmitting": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.time": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem._onBeforeSerialize": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.getNoisePreview": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ShapeModule": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "ShapeModule.position": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ShapeModule"
+    },
+    "ShapeModule.rotation": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ShapeModule"
+    },
+    "ShapeModule.scale": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ShapeModule"
+    },
+    "ShapeModule.arc": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ShapeModule"
+    },
+    "ShapeModule.angle": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ShapeModule"
+    },
+    "ShapeModule.enable": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ShapeModule"
+    },
+    "ShapeModule._shapeType": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "ShapeModule"
+    },
+    "ShapeModule.shapeType": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ShapeModule"
+    },
+    "ShapeModule.emitFrom": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ShapeModule"
+    },
+    "ShapeModule.alignToDirection": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ShapeModule"
+    },
+    "ShapeModule.randomDirectionAmount": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ShapeModule"
+    },
+    "ShapeModule.sphericalDirectionAmount": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ShapeModule"
+    },
+    "ShapeModule.randomPositionAmount": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ShapeModule"
+    },
+    "ShapeModule.radius": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ShapeModule"
+    },
+    "ShapeModule.radiusThickness": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ShapeModule"
+    },
+    "ShapeModule.arcMode": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ShapeModule"
+    },
+    "ShapeModule.arcSpread": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ShapeModule"
+    },
+    "ShapeModule.arcSpeed": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ShapeModule"
+    },
+    "ShapeModule.length": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ShapeModule"
+    },
+    "ShapeModule.boxThickness": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ShapeModule"
+    },
+    "ShapeModule.constructor": {
+      "kind": "constructor",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ShapeModule"
+    },
+    "ShapeModule.onInit": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "ShapeModule"
+    },
+    "ShapeModule.emit": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "ShapeModule"
+    },
+    "CurveRange": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "CurveRange.Mode": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CurveRange"
+    },
+    "CurveRange.mode": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CurveRange"
+    },
+    "CurveRange.spline": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CurveRange"
+    },
+    "CurveRange.splineMin": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CurveRange"
+    },
+    "CurveRange.splineMax": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CurveRange"
+    },
+    "CurveRange.curve": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CurveRange"
+    },
+    "CurveRange.curveMin": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CurveRange"
+    },
+    "CurveRange.curveMax": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CurveRange"
+    },
+    "CurveRange.constant": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CurveRange"
+    },
+    "CurveRange.constantMin": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CurveRange"
+    },
+    "CurveRange.constantMax": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CurveRange"
+    },
+    "CurveRange.multiplier": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CurveRange"
+    },
+    "CurveRange.constructor": {
+      "kind": "constructor",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CurveRange"
+    },
+    "CurveRange.evaluate": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CurveRange"
+    },
+    "CurveRange.getMax": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CurveRange"
+    },
+    "CurveRange.isZero": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CurveRange"
+    },
+    "CurveRange._onBeforeSerialize": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "CurveRange"
+    },
+    "GradientRange": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "GradientRange.mode": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "GradientRange"
+    },
+    "GradientRange.Mode": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "GradientRange"
+    },
+    "GradientRange.color": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "GradientRange"
+    },
+    "GradientRange.colorMin": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "GradientRange"
+    },
+    "GradientRange.colorMax": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "GradientRange"
+    },
+    "GradientRange.gradient": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "GradientRange"
+    },
+    "GradientRange.gradientMin": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "GradientRange"
+    },
+    "GradientRange.gradientMax": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "GradientRange"
+    },
+    "GradientRange.evaluate": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "GradientRange"
+    },
+    "GradientRange._onBeforeSerialize": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "GradientRange"
+    },
+    "Burst": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "Burst.time": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "Burst"
+    },
+    "Burst.repeatCount": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "Burst"
+    },
+    "Burst.repeatInterval": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "Burst"
+    },
+    "Burst.count": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "Burst"
+    },
+    "Burst.constructor": {
+      "kind": "constructor",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "Burst"
+    },
+    "Burst.update": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "Burst"
+    },
+    "Burst.reset": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "Burst"
+    },
+    "Burst.getMaxCount": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "Burst"
+    },
+    "ParticleUtils": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "ParticleUtils.instantiate": {
+      "kind": "static",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleUtils"
+    },
+    "ParticleUtils.destroy": {
+      "kind": "static",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleUtils"
+    },
+    "ParticleUtils.play": {
+      "kind": "static",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleUtils"
+    },
+    "ParticleUtils.stop": {
+      "kind": "static",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleUtils"
+    },
+    "ParticleCurveMode": {
+      "kind": "constant",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "TrailModule": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "TrailModule.enable": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule._enable": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule.mode": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule.lifeTime": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule._minParticleDistance": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule.minParticleDistance": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule.space": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule.existWithParticles": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule.textureMode": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule.widthFromParticle": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule.widthRatio": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule.colorFromParticle": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule.colorOverTrail": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule.colorOvertime": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule.getModel": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule.constructor": {
+      "kind": "constructor",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule.onInit": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule.onEnable": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule.onDisable": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule._attachToScene": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule._detachFromScene": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule.destroy": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule.play": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule.clear": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule.updateMaterial": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule.update": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule.animate": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule.removeParticle": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule.updateRenderData": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule.updateIA": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule.beforeRender": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "ColorOvertimeModule": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "ColorOvertimeModule.constructor": {
+      "kind": "constructor",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ColorOvertimeModule"
+    },
+    "ColorOvertimeModule._enable": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "ColorOvertimeModule"
+    },
+    "ColorOvertimeModule.enable": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ColorOvertimeModule"
+    },
+    "ColorOvertimeModule.color": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ColorOvertimeModule"
+    },
+    "ColorOvertimeModule.name": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ColorOvertimeModule"
+    },
+    "ColorOvertimeModule.animate": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "ColorOvertimeModule"
+    },
+    "SizeOvertimeModule": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "SizeOvertimeModule.constructor": {
+      "kind": "constructor",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "SizeOvertimeModule"
+    },
+    "SizeOvertimeModule._enable": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "SizeOvertimeModule"
+    },
+    "SizeOvertimeModule.enable": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "SizeOvertimeModule"
+    },
+    "SizeOvertimeModule.separateAxes": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "SizeOvertimeModule"
+    },
+    "SizeOvertimeModule.size": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "SizeOvertimeModule"
+    },
+    "SizeOvertimeModule.x": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "SizeOvertimeModule"
+    },
+    "SizeOvertimeModule.y": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "SizeOvertimeModule"
+    },
+    "SizeOvertimeModule.z": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "SizeOvertimeModule"
+    },
+    "SizeOvertimeModule.name": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "SizeOvertimeModule"
+    },
+    "SizeOvertimeModule.animate": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "SizeOvertimeModule"
+    },
+    "VelocityOvertimeModule": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "VelocityOvertimeModule._enable": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "VelocityOvertimeModule"
+    },
+    "VelocityOvertimeModule.enable": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "VelocityOvertimeModule"
+    },
+    "VelocityOvertimeModule.x": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "VelocityOvertimeModule"
+    },
+    "VelocityOvertimeModule.y": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "VelocityOvertimeModule"
+    },
+    "VelocityOvertimeModule.z": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "VelocityOvertimeModule"
+    },
+    "VelocityOvertimeModule.speedModifier": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "VelocityOvertimeModule"
+    },
+    "VelocityOvertimeModule.space": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "VelocityOvertimeModule"
+    },
+    "VelocityOvertimeModule.name": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "VelocityOvertimeModule"
+    },
+    "VelocityOvertimeModule.constructor": {
+      "kind": "constructor",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "VelocityOvertimeModule"
+    },
+    "VelocityOvertimeModule.update": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "VelocityOvertimeModule"
+    },
+    "VelocityOvertimeModule.animate": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "VelocityOvertimeModule"
+    },
+    "ForceOvertimeModule": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "ForceOvertimeModule._enable": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "ForceOvertimeModule"
+    },
+    "ForceOvertimeModule.enable": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ForceOvertimeModule"
+    },
+    "ForceOvertimeModule.x": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ForceOvertimeModule"
+    },
+    "ForceOvertimeModule.y": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ForceOvertimeModule"
+    },
+    "ForceOvertimeModule.z": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ForceOvertimeModule"
+    },
+    "ForceOvertimeModule.space": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ForceOvertimeModule"
+    },
+    "ForceOvertimeModule.randomized": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ForceOvertimeModule"
+    },
+    "ForceOvertimeModule.name": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ForceOvertimeModule"
+    },
+    "ForceOvertimeModule.constructor": {
+      "kind": "constructor",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ForceOvertimeModule"
+    },
+    "ForceOvertimeModule.update": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "ForceOvertimeModule"
+    },
+    "ForceOvertimeModule.animate": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "ForceOvertimeModule"
+    },
+    "LimitVelocityOvertimeModule": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "LimitVelocityOvertimeModule._enable": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "LimitVelocityOvertimeModule"
+    },
+    "LimitVelocityOvertimeModule.enable": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "LimitVelocityOvertimeModule"
+    },
+    "LimitVelocityOvertimeModule.limitX": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "LimitVelocityOvertimeModule"
+    },
+    "LimitVelocityOvertimeModule.limitY": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "LimitVelocityOvertimeModule"
+    },
+    "LimitVelocityOvertimeModule.limitZ": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "LimitVelocityOvertimeModule"
+    },
+    "LimitVelocityOvertimeModule.limit": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "LimitVelocityOvertimeModule"
+    },
+    "LimitVelocityOvertimeModule.dampen": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "LimitVelocityOvertimeModule"
+    },
+    "LimitVelocityOvertimeModule.separateAxes": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "LimitVelocityOvertimeModule"
+    },
+    "LimitVelocityOvertimeModule.space": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "LimitVelocityOvertimeModule"
+    },
+    "LimitVelocityOvertimeModule.drag": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "LimitVelocityOvertimeModule"
+    },
+    "LimitVelocityOvertimeModule.multiplyDragByParticleSize": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "LimitVelocityOvertimeModule"
+    },
+    "LimitVelocityOvertimeModule.multiplyDragByParticleVelocity": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "LimitVelocityOvertimeModule"
+    },
+    "LimitVelocityOvertimeModule.name": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "LimitVelocityOvertimeModule"
+    },
+    "LimitVelocityOvertimeModule.constructor": {
+      "kind": "constructor",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "LimitVelocityOvertimeModule"
+    },
+    "LimitVelocityOvertimeModule.update": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "LimitVelocityOvertimeModule"
+    },
+    "LimitVelocityOvertimeModule.animate": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "LimitVelocityOvertimeModule"
+    },
+    "RotationOvertimeModule": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "RotationOvertimeModule.constructor": {
+      "kind": "constructor",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "RotationOvertimeModule"
+    },
+    "RotationOvertimeModule._enable": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "RotationOvertimeModule"
+    },
+    "RotationOvertimeModule.enable": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "RotationOvertimeModule"
+    },
+    "RotationOvertimeModule.separateAxes": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "RotationOvertimeModule"
+    },
+    "RotationOvertimeModule.x": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "RotationOvertimeModule"
+    },
+    "RotationOvertimeModule.y": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "RotationOvertimeModule"
+    },
+    "RotationOvertimeModule.z": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "RotationOvertimeModule"
+    },
+    "RotationOvertimeModule.name": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "RotationOvertimeModule"
+    },
+    "RotationOvertimeModule.animate": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "RotationOvertimeModule"
+    },
+    "TextureAnimationModule": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "TextureAnimationModule.constructor": {
+      "kind": "constructor",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TextureAnimationModule"
+    },
+    "TextureAnimationModule.enable": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TextureAnimationModule"
+    },
+    "TextureAnimationModule.mode": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TextureAnimationModule"
+    },
+    "TextureAnimationModule.numTilesX": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TextureAnimationModule"
+    },
+    "TextureAnimationModule.numTilesY": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TextureAnimationModule"
+    },
+    "TextureAnimationModule.animation": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TextureAnimationModule"
+    },
+    "TextureAnimationModule.frameOverTime": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TextureAnimationModule"
+    },
+    "TextureAnimationModule.startFrame": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TextureAnimationModule"
+    },
+    "TextureAnimationModule.cycleCount": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TextureAnimationModule"
+    },
+    "TextureAnimationModule.flipU": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TextureAnimationModule"
+    },
+    "TextureAnimationModule.flipV": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TextureAnimationModule"
+    },
+    "TextureAnimationModule.uvChannelMask": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TextureAnimationModule"
+    },
+    "TextureAnimationModule.randomRow": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TextureAnimationModule"
+    },
+    "TextureAnimationModule.rowIndex": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TextureAnimationModule"
+    },
+    "TextureAnimationModule.name": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TextureAnimationModule"
+    },
+    "TextureAnimationModule.init": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "TextureAnimationModule"
+    },
+    "TextureAnimationModule.animate": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "TextureAnimationModule"
+    },
+    "NoiseModule": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "NoiseModule.constructor": {
+      "kind": "constructor",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "NoiseModule"
+    },
+    "NoiseModule._enable": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "NoiseModule"
+    },
+    "NoiseModule.enable": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "NoiseModule"
+    },
+    "NoiseModule.strengthX": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "NoiseModule"
+    },
+    "NoiseModule.strengthY": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "NoiseModule"
+    },
+    "NoiseModule.strengthZ": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "NoiseModule"
+    },
+    "NoiseModule.noiseSpeedX": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "NoiseModule"
+    },
+    "NoiseModule.noiseSpeedY": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "NoiseModule"
+    },
+    "NoiseModule.noiseSpeedZ": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "NoiseModule"
+    },
+    "NoiseModule.noiseFrequency": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "NoiseModule"
+    },
+    "NoiseModule.remapX": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "NoiseModule"
+    },
+    "NoiseModule.remapY": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "NoiseModule"
+    },
+    "NoiseModule.remapZ": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "NoiseModule"
+    },
+    "NoiseModule.octaves": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "NoiseModule"
+    },
+    "NoiseModule.octaveMultiplier": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "NoiseModule"
+    },
+    "NoiseModule.octaveScale": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "NoiseModule"
+    },
+    "NoiseModule.name": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "NoiseModule"
+    },
+    "NoiseModule.animate": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "NoiseModule"
+    },
+    "NoiseModule.getNoisePreview": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "NoiseModule"
+    },
+    "ParticleSpace": {
+      "kind": "enum",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "ParticleCullingMode": {
+      "kind": "enum",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "ParticleAlignmentSpace": {
+      "kind": "enum",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "ParticleRenderMode": {
+      "kind": "enum",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "ParticleShapeType": {
+      "kind": "enum",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "ParticleEmitLocation": {
+      "kind": "enum",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "ParticleArcMode": {
+      "kind": "enum",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "ParticleTrailMode": {
+      "kind": "enum",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "ParticleTextureMode": {
+      "kind": "enum",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "ParticleModuleRandSeed": {
+      "kind": "enum",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
     "GLTFAsset": {
       "kind": "class",
       "tier": "core",
@@ -54656,6 +56432,36 @@
       "parent": null
     },
     "createAirPostProcess": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "createAirInstanceBatch": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "createAirMorphField": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "sampleAirImageShape": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "sampleAirTriangleShape": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "sampleAirTextShape": {
       "kind": "function",
       "tier": "supporting",
       "coverageRequired": false,
@@ -73537,6 +75343,678 @@
       "coverageRequired": false,
       "parent": null
     },
+    "__private._cocos_particle_renderer_particle_system_renderer_data__default": {
+      "kind": "class",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "__private._cocos_particle_renderer_particle_system_renderer_data__default.renderMode": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_renderer_particle_system_renderer_data__default"
+    },
+    "__private._cocos_particle_renderer_particle_system_renderer_data__default.velocityScale": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_renderer_particle_system_renderer_data__default"
+    },
+    "__private._cocos_particle_renderer_particle_system_renderer_data__default.lengthScale": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_renderer_particle_system_renderer_data__default"
+    },
+    "__private._cocos_particle_renderer_particle_system_renderer_data__default.mesh": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_renderer_particle_system_renderer_data__default"
+    },
+    "__private._cocos_particle_renderer_particle_system_renderer_data__default.particleMaterial": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_renderer_particle_system_renderer_data__default"
+    },
+    "__private._cocos_particle_renderer_particle_system_renderer_data__default.cpuMaterial": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_renderer_particle_system_renderer_data__default"
+    },
+    "__private._cocos_particle_renderer_particle_system_renderer_data__default.gpuMaterial": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_renderer_particle_system_renderer_data__default"
+    },
+    "__private._cocos_particle_renderer_particle_system_renderer_data__default.trailMaterial": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_renderer_particle_system_renderer_data__default"
+    },
+    "__private._cocos_particle_renderer_particle_system_renderer_data__default.mainTexture": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_renderer_particle_system_renderer_data__default"
+    },
+    "__private._cocos_particle_renderer_particle_system_renderer_data__default.useGPU": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_renderer_particle_system_renderer_data__default"
+    },
+    "__private._cocos_particle_renderer_particle_system_renderer_data__default.alignSpace": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_renderer_particle_system_renderer_data__default"
+    },
+    "__private._cocos_particle_renderer_particle_system_renderer_data__default.AlignmentSpace": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_renderer_particle_system_renderer_data__default"
+    },
+    "__private._cocos_particle_renderer_particle_system_renderer_data__default.create": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_renderer_particle_system_renderer_data__default"
+    },
+    "__private._cocos_particle_renderer_particle_system_renderer_data__default.onInit": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_renderer_particle_system_renderer_data__default"
+    },
+    "__private._cocos_particle_renderer_particle_system_renderer_cpu__PVData": {
+      "kind": "class",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "__private._cocos_particle_renderer_particle_system_renderer_cpu__PVData.position": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_renderer_particle_system_renderer_cpu__PVData"
+    },
+    "__private._cocos_particle_renderer_particle_system_renderer_cpu__PVData.texcoord": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_renderer_particle_system_renderer_cpu__PVData"
+    },
+    "__private._cocos_particle_renderer_particle_system_renderer_cpu__PVData.size": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_renderer_particle_system_renderer_cpu__PVData"
+    },
+    "__private._cocos_particle_renderer_particle_system_renderer_cpu__PVData.rotation": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_renderer_particle_system_renderer_cpu__PVData"
+    },
+    "__private._cocos_particle_renderer_particle_system_renderer_cpu__PVData.color": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_renderer_particle_system_renderer_cpu__PVData"
+    },
+    "__private._cocos_particle_renderer_particle_system_renderer_cpu__PVData.velocity": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_renderer_particle_system_renderer_cpu__PVData"
+    },
+    "__private._cocos_particle_renderer_particle_system_renderer_cpu__PVData.constructor": {
+      "kind": "constructor",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_renderer_particle_system_renderer_cpu__PVData"
+    },
+    "__private._cocos_particle_particle__Particle": {
+      "kind": "class",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "__private._cocos_particle_particle__Particle.INDENTIFY_NEG_QUAT": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_particle__Particle"
+    },
+    "__private._cocos_particle_particle__Particle.R2D": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_particle__Particle"
+    },
+    "__private._cocos_particle_particle__Particle.particleSystem": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_particle__Particle"
+    },
+    "__private._cocos_particle_particle__Particle.position": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_particle__Particle"
+    },
+    "__private._cocos_particle_particle__Particle.velocity": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_particle__Particle"
+    },
+    "__private._cocos_particle_particle__Particle.animatedVelocity": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_particle__Particle"
+    },
+    "__private._cocos_particle_particle__Particle.ultimateVelocity": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_particle__Particle"
+    },
+    "__private._cocos_particle_particle__Particle.angularVelocity": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_particle__Particle"
+    },
+    "__private._cocos_particle_particle__Particle.axisOfRotation": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_particle__Particle"
+    },
+    "__private._cocos_particle_particle__Particle.rotation": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_particle__Particle"
+    },
+    "__private._cocos_particle_particle__Particle.startEuler": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_particle__Particle"
+    },
+    "__private._cocos_particle_particle__Particle.startRotation": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_particle__Particle"
+    },
+    "__private._cocos_particle_particle__Particle.startRotated": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_particle__Particle"
+    },
+    "__private._cocos_particle_particle__Particle.deltaQuat": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_particle__Particle"
+    },
+    "__private._cocos_particle_particle__Particle.deltaMat": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_particle__Particle"
+    },
+    "__private._cocos_particle_particle__Particle.localMat": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_particle__Particle"
+    },
+    "__private._cocos_particle_particle__Particle.startSize": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_particle__Particle"
+    },
+    "__private._cocos_particle_particle__Particle.size": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_particle__Particle"
+    },
+    "__private._cocos_particle_particle__Particle.startColor": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_particle__Particle"
+    },
+    "__private._cocos_particle_particle__Particle.color": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_particle__Particle"
+    },
+    "__private._cocos_particle_particle__Particle.randomSeed": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_particle__Particle"
+    },
+    "__private._cocos_particle_particle__Particle.remainingLifetime": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_particle__Particle"
+    },
+    "__private._cocos_particle_particle__Particle.loopCount": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_particle__Particle"
+    },
+    "__private._cocos_particle_particle__Particle.lastLoop": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_particle__Particle"
+    },
+    "__private._cocos_particle_particle__Particle.trailDelay": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_particle__Particle"
+    },
+    "__private._cocos_particle_particle__Particle.startLifetime": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_particle__Particle"
+    },
+    "__private._cocos_particle_particle__Particle.emitAccumulator0": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_particle__Particle"
+    },
+    "__private._cocos_particle_particle__Particle.emitAccumulator1": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_particle__Particle"
+    },
+    "__private._cocos_particle_particle__Particle.frameIndex": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_particle__Particle"
+    },
+    "__private._cocos_particle_particle__Particle.startRow": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_particle__Particle"
+    },
+    "__private._cocos_particle_particle__Particle.constructor": {
+      "kind": "constructor",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_particle__Particle"
+    },
+    "__private._cocos_particle_particle__Particle.reset": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_particle__Particle"
+    },
+    "__private._cocos_particle_models_particle_batch_model__default": {
+      "kind": "class",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "__private._cocos_particle_models_particle_batch_model__default.constructor": {
+      "kind": "constructor",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_models_particle_batch_model__default"
+    },
+    "__private._cocos_particle_models_particle_batch_model__default.setCapacity": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_models_particle_batch_model__default"
+    },
+    "__private._cocos_particle_models_particle_batch_model__default.setVertexAttributes": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_models_particle_batch_model__default"
+    },
+    "__private._cocos_particle_models_particle_batch_model__default.updateMaterial": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_models_particle_batch_model__default"
+    },
+    "__private._cocos_particle_models_particle_batch_model__default.addParticleVertexData": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_models_particle_batch_model__default"
+    },
+    "__private._cocos_particle_models_particle_batch_model__default.addGPUParticleVertexData": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_models_particle_batch_model__default"
+    },
+    "__private._cocos_particle_models_particle_batch_model__default.updateGPUParticles": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_models_particle_batch_model__default"
+    },
+    "__private._cocos_particle_models_particle_batch_model__default.constructAttributeIndex": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_models_particle_batch_model__default"
+    },
+    "__private._cocos_particle_models_particle_batch_model__default.updateIA": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_models_particle_batch_model__default"
+    },
+    "__private._cocos_particle_models_particle_batch_model__default.clear": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_models_particle_batch_model__default"
+    },
+    "__private._cocos_particle_models_particle_batch_model__default.destroy": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_models_particle_batch_model__default"
+    },
+    "__private._cocos_particle_models_particle_batch_model__default.doDestroy": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_models_particle_batch_model__default"
+    },
+    "__private._cocos_particle_models_particle_batch_model__default.useInstance": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_models_particle_batch_model__default"
+    },
+    "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase": {
+      "kind": "class",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase.constructor": {
+      "kind": "constructor",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase"
+    },
+    "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase.getUseInstance": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase"
+    },
+    "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase.getInfo": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase"
+    },
+    "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase.onInit": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase"
+    },
+    "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase.onEnable": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase"
+    },
+    "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase.onDisable": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase"
+    },
+    "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase.onDestroy": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase"
+    },
+    "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase.attachToScene": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase"
+    },
+    "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase.detachFromScene": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase"
+    },
+    "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase.setVertexAttributes": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase"
+    },
+    "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase.clear": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase"
+    },
+    "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase.getModel": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase"
+    },
+    "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase.updateTrailMaterial": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase"
+    },
+    "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase.getDefaultTrailMaterial": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase"
+    },
+    "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase.getParticleCount": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase"
+    },
+    "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase.getFreeParticle": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase"
+    },
+    "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase.onMaterialModified": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase"
+    },
+    "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase.onRebuildPSO": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase"
+    },
+    "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase.updateVertexAttrib": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase"
+    },
+    "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase.updateRenderMode": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase"
+    },
+    "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase.updateMaterialParams": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase"
+    },
+    "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase.setNewParticle": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase"
+    },
+    "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase.getDefaultMaterial": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase"
+    },
+    "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase.updateRotation": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase"
+    },
+    "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase.updateScale": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase"
+    },
+    "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase.updateParticles": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase"
+    },
+    "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase.updateRenderData": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase"
+    },
+    "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase.enableModule": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase"
+    },
+    "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase.beforeRender": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase"
+    },
+    "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase.setUseInstance": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase"
+    },
+    "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase.getNoisePreview": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase"
+    },
+    "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase.updateAlignSpace": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase"
+    },
+    "__private._cocos_particle_particle__ParticleModuleBase": {
+      "kind": "class",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "__private._cocos_particle_particle__ParticleModuleBase.enable": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_particle__ParticleModuleBase"
+    },
+    "__private._cocos_particle_particle__ParticleModuleBase.target": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_particle__ParticleModuleBase"
+    },
+    "__private._cocos_particle_particle__ParticleModuleBase.needUpdate": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_particle__ParticleModuleBase"
+    },
+    "__private._cocos_particle_particle__ParticleModuleBase.needAnimate": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_particle__ParticleModuleBase"
+    },
+    "__private._cocos_particle_particle__ParticleModuleBase.bindTarget": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_particle__ParticleModuleBase"
+    },
+    "__private._cocos_particle_particle__ParticleModuleBase.update": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_particle__ParticleModuleBase"
+    },
+    "__private._cocos_particle_particle__ParticleModuleBase.name": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_particle__ParticleModuleBase"
+    },
+    "__private._cocos_particle_particle__ParticleModuleBase.animate": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "__private._cocos_particle_particle__ParticleModuleBase"
+    },
     "__private._air_assets_gltf_parser_context__GLTFParserContext": {
       "kind": "class",
       "tier": "internal",
@@ -82132,9 +84610,9 @@
     "core": 964,
     "important": 283,
     "advanced": 192,
-    "supporting": 8830,
-    "internal": 3257
+    "supporting": 9088,
+    "internal": 3412
   },
-  "totalUnits": 13526,
+  "totalUnits": 13939,
   "coverageRequiredUnits": 1439
 }

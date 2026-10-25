@@ -242,6 +242,18 @@ npm run dev -- --example hello-cube --port 7454
 
 主入口提供 `createAirPostProcess(camera, { levels: 5, toneMapping: 'aces', exposure: 1 })`，开箱即用的线性 HDR 捕获、多级 Bloom、ACES/Reinhard 和统一 sRGB 输出。先创建 app，再装配相机；参见 [用法与边界](docs/guides/hdr-post-processing.md) 、[AFTERLIGHT 光环装置](examples/afterlight/index.html) 和 [霓虹夜城示例](examples/neon-city/index.html)。当前支持默认 WebGL2 ForwardPipeline。
 
+## 动态实例批次
+
+动态物件批次可用 `createAirInstanceBatch`：一个原生 Node/Model 共享索引几何，支持实例变换/颜色、范围提交、显式扩容、包围盒和射线选择。用法及 WebGL2/材质边界见[动态实例批次](docs/guides/instance-batches.md)。
+
+## Code First 3D 粒子
+
+`createAirParticleSystem` 直接装配原生 CPU/GPU 粒子与模块，支持纯代码配置发射器、曲线和 CPU 拖尾。示例 `/particles-3d/` 提供喷射、火星、烟雾粒子、雨、雪及暂停/继续/重播。用法与 GPU 模块边界见 [3D 粒子指南](docs/guides/particles.md)。
+
+## GPU 点 / 体素形变
+
+`createAirMorphField` 将文字、图像和网格采样为共享实例批次，形态与颜色由 GPU 插值；进度更新不重传样本数据。示例 `/morph-field/` 提供 16,384 个样本、点/体素切换和 HDR 输出。数据、设备与释放合同见 [GPU 形态场](docs/guides/morph-fields.md)。
+
 ## 可选：Spark 独立模块
 
 在引擎仓库运行 npm run build:spark，然后将 spark.module.js 与主引擎 JS 放在同一个部署目录：

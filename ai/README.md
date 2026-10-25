@@ -13,6 +13,7 @@
 
 | 主题 | 计划 | 执行台账 |
 | --- | --- | --- |
+| 高质量互动内容功能补全 | [F01–F18 任务书](plans/vibe-content-capabilities.md) | [执行台账](ledgers/vibe-content-capabilities.md) |
 | Code First 与 Web 可靠性 | [计划](plans/code-first-web-reliability.md) | [台账](ledgers/code-first-web-reliability.md) |
 | API 场景、开发范式与 Shader | [计划](plans/api-scenarios-shaders.md) | [台账](ledgers/api-scenarios-shaders.md) |
 | 引擎抽取 | [计划](plans/engine-extraction.md) | — |

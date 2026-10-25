@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-24T10:58:26.172Z",
+  "generatedAt": "2026-10-25T09:33:02.700Z",
   "revision": "fa54a3f6",
   "examples": [
     {
@@ -4982,6 +4982,79 @@
         "verified": 28,
         "attested": 0,
         "units": 28
+      }
+    },
+    {
+      "dir": "instance-batch",
+      "id": "instance-batch",
+      "version": "1.0.0",
+      "title": "Dynamic Instance Batches",
+      "category": "rendering",
+      "status": "draft",
+      "specStatus": "draft",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "使用一个原生 Node/Model 与共享几何构造可更新、可拾取的实例批次",
+        "points": [
+          "暂存数据与已提交数据分离",
+          "显式容量、有效数量、范围提交",
+          "包围盒、射线选择与实际绘制一致",
+          "零实例和共享资源所有权"
+        ]
+      },
+      "effect": {
+        "functional": "创建一个批次，按钮执行扩容、范围更新、清空和恢复；指针根据原生相机射线选择实例。",
+        "visual": "彩色索引方块组成网格；扩容后显示 2048 实例，范围更新改变前 16 个颜色，选中实例高亮。"
+      },
+      "api": {
+        "primary": [
+          "createAirInstanceBatch"
+        ],
+        "supporting": [
+          "utils.createMesh",
+          "Camera",
+          "Node",
+          "Scene"
+        ],
+        "claims": [
+          "createAirInstanceBatch",
+          "utils.createMesh",
+          "Camera",
+          "Node",
+          "Scene"
+        ]
+      },
+      "capabilities": [
+        "rendering"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Instance batch"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "scene-ready",
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "interaction": [],
+        "lifecycle": [],
+        "capability": []
       }
     },
     {
@@ -13438,6 +13511,84 @@
       }
     },
     {
+      "dir": "morph-field",
+      "id": "morph-field",
+      "version": "1.0.0",
+      "title": "FORM / MATTER — GPU Morph Fields",
+      "category": "rendering",
+      "status": "draft",
+      "specStatus": "draft",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "用原生索引实例化与 GPU 形态纹理连续变形文字、网格和图像",
+        "points": [
+          "固定样本索引和线性 RGB",
+          "进度 uniform 与静态形态纹理",
+          "全形态 envelope bounds",
+          "点/体素与资源所有权",
+          "形态法线与程序化摄影棚反射"
+        ]
+      },
+      "effect": {
+        "functional": "形态选择、进度、点/体素、自动往返、暂停及拖动旋转；竖屏重新适配。",
+        "visual": "16,384 个样本形成文字、球体、斜置圆环和原创图像；抛光表面具有视角反射、清漆亮带和可调粗糙度，经 HDR 输出。"
+      },
+      "api": {
+        "primary": [
+          "createAirMorphField"
+        ],
+        "supporting": [
+          "sampleAirTextShape",
+          "sampleAirImageShape",
+          "sampleAirTriangleShape",
+          "Camera",
+          "Node",
+          "Scene"
+        ],
+        "claims": [
+          "createAirMorphField",
+          "sampleAirTextShape",
+          "sampleAirImageShape",
+          "sampleAirTriangleShape",
+          "Camera",
+          "Node",
+          "Scene"
+        ]
+      },
+      "capabilities": [
+        "rendering"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Morph field"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "scene-ready",
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "interaction": [],
+        "lifecycle": [],
+        "capability": []
+      }
+    },
+    {
       "dir": "neon-city",
       "id": "neon-city",
       "version": "1.0.0",
@@ -14797,6 +14948,78 @@
         "verified": 23,
         "attested": 11,
         "units": 34
+      }
+    },
+    {
+      "dir": "particles-3d",
+      "id": "particles-3d",
+      "version": "1.0.0",
+      "title": "Native 3D Particles",
+      "category": "rendering",
+      "status": "draft",
+      "specStatus": "draft",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "无编辑器资产装配原生 CPU/GPU 粒子与拖尾",
+        "points": [
+          "模块在激活前配置",
+          "原生暂停、自然衰减与重播",
+          "世界与本地模拟空间",
+          "节点销毁与共享资产所有权"
+        ]
+      },
+      "effect": {
+        "functional": "左右两套粒子处理器，按钮控制暂停、继续、停止发射与清空重播。",
+        "visual": "橙色 CPU 粒子带拖尾，蓝色 GPU 喷射，生命周期尺寸曲线。"
+      },
+      "api": {
+        "primary": [
+          "createAirParticleSystem"
+        ],
+        "supporting": [
+          "Camera",
+          "Node",
+          "Scene"
+        ],
+        "claims": [
+          "createAirParticleSystem",
+          "Camera",
+          "Node",
+          "Scene"
+        ]
+      },
+      "capabilities": [
+        "rendering"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "CPU trails",
+            "GPU fountain"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "scene-ready",
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "interaction": [],
+        "lifecycle": [],
+        "capability": []
       }
     },
     {
@@ -22476,7 +22699,10 @@
       "shader-driver-pilot",
       "spark-splats",
       "neon-city",
-      "afterlight"
+      "afterlight",
+      "instance-batch",
+      "particles-3d",
+      "morph-field"
     ],
     "shader": [
       "shader-custom-gradient",

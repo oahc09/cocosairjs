@@ -1,5 +1,9 @@
 # UPSTREAM
 
+2026-10-25 提交前拖尾边界复核：`particle/particle-system.ts` 将已有 CPU 拖尾按需初始化移到模拟前，避免初始关闭、运行中开启时模拟先访问未绑定的 owner/pool。`particle/renderer/trail.ts` 在 onInit 绑定所属系统后同步 renderer 拖尾材质；保留原生模拟、剔除与资源创建/释放流程。真实浏览器反例原先 indexCount=0（直接诊断暴露 null owner），修复后要求实际索引几何，不以 enable 字段代替绘制。记录见 [执行台账](../ai/ledgers/vibe-content-capabilities.md)。
+
+2026-10-25 F02 Code First 粒子接入：AIR 装配层导出原生 ParticleSystem 与模块，在 inactive Node 上配置后激活；不新增模拟器。`particle/renderer/trail.ts` 的 enable setter 在尚未绑定 ParticleSystem 时只保存状态，onInit 绑定后先解析材质再构造模型，避免提前访问 null 或创建缺少 transform 的模型。`animator/texture-animation.ts` 的 tiles setter 与 `renderer/particle-system-renderer-data.ts` 的 alignment setter 也在绑定前只保存配置，原生初始化继续负责刷新。基线与版权保持；进度和当前验证范围见 [执行台账](../ai/ledgers/vibe-content-capabilities.md)。
+
 2026-10-24 A4 dynamic mesh synchronization: Mesh.updateSubMesh emits a commit event after updating buffers, counts and bounds. MeshRenderer subscribes at mesh/lifecycle binding boundaries and reuses onGeometryChanged for all sharing renderers, including their world transforms. Rebind and pre-destroy detach old listeners, including components never activated; pending destruction ignores updates. Manual notification remains compatible. This fixes the engine-local stale-bounds/draw-info contract, without attributing historical E02/E04 inputs.
 
 2026-10-24 effect/shader contracts: EffectAsset and legacy ProgramLib normalize omitted resource arrays, reject malformed array values before metadata/template publication, derive missing content hashes and reject hash/content cache conflicts. WebGL2 compile/link failures carry structured diagnostics and the exact submitted source; failure cleanup releases every created stage and failed program. Implementations live in AIR-owned helpers; extracted file headers and the pinned baseline remain unchanged. Dynamic-mesh historical E02/E04 attribution is not implied by these changes.

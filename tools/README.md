@@ -338,6 +338,14 @@ The output directory must not exist. The tool checks all four archives before wr
 
 `node tools/verify/hdr-post-process.cjs --out=output/hdr-attempt` runs bounded real Chromium calibration and the neon-city controls. Optional `--bundle=<candidate.js>` selects a candidate runtime. Requires Playwright/browser, pngjs and esbuild. Writes a new attempt directory with raw screenshots, source/runtime fingerprints and report; refuses an existing directory and never publishes canonical example evidence. Validates float HDR capture, tone curves, exposure, Bloom spread, resize and release/recreation. Browser close acknowledgement is separate from compositor presentation and OS shutdown evidence.
 
+### Native 3D particles
+
+`node tools/verify/particles.cjs --bundle=<candidate.js> --out=output/playwright/new-particles-attempt` verifies Code First CPU/GPU particle initialization, actual colored pixels and trail geometry, size curves, local/world spaces, pause/resume/drain/replay, invalid GPU module rejection, native GPU resource deletion and reentry. Requires Playwright/browser, pngjs and esbuild. Writes a new local attempt and retains failures; it does not publish canonical evidence or claim compositor timing/OS process custody.
+
+### GPU point/voxel morph fields
+
+`node tools/verify/morph-field.cjs --bundle=<candidate.js> --out=output/playwright/new-morph-attempt` validates GPU position/color interpolation through real pixels, actual indexed instance counts, zero shape/instance transfers during progress changes, atlas row boundaries, font sampling, parent transforms and native GPU deletion. It also checks the FORM / MATTER controls and portrait output. Requires Playwright/browser, pngjs and esbuild. Retains a new local report and screenshots; no canonical promotion, GPU throughput or OS process-custody claim.
+
 ### AFTERLIGHT visual study
 
 `node tools/verify/afterlight-example.cjs --out=output/new-afterlight-attempt` verifies the procedural light-sculpture example with real Chromium screenshots, actual HDR reflection, tone/exposure/Bloom controls, pause/resume, orbit, portrait projection and texture release. `--url=http://127.0.0.1:7454/afterlight/` verifies an already-running real dev server and checks its served bundle hash. `--bundle=<candidate.js>` selects a runtime; Playwright/browser, esbuild and pngjs are required. It writes a new isolated local attempt, retains failures and never publishes canonical Gallery evidence.

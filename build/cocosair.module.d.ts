@@ -55826,6 +55826,14 @@
      * Its native world matrix, instancing, skinning and morph code is retained.
      */
     export function createAirUnlitFogEffect(): EffectAsset;
+    /** Opaque, double-sided unlit instance material. Input RGB is linear; HDR captures bypass display encoding. */
+    export function createAirInstanceMaterial(baseColor?: Readonly<math.Vec4>): Material;
+    export const AIR_INSTANCE_ATTRIBUTES: readonly [
+        "i_airMat0",
+        "i_airMat1",
+        "i_airMat2",
+        "i_airColor"
+    ];
     export interface AirSceneReleaseReceipt extends AirCleanupReceipt {
         readonly scene: string | null;
         readonly retained: readonly string[];
@@ -57195,6 +57203,1565 @@
         capped?: boolean;
         arc?: number;
     });
+    /** Create and configure the native component without editor-serialized module objects. */
+    export function createAirParticleSystem(options: AirParticleOptions): ParticleSystem;
+    /**
+     * @en
+     * Particle system component, which can make many effects such as smoke and fire.
+     * Include some interesting modules and components such as Velocity Overtime, Force Overtime, Trail and Noise.
+     * You can open these modules to see how the particles animate.
+     * @zh
+     * 粒子系统能够用来制作许多特效，例如 烟雾和火焰。
+     * 包含一些有趣的模块，例如 速度模块，受力模块，拖尾模块和噪声模块。
+     * 打开这些模块可以看到粒子如何进行变化。
+     */
+    export class ParticleSystem extends ModelRenderer {
+        /**
+         * @en Maximum particle capacity to generate.
+         * @zh 粒子系统能生成的最大粒子数量。
+         */
+        get capacity(): number;
+        set capacity(val: number);
+        /**
+         * @en The initial color of the particle.
+         * @zh 粒子初始颜色。
+         */
+        startColor: GradientRange;
+        /**
+         * @en The space of particle scaling.
+         * @zh 计算粒子缩放的空间。
+         */
+        scaleSpace: ParticleSpace;
+        /**
+         * @en Whether to modify particle size on XYZ axis.
+         * @zh 是否需要修改粒子在三个轴上的大小。
+         */
+        startSize3D: boolean;
+        /**
+         * @en The initial X size of the particle.
+         * @zh 粒子初始x轴方向大小。
+         */
+        startSizeX: CurveRange;
+        /**
+         * @en The initial Y size of the particle.
+         * @zh 粒子初始y轴方向大小。
+         */
+        startSizeY: CurveRange;
+        /**
+         * @en The initial Z size of the particle.
+         * @zh 粒子初始z轴方向大小。
+         */
+        startSizeZ: CurveRange;
+        /**
+         * @en The initial velocity of the particle.
+         * @zh 粒子初始速度。
+         */
+        startSpeed: CurveRange;
+        /**
+         * @en Whether to modify particle rotation on XYZ axis.
+         * @zh 是否需要修改粒子在三个轴上的旋转。
+         */
+        startRotation3D: boolean;
+        /**
+         * @en The initial rotation angle of the particle on X axis.
+         * @zh 粒子初始x轴旋转角度。
+         */
+        startRotationX: CurveRange;
+        /**
+         * @en The initial rotation angle of the particle on Y axis.
+         * @zh 粒子初始y轴旋转角度。
+         */
+        startRotationY: CurveRange;
+        /**
+         * @en The initial rotation angle of the particle on Z axis.
+         * @zh 粒子初始z轴旋转角度。
+         */
+        startRotationZ: CurveRange;
+        /**
+         * @en The time delay to start emission after the particle system starts running.
+         * @zh 粒子系统开始运行后，延迟粒子发射的时间。
+         */
+        startDelay: CurveRange;
+        /**
+         * @en Particle life time.
+         * @zh 粒子生命周期。
+         */
+        startLifetime: CurveRange;
+        /**
+         * @en Particle system emitter duration time.
+         * @zh 粒子系统发射器运行时间。
+         */
+        duration: number;
+        /**
+         * @en Whether the particle system is looping.
+         * @zh 粒子系统是否循环播放。
+         */
+        loop: boolean;
+        /**
+         * @en Play one round before start this particle system.
+         * @zh 选中之后，粒子系统会以已播放完一轮之后的状态开始播放（仅当循环播放启用时有效）。
+         */
+        get prewarm(): boolean;
+        set prewarm(val: boolean);
+        /**
+         * @en The simulation space of the particle system, it could be world, local or custom.
+         * @zh 选择粒子系统所在的坐标系[[Space]]。<br>
+         */
+        get simulationSpace(): number;
+        set simulationSpace(val: number);
+        /**
+         * @en The simulation speed of the particle system.
+         * @zh 控制整个粒子系统的更新速度。
+         */
+        simulationSpeed: number;
+        /**
+         * @en Automatically start playing after particle system initialized.
+         * @zh 粒子系统加载后是否自动开始播放。
+         */
+        playOnAwake: boolean;
+        /**
+         * @en The gravity of the particle system.
+         * @zh 粒子受重力影响的重力系数。
+         */
+        gravityModifier: CurveRange;
+        /**
+         * @en The value curve of emission rate over time.
+         * @zh 随时间推移发射的粒子数的变化曲线。
+         */
+        rateOverTime: CurveRange;
+        /**
+         * @en The value curve of emission rate over distance.
+         * @zh 每移动单位距离发射的粒子数的变化曲线。
+         */
+        rateOverDistance: CurveRange;
+        /**
+         * @en Burst triggers of the particle system.
+         * @zh 设定在指定时间发射指定数量的粒子的 burst 的数量。
+         */
+        bursts: Burst[];
+        /**
+         * @en Enable particle culling switch. Open it to enable particle culling.
+         * If enabled will generate emitter bounding box and emitters outside the frustum will be culled.
+         * @zh 粒子剔除开关，如果打开将会生成一个发射器包围盒，包围盒在相机外发射器将被剔除。
+         */
+        set renderCulling(value: boolean);
+        get renderCulling(): boolean;
+        /**
+         * @en Particle culling mode option. Includes pause, pause and catchup, always simulate.
+         * @zh 粒子剔除模式选择。包括暂停模拟，暂停以后快进继续以及不间断模拟。
+         */
+        get cullingMode(): number;
+        set cullingMode(value: number);
+        _cullingMode: ParticleCullingMode;
+        /**
+         * @en Emitter culling mode.
+         * @zh 发射器的各种剔除模式。
+         */
+        static CullingMode: typeof ParticleCullingMode;
+        /**
+         * @en Particle bounding box half width.
+         * @zh 粒子包围盒半宽。
+         */
+        get aabbHalfX(): number;
+        set aabbHalfX(value: number);
+        /**
+         * @en Particle bounding box half height.
+         * @zh 粒子包围盒半高。
+         */
+        get aabbHalfY(): number;
+        set aabbHalfY(value: number);
+        /**
+         * @en Particle bounding box half depth.
+         * @zh 粒子包围盒半深。
+         */
+        get aabbHalfZ(): number;
+        set aabbHalfZ(value: number);
+        /**
+         * @en Culling module data before serialize.
+         * @zh 序列化之前剔除不需要的模块数据。
+         */
+        get dataCulling(): boolean;
+        set dataCulling(value: boolean);
+        get sharedMaterials(): any;
+        set sharedMaterials(val: any);
+        _colorOverLifetimeModule: ColorOvertimeModule | null;
+        /**
+         * @en The module controlling particle's color over life time.
+         * @zh 颜色控制模块。
+         */
+        get colorOverLifetimeModule(): ColorOvertimeModule | null;
+        set colorOverLifetimeModule(val: ColorOvertimeModule | null);
+        _shapeModule: ShapeModule | null;
+        /**
+         * @en The module controlling emitter's shape.
+         * @zh 粒子发射器模块。
+         */
+        get shapeModule(): ShapeModule | null;
+        set shapeModule(val: ShapeModule | null);
+        _sizeOvertimeModule: SizeOvertimeModule | null;
+        /**
+         * @en The module controlling particle's size over time.
+         * @zh 粒子大小模块。
+         */
+        get sizeOvertimeModule(): SizeOvertimeModule | null;
+        set sizeOvertimeModule(val: SizeOvertimeModule | null);
+        _velocityOvertimeModule: VelocityOvertimeModule | null;
+        /**
+         * @en The module controlling particle's velocity over time.
+         * @zh 粒子速度模块。
+         */
+        get velocityOvertimeModule(): VelocityOvertimeModule | null;
+        set velocityOvertimeModule(val: VelocityOvertimeModule | null);
+        _forceOvertimeModule: ForceOvertimeModule | null;
+        /**
+         * @en The module controlling the force applied to particles over time.
+         * @zh 粒子加速度模块。
+         */
+        get forceOvertimeModule(): ForceOvertimeModule | null;
+        set forceOvertimeModule(val: ForceOvertimeModule | null);
+        _limitVelocityOvertimeModule: LimitVelocityOvertimeModule | null;
+        /**
+         * @en The module which limits the velocity applied to particles over time, only supported in CPU particle system.
+         * @zh 粒子限制速度模块（只支持 CPU 粒子）。
+         */
+        get limitVelocityOvertimeModule(): LimitVelocityOvertimeModule | null;
+        set limitVelocityOvertimeModule(val: LimitVelocityOvertimeModule | null);
+        _rotationOvertimeModule: RotationOvertimeModule | null;
+        /**
+         * @en The module controlling the rotation of particles over time.
+         * @zh 粒子旋转模块。
+         */
+        get rotationOvertimeModule(): RotationOvertimeModule | null;
+        set rotationOvertimeModule(val: RotationOvertimeModule | null);
+        _textureAnimationModule: TextureAnimationModule | null;
+        /**
+         * @en The module controlling the texture animation of particles.
+         * @zh 贴图动画模块。
+         */
+        get textureAnimationModule(): TextureAnimationModule | null;
+        set textureAnimationModule(val: TextureAnimationModule | null);
+        /**
+         * @en The module controlling noise map applied to the particles, only supported in CPU particle system.
+         * @zh 噪声动画模块，仅支持 CPU 粒子。
+         */
+        get noiseModule(): NoiseModule | null;
+        set noiseModule(val: NoiseModule | null);
+        _trailModule: TrailModule | null;
+        /**
+         * @en The module controlling the trail module.
+         * @zh 粒子轨迹模块。
+         */
+        get trailModule(): TrailModule | null;
+        set trailModule(val: TrailModule | null);
+        /**
+         * @en Particle system renderer (CPU or GPU).
+         * @zh 粒子系统渲染器（CPU 还是 GPU）。
+         */
+        renderer: __private._cocos_particle_renderer_particle_system_renderer_data__default;
+        /**
+         * @en Particle update processor (update every particle).
+         * @zh 粒子更新器（负责更新每个粒子）。
+         */
+        processor: __private._cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase;
+        constructor();
+        onFocusInEditor(): void;
+        onLoad(): void;
+        /**
+         * @deprecated since v3.5.0, this is an engine private interface that will be removed in the future.
+         */
+        _onMaterialModified(index: number, material: Material): void;
+        /**
+         * @deprecated since v3.5.0, this is an engine private interface that will be removed in the future.
+         */
+        _onRebuildPSO(index: number, material: Material): void;
+        /**
+         * @deprecated since v3.5.0, this is an engine private interface that will be removed in the future.
+         */
+        _collectModels(): renderer.scene.Model[];
+        protected _attachToScene(): void;
+        /**
+         * @en Play particle system.
+         * @zh 播放粒子效果。
+         */
+        play(): void;
+        /**
+         * @en Pause particle system.
+         * @zh 暂停播放粒子效果。
+         */
+        pause(): void;
+        /**
+         * @zh 停止发射粒子。
+         * @en Stop emitting particles.
+         */
+        stopEmitting(): void;
+        /**
+         * @en Stop particle system.
+         * @zh 停止播放粒子。
+         */
+        stop(): void;
+        /**
+         * @en remove all particles from current particle system.
+         * @zh 将所有粒子从粒子系统中清除。
+         */
+        clear(): void;
+        /**
+         * @en Get current particle capacity.
+         * @zh 获取当前粒子数量。
+         */
+        getParticleCount(): number;
+        /**
+         * @ignore
+         */
+        setCustomData1(x: number, y: number): void;
+        /**
+         * @ignore
+         */
+        setCustomData2(x: number, y: number): void;
+        protected onDestroy(): void;
+        protected onEnable(): void;
+        protected onDisable(): void;
+        protected update(dt: number): void;
+        protected beforeRender(): void;
+        protected _onVisibilityChange(val: number): void;
+        /**
+         * @ignore
+         */
+        get isPlaying(): boolean;
+        /**
+         * @en Query particle system is paused or not.
+         * @zh 获取粒子系统当前是否已经暂停运行。
+         */
+        get isPaused(): boolean;
+        /**
+         * @en Query particle system is stopped or not.
+         * @zh 获取粒子系统当前是否已经停止。
+         */
+        get isStopped(): boolean;
+        /**
+         * @en Query particle system is emitting or not.
+         * @zh 获取粒子系统当前是否还在发射。
+         */
+        get isEmitting(): boolean;
+        /**
+         * @en Query particle system simulation time.
+         * @zh 获取粒子系统运行时间。
+         */
+        get time(): number;
+        /**
+         * @deprecated since v3.5.0, this is an engine private interface that will be removed in the future.
+         */
+        _onBeforeSerialize(props: any): any;
+        /**
+         * @en Gets the preview of noise texture.
+         * @zh 获取噪声图预览。
+         * @param width @en Noise texture width @zh 噪声图宽度
+         * @param height @en Noise texture height @zh 噪声图高度
+         * @returns @en Noise texture RGB pixel array @zh 噪声图 RGB 纹理数组
+         */
+        getNoisePreview(width: number, height: number): number[];
+    }
+    /**
+     * @en
+     * This module defines the the volume or surface from which particles can be emitted, and the direction of the start velocity.
+     * The Shape property defines the shape of the emission volume, and the rest of the module properties vary depending on the Shape you choose.
+     * All shapes have properties that define their dimensions, such as the Radius property.
+     * To edit these, drag the handles on the wireframe emitter shape in the Scene view.
+     * The choice of shape affects the region from which particles can be emitted, but also the initial direction of the particles.
+     * @zh
+     * 本模块定义一个发射体或发射面，粒子将会从它进行发射，并且定义了粒子发射的初始方向和初始速度。
+     * 形状属性定义粒子系统的发射体，剩下的属性依赖于选择的形状。
+     * 所有形状都具有定义其大小的属性，例如 Radius 属性。要编辑这些属性，请在视图中拖动线框发射器形状上的控制柄。
+     * 形状的选择会影响可发射粒子的区域，但也会影响粒子的初始方向。
+     */
+    export class ShapeModule {
+        /**
+         * @en Emitter position.
+         * @zh 粒子发射器位置。
+         */
+        get position(): math.Vec3;
+        set position(val: math.Vec3);
+        /**
+         * @en Emitter rotation.
+         * @zh 粒子发射器旋转角度。
+         */
+        get rotation(): math.Vec3;
+        set rotation(val: math.Vec3);
+        /**
+         * @en Emitter size scale.
+         * @zh 粒子发射器缩放比例。
+         */
+        get scale(): math.Vec3;
+        set scale(val: math.Vec3);
+        /**
+         * @en Particles will be emitted in an arc if shape is Cone or Circle.
+         * @zh 粒子发射器在一个扇形范围内发射。
+         */
+        get arc(): number;
+        set arc(val: number);
+        /**
+         * @en The angle of the Cone.<bg>
+         * Define how the cone opening and closing.
+         * @zh 圆锥的轴与母线的夹角<bg>。
+         * 决定圆锥发射器的开合程度。
+         */
+        get angle(): number;
+        set angle(val: number);
+        /**
+         * @en Enable this module or not.
+         * @zh 是否启用。
+         */
+        get enable(): boolean;
+        set enable(val: boolean);
+        /**
+         * @en Emitter [[ShapeType]].
+         * @zh 粒子发射器类型 [[ShapeType]]。
+         *
+         * @deprecated since v3.5.0, this is an engine private interface that will be removed in the future.
+         */
+        _shapeType: ParticleShapeType;
+        get shapeType(): number;
+        set shapeType(val: number);
+        /**
+         * @en Particles emitted from which part of the shape [[EmitLocation]] (Box Cone Sphere Hemisphere).
+         * @zh 粒子从发射器哪个部位发射 [[EmitLocation]]。
+         */
+        emitFrom: ParticleEmitLocation;
+        /**
+         * @en Align particle with particle direction.
+         * @zh 根据粒子的初始方向决定粒子的移动方向。
+         */
+        alignToDirection: boolean;
+        /**
+         * @en Particle direction random amount.
+         * @zh 粒子生成方向随机设定。
+         */
+        randomDirectionAmount: number;
+        /**
+         * @en Blend particle directions towards a spherical direction, where they travel outwards from the center of their transform.
+         * @zh 表示当前发射方向与当前位置到结点中心连线方向的插值。
+         */
+        sphericalDirectionAmount: number;
+        /**
+         * @en Particle position random amount.
+         * @zh 粒子生成位置随机设定（设定此值为非 0 会使粒子生成位置超出生成器大小范围）。
+         */
+        randomPositionAmount: number;
+        /**
+         * @en Emition radius (available for Circle Cone Sphere Hemisphere).
+         * @zh 粒子发射器半径。
+         */
+        radius: number;
+        /**
+         * @en Emit position in shape (available for Circle Cone Sphere Hemisphere): <bg>
+         * - 0 Emit from surface;
+         * - 1 Emit from volume center;
+         * - 0 to 1 Emit within surface and volume center.
+         * @zh 粒子发射器发射位置（对 Box 类型的发射器无效）：<bg>
+         * - 0 表示从表面发射；
+         * - 1 表示从中心发射；
+         * - 0 ~ 1 之间表示在中心到表面之间发射。
+         */
+        radiusThickness: number;
+        /**
+         * @en Arc mode for Cone and Circle shape.
+         * @zh 粒子在扇形范围内的发射方式 [[ArcMode]]。
+         */
+        arcMode: ParticleArcMode;
+        /**
+         * @en Control arc spread for Cone and circle shape.
+         * @zh 控制可能产生粒子的弧周围的离散间隔。
+         */
+        arcSpread: number;
+        /**
+         * @en Emit speed around arc (available for Cone and Circle).
+         * @zh 粒子沿圆周发射的速度。
+         */
+        arcSpeed: CurveRange;
+        /**
+         * @en The length from Cone bottom to top.
+         * @zh 圆锥顶部截面距离底部的轴长<bg>。
+         * 决定圆锥发射器的高度。
+         */
+        length: number;
+        /**
+         * @en Shape thickness for box shape.
+         * @zh 粒子发射器发射位置（针对 Box 类型的粒子发射器）。
+         */
+        boxThickness: math.Vec3;
+        constructor();
+        /**
+         * @en Apply particle system to this shape and create shape transform matrix.
+         * @zh 把发射形状应用到粒子系统，并且创建发射形状变换矩阵。
+         * @param ps @en Emit shape applied to which Particle system. @zh 使用发射形状的粒子系统。
+         * @internal
+         */
+        onInit(ps: ParticleSystem): void;
+        /**
+         * @en Emit particle by this shape.
+         * @zh 通过这个形状发射粒子。
+         * @param p @en Particle emitted. @zh 发射出来的粒子。
+         * @internal
+         */
+        emit(p: __private._cocos_particle_particle__Particle): void;
+    }
+    /**
+     * @en
+     * CurveRange is a data structure which contains some constants or curves.
+     * Calculate the value by its mode and particle system will use it to change particle attribute associated with it.
+     * Refer [[CurveRange.Mode]] to see the detail of calculation mode.
+     * @zh
+     * CurveRange 是一类数据结构，其包含了多个常数值或曲线值，计算时其将根据计算模式计算最终值，粒子系统使用此数据结构对所有的粒子的属性进行修改。
+     * 详细的计算模式请参考 [[CurveRange.Mode]] 的解释。
+     */
+    export class CurveRange {
+        /**
+         * @en The curve mode. See [[Mode]].
+         * @zh 曲线类型 [[Mode]]。
+         */
+        static Mode: {
+            Constant: number;
+            Curve: number;
+            TwoCurves: number;
+            TwoConstants: number;
+        };
+        /**
+         * @en Spline will create a RealCurve when mode is curve. The mode of curve range, see [[Mode]].
+         * A RealCurve will be created for each spline(SplineMin & SplineMax) when mode is TwoCurves.
+         * @zh 当mode为Curve时，spline创建1个RealCurve，当mode为TwoCurves时，splineMax创建1个RealCurve,splineMin创建一个RealCurve。
+         */
+        set mode(mode: number);
+        get mode(): number;
+        /**
+         * @en The spline used when mode is Mode.Curve.
+         * @zh 当 mode 为Curve时，使用的曲线。
+         */
+        spline: RealCurve;
+        /**
+         * @en The min spline when mode is Mode.TwoCurves.
+         * @zh 当 mode 为TwoCurves时，使用的曲线下限。
+         */
+        splineMin: RealCurve;
+        /**
+         * @en Max spline when mode is TwoCurves.
+         * @zh 当 mode 为TwoCurves时，使用的曲线上限。
+         */
+        splineMax: RealCurve;
+        /**
+         * @en Gets/Sets the curve when use curve mode.
+         * @zh 当 mode 为 Curve 时，使用的曲线。
+         * @deprecated Since V3.3. Use `spline` instead.
+         */
+        get curve(): geometry.AnimationCurve;
+        set curve(value: geometry.AnimationCurve);
+        /**
+         * @en Get/Set min curve when use TwoCurves mode.
+         * @zh 当 mode 为 TwoCurves 时，使用的曲线下限。
+         * @deprecated Since V3.3. Use `splineMin` instead.
+         */
+        get curveMin(): geometry.AnimationCurve;
+        set curveMin(value: geometry.AnimationCurve);
+        /**
+         * @en Gets/Sets max curve when use TwoCurves mode.
+         * @zh 当 mode 为 TwoCurves 时，使用的曲线上限。
+         * @deprecated Since V3.3. Use `splineMax` instead.
+         */
+        get curveMax(): geometry.AnimationCurve;
+        set curveMax(value: geometry.AnimationCurve);
+        /**
+         * @en Constant value when use constant mode.
+         * @zh 当 mode 为 Constant 时，曲线的值。
+         */
+        constant: number;
+        /**
+         * @en Constant min value when use TwoConstants mode.
+         * @zh 当 mode 为 TwoConstants 时，曲线的下限。
+         */
+        constantMin: number;
+        /**
+         * @en Constant max value when use TwoConstants mode.
+         * @zh 当 mode 为 TwoConstants 时，曲线的上限。
+         */
+        constantMax: number;
+        /**
+         * @en Mulitplier used to evaluate spline.
+         * @zh 应用于曲线插值的系数。
+         */
+        multiplier: number;
+        constructor();
+        /**
+         * @en Calculate curve value.
+         * @zh 计算曲线数值。
+         * @param time @en Normalized time to interpolate. @zh 用于插值的归一化时间。
+         * @param rndRatio @en Interpolation ratio when mode is TwoCurves or TwoConstants.
+         *                     Particle attribute will pass in a random number to get a random result.
+         *                 @zh 当模式为双曲线或双常数时，使用的插值比例，通常粒子系统会传入一个随机数以获得一个随机结果。
+         * @returns @en Curve value. @zh 曲线的值。
+         */
+        evaluate(time: number, rndRatio: number): number;
+        /**
+         * @en Gets the max value this curve can reach.
+         * @zh 获得曲线能达到的最大值。
+         * @returns @en Max value of this curve @zh 曲线能达到的最大值
+         */
+        getMax(): number;
+        isZero(): boolean;
+        /**
+         * @deprecated since v3.5.0, this is an engine private interface that will be removed in the future.
+         */
+        _onBeforeSerialize(props: any): readonly [
+            "mode",
+            "constant",
+            "multiplier"
+        ] | readonly [
+            "mode",
+            "spline",
+            "multiplier"
+        ] | readonly [
+            "mode",
+            "splineMin",
+            "splineMax",
+            "multiplier"
+        ] | readonly [
+            "mode",
+            "constantMin",
+            "constantMax",
+            "multiplier"
+        ];
+    }
+    /**
+     * @en
+     * GradientRange is a data structure which contains some constant colors or gradients.
+     * Calculate the color by its mode and particle system will use it to change particle attribute associated with it.
+     * Refer [[GradientRange.Mode]] to see the detail of calculation mode.
+     * @zh
+     * GradientRange 是一类数据结构，其包含了多个常数颜色或渐变色，计算时其将根据计算模式计算最终颜色，粒子系统使用此数据结构对所有的粒子的属性进行修改。
+     * 详细的计算模式请参考 [[GradientRange.Mode]] 的解释。
+     */
+    export class GradientRange {
+        /**
+         * @en Gets/Sets color gradient mode to use. See [[Mode]].
+         * @zh 使用的渐变色类型 参考 [[Mode]]。
+         */
+        get mode(): number;
+        set mode(m: number);
+        /**
+         * @en The gradient mode. See [[Mode]].
+         * @zh 渐变色类型 参考 [[Mode]]。
+         */
+        static Mode: {
+            Color: number;
+            Gradient: number;
+            TwoColors: number;
+            TwoGradients: number;
+            RandomColor: number;
+        };
+        /**
+         * @en Color value when use color mode.
+         * @zh 当 mode 为 Color 时的颜色。
+         */
+        color: math.Color;
+        /**
+         * @en Min color value when use TwoColors mode.
+         * @zh 当 mode 为 TwoColors 时的颜色下限。
+         */
+        colorMin: math.Color;
+        /**
+         * @en Max color value when use TwoColors mode.
+         * @zh 当 mode 为 TwoColors 时的颜色上限。
+         */
+        colorMax: math.Color;
+        /**
+         * @en Gradient value when use gradient mode.
+         * @zh 当 mode 为 Gradient 时的颜色渐变。
+         */
+        gradient: Gradient;
+        /**
+         * @en Gradient min value when use TwoGradients.
+         * @zh 当mode为TwoGradients时的颜色渐变下限。
+         */
+        gradientMin: Gradient;
+        /**
+         * @en Gradient max value when use TwoGradients.
+         * @zh 当 mode 为 TwoGradients 时的颜色渐变上限。
+         */
+        gradientMax: Gradient;
+        /**
+         * @en Calculate gradient value.
+         * @zh 计算颜色渐变曲线数值。
+         * @param time @en Normalized time to interpolate. @zh 用于插值的归一化时间。
+         * @param rndRatio @en Interpolation ratio when mode is TwoColors or TwoGradients.
+         *                     Particle attribute will pass in a random number to get a random result.
+         *                 @zh 当模式为双色或双渐变色时，使用的插值比例，通常粒子系统会传入一个随机数以获得一个随机结果。
+         * @returns @en Gradient value. @zh 颜色渐变曲线的值。
+         */
+        evaluate(time: number, rndRatio: number): math.Color;
+        /**
+         * @deprecated since v3.5.0, this is an engine private interface that will be removed in the future.
+         */
+        _onBeforeSerialize(props: any): any;
+    }
+    /**
+     * @en
+     * A burst is a particle emission event, where a number of particles are all emitted at the same time
+     * @zh
+     * Burst 是粒子的一种发射事件，触发时很多粒子将会同时喷出
+     */
+    export class Burst {
+        /**
+         *  @en The time from particle system start until this burst triggered.
+         *  @zh 粒子系统开始运行到触发此次 Brust 的时间。
+         */
+        get time(): number;
+        set time(val: number);
+        /**
+         * @en Burst trigger count.
+         * @zh Burst 的触发次数。
+         */
+        get repeatCount(): number;
+        set repeatCount(val: number);
+        /**
+         * @en Trigger interval count.
+         * @zh 每次触发的间隔时间。
+         */
+        repeatInterval: number;
+        /**
+         * @en Burst particle count.
+         * @zh 发射的粒子的数量。
+         */
+        count: CurveRange;
+        constructor();
+        /**
+         * @en Update burst trigger
+         * @zh 更新触发事件
+         * @param psys @en Particle system to burst. @zh 要触发的粒子系统。
+         * @param dt @en Update interval time. @zh 粒子系统更新的间隔时间。
+         * @internal
+         */
+        update(psys: ParticleSystem, dt: number): void;
+        /**
+         * @en Reset remaining burst count and burst time to zero.
+         * @zh 重置触发时间和留存的触发次数为零。
+         */
+        reset(): void;
+        /**
+         * @en Get the max particle count this burst trigger.
+         * @zh 获取最大的触发粒子数量。
+         * @param psys @en Particle system to burst. @zh 要触发的粒子系统。
+         * @returns @en burst max particle count. @zh 一次最多触发的粒子个数。
+         */
+        getMaxCount(psys: ParticleSystem): number;
+    }
+    /**
+     * @en Contains some util functions for particle system. Such as create and destroy particle system.
+     * @zh 该类包含一些粒子系统的工具函数，例如创建和销毁粒子系统。
+     */
+    export class ParticleUtils {
+        /**
+         * @en Instantiate particle system from prefab.
+         * @zh 从 prefab 实例化粒子系统。
+         */
+        static instantiate(prefab: any): CCObject;
+        /**
+         * @en Destroy particle system prefab.
+         * @zh 销毁创建出来的粒子系统prefab。
+         * @param prefab @en Particle system prefab to destroy. @zh 要销毁的粒子系统prefab。
+         */
+        static destroy(prefab: Node): void;
+        /**
+         * @en Play particle system.
+         * @zh 播放粒子系统。
+         * @param rootNode @en Root node contains the particle system. @zh 包含粒子系统的根节点。
+         */
+        static play(rootNode: Node): void;
+        /**
+         * @en Stop particle system.
+         * @zh 停止播放粒子系统。
+         * @param rootNode @en Root node contains the particle system. @zh 包含粒子系统的根节点。
+         */
+        static stop(rootNode: Node): void;
+    }
+    /**
+     * @en
+     * This curve has 4 modes:
+     * Constant means this curve only have the constant value all the time.
+     * Tow Constants means this curve value will generated by the interpolation of these 2 constant values.
+     * Curve means the curve value will generated by one RealCurve.
+     * A RealCurve has many key frames, so the value will be generated by interpolation of key frames.
+     * Two Curves has two RealCurve, so the value is generated by the interpolation of these 2 curves.
+     * @zh
+     * 曲线控件包含四种模式：
+     * 常值，表示曲线的值从头到尾都是一个常量。
+     * 双常值，表示曲线的值是从两个常量进行插值。
+     * 曲线，包含一个 RealCurve 曲线值，从 RealCurve 取得关键帧进行插值得到。
+     * 双曲线，包含两个 RealCurve 曲线，首先对每个曲线进行关键帧插值计算，然后再对算出的两个曲线值进行插值得到最终的数值。
+     */
+    export const ParticleCurveMode: {
+        Constant: number;
+        Curve: number;
+        TwoCurves: number;
+        TwoConstants: number;
+    };
+    export class TrailModule {
+        /**
+         * 是否启用。
+         */
+        get enable(): boolean;
+        set enable(val: boolean);
+        /**
+         * @deprecated since v3.5.0, this is an engine private interface that will be removed in the future.
+         */
+        _enable: boolean;
+        /**
+         * 设定粒子生成轨迹的方式。
+         */
+        mode: ParticleTrailMode;
+        /**
+         * 轨迹存在的生命周期。
+         */
+        lifeTime: CurveRange;
+        /**
+         * @deprecated since v3.5.0, this is an engine private interface that will be removed in the future.
+         */
+        _minParticleDistance: number;
+        /**
+         * 每个轨迹粒子之间的最小间距。
+         */
+        get minParticleDistance(): number;
+        set minParticleDistance(val: number);
+        get space(): number;
+        set space(val: number);
+        /**
+         * 粒子本身是否存在。
+         */
+        existWithParticles: boolean;
+        /**
+         * 设定纹理填充方式。
+         */
+        textureMode: ParticleTextureMode;
+        widthFromParticle: boolean;
+        /**
+         * 控制轨迹长度的曲线。
+         */
+        widthRatio: CurveRange;
+        colorFromParticle: boolean;
+        colorOverTrail: GradientRange;
+        colorOvertime: GradientRange;
+        /**
+         * @en Get trail model
+         * @zh 获取拖尾模型
+         * @return Model of this trail and type is scene.Model
+         */
+        getModel(): renderer.scene.Model | null;
+        constructor();
+        onInit(ps: ParticleSystem): void;
+        onEnable(): void;
+        onDisable(): void;
+        /**
+         * @deprecated since v3.5.0, this is an engine private interface that will be removed in the future.
+         */
+        _attachToScene(): void;
+        /**
+         * @deprecated since v3.5.0, this is an engine private interface that will be removed in the future.
+         */
+        _detachFromScene(): void;
+        destroy(): void;
+        play(): void;
+        clear(): void;
+        updateMaterial(): void;
+        update(): void;
+        animate(p: __private._cocos_particle_particle__Particle, scaledDt: number): void;
+        removeParticle(p: __private._cocos_particle_particle__Particle): void;
+        updateRenderData(): void;
+        updateIA(count: number): void;
+        beforeRender(): void;
+    }
+    /**
+     * @en
+     * This module will modify particle color over life time. You can set the color gradient to see how it changes.
+     * @zh
+     * 本模块用于在粒子生命周期内对颜色进行改变，可以修改模块下的颜色渐变条来查看粒子颜色渐变效果。
+     */
+    export class ColorOvertimeModule extends __private._cocos_particle_particle__ParticleModuleBase {
+        constructor();
+        _enable: boolean;
+        /**
+         * @en Enable or disable this module.
+         * @zh 是否启用。
+         */
+        get enable(): boolean;
+        set enable(val: boolean);
+        /**
+         * @en Change color over life time. Evaluate by key interpolation.
+         * @zh 颜色随时间变化的参数，各个 key 之间线性插值变化。
+         */
+        color: GradientRange;
+        name: string;
+        /**
+         * @en Apply color animation to particle.
+         * @zh 作用颜色变换到粒子上。
+         * @param particle @en Particle to animate. @zh 模块需要更新的粒子。
+         * @internal
+         */
+        animate(particle: __private._cocos_particle_particle__Particle): void;
+    }
+    /**
+     * @en
+     * This module will modify particle size over life time.
+     * Open the separateAxes option you can change the particle size on XYZ axis (Size on Z axis is invalid for billboard particle)
+     * Size on every axis is curve so you can modify these curves to see how it animate.
+     * @zh
+     * 本模块用于在粒子生命周期内对大小进行改变。
+     * 打开 separateAxes 就能够修改粒子在三个轴方向的大小（z轴大小对公告板粒子无效）
+     * 每个轴上的粒子大小都是可以用曲线来进行编辑，修改曲线就能够看到粒子大小变化的效果了。
+     */
+    export class SizeOvertimeModule extends __private._cocos_particle_particle__ParticleModuleBase {
+        constructor();
+        _enable: boolean;
+        /**
+         * @en Enable this module or not.
+         * @zh 是否启用。
+         */
+        get enable(): boolean;
+        set enable(val: boolean);
+        /**
+         * @en Different size on separate axis.
+         * @zh 决定是否在每个轴上独立控制粒子大小。
+         */
+        separateAxes: boolean;
+        /**
+         * @en Curve to modify particle size.
+         * @zh 定义一条曲线来决定粒子在其生命周期中的大小变化。
+         */
+        size: CurveRange;
+        /**
+         * @en Curve to modify particle size on X axis.
+         * @zh 定义一条曲线来决定粒子在其生命周期中 X 轴方向上的大小变化。
+         */
+        x: CurveRange;
+        /**
+         * @en Curve to modify particle size on Y axis.
+         * @zh 定义一条曲线来决定粒子在其生命周期中 Y 轴方向上的大小变化。
+         */
+        y: CurveRange;
+        /**
+         * @en Curve to modify particle size on Z axis.
+         * @zh 定义一条曲线来决定粒子在其生命周期中 Z 轴方向上的大小变化。
+         */
+        z: CurveRange;
+        name: string;
+        /**
+         * @en Apply size animation to particle.
+         * @zh 应用大小变换到粒子上。
+         * @param particle @en Particle to animate @zh 模块需要更新的粒子
+         * @param dt @en Update interval time @zh 粒子系统更新的间隔时间
+         * @internal
+         */
+        animate(particle: __private._cocos_particle_particle__Particle, dt: number): void;
+    }
+    /**
+     * @en
+     * This module will modify particle velocity over life time.
+     * Open the separateAxes option you can change the velocity on XYZ axis.
+     * Velocity on every axis is curve so you can modify these curves to see how it animate.
+     * @zh
+     * 本模块用于在粒子生命周期内改变粒子的速度。
+     * 打开 separateAxes 就能够修改粒子在三个轴方向的速度大小。
+     * 每个轴上的速度大小都是可以用曲线来进行编辑，修改曲线就能够看到粒子速度变化的效果了。
+     */
+    export class VelocityOvertimeModule extends __private._cocos_particle_particle__ParticleModuleBase {
+        _enable: boolean;
+        /**
+         * @en Enable this module or not.
+         * @zh 是否启用。
+         */
+        get enable(): boolean;
+        set enable(val: boolean);
+        /**
+         * @en Velocity on X axis.
+         * @zh X 轴方向上的速度分量。
+         */
+        x: CurveRange;
+        /**
+         * @en Velocity on Y axis.
+         * @zh Y 轴方向上的速度分量。
+         */
+        y: CurveRange;
+        /**
+         * @en Velocity on Z axis.
+         * @zh Z 轴方向上的速度分量。
+         */
+        z: CurveRange;
+        /**
+         * @en Speed modifier (available for CPU particle).
+         * @zh 速度修正系数（只支持 CPU 粒子）。
+         */
+        speedModifier: CurveRange;
+        /**
+         * @en Velocity [[Space]] used to calculate particle velocity.
+         * @zh 速度计算时采用的坐标系[[Space]]。
+         */
+        space: ParticleSpace;
+        name: string;
+        constructor();
+        /**
+         * @en Update velocity overtime module calculate transform.
+         * @zh 更新模块，计算坐标变换。
+         * @param space @en Velocity overtime module update space @zh 模块更新空间
+         * @param worldTransform @en Particle system world transform @zh 粒子系统的世界变换矩阵
+         * @internal
+         */
+        update(space: number, worldTransform: math.Mat4): void;
+        /**
+         * @en Apply velocity animation to particle.
+         * @zh 作用速度变换到粒子上。
+         * @param p @en Particle to animate @zh 模块需要更新的粒子
+         * @param dt @en Update interval time @zh 粒子系统更新的间隔时间
+         * @internal
+         */
+        animate(p: __private._cocos_particle_particle__Particle, dt: number): void;
+    }
+    /**
+     * @en
+     * This module will apply force to particle over life time.
+     * Force on every axis is curve so you can modify these curves to see how it animate.
+     * @zh
+     * 本模块用于在粒子生命周期内对粒子施加外力。
+     * 每个轴上的受力大小都是可以用曲线来进行编辑，修改曲线就能够看到粒子受力变化的效果了。
+     */
+    export class ForceOvertimeModule extends __private._cocos_particle_particle__ParticleModuleBase {
+        _enable: boolean;
+        /**
+         * @en Enable this module or not.
+         * @zh 是否启用。
+         */
+        get enable(): boolean;
+        set enable(val: boolean);
+        /**
+         * @en Force on the X axis.
+         * @zh X 轴方向上的加速度分量。
+         */
+        x: CurveRange;
+        /**
+         * @en Force on the Y axis.
+         * @zh Y 轴方向上的加速度分量。
+         */
+        y: CurveRange;
+        /**
+         * @en Force on the Z axis.
+         * @zh Z 轴方向上的加速度分量。
+         */
+        z: CurveRange;
+        /**
+         * @en Force calculation coordinate. See [[Space]].
+         * @zh 加速度计算时采用的坐标系 [[Space]]。
+         */
+        space: ParticleSpace;
+        randomized: boolean;
+        name: string;
+        constructor();
+        /**
+         * @en Update force module calculate transform.
+         * @zh 更新模块，计算坐标变换。
+         * @param space @en Force module update space. @zh 模块更新空间。
+         * @param worldTransform @en Particle system world transform. @zh 粒子系统的世界变换矩阵。
+         * @internal
+         */
+        update(space: number, worldTransform: math.Mat4): void;
+        /**
+         * @en Apply force to particle.
+         * @zh 作用力到粒子上。
+         * @param p @en Particle to animate. @zh 模块需要更新的粒子。
+         * @param dt @en Update interval time. @zh 粒子系统更新的间隔时间。
+         * @internal
+         */
+        animate(p: __private._cocos_particle_particle__Particle, dt: number): void;
+    }
+    /**
+     * @en
+     * This module will damping particle velocity to the limit value over life time.
+     * Open the separateAxes option you can damping the particle velocity on XYZ axis
+     * Limit value on every axis is curve so you can modify these curves to see how it animate.
+     * @zh
+     * 本模块用于在粒子生命周期内对速度进行衰减，速度每次衰减比例为 dampen 持续衰减到极限速度。
+     * 打开 separateAxes 就能够修改粒子在三个轴方向的极限速度大小。
+     * 每个轴上的粒子极限速度大小都是可以用曲线来进行编辑，修改曲线就能够看到粒子大小变化的效果了。
+     */
+    export class LimitVelocityOvertimeModule extends __private._cocos_particle_particle__ParticleModuleBase {
+        _enable: boolean;
+        /**
+         * @en Enable this module or not.
+         * @zh 是否启用。
+         */
+        get enable(): boolean;
+        set enable(val: boolean);
+        /**
+         * @en Limit velocity on X axis.
+         * @zh X 轴方向上的速度下限。
+         */
+        limitX: CurveRange;
+        /**
+         * @en Limit velocity on Y axis.
+         * @zh Y 轴方向上的速度下限。
+         */
+        limitY: CurveRange;
+        /**
+         * @en Limit velocity on Z axis.
+         * @zh Z 轴方向上的速度下限。
+         */
+        limitZ: CurveRange;
+        /**
+         * @en Velocity limit.
+         * @zh 速度下限。
+         */
+        limit: CurveRange;
+        /**
+         * @en Dampen velocity percent every time.
+         * @zh 速度每次衰减的比例。
+         */
+        dampen: number;
+        /**
+         * @en Limit velocity on separate axis.
+         * @zh 是否三个轴分开限制。
+         */
+        separateAxes: boolean;
+        /**
+         * @en Space used to calculate limit velocity.
+         * @zh 计算速度下限时采用的坐标系 [[Space]]。
+         */
+        space: ParticleSpace;
+        drag: null;
+        multiplyDragByParticleSize: boolean;
+        multiplyDragByParticleVelocity: boolean;
+        name: string;
+        constructor();
+        /**
+         * @en Update limit velocity module calculate transform.
+         * @zh 更新模块，计算坐标变换。
+         * @param space @en Limit velocity module update space @zh 模块更新空间
+         * @param worldTransform @en Particle system world transform @zh 粒子系统的世界变换矩阵
+         * @internal
+         */
+        update(space: number, worldTransform: math.Mat4): void;
+        /**
+         * @en Apply limit velocity to particle.
+         * @zh 作用速度衰减到粒子上。
+         * @param p @en Particle to animate @zh 模块需要更新的粒子
+         * @param dt @en Update interval time @zh 粒子系统更新的间隔时间
+         * @internal
+         */
+        animate(p: __private._cocos_particle_particle__Particle, dt: number): void;
+    }
+    /**
+     * @en
+     * This module will apply rotation to particle over life time.
+     * Open the separateAxes option you can change the rotation on XYZ axis
+     * Rotation on every axis is curve so you can modify these curves to see how it animate.
+     * @zh
+     * 本模块用于在粒子生命周期内对粒子施加旋转角速度。
+     * 打开 separateAxes 就能够修改粒子在三个轴方向的旋转角速度大小。
+     * 每个轴上的旋转角速度都是可以用曲线来进行编辑，修改曲线就能够看到粒子受力变化的效果了。
+     */
+    export class RotationOvertimeModule extends __private._cocos_particle_particle__ParticleModuleBase {
+        constructor();
+        _enable: boolean;
+        /**
+         * @en Enable this module or not.
+         * @zh 是否启用。
+         */
+        get enable(): boolean;
+        set enable(val: boolean);
+        /**
+         * @en Rotation around separate axis.
+         * @zh 是否三个轴分开设定旋转。
+         */
+        get separateAxes(): boolean;
+        set separateAxes(val: boolean);
+        /**
+         * @en Angle around X axis.
+         * @zh 绕 X 轴设定旋转。
+         */
+        x: CurveRange;
+        /**
+         * @en Angle around Y axis.
+         * @zh 绕 Y 轴设定旋转。
+         */
+        y: CurveRange;
+        /**
+         * @en Angle around Z axis.
+         * @zh 绕 Z 轴设定旋转。
+         */
+        z: CurveRange;
+        name: string;
+        /**
+         * @en Apply rotation to particle.
+         * @zh 作用旋转到粒子上。
+         * @param p @en Particle to animate @zh 模块需要更新的粒子
+         * @param dt @en Update interval time @zh 粒子系统更新的间隔时间
+         * @internal
+         */
+        animate(p: __private._cocos_particle_particle__Particle, dt: number): void;
+    }
+    /**
+     * @en
+     * Use this module to play frame animation of the particle texture.
+     * @zh
+     * 这个模块用于播放粒子纹理带的纹理帧动画。
+     */
+    export class TextureAnimationModule extends __private._cocos_particle_particle__ParticleModuleBase {
+        constructor();
+        /**
+         * @en Enable this module or not.
+         * @zh 是否启用。
+         */
+        get enable(): boolean;
+        set enable(val: boolean);
+        /**
+         * @en Set texture animation [[Mode]] (only support Grid mode).
+         * @zh 设定粒子贴图动画的类型（暂只支持 Grid 模式）[[Mode]]。
+         */
+        get mode(): number;
+        set mode(val: number);
+        /**
+         * @en Tile count on X axis.
+         * @zh X 方向动画帧数。
+         */
+        get numTilesX(): number;
+        set numTilesX(val: number);
+        /**
+         * @en Tile count on Y axis.
+         * @zh Y 方向动画帧数。
+         */
+        get numTilesY(): number;
+        set numTilesY(val: number);
+        /**
+         * @en Texture animation type. See [[Animation]].
+         * @zh 动画播放方式 [[Animation]]。
+         */
+        animation: number;
+        /**
+         * @en Curve to control texture animation speed.
+         * @zh 一个周期内动画播放的帧与时间变化曲线。
+         */
+        frameOverTime: CurveRange;
+        /**
+         * @en Texture animation frame start to play.
+         * @zh 从第几帧开始播放，时间为整个粒子系统的生命周期。
+         */
+        startFrame: CurveRange;
+        /**
+         * @en Animation cycle count per particle life.
+         * @zh 一个生命周期内播放循环的次数。
+         */
+        cycleCount: number;
+        /**
+         * @ignore
+         */
+        get flipU(): number;
+        set flipU(val: number);
+        get flipV(): number;
+        set flipV(val: number);
+        get uvChannelMask(): number;
+        set uvChannelMask(val: number);
+        /**
+         * @en Get random row from texture to generate animation.<br>
+         * This option is available when [[Animation]] type is SingleRow.
+         * @zh 随机从动画贴图中选择一行以生成动画。<br>
+         * 此选项仅在动画播放方式为 SingleRow 时生效。
+         */
+        randomRow: boolean;
+        /**
+         * @en Generate animation from specific row in texture.<br>
+         * This option is available when [[Animation]] type is SingleRow and randomRow option is disabled.
+         * @zh 从动画贴图中选择特定行以生成动画。<br>
+         * 此选项仅在动画播放方式为 SingleRow 时且禁用 randomRow 时可用。
+         */
+        rowIndex: number;
+        name: string;
+        /**
+         * @en Init start row to particle.
+         * @zh 给粒子创建初始行属性。
+         * @param p @en Particle to set start row. @zh 设置初始行属性的粒子。
+         * @internal
+         */
+        init(p: __private._cocos_particle_particle__Particle): void;
+        /**
+         * @en Apply texture animation to particle.
+         * @zh 应用贴图动画到粒子。
+         * @param p @en Particle to animate. @zh 模块需要更新的粒子。
+         * @param dt @en Update interval time. @zh 粒子系统更新的间隔时间。
+         * @internal
+         */
+        animate(p: __private._cocos_particle_particle__Particle, dt: number): void;
+    }
+    /**
+     * @en
+     * Adding noise to your particles is a simple and effective way to create interesting patterns and effects.
+     * @zh
+     * 为粒子添加噪声是创建有趣方案和效果的简单有效方法。
+     */
+    export class NoiseModule extends __private._cocos_particle_particle__ParticleModuleBase {
+        constructor();
+        _enable: boolean;
+        /**
+         * @en Enable this module or not.
+         * @zh 是否启用。
+         */
+        get enable(): boolean;
+        set enable(val: boolean);
+        /**
+         * @en Strength on X axis.
+         * @zh X 轴上的强度大小。
+         */
+        get strengthX(): number;
+        set strengthX(value: number);
+        /**
+         * @en Strength on Y axis.
+         * @zh Y 轴上的强度大小。
+         */
+        get strengthY(): number;
+        set strengthY(value: number);
+        /**
+         * @en Strength on Z axis.
+         * @zh Z 轴上的强度大小。
+         */
+        get strengthZ(): number;
+        set strengthZ(value: number);
+        /**
+         * @en Noise texture roll speed on X axis.
+         * @zh X 轴上的噪声图滚动速度。
+         */
+        get noiseSpeedX(): number;
+        set noiseSpeedX(value: number);
+        /**
+         * @en Noise texture roll speed on Y axis.
+         * @zh Y 轴上的噪声图滚动速度。
+         */
+        get noiseSpeedY(): number;
+        set noiseSpeedY(value: number);
+        /**
+         * @en Noise texture roll speed on Z axis.
+         * @zh Z 轴上的噪声图滚动速度。
+         */
+        get noiseSpeedZ(): number;
+        set noiseSpeedZ(value: number);
+        /**
+         * @en Noise frequency.
+         * @zh 噪声图频率。
+         */
+        get noiseFrequency(): number;
+        set noiseFrequency(value: number);
+        /**
+         * @en Remap the final noise X axis values into a different range.
+         * @zh 噪声值映射到 X 轴的不同范围。
+         */
+        get remapX(): number;
+        set remapX(value: number);
+        /**
+         * @en Remap the final noise Y axis values into a different range.
+         * @zh 噪声值映射到 Y 轴的不同范围。
+         */
+        get remapY(): number;
+        set remapY(value: number);
+        /**
+         * @en Remap the final noise Z axis values into a different range.
+         * @zh 噪声值映射到 Z 轴的不同范围。
+         */
+        get remapZ(): number;
+        set remapZ(value: number);
+        /**
+         * @en Specify how many layers of overlapping noise are combined to produce the final noise values.
+         * @zh 指定组合多少层重叠噪声来产生最终噪声值。
+         */
+        get octaves(): number;
+        set octaves(value: number);
+        /**
+         * @en For each additional noise layer, reduce the strength by this proportion.
+         * @zh 对于每个附加的噪声层，按此比例降低强度。
+         */
+        get octaveMultiplier(): number;
+        set octaveMultiplier(value: number);
+        /**
+         * @en For each additional noise layer, adjust the frequency by this multiplier.
+         * @zh 对于每个附加的噪声层，按此乘数调整频率。
+         */
+        get octaveScale(): number;
+        set octaveScale(value: number);
+        name: string;
+        /**
+         * @en Apply noise effect to particle.
+         * @zh 作用噪声效果到粒子上。
+         * @param particle @en Particle to animate @zh 模块需要更新的粒子
+         * @param dt @en Update interval time @zh 粒子系统更新的间隔时间
+         * @internal
+         */
+        animate(particle: __private._cocos_particle_particle__Particle, dt: number): void;
+        /**
+         * @en Gets the preview of noise texture.
+         * @zh 获取噪声图预览。
+         * @param out @en Noise texture pixels array @zh 噪声图像素数组
+         * @param ps @en Particle system @zh 噪声图作用的粒子系统
+         * @param width @en Texture width @zh 噪声图宽度
+         * @param height @en Texture height @zh 噪声图高度
+         */
+        getNoisePreview(out: number[], ps: ParticleSystem, width: number, height: number): void;
+    }
+    export interface AirParticleOptions {
+        parent: Node;
+        name?: string;
+        /** Defaults to CPU. GPU mode uses native analytical simulation, not arbitrary compute. */
+        useGPU?: boolean;
+        /** Runs on an inactive node, before native onLoad/onEnable. Do not activate the node here. */
+        configure?: (system: ParticleSystem) => void;
+    }
+    export enum ParticleSpace {
+        World = 0,
+        Local = 1,
+        Custom = 2
+    }
+    /**
+     * @en Particle emitter culling mode
+     * @zh 粒子的剔除模式。
+     * @enum ParticleSystem.CullingMode
+     */
+    export enum ParticleCullingMode {
+        Pause = 0,
+        PauseAndCatchup = 1,
+        AlwaysSimulate = 2
+    }
+    /**
+     * @en Particle emitter alignment space
+     * @zh 粒子的对齐模式。
+     * @enum ParticleSystemRenderer.AlignmentSpace
+     */
+    export enum ParticleAlignmentSpace {
+        World = 0,
+        Local = 1,
+        View = 2
+    }
+    /**
+     * 粒子的生成模式。
+     * @enum ParticleSystemRenderer.RenderMode
+     */
+    export enum ParticleRenderMode {
+        /**
+         * 粒子始终面向摄像机。
+         */
+        Billboard = 0,
+        /**
+         * 粒子始终面向摄像机但会根据参数进行拉伸。
+         */
+        StrecthedBillboard = 1,
+        /**
+         * 粒子始终与 XZ 平面平行。
+         */
+        HorizontalBillboard = 2,
+        /**
+         * 粒子始终与 Y 轴平行且朝向摄像机。
+         */
+        VerticalBillboard = 3,
+        /**
+         * 粒子保持模型本身状态。
+         */
+        Mesh = 4
+    }
+    /**
+     * 粒子发射器类型。
+     * @enum shapeModule.ShapeType
+     */
+    export enum ParticleShapeType {
+        /**
+         * 立方体类型粒子发射器。
+         */
+        Box = 0,
+        /**
+         * 圆形粒子发射器。
+         */
+        Circle = 1,
+        /**
+         * 圆锥体粒子发射器。
+         */
+        Cone = 2,
+        /**
+         * 球体粒子发射器。
+         */
+        Sphere = 3,
+        /**
+         * 半球体粒子发射器。
+         */
+        Hemisphere = 4
+    }
+    /**
+     * 粒子从发射器的哪个部位发射。
+     * @enum shapeModule.EmitLocation
+     */
+    export enum ParticleEmitLocation {
+        /**
+         * 基础位置发射（仅对 Circle 类型及 Cone 类型的粒子发射器适用）。
+         */
+        Base = 0,
+        /**
+         * 边框位置发射（仅对 Box 类型及 Circle 类型的粒子发射器适用）。
+         */
+        Edge = 1,
+        /**
+         * 表面位置发射（对所有类型的粒子发射器都适用）。
+         */
+        Shell = 2,
+        /**
+         * 内部位置发射（对所有类型的粒子发射器都适用）。
+         */
+        Volume = 3
+    }
+    /**
+     * 粒子在扇形区域的发射方式。
+     * @enum shapeModule.ArcMode
+     */
+    export enum ParticleArcMode {
+        /**
+         * 随机位置发射。
+         */
+        Random = 0,
+        /**
+         * 沿某一方向循环发射，每次循环方向相同。
+         */
+        Loop = 1,
+        /**
+         * 循环发射，每次循环方向相反。
+         */
+        PingPong = 2
+    }
+    /**
+     * 选择如何为粒子系统生成轨迹。
+     * @enum trailModule.TrailMode
+     */
+    export enum ParticleTrailMode {
+        /**
+         * 粒子模式<bg>。
+         * 创建一种效果，其中每个粒子在其路径中留下固定的轨迹。
+         */
+        Particles = 0
+    }
+    /**
+     * 纹理填充模式。
+     * @enum trailModule.TextureMode
+     */
+    export enum ParticleTextureMode {
+        /**
+         * 拉伸填充纹理。
+         */
+        Stretch = 0
+    }
+    export enum ParticleModuleRandSeed {
+        LIMIT = 23541,
+        SIZE = 39825,
+        TEXTURE = 90794,
+        COLOR = 91041,
+        FORCE = 212165,
+        ROTATION = 125292,
+        VELOCITY_X = 197866,
+        VELOCITY_Y = 156497,
+        VELOCITY_Z = 984136
+    }
     /** Shared native assets; instantiate creates independent node/animation/morph state. */
     export class GLTFAsset extends Asset {
         /** @internal Resource builder; public accessors expose readonly collections. */
@@ -57863,6 +59430,131 @@
         setOptions(options: AirPostProcessSettings): void;
         setEnabled(enabled: boolean): void;
         dispose(): void;
+    }
+    /** One native node/model, shared geometry, and one explicit instance stream. Call commit after staged edits.
+     * Static indexed TRIANGLE_LIST meshes only. Custom materials must declare AIR_INSTANCE_ATTRIBUTES as instanced
+     * RGBA32F attributes and use ordinary (non-native-auto-batched) passes. WebGL2 only in this first implementation.
+     */
+    export function createAirInstanceBatch(options: AirInstanceBatchOptions): AirInstanceBatch;
+    export interface AirInstanceBatchOptions {
+        parent: Node;
+        mesh: Mesh;
+        material?: Material;
+        capacity?: number;
+        count?: number;
+        name?: string;
+    }
+    export interface AirInstanceHit {
+        instanceIndex: number;
+        distance: number;
+        point: math.Vec3;
+    }
+    export interface AirInstanceBatch {
+        readonly node: Node;
+        readonly info: Readonly<{
+            capacity: number;
+            count: number;
+            pendingInstances: number;
+            gpuBytes: number;
+            cpuBytes: number;
+            lastUploadBytes: number;
+            subMeshes: number;
+            attached: boolean;
+            disposed: boolean;
+            maxVertexAttributes: number;
+        }>;
+        setMatrix(index: number, matrix: Readonly<math.Mat4>): void;
+        setColor(index: number, color: Readonly<math.Vec4>): void;
+        getMatrix(index: number, out: math.Mat4): math.Mat4;
+        setCount(count: number): void;
+        reserve(capacity: number): void;
+        commit(start?: number, count?: number): number;
+        getWorldBounds(out?: geometry.AABB): geometry.AABB | null;
+        raycast(ray: geometry.Ray, maxDistance?: number): AirInstanceHit | null;
+        dispose(): void;
+    }
+    /** Indexed instancing with immutable shape atlases; transition updates only material uniforms. WebGL2. */
+    export function createAirMorphField(options: AirMorphFieldOptions): AirMorphField;
+    export type AirMorphSurface = "unlit" | "polished";
+    export interface AirMorphFieldOptions {
+        parent: Node;
+        targets: readonly AirPointShape[];
+        mode?: "points" | "voxels";
+        /** Local diameter/edge length; fixed for the lifetime of this field. */
+        size?: number;
+        intensity?: number;
+        /** Procedural studio reflections, independent of native scene lights. Defaults to unlit. */
+        surface?: AirMorphSurface;
+        roughness?: number;
+        name?: string;
+        /** Shape textures plus instance stream; defaults to 256 MiB. Excludes fixed geometry and driver allocations. */
+        maxGpuBytes?: number;
+    }
+    export interface AirMorphField {
+        readonly node: Node;
+        readonly info: Readonly<{
+            count: number;
+            targetCount: number;
+            mode: "points" | "voxels";
+            surface: AirMorphSurface;
+            roughness: number;
+            from: number;
+            to: number;
+            progress: number;
+            disposed: boolean;
+            gpuBytes: number;
+            cpuBytes: number;
+            /** Resource payload, not a measurement of all initialization/driver transfers. */
+            initialDataBytes: number;
+            /** Shape/instance data only. Native uniform uploads still occur. */
+            transitionDataBytes: 0;
+        }>;
+        setTransition(from: number, to: number, progress: number): void;
+        setIntensity(intensity: number): void;
+        setSurface(surface: AirMorphSurface, roughness?: number): void;
+        getWorldBounds(out?: geometry.AABB): geometry.AABB | null;
+        dispose(): void;
+    }
+    /** Alpha-weighted sampling. Row zero maps to positive Y; RGB bytes are decoded from sRGB. */
+    export function sampleAirImageShape(options: AirImageShapeOptions): AirPointShape;
+    /** Area-weighted triangle sampling; degenerate faces are skipped, not counted as surface area. */
+    export function sampleAirTriangleShape(options: AirTriangleShapeOptions): AirPointShape;
+    /** Flat positions in parent-local units and linear RGB; one ordered record per point. */
+    export interface AirPointShape {
+        readonly positions: Float32Array;
+        readonly colors: Float32Array;
+        /** Optional unit surface normals. Omitted shapes use a +Z plane normal. */
+        readonly normals?: Float32Array;
+    }
+    export interface AirImageShapeOptions {
+        rgba: Uint8Array | Uint8ClampedArray;
+        width: number;
+        height: number;
+        count: number;
+        seed?: number;
+        /** Width in local units; height preserves the source aspect ratio. */
+        size?: number;
+        /** Pixels whose alpha is <= this threshold are excluded. Defaults to zero. */
+        alphaThreshold?: number;
+    }
+    export interface AirTriangleShapeOptions {
+        positions: Float32Array;
+        normals?: Float32Array;
+        indices?: Uint16Array | Uint32Array;
+        /** Optional linear RGB per vertex. */
+        colors?: Float32Array;
+        count: number;
+        seed?: number;
+    }
+    /** Sample a single line after document fonts load. The temporary canvas is always released. */
+    export function sampleAirTextShape(options: AirTextShapeOptions): Promise<AirPointShape>;
+    export interface AirTextShapeOptions {
+        text: string;
+        /** CSS canvas font. Browser/system font metrics affect the resulting shape. */
+        font?: string;
+        count: number;
+        size?: number;
+        seed?: number;
     }
     /**
      * @en Post-process one camera with a full-screen vignette.
@@ -74329,6 +76021,183 @@
         export interface _air_primitive_geometry__GeometryChannels {
             includeNormal?: boolean;
             includeUV?: boolean;
+        }
+        export class _cocos_particle_renderer_particle_system_renderer_data__default {
+            /**
+             * @zh 设定粒子生成模式。
+             */
+            get renderMode(): number;
+            set renderMode(val: number);
+            /**
+             * @zh 在粒子生成方式为 StrecthedBillboard 时,对粒子在运动方向上按速度大小进行拉伸。
+             */
+            get velocityScale(): number;
+            set velocityScale(val: number);
+            /**
+             * @zh 在粒子生成方式为 StrecthedBillboard 时,对粒子在运动方向上按粒子大小进行拉伸。
+             */
+            get lengthScale(): number;
+            set lengthScale(val: number);
+            /**
+             * @zh 粒子发射的模型。
+             */
+            get mesh(): Mesh | null;
+            set mesh(val: Mesh | null);
+            /**
+             * @zh 粒子使用的材质。
+             */
+            get particleMaterial(): Material | null;
+            set particleMaterial(val: Material | null);
+            /**
+             * @en particle cpu material
+             * @zh 粒子使用的cpu材质。
+             */
+            get cpuMaterial(): Material | null;
+            set cpuMaterial(val: Material | null);
+            /**
+             * @en particle gpu material
+             * @zh 粒子使用的gpu材质。
+             */
+            get gpuMaterial(): Material | null;
+            set gpuMaterial(val: Material | null);
+            /**
+             * @en particle trail material
+             * @zh 拖尾使用的材质。
+             */
+            get trailMaterial(): Material | null;
+            set trailMaterial(val: Material | null);
+            get mainTexture(): Texture2D | null;
+            set mainTexture(val: Texture2D | null);
+            get useGPU(): boolean;
+            set useGPU(val: boolean);
+            /**
+             * @en Particle alignment space option. Includes world, local and view.
+             * @zh 粒子对齐空间选择。包括世界空间，局部空间和视角空间。
+             */
+            get alignSpace(): number;
+            set alignSpace(val: number);
+            static AlignmentSpace: typeof ParticleAlignmentSpace;
+            create(ps: ParticleSystem): void;
+            onInit(ps: ParticleSystem): void;
+        }
+        export class _cocos_particle_renderer_particle_system_renderer_cpu__PVData {
+            position: math.Vec3;
+            texcoord: math.Vec3;
+            size: math.Vec3;
+            rotation: math.Vec3;
+            color: number;
+            velocity: math.Vec3 | null;
+            constructor();
+        }
+        export class _cocos_particle_particle__Particle {
+            static INDENTIFY_NEG_QUAT: number;
+            static R2D: number;
+            particleSystem: ParticleSystem;
+            position: math.Vec3;
+            velocity: math.Vec3;
+            animatedVelocity: math.Vec3;
+            ultimateVelocity: math.Vec3;
+            angularVelocity: math.Vec3;
+            axisOfRotation: math.Vec3;
+            rotation: math.Vec3;
+            startEuler: math.Vec3;
+            startRotation: math.Quat;
+            startRotated: boolean;
+            deltaQuat: math.Quat;
+            deltaMat: math.Mat4;
+            localMat: math.Mat4;
+            startSize: math.Vec3;
+            size: math.Vec3;
+            startColor: math.Color;
+            color: math.Color;
+            randomSeed: number;
+            remainingLifetime: number;
+            loopCount: number;
+            lastLoop: number;
+            trailDelay: number;
+            startLifetime: number;
+            emitAccumulator0: number;
+            emitAccumulator1: number;
+            frameIndex: number;
+            startRow: number;
+            constructor(particleSystem: any);
+            reset(): void;
+        }
+        export class _cocos_particle_models_particle_batch_model__default extends renderer.scene.Model {
+            constructor();
+            setCapacity(capacity: number): void;
+            setVertexAttributes(mesh: Mesh | null, attrs: gfx.Attribute[]): void;
+            updateMaterial(mat: Material): void;
+            addParticleVertexData(index: number, pvdata: _cocos_particle_renderer_particle_system_renderer_cpu__PVData): void;
+            addGPUParticleVertexData(p: _cocos_particle_particle__Particle, num: number, time: number): void;
+            updateGPUParticles(num: number, time: number, dt: number): number;
+            constructAttributeIndex(): void;
+            updateIA(count: number): void;
+            clear(): void;
+            destroy(): void;
+            doDestroy(): void;
+            set useInstance(value: boolean);
+            get useInstance(): boolean;
+        }
+        export interface _cocos_particle_particle__IParticleModule {
+            target: _cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase | null;
+            needUpdate: boolean;
+            needAnimate: boolean;
+            name: string;
+            bindTarget(target: any): void;
+            update(space: number, trans: math.Mat4): void;
+            animate(p: _cocos_particle_particle__Particle, dt?: number): void;
+        }
+        export abstract class _cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase {
+            protected _particleSystem: ParticleSystem | null;
+            protected _model: _cocos_particle_models_particle_batch_model__default | null;
+            protected _renderInfo: _cocos_particle_renderer_particle_system_renderer_data__default | null;
+            protected _vertAttrs: gfx.Attribute[];
+            protected _useInstance: boolean;
+            constructor(info: _cocos_particle_renderer_particle_system_renderer_data__default);
+            getUseInstance(): boolean;
+            getInfo(): _cocos_particle_renderer_particle_system_renderer_data__default;
+            onInit(ps: ParticleSystem): void;
+            onEnable(): void;
+            onDisable(): void;
+            onDestroy(): void;
+            attachToScene(): void;
+            detachFromScene(): void;
+            setVertexAttributes(): void;
+            clear(): void;
+            getModel(): _cocos_particle_models_particle_batch_model__default | null;
+            protected _initModel(): void;
+            updateTrailMaterial(): void;
+            getDefaultTrailMaterial(): Material | null;
+            abstract getParticleCount(): number;
+            abstract getFreeParticle(): _cocos_particle_particle__Particle | null;
+            abstract onMaterialModified(index: number, material: Material): void;
+            abstract onRebuildPSO(index: number, material: Material): void;
+            abstract updateVertexAttrib(): void;
+            abstract updateRenderMode(): void;
+            abstract updateMaterialParams(): void;
+            abstract setNewParticle(p: _cocos_particle_particle__Particle): void;
+            abstract getDefaultMaterial(): Material | null;
+            abstract updateRotation(pass: renderer.Pass | null): void;
+            abstract updateScale(pass: renderer.Pass | null): void;
+            abstract updateParticles(dt: number): number;
+            abstract updateRenderData(): void;
+            abstract enableModule(name: string, val: boolean, pm: _cocos_particle_particle__IParticleModule): void;
+            abstract beforeRender(): void;
+            abstract setUseInstance(value: boolean): void;
+            abstract getNoisePreview(out: number[], width: number, height: number): void;
+            abstract updateAlignSpace(space: number): void;
+        }
+        export abstract class _cocos_particle_particle__ParticleModuleBase implements _cocos_particle_particle__IParticleModule {
+            abstract get enable(): boolean;
+            abstract set enable(val: boolean);
+            target: _cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase | null;
+            needUpdate: boolean;
+            needAnimate: boolean;
+            bindTarget(target: _cocos_particle_renderer_particle_system_renderer_base__ParticleSystemRendererBase): void;
+            update(space: number, trans: math.Mat4): void;
+            abstract name: string;
+            abstract animate(p: _cocos_particle_particle__Particle, dt?: number): void;
         }
         /** glTF 2.0 wire types. Unknown extension data is retained, never executed. */
         export interface _air_assets_gltf_schema__Property {

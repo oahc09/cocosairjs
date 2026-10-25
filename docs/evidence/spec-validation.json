@@ -1,8 +1,8 @@
 {
-  "measuredAt": "2026-10-24T12:24:56.625Z",
-  "total": 190,
+  "measuredAt": "2026-10-25T13:59:43.287Z",
+  "total": 193,
   "frozen": 188,
-  "draft": 2,
+  "draft": 5,
   "blocked": 0,
   "examples": [
     {
@@ -233,6 +233,11 @@
     {
       "id": "input-queries",
       "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "instance-batch",
+      "specStatus": "draft",
       "issues": []
     },
     {
@@ -591,6 +596,11 @@
       "issues": []
     },
     {
+      "id": "morph-field",
+      "specStatus": "draft",
+      "issues": []
+    },
+    {
       "id": "neon-city",
       "specStatus": "draft",
       "issues": []
@@ -648,6 +658,11 @@
     {
       "id": "particle-2d-basic",
       "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "particles-3d",
+      "specStatus": "draft",
       "issues": []
     },
     {
