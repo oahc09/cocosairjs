@@ -79,3 +79,16 @@ Contact evidence must match live self/other collider object identities, then rec
 trial/projectile/target labels (not invented native IDs), callback-associated attempted tick, contact
 count and copied public world point/normal. Policy rejects malformed/nonfinite, wrong-trial/body/target
 or out-of-range tick contacts. Labels and CPU policy alone do not authenticate an externally edited report.
+
+## Retained initial browser failure and ordering correction
+
+The first SDK223 Firefox attempt against commit `eaa04f7` failed before firing: `RigidBody.useCCD`
+was assigned in body construction before component `onLoad`. Unlike cached type/mass/damping settings,
+this public setter needs an initialized native body and does not cache an early assignment. The original
+attempt and its console/close evidence remain failures; this correction does not relabel that attempt.
+
+The live mount boundary now calls synchronous `app.run(scene)` first, enables the owner, applies both
+bodies' `useCCD`, verifies both public getter readbacks, and only then sets initial velocities. Each trial
+retains these readbacks. Pure CPU call-order doubles explicitly reject pre-mount setter/getter/velocity
+access and stop on failed mount or mismatched readback; they establish no physics result. A fresh browser
+attempt with new example fingerprints is required. No delays, swallowed diagnostics or SDK changes are used.

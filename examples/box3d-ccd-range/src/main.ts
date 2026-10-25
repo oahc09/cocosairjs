@@ -29,6 +29,7 @@ import {
 } from 'cocosair';
 import { configuration, counts, assessTrial, FIXED_DT, RADIUS, TRIAL_TICKS } from './protocol.mjs';
 import { TrialLifecycle } from './lifecycle.mjs';
+import { mountAndConfigureBodies } from './mounted-body-configuration.mjs';
 const lifecycle = new TrialLifecycle();
 const el = (id: string): any => document.getElementById(id)!;
 const report: any = {
@@ -129,7 +130,7 @@ function buildScene(c: any) {
         visual(marker, primitives.box({ width: 0.015, height: 0.01, length: 1.1 }), paint([85, 130, 140, 255]));
         activate(marker);
     }
-    const makeBody = (name: string, x: number, sphere: boolean, dynamic: boolean, bullet: boolean, color: number[]) => {
+    const makeBody = (name: string, x: number, sphere: boolean, dynamic: boolean, color: number[]) => {
         const n = node(name, x, 0, 0);
         visual(
             n,
@@ -143,7 +144,6 @@ function buildScene(c: any) {
         b.allowSleep = false;
         b.linearDamping = 0;
         b.angularDamping = 0;
-        b.useCCD = bullet;
         let collider: SphereCollider | BoxCollider;
         if (sphere) {
             const shape = n.addComponent(SphereCollider);
@@ -158,8 +158,8 @@ function buildScene(c: any) {
         activate(n);
         return { node: n, body: b, collider };
     };
-    target = makeBody(c.target, 0, false, c.target !== 'wall', c.target === 'bullet-target', [236, 174, 90, 255]);
-    projectile = makeBody('Projectile r=.05m', -2, true, true, c.bullet, [85, 226, 201, 255]);
+    target = makeBody(c.target, 0, false, c.target !== 'wall', [236, 174, 90, 255]);
+    projectile = makeBody('Projectile r=.05m', -2, true, true, [85, 226, 201, 255]);
     projectile.collider.on('onCollisionEnter', (event: any) => {
         if (!current || event.selfCollider !== projectile.collider || event.otherCollider !== target.collider) return;
         const points = event.contacts.map((contact: any) => {
@@ -179,10 +179,15 @@ function buildScene(c: any) {
             points,
         });
     });
-    app.run(scene);
-    system.enable = true;
-    projectile.body.setLinearVelocity(new Vec3(c.speed, 0, 0));
-    if (c.target !== 'wall') target.body.setLinearVelocity(new Vec3(-1, 0, 0));
+    return mountAndConfigureBodies({
+        app,
+        scene,
+        system,
+        projectile,
+        target,
+        config: c,
+        vector: (x: number, y: number, z: number) => new Vec3(x, y, z),
+    });
 }
 function copyHit(hit: any) {
     return {
@@ -285,9 +290,9 @@ async function trial(c: any, token: number) {
     await release();
     if (lifecycle.blocked || token !== generation) return;
     const trialConfig = { ...c, trialId: `${token}:${report.trials.length + 1}` };
-    buildScene(trialConfig);
+    const ccdReadback = buildScene(trialConfig);
     attemptedTick = lastObserved = -1;
-    current = { config: trialConfig, generation: token, seed: 0, trace: [], queries: [], contacts: [] };
+    current = { ccdReadback, config: trialConfig, generation: token, seed: 0, trace: [], queries: [], contacts: [] };
     hook = registerBox3DBeforeStep((context: any) => {
         try {
             if (!current) throw new Error('Stale EX05 hook');

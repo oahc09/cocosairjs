@@ -71,7 +71,7 @@ test('source owns no physics clock or runtime teleport; public query and body pa
         'queryBox3DCommittedRay',
         'queryBox3DCommittedColliders',
         'readBox3DBodyMotion',
-        'b.useCCD = bullet',
+        'mountAndConfigureBodies',
         'system.maxSubSteps = 1',
         'app.releaseScene()',
         'app.close()',
