@@ -1,0 +1,429 @@
+{
+  "schema": "box3d-sdk223-ex03-channel-regression-v1",
+  "status": "FINITE_FIXTURE_REGRESSION_OBSERVATIONS_NOT_FULL_ACCEPTANCE",
+  "sourceCommit": "6e73abd892b17d2bcdaf2a0e10737ddf19c2e835",
+  "runtimeProducer": "b089d223aad1bb4be4a81f187eceb341510d766a",
+  "runtimeBuild": 223,
+  "runs": [
+    {
+      "generation": 1,
+      "mode": "lifecycle",
+      "attemptedClocks": 480,
+      "postFrames": 480,
+      "counts": {
+        "enter": 4,
+        "stay": 231,
+        "exit": 3
+      },
+      "status": "OBSERVATION_WINDOW_ENDED_NOT_ACCEPTANCE"
+    },
+    {
+      "generation": 2,
+      "mode": "lifecycle",
+      "attemptedClocks": 480,
+      "postFrames": 480,
+      "counts": {
+        "enter": 2,
+        "stay": 396,
+        "exit": 1
+      },
+      "status": "OBSERVATION_WINDOW_ENDED_NOT_ACCEPTANCE"
+    },
+    {
+      "generation": 3,
+      "mode": "fast-solid-transient120",
+      "attemptedClocks": 24,
+      "postFrames": 24,
+      "counts": {
+        "enter": 1,
+        "stay": 0,
+        "exit": 1
+      },
+      "status": "OBSERVATION_WINDOW_ENDED_NOT_ACCEPTANCE"
+    },
+    {
+      "generation": 4,
+      "mode": "moving-sensor-transient120",
+      "attemptedClocks": 24,
+      "postFrames": 24,
+      "counts": {
+        "enter": 0,
+        "stay": 0,
+        "exit": 0
+      },
+      "status": "OBSERVATION_WINDOW_ENDED_NOT_ACCEPTANCE"
+    },
+    {
+      "generation": 5,
+      "mode": "lifecycle",
+      "attemptedClocks": 480,
+      "postFrames": 480,
+      "counts": {
+        "enter": 4,
+        "stay": 231,
+        "exit": 4
+      },
+      "status": "OBSERVATION_WINDOW_ENDED_NOT_ACCEPTANCE"
+    },
+    {
+      "generation": 6,
+      "mode": "lifecycle",
+      "attemptedClocks": 9,
+      "postFrames": 9,
+      "counts": {
+        "enter": 0,
+        "stay": 0,
+        "exit": 0
+      },
+      "status": "NO_TERMINAL_RUN_STATUS_FIELD"
+    },
+    {
+      "generation": 7,
+      "mode": "lifecycle",
+      "attemptedClocks": 10,
+      "postFrames": 10,
+      "counts": {
+        "enter": 0,
+        "stay": 0,
+        "exit": 0
+      },
+      "status": "NO_TERMINAL_RUN_STATUS_FIELD"
+    }
+  ],
+  "enabled": {
+    "enterTickEpoch0": 81,
+    "disableTick": 83,
+    "applicationInvalidation": {
+      "epochFrom": 0,
+      "epochTo": 1,
+      "nativeEvent": false,
+      "epochMeaning": "Application ledger epoch, not native token"
+    },
+    "restoreTick": 85,
+    "enterTickEpoch1": 86,
+    "exitTick": 160,
+    "counts": [
+      4,
+      231,
+      3
+    ],
+    "overlapAtBothActions": true,
+    "offsetsFromAnchor": [
+      2,
+      4
+    ],
+    "faults": []
+  },
+  "trigger": {
+    "anchorTick": 561,
+    "solidTick": 563,
+    "exitTick": 564,
+    "restoreTriggerTick": 565,
+    "restoreX": -2.638843297958374,
+    "restoreVelocity": 0,
+    "overlapAtRestore": true,
+    "reenterTick": 566,
+    "stayThroughTick": 960,
+    "counts": [
+      2,
+      396,
+      1
+    ],
+    "finalActivePairs": 1,
+    "boundary": "Stopped visitor still overlaps; no assumption of restored speed or re-entry on every path."
+  },
+  "thinDiagnostics": {
+    "ticksAndQualificationEach": 24,
+    "fastNativeCounts": [
+      1,
+      0,
+      1
+    ],
+    "movingSensorNativeCounts": [
+      0,
+      0,
+      0
+    ],
+    "queryHitsEach": 1,
+    "fastNativeEnterExit": [
+      965,
+      966
+    ],
+    "queryHookTicks": [
+      965,
+      989
+    ],
+    "boundary": "Query hit is not native callback; source-model internal substeps are not measured native substeps."
+  },
+  "mask": {
+    "anchorTick": 1089,
+    "disableRestoreTicks": [
+      1091,
+      1093
+    ],
+    "values": [
+      1,
+      0,
+      1
+    ],
+    "nativeExitReenter": [
+      1092,
+      1094
+    ],
+    "counts": [
+      4,
+      231,
+      4
+    ],
+    "overlapBoth": true,
+    "channelEpoch": 0,
+    "applicationInvalidation": false
+  },
+  "motionLifecycle": {
+    "reset": {
+      "generation": 6,
+      "clocksAndFrames": 9,
+      "lastX": -3.85000014,
+      "velocityX": 1,
+      "terminalStatusField": false
+    },
+    "close": {
+      "generation": 7,
+      "clocksAndFrames": 10,
+      "lastX": -3.83333349,
+      "velocityX": 1,
+      "terminalStatusField": false
+    },
+    "boundary": "Ordinary lifecycle runs with no preset or pending actions; not live coverage of armed/anchored-preset cancellation. No ABORTED or480tick completion claim."
+  },
+  "mainClose": {
+    "kind": "close",
+    "receipt": {
+      "status": "released",
+      "scene": null,
+      "completed": [],
+      "pending": [],
+      "failures": [],
+      "retained": [
+        "runtime",
+        "scheduler",
+        "builtin-resources",
+        "shared-asset-caches"
+      ],
+      "measurements": {
+        "gpuMemory": "unavailable",
+        "reason": "WebGL provides no portable complete GPU allocation measurement; scene destruction is not proof of zero leaks."
+      },
+      "physicsPreparation": {
+        "attemptGeneration": 1,
+        "status": "closed",
+        "acquired": [
+          {
+            "backend": "box3d",
+            "resource": "module",
+            "cleanup": "released",
+            "retained": []
+          },
+          {
+            "backend": "box3d",
+            "resource": "world",
+            "cleanup": "released",
+            "retained": []
+          }
+        ],
+        "originalError": null,
+        "cleanupErrors": []
+      }
+    }
+  },
+  "cleanClose": {
+    "kind": "close",
+    "receipt": {
+      "status": "released",
+      "scene": null,
+      "completed": [],
+      "pending": [],
+      "failures": [],
+      "retained": [
+        "runtime",
+        "scheduler",
+        "builtin-resources",
+        "shared-asset-caches"
+      ],
+      "measurements": {
+        "gpuMemory": "unavailable",
+        "reason": "WebGL provides no portable complete GPU allocation measurement; scene destruction is not proof of zero leaks."
+      },
+      "physicsPreparation": {
+        "attemptGeneration": 1,
+        "status": "closed",
+        "acquired": [
+          {
+            "backend": "box3d",
+            "resource": "module",
+            "cleanup": "released",
+            "retained": []
+          },
+          {
+            "backend": "box3d",
+            "resource": "world",
+            "cleanup": "released",
+            "retained": []
+          }
+        ],
+        "originalError": null,
+        "cleanupErrors": []
+      }
+    }
+  },
+  "closingChecks": {
+    "raw23And24ByteEqual": true,
+    "singleMainCloseReceipt": true,
+    "raw25And26EmptyRuns": true,
+    "sourceBeforeAfterFrozenRawMatch": true,
+    "gpuMemory": "unavailable",
+    "zeroLeakClaim": false
+  },
+  "narrowDesktopOuterWidthPx": 697,
+  "console": "WASM source-map warning and identity-page favicon error retained; no all-session zero-console-error claim.",
+  "limitations": [
+    "Old4b41209 failed report preserved; this fresh source regression does not rewrite it.",
+    "Not fullEX03/G5 or global sensor/CCD qualification.",
+    "Armed/anchored preset cancellation remains source/CPU-only, not browser qualified here.",
+    "Narrow desktop is not mobile-device qualification.",
+    "Retained resources/GPUunavailable prohibit zero-leak claims."
+  ],
+  "evidencePolicy": "Artifact paths relative to retained fresh6e73 regression evidence root. Originals not included in commit; hash summary is not a self-contained replay bundle.",
+  "retainedEvidence": [
+    {
+      "artifact": "download-copy-receipt.json",
+      "bytes": 4260,
+      "sha256": "eacf0265862217d85f60ea168897f44c63808694bd44a3f77ebd0fb4c5d835a4"
+    },
+    {
+      "artifact": "enabled-timing.json",
+      "bytes": 232,
+      "sha256": "7a191c31f5efec08eb300e51478f27b823b47d52b0077c4a37ed6183e17e8b9b"
+    },
+    {
+      "artifact": "evidence-manifest.json",
+      "bytes": 8318,
+      "sha256": "e2ee86894bbf3a69b87108c1539f0f63ef3ff0fd604f334e7e9e03b2352d9825"
+    },
+    {
+      "artifact": "fast-timing.json",
+      "bytes": 86,
+      "sha256": "bc6c660bfa3ac27b40b5b4d148cb9d441456e85af24430357c0990a9a29471b4"
+    },
+    {
+      "artifact": "frozen-identity.json",
+      "bytes": 1613,
+      "sha256": "228bdf8ad7b7e8cbb0446d3b84f0b5cd818435317b1e248dba7eaa43e109d268"
+    },
+    {
+      "artifact": "identity-after.json",
+      "bytes": 1405,
+      "sha256": "b6f9a0ef88be0c1571674a21da45d1c8ee6ac8ac5eeaf89a87c0e75544dd4dd0"
+    },
+    {
+      "artifact": "identity-before.json",
+      "bytes": 1405,
+      "sha256": "b6f9a0ef88be0c1571674a21da45d1c8ee6ac8ac5eeaf89a87c0e75544dd4dd0"
+    },
+    {
+      "artifact": "mask-timing.json",
+      "bytes": 86,
+      "sha256": "c231df081f3a521afde17d07c1c4c93dd36fa41cf9e32488151200ed3fbbeb3b"
+    },
+    {
+      "artifact": "motion-close-timing.json",
+      "bytes": 72,
+      "sha256": "a7d8eb1bcff395c0058dee2132d3a2d9258d4be47a91e3de32b796e6ae0710d1"
+    },
+    {
+      "artifact": "motion-reset-timing.json",
+      "bytes": 72,
+      "sha256": "aa4910611e78515b4be701325c751316174b5a0f5ef1972e98195192886e31d4"
+    },
+    {
+      "artifact": "moving-timing.json",
+      "bytes": 86,
+      "sha256": "a71275db766a4675bb788a331fd032580e44015895f247dfcb89aa532450f25b"
+    },
+    {
+      "artifact": "narrow-window-inventory.json",
+      "bytes": 2465,
+      "sha256": "06a8c2ee70d6e150963554e937a290ff04f97b1d6032b9973b299282bf2cbc44"
+    },
+    {
+      "artifact": "physical-close-windows.json",
+      "bytes": 1988,
+      "sha256": "68d56245e13b36b244d4e8e217a72e5ecadbade145b0575cd5b981332ca53c32"
+    },
+    {
+      "artifact": "predeclared-plan.json",
+      "bytes": 2997,
+      "sha256": "b394dba18072d5318fa701f90efd0ddfe82dfe558e1bbaa093c8b767fdd8bd92"
+    },
+    {
+      "artifact": "result.json",
+      "bytes": 43140,
+      "sha256": "ff253fb836931de5c8e013f412cca1669806ef333ba7993adac2c5222dcdb031"
+    },
+    {
+      "artifact": "trigger-timing.json",
+      "bytes": 120,
+      "sha256": "a125439125709c3088246ea8f0158c7b393786cd813d12d62fa20fe3cea09707"
+    },
+    {
+      "artifact": "downloads/ex03-trigger-lifecycle(17).json",
+      "bytes": 6789176,
+      "sha256": "981babbfd8c2dfaddd6a84f5d0fe3c15aa48d40d2e1dee3fd2b4e9ffe67dfedc"
+    },
+    {
+      "artifact": "downloads/ex03-trigger-lifecycle(18).json",
+      "bytes": 14047600,
+      "sha256": "2e8c4caed9f7a9d7956db72662197c74741b6718120334e77f726440b540ed25"
+    },
+    {
+      "artifact": "downloads/ex03-trigger-lifecycle(19).json",
+      "bytes": 14496292,
+      "sha256": "a049041e8a7a7cbf8428c8c1f27e25d26aaa10376fdb0a05eef262015eadf8c3"
+    },
+    {
+      "artifact": "downloads/ex03-trigger-lifecycle(20).json",
+      "bytes": 15012844,
+      "sha256": "d1ec4768d7b1237ff04fdaafafc6727639fb20d259d8199e0191ecf9ace82998"
+    },
+    {
+      "artifact": "downloads/ex03-trigger-lifecycle(21).json",
+      "bytes": 21811111,
+      "sha256": "dcf0fff670ecbbf786503074fff435757a254e5546699a7b1fd24cd9bfd47ea3"
+    },
+    {
+      "artifact": "downloads/ex03-trigger-lifecycle(22).json",
+      "bytes": 21931071,
+      "sha256": "b158459963bab74d95329bdaf949727194269f9e6bb37b16c499dcdf166a23cb"
+    },
+    {
+      "artifact": "downloads/ex03-trigger-lifecycle(23).json",
+      "bytes": 22063946,
+      "sha256": "35f6e6fc3854a96f31ea88d38c85fc75e56c3b941f9f4f39089a6ee7b8122150"
+    },
+    {
+      "artifact": "downloads/ex03-trigger-lifecycle(24).json",
+      "bytes": 22063946,
+      "sha256": "35f6e6fc3854a96f31ea88d38c85fc75e56c3b941f9f4f39089a6ee7b8122150"
+    },
+    {
+      "artifact": "downloads/ex03-trigger-lifecycle(25).json",
+      "bytes": 1852,
+      "sha256": "a7dbbcedc1f63c77309d904689a598d2781e3e81b43e67cf1300a941d60cfdb9"
+    },
+    {
+      "artifact": "downloads/ex03-trigger-lifecycle(26).json",
+      "bytes": 4245,
+      "sha256": "85d7dcbf68a0fab07d66495551a8b126fd790b128e0c4b84d90dbe6fd25eec51"
+    }
+  ]
+}
