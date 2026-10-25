@@ -50,9 +50,14 @@ export function assessTrial(config, trace, contacts, interrupted = false) {
     // Query hits do NOT count as collision events or proof of stopping.
     return {
         status: !promised(config) ? 'OBSERVATION_ONLY' : crossed || !poseMatches || !hit ? 'FAIL' : 'OBSERVED_OK',
+        // Additive labels preserve v1 booleans; a moving target is not the fixed world-X reference.
+        resultSemantics: 'ex05-crossing-labels-v2',
         crossed,
+        crossedScope: config.target === 'wall' ? 'STATIC_WALL_FIXED_X_BOUND' : 'FIXED_WORLD_X_DIAGNOSTIC_ONLY',
+        ...(config.target !== 'wall' ? { targetPenetrationAssessment: 'NOT_ASSESSED' } : {}),
         poseMatches,
         hit,
+        hitMeaning: 'VALID_CONTACT_EVENT_NOT_BLOCKING_PROOF',
         finalPosition: final.position,
         reason: 'Local fixed-step evidence only; browser presentation and C26-C28 matrix remain NOT_RUN',
     };

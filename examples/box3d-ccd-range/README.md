@@ -108,3 +108,25 @@ expected/actual solver subdivisions and tick/attempt IDs before validation, incl
 Ray/sweep translation still uses that same callback's `context.fixedDt`. The original speeds, geometry,
 90-tick trial window and no-crossing/pose thresholds are unchanged. Both old failures remain failures;
 the corrected revision requires a fresh real run to establish the actual clock values.
+
+## Crossing diagnostic field meanings (additive result semantics)
+
+Report schema `ex05-ccd-range-v1` and existing `crossed` / `hit` booleans remain compatible. Completed
+results add `resultSemantics: "ex05-crossing-labels-v2"`; old reports without it keep their original
+meaning and must not be rewritten or promoted.
+
+- `crossed` always retains the original test: any sampled projectile center X exceeds
+  `thickness / 2 + RADIUS` in fixed world coordinates. For a wall at X=0, `crossedScope` is
+  `STATIC_WALL_FIXED_X_BOUND`; its original acceptance predicate and thresholds are unchanged.
+- For either moving target, `crossedScope` is `FIXED_WORLD_X_DIAGNOSTIC_ONLY` and
+  `targetPenetrationAssessment` is `NOT_ASSESSED`. A true `crossed` does **not** mean the projectile
+  passed through that moving target; a false value does not prove nonpenetration either. The result
+  remains `OBSERVATION_ONLY`, excluded from the static-wall promise counters.
+- `hitMeaning` is `VALID_CONTACT_EVENT_NOT_BLOCKING_PROOF`: `hit=true` means the retained event records
+  satisfy the existing identity/tick/finite-field checks, not that the target blocked the projectile.
+  This is particularly important for the non-promised bullet–bullet comparison.
+
+Sampled center ordering, contact existence, and fixed-X crossing are distinct observations. This revision
+adds no dynamic-target penetration algorithm, collision guarantee, or new geometric threshold. Existing
+raw observations and their original result fields remain immutable; this schema-label change requires
+new example fingerprints for any subsequent run.
