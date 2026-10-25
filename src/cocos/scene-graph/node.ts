@@ -22,6 +22,7 @@
  THE SOFTWARE.
 */
 
+import { requestDeferredDestroy } from './deferred-destroy-control';
 import { assertMutationAllowed, assertMutationBatchAllowed } from '../core/data/mutation-guard';
 import { installComponentActivityNodeSource } from './component-activity-control';
 import { validateTransformValues, assertNodeTransformEntry, assertNodeTransformWrite } from './node-transform-validation';
@@ -1376,6 +1377,8 @@ export class Node extends CCObject implements ISchedulable, CustomSerializable {
     }
 
     public destroy (): boolean {
+        const deferred = requestDeferredDestroy(this, 'Node.destroy', (this._objFlags & (CCObjectFlags.Destroyed | CCObjectFlags.ToDestroy)) !== 0);
+        if (deferred !== undefined) return deferred;
         assertMutationAllowed(this, 'Node.destroy');
         if (super.destroy()) {
             this.active = false;

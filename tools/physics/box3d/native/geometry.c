@@ -18,9 +18,15 @@ int air_b3_contact_geometry(uint32_t world, const uint32_t* words, uint32_t* out
     uint32_t copy[3]; memcpy(copy, words, sizeof(copy)); b3ContactId id = b3LoadContactId(copy);
     b3ContactData data = b3Contact_GetData(id);
     b3ShapeType a = b3Shape_GetType(data.shapeIdA), b = b3Shape_GetType(data.shapeIdB);
-    /* Only these analytic-fixture geometry families are admitted in this increment. */
+    /* This layer copies an available generation basis, not blanket shape-family
+       qualification. A native hull tag also covers arbitrary convex Hulls; the
+       public layer admits only the explicitly tested Box/Capsule descriptors.
+       Baked compounds, meshes, heightfields and sphere-capsule remain excluded. */
     if (!((a == b3_sphereShape && (b == b3_sphereShape || b == b3_hullShape)) ||
-          (b == b3_sphereShape && a == b3_hullShape))) return AIR_B3_UNSUPPORTED_GEOMETRY;
+          (b == b3_sphereShape && a == b3_hullShape) ||
+          (a == b3_hullShape && b == b3_hullShape) ||
+          (a == b3_capsuleShape && (b == b3_hullShape || b == b3_capsuleShape)) ||
+          (b == b3_capsuleShape && a == b3_hullShape))) return AIR_B3_UNSUPPORTED_GEOMETRY;
     b3ContactGeometryBasis basis;
     if (!b3Contact_GetGeometryBasis(id, &basis)) return AIR_B3_GEOMETRY_UNAVAILABLE;
     uint32_t result[25] = {1, (uint32_t)basis.geometryRevision, (uint32_t)(basis.geometryRevision >> 32),

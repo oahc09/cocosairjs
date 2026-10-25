@@ -106,3 +106,8 @@ export function readBox3DBodyMotion(body: RigidBody): Readonly<Box3DBodyMotion> 
         });
     return readBox3DBodyMotionSource(body, world);
 }
+
+/** Requested/committed Fixed state and native copied observations, not a native handle.
+ * Pending requests commit before the next physical step; broken joints only rearm
+ * on an explicit disable→enable transition. Other backends have no such owner. */
+export { readConstraintState as readBox3DConstraintState } from '../cocos/physics/framework/constraint-state-control';

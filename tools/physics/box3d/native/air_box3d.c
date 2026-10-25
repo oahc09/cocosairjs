@@ -1,6 +1,7 @@
 /* Copyright (c) 2026-2027 oahc09@gmail.com. SPDX-License-Identifier: MIT */
 #include "air_box3d.h"
 #include "world_bridge.h"
+#include "mesh_bridge.h"
 #include <box3d/box3d.h>
 #include <box3d/collision.h>
 #include <box3d/constants.h>
@@ -102,8 +103,10 @@ int air_b3_body_valid(uint32_t lo, uint32_t hi) { return b3Body_IsValid(b3LoadBo
 int air_b3_body_destroy(uint32_t lo, uint32_t hi)
 {
     if (!air_b3_body_valid(lo, hi)) return AIR_B3_INVALID;
-    int locked = air_b3_world_unlocked(b3StoreWorldId(b3Body_GetWorld(b3LoadBodyId(join_id(lo, hi))))); if (locked) return locked;
+    uint32_t world = b3StoreWorldId(b3Body_GetWorld(b3LoadBodyId(join_id(lo, hi))));
+    int locked = air_b3_world_unlocked(world); if (locked) return locked;
     b3DestroyBody(b3LoadBodyId(join_id(lo, hi)));
+    air_b3_mesh_body_destroyed(world, join_id(lo, hi));
     return AIR_B3_OK;
 }
 int air_b3_body_snapshot(uint32_t lo, uint32_t hi, float* out)
@@ -187,8 +190,10 @@ int air_b3_shape_valid(uint32_t lo, uint32_t hi) { return b3Shape_IsValid(b3Load
 int air_b3_shape_destroy(uint32_t lo, uint32_t hi)
 {
     if (!air_b3_shape_valid(lo, hi)) return AIR_B3_INVALID;
-    int locked = air_b3_world_unlocked(b3StoreWorldId(b3Shape_GetWorld(b3LoadShapeId(join_id(lo, hi))))); if (locked) return locked;
+    uint32_t world = b3StoreWorldId(b3Shape_GetWorld(b3LoadShapeId(join_id(lo, hi))));
+    int locked = air_b3_world_unlocked(world); if (locked) return locked;
     b3DestroyShape(b3LoadShapeId(join_id(lo, hi)), true);
+    air_b3_mesh_shape_destroyed(world, join_id(lo, hi));
     return AIR_B3_OK;
 }
 int air_b3_ray_closest(uint32_t world, const float* input, float* out, uint32_t* shape)

@@ -43,6 +43,7 @@ export function copyWritebackQualification(value?: Box3DWritebackQualification):
 }
 interface LocalRecord {
     readonly node: Node;
+    readonly signedStaticMesh: boolean;
     readonly parent: Node | null;
     readonly position: readonly number[];
     readonly rotation: readonly number[];
@@ -55,29 +56,31 @@ const quat = (v: readonly number[]) => new Quat(v[0], v[1], v[2], v[3]);
 function reject(reason: string): never {
     throw worldError('AIR_E_BOX3D_CONFIG', 'owned writeback', reason);
 }
-function local(node: Node): LocalRecord {
+function local(node: Node, signedStaticMesh = false): LocalRecord {
     if (!isValid(node, true)) reject('Node ownership is destroyed or pending destruction.');
+    const copiedScale = vector(node.scale);
     const result = Object.freeze({
         node,
+        signedStaticMesh: signedStaticMesh && copiedScale.some((n) => n < 0),
         parent: node.parent,
         position: vector(node.position),
         rotation: quaternion(node.rotation),
-        scale: vector(node.scale),
+        scale: copiedScale,
     });
     if (
         [...result.position, ...result.rotation, ...result.scale].some((v) => !Number.isFinite(v)) ||
-        result.scale.some((v) => v <= 0)
+        result.scale.some((v) => (signedStaticMesh ? v === 0 : v <= 0))
     )
         reject('Expected finite local TRS and positive scale.');
     return result;
 }
-function chain(node: Node): readonly LocalRecord[] {
+function chain(node: Node, signedStaticMesh = false): readonly LocalRecord[] {
     const result: LocalRecord[] = [],
         seen = new Set<Node>();
     for (let current: Node | null = node; current; current = current.parent) {
         if (seen.has(current)) reject('Cyclic Node ancestry.');
         seen.add(current);
-        result.unshift(local(current));
+        result.unshift(local(current, signedStaticMesh));
     }
     return Object.freeze(result);
 }
@@ -87,6 +90,7 @@ function same(a: readonly number[], b: readonly number[]): boolean {
 function sameLocal(a: LocalRecord, b: LocalRecord): boolean {
     return (
         a.node === b.node &&
+        a.signedStaticMesh === b.signedStaticMesh &&
         a.parent === b.parent &&
         same(a.position, b.position) &&
         same(a.rotation, b.rotation) &&
@@ -96,7 +100,7 @@ function sameLocal(a: LocalRecord, b: LocalRecord): boolean {
 function assertLocals(expected: ReadonlyMap<Node, LocalRecord>): void {
     // Raw local values and parent identity are checked BEFORE any world getter can refresh a cache.
     for (const item of expected.values())
-        if (!sameLocal(item, local(item.node))) reject('Unowned local TRS or ancestor change.');
+        if (!sameLocal(item, local(item.node, item.signedStaticMesh))) reject('Unowned local TRS or ancestor change.');
 }
 function near(a: readonly number[], b: readonly number[]): boolean {
     return (
@@ -153,13 +157,16 @@ function verify(expected: ReadonlyMap<Node, LocalRecord>): void {
 export class Box3DSceneTransform {
     readonly node: Node;
     #baseline: readonly LocalRecord[];
-    constructor(node: Node) {
+    constructor(
+        node: Node,
+        readonly signedStaticMesh = false,
+    ) {
         this.node = node;
-        this.#baseline = chain(node);
+        this.#baseline = chain(node, signedStaticMesh);
         verify(new Map(this.#baseline.map((item) => [item.node, item])));
     }
     preflight(): void {
-        const current = chain(this.node);
+        const current = chain(this.node, this.signedStaticMesh);
         if (current.length !== this.#baseline.length || current.some((item, i) => !sameLocal(item, this.#baseline[i])))
             reject('External Node pose/parent/scale synchronization is not enabled.');
         verify(new Map(this.#baseline.map((item) => [item.node, item])));

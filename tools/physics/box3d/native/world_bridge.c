@@ -2,6 +2,7 @@
 /* ST-only owned callback data; original core source and allocator are unchanged. */
 #include "air_box3d.h"
 #include "world_bridge.h"
+#include "mesh_bridge.h"
 #include <box3d/box3d.h>
 #include <box3d/collision.h>
 #include <box3d/constants.h>
@@ -90,6 +91,12 @@ static void* create_shape(const b3DebugShape* shape, void* context) {
             w->error = AIR_B3_UNSUPPORTED; return NULL;
         }
         lines = h->edgeCount / 2;
+    } else if (shape->type == b3_meshShape) {
+        const b3MeshData* m = shape->mesh->data;
+        if (!m || m->triangleCount < 1 || m->triangleCount > DEBUG_MAX_PRIMITIVES / 3) {
+            w->error = AIR_B3_CAPACITY; return NULL;
+        }
+        lines = 3 * m->triangleCount;
     } else { w->error = AIR_B3_UNSUPPORTED; return NULL; }
     size_t bytes = sizeof(DebugShape) + (size_t)lines * 2 * sizeof(b3Vec3);
     DebugShape* result = owned_alloc(w, bytes);
@@ -129,6 +136,21 @@ static void* create_shape(const b3DebugShape* shape, void* context) {
             result->ends[2*n+1] = b3Add(c->center2,radial);
         }
         B3_ASSERT(n == lines);
+    } else if (shape->type == b3_meshShape) {
+        const b3MeshData* m = shape->mesh->data;
+        const b3Vec3* points = b3GetMeshVertices(m);
+        const b3MeshTriangle* triangles = b3GetMeshTriangles(m);
+        b3Vec3 scale = shape->mesh->scale;
+        for (int t = 0; t < m->triangleCount; ++t) {
+            int ids[3] = {triangles[t].index1,triangles[t].index2,triangles[t].index3};
+            for (int e = 0; e < 3; ++e) {
+                if (ids[e] < 0 || ids[e] >= m->vertexCount || ids[(e+1)%3] < 0 || ids[(e+1)%3] >= m->vertexCount) {
+                    owned_free(w,result,bytes); w->error = AIR_B3_UNSUPPORTED; return NULL;
+                }
+                result->ends[6*t+2*e] = b3Mul(points[ids[e]],scale);
+                result->ends[6*t+2*e+1] = b3Mul(points[ids[(e+1)%3]],scale);
+            }
+        }
     } else {
         const b3HullData* h = shape->hull;
         const b3Vec3* p = b3GetHullPoints(h);
@@ -196,6 +218,7 @@ int air_b3_bridge_world_destroy(uint32_t world) {
     BridgeWorld* w=find_world(world);
     if (!w) return AIR_B3_INVALID;
     b3DestroyWorld(b3LoadWorldId(world)); /* Calls destroy_shape for every remaining userShape. */
+    air_b3_mesh_world_destroyed(world); /* Core callbacks finish before borrowed geometry is freed. */
     clear_wire(w);
     clear_temporary(w); /* Unresolved temporary plans remain owned until world cleanup. */
     BridgeWorld** p=&worlds; while (*p != w) p=&(*p)->next; *p=w->next;

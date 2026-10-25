@@ -66,6 +66,15 @@ const INPUTS = [
     'tools/physics/box3d/native/capsule_contract.c',
     'tools/physics/box3d/native/hull_bridge.c',
     'tools/physics/box3d/native/hull_bridge.h',
+    'tools/physics/box3d/native/joint_bridge.c',
+    'tools/physics/box3d/native/joint_bridge.h',
+    'tools/physics/box3d/native/joint_contract.c',
+    'tools/physics/box3d/native/hinge_bridge.c',
+    'tools/physics/box3d/native/hinge_bridge.h',
+    'tools/physics/box3d/native/hinge_contract.c',
+    'tools/physics/box3d/native/p2p_bridge.c',
+    'tools/physics/box3d/native/p2p_bridge.h',
+    'tools/physics/box3d/native/p2p_contract.c',
     'tools/physics/box3d/native/hull_contract.c',
     'tools/physics/box3d/native/hull_core_contract.c',
     'tools/physics/box3d/native/hull_legacy_fingerprint.c',
@@ -84,6 +93,11 @@ const INPUTS = [
     'docs/physics/box3d/contracts/unified-command-decisions-v1.md',
     'src/air/physics/box3d/binding/facade.mjs',
     'src/air/physics/box3d/binding/facade.d.mts',
+    'tools/physics/box3d/native/mesh_bridge.c',
+    'tools/physics/box3d/native/mesh_bridge.h',
+    'tools/physics/box3d/native/mesh_contract.c',
+    'tools/physics/box3d/wasm-mesh-contract.mjs',
+    'tools/physics/box3d/static-mesh-bridge-contract.md',
 ];
 const sha256 = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const read = (file) => fs.readFileSync(file);
@@ -119,7 +133,7 @@ function verifyRecord(directory, record) {
     return bytes;
 }
 /** Read-only consistency gate; physical/browser acceptance is not inferred from staging. */
-async function verifySTBuild(buildDirectory) {
+async function verifySTBuild(buildDirectory, { provenanceRoot = ROOT } = {}) {
     assert(typeof buildDirectory === 'string' && buildDirectory.trim(), 'AIR_BOX3D_ST_BUILD_DIR is required');
     const directory = path.resolve(buildDirectory);
     const { verifySources } = await import(pathToFileURL(path.join(ROOT, 'tools/physics/box3d/verify-sources.mjs')));
@@ -137,7 +151,7 @@ async function verifySTBuild(buildDirectory) {
     assert.equal(receipt.kind, 'st-simd-wasm');
     assert(['Debug', 'Release'].includes(receipt.mode));
     verifyCommandSchedule(receipt);
-    assert.equal(INPUTS.length, 65);
+    assert.equal(INPUTS.length, 79);
     assert.deepEqual(sorted(INPUTS), sorted(COMMAND_EXPECTATIONS.gate.inputs));
     assert.deepEqual(sorted(receipt.inputHashes.map((row) => row.path)), sorted(INPUTS), 'Build input inventory drift');
     for (const input of receipt.inputHashes) {
@@ -171,7 +185,7 @@ async function verifySTBuild(buildDirectory) {
     assert.equal(audit.sharedMemory, false);
     assert.equal(audit.dynamicExecutionOrWorkerConstructorFound, false);
     assert.equal(audit.compiledSourceCount, audit.compiledSourceHashes.length);
-    assert.equal(audit.compiledSourceCount, 74, 'Compile audit inventory drift');
+    assert.equal(audit.compiledSourceCount, 82, 'Compile audit inventory drift');
     assert.equal(new Set(audit.compiledSourceHashes.map((row) => row.path)).size, audit.compiledSourceCount);
     for (const name of [
         'body_control.c',
@@ -185,6 +199,14 @@ async function verifySTBuild(buildDirectory) {
         'query_bridge.c',
         'query_contract.c',
         'capsule_contract.c',
+        'joint_bridge.c',
+        'joint_contract.c',
+        'hinge_bridge.c',
+        'hinge_contract.c',
+        'p2p_bridge.c',
+        'p2p_contract.c',
+        'mesh_bridge.c',
+        'mesh_contract.c',
         'hull_bridge.c',
         'hull_contract.c',
         'hull_core_contract.c',
@@ -234,6 +256,15 @@ async function verifySTBuild(buildDirectory) {
             'wasm-motion-contract.raw.json',
             'motion-samples.raw.jsonl',
             'air_box3d_motion_contract.cjs',
+            'native-joint-contract.raw.json',
+            'air_box3d_joint_contract.cjs',
+            'native-hinge-contract.raw.json',
+            'air_box3d_hinge_contract.cjs',
+            'native-p2p-contract.raw.json',
+            'air_box3d_p2p_contract.cjs',
+            'air_box3d_mesh_contract.cjs',
+            'native-mesh-contract.raw.json',
+            'wasm-mesh-contract.raw.json',
             'native-capsule-contract.raw.json',
             'air_box3d_capsule_contract.cjs',
             'native-hull-contract.raw.json',
@@ -263,6 +294,7 @@ async function verifySTBuild(buildDirectory) {
     verifyHullQualification({
         directory,
         root: ROOT,
+        provenanceRoot,
         receipt,
         identity,
         sources,
@@ -279,6 +311,93 @@ async function verifySTBuild(buildDirectory) {
         receipt,
         fixtureSha256: sha256(read(path.join(ROOT, 'tools/physics/box3d/wasm-query-contract.mjs'))),
     });
+    const nativeJoint = json(fileInside(directory, 'native-joint-contract.raw.json'));
+    assert.equal(nativeJoint.status, 'PASS');
+    assert.equal(nativeJoint.pointerBytes, 4);
+    assert.deepEqual(nativeJoint, receipt.jointContract);
+    assert.equal(nativeJoint.ticksPerDynamicsCase, 600);
+    assert.ok(Math.abs(nativeJoint.positionLimitMeters - 0.02) < 1e-8);
+    assert.ok(Math.abs(nativeJoint.angularLimitRadians - 0.02) < 1e-8);
+    for (const field of [
+        'shapeFreeStaticAnchor',
+        'configurePreservesFramesPosesAndReaction',
+        'nativeThresholdDoesNotDestroy',
+        'fullEventIdCopied',
+        'explicitDestroyReleasesConstraint',
+        'bodyDestroyInvalidatesJoint',
+        'worldDestroyInvalidatesJoint',
+    ])
+        assert.equal(nativeJoint[field], true, field);
+    for (const field of [
+        'anchoredMaxPositionError',
+        'anchoredMaxAngularError',
+        'reversedAnchoredMaxPositionError',
+        'reversedAnchoredMaxAngularError',
+        'movingMaxPositionError',
+        'movingMaxAngularError',
+    ])
+        assert.ok(Number.isFinite(nativeJoint[field]) && nativeJoint[field] >= 0 && nativeJoint[field] <= 0.02, field);
+    assert.equal(nativeJoint.finalCoreBytes, 0);
+    assert.equal(nativeJoint.finalBridgeBytes, 0);
+    assert.ok(
+        receipt.commands.some(
+            (entry) => entry.args.some((arg) => arg.endsWith('air_box3d_joint_contract.cjs')) && entry.exitCode === 0,
+        ),
+    );
+    const nativeHinge = json(fileInside(directory, 'native-hinge-contract.raw.json'));
+    assert.equal(nativeHinge.status, 'PASS');
+    assert.equal(nativeHinge.pointerBytes, 4);
+    assert.deepEqual(nativeHinge, receipt.hingeContract);
+    assert.ok(
+        receipt.commands.some(
+            (entry) => entry.args.some((arg) => arg.endsWith('air_box3d_hinge_contract.cjs')) && entry.exitCode === 0,
+        ),
+    );
+    const wasmMesh = json(fileInside(directory, 'wasm-mesh-contract.raw.json'));
+    assert.equal(wasmMesh.status, 'PASS');
+    assert.equal(wasmMesh.orders.length, 4);
+    assert.equal(wasmMesh.fixtureSha256, sha256(read(fileInside(ROOT, 'tools/physics/box3d/wasm-mesh-contract.mjs'))));
+    for (const passed of Object.values(wasmMesh.checks)) assert.equal(passed, true);
+    const nativeMesh = json(fileInside(directory, 'native-mesh-contract.raw.json'));
+    assert.equal(nativeMesh.status, 'PASS');
+    assert.equal(nativeMesh.pointerBytes, 4);
+    assert.equal(nativeMesh.releaseOrders, 4);
+    assert.ok(nativeMesh.checks >= 618);
+    assert.deepEqual(nativeMesh, receipt.meshContract);
+    const nativeP2P = json(fileInside(directory, 'native-p2p-contract.raw.json'));
+    assert.equal(nativeP2P.status, 'PASS');
+    assert.equal(nativeP2P.pointerBytes, 4);
+    assert.equal(nativeP2P.coreSha, identity.coreSha);
+    assert.deepEqual(nativeP2P, receipt.p2pContract);
+    assert.equal(nativeP2P.rejectionChecks, 126);
+    assert.equal(nativeP2P.geometryChecks, 15);
+    for (const field of [
+        'nativeSpherical',
+        'fullGenerationWorldOwnership',
+        'independentBodyOriginQuaternionAnchorOracle',
+        'configurePreservesFramesAndPoses',
+        'nativePositionalSoftnessUnchanged',
+        'actualCollisionManifolds',
+        'wholeSolverBodyStateUnchanged',
+    ])
+        assert.equal(nativeP2P[field], true, field);
+    for (const field of [
+        'anchoredMaxAnchorMeters',
+        'twoDynamicMaxAnchorMeters',
+        'mismatchFinalMeters',
+        'mismatchMaxSettledMeters',
+    ])
+        assert.ok(Number.isFinite(nativeP2P[field]) && nativeP2P[field] >= 0 && nativeP2P[field] <= 0.02, field);
+    assert.ok(nativeP2P.mismatchInitialMeters > 0.3);
+    assert.equal(nativeP2P.independentFreeRotationAxes, 3);
+    assert.ok(
+        Number.isFinite(nativeP2P.maxQuaternionErrorRadians) &&
+            nativeP2P.maxQuaternionErrorRadians >= 0 &&
+            nativeP2P.maxQuaternionErrorRadians <= 0.005,
+    );
+    assert.equal(nativeP2P.pureStateReads, 8684);
+    assert.equal(nativeP2P.finalCoreBytes, 0);
+    assert.equal(nativeP2P.finalBridgeBytes, 0);
     const nativeGeometry = json(fileInside(directory, 'native-geometry-contract.raw.json'));
     assert.equal(nativeGeometry.status, 'PASS', 'Native geometry qualification did not pass');
     assert.equal(nativeGeometry.pointerBytes, 4, 'Geometry qualification must execute WASM32');
@@ -476,11 +595,16 @@ async function verifySTBuild(buildDirectory) {
     };
 }
 /** Validates every input before writing. Not selected means no source reads or output writes. */
-async function stageBox3DAssets({ features, outputDirectory, buildDirectory }) {
+async function stageBox3DAssets({
+    features,
+    outputDirectory,
+    buildDirectory,
+    provenanceRoot = process.env.AIR_BOX3D_PROVENANCE_ROOT ?? ROOT,
+}) {
     assert(Array.isArray(features), 'Explicit effective feature list is required');
     if (!features.includes(FEATURE)) return null;
     assert(typeof outputDirectory === 'string' && outputDirectory.trim(), 'Output directory is required');
-    const verified = await verifySTBuild(buildDirectory);
+    const verified = await verifySTBuild(buildDirectory, { provenanceRoot });
     const output = path.resolve(outputDirectory, 'physics/box3d/st');
     assert(
         output !== verified.directory &&

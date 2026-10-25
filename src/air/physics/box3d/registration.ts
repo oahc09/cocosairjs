@@ -19,6 +19,9 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
 */
+import { Box3DFixedConstraint } from './fixed-constraint';
+import { Box3DHingeConstraint } from './hinge-constraint';
+import { Box3DPointToPointConstraint } from './point-to-point-constraint';
 import type { Box3DWorldOwnerEnvironment } from './world-command-owner';
 import { PhysicsSystem } from '../../../cocos/physics/framework/physics-system';
 import type { IPhysicsSelector } from '../../../cocos/physics/framework/physics-selector';
@@ -27,6 +30,7 @@ import { Box3DPhysicsWorld } from './world';
 import { Box3DRigidBody } from './rigid-body';
 import { Box3DBoxShape, Box3DSphereShape, Box3DCapsuleShape } from './box-sphere-shape';
 import { Box3DHullShape } from './hull-shape';
+import { Box3DRoundHullShape } from './round-hull-shape';
 import type { Box3DComponentConfiguration } from './shared-body';
 import { requireComponentBinding, requireWorldBinding, worldError } from './world-binding';
 import { createUnsupportedBox3DComponents } from './unsupported';
@@ -66,6 +70,21 @@ export function createBox3DWorldAdapter(
         };
         const componentWrappers = components
             ? {
+                  HingeConstraint: class extends Box3DHingeConstraint {
+                      constructor() {
+                          super(getWorld);
+                      }
+                  },
+                  PointToPointConstraint: class extends Box3DPointToPointConstraint {
+                      constructor() {
+                          super(getWorld);
+                      }
+                  },
+                  FixedConstraint: class extends Box3DFixedConstraint {
+                      constructor() {
+                          super(getWorld);
+                      }
+                  },
                   RigidBody: class extends Box3DRigidBody {
                       constructor() {
                           super(getWorld, components!);
@@ -79,6 +98,16 @@ export function createBox3DWorldAdapter(
                   CapsuleShape: class extends Box3DCapsuleShape {
                       constructor() {
                           super(getWorld, components!);
+                      }
+                  },
+                  CylinderShape: class extends Box3DRoundHullShape {
+                      constructor() {
+                          super('cylinder', getWorld, components!);
+                      }
+                  },
+                  ConeShape: class extends Box3DRoundHullShape {
+                      constructor() {
+                          super('cone', getWorld, components!);
                       }
                   },
                   TrimeshShape: class extends Box3DHullShape {

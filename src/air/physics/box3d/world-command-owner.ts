@@ -20,11 +20,17 @@
  THE SOFTWARE.
 */
 import { Node } from '../../../cocos/scene-graph/node';
+import { Component } from '../../../cocos/scene-graph/component';
+import { registerDeferredDestroyScope } from '../../../cocos/scene-graph/deferred-destroy-control';
+import type { DeferredDestroyScope, DeferredDestroyTarget } from '../../../cocos/scene-graph/deferred-destroy-control';
 import { game } from '../../../cocos/game/game';
 import { registerGameClockObserver, gameClockSemanticPause } from '../../../cocos/game/game-clock-control';
 import type { GameClockState, GameClockObservation, GameClockDiagnostics, GameClockPlan, GameClockFailure } from '../../../cocos/game/game-clock-control';
 import { PhysicsSystem } from '../../../cocos/physics/framework/physics-system';
 import { RigidBody } from '../../../cocos/physics/framework/components/rigid-body';
+import { FixedConstraint } from '../../../cocos/physics/framework/components/constraints/fixed-constraint';
+import { HingeConstraint } from '../../../cocos/physics/framework/components/constraints/hinge-constraint';
+import { PointToPointConstraint } from '../../../cocos/physics/framework/components/constraints/point-to-point-constraint';
 import { Collider } from '../../../cocos/physics/framework/components/colliders/collider';
 import { PhysicsMaterial } from '../../../cocos/physics/framework/assets/physics-material';
 import { registerMutationGuard } from '../../../cocos/core/data/mutation-guard';
@@ -184,6 +190,13 @@ export interface Box3DOwnerFenceScope {
     write(node: Node, operation: NodeTransformWriteOperation, expected: readonly number[], perform: () => void): void;
     dispose(): void;
 }
+export interface Box3DDispatchScope extends Box3DOwnerFenceScope {
+    pendingDestruction(component: Collider): boolean;
+    /** Only after dispose: route queued identities through the original guarded entry. */
+    drainDestruction(): void;
+}
+const originalNodeDestroy = Node.prototype.destroy;
+const originalComponentDestroy = Component.prototype.destroy;
 type Phase =
     | 'idle'
     | 'admission'
@@ -245,6 +258,7 @@ function object(value: unknown, operation: string): asserts value is object {
  * Public activation still requires complete lifetime and acceptance contracts.
  */
 export class Box3DWorldCommandOwner {
+    #destroyAdmission: DeferredDestroyScope | null = null;
     readonly #generation: number;
     #valuesLease: MaterialValuesOwnerLease | null = null;
     #bindingOwner: MaterialBindingOwnerLease | null = null;
@@ -279,6 +293,9 @@ export class Box3DWorldCommandOwner {
     #lastActivity: Readonly<{ cacheWriteEntered: boolean; callbackReturned: boolean; schedulerReturned: boolean; cleanupCommitted: boolean; nativeApplied: boolean; delegated: boolean; actual: ActivityState | null; actualReadStatus: string; schedulerUnchanged: boolean | null }> | null = null;
     #defaultMaterial: PhysicsMaterial | null = null;
     #phase: Phase = 'idle';
+    #publicQueryContext: CommandContext | undefined;
+    #publicQueryReading = false;
+    #jointActivity: object | null = null;
     #nativeTeardown: 'owned' | 'released' | 'unresolved' = 'owned';
     #scope: Box3DOwnerFenceScope | null = null;
     readonly #materialLeases = new Map<object, PhysicsMaterialDelegateLease>();
@@ -795,7 +812,39 @@ export class Box3DWorldCommandOwner {
         }
     }
     registerCommandHook(callback: CommandProducer, options?: { enabled?: boolean }): ProducerHandle {
-        return this.#producers.registerBeforeStep(callback, options);
+        if (typeof callback !== 'function')
+            throw worldError('AIR_E_BOX3D_CONFIG', 'before-step callback', 'Expected function.');
+        return this.#producers.registerBeforeStep((context) => {
+            const own = Object.freeze({ ...context });
+            this.#publicQueryContext = own;
+            try {
+                return callback(own);
+            } finally {
+                this.#publicQueryContext = undefined;
+            }
+        }, options);
+    }
+    withCommittedQuery<T>(context: CommandContext, read: () => T): T {
+        this.assertCommittedRead('public committed query');
+        if (
+            context !== this.#publicQueryContext ||
+            !context ||
+            this.#phase !== 'preflight' ||
+            this.#commandPhase !== 'collecting' ||
+            !this.#scope ||
+            this.#publicQueryReading
+        )
+            throw worldError(
+                'AIR_E_BOX3D_QUERY_PHASE',
+                'public committed query',
+                'Expected exact current callback context and nonnested read.',
+            );
+        this.#publicQueryReading = true;
+        try {
+            return read();
+        } finally {
+            this.#publicQueryReading = false;
+        }
     }
     registerContinuousCommand(
         source: object,
@@ -1064,6 +1113,13 @@ export class Box3DWorldCommandOwner {
                 operation,
                 `Owner configuration is unavailable during ${this.#phase}.`,
             );
+    }
+    /** Callback-list updates are JS-only: native contact capture is fixed at
+     * solid shape creation. Do not reuse the broader committed-read admission. */
+    assertListenerUpdate(operation: string): void {
+        if (this.#jointActivity) throw worldError('AIR_E_BOX3D_REENTRANT', operation, 'Fixed activity transaction is active.');
+        if (this.#phase === 'dispatch') return;
+        this.assertConfiguration(operation);
     }
     /** Exact provisional source; public Collider getters are never ownership authority. */
     prepareInitialShapeMaterial<T>(
@@ -2280,13 +2336,127 @@ export class Box3DWorldCommandOwner {
         this.#scope = scope;
         return scope;
     }
+    /** A Fixed enabled request performs no native writes. Reuse an existing dispatch
+     * fence, or own a full control fence until original lifecycle/scheduler completes. */
+    beginJointActivity(): { assertCurrent(): void; dispose(): void } {
+        this.assertListenerUpdate('Fixed activity scope');
+        const borrowed = this.#phase === 'dispatch';
+        const scope = borrowed ? this.#scope : this.#begin('control');
+        const token = Object.freeze({});
+        this.#jointActivity = token;
+        let disposed = false;
+        return Object.freeze({
+            assertCurrent: () => {
+                if (disposed || this.#jointActivity !== token || this.#scope !== scope ||
+                    this.#phase !== (borrowed ? 'dispatch' : 'control'))
+                    throw worldError('AIR_E_BOX3D_REENTRANT', 'Fixed activity', 'Expired request scope.');
+            },
+            dispose: () => {
+                if (disposed) return;
+                disposed = true;
+                try { if (!borrowed) scope?.dispose(); }
+                finally { if (this.#jointActivity === token) this.#jointActivity = null; }
+            },
+        });
+    }
     beginStep(): Box3DOwnerFenceScope {
         this.assertSteppingAllowed('begin step');
         this.assertNativeClockFrame();
         return this.#begin('preflight');
     }
-    beginDispatch(): Box3DOwnerFenceScope {
-        return this.#begin('dispatch');
+    beginDispatch(
+        constraints: readonly (FixedConstraint | HingeConstraint | PointToPointConstraint)[] = [],
+    ): Box3DDispatchScope {
+        this.assertConfiguration('joint dispatch admission');
+        const additional = constraints.map((component) => {
+            if (
+                !(component instanceof FixedConstraint) &&
+                !(component instanceof HingeConstraint) &&
+                !(component instanceof PointToPointConstraint)
+            )
+                throw worldError(
+                    'AIR_E_BOX3D_CONFIG',
+                    'joint dispatch',
+                    'Expected actual FixedConstraint, HingeConstraint or PointToPointConstraint.',
+                );
+            // A destroyed RigidBody may leave a deliberately orphaned Constraint.
+            // Its JS lifecycle identity remains owned, independently of native body lifetime.
+            const ancestry: Node[] = [];
+            for (let node: Node | null = component.node; node; node = node.parent) {
+                if (ancestry.includes(node)) throw worldError('AIR_E_BOX3D_CONFIG', 'joint dispatch', 'Cyclic Node ancestry.');
+                ancestry.push(node);
+            }
+            return Object.freeze({ component, ancestry: Object.freeze(ancestry) });
+        });
+        const scope = this.#begin('dispatch');
+        let admission: DeferredDestroyScope;
+        const ancestry = new Map<object, readonly Node[]>();
+        try {
+            const targets: DeferredDestroyTarget[] = [];
+            const nodes = new Set<Node>();
+            for (const body of this.#bodies.values()) for (const node of body.ancestry) nodes.add(node);
+            for (const row of additional) for (const node of row.ancestry) nodes.add(node);
+            for (const node of nodes) targets.push({ target: node, operation: 'Node.destroy' });
+            for (const component of this.#components.values()) {
+                const body = this.#bodies.get(component.body);
+                if (!body) throw worldError('AIR_E_BOX3D_ABI', 'dispatch destruction', 'Missing owned body.');
+                ancestry.set(component.component, body.ancestry);
+                targets.push({ target: component.component, operation: 'Component.destroy' });
+            }
+            for (const row of additional) {
+                ancestry.set(row.component, row.ancestry);
+                targets.push({ target: row.component, operation: 'Component.destroy' });
+            }
+            admission = registerDeferredDestroyScope(Object.freeze(targets));
+            this.#destroyAdmission = admission;
+        } catch (error) {
+            scope.dispose();
+            throw error;
+        }
+        let disposed = false;
+        let drained = false;
+        const owner = this;
+        return Object.freeze({
+            ...scope,
+            pendingDestruction(component: Collider): boolean {
+                return (
+                    admission.pending(component) ||
+                    (ancestry.get(component)?.some((node) => admission.pending(node)) ?? false)
+                );
+            },
+            dispose(): void {
+                if (disposed) return;
+                // Release queue admission even if releasing another fence fails.
+                admission.dispose();
+                if (owner.#destroyAdmission === admission) owner.#destroyAdmission = null;
+                scope.dispose();
+                disposed = true;
+            },
+            drainDestruction(): void {
+                if (!disposed || drained)
+                    throw worldError(
+                        'AIR_E_BOX3D_REENTRANT',
+                        'dispatch destruction',
+                        'No unconsumed completed dispatch.',
+                    );
+                drained = true;
+                owner.assertConfiguration('dispatch destruction safe point');
+                const errors: unknown[] = [];
+                for (const request of admission.requests()) {
+                    try {
+                        if (request.operation === 'Node.destroy') originalNodeDestroy.call(request.target as Node);
+                        else originalComponentDestroy.call(request.target as Component);
+                    } catch (error) {
+                        errors.push(error);
+                    }
+                }
+                if (errors.length)
+                    throw Object.assign(
+                        worldError('AIR_E_BOX3D_WORLD_FAULTED', 'dispatch destruction', 'Deferred destruction failed.'),
+                        { cause: errors[0], errors: Object.freeze(errors) },
+                    );
+            },
+        });
     }
     fault(): void {
         if (this.#phase !== 'closed') this.#phase = 'faulted';
@@ -2305,6 +2475,8 @@ export class Box3DWorldCommandOwner {
                 cleanupFailed = true;
             }
         };
+        attempt(() => this.#destroyAdmission?.dispose());
+        this.#destroyAdmission = null;
         attempt(() => this.#motionRouting?.dispose());
         this.#motionRouting = null;
         attempt(() => this.#commandRouting?.dispose());

@@ -34,8 +34,10 @@ export interface Box3DCopiedRay {
 export interface Box3DQueryCollider {
     readonly collider: Collider;
     readonly logicalId: number;
+    readonly sourceFace?: (triangle: number) => Readonly<{ submesh: number; primitive: number; flatFace: number }>;
 }
-export interface Box3DResolvedRayHit extends Box3DQueryCollider {
+export interface Box3DResolvedRayHit extends Omit<Box3DQueryCollider, 'sourceFace'> {
+    readonly meshFace?: Readonly<{ submesh: number; primitive: number; flatFace: number }>;
     readonly distance: number;
     readonly fraction: number;
     readonly point: Readonly<{ x: number; y: number; z: number }>;
@@ -123,7 +125,11 @@ export function resolveBox3DRayHits(
             return abi('Native hit does not map to a current owned collider.');
         const point = copiedVector(value.point, 'point');
         const normal = copiedVector(value.normal, 'normal');
+        if (owner.sourceFace && (!Number.isSafeInteger(value.triangleIndex) || value.triangleIndex < 0))
+            return abi('Mesh hit has no valid cooked triangle.');
+        const meshFace = owner.sourceFace?.(value.triangleIndex);
         const candidate = {
+            ...(meshFace ? { meshFace } : {}),
             collider: owner.collider,
             logicalId: owner.logicalId,
             distance: fraction * ray.maxDistance,

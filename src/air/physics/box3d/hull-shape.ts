@@ -31,6 +31,11 @@ import type { Box3DPhysicsWorld } from './world';
 import type { Box3DSurfaceMaterial } from './world-binding';
 import type { Box3DComponentConfiguration } from './shared-body';
 import type { Box3DHullGeometry } from './hull-geometry';
+import { RigidBody } from '../../../cocos/physics/framework/components/rigid-body';
+import type { StaticMeshSource } from './static-mesh-intake';
+import { copyStaticMeshSource } from './static-mesh-intake';
+import { staticMeshGeometry } from './static-mesh-resource';
+import type { Box3DStaticMeshGeometry } from './static-mesh-resource';
 import { Box3DSharedBody, bodyVector, filterBits } from './shared-body';
 import { primitiveMaterial } from './box-sphere-geometry';
 import { copyHullPoints, hullBounds, hullGeometry } from './hull-geometry';
@@ -45,10 +50,12 @@ export class Box3DHullShape implements ITrimeshShape {
     #center: readonly number[] = Object.freeze([0, 0, 0]);
     #points: readonly number[] | null = null;
     #convex = false;
+    #mesh: Mesh | null = null;
+    #source: StaticMeshSource | null = null;
     #material: Readonly<Box3DSurfaceMaterial> | null = null;
     #trigger = false;
     #active = false;
-    #geometry: Box3DHullGeometry | null = null;
+    #geometry: Box3DHullGeometry | Box3DStaticMeshGeometry | null = null;
     constructor(world: () => Box3DPhysicsWorld, configuration: Box3DComponentConfiguration) {
         this.#world = world;
         this.#configuration = configuration;
@@ -75,16 +82,25 @@ export class Box3DHullShape implements ITrimeshShape {
             if (value.needCollisionEvent || value.needTriggerEvent) unsupportedBox3D('collider event listeners (T15)');
             const center = bodyVector(value.center, 'center');
             const component = value as MeshCollider;
-            const points = copyHullPoints(component.mesh);
             const convex = component.convex;
+            const mesh = component.mesh;
+            const points = convex ? copyHullPoints(mesh) : null;
+            const source = convex ? null : copyStaticMeshSource(mesh);
             const material = primitiveMaterial(asset);
             const scale = bodyVector(value.node.worldScale, 'initial shape scale');
             const trigger = value.isTrigger;
-            const geometry = hullGeometry(points, convex, center, scale, trigger, material);
-            return Object.freeze({ center, points, convex, material, trigger, geometry });
+            const geometry = convex
+                ? hullGeometry(points, true, center, scale, trigger, material)
+                : staticMeshGeometry(source, center, scale, trigger, material, this.#world().staticMeshIdentity);
+            if (geometry?.kind === 'mesh') {
+                const rigid = value.node.getComponent(RigidBody);
+                if (rigid && rigid.type !== 2)
+                    unsupportedBox3D('MeshCollider.convex=false requires a static RigidBody');
+            }
+            return Object.freeze({ center, points, source, mesh, convex, material, trigger, geometry });
         });
         const { material: asset, initialization } = prepared;
-        const { center, points, convex, material, trigger, geometry } = prepared.copied;
+        const { center, points, source, mesh, convex, material, trigger, geometry } = prepared.copied;
         try {
             initialization.assertValid();
             // Preserve the component for its real onDestroy listener-clearing callback if native acquisition fails.
@@ -126,8 +142,11 @@ export class Box3DHullShape implements ITrimeshShape {
             this.#shared = body;
             initialization.assertValid();
             this.#center = center;
-            if (geometry) body.validateHull(geometry.positions);
+            if (geometry?.kind === 'mesh') body.validateStaticMesh(geometry);
+            else if (geometry) body.validateHull(geometry.positions);
             this.#points = points;
+            this.#source = source;
+            this.#mesh = mesh;
             this.#convex = convex;
             this.#material = material;
             this.#trigger = trigger;
@@ -164,38 +183,63 @@ export class Box3DHullShape implements ITrimeshShape {
         this.#collider = null;
         this.#geometry = null;
         this.#points = null;
+        this.#source = null;
+        this.#mesh = null;
         this.#active = false;
     }
     protected assertConfiguration(operation: string): void {
         this.#body.assertConfiguration(operation);
     }
-    private candidate(center = this.#center, trigger = this.#trigger, points = this.#points, convex = this.#convex) {
-        return hullGeometry(points, convex, center, this.#body.initialScale, trigger, this.#material);
+    private candidate(
+        center = this.#center,
+        trigger = this.#trigger,
+        points = this.#points,
+        convex = this.#convex,
+        source = this.#source,
+    ) {
+        return convex
+            ? hullGeometry(points, true, center, this.#body.initialScale, trigger, this.#material)
+            : staticMeshGeometry(
+                  source,
+                  center,
+                  this.#body.initialScale,
+                  trigger,
+                  this.#material,
+                  this.#world().staticMeshIdentity,
+              );
     }
-    private applyCandidate(next: Box3DHullGeometry | null): void {
+    private applyCandidate(next: Box3DHullGeometry | Box3DStaticMeshGeometry | null): void {
         if (this.#active) {
             if (next) this.#body.setShape(this, next);
             else if (this.#geometry) this.#body.removeShape(this);
         } else if (next) {
             // Disabled setters must still reject failed cooking before either adapter or component cache changes.
-            this.#body.validateHull(next.positions);
+            if (next.kind === 'mesh') this.#body.validateStaticMesh(next);
+            else this.#body.validateHull(next.positions);
         }
     }
     setMesh(value: Mesh | null): void {
         this.assertConfiguration('setMesh');
-        const points = copyHullPoints(value);
-        const next = this.candidate(this.#center, this.#trigger, points);
+        const points = this.#convex ? copyHullPoints(value) : null;
+        const source = this.#convex ? null : copyStaticMeshSource(value);
+        const next = this.candidate(this.#center, this.#trigger, points, this.#convex, source);
         this.applyCandidate(next);
         this.#points = points;
+        this.#source = source;
+        this.#mesh = value;
         this.#geometry = next;
     }
     setConvex(value: boolean): void {
         this.assertConfiguration('setConvex');
         if (typeof value !== 'boolean')
             throw worldError('AIR_E_BOX3D_CONFIG', 'setConvex', 'convex must be an exact boolean.');
-        const next = this.candidate(this.#center, this.#trigger, this.#points, value);
+        const source = value ? null : (this.#source ?? copyStaticMeshSource(this.#mesh));
+        const points = value ? (this.#convex ? this.#points : copyHullPoints(this.#source as Mesh | null)) : null;
+        const next = this.candidate(this.#center, this.#trigger, points, value, source);
         this.applyCandidate(next);
         this.#convex = value;
+        this.#points = points;
+        this.#source = source;
         this.#geometry = next;
     }
     setCenter(value: IVec3Like): void {
@@ -231,7 +275,7 @@ export class Box3DHullShape implements ITrimeshShape {
             unsupportedBox3D('collider event listeners (T15)');
         // Every native shape is configured with real native event flags disabled at creation.
     }
-    private requireGeometry(): Box3DHullGeometry {
+    private requireGeometry(): Box3DHullGeometry | Box3DStaticMeshGeometry {
         if (!this.#geometry)
             throw worldError('AIR_E_BOX3D_GEOMETRY', 'hull bounds', 'MeshCollider is pending without geometry.');
         return this.#geometry;

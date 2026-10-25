@@ -2,6 +2,7 @@
 /* Exact staged efca0c1 private layouts: no vendor edits, pointers or persistent allocations. */
 #include "air_box3d.h"
 #include "body_control.h"
+#include "mesh_bridge.h"
 #include "body.h"
 #include "physics_world.h"
 #include "shape.h"
@@ -31,6 +32,15 @@ static int supported(const b3Shape* s){return s->type==b3_sphereShape||s->type==
 /* Non-sensors win. Sensor-only bodies explicitly fall back to sensor geometry. */
 static int mass_plan(b3World* w,b3Body* b,float target,int skip,const b3Shape* added,b3MassData* plan,int* fallback,int* pending){
  if(!isfinite(target)||target<=0||!isfinite(1.0f/target))return AIR_B3_ARGUMENT;
+ /* A static Mesh has no dynamic mass/inertia. Do not feed nonconvex geometry
+    to b3ComputeShapeMass. This exception is scoped to static mesh-bearing bodies;
+    the SetType admission below still rejects nonstatic transitions before mutation. */
+ int staticMesh=0;
+ for(int i=b->headShapeId;i!=B3_NULL_INDEX;){const b3Shape* sh=b3Array_Get(w->shapes,i);i=sh->nextShapeId;
+  if(sh->id!=skip&&sh->type==b3_meshShape)staticMesh=1;}
+ if(added&&added->type==b3_meshShape)staticMesh=1;
+ if(staticMesh){if(b->type!=b3_staticBody)return AIR_B3_UNSUPPORTED;
+  *plan=(b3MassData){0};*fallback=0;*pending=0;return 0;}
  int solids=0,sensors=0;
  for(int i=b->headShapeId;i!=B3_NULL_INDEX;){const b3Shape* s=b3Array_Get(w->shapes,i);i=s->nextShapeId;
   if(s->id==skip)continue;if(!supported(s))return AIR_B3_UNSUPPORTED;
@@ -113,7 +123,7 @@ int air_b3_body_control(uint32_t wid,uint32_t lo,uint32_t hi,int op,const float*
  if(op==6&&p[0]<0)return AIR_B3_ARGUMENT;
  if(op==9)for(int i=0;i<6;++i)if(p[i]!=0&&p[i]!=1)return AIR_B3_ARGUMENT;
  if((op==10||op==11)&&(b->type==b3_staticBody||b->setIndex==b3_disabledSet))return AIR_B3_UNSUPPORTED;
- if(op==1)for(int i=b->headShapeId;i!=B3_NULL_INDEX;){const b3Shape* sh=b3Array_Get(w->shapes,i);if(!supported(sh))return AIR_B3_UNSUPPORTED;i=sh->nextShapeId;}
+ if(op==1)for(int i=b->headShapeId;i!=B3_NULL_INDEX;){const b3Shape* sh=b3Array_Get(w->shapes,i);if(!supported(sh)&&!(sh->type==b3_meshShape&&p[0]==b3_staticBody))return AIR_B3_UNSUPPORTED;i=sh->nextShapeId;}
  b3MassData plan;int f=0,pending=0;
  if(target>0&&(op==1||op==9)){s=mass_plan(w,b,target,B3_NULL_INDEX,NULL,&plan,&f,&pending);if(s)return s;}
  switch(op){
@@ -302,5 +312,5 @@ int air_b3_mass_shape_destroy(uint32_t wid,uint32_t lo,uint32_t hi,uint32_t slo,
  b3ShapeId shape=b3LoadShapeId(((uint64_t)shi<<32)|slo);
  if(!b3Shape_IsValid(shape)||b3StoreBodyId(b3Shape_GetBody(shape))!=b3StoreBodyId(id))return AIR_B3_INVALID;
  b3MassData plan;int f,n;s=mass_plan(w,b,target,shape.index1-1,NULL,&plan,&f,&n);if(s)return s;
- b3DestroyShape(shape,false);apply_mass(w,b,id,plan);return 0;
+ b3DestroyShape(shape,false);air_b3_mesh_shape_destroyed(wid,((uint64_t)shi<<32)|slo);apply_mass(w,b,id,plan);return 0;
 }

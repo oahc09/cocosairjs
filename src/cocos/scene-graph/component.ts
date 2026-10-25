@@ -23,6 +23,7 @@
  THE SOFTWARE.
 */
 
+import { requestDeferredDestroy } from './deferred-destroy-control';
 import { assertMutationAllowed } from '../core/data/mutation-guard';
 import { ccclass, tooltip, displayName, type, serializable, disallowAnimation } from 'cc.decorator';
 import { EDITOR, NODEJS, TEST } from 'internal:constants';
@@ -394,6 +395,8 @@ class Component extends CCObject {
     // OVERRIDE
 
     public destroy (): boolean {
+        const deferred = requestDeferredDestroy(this, 'Component.destroy', (this._objFlags & (CCObjectFlags.Destroyed | CCObjectFlags.ToDestroy)) !== 0);
+        if (deferred !== undefined) return deferred;
         assertMutationAllowed(this, 'Component.destroy');
         if (EDITOR) {
             // TODO: `_getDependComponent` is an injected method.

@@ -44,9 +44,26 @@ assert.ok(build.includes("'tools/physics/box3d/native/motion_bridge.c'"));
 assert.ok(build.includes(`'${decision.path}'`));
 const inputBlock = build.match(/const inputs = \[([\s\S]*?)\];/)[1];
 const inputs = [...inputBlock.matchAll(/'([^']+)'/g)].map((match) => match[1]);
-assert.equal(inputs.length, 65);
-assert.equal(new Set(inputs).size, 65);
+assert.equal(inputs.length, 79);
+assert.equal(new Set(inputs).size, 79);
 for (const path of [
+    'tools/physics/box3d/native/mesh_bridge.c',
+    'tools/physics/box3d/native/mesh_bridge.h',
+    'tools/physics/box3d/native/mesh_contract.c',
+    'tools/physics/box3d/wasm-mesh-contract.mjs',
+    'tools/physics/box3d/static-mesh-bridge-contract.md',
+])
+    assert.ok(inputs.includes(path));
+for (const path of [
+    'tools/physics/box3d/native/joint_bridge.c',
+    'tools/physics/box3d/native/joint_bridge.h',
+    'tools/physics/box3d/native/joint_contract.c',
+    'tools/physics/box3d/native/hinge_bridge.c',
+    'tools/physics/box3d/native/hinge_bridge.h',
+    'tools/physics/box3d/native/hinge_contract.c',
+    'tools/physics/box3d/native/p2p_bridge.c',
+    'tools/physics/box3d/native/p2p_bridge.h',
+    'tools/physics/box3d/native/p2p_contract.c',
     'tools/physics/box3d/native/hull_bridge.c',
     'tools/physics/box3d/native/hull_bridge.h',
     'tools/physics/box3d/native/hull_contract.c',

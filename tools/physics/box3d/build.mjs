@@ -99,6 +99,10 @@ try {
             'tools/physics/box3d/native/command_bridge.c',
             'tools/physics/box3d/native/query_bridge.c',
             'tools/physics/box3d/native/hull_bridge.c',
+            'tools/physics/box3d/native/joint_bridge.c',
+            'tools/physics/box3d/native/hinge_bridge.c',
+            'tools/physics/box3d/native/p2p_bridge.c',
+            'tools/physics/box3d/native/mesh_bridge.c',
             'tools/physics/box3d/native/contract.c',
         ]) {
             const object = resolve(out, basename(source) + '.o');
@@ -232,8 +236,51 @@ try {
         writeFileSync(resolve(out, 'native-capsule-contract.raw.json'), capsuleRaw);
         result.capsuleContract = JSON.parse(capsuleRaw);
         if (result.capsuleContract.status !== 'PASS') throw new Error('Native capsule contract failed');
+        const jointExe = resolve(out, 'native-joint-contract');
+        run(cc, [
+            ...flags,
+            'tools/physics/box3d/native/joint_contract.c',
+            ...objects.filter((file) => !file.endsWith('/contract.c.o')),
+            ...(sanitize ? ['-fsanitize=address,undefined'] : []),
+            '-lm',
+            '-o',
+            jointExe,
+        ]);
+        const jointRaw = run(jointExe, []);
+        writeFileSync(resolve(out, 'native-joint-contract.raw.json'), jointRaw);
+        result.jointContract = JSON.parse(jointRaw);
+        if (result.jointContract.status !== 'PASS') throw new Error('Native Fixed joint contract failed');
+        const hingeExe = resolve(out, 'native-hinge-contract');
+        run(cc, [
+            ...flags,
+            'tools/physics/box3d/native/hinge_contract.c',
+            ...objects.filter((file) => !file.endsWith('/contract.c.o')),
+            ...(sanitize ? ['-fsanitize=address,undefined'] : []),
+            '-lm',
+            '-o',
+            hingeExe,
+        ]);
+        const hingeRaw = run(hingeExe, []);
+        writeFileSync(resolve(out, 'native-hinge-contract.raw.json'), hingeRaw);
+        result.hingeContract = JSON.parse(hingeRaw);
+        if (result.hingeContract.status !== 'PASS') throw new Error('Native Hinge joint contract failed');
+        const p2pExe = resolve(out, 'native-p2p-contract');
+        run(cc, [
+            ...flags,
+            'tools/physics/box3d/native/p2p_contract.c',
+            ...objects.filter((file) => !file.endsWith('/contract.c.o')),
+            ...(sanitize ? ['-fsanitize=address,undefined'] : []),
+            '-lm',
+            '-o',
+            p2pExe,
+        ]);
+        const p2pRaw = run(p2pExe, []);
+        writeFileSync(resolve(out, 'native-p2p-contract.raw.json'), p2pRaw);
+        result.p2pContract = JSON.parse(p2pRaw);
+        if (result.p2pContract.status !== 'PASS') throw new Error('Native PointToPoint joint contract failed');
         // Real point-cloud tests, including exact private core workspace/containment.
         for (const [name, omitted, field] of [
+            ['mesh', ['world_bridge.c.o'], 'meshContract'],
             ['hull', ['world_bridge.c.o'], 'hullContract'],
             ['hull-core', ['hull.c.o'], 'hullCoreContract'],
             ['hull-legacy-fingerprint', [], null],
@@ -372,6 +419,10 @@ try {
         if (result.capsuleContract.status !== 'PASS' || result.capsuleContract.pointerBytes !== 4)
             throw new Error('WASM32 capsule native contract failed');
         for (const [name, field] of [
+            ['joint', 'jointContract'],
+            ['hinge', 'hingeContract'],
+            ['p2p', 'p2pContract'],
+            ['mesh', 'meshContract'],
             ['hull', 'hullContract'],
             ['hull-core', 'hullCoreContract'],
         ]) {
@@ -399,6 +450,7 @@ try {
         run(process.execPath, ['tools/physics/box3d/wasm-motion-contract.mjs', out]);
         run(process.execPath, ['tools/physics/box3d/wasm-command-contract.mjs', out]);
         run(process.execPath, ['tools/physics/box3d/wasm-query-contract.mjs', out]);
+        run(process.execPath, ['tools/physics/box3d/wasm-mesh-contract.mjs', out]);
         result.artifacts = artifacts;
         result.browserStatus = 'NOT_RUN';
     }
@@ -456,10 +508,24 @@ try {
         'tools/physics/box3d/native/query_bridge.h',
         'tools/physics/box3d/native/hull_bridge.c',
         'tools/physics/box3d/native/hull_bridge.h',
+        'tools/physics/box3d/native/joint_bridge.c',
+        'tools/physics/box3d/native/joint_bridge.h',
+        'tools/physics/box3d/native/joint_contract.c',
+        'tools/physics/box3d/native/hinge_bridge.c',
+        'tools/physics/box3d/native/hinge_bridge.h',
+        'tools/physics/box3d/native/hinge_contract.c',
+        'tools/physics/box3d/native/p2p_bridge.c',
+        'tools/physics/box3d/native/mesh_bridge.c',
+        'tools/physics/box3d/native/p2p_bridge.h',
+        'tools/physics/box3d/native/p2p_contract.c',
+        'tools/physics/box3d/native/mesh_bridge.h',
+        'tools/physics/box3d/native/mesh_contract.c',
+        'tools/physics/box3d/wasm-mesh-contract.mjs',
         'tools/physics/box3d/native/hull_contract.c',
         'tools/physics/box3d/native/hull_core_contract.c',
         'tools/physics/box3d/native/hull_legacy_fingerprint.c',
         'tools/physics/box3d/hull-bridge-contract.md',
+        'tools/physics/box3d/static-mesh-bridge-contract.md',
         'tools/physics/box3d/hull-legacy-contract.mjs',
         'tools/physics/box3d/patches/checked-hull-cooking.patch',
         'tools/physics/box3d/capsule-bridge-contract.md',

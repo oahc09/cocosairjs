@@ -53,7 +53,7 @@
   "excluded": [
     "proven same-epoch contact world/local reconstruction, full C21 and transient-sensor C22 acceptance",
     "non-convex triangle mesh/compound cooking",
-    "joints",
+    "Hinge/P2P/other joints; Fixed native bridge is candidate, not T17 acceptance",
     "MT",
     "replay",
     "complete AIR adapter",
@@ -148,15 +148,26 @@
       "generationPoseB[10]:f32 origin.xyz/rotation.xyzw/COM.xyz"
     ],
     "epoch": "Actual b3UpdateContact completed generation, after flip/COM adjustment, before solve increments native stepIndex. Recycle/sleep/solve/CCD retain it. Not a current intersection or TOI point.",
-    "admittedFamilies": [
-      "sphere-sphere",
-      "sphere-hull (finite box face qualified by narrow oracle; not arbitrary hull acceptance)"
+    "admittedFamilies": ["sphere-sphere", "sphere-hull", "hull-hull", "capsule-hull", "capsule-capsule"],
+    "unqualifiedFamilies": [
+      "sphere-capsule (including one zero-segment Capsule versus a nonzero Capsule)",
+      "arbitrary convex hull feature qualification beyond public Box",
+      "mesh",
+      "baked compound",
+      "heightfield"
     ],
-    "unqualifiedFamilies": ["capsule", "hull-hull", "mesh", "compound", "heightfield"],
     "lifetime": "Read immediately into independent JS storage associated with the matching raw contact/full ID/world lifetime/step/mutation revision. Missing basis or unsupported family gives explicit error, never empty success.",
     "solverObservations": "Raw separation/normalVelocity/impulses retain separate native sampling semantics; no same-epoch claim.",
     "nativeSnapshotCompatibility": "b3Contact stride changes; native layoutHash incompatible with previous snapshots. No AIR replay claim.",
-    "revisionExhaustion": "When an additional generation would wrap UINT64_MAX, geometry is permanently unavailable for that contact lifetime; physics continues unchanged. Contact slot allocation zeroes all geometry storage and advances full contact ID generation."
+    "revisionExhaustion": "When an additional generation would wrap UINT64_MAX, geometry is permanently unavailable for that contact lifetime; physics continues unchanged. Contact slot allocation zeroes all geometry storage and advances full contact ID generation.",
+    "publicDescriptorCandidates": [
+      "Sphere-Sphere",
+      "Sphere-Box",
+      "Box-Box",
+      "Capsule-Box",
+      "Capsule-Capsule with positive segments"
+    ],
+    "qualificationBoundary": "Native AVAILABLE means copied cached-generation basis exists, not whole-family numerical qualification. Native hull includes arbitrary convex Hull, but public events only admit exact Box/Sphere/Capsule descriptors. Runtime compound is per-shape; baked compound excluded. Finite analytic and EX09 descriptor oracles are separate evidence; no formal T15/C21/Gate claim."
   },
   "geometryCounters": [
     "awakeContactCount",
@@ -528,5 +539,143 @@
       "capacity": "Uses the same creation scratch planner, including its 8-byte wire-result reservation, so disabled admission matches create capacity.",
       "failure": "Known statuses1,2,4,5,8,9 are prewrite refusals. Unexpected status3/native trap is UNKNOWN and must fault the facade world; cleanup after trap is not promised."
     }
+  },
+  "fixedJointBridge": {
+    "status": "UNQUALIFIED_FIXED_CANDIDATE",
+    "id": "two uint32 low/high via official b3Store/LoadJointId; exact world and both live body capabilities required",
+    "creation": "native weld captures current body-origin relative pose without writes; common frame orientation=current originA rotation; position=sole dynamic endpoint world COM, otherwise midpoint of both world COMs; local frames=inverse(current body origin)*common world frame",
+    "configuration": "collideConnected exact bool; breakForce finite nonnegative f32 N; breakTorque finite nonnegative f32 N*m; changing thresholds/collision does not recapture frames",
+    "stateWords": 30,
+    "state": [
+      "kind=1:u32",
+      "bodyA.low/high:u32",
+      "bodyB.low/high:u32",
+      "collideConnected:u32",
+      "frameA.position.xyz/rotation.xyzw:f32",
+      "frameB.position.xyz/rotation.xyzw:f32",
+      "breakForce/breakTorque:f32",
+      "constraintForce.xyz:f32",
+      "constraintTorque.xyz:f32",
+      "linearSeparation/angularSeparation:f32"
+    ],
+    "events": "separate copied count:u32 + count * [joint.low/high:u32, valid:u32]; facade copies immediately after step before callbacks/mutations; no native pointers or userdata",
+    "breakSemantics": "native reports threshold met/exceeded during solver bias substeps but never auto destroys; observation omits force/torque magnitude; adapter latches and safe-destroys explicitly",
+    "lifetime": "all reads copied; native events invalidated by next step/destruction. Body/world destruction invalidates joint capability. No pointer/generation truncation."
+  },
+  "hingeJointBridge": {
+    "status": "UNQUALIFIED_HINGE_CANDIDATE",
+    "geometryFloats": 9,
+    "geometry": [
+      "pivotA.xyz local scaled metres",
+      "pivotB.xyz local scaled metres",
+      "axisA.xyz finite nonzero; normalized internally"
+    ],
+    "autoPivotB": "bool: capture current world anchor of A in B instead of pivotB; Cocos null connectedBody uses this",
+    "configWords": 7,
+    "configuration": [
+      "collide:u32 bool",
+      "limit:u32 bool",
+      "lowerRadians:f32",
+      "upperRadians:f32",
+      "motor:u32 bool",
+      "motorSpeedRadians:f32 B-minus-A",
+      "maxMotorTorque:f32 N*m nonnegative"
+    ],
+    "stateWords": 36,
+    "state": [
+      "kind=2:u32",
+      "bodyA.low/high:u32",
+      "bodyB.low/high:u32",
+      "collide:u32",
+      "frameA.position.xyz/rotation.xyzw:f32",
+      "frameB.position.xyz/rotation.xyzw:f32",
+      "limit:u32",
+      "lower/upper:f32 radians",
+      "motor:u32",
+      "speed/maxTorque/angle/motorTorque:f32",
+      "constraintForce.xyz:f32",
+      "constraintTorque.xyz:f32",
+      "linearSeparation/axisAlignmentRadians:f32"
+    ],
+    "frames": "local +Z maps to normalized axisA. Initial world orientations equal establish zero. No body pose writes. Explicit geometry changes recreate at safe commit; config-only updates preserve frames. Spring remains disabled.",
+    "admission": "Exact counts, booleans, copied finite fields, nonzero axis, distinct valid full-generation endpoints in exact world. Raw bounds ordered and within +/-0.99f*B3_PI even when disabled, never silently clamped or sorted. All validation before first mutation; bad output capacity untouched.",
+    "publicConvention": "Derived documented Box3D coordinate decision: A-relative-B angle, degrees and degrees/second; native speed=-publicSpeed*pi/180, native bounds=[-publicUpper,-publicLower]*pi/180. Original C30 literal positive native target retained with clarification, not silently rewritten.",
+    "lifetime": "Copied state only, owned joint capability; generic joint destruction. Body/world destruction invalidates joint. No invented Cocos spring/break event.",
+    "reactionTorqueReadback": {
+      "revision": 2,
+      "coordinates": "world",
+      "actsOn": "body B; A receives opposite angular couple",
+      "units": "N.m",
+      "temporalScope": "Current retained solver impulse/basis cache times latest world inv_h. Configuration may clear terms; sleeping cache may be rescaled without a solve. Not a live load, historical frozen sample or outer-step average.",
+      "excludes": "linear constraint force lever-arm r cross F about body COM",
+      "implementation": "Read-only pinned b3RevoluteJoint final perpImpulse/perpAxisX/perpAxisY plus spring+motor+lower-upper impulse along rotationAxisZ, exactly once, times world.inv_h. Never call upstream b3GetRevoluteJointTorque.",
+      "guards": "Existing full joint/world generation/type and unlocked-world guards; fixed core source SHA and patch-chain audit; compiled field-size assertions; native fixture verifies unchanged solver/body bytes.",
+      "machineReadableSemantics": {
+        "quantity": "angular-constraint-couple",
+        "coordinates": "world",
+        "actsOn": "B",
+        "source": "current-solver-impulse-cache",
+        "timeBasis": "latest-world-inverse-substep",
+        "freshness": "not-tracked",
+        "usableForLoadOrBreak": false
+      }
+    }
+  },
+  "pointToPointJointBridge": {
+    "status": "UNQUALIFIED_POINT_TO_POINT_CANDIDATE",
+    "geometryFloats": 6,
+    "geometry": "pivotA.xyz, pivotB.xyz in body-origin admitted-scale local metres; finite float32",
+    "autoPivotB": "exact bool; capture current A world pivot in B instead of pivotB; no body pose writes",
+    "configuration": "collideConnected exact bool; collision-only configure does not recapture anchors",
+    "stateWords": 25,
+    "state": [
+      "kind=3:u32",
+      "bodyA.low/high:u32",
+      "bodyB.low/high:u32",
+      "collide:u32",
+      "frameA.position.xyz/rotation.xyzw:f32",
+      "frameB.position.xyz/rotation.xyzw:f32",
+      "spring/motor/coneLimit/twistLimit:u32 all false",
+      "linearSeparation:f32 metres"
+    ],
+    "angularFreedom": "Native spherical spring, motor, cone and twist limits disabled; native default positional softness retained. No reaction force/torque/angle diagnostic exposed.",
+    "lifetime": "Owned full-generation exact-world joint capability, copied state; generic destroy; joint-before-owned-static-anchor cleanup. Public explicit pivot setter with nullB recaptures current world anchor at next safe commit, including identical values; collision-only updates preserve capture."
+  },
+  "convexQueries": {
+    "status": "SOURCE_CONTRACT_NOT_RUNTIME_QUALIFIED",
+    "exports": ["_air_b3_shape_query", "_air_b3_overlap_query"],
+    "facade": ["shapeAllRaw", "overlapAllRaw", "readQueryEpoch"],
+    "pointCount": "1..128; reject overflow, never truncate",
+    "points": "copied world-oriented XYZ relative to supplied origin; convex hull plus nonnegative radius",
+    "castInput": "origin3 + translation3",
+    "overlapInput": "origin3",
+    "castHitWords": 11,
+    "overlapHitWords": 2,
+    "filter": "bilateral uint32 category/mask zero-extended to native64; trigger filtering continues traversal",
+    "capacity": "count-only then full capacity verified before output; no persistent allocation or implicit hit cap",
+    "ownership": "unlocked exact world; all four pointer regions aligned and nonoverlapping; complete full shape IDs copied, never ownership capabilities",
+    "zero": "zero cast translation avoids core and facade native call; overlap remains a separate query",
+    "initialOverlap": "native conservative overlap (including distance slop), not MTD or permission to move; inside cast fraction0 preserved",
+    "epoch": "facade committed stepIndex/mutationRevision copied; queries do not mutate them",
+    "public": "six primitive Cocos sweeps plus exact live before-step context copied whole-group queries; no mutation guard relaxation"
+  },
+  "staticMeshResource": {
+    "status": "NATIVE_HOST_CANDIDATE_NOT_PUBLIC_QUALIFIED",
+    "exports": [
+      "_air_b3_mesh_cook",
+      "_air_b3_mesh_retain",
+      "_air_b3_mesh_release",
+      "_air_b3_mesh_state",
+      "_air_b3_mesh_shape_create",
+      "_air_b3_mesh_face_read"
+    ],
+    "resourceToken": "two uint32 words monotonic within exact WASM binding; facade brands each separately owned cache lease",
+    "worldScope": "exact full world ID; no cross-world native data sharing",
+    "cook": "copied body-local float32 XYZ / int32 triangle list; CCW normalized once; no welding; SAH/adjacency; reject degenerate and duplicate oriented indices",
+    "lifetime": "cache leases and native shape borrows separately counted; free once after both zero; world destroys core shapes before freeing data",
+    "stateWords": ["cacheLeases", "nativeShapeBorrows", "vertexCount", "triangleCount", "coreMeshBytes", "fullWorldId"],
+    "sourceFace": "read cooked triangle index -> original flattened source ordinal; preserve existing query 11-word cooked index ABI",
+    "admission": "static only; nonstatic create or SetType rejected before native mutation; sensor/contact not qualified",
+    "copiedDebug": "actual cooked triangle edges; bounded debug allocation, no Hull substitution"
   }
 }

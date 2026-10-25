@@ -24,9 +24,24 @@ import type { PhysicsMaterial } from '../../../cocos/physics/framework/assets/ph
 import type { Box3DOwnedBodySeed, Box3DOwnedComponentSeed, Box3DPreparedRigidActivity } from './world-command-owner';
 import type { Node } from '../../../cocos/scene-graph/node';
 import type { RigidBody } from '../../../cocos/physics/framework/components/rigid-body';
-import type { Box3DBodyState, Box3DId, Box3DWorld } from './binding/facade.mjs';
+import type {
+    Box3DBodyState,
+    Box3DId,
+    Box3DWorld,
+    Box3DFixedConfiguration,
+    Box3DFixedState,
+    Box3DHingeState,
+    Box3DPointToPointState,
+    Box3DHingeConfiguration,
+    Box3DPointToPointConfiguration,
+    Box3DHingeGeometry,
+    Box3DPointToPointGeometry,
+} from './binding/facade.mjs';
 import type { Box3DPrimitiveGeometry } from './box-sphere-geometry';
 import type { Box3DHullGeometry } from './hull-geometry';
+import type { Box3DStaticMeshGeometry, Box3DMeshResourceUse } from './static-mesh-resource';
+import type { StaticMeshIntake } from './static-mesh-intake';
+import { MeshCollider } from '../../../cocos/physics/framework/components/colliders/mesh-collider';
 import type { Box3DSurfaceMaterial } from './world-binding';
 import type { Box3DComponentBinding } from './world-binding';
 import { finiteFloat32, mutationNotApplied, worldError } from './world-binding';
@@ -34,15 +49,39 @@ import { unsupportedBox3D } from './unsupported';
 import { Box3DSceneTransform } from './world-writeback';
 import type { Box3DWritebackBody } from './world-writeback';
 
-type Box3DShapeGeometry = Box3DPrimitiveGeometry | Box3DHullGeometry;
+type Box3DShapeGeometry = Box3DPrimitiveGeometry | Box3DHullGeometry | Box3DStaticMeshGeometry;
 type Vec = { x: number; y: number; z: number };
 export interface Box3DComponentConfiguration {
     /** Must read the actual PhysicsSystem, not a separate collision matrix. */
     readonly collisionMask: (group: number) => number;
     readonly sleepThreshold: () => number;
 }
+export interface Box3DFixedNativeLease {
+    readonly identity: Readonly<Box3DId>;
+    read(): Readonly<Box3DFixedState>;
+    configure(configuration: Box3DFixedConfiguration): void;
+    destroy(): void;
+    closeWithWorld(): void;
+}
+export interface Box3DHingeNativeLease {
+    readonly identity: Readonly<Box3DId>;
+    read(): Readonly<Box3DHingeState>;
+    configure(configuration: Box3DHingeConfiguration): void;
+    destroy(): void;
+    closeWithWorld(): void;
+}
+export interface Box3DPointToPointNativeLease {
+    readonly identity: Readonly<Box3DId>;
+    read(): Readonly<Box3DPointToPointState>;
+    configure(configuration: Box3DPointToPointConfiguration): void;
+    destroy(): void;
+    closeWithWorld(): void;
+}
 export interface Box3DBodyOwner {
+    acquireStaticMesh(intake: StaticMeshIntake): Box3DMeshResourceUse;
+    rigidBodyDetaching(body: RigidBody): void;
     assertReady(operation: string): void;
+    assertListenerUpdate(operation: string): void;
     assertCommittedRead(operation: string): void;
     adoptBody(seed: Box3DOwnedBodySeed): object;
     attachComponent(body: object, seed: Box3DOwnedComponentSeed): void;
@@ -204,7 +243,12 @@ export class Box3DSharedBody {
     readonly #node: Node;
     readonly #references = new Set<object>();
     readonly #queryColliders = new Map<object, Collider>();
-    readonly #shapes = new Map<object, { token: Box3DId; geometry: Box3DShapeGeometry }>();
+    readonly #shapes = new Map<
+        object,
+        { token: Box3DId; geometry: Box3DShapeGeometry; meshResource?: Box3DMeshResourceUse }
+    >();
+    readonly #shapeEventGenerations = new WeakMap<object, number>();
+    #shapeEventSequence = 0;
     #closed = false;
     #rigidBody: RigidBody | null = null;
     #rigidEnabled = false;
@@ -213,6 +257,7 @@ export class Box3DSharedBody {
     #mask: number;
     #pose: readonly number[];
     readonly #scale: readonly number[];
+    readonly #signedStaticMesh: boolean;
     readonly #scene: Box3DSceneTransform;
 
     constructor(
@@ -231,8 +276,11 @@ export class Box3DSharedBody {
         this.#pose.forEach((v) => finiteFloat32(v, 'initial pose'));
         rejectInitialShear(node);
         this.#scale = bodyVector(node.worldScale, 'initial scale');
-        if (this.#scale.some((v) => v <= 0)) unsupportedBox3D('nonpositive initial Node scale');
-        this.#scene = new Box3DSceneTransform(node);
+        const mesh = node.getComponent(MeshCollider);
+        this.#signedStaticMesh = !!mesh && mesh.convex === false;
+        if (this.#scale.some((v) => (this.#signedStaticMesh ? v === 0 : v <= 0)))
+            unsupportedBox3D('nonpositive initial Node scale');
+        this.#scene = new Box3DSceneTransform(node, this.#signedStaticMesh);
         // No dynamic, geometry-less body can enter simulation during component assembly.
         const threshold = finiteFloat32(configuration.sleepThreshold(), 'sleepThreshold');
         if (threshold < 0) throw worldError('AIR_E_BOX3D_CONFIG', 'sleepThreshold', 'Expected nonnegative threshold.');
@@ -293,6 +341,10 @@ export class Box3DSharedBody {
     }
     assertConfiguration(operation: string): void {
         this.assert(operation);
+    }
+    assertListenerUpdate(operation: string): void {
+        if (this.#closed) throw worldError('AIR_E_BOX3D_DISPOSED', operation, 'Shared body is closed.');
+        this.#owner.assertListenerUpdate(operation);
     }
     completeComponent(reference: object): void {
         this.#owner.completeComponent(reference);
@@ -411,17 +463,380 @@ export class Box3DSharedBody {
     }
     /** Internal copied observational IDs only; native ownership tokens never leave this class. */
     static queryColliderRecords(bodies: readonly Box3DSharedBody[]) {
-        const records: { low: number; high: number; collider: Collider }[] = [];
+        const records: {
+            low: number;
+            high: number;
+            collider: Collider;
+            sourceFace?: (triangle: number) => Readonly<{ submesh: number; primitive: number; flatFace: number }>;
+        }[] = [];
         for (const body of bodies) {
             body.assertRead('ray collider roster');
             for (const [reference, shape] of body.#shapes) {
                 const collider = body.#queryColliders.get(reference);
                 if (!collider || !body.#references.has(reference))
                     throw worldError('AIR_E_BOX3D_ABI', 'ray collider roster', 'Active shape has no owned collider.');
-                records.push(Object.freeze({ low: shape.token.low, high: shape.token.high, collider }));
+                const geometry = shape.geometry;
+                const sourceFace =
+                    geometry.kind === 'mesh'
+                        ? (triangle: number) => {
+                              body.assertRead('Mesh source face');
+                              const index = body.#binding.staticMeshSourceFace(shape.token, triangle);
+                              const face = geometry.intake.sourceFaces[index];
+                              if (!face)
+                                  throw worldError(
+                                      'AIR_E_BOX3D_ABI',
+                                      'Mesh source face',
+                                      'Native triangle has no source face.',
+                                  );
+                              return Object.freeze({ ...face });
+                          }
+                        : undefined;
+                records.push(Object.freeze({ low: shape.token.low, high: shape.token.high, collider, sourceFace }));
             }
         }
         return Object.freeze(records);
+    }
+    static committedQueryGeometries(bodies: readonly Box3DSharedBody[]) {
+        return Object.freeze(
+            (
+                [] as { collider: Collider; body: object; geometry: Box3DShapeGeometry; pose: readonly number[] }[]
+            ).concat(
+                ...bodies.map((body) => {
+                    body.assertRead('committed query geometry');
+                    const state = body.#binding.bodyState(body.#world, body.#body);
+                    if (!state.enabled) return [];
+                    const pose = body.#binding.bodyTransforms(body.#world, [body.#body]);
+                    if (pose.length !== 10 || !pose.every(Number.isFinite))
+                        throw worldError('AIR_E_BOX3D_ABI', 'committed query geometry', 'Invalid native pose.');
+                    return [...body.#shapes].map(([reference, shape]) => {
+                        const collider = body.#queryColliders.get(reference);
+                        if (!collider || !body.#references.has(reference))
+                            throw worldError(
+                                'AIR_E_BOX3D_ABI',
+                                'committed query geometry',
+                                'Missing collider ownership.',
+                            );
+                        return Object.freeze({
+                            collider,
+                            body,
+                            geometry: shape.geometry,
+                            pose: Object.freeze(Array.from(pose)),
+                        });
+                    });
+                }),
+            ),
+        );
+    }
+    static collisionColliderRecords(bodies: readonly Box3DSharedBody[]) {
+        const records: {
+            low: number;
+            high: number;
+            collider: Collider;
+            kind: 'box' | 'sphere' | 'capsule' | 'hull' | 'mesh';
+            trigger: boolean;
+            collisionListener: boolean;
+            triggerListener: boolean;
+            eventGeneration: number;
+            filterKey: string;
+        }[] = [];
+        for (const body of bodies) {
+            body.assertRead('collision collider roster');
+            if (!body.#binding.bodyState(body.#world, body.#body).enabled) continue;
+            for (const [reference, shape] of body.#shapes) {
+                const collider = body.#queryColliders.get(reference);
+                if (!collider || !body.#references.has(reference))
+                    throw worldError(
+                        'AIR_E_BOX3D_ABI',
+                        'collision collider roster',
+                        'Active shape has no owned collider.',
+                    );
+                records.push(
+                    Object.freeze({
+                        low: shape.token.low,
+                        high: shape.token.high,
+                        collider,
+                        kind: shape.geometry.kind,
+                        trigger: shape.geometry.trigger,
+                        collisionListener: collider.needCollisionEvent,
+                        triggerListener: collider.needTriggerEvent,
+                        eventGeneration: body.#shapeEventGenerations.get(reference)!,
+                        filterKey: `${body.#group}:${body.#mask}`,
+                    }),
+                );
+            }
+        }
+        return Object.freeze(records);
+    }
+    /** Internal two-endpoint joint capability. Neither body nor joint token escapes in diagnostics. */
+    static createFixedLease(
+        a: Box3DSharedBody,
+        b: Box3DSharedBody | null,
+        configuration: Box3DFixedConfiguration,
+    ): Box3DFixedNativeLease {
+        a.assert('create Fixed');
+        b?.assert('create Fixed');
+        if (b && (a.#binding !== b.#binding || a.#world !== b.#world || a === b))
+            throw worldError('AIR_E_BOX3D_CONFIG', 'Fixed', 'Expected distinct bodies in the same owned world.');
+        const binding = a.#binding,
+            world = a.#world;
+        let anchor: Box3DId | null = null,
+            joint: Box3DId | null = null,
+            closed = false;
+        try {
+            if (!b) anchor = binding.createBody(world, { type: 0, enableSleep: false });
+            joint = binding.createFixedJoint(world, a.#body, b ? b.#body : anchor!, configuration);
+            const identity = Object.freeze({ low: joint.low, high: joint.high });
+            // Readback failure after native create is a real committed/unknown failure, never retried.
+            binding.fixedJointState(world, joint);
+            return Object.freeze({
+                identity,
+                read() {
+                    if (closed || !joint) throw worldError('AIR_E_BOX3D_DISPOSED', 'Fixed read', 'Joint is released.');
+                    return binding.fixedJointState(world, joint);
+                },
+                configure(value: Box3DFixedConfiguration) {
+                    if (closed || !joint)
+                        throw worldError('AIR_E_BOX3D_DISPOSED', 'Fixed configure', 'Joint is released.');
+                    const actual = binding.configureFixedJoint(world, joint, value);
+                    if (
+                        actual.collideConnected !== value.collideConnected ||
+                        actual.breakForce !== value.breakForce ||
+                        actual.breakTorque !== value.breakTorque
+                    )
+                        throw worldError(
+                            'AIR_E_BOX3D_ABI',
+                            'Fixed configure',
+                            'Native readback differs from admitted configuration.',
+                        );
+                },
+                destroy() {
+                    if (closed) return;
+                    if (joint) {
+                        binding.destroyJoint(world, joint);
+                        joint = null;
+                    }
+                    if (anchor) {
+                        binding.destroyBody(anchor);
+                        anchor = null;
+                    }
+                    closed = true;
+                },
+                closeWithWorld() {
+                    joint = null;
+                    anchor = null;
+                    closed = true;
+                },
+            });
+        } catch (error) {
+            const cleanupErrors: unknown[] = [];
+            if (joint) {
+                try {
+                    binding.destroyJoint(world, joint);
+                    joint = null;
+                } catch (cleanup) {
+                    cleanupErrors.push(cleanup);
+                }
+            }
+            if (anchor && !joint) {
+                try {
+                    binding.destroyBody(anchor);
+                    anchor = null;
+                } catch (cleanup) {
+                    cleanupErrors.push(cleanup);
+                }
+            }
+            if (cleanupErrors.length)
+                throw Object.assign(
+                    worldError(
+                        'AIR_E_BOX3D_WORLD_FAULTED',
+                        'Fixed create cleanup',
+                        'Unresolved joint ownership remains with the world.',
+                    ),
+                    { cause: error, cleanupErrors },
+                );
+            throw error;
+        }
+    }
+    static createHingeLease(
+        a: Box3DSharedBody,
+        b: Box3DSharedBody | null,
+        geometry: Box3DHingeGeometry,
+        configuration: Box3DHingeConfiguration,
+    ): Box3DHingeNativeLease {
+        a.assert('create Hinge');
+        b?.assert('create Hinge');
+        if (b && (a.#binding !== b.#binding || a.#world !== b.#world || a === b))
+            throw worldError('AIR_E_BOX3D_CONFIG', 'Hinge', 'Expected distinct bodies in the same owned world.');
+        const binding = a.#binding,
+            world = a.#world;
+        let anchor: Box3DId | null = null,
+            joint: Box3DId | null = null,
+            closed = false;
+        try {
+            if (!b) anchor = binding.createBody(world, { type: 0, enableSleep: false });
+            joint = binding.createHingeJoint(world, a.#body, b ? b.#body : anchor!, geometry, configuration);
+            const identity = Object.freeze({ low: joint.low, high: joint.high });
+            // Readback failure after native create is a real committed/unknown failure, never retried.
+            binding.hingeJointState(world, joint);
+            return Object.freeze({
+                identity,
+                read() {
+                    if (closed || !joint) throw worldError('AIR_E_BOX3D_DISPOSED', 'Hinge read', 'Joint is released.');
+                    return binding.hingeJointState(world, joint);
+                },
+                configure(value: Box3DHingeConfiguration) {
+                    if (closed || !joint)
+                        throw worldError('AIR_E_BOX3D_DISPOSED', 'Hinge configure', 'Joint is released.');
+                    const actual = binding.configureHingeJoint(world, joint, value);
+                    if (
+                        actual.collideConnected !== value.collideConnected ||
+                        actual.limitEnabled !== value.limitEnabled ||
+                        actual.lowerAngleRadians !== value.lowerAngleRadians ||
+                        actual.upperAngleRadians !== value.upperAngleRadians ||
+                        actual.motorEnabled !== value.motorEnabled ||
+                        actual.motorSpeedRadians !== value.motorSpeedRadians ||
+                        actual.maxMotorTorque !== value.maxMotorTorque
+                    )
+                        throw worldError(
+                            'AIR_E_BOX3D_ABI',
+                            'Hinge configure',
+                            'Native readback differs from admitted configuration.',
+                        );
+                },
+                destroy() {
+                    if (closed) return;
+                    if (joint) {
+                        binding.destroyJoint(world, joint);
+                        joint = null;
+                    }
+                    if (anchor) {
+                        binding.destroyBody(anchor);
+                        anchor = null;
+                    }
+                    closed = true;
+                },
+                closeWithWorld() {
+                    joint = null;
+                    anchor = null;
+                    closed = true;
+                },
+            });
+        } catch (error) {
+            const cleanupErrors: unknown[] = [];
+            if (joint) {
+                try {
+                    binding.destroyJoint(world, joint);
+                    joint = null;
+                } catch (cleanup) {
+                    cleanupErrors.push(cleanup);
+                }
+            }
+            if (anchor && !joint) {
+                try {
+                    binding.destroyBody(anchor);
+                    anchor = null;
+                } catch (cleanup) {
+                    cleanupErrors.push(cleanup);
+                }
+            }
+            if (cleanupErrors.length)
+                throw Object.assign(
+                    worldError(
+                        'AIR_E_BOX3D_WORLD_FAULTED',
+                        'Hinge create cleanup',
+                        'Unresolved joint ownership remains with the world.',
+                    ),
+                    { cause: error, cleanupErrors },
+                );
+            throw error;
+        }
+    }
+    static createPointToPointLease(
+        a: Box3DSharedBody,
+        b: Box3DSharedBody | null,
+        geometry: Box3DPointToPointGeometry,
+        configuration: Box3DPointToPointConfiguration,
+    ): Box3DPointToPointNativeLease {
+        a.assert('create PointToPoint');
+        b?.assert('create PointToPoint');
+        if (b && (a.#binding !== b.#binding || a.#world !== b.#world || a === b))
+            throw worldError('AIR_E_BOX3D_CONFIG', 'PointToPoint', 'Expected distinct bodies in the same owned world.');
+        const binding = a.#binding,
+            world = a.#world;
+        let anchor: Box3DId | null = null,
+            joint: Box3DId | null = null,
+            closed = false;
+        try {
+            if (!b) anchor = binding.createBody(world, { type: 0, enableSleep: false });
+            joint = binding.createPointToPointJoint(world, a.#body, b ? b.#body : anchor!, geometry, configuration);
+            const identity = Object.freeze({ low: joint.low, high: joint.high });
+            // Readback failure after native create is a real committed/unknown failure, never retried.
+            binding.pointToPointJointState(world, joint);
+            return Object.freeze({
+                identity,
+                read() {
+                    if (closed || !joint)
+                        throw worldError('AIR_E_BOX3D_DISPOSED', 'PointToPoint read', 'Joint is released.');
+                    return binding.pointToPointJointState(world, joint);
+                },
+                configure(value: Box3DPointToPointConfiguration) {
+                    if (closed || !joint)
+                        throw worldError('AIR_E_BOX3D_DISPOSED', 'PointToPoint configure', 'Joint is released.');
+                    const actual = binding.configurePointToPointJoint(world, joint, value);
+                    if (actual.collideConnected !== value.collideConnected)
+                        throw worldError(
+                            'AIR_E_BOX3D_ABI',
+                            'PointToPoint configure',
+                            'Native readback differs from admitted configuration.',
+                        );
+                },
+                destroy() {
+                    if (closed) return;
+                    if (joint) {
+                        binding.destroyJoint(world, joint);
+                        joint = null;
+                    }
+                    if (anchor) {
+                        binding.destroyBody(anchor);
+                        anchor = null;
+                    }
+                    closed = true;
+                },
+                closeWithWorld() {
+                    joint = null;
+                    anchor = null;
+                    closed = true;
+                },
+            });
+        } catch (error) {
+            const cleanupErrors: unknown[] = [];
+            if (joint) {
+                try {
+                    binding.destroyJoint(world, joint);
+                    joint = null;
+                } catch (cleanup) {
+                    cleanupErrors.push(cleanup);
+                }
+            }
+            if (anchor && !joint) {
+                try {
+                    binding.destroyBody(anchor);
+                    anchor = null;
+                } catch (cleanup) {
+                    cleanupErrors.push(cleanup);
+                }
+            }
+            if (cleanupErrors.length)
+                throw Object.assign(
+                    worldError(
+                        'AIR_E_BOX3D_WORLD_FAULTED',
+                        'PointToPoint create cleanup',
+                        'Unresolved joint ownership remains with the world.',
+                    ),
+                    { cause: error, cleanupErrors },
+                );
+            throw error;
+        }
     }
     retain(reference: object, component: Box3DOwnedComponentSeed): void {
         this.assert('retain body');
@@ -521,6 +936,12 @@ export class Box3DSharedBody {
         if (this.#rigidBody)
             throw worldError('AIR_E_BOX3D_CONFIG', 'attach RigidBody', 'Node already has a body owner.');
         const next = validateRigidBodyInitial(value, configuration);
+        if (
+            next.type !== 0 &&
+            ((this.#signedStaticMesh && this.#scene.records().some((record) => record.signedStaticMesh)) ||
+                [...this.#shapes.values()].some((s) => s.geometry.kind === 'mesh'))
+        )
+            unsupportedBox3D('nonstatic RigidBody with static Mesh geometry');
         this.readFilter(); // Every current native shape is validated before the first body-control write.
         let committed = 0;
         try {
@@ -783,6 +1204,7 @@ export class Box3DSharedBody {
             return;
         }
         this.assert('detach RigidBody');
+        if (this.#rigidBody) this.#owner.rigidBodyDetaching(this.#rigidBody);
         const cleaned = this.#owner.prepareTargetTransition(this.#logical);
         let changedType = false;
         try {
@@ -799,8 +1221,14 @@ export class Box3DSharedBody {
     }
     setType(value: number): void {
         this.assert('setType');
-        const next = nativeBodyType(value),
-            cleaned = next !== 1 && this.#owner.prepareTargetTransition(this.#logical);
+        const next = nativeBodyType(value);
+        if (
+            next !== 0 &&
+            ((this.#signedStaticMesh && this.#scene.records().some((record) => record.signedStaticMesh)) ||
+                [...this.#shapes.values()].some((s) => s.geometry.kind === 'mesh'))
+        )
+            unsupportedBox3D('nonstatic RigidBody with static Mesh geometry');
+        const cleaned = next !== 1 && this.#owner.prepareTargetTransition(this.#logical);
         try {
             this.control('setBodyType', next);
             this.#type = next;
@@ -881,47 +1309,82 @@ export class Box3DSharedBody {
             throw error;
         }
     }
+    assertStaticMesh(): void {
+        this.assert('static Mesh admission');
+        this.#scene.preflight();
+        if (this.#type !== 0 || this.#binding.bodyState(this.#world, this.#body).type !== 0)
+            unsupportedBox3D('MeshCollider.convex=false requires a static body');
+    }
+    validateStaticMesh(geometry: Box3DStaticMeshGeometry): void {
+        this.assertStaticMesh();
+        let resource: Box3DMeshResourceUse | undefined;
+        try {
+            resource = this.#owner.acquireStaticMesh(geometry.intake);
+            resource.release();
+        } catch (error) {
+            if (!mutationNotApplied(error)) {
+                this.#owner.invalidate();
+                this.#owner.fault(error);
+            }
+            throw error;
+        }
+    }
     /** Actual native geometry allocation. A later uncertain failure is not advertised as atomic rollback. */
     setShape(reference: object, geometry: Box3DShapeGeometry): void {
         this.assert('setShape');
         this.#scene.preflight();
         if (!this.#references.has(reference))
             throw worldError('AIR_E_BOX3D_DISPOSED', 'setShape', 'Unknown component owner.');
+        if (geometry.kind === 'mesh') this.assertStaticMesh();
         const previous = this.#shapes.get(reference);
+        const eventGeneration =
+            previous && previous.geometry.trigger === geometry.trigger
+                ? this.#shapeEventGenerations.get(reference)!
+                : ++this.#shapeEventSequence;
+        if (!Number.isSafeInteger(eventGeneration))
+            throw worldError('AIR_E_BOX3D_CONFIG', 'shape event generation', 'Generation exhausted.');
         let token: Box3DId | undefined;
         let registered = false;
+        let meshResource: Box3DMeshResourceUse | undefined;
         try {
+            if (geometry.kind === 'mesh') meshResource = this.#owner.acquireStaticMesh(geometry.intake);
             token =
-                geometry.kind === 'hull'
-                    ? this.#binding.createHull(this.#body, geometry.positions, 1, geometry.trigger)
-                    : geometry.kind === 'box'
-                      ? this.#binding.createOffsetBox(
-                            this.#body,
-                            geometry.center,
-                            geometry.dimensions,
-                            [0, 0, 0, 1],
-                            1,
-                            geometry.trigger,
-                        )
-                      : geometry.kind === 'capsule'
-                        ? this.#binding.createOffsetCapsule(
+                geometry.kind === 'mesh'
+                    ? this.#binding.createStaticMeshShape(this.#body, meshResource!.native)
+                    : geometry.kind === 'hull'
+                      ? this.#binding.createHull(this.#body, geometry.positions, 1, geometry.trigger)
+                      : geometry.kind === 'box'
+                        ? this.#binding.createOffsetBox(
                               this.#body,
                               geometry.center,
-                              geometry.dimensions[0],
-                              geometry.dimensions[1],
-                              geometry.dimensions[2],
+                              geometry.dimensions,
+                              [0, 0, 0, 1],
                               1,
                               geometry.trigger,
                           )
-                        : this.#binding.createOffsetSphere(
-                              this.#body,
-                              geometry.center,
-                              geometry.dimensions[0],
-                              1,
-                              geometry.trigger,
-                          );
+                        : geometry.kind === 'capsule'
+                          ? this.#binding.createOffsetCapsule(
+                                this.#body,
+                                geometry.center,
+                                geometry.dimensions[0],
+                                geometry.dimensions[1],
+                                geometry.dimensions[2],
+                                1,
+                                geometry.trigger,
+                            )
+                          : this.#binding.createOffsetSphere(
+                                this.#body,
+                                geometry.center,
+                                geometry.dimensions[0],
+                                1,
+                                geometry.trigger,
+                            );
             this.#owner.invalidate();
-            this.#binding.configureShapeEvents(token, { sensor: false, contact: false, hit: false });
+            this.#binding.configureShapeEvents(token, {
+                sensor: geometry.kind !== 'mesh',
+                contact: geometry.kind !== 'mesh' && !geometry.trigger,
+                hit: false,
+            });
             const filter = this.#binding.setShapeFilters(this.#world, [token], {
                 group: this.#group,
                 mask: this.#mask,
@@ -942,14 +1405,27 @@ export class Box3DSharedBody {
             if (previous) {
                 this.#binding.destroyShape(previous.token);
                 this.#owner.unregisterShapeMaterial(previous.token);
+                previous.meshResource?.release();
             }
-            this.#shapes.set(reference, { token, geometry });
+            this.#shapes.set(reference, { token, geometry, meshResource });
+            this.#shapeEventGenerations.set(reference, eventGeneration);
             if (!this.state.enabled) this.control('setBodyEnabled', true);
         } catch (error) {
             // Only the reviewed creation preflight can prove that the old shape and mass were untouched.
             // Never reuse this exemption after a token returned or any configuration/destruction began.
-            if ((geometry.kind === 'capsule' || geometry.kind === 'hull') && !token && mutationNotApplied(error))
+            if (
+                (geometry.kind === 'capsule' || geometry.kind === 'hull' || geometry.kind === 'mesh') &&
+                !token &&
+                mutationNotApplied(error)
+            ) {
+                try {
+                    meshResource?.release();
+                } catch (cleanupError) {
+                    this.#owner.fault(cleanupError);
+                    throw cleanupError;
+                }
                 throw error;
+            }
             // Candidate cleanup does not restore native contact history. The whole world is conservatively faulted.
             let failure = error;
             try {
@@ -957,13 +1433,14 @@ export class Box3DSharedBody {
                     this.#binding.destroyShape(token);
                     if (registered) this.#owner.unregisterShapeMaterial(token);
                 }
+                meshResource?.release();
             } catch (cleanupError) {
                 failure = Object.assign(
                     worldError('AIR_E_BOX3D_WORLD_FAULTED', 'shape cleanup', 'World owns unresolved cleanup.'),
                     { cause: error, cleanupError },
                 );
             }
-            if (geometry.kind === 'hull' && token) {
+            if ((geometry.kind === 'hull' || geometry.kind === 'mesh') && token) {
                 const committed = Object.assign(
                     worldError(
                         'AIR_E_BOX3D_WORLD_FAULTED',
@@ -991,12 +1468,13 @@ export class Box3DSharedBody {
             destroyed = true;
             this.#owner.invalidate();
             this.#owner.unregisterShapeMaterial(value.token);
+            value.meshResource?.release();
             this.#shapes.delete(reference);
             const active = this.#rigidEnabled || this.#shapes.size > 0;
             if (this.state.enabled !== active) this.control('setBodyEnabled', active);
         } catch (error) {
             let failure = error;
-            if (value.geometry.kind === 'hull' && destroyed) {
+            if ((value.geometry.kind === 'hull' || value.geometry.kind === 'mesh') && destroyed) {
                 failure = Object.assign(
                     worldError(
                         'AIR_E_BOX3D_WORLD_FAULTED',
@@ -1020,6 +1498,7 @@ export class Box3DSharedBody {
         this.#owner.applyCopiedMaterial(reference, authority, shape?.token ?? null, value);
         if (shape)
             this.#shapes.set(reference, {
+                ...shape,
                 token: shape.token,
                 geometry: Object.freeze({ ...shape.geometry, material: value }),
             });
@@ -1031,7 +1510,7 @@ export class Box3DSharedBody {
             throw worldError('AIR_E_BOX3D_DISPOSED', 'prepare shape material', 'Unknown live adapter.');
         const previous = this.#shapes.get(reference);
         const next = previous
-            ? { token: previous.token, geometry: Object.freeze({ ...previous.geometry, material: value }) }
+            ? { ...previous, token: previous.token, geometry: Object.freeze({ ...previous.geometry, material: value }) }
             : undefined;
         let committed = false;
         return Object.freeze({
@@ -1060,6 +1539,7 @@ export class Box3DSharedBody {
         if (!shape) throw worldError('AIR_E_BOX3D_DISPOSED', 'shape material', 'Shape is inactive.');
         this.#owner.updateShapeMaterial(shape.token, value);
         this.#shapes.set(reference, {
+            ...shape,
             token: shape.token,
             geometry: Object.freeze({ ...shape.geometry, material: value }),
         });

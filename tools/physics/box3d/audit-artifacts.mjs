@@ -17,9 +17,10 @@ const fileHash = (path) => ({ path, bytes: read(path).length, sha256: sha256(rea
 const receipt = json('build-receipt.json');
 assert.equal(receipt.status, 'PASS');
 assert.equal(receipt.kind, 'st-simd-wasm');
-assert.ok(receipt.commands.length >= 21 && receipt.commands.every((c) => c.exitCode === 0 && !c.error));
-assert.equal(receipt.inputHashes.length, 65);
-assert.equal(new Set(receipt.inputHashes.map((input) => input.path)).size, 65);
+assert.equal(receipt.commands.length, 33, 'Exact successful WASM command inventory');
+assert.ok(receipt.commands.every((c) => c.exitCode === 0 && !c.error));
+assert.equal(receipt.inputHashes.length, 79);
+assert.equal(new Set(receipt.inputHashes.map((input) => input.path)).size, 79);
 assert.equal(receipt.motionSourceControls.status, 'PASS_SOURCE_CONTROLS_ONLY');
 assert.equal(receipt.commandSourceControls.status, 'PASS_SOURCE_CONTROLS_ONLY');
 for (const input of receipt.inputHashes) {
@@ -51,6 +52,14 @@ const expectedSources = [
     'tools/physics/box3d/native/command_bridge.c',
     'tools/physics/box3d/native/query_bridge.c',
     'tools/physics/box3d/native/hull_bridge.c',
+    'tools/physics/box3d/native/joint_bridge.c',
+    'tools/physics/box3d/native/joint_contract.c',
+    'tools/physics/box3d/native/hinge_bridge.c',
+    'tools/physics/box3d/native/hinge_contract.c',
+    'tools/physics/box3d/native/p2p_bridge.c',
+    'tools/physics/box3d/native/p2p_contract.c',
+    'tools/physics/box3d/native/mesh_bridge.c',
+    'tools/physics/box3d/native/mesh_contract.c',
     'tools/physics/box3d/native/hull_contract.c',
     'tools/physics/box3d/native/hull_core_contract.c',
     'tools/physics/box3d/native/hull_legacy_fingerprint.c',
@@ -131,6 +140,68 @@ assert.equal(
 assert.equal(
     geometry.samplesArtifact.records,
     Object.values(geometry.observations).reduce((sum, item) => sum + (item.contactSamples ?? 0), 0),
+);
+const nativeJoint = json('native-joint-contract.raw.json');
+assert.equal(nativeJoint.status, 'PASS');
+assert.equal(nativeJoint.pointerBytes, 4);
+assert.deepEqual(nativeJoint, receipt.jointContract);
+assert.equal(nativeJoint.ticksPerDynamicsCase, 600);
+assert.ok(Math.abs(nativeJoint.positionLimitMeters - 0.02) < 1e-8);
+assert.ok(Math.abs(nativeJoint.angularLimitRadians - 0.02) < 1e-8);
+for (const field of [
+    'shapeFreeStaticAnchor',
+    'configurePreservesFramesPosesAndReaction',
+    'nativeThresholdDoesNotDestroy',
+    'fullEventIdCopied',
+    'explicitDestroyReleasesConstraint',
+    'bodyDestroyInvalidatesJoint',
+    'worldDestroyInvalidatesJoint',
+])
+    assert.equal(nativeJoint[field], true, field);
+for (const field of [
+    'anchoredMaxPositionError',
+    'anchoredMaxAngularError',
+    'reversedAnchoredMaxPositionError',
+    'reversedAnchoredMaxAngularError',
+    'movingMaxPositionError',
+    'movingMaxAngularError',
+])
+    assert.ok(Number.isFinite(nativeJoint[field]) && nativeJoint[field] >= 0 && nativeJoint[field] <= 0.02, field);
+assert.equal(nativeJoint.finalCoreBytes, 0);
+assert.equal(nativeJoint.finalBridgeBytes, 0);
+assert.ok(
+    receipt.commands.some(
+        (entry) => entry.args.some((arg) => arg.endsWith('air_box3d_joint_contract.cjs')) && entry.exitCode === 0,
+    ),
+);
+const nativeHinge = json('native-hinge-contract.raw.json');
+assert.equal(nativeHinge.status, 'PASS');
+assert.equal(nativeHinge.pointerBytes, 4);
+assert.deepEqual(nativeHinge, receipt.hingeContract);
+assert.ok(
+    receipt.commands.some(
+        (entry) => entry.args.some((arg) => arg.endsWith('air_box3d_hinge_contract.cjs')) && entry.exitCode === 0,
+    ),
+);
+const wasmMesh = json('wasm-mesh-contract.raw.json');
+assert.equal(wasmMesh.status, 'PASS');
+assert.equal(wasmMesh.orders.length, 4);
+assert.equal(wasmMesh.fixtureSha256, sha256(readFileSync(resolve(root, 'tools/physics/box3d/wasm-mesh-contract.mjs'))));
+for (const passed of Object.values(wasmMesh.checks)) assert.equal(passed, true);
+const nativeMesh = json('native-mesh-contract.raw.json');
+assert.equal(nativeMesh.status, 'PASS');
+assert.equal(nativeMesh.pointerBytes, 4);
+assert.equal(nativeMesh.releaseOrders, 4);
+assert.ok(nativeMesh.checks >= 618);
+assert.deepEqual(nativeMesh, receipt.meshContract);
+const nativeP2P = json('native-p2p-contract.raw.json');
+assert.equal(nativeP2P.status, 'PASS');
+assert.equal(nativeP2P.pointerBytes, 4);
+assert.deepEqual(nativeP2P, receipt.p2pContract);
+assert.ok(
+    receipt.commands.some(
+        (entry) => entry.args.some((arg) => arg.endsWith('air_box3d_p2p_contract.cjs')) && entry.exitCode === 0,
+    ),
 );
 const nativeGeometry = json('native-geometry-contract.raw.json');
 assert.equal(nativeGeometry.status, 'PASS');
@@ -690,6 +761,15 @@ const report = {
         'hull-legacy-baseline/compile_commands.json',
         'hull-legacy-baseline/baseline.raw.txt',
         'hull-legacy-baseline/patched.raw.txt',
+        'native-joint-contract.raw.json',
+        'air_box3d_joint_contract.cjs',
+        'native-hinge-contract.raw.json',
+        'air_box3d_hinge_contract.cjs',
+        'native-p2p-contract.raw.json',
+        'air_box3d_p2p_contract.cjs',
+        'native-mesh-contract.raw.json',
+        'wasm-mesh-contract.raw.json',
+        'air_box3d_mesh_contract.cjs',
         'native-capsule-contract.raw.json',
         'air_box3d_capsule_contract.cjs',
         'native-query-contract.raw.json',

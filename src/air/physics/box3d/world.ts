@@ -27,7 +27,26 @@ import { Box3DSharedBody } from './shared-body';
 import type { Box3DComponentConfiguration } from './shared-body';
 import { PhysicsRayResult } from '../../../cocos/physics/framework/physics-ray-result';
 import { copyBox3DRay, resolveBox3DRayHits } from './query';
+import { Box3DStaticMeshResources } from './static-mesh-resource';
 import { installBox3DBeforeStepSource } from './before-step-source';
+import { installBox3DCommittedQuerySource } from './committed-query-source';
+import {
+    copyQueryRotation,
+    primitiveQueryProxy,
+    committedPrimitiveQuery,
+    capsuleQueryHalfHeight,
+    copyTranslationQuery,
+    queryVector,
+} from './convex-query';
+import type { Box3DCopiedRay } from './query';
+import type { Box3DQueryProxy } from './binding/facade.mjs';
+import type { Box3DBeforeStepContext } from '../../box3d-controls';
+import type {
+    Box3DCommittedColliderQuery,
+    Box3DCommittedRayQuery,
+    Box3DQueryOptions,
+    Box3DCommittedQueryChild,
+} from '../../box3d-queries';
 import type { Box3DQueryCollider } from './query';
 import type { IPhysicsWorld } from '../../../cocos/physics/spec/i-physics-world';
 import type { PhysicsMaterial } from '../../../cocos/physics/framework/assets/physics-material';
@@ -53,11 +72,24 @@ import { unsupportedBox3D } from './unsupported';
 import { copyWritebackQualification, writebackSceneBatch } from './world-writeback';
 import type { Box3DWritebackQualification } from './world-writeback';
 
-import type { Box3DCommandTick } from './world-command-owner';
+import type { Box3DCommandTick, Box3DDispatchScope } from './world-command-owner';
 import type { Box3DCommand, Box3DCommandBatchResult } from './binding/facade.mjs';
 import type { CommandPose, CommandProducer } from './command-queue';
 import type { ContinuousDescriptor } from './command-producers';
 import type { PhysicsBodyCommandInput } from '../../../cocos/physics/framework/physics-command-submission';
+import { Box3DCollisionEvents } from './collision-events';
+import { Box3DTriggerEvents } from './trigger-events';
+import type { Box3DFixedConstraint } from './fixed-constraint';
+import type { Box3DHingeConstraint } from './hinge-constraint';
+import type { Box3DPointToPointConstraint } from './point-to-point-constraint';
+import { RigidBody } from '../../../cocos/physics/framework/components/rigid-body';
+import type {
+    Box3DFixedConfiguration,
+    Box3DHingeConfiguration,
+    Box3DHingeGeometry,
+    Box3DPointToPointConfiguration,
+    Box3DPointToPointGeometry,
+} from './binding/facade.mjs';
 
 type WorldState = 'ready' | 'stepping' | 'faulted' | 'destroying' | 'destroyed' | 'destroy-failed';
 /** Internal adapter only. Not registered/exported by the optional feature yet. */
@@ -73,6 +105,7 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
     private hasNativeDestroyFailure = false;
     private nativeDestroyFailure: unknown;
     readonly #token: Box3DWorld;
+    #meshResources: Box3DStaticMeshResources | undefined;
     private readonly description: Readonly<{
         backend: 'box3d';
         generation: number;
@@ -88,9 +121,13 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
     private debug: Box3DDebugSnapshot | null = null;
     private material: Readonly<Box3DSurfaceMaterial> | null = null;
     readonly #sharedBodies = new Map<Node, Box3DSharedBody>();
+    readonly #fixedConstraints = new Set<Box3DFixedConstraint>();
+    readonly #hingeConstraints = new Set<Box3DHingeConstraint>();
+    readonly #pointToPointConstraints = new Set<Box3DPointToPointConstraint>();
     readonly #queryLogicalIds = new WeakMap<Collider, number>();
     #queryLogicalSequence = 0;
     #beforeStepSource: { dispose(): void } | undefined;
+    #querySource: { dispose(): void } | undefined;
     readonly #materialShapes = new Map<Box3DId, boolean>();
     private nativeStep: Readonly<Box3DNativeStepDiagnostics> = Object.freeze({
         nativeStepIndex: 0,
@@ -100,6 +137,8 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
     private snapshot: Box3DStepSnapshot | null = null;
     private pendingSnapshot: Box3DStepSnapshot | null = null;
     private emittedStep = 0;
+    readonly #collisionEvents = new Box3DCollisionEvents();
+    readonly #triggerEvents = new Box3DTriggerEvents();
     private sceneSyncCalls = 0;
     private afterEventsCalls = 0;
     private attemptedSteps = 0;
@@ -222,7 +261,16 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
             this.#beforeStepSource = installBox3DBeforeStepSource(this, (callback, options) =>
                 this.registerCommandHook(callback, options),
             );
+            this.#querySource = installBox3DCommittedQuerySource(this, {
+                colliders: (context, colliders, translation, options) =>
+                    this.queryCommittedColliders(context, colliders, translation, options),
+                ray: (context, origin, translation, options) =>
+                    this.queryCommittedRay(context, origin, translation, options),
+                target: (body) => this.createKinematicTarget(body),
+            });
         } catch (error) {
+            this.#querySource?.dispose();
+            this.#querySource = undefined;
             this.#beforeStepSource?.dispose();
             this.#beforeStepSource = undefined;
             this.fault(error);
@@ -625,6 +673,176 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
     assertComponentConfiguration(operation: string): void {
         this.assertReady(operation);
     }
+    get jointCleanupOnly(): boolean {
+        return ['faulted', 'destroying', 'destroyed', 'destroy-failed'].includes(this.state);
+    }
+    assertJointRequest(operation: string): void {
+        this.assertReadyState(operation);
+        this.#commandOwner.assertListenerUpdate(operation);
+    }
+    beginJointActivity() {
+        this.assertReadyState('Joint activity');
+        return this.#commandOwner.beginJointActivity();
+    }
+    assertJointRead(operation: string): void {
+        this.assertCommittedRead(operation);
+    }
+    failJointOperation(error: unknown): never {
+        this.fault(error);
+        throw error;
+    }
+    validateFixedEndpoints(attached: RigidBody, connected: RigidBody | null): void {
+        this.assertCommittedRead('Fixed endpoint admission');
+        for (const component of connected ? [attached, connected] : [attached]) {
+            const body = this.#sharedBodies.get(component.node);
+            if (!body || body.rigidBody !== component)
+                throw worldError(
+                    'AIR_E_BOX3D_CONFIG',
+                    'Fixed endpoints',
+                    'RigidBody is not owned by this exact world.',
+                );
+        }
+    }
+    /** Same frozen admission scale used by the owned shapes. Rotation cache decomposition
+     * must not count as user geometry mutation or reset a joint's captured zero. The
+     * existing body preflight still rejects external local scale/parent changes. */
+    initialJointScale(component: RigidBody): readonly number[] {
+        this.assertCommittedRead('joint admitted scale');
+        const body = this.#sharedBodies.get(component.node);
+        if (!body || body.rigidBody !== component)
+            throw worldError(
+                'AIR_E_BOX3D_CONFIG',
+                'joint admitted scale',
+                'RigidBody is not owned by this exact world.',
+            );
+        return body.initialScale;
+    }
+    registerFixedConstraint(value: Box3DFixedConstraint): void {
+        this.assertReady('register Fixed');
+        if (this.#fixedConstraints.has(value))
+            throw worldError('AIR_E_BOX3D_CONFIG', 'register Fixed', 'Duplicate owner.');
+        this.#fixedConstraints.add(value);
+    }
+    releaseFixedConstraint(value: Box3DFixedConstraint): void {
+        if (this.jointCleanupOnly) return; // Native ownership remains with terminal world teardown.
+        this.assertReady('release Fixed');
+        if (!this.#fixedConstraints.has(value))
+            throw worldError('AIR_E_BOX3D_DISPOSED', 'release Fixed', 'Unknown owner.');
+        try {
+            value.detach();
+            this.#fixedConstraints.delete(value);
+        } catch (error) {
+            this.failJointOperation(error);
+        }
+    }
+    createFixedLease(attached: RigidBody, connected: RigidBody | null, configuration: Box3DFixedConfiguration) {
+        this.assertReady('Fixed safe commit');
+        this.validateFixedEndpoints(attached, connected);
+        try {
+            return Box3DSharedBody.createFixedLease(
+                this.#sharedBodies.get(attached.node)!,
+                connected ? this.#sharedBodies.get(connected.node)! : null,
+                configuration,
+            );
+        } catch (error) {
+            this.failJointOperation(error);
+        }
+    }
+    registerHingeConstraint(value: Box3DHingeConstraint): void {
+        this.assertReady('register Hinge');
+        if (this.#hingeConstraints.has(value))
+            throw worldError('AIR_E_BOX3D_CONFIG', 'register Hinge', 'Duplicate owner.');
+        this.#hingeConstraints.add(value);
+    }
+    releaseHingeConstraint(value: Box3DHingeConstraint): void {
+        if (this.jointCleanupOnly) return; // Native ownership remains with terminal world teardown.
+        this.assertReady('release Hinge');
+        if (!this.#hingeConstraints.has(value))
+            throw worldError('AIR_E_BOX3D_DISPOSED', 'release Hinge', 'Unknown owner.');
+        try {
+            value.detach();
+            this.#hingeConstraints.delete(value);
+        } catch (error) {
+            this.failJointOperation(error);
+        }
+    }
+    createHingeLease(
+        attached: RigidBody,
+        connected: RigidBody | null,
+        geometry: Box3DHingeGeometry,
+        configuration: Box3DHingeConfiguration,
+    ) {
+        this.assertReady('Hinge safe commit');
+        this.validateFixedEndpoints(attached, connected);
+        try {
+            return Box3DSharedBody.createHingeLease(
+                this.#sharedBodies.get(attached.node)!,
+                connected ? this.#sharedBodies.get(connected.node)! : null,
+                geometry,
+                configuration,
+            );
+        } catch (error) {
+            this.failJointOperation(error);
+        }
+    }
+    registerPointToPointConstraint(value: Box3DPointToPointConstraint): void {
+        this.assertReady('register PointToPoint');
+        if (this.#pointToPointConstraints.has(value))
+            throw worldError('AIR_E_BOX3D_CONFIG', 'register PointToPoint', 'Duplicate owner.');
+        this.#pointToPointConstraints.add(value);
+    }
+    releasePointToPointConstraint(value: Box3DPointToPointConstraint): void {
+        if (this.jointCleanupOnly) return; // Native ownership remains with terminal world teardown.
+        this.assertReady('release PointToPoint');
+        if (!this.#pointToPointConstraints.has(value))
+            throw worldError('AIR_E_BOX3D_DISPOSED', 'release PointToPoint', 'Unknown owner.');
+        try {
+            value.detach();
+            this.#pointToPointConstraints.delete(value);
+        } catch (error) {
+            this.failJointOperation(error);
+        }
+    }
+    createPointToPointLease(
+        attached: RigidBody,
+        connected: RigidBody | null,
+        geometry: Box3DPointToPointGeometry,
+        configuration: Box3DPointToPointConfiguration,
+    ) {
+        this.assertReady('PointToPoint safe commit');
+        this.validateFixedEndpoints(attached, connected);
+        try {
+            return Box3DSharedBody.createPointToPointLease(
+                this.#sharedBodies.get(attached.node)!,
+                connected ? this.#sharedBodies.get(connected.node)! : null,
+                geometry,
+                configuration,
+            );
+        } catch (error) {
+            this.failJointOperation(error);
+        }
+    }
+    #detachBodyJoints(body: RigidBody): void {
+        try {
+            for (const joint of this.#fixedConstraints) joint.endpointRemoving(body);
+            for (const joint of this.#hingeConstraints) joint.endpointRemoving(body);
+            for (const joint of this.#pointToPointConstraints) joint.endpointRemoving(body);
+        } catch (error) {
+            this.failJointOperation(error);
+        }
+    }
+    #commitFixedConstraints(): void {
+        try {
+            for (const joint of this.#fixedConstraints) joint.commit();
+            for (const joint of this.#hingeConstraints) joint.commit();
+            for (const joint of this.#pointToPointConstraints) joint.commit();
+        } catch (error) {
+            this.failJointOperation(error);
+        }
+    }
+    get staticMeshIdentity() {
+        return this.#binding.identity;
+    }
     /** Internal component acquisition; never returns a native token or binding. */
     acquireSharedBody(
         node: Node,
@@ -641,7 +859,17 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
                 this.#token,
                 node,
                 {
+                    acquireStaticMesh: (intake) => {
+                        this.assertReady('static Mesh cache');
+                        this.#meshResources ??= new Box3DStaticMeshResources(this.#binding, this.#token);
+                        return this.#meshResources.acquire(intake);
+                    },
                     assertReady: (operation) => this.assertReady(operation),
+                    rigidBodyDetaching: (body) => this.#detachBodyJoints(body),
+                    assertListenerUpdate: (operation) => {
+                        this.assertReadyState(operation);
+                        this.#commandOwner.assertListenerUpdate(operation);
+                    },
                     assertCommittedRead: (operation) => this.assertCommittedRead(operation),
                     adoptBody: (seed) => this.#commandOwner.adoptBody(seed),
                     attachComponent: (key, seed) => this.#commandOwner.attachComponent(key, seed),
@@ -679,6 +907,9 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
     syncSceneToPhysics(): void {
         this.assertReady('syncSceneToPhysics');
         for (const body of this.#sharedBodies.values()) body.preflight();
+        for (const joint of this.#hingeConstraints) joint.preflight();
+        for (const joint of this.#pointToPointConstraints) joint.preflight();
+        this.#commitFixedConstraints();
         ++this.sceneSyncCalls;
     }
     syncAfterEvents(): void {
@@ -687,22 +918,62 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
     }
     emitEvents(): void {
         this.assertReady('emitEvents');
-        const scope = this.#commandOwner.beginDispatch();
+        if (!this.pendingSnapshot) return;
+        const snapshot = this.pendingSnapshot;
+        const roster = Box3DSharedBody.collisionColliderRecords(Array.from(this.#sharedBodies.values()));
+        let deliveries;
         try {
-            if (this.pendingSnapshot) {
-                this.emittedStep = this.pendingSnapshot.stepIndex;
-                this.pendingSnapshot = null;
+            deliveries = [
+                ...this.#collisionEvents.prepare(snapshot, roster),
+                ...this.#triggerEvents.prepare(snapshot, roster),
+            ];
+        } catch (error) {
+            this.fault(error);
+            throw error;
+        }
+        let scope: Box3DDispatchScope;
+        try {
+            scope = this.#commandOwner.beginDispatch(
+                Object.freeze([
+                    ...Array.from(this.#fixedConstraints, (joint) => joint.component),
+                    ...Array.from(this.#hingeConstraints, (joint) => joint.component),
+                    ...Array.from(this.#pointToPointConstraints, (joint) => joint.component),
+                ]),
+            );
+        } catch (error) {
+            this.fault(error);
+            throw error;
+        }
+        let failed = false,
+            primary: unknown;
+        try {
+            // Consume this batch before callbacks: failures cannot replay the native step.
+            this.emittedStep = snapshot.stepIndex;
+            this.pendingSnapshot = null;
+            for (const { event } of deliveries) {
+                if (scope.pendingDestruction(event.selfCollider) || scope.pendingDestruction(event.otherCollider))
+                    continue;
+                event.selfCollider.emit(event.type, event);
             }
+        } catch (error) {
+            failed = true;
+            primary = error;
         } finally {
             try {
                 scope.dispose();
+                scope.drainDestruction();
             } catch (error) {
                 this.recordOwnerCleanup(error);
-                this.fault(error);
-                throw error;
+                if (!failed) {
+                    failed = true;
+                    primary = error;
+                }
             }
         }
-        // T09 admits no collider event listeners; raw snapshots are diagnostics, not Cocos events.
+        if (failed) {
+            this.fault(primary);
+            throw primary;
+        }
     }
     step(dt: number, timeSinceLastCalled?: number, maxSubSteps?: number): void {
         this.assertReady('step');
@@ -834,6 +1105,8 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
             )
                 throw worldError('AIR_E_BOX3D_ABI', 'step', 'Expected the current owned immutable snapshot.');
             this.snapshot = this.pendingSnapshot = snapshot;
+            for (const joint of this.#fixedConstraints)
+                joint.observe(snapshot.jointThresholdEvents, snapshot.stepIndex);
             const plans = Box3DSharedBody.captureWriteback(bodies, tick.teleportNodes);
             writebackSceneBatch(
                 plans,
@@ -901,6 +1174,18 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
                 if (!failed) throw cleanupError;
             }
         }
+        // Threshold events were copied before any user callback. Once idle again,
+        // destroy only latched broken joints. Preserve this step's copied contact batch.
+        try {
+            for (const joint of this.#fixedConstraints) joint.afterStep();
+        } catch (error) {
+            this.failJointOperation(error);
+        }
+    }
+    /** Internal copied resource diagnostics for qualification; no token is returned. */
+    getStaticMeshResourceDiagnostics() {
+        this.assertCommittedRead('Mesh resource diagnostics');
+        return this.#meshResources?.readDiagnostics() ?? Object.freeze([]);
     }
     getNativeCounts() {
         this.assertCommittedRead('getNativeCounts');
@@ -958,6 +1243,14 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
             afterEventsCalls: this.afterEventsCalls,
             emittedStep: this.emittedStep,
             componentEventsSupported: false,
+            collisionEventSubset: 'SOLID_PRIMITIVE_CONTACT_CANDIDATE',
+            collisionEventFamilies: Object.freeze([
+                'sphere-sphere',
+                'sphere-box',
+                'box-box',
+                'capsule-box',
+                'capsule-capsule',
+            ]),
             debugPresented: false,
             error: this.hasFailure ? String(this.failure) : null,
         });
@@ -982,15 +1275,25 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
             try {
                 this.#binding.destroyWorld(this.#token);
                 this.nativeDestroyReturned = true;
+                this.#meshResources?.closeAfterWorld();
+                this.#meshResources = undefined;
             } catch (error) {
                 this.hasNativeDestroyFailure = true;
                 this.nativeDestroyFailure = error;
                 throw error;
             }
+            for (const joint of this.#fixedConstraints) joint.closeWithWorld();
+            this.#fixedConstraints.clear();
+            for (const joint of this.#hingeConstraints) joint.closeWithWorld();
+            for (const joint of this.#pointToPointConstraints) joint.closeWithWorld();
+            this.#hingeConstraints.clear();
+            this.#pointToPointConstraints.clear();
             for (const body of this.#sharedBodies.values()) body.closeWithWorld();
             this.#sharedBodies.clear();
             this.#materialShapes.clear();
             this.pendingSnapshot = null;
+            this.#collisionEvents.clear();
+            this.#triggerEvents.clear();
             this.snapshot = null;
             this.debug = null;
             this.state = 'destroyed';
@@ -1012,22 +1315,14 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
                 }
             } finally {
                 // Source lookup must not survive terminal owner/native teardown, even when cleanup fails.
+                this.#querySource?.dispose();
+                this.#querySource = undefined;
                 this.#beforeStepSource?.dispose();
                 this.#beforeStepSource = undefined;
             }
         }
     }
-    /** One complete generic callback query feeds both public routes. */
-    #raycastHits(
-        worldRay: Parameters<IPhysicsWorld['raycastClosest']>[0],
-        options: Parameters<IPhysicsWorld['raycastClosest']>[1],
-    ) {
-        this.assertCommittedRead('ray query');
-        const copied = copyBox3DRay(worldRay, options);
-        this.assertCommittedRead('ray query copied admission');
-        if (copied.empty) return Object.freeze([]);
-        const query = this.#binding.rayAllRaw;
-        if (typeof query !== 'function') return unsupportedBox3D('generic callback ray query ABI');
+    #queryRoster(): Map<string, Box3DQueryCollider> {
         const roster = new Map<string, Box3DQueryCollider>();
         for (const record of Box3DSharedBody.queryColliderRecords([...this.#sharedBodies.values()])) {
             let logicalId = this.#queryLogicalIds.get(record.collider);
@@ -1044,8 +1339,259 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
             const key = `${record.low}:${record.high}`;
             if (roster.has(key))
                 throw worldError('AIR_E_BOX3D_ABI', 'ray collider identity', 'Duplicate full native shape identity.');
-            roster.set(key, Object.freeze({ collider: record.collider, logicalId }));
+            roster.set(key, Object.freeze({ collider: record.collider, logicalId, sourceFace: record.sourceFace }));
         }
+        return roster;
+    }
+    #queryStamp(context: Box3DBeforeStepContext) {
+        const epoch = this.#binding.readQueryEpoch(this.#token);
+        if (
+            !Number.isSafeInteger(epoch.stepIndex) ||
+            epoch.stepIndex < 0 ||
+            !Number.isSafeInteger(epoch.mutationRevision) ||
+            epoch.mutationRevision < 0
+        )
+            throw worldError('AIR_E_BOX3D_ABI', 'query epoch', 'Invalid committed epoch.');
+        return Object.freeze({
+            worldGeneration: this.description.generation,
+            tickIndex: context.tickIndex,
+            attemptId: context.attemptId,
+            nativeStepIndex: epoch.stepIndex,
+            nativeMutationRevision: epoch.mutationRevision,
+            complete: true as const,
+        });
+    }
+    #assertQueryEpoch(stamp: { nativeStepIndex: number; nativeMutationRevision: number }): void {
+        this.assertCommittedRead('copied committed query result');
+        const after = this.#binding.readQueryEpoch(this.#token);
+        if (after.stepIndex !== stamp.nativeStepIndex || after.mutationRevision !== stamp.nativeMutationRevision)
+            throw worldError('AIR_E_BOX3D_ABI', 'query epoch', 'Native world changed during synchronous read.');
+    }
+    queryCommittedRay(
+        context: Box3DBeforeStepContext,
+        origin: { x: number; y: number; z: number },
+        translation: { x: number; y: number; z: number },
+        options: Box3DQueryOptions,
+    ): Box3DCommittedRayQuery {
+        return this.#commandOwner.withCommittedQuery(context, () => {
+            const copied = copyTranslationQuery(origin, translation, options),
+                stamp = this.#queryStamp(context);
+            const roster = this.#queryRoster();
+            const raw = copied.empty
+                ? Object.freeze([])
+                : this.#binding.rayAllRaw(this.#token, copied.origin, copied.translation, copied.options);
+            const hits = resolveBox3DRayHits(raw, copied, (low, high) => roster.get(`${low}:${high}`));
+            this.#assertQueryEpoch(stamp);
+            return Object.freeze({
+                ...stamp,
+                origin: queryVector(copied.origin),
+                translation: queryVector(copied.translation),
+                hits,
+            });
+        });
+    }
+    queryCommittedColliders(
+        context: Box3DBeforeStepContext,
+        colliders: readonly Collider[],
+        translation: { x: number; y: number; z: number },
+        options: Box3DQueryOptions,
+    ): Box3DCommittedColliderQuery {
+        return this.#commandOwner.withCommittedQuery(context, () => {
+            if (!Array.isArray(colliders) || !colliders.length)
+                throw worldError('AIR_E_BOX3D_CONFIG', 'query group', 'Expected nonempty Collider array.');
+            const requested = Array.from(colliders),
+                group = new Set(requested);
+            if (group.size !== requested.length)
+                throw worldError('AIR_E_BOX3D_CONFIG', 'query group', 'Duplicate collider.');
+            // Copy caller scalar inputs before any native query. Group ownership and every proxy
+            // are admitted completely before the first overlap/cast; no partial query on bad tail.
+            const copied = copyTranslationQuery({ x: 0, y: 0, z: 0 }, translation, options),
+                stamp = this.#queryStamp(context);
+            const geometry = Box3DSharedBody.committedQueryGeometries([...this.#sharedBodies.values()]);
+            const requestedBodies = new Set(geometry.filter((row) => group.has(row.collider)).map((row) => row.body));
+            if (geometry.some((row) => requestedBodies.has(row.body) && !group.has(row.collider)))
+                throw worldError(
+                    'AIR_E_BOX3D_CONFIG',
+                    'query group',
+                    'Include every active Collider of each requested body.',
+                );
+            const roster = this.#queryRoster();
+            const records = requested.map((collider) => {
+                const matches = geometry.filter((v) => v.collider === collider);
+                if (matches.length !== 1)
+                    throw worldError('AIR_E_BOX3D_DISPOSED', 'query group', 'Expected current enabled owned collider.');
+                const { geometry: g, pose } = matches[0];
+                if (g.kind === 'hull' || g.kind === 'mesh') return unsupportedBox3D('committed Hull query proxy');
+                const actual = committedPrimitiveQuery(g.kind, g.center, g.dimensions, pose);
+                const { rotation, proxy } = actual;
+                const ray = copyTranslationQuery(
+                    queryVector(actual.origin),
+                    queryVector(copied.translation),
+                    copied.options,
+                );
+                // Validate every translated inflated bound before even the first child query.
+                for (const p of proxy.points)
+                    for (let a = 0; a < 3; ++a)
+                        for (const sign of [-1, 1]) {
+                            finiteFloat32(actual.origin[a] + p[a] + sign * proxy.radius, 'query child start bound');
+                            finiteFloat32(
+                                Math.fround(actual.origin[a] + ray.translation[a]) + p[a] + sign * proxy.radius,
+                                'query child end bound',
+                            );
+                        }
+                const child: Box3DCommittedQueryChild = Object.freeze({
+                    collider,
+                    kind: g.kind,
+                    origin: queryVector(actual.center),
+                    rotation: Object.freeze({ x: rotation[0], y: rotation[1], z: rotation[2], w: rotation[3] }),
+                    dimensions: actual.dimensions,
+                    support: Object.freeze({
+                        origin: queryVector(actual.origin),
+                        points: Object.freeze(proxy.points.map(queryVector)),
+                        radius: proxy.radius,
+                    }),
+                });
+                return { child, ray, proxy };
+            });
+            const copiedBlockers = new Map<Collider, Box3DCommittedQueryChild | null>();
+            const copyBlocker = (collider: Collider): Box3DCommittedQueryChild | null => {
+                if (copiedBlockers.has(collider)) return copiedBlockers.get(collider)!;
+                const block = geometry.find((g) => g.collider === collider);
+                let result: Box3DCommittedQueryChild | null = null;
+                if (block && block.geometry.kind !== 'hull' && block.geometry.kind !== 'mesh') {
+                    const b = committedPrimitiveQuery(
+                        block.geometry.kind,
+                        block.geometry.center,
+                        block.geometry.dimensions,
+                        block.pose,
+                    );
+                    result = Object.freeze({
+                        collider,
+                        kind: block.geometry.kind,
+                        origin: queryVector(b.center),
+                        rotation: Object.freeze({
+                            x: b.rotation[0],
+                            y: b.rotation[1],
+                            z: b.rotation[2],
+                            w: b.rotation[3],
+                        }),
+                        dimensions: b.dimensions,
+                        support: Object.freeze({
+                            origin: queryVector(b.origin),
+                            points: Object.freeze(b.proxy.points.map(queryVector)),
+                            radius: b.proxy.radius,
+                        }),
+                    });
+                }
+                copiedBlockers.set(collider, result);
+                return result;
+            };
+            const overlaps: {
+                    queryCollider: Collider;
+                    collider: Collider;
+                    blockingGeometry: Box3DCommittedQueryChild | null;
+                }[] = [],
+                hits: (ReturnType<typeof resolveBox3DRayHits>[number] & {
+                    queryCollider: Collider;
+                    blockingGeometry: Box3DCommittedQueryChild | null;
+                })[] = [];
+            for (const { child, ray, proxy } of records) {
+                const raw = this.#binding.overlapAllRaw(this.#token, ray.origin, proxy, ray.options);
+                const seen = new Set<Collider>();
+                for (const value of raw) {
+                    const id = value?.shape;
+                    if (!id || ![id.low, id.high].every((v) => Number.isInteger(v) && v >= 0 && v <= 0xffffffff))
+                        throw worldError('AIR_E_BOX3D_ABI', 'overlap', 'Invalid full shape identity.');
+                    const hit = roster.get(`${id.low}:${id.high}`);
+                    if (!hit) throw worldError('AIR_E_BOX3D_ABI', 'overlap', 'Unknown current collider.');
+                    if (!group.has(hit.collider) && !seen.has(hit.collider)) {
+                        seen.add(hit.collider);
+                        const blockingGeometry = copyBlocker(hit.collider);
+                        overlaps.push(
+                            Object.freeze({ queryCollider: child.collider, collider: hit.collider, blockingGeometry }),
+                        );
+                    }
+                }
+                if (!ray.empty) {
+                    const rawHits = this.#binding.shapeAllRaw(
+                        this.#token,
+                        ray.origin,
+                        ray.translation,
+                        proxy,
+                        ray.options,
+                    );
+                    for (const hit of resolveBox3DRayHits(rawHits, ray, (lo, hi) => roster.get(`${lo}:${hi}`)))
+                        if (!group.has(hit.collider))
+                            hits.push(
+                                Object.freeze({
+                                    ...hit,
+                                    queryCollider: child.collider,
+                                    blockingGeometry: copyBlocker(hit.collider),
+                                }),
+                            );
+                }
+            }
+            hits.sort(
+                (a, b) =>
+                    a.distance - b.distance ||
+                    a.logicalId - b.logicalId ||
+                    requested.indexOf(a.queryCollider) - requested.indexOf(b.queryCollider),
+            );
+            overlaps.sort(
+                (a, b) =>
+                    requested.indexOf(a.queryCollider) - requested.indexOf(b.queryCollider) ||
+                    this.#queryLogicalIds.get(a.collider)! - this.#queryLogicalIds.get(b.collider)!,
+            );
+            this.#assertQueryEpoch(stamp);
+            return Object.freeze({
+                ...stamp,
+                translation: queryVector(copied.translation),
+                children: Object.freeze(records.map((r) => r.child)),
+                overlaps: Object.freeze(overlaps),
+                hits: Object.freeze(hits),
+                initialOverlap: overlaps.length !== 0,
+                nearestDistance: hits[0]?.distance ?? null,
+            });
+        });
+    }
+    #sweepHits(copied: Box3DCopiedRay, proxy: Box3DQueryProxy) {
+        this.assertCommittedRead('shape query copied admission');
+        if (copied.empty) return Object.freeze([]);
+        const roster = this.#queryRoster();
+        const raw = this.#binding.shapeAllRaw(this.#token, copied.origin, copied.translation, proxy, copied.options);
+        this.assertCommittedRead('shape query result');
+        return resolveBox3DRayHits(raw, copied, (low, high) => roster.get(`${low}:${high}`));
+    }
+    #assignQuery(
+        hits: ReturnType<typeof resolveBox3DRayHits>,
+        pool: Parameters<IPhysicsWorld['raycast']>[2],
+        results: PhysicsRayResult[],
+    ): boolean {
+        for (const hit of hits) {
+            const out = pool.add();
+            PhysicsRayResult.prototype._assign.call(out, hit.point, hit.distance, hit.collider, hit.normal);
+            results.push(out);
+        }
+        return results.length !== 0;
+    }
+    #assignClosest(hits: ReturnType<typeof resolveBox3DRayHits>, out: PhysicsRayResult): boolean {
+        const hit = hits[0];
+        if (!hit) return false;
+        PhysicsRayResult.prototype._assign.call(out, hit.point, hit.distance, hit.collider, hit.normal);
+        return true;
+    }
+    /** One complete generic callback query feeds both public routes. */
+    #raycastHits(
+        worldRay: Parameters<IPhysicsWorld['raycastClosest']>[0],
+        options: Parameters<IPhysicsWorld['raycastClosest']>[1],
+    ) {
+        this.assertCommittedRead('ray query');
+        const copied = copyBox3DRay(worldRay, options);
+        this.assertCommittedRead('ray query copied admission');
+        if (copied.empty) return Object.freeze([]);
+        const query = this.#binding.rayAllRaw;
+        if (typeof query !== 'function') return unsupportedBox3D('generic callback ray query ABI');
+        const roster = this.#queryRoster();
         const raw = query.call(this.#binding, this.#token, copied.origin, copied.translation, copied.options);
         this.assertCommittedRead('ray query result');
         return resolveBox3DRayHits(raw, copied, (low, high) => roster.get(`${low}:${high}`));
@@ -1075,28 +1621,49 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
         PhysicsRayResult.prototype._assign.call(out, hit.point, hit.distance, hit.collider, hit.normal);
         return true;
     }
-    sweepBox(..._args: Parameters<IPhysicsWorld['sweepBox']>): never {
-        this.assertReady('sweepBox');
-        return unsupportedBox3D('sweepBox');
+    sweepBox(...args: Parameters<IPhysicsWorld['sweepBox']>): boolean {
+        const [ray, half, q, options, pool, results] = args;
+        results.length = 0;
+        this.assertCommittedRead('sweepBox');
+        const copied = copyBox3DRay(ray, options),
+            proxy = primitiveQueryProxy('box', [half.x, half.y, half.z], copyQueryRotation(q));
+        return this.#assignQuery(this.#sweepHits(copied, proxy), pool, results);
     }
-    sweepBoxClosest(..._args: Parameters<IPhysicsWorld['sweepBoxClosest']>): never {
-        this.assertReady('sweepBoxClosest');
-        return unsupportedBox3D('sweepBoxClosest');
+    sweepBoxClosest(...args: Parameters<IPhysicsWorld['sweepBoxClosest']>): boolean {
+        const [ray, half, q, options, out] = args;
+        this.assertCommittedRead('sweepBoxClosest');
+        const copied = copyBox3DRay(ray, options),
+            proxy = primitiveQueryProxy('box', [half.x, half.y, half.z], copyQueryRotation(q));
+        return this.#assignClosest(this.#sweepHits(copied, proxy), out);
     }
-    sweepSphere(..._args: Parameters<IPhysicsWorld['sweepSphere']>): never {
-        this.assertReady('sweepSphere');
-        return unsupportedBox3D('sweepSphere');
+    sweepSphere(...args: Parameters<IPhysicsWorld['sweepSphere']>): boolean {
+        const [ray, radius, options, pool, results] = args;
+        results.length = 0;
+        this.assertCommittedRead('sweepSphere');
+        const copied = copyBox3DRay(ray, options),
+            proxy = primitiveQueryProxy('sphere', [radius], [0, 0, 0, 1]);
+        return this.#assignQuery(this.#sweepHits(copied, proxy), pool, results);
     }
-    sweepSphereClosest(..._args: Parameters<IPhysicsWorld['sweepSphereClosest']>): never {
-        this.assertReady('sweepSphereClosest');
-        return unsupportedBox3D('sweepSphereClosest');
+    sweepSphereClosest(...args: Parameters<IPhysicsWorld['sweepSphereClosest']>): boolean {
+        const [ray, radius, options, out] = args;
+        this.assertCommittedRead('sweepSphereClosest');
+        const copied = copyBox3DRay(ray, options),
+            proxy = primitiveQueryProxy('sphere', [radius], [0, 0, 0, 1]);
+        return this.#assignClosest(this.#sweepHits(copied, proxy), out);
     }
-    sweepCapsule(..._args: Parameters<IPhysicsWorld['sweepCapsule']>): never {
-        this.assertReady('sweepCapsule');
-        return unsupportedBox3D('sweepCapsule');
+    sweepCapsule(...args: Parameters<IPhysicsWorld['sweepCapsule']>): boolean {
+        const [ray, radius, height, q, options, pool, results] = args;
+        results.length = 0;
+        this.assertCommittedRead('sweepCapsule');
+        const copied = copyBox3DRay(ray, options),
+            proxy = primitiveQueryProxy('capsule', [radius, capsuleQueryHalfHeight(height), 1], copyQueryRotation(q));
+        return this.#assignQuery(this.#sweepHits(copied, proxy), pool, results);
     }
-    sweepCapsuleClosest(..._args: Parameters<IPhysicsWorld['sweepCapsuleClosest']>): never {
-        this.assertReady('sweepCapsuleClosest');
-        return unsupportedBox3D('sweepCapsuleClosest');
+    sweepCapsuleClosest(...args: Parameters<IPhysicsWorld['sweepCapsuleClosest']>): boolean {
+        const [ray, radius, height, q, options, out] = args;
+        this.assertCommittedRead('sweepCapsuleClosest');
+        const copied = copyBox3DRay(ray, options),
+            proxy = primitiveQueryProxy('capsule', [radius, capsuleQueryHalfHeight(height), 1], copyQueryRotation(q));
+        return this.#assignClosest(this.#sweepHits(copied, proxy), out);
     }
 }

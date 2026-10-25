@@ -7,6 +7,8 @@
 #include "command_bridge.h"
 #include "query_bridge.h"
 #include "hull_bridge.h"
+#include "joint_bridge.h"
+#include "hinge_bridge.h"
 
 #ifdef __cplusplus
 extern "C" {

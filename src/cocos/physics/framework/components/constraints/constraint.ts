@@ -31,6 +31,7 @@ import { Eventify } from '../../../../core';
 import { IBaseConstraint } from '../../../spec/i-physics-constraint';
 import { selector, createConstraint } from '../../physics-selector';
 import { EConstraintType } from '../../physics-enum';
+import { tryChangeConstraintState, assertConstraintDestroyAllowed } from '../../constraint-state-control';
 
 /**
  * @en
@@ -77,6 +78,7 @@ export class Constraint extends Eventify(Component) {
     }
 
     set connectedBody (v: RigidBody | null) {
+        if (tryChangeConstraintState(this, 'connectedBody', v, () => { this._connectedBody = v; })) return;
         this._connectedBody = v;
         if (!EDITOR_NOT_IN_PREVIEW) {
             if (this._constraint) this._constraint.setConnectedBody(v);
@@ -96,6 +98,7 @@ export class Constraint extends Eventify(Component) {
     }
 
     set enableCollision (v) {
+        if (tryChangeConstraintState(this, 'enableCollision', v, () => { this._enableCollision = v; })) return;
         this._enableCollision = v;
         if (!EDITOR_NOT_IN_PREVIEW) {
             if (this._constraint) this._constraint.setEnableCollision(v);
@@ -123,6 +126,11 @@ export class Constraint extends Eventify(Component) {
     constructor (type: EConstraintType) {
         super();
         this.TYPE = type;
+    }
+
+    public destroy (): boolean {
+        assertConstraintDestroyAllowed(this);
+        return super.destroy();
     }
 
     /// COMPONENT LIFECYCLE ///

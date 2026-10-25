@@ -122,7 +122,7 @@ export class Box3DRigidBody implements IRigidBody {
                 const state = body.state;
                 const vector = (v: readonly number[], offset = 0): Box3DBodyMotionVector =>
                     Object.freeze({ x: v[offset], y: v[offset + 1], z: v[offset + 2] });
-                return Object.freeze({
+                const snapshot: Box3DBodyMotion = Object.freeze({
                     position: vector(transform),
                     rotation: Object.freeze({ x: transform[3], y: transform[4], z: transform[5], w: transform[6] }),
                     worldCOM: vector(state.worldCenter),
@@ -133,7 +133,8 @@ export class Box3DRigidBody implements IRigidBody {
                     enabled: state.enabled,
                     type: state.type,
                     massPending: state.massPending,
-                }) satisfies Box3DBodyMotion;
+                });
+                return snapshot;
             });
         } catch (error) {
             try {

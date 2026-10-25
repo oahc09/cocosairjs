@@ -77,7 +77,6 @@ class Box3DPrimitiveShape {
         this.#world().assertComponentConfiguration('Collider initialize');
         if (this.#shared) throw worldError('AIR_E_BOX3D_CONFIG', 'shape initialize', 'Already initialized.');
         const prepared = this.#world().prepareInitialShapeMaterial(this, value, (asset) => {
-            if (value.needCollisionEvent || value.needTriggerEvent) unsupportedBox3D('collider event listeners (T15)');
             const center = bodyVector(value.center, 'center');
             const dimensions =
                 this.#kind === 'box'
@@ -225,10 +224,9 @@ class Box3DPrimitiveShape {
     }
     updateEventListener(): void {
         if (this.#shared?.cleanupOnly && !this.collider.needCollisionEvent && !this.collider.needTriggerEvent) return;
-        this.assertConfiguration('updateEventListener');
-        if (this.collider.needCollisionEvent || this.collider.needTriggerEvent)
-            unsupportedBox3D('collider event listeners (T15)');
-        // Every native shape is configured with real native event flags disabled at creation.
+        this.#body.assertListenerUpdate('updateEventListener');
+        // Both convex sensor participants are enabled at creation. Dispatch uses
+        // copied listener state; listener changes never toggle native participation.
     }
     getAABB(out: AABB): void {
         const value = primitiveBounds(this.#geometry!, this.#body.copiedTransform());

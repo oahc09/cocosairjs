@@ -12,13 +12,13 @@
   "files": [
     {
       "path": "src/air/physics/box3d/binding/facade.d.mts",
-      "bytes": 22233,
-      "sha256": "d7774738fdb78f5ee838328cc1041f82f24cefc7cf677fb9a9d785d918c29e47"
+      "bytes": 28625,
+      "sha256": "c9f6227116700d7b472825fb86cfe5186265ab76cb2a00f6e6e32a4a70e88236"
     },
     {
       "path": "src/air/physics/box3d/binding/facade.mjs",
-      "bytes": 88274,
-      "sha256": "1d910108b5a7570250bed070bf3529fbf2153346e7cbc8dd0f7cb54faca95ef4"
+      "bytes": 114938,
+      "sha256": "4087eb4c0e1928a027db5b73379f2fc42dbed7c1c7a1111249a3dd78ed8c5060"
     },
     {
       "path": "tools/physics/box3d/.gitignore",
@@ -27,8 +27,8 @@
     },
     {
       "path": "tools/physics/box3d/CMakeLists.txt",
-      "bytes": 9856,
-      "sha256": "739c1cac7e02b395cf0510a3f4e12233f3f02d99641a4f0e5ef203940d97819c"
+      "bytes": 10139,
+      "sha256": "4cda9c0263b572834ee67ca66d0dcc30f6557d87103154e7e1f0bd4a361cfd7a"
     },
     {
       "path": "tools/physics/box3d/README.md",
@@ -47,13 +47,13 @@
     },
     {
       "path": "tools/physics/box3d/abi-schema.json",
-      "bytes": 28882,
-      "sha256": "96c2e532652d1f1d76f62852b2b269cebe37e30ba4615f47c80b9ed92844ba63"
+      "bytes": 38561,
+      "sha256": "d0a917e85e800605295296ca0820fbcb54847ea5d00f6bfc296a3ce527243551"
     },
     {
       "path": "tools/physics/box3d/audit-artifacts.mjs",
-      "bytes": 30174,
-      "sha256": "67c6b0ffc22e821609f32be7dc10eac4ca3372545c82306c00df09dbd6f745e0"
+      "bytes": 33613,
+      "sha256": "0bf5da9472b1c50eaaa267b253bd35872387139424c3233ea9b1ddc1827119da"
     },
     {
       "path": "tools/physics/box3d/audit-geometry-samples.mjs",
@@ -66,9 +66,14 @@
       "sha256": "09a6d76f01dd6b0cb346ceb8aa7ebc1783bc98b4325fedad90c2e9ad9bb87523"
     },
     {
+      "path": "tools/physics/box3d/build-ready.mjs",
+      "bytes": 2334,
+      "sha256": "00d78384b362861b8e622c65029e15d8bfb187aa33fd63a2a6430252fea340e9"
+    },
+    {
       "path": "tools/physics/box3d/build.mjs",
-      "bytes": 25967,
-      "sha256": "1e6ca6c03a240affe435fe5ceff9063d02aa2db941e6789cf01312f8c3768eff"
+      "bytes": 29206,
+      "sha256": "0f3959c71214d4c0b0f291759dbc69770787f444d13c4d988b630a3ae52ca687"
     },
     {
       "path": "tools/physics/box3d/capsule-bridge-contract.md",
@@ -77,8 +82,8 @@
     },
     {
       "path": "tools/physics/box3d/command-source-controls.mjs",
-      "bytes": 5477,
-      "sha256": "4630a561d54c0558a7767baf1774df66ab7c7c871ef616960654ff497a9e616c"
+      "bytes": 5918,
+      "sha256": "8b285a30678ab9d83c8a468b8f06d775defc6959dd3774ffcb116fb7a0d9a8c8"
     },
     {
       "path": "tools/physics/box3d/compare-geometry-builds.mjs",
@@ -94,6 +99,21 @@
       "path": "tools/physics/box3d/compare-wasm-builds.mjs",
       "bytes": 5034,
       "sha256": "1b219633e3f0e77c670c8c6393128c39170ee13b2a08ab5911ef14fd2dc03846"
+    },
+    {
+      "path": "tools/physics/box3d/convex-query-contract.md",
+      "bytes": 4452,
+      "sha256": "82d336e162676d747cbcc231e1c89d19f67faf8006aa36382dd3bebddb16cb0e"
+    },
+    {
+      "path": "tools/physics/box3d/deliveries/p2p-contact-217.json",
+      "bytes": 2414,
+      "sha256": "0d733f842617ef60aef591db3f9e882b05fafbbe05c2cb2236d5257234aefdd3"
+    },
+    {
+      "path": "tools/physics/box3d/deliveries/query-runtime-218.json",
+      "bytes": 2149,
+      "sha256": "16d5a7c1832c76744257252ae9dd6b476c79f7d96279afac8cf06313c6d00e5a"
     },
     {
       "path": "tools/physics/box3d/evidence/body-checkpoint-20261022-k/archive-metadata.json",
@@ -3206,6 +3226,96 @@
       "sha256": "0b3f26b563326da098b37aa65ff3c3a2f0900221fb63b14dc05da3a1e07744fe"
     },
     {
+      "path": "tools/physics/box3d/evidence/sweep-source-preflight-20261024-a/command.exit.txt",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/sweep-source-preflight-20261024-a/command.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/sweep-source-preflight-20261024-a/command.stdout.txt",
+      "bytes": 891,
+      "sha256": "cef39185024553f7075f0339402f972d63c039a86b40f5bb05555ef20d809964"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/sweep-source-preflight-20261024-a/query.exit.txt",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/sweep-source-preflight-20261024-a/query.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/sweep-source-preflight-20261024-a/query.stdout.txt",
+      "bytes": 103,
+      "sha256": "4fb19df1bb80fa2c50ad7c1b85ceef92ac31d1e8bdc8b28212b0955c6c6a92a8"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/sweep-source-preflight-20261024-a/semantic.exit.txt",
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/sweep-source-preflight-20261024-a/semantic.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/sweep-source-preflight-20261024-a/semantic.stdout.txt",
+      "bytes": 191,
+      "sha256": "cb51112c5a2dcbff62b6fcd27e484ea67a2bed1c7e001ac419c9fe1cd0a96630"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/sweep-source-preflight-20261024-a/typescript-syntax.exit.txt",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/sweep-source-preflight-20261024-a/typescript-syntax.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/sweep-source-preflight-20261024-a/typescript-syntax.stdout.txt",
+      "bytes": 296,
+      "sha256": "e3baf7e8974035ac35ac313e702b3264034ce23755b9e06a2f2b825a7e7f8023"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/sweep-source-preflight-20261024-b/semantic.exit.txt",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/sweep-source-preflight-20261024-b/semantic.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/sweep-source-preflight-20261024-b/semantic.stdout.txt",
+      "bytes": 63,
+      "sha256": "34f6d136039db76ec53d1175b91a382934bfa3ecabf7ee07bcbeedeb48c34a9a"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/sweep-source-preflight-20261024-c/semantic.exit.txt",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/sweep-source-preflight-20261024-c/semantic.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tools/physics/box3d/evidence/sweep-source-preflight-20261024-c/semantic.stdout.txt",
+      "bytes": 65,
+      "sha256": "c9c1cf540f1259b076eef88e7747c7afb79c01d0647875d4d5e7003a6cb4f72a"
+    },
+    {
       "path": "tools/physics/box3d/evidence/wasm-c-increment-checks.json",
       "bytes": 3385,
       "sha256": "5b1b5d958789e0cb22e3c6d9507b723cb7bf7040eff87e9f52b96ace30148cf1"
@@ -4662,8 +4772,8 @@
     },
     {
       "path": "tools/physics/box3d/exports.json",
-      "bytes": 1546,
-      "sha256": "4069ba0338b4cceae8a24816a87173e273eb1084325416ca099a67f8cf206ac8"
+      "bytes": 2072,
+      "sha256": "25d204129b3b6763161db10a652736f77bdc443099e0304f4df2d0e1303e88cc"
     },
     {
       "path": "tools/physics/box3d/filter-bridge-contract.md",
@@ -4702,8 +4812,8 @@
     },
     {
       "path": "tools/physics/box3d/motion-source-controls.mjs",
-      "bytes": 5013,
-      "sha256": "c3d13fd204cd2fd237554133fa9b8142b17fe5b5734439fba561c154ac4d534c"
+      "bytes": 5454,
+      "sha256": "1b4d7d2e04953d4818dc1cf21e64272e22ca491d2925a3b09c7c236afd8d300f"
     },
     {
       "path": "tools/physics/box3d/native-geometry-ubsan.mjs",
@@ -4712,13 +4822,13 @@
     },
     {
       "path": "tools/physics/box3d/native/air_box3d.c",
-      "bytes": 10167,
-      "sha256": "28e6e26ff7d3dc3db3fa7a257510f96da90e04e1b677e8a84da23f0c3d145468"
+      "bytes": 10361,
+      "sha256": "148bb4e0ed893ee75e862d2ce370176ebe33a562902dad95ddad8c2afbdf18d3"
     },
     {
       "path": "tools/physics/box3d/native/air_box3d.h",
-      "bytes": 3722,
-      "sha256": "0c7c4b98d1c8fdfe50ba3b2e95732dd1801494b6ea95328f705296b191398660"
+      "bytes": 3774,
+      "sha256": "48e0af8a46c17ec1f1c99d1cbd57195a7804af6cc76e5fb4d510fa20a813beaa"
     },
     {
       "path": "tools/physics/box3d/native/body_contract.c",
@@ -4727,8 +4837,8 @@
     },
     {
       "path": "tools/physics/box3d/native/body_control.c",
-      "bytes": 21885,
-      "sha256": "f2d2532657a8dd6962c957efb675c3a7456c107863be5e8ee7b01a242b8c6b34"
+      "bytes": 22625,
+      "sha256": "3f9c4f21a7eb42ae623547e1275f2b056f7a143e495542153f2620680366cb61"
     },
     {
       "path": "tools/physics/box3d/native/body_control.h",
@@ -4777,8 +4887,8 @@
     },
     {
       "path": "tools/physics/box3d/native/geometry.c",
-      "bytes": 2492,
-      "sha256": "0dcb3f74fa2ee34fba5f716735cba2d83f07175db55d3e344d88e6fa55ab3825"
+      "bytes": 2922,
+      "sha256": "3bbef114392b4a1764c53ef6eaaef5788154869aba5a99c847158eea585ff629"
     },
     {
       "path": "tools/physics/box3d/native/geometry_contract.c",
@@ -4789,6 +4899,21 @@
       "path": "tools/physics/box3d/native/geometry_layout_probe.c",
       "bytes": 706,
       "sha256": "f9ec8aa5e7a2f45f6e03f8ff227d376adfdab59b0a11c6b2c418a86e0c9eabab"
+    },
+    {
+      "path": "tools/physics/box3d/native/hinge_bridge.c",
+      "bytes": 8672,
+      "sha256": "f54a41c0f0588c89bab2b987afb3b7e9d64a486da54d5cb9f5d369684a25a7bc"
+    },
+    {
+      "path": "tools/physics/box3d/native/hinge_bridge.h",
+      "bytes": 2004,
+      "sha256": "af53664a0172b4a4ea2d832791e8e487b6d920b8f6d2fdc8eb6443473e112b72"
+    },
+    {
+      "path": "tools/physics/box3d/native/hinge_contract.c",
+      "bytes": 51132,
+      "sha256": "d2079768c6b59b208d7fd413f6213802f1fce16916a12702c2a8a027bf80d817"
     },
     {
       "path": "tools/physics/box3d/native/hull_bridge.c",
@@ -4816,9 +4941,39 @@
       "sha256": "8a3f521f857c76b0058ca27c46665e4b0cf08d1cd9f520df61b60207bf7b4387"
     },
     {
+      "path": "tools/physics/box3d/native/joint_bridge.c",
+      "bytes": 7839,
+      "sha256": "f6af8964101dc50a91da54c7687cdd03032cf2f22c8253d1dcc7604028e7a313"
+    },
+    {
+      "path": "tools/physics/box3d/native/joint_bridge.h",
+      "bytes": 893,
+      "sha256": "45275018559008596dd4027b3f3333bbb2491bd9893b530186180f09a1b7e39b"
+    },
+    {
+      "path": "tools/physics/box3d/native/joint_contract.c",
+      "bytes": 30061,
+      "sha256": "1922c2474a6e6a78b2fc8309ba584febcacbe4e7e549e092244e09907d205322"
+    },
+    {
       "path": "tools/physics/box3d/native/layout_probe.c",
       "bytes": 1551,
       "sha256": "4a81e1bf4cc3b0545e96e3b0dff9d5d4ea8857cbaafa63115bfd20d2511a5951"
+    },
+    {
+      "path": "tools/physics/box3d/native/mesh_bridge.c",
+      "bytes": 13616,
+      "sha256": "64397d5c3065f9bdc6e5311882839d6be045fe3a5d019e32ca3ffc073630503d"
+    },
+    {
+      "path": "tools/physics/box3d/native/mesh_bridge.h",
+      "bytes": 2117,
+      "sha256": "3d823aa2b7a51ab24237c49e6c2e83abe22ea1c1f4527b3cc5970902615707aa"
+    },
+    {
+      "path": "tools/physics/box3d/native/mesh_contract.c",
+      "bytes": 6611,
+      "sha256": "5a9d2bf644033fca15c4bfb86cff8f64feb467a6a68f9cb8defdc0b1281becbf"
     },
     {
       "path": "tools/physics/box3d/native/motion_bridge.c",
@@ -4836,14 +4991,29 @@
       "sha256": "30d1ca6ed0e1f8b1c47b0b1c2c2ce4cd89cdd6be68efad5037c926d7a849e046"
     },
     {
+      "path": "tools/physics/box3d/native/p2p_bridge.c",
+      "bytes": 4718,
+      "sha256": "c13ad886533af73070181fcad19fed411abde08b828902a1b512e97d7e3f0746"
+    },
+    {
+      "path": "tools/physics/box3d/native/p2p_bridge.h",
+      "bytes": 1168,
+      "sha256": "6393649fecf83462454e2222f1e3f6e49b75556140841d1c12dc1519adc80a64"
+    },
+    {
+      "path": "tools/physics/box3d/native/p2p_contract.c",
+      "bytes": 34097,
+      "sha256": "b1d9343ed984fa4ef6bcbb9821e0a99d3fed47e8324ade0bcddf67d1475d4f28"
+    },
+    {
       "path": "tools/physics/box3d/native/query_bridge.c",
-      "bytes": 5017,
-      "sha256": "7b7b3ffc79d7fb87b50c1ffff4dd5e494be423f36352cad1ffd9ea6cc63bd2d8"
+      "bytes": 10239,
+      "sha256": "3cb7d60f86bcf5fb136d5f5e1ea0682c09ed776c80fd3477e3a26573e1c1cef2"
     },
     {
       "path": "tools/physics/box3d/native/query_bridge.h",
-      "bytes": 838,
-      "sha256": "bb4b30479715f0ecc8ba610e36cc08011777a5b1d42f1ea6db18b4e43ac3a643"
+      "bytes": 1678,
+      "sha256": "4b024976ee6449f0294d824d94757ace0aa0cc02d32bc9edc03baa495b0cdc14"
     },
     {
       "path": "tools/physics/box3d/native/query_contract.c",
@@ -4867,8 +5037,8 @@
     },
     {
       "path": "tools/physics/box3d/native/world_bridge.c",
-      "bytes": 14189,
-      "sha256": "1ed0151ed61b927f95fb9161110b6ec35131a85699e15dc2bec3e4189926b86b"
+      "bytes": 15437,
+      "sha256": "cdab0a3efe4752f3d2dd3fab503f2dcddb838d7f7d6a07fedfd5112a3acdc45c"
     },
     {
       "path": "tools/physics/box3d/native/world_bridge.h",
@@ -4936,6 +5106,11 @@
       "sha256": "7c8ebf160667daa5dd1dc9624dc30457f297dfe8e75ab2011baabc1631b70018"
     },
     {
+      "path": "tools/physics/box3d/static-mesh-bridge-contract.md",
+      "bytes": 4112,
+      "sha256": "3fcd44c5ad59dd9840aae1466aacf0ca4bc8268670ae8879883003e9a356b84a"
+    },
+    {
       "path": "tools/physics/box3d/verify-sources.mjs",
       "bytes": 3268,
       "sha256": "f18ad0dc623b6b83b8a46a2abbf34a29e0400d127a85f3fc16b966493b97e171"
@@ -4947,8 +5122,8 @@
     },
     {
       "path": "tools/physics/box3d/versions.lock.json",
-      "bytes": 5760,
-      "sha256": "7c5674716c7ade3830ee073fdf2a4523c3909ed232de98f8c1d0d7c2f5c3033d"
+      "bytes": 5796,
+      "sha256": "3f57d726c36b502ced8ea105e2acffbddc7e964596235846fddd4b63506843be"
     },
     {
       "path": "tools/physics/box3d/wasm-body-contract.mjs",
@@ -4977,8 +5152,13 @@
     },
     {
       "path": "tools/physics/box3d/wasm-geometry-contract.mjs",
-      "bytes": 18887,
-      "sha256": "4ce3094d9919f3bc01bbd2eadc7f0811ca75a6e5e2b063de7db77955187f9348"
+      "bytes": 19068,
+      "sha256": "adcce9d9ec773052407b49f953030a0cef2f8c01a7dd391c6c26a471d990c0a8"
+    },
+    {
+      "path": "tools/physics/box3d/wasm-mesh-contract.mjs",
+      "bytes": 6850,
+      "sha256": "173d868453cf74613e932dc8ee6184a0eb73589dd2b1586df3da250618b2ded1"
     },
     {
       "path": "tools/physics/box3d/wasm-motion-contract.mjs",

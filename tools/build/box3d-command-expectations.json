@@ -186,7 +186,21 @@
       "tools/physics/box3d/native/hull_legacy_fingerprint.c",
       "tools/physics/box3d/hull-bridge-contract.md",
       "tools/physics/box3d/hull-legacy-contract.mjs",
-      "tools/physics/box3d/patches/checked-hull-cooking.patch"
+      "tools/physics/box3d/patches/checked-hull-cooking.patch",
+      "tools/physics/box3d/native/joint_bridge.c",
+      "tools/physics/box3d/native/joint_bridge.h",
+      "tools/physics/box3d/native/joint_contract.c",
+      "tools/physics/box3d/native/hinge_bridge.c",
+      "tools/physics/box3d/native/hinge_bridge.h",
+      "tools/physics/box3d/native/hinge_contract.c",
+      "tools/physics/box3d/native/p2p_bridge.c",
+      "tools/physics/box3d/native/p2p_bridge.h",
+      "tools/physics/box3d/native/p2p_contract.c",
+      "tools/physics/box3d/native/mesh_bridge.c",
+      "tools/physics/box3d/native/mesh_bridge.h",
+      "tools/physics/box3d/native/mesh_contract.c",
+      "tools/physics/box3d/wasm-mesh-contract.mjs",
+      "tools/physics/box3d/static-mesh-bridge-contract.md"
     ],
     "compileUnits": [
       "staged-core/src/aabb.c",
@@ -262,7 +276,15 @@
       "tools/physics/box3d/native/hull_bridge.c",
       "tools/physics/box3d/native/hull_contract.c",
       "tools/physics/box3d/native/hull_core_contract.c",
-      "tools/physics/box3d/native/hull_legacy_fingerprint.c"
+      "tools/physics/box3d/native/hull_legacy_fingerprint.c",
+      "tools/physics/box3d/native/joint_bridge.c",
+      "tools/physics/box3d/native/joint_contract.c",
+      "tools/physics/box3d/native/hinge_bridge.c",
+      "tools/physics/box3d/native/hinge_contract.c",
+      "tools/physics/box3d/native/p2p_bridge.c",
+      "tools/physics/box3d/native/p2p_contract.c",
+      "tools/physics/box3d/native/mesh_bridge.c",
+      "tools/physics/box3d/native/mesh_contract.c"
     ],
     "evidence": [
       "build-receipt.json",
@@ -307,9 +329,18 @@
       "hull-legacy-baseline/comparison.raw.json",
       "hull-legacy-baseline/compile_commands.json",
       "hull-legacy-baseline/baseline.raw.txt",
-      "hull-legacy-baseline/patched.raw.txt"
+      "hull-legacy-baseline/patched.raw.txt",
+      "native-joint-contract.raw.json",
+      "air_box3d_joint_contract.cjs",
+      "native-hinge-contract.raw.json",
+      "air_box3d_hinge_contract.cjs",
+      "native-p2p-contract.raw.json",
+      "air_box3d_p2p_contract.cjs",
+      "native-mesh-contract.raw.json",
+      "air_box3d_mesh_contract.cjs",
+      "wasm-mesh-contract.raw.json"
     ],
-    "commands": 28
+    "commands": 33
   },
   "queryExtension": {
     "status": "ADDITIVE_SOURCE_GENERATION_NOT_FORMAL_ACCEPTANCE",
@@ -363,6 +394,34 @@
       "legacyComparison": "tools/physics/box3d/hull-legacy-contract.mjs"
     },
     "formalC14": "NOT_RUN",
+    "formal2128": "NOT_RUN",
+    "nineGates": "NOT_RUN"
+  },
+  "fixedExtension": {
+    "status": "ADDITIVE_FIXED_SOURCE_NOT_FORMAL_ACCEPTANCE",
+    "inputs": [
+      "tools/physics/box3d/native/joint_bridge.c",
+      "tools/physics/box3d/native/joint_bridge.h",
+      "tools/physics/box3d/native/joint_contract.c"
+    ],
+    "compileUnits": ["tools/physics/box3d/native/joint_bridge.c", "tools/physics/box3d/native/joint_contract.c"],
+    "evidence": ["native-joint-contract.raw.json", "air_box3d_joint_contract.cjs"],
+    "commands": ["air_box3d_joint_contract.cjs"],
+    "formalT17": "NOT_RUN",
+    "formal2128": "NOT_RUN",
+    "nineGates": "NOT_RUN"
+  },
+  "hingeExtension": {
+    "status": "ADDITIVE_HINGE_SOURCE_NOT_FORMAL_ACCEPTANCE",
+    "inputs": [
+      "tools/physics/box3d/native/hinge_bridge.c",
+      "tools/physics/box3d/native/hinge_bridge.h",
+      "tools/physics/box3d/native/hinge_contract.c"
+    ],
+    "compileUnits": ["tools/physics/box3d/native/hinge_bridge.c", "tools/physics/box3d/native/hinge_contract.c"],
+    "evidence": ["native-hinge-contract.raw.json", "air_box3d_hinge_contract.cjs"],
+    "commands": ["air_box3d_hinge_contract.cjs"],
+    "formalT17": "NOT_RUN",
     "formal2128": "NOT_RUN",
     "nineGates": "NOT_RUN"
   }

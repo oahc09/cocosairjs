@@ -74,7 +74,7 @@ export * from './ui-glyph-text';
 export * from './ui-glyph-icons';
 export * from './ui-typewriter';
 
-export { registerBox3DBeforeStep, readBox3DBodyMotion } from './box3d-controls';
+export { registerBox3DBeforeStep, readBox3DBodyMotion, readBox3DConstraintState } from './box3d-controls';
 export type {
     Box3DBeforeStepContext,
     Box3DBeforeStepHandle,
@@ -83,3 +83,5 @@ export type {
     Box3DBodyMotionVector,
     Box3DBodyMotionRotation,
 } from './box3d-controls';
+
+export * from './box3d-queries';

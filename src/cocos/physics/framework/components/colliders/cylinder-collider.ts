@@ -22,6 +22,8 @@
  THE SOFTWARE.
 */
 
+import { assertMutationAllowed } from '../../../../core/data/mutation-guard';
+import { selector } from '../../physics-selector';
 import {
     ccclass,
     help,
@@ -60,7 +62,14 @@ export class CylinderCollider extends Collider {
     }
 
     public set radius (value) {
+        if (selector.id === 'box3d') assertMutationAllowed(this, 'CylinderCollider.radius');
         if (this._radius === value) return;
+        if (selector.id === 'box3d' && this._shape) {
+            const next = Math.abs(value);
+            this.shape.setRadius(next);
+            this._radius = next;
+            return;
+        }
         this._radius = Math.abs(value);
         if (this._shape) {
             this.shape.setRadius(value);
@@ -79,7 +88,14 @@ export class CylinderCollider extends Collider {
     }
 
     public set height (value) {
+        if (selector.id === 'box3d') assertMutationAllowed(this, 'CylinderCollider.height');
         if (this._height === value) return;
+        if (selector.id === 'box3d' && this._shape) {
+            const next = Math.abs(value);
+            this.shape.setHeight(next);
+            this._height = next;
+            return;
+        }
         this._height = Math.abs(value);
         if (this._shape) {
             this.shape.setHeight(value);
@@ -99,7 +115,13 @@ export class CylinderCollider extends Collider {
     }
 
     public set direction (value: EAxisDirection) {
+        if (selector.id === 'box3d') assertMutationAllowed(this, 'CylinderCollider.direction');
         if (this._direction === value) return;
+        if (selector.id === 'box3d' && this._shape) {
+            this.shape.setDirection(value);
+            this._direction = value;
+            return;
+        }
         if (value < EAxisDirection.X_AXIS || value > EAxisDirection.Z_AXIS) return;
         this._direction = value;
         if (this._shape) {

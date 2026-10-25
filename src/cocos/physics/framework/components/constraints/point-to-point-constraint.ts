@@ -32,6 +32,7 @@ import {
 } from 'cc.decorator';
 import { EDITOR_NOT_IN_PREVIEW } from 'internal:constants';
 import { Constraint } from './constraint';
+import { tryChangeConstraintState } from '../../constraint-state-control';
 import { Vec3, IVec3Like } from '../../../../core';
 import { EConstraintType } from '../../physics-enum';
 import { IPointToPointConstraint } from '../../../spec/i-physics-constraint';
@@ -59,6 +60,7 @@ export class PointToPointConstraint extends Constraint {
     }
 
     set pivotA (v: IVec3Like) {
+        if (tryChangeConstraintState(this, 'pivotA', v, (admitted) => Vec3.copy(this._pivotA, admitted as IVec3Like))) return;
         Vec3.copy(this._pivotA, v);
         if (!EDITOR_NOT_IN_PREVIEW) {
             this.constraint.setPivotA(this._pivotA);
@@ -78,6 +80,7 @@ export class PointToPointConstraint extends Constraint {
     }
 
     set pivotB (v: IVec3Like) {
+        if (tryChangeConstraintState(this, 'pivotB', v, (admitted) => Vec3.copy(this._pivotB, admitted as IVec3Like))) return;
         Vec3.copy(this._pivotB, v);
         if (!EDITOR_NOT_IN_PREVIEW) {
             this.constraint.setPivotB(this._pivotB);

@@ -23,7 +23,7 @@ THE SOFTWARE.
 // Internal, limited M1 foundation. This is not the Cocos physics adapter.
 const CORE_SHA = 'efca0c184d40fd6a82016983f1601c4d23965867';
 const BINDING_BASE_SHA = '5d5a3af049cccd9948b2b55bac4342414af0ef64';
-const SCHEMA_SHA256 = '96c2e532652d1f1d76f62852b2b269cebe37e30ba4615f47c80b9ed92844ba63';
+const SCHEMA_SHA256 = 'd0a917e85e800605295296ca0820fbcb54847ea5d00f6bfc296a3ce527243551';
 const commandIsArray = Array.isArray;
 const commandKeys = Object.keys;
 const PATCH_CHAIN_SHA256 = '4c9d057fe6d7403f6f2c7672c4a7abe38041d845942540a6b5c5abbc6f4bc45c';
@@ -101,6 +101,7 @@ export function createBox3DBinding(module, expected) {
     const handles = new WeakMap();
     const worldStates = new WeakMap();
     const snapshotHandles = new WeakMap();
+    const meshLeases = new WeakMap();
     const freeze = (value) => {
         if (value && typeof value === 'object' && !Object.isFrozen(value)) {
             for (const child of Object.values(value)) freeze(child);
@@ -124,6 +125,69 @@ export function createBox3DBinding(module, expected) {
         } finally {
             module._free(ptr);
         }
+    }
+    function proxyQuery(world, origin, translation, proxy, options) {
+        const id = worldId(world),
+            cast = translation !== null;
+        const start = vector(origin, 3, 'origin').map(Math.fround);
+        const delta = cast ? vector(translation, 3, 'translation').map(Math.fround) : [0, 0, 0];
+        if (!proxy || !Array.isArray(proxy.points) || proxy.points.length < 1 || proxy.points.length > 128)
+            throw failure('AIR_E_BOX3D_ARGUMENT', 'Convex query needs 1..128 copied points');
+        const originalRadius = finite(proxy.radius, 'radius');
+        const radius = Math.fround(originalRadius);
+        if (originalRadius < 0) throw failure('AIR_E_BOX3D_ARGUMENT', 'Query radius cannot be negative');
+        const points = proxy.points.map((p) => vector(p, 3, 'query point').map(Math.fround));
+        if (!options || typeof options !== 'object') throw failure('AIR_E_BOX3D_ARGUMENT', 'Query options required');
+        const group = filterBits(options.group, 'group'),
+            mask = filterBits(options.mask, 'mask');
+        const queryTrigger = boolean(options.queryTrigger, 'queryTrigger');
+        for (let a = 0; a < 3; ++a) {
+            const end = Math.fround(start[a] + delta[a]);
+            finite(end, 'query endpoint');
+            for (const p of points)
+                for (const sign of [-1, 1]) {
+                    finite(Math.fround(p[a] + sign * radius), 'query extent');
+                    finite(Math.fround(Math.fround(start[a] + p[a]) + sign * radius), 'query start bound');
+                    finite(Math.fround(Math.fround(end + p[a]) + sign * radius), 'query end bound');
+                }
+        }
+        if (group === 0 || mask === 0 || (cast && delta.every((v) => v === 0))) return Object.freeze([]);
+        const query = cast ? module._air_b3_shape_query : module._air_b3_overlap_query;
+        if (typeof query !== 'function') throw failure('AIR_E_BOX3D_ABI', 'Convex query export missing');
+        return withBuffer(points.length * 12, (pointsPtr) => {
+            module.HEAPF32.set(points.flat(), pointsPtr >>> 2);
+            module.HEAPF32.set(cast ? [...start, ...delta] : start, input >>> 2);
+            const run = (ptr, words) =>
+                query(id, input, pointsPtr, points.length, radius, group, mask, queryTrigger, ptr, words, output);
+            nativeStatus(run(0, 0));
+            const count = module.HEAPU32[output >>> 2],
+                stride = cast ? 11 : 2;
+            if (!count) return Object.freeze([]);
+            const words = count * stride;
+            return withBuffer(words * 4, (ptr) => {
+                nativeStatus(run(ptr, words));
+                if (module.HEAPU32[output >>> 2] !== count)
+                    throw failure('AIR_E_BOX3D_ABI', 'Query count changed during synchronous read');
+                const data = module.HEAPU32.slice(ptr >>> 2, (ptr >>> 2) + words);
+                const floats = new Float32Array(data.buffer);
+                return freeze(
+                    Array.from({ length: count }, (_, i) => {
+                        const at = i * stride,
+                            shape = { low: data[at], high: data[at + 1] };
+                        return cast
+                            ? {
+                                  shape,
+                                  point: Array.from(floats.slice(at + 2, at + 5)),
+                                  normal: Array.from(floats.slice(at + 5, at + 8)),
+                                  fraction: floats[at + 8],
+                                  triangleIndex: data[at + 9] | 0,
+                                  childIndex: data[at + 10] | 0,
+                              }
+                            : { shape };
+                    }),
+                );
+            });
+        });
     }
     function transforms(world, bodies) {
         const worldNative = worldId(world);
@@ -203,6 +267,19 @@ export function createBox3DBinding(module, expected) {
         const sensorEnds = Array.from({ length: counts[5] }, sensor);
         r.done();
         return { bodyMoves, contactBegins, contactEnds, contactHits, sensorBegins, sensorEnds };
+    }
+    function readJointEvents(world) {
+        const wid = worldId(world);
+        const bytes = copyWire(
+            (out) => module._air_b3_joint_event_size(wid, out),
+            (out, cap) => module._air_b3_joint_events(wid, out, cap),
+        );
+        const r = reader(bytes),
+            count = r.u();
+        if (count > (bytes.length - 4) / 12) throw failure('AIR_E_BOX3D_ABI', 'Invalid joint event count');
+        const events = Array.from({ length: count }, () => ({ joint: r.id(), valid: Boolean(r.u()) }));
+        r.done();
+        return events;
     }
     function readBodyContacts(world, body) {
         const wid = worldId(world);
@@ -364,6 +441,7 @@ export function createBox3DBinding(module, expected) {
             worldId: worldId(world),
             stepIndex: state.step,
             ...events,
+            jointThresholdEvents: readJointEvents(world),
             bodyPosesBefore: beforeRows,
             bodyPosesAfter: afterRows,
             contactsOfOwnedBodies: [...contacts.values()],
@@ -420,7 +498,8 @@ export function createBox3DBinding(module, expected) {
             item.kind !== kind ||
             item.destroyed ||
             !worlds.has(item.world) ||
-            (item.body && handles.get(item.body).destroyed)
+            (item.body && handles.get(item.body).destroyed) ||
+            (item.bodyB && handles.get(item.bodyB).destroyed)
         ) {
             throw failure('AIR_E_BOX3D_DISPOSED', `${kind} is foreign or disposed`);
         }
@@ -510,7 +589,7 @@ export function createBox3DBinding(module, expected) {
             }
         });
     }
-    function mutatingCall(world, action) {
+    function mutatingCall(world, action, preMutationStatuses = null) {
         activeMutation.outcome = undefined;
         let status;
         try {
@@ -520,13 +599,225 @@ export function createBox3DBinding(module, expected) {
             changed(world);
             throw error;
         }
-        activeMutation.outcome = status === 0 ? 'committed' : 'not-mutated';
+        activeMutation.outcome =
+            status === 0
+                ? 'committed'
+                : !preMutationStatuses || preMutationStatuses.includes(status)
+                  ? 'not-mutated'
+                  : undefined;
+        if (status !== 0 && activeMutation.outcome === undefined) changed(world);
         nativeStatus(status);
     }
     function filterBits(value, name) {
         if (!Number.isInteger(value) || value < -2147483648 || value > 4294967295)
             throw failure('AIR_E_BOX3D_ARGUMENT', `${name} must be a signed32 or unsigned32 bitset`);
         return value >>> 0;
+    }
+    function fixedConfig(value) {
+        if (!value || typeof value !== 'object') throw failure('AIR_E_BOX3D_ARGUMENT', 'Fixed configuration required');
+        const collide = boolean(value.collideConnected, 'collideConnected');
+        const rawForce = finite(value.breakForce, 'breakForce');
+        const rawTorque = finite(value.breakTorque, 'breakTorque');
+        const force = Math.fround(rawForce),
+            torque = Math.fround(rawTorque);
+        if (rawForce < 0 || rawTorque < 0)
+            throw failure('AIR_E_BOX3D_ARGUMENT', 'Break thresholds must be nonnegative');
+        return { collide, force, torque };
+    }
+    function hingeConfig(value) {
+        if (!value || typeof value !== 'object') throw failure('AIR_E_BOX3D_ARGUMENT', 'Hinge configuration required');
+        const collide = boolean(value.collideConnected, 'collideConnected');
+        const limit = boolean(value.limitEnabled, 'limitEnabled');
+        const motor = boolean(value.motorEnabled, 'motorEnabled');
+        const lower = finite(value.lowerAngleRadians, 'lower radians'),
+            upper = finite(value.upperAngleRadians, 'upper radians');
+        const speed = finite(value.motorSpeedRadians, 'motor rad/s'),
+            torque = finite(value.maxMotorTorque, 'motor torque');
+        const bound = Math.fround(Math.fround(0.99) * Math.fround(Math.PI));
+        if (lower > upper || lower < -bound || upper > bound || torque < 0)
+            throw failure('AIR_E_BOX3D_ARGUMENT', 'Hinge bounds must be ordered/in range and torque nonnegative');
+        const words = new Uint32Array(7),
+            floats = new Float32Array(words.buffer);
+        words[0] = collide;
+        words[1] = limit;
+        floats[2] = lower;
+        floats[3] = upper;
+        words[4] = motor;
+        floats[5] = speed;
+        floats[6] = torque;
+        return words;
+    }
+    function pointToPointConfig(value) {
+        if (!value || typeof value !== 'object')
+            throw failure('AIR_E_BOX3D_ARGUMENT', 'PointToPoint configuration required');
+        return boolean(value.collideConnected, 'collideConnected');
+    }
+    function pointToPointState(world, joint) {
+        const { wid } = jointOwner(world, joint);
+        nativeStatus(module._air_b3_p2p_state(wid, joint.low, joint.high, output, 25));
+        const r = reader(module.HEAPU8.slice(output, output + 100));
+        const kind = r.u(),
+            bodyA = r.id(),
+            bodyB = r.id(),
+            collide = r.u();
+        const frameA = r.floats(7),
+            frameB = r.floats(7);
+        const spring = r.u(),
+            motor = r.u(),
+            cone = r.u(),
+            twist = r.u(),
+            linearSeparation = r.f();
+        r.done();
+        if (
+            kind !== 3 ||
+            collide > 1 ||
+            spring !== 0 ||
+            motor !== 0 ||
+            cone !== 0 ||
+            twist !== 0 ||
+            ![...frameA, ...frameB, linearSeparation].every(Number.isFinite)
+        )
+            throw failure('AIR_E_BOX3D_ABI', 'Invalid copied PointToPoint state or unexpected angular constraint');
+        return freeze({
+            kind: 'point-to-point',
+            bodyA,
+            bodyB,
+            collideConnected: Boolean(collide),
+            frameA,
+            frameB,
+            springEnabled: false,
+            motorEnabled: false,
+            coneLimitEnabled: false,
+            twistLimitEnabled: false,
+            linearSeparation,
+        });
+    }
+    function hingeState(world, joint) {
+        const { wid } = jointOwner(world, joint);
+        nativeStatus(module._air_b3_hinge_state(wid, joint.low, joint.high, output, 36));
+        const r = reader(module.HEAPU8.slice(output, output + 144));
+        const kind = r.u(),
+            bodyA = r.id(),
+            bodyB = r.id(),
+            collide = r.u();
+        const frameA = r.floats(7),
+            frameB = r.floats(7),
+            limit = r.u();
+        const lowerAngleRadians = r.f(),
+            upperAngleRadians = r.f(),
+            motor = r.u();
+        const motorSpeedRadians = r.f(),
+            maxMotorTorque = r.f(),
+            angleRadians = r.f(),
+            motorTorque = r.f();
+        const force = r.floats(3),
+            torque = r.floats(3),
+            linearSeparation = r.f(),
+            axisAlignmentRadians = r.f();
+        r.done();
+        if (
+            kind !== 2 ||
+            collide > 1 ||
+            limit > 1 ||
+            motor > 1 ||
+            ![
+                ...frameA,
+                ...frameB,
+                lowerAngleRadians,
+                upperAngleRadians,
+                motorSpeedRadians,
+                maxMotorTorque,
+                angleRadians,
+                motorTorque,
+                ...force,
+                ...torque,
+                linearSeparation,
+                axisAlignmentRadians,
+            ].every(Number.isFinite)
+        )
+            throw failure('AIR_E_BOX3D_ABI', 'Invalid copied Hinge state');
+        return freeze({
+            kind: 'hinge',
+            bodyA,
+            bodyB,
+            collideConnected: Boolean(collide),
+            frameA,
+            frameB,
+            limitEnabled: Boolean(limit),
+            lowerAngleRadians,
+            upperAngleRadians,
+            motorEnabled: Boolean(motor),
+            motorSpeedRadians,
+            maxMotorTorque,
+            angleRadians,
+            motorTorque,
+            force,
+            torque,
+            torqueSemantics: freeze({
+                quantity: 'angular-constraint-couple',
+                coordinates: 'world',
+                actsOn: 'B',
+                source: 'current-solver-impulse-cache',
+                timeBasis: 'latest-world-inverse-substep',
+                freshness: 'not-tracked',
+                usableForLoadOrBreak: false,
+            }),
+            linearSeparation,
+            axisAlignmentRadians,
+        });
+    }
+    function jointOwner(world, joint) {
+        const wid = worldId(world),
+            item = handle(joint, 'joint');
+        if (item.world !== world) throw failure('AIR_E_BOX3D_DISPOSED', 'Joint belongs to another world');
+        return { wid, item };
+    }
+    function fixedState(world, joint) {
+        const { wid } = jointOwner(world, joint);
+        nativeStatus(module._air_b3_fixed_state(wid, joint.low, joint.high, output, 30));
+        const r = reader(module.HEAPU8.slice(output, output + 120));
+        const kind = r.u(),
+            bodyA = r.id(),
+            bodyB = r.id(),
+            collide = r.u();
+        const frameA = r.floats(7),
+            frameB = r.floats(7),
+            breakForce = r.f(),
+            breakTorque = r.f();
+        const force = r.floats(3),
+            torque = r.floats(3),
+            linearSeparation = r.f(),
+            angularSeparation = r.f();
+        r.done();
+        if (
+            kind !== 1 ||
+            collide > 1 ||
+            ![
+                ...frameA,
+                ...frameB,
+                breakForce,
+                breakTorque,
+                ...force,
+                ...torque,
+                linearSeparation,
+                angularSeparation,
+            ].every(Number.isFinite)
+        )
+            throw failure('AIR_E_BOX3D_ABI', 'Invalid copied Fixed state');
+        return freeze({
+            kind: 'fixed',
+            bodyA,
+            bodyB,
+            collideConnected: Boolean(collide),
+            frameA,
+            frameB,
+            breakForce,
+            breakTorque,
+            force,
+            torque,
+            linearSeparation,
+            angularSeparation,
+        });
     }
     function shapeOwner(world, shape) {
         const wid = worldId(world),
@@ -1191,6 +1482,40 @@ export function createBox3DBinding(module, expected) {
         bodyState(item.world, body);
         return result;
     }
+    function meshLease(value, requireActive = true) {
+        const item = meshLeases.get(value);
+        if (!item || (requireActive && item.released))
+            throw failure('AIR_E_BOX3D_DISPOSED', 'Mesh resource lease is foreign or released');
+        worldId(item.world);
+        return item;
+    }
+    function newMeshLease(world, low, high) {
+        const lease = Object.freeze({ low, high });
+        meshLeases.set(lease, { world, released: false });
+        return lease;
+    }
+    function meshInput(positions, indices) {
+        if (
+            !positions ||
+            !indices ||
+            !Number.isSafeInteger(positions.length) ||
+            positions.length < 9 ||
+            positions.length % 3 ||
+            positions.length > 0x1fffffff ||
+            !Number.isSafeInteger(indices.length) ||
+            indices.length < 3 ||
+            indices.length % 3 ||
+            indices.length > 0x1fffffff
+        )
+            throw failure('AIR_E_BOX3D_ARGUMENT', 'Mesh requires complete XYZ vertices and triangle indices');
+        const points = Float32Array.from(positions, (v) => finite(v, 'mesh vertex'));
+        const triangles = Int32Array.from(indices, (v) => {
+            if (!Number.isSafeInteger(v) || v < 0 || v >= points.length / 3)
+                throw failure('AIR_E_BOX3D_ARGUMENT', 'Mesh index is outside the complete vertex array');
+            return v;
+        });
+        return { points, triangles };
+    }
     const api = {
         identity: Object.freeze({ ...expected }),
         validateCommandBatch(world, commands, dt, substeps) {
@@ -1204,6 +1529,117 @@ export function createBox3DBinding(module, expected) {
         },
         applyMotionBatch(world, records, dt, substeps) {
             return mutate(() => motionBatch(world, records, dt, substeps, true));
+        },
+        cookStaticMesh(world, positions, indices) {
+            return mutate(() => {
+                const wid = worldId(world);
+                const { points, triangles } = meshInput(positions, indices);
+                return withBuffer(points.byteLength, (pp) =>
+                    withBuffer(triangles.byteLength, (ip) => {
+                        module.HEAPF32.set(points, pp >>> 2);
+                        module.HEAPU32.set(triangles, ip >>> 2);
+                        activeMutation.outcome = undefined;
+                        const status = module._air_b3_mesh_cook(
+                            wid,
+                            pp,
+                            points.length / 3,
+                            points.length,
+                            ip,
+                            triangles.length / 3,
+                            triangles.length,
+                            ids,
+                        );
+                        if (status === 0) activeMutation.outcome = 'committed';
+                        else if ([1, 2, 4, 5, 8, 9].includes(status)) activeMutation.outcome = 'not-mutated';
+                        nativeStatus(status);
+                        return newMeshLease(world, module.HEAPU32[ids >>> 2], module.HEAPU32[(ids >>> 2) + 1]);
+                    }),
+                );
+            });
+        },
+        retainStaticMesh(resource) {
+            return mutate(() => {
+                const item = meshLease(resource);
+                activeMutation.outcome = undefined;
+                const status = module._air_b3_mesh_retain(worldId(item.world), resource.low, resource.high);
+                activeMutation.outcome =
+                    status === 0 ? 'committed' : [1, 4, 9].includes(status) ? 'not-mutated' : undefined;
+                nativeStatus(status);
+                return newMeshLease(item.world, resource.low, resource.high);
+            });
+        },
+        releaseStaticMesh(resource) {
+            return mutate(() => {
+                const known = meshLeases.get(resource);
+                if (!known) throw failure('AIR_E_BOX3D_DISPOSED', 'Mesh resource lease is foreign');
+                if (known.released) return;
+                const item = meshLease(resource);
+                activeMutation.outcome = undefined;
+                const status = module._air_b3_mesh_release(worldId(item.world), resource.low, resource.high);
+                activeMutation.outcome =
+                    status === 0 ? 'committed' : [1, 9].includes(status) ? 'not-mutated' : undefined;
+                nativeStatus(status);
+                item.released = true;
+            });
+        },
+        staticMeshState(resource) {
+            return exclusive(() => {
+                const item = meshLease(resource);
+                nativeStatus(module._air_b3_mesh_state(worldId(item.world), resource.low, resource.high, output));
+                const row = module.HEAPU32.slice(output >>> 2, (output >>> 2) + 6);
+                return Object.freeze({
+                    cacheLeases: row[0],
+                    shapeBorrows: row[1],
+                    vertexCount: row[2],
+                    triangleCount: row[3],
+                    coreMeshBytes: row[4],
+                    worldId: row[5],
+                });
+            });
+        },
+        createStaticMeshShape(body, resource) {
+            return mutate(() => {
+                const item = handle(body, 'body'),
+                    lease = meshLease(resource);
+                if (item.world !== lease.world)
+                    throw failure('AIR_E_BOX3D_DISPOSED', 'Mesh lease belongs to another world');
+                const wid = worldId(item.world);
+                activeMutation.outcome = undefined;
+                let status;
+                try {
+                    status = module._air_b3_mesh_shape_create(
+                        wid,
+                        body.low,
+                        body.high,
+                        resource.low,
+                        resource.high,
+                        ids,
+                    );
+                } catch (error) {
+                    changed(item.world);
+                    throw error;
+                }
+                if (status === 0) {
+                    activeMutation.outcome = 'committed';
+                    changed(item.world);
+                } else if ([1, 2, 4, 5, 8, 9].includes(status)) activeMutation.outcome = 'not-mutated';
+                else changed(item.world);
+                nativeStatus(status);
+                const shape = copiedId(item.world, 'shape', body);
+                bodyState(item.world, body);
+                return shape;
+            });
+        },
+        staticMeshSourceFace(shape, cookedTriangle) {
+            return exclusive(() => {
+                const item = handle(shape, 'shape');
+                if (!Number.isSafeInteger(cookedTriangle) || cookedTriangle < 0 || cookedTriangle > 0x7fffffff)
+                    throw failure('AIR_E_BOX3D_ARGUMENT', 'Cooked triangle must be a nonnegative int32');
+                nativeStatus(
+                    module._air_b3_mesh_face_read(worldId(item.world), shape.low, shape.high, cookedTriangle, output),
+                );
+                return module.HEAPU32[output >>> 2] | 0;
+            });
         },
         createWorld(gravity = [0, -10, 0]) {
             return exclusive(() => {
@@ -1532,6 +1968,154 @@ export function createBox3DBinding(module, expected) {
                 ),
             );
         },
+        createPointToPointJoint(world, bodyA, bodyB, geometry, configuration) {
+            return mutate(() => {
+                const { wid } = bodyOwner(world, bodyA);
+                bodyOwner(world, bodyB);
+                if (bodyA === bodyB) throw failure('AIR_E_BOX3D_ARGUMENT', 'Joint endpoints must differ');
+                if (!geometry || typeof geometry !== 'object')
+                    throw failure('AIR_E_BOX3D_ARGUMENT', 'PointToPoint geometry required');
+                const ga = vector(geometry.pivotA, 3, 'pivotA'),
+                    gb = vector(geometry.pivotB, 3, 'pivotB');
+                const auto = boolean(geometry.autoPivotB, 'autoPivotB'),
+                    collide = pointToPointConfig(configuration);
+                if (ga.length !== 3 || gb.length !== 3)
+                    throw failure('AIR_E_BOX3D_ARGUMENT', 'PointToPoint vectors must copy exactly three components');
+                module.HEAPF32.set([...ga, ...gb], input >>> 2);
+                mutatingCall(
+                    world,
+                    () =>
+                        module._air_b3_p2p_create(
+                            wid,
+                            bodyA.low,
+                            bodyA.high,
+                            bodyB.low,
+                            bodyB.high,
+                            input,
+                            6,
+                            auto,
+                            collide,
+                            ids,
+                        ),
+                    [1, 2, 9],
+                );
+                const joint = copiedId(world, 'joint', bodyA);
+                handles.get(joint).bodyB = bodyB;
+                return joint;
+            });
+        },
+        pointToPointJointState(world, joint) {
+            return exclusive(() => pointToPointState(world, joint));
+        },
+        configurePointToPointJoint(world, joint, configuration) {
+            return mutate(() => {
+                const { wid } = jointOwner(world, joint),
+                    collide = pointToPointConfig(configuration);
+                mutatingCall(world, () => module._air_b3_p2p_configure(wid, joint.low, joint.high, collide));
+                changed(world);
+                return pointToPointState(world, joint);
+            });
+        },
+        createHingeJoint(world, bodyA, bodyB, geometry, configuration) {
+            return mutate(() => {
+                const { wid } = bodyOwner(world, bodyA);
+                bodyOwner(world, bodyB);
+                if (bodyA === bodyB) throw failure('AIR_E_BOX3D_ARGUMENT', 'Joint endpoints must differ');
+                if (!geometry || typeof geometry !== 'object')
+                    throw failure('AIR_E_BOX3D_ARGUMENT', 'Hinge geometry required');
+                const ga = vector(geometry.pivotA, 3, 'pivotA'),
+                    gb = vector(geometry.pivotB, 3, 'pivotB');
+                const axis = vector(geometry.axisA, 3, 'axisA'),
+                    auto = boolean(geometry.autoPivotB, 'autoPivotB');
+                if (!(Math.hypot(...axis) > 0) || axis.map(Math.fround).every((v) => v === 0))
+                    throw failure('AIR_E_BOX3D_ARGUMENT', 'Hinge axis must be nonzero in float32');
+                if (ga.length !== 3 || gb.length !== 3 || axis.length !== 3)
+                    throw failure('AIR_E_BOX3D_ARGUMENT', 'Hinge vectors must copy exactly three components');
+                const words = hingeConfig(configuration);
+                module.HEAPF32.set([...ga, ...gb, ...axis], input >>> 2);
+                module.HEAPU32.set(words, (input + 64) >>> 2);
+                mutatingCall(
+                    world,
+                    () =>
+                        module._air_b3_hinge_create(
+                            wid,
+                            bodyA.low,
+                            bodyA.high,
+                            bodyB.low,
+                            bodyB.high,
+                            input,
+                            9,
+                            auto,
+                            input + 64,
+                            7,
+                            ids,
+                        ),
+                    [1, 2, 9],
+                );
+                const joint = copiedId(world, 'joint', bodyA);
+                handles.get(joint).bodyB = bodyB;
+                return joint;
+            });
+        },
+        hingeJointState(world, joint) {
+            return exclusive(() => hingeState(world, joint));
+        },
+        configureHingeJoint(world, joint, configuration) {
+            return mutate(() => {
+                const { wid } = jointOwner(world, joint),
+                    words = hingeConfig(configuration);
+                module.HEAPU32.set(words, input >>> 2);
+                mutatingCall(world, () => module._air_b3_hinge_configure(wid, joint.low, joint.high, input, 7));
+                changed(world);
+                return hingeState(world, joint);
+            });
+        },
+        createFixedJoint(world, bodyA, bodyB, configuration) {
+            return mutate(() => {
+                const { wid } = bodyOwner(world, bodyA);
+                bodyOwner(world, bodyB);
+                if (bodyA === bodyB) throw failure('AIR_E_BOX3D_ARGUMENT', 'Joint endpoints must differ');
+                const { collide, force, torque } = fixedConfig(configuration);
+                mutatingCall(world, () =>
+                    module._air_b3_fixed_create(
+                        wid,
+                        bodyA.low,
+                        bodyA.high,
+                        bodyB.low,
+                        bodyB.high,
+                        collide,
+                        force,
+                        torque,
+                        ids,
+                    ),
+                );
+                const joint = copiedId(world, 'joint', bodyA);
+                handles.get(joint).bodyB = bodyB;
+                return joint;
+            });
+        },
+        fixedJointState(world, joint) {
+            return exclusive(() => fixedState(world, joint));
+        },
+        configureFixedJoint(world, joint, configuration) {
+            return mutate(() => {
+                const { wid } = jointOwner(world, joint);
+                const { collide, force, torque } = fixedConfig(configuration);
+                mutatingCall(world, () =>
+                    module._air_b3_fixed_configure(wid, joint.low, joint.high, collide, force, torque),
+                );
+                changed(world);
+                return fixedState(world, joint);
+            });
+        },
+        destroyJoint(world, joint) {
+            return mutate(() => {
+                const { wid, item } = jointOwner(world, joint);
+                mutatingCall(world, () => module._air_b3_joint_destroy(wid, joint.low, joint.high));
+                item.destroyed = true;
+                changed(world);
+            });
+        },
         destroyBody(body) {
             return exclusive(() => {
                 const item = handle(body, 'body');
@@ -1777,6 +2361,19 @@ export function createBox3DBinding(module, expected) {
                     return result;
                 });
             });
+        },
+        readQueryEpoch(world) {
+            return exclusive(() => {
+                worldId(world);
+                const state = worldStates.get(world);
+                return Object.freeze({ stepIndex: state.step, mutationRevision: state.revision });
+            });
+        },
+        shapeAllRaw(world, origin, translation, proxy, options) {
+            return exclusive(() => proxyQuery(world, origin, translation, proxy, options));
+        },
+        overlapAllRaw(world, origin, proxy, options) {
+            return exclusive(() => proxyQuery(world, origin, null, proxy, options));
         },
         rayAllRaw(world, origin, translation, options) {
             return exclusive(() => {

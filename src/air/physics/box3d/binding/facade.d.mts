@@ -36,6 +36,16 @@ export interface Box3DId {
     readonly low: number;
     readonly high: number;
 }
+/** Owned cache lease, branded by exact facade instance. Numeric bits are not authority. */
+export interface Box3DStaticMeshLease extends Box3DId {}
+export interface Box3DStaticMeshState {
+    readonly cacheLeases: number;
+    readonly shapeBorrows: number;
+    readonly vertexCount: number;
+    readonly triangleCount: number;
+    readonly coreMeshBytes: number;
+    readonly worldId: number;
+}
 export interface Box3DBodyOptions {
     type?: 0 | 1 | 2;
     position?: ArrayLike<number>;
@@ -47,7 +57,131 @@ export interface Box3DBodyOptions {
     gravityScale?: number;
     enableSleep?: boolean;
 }
+export interface Box3DFixedConfiguration {
+    readonly collideConnected: boolean;
+    /** Nonnegative finite float32 Newtons and Newton-metres, not impulse. */
+    readonly breakForce: number;
+    readonly breakTorque: number;
+}
+export interface Box3DFixedState extends Box3DFixedConfiguration {
+    readonly kind: 'fixed';
+    readonly bodyA: Readonly<Box3DId>;
+    readonly bodyB: Readonly<Box3DId>;
+    readonly frameA: readonly number[];
+    readonly frameB: readonly number[];
+    readonly force: readonly number[];
+    readonly torque: readonly number[];
+    readonly linearSeparation: number;
+    readonly angularSeparation: number;
+}
+/** Native spherical joint with exactly three unconstrained rotational DOFs. */
+export interface Box3DPointToPointGeometry {
+    readonly pivotA: ArrayLike<number>;
+    readonly pivotB: ArrayLike<number>;
+    readonly autoPivotB: boolean;
+}
+export interface Box3DPointToPointConfiguration {
+    readonly collideConnected: boolean;
+}
+export interface Box3DPointToPointState extends Box3DPointToPointConfiguration {
+    readonly kind: 'point-to-point';
+    readonly bodyA: Readonly<Box3DId>;
+    readonly bodyB: Readonly<Box3DId>;
+    readonly frameA: readonly number[];
+    readonly frameB: readonly number[];
+    readonly springEnabled: false;
+    readonly motorEnabled: false;
+    readonly coneLimitEnabled: false;
+    readonly twistLimitEnabled: false;
+    readonly linearSeparation: number;
+}
+export interface Box3DHingeGeometry {
+    readonly pivotA: ArrayLike<number>;
+    readonly pivotB: ArrayLike<number>;
+    readonly axisA: ArrayLike<number>;
+    readonly autoPivotB: boolean;
+}
+export interface Box3DHingeConfiguration {
+    readonly collideConnected: boolean;
+    readonly limitEnabled: boolean;
+    readonly lowerAngleRadians: number;
+    readonly upperAngleRadians: number;
+    readonly motorEnabled: boolean;
+    /** Native B-relative-A radians per second; public component converts sign/units. */
+    readonly motorSpeedRadians: number;
+    readonly maxMotorTorque: number;
+}
+export interface Box3DHingeState extends Box3DHingeConfiguration {
+    readonly kind: 'hinge';
+    readonly bodyA: Readonly<Box3DId>;
+    readonly bodyB: Readonly<Box3DId>;
+    readonly frameA: readonly number[];
+    readonly frameB: readonly number[];
+    readonly angleRadians: number;
+    readonly motorTorque: number;
+    readonly force: readonly number[];
+    /** World-space angular constraint couple on B, N.m, CURRENT SOLVER CACHE.
+     * Excludes the linear constraint force's r x F about the body COM.
+     * Uses latest world inv_h; configuration can clear individual terms and sleeping
+     * caches may be rescaled without a new solve. Not a current-load sensor,
+     * outer-step average, historical frozen sample or break-threshold input. */
+    readonly torque: readonly number[];
+    readonly torqueSemantics: Readonly<{
+        quantity: 'angular-constraint-couple';
+        coordinates: 'world';
+        actsOn: 'B';
+        source: 'current-solver-impulse-cache';
+        timeBasis: 'latest-world-inverse-substep';
+        freshness: 'not-tracked';
+        usableForLoadOrBreak: false;
+    }>;
+    readonly linearSeparation: number;
+    readonly axisAlignmentRadians: number;
+}
+export interface Box3DJointThresholdEvent {
+    readonly joint: Readonly<Box3DId>;
+    readonly valid: boolean;
+}
 export interface Box3DFoundation {
+    createPointToPointJoint(
+        world: Box3DWorld,
+        bodyA: Box3DId,
+        bodyB: Box3DId,
+        geometry: Box3DPointToPointGeometry,
+        configuration: Box3DPointToPointConfiguration,
+    ): Box3DId;
+    pointToPointJointState(world: Box3DWorld, joint: Box3DId): Readonly<Box3DPointToPointState>;
+    configurePointToPointJoint(
+        world: Box3DWorld,
+        joint: Box3DId,
+        configuration: Box3DPointToPointConfiguration,
+    ): Readonly<Box3DPointToPointState>;
+    createHingeJoint(
+        world: Box3DWorld,
+        bodyA: Box3DId,
+        bodyB: Box3DId,
+        geometry: Box3DHingeGeometry,
+        configuration: Box3DHingeConfiguration,
+    ): Box3DId;
+    hingeJointState(world: Box3DWorld, joint: Box3DId): Readonly<Box3DHingeState>;
+    configureHingeJoint(
+        world: Box3DWorld,
+        joint: Box3DId,
+        configuration: Box3DHingeConfiguration,
+    ): Readonly<Box3DHingeState>;
+    createFixedJoint(
+        world: Box3DWorld,
+        bodyA: Box3DId,
+        bodyB: Box3DId,
+        configuration: Box3DFixedConfiguration,
+    ): Box3DId;
+    fixedJointState(world: Box3DWorld, joint: Box3DId): Readonly<Box3DFixedState>;
+    configureFixedJoint(
+        world: Box3DWorld,
+        joint: Box3DId,
+        configuration: Box3DFixedConfiguration,
+    ): Readonly<Box3DFixedState>;
+    destroyJoint(world: Box3DWorld, joint: Box3DId): void;
     readonly identity: Readonly<Box3DIdentity>;
     /** Pure native admission. Does not reserve a plan, consume commands or invalidate snapshots. */
     validateMotionBatch(world: Box3DWorld, records: readonly Box3DMotionRecord[], dt: number, substeps: number): void;
@@ -174,6 +308,12 @@ export interface Box3DFoundation {
     /** Actual temporary native cook/topology validation without creating body or shape. */
     validateHull(world: Box3DWorld, positions: ArrayLike<number>): void;
     /** Native convex envelope of all copied body-local XYZ points; no box or reduced-hull fallback. */
+    cookStaticMesh(world: Box3DWorld, positions: ArrayLike<number>, indices: ArrayLike<number>): Box3DStaticMeshLease;
+    retainStaticMesh(resource: Box3DStaticMeshLease): Box3DStaticMeshLease;
+    releaseStaticMesh(resource: Box3DStaticMeshLease): void;
+    staticMeshState(resource: Box3DStaticMeshLease): Readonly<Box3DStaticMeshState>;
+    createStaticMeshShape(body: Box3DId, resource: Box3DStaticMeshLease): Box3DId;
+    staticMeshSourceFace(shape: Box3DId, cookedTriangle: number): number;
     createHull(body: Box3DId, positions: ArrayLike<number>, density?: number, sensor?: boolean): Box3DId;
     setLinearVelocity(body: Box3DId, velocity: ArrayLike<number>): void;
     applyCenterImpulse(body: Box3DId, impulse: ArrayLike<number>): void;
@@ -187,6 +327,20 @@ export interface Box3DFoundation {
         translation: ArrayLike<number>,
         options: Readonly<Box3DRayQueryOptions>,
     ): readonly Readonly<Box3DRawRayHit>[];
+    readQueryEpoch(world: Box3DWorld): Readonly<{ stepIndex: number; mutationRevision: number }>;
+    shapeAllRaw(
+        world: Box3DWorld,
+        origin: ArrayLike<number>,
+        translation: ArrayLike<number>,
+        proxy: Box3DQueryProxy,
+        options: Readonly<Box3DRayQueryOptions>,
+    ): readonly Readonly<Box3DRawRayHit>[];
+    overlapAllRaw(
+        world: Box3DWorld,
+        origin: ArrayLike<number>,
+        proxy: Box3DQueryProxy,
+        options: Readonly<Box3DRayQueryOptions>,
+    ): readonly Readonly<{ shape: Readonly<Box3DId> }>[];
     rayClosest(
         world: Box3DWorld,
         origin: ArrayLike<number>,
@@ -272,6 +426,7 @@ export interface Box3DBodyPoseRow {
     readonly pose: readonly number[];
 }
 export interface Box3DStepSnapshot {
+    readonly jointThresholdEvents: readonly Box3DJointThresholdEvent[];
     readonly worldId: number;
     readonly stepIndex: number;
     readonly bodyMoves: readonly Box3DBodyMoveEvent[];
@@ -526,4 +681,9 @@ export interface Box3DRawRayHit {
     readonly normal: readonly number[];
     readonly triangleIndex: number;
     readonly childIndex: number;
+}
+
+export interface Box3DQueryProxy {
+    readonly points: readonly (readonly number[])[];
+    readonly radius: number;
 }

@@ -35,9 +35,61 @@ function requireChecks(actual, names, label) {
     assert.deepEqual(sorted(Object.keys(actual)), sorted(names), `${label} exact check inventory`);
     for (const name of names) assert.equal(actual[name], true, `${label}: ${name}`);
 }
+// Original audit bytes remain immutable. Only their explicitly declared build root is mapped.
+function legacyCompilePaths({ root, directory, provenanceRoot = root }) {
+    for (const value of [root, directory, provenanceRoot]) {
+        assert(
+            typeof value === 'string' && !/[\x00-\x1f\\]/.test(value) && path.isAbsolute(value),
+            'Absolute audit root required',
+        );
+        assert.equal(path.resolve(value), value, 'Canonical audit root required');
+        assert.notEqual(value, path.parse(value).root, 'Filesystem root is not a provenance root');
+    }
+    const relative = path.relative(root, directory);
+    assert(
+        relative && relative !== '..' && !relative.startsWith('..' + path.sep) && !path.isAbsolute(relative),
+        'Build directory outside candidate root',
+    );
+    const originalDirectory = path.join(provenanceRoot, relative);
+    const originalBaseline = path.join(originalDirectory, 'hull-legacy-baseline');
+    const units = EXPECTED.gate.compileUnits.filter((name) => name.startsWith('staged-core/'));
+    assert.equal(units.length, 52, 'Exact pre-Hull fixed-core translation-unit inventory');
+    const files = [
+        ...units.map((name) => path.join(originalBaseline, name)),
+        path.join(provenanceRoot, LEGACY_FIXTURE),
+    ];
+    const normalize = (value) => {
+        assert.equal(typeof value, 'string');
+        assert(!/[\x00-\x1f\\]/.test(value), 'Unsafe compiler argument');
+        const prefix = value.startsWith('-I') ? '-I' : '';
+        const name = prefix ? value.slice(2) : value;
+        if (!path.isAbsolute(name)) return value;
+        assert.equal(path.resolve(name), name, 'Noncanonical compiler path');
+        assert(
+            name === provenanceRoot || name.startsWith(provenanceRoot + path.sep),
+            'Compiler path outside provenance root',
+        );
+        const normalized =
+            name === originalBaseline || name.startsWith(originalBaseline + path.sep)
+                ? '<baseline>' + name.slice(originalBaseline.length)
+                : '<repo>' + name.slice(provenanceRoot.length);
+        return prefix + normalized.split(path.sep).join('/');
+    };
+    const verifyCompile = (compile) => {
+        assert(Array.isArray(compile), 'Legacy compile database must be an array');
+        assert.deepEqual(
+            compile.map((row) => row.file),
+            files,
+            'Exact legacy compile inventory',
+        );
+        for (const row of compile) assert.equal(row.directory, provenanceRoot, 'Legacy compiler working directory');
+    };
+    return { files, normalize, provenanceRoot, originalDirectory, verifyCompile };
+}
 function verifyHullQualification({
     directory,
     root,
+    provenanceRoot = root,
     receipt,
     identity,
     sources,
@@ -134,13 +186,12 @@ function verifyHullQualification({
     );
 
     const compile = json('hull-legacy-baseline/compile_commands.json');
-    const units = EXPECTED.gate.compileUnits.filter((name) => name.startsWith('staged-core/'));
-    assert.equal(units.length, 52, 'Exact pre-Hull fixed-core translation-unit inventory');
-    const files = [
-        ...units.map((name) => path.join(legacyCore, name.slice('staged-core/'.length))),
-        path.join(root, LEGACY_FIXTURE),
-    ];
-    assert.deepEqual(sorted(compile.map((row) => row.file)), sorted(files), 'Exact legacy compile inventory');
+    const { files, normalize, originalDirectory, verifyCompile } = legacyCompilePaths({
+        root,
+        directory,
+        provenanceRoot,
+    });
+    verifyCompile(compile);
     const required = [
         '-msimd128',
         '-msse2',
@@ -150,8 +201,6 @@ function verifyHullQualification({
         '-DBOX3D_VALIDATE',
     ];
     const forbidden = /pthread|SHARED_MEMORY|USE_PTHREADS|-ffast-math|-Ofast|BOX3D_DISABLE_SIMD|BOX3D_DOUBLE_PRECISION/;
-    const baselineDirectory = path.join(directory, 'hull-legacy-baseline');
-    const normalize = (value) => value.replaceAll(baselineDirectory, '<baseline>').replaceAll(root, '<repo>');
     assert.equal(legacy.commands.length, files.length + 4, 'Exact independent baseline command inventory');
     for (const row of legacy.commands) {
         assert.equal(row.exitCode, 0, 'Legacy command failed');
@@ -162,7 +211,7 @@ function verifyHullQualification({
     assert.equal(legacy.commands[0].command, 'emcc');
     assert.deepEqual(legacy.commands[0].args, ['--version']);
     compile.forEach((row, index) => {
-        assert.equal(row.directory, root, 'Legacy compiler working directory');
+        assert.equal(row.directory, provenanceRoot, 'Legacy compiler working directory');
         assert(Array.isArray(row.arguments) && row.arguments.every((arg) => typeof arg === 'string'));
         assert.equal(row.arguments[0], 'emcc');
         const flags = row.arguments.slice(1);
@@ -192,7 +241,7 @@ function verifyHullQualification({
     assert.deepEqual(link.args.slice(-2), ['-o', '<baseline>/legacy-fingerprint.cjs']);
     assert.deepEqual(legacy.commands.at(-2).args, ['<baseline>/legacy-fingerprint.cjs']);
     assert.deepEqual(legacy.commands.at(-1).args, [
-        normalize(path.join(directory, 'air_box3d_hull_legacy_fingerprint.cjs')),
+        normalize(path.join(originalDirectory, 'air_box3d_hull_legacy_fingerprint.cjs')),
     ]);
     assert.equal(legacy.commands.at(-2).command, legacy.commands.at(-1).command, 'Same legacy execution runtime');
     assert.equal(typeof legacy.commands.at(-1).command, 'string');
@@ -212,4 +261,4 @@ function verifyHullQualification({
         legacyCommands: legacy.commands.length,
     };
 }
-module.exports = { verifyHullQualification };
+module.exports = { verifyHullQualification, legacyCompilePaths };

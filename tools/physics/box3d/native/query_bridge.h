@@ -11,3 +11,15 @@ enum { AIR_B3_RAY_INPUT_FLOATS = 6, AIR_B3_RAY_HIT_WORDS = 11 };
    sorts distance/ID and selects closest from these SAME generic-callback results. */
 int air_b3_ray_query(uint32_t world, const float* input, uint32_t group, uint32_t mask,
     int queryTrigger, uint32_t* out, int capacityWords, uint32_t* countOut);
+
+/* World-oriented convex point cloud relative to origin. 1..128 points, finite
+   nonnegative radius. Inputs, points, output and count must not alias. Shape
+   casts share the ray's 11-word copied record; overlaps copy shape lo/hi only.
+   Count-only then complete-capacity copy. No clipping or hidden hit cap. */
+enum { AIR_B3_OVERLAP_HIT_WORDS = 2, AIR_B3_QUERY_MAX_POINTS = 128 };
+int air_b3_shape_query(uint32_t world, const float* input6, const float* pointsXYZ,
+    int pointCount, float radius, uint32_t group, uint32_t mask, int queryTrigger,
+    uint32_t* out, int capacityWords, uint32_t* countOut);
+int air_b3_overlap_query(uint32_t world, const float* origin3, const float* pointsXYZ,
+    int pointCount, float radius, uint32_t group, uint32_t mask, int queryTrigger,
+    uint32_t* out, int capacityWords, uint32_t* countOut);

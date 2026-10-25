@@ -151,7 +151,7 @@ export function hullGeometry(
 }
 
 /** Conservative source-point bounds under the copied native body-origin pose, not a native hull readback. */
-export function hullBounds(value: Box3DHullGeometry, pose: readonly number[]) {
+export function hullBounds(value: Pick<Box3DHullGeometry, 'positions'>, pose: readonly number[]) {
     if (pose.length !== 10 || pose.some((v) => !Number.isFinite(v)))
         throw worldError('AIR_E_BOX3D_ABI', 'hull bounds', 'Expected copied native origin/rotation/COM transform.');
     const [x, y, z, w] = pose.slice(3, 7);
