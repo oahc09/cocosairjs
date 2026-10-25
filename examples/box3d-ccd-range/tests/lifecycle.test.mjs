@@ -28,7 +28,7 @@ test('reset abort settles once and next trial gets a distinct wait', async () =>
     await next;
     assert.equal(settled, 2);
 });
-test('duplicate close excluded; failed close permits retry, successful close is terminal', async () => {
+test('duplicate close excluded; preparation failure permits retry before SDK close starts', async () => {
     const state = new TrialLifecycle();
     const flight = state.waitForTrial();
     assert.equal(state.beginClose(), true);
@@ -44,4 +44,27 @@ test('duplicate close excluded; failed close permits retry, successful close is 
     assert.equal(state.canClose, false);
     assert.equal(state.beginClose(), false);
     assert.throws(() => state.waitForTrial());
+});
+
+test('failed terminal SDK close cannot be retried despite cached rejection or failed receipt', async () => {
+    for (const outcome of ['reject', 'failed']) {
+        const state = new TrialLifecycle();
+        let calls = 0;
+        assert.equal(state.beginClose(), true);
+        state.startSdkClose();
+        const sdkClose = () => {
+            calls++;
+            return outcome === 'reject' ? Promise.reject(Error('cached')) : Promise.resolve({ status: 'failed' });
+        };
+        try {
+            const receipt = await sdkClose();
+            if (receipt.status !== 'released') throw Error('failed');
+        } catch {
+            state.failClose();
+        }
+        assert.equal(state.canClose, false);
+        assert.equal(state.blocked, true);
+        assert.equal(state.beginClose(), false);
+        assert.equal(calls, 1);
+    }
 });

@@ -69,7 +69,8 @@ Associated C26–C28 inventory and cross-browser/ST/MT full matrix are **NOT_RUN
 
 The actual SDK223 declarations are checked with TypeScript `noEmit` (not only esbuild).
 A pure lifecycle boundary used by the live page settles pending trial waits on faults and permits
-explicit Close after fault; duplicate close is excluded and failed close may be retried. Before-step
+explicit Close after fault; duplicate close is excluded. Only preparation failure before SDK Close
+may be retried; invoking SDK Close consumes the terminal attempt, including on failure. Before-step
 errors are deferred to the idle cleanup path and rethrown to prevent committing a bad tick. Public
 app diagnostics plus browser error/unhandled-rejection listeners preserve asynchronous faults rather
 than waiting for an after-physics event that a failed step may never emit. They do not suppress errors.
@@ -130,3 +131,22 @@ Sampled center ordering, contact existence, and fixed-X crossing are distinct ob
 adds no dynamic-target penetration algorithm, collision guarantee, or new geometric threshold. Existing
 raw observations and their original result fields remain immutable; this schema-label change requires
 new example fingerprints for any subsequent run.
+
+## Cleanup source correction (new runtime evidence NOT_RUN)
+
+SDK223 caches `app.close()` permanently, including failed results. This example now distinguishes
+retryable **pre-close preparation** failure from terminal SDK-close failure: after invoking SDK Close,
+the UI disables further Close attempts and asks to export evidence and reload. It never presents a
+cached failed receipt as a fresh cleanup attempt.
+
+Before reuse or Close, it requests public destruction of unmounted candidate scenes and detached nodes,
+then awaits `app.releaseScene()`, destroys owned assets, and awaits a second public `releaseScene()`
+even with no current scene. The second boundary flushes deferred asset destruction while paused.
+Owned valid identities are retained on failure; neither an accepted `destroy()` nor a queued request
+is treated as physical release. No private flush API is used. Materials and nodes are registered before
+fallible configuration so failed construction remains owned. Close invokes the SDK only after this
+preparation succeeds. CPU fixtures model ownership/order only, not native cleanup or physics.
+
+This is a new source fingerprint. The earlier 742/ad67 browser evidence is unchanged and does not
+qualify the corrected lifecycle. Native failure injection, paused flush, premount-failure Close and
+resource baselines still require separately authorized runtime verification; no leak-freedom claim.

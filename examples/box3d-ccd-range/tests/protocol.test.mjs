@@ -73,7 +73,7 @@ test('source owns no physics clock or runtime teleport; public query and body pa
         'readBox3DBodyMotion',
         'mountAndConfigureBodies',
         'system.maxSubSteps = 1',
-        'app.releaseScene()',
+        'releaseOwned({',
         'app.close()',
     ])
         assert.ok(source.includes(required), required);

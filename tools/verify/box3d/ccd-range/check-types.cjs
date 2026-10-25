@@ -16,6 +16,7 @@ const ts = require('typescript');
 const entry = path.join(root, 'examples/box3d-ccd-range/src/main.ts');
 const program = ts.createProgram([entry], {
     noEmit: true,
+    strict: true,
     skipLibCheck: true,
     target: ts.ScriptTarget.ES2022,
     module: ts.ModuleKind.ESNext,

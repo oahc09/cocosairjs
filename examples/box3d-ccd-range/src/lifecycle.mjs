@@ -3,12 +3,13 @@ export class TrialLifecycle {
     faulted = false;
     closing = false;
     closed = false;
+    sdkCloseStarted = false;
     #resolve = null;
     get blocked() {
-        return this.faulted || this.closing || this.closed;
+        return this.faulted || this.closing || this.closed || this.sdkCloseStarted;
     }
     get canClose() {
-        return !this.closing && !this.closed;
+        return !this.closing && !this.closed && !this.sdkCloseStarted;
     }
     waitForTrial() {
         if (this.blocked || this.#resolve) throw new Error('Trial lifecycle is not ready');
@@ -30,6 +31,9 @@ export class TrialLifecycle {
         this.closing = true;
         this.settleTrial();
         return true;
+    }
+    startSdkClose() {
+        this.sdkCloseStarted = true;
     }
     completeClose() {
         this.closing = false;

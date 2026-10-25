@@ -30,6 +30,7 @@ import {
 import { configuration, counts, assessTrial, FIXED_DT, RADIUS, TRIAL_TICKS } from './protocol.mjs';
 import { assertStepClock, copyStepClock, SOLVER_SUB_STEPS } from './fixed-step-contract.mjs';
 import { TrialLifecycle } from './lifecycle.mjs';
+import { releaseOwned, attemptStops } from './cleanup.mjs';
 import { mountAndConfigureBodies } from './mounted-body-configuration.mjs';
 const lifecycle = new TrialLifecycle();
 const el = (id: string): any => document.getElementById(id)!;
@@ -43,6 +44,7 @@ const report: any = {
     gaps: ['PUBLIC_WORLD_CONTINUOUS_DIAGNOSTIC_UNAVAILABLE'],
 };
 let app: any, system: any, hook: any, scene: any, projectile: any, target: any;
+let nodes: Node[] = [];
 let assets: any[] = [],
     current: any = null;
 let busy = false,
@@ -79,14 +81,15 @@ function config() {
 }
 function paint(color: number[]) {
     const m = new Material();
+    assets.push(m);
     m.initialize({ effectName: 'builtin-standard' });
     m.setProperty('mainColor', new Color(color[0], color[1], color[2], color[3]));
     m.setProperty('roughness', 0.7);
-    assets.push(m);
     return m;
 }
 function node(name: string, x: number, y: number, z: number) {
     const n = new Node(name);
+    nodes.push(n);
     n.active = false;
     n.layer = Layers.Enum.DEFAULT;
     n.setPosition(x, y, z);
@@ -106,9 +109,9 @@ function activate(n: any) {
 function buildScene(c: any) {
     scene = new Scene('box3d-ccd-range');
     const surface = new PhysicsMaterial();
+    assets.push(surface);
     surface.friction = 0;
     surface.restitution = 0;
-    assets.push(surface);
     const cameraNode = node('Camera', -1, 2.5, 5);
     const camera = cameraNode.addComponent(Camera);
     camera.fov = 42;
@@ -257,10 +260,10 @@ function finish(aborted: boolean) {
     }
     try {
         hook?.dispose();
+        hook = null;
     } catch (error) {
         errors.push(String(error));
     }
-    hook = null;
     if (errors.length) {
         report.lifecycle.push({ kind: 'stop-failed', errors });
         aborted = true;
@@ -277,15 +280,21 @@ function finish(aborted: boolean) {
     if (errors.length) say('BLOCKED: stop failed; evidence retained, explicit close required');
     return errors.length === 0;
 }
-async function release() {
-    system.enable = false;
-    hook?.dispose();
-    hook = null;
-    const receipt = await app.releaseScene();
-    report.lifecycle.push({ kind: 'releaseScene', receipt });
-    if (receipt.status !== 'released') throw new Error('Scene release receipt is not released');
-    for (const asset of assets.reverse()) asset.destroy();
-    assets = [];
+async function release(forClose = false) {
+    const errors = attemptStops([
+        () => {
+            if (system) system.enable = false;
+        },
+        () => {
+            hook?.dispose();
+            hook = null;
+        },
+    ]);
+    if (errors.length) report.lifecycle.push({ kind: 'release-stop-failed', errors, forClose });
+    await releaseOwned({ app, scene, nodes, assets, record: (row: unknown) => report.lifecycle.push(row) });
+    scene = null;
+    projectile = target = null;
+    if (errors.length && !forClose) throw new Error('Stop failed; cleanup attempted, reset blocked');
 }
 async function trial(c: any, token: number) {
     await release();
@@ -369,7 +378,6 @@ function fail(error: unknown) {
     }
     lifecycle.fault();
     controls();
-    el('close').disabled = !app;
     say(`BLOCKED: ${String(error)} · 不回退物理后端`);
 }
 async function reset() {
@@ -379,7 +387,6 @@ async function reset() {
     if (!finish(true)) {
         lifecycleBusy = false;
         controls();
-        el('close').disabled = false;
         return;
     }
     busy = true;
@@ -409,21 +416,31 @@ async function close() {
     director.off(Director.EVENT_AFTER_PHYSICS, afterPhysics);
     try {
         await activeRun;
+        await release(true);
+        lifecycle.startSdkClose(); // SDK223 caches close forever, including a failed receipt.
         const receipt = await app.close();
         report.lifecycle.push({ kind: 'close', receipt });
         if (receipt.status !== 'released') throw new Error('App close receipt is not released');
-        for (const asset of assets.reverse()) asset.destroy();
-        assets = [];
         unsubscribeDiagnostics?.();
         window.removeEventListener('error', onWindowError);
         window.removeEventListener('unhandledrejection', onUnhandledRejection);
         lifecycle.completeClose();
         say('已关闭并释放；验收 NOT_RUN');
     } catch (error) {
-        say(`关闭失败：${String(error)}`);
+        report.lifecycle.push({
+            kind: 'close-failed',
+            sdkCloseStarted: lifecycle.sdkCloseStarted,
+            error: String(error),
+        });
+        say(
+            lifecycle.sdkCloseStarted
+                ? `SDK Close 失败：${String(error)}；结果已缓存，导出证据后重载，不能重试清理`
+                : `关闭准备失败：${String(error)}；尚未调用 SDK Close，可重试准备`,
+        );
         lifecycle.failClose();
+    } finally {
         lifecycleBusy = false;
-        el('close').disabled = false;
+        controls();
     }
 }
 function afterPhysics() {
