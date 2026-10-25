@@ -700,7 +700,6 @@ The Hull adapter reads every submesh's real XYZ POSITION stream, decodes support
 
 This is source candidate scope, not C14 or browser acceptance. Pure/injected fixtures only establish their labeled seams; actual native Release/Debug cooking, geometric rays, compound COM/inertia, pending recovery, disabled rejection, and fault-phase cases require fresh runs. The recovered C14 initial input remains unchanged with its original provenance. Full C14 categories, all 2128 formal matrix cells, and all nine Gates remain NOT_RUN.
 
-
 ### Box3D SDK222 backend source checkpoint (2026-10-25)
 
 This incremental checkpoint preserves the recovered SDK222 backend sources on top of the separately committed Game event cleanup. It includes deferred Node/Component destruction admission, constraint controls and fixed/hinge/point-to-point adapters, collision/trigger/contact readback, round hull/static mesh/query adapters, their native bridges and contracts, and the corresponding ABI/build declarations. Changes remain opt-in Box3D work; this source checkpoint is not merge-ready or full backend acceptance.

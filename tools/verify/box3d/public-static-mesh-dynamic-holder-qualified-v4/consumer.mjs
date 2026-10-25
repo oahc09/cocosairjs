@@ -337,12 +337,13 @@ try {
         // An enabled dynamic body needs real effective geometry before world preflight.
         // Keep its MeshCollider empty: only the primitive supplies mass for the rejection probe.
         const primitive = type === RigidBody.Type.DYNAMIC ? holder.node.addComponent(SphereCollider) : null;
-        const primitiveState = () => primitive && ({
-            body: primitive.attachedRigidBody,
-            radius: primitive.radius,
-            enabled: primitive.enabled,
-            isTrigger: primitive.isTrigger,
-        });
+        const primitiveState = () =>
+            primitive && {
+                body: primitive.attachedRigidBody,
+                radius: primitive.radius,
+                enabled: primitive.enabled,
+                isTrigger: primitive.isTrigger,
+            };
         if (primitive) {
             assert.equal(primitive.attachedRigidBody, holder.body);
             assert(primitive.radius > 0 && Number.isFinite(primitive.radius));
