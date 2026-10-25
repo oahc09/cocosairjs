@@ -1,5 +1,7 @@
 # UPSTREAM
 
+2026-10-25 quad dimensions and host mouse propagation: `cocos/primitive/quad.ts` accepts optional width/height (default 1), with matching positions, AABB and radius. The frozen PAL transform in `tools/build/pal-source.cjs` preserves DOM bubbling for mouse down/move/up and wheel, and cancels defaults only for cancelable canvas events. Mouseup uses only the existing window listener to avoid duplicate engine dispatch after bubbling. Frozen vendor sources and upstream headers remain unchanged.
+
 2026-10-25 提交前拖尾边界复核：`particle/particle-system.ts` 将已有 CPU 拖尾按需初始化移到模拟前，避免初始关闭、运行中开启时模拟先访问未绑定的 owner/pool。`particle/renderer/trail.ts` 在 onInit 绑定所属系统后同步 renderer 拖尾材质；保留原生模拟、剔除与资源创建/释放流程。真实浏览器反例原先 indexCount=0（直接诊断暴露 null owner），修复后要求实际索引几何，不以 enable 字段代替绘制。记录见 [执行台账](../ai/ledgers/vibe-content-capabilities.md)。
 
 2026-10-25 F02 Code First 粒子接入：AIR 装配层导出原生 ParticleSystem 与模块，在 inactive Node 上配置后激活；不新增模拟器。`particle/renderer/trail.ts` 的 enable setter 在尚未绑定 ParticleSystem 时只保存状态，onInit 绑定后先解析材质再构造模型，避免提前访问 null 或创建缺少 transform 的模型。`animator/texture-animation.ts` 的 tiles setter 与 `renderer/particle-system-renderer-data.ts` 的 alignment setter 也在绑定前只保存配置，原生初始化继续负责刷新。基线与版权保持；进度和当前验证范围见 [执行台账](../ai/ledgers/vibe-content-capabilities.md)。

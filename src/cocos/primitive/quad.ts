@@ -24,33 +24,42 @@
 
 import { applyDefaultGeometryOptions, IGeometry, IGeometryOptions } from './define';
 
+interface IQuadOptions extends RecursivePartial<IGeometryOptions> {
+    /** Width on the X axis. Defaults to 1. */
+    width?: number;
+    /** Height on the Y axis. Defaults to 1. */
+    height?: number;
+}
+
 /**
  * @en
- * Generate a quad with width and height both to 1, centered at origin.
+ * Generate a quad with configurable width and height (both default to 1), centered at origin.
  * @zh
- * 生成一个四边形，宽高都为1，中心在原点。
+ * 生成一个四边形，宽高默认都为1，中心在原点。
  * @param options @zh 参数选项。 @en The optional creation parameters of the quad
  */
-export default function quad (options?: IGeometryOptions): IGeometry {
+export default function quad (options?: IQuadOptions): IGeometry {
     const normalizedOptions = applyDefaultGeometryOptions(options);
+    const hw = (options?.width ?? 1) * 0.5;
+    const hh = (options?.height ?? 1) * 0.5;
     const result: IGeometry = {
         positions: [
-            -0.5, -0.5, 0, // bottom-left
-            -0.5,  0.5, 0, // top-left
-            0.5,  0.5, 0, // top-right
-            0.5, -0.5, 0, // bottom-right
+            -hw, -hh, 0, // bottom-left
+            -hw,  hh, 0, // top-left
+            hw,  hh, 0, // top-right
+            hw, -hh, 0, // bottom-right
         ],
         indices: [
             0, 3, 1,
             3, 2, 1,
         ],
         minPos: {
-            x: -0.5, y: -0.5, z: 0,
+            x: -Math.abs(hw), y: -Math.abs(hh), z: 0,
         },
         maxPos: {
-            x: 0.5, y: 0.5, z: 0,
+            x: Math.abs(hw), y: Math.abs(hh), z: 0,
         },
-        boundingRadius: Math.sqrt(0.5 * 0.5 + 0.5 * 0.5),
+        boundingRadius: Math.sqrt(hw * hw + hh * hh),
     };
     if (normalizedOptions.includeNormal !== false) {
         result.normals = [

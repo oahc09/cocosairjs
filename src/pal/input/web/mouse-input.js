@@ -87,7 +87,6 @@ export class MouseInputSource {
         this._canvas?.addEventListener('mousemove', this._handleMouseMove);
         // register mouse up event
         window.addEventListener('mouseup', this._handleMouseUp);
-        this._canvas?.addEventListener('mouseup', this._handleMouseUp);
         // register wheel event
         this._canvas?.addEventListener('wheel', this._handleMouseWheel.bind(this));
         this._registerPointerLockEvent();
@@ -153,8 +152,7 @@ export class MouseInputSource {
             eventMouse.movementY = mouseEvent.movementY;
             // update previous mouse position.
             this._preMousePos.set(location.x, location.y);
-            mouseEvent.stopPropagation();
-            if (mouseEvent.target === this._canvas) {
+            if (mouseEvent.target === this._canvas && mouseEvent.cancelable) {
                 mouseEvent.preventDefault();
             }
             this._eventTarget.emit(eventType, eventMouse);
@@ -173,8 +171,7 @@ export class MouseInputSource {
         eventMouse.setScrollData(mouseEvent.deltaX * wheelSensitivityFactor, -mouseEvent.deltaY * wheelSensitivityFactor);
         // update previous mouse position.
         this._preMousePos.set(location.x, location.y);
-        mouseEvent.stopPropagation();
-        if (mouseEvent.target === this._canvas) {
+        if (mouseEvent.target === this._canvas && mouseEvent.cancelable) {
             mouseEvent.preventDefault();
         }
         this._eventTarget.emit(eventType, eventMouse);
