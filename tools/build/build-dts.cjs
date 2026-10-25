@@ -19,11 +19,12 @@ const { join } = require('path');
 const fs = require('fs');
 const { existsSync, renameSync } = require('fs-extra');
 const { dtsBundler } = require('@cocos/ccbuild');
+const { withDeclarationInputs } = require('./dts-inputs.cjs');
 
 const ROOT = join(__dirname, '..', '..');
 const ENGINE = join(ROOT, 'src');
 
-function cleanupDtsTemp () {
+function cleanupDtsTemp() {
     const tmp = join(ENGINE, '__dts_before_bundle');
     if (!existsSync(tmp)) return;
     try {
@@ -34,7 +35,7 @@ function cleanupDtsTemp () {
     }
 }
 
-function copyOutput (outDir) {
+function copyOutput(outDir) {
     const candidates = ['cc.d.ts', 'index.d.ts'];
     for (const c of candidates) {
         const p = join(outDir, c);
@@ -45,7 +46,8 @@ function copyOutput (outDir) {
             if (!/^\s*declare module "cc" \{/.test(declarations) || !/\}\s*$/.test(declarations)) {
                 throw new Error('Unexpected ccbuild declaration format');
             }
-            const sdk = declarations.replace(/^\s*declare module "cc" \{\s*/, '')
+            const sdk = declarations
+                .replace(/^\s*declare module "cc" \{\s*/, '')
                 .replace(/\}\s*$/, '')
                 .replace(/(["'])cc\1/g, '"./cocosair.module"');
             fs.writeFileSync(join(ROOT, 'build', 'cocosair.module.d.ts'), sdk);
@@ -57,14 +59,14 @@ function copyOutput (outDir) {
     return false;
 }
 
-(async function exec () {
+(async function exec() {
     const outDir = join(ROOT, 'build', `.dts-tmp-${Date.now()}`);
     fs.mkdirSync(outDir, { recursive: true });
     console.log('[dts] bundling type declarations (this may take a few minutes) ...');
     const started = Date.now();
     let buildOk = false;
     try {
-        await dtsBundler.build({ engine: ENGINE, outDir });
+        await withDeclarationInputs(ENGINE, () => dtsBundler.build({ engine: ENGINE, outDir }));
         buildOk = true;
     } catch (e) {
         // dtsBundler 内部清理被 safe-delete shim 拦截时会 throw；产物此时通常已写出
@@ -77,8 +79,14 @@ function copyOutput (outDir) {
         console.error('[dts] FAILED: declaration output not found in', outDir);
         process.exit(1);
     }
-    console.log(`[dts] done in ${((Date.now() - started) / 1000).toFixed(1)}s → build/cocosair.module.d.ts${buildOk ? '' : ' (recovered: bundler cleanup was blocked, output intact)'}`);
-    try { fs.rmSync(outDir, { recursive: true, force: true }); } catch (e) { /* shim 可能拦截，残留于 build/ */ }
+    console.log(
+        `[dts] done in ${((Date.now() - started) / 1000).toFixed(1)}s → build/cocosair.module.d.ts${buildOk ? '' : ' (recovered: bundler cleanup was blocked, output intact)'}`,
+    );
+    try {
+        fs.rmSync(outDir, { recursive: true, force: true });
+    } catch (e) {
+        /* shim 可能拦截，残留于 build/ */
+    }
 })().catch((e) => {
     cleanupDtsTemp();
     console.error('[dts] FAILED:', e && e.message ? e.message : e);
