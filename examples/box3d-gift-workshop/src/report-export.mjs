@@ -1,0 +1,34 @@
+/** Export-only. Capture once synchronously; compressors never receive a live report getter. */
+export const MAX_GZIP_INPUT_BYTES = 128 * 1024 * 1024;
+export function captureReportText(getReport) {
+    const text = JSON.stringify(getReport(), null, 2);
+    if (typeof text !== 'string') throw new TypeError('Report must serialize to JSON text');
+    return text;
+}
+export function supportsGzip(Compression = globalThis.CompressionStream) {
+    try {
+        return typeof Compression === 'function' && Boolean(new Compression('gzip'));
+    } catch {
+        return false;
+    }
+}
+export async function gzipReportText(text, Compression = globalThis.CompressionStream) {
+    if (typeof text !== 'string') throw new TypeError('Expected frozen JSON text');
+    const bytes = new TextEncoder().encode(text);
+    if (bytes.byteLength > MAX_GZIP_INPUT_BYTES)
+        throw new RangeError('Gzip export exceeds 128 MiB; use plain JSON. No fields removed.');
+    if (!supportsGzip(Compression)) throw new Error('Browser gzip unavailable; use plain JSON');
+    const stream = new Blob([bytes]).stream().pipeThrough(new Compression('gzip'));
+    return new Blob([await new Response(stream).arrayBuffer()], { type: 'application/gzip' });
+}
+export function downloadReportBlob(blob, filename) {
+    const url = URL.createObjectURL(blob);
+    try {
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = filename;
+        link.click();
+    } finally {
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }
+}

@@ -1,0 +1,14 @@
+✔ one getter read, detached JSON, identity filename, unknown retained, duplicate clicks blocked (2.320576ms)
+✔ all observer rejection reasons stay visible without download or retry (5.097237ms)
+✔ getter, serialization and download failures remain recoverable (1.503394ms)
+✔ real observer refuses running/system-enabled and stale scope; export makes no body writes (3.370543ms)
+✔ source guard: additive binding only, baseline main/HTML preserved, report and observer untouched (1.280899ms)
+✔ esbuild transforms entire main.ts without SDK build (70.669374ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 182.029304

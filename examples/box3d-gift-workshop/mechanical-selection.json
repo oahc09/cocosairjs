@@ -1,0 +1,37 @@
+{
+  "version": "ex09-door-selected-2",
+  "selectedAt": "2026-10-24",
+  "status": "SELECTED_ENGINEERING_REVISION_ORIGINAL_CONTRACT_RETAINED",
+  "authority": "User delegated the final engineering choice for this project on 2026-10-24.",
+  "previousGeometryVersion": "ex09-door-development-2",
+  "originalPivot": [1.65, 1.5, -0.425],
+  "effectivePivot": [1.65, 1.46, -0.425],
+  "leafSize": [0.9999998807907104, 0.04, 0.8479998707771301],
+  "closedOrigin": [1.65, 1.48, -0.001],
+  "massKg": 1,
+  "motorForceLimitNm": 20,
+  "unchanged": [
+    "closed top y=1.5",
+    "packing chamber",
+    "all SKU dimensions and masses",
+    "orders",
+    "180-second limit",
+    "2-degree close gate",
+    "65-degree delivery gate",
+    "collisions"
+  ],
+  "rationale": "Original pivot jammed against the rear/frame geometry. Lower rear hinge plus 2 mm front clearance has 1.057 mm analytic minimum clearance over 0–75 degrees; actual empty and maximum .95 kg O2 open/close and g three-order completion were recorded on development-2.",
+  "evidenceBoundary": "Development-2 g remains unchanged and qualified only at its original dimensions. Selected-2 adds explicit submicrometre assembly clearance and needs fresh actual native door/recovery validation; it is not covered by g. Recovery/mobile/full BIZ remain pending.",
+  "previousSelectedVersion": "ex09-door-selected-1",
+  "previousLeafSize": [1, 0.04, 0.848],
+  "assemblyRevision": {
+    "method": "Each X and Z baked F32 half extent moves exactly two adjacent F32 values toward zero.",
+    "widthReductionM": 1.1920928955078125e-7,
+    "depthReductionFromRequestedM": 1.2922286984906606e-7,
+    "reason": "Selected-2 retains the explicit inward half-size revision. Earlier negative nanometre gaps were exact unrounded geometry, not proof of SDK220 native penetration: its ABI uses Float32 world arithmetic. Identity-box separation is sufficient by monotone RN32 rounding; exact negative gaps remain conservatively rejected.",
+    "proofStatus": "PURE_EXACT_DYADIC_CANDIDATE_NATIVE_VALIDATION_PENDING",
+    "hingeWorldAnchorUnchanged": true,
+    "supersededArithmeticExplanation": "Exact pinned-core float-rotation/double-translation birth geometry had negative side/rear gaps measured in nanometres. No epsilon or contact slop is used to admit restoration."
+  },
+  "arithmeticClarificationVersion": "sdk220-f32-world-1"
+}

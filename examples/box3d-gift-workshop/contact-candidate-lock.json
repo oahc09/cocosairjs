@@ -1,0 +1,9 @@
+{
+  "status": "READY_FOR_VERIFICATION",
+  "expectedBuild": 217,
+  "runtimeSha256": "ff21f687644a1afaf58c1d29f9ff8dac930c04b34633e3f0161437f03ed50d9c",
+  "manifestSha256": "2fd07564431a9cc529ac0a059641ac19aad988559c0dc96ed60180a6a6aaf8f6",
+  "scope": "Explicit isolated contact verification only, never a permanent capability API or BIZ pass",
+  "priorAttempt": "Attempt216 failed package qualification; attempt217 terminated with SIGKILL (-9), cause unconfirmed. Completed attempt218 exports actual build216 because failed attempts did not commit the build counter. Actual build216 qualified A/C; actual217 fixes remaining Capsule listener gates. Earlier reports retained separately.",
+  "artifactDirectory": "p2p-public-runtime219-20261024"
+}

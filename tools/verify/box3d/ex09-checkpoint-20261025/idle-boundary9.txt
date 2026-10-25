@@ -1,0 +1,17 @@
+✔ two queued terminal callbacks do native cleanup once, including after replay pause (1.557287ms)
+✔ old scene, reset or close callback cannot touch any owner (0.160284ms)
+✔ recovery owns entire idle block, not only flow (0.254292ms)
+✔ paused unsettled terminal only clears JS and defers, never enables native (0.15734ms)
+✔ normal paused callback never flushes native (0.127226ms)
+✔ real native cleanup failure is exposed and never marked settled or captured (0.529945ms)
+✔ direct 300/299 penalty terminal shares same latch without restoring or another step (0.206041ms)
+✔ 301 recovery block N does not flush; N+1 terminal settles once (0.126304ms)
+✔ mechanism replacement retires old queued boundary and new door flushes normally (0.290725ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 97.349795
