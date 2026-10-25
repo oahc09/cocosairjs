@@ -1,0 +1,168 @@
+{
+  "schema": "box3d-sdk223-ex05-static-baseline-report-v1",
+  "status": "FINITE_STATIC_BASELINE_OBSERVED_OK_NOT_FULL_EX05_PASS",
+  "sourceCommit": "74229692be62445dc2de11cdabfa974bd9608c00",
+  "runtimeProducer": "b089d223aad1bb4be4a81f187eceb341510d766a",
+  "runtimeBuild": 223,
+  "scope": {
+    "browser": "Firefox 158",
+    "backend": "ST",
+    "wallThicknessM": 0.05,
+    "target": "static wall",
+    "mode": "body",
+    "projectileBullet": true
+  },
+  "baseline": {
+    "speed10": 30,
+    "speed30": 30,
+    "speed80": 30,
+    "total": 90,
+    "nativeSamples": 8100,
+    "clockCCDContactPoseChecks": true,
+    "maxPoseError": 0,
+    "completeCrossing": false
+  },
+  "smoke": {
+    "separateApplication": true,
+    "trials": 1,
+    "speedMps": 10,
+    "samples": 90,
+    "includedInBaseline": false
+  },
+  "observed": {
+    "targetBullet": false,
+    "projectileBullet": true,
+    "actualNativeFixedDt": 0.01666666753590107,
+    "solverSubSteps": 4,
+    "contactAndPoseChecks": true,
+    "maxPoseError": 0,
+    "finalXAllTrials": -0.07499999552965164,
+    "maxSampledSurfaceOverlapMmBySpeed": {
+      "10": 4.999992,
+      "30": 7.194248,
+      "80": 14.381361
+    },
+    "nominalFinalSurfaceOverlapNmApprox": 4.47
+  },
+  "continuity": "Baseline ticks 1..8100; 90 samples per trial. Samples do not prove continuous substep behavior or zero penetration.",
+  "identity": "Before == after == frozen == all raw identity; verified in sealed baseline.",
+  "lifecycle": {
+    "releaseSceneCount": 90,
+    "normalClose": "released",
+    "module": "released",
+    "world": "released",
+    "cleanupFailures": [],
+    "gpuMemory": "unmeasurable; no leak-freedom claim"
+  },
+  "console": {
+    "errorsOnly": "empty",
+    "warningCount": 22,
+    "warningCategories": [
+      "autoplay audio",
+      "deprecated debug_renderer_info",
+      "mipmap lazy initialization"
+    ]
+  },
+  "narrowDesktopOuterWidthPx": 697,
+  "limitations": {
+    "fullEX05": "NOT_PASSED",
+    "C26_C28": "NOT_RUN",
+    "crossBrowser": "NOT_RUN",
+    "MT": "NOT_RUN",
+    "mobileDevice": "NOT_RUN",
+    "worldContinuousPublicDiagnostic": "NOT_IMPLEMENTED",
+    "zeroPenetration": "NOT_CLAIMED",
+    "globalPhysics": "NOT_CLAIMED",
+    "substepContinuity": "NOT_PROVEN",
+    "comparisonRuns": "EXCLUDED_FROM_THIS_BASELINE"
+  },
+  "history": [
+    {
+      "sourceCommit": "eaa04f7fe674073144a4eddfda288e0e9c325d07",
+      "label": "FAILED_BOOT",
+      "recordedOutcome": "BLOCKED_INITIALIZATION",
+      "resultSha256": "b918721de5c7ba88e89dc44941f89a93db749f16a27bc2eedf3e4f2d14774827",
+      "boundary": "useCCD-before-onLoad initialization failure; baseline not run"
+    },
+    {
+      "sourceCommit": "df3f1d94fdeec8f766143f3e3f5ec8cf960ce324",
+      "label": "FAILED_FIRST_STEP",
+      "recordedOutcome": "BLOCKED_FIRST_BEFORE_STEP",
+      "resultSha256": "88e67d707de5d8fae3a39893ce45f18aa6995f7cbb9f91ede982a0b5d6b36ca8",
+      "boundary": "actualDt not recorded before throw; cause can be inferred from source only, not claimed as observed dt; baseline not run"
+    }
+  ],
+  "evidencePolicy": "Artifact paths are relative to the retained sealed baseline evidence root, not repository files. Raw evidence is not included in this report commit; hashes do not make this a self-contained replay bundle.",
+  "retainedEvidence": [
+    {
+      "artifact": "result.json",
+      "bytes": 2169,
+      "sha256": "7447cd3cc5aeec34ecc686ce8128d5d984499ed2d363cebb438b8731a3caf47a"
+    },
+    {
+      "artifact": "raw-audit.json",
+      "bytes": 95158,
+      "sha256": "3d61ccb6fd11756c167879335c5edb4588744a79e1000721e25ad222d8906579"
+    },
+    {
+      "artifact": "evidence-manifest.json",
+      "bytes": 5997,
+      "sha256": "a9f1fb6eedcafee51187f1bf38bc20bfa3b90b1e9c7ffda064592292029b54d9"
+    },
+    {
+      "artifact": "predeclared-plan.json",
+      "bytes": 2168,
+      "sha256": "6aa017d7ceb642266e2c3bef4bb13ccf5db93bab0120c3b2df844bd5615150c8"
+    },
+    {
+      "artifact": "identity-before.json",
+      "bytes": 1354,
+      "sha256": "afe4137138abc06a537eba1fdd9472b7d9a6c05bce48ce9dd9b1454d3ebe6604"
+    },
+    {
+      "artifact": "identity-after.json",
+      "bytes": 1354,
+      "sha256": "afe4137138abc06a537eba1fdd9472b7d9a6c05bce48ce9dd9b1454d3ebe6604"
+    },
+    {
+      "artifact": "frozen-identity.json",
+      "bytes": 1556,
+      "sha256": "36f54cc0946b3623f37da29a7b4086715995767ff7554e5b828ceea7c6fcf25c"
+    },
+    {
+      "artifact": "normal-close-receipt.json",
+      "bytes": 806,
+      "sha256": "712967856596ef1dbf5bcf7c6f81f6bb3e01241f7aae5a66bcea9463bf0c0906"
+    },
+    {
+      "artifact": "downloads/ex05-ccd-range(4).json",
+      "bytes": 113570,
+      "sha256": "b0c8f8ae5efe7e192e23bd79739cf075ade9e973596065b75debf1e4e02e78b9"
+    },
+    {
+      "artifact": "downloads/ex05-ccd-range(5).json",
+      "bytes": 114645,
+      "sha256": "3b9db005c310b7838d452e250fd065d6b2f7d5acd5711c1ea9f413ea4381010c"
+    },
+    {
+      "artifact": "downloads/ex05-ccd-range(6).json",
+      "bytes": 3375088,
+      "sha256": "3894f11f3f8bb1e288a73ec386e4a5d8920cf34dcb0e3983aafb06dc4d03cecf"
+    },
+    {
+      "artifact": "downloads/ex05-ccd-range(7).json",
+      "bytes": 6650115,
+      "sha256": "0ad787eaef742100ae0d9164f6397132816cc9a489a9d62ff399ef5dceb0bedd"
+    },
+    {
+      "artifact": "downloads/ex05-ccd-range(8).json",
+      "bytes": 9901817,
+      "sha256": "6f99c2af23449b8309745e7199fc457a4988664e632ebdd40fefe48aeef3b60f"
+    },
+    {
+      "artifact": "downloads/ex05-ccd-range(9).json",
+      "bytes": 9902893,
+      "sha256": "6cebdb426cb14979c122d1ce906b08a39b3ab1c4473af38b0d5a8e9ed99d0915"
+    }
+  ]
+}
