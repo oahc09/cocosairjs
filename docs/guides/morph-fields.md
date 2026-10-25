@@ -3,7 +3,7 @@
 `createAirMorphField()` 将有相同样本数的形态一次上传到两张 RGBA32F 纹理，再由 GPU 插值位置与线性 RGB。每个场使用一个原生 Node/Model、共享图元几何和实例流，没有逐样本 Node，也没有每帧 CPU 插值矩阵。
 
 ```ts
-import { createAirMorphField, sampleAirTextShape, sampleAirTriangleShape, primitives } from 'cocosair';
+import { createAirMorphField, sampleAirTextShape, sampleAirTriangleShape, primitives } from 'cocosair.js';
 
 // 在 createAirApp() 之后组装；可以先组装，再 app.run(scene)。
 const count = 16384;

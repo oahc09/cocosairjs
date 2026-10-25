@@ -3,7 +3,7 @@
 `createAirParticleSystem()` 创建原生 `ParticleSystem`，补齐原来由编辑器保存的模块对象，再激活节点。没有独立播放器或平行模拟系统。先完成 `createAirApp()`；可以在 `app.run(scene)` 前组装，也可以向运行中的场景添加。
 
 ```ts
-import { createAirParticleSystem, ParticleShapeType, ParticleSpace, ParticleCurveMode } from 'cocosair';
+import { createAirParticleSystem, ParticleShapeType, ParticleSpace, ParticleCurveMode } from 'cocosair.js';
 
 const particles = createAirParticleSystem({
     parent: scene,
@@ -31,6 +31,8 @@ const particles = createAirParticleSystem({
 `configure` 在 inactive、未挂载的节点上同步执行。不要在回调内激活或挂载节点。回调异常时销毁新节点；成功时返回原生组件，通过 `particles.node` 操作变换，通过 `play()/pause()/stopEmitting()/stop()` 控制生命周期。`playOnAwake` 默认开启；需要手动启动时在回调里设为 false。
 
 `pause()` 保留当前粒子与播放时间；`stopEmitting()` 停止生成，已有粒子继续衰减；`stop()` 清空。返回值没有单独的 dispose：销毁 `particles.node`，在原生延迟销毁边界后释放模型和缓冲。共享 Texture、Mesh、Material 仍由业务所有者负责，不能按组件数重复销毁。默认内建材质继续由引擎资源管理器持有。
+
+CPU 拖尾可以初始关闭，稍后通过 `particles.trailModule!.enable = true` 开启；原生下一次 update 会先初始化所属系统、材质和缓冲，再模拟粒子。检查下一帧的实际拖尾画面/索引，不能仅以 enable 已变为 true 作为成功。建议在激活前配置寿命、容量和拖尾曲线；这些值影响原生拖尾缓冲规模。
 
 ## CPU、GPU 与空间
 

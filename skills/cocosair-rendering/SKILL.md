@@ -55,6 +55,8 @@ Exact API and symptom mappings: [triggers](references/triggers.md).
 
 Legacy forward uses one effective main directional light. Check the shadow support matrix and all cast/receive switches. Report requested versus effective MSAA and verify actual pixels.
 
+ShadowMap needs `light.shadowEnabled`, caster `shadowCastingMode = MeshRenderer.ShadowCastingMode.ON`, and receivers' `receiveShadow`.
+
 In diagnostic answers, cite the specific reference paths or links actually read and tie conclusions to those sources. Distinguish documented support, historical browser evidence and verification of the current scene; a configuration snippet is not a current runtime PASS.
 
 Read [references/contracts.md](references/contracts.md) only when the task needs exact option rules, limits, error behavior or source annotations. Prefer the topic references below for a narrower question.

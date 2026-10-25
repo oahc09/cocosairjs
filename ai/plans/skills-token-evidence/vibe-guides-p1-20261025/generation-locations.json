@@ -1,0 +1,26 @@
+{
+  "scope": "fresh generation from complete skill copies in two separate clean directories",
+  "status": "PASS",
+  "locations": [
+    [
+      {
+        "path": "skills/index.json",
+        "sha256": "11caa491d8a17495c91a955e248cdccf7acf711c441de6078e30954f90b791f0"
+      },
+      {
+        "path": "skills/INDEX.md",
+        "sha256": "38dcce5e252049d79fe994feb325b31284365b56b6cf02ed1ee2b4dbebfc6ada"
+      }
+    ],
+    [
+      {
+        "path": "skills/index.json",
+        "sha256": "11caa491d8a17495c91a955e248cdccf7acf711c441de6078e30954f90b791f0"
+      },
+      {
+        "path": "skills/INDEX.md",
+        "sha256": "38dcce5e252049d79fe994feb325b31284365b56b6cf02ed1ee2b4dbebfc6ada"
+      }
+    ]
+  ]
+}

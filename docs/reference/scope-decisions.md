@@ -1,5 +1,9 @@
 # V1.2 · D9 范围外残留差集逐条分类（**提案**，待 owner 确认）
 
+## 当前覆盖与历史记录
+
+以下分类保留 V1.2 当时的源码差集与审批过程，不作为当前 SDK 的完整能力清单。2026-10-25 已通过 AIR 聚合入口接入原生 `ParticleSystem` 与 `createAirParticleSystem`，默认 WebGL2 的 CPU/GPU 发射、生命周期与 CPU 拖尾已有定向回归，见[当前指南](../guides/particles.md)。未新增独立 `particle` feature；当前粒子源码不再引用本记录当时列出的 `optimized-curve.ts`，因此不能据其缺失断言当前 3D 粒子不可用。WebGPU 粒子与完整发布矩阵没有据此获得验收。
+
 日期：2026-09-22（r42 建立，**r43 补扫结案**）。用途：把 历史记录（v12-upstream-regression.md，已清理） §4 的「范围外残留差集」从「需逐个分类后方可判定」推进到**逐条有理由、有实测、有成本**的可确认清单。
 
 r43 增量：D 组（`deserialize-dynamic-empty.ts`）从「高置信推断 + 待核」升为**实测结案**，代价是发现并修正了 r42 初版对 `cc.config.json` 的一句错报（§2 末条留痕）；14 项里现在 **13 项待批**（A 组 7 / B 组 1 / C 组 5），D 组 1 项只剩「确认口径」一句。
@@ -44,18 +48,19 @@ airDangling = []   ← Air 没有任何 feature 指向「已声明但文件不�
 > `node tools/verify/verify-file-map.cjs`（含 r43 的 `moduleOverrides` 第 7 类断言）、以及本文件与 §3 各表里写明的 `grep` 命令（feature 名单 / `-empty` 映射 / importer）。
 > 即：**结论的证据链有仓库内一半**，探测脚本只是把同一批判据批量化的加速器。
 
-| 判据 | 命令 | 产物 |
-|---|---|---|
-| 谁静态 import 了它（按相对说明符真实解析，不按 basename 猜） | `node .../d9-probe/importers.cjs` | `importers-r1.json` |
-| 从它出发能到达哪些上游文件，其中 Air 缺几个 | `node .../d9-probe/cost.cjs` | `cost-r1.json` |
-| 当期交付产物的顶层导出表里有没有对应符号 | `node .../d9-probe/verdict.cjs` + 导出的 `bundle-exports.json`（**574 个导出名**） | `verdict-r1.json` |
-| 上游 feature unit 差集 / Air 悬空 feature | `node .../d9-probe/features.cjs` | `features-r1.json` |
-| 27 个未声明 feature 各自在 `cocos/<module>/**` 下贡献几个 Air 缺失文件 | `node .../d9-probe/features-only.cjs` | `features-only-upstream-r1.json` |
-| `-empty` 替换在上游如何接线、有没有覆盖某个文件（r43 新增） | `grep -n "empty" E:/AIProMax/github/cocos4/cc.config.json` | 实测 3 条：`:321` `:462` `:469`，全在 `moduleOverrides[].overrides` 里，形如 `"cocos/2d/renderer/native-2d.ts": "cocos/2d/renderer/native-2d-empty.ts"` ⇒ **只有显式列出的路径对才会被替换，不存在自动后缀规则** |
-| 上游构建脚本里有没有按名替换模块的逻辑（r43 新增） | `grep -rn "empty\|replacement\|importReplace" E:/AIProMax/github/cocos4/scripts` | 命中仅 `emptyDir`（fs-extra，清空输出目录）+ `native-pack-tool/source/platforms/ios.ts:57` 的局部变量 `replacement`（写 Info.plist）⇒ **无** |
-| Air 侧是否镜像了上游现有的 3 条 `-empty` 替换（r43 新增） | `grep -n "empty\|overrides" E:/AIProMax/github/cocosair.js/src/cc.config.json` + 对三个目标文件做 sha256₁₆ 对比 | `src/cc.config.json:281/422/429` 三条齐全；目标文件 `native-2d-empty.ts` `marionette/index-empty.ts` `pose-graph/runtime-exports-empty.ts` 与上游 **逐字节同**（`e0f982053278a8f1` / `c5c59441c2e0b260` / `8e609bb71c20b858`） |
+| 判据                                                                   | 命令                                                                                                            | 产物                                                                                                                                                                                                                           |
+| ---------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 谁静态 import 了它（按相对说明符真实解析，不按 basename 猜）           | `node .../d9-probe/importers.cjs`                                                                               | `importers-r1.json`                                                                                                                                                                                                            |
+| 从它出发能到达哪些上游文件，其中 Air 缺几个                            | `node .../d9-probe/cost.cjs`                                                                                    | `cost-r1.json`                                                                                                                                                                                                                 |
+| 当期交付产物的顶层导出表里有没有对应符号                               | `node .../d9-probe/verdict.cjs` + 导出的 `bundle-exports.json`（**574 个导出名**）                              | `verdict-r1.json`                                                                                                                                                                                                              |
+| 上游 feature unit 差集 / Air 悬空 feature                              | `node .../d9-probe/features.cjs`                                                                                | `features-r1.json`                                                                                                                                                                                                             |
+| 27 个未声明 feature 各自在 `cocos/<module>/**` 下贡献几个 Air 缺失文件 | `node .../d9-probe/features-only.cjs`                                                                           | `features-only-upstream-r1.json`                                                                                                                                                                                               |
+| `-empty` 替换在上游如何接线、有没有覆盖某个文件（r43 新增）            | `grep -n "empty" E:/AIProMax/github/cocos4/cc.config.json`                                                      | 实测 3 条：`:321` `:462` `:469`，全在 `moduleOverrides[].overrides` 里，形如 `"cocos/2d/renderer/native-2d.ts": "cocos/2d/renderer/native-2d-empty.ts"` ⇒ **只有显式列出的路径对才会被替换，不存在自动后缀规则**               |
+| 上游构建脚本里有没有按名替换模块的逻辑（r43 新增）                     | `grep -rn "empty\|replacement\|importReplace" E:/AIProMax/github/cocos4/scripts`                                | 命中仅 `emptyDir`（fs-extra，清空输出目录）+ `native-pack-tool/source/platforms/ios.ts:57` 的局部变量 `replacement`（写 Info.plist）⇒ **无**                                                                                   |
+| Air 侧是否镜像了上游现有的 3 条 `-empty` 替换（r43 新增）              | `grep -n "empty\|overrides" E:/AIProMax/github/cocosair.js/src/cc.config.json` + 对三个目标文件做 sha256₁₆ 对比 | `src/cc.config.json:281/422/429` 三条齐全；目标文件 `native-2d-empty.ts` `marionette/index-empty.ts` `pose-graph/runtime-exports-empty.ts` 与上游 **逐字节同**（`e0f982053278a8f1` / `c5c59441c2e0b260` / `8e609bb71c20b858`） |
 
 ⚠️ 诚实边界：
+
 - 「Air 缺 N 个文件」的闭包**只覆盖 `cocos/**` + `exports/**` 内的相对静态 import**，不含 `internal:constants`、动态构造的路径，也不含仓库根的 `vendor/**`（`exports/vendor-google.ts` 因此被低估，见 A-4）。
 - 一次可达性实验（`reach.cjs`）因把上游入口猜成 `cocos/index.ts`（实测不存在，上游入口是**逐 feature 的 `exports/*.ts`**）而得到全 0 结果，**该实验的结论一个都没用**，仅留档。
 - 「符号未在导出表」≠「代码不在产物里」：例如 `RichText` 未导出但 `RichTextComponent` 在 574 名里 ⇒ 实现已发布，缺的只是 `export *` 门面。
@@ -65,44 +70,44 @@ airDangling = []   ← Air 没有任何 feature 指向「已声明但文件不�
 
 ### A 组：入口门面（`exports/*.ts`，1–26 行，纯 re-export）
 
-| # | 文件 | 上游 feature | 实质 | Air 现状（实测） | 纳入成本 |
-|---|---|---|---|---|---|
-| A-1 | `exports/affine-transform.ts` | `affine-transform` | `export { AffineTransform } from '../cocos/core/math/affine-transform'`（1 行） | 实现**已在树内**（`src/cocos/core/math/affine-transform.ts` 275 行）；顶层导出表无 `AffineTransform` | 1 个文件 |
-| A-2 | `exports/rich-text.ts` | `rich-text` | `export * from '../cocos/2d/components/rich-text'`（1 行） | 实现已在树内（`src/cocos/2d/components/rich-text.ts`），且产物已含 `RichTextComponent` | 1 个文件 |
-| A-3 | `exports/ui-skew.ts` | `ui-skew` | `export * from '../cocos/2d/framework/ui-skew'`（1 行） | 实现已在树内（`src/cocos/2d/framework/ui-skew.ts`），产物含 `UIRenderer`/`skewX` | 1 个文件 |
-| A-4 | `exports/vendor-google.ts` | `vendor-google` | re-export `../vendor/google`（26 行） | **实现不在树内**（`src/vendor/google.ts` 缺）⇒ 闭包计数「缺 1」低估了它（`vendor/**` 未纳入扫描根） | ≥2 个文件 + 第三方 Google Cast SDK 依赖（许可面） |
-| A-5 | `exports/light-probe.ts` | `light-probe` | `export * from '../cocos/gi/light-probe'`（1 行） | 实现已在树内（`src/cocos/gi/light-probe/index.ts` 29 行）；产物有 `LightProbeInfo` 但无 `LightProbe`；另有 2 个 `.jsb.ts` 属平台排除 | 1 个文件（若 `gi/light-probe` 其余实现确有缺口则按闭包补，实测闭包缺 1） |
-| A-6 | `exports/xr.ts` | `xr` | 26 行入口 | 实现已在树内（`src/cocos/xr/index.ts` 25 行）；顶层无 `xr` 相关导出 | 1 个文件；但 WebXR 语义在 headless 三引擎下**不可取证**（矩阵无 XR 设备）⇒ 纳入也拿不到 §12 的浏览器证据 |
-| A-7 | `exports/particle.ts` | `particle`（3D 粒子） | 26 行入口 | 实现基本已在树内（`src/cocos/particle/index.ts` 46 行；闭包 629 文件仅缺 2：本门面 + `cocos/particle/animator/optimized-curve.ts`） | 2 个文件（见 B-1） |
+| #   | 文件                          | 上游 feature          | 实质                                                                            | Air 现状（实测）                                                                                                                     | 纳入成本                                                                                                 |
+| --- | ----------------------------- | --------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------- |
+| A-1 | `exports/affine-transform.ts` | `affine-transform`    | `export { AffineTransform } from '../cocos/core/math/affine-transform'`（1 行） | 实现**已在树内**（`src/cocos/core/math/affine-transform.ts` 275 行）；顶层导出表无 `AffineTransform`                                 | 1 个文件                                                                                                 |
+| A-2 | `exports/rich-text.ts`        | `rich-text`           | `export * from '../cocos/2d/components/rich-text'`（1 行）                      | 实现已在树内（`src/cocos/2d/components/rich-text.ts`），且产物已含 `RichTextComponent`                                               | 1 个文件                                                                                                 |
+| A-3 | `exports/ui-skew.ts`          | `ui-skew`             | `export * from '../cocos/2d/framework/ui-skew'`（1 行）                         | 实现已在树内（`src/cocos/2d/framework/ui-skew.ts`），产物含 `UIRenderer`/`skewX`                                                     | 1 个文件                                                                                                 |
+| A-4 | `exports/vendor-google.ts`    | `vendor-google`       | re-export `../vendor/google`（26 行）                                           | **实现不在树内**（`src/vendor/google.ts` 缺）⇒ 闭包计数「缺 1」低估了它（`vendor/**` 未纳入扫描根）                                  | ≥2 个文件 + 第三方 Google Cast SDK 依赖（许可面）                                                        |
+| A-5 | `exports/light-probe.ts`      | `light-probe`         | `export * from '../cocos/gi/light-probe'`（1 行）                               | 实现已在树内（`src/cocos/gi/light-probe/index.ts` 29 行）；产物有 `LightProbeInfo` 但无 `LightProbe`；另有 2 个 `.jsb.ts` 属平台排除 | 1 个文件（若 `gi/light-probe` 其余实现确有缺口则按闭包补，实测闭包缺 1）                                 |
+| A-6 | `exports/xr.ts`               | `xr`                  | 26 行入口                                                                       | 实现已在树内（`src/cocos/xr/index.ts` 25 行）；顶层无 `xr` 相关导出                                                                  | 1 个文件；但 WebXR 语义在 headless 三引擎下**不可取证**（矩阵无 XR 设备）⇒ 纳入也拿不到 §12 的浏览器证据 |
+| A-7 | `exports/particle.ts`         | `particle`（3D 粒子） | 26 行入口                                                                       | 实现基本已在树内（`src/cocos/particle/index.ts` 46 行；闭包 629 文件仅缺 2：本门面 + `cocos/particle/animator/optimized-curve.ts`）  | 2 个文件（见 B-1）                                                                                       |
 
 ⇒ **A 组共 7 项，其中 5 项的「缺失」只差一个 1–26 行的 re-export 门面**，实现与产物都已经在 Air 里。
 这一组的真问题不是抽取完整性，而是**「Code First 的顶层命名空间要不要暴露它们」**——与已交付示例无关，与 API 面口径有关（同一口径问题已记在 F-88：inventory 不识别别名导出 / `export enum` / 访问器属性）。
 
 ### B 组：真实现未纳入的子系统（3D 粒子的一处）
 
-| # | 文件 | 说明 | 实测 |
-|---|---|---|---|
+| #   | 文件                                         | 说明                               | 实测                                                                                                                                                            |
+| --- | -------------------------------------------- | ---------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | B-1 | `cocos/particle/animator/optimized-curve.ts` | 3D 粒子 `OptimizedCurve`（220 行） | Air 缺该文件，且它是 A-7 闭包里唯一缺的实现文件；顶层导出表无 `OptimizedCurve` ⇒ 3D 粒子目前**在 Air 里是「树内有大部分实现、少一处文件、且无入口」的半纳入态** |
 
 ⚠️ 「半纳入」是实测结论，不是判断：`cocos/particle/**` 其余文件在 Air 树内存在，但它们整体不被任何 Air 入口静态触达（A-7 门面缺失），因此在交付产物里是否存活需单独测（本轮只测了 `exports/` 表，未测 `cocos/particle` 的存活集）⇒ **待核**。
 
 ### C 组：terrain（计划书未列的完整子系统，5 个文件）
 
-| # | 文件 | 行数（上游） | 谁引用它 |
-|---|---|---|---|
-| C-1 | `cocos/terrain/terrain.ts` | 2706 | 仅 `cocos/terrain/index.ts` 与 `exports/terrain.ts` |
-| C-2 | `cocos/terrain/terrain-lod.ts` | 509 | 仅 `cocos/terrain/terrain.ts` |
-| C-3 | `cocos/terrain/height-field.ts` | 92 | 仅 `terrain/index.ts`、`terrain/terrain.ts` |
-| C-4 | `cocos/terrain/index.ts` | 27 | 仅 `exports/terrain.ts` |
-| C-5 | `exports/terrain.ts` | 26 | 上游无静态引用者（feature 入口即终点） |
+| #   | 文件                            | 行数（上游） | 谁引用它                                            |
+| --- | ------------------------------- | ------------ | --------------------------------------------------- |
+| C-1 | `cocos/terrain/terrain.ts`      | 2706         | 仅 `cocos/terrain/index.ts` 与 `exports/terrain.ts` |
+| C-2 | `cocos/terrain/terrain-lod.ts`  | 509          | 仅 `cocos/terrain/terrain.ts`                       |
+| C-3 | `cocos/terrain/height-field.ts` | 92           | 仅 `terrain/index.ts`、`terrain/terrain.ts`         |
+| C-4 | `cocos/terrain/index.ts`        | 27           | 仅 `exports/terrain.ts`                             |
+| C-5 | `exports/terrain.ts`            | 26           | 上游无静态引用者（feature 入口即终点）              |
 
 ⇒ **闭包自封**：这 5 个文件构成一个闭合簇（`importers-r1.json` 实测：簇外无相对静态 import 者），Air 从 `src/cocos/terrain` 到顶层导出表**完全没有地形路径**（`Terrain` 未导出；产物里唯一的近亲是物理侧 `TerrainCollider`，它不 import `cocos/terrain`）。
 计划书 16 组回归目标里没有地形，LV12-xx 亦无地形 example ⇒ 建议口径：**显式 Deviation 豁免（不纳入 V1.2）**，理由链=「计划书未列该组 + 闭包自封（不纳入不会让任何已纳入文件失去依赖）+ 纳入需 3334 行真实现与 `Terrain` 资产/编辑面，而 V1.2 无地形回归目标可验收」。
 
 ### D 组：上游侧零引用桩（1 个文件）—— r43 **实测结案**，原「构建管线排除」推断作废
 
-| # | 文件 | 实测（r43，四条命令全可复跑） |
-|---|---|---|
+| #   | 文件                                                                                                                         | 实测（r43，四条命令全可复跑）                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| --- | ---------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | D-1 | `cocos/serialization/deserialize-dynamic-empty.ts`（32 行 / 1,305 B，两个函数体都是 `throw new Error('Should not called')`） | ① 上游 `cocos/**`+`exports/**` 对该路径 **零静态引用者**：全仓 `grep -rn "deserialize-dynamic" E:/AIProMax/github/cocos4` 只有 4 处命中，全在 `cocos/serialization/deserialize.ts:28/31/498/518`，且引的是 `./deserialize-dynamic`（真实现，Air 已有 893 行版本）。② 上游 `cc.config.json` 的 `-empty` 替换共 **3 条**（`:321` native-2d、`:462` marionette runtime-exports、`:469` pose-graph runtime-exports），**没有** `deserialize-dynamic` 的条目。③ 上游 `scripts/**` 扫 `empty\|replacement\|importReplace` 只命中 `emptyDir`（fs-extra 清空目录）与 iOS plist 的局部变量 `replacement` ⇒ **无按名替换模块的构建逻辑**。④ Air 侧同名机制已对齐：`src/cc.config.json:281/422/429` 逐条镜像那 3 个映射，且三个替换目标文件在 Air 树内与上游 **sha256₁₆ 全同**（`e0f982053278a8f1` / `c5c59441c2e0b260` / `8e609bb71c20b858`，行数 29/25/1 亦同）。 |
 
 ⇒ 结案口径：**登记为「上游侧零引用桩（本仓库快照内不可达），不纳入零功能损失」**。

@@ -1,0 +1,367 @@
+✔ fresh candidate reading evidence is explicitly selected without rebinding historical records (1.2694ms)
+✔ CLI requires explicit source and output, and rejects unknown, duplicate or valueless flags (0.5784ms)
+✔ output must be a new absolute child of the approved temporary root (14.7653ms)
+✔ output cannot be inside a protected source or contain a protected source (7.9658ms)
+✔ output parent must already exist (7.188ms)
+✔ output rejects both an existing symlink and a symlink ancestor (8.9218ms)
+✔ read-only inputs reject symlinks, directories and absent files (12.0829ms)
+✔ writeNew refuses traversal, absolute paths, backslashes, NULs and overwrite (10.5301ms)
+✔ writeNew refuses a symlinked parent without touching the target (8.2791ms)
+✔ original snapshot identity is pinned, not accepted from candidate-derived hashes (1.0527ms)
+✔ prerequisite replacement checks old bytes and exactly one occurrence (0.3575ms)
+✔ prerequisite replacement rejects malformed UTF-8 even with a matching hash (0.1262ms)
+✔ missing, empty, synthetic B2, incomplete, failed and multiple B1 records fail closed (19.3621ms)
+✔ disk verification rejects missing, extra, byte-changed or hash-changed files (0.875ms)
+✔ format scope contains all new or byte-modified skill sources, without unchanged originals (0.1799ms)
+✔ CLI without explicit output cannot start or create a passing report (78.6987ms)
+✔ orchestration refuses an existing output without modifying its contents (9.7316ms)
+✔ missing current tools or future inputs produce FAIL, never a placeholder PASS (13.0853ms)
+✔ shared projection has fixed fields, legacy empties and strict field types (1.1243ms)
+✔ serialization pins independent field views and never adds body fields (0.1492ms)
+✔ generated schema has all routing fields, unique sorted names and deterministic bytes (19.3319ms)
+✔ reference target and answer extraction preserves nested and escaped paths (7.8541ms)
+✔ new Reference map takes precedence over legacy References (9.0466ms)
+✔ directory identity mismatches and duplicate projected names are rejected (13.3557ms)
+✔ reference map link titles do not contaminate answer text (7.8355ms)
+✔ closure includes sibling directories, reference definitions and cycles without writes (29.4978ms)
+✖ closure rejects out-of-tree targets and never follows symbolic links (13.4513ms)
+✔ navigation FAIL retains actual closed-tree statistics and cannot be bypassed (16.2611ms)
+✔ encoded escapes, invalid encoding, absolute paths and backslashes fail containment (13.1738ms)
+✔ CLI writes only the two deterministic indexes, checks drift, and refuses bundle or implicit writes (1670.0768ms)
+✔ CLI analysis executes the tool-owned checker and never an analyzed-tree checker (122.9671ms)
+✔ YAML parser rejects duplicate keys and preserves Unicode plus quoted scalar types (2.8412ms)
+✔ fences retain exact code bytes and do not produce headings or navigation (0.8534ms)
+✔ headings, prose and table blocks preserve original ranges and raw hashes (0.3422ms)
+✔ link offsets survive frontmatter, Unicode, nested and escaped destinations (0.4226ms)
+✔ inline code, comments and escaped link openers are not navigation (0.105ms)
+✔ malformed frontmatter and non-LF text fail rather than invent source offsets (0.1367ms)
+✖ filesystem walk rejects root and nested symlinks instead of following them (4.8247ms)
+✔ comment-contained backticks cannot conceal active links and invalid reference titles are ignored (0.1936ms)
+✔ frontmatter text is not navigation and body link metadata keeps full-source offsets (0.2351ms)
+✖ inventory is path-sorted with pinned field order and independent Git blob hashes (10.0581ms)
+✔ typed argument parsing rejects unknown flags, duplicates and missing values (0.346ms)
+✔ single-column tables preserve table semantics and exact cell bytes (0.1716ms)
+✔ Unicode code points, UTF-8 bytes, Han and other-token estimates are distinct (1.2554ms)
+✔ L0 is exactly 22 name-sorted shared host-minimal serializations joined with LF (139.4486ms)
+✔ static full, original raw frontmatter and body have separate deterministic layers (224.0462ms)
+✔ verified snapshots reject on-disk edits, missing or additional files (111.8236ms)
+✔ snapshot schema, canonical ordering, digest, blob digest and unsafe paths are verified (77.7922ms)
+✖ snapshot root, parent, manifest and source symlinks fail closed (58.8261ms)
+✔ scenario fixtures require schema, exactly B1/B2, frozen protocol and real source blocks (208.8042ms)
+✔ B2 always requires a genuine at-least-15000-byte pipeline source (81.4964ms)
+✔ valid fixed loads count L0 once and preserve every repeated nonrouter read (185.2798ms)
+✔ fragment costs use inclusive 1-based lines, real bytes and exact fragment hashes (130.8932ms)
+✔ empty reads, missing fragments, overlap, wrong endpoints and wrong fragment hashes fail (532.4668ms)
+✔ missing, partial and duplicated router reads cannot establish Profile A benefit (186.6504ms)
+✔ missing or false L0 and per-read receipt flags fail rather than assuming full receipt (197.3015ms)
+✔ question, protocol, fixture, metric, snapshot and L0 hashes bind every fixed task (313.7535ms)
+✔ paths, full content hashes and actual char/byte counts cannot be fabricated (326.7006ms)
+✔ failed, blocked, incomplete and invalid-time fixed tasks retain evidence but never savings (553.5197ms)
+✔ answer checks require every frozen check, success and actual answer-text evidence (565.0783ms)
+✖ answer symlinks and symlink parents outside the log directory are rejected (97.0231ms)
+✔ empty and malformed JSONL logs fail; valid siblings do not hide malformed events (138.5919ms)
+✔ M2 retains failed and zero-reference real tasks, deduplicates references and excludes context (71.9934ms)
+✔ twenty logged real tasks cannot prove complete five-business-day population or authorize P2 (129.9086ms)
+✔ M2 rejects fixed tasks, unlabeled tasks and missing reads; zero-task denominator is null (101.6902ms)
+✔ benefit comparison recomputes both reports and B1 nonincrease passes at equality (350.8164ms)
+✔ B2 comparison uses original baseline and enforces at least forty percent reduction (371.7946ms)
+✔ changed frozen question or protocol invalidates original evidence, even with new high denominators (240.9906ms)
+✔ empty comparisons and retained retries fail rather than picking the cheapest attempt (269.6535ms)
+✔ CLI rejects unknown, missing, duplicate and write/P2 flags (481.8894ms)
+✔ CLI static diff requires original snapshot and detects fabricated baseline fields (502.6068ms)
+✔ CLI load diff requires raw original logs and refuses M2 benefit comparisons (649.6993ms)
+✔ CLI default JSON measurement is read-only and UTF-8 files remain unchanged (217.6306ms)
+✔ static measurement is location independent even for a renamed skills directory (185.0111ms)
+✔ B2 reference under 15000 bytes fails even after all its source hashes are consistently changed (72.709ms)
+✔ candidate snapshot requires original source snapshot for frozen scenario validation (204.4423ms)
+✔ answer changes after baseline capture invalidate recomputation even when old report is unchanged (180.1666ms)
+✔ BOMs are preserved in text payload cost and malformed UTF-8 is rejected (106.0478ms)
+✔ fixed CLI contract pins the four historical reports and immutable inventory (1.4643ms)
+✔ all four synthetic archives recover exact bytes and preserve historical FAIL (2.6164ms)
+✔ missing, extra, duplicate and unknown manifest entries fail (1.1387ms)
+✔ manifest rejects changed original size, Git SHA, status, unknown fields and invalid gzip bounds (1.5803ms)
+✔ both changed inventory bytes and a matching replacement manifest pin are rejected (1.0323ms)
+✔ publication inventory must independently contain the exact original report identity (1.4455ms)
+✔ gzip length and hash mismatches fail before decompression (0.7249ms)
+✔ truncated gzip and bad CRC fail even if compressed hashes are updated (0.6724ms)
+✔ oversized decompression is capped by the fixed original size (2.3118ms)
+✔ changing payload plus gzip and original hashes cannot escape the fixed historical Git SHA (0.7977ms)
+✔ original SHA-256 and parsed JSON status are independently checked (0.7231ms)
+✔ logical and gzip paths reject traversal, absolute paths and alternative artifact names (0.8182ms)
+✖ bounded file reads reject absent files, oversize inputs, symlinks and symlink parents (8.2741ms)
+✖ output refuses overwrite, symlinks, traversal outside temp and source overlap (11.6611ms)
+✔ restoration writes only verified logical paths and independently rereads their bytes (39.8986ms)
+✔ CLI failures are JSON-only and validation failure creates no output directory (290.3952ms)
+✔ tokenizer pins casing, Unicode normalization, exact errors, camel case and stop words (2.7055ms)
+✔ BM25 follows k1 1.2 b .75 and positive natural-log IDF (0.7284ms)
+✔ ties use deterministic ascending names and retain every competitor (0.1666ms)
+✔ zero-hit accidental top three is not effective recall or a boundary pass (0.2755ms)
+✔ field views stay separate without body fallback (0.2078ms)
+✔ full gate requires 38/44, 19/22 and every top-three and boundary result (0.1954ms)
+✔ probe gate takes ceil(.85 N) and preserves every effective hit (0.0782ms)
+✔ regression comparison preserves each metric independently (0.1176ms)
+✔ CLI rejects unsupported model tier, unknown flags and missing snapshot (0.5918ms)
+✖ snapshot inventory is deterministic and rejects symbolic links (7.2908ms)
+✔ probe selection is all-and-only frozen five owners, with both required real errors (0.2734ms)
+✔ a self-consistent but fabricated baseline score is rejected against original recomputation (0.912ms)
+✔ prerequisite CLI flags must be paired and probe-only, including programmatic calls (0.5549ms)
+✔ approved prerequisite accepts only the bounded 4+1 diff and table padding (315.4033ms)
+✔ prerequisite rejects forged hashes, provenance, approval and proof path sets (153.5209ms)
+✔ prerequisite snapshots are reread against their frozen manifests before use (193.068ms)
+✔ rewriting the approved excerpt and synchronously rehashing its proof cannot authorize different content (175.3372ms)
+▶ prerequisite rejects fifth file rewrite, extra addition, deletion and SKILL changes even with rehashed proof
+  ✔ fifth old file (182.5348ms)
+  ✔ extra new file (176.5524ms)
+  ✔ deleted old file (251.5514ms)
+  ✔ probe metadata (171.3761ms)
+  ✔ non-probe metadata (154.715ms)
+  ✔ body without routing change (118.6728ms)
+✔ prerequisite rejects fifth file rewrite, extra addition, deletion and SKILL changes even with rehashed proof (1056.1243ms)
+▶ approved paths reject prose, qualifiers, blank lines, code spacing and row changes beyond exact replacements
+  ✔ prose rewrite (109.7916ms)
+  ✔ lost under note (107.3168ms)
+  ✔ new non-table whitespace (96.9057ms)
+  ✔ replacement absent (100.9718ms)
+  ✔ replacement duplicated (120.755ms)
+  ✔ inline-code spaces (105.5344ms)
+  ✔ table prose spaces (106.4313ms)
+  ✔ table alignment semantics (105.9644ms)
+  ✔ table row duplicate (99.4231ms)
+  ✔ table row reordered (219.3685ms)
+  ✔ graphics link target (180.3049ms)
+✔ approved paths reject prose, qualifiers, blank lines, code spacing and row changes beyond exact replacements (1354.0151ms)
+✔ each original approved replacement must occur exactly once (185.2368ms)
+✔ prerequisite requires equality of the shared routing projections (177.9147ms)
+✔ candidate probe still freezes all prerequisite references, competitors and bodies (250.2431ms)
+✔ synthetic end-to-end probe keeps original prompt evidence and baseline while reporting prerequisite hashes (356.6878ms)
+✔ unchanged tree requires an explicit source-bound ledger and stays read-only (127.8314ms)
+✔ every removed prose block and heading needs a valid explicit mapping (135.4944ms)
+✔ summaries alone cannot preserve original qualifiers (41.0879ms)
+✔ tampered original snapshot bytes and manifest fingerprints fail closed (19.9895ms)
+✔ source and destination hashes independently detect tampering (86.3547ms)
+✔ unreviewed entries, empty destinations and unknown phases fail closed (63.2956ms)
+✔ metadata original values can be fully archived, with exact field hashes (67.2461ms)
+✔ host permissions cannot change even if old declaration has an archived ledger destination (41.8818ms)
+✔ code body must be byte-exact even when fence style changes (66.8232ms)
+✔ table alignment and row order can change, but cell values and row multiplicity cannot (62.9553ms)
+✔ prose duplicate deletion requires explicit deduplication, including range aliases (106.7027ms)
+✔ code duplicate deletion requires explicit deduplication, including range aliases (94.8865ms)
+✔ table duplicate deletion requires explicit deduplication, including range aliases (123.6122ms)
+✔ recorded link edits require same logical target and preserve all surrounding prose (94.5829ms)
+✔ unrecorded link edits and invented mappings cannot be normalized away (64.0522ms)
+✔ restore performs a fresh exact disk enumeration and never executes restored scripts (35.9996ms)
+✖ restore rejects existing output, source-tree destinations, symlinks and nonexistent parent (53.1796ms)
+✖ snapshots reject added files, symlinks, path traversal and duplicate manifest paths (37.2409ms)
+✔ CLI only emits parseable JSON and rejects a write mode without explicit restore output (182.9158ms)
+✔ one approved deduplication cannot exempt a third source move to the same destination (79.0388ms)
+✔ a full original archived in an unlinked file is not reachable preservation (38.6338ms)
+✔ inline code whitespace remains exact while prose layout can change (70.6061ms)
+✔ table header roles, inline code spaces and duplicate rows are preserved (0.3977ms)
+✔ actual YAML parser accepts block values; Unicode budgets count code points (156.949ms)
+✔ metadata-only skips body budget but final mode applies UTF-8 bytes (74.8352ms)
+✔ frontmatter includes delimiter and newline code points (33.5736ms)
+✔ original read-only permissions cannot be widened or swapped by directory order (55.698ms)
+✔ host environment, attribution, version, date and Chinese description remain exact strings (136.1417ms)
+✔ metadata-only explicitly selected skills leave all other originals byte-identical (68.7154ms)
+✔ metadata-only rejects selected body edits and unexpected new references (58.6045ms)
+✔ duplicate YAML keys and invalid list types fail rather than taking last value (55.8837ms)
+✔ retired, misplaced, duplicate and over-budget routing fields are rejected (40.1381ms)
+✔ directory/name mismatch and unknown skill additions fail (36.4838ms)
+✔ final gate validates index schema and compact per-name object size (80.1889ms)
+✔ CLI is JSON-only, read-only and fails for unknown flags (299.7894ms)
+ℹ tests 169
+ℹ suites 0
+ℹ pass 159
+ℹ fail 10
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8501.2707
+
+✖ failing tests:
+
+test at tools\skills\test\gen-index.test.cjs:171:1
+✖ closure rejects out-of-tree targets and never follows symbolic links (13.4513ms)
+  Error: EPERM: operation not permitted, symlink 'E:\tmp' -> 'C:\Users\caosh\AppData\Local\Temp\gen-index-test-VzJP3p\cocosair-alpha\escape'
+      at Object.symlinkSync (node:fs:1868:11)
+      at E:\AIProMax\github\cocosair.js\tools\skills\test\gen-index.test.cjs:178:12
+      at fixture (E:\AIProMax\github\cocosair.js\tools\skills\test\gen-index.test.cjs:24:16)
+      at TestContext.<anonymous> (E:\AIProMax\github\cocosair.js\tools\skills\test\gen-index.test.cjs:172:5)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    errno: -4048,
+    code: 'EPERM',
+    syscall: 'symlink',
+    path: 'E:\\tmp',
+    dest: 'C:\\Users\\caosh\\AppData\\Local\\Temp\\gen-index-test-VzJP3p\\cocosair-alpha\\escape'
+  }
+
+test at tools\skills\test\md-parse.test.cjs:92:1
+✖ filesystem walk rejects root and nested symlinks instead of following them (4.8247ms)
+  Error: EPERM: operation not permitted, symlink 'C:\Users\caosh\AppData\Local\Temp\md-parse-test-7CUtqe\root' -> 'C:\Users\caosh\AppData\Local\Temp\md-parse-test-7CUtqe\alias'
+      at Object.symlinkSync (node:fs:1868:11)
+      at TestContext.<anonymous> (E:\AIProMax\github\cocosair.js\tools\skills\test\md-parse.test.cjs:98:12)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    errno: -4048,
+    code: 'EPERM',
+    syscall: 'symlink',
+    path: 'C:\\Users\\caosh\\AppData\\Local\\Temp\\md-parse-test-7CUtqe\\root',
+    dest: 'C:\\Users\\caosh\\AppData\\Local\\Temp\\md-parse-test-7CUtqe\\alias'
+  }
+
+test at tools\skills\test\md-parse.test.cjs:132:1
+✖ inventory is path-sorted with pinned field order and independent Git blob hashes (10.0581ms)
+  Error: EPERM: operation not permitted, symlink 'C:\Users\caosh\AppData\Local\Temp\md-inventory-test-hwRWyl' -> 'C:\Users\caosh\AppData\Local\Temp\md-inventory-test-hwRWyl\nested\alias'
+      at Object.symlinkSync (node:fs:1868:11)
+      at TestContext.<anonymous> (E:\AIProMax\github\cocosair.js\tools\skills\test\md-parse.test.cjs:150:12)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    errno: -4048,
+    code: 'EPERM',
+    syscall: 'symlink',
+    path: 'C:\\Users\\caosh\\AppData\\Local\\Temp\\md-inventory-test-hwRWyl',
+    dest: 'C:\\Users\\caosh\\AppData\\Local\\Temp\\md-inventory-test-hwRWyl\\nested\\alias'
+  }
+
+test at tools\skills\test\measure-tokens.test.cjs:298:1
+✖ snapshot root, parent, manifest and source symlinks fail closed (58.8261ms)
+  Error: EPERM: operation not permitted, symlink 'C:\Users\caosh\AppData\Local\Temp\skills-measure-eXOP8p\original' -> 'C:\Users\caosh\AppData\Local\Temp\skills-measure-eXOP8p\linked'
+      at Object.symlinkSync (node:fs:1868:11)
+      at TestContext.<anonymous> (E:\AIProMax\github\cocosair.js\tools\skills\test\measure-tokens.test.cjs:300:8)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    errno: -4048,
+    code: 'EPERM',
+    syscall: 'symlink',
+    path: 'C:\\Users\\caosh\\AppData\\Local\\Temp\\skills-measure-eXOP8p\\original',
+    dest: 'C:\\Users\\caosh\\AppData\\Local\\Temp\\skills-measure-eXOP8p\\linked'
+  }
+
+test at tools\skills\test\measure-tokens.test.cjs:608:1
+✖ answer symlinks and symlink parents outside the log directory are rejected (97.0231ms)
+  Error: EPERM: operation not permitted, symlink 'C:\Users\caosh\AppData\Local\Temp\skills-measure-gCAbMr\outside-answers' -> 'C:\Users\caosh\AppData\Local\Temp\skills-measure-gCAbMr\answers'
+      at Object.symlinkSync (node:fs:1868:11)
+      at TestContext.<anonymous> (E:\AIProMax\github\cocosair.js\tools\skills\test\measure-tokens.test.cjs:612:8)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    errno: -4048,
+    code: 'EPERM',
+    syscall: 'symlink',
+    path: 'C:\\Users\\caosh\\AppData\\Local\\Temp\\skills-measure-gCAbMr\\outside-answers',
+    dest: 'C:\\Users\\caosh\\AppData\\Local\\Temp\\skills-measure-gCAbMr\\answers'
+  }
+
+test at tools\skills\test\restore-route-reports.test.cjs:256:1
+✖ bounded file reads reject absent files, oversize inputs, symlinks and symlink parents (8.2741ms)
+  Error: EPERM: operation not permitted, symlink 'C:\Users\caosh\AppData\Local\Temp\route-restore-test-18hO9D\source\artifact.gz' -> 'C:\Users\caosh\AppData\Local\Temp\route-restore-test-18hO9D\source\link.gz'
+      at Object.symlinkSync (node:fs:1868:11)
+      at E:\AIProMax\github\cocosair.js\tools\skills\test\restore-route-reports.test.cjs:263:12
+      at temporary (E:\AIProMax\github\cocosair.js\tools\skills\test\restore-route-reports.test.cjs:60:16)
+      at TestContext.<anonymous> (E:\AIProMax\github\cocosair.js\tools\skills\test\restore-route-reports.test.cjs:257:5)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    errno: -4048,
+    code: 'EPERM',
+    syscall: 'symlink',
+    path: 'C:\\Users\\caosh\\AppData\\Local\\Temp\\route-restore-test-18hO9D\\source\\artifact.gz',
+    dest: 'C:\\Users\\caosh\\AppData\\Local\\Temp\\route-restore-test-18hO9D\\source\\link.gz'
+  }
+
+test at tools\skills\test\restore-route-reports.test.cjs:269:1
+✖ output refuses overwrite, symlinks, traversal outside temp and source overlap (11.6611ms)
+  Error: EPERM: operation not permitted, symlink 'C:\Users\caosh\AppData\Local\Temp\route-restore-test-XEPqns\source' -> 'C:\Users\caosh\AppData\Local\Temp\route-restore-test-XEPqns\restored'
+      at Object.symlinkSync (node:fs:1868:11)
+      at E:\AIProMax\github\cocosair.js\tools\skills\test\restore-route-reports.test.cjs:279:12
+      at temporary (E:\AIProMax\github\cocosair.js\tools\skills\test\restore-route-reports.test.cjs:60:16)
+      at TestContext.<anonymous> (E:\AIProMax\github\cocosair.js\tools\skills\test\restore-route-reports.test.cjs:270:5)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    errno: -4048,
+    code: 'EPERM',
+    syscall: 'symlink',
+    path: 'C:\\Users\\caosh\\AppData\\Local\\Temp\\route-restore-test-XEPqns\\source',
+    dest: 'C:\\Users\\caosh\\AppData\\Local\\Temp\\route-restore-test-XEPqns\\restored'
+  }
+
+test at tools\skills\test\route-regression.test.cjs:143:1
+✖ snapshot inventory is deterministic and rejects symbolic links (7.2908ms)
+  Error: EPERM: operation not permitted, symlink 'C:\Users\caosh\AppData\Local\Temp\route-regression-test-VT3Ssa' -> 'C:\Users\caosh\AppData\Local\Temp\route-regression-test-VT3Ssa\root-link'
+      at Object.symlinkSync (node:fs:1868:11)
+      at TestContext.<anonymous> (E:\AIProMax\github\cocosair.js\tools\skills\test\route-regression.test.cjs:155:12)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    errno: -4048,
+    code: 'EPERM',
+    syscall: 'symlink',
+    path: 'C:\\Users\\caosh\\AppData\\Local\\Temp\\route-regression-test-VT3Ssa',
+    dest: 'C:\\Users\\caosh\\AppData\\Local\\Temp\\route-regression-test-VT3Ssa\\root-link'
+  }
+
+test at tools\skills\test\verify-lossless.test.cjs:282:1
+✖ restore rejects existing output, source-tree destinations, symlinks and nonexistent parent (53.1796ms)
+  Error: EPERM: operation not permitted, symlink 'C:\Users\caosh\AppData\Local\Temp\skills-lossless-zH9Y25\candidate' -> 'C:\Users\caosh\AppData\Local\Temp\skills-lossless-zH9Y25\linked'
+      at Object.symlinkSync (node:fs:1868:11)
+      at TestContext.<anonymous> (E:\AIProMax\github\cocosair.js\tools\skills\test\verify-lossless.test.cjs:290:8)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    errno: -4048,
+    code: 'EPERM',
+    syscall: 'symlink',
+    path: 'C:\\Users\\caosh\\AppData\\Local\\Temp\\skills-lossless-zH9Y25\\candidate',
+    dest: 'C:\\Users\\caosh\\AppData\\Local\\Temp\\skills-lossless-zH9Y25\\linked'
+  }
+
+test at tools\skills\test\verify-lossless.test.cjs:297:1
+✖ snapshots reject added files, symlinks, path traversal and duplicate manifest paths (37.2409ms)
+  Error: EPERM: operation not permitted, symlink 'C:\Users\caosh\AppData\Local\Temp\skills-lossless-AZ7epH\candidate\skills\cocosair-test\references\source.md' -> 'C:\Users\caosh\AppData\Local\Temp\skills-lossless-AZ7epH\snapshot\skills\link'
+      at Object.symlinkSync (node:fs:1868:11)
+      at TestContext.<anonymous> (E:\AIProMax\github\cocosair.js\tools\skills\test\verify-lossless.test.cjs:302:8)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:787:18)
+      at Test.postRun (node:internal/test_runner/test:1247:19)
+      at Test.run (node:internal/test_runner/test:1175:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:787:7) {
+    errno: -4048,
+    code: 'EPERM',
+    syscall: 'symlink',
+    path: 'C:\\Users\\caosh\\AppData\\Local\\Temp\\skills-lossless-AZ7epH\\candidate\\skills\\cocosair-test\\references\\source.md',
+    dest: 'C:\\Users\\caosh\\AppData\\Local\\Temp\\skills-lossless-AZ7epH\\snapshot\\skills\\link'
+  }

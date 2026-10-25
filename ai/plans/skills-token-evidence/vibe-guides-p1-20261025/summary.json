@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "scope": "deterministic-P1-CI",
+  "status": "PASS",
+  "source_commit": "66d11fd0c3c189b7dfa6d20645222e237352f9f3",
+  "gates": [
+    {
+      "name": "modified-skills-prettier",
+      "status": "PASS",
+      "files": 94
+    },
+    {
+      "name": "original-paths",
+      "status": "FAIL",
+      "purpose": "original defect retained, not an acceptance PASS"
+    },
+    {
+      "name": "prerequisite-paths",
+      "status": "PASS"
+    },
+    {
+      "name": "original-restore",
+      "status": "PASS"
+    },
+    {
+      "name": "candidate-paths",
+      "status": "PASS"
+    },
+    {
+      "name": "candidate-index",
+      "status": "PASS"
+    },
+    {
+      "name": "candidate-meta",
+      "status": "PASS"
+    },
+    {
+      "name": "candidate-lossless",
+      "status": "PASS"
+    },
+    {
+      "name": "candidate-route",
+      "status": "PASS"
+    },
+    {
+      "name": "candidate-static-diff",
+      "status": "PASS"
+    },
+    {
+      "name": "candidate-B1-diff",
+      "status": "PASS"
+    },
+    {
+      "name": "a-only-paths",
+      "status": "PASS"
+    },
+    {
+      "name": "a-only-index",
+      "status": "PASS"
+    },
+    {
+      "name": "a-only-meta",
+      "status": "PASS"
+    }
+  ],
+  "candidate_loads": "ai/plans/skills-token-evidence/reading-vibe-guides-refined-B1-20261025/events.jsonl",
+  "original_snapshot_hash": "1e9c6637a512b819e822d8d06ea64d444c1e5640f35c48134f70fe80a5363e19",
+  "prerequisite_snapshot_hash": "46a9449ad54586ae70a914a77992801ea732270ab7f14509f40bf3792ee22d9d",
+  "candidate_snapshot_hash": "e99d41033b9e2a8dcee26a8bb8d04e6708f338603514be4b905f86a2363a7fad",
+  "read_events_collected_or_synthesized": false,
+  "phase_two_authorized": false
+}

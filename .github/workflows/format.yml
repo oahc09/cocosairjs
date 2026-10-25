@@ -252,7 +252,7 @@ jobs:
 
           node tools/skills/restore-route-reports.cjs --out "$RUNNER_TEMP/skills-route-reports"
           set -euo pipefail
-          node tools/skills/check-p1.cjs --source "$GITHUB_WORKSPACE/.skills-original-source" --out "$RUNNER_TEMP/skills-p1" --candidate-loads ai/plans/skills-token-evidence/reading-hdr-refined-B1-20261024T130646090/events.jsonl
+          node tools/skills/check-p1.cjs --source "$GITHUB_WORKSPACE/.skills-original-source" --out "$RUNNER_TEMP/skills-p1" --candidate-loads ai/plans/skills-token-evidence/reading-vibe-guides-refined-B1-20261025/events.jsonl
       - name: Build main, min, maps, declarations and Spark exactly once
         id: build
         if: steps.classify.outputs.code == 'true'

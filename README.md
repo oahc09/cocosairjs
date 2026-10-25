@@ -382,7 +382,7 @@ cocosair.js/
 - **WASM 物理后端**：可选 Box2D 3.2 通过 `physics2D: 'box2d-v3-wasm'` 使用，配套资产随构建和 npm 包独立提供，默认 JS 后端不加载。它与旧 `physics-2d-box2d-wasm` feature 不同；旧 Box2D WASM、bullet/physx 仍受外部资产限制。分别见 [Box2D 3.2 指南](docs/guides/box2d3.md)和[资产来源记录](docs/notes/physics-asset-sourcing.md)。
 - **Spine**：组件、类型及适配代码存在，但基线的完整运行时依赖尚未部署的外部资产；不能据此宣称 Spine 动画运行已验收。见 [Spine 资产来源](docs/notes/spine-asset-sourcing.md)。
 - **Draco 浏览器解码**：adapter 支持注入 provider；随包入口为 Node/CommonJS 形态，浏览器 factory 由应用另行提供。见 [decoder 部署边界](docs/gltf/gltf-decoder-deployment.md)。
-- **地形、3D 粒子、XR、Light Probe 等范围项**：不属于当前默认支持面，具体排除与待扩展范围见 [范围记录](docs/reference/scope-decisions.md)。
+- **地形、XR、Light Probe 等范围项**：不属于当前默认支持面，具体排除与待扩展范围见 [范围记录](docs/reference/scope-decisions.md)。3D 粒子已通过 `createAirParticleSystem` 接入；当前覆盖与历史范围记录分开说明。
 - **MiniGame、Native/JSB、Creator Editor**：不属于 Web 运行时依赖闭包。
 - **Spark 高斯泼溅**：使用 `npm run build:spark` 生成独立 `build/spark.module.js`，借用主引擎，不重复打包 Cocos。可运行示例为 `examples/spark-splats/`。默认 bundle 不包含 Spark；WASM 仍以内联的上游发行字节提供，XR/hand 家族排除范围不变。Spark-rs 的 crate 级许可处置仍为 pending，因此当前仅提供仓库内可选构建，不纳入默认 npm 包。边界、声明与部署方式见 [Spark 独立模块](docs/reference/spark-optional-entry.md)。
 

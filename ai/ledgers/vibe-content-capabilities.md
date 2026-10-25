@@ -131,3 +131,17 @@
 - 最终产物浏览器报告：`output/playwright/vibe-delivery-{particles,particles-min,morph,morph-min,instances}/report.json` 均 completed=true、errors=[]。保留每份 SDK 指纹、画面和资源证据；不是完整 Gallery 或多浏览器发布验收。
 - 本轮 27 项 CPU 回归及既有未推送父提交的 10 项 shader/layout 回归通过；完整 format:check、typecheck、Web-only、file-map、doc-refs、声明消费和 193 个示例规格检查通过。所有日志位于 `output/delivery-vibe-20261025/`。
 - 本轮改动按路径/共享文件 hunk 隔离。另有本地父提交 `469a9e65`，其 Skills CI/B1 配套仍在并行工作区，范围单独确认；没有覆盖、清除或伪造这些记录。针对当前封存 B1 的完整 P1 checker 新跑 PASS；原有 Windows symlink 工具回归 BLOCKED 记录保持，不将其冒称通过。
+
+### 2026-10-25 / Docs 与 Skills 同步、B1 和提交范围确认
+
+- 用户明确授权核验并一并提交此前 Skills 配套，并授权独立冷读后完成提交推送。保留本机 `.vscode/`；不修改已有封存答案、payload 或失败结果。
+- Docs 补齐三类 Code First 指南入口，纠正 README 的“3D 粒子未支持”旧结论；scope-decisions 保留历史分类并增加当前覆盖说明。指南使用公开包名 `cocosair.js`，补上延迟开启 CPU 拖尾的初始化边界。
+- Skills 新增显式实例批次、3D ParticleSystem、GPU 点/体素形态场三份主题参考，补齐抛光/粗糙度、法线、两张 atlas、uniform 与数据上传的区别、资源归属及验收边界。既有 22 个技能、只读宿主声明、原有触发/用途和完整历史实例化正文保留；未启动第二阶段切片或共享内容迁移。
+- 元数据预算、索引、路径、无损保留和双视图路由通过。首轮预算/触发词长度失败保留在新的 P1 archive 中，修正内容以适应原门禁，没有放宽规则。六份文档代码片段用当前生成声明进行类型检查，通过；脚本补齐上下文变量的失败也保留。
+- 首次独立 B1 在快照 ad9d46f 得到 5/6，因未明确网格端 shadowCastingMode 而失败。保留该答案与真实回执，在 rendering 入口补充灯光/投影网格/接收面开关后冻结 e99d41033b9e2a8dcee26a8bb8d04e6708f338603514be4b905f86a2363a7fad；第二位无历史冷读者封存后 6/6 PASS。
+- 事件适配首次使用 completed 而非门禁要求的 complete/outcome/answer_checks，P1 如实失败。保留原始 events-reader-original.jsonl 后只补充模式别名，未改变答案哈希、读次、文档字节或判定；首次试验保持 failure，第二次保持 success。
+- 最终完整 P1 checker PASS，包括原始缺陷预期 FAIL、immutable restore、当前路由/元数据/无损校验、真实 B1 和完整 A-only 复制校验。新 B1 文档输入 C=40675，对照原始 85260；这是固定阅读协议的文档成本，不是计费 token 或运行时验收。CI 选择 reading-vibe-guides-refined-B1-20261025，旧记录保持各自历史身份。
+- 两个新的干净目录重新生成索引，均与当前字节一致。当前 Skills 与最终冻结快照仍完全匹配。本次仅文档/Skills/CI 证据改动，不重复重编此前已验收的 SDK。
+- 本地完整工具回归仍为 169 项、159 通过、10 项因 Windows 真实 symlink EPERM 失败，未跳过或改断言。manual-doc-consistency 的 10 项失败，与使用 HEAD 原索引、原检查器得到的失败清单完全一致；这是存量失败，未冒称通过。文档引用及格式检查通过。
+- 新验收材料与完整失败留存在 `ai/plans/skills-token-evidence/vibe-guides-p1-20261025/` 及两份 reading-vibe-guides 记录；原 current-p1 / reading-current 记录一并保留。汇总 index 对本地权限限制维持 BLOCKED，区分 P1 checker PASS；不宣称完整发布就绪。
+- 封存答案含原始末尾回车，Git 全文本 whitespace 检查提出警告；不能为消除警告改动答案哈希。读取 trial 通过 .gitattributes 禁止换行转换，按原字节保留。源码/说明文档单独做 diff 格式检查，另直接校验暂存区的答案 SHA 与完整 Skills 快照，避免“工作区验证通过、检出后失效”。没有添加格式忽略项或降低 P1 验证。

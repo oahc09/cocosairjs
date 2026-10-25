@@ -24,6 +24,20 @@ Use the [creation/update checklist](../../cocosair-primitives-mesh/references/co
 
 For continuous deformation, go directly to the [Component.update(dt) example](../../cocosair-animation-tween/references/quick-start.md#per-frame-geometry-updates). For controlled captures, use the [step clock](../../cocosair-animation-tween/references/step-clock.md). The implementation loop and the capture clock serve different steps; a mesh animation alone does not require reading the tween/clip examples.
 
+## Instances, particles and GPU shapes
+
+Choose by data/lifetime ownership rather than by the word "particle":
+
+| Task                                                | Read first                                                                             |
+| --------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| Repeated fixed meshes without per-instance Nodes    | [Explicit instance batches](../../cocosair-performance/references/instance-batches.md) |
+| Ordinary shared-material MeshRenderer auto-batching | [Native instancing](../../cocosair-performance/references/instancing.md)               |
+| Emission, lifetime and CPU trails                   | [Native 3D ParticleSystem](../../cocosair-2d-subsystems/references/particle-3d.md)     |
+| Text/image/mesh point or voxel shape transitions    | [GPU morph fields](../../cocosair-performance/references/gpu-morph-fields.md)          |
+| glTF mesh Morph weights or skeletal deformation     | [Skinning and Morph](../../cocosair-skinning-morph/SKILL.md)                           |
+
+For a dull `AirMorphField`, inspect its own surface mode and normals: `setSurface('polished', 0.18)` enables a procedural studio reflection, not native scene lights or full PBR/IBL. Check actual highlight changes when roughness/camera changes before adding exposure. Original native material workflows keep their existing owners; do not swap a field's private material for builtin-standard or add native `USE_INSTANCING` to its managed stream.
+
 ## Sky and environment
 
 Choose [scene globals](../../cocosair-scene-graph/references/scene-globals.md) for skybox, fog and ambient configuration, [lighting units](../../cocosair-rendering/references/lighting-units.md) for exposure/physical magnitudes, and [camera framing](../../cocosair-camera/references/camera-projection.md) for scene scale. Confirm a readable scene with fog and extra effects disabled, then tune the environment incrementally. A dark frame does not identify a missing light, excessive fog or exposure on its own; compare the [symptom checks](visual-feedback.md#start-from-the-visible-symptom).
