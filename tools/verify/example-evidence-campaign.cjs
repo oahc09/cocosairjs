@@ -53,7 +53,7 @@ const INPUT_TREES = [
     'tools/build',
 ];
 const OPTIONAL_TREES = ['build/gltf-decoders', 'build/spark-types', 'build/fflate', 'build/devtools'];
-const OPTIONAL_FILES = ['build/package.json', 'build/cocosair.legacy.d.ts', 'build/spark.module.meta.json'];
+const OPTIONAL_FILES = ['build/package.json', 'build/cocosair.legacy.d.ts', 'build/metadata/spark.module.meta.json'];
 const DEFAULT_LIMITS = Object.freeze(require('./example-evidence-limits.json'));
 
 function stable(value) {

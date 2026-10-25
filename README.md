@@ -6,6 +6,8 @@
 
 2D 物理默认使用现有 JavaScript 后端；可显式选择 [Box2D 3.2 WASM 后端](docs/guides/box2d3.md)，继续使用 Cocos 刚体、碰撞体和关节组件。WASM 资产独立部署、按需加载。
 
+直接部署 SDK 时，先看 [build 最小文件集](build/README.md)：普通浏览器只需选择一份主 JS，可选后端/解码器按功能部署；声明、source map、编译收据和 Gallery 不是每个应用的运行依赖。
+
 ## 视觉展示
 
 以下为项目概念视觉与宣传素材，非引擎实机截图。
@@ -31,10 +33,8 @@ https://github.com/user-attachments/assets/689ea4e1-de14-47dd-a104-564cf1005c06
 | 在自己的 TypeScript/JavaScript 项目开发应用 | 推荐安装本地 SDK tarball，或正式发布的 npm 包 | 应用不需要 src/、tools/、引擎 node_modules/ |
 | 不用打包器，直接在网页运行                  | 复制主 JS，通过 import map 加载               | 不需要                                      |
 | 修改引擎或运行仓库示例                      | 在本仓库安装开发依赖、构建并启动 dev server   | 需要                                        |
-| 只做数学计算（含 Node/Worker）              | 从 `cocosair.js/math` 导入                    | 不需要浏览器或主                            |
-
-引擎启动 |
-| 使用 Gaussian Splatting | 额外构建独立 Spark 模块，复用同一主引擎 | 本地构建需要；运行应用不需要 |
+| 只做数学计算（含 Node/Worker）              | 从 `cocosair.js/math` 导入                    | 不需要浏览器或主引擎启动                    |
+| 使用 Gaussian Splatting                     | 额外构建独立 Spark 模块，复用同一主引擎       | 本地构建需要；运行应用不需要                |
 
 ## 方式一：在自己的项目中依赖 SDK（推荐）
 

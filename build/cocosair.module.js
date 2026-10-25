@@ -42412,18 +42412,17 @@ class MouseInputSource {
     return new Vec2(x, y);
   }
   _registerEvent() {
-    var _this$_canvas, _this$_canvas2, _this$_canvas3, _this$_canvas4, _this$_canvas5, _this$_canvas6;
+    var _this$_canvas, _this$_canvas2, _this$_canvas3, _this$_canvas4, _this$_canvas5;
     window.addEventListener('mousedown', () => {
       this._isPressed = true;
     });
     (_this$_canvas = this._canvas) == null ? void 0 : _this$_canvas.addEventListener('mousedown', this._handleMouseDown);
     (_this$_canvas2 = this._canvas) == null ? void 0 : _this$_canvas2.addEventListener('mousemove', this._handleMouseMove);
     window.addEventListener('mouseup', this._handleMouseUp);
-    (_this$_canvas3 = this._canvas) == null ? void 0 : _this$_canvas3.addEventListener('mouseup', this._handleMouseUp);
-    (_this$_canvas4 = this._canvas) == null ? void 0 : _this$_canvas4.addEventListener('wheel', this._handleMouseWheel.bind(this));
+    (_this$_canvas3 = this._canvas) == null ? void 0 : _this$_canvas3.addEventListener('wheel', this._handleMouseWheel.bind(this));
     this._registerPointerLockEvent();
-    (_this$_canvas5 = this._canvas) == null ? void 0 : _this$_canvas5.addEventListener('mouseleave', this._handleMouseLeave.bind(this));
-    (_this$_canvas6 = this._canvas) == null ? void 0 : _this$_canvas6.addEventListener('mouseenter', this._handleMouseEnter.bind(this));
+    (_this$_canvas4 = this._canvas) == null ? void 0 : _this$_canvas4.addEventListener('mouseleave', this._handleMouseLeave.bind(this));
+    (_this$_canvas5 = this._canvas) == null ? void 0 : _this$_canvas5.addEventListener('mouseenter', this._handleMouseEnter.bind(this));
   }
   _registerPointerLockEvent() {
     const lockChangeAlert = () => {
@@ -42442,7 +42441,7 @@ class MouseInputSource {
   }
   _createCallback(eventType) {
     return mouseEvent => {
-      var _this$_canvas7;
+      var _this$_canvas6;
       const location = this._getLocation(mouseEvent);
       const {
         button,
@@ -42451,7 +42450,7 @@ class MouseInputSource {
       let targetButton = button;
       switch (eventType) {
         case InputEventType.MOUSE_DOWN:
-          (_this$_canvas7 = this._canvas) == null ? void 0 : _this$_canvas7.focus();
+          (_this$_canvas6 = this._canvas) == null ? void 0 : _this$_canvas6.focus();
           this._isPressed = true;
           break;
         case InputEventType.MOUSE_UP:
@@ -42475,8 +42474,7 @@ class MouseInputSource {
       eventMouse.movementX = mouseEvent.movementX;
       eventMouse.movementY = mouseEvent.movementY;
       this._preMousePos.set(location.x, location.y);
-      mouseEvent.stopPropagation();
-      if (mouseEvent.target === this._canvas) {
+      if (mouseEvent.target === this._canvas && mouseEvent.cancelable) {
         mouseEvent.preventDefault();
       }
       this._eventTarget.emit(eventType, eventMouse);
@@ -42494,8 +42492,7 @@ class MouseInputSource {
     const wheelSensitivityFactor = 5;
     eventMouse.setScrollData(mouseEvent.deltaX * wheelSensitivityFactor, -mouseEvent.deltaY * wheelSensitivityFactor);
     this._preMousePos.set(location.x, location.y);
-    mouseEvent.stopPropagation();
-    if (mouseEvent.target === this._canvas) {
+    if (mouseEvent.target === this._canvas && mouseEvent.cancelable) {
       mouseEvent.preventDefault();
     }
     this._eventTarget.emit(eventType, eventMouse);
@@ -55842,22 +55839,25 @@ function plane(options) {
 }
 
 function quad(options) {
+  var _options$width, _options$height;
   const normalizedOptions = applyDefaultGeometryOptions(options);
+  const hw = ((_options$width = options == null ? void 0 : options.width) !== null && _options$width !== void 0 ? _options$width : 1) * 0.5;
+  const hh = ((_options$height = options == null ? void 0 : options.height) !== null && _options$height !== void 0 ? _options$height : 1) * 0.5;
   const result = {
-    positions: [-0.5, -0.5, 0, -0.5, 0.5, 0, 0.5, 0.5, 0, 0.5, -0.5, 0],
+    positions: [-hw, -hh, 0, -hw, hh, 0, hw, hh, 0, hw, -hh, 0],
 
     indices: [0, 3, 1, 3, 2, 1],
     minPos: {
-      x: -0.5,
-      y: -0.5,
+      x: -Math.abs(hw),
+      y: -Math.abs(hh),
       z: 0
     },
     maxPos: {
-      x: 0.5,
-      y: 0.5,
+      x: Math.abs(hw),
+      y: Math.abs(hh),
       z: 0
     },
-    boundingRadius: Math.sqrt(0.5 * 0.5 + 0.5 * 0.5)
+    boundingRadius: Math.sqrt(hw * hw + hh * hh)
   };
   if (normalizedOptions.includeNormal !== false) {
     result.normals = [0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1];
@@ -138845,8 +138845,8 @@ class MouseJoint extends BaseJoint {
 
 const AIR_VERSION = '1.0.0';
 const AIR_REVISION = 100;
-const AIR_BUILD_DATE = "202610252152";
-const AIR_BUILD_NUMBER = 238;
+const AIR_BUILD_DATE = "202610260748";
+const AIR_BUILD_NUMBER = 242;
 class AirAppImpl {
   get session() {
     return this._scope;

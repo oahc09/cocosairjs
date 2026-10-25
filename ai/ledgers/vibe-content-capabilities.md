@@ -145,3 +145,21 @@
 - 本地完整工具回归仍为 169 项、159 通过、10 项因 Windows 真实 symlink EPERM 失败，未跳过或改断言。manual-doc-consistency 的 10 项失败，与使用 HEAD 原索引、原检查器得到的失败清单完全一致；这是存量失败，未冒称通过。文档引用及格式检查通过。
 - 新验收材料与完整失败留存在 `ai/plans/skills-token-evidence/vibe-guides-p1-20261025/` 及两份 reading-vibe-guides 记录；原 current-p1 / reading-current 记录一并保留。汇总 index 对本地权限限制维持 BLOCKED，区分 P1 checker PASS；不宣称完整发布就绪。
 - 封存答案含原始末尾回车，Git 全文本 whitespace 检查提出警告；不能为消除警告改动答案哈希。读取 trial 通过 .gitattributes 禁止换行转换，按原字节保留。源码/说明文档单独做 diff 格式检查，另直接校验暂存区的答案 SHA 与完整 Skills 快照，避免“工作区验证通过、检出后失效”。没有添加格式忽略项或降低 P1 验证。
+
+### 2026-10-25 / build 产物分层收纳
+
+- 普通浏览器最小部署只需选一份主 JS；TypeScript、Spark、压缩模型、WebGPU 和 Box2D3 分别有条件依赖。重写 build/README 与根入口链接，说明 map/类型不增加普通页面运行请求，npm/ 副本的发布用途，以及 fflate、样例、报告和缓存的角色。
+- 两份原有收据移到 `build/metadata/`：math-build.json 与 spark.module.meta.json。同步生产脚本、CI 身份校验、数学 tarball 消费检查和 campaign 可选输入收集；保留历史证据中的原始路径与指纹。生成成功后只清除明确迁移的旧收据，不删除 SDK、decoder、许可或验证资产。
+- 67 项既有运行/类型/资源/收据文件在迁移对应路径后均保持字节一致；只改目录说明和内部收据位置，没有重编主引擎或推进 build number。数学入口与独立 Spark 已重新生成。记录 `output/build-layout-20261025/`。
+- 数学/CI 56 项通过；campaign 98 项通过（新增元数据路径应使旧 freeze 失效的负控）。执行时发现旧 real-manifest 断言仍写 183/184，按当前清单更新为 188 普通示例/189 模式并明确检查新增的五个 ID，没有删除 ID/mode 或降低完整性要求。
+- 集成检查在正确的 Git Bash 环境为 23/24；剩余一项原有编译器子进程测试读取 Linux `/proc/self/ns/pid`，Windows 为 ENOENT，未跳过或修改该断言。初次误用系统 WSL Bash 的失败保留，未把环境失败当迁移回归。
+- 实际 npm tarball 离线安装、Node 导入、Node/NodeNext 类型解析通过。新增 build 文件说明随包提供，metadata 不进入运行包；没有发布 npm。文档引用、格式和 diff 检查通过。
+- 保留开始时已有的 neon-city 示例改动与本机 `.vscode/`。本次未暂存、提交或 push。
+
+### 2026-10-26 / 清理核查与提交前集成
+
+- 用户已手动删除未跟踪的 `build/examples/` 和 `build/reports/`，核查两者均不存在；SDK、解码器、许可、类型、metadata 与包入口依赖的 npm 副本保留。
+- 纳入霓虹示例的无 sin 哈希及远景窗格抗摩尔纹调整。Chromium 开发版/压缩版定向检查覆盖实际画面、Bloom、ACES/Reinhard、曝光、冻结帧与资源销毁；记录在 `output/build-layout-20261025/delivery-hdr-*/`，属于局部回归，不是全量示例或发布验收。
+- 提交前发现已有主 JS 尚含旧 canvas mouseup 重复监听，压缩 JS 和声明也未完全同步最新 quad/PAL 源码。因此重新构建主 JS、压缩 JS 和声明，刷新 npm 副本，并核对两份 map 中的 quad 与 mouse-input 原文；保留这次发现和重建前的本地检查记录。
+- 数学/CI 路径 56 项及 campaign/quad/鼠标冒泡 108 项通过；typecheck、PAL 生成漂移、上游映射、文档引用与所改文件格式检查通过。真实 tarball 离线安装、Node 导入和 Node/NodeNext 类型解析通过；两份 metadata 收据保留迁移前原字节。
+- 上一轮完整集成检查仍有 1 项 Linux `/proc` 专用检查在 Windows 无法执行成功，未改断言或冒称全绿。本机 `.vscode/settings.json` 指向绝对路径的临时 Box2D 目录，不随项目提交。

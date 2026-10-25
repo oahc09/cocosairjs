@@ -35617,12 +35617,12 @@
         export function plane(options?: __private._cocos_primitive_plane__IPlaneOptions): IGeometry;
         /**
          * @en
-         * Generate a quad with width and height both to 1, centered at origin.
+         * Generate a quad with configurable width and height (both default to 1), centered at origin.
          * @zh
-         * 生成一个四边形，宽高都为1，中心在原点。
+         * 生成一个四边形，宽高默认都为1，中心在原点。
          * @param options @zh 参数选项。 @en The optional creation parameters of the quad
          */
-        export function quad(options?: IGeometryOptions): IGeometry;
+        export function quad(options?: __private._cocos_primitive_quad__IQuadOptions): IGeometry;
         /**
          * @en
          * Generate a shpere with radius 0.5.
@@ -72219,6 +72219,12 @@
              * Segment count on Z-axis.
              */
             lengthSegments: number;
+        }
+        export interface _cocos_primitive_quad__IQuadOptions extends __types_globals__RecursivePartial<primitives.IGeometryOptions> {
+            /** Width on the X axis. Defaults to 1. */
+            width?: number;
+            /** Height on the Y axis. Defaults to 1. */
+            height?: number;
         }
         /**
          * @zh

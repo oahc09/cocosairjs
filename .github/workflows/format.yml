@@ -83,7 +83,7 @@ jobs:
           npm ci --ignore-scripts
           mkdir -p output/sdk-ci
           git rev-parse HEAD > output/sdk-ci/head.txt
-          sha256sum build/cocosair.math.js build/cocosair.math.d.ts build/cocosair.math.legacy.d.ts build/math-build.json > output/sdk-ci/committed-math.sha256
+          sha256sum build/cocosair.math.js build/cocosair.math.d.ts build/cocosair.math.legacy.d.ts build/metadata/math-build.json > output/sdk-ci/committed-math.sha256
       - name: Check classification and fail-closed result propagation
         id: policy_tests
         run: |

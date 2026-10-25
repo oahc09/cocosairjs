@@ -275,18 +275,20 @@ test('fresh artifact copy requires matching head and all expected outputs, never
         'cocosair.math.js',
         'cocosair.math.d.ts',
         'cocosair.math.legacy.d.ts',
-        'math-build.json',
+        'metadata/math-build.json',
     ];
     for (const name of files) put(dir, 'build/' + name, 'synthetic:' + name);
     assert.equal(cli(dir, ['identity'], { CI_HEAD_SHA: '0'.repeat(40) }).status, 1);
     assert.equal(fs.existsSync(path.join(dir, 'output/ci/build')), false);
-    fs.rmSync(path.join(dir, 'build/math-build.json'));
+    fs.rmSync(path.join(dir, 'build/metadata/math-build.json'));
+    put(dir, 'build/math-build.json', 'synthetic:stale-root-receipt');
     assert.equal(cli(dir, ['identity'], { CI_HEAD_SHA: head }).status, 1);
     assert.equal(fs.existsSync(path.join(dir, 'output/ci/build')), false);
-    put(dir, 'build/math-build.json', 'synthetic:math-build.json');
+    put(dir, 'build/metadata/math-build.json', 'synthetic:metadata/math-build.json');
     const run = cli(dir, ['identity'], { CI_HEAD_SHA: head });
     assert.equal(run.status, 0, run.stderr);
     const receipt = JSON.parse(fs.readFileSync(path.join(dir, 'output/ci/build-identity.json')));
+    assert.equal(fs.existsSync(path.join(dir, 'output/ci/build/math-build.json')), false);
     assert.equal(receipt.head, head);
     assert.equal(receipt.files.length, 10);
     for (const row of receipt.files)

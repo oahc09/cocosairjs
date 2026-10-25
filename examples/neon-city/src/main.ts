@@ -77,11 +77,13 @@ mat4 airWorldMatrix () {
 vec3 airWorldScale (mat4 m) {
   return vec3(length(m[0].xyz), length(m[1].xyz), length(m[2].xyz));
 }
-float airHash11 (float p) {
-  return fract(sin(p * 127.1) * 43758.5453);
-}
 float airHash (vec2 p) {
-  return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
+  vec3 p3 = fract(vec3(p.xyx) * 0.1031);
+  p3 += dot(p3, p3.yzx + 33.33);
+  return fract((p3.x + p3.y) * p3.z); // sin-free: D3D large-arg sin ULP instability gets amplified by *43758 into per-pixel dots
+}
+float airHash11 (float p) {
+  return airHash(vec2(p, p * 1.37));
 }`;
 
 // ---- neon-sky：渐变穹顶 + 程序星空 + 地平线光污染 ----
@@ -100,7 +102,9 @@ ${UBO_CC_GLOBAL_GLSL4}
 in highp vec3 v_dir;
 layout(location = 0) out vec4 cc_FragColor;
 float airHashS (vec2 p) {
-  return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
+  vec3 p3 = fract(vec3(p.xyx) * 0.1031);
+  p3 += dot(p3, p3.yzx + 33.33);
+  return fract((p3.x + p3.y) * p3.z); // sin-free：D3D 大参数 sin 的 ULP 不稳定性会被 *43758 放大成逐像素点阵
 }
 void main () {
   vec3 d = normalize(v_dir);
@@ -141,7 +145,7 @@ void main () {
 const SKY_FRAG_GLSL1 = `precision highp float;
 uniform highp vec4 cc_time;
 varying highp vec3 v_dir;
-float airHashS (vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+float airHashS (vec2 p) { vec3 p3 = fract(vec3(p.xyx) * 0.1031); p3 += dot(p3, p3.yzx + 33.33); return fract((p3.x + p3.y) * p3.z); }
 void main () {
   vec3 d = normalize(v_dir);
   float h = clamp(d.y, 0.0, 1.0);
@@ -195,7 +199,7 @@ void main () {
   v_height = scale.y;
   float dist = distance(v_worldPos, cc_cameraPos.xyz);
   v_fog = clamp(1.0 - exp(-pow(dist * facadeParams.x, 2.0)), 0.0, 1.0);
-  v_lod = smoothstep(60.0, 170.0, dist);
+  v_lod = smoothstep(35.0, 110.0, dist);
   // 该楼的平均窗色（LOD 远景退化为柔和光柱）
   float toneSeed = airHash11(v_seed * 31.0);
   v_tintAvg = neonPaletteV(toneSeed) * (0.05 + 0.11 * airHash11(v_seed * 7.7));
@@ -218,7 +222,9 @@ in mediump float v_lod;
 in mediump vec3 v_tintAvg;
 layout(location = 0) out vec4 cc_FragColor;
 float airHashF (vec2 p) {
-  return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
+  vec3 p3 = fract(vec3(p.xyx) * 0.1031);
+  p3 += dot(p3, p3.yzx + 33.33);
+  return fract((p3.x + p3.y) * p3.z); // sin-free：D3D 大参数 sin 的 ULP 不稳定性会被 *43758 放大成逐像素点阵
 }
 vec3 neonPalette (float t) {
   vec3 cyan    = vec3(0.16, 0.90, 1.00);
@@ -258,8 +264,11 @@ void main () {
     float twinkle = (v_lod < 0.45 && airHashF(cell + v_seed) > 0.985)
       ? (0.5 + 0.5 * sin(cc_time.x * 9.0 + airHashF(cell) * 911.0)) : 1.0;
     vec3 pattern = base + winColor * lit * bright * twinkle * 5.0; // Linear HDR radiance.
-    // LOD：远景收敛为该楼平均辉光（柔和光柱，无高频）
-    col = mix(pattern, base * 0.55 + v_tintAvg, v_lod);
+    // 摩尔纹防线：窗格屏幕尺寸 <~4px 时整体淡出为平均辉光（透视压缩敏感，补距离 LOD 的盲带）
+    vec2 fwRaw = fwidth(grid);
+    float winPx = min(facadeParams.y / max(fwRaw.x, 1e-5), facadeParams.z / max(fwRaw.y, 1e-5));
+    float lod = max(v_lod, 1.0 - smoothstep(2.0, 5.0, winPx));
+    col = mix(pattern, base * 0.55 + v_tintAvg, lod);
   } else {
     col = base * 0.5;
   }
@@ -305,7 +314,7 @@ varying mediump float v_height;
 varying mediump float v_fog;
 varying mediump float v_lod;
 varying mediump vec3 v_tintAvg;
-float airHashF (vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+float airHashF (vec2 p) { vec3 p3 = fract(vec3(p.xyx) * 0.1031); p3 += dot(p3, p3.yzx + 33.33); return fract((p3.x + p3.y) * p3.z); }
 vec3 neonPalette (float t) {
   vec3 c = mix(vec3(0.16, 0.90, 1.00), vec3(1.00, 0.24, 0.94), clamp(t * 4.0, 0.0, 1.0));
   c = mix(c, vec3(1.00, 0.70, 0.28), clamp(t * 4.0 - 1.0, 0.0, 1.0));

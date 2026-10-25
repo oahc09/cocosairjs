@@ -36,10 +36,12 @@ describe('fixed-snapshot segmented example evidence', () => {
         for (const file of state.segmentFiles) expect(read(file)).toMatchObject({ partial: true, completed: false });
         expect(read(path.join(state.repo, 'examples/alpha/example.json')).status).toBe('stable');
     });
-    test('current real manifest includes all 183 examples and 184 ordered modes including Spark and WebGPU', () => {
+    test('current real manifest includes all 188 examples and 189 ordered modes including Spark and WebGPU', () => {
         const scope = campaign.collectScope(path.resolve(__dirname, '../..'));
-        expect(scope).toHaveLength(183);
-        expect(scope.reduce((n, e) => n + e.modes.length, 0)).toBe(184);
+        expect(scope).toHaveLength(188);
+        expect(scope.reduce((n, e) => n + e.modes.length, 0)).toBe(189);
+        for (const id of ['afterlight', 'neon-city', 'instance-batch', 'particles-3d', 'morph-field'])
+            expect(scope.some((e) => e.id === id)).toBe(true);
         expect(scope.some((e) => e.id === 'spark-splats')).toBe(true);
         expect(scope.find((e) => e.id === 'webgpu-basic').modes).toEqual([
             expect.objectContaining({ id: 'primary', query: 'renderer=webgl2' }),
@@ -190,6 +192,11 @@ describe('fixed-snapshot segmented example evidence', () => {
     test('new dependency file changes inventory even when old paths still match', () => {
         const data = complete(state);
         write(path.join(state.repo, 'examples/alpha/assets/new.bin'), 'new');
+        expect(check(state, data).ok).toBe(false);
+    });
+    test('new metadata/Spark graph is captured and invalidates an older frozen inventory', () => {
+        const data = complete(state);
+        write(path.join(state.repo, 'build/metadata/spark.module.meta.json'), '{"inputs":{}}');
         expect(check(state, data).ok).toBe(false);
     });
     test('symbolic-link inputs fail closed, including unprivileged Windows junctions', () => {

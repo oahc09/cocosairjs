@@ -13,13 +13,13 @@ npm run build:spark
 
 兼容命令 node tools/build/build.cjs --format esm --spark 也构建独立模块，不再构建整合版。build:spark 不重建主引擎、不推进主引擎 AIR_BUILD_NUMBER；build:all 仍只构建默认 runtime/min/声明及 npm 副本，Spark 按需单独构建。
 
-| 文件                         | 用途                                                              |
-| ---------------------------- | ----------------------------------------------------------------- |
-| build/spark.module.js        | 独立 Spark 模块，唯一 runtime 外部依赖为相邻的 cocosair.module.js |
-| build/spark.module.js.map    | 定位 AIR 集成层与冻结 Spark 代码的源码映射                        |
-| build/spark.module.d.ts      | 独立模块公开声明入口                                              |
-| build/spark-types/           | 集成层生成声明及冻结上游声明，原生 gfx/数学类型引用主 SDK         |
-| build/spark.module.meta.json | 构建依赖图，检查没有打包 Cocos/PAL 实现                           |
+| 文件                                  | 用途                                                              |
+| ------------------------------------- | ----------------------------------------------------------------- |
+| build/spark.module.js                 | 独立 Spark 模块，唯一 runtime 外部依赖为相邻的 cocosair.module.js |
+| build/spark.module.js.map             | 定位 AIR 集成层与冻结 Spark 代码的源码映射                        |
+| build/spark.module.d.ts               | 独立模块公开声明入口                                              |
+| build/spark-types/                    | 集成层生成声明及冻结上游声明，原生 gfx/数学类型引用主 SDK         |
+| build/metadata/spark.module.meta.json | 构建依赖图，检查没有打包 Cocos/PAL 实现；不是运行时资源           |
 
 旧 cocosair.module.spark.js 与 map 已退役，由独立构建删除。没有再复制主引擎的 JS；部署时将主 JS 和 Spark JS 放在同一目录。使用压缩主引擎时，应保持该 canonical 主入口 URL 指向压缩实现，不能让应用与 Spark 载入两个不同 URL 的引擎副本。
 
