@@ -1,0 +1,47 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { TrialLifecycle } from '../src/lifecycle.mjs';
+test('fault settles in-flight wait without afterPhysics and keeps Close available', async () => {
+    const state = new TrialLifecycle();
+    let settled = 0;
+    const pending = state.waitForTrial().then(() => settled++);
+    state.fault();
+    await pending;
+    assert.equal(settled, 1);
+    assert.equal(state.blocked, true);
+    assert.equal(state.canClose, true);
+    assert.throws(() => state.waitForTrial());
+    state.fault();
+    state.settleTrial();
+    assert.equal(settled, 1);
+});
+test('reset abort settles once and next trial gets a distinct wait', async () => {
+    const state = new TrialLifecycle();
+    let settled = 0;
+    const old = state.waitForTrial().then(() => settled++);
+    state.settleTrial();
+    state.settleTrial();
+    await old;
+    const next = state.waitForTrial().then(() => settled++);
+    assert.equal(settled, 1);
+    state.settleTrial();
+    await next;
+    assert.equal(settled, 2);
+});
+test('duplicate close excluded; failed close permits retry, successful close is terminal', async () => {
+    const state = new TrialLifecycle();
+    const flight = state.waitForTrial();
+    assert.equal(state.beginClose(), true);
+    await flight;
+    assert.equal(state.beginClose(), false);
+    assert.equal(state.canClose, false);
+    state.failClose();
+    assert.equal(state.blocked, true);
+    assert.equal(state.canClose, true);
+    assert.equal(state.beginClose(), true);
+    state.completeClose();
+    assert.equal(state.closed, true);
+    assert.equal(state.canClose, false);
+    assert.equal(state.beginClose(), false);
+    assert.throws(() => state.waitForTrial());
+});

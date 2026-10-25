@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <title>Box3D · CCD Range</title>
+        <link rel="stylesheet" href="./style.css" />
+        <script type="importmap">
+            { "imports": { "cocosair": "/runtime/cocosair.module.js" } }
+        </script>
+    </head>
+    <body>
+        <header>
+            <span>BOX3D / EX05</span>
+            <h1>CCD 射击靶场</h1>
+            <p>真实刚体、原生固定步与查询对照。未运行的验收不显示通过。</p>
+        </header>
+        <main>
+            <section id="scene-host"><canvas id="GameCanvas"></canvas></section>
+            <aside>
+                <label
+                    >速度
+                    <select id="speed">
+                        <option>10</option>
+                        <option>30</option>
+                        <option>80</option>
+                    </select>
+                    m/s</label
+                >
+                <label
+                    >静态墙厚度
+                    <input id="thickness" type="number" value="0.05" min="0.01" max="0.5" step="0.01" /> m</label
+                >
+                <label
+                    >靶标
+                    <select id="target">
+                        <option value="wall">静态墙（承诺基线）</option>
+                        <option value="slow-target">低速非 bullet 靶（-1 m/s）</option>
+                        <option value="bullet-target">bullet 靶（-1 m/s，边界观察）</option>
+                    </select></label
+                >
+                <label
+                    >模式
+                    <select id="mode">
+                        <option value="body">刚体 CCD</option>
+                        <option value="sweep">Sweep 对照（查询不阻挡）</option>
+                    </select></label
+                >
+                <label><input id="bullet" type="checkbox" checked /> 发射体 RigidBody.useCCD / bullet</label>
+                <label><input id="diagnostic" type="checkbox" /> 诊断信息</label>
+                <p id="world-note" hidden>
+                    <button disabled>world continuous：不可控制</button>SDK223 没有公开 world continuous
+                    开关；不访问私有 WASM。
+                </p>
+                <p class="boundary">
+                    bullet=false 不等于禁用全部 CCD。bullet–bullet / 双高速属于非承诺边界。Sweep
+                    仅查询，绝不搬动刚体模拟命中。
+                </p>
+                <div class="buttons">
+                    <button id="fire" disabled>发射一次</button><button id="batch" disabled>当前档 30 次</button
+                    ><button id="reset" disabled>重置 / 中止</button><button id="export">导出证据</button
+                    ><button id="close" disabled>关闭并释放</button>
+                </div>
+                <p id="status" role="status">初始化中 · 验收 NOT_RUN</p>
+                <pre id="counts"></pre>
+                <details open>
+                    <summary>最近原生轨迹 / 查询</summary>
+                    <pre id="observation">NOT_RUN</pre>
+                </details>
+            </aside>
+        </main>
+        <script type="module" src="./src/main.ts"></script>
+    </body>
+</html>
