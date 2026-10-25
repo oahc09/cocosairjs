@@ -1,0 +1,670 @@
+{
+  "schema": "box3d-sdk223-ex03-initial-observations-v1",
+  "status": "FINITE_OBSERVATIONS_NOT_FULL_ACCEPTANCE",
+  "sourceCommit": "3b362b254a9c38ae18815e1faa1b0d7d0542c9e9",
+  "runtimeProducer": "b089d223aad1bb4be4a81f187eceb341510d766a",
+  "runtimeBuild": 223,
+  "runs": [
+    {
+      "generation": 1,
+      "mode": "lifecycle",
+      "observedTicks": 480,
+      "counts": {
+        "enter": 3,
+        "stay": 234,
+        "exit": 3
+      },
+      "status": "OBSERVATION_WINDOW_ENDED_NOT_ACCEPTANCE",
+      "clockContractAll": true,
+      "eventsRejected": [],
+      "mutations": [
+        {
+          "label": "open-door",
+          "status": "APPLIED_AT_IDLE",
+          "generation": 1,
+          "afterHookTick": 201
+        },
+        {
+          "label": "spawned",
+          "id": "g1:spawned#6",
+          "afterHookTick": 321
+        },
+        {
+          "label": "spawn-and-destroy",
+          "status": "APPLIED_AT_IDLE",
+          "generation": 1,
+          "afterHookTick": 321
+        },
+        {
+          "label": "spawn-lifetime-destroy",
+          "status": "APPLIED_AT_IDLE",
+          "generation": 1,
+          "afterHookTick": 351
+        },
+        {
+          "label": "finish-observation-window",
+          "status": "APPLIED_AT_IDLE",
+          "generation": 1,
+          "afterHookTick": 480
+        }
+      ]
+    },
+    {
+      "generation": 2,
+      "mode": "lifecycle",
+      "observedTicks": 480,
+      "counts": {
+        "enter": 3,
+        "stay": 234,
+        "exit": 3
+      },
+      "status": "OBSERVATION_WINDOW_ENDED_NOT_ACCEPTANCE",
+      "clockContractAll": true,
+      "eventsRejected": [],
+      "mutations": [
+        {
+          "label": "open-door",
+          "status": "APPLIED_AT_IDLE",
+          "generation": 2,
+          "afterHookTick": 681
+        },
+        {
+          "label": "spawned",
+          "id": "g2:spawned#12",
+          "afterHookTick": 801
+        },
+        {
+          "label": "spawn-and-destroy",
+          "status": "APPLIED_AT_IDLE",
+          "generation": 2,
+          "afterHookTick": 801
+        },
+        {
+          "label": "spawn-lifetime-destroy",
+          "status": "APPLIED_AT_IDLE",
+          "generation": 2,
+          "afterHookTick": 831
+        },
+        {
+          "label": "finish-observation-window",
+          "status": "APPLIED_AT_IDLE",
+          "generation": 2,
+          "afterHookTick": 960
+        }
+      ]
+    },
+    {
+      "generation": 3,
+      "mode": "lifecycle",
+      "observedTicks": 480,
+      "counts": {
+        "enter": 3,
+        "stay": 234,
+        "exit": 3
+      },
+      "status": "OBSERVATION_WINDOW_ENDED_NOT_ACCEPTANCE",
+      "clockContractAll": true,
+      "eventsRejected": [],
+      "mutations": [
+        {
+          "label": "toggle-mask",
+          "status": "APPLIED_AT_IDLE",
+          "generation": 3,
+          "afterHookTick": 980
+        },
+        {
+          "label": "toggle-mask",
+          "status": "APPLIED_AT_IDLE",
+          "generation": 3,
+          "afterHookTick": 991
+        },
+        {
+          "label": "open-door",
+          "status": "APPLIED_AT_IDLE",
+          "generation": 3,
+          "afterHookTick": 1161
+        },
+        {
+          "label": "spawned",
+          "id": "g3:spawned#18",
+          "afterHookTick": 1281
+        },
+        {
+          "label": "spawn-and-destroy",
+          "status": "APPLIED_AT_IDLE",
+          "generation": 3,
+          "afterHookTick": 1281
+        },
+        {
+          "label": "spawn-lifetime-destroy",
+          "status": "APPLIED_AT_IDLE",
+          "generation": 3,
+          "afterHookTick": 1311
+        },
+        {
+          "label": "finish-observation-window",
+          "status": "APPLIED_AT_IDLE",
+          "generation": 3,
+          "afterHookTick": 1440
+        }
+      ]
+    },
+    {
+      "generation": 4,
+      "mode": "lifecycle",
+      "observedTicks": 480,
+      "counts": {
+        "enter": 3,
+        "stay": 234,
+        "exit": 3
+      },
+      "status": "OBSERVATION_WINDOW_ENDED_NOT_ACCEPTANCE",
+      "clockContractAll": true,
+      "eventsRejected": [],
+      "mutations": [
+        {
+          "label": "toggle-enabled",
+          "status": "APPLIED_AT_IDLE",
+          "generation": 4,
+          "afterHookTick": 1508
+        },
+        {
+          "label": "toggle-enabled",
+          "status": "APPLIED_AT_IDLE",
+          "generation": 4,
+          "afterHookTick": 1518
+        },
+        {
+          "label": "open-door",
+          "status": "APPLIED_AT_IDLE",
+          "generation": 4,
+          "afterHookTick": 1641
+        },
+        {
+          "label": "spawned",
+          "id": "g4:spawned#24",
+          "afterHookTick": 1761
+        },
+        {
+          "label": "spawn-and-destroy",
+          "status": "APPLIED_AT_IDLE",
+          "generation": 4,
+          "afterHookTick": 1761
+        },
+        {
+          "label": "spawn-lifetime-destroy",
+          "status": "APPLIED_AT_IDLE",
+          "generation": 4,
+          "afterHookTick": 1791
+        },
+        {
+          "label": "finish-observation-window",
+          "status": "APPLIED_AT_IDLE",
+          "generation": 4,
+          "afterHookTick": 1920
+        }
+      ]
+    },
+    {
+      "generation": 5,
+      "mode": "lifecycle",
+      "observedTicks": 480,
+      "counts": {
+        "enter": 1,
+        "stay": 12,
+        "exit": 1
+      },
+      "status": "OBSERVATION_WINDOW_ENDED_NOT_ACCEPTANCE",
+      "clockContractAll": true,
+      "eventsRejected": [],
+      "mutations": [
+        {
+          "label": "toggle-trigger",
+          "status": "APPLIED_AT_IDLE",
+          "generation": 5,
+          "afterHookTick": 2013
+        },
+        {
+          "label": "finish-observation-window",
+          "status": "APPLIED_AT_IDLE",
+          "generation": 5,
+          "afterHookTick": 2400
+        }
+      ]
+    },
+    {
+      "generation": 6,
+      "mode": "lifecycle",
+      "observedTicks": 480,
+      "counts": {
+        "enter": 1,
+        "stay": 0,
+        "exit": 0
+      },
+      "status": "OBSERVATION_WINDOW_ENDED_NOT_ACCEPTANCE",
+      "clockContractAll": true,
+      "eventsRejected": [],
+      "mutations": [
+        {
+          "label": "callback-destroy-armed",
+          "value": true,
+          "afterHookTick": 2411
+        },
+        {
+          "label": "callback-requested-visitor-destroy",
+          "status": "APPLIED_AT_IDLE",
+          "generation": 6,
+          "afterHookTick": 2481
+        },
+        {
+          "label": "finish-observation-window",
+          "status": "APPLIED_AT_IDLE",
+          "generation": 6,
+          "afterHookTick": 2880
+        }
+      ]
+    },
+    {
+      "generation": 7,
+      "mode": "lifecycle",
+      "observedTicks": 13,
+      "counts": {
+        "enter": 0,
+        "stay": 0,
+        "exit": 0
+      },
+      "status": "NO_TERMINAL_RUN_STATUS_FIELD",
+      "clockContractAll": true,
+      "eventsRejected": [],
+      "mutations": []
+    },
+    {
+      "generation": 8,
+      "mode": "fast-solid",
+      "observedTicks": 24,
+      "counts": {
+        "enter": 1,
+        "stay": 1,
+        "exit": 1
+      },
+      "status": "OBSERVATION_WINDOW_ENDED_NOT_ACCEPTANCE",
+      "clockContractAll": true,
+      "eventsRejected": [],
+      "mutations": [
+        {
+          "label": "finish-observation-window",
+          "status": "APPLIED_AT_IDLE",
+          "generation": 8,
+          "afterHookTick": 2917
+        }
+      ]
+    },
+    {
+      "generation": 9,
+      "mode": "moving-sensor",
+      "observedTicks": 24,
+      "counts": {
+        "enter": 1,
+        "stay": 0,
+        "exit": 1
+      },
+      "status": "OBSERVATION_WINDOW_ENDED_NOT_ACCEPTANCE",
+      "clockContractAll": true,
+      "eventsRejected": [],
+      "mutations": [
+        {
+          "label": "moving-sensor-target",
+          "status": "APPLIED_AT_IDLE",
+          "generation": 9,
+          "afterHookTick": 2918
+        },
+        {
+          "label": "moving-sensor-target",
+          "status": "APPLIED_AT_IDLE",
+          "generation": 9,
+          "afterHookTick": 2919
+        },
+        {
+          "label": "moving-sensor-target",
+          "status": "APPLIED_AT_IDLE",
+          "generation": 9,
+          "afterHookTick": 2920
+        },
+        {
+          "label": "moving-sensor-target",
+          "status": "APPLIED_AT_IDLE",
+          "generation": 9,
+          "afterHookTick": 2921
+        },
+        {
+          "label": "moving-sensor-target",
+          "status": "APPLIED_AT_IDLE",
+          "generation": 9,
+          "afterHookTick": 2922
+        },
+        {
+          "label": "moving-sensor-target",
+          "status": "APPLIED_AT_IDLE",
+          "generation": 9,
+          "afterHookTick": 2923
+        },
+        {
+          "label": "moving-sensor-target",
+          "status": "APPLIED_AT_IDLE",
+          "generation": 9,
+          "afterHookTick": 2924
+        },
+        {
+          "label": "moving-sensor-target",
+          "status": "APPLIED_AT_IDLE",
+          "generation": 9,
+          "afterHookTick": 2925
+        },
+        {
+          "label": "moving-sensor-target",
+          "status": "APPLIED_AT_IDLE",
+          "generation": 9,
+          "afterHookTick": 2926
+        },
+        {
+          "label": "moving-sensor-target",
+          "status": "APPLIED_AT_IDLE",
+          "generation": 9,
+          "afterHookTick": 2927
+        },
+        {
+          "label": "moving-sensor-target",
+          "status": "APPLIED_AT_IDLE",
+          "generation": 9,
+          "afterHookTick": 2928
+        },
+        {
+          "label": "moving-sensor-target",
+          "status": "APPLIED_AT_IDLE",
+          "generation": 9,
+          "afterHookTick": 2929
+        },
+        {
+          "label": "moving-sensor-target",
+          "status": "APPLIED_AT_IDLE",
+          "generation": 9,
+          "afterHookTick": 2930
+        },
+        {
+          "label": "moving-sensor-target",
+          "status": "APPLIED_AT_IDLE",
+          "generation": 9,
+          "afterHookTick": 2931
+        },
+        {
+          "label": "moving-sensor-target",
+          "status": "APPLIED_AT_IDLE",
+          "generation": 9,
+          "afterHookTick": 2932
+        },
+        {
+          "label": "moving-sensor-target",
+          "status": "APPLIED_AT_IDLE",
+          "generation": 9,
+          "afterHookTick": 2933
+        },
+        {
+          "label": "moving-sensor-target",
+          "status": "APPLIED_AT_IDLE",
+          "generation": 9,
+          "afterHookTick": 2934
+        },
+        {
+          "label": "moving-sensor-target",
+          "status": "APPLIED_AT_IDLE",
+          "generation": 9,
+          "afterHookTick": 2935
+        },
+        {
+          "label": "moving-sensor-target",
+          "status": "APPLIED_AT_IDLE",
+          "generation": 9,
+          "afterHookTick": 2936
+        },
+        {
+          "label": "moving-sensor-target",
+          "status": "APPLIED_AT_IDLE",
+          "generation": 9,
+          "afterHookTick": 2937
+        },
+        {
+          "label": "moving-sensor-target",
+          "status": "APPLIED_AT_IDLE",
+          "generation": 9,
+          "afterHookTick": 2938
+        },
+        {
+          "label": "moving-sensor-target",
+          "status": "APPLIED_AT_IDLE",
+          "generation": 9,
+          "afterHookTick": 2939
+        },
+        {
+          "label": "moving-sensor-target",
+          "status": "APPLIED_AT_IDLE",
+          "generation": 9,
+          "afterHookTick": 2940
+        },
+        {
+          "label": "finish-observation-window",
+          "status": "APPLIED_AT_IDLE",
+          "generation": 9,
+          "afterHookTick": 2941
+        }
+      ]
+    }
+  ],
+  "faults": [],
+  "close": {
+    "kind": "close",
+    "receipt": {
+      "status": "released",
+      "scene": "Node.407",
+      "completed": [],
+      "pending": [],
+      "failures": [],
+      "retained": [
+        "runtime",
+        "scheduler",
+        "builtin-resources",
+        "shared-asset-caches"
+      ],
+      "measurements": {
+        "gpuMemory": "unavailable",
+        "reason": "WebGL provides no portable complete GPU allocation measurement; scene destruction is not proof of zero leaks."
+      },
+      "physicsPreparation": {
+        "attemptGeneration": 1,
+        "status": "closed",
+        "acquired": [
+          {
+            "backend": "box3d",
+            "resource": "module",
+            "cleanup": "released",
+            "retained": []
+          },
+          {
+            "backend": "box3d",
+            "resource": "world",
+            "cleanup": "released",
+            "retained": []
+          }
+        ],
+        "originalError": null,
+        "cleanupErrors": []
+      }
+    }
+  },
+  "freshness": {
+    "verifiedDownloadBindings": 12,
+    "requestEpochAndFileMtimeMatched": true,
+    "beforeAfterIdentityByteEqual": true
+  },
+  "interpretation": {
+    "A": {
+      "ticks": 480,
+      "perZoneCounts": {
+        "enter": 1,
+        "stay": 78,
+        "exit": 1
+      },
+      "totalCounts": {
+        "enter": 3,
+        "stay": 234,
+        "exit": 3
+      },
+      "count": 1,
+      "doorRequestAfterHookTick": 201,
+      "doorYObservedTick202": {
+        "from": 0,
+        "to": 2,
+        "mechanism": "public kinematic target"
+      },
+      "spawnRequestTick": 321,
+      "destroyRetireRequestTick": 351,
+      "requestIntervalTicks": 30,
+      "nativeFreeTime": "NOT_PROVEN"
+    },
+    "B": {
+      "g2": "No toggle occurred.",
+      "g3": "Mask toggles at980/991 preceded enter1041; not in-overlap bidirectional coverage.",
+      "g4": "Enabled toggles1508/1518 preceded enter1521; not in-overlap bidirectional coverage.",
+      "g5": "Trigger-to-solid at2013 in overlap, exit2014; visitor later stopped x=-2.65/v=0. Reverse transition not demonstrated."
+    },
+    "C": {
+      "g6": "Enter2481 followed by idle retirement request;399later retired frames with no new accepted callbacks. Not proof of instantaneous native free or late-callback rejection branch coverage.",
+      "g7": "Reset/release after13motion ticks; not a480tick completion or timeout."
+    },
+    "D": {
+      "speedMps": 30,
+      "ticksEach": 24,
+      "fastSolidCounts": [
+        1,
+        1,
+        1
+      ],
+      "movingSensorCounts": [
+        1,
+        0,
+        1
+      ],
+      "boundary": "Both fourth-step endpoints overlap near x=0; not pure endpoint-outside transient CCD proof or universal sensor support. Query predictions and native events are separate."
+    }
+  },
+  "limitations": [
+    "Not full EX03/T20/C21-C28/G5 PASS.",
+    "Three active-zone transient screenshots and spawned-cube visibility not captured; terminal evidence only.",
+    "Narrow viewport, error injection, duplicate close and concurrent close/release not tested.",
+    "GPU memory unavailable; retained runtime/scheduler/builtin resources/shared caches prohibit zero-leak claims.",
+    "WebGL lazy-init and WASM sourcemap URL warnings retained.",
+    "Future120m/s diagnostics and preset safe-control sequences are not run in this source and are excluded."
+  ],
+  "evidencePolicy": "Artifact paths relative to retained EX03 first-round evidence root; original files are not included in this report commit. Hash summary is not a self-contained replay bundle.",
+  "retainedEvidence": [
+    {
+      "artifact": "result.json",
+      "bytes": 14292,
+      "sha256": "a6430f54d36cb80a34919151f8c46db43115f3dd74abe8cb390dca2974142b01"
+    },
+    {
+      "artifact": "evidence-manifest.json",
+      "bytes": 16486,
+      "sha256": "0227184c68b68aa7084fa0150b890a9bcec0150a92fd6ec9c0d0b785d0b0c9bc"
+    },
+    {
+      "artifact": "freshness-bindings.json",
+      "bytes": 8434,
+      "sha256": "d6fcf7dfb22cdf74fe021eceb15cfd5bfa0fabce8e83e2f24901747b4df9e491"
+    },
+    {
+      "artifact": "export-requests.json",
+      "bytes": 2661,
+      "sha256": "249993d02b1e737937550931e12ef7f44213c7e0ccb7cab37ccee0fcea1f7da3"
+    },
+    {
+      "artifact": "download-receipts.json",
+      "bytes": 5468,
+      "sha256": "583a2379b66dc14b6084128123a623f4271f1ecd453f994b007c29bb37aa24d9"
+    },
+    {
+      "artifact": "identity-before.json",
+      "bytes": 1149,
+      "sha256": "7964eafaab2a446615a9ba7a1492ca566202b0d576c153dddc961037a402a37a"
+    },
+    {
+      "artifact": "identity-after.json",
+      "bytes": 1149,
+      "sha256": "7964eafaab2a446615a9ba7a1492ca566202b0d576c153dddc961037a402a37a"
+    },
+    {
+      "artifact": "00-file-freeze.json",
+      "bytes": 4334,
+      "sha256": "898f36955de22df4a113b7dd6aaa5df8c4e339e7018c043bbff65c023c024ab4"
+    },
+    {
+      "artifact": "downloads/ex03-trigger-lifecycle(1).json",
+      "bytes": 1458292,
+      "sha256": "5b098f89b4b26f008e399605536a4bf98b86c85fc70f1e1a74e12c53c089fbac"
+    },
+    {
+      "artifact": "downloads/ex03-trigger-lifecycle(10).json",
+      "bytes": 8240486,
+      "sha256": "cc4f2466e912c472b899acd8e2d5220038f6b4bccfdfc61dab50c049c8425dfa"
+    },
+    {
+      "artifact": "downloads/ex03-trigger-lifecycle(11).json",
+      "bytes": 8241561,
+      "sha256": "f81101036ca08fb0fb785f3313c999cc250e356cc5b39802db694b344dee6e44"
+    },
+    {
+      "artifact": "downloads/ex03-trigger-lifecycle(2).json",
+      "bytes": 1458292,
+      "sha256": "5b098f89b4b26f008e399605536a4bf98b86c85fc70f1e1a74e12c53c089fbac"
+    },
+    {
+      "artifact": "downloads/ex03-trigger-lifecycle(3).json",
+      "bytes": 2916977,
+      "sha256": "22aa10a7116dcdebea74b18e84d32cc096a2b3291538e677945457359fd0ec18"
+    },
+    {
+      "artifact": "downloads/ex03-trigger-lifecycle(4).json",
+      "bytes": 4380806,
+      "sha256": "4f4fcbd08dfd75758f14f1cb75df09d78c4cd335707468c284a8e29afbf63c4b"
+    },
+    {
+      "artifact": "downloads/ex03-trigger-lifecycle(5).json",
+      "bytes": 5844917,
+      "sha256": "5e04a1d6d5270c336912ae053d11908c53e6f29a41b405ad0b8751dd811ca1bd"
+    },
+    {
+      "artifact": "downloads/ex03-trigger-lifecycle(6).json",
+      "bytes": 7305064,
+      "sha256": "3ab1dfb8ead721c9aac5221d9389f200211aa90efa51a2b00af761c5105bd773"
+    },
+    {
+      "artifact": "downloads/ex03-trigger-lifecycle(7).json",
+      "bytes": 8046893,
+      "sha256": "93248fb8c21789ebaad025dd4e75bd1882908ff610e052c8168adf53a425208c"
+    },
+    {
+      "artifact": "downloads/ex03-trigger-lifecycle(8).json",
+      "bytes": 8083489,
+      "sha256": "607784fdeae36ec815f93c14307a420fc9df69e1b11ab8d4be96cd1c22fed4a4"
+    },
+    {
+      "artifact": "downloads/ex03-trigger-lifecycle(9).json",
+      "bytes": 8150190,
+      "sha256": "cd96f960d3b827bd9f22bc7840a305896d9fe95cd16468849ca2cbece1c6adcf"
+    },
+    {
+      "artifact": "downloads/ex03-trigger-lifecycle.json",
+      "bytes": 1551,
+      "sha256": "95edbe05cdc20d878834a4052f1ee1a3e2c220ea8d7f7b21db3c038152bcb534"
+    }
+  ]
+}
