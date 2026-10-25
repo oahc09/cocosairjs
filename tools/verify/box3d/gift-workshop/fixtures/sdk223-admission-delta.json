@@ -1,0 +1,26 @@
+{
+  "examples/box3d-gift-workshop/src/main.ts": [
+    {
+      "before": "",
+      "after": "import { selectTransportCandidate, validateTransportCandidate } from './candidate-admission.mjs';\n"
+    },
+    {
+      "before": "",
+      "after": "const transportSelection = selectTransportCandidate(query);\n"
+    },
+    {
+      "before": "        const lock = await (await fetch('./transport-candidate-lock.json')).json();\n",
+      "after": "        const response = await fetch(`./${transportSelection.lockFile}`);\n        if (!response.ok) throw new Error('Missing explicit transport-candidate lock');\n        const lock = await response.json();\n        validateTransportCandidate(transportSelection, lock, AIR_BUILD_NUMBER, identity);\n"
+    },
+    {
+      "before": "",
+      "after": "        identity.selectedTransportCandidate = { ...transportSelection, expectedBuild: lock.expectedBuild };\n"
+    }
+  ],
+  "examples/box3d-gift-workshop/serve.cjs": [
+    {
+      "before": "",
+      "after": "                        'transport-candidate-sdk223-lock.json',\n"
+    }
+  ]
+}

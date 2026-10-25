@@ -29,6 +29,7 @@ import {
     readBox3DBodyMotion,
 } from 'cocosair';
 import * as publicAPI from 'cocosair';
+import { selectTransportCandidate, validateTransportCandidate } from './candidate-admission.mjs';
 import { captureReportText, supportsGzip, gzipReportText, downloadReportBlob } from './report-export.mjs';
 import { proveRecoveryPlacement } from './recovery-placement.mjs';
 import { scaleDisplay } from './scale-display.mjs';
@@ -58,6 +59,7 @@ const say = (id: string, value: string) => {
     el(id).textContent = value;
 };
 const query = new URLSearchParams(location.search);
+const transportSelection = selectTransportCandidate(query);
 const profile = query.get('profile') || 'inventory';
 // Explicit opt-in reproduces the retained runtime215 contact-family failure; it is not a passing profile.
 const probeUnsupportedContacts = query.get('probe') === 'unsupported-contacts';
@@ -1594,7 +1596,10 @@ async function main() {
             .map((b) => b.toString(16).padStart(2, '0'))
             .join('');
     if (transportCandidate) {
-        const lock = await (await fetch('./transport-candidate-lock.json')).json();
+        const response = await fetch(`./${transportSelection.lockFile}`);
+        if (!response.ok) throw new Error('Missing explicit transport-candidate lock');
+        const lock = await response.json();
+        validateTransportCandidate(transportSelection, lock, AIR_BUILD_NUMBER, identity);
         if (
             lock.status !== 'READY_FOR_VERIFICATION' ||
             lock.expectedBuild !== AIR_BUILD_NUMBER ||
@@ -1602,6 +1607,7 @@ async function main() {
             identity.runtimeAssets?.['manifest.json']?.sha256 !== lock.manifestSha256
         )
             throw new Error('Committed transport candidate is NOT_READY or does not match the frozen runtime.');
+        identity.selectedTransportCandidate = { ...transportSelection, expectedBuild: lock.expectedBuild };
         transportQualification = lock.qualification;
         Object.assign(capabilities, { allShapeSweeps: true, initialOverlap: true, rayVisibility: true });
     }

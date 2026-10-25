@@ -8,6 +8,16 @@ import { transformSync } from 'esbuild';
 import * as prettier from 'prettier';
 import { captureReportText } from '../../../../examples/box3d-gift-workshop/src/report-export.mjs';
 import { createCommittedMotionObserver } from '../../../../examples/box3d-gift-workshop/src/committed-motion-observation.mjs';
+// Only the enumerated admission delta is removed; historical baseline SHA values stay unchanged.
+const admissionDelta = JSON.parse(readFileSync(new URL('./fixtures/sdk223-admission-delta.json', import.meta.url)));
+function beforeAdmission(path, text) {
+    for (const { before, after } of admissionDelta[path] || []) {
+        assert.ok(after.length > 0);
+        assert.equal(text.split(after).length, 2, 'exact unique admission delta: ' + path);
+        text = text.replace(after, before);
+    }
+    return text;
+}
 const mainPath = 'examples/box3d-gift-workshop/src/main.ts';
 const main = readFileSync(new URL('../../../../' + mainPath, import.meta.url), 'utf8');
 const start = '    // Independent read-only export:';
@@ -189,7 +199,7 @@ test('source guard: additive binding only, baseline main/HTML preserved, report 
         'examples/box3d-gift-workshop/serve.cjs': '512109b84b158b7f135efd4bf806bd27001d9e5893a7c7424e49b52e4b01b381',
     };
     const digest = (text) => createHash('sha256').update(text).digest('hex');
-    assert.equal(digest(main.replace(handler, '')), baseline[mainPath]);
+    assert.equal(digest(beforeAdmission(mainPath, main).replace(handler, '')), baseline[mainPath]);
     const htmlPath = 'examples/box3d-gift-workshop/index.html';
     const html = readFileSync(new URL('./fixtures/delivered-index.html.txt', import.meta.url), 'utf8');
     assert.equal(digest(html), '228a0bd3aaed933babe08d8c6c34836c791d17f0f6287e3a40aa046663f242dd');
@@ -221,7 +231,7 @@ test('source guard: additive binding only, baseline main/HTML preserved, report 
     );
     for (const path of ['src/committed-motion-observation.mjs', 'serve.cjs']) {
         const full = 'examples/box3d-gift-workshop/' + path;
-        assert.equal(digest(readFileSync(full, 'utf8')), baseline[full]);
+        assert.equal(digest(beforeAdmission(full, readFileSync(full, 'utf8'))), baseline[full]);
     }
 });
 test('esbuild transforms entire main.ts without SDK build', () => {
