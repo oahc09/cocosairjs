@@ -28,6 +28,7 @@ import {
     queryBox3DCommittedColliders,
 } from 'cocosair';
 import { configuration, counts, assessTrial, FIXED_DT, RADIUS, TRIAL_TICKS } from './protocol.mjs';
+import { assertStepClock, copyStepClock, SOLVER_SUB_STEPS } from './fixed-step-contract.mjs';
 import { TrialLifecycle } from './lifecycle.mjs';
 import { mountAndConfigureBodies } from './mounted-body-configuration.mjs';
 const lifecycle = new TrialLifecycle();
@@ -292,11 +293,21 @@ async function trial(c: any, token: number) {
     const trialConfig = { ...c, trialId: `${token}:${report.trials.length + 1}` };
     const ccdReadback = buildScene(trialConfig);
     attemptedTick = lastObserved = -1;
-    current = { ccdReadback, config: trialConfig, generation: token, seed: 0, trace: [], queries: [], contacts: [] };
-    hook = registerBox3DBeforeStep((context: any) => {
+    current = {
+        ccdReadback,
+        config: trialConfig,
+        generation: token,
+        seed: 0,
+        stepClocks: [],
+        trace: [],
+        queries: [],
+        contacts: [],
+    };
+    hook = registerBox3DBeforeStep((context) => {
         try {
             if (!current) throw new Error('Stale EX05 hook');
-            if (Math.abs(context.fixedDt - FIXED_DT) > 1e-12) throw new Error('Unexpected fixed step');
+            current.stepClocks.push(copyStepClock(context));
+            assertStepClock(context);
             attemptedTick = context.tickIndex;
             const m = readBox3DBodyMotion(projectile.body);
             const translation = {
@@ -459,7 +470,7 @@ async function boot() {
                 assetBaseUrl: '/runtime/physics/box3d/st/',
                 threading: 'single',
                 workerCount: 1,
-                solverSubSteps: 4,
+                solverSubSteps: SOLVER_SUB_STEPS,
             },
         },
     });

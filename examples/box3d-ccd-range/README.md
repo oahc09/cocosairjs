@@ -92,3 +92,19 @@ bodies' `useCCD`, verifies both public getter readbacks, and only then sets init
 retains these readbacks. Pure CPU call-order doubles explicitly reject pre-mount setter/getter/velocity
 access and stop on failed mount or mismatched readback; they establish no physics result. A fresh browser
 attempt with new example fingerprints is required. No delays, swallowed diagnostics or SDK changes are used.
+
+## Float32 fixed-step contract correction
+
+The onLoad-corrected SDK223 attempt reached READY, then its first 10 m/s shot failed in the hook's
+fixed-step check before producing any trajectory/query/contact samples. Its exported raw report does
+**not** contain the actual `context.fixedDt`; the value cannot be claimed as observed. The retained error
+and the locked SDK source (`world.step` converts via `finiteFloat32` before creating the command context)
+identify an incorrect double-precision comparison in the example.
+
+The example now requires **exactly** `Math.fround(1 / 60)` = `0.01666666753590107` in the context, while
+`PhysicsSystem.fixedTimeStep` stays authored as `1 / 60`. It also requires exactly four solver substeps.
+There is no widened epsilon. Every attempted hook records authored, expected native, actual native,
+expected/actual solver subdivisions and tick/attempt IDs before validation, including failed attempts.
+Ray/sweep translation still uses that same callback's `context.fixedDt`. The original speeds, geometry,
+90-tick trial window and no-crossing/pose thresholds are unchanged. Both old failures remain failures;
+the corrected revision requires a fresh real run to establish the actual clock values.
