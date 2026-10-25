@@ -17,8 +17,8 @@
     },
     {
       "path": "src/air/physics/box3d/binding/facade.mjs",
-      "bytes": 114938,
-      "sha256": "4087eb4c0e1928a027db5b73379f2fc42dbed7c1c7a1111249a3dd78ed8c5060"
+      "bytes": 114944,
+      "sha256": "ca8d3ce2ac80f636be13fb89a8d4c9b2db79317366ef1a013f3d17427cc99b69"
     },
     {
       "path": "tools/physics/box3d/.gitignore",
@@ -82,8 +82,8 @@
     },
     {
       "path": "tools/physics/box3d/command-source-controls.mjs",
-      "bytes": 5918,
-      "sha256": "8b285a30678ab9d83c8a468b8f06d775defc6959dd3774ffcb116fb7a0d9a8c8"
+      "bytes": 6234,
+      "sha256": "06644f439316de51ab5107423a00cc965e4f4ac36ddb2394ace0874f1bcddfc6"
     },
     {
       "path": "tools/physics/box3d/compare-geometry-builds.mjs",
@@ -4812,8 +4812,8 @@
     },
     {
       "path": "tools/physics/box3d/motion-source-controls.mjs",
-      "bytes": 5454,
-      "sha256": "1b4d7d2e04953d4818dc1cf21e64272e22ca491d2925a3b09c7c236afd8d300f"
+      "bytes": 5770,
+      "sha256": "9d36ac5a1b929be144e621d02519c6c5b3edf700b0ff10df105f4f8aa0aa4991"
     },
     {
       "path": "tools/physics/box3d/native-geometry-ubsan.mjs",
@@ -5157,8 +5157,8 @@
     },
     {
       "path": "tools/physics/box3d/wasm-mesh-contract.mjs",
-      "bytes": 6850,
-      "sha256": "173d868453cf74613e932dc8ee6184a0eb73589dd2b1586df3da250618b2ded1"
+      "bytes": 6948,
+      "sha256": "bc02b0ecfbc9f175711c51f8c242e68bec11f6a9c5ed796cc8f9603f05a77d94"
     },
     {
       "path": "tools/physics/box3d/wasm-motion-contract.mjs",
