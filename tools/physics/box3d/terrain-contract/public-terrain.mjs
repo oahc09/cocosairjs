@@ -6,7 +6,9 @@ import { DROP, reviewDropTrace } from './drop-oracle.mjs';
 const xyz = (v) => [v.x, v.y, v.z],
     vec = ([x, y, z]) => ({ x, y, z });
 const near = (a, b) => assert.ok(Math.abs(a - b) <= TOLERANCE, `${a} vs ${b}; original 0.01 m tolerance`);
-export async function runPublicTerrainQueries(sdk, scene, step) {
+export async function runPublicTerrainQueries(sdk, scene, step, observe = () => {}) {
+    // Observation-only copies: failure evidence must not depend on the fixture reaching return.
+    const emit = (kind, value) => observe(kind, structuredClone(value));
     const { Node, RigidBody, TerrainCollider, SphereCollider, PhysicsMaterial, PhysicsSystem, Vec3 } = sdk,
         system = PhysicsSystem.instance;
     assert.equal(typeof TerrainCollider, 'function', 'new product must actually export TerrainCollider');
@@ -21,6 +23,8 @@ export async function runPublicTerrainQueries(sdk, scene, step) {
         rays: [],
         sweeps: [],
         drops: [],
+        committedQueries: [],
+        cleanupErrors: [],
         C19: 'NOT_QUALIFIED_BY_PUBLIC_BEHAVIOR',
     };
     const original = {
@@ -58,8 +62,17 @@ export async function runPublicTerrainQueries(sdk, scene, step) {
         const oracle = rayOracle(origin, dir, L, item.spec);
         system.syncSceneToPhysics();
         const hit = system.raycastClosest(new sdk.geometry.Ray(...origin, ...dir), -1, L, false);
+        const row = { id: item.id, origin, dir, L, hit, expectedHit: expected };
+        if (hit) {
+            const r = system.raycastClosestResult;
+            row.point = xyz(r.hitPoint);
+            row.distance = r.distance;
+            row.colliderMatches = r.collider === item.collider;
+            row.faceOracle = oracle[0]?.face ?? null;
+        }
+        report.rays.push(row);
+        emit('ray', row);
         assert.equal(hit, expected);
-        const row = { id: item.id, origin, dir, L, hit };
         if (hit) {
             assert.equal(oracle.length, 1);
             const r = system.raycastClosestResult,
@@ -70,9 +83,9 @@ export async function runPublicTerrainQueries(sdk, scene, step) {
             row.point = xyz(r.hitPoint);
             row.faceOracle = e.face;
         }
-        report.rays.push(row);
         return row;
     };
+    let primaryFailed = false;
     try {
         const a = make('terrain-a'),
             b = make('terrain-b', { ...baseSpec, position: [20, 0, 0] }),
@@ -98,11 +111,19 @@ export async function runPublicTerrainQueries(sdk, scene, step) {
             ['box', () => system.sweepBoxClosest(cast, new Vec3(0.05, 0.05, 0.05), q, -1, 30, false)],
             ['capsule', () => system.sweepCapsuleClosest(cast, 0.05, 0.1, q, -1, 30, false)],
         ]) {
-            assert.equal(run(), true);
-            const r = system.sweepCastClosestResult;
+            const hit = run(),
+                r = system.sweepCastClosestResult;
+            const row = {
+                kind,
+                hit,
+                distance: hit ? r.distance : null,
+                collider: hit && r.collider === a.collider ? a.id : null,
+            };
+            report.sweeps.push(row);
+            emit('sweep', row);
+            assert.equal(hit, true);
             assert.equal(r.collider, a.collider);
             assert.ok(r.distance >= 0 && r.distance < 30);
-            report.sweeps.push({ kind, distance: r.distance, collider: a.id });
         }
         let copied,
             savedCopied,
@@ -114,6 +135,12 @@ export async function runPublicTerrainQueries(sdk, scene, step) {
                 mask: -1,
                 queryTrigger: false,
             });
+            const observation = {
+                complete: result.complete,
+                hits: result.hits.map((hit) => ({ ...hit, collider: hit.collider?.node?.name ?? null })),
+            };
+            report.committedQueries.push(observation);
+            emit('committed-query', observation);
             assert.equal(result.complete, true);
             assert.equal(result.hits.length, 1);
             assert.equal(result.hits[0].collider, a.collider);
@@ -201,7 +228,9 @@ export async function runPublicTerrainQueries(sdk, scene, step) {
             await step();
             const position = xyz(ballNode.worldPosition),
                 clearance = surfaceDistance(position) - 0.1;
-            report.drops.push({ step: i + 1, position, clearance });
+            const row = { step: i + 1, position, clearance };
+            report.drops.push(row);
+            emit('drop', row);
             const vertical = rayOracle([position[0], 30, position[2]], [0, -1, 0], 60);
             assert.ok(vertical.length > 0, 'drop must remain over the finite terrain before first contact');
             assert.ok(
@@ -216,14 +245,57 @@ export async function runPublicTerrainQueries(sdk, scene, step) {
         assert.ok(report.drops.at(-1).position[1] < 1.99, 'real gravity movement, not a static mock');
         report.status = 'PASS';
         return report;
+    } catch (error) {
+        primaryFailed = true;
+        report.status = 'FAIL';
+        report.error = String(error?.stack ?? error);
+        try {
+            emit('fixture-failure', report);
+        } catch (observationError) {
+            report.observationError = String(observationError?.stack ?? observationError);
+        }
+        throw error;
     } finally {
-        system.autoSimulation = false;
-        for (const n of nodes) if (n.isValid) n.destroy();
-        await step();
-        material.destroy();
-        system.gravity = original.gravity;
-        system.autoSimulation = original.autoSimulation;
-        system.fixedTimeStep = original.fixedTimeStep;
-        system.maxSubSteps = original.maxSubSteps;
+        // Attempt every cleanup and preserve the primary assertion instead of masking it with a cleanup tick failure.
+        let cleanupFailure,
+            cleanupFailed = false;
+        const cleanup = async (stage, action) => {
+            try {
+                await action();
+            } catch (error) {
+                if (!cleanupFailed) cleanupFailure = error;
+                cleanupFailed = true;
+                report.status = 'FAIL';
+                const row = { stage, error: String(error?.stack ?? error) };
+                report.cleanupErrors.push(row);
+                try {
+                    emit('fixture-cleanup-failure', row);
+                } catch (observationError) {
+                    report.observationError = String(observationError?.stack ?? observationError);
+                }
+            }
+        };
+        await cleanup('stop-simulation', () => {
+            system.autoSimulation = false;
+        });
+        for (const n of nodes)
+            await cleanup('destroy-' + n.name, () => {
+                if (n.isValid) n.destroy();
+            });
+        await cleanup('deferred-destroy-tick', () => step());
+        await cleanup('destroy-material', () => material.destroy());
+        await cleanup('restore-gravity', () => {
+            system.gravity = original.gravity;
+        });
+        await cleanup('restore-auto-simulation', () => {
+            system.autoSimulation = original.autoSimulation;
+        });
+        await cleanup('restore-fixed-step', () => {
+            system.fixedTimeStep = original.fixedTimeStep;
+        });
+        await cleanup('restore-substeps', () => {
+            system.maxSubSteps = original.maxSubSteps;
+        });
+        if (!primaryFailed && cleanupFailed) throw cleanupFailure;
     }
 }
