@@ -96,7 +96,7 @@ try {
         }
     }
     verifyInputs(sourceRoot, sdkDir, stDir, evidenceRoot, lock);
-    report.readiness = await verifyReady(sourceRoot, stDir);
+    report.readiness = await verifyReady(sourceRoot, stDir, evidenceRoot, lock.provenance);
     assert.deepEqual(report.readiness, lock.readiness);
     record('inputs-before', {
         lockSha256,

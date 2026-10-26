@@ -12,6 +12,7 @@ import {
     validateProvenance,
     validateProducerObjects,
     validateNativeIdentity,
+    validateNativeLayout,
     requireDiagnosticExports,
     SDK_FILES,
     ST_FILES,
@@ -493,3 +494,89 @@ for (const [label, failures] of [
         if (failures.includes('close')) assert.match(report.diagnosticJournalCloseError, /CPU_CLOSE_FAILURE/);
         assert.deepEqual(calls, failures.includes('read') ? ['close', 'read'] : ['close', 'read', 'hash']);
     });
+
+function nativeLayoutCase() {
+    return {
+        source: '/cpu/execution-source',
+        st: '/cpu/execution-source/tools/physics/box3d/output/real-st',
+        native: {
+            sourceCommit: N,
+            cwd: '/cpu/native-producer',
+            budget: {
+                cwd: '/cpu/native-producer',
+                sourceCommit: N,
+                out: '/cpu/native-producer/tools/physics/box3d/output/real-st',
+            },
+        },
+    };
+}
+test('copied ST retains producer relative OUT while original absolute compiler root remains real producer', () => {
+    const value = nativeLayoutCase();
+    assert.deepEqual(validateNativeLayout(value.source, value.st, value.native), {
+        provenanceRoot: '/cpu/native-producer',
+        relativeOutput: 'tools/physics/box3d/output/real-st',
+    });
+});
+for (const [label, change] of [
+    [
+        'attempt1 external original ST under copied fixture root',
+        (v) => {
+            v.st = v.native.budget.out;
+        },
+    ],
+    [
+        'different copied relative output',
+        (v) => {
+            v.st += '-other';
+        },
+    ],
+    [
+        'fixture root substituted for native receipt cwd',
+        (v) => {
+            v.native.cwd = v.source;
+        },
+    ],
+    [
+        'both receipt roots rewritten but original OUT retained',
+        (v) => {
+            v.native.cwd = v.source;
+            v.native.budget.cwd = v.source;
+        },
+    ],
+    [
+        'native OUT escapes producer root',
+        (v) => {
+            v.native.budget.out = '/foreign/st';
+        },
+    ],
+    [
+        'relative producer cwd',
+        (v) => {
+            v.native.cwd = 'producer';
+        },
+    ],
+    [
+        'noncanonical output path',
+        (v) => {
+            v.native.budget.out += '/../st';
+        },
+    ],
+    [
+        'different budget producer commit',
+        (v) => {
+            v.native.budget.sourceCommit = P;
+        },
+    ],
+])
+    test('native producer layout negative: ' + label, () => {
+        const value = nativeLayoutCase();
+        change(value);
+        assert.throws(() => validateNativeLayout(value.source, value.st, value.native));
+    });
+test('original native-root layout remains supported without rewriting producer audit paths', () => {
+    const value = nativeLayoutCase();
+    assert.equal(
+        validateNativeLayout(value.native.cwd, value.native.budget.out, value.native).provenanceRoot,
+        value.native.cwd,
+    );
+});

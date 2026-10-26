@@ -50,7 +50,7 @@ export async function freezeInputs({ sourceRoot, sdkDir, stDir, evidenceRoot, pr
     };
     assert.equal(lock.supervisor.sha256, SUPERVISOR.sha256);
     verifyInputs(sourceRoot, sdkDir, stDir, evidenceRoot, lock);
-    lock.readiness = await verifyReady(sourceRoot, stDir);
+    lock.readiness = await verifyReady(sourceRoot, stDir, evidenceRoot, provenance);
     writeFileSync(output, JSON.stringify(lock, null, 2) + '\n', { flag: 'wx' });
     return {
         status: 'READY_INPUT_LOCK_ONLY_NOT_ACCEPTANCE',

@@ -3,7 +3,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';
 import { createRequire } from 'node:module';
-import { dirname, join, resolve } from 'node:path';
+import { dirname, join, resolve, relative, isAbsolute } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { entry, json, sha, safePath, sourceEntries, validateRecords } from '../../c20-app-scene-cycles/v2/inputs.mjs';
 import {
@@ -275,18 +275,57 @@ export function validateNativeIdentity(manifest, versions, schemaBytes) {
         assert.equal(manifest[key], value, 'New same-product identity: ' + key);
     assert.equal(manifest.schemaVersion, 1);
 }
-export async function verifyReady(sourceRoot, stDir) {
+// The product gate has two intentional roots: copied inputs under ROOT, original absolute compiler provenance.
+// Derive the latter from the hash-bound actual native supervisor receipt, never from fixture source/HEAD.
+export function validateNativeLayout(sourceRoot, stDir, native) {
+    const producerRoot = native.cwd;
+    for (const path of [sourceRoot, stDir, producerRoot, native.budget.cwd, native.budget.out]) {
+        assert(
+            typeof path === 'string' && isAbsolute(path) && resolve(path) === path,
+            'Canonical absolute product/layout path required',
+        );
+        assert(!/[\x00-\x1f\\]/.test(path), 'Unsafe product/layout path');
+    }
+    assert.equal(native.budget.cwd, producerRoot, 'Native receipt roots disagree');
+    assert.equal(native.budget.sourceCommit, native.sourceCommit, 'Native receipt producer identities disagree');
+    const relativeOutput = relative(producerRoot, native.budget.out).split('\\').join('/');
+    safePath(relativeOutput);
+    assert.equal(
+        resolve(sourceRoot, relativeOutput),
+        stDir,
+        'Ready ST must retain the native producer relative output under execution source',
+    );
+    return { provenanceRoot: producerRoot, relativeOutput };
+}
+export async function verifyReady(sourceRoot, stDir, evidenceRoot, provenance) {
+    validateProvenance(provenance);
+    const nativeFile = provenance.receipts.native;
+    assert.deepEqual(
+        entry(evidenceRoot, nativeFile.path),
+        nativeFile,
+        'Native producer receipt drift before readiness',
+    );
+    const native = json(evidenceRoot, nativeFile.path);
+    closedProducer(native, provenance.nativeProducerCommit);
+    assert.equal(native.status, 'PASS_LIMITED_ST_BUILD');
+    const layout = validateNativeLayout(sourceRoot, stDir, native);
     const ready = json(stDir, 'consumer-ready.json');
     assert.equal(ready.status, 'READY_FOR_LIMITED_CONSUMER_VERIFICATION');
     assert.equal(ready.acceptancePassed, false);
     validateRecords(ready.files, ['build-receipt.json', 'artifact-audit.raw.json', 'manifest.json']);
     for (const item of ready.files) assert.deepEqual(entry(stDir, item.path), item);
     const require = createRequire(join(sourceRoot, 'package.json'));
-    const verified = await require(join(sourceRoot, 'tools/build/box3d-assets.cjs')).verifySTBuild(stDir);
+    const verified = await require(join(sourceRoot, 'tools/build/box3d-assets.cjs')).verifySTBuild(stDir, {
+        provenanceRoot: layout.provenanceRoot,
+    });
     assert.deepEqual(verified.descriptor, ready.descriptor);
     assert.deepEqual(verified.descriptor.identity, NATIVE_IDENTITY);
     requireDiagnosticExports(readFileSync(join(stDir, 'box3d-st.wasm')));
-    return { descriptor: verified.descriptor, readinessSha256: entry(stDir, 'consumer-ready.json').sha256 };
+    return {
+        descriptor: verified.descriptor,
+        readinessSha256: entry(stDir, 'consumer-ready.json').sha256,
+        nativeProducerLayout: layout,
+    };
 }
 export function loadLock(path) {
     const bytes = readFileSync(path),

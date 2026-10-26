@@ -86,6 +86,27 @@ Lock inputs are rechecked before and after consumer use and by the outer wrapper
 when it exits; added/removed SDK or source files cannot be silently ignored.
 The prior SDK225 and ended attempts are read-only; no attempt directory is reused.
 
+## Producer root and relocated ready ST layout
+
+For an independent execution source, pass the **byte-identical full ready ST
+copy inside that source at the producer's original relative OUT path**, not the
+original ST directory outside the execution source. Copy all retained build
+files, staged sources and audit evidence without rewriting any bytes; hash the
+entire original/copy inventory. Payload equivalence alone is not enough.
+
+The existing product gate binds compiled source paths under its own source ROOT
+and has a separate, supported `provenanceRoot` option for retained original
+absolute Hull/compiler paths. This runner obtains that provenance root only from
+the hash-locked actual native supervision receipt's matching `cwd` / `budget.cwd`,
+checks its producer commit and relative `budget.out`, then passes it to the
+unchanged gate. The freeze and consumer use the same binding. The fixture source
+is not the native compiler source; do not edit original audit paths, relax source
+inventories or normalize away a root mismatch.
+
+The original memory attempt 1 stopped at this root-layout admission mismatch:
+`NOT_READY`, no lock, no CPU/consumer/physics startup. It remains unchanged and is
+not relabelled by a later successful readiness or runtime attempt.
+
 ## Consumer semantics and independent results
 
 `consumer.mjs` retains original APP v2 create-app/physics configuration, public
