@@ -1,0 +1,848 @@
+{
+  "schema": "box3d-c20app-strict-baseline-failures-report-v1",
+  "generatedAtUTC": "2026-10-26T10:54:56.414099+00:00",
+  "status": "TWO_FAILED_ATTEMPTS_C20APP_NOT_QUALIFIED",
+  "reportScope": "Retrospective report over two closed real app attempts and read-only source accounting. No new runtime execution or evidence rewrite.",
+  "evidenceLocation": {
+    "rootLabel": "box3d-resume-20261025T1146",
+    "pathConvention": "All artifact paths are relative to this retained workspace evidence root, not relative to this document or to a repository checkout.",
+    "selfContained": false,
+    "rawBundledWithThisPublication": false,
+    "publicationPayload": "Only this JSON and companion Markdown report; raw reports, SDK/native binaries and locks remain separately retained originals."
+  },
+  "originalContract": {
+    "artifactId": "contract.originalC20",
+    "line": 666,
+    "meaning": "Separate application 100-scene lane; counts/bytes return to baseline, with only a legal empty world retained. This does not authorize arbitrary high-water capacity or warmed-baseline acceptance."
+  },
+  "identity": {
+    "runtimeBuildNumber": 225,
+    "runtimeESMProducerCommit": "cd742f8000e8718f2bdfde0ce1eb9015271c1e28",
+    "nativeSTProducerCommit": "ae0803c0c3e85aa627666f76eef29c4e62ab2e93",
+    "fixtureCommits": ["f855a01c60ec586754328fcd214a1548373c5856", "f1380eb96809c3a24e7f2ec024f4cdeebefb327e"],
+    "layerBoundary": "The later fixture/source snapshot commits are not claimed to be the compiler source commit of SDK225 or ST2. Producer receipts, exact SDK/DTS/ST artifacts and each fresh lock are separately bound. No lowlevel result from another module supplies app counters.",
+    "commonArtifactIds": {
+      "sdkJS": "common.sdkJS",
+      "sdkMap": "common.sdkMap",
+      "sdkDeclarations": "common.sdkDeclarations",
+      "sdkLegacyDeclarations": "common.sdkLegacyDeclarations",
+      "esmReceipt": "common.esmReceipt",
+      "dtsReceipt": "common.dtsReceipt",
+      "dtsSevenGates": "common.dtsSevenGates",
+      "stManifest": "common.stManifest",
+      "stBuildReceipt": "common.stBuildReceipt",
+      "stReadiness": "common.stReadiness",
+      "stWasm": "common.stWasm",
+      "stModule": "common.stModule",
+      "v1FixturePublication": "common.v1FixturePublication",
+      "v2FixturePublication": "common.v2FixturePublication"
+    },
+    "nativeABIIdentity": {
+      "schemaVersion": 1,
+      "coreSha": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "bindingBaseSha": "5d5a3af049cccd9948b2b55bac4342414af0ef64",
+      "abiVersion": 1,
+      "schemaSha256": "ce98aca1a40c4999df838c1eaab2b08b0533c85adca9866eb48180c6190575d6",
+      "variant": "st-simd",
+      "patchChainSha256": "4c9d057fe6d7403f6f2c7672c4a7abe38041d845942540a6b5c5abbc6f4bc45c",
+      "patchLockSha256": "1144f23426855276e9a103cb062f1315bcd6d161a3e586dcd690964969e13809"
+    }
+  },
+  "rawLiveBytesSemantics": {
+    "rawField": "getNativeCounts().liveBytes / snapshot.native.liveBytes",
+    "accurateLabel": "Native per-world capacity-ledger bytes (b3World_GetCounters.byteCount)",
+    "decimalStringsPreserved": true,
+    "notEquivalentTo": [
+      "module-global b3GetByteCount / binding.liveBytes",
+      "WASM linear-memory/heap size",
+      "only payload of live or unreleased objects",
+      "a complete allocation-by-allocation leak attribution"
+    ],
+    "includedCategories": [
+      "ID pools",
+      "world arrays and retained capacities",
+      "broad-phase trees/pair set",
+      "manifold blocks",
+      "solver sets and constraint graph",
+      "task structures/bitsets",
+      "event/debug buffers",
+      "stack.capacity"
+    ],
+    "workerArenaBoundary": "Worker arena buffers are not added to this ledger total; their growth cannot directly explain the observed ledger delta.",
+    "attribution": "Source supports capacity retention as a possible cause. Neither the complete +76940 bytes nor absence/presence of a leak is established by these aggregate observations.",
+    "legalEmptyWorldBoundary": "Existing C20 allowance for a legal empty world does not itself waive the unchanged original byte-baseline assertion or authorize arbitrary retained high-water capacity.",
+    "sourceEvidence": [
+      {
+        "artifactId": "source.worldDiagnostic",
+        "lines": "1190–1204",
+        "meaning": "getNativeCounts forwards the actual binding worldCounts diagnostic, not stable IPhysicsWorld total-memory API"
+      },
+      {
+        "artifactId": "source.facade",
+        "lines": "2443–2454",
+        "meaning": "worldCounts and module-global liveBytes are distinct binding methods"
+      },
+      {
+        "artifactId": "source.bridge",
+        "lines": "63–75",
+        "meaning": "worldCounts copies b3World_GetCounters.byteCount; air_b3_live_bytes separately calls b3GetByteCount"
+      },
+      {
+        "artifactId": "source.stagedWorld",
+        "lines": "2360–2620,2633–2695;435–534",
+        "meaning": "per-world capacity-ledger categories; GetCounters uses ledger; world destroy owns deallocation"
+      },
+      {
+        "artifactId": "source.stagedContainer",
+        "lines": "145,182",
+        "meaning": "remove swaps/counts; array byte count is capacity times element size"
+      },
+      {
+        "artifactId": "source.stagedIdPool",
+        "lines": "32–46",
+        "meaning": "free IDs enter freeArray, which can retain allocation"
+      },
+      {
+        "artifactId": "source.stagedBlockAllocator",
+        "lines": "85–98",
+        "meaning": "freed elements enter freelist; block storage belongs to allocator lifetime"
+      },
+      {
+        "artifactId": "source.stagedStack",
+        "lines": "84–94",
+        "meaning": "stack growth follows high water mark; do not confuse this with uncounted worker arena buffers"
+      },
+      {
+        "artifactId": "source.stagedDynamicTree",
+        "lines": "38–45",
+        "meaning": "dynamic-tree growth allocates capacity"
+      }
+    ]
+  },
+  "attempts": [
+    {
+      "status": "FAIL",
+      "derivedFailureCategory": "PRE_MOUNT_FIXTURE_SETTER_LIFECYCLE",
+      "consumerStartedAtUTC": "2026-10-26T09:30:09.319Z",
+      "consumerCompletedAtUTC": "2026-10-26T09:30:10.589Z",
+      "fixtureCommit": "f855a01c60ec586754328fcd214a1548373c5856",
+      "profile": "c20-app-same-app-scene-cycles-v1",
+      "qualifiedCompletedCycles": 0,
+      "requiredCycles": 100,
+      "mountedScenes": 0,
+      "releasedScenes": 0,
+      "fixedSteps": 0,
+      "callbackCount": 0,
+      "callbackCounts": {},
+      "initialNativeSnapshot": {
+        "native": {
+          "bodies": 0,
+          "shapes": 0,
+          "contacts": 0,
+          "joints": 0,
+          "liveBytes": "36040"
+        },
+        "resources": []
+      },
+      "observedActiveNativeSnapshot": null,
+      "beforeSceneReleaseNativeSnapshot": null,
+      "afterSceneReleaseNativeSnapshot": null,
+      "firstFailure": {
+        "phase": "construct",
+        "errorType": "TypeError",
+        "message": "TypeError: Cannot read properties of null (reading 'setBreakForce')",
+        "location": "SDK225 cocosair.module.js:109976; v1 fixture.mjs:150",
+        "finalCycleRowStatus": "FAIL"
+      },
+      "constructedComponentProgressCounters": {
+        "createdBodies": 7,
+        "createdShapes": 7,
+        "createdTerrainUsers": 3,
+        "createdJoints": 0
+      },
+      "constructedCounterBoundary": "Fixture progress counters are JS construction bookkeeping, not native object evidence. In v1 a joint component exists before the failed setter but its createdJoints increment is never reached.",
+      "appAndClockCalls": {
+        "appCreateCalls": 1,
+        "appCloseCalls": 1,
+        "clockCreateCalls": 0,
+        "clockBeginCalls": 0,
+        "clockEndCalls": 0
+      },
+      "sceneReleaseReceipt": null,
+      "normalAppCloseReceipt": {
+        "status": "released",
+        "scene": null,
+        "completed": [],
+        "pending": [],
+        "failures": [],
+        "retained": ["runtime", "scheduler", "builtin-resources", "shared-asset-caches"],
+        "measurements": {
+          "gpuMemory": "unavailable",
+          "reason": "WebGL provides no portable complete GPU allocation measurement; scene destruction is not proof of zero leaks."
+        },
+        "physicsPreparation": {
+          "attemptGeneration": 1,
+          "status": "closed",
+          "acquired": [
+            {
+              "backend": "box3d",
+              "resource": "module",
+              "cleanup": "released",
+              "retained": []
+            },
+            {
+              "backend": "box3d",
+              "resource": "world",
+              "cleanup": "released",
+              "retained": []
+            }
+          ],
+          "originalError": null,
+          "cleanupErrors": []
+        }
+      },
+      "hostClosed": true,
+      "hostErrors": [],
+      "normalCloseBoundary": "Actual app.close receipt and backend cleanup completion; not an app-module global byte/handle measurement or proof that unattached objects were reclaimed.",
+      "crossSceneGenerationIsolation": "NOT_QUALIFIED_NO_SECOND_MOUNTED_SCENE",
+      "preMountUnownedCleanup": "NOT_QUALIFIED",
+      "physicalClosure": {
+        "status": "FAIL",
+        "exitCode": 1,
+        "signal": null,
+        "rawReturnCode": 1,
+        "subreaper": true,
+        "waitpidECHILD": true,
+        "waitpidScope": "ALL_CHILDREN_-1",
+        "remainingDescendants": [],
+        "remainingProcessGroup": [],
+        "budgetViolation": null,
+        "errors": [],
+        "rawWaitRows": [
+          {
+            "pid": 17,
+            "rawWaitStatus": 256,
+            "exitCode": 1
+          }
+        ],
+        "elapsedSeconds": 1.6936331230026553,
+        "closeSeconds": 0.0012827320024371147,
+        "closeBudgetSeconds": 4,
+        "peakSampledDescendantRSSBytes": 294580224,
+        "retainedOutputBytes": 945330,
+        "samplingIntervalSeconds": 0.025,
+        "rssQualification": "sampled full descendant-tree RSS, not a kernel hard limit"
+      },
+      "closureStatusBoundary": "closure.status stays FAIL because runner exited 1; independently, ECHILD and empty descendant enumeration prove physical process closure, not test success.",
+      "budgets": {
+        "cpuTimeoutMs": 30000,
+        "consumerTimeoutMs": 300000,
+        "outerRunner": {
+          "wallSeconds": 334,
+          "rssBytes": 2147483648,
+          "outputBytes": 58720256
+        },
+        "parentCloseSeconds": 4,
+        "preflightAndFreezeReserveBytes": 8388608,
+        "combinedOutputCapBytes": 67108864,
+        "combinedRetainedBytesMeasuredBeforeSummary": 4239413,
+        "outputMeasurementBoundary": "Outer result records this combined total before its terminal summary and later derived assessment files, not a final archival-directory total."
+      },
+      "inputProtection": {
+        "consumerInputsUnchanged": true,
+        "outerProtectedFiles": 9653,
+        "outerChangedPaths": [],
+        "sourceInventoryCount": 1800,
+        "fixtureInventoryCount": 9,
+        "sourceSnapshotRole": "Actual source bytes at freeze. Producer commit is caller-declared, not inferred from ST identity; retain the independent ESM build receipt for source-to-binary provenance."
+      },
+      "cpuControls": {
+        "passed": 44,
+        "failed": 0,
+        "runtimeAcceptanceCredit": false
+      },
+      "artifactIds": {
+        "consumer": "v1.consumer",
+        "journal": "v1.journal",
+        "consumerLockCopy": "v1.consumerLockCopy",
+        "closure": "v1.closure",
+        "runner": "v1.runner",
+        "consumerProcess": "v1.consumerProcess",
+        "cpuProcess": "v1.cpuProcess",
+        "cpuStdout": "v1.cpuStdout",
+        "inputLock": "v1.inputLock",
+        "producerBinding": "v1.producerBinding",
+        "outerResult": "v1.outerResult",
+        "authorization": "v1.authorization",
+        "assessment": "v1.assessment",
+        "supervisorSource": "v1.supervisorSource"
+      },
+      "notObserved": [
+        "Nonempty native scene counts",
+        "native joint creation",
+        "native mesh-lease creation",
+        "scene release and return-to-baseline",
+        "fixed stepping",
+        "public callbacks"
+      ],
+      "interpretation": "The real SDK/ST module and initial empty native world were loaded. The recorded 7 JS bodies/7 JS shapes/3 Terrain users do not establish 7 native bodies. The null-adapter failure is preserved; no scene was mounted and no step ran. A released app.close does not qualify unowned pre-mount Scene/Node/material cleanup.",
+      "hostProfile": {
+        "boundary": "Original public-terrain host bytes; JSDOM HEADLESS, normal production loader and module factory; no browser/GPU/CSP acceptance",
+        "hostSha256": "10205d33d67ca3002eb5860aef9047688873423d910964eebf5269b0ef5d367b",
+        "moduleFactoryReplaced": false
+      }
+    },
+    {
+      "status": "FAIL",
+      "derivedFailureCategory": "STRICT_ORIGINAL_WORLD_LEDGER_BASELINE",
+      "consumerStartedAtUTC": "2026-10-26T09:56:10.656Z",
+      "consumerCompletedAtUTC": "2026-10-26T09:56:14.185Z",
+      "fixtureCommit": "f1380eb96809c3a24e7f2ec024f4cdeebefb327e",
+      "profile": "c20-app-same-app-scene-cycles-v2",
+      "qualifiedCompletedCycles": 0,
+      "requiredCycles": 100,
+      "mountedScenes": 1,
+      "releasedScenes": 1,
+      "fixedSteps": 58,
+      "callbackCount": 108,
+      "callbackCounts": {
+        "sensor:onTriggerEnter": 1,
+        "visitor:onTriggerEnter": 1,
+        "sensor:onTriggerStay": 52,
+        "visitor:onTriggerStay": 52,
+        "sensor:onTriggerExit": 1,
+        "visitor:onTriggerExit": 1
+      },
+      "initialNativeSnapshot": {
+        "native": {
+          "bodies": 0,
+          "shapes": 0,
+          "contacts": 0,
+          "joints": 0,
+          "liveBytes": "36040"
+        },
+        "resources": []
+      },
+      "observedActiveNativeSnapshot": {
+        "native": {
+          "bodies": 50,
+          "shapes": 50,
+          "contacts": 0,
+          "joints": 1,
+          "liveBytes": "108708"
+        },
+        "resources": [
+          {
+            "users": 3,
+            "bucketHash": "5beb9535",
+            "cacheLeases": 1,
+            "shapeBorrows": 3,
+            "vertexCount": 9,
+            "triangleCount": 8,
+            "coreMeshBytes": 416,
+            "worldId": 65536
+          }
+        ]
+      },
+      "beforeSceneReleaseNativeSnapshot": {
+        "native": {
+          "bodies": 50,
+          "shapes": 50,
+          "contacts": 0,
+          "joints": 1,
+          "liveBytes": "108708"
+        },
+        "resources": [
+          {
+            "users": 3,
+            "bucketHash": "5beb9535",
+            "cacheLeases": 1,
+            "shapeBorrows": 3,
+            "vertexCount": 9,
+            "triangleCount": 8,
+            "coreMeshBytes": 416,
+            "worldId": 65536
+          }
+        ]
+      },
+      "afterSceneReleaseNativeSnapshot": {
+        "native": {
+          "bodies": 0,
+          "shapes": 0,
+          "contacts": 0,
+          "joints": 0,
+          "liveBytes": "112980"
+        },
+        "resources": []
+      },
+      "firstFailure": {
+        "phase": "strict-original-baseline-check",
+        "errorType": "AssertionError",
+        "message": "AssertionError [ERR_ASSERTION]: Every cycle must return to ORIGINAL pre-scene baseline; no warmup/reset/averaging",
+        "location": "v2 contract.mjs:162; v2 fixture.mjs:312",
+        "finalCycleRowStatus": "FAIL"
+      },
+      "constructedComponentProgressCounters": {
+        "createdBodies": 50,
+        "createdShapes": 50,
+        "createdTerrainUsers": 3,
+        "createdJoints": 1
+      },
+      "constructedCounterBoundary": "Fixture progress counters are JS construction bookkeeping, not native object evidence. In v1 a joint component exists before the failed setter but its createdJoints increment is never reached.",
+      "appAndClockCalls": {
+        "appCreateCalls": 1,
+        "appCloseCalls": 1,
+        "clockCreateCalls": 1,
+        "clockBeginCalls": 1,
+        "clockEndCalls": 0
+      },
+      "sceneReleaseReceipt": {
+        "status": "released",
+        "scene": "Node.754",
+        "completed": ["c20-material-1#1"],
+        "pending": [],
+        "failures": [],
+        "retained": ["runtime", "scheduler", "builtin-resources", "shared-asset-caches"],
+        "measurements": {
+          "gpuMemory": "unavailable",
+          "reason": "WebGL provides no portable complete GPU allocation measurement; scene destruction is not proof of zero leaks."
+        }
+      },
+      "normalAppCloseReceipt": {
+        "status": "released",
+        "scene": null,
+        "completed": ["c20-material-1#1"],
+        "pending": [],
+        "failures": [],
+        "retained": ["runtime", "scheduler", "builtin-resources", "shared-asset-caches"],
+        "measurements": {
+          "gpuMemory": "unavailable",
+          "reason": "WebGL provides no portable complete GPU allocation measurement; scene destruction is not proof of zero leaks."
+        },
+        "physicsPreparation": {
+          "attemptGeneration": 1,
+          "status": "closed",
+          "acquired": [
+            {
+              "backend": "box3d",
+              "resource": "module",
+              "cleanup": "released",
+              "retained": []
+            },
+            {
+              "backend": "box3d",
+              "resource": "world",
+              "cleanup": "released",
+              "retained": []
+            }
+          ],
+          "originalError": null,
+          "cleanupErrors": []
+        }
+      },
+      "hostClosed": true,
+      "hostErrors": [],
+      "normalCloseBoundary": "Actual app.close receipt and backend cleanup completion; not an app-module global byte/handle measurement or proof that unattached objects were reclaimed.",
+      "crossSceneGenerationIsolation": "NOT_QUALIFIED_NO_SECOND_MOUNTED_SCENE",
+      "preMountUnownedCleanup": "NOT_QUALIFIED",
+      "physicalClosure": {
+        "status": "FAIL",
+        "exitCode": 1,
+        "signal": null,
+        "rawReturnCode": 1,
+        "subreaper": true,
+        "waitpidECHILD": true,
+        "waitpidScope": "ALL_CHILDREN_-1",
+        "remainingDescendants": [],
+        "remainingProcessGroup": [],
+        "budgetViolation": null,
+        "errors": [],
+        "rawWaitRows": [
+          {
+            "pid": 17,
+            "rawWaitStatus": 256,
+            "exitCode": 1
+          }
+        ],
+        "elapsedSeconds": 4.330447009997442,
+        "closeSeconds": 0.0012370709991955664,
+        "closeBudgetSeconds": 4,
+        "peakSampledDescendantRSSBytes": 375062528,
+        "retainedOutputBytes": 1184154,
+        "samplingIntervalSeconds": 0.025,
+        "rssQualification": "sampled full descendant-tree RSS, not a kernel hard limit"
+      },
+      "closureStatusBoundary": "closure.status stays FAIL because runner exited 1; independently, ECHILD and empty descendant enumeration prove physical process closure, not test success.",
+      "budgets": {
+        "cpuTimeoutMs": 30000,
+        "consumerTimeoutMs": 300000,
+        "outerRunner": {
+          "wallSeconds": 334,
+          "rssBytes": 2147483648,
+          "outputBytes": 58720256
+        },
+        "parentCloseSeconds": 4,
+        "preflightAndFreezeReserveBytes": 8388608,
+        "combinedOutputCapBytes": 67108864,
+        "combinedRetainedBytesMeasuredBeforeSummary": 4523837,
+        "outputMeasurementBoundary": "Outer result records this combined total before its terminal summary and later derived assessment files, not a final archival-directory total."
+      },
+      "inputProtection": {
+        "consumerInputsUnchanged": true,
+        "outerProtectedFiles": 9882,
+        "outerChangedPaths": [],
+        "sourceInventoryCount": 1801,
+        "fixtureInventoryCount": 10,
+        "sourceSnapshotRole": "Actual source bytes at freeze. Producer commit is caller-declared, not inferred from ST identity; retain the independent ESM build receipt for source-to-binary provenance."
+      },
+      "cpuControls": {
+        "passed": 58,
+        "failed": 0,
+        "runtimeAcceptanceCredit": false
+      },
+      "artifactIds": {
+        "consumer": "v2.consumer",
+        "journal": "v2.journal",
+        "consumerLockCopy": "v2.consumerLockCopy",
+        "closure": "v2.closure",
+        "runner": "v2.runner",
+        "consumerProcess": "v2.consumerProcess",
+        "cpuProcess": "v2.cpuProcess",
+        "cpuStdout": "v2.cpuStdout",
+        "inputLock": "v2.inputLock",
+        "producerBinding": "v2.producerBinding",
+        "outerResult": "v2.outerResult",
+        "authorization": "v2.authorization",
+        "assessment": "v2.assessment",
+        "supervisorSource": "v2.supervisorSource"
+      },
+      "jointComponentConfiguration": {
+        "afterRun": true,
+        "ownerReadableBeforeSetters": true,
+        "beforeState": "pending",
+        "afterState": "pending",
+        "componentBreakForce": 100000000,
+        "componentBreakTorque": 100000000,
+        "step": 0,
+        "beforeFirstStep": true
+      },
+      "nativeJointBeforeFirstStep": {
+        "kind": "fixed",
+        "state": "connected",
+        "nativeKind": "fixed",
+        "breakForce": 100000000,
+        "breakTorque": 100000000,
+        "step": 0
+      },
+      "nativeJointDuringScene": {
+        "kind": "fixed",
+        "state": "connected",
+        "nativeKind": "fixed",
+        "breakForce": 100000000,
+        "breakTorque": 100000000
+      },
+      "releasedLifecycleFlags": {
+        "sceneInvalid": true,
+        "currentSceneNull": true,
+        "oldTokenCurrent": false,
+        "allPreviousTokensStale": true,
+        "previousCallbacksUnchanged": true,
+        "eventCopiesUnchanged": true,
+        "materialInvalid": true,
+        "sessionCleanupCalls": 1,
+        "stepsDuringRelease": 0,
+        "sameApp": true,
+        "sameClock": true,
+        "sameWorldDiagnosticObject": true
+      },
+      "flagQualification": "Scene/material invalidation and this token/payload stability were observed. Previous-cycle checks are vacuous on cycle 1; no cross-scene generation or 100-cycle lifetime claim follows. sameWorldDiagnosticObject is JS identity, not a module-wide live-world counter.",
+      "worldLedgerDeltaBytes": "76940",
+      "interpretation": "One real mounted scene reached its release receipt but failed the original byte-ledger equality assertion before completedCycles incremented. This is 0 qualified cycles, not 1/100 or 100/100. No second scene, warmup, baseline reset or retry occurred.",
+      "hostProfile": {
+        "boundary": "Original public-terrain host bytes; JSDOM HEADLESS, normal production loader and module factory; no browser/GPU/CSP acceptance",
+        "hostSha256": "10205d33d67ca3002eb5860aef9047688873423d910964eebf5269b0ef5d367b",
+        "moduleFactoryReplaced": false
+      }
+    }
+  ],
+  "qualification": {
+    "C20APP": "NOT_QUALIFIED",
+    "C20": "NOT_QUALIFIED",
+    "I05": "NOT_QUALIFIED",
+    "I06": "NOT_QUALIFIED",
+    "moduleGlobalLiveWorlds": "NOT_QUALIFIED",
+    "moduleGlobalLiveHandles": "NOT_QUALIFIED",
+    "postCloseGlobalBytes": "NOT_QUALIFIED",
+    "untrackedNativeResourceLeaks": "NOT_QUALIFIED",
+    "crossSceneGenerationIsolation": "NOT_QUALIFIED",
+    "browserGpuCsp": "NOT_RUN"
+  },
+  "newMemoryDiagnosticWork": {
+    "status": "INDEPENDENT_SOURCE_IMPLEMENTATION_ONLY_NO_RESULT_USED",
+    "claimsExplainedDelta": false,
+    "claimsFixedFailure": false,
+    "changesEitherHistoricalFailure": false
+  },
+  "artifacts": {
+    "v1.consumer": {
+      "path": "native-candidate-302935a/c20-app-attempt-1/run/result/consumer.raw.json",
+      "bytes": 8801,
+      "sha256": "8518bc352aa0c5d632cf732e59de72afe891218d6c8f50675ff386b07b371ed9"
+    },
+    "v1.journal": {
+      "path": "native-candidate-302935a/c20-app-attempt-1/run/result/observations.raw.jsonl",
+      "bytes": 523871,
+      "sha256": "dfc8ee32a95ce48aa2543ce034d15a43c4269b64db2bea35f5961482ef4815b2"
+    },
+    "v1.consumerLockCopy": {
+      "path": "native-candidate-302935a/c20-app-attempt-1/run/result/input-lock.json",
+      "bytes": 323172,
+      "sha256": "67f6159cb6bf74bd8ff63eca6ce8c2c09d855e9bf54a632c8fc5c23ba02f9c3a"
+    },
+    "v1.closure": {
+      "path": "native-candidate-302935a/c20-app-attempt-1/closure.json",
+      "bytes": 1863,
+      "sha256": "02e3a4b841c8187738a207362ae86c7e17267f8385648254d58cef5c8eb1fc99"
+    },
+    "v1.runner": {
+      "path": "native-candidate-302935a/c20-app-attempt-1/run/process.raw.json",
+      "bytes": 3697,
+      "sha256": "17d70921b879ab4d4ac8bbdc990fdd89db36f8ec7e78fef2f7889861c9ece6cf"
+    },
+    "v1.consumerProcess": {
+      "path": "native-candidate-302935a/c20-app-attempt-1/run/consumer.process.json",
+      "bytes": 1378,
+      "sha256": "b8fbbcc866e086a45f04fe2b82818ea9df8c8bd0d9f387ce2505ad79cd66ceb7"
+    },
+    "v1.cpuProcess": {
+      "path": "native-candidate-302935a/c20-app-attempt-1/run/cpu-controls.process.json",
+      "bytes": 752,
+      "sha256": "2e9db25352f08dac91dec504507df866de61782b400a11381f1e2760b20b9da0"
+    },
+    "v1.cpuStdout": {
+      "path": "native-candidate-302935a/c20-app-attempt-1/run/cpu-controls.stdout.txt",
+      "bytes": 6764,
+      "sha256": "d9248cd1d5fa0329371b4ab16828db4ec577703b65da733e974ec6a914f853ed"
+    },
+    "v1.inputLock": {
+      "path": "native-candidate-302935a/supervision-c20-app-attempt-1/input-lock.json",
+      "bytes": 323172,
+      "sha256": "67f6159cb6bf74bd8ff63eca6ce8c2c09d855e9bf54a632c8fc5c23ba02f9c3a"
+    },
+    "v1.producerBinding": {
+      "path": "native-candidate-302935a/supervision-c20-app-attempt-1/producer-binding.json",
+      "bytes": 6017,
+      "sha256": "2b41878f24431d0e88c171d0754f44443fc9717a7bc96293eb90188f80dcff7e"
+    },
+    "v1.outerResult": {
+      "path": "native-candidate-302935a/supervision-c20-app-attempt-1/result.json",
+      "bytes": 2226,
+      "sha256": "3ae199eba049e19f080d065d068dba7340f0ce199a403c45ad7e7d7adb01b713"
+    },
+    "v1.authorization": {
+      "path": "native-candidate-302935a/supervision-c20-app-attempt-1/authorization.json",
+      "bytes": 1459,
+      "sha256": "8cf72f629ae2c06358ffe70e11605c919019f2d893a4017fdcdd06ecc62cb6ee"
+    },
+    "v1.assessment": {
+      "path": "native-candidate-302935a/supervision-c20-app-attempt-1/assessment.json",
+      "bytes": 7382,
+      "sha256": "b9348d126df0c5cf44fedea0a4cfc5e90044a9b8ae842e2b6c862e1793bec3f0"
+    },
+    "v1.supervisorSource": {
+      "path": "native-candidate-302935a/supervision-c20-app-attempt-1/execute-once.py",
+      "bytes": 10108,
+      "sha256": "2fb8cfb5cacaf55b4d6d50371a49118537e4d29cdd4db78e22e9b55c294bc55c"
+    },
+    "v2.consumer": {
+      "path": "native-candidate-302935a/c20-app-attempt-2-mounted-v2/run/result/consumer.raw.json",
+      "bytes": 89992,
+      "sha256": "0d89f4fd440ab537d50e810db534f85fb82b07fabae0d85fd1f3672f09be8b0c"
+    },
+    "v2.journal": {
+      "path": "native-candidate-302935a/c20-app-attempt-2-mounted-v2/run/result/observations.raw.jsonl",
+      "bytes": 660441,
+      "sha256": "64ca22991a9945df10dcb6d879ce9797cc27c375d267d40ed24fa075830827bf"
+    },
+    "v2.consumerLockCopy": {
+      "path": "native-candidate-302935a/c20-app-attempt-2-mounted-v2/run/result/input-lock.json",
+      "bytes": 323526,
+      "sha256": "7df6f2c71106d908739459b27d3954947655fd1c51bdf98df377e6b8df0e3893"
+    },
+    "v2.closure": {
+      "path": "native-candidate-302935a/c20-app-attempt-2-mounted-v2/closure.json",
+      "bytes": 1885,
+      "sha256": "130d3fe8dbb3fc7a3ce61f4f000df67bfa0db63ab9169596c4424d23fa1ad3c6"
+    },
+    "v2.runner": {
+      "path": "native-candidate-302935a/c20-app-attempt-2-mounted-v2/run/process.raw.json",
+      "bytes": 3893,
+      "sha256": "292ec71380635632d69905f9efeda0a3f6a3ae565c872b5a73c03359575e9cb8"
+    },
+    "v2.consumerProcess": {
+      "path": "native-candidate-302935a/c20-app-attempt-2-mounted-v2/run/consumer.process.json",
+      "bytes": 1401,
+      "sha256": "3bcd5b7d5f4d6fb00809eb2ed0699cfae5b503db4840aab0e6f035b9660a607d"
+    },
+    "v2.cpuProcess": {
+      "path": "native-candidate-302935a/c20-app-attempt-2-mounted-v2/run/cpu-controls.process.json",
+      "bytes": 921,
+      "sha256": "e77b58a851188aadc235c5334640c6a90f5640899d956cb4e0ebba92d9ec83ed"
+    },
+    "v2.cpuStdout": {
+      "path": "native-candidate-302935a/c20-app-attempt-2-mounted-v2/run/cpu-controls.stdout.txt",
+      "bytes": 9642,
+      "sha256": "899f585e5ea0180be33268ef1fada0624a7131076a14bceda65ed6f783e5d75b"
+    },
+    "v2.inputLock": {
+      "path": "native-candidate-302935a/supervision-c20-app-attempt-2-mounted-v2/input-lock.json",
+      "bytes": 323526,
+      "sha256": "7df6f2c71106d908739459b27d3954947655fd1c51bdf98df377e6b8df0e3893"
+    },
+    "v2.producerBinding": {
+      "path": "native-candidate-302935a/supervision-c20-app-attempt-2-mounted-v2/producer-binding.json",
+      "bytes": 6333,
+      "sha256": "914608a88ce537a7bed293772dccd8df1f595814123d47d937dee218c2325689"
+    },
+    "v2.outerResult": {
+      "path": "native-candidate-302935a/supervision-c20-app-attempt-2-mounted-v2/result.json",
+      "bytes": 2293,
+      "sha256": "f08851ddc2dfb27d6f2f7df8ae99555a1449f7a3f7d2849dcf15af47956e9eb2"
+    },
+    "v2.authorization": {
+      "path": "native-candidate-302935a/supervision-c20-app-attempt-2-mounted-v2/authorization.json",
+      "bytes": 1481,
+      "sha256": "a0b124576f0ad958dd594fc9a76a9b5939fccb28ae53a7c90ad6812dfaf987c7"
+    },
+    "v2.assessment": {
+      "path": "native-candidate-302935a/supervision-c20-app-attempt-2-mounted-v2/assessment.json",
+      "bytes": 10953,
+      "sha256": "33746b5ab2f81539dae83043c6b0086f1eeb9092a534af3cd9ba9f56707f6de4"
+    },
+    "v2.supervisorSource": {
+      "path": "native-candidate-302935a/supervision-c20-app-attempt-2-mounted-v2/execute-once.py",
+      "bytes": 10304,
+      "sha256": "6f2b09cda88f9a23cf1455c0d1d5952e31e4505f5456cc5eb38708e850c28669"
+    },
+    "common.sdkJS": {
+      "path": "native-candidate-302935a/sdk225-esm-attempt-1/cocosair.module.js",
+      "bytes": 9443738,
+      "sha256": "1c04ff368e50aeff8b72d0bc8a3a8c3d0221e5ebf6ece233bcf263fdafe7f751"
+    },
+    "common.sdkMap": {
+      "path": "native-candidate-302935a/sdk225-esm-attempt-1/cocosair.module.js.map",
+      "bytes": 26436650,
+      "sha256": "fab1e0b9faf312a53790c384e2e32837ccc8082345118e362124e62049b5ab08"
+    },
+    "common.sdkDeclarations": {
+      "path": "native-candidate-302935a/sdk225-esm-attempt-1/cocosair.module.d.ts",
+      "bytes": 3375419,
+      "sha256": "7b328909fb3e2e4b3753233ceb51a3e761d60c37cba7be94aa73c43606ec95ed"
+    },
+    "common.sdkLegacyDeclarations": {
+      "path": "native-candidate-302935a/sdk225-esm-attempt-1/cocosair.legacy.d.ts",
+      "bytes": 367,
+      "sha256": "6dd42c6a064b17f923568bce9e3befce5ff0e33d7b0af19bed965a9e1a86aed2"
+    },
+    "common.esmReceipt": {
+      "path": "native-candidate-302935a/esm225-attempt-1-evidence/result.json",
+      "bytes": 8967,
+      "sha256": "d4f08995a81f1a5a26016760d22c50f64ed93a562051a0bf54579e34a25d6406"
+    },
+    "common.dtsReceipt": {
+      "path": "native-candidate-302935a/dts225-attempt-1-evidence/result.json",
+      "bytes": 9274,
+      "sha256": "052c075b2b54de2d9b90fee2db748e16ae4edcc8dc217f35c6aa59c4dc2c15ef"
+    },
+    "common.dtsSevenGates": {
+      "path": "native-candidate-302935a/dts225-attempt-1-evidence/seven-gates.json",
+      "bytes": 2824,
+      "sha256": "8813b919adade054c9294dc20b3b9cb62b8f6cc108bf39ba048e4409981a4003"
+    },
+    "common.stManifest": {
+      "path": "native-candidate-302935a/source/tools/physics/box3d/output/terrain-st-ae0803c-attempt-2/manifest.json",
+      "bytes": 3774,
+      "sha256": "e9cbb8b7e0eb03f7ba9dcfc71fc86360f94fe517c19c30c342c7f44b73e605a1"
+    },
+    "common.stBuildReceipt": {
+      "path": "native-candidate-302935a/source/tools/physics/box3d/output/terrain-st-ae0803c-attempt-2/build-receipt.json",
+      "bytes": 71743,
+      "sha256": "750bd292e037c624d25bea1ff31ace03c71f69fbe3950666efe292e6abfe3ab6"
+    },
+    "common.stReadiness": {
+      "path": "native-candidate-302935a/source/tools/physics/box3d/output/terrain-st-ae0803c-attempt-2/consumer-ready.json",
+      "bytes": 2168,
+      "sha256": "224cb4943095e6ccece6fa6b8e9e1f8f3faf5452ea3a1f6a4eb43be9a18b6447"
+    },
+    "common.stWasm": {
+      "path": "native-candidate-302935a/source/tools/physics/box3d/output/terrain-st-ae0803c-attempt-2/box3d-st.wasm",
+      "bytes": 693948,
+      "sha256": "3aad5fe443760ee7507513847d59526056ce39cc282e9502a8b4df32220e77b4"
+    },
+    "common.stModule": {
+      "path": "native-candidate-302935a/source/tools/physics/box3d/output/terrain-st-ae0803c-attempt-2/box3d-st.mjs",
+      "bytes": 55343,
+      "sha256": "29936ae2cdef0304d66fb7d86e5672f2f05304973a3f805bbeff7f08a3fc1e75"
+    },
+    "common.v1FixturePublication": {
+      "path": "c20-scene-cycles-candidate/publication-receipt.json",
+      "bytes": 6919,
+      "sha256": "f955cb43cb5e49b50290d5f878442a04d66dfc591db040f22de444ca82862cb2"
+    },
+    "common.v2FixturePublication": {
+      "path": "c20-scene-cycles-v2-candidate/publication-receipt.json",
+      "bytes": 5166,
+      "sha256": "ea9e92bbfe88618de7c9f766cc8da29ff90a176fef2400e9e1b35da505c9a04d"
+    },
+    "source.worldDiagnostic": {
+      "path": "native-candidate-302935a/source/src/air/physics/box3d/world.ts",
+      "bytes": 80263,
+      "sha256": "699b3740e215eefb62ad6e912d26c0c94028d1decf6f0eb71ab34a947b760a9a"
+    },
+    "source.facade": {
+      "path": "native-candidate-302935a/source/src/air/physics/box3d/binding/facade.mjs",
+      "bytes": 115381,
+      "sha256": "2618f81231d6291d364af46be6b5e19dbd7014af8e4d660c3abb74f7df47234b"
+    },
+    "source.bridge": {
+      "path": "native-candidate-302935a/source/tools/physics/box3d/native/air_box3d.c",
+      "bytes": 10361,
+      "sha256": "148bb4e0ed893ee75e862d2ce370176ebe33a562902dad95ddad8c2afbdf18d3"
+    },
+    "source.stagedWorld": {
+      "path": "native-candidate-302935a/source/tools/physics/box3d/output/terrain-st-ae0803c-attempt-2/staged-core/src/physics_world.c",
+      "bytes": 129594,
+      "sha256": "c7d679cf8051b59fee54c8b76ee63131f9c8c7d1d01a71f241827e53775939da"
+    },
+    "source.stagedContainer": {
+      "path": "native-candidate-302935a/source/tools/physics/box3d/output/terrain-st-ae0803c-attempt-2/staged-core/src/container.h",
+      "bytes": 14469,
+      "sha256": "7a7e6b600115b454ee4026700c48dfdaaff0e1f978335962a1acf7d7399e6a72"
+    },
+    "source.stagedIdPool": {
+      "path": "native-candidate-302935a/source/tools/physics/box3d/output/terrain-st-ae0803c-attempt-2/staged-core/src/id_pool.c",
+      "bytes": 1225,
+      "sha256": "f6702465f07520ef4b74d7ca970409bc60bbec4ea4afd31f51257b361ad5c4f0"
+    },
+    "source.stagedBlockAllocator": {
+      "path": "native-candidate-302935a/source/tools/physics/box3d/output/terrain-st-ae0803c-attempt-2/staged-core/src/block_allocator.c",
+      "bytes": 2585,
+      "sha256": "e7f51cc2bbbb5f6f5173a1c71ab1f5713a7e55ea7cf9ff64ed3397db7ed4e0ec"
+    },
+    "source.stagedStack": {
+      "path": "native-candidate-302935a/source/tools/physics/box3d/output/terrain-st-ae0803c-attempt-2/staged-core/src/arena_allocator.c",
+      "bytes": 3991,
+      "sha256": "970c9436b31ec137787a8595be9291729d19607e8043cd8b30b4794de2c2faf5"
+    },
+    "source.stagedDynamicTree": {
+      "path": "native-candidate-302935a/source/tools/physics/box3d/output/terrain-st-ae0803c-attempt-2/staged-core/src/dynamic_tree.c",
+      "bytes": 65580,
+      "sha256": "5229aaa0faa6de2ab41a9b82864bdfd82388248ea0447827d7021df31bb35359"
+    },
+    "contract.originalC20": {
+      "path": "dependency-recovery-20261026/restored/workspace/tools/verify/box3d/collider-retirement-contract-review-20261022-a/inputs/ai/plans/box3d-v1.2-reference.md",
+      "bytes": 153689,
+      "sha256": "17b4dcf0d8acbe0ed72f81ab4d3fc53c6a51f705d573699f0d50137e4bf00c46"
+    }
+  }
+}
