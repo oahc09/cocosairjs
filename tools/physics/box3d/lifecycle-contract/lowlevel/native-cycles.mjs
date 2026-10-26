@@ -1,5 +1,6 @@
 // Explicit caller authorization required. No WASM load, physics step, or native call at import time.
 import assert from 'node:assert/strict';
+import { DEBUG_SPEC, validateDebugSnapshot } from './debug-artifacts.mjs';
 import { geometry } from './oracle.mjs';
 import { CYCLES, BODIES, ORDERS, stages, copy, validateGlobal } from './contract.mjs';
 const disposed = (error) => error?.code === 'AIR_E_BOX3D_DISPOSED';
@@ -118,7 +119,8 @@ function rejectOldTokens(api, prior) {
     return count;
 }
 
-export function runNativeCycles({ api, module, probe, baseline, emit, state }) {
+export function runNativeCycles({ api, module, probe, baseline, emit, state, retainDebugSnapshot }) {
+    assert.equal(typeof retainDebugSnapshot, 'function', 'complete raw debug result preservation required');
     let prior;
     for (let cycle = 0; cycle < CYCLES; cycle++) {
         const order = ORDERS[cycle % ORDERS.length],
@@ -134,6 +136,9 @@ export function runNativeCycles({ api, module, probe, baseline, emit, state }) {
             emit({ kind: 'stage', cycle, order, stage, worldId: current.world.id, observation, ...detail });
             // Persist the raw observation BEFORE asserting, including a failing stage.
             validateGlobal(observation, baseline, stage === 'world-destroyed');
+            assert.equal(observation.bridge.shapeHandles, spec.debugHandles);
+            assert.equal(observation.bridge.primitiveCapacity, 0);
+            assert.equal(observation.bridge.capturedPrimitives, 0);
             assert.equal(
                 BigInt(observation.meshCounters.cooks),
                 BigInt(baseline.meshCounters.cooks) + BigInt(cycle + spec.cooked),
@@ -235,6 +240,13 @@ export function runNativeCycles({ api, module, probe, baseline, emit, state }) {
                     rawBodyRevalidation: prior.bodies.map((id) => module._air_b3_body_valid(id.low, id.high)),
                     rawShapeRevalidation: prior.shapes.map((id) => module._air_b3_shape_valid(id.low, id.high)),
                 });
+            // The API calls real native WIRE_FRAME capture and always releases its copied wire.
+            // Lazy debug caches deliberately remain owned by their native shapes until destruction.
+            const debugSnapshot = api.debugSnapshot(current.world, DEBUG_SPEC.flags, DEBUG_SPEC.jointScale);
+            const debugArtifact = retainDebugSnapshot(cycle, current.world.id, debugSnapshot);
+            record('debug-captured', { debugArtifact });
+            validateDebugSnapshot(debugSnapshot);
+            state.completedDebugSnapshots = (state.completedDebugSnapshots ?? 0) + 1;
             if (order !== 'cache-last') {
                 api.releaseStaticMesh(current.resource);
                 record('cache-released');

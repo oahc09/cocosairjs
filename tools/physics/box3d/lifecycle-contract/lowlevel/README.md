@@ -1,4 +1,4 @@
-# C20-LOWLEVEL native lifecycle candidate v2
+# C20-LOWLEVEL native lifecycle candidate v3
 
 **Preparation only: no actual WASM/native execution has been performed for this candidate.**
 The CPU model and CPU-negative tests are not native evidence. Execution requires root review/authorization.
@@ -12,7 +12,7 @@ The existing `wasm-ownership-contract.mjs` two 128-round one-body loops remain v
 One actual ST module and one production facade remain alive for **all 100 sequential rounds**.
 Each round creates exactly 50 bodies (3 static mesh carriers + 47 dynamic sphere bodies), 50 shapes,
 one real native fixed joint between dynamic bodies 3/4, and one 9-vertex/8-triangle cooked mesh shared by three shapes.
-An extra cache lease is retained/released/idempotently released. No physics step, events, difficult geometry or unsupported joint is added.
+An extra cache lease is retained/released/idempotently released. After the real 50-shape/1-joint phase, every round calls the actual `api.debugSnapshot(world, 1, 0)` once. No physics step, events, difficult geometry or unsupported joint is added.
 
 Before any world, declare 34 cache-first, 33 cache-last, 33 world-last rounds and every expected stage.
 The original core/global-bridge baseline is measured once before facade construction, after one fixed diagnostic scratch allocation.
@@ -33,7 +33,7 @@ There is no warmup, baseline replacement, growth tolerance or separate per-round
 
 `C20_LOWLEVEL=NOT_QUALIFIED`; `C20_APPLICATION=NOT_RUN`, even if the observed subset passes.
 No complete native global-world count or complete global-handle count is exported.
-`bridge.shapeHandles` is only the native bridge's defined subset, not all native/JS handles.
+`bridge.shapeHandles` counts only lazily allocated debug-shape caches, not core shape IDs or all native/JS handles. This version explicitly exercises their creation and destruction; complete global-handle/world census remains unqualified.
 Known world invalidity is not a census of unknown worlds. Native core bytes + bridge memory + completed mesh destruction are not allocator malloc/free totals.
 No contact/event/dynamics or application-level 100-scene-cycle qualification is claimed.
 
@@ -62,7 +62,7 @@ C=$S/tools/physics/box3d/lifecycle-contract/lowlevel
 R=/path/to/reviewed/st-runtime
 NODE=/path/to/node-v22.16.0/bin/node
 LOCAL=/path/to/local-evidence
-LOCK=$LOCAL/input-lock-v2.json
+LOCK=$LOCAL/input-lock-v3.json
 
 # Already prepared via CPU-only inspection; never overwrite it.
 # "$NODE" "$C/prepare-input-lock.mjs" "$R" "$S" "$LOCK"
@@ -91,3 +91,23 @@ Use existing Node 22 and installed Prettier from the restored dependency tree; n
 plus missing-round, 49-body, absent-joint, core/bridge-growth, empty-JS-map, altered-input,
 rebaselining, stale-token, mesh-lifetime, module-recreation and closure-failure negatives.
 `python3 supervise.test.py` additionally checks only CPU child-process closure (including escaped setsid descendants and forced kill); it does not execute the native runner or any WASM. Original source/SDK/raw evidence is untouched.
+
+## v3 correction: exercise the real lazy debug resource path
+
+The preserved v2 native attempt completed 100 rounds but **FAILED** its final consumer because the fixture never exercised debug capture while asserting a nonempty debug-handle cache. That attempt and its source/locks/raw are retained unchanged; v3 does not reclassify it or lower the assertion to gain a pass. The v2 CPU model also incorrectly equated core shapes and debug handles; v3 fixes that model to be lazy.
+
+Expected counts are derived from the locked actual ST staged core and production bridge, not inferred from the failed run:
+
+- `staged-core/src/types.c:35–47` enables bodies by default; `shape.c:215–219` inserts enabled shapes into the broadphase. All this fixture's bodies remain enabled and its default category bits are nonzero.
+- `world_bridge.c:265–274` maps WIRE_FRAME=1 to `drawShapes`, uses an unbounded finite drawing box and `UINT64_MAX` category mask. The default debug draw has other draw switches off (`types.c:133–160`), so joints/AABBs/contacts are not part of this output.
+- `physics_world.c:1424–1433` queries all three body-type broadphases; `DrawQueryCallback` lazily creates one debug resource for each visible shape (`1329–1363`), including mesh and sphere cases. Thus these **3 mesh + 47 sphere** shapes each contribute one debug cache: **50** after capture, **0** before it.
+- `world_bridge.c:73–101` defines sphere lines as 3×24=72 and mesh lines as 3×triangleCount. The cooked mesh has 8 triangles, yielding 24 lines per carrier; total **47×72 + 3×24 = 3456 lines**. Complete returned line data is validated against each of the 50 distinct predeclared body bounds and its expected 72/24 lines, so a missing mesh cannot hide in the aggregate.
+- `facade.mjs:1795–1831` performs native capture/copy and releases native wire in `finally`. Native `primitiveCapacity` and `capturedPrimitives` must therefore be zero after the API returns, while lazy caches remain live. `world_bridge.c:170/176` tracks cache allocation/free callbacks; shape/body/world destruction must release the corresponding caches, ultimately restoring the original global baseline.
+
+The exact core files (`shape.c`, `physics_world.c`, `types.c`, `dynamic_tree.c`) in the selected ST runtime's `staged-core` directory are hash-bound in the new input lock, together with the bridge/default filter/facade. No core or engine file is changed.
+
+### Complete debug originals, not samples
+
+Each successful API return is retained in full as an exclusive/fsynced `run/debug/cycle-NNN.json.gz` before any content/size assertion. The uncompressed JSON contains the entire returned snapshot, world ID and cycle. Each journal row binds both raw and compressed SHA-256, both byte counts, exact filename, API arguments and primitive count. The runner and final read-only consumer decompress and validate all 100 originals; missing, replaced, truncated, corrupted or cross-cycle files fail closed. No sampling, lossy float rounding, omitted primitives, or synthetic debug output is used in actual execution.
+
+Original 120s execution + one 4s failure-close window / 1GiB sampled descendant RSS / 16MiB retained output budgets are unchanged. Before execution v3 also declares per-round maxima of 2MiB decoded JSON and 96KiB gzip. CPU-only full-data modeling produced approximately 39.9MB decoded / 2.24MB gzip across 100 rounds plus 1.75MB journal (about 4MB retained, before small receipts), leaving substantial margin. These are preparation estimates, not native performance claims; actual overruns fail and preserve originals rather than widening budgets.

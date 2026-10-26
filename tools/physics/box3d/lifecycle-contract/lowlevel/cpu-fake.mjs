@@ -44,6 +44,7 @@ export function cpuFake() {
     const dropShape = (shape) => {
         if (!shape.alive) return;
         shape.alive = false;
+        shape.debugCached = false;
         if (shape.mesh) {
             shape.mesh.borrows--;
             maybeFree(shape.mesh);
@@ -63,12 +64,14 @@ export function cpuFake() {
         );
     const bridge = () => {
         const ws = [...worlds.values()].filter((w) => w.alive).length,
-            ss = [...shapes.values()].filter((s) => s.alive).length,
-            ms = [...meshes.values()].filter((m) => m.alive).length;
+            ms = [...meshes.values()].filter((m) => m.alive).length,
+            borrows = [...shapes.values()].filter((s) => s.alive && s.mesh).length,
+            cached = [...shapes.values()].filter((s) => s.alive && s.debugCached),
+            debugBytes = cached.reduce((total, shape) => total + 8 + (shape.mesh ? 24 : 72) * 24, 0);
         return {
-            liveBytes: BigInt(ws * 64 + ss * 8 + ms * 256),
-            liveAllocations: ws + ss + ms,
-            shapeHandles: ss,
+            liveBytes: BigInt(ws * 64 + ms * 256 + borrows * 24 + debugBytes),
+            liveAllocations: ws + ms + borrows + cached.length,
+            shapeHandles: cached.length, // Only lazy createDebugShape resources, never core shape count.
             primitiveCapacity: 0,
             capturedPrimitives: 0,
         };
@@ -114,24 +117,32 @@ export function cpuFake() {
             worlds.set(token.id, { token, alive: true });
             return token;
         },
-        createBody: (token) => {
+        createBody: (token, options = {}) => {
             const body = id(),
-                b = { token: body, alive: true, world: world(token) };
+                b = { token: body, alive: true, world: world(token), position: options.position ?? [0, 0, 0] };
             bodies.set(key(body.low, body.high), b);
             bodyTokens.set(body, b);
             return body;
         },
-        createSphere: (token) => {
+        createSphere: (token, radius = 0.5) => {
             const body = owned(bodyTokens, token),
                 shape = id(),
-                s = { token: shape, alive: true, world: body.world, body };
+                s = { token: shape, alive: true, world: body.world, body, radius, debugCached: false };
             shapes.set(key(shape.low, shape.high), s);
             shapeTokens.set(shape, s);
             return shape;
         },
-        cookStaticMesh: (token) => {
+        cookStaticMesh: (token, points, indices) => {
             const resource = id(),
-                m = { token: resource, world: world(token), alive: true, cache: 1, borrows: 0 };
+                m = {
+                    token: resource,
+                    world: world(token),
+                    alive: true,
+                    cache: 1,
+                    borrows: 0,
+                    points: Array.from(points),
+                    indices: Array.from(indices),
+                };
             cooks++;
             meshes.set(key(resource.low, resource.high), m);
             leases.set(resource, { mesh: m, released: false });
@@ -181,6 +192,43 @@ export function cpuFake() {
             joints.set(key(joint.low, joint.high), j);
             jointTokens.set(joint, j);
             return joint;
+        },
+        debugSnapshot: (token, flags, jointScale) => {
+            const w = world(token),
+                primitives = [];
+            if (flags !== 1 || jointScale !== 0) throw new Error('CPU model covers only declared wireframe request');
+            for (const shape of shapes.values()) {
+                if (!shape.alive || shape.world !== w) continue;
+                // mirrors lazy callback lifecycle, not a native geometry qualification oracle
+                shape.debugCached = true;
+                const add = (p) => p.map((value, axis) => Math.fround(value + shape.body.position[axis]));
+                const line = (from, to) =>
+                    primitives.push({ kind: 'line', from: add(from), to: add(to), color: 0xffcc00 });
+                if (shape.mesh) {
+                    const { points, indices } = shape.mesh;
+                    for (let triangle = 0; triangle < indices.length; triangle += 3) {
+                        for (let edge = 0; edge < 3; edge++) {
+                            const a = indices[triangle + edge] * 3,
+                                b = indices[triangle + ((edge + 1) % 3)] * 3;
+                            line(points.slice(a, a + 3), points.slice(b, b + 3));
+                        }
+                    }
+                } else {
+                    for (let axis = 0; axis < 3; axis++)
+                        for (let i = 0; i < 24; i++) {
+                            const ends = [i, i + 1].map((step) => {
+                                const angle = Math.fround(step * Math.fround((2 * Math.PI) / 24)),
+                                    point = [0, 0, 0];
+                                point[(axis + 1) % 3] = Math.fround(shape.radius * Math.cos(angle));
+                                point[(axis + 2) % 3] = Math.fround(shape.radius * Math.sin(angle));
+                                return point;
+                            });
+                            line(...ends);
+                        }
+                }
+            }
+            // Production api.debugSnapshot releases the wire before return; caches stay live until shapes die.
+            return { primitives, flags, jointScale, supportedFlags: 5 };
         },
         fixedJointState: (token, joint) => {
             world(token);

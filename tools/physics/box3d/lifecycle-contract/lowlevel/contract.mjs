@@ -3,8 +3,9 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { DEBUG_SPEC, validateDebugSnapshot } from './debug-artifacts.mjs';
 
-export const VERSION = 'box3d-c20-lowlevel-observed-subset-v2';
+export const VERSION = 'box3d-c20-lowlevel-observed-subset-v3';
 export const SCHEMA = 'ce98aca1a40c4999df838c1eaab2b08b0533c85adca9866eb48180c6190575d6';
 export const CYCLES = 100;
 export const BODIES = 50;
@@ -18,7 +19,7 @@ export const LIMITS = Object.freeze({
     allocatorFreeCounts: 'NOT_QUALIFIED_CORE_BYTES_AND_COMPLETED_MESH_DESTROYS_ARE_NOT_MALLOC_FREE_COUNTS',
     rawIdsAcrossWorlds: 'NOT_QUALIFIED_RAW_BODY_SHAPE_IDS_CAN_REVALIDATE_IN_ANOTHER_WORLD_LIFETIME',
     contacts: 'ZERO_CONTACT_LIFECYCLE_ONLY_NO_STEP_OR_EVENT_QUALIFICATION',
-    bridgeShapeHandles: 'BRIDGE_DEFINED_SHAPE_HANDLES_ONLY_NOT_ALL_NATIVE_OR_JS_HANDLES',
+    bridgeShapeHandles: 'LAZY_DEBUG_SHAPE_CACHE_ONLY_NOT_ALL_NATIVE_OR_JS_HANDLES',
 });
 export const FIXTURES = Object.freeze([
     'contract.mjs',
@@ -32,6 +33,7 @@ export const FIXTURES = Object.freeze([
     'cpu-fake.mjs',
     'README.md',
     'supervise.test.py',
+    'debug-artifacts.mjs',
 ]);
 export const SOURCES = Object.freeze([
     'tools/physics/box3d/abi-schema.json',
@@ -39,6 +41,7 @@ export const SOURCES = Object.freeze([
     'tools/physics/box3d/native/world_bridge.c',
     'tools/physics/box3d/native/joint_bridge.c',
     'tools/physics/box3d/native/mesh_bridge.c',
+    'tools/physics/box3d/native/filter_bridge.h',
     'src/air/physics/box3d/binding/facade.mjs',
     'tools/physics/box3d/terrain-contract/native-terrain-lifetime.mjs',
     'tools/physics/box3d/terrain-contract/run-native.mjs',
@@ -71,6 +74,12 @@ export function inspectInputs(runtime, source, fixture) {
         assert.equal(declared[0].sha256, assets[name].sha256, `manifest hash ${name}`);
         assert.equal(declared[0].bytes, assets[name].bytes, `manifest byte count ${name}`);
     }
+    const debugCoreSources = hashFiles(runtime, [
+        'staged-core/src/shape.c',
+        'staged-core/src/physics_world.c',
+        'staged-core/src/types.c',
+        'staged-core/src/dynamic_tree.c',
+    ]);
     const sources = hashFiles(source, SOURCES),
         fixtures = hashFiles(fixture, FIXTURES);
     assert.equal(sources[SOURCES[0]].sha256, SCHEMA, 'source ABI must match actual manifest schema');
@@ -88,6 +97,8 @@ export function inspectInputs(runtime, source, fixture) {
         limits: LIMITS,
         assets,
         sources,
+        debugCoreSources,
+        debugSpec: DEBUG_SPEC,
         fixtures,
     };
 }
@@ -117,6 +128,7 @@ export function stages(order) {
         row('bodies-created', 50, 0, 0, 1, 0),
         row('shapes-borrowed', 50, 50, 0, 1, 3),
         row('joint-created', 50, 50, 1, 1, 3),
+        row('debug-captured', 50, 50, 1, 1, 3),
     ];
     if (order === 'cache-first')
         rows.push(
@@ -145,7 +157,11 @@ export function stages(order) {
             row('second-borrow-body-destroyed', 49, 48, 1, 0, 1),
         );
     rows.push(row('world-destroyed', null, null, null, null, null, 1, 1));
-    return rows;
+    let debugCreated = false;
+    return rows.map((spec) => {
+        if (spec.stage === 'debug-captured') debugCreated = true;
+        return { ...spec, debugHandles: debugCreated ? (spec.shapes ?? 0) : 0 };
+    });
 }
 const natural = (n) => assert.ok(Number.isSafeInteger(n) && n >= 0);
 const bigintString = (s) => {
@@ -164,7 +180,8 @@ export function validateGlobal(observation, baseline, equal = false) {
         assert.deepEqual(observation.bridge, baseline.bridge, 'native global bridge must return to ORIGINAL baseline');
     }
 }
-export function validateObservedSubset(events, report, expectedInputs) {
+export function validateObservedSubset(events, report, expectedInputs, readDebugArtifact) {
+    assert.equal(typeof readDebugArtifact, 'function', 'full raw debug output reader is mandatory');
     assert.equal(report.version, VERSION);
     validateInputs(expectedInputs, report.inputs);
     assert.deepEqual(report.limits, LIMITS, 'must retain all non-qualification statements');
@@ -185,6 +202,7 @@ export function validateObservedSubset(events, report, expectedInputs) {
     );
     assert.deepEqual(events[0].stageContracts, Object.fromEntries(ORDERS.map((o) => [o, stages(o)])));
     assert.deepEqual(events[0].limits, LIMITS);
+    assert.deepEqual(events[0].debugSpec, DEBUG_SPEC);
     events.forEach((event, index) => assert.equal(event.sequence, index, 'missing/reordered raw row'));
     const expectedTimeline = ['declaration', 'input-identity', 'initial-baseline'];
     for (let cycle = 0; cycle < 100; ++cycle) {
@@ -243,6 +261,13 @@ export function validateObservedSubset(events, report, expectedInputs) {
             assert.equal(row.stage, spec.stage);
             const o = row.observation;
             validateGlobal(o, baseline, spec.stage === 'world-destroyed');
+            assert.equal(
+                o.bridge.shapeHandles,
+                spec.debugHandles,
+                'lazy debug handles track exercised caches, never all core shapes',
+            );
+            assert.equal(o.bridge.primitiveCapacity, 0, 'api.debugSnapshot must release native copied wire');
+            assert.equal(o.bridge.capturedPrimitives, 0);
             assert.equal(BigInt(o.meshCounters.cooks), initialCooks + BigInt(cycle + spec.cooked));
             assert.equal(BigInt(o.meshCounters.destroys), initialDestroys + BigInt(cycle + spec.destroyed));
             assert.ok(row.worldId > 0);
@@ -290,7 +315,14 @@ export function validateObservedSubset(events, report, expectedInputs) {
                 assert.ok(BigInt(o.coreBytes) > BigInt(baseline.coreBytes), 'nonempty core allocation proof');
                 assert.ok(o.bridge.liveAllocations > 0);
                 assert.ok(BigInt(o.bridge.liveBytes) > 0n);
-                assert.ok(o.bridge.shapeHandles > 0, 'bridge-defined handle subset must be nonempty');
+                assert.equal(o.bridge.shapeHandles, 0, 'native shape creation does not create lazy debug cache');
+            }
+            if (spec.stage === 'debug-captured') {
+                assert.ok(o.bridge.shapeHandles > 0, 'actually exercised debug-handle subset must be nonempty');
+                assert.equal(o.bridge.shapeHandles, DEBUG_SPEC.handles);
+                assert.equal(row.debugArtifact.cycle, cycle);
+                assert.equal(row.debugArtifact.worldId, row.worldId);
+                assert.equal(row.debugArtifact.primitiveCount, DEBUG_SPEC.primitives);
             }
         }
     }
@@ -298,6 +330,7 @@ export function validateObservedSubset(events, report, expectedInputs) {
     assert.equal(report.completedCycles, 100);
     assert.equal(report.createdBodies, 5000);
     assert.equal(report.createdWorlds, 100);
+    assert.equal(report.completedDebugSnapshots, 100);
     const closed = events.filter((e) => e.kind === 'lifecycle-closed');
     assert.equal(closed.length, 1);
     validateGlobal(closed[0].observation, baseline, true);
@@ -312,6 +345,13 @@ export function validateObservedSubset(events, report, expectedInputs) {
     }
     assert.equal(events.at(-1).kind, 'lifecycle-closed');
     assert.equal(events.filter((e) => e.kind === 'failure').length, 0);
+    // Validate complete per-round lossless output only after structural fail-closed checks.
+    for (const row of rows.filter((item) => item.stage === 'debug-captured')) {
+        const payload = readDebugArtifact(row.debugArtifact);
+        assert.equal(payload.cycle, row.cycle);
+        assert.equal(payload.worldId, row.worldId);
+        validateDebugSnapshot(payload.snapshot);
+    }
     return { status: 'OBSERVED_NATIVE_SUBSET_PASS', cycles: 100, bodies: 5000, limits: LIMITS };
 }
 export function validatePhysicalClosure(closure) {

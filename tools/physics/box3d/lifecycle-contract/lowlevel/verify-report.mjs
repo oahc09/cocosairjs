@@ -1,4 +1,5 @@
 // CPU-only final consumer: a runner's summary alone can never qualify a completed attempt.
+import { readDebugSnapshot } from './debug-artifacts.mjs';
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { resolve, join, dirname } from 'node:path';
@@ -47,4 +48,12 @@ const totalBytes = (directory) =>
     }, 0);
 assert.equal(closure.retainedOutputBytes, totalBytes(attempt), 'final receipt included in output budget');
 validatePhysicalClosure(closure);
-console.log(JSON.stringify(validateObservedSubset(events, report, expected), null, 2));
+console.log(
+    JSON.stringify(
+        validateObservedSubset(events, report, expected, (metadata) =>
+            readDebugSnapshot(join(attempt, 'run'), metadata),
+        ),
+        null,
+        2,
+    ),
+);

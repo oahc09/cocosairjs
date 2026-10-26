@@ -19,6 +19,7 @@ import {
     json,
     copy,
 } from './contract.mjs';
+import { DEBUG_SPEC, writeDebugSnapshot, readDebugSnapshot } from './debug-artifacts.mjs';
 import { createNativeProbe, runNativeCycles } from './native-cycles.mjs';
 assert.equal(
     process.argv[2],
@@ -31,7 +32,8 @@ assert.equal(
     'usage: run-native.mjs --authorized-fresh-native-c20 RUNTIME SOURCE LOCK FRESH_OUTPUT',
 );
 const [runtime, source, lockPath, out] = process.argv.slice(3).map((p) => resolve(p));
-mkdirSync(out); // Exclusive creation; EEXIST is fatal, including an empty prior attempt.
+mkdirSync(out);
+mkdirSync(join(out, 'debug')); // Exclusive creation; EEXIST is fatal, including an empty prior attempt.
 const rawPath = join(out, 'events.jsonl'),
     fd = openSync(rawPath, 'wx'),
     events = [];
@@ -71,6 +73,7 @@ emit({
     stageContracts: Object.fromEntries(ORDERS.map((order) => [order, stages(order)])),
     budget: BUDGET,
     limits: LIMITS,
+    debugSpec: DEBUG_SPEC,
     baselinePolicy: 'one original module baseline before facade construction; no warmup or per-cycle rebasing',
     scratchPolicy:
         'one 120-byte diagnostic malloc plus facade-owned scratch; not claimed as core/bridge allocation bytes',
@@ -98,7 +101,15 @@ try {
     report.identity = api.identity;
     assert.equal(report.identity.schemaSha256, expectedInputs.sources['tools/physics/box3d/abi-schema.json'].sha256);
     validateGlobal(copy(probe.global()), baseline, true);
-    runNativeCycles({ api, module, probe, baseline, emit, state });
+    runNativeCycles({
+        api,
+        module,
+        probe,
+        baseline,
+        emit,
+        state,
+        retainDebugSnapshot: (cycle, worldId, snapshot) => writeDebugSnapshot(out, cycle, worldId, snapshot),
+    });
 } catch (error) {
     fail(error, 'native-attempt');
 } finally {
@@ -127,6 +138,7 @@ try {
     }
     report.completedCycles = state.completedCycles;
     report.createdWorlds = state.createdWorlds;
+    report.completedDebugSnapshots = state.completedDebugSnapshots ?? 0;
     report.createdBodies = state.createdBodies;
     report.lifecycleClosure = {
         status: apiDisposeCompleted && probe?.ownership.frees === 1 ? 'CLOSED' : 'NOT_CLOSED',
@@ -137,7 +149,9 @@ try {
     if (report.status !== 'FAIL') {
         report.status = 'OBSERVED_NATIVE_SUBSET_PASS';
         try {
-            report.observedSubset = validateObservedSubset(events, report, expectedInputs);
+            report.observedSubset = validateObservedSubset(events, report, expectedInputs, (metadata) =>
+                readDebugSnapshot(out, metadata),
+            );
         } catch (error) {
             fail(error, 'strict-consumer');
         }

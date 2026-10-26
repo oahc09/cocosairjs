@@ -16,7 +16,15 @@ import {
     validateInputs,
 } from './contract.mjs';
 import { createNativeProbe, runNativeCycles } from './native-cycles.mjs';
+import { DEBUG_SPEC, packDebugSnapshot, unpackDebugSnapshot, validateDebugSnapshot } from './debug-artifacts.mjs';
 import { cpuFake } from './cpu-fake.mjs';
+const debugBlobs = new Map();
+const retainDebugSnapshot = (cycle, worldId, snapshot) => {
+    const packed = packDebugSnapshot(cycle, worldId, snapshot);
+    debugBlobs.set(packed.metadata.path, packed.gzip);
+    return packed.metadata;
+};
+const debugReader = (metadata) => unpackDebugSnapshot(metadata, debugBlobs.get(metadata.path));
 const expected = { syntheticCPUOnly: true, fixture: 'not-a-native-report' };
 function synthetic() {
     const { api, module } = cpuFake(),
@@ -32,11 +40,12 @@ function synthetic() {
         bodiesPerCycle: BODIES,
         releaseOrders: Array.from({ length: CYCLES }, (_, i) => ORDERS[i % 3]),
         stageContracts: Object.fromEntries(ORDERS.map((order) => [order, stages(order)])),
+        debugSpec: DEBUG_SPEC,
         limits: LIMITS,
     });
     emit({ kind: 'input-identity', inputs: expected, inputLockSha256: 'synthetic-cpu-only' });
     emit({ kind: 'initial-baseline', observation: baseline });
-    runNativeCycles({ api, module, probe, baseline, emit, state });
+    runNativeCycles({ api, module, probe, baseline, emit, state, retainDebugSnapshot });
     api.dispose();
     const observation = probe.global();
     probe.free();
@@ -57,13 +66,14 @@ function synthetic() {
             completedCycles: state.completedCycles,
             createdBodies: state.createdBodies,
             createdWorlds: state.createdWorlds,
+            completedDebugSnapshots: state.completedDebugSnapshots,
             lifecycleClosure: { status: 'CLOSED', apiDisposeCompleted: true, diagnosticScratch: probe.ownership },
         },
     };
 }
 const base = synthetic();
 function check(data) {
-    return validateObservedSubset(data.events, data.report, expected);
+    return validateObservedSubset(data.events, data.report, expected, debugReader);
 }
 const populated = (d) => d.events.find((e) => e.kind === 'stage' && e.stage === 'joint-created');
 const finished = (d) => d.events.find((e) => e.kind === 'stage' && e.stage === 'world-destroyed');
@@ -232,7 +242,9 @@ test('CPU failure injection: 49 actual fake bodies retains failing native-count 
         tokens.push(token);
         return token;
     };
-    assert.throws(() => runNativeCycles({ ...f, probe, baseline, emit: (e) => events.push(copy(e)), state }));
+    assert.throws(() =>
+        runNativeCycles({ ...f, probe, baseline, emit: (e) => events.push(copy(e)), state, retainDebugSnapshot }),
+    );
     assert.equal(events.find((e) => e.stage === 'bodies-created').observation.nativeWorld.counts[0], 49);
     assert.equal(events.at(-1).kind, 'partial-failure-probe');
     assert.equal(state.completedCycles, 0);
@@ -291,4 +303,96 @@ test('CPU closure numeric limits and complete descendant proof are mandatory', (
         bad[key] = value;
         assert.throws(() => validatePhysicalClosure(bad));
     }
+});
+
+negative('missing debug invocation phase cannot qualify', (d) => {
+    d.events = d.events.filter((e) => e.stage !== 'debug-captured');
+    d.events.forEach((event, i) => (event.sequence = i));
+});
+negative('populated core shapes cannot pretend to be lazy debug handles before draw', (d) => {
+    populated(d).observation.bridge.shapeHandles = 50;
+});
+negative('debug capture without native debug handles cannot qualify', (d) => {
+    d.events.find((e) => e.stage === 'debug-captured').observation.bridge.shapeHandles = 0;
+});
+negative('one mesh missing from exercised debug cache cannot qualify', (d) => {
+    d.events.find((e) => e.stage === 'debug-captured').observation.bridge.shapeHandles = 49;
+});
+negative('captured wire retained after api.debugSnapshot cannot qualify', (d) => {
+    d.events.find((e) => e.stage === 'debug-captured').observation.bridge.primitiveCapacity = 4096;
+});
+negative('raw debug output cannot be omitted', (d) => {
+    delete d.events.find((e) => e.stage === 'debug-captured').debugArtifact;
+});
+negative('raw debug gzip hash cannot be changed', (d) => {
+    d.events.find((e) => e.stage === 'debug-captured').debugArtifact.gzipSha256 = '0'.repeat(64);
+});
+negative('raw debug decoded hash cannot be changed', (d) => {
+    d.events.find((e) => e.stage === 'debug-captured').debugArtifact.rawSha256 = '0'.repeat(64);
+});
+negative('borrow another cycle debug output cannot qualify', (d) => {
+    d.events.find((e) => e.stage === 'debug-captured').debugArtifact.cycle = 1;
+});
+test('CPU fake lazy lifecycle: 50 native shapes exist before any debug cache; draw creates all 50 caches', () => {
+    const row = base.events.find((e) => e.stage === 'joint-created'),
+        drawn = base.events.find((e) => e.stage === 'debug-captured');
+    assert.equal(row.observation.nativeWorld.counts[1], 50);
+    assert.equal(row.observation.bridge.shapeHandles, 0);
+    assert.equal(drawn.observation.bridge.shapeHandles, 50);
+    const decoded = debugReader(drawn.debugArtifact);
+    assert.equal(validateDebugSnapshot(decoded.snapshot).primitiveCount, 3456);
+});
+test('CPU raw debug full results and journal fit original 16MiB budget with declared headroom', () => {
+    const rawBytes = base.events
+        .filter((e) => e.stage === 'debug-captured')
+        .reduce((n, e) => n + e.debugArtifact.rawBytes, 0);
+    const gzipBytes = [...debugBlobs.values()].reduce((n, bytes) => n + bytes.length, 0);
+    const journalBytes = Buffer.byteLength(base.events.map((e) => JSON.stringify(e) + '\n').join(''));
+    assert.equal(debugBlobs.size, 100);
+    assert.ok([...debugBlobs.values()].every((bytes) => bytes.length <= DEBUG_SPEC.maxGzipBytes));
+    assert.ok(gzipBytes + journalBytes < BUDGET.outputBytes * 0.6);
+    console.log(
+        `CPU_ONLY_DEBUG_RAW_BYTES=${rawBytes}; GZIP_BYTES=${gzipBytes}; JOURNAL_BYTES=${journalBytes}; NATIVE_NOT_RUN`,
+    );
+});
+test('CPU complete raw debug data rejects missing primitives, wrong bounds, and corruption', () => {
+    const metadata = base.events.find((e) => e.stage === 'debug-captured').debugArtifact;
+    const payload = debugReader(metadata),
+        short = copy(payload.snapshot),
+        wrong = copy(payload.snapshot);
+    short.primitives.pop();
+    assert.throws(() => validateDebugSnapshot(short));
+    wrong.primitives[0].to[0] = 10000;
+    assert.throws(() => validateDebugSnapshot(wrong));
+    const corrupt = Buffer.from(debugBlobs.get(metadata.path));
+    corrupt[10] ^= 1;
+    assert.throws(() => unpackDebugSnapshot(metadata, corrupt));
+});
+
+negative('changing declared debug subset counts after execution is rejected', (d) => {
+    d.events[0].debugSpec.handles = 49;
+});
+test('CPU actual fixture rejects a fake debug return without creating lazy native-model resources', () => {
+    const f = cpuFake(),
+        probe = createNativeProbe(f.module),
+        baseline = probe.global(),
+        events = [],
+        state = { knownWorlds: [], completedCycles: 0, createdBodies: 0, createdWorlds: 0 },
+        first = base.events.find((e) => e.stage === 'debug-captured');
+    f.api.debugSnapshot = () => copy(debugReader(first.debugArtifact).snapshot);
+    assert.throws(() =>
+        runNativeCycles({
+            ...f,
+            probe,
+            baseline,
+            state,
+            emit: (e) => events.push(copy(e)),
+            retainDebugSnapshot: (cycle, worldId, snapshot) => packDebugSnapshot(cycle, worldId, snapshot).metadata,
+        }),
+    );
+    assert.equal(events.find((e) => e.stage === 'debug-captured').observation.bridge.shapeHandles, 0);
+    assert.equal(events.at(-1).kind, 'partial-failure-probe');
+    assert.equal(state.completedCycles, 0);
+    f.api.dispose();
+    probe.free();
 });
