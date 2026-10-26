@@ -6,6 +6,7 @@ import { readFileSync, mkdtempSync, existsSync, rmSync } from 'node:fs';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { spawnSync } from 'node:child_process';
+import vm from 'node:vm';
 import { freezeInputs } from './freeze.mjs';
 import {
     validateProvenance,
@@ -432,3 +433,63 @@ test('existing audited all-descendant closure core is unchanged; PGID alone cann
         'd721d69135c4ab4fc8c09585fe835ff31555f6529525611dfcc29955fd7a021e',
     );
 });
+
+// Execute only the actual consumer's finalization block with explicit CPU IO stubs.
+// No consumer import, SDK startup, physics, or broad lifecycle replacement occurs.
+for (const [label, failures] of [
+    ['diagnostic read failure', ['read']],
+    ['diagnostic hash failure', ['hash']],
+    ['diagnostic close plus read failure', ['close', 'read']],
+    ['diagnostic close plus hash failure after strict success', ['close', 'hash']],
+])
+    test('primary report survives ' + label, () => {
+        const source = readFileSync(join(here, 'consumer.mjs'), 'utf8');
+        const start = source.indexOf('    try {\n        closeSync(diagnosticJournal);');
+        const end = source.indexOf("    record('terminal', {", start);
+        assert(start >= 0 && end > start, 'Exact consumer finalization block required');
+        const primaryError = 'ORIGINAL_STRICT_BASELINE_FAILURE_36040_112980';
+        const strictStatus = label.endsWith('after strict success') ? 'PASS_LIMITED_C20APP_OBSERVABLE_SUBSET' : 'FAIL';
+        const report = {
+            error: primaryError,
+            strictStatus,
+            status: strictStatus,
+            memoryDiagnosticStatus: 'COMPLETE_REACHED_SCENE_SNAPSHOT_SETS',
+        };
+        const calls = [];
+        vm.runInNewContext(
+            source.slice(start, end),
+            {
+                report,
+                diagnosticJournal: 17,
+                out: '/cpu-only',
+                join,
+                closeSync() {
+                    calls.push('close');
+                    if (failures.includes('close')) throw new Error('CPU_CLOSE_FAILURE');
+                },
+                readFileSync() {
+                    calls.push('read');
+                    if (failures.includes('read')) throw new Error('CPU_READ_FAILURE');
+                    return Buffer.from('cpu journal');
+                },
+                sha() {
+                    calls.push('hash');
+                    if (failures.includes('hash')) throw new Error('CPU_HASH_FAILURE');
+                    return H;
+                },
+            },
+            { timeout: 1000 },
+        );
+        assert.equal(report.error, primaryError);
+        assert.equal(report.strictStatus, strictStatus);
+        assert.equal(report.status, 'FAIL');
+        assert.equal(report.memoryDiagnosticStatus, 'DIAGNOSTIC_FAILURE');
+        assert.equal(report.memoryDiagnosticJournal.sha256, null);
+        assert.equal(report.memoryDiagnosticJournal.status, 'UNAVAILABLE_READ_OR_HASH_FAILURE');
+        assert.match(
+            report.diagnosticJournalReadOrHashError,
+            failures.includes('read') ? /CPU_READ_FAILURE/ : /CPU_HASH_FAILURE/,
+        );
+        if (failures.includes('close')) assert.match(report.diagnosticJournalCloseError, /CPU_CLOSE_FAILURE/);
+        assert.deepEqual(calls, failures.includes('read') ? ['close', 'read'] : ['close', 'read', 'hash']);
+    });

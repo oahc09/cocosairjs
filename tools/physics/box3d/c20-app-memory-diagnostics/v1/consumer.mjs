@@ -234,10 +234,22 @@ try {
         report.memoryDiagnosticStatus = 'DIAGNOSTIC_FAILURE';
         report.status = 'FAIL';
     }
-    report.memoryDiagnosticJournal = {
-        path: 'memory-diagnostics.raw.jsonl',
-        sha256: sha(readFileSync(join(out, 'memory-diagnostics.raw.jsonl'))),
-    };
+    try {
+        report.memoryDiagnosticJournal = {
+            path: 'memory-diagnostics.raw.jsonl',
+            sha256: sha(readFileSync(join(out, 'memory-diagnostics.raw.jsonl'))),
+        };
+    } catch (error) {
+        // Side-journal finalization must not throw over an existing strict-baseline failure.
+        report.diagnosticJournalReadOrHashError = String(error.stack ?? error);
+        report.memoryDiagnosticJournal = {
+            path: 'memory-diagnostics.raw.jsonl',
+            sha256: null,
+            status: 'UNAVAILABLE_READ_OR_HASH_FAILURE',
+        };
+        report.memoryDiagnosticStatus = 'DIAGNOSTIC_FAILURE';
+        report.status = 'FAIL';
+    }
     record('terminal', {
         status: report.status,
         strictStatus: report.strictStatus,
