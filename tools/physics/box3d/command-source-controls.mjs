@@ -76,8 +76,8 @@ assert.ok(
 );
 const build = read('tools/physics/box3d/build.mjs'),
     inputs = [...build.match(/const inputs = \[([\s\S]*?)\];/)[1].matchAll(/'([^']+)'/g)].map((m) => m[1]);
-assert.equal(inputs.length, 79);
-assert.equal(new Set(inputs).size, 79);
+assert.equal(inputs.length, 92);
+assert.equal(new Set(inputs).size, 92);
 for (const path of [
     'tools/physics/box3d/native/mesh_bridge.c',
     'tools/physics/box3d/native/mesh_bridge.h',

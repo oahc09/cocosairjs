@@ -83,7 +83,7 @@
     {
       "path": "tools/physics/box3d/command-source-controls.mjs",
       "bytes": 6234,
-      "sha256": "06644f439316de51ab5107423a00cc965e4f4ac36ddb2394ace0874f1bcddfc6"
+      "sha256": "c205bf7720c2d14a604664d787abd3be956c8645e7b11e3dc69afa704361bce7"
     },
     {
       "path": "tools/physics/box3d/compare-geometry-builds.mjs",
@@ -4817,8 +4817,8 @@
     },
     {
       "path": "tools/physics/box3d/memory-diagnostics/v1/contract.test.mjs",
-      "bytes": 20783,
-      "sha256": "0c881e39d99ebda3baa60615d56063e3fb8f577d0d034e038f7ad604555cc6d8"
+      "bytes": 23163,
+      "sha256": "d3b0d6c92f19bda14db52257191e8f85322367ff9472c0a6a5b8ba0df10c0d4b"
     },
     {
       "path": "tools/physics/box3d/memory-diagnostics/v1/qualification.mjs",
@@ -4843,7 +4843,7 @@
     {
       "path": "tools/physics/box3d/motion-source-controls.mjs",
       "bytes": 5770,
-      "sha256": "9d36ac5a1b929be144e621d02519c6c5b3edf700b0ff10df105f4f8aa0aa4991"
+      "sha256": "342ad6e51837007065e0b68b40d911590f2a92fd11dfef01a78e3cb9352b4109"
     },
     {
       "path": "tools/physics/box3d/native-geometry-ubsan.mjs",

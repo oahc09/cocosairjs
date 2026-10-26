@@ -219,7 +219,7 @@ async function verifySTBuild(buildDirectory, { provenanceRoot = ROOT } = {}) {
     assert.equal(audit.sharedMemory, false);
     assert.equal(audit.dynamicExecutionOrWorkerConstructorFound, false);
     assert.equal(audit.compiledSourceCount, audit.compiledSourceHashes.length);
-    assert.equal(audit.compiledSourceCount, 82, 'Compile audit inventory drift');
+    assert.equal(audit.compiledSourceCount, 84, 'Compile audit inventory drift');
     assert.equal(new Set(audit.compiledSourceHashes.map((row) => row.path)).size, audit.compiledSourceCount);
     for (const name of [
         'body_control.c',

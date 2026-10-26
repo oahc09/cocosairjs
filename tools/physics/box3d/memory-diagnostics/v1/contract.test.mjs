@@ -2,6 +2,7 @@
 // CPU-only fake ABI/actual facade and extracted backend method tests. Never loads WASM or runs physics.
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
+import { spawnSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -471,6 +472,37 @@ test('exact 92-input, 84-compile-unit and 55-evidence inventories retain all old
         sha(JSON.stringify(exports.filter((name) => name !== '_air_b3_world_memory_diagnostics_v1'))),
         '8f0a8f65ba731716e8c87e2c4bcf02f60ee4b44864d8ebdeb7a39fba3793547b',
     );
+});
+test('current source controls execute and exact input/compile guards reject stale or nonexact counts', () => {
+    for (const name of ['motion-source-controls.mjs', 'command-source-controls.mjs']) {
+        const path = resolve(root, 'tools/physics/box3d', name);
+        const text = readFileSync(path, 'utf8');
+        const guards = text.match(/assert\.equal\((?:inputs\.length|new Set\(inputs\)\.size), \d+\);/g);
+        assert.equal(guards?.length, 2, 'Both exact length and uniqueness guards required');
+        const checkInputs = new Function('assert', 'inputs', guards.join('\n'));
+        assert.doesNotThrow(() => checkInputs(assert, expected.gate.inputs));
+        for (const invalid of [
+            expected.gate.inputs.slice(0, -1),
+            [...expected.gate.inputs, 'unexpected-extra-input'],
+            [...expected.gate.inputs.slice(0, -1), expected.gate.inputs[0]],
+        ])
+            assert.throws(() => checkInputs(assert, invalid));
+        const stale = new Function('assert', 'inputs', guards.join('\n').replaceAll(', 92);', ', 79);'));
+        assert.throws(() => stale(assert, expected.gate.inputs), 'Old 79-input guard must reject the real 92 set');
+        const result = spawnSync(process.execPath, [path], { cwd: root, encoding: 'utf8', timeout: 30000 });
+        assert.ifError(result.error);
+        assert.equal(result.signal, null);
+        assert.equal(result.status, 0, `${name}: ${result.stderr}`);
+        assert.equal(JSON.parse(result.stdout).status, 'PASS_SOURCE_CONTROLS_ONLY');
+    }
+    const assets = readFileSync(resolve(root, 'tools/build/box3d-assets.cjs'), 'utf8');
+    const guards = assets.match(/assert\.equal\(audit\.compiledSourceCount, \d+, 'Compile audit inventory drift'\);/g);
+    assert.equal(guards?.length, 1, 'One exact asset compile-unit count guard required');
+    const checkCompiled = new Function('assert', 'audit', guards[0]);
+    assert.doesNotThrow(() => checkCompiled(assert, { compiledSourceCount: expected.gate.compileUnits.length }));
+    for (const compiledSourceCount of [82, 83, 85]) assert.throws(() => checkCompiled(assert, { compiledSourceCount }));
+    const stale = new Function('assert', 'audit', guards[0].replace(', 84,', ', 82,'));
+    assert.throws(() => stale(assert, { compiledSourceCount: expected.gate.compileUnits.length }));
 });
 function syntheticQualification() {
     const native = {

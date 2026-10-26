@@ -44,8 +44,8 @@ assert.ok(build.includes("'tools/physics/box3d/native/motion_bridge.c'"));
 assert.ok(build.includes(`'${decision.path}'`));
 const inputBlock = build.match(/const inputs = \[([\s\S]*?)\];/)[1];
 const inputs = [...inputBlock.matchAll(/'([^']+)'/g)].map((match) => match[1]);
-assert.equal(inputs.length, 79);
-assert.equal(new Set(inputs).size, 79);
+assert.equal(inputs.length, 92);
+assert.equal(new Set(inputs).size, 92);
 for (const path of [
     'tools/physics/box3d/native/mesh_bridge.c',
     'tools/physics/box3d/native/mesh_bridge.h',
