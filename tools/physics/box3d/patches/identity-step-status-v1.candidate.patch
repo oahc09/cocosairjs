@@ -1,0 +1,11 @@
+--- a/tools/physics/box3d/native/air_box3d.c
++++ b/tools/physics/box3d/native/air_box3d.c
+@@ -58,7 +58,7 @@
+     if (!isfinite(dt) || dt <= 0 || substeps < 1) return AIR_B3_ARGUMENT;
+     int locked = air_b3_world_unlocked(world); if (locked) return locked;
+     b3World_Step(b3LoadWorldId(world), dt, substeps);
+-    return AIR_B3_OK;
++    return b3World_HasIdentityFault(b3LoadWorldId(world)) ? AIR_B3_CAPACITY : AIR_B3_OK;
+ }
+ int air_b3_world_counts(uint32_t world, uint32_t* out)
+ {

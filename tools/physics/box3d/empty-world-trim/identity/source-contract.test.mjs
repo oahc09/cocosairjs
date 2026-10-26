@@ -1,12 +1,15 @@
 // Copyright (c) 2026-2027 oahc09@gmail.com. SPDX-License-Identifier: MIT
 // Structural CPU controls, not C compilation or physical simulation.
 import assert from 'node:assert/strict';
-import { mkdtempSync, writeFileSync, unlinkSync, symlinkSync, rmSync } from 'node:fs';
+import { readFileSync, mkdtempSync, writeFileSync, unlinkSync, symlinkSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { spawnSync } from 'node:child_process';
 import test from 'node:test';
-import { applyProfile, BASE_PATCH_SHA } from './profile.mjs';
+import { applyProfile, assertBuildProfile, BASE_PATCH_SHA } from './profile.mjs';
 import { stageIdentity } from './stage.mjs';
+import { compareLedgers } from './compare-ledgers.mjs';
 
 const root = process.env.AIR_IDENTITY_SOURCE_ROOT;
 assert.ok(root, 'AIR_IDENTITY_SOURCE_ROOT must name the verified producer source');
@@ -144,6 +147,9 @@ test('staging is exact, repeat-safe and rejects extra, changed and symlink files
         assert.equal(receipt.trimEnabled, false);
         assert.equal(receipt.files, 111);
         await stageIdentity('--verify', root, destination);
+        writeFileSync(destination + '.step-adapter.c', 'changed');
+        await assert.rejects(stageIdentity('--verify', root, destination));
+        writeFileSync(destination + '.step-adapter.c', candidate.adapter);
         await assert.rejects(stageIdentity('--stage', root, destination));
         const file = join(destination, 'extra');
         writeFileSync(file, 'extra');
@@ -161,4 +167,142 @@ test('staging is exact, repeat-safe and rejects extra, changed and symlink files
     } finally {
         rmSync(temporary, { recursive: true, force: true }); // Only this test's own temporary files.
     }
+});
+
+// These admission and parser fixtures are CPU controls, never native PASS evidence.
+test('complete hash-bound bridge functions use valid/unlocked checks and sticky fault status', () => {
+    assert.deepEqual(candidate.configuration.compiledBridgeFunctions, [
+        'air_b3_world_valid',
+        'air_b3_world_unlocked',
+        'air_b3_world_step',
+    ]);
+    assert.equal(candidate.configuration.bridgeInputs.length, 12);
+    assert.equal(new Set(candidate.configuration.bridgeInputs.map((entry) => entry.path)).size, 12);
+    assert.equal(control.adapter, '');
+    ordered(
+        candidate.adapter,
+        'int air_b3_world_valid(',
+        'int air_b3_world_unlocked(',
+        'int air_b3_world_step(',
+        'b3World_Step(',
+        'return b3World_HasIdentityFault(b3LoadWorldId(world)) ? AIR_B3_CAPACITY : AIR_B3_OK;',
+    );
+    assert.equal((candidate.adapter.match(/int air_b3_world_step\(/g) || []).length, 1);
+});
+const debug = { buildType: 'Debug', multiConfig: '', flags: ['', '', '-g', '-g'] };
+test('qualification admission allows single-config Debug only', () => {
+    assertBuildProfile(debug);
+    for (const buildType of ['', 'Release', 'RelWithDebInfo', 'MinSizeRel'])
+        assert.throws(() => assertBuildProfile({ ...debug, buildType }));
+    assert.throws(() => assertBuildProfile({ ...debug, multiConfig: 'Debug;Release' }));
+    assert.throws(() => assertBuildProfile({ ...debug, flags: [] }));
+});
+test('qualification admission rejects NDEBUG and unsafe thread/FP flags', () => {
+    for (const flag of [
+        '-DNDEBUG',
+        '-DNDEBUG=0',
+        '-D NDEBUG',
+        '/DNDEBUG',
+        '-g -DNDEBUG=1',
+        '-pthread',
+        '-sSHARED_MEMORY=1',
+        '-sUSE_PTHREADS=1',
+        '-ffast-math',
+        '-Ofast',
+    ]) {
+        assert.throws(() => assertBuildProfile({ ...debug, flags: [flag, '', '', ''] }), flag);
+    }
+});
+test('CMake admission executes the same strict CLI with empty arguments preserved', () => {
+    const script = fileURLToPath(new URL('./profile.mjs', import.meta.url));
+    const args = [
+        '--check-build-profile',
+        'buildType=Debug',
+        'multiConfig=',
+        'flag0=',
+        'flag1=',
+        'flag2=-g',
+        'flag3=-g',
+    ];
+    const accepted = spawnSync(process.execPath, [script, ...args], { encoding: 'utf8' });
+    assert.equal(accepted.status, 0, accepted.stderr);
+    assert.equal(JSON.parse(accepted.stdout).compilation, 'NOT_PERFORMED');
+    for (const mutation of [
+        args.map((x) => x.replace('buildType=Debug', 'buildType=Release')),
+        args.map((x) => x.replace('flag0=', 'flag0=-DNDEBUG')),
+        args.slice(0, -1),
+    ]) {
+        assert.notEqual(spawnSync(process.execPath, [script, ...mutation], { encoding: 'utf8' }).status, 0);
+    }
+});
+function guardRules(cmake, guard) {
+    ordered(
+        cmake,
+        'if(NOT CMAKE_BUILD_TYPE STREQUAL "Debug" OR CMAKE_CONFIGURATION_TYPES)',
+        'project(',
+        '--check-build-profile',
+        'message(FATAL_ERROR "Identity qualification requires single-config Debug without NDEBUG")',
+        'add_compile_options(-include "${CMAKE_CURRENT_LIST_DIR}/qualification-guard.h")',
+        'add_subdirectory(',
+    );
+    assert.ok(/#ifdef NDEBUG\s+#error/.test(guard));
+    assert.ok(!cmake.includes('-UNDEBUG') && !guard.includes('#undef NDEBUG'));
+}
+test('every core/fixture TU has an effective-macro guard, not just a flag regex', () => {
+    const cmake = readFileSync(new URL('./CMakeLists.txt', import.meta.url), 'utf8');
+    const guard = readFileSync(new URL('./qualification-guard.h', import.meta.url), 'utf8');
+    guardRules(cmake, guard);
+    assert.throws(() => guardRules(cmake.replace('add_compile_options(-include', 'removed(-include'), guard));
+    assert.throws(() => guardRules(cmake, guard.replace('#ifdef NDEBUG', '#ifdef NEVER')));
+});
+const configuration = candidate.configuration;
+const syntheticControl = {
+    profile: 'air-box3d-identity-base-control-v1',
+    status: 'PASS',
+    checks: 4,
+    identityMetadataLedgerBytes: 0,
+    trimEnabled: false,
+    initialLedgerBytes: 2000,
+    moduleBeforeWorld: 0,
+    moduleWithWorld: 9000,
+    moduleAfterClose: 0,
+};
+const syntheticCandidate = {
+    ...syntheticControl,
+    profile: configuration.id,
+    checks: 170,
+    identityMetadataLedgerBytes: 36,
+    initialLedgerBytes: 2036,
+    groups: {
+        body: 31,
+        shape: 31,
+        failedHullFloor: 8,
+        joint: 40,
+        contactHigh: 26,
+        contactUnsigned: 8,
+        contactFault: 20,
+        main: 6,
+    },
+};
+test('synthetic parser positive separates embedded ledger from actual allocator requests', () => {
+    const result = compareLedgers(syntheticCandidate, syntheticControl);
+    assert.equal(result.initialLedgerDelta, 36);
+    assert.equal(result.moduleBytesComparedToLedger, false);
+});
+test('synthetic parser negative rejects incomplete/native-mismatched reports', () => {
+    for (const change of [
+        { profile: 'old-profile' },
+        { status: 'NOT_RUN' },
+        { checks: 171 },
+        { identityMetadataLedgerBytes: 0 },
+        { initialLedgerBytes: 2000 },
+        { trimEnabled: true },
+        { moduleAfterClose: 1 },
+        { initialLedgerBytes: Number.MAX_SAFE_INTEGER + 1 },
+        { extra: 'unknown' },
+        { groups: { ...syntheticCandidate.groups, contactFault: 19 } },
+    ]) {
+        assert.throws(() => compareLedgers({ ...syntheticCandidate, ...change }, syntheticControl));
+    }
+    assert.throws(() => compareLedgers(syntheticCandidate, { ...syntheticControl, checks: 0 }));
 });

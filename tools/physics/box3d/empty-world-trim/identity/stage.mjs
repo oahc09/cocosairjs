@@ -15,7 +15,9 @@ export async function stageIdentity(mode, sourceRoot, destination) {
         .map(([path, bytes]) => ({ path, bytes: bytes.length, sha256: hash(bytes) }))
         .sort((a, b) => a.path.localeCompare(b.path));
     const receipt = {
-        profile: 'air-box3d-identity-source-rebuild-v1',
+        profile: profile.control ? 'air-box3d-identity-base-control-v1' : profile.configuration.id,
+        profileSha256: profile.profileSha256,
+        adapterSha256: hash(profile.adapter),
         productionCompatible: false,
         trimEnabled: false,
         control: profile.control,
@@ -25,14 +27,20 @@ export async function stageIdentity(mode, sourceRoot, destination) {
         files,
     };
     if (mode.startsWith('--stage')) {
-        assert.ok(!existsSync(target) && !existsSync(target + '.receipt.json'), 'Preserve earlier staging');
+        assert.ok(
+            !existsSync(target) && !existsSync(target + '.receipt.json') && !existsSync(target + '.step-adapter.c'),
+            'Preserve earlier staging',
+        );
         for (const [path, bytes] of profile.files) {
             mkdirSync(dirname(resolve(target, path)), { recursive: true });
             writeFileSync(resolve(target, path), bytes, { flag: 'wx' });
         }
+        writeFileSync(target + '.step-adapter.c', profile.adapter, { flag: 'wx' });
         writeFileSync(target + '.receipt.json', JSON.stringify(receipt, null, 2) + '\n', { flag: 'wx' });
     }
     assert.ok(lstatSync(target + '.receipt.json').isFile());
+    assert.ok(lstatSync(target + '.step-adapter.c').isFile());
+    assert.equal(readFileSync(target + '.step-adapter.c', 'utf8'), profile.adapter);
     assert.deepEqual(JSON.parse(readFileSync(target + '.receipt.json')), receipt);
     const actual = [];
     function walk(path) {

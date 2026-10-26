@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "id": "air-box3d-identity-native-rebuild-v1",
+  "productionCompatible": false,
+  "trimEnabled": false,
+  "expectedNativeAssertions": 170,
+  "corePatchChainSha256": "2334e8948b294ec08c09cc5c7b0c0336bbd82d5eda0ae06acb481fcc85ef1932",
+  "bridgePatch": {
+    "path": "tools/physics/box3d/patches/identity-step-status-v1.candidate.patch",
+    "sha256": "33abac453bb7d2f2113f7c6ab6c9dc0ba6fb42f8b5de4561d42c36bb83388d14",
+    "files": [
+      {
+        "path": "tools/physics/box3d/native/air_box3d.c",
+        "beforeSha256": "148bb4e0ed893ee75e862d2ce370176ebe33a562902dad95ddad8c2afbdf18d3",
+        "afterSha256": "9a30bd0da2ce989bfd09db88a4205805402b411b6627fe954db1166465c93a84"
+      }
+    ]
+  },
+  "bridgeInputs": [
+    {
+      "path": "tools/physics/box3d/native/air_box3d.c",
+      "sha256": "148bb4e0ed893ee75e862d2ce370176ebe33a562902dad95ddad8c2afbdf18d3"
+    },
+    {
+      "path": "tools/physics/box3d/native/air_box3d.h",
+      "sha256": "9f26162ffd0b84e1ed6e681fc478a37960c11ba65584d6467dc3586df2c2d37d"
+    },
+    {
+      "path": "tools/physics/box3d/native/body_control.c",
+      "sha256": "3f9c4f21a7eb42ae623547e1275f2b056f7a143e495542153f2620680366cb61"
+    },
+    {
+      "path": "tools/physics/box3d/native/body_control.h",
+      "sha256": "2602d5ef1c81f065d8634756fa84dc92236b3a640000c4097ec12957371d6843"
+    },
+    {
+      "path": "tools/physics/box3d/native/command_bridge.h",
+      "sha256": "51b5dbc6c437c593172b2bcf055de242998c001ce14900d9819005e5d53b4ee0"
+    },
+    {
+      "path": "tools/physics/box3d/native/filter_bridge.h",
+      "sha256": "7b93839f91a4e828971d2a02e0d11393f5b7b944b3335cdb1d5a3fe3553d1e84"
+    },
+    {
+      "path": "tools/physics/box3d/native/hinge_bridge.h",
+      "sha256": "af53664a0172b4a4ea2d832791e8e487b6d920b8f6d2fdc8eb6443473e112b72"
+    },
+    {
+      "path": "tools/physics/box3d/native/hull_bridge.h",
+      "sha256": "4385bdcd363db74cf9c5fde72a542d393b73eb30a78d4b519915d815869ca999"
+    },
+    {
+      "path": "tools/physics/box3d/native/joint_bridge.h",
+      "sha256": "45275018559008596dd4027b3f3333bbb2491bd9893b530186180f09a1b7e39b"
+    },
+    {
+      "path": "tools/physics/box3d/native/memory_diagnostics.h",
+      "sha256": "73a366c1d1ace5e3ab356971f6cad20154318fe9ae5c421d5fc86b9ea66e34eb"
+    },
+    {
+      "path": "tools/physics/box3d/native/motion_bridge.h",
+      "sha256": "67c486efc11775f2743992625efb15ce1ed0fe3c1fac79c8c0a82045b57de8ca"
+    },
+    {
+      "path": "tools/physics/box3d/native/query_bridge.h",
+      "sha256": "4b024976ee6449f0294d824d94757ace0aa0cc02d32bc9edc03baa495b0cdc14"
+    }
+  ],
+  "compiledBridgeFunctions": ["air_b3_world_valid", "air_b3_world_unlocked", "air_b3_world_step"],
+  "productionIntegration": "NOT_INTEGRATED: 87-row production diagnostic does not account for fixed identity metadata",
+  "expectedControlAssertions": 4,
+  "expectedNativeGroups": {
+    "body": 31,
+    "shape": 31,
+    "failedHullFloor": 8,
+    "joint": 40,
+    "contactHigh": 26,
+    "contactUnsigned": 8,
+    "contactFault": 20,
+    "main": 6
+  },
+  "identityMetadataLedgerBytes": 36
+}
