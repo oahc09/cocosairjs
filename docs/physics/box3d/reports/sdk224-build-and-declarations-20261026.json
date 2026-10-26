@@ -1,0 +1,355 @@
+{
+  "schema": "box3d-sdk224-build-declarations-limited-report-v1",
+  "date": "2026-10-26",
+  "status": "FRESH_ESM_AND_DECLARATIONS_DELIVERED_LIMITED",
+  "source": {
+    "commit": "1ebcdd3b7a9e4813984d8d9b5bc0829de8581863",
+    "tree": "8cc80d6aa978253c680df837a9f2afd2e225530d",
+    "nativeProducerCommit": "ae0803c0c3e85aa627666f76eef29c4e62ab2e93",
+    "nativeSchemaSha256": "ce98aca1a40c4999df838c1eaab2b08b0533c85adca9866eb48180c6190575d6",
+    "scope": "Recovered source/build/native/vendor inputs verified against committed blobs; auxiliary archived tools/verify projection is not claimed to be a complete latest checkout."
+  },
+  "counter": {
+    "before": 223,
+    "after": 224,
+    "committedOnlyBySuccessfulESM": true,
+    "publicationFile": "tools/build/build-number.json",
+    "sha256": "bc4b006ee6285861b42e5392e2d7988bb2bffd5f21b901552ee83ef1cc775fd8"
+  },
+  "esm": {
+    "attemptsInThisScope": 1,
+    "command": "node --max-old-space-size=4096 tools/build/build.cjs --format esm",
+    "node": "v22.16.0",
+    "preload": false,
+    "features": [
+      "air",
+      "base",
+      "gfx-webgl2",
+      "gfx-webgpu",
+      "gfx-empty",
+      "3d",
+      "animation",
+      "skeletal-animation",
+      "primitive",
+      "tween",
+      "custom-pipeline",
+      "legacy-pipeline",
+      "profiler",
+      "video",
+      "webview",
+      "2d",
+      "physics-2d-framework",
+      "particle-2d",
+      "tiled-map",
+      "ui",
+      "spine-3.8",
+      "spine-4.2",
+      "dragon-bones",
+      "physics-2d-box2d",
+      "physics-builtin",
+      "physics-cannon",
+      "custom-pipeline-post-process",
+      "physics-box3d"
+    ],
+    "status": "PASS_FRESH_ESM224_BUILD",
+    "exitCode": 0,
+    "startedAt": "2026-10-26T07:42:07.993406+00:00",
+    "finishedAt": "2026-10-26T07:43:08.067430+00:00",
+    "elapsedSeconds": 66.77864635800142,
+    "elapsedScope": "Supervisor through post-input audit; final artifact checks and receipt writing follow.",
+    "peakTreeRssBytes": 3154063360,
+    "postInputDriftCount": 0,
+    "physicalClose": "ECHILD_AND_NO_GROUP_MEMBERS",
+    "buildLockRemaining": false,
+    "sourceMapSources": 995,
+    "fileCount": 23,
+    "fileBytes": 40267487,
+    "recordedPrePackageOutputBytes": 40267469,
+    "postBuildPackageBytes": 18,
+    "packageMeaning": "Exclusive type:module package.json added after the compiler exits; 18-byte addition explains final sum, not a second build.",
+    "files": [
+      {
+        "path": "box2d3/LICENSE.Box2D.txt",
+        "bytes": 1067,
+        "sha256": "68a3e676d7e94093b102d5cba0d4e04af812040d6f230c3db67a6664574e43d2"
+      },
+      {
+        "path": "box2d3/air-box2d.mjs",
+        "bytes": 56143,
+        "sha256": "5a7d80e036a41ce9921daed74c31d7a30d1a7f41c103e207576991d1db126485"
+      },
+      {
+        "path": "box2d3/air-box2d.wasm",
+        "bytes": 371639,
+        "sha256": "3391e2ace476adba36297ff8ce66766a0a09d9365caec8079b6843d1dd4219ec"
+      },
+      {
+        "path": "box2d3/receipt.json",
+        "bytes": 974,
+        "sha256": "5540911a20a2c624629de1c6f155c43a6cf8e28c91fa0cb6f4cabfb54dfcfbf4"
+      },
+      {
+        "path": "cocosair.module.js",
+        "bytes": 9441888,
+        "sha256": "b5ec7c357a762a674eb893b719d202274f180725337c72c3be57e791c4d816f8"
+      },
+      {
+        "path": "cocosair.module.js.map",
+        "bytes": 26432991,
+        "sha256": "682a8ed033f963166dbb58d774733e9404a22b1a83c53ff07b647dbf8aa9cc3f"
+      },
+      {
+        "path": "package.json",
+        "bytes": 18,
+        "sha256": "1239d4d885dcad42201a27ed9324f8f0f760b78700d8db9ced39a511cffe7eae"
+      },
+      {
+        "path": "physics/box3d/st/LICENSE.Box3D.txt",
+        "bytes": 1067,
+        "sha256": "da5e31a26bf3cfd5ba5c96d6823e480128c81e76c107ef9d3ee5d94789184b90"
+      },
+      {
+        "path": "physics/box3d/st/box3d-st.mjs",
+        "bytes": 55343,
+        "sha256": "29936ae2cdef0304d66fb7d86e5672f2f05304973a3f805bbeff7f08a3fc1e75"
+      },
+      {
+        "path": "physics/box3d/st/box3d-st.wasm",
+        "bytes": 693948,
+        "sha256": "3aad5fe443760ee7507513847d59526056ce39cc282e9502a8b4df32220e77b4"
+      },
+      {
+        "path": "physics/box3d/st/distribution-receipt.json",
+        "bytes": 2845,
+        "sha256": "5134f5ab021af04509888818acc9af069e1994dc2eee53959020088a2241cf0b"
+      },
+      {
+        "path": "physics/box3d/st/facade.d.mts",
+        "bytes": 28881,
+        "sha256": "c849bb1ccb8ba6df221beabc065195076660c421af7c48ab8255fa0e5a8acb99"
+      },
+      {
+        "path": "physics/box3d/st/facade.mjs",
+        "bytes": 115381,
+        "sha256": "2618f81231d6291d364af46be6b5e19dbd7014af8e4d660c3abb74f7df47234b"
+      },
+      {
+        "path": "physics/box3d/st/manifest.json",
+        "bytes": 3774,
+        "sha256": "e9cbb8b7e0eb03f7ba9dcfc71fc86360f94fe517c19c30c342c7f44b73e605a1"
+      },
+      {
+        "path": "webgpu/LICENSE-apache.txt",
+        "bytes": 9226,
+        "sha256": "9362ea9ea17cb221a20cbbd63f404710834cc273d2a9a7b60314fd68ab702cd6"
+      },
+      {
+        "path": "webgpu/LICENSE-dawn.txt",
+        "bytes": 11829,
+        "sha256": "0493f897193af1796d5054659f45ec7d4c5af648fa67a99f01d30e55cc805abc"
+      },
+      {
+        "path": "webgpu/LICENSE-glslang.txt",
+        "bytes": 55719,
+        "sha256": "373bb541d74f5a2854e4b752c57952dd8155cca535124176de90c94efc67ef85"
+      },
+      {
+        "path": "webgpu/NOTICE-babylon.md",
+        "bytes": 793,
+        "sha256": "7f85d099ce3c6e1900a45ee8d5b8fa405e760c746af687b3ee2081416e48f183"
+      },
+      {
+        "path": "webgpu/glslang.js",
+        "bytes": 12829,
+        "sha256": "7937463b384ded16e10da2c1d64cb63a0894e56e8d8167cce636be5635caef59"
+      },
+      {
+        "path": "webgpu/glslang.wasm",
+        "bytes": 1192271,
+        "sha256": "2746e37cbb52ff99f21a836e56e72e5771873a83a032faec2ed860941b23768e"
+      },
+      {
+        "path": "webgpu/manifest.json",
+        "bytes": 1816,
+        "sha256": "84161a92c5469819bab8a3ddc6512bf8e6e88c1bb67c1fd4c873be84ce0e6df9"
+      },
+      {
+        "path": "webgpu/twgsl.js",
+        "bytes": 74129,
+        "sha256": "e5664e33a74d064118769636440a5b09121db31370d6fe54b778deb17cd0e4f5"
+      },
+      {
+        "path": "webgpu/twgsl.wasm",
+        "bytes": 1702916,
+        "sha256": "a434c2decdbb38caadf5f486d806384a1543554828c983c77922b2d92579914c"
+      }
+    ]
+  },
+  "declarations": {
+    "generationAttempts": 1,
+    "generationExitCode": 0,
+    "generationAndChecksElapsedSeconds": 52.32950796899968,
+    "physicalClose": "ECHILD_AND_NO_GROUP_MEMBERS",
+    "inputDriftCount": 0,
+    "gates": [
+      {
+        "role": "fresh-emit",
+        "exitCode": 0,
+        "elapsedSeconds": 21.64509703099975
+      },
+      {
+        "role": "dts-inputs-fixture",
+        "exitCode": 0,
+        "elapsedSeconds": 3.8863703700008045
+      },
+      {
+        "role": "external-types-fixture",
+        "exitCode": 0,
+        "elapsedSeconds": 2.5191145240005426
+      },
+      {
+        "role": "symbols-fixture",
+        "exitCode": 0,
+        "elapsedSeconds": 4.976188100999934
+      },
+      {
+        "role": "strict-app-consumer",
+        "exitCode": 0,
+        "elapsedSeconds": 2.111463162000291
+      },
+      {
+        "role": "strict-mesh-consumer",
+        "exitCode": 0,
+        "elapsedSeconds": 2.095510102000844
+      },
+      {
+        "role": "strict-terrain-consumer",
+        "exitCode": 0,
+        "elapsedSeconds": 2.0649900589996832
+      }
+    ],
+    "strictOptions": {
+      "strict": true,
+      "noEmit": true,
+      "skipLibCheck": false,
+      "declarations": "Freshly generated cocosair.module.d.ts only"
+    },
+    "originalSupervisorStatus": "FAIL_OR_PARTIAL",
+    "originalFailure": "Incorrect supervisor size assertion (>1000 bytes for every declaration) rejected the canonical 367-byte legacy wrapper after modern declaration promotion. Original terminal and logs remain unchanged.",
+    "supplementalDelivery": "Separately authorized exact source-literal and relative-modern-export verification, existing modern hash verification, and exclusive missing legacy copy; no regeneration or overwrite.",
+    "originalResultSha256": "29fe9760eb974b0614faee18a865c61ea5e40cdb64833d3194a4d75b27abc0a9",
+    "promotionReceiptSha256": "5777216d1bd7d27e47ccc12e08eead63fe64bed12b31073ed8f1840eaa1aae41",
+    "files": [
+      {
+        "path": "cocosair.legacy.d.ts",
+        "bytes": 367,
+        "sha256": "6dd42c6a064b17f923568bce9e3befce5ff0e33d7b0af19bed965a9e1a86aed2"
+      },
+      {
+        "path": "cocosair.module.d.ts",
+        "bytes": 3375235,
+        "sha256": "2686ebd434bed7a05982f72ff37c553474168838798c7ba23b7ff19506ec0745"
+      }
+    ]
+  },
+  "finalSDK": {
+    "fileCount": 25,
+    "bytes": 43643089,
+    "originalESM23Unchanged": true
+  },
+  "nativeContext": {
+    "stAttempt2": "PASS_LIMITED_ST_BUILD",
+    "stAttempt1": "Native build exit0 but outer FAIL_OR_PARTIAL due to six first-use official Python bytecode cache files; original failure retained, attempt2 protected the exact files without widening exclusions.",
+    "bridge": "Three native mesh destruction orders passed; b3DestroyMesh completion/core-byte baseline only, not malloc/free invocation counts or complete public Terrain acceptance."
+  },
+  "limits": [
+    "This build/declaration evidence does not qualify public Terrain/C17. A subsequent separate first public execution failed and is handled in a separate report.",
+    "Full Terrain gates, browser, device, gameplay and global leak freedom are not established.",
+    "SDK223 original runtime/raw files were not recovered; this is fresh SDK224 generation, not relabeled SDK222/223 output.",
+    "DTS deprecation/template-literal diagnostic messages and ESM Babel/circular-dependency warnings are retained; no claim of zero diagnostics.",
+    "Only compact report/summary/counter are published. Large raw artifacts are retained separately; this is not a self-contained replay package."
+  ],
+  "retainedEvidenceRoot": "native-candidate-302935a/ (artifact-relative, not a repository directory)",
+  "retainedEvidence": [
+    {
+      "path": "esm224-attempt-1-evidence/result.json",
+      "bytes": 8839,
+      "sha256": "98c98aad97e1038e8dcfcbd23489b5236c02177f06bde8cedb8e68f6eac6657d"
+    },
+    {
+      "path": "esm224-attempt-1-evidence/complete.json",
+      "bytes": 8838,
+      "sha256": "000d4ec58d13fed0de900d2eca0ac6e96b6e30caf1c5ab7b03485ce93394ebde"
+    },
+    {
+      "path": "esm224-attempt-1-evidence/stdout.txt",
+      "bytes": 13195,
+      "sha256": "0a6d7787d395dbcb1b24c42e44ab868439f2e5c00e11ab1b84d5a5b43b429edf"
+    },
+    {
+      "path": "esm224-attempt-1-evidence/stderr.txt",
+      "bytes": 753,
+      "sha256": "d697b145baee2af346e4c57d66afb5f7938263ab5bfc8006042f6f2929f7b097"
+    },
+    {
+      "path": "supervision-esm224/control.json",
+      "bytes": 4009,
+      "sha256": "7cb248c95b220f6f9882ebf793b9dffc183332231e0602b883626dcf3014151a"
+    },
+    {
+      "path": "supervision-esm224/protected-inputs.json",
+      "bytes": 12070942,
+      "sha256": "b81b6010bcc2e73d72e9971087e1cd9cac84451a427eac287b555d310d1ee421"
+    },
+    {
+      "path": "dts224-attempt-1-evidence/result.json",
+      "bytes": 8896,
+      "sha256": "29fe9760eb974b0614faee18a865c61ea5e40cdb64833d3194a4d75b27abc0a9"
+    },
+    {
+      "path": "dts224-attempt-1-evidence/seven-gates.json",
+      "bytes": 2824,
+      "sha256": "b7013722dc0ec660652934743852a52ec6807df2c4a85a2d6994e74be0d07045"
+    },
+    {
+      "path": "dts224-attempt-1-evidence/stdout.txt",
+      "bytes": 919,
+      "sha256": "0804c8594f8b7c9cb5608c76a82694ccf14c9fe73c3febb9a71ede432bd7d91b"
+    },
+    {
+      "path": "dts224-attempt-1-evidence/stderr.txt",
+      "bytes": 689,
+      "sha256": "474778e1cdc63b0bee3919b79ba27950dade173b7667193c69610720ebe75554"
+    },
+    {
+      "path": "dts224-promotion-supplement.json",
+      "bytes": 2454,
+      "sha256": "5777216d1bd7d27e47ccc12e08eead63fe64bed12b31073ed8f1840eaa1aae41"
+    },
+    {
+      "path": "supervision-dts224/control.json",
+      "bytes": 7616,
+      "sha256": "bdff4cc433263f71230cbfdd4c96425517a9304ed584fad10b06d43f389c80b2"
+    },
+    {
+      "path": "supervision-dts224/protected-inputs.json",
+      "bytes": 11198707,
+      "sha256": "54d6f84cc223088d19b669c9325e66574366816b42bc239a8a996018c982605c"
+    },
+    {
+      "path": "attempt-2-st-evidence/result.json",
+      "bytes": 4530,
+      "sha256": "80fb92eef28992a80fbb2968e44700ae0f41b07e42700b420c52f262d2d02821"
+    },
+    {
+      "path": "terrain-native-attempt-1/results/report.json",
+      "bytes": 8459,
+      "sha256": "935270eb7de0a35491d8ad065842b8ab5f9a4c2e9ddca8e97b89e2eb165f7d40"
+    }
+  ],
+  "publicTerrain": {
+    "qualificationByThisBuild": "NOT_QUALIFIED_BY_BUILD",
+    "separateFirstExecution": "SEPARATE_RUN_FAILED",
+    "boundary": "Public execution had not run when build/declaration evidence completed; a subsequent separate first public run failed. Its diagnosis and evidence belong to a separate report. Successful build counter224 is unchanged."
+  }
+}
