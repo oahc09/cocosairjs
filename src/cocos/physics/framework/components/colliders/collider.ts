@@ -366,6 +366,7 @@ export class Collider extends Eventify(Component) {
         target?,
         once?: boolean,
     ): any {
+        this._preflightEventRegistration(type);
         const ret = super.on(type, callback, target, once);
         this._updateNeedEvent(type);
         return ret;
@@ -634,6 +635,19 @@ export class Collider extends Eventify(Component) {
 
     private _updateMaterial (): void {
         if (this._shape) this._shape.setMaterial(this._material);
+    }
+
+    /** Box3D rejects unsupported registration before callback-table and demand-flag mutation. */
+    private _preflightEventRegistration (type: string): void {
+        if (selector.id !== 'box3d' || !this._shape || !this.isValid) return;
+        const collision = this._needCollisionEvent || type === 'onCollisionEnter'
+            || type === 'onCollisionStay' || type === 'onCollisionExit';
+        const trigger = this._needTriggerEvent || type === 'onTriggerEnter'
+            || type === 'onTriggerStay' || type === 'onTriggerExit'
+            || type === 'onControllerTriggerEnter' || type === 'onControllerTriggerStay'
+            || type === 'onControllerTriggerExit';
+        if (this._shape.validateEventListener) this._shape.validateEventListener(collision, trigger);
+        else this._shape.updateEventListener(); // Qualified primitive adapters perform read-only phase admission.
     }
 
     private _updateNeedEvent (type?: string): void {

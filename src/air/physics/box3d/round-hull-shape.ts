@@ -230,6 +230,11 @@ export class Box3DRoundHullShape implements ICylinderShape, IConeShape {
         this.#material = material;
         this.#geometry = this.#geometry ? Object.freeze({ ...this.#geometry, material }) : null;
     }
+    validateEventListener(collision: boolean, trigger: boolean): void {
+        if (this.#shared?.cleanupOnly && !collision && !trigger) return;
+        this.assertConfiguration('validateEventListener');
+        if (collision || trigger) unsupportedBox3D('collider event listeners (T15)');
+    }
     updateEventListener(): void {
         if (this.#shared?.cleanupOnly && !this.collider.needCollisionEvent && !this.collider.needTriggerEvent) return;
         this.assertConfiguration('updateEventListener');

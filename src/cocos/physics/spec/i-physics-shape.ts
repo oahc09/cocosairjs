@@ -41,6 +41,8 @@ export interface IBaseShape extends ILifecycle, IGroupMask {
     getAABB: (v: geometry.AABB) => void;
     getBoundingSphere: (v: geometry.Sphere) => void;
     updateEventListener: () => void;
+    /** Optional read-only phase/candidate admission before Box3D callback registration. */
+    validateEventListener?: (collision: boolean, trigger: boolean) => void;
 }
 
 export interface IBoxShape extends IBaseShape {
