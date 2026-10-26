@@ -1,0 +1,1676 @@
+{
+  "schema": "box3d-c20-lowlevel-observable-regression-report-v1",
+  "date": "2026-10-26",
+  "status": "OBSERVED_NATIVE_SUBSET_PASS",
+  "scope": "Low-level single-module actual ST WASM native observable-resource lifecycle regression only",
+  "originalContract": {
+    "reference": "ai/plans/box3d-v1.2-reference.md §10.3 B3-C20 (frozen reference line 666)",
+    "requiredLowlevel": "100 rounds: create world +50 bodies+assets then destroy; live world/body/shape/joint/handle/bytes return to baseline",
+    "requiredApplication": "Separate 100 scene-transition rounds; this report does not execute or qualify that scope"
+  },
+  "qualificationLimits": {
+    "C20_LOWLEVEL": "NOT_QUALIFIED",
+    "C20_APPLICATION": "NOT_RUN",
+    "completeGlobalWorldCount": "NOT_QUALIFIED_NO_EXPORTED_COMPLETE_GLOBAL_WORLD_COUNT",
+    "completeGlobalHandleCount": "NOT_QUALIFIED_NO_EXPORTED_COMPLETE_GLOBAL_HANDLE_COUNT",
+    "allocatorFreeCounts": "NOT_QUALIFIED_CORE_BYTES_AND_COMPLETED_MESH_DESTROYS_ARE_NOT_MALLOC_FREE_COUNTS",
+    "rawIdsAcrossWorlds": "NOT_QUALIFIED_RAW_BODY_SHAPE_IDS_CAN_REVALIDATE_IN_ANOTHER_WORLD_LIFETIME",
+    "contacts": "ZERO_CONTACT_LIFECYCLE_ONLY_NO_STEP_OR_EVENT_QUALIFICATION",
+    "bridgeShapeHandles": "LAZY_DEBUG_SHAPE_CACHE_ONLY_NOT_ALL_NATIVE_OR_JS_HANDLES"
+  },
+  "identities": {
+    "v2FixtureCommit": "ea7a29edecb7873cd234b59d0de4335eba872133",
+    "v3FixtureCommit": "4a21d78d95b3a7e09f3f6c1226cf0a56339cfea2",
+    "fixtureRepositoryDirectory": "tools/physics/box3d/lifecycle-contract/lowlevel",
+    "sameST2BuildSourceCommit": "ae0803c0c3e85aa627666f76eef29c4e62ab2e93",
+    "sameRuntimeRelativeDirectory": "native-candidate-302935a/source/tools/physics/box3d/output/terrain-st-ae0803c-attempt-2",
+    "runtimeSchemaSha256": "ce98aca1a40c4999df838c1eaab2b08b0533c85adca9866eb48180c6190575d6",
+    "runtimeVariant": "st-simd",
+    "runtimeCoreSha": "efca0c184d40fd6a82016983f1601c4d23965867",
+    "runtimePatchChainSha256": "4c9d057fe6d7403f6f2c7672c4a7abe38041d845942540a6b5c5abbc6f4bc45c",
+    "sameNativeAssetsBothAttempts": true,
+    "nodeVersion": "v22.16.0",
+    "nodeExecutable": {
+      "sha256": "8142d37c6f2f372ef040419e7a111a6baf17df89f8078d02447d6c639ae20c1d",
+      "bytes": 121509208
+    },
+    "v2InputLockSha256": "f5709c2e3d36cc18cdc3a9e08d9677254bc3bbe2c470a1bbc87f279e87ce20d4",
+    "v3InputLockSha256": "946f64dc92fcb0cd13db5f33648a60528aae8ab38bf194dfcfe60733dffd9bdb"
+  },
+  "preservedV2Failure": {
+    "attemptRelativePath": "native-candidate-302935a/c20-lowlevel-attempt-1",
+    "originalProducerStatus": "FAIL",
+    "originalSupervisorStatus": "FAIL",
+    "rawReturnCode": 1,
+    "rawWaitRows": [
+      {
+        "pid": 7,
+        "rawWaitStatus": 256,
+        "exitCode": 1
+      }
+    ],
+    "completedCycles": 100,
+    "createdWorlds": 100,
+    "createdBodies": 5000,
+    "stageRows": 1368,
+    "failurePhase": "strict-consumer",
+    "failureMessage": "bridge-defined handle subset must be nonempty",
+    "rootCause": "The fixture asserted nonempty lazy debug-shape caches without invoking debug capture; the CPU model also incorrectly equated all live core shapes with debug handles. The original failure is not engine-leak or missing-core-shape evidence.",
+    "nativePopulatedCounts": [50, 50, 0, 1],
+    "actualLazyDebugHandles": 0,
+    "initialBaseline": {
+      "coreBytes": "0",
+      "bridge": {
+        "origin": "module._air_b3_bridge_memory",
+        "worldArgument": 0,
+        "liveBytes": "0",
+        "liveAllocations": 0,
+        "shapeHandles": 0,
+        "primitiveCapacity": 0,
+        "capturedPrimitives": 0
+      },
+      "meshCounters": {
+        "cooks": "0",
+        "destroys": "0"
+      }
+    },
+    "originalOutcomePreserved": true,
+    "notReclassifiedAsPass": true,
+    "physicalClosureFactsDespiteFailedExit": {
+      "waitpidScope": "ALL_CHILDREN_-1",
+      "waitpidECHILD": true,
+      "remainingDescendants": [],
+      "budgetViolation": null
+    },
+    "elapsedSeconds": 1.4387775530012732,
+    "peakSampledDescendantRSSBytes": 177061888,
+    "retainedOutputBytes": 1631971
+  },
+  "v3ObservedResult": {
+    "attemptRelativePath": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3",
+    "producerStatus": "OBSERVED_NATIVE_SUBSET_PASS",
+    "readOnlyFinalVerifierExitCode": 0,
+    "moduleInstances": 1,
+    "factoryCalls": 1,
+    "worldsCreated": 100,
+    "roundsCompleted": 100,
+    "bodiesPerRound": 50,
+    "bodiesCreated": 5000,
+    "shapesPerRound": 50,
+    "nativeFixedJointsPerRound": 1,
+    "totalNativeFixedJointsObserved": 100,
+    "populatedNativeCounts": [50, 50, 0, 1],
+    "countsOrder": ["body", "shape", "contact", "joint"],
+    "releaseOrders": {
+      "cache-first": 34,
+      "cache-last": 33,
+      "world-last": 33
+    },
+    "stageRows": 1468,
+    "rawJournalRows": 1771,
+    "initialBaseline": {
+      "coreBytes": "0",
+      "bridge": {
+        "origin": "module._air_b3_bridge_memory",
+        "worldArgument": 0,
+        "liveBytes": "0",
+        "liveAllocations": 0,
+        "shapeHandles": 0,
+        "primitiveCapacity": 0,
+        "capturedPrimitives": 0
+      },
+      "meshCounters": {
+        "cooks": "0",
+        "destroys": "0"
+      }
+    },
+    "postDisposeObservation": {
+      "coreBytes": "0",
+      "bridge": {
+        "origin": "module._air_b3_bridge_memory",
+        "worldArgument": 0,
+        "liveBytes": "0",
+        "liveAllocations": 0,
+        "shapeHandles": 0,
+        "primitiveCapacity": 0,
+        "capturedPrimitives": 0
+      },
+      "meshCounters": {
+        "cooks": "100",
+        "destroys": "100"
+      }
+    },
+    "eachDestroyedRoundMatchesOriginalBaseline": true,
+    "nativeKnownWorldIdsInvalidAfterEachRound": true,
+    "nativeCurrentBodyShapeIdsInvalidAtDestructionBoundary": true,
+    "oldFacadeTokensRejectedPerBoundary": 104,
+    "oldFacadeTokensRejectedInNextWorldAsRecorded": true,
+    "rawBodyShapeIdsMayRevalidateAcrossWorldLifetimes": true,
+    "postDestroyWorldCountsAreNullNotFabricatedZeros": true,
+    "nativeMeshCooksDelta": 100,
+    "nativeMeshDestroysDelta": 100,
+    "completedDebugSnapshots": 100,
+    "debug": {
+      "actualAPI": "api.debugSnapshot(world, 1, 0)",
+      "nativeGlobalBridgeProbe": "same module._air_b3_bridge_memory(0, out); no zero-argument JS-world-map aggregation",
+      "beforeDebugHandles": 0,
+      "afterDebugHandles": 50,
+      "handlesMeaning": "lazy debug-shape caches only",
+      "sourceDerivedVisibleShapeCohort": {
+        "mesh": 3,
+        "sphere": 47
+      },
+      "primitiveLinesPerSnapshot": 3456,
+      "sourceDerivedLines": "3 mesh *8 triangles *3 edges +47 spheres *3 rings *24 segments",
+      "totalPrimitiveLines": 345600,
+      "completeRawPerBodyChecks": "24 lines for each mesh carrier; 72 for each sphere body; all finite and inside distinct declared body bounds",
+      "wireCapacityAndCapturedCountZeroAfterAPI": true,
+      "debugCachesReleasedWithShapeBodyWorldDestruction": true,
+      "losslessOriginalCount": 100,
+      "totalDecodedOriginalBytes": 39902490,
+      "totalGzipOriginalBytes": 2361468,
+      "all100FullOriginalsDecodedAndValidatedByProducerAndFinalConsumer": true,
+      "notSamples": true
+    },
+    "lifecycleClosure": {
+      "status": "CLOSED",
+      "apiDisposeCompleted": true,
+      "diagnosticScratch": {
+        "bytes": 120,
+        "allocations": 1,
+        "frees": 1
+      }
+    },
+    "physicalClosure": {
+      "status": "PHYSICALLY_CLOSED",
+      "exitCode": 0,
+      "signal": null,
+      "rawReturnCode": 0,
+      "subreaper": true,
+      "waitpidScope": "ALL_CHILDREN_-1",
+      "waitpidECHILD": true,
+      "remainingDescendants": [],
+      "remainingProcessGroup": [],
+      "rawWaitRows": [
+        {
+          "pid": 6,
+          "rawWaitStatus": 0,
+          "exitCode": 0
+        }
+      ],
+      "budgetViolation": null,
+      "errors": []
+    },
+    "budgetAndMeasurements": {
+      "declared": {
+        "wallSeconds": 120,
+        "rssBytes": 1073741824,
+        "outputBytes": 16777216
+      },
+      "originalFailureCloseSeconds": 4,
+      "actualElapsedSeconds": 4.332096787999035,
+      "actualCloseSeconds": 0.0020132350000494625,
+      "peakSampledDescendantRSSBytes": 177455104,
+      "rssSamplingIntervalSeconds": 0.025,
+      "rssQualification": "sampled full descendant-tree RSS, not a kernel hard limit",
+      "retainedOutputBytesIncludingFinalReceipt": 4145306,
+      "postFailureBudgetWidening": false
+    }
+  },
+  "measurementBoundaries": [
+    "Known-world native invalidity is not a complete census of every global world.",
+    "Per-live-world native body/shape/contact/joint counts are observed; post-destroy world counts are unavailable/null.",
+    "Lazy debug-shape caches are only one bridge-defined handle subset; no complete all-handle counter is available.",
+    "Core/bridge bytes and completed b3DestroyMesh calls are not malloc/free call counts or a proof of zero leaks in every allocator/resource domain.",
+    "Diagnostic scratch and facade scratch are outside the core/bridge byte counters; successful disposal/free call completion is recorded separately, not claimed as a full allocator census.",
+    "There are no physics steps, contact/event qualification, dynamics performance, application scene-transition qualification or universal leak-free claims in this report."
+  ],
+  "review": {
+    "sourceV3CPU": "51 JS CPU +4 CPU process-closure tests and formatting independently passed before authorization; CPU tests are not native proof",
+    "realRunReadOnlyIndependentReview": "Passed after independent final-consumer execution and audit of 1468 stages/all100 gzip originals, exact bytes/hashes/round/world identities, closure and budgets",
+    "reviewOutcome": "OBSERVED_NATIVE_SUBSET_PASS_ONLY",
+    "reportPreparation": "Only existing originals were read and summarized; source tests and native attempts were not rerun for document preparation"
+  },
+  "artifactLocators": {
+    "scheme": "original-local-relative-paths",
+    "rootLabel": "box3d-resume-20261025T1146",
+    "resolution": "All listed paths resolve relative to the original authorized local evidence workspace root, not this Git repository.",
+    "originalsRetainedLocally": true,
+    "rawBundleCreated": false,
+    "rawOriginalsUploadedOrPublishedByThisReport": false,
+    "notSelfContainedEvidenceBundle": true,
+    "note": "This two-file report publishes source-linked summaries and content hashes only. It does not pretend that hashes or relative locators bundle the original files."
+  },
+  "keyOriginalArtifacts": [
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-1/run/report.json",
+      "bytes": 11184,
+      "sha256": "595c0e3b35fa68dab811553472f0f5ad99f4c8fc024e15b12590869485e76c98",
+      "role": "v2-original-producer-report"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-1/run/events.jsonl",
+      "bytes": 1617231,
+      "sha256": "bca6c237818f977974f310b90206effae4aea5c5df233194cb096c953bf9573d",
+      "role": "v2-complete-original-append-only-observation-journal"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-1/closure.json",
+      "bytes": 1885,
+      "sha256": "0e38bff73728174c85802649cc2b4308f83178b44a4f99d75174a5929b5c6b60",
+      "role": "v2-original-process-closure-and-budget-receipt"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-1/supervision-start.json",
+      "bytes": 1356,
+      "sha256": "dbd084a75948066166c7e5f3893663cefbbbcf7cb2e56c5a2790c2ddefb4050e",
+      "role": "v2-original-executable-and-command-start-receipt"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-1/supervisor-events.jsonl",
+      "bytes": 68,
+      "sha256": "1d338ed99efe37d297a0d3ba55a2bf32d4daefac6e29704d1622a7e66de65e2b",
+      "role": "v2-original-wait-and-supervision-events"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-1/child-start.json",
+      "bytes": 36,
+      "sha256": "c43fd70a392bdbd7978bca8a0b1e52ae6503810609a1080d0760130cc5bad712",
+      "role": "v2-original-child-process-identity"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-1/stdout.raw",
+      "bytes": 211,
+      "sha256": "0f1642bf789b1808c299e1d389a99ddb8e1503892139bfc1654f423a2787f771",
+      "role": "v2-original-runner-stdout"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-1/stderr.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "role": "v2-original-runner-stderr"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/report.json",
+      "bytes": 12816,
+      "sha256": "8ea84387c6197a30fc32418f85f6af11c2cc74a2206c313fa677956389bcba84",
+      "role": "v3-original-producer-report"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/events.jsonl",
+      "bytes": 1767390,
+      "sha256": "982a7b837c4d5bb389193b095aecfc38dfe1f5413585986186334b62cbcd74d4",
+      "role": "v3-complete-original-append-only-observation-journal"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/closure.json",
+      "bytes": 1913,
+      "sha256": "492faf61e6ede6dbc261fd7eaf64aa2a05d62dbd97db0ad404604b75c45b4c43",
+      "role": "v3-original-process-closure-and-budget-receipt"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/supervision-start.json",
+      "bytes": 1374,
+      "sha256": "e1019f100b6450124fcdee30de146d05b5d00baed387c7adc4bc1ccc508edd0e",
+      "role": "v3-original-executable-and-command-start-receipt"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/supervisor-events.jsonl",
+      "bytes": 66,
+      "sha256": "2dd5d332f21d9c48ade24b0af6d8be41eb316a9150d2f9104c62761e30fe88a3",
+      "role": "v3-original-wait-and-supervision-events"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/child-start.json",
+      "bytes": 36,
+      "sha256": "78d6c4d7b9cb3ba572f7766c250c0e843ed987a282307c1d26baae722db2a1e2",
+      "role": "v3-original-child-process-identity"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/stdout.raw",
+      "bytes": 243,
+      "sha256": "ce284ca012ac888b80b45922d915e357f886b030a3d7a1a9e065baa13176b16a",
+      "role": "v3-original-runner-stdout"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/stderr.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "role": "v3-original-runner-stderr"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-input-lock-attempt-1.json",
+      "bytes": 4965,
+      "sha256": "f5709c2e3d36cc18cdc3a9e08d9677254bc3bbe2c470a1bbc87f279e87ce20d4",
+      "role": "frozen-input-lock"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-authorization-attempt-1.json",
+      "bytes": 1634,
+      "sha256": "2ac1b221c8352b63c0941cfa031d4ad264bf8feefdc225da7b0135d469c8727e",
+      "role": "published-commit-and-single-execution-authorization-record"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-final-verification-attempt-1.stdout.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "role": "original-read-only-final-verifier-stdout"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-final-verification-attempt-1.stderr.raw",
+      "bytes": 958,
+      "sha256": "7f46f82a813e4ee831031c5acf011e51b9a8f94a8dcaa21a9aa73d2645ab3e62",
+      "role": "original-read-only-final-verifier-stderr"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-final-verification-attempt-1.exit.txt",
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "role": "original-read-only-final-verifier-exit"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-supervisor-attempt-1.stdout.raw",
+      "bytes": 160,
+      "sha256": "ae64bd2ad8d4fd1cbdaa67b3944a4380732fd806c2f4423c291592ad328c488c",
+      "role": "original-supervisor-stdout"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-supervisor-attempt-1.stderr.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "role": "original-supervisor-stderr"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-supervisor-attempt-1.exit.txt",
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "role": "original-supervisor-exit"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-input-lock-attempt-2-debug-v3.json",
+      "bytes": 6227,
+      "sha256": "946f64dc92fcb0cd13db5f33648a60528aae8ab38bf194dfcfe60733dffd9bdb",
+      "role": "frozen-input-lock"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-authorization-attempt-2-debug-v3.json",
+      "bytes": 2014,
+      "sha256": "70beeef14b0e951f11a70e7528e7edd681cd566d45d293bd7a66bae30146160c",
+      "role": "published-commit-and-single-execution-authorization-record"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-final-verification-attempt-2-debug-v3.stdout.raw",
+      "bytes": 727,
+      "sha256": "4c3fce272d6df9df1fc6896ad71beb402e7dc9a78b487e65c5446691d7652da3",
+      "role": "original-read-only-final-verifier-stdout"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-final-verification-attempt-2-debug-v3.stderr.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "role": "original-read-only-final-verifier-stderr"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-final-verification-attempt-2-debug-v3.exit.txt",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "role": "original-read-only-final-verifier-exit"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-supervisor-attempt-2-debug-v3.stdout.raw",
+      "bytes": 182,
+      "sha256": "83e2b75916fd9090d2792a22538dc6e96979f948d778a62e2e308e465997bdba",
+      "role": "original-supervisor-stdout"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-supervisor-attempt-2-debug-v3.stderr.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "role": "original-supervisor-stderr"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-supervisor-attempt-2-debug-v3.exit.txt",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "role": "original-supervisor-exit"
+    },
+    {
+      "path": "native-candidate-302935a/source/tools/physics/box3d/output/terrain-st-ae0803c-attempt-2/manifest.json",
+      "bytes": 3774,
+      "sha256": "e9cbb8b7e0eb03f7ba9dcfc71fc86360f94fe517c19c30c342c7f44b73e605a1",
+      "role": "same-native-ST2-runtime-input-both-attempts"
+    },
+    {
+      "path": "native-candidate-302935a/source/tools/physics/box3d/output/terrain-st-ae0803c-attempt-2/box3d-st.mjs",
+      "bytes": 55343,
+      "sha256": "29936ae2cdef0304d66fb7d86e5672f2f05304973a3f805bbeff7f08a3fc1e75",
+      "role": "same-native-ST2-runtime-input-both-attempts"
+    },
+    {
+      "path": "native-candidate-302935a/source/tools/physics/box3d/output/terrain-st-ae0803c-attempt-2/box3d-st.wasm",
+      "bytes": 693948,
+      "sha256": "3aad5fe443760ee7507513847d59526056ce39cc282e9502a8b4df32220e77b4",
+      "role": "same-native-ST2-runtime-input-both-attempts"
+    },
+    {
+      "path": "native-candidate-302935a/source/tools/physics/box3d/output/terrain-st-ae0803c-attempt-2/facade.mjs",
+      "bytes": 115381,
+      "sha256": "2618f81231d6291d364af46be6b5e19dbd7014af8e4d660c3abb74f7df47234b",
+      "role": "same-native-ST2-runtime-input-both-attempts"
+    },
+    {
+      "path": "native-candidate-302935a/source/tools/physics/box3d/output/terrain-st-ae0803c-attempt-2/facade.d.mts",
+      "bytes": 28881,
+      "sha256": "c849bb1ccb8ba6df221beabc065195076660c421af7c48ab8255fa0e5a8acb99",
+      "role": "same-native-ST2-runtime-input-both-attempts"
+    },
+    {
+      "path": "native-candidate-302935a/supervision-attempt2/control.json",
+      "bytes": 3291,
+      "sha256": "fd8749061f16f2bb4e8e129bc0cc77798331c3a17070bd80e16b501d650d9f33",
+      "role": "original-ST2-build-control-source-commit-provenance"
+    }
+  ],
+  "completeDebugOriginals": [
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-000.json.gz",
+      "bytes": 23614,
+      "sha256": "aaeb0de2fe1776a37716a829abb6767eb73e8a7ac1f4119cc41b6d7495f4996a",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 0,
+      "worldId": 65536,
+      "decodedBytes": 399024,
+      "decodedSha256": "7a5dfa1198d2add266bf8c05d0759c2cee3d711f0d58648956840f5bd2393aa2",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-001.json.gz",
+      "bytes": 23615,
+      "sha256": "e56fe4b9319b7095dc13e38d159522a08f12f0c396a4e3d41a0ecbfa50ad9b62",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 1,
+      "worldId": 65537,
+      "decodedBytes": 399024,
+      "decodedSha256": "0b4fe380646ce06c7369e56c8892783898266a265386e08b8e3082094295fd0c",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-002.json.gz",
+      "bytes": 23614,
+      "sha256": "d1b68fc34072a66f036f35acea7c8072c29c343d0946235cfd0655032cfcd6b6",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 2,
+      "worldId": 65538,
+      "decodedBytes": 399024,
+      "decodedSha256": "8127855b481dc88f194502747020253d887a05134fce959e1d7b5c890fff7887",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-003.json.gz",
+      "bytes": 23614,
+      "sha256": "a0c4cad6e5929d66a451ea2d919364a8048804fa4ede180d22370c7a9ac709e1",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 3,
+      "worldId": 65539,
+      "decodedBytes": 399024,
+      "decodedSha256": "f034d9c8f1f119ea9ea582d4f03f1bbd6e265f1d169edecbb7396d7773d53216",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-004.json.gz",
+      "bytes": 23614,
+      "sha256": "fc188fa2ef6a35a09f7e5ea7c27215d04a034c4c1c55b7ebe974f16a909c9669",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 4,
+      "worldId": 65540,
+      "decodedBytes": 399024,
+      "decodedSha256": "8fb5c0d134862d85845049dd7fea8ce5926df02982178af94f5422d8fa23a394",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-005.json.gz",
+      "bytes": 23614,
+      "sha256": "ef63da56cbe7cbccbd5f27a7124862111476b8434f4c9fe6ee47de43351f5171",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 5,
+      "worldId": 65541,
+      "decodedBytes": 399024,
+      "decodedSha256": "45dc954907c6130c845a859cbb89b02b14728ee565cbbf1734b3c98adbc33145",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-006.json.gz",
+      "bytes": 23614,
+      "sha256": "de7f3ebd4eccefe7cca5bece73e440181b8f4b9ed54924884025a3ef6a2169a4",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 6,
+      "worldId": 65542,
+      "decodedBytes": 399024,
+      "decodedSha256": "95f1900552448a265bf10424acae677ca5e14202cf02ac83430c15776aadd054",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-007.json.gz",
+      "bytes": 23614,
+      "sha256": "d88fa698c4ab10a4599ccf42fc8228493560047648e719a55b5c5dc8f6325662",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 7,
+      "worldId": 65543,
+      "decodedBytes": 399024,
+      "decodedSha256": "8626072213a2cfd10be1e52e9e1a9d8e8ea0872a1ebcd9a221f8dc00865500e4",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-008.json.gz",
+      "bytes": 23614,
+      "sha256": "92c98d88116d3465f091d4d66ee331db74542a8715e19c968aa6ff3e626defbe",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 8,
+      "worldId": 65544,
+      "decodedBytes": 399024,
+      "decodedSha256": "d32625e0ec9207220a77f1f9be774cb666b1eb88f77fd515b62e6ac1c7a3ba32",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-009.json.gz",
+      "bytes": 23614,
+      "sha256": "0ffdaa67b5ffa6b8e0af71530c048c8b8a6c2b1369ec055382065b6563dbe84b",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 9,
+      "worldId": 65545,
+      "decodedBytes": 399024,
+      "decodedSha256": "84afef8762ee9bd28bd9687ae7a5f9f7f0bbf4406fe3d532a0937831800b927b",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-010.json.gz",
+      "bytes": 23615,
+      "sha256": "0d588bd29142afd01673c5a21dbf2437f1eb30f62d78845c29943eeed05a03b2",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 10,
+      "worldId": 65546,
+      "decodedBytes": 399025,
+      "decodedSha256": "83ec9d13014a647f3e14774e64a87183296964fecabbc2b183a0a247034bc4c5",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-011.json.gz",
+      "bytes": 23615,
+      "sha256": "20846d8823077b901c4cafee83d5a44d7b339348f825932ee32fd7dd5d120cf1",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 11,
+      "worldId": 65547,
+      "decodedBytes": 399025,
+      "decodedSha256": "057aad7fe9708a042e62aece15fc5ac00683d2711b4111d1be7c05ff10bc50d2",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-012.json.gz",
+      "bytes": 23614,
+      "sha256": "6f7ed8e8d8e1faa07c595615659397c97be60ccde4cf20c88a8817616234fd8f",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 12,
+      "worldId": 65548,
+      "decodedBytes": 399025,
+      "decodedSha256": "72d31b339a2644cb8762775a5c31e4c6212d32cc5394e31bb59fd37614fd5da1",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-013.json.gz",
+      "bytes": 23615,
+      "sha256": "b83d5e8d1418b11c426719b2999837e18176a0c185c55b3acf97f34f832c9188",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 13,
+      "worldId": 65549,
+      "decodedBytes": 399025,
+      "decodedSha256": "2ab0b304d8a30c8e79fc7eb37f4fed6d5bed526357266f036ed4a62ebc02e7cc",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-014.json.gz",
+      "bytes": 23614,
+      "sha256": "b096492129782c575f6a01f63c555ef41d9996bc19081e26c3a5ad216dc16102",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 14,
+      "worldId": 65550,
+      "decodedBytes": 399025,
+      "decodedSha256": "7592234b5d1d27aa5ae0f9377e965fa7c2952ee7313bc450d10d0ff4cf6827e7",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-015.json.gz",
+      "bytes": 23614,
+      "sha256": "a509c48002ee21b6955e380684f2bcf1b640899a08bbc2cbefe2f3b6c6518173",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 15,
+      "worldId": 65551,
+      "decodedBytes": 399025,
+      "decodedSha256": "5d6f4f33c839f62b09a9af04617af15ca2570b5814fc821d2929111074fad7d9",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-016.json.gz",
+      "bytes": 23614,
+      "sha256": "c1fc610ee5d681cc6941f553aeba81885212376acb2fff1b7870ffb7cd6c481b",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 16,
+      "worldId": 65552,
+      "decodedBytes": 399025,
+      "decodedSha256": "446a857f43df2753732e3ab15fb026e9bc2c53ad5e5e167ad3fc3ed9ddf7c510",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-017.json.gz",
+      "bytes": 23615,
+      "sha256": "8ba27729cd51dd49b6de64c8d88b43998c4bca98a906db7efade4799e64871a3",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 17,
+      "worldId": 65553,
+      "decodedBytes": 399025,
+      "decodedSha256": "d960ce892b4801458edbb2e87b28477f590a20f8510b1799377f00d3d8d4e1ad",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-018.json.gz",
+      "bytes": 23614,
+      "sha256": "2c80af0b68ba517345388507ddcfcb366374f607ff204ff444a6665c98d2ee8e",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 18,
+      "worldId": 65554,
+      "decodedBytes": 399025,
+      "decodedSha256": "50176493f9ab862a2e8bdb2c5afe3789830f9b0383f06e5f70a720436de742c7",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-019.json.gz",
+      "bytes": 23615,
+      "sha256": "64cc5e6320c2ff2e1664fc360c3f5a0d8ccaba9466df88f14209dfea67f36b38",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 19,
+      "worldId": 65555,
+      "decodedBytes": 399025,
+      "decodedSha256": "15fb70453a453d93d9b0fb6f27a7db247cb1066e66e7e2fac4842b78c2f2a903",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-020.json.gz",
+      "bytes": 23614,
+      "sha256": "90e0c21057a0ce698cd990e73f891fe64f576551f46a08d3e71785a3795448cd",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 20,
+      "worldId": 65556,
+      "decodedBytes": 399025,
+      "decodedSha256": "bc71bc087cf825bb60f752b5a5e214c3ccb833bc042ec6082242a5c60930b01c",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-021.json.gz",
+      "bytes": 23615,
+      "sha256": "2c08c50d4c6f81e9a360ad956ebf1b6940db9190ed41e0e4a88436b0d109b871",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 21,
+      "worldId": 65557,
+      "decodedBytes": 399025,
+      "decodedSha256": "8ff03aac7e80ccc20e9ccb865f037b326f44614de6083c482f745bf1ea7bbdb3",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-022.json.gz",
+      "bytes": 23614,
+      "sha256": "d122f2a0b319cfaa2fd928050d2fa9497eddacdc26173766b790c083e2e3abdc",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 22,
+      "worldId": 65558,
+      "decodedBytes": 399025,
+      "decodedSha256": "1194eb0466e6e0b5e1a0fdc21f96d532062bcc40e830ee21d7d745d8a6cbcad5",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-023.json.gz",
+      "bytes": 23615,
+      "sha256": "92c9d8e50aa0114071419c2e1cf8d748fb491dda470c41786ce75d1e518b02d1",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 23,
+      "worldId": 65559,
+      "decodedBytes": 399025,
+      "decodedSha256": "caf3c657508a487f1cea0037a7ea1f5a974321a8eb492a997a56722aeb9d7b83",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-024.json.gz",
+      "bytes": 23614,
+      "sha256": "86577ab54463efb05e534ab567e19639b72a7989cbeedc0e86992f48fca40755",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 24,
+      "worldId": 65560,
+      "decodedBytes": 399025,
+      "decodedSha256": "36ef33cfa20140180a54d9f5f3b058166c1b46912d569f11cc8fa851a0c04566",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-025.json.gz",
+      "bytes": 23614,
+      "sha256": "0132f9c9d10abe52e653e172830efcd04a52f7a9a535ecece4d6bbf2188c6eb6",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 25,
+      "worldId": 65561,
+      "decodedBytes": 399025,
+      "decodedSha256": "e9687d7f32f7f5340957a15ed49e9376e3538c083cbf21670c07959012ab87fc",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-026.json.gz",
+      "bytes": 23616,
+      "sha256": "e4e11ee4db1d6f3bd0434809ae1015c39c2bf8b0b971bb818bb4e9a82b186517",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 26,
+      "worldId": 65562,
+      "decodedBytes": 399025,
+      "decodedSha256": "395a696ca3886207027e13644f5b71346cf6bf0838918b3d25ee56ca5681ab7f",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-027.json.gz",
+      "bytes": 23613,
+      "sha256": "c68b190a4308e2205389f6501fde5f213cfb0158b6ad3a4c1194356c0f70436a",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 27,
+      "worldId": 65563,
+      "decodedBytes": 399025,
+      "decodedSha256": "e6e51cca35af420674dde77e7638833d62a4b9f855a02af2167bc0c1fcc2eece",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-028.json.gz",
+      "bytes": 23614,
+      "sha256": "dac6a97f567b1514fe375affa9f7a10cb0fd53bb55a56ac2a4b34a1ef7a3a095",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 28,
+      "worldId": 65564,
+      "decodedBytes": 399025,
+      "decodedSha256": "e1b7d43f426b63884e732f4db040f2e388548305014a3317930d00238bfed1ab",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-029.json.gz",
+      "bytes": 23615,
+      "sha256": "5858e5df24134bc35cc7d258e4ff72330f7fa787974ac476ab27e412dc9d1a2b",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 29,
+      "worldId": 65565,
+      "decodedBytes": 399025,
+      "decodedSha256": "c16caffd6e9ab511d54a28c623bbf60b9db45e4e43d9c20a579659982479eb88",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-030.json.gz",
+      "bytes": 23615,
+      "sha256": "842e3f6561baa753924e5642f894ff8d012a7bc7f453c2a9ff87e65d1b0c8dd5",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 30,
+      "worldId": 65566,
+      "decodedBytes": 399025,
+      "decodedSha256": "998cd9ed3bf3e709e5cc344351e09c65168335475e2d85cf36e8cbfcfc048f18",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-031.json.gz",
+      "bytes": 23615,
+      "sha256": "a406028fb50cddb7e7a8b1e8888f1f0619f5c0103fa093e20fa48f336c1d1d2f",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 31,
+      "worldId": 65567,
+      "decodedBytes": 399025,
+      "decodedSha256": "aa69c0070279d6ca85cc7ea7f0dfe726420a3f871674641b77d8e9634c313781",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-032.json.gz",
+      "bytes": 23614,
+      "sha256": "4b6a5ab4e7763cefaa50e525d93ea474133657a0f37943740f07f3350f04c032",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 32,
+      "worldId": 65568,
+      "decodedBytes": 399025,
+      "decodedSha256": "ddf92950e84449db95ecafa9a842b9e1d0bc574f1bbcd2513ce84847c2eba640",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-033.json.gz",
+      "bytes": 23615,
+      "sha256": "e8af64280ae0eb74db40560fa37eb893cb882cde85fa8f58834e55b27b22aa66",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 33,
+      "worldId": 65569,
+      "decodedBytes": 399025,
+      "decodedSha256": "7580b7fc7184d2bcc23656dffcf9734062814f7ef899bb39b20e7af4bc5de407",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-034.json.gz",
+      "bytes": 23615,
+      "sha256": "938bea6d949c712042dd16556925cf8cf16e54a6bab9c78456ca9ca1c203ddc3",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 34,
+      "worldId": 65570,
+      "decodedBytes": 399025,
+      "decodedSha256": "31c4a51e82c2a7b5fea70ddf91bb81b9f19f62725fbf0de6b6492dbcf1606b28",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-035.json.gz",
+      "bytes": 23615,
+      "sha256": "f9e9fcdd9e5e12698fbc173399b58bece496a9dd27c7e3a38c9c8d4da6b6c915",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 35,
+      "worldId": 65571,
+      "decodedBytes": 399025,
+      "decodedSha256": "5467faed8af25a21cfc37a0eac0ea53335ba786a0fd0bc9f2623aee4d5da0e8a",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-036.json.gz",
+      "bytes": 23615,
+      "sha256": "738e96c1bc491a55997718326dd45384f04d07803f71331e37ece4027b29429d",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 36,
+      "worldId": 65572,
+      "decodedBytes": 399025,
+      "decodedSha256": "31223acd95ccea1629b25a8ebf3a785f29fb4cbfc8b9827916bc9f50d9d77872",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-037.json.gz",
+      "bytes": 23615,
+      "sha256": "79de0d710b6255d6c547cbe0b5e9fef56629c6e5c5a0a7084064e445522ee822",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 37,
+      "worldId": 65573,
+      "decodedBytes": 399025,
+      "decodedSha256": "f23c69f2d0c981046a3cfd46efb73f4a8bf93205b0d99c2863b9705bf6725b68",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-038.json.gz",
+      "bytes": 23615,
+      "sha256": "0707e2c12aafecedc095e32a5a27f49d8ddcf1f6ca320ce2d805117a73d90e73",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 38,
+      "worldId": 65574,
+      "decodedBytes": 399025,
+      "decodedSha256": "a26d71cbc6c150eaacde7d2a4a805d7df0015241ddb9a6800e824dd03649cc09",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-039.json.gz",
+      "bytes": 23615,
+      "sha256": "f0bd2d6e3e31d2fff1d1507ecb34b4b61f036c1f10718491503497c326885555",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 39,
+      "worldId": 65575,
+      "decodedBytes": 399025,
+      "decodedSha256": "0298799936fe85ad9a01eaab4b5978503f6ec4d4b614f11e4f093012b28075fb",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-040.json.gz",
+      "bytes": 23615,
+      "sha256": "22e12637173bf644bc83ee26fee720a215e4701099bf3d2d82759428e638f3b8",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 40,
+      "worldId": 65576,
+      "decodedBytes": 399025,
+      "decodedSha256": "b3d49d553f7e72359194718613f1312466b874600a94b36023d66edb83b58e7c",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-041.json.gz",
+      "bytes": 23615,
+      "sha256": "ae23bdcc4c5d3d3698af00b8aee77068d9addfcf086bc2374f2e94f0b92aace5",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 41,
+      "worldId": 65577,
+      "decodedBytes": 399025,
+      "decodedSha256": "d41c2c6ac90c32774a7f56d9c038436f264a967bcfe3497b8bacb9d33bd65e47",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-042.json.gz",
+      "bytes": 23614,
+      "sha256": "1de6d4e2e265a7754df45beb87864146f60866e997a122aa23ba1535308c0a8c",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 42,
+      "worldId": 65578,
+      "decodedBytes": 399025,
+      "decodedSha256": "df68177877cb453ff469a19169801d1d2f8c9393267d13a99f7856901953096c",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-043.json.gz",
+      "bytes": 23615,
+      "sha256": "f5e01f7cb8e2e437a857f54d453f0a0c42f7e5bb009c314e339efb018a0f45dc",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 43,
+      "worldId": 65579,
+      "decodedBytes": 399025,
+      "decodedSha256": "8e72057fdfd2aae32edfdafefc3652ad66cbff6c0333412cfbd69d39681dee65",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-044.json.gz",
+      "bytes": 23615,
+      "sha256": "8d7410fb3fd599fec192f0dfaf62e91be46f96be224d1aee41539c63814d5d96",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 44,
+      "worldId": 65580,
+      "decodedBytes": 399025,
+      "decodedSha256": "ea08a4b601e51b28c00011405c5c036fce07991d5026fb2f5c6ded8f9d1cf2f1",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-045.json.gz",
+      "bytes": 23614,
+      "sha256": "805e99c8052eca63824ab07c623cea9624499941f9cd4d68fb7fcb2b02fb0ca5",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 45,
+      "worldId": 65581,
+      "decodedBytes": 399025,
+      "decodedSha256": "c122dd77903a8ab2e1ca4365df9812371f1d7ea035b858d31e90f047cdb2d880",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-046.json.gz",
+      "bytes": 23614,
+      "sha256": "36ccbf1b2816a6cbe90e2cbd5b5fe26920b225923367de42b02b7a0386f691cd",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 46,
+      "worldId": 65582,
+      "decodedBytes": 399025,
+      "decodedSha256": "35147f5b3847701958fbe52744acf434bad95a0a5e3f35523d22724be59fedb9",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-047.json.gz",
+      "bytes": 23615,
+      "sha256": "608fbb9886e2e2a1d633c8c9859640c7428b66f04c780911976c5fcf5ac97bc4",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 47,
+      "worldId": 65583,
+      "decodedBytes": 399025,
+      "decodedSha256": "3bb8e72d2859943fd82916c756bc68222ed58f72f2c14e2bdc3795249e28721d",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-048.json.gz",
+      "bytes": 23614,
+      "sha256": "ffab7da339bf90f85e4a5695642275ae2eb729c24cae4ff3e488a0e69030f691",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 48,
+      "worldId": 65584,
+      "decodedBytes": 399025,
+      "decodedSha256": "d1f5ddd433e2120006cb8e0acb9c86732ad5383543097b605b801a4db2b48e84",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-049.json.gz",
+      "bytes": 23614,
+      "sha256": "2aac9566d8d1eb766f3cee0a6ae5f97f8938e82ea38a0b5186d05f0e960fa17a",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 49,
+      "worldId": 65585,
+      "decodedBytes": 399025,
+      "decodedSha256": "95fd50eddcc503d11a1e140a598e8e1a8dbe7051250fe4635b62ec483ab17d63",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-050.json.gz",
+      "bytes": 23614,
+      "sha256": "a58c8bd13840d153ce2ded600d2d5c2c40517bc3cfd99104c2fe72aaffa3d571",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 50,
+      "worldId": 65586,
+      "decodedBytes": 399025,
+      "decodedSha256": "c5bc4bc975f6e23dfc07a8ce0f65932258b9f4c23e5f99b82f4638eb5586a109",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-051.json.gz",
+      "bytes": 23615,
+      "sha256": "6dabf9d3796268324d06f500dbe4d102a2821a369ffdc10f0b5fb8902d2bb2f7",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 51,
+      "worldId": 65587,
+      "decodedBytes": 399025,
+      "decodedSha256": "47105fbedd1d58bbe2adf2a1a2a59c0ee712a8ce7254b1ff41b3316bc7170676",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-052.json.gz",
+      "bytes": 23614,
+      "sha256": "797181b87d4216a8f836e4f0fb1bd6789d651459f7acf30b0958b353ebede167",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 52,
+      "worldId": 65588,
+      "decodedBytes": 399025,
+      "decodedSha256": "0a3a9e6b3d74a172f41af47216f9ecc6ff33053f9c30ef91a32f873f5d6446ea",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-053.json.gz",
+      "bytes": 23615,
+      "sha256": "1f760bf740db3d04882a91c1cd40024f8c0404dc5df468e690dec86a2abbe435",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 53,
+      "worldId": 65589,
+      "decodedBytes": 399025,
+      "decodedSha256": "dc15748b920a57850ec011f6b7245b73d0009d1fa5925572ce7f67186eefc6ae",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-054.json.gz",
+      "bytes": 23615,
+      "sha256": "b2c4c0e391b1dcf6ec1710f14d82d6c496cdf9626218a6a568b1ea16049f654e",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 54,
+      "worldId": 65590,
+      "decodedBytes": 399025,
+      "decodedSha256": "869ea95749c0993d7cfe3641cabda8cca665a45beb2c43f91ff576f5a9912f87",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-055.json.gz",
+      "bytes": 23615,
+      "sha256": "d56be53a4d27d45dc6618708251d3ac0397be3503e632f895a7dff750676b688",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 55,
+      "worldId": 65591,
+      "decodedBytes": 399025,
+      "decodedSha256": "190c3dc677c00c72079ffd3197da540f4611b1fd08ab4d8514eda1a551ffb39f",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-056.json.gz",
+      "bytes": 23615,
+      "sha256": "233acf6f1a8eb4f788933978893c9c8a99184df068873832adf56df6e4bd8eca",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 56,
+      "worldId": 65592,
+      "decodedBytes": 399025,
+      "decodedSha256": "6eb7924ebe12e19957ca81d8334ef17d834f338bcc5da46b33879b7000ddc320",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-057.json.gz",
+      "bytes": 23615,
+      "sha256": "0cb88e1ead82caae323d3d320b3ddd6dce4286b90fdd59a90b0062a643b5280e",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 57,
+      "worldId": 65593,
+      "decodedBytes": 399025,
+      "decodedSha256": "845cb9d8d8c6f8f75b285f45683057c1e3b5661fb8fb4b71c4cc4afa16d08008",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-058.json.gz",
+      "bytes": 23614,
+      "sha256": "057fd7eef4ee935ae65686e876e6fe7d0873d018a609cc29c160d076d9f685d6",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 58,
+      "worldId": 65594,
+      "decodedBytes": 399025,
+      "decodedSha256": "84697be961eb3f862b7daa0a1f871eac6ffe6a171194395e5115117cd13d304b",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-059.json.gz",
+      "bytes": 23615,
+      "sha256": "d4ecf7514835dcc7dbfbb6fdd3c902970cfe70337885cb503f5b83ae6ae1eca5",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 59,
+      "worldId": 65595,
+      "decodedBytes": 399025,
+      "decodedSha256": "15974f07ffd569fb40d2282eeac00bcbbfd1b45d4f0393606533e5eacc2f48e0",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-060.json.gz",
+      "bytes": 23615,
+      "sha256": "a9caa3f3bdeac28a6ae648609f2cd234bc1b5534edfa5acde9535e15d4b2ed56",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 60,
+      "worldId": 65596,
+      "decodedBytes": 399025,
+      "decodedSha256": "2a06143e831ea748b02bcc8c760662dd84db58a51cf3d606de41f1b1d2a2800c",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-061.json.gz",
+      "bytes": 23615,
+      "sha256": "71a26f7a85e57809775228fbabb4e35e02d4bbefc49155c50d0d4d2dc3dc2463",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 61,
+      "worldId": 65597,
+      "decodedBytes": 399025,
+      "decodedSha256": "d02b90840dc5aabbca51ac1c239f63976fb59123f4de23214d7365952e734702",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-062.json.gz",
+      "bytes": 23615,
+      "sha256": "af8fb48115d6cb90d6ed1e69b7e33d7c4e7dc3df2a4172c251ae4d4cd165c05c",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 62,
+      "worldId": 65598,
+      "decodedBytes": 399025,
+      "decodedSha256": "bb78ab3b80ecc479c290bacab34b552f68b79ecef9ba464a52451ea07fd7aac3",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-063.json.gz",
+      "bytes": 23615,
+      "sha256": "e984ae2009a1784ace19a46d057304347272840ef166ee3358ccae8d720e13e3",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 63,
+      "worldId": 65599,
+      "decodedBytes": 399025,
+      "decodedSha256": "ccb56eebc69f92bab18f8d2747ede74b1d53785589c828eeb30863ca7d3f1d75",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-064.json.gz",
+      "bytes": 23617,
+      "sha256": "8575e3458a5d98448ac3bb34968a553edbd959053c64e839552915c8292a3aee",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 64,
+      "worldId": 65600,
+      "decodedBytes": 399025,
+      "decodedSha256": "b8fd03996f60fcc1ad37563d0cf3c3b968f199c048245a3d099d55416e3e074d",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-065.json.gz",
+      "bytes": 23613,
+      "sha256": "1fddc28966d16aa64ae55fbcb8cd2ad5f30073a7d362d871cfc7700cb1ab8927",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 65,
+      "worldId": 65601,
+      "decodedBytes": 399025,
+      "decodedSha256": "9190fca0dd147fcd40c971ac85a3abdb165c5b20505468d35cb40bd472f3f8db",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-066.json.gz",
+      "bytes": 23615,
+      "sha256": "a1ad20aef8dc07c7dd3be39c5aca1fb3809adbb7612d37fa0eb05f1f63b7927a",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 66,
+      "worldId": 65602,
+      "decodedBytes": 399025,
+      "decodedSha256": "d78abb249296cb8edabb7e1de855d48addfdda3145d5cc5f78cba11f430056a4",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-067.json.gz",
+      "bytes": 23615,
+      "sha256": "d40c8af742e21d389a24a07c3e3313fa99fb485039f1df079f8dc64d067bccd8",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 67,
+      "worldId": 65603,
+      "decodedBytes": 399025,
+      "decodedSha256": "01093588cb4ac3547590575925a6a9fbe5fc193c7599281b5a00141830960d2c",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-068.json.gz",
+      "bytes": 23615,
+      "sha256": "79beef9b05c2d74de7eb717bb4acbb0ad01f4c6ac3d78d714ec1ea30b95cc6a5",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 68,
+      "worldId": 65604,
+      "decodedBytes": 399025,
+      "decodedSha256": "c06df895c848d7b7db4693dae072e7c6a960fb8c37a5c63cb070654db3f296ab",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-069.json.gz",
+      "bytes": 23615,
+      "sha256": "8793d82b64206798d9062209ba4b2ca5eb1f1c79c38149381563f05ce02ba006",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 69,
+      "worldId": 65605,
+      "decodedBytes": 399025,
+      "decodedSha256": "d09e2b8b6d7a5149f713dfd6b65840ae587d26249c12af19514e78a3ef6e9933",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-070.json.gz",
+      "bytes": 23615,
+      "sha256": "d5abcd688d9d057241a09a06a7dba694df333e1a413004bd8038a5ef6b8bf111",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 70,
+      "worldId": 65606,
+      "decodedBytes": 399025,
+      "decodedSha256": "cab20d34a2c11dfb0efb535cc7ec5af1685527475fb8c0e6e9bc84c2ea0c7fc8",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-071.json.gz",
+      "bytes": 23615,
+      "sha256": "5076836c90b10cc0c14e308ad45b21fe0abe320c2f2d8cce91e6af2cc297dc75",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 71,
+      "worldId": 65607,
+      "decodedBytes": 399025,
+      "decodedSha256": "9d1387c66ba12e7cad48b6957f391acb546595b1cda9a9e2d0d2c37ed9135b57",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-072.json.gz",
+      "bytes": 23615,
+      "sha256": "de4a9302aa995b1906a5411086f3a7733c3b90082bb11f3330a1727c3831c5bf",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 72,
+      "worldId": 65608,
+      "decodedBytes": 399025,
+      "decodedSha256": "9a7c650022f1476696541f3f155aec966c4c47e0bf21de78599553641b439b2f",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-073.json.gz",
+      "bytes": 23615,
+      "sha256": "b33dd20aba49ee5d3f1c7a11feff6498091cd61cab67b4f51d8e18a67ee63084",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 73,
+      "worldId": 65609,
+      "decodedBytes": 399025,
+      "decodedSha256": "3d567dcfc55ed7a23c029fbc505214e45093b5b6c8f430eed606eb65ff3d45b2",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-074.json.gz",
+      "bytes": 23615,
+      "sha256": "1a5645c73cea25032abb42678795765e94d82ab2e72c88a522a87309be23c51e",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 74,
+      "worldId": 65610,
+      "decodedBytes": 399025,
+      "decodedSha256": "c793f9468ac1efea19853f5afe5e328ef271bb45fbfa6306a170d2efdfac519a",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-075.json.gz",
+      "bytes": 23615,
+      "sha256": "2bd70af84f38d51ee4856f719ef7e558f1e560a025a2715eb251a5893cd19124",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 75,
+      "worldId": 65611,
+      "decodedBytes": 399025,
+      "decodedSha256": "4b3f356c513e1c9bff6671277b1463eb1d78bed3a8383ce22b9bceaf07e22857",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-076.json.gz",
+      "bytes": 23615,
+      "sha256": "a6a184773a39e20480ea4dbe49b9e993842e6c067436c20c1b19472b1013f94b",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 76,
+      "worldId": 65612,
+      "decodedBytes": 399025,
+      "decodedSha256": "6210335642473e381981c3426c7373695026477f1ddd94c6ac266c471eec652e",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-077.json.gz",
+      "bytes": 23615,
+      "sha256": "d8a537ee42cd614131fc5e05732ac9d3bb1424a65a25624a5524a9663a17382c",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 77,
+      "worldId": 65613,
+      "decodedBytes": 399025,
+      "decodedSha256": "5a73d4e696d7d871777283b10f4434d15094cafa2f85e7fbf527fded3c34f620",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-078.json.gz",
+      "bytes": 23615,
+      "sha256": "c70e0047c4da4d273a9d007562ca16c2dea5ff2f70f9ccb4b5efe11a6718c3a1",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 78,
+      "worldId": 65614,
+      "decodedBytes": 399025,
+      "decodedSha256": "0e705a3554728e880a9ff1076b18baab43485a62e70f2c0f09e3d3168967bbad",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-079.json.gz",
+      "bytes": 23615,
+      "sha256": "fc498e878a1d8e4c425fe02771de4a35f4024db2f22333f93cb3e09331b45cfe",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 79,
+      "worldId": 65615,
+      "decodedBytes": 399025,
+      "decodedSha256": "4af03c17e86894d3078e40b96f06b02513b36df4afdbe71e0f9fdb6a4bb8e150",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-080.json.gz",
+      "bytes": 23615,
+      "sha256": "3c2feaeca843009aff6d7c4c74291a7254512a5cd780446b8ca70d9a28305d87",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 80,
+      "worldId": 65616,
+      "decodedBytes": 399025,
+      "decodedSha256": "c1169b6daf994dd0bcca544fbb91c15f4da922d9e5bc80452d0a3d6c5e381287",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-081.json.gz",
+      "bytes": 23615,
+      "sha256": "b68444d8c1dc32aec8483b4a78747b73918cd38843e3b18b97c76f8aff6a7a61",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 81,
+      "worldId": 65617,
+      "decodedBytes": 399025,
+      "decodedSha256": "55a76d3b30b2bc4fd8f14853e59d240bf2795ffbe60fa600f980f4b84ce06935",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-082.json.gz",
+      "bytes": 23614,
+      "sha256": "304eb3a697da7f4bb2d8546a6fcae8f7e92739d80d5cf3f87d21747322907154",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 82,
+      "worldId": 65618,
+      "decodedBytes": 399025,
+      "decodedSha256": "612c6a338c68845d5f1fe2aa13594f1dee01f2ed7fd4c211e1dbfcea7ba06e1b",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-083.json.gz",
+      "bytes": 23615,
+      "sha256": "6f9f2c2a73df86f8b8a09a7ebc2fc49bb1c5785ff25598f3fd70cde894deb451",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 83,
+      "worldId": 65619,
+      "decodedBytes": 399025,
+      "decodedSha256": "33c2fbaf2418af97e3a42ef333bbd61dc8e6beca1a38ee8d9b790987d84119c8",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-084.json.gz",
+      "bytes": 23616,
+      "sha256": "192e6a6fd55bf0ac99addaa3ee462d5b57ba4b2fe369de97144483f5a2926d8d",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 84,
+      "worldId": 65620,
+      "decodedBytes": 399025,
+      "decodedSha256": "aeb2e3f80d1a5e36a352a953e731bdd7fe766ac64e2b8a8f9c3a371017f441f3",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-085.json.gz",
+      "bytes": 23614,
+      "sha256": "6cd1426520a7fedfcb3f780cc94b62718defc7c6572163f2d7c1d8fb0c8523a4",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 85,
+      "worldId": 65621,
+      "decodedBytes": 399025,
+      "decodedSha256": "2f9aadc5344b5e24a6bdf0aceaa5f9e45a7f6978c43df242be11c3cc3fc5315a",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-086.json.gz",
+      "bytes": 23614,
+      "sha256": "56e503967b1d3356bc506ee9f40220a70358f6cb286fff5b5c373db18a9985b7",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 86,
+      "worldId": 65622,
+      "decodedBytes": 399025,
+      "decodedSha256": "12334486609134ac2a6bac90658a628dd93d063cd13846162b04e877eeb53c31",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-087.json.gz",
+      "bytes": 23615,
+      "sha256": "b9e32e2b2efb69bc4604ffe67d366d47ca4b494f06d247eab9459faf391b1237",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 87,
+      "worldId": 65623,
+      "decodedBytes": 399025,
+      "decodedSha256": "4e78dd6998c178d133cf91722e925ad4897ce2dde5478222cc526143aebe3501",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-088.json.gz",
+      "bytes": 23614,
+      "sha256": "e0a14fd3fefa6758877679504b5153d65bbbf80994bad37892642427811540c4",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 88,
+      "worldId": 65624,
+      "decodedBytes": 399025,
+      "decodedSha256": "a70fdf71e75b2717df0f199755d52a65c3c48ebfdda571bdd43f3242c4234564",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-089.json.gz",
+      "bytes": 23615,
+      "sha256": "ce6868e95ba7d3348533e99aee1f389d492801526efc9e1a77990baf8c58f7ce",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 89,
+      "worldId": 65625,
+      "decodedBytes": 399025,
+      "decodedSha256": "60f8ed33e4c43d0b083950c863286cc98617a5a45db58009da802f6a26d0d096",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-090.json.gz",
+      "bytes": 23615,
+      "sha256": "347ae4c3917929b2bacb4d80e40f39da53b372731e4bb15b79dc00efe56919b4",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 90,
+      "worldId": 65626,
+      "decodedBytes": 399025,
+      "decodedSha256": "d4b8c80b24c95e077f9a5752efb6d1f78f28f70ff6bad5f85b52842401612a9b",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-091.json.gz",
+      "bytes": 23615,
+      "sha256": "dc4dfd72a91d576f639fc31a31578b96e964cebee6aa99a40266b4c8e761525f",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 91,
+      "worldId": 65627,
+      "decodedBytes": 399025,
+      "decodedSha256": "d7f981189dfddd8dd61f04b5caee1afb9bda484e657b1f2b28742afda5ac4bdf",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-092.json.gz",
+      "bytes": 23615,
+      "sha256": "629758688c8ebced8555f55f5c16a938a0517e3b400f97bfcf83f165dbdef3d1",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 92,
+      "worldId": 65628,
+      "decodedBytes": 399025,
+      "decodedSha256": "c656ef073a5afed940f5c86b62e41a84a86d452fbfee310c2cf0c6a73a185845",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-093.json.gz",
+      "bytes": 23615,
+      "sha256": "75c619e7a823daed73d83518e8f2911d11cdd9c7286ac42f03ef55bcaa0ff839",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 93,
+      "worldId": 65629,
+      "decodedBytes": 399025,
+      "decodedSha256": "663829a3ac572db286be1303f8022ff75051d393344e1ac9f716452e46f3abe1",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-094.json.gz",
+      "bytes": 23615,
+      "sha256": "8b6a5c6e5fa431e03e52fa1120036538cc3e2123795072a1e5e557a3d20f01ce",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 94,
+      "worldId": 65630,
+      "decodedBytes": 399025,
+      "decodedSha256": "c0e57309222bbee00516607e91733c5e6b30250a4d85e84aa44bc78b7d631b5d",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-095.json.gz",
+      "bytes": 23615,
+      "sha256": "833856b4706467af43b1320def676c98f59ce62d6f7d77e3750b90b341ce9116",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 95,
+      "worldId": 65631,
+      "decodedBytes": 399025,
+      "decodedSha256": "fe5c79f62616a0b86c062d17bb952c0b9708fc67be0bffaa84466187c2278ca7",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-096.json.gz",
+      "bytes": 23615,
+      "sha256": "3baea63ea009eef6801e0d131ceb2b4005e5b298fe53bdc71dba316b52e10f93",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 96,
+      "worldId": 65632,
+      "decodedBytes": 399025,
+      "decodedSha256": "ab78be3c0aff6cfe026c8dcb325d2c1b27aea6405a215e66aae9709ce4e795be",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-097.json.gz",
+      "bytes": 23615,
+      "sha256": "6a7afe8ca8e8c665784f1f74a654e18f6df04e62acc33a1db5f04abe341a0b48",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 97,
+      "worldId": 65633,
+      "decodedBytes": 399025,
+      "decodedSha256": "ce4198867f5c291a7d4e953110678e630325c9a6c4543c4f18b66a096436240b",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-098.json.gz",
+      "bytes": 23615,
+      "sha256": "c3df94b629b7bfb60f085fb53cbba580756108feea7aa3e9858657a6b0393407",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 98,
+      "worldId": 65634,
+      "decodedBytes": 399025,
+      "decodedSha256": "33e92d6a0926c6188a715f52f842fba3a8239025212f15cf95557693a0d49691",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    },
+    {
+      "path": "native-candidate-302935a/c20-lowlevel-attempt-2-debug-v3/run/debug/cycle-099.json.gz",
+      "bytes": 23615,
+      "sha256": "4f5590f887d68bb7df4f2dfd58c6f588afa373ebf9e96671c366582ae2107804",
+      "role": "complete-lossless-gzip-api-debugSnapshot-result",
+      "cycle": 99,
+      "worldId": 65635,
+      "decodedBytes": 399025,
+      "decodedSha256": "7f6069853e551377f8ad276deab05f7863804fe12d21eb67dd31363a53eb86db",
+      "primitiveCount": 3456,
+      "codec": "gzip-json-lossless-full-api-result"
+    }
+  ]
+}
