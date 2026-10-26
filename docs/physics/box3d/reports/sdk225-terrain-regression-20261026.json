@@ -1,0 +1,574 @@
+{
+  "schema": "box3d-sdk225-terrain-regression-report-v1",
+  "reportedAt": "2026-10-26T08:29:37.737306+00:00",
+  "status": "PASS_LIMITED_HEADLESS_PRODUCTION_ESM_PUBLIC_TERRAIN",
+  "scope": "Fresh official ESM225 + fresh declarations + one unchanged public Terrain fixture cohort, following the retained SDK224 failure. Not full Box3D/C19/browser/mobile/render acceptance.",
+  "evidenceArchive": {
+    "logicalRoot": "box3d-resume-20261025T1146",
+    "originalPathsRelativeTo": "logicalRoot",
+    "rawBundleEmbedded": false,
+    "selfContainedRawArchive": false,
+    "availability": "Original artifacts remain in the authorized workspace. This report and its companion Markdown contain hashes and selected derived facts, not the complete raw bundle or a claim that every original is published."
+  },
+  "identity": {
+    "sourceProducerCommit": "cd742f8000e8718f2bdfde0ce1eb9015271c1e28",
+    "sourceTree": "c948e3d39c35ccb4deb765fb199e084ec0f81aab",
+    "runtimeBuildNumber": 225,
+    "nativeProducerCommit": "ae0803c0c3e85aa627666f76eef29c4e62ab2e93",
+    "nativeRebuiltFor225": false,
+    "nativeReuseAdmission": "Existing ST2 exact identity, assets and 79-input provenance gate revalidated; no relaxed gate and no native recompilation for SDK225.",
+    "nativeIdentity": {
+      "coreSha": "efca0c184d40fd6a82016983f1601c4d23965867",
+      "bindingBaseSha": "5d5a3af049cccd9948b2b55bac4342414af0ef64",
+      "patchChainSha256": "4c9d057fe6d7403f6f2c7672c4a7abe38041d845942540a6b5c5abbc6f4bc45c",
+      "abiVersion": 1,
+      "variant": "st-simd",
+      "schemaSha256": "ce98aca1a40c4999df838c1eaab2b08b0533c85adca9866eb48180c6190575d6"
+    },
+    "fixtureCommit": "ae0803c0c3e85aa627666f76eef29c4e62ab2e93",
+    "fixtureUnchangedFromSdk224": true,
+    "frozenFixtureFiles": [
+      {
+        "path": "oracle.mjs",
+        "bytes": 3983,
+        "sha256": "12008663252a04476b22039f10484846fb6b412e292112d794ddd594408f00b4"
+      },
+      {
+        "path": "drop-oracle.mjs",
+        "bytes": 2128,
+        "sha256": "6fd921d1324957dcd7b3d3ba2f163ad403b416c660e750b413055c1b40e99637"
+      },
+      {
+        "path": "public-terrain.mjs",
+        "bytes": 13515,
+        "sha256": "849aa37b76577c17e8a4e0ad9093ed1dfed3cc97807ecb5fcea034537d0776c1"
+      },
+      {
+        "path": "oracle.test.mjs",
+        "bytes": 1547,
+        "sha256": "ad3627ffd407738a141eb81a5a5880cd30c421ff7c69043a2b01ad342a345432"
+      },
+      {
+        "path": "drop-oracle.test.mjs",
+        "bytes": 1694,
+        "sha256": "e903d5784d64d2fae21ebba1f8eb875ce80ef3ff0c0f58f8f5cb5fc5c926ec42"
+      },
+      {
+        "path": "public-harness/inputs.mjs",
+        "bytes": 10039,
+        "sha256": "5c8890b901970b771abe01a446e00805ed42410f6ce9077ac4c95c75e244a916"
+      },
+      {
+        "path": "public-harness/freeze.mjs",
+        "bytes": 2265,
+        "sha256": "e1138d78d8fcaab0f68ff5585b2945c653dcaca23bfa95cd1c632c6c4f16fc45"
+      },
+      {
+        "path": "public-harness/host.mjs",
+        "bytes": 4543,
+        "sha256": "10205d33d67ca3002eb5860aef9047688873423d910964eebf5269b0ef5d367b"
+      },
+      {
+        "path": "public-harness/consumer.mjs",
+        "bytes": 8527,
+        "sha256": "f1c1e4e61039924dcc8227ecba429f9db5200364b93e01550c488407bb49830f"
+      },
+      {
+        "path": "public-harness/run.mjs",
+        "bytes": 4638,
+        "sha256": "1f9a5fa4c1c883a2d717188223546279837ac7f6bf0f9542e14393f8c11ba87b"
+      },
+      {
+        "path": "public-harness/contract.test.mjs",
+        "bytes": 10208,
+        "sha256": "51807e43368b88d903d94b73200a5c172995390368f5ebf653ab79a390fe2130"
+      },
+      {
+        "path": "public-harness/README.md",
+        "bytes": 5137,
+        "sha256": "2271af1ff964c6f10409a28e9fe2ffb92dce8b5bcf47dcf3130aff46861fae9f"
+      }
+    ],
+    "sourceFixManifest": {
+      "path": "terrain-contact-fix-candidate/publish-manifest.json",
+      "bytes": 3968,
+      "sha256": "b76827424bf03b107eb140b68c4c90fa0d0a270f04ac5de690908bac8ad38685"
+    },
+    "runtimeFixSourcesInMap": [
+      {
+        "sourcePath": "src/cocos/physics/framework/components/colliders/collider.ts",
+        "mapIndex": 647,
+        "mapSource": "../source/src/cocos/physics/framework/components/colliders/collider.ts",
+        "bytes": 28603,
+        "sha256": "927167d9c3ee721c68ae2f1777d300a95bb1017f9af763478fb15cf4818d2e26",
+        "sourcesContentByteExact": true
+      },
+      {
+        "sourcePath": "src/air/physics/box3d/terrain-shape.ts",
+        "mapIndex": 989,
+        "mapSource": "../source/src/air/physics/box3d/terrain-shape.ts",
+        "bytes": 13826,
+        "sha256": "099f61594429a28412011332d2f6c356dd0ef58ef314dd193c577c8c43a96f1b",
+        "sourcesContentByteExact": true
+      },
+      {
+        "sourcePath": "src/air/physics/box3d/hull-shape.ts",
+        "mapIndex": 990,
+        "mapSource": "../source/src/air/physics/box3d/hull-shape.ts",
+        "bytes": 15524,
+        "sha256": "81fd8ae5ae3235dc05ed89cf7677eddf3f6cef081dd6d27a8738ddfe808f9d6f",
+        "sourcesContentByteExact": true
+      },
+      {
+        "sourcePath": "src/air/physics/box3d/round-hull-shape.ts",
+        "mapIndex": 992,
+        "mapSource": "../source/src/air/physics/box3d/round-hull-shape.ts",
+        "bytes": 13744,
+        "sha256": "71433b59289003dd450a8012907b65a9cae02385e7154acdf687738ee0df3c49",
+        "sourcesContentByteExact": true
+      }
+    ],
+    "typeOnlyFix": {
+      "source": {
+        "path": "native-candidate-302935a/source/src/cocos/physics/spec/i-physics-shape.ts",
+        "bytes": 3616,
+        "sha256": "47091f1e47f2ad0a6220be873c4f84d91054e70f4149e404563f1b166c6f4e68"
+      },
+      "inRuntimeSourceMap": false,
+      "declarationSignature": "validateEventListener?: (collision: boolean, trigger: boolean) => void;",
+      "signaturePresentInFreshModernDts": true
+    },
+    "producerChain": "The public supervisor checked real ESM/DTS receipts, their protection/release bindings and artifact hashes. Native ABI identity or consumer caller-declared producer text is not substituted for source-to-binary evidence."
+  },
+  "esm": {
+    "status": "PASS_FRESH_ESM225_BUILD",
+    "sourceCommit": "cd742f8000e8718f2bdfde0ce1eb9015271c1e28",
+    "startedAt": "2026-10-26T08:14:56.593554+00:00",
+    "finishedAt": "2026-10-26T08:15:57.154791+00:00",
+    "elapsedSeconds": 68.08855061400027,
+    "exitCode": 0,
+    "abort": null,
+    "physicalClose": "ECHILD_AND_NO_GROUP_MEMBERS",
+    "postInputDrift": [],
+    "protectedEntries": 48194,
+    "sourceMapSources": 995,
+    "command": ["node22", "--max-old-space-size=4096", "tools/build/build.cjs", "--format", "esm"],
+    "compilerCondition": "Official bare build, no historical process-local preload; ESM only, not all/min, exactly one successful runtime counter consumption.",
+    "featureSet": "air,base,gfx-webgl2,gfx-webgpu,gfx-empty,3d,animation,skeletal-animation,primitive,tween,custom-pipeline,legacy-pipeline,profiler,video,webview,2d,physics-2d-framework,particle-2d,tiled-map,ui,spine-3.8,spine-4.2,dragon-bones,physics-2d-box2d,physics-builtin,physics-cannon,custom-pipeline-post-process,physics-box3d",
+    "artifactCountBeforeDts": 23,
+    "artifactCountAfterDts": 25,
+    "runtimeFiles": [
+      {
+        "path": "native-candidate-302935a/sdk225-esm-attempt-1/cocosair.module.js",
+        "bytes": 9443738,
+        "sha256": "1c04ff368e50aeff8b72d0bc8a3a8c3d0221e5ebf6ece233bcf263fdafe7f751"
+      },
+      {
+        "path": "native-candidate-302935a/sdk225-esm-attempt-1/cocosair.module.js.map",
+        "bytes": 26436650,
+        "sha256": "fab1e0b9faf312a53790c384e2e32837ccc8082345118e362124e62049b5ab08"
+      },
+      {
+        "path": "native-candidate-302935a/sdk225-esm-attempt-1/package.json",
+        "bytes": 18,
+        "sha256": "1239d4d885dcad42201a27ed9324f8f0f760b78700d8db9ced39a511cffe7eae"
+      }
+    ],
+    "counterAfter": {
+      "lastBuildNumber": 225
+    },
+    "counterAfterSha256": "234f98bff88f83d18c432587bd1c831262ecd19822ceffae3e35dcc42c945c21"
+  },
+  "dts": {
+    "status": "PASS_FRESH_DTS225_SEVEN_GATES",
+    "sourceCommit": "cd742f8000e8718f2bdfde0ce1eb9015271c1e28",
+    "independentSourceCopy": "native-candidate-302935a/dts225-source",
+    "elapsedSeconds": 50.45025051700031,
+    "exitCode": 0,
+    "abort": null,
+    "physicalClose": "ECHILD_AND_NO_GROUP_MEMBERS",
+    "postInputDrift": [],
+    "protectedEntries": 45695,
+    "gates": {
+      "count": 7,
+      "status": "PASS",
+      "exitCodes": [0, 0, 0, 0, 0, 0, 0],
+      "labels": [
+        "emit",
+        "dts-inputs",
+        "dts-external-types",
+        "dts-symbols",
+        "strict-app",
+        "strict-mesh",
+        "strict-terrain"
+      ]
+    },
+    "declarations": [
+      {
+        "path": "native-candidate-302935a/sdk225-esm-attempt-1/cocosair.module.d.ts",
+        "bytes": 3375419,
+        "sha256": "7b328909fb3e2e4b3753233ceb51a3e761d60c37cba7be94aa73c43606ec95ed"
+      },
+      {
+        "path": "native-candidate-302935a/sdk225-esm-attempt-1/cocosair.legacy.d.ts",
+        "bytes": 367,
+        "sha256": "6dd42c6a064b17f923568bce9e3befce5ff0e33d7b0af19bed965a9e1a86aed2"
+      }
+    ],
+    "canonicalLegacySourceSha256": "5c590e847c619819103833a52971e852f8bb7d228cea211ddd1e9b2248cd7e69",
+    "legacyContract": "Exact fresh emitted wrapper literal and relative ./cocosair.module.js export verified before exclusive creation of both SDK declarations. Same legacy hash as SDK224 is not old-file reuse.",
+    "compensationRequired": false,
+    "usesSdk224CompensationReceipt": false,
+    "counterConsumed": false,
+    "sourceFilesMatchedToCurrentProducer": 2273
+  },
+  "publicTerrain": {
+    "status": "PASS_LIMITED_NODE_HEADLESS_PUBLIC_TERRAIN",
+    "C17": "PUBLIC_TERRAIN_SUBSET_PASS; NOT_FULL_GATES",
+    "startedAt": "2026-10-26T08:21:31.999Z",
+    "completedAt": "2026-10-26T08:21:33.250Z",
+    "actualSdk225PhysicsCohorts": 1,
+    "physicalRetryCount": 0,
+    "hostBoundary": "Node HEADLESS/JSDOM, not browser/GPU/CSP/presentation acceptance. Only frozen asset transport and DOM are adapted; engine, WASM and fixed-step clock are unchanged.",
+    "clock": {
+      "api": "createStepClock",
+      "frameRate": 60,
+      "dt": 0.016666666666666666,
+      "stepTimeoutMs": 2000,
+      "maxFrames": 110,
+      "nativePacer": "Exclusive project clock lease from begin() until normal app.close(); no direct physics.step or director.tick calls."
+    },
+    "limits": {
+      "cpuChildMs": 30000,
+      "consumerChildMs": 240000,
+      "outerSeconds": 285
+    },
+    "counts": {
+      "inputs-verified": 1,
+      "asset-transport": 4,
+      "ray": 43,
+      "sweep": 3,
+      "committed-query": 1,
+      "fixed-frame": 45,
+      "drop": 41,
+      "terrain-result": 1,
+      "normal-app-close": 1,
+      "terminal": 1
+    },
+    "dropResponse": {
+      "firstContactStep": 29,
+      "responseThroughStep": 41,
+      "noCollisionY": -0.3347222222222226,
+      "responseY": 0.5143342018127441,
+      "responseSteps": 12
+    },
+    "lastDropSample": {
+      "step": 41,
+      "position": [0.23488692939281464, 0.5143342018127441, 0.3965161442756653],
+      "clearance": 0.0018251501035451145
+    },
+    "fixtureCleanupErrors": [],
+    "originalRejectedRegistrationAssertionPreserved": true,
+    "directRuntimeListenerFlagProbeAdded": false,
+    "listenerRegressionEvidence": "The unchanged fixture still asserts rejected Terrain collision registration, then completes native contact and 12 further response steps without SDK224 event-world-fault cascade. No direct before/after hasEventListener or need-flag runtime values are claimed. Separate reviewed CPU controls cover direct state assertions.",
+    "sameAttemptCpuControls": {
+      "count": 13,
+      "exitCode": 0,
+      "scope": "CPU mock/negative controls only; distinct from real public physics."
+    }
+  },
+  "closure": {
+    "application": {
+      "status": "released",
+      "scene": "Node.48",
+      "completed": [],
+      "pending": [],
+      "failures": [],
+      "retained": ["runtime", "scheduler", "builtin-resources", "shared-asset-caches"],
+      "measurements": {
+        "gpuMemory": "unavailable",
+        "reason": "WebGL provides no portable complete GPU allocation measurement; scene destruction is not proof of zero leaks."
+      },
+      "physicsPreparation": {
+        "attemptGeneration": 1,
+        "status": "closed",
+        "acquired": [
+          {
+            "backend": "box3d",
+            "resource": "module",
+            "cleanup": "released",
+            "retained": []
+          },
+          {
+            "backend": "box3d",
+            "resource": "world",
+            "cleanup": "released",
+            "retained": []
+          }
+        ],
+        "originalError": null,
+        "cleanupErrors": []
+      }
+    },
+    "closeIdempotent": true,
+    "hostClosed": true,
+    "hostErrors": [],
+    "consumerExitCode": 0,
+    "consumerSignal": null,
+    "parentExitCode": 0,
+    "parentAbort": null,
+    "parentPhysicalClose": "ECHILD_AND_NO_GROUP_MEMBERS",
+    "meaning": "Successful bounded Node cohort and normal application close; retained runtime/scheduler/builtin/shared caches remain explicit. Not zero-global/GPU-leak proof or browser shutdown evidence."
+  },
+  "inputProtection": {
+    "inputsUnchanged": true,
+    "entries": 50835,
+    "changes": [],
+    "preservedSdk224EvidenceFiles": 46,
+    "bindingManifest": {
+      "path": "native-candidate-302935a/supervision-public-terrain-sdk225-v2/producer-binding.json",
+      "bytes": 24810,
+      "sha256": "a390ba718044b249ab420dbefe56ac4d2c26740ed0bf27fd51bb54b0edc11cb8"
+    },
+    "oldEvidenceBoundary": "46 preserved rows cover SDK224 raw/report artifacts and the failed SDK225 preflight-control files; they are not 46 new physics runs. Old SDK224 binaries are separately protected by the producer input manifest.",
+    "producerManifestAbsoluteArtifactRows": 81,
+    "sourceFixRelativeRows": 8,
+    "rowCountMeaning": "81 hash-bound artifact rows in producer-binding include the 46 preservation rows; 8 source-fix rows use source-relative paths and are separately verified. Counts are binding rows, not distinct executions."
+  },
+  "preservedFailures": {
+    "sdk224WorldFault": {
+      "status": "FAIL_PRESERVED_NO_RETRY",
+      "errorCode": "AIR_E_BOX3D_UNSUPPORTED_GEOMETRY",
+      "cause": "Rejected Terrain subscription mutated the listener / need flag before adapter rejection; first demanded Sphere–Terrain event pair faulted the world.",
+      "normalClose": "failed",
+      "replacedOrRelabelled": false
+    },
+    "sdk224Dts": {
+      "originalStatus": "FAIL_OR_PARTIAL",
+      "separateCompensationRetained": true,
+      "replacedOrRelabelled": false
+    },
+    "sdk225ControlV1": {
+      "status": "FAILED_BEFORE_FREEZE_AND_PUBLIC_LAUNCH",
+      "exitCode": 1,
+      "physicsAttemptOccurred": false,
+      "reason": "The local build-input source projection did not contain every remote-published report. The controller initially referenced an absent S/docs report; v2 uses the existing hash-verified report candidate path. No fixture or physics threshold changed.",
+      "rawPreserved": true
+    }
+  },
+  "qualification": {
+    "publicC17": "PUBLIC_TERRAIN_SUBSET_PASS; NOT_FULL_GATES",
+    "C19": "NOT_QUALIFIED_BY_PUBLIC_BEHAVIOR",
+    "fullGates": "NOT_RUN",
+    "browserVisualMobileRenderGpuCsp": "NOT_RUN",
+    "globalMatrixUpdated": false,
+    "nativeLifetimeBoundary": "Public shared-user visibility/lifetime behavior only. Exact native cook/destruction counters and cache-lease proofs require the separate real native fixture."
+  },
+  "counterPublication": {
+    "file": "tools/build/build-number.json",
+    "before": 224,
+    "after": 225,
+    "beforeSha256": "bc4b006ee6285861b42e5392e2d7988bb2bffd5f21b901552ee83ef1cc775fd8",
+    "afterSha256": "234f98bff88f83d18c432587bd1c831262ecd19822ceffae3e35dcc42c945c21",
+    "reason": "Publish the actual successful ESM225 counter once; not a fabricated bump, DTS consumption, rollback or new runtime build."
+  },
+  "originals": {
+    "esmResult": {
+      "path": "native-candidate-302935a/esm225-attempt-1-evidence/result.json",
+      "bytes": 8967,
+      "sha256": "d4f08995a81f1a5a26016760d22c50f64ed93a562051a0bf54579e34a25d6406"
+    },
+    "esmControl": {
+      "path": "native-candidate-302935a/supervision-esm225/control.json",
+      "bytes": 4135,
+      "sha256": "add0ce4599cd547a9d4a02bd086fb09fc75a882f38f1812d179beb67267f7348"
+    },
+    "esmProtection": {
+      "path": "native-candidate-302935a/supervision-esm225/protected-inputs.json",
+      "bytes": 12077508,
+      "sha256": "d194f38143574e7ca379231ddd9d33a483acd37f29189c69bd407d26cc9b417a"
+    },
+    "esmRelease": {
+      "path": "native-candidate-302935a/supervision-esm225/root-release.json",
+      "bytes": 526,
+      "sha256": "5f5ff33d2d291b390c59c0853ff6652f113ba1c00f71830dde20601cabfc5689"
+    },
+    "dtsResult": {
+      "path": "native-candidate-302935a/dts225-attempt-1-evidence/result.json",
+      "bytes": 9274,
+      "sha256": "052c075b2b54de2d9b90fee2db748e16ae4edcc8dc217f35c6aa59c4dc2c15ef"
+    },
+    "dtsSevenGates": {
+      "path": "native-candidate-302935a/dts225-attempt-1-evidence/seven-gates.json",
+      "bytes": 2824,
+      "sha256": "8813b919adade054c9294dc20b3b9cb62b8f6cc108bf39ba048e4409981a4003"
+    },
+    "dtsControl": {
+      "path": "native-candidate-302935a/supervision-dts225/control.json",
+      "bytes": 7676,
+      "sha256": "d567661673ece8e9be70960930f3b015908b52a06e27d0171d9911fb700d7c6f"
+    },
+    "dtsProtection": {
+      "path": "native-candidate-302935a/supervision-dts225/protected-inputs.json",
+      "bytes": 11205273,
+      "sha256": "afac9e24a156d7a3e4b9ecac3933449d526eb15d33cf2e391225043e8c56c865"
+    },
+    "dtsRelease": {
+      "path": "native-candidate-302935a/supervision-dts225/root-release.json",
+      "bytes": 512,
+      "sha256": "770468fff2d84cefbfab96a906804b6500d04eb7c2ef751018c7a6a6101fefcc"
+    },
+    "dtsLegacySource": {
+      "path": "native-candidate-302935a/dts225-source/tools/build/legacy-dom-types.cjs",
+      "bytes": 791,
+      "sha256": "5c590e847c619819103833a52971e852f8bb7d228cea211ddd1e9b2248cd7e69"
+    },
+    "publicProducerBinding": {
+      "path": "native-candidate-302935a/supervision-public-terrain-sdk225-v2/producer-binding.json",
+      "bytes": 24810,
+      "sha256": "a390ba718044b249ab420dbefe56ac4d2c26740ed0bf27fd51bb54b0edc11cb8"
+    },
+    "publicInputLock": {
+      "path": "native-candidate-302935a/supervision-public-terrain-sdk225-v2/input-lock.json",
+      "bytes": 323265,
+      "sha256": "c3458204fc2c014f8456ab8bfcc48a1a13bce4f924fdeac58d743a0cc1be5876"
+    },
+    "publicRequest": {
+      "path": "native-candidate-302935a/supervision-public-terrain-sdk225-v2/request.json",
+      "bytes": 1083,
+      "sha256": "7a6c735fc8aac0c85f03d68e28176003330f17faa6a44440ee4ffe0fd754c8ee"
+    },
+    "publicController": {
+      "path": "native-candidate-302935a/supervision-public-terrain-sdk225-v2/run-public-once.py",
+      "bytes": 13469,
+      "sha256": "e697a8d6b934d526153674d088aaffab6b72fdf7d2a9bee4733ff6e7123de395"
+    },
+    "publicParentResult": {
+      "path": "native-candidate-302935a/supervision-public-terrain-sdk225-v2/result.json",
+      "bytes": 3219,
+      "sha256": "edff378c471f52decca90a3bf128c730ff50550295d75472f15ff08518220fa1"
+    },
+    "publicParentProcess": {
+      "path": "native-candidate-302935a/supervision-public-terrain-sdk225-v2/public-runner.process.json",
+      "bytes": 1838,
+      "sha256": "b1f339d9bc063d3cc2d408c9da66c3475c86131a33fc3be3e7fc320185653ce7"
+    },
+    "publicProcessRaw": {
+      "path": "native-candidate-302935a/terrain-public-attempt-2-sdk225/process.raw.json",
+      "bytes": 3392,
+      "sha256": "eca6fa65a0cdcc1c25f8e5cdb16e1e1e0f74e3641aa96b3f1c73ccb284fbcb20"
+    },
+    "publicConsumerRaw": {
+      "path": "native-candidate-302935a/terrain-public-attempt-2-sdk225/result/consumer.raw.json",
+      "bytes": 37348,
+      "sha256": "4d8719e92b6be32418eab7cb5cd3fd4db322fc2b5dfeaa357adb6a4e5342e349"
+    },
+    "publicJournal": {
+      "path": "native-candidate-302935a/terrain-public-attempt-2-sdk225/result/observations.raw.jsonl",
+      "bytes": 37232,
+      "sha256": "0d4d3cfd98b639311c0fb5043539ee8b138e620b2744363e31c426bb05f63893"
+    },
+    "publicAssessment": {
+      "path": "native-candidate-302935a/supervision-public-terrain-sdk225-v2/assessment.json",
+      "bytes": 4991,
+      "sha256": "53a5781530b13853482d2e0a4a8486fddf10556dd61c45f5816623ee81981ba7"
+    },
+    "priorPreflightExplanation": {
+      "path": "native-candidate-302935a/supervision-public-terrain-sdk225-v2/previous-preflight.json",
+      "bytes": 1477,
+      "sha256": "2ab41f827ef5f5d73c02e99896c83125db6d98ee00f8433108aa6abc397be8d2"
+    },
+    "priorPreflightController": {
+      "path": "native-candidate-302935a/supervision-public-terrain-sdk225/run-public-once.py",
+      "bytes": 13379,
+      "sha256": "12ae42d3cbd7e81b1ecdb9ac6c5a73c565245f182bf0c7a99fe59b25723723e9"
+    },
+    "priorPreflightStderr": {
+      "path": "native-candidate-302935a/supervision-public-terrain-sdk225/supervisor.stderr.txt",
+      "bytes": 1101,
+      "sha256": "5ca8c20aef85ee5146e8b41e01815caf6b032b68f7783bc585109ee345190b01"
+    },
+    "priorPreflightExit": {
+      "path": "native-candidate-302935a/supervision-public-terrain-sdk225/supervisor.exit.txt",
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    },
+    "fixManifest": {
+      "path": "terrain-contact-fix-candidate/publish-manifest.json",
+      "bytes": 3968,
+      "sha256": "b76827424bf03b107eb140b68c4c90fa0d0a270f04ac5de690908bac8ad38685"
+    },
+    "fixCpuStdout": {
+      "path": "terrain-contact-fix-candidate/preparation-evidence-v2/cpu.stdout.txt",
+      "bytes": 2509,
+      "sha256": "0a544b6efbfecd641d2f02963c2c88e6d79d0bdabe2e8fd859cbf6de9481b63a"
+    },
+    "fixCpuExit": {
+      "path": "terrain-contact-fix-candidate/preparation-evidence-v2/cpu.exit.txt",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    "sdk224PublicResult": {
+      "path": "native-candidate-302935a/supervision-public-terrain/result.json",
+      "bytes": 2581,
+      "sha256": "0c81b0f9fabe164b78990d8848f341058a30ff1782328969453fcd09ccd5b6e1"
+    },
+    "sdk224PublicConsumer": {
+      "path": "native-candidate-302935a/terrain-public-attempt-1/result/consumer.raw.json",
+      "bytes": 11168,
+      "sha256": "220ac9bf9c35b4c869cbd198fabe2c0107e5994c26f548ddfd543e85378a0ea9"
+    },
+    "sdk224PublicJournal": {
+      "path": "native-candidate-302935a/terrain-public-attempt-1/result/observations.raw.jsonl",
+      "bytes": 45198,
+      "sha256": "9223401bbe167b94d33351eccfd711ec0ec929e9e1cd6205a33468e21420c3a7"
+    },
+    "sdk224DtsFailedResult": {
+      "path": "native-candidate-302935a/dts224-attempt-1-evidence/result.json",
+      "bytes": 8896,
+      "sha256": "29fe9760eb974b0614faee18a865c61ea5e40cdb64833d3194a4d75b27abc0a9"
+    },
+    "sdk224DtsPromotion": {
+      "path": "native-candidate-302935a/dts224-promotion-supplement.json",
+      "bytes": 2454,
+      "sha256": "5777216d1bd7d27e47ccc12e08eead63fe64bed12b31073ed8f1840eaa1aae41"
+    },
+    "sdk224ReportMd": {
+      "path": "sdk224-public-first-failure-report-candidate/docs/physics/box3d/reports/sdk224-public-terrain-first-failure-20261026.md",
+      "bytes": 9977,
+      "sha256": "8fd5309208345ec403c53fee15b708a54cd1909a9f402d9f25b32aca9e13ab7a"
+    },
+    "sdk224ReportJson": {
+      "path": "sdk224-public-first-failure-report-candidate/docs/physics/box3d/reports/sdk224-public-terrain-first-failure-20261026.json",
+      "bytes": 21198,
+      "sha256": "b53c81452d2ea997a3bbde81e15e3571c231486375bf566bddfd5e3996b84d28"
+    },
+    "publicCpuControlsStdout": {
+      "path": "native-candidate-302935a/terrain-public-attempt-2-sdk225/cpu-controls.stdout.txt",
+      "bytes": 3212,
+      "sha256": "da71829330eaf31a41b1b0ca9390f20ec13ed023f7c9144fc2e59907b08b48b5"
+    },
+    "publicCpuControlsStderr": {
+      "path": "native-candidate-302935a/terrain-public-attempt-2-sdk225/cpu-controls.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "publicConsumerStdout": {
+      "path": "native-candidate-302935a/terrain-public-attempt-2-sdk225/consumer.stdout.txt",
+      "bytes": 524,
+      "sha256": "48401511f610ee93e9aadd046e702780fdfa98f6fcf81f835a30e0fe103e31a6"
+    },
+    "publicConsumerStderr": {
+      "path": "native-candidate-302935a/terrain-public-attempt-2-sdk225/consumer.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "reportPreparation": {
+    "newPhysicsOrTestsRun": false,
+    "sourceModified": false,
+    "sdkModified": false,
+    "rawModified": false,
+    "actions": "Read/hash existing artifacts and source-map contents; create two report files plus an exact copy of the actual counter. Independent final review follows freeze."
+  }
+}
