@@ -1,0 +1,429 @@
+{
+  "schema": "android-final-matrix-exit-log-audit-v1",
+  "pass": true,
+  "report": "output/runtime-interop/android-matrix-final-20261025/report.json",
+  "reportSha256": "f94f9d52071082245e106ec7567556581e5f4b190343e200df8fbb0b00fca0ff",
+  "apkSha256": "53093e1e3b3149a6e8e5033bbe1785399232e4565c44af0a810e8eaae18e894c",
+  "cases": [
+    {
+      "caseId": "probes",
+      "runId": "android-1792939007590-probes-e43dd6",
+      "pid": 18629,
+      "nativeExitCode": 0,
+      "finishToNativeEndedMs": 66,
+      "log": "output/runtime-interop/android-matrix-final-20261025/logcat.txt",
+      "logSha256": "9961b40e08cf06ecf7e610fbad844599c5cfca6a9195f686843e880c289f82b5",
+      "orderedStages": [
+        {
+          "stage": "shutdown-webgpu-return",
+          "line": 104,
+          "text": "10-25 14:36:49.842 18629 18656 I MystralInterop: EXIT_STAGE shutdown-webgpu-return"
+        },
+        {
+          "stage": "shutdown-window-enter",
+          "line": 105,
+          "text": "10-25 14:36:49.842 18629 18656 I MystralInterop: EXIT_STAGE shutdown-window-enter"
+        },
+        {
+          "stage": "shutdown-window-return",
+          "line": 106,
+          "text": "10-25 14:36:49.843 18629 18656 I MystralInterop: EXIT_STAGE shutdown-window-return"
+        },
+        {
+          "stage": "shutdown-complete",
+          "line": 107,
+          "text": "10-25 14:36:49.843 18629 18656 I MystralInterop: EXIT_STAGE shutdown-complete"
+        },
+        {
+          "stage": "runtime-reset-return",
+          "line": 108,
+          "text": "10-25 14:36:49.843 18629 18656 I MystralInterop: EXIT_STAGE runtime-reset-return pid=18629 thread=124191629889728"
+        },
+        {
+          "stage": "Native SDL_main ended code=0",
+          "line": 109,
+          "text": "10-25 14:36:49.843 18629 18656 I MystralInterop: Native SDL_main ended code=0 error="
+        },
+        {
+          "stage": "java-exit-notify-enter",
+          "line": 110,
+          "text": "10-25 14:36:49.843 18629 18656 I MystralInterop: EXIT_STAGE java-exit-notify-enter pid=18629 thread=124191629889728"
+        },
+        {
+          "stage": "java-native-finished code=0",
+          "line": 111,
+          "text": "10-25 14:36:49.843 18629 18656 I MystralInterop: EXIT_STAGE java-native-finished code=0 activity=true server=true"
+        },
+        {
+          "stage": "NATIVE_FINISHED",
+          "line": 112,
+          "text": "10-25 14:36:49.843 18629 18656 I MystralInterop: NATIVE_FINISHED {\"code\":0,\"error\":\"\",\"pid\":18629,\"elapsedRealtime\":8803339}"
+        },
+        {
+          "stage": "java-exit-notify-return",
+          "line": 113,
+          "text": "10-25 14:36:49.844 18629 18656 I MystralInterop: EXIT_STAGE java-exit-notify-return pid=18629 thread=124191629889728"
+        },
+        {
+          "stage": "Finished main function",
+          "line": 114,
+          "text": "10-25 14:36:49.844 18629 18656 V SDL     : Finished main function"
+        }
+      ],
+      "physicalStopAfterNativeReturn": {
+        "line": 120,
+        "text": "10-25 14:36:49.978   699  2556 I ActivityManager: Killing 18629:com.mystral.engine.interop/u0a235 (adj 0): stop com.mystral.engine.interop due to from pid 18696"
+      }
+    },
+    {
+      "caseId": "air",
+      "runId": "android-1792939010589-air-3e658e",
+      "pid": 18712,
+      "nativeExitCode": 0,
+      "finishToNativeEndedMs": 120,
+      "log": "output/runtime-interop/android-matrix-final-20261025/logcat.txt",
+      "logSha256": "9961b40e08cf06ecf7e610fbad844599c5cfca6a9195f686843e880c289f82b5",
+      "orderedStages": [
+        {
+          "stage": "shutdown-webgpu-return",
+          "line": 225,
+          "text": "10-25 14:36:53.904 18712 18735 I MystralInterop: EXIT_STAGE shutdown-webgpu-return"
+        },
+        {
+          "stage": "shutdown-window-enter",
+          "line": 226,
+          "text": "10-25 14:36:53.904 18712 18735 I MystralInterop: EXIT_STAGE shutdown-window-enter"
+        },
+        {
+          "stage": "shutdown-window-return",
+          "line": 227,
+          "text": "10-25 14:36:53.906 18712 18735 I MystralInterop: EXIT_STAGE shutdown-window-return"
+        },
+        {
+          "stage": "shutdown-complete",
+          "line": 228,
+          "text": "10-25 14:36:53.906 18712 18735 I MystralInterop: EXIT_STAGE shutdown-complete"
+        },
+        {
+          "stage": "runtime-reset-return",
+          "line": 229,
+          "text": "10-25 14:36:53.906 18712 18735 I MystralInterop: EXIT_STAGE runtime-reset-return pid=18712 thread=124191643398336"
+        },
+        {
+          "stage": "Native SDL_main ended code=0",
+          "line": 230,
+          "text": "10-25 14:36:53.906 18712 18735 I MystralInterop: Native SDL_main ended code=0 error="
+        },
+        {
+          "stage": "java-exit-notify-enter",
+          "line": 231,
+          "text": "10-25 14:36:53.906 18712 18735 I MystralInterop: EXIT_STAGE java-exit-notify-enter pid=18712 thread=124191643398336"
+        },
+        {
+          "stage": "java-native-finished code=0",
+          "line": 232,
+          "text": "10-25 14:36:53.906 18712 18735 I MystralInterop: EXIT_STAGE java-native-finished code=0 activity=true server=true"
+        },
+        {
+          "stage": "NATIVE_FINISHED",
+          "line": 233,
+          "text": "10-25 14:36:53.907 18712 18735 I MystralInterop: NATIVE_FINISHED {\"code\":0,\"error\":\"\",\"pid\":18712,\"elapsedRealtime\":8807402}"
+        },
+        {
+          "stage": "java-exit-notify-return",
+          "line": 234,
+          "text": "10-25 14:36:53.907 18712 18735 I MystralInterop: EXIT_STAGE java-exit-notify-return pid=18712 thread=124191643398336"
+        },
+        {
+          "stage": "Finished main function",
+          "line": 235,
+          "text": "10-25 14:36:53.907 18712 18735 V SDL     : Finished main function"
+        }
+      ],
+      "physicalStopAfterNativeReturn": {
+        "line": 241,
+        "text": "10-25 14:36:54.160   699   713 I ActivityManager: Killing 18712:com.mystral.engine.interop/u0a235 (adj 200): stop com.mystral.engine.interop due to from pid 18773"
+      }
+    },
+    {
+      "caseId": "pbr",
+      "runId": "android-1792939014758-pbr-17b434",
+      "pid": 18788,
+      "nativeExitCode": 0,
+      "finishToNativeEndedMs": 126,
+      "log": "output/runtime-interop/android-matrix-final-20261025/logcat.txt",
+      "logSha256": "9961b40e08cf06ecf7e610fbad844599c5cfca6a9195f686843e880c289f82b5",
+      "orderedStages": [
+        {
+          "stage": "shutdown-webgpu-return",
+          "line": 346,
+          "text": "10-25 14:36:59.345 18788 18811 I MystralInterop: EXIT_STAGE shutdown-webgpu-return"
+        },
+        {
+          "stage": "shutdown-window-enter",
+          "line": 347,
+          "text": "10-25 14:36:59.345 18788 18811 I MystralInterop: EXIT_STAGE shutdown-window-enter"
+        },
+        {
+          "stage": "shutdown-window-return",
+          "line": 348,
+          "text": "10-25 14:36:59.345 18788 18811 I MystralInterop: EXIT_STAGE shutdown-window-return"
+        },
+        {
+          "stage": "shutdown-complete",
+          "line": 349,
+          "text": "10-25 14:36:59.345 18788 18811 I MystralInterop: EXIT_STAGE shutdown-complete"
+        },
+        {
+          "stage": "runtime-reset-return",
+          "line": 350,
+          "text": "10-25 14:36:59.345 18788 18811 I MystralInterop: EXIT_STAGE runtime-reset-return pid=18788 thread=124191704563904"
+        },
+        {
+          "stage": "Native SDL_main ended code=0",
+          "line": 351,
+          "text": "10-25 14:36:59.346 18788 18811 I MystralInterop: Native SDL_main ended code=0 error="
+        },
+        {
+          "stage": "java-exit-notify-enter",
+          "line": 352,
+          "text": "10-25 14:36:59.346 18788 18811 I MystralInterop: EXIT_STAGE java-exit-notify-enter pid=18788 thread=124191704563904"
+        },
+        {
+          "stage": "java-native-finished code=0",
+          "line": 353,
+          "text": "10-25 14:36:59.346 18788 18811 I MystralInterop: EXIT_STAGE java-native-finished code=0 activity=true server=true"
+        },
+        {
+          "stage": "NATIVE_FINISHED",
+          "line": 354,
+          "text": "10-25 14:36:59.346 18788 18811 I MystralInterop: NATIVE_FINISHED {\"code\":0,\"error\":\"\",\"pid\":18788,\"elapsedRealtime\":8812842}"
+        },
+        {
+          "stage": "java-exit-notify-return",
+          "line": 355,
+          "text": "10-25 14:36:59.346 18788 18811 I MystralInterop: EXIT_STAGE java-exit-notify-return pid=18788 thread=124191704563904"
+        },
+        {
+          "stage": "Finished main function",
+          "line": 356,
+          "text": "10-25 14:36:59.346 18788 18811 V SDL     : Finished main function"
+        }
+      ],
+      "physicalStopAfterNativeReturn": {
+        "line": 362,
+        "text": "10-25 14:36:59.586   699  1302 I ActivityManager: Killing 18788:com.mystral.engine.interop/u0a235 (adj 200): stop com.mystral.engine.interop due to from pid 18861"
+      }
+    },
+    {
+      "caseId": "skin",
+      "runId": "android-1792939020193-skin-bb63ed",
+      "pid": 18876,
+      "nativeExitCode": 0,
+      "finishToNativeEndedMs": 126,
+      "log": "output/runtime-interop/android-matrix-final-20261025/logcat.txt",
+      "logSha256": "9961b40e08cf06ecf7e610fbad844599c5cfca6a9195f686843e880c289f82b5",
+      "orderedStages": [
+        {
+          "stage": "shutdown-webgpu-return",
+          "line": 467,
+          "text": "10-25 14:37:04.787 18876 18898 I MystralInterop: EXIT_STAGE shutdown-webgpu-return"
+        },
+        {
+          "stage": "shutdown-window-enter",
+          "line": 468,
+          "text": "10-25 14:37:04.787 18876 18898 I MystralInterop: EXIT_STAGE shutdown-window-enter"
+        },
+        {
+          "stage": "shutdown-window-return",
+          "line": 469,
+          "text": "10-25 14:37:04.788 18876 18898 I MystralInterop: EXIT_STAGE shutdown-window-return"
+        },
+        {
+          "stage": "shutdown-complete",
+          "line": 470,
+          "text": "10-25 14:37:04.788 18876 18898 I MystralInterop: EXIT_STAGE shutdown-complete"
+        },
+        {
+          "stage": "runtime-reset-return",
+          "line": 471,
+          "text": "10-25 14:37:04.789 18876 18898 I MystralInterop: EXIT_STAGE runtime-reset-return pid=18876 thread=124191636418752"
+        },
+        {
+          "stage": "Native SDL_main ended code=0",
+          "line": 472,
+          "text": "10-25 14:37:04.789 18876 18898 I MystralInterop: Native SDL_main ended code=0 error="
+        },
+        {
+          "stage": "java-exit-notify-enter",
+          "line": 473,
+          "text": "10-25 14:37:04.789 18876 18898 I MystralInterop: EXIT_STAGE java-exit-notify-enter pid=18876 thread=124191636418752"
+        },
+        {
+          "stage": "java-native-finished code=0",
+          "line": 474,
+          "text": "10-25 14:37:04.789 18876 18898 I MystralInterop: EXIT_STAGE java-native-finished code=0 activity=true server=true"
+        },
+        {
+          "stage": "NATIVE_FINISHED",
+          "line": 475,
+          "text": "10-25 14:37:04.789 18876 18898 I MystralInterop: NATIVE_FINISHED {\"code\":0,\"error\":\"\",\"pid\":18876,\"elapsedRealtime\":8818285}"
+        },
+        {
+          "stage": "java-exit-notify-return",
+          "line": 476,
+          "text": "10-25 14:37:04.789 18876 18898 I MystralInterop: EXIT_STAGE java-exit-notify-return pid=18876 thread=124191636418752"
+        },
+        {
+          "stage": "Finished main function",
+          "line": 477,
+          "text": "10-25 14:37:04.789 18876 18898 V SDL     : Finished main function"
+        }
+      ],
+      "physicalStopAfterNativeReturn": {
+        "line": 483,
+        "text": "10-25 14:37:05.032   699   782 I ActivityManager: Killing 18876:com.mystral.engine.interop/u0a235 (adj 200): stop com.mystral.engine.interop due to from pid 18945"
+      }
+    },
+    {
+      "caseId": "ui",
+      "runId": "android-1792939025632-ui-90331f",
+      "pid": 18960,
+      "nativeExitCode": 0,
+      "finishToNativeEndedMs": 121,
+      "log": "output/runtime-interop/android-matrix-final-20261025/logcat.txt",
+      "logSha256": "9961b40e08cf06ecf7e610fbad844599c5cfca6a9195f686843e880c289f82b5",
+      "orderedStages": [
+        {
+          "stage": "shutdown-webgpu-return",
+          "line": 588,
+          "text": "10-25 14:37:09.242 18960 18983 I MystralInterop: EXIT_STAGE shutdown-webgpu-return"
+        },
+        {
+          "stage": "shutdown-window-enter",
+          "line": 589,
+          "text": "10-25 14:37:09.242 18960 18983 I MystralInterop: EXIT_STAGE shutdown-window-enter"
+        },
+        {
+          "stage": "shutdown-window-return",
+          "line": 590,
+          "text": "10-25 14:37:09.242 18960 18983 I MystralInterop: EXIT_STAGE shutdown-window-return"
+        },
+        {
+          "stage": "shutdown-complete",
+          "line": 591,
+          "text": "10-25 14:37:09.243 18960 18983 I MystralInterop: EXIT_STAGE shutdown-complete"
+        },
+        {
+          "stage": "runtime-reset-return",
+          "line": 592,
+          "text": "10-25 14:37:09.243 18960 18983 I MystralInterop: EXIT_STAGE runtime-reset-return pid=18960 thread=124191631954112"
+        },
+        {
+          "stage": "Native SDL_main ended code=0",
+          "line": 593,
+          "text": "10-25 14:37:09.243 18960 18983 I MystralInterop: Native SDL_main ended code=0 error="
+        },
+        {
+          "stage": "java-exit-notify-enter",
+          "line": 594,
+          "text": "10-25 14:37:09.243 18960 18983 I MystralInterop: EXIT_STAGE java-exit-notify-enter pid=18960 thread=124191631954112"
+        },
+        {
+          "stage": "java-native-finished code=0",
+          "line": 595,
+          "text": "10-25 14:37:09.243 18960 18983 I MystralInterop: EXIT_STAGE java-native-finished code=0 activity=true server=true"
+        },
+        {
+          "stage": "NATIVE_FINISHED",
+          "line": 596,
+          "text": "10-25 14:37:09.244 18960 18983 I MystralInterop: NATIVE_FINISHED {\"code\":0,\"error\":\"\",\"pid\":18960,\"elapsedRealtime\":8822740}"
+        },
+        {
+          "stage": "java-exit-notify-return",
+          "line": 597,
+          "text": "10-25 14:37:09.244 18960 18983 I MystralInterop: EXIT_STAGE java-exit-notify-return pid=18960 thread=124191631954112"
+        },
+        {
+          "stage": "Finished main function",
+          "line": 598,
+          "text": "10-25 14:37:09.244 18960 18983 V SDL     : Finished main function"
+        }
+      ],
+      "physicalStopAfterNativeReturn": {
+        "line": 604,
+        "text": "10-25 14:37:09.494   699   784 I ActivityManager: Killing 18960:com.mystral.engine.interop/u0a235 (adj 200): stop com.mystral.engine.interop due to from pid 19030"
+      }
+    },
+    {
+      "caseId": "compute",
+      "runId": "android-1792939030091-compute-b357cf",
+      "pid": 19045,
+      "nativeExitCode": 0,
+      "finishToNativeEndedMs": 123,
+      "log": "output/runtime-interop/android-matrix-final-20261025/logcat.txt",
+      "logSha256": "9961b40e08cf06ecf7e610fbad844599c5cfca6a9195f686843e880c289f82b5",
+      "orderedStages": [
+        {
+          "stage": "shutdown-webgpu-return",
+          "line": 709,
+          "text": "10-25 14:37:13.746 19045 19069 I MystralInterop: EXIT_STAGE shutdown-webgpu-return"
+        },
+        {
+          "stage": "shutdown-window-enter",
+          "line": 710,
+          "text": "10-25 14:37:13.746 19045 19069 I MystralInterop: EXIT_STAGE shutdown-window-enter"
+        },
+        {
+          "stage": "shutdown-window-return",
+          "line": 711,
+          "text": "10-25 14:37:13.747 19045 19069 I MystralInterop: EXIT_STAGE shutdown-window-return"
+        },
+        {
+          "stage": "shutdown-complete",
+          "line": 712,
+          "text": "10-25 14:37:13.747 19045 19069 I MystralInterop: EXIT_STAGE shutdown-complete"
+        },
+        {
+          "stage": "runtime-reset-return",
+          "line": 713,
+          "text": "10-25 14:37:13.747 19045 19069 I MystralInterop: EXIT_STAGE runtime-reset-return pid=19045 thread=124191707414720"
+        },
+        {
+          "stage": "Native SDL_main ended code=0",
+          "line": 714,
+          "text": "10-25 14:37:13.747 19045 19069 I MystralInterop: Native SDL_main ended code=0 error="
+        },
+        {
+          "stage": "java-exit-notify-enter",
+          "line": 715,
+          "text": "10-25 14:37:13.747 19045 19069 I MystralInterop: EXIT_STAGE java-exit-notify-enter pid=19045 thread=124191707414720"
+        },
+        {
+          "stage": "java-native-finished code=0",
+          "line": 716,
+          "text": "10-25 14:37:13.747 19045 19069 I MystralInterop: EXIT_STAGE java-native-finished code=0 activity=true server=true"
+        },
+        {
+          "stage": "NATIVE_FINISHED",
+          "line": 717,
+          "text": "10-25 14:37:13.748 19045 19069 I MystralInterop: NATIVE_FINISHED {\"code\":0,\"error\":\"\",\"pid\":19045,\"elapsedRealtime\":8827243}"
+        },
+        {
+          "stage": "java-exit-notify-return",
+          "line": 718,
+          "text": "10-25 14:37:13.748 19045 19069 I MystralInterop: EXIT_STAGE java-exit-notify-return pid=19045 thread=124191707414720"
+        },
+        {
+          "stage": "Finished main function",
+          "line": 719,
+          "text": "10-25 14:37:13.748 19045 19069 V SDL     : Finished main function"
+        }
+      ],
+      "physicalStopAfterNativeReturn": {
+        "line": 725,
+        "text": "10-25 14:37:13.987   699   713 I ActivityManager: Killing 19045:com.mystral.engine.interop/u0a235 (adj 200): stop com.mystral.engine.interop due to from pid 19111"
+      }
+    }
+  ]
+}

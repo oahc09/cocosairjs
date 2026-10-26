@@ -1,0 +1,16 @@
+{
+  "schema": "fixed-cocos-v8-x64-download-manifest-v1",
+  "repository": "https://github.com/cocos/cocos-engine-external",
+  "ref": "0be13f7e2e9034d123744935ea73b410b2085b15",
+  "metadataFetchedAt": "2026-10-26T00:11:38.100Z",
+  "v8Version": "11.6.189.22",
+  "files": [
+    {
+      "path": "android/x86_64/v8/libv8_monolith.a",
+      "sha": "135b8a6efbad5142f022ccb184406f0beaf57e84",
+      "size": 68563002,
+      "destination": "v8/x86_64/libv8_monolith.a",
+      "url": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/x86_64/v8/libv8_monolith.a"
+    }
+  ]
+}

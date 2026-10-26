@@ -1,0 +1,90 @@
+{
+  "schema": "air-android-arm64-test-summary-v1",
+  "createdAt": "2026-10-25T16:14:55.946Z",
+  "nativeCommit": "3cea6b450b71661e114a04b8bde777ff6d29f67f",
+  "nativeSourceUnchanged": true,
+  "device": {
+    "model": "V2520A",
+    "soc": "SM8750",
+    "gpu": "Qualcomm Adreno (TM) 830",
+    "api": 37,
+    "abi": "arm64-v8a",
+    "memoryPageBytes": 4096
+  },
+  "functionalMatrix": {
+    "completed": true,
+    "pass": true,
+    "physicalAcceptance": true,
+    "scope": "Six fixed cases at a real 320x240 physical-pixel SurfaceView on this 4096-byte-page phone",
+    "cases": [
+      "probes",
+      "air",
+      "pbr",
+      "skin",
+      "ui",
+      "compute"
+    ],
+    "evidence": {
+      "file": "output/runtime-interop/android-arm64-matrix-attempt-1/report.json",
+      "sha256": "04244377cb4c0b045cfea28c53785eef8a5fe66df6a9c53196caf5aea3523ca8"
+    },
+    "currentInputsChecked": 162,
+    "independentAudit": {
+      "file": "output/runtime-interop/android-arm64-final-audit-2/report.json",
+      "sha256": "274132e97e50a157d1c88f70be188e2d8af017c03e8a59acc5f69734b211f425"
+    },
+    "sourceExitAudit": {
+      "file": "output/android-arm64-source-exit-audit-1/final-result.json",
+      "sha256": "d7cbd7263ea461573c4e4f53903f8ed174ec4fa6198cce67118e0e9dc71d9b9f"
+    }
+  },
+  "apk": {
+    "file": "output/runtime-interop/android-arm64-build-attempt-1/app-debug.apk",
+    "bytes": 25315833,
+    "sha256": "b59938748912dcbfe76ab8b96cf849301b6b18519d3706418c380a535903a86e",
+    "buildReceipt": {
+      "file": "output/runtime-interop/android-arm64-build-attempt-1/build-report.json",
+      "sha256": "345a45148cbfbcf83644582cc809b905bbe26e4a3fc0965bfa96eb054fdab7ab"
+    },
+    "signatureVerified": true
+  },
+  "sdkSha256": "417509cb4774f85346158c7c27f580a7afe5ace70c7486e095b4bbb216de518a",
+  "colorManagement": {
+    "rawScreensRetained": true,
+    "embeddedProfile": "Display P3 Gamut with sRGB Transfer",
+    "iccSha256": "6e72ac49fd45d1275f29daca1038a0b9af5befd0e891af9267f47ab066a5dffb",
+    "method": "Actual embedded ICC via LittleCMS relative-colorimetric to standard sRGB, full image at original dimensions; original oracles unchanged"
+  },
+  "largePageCompatibility": {
+    "elf16kCompatible": false,
+    "actual16kEnvironmentTest": "NOT_RUN",
+    "blockingLibraries": [
+      "libSDL3.so",
+      "libv8android.so"
+    ],
+    "evidence": {
+      "file": "output/runtime-interop/android-arm64-elf-audit-1/report.json",
+      "sha256": "f095cc4c79e6fb4804182032c0122e3608eee41245ac6c5421b74b8c3d18278d"
+    }
+  },
+  "extraLifecycle": {
+    "accepted": false,
+    "status": "PENDING_DEVICE_UNLOCK",
+    "nativeTrustedInputEventObserved": true,
+    "touchVisualEffectAcceptance": "NOT_COMPLETE",
+    "retainedFailures": [
+      {
+        "file": "output/runtime-interop/android-arm64-demo-attempt-1/report.json",
+        "sha256": "bc8621d62a38da06e59ae05b2b9ea668c283379fd726dbe7ff3cf13492b1d94b"
+      },
+      {
+        "file": "output/runtime-interop/android-arm64-lifecycle-diagnostic-attempt-1/report.json",
+        "sha256": "8fafe9d6c10f62bee1a2822bcc6143695dfddde3cc7379c418d9dc1c85877363"
+      }
+    ],
+    "reason": "First restore was attempted during HOME transition; a later diagnostic started while keyguard was locked and could not obtain a valid foreground Surface. Neither establishes native background recovery."
+  },
+  "subset": true,
+  "releaseReady": false,
+  "overallAndroidReleaseAccepted": false
+}

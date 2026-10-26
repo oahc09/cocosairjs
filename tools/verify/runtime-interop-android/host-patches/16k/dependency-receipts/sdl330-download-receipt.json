@@ -1,0 +1,11 @@
+{
+  "url": "https://github.com/libsdl-org/SDL/releases/download/release-3.2.30/SDL3-devel-3.2.30-android.zip",
+  "expectedSha256": "0525e4bc9cc1370e6d664ec93c927846e311c19a819de05a232bca452b0e3a7a",
+  "expectedBytes": 15121629,
+  "maximumCandidateBytes": 20971520,
+  "startedAt": "2026-10-25T23:49:40.1375881Z",
+  "pass": true,
+  "bytes": 15121629,
+  "sha256": "0525e4bc9cc1370e6d664ec93c927846e311c19a819de05a232bca452b0e3a7a",
+  "finishedAt": "2026-10-25T23:49:42.3541501Z"
+}

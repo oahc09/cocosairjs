@@ -1,0 +1,10 @@
+{
+  "name": "gradlew.bat",
+  "url": "https://raw.githubusercontent.com/gradle/gradle/v8.11.1/gradlew.bat",
+  "expectedSha256": null,
+  "startedAt": "2026-10-25T12:19:40.6834649Z",
+  "pass": true,
+  "sha256": "0f3ed8f03b50934cb8c48b15a470d5c20a30a5385825e48b55bcc8ea3d8f8e18",
+  "bytes": 2894,
+  "finishedAt": "2026-10-25T12:19:41.3779845Z"
+}

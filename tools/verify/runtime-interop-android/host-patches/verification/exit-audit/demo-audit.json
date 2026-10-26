@@ -1,0 +1,137 @@
+{
+  "schema": "android-final-demo-audit-v1",
+  "pass": true,
+  "report": "output/runtime-interop/android-demo-final-20261025/report.json",
+  "reportSha256": "c619bcdd09d8c301fbf2e3c4f4da97e9e4d11cd4c890eba4111746ed134723d3",
+  "apkSha256": "53093e1e3b3149a6e8e5033bbe1785399232e4565c44af0a810e8eaae18e894c",
+  "scope": "Interactive startup, two trusted taps, same-surface pause/resume and native shutdown; not rotation/surface-recreation acceptance",
+  "input1": {
+    "stage": "demo-input",
+    "frames": 34,
+    "taps": 1,
+    "color": "green",
+    "gpuErrors": [],
+    "type": "mousedown",
+    "isTrusted": true,
+    "clientX": 160.50157165527344,
+    "clientY": 120.5020980834961
+  },
+  "input2": {
+    "stage": "demo-input",
+    "frames": 130,
+    "taps": 2,
+    "color": "orange",
+    "gpuErrors": [],
+    "type": "mousedown",
+    "isTrusted": true,
+    "clientX": 160.50157165527344,
+    "clientY": 120.5020980834961
+  },
+  "resumedLifecycle": [
+    {
+      "event": "created",
+      "pid": 18479,
+      "surfaceGeneration": 0,
+      "orientation": 2,
+      "elapsedRealtime": 8785071
+    },
+    {
+      "event": "resume",
+      "pid": 18479,
+      "surfaceGeneration": 0,
+      "orientation": 2,
+      "elapsedRealtime": 8785078
+    },
+    {
+      "event": "surface-created",
+      "pid": 18479,
+      "surfaceGeneration": 1,
+      "orientation": 2,
+      "elapsedRealtime": 8785133
+    },
+    {
+      "event": "surface-changed",
+      "pid": 18479,
+      "surfaceGeneration": 1,
+      "orientation": 2,
+      "elapsedRealtime": 8785146
+    },
+    {
+      "event": "pause",
+      "pid": 18479,
+      "surfaceGeneration": 1,
+      "orientation": 2,
+      "elapsedRealtime": 8788883
+    },
+    {
+      "event": "resume",
+      "pid": 18479,
+      "surfaceGeneration": 1,
+      "orientation": 2,
+      "elapsedRealtime": 8789095
+    }
+  ],
+  "exit": {
+    "pid": 18479,
+    "nativeExitCode": 0,
+    "finishToNativeEndedMs": 132,
+    "log": "output/runtime-interop/android-demo-final-20261025/logcat.txt",
+    "logSha256": "af2b020fbd6886c5b235eed1f9f68c4e0c2126bae1e4f411fe43d8c744ab12a6",
+    "orderedStages": [
+      {
+        "stage": "shutdown-webgpu-return",
+        "line": 78,
+        "text": "10-25 14:36:37.051 18479 18504 I MystralInterop: EXIT_STAGE shutdown-webgpu-return"
+      },
+      {
+        "stage": "shutdown-window-enter",
+        "line": 79,
+        "text": "10-25 14:36:37.051 18479 18504 I MystralInterop: EXIT_STAGE shutdown-window-enter"
+      },
+      {
+        "stage": "shutdown-window-return",
+        "line": 80,
+        "text": "10-25 14:36:37.051 18479 18504 I MystralInterop: EXIT_STAGE shutdown-window-return"
+      },
+      {
+        "stage": "shutdown-complete",
+        "line": 81,
+        "text": "10-25 14:36:37.051 18479 18504 I MystralInterop: EXIT_STAGE shutdown-complete"
+      },
+      {
+        "stage": "runtime-reset-return",
+        "line": 82,
+        "text": "10-25 14:36:37.051 18479 18504 I MystralInterop: EXIT_STAGE runtime-reset-return pid=18479 thread=124191692529856"
+      },
+      {
+        "stage": "Native SDL_main ended code=0",
+        "line": 83,
+        "text": "10-25 14:36:37.051 18479 18504 I MystralInterop: Native SDL_main ended code=0 error="
+      },
+      {
+        "stage": "java-exit-notify-enter",
+        "line": 84,
+        "text": "10-25 14:36:37.051 18479 18504 I MystralInterop: EXIT_STAGE java-exit-notify-enter pid=18479 thread=124191692529856"
+      },
+      {
+        "stage": "java-native-finished code=0",
+        "line": 85,
+        "text": "10-25 14:36:37.052 18479 18504 I MystralInterop: EXIT_STAGE java-native-finished code=0 activity=true server=true"
+      },
+      {
+        "stage": "NATIVE_FINISHED",
+        "line": 86,
+        "text": "10-25 14:36:37.052 18479 18504 I MystralInterop: NATIVE_FINISHED {\"code\":0,\"error\":\"\",\"pid\":18479,\"elapsedRealtime\":8790548}"
+      },
+      {
+        "stage": "java-exit-notify-return",
+        "line": 87,
+        "text": "10-25 14:36:37.053 18479 18504 I MystralInterop: EXIT_STAGE java-exit-notify-return pid=18479 thread=124191692529856"
+      }
+    ],
+    "physicalStopAfterNativeReturn": {
+      "line": 90,
+      "text": "10-25 14:36:37.281   699  1505 I ActivityManager: Killing 18479:com.mystral.engine.interop/u0a235 (adj 200): stop com.mystral.engine.interop due to from pid 18583"
+    }
+  }
+}

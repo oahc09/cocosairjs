@@ -4,3 +4,8 @@ vendor/box2d/** -text
 tools/build/box2d/** -text
 build/box2d3/** -text
 build/box2d3-samples/** -text
+
+# Runtime interop patches, evidence and archived producers retain hash-bound bytes.
+tools/verify/runtime-interop/host-patches/** -text
+tools/verify/runtime-interop-android/host-patches/** -text
+tools/verify/runtime-interop-android/verification-snapshots/** -text

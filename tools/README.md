@@ -1,5 +1,23 @@
 # Cocos AIR 工具
 
+## 通用 WebGPU Runtime 桌面兼容探针
+
+Android 原生 APK 的资产准备与 ADB/PixelCopy 采集使用 `tools/build/runtime-interop-android.cjs` 和 `tools/verify/runtime-interop-android.cjs`。写入、安装、专用包停止与证据范围见 [Android 互操作说明](../docs/reference/android-runtime-interop.md)，模拟器和真机结果单独计数。
+
+Android 累计宿主修复、binary wrapper 和固定依赖回执见 [独立补丁交付](verify/runtime-interop-android/host-patches/README.md)；`acceptance.json` 将最终 APK 与源码、SDK 和设备报告分别绑定。默认图标演示及一次同 Surface 暂停恢复不扩大为完整 Android 生命周期、ARM64 或真机验收。
+
+最新 SDL 3.2.30 / `c++_static` 候选见 [16 KB 交付](verify/runtime-interop-android/host-patches/16k/README.md)与其 `git-delivery.json`。ARM64、static、16 KB collector、色彩/进程 helper 和构建/审计脚本的原始字节另存于[验收源码快照](verify/runtime-interop-android/verification-snapshots/README.md)；按其清单恢复原路径后使用，不将历史快照作为新的直接运行入口。
+
+`node tools/verify/runtime-interop.cjs --host=browser --out=<new-directory>` 验证 Canvas/DOM、模块与资产、真实 Shader WASM、GPU 提交与独立截图、错误与设备生命周期，并运行同一 Bundle 的 AIR 立方体。需要可解析的 Playwright 与现有 Chrome/Edge；可用 `--bundle=<current-bundle.js>` 指定新构建。`--host=mystral --executable=<existing-file>` 运行同一探针的原生诊断，保留原始 stdout/stderr 和进程回执。Shader 失败不再屏蔽独立 GPU 接口诊断。
+
+`node tools/build/runtime-interop-capture.cjs --out=<new-output-directory>` 使用已安装的 Windows CMake/C++ 工具链构建独立 Windows.Graphics.Capture helper，只写新的 `output/` 子目录和构建收据。原生采集器用 `--headed --capture-executable=<existing-helper>` 启用按需系统窗口 PNG 与独立像素验证；默认无呈现回调不能输出兼容验收通过。helper不调用宿主的GPU截图接口，不安装依赖或修改宿主。
+
+采集器只写新的输出目录及临时本机 HTTP 服务，不安装或构建引擎/宿主，不改默认 CI，不刷新正典证据；独立构建命令只编译捕获 helper。`node --test tools/verify/runtime-interop.test.cjs` 是不启动浏览器的定向工具回归。命令、五组行为和结果边界见[Runtime 互操作说明](../docs/reference/runtime-interop.md)。
+
+本地 MystralNative 桌面兼容修复作为 `tools/verify/runtime-interop/host-patches/` 下的固定基线补丁和构建配置交付，供独立源码明确应用；`--host-build=<matching-receipt.json>` 将实际宿主构建、源码补丁与 EXE 身份绑定到本轮验收。该补丁不进入默认引擎或 npm 运行时。
+
+手动 `--matrix` 扩展到 PBR、真实骨骼动画、UI 字体/精灵、direct/indirect Compute 四个隔离场景；每个保留前后两张独立 PNG、真实状态/数值与类型正确的释放证据。缺场景或阶段、仅文字字符串存在却无 glyph、错误间接 offset、无像素效果均拒绝，不增加默认命令或 CI 的执行。矩阵仍为 subset，不更新 canonical example evidence。
+
 ## Box2D 3.2 可选后端
 
 `node tools/build/box2d3.cjs --check` 只读检查冻结源码；`--build` 使用固定的 Emscripten 4.0.21 编译，写入 vendor 运行时与 receipt、`build/box2d3/` 和开发专用的 `build/box2d3-samples/`。它不会安装系统工具链；本地路径可通过 `BOX2D_EMSDK`、`NINJA`、`BOX2D_BUILD_DIR` 指定。

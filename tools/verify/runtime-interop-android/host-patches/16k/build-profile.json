@@ -1,0 +1,176 @@
+{
+  "schema": "mystral-cxx-static-sdl330-source-profile-v1",
+  "androidStl": "c++_static",
+  "v8LibraryKind": "static",
+  "v8StartupMode": "embedded",
+  "v8Version": "11.6.189.22",
+  "repository": "https://github.com/cocos/cocos-engine-external",
+  "ref": "0be13f7e2e9034d123744935ea73b410b2085b15",
+  "gradleProperties": {
+    "mystralAndroidStl": "c++_static",
+    "mystralV8LibraryKind": "static",
+    "mystralV8StartupData": "embedded",
+    "mystralSdlVersion": "3.2.30"
+  },
+  "explicitLegacyProfile": {
+    "mystralAndroidStl": "c++_shared",
+    "mystralV8LibraryKind": "shared",
+    "mystralV8StartupData": "external",
+    "dependencyProvider": "Use the original matching shared V8 and its real per-ABI external snapshot; the static archive below is not a shared-library replacement.",
+    "mystralSdlVersion": "3.2.8"
+  },
+  "v8Artifacts": [
+    {
+      "file": "v8/arm64-v8a/libv8_monolith.a",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/v8/libv8_monolith.a",
+      "bytes": 67098410,
+      "sha256": "1abb1cd172631eb809a672c858c1c4608863524ed6c62bc6ff9339976a7c8643",
+      "gitBlobSha1": "04e799ad745c3a8d6afbf78dd4463d21a1a7c549"
+    },
+    {
+      "file": "v8/x86_64/libv8_monolith.a",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/x86_64/v8/libv8_monolith.a",
+      "bytes": 68563002,
+      "sha256": "ba0a35faf077ba81ddc3a9213aabc7519d90790f4ccd542405125a74bb39fa9e",
+      "gitBlobSha1": "135b8a6efbad5142f022ccb184406f0beaf57e84"
+    }
+  ],
+  "includes": {
+    "file": "v8-include-files.json",
+    "count": 118,
+    "hFiles": 107,
+    "sharedBy": [
+      "arm64-v8a",
+      "x86_64"
+    ],
+    "equivalenceReceipt": "dependency-receipts/x64-header-equivalence.json"
+  },
+  "licenses": {
+    "mystral": "licenses/LICENSE-MYSTRAL.txt",
+    "v8": "licenses/LICENSE-V8-11.6.189.22.txt",
+    "v8Source": "https://raw.githubusercontent.com/v8/v8/11.6.189.22/LICENSE",
+    "sdl": "licenses/LICENSE-SDL3-3.2.30.txt"
+  },
+  "scope": "Source configuration and exact V8 dependency identities only. No APK, physical-device, 16KB, performance or release acceptance is granted by this profile.",
+  "sdlVersion": "3.2.30",
+  "sdl": {
+    "version": "3.2.30",
+    "distribution": "Complete official Android AAR, including matching Java, native libraries and Prefab headers",
+    "source": "https://github.com/libsdl-org/SDL/releases/download/release-3.2.30/SDL3-devel-3.2.30-android.zip",
+    "zipSha256": "0525e4bc9cc1370e6d664ec93c927846e311c19a819de05a232bca452b0e3a7a",
+    "aarSha256": "ac582807f04c82a8cb80140ce6321598848da4a632fd4531874c60df8e019837",
+    "inventory": {
+      "file": "component-manifests/sdl330-aar-entries.json",
+      "sha256": "2b9b7a6b9eec5b7c06da27ace7630a46a76581da435470e7dea06e6e1d380aaf",
+      "entries": 123
+    },
+    "dependency": {
+      "file": "dependency-receipts/16k-dependency-inputs.json",
+      "bytes": 917677,
+      "sha256": "d09d8bcf1918f10682495c7dd8859800f26ec4b6498ba9004fc151e819002d12"
+    },
+    "producers": [
+      {
+        "file": "dependency-producers/prepare-deps.py",
+        "bytes": 3426,
+        "sha256": "9163fc736ec2d71428fc95df173864216875fdf31279d9d6f99627cf3116e6fc"
+      },
+      {
+        "file": "dependency-producers/finalize-16k-apk.py",
+        "bytes": 10284,
+        "sha256": "3921fd1666322412fd82d4b015c19562c730c3853b5459fd5c8f4aa6fc524c89"
+      },
+      {
+        "file": "dependency-producers/build-16k-arm64-apk-attempt-1.ps1",
+        "bytes": 3819,
+        "sha256": "7f5491566a476c3d6fa7681e4b908744d13a63f7ac1248e831dea70aa89fb308"
+      },
+      {
+        "file": "dependency-producers/build-16k-x64-apk-attempt-1.ps1",
+        "bytes": 3814,
+        "sha256": "1da48a17ab774a8bf64be7e2254293155fa5fec0f58d0a9c7faac964a2e0f7db"
+      }
+    ],
+    "license": {
+      "file": "licenses/LICENSE-SDL3-3.2.30.txt",
+      "bytes": 884,
+      "sha256": "97f35b302b361680ec1e891e95d2d52097bb95abff361434916d99dc1305f127"
+    },
+    "prefab": [
+      {
+        "entry": "prefab/prefab.json",
+        "bytes": 97,
+        "sha256": "c3c22414b9a57fa677d4f6bd3c5619bf53751e23a0188f9d4d2dbaf2f85518c9"
+      },
+      {
+        "entry": "prefab/modules/SDL3/module.json",
+        "bytes": 58,
+        "sha256": "369e249636d5c527b822517f2a85ee9ca8d5d9e0d72961b9ccb3bac57ae6965e"
+      },
+      {
+        "entry": "prefab/modules/SDL3-shared/module.json",
+        "bytes": 85,
+        "sha256": "bfc31589b4d972dd380678aa2dfe844f774ea6f0a578af7c721f57b1ceb7f0fb"
+      },
+      {
+        "entry": "prefab/modules/SDL3-Headers/module.json",
+        "bytes": 30,
+        "sha256": "f283d2a57237ec5278d4b44d983ea7b0c2909e78ebf044a7a2f1d309f82363ca"
+      }
+    ],
+    "java": [
+      {
+        "entry": "classes.jar",
+        "bytes": 83143,
+        "sha256": "ed2307813ca9e630db793ec311fa934264de811b6fe3d0dd8216bb7c9b4e911e"
+      },
+      {
+        "entry": "classes-sources.jar",
+        "bytes": 47395,
+        "sha256": "666425e4ded803262cbf4297c9ce96200a821464ceb96e0a6ec2344d44363224"
+      }
+    ],
+    "supportedAppAbis": [
+      "arm64-v8a",
+      "x86_64"
+    ],
+    "noMixedOldJavaOrHeaders": true
+  },
+  "sdkProvenance": {
+    "package": "system-images;android-37.0;google_apis_ps16k;x86_64",
+    "installedPackageRevision": 8,
+    "sourcePropertiesRevision": 7,
+    "emulatorVersion": "37.2.12",
+    "emulatorBuildId": "16428233",
+    "metadata": [
+      {
+        "file": "sdk-provenance/emulator/package.xml",
+        "bytes": 18389,
+        "sha256": "93c00e6c4aa5607e7a78accc4fb1a1190434f9e75e87e31d577d6254785479d5"
+      },
+      {
+        "file": "sdk-provenance/emulator/source.properties",
+        "bytes": 103,
+        "sha256": "ba13085f647fb8389a4d06a1de0e4104ac4e841733e50f67223ac230e1ce685a"
+      },
+      {
+        "file": "sdk-provenance/system-image/package.xml",
+        "bytes": 19457,
+        "sha256": "1837b494ed65fbab228741589dd4b5161255ed8f53a61f9e0dfc4c8ef7dcd9de"
+      },
+      {
+        "file": "sdk-provenance/system-image/source.properties",
+        "bytes": 403,
+        "sha256": "6e6dcd9162dd03eacc00241f1db35fb92e37373be5bcb014df855e190f3b4465"
+      },
+      {
+        "file": "sdk-provenance/sdk-install.log",
+        "bytes": 1705,
+        "sha256": "15cc51347548cdd28a2470a86b3565b41783b80ca8cea843d72a6a2671c240e1"
+      }
+    ],
+    "license": "android-sdk-license text retained inside the original package.xml metadata",
+    "revisionNote": "The vendor source.properties reports revision 7 while installed package.xml and sdkmanager report revision 8; both original records are retained without rewriting.",
+    "scope": "Isolated SDK/AVD environment provenance only. Runtime page size and compatibility policy are proved separately by acceptance reports; no SDK image or emulator binary is redistributed."
+  }
+}

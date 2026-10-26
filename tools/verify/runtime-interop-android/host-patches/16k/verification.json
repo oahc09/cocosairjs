@@ -1,0 +1,323 @@
+{
+  "schema": "mystral-cxx-static-sdl330-patch-verification-v1",
+  "pass": true,
+  "base": "3cea6b450b71661e114a04b8bde777ff6d29f67f",
+  "freshClone": "fresh-base",
+  "applyCheck": true,
+  "actualApply": true,
+  "sourceFiles": [
+    {
+      "file": "CMakeLists.txt",
+      "appliedSha256": "31c4455589931d8341bce6edcc142e8b07f8d74cba4fbaa9540474ea7a313a71",
+      "currentSha256": "31c4455589931d8341bce6edcc142e8b07f8d74cba4fbaa9540474ea7a313a71",
+      "compiledSha256": "31c4455589931d8341bce6edcc142e8b07f8d74cba4fbaa9540474ea7a313a71",
+      "matches": true
+    },
+    {
+      "file": "android/app/build.gradle.kts",
+      "appliedSha256": "07f654f08012ec4d2a537ad0b5eedd2a77e22c0383d5c523bb932f0e6369a8f2",
+      "currentSha256": "07f654f08012ec4d2a537ad0b5eedd2a77e22c0383d5c523bb932f0e6369a8f2",
+      "compiledSha256": "07f654f08012ec4d2a537ad0b5eedd2a77e22c0383d5c523bb932f0e6369a8f2",
+      "matches": true
+    },
+    {
+      "file": "android/app/src/main/java/com/mystral/engine/InteropServer.java",
+      "appliedSha256": "efece048a5606f9b38e1c678d6ed9aa3ee7bb09d121ffb75e0ca024c7f95bc9e",
+      "currentSha256": "efece048a5606f9b38e1c678d6ed9aa3ee7bb09d121ffb75e0ca024c7f95bc9e",
+      "compiledSha256": "efece048a5606f9b38e1c678d6ed9aa3ee7bb09d121ffb75e0ca024c7f95bc9e",
+      "matches": true
+    },
+    {
+      "file": "android/app/src/main/java/com/mystral/engine/MystralActivity.java",
+      "appliedSha256": "a43a14b83bda5e0840381cd3b80a2d17d12f1ef06d3d9daebbb4609d5cc88283",
+      "currentSha256": "a43a14b83bda5e0840381cd3b80a2d17d12f1ef06d3d9daebbb4609d5cc88283",
+      "compiledSha256": "a43a14b83bda5e0840381cd3b80a2d17d12f1ef06d3d9daebbb4609d5cc88283",
+      "matches": true
+    },
+    {
+      "file": "src/js/v8_engine.cpp",
+      "appliedSha256": "d5c78e5919247a4e0030068740cfd56fc6e16592c5baa80da3f4b4b488230f75",
+      "currentSha256": "d5c78e5919247a4e0030068740cfd56fc6e16592c5baa80da3f4b4b488230f75",
+      "compiledSha256": "d5c78e5919247a4e0030068740cfd56fc6e16592c5baa80da3f4b4b488230f75",
+      "matches": true
+    },
+    {
+      "file": "src/platform/android_main.cpp",
+      "appliedSha256": "e8d3cd2cde52de9dda520dc062ac8b57f0a8d0f23bf3204d82cdddd62df969d0",
+      "currentSha256": "e8d3cd2cde52de9dda520dc062ac8b57f0a8d0f23bf3204d82cdddd62df969d0",
+      "compiledSha256": "e8d3cd2cde52de9dda520dc062ac8b57f0a8d0f23bf3204d82cdddd62df969d0",
+      "matches": true
+    }
+  ],
+  "compiledSourceMap": {
+    "file": "output/runtime-interop/android-16k-x64-build-attempt-1/source-after.json",
+    "bytes": 12124,
+    "sha256": "b7199e4c1ccaec1fe6cf1e61796772f01cc778f53a5af53672102be07ff5662b"
+  },
+  "buildReceipt": {
+    "file": "output/runtime-interop/android-16k-x64-build-attempt-1/build-report.json",
+    "bytes": 8063,
+    "sha256": "458d32e830da33b1104d13463d038d3f218a79dc04409bb41712b0ae0f5fa43e"
+  },
+  "sourceMapUnchanged": true,
+  "hostFilesUnchangedDuringExport": true,
+  "artifactBytesVerified": true,
+  "includeFilesVerified": 118,
+  "commands": [
+    {
+      "id": "01",
+      "cwd": "output/runtime-interop/mystral-source",
+      "command": "git",
+      "arguments": [
+        "-c",
+        "core.autocrlf=false",
+        "rev-parse",
+        "HEAD"
+      ],
+      "status": 0
+    },
+    {
+      "id": "02",
+      "cwd": "output/runtime-interop/mystral-source",
+      "command": "git",
+      "arguments": [
+        "-c",
+        "core.autocrlf=false",
+        "diff",
+        "--name-only",
+        "3cea6b450b71661e114a04b8bde777ff6d29f67f"
+      ],
+      "status": 0
+    },
+    {
+      "id": "03",
+      "cwd": "output/runtime-interop/mystral-source",
+      "command": "git",
+      "arguments": [
+        "-c",
+        "core.autocrlf=false",
+        "diff",
+        "--check",
+        "3cea6b450b71661e114a04b8bde777ff6d29f67f",
+        "--",
+        "CMakeLists.txt",
+        "android/app/build.gradle.kts",
+        "android/app/src/main/java/com/mystral/engine/InteropServer.java",
+        "android/app/src/main/java/com/mystral/engine/MystralActivity.java",
+        "src/js/v8_engine.cpp",
+        "src/platform/android_main.cpp"
+      ],
+      "status": 0
+    },
+    {
+      "id": "04",
+      "cwd": "output/runtime-interop/mystral-source",
+      "command": "git",
+      "arguments": [
+        "-c",
+        "core.autocrlf=false",
+        "show",
+        "3cea6b450b71661e114a04b8bde777ff6d29f67f:CMakeLists.txt"
+      ],
+      "status": 0
+    },
+    {
+      "id": "05",
+      "cwd": "output/runtime-interop/mystral-source",
+      "command": "git",
+      "arguments": [
+        "-c",
+        "core.autocrlf=false",
+        "show",
+        "3cea6b450b71661e114a04b8bde777ff6d29f67f:android/app/build.gradle.kts"
+      ],
+      "status": 0
+    },
+    {
+      "id": "06",
+      "cwd": "output/runtime-interop/mystral-source",
+      "command": "git",
+      "arguments": [
+        "-c",
+        "core.autocrlf=false",
+        "show",
+        "3cea6b450b71661e114a04b8bde777ff6d29f67f:android/app/src/main/java/com/mystral/engine/InteropServer.java"
+      ],
+      "status": 0
+    },
+    {
+      "id": "07",
+      "cwd": "output/runtime-interop/mystral-source",
+      "command": "git",
+      "arguments": [
+        "-c",
+        "core.autocrlf=false",
+        "show",
+        "3cea6b450b71661e114a04b8bde777ff6d29f67f:android/app/src/main/java/com/mystral/engine/MystralActivity.java"
+      ],
+      "status": 0
+    },
+    {
+      "id": "08",
+      "cwd": "output/runtime-interop/mystral-source",
+      "command": "git",
+      "arguments": [
+        "-c",
+        "core.autocrlf=false",
+        "show",
+        "3cea6b450b71661e114a04b8bde777ff6d29f67f:src/js/v8_engine.cpp"
+      ],
+      "status": 0
+    },
+    {
+      "id": "09",
+      "cwd": "output/runtime-interop/mystral-source",
+      "command": "git",
+      "arguments": [
+        "-c",
+        "core.autocrlf=false",
+        "show",
+        "3cea6b450b71661e114a04b8bde777ff6d29f67f:src/platform/android_main.cpp"
+      ],
+      "status": 0
+    },
+    {
+      "id": "10",
+      "cwd": "output/runtime-interop/mystral-source",
+      "command": "git",
+      "arguments": [
+        "-c",
+        "core.autocrlf=false",
+        "diff",
+        "--binary",
+        "--full-index",
+        "3cea6b450b71661e114a04b8bde777ff6d29f67f",
+        "--",
+        "CMakeLists.txt",
+        "android/app/build.gradle.kts",
+        "android/app/src/main/java/com/mystral/engine/InteropServer.java",
+        "android/app/src/main/java/com/mystral/engine/MystralActivity.java",
+        "src/js/v8_engine.cpp",
+        "src/platform/android_main.cpp"
+      ],
+      "status": 0
+    },
+    {
+      "id": "11",
+      "cwd": "output/runtime-interop/mystral-source",
+      "command": "git",
+      "arguments": [
+        "-c",
+        "core.autocrlf=false",
+        "show",
+        "-s",
+        "--format=raw",
+        "3cea6b450b71661e114a04b8bde777ff6d29f67f"
+      ],
+      "status": 0
+    },
+    {
+      "id": "12",
+      "cwd": "output/runtime-interop/mystral-source",
+      "command": "git",
+      "arguments": [
+        "-c",
+        "core.autocrlf=false",
+        "show",
+        "3cea6b450b71661e114a04b8bde777ff6d29f67f:LICENSE"
+      ],
+      "status": 0
+    },
+    {
+      "id": "13",
+      "cwd": "output/runtime-interop/sdl330-16k-host-patch-attempt-1",
+      "command": "git",
+      "arguments": [
+        "-c",
+        "core.autocrlf=false",
+        "clone",
+        "--no-hardlinks",
+        "--no-checkout",
+        "--",
+        "C:\\Users\\caosh\\.codex\\worktrees\\webgpu-runtime-interop\\cocosair.js\\output\\runtime-interop\\mystral-source",
+        "C:\\Users\\caosh\\.codex\\worktrees\\webgpu-runtime-interop\\cocosair.js\\output\\runtime-interop\\sdl330-16k-host-patch-attempt-1\\fresh-base"
+      ],
+      "status": 0
+    },
+    {
+      "id": "14",
+      "cwd": "output/runtime-interop/sdl330-16k-host-patch-attempt-1/fresh-base",
+      "command": "git",
+      "arguments": [
+        "-c",
+        "core.autocrlf=false",
+        "checkout",
+        "--detach",
+        "3cea6b450b71661e114a04b8bde777ff6d29f67f"
+      ],
+      "status": 0
+    },
+    {
+      "id": "15",
+      "cwd": "output/runtime-interop/sdl330-16k-host-patch-attempt-1/fresh-base",
+      "command": "git",
+      "arguments": [
+        "-c",
+        "core.autocrlf=false",
+        "rev-parse",
+        "HEAD"
+      ],
+      "status": 0
+    },
+    {
+      "id": "16",
+      "cwd": "output/runtime-interop/sdl330-16k-host-patch-attempt-1/fresh-base",
+      "command": "git",
+      "arguments": [
+        "-c",
+        "core.autocrlf=false",
+        "status",
+        "--porcelain"
+      ],
+      "status": 0
+    },
+    {
+      "id": "17",
+      "cwd": "output/runtime-interop/sdl330-16k-host-patch-attempt-1/fresh-base",
+      "command": "git",
+      "arguments": [
+        "-c",
+        "core.autocrlf=false",
+        "apply",
+        "--check",
+        "C:\\Users\\caosh\\.codex\\worktrees\\webgpu-runtime-interop\\cocosair.js\\output\\runtime-interop\\sdl330-16k-host-patch-attempt-1\\mystral-sdl330-16k.patch"
+      ],
+      "status": 0
+    },
+    {
+      "id": "18",
+      "cwd": "output/runtime-interop/sdl330-16k-host-patch-attempt-1/fresh-base",
+      "command": "git",
+      "arguments": [
+        "-c",
+        "core.autocrlf=false",
+        "apply",
+        "C:\\Users\\caosh\\.codex\\worktrees\\webgpu-runtime-interop\\cocosair.js\\output\\runtime-interop\\sdl330-16k-host-patch-attempt-1\\mystral-sdl330-16k.patch"
+      ],
+      "status": 0
+    },
+    {
+      "id": "19",
+      "cwd": "output/runtime-interop/sdl330-16k-host-patch-attempt-1/fresh-base",
+      "command": "git",
+      "arguments": [
+        "-c",
+        "core.autocrlf=false",
+        "diff",
+        "--name-only",
+        "3cea6b450b71661e114a04b8bde777ff6d29f67f"
+      ],
+      "status": 0
+    }
+  ]
+}

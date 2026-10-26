@@ -1,0 +1,52 @@
+{
+  "schema": "mystral-cxx-static-source-profile-v1",
+  "androidStl": "c++_static",
+  "v8LibraryKind": "static",
+  "v8StartupMode": "embedded",
+  "v8Version": "11.6.189.22",
+  "repository": "https://github.com/cocos/cocos-engine-external",
+  "ref": "0be13f7e2e9034d123744935ea73b410b2085b15",
+  "gradleProperties": {
+    "mystralAndroidStl": "c++_static",
+    "mystralV8LibraryKind": "static",
+    "mystralV8StartupData": "embedded"
+  },
+  "explicitLegacyProfile": {
+    "mystralAndroidStl": "c++_shared",
+    "mystralV8LibraryKind": "shared",
+    "mystralV8StartupData": "external",
+    "dependencyProvider": "Use the original matching shared V8 and its real per-ABI external snapshot; the static archive below is not a shared-library replacement."
+  },
+  "v8Artifacts": [
+    {
+      "file": "v8/arm64-v8a/libv8_monolith.a",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/v8/libv8_monolith.a",
+      "bytes": 67098410,
+      "sha256": "1abb1cd172631eb809a672c858c1c4608863524ed6c62bc6ff9339976a7c8643",
+      "gitBlobSha1": "04e799ad745c3a8d6afbf78dd4463d21a1a7c549"
+    },
+    {
+      "file": "v8/x86_64/libv8_monolith.a",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/x86_64/v8/libv8_monolith.a",
+      "bytes": 68563002,
+      "sha256": "ba0a35faf077ba81ddc3a9213aabc7519d90790f4ccd542405125a74bb39fa9e",
+      "gitBlobSha1": "135b8a6efbad5142f022ccb184406f0beaf57e84"
+    }
+  ],
+  "includes": {
+    "file": "v8-include-files.json",
+    "count": 118,
+    "hFiles": 107,
+    "sharedBy": [
+      "arm64-v8a",
+      "x86_64"
+    ],
+    "equivalenceReceipt": "dependency-receipts/x64-header-equivalence.json"
+  },
+  "licenses": {
+    "mystral": "licenses/LICENSE-MYSTRAL.txt",
+    "v8": "licenses/LICENSE-V8-11.6.189.22.txt",
+    "v8Source": "https://raw.githubusercontent.com/v8/v8/11.6.189.22/LICENSE"
+  },
+  "scope": "Source configuration and exact V8 dependency identities only. No APK, physical-device, 16KB, performance or release acceptance is granted by this profile."
+}

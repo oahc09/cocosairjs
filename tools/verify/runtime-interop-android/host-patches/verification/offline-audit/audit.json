@@ -1,0 +1,803 @@
+{
+  "schema": "air-android-offline-independent-audit-v1",
+  "startedAt": "2026-10-25T14:53:09.549Z",
+  "scope": "APK10 x86_64 API37 emulator; fixed six-case matrix and interactive demo only",
+  "method": "Offline hashes, APK ZIP payloads, PNG pixels, raw exit/lifecycle/process-table records",
+  "noDeviceOperations": true,
+  "noInputMutations": true,
+  "checks": [
+    {
+      "name": "matrix fixed six cases and emulator scope",
+      "pass": true
+    },
+    {
+      "name": "all current acceptance input hashes",
+      "pass": true,
+      "detail": {
+        "count": 152,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "same SDK and source map binding",
+      "pass": true,
+      "detail": {
+        "sdkSha256": "417509cb4774f85346158c7c27f580a7afe5ace70c7486e095b4bbb216de518a"
+      }
+    },
+    {
+      "name": "asset manifest hash and generator binding",
+      "pass": true
+    },
+    {
+      "name": "all real staged source files current",
+      "pass": true,
+      "detail": {
+        "count": 26
+      }
+    },
+    {
+      "name": "APK bytes and installed APK fingerprint",
+      "pass": true,
+      "detail": {
+        "file": "output/runtime-interop/android-build-attempt-10/app-debug.apk",
+        "bytes": 27055266,
+        "sha256": "53093e1e3b3149a6e8e5033bbe1785399232e4565c44af0a810e8eaae18e894c"
+      }
+    },
+    {
+      "name": "APK ZIP payload and 27 staged files plus two manifest copies",
+      "pass": true,
+      "detail": {
+        "stagedFiles": 27,
+        "manifests": 2,
+        "apkMismatches": []
+      }
+    },
+    {
+      "name": "native source build receipt matches current sources",
+      "pass": true,
+      "detail": {
+        "sources": 115,
+        "hostMismatches": []
+      }
+    },
+    {
+      "name": "all 29 asset receipt entries match APK bytes plus the ABI snapshot",
+      "pass": true
+    },
+    {
+      "name": "raw APK signature verification retained",
+      "pass": true
+    },
+    {
+      "name": "native APK library lib/x86_64/libSDL3.so",
+      "pass": true
+    },
+    {
+      "name": "native APK library lib/x86_64/libc++_shared.so",
+      "pass": true
+    },
+    {
+      "name": "native APK library lib/x86_64/libmystral-runtime.so",
+      "pass": true
+    },
+    {
+      "name": "native APK library lib/x86_64/libv8android.so",
+      "pass": true
+    },
+    {
+      "name": "probes raw application/session identity",
+      "pass": true
+    },
+    {
+      "name": "probes business result",
+      "pass": true
+    },
+    {
+      "name": "probes native runtime and snapshot binding",
+      "pass": true
+    },
+    {
+      "name": "real two WASM factories and non-Null renderer",
+      "pass": true,
+      "detail": {
+        "vendor": "nvidia",
+        "device": "Goldfish GFXStream (NVIDIA GeForce RTX 5060)",
+        "description": "gfxstream (NVIDIA): Mesa 26.2.0-devel 26.0.65.35"
+      }
+    },
+    {
+      "name": "probes independent PNG and metadata",
+      "pass": true
+    },
+    {
+      "name": "probes exact presentation count",
+      "pass": true
+    },
+    {
+      "name": "probes raw native exit",
+      "pass": true
+    },
+    {
+      "name": "probes real SDL main return within unchanged closing budget",
+      "pass": true,
+      "detail": {
+        "pid": 18629,
+        "finishToSDLMainMs": 67
+      }
+    },
+    {
+      "name": "probes actual retained process table",
+      "pass": true
+    },
+    {
+      "name": "air raw application/session identity",
+      "pass": true
+    },
+    {
+      "name": "air business result",
+      "pass": true
+    },
+    {
+      "name": "air native runtime and snapshot binding",
+      "pass": true
+    },
+    {
+      "name": "air independent PNG and metadata",
+      "pass": true
+    },
+    {
+      "name": "air exact presentation count",
+      "pass": true
+    },
+    {
+      "name": "air raw native exit",
+      "pass": true
+    },
+    {
+      "name": "air real SDL main return within unchanged closing budget",
+      "pass": true,
+      "detail": {
+        "pid": 18712,
+        "finishToSDLMainMs": 121
+      }
+    },
+    {
+      "name": "air actual retained process table",
+      "pass": true
+    },
+    {
+      "name": "pbr raw application/session identity",
+      "pass": true
+    },
+    {
+      "name": "pbr business result",
+      "pass": true
+    },
+    {
+      "name": "pbr native runtime and snapshot binding",
+      "pass": true
+    },
+    {
+      "name": "scene-pbr-before independent PNG and metadata",
+      "pass": true
+    },
+    {
+      "name": "scene-pbr-after independent PNG and metadata",
+      "pass": true
+    },
+    {
+      "name": "scene-pbr-after before-pair identity",
+      "pass": true
+    },
+    {
+      "name": "pbr exact presentation count",
+      "pass": true
+    },
+    {
+      "name": "pbr raw native exit",
+      "pass": true
+    },
+    {
+      "name": "pbr real SDL main return within unchanged closing budget",
+      "pass": true,
+      "detail": {
+        "pid": 18788,
+        "finishToSDLMainMs": 126
+      }
+    },
+    {
+      "name": "pbr actual retained process table",
+      "pass": true
+    },
+    {
+      "name": "skin raw application/session identity",
+      "pass": true
+    },
+    {
+      "name": "skin business result",
+      "pass": true
+    },
+    {
+      "name": "skin native runtime and snapshot binding",
+      "pass": true
+    },
+    {
+      "name": "scene-skin-before independent PNG and metadata",
+      "pass": true
+    },
+    {
+      "name": "scene-skin-after independent PNG and metadata",
+      "pass": true
+    },
+    {
+      "name": "scene-skin-after before-pair identity",
+      "pass": true
+    },
+    {
+      "name": "skin exact presentation count",
+      "pass": true
+    },
+    {
+      "name": "skin raw native exit",
+      "pass": true
+    },
+    {
+      "name": "skin real SDL main return within unchanged closing budget",
+      "pass": true,
+      "detail": {
+        "pid": 18876,
+        "finishToSDLMainMs": 126
+      }
+    },
+    {
+      "name": "skin actual retained process table",
+      "pass": true
+    },
+    {
+      "name": "ui raw application/session identity",
+      "pass": true
+    },
+    {
+      "name": "ui business result",
+      "pass": true
+    },
+    {
+      "name": "ui native runtime and snapshot binding",
+      "pass": true
+    },
+    {
+      "name": "scene-ui-before independent PNG and metadata",
+      "pass": true
+    },
+    {
+      "name": "scene-ui-after independent PNG and metadata",
+      "pass": true
+    },
+    {
+      "name": "scene-ui-after before-pair identity",
+      "pass": true
+    },
+    {
+      "name": "ui exact presentation count",
+      "pass": true
+    },
+    {
+      "name": "ui raw native exit",
+      "pass": true
+    },
+    {
+      "name": "ui real SDL main return within unchanged closing budget",
+      "pass": true,
+      "detail": {
+        "pid": 18960,
+        "finishToSDLMainMs": 122
+      }
+    },
+    {
+      "name": "ui actual retained process table",
+      "pass": true
+    },
+    {
+      "name": "compute raw application/session identity",
+      "pass": true
+    },
+    {
+      "name": "compute business result",
+      "pass": true
+    },
+    {
+      "name": "compute native runtime and snapshot binding",
+      "pass": true
+    },
+    {
+      "name": "compute direct/indirect numeric and offset receipts",
+      "pass": true
+    },
+    {
+      "name": "scene-compute-before independent PNG and metadata",
+      "pass": true
+    },
+    {
+      "name": "scene-compute-after independent PNG and metadata",
+      "pass": true
+    },
+    {
+      "name": "scene-compute-after before-pair identity",
+      "pass": true
+    },
+    {
+      "name": "compute exact presentation count",
+      "pass": true
+    },
+    {
+      "name": "compute raw native exit",
+      "pass": true
+    },
+    {
+      "name": "compute real SDL main return within unchanged closing budget",
+      "pass": true,
+      "detail": {
+        "pid": 19045,
+        "finishToSDLMainMs": 124
+      }
+    },
+    {
+      "name": "compute actual retained process table",
+      "pass": true
+    },
+    {
+      "name": "ten formal independent capture pairs",
+      "pass": true
+    },
+    {
+      "name": "demo shares exact APK and current verifier",
+      "pass": true
+    },
+    {
+      "name": "demo startup uses real AIR draws",
+      "pass": true
+    },
+    {
+      "name": "demo before independent PixelCopy and screen",
+      "pass": true
+    },
+    {
+      "name": "demo after independent PixelCopy and screen",
+      "pass": true
+    },
+    {
+      "name": "demo before/after pair",
+      "pass": true
+    },
+    {
+      "name": "demo two actual trusted OS input events with subpixel coordinates",
+      "pass": true,
+      "detail": {
+        "inputs": [
+          {
+            "stage": "demo-input",
+            "frames": 34,
+            "taps": 1,
+            "color": "green",
+            "gpuErrors": [],
+            "type": "mousedown",
+            "isTrusted": true,
+            "clientX": 160.50157165527344,
+            "clientY": 120.5020980834961
+          },
+          {
+            "stage": "demo-input",
+            "frames": 130,
+            "taps": 2,
+            "color": "orange",
+            "gpuErrors": [],
+            "type": "mousedown",
+            "isTrusted": true,
+            "clientX": 160.50157165527344,
+            "clientY": 120.5020980834961
+          }
+        ]
+      }
+    },
+    {
+      "name": "demo real background/resume preserves native session",
+      "pass": true
+    },
+    {
+      "name": "resumed demo compositor shows the second OS input effect",
+      "pass": true
+    },
+    {
+      "name": "demo native exit and real PID cleanup",
+      "pass": true
+    },
+    {
+      "name": "earlier failed input diagnostic remains retained",
+      "pass": true
+    }
+  ],
+  "captureGroups": [
+    {
+      "caseId": "probes",
+      "phase": null,
+      "surface": "76f3c9c28395a74738315316c7d5ea4363cda35bbfe25acbd40bbeb648a9cde6",
+      "compositor": "ef2601f1a3054b5e55cb6420f14b262038a19ca36cb4623265c9b5fafb0f88e5",
+      "pass": true
+    },
+    {
+      "caseId": "air",
+      "phase": null,
+      "surface": "8004bc74dd88707be5cc94d8ef9ce3e819251bd0f52bcf7d5b56a8fa46d336fb",
+      "compositor": "abd86ec2192728dc21650d9207d20005290ffe0e4df64c86bb5793e8550b13bc",
+      "pass": true
+    },
+    {
+      "caseId": "pbr",
+      "phase": "before",
+      "surface": "40b3f8fa74b390dc18e856717756bc4d876409ca37ae32d721dc4ab427830e06",
+      "compositor": "6316e7affa37ee5bf2afe9286c88c103acd312c0bd335e9256d6ee13a60b9947",
+      "pass": true
+    },
+    {
+      "caseId": "pbr",
+      "phase": "after",
+      "surface": "6c6b31d0cc2516a9397dd80c9c99a3844144d2dcaf06ae0e77693bbb5c0e689a",
+      "compositor": "44143e3616f88555bfe09ff358f2299deb49dffcc69a8cad798c0fe9d1cfc1c7",
+      "pass": true
+    },
+    {
+      "caseId": "skin",
+      "phase": "before",
+      "surface": "8d1ec6fdd9bfb7acd24cd72c3c357733e4014492c0982f97f06f88d2d102bb6a",
+      "compositor": "fe3cb95810f5abf208c85bd73a94968ceb8d6debca18ee04dc61ef9590021e20",
+      "pass": true
+    },
+    {
+      "caseId": "skin",
+      "phase": "after",
+      "surface": "e9003d014764684615f83693ca256896a3bb7291f9ec90c300149544512611c7",
+      "compositor": "f1745e15e0dbe202a8ae45e825c56ce24239b47fcee740127dd2ca4e3e00cea4",
+      "pass": true
+    },
+    {
+      "caseId": "ui",
+      "phase": "before",
+      "surface": "0183b7cd6f943f144339a0fe015c658f397b7289d010a4e5f4dbacdddbe0159f",
+      "compositor": "02f7c27cd184d26ba821b6cf37a65901840e98d684a5a6cca85e1be7f7cea0a9",
+      "pass": true,
+      "pixelcopyInterior": 15,
+      "compositorInterior": 15
+    },
+    {
+      "caseId": "ui",
+      "phase": "after",
+      "surface": "656a73c51e79d17e8987d560c49902d500ad33321ba6ded292beb7373bf05383",
+      "compositor": "4aaba83a24103b338b7e7bc94a995f0c876fcd9a28f6eee2d1ca2c56c64a7d2a",
+      "pass": true,
+      "pixelcopyInterior": 15,
+      "compositorInterior": 15
+    },
+    {
+      "caseId": "compute",
+      "phase": "before",
+      "surface": "0c91381c47407e34ac287c51ff6f817b8914953189126878994d3b809eed2e5f",
+      "compositor": "8989349a8d8609467ca12127b515a5a89731f2c226e014c75543339aac3ec5a4",
+      "pass": true
+    },
+    {
+      "caseId": "compute",
+      "phase": "after",
+      "surface": "72528bb7b2b6d20898765ff7af17aa90ae0bf8e2af5a311e8832af3978d75e6f",
+      "compositor": "e36e67b5e17c632ec8373e565379f25c188a62a30dbf1b661bad702277cdfb7e",
+      "pass": true
+    }
+  ],
+  "cases": [
+    {
+      "caseId": "probes",
+      "pid": 18629,
+      "nativeExitCode": 0,
+      "finishToSDLMainMs": 67
+    },
+    {
+      "caseId": "air",
+      "pid": 18712,
+      "nativeExitCode": 0,
+      "finishToSDLMainMs": 121
+    },
+    {
+      "caseId": "pbr",
+      "pid": 18788,
+      "nativeExitCode": 0,
+      "finishToSDLMainMs": 126
+    },
+    {
+      "caseId": "skin",
+      "pid": 18876,
+      "nativeExitCode": 0,
+      "finishToSDLMainMs": 126
+    },
+    {
+      "caseId": "ui",
+      "pid": 18960,
+      "nativeExitCode": 0,
+      "finishToSDLMainMs": 122
+    },
+    {
+      "caseId": "compute",
+      "pid": 19045,
+      "nativeExitCode": 0,
+      "finishToSDLMainMs": 124
+    }
+  ],
+  "notes": [
+    "PID disappearance is proven after the collector force-stops its own package; clean native runtime/SDL return is separately retained before that cleanup.",
+    "Fractional SDL-derived client coordinates remain within one physical pixel; graphics/numeric/interior thresholds are unchanged.",
+    "Background/resume retained the same PID and surfaceGeneration=1; this does not certify surface recreation, rotation, context recovery, ARM, phones, performance, or release readiness.",
+    "Demo log capture excludes the SDL tag; six formal cases independently retain SDL Finished main function plus raw native-exit files."
+  ],
+  "pass": true,
+  "retainedDemoAttempts": [
+    {
+      "file": "output/runtime-interop/android-demo-attempt-1/report.json",
+      "status": "FAIL",
+      "pass": false,
+      "error": "Error: Demo startup failed\n    at check (C:\\Users\\caosh\\.codex\\worktrees\\webgpu-runtime-interop\\cocosair.js\\output\\runtime-interop\\android-demo-verify.cjs:8:82)\n    at C:\\Users\\caosh\\.codex\\worktrees\\webgpu-runtime-interop\\cocosair.js\\output\\runtime-interop\\android-demo-verify.cjs:23:86\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+    },
+    {
+      "file": "output/runtime-interop/android-demo-attempt-2/report.json",
+      "status": "FAIL",
+      "pass": false,
+      "error": "Error: Native SDL/DOM input contract failed\n    at check (C:\\Users\\caosh\\.codex\\worktrees\\webgpu-runtime-interop\\cocosair.js\\output\\runtime-interop\\android-demo-verify.cjs:8:82)\n    at C:\\Users\\caosh\\.codex\\worktrees\\webgpu-runtime-interop\\cocosair.js\\output\\runtime-interop\\android-demo-verify.cjs:38:113\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+    },
+    {
+      "file": "output/runtime-interop/android-demo-attempt-3/report.json",
+      "status": "PASS",
+      "pass": true,
+      "error": null
+    }
+  ],
+  "correctedAuditOnly": {
+    "previousAttempt": "output/runtime-interop/android-final-independent-audit-20261025/audit.json",
+    "explanation": "Retained prior FAIL is an audit implementation error: localeCompare(en) source canonicalization; 27 staged files plus two manifest copies; renderer name contains a space. Original runtime evidence is unchanged.",
+    "previousAuditSha256": "ed394becb50bc458a9da1a5cbc280708814c92e6343e50f2472a6a4dbe7c9456"
+  },
+  "completed": true,
+  "evidenceFilesSha256": {
+    "output/runtime-interop/android-matrix-final-20261025/report.json": "f94f9d52071082245e106ec7567556581e5f4b190343e200df8fbb0b00fca0ff",
+    "output/runtime-interop/android-demo-final-20261025/report.json": "c619bcdd09d8c301fbf2e3c4f4da97e9e4d11cd4c890eba4111746ed134723d3",
+    "tools/verify/runtime-interop-android.cjs": "124c9145bf3833c33d95ef692df8a810db8cb8daa1a56d53ce26e0a7fa057837",
+    "output/runtime-interop/android-assets-attempt-4/assets-manifest.json": "18615a9c5b1760074f82296c664d5d894032c62fc1e6671239f94e8c18f418df",
+    "output/runtime-interop/android-build-attempt-10/app-debug.apk": "53093e1e3b3149a6e8e5033bbe1785399232e4565c44af0a810e8eaae18e894c",
+    "tools/build/runtime-interop-android.cjs": "029595afd0c9470c74ab9ed7e99355e0a0762a6671f97ceaaeb3c94fb754a9c2",
+    "tools/verify/runtime-interop.cjs": "93218e2842e4fa97a7a4d5b50fd8d70e6fc359b5f4584d14c1ddda91b6c66222",
+    "tools/verify/runtime-interop/scene-contract.cjs": "25fea3e9d7ab2cf220965b47504a67efd5d5ffbc5ffb241d03dbe26af7a56a3c",
+    "tools/verify/runtime-interop/scene-oracles.cjs": "76e302dfe4fa7da653aba66bbac85c988551a786ef3a5a577356e3d55c441fe7",
+    "package-lock.json": "69d2f4480314c9a4630a72ff608d1b83fbf7d10a9d2ed8e3b3dc8590e5ff2e47",
+    "output/runtime-interop/sdk/cocosair.module.js": "417509cb4774f85346158c7c27f580a7afe5ace70c7486e095b4bbb216de518a",
+    "output/runtime-interop/sdk/webgpu/glslang.js": "7937463b384ded16e10da2c1d64cb63a0894e56e8d8167cce636be5635caef59",
+    "output/runtime-interop/sdk/webgpu/glslang.wasm": "2746e37cbb52ff99f21a836e56e72e5771873a83a032faec2ed860941b23768e",
+    "output/runtime-interop/sdk/webgpu/LICENSE-apache.txt": "9362ea9ea17cb221a20cbbd63f404710834cc273d2a9a7b60314fd68ab702cd6",
+    "output/runtime-interop/sdk/webgpu/LICENSE-dawn.txt": "0493f897193af1796d5054659f45ec7d4c5af648fa67a99f01d30e55cc805abc",
+    "output/runtime-interop/sdk/webgpu/LICENSE-glslang.txt": "373bb541d74f5a2854e4b752c57952dd8155cca535124176de90c94efc67ef85",
+    "output/runtime-interop/sdk/webgpu/manifest.json": "84161a92c5469819bab8a3ddc6512bf8e6e88c1bb67c1fd4c873be84ce0e6df9",
+    "output/runtime-interop/sdk/webgpu/NOTICE-babylon.md": "7f85d099ce3c6e1900a45ee8d5b8fa405e760c746af687b3ee2081416e48f183",
+    "output/runtime-interop/sdk/webgpu/twgsl.js": "e5664e33a74d064118769636440a5b09121db31370d6fe54b778deb17cd0e4f5",
+    "output/runtime-interop/sdk/webgpu/twgsl.wasm": "a434c2decdbb38caadf5f486d806384a1543554828c983c77922b2d92579914c",
+    "tools/verify/runtime-interop/air-smoke.mjs": "cf27c158eda7515906e92a03153f2a12f23219b8cda8e02eda7145e6cdb7d2ea",
+    "tools/verify/runtime-interop/android-demo.mjs": "a1d45980a097d1f863ed5eafd7c52ce03816eac134f4e333eaa331e5af9dc9b4",
+    "tools/verify/runtime-interop/module-fixture.mjs": "74c80e8da1947d2abb286f690223c6751b050f2c9e254c507b43c164b11791f5",
+    "tools/verify/runtime-interop/probes.mjs": "fde69e728aa64ba9de48d16644be002b8ecbca6a35c555f01b1d338ef1f6d199",
+    "tools/verify/runtime-interop/scene-compute.mjs": "76d930111874283271a226a4977ebf1f0f21a3017220347418a904c8074be519",
+    "tools/verify/runtime-interop/scene-models.mjs": "ec953308f487453faabdafc5ce96fac225b866ca82ee905f9ab10f81b30b48e1",
+    "tools/verify/runtime-interop/scene-runner.mjs": "03a8789346334c18f062b8ed71ebb454e2fd7649fd42d5a514dad94bdb613264",
+    "tools/verify/runtime-interop/scene-ui.mjs": "a34b91d061136d53734100844547353c0fb988fc773371d4aba05b8d2415b5d4",
+    "examples/gltf-basic/assets/BoxTextured.glb": "b510eca2e2ef33f62f9ed57d6e7ce2d10ebb2bdebc4a8e59d347719ba81abdf4",
+    "examples/gltf-basic/assets/BoxTextured.LICENSE.md": "505ec72f522d924ae26dbccd78b0b66efe5ef91c454cb16e139a465ce25839b8",
+    "examples/gltf-skin/assets/SimpleSkin.gltf": "8d92e9888340eb98e82a65a1f8b037d9a1d9f09e5fd0b6ba6d40fd93700b3239",
+    "examples/gltf-skin/assets/SimpleSkin.LICENSE.md": "2f6560ab0c37fad10295af0289cbe4a04264c5ef97003a4129a3b8c8b0ba6a27",
+    "examples/gltf-skin/assets/SimpleSkin_skinningData.bin": "413bc8a8c0da673df767874e6f05f0b00c9261756a08586b9d555bd5535414b5",
+    "examples/gltf-skin/assets/SimpleSkin_inverseBindMatrices.bin": "5844ab221cd2ad367420a248f6387b46e5f8498604427730a37ee96b4d4ec599",
+    "examples/gltf-skin/assets/SimpleSkin_geometry.bin": "35f0ca6bc07976c0aadc163d4737758989cfcc9870a99800004c4478fe698b63",
+    "examples/gltf-skin/assets/SimpleSkin_animation.bin": "ff21b1bc3d0abbe53f7665060ec6c22d873b6e85a7669171a2b6b8ae01c39347",
+    "output/runtime-interop/mystral-source/CMakeLists.txt": "401f3ac04919f1bb4314e14fe825455ce4a37c41361ec56f5e843e63035676b4",
+    "output/runtime-interop/mystral-source/android/README.md": "d6bb22e69235e2d264c25a3ee70b0e62137bacb496a69770c93c0a2e984ce778",
+    "output/runtime-interop/mystral-source/android/app/build.gradle.kts": "a611d62b3f84a907aa3adfe52c8a88263d03cbcc9c55ce59389ff5eb8d3d13b9",
+    "output/runtime-interop/mystral-source/android/app/proguard-rules.pro": "48d08360423fc527f0243faccca31b2530a6064688abb45dfee92eb1f1ac9a75",
+    "output/runtime-interop/mystral-source/android/app/src/main/AndroidManifest.xml": "da04a9680499afcfbf7d0a5c9fc126dd7dfbf9c15c6dbf2776857089a6c56961",
+    "output/runtime-interop/mystral-source/android/app/src/main/assets/DamagedHelmet.glb": "a1e3b04de97b11de564ce6e53b95f02954a297f0008183ac63a4f5974f6b32d8",
+    "output/runtime-interop/mystral-source/android/app/src/main/assets/main.js": "618eb7b7886555e1c467f07a7312f0fcf96050cb62227c8e7926a3b4d5042e20",
+    "output/runtime-interop/mystral-source/android/app/src/main/assets/scripts/glb-parser.js": "1d4122a1daf95940bac63b99650dffdc59343ae3e1716267cdedbb1dabbf3bd6",
+    "output/runtime-interop/mystral-source/android/app/src/main/assets/scripts/gltf-viewer.js": "618eb7b7886555e1c467f07a7312f0fcf96050cb62227c8e7926a3b4d5042e20",
+    "output/runtime-interop/mystral-source/android/app/src/main/assets/scripts/main.js": "c2fc418f95f515ade14cd303ee4425de4c4db437a5bd03d01efc41be68d75a52",
+    "output/runtime-interop/mystral-source/android/app/src/main/assets/sunny_rose_garden_2k.hdr": "6c79c0e300a584179597b7dc1ec398aba3be1e84cf5367de60af4535ee85addd",
+    "output/runtime-interop/mystral-source/android/app/src/main/java/com/mystral/engine/InteropServer.java": "5f8356df84a9519d2af9541d4099461dcb12a7e013fb9180a9ddc9aaaf4a8fb6",
+    "output/runtime-interop/mystral-source/android/app/src/main/java/com/mystral/engine/MystralActivity.java": "7c5419e5dc5f63e44c9974d6d16531a7888827738176483fa8b2c5e00aa7ecd0",
+    "output/runtime-interop/mystral-source/android/app/src/main/res/values/strings.xml": "19b11f6a77c84d1bcdb98f63deda04a526249095c5843d56d39de302d579cc71",
+    "output/runtime-interop/mystral-source/android/app/src/main/res/values/themes.xml": "c9fbfcfa44e07f1b6b717ca20d6de82eb6b6efbcf95756746d7bf2eca94d7606",
+    "output/runtime-interop/mystral-source/android/app/src/main/res/xml/interop_network_security.xml": "4d9477feb75a3183fee4c058241e099377b2d33621fdabac9b433b59c2277729",
+    "output/runtime-interop/mystral-source/android/build.gradle.kts": "96af1738f87839a9274a6d4e2fd150cbe69a3f6d727bdaf3ca2001558667c315",
+    "output/runtime-interop/mystral-source/android/gradle.properties": "45f51d340685e3bda3d0ec6f4b1429535a52d3765a0d101e79a965ef6aaf9712",
+    "output/runtime-interop/mystral-source/android/gradle/wrapper/gradle-wrapper.jar": "2db75c40782f5e8ba1fc278a5574bab070adccb2d21ca5a6e5ed840888448046",
+    "output/runtime-interop/mystral-source/android/gradle/wrapper/gradle-wrapper.properties": "c1df29f10948da4b8b37df2b5c6e7525b051f8e7088658efdaacd95858c0ecfd",
+    "output/runtime-interop/mystral-source/android/gradlew": "811941e3c7d246009ef55b9ff07329b2b194c343a2fa949bd49f9278563cf2f1",
+    "output/runtime-interop/mystral-source/android/gradlew.bat": "0f3ed8f03b50934cb8c48b15a470d5c20a30a5385825e48b55bcc8ea3d8f8e18",
+    "output/runtime-interop/mystral-source/android/settings.gradle.kts": "4126f231e38249e48d3b4fdd5e5bffe8e38917c3cae4e6edcb1b13329c347ace",
+    "output/runtime-interop/mystral-source/cmake/CompileRTShaders.cmake": "b0614f96c94dbacece7f6dab8ee77af42e6a3113b669a9f267d4e94e47bac1af",
+    "output/runtime-interop/mystral-source/cmake/ios.toolchain.cmake": "82686e6b9069acc4ff2c4dca83554c809a4e452a288670e9027eb38a1ca9b6ef",
+    "output/runtime-interop/mystral-source/include/mystral/async/event_loop.h": "f1d36654142400b804273175b3d2fedf27906c2161ec48e76d21fab315be8756",
+    "output/runtime-interop/mystral-source/include/mystral/audio/audio_bindings.h": "fdf371118be4d94359eac888edc5248fc993c1803f2d1b969f6600b8339a56fa",
+    "output/runtime-interop/mystral-source/include/mystral/audio/audio_context.h": "599ef4ac2de996609429abd4a539689ac7841f966ad19a23d351565f4d78d2da",
+    "output/runtime-interop/mystral-source/include/mystral/canvas/canvas2d.h": "67dde82d07323e7f07de0c93b8fb7d46d414857fc021ae9e115784ba7ba5bfd9",
+    "output/runtime-interop/mystral-source/include/mystral/debug/debug_server.h": "dca4422f901b867752d9f55508bc3e5570f4d7e8088c4d73732143733a30fb27",
+    "output/runtime-interop/mystral-source/include/mystral/fs/async_file.h": "80dac908e88f4c51597ca454138887b37f5f8b1c9fed9f0319a38c3e044aa010",
+    "output/runtime-interop/mystral-source/include/mystral/fs/file_watcher.h": "59c0e7260a23b5a3659ae3046f9c982202ee348448a543c2283d1c9d8f99452d",
+    "output/runtime-interop/mystral-source/include/mystral/gltf/gltf_loader.h": "b28359ca554e3325c4c18530400f144a84a5604916a40bc45a52b8864f15827d",
+    "output/runtime-interop/mystral-source/include/mystral/http/async_http_client.h": "f20fe10bb5363a0558b85d9bdad897a52ddba7bbac7e826f9b017fbbb22bf0f4",
+    "output/runtime-interop/mystral-source/include/mystral/http/http_client.h": "d4c09fc8ed48dca667cef80a4686f80a380977c7b03acace09352133f241607f",
+    "output/runtime-interop/mystral-source/include/mystral/js/engine.h": "536366310f5f1109659895efce8fa6550b028fb97dd9e9fe67e6462ff6bf110e",
+    "output/runtime-interop/mystral-source/include/mystral/js/module_resolver.h": "efe0b302917dd06b67b26d1b5ff241465a661a36bcf8f54b9346be5a2b0eb19d",
+    "output/runtime-interop/mystral-source/include/mystral/js/module_system.h": "7603baef0f0ddd9b936b0e7101b5e0529d1e5d8d3e9aaf8234803d5efe062804",
+    "output/runtime-interop/mystral-source/include/mystral/js/ts_transpiler.h": "55340f5679accd3dc5e1578c68f613fb752c9f5ad5dca617936faab740c9d945",
+    "output/runtime-interop/mystral-source/include/mystral/platform/input.h": "ef0e665ad84f16f1066d724c83967ec9860fa2544416b048b6a15029c2a33eeb",
+    "output/runtime-interop/mystral-source/include/mystral/platform/window.h": "284b25e94516290b951fabfd6d43624007d0217b08f51a1eaf6be1d335597079",
+    "output/runtime-interop/mystral-source/include/mystral/runtime.h": "b1d127de69e683c1c4be7b4fe8c761d9731f7d738ed2602208f24096c157d315",
+    "output/runtime-interop/mystral-source/include/mystral/vfs/embedded_bundle.h": "cd6e75cc8953b5dd24e00693630686d642353527c8b12f5648c9d2eefac42ded",
+    "output/runtime-interop/mystral-source/include/mystral/video/async_capture.h": "46e2857cc2cd186fd3a699c8d3101bf0c84a9fcc727534444561e8d0eceaec14",
+    "output/runtime-interop/mystral-source/include/mystral/video/video_recorder.h": "8084e465d4a1b523f7e0ef7e886bebcb462c217b4bc01d611367f7640af876d7",
+    "output/runtime-interop/mystral-source/include/mystral/webgpu/context.h": "c4fd71d37f4d76cdb85da7f75c3283082e5dd5d4cd49d0ef9e4a711ca18d6e37",
+    "output/runtime-interop/mystral-source/include/mystral/webgpu_compat.h": "68020b1e5b56eae70fe64c56b011852812a5db4c9a6630c711f7e97043c29527",
+    "output/runtime-interop/mystral-source/include/mystral/webtransport/webtransport.h": "2526bc8e053d800178a415932e222755ba038a721e66c4492212d45067dec084",
+    "output/runtime-interop/mystral-source/include/mystral/workers/worker_registry.h": "a53482f926aae056b292a431a300fb1fcb720177661a1333a80bf27128e94f90",
+    "output/runtime-interop/mystral-source/include/mystral/workers/worker_thread.h": "b528ba554103f68206e028ef08319095913185dfb3c006dd9bbadbdcfccdb109",
+    "output/runtime-interop/mystral-source/src/async/event_loop.cpp": "a9ce7f7f20d2cb753fc20f806cfd0dcaea27e6c27705d84b6809eed9b8f54949",
+    "output/runtime-interop/mystral-source/src/audio/audio_bindings.cpp": "9f2d9a6ae6f94b08d29bf8c125e831ee97a3320d429b374bfa1a6c695f979a31",
+    "output/runtime-interop/mystral-source/src/audio/audio_context.cpp": "4a00ef812fc02f118d6ae8ed170894b88bd887ea6e3ff416183b4a903fe1b2a2",
+    "output/runtime-interop/mystral-source/src/canvas/canvas.cpp": "8f806653f2df5b6311598fc0ed60e98db07bbd29e470cc49efa0037a42b2950f",
+    "output/runtime-interop/mystral-source/src/canvas/canvas2d.cpp": "cbea78aaafc59bd34fd646b1eac3771b3b5df58e153feac3fac17bfd5cf19b72",
+    "output/runtime-interop/mystral-source/src/canvas/canvas2d_bindings.cpp": "ba097a31e0eabc777f23d36747a76362a97a81b0add056528a33bbf7ea10c783",
+    "output/runtime-interop/mystral-source/src/cli/main.cpp": "36c2fb31b55b360753760ba84055eaf666279094f30a203886ed613120ed1bce",
+    "output/runtime-interop/mystral-source/src/debug/debug_server.cpp": "b86f6a6c5ff63c7c70b0304b6bd04138dea48bb872627ac601f5f35f1b526f50",
+    "output/runtime-interop/mystral-source/src/fs/async_file.cpp": "b306842c80503962495f83411cb2ea2e48192c3fcd7699f7ce22370a2be115c5",
+    "output/runtime-interop/mystral-source/src/fs/file_watcher.cpp": "7dc6429ed3824591b3ce9aa3389da0e0ba9fe4369826cfa26385150802b712d8",
+    "output/runtime-interop/mystral-source/src/gltf/gltf_loader.cpp": "af299c89d129e2a50e4f1e151a0d6f17f291c4689e35e6a59cca715f075ea772",
+    "output/runtime-interop/mystral-source/src/http/async_http_client.cpp": "aa4360e81cd757e38dc3f7c43ff620fa902aeb172bd422f4bd0e97a753d14b58",
+    "output/runtime-interop/mystral-source/src/http/http_client.cpp": "2d8833233b430a2ca2718bdea7ad81c5db681a5c41dda8310566eddfdbc7b0dd",
+    "output/runtime-interop/mystral-source/src/input/input_shim.cpp": "4a5954289bf2e629243b8e9c745fd64bc24697cb0602f47fec99ca9fd5d2e056",
+    "output/runtime-interop/mystral-source/src/js/engine_factory.cpp": "e00a5524d06d90709e6c240993e7d6e4f3fdf28dbef6164d834790df2d9212c4",
+    "output/runtime-interop/mystral-source/src/js/jsc_engine.mm": "78ed9069d90f05c0f6b7bb331577a5b4cf053b5f2a76ab984af03fcf820ce9a0",
+    "output/runtime-interop/mystral-source/src/js/module_resolver.cpp": "e2efcbbdf30f275794f9341474091af420403a886f86c0d1e9f2875fc54f5418",
+    "output/runtime-interop/mystral-source/src/js/module_system.cpp": "324619aa4be44bfdbdbef8fc69581b4550bb0218d493bdf0de72534675c52e76",
+    "output/runtime-interop/mystral-source/src/js/quickjs_engine.cpp": "cdadc40847d25a2dbea7003b4d9d5b6b2ee91be13eb4805c8ebaafbeb51f5a56",
+    "output/runtime-interop/mystral-source/src/js/ts_transpiler.cpp": "24991b51ac00044e6478c2ef539eb08f30d71bbeb09e14667038ad3df09fc211",
+    "output/runtime-interop/mystral-source/src/js/v8_engine.cpp": "90e3901f1dc8b7778e709599401af792a7ad150e2c95c338df75c5cda6977cac",
+    "output/runtime-interop/mystral-source/src/platform/android_main.cpp": "ea3b299ade9da3a01b5e52e1666a73fa761a42221c9bad9feee2f03cf7122f0e",
+    "output/runtime-interop/mystral-source/src/platform/input.cpp": "bdfb2963f3f8e17df00cbe631443c37a5524d82119c7c34fb1fcc8e15fe0b46e",
+    "output/runtime-interop/mystral-source/src/platform/surface_android.cpp": "fc2542100bc5a510bff78ba36621f96e4cdd976081c5e862d1830c22c713e4c3",
+    "output/runtime-interop/mystral-source/src/platform/surface_linux.cpp": "baced331b2c228d238713ce8c2005dc27d1864ce6b65200455560385b5c124b2",
+    "output/runtime-interop/mystral-source/src/platform/surface_metal.mm": "26d4ecd986632e91f058adf63e68b4d5878d54826a498dcae94d414b6c835fe9",
+    "output/runtime-interop/mystral-source/src/platform/surface_win32.cpp": "175ed875b8b8a8011f73aa8a79c93606846bc04c6008c4501dedde16aa3f3998",
+    "output/runtime-interop/mystral-source/src/platform/window.cpp": "614dcd7df414eae43fca95dece64c4c69649c0fb9fbfa93cd7ffdb583952e79a",
+    "output/runtime-interop/mystral-source/src/raytracing/bindings.cpp": "931ac603fe4a6896f2850fadc919684aae66f059680f5b62ea3e99cabcb61e5e",
+    "output/runtime-interop/mystral-source/src/raytracing/bindings.h": "533e3174aa645af3b0c3ae6909324f60182563d1ee879014295f875f577b6704",
+    "output/runtime-interop/mystral-source/src/raytracing/dxr_rt.cpp": "f24db4f1d161c76696fe9b6864733d074ccc809e06604d05baac326bc09bdda0",
+    "output/runtime-interop/mystral-source/src/raytracing/dxr_rt.h": "46e256feed7ad4f8857c5461b22ce6ecc46152a11fb7a614562e9593f983b681",
+    "output/runtime-interop/mystral-source/src/raytracing/metal_rt.h": "08f6c5c1b716a6aee1c42e8521f5e421172fa9ef18b93b10bde9643f07efa622",
+    "output/runtime-interop/mystral-source/src/raytracing/metal_rt.mm": "e3066d62b97069a1f61a12243b01c1920d697c6832323c0608a889d449e24d8a",
+    "output/runtime-interop/mystral-source/src/raytracing/rt_common.cpp": "34920f3237b0466fd8aa6c7fcb1d38e63b1ce706d280bb1b0089209e58447561",
+    "output/runtime-interop/mystral-source/src/raytracing/rt_common.h": "e81eeee9a246fbd079fa8e27891de450b474f85c4baf91e0a351879bd7d3ee0d",
+    "output/runtime-interop/mystral-source/src/raytracing/shaders/closesthit.hlsl": "fc2f747fc7f2d669b84afe51a09d943f09f8d053ab9986f252fbd8fb5012902f",
+    "output/runtime-interop/mystral-source/src/raytracing/shaders/closesthit.rchit": "f6945a55ed640f74e02c90a936cc8967dd8a1ba5ca7bd9325127beb1c38c78a6",
+    "output/runtime-interop/mystral-source/src/raytracing/shaders/miss.hlsl": "4a2c0c38981ca5aecca0e68a5b1a14e002379b1113ff606ddd9aae8f6a8f325a",
+    "output/runtime-interop/mystral-source/src/raytracing/shaders/miss.rmiss": "159e11892ccd6a7d6772f891dc7a6641592f348e4b53a5c2c20063d58710eb06",
+    "output/runtime-interop/mystral-source/src/raytracing/shaders/raygen.hlsl": "3cb6eb89bb5864184a80da757dd4b7a6cf2d4c296bfecad23533fee045b44788",
+    "output/runtime-interop/mystral-source/src/raytracing/shaders/raygen.rgen": "dff27d45117f90e3c3651ef1dd057d478c4fa28b6abaef1e7b017f943de7b1c1",
+    "output/runtime-interop/mystral-source/src/raytracing/shaders/raytracing.metal": "e71a4dfbaf393a90c72e0f0bc70b9164932c25fedde69ed5c82ed31a0cb07072",
+    "output/runtime-interop/mystral-source/src/raytracing/shaders/rt_shaders_dxil.h": "c2996b1788832b4ac1413882c9f1334b530fd594d1206b2f3caafffecb947eec",
+    "output/runtime-interop/mystral-source/src/raytracing/shaders/rt_shaders_spirv.h": "363f72ba83bf80a0b90f6ee32da6aa18a7ce76e2156b308b2242bd1417afe949",
+    "output/runtime-interop/mystral-source/src/raytracing/vulkan_rt.cpp": "999666b011a47ee1da9ddc5d23ebabf1a961688c1abc5cb0f817ccd74cee703b",
+    "output/runtime-interop/mystral-source/src/raytracing/vulkan_rt.h": "df89ccbc90084e915fcd50c1a2e5ea588876951c35ccf02e24e035d58c65718d",
+    "output/runtime-interop/mystral-source/src/runtime.cpp": "0bdd67b8b72245ad9208a0732e91a544c161b0793df3ef159b36bbc7e95fafb6",
+    "output/runtime-interop/mystral-source/src/storage/local_storage.cpp": "2ab291c26374d2676fc45397362534842a300338d425663ece5c97a8995ff444",
+    "output/runtime-interop/mystral-source/src/storage/local_storage.h": "440fc19a736af00c62976417669034b11d5cfa5f8f78748abf69100b3eb6a442",
+    "output/runtime-interop/mystral-source/src/utils/cgltf_impl.cpp": "9317c66a88781435033bd27c93f87f76378b95808f54fa5be2d6b9493ca59ae5",
+    "output/runtime-interop/mystral-source/src/utils/stb_impl.cpp": "92c508ceefbd584e1487fe97e068ab22e21cf7711e3515e418951ef7b28ac22d",
+    "output/runtime-interop/mystral-source/src/vfs/embedded_bundle.cpp": "7b341af45abfc86206c7ccbfa08cc27aa2b8a64bb23ce617a7a48bf46a31576f",
+    "output/runtime-interop/mystral-source/src/video/async_capture.cpp": "79d5762cb80c254ce8bc985454fc86481cc9c11413e07b60a604673284bc61fb",
+    "output/runtime-interop/mystral-source/src/video/gpu_readback_recorder.cpp": "2bdb5a53a394a771d9f7a089c336089ca4657d92652c5cfe1b24c32d215d5759",
+    "output/runtime-interop/mystral-source/src/video/screen_capture_kit.mm": "ef2eb03187f8a98fcab619c515a773fdfeefa45e934aed2627e921292ce6198b",
+    "output/runtime-interop/mystral-source/src/video/video_recorder.cpp": "d5b04aac36b8c009e602e9d4b33996251eda3b22874a3f49ed5d69ea2d805c22",
+    "output/runtime-interop/mystral-source/src/video/windows_graphics_capture.cpp": "5a5e7e66c1d18b65c2de21779ffd2aefb360bcf17b1d1992a435a471df3a571f",
+    "output/runtime-interop/mystral-source/src/video/windows_graphics_capture_impl.cpp": "41b22a24757f1d67cfda959466ad9c9e1f650c2a679373ab2f90582dd65b0afe",
+    "output/runtime-interop/mystral-source/src/webgpu/bindings.cpp": "51274f47094d2fbd970feb2fc6802e6fadeb555b9a1c32252dfb8c96ea378055",
+    "output/runtime-interop/mystral-source/src/webgpu/context.cpp": "d8c39d75c34ead0f0b2e49d701543490a5e7c94a900543b83a12d52268d69cd2",
+    "output/runtime-interop/mystral-source/src/webtransport/webtransport.cpp": "2989c0d1725b9ed1b6c4aae30358837abc8e47bb2ddc9f617b253e5550f2de84",
+    "output/runtime-interop/mystral-source/src/webtransport/webtransport_polyfill.cpp": "4f8a3d5449d1523a1490edfe45d354e32f71d123b2b8474072348d136d744d51",
+    "output/runtime-interop/mystral-source/src/workers/worker_registry.cpp": "84603505600671a18dc14f50b450c4b5d3fb17f99125476ebdf3a41f87e44067",
+    "output/runtime-interop/mystral-source/src/workers/worker_thread.cpp": "9a5b388b87f2183e8ee0d83772c2098e18f4d3b276a940249a9995a4f64c5df2",
+    "output/runtime-interop/android-build-attempt-10/build-report.json": "b9d08d8fd43db659227a44f12b9e4db04780ebbe7dfd19b7669c2e2bd48f7b28",
+    "output/runtime-interop/android-build-attempt-10/source-before.json": "6525200cb6990eefd2217cfa35a1c73cdec1da0bf0a13c1ed63101249f0c8f84",
+    "output/runtime-interop/android-build-attempt-10/source-after.json": "6525200cb6990eefd2217cfa35a1c73cdec1da0bf0a13c1ed63101249f0c8f84",
+    "output/runtime-interop/android-build-attempt-10/apksigner.log": "b9c6879e48d25a9786d2beb8a15738c06edce7d06f2722dd860894618592bd09",
+    "output/runtime-interop/android-matrix-final-20261025/logcat.txt": "9961b40e08cf06ecf7e610fbad844599c5cfca6a9195f686843e880c289f82b5",
+    "output/runtime-interop/android-matrix-final-20261025/probes/session.json": "9b5b7277af1011859d20dd4ceb5885aca609a87edadc88e627786c84d3b0fced",
+    "output/runtime-interop/android-matrix-final-20261025/probes/app-report.json": "c22c2e65ccd1218a404398e98358f1b5aba7569965d9d7cc6f90b2836f25f619",
+    "output/runtime-interop/android-matrix-final-20261025/probes/probes.png": "76f3c9c28395a74738315316c7d5ea4363cda35bbfe25acbd40bbeb648a9cde6",
+    "output/runtime-interop/android-matrix-final-20261025/probes/probes.screen.png": "e36e4188e7943d4de2e4b8703b016a2346dfce2e9ba4ad3c234931523b650f6e",
+    "output/runtime-interop/android-matrix-final-20261025/probes/probes.screen-crop.png": "ef2601f1a3054b5e55cb6420f14b262038a19ca36cb4623265c9b5fafb0f88e5",
+    "output/runtime-interop/android-matrix-final-20261025/probes/native-exit.json": "2ea4ab008003e5f28ca1dcd0cffc553e356806f0afb8ef3902790911a154185b",
+    "output/runtime-interop/android-matrix-final-20261025/probes/process-table-after-stop.txt": "62341dd6e9a980af6b7e14f8174350fa8e53f21dc0dcbbde8bdd9594d4031466",
+    "output/runtime-interop/android-matrix-final-20261025/air/session.json": "cb1f9b6572bc1a47d3aca17ab382f43dbe5681ed78fb9631caee6dca589bd0cd",
+    "output/runtime-interop/android-matrix-final-20261025/air/app-report.json": "e7151d4503d429c94b1f9ea299072b3bdbde463f932e9d6cdd871b76c6d459b7",
+    "output/runtime-interop/android-matrix-final-20261025/air/air.png": "8004bc74dd88707be5cc94d8ef9ce3e819251bd0f52bcf7d5b56a8fa46d336fb",
+    "output/runtime-interop/android-matrix-final-20261025/air/air.screen.png": "f62c2309c2eb5b64e1187c8b038804e616651f8496064eac40e8eb5d6a8c0ff3",
+    "output/runtime-interop/android-matrix-final-20261025/air/air.screen-crop.png": "abd86ec2192728dc21650d9207d20005290ffe0e4df64c86bb5793e8550b13bc",
+    "output/runtime-interop/android-matrix-final-20261025/air/native-exit.json": "a05c153c30e9eb1d949c696e296b12244ddc982a5215242d9f02c876be6e214e",
+    "output/runtime-interop/android-matrix-final-20261025/air/process-table-after-stop.txt": "9825dfabd6fe2b6b16cfd294cb2861653434831b2849cbbf3d007566e246fec7",
+    "output/runtime-interop/android-matrix-final-20261025/pbr/session.json": "f5424aef1f7475aeff81e137ceaebb87b4f4a49b8160466428a767eb61c0bdc3",
+    "output/runtime-interop/android-matrix-final-20261025/pbr/app-report.json": "710c22ead718bfa701e17431e3201475ddf6404ff8e10bb8843ecb054e7c8df3",
+    "output/runtime-interop/android-matrix-final-20261025/pbr/scene-pbr-before.png": "40b3f8fa74b390dc18e856717756bc4d876409ca37ae32d721dc4ab427830e06",
+    "output/runtime-interop/android-matrix-final-20261025/pbr/scene-pbr-before.screen.png": "d0cb3ebf5dba4c811ae26a11e37a6560badd4f03399e5801c1b48c011545e63d",
+    "output/runtime-interop/android-matrix-final-20261025/pbr/scene-pbr-before.screen-crop.png": "6316e7affa37ee5bf2afe9286c88c103acd312c0bd335e9256d6ee13a60b9947",
+    "output/runtime-interop/android-matrix-final-20261025/pbr/scene-pbr-after.png": "6c6b31d0cc2516a9397dd80c9c99a3844144d2dcaf06ae0e77693bbb5c0e689a",
+    "output/runtime-interop/android-matrix-final-20261025/pbr/scene-pbr-after.screen.png": "bdd1557695de6dc210be20a99d172110857c3a40e550985127ba0522031f23e6",
+    "output/runtime-interop/android-matrix-final-20261025/pbr/scene-pbr-after.screen-crop.png": "44143e3616f88555bfe09ff358f2299deb49dffcc69a8cad798c0fe9d1cfc1c7",
+    "output/runtime-interop/android-matrix-final-20261025/pbr/native-exit.json": "f7fa0bedaf40874203df98693c09d951442b4249f263efeeeb1ef317c07e6598",
+    "output/runtime-interop/android-matrix-final-20261025/pbr/process-table-after-stop.txt": "3fcf39047bebb48bc3654ea40c32e8f5544cc38adaa9504908558c9177a8ce1e",
+    "output/runtime-interop/android-matrix-final-20261025/skin/session.json": "4ac4682e4939a6e4c19607c89098840983bfcc58481ce5e3d5a58dd08912cc35",
+    "output/runtime-interop/android-matrix-final-20261025/skin/app-report.json": "c6816d395f29c64a7eaf72af0ccc1b50069699f49ae7197a2390887fe215cf0c",
+    "output/runtime-interop/android-matrix-final-20261025/skin/scene-skin-before.png": "8d1ec6fdd9bfb7acd24cd72c3c357733e4014492c0982f97f06f88d2d102bb6a",
+    "output/runtime-interop/android-matrix-final-20261025/skin/scene-skin-before.screen.png": "0206cd5edad11cbb55797344a8e9fd5eeadfe666bc0d06807a604a11a2447417",
+    "output/runtime-interop/android-matrix-final-20261025/skin/scene-skin-before.screen-crop.png": "fe3cb95810f5abf208c85bd73a94968ceb8d6debca18ee04dc61ef9590021e20",
+    "output/runtime-interop/android-matrix-final-20261025/skin/scene-skin-after.png": "e9003d014764684615f83693ca256896a3bb7291f9ec90c300149544512611c7",
+    "output/runtime-interop/android-matrix-final-20261025/skin/scene-skin-after.screen.png": "3049a663f7d2b0794da702f9cc2a2ddb797a6c86cc67ba5d1ffd6930114fb840",
+    "output/runtime-interop/android-matrix-final-20261025/skin/scene-skin-after.screen-crop.png": "f1745e15e0dbe202a8ae45e825c56ce24239b47fcee740127dd2ca4e3e00cea4",
+    "output/runtime-interop/android-matrix-final-20261025/skin/native-exit.json": "c90857cc4c90cba85867ce39ace17c8cefccb5ce51d59ee2cf4f81dfffc1a50b",
+    "output/runtime-interop/android-matrix-final-20261025/skin/process-table-after-stop.txt": "7bca025631711117a001b61463f0ac84d2def1b5bc44e77bd9fb93f5ee949a7f",
+    "output/runtime-interop/android-matrix-final-20261025/ui/session.json": "8f8b6ebe511421f2592319d1342d3d92499daa17c6bc747238bdda579a681211",
+    "output/runtime-interop/android-matrix-final-20261025/ui/app-report.json": "7557aac3f81239ac70f8e0a80a493f164a1ec1f06f6428996dcbbddabcf63691",
+    "output/runtime-interop/android-matrix-final-20261025/ui/scene-ui-before.png": "0183b7cd6f943f144339a0fe015c658f397b7289d010a4e5f4dbacdddbe0159f",
+    "output/runtime-interop/android-matrix-final-20261025/ui/scene-ui-before.screen.png": "8a69cdb9158d5a0b1fd3716e6c4bf858c5bc52820897ae1ccdd84b50b22ea00e",
+    "output/runtime-interop/android-matrix-final-20261025/ui/scene-ui-before.screen-crop.png": "02f7c27cd184d26ba821b6cf37a65901840e98d684a5a6cca85e1be7f7cea0a9",
+    "output/runtime-interop/android-matrix-final-20261025/ui/scene-ui-after.png": "656a73c51e79d17e8987d560c49902d500ad33321ba6ded292beb7373bf05383",
+    "output/runtime-interop/android-matrix-final-20261025/ui/scene-ui-after.screen.png": "262e6a41030aed63c0f82d4aedef98dbb34d96115b6d102610935beace6e33af",
+    "output/runtime-interop/android-matrix-final-20261025/ui/scene-ui-after.screen-crop.png": "4aaba83a24103b338b7e7bc94a995f0c876fcd9a28f6eee2d1ca2c56c64a7d2a",
+    "output/runtime-interop/android-matrix-final-20261025/ui/native-exit.json": "7dfb7f6b3c6f19406decd3c64086a5598a00c0458d8086d61995dcfa756b35f1",
+    "output/runtime-interop/android-matrix-final-20261025/ui/process-table-after-stop.txt": "af77d764ed91a8525b548a89a17cdfbb1678bc6eaba535bcb4f0f413221b26b7",
+    "output/runtime-interop/android-matrix-final-20261025/compute/session.json": "4ba510f0e4ba2cc30595038a441ecc9ce31f9e4458310a8735dc2e1806fbbb11",
+    "output/runtime-interop/android-matrix-final-20261025/compute/app-report.json": "ac0463135a04c3327a46b5c6ccca248d9148995b75c93e998a59fb45e3a180df",
+    "output/runtime-interop/android-matrix-final-20261025/compute/scene-compute-before.png": "0c91381c47407e34ac287c51ff6f817b8914953189126878994d3b809eed2e5f",
+    "output/runtime-interop/android-matrix-final-20261025/compute/scene-compute-before.screen.png": "0eff2385bbed201e96afddb539a4319cf0d505c38eab0b2f3461109853c7bd5e",
+    "output/runtime-interop/android-matrix-final-20261025/compute/scene-compute-before.screen-crop.png": "8989349a8d8609467ca12127b515a5a89731f2c226e014c75543339aac3ec5a4",
+    "output/runtime-interop/android-matrix-final-20261025/compute/scene-compute-after.png": "72528bb7b2b6d20898765ff7af17aa90ae0bf8e2af5a311e8832af3978d75e6f",
+    "output/runtime-interop/android-matrix-final-20261025/compute/scene-compute-after.screen.png": "5601410a3e8f56486721b88d197777efdfe190a398a4210c71a6fa2410954ad0",
+    "output/runtime-interop/android-matrix-final-20261025/compute/scene-compute-after.screen-crop.png": "e36e67b5e17c632ec8373e565379f25c188a62a30dbf1b661bad702277cdfb7e",
+    "output/runtime-interop/android-matrix-final-20261025/compute/native-exit.json": "3624ff7a42a8342c7bbff7de5791737cdcbc06330d39fd1cadef60a35f3adc8f",
+    "output/runtime-interop/android-matrix-final-20261025/compute/process-table-after-stop.txt": "e59df40bc4374291d54ac766433812ea1f85e598cb2aa2517f2909a14e77fd02",
+    "output/runtime-interop/android-demo-final-20261025/session.json": "714dfbb982e5e1a6121b55b3bf5752b2b599fe136ffc7e1421b6b460e9cdff55",
+    "output/runtime-interop/android-demo-final-20261025/state-ready.json": "21596f0a1d912ad1512931c225f9341d2511971f8496fb61cff7fb26e93d449a",
+    "output/runtime-interop/android-demo-verify.cjs": "57ffe94fbbbcb90cd0e8801efc9551113210ad663d260431d74afb65714cf39a",
+    "output/runtime-interop/android-demo-final-20261025/scene-demo-before.png": "5045c37452682949c1ab5712f9d6692765102647397c40b5d00c8d3b51218a7f",
+    "output/runtime-interop/android-demo-final-20261025/before.screen.png": "7fbf5539f30fcdbdf0f41ea28c195ba5c12797939ef04d5991bd6fe3c89e05a2",
+    "output/runtime-interop/android-demo-final-20261025/before.screen-crop.png": "58a478c4b51e690f1a9d779083cf17ca35ba8c63612909da1287d38deb1dec0f",
+    "output/runtime-interop/android-demo-final-20261025/scene-demo-after.png": "c3fceffaadd5b14367d526815c45b2a398bd22424c62950ca5f1d4d1dc9207ef",
+    "output/runtime-interop/android-demo-final-20261025/after.screen.png": "54ce5727f1b74b095f803c5423c0009691e7ebb8a6a73f5ead490364d0cf6ab7",
+    "output/runtime-interop/android-demo-final-20261025/after.screen-crop.png": "c05d1229afc9048c119fe954300113835206887f47358d70407ab06ee81e668d",
+    "output/runtime-interop/android-demo-final-20261025/events.jsonl": "99617968e25fb9a02d77be13e6eca96e09f4cfc1d0238737a193c755c1812429",
+    "output/runtime-interop/android-demo-final-20261025/lifecycle.jsonl": "0eee2243e0d1883ab1e6f75eacbe7b95254d04de983b18002e2658011dc9339d",
+    "output/runtime-interop/android-demo-final-20261025/resume.screen.png": "9a31b35a2af739ceebcb817aa8c08faf9a0ca1ceeda03201f7fad58c189e8277",
+    "output/runtime-interop/android-demo-final-20261025/resume.screen-crop.png": "d1751f9fb00c25c08cd6f756994eacb26c192ca51bdbb31dae69af79414cc33e",
+    "output/runtime-interop/android-demo-final-20261025/logcat.txt": "af2b020fbd6886c5b235eed1f9f68c4e0c2126bae1e4f411fe43d8c744ab12a6",
+    "output/runtime-interop/android-demo-final-20261025/process-table-after-stop.txt": "905ab218b366c145eac5dda1d723fd5643d2fada116723657e8fe1b2a34e8a22",
+    "output/runtime-interop/android-demo-attempt-1/report.json": "3064e71ce391147fef3699ca058783c5a545602d211f4ef540180a7bc8aa5615",
+    "output/runtime-interop/android-demo-attempt-2/report.json": "c12411429ae4cda24209b4c840ea94cdfdd90047140db1a04aed24467438bb8d",
+    "output/runtime-interop/android-demo-attempt-3/report.json": "f2e57b874aecfc7e140276edab0252711e8f7fc6d8193083f6dc07099e792095",
+    "output/runtime-interop/android-final-independent-audit-20261025/audit.json": "ed394becb50bc458a9da1a5cbc280708814c92e6343e50f2472a6a4dbe7c9456"
+  },
+  "auditScriptSha256": "31b3e919cde2dd1ad28717089d03c93b59289553ab74f69226949a0981bf7bc9",
+  "failedChecks": [],
+  "status": "PASS",
+  "finishedAt": "2026-10-25T14:53:11.992Z"
+}

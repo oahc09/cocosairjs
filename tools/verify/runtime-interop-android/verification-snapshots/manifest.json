@@ -1,0 +1,374 @@
+{
+  "schema": "air-runtime-interop-verification-source-snapshots-v1",
+  "createdAt": "2026-10-26T15:15:15.9189561Z",
+  "purpose": "Byte-identical source archive; restore originalFile paths and prerequisites before replay. Historical evidence and original inputs are unchanged.",
+  "fileCount": 61,
+  "files": [
+    {
+      "originalFile": "output/android-16k-build-source-audit-1/audit.py",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/android-16k-build-source-audit-1/audit.py",
+      "bytes": 15788,
+      "sha256": "9bf8a694625cef983e1a849562761a329d4c42450c1f3ffd1757fd88743c150c"
+    },
+    {
+      "originalFile": "output/android-arm64-source-exit-audit-1/audit-attempt-2.cjs",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/android-arm64-source-exit-audit-1/audit-attempt-2.cjs",
+      "bytes": 17770,
+      "sha256": "0da9d09baefffff749f72842d8c8a53afd4c8509ab88490a20e52d58aa03f0bf"
+    },
+    {
+      "originalFile": "output/runtime-interop/16k-assessment-sdl-1/abi-supplement.py",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/16k-assessment-sdl-1/abi-supplement.py",
+      "bytes": 3872,
+      "sha256": "28ff71852997cf2140f697daa51735447499fdac481c7a75755c25221feca984"
+    },
+    {
+      "originalFile": "output/runtime-interop/16k-assessment-sdl-1/assess-attempt-2.py",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/16k-assessment-sdl-1/assess-attempt-2.py",
+      "bytes": 12703,
+      "sha256": "1f80b10c76d2d6b64787e479526e152bfa88b80d574ff5e0ef5bdbaf20e98ebc"
+    },
+    {
+      "originalFile": "output/runtime-interop/16k-assessment-sdl-1/assess.py",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/16k-assessment-sdl-1/assess.py",
+      "bytes": 12213,
+      "sha256": "7a233bd86f1affa86fac2986b2bb60faf09dc617a2f5f88f14dafc8ce9a6a8a0"
+    },
+    {
+      "originalFile": "output/runtime-interop/16k-assessment-sdl-1/download.ps1",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/16k-assessment-sdl-1/download.ps1",
+      "bytes": 1470,
+      "sha256": "030da3c3f63030e86f96c9b44a519504529fa378aee71db40df8b8b5c47fd6d4"
+    },
+    {
+      "originalFile": "output/runtime-interop/android-16k-collector-v1.cjs",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/android-16k-collector-v1.cjs",
+      "bytes": 50688,
+      "sha256": "8ddcdb6d6dfe3510d57c648265b25a2778b81df9760d830f037f28a124bdb19e"
+    },
+    {
+      "originalFile": "output/runtime-interop/android-16k-demo-audit-1/produce.cjs",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/android-16k-demo-audit-1/produce.cjs",
+      "bytes": 13477,
+      "sha256": "b849ebdaa2434d886f6d18b3153238a020574c90c10879e270203533e11cc294"
+    },
+    {
+      "originalFile": "output/runtime-interop/android-16k-demo-verify-v1.cjs",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/android-16k-demo-verify-v1.cjs",
+      "bytes": 13441,
+      "sha256": "ac7d5999a910411064b6c3f3b263ae40dcfc6275c15b6cb39085e0435188dc46"
+    },
+    {
+      "originalFile": "output/runtime-interop/android-16k-final-audit-2/map-audit.cjs",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/android-16k-final-audit-2/map-audit.cjs",
+      "bytes": 3312,
+      "sha256": "e2d7afec306fd7e0c2ffe323870a27c06c66472abc13fa7eeef4368070a5da1e"
+    },
+    {
+      "originalFile": "output/runtime-interop/android-16k-final-audit-2/produce.cjs",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/android-16k-final-audit-2/produce.cjs",
+      "bytes": 42253,
+      "sha256": "d7348f38a0e3c50e5ee24a444401d22a203818c8e619bb9238a64997a93f967b"
+    },
+    {
+      "originalFile": "output/runtime-interop/android-arm64-collector-v2.cjs",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/android-arm64-collector-v2.cjs",
+      "bytes": 36453,
+      "sha256": "4a48bea1c7d381b934bd3b6853141ce27de0faf3005d422ad641a09273af4852"
+    },
+    {
+      "originalFile": "output/runtime-interop/android-arm64-elf-audit-1/produce.cjs",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/android-arm64-elf-audit-1/produce.cjs",
+      "bytes": 12095,
+      "sha256": "6f1c7f7ebb4ce5a9555b2a585ecb42b9b7c6d038ae2f7a2d8cd1bb9e6795c084"
+    },
+    {
+      "originalFile": "output/runtime-interop/android-arm64-final-audit-2/produce.cjs",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/android-arm64-final-audit-2/produce.cjs",
+      "bytes": 31011,
+      "sha256": "c77c2d527c756f3666ca1dfaeca028d0a4f9501af8cb4c2ffadcb22a39c871b7"
+    },
+    {
+      "originalFile": "output/runtime-interop/android-arm64-final-audit-2/replay-icc.py",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/android-arm64-final-audit-2/replay-icc.py",
+      "bytes": 4369,
+      "sha256": "58b2346b446dfbbab0350bb42221abc3310bf30d59fc44b6d0697d27a4571965"
+    },
+    {
+      "originalFile": "output/runtime-interop/android-build-deps-attempt-1/build-apk-arm64-attempt-1-stage4.ps1",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/android-build-deps-attempt-1/build-apk-arm64-attempt-1-stage4.ps1",
+      "bytes": 4229,
+      "sha256": "01e583e3c641b9793b4190d0d9a020ef849177fa0dbbace19904b3af544d7fdd"
+    },
+    {
+      "originalFile": "output/runtime-interop/android-build-deps-attempt-1/build-apk-attempt-1.ps1",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/android-build-deps-attempt-1/build-apk-attempt-1.ps1",
+      "bytes": 1702,
+      "sha256": "bbc8e540bd187a23202292d6a24af68fb7cc0075ca67406efb990d5617a44269"
+    },
+    {
+      "originalFile": "output/runtime-interop/android-build-deps-attempt-1/build-apk-attempt-10-stage4.ps1",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/android-build-deps-attempt-1/build-apk-attempt-10-stage4.ps1",
+      "bytes": 2166,
+      "sha256": "42e6a9c723af10df336b4be7baef4e936eb18f98afad098b6a6a69fcacfa8052"
+    },
+    {
+      "originalFile": "output/runtime-interop/android-build-deps-attempt-1/build-apk-attempt-2.ps1",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/android-build-deps-attempt-1/build-apk-attempt-2.ps1",
+      "bytes": 2081,
+      "sha256": "6a68374987c7ad7c40bec73085a29feda4e03078760c8be81ceea496955354f1"
+    },
+    {
+      "originalFile": "output/runtime-interop/android-build-deps-attempt-1/build-apk-attempt-3.ps1",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/android-build-deps-attempt-1/build-apk-attempt-3.ps1",
+      "bytes": 2083,
+      "sha256": "7826f78ebf9821d64c8b79216b05cc28adbb367f2f4e6e9eba5f35c80aabfb5e"
+    },
+    {
+      "originalFile": "output/runtime-interop/android-build-deps-attempt-1/build-apk-attempt-4.ps1",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/android-build-deps-attempt-1/build-apk-attempt-4.ps1",
+      "bytes": 2085,
+      "sha256": "8478e0731376a5c1f4fac640b1a533752c21a763b17c5a10a7793f405b1d98f9"
+    },
+    {
+      "originalFile": "output/runtime-interop/android-build-deps-attempt-1/build-apk-attempt-5.ps1",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/android-build-deps-attempt-1/build-apk-attempt-5.ps1",
+      "bytes": 2087,
+      "sha256": "34c8b0a63c05cdbd04e9d5c1ded64f0d41dd0f43b976873968505a3e586fe8da"
+    },
+    {
+      "originalFile": "output/runtime-interop/android-build-deps-attempt-1/build-apk-attempt-6.ps1",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/android-build-deps-attempt-1/build-apk-attempt-6.ps1",
+      "bytes": 2089,
+      "sha256": "dd4f5ca9c6cd29da8d782e3516b3d39451b00965d698bdc81776d3aa3e4b906e"
+    },
+    {
+      "originalFile": "output/runtime-interop/android-build-deps-attempt-1/build-apk-attempt-7-stage2.ps1",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/android-build-deps-attempt-1/build-apk-attempt-7-stage2.ps1",
+      "bytes": 2093,
+      "sha256": "3bc7cb6ba39512d0c4d8a2575a00abc35a92212db7c9dd9b4bf860428b3ff1eb"
+    },
+    {
+      "originalFile": "output/runtime-interop/android-build-deps-attempt-1/build-apk-attempt-7.ps1",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/android-build-deps-attempt-1/build-apk-attempt-7.ps1",
+      "bytes": 2091,
+      "sha256": "fa4b7c2701ec43f4bd2cd314d98609d1503829ee22cd7781fac44ccd8840fa53"
+    },
+    {
+      "originalFile": "output/runtime-interop/android-build-deps-attempt-1/build-apk-attempt-8-stage2.ps1",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/android-build-deps-attempt-1/build-apk-attempt-8-stage2.ps1",
+      "bytes": 2095,
+      "sha256": "25af3574095280638424afeb46f198cf2310a683bb6d40f3e147b6748d57dee6"
+    },
+    {
+      "originalFile": "output/runtime-interop/android-build-deps-attempt-1/build-apk-attempt-9-stage3.ps1",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/android-build-deps-attempt-1/build-apk-attempt-9-stage3.ps1",
+      "bytes": 2161,
+      "sha256": "61cf852747282f964e23ee6eab1ce29a8084e434ed0783453cf843d0f612a706"
+    },
+    {
+      "originalFile": "output/runtime-interop/android-build-deps-attempt-1/cmake-preflight-attempt-1.ps1",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/android-build-deps-attempt-1/cmake-preflight-attempt-1.ps1",
+      "bytes": 1844,
+      "sha256": "e4224943894c8a0ee4128968e8f6ced1bc19133b8e4af27d54e6d7cec169d765"
+    },
+    {
+      "originalFile": "output/runtime-interop/android-build-deps-attempt-1/download-dawn.ps1",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/android-build-deps-attempt-1/download-dawn.ps1",
+      "bytes": 1881,
+      "sha256": "b9e3f444cae97861a45657453cf0547ad1fd09b409f021db74364808bc524887"
+    },
+    {
+      "originalFile": "output/runtime-interop/android-build-deps-attempt-1/download-skia-arm64.ps1",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/android-build-deps-attempt-1/download-skia-arm64.ps1",
+      "bytes": 1973,
+      "sha256": "bbf22e3be6d3534ddd10dd62d7dc0fae766da47752a756aceb39b8b6616ccc3a"
+    },
+    {
+      "originalFile": "output/runtime-interop/android-build-deps-attempt-1/download.ps1",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/android-build-deps-attempt-1/download.ps1",
+      "bytes": 2164,
+      "sha256": "4a1c68276ac9f08735f7d1c0235aa12feb18da7522cc8920230d845bdd85c660"
+    },
+    {
+      "originalFile": "output/runtime-interop/android-build-deps-attempt-1/finalize-apk-arm64-stage4.ps1",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/android-build-deps-attempt-1/finalize-apk-arm64-stage4.ps1",
+      "bytes": 7534,
+      "sha256": "ac98238a9f9db6f39688a1d0c3a7ff66452d83d524b89c5dfcbe33ebb59b3186"
+    },
+    {
+      "originalFile": "output/runtime-interop/android-build-deps-attempt-1/finalize-apk-stage2.ps1",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/android-build-deps-attempt-1/finalize-apk-stage2.ps1",
+      "bytes": 5425,
+      "sha256": "0bc6f18d079c129a2c20df89b20d183c3b6eb2f531655946562d382c5aa4dde2"
+    },
+    {
+      "originalFile": "output/runtime-interop/android-build-deps-attempt-1/finalize-apk-stage3.ps1",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/android-build-deps-attempt-1/finalize-apk-stage3.ps1",
+      "bytes": 5427,
+      "sha256": "58d6a2162c361a414f2acde92aabb89ccb94c0803590ad2ea059812d1d072a1a"
+    },
+    {
+      "originalFile": "output/runtime-interop/android-build-deps-attempt-1/finalize-apk-stage4.ps1",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/android-build-deps-attempt-1/finalize-apk-stage4.ps1",
+      "bytes": 5429,
+      "sha256": "e78545439a1226016b7fa82a43604b68194d359836e81ace87989870bd1920f8"
+    },
+    {
+      "originalFile": "output/runtime-interop/android-build-deps-attempt-1/finalize-apk.ps1",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/android-build-deps-attempt-1/finalize-apk.ps1",
+      "bytes": 5423,
+      "sha256": "cec801e11015ceee53842aa2bd2070b925fb32ee9e169bfb698d388553ffef92"
+    },
+    {
+      "originalFile": "output/runtime-interop/android-build-deps-attempt-1/fingerprint-android-source.cjs",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/android-build-deps-attempt-1/fingerprint-android-source.cjs",
+      "bytes": 632,
+      "sha256": "6d43a4bc36965489f038411b0d0ec3fc97dcc4edfa3166e766721c4bdb8eb4ac"
+    },
+    {
+      "originalFile": "output/runtime-interop/android-build-deps-attempt-1/fingerprint-assets.cjs",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/android-build-deps-attempt-1/fingerprint-assets.cjs",
+      "bytes": 662,
+      "sha256": "32059cfdd7f99a7887abcaeace0f4e1044a4b902b8a9dd5ce293b20ecf012845"
+    },
+    {
+      "originalFile": "output/runtime-interop/android-build-deps-attempt-1/prepare-compact-apk.ps1",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/android-build-deps-attempt-1/prepare-compact-apk.ps1",
+      "bytes": 1404,
+      "sha256": "7c57af6c76b33465920cd48dba803a0862637593b3e62e253ae92f0ed8ced825"
+    },
+    {
+      "originalFile": "output/runtime-interop/android-build-deps-attempt-1/prepare-compact-apk10.ps1",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/android-build-deps-attempt-1/prepare-compact-apk10.ps1",
+      "bytes": 1406,
+      "sha256": "65c349d6e15d6389ae9c6335bdebf04227f58de84f63cbb419994e47660177bd"
+    },
+    {
+      "originalFile": "output/runtime-interop/android-build-deps-attempt-1/record-arm64-dependencies.ps1",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/android-build-deps-attempt-1/record-arm64-dependencies.ps1",
+      "bytes": 4149,
+      "sha256": "b628a378a984c0740e97a2719df02aa4b2464db5db10a056112d313e27f0b473"
+    },
+    {
+      "originalFile": "output/runtime-interop/android-build-deps-attempt-1/run-wrapper-version.ps1",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/android-build-deps-attempt-1/run-wrapper-version.ps1",
+      "bytes": 1721,
+      "sha256": "1d35d68a561a21e647fae76e5121ed4442708552acc087576099dfb0393d7a10"
+    },
+    {
+      "originalFile": "output/runtime-interop/android-cxx-static-audit-2/produce.cjs",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/android-cxx-static-audit-2/produce.cjs",
+      "bytes": 31617,
+      "sha256": "8e2a51f5d264a0de98d058690099c6d9131a5ec8fa7e19ed9c069e956878f256"
+    },
+    {
+      "originalFile": "output/runtime-interop/android-cxx-static-collector-v1.cjs",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/android-cxx-static-collector-v1.cjs",
+      "bytes": 40353,
+      "sha256": "e60fa96459684f67556b33641c872efcbf5ed96ecd27fdb261e5fca5af72e859"
+    },
+    {
+      "originalFile": "output/runtime-interop/android-phone-color-normalize.py",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/android-phone-color-normalize.py",
+      "bytes": 9376,
+      "sha256": "0a6f3d0817bf8693d04ed2a590bfe1cd7faa2d64c0a158e440a8661d93e4f4ac"
+    },
+    {
+      "originalFile": "output/runtime-interop/android-phone-color-presentation.cjs",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/android-phone-color-presentation.cjs",
+      "bytes": 5081,
+      "sha256": "d5b57f2feacbba350437cd16c1ace930f02a5e1291e21ccef2bd4f9a8388105f"
+    },
+    {
+      "originalFile": "output/runtime-interop/android-phone-process-table.cjs",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/android-phone-process-table.cjs",
+      "bytes": 853,
+      "sha256": "691ee9897c80aef53951b67894618071527d0a02032cd0f2469685ae08a4744d"
+    },
+    {
+      "originalFile": "output/runtime-interop/deps-16k-attempt-1/build-16k-arm64-apk-attempt-1.ps1",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/deps-16k-attempt-1/build-16k-arm64-apk-attempt-1.ps1",
+      "bytes": 3819,
+      "sha256": "7f5491566a476c3d6fa7681e4b908744d13a63f7ac1248e831dea70aa89fb308"
+    },
+    {
+      "originalFile": "output/runtime-interop/deps-16k-attempt-1/build-16k-x64-apk-attempt-1.ps1",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/deps-16k-attempt-1/build-16k-x64-apk-attempt-1.ps1",
+      "bytes": 3814,
+      "sha256": "1da48a17ab774a8bf64be7e2254293155fa5fec0f58d0a9c7faac964a2e0f7db"
+    },
+    {
+      "originalFile": "output/runtime-interop/deps-16k-attempt-1/finalize-16k-apk.py",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/deps-16k-attempt-1/finalize-16k-apk.py",
+      "bytes": 10284,
+      "sha256": "3921fd1666322412fd82d4b015c19562c730c3853b5459fd5c8f4aa6fc524c89"
+    },
+    {
+      "originalFile": "output/runtime-interop/deps-16k-attempt-1/prepare-deps.py",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/deps-16k-attempt-1/prepare-deps.py",
+      "bytes": 3426,
+      "sha256": "9163fc736ec2d71428fc95df173864216875fdf31279d9d6f99627cf3116e6fc"
+    },
+    {
+      "originalFile": "output/runtime-interop/deps-static-attempt-1/build-static-apk-attempt-1.ps1",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/deps-static-attempt-1/build-static-apk-attempt-1.ps1",
+      "bytes": 3773,
+      "sha256": "934c09fe487a907929515c1c6a09b54db6f8e97e5a7a780aeeaabfa1370f4f15"
+    },
+    {
+      "originalFile": "output/runtime-interop/deps-static-attempt-1/build-static-x64-apk-attempt-1.ps1",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/deps-static-attempt-1/build-static-x64-apk-attempt-1.ps1",
+      "bytes": 3778,
+      "sha256": "74e8fe24dae66d47b7955039c2fa8a47c68e3ba10172f0799b23c7f3b1b7d3d1"
+    },
+    {
+      "originalFile": "output/runtime-interop/deps-static-attempt-1/check-rejected-mixed-profile.ps1",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/deps-static-attempt-1/check-rejected-mixed-profile.ps1",
+      "bytes": 1458,
+      "sha256": "6ece6a0b86be427022a09a0e73f080cb37982281e450437ca9dfe89f9e72ecad"
+    },
+    {
+      "originalFile": "output/runtime-interop/deps-static-attempt-1/copy-fixed-deps-x64.ps1",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/deps-static-attempt-1/copy-fixed-deps-x64.ps1",
+      "bytes": 1690,
+      "sha256": "a879dff4136bcbd465e150effdd3d6edf250fb717131d14dad2b33e8e8ce6de2"
+    },
+    {
+      "originalFile": "output/runtime-interop/deps-static-attempt-1/copy-fixed-deps.ps1",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/deps-static-attempt-1/copy-fixed-deps.ps1",
+      "bytes": 1744,
+      "sha256": "3b7493914f131f32db265dfc9e958025aeda4024eee6a72761f8db4a1e7bcadb"
+    },
+    {
+      "originalFile": "output/runtime-interop/deps-static-attempt-1/download-v8-x64.ps1",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/deps-static-attempt-1/download-v8-x64.ps1",
+      "bytes": 2125,
+      "sha256": "d9587e0ffdf28d0e88bd565967f42a4a8dbed0bcf41eb2713ec673d57e38bbd1"
+    },
+    {
+      "originalFile": "output/runtime-interop/deps-static-attempt-1/download-v8.ps1",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/deps-static-attempt-1/download-v8.ps1",
+      "bytes": 2115,
+      "sha256": "eecc4d4a27c791735c48c9b6b32f19426508346e584e5a2cf53be249b01e98ba"
+    },
+    {
+      "originalFile": "output/runtime-interop/deps-static-attempt-1/finalize-static-apk.py",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/deps-static-attempt-1/finalize-static-apk.py",
+      "bytes": 8821,
+      "sha256": "c049ffa17bf4555ef76daaf3638479ff8d70de453be16ae56a91ebcb6ccfb0b7"
+    },
+    {
+      "originalFile": "output/runtime-interop/deps-static-attempt-1/finalize-static-x64-apk-complete.py",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/deps-static-attempt-1/finalize-static-x64-apk-complete.py",
+      "bytes": 7598,
+      "sha256": "036bceaf6fd8fb011d6eacae85afd2a3d3892f873659dac9300458de94d2508c"
+    },
+    {
+      "originalFile": "output/runtime-interop/deps-static-attempt-1/finalize-static-x64-apk.py",
+      "file": "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/deps-static-attempt-1/finalize-static-x64-apk.py",
+      "bytes": 9804,
+      "sha256": "f3625cf8fea38b251c3df033cbdf6a266894c9694694f96b85b3a7fd3dc7c4bd"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "name": "SDL3-devel-3.2.8-android.zip",
+  "url": "https://github.com/libsdl-org/SDL/releases/download/release-3.2.8/SDL3-devel-3.2.8-android.zip",
+  "expectedSha256": null,
+  "startedAt": "2026-10-25T12:19:40.6833631Z",
+  "pass": true,
+  "sha256": "31d0cf0d2863abfe01130ca130a15066fa6e364614e0c798a168359b4bdc7df7",
+  "bytes": 13938133,
+  "finishedAt": "2026-10-25T12:19:46.8019116Z"
+}

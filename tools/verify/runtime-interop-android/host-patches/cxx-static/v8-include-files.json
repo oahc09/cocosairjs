@@ -1,0 +1,836 @@
+{
+  "schema": "fixed-v8-include-files-v1",
+  "repository": "https://github.com/cocos/cocos-engine-external",
+  "ref": "0be13f7e2e9034d123744935ea73b410b2085b15",
+  "files": [
+    {
+      "file": "v8/include/APIDesign.md",
+      "bytes": 3377,
+      "sha256": "7d8ef429f7873483f777c9413f45b1c742af62f34c122526ed935642387734dd",
+      "gitBlobSha1": "fe42c8ed5da36eca3c9fb7a12e306baabcc7bf53",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/APIDesign.md"
+    },
+    {
+      "file": "v8/include/cppgc/allocation.h",
+      "bytes": 11889,
+      "sha256": "bb3c6bdba714de127d89bb1576c601d69ef6accb5080bce98566f68093bb5ace",
+      "gitBlobSha1": "69883fb34d1e46f9aada3977adc78192daa5a5af",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/cppgc/allocation.h"
+    },
+    {
+      "file": "v8/include/cppgc/common.h",
+      "bytes": 643,
+      "sha256": "3c64e8f6eb258720401ec5079869c2148213f72f6d4d4df6df89d546b07a2c1a",
+      "gitBlobSha1": "961038360ac4289972cf28dc01d533e7436ac878",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/cppgc/common.h"
+    },
+    {
+      "file": "v8/include/cppgc/cross-thread-persistent.h",
+      "bytes": 15170,
+      "sha256": "35cb3964217662a99e9c3cefaf75127a049fb50160cd6292cb1f09039df8c936",
+      "gitBlobSha1": "a5f8bac0b1013eac2e23cf5ea82e126ee8964d3d",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/cppgc/cross-thread-persistent.h"
+    },
+    {
+      "file": "v8/include/cppgc/custom-space.h",
+      "bytes": 2454,
+      "sha256": "e07586be071fa0bc194efd585b0c9e483bb332049ee12693de27801879b9c868",
+      "gitBlobSha1": "757c4fde15ea7c7b5703aa5c6f27112629fbae29",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/cppgc/custom-space.h"
+    },
+    {
+      "file": "v8/include/cppgc/default-platform.h",
+      "bytes": 2230,
+      "sha256": "b83af2ba4c121f24895b01eaf2d08f10b28efd2d3fe046c52a97f7a2fd5a735d",
+      "gitBlobSha1": "a27871cc37ee47cd7a073b5fe473381b67b0dbfa",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/cppgc/default-platform.h"
+    },
+    {
+      "file": "v8/include/cppgc/DEPS",
+      "bytes": 152,
+      "sha256": "219acd95f9b0cc528a6d506775e22f2f1f0b5b255ff3a52bcc9de48be7361f6b",
+      "gitBlobSha1": "2ec7ebbd4abd662e00e9d362d0b95f6e00371e39",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/cppgc/DEPS"
+    },
+    {
+      "file": "v8/include/cppgc/ephemeron-pair.h",
+      "bytes": 804,
+      "sha256": "bee39f129b2597a9c34a579829fe720f3d71f5cf737918530aab81ead99b1e7f",
+      "gitBlobSha1": "e16cf1f0aa2accb34529c3e0b2221af6bfb45653",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/cppgc/ephemeron-pair.h"
+    },
+    {
+      "file": "v8/include/cppgc/explicit-management.h",
+      "bytes": 3370,
+      "sha256": "17772b2437ac8463b95dd331c2e7be371f3bb89c933c7cff0bfc09a254d94106",
+      "gitBlobSha1": "0290328dccbab8f1d1e71bc60e2aea1f2fc4d3b4",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/cppgc/explicit-management.h"
+    },
+    {
+      "file": "v8/include/cppgc/garbage-collected.h",
+      "bytes": 3183,
+      "sha256": "9e6684f6d11904d1ab201514fbceadaf305431904b6a373b836c3c5a4de7cd90",
+      "gitBlobSha1": "6737c8be49aca4e4e75d8b5516840de01db47305",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/cppgc/garbage-collected.h"
+    },
+    {
+      "file": "v8/include/cppgc/heap-consistency.h",
+      "bytes": 12021,
+      "sha256": "12d8f696a9f983d6a3a89d08e1777bf984483dc5b0816c328d295a80921ff211",
+      "gitBlobSha1": "eb7fdaee8c3c02f4c411d45b6001e232f8aefed2",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/cppgc/heap-consistency.h"
+    },
+    {
+      "file": "v8/include/cppgc/heap-handle.h",
+      "bytes": 1289,
+      "sha256": "29e12945e9bc2b6382e97d1527b19d858e54c75149a09107c29bffa53f3c8ad9",
+      "gitBlobSha1": "0d1d21e65daafddff12a7d1cff57fca002cacaf2",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/cppgc/heap-handle.h"
+    },
+    {
+      "file": "v8/include/cppgc/heap-state.h",
+      "bytes": 2632,
+      "sha256": "9e4ac38fc7e351a3138c3c99e5ea6a09e61e6ddd8b02b4fc2e48100199e9dadc",
+      "gitBlobSha1": "28212589f8d714ad008f5669527544fa037dfdef",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/cppgc/heap-state.h"
+    },
+    {
+      "file": "v8/include/cppgc/heap-statistics.h",
+      "bytes": 3982,
+      "sha256": "744fc9a47261fa62c86a07cf1d50cd6ab78caed42c1977dbad9abd3f6f054538",
+      "gitBlobSha1": "5e389874099426faa4317d4f5d91fdbfadb25715",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/cppgc/heap-statistics.h"
+    },
+    {
+      "file": "v8/include/cppgc/heap.h",
+      "bytes": 5834,
+      "sha256": "2afd83536f15879b859f9f12ca341aff9c462aa541769d0744025daefd92f5a9",
+      "gitBlobSha1": "02ee12eaba09d5aa17539170d6ad0f40632b8666",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/cppgc/heap.h"
+    },
+    {
+      "file": "v8/include/cppgc/internal/api-constants.h",
+      "bytes": 2903,
+      "sha256": "c1c9e15549b0bbc42be91a5e5134d574902cadd937a69bc49f48b5f87e4d71b5",
+      "gitBlobSha1": "4e2a637e420560b6eb0ce0abcde5e4f4a48c762f",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/cppgc/internal/api-constants.h"
+    },
+    {
+      "file": "v8/include/cppgc/internal/atomic-entry-flag.h",
+      "bytes": 1763,
+      "sha256": "270e86353643206f2a15023f7c8b9d0d6f16393f8407b48b006fba1e45068ff9",
+      "gitBlobSha1": "5a7d3b8f8ac4c10098aaf862a3e6775db9362b81",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/cppgc/internal/atomic-entry-flag.h"
+    },
+    {
+      "file": "v8/include/cppgc/internal/base-page-handle.h",
+      "bytes": 1472,
+      "sha256": "d3701ae9493a9e7abdb6003cb2cf582e7fc4fda326d8df78cc08464f0b55a40f",
+      "gitBlobSha1": "9c6907555e21d425087f333e6d0779dff2a4606e",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/cppgc/internal/base-page-handle.h"
+    },
+    {
+      "file": "v8/include/cppgc/internal/caged-heap-local-data.h",
+      "bytes": 3696,
+      "sha256": "770367e6a4a99fd453452f7df143377ad703e6827a0e35aa129672af742bacfb",
+      "gitBlobSha1": "1eb87dfb5389555b8737138c311272178778bada",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/cppgc/internal/caged-heap-local-data.h"
+    },
+    {
+      "file": "v8/include/cppgc/internal/caged-heap.h",
+      "bytes": 2264,
+      "sha256": "f0a1fe3f882b5f86def20adc4c91d17462cb80fd118abefbae9bc4c050cc4d0e",
+      "gitBlobSha1": "0c987a95447cc688cbcb791bb57d66f29edc3058",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/cppgc/internal/caged-heap.h"
+    },
+    {
+      "file": "v8/include/cppgc/internal/compiler-specific.h",
+      "bytes": 1019,
+      "sha256": "c4e4b980874119f3dbaa9f4875d6f64f5b23299f876ba7024b34953217216ca8",
+      "gitBlobSha1": "595b6398cb720a120f15764ee624c1fd6166f389",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/cppgc/internal/compiler-specific.h"
+    },
+    {
+      "file": "v8/include/cppgc/internal/finalizer-trait.h",
+      "bytes": 2656,
+      "sha256": "249dc1add987c14d9f94d342828d3341192656557a5603eb3259bde07e808b80",
+      "gitBlobSha1": "ab49af870e0ba30708698bb9ee63bcf545ff026e",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/cppgc/internal/finalizer-trait.h"
+    },
+    {
+      "file": "v8/include/cppgc/internal/gc-info.h",
+      "bytes": 6461,
+      "sha256": "ef8a240ac79b53c5605ab204e6d9f2a061f99717b8cc58b6c2d650392cc9ce0c",
+      "gitBlobSha1": "c8cb99acbc0fde5ebc4c2ae3f4594a124029a4ab",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/cppgc/internal/gc-info.h"
+    },
+    {
+      "file": "v8/include/cppgc/internal/logging.h",
+      "bytes": 1702,
+      "sha256": "63a56e9d9feebb29d49b247590a47d5d62c5b55cfb177535e372e5888509d200",
+      "gitBlobSha1": "3a279fe0bef8392774f4b9d8dd5beff779774b34",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/cppgc/internal/logging.h"
+    },
+    {
+      "file": "v8/include/cppgc/internal/member-storage.h",
+      "bytes": 8904,
+      "sha256": "77e341ca37f98a3d91207e047d14599cea70dff84694429dcdbc994f6f5b6de6",
+      "gitBlobSha1": "61b255ba637a922df250a5238673de720c109d4b",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/cppgc/internal/member-storage.h"
+    },
+    {
+      "file": "v8/include/cppgc/internal/name-trait.h",
+      "bytes": 4180,
+      "sha256": "c60c805cd15541fe98a5489ea311ba011fd16f7a2812600a54efe4f77ad4f0b2",
+      "gitBlobSha1": "1d927a9d0a962c0d5acd493848adc871de020b2d",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/cppgc/internal/name-trait.h"
+    },
+    {
+      "file": "v8/include/cppgc/internal/persistent-node.h",
+      "bytes": 6032,
+      "sha256": "20a648a3d6c0b448ebe8c6be3137d59319a6182ac83aab90caf8bdf59079fe8e",
+      "gitBlobSha1": "d22692a768c49f6876e8b91dbca30559069bc975",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/cppgc/internal/persistent-node.h"
+    },
+    {
+      "file": "v8/include/cppgc/internal/pointer-policies.h",
+      "bytes": 8540,
+      "sha256": "387f1dbe91157a65cbee581bab2da0fc3f0e1d706e4bf75730c0ab85a998a6a3",
+      "gitBlobSha1": "06fa884f49f34bd102856f3bbfd4f1c947e07201",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/cppgc/internal/pointer-policies.h"
+    },
+    {
+      "file": "v8/include/cppgc/internal/write-barrier.h",
+      "bytes": 19548,
+      "sha256": "25444565b9c2f4dae373cc25b69e72ca411cffe87e7a4a985c4f8e5b310144dd",
+      "gitBlobSha1": "566724d30a0901366e0cfe929eb4920a516ab75a",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/cppgc/internal/write-barrier.h"
+    },
+    {
+      "file": "v8/include/cppgc/liveness-broker.h",
+      "bytes": 2396,
+      "sha256": "4390c573e7a792598e1f7d4d000ba345d0d3d627cf98c6f9f4094ef106084ccb",
+      "gitBlobSha1": "2c94f1c0fade96004a85694e87c4776e231a8eb0",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/cppgc/liveness-broker.h"
+    },
+    {
+      "file": "v8/include/cppgc/macros.h",
+      "bytes": 1345,
+      "sha256": "a26d991809558ee3932ff97cfaa5d30adc33f1a92a1840c5c542cc9519393968",
+      "gitBlobSha1": "a9ac22d7af0d0b3dd3cb05ec22f3e68d2c5ec65c",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/cppgc/macros.h"
+    },
+    {
+      "file": "v8/include/cppgc/member.h",
+      "bytes": 24114,
+      "sha256": "4a62cf6e023f2451b9b7a57f0e8f80b74e817815f0cb6c739f0a9a370b52c0af",
+      "gitBlobSha1": "457f163bc78eab01288be33d63a81c0922a51e60",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/cppgc/member.h"
+    },
+    {
+      "file": "v8/include/cppgc/name-provider.h",
+      "bytes": 2034,
+      "sha256": "15f31cdf3986f92bad4997fcfed4de53693fb1174a391fec33f757c5dac48444",
+      "gitBlobSha1": "216f6098d99dd145a9c00760fa1c488c284206a7",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/cppgc/name-provider.h"
+    },
+    {
+      "file": "v8/include/cppgc/object-size-trait.h",
+      "bytes": 1643,
+      "sha256": "b595c4cb82e4923f67cf207382b518751667be55ee86086b6b8eedaf5baa1b35",
+      "gitBlobSha1": "35795596d3621b127ff59fc6c7de9d43357060e6",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/cppgc/object-size-trait.h"
+    },
+    {
+      "file": "v8/include/cppgc/OWNERS",
+      "bytes": 43,
+      "sha256": "5fe69d53f8ddb9bd6033ef645a2b7896aaa15f053703ffe40bb3d7e1132ec6fa",
+      "gitBlobSha1": "6ccabf60b15cd1244692f2da4631e9bd2b7e7095",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/cppgc/OWNERS"
+    },
+    {
+      "file": "v8/include/cppgc/persistent.h",
+      "bytes": 13822,
+      "sha256": "df51f3610a53d6d2ab65ffe8dbf5560976c4802eac8f4f3197688ba9e93e0659",
+      "gitBlobSha1": "709f3fd6ab0996279884967e441d2f1403cda956",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/cppgc/persistent.h"
+    },
+    {
+      "file": "v8/include/cppgc/platform.h",
+      "bytes": 6042,
+      "sha256": "63d96c1fe154fee8249c641d22392cf8d37b03c22ffd624b7f9b264a3ff90fb3",
+      "gitBlobSha1": "ae96579dd64e4459fe326b3029ff54e2c74025f3",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/cppgc/platform.h"
+    },
+    {
+      "file": "v8/include/cppgc/prefinalizer.h",
+      "bytes": 2944,
+      "sha256": "a166ad493a02e382acb093bfd56425ac177504aedcc650ac4dd37f7de38ce56b",
+      "gitBlobSha1": "51f2eac8ed466190597d2f62b071827bb371c022",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/cppgc/prefinalizer.h"
+    },
+    {
+      "file": "v8/include/cppgc/process-heap-statistics.h",
+      "bytes": 1009,
+      "sha256": "97831f0ab6b7b7932fcf045b15ca66289eaf9a3218850a6672b7253e59846d44",
+      "gitBlobSha1": "774cc92f46cd92f25b6a64de39cb947f6a62a9cd",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/cppgc/process-heap-statistics.h"
+    },
+    {
+      "file": "v8/include/cppgc/README.md",
+      "bytes": 8274,
+      "sha256": "917355b77342420a876d7cf1b820f697af5f130985a820311ecc99de8a8ce091",
+      "gitBlobSha1": "d825ea5bd5ba9b0ab2fe5e83c4566933b9378aa0",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/cppgc/README.md"
+    },
+    {
+      "file": "v8/include/cppgc/sentinel-pointer.h",
+      "bytes": 1208,
+      "sha256": "13f78abbe810a9959bb2126a5ca4de7795fe0c7b21c18a261cd278bfa4035fd7",
+      "gitBlobSha1": "bee96c77607428ec4ac07adb9573fe05bbda8655",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/cppgc/sentinel-pointer.h"
+    },
+    {
+      "file": "v8/include/cppgc/source-location.h",
+      "bytes": 414,
+      "sha256": "aadb7df97fbe5320787b16ae01d0de46f95054846908406b3ec72914b48942fa",
+      "gitBlobSha1": "0dc28aedd9b225b6e7d5099e51cc766d2b0829bb",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/cppgc/source-location.h"
+    },
+    {
+      "file": "v8/include/cppgc/testing.h",
+      "bytes": 3033,
+      "sha256": "d7e6d067eb779d41fc790854dcb2d8e8f58af3a7595979000c8929c83bde86e1",
+      "gitBlobSha1": "bddd1fc163305bb7bf25add65a2d15e0cd8071e4",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/cppgc/testing.h"
+    },
+    {
+      "file": "v8/include/cppgc/trace-trait.h",
+      "bytes": 3479,
+      "sha256": "950993565adb04dba8c6a991c62f5f4878325258b3801853577b4f44e97a5aec",
+      "gitBlobSha1": "5fc863d2ebbac5251117d15cd2a547fe4fdc5b06",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/cppgc/trace-trait.h"
+    },
+    {
+      "file": "v8/include/cppgc/type-traits.h",
+      "bytes": 7966,
+      "sha256": "f0188137ca3d171b68b9117faf6f6f25afc291c9fe633b07b6d79ffbf501c56d",
+      "gitBlobSha1": "4651435390058fc01b107dacbd03f7135cbfd161",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/cppgc/type-traits.h"
+    },
+    {
+      "file": "v8/include/cppgc/visitor.h",
+      "bytes": 18516,
+      "sha256": "f15c1a9e2b633b28326d30e5ad9b0e1ec3c22e77647547864a27ac1e22949dc6",
+      "gitBlobSha1": "1d6b39a14fd16af143ded6592934e8db1e42811f",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/cppgc/visitor.h"
+    },
+    {
+      "file": "v8/include/DEPS",
+      "bytes": 296,
+      "sha256": "d875e107601928d036c4ad016654f73eca6745a64cb5a38e58d6ec453e242925",
+      "gitBlobSha1": "21ce3d964593c832d79fa77d0b8d4c7d8f9a6d0b",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/DEPS"
+    },
+    {
+      "file": "v8/include/DIR_METADATA",
+      "bytes": 409,
+      "sha256": "f23302e4b9f1642f306beb4292031f2348fa7bd7a5fbff19d67979c412b0c0b4",
+      "gitBlobSha1": "a27ea1b53a3f539745872fa12929070032b5378f",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/DIR_METADATA"
+    },
+    {
+      "file": "v8/include/js_protocol-1.2.json",
+      "bytes": 66714,
+      "sha256": "90f3db8f0bae67327b8a311031e25a26cae5e1dd85fbe386fbc07a28d240700c",
+      "gitBlobSha1": "aff6806222684747ad6670f5bcd476fea04ab24e",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/js_protocol-1.2.json"
+    },
+    {
+      "file": "v8/include/js_protocol-1.3.json",
+      "bytes": 79251,
+      "sha256": "8d353fb92f09347bc8779e3fcf3309aae66f658c0a2370915c514998976f4cc2",
+      "gitBlobSha1": "a998d4611d16d38f6a9615ed9ce6dc0bf61a1617",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/js_protocol-1.3.json"
+    },
+    {
+      "file": "v8/include/js_protocol.pdl",
+      "bytes": 69333,
+      "sha256": "3ed5bcf33e239243106889006d00471d013e9d242c19860329050b20cb254efa",
+      "gitBlobSha1": "7a3c772cb5cdf7615e6bdbf2db0c6ac67225b32c",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/js_protocol.pdl"
+    },
+    {
+      "file": "v8/include/libplatform/DEPS",
+      "bytes": 149,
+      "sha256": "c19d5d4c024737fb748dbf1d9a5e346b43f717d05d4fde782565f21b8e644835",
+      "gitBlobSha1": "d8bcf99880d380a09ce263353bffb7f6161ec1ab",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/libplatform/DEPS"
+    },
+    {
+      "file": "v8/include/libplatform/libplatform-export.h",
+      "bytes": 804,
+      "sha256": "4e9c163e7e549f6e973a6ad951056c2dae71e2eb8d1673cc5889e34ec40e43d0",
+      "gitBlobSha1": "15618434977d933285af1eed45fd3bdea85dae4b",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/libplatform/libplatform-export.h"
+    },
+    {
+      "file": "v8/include/libplatform/libplatform.h",
+      "bytes": 4196,
+      "sha256": "1052cb8e8f6025955c2c03b24273b0a7ae29213b20ce548014c8d4081aaeaee9",
+      "gitBlobSha1": "9ec60c04f9cce67b054cef53f7c31a943025e260",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/libplatform/libplatform.h"
+    },
+    {
+      "file": "v8/include/libplatform/v8-tracing.h",
+      "bytes": 11073,
+      "sha256": "e1e0e8de8f199e3df4f6beb9ea7b2ad8ad183f4631c51b1beb5cf018734b2877",
+      "gitBlobSha1": "6039a9c520b6a31efc15bbd91dad7f8e11566024",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/libplatform/v8-tracing.h"
+    },
+    {
+      "file": "v8/include/OWNERS",
+      "bytes": 689,
+      "sha256": "8eb8cced950b66e599506e27d6762ed840bc396dbfa9c7345e5a29c393dcd61f",
+      "gitBlobSha1": "535040c539a732f481e62b18ae92390b995fbd87",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/OWNERS"
+    },
+    {
+      "file": "v8/include/v8-array-buffer.h",
+      "bytes": 17873,
+      "sha256": "b4b8860ffe5632dcc689cfbc56aaab0f90ed45ee96140f670837bd990d1c85fe",
+      "gitBlobSha1": "804fc42c4b56dd9b79f0fdc49e94c0e101e510e8",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-array-buffer.h"
+    },
+    {
+      "file": "v8/include/v8-callbacks.h",
+      "bytes": 15285,
+      "sha256": "d24f8d1748be097b7094b45ab7bb4a33eceae3ec6c26abc00095820bbddec7e8",
+      "gitBlobSha1": "12588c6c4f625c8ae82219cc4fced3f6796bbd63",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-callbacks.h"
+    },
+    {
+      "file": "v8/include/v8-container.h",
+      "bytes": 3482,
+      "sha256": "fb3934ce17bfee865c2d23f461744b217a051b03b4489c40e57960d223a18b12",
+      "gitBlobSha1": "ce06860364946167581e1313dbee83cee0a935c2",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-container.h"
+    },
+    {
+      "file": "v8/include/v8-context.h",
+      "bytes": 16376,
+      "sha256": "eb5360d0341ef94b1b63625ce030cba0af06c3cd4224a6b902d44ed046d0ee85",
+      "gitBlobSha1": "36cd43cb417b8534fefc1629171c787776dad65e",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-context.h"
+    },
+    {
+      "file": "v8/include/v8-cppgc.h",
+      "bytes": 7522,
+      "sha256": "2c8782f536b2592fc115e318c972eb3a37f687ae7132ad9ee612fbddbd401286",
+      "gitBlobSha1": "4a457027c9f76b5d75f8f693ebe31fd616134849",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-cppgc.h"
+    },
+    {
+      "file": "v8/include/v8-data.h",
+      "bytes": 1623,
+      "sha256": "a4c68b87c1e94d2e4548aa6ec8968e622b2a4791b1494d0dc0c0795f1ceb0ed2",
+      "gitBlobSha1": "fc4dea92f3d8ccfcc33f6cd8e50ddf4a89601267",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-data.h"
+    },
+    {
+      "file": "v8/include/v8-date.h",
+      "bytes": 1218,
+      "sha256": "fd36597d1c76bee2403dcef8083bb64e65f2dea351eda931c8aa167cf2710c98",
+      "gitBlobSha1": "8d82ccc9ea60bbeed6d1903dac3638a921a4a7e3",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-date.h"
+    },
+    {
+      "file": "v8/include/v8-debug.h",
+      "bytes": 5161,
+      "sha256": "912cb74df5410390c81919cdd9b77ae5bcbd8479202d506e1236fe8f6eb6d969",
+      "gitBlobSha1": "52255f3700cb73b094776174c0a3d5845e56bf48",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-debug.h"
+    },
+    {
+      "file": "v8/include/v8-embedder-heap.h",
+      "bytes": 2371,
+      "sha256": "0ac188d914e371130eda480e662e572ac9344cf75e93f274f454465c59d7d1e4",
+      "gitBlobSha1": "c37dadf7a39d556ca0883571ed24074df91fa830",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-embedder-heap.h"
+    },
+    {
+      "file": "v8/include/v8-embedder-state-scope.h",
+      "bytes": 1542,
+      "sha256": "12b951623717be873571c0924c827ec2a538b782b7e298c81a248473fd8d5a78",
+      "gitBlobSha1": "d8a3b08d5caeaed0cc84def2f229797a2abb8d42",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-embedder-state-scope.h"
+    },
+    {
+      "file": "v8/include/v8-exception.h",
+      "bytes": 7151,
+      "sha256": "97d06e06871d5c422a06b2d7e75ddfad696f93ee25030abc2e1132f5a9b668d9",
+      "gitBlobSha1": "bc058e3fc7b8741b5bd1c7eaaeaaf0225a03e56e",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-exception.h"
+    },
+    {
+      "file": "v8/include/v8-extension.h",
+      "bytes": 1870,
+      "sha256": "ad2783655342544e49ad5323e04aefd112facbf5f6630d2f3050fbee1da4bcd0",
+      "gitBlobSha1": "0705e2afbb8708694c7de3b8ca50fc8b4b986216",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-extension.h"
+    },
+    {
+      "file": "v8/include/v8-external.h",
+      "bytes": 924,
+      "sha256": "234042362502bc29d2e5fa652b3ca50aeff60bbacbb045a3e9e4ca10b3bb59fd",
+      "gitBlobSha1": "2e245036f422317602d5186a79a872c90ff15b42",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-external.h"
+    },
+    {
+      "file": "v8/include/v8-fast-api-calls.h",
+      "bytes": 37298,
+      "sha256": "8635ce45b9265337413fcd618724b589610a746971abdf48cbb308ae82aefcb1",
+      "gitBlobSha1": "e40f1068faba99141d42b0ff009f001f2c6b124b",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-fast-api-calls.h"
+    },
+    {
+      "file": "v8/include/v8-forward.h",
+      "bytes": 1662,
+      "sha256": "156ca9805102d8620205847630c8b09345b8514f8b56b11065b4053f53f4deee",
+      "gitBlobSha1": "db3a2017b7e5ee900459144109597f8f4d8ffde3",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-forward.h"
+    },
+    {
+      "file": "v8/include/v8-function-callback.h",
+      "bytes": 15849,
+      "sha256": "746d5a9c96487013db3248d73bc0ceb894d836781cd8172a7499d5dc844f5bba",
+      "gitBlobSha1": "49c102bc9c773097e7533312a6f7e4820d0872eb",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-function-callback.h"
+    },
+    {
+      "file": "v8/include/v8-function.h",
+      "bytes": 4346,
+      "sha256": "8a58227781edb1e5d3468333759aec8dda2905d21cbe1f6bde9d9c8e5695410b",
+      "gitBlobSha1": "1e35bfc8bfa272d57321440b4bf26989a9c38562",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-function.h"
+    },
+    {
+      "file": "v8/include/v8-handle-base.h",
+      "bytes": 5644,
+      "sha256": "d33812f16624ebe6ed14a77ada43e9d693f61ceb832f64ee92e57890e6399966",
+      "gitBlobSha1": "da19db77dabc205f9fdbfec6fff0e5259c342ecf",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-handle-base.h"
+    },
+    {
+      "file": "v8/include/v8-initialization.h",
+      "bytes": 10478,
+      "sha256": "61bd9579d84ac44f28d9c6a39a37320b04cce1e8126e42edc5d566a1dd847a95",
+      "gitBlobSha1": "d3e35d6ec5f860dbed9b4b705fe3898acda8779e",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-initialization.h"
+    },
+    {
+      "file": "v8/include/v8-inspector-protocol.h",
+      "bytes": 553,
+      "sha256": "a6d0d6a35f1eb3558cd04bf918c244d5a550bb451a99459cea1c11312fb16bd1",
+      "gitBlobSha1": "a5ffb7d6954bcfe0d5aa5c78ff374a8d3f9b46c0",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-inspector-protocol.h"
+    },
+    {
+      "file": "v8/include/v8-inspector.h",
+      "bytes": 14124,
+      "sha256": "b91e921ec299f25aa97cc1b48b0eb210a2f2b82638a00d2bb5f7d885fe8743a3",
+      "gitBlobSha1": "96643bb4eeaa68897385c9eb64401e1715896166",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-inspector.h"
+    },
+    {
+      "file": "v8/include/v8-internal.h",
+      "bytes": 40984,
+      "sha256": "aaa184128cf0ffcd56707af889a3931d608d2f5dc64fbb1b2e783c0d494f535d",
+      "gitBlobSha1": "9d163de1efe9925bcbbae441d9691d45de4f60a6",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-internal.h"
+    },
+    {
+      "file": "v8/include/v8-isolate.h",
+      "bytes": 62744,
+      "sha256": "75b2ca18e77a480fe561b6af6a5159061a87205698ca590c064ccfad21b4d9fc",
+      "gitBlobSha1": "22377d60aacde24a68ae6040b1e1002d68ce507c",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-isolate.h"
+    },
+    {
+      "file": "v8/include/v8-json.h",
+      "bytes": 1356,
+      "sha256": "7ac22ac74ebac312a5901478e398ef1d3a29f0ef56accb6d6736d47e0dbb4cdc",
+      "gitBlobSha1": "23d918fc9736d8d1c2cee77d710fed4199387ffd",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-json.h"
+    },
+    {
+      "file": "v8/include/v8-local-handle.h",
+      "bytes": 16064,
+      "sha256": "c60da82ac5697d617c93f321792a206a71bad1be893be6952560043f223d5eb3",
+      "gitBlobSha1": "9c28be2e0f1f61f21f279ecd9b386fd8edb4a1b5",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-local-handle.h"
+    },
+    {
+      "file": "v8/include/v8-locker.h",
+      "bytes": 3956,
+      "sha256": "a3f67133e57b85f46482e312ec1400ba00cf831fe4fe4556872d270b000a72e9",
+      "gitBlobSha1": "22b7a8767a83a702a2601bdfd4c0f71206df0ad5",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-locker.h"
+    },
+    {
+      "file": "v8/include/v8-maybe.h",
+      "bytes": 4574,
+      "sha256": "2f204c9f94400a75169b3e6b544137fd3fd6a367e833334596ddbf0ca236af99",
+      "gitBlobSha1": "8d3aeabe02af45d914b2c9c9bb849b196dea02c4",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-maybe.h"
+    },
+    {
+      "file": "v8/include/v8-memory-span.h",
+      "bytes": 1279,
+      "sha256": "8bcfd748938691c99e1f22cf52c75240b27c52972b7097bbf42906409f959915",
+      "gitBlobSha1": "b26af4f705b7cf34e580841f7b39d19906a7b4c3",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-memory-span.h"
+    },
+    {
+      "file": "v8/include/v8-message.h",
+      "bytes": 6436,
+      "sha256": "026e027a58407c551aad21d3f08710bc8734fe67caa1888bc970ffde94725ec2",
+      "gitBlobSha1": "09f9a0a97ddb647887a33ba3976417eb689468fc",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-message.h"
+    },
+    {
+      "file": "v8/include/v8-metrics.h",
+      "bytes": 9059,
+      "sha256": "0e6a9a38a19f8941b834c5f19061249bfaadfe41ce4c480c3d03a2a82743d89e",
+      "gitBlobSha1": "5c6c1c4705e38b15e057a5f789b54f5291486cfe",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-metrics.h"
+    },
+    {
+      "file": "v8/include/v8-microtask-queue.h",
+      "bytes": 5069,
+      "sha256": "eed97d7dbff52838ddff338ce3454c2c2b1f59afbf2bf368d045e092a77054c1",
+      "gitBlobSha1": "85d227fa3fdce6fc29bc4927e30a0171987578ac",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-microtask-queue.h"
+    },
+    {
+      "file": "v8/include/v8-microtask.h",
+      "bytes": 861,
+      "sha256": "e055cf06808240053f30672c424716db7d87cd15029a1dbd1cf2a2f9a3b3dc3b",
+      "gitBlobSha1": "c159203608dc900d03bdd04c2177acb74882b76f",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-microtask.h"
+    },
+    {
+      "file": "v8/include/v8-object.h",
+      "bytes": 28926,
+      "sha256": "4a5d6f6ae4fa5e9281222cc9e514d559bc10816b0070a078a64b89241e300443",
+      "gitBlobSha1": "6954c00b50a504d2a0205fb67f314e4e50fb455a",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-object.h"
+    },
+    {
+      "file": "v8/include/v8-persistent-handle.h",
+      "bytes": 17931,
+      "sha256": "60ce649b7453d1faae469d00723e4f125a05512958b45d90ee6de24ca5764e47",
+      "gitBlobSha1": "d76d551f550708f41f03d50c2b0a82f85fe12efd",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-persistent-handle.h"
+    },
+    {
+      "file": "v8/include/v8-platform.h",
+      "bytes": 46508,
+      "sha256": "4cd20ec72a3d9c9a6d04daf4630690a4b65ec3461be4ab1f7e3d80bbd4956b7b",
+      "gitBlobSha1": "9811c6e7bfbfa4b1cbd53b0d945fece98952b1d8",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-platform.h"
+    },
+    {
+      "file": "v8/include/v8-primitive-object.h",
+      "bytes": 2591,
+      "sha256": "d9c187b42f7ee96ec20ad4d9ac91a9a1eed3efc227a831736bba362f9c2b22ba",
+      "gitBlobSha1": "573932d0789cf00c59a0499757823d5bacd9d4fb",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-primitive-object.h"
+    },
+    {
+      "file": "v8/include/v8-primitive.h",
+      "bytes": 28138,
+      "sha256": "4f1d002a3a056894a70674b72d60faa69bd975427ee3b691a4a838cc9f7e9cfa",
+      "gitBlobSha1": "80ebe94c22f76c4d25b20b0a88aeb89a3cf63930",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-primitive.h"
+    },
+    {
+      "file": "v8/include/v8-profiler.h",
+      "bytes": 41838,
+      "sha256": "9faec282422198b39aa465a40a43344e148a0fc119e1d47b466b34f834cf7977",
+      "gitBlobSha1": "37fb1701e4c9317fd0b14fccf1a704133e81188e",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-profiler.h"
+    },
+    {
+      "file": "v8/include/v8-promise.h",
+      "bytes": 5294,
+      "sha256": "1a9076b3f6b2b093a43f864693be944514612e9ecff70aed0b88cc5979d1a9a1",
+      "gitBlobSha1": "9da8e4b4e86f9ab1ffaae52e800efc8702f80565",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-promise.h"
+    },
+    {
+      "file": "v8/include/v8-proxy.h",
+      "bytes": 1255,
+      "sha256": "3abc802421cacf3078e30032ff53dd5d462317ea21760cd1b10abd7591dbcbd4",
+      "gitBlobSha1": "a08db8805c62c0046720143c9c5b3e72fd6b757b",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-proxy.h"
+    },
+    {
+      "file": "v8/include/v8-regexp.h",
+      "bytes": 3171,
+      "sha256": "55087b09662735d457e46fbb137689019d9a086be1b80cda7157e9d6aa1c176f",
+      "gitBlobSha1": "135977bfbb85eeb2f673672d39c9eee9367c62b7",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-regexp.h"
+    },
+    {
+      "file": "v8/include/v8-script.h",
+      "bytes": 28931,
+      "sha256": "91543b7c35832d16e0368f112915abe560d35f1d9ffd4511116cd4232ad86c58",
+      "gitBlobSha1": "bca78970bb9407ab76c7b5da995b7ad2fa5f4c16",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-script.h"
+    },
+    {
+      "file": "v8/include/v8-snapshot.h",
+      "bytes": 7308,
+      "sha256": "285891dd24e78af8752460b2d23d57a966f5e5adeaa586753e70740c054b17aa",
+      "gitBlobSha1": "74bbcae2d0fac32274ad0b826e162d0b3e25bf1b",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-snapshot.h"
+    },
+    {
+      "file": "v8/include/v8-source-location.h",
+      "bytes": 2597,
+      "sha256": "cdb965b501c5cf1ecd36c12260374b8f056710a951224f4a70de5ac5d3128965",
+      "gitBlobSha1": "92216ef2fa6152c5a86a9aad0ed492ae5097e048",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-source-location.h"
+    },
+    {
+      "file": "v8/include/v8-statistics.h",
+      "bytes": 6965,
+      "sha256": "03b1863902fe8e24b4268748a572166e01961b56d9f98218be86c8d2bfe2ece8",
+      "gitBlobSha1": "ca20bc9f6c4161e1eb3985c5e1be41645153bef9",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-statistics.h"
+    },
+    {
+      "file": "v8/include/v8-template.h",
+      "bytes": 38314,
+      "sha256": "de0f827949b0fbb0cf778860cbc1ced68ae68fc533b77a513caa711529baa9f5",
+      "gitBlobSha1": "11296cd48896ddc94867a304d3db36ec44fc8361",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-template.h"
+    },
+    {
+      "file": "v8/include/v8-traced-handle.h",
+      "bytes": 11481,
+      "sha256": "c13d13d1df82a0a819f2d0e77b78322d7b2567528c017f9ad858534e6d1bae64",
+      "gitBlobSha1": "e5bad3e9b47db6be36088afe172785c058676e16",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-traced-handle.h"
+    },
+    {
+      "file": "v8/include/v8-typed-array.h",
+      "bytes": 8257,
+      "sha256": "77fe00c0157369acd591baf0f7c9f70a86dc012327cba70bfac124c1d13b444a",
+      "gitBlobSha1": "483b4f772ffa817d41aa9a7bdb7bc264d93448c6",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-typed-array.h"
+    },
+    {
+      "file": "v8/include/v8-unwinder-state.h",
+      "bytes": 871,
+      "sha256": "e5f81652c3416b049710fc57dc5bd5318965c8cf0a8d3688721898c8d70fabbe",
+      "gitBlobSha1": "18bb410d2b163b19774680c3aeb294bb70d83e16",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-unwinder-state.h"
+    },
+    {
+      "file": "v8/include/v8-unwinder.h",
+      "bytes": 4751,
+      "sha256": "90642a49905eab7602f42dbf1f980eca622d59f4b7a0c4c8f1087fdd3b082aae",
+      "gitBlobSha1": "8b71bb39b55f4210577bcc46aa4a2056fd3f9396",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-unwinder.h"
+    },
+    {
+      "file": "v8/include/v8-util.h",
+      "bytes": 20631,
+      "sha256": "8496a7d7293069d6dc8dc89277645dae679e68a18aceae56e522d9f0c0064cb9",
+      "gitBlobSha1": "c845c9924cd403f782a8da5499ec9e4298cba46b",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-util.h"
+    },
+    {
+      "file": "v8/include/v8-value-serializer-version.h",
+      "bytes": 648,
+      "sha256": "bba34ac71b25e8582db0d75797a254f37589ca1e38ea3abe093c375e6f44f460",
+      "gitBlobSha1": "25eb19ca757d89e46d019adca880d679a23a8923",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-value-serializer-version.h"
+    },
+    {
+      "file": "v8/include/v8-value-serializer.h",
+      "bytes": 10815,
+      "sha256": "bc1d30d03ee47dd548b3ce30609a66fc47d252b3454603dffa28a3a9c1dd1cb6",
+      "gitBlobSha1": "0cb3e045bc46ec732956318b980e749d1847d06d",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-value-serializer.h"
+    },
+    {
+      "file": "v8/include/v8-value.h",
+      "bytes": 13773,
+      "sha256": "d3794c83ae2753c22d061e5acadee4ceceeb8cb19360febb02ee26e9024f5088",
+      "gitBlobSha1": "c80ae064ee7ba9df8e97ff858b59721220c3d923",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-value.h"
+    },
+    {
+      "file": "v8/include/v8-version-string.h",
+      "bytes": 1157,
+      "sha256": "d8ee8253ba981ec63c37ce44c242ae349029bfd1a0534bfc0a8a4b30d4cded06",
+      "gitBlobSha1": "8faed2a740592b93075144eeca028a598e6c379b",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-version-string.h"
+    },
+    {
+      "file": "v8/include/v8-version.h",
+      "bytes": 773,
+      "sha256": "154aea3aae5391066465d59ff7f654714119e34611cb7807b83c573c46c21ce3",
+      "gitBlobSha1": "3b2f8531e62fb172b7104f8e74dbc0c5d45763cb",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-version.h"
+    },
+    {
+      "file": "v8/include/v8-wasm-trap-handler-posix.h",
+      "bytes": 1210,
+      "sha256": "869c55adee0889469706f2c4f4f4ebf3b306413f262b02ce69ad1d9d8b9af07d",
+      "gitBlobSha1": "9b8e8a5b496aa05f6d3c91ebb6f467c4daa45a37",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-wasm-trap-handler-posix.h"
+    },
+    {
+      "file": "v8/include/v8-wasm-trap-handler-win.h",
+      "bytes": 1036,
+      "sha256": "95ac127b38204e0619eca07aab0968d8ef7659058d4515bd5180600d8ac1593d",
+      "gitBlobSha1": "9d3cad584832850e343730a62c06d6d3e069e719",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-wasm-trap-handler-win.h"
+    },
+    {
+      "file": "v8/include/v8-wasm.h",
+      "bytes": 6148,
+      "sha256": "c28824961b318737e94490f27eba7dfdb12a5fae07374e3a00f9a6b8d54f07c6",
+      "gitBlobSha1": "71514615466eb333e8efb3dfffd1eb9b2684a571",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-wasm.h"
+    },
+    {
+      "file": "v8/include/v8-weak-callback-info.h",
+      "bytes": 2471,
+      "sha256": "feb2147ad1b24f5583eb57b834c92d2c17b16945037800d72ee56824e401fc7f",
+      "gitBlobSha1": "df4dcb8eb9644c401f09f9bd2bafa020c279408f",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8-weak-callback-info.h"
+    },
+    {
+      "file": "v8/include/v8.h",
+      "bytes": 3775,
+      "sha256": "f3414d24207fb94f61ea6c8cd5bed49bf2fab599d23d543b159f61f06e8a6670",
+      "gitBlobSha1": "1067d3eb243efb50db7450fd5de0a6af4903a049",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8.h"
+    },
+    {
+      "file": "v8/include/v8config.h",
+      "bytes": 32394,
+      "sha256": "92bfc75ec56ce7b029484358e2edde2f26f2b1b5fb1d7f3d9fcf1d08e7503e0a",
+      "gitBlobSha1": "e6053a152b087ae5a167f1b3b099280208d46031",
+      "source": "https://raw.githubusercontent.com/cocos/cocos-engine-external/0be13f7e2e9034d123744935ea73b410b2085b15/android/arm64-v8a/include/v8/v8config.h"
+    }
+  ],
+  "count": 118,
+  "hFiles": 107,
+  "canonicalFilesSha256": "c1f040ac18ea03f0b6774e27726d9ee22b3a50eaa8378dce139de7fb452e05e8"
+}

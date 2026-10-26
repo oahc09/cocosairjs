@@ -1,0 +1,190 @@
+{
+  "schema": "mystral-android-build-profile-v1",
+  "scope": "Native Android x86_64 APK and emulator validation profile; physical devices and arm64 acceptance are separate",
+  "base": {
+    "repository": "https://github.com/mystralengine/mystralnative",
+    "commit": "bafab09d599bd55aeb7433ba7131c3f320334c99",
+    "deliveredSourcePatchRequired": true
+  },
+  "placeholders": {
+    "<host-source>": "Dedicated patched upstream checkout",
+    "<android-sdk>": "Existing Android SDK with the exact selected platform/build-tools/NDK/CMake packages",
+    "<jdk-17>": "JDK 17 root",
+    "<android-deps>": "Isolated dependency layout described by dependency-receipts.json",
+    "<interop-assets>": "Generated SDK/probe/model/entry asset directory bound by its own manifest"
+  },
+  "toolchain": {
+    "jdk": "OpenJDK 17+35-2724",
+    "gradle": "8.11.1",
+    "agp": "8.10.1",
+    "kotlinPluginDeclared": "1.9.22 apply false; app sources are Java",
+    "compileSdk": 36,
+    "buildTools": "36.0.0",
+    "ndk": "29.0.14206865",
+    "cmake": "3.22.1-g37088a8",
+    "ninja": "1.10.2",
+    "localTools": {
+      "java": {
+        "source": "Pre-existing local toolchain; not downloaded or installed by this task",
+        "bytes": 46400,
+        "sha256": "4fcfea6450f7c5a5f1eff1761f4d518235eb73b030311daee31c0323e683bd50"
+      },
+      "javac": {
+        "source": "Pre-existing local toolchain; not downloaded or installed by this task",
+        "bytes": 20288,
+        "sha256": "2f9f4f56002473ac02448ded23258687d187d33445ed42ce2556e83fc1f42d2c"
+      },
+      "ndkSource": {
+        "source": "Pre-existing local toolchain; not downloaded or installed by this task",
+        "bytes": 107,
+        "sha256": "716f3518a923198cfab037abb32dc3f1b1f7e9a9dcdcda6b66be5906215d2658"
+      },
+      "clang": {
+        "source": "Pre-existing local toolchain; not downloaded or installed by this task",
+        "bytes": 126826136,
+        "sha256": "3da8eb6f49b741ab885854665f10d3793822232f133f8c0233a8a4cb32c97dc0"
+      },
+      "cmake": {
+        "source": "Pre-existing local toolchain; not downloaded or installed by this task",
+        "bytes": 9819992,
+        "sha256": "41d609bae2a65a9a8e2060bb222d6e031d33c0546054d354137eb490933cb8ac"
+      },
+      "ninja": {
+        "source": "Pre-existing local toolchain; not downloaded or installed by this task",
+        "bytes": 554840,
+        "sha256": "d5d6705439aac3162ff6cfb1509246cdbbecaf9d10d7c846713af2c07d8d7ee8"
+      }
+    },
+    "compatibilitySource": "https://developer.android.com/build/releases/agp-8-10-0-release-notes"
+  },
+  "environment": {
+    "JAVA_HOME": "<jdk-17>",
+    "ANDROID_HOME": "<android-sdk>",
+    "ANDROID_SDK_ROOT": "<android-sdk>",
+    "GRADLE_USER_HOME": "<android-deps>/gradle-home",
+    "ANDROID_USER_HOME": "<android-deps>/android-home"
+  },
+  "command": {
+    "cwd": "<host-source>/android",
+    "executable": "gradlew.bat",
+    "arguments": [
+      ":app:assembleDebug",
+      "--no-daemon",
+      "--stacktrace",
+      "--console=plain",
+      "--max-workers=8",
+      "--gradle-user-home",
+      "<android-deps>/gradle-home",
+      "--project-cache-dir",
+      "<android-deps>/project-cache",
+      "-PinteropAbis=x86_64",
+      "-PmystralJsEngine=v8",
+      "-PmystralGpuBackend=dawn",
+      "-PinteropAssetsDir=<interop-assets>",
+      "-PmystralAndroidDeps=<android-deps>"
+    ]
+  },
+  "properties": {
+    "interopAbis": {
+      "tested": "x86_64",
+      "default": "arm64-v8a,x86_64",
+      "allowed": [
+        "arm64-v8a",
+        "x86_64"
+      ]
+    },
+    "mystralJsEngine": {
+      "tested": "v8",
+      "default": "quickjs",
+      "allowed": [
+        "v8",
+        "quickjs"
+      ]
+    },
+    "mystralGpuBackend": {
+      "tested": "dawn",
+      "default": "wgpu",
+      "allowed": [
+        "dawn",
+        "wgpu"
+      ]
+    },
+    "mystralNdkVersion": {
+      "tested": "29.0.14206865",
+      "default": "29.0.14206865"
+    },
+    "mystralAndroidDeps": "<android-deps>",
+    "interopAssetsDir": "<interop-assets>"
+  },
+  "nativeProfile": {
+    "target": "mystral-runtime SHARED",
+    "api": 26,
+    "stl": "c++_shared",
+    "v8": {
+      "provider": "Kudo/v8-android-buildscripts",
+      "npm": "v8-android-jit@11.1000.4",
+      "engine": "10.0.139.9",
+      "import": "SHARED libv8android.so selected strictly by ANDROID_ABI",
+      "consumerDefines": [
+        "V8_COMPRESS_POINTERS on Android x86_64/arm64-v8a only"
+      ],
+      "platform": "Original NewDefaultPlatform; no single-thread/tracing experiment in the APK",
+      "snapshotAsset": "assets/v8/<compiled-ABI>/snapshot_blob.bin",
+      "snapshotInitialization": "Extract to an absolute regular private file and set MYSTRAL_V8_SNAPSHOT before InitializeExternalStartupDataFromFile"
+    },
+    "dawn": {
+      "tag": "v20260117.152313",
+      "commit": "d14ae3d97ad74100e9f382efef5e9c0872ddbeb2",
+      "import": "STATIC libwebgpu_dawn.a",
+      "backend": "Vulkan; real AdapterInfo checked and Null rejected"
+    },
+    "skia": {
+      "provider": "JetBrains/skia-pack",
+      "tag": "m144-e2e6623374-4",
+      "import": "STATIC archives in a linker group, Android-only paths",
+      "systemFonts": "SkFontMgr_New_Android(nullptr, SkFontScanner_Make_FreeType())"
+    },
+    "sdl3": "3.2.8 AAR Java classes and matching Prefab SHARED native library",
+    "http": "Android Java HttpURLConnection through JNI; real sync/async headers; no Android curl substitution",
+    "async": "std::thread and main-thread completion queue; genuine existing async-file/timer fallbacks preserved",
+    "disabledOptional": {
+      "SWC": true,
+      "Draco": true,
+      "QUICHE": true,
+      "rayTracing": true
+    },
+    "requireCanvas2D": true
+  },
+  "packaging": {
+    "applicationId": "com.mystral.engine.interop",
+    "namespace": "com.mystral.engine",
+    "debugSuffix": ".interop",
+    "versionCode": 1,
+    "versionName": "0.1.0",
+    "minSdk": 26,
+    "targetSdk": 34,
+    "webView": false,
+    "nativeLibraries": [
+      "libSDL3.so",
+      "libc++_shared.so",
+      "libmystral-runtime.so",
+      "libv8android.so"
+    ],
+    "snapshots": "Selected ABI only; file and library SHA must match the dependency receipt",
+    "jniUseLegacyPackaging": true,
+    "keepDebugSymbols": [
+      "libv8android.so",
+      "libSDL3.so"
+    ],
+    "signing": "Local debug APK signing; publication signing is outside this profile"
+  },
+  "acceptance": {
+    "build": "Actual assembleDebug success plus signed APK and exact ZIP payload/source/asset receipts",
+    "runnable": "Separate recorded installation and app/native startup on the selected emulator",
+    "graphics": "Separate true Vulkan, WASM, PixelCopy/fullscreen evidence",
+    "shutdown": "Separate original 10-second native-exit acknowledgement gate; do not move exit acknowledgement before teardown",
+    "physicalDevice": "NOT_RUN; later user milestone",
+    "candidateIdentity": "Selected only by the final delivery manifest, not this reusable profile"
+  },
+  "createdAt": "2026-10-25T13:55:07.985Z"
+}

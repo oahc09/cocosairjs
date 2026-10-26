@@ -1,0 +1,6 @@
+CMakeLists.txt
+android/app/build.gradle.kts
+android/app/src/main/java/com/mystral/engine/InteropServer.java
+android/app/src/main/java/com/mystral/engine/MystralActivity.java
+src/js/v8_engine.cpp
+src/platform/android_main.cpp

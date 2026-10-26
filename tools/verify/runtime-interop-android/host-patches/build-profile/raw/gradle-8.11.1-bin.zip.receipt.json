@@ -1,0 +1,9 @@
+{
+  "url": "https://services.gradle.org/distributions/gradle-8.11.1-bin.zip",
+  "expectedSha256": "f397b287023acdba1e9f6fc5ea72d22dd63669d59ed4a289a29b1a76eee151c6",
+  "startedAt": "2026-10-25T12:34:55.5193274Z",
+  "pass": true,
+  "sha256": "f397b287023acdba1e9f6fc5ea72d22dd63669d59ed4a289a29b1a76eee151c6",
+  "bytes": 136920070,
+  "finishedAt": "2026-10-25T12:35:17.6727295Z"
+}

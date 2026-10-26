@@ -1,0 +1,624 @@
+{
+  "schema": "official-sdl330-aar-entry-inventory-v1",
+  "source": "https://github.com/libsdl-org/SDL/releases/download/release-3.2.30/SDL3-devel-3.2.30-android.zip",
+  "sourceZipSha256": "0525e4bc9cc1370e6d664ec93c927846e311c19a819de05a232bca452b0e3a7a",
+  "aarSha256": "ac582807f04c82a8cb80140ce6321598848da4a632fd4531874c60df8e019837",
+  "entries": [
+    {
+      "entry": "prefab/modules/SDL3-Headers/module.json",
+      "bytes": 30,
+      "sha256": "f283d2a57237ec5278d4b44d983ea7b0c2909e78ebf044a7a2f1d309f82363ca"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_keycode.h",
+      "bytes": 26573,
+      "sha256": "0861f1ec14bbfd2eddf2a3135cdd4f55ccaafa81a283e5740236ef4d10e8e700"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_gpu.h",
+      "bytes": 161632,
+      "sha256": "30706ed2427c93a5c217fe68a707c64cf97ee119826edcd75c804746b9ee3956"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_test.h",
+      "bytes": 1954,
+      "sha256": "d3b3d881d54137b19347c81c914b52e20f2a89d13c7ca7225270d1dd19b7c925"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_dialog.h",
+      "bytes": 14404,
+      "sha256": "7d674d748369f62e3ee79ce9b92e67a890413afb651a58c05f8c6d7ba0ff4dee"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL.h",
+      "bytes": 2953,
+      "sha256": "753c11c706c537b4473d448ec0398a2cd6f823749a683654cb2d615a3ef0e0f1"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_vulkan.h",
+      "bytes": 11897,
+      "sha256": "a0d1b8c6a2a7982e419dbdb8ea60fce09e99390238634ca117d82442953a4e1c"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_opengles2_khrplatform.h",
+      "bytes": 11131,
+      "sha256": "7b1e01aaa7ad8f6fc34b5c7bdf79ebf5189bb09e2c4d2e79fc5d350623d11e83"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_thread.h",
+      "bytes": 22802,
+      "sha256": "f8b9761ad77090828102d49ac7f01962e4bc918b6b19cfa1c3e9ed607aa19a21"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_surface.h",
+      "bytes": 62073,
+      "sha256": "97a4c47b926d001cbd56c1f703861099ff7b27e11c9a2f76519e7b3b2e1b8189"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_copying.h",
+      "bytes": 984,
+      "sha256": "64436d5078d6742f11c8b0acf8bc87237d15da36716eb2552986a8b45c419967"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_main_impl.h",
+      "bytes": 5846,
+      "sha256": "9cb2612a63b331fff7a0d9fc307be9dbc3e1f21c7b0ae64e8181afcb16b4160f"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_test_memory.h",
+      "bytes": 1942,
+      "sha256": "a381268143f2013022d742a77b1e35491fa710cf244d957e5987b8af527ea0da"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_process.h",
+      "bytes": 17699,
+      "sha256": "a270b5070d67d561ed927833916449a948db0316fd4276b30cb5a37cd9f91d04"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_opengles2.h",
+      "bytes": 1615,
+      "sha256": "d043611c5c1e06e466a623b88d1ee498746295db8cc1f15f1872c19742045217"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_pen.h",
+      "bytes": 4735,
+      "sha256": "90c55ee2b222942d03d9b0815da42e4dbc8971f62e141e8d176cd8d063076527"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_error.h",
+      "bytes": 7095,
+      "sha256": "7d294ba3e994b89a42bc6346e7e59bff82fbce2d050f7cdb189d8f45f31795f2"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_power.h",
+      "bytes": 4170,
+      "sha256": "0abc02f096234518b87527e917ebb3fef1629fccf94a595c4953afd3f869e8ff"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_locale.h",
+      "bytes": 4470,
+      "sha256": "b34500fc0c94685211fd4c6e15b0272f3ba5dfb50060407c3901c6c9e983985b"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_timer.h",
+      "bytes": 14557,
+      "sha256": "e619324d446432abb3cc2f5218ac089b2345c00e454ec52b5fc723f137e4bf3c"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_stdinc.h",
+      "bytes": 204354,
+      "sha256": "7ab9adf855925f6dd84e4fa8b1ddcf59ef0b1c73cf34add798ad9ab6614b6ee7"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_test_crc32.h",
+      "bytes": 3614,
+      "sha256": "8ab40c4a3e116a6182ee135b067c54449463b422dfc417106c6219b4222be27a"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_render.h",
+      "bytes": 111376,
+      "sha256": "e32fcbc32e80d06bd69a3d36855bdac412b2d00195b83a5181458ced4cd317bf"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_properties.h",
+      "bytes": 19052,
+      "sha256": "14c48c9c47da233be6b83fe8e4204beab85dea95c6ba1ae48e6490d45ea64edf"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_opengles2_gl2platform.h",
+      "bytes": 646,
+      "sha256": "4779be999acd1904458238f09c86983b7960ac40e612e05db2db97db615f1e0f"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_atomic.h",
+      "bytes": 24804,
+      "sha256": "081ff913ad637a16b94ca5870fba7d9ed710e8e8e20b1b866feac2df19a58f17"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_opengles2_gl2.h",
+      "bytes": 42938,
+      "sha256": "d6ec44b1d73f3afce3a20ac6976db7fb3dac656c5190f0b563e4ce90d79a15aa"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_endian.h",
+      "bytes": 20150,
+      "sha256": "8f22c489c5073a3034e0a1c4e05274680d485f4cc2d16d7c211a60c2731380b2"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_test_common.h",
+      "bytes": 8718,
+      "sha256": "6b112c4d00c2cfb78d626a43aa3be480435e3f986c426e2e38a02db33f77d182"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_version.h",
+      "bytes": 5273,
+      "sha256": "8b1fef97224c5c966b605fd9f444817d070526d74b8f0d9242d732c96a9cee29"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_mutex.h",
+      "bytes": 35214,
+      "sha256": "dcbce03129d6df1404e3846a6c512694320bdaebe3ee320b5a7de6692152de15"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_camera.h",
+      "bytes": 20586,
+      "sha256": "835839506cd2ffa6c0f4c83031c2f8afb0c8a8b59d894c118d4d415349f91571"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_log.h",
+      "bytes": 16776,
+      "sha256": "b8f7707c73286f1631293b7766ee684ab686b8c5d00a5ba45a4f53cc738fbad8"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_cpuinfo.h",
+      "bytes": 10514,
+      "sha256": "c03363b9c6c93f751b5b253d636208baa9d6658c6926802b35169736b96f1aef"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_platform.h",
+      "bytes": 1893,
+      "sha256": "ac9cf309bddc0e7555fbe1d425837bad13ab6887a00a2941be8d4fcdf4b3111a"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_opengl.h",
+      "bytes": 126683,
+      "sha256": "2ea5b106f91bf54a283f761d3efda185a515ed9d61702ac7357274920e69202e"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_guid.h",
+      "bytes": 3430,
+      "sha256": "0629f5b5f3fdd6bfc252d7beab1af214e1214574cc51e72871e2c0f9c308e69a"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_begin_code.h",
+      "bytes": 15897,
+      "sha256": "7f193613b1e37af9274aa26e33a81d4d5764ef6f682aabba7468882a59e028e2"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_main.h",
+      "bytes": 26405,
+      "sha256": "ea28f889b980a954d102936737a4c50c2ac58f038775a4a60f5ce519f8b337aa"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_video.h",
+      "bytes": 134220,
+      "sha256": "3a9acf9c1f494b476aba5a515c893cfd55b136c6e18e82f4e570d01718139eb4"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_oldnames.h",
+      "bytes": 79502,
+      "sha256": "a461ac4c49c64b5a8ddfc9dfad0a282b55ff08ce29e84858c07b92ad40ae6421"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_platform_defines.h",
+      "bytes": 11746,
+      "sha256": "26606666d530a777cb40eb27c46d882278539d9649b1ad3a6926c24c12f85bcd"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_opengl_glext.h",
+      "bytes": 864070,
+      "sha256": "d885e4af07f53083cac1ae90a61ccb39317947ee73e5216506fb25f6ae503324"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_revision.h",
+      "bytes": 1421,
+      "sha256": "384df88c930139d315bbffab88c521b06d585469a0cc9c57751d43f80a2fbcca"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_events.h",
+      "bytes": 68269,
+      "sha256": "3dacc545e901ba81ddc3a38ddec0525a750b7d9c7256456dd8f267963614fda3"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_pixels.h",
+      "bytes": 59673,
+      "sha256": "78249e55f5eb05bf6510e5de53242eb6c938cb2e7af66676b2c64ec10217ee9a"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_bits.h",
+      "bytes": 4395,
+      "sha256": "1fcf06b747c667e53bb6cf9d017d5abc5a29ad883c05eedfcfb021c571b61592"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_joystick.h",
+      "bytes": 44926,
+      "sha256": "af468fcbca5a13b3b9e4f881de4bb897ef9d6484e07dbda604b6246573f383b5"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_rect.h",
+      "bytes": 18279,
+      "sha256": "bcdc36655bb13107b44761b6f600ad72bb7f82060edb948022fd63d48c3a8566"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_assert.h",
+      "bytes": 26867,
+      "sha256": "2ed21bb3ed11d1dd8c343400ae8da49c4e5ac166280b4be2cfdc99768b9d93c0"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_filesystem.h",
+      "bytes": 21406,
+      "sha256": "6d1e800ff2b20de2d0416f7c6817dd6f11b3b9fc3bfb80be5834e3069466cbd2"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_loadso.h",
+      "bytes": 5182,
+      "sha256": "2ee703a4dbe54fea84980134c26d21cb87c30df4b7afdfa1a3cc6ca6ef64e09e"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_touch.h",
+      "bytes": 6353,
+      "sha256": "2248db7eb31d850dc6f7784097acb250c1bafe6508b3e91550478ffffd465261"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_audio.h",
+      "bytes": 89825,
+      "sha256": "9df2fe57f4ab31ae8ee1c8f117098e994fd3983ea0e48abd014541b566410fcd"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_hidapi.h",
+      "bytes": 21323,
+      "sha256": "052fd434781ea148143f4644ed6af512589c4a432d31c5d9472d2f394d4eb16b"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_sensor.h",
+      "bytes": 10498,
+      "sha256": "0629da20ce5c42c4cf9b12e3c35ba4caaeb0fb73841bc2a246fcefe260330c43"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_test_assert.h",
+      "bytes": 3196,
+      "sha256": "4e81b0f08e829abf7ec9bbb3f524c58d4b3dff81070899bf2f69afe64d48a8b5"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_iostream.h",
+      "bytes": 51175,
+      "sha256": "db06713225006e84aa92662018e6e1f5d7a6192e2e5c67ad18839d7733a80715"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_egl.h",
+      "bytes": 108941,
+      "sha256": "648d431c8c51bafeac9036db17c3ee5fdea6b6b7b8fe1b86d8b7541630d7cddb"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_haptic.h",
+      "bytes": 44559,
+      "sha256": "a8bba38a319298e6e2b110041c0fb7b144b6fec89c06ee428854542db73db70f"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_gamepad.h",
+      "bytes": 54005,
+      "sha256": "2fc1db9f76cd78ca7a7b53df4a717b8f0fe70476d3f111f8a924cc90cd1704a7"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_system.h",
+      "bytes": 29327,
+      "sha256": "8febdcffaa9afed5b09cd56ec45b65ffe65ab230e91622888ff496b3d5af9a80"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_messagebox.h",
+      "bytes": 8026,
+      "sha256": "7fd26a4a17ab80cec0a58c47409a74accc27440d935b79b508e11098982bc0c8"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_mouse.h",
+      "bytes": 26367,
+      "sha256": "325398956b2f49874f44e74244adf304738c478b67a1189248b5f6b57ea393bd"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_test_harness.h",
+      "bytes": 5374,
+      "sha256": "32f657a13d89451188134cc667d6d11b3e4553f975a6f17fba426326f5c46182"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_tray.h",
+      "bytes": 17471,
+      "sha256": "65d74cb1727af7cb9029cbdad9cd6d0a7b9fe782efef05fec89fff267ca45036"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_clipboard.h",
+      "bytes": 12414,
+      "sha256": "97fc3c82e30238a067e9a6e08d9ed5bd58a92b65d30e968fe7757d6a0ef72d49"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_blendmode.h",
+      "bytes": 9342,
+      "sha256": "8406acc439c395ac49ea779c2d382a12da97832531398f68e83b6d680cc03fc5"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_misc.h",
+      "bytes": 2843,
+      "sha256": "ce53806638666ecde452ae3f8bce9a653c8539fe78b8c6fd9585bd4888ec93e0"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_intrin.h",
+      "bytes": 13820,
+      "sha256": "0730df8050dc7451e5f584b6998d76a5c583dd73f6f8049a0846d35796d24d79"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_opengles2_gl2ext.h",
+      "bytes": 241221,
+      "sha256": "4fc5b0034dcde9c125922e3e70d01489a6b335076856ee660294e1a6305a3719"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_asyncio.h",
+      "bytes": 23310,
+      "sha256": "e9e4074f1b35bda21f3e1d97259f03c65e2dc6da9c5f218d29890475c9306da6"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_test_md5.h",
+      "bytes": 4633,
+      "sha256": "86c13419584377686d8be95933f421246aea396e6e1fc8223748453f2a506bf7"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_keyboard.h",
+      "bytes": 21532,
+      "sha256": "40c0048a237e7fd49468f16d7336f80c5ae5e3888c3cd1d7bde43159f60682ad"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_hints.h",
+      "bytes": 151724,
+      "sha256": "27df6d885b4267185e2084e935151fb655be57ca56ee186f7f866c5b990de52b"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_test_compare.h",
+      "bytes": 2644,
+      "sha256": "dbac58641d39195715d34875c7d884440fa4fd4fdcccfc6ba8590ca4df28a695"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_test_font.h",
+      "bytes": 5505,
+      "sha256": "b9f0b7dbbfdcd979167a0766014981e04d730073a6080c3c29609d6e08479b16"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_opengles.h",
+      "bytes": 1244,
+      "sha256": "abc718af7453d169d1e7c7dfdfb5d939a250519bee02df7d42e0d6a65b7e0c85"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_storage.h",
+      "bytes": 25757,
+      "sha256": "773c66839fb16a004d632ab0f7d34fb7a3b4371106b5ffe292255a15f01ddd9e"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_init.h",
+      "bytes": 20514,
+      "sha256": "43fea08b512cbaaa331b21b1f885ba98c88c8b3dd423bce3ea46f0c0d0e3536c"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_close_code.h",
+      "bytes": 1567,
+      "sha256": "ce3ca73e7fd5293310fd155692c58b5e82e516f1a8267f84d0af572c8398e3e9"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_time.h",
+      "bytes": 8125,
+      "sha256": "dae323ae82b6a4942a4e9418477ed4f284eeac4b815966af2b8ca934842b8e22"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_scancode.h",
+      "bytes": 17246,
+      "sha256": "055b04c228b86451e97c972614a76cb0785a8d869df70ba8cef98b0a96235418"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_test_fuzzer.h",
+      "bytes": 13205,
+      "sha256": "6dd147744812442b54ff3ff005b2123683f0bae39b014440b1833c07f38d0709"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_test_log.h",
+      "bytes": 2293,
+      "sha256": "935eb712ab9aca7dd1ec349f89dbb458e2feb78312513092a89a1bd9f88f2d35"
+    },
+    {
+      "entry": "prefab/modules/SDL3-Headers/include/SDL3/SDL_metal.h",
+      "bytes": 3126,
+      "sha256": "ec5b39fa253ba8b1cd87c5e40ef6de36dc32a588f20d5078b011280124b08240"
+    },
+    {
+      "entry": "prefab/modules/Headers/module.json",
+      "bytes": 59,
+      "sha256": "ba45e8cef67c8093da2a5fa664bef5baabfa41d5175586214cf89520dc6bf165"
+    },
+    {
+      "entry": "prefab/modules/Headers/include/.keep",
+      "bytes": 1,
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "entry": "prefab/modules/SDL3_test/libs/android.armeabi-v7a/libSDL3_test.a",
+      "bytes": 369244,
+      "sha256": "7be1685bafbe3770f3f532ca2a00c8a6ce9b81d9d3ccf18b11850e0f41b0c97c"
+    },
+    {
+      "entry": "prefab/modules/SDL3_test/libs/android.armeabi-v7a/abi.json",
+      "bytes": 97,
+      "sha256": "350b101f74bc46c2e7e182c644c35a7dda1b8dcb7538bf30241e7ba61ca87a5e"
+    },
+    {
+      "entry": "prefab/modules/SDL3_test/module.json",
+      "bytes": 90,
+      "sha256": "3bfa96bc93c8413797ea8a2319cb45840ab4cf98f75a6952500410f0c275ec6f"
+    },
+    {
+      "entry": "prefab/modules/SDL3_test/include/.keep",
+      "bytes": 1,
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "entry": "prefab/modules/SDL3-shared/libs/android.armeabi-v7a/libSDL3.so",
+      "bytes": 8243812,
+      "sha256": "a0f819bbd492347c494b8bd7b28c732f3da3c72712df446e93f672ce918d6b50"
+    },
+    {
+      "entry": "prefab/modules/SDL3-shared/libs/android.armeabi-v7a/abi.json",
+      "bytes": 98,
+      "sha256": "2640a2c498ebda039cdf9877524dd5d4efce045ba55a88e0751a8b04ad4e3ea6"
+    },
+    {
+      "entry": "prefab/modules/SDL3-shared/module.json",
+      "bytes": 85,
+      "sha256": "bfc31589b4d972dd380678aa2dfe844f774ea6f0a578af7c721f57b1ceb7f0fb"
+    },
+    {
+      "entry": "prefab/modules/SDL3-shared/include/.keep",
+      "bytes": 1,
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "entry": "prefab/modules/SDL3/module.json",
+      "bytes": 58,
+      "sha256": "369e249636d5c527b822517f2a85ee9ca8d5d9e0d72961b9ccb3bac57ae6965e"
+    },
+    {
+      "entry": "prefab/modules/SDL3/include/.keep",
+      "bytes": 1,
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "entry": "classes.jar",
+      "bytes": 83143,
+      "sha256": "ed2307813ca9e630db793ec311fa934264de811b6fe3d0dd8216bb7c9b4e911e"
+    },
+    {
+      "entry": "classes-sources.jar",
+      "bytes": 47395,
+      "sha256": "666425e4ded803262cbf4297c9ce96200a821464ceb96e0a6ec2344d44363224"
+    },
+    {
+      "entry": "classes-doc.jar",
+      "bytes": 393793,
+      "sha256": "4a2e06adf361d4bbd7c11804d34713a732ca7c45424edc3f636b4cf5e0fc6f32"
+    },
+    {
+      "entry": "prefab/modules/SDL3_test/libs/android.arm64-v8a/libSDL3_test.a",
+      "bytes": 609944,
+      "sha256": "15eee76b02f462ef22f72d96ed3544f3dd64b6068d6950a7e466c18a06383c61"
+    },
+    {
+      "entry": "prefab/modules/SDL3_test/libs/android.arm64-v8a/abi.json",
+      "bytes": 95,
+      "sha256": "91d4563c336abff243caf2495ec12d03268ba5483b944187f25039fad854fe7e"
+    },
+    {
+      "entry": "prefab/modules/SDL3-shared/libs/android.arm64-v8a/libSDL3.so",
+      "bytes": 10782216,
+      "sha256": "92e7ff5548ecd67788e61043c9fcb0250364080726714174e825c48dcc850376"
+    },
+    {
+      "entry": "prefab/modules/SDL3-shared/libs/android.arm64-v8a/abi.json",
+      "bytes": 96,
+      "sha256": "d2d258ba69e7ea95194ea659a473f8f8ee21ca7f364d426090c9acb0442365d8"
+    },
+    {
+      "entry": "prefab/modules/SDL3_test/libs/android.x86/libSDL3_test.a",
+      "bytes": 374472,
+      "sha256": "9d5965189321955dc608d1c71e5633a342cc6ae49e8c608b9f719b9dacf73af5"
+    },
+    {
+      "entry": "prefab/modules/SDL3_test/libs/android.x86/abi.json",
+      "bytes": 89,
+      "sha256": "23b9bb4250e49b206f41c64b5aaa410e85be4c4940a5aaf6167904a5e7f79d30"
+    },
+    {
+      "entry": "prefab/modules/SDL3-shared/libs/android.x86/libSDL3.so",
+      "bytes": 8919112,
+      "sha256": "55b7790e9f85726e94b49111f0e408655a2f4f067124c4ec5c5015585b913869"
+    },
+    {
+      "entry": "prefab/modules/SDL3-shared/libs/android.x86/abi.json",
+      "bytes": 90,
+      "sha256": "8238c352370634d87791d2c26715a5585b7746b644fb9d0f3c5ad84d343731ca"
+    },
+    {
+      "entry": "prefab/modules/SDL3_test/libs/android.x86_64/libSDL3_test.a",
+      "bytes": 607448,
+      "sha256": "a44a72043fa7742fecf1d1ee46f50443dcfd85ebf76dad0a1d3895454fe1e363"
+    },
+    {
+      "entry": "prefab/modules/SDL3_test/libs/android.x86_64/abi.json",
+      "bytes": 92,
+      "sha256": "cf23e90b2bb26583b7b56bbc2aed3e569a01297fb7945be95a673749a0613b09"
+    },
+    {
+      "entry": "prefab/modules/SDL3-shared/libs/android.x86_64/libSDL3.so",
+      "bytes": 10930984,
+      "sha256": "f3192dadc88692f8cbe8d29cd6a395c3d4139b2b55236540589c1c6f56608ffe"
+    },
+    {
+      "entry": "prefab/modules/SDL3-shared/libs/android.x86_64/abi.json",
+      "bytes": 93,
+      "sha256": "8dbace18aae4b66867b92136bbef8e597573f273c101b17488d1285b302f9a65"
+    },
+    {
+      "entry": "proguard.txt",
+      "bytes": 3156,
+      "sha256": "3db921c36704d20109382fe3f5750b33ec3605bcc04961dd2c1a087f958ffcdf"
+    },
+    {
+      "entry": "__main__.py",
+      "bytes": 4334,
+      "sha256": "a67ce8a893e5b51cc3552ba1b88f567904f732cc6cb2dfc1cff66b0bf1e3158a"
+    },
+    {
+      "entry": "description.json",
+      "bytes": 108,
+      "sha256": "b12b86de38757f0a827f6183ac6ac5c71491b3faee4c2ccd1249b8b3378fc2ed"
+    },
+    {
+      "entry": "META-INF/LICENSE.txt",
+      "bytes": 884,
+      "sha256": "97f35b302b361680ec1e891e95d2d52097bb95abff361434916d99dc1305f127"
+    },
+    {
+      "entry": "cmake/sdlcpu.cmake",
+      "bytes": 5219,
+      "sha256": "a5c8e8ecfdb20fb392b869db5f047c600f984896430cb8629a1349ddd2fb4234"
+    },
+    {
+      "entry": "cmake/SDL3Config.cmake",
+      "bytes": 4675,
+      "sha256": "2a7ce4724985e73b031d79af163cc16c8e06f659b21d89cd409932d11cdf998a"
+    },
+    {
+      "entry": "cmake/SDL3ConfigVersion.cmake",
+      "bytes": 1620,
+      "sha256": "f07119e0cf9ae4bd387af1afb86ab0a3ba7b61e5086565664f10bf83ce9c6e9c"
+    },
+    {
+      "entry": "prefab/prefab.json",
+      "bytes": 97,
+      "sha256": "c3c22414b9a57fa677d4f6bd3c5619bf53751e23a0188f9d4d2dbaf2f85518c9"
+    },
+    {
+      "entry": "AndroidManifest.xml",
+      "bytes": 266,
+      "sha256": "ea1e5eb421f2a174c4fa2cdf8b2e586b53e883928a23f1ab7be7120e361034ae"
+    },
+    {
+      "entry": ".git-hash",
+      "bytes": 41,
+      "sha256": "4aa7a62f8df53252235c3f1383d2fea964d5362f4066b237c6e058aca62b8d8e"
+    }
+  ],
+  "allExtractedBytesMatchAar": true
+}
