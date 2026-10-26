@@ -7,6 +7,8 @@ const lock = JSON.parse(readFileSync(new URL('./versions.lock.json', import.meta
 const buffer = new ArrayBuffer(65536);
 const module = { HEAPU8: new Uint8Array(buffer), HEAPU32: new Uint32Array(buffer), HEAPF32: new Float32Array(buffer) };
 let cursor = 16;
+let scratchAllocations = 0;
+let meshCounterCalls = 0;
 const text = (value) => {
     const at = cursor;
     const bytes = new TextEncoder().encode(`${value}\0`);
@@ -22,7 +24,15 @@ Object.assign(module, {
     _air_b3_schema_sha: () => schema,
     _air_b3_patch_chain_sha: () => patch,
     _air_b3_abi_version: () => 1,
-    _malloc: () => 4096,
+    _malloc: () => {
+        ++scratchAllocations;
+        return 4096;
+    },
+    // Identity presence only: this CPU fixture must never fabricate native lifetime evidence.
+    _air_b3_mesh_lifetime_counters: () => {
+        ++meshCounterCalls;
+        throw new Error('Unexpected native mesh lifetime counter call');
+    },
     _free: () => {},
     _air_b3_world_create: () => 1,
     _air_b3_world_destroy: () => 0,
@@ -32,14 +42,34 @@ module._air_b3_ray_query = () => {
     ++calls;
     throw new Error('Unexpected native query call');
 };
-const binding = createBox3DBinding(module, {
+const expected = {
     coreSha: lock.core.commit,
     bindingBaseSha: lock.bindingBase.commit,
     schemaSha256: lock.apiSchemaSha256,
     patchChainSha256: lock.patchLock.patchChainSha256,
     abiVersion: 1,
     variant: 'st-simd',
-});
+};
+// Fail closed before scratch allocation even when the claimed schema is current.
+const missingProbe = { ...module };
+delete missingProbe._air_b3_mesh_lifetime_counters;
+assert.throws(
+    () => createBox3DBinding(missingProbe, expected),
+    (e) => e.code === 'AIR_E_BOX3D_ABI',
+);
+assert.equal(scratchAllocations, 0);
+assert.equal(meshCounterCalls, 0);
+assert.throws(
+    () =>
+        createBox3DBinding(module, {
+            ...expected,
+            schemaSha256: 'd0a917e85e800605295296ca0820fbcb54847ea5d00f6bfc296a3ce527243551',
+        }),
+    (e) => e.code === 'AIR_E_BOX3D_ABI',
+);
+assert.equal(scratchAllocations, 0);
+const binding = createBox3DBinding(module, expected);
+assert.equal(scratchAllocations, 1);
 const world = binding.createWorld();
 const options = { group: -1, mask: -1, queryTrigger: false };
 const empty = binding.rayAllRaw(world, [0, 0, 0], [0, 0, 0], options);
@@ -77,10 +107,13 @@ assert.throws(
 );
 binding.dispose();
 assert.equal(calls, 0);
+assert.equal(meshCounterCalls, 0);
 console.log(
     JSON.stringify({
         status: 'PASS_ADMISSION_NO_NATIVE_CALLS',
         nativeQueryCalls: calls,
+        nativeMeshCounterCalls: meshCounterCalls,
+        identityNegativeControls: 2,
         rejected,
         physicsEvidence: false,
     }),
