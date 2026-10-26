@@ -1,0 +1,594 @@
+{
+  "schemaVersion": 1,
+  "title": "Terrain ST build and native mesh lifetime evidence, 2026-10-26",
+  "status": "LIMITED_ST_BUILD_AND_NATIVE_MESH_BRIDGE_PASS_NOT_PUBLIC_TERRAIN_ACCEPTANCE",
+  "evidencePathBase": "box3d-resume-20261025T1146/ (external task workspace, not repository-relative raw files)",
+  "selfContainedReplay": false,
+  "rawEvidenceBundled": false,
+  "provenanceNote": "The two committed reports index external originals by relative path, bytes and SHA256. Full raw logs, binaries, protection inventories and toolchain are not bundled; hashes are not a self-contained replay package.",
+  "identity": {
+    "coreSha": "efca0c184d40fd6a82016983f1601c4d23965867",
+    "bindingBaseSha": "5d5a3af049cccd9948b2b55bac4342414af0ef64",
+    "schemaSha256": "ce98aca1a40c4999df838c1eaab2b08b0533c85adca9866eb48180c6190575d6",
+    "patchChainSha256": "4c9d057fe6d7403f6f2c7672c4a7abe38041d845942540a6b5c5abbc6f4bc45c",
+    "patchLockSha256": "1144f23426855276e9a103cb062f1315bcd6d161a3e586dcd690964969e13809",
+    "abiVersion": 1,
+    "variant": "st-simd"
+  },
+  "toolchain": {
+    "emscripten": "6.0.2",
+    "cmake": "4.4.4",
+    "ninja": "1.13.2",
+    "node": "22.16.0",
+    "scope": "Task-local restored toolchain; no global toolchain promotion; exact original receipts indexed below."
+  },
+  "attempts": [
+    {
+      "attempt": 1,
+      "sourceCommit": "2a75272ffca5facf7a12a985c6f5bea2ad0e6a19",
+      "sourceTree": "3a43110e601cba87c67cc0f59033806231a52c2f",
+      "overallStatus": "FAIL_OR_PARTIAL",
+      "elapsedSeconds": 86.71204972299893,
+      "exitCode": 0,
+      "physicalClose": "ECHILD_AND_NO_GROUP_MEMBERS",
+      "postInputDrift": [
+        "toolchain-restored-20261026/emsdk/upstream/emscripten/tools/__pycache__/emscripten.cpython-312.pyc",
+        "toolchain-restored-20261026/emsdk/upstream/emscripten/tools/__pycache__/minimal_runtime_shell.cpython-312.pyc",
+        "toolchain-restored-20261026/emsdk/upstream/emscripten/tools/__pycache__/extract_metadata.cpython-312.pyc",
+        "toolchain-restored-20261026/emsdk/upstream/emscripten/tools/__pycache__/js_manipulation.cpython-312.pyc",
+        "toolchain-restored-20261026/emsdk/upstream/emscripten/tools/__pycache__/link.cpython-312.pyc",
+        "toolchain-restored-20261026/emsdk/upstream/emscripten/tools/__pycache__/native_sigs.cpython-312.pyc"
+      ],
+      "protectedEntryCount": 66407,
+      "completeMarkerPresent": false,
+      "standardBuild": {
+        "status": "PASS",
+        "kind": "st-simd-wasm",
+        "mode": "Release",
+        "commandCount": 33,
+        "inputCount": 79,
+        "allCommandsExitZero": true,
+        "auditStatus": "PASS",
+        "compiledSources": 82,
+        "readyStatus": "READY_FOR_LIMITED_CONSUMER_VERIFICATION",
+        "acceptancePassed": false,
+        "meshContract": {
+          "status": "PASS",
+          "checks": 677,
+          "pointerBytes": 4,
+          "releaseOrders": 4,
+          "scope": "mesh-bridge-resource-contract"
+        },
+        "browserStatus": "NOT_RUN"
+      },
+      "result": {
+        "path": "native-candidate-302935a/attempt-1-st-evidence/result.json",
+        "bytes": 4663,
+        "sha256": "84d9694d83e4921bcb3410579d6815832f2c198bd9195d174d80ff7abd04eba4"
+      }
+    },
+    {
+      "attempt": 2,
+      "sourceCommit": "ae0803c0c3e85aa627666f76eef29c4e62ab2e93",
+      "sourceTree": "a9247d91907a32c95fef3c637772af648055f944",
+      "overallStatus": "PASS_LIMITED_ST_BUILD",
+      "elapsedSeconds": 85.37731301399981,
+      "exitCode": 0,
+      "physicalClose": "ECHILD_AND_NO_GROUP_MEMBERS",
+      "postInputDrift": [],
+      "protectedEntryCount": 67410,
+      "completeMarkerPresent": true,
+      "standardBuild": {
+        "status": "PASS",
+        "kind": "st-simd-wasm",
+        "mode": "Release",
+        "commandCount": 33,
+        "inputCount": 79,
+        "allCommandsExitZero": true,
+        "auditStatus": "PASS",
+        "compiledSources": 82,
+        "readyStatus": "READY_FOR_LIMITED_CONSUMER_VERIFICATION",
+        "acceptancePassed": false,
+        "meshContract": {
+          "status": "PASS",
+          "checks": 677,
+          "pointerBytes": 4,
+          "releaseOrders": 4,
+          "scope": "mesh-bridge-resource-contract"
+        },
+        "browserStatus": "NOT_RUN"
+      },
+      "result": {
+        "path": "native-candidate-302935a/attempt-2-st-evidence/result.json",
+        "bytes": 4530,
+        "sha256": "80fb92eef28992a80fbb2968e44700ae0f41b07e42700b420c52f262d2d02821"
+      }
+    }
+  ],
+  "sameBuildInputsAcrossAttempts": {
+    "count": 79,
+    "orderedPathAndSha256ListsEqual": true
+  },
+  "sameProductAssetsAcrossAttempts": {
+    "byteIdentical": true,
+    "assets": [
+      {
+        "path": "box3d-st.mjs",
+        "sha256": "29936ae2cdef0304d66fb7d86e5672f2f05304973a3f805bbeff7f08a3fc1e75",
+        "bytes": 55343
+      },
+      {
+        "path": "box3d-st.wasm",
+        "sha256": "3aad5fe443760ee7507513847d59526056ce39cc282e9502a8b4df32220e77b4",
+        "bytes": 693948
+      },
+      {
+        "path": "facade.mjs",
+        "sha256": "2618f81231d6291d364af46be6b5e19dbd7014af8e4d660c3abb74f7df47234b",
+        "bytes": 115381
+      },
+      {
+        "path": "facade.d.mts",
+        "sha256": "c849bb1ccb8ba6df221beabc065195076660c421af7c48ab8255fa0e5a8acb99",
+        "bytes": 28881
+      }
+    ]
+  },
+  "bridge": {
+    "overallStatus": "PASS_LIMITED_NATIVE_TERRAIN_BRIDGE",
+    "sourceCommit": "ae0803c0c3e85aa627666f76eef29c4e62ab2e93",
+    "elapsedSeconds": 1.480838829998902,
+    "exitCode": 0,
+    "physicalClose": "ECHILD_AND_NO_GROUP_MEMBERS",
+    "postInputDrift": [],
+    "protectedEntryCount": 996,
+    "report": {
+      "path": "native-candidate-302935a/terrain-native-attempt-1/results/report.json",
+      "bytes": 8459,
+      "sha256": "935270eb7de0a35491d8ad065842b8ab5f9a4c2e9ddca8e97b89e2eb165f7d40"
+    },
+    "assets": {
+      "manifest.json": "e9cbb8b7e0eb03f7ba9dcfc71fc86360f94fe517c19c30c342c7f44b73e605a1",
+      "box3d-st.mjs": "29936ae2cdef0304d66fb7d86e5672f2f05304973a3f805bbeff7f08a3fc1e75",
+      "box3d-st.wasm": "3aad5fe443760ee7507513847d59526056ce39cc282e9502a8b4df32220e77b4",
+      "facade.mjs": "2618f81231d6291d364af46be6b5e19dbd7014af8e4d660c3abb74f7df47234b"
+    },
+    "fixture": {
+      "oracle.mjs": "12008663252a04476b22039f10484846fb6b412e292112d794ddd594408f00b4",
+      "native-terrain-lifetime.mjs": "90c1ebec94d859f2a2cdb799854303c6a39dec172917d4f63f9708382319ecd1",
+      "run-native.mjs": "6cb8ca807a828c8f13dcc77361cfb1c84658cf3af712a8b2cd6319605998f64f"
+    },
+    "native": {
+      "scope": "actual production mesh bridge used by cooked TerrainCollider",
+      "orders": [
+        {
+          "order": "cache-first",
+          "rows": [
+            {
+              "stage": "cook",
+              "cooks": "1",
+              "destroys": "0"
+            },
+            {
+              "stage": "nonstatic-rejection",
+              "cooks": "1",
+              "destroys": "0"
+            },
+            {
+              "stage": "nonstatic-rejection",
+              "cooks": "1",
+              "destroys": "0"
+            },
+            {
+              "stage": "cache-released-three-borrows",
+              "cooks": "1",
+              "destroys": "0"
+            },
+            {
+              "stage": "second-shape-destroyed",
+              "cooks": "1",
+              "destroys": "0"
+            },
+            {
+              "stage": "third-body-destroyed",
+              "cooks": "1",
+              "destroys": "0"
+            },
+            {
+              "stage": "last-native-borrow-released",
+              "cooks": "1",
+              "destroys": "1"
+            },
+            {
+              "stage": "world-destroyed",
+              "cooks": "1",
+              "destroys": "1"
+            },
+            {
+              "stage": "idempotent-released-lease",
+              "cooks": "1",
+              "destroys": "1"
+            }
+          ],
+          "finalCoreBytes": "0"
+        },
+        {
+          "order": "cache-last",
+          "rows": [
+            {
+              "stage": "cook",
+              "cooks": "1",
+              "destroys": "0"
+            },
+            {
+              "stage": "nonstatic-rejection",
+              "cooks": "1",
+              "destroys": "0"
+            },
+            {
+              "stage": "nonstatic-rejection",
+              "cooks": "1",
+              "destroys": "0"
+            },
+            {
+              "stage": "shape-2-released-cache-live",
+              "cooks": "1",
+              "destroys": "0"
+            },
+            {
+              "stage": "shape-1-released-cache-live",
+              "cooks": "1",
+              "destroys": "0"
+            },
+            {
+              "stage": "shape-0-released-cache-live",
+              "cooks": "1",
+              "destroys": "0"
+            },
+            {
+              "stage": "last-cache-lease-released",
+              "cooks": "1",
+              "destroys": "1"
+            },
+            {
+              "stage": "world-destroyed",
+              "cooks": "1",
+              "destroys": "1"
+            },
+            {
+              "stage": "idempotent-released-lease",
+              "cooks": "1",
+              "destroys": "1"
+            }
+          ],
+          "finalCoreBytes": "0"
+        },
+        {
+          "order": "world-last",
+          "rows": [
+            {
+              "stage": "cook",
+              "cooks": "1",
+              "destroys": "0"
+            },
+            {
+              "stage": "nonstatic-rejection",
+              "cooks": "1",
+              "destroys": "0"
+            },
+            {
+              "stage": "nonstatic-rejection",
+              "cooks": "1",
+              "destroys": "0"
+            },
+            {
+              "stage": "one-shape-released",
+              "cooks": "1",
+              "destroys": "0"
+            },
+            {
+              "stage": "cache-released-two-borrows",
+              "cooks": "1",
+              "destroys": "0"
+            },
+            {
+              "stage": "world-destroyed",
+              "cooks": "1",
+              "destroys": "1"
+            },
+            {
+              "stage": "idempotent-released-lease",
+              "cooks": "1",
+              "destroys": "1"
+            }
+          ],
+          "finalCoreBytes": "0"
+        }
+      ],
+      "freeEvidence": "completed b3DestroyMesh calls + core-byte baseline; NOT malloc/free invocation counts",
+      "status": "PASS"
+    },
+    "C17": "NOT_QUALIFIED_NATIVE_ONLY",
+    "C19": "NATIVE_MESH_BRIDGE_DESTRUCTION_PASS; PUBLIC_TERRAIN_COHORT_REQUIRES_SEPARATE_RUN"
+  },
+  "boundaries": {
+    "C17PublicTerrain": "NOT_RUN",
+    "publicTerrainCohort": "NOT_RUN",
+    "C19": "Finite production mesh-bridge destruction evidence only; not public TerrainCollider acceptance.",
+    "notProven": [
+      "individual allocator malloc/free call counts",
+      "global zero leaks",
+      "full physics acceptance",
+      "browser acceptance",
+      "holes or native heightfield shape"
+    ],
+    "counterMeaning": "Completed b3DestroyMesh calls plus core live-byte baseline, not allocator free-call counts.",
+    "attempt1Preservation": "FAIL_OR_PARTIAL retained despite standard limited product gates passing; six new toolchain pyc files breached its frozen protection baseline. No retroactive exclusion or relabeling.",
+    "attempt2Baseline": "New separately authorized attempt and frozen baseline; does not erase attempt1 failure.",
+    "producerIdentity": "ST attempt1 is 2a75272; ST attempt2 and bridge are ae0803c. Later head 1ebcdd restores the JS counter only and is not retrospectively the producer.",
+    "historicalSDK": "Original SDK223 artifacts were not recovered. Restored producer5e507bf/counter221 archive and retained SDK222 material are historical; no old receipts were credited to these fresh attempts.",
+    "jsBuildCounter": "ST build/bridge did not create a fresh production ESM or consume a JS runtime build number."
+  },
+  "originals": [
+    {
+      "path": "native-candidate-302935a/attempt-1-st-evidence/result.json",
+      "bytes": 4663,
+      "sha256": "84d9694d83e4921bcb3410579d6815832f2c198bd9195d174d80ff7abd04eba4"
+    },
+    {
+      "path": "native-candidate-302935a/attempt-1-st-evidence/stdout.txt",
+      "bytes": 647,
+      "sha256": "34e322081dd89a15e7c0e2cb3a7cce7f5c43998fbe3e98ab7931a98fc1b1e66d"
+    },
+    {
+      "path": "native-candidate-302935a/attempt-1-st-evidence/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "native-candidate-302935a/attempt-1-st-evidence/resources.jsonl",
+      "bytes": 51822,
+      "sha256": "a68108ad5fffc9d7259e1148905bb86e186784191c7a9ec5ecccaa693383cfec"
+    },
+    {
+      "path": "native-candidate-302935a/source/tools/physics/box3d/output/terrain-st-2a75272-attempt-1/build-receipt.json",
+      "bytes": 71743,
+      "sha256": "526d92d599f7edf0c12e164d27bf568850204604f15779fcb9912f8b99110dbe"
+    },
+    {
+      "path": "native-candidate-302935a/source/tools/physics/box3d/output/terrain-st-2a75272-attempt-1/artifact-audit.raw.json",
+      "bytes": 26313,
+      "sha256": "69ec5dcd01950333f273ffddf521158cdad7a1411b19f55b97300ce0773a6955"
+    },
+    {
+      "path": "native-candidate-302935a/source/tools/physics/box3d/output/terrain-st-2a75272-attempt-1/consumer-ready.json",
+      "bytes": 2168,
+      "sha256": "95b375e5fc13c9d9f4958716fe7b8fa96a2474a3d3372207fdd891cb1f860487"
+    },
+    {
+      "path": "native-candidate-302935a/source/tools/physics/box3d/output/terrain-st-2a75272-attempt-1/manifest.json",
+      "bytes": 3774,
+      "sha256": "e9cbb8b7e0eb03f7ba9dcfc71fc86360f94fe517c19c30c342c7f44b73e605a1"
+    },
+    {
+      "path": "native-candidate-302935a/source/tools/physics/box3d/output/terrain-st-2a75272-attempt-1/native-mesh-contract.raw.json",
+      "bytes": 106,
+      "sha256": "973b7eec9667c2974cacaa2376dbcb4356fea4a31c1c6c4375c1eba2e3845e3c"
+    },
+    {
+      "path": "native-candidate-302935a/supervision/run-st-once.py",
+      "bytes": 9983,
+      "sha256": "aac761ced4e0b411ecac2c2b2d27e00b186b0d995eb71161c6ce9026f5d1a886"
+    },
+    {
+      "path": "native-candidate-302935a/supervision/control.json",
+      "bytes": 2837,
+      "sha256": "e0de11de735919e361b28e3db27fed535d839a01e9309dade789ea3da6a29dd8"
+    },
+    {
+      "path": "native-candidate-302935a/supervision/protected-inputs.json",
+      "bytes": 16730286,
+      "sha256": "4c44379bd81b95ed0baf73f591559033e0f4055042a67503aa1d322e20201d54"
+    },
+    {
+      "path": "native-candidate-302935a/supervision/root-release.json",
+      "bytes": 555,
+      "sha256": "d1fe5db0cb08f8c3ab655600923541500fbb9660af792bdeb1650191ee624dd1"
+    },
+    {
+      "path": "native-candidate-302935a/attempt-2-st-evidence/result.json",
+      "bytes": 4530,
+      "sha256": "80fb92eef28992a80fbb2968e44700ae0f41b07e42700b420c52f262d2d02821"
+    },
+    {
+      "path": "native-candidate-302935a/attempt-2-st-evidence/stdout.txt",
+      "bytes": 647,
+      "sha256": "11cc6681d993a8bf54bfba0077f3187a8ae234ea35d548492d94704660c6fb3c"
+    },
+    {
+      "path": "native-candidate-302935a/attempt-2-st-evidence/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "native-candidate-302935a/attempt-2-st-evidence/resources.jsonl",
+      "bytes": 49399,
+      "sha256": "3e1bd4bffa89bb2124cb851194df67725e7030f98fb135f3a4e0a858d2d8007b"
+    },
+    {
+      "path": "native-candidate-302935a/source/tools/physics/box3d/output/terrain-st-ae0803c-attempt-2/build-receipt.json",
+      "bytes": 71743,
+      "sha256": "750bd292e037c624d25bea1ff31ace03c71f69fbe3950666efe292e6abfe3ab6"
+    },
+    {
+      "path": "native-candidate-302935a/source/tools/physics/box3d/output/terrain-st-ae0803c-attempt-2/artifact-audit.raw.json",
+      "bytes": 26313,
+      "sha256": "c3c4e9a9a6f6c41a34b2dc70f410b5c67366ffe55ed64a6b880df462bf3f6290"
+    },
+    {
+      "path": "native-candidate-302935a/source/tools/physics/box3d/output/terrain-st-ae0803c-attempt-2/consumer-ready.json",
+      "bytes": 2168,
+      "sha256": "224cb4943095e6ccece6fa6b8e9e1f8f3faf5452ea3a1f6a4eb43be9a18b6447"
+    },
+    {
+      "path": "native-candidate-302935a/source/tools/physics/box3d/output/terrain-st-ae0803c-attempt-2/manifest.json",
+      "bytes": 3774,
+      "sha256": "e9cbb8b7e0eb03f7ba9dcfc71fc86360f94fe517c19c30c342c7f44b73e605a1"
+    },
+    {
+      "path": "native-candidate-302935a/source/tools/physics/box3d/output/terrain-st-ae0803c-attempt-2/native-mesh-contract.raw.json",
+      "bytes": 106,
+      "sha256": "973b7eec9667c2974cacaa2376dbcb4356fea4a31c1c6c4375c1eba2e3845e3c"
+    },
+    {
+      "path": "native-candidate-302935a/supervision-attempt2/run-st-once.py",
+      "bytes": 9983,
+      "sha256": "aac761ced4e0b411ecac2c2b2d27e00b186b0d995eb71161c6ce9026f5d1a886"
+    },
+    {
+      "path": "native-candidate-302935a/supervision-attempt2/control.json",
+      "bytes": 3291,
+      "sha256": "fd8749061f16f2bb4e8e129bc0cc77798331c3a17070bd80e16b501d650d9f33"
+    },
+    {
+      "path": "native-candidate-302935a/supervision-attempt2/protected-inputs.json",
+      "bytes": 17006724,
+      "sha256": "d2d268d14eadd53ed042183df7cb342b1bf2d7dd21bf8f079669a18f68ee069f"
+    },
+    {
+      "path": "native-candidate-302935a/supervision-attempt2/root-release.json",
+      "bytes": 578,
+      "sha256": "dc95b8089bf1635e9c58401553e1390a59f012bb6fa8498360a40c93e486f75f"
+    },
+    {
+      "path": "native-candidate-302935a/attempt-2-st-evidence/complete.json",
+      "bytes": 4529,
+      "sha256": "2d81785a9c8d13b40c69c15c0600059962eaff39dcd089ff55a37df76fe3698a"
+    },
+    {
+      "path": "native-candidate-302935a/terrain-native-attempt-1/results/report.json",
+      "bytes": 8459,
+      "sha256": "935270eb7de0a35491d8ad065842b8ab5f9a4c2e9ddca8e97b89e2eb165f7d40"
+    },
+    {
+      "path": "native-candidate-302935a/terrain-native-attempt-1/result.json",
+      "bytes": 4255,
+      "sha256": "b5f5fd85dabb008b6a2cb714c1e9d862315ef4849bf7e9a17b7a93f5f4f5b2f7"
+    },
+    {
+      "path": "native-candidate-302935a/terrain-native-attempt-1/complete.json",
+      "bytes": 4254,
+      "sha256": "191450e0a97fef0885f2cf1925c5a22c448773b69ed4b6737f409170fbda4c77"
+    },
+    {
+      "path": "native-candidate-302935a/terrain-native-attempt-1/stdout.txt",
+      "bytes": 158,
+      "sha256": "dd8af08e7f40da63a81d807e28f47d2725a64698a003cb1c4fec6830440c7f59"
+    },
+    {
+      "path": "native-candidate-302935a/terrain-native-attempt-1/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "native-candidate-302935a/terrain-native-attempt-1/resources.jsonl",
+      "bytes": 283,
+      "sha256": "b28446e7d2f6bf6827ee64fdda218cc3bdf6dafa554278dcd8caac74304cc02f"
+    },
+    {
+      "path": "native-candidate-302935a/supervision-terrain-native/run-st-once.py",
+      "bytes": 9392,
+      "sha256": "00f6c159276e531de946e042bb8dc342fd79ec662403e668187bf7d72c7255c4"
+    },
+    {
+      "path": "native-candidate-302935a/supervision-terrain-native/control.json",
+      "bytes": 3004,
+      "sha256": "01a6ece1519b2469b0b31b4cfd7137f5aa806d9b16b9faa438e4cfb7353004c6"
+    },
+    {
+      "path": "native-candidate-302935a/supervision-terrain-native/protected-inputs.json",
+      "bytes": 220219,
+      "sha256": "accbe0b377d652fb4778ecbc6f96256ddb3891b50d6bd971d2077a3cc8ee348d"
+    },
+    {
+      "path": "native-candidate-302935a/supervision-terrain-native/root-release.json",
+      "bytes": 511,
+      "sha256": "380a7edbfdbcf4962c21ca9beccd842d7bb2de9c2249312206274de0c8f51724"
+    },
+    {
+      "path": "toolchain-restored-20261026/use-toolchain.sh",
+      "bytes": 1995,
+      "sha256": "3db4b4c3c35587557febdf26f49eb28b555ecf04a2043e6f9a5e85beccecdfe7"
+    },
+    {
+      "path": "toolchain-restored-20261026/evidence/restored-toolchain-provenance.json",
+      "bytes": 8402,
+      "sha256": "56c2e48fa350ec9292ad13b06905b686a3684dcf2d2dfd74018a232090fa5eec"
+    },
+    {
+      "path": "toolchain-restored-20261026/evidence/installed-files-SHA256.json",
+      "bytes": 2039,
+      "sha256": "7c508bb30171cc1f7699aecc120f878b8c88693a94a897d7aaff46ed339e00a7"
+    },
+    {
+      "path": "toolchain-restored-20261026/evidence/package-verification.json",
+      "bytes": 1648,
+      "sha256": "1d6e7949873db4ab444a9285dd9f68c64c9d6c1e4a22b031873d5ee664d89719"
+    },
+    {
+      "path": "toolchain-restored-20261026/evidence/packages-SHA256SUMS",
+      "bytes": 304,
+      "sha256": "db3ea899c371f1c4836222f5f82f90806d480281f96153858a15ceea2e458c4a"
+    },
+    {
+      "path": "toolchain-restored-20261026/evidence/final-entrypoint-check.log",
+      "bytes": 766,
+      "sha256": "b7ae72212de2c5d80805653b78c3789cfd19b51354b2d7c68cffc70828eabe93"
+    },
+    {
+      "path": "toolchain-restored-20261026/evidence/recovered-node-hash-check.log",
+      "bytes": 274,
+      "sha256": "957fa5585108cd2709b7a4aa794ccc787cbe71edd7e39f8a4d89bdd8437b1c48"
+    },
+    {
+      "path": "native-candidate-302935a/source/tools/physics/box3d/terrain-contract/oracle.mjs",
+      "bytes": 3983,
+      "sha256": "12008663252a04476b22039f10484846fb6b412e292112d794ddd594408f00b4"
+    },
+    {
+      "path": "native-candidate-302935a/source/tools/physics/box3d/terrain-contract/native-terrain-lifetime.mjs",
+      "bytes": 5798,
+      "sha256": "90c1ebec94d859f2a2cdb799854303c6a39dec172917d4f63f9708382319ecd1"
+    },
+    {
+      "path": "native-candidate-302935a/source/tools/physics/box3d/terrain-contract/run-native.mjs",
+      "bytes": 2324,
+      "sha256": "6cb8ca807a828c8f13dcc77361cfb1c84658cf3af712a8b2cd6319605998f64f"
+    },
+    {
+      "path": "native-candidate-302935a/source/tools/physics/box3d/abi-schema.json",
+      "bytes": 39211,
+      "sha256": "ce98aca1a40c4999df838c1eaab2b08b0533c85adca9866eb48180c6190575d6"
+    },
+    {
+      "path": "native-candidate-302935a/source/tools/physics/box3d/versions.lock.json",
+      "bytes": 5796,
+      "sha256": "2d645b58040ba85d55d803b8f093fed0687a5086ff78f8b732d9a23fb14eaf9f"
+    },
+    {
+      "path": "native-candidate-302935a/source/tools/physics/box3d/native/mesh_bridge.c",
+      "bytes": 14812,
+      "sha256": "c7f5bd83fdeaa244db004879b461835b53e5929f22a05f6c81c853c70feb216a"
+    },
+    {
+      "path": "native-candidate-302935a/source/tools/physics/box3d/native/mesh_contract.c",
+      "bytes": 7161,
+      "sha256": "1735fab9abb5a8820815c8fe030ed6da6e6f240737be829782f6ef325d72eddc"
+    },
+    {
+      "path": "native-candidate-302935a/source/src/air/physics/box3d/binding/facade.mjs",
+      "bytes": 115381,
+      "sha256": "2618f81231d6291d364af46be6b5e19dbd7014af8e4d660c3abb74f7df47234b"
+    }
+  ]
+}
