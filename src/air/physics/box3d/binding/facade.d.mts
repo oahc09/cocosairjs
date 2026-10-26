@@ -349,6 +349,7 @@ export interface Box3DFoundation {
         origin: ArrayLike<number>,
         translation: ArrayLike<number>,
     ): { data: Float32Array; shape: Box3DId | null };
+    memoryDiagnostics(world: Box3DWorld): Readonly<Box3DMemoryDiagnostics>;
     worldCounts(world: Box3DWorld): { counts: Uint32Array; liveBytes: bigint };
     liveBytes(): bigint;
     dispose(): void;
@@ -689,4 +690,69 @@ export interface Box3DRawRayHit {
 export interface Box3DQueryProxy {
     readonly points: readonly (readonly number[])[];
     readonly radius: number;
+}
+
+/** Experimental read-only diagnostic profile. Storage row lengths are not live entity counts. */
+export interface Box3DMemoryRow {
+    readonly id: number;
+    readonly name: string;
+    readonly count: bigint | null;
+    readonly countUnit: string;
+    readonly countMeaning: string;
+    readonly capacity: bigint;
+    readonly capacityUnit: string;
+    readonly capacityMeaning: string;
+    readonly bytes: bigint;
+}
+export interface Box3DMemoryBridge {
+    readonly trackedBytes: bigint;
+    readonly allocations: number;
+    readonly debugShapeHandles: number;
+    readonly debugPrimitiveCapacity: number;
+    readonly capturedPrimitives: number;
+}
+export interface Box3DMemoryDiagnostics {
+    readonly profile: 'air-box3d-memory-diagnostics-v1';
+    readonly schemaVersion: 1;
+    readonly identity: Readonly<
+        Box3DIdentity & {
+            worldId: number;
+            nativeStepIndex: bigint;
+            bindingMutationRevision: number;
+        }
+    >;
+    readonly worldLedger: Readonly<{
+        accounting: string;
+        coreReportedBytes: bigint;
+        classifiedBytes: bigint;
+        sumMatchesCore: true;
+        rows: readonly Readonly<Box3DMemoryRow>[];
+    }>;
+    readonly liveCounts: Readonly<{
+        bodies: number;
+        shapes: number;
+        contacts: number;
+        joints: number;
+        islands: number;
+    }>;
+    readonly maxWorkload: Readonly<{
+        meaning: string;
+        staticShapeCount: number;
+        dynamicShapeCount: number;
+        staticBodyCount: number;
+        dynamicBodyCount: number;
+        contactCount: number;
+    }>;
+    readonly moduleCoreTrackedRequestedBytes: bigint;
+    readonly nativeWorldBridge: Readonly<Box3DMemoryBridge>;
+    readonly nativeGlobalBridge: Readonly<Box3DMemoryBridge>;
+    readonly mesh: Readonly<{ moduleSuccessfulCooks: bigint; moduleDestroys: bigint }>;
+    readonly excludedObservations: Readonly<{
+        workerArenaBackingCapacityBytes: bigint;
+        workerArenaPeakDemand: number;
+        meaning: string;
+    }>;
+    readonly unavailable: readonly string[];
+    readonly excludedFromWorldLedger: readonly string[];
+    readonly observer: Readonly<{ facadeScratchBytes: 4096; queryNativeAllocationPolicy: 'none-by-source-design' }>;
 }

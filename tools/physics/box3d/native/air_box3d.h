@@ -9,6 +9,7 @@
 #include "hull_bridge.h"
 #include "joint_bridge.h"
 #include "hinge_bridge.h"
+#include "memory_diagnostics.h"
 
 #ifdef __cplusplus
 extern "C" {

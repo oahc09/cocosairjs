@@ -56,6 +56,13 @@ try {
     const patchPlan = readPatchPlan();
     const stagedCore = resolve(out, 'staged-core');
     result.stagedCore = stageCore(stagedCore, patchPlan);
+    result.memorySourceControls = JSON.parse(
+        run(process.execPath, ['tools/physics/box3d/memory-diagnostics/v1/source-gate.mjs', '--core', stagedCore]),
+    );
+    if (result.memorySourceControls.status !== 'PASS_SOURCE_CONTROLS_ONLY')
+        throw new Error('Memory diagnostic source controls failed');
+    run(process.execPath, ['tools/physics/box3d/memory-diagnostics/v1/contract.test.mjs']);
+    result.memoryCpuContract = { status: 'PASS_CPU_FAKE_DIAGNOSTICS_ONLY', nativeRuntimeExecuted: false };
     result.identity = {
         patchChainSha256: patchPlan.patchChainSha256,
         coreSha: lock.core.commit,
@@ -103,6 +110,7 @@ try {
             'tools/physics/box3d/native/hinge_bridge.c',
             'tools/physics/box3d/native/p2p_bridge.c',
             'tools/physics/box3d/native/mesh_bridge.c',
+            'tools/physics/box3d/native/memory_diagnostics.c',
             'tools/physics/box3d/native/contract.c',
         ]) {
             const object = resolve(out, basename(source) + '.o');
@@ -283,6 +291,7 @@ try {
             ['mesh', ['world_bridge.c.o'], 'meshContract'],
             ['hull', ['world_bridge.c.o'], 'hullContract'],
             ['hull-core', ['hull.c.o'], 'hullCoreContract'],
+            ['memory', ['world_bridge.c.o', 'memory_diagnostics.c.o'], 'memoryContract'],
             ['hull-legacy-fingerprint', [], null],
         ]) {
             const source =
@@ -425,6 +434,7 @@ try {
             ['mesh', 'meshContract'],
             ['hull', 'hullContract'],
             ['hull-core', 'hullCoreContract'],
+            ['memory', 'memoryContract'],
         ]) {
             const raw = run(process.execPath, [resolve(out, `air_box3d_${name.replaceAll('-', '_')}_contract.cjs`)]);
             writeFileSync(resolve(out, `native-${name}-contract.raw.json`), raw);
@@ -451,6 +461,7 @@ try {
         run(process.execPath, ['tools/physics/box3d/wasm-command-contract.mjs', out]);
         run(process.execPath, ['tools/physics/box3d/wasm-query-contract.mjs', out]);
         run(process.execPath, ['tools/physics/box3d/wasm-mesh-contract.mjs', out]);
+        run(process.execPath, ['tools/physics/box3d/wasm-memory-contract.mjs', out]);
         result.artifacts = artifacts;
         result.browserStatus = 'NOT_RUN';
     }
@@ -463,6 +474,22 @@ try {
 } finally {
     result.completedAt = new Date().toISOString();
     const inputs = [
+        'tools/build/box3d-command-expectations.json',
+        'tools/build/box3d-command-qualification.cjs',
+
+        'tools/physics/box3d/native/memory_contract.c',
+        'tools/physics/box3d/wasm-memory-contract.mjs',
+        'tools/physics/box3d/memory-diagnostics/v1/qualification.mjs',
+
+        'tools/physics/box3d/native/memory_diagnostics.c',
+        'tools/physics/box3d/native/memory_diagnostics.h',
+        'tools/physics/box3d/memory-diagnostics/v1/schema.json',
+        'tools/physics/box3d/memory-diagnostics/v1/source-lock.json',
+        'tools/physics/box3d/memory-diagnostics/v1/source-gate.mjs',
+        'tools/physics/box3d/memory-diagnostics/v1/contract.test.mjs',
+        'tools/physics/box3d/memory-diagnostics/v1/README.md',
+        'src/air/physics/box3d/world.ts',
+
         'tools/physics/box3d/abi-schema.json',
         'tools/physics/box3d/versions.lock.json',
         'vendor/box3d/source-manifest.json',

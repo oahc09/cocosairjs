@@ -19,6 +19,22 @@ const DESCRIPTOR_MARKER = "'__AIR_BOX3D_ST_DESCRIPTOR__'";
 const BASE_MARKER = "'__AIR_BOX3D_ST_ASSET_BASE__'";
 const ARTIFACTS = ['box3d-st.mjs', 'box3d-st.wasm', 'facade.mjs', 'facade.d.mts'];
 const INPUTS = [
+    'tools/build/box3d-command-expectations.json',
+    'tools/build/box3d-command-qualification.cjs',
+
+    'tools/physics/box3d/native/memory_contract.c',
+    'tools/physics/box3d/wasm-memory-contract.mjs',
+    'tools/physics/box3d/memory-diagnostics/v1/qualification.mjs',
+
+    'tools/physics/box3d/native/memory_diagnostics.c',
+    'tools/physics/box3d/native/memory_diagnostics.h',
+    'tools/physics/box3d/memory-diagnostics/v1/schema.json',
+    'tools/physics/box3d/memory-diagnostics/v1/source-lock.json',
+    'tools/physics/box3d/memory-diagnostics/v1/source-gate.mjs',
+    'tools/physics/box3d/memory-diagnostics/v1/contract.test.mjs',
+    'tools/physics/box3d/memory-diagnostics/v1/README.md',
+    'src/air/physics/box3d/world.ts',
+
     'tools/physics/box3d/abi-schema.json',
     'tools/physics/box3d/versions.lock.json',
     'vendor/box3d/source-manifest.json',
@@ -141,6 +157,12 @@ async function verifySTBuild(buildDirectory, { provenanceRoot = ROOT } = {}) {
     const { readPatchPlan, validatePatchLock, verifyStagedCore } = await import(
         pathToFileURL(path.join(ROOT, 'tools/physics/box3d/patch-intake.mjs'))
     );
+    const { verifyMemoryDiagnosticSources } = await import(
+        pathToFileURL(path.join(ROOT, 'tools/physics/box3d/memory-diagnostics/v1/source-gate.mjs'))
+    );
+    const { verifyMemoryDiagnosticQualification } = await import(
+        pathToFileURL(path.join(ROOT, 'tools/physics/box3d/memory-diagnostics/v1/qualification.mjs'))
+    );
     const patch = readPatchPlan();
     const lock = json(path.join(ROOT, 'tools/physics/box3d/versions.lock.json'));
     const receipt = json(fileInside(directory, 'build-receipt.json'));
@@ -151,7 +173,11 @@ async function verifySTBuild(buildDirectory, { provenanceRoot = ROOT } = {}) {
     assert.equal(receipt.kind, 'st-simd-wasm');
     assert(['Debug', 'Release'].includes(receipt.mode));
     verifyCommandSchedule(receipt);
-    assert.equal(INPUTS.length, 79);
+    assert.deepEqual(
+        receipt.memorySourceControls,
+        verifyMemoryDiagnosticSources(ROOT, path.join(directory, 'staged-core')),
+    );
+    assert.equal(INPUTS.length, 92);
     assert.deepEqual(sorted(INPUTS), sorted(COMMAND_EXPECTATIONS.gate.inputs));
     assert.deepEqual(sorted(receipt.inputHashes.map((row) => row.path)), sorted(INPUTS), 'Build input inventory drift');
     for (const input of receipt.inputHashes) {
@@ -178,6 +204,14 @@ async function verifySTBuild(buildDirectory, { provenanceRoot = ROOT } = {}) {
         assert(bytes.get(name).equals(read(path.join(ROOT, 'src/air/physics/box3d/binding', name))), `Stale ${name}`);
     }
     assert.equal(audit.status, 'PASS');
+    const memoryQualification = verifyMemoryDiagnosticQualification({
+        native: json(fileInside(directory, 'native-memory-contract.raw.json')),
+        wasm: json(fileInside(directory, 'wasm-memory-contract.raw.json')),
+        identity,
+        fixtureSha256: sha256(read(path.join(ROOT, 'tools/physics/box3d/wasm-memory-contract.mjs'))),
+        receipt,
+    });
+    assert.deepEqual(audit.memoryQualification, memoryQualification);
     assert.equal(audit.auditScriptSha256, sha256(read(path.join(ROOT, 'tools/physics/box3d/audit-artifacts.mjs'))));
     assert.deepEqual(audit.sources, sources);
     assert.deepEqual(audit.artifacts, manifest.artifacts);
@@ -231,6 +265,9 @@ async function verifySTBuild(buildDirectory, { provenanceRoot = ROOT } = {}) {
     assert.deepEqual(
         sorted(audit.evidence.map((row) => row.path)),
         sorted([
+            'native-memory-contract.raw.json',
+            'air_box3d_memory_contract.cjs',
+            'wasm-memory-contract.raw.json',
             'build-receipt.json',
             'manifest.json',
             'staged-core.receipt.json',
@@ -583,14 +620,16 @@ async function verifySTBuild(buildDirectory, { provenanceRoot = ROOT } = {}) {
         mode: receipt.mode,
         auditSha256: sha256(read(path.join(directory, 'artifact-audit.raw.json'))),
         qualificationGateSources: [
+            'tools/physics/box3d/memory-diagnostics/v1/qualification.mjs',
             'box3d-command-qualification.cjs',
             'box3d-command-expectations.json',
             'box3d-query-qualification.cjs',
             'box3d-capsule-qualification.cjs',
             'box3d-hull-qualification.cjs',
         ].map((name) => {
-            const data = read(path.join(__dirname, name));
-            return { path: 'tools/build/' + name, bytes: data.length, sha256: sha256(data) };
+            const logicalPath = name.startsWith('tools/') ? name : 'tools/build/' + name;
+            const data = read(path.join(ROOT, logicalPath));
+            return { path: logicalPath, bytes: data.length, sha256: sha256(data) };
         }),
     };
 }

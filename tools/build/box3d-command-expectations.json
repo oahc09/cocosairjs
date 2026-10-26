@@ -200,7 +200,20 @@
       "tools/physics/box3d/native/mesh_bridge.h",
       "tools/physics/box3d/native/mesh_contract.c",
       "tools/physics/box3d/wasm-mesh-contract.mjs",
-      "tools/physics/box3d/static-mesh-bridge-contract.md"
+      "tools/physics/box3d/static-mesh-bridge-contract.md",
+      "tools/physics/box3d/native/memory_diagnostics.c",
+      "tools/physics/box3d/native/memory_diagnostics.h",
+      "tools/physics/box3d/memory-diagnostics/v1/schema.json",
+      "tools/physics/box3d/memory-diagnostics/v1/source-lock.json",
+      "tools/physics/box3d/memory-diagnostics/v1/source-gate.mjs",
+      "tools/physics/box3d/memory-diagnostics/v1/contract.test.mjs",
+      "tools/physics/box3d/memory-diagnostics/v1/README.md",
+      "src/air/physics/box3d/world.ts",
+      "tools/physics/box3d/native/memory_contract.c",
+      "tools/physics/box3d/wasm-memory-contract.mjs",
+      "tools/physics/box3d/memory-diagnostics/v1/qualification.mjs",
+      "tools/build/box3d-command-expectations.json",
+      "tools/build/box3d-command-qualification.cjs"
     ],
     "compileUnits": [
       "staged-core/src/aabb.c",
@@ -284,7 +297,9 @@
       "tools/physics/box3d/native/p2p_bridge.c",
       "tools/physics/box3d/native/p2p_contract.c",
       "tools/physics/box3d/native/mesh_bridge.c",
-      "tools/physics/box3d/native/mesh_contract.c"
+      "tools/physics/box3d/native/mesh_contract.c",
+      "tools/physics/box3d/native/memory_diagnostics.c",
+      "tools/physics/box3d/native/memory_contract.c"
     ],
     "evidence": [
       "build-receipt.json",
@@ -338,9 +353,12 @@
       "air_box3d_p2p_contract.cjs",
       "native-mesh-contract.raw.json",
       "air_box3d_mesh_contract.cjs",
-      "wasm-mesh-contract.raw.json"
+      "wasm-mesh-contract.raw.json",
+      "native-memory-contract.raw.json",
+      "air_box3d_memory_contract.cjs",
+      "wasm-memory-contract.raw.json"
     ],
-    "commands": 33
+    "commands": 37
   },
   "queryExtension": {
     "status": "ADDITIVE_SOURCE_GENERATION_NOT_FORMAL_ACCEPTANCE",
@@ -424,5 +442,33 @@
     "formalT17": "NOT_RUN",
     "formal2128": "NOT_RUN",
     "nineGates": "NOT_RUN"
+  },
+  "memoryDiagnosticExtension": {
+    "status": "ADDITIVE_READONLY_SOURCE_NOT_NATIVE_QUALIFIED",
+    "inputs": [
+      "tools/physics/box3d/native/memory_diagnostics.c",
+      "tools/physics/box3d/native/memory_diagnostics.h",
+      "tools/physics/box3d/memory-diagnostics/v1/schema.json",
+      "tools/physics/box3d/memory-diagnostics/v1/source-lock.json",
+      "tools/physics/box3d/memory-diagnostics/v1/source-gate.mjs",
+      "tools/physics/box3d/memory-diagnostics/v1/contract.test.mjs",
+      "tools/physics/box3d/memory-diagnostics/v1/README.md",
+      "src/air/physics/box3d/world.ts",
+      "tools/physics/box3d/native/memory_contract.c",
+      "tools/physics/box3d/wasm-memory-contract.mjs",
+      "tools/physics/box3d/memory-diagnostics/v1/qualification.mjs",
+      "tools/build/box3d-command-expectations.json",
+      "tools/build/box3d-command-qualification.cjs"
+    ],
+    "commands": [
+      "memory-diagnostics/v1/source-gate.mjs",
+      "memory-diagnostics/v1/contract.test.mjs",
+      "air_box3d_memory_contract.cjs",
+      "wasm-memory-contract.mjs"
+    ],
+    "nativeQualification": "REQUIRED_BY_SOURCE_NOT_RUN",
+    "formalC20": "ORIGINAL_FAIL_UNCHANGED",
+    "afterClose": "UNAVAILABLE",
+    "evidence": ["native-memory-contract.raw.json", "air_box3d_memory_contract.cjs", "wasm-memory-contract.raw.json"]
   }
 }

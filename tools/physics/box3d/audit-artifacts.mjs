@@ -7,6 +7,8 @@ import { fileURLToPath } from 'node:url';
 import { root, sha256, verifySources } from './verify-sources.mjs';
 import { inspectWasmMemory } from './verify-wasm.mjs';
 import { readPatchPlan, validatePatchLock, verifyStagedCore } from './patch-intake.mjs';
+import { verifyMemoryDiagnosticSources } from './memory-diagnostics/v1/source-gate.mjs';
+import { verifyMemoryDiagnosticQualification } from './memory-diagnostics/v1/qualification.mjs';
 
 const dir = resolve(process.argv[2]);
 const reportPath = resolve(dir, 'artifact-audit.raw.json');
@@ -17,12 +19,13 @@ const fileHash = (path) => ({ path, bytes: read(path).length, sha256: sha256(rea
 const receipt = json('build-receipt.json');
 assert.equal(receipt.status, 'PASS');
 assert.equal(receipt.kind, 'st-simd-wasm');
-assert.equal(receipt.commands.length, 33, 'Exact successful WASM command inventory');
+assert.equal(receipt.commands.length, 37, 'Exact successful WASM command inventory');
 assert.ok(receipt.commands.every((c) => c.exitCode === 0 && !c.error));
-assert.equal(receipt.inputHashes.length, 79);
-assert.equal(new Set(receipt.inputHashes.map((input) => input.path)).size, 79);
+assert.equal(receipt.inputHashes.length, 92);
+assert.equal(new Set(receipt.inputHashes.map((input) => input.path)).size, 92);
 assert.equal(receipt.motionSourceControls.status, 'PASS_SOURCE_CONTROLS_ONLY');
 assert.equal(receipt.commandSourceControls.status, 'PASS_SOURCE_CONTROLS_ONLY');
+assert.deepEqual(receipt.memoryCpuContract, { status: 'PASS_CPU_FAKE_DIAGNOSTICS_ONLY', nativeRuntimeExecuted: false });
 for (const input of receipt.inputHashes) {
     assert.equal(sha256(readFileSync(resolve(root, input.path))), input.sha256, `Build input drift: ${input.path}`);
 }
@@ -31,6 +34,7 @@ const manifest = json('manifest.json');
 const patchPlan = readPatchPlan();
 const stagedCore = resolve(dir, 'staged-core');
 const staged = verifyStagedCore(stagedCore, patchPlan);
+assert.deepEqual(receipt.memorySourceControls, verifyMemoryDiagnosticSources(root, stagedCore));
 assert.equal(manifest.patchChainSha256, patchPlan.patchChainSha256);
 assert.equal(manifest.patchLockSha256, patchPlan.patchLockSha256);
 assert.deepEqual(manifest.appliedPatches, patchPlan.lock.patches);
@@ -59,6 +63,8 @@ const expectedSources = [
     'tools/physics/box3d/native/p2p_bridge.c',
     'tools/physics/box3d/native/p2p_contract.c',
     'tools/physics/box3d/native/mesh_bridge.c',
+    'tools/physics/box3d/native/memory_diagnostics.c',
+    'tools/physics/box3d/native/memory_contract.c',
     'tools/physics/box3d/native/mesh_contract.c',
     'tools/physics/box3d/native/hull_contract.c',
     'tools/physics/box3d/native/hull_core_contract.c',
@@ -188,6 +194,13 @@ assert.equal(wasmMesh.status, 'PASS');
 assert.equal(wasmMesh.orders.length, 4);
 assert.equal(wasmMesh.fixtureSha256, sha256(readFileSync(resolve(root, 'tools/physics/box3d/wasm-mesh-contract.mjs'))));
 for (const passed of Object.values(wasmMesh.checks)) assert.equal(passed, true);
+const memoryQualification = verifyMemoryDiagnosticQualification({
+    native: json('native-memory-contract.raw.json'),
+    wasm: json('wasm-memory-contract.raw.json'),
+    identity: manifest,
+    fixtureSha256: sha256(readFileSync(resolve(root, 'tools/physics/box3d/wasm-memory-contract.mjs'))),
+    receipt,
+});
 const nativeMesh = json('native-mesh-contract.raw.json');
 assert.equal(nativeMesh.status, 'PASS');
 assert.equal(nativeMesh.pointerBytes, 4);
@@ -726,7 +739,12 @@ const report = {
     imports,
     dynamicExecutionOrWorkerConstructorFound: false,
     artifacts: manifest.artifacts,
+    memoryQualification,
     evidence: [
+        'native-memory-contract.raw.json',
+        'air_box3d_memory_contract.cjs',
+        'wasm-memory-contract.raw.json',
+
         'build-receipt.json',
         'manifest.json',
         'staged-core.receipt.json',

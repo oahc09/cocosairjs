@@ -118,17 +118,24 @@ function outputPacket(input, output) {
     }
 }
 function verifyCommandSchedule(receipt) {
-    assert.equal(EXPECTED.gate.commands, 33, 'Exact consumer-owned WASM command count');
+    assert.equal(EXPECTED.gate.commands, 37, 'Exact consumer-owned WASM command count');
     assert.equal(receipt.commands.length, EXPECTED.gate.commands, 'Exact successful WASM command inventory');
     assert(receipt.commands.every((row) => row.exitCode === 0 && !row.error));
     assert.equal(receipt.motionSourceControls?.status, 'PASS_SOURCE_CONTROLS_ONLY');
     assert.equal(receipt.commandSourceControls?.status, 'PASS_SOURCE_CONTROLS_ONLY');
+    assert.equal(receipt.memorySourceControls?.status, 'PASS_SOURCE_CONTROLS_ONLY');
+    assert.deepEqual(receipt.memoryCpuContract, {
+        status: 'PASS_CPU_FAKE_DIAGNOSTICS_ONLY',
+        nativeRuntimeExecuted: false,
+    });
     assert.equal(receipt.queryAdmission?.status, 'PASS_ADMISSION_NO_NATIVE_CALLS');
     assert.equal(receipt.queryAdmission?.nativeQueryCalls, 0);
     const scripts = [
         'query-admission-contract.mjs',
         'motion-source-controls.mjs',
         'command-source-controls.mjs',
+        'memory-diagnostics/v1/source-gate.mjs',
+        'memory-diagnostics/v1/contract.test.mjs',
         null,
         null,
         null,
@@ -148,6 +155,7 @@ function verifyCommandSchedule(receipt) {
             'mesh',
             'hull',
             'hull_core',
+            'memory',
         ].map((n) => `air_box3d_${n}_contract.cjs`),
         'hull-legacy-contract.mjs',
         ...[
@@ -162,6 +170,7 @@ function verifyCommandSchedule(receipt) {
             'command-',
             'query-',
             'mesh-',
+            'memory-',
         ].map((n) => `wasm-${n}contract.mjs`),
     ];
     assert.equal(scripts.length, EXPECTED.gate.commands, 'Exact consumer-owned command schedule length');
@@ -170,15 +179,15 @@ function verifyCommandSchedule(receipt) {
         assert(Array.isArray(row.args) && row.args.every((arg) => typeof arg === 'string'));
         if (script) assert(row.args[0]?.endsWith('/' + script), `Command ${i + 1}: ${script}`);
     });
-    assert.equal(receipt.commands[3].command, 'emcc');
-    assert.deepEqual(receipt.commands[3].args, ['--version']);
-    assert.equal(receipt.commands[4].command, 'cmake');
-    assert.deepEqual(receipt.commands[4].args, ['--version']);
-    assert.equal(receipt.commands[5].command, 'emcmake');
-    assert.equal(receipt.commands[5].args[0], 'cmake');
+    assert.equal(receipt.commands[5].command, 'emcc');
+    assert.deepEqual(receipt.commands[5].args, ['--version']);
     assert.equal(receipt.commands[6].command, 'cmake');
-    assert.equal(receipt.commands[6].args[0], '--build');
-    assert.deepEqual(receipt.commands[6].args.slice(-2), ['--parallel', '1']);
+    assert.deepEqual(receipt.commands[6].args, ['--version']);
+    assert.equal(receipt.commands[7].command, 'emcmake');
+    assert.equal(receipt.commands[7].args[0], 'cmake');
+    assert.equal(receipt.commands[8].command, 'cmake');
+    assert.equal(receipt.commands[8].args[0], '--build');
+    assert.deepEqual(receipt.commands[8].args.slice(-2), ['--parallel', '1']);
 }
 function verifyCommandQualification({ native, wasm, samplesBytes, identity, fixtureSha256, receipt }) {
     assert.equal(native.status, 'PASS');

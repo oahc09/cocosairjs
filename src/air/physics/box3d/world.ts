@@ -1187,6 +1187,22 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
         this.assertCommittedRead('Mesh resource diagnostics');
         return this.#meshResources?.readDiagnostics() ?? Object.freeze([]);
     }
+    /** Live-world safe-point diagnostics only. This neither advances nor flushes physics. */
+    getNativeMemoryDiagnostics() {
+        if (this.state !== 'ready')
+            throw worldError('AIR_E_BOX3D_REENTRANT', 'getNativeMemoryDiagnostics', 'Requires an idle ready world.');
+        this.assertCommittedRead('getNativeMemoryDiagnostics');
+        if (typeof this.#binding.memoryDiagnostics !== 'function')
+            throw worldError('AIR_E_BOX3D_ABI', 'getNativeMemoryDiagnostics', 'Diagnostic v1 binding unavailable.');
+        const value = this.#binding.memoryDiagnostics(this.#token);
+        if (value?.profile !== 'air-box3d-memory-diagnostics-v1' || value.identity.worldId !== this.#token.id)
+            throw worldError('AIR_E_BOX3D_ABI', 'getNativeMemoryDiagnostics', 'Foreign diagnostic world identity.');
+        return Object.freeze({
+            ...value,
+            identity: Object.freeze({ ...value.identity, bindingGeneration: this.description.generation }),
+            mesh: Object.freeze({ ...value.mesh, liveResourceSnapshots: this.getStaticMeshResourceDiagnostics() }),
+        });
+    }
     getNativeCounts() {
         this.assertCommittedRead('getNativeCounts');
         const result = this.#binding.worldCounts(this.#token);

@@ -20,7 +20,8 @@
     "9": "WORLD_LOCKED",
     "10": "BODY_MASS_PENDING",
     "11": "MOTION_LOCK_CONFLICT",
-    "12": "MOTION_SPEED_CAP"
+    "12": "MOTION_SPEED_CAP",
+    "13": "MEMORY_DIAGNOSTIC_INCONSISTENT"
   },
   "bodyInput": [
     "position.xyz",
@@ -681,5 +682,795 @@
     "sourceFace": "read cooked triangle index -> original flattened source ordinal; preserve existing query 11-word cooked index ABI",
     "admission": "static only; nonstatic create or SetType rejected before native mutation; sensor/contact not qualified",
     "copiedDebug": "actual cooked triangle edges; bounded debug allocation, no Hull substitution"
+  },
+  "memoryDiagnosticsV1": {
+    "profile": "air-box3d-memory-diagnostics-v1",
+    "version": 1,
+    "status": "SOURCE_CANDIDATE_NO_NATIVE_EXECUTION",
+    "export": "_air_b3_world_memory_diagnostics_v1",
+    "headerWords": 44,
+    "rowWords": 8,
+    "rowCount": 87,
+    "wireWords": 740,
+    "wireHeader": [
+      "version",
+      "wireWords",
+      "rowCount",
+      "worldId",
+      "stepIndex.low",
+      "stepIndex.high",
+      "worldLedgerBytes.low",
+      "worldLedgerBytes.high",
+      "bodies",
+      "shapes",
+      "contacts",
+      "joints",
+      "islands",
+      "maxStaticShapes",
+      "maxDynamicShapes",
+      "maxStaticBodies",
+      "maxDynamicBodies",
+      "maxContacts",
+      "workerCount",
+      "arenaPeakDemand",
+      "workerArenaBackingCapacity.low",
+      "workerArenaBackingCapacity.high",
+      "moduleCoreTrackedRequestedBytes.low",
+      "moduleCoreTrackedRequestedBytes.high",
+      "worldBridge.bytes.low",
+      "worldBridge.bytes.high",
+      "worldBridge.allocations",
+      "worldBridge.debugShapeHandles",
+      "worldBridge.primitiveCapacity",
+      "worldBridge.capturedPrimitives",
+      "globalBridge.bytes.low",
+      "globalBridge.bytes.high",
+      "globalBridge.allocations",
+      "globalBridge.debugShapeHandles",
+      "globalBridge.primitiveCapacity",
+      "globalBridge.capturedPrimitives",
+      "meshSuccessfulCooks.low",
+      "meshSuccessfulCooks.high",
+      "meshDestroys.low",
+      "meshDestroys.high",
+      "formulaComplete=1",
+      "reserved=0",
+      "reserved=0",
+      "reserved=0"
+    ],
+    "wireRow": [
+      "stableId",
+      "knownFlags:count=1,capacity=2",
+      "count.low",
+      "count.high",
+      "capacity.low",
+      "capacity.high",
+      "bytes.low",
+      "bytes.high"
+    ],
+    "rows": [
+      {
+        "id": 1,
+        "name": "idFreeList.body",
+        "countUnit": "free-ids",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "id-slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 2,
+        "name": "idFreeList.solverSet",
+        "countUnit": "free-ids",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "id-slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 3,
+        "name": "idFreeList.joint",
+        "countUnit": "free-ids",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "id-slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 4,
+        "name": "idFreeList.contact",
+        "countUnit": "free-ids",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "id-slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 5,
+        "name": "idFreeList.island",
+        "countUnit": "free-ids",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "id-slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 6,
+        "name": "idFreeList.shape",
+        "countUnit": "free-ids",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "id-slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 7,
+        "name": "worldArray.bodies",
+        "countUnit": "addressable-slots",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 8,
+        "name": "worldArray.solverSets",
+        "countUnit": "addressable-slots",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 9,
+        "name": "worldArray.joints",
+        "countUnit": "addressable-slots",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 10,
+        "name": "worldArray.contacts",
+        "countUnit": "addressable-slots",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 11,
+        "name": "worldArray.islands",
+        "countUnit": "addressable-slots",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 12,
+        "name": "worldArray.shapes",
+        "countUnit": "addressable-slots",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 13,
+        "name": "worldArray.sensors",
+        "countUnit": "addressable-slots",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 14,
+        "name": "islandLinks.bodies",
+        "countUnit": "elements",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "elements",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 15,
+        "name": "islandLinks.contacts",
+        "countUnit": "elements",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "elements",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 16,
+        "name": "islandLinks.joints",
+        "countUnit": "elements",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "elements",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 17,
+        "name": "sensorOwned.hits",
+        "countUnit": "visitors",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "visitor-slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 18,
+        "name": "sensorOwned.overlaps1",
+        "countUnit": "visitors",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "visitor-slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 19,
+        "name": "sensorOwned.overlaps2",
+        "countUnit": "visitors",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "visitor-slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 20,
+        "name": "hulls.map",
+        "countUnit": "stored-hulls",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "buckets",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 21,
+        "name": "hulls.data",
+        "countUnit": "stored-hulls",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "bytes",
+        "capacityMeaning": "sum of owned hull byteCount, not spare capacity"
+      },
+      {
+        "id": 22,
+        "name": "tree.static.inlineStruct",
+        "countUnit": "structs",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "structs",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 23,
+        "name": "tree.static.nodes",
+        "countUnit": "addressable-node-slots",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 24,
+        "name": "tree.static.parents",
+        "countUnit": "addressable-node-slots",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 25,
+        "name": "tree.static.proxies",
+        "countUnit": "proxies",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "proxy-slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 26,
+        "name": "tree.static.swapNodes",
+        "countUnit": "unavailable",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 27,
+        "name": "tree.static.leafIndices",
+        "countUnit": "unavailable",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 28,
+        "name": "tree.static.leafNodes",
+        "countUnit": "unavailable",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 29,
+        "name": "tree.static.leafBoxes",
+        "countUnit": "unavailable",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 30,
+        "name": "tree.static.leafCenters",
+        "countUnit": "unavailable",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 31,
+        "name": "tree.static.binIndices",
+        "countUnit": "unavailable",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 32,
+        "name": "tree.kinematic.inlineStruct",
+        "countUnit": "structs",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "structs",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 33,
+        "name": "tree.kinematic.nodes",
+        "countUnit": "addressable-node-slots",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 34,
+        "name": "tree.kinematic.parents",
+        "countUnit": "addressable-node-slots",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 35,
+        "name": "tree.kinematic.proxies",
+        "countUnit": "proxies",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "proxy-slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 36,
+        "name": "tree.kinematic.swapNodes",
+        "countUnit": "unavailable",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 37,
+        "name": "tree.kinematic.leafIndices",
+        "countUnit": "unavailable",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 38,
+        "name": "tree.kinematic.leafNodes",
+        "countUnit": "unavailable",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 39,
+        "name": "tree.kinematic.leafBoxes",
+        "countUnit": "unavailable",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 40,
+        "name": "tree.kinematic.leafCenters",
+        "countUnit": "unavailable",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 41,
+        "name": "tree.kinematic.binIndices",
+        "countUnit": "unavailable",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 42,
+        "name": "tree.dynamic.inlineStruct",
+        "countUnit": "structs",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "structs",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 43,
+        "name": "tree.dynamic.nodes",
+        "countUnit": "addressable-node-slots",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 44,
+        "name": "tree.dynamic.parents",
+        "countUnit": "addressable-node-slots",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 45,
+        "name": "tree.dynamic.proxies",
+        "countUnit": "proxies",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "proxy-slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 46,
+        "name": "tree.dynamic.swapNodes",
+        "countUnit": "unavailable",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 47,
+        "name": "tree.dynamic.leafIndices",
+        "countUnit": "unavailable",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 48,
+        "name": "tree.dynamic.leafNodes",
+        "countUnit": "unavailable",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 49,
+        "name": "tree.dynamic.leafBoxes",
+        "countUnit": "unavailable",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 50,
+        "name": "tree.dynamic.leafCenters",
+        "countUnit": "unavailable",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 51,
+        "name": "tree.dynamic.binIndices",
+        "countUnit": "unavailable",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 52,
+        "name": "broadPhase.pairSet",
+        "countUnit": "pairs",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "hash-slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 53,
+        "name": "manifold.allocatorArray",
+        "countUnit": "allocators",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "allocator-slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 54,
+        "name": "manifold.blockDirectory",
+        "countUnit": "blocks",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "block-descriptor-slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 55,
+        "name": "manifold.blockStorage",
+        "countUnit": "allocated-elements",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "bytes",
+        "capacityMeaning": "allocated blocks times their own element size; heterogeneous elements"
+      },
+      {
+        "id": 56,
+        "name": "solverSet.bodySims",
+        "countUnit": "elements",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "elements",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 57,
+        "name": "solverSet.bodyStates",
+        "countUnit": "elements",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "elements",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 58,
+        "name": "solverSet.jointSims",
+        "countUnit": "elements",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "elements",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 59,
+        "name": "solverSet.contactIndices",
+        "countUnit": "elements",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "elements",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 60,
+        "name": "solverSet.islandSims",
+        "countUnit": "elements",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "elements",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 61,
+        "name": "graph.bodyBits",
+        "countUnit": "64-bit-blocks",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "64-bit-blocks",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 62,
+        "name": "graph.convexContacts",
+        "countUnit": "elements",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "elements",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 63,
+        "name": "graph.contacts",
+        "countUnit": "elements",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "elements",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 64,
+        "name": "graph.jointSims",
+        "countUnit": "elements",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "elements",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 65,
+        "name": "task.contextArray",
+        "countUnit": "contexts",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "context-slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 66,
+        "name": "task.sensorHits",
+        "countUnit": "elements",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "elements",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 67,
+        "name": "task.pairKeys",
+        "countUnit": "elements",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "elements",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 68,
+        "name": "task.contactStateBits",
+        "countUnit": "64-bit-blocks",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "64-bit-blocks",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 69,
+        "name": "task.jointStateBits",
+        "countUnit": "64-bit-blocks",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "64-bit-blocks",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 70,
+        "name": "task.hitEventBits",
+        "countUnit": "64-bit-blocks",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "64-bit-blocks",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 71,
+        "name": "task.awakeIslandBits",
+        "countUnit": "64-bit-blocks",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "64-bit-blocks",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 72,
+        "name": "sensorTask.contextArray",
+        "countUnit": "contexts",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "context-slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 73,
+        "name": "sensorTask.eventBits",
+        "countUnit": "64-bit-blocks",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "64-bit-blocks",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 74,
+        "name": "event.bodyMoveEvents",
+        "countUnit": "events",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "event-slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 75,
+        "name": "event.sensorBeginEvents",
+        "countUnit": "events",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "event-slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 76,
+        "name": "event.contactBeginEvents",
+        "countUnit": "events",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "event-slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 77,
+        "name": "event.sensorEndEvents0",
+        "countUnit": "events",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "event-slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 78,
+        "name": "event.sensorEndEvents1",
+        "countUnit": "events",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "event-slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 79,
+        "name": "event.contactEndEvents0",
+        "countUnit": "events",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "event-slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 80,
+        "name": "event.contactEndEvents1",
+        "countUnit": "events",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "event-slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 81,
+        "name": "event.contactHitEvents",
+        "countUnit": "events",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "event-slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 82,
+        "name": "event.jointEvents",
+        "countUnit": "events",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "event-slots",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 83,
+        "name": "debug.body",
+        "countUnit": "64-bit-blocks",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "64-bit-blocks",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 84,
+        "name": "debug.joint",
+        "countUnit": "64-bit-blocks",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "64-bit-blocks",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 85,
+        "name": "debug.contact",
+        "countUnit": "64-bit-blocks",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "64-bit-blocks",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 86,
+        "name": "debug.island",
+        "countUnit": "64-bit-blocks",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "64-bit-blocks",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 87,
+        "name": "stack",
+        "countUnit": "allocated-bytes",
+        "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
+        "capacityUnit": "bytes",
+        "capacityMeaning": "allocated capacity, not live allocation usage"
+      }
+    ],
+    "rules": {
+      "safety": "ST serialized read at ready committed safe point. Native validates full world ID and explicit locked/active task state before GetCounters; every failure leaves all caller output unchanged. No allocation, step, flush, trim, draw or mutation.",
+      "capacityLedger": "Exact pinned b3GetWorldByteCount ledger, including embedded tree sizeof terms. Not a complete malloc ledger. Sum of every row must equal GetCounters.byteCount. No residual, unknown-as-zero or partial success.",
+      "integers": "Checked uint64 arithmetic; core int-sized intermediate groups are preflighted before core GetCounters. Overflow or inconsistent accounting returns non-OK.",
+      "globals": "b3GetByteCount requested-size accounting and actual native air_b3_bridge_memory(0) are separate scopes. Never add them to worldLedger as a total.",
+      "stepIndex": "Native completed-step identity only, not an epoch of every allocation/mutation. Binding revision/generation are separate labels.",
+      "workload": "b3World_GetMaxCapacity is a step-sampled historical workload maximum, not allocation capacity, a budget or an acceptance threshold.",
+      "workerArena": "Backing capacity read independently from taskContexts[].arena.capacity; excluded from worldLedger, distinct from Counters.arenaCapacity peakDemand.",
+      "mesh": "Successful cook/completed destroy counts are module-wide call counters including rollback. Per-resource leases/borrows are separate existing backend snapshots, not a module-wide census.",
+      "afterClose": "Unavailable through this live-world backend method. No retained/replacement factory, module or new host is introduced."
+    },
+    "unavailable": [
+      "all-native-handle census",
+      "global-world census",
+      "global-mesh-lease census",
+      "after-app-close module observation"
+    ],
+    "excludedFromWorldLedger": [
+      "worker arena backing/shared/overflow allocations",
+      "fatAABBs",
+      "name cache",
+      "scheduler and mutex allocations",
+      "allocator rounding/metadata",
+      "generic malloc observer scratch",
+      "WASM memory capacity/JS heap/RSS"
+    ]
   }
 }

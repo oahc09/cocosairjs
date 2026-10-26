@@ -23,7 +23,104 @@ THE SOFTWARE.
 // Internal, limited M1 foundation. This is not the Cocos physics adapter.
 const CORE_SHA = 'efca0c184d40fd6a82016983f1601c4d23965867';
 const BINDING_BASE_SHA = '5d5a3af049cccd9948b2b55bac4342414af0ef64';
-const SCHEMA_SHA256 = 'ce98aca1a40c4999df838c1eaab2b08b0533c85adca9866eb48180c6190575d6';
+const SCHEMA_SHA256 = 'bef78296f8fff850570799c65d6f4b0a47115cf38aed898a58cf88275348fd84';
+// Stable rows for the separately versioned diagnostic extension in the main ABI schema.
+// Lengths are storage lengths, not live entities or unconsumed events.
+const MEMORY_DIAGNOSTIC_ROWS = [
+    ['idFreeList.body', 'free-ids', 'id-slots', 'allocated capacity, not live allocation usage'],
+    ['idFreeList.solverSet', 'free-ids', 'id-slots', 'allocated capacity, not live allocation usage'],
+    ['idFreeList.joint', 'free-ids', 'id-slots', 'allocated capacity, not live allocation usage'],
+    ['idFreeList.contact', 'free-ids', 'id-slots', 'allocated capacity, not live allocation usage'],
+    ['idFreeList.island', 'free-ids', 'id-slots', 'allocated capacity, not live allocation usage'],
+    ['idFreeList.shape', 'free-ids', 'id-slots', 'allocated capacity, not live allocation usage'],
+    ['worldArray.bodies', 'addressable-slots', 'slots', 'allocated capacity, not live allocation usage'],
+    ['worldArray.solverSets', 'addressable-slots', 'slots', 'allocated capacity, not live allocation usage'],
+    ['worldArray.joints', 'addressable-slots', 'slots', 'allocated capacity, not live allocation usage'],
+    ['worldArray.contacts', 'addressable-slots', 'slots', 'allocated capacity, not live allocation usage'],
+    ['worldArray.islands', 'addressable-slots', 'slots', 'allocated capacity, not live allocation usage'],
+    ['worldArray.shapes', 'addressable-slots', 'slots', 'allocated capacity, not live allocation usage'],
+    ['worldArray.sensors', 'addressable-slots', 'slots', 'allocated capacity, not live allocation usage'],
+    ['islandLinks.bodies', 'elements', 'elements', 'allocated capacity, not live allocation usage'],
+    ['islandLinks.contacts', 'elements', 'elements', 'allocated capacity, not live allocation usage'],
+    ['islandLinks.joints', 'elements', 'elements', 'allocated capacity, not live allocation usage'],
+    ['sensorOwned.hits', 'visitors', 'visitor-slots', 'allocated capacity, not live allocation usage'],
+    ['sensorOwned.overlaps1', 'visitors', 'visitor-slots', 'allocated capacity, not live allocation usage'],
+    ['sensorOwned.overlaps2', 'visitors', 'visitor-slots', 'allocated capacity, not live allocation usage'],
+    ['hulls.map', 'stored-hulls', 'buckets', 'allocated capacity, not live allocation usage'],
+    ['hulls.data', 'stored-hulls', 'bytes', 'sum of owned hull byteCount, not spare capacity'],
+    ['tree.static.inlineStruct', 'structs', 'structs', 'allocated capacity, not live allocation usage'],
+    ['tree.static.nodes', 'addressable-node-slots', 'slots', 'allocated capacity, not live allocation usage'],
+    ['tree.static.parents', 'addressable-node-slots', 'slots', 'allocated capacity, not live allocation usage'],
+    ['tree.static.proxies', 'proxies', 'proxy-slots', 'allocated capacity, not live allocation usage'],
+    ['tree.static.swapNodes', 'unavailable', 'slots', 'allocated capacity, not live allocation usage'],
+    ['tree.static.leafIndices', 'unavailable', 'slots', 'allocated capacity, not live allocation usage'],
+    ['tree.static.leafNodes', 'unavailable', 'slots', 'allocated capacity, not live allocation usage'],
+    ['tree.static.leafBoxes', 'unavailable', 'slots', 'allocated capacity, not live allocation usage'],
+    ['tree.static.leafCenters', 'unavailable', 'slots', 'allocated capacity, not live allocation usage'],
+    ['tree.static.binIndices', 'unavailable', 'slots', 'allocated capacity, not live allocation usage'],
+    ['tree.kinematic.inlineStruct', 'structs', 'structs', 'allocated capacity, not live allocation usage'],
+    ['tree.kinematic.nodes', 'addressable-node-slots', 'slots', 'allocated capacity, not live allocation usage'],
+    ['tree.kinematic.parents', 'addressable-node-slots', 'slots', 'allocated capacity, not live allocation usage'],
+    ['tree.kinematic.proxies', 'proxies', 'proxy-slots', 'allocated capacity, not live allocation usage'],
+    ['tree.kinematic.swapNodes', 'unavailable', 'slots', 'allocated capacity, not live allocation usage'],
+    ['tree.kinematic.leafIndices', 'unavailable', 'slots', 'allocated capacity, not live allocation usage'],
+    ['tree.kinematic.leafNodes', 'unavailable', 'slots', 'allocated capacity, not live allocation usage'],
+    ['tree.kinematic.leafBoxes', 'unavailable', 'slots', 'allocated capacity, not live allocation usage'],
+    ['tree.kinematic.leafCenters', 'unavailable', 'slots', 'allocated capacity, not live allocation usage'],
+    ['tree.kinematic.binIndices', 'unavailable', 'slots', 'allocated capacity, not live allocation usage'],
+    ['tree.dynamic.inlineStruct', 'structs', 'structs', 'allocated capacity, not live allocation usage'],
+    ['tree.dynamic.nodes', 'addressable-node-slots', 'slots', 'allocated capacity, not live allocation usage'],
+    ['tree.dynamic.parents', 'addressable-node-slots', 'slots', 'allocated capacity, not live allocation usage'],
+    ['tree.dynamic.proxies', 'proxies', 'proxy-slots', 'allocated capacity, not live allocation usage'],
+    ['tree.dynamic.swapNodes', 'unavailable', 'slots', 'allocated capacity, not live allocation usage'],
+    ['tree.dynamic.leafIndices', 'unavailable', 'slots', 'allocated capacity, not live allocation usage'],
+    ['tree.dynamic.leafNodes', 'unavailable', 'slots', 'allocated capacity, not live allocation usage'],
+    ['tree.dynamic.leafBoxes', 'unavailable', 'slots', 'allocated capacity, not live allocation usage'],
+    ['tree.dynamic.leafCenters', 'unavailable', 'slots', 'allocated capacity, not live allocation usage'],
+    ['tree.dynamic.binIndices', 'unavailable', 'slots', 'allocated capacity, not live allocation usage'],
+    ['broadPhase.pairSet', 'pairs', 'hash-slots', 'allocated capacity, not live allocation usage'],
+    ['manifold.allocatorArray', 'allocators', 'allocator-slots', 'allocated capacity, not live allocation usage'],
+    ['manifold.blockDirectory', 'blocks', 'block-descriptor-slots', 'allocated capacity, not live allocation usage'],
+    [
+        'manifold.blockStorage',
+        'allocated-elements',
+        'bytes',
+        'allocated blocks times their own element size; heterogeneous elements',
+    ],
+    ['solverSet.bodySims', 'elements', 'elements', 'allocated capacity, not live allocation usage'],
+    ['solverSet.bodyStates', 'elements', 'elements', 'allocated capacity, not live allocation usage'],
+    ['solverSet.jointSims', 'elements', 'elements', 'allocated capacity, not live allocation usage'],
+    ['solverSet.contactIndices', 'elements', 'elements', 'allocated capacity, not live allocation usage'],
+    ['solverSet.islandSims', 'elements', 'elements', 'allocated capacity, not live allocation usage'],
+    ['graph.bodyBits', '64-bit-blocks', '64-bit-blocks', 'allocated capacity, not live allocation usage'],
+    ['graph.convexContacts', 'elements', 'elements', 'allocated capacity, not live allocation usage'],
+    ['graph.contacts', 'elements', 'elements', 'allocated capacity, not live allocation usage'],
+    ['graph.jointSims', 'elements', 'elements', 'allocated capacity, not live allocation usage'],
+    ['task.contextArray', 'contexts', 'context-slots', 'allocated capacity, not live allocation usage'],
+    ['task.sensorHits', 'elements', 'elements', 'allocated capacity, not live allocation usage'],
+    ['task.pairKeys', 'elements', 'elements', 'allocated capacity, not live allocation usage'],
+    ['task.contactStateBits', '64-bit-blocks', '64-bit-blocks', 'allocated capacity, not live allocation usage'],
+    ['task.jointStateBits', '64-bit-blocks', '64-bit-blocks', 'allocated capacity, not live allocation usage'],
+    ['task.hitEventBits', '64-bit-blocks', '64-bit-blocks', 'allocated capacity, not live allocation usage'],
+    ['task.awakeIslandBits', '64-bit-blocks', '64-bit-blocks', 'allocated capacity, not live allocation usage'],
+    ['sensorTask.contextArray', 'contexts', 'context-slots', 'allocated capacity, not live allocation usage'],
+    ['sensorTask.eventBits', '64-bit-blocks', '64-bit-blocks', 'allocated capacity, not live allocation usage'],
+    ['event.bodyMoveEvents', 'events', 'event-slots', 'allocated capacity, not live allocation usage'],
+    ['event.sensorBeginEvents', 'events', 'event-slots', 'allocated capacity, not live allocation usage'],
+    ['event.contactBeginEvents', 'events', 'event-slots', 'allocated capacity, not live allocation usage'],
+    ['event.sensorEndEvents0', 'events', 'event-slots', 'allocated capacity, not live allocation usage'],
+    ['event.sensorEndEvents1', 'events', 'event-slots', 'allocated capacity, not live allocation usage'],
+    ['event.contactEndEvents0', 'events', 'event-slots', 'allocated capacity, not live allocation usage'],
+    ['event.contactEndEvents1', 'events', 'event-slots', 'allocated capacity, not live allocation usage'],
+    ['event.contactHitEvents', 'events', 'event-slots', 'allocated capacity, not live allocation usage'],
+    ['event.jointEvents', 'events', 'event-slots', 'allocated capacity, not live allocation usage'],
+    ['debug.body', '64-bit-blocks', '64-bit-blocks', 'allocated capacity, not live allocation usage'],
+    ['debug.joint', '64-bit-blocks', '64-bit-blocks', 'allocated capacity, not live allocation usage'],
+    ['debug.contact', '64-bit-blocks', '64-bit-blocks', 'allocated capacity, not live allocation usage'],
+    ['debug.island', '64-bit-blocks', '64-bit-blocks', 'allocated capacity, not live allocation usage'],
+    ['stack', 'allocated-bytes', 'bytes', 'allocated capacity, not live allocation usage'],
+];
+const MEMORY_DIAGNOSTIC_WORDS = 740;
 const commandIsArray = Array.isArray;
 const commandKeys = Object.keys;
 const PATCH_CHAIN_SHA256 = '4c9d057fe6d7403f6f2c7672c4a7abe38041d845942540a6b5c5abbc6f4bc45c';
@@ -33,6 +130,7 @@ function failure(code, message) {
 }
 
 function nativeStatus(status) {
+    if (status === 13) throw failure('AIR_E_BOX3D_ABI', 'Native memory diagnostic accounting is inconsistent');
     if (status === 11) throw failure('AIR_E_BOX3D_CONFIG', 'Motion conflicts with a locked world velocity component');
     if (status === 12) throw failure('AIR_E_BOX3D_CONFIG', 'Motion exceeds the safe native speed cap');
     if (status === 9) throw failure('AIR_E_BOX3D_LOCKED', 'World is locked');
@@ -90,7 +188,10 @@ export function createBox3DBinding(module, expected) {
     )
         throw failure('AIR_E_BOX3D_ABI', 'Core/schema/variant/patch-chain identity mismatch');
 
-    const scratch = module._malloc(512);
+    // One facade-owned allocation, freed by the original dispose path. The larger fixed
+    // readback area avoids malloc/grow during a diagnostic query. It is generic observer
+    // scratch, excluded from both core and bridge accounting (not a memory acceptance baseline).
+    const scratch = module._malloc(4096);
     if (!scratch) throw failure('AIR_E_BOX3D_NATIVE', 'Cannot allocate binding scratch');
     const input = scratch;
     const ids = scratch + 128;
@@ -2438,6 +2539,139 @@ export function createBox3DBinding(module, expected) {
                     data: result,
                     shape: result[0] ? { low: module.HEAPU32[ids >>> 2], high: module.HEAPU32[(ids >>> 2) + 1] } : null,
                 };
+            });
+        },
+        memoryDiagnostics(world) {
+            return exclusive(() => {
+                const wid = worldId(world);
+                const state = worldStates.get(world);
+                if (typeof module._air_b3_world_memory_diagnostics_v1 !== 'function')
+                    throw failure('AIR_E_BOX3D_ABI', 'Memory diagnostic v1 export unavailable');
+                nativeStatus(module._air_b3_world_memory_diagnostics_v1(wid, output, MEMORY_DIAGNOSTIC_WORDS));
+                // Reacquire after the call, then copy. No HEAP view or pointer is returned.
+                const words = Array.from(module.HEAPU32.slice(output >>> 2, (output >>> 2) + MEMORY_DIAGNOSTIC_WORDS));
+                const reject = (condition, message) => {
+                    if (!condition) throw failure('AIR_E_BOX3D_ABI', message);
+                };
+                reject(
+                    words.length === MEMORY_DIAGNOSTIC_WORDS &&
+                        words[0] === 1 &&
+                        words[1] === MEMORY_DIAGNOSTIC_WORDS &&
+                        words[2] === MEMORY_DIAGNOSTIC_ROWS.length &&
+                        words[3] === wid &&
+                        words[40] === 1 &&
+                        words.slice(41, 44).every((word) => word === 0),
+                    'Malformed or foreign memory diagnostic header',
+                );
+                const u64 = (at) => BigInt(words[at]) | (BigInt(words[at + 1]) << 32n);
+                const step = u64(4),
+                    coreReportedBytes = u64(6),
+                    moduleBytes = u64(22);
+                reject(
+                    Number.isSafeInteger(state.step) && step === BigInt(state.step),
+                    'Native step identity mismatch',
+                );
+                reject(
+                    coreReportedBytes <= 0x7fffffffffffffffn && moduleBytes <= 0x7fffffffffffffffn,
+                    'Negative or overflowed signed core ledger',
+                );
+                reject(words[18] === 1, 'Expected the pinned single-worker ST world');
+                let classifiedBytes = 0n;
+                const rows = MEMORY_DIAGNOSTIC_ROWS.map(([name, countUnit, capacityUnit, capacityMeaning], index) => {
+                    const at = 44 + 8 * index;
+                    const expectedFlags = countUnit === 'unavailable' ? 2 : 3;
+                    reject(
+                        words[at] === index + 1 && words[at + 1] === expectedFlags,
+                        'Unknown or duplicate memory row',
+                    );
+                    reject(expectedFlags !== 2 || u64(at + 2) === 0n, 'Unknown count must carry no numeric claim');
+                    const bytes = u64(at + 6);
+                    classifiedBytes += bytes;
+                    reject(classifiedBytes <= 0xffffffffffffffffn, 'Classified memory sum overflow');
+                    return {
+                        id: index + 1,
+                        name,
+                        count: expectedFlags === 3 ? u64(at + 2) : null,
+                        countUnit,
+                        countMeaning: 'Native storage length/field; not live entities or unconsumed events',
+                        capacity: u64(at + 4),
+                        capacityUnit,
+                        capacityMeaning,
+                        bytes,
+                    };
+                });
+                reject(classifiedBytes === coreReportedBytes, 'Memory categories do not equal the pinned core ledger');
+                const bridge = (at) => ({
+                    trackedBytes: u64(at),
+                    allocations: words[at + 2],
+                    debugShapeHandles: words[at + 3],
+                    debugPrimitiveCapacity: words[at + 4],
+                    capturedPrimitives: words[at + 5],
+                });
+                const nativeWorldBridge = bridge(24),
+                    nativeGlobalBridge = bridge(30);
+                for (const key of Object.keys(nativeWorldBridge))
+                    reject(nativeGlobalBridge[key] >= nativeWorldBridge[key], 'Global bridge smaller than this world');
+                const moduleSuccessfulCooks = u64(36),
+                    moduleDestroys = u64(38);
+                reject(moduleDestroys <= moduleSuccessfulCooks, 'Mesh lifetime counter ordering invalid');
+                return freeze({
+                    profile: 'air-box3d-memory-diagnostics-v1',
+                    schemaVersion: 1,
+                    identity: {
+                        ...api.identity,
+                        worldId: wid,
+                        nativeStepIndex: step,
+                        bindingMutationRevision: state.revision,
+                    },
+                    worldLedger: {
+                        accounting: 'Pinned b3GetWorldByteCount capacity ledger, including embedded tree struct terms',
+                        coreReportedBytes,
+                        classifiedBytes,
+                        sumMatchesCore: true,
+                        rows,
+                    },
+                    liveCounts: {
+                        bodies: words[8],
+                        shapes: words[9],
+                        contacts: words[10],
+                        joints: words[11],
+                        islands: words[12],
+                    },
+                    maxWorkload: {
+                        meaning: 'Step-sampled historical workload maxima; not allocated capacity or limits',
+                        staticShapeCount: words[13],
+                        dynamicShapeCount: words[14],
+                        staticBodyCount: words[15],
+                        dynamicBodyCount: words[16],
+                        contactCount: words[17],
+                    },
+                    moduleCoreTrackedRequestedBytes: moduleBytes,
+                    nativeWorldBridge,
+                    nativeGlobalBridge,
+                    mesh: { moduleSuccessfulCooks, moduleDestroys },
+                    excludedObservations: {
+                        workerArenaBackingCapacityBytes: u64(20),
+                        workerArenaPeakDemand: words[19],
+                        meaning: 'Backing capacity and historical peak demand are distinct; neither enters worldLedger',
+                    },
+                    unavailable: [
+                        'all-native-handle census',
+                        'global-world census',
+                        'global-mesh-lease census',
+                        'after-app-close module observation',
+                    ],
+                    excludedFromWorldLedger: [
+                        'worker arena backing/shared/overflow allocations',
+                        'fatAABBs',
+                        'name cache',
+                        'scheduler and mutex allocations',
+                        'allocator rounding/metadata',
+                        'generic malloc observer scratch',
+                        'WASM memory capacity/JS heap/RSS',
+                    ],
+                    observer: { facadeScratchBytes: 4096, queryNativeAllocationPolicy: 'none-by-source-design' },
+                });
             });
         },
         worldCounts(world) {

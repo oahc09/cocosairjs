@@ -290,7 +290,15 @@ int air_b3_bridge_memory(uint32_t world,uint32_t* out) {
     if(!out)return AIR_B3_ARGUMENT;
     BridgeWorld* w=world?find_world(world):worlds;if(world&&!w)return AIR_B3_INVALID;
     uint64_t bytes=0;uint32_t allocations=0,shapes=0,capacity=0,count=0;
-    for(;w;w=world?NULL:w->next){bytes+=w->bytes;allocations+=w->allocations;shapes+=w->shapes;capacity+=w->capacity;count+=w->count;}
-    out[0]=(uint32_t)bytes;out[1]=(uint32_t)(bytes>>32);out[2]=allocations;out[3]=shapes;out[4]=capacity;out[5]=count;
+    /* Same native linked-list accounting, now fail-closed instead of wrapping.
+       No allocation or registry change; every nonzero return preserves caller storage. */
+    for(;w;w=world?NULL:w->next){
+        if(UINT64_MAX-bytes<w->bytes || UINT32_MAX-allocations<w->allocations ||
+           UINT32_MAX-shapes<w->shapes || UINT32_MAX-capacity<w->capacity || UINT32_MAX-count<w->count)
+            return AIR_B3_CAPACITY;
+        bytes+=w->bytes;allocations+=w->allocations;shapes+=w->shapes;capacity+=w->capacity;count+=w->count;
+    }
+    uint32_t copy[6]={(uint32_t)bytes,(uint32_t)(bytes>>32),allocations,shapes,capacity,count};
+    memcpy(out,copy,sizeof(copy));
     return AIR_B3_OK;
 }

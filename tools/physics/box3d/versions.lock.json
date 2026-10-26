@@ -36,7 +36,7 @@
     "abiVersion": 1,
     "status": "EXPERIMENTAL_FOUNDATION"
   },
-  "apiSchemaSha256": "ce98aca1a40c4999df838c1eaab2b08b0533c85adca9866eb48180c6190575d6",
+  "apiSchemaSha256": "bef78296f8fff850570799c65d6f4b0a47115cf38aed898a58cf88275348fd84",
   "corePatches": [
     {
       "id": "sse2-loadv-float-alignment-v1",
@@ -105,14 +105,8 @@
     "bindingStandard": "C17",
     "precision": "float32",
     "variant": "st-simd",
-    "simdFlags": [
-      "-msimd128",
-      "-msse2"
-    ],
-    "determinismFlags": [
-      "-fno-fast-math",
-      "-ffp-contract=off"
-    ],
+    "simdFlags": ["-msimd128", "-msse2"],
+    "determinismFlags": ["-fno-fast-math", "-ffp-contract=off"],
     "pthread": false,
     "sharedMemory": false,
     "workerPool": false,
