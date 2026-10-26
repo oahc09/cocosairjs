@@ -13,6 +13,10 @@ export const MEMORY_NATIVE_CHECKS = Object.freeze([
     'overflowBeforeCoreGetter',
     'injectedMismatchNoWrite',
     'bridgeOverflowNoWrite',
+    'postStepRebuildAndRelease',
+    'inactiveScratchLedgerNotAllocation',
+    'requiredScratchNullNoWrite',
+    'unexpectedInactiveBackingNoWrite',
 ]);
 export const MEMORY_WASM_CHECKS = Object.freeze([
     'initialZeroStepSameWorld',
@@ -23,6 +27,8 @@ export const MEMORY_WASM_CHECKS = Object.freeze([
     'nonemptyCopiedImmutable',
     'releasedWorldNoWarmupOrBaselineRewrite',
     'afterCloseNotClaimed',
+    'postStepRebuildLedger',
+    'releasedPostStepRetainedLedger',
 ]);
 export function verifyMemoryDiagnosticQualification({ native, wasm, identity, fixtureSha256, receipt }) {
     assert.equal(native.schema, 'air-box3d-memory-native-contract-v1');
@@ -30,7 +36,7 @@ export function verifyMemoryDiagnosticQualification({ native, wasm, identity, fi
     assert.equal(native.pointerBytes, 4);
     assert.equal(native.rowCount, 87);
     assert.equal(native.wireWords, 740);
-    assert.equal(native.checks, 31);
+    assert.equal(native.checks, 39);
     assert.equal(native.controlledFixture, true);
     assert.equal(native.injectionsAreProductionObservations, false);
     for (const key of MEMORY_NATIVE_CHECKS) assert.equal(native[key], true, key);

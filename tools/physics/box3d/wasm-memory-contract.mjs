@@ -77,14 +77,47 @@ try {
             active.worldLedger.rows[0].bytes = 0n;
         }, TypeError);
     });
+    let stepped;
+    check('postStepRebuildLedger', () => {
+        api.step(world, 1 / 60, 1);
+        stepped = api.memoryDiagnostics(world);
+        assert.equal(stepped.identity.nativeStepIndex, 1n);
+        const row = (name) => stepped.worldLedger.rows.find((entry) => entry.name === name);
+        const scratchCapacity = row('tree.dynamic.leafIndices').capacity;
+        assert(scratchCapacity > 0n, 'A real step must exercise nonzero tree rebuild scratch');
+        for (const name of ['tree.dynamic.leafBoxes', 'tree.dynamic.binIndices']) {
+            const entry = row(name);
+            assert.equal(entry.count, null);
+            assert.equal(entry.capacity, scratchCapacity);
+            assert(entry.bytes > 0n, 'Core ledger estimates inactive scratch even without backing');
+            assert.equal(
+                entry.capacityMeaning,
+                'Shared rebuildCapacity ledger estimate; backing is unallocated in pinned B3_TREE_HEURISTIC=0',
+            );
+        }
+        assert.equal(stepped.worldLedger.classifiedBytes, stepped.worldLedger.coreReportedBytes);
+        assert.deepEqual(api.memoryDiagnostics(world), stepped);
+        assert.equal(active.identity.nativeStepIndex, 0n, 'Earlier copied observation remains immutable');
+    });
     api.destroyBody(body);
+    const released = api.memoryDiagnostics(world);
     check('releasedWorldNoWarmupOrBaselineRewrite', () => {
-        const released = api.memoryDiagnostics(world);
         assert.equal(released.liveCounts.bodies, 0);
         assert.equal(released.liveCounts.shapes, 0);
-        assert.equal(released.identity.nativeStepIndex, 0n);
+        assert.equal(released.identity.nativeStepIndex, 1n);
         assert.equal(released.worldLedger.classifiedBytes, released.worldLedger.coreReportedBytes);
         assert.equal(initial.liveCounts.bodies, 0);
+    });
+    check('releasedPostStepRetainedLedger', () => {
+        for (const name of ['tree.dynamic.leafIndices', 'tree.dynamic.leafBoxes', 'tree.dynamic.binIndices']) {
+            const before = stepped.worldLedger.rows.find((entry) => entry.name === name);
+            const after = released.worldLedger.rows.find((entry) => entry.name === name);
+            assert(before.capacity > 0n);
+            assert.equal(after.capacity, before.capacity);
+            assert.equal(after.bytes, before.bytes);
+        }
+        assert.equal(released.worldLedger.classifiedBytes, released.worldLedger.coreReportedBytes);
+        assert.deepEqual(api.memoryDiagnostics(world), released);
     });
     check('afterCloseNotClaimed', () => assert(initial.unavailable.includes('after-app-close module observation')));
 } finally {

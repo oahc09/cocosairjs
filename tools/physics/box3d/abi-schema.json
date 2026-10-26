@@ -979,7 +979,7 @@
         "countUnit": "unavailable",
         "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
         "capacityUnit": "slots",
-        "capacityMeaning": "allocated capacity, not live allocation usage"
+        "capacityMeaning": "Shared rebuildCapacity ledger estimate; backing is unallocated in pinned B3_TREE_HEURISTIC=0"
       },
       {
         "id": 30,
@@ -995,7 +995,7 @@
         "countUnit": "unavailable",
         "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
         "capacityUnit": "slots",
-        "capacityMeaning": "allocated capacity, not live allocation usage"
+        "capacityMeaning": "Shared rebuildCapacity ledger estimate; backing is unallocated in pinned B3_TREE_HEURISTIC=0"
       },
       {
         "id": 32,
@@ -1059,7 +1059,7 @@
         "countUnit": "unavailable",
         "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
         "capacityUnit": "slots",
-        "capacityMeaning": "allocated capacity, not live allocation usage"
+        "capacityMeaning": "Shared rebuildCapacity ledger estimate; backing is unallocated in pinned B3_TREE_HEURISTIC=0"
       },
       {
         "id": 40,
@@ -1075,7 +1075,7 @@
         "countUnit": "unavailable",
         "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
         "capacityUnit": "slots",
-        "capacityMeaning": "allocated capacity, not live allocation usage"
+        "capacityMeaning": "Shared rebuildCapacity ledger estimate; backing is unallocated in pinned B3_TREE_HEURISTIC=0"
       },
       {
         "id": 42,
@@ -1139,7 +1139,7 @@
         "countUnit": "unavailable",
         "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
         "capacityUnit": "slots",
-        "capacityMeaning": "allocated capacity, not live allocation usage"
+        "capacityMeaning": "Shared rebuildCapacity ledger estimate; backing is unallocated in pinned B3_TREE_HEURISTIC=0"
       },
       {
         "id": 50,
@@ -1155,7 +1155,7 @@
         "countUnit": "unavailable",
         "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
         "capacityUnit": "slots",
-        "capacityMeaning": "allocated capacity, not live allocation usage"
+        "capacityMeaning": "Shared rebuildCapacity ledger estimate; backing is unallocated in pinned B3_TREE_HEURISTIC=0"
       },
       {
         "id": 52,

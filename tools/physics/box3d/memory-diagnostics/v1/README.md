@@ -148,3 +148,31 @@ authorized remote repository, including the 20 extras identified in the parent
 source audit, are not newly admitted. Old raw/output evidence is not added. The
 56-file diagnostic source gate and original vendor-source verification have their
 own narrower scopes; neither establishes complete `owned-files.json` coverage.
+
+## Tree rebuild accounting correction
+
+The pinned `dynamic_tree.c` sets `B3_TREE_HEURISTIC` to zero. After a real rebuild,
+`leafIndices`, `leafNodes`, and `leafCenters` are allocated, while `leafBoxes` and
+`binIndices` remain NULL. Its `GetByteCount` nevertheless charges the shared
+`rebuildCapacity` for all five scratch categories. The six leafBoxes/binIndices
+rows across the three trees are therefore **core ledger estimates, not actual
+backing allocation sizes**. Their capacity is the shared formula multiplier.
+
+A dedicated read-only helper accepts exactly these pinned inactive rows and
+requires their pointers to remain NULL. All active scratch retains its original
+non-NULL requirement; overflow, total equality, safe-point and all-or-nothing
+output checks are unchanged. No residual correction or guessed category is used.
+The six row descriptions change the main schema hash but not the 87-row/740-word
+layout. Old SDK226 assets must not be combined with the corrected facade.
+
+The earlier native and WASM diagnostic fixtures observed a sphere without stepping,
+so they did not exercise tree rebuild storage. The strengthened native fixture
+requires a real step, nonzero dynamic-tree rebuild capacity, inactive-pointer
+facts, ledger equality before and after body release, immutable repeated reads,
+and fixture-only required-NULL/unexpected-inactive-backing negatives with no
+partial output. Its exact assertion count is 39. The production WASM fixture
+adds two required post-step/released-ledger checks (ten total). These strengthened
+contracts are prepared source only until freshly compiled and executed; the CPU
+suite does not manufacture native proof. The original C20 baseline failure and
+SDK226 diagnostic failure remain unchanged, and their byte delta is not attributed
+by this source-level correction.

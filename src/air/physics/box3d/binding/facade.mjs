@@ -23,7 +23,7 @@ THE SOFTWARE.
 // Internal, limited M1 foundation. This is not the Cocos physics adapter.
 const CORE_SHA = 'efca0c184d40fd6a82016983f1601c4d23965867';
 const BINDING_BASE_SHA = '5d5a3af049cccd9948b2b55bac4342414af0ef64';
-const SCHEMA_SHA256 = 'bef78296f8fff850570799c65d6f4b0a47115cf38aed898a58cf88275348fd84';
+const SCHEMA_SHA256 = '3a1c552650979c205898c90c4d862483810b66dc5c875f155c80e92fb15618da';
 // Stable rows for the separately versioned diagnostic extension in the main ABI schema.
 // Lengths are storage lengths, not live entities or unconsumed events.
 const MEMORY_DIAGNOSTIC_ROWS = [
@@ -55,9 +55,19 @@ const MEMORY_DIAGNOSTIC_ROWS = [
     ['tree.static.swapNodes', 'unavailable', 'slots', 'allocated capacity, not live allocation usage'],
     ['tree.static.leafIndices', 'unavailable', 'slots', 'allocated capacity, not live allocation usage'],
     ['tree.static.leafNodes', 'unavailable', 'slots', 'allocated capacity, not live allocation usage'],
-    ['tree.static.leafBoxes', 'unavailable', 'slots', 'allocated capacity, not live allocation usage'],
+    [
+        'tree.static.leafBoxes',
+        'unavailable',
+        'slots',
+        'Shared rebuildCapacity ledger estimate; backing is unallocated in pinned B3_TREE_HEURISTIC=0',
+    ],
     ['tree.static.leafCenters', 'unavailable', 'slots', 'allocated capacity, not live allocation usage'],
-    ['tree.static.binIndices', 'unavailable', 'slots', 'allocated capacity, not live allocation usage'],
+    [
+        'tree.static.binIndices',
+        'unavailable',
+        'slots',
+        'Shared rebuildCapacity ledger estimate; backing is unallocated in pinned B3_TREE_HEURISTIC=0',
+    ],
     ['tree.kinematic.inlineStruct', 'structs', 'structs', 'allocated capacity, not live allocation usage'],
     ['tree.kinematic.nodes', 'addressable-node-slots', 'slots', 'allocated capacity, not live allocation usage'],
     ['tree.kinematic.parents', 'addressable-node-slots', 'slots', 'allocated capacity, not live allocation usage'],
@@ -65,9 +75,19 @@ const MEMORY_DIAGNOSTIC_ROWS = [
     ['tree.kinematic.swapNodes', 'unavailable', 'slots', 'allocated capacity, not live allocation usage'],
     ['tree.kinematic.leafIndices', 'unavailable', 'slots', 'allocated capacity, not live allocation usage'],
     ['tree.kinematic.leafNodes', 'unavailable', 'slots', 'allocated capacity, not live allocation usage'],
-    ['tree.kinematic.leafBoxes', 'unavailable', 'slots', 'allocated capacity, not live allocation usage'],
+    [
+        'tree.kinematic.leafBoxes',
+        'unavailable',
+        'slots',
+        'Shared rebuildCapacity ledger estimate; backing is unallocated in pinned B3_TREE_HEURISTIC=0',
+    ],
     ['tree.kinematic.leafCenters', 'unavailable', 'slots', 'allocated capacity, not live allocation usage'],
-    ['tree.kinematic.binIndices', 'unavailable', 'slots', 'allocated capacity, not live allocation usage'],
+    [
+        'tree.kinematic.binIndices',
+        'unavailable',
+        'slots',
+        'Shared rebuildCapacity ledger estimate; backing is unallocated in pinned B3_TREE_HEURISTIC=0',
+    ],
     ['tree.dynamic.inlineStruct', 'structs', 'structs', 'allocated capacity, not live allocation usage'],
     ['tree.dynamic.nodes', 'addressable-node-slots', 'slots', 'allocated capacity, not live allocation usage'],
     ['tree.dynamic.parents', 'addressable-node-slots', 'slots', 'allocated capacity, not live allocation usage'],
@@ -75,9 +95,19 @@ const MEMORY_DIAGNOSTIC_ROWS = [
     ['tree.dynamic.swapNodes', 'unavailable', 'slots', 'allocated capacity, not live allocation usage'],
     ['tree.dynamic.leafIndices', 'unavailable', 'slots', 'allocated capacity, not live allocation usage'],
     ['tree.dynamic.leafNodes', 'unavailable', 'slots', 'allocated capacity, not live allocation usage'],
-    ['tree.dynamic.leafBoxes', 'unavailable', 'slots', 'allocated capacity, not live allocation usage'],
+    [
+        'tree.dynamic.leafBoxes',
+        'unavailable',
+        'slots',
+        'Shared rebuildCapacity ledger estimate; backing is unallocated in pinned B3_TREE_HEURISTIC=0',
+    ],
     ['tree.dynamic.leafCenters', 'unavailable', 'slots', 'allocated capacity, not live allocation usage'],
-    ['tree.dynamic.binIndices', 'unavailable', 'slots', 'allocated capacity, not live allocation usage'],
+    [
+        'tree.dynamic.binIndices',
+        'unavailable',
+        'slots',
+        'Shared rebuildCapacity ledger estimate; backing is unallocated in pinned B3_TREE_HEURISTIC=0',
+    ],
     ['broadPhase.pairSet', 'pairs', 'hash-slots', 'allocated capacity, not live allocation usage'],
     ['manifold.allocatorArray', 'allocators', 'allocator-slots', 'allocated capacity, not live allocation usage'],
     ['manifold.blockDirectory', 'blocks', 'block-descriptor-slots', 'allocated capacity, not live allocation usage'],

@@ -66,6 +66,34 @@ export function verifyMemoryDiagnosticSources(root, stagedCore) {
         assert(facade.includes(`'${row.name}'`), 'Missing facade row: ' + row.name);
         assert(row.countUnit && row.capacityUnit && row.countMeaning && row.capacityMeaning);
     }
+    // The pinned core accounts for both heuristic branches but allocates only heuristic 0 scratch.
+    const treeSource = readFileSync(resolve(stagedCore, 'src/dynamic_tree.c'), 'utf8');
+    assert.match(treeSource, /^#define B3_TREE_HEURISTIC 0$/m);
+    const inactiveNames = ['static', 'kinematic', 'dynamic'].flatMap((kind) =>
+        ['leafBoxes', 'binIndices'].map((field) => `tree.${kind}.${field}`),
+    );
+    const inactiveMeaning =
+        'Shared rebuildCapacity ledger estimate; backing is unallocated in pinned B3_TREE_HEURISTIC=0';
+    for (const name of inactiveNames) {
+        const row = profile.rows.find((entry) => entry.name === name);
+        assert.equal(row.countUnit, 'unavailable');
+        assert.equal(row.capacityMeaning, inactiveMeaning);
+    }
+    const inactiveCalls = [...native.matchAll(/CHECK\(inactive_rebuild_row\(&rows\[(M_TREE_[A-Z]+_[A-Z]+)\]/g)]
+        .map((match) => match[1])
+        .sort();
+    assert.deepEqual(inactiveCalls, inactiveNames.map((name) => `M_${name.toUpperCase().replaceAll('.', '_')}`).sort());
+    assert.equal((native.match(/\binactive_rebuild_row\(/g) ?? []).length, 7, 'Only six pinned inactive rows');
+    const activeStorage = native.slice(
+        native.indexOf('static int storage_row('),
+        native.indexOf('static int inactive_rebuild_row('),
+    );
+    assert(activeStorage.includes('capacity < 0 || (capacity && !pointer)'), 'Active backing remains mandatory');
+    const inactiveStorage = native.slice(
+        native.indexOf('static int inactive_rebuild_row('),
+        native.indexOf('static int int_group('),
+    );
+    assert(inactiveStorage.includes('capacity < 0 || pointer != NULL'), 'Pinned inactive backing must stay NULL');
     const nativeBody = native.slice(native.indexOf('int air_b3_world_memory_diagnostics_v1('));
     assert(nativeBody.indexOf('CHECK(air_b3_world_unlocked(world))') < nativeBody.indexOf('b3World_GetCounters('));
     assert(!nativeBody.includes('b3GetUnlockedWorldFromId('));

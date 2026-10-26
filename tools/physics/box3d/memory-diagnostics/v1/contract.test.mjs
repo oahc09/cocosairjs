@@ -138,6 +138,25 @@ const bad = (name, mutate, code = 'AIR_E_BOX3D_ABI') =>
         );
         f.api.dispose();
     });
+test('six inactive rebuild rows describe core ledger estimates, not backing allocations', () => {
+    const f = fixture();
+    const value = f.api.memoryDiagnostics(f.world);
+    const names = ['static', 'kinematic', 'dynamic'].flatMap((kind) =>
+        ['leafBoxes', 'binIndices'].map((field) => `tree.${kind}.${field}`),
+    );
+    for (const name of names) {
+        const expected = profile.rows.find((row) => row.name === name);
+        const actual = value.worldLedger.rows.find((row) => row.name === name);
+        assert.equal(
+            expected.capacityMeaning,
+            'Shared rebuildCapacity ledger estimate; backing is unallocated in pinned B3_TREE_HEURISTIC=0',
+        );
+        assert.equal(actual.capacityMeaning, expected.capacityMeaning);
+        assert.equal(actual.count, null);
+        assert(actual.capacity > 0n && actual.bytes > 0n);
+    }
+    f.api.dispose();
+});
 test('actual facade copies separate scopes and immutable plain storage rows without query malloc', () => {
     const f = fixture();
     assert.deepEqual(f.allocations, [4096]);
@@ -511,7 +530,7 @@ function syntheticQualification() {
         pointerBytes: 4,
         rowCount: 87,
         wireWords: 740,
-        checks: 31,
+        checks: 39,
         coreSha: identity.coreSha,
         schemaSha256: identity.schemaSha256,
         patchChainSha256: identity.patchChainSha256,
@@ -580,5 +599,29 @@ test('new consumer qualification rejects partial, stale, injected-as-production 
         const d = syntheticQualification();
         alter(d);
         assert.throws(() => verifyMemoryDiagnosticQualification(d));
+    }
+});
+
+test('qualification rejects the old zero-step-only memory evidence', () => {
+    for (const mutate of [
+        (q) => {
+            q.native.checks = 31;
+        },
+        (q) => {
+            delete q.native.postStepRebuildAndRelease;
+        },
+        (q) => {
+            q.native.requiredScratchNullNoWrite = false;
+        },
+        (q) => {
+            delete q.wasm.checks.postStepRebuildLedger;
+        },
+        (q) => {
+            delete q.wasm.checks.releasedPostStepRetainedLedger;
+        },
+    ]) {
+        const q = syntheticQualification();
+        mutate(q);
+        assert.throws(() => verifyMemoryDiagnosticQualification(q));
     }
 });

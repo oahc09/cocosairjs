@@ -151,6 +151,15 @@ static int storage_row(MemoryRow* row, int capacity, size_t element, const void*
     if (s || bytes > INT_MAX) return AIR_B3_CAPACITY;
     return add_row(row, 0, (uint64_t)capacity, bytes, 2); /* current used count not stored */
 }
+/* Pinned dynamic_tree.c uses B3_TREE_HEURISTIC == 0. leafBoxes/binIndices remain NULL,
+ * but GetByteCount still charges shared rebuildCapacity for both. These are ledger estimates,
+ * not backing allocations. Reject non-NULL here; never relax storage_row for active scratch. */
+static int inactive_rebuild_row(MemoryRow* row, int capacity, size_t element, const void* pointer) {
+    if (capacity < 0 || pointer != NULL) return AIR_B3_MEMORY_INCONSISTENT;
+    uint64_t bytes; int s = multiply((uint64_t)capacity, element, &bytes);
+    if (s || bytes > INT_MAX) return AIR_B3_CAPACITY;
+    return add_row(row, 0, (uint64_t)capacity, bytes, 2);
+}
 static int int_group(const MemoryRow* rows, int begin, int end) {
     uint64_t bytes = 0;
     for (int i = begin; i <= end; ++i) {
@@ -253,9 +262,9 @@ int air_b3_world_memory_diagnostics_v1(uint32_t world, uint32_t* out, int capaci
         STORAGE(M_TREE_STATIC_SWAPNODES, tree->swapNodes ? tree->nodeCapacity : 0, b3TreeNode, tree->swapNodes);
         STORAGE(M_TREE_STATIC_LEAFINDICES, tree->rebuildCapacity, int32_t, tree->leafIndices);
         STORAGE(M_TREE_STATIC_LEAFNODES, tree->rebuildCapacity, b3TreeNode, tree->leafNodes);
-        STORAGE(M_TREE_STATIC_LEAFBOXES, tree->rebuildCapacity, b3AABB, tree->leafBoxes);
+        CHECK(inactive_rebuild_row(&rows[M_TREE_STATIC_LEAFBOXES], tree->rebuildCapacity, sizeof(b3AABB), tree->leafBoxes));
         STORAGE(M_TREE_STATIC_LEAFCENTERS, tree->rebuildCapacity, b3Vec3, tree->leafCenters);
-        STORAGE(M_TREE_STATIC_BININDICES, tree->rebuildCapacity, int32_t, tree->binIndices);
+        CHECK(inactive_rebuild_row(&rows[M_TREE_STATIC_BININDICES], tree->rebuildCapacity, sizeof(int32_t), tree->binIndices));
         CHECK(int_group(rows, M_TREE_STATIC_INLINESTRUCT, M_TREE_STATIC_BININDICES));
     }
     {
@@ -268,9 +277,9 @@ int air_b3_world_memory_diagnostics_v1(uint32_t world, uint32_t* out, int capaci
         STORAGE(M_TREE_KINEMATIC_SWAPNODES, tree->swapNodes ? tree->nodeCapacity : 0, b3TreeNode, tree->swapNodes);
         STORAGE(M_TREE_KINEMATIC_LEAFINDICES, tree->rebuildCapacity, int32_t, tree->leafIndices);
         STORAGE(M_TREE_KINEMATIC_LEAFNODES, tree->rebuildCapacity, b3TreeNode, tree->leafNodes);
-        STORAGE(M_TREE_KINEMATIC_LEAFBOXES, tree->rebuildCapacity, b3AABB, tree->leafBoxes);
+        CHECK(inactive_rebuild_row(&rows[M_TREE_KINEMATIC_LEAFBOXES], tree->rebuildCapacity, sizeof(b3AABB), tree->leafBoxes));
         STORAGE(M_TREE_KINEMATIC_LEAFCENTERS, tree->rebuildCapacity, b3Vec3, tree->leafCenters);
-        STORAGE(M_TREE_KINEMATIC_BININDICES, tree->rebuildCapacity, int32_t, tree->binIndices);
+        CHECK(inactive_rebuild_row(&rows[M_TREE_KINEMATIC_BININDICES], tree->rebuildCapacity, sizeof(int32_t), tree->binIndices));
         CHECK(int_group(rows, M_TREE_KINEMATIC_INLINESTRUCT, M_TREE_KINEMATIC_BININDICES));
     }
     {
@@ -283,9 +292,9 @@ int air_b3_world_memory_diagnostics_v1(uint32_t world, uint32_t* out, int capaci
         STORAGE(M_TREE_DYNAMIC_SWAPNODES, tree->swapNodes ? tree->nodeCapacity : 0, b3TreeNode, tree->swapNodes);
         STORAGE(M_TREE_DYNAMIC_LEAFINDICES, tree->rebuildCapacity, int32_t, tree->leafIndices);
         STORAGE(M_TREE_DYNAMIC_LEAFNODES, tree->rebuildCapacity, b3TreeNode, tree->leafNodes);
-        STORAGE(M_TREE_DYNAMIC_LEAFBOXES, tree->rebuildCapacity, b3AABB, tree->leafBoxes);
+        CHECK(inactive_rebuild_row(&rows[M_TREE_DYNAMIC_LEAFBOXES], tree->rebuildCapacity, sizeof(b3AABB), tree->leafBoxes));
         STORAGE(M_TREE_DYNAMIC_LEAFCENTERS, tree->rebuildCapacity, b3Vec3, tree->leafCenters);
-        STORAGE(M_TREE_DYNAMIC_BININDICES, tree->rebuildCapacity, int32_t, tree->binIndices);
+        CHECK(inactive_rebuild_row(&rows[M_TREE_DYNAMIC_BININDICES], tree->rebuildCapacity, sizeof(int32_t), tree->binIndices));
         CHECK(int_group(rows, M_TREE_DYNAMIC_INLINESTRUCT, M_TREE_DYNAMIC_BININDICES));
     }
     const b3HashSet* pairs = &w->broadPhase.pairSet;
