@@ -1,6 +1,6 @@
 # Box3D closure status
 
-Updated: 2026-10-26 23:46 UTC+8. Branch: `feat/box3d-rebuild-20261022`.
+Updated: 2026-10-26 16:02 UTC. Branch: `feat/box3d-rebuild-20261022`.
 
 ## Current outcome
 
@@ -13,14 +13,14 @@ Updated: 2026-10-26 23:46 UTC+8. Branch: `feat/box3d-rebuild-20261022`.
 
 1. `4af73894a2dad78994c89121e832791fc2d6d8fe`: Chinese local handoff at `delivery/local-handoff-20261026.md`.
 2. `6b31b113b6d9f1ec4d15223635d114d70458af4e`: rebuilt isolated identity core patch and exact source staging. 11 source CPU plus 13 model tests passed. This is new reconstructed code, not restoration of lost historical manifest `42c3dad...`.
-3. The accompanying identity qualification sources add a real native fixture, non-OK step adapter subset, exact control/candidate comparison, and enforced Debug/no-NDEBUG guards. **Source preparation is not native execution.** Current expected native count is 170, control count 4; historical 171 is not reused. The actual runtime ledger delta 36 remains NOT_RUN until measured.
+3. The accompanying identity qualification sources add a real native fixture, non-OK step adapter subset, exact control/candidate comparison, and enforced Debug/no-NDEBUG guards. **Source preparation is not native execution.** Current expected native count is 170, control count 4; historical 171 is not reused. A subsequent independent host-native run of producer `f66809c1d9bc8351e130bc07bd4dc1926de6fcdc` passed candidate170/control4: initial ledger37440→37476 (+36 embedded bytes), tracked module bytes returned to0 after close, Debug/no-NDEBUG actual commands verified, ECHILD and no input drift. See [host qualification report](reports/identity-host-qualification-20261026.md). This is VERIFIED_LIMITED host evidence, not WASM or production integration.
 
 Production `versions.lock.json`, production patch lock, facade, SDK schema and original strict fixture remain unchanged. Do not load the isolated candidate using the production 87-row diagnostic schema. Trim and the app release hook are not enabled.
 
 ## Next actions, in order
 
 1. Verify the current checkout and preserve local changes. Establish one writer before local implementation begins; cloud and local must not write the same module concurrently.
-2. Run the isolated identity source controls; build control and candidate in fresh directories with a verified supported toolchain. Require single-config Debug and actual compile-command checks with effective NDEBUG forbidden. Run the full native fixture and exact comparison, preserving any failures.
+2. Preserve the completed isolated host-native qualification and its exact source/toolchain binding. WASM and full production integration remain unqualified; do not relabel the host result as SDK or APP acceptance.
 3. Only after identity/fault/teardown correctness is actually established, implement same-world empty-storage reclamation and event acknowledgement under `empty-world-trim-design.md`.
 4. Integrate the production bridge/backend fault state, fixed metadata accounting row/schema and exact producer inventory. Preserve allocator, ID, stale-view and close semantics; do not replace the world or reset its step index.
 5. Integrate the post-scene-destruction, post-cleanup release hook. Legal nonempty persistent worlds skip empty trimming; an eligible-empty failure must not produce a successful restoration receipt.
