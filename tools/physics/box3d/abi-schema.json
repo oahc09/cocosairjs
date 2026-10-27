@@ -1508,5 +1508,37 @@
     "errors": "All returned refusals preflight before mutation; unexpected host exception is unknown and faults backend. Allocation failure is process-fatal, not a recoverable rollback.",
     "identity": "Four-family same-world high/floor with checked exhaustion. Not cross-world raw ID ABA protection.",
     "baseline": "Current implementation initial world ledger includes fixed identityHistory and creationCapacity metadata. Never substitute historical36040 or rewrite acceptance."
+  },
+  "moduleReleaseSnapshot": {
+    "schemaVersion": 1,
+    "export": "_air_b3_module_release_snapshot_v1",
+    "outputWords": 38,
+    "header": ["version=1", "words=38", "fields=17", "reserved=0"],
+    "fieldsU64LoHi": [
+      "core.worlds",
+      "core.trackedRequestedBytes",
+      "bridge.worlds",
+      "bridge.allocations",
+      "bridge.bytes",
+      "bridge.debugShapeHandles",
+      "bridge.temporaryNodes",
+      "bridge.temporaryBytes",
+      "bridge.wireBuffers",
+      "bridge.wireCapacityRecords",
+      "bridge.wireLengthRecords",
+      "bridge.capturedWorlds",
+      "mesh.resources",
+      "mesh.leases",
+      "mesh.references",
+      "mesh.borrowNodes",
+      "mesh.resourceStorageBytes"
+    ],
+    "rules": {
+      "phase": "Exclusive ST module access with all world tasks/callbacks joined. Loader captures once after actual factory and before binding, then after binding.dispose and before module-reference release. No retained or replacement module.",
+      "atomic": "Read-only, no allocation or mutation. Checked sums; all failure paths leave full output unchanged. A direct core world bypassing bridge still appears in b3GetWorldCount.",
+      "scope": "Core world count and b3GetByteCount requested-size tracking; registered bridge/world and mesh native chains only. Not all live handles, malloc bytes, WASM capacity, JS heap, RSS or GC.",
+      "bytes": "Bridge temporaryBytes includes BridgeTemp header and is a subset of bridge.bytes. Mesh resourceStorageBytes excludes that header and cooked mesh data; it is a subset of bridge temporary bytes. Never add these overlapping scopes. Wire capacity/length are debug primitive records, not physics shapes.",
+      "terminal": "Core worlds and every bridge/mesh field must be zero; core tracked bytes must equal the original same-module factory baseline. Collection, verification or cleanup failure never qualifies released verification. Cleanup is still attempted once."
+    }
   }
 }

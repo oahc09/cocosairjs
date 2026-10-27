@@ -22,6 +22,7 @@ THE SOFTWARE.
 
 // Internal ST loader, not registered with the engine or app bootstrap yet.
 import { createBox3DBinding } from '../binding/facade.mjs';
+import { captureModuleReleaseSnapshot, verifyModuleReleased } from '../binding/module-release.mjs';
 
 const HASH = /^[a-f0-9]{64}$/;
 const REVISION = /^[a-f0-9]{40}$/;
@@ -130,6 +131,8 @@ export function createBox3DSTLoader(descriptor, context = {}, dependencies = {})
     const loadModule = dependencies.loadModule ?? ((url) => import(/* @vite-ignore */ url));
     const createBinding = dependencies.createBinding ?? createBox3DBinding;
     const hash = dependencies.digest ?? digest;
+    // Test-only seam: the production default observes the same acquired native module.
+    const captureRelease = dependencies.captureModuleReleaseSnapshot ?? captureModuleReleaseSnapshot;
     // ST has no workers or explicit WebAssembly.Memory destroy API. Disposal destroys
     // binding-owned worlds/scratch, then drops our module reference for ordinary GC.
     // This does not assert GC completion or whole-heap leak freedom.
@@ -164,27 +167,79 @@ export function createBox3DSTLoader(descriptor, context = {}, dependencies = {})
         current(entry);
         return value;
     }
+    function releaseError(entry, phase, error) {
+        const receipt = entry.receipt.moduleRelease;
+        receipt.status = 'FAILED';
+        receipt.verified = false;
+        receipt.errors.push({
+            phase,
+            code: typeof error?.code === 'string' ? error.code : null,
+            message: String(error?.message ?? error),
+        });
+    }
+    function captureBaseline(entry) {
+        try {
+            const baseline = immutableCopy(captureRelease(entry.module, trusted.identity));
+            entry.receipt.moduleRelease.baseline = baseline;
+            // A factory must start without registered worlds/bridge/mesh ownership.
+            // Core requested-byte baseline may be nonzero; it is never rebased later.
+            verifyModuleReleased(baseline, baseline);
+            entry.receipt.moduleRelease.status = 'BASELINE_CAPTURED';
+        } catch (error) {
+            releaseError(entry, 'baseline', error);
+            throw error;
+        }
+    }
     async function release(entry) {
         if (entry.released) return;
         entry.released = true;
         const errors = [];
+        const record = (phase, error) => {
+            errors.push(error);
+            releaseError(entry, phase, error);
+        };
         if (entry.binding) {
             entry.receipt.cleanup.push({ resource: 'binding', attempted: true });
             try {
                 entry.binding.dispose();
             } catch (error) {
-                errors.push(error);
+                record('binding-dispose', error);
+            } finally {
+                entry.binding = null;
             }
-            entry.binding = null;
         }
         if (entry.module) {
+            // Even a throwing binding dispose must not suppress the real terminal read.
+            try {
+                entry.receipt.moduleRelease.terminal = immutableCopy(captureRelease(entry.module, trusted.identity));
+            } catch (error) {
+                record('terminal', error);
+            }
+            if (entry.receipt.moduleRelease.baseline && entry.receipt.moduleRelease.terminal) {
+                try {
+                    verifyModuleReleased(entry.receipt.moduleRelease.baseline, entry.receipt.moduleRelease.terminal);
+                } catch (error) {
+                    record('verify', error);
+                }
+            }
             entry.receipt.cleanup.push({ resource: 'module-reference', attempted: true });
             try {
                 await releaseModule(entry.module);
             } catch (error) {
-                errors.push(error);
+                record('release-module', error);
+            } finally {
+                entry.module = null;
             }
-            entry.module = null;
+            const receipt = entry.receipt.moduleRelease;
+            receipt.verified = !!receipt.baseline && !!receipt.terminal && receipt.errors.length === 0;
+            receipt.status = receipt.verified ? 'VERIFIED' : 'FAILED';
+            if (!receipt.verified && errors.length === 0)
+                errors.push(
+                    fail(
+                        'AIR_E_BOX3D_MODULE_RELEASE',
+                        'Module release verification lacks a valid baseline or terminal observation',
+                    ),
+                );
         }
         entry.receipt.cleanupErrors = errors.map((error) => String(error?.message ?? error));
         if (errors.length) {
@@ -224,6 +279,7 @@ export function createBox3DSTLoader(descriptor, context = {}, dependencies = {})
                 cleanup: [],
                 cleanupErrors: [],
                 originalError: null,
+                moduleRelease: { status: 'NOT_ACQUIRED', verified: false, baseline: null, terminal: null, errors: [] },
             },
         };
         active = entry;
@@ -262,6 +318,8 @@ export function createBox3DSTLoader(descriptor, context = {}, dependencies = {})
                     throw fail('AIR_E_BOX3D_LOADER', 'Generated factory returned no native module');
                 entry.module = module;
                 entry.receipt.acquired.push('module-reference');
+                // Capture even a late factory result before cancellation cleanup releases it.
+                captureBaseline(entry);
                 current(entry);
                 entry.binding = createBinding(entry.module, trusted.identity);
                 entry.receipt.acquired.push('binding');
@@ -272,6 +330,7 @@ export function createBox3DSTLoader(descriptor, context = {}, dependencies = {})
                     options: normalized,
                     generation: entry.generation,
                     dispose: () => dispose(entry.generation),
+                    diagnostics: () => immutableCopy(entry.receipt),
                 });
             } catch (error) {
                 entry.receipt.originalError = {

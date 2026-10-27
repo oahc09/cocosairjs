@@ -48,17 +48,25 @@ function exactExtension(values, prefixLength, prefixHash, addition) {
 const sphereInputs = expected.sphereCapsuleExtension.inputs;
 const sphereEvidence = expected.sphereCapsuleExtension.evidence;
 const frozen = {
-    inputs: [92, '3dd1a14c3595df14d1e184108d31d1d69f71c13633ff8f27f354ba03082644eb', [...addedInputs, ...sphereInputs]],
-    compileUnits: [84, '2c736923cc8acf26bf83fd1da0acedbcbe2b235d51d8bfe0a9bd0a3acdd98ef4', addedCompile],
+    inputs: [
+        92,
+        '3dd1a14c3595df14d1e184108d31d1d69f71c13633ff8f27f354ba03082644eb',
+        [...addedInputs, ...sphereInputs, ...expected.moduleReleaseExtension.inputs],
+    ],
+    compileUnits: [
+        84,
+        '2c736923cc8acf26bf83fd1da0acedbcbe2b235d51d8bfe0a9bd0a3acdd98ef4',
+        [...addedCompile, ...expected.moduleReleaseExtension.compileUnits],
+    ],
     evidence: [
         55,
         '8e6ab780bb5afc917b238ff5e2b0294349a776bec69f3a72deabbf0271bac690',
-        [...addedEvidence, ...sphereEvidence],
+        [...addedEvidence, ...sphereEvidence, ...expected.moduleReleaseExtension.evidence],
     ],
 };
 test('consumer retains complete ordered 92/84/55 inventories and exact storage additions', () => {
     for (const [key, args] of Object.entries(frozen)) exactExtension(expected.gate[key], ...args);
-    assert.equal(expected.gate.commands, 43);
+    assert.equal(expected.gate.commands, 47);
     assert.equal(
         hash({ native: expected.native, wasm: expected.wasm, provenance: expected.provenance }),
         'b51feb1774c4e86f0ba41a7b84d11879f2318c583a0e2a93b714c1ee7026b3e1',
@@ -95,7 +103,11 @@ test('build and asset consumers retain their own ordered original inputs, then t
         const block = read(file).match(new RegExp(`const ${variable} = \\[([\\s\\S]*?)\\];`));
         assert(block, file);
         const inputs = [...block[1].matchAll(/'([^']+)'/g)].map((m) => m[1]);
-        exactExtension(inputs, 92, digest, [...addedInputs, ...sphereInputs]);
+        exactExtension(inputs, 92, digest, [
+            ...addedInputs,
+            ...sphereInputs,
+            ...expected.moduleReleaseExtension.inputs,
+        ]);
         assert.deepEqual(sorted(inputs), sorted(expected.gate.inputs));
     }
 });
@@ -119,8 +131,8 @@ test('all current build/audit/asset consumers require production storage and v2 
     assert(cmake.includes('target_link_libraries(air_box3d_world_storage_contract PRIVATE air_box3d_abi)'));
     for (const name of ['motion-source-controls.mjs', 'command-source-controls.mjs']) {
         const source = read('tools/physics/box3d/' + name);
-        assert(source.includes('assert.equal(inputs.length, 120)'));
-        assert(source.includes('assert.equal(new Set(inputs).size, 120)'));
+        assert(source.includes('assert.equal(inputs.length, 136)'));
+        assert(source.includes('assert.equal(new Set(inputs).size, 136)'));
     }
 });
 

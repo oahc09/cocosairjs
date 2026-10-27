@@ -43,6 +43,7 @@ function fixture() {
         _air_b3_core_sha: () => core,
         _air_b3_patch_chain_sha: () => patch,
         _air_b3_schema_sha: () => schemaAt,
+        _air_b3_module_release_snapshot_v1: () => 0,
         _air_b3_mesh_lifetime_counters: () => 0,
         _malloc: () => 4096,
         _free: () => {},

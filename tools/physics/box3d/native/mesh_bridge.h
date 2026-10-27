@@ -37,3 +37,8 @@ int air_b3_mesh_face_read(uint32_t world, uint32_t shapeLo, uint32_t shapeHi,
  * including rollback; NOT malloc/free counts. [cookLo,cookHi,destroyLo,destroyHi].
  * No reset, allocation, or raw pointer result. Overflow returns CAPACITY. */
 int air_b3_mesh_lifetime_counters(uint32_t* outFour);
+
+/* Internal copied registry totals: resources, leases, references, borrowNodes,
+ * resourceStorageBytes (resource + source-face map, excluding BridgeTemp header).
+ * Storage is a subset of bridge temporary bytes; cooked mesh allocation is core. */
+int air_b3_mesh_global_snapshot(uint64_t out[5]);

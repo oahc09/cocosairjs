@@ -10,6 +10,7 @@
 #include "joint_bridge.h"
 #include "hinge_bridge.h"
 #include "memory_diagnostics.h"
+#include "module_release.h"
 
 #ifdef __cplusplus
 extern "C" {

@@ -1,5 +1,6 @@
 /* Copyright (c) 2026-2027 oahc09@gmail.com. SPDX-License-Identifier: MIT */
-/* ST-only owned callback data; original core source and allocator are unchanged. */
+/* ST-only owned callback data. Locked vendor bytes remain unchanged; staged core
+ * identity/storage patches and their fingerprint are separately qualified. */
 #include "air_box3d.h"
 #include "world_bridge.h"
 #include "mesh_bridge.h"
@@ -333,4 +334,29 @@ int air_b3_world_trim_empty(uint32_t world, int acknowledgeRetiredEvents) {
         case b3_emptyTrimInconsistent: return AIR_B3_MEMORY_INCONSISTENT;
     }
     return AIR_B3_MEMORY_INCONSISTENT;
+}
+
+/* No allocation, mutation, borrowed pointer, or JS-side registry fallback. */
+static int global_add(uint64_t* total, uint64_t value) {
+    if (*total > UINT64_MAX - value) return AIR_B3_CAPACITY;
+    *total += value; return AIR_B3_OK;
+}
+int air_b3_bridge_global_snapshot(uint64_t out[10]) {
+    if (!out) return AIR_B3_ARGUMENT;
+    uint64_t staged[10] = {0};
+#define GLOBAL_ADD(i, v) do { int rc_ = global_add(staged + (i), (uint64_t)(v)); if (rc_) return rc_; } while (0)
+    for (const BridgeWorld* w = worlds; w; w = w->next) {
+        int status = air_b3_world_unlocked(w->id); if (status) return status;
+        if (w->count > w->capacity || ((w->wire == NULL) != (w->capacity == 0)))
+            return AIR_B3_MEMORY_INCONSISTENT;
+        GLOBAL_ADD(0, 1); GLOBAL_ADD(1, w->allocations); GLOBAL_ADD(2, w->bytes);
+        GLOBAL_ADD(3, w->shapes);
+        for (const BridgeTemp* p = w->temporary; p; p = p->next) {
+            GLOBAL_ADD(4, 1); GLOBAL_ADD(5, sizeof(BridgeTemp)); GLOBAL_ADD(5, p->bytes);
+        }
+        GLOBAL_ADD(6, w->wire != NULL); GLOBAL_ADD(7, w->capacity);
+        GLOBAL_ADD(8, w->count); GLOBAL_ADD(9, w->captured);
+    }
+#undef GLOBAL_ADD
+    memcpy(out, staged, sizeof(staged)); return AIR_B3_OK;
 }

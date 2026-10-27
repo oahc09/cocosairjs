@@ -142,6 +142,22 @@ const INPUTS = [
     'tools/physics/box3d/sphere-capsule/public-contract.mjs',
     'tools/physics/box3d/sphere-capsule/public-contract.test.mjs',
     'src/air/physics/box3d/contact-equation.ts',
+    'tools/physics/box3d/native/module_release.c',
+    'tools/physics/box3d/native/module_release.h',
+    'tools/physics/box3d/native/module_release_contract.c',
+    'src/air/physics/box3d/binding/module-release.mjs',
+    'src/air/physics/box3d/binding/module-release.d.mts',
+    'tools/physics/box3d/module-release/contract.test.mjs',
+    'tools/physics/box3d/module-release/README.md',
+    'tools/physics/box3d/module-release/qualification.mjs',
+    'tools/physics/box3d/wasm-module-release-contract.mjs',
+    'tools/build/box3d-module-release-gates.test.cjs',
+    'src/air/physics/box3d/loader/st-loader.mjs',
+    'src/air/physics/box3d/loader/st-loader.d.mts',
+    'tools/physics/box3d/module-release/loader-contract.test.mjs',
+    'tools/physics/box3d/module-release/public-contract.mjs',
+    'tools/verify/box3d/loader-lifecycle.test.mjs',
+    'src/air/physics/box3d/prepare.ts',
 ];
 const sha256 = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const read = (file) => fs.readFileSync(file);
@@ -197,6 +213,9 @@ async function verifySTBuild(buildDirectory, { provenanceRoot = ROOT } = {}) {
     const { verifySphereCapsuleQualification } = await import(
         pathToFileURL(path.join(ROOT, 'tools/physics/box3d/sphere-capsule/qualification.mjs'))
     );
+    const { verifyModuleReleaseQualification } = await import(
+        pathToFileURL(path.join(ROOT, 'tools/physics/box3d/module-release/qualification.mjs'))
+    );
     const patch = readPatchPlan();
     const lock = json(path.join(ROOT, 'tools/physics/box3d/versions.lock.json'));
     const receipt = json(fileInside(directory, 'build-receipt.json'));
@@ -211,7 +230,7 @@ async function verifySTBuild(buildDirectory, { provenanceRoot = ROOT } = {}) {
         receipt.memorySourceControls,
         verifyMemoryDiagnosticSources(ROOT, path.join(directory, 'staged-core')),
     );
-    assert.equal(INPUTS.length, 120);
+    assert.equal(INPUTS.length, 136);
     assert.deepEqual(sorted(INPUTS), sorted(COMMAND_EXPECTATIONS.gate.inputs));
     assert.deepEqual(sorted(receipt.inputHashes.map((row) => row.path)), sorted(INPUTS), 'Build input inventory drift');
     for (const input of receipt.inputHashes) {
@@ -254,6 +273,14 @@ async function verifySTBuild(buildDirectory, { provenanceRoot = ROOT } = {}) {
         receipt,
     });
     assert.deepEqual(audit.storageQualification, storageQualification);
+    const moduleReleaseQualification = verifyModuleReleaseQualification({
+        native: json(fileInside(directory, 'native-module-release-contract.raw.json')),
+        wasm: json(fileInside(directory, 'wasm-module-release-contract.raw.json')),
+        identity: manifest,
+        fixtureSha256: sha256(read(path.join(ROOT, 'tools/physics/box3d/wasm-module-release-contract.mjs'))),
+        receipt,
+    });
+    assert.deepEqual(audit.moduleReleaseQualification, moduleReleaseQualification);
     const sphereCapsuleQualification = verifySphereCapsuleQualification({
         report: json(fileInside(directory, 'wasm-sphere-capsule-contract.raw.json')),
         samplesText: read(fileInside(directory, 'sphere-capsule-samples.raw.jsonl')).toString('utf8'),
@@ -269,7 +296,7 @@ async function verifySTBuild(buildDirectory, { provenanceRoot = ROOT } = {}) {
     assert.equal(audit.sharedMemory, false);
     assert.equal(audit.dynamicExecutionOrWorkerConstructorFound, false);
     assert.equal(audit.compiledSourceCount, audit.compiledSourceHashes.length);
-    assert.equal(audit.compiledSourceCount, 85, 'Compile audit inventory drift');
+    assert.equal(audit.compiledSourceCount, 87, 'Compile audit inventory drift');
     assert.equal(new Set(audit.compiledSourceHashes.map((row) => row.path)).size, audit.compiledSourceCount);
     for (const name of [
         'body_control.c',
@@ -375,6 +402,9 @@ async function verifySTBuild(buildDirectory, { provenanceRoot = ROOT } = {}) {
             'wasm-storage-contract.raw.json',
             'sphere-capsule-samples.raw.jsonl',
             'wasm-sphere-capsule-contract.raw.json',
+            'native-module-release-contract.raw.json',
+            'air_box3d_module_release_contract.cjs',
+            'wasm-module-release-contract.raw.json',
         ]),
     );
     assert.deepEqual(sorted(audit.evidence.map((row) => row.path)), sorted(COMMAND_EXPECTATIONS.gate.evidence));

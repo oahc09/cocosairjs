@@ -118,7 +118,7 @@ function outputPacket(input, output) {
     }
 }
 function verifyCommandSchedule(receipt) {
-    assert.equal(EXPECTED.gate.commands, 43, 'Exact consumer-owned WASM command count');
+    assert.equal(EXPECTED.gate.commands, 47, 'Exact consumer-owned WASM command count');
     assert.equal(receipt.commands.length, EXPECTED.gate.commands, 'Exact successful WASM command inventory');
     assert(receipt.commands.every((row) => row.exitCode === 0 && !row.error));
     assert.equal(receipt.motionSourceControls?.status, 'PASS_SOURCE_CONTROLS_ONLY');
@@ -138,6 +138,14 @@ function verifyCommandSchedule(receipt) {
     });
     assert.deepEqual(receipt.sphereCapsuleCpuContract, {
         status: 'PASS_CPU_SPHERE_CAPSULE_ONLY',
+        nativeRuntimeExecuted: false,
+    });
+    assert.deepEqual(receipt.moduleReleaseCpuContract, {
+        status: 'PASS_CPU_MODULE_RELEASE_ONLY',
+        nativeRuntimeExecuted: false,
+    });
+    assert.deepEqual(receipt.moduleReleaseLoaderCpuContract, {
+        status: 'PASS_CPU_LOADER_MOCKS_ONLY',
         nativeRuntimeExecuted: false,
     });
     assert.equal(receipt.queryAdmission?.status, 'PASS_ADMISSION_NO_NATIVE_CALLS');
@@ -190,6 +198,10 @@ function verifyCommandSchedule(receipt) {
         'wasm-storage-contract.mjs',
         'sphere-capsule/contract.test.mjs',
         'wasm-sphere-capsule-contract.mjs',
+        'module-release/contract.test.mjs',
+        'tools/physics/box3d/module-release/loader-contract.test.mjs',
+        'air_box3d_module_release_contract.cjs',
+        'wasm-module-release-contract.mjs',
     ];
     assert.equal(scripts.length, EXPECTED.gate.commands, 'Exact consumer-owned command schedule length');
     scripts.forEach((script, i) => {
@@ -197,6 +209,8 @@ function verifyCommandSchedule(receipt) {
         assert(Array.isArray(row.args) && row.args.every((arg) => typeof arg === 'string'));
         if (script === 'tools/verify/box3d/empty-world-release.test.mjs')
             assert.deepEqual(row.args, ['--test', script], 'Exact real TypeScript release CPU command');
+        else if (script === 'tools/physics/box3d/module-release/loader-contract.test.mjs')
+            assert.deepEqual(row.args, ['--test', script, 'tools/verify/box3d/loader-lifecycle.test.mjs']);
         else if (script) assert(row.args[0]?.endsWith('/' + script), `Command ${i + 1}: ${script}`);
     });
     assert.equal(receipt.commands[7].command, 'emcc');

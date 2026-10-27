@@ -78,5 +78,6 @@
   "_air_b3_mesh_shape_create",
   "_air_b3_mesh_face_read",
   "_air_b3_world_memory_diagnostics_v2",
-  "_air_b3_world_trim_empty"
+  "_air_b3_world_trim_empty",
+  "_air_b3_module_release_snapshot_v1"
 ]

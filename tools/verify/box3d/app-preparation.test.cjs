@@ -182,6 +182,64 @@ function installFeature(h, { adapter = true, failPrepare, failWorld, failDispose
                     h.calls.push('3d.prepare');
                     if (failPrepare) throw failPrepare;
                     return {
+                        // Explicit lifecycle-only mock data, never a native measurement.
+                        diagnostics: () => ({
+                            moduleRelease: {
+                                status: failDispose ? 'FAILED' : 'VERIFIED',
+                                verified: !failDispose,
+                                baseline: {
+                                    schema: 'air-box3d-module-release-snapshot-v1',
+                                    schemaVersion: 1,
+                                    core: { worlds: 0, trackedRequestedBytes: 0 },
+                                    bridge: {
+                                        worlds: 0,
+                                        allocations: 0,
+                                        bytes: 0,
+                                        debugShapeHandles: 0,
+                                        temporaryNodes: 0,
+                                        temporaryBytes: 0,
+                                        wireBuffers: 0,
+                                        wireCapacityRecords: 0,
+                                        wireLengthRecords: 0,
+                                        capturedWorlds: 0,
+                                    },
+                                    mesh: {
+                                        resources: 0,
+                                        leases: 0,
+                                        references: 0,
+                                        borrowNodes: 0,
+                                        resourceStorageBytes: 0,
+                                    },
+                                },
+                                terminal: {
+                                    schema: 'air-box3d-module-release-snapshot-v1',
+                                    schemaVersion: 1,
+                                    core: { worlds: 0, trackedRequestedBytes: 0 },
+                                    bridge: {
+                                        worlds: 0,
+                                        allocations: 0,
+                                        bytes: 0,
+                                        debugShapeHandles: 0,
+                                        temporaryNodes: 0,
+                                        temporaryBytes: 0,
+                                        wireBuffers: 0,
+                                        wireCapacityRecords: 0,
+                                        wireLengthRecords: 0,
+                                        capturedWorlds: 0,
+                                    },
+                                    mesh: {
+                                        resources: 0,
+                                        leases: 0,
+                                        references: 0,
+                                        borrowNodes: 0,
+                                        resourceStorageBytes: 0,
+                                    },
+                                },
+                                errors: failDispose
+                                    ? [{ phase: 'binding-dispose', code: null, message: String(failDispose) }]
+                                    : [],
+                            },
+                        }),
                         dispose: () => {
                             h.calls.push('3d.module.dispose');
                             if (failDispose) throw failDispose;

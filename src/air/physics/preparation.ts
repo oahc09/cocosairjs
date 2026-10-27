@@ -19,6 +19,8 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
 */
+import type { Box3DModuleReleaseReceipt } from './box3d/loader/st-loader.mjs';
+
 /** Resource acquisition bookkeeping. A successful mock test proves lifecycle, not physics. */
 export type AirPreparedBackend = 'box2d-v3-wasm' | 'box3d';
 export interface AirPhysicsSceneReleaseResult {
@@ -39,6 +41,8 @@ export interface AirPhysicsPreparationReceipt {
     }>[];
     readonly originalError: Readonly<{ code: string | null; message: string }> | null;
     readonly cleanupErrors: readonly Readonly<{ label: string; message: string }>[];
+    /** Same acquired module's detached terminal evidence, captured before module release. */
+    readonly moduleRelease?: Box3DModuleReleaseReceipt;
 }
 export interface AirPhysicsPreparation {
     readonly generation: number;
@@ -60,6 +64,8 @@ export interface AirPhysicsPreparation {
     prepared(): void;
     failed(error: unknown): void;
     recordCleanupError(label: string, error: unknown): void;
+    /** Internal module disposer only; stores copied data, never a module or live getter. */
+    recordBox3DModuleRelease(receipt: Box3DModuleReleaseReceipt): void;
     /** Idempotent; independent resources are attempted even after a failure. Dependencies of failed resources are retained. */
     dispose(): Promise<AirPhysicsPreparationReceipt>;
     diagnostics(): AirPhysicsPreparationReceipt;
@@ -79,6 +85,7 @@ export function createAirPhysicsPreparation(): AirPhysicsPreparation {
     let closing: Promise<AirPhysicsPreparationReceipt> | undefined;
     let sceneReleaseHook: (() => AirPhysicsSceneReleaseResult) | undefined;
     let sceneReleaseBusy = false;
+    let moduleRelease: Box3DModuleReleaseReceipt | undefined;
     const cleanupErrors: { label: string; message: string }[] = [];
     const entries: {
         backend: AirPreparedBackend;
@@ -99,6 +106,7 @@ export function createAirPhysicsPreparation(): AirPhysicsPreparation {
                 ),
             ),
             originalError,
+            ...(moduleRelease ? { moduleRelease } : {}),
             cleanupErrors: Object.freeze(cleanupErrors.map((error) => Object.freeze({ ...error }))),
         });
     const release = (entry: (typeof entries)[number]): Promise<void> => {
@@ -118,6 +126,49 @@ export function createAirPhysicsPreparation(): AirPhysicsPreparation {
     };
     return {
         generation: attemptGeneration,
+        recordBox3DModuleRelease(receipt) {
+            const acquiredModule = entries.find((entry) => entry.backend === 'box3d' && entry.resource === 'module');
+            if (
+                moduleRelease ||
+                !closing ||
+                !acquiredModule?.releasePromise ||
+                acquiredModule.cleanup !== 'not-attempted'
+            )
+                throw new Error(
+                    'Module release evidence may be recorded once, only during its acquired module disposal.',
+                );
+            const ancestors = new Set<object>();
+            const copy = (value: unknown): unknown => {
+                if (value === null || typeof value === 'string' || typeof value === 'boolean') return value;
+                if (typeof value === 'number' && Number.isSafeInteger(value)) return value;
+                if (value && typeof value === 'object') {
+                    const prototype = Object.getPrototypeOf(value);
+                    const plain =
+                        prototype === null ||
+                        (Object.getPrototypeOf(prototype) === null &&
+                            Object.prototype.hasOwnProperty.call(prototype, 'constructor') &&
+                            typeof prototype.constructor === 'function' &&
+                            Function.prototype.toString.call(prototype.constructor) ===
+                                Function.prototype.toString.call(Object));
+                    if ((!Array.isArray(value) && !plain) || ancestors.has(value))
+                        throw new Error('Module release evidence rejects non-plain objects and cycles.');
+                    ancestors.add(value);
+                    try {
+                        return Array.isArray(value)
+                            ? Object.freeze(value.map(copy))
+                            : Object.freeze(
+                                  Object.fromEntries(Object.entries(value).map(([key, item]) => [key, copy(item)])),
+                              );
+                    } finally {
+                        ancestors.delete(value);
+                    }
+                }
+                throw new Error('Module release evidence must contain only immutable plain data.');
+            };
+            if (!receipt || !['VERIFIED', 'FAILED'].includes(receipt.status))
+                throw new Error('Module release evidence must be terminal.');
+            moduleRelease = copy(receipt) as Box3DModuleReleaseReceipt;
+        },
         own(backend, resource, dispose, options = {}) {
             if (entries.some((item) => item.backend === backend && item.resource === resource))
                 throw new Error(`Duplicate physics acquisition: ${backend}:${resource}`);

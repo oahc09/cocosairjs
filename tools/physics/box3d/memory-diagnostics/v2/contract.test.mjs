@@ -106,6 +106,7 @@ function fixture() {
             module.HEAPU32.set([128, 0, 1, 0, 0, 0], out >>> 2);
             return 0;
         },
+        _air_b3_module_release_snapshot_v1: () => 0,
         _air_b3_world_memory_diagnostics_v2: (world, out, capacity) => {
             calls.push(['diagnostics', world, capacity]);
             if (control.reenter) control.reenter();
@@ -420,7 +421,14 @@ const storageSchedule = [
     ...storageCommands.slice(2),
 ];
 const sphereCommands = ['sphere-capsule/contract.test.mjs', 'wasm-sphere-capsule-contract.mjs'];
-const newSchedule = [...storageSchedule, ...sphereCommands];
+const sphereSchedule = [...storageSchedule, ...sphereCommands];
+const moduleCommands = [
+    'module-release/contract.test.mjs',
+    'tools/physics/box3d/module-release/loader-contract.test.mjs',
+    'air_box3d_module_release_contract.cjs',
+    'wasm-module-release-contract.mjs',
+];
+const newSchedule = [...sphereSchedule, ...moduleCommands];
 function scheduleReceipt() {
     const commands = newSchedule.map((script) => ({
         command: 'node',
@@ -428,6 +436,12 @@ function scheduleReceipt() {
         exitCode: 0,
         error: null,
     }));
+    commands[44] = {
+        command: 'node',
+        args: ['--test', moduleCommands[1], 'tools/verify/box3d/loader-lifecycle.test.mjs'],
+        exitCode: 0,
+        error: null,
+    };
     commands[6] = { command: 'node', args: ['--test', storageCommands[1]], exitCode: 0, error: null };
     commands[7] = { command: 'emcc', args: ['--version'], exitCode: 0, error: null };
     commands[8] = { command: 'cmake', args: ['--version'], exitCode: 0, error: null };
@@ -439,17 +453,21 @@ function scheduleReceipt() {
         commandSourceControls: { status: 'PASS_SOURCE_CONTROLS_ONLY' },
         memorySourceControls: { status: 'PASS_SOURCE_CONTROLS_ONLY' },
         memoryCpuContract: { status: 'PASS_CPU_FAKE_DIAGNOSTICS_ONLY', nativeRuntimeExecuted: false },
+        moduleReleaseCpuContract: { status: 'PASS_CPU_MODULE_RELEASE_ONLY', nativeRuntimeExecuted: false },
+        moduleReleaseLoaderCpuContract: { status: 'PASS_CPU_LOADER_MOCKS_ONLY', nativeRuntimeExecuted: false },
         sphereCapsuleCpuContract: { status: 'PASS_CPU_SPHERE_CAPSULE_ONLY', nativeRuntimeExecuted: false },
         storageCpuContract: { status: 'PASS_CPU_STORAGE_CONTRACT_ONLY', nativeRuntimeExecuted: false },
         emptyWorldReleaseCpuContract: { status: 'PASS_CPU_TS_NATIVE_MOCKS_ONLY', nativeRuntimeExecuted: false },
         queryAdmission: { status: 'PASS_ADMISSION_NO_NATIVE_CALLS', nativeQueryCalls: 0 },
     };
 }
-test('exact 43-command gate preserves historical 33 and diagnostic 37-command sequences', () => {
+test('exact 47-command gate preserves historical 33 and diagnostic 37-command sequences', () => {
     assert.equal(originalSchedule.length, 33);
     assert.equal(diagnosticSchedule.length, 37);
     assert.equal(storageSchedule.length, 41);
-    assert.equal(newSchedule.length, 43);
+    assert.equal(sphereSchedule.length, 43);
+    assert.deepEqual(newSchedule.slice(0, 43), sphereSchedule);
+    assert.equal(newSchedule.length, 47);
     assert.deepEqual(
         storageSchedule.filter((name) => !storageCommands.includes(name)),
         diagnosticSchedule,
@@ -481,15 +499,17 @@ test('exact 43-command gate preserves historical 33 and diagnostic 37-command se
         assert.throws(() => verifyCommandSchedule(r));
     }
 });
-test('exact 120-input, 85-compile-unit and 60-evidence inventories retain original 79 and diagnostic 92 input sets', () => {
+test('exact 136-input, 87-compile-unit and 63-evidence inventories retain original 79 and diagnostic 92 input sets', () => {
     const additions = expected.memoryDiagnosticExtension.inputs;
     assert.equal(additions.length, 13);
     assert.equal(new Set(additions).size, 13);
-    assert.equal(expected.gate.inputs.length, 120);
+    assert.equal(expected.gate.inputs.length, 136);
     assert.equal(expected.storageExtension.inputs.length, 19);
     const diagnosticInputs = expected.gate.inputs.filter(
         (path) =>
-            !expected.storageExtension.inputs.includes(path) && !expected.sphereCapsuleExtension.inputs.includes(path),
+            !expected.storageExtension.inputs.includes(path) &&
+            !expected.sphereCapsuleExtension.inputs.includes(path) &&
+            !expected.moduleReleaseExtension.inputs.includes(path),
     );
     assert.equal(diagnosticInputs.length, 92);
     assert.equal(
@@ -506,20 +526,23 @@ test('exact 120-input, 85-compile-unit and 60-evidence inventories retain origin
                     'tools/physics/box3d/native/memory_diagnostics.c',
                     'tools/physics/box3d/native/memory_contract.c',
                     'tools/physics/box3d/native/world_storage_contract.c',
+                    'tools/physics/box3d/native/module_release.c',
+                    'tools/physics/box3d/native/module_release_contract.c',
                 ].includes(p),
         )
         .sort();
-    assert.equal(expected.gate.compileUnits.length, 85);
+    assert.equal(expected.gate.compileUnits.length, 87);
     assert.equal(sha(JSON.stringify(units)), '3e0408096fcee766114b61342449f8034bd68b69da1fe24972a6bd3741e1fdd8');
     const evidence = expected.gate.evidence
         .filter(
             (p) =>
                 !expected.memoryDiagnosticExtension.evidence.includes(p) &&
                 !expected.storageExtension.evidence.includes(p) &&
-                !expected.sphereCapsuleExtension.evidence.includes(p),
+                !expected.sphereCapsuleExtension.evidence.includes(p) &&
+                !expected.moduleReleaseExtension.evidence.includes(p),
         )
         .sort();
-    assert.equal(expected.gate.evidence.length, 60);
+    assert.equal(expected.gate.evidence.length, 63);
     assert.equal(sha(JSON.stringify(evidence)), 'bbddcd57693c296da26561827cb76e7b14310a08e8228b0fadb56c61bc340bf6');
     const readList = (file, expression) => {
         const text = readFileSync(resolve(root, file), 'utf8');
@@ -537,11 +560,17 @@ test('exact 120-input, 85-compile-unit and 60-evidence inventories retain origin
     assert.equal(exports.filter((name) => name === '_air_b3_world_memory_diagnostics_v1').length, 0);
     assert.equal(exports.filter((name) => name === '_air_b3_world_memory_diagnostics_v2').length, 1);
     assert.equal(exports.filter((name) => name === '_air_b3_world_trim_empty').length, 1);
+    assert.equal(exports.filter((name) => name === '_air_b3_module_release_snapshot_v1').length, 1);
     assert.equal(
         sha(
             JSON.stringify(
                 exports.filter(
-                    (name) => !['_air_b3_world_memory_diagnostics_v2', '_air_b3_world_trim_empty'].includes(name),
+                    (name) =>
+                        ![
+                            '_air_b3_world_memory_diagnostics_v2',
+                            '_air_b3_world_trim_empty',
+                            '_air_b3_module_release_snapshot_v1',
+                        ].includes(name),
                 ),
             ),
         ),
@@ -562,8 +591,8 @@ test('current source controls execute and exact input/compile guards reject stal
             [...expected.gate.inputs.slice(0, -1), expected.gate.inputs[0]],
         ])
             assert.throws(() => checkInputs(assert, invalid));
-        const stale = new Function('assert', 'inputs', guards.join('\n').replaceAll(', 120);', ', 79);'));
-        assert.throws(() => stale(assert, expected.gate.inputs), 'Old 79-input guard must reject the real 120 set');
+        const stale = new Function('assert', 'inputs', guards.join('\n').replaceAll(', 136);', ', 79);'));
+        assert.throws(() => stale(assert, expected.gate.inputs), 'Old 79-input guard must reject the real 136 set');
         const result = spawnSync(process.execPath, [path], { cwd: root, encoding: 'utf8', timeout: 30000 });
         assert.ifError(result.error);
         assert.equal(result.signal, null);
@@ -576,7 +605,7 @@ test('current source controls execute and exact input/compile guards reject stal
     const checkCompiled = new Function('assert', 'audit', guards[0]);
     assert.doesNotThrow(() => checkCompiled(assert, { compiledSourceCount: expected.gate.compileUnits.length }));
     for (const compiledSourceCount of [82, 84, 86]) assert.throws(() => checkCompiled(assert, { compiledSourceCount }));
-    const stale = new Function('assert', 'audit', guards[0].replace(', 85,', ', 82,'));
+    const stale = new Function('assert', 'audit', guards[0].replace(', 87,', ', 82,'));
     assert.throws(() => stale(assert, { compiledSourceCount: expected.gate.compileUnits.length }));
 });
 

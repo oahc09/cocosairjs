@@ -83,7 +83,30 @@ export async function prepareBox3D(
         );
     loader ??= feature.createLoader();
     const lease = await loader.prepare({ ...options, threading: 'single', workerCount: 1 });
-    preparation.own('box3d', 'module', () => lease.dispose());
+    preparation.own('box3d', 'module', async () => {
+        let failure: unknown;
+        let failed = false;
+        try {
+            await lease.dispose();
+        } catch (error) {
+            failure = error;
+            failed = true;
+        }
+        // Copy only this lease generation after terminal capture and reference release.
+        // A failed dispose must still publish its FAILED evidence, never a stale global receipt.
+        try {
+            const receipt = lease.diagnostics().moduleRelease;
+            if (!receipt) throw unavailable('AIR_E_BOX3D_MODULE_RELEASE', 'Missing acquired module release receipt.');
+            preparation.recordBox3DModuleRelease(receipt);
+        } catch (error) {
+            if (failed) preparation.recordCleanupError('box3d:module-release-receipt', error);
+            else {
+                failure = error;
+                failed = true;
+            }
+        }
+        if (failed) throw failure;
+    });
     // The adapter owns every partial world/handle acquisition before any later failure.
     // Native resources must declare { dependsOn: ['module'] } so a failed world release retains its module.
     const prepared = await worldAdapter(lease, options, preparation);

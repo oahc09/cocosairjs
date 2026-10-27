@@ -291,3 +291,26 @@ int air_b3_mesh_lifetime_counters(uint32_t* out) {
     memcpy(out, copy, sizeof(copy));
     return AIR_B3_OK;
 }
+
+/* Counts only actual registered resources and the real native borrow list. */
+static int mesh_global_add(uint64_t* total, uint64_t value) {
+    if (*total > UINT64_MAX - value) return AIR_B3_CAPACITY;
+    *total += value; return AIR_B3_OK;
+}
+int air_b3_mesh_global_snapshot(uint64_t out[5]) {
+    if (!out) return AIR_B3_ARGUMENT;
+    uint64_t staged[5] = {0};
+#define MESH_GLOBAL_ADD(i, v) do { int rc_ = mesh_global_add(staged + (i), (uint64_t)(v)); if (rc_) return rc_; } while (0)
+    for (const MeshResource* r = resources; r; r = r->next) {
+        int status = air_b3_world_unlocked(r->world); if (status) return status;
+        uint64_t borrows = 0;
+        for (const MeshBorrow* b = r->borrows; b; b = b->next) {
+            int status = mesh_global_add(&borrows, 1); if (status) return status;
+        }
+        if (!r->mesh || borrows != r->references) return AIR_B3_MEMORY_INCONSISTENT;
+        MESH_GLOBAL_ADD(0, 1); MESH_GLOBAL_ADD(1, r->leases); MESH_GLOBAL_ADD(2, r->references);
+        MESH_GLOBAL_ADD(3, borrows); MESH_GLOBAL_ADD(4, r->bytes);
+    }
+#undef MESH_GLOBAL_ADD
+    memcpy(out, staged, sizeof(staged)); return AIR_B3_OK;
+}

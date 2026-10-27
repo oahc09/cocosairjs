@@ -21,6 +21,7 @@ THE SOFTWARE.
 */
 
 import type { Box3DFoundation, Box3DIdentity } from '../binding/facade.mjs';
+import type { Box3DModuleReleaseSnapshot } from '../binding/module-release.mjs';
 
 /** Internal ST-only preparer; application/feature integration is not complete. */
 export interface Box3DSTOptions {
@@ -44,6 +45,19 @@ export interface Box3DSTLease {
     readonly generation: number;
     /** Idempotent; an old lease cannot dispose a newer preparation generation. */
     dispose(): Promise<void>;
+    /** Immutable copy of this lease generation, even after another preparation. */
+    diagnostics(): Box3DLoaderReceipt;
+}
+export interface Box3DModuleReleaseReceipt {
+    readonly status: 'NOT_ACQUIRED' | 'BASELINE_CAPTURED' | 'VERIFIED' | 'FAILED';
+    readonly verified: boolean;
+    readonly baseline: Box3DModuleReleaseSnapshot | null;
+    readonly terminal: Box3DModuleReleaseSnapshot | null;
+    readonly errors: readonly Readonly<{
+        phase: 'baseline' | 'binding-dispose' | 'terminal' | 'verify' | 'release-module';
+        code: string | null;
+        message: string;
+    }>[];
 }
 export interface Box3DLoaderReceipt {
     readonly status: 'IDLE' | 'PREPARING' | 'READY' | 'DISPOSED' | 'CANCELLED' | 'FAILED' | 'CLEANUP_FAILED';
@@ -54,6 +68,8 @@ export interface Box3DLoaderReceipt {
     readonly cleanupErrors?: readonly string[];
     readonly originalError?: Readonly<{ code: string | null; message: string }> | null;
     readonly cleanupFailure?: string;
+    /** Copied terminal evidence; never retains a module, native pointer or live getter. */
+    readonly moduleRelease?: Box3DModuleReleaseReceipt;
 }
 export interface Box3DSTLoader {
     /** Same normalized config returns the same Promise, including after it resolves. */
@@ -71,6 +87,11 @@ export interface Box3DLoaderDependencies {
     createBinding?: (module: unknown, expected: Box3DBuildDescriptor['identity']) => Box3DFoundation;
     digest?: (bytes: Uint8Array) => Promise<string>;
     releaseModule?: (module: unknown) => void | Promise<void>;
+    /** CPU seam only. Production always defaults to the real same-module native capture. */
+    captureModuleReleaseSnapshot?: (
+        module: unknown,
+        expected: Box3DBuildDescriptor['identity'],
+    ) => Box3DModuleReleaseSnapshot;
 }
 export function normalizeBox3DSTOptions(
     options?: Box3DSTOptions,

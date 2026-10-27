@@ -241,7 +241,23 @@
       "src/air/physics/box3d/collision-events.ts",
       "tools/physics/box3d/sphere-capsule/public-contract.mjs",
       "tools/physics/box3d/sphere-capsule/public-contract.test.mjs",
-      "src/air/physics/box3d/contact-equation.ts"
+      "src/air/physics/box3d/contact-equation.ts",
+      "tools/physics/box3d/native/module_release.c",
+      "tools/physics/box3d/native/module_release.h",
+      "tools/physics/box3d/native/module_release_contract.c",
+      "src/air/physics/box3d/binding/module-release.mjs",
+      "src/air/physics/box3d/binding/module-release.d.mts",
+      "tools/physics/box3d/module-release/contract.test.mjs",
+      "tools/physics/box3d/module-release/README.md",
+      "tools/physics/box3d/module-release/qualification.mjs",
+      "tools/physics/box3d/wasm-module-release-contract.mjs",
+      "tools/build/box3d-module-release-gates.test.cjs",
+      "src/air/physics/box3d/loader/st-loader.mjs",
+      "src/air/physics/box3d/loader/st-loader.d.mts",
+      "tools/physics/box3d/module-release/loader-contract.test.mjs",
+      "tools/physics/box3d/module-release/public-contract.mjs",
+      "tools/verify/box3d/loader-lifecycle.test.mjs",
+      "src/air/physics/box3d/prepare.ts"
     ],
     "compileUnits": [
       "staged-core/src/aabb.c",
@@ -328,7 +344,9 @@
       "tools/physics/box3d/native/mesh_contract.c",
       "tools/physics/box3d/native/memory_diagnostics.c",
       "tools/physics/box3d/native/memory_contract.c",
-      "tools/physics/box3d/native/world_storage_contract.c"
+      "tools/physics/box3d/native/world_storage_contract.c",
+      "tools/physics/box3d/native/module_release.c",
+      "tools/physics/box3d/native/module_release_contract.c"
     ],
     "evidence": [
       "build-receipt.json",
@@ -390,9 +408,12 @@
       "air_box3d_world_storage_contract.cjs",
       "wasm-storage-contract.raw.json",
       "sphere-capsule-samples.raw.jsonl",
-      "wasm-sphere-capsule-contract.raw.json"
+      "wasm-sphere-capsule-contract.raw.json",
+      "native-module-release-contract.raw.json",
+      "air_box3d_module_release_contract.cjs",
+      "wasm-module-release-contract.raw.json"
     ],
-    "commands": 43
+    "commands": 47
   },
   "queryExtension": {
     "status": "ADDITIVE_SOURCE_GENERATION_NOT_FORMAL_ACCEPTANCE",
@@ -566,5 +587,37 @@
     "evidence": ["sphere-capsule-samples.raw.jsonl", "wasm-sphere-capsule-contract.raw.json"],
     "commands": 2,
     "fullT15": "NOT_QUALIFIED"
+  },
+  "moduleReleaseExtension": {
+    "inputs": [
+      "tools/physics/box3d/native/module_release.c",
+      "tools/physics/box3d/native/module_release.h",
+      "tools/physics/box3d/native/module_release_contract.c",
+      "src/air/physics/box3d/binding/module-release.mjs",
+      "src/air/physics/box3d/binding/module-release.d.mts",
+      "tools/physics/box3d/module-release/contract.test.mjs",
+      "tools/physics/box3d/module-release/README.md",
+      "tools/physics/box3d/module-release/qualification.mjs",
+      "tools/physics/box3d/wasm-module-release-contract.mjs",
+      "tools/build/box3d-module-release-gates.test.cjs",
+      "src/air/physics/box3d/loader/st-loader.mjs",
+      "src/air/physics/box3d/loader/st-loader.d.mts",
+      "tools/physics/box3d/module-release/loader-contract.test.mjs",
+      "tools/physics/box3d/module-release/public-contract.mjs",
+      "tools/verify/box3d/loader-lifecycle.test.mjs",
+      "src/air/physics/box3d/prepare.ts"
+    ],
+    "compileUnits": [
+      "tools/physics/box3d/native/module_release.c",
+      "tools/physics/box3d/native/module_release_contract.c"
+    ],
+    "evidence": [
+      "native-module-release-contract.raw.json",
+      "air_box3d_module_release_contract.cjs",
+      "wasm-module-release-contract.raw.json"
+    ],
+    "commands": 4,
+    "formalC20": "NOT_QUALIFIED",
+    "scope": "same-module terminal native snapshot; no heap-capacity/global-handle claim"
   }
 }

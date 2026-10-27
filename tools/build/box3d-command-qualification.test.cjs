@@ -345,7 +345,7 @@ test('Consumer preserves every n4 expectation and adds exact query inventory', (
     assert.equal(inventory.expectedCompileUnits.length + additions.compileUnits.length, 69);
     assert.equal(inventory.expectedEvidence.length + additions.evidence.length, 32);
 });
-test('SYNTHETIC ONLY: exact 43-command schedule rejects omissions, additions and reordered qualifications', () => {
+test('SYNTHETIC ONLY: exact 47-command schedule rejects omissions, additions and reordered qualifications', () => {
     const scripts = [
         'query-admission-contract.mjs',
         'motion-source-controls.mjs',
@@ -394,6 +394,10 @@ test('SYNTHETIC ONLY: exact 43-command schedule rejects omissions, additions and
         'wasm-storage-contract.mjs',
         'sphere-capsule/contract.test.mjs',
         'wasm-sphere-capsule-contract.mjs',
+        'module-release/contract.test.mjs',
+        'tools/physics/box3d/module-release/loader-contract.test.mjs',
+        'air_box3d_module_release_contract.cjs',
+        'wasm-module-release-contract.mjs',
     ];
     const r = {
         commands: scripts.map((n) => ({ command: 'node', args: ['synthetic/' + n], exitCode: 0, error: null })),
@@ -403,11 +407,18 @@ test('SYNTHETIC ONLY: exact 43-command schedule rejects omissions, additions and
         memorySourceControls: { status: 'PASS_SOURCE_CONTROLS_ONLY' },
         memoryCpuContract: { status: 'PASS_CPU_FAKE_DIAGNOSTICS_ONLY', nativeRuntimeExecuted: false },
         sphereCapsuleCpuContract: { status: 'PASS_CPU_SPHERE_CAPSULE_ONLY', nativeRuntimeExecuted: false },
+        moduleReleaseCpuContract: { status: 'PASS_CPU_MODULE_RELEASE_ONLY', nativeRuntimeExecuted: false },
+        moduleReleaseLoaderCpuContract: { status: 'PASS_CPU_LOADER_MOCKS_ONLY', nativeRuntimeExecuted: false },
         storageCpuContract: { status: 'PASS_CPU_STORAGE_CONTRACT_ONLY', nativeRuntimeExecuted: false },
         emptyWorldReleaseCpuContract: { status: 'PASS_CPU_TS_NATIVE_MOCKS_ONLY', nativeRuntimeExecuted: false },
     };
     const set = (i, command, args) => Object.assign(r.commands[i], { command, args });
     set(6, 'node', ['--test', 'tools/verify/box3d/empty-world-release.test.mjs']);
+    set(44, 'node', [
+        '--test',
+        'tools/physics/box3d/module-release/loader-contract.test.mjs',
+        'tools/verify/box3d/loader-lifecycle.test.mjs',
+    ]);
     set(7, 'emcc', ['--version']);
     set(8, 'cmake', ['--version']);
     set(9, 'emcmake', ['cmake']);

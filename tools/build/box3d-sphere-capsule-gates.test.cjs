@@ -162,19 +162,19 @@ for (const kind of ['normal', 'point', 'pose', 'identity', 'duplicate', 'order',
         };
         assert.throws(() => verify(args));
     });
-test('exact additive gate locks preserve prior111/85/58 prefix and43 command count', () => {
-    assert.equal(expected.gate.commands, 43);
-    assert.equal(expected.gate.inputs.length, 120);
-    assert.equal(expected.gate.compileUnits.length, 85);
-    assert.equal(expected.gate.evidence.length, 60);
+test('exact additive gate locks preserve prior111/85/58 prefix and current47 command count', () => {
+    assert.equal(expected.gate.commands, 47);
+    assert.equal(expected.gate.inputs.length, 136);
+    assert.equal(expected.gate.compileUnits.length, 87);
+    assert.equal(expected.gate.evidence.length, 63);
     for (const [k, n] of [
         ['inputs', 111],
         ['compileUnits', 85],
         ['evidence', 58],
     ])
         assert.equal(hash(expected.gate[k].slice(0, n)), BASE_HASH[k]);
-    assert.deepEqual(expected.gate.inputs.slice(111), expected.sphereCapsuleExtension.inputs);
-    assert.deepEqual(expected.gate.evidence.slice(58), expected.sphereCapsuleExtension.evidence);
+    assert.deepEqual(expected.gate.inputs.slice(111, 120), expected.sphereCapsuleExtension.inputs);
+    assert.deepEqual(expected.gate.evidence.slice(58, 60), expected.sphereCapsuleExtension.evidence);
     for (const name of ['tools/physics/box3d/audit-artifacts.mjs', 'tools/build/box3d-assets.cjs'])
         assert.match(fs.readFileSync(path.join(root, name), 'utf8'), /verifySphereCapsuleQualification/);
 });
@@ -206,7 +206,7 @@ function productionEvidenceGuard(source) {
 }
 const assetsSource = fs.readFileSync(path.join(root, 'tools/build/box3d-assets.cjs'), 'utf8');
 const evidenceRows = (names) => ({ evidence: names.map((name) => ({ path: name })) });
-test('actual verifySTBuild evidence guards accept exactly all 60 current paths, in any audit order', () => {
+test('actual verifySTBuild evidence guards accept exactly all 63 current paths, in any audit order', () => {
     const verify = productionEvidenceGuard(assetsSource);
     verify(evidenceRows(expected.gate.evidence));
     verify(evidenceRows([...expected.gate.evidence].reverse()));
@@ -221,7 +221,7 @@ test('actual verifySTBuild evidence guards reject unknown and duplicated paths',
     assert.throws(() => verify(evidenceRows([...expected.gate.evidence, 'unqualified.raw.json'])));
     assert.throws(() => verify(evidenceRows([...expected.gate.evidence, expected.gate.evidence[0]])));
 });
-test('regression: the old inline 58-path consumer rejects the real current 60-path inventory', () => {
+test('regression: the old inline 58-path consumer rejects the real current 63-path inventory', () => {
     let old = assetsSource;
     for (const name of ['sphere-capsule-samples.raw.jsonl', 'wasm-sphere-capsule-contract.raw.json']) {
         const line = `            '${name}',\n`;

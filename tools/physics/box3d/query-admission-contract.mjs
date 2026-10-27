@@ -29,6 +29,7 @@ Object.assign(module, {
         return 4096;
     },
     // Identity presence only: this CPU fixture must never fabricate native lifetime evidence.
+    _air_b3_module_release_snapshot_v1: () => 0,
     _air_b3_mesh_lifetime_counters: () => {
         ++meshCounterCalls;
         throw new Error('Unexpected native mesh lifetime counter call');

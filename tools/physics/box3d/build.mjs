@@ -115,6 +115,7 @@ try {
             'tools/physics/box3d/native/p2p_bridge.c',
             'tools/physics/box3d/native/mesh_bridge.c',
             'tools/physics/box3d/native/memory_diagnostics.c',
+            'tools/physics/box3d/native/module_release.c',
             'tools/physics/box3d/native/contract.c',
         ]) {
             const object = resolve(out, basename(source) + '.o');
@@ -345,6 +346,21 @@ try {
         writeFileSync(resolve(out, 'native-world-storage-contract.raw.json'), storageRaw);
         result.storageContract = JSON.parse(storageRaw);
         if (result.storageContract.status !== 'PASS') throw new Error('Native world storage contract failed');
+        const moduleReleaseExe = resolve(out, 'native-module-release-contract');
+        run(cc, [
+            ...flags,
+            'tools/physics/box3d/native/module_release_contract.c',
+            ...objects.filter((file) => !file.endsWith('/contract.c.o')),
+            ...(sanitize ? ['-fsanitize=address,undefined'] : []),
+            '-lm',
+            '-o',
+            moduleReleaseExe,
+        ]);
+        const moduleReleaseRaw = run(moduleReleaseExe, []);
+        writeFileSync(resolve(out, 'native-module-release-contract.raw.json'), moduleReleaseRaw);
+        result.moduleReleaseContract = JSON.parse(moduleReleaseRaw);
+        if (result.moduleReleaseContract.status !== 'PASS') throw new Error('Native module release contract failed');
+
         result.artifacts = [
             { path: 'native-contract', sha256: sha256(readFileSync(exe)), bytes: readFileSync(exe).length },
         ];
@@ -489,6 +505,21 @@ try {
         run(process.execPath, ['tools/physics/box3d/sphere-capsule/contract.test.mjs']);
         result.sphereCapsuleCpuContract = { status: 'PASS_CPU_SPHERE_CAPSULE_ONLY', nativeRuntimeExecuted: false };
         run(process.execPath, ['tools/physics/box3d/wasm-sphere-capsule-contract.mjs', out]);
+        run(process.execPath, ['tools/physics/box3d/module-release/contract.test.mjs']);
+        result.moduleReleaseCpuContract = { status: 'PASS_CPU_MODULE_RELEASE_ONLY', nativeRuntimeExecuted: false };
+        run(process.execPath, [
+            '--test',
+            'tools/physics/box3d/module-release/loader-contract.test.mjs',
+            'tools/verify/box3d/loader-lifecycle.test.mjs',
+        ]);
+        result.moduleReleaseLoaderCpuContract = { status: 'PASS_CPU_LOADER_MOCKS_ONLY', nativeRuntimeExecuted: false };
+        const moduleReleaseRaw = run(process.execPath, [resolve(out, 'air_box3d_module_release_contract.cjs')]);
+        writeFileSync(resolve(out, 'native-module-release-contract.raw.json'), moduleReleaseRaw);
+        result.moduleReleaseContract = JSON.parse(moduleReleaseRaw);
+        if (result.moduleReleaseContract.status !== 'PASS' || result.moduleReleaseContract.pointerBytes !== 4)
+            throw new Error('WASM32 module release native contract failed');
+        run(process.execPath, ['tools/physics/box3d/wasm-module-release-contract.mjs', out]);
+
         result.artifacts = artifacts;
         result.browserStatus = 'NOT_RUN';
     }
@@ -624,6 +655,22 @@ try {
         'tools/physics/box3d/sphere-capsule/public-contract.mjs',
         'tools/physics/box3d/sphere-capsule/public-contract.test.mjs',
         'src/air/physics/box3d/contact-equation.ts',
+        'tools/physics/box3d/native/module_release.c',
+        'tools/physics/box3d/native/module_release.h',
+        'tools/physics/box3d/native/module_release_contract.c',
+        'src/air/physics/box3d/binding/module-release.mjs',
+        'src/air/physics/box3d/binding/module-release.d.mts',
+        'tools/physics/box3d/module-release/contract.test.mjs',
+        'tools/physics/box3d/module-release/README.md',
+        'tools/physics/box3d/module-release/qualification.mjs',
+        'tools/physics/box3d/wasm-module-release-contract.mjs',
+        'tools/build/box3d-module-release-gates.test.cjs',
+        'src/air/physics/box3d/loader/st-loader.mjs',
+        'src/air/physics/box3d/loader/st-loader.d.mts',
+        'tools/physics/box3d/module-release/loader-contract.test.mjs',
+        'tools/physics/box3d/module-release/public-contract.mjs',
+        'tools/verify/box3d/loader-lifecycle.test.mjs',
+        'src/air/physics/box3d/prepare.ts',
     ];
     result.inputHashes = inputs.map((path) => ({ path, sha256: sha256(readFileSync(resolve(root, path))) }));
     receipt();

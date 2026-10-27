@@ -36,7 +36,7 @@
     "abiVersion": 1,
     "status": "EXPERIMENTAL_FOUNDATION"
   },
-  "apiSchemaSha256": "d23be6157ee158ade877202b5e38d40978682cbd4794089c763e3ac8a79242a8",
+  "apiSchemaSha256": "8af84ffb85ce311e9693d378c70ca3c788896b8aeee228700bbddd61c0ca8a04",
   "corePatches": [
     {
       "id": "sse2-loadv-float-alignment-v1",
@@ -201,7 +201,8 @@
     "G1": "INCOMPLETE",
     "contactAnchorEpoch": "GEOMETRY_ONLY_CANDIDATE_PENDING_INDEPENDENT_QUALIFICATION",
     "hullCooking": "NATIVE_SOURCE_INTEGRATED_EXECUTION_PENDING_C14_AND_EX01_NOT_QUALIFIED",
-    "emptyWorldStorage": "PRODUCTION_SOURCE_CANDIDATE_NATIVE_WASM_APP_NOT_RUN"
+    "emptyWorldStorage": "PRODUCTION_SOURCE_CANDIDATE_NATIVE_WASM_APP_NOT_RUN",
+    "moduleReleaseSnapshot": "SOURCE_CPU_CANDIDATE_NATIVE_WASM_APP_NOT_RUN"
   },
   "patchLock": {
     "path": "tools/physics/box3d/patches/lock.json",

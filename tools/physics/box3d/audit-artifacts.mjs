@@ -11,6 +11,7 @@ import { verifyMemoryDiagnosticSources } from './memory-diagnostics/v2/source-ga
 import { verifyMemoryDiagnosticQualification } from './memory-diagnostics/v2/qualification.mjs';
 import { verifyStorageQualification } from './empty-world-trim/production/qualification.mjs';
 import { verifySphereCapsuleQualification } from './sphere-capsule/qualification.mjs';
+import { verifyModuleReleaseQualification } from './module-release/qualification.mjs';
 import commandQualification from '../../build/box3d-command-qualification.cjs';
 import hullQualification from '../../build/box3d-hull-qualification.cjs';
 
@@ -25,8 +26,8 @@ assert.equal(receipt.status, 'PASS');
 assert.equal(receipt.kind, 'st-simd-wasm');
 commandQualification.verifyCommandSchedule(receipt);
 assert.ok(receipt.commands.every((c) => c.exitCode === 0 && !c.error));
-assert.equal(receipt.inputHashes.length, 120);
-assert.equal(new Set(receipt.inputHashes.map((input) => input.path)).size, 120);
+assert.equal(receipt.inputHashes.length, 136);
+assert.equal(new Set(receipt.inputHashes.map((input) => input.path)).size, 136);
 const expectedGate = JSON.parse(
     readFileSync(resolve(root, 'tools/build/box3d-command-expectations.json'), 'utf8'),
 ).gate;
@@ -91,6 +92,8 @@ const expectedSources = [
     'tools/physics/box3d/native/wasm_entry.c',
     'tools/physics/box3d/native/geometry_contract.c',
     'tools/physics/box3d/native/world_storage_contract.c',
+    'tools/physics/box3d/native/module_release.c',
+    'tools/physics/box3d/native/module_release_contract.c',
 ].sort();
 assert.deepEqual(commands.map((c) => relative(root, c.file)).sort(), expectedSources);
 const requiredFlags = ['-msimd128', '-msse2', '-fno-fast-math', '-ffp-contract=off'];
@@ -731,6 +734,13 @@ for (const filename of ['air_box3d_hull_contract.cjs', 'air_box3d_hull_core_cont
     assert.ok(
         receipt.commands.some((entry) => entry.args.some((arg) => arg.endsWith(filename)) && entry.exitCode === 0),
     );
+const moduleReleaseQualification = verifyModuleReleaseQualification({
+    native: json('native-module-release-contract.raw.json'),
+    wasm: json('wasm-module-release-contract.raw.json'),
+    identity: manifest,
+    fixtureSha256: sha256(readFileSync(resolve(root, 'tools/physics/box3d/wasm-module-release-contract.mjs'))),
+    receipt,
+});
 const sphereCapsuleQualification = verifySphereCapsuleQualification({
     report: json('wasm-sphere-capsule-contract.raw.json'),
     samplesText: read('sphere-capsule-samples.raw.jsonl').toString('utf8'),
@@ -769,6 +779,7 @@ const report = {
     memoryQualification,
     storageQualification,
     sphereCapsuleQualification,
+    moduleReleaseQualification,
     evidence: [
         'native-memory-contract.raw.json',
         'air_box3d_memory_contract.cjs',
@@ -831,6 +842,9 @@ const report = {
         'wasm-storage-contract.raw.json',
         'sphere-capsule-samples.raw.jsonl',
         'wasm-sphere-capsule-contract.raw.json',
+        'native-module-release-contract.raw.json',
+        'air_box3d_module_release_contract.cjs',
+        'wasm-module-release-contract.raw.json',
     ].map(fileHash),
 };
 assert.deepEqual(
@@ -838,7 +852,7 @@ assert.deepEqual(
     [...expectedGate.evidence].sort(),
     'Exact evidence set',
 );
-assert.equal(report.compiledSourceCount, 85, 'Exact current compiled source inventory');
+assert.equal(report.compiledSourceCount, 87, 'Exact current compiled source inventory');
 writeFileSync(reportPath, JSON.stringify(report, null, 2) + '\n');
 console.log(
     JSON.stringify({ status: report.status, compiledSourceCount: commands.length, output: relative(root, reportPath) }),
