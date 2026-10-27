@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "profile": "air-box3d-empty-storage-native-v1",
+  "controlProfile": "air-box3d-empty-storage-identity-control-v1",
+  "checks": 3661,
+  "controlChecks": 2,
+  "groups": {
+    "defaultMixed": 112,
+    "customMixed": 112,
+    "cycles": 3206,
+    "refusals": 71,
+    "isolation": 6,
+    "callerOwnedMesh": 56,
+    "sleepingDisabled": 34,
+    "privateEventAck": 60,
+    "main": 4
+  },
+  "productionCompatible": false,
+  "runtimeQualification": "NOT_RUN"
+}
