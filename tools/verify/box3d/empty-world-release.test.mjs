@@ -85,7 +85,7 @@ test('hook error is not substituted, and malformed hook result cannot become suc
     q.prepared();
     assert.throws(() => q.releaseScene(), /Invalid/);
 });
-function ownerHarness() {
+function ownerHarness(options = {}) {
     const queue = { phase: 'paused', preparedControl: false, pending: [], provisionalCount: 0, quarantined: null };
     const producers = { closed: false, preparedControl: false, collecting: false };
     class PhysicsSystem {}
@@ -95,6 +95,38 @@ function ownerHarness() {
     class Component {
         destroy() {}
     }
+    class Collider extends Component {}
+    class RigidBody extends Component {}
+    class PhysicsMaterial {}
+    const materialRegistrations = [];
+    const registerPhysicsMaterialDelegate = (target, delegate, cleanup, mode, reader) => {
+        // Explicit CPU registration adapter, not a native or full framework simulation.
+        assert.equal(mode, 'legacy');
+        assert.equal(typeof reader, 'function');
+        for (const name of [
+            'open',
+            'protectCandidate',
+            'preflightCopied',
+            'applyCopied',
+            'commitActual',
+            'fail',
+            'dispose',
+        ])
+            assert.equal(typeof delegate[name], 'function');
+        assert.equal(cleanup.generation, 1);
+        const record = { target, active: true, disposeCalls: 0 };
+        const lease = Object.freeze({
+            dispose() {
+                assert.equal(this, lease);
+                if (!record.active) return;
+                record.active = false;
+                record.disposeCalls++;
+            },
+        });
+        record.lease = lease;
+        materialRegistrations.push(record);
+        return lease;
+    };
     const world = {},
         system = new PhysicsSystem();
     PhysicsSystem.instance = system;
@@ -122,11 +154,15 @@ function ownerHarness() {
         'bodies',
         'components',
     ];
-    const inject = (s) =>
-        s.replace(
+    const inject = (source) => {
+        const s = options.legacyMaterialGuard
+            ? source.replace('!this.#hasOnlyWorldMaterialObservation()', 'this.#materialLeases.size')
+            : source;
+        return s.replace(
             'export class Box3DWorldCommandOwner {',
-            `export class Box3DWorldCommandOwner {\n__inject(key, value) { switch(key) { ${keys.map((k) => `case '${k}': this.#${k}=value; break;`).join('')} ${sets.map((k) => `case '${k}': this.#${k}.${k.endsWith('Cleanups') ? 'add(value)' : 'set(value,value)'}; break;`).join('')} case 'cleanupFailures': this.#cleanupFailures.push(value); break; case 'targets': this.#targets.set(value,value); break; default: throw Error('test injection key'); } }`,
+            `export class Box3DWorldCommandOwner {\n__inject(key, value) { switch(key) { ${keys.map((k) => `case '${k}': this.#${k}=value; break;`).join('')} ${sets.map((k) => `case '${k}': this.#${k}.${k.endsWith('Cleanups') ? 'add(value)' : 'set(value,value)'}; break;`).join('')} case 'cleanupFailures': this.#cleanupFailures.push(value); break; case 'targets': this.#targets.set(value,value); break; case 'replace-system-material': this.#materialLeases.set(this.#system,value); break; case 'remove-system-material': this.#materialLeases.delete(this.#system); break; default: throw Error('test injection key'); } }`,
         );
+    };
     const { Box3DWorldCommandOwner } = load(
         'src/air/physics/box3d/world-command-owner.ts',
         ['Box3DWorldCommandOwner'],
@@ -135,20 +171,46 @@ function ownerHarness() {
             Node,
             Component,
             PhysicsSystem,
+            Collider,
+            RigidBody,
+            PhysicsMaterial,
+            registerPhysicsMaterialDelegate,
+            nextPhysicsMaterialCleanupGeneration: () => 1,
+            readPhysicsMaterialPrivateValues: () => {
+                throw Error('No material value/native read in this CPU test');
+            },
+            getMaterialSource: () => undefined,
             Box3DCommandQueue: class {
                 diagnostics() {
                     return queue;
+                }
+                registerBody() {}
+                releaseBodyAfterTeardown() {}
+                close() {
+                    queue.phase = 'closed';
                 }
             },
             Box3DCommandProducers: class {
                 diagnostics() {
                     return producers;
                 }
+                close() {
+                    producers.closed = true;
+                }
             },
         },
         inject,
     );
-    return { owner: new Box3DWorldCommandOwner(1, system, world), queue, producers, system, world };
+    return {
+        owner: new Box3DWorldCommandOwner(1, system, world),
+        queue,
+        producers,
+        system,
+        world,
+        Node,
+        Collider,
+        materialRegistrations,
+    };
 }
 test('actual owner guard accepts idle paused/ready queue, not stepping admission', () => {
     const f = ownerHarness();
@@ -683,4 +745,102 @@ for (const memoryOverride of [
             () => f.world.getNativeMemoryDiagnostics(),
             (e) => e.code === 'AIR_E_BOX3D_ABI',
         );
+    });
+
+// Regression: the production System/default-material observer lasts for the whole world,
+// unlike per-collider observers. Native and registry adapters here remain explicit CPU mocks.
+function installDefaultObservation(f) {
+    f.owner.installMaterialObservation(
+        () => {
+            throw Error('ACK must not apply a material');
+        },
+        () => f.owner.fault(),
+    );
+    assert.equal(f.materialRegistrations.length, 1);
+    assert.equal(f.materialRegistrations[0].target, f.system);
+    assert.equal(f.owner.diagnostics().materialObserverLeases, 1);
+    assert.equal(f.owner.diagnostics().bodies, 0);
+    assert.equal(f.owner.diagnostics().components, 0);
+    assert.deepEqual(plain(f.owner.diagnostics().targets), { active: 0, protected: 0, unresolved: 0, guards: 0 });
+}
+test('actual installMaterialObservation retains exact world-scoped lease across empty ACK, then actual owner close releases it', () => {
+    const f = ownerHarness();
+    installDefaultObservation(f);
+    f.owner.assertSceneReleaseBoundary(true);
+    f.owner.assertSceneReleaseBoundary(true);
+    assert.equal(f.owner.diagnostics().materialObserverLeases, 1);
+    assert.equal(f.materialRegistrations[0].active, true);
+    assert.equal(f.materialRegistrations[0].disposeCalls, 0);
+    f.owner.closeAfterWorldTeardown(true);
+    assert.equal(f.materialRegistrations[0].active, false);
+    assert.equal(f.materialRegistrations[0].disposeCalls, 1);
+    assert.equal(f.owner.diagnostics().materialObserverLeases, 0);
+    assert.equal(f.owner.diagnostics().phase, 'closed');
+});
+test('legacy size predicate reproduces the real ACK blind spot after actual default registration', () => {
+    const f = ownerHarness({ legacyMaterialGuard: true });
+    installDefaultObservation(f);
+    assert.throws(
+        () => f.owner.assertSceneReleaseBoundary(true),
+        (e) => e.code === 'AIR_E_BOX3D_CONFIG' && /retained owner identities/.test(e.message),
+    );
+    assert.equal(f.materialRegistrations[0].disposeCalls, 0);
+    f.owner.closeAfterWorldTeardown(true);
+    assert.equal(f.materialRegistrations[0].disposeCalls, 1);
+});
+test('actual component/body owner cleanup leaves only default observer, not stale scene ownership', () => {
+    const f = ownerHarness();
+    installDefaultObservation(f);
+    const node = new f.Node(),
+        adapter = {},
+        component = new f.Collider();
+    component.node = node;
+    const body = f.owner.adoptBody({
+        node,
+        ancestry: [node],
+        preflight() {},
+        readCommitted() {},
+        resolveNative() {},
+        clearTargetVelocity() {},
+        prepareRigidActivity() {},
+    });
+    f.owner.attachComponent(body, { adapter, component, kind: 'collider', material: null, applyMaterial() {} });
+    assert.equal(f.owner.diagnostics().materialObserverLeases, 2);
+    assert.throws(() => f.owner.assertSceneReleaseBoundary(true));
+    f.owner.releaseComponentAfterCleanup(adapter);
+    f.owner.retireBodyAfterDestroy(body);
+    assert.equal(f.owner.diagnostics().bodies, 0);
+    assert.equal(f.owner.diagnostics().components, 0);
+    assert.equal(f.owner.diagnostics().materialObserverLeases, 1);
+    assert.equal(f.materialRegistrations[0].active, true);
+    assert.equal(f.materialRegistrations[1].disposeCalls, 1);
+    f.owner.assertSceneReleaseBoundary(true);
+    f.owner.closeAfterWorldTeardown(true);
+    assert.deepEqual(
+        f.materialRegistrations.map((r) => r.disposeCalls),
+        [1, 1],
+    );
+});
+for (const key of ['replace-system-material', 'remove-system-material'])
+    test('system-key alone cannot fake or silently lose the exact private lease: ' + key, () => {
+        const f = ownerHarness();
+        installDefaultObservation(f);
+        f.owner.__inject(key, { dispose() {} });
+        assert.throws(() => f.owner.assertSceneReleaseBoundary(true));
+    });
+for (const key of [
+    'bodies',
+    'components',
+    'activityLeases',
+    'materialLeases',
+    'targets',
+    'materialContext',
+    'valuesContext',
+    'materialCleanups',
+])
+    test('legal default observer does not exempt other live/pending ownership: ' + key, () => {
+        const f = ownerHarness();
+        installDefaultObservation(f);
+        f.owner.__inject(key, {});
+        assert.throws(() => f.owner.assertSceneReleaseBoundary(true));
     });

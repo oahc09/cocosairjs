@@ -333,6 +333,7 @@ export class Box3DWorldCommandOwner {
     #nativeTeardown: 'owned' | 'released' | 'unresolved' = 'owned';
     #scope: Box3DOwnerFenceScope | null = null;
     readonly #materialLeases = new Map<object, PhysicsMaterialDelegateLease>();
+    #systemMaterialLease: PhysicsMaterialDelegateLease | null = null;
     readonly #materialCleanups = new Set<() => void>();
     readonly #materialAuthorities = new WeakMap<
         object,
@@ -1148,6 +1149,12 @@ export class Box3DWorldCommandOwner {
                 `Owner configuration is unavailable during ${this.#phase}.`,
             );
     }
+    #hasOnlyWorldMaterialObservation(): boolean {
+        // The default-material observer belongs to this world/System lifetime, not a scene.
+        // Preserve its exact private registration capability; a matching key alone is not proof.
+        if (this.#systemMaterialLease === null) return this.#materialLeases.size === 0;
+        return this.#materialLeases.size === 1 && this.#materialLeases.get(this.#system) === this.#systemMaterialLease;
+    }
     /** Internal post-scene boundary. Pause is valid; no new command/native step is admitted. */
     assertSceneReleaseBoundary(requireEmpty: boolean): void {
         this.assertConfiguration('scene release acknowledgement');
@@ -1189,7 +1196,7 @@ export class Box3DWorldCommandOwner {
             (this.#bodies.size ||
                 this.#components.size ||
                 this.#activityLeases.size ||
-                this.#materialLeases.size ||
+                !this.#hasOnlyWorldMaterialObservation() ||
                 [...this.#targets.values()].some((target) => target.state !== 'settled' || target.guard))
         )
             throw worldError(
@@ -1624,7 +1631,7 @@ export class Box3DWorldCommandOwner {
             this.#bindingOwner.declareBinding(this.#system, this.#world, this.#system, 'default');
             this.#installMaterialValues(prepareValues);
         }
-        this.#registerMaterial(this.#system, this.#system, applyDefault);
+        this.#systemMaterialLease = this.#registerMaterial(this.#system, this.#system, applyDefault);
     }
     #assertMaterialLive(asset: object): asserts asset is PhysicsMaterial {
         if (
@@ -2118,7 +2125,11 @@ export class Box3DWorldCommandOwner {
         if (this.#cleanupFailures.length < 4096) this.#cleanupFailures.push(Object.freeze({ stage, error }));
         else ++this.#omittedCleanupFailures;
     }
-    #registerMaterial(key: object, target: Collider | PhysicsSystem, apply: CopiedMaterialApplication): void {
+    #registerMaterial(
+        key: object,
+        target: Collider | PhysicsSystem,
+        apply: CopiedMaterialApplication,
+    ): PhysicsMaterialDelegateLease {
         let context: Readonly<PhysicsStateChangeContext> | null = null;
         let scope: Box3DOwnerFenceScope | null = null;
         let copied: Readonly<Box3DSurfaceMaterial> | null = null;
@@ -2333,6 +2344,7 @@ export class Box3DWorldCommandOwner {
             readPhysicsMaterialPrivateValues,
         );
         this.#materialLeases.set(key, lease);
+        return lease;
     }
     releaseComponentAfterCleanup(adapter: object): void {
         if (this.#phase !== 'faulted' && this.#phase !== 'closed')
@@ -2754,6 +2766,7 @@ export class Box3DWorldCommandOwner {
                     throw error;
                 }
                 this.#materialLeases.delete(key);
+                if (key === this.#system && this.#systemMaterialLease === lease) this.#systemMaterialLease = null;
             });
         try {
             attempt(() => this.#scope?.dispose());
