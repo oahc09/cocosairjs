@@ -1,10 +1,12 @@
 # Box3D closure status
 
-Updated: 2026-10-27 13:19 UTC. Branch: `feat/box3d-rebuild-20261022`.
+Updated: 2026-10-27 13:38 UTC. Branch: `feat/box3d-rebuild-20261022`.
 
 ## Current outcome
 
-- Latest build attempt: **SDK234 PARTIAL — ST/ESM limited PASS, DTS FAIL** on `eddf4ac58ea536348aac960a527cc27961b9011f`. Fresh47/136/87/63 ST passed module native120/WASM8; bare full28-feature ESM233→234 produced23 files/40457499B. DTS gates1–4 exited0, gate5 strict consumer failed on two missing `Box3DModuleReleaseReceipt` references; gates6/7 NOT_RUN. Emit also reported unsupported `Object.fromEntries` target lib. No declarations promoted, no complete25-file SDK or public module-close qualification. Counter234 is the real successful ESM count, not a whole-cohort PASS. See [SDK234 failure report](reports/sdk234-module-terminal-build-and-dts-failure-20261027.md).
+- Latest build: **SDK235 VERIFIED_LIMITED** on `a00306f391c595e292bbcaedd0f757bc99ca4ead`: fresh47/136/87/63 ST including module native120/WASM8, full28-feature ESM234→235 and fresh DTS7/7. Emit has no source diagnostic lines; qualified receipt/snapshot declaration types close correctly. Final25 files/43837664B. SDK234 DTS FAIL remains unchanged; this new build does not pre-judge the separate public module-close run/full C20. See [SDK235 report](reports/sdk235-module-terminal-build-and-declarations-20261027.md).
+
+- Previous build attempt: **SDK234 PARTIAL — ST/ESM limited PASS, DTS FAIL** on `eddf4ac58ea536348aac960a527cc27961b9011f`. Fresh47/136/87/63 ST passed module native120/WASM8; bare full28-feature ESM233→234 produced23 files/40457499B. DTS gates1–4 exited0, gate5 strict consumer failed on two missing `Box3DModuleReleaseReceipt` references; gates6/7 NOT_RUN. Emit also reported unsupported `Object.fromEntries` target lib. No declarations promoted, no complete25-file SDK or public module-close qualification. Counter234 is the real successful ESM count, not a whole-cohort PASS. See [SDK234 failure report](reports/sdk234-module-terminal-build-and-dts-failure-20261027.md).
 
 - Latest public Sphere–Capsule attempt3 on SDK233: **PASS_PUBLIC_SPHERE_CAPSULE_SUBSET, 4/4 declared cases**,25 completed public frames/31 callbacks. Destroy-peer observations explicitly retain immediate step24 Node-valid/native2body1shape and original next frame25 Node-invalid/native1body1shape; neither is inferred or backfilled. All4 scene releases restored0 live counts/ledger36096, normal app close/module/world cleanup released, fallback0, exit0/ECHILD,3014 protected records0drift. Attempts1/2 remain FAIL. Headless subset only, not full T15/C21/C20/I05/I06 or browser/mobile. See [SDK233 public qualification](reports/sphere-capsule-public-sdk233-attempt3-20261027.md).
 
