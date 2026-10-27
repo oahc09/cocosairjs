@@ -15,14 +15,14 @@
 
 ## Read-only serving (only when browser/physics execution is authorized)
 
-Run from the repository root with an **existing** SDK223 runtime and installed project dependencies; do not build or install:
+Run from the repository root with an **existing explicitly qualified** runtime (SDK223 original baseline; SDK235 CPU declarations checked, browser acceptance still NOT_RUN) and installed project dependencies; do not build or install:
 
 ```sh
 BOX3D_RUNTIME=/absolute/path/to/qualified-sdk223 PORT=7472 \
   node examples/box3d-compound-bowling/serve.cjs
 ```
 
-If dependencies are outside the checkout, set `NODE_PATH=/absolute/path/to/existing/node_modules`; use the existing authorized Node binary. The server binds 127.0.0.1, transforms example TS in memory, and serves runtime read-only. It does not copy/modify the runtime, build engines, or install dependencies. `/identity.json` hashes runtime JS, ST manifest/module/WASM/facade/distribution receipt and example source. Retain it with the exported JSON and screenshots. Runtime source changes/new Terrain ABI are **not** part of SDK223.
+If dependencies are outside the checkout, set `NODE_PATH=/absolute/path/to/existing/node_modules`; use the existing authorized Node binary. The server binds 127.0.0.1, transforms example TS in memory, and serves runtime read-only. It does not copy/modify the runtime, build engines, or install dependencies. `/identity.json` hashes runtime JS, ST manifest/module/WASM/facade/distribution receipt and example source. Retain it with the exported JSON and screenshots. Runtime source changes/new Terrain ABI are **not** part of SDK223. The shared route now additionally checks the selected ST manifest/receipt identity and asset hashes; this is integrity checking, not browser qualification. The server captures runtime bytes once so later file changes cannot silently mix responses with the recorded identity; restart the server to select new bytes.
 
 ## CPU / strict declarations (no runtime import)
 
@@ -59,3 +59,24 @@ The initial review identified terminal-close and deferred-asset ownership issues
 - Objects are removed from the owned-asset ledger only once their public `isValid` is false. Failed destroy attempts retain the object; successful destroy requests are still flushed. A `released` receipt without invalid assets does not pass this policy. This is not proof of GPU zero-leak behavior; measurements remain unavailable.
 - Refused hook/target stop attempts are recorded without skipping other stop attempts or public scene/asset release. Such a failure blocks reset/rebuild; Close may proceed to final SDK owner teardown only after the public scene/asset flush policy succeeds. No stop failure is erased from the log.
 - Close preparation must complete these public flushes **before** invoking terminal SDK Close. If preparation fails, it is recorded distinctly and SDK Close has not run. If SDK Close has run and fails, the Close control is disabled and the UI says the result is terminal/cached; there is no misleading re-invocation of the same Promise. CPU doubles test only this orchestration/state contract, never actual SDK destruction or retry success.
+
+## Gallery draft entry (source/CPU contract only; browser NOT_RUN)
+
+The Gallery entry is `draft`, with no promotion or runtime validator evidence. It does not qualify EX02 or alter existing examples' evidence. The API/evidence specification is deliberately not frozen; full strict specification/campaign acceptance remains pending.
+
+The ordinary Gallery dev server now has an EX02-scoped runtime mount. It requires the same explicit runtime selection as standalone serving; it never substitutes `/build` for EX02:
+
+```sh
+BOX3D_RUNTIME=/absolute/path/to/qualified-runtime npm run dev -- --example box3d-compound-bowling
+# Open http://127.0.0.1:7454/gallery.html#box3d-compound-bowling
+```
+
+Unlike the isolated `serve.cjs`, the ordinary dev server retains its existing build/watch behavior. Use standalone serving when a frozen, read-only runtime test is required. For Gallery, EX02 URLs are `/box3d-compound-bowling/identity.json` and `/box3d-compound-bowling/runtime/`; standalone keeps `/identity.json` and `/runtime/`. Both entry points use the same `runtime-route.cjs`, identical selected runtime bytes and identity fields. Missing or invalid runtime returns HTTP 503 on the scoped Gallery routes; unrelated Gallery examples are unaffected. The importmap, identity fetch, and ST asset URL are relative to the example, not the Gallery root.
+
+```sh
+node --test examples/box3d-compound-bowling/tests/*.test.mjs \
+  examples/box3d-compound-bowling/tests/*.test.cjs \
+  tools/verify/box3d/compound-bowling/check-types.test.cjs
+```
+
+Route tests use synthetic CPU fixtures and in-memory request/response calls (no browser or socket); fixture bytes are explicitly not native SDK artifacts. Separate read-only comparison with an actual selected SDK can establish route/hash consistency, never engine or visual behavior. The required moving Stop → fresh Start → twenty real release/rebuilds → Close during release sequence remains **NOT_RUN** until a real browser can execute it. Do not replace it with these tests.
