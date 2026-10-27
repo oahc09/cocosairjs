@@ -152,9 +152,15 @@
       "generationPoseB[10]:f32 origin.xyz/rotation.xyzw/COM.xyz"
     ],
     "epoch": "Actual b3UpdateContact completed generation, after flip/COM adjustment, before solve increments native stepIndex. Recycle/sleep/solve/CCD retain it. Not a current intersection or TOI point.",
-    "admittedFamilies": ["sphere-sphere", "sphere-hull", "hull-hull", "capsule-hull", "capsule-capsule"],
+    "admittedFamilies": [
+      "sphere-sphere",
+      "sphere-hull",
+      "hull-hull",
+      "capsule-hull",
+      "capsule-capsule",
+      "sphere-capsule"
+    ],
     "unqualifiedFamilies": [
-      "sphere-capsule (including one zero-segment Capsule versus a nonzero Capsule)",
       "arbitrary convex hull feature qualification beyond public Box",
       "mesh",
       "baked compound",
@@ -169,9 +175,10 @@
       "Sphere-Box",
       "Box-Box",
       "Capsule-Box",
-      "Capsule-Capsule with positive segments"
+      "Capsule-Capsule, including one exact-zero segment represented by a native sphere",
+      "Sphere-Capsule"
     ],
-    "qualificationBoundary": "Native AVAILABLE means copied cached-generation basis exists, not whole-family numerical qualification. Native hull includes arbitrary convex Hull, but public events only admit exact Box/Sphere/Capsule descriptors. Runtime compound is per-shape; baked compound excluded. Finite analytic and EX09 descriptor oracles are separate evidence; no formal T15/C21/Gate claim."
+    "qualificationBoundary": "Native AVAILABLE means copied cached-generation basis exists, not whole-family numerical qualification. Native hull includes arbitrary convex Hull, but public events only admit exact Box/Sphere/Capsule descriptors. Runtime compound is per-shape; baked compound excluded. Finite analytic and EX09 descriptor oracles are separate evidence; no formal T15/C21/Gate claim. Sphere-Capsule uses independent finite closest-segment generation cases; AVAILABLE alone is not whole-family/public callback qualification."
   },
   "geometryCounters": [
     "awakeContactCount",

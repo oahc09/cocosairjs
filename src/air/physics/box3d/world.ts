@@ -1335,6 +1335,7 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
             collisionEventFamilies: Object.freeze([
                 'sphere-sphere',
                 'sphere-box',
+                'sphere-capsule',
                 'box-box',
                 'capsule-box',
                 'capsule-capsule',

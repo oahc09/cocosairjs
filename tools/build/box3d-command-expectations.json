@@ -232,7 +232,16 @@
       "src/air/physics/box3d/world-binding.ts",
       "src/air/session-scope.ts",
       "tools/verify/box3d/empty-world-release.test.mjs",
-      "tools/build/box3d-hull-qualification.cjs"
+      "tools/build/box3d-hull-qualification.cjs",
+      "tools/physics/box3d/sphere-capsule/oracle.mjs",
+      "tools/physics/box3d/sphere-capsule/contract.test.mjs",
+      "tools/physics/box3d/wasm-sphere-capsule-contract.mjs",
+      "tools/physics/box3d/sphere-capsule/qualification.mjs",
+      "tools/build/box3d-sphere-capsule-gates.test.cjs",
+      "src/air/physics/box3d/collision-events.ts",
+      "tools/physics/box3d/sphere-capsule/public-contract.mjs",
+      "tools/physics/box3d/sphere-capsule/public-contract.test.mjs",
+      "src/air/physics/box3d/contact-equation.ts"
     ],
     "compileUnits": [
       "staged-core/src/aabb.c",
@@ -379,9 +388,11 @@
       "wasm-memory-contract.raw.json",
       "native-world-storage-contract.raw.json",
       "air_box3d_world_storage_contract.cjs",
-      "wasm-storage-contract.raw.json"
+      "wasm-storage-contract.raw.json",
+      "sphere-capsule-samples.raw.jsonl",
+      "wasm-sphere-capsule-contract.raw.json"
     ],
-    "commands": 41
+    "commands": 43
   },
   "queryExtension": {
     "status": "ADDITIVE_SOURCE_GENERATION_NOT_FORMAL_ACCEPTANCE",
@@ -539,5 +550,21 @@
       "memory-diagnostics/v1/source-gate.mjs": "memory-diagnostics/v2/source-gate.mjs",
       "memory-diagnostics/v1/contract.test.mjs": "memory-diagnostics/v2/contract.test.mjs"
     }
+  },
+  "sphereCapsuleExtension": {
+    "inputs": [
+      "tools/physics/box3d/sphere-capsule/oracle.mjs",
+      "tools/physics/box3d/sphere-capsule/contract.test.mjs",
+      "tools/physics/box3d/wasm-sphere-capsule-contract.mjs",
+      "tools/physics/box3d/sphere-capsule/qualification.mjs",
+      "tools/build/box3d-sphere-capsule-gates.test.cjs",
+      "src/air/physics/box3d/collision-events.ts",
+      "tools/physics/box3d/sphere-capsule/public-contract.mjs",
+      "tools/physics/box3d/sphere-capsule/public-contract.test.mjs",
+      "src/air/physics/box3d/contact-equation.ts"
+    ],
+    "evidence": ["sphere-capsule-samples.raw.jsonl", "wasm-sphere-capsule-contract.raw.json"],
+    "commands": 2,
+    "fullT15": "NOT_QUALIFIED"
   }
 }

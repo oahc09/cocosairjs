@@ -333,13 +333,15 @@ try {
     api.step(boxWorld);
     assert.equal(JSON.stringify(oldGeometry), oldText);
     pass('actual-body-slot-reuse-does-not-retarget-old-contact-geometry');
-    // Sphere/capsule remains outside the admitted primitive geometry families.
+    // Mesh/sphere remains outside the admitted generation geometry families.
+    // Sphere/capsule now has its own independent generation oracle; retain a real unsupported pair.
     // The prior Box/Box negative is preserved in attempt c; Box/Box is now admitted
     // and independently qualified by contact-family-qualification, not this sphere oracle.
     const unsupported = api.createWorld();
     const uf = api.createBody(unsupported, { type: 0, position: [0, 0, 0] });
-    api.createOffsetCapsule(uf, [0, 0, 0], 0.5, 0.5, 1);
-    const ub = api.createBody(unsupported, { position: [0.99, 0, 0] });
+    const mesh = api.cookStaticMesh(unsupported, [-2, 0, -2, 2, 0, -2, 2, 0, 2, -2, 0, 2], [0, 2, 1, 0, 3, 2]);
+    api.createStaticMeshShape(uf, mesh);
+    const ub = api.createBody(unsupported, { position: [0.2, 0.49, 0.1] });
     api.createSphere(ub, 0.5);
     api.step(unsupported);
     const uc = api.readStepSnapshot(unsupported).contactsOfOwnedBodies;
@@ -348,7 +350,7 @@ try {
         assert.equal(c.geometry.status, 'UNSUPPORTED_GEOMETRY_FAMILY');
         assert.throws(() => api.contactWorldPoints(c.handle), { code: 'AIR_E_BOX3D_UNSUPPORTED_GEOMETRY' });
     }
-    pass('real-unsupported-sphere-capsule-contact-fails-closed');
+    pass('real-unsupported-mesh-sphere-contact-fails-closed');
     for (const w of [sphereWorld, boxWorld, unsupported]) api.destroyWorld(w);
     assert.equal(JSON.stringify(oldGeometry), oldText);
     assert.throws(() => api.contactWorldPoints(oldContact.handle), { code: 'AIR_E_BOX3D_STALE_SNAPSHOT' });

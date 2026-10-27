@@ -133,6 +133,15 @@ const INPUTS = [
     'src/air/session-scope.ts',
     'tools/verify/box3d/empty-world-release.test.mjs',
     'tools/build/box3d-hull-qualification.cjs',
+    'tools/physics/box3d/sphere-capsule/oracle.mjs',
+    'tools/physics/box3d/sphere-capsule/contract.test.mjs',
+    'tools/physics/box3d/wasm-sphere-capsule-contract.mjs',
+    'tools/physics/box3d/sphere-capsule/qualification.mjs',
+    'tools/build/box3d-sphere-capsule-gates.test.cjs',
+    'src/air/physics/box3d/collision-events.ts',
+    'tools/physics/box3d/sphere-capsule/public-contract.mjs',
+    'tools/physics/box3d/sphere-capsule/public-contract.test.mjs',
+    'src/air/physics/box3d/contact-equation.ts',
 ];
 const sha256 = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const read = (file) => fs.readFileSync(file);
@@ -185,6 +194,9 @@ async function verifySTBuild(buildDirectory, { provenanceRoot = ROOT } = {}) {
     const { verifyStorageQualification } = await import(
         pathToFileURL(path.join(ROOT, 'tools/physics/box3d/empty-world-trim/production/qualification.mjs'))
     );
+    const { verifySphereCapsuleQualification } = await import(
+        pathToFileURL(path.join(ROOT, 'tools/physics/box3d/sphere-capsule/qualification.mjs'))
+    );
     const patch = readPatchPlan();
     const lock = json(path.join(ROOT, 'tools/physics/box3d/versions.lock.json'));
     const receipt = json(fileInside(directory, 'build-receipt.json'));
@@ -199,7 +211,7 @@ async function verifySTBuild(buildDirectory, { provenanceRoot = ROOT } = {}) {
         receipt.memorySourceControls,
         verifyMemoryDiagnosticSources(ROOT, path.join(directory, 'staged-core')),
     );
-    assert.equal(INPUTS.length, 111);
+    assert.equal(INPUTS.length, 120);
     assert.deepEqual(sorted(INPUTS), sorted(COMMAND_EXPECTATIONS.gate.inputs));
     assert.deepEqual(sorted(receipt.inputHashes.map((row) => row.path)), sorted(INPUTS), 'Build input inventory drift');
     for (const input of receipt.inputHashes) {
@@ -242,6 +254,14 @@ async function verifySTBuild(buildDirectory, { provenanceRoot = ROOT } = {}) {
         receipt,
     });
     assert.deepEqual(audit.storageQualification, storageQualification);
+    const sphereCapsuleQualification = verifySphereCapsuleQualification({
+        report: json(fileInside(directory, 'wasm-sphere-capsule-contract.raw.json')),
+        samplesText: read(fileInside(directory, 'sphere-capsule-samples.raw.jsonl')).toString('utf8'),
+        identity: manifest,
+        fixtureSha256: sha256(read(path.join(ROOT, 'tools/physics/box3d/wasm-sphere-capsule-contract.mjs'))),
+        oracleSha256: sha256(read(path.join(ROOT, 'tools/physics/box3d/sphere-capsule/oracle.mjs'))),
+    });
+    assert.deepEqual(audit.sphereCapsuleQualification, sphereCapsuleQualification);
     assert.equal(audit.auditScriptSha256, sha256(read(path.join(ROOT, 'tools/physics/box3d/audit-artifacts.mjs'))));
     assert.deepEqual(audit.sources, sources);
     assert.deepEqual(audit.artifacts, manifest.artifacts);
@@ -655,6 +675,8 @@ async function verifySTBuild(buildDirectory, { provenanceRoot = ROOT } = {}) {
         qualificationGateSources: [
             'tools/physics/box3d/memory-diagnostics/v2/qualification.mjs',
             'tools/physics/box3d/empty-world-trim/production/qualification.mjs',
+            'tools/physics/box3d/sphere-capsule/qualification.mjs',
+            'tools/physics/box3d/sphere-capsule/oracle.mjs',
             'box3d-command-qualification.cjs',
             'box3d-command-expectations.json',
             'box3d-query-qualification.cjs',

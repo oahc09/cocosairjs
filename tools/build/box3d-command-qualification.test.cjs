@@ -345,7 +345,7 @@ test('Consumer preserves every n4 expectation and adds exact query inventory', (
     assert.equal(inventory.expectedCompileUnits.length + additions.compileUnits.length, 69);
     assert.equal(inventory.expectedEvidence.length + additions.evidence.length, 32);
 });
-test('SYNTHETIC ONLY: exact 41-command schedule rejects omissions, additions and reordered qualifications', () => {
+test('SYNTHETIC ONLY: exact 43-command schedule rejects omissions, additions and reordered qualifications', () => {
     const scripts = [
         'query-admission-contract.mjs',
         'motion-source-controls.mjs',
@@ -392,6 +392,8 @@ test('SYNTHETIC ONLY: exact 41-command schedule rejects omissions, additions and
         ].map((n) => `wasm-${n}contract.mjs`),
         'air_box3d_world_storage_contract.cjs',
         'wasm-storage-contract.mjs',
+        'sphere-capsule/contract.test.mjs',
+        'wasm-sphere-capsule-contract.mjs',
     ];
     const r = {
         commands: scripts.map((n) => ({ command: 'node', args: ['synthetic/' + n], exitCode: 0, error: null })),
@@ -400,6 +402,7 @@ test('SYNTHETIC ONLY: exact 41-command schedule rejects omissions, additions and
         commandSourceControls: { status: 'PASS_SOURCE_CONTROLS_ONLY' },
         memorySourceControls: { status: 'PASS_SOURCE_CONTROLS_ONLY' },
         memoryCpuContract: { status: 'PASS_CPU_FAKE_DIAGNOSTICS_ONLY', nativeRuntimeExecuted: false },
+        sphereCapsuleCpuContract: { status: 'PASS_CPU_SPHERE_CAPSULE_ONLY', nativeRuntimeExecuted: false },
         storageCpuContract: { status: 'PASS_CPU_STORAGE_CONTRACT_ONLY', nativeRuntimeExecuted: false },
         emptyWorldReleaseCpuContract: { status: 'PASS_CPU_TS_NATIVE_MOCKS_ONLY', nativeRuntimeExecuted: false },
     };

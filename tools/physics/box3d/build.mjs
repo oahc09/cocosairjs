@@ -486,6 +486,9 @@ try {
         if (result.storageContract.status !== 'PASS' || result.storageContract.pointerBytes !== 4)
             throw new Error('WASM32 world storage native contract failed');
         run(process.execPath, ['tools/physics/box3d/wasm-storage-contract.mjs', out]);
+        run(process.execPath, ['tools/physics/box3d/sphere-capsule/contract.test.mjs']);
+        result.sphereCapsuleCpuContract = { status: 'PASS_CPU_SPHERE_CAPSULE_ONLY', nativeRuntimeExecuted: false };
+        run(process.execPath, ['tools/physics/box3d/wasm-sphere-capsule-contract.mjs', out]);
         result.artifacts = artifacts;
         result.browserStatus = 'NOT_RUN';
     }
@@ -612,6 +615,15 @@ try {
         'src/air/session-scope.ts',
         'tools/verify/box3d/empty-world-release.test.mjs',
         'tools/build/box3d-hull-qualification.cjs',
+        'tools/physics/box3d/sphere-capsule/oracle.mjs',
+        'tools/physics/box3d/sphere-capsule/contract.test.mjs',
+        'tools/physics/box3d/wasm-sphere-capsule-contract.mjs',
+        'tools/physics/box3d/sphere-capsule/qualification.mjs',
+        'tools/build/box3d-sphere-capsule-gates.test.cjs',
+        'src/air/physics/box3d/collision-events.ts',
+        'tools/physics/box3d/sphere-capsule/public-contract.mjs',
+        'tools/physics/box3d/sphere-capsule/public-contract.test.mjs',
+        'src/air/physics/box3d/contact-equation.ts',
     ];
     result.inputHashes = inputs.map((path) => ({ path, sha256: sha256(readFileSync(resolve(root, path))) }));
     receipt();

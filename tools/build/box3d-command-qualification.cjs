@@ -118,7 +118,7 @@ function outputPacket(input, output) {
     }
 }
 function verifyCommandSchedule(receipt) {
-    assert.equal(EXPECTED.gate.commands, 41, 'Exact consumer-owned WASM command count');
+    assert.equal(EXPECTED.gate.commands, 43, 'Exact consumer-owned WASM command count');
     assert.equal(receipt.commands.length, EXPECTED.gate.commands, 'Exact successful WASM command inventory');
     assert(receipt.commands.every((row) => row.exitCode === 0 && !row.error));
     assert.equal(receipt.motionSourceControls?.status, 'PASS_SOURCE_CONTROLS_ONLY');
@@ -134,6 +134,10 @@ function verifyCommandSchedule(receipt) {
     });
     assert.deepEqual(receipt.emptyWorldReleaseCpuContract, {
         status: 'PASS_CPU_TS_NATIVE_MOCKS_ONLY',
+        nativeRuntimeExecuted: false,
+    });
+    assert.deepEqual(receipt.sphereCapsuleCpuContract, {
+        status: 'PASS_CPU_SPHERE_CAPSULE_ONLY',
         nativeRuntimeExecuted: false,
     });
     assert.equal(receipt.queryAdmission?.status, 'PASS_ADMISSION_NO_NATIVE_CALLS');
@@ -184,6 +188,8 @@ function verifyCommandSchedule(receipt) {
         ].map((n) => `wasm-${n}contract.mjs`),
         'air_box3d_world_storage_contract.cjs',
         'wasm-storage-contract.mjs',
+        'sphere-capsule/contract.test.mjs',
+        'wasm-sphere-capsule-contract.mjs',
     ];
     assert.equal(scripts.length, EXPECTED.gate.commands, 'Exact consumer-owned command schedule length');
     scripts.forEach((script, i) => {

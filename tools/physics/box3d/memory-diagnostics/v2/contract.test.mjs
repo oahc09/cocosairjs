@@ -413,12 +413,14 @@ const storageCommands = [
     'air_box3d_world_storage_contract.cjs',
     'wasm-storage-contract.mjs',
 ];
-const newSchedule = [
+const storageSchedule = [
     ...diagnosticSchedule.slice(0, 5),
     ...storageCommands.slice(0, 2),
     ...diagnosticSchedule.slice(5),
     ...storageCommands.slice(2),
 ];
+const sphereCommands = ['sphere-capsule/contract.test.mjs', 'wasm-sphere-capsule-contract.mjs'];
+const newSchedule = [...storageSchedule, ...sphereCommands];
 function scheduleReceipt() {
     const commands = newSchedule.map((script) => ({
         command: 'node',
@@ -437,17 +439,19 @@ function scheduleReceipt() {
         commandSourceControls: { status: 'PASS_SOURCE_CONTROLS_ONLY' },
         memorySourceControls: { status: 'PASS_SOURCE_CONTROLS_ONLY' },
         memoryCpuContract: { status: 'PASS_CPU_FAKE_DIAGNOSTICS_ONLY', nativeRuntimeExecuted: false },
+        sphereCapsuleCpuContract: { status: 'PASS_CPU_SPHERE_CAPSULE_ONLY', nativeRuntimeExecuted: false },
         storageCpuContract: { status: 'PASS_CPU_STORAGE_CONTRACT_ONLY', nativeRuntimeExecuted: false },
         emptyWorldReleaseCpuContract: { status: 'PASS_CPU_TS_NATIVE_MOCKS_ONLY', nativeRuntimeExecuted: false },
         queryAdmission: { status: 'PASS_ADMISSION_NO_NATIVE_CALLS', nativeQueryCalls: 0 },
     };
 }
-test('exact 41-command gate preserves historical 33 and diagnostic 37-command sequences', () => {
+test('exact 43-command gate preserves historical 33 and diagnostic 37-command sequences', () => {
     assert.equal(originalSchedule.length, 33);
     assert.equal(diagnosticSchedule.length, 37);
-    assert.equal(newSchedule.length, 41);
+    assert.equal(storageSchedule.length, 41);
+    assert.equal(newSchedule.length, 43);
     assert.deepEqual(
-        newSchedule.filter((name) => !storageCommands.includes(name)),
+        storageSchedule.filter((name) => !storageCommands.includes(name)),
         diagnosticSchedule,
     );
     assert.deepEqual(
@@ -477,13 +481,16 @@ test('exact 41-command gate preserves historical 33 and diagnostic 37-command se
         assert.throws(() => verifyCommandSchedule(r));
     }
 });
-test('exact 111-input, 85-compile-unit and 58-evidence inventories retain original 79 and diagnostic 92 input sets', () => {
+test('exact 120-input, 85-compile-unit and 60-evidence inventories retain original 79 and diagnostic 92 input sets', () => {
     const additions = expected.memoryDiagnosticExtension.inputs;
     assert.equal(additions.length, 13);
     assert.equal(new Set(additions).size, 13);
-    assert.equal(expected.gate.inputs.length, 111);
+    assert.equal(expected.gate.inputs.length, 120);
     assert.equal(expected.storageExtension.inputs.length, 19);
-    const diagnosticInputs = expected.gate.inputs.filter((path) => !expected.storageExtension.inputs.includes(path));
+    const diagnosticInputs = expected.gate.inputs.filter(
+        (path) =>
+            !expected.storageExtension.inputs.includes(path) && !expected.sphereCapsuleExtension.inputs.includes(path),
+    );
     assert.equal(diagnosticInputs.length, 92);
     assert.equal(
         sha(JSON.stringify(diagnosticInputs)),
@@ -508,10 +515,11 @@ test('exact 111-input, 85-compile-unit and 58-evidence inventories retain origin
         .filter(
             (p) =>
                 !expected.memoryDiagnosticExtension.evidence.includes(p) &&
-                !expected.storageExtension.evidence.includes(p),
+                !expected.storageExtension.evidence.includes(p) &&
+                !expected.sphereCapsuleExtension.evidence.includes(p),
         )
         .sort();
-    assert.equal(expected.gate.evidence.length, 58);
+    assert.equal(expected.gate.evidence.length, 60);
     assert.equal(sha(JSON.stringify(evidence)), 'bbddcd57693c296da26561827cb76e7b14310a08e8228b0fadb56c61bc340bf6');
     const readList = (file, expression) => {
         const text = readFileSync(resolve(root, file), 'utf8');
@@ -554,8 +562,8 @@ test('current source controls execute and exact input/compile guards reject stal
             [...expected.gate.inputs.slice(0, -1), expected.gate.inputs[0]],
         ])
             assert.throws(() => checkInputs(assert, invalid));
-        const stale = new Function('assert', 'inputs', guards.join('\n').replaceAll(', 111);', ', 79);'));
-        assert.throws(() => stale(assert, expected.gate.inputs), 'Old 79-input guard must reject the real 111 set');
+        const stale = new Function('assert', 'inputs', guards.join('\n').replaceAll(', 120);', ', 79);'));
+        assert.throws(() => stale(assert, expected.gate.inputs), 'Old 79-input guard must reject the real 120 set');
         const result = spawnSync(process.execPath, [path], { cwd: root, encoding: 'utf8', timeout: 30000 });
         assert.ifError(result.error);
         assert.equal(result.signal, null);

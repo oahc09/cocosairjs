@@ -21,9 +21,9 @@ int air_b3_contact_geometry(uint32_t world, const uint32_t* words, uint32_t* out
     /* This layer copies an available generation basis, not blanket shape-family
        qualification. A native hull tag also covers arbitrary convex Hulls; the
        public layer admits only the explicitly tested Box/Capsule descriptors.
-       Baked compounds, meshes, heightfields and sphere-capsule remain excluded. */
-    if (!((a == b3_sphereShape && (b == b3_sphereShape || b == b3_hullShape)) ||
-          (b == b3_sphereShape && a == b3_hullShape) ||
+       Sphere-capsule has a separate independent generation-oracle contract. Baked compounds, meshes and heightfields remain excluded. */
+    if (!((a == b3_sphereShape && (b == b3_sphereShape || b == b3_hullShape || b == b3_capsuleShape)) ||
+          (b == b3_sphereShape && (a == b3_hullShape || a == b3_capsuleShape)) ||
           (a == b3_hullShape && b == b3_hullShape) ||
           (a == b3_capsuleShape && (b == b3_hullShape || b == b3_capsuleShape)) ||
           (b == b3_capsuleShape && a == b3_hullShape))) return AIR_B3_UNSUPPORTED_GEOMETRY;

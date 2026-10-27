@@ -71,8 +71,8 @@ export class Box3DCollisionEvents {
             // Exact public descriptors, not the broader native hull tag. Runtime
             // compound bodies dispatch as their individual qualified child pairs.
             const qualified =
-                (a.kind === 'sphere' && (b.kind === 'sphere' || b.kind === 'box')) ||
-                (b.kind === 'sphere' && a.kind === 'box') ||
+                (a.kind === 'sphere' && (b.kind === 'sphere' || b.kind === 'box' || b.kind === 'capsule')) ||
+                (b.kind === 'sphere' && (a.kind === 'box' || a.kind === 'capsule')) ||
                 (a.kind === 'box' && b.kind === 'box') ||
                 (a.kind === 'capsule' && (b.kind === 'box' || b.kind === 'capsule')) ||
                 (b.kind === 'capsule' && a.kind === 'box');
@@ -80,7 +80,15 @@ export class Box3DCollisionEvents {
                 throw worldError(
                     'AIR_E_BOX3D_UNSUPPORTED_GEOMETRY',
                     'collision events',
-                    'Contact pair is outside Sphere–Sphere, Sphere–Box, Box–Box, Capsule–Box and Capsule–Capsule candidates.',
+                    'Contact pair is outside Sphere–Sphere, Sphere–Box, Sphere–Capsule, Box–Box, Capsule–Box and Capsule–Capsule candidates.',
+                );
+            // readStep is the immutable capture epoch; generation may legitimately be older
+            // (sleeping/recycled contacts). Never compare generatedAfterStep to the read step.
+            if (contact.geometry?.status === 'AVAILABLE' && contact.geometry.readStepIndex !== snapshot.stepIndex)
+                throw worldError(
+                    'AIR_E_BOX3D_ABI',
+                    'collision geometry epoch',
+                    'Geometry read step differs from snapshot.',
                 );
             const ia = this.id(a.collider),
                 ib = this.id(b.collider);

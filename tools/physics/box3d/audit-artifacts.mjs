@@ -10,6 +10,7 @@ import { readPatchPlan, validatePatchLock, verifyStagedCore } from './patch-inta
 import { verifyMemoryDiagnosticSources } from './memory-diagnostics/v2/source-gate.mjs';
 import { verifyMemoryDiagnosticQualification } from './memory-diagnostics/v2/qualification.mjs';
 import { verifyStorageQualification } from './empty-world-trim/production/qualification.mjs';
+import { verifySphereCapsuleQualification } from './sphere-capsule/qualification.mjs';
 import commandQualification from '../../build/box3d-command-qualification.cjs';
 import hullQualification from '../../build/box3d-hull-qualification.cjs';
 
@@ -24,8 +25,8 @@ assert.equal(receipt.status, 'PASS');
 assert.equal(receipt.kind, 'st-simd-wasm');
 commandQualification.verifyCommandSchedule(receipt);
 assert.ok(receipt.commands.every((c) => c.exitCode === 0 && !c.error));
-assert.equal(receipt.inputHashes.length, 111);
-assert.equal(new Set(receipt.inputHashes.map((input) => input.path)).size, 111);
+assert.equal(receipt.inputHashes.length, 120);
+assert.equal(new Set(receipt.inputHashes.map((input) => input.path)).size, 120);
 const expectedGate = JSON.parse(
     readFileSync(resolve(root, 'tools/build/box3d-command-expectations.json'), 'utf8'),
 ).gate;
@@ -730,6 +731,13 @@ for (const filename of ['air_box3d_hull_contract.cjs', 'air_box3d_hull_core_cont
     assert.ok(
         receipt.commands.some((entry) => entry.args.some((arg) => arg.endsWith(filename)) && entry.exitCode === 0),
     );
+const sphereCapsuleQualification = verifySphereCapsuleQualification({
+    report: json('wasm-sphere-capsule-contract.raw.json'),
+    samplesText: read('sphere-capsule-samples.raw.jsonl').toString('utf8'),
+    identity: manifest,
+    fixtureSha256: sha256(readFileSync(resolve(root, 'tools/physics/box3d/wasm-sphere-capsule-contract.mjs'))),
+    oracleSha256: sha256(readFileSync(resolve(root, 'tools/physics/box3d/sphere-capsule/oracle.mjs'))),
+});
 const storageQualification = verifyStorageQualification({
     native: json('native-world-storage-contract.raw.json'),
     wasm: json('wasm-storage-contract.raw.json'),
@@ -760,6 +768,7 @@ const report = {
     artifacts: manifest.artifacts,
     memoryQualification,
     storageQualification,
+    sphereCapsuleQualification,
     evidence: [
         'native-memory-contract.raw.json',
         'air_box3d_memory_contract.cjs',
@@ -820,6 +829,8 @@ const report = {
         'native-world-storage-contract.raw.json',
         'air_box3d_world_storage_contract.cjs',
         'wasm-storage-contract.raw.json',
+        'sphere-capsule-samples.raw.jsonl',
+        'wasm-sphere-capsule-contract.raw.json',
     ].map(fileHash),
 };
 assert.deepEqual(

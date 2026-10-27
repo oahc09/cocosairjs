@@ -23,7 +23,7 @@ THE SOFTWARE.
 // Internal, limited M1 foundation. This is not the Cocos physics adapter.
 const CORE_SHA = 'efca0c184d40fd6a82016983f1601c4d23965867';
 const BINDING_BASE_SHA = '5d5a3af049cccd9948b2b55bac4342414af0ef64';
-const SCHEMA_SHA256 = 'f5df4fae8476651b11ae3a952cb418ee987767ae1cfad0f5bb3c8f8e071bae28';
+const SCHEMA_SHA256 = 'd23be6157ee158ade877202b5e38d40978682cbd4794089c763e3ac8a79242a8';
 // Stable rows for the separately versioned diagnostic extension in the main ABI schema.
 // Lengths are storage lengths, not live entities or unconsumed events.
 const MEMORY_DIAGNOSTIC_ROWS = [
