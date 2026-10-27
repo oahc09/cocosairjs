@@ -1,0 +1,18 @@
+{
+  "arguments": [
+    "-s",
+    "10CG4G0BE1003M8",
+    "shell",
+    "getprop",
+    "bionic.linker.16kb.app_compat.enabled"
+  ],
+  "startedAt": "2026-10-27T14:05:14.047Z",
+  "monotonicStartMs": 83924620.9283,
+  "absoluteDeadlineMs": 83939620.9097,
+  "timeoutMs": 15000,
+  "exitCode": 0,
+  "signal": null,
+  "error": null,
+  "finishedAt": "2026-10-27T14:05:14.145Z",
+  "monotonicEndMs": 83924718.9256
+}

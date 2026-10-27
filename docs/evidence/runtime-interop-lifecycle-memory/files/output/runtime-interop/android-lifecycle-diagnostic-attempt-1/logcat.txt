@@ -1,0 +1,214 @@
+--------- beginning of system
+         1793029351.350   677  1921 I ActivityManager: Force stopping com.mystral.engine.interop appid=10231 user=0: from pid 4343
+         1793029351.539   677   709 I ActivityManager: Start proc 4353:com.mystral.engine.interop/u0a231 for next-top-activity {com.mystral.engine.interop/com.mystral.engine.MystralActivity}
+--------- beginning of main
+         1793029351.734  4353  4353 V SDL     : Manufacturer: Google
+         1793029351.734  4353  4353 V SDL     : Device: emu64xa16k
+         1793029351.734  4353  4353 V SDL     : Model: sdk_gphone16k_x86_64
+         1793029351.734  4353  4353 V SDL     : onCreate()
+         1793029351.753  4353  4353 V SDL     : nativeSetupJNI()
+         1793029351.754  4353  4353 V SDL     : AUDIO nativeSetupJNI()
+         1793029351.757  4353  4353 V SDL     : CONTROLLER nativeSetupJNI()
+         1793029351.833  4353  4353 I MystralInterop: SERVER_READY {"schema":"air-android-interop-session-v1","runId":"android-lifecycle-1793029350099","caseId":"demo","pid":4353,"demo":true,"v8StartupMode":"embedded","v8Version":"11.6.189.22","origin":"http:\/\/127.0.0.1:41991","token":"a97d125e-af0e-4ce3-90c1-b36e632f18c7","entryUrl":"http:\/\/127.0.0.1:41991\/entry.js","bundleUrl":"http:\/\/127.0.0.1:41991\/sdk\/cocosair.module.js","assetBaseUrl":"http:\/\/127.0.0.1:41991\/sdk\/webgpu\/","assetRootUrl":"http:\/\/127.0.0.1:41991\/assets\/","moduleUrl":"http:\/\/127.0.0.1:41991\/probes\/module-fixture.mjs","captureUrl":"http:\/\/127.0.0.1:41991\/capture","reportUrl":"http:\/\/127.0.0.1:41991\/report","eventUrl":"http:\/\/127.0.0.1:41991\/event"}
+         1793029351.834  4353  4353 I MystralInterop: LIFECYCLE {"event":"created","pid":4353,"surfaceGeneration":0,"orientation":1,"elapsedRealtime":870983}
+         1793029351.835  4353  4353 V SDL     : onStart()
+         1793029351.836  4353  4353 V SDL     : onResume()
+         1793029351.846  4353  4353 I MystralInterop: LIFECYCLE {"event":"resume","pid":4353,"surfaceGeneration":0,"orientation":1,"elapsedRealtime":870995}
+         1793029351.896  4353  4353 V SDL     : surfaceCreated()
+         1793029351.896  4353  4353 I MystralInterop: SURFACE_QUEUED generation=1 revision=1 available=1 window=0x7e7f44849aa0 pid=4353
+         1793029351.896  4353  4353 I MystralInterop: LIFECYCLE {"event":"surface-created","pid":4353,"surfaceGeneration":1,"orientation":1,"elapsedRealtime":871046}
+         1793029351.897  4353  4353 V SDL     : surfaceChanged()
+         1793029351.897  4353  4353 V SDL     : Window size: 320x240
+         1793029351.897  4353  4353 V SDL     : Device size: 1080x2400
+         1793029351.899  4353  4353 I MystralInterop: SURFACE_QUEUED generation=1 revision=2 available=1 window=0x7e7f44849aa0 pid=4353
+         1793029351.899  4353  4376 V SDL     : nativeInitSDLThread() 1 time
+         1793029351.900  4353  4353 I MystralInterop: LIFECYCLE {"event":"surface-changed","pid":4353,"surfaceGeneration":1,"orientation":1,"elapsedRealtime":871049}
+         1793029351.908  4353  4376 V SDL     : Running main function SDL_main from library /data/app/~~e03E8h_u-C4tY1UgloixRg==/com.mystral.engine.interop-g3zy_6AC2sSjX0fDg6-Zbg==/lib/x86_64/libmystral-runtime.so
+         1793029351.942  4353  4376 V SDL     : setOrientation() requestedOrientation=13 width=1080 height=2400 resizable=true hint=
+         1793029352.447  4353  4376 I MystralRuntime: Got SDL window: 0x7e7e8483aa60
+         1793029352.447  4353  4376 I MystralRuntime: Waiting for valid ANativeWindow...
+         1793029352.447  4353  4376 I MystralRuntime: Window event: 526 (shown/restored/focused)
+         1793029352.447  4353  4376 I MystralRuntime: Window event: 514 (shown/restored/focused)
+         1793029352.447  4353  4376 I MystralRuntime: ANativeWindow validated: 0x7e7f44849aa0 (320x240)
+         1793029352.447  4353  4376 I MystralRuntime: Got valid ANativeWindow: 0x7e7f44849aa0 after 0 attempts
+         1793029352.493  4353  4353 V SDL     : onWindowFocusChanged(): true
+         1793029352.494  4353  4353 V SDL     : nativeFocusChanged()
+         1793029352.569  4353  4376 I MystralRuntime: WebGPU surface created successfully
+         1793029352.569  4353  4376 I MystralRuntime: SURFACE_INITIAL generation=1 revision=2 window=0x7e7f44849aa0 device=0x7e7eb4827430 thread=139077218656448
+         1793029352.569  4353  4376 I MystralRuntime: Configuring surface: 320x240
+         1793029352.601  4353  4376 I MystralRuntime: Surface configured successfully
+         1793029352.601  4353  4376 I MystralRuntime: Creating JavaScript engine...
+         1793029352.606  4353  4376 I MystralRuntime: JS engine created: V8
+         1793029352.619  4353  4376 I MystralInterop: NATIVE_READY {"loadedABI":"x86_64","v8StartupMode":"embedded","v8Version":"11.6.189.22","entryPath":"\/data\/user\/0\/com.mystral.engine.interop\/files\/interop\/android-lifecycle-1793029350099\/native-entry.mjs","entrySha256":"01ee283d41f340f0b85fe0da74d58694b5125c36d82fa142a9382ade89cd3a68","jsEngine":"v8","backend":"dawn","nativeStarted":true}
+         1793029352.621  4353  4376 I MystralInterop: EXIT_STAGE runtime-run-enter pid=4353 thread=139077218656448
+         1793029352.635  4353  4381 I MystralInterop: EVENT entry-ready
+         1793029355.481  4353  4381 I MystralInterop: EVENT demo-ready
+         1793029355.487  4353  4382 I MystralInterop: REPORT_SAVED android-lifecycle-1793029350099
+         1793029358.687  4353  4384 I MystralInterop: EVENT demo-input
+         1793029360.631  4353  4353 I MystralInterop: LIFECYCLE {"event":"pause","pid":4353,"surfaceGeneration":1,"orientation":1,"elapsedRealtime":879776}
+         1793029360.631  4353  4353 V SDL     : onPause()
+         1793029360.650  4353  4353 V SDL     : onWindowFocusChanged(): false
+         1793029360.650  4353  4353 V SDL     : nativeFocusChanged()
+         1793029360.902  4353  4353 V SDL     : onResume()
+         1793029360.902  4353  4353 I MystralInterop: LIFECYCLE {"event":"resume","pid":4353,"surfaceGeneration":1,"orientation":1,"elapsedRealtime":880052}
+         1793029360.979  4353  4353 V SDL     : onWindowFocusChanged(): true
+         1793029360.979  4353  4353 V SDL     : nativeFocusChanged()
+         1793029366.291  4353  4380 I MystralInterop: EVENT demo-input
+         1793029367.907  4353  4353 I MystralInterop: LIFECYCLE {"event":"pause","pid":4353,"surfaceGeneration":1,"orientation":1,"elapsedRealtime":887055}
+         1793029367.907  4353  4353 V SDL     : onPause()
+         1793029367.922  4353  4353 V SDL     : onTrimMemory()
+         1793029367.933  4353  4353 V SDL     : surfaceDestroyed()
+         1793029367.933  4353  4353 V SDL     : nativePause()
+         1793029367.941  4353  4353 I MystralInterop: SURFACE_QUEUED generation=2 revision=3 available=0 window=0x0 pid=4353
+         1793029367.941  4353  4353 I MystralInterop: LIFECYCLE {"event":"surface-destroyed","pid":4353,"surfaceGeneration":2,"orientation":1,"elapsedRealtime":887090}
+         1793029367.943  4353  4353 V SDL     : onStop()
+         1793029367.964  4353  4353 V SDL     : onWindowFocusChanged(): false
+         1793029367.964  4353  4353 V SDL     : nativeFocusChanged()
+         1793029369.051  4353  4353 V SDL     : onStart()
+         1793029369.051  4353  4353 V SDL     : onResume()
+         1793029369.052  4353  4353 I MystralInterop: LIFECYCLE {"event":"resume","pid":4353,"surfaceGeneration":2,"orientation":1,"elapsedRealtime":888201}
+         1793029369.055  4353  4353 I MystralInterop: LIFECYCLE {"event":"pause","pid":4353,"surfaceGeneration":2,"orientation":1,"elapsedRealtime":888203}
+         1793029369.055  4353  4353 V SDL     : onPause()
+         1793029369.067  4353  4353 V SDL     : surfaceCreated()
+         1793029369.067  4353  4353 I MystralInterop: SURFACE_QUEUED generation=3 revision=4 available=1 window=0x7e7f4485c2c0 pid=4353
+         1793029369.067  4353  4353 I MystralInterop: LIFECYCLE {"event":"surface-created","pid":4353,"surfaceGeneration":3,"orientation":1,"elapsedRealtime":888216}
+         1793029369.067  4353  4353 V SDL     : surfaceChanged()
+         1793029369.067  4353  4353 V SDL     : Window size: 320x240
+         1793029369.067  4353  4353 V SDL     : Device size: 1080x2400
+         1793029369.067  4353  4353 V SDL     : nativeResume()
+         1793029369.085  4353  4353 I MystralInterop: SURFACE_QUEUED generation=3 revision=5 available=1 window=0x7e7f4485c2c0 pid=4353
+         1793029369.085  4353  4353 I MystralInterop: LIFECYCLE {"event":"surface-changed","pid":4353,"surfaceGeneration":3,"orientation":1,"elapsedRealtime":888235}
+         1793029369.097  4353  4376 I MystralRuntime: SURFACE_RETIRED generation=1 nextGeneration=3 window=0x7e7f44849aa0 device=0x7e7eb4827430 thread=139077218656448
+         1793029369.097  4353  4376 I MystralRuntime: SURFACE_RESTORED generation=3 revision=4 window=0x7e7f4485c2c0 device=0x7e7eb4827430 thread=139077218656448
+         1793029369.111  4353  4353 V SDL     : onTrimMemory()
+         1793029369.113  4353  4353 V SDL     : surfaceDestroyed()
+         1793029369.113  4353  4353 V SDL     : nativePause()
+         1793029369.115  4353  4353 I MystralInterop: SURFACE_QUEUED generation=4 revision=6 available=0 window=0x0 pid=4353
+         1793029369.116  4353  4353 I MystralInterop: LIFECYCLE {"event":"surface-destroyed","pid":4353,"surfaceGeneration":4,"orientation":1,"elapsedRealtime":888265}
+         1793029369.117  4353  4353 V SDL     : onStop()
+         1793029369.170  4353  4353 V SDL     : onStart()
+         1793029369.170  4353  4353 V SDL     : onResume()
+         1793029369.171  4353  4353 I MystralInterop: LIFECYCLE {"event":"resume","pid":4353,"surfaceGeneration":4,"orientation":1,"elapsedRealtime":888320}
+         1793029369.205  4353  4353 V SDL     : surfaceCreated()
+         1793029369.205  4353  4353 I MystralInterop: SURFACE_QUEUED generation=5 revision=7 available=1 window=0x7e7f44877ef0 pid=4353
+         1793029369.205  4353  4353 I MystralInterop: LIFECYCLE {"event":"surface-created","pid":4353,"surfaceGeneration":5,"orientation":1,"elapsedRealtime":888354}
+         1793029369.205  4353  4353 V SDL     : surfaceChanged()
+         1793029369.205  4353  4353 V SDL     : Window size: 320x240
+         1793029369.205  4353  4353 V SDL     : Device size: 1080x2400
+         1793029369.205  4353  4353 V SDL     : nativeResume()
+         1793029369.220  4353  4353 I MystralInterop: SURFACE_QUEUED generation=5 revision=8 available=1 window=0x7e7f44877ef0 pid=4353
+         1793029369.222  4353  4353 I MystralInterop: LIFECYCLE {"event":"surface-changed","pid":4353,"surfaceGeneration":5,"orientation":1,"elapsedRealtime":888370}
+         1793029369.267  4353  4376 I MystralRuntime: SURFACE_RETIRED generation=3 nextGeneration=5 window=0x7e7f4485c2c0 device=0x7e7eb4827430 thread=139077218656448
+         1793029369.267  4353  4376 I MystralRuntime: SURFACE_RESTORED generation=5 revision=7 window=0x7e7f44877ef0 device=0x7e7eb4827430 thread=139077218656448
+         1793029369.729  4353  4353 V SDL     : onWindowFocusChanged(): true
+         1793029369.729  4353  4353 V SDL     : nativeFocusChanged()
+         1793029370.221   677   922 W ActivityManager: Skipping manifest association check for null package. SourceUid: 10224, SourcePkg: null, TargetUid: 10224, TargetPkg: com.google.android.gms
+         1793029374.758  4353  4384 I MystralInterop: EVENT demo-input
+         1793029375.861  4353  4353 I MystralInterop: LIFECYCLE {"event":"pause","pid":4353,"surfaceGeneration":5,"orientation":1,"elapsedRealtime":895009}
+         1793029375.861  4353  4353 V SDL     : onPause()
+         1793029375.900  4353  4353 V SDL     : onWindowFocusChanged(): false
+         1793029375.900  4353  4353 V SDL     : nativeFocusChanged()
+         1793029376.458  4353  4353 V SDL     : surfaceDestroyed()
+         1793029376.458  4353  4353 V SDL     : nativePause()
+         1793029376.463  4353  4353 I MystralInterop: SURFACE_QUEUED generation=6 revision=9 available=0 window=0x0 pid=4353
+         1793029376.464  4353  4353 I MystralInterop: LIFECYCLE {"event":"surface-destroyed","pid":4353,"surfaceGeneration":6,"orientation":1,"elapsedRealtime":895613}
+         1793029376.473  4353  4353 V SDL     : onStop()
+         1793029376.535  4353  4353 V SDL     : onTrimMemory()
+         1793029376.887  4353  4353 V SDL     : onStart()
+         1793029376.887  4353  4353 V SDL     : onResume()
+         1793029376.888  4353  4353 I MystralInterop: LIFECYCLE {"event":"resume","pid":4353,"surfaceGeneration":6,"orientation":1,"elapsedRealtime":896037}
+         1793029376.901  4353  4353 V SDL     : surfaceCreated()
+         1793029376.901  4353  4353 I MystralInterop: SURFACE_QUEUED generation=7 revision=10 available=1 window=0x7e7f4486aa80 pid=4353
+         1793029376.906  4353  4353 I MystralInterop: LIFECYCLE {"event":"surface-created","pid":4353,"surfaceGeneration":7,"orientation":1,"elapsedRealtime":896051}
+         1793029376.907  4353  4353 V SDL     : surfaceChanged()
+         1793029376.907  4353  4353 V SDL     : Window size: 320x240
+         1793029376.907  4353  4353 V SDL     : Device size: 1080x2400
+         1793029376.907  4353  4353 V SDL     : nativeResume()
+         1793029376.912  4353  4353 I MystralInterop: SURFACE_QUEUED generation=7 revision=11 available=1 window=0x7e7f4486aa80 pid=4353
+         1793029376.912  4353  4353 I MystralInterop: LIFECYCLE {"event":"surface-changed","pid":4353,"surfaceGeneration":7,"orientation":1,"elapsedRealtime":896062}
+         1793029376.967  4353  4353 V SDL     : onWindowFocusChanged(): true
+         1793029376.967  4353  4353 V SDL     : nativeFocusChanged()
+         1793029376.972  4353  4376 I MystralRuntime: SURFACE_RETIRED generation=5 nextGeneration=7 window=0x7e7f44877ef0 device=0x7e7eb4827430 thread=139077218656448
+         1793029376.972  4353  4376 I MystralRuntime: SURFACE_RESTORED generation=7 revision=11 window=0x7e7f4486aa80 device=0x7e7eb4827430 thread=139077218656448
+         1793029382.320  4353  4382 I MystralInterop: EVENT demo-input
+         1793029383.357  4353  4380 I MystralInterop: EXIT_STAGE finish-request run=android-lifecycle-1793029350099 outcome=0
+         1793029383.359  4353  4380 I MystralInterop: EXIT_STAGE finish-ack-written run=android-lifecycle-1793029350099
+         1793029383.359  4353  4380 I MystralInterop: EXIT_STAGE java-quit-schedule pid=4353
+         1793029383.359  4353  4380 I MystralInterop: EXIT_STAGE java-quit-posted value=true
+         1793029383.359  4353  4380 I MystralInterop: EXIT_STAGE finish-quit-scheduled run=android-lifecycle-1793029350099
+         1793029383.413  4353  4353 I MystralInterop: EXIT_STAGE java-quit-dispatch pid=4353
+         1793029383.413  4353  4353 I MystralInterop: EXIT_STAGE jni-quit-enter pid=4353 thread=139090204020792
+         1793029383.413  4353  4353 I MystralInterop: EXIT_STAGE sdl-quit-pushed result=1 error=
+         1793029383.413  4353  4353 I MystralInterop: EXIT_STAGE java-quit-return pid=4353
+         1793029383.419  4353  4376 I MystralInterop: EXIT_STAGE runtime-run-return pid=4353 thread=139077218656448
+         1793029383.419  4353  4376 I MystralInterop: EXIT_STAGE reported-outcome-enter pid=4353 thread=139077218656448
+         1793029383.419  4353  4376 I MystralInterop: EXIT_STAGE reported-outcome-return value=0
+         1793029383.419  4353  4376 I MystralInterop: EXIT_STAGE runtime-reset-enter pid=4353 thread=139077218656448
+         1793029383.419  4353  4376 I MystralInterop: EXIT_STAGE shutdown-enter
+         1793029383.419  4353  4376 I MystralInterop: EXIT_STAGE shutdown-audio-enter
+         1793029383.419  4353  4376 I MystralInterop: EXIT_STAGE shutdown-audio-return
+         1793029383.419  4353  4376 I MystralInterop: EXIT_STAGE shutdown-http-enter
+         1793029383.419  4353  4376 I MystralInterop: EXIT_STAGE shutdown-http-return
+         1793029383.419  4353  4376 I MystralInterop: EXIT_STAGE shutdown-file-enter
+         1793029383.419  4353  4376 I MystralInterop: EXIT_STAGE shutdown-file-return
+         1793029383.419  4353  4376 I MystralInterop: EXIT_STAGE shutdown-webtransport-enter
+         1793029383.419  4353  4376 I MystralInterop: EXIT_STAGE shutdown-webtransport-return
+         1793029383.419  4353  4376 I MystralInterop: EXIT_STAGE shutdown-eventloop-enter
+         1793029383.419  4353  4376 I MystralInterop: EXIT_STAGE shutdown-eventloop-return
+         1793029383.419  4353  4376 I MystralInterop: EXIT_STAGE shutdown-raf-enter
+         1793029383.419  4353  4376 I MystralInterop: EXIT_STAGE shutdown-raf-return
+         1793029383.419  4353  4376 I MystralInterop: EXIT_STAGE shutdown-timers-enter
+         1793029383.419  4353  4376 I MystralInterop: EXIT_STAGE shutdown-timers-return
+         1793029383.419  4353  4376 I MystralInterop: EXIT_STAGE shutdown-modules-enter
+         1793029383.419  4353  4376 I MystralInterop: EXIT_STAGE shutdown-modules-return
+         1793029383.419  4353  4376 I MystralInterop: EXIT_STAGE shutdown-gc1-enter
+         1793029383.463  4353  4376 I MystralInterop: EXIT_STAGE shutdown-gc1-return
+         1793029383.463  4353  4376 I MystralInterop: EXIT_STAGE shutdown-gc2-enter
+         1793029383.484  4353  4376 I MystralInterop: EXIT_STAGE shutdown-gc2-return
+         1793029383.484  4353  4376 I MystralInterop: EXIT_STAGE shutdown-devicebindings-enter
+         1793029383.484  4353  4376 I MystralInterop: EXIT_STAGE shutdown-devicebindings-return
+         1793029383.484  4353  4376 I MystralInterop: EXIT_STAGE shutdown-jsEngine-enter
+         1793029383.493  4353  4376 I MystralInterop: EXIT_STAGE shutdown-jsEngine-return
+         1793029383.493  4353  4376 I MystralInterop: EXIT_STAGE shutdown-webgpu-enter
+         1793029383.493  4353  4376 I MystralInterop: EXIT_STAGE context-enter
+         1793029383.493  4353  4376 I MystralInterop: EXIT_STAGE context-surface-release-enter
+         1793029383.493  4353  4376 I MystralInterop: EXIT_STAGE context-surface-release-return
+         1793029383.493  4353  4376 I MystralInterop: EXIT_STAGE context-queue-release-enter
+         1793029383.493  4353  4376 I MystralInterop: EXIT_STAGE context-queue-release-return
+         1793029383.493  4353  4376 I MystralInterop: EXIT_STAGE context-device-destroy-enter
+         1793029383.504  4353  4376 I MystralInterop: EXIT_STAGE context-device-destroy-return
+         1793029383.504  4353  4376 I MystralInterop: EXIT_STAGE context-device-tick-enter
+         1793029383.504  4353  4376 I MystralInterop: EXIT_STAGE context-device-tick-return
+         1793029383.504  4353  4376 I MystralInterop: EXIT_STAGE context-callbacks-drain-enter
+         1793029383.504  4353  4376 I MystralInterop: EXIT_STAGE context-callbacks-drain-return
+         1793029383.504  4353  4376 I MystralInterop: EXIT_STAGE context-device-release-enter
+         1793029383.504  4353  4376 I MystralInterop: EXIT_STAGE context-device-release-return
+         1793029383.504  4353  4376 I MystralInterop: EXIT_STAGE context-adapter-release-enter
+         1793029383.504  4353  4376 I MystralInterop: EXIT_STAGE context-adapter-release-return
+         1793029383.504  4353  4376 I MystralInterop: EXIT_STAGE context-instance-release-enter
+         1793029383.504  4353  4376 I MystralInterop: EXIT_STAGE context-instance-release-return
+         1793029383.504  4353  4376 I MystralInterop: EXIT_STAGE context-return
+         1793029383.504  4353  4376 I MystralInterop: EXIT_STAGE shutdown-webgpu-return
+         1793029383.505  4353  4376 I MystralInterop: EXIT_STAGE shutdown-window-enter
+         1793029383.507  4353  4376 I MystralInterop: EXIT_STAGE shutdown-window-return
+         1793029383.507  4353  4376 I MystralInterop: EXIT_STAGE shutdown-complete
+         1793029383.507  4353  4376 I MystralInterop: EXIT_STAGE runtime-reset-return pid=4353 thread=139077218656448
+         1793029383.507  4353  4376 I MystralInterop: Native SDL_main ended code=0 error=
+         1793029383.507  4353  4376 I MystralInterop: EXIT_STAGE java-exit-notify-enter pid=4353 thread=139077218656448
+         1793029383.508  4353  4376 I MystralInterop: EXIT_STAGE java-native-finished code=0 activity=true server=true
+         1793029383.510  4353  4376 I MystralInterop: NATIVE_FINISHED {"code":0,"error":"","pid":4353,"elapsedRealtime":902657}
+         1793029383.510  4353  4376 I MystralInterop: EXIT_STAGE java-exit-notify-return pid=4353 thread=139077218656448
+         1793029383.511  4353  4376 V SDL     : Finished main function
+         1793029383.541  4353  4353 I MystralInterop: LIFECYCLE {"event":"pause","pid":4353,"surfaceGeneration":7,"orientation":1,"elapsedRealtime":902689}
+         1793029383.541  4353  4353 V SDL     : onPause()
+         1793029383.550  4353  4353 V SDL     : onWindowFocusChanged(): false
+         1793029384.212  4353  4353 V SDL     : surfaceDestroyed()
+         1793029384.215  4353  4353 I MystralInterop: SURFACE_QUEUED generation=8 revision=13 available=0 window=0x0 pid=4353
+         1793029384.215  4353  4353 I MystralInterop: LIFECYCLE {"event":"surface-destroyed","pid":4353,"surfaceGeneration":8,"orientation":1,"elapsedRealtime":903364}
+         1793029384.234  4353  4353 V SDL     : onStop()
+         1793029384.235  4353  4353 I MystralInterop: LIFECYCLE {"event":"destroy","pid":4353,"surfaceGeneration":8,"orientation":1,"elapsedRealtime":903385}
+         1793029384.236  4353  4353 V SDL     : onDestroy()
+         1793029384.237  4353  4353 V SDL     : SDLActivity thread ends
+         1793029384.440   677   693 I ActivityManager: Force stopping com.mystral.engine.interop appid=10231 user=0: from pid 4824
+         1793029384.443   677   693 I ActivityManager: Killing 4353:com.mystral.engine.interop/u0a231 (adj 900): stop com.mystral.engine.interop due to from pid 4824
+         1793029384.493   677   702 W ActivityManager: setHasOverlayUi called on unknown pid: 4353

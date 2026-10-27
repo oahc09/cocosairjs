@@ -1,0 +1,6 @@
+{"event":"created","pid":13362,"surfaceGeneration":0,"orientation":1,"elapsedRealtime":593750414}
+{"event":"resume","pid":13362,"surfaceGeneration":0,"orientation":1,"elapsedRealtime":593750424}
+{"event":"pause","pid":13362,"surfaceGeneration":0,"orientation":1,"elapsedRealtime":593750454}
+{"event":"surface-created","pid":13362,"surfaceGeneration":1,"orientation":1,"elapsedRealtime":593750501}
+{"event":"surface-changed","pid":13362,"surfaceGeneration":1,"orientation":1,"elapsedRealtime":593750506}
+{"event":"surface-destroyed","pid":13362,"surfaceGeneration":2,"orientation":1,"elapsedRealtime":593750530}

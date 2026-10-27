@@ -1,0 +1,14 @@
+{
+  "arguments": [
+    "-s",
+    "emulator-5554",
+    "exec-out",
+    "screencap",
+    "-p"
+  ],
+  "startedAt": "2026-10-26T15:31:22.541Z",
+  "timeoutMs": 184,
+  "exitCode": null,
+  "error": "Error: spawnSync adb ETIMEDOUT",
+  "finishedAt": "2026-10-26T15:31:22.746Z"
+}

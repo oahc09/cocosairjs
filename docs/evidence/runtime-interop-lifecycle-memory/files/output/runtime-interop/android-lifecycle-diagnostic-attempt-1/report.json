@@ -1,0 +1,1639 @@
+{
+  "schema": "air-android-runtime-lifecycle-v1",
+  "createdAt": "2026-10-26T15:42:30.098Z",
+  "serial": "emulator-5554",
+  "runId": "android-lifecycle-1793029350099",
+  "scope": "existing-demo-lifecycle-and-bounded-stability",
+  "subset": true,
+  "releaseReady": false,
+  "completed": false,
+  "pass": false,
+  "expectedPageBytes": 16384,
+  "requestedSoakSeconds": 0,
+  "budgets": {
+    "operationMs": 15000,
+    "captureAndAckMs": 15000,
+    "resumeIncludingAutomaticPaintAndInputMs": 15000,
+    "nativeExitMs": 10000,
+    "heartbeatMs": 30000,
+    "maximumHeartbeatIntervalMs": 45000,
+    "collectorLogCloseMs": 2000,
+    "samplingLimitMeaning": "Bounded evidence sampling mechanics; not an application performance target"
+  },
+  "stages": {
+    "initial": {
+      "status": "PASS",
+      "evidence": {
+        "event": {
+          "stage": "demo-input",
+          "frames": 194,
+          "taps": 1,
+          "color": "green",
+          "gpuErrors": [],
+          "type": "mousedown",
+          "isTrusted": true,
+          "clientX": 160.50157165527344,
+          "clientY": 120.5020980834961
+        },
+        "visual": {
+          "label": "initial-input-paint-0000",
+          "bounds": {
+            "x": 380,
+            "y": 1080,
+            "width": 320,
+            "height": 240
+          },
+          "wanted": "green",
+          "measuredAt": "2026-10-26T15:42:39.229Z",
+          "originalSha256": "b50b6ab9d911d0a66ea6a0d78a781f18a639ea8e684ae64d526743813da51976",
+          "originalCropSha256": "88d339f7c78fa8c0852aadd64ef4b10ba0914bcff3a77b512959d458028bb4b8",
+          "interpretedSha256": "b50b6ab9d911d0a66ea6a0d78a781f18a639ea8e684ae64d526743813da51976",
+          "interpretedCropSha256": "88d339f7c78fa8c0852aadd64ef4b10ba0914bcff3a77b512959d458028bb4b8",
+          "colors": {
+            "width": 320,
+            "height": 240,
+            "orange": 0,
+            "green": 7759,
+            "blue": 69041,
+            "sha256": "88d339f7c78fa8c0852aadd64ef4b10ba0914bcff3a77b512959d458028bb4b8"
+          },
+          "pass": true,
+          "colorMetadata": "initial-input-paint-0000.screen-color.json"
+        },
+        "lifecycle": [
+          {
+            "event": "created",
+            "pid": 4353,
+            "surfaceGeneration": 0,
+            "orientation": 1,
+            "elapsedRealtime": 870983
+          },
+          {
+            "event": "resume",
+            "pid": 4353,
+            "surfaceGeneration": 0,
+            "orientation": 1,
+            "elapsedRealtime": 870995
+          },
+          {
+            "event": "surface-created",
+            "pid": 4353,
+            "surfaceGeneration": 1,
+            "orientation": 1,
+            "elapsedRealtime": 871046
+          },
+          {
+            "event": "surface-changed",
+            "pid": 4353,
+            "surfaceGeneration": 1,
+            "orientation": 1,
+            "elapsedRealtime": 871049
+          }
+        ]
+      }
+    },
+    "background": {
+      "status": "PASS",
+      "boundary": {
+        "paused": {
+          "event": "pause",
+          "pid": 4353,
+          "surfaceGeneration": 1,
+          "orientation": 1,
+          "elapsedRealtime": 879776
+        },
+        "rows": [
+          {
+            "event": "created",
+            "pid": 4353,
+            "surfaceGeneration": 0,
+            "orientation": 1,
+            "elapsedRealtime": 870983
+          },
+          {
+            "event": "resume",
+            "pid": 4353,
+            "surfaceGeneration": 0,
+            "orientation": 1,
+            "elapsedRealtime": 870995
+          },
+          {
+            "event": "surface-created",
+            "pid": 4353,
+            "surfaceGeneration": 1,
+            "orientation": 1,
+            "elapsedRealtime": 871046
+          },
+          {
+            "event": "surface-changed",
+            "pid": 4353,
+            "surfaceGeneration": 1,
+            "orientation": 1,
+            "elapsedRealtime": 871049
+          },
+          {
+            "event": "pause",
+            "pid": 4353,
+            "surfaceGeneration": 1,
+            "orientation": 1,
+            "elapsedRealtime": 879776
+          }
+        ]
+      },
+      "recovery": {
+        "event": {
+          "stage": "demo-input",
+          "frames": 643,
+          "taps": 2,
+          "color": "orange",
+          "gpuErrors": [],
+          "type": "mousedown",
+          "isTrusted": true,
+          "clientX": 160.50157165527344,
+          "clientY": 120.5020980834961
+        },
+        "visual": {
+          "label": "background-recovery-paint-0002",
+          "bounds": {
+            "x": 380,
+            "y": 1080,
+            "width": 320,
+            "height": 240
+          },
+          "wanted": "orange",
+          "measuredAt": "2026-10-26T15:42:46.846Z",
+          "originalSha256": "b2bd53f7242815d3abefe514f6a69439606e3eb2361697d653ab1a5ebdf6468b",
+          "originalCropSha256": "588914a95465812d202cf6ae9d3fd0c61953fb3d78ccc5416dd11fe5f7a16a23",
+          "interpretedSha256": "b2bd53f7242815d3abefe514f6a69439606e3eb2361697d653ab1a5ebdf6468b",
+          "interpretedCropSha256": "588914a95465812d202cf6ae9d3fd0c61953fb3d78ccc5416dd11fe5f7a16a23",
+          "colors": {
+            "width": 320,
+            "height": 240,
+            "orange": 7759,
+            "green": 0,
+            "blue": 69041,
+            "sha256": "588914a95465812d202cf6ae9d3fd0c61953fb3d78ccc5416dd11fe5f7a16a23"
+          },
+          "pass": true,
+          "colorMetadata": "background-recovery-paint-0002.screen-color.json"
+        },
+        "lifecycle": [
+          {
+            "event": "created",
+            "pid": 4353,
+            "surfaceGeneration": 0,
+            "orientation": 1,
+            "elapsedRealtime": 870983
+          },
+          {
+            "event": "resume",
+            "pid": 4353,
+            "surfaceGeneration": 0,
+            "orientation": 1,
+            "elapsedRealtime": 870995
+          },
+          {
+            "event": "surface-created",
+            "pid": 4353,
+            "surfaceGeneration": 1,
+            "orientation": 1,
+            "elapsedRealtime": 871046
+          },
+          {
+            "event": "surface-changed",
+            "pid": 4353,
+            "surfaceGeneration": 1,
+            "orientation": 1,
+            "elapsedRealtime": 871049
+          },
+          {
+            "event": "pause",
+            "pid": 4353,
+            "surfaceGeneration": 1,
+            "orientation": 1,
+            "elapsedRealtime": 879776
+          },
+          {
+            "event": "resume",
+            "pid": 4353,
+            "surfaceGeneration": 1,
+            "orientation": 1,
+            "elapsedRealtime": 880052
+          }
+        ],
+        "automaticPresentation": {
+          "label": "background-recovery-automatic-paint-0001",
+          "bounds": {
+            "x": 380,
+            "y": 1080,
+            "width": 320,
+            "height": 240
+          },
+          "wanted": "green",
+          "measuredAt": "2026-10-26T15:42:43.838Z",
+          "originalSha256": "b50b6ab9d911d0a66ea6a0d78a781f18a639ea8e684ae64d526743813da51976",
+          "originalCropSha256": "88d339f7c78fa8c0852aadd64ef4b10ba0914bcff3a77b512959d458028bb4b8",
+          "interpretedSha256": "b50b6ab9d911d0a66ea6a0d78a781f18a639ea8e684ae64d526743813da51976",
+          "interpretedCropSha256": "88d339f7c78fa8c0852aadd64ef4b10ba0914bcff3a77b512959d458028bb4b8",
+          "colors": {
+            "width": 320,
+            "height": 240,
+            "orange": 0,
+            "green": 7759,
+            "blue": 69041,
+            "sha256": "88d339f7c78fa8c0852aadd64ef4b10ba0914bcff3a77b512959d458028bb4b8"
+          },
+          "pass": true,
+          "colorMetadata": "background-recovery-automatic-paint-0001.screen-color.json"
+        },
+        "beforeFirstInput": true,
+        "elapsedMs": 6391.335399999749
+      }
+    },
+    "lock": {
+      "status": "PASS",
+      "boundary": {
+        "paused": {
+          "event": "pause",
+          "pid": 4353,
+          "surfaceGeneration": 1,
+          "orientation": 1,
+          "elapsedRealtime": 887055
+        },
+        "keyguardShowing": true,
+        "asleep": true,
+        "rows": [
+          {
+            "event": "created",
+            "pid": 4353,
+            "surfaceGeneration": 0,
+            "orientation": 1,
+            "elapsedRealtime": 870983
+          },
+          {
+            "event": "resume",
+            "pid": 4353,
+            "surfaceGeneration": 0,
+            "orientation": 1,
+            "elapsedRealtime": 870995
+          },
+          {
+            "event": "surface-created",
+            "pid": 4353,
+            "surfaceGeneration": 1,
+            "orientation": 1,
+            "elapsedRealtime": 871046
+          },
+          {
+            "event": "surface-changed",
+            "pid": 4353,
+            "surfaceGeneration": 1,
+            "orientation": 1,
+            "elapsedRealtime": 871049
+          },
+          {
+            "event": "pause",
+            "pid": 4353,
+            "surfaceGeneration": 1,
+            "orientation": 1,
+            "elapsedRealtime": 879776
+          },
+          {
+            "event": "resume",
+            "pid": 4353,
+            "surfaceGeneration": 1,
+            "orientation": 1,
+            "elapsedRealtime": 880052
+          },
+          {
+            "event": "pause",
+            "pid": 4353,
+            "surfaceGeneration": 1,
+            "orientation": 1,
+            "elapsedRealtime": 887055
+          },
+          {
+            "event": "surface-destroyed",
+            "pid": 4353,
+            "surfaceGeneration": 2,
+            "orientation": 1,
+            "elapsedRealtime": 887090
+          }
+        ]
+      },
+      "recovery": {
+        "event": {
+          "stage": "demo-input",
+          "frames": 1055,
+          "taps": 3,
+          "color": "green",
+          "gpuErrors": [],
+          "type": "mousedown",
+          "isTrusted": true,
+          "clientX": 160.50157165527344,
+          "clientY": 120.5020980834961
+        },
+        "visual": {
+          "label": "lock-recovery-paint-0004",
+          "bounds": {
+            "x": 380,
+            "y": 1080,
+            "width": 320,
+            "height": 240
+          },
+          "wanted": "green",
+          "measuredAt": "2026-10-26T15:42:55.311Z",
+          "originalSha256": "b50b6ab9d911d0a66ea6a0d78a781f18a639ea8e684ae64d526743813da51976",
+          "originalCropSha256": "88d339f7c78fa8c0852aadd64ef4b10ba0914bcff3a77b512959d458028bb4b8",
+          "interpretedSha256": "b50b6ab9d911d0a66ea6a0d78a781f18a639ea8e684ae64d526743813da51976",
+          "interpretedCropSha256": "88d339f7c78fa8c0852aadd64ef4b10ba0914bcff3a77b512959d458028bb4b8",
+          "colors": {
+            "width": 320,
+            "height": 240,
+            "orange": 0,
+            "green": 7759,
+            "blue": 69041,
+            "sha256": "88d339f7c78fa8c0852aadd64ef4b10ba0914bcff3a77b512959d458028bb4b8"
+          },
+          "pass": true,
+          "colorMetadata": "lock-recovery-paint-0004.screen-color.json"
+        },
+        "lifecycle": [
+          {
+            "event": "created",
+            "pid": 4353,
+            "surfaceGeneration": 0,
+            "orientation": 1,
+            "elapsedRealtime": 870983
+          },
+          {
+            "event": "resume",
+            "pid": 4353,
+            "surfaceGeneration": 0,
+            "orientation": 1,
+            "elapsedRealtime": 870995
+          },
+          {
+            "event": "surface-created",
+            "pid": 4353,
+            "surfaceGeneration": 1,
+            "orientation": 1,
+            "elapsedRealtime": 871046
+          },
+          {
+            "event": "surface-changed",
+            "pid": 4353,
+            "surfaceGeneration": 1,
+            "orientation": 1,
+            "elapsedRealtime": 871049
+          },
+          {
+            "event": "pause",
+            "pid": 4353,
+            "surfaceGeneration": 1,
+            "orientation": 1,
+            "elapsedRealtime": 879776
+          },
+          {
+            "event": "resume",
+            "pid": 4353,
+            "surfaceGeneration": 1,
+            "orientation": 1,
+            "elapsedRealtime": 880052
+          },
+          {
+            "event": "pause",
+            "pid": 4353,
+            "surfaceGeneration": 1,
+            "orientation": 1,
+            "elapsedRealtime": 887055
+          },
+          {
+            "event": "surface-destroyed",
+            "pid": 4353,
+            "surfaceGeneration": 2,
+            "orientation": 1,
+            "elapsedRealtime": 887090
+          },
+          {
+            "event": "resume",
+            "pid": 4353,
+            "surfaceGeneration": 2,
+            "orientation": 1,
+            "elapsedRealtime": 888201
+          },
+          {
+            "event": "pause",
+            "pid": 4353,
+            "surfaceGeneration": 2,
+            "orientation": 1,
+            "elapsedRealtime": 888203
+          },
+          {
+            "event": "surface-created",
+            "pid": 4353,
+            "surfaceGeneration": 3,
+            "orientation": 1,
+            "elapsedRealtime": 888216
+          },
+          {
+            "event": "surface-changed",
+            "pid": 4353,
+            "surfaceGeneration": 3,
+            "orientation": 1,
+            "elapsedRealtime": 888235
+          },
+          {
+            "event": "surface-destroyed",
+            "pid": 4353,
+            "surfaceGeneration": 4,
+            "orientation": 1,
+            "elapsedRealtime": 888265
+          },
+          {
+            "event": "resume",
+            "pid": 4353,
+            "surfaceGeneration": 4,
+            "orientation": 1,
+            "elapsedRealtime": 888320
+          },
+          {
+            "event": "surface-created",
+            "pid": 4353,
+            "surfaceGeneration": 5,
+            "orientation": 1,
+            "elapsedRealtime": 888354
+          },
+          {
+            "event": "surface-changed",
+            "pid": 4353,
+            "surfaceGeneration": 5,
+            "orientation": 1,
+            "elapsedRealtime": 888370
+          }
+        ],
+        "automaticPresentation": {
+          "label": "lock-recovery-automatic-paint-0003",
+          "bounds": {
+            "x": 380,
+            "y": 1080,
+            "width": 320,
+            "height": 240
+          },
+          "wanted": "orange",
+          "measuredAt": "2026-10-26T15:42:52.305Z",
+          "originalSha256": "b2bd53f7242815d3abefe514f6a69439606e3eb2361697d653ab1a5ebdf6468b",
+          "originalCropSha256": "588914a95465812d202cf6ae9d3fd0c61953fb3d78ccc5416dd11fe5f7a16a23",
+          "interpretedSha256": "b2bd53f7242815d3abefe514f6a69439606e3eb2361697d653ab1a5ebdf6468b",
+          "interpretedCropSha256": "588914a95465812d202cf6ae9d3fd0c61953fb3d78ccc5416dd11fe5f7a16a23",
+          "colors": {
+            "width": 320,
+            "height": 240,
+            "orange": 7759,
+            "green": 0,
+            "blue": 69041,
+            "sha256": "588914a95465812d202cf6ae9d3fd0c61953fb3d78ccc5416dd11fe5f7a16a23"
+          },
+          "pass": true,
+          "colorMetadata": "lock-recovery-automatic-paint-0003.screen-color.json"
+        },
+        "beforeFirstInput": true,
+        "elapsedMs": 6713.727500000037
+      }
+    },
+    "surface": {
+      "status": "PASS",
+      "boundary": {
+        "event": {
+          "event": "surface-destroyed",
+          "pid": 4353,
+          "surfaceGeneration": 6,
+          "orientation": 1,
+          "elapsedRealtime": 895613
+        },
+        "rows": [
+          {
+            "event": "created",
+            "pid": 4353,
+            "surfaceGeneration": 0,
+            "orientation": 1,
+            "elapsedRealtime": 870983
+          },
+          {
+            "event": "resume",
+            "pid": 4353,
+            "surfaceGeneration": 0,
+            "orientation": 1,
+            "elapsedRealtime": 870995
+          },
+          {
+            "event": "surface-created",
+            "pid": 4353,
+            "surfaceGeneration": 1,
+            "orientation": 1,
+            "elapsedRealtime": 871046
+          },
+          {
+            "event": "surface-changed",
+            "pid": 4353,
+            "surfaceGeneration": 1,
+            "orientation": 1,
+            "elapsedRealtime": 871049
+          },
+          {
+            "event": "pause",
+            "pid": 4353,
+            "surfaceGeneration": 1,
+            "orientation": 1,
+            "elapsedRealtime": 879776
+          },
+          {
+            "event": "resume",
+            "pid": 4353,
+            "surfaceGeneration": 1,
+            "orientation": 1,
+            "elapsedRealtime": 880052
+          },
+          {
+            "event": "pause",
+            "pid": 4353,
+            "surfaceGeneration": 1,
+            "orientation": 1,
+            "elapsedRealtime": 887055
+          },
+          {
+            "event": "surface-destroyed",
+            "pid": 4353,
+            "surfaceGeneration": 2,
+            "orientation": 1,
+            "elapsedRealtime": 887090
+          },
+          {
+            "event": "resume",
+            "pid": 4353,
+            "surfaceGeneration": 2,
+            "orientation": 1,
+            "elapsedRealtime": 888201
+          },
+          {
+            "event": "pause",
+            "pid": 4353,
+            "surfaceGeneration": 2,
+            "orientation": 1,
+            "elapsedRealtime": 888203
+          },
+          {
+            "event": "surface-created",
+            "pid": 4353,
+            "surfaceGeneration": 3,
+            "orientation": 1,
+            "elapsedRealtime": 888216
+          },
+          {
+            "event": "surface-changed",
+            "pid": 4353,
+            "surfaceGeneration": 3,
+            "orientation": 1,
+            "elapsedRealtime": 888235
+          },
+          {
+            "event": "surface-destroyed",
+            "pid": 4353,
+            "surfaceGeneration": 4,
+            "orientation": 1,
+            "elapsedRealtime": 888265
+          },
+          {
+            "event": "resume",
+            "pid": 4353,
+            "surfaceGeneration": 4,
+            "orientation": 1,
+            "elapsedRealtime": 888320
+          },
+          {
+            "event": "surface-created",
+            "pid": 4353,
+            "surfaceGeneration": 5,
+            "orientation": 1,
+            "elapsedRealtime": 888354
+          },
+          {
+            "event": "surface-changed",
+            "pid": 4353,
+            "surfaceGeneration": 5,
+            "orientation": 1,
+            "elapsedRealtime": 888370
+          },
+          {
+            "event": "pause",
+            "pid": 4353,
+            "surfaceGeneration": 5,
+            "orientation": 1,
+            "elapsedRealtime": 895009
+          },
+          {
+            "event": "surface-destroyed",
+            "pid": 4353,
+            "surfaceGeneration": 6,
+            "orientation": 1,
+            "elapsedRealtime": 895613
+          }
+        ],
+        "top": "com.android.settings/com.android.settings.homepage.SettingsHomepageActivity"
+      },
+      "recovery": {
+        "event": {
+          "stage": "demo-input",
+          "frames": 1468,
+          "taps": 4,
+          "color": "orange",
+          "gpuErrors": [],
+          "type": "mousedown",
+          "isTrusted": true,
+          "clientX": 160.50157165527344,
+          "clientY": 120.5020980834961
+        },
+        "visual": {
+          "label": "surface-recovery-paint-0006",
+          "bounds": {
+            "x": 380,
+            "y": 1080,
+            "width": 320,
+            "height": 240
+          },
+          "wanted": "orange",
+          "measuredAt": "2026-10-26T15:43:02.916Z",
+          "originalSha256": "b2bd53f7242815d3abefe514f6a69439606e3eb2361697d653ab1a5ebdf6468b",
+          "originalCropSha256": "588914a95465812d202cf6ae9d3fd0c61953fb3d78ccc5416dd11fe5f7a16a23",
+          "interpretedSha256": "b2bd53f7242815d3abefe514f6a69439606e3eb2361697d653ab1a5ebdf6468b",
+          "interpretedCropSha256": "588914a95465812d202cf6ae9d3fd0c61953fb3d78ccc5416dd11fe5f7a16a23",
+          "colors": {
+            "width": 320,
+            "height": 240,
+            "orange": 7759,
+            "green": 0,
+            "blue": 69041,
+            "sha256": "588914a95465812d202cf6ae9d3fd0c61953fb3d78ccc5416dd11fe5f7a16a23"
+          },
+          "pass": true,
+          "colorMetadata": "surface-recovery-paint-0006.screen-color.json"
+        },
+        "lifecycle": [
+          {
+            "event": "created",
+            "pid": 4353,
+            "surfaceGeneration": 0,
+            "orientation": 1,
+            "elapsedRealtime": 870983
+          },
+          {
+            "event": "resume",
+            "pid": 4353,
+            "surfaceGeneration": 0,
+            "orientation": 1,
+            "elapsedRealtime": 870995
+          },
+          {
+            "event": "surface-created",
+            "pid": 4353,
+            "surfaceGeneration": 1,
+            "orientation": 1,
+            "elapsedRealtime": 871046
+          },
+          {
+            "event": "surface-changed",
+            "pid": 4353,
+            "surfaceGeneration": 1,
+            "orientation": 1,
+            "elapsedRealtime": 871049
+          },
+          {
+            "event": "pause",
+            "pid": 4353,
+            "surfaceGeneration": 1,
+            "orientation": 1,
+            "elapsedRealtime": 879776
+          },
+          {
+            "event": "resume",
+            "pid": 4353,
+            "surfaceGeneration": 1,
+            "orientation": 1,
+            "elapsedRealtime": 880052
+          },
+          {
+            "event": "pause",
+            "pid": 4353,
+            "surfaceGeneration": 1,
+            "orientation": 1,
+            "elapsedRealtime": 887055
+          },
+          {
+            "event": "surface-destroyed",
+            "pid": 4353,
+            "surfaceGeneration": 2,
+            "orientation": 1,
+            "elapsedRealtime": 887090
+          },
+          {
+            "event": "resume",
+            "pid": 4353,
+            "surfaceGeneration": 2,
+            "orientation": 1,
+            "elapsedRealtime": 888201
+          },
+          {
+            "event": "pause",
+            "pid": 4353,
+            "surfaceGeneration": 2,
+            "orientation": 1,
+            "elapsedRealtime": 888203
+          },
+          {
+            "event": "surface-created",
+            "pid": 4353,
+            "surfaceGeneration": 3,
+            "orientation": 1,
+            "elapsedRealtime": 888216
+          },
+          {
+            "event": "surface-changed",
+            "pid": 4353,
+            "surfaceGeneration": 3,
+            "orientation": 1,
+            "elapsedRealtime": 888235
+          },
+          {
+            "event": "surface-destroyed",
+            "pid": 4353,
+            "surfaceGeneration": 4,
+            "orientation": 1,
+            "elapsedRealtime": 888265
+          },
+          {
+            "event": "resume",
+            "pid": 4353,
+            "surfaceGeneration": 4,
+            "orientation": 1,
+            "elapsedRealtime": 888320
+          },
+          {
+            "event": "surface-created",
+            "pid": 4353,
+            "surfaceGeneration": 5,
+            "orientation": 1,
+            "elapsedRealtime": 888354
+          },
+          {
+            "event": "surface-changed",
+            "pid": 4353,
+            "surfaceGeneration": 5,
+            "orientation": 1,
+            "elapsedRealtime": 888370
+          },
+          {
+            "event": "pause",
+            "pid": 4353,
+            "surfaceGeneration": 5,
+            "orientation": 1,
+            "elapsedRealtime": 895009
+          },
+          {
+            "event": "surface-destroyed",
+            "pid": 4353,
+            "surfaceGeneration": 6,
+            "orientation": 1,
+            "elapsedRealtime": 895613
+          },
+          {
+            "event": "resume",
+            "pid": 4353,
+            "surfaceGeneration": 6,
+            "orientation": 1,
+            "elapsedRealtime": 896037
+          },
+          {
+            "event": "surface-created",
+            "pid": 4353,
+            "surfaceGeneration": 7,
+            "orientation": 1,
+            "elapsedRealtime": 896051
+          },
+          {
+            "event": "surface-changed",
+            "pid": 4353,
+            "surfaceGeneration": 7,
+            "orientation": 1,
+            "elapsedRealtime": 896062
+          }
+        ],
+        "automaticPresentation": {
+          "label": "surface-recovery-automatic-paint-0005",
+          "bounds": {
+            "x": 380,
+            "y": 1080,
+            "width": 320,
+            "height": 240
+          },
+          "wanted": "green",
+          "measuredAt": "2026-10-26T15:42:59.875Z",
+          "originalSha256": "b50b6ab9d911d0a66ea6a0d78a781f18a639ea8e684ae64d526743813da51976",
+          "originalCropSha256": "88d339f7c78fa8c0852aadd64ef4b10ba0914bcff3a77b512959d458028bb4b8",
+          "interpretedSha256": "b50b6ab9d911d0a66ea6a0d78a781f18a639ea8e684ae64d526743813da51976",
+          "interpretedCropSha256": "88d339f7c78fa8c0852aadd64ef4b10ba0914bcff3a77b512959d458028bb4b8",
+          "colors": {
+            "width": 320,
+            "height": 240,
+            "orange": 0,
+            "green": 7759,
+            "blue": 69041,
+            "sha256": "88d339f7c78fa8c0852aadd64ef4b10ba0914bcff3a77b512959d458028bb4b8"
+          },
+          "pass": true,
+          "colorMetadata": "surface-recovery-automatic-paint-0005.screen-color.json"
+        },
+        "beforeFirstInput": true,
+        "elapsedMs": 6465.791800000239
+      },
+      "created": {
+        "event": "surface-created",
+        "pid": 4353,
+        "surfaceGeneration": 7,
+        "orientation": 1,
+        "elapsedRealtime": 896051
+      }
+    },
+    "continuous": {
+      "status": "NOT_RUN"
+    }
+  },
+  "captures": [
+    {
+      "metadata": {
+        "channel": "android-pixelcopy",
+        "pid": 4353,
+        "file": "scene-demo-before.png",
+        "width": 320,
+        "height": 240,
+        "bitmapWidth": 320,
+        "bitmapHeight": 240,
+        "surfaceWidth": 320,
+        "surfaceHeight": 240,
+        "viewWidth": 320,
+        "viewHeight": 240,
+        "surfaceGeneration": 1,
+        "resultCode": 0,
+        "bounds": {
+          "x": 380,
+          "y": 1080,
+          "width": 320,
+          "height": 240
+        },
+        "sha256": "9178e2a98e062aedab2f0c28e3198e9eb8523285d010d603fd054ddf737bb09d",
+        "captureId": "25c88441-d429-4fad-82ff-d286cc783068",
+        "kind": "scene-demo",
+        "phase": "before",
+        "runId": "android-lifecycle-1793029350099"
+      },
+      "surface": {
+        "width": 320,
+        "height": 240,
+        "orange": 7282,
+        "green": 0,
+        "blue": 69518,
+        "sha256": "9178e2a98e062aedab2f0c28e3198e9eb8523285d010d603fd054ddf737bb09d"
+      },
+      "compositor": {
+        "label": "initial-before",
+        "bounds": {
+          "x": 380,
+          "y": 1080,
+          "width": 320,
+          "height": 240
+        },
+        "wanted": "orange",
+        "measuredAt": "2026-10-26T15:42:36.199Z",
+        "originalSha256": "a10ba68af02e0b09f55b06883360afc8bb290e37c6e6effee50009ec69adca8e",
+        "originalCropSha256": "bb43ae1f638340e5e111836ff14b09e55304da0573ba58efcecc910692a10460",
+        "interpretedSha256": "a10ba68af02e0b09f55b06883360afc8bb290e37c6e6effee50009ec69adca8e",
+        "interpretedCropSha256": "bb43ae1f638340e5e111836ff14b09e55304da0573ba58efcecc910692a10460",
+        "colors": {
+          "width": 320,
+          "height": 240,
+          "orange": 7617,
+          "green": 0,
+          "blue": 69183,
+          "sha256": "bb43ae1f638340e5e111836ff14b09e55304da0573ba58efcecc910692a10460"
+        },
+        "pass": true,
+        "colorMetadata": "initial-before.screen-color.json"
+      },
+      "pass": true
+    },
+    {
+      "metadata": {
+        "channel": "android-pixelcopy",
+        "pid": 4353,
+        "file": "scene-demo-after.png",
+        "width": 320,
+        "height": 240,
+        "bitmapWidth": 320,
+        "bitmapHeight": 240,
+        "surfaceWidth": 320,
+        "surfaceHeight": 240,
+        "viewWidth": 320,
+        "viewHeight": 240,
+        "surfaceGeneration": 1,
+        "resultCode": 0,
+        "bounds": {
+          "x": 380,
+          "y": 1080,
+          "width": 320,
+          "height": 240
+        },
+        "sha256": "b8abd5579ed5941cb10f0f96e05660c32752f91c36562f0a13ffede25aa5a879",
+        "captureId": "f1712bfc-bb40-4682-b778-47a840393842",
+        "kind": "scene-demo",
+        "phase": "after",
+        "runId": "android-lifecycle-1793029350099",
+        "previous": {
+          "file": "scene-demo-before.png",
+          "sha256": "9178e2a98e062aedab2f0c28e3198e9eb8523285d010d603fd054ddf737bb09d",
+          "pid": 4353,
+          "surfaceGeneration": 1
+        }
+      },
+      "surface": {
+        "width": 320,
+        "height": 240,
+        "orange": 0,
+        "green": 7759,
+        "blue": 69041,
+        "sha256": "b8abd5579ed5941cb10f0f96e05660c32752f91c36562f0a13ffede25aa5a879"
+      },
+      "compositor": {
+        "label": "initial-after",
+        "bounds": {
+          "x": 380,
+          "y": 1080,
+          "width": 320,
+          "height": 240
+        },
+        "wanted": "green",
+        "measuredAt": "2026-10-26T15:42:40.195Z",
+        "originalSha256": "b50b6ab9d911d0a66ea6a0d78a781f18a639ea8e684ae64d526743813da51976",
+        "originalCropSha256": "88d339f7c78fa8c0852aadd64ef4b10ba0914bcff3a77b512959d458028bb4b8",
+        "interpretedSha256": "b50b6ab9d911d0a66ea6a0d78a781f18a639ea8e684ae64d526743813da51976",
+        "interpretedCropSha256": "88d339f7c78fa8c0852aadd64ef4b10ba0914bcff3a77b512959d458028bb4b8",
+        "colors": {
+          "width": 320,
+          "height": 240,
+          "orange": 0,
+          "green": 7759,
+          "blue": 69041,
+          "sha256": "88d339f7c78fa8c0852aadd64ef4b10ba0914bcff3a77b512959d458028bb4b8"
+        },
+        "pass": true,
+        "colorMetadata": "initial-after.screen-color.json"
+      },
+      "pass": true
+    }
+  ],
+  "observations": [
+    {
+      "label": "initial-before",
+      "bounds": {
+        "x": 380,
+        "y": 1080,
+        "width": 320,
+        "height": 240
+      },
+      "wanted": "orange",
+      "measuredAt": "2026-10-26T15:42:36.199Z",
+      "originalSha256": "a10ba68af02e0b09f55b06883360afc8bb290e37c6e6effee50009ec69adca8e",
+      "originalCropSha256": "bb43ae1f638340e5e111836ff14b09e55304da0573ba58efcecc910692a10460",
+      "interpretedSha256": "a10ba68af02e0b09f55b06883360afc8bb290e37c6e6effee50009ec69adca8e",
+      "interpretedCropSha256": "bb43ae1f638340e5e111836ff14b09e55304da0573ba58efcecc910692a10460",
+      "colors": {
+        "width": 320,
+        "height": 240,
+        "orange": 7617,
+        "green": 0,
+        "blue": 69183,
+        "sha256": "bb43ae1f638340e5e111836ff14b09e55304da0573ba58efcecc910692a10460"
+      },
+      "pass": true,
+      "colorMetadata": "initial-before.screen-color.json"
+    },
+    {
+      "label": "initial-input-paint-0000",
+      "bounds": {
+        "x": 380,
+        "y": 1080,
+        "width": 320,
+        "height": 240
+      },
+      "wanted": "green",
+      "measuredAt": "2026-10-26T15:42:39.229Z",
+      "originalSha256": "b50b6ab9d911d0a66ea6a0d78a781f18a639ea8e684ae64d526743813da51976",
+      "originalCropSha256": "88d339f7c78fa8c0852aadd64ef4b10ba0914bcff3a77b512959d458028bb4b8",
+      "interpretedSha256": "b50b6ab9d911d0a66ea6a0d78a781f18a639ea8e684ae64d526743813da51976",
+      "interpretedCropSha256": "88d339f7c78fa8c0852aadd64ef4b10ba0914bcff3a77b512959d458028bb4b8",
+      "colors": {
+        "width": 320,
+        "height": 240,
+        "orange": 0,
+        "green": 7759,
+        "blue": 69041,
+        "sha256": "88d339f7c78fa8c0852aadd64ef4b10ba0914bcff3a77b512959d458028bb4b8"
+      },
+      "pass": true,
+      "colorMetadata": "initial-input-paint-0000.screen-color.json"
+    },
+    {
+      "label": "initial-after",
+      "bounds": {
+        "x": 380,
+        "y": 1080,
+        "width": 320,
+        "height": 240
+      },
+      "wanted": "green",
+      "measuredAt": "2026-10-26T15:42:40.195Z",
+      "originalSha256": "b50b6ab9d911d0a66ea6a0d78a781f18a639ea8e684ae64d526743813da51976",
+      "originalCropSha256": "88d339f7c78fa8c0852aadd64ef4b10ba0914bcff3a77b512959d458028bb4b8",
+      "interpretedSha256": "b50b6ab9d911d0a66ea6a0d78a781f18a639ea8e684ae64d526743813da51976",
+      "interpretedCropSha256": "88d339f7c78fa8c0852aadd64ef4b10ba0914bcff3a77b512959d458028bb4b8",
+      "colors": {
+        "width": 320,
+        "height": 240,
+        "orange": 0,
+        "green": 7759,
+        "blue": 69041,
+        "sha256": "88d339f7c78fa8c0852aadd64ef4b10ba0914bcff3a77b512959d458028bb4b8"
+      },
+      "pass": true,
+      "colorMetadata": "initial-after.screen-color.json"
+    },
+    {
+      "label": "background-recovery-automatic-paint-0001",
+      "bounds": {
+        "x": 380,
+        "y": 1080,
+        "width": 320,
+        "height": 240
+      },
+      "wanted": "green",
+      "measuredAt": "2026-10-26T15:42:43.838Z",
+      "originalSha256": "b50b6ab9d911d0a66ea6a0d78a781f18a639ea8e684ae64d526743813da51976",
+      "originalCropSha256": "88d339f7c78fa8c0852aadd64ef4b10ba0914bcff3a77b512959d458028bb4b8",
+      "interpretedSha256": "b50b6ab9d911d0a66ea6a0d78a781f18a639ea8e684ae64d526743813da51976",
+      "interpretedCropSha256": "88d339f7c78fa8c0852aadd64ef4b10ba0914bcff3a77b512959d458028bb4b8",
+      "colors": {
+        "width": 320,
+        "height": 240,
+        "orange": 0,
+        "green": 7759,
+        "blue": 69041,
+        "sha256": "88d339f7c78fa8c0852aadd64ef4b10ba0914bcff3a77b512959d458028bb4b8"
+      },
+      "pass": true,
+      "colorMetadata": "background-recovery-automatic-paint-0001.screen-color.json"
+    },
+    {
+      "label": "background-recovery-paint-0002",
+      "bounds": {
+        "x": 380,
+        "y": 1080,
+        "width": 320,
+        "height": 240
+      },
+      "wanted": "orange",
+      "measuredAt": "2026-10-26T15:42:46.846Z",
+      "originalSha256": "b2bd53f7242815d3abefe514f6a69439606e3eb2361697d653ab1a5ebdf6468b",
+      "originalCropSha256": "588914a95465812d202cf6ae9d3fd0c61953fb3d78ccc5416dd11fe5f7a16a23",
+      "interpretedSha256": "b2bd53f7242815d3abefe514f6a69439606e3eb2361697d653ab1a5ebdf6468b",
+      "interpretedCropSha256": "588914a95465812d202cf6ae9d3fd0c61953fb3d78ccc5416dd11fe5f7a16a23",
+      "colors": {
+        "width": 320,
+        "height": 240,
+        "orange": 7759,
+        "green": 0,
+        "blue": 69041,
+        "sha256": "588914a95465812d202cf6ae9d3fd0c61953fb3d78ccc5416dd11fe5f7a16a23"
+      },
+      "pass": true,
+      "colorMetadata": "background-recovery-paint-0002.screen-color.json"
+    },
+    {
+      "label": "lock-recovery-automatic-paint-0003",
+      "bounds": {
+        "x": 380,
+        "y": 1080,
+        "width": 320,
+        "height": 240
+      },
+      "wanted": "orange",
+      "measuredAt": "2026-10-26T15:42:52.305Z",
+      "originalSha256": "b2bd53f7242815d3abefe514f6a69439606e3eb2361697d653ab1a5ebdf6468b",
+      "originalCropSha256": "588914a95465812d202cf6ae9d3fd0c61953fb3d78ccc5416dd11fe5f7a16a23",
+      "interpretedSha256": "b2bd53f7242815d3abefe514f6a69439606e3eb2361697d653ab1a5ebdf6468b",
+      "interpretedCropSha256": "588914a95465812d202cf6ae9d3fd0c61953fb3d78ccc5416dd11fe5f7a16a23",
+      "colors": {
+        "width": 320,
+        "height": 240,
+        "orange": 7759,
+        "green": 0,
+        "blue": 69041,
+        "sha256": "588914a95465812d202cf6ae9d3fd0c61953fb3d78ccc5416dd11fe5f7a16a23"
+      },
+      "pass": true,
+      "colorMetadata": "lock-recovery-automatic-paint-0003.screen-color.json"
+    },
+    {
+      "label": "lock-recovery-paint-0004",
+      "bounds": {
+        "x": 380,
+        "y": 1080,
+        "width": 320,
+        "height": 240
+      },
+      "wanted": "green",
+      "measuredAt": "2026-10-26T15:42:55.311Z",
+      "originalSha256": "b50b6ab9d911d0a66ea6a0d78a781f18a639ea8e684ae64d526743813da51976",
+      "originalCropSha256": "88d339f7c78fa8c0852aadd64ef4b10ba0914bcff3a77b512959d458028bb4b8",
+      "interpretedSha256": "b50b6ab9d911d0a66ea6a0d78a781f18a639ea8e684ae64d526743813da51976",
+      "interpretedCropSha256": "88d339f7c78fa8c0852aadd64ef4b10ba0914bcff3a77b512959d458028bb4b8",
+      "colors": {
+        "width": 320,
+        "height": 240,
+        "orange": 0,
+        "green": 7759,
+        "blue": 69041,
+        "sha256": "88d339f7c78fa8c0852aadd64ef4b10ba0914bcff3a77b512959d458028bb4b8"
+      },
+      "pass": true,
+      "colorMetadata": "lock-recovery-paint-0004.screen-color.json"
+    },
+    {
+      "label": "surface-recovery-automatic-paint-0005",
+      "bounds": {
+        "x": 380,
+        "y": 1080,
+        "width": 320,
+        "height": 240
+      },
+      "wanted": "green",
+      "measuredAt": "2026-10-26T15:42:59.875Z",
+      "originalSha256": "b50b6ab9d911d0a66ea6a0d78a781f18a639ea8e684ae64d526743813da51976",
+      "originalCropSha256": "88d339f7c78fa8c0852aadd64ef4b10ba0914bcff3a77b512959d458028bb4b8",
+      "interpretedSha256": "b50b6ab9d911d0a66ea6a0d78a781f18a639ea8e684ae64d526743813da51976",
+      "interpretedCropSha256": "88d339f7c78fa8c0852aadd64ef4b10ba0914bcff3a77b512959d458028bb4b8",
+      "colors": {
+        "width": 320,
+        "height": 240,
+        "orange": 0,
+        "green": 7759,
+        "blue": 69041,
+        "sha256": "88d339f7c78fa8c0852aadd64ef4b10ba0914bcff3a77b512959d458028bb4b8"
+      },
+      "pass": true,
+      "colorMetadata": "surface-recovery-automatic-paint-0005.screen-color.json"
+    },
+    {
+      "label": "surface-recovery-paint-0006",
+      "bounds": {
+        "x": 380,
+        "y": 1080,
+        "width": 320,
+        "height": 240
+      },
+      "wanted": "orange",
+      "measuredAt": "2026-10-26T15:43:02.916Z",
+      "originalSha256": "b2bd53f7242815d3abefe514f6a69439606e3eb2361697d653ab1a5ebdf6468b",
+      "originalCropSha256": "588914a95465812d202cf6ae9d3fd0c61953fb3d78ccc5416dd11fe5f7a16a23",
+      "interpretedSha256": "b2bd53f7242815d3abefe514f6a69439606e3eb2361697d653ab1a5ebdf6468b",
+      "interpretedCropSha256": "588914a95465812d202cf6ae9d3fd0c61953fb3d78ccc5416dd11fe5f7a16a23",
+      "colors": {
+        "width": 320,
+        "height": 240,
+        "orange": 7759,
+        "green": 0,
+        "blue": 69041,
+        "sha256": "588914a95465812d202cf6ae9d3fd0c61953fb3d78ccc5416dd11fe5f7a16a23"
+      },
+      "pass": true,
+      "colorMetadata": "surface-recovery-paint-0006.screen-color.json"
+    }
+  ],
+  "commandCount": 106,
+  "limitations": [
+    "Initial PixelCopy pair retains the original same-Surface scene contract; lifecycle recovery uses fresh independent compositor captures.",
+    "Continuous running is a bounded stability check, not long-run stress, performance or leak-free certification.",
+    "Resource release means the real existing native teardown and process shutdown contract; no per-object GPU leak census is available."
+  ],
+  "apk": {
+    "file": "output/runtime-interop/android-lifecycle-x64-build-attempt-2/app-debug.apk",
+    "bytes": 24611573,
+    "sha256": "dc7c4d95d16566ada0954f2e6ee2690e645c70bf7fda71cf2185ba59b8edec56"
+  },
+  "packagedAssets": {
+    "assets-manifest.json": {
+      "bytes": 6541,
+      "sha256": "18615a9c5b1760074f82296c664d5d894032c62fc1e6671239f94e8c18f418df"
+    },
+    "interop/assets/gltf-basic/BoxTextured.LICENSE.md": {
+      "bytes": 482,
+      "sha256": "505ec72f522d924ae26dbccd78b0b66efe5ef91c454cb16e139a465ce25839b8"
+    },
+    "interop/assets/gltf-basic/BoxTextured.glb": {
+      "bytes": 5956,
+      "sha256": "b510eca2e2ef33f62f9ed57d6e7ce2d10ebb2bdebc4a8e59d347719ba81abdf4"
+    },
+    "interop/assets/gltf-skin/SimpleSkin.LICENSE.md": {
+      "bytes": 316,
+      "sha256": "2f6560ab0c37fad10295af0289cbe4a04264c5ef97003a4129a3b8c8b0ba6a27"
+    },
+    "interop/assets/gltf-skin/SimpleSkin.gltf": {
+      "bytes": 2386,
+      "sha256": "8d92e9888340eb98e82a65a1f8b037d9a1d9f09e5fd0b6ba6d40fd93700b3239"
+    },
+    "interop/assets/gltf-skin/SimpleSkin_animation.bin": {
+      "bytes": 240,
+      "sha256": "ff21b1bc3d0abbe53f7665060ec6c22d873b6e85a7669171a2b6b8ae01c39347"
+    },
+    "interop/assets/gltf-skin/SimpleSkin_geometry.bin": {
+      "bytes": 168,
+      "sha256": "35f0ca6bc07976c0aadc163d4737758989cfcc9870a99800004c4478fe698b63"
+    },
+    "interop/assets/gltf-skin/SimpleSkin_inverseBindMatrices.bin": {
+      "bytes": 128,
+      "sha256": "5844ab221cd2ad367420a248f6387b46e5f8498604427730a37ee96b4d4ec599"
+    },
+    "interop/assets/gltf-skin/SimpleSkin_skinningData.bin": {
+      "bytes": 320,
+      "sha256": "413bc8a8c0da673df767874e6f05f0b00c9261756a08586b9d555bd5535414b5"
+    },
+    "interop/entry.js": {
+      "bytes": 2939,
+      "sha256": "01ee283d41f340f0b85fe0da74d58694b5125c36d82fa142a9382ade89cd3a68"
+    },
+    "interop/manifest.json": {
+      "bytes": 6541,
+      "sha256": "18615a9c5b1760074f82296c664d5d894032c62fc1e6671239f94e8c18f418df"
+    },
+    "interop/probes/air-smoke.mjs": {
+      "bytes": 8303,
+      "sha256": "cf27c158eda7515906e92a03153f2a12f23219b8cda8e02eda7145e6cdb7d2ea"
+    },
+    "interop/probes/android-demo.mjs": {
+      "bytes": 3504,
+      "sha256": "a1d45980a097d1f863ed5eafd7c52ce03816eac134f4e333eaa331e5af9dc9b4"
+    },
+    "interop/probes/module-fixture.mjs": {
+      "bytes": 91,
+      "sha256": "74c80e8da1947d2abb286f690223c6751b050f2c9e254c507b43c164b11791f5"
+    },
+    "interop/probes/probes.mjs": {
+      "bytes": 25271,
+      "sha256": "fde69e728aa64ba9de48d16644be002b8ecbca6a35c555f01b1d338ef1f6d199"
+    },
+    "interop/probes/scene-compute.mjs": {
+      "bytes": 10956,
+      "sha256": "76d930111874283271a226a4977ebf1f0f21a3017220347418a904c8074be519"
+    },
+    "interop/probes/scene-models.mjs": {
+      "bytes": 14654,
+      "sha256": "ec953308f487453faabdafc5ce96fac225b866ca82ee905f9ab10f81b30b48e1"
+    },
+    "interop/probes/scene-runner.mjs": {
+      "bytes": 7495,
+      "sha256": "03a8789346334c18f062b8ed71ebb454e2fd7649fd42d5a514dad94bdb613264"
+    },
+    "interop/probes/scene-ui.mjs": {
+      "bytes": 5607,
+      "sha256": "a34b91d061136d53734100844547353c0fb988fc773371d4aba05b8d2415b5d4"
+    },
+    "interop/sdk/cocosair.module.js": {
+      "bytes": 8526393,
+      "sha256": "417509cb4774f85346158c7c27f580a7afe5ace70c7486e095b4bbb216de518a"
+    },
+    "interop/sdk/webgpu/LICENSE-apache.txt": {
+      "bytes": 9226,
+      "sha256": "9362ea9ea17cb221a20cbbd63f404710834cc273d2a9a7b60314fd68ab702cd6"
+    },
+    "interop/sdk/webgpu/LICENSE-dawn.txt": {
+      "bytes": 11829,
+      "sha256": "0493f897193af1796d5054659f45ec7d4c5af648fa67a99f01d30e55cc805abc"
+    },
+    "interop/sdk/webgpu/LICENSE-glslang.txt": {
+      "bytes": 55719,
+      "sha256": "373bb541d74f5a2854e4b752c57952dd8155cca535124176de90c94efc67ef85"
+    },
+    "interop/sdk/webgpu/NOTICE-babylon.md": {
+      "bytes": 793,
+      "sha256": "7f85d099ce3c6e1900a45ee8d5b8fa405e760c746af687b3ee2081416e48f183"
+    },
+    "interop/sdk/webgpu/glslang.js": {
+      "bytes": 12829,
+      "sha256": "7937463b384ded16e10da2c1d64cb63a0894e56e8d8167cce636be5635caef59"
+    },
+    "interop/sdk/webgpu/glslang.wasm": {
+      "bytes": 1192271,
+      "sha256": "2746e37cbb52ff99f21a836e56e72e5771873a83a032faec2ed860941b23768e"
+    },
+    "interop/sdk/webgpu/manifest.json": {
+      "bytes": 1816,
+      "sha256": "84161a92c5469819bab8a3ddc6512bf8e6e88c1bb67c1fd4c873be84ce0e6df9"
+    },
+    "interop/sdk/webgpu/twgsl.js": {
+      "bytes": 74129,
+      "sha256": "e5664e33a74d064118769636440a5b09121db31370d6fe54b778deb17cd0e4f5"
+    },
+    "interop/sdk/webgpu/twgsl.wasm": {
+      "bytes": 1702916,
+      "sha256": "a434c2decdbb38caadf5f486d806384a1543554828c983c77922b2d92579914c"
+    }
+  },
+  "colorRuntime": {
+    "executable": {
+      "file": "C:\\Users\\caosh\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+      "sha256": "ceabb31054d429f57cb3825775677eeaf0db35fdabbc5ff6aef661c037154b00"
+    },
+    "modules": {
+      "PIL": {
+        "file": "C:\\Users\\caosh\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\site-packages\\PIL\\__init__.py",
+        "sha256": "3fffff8502f4b59ca61d39cce713d55ffef046954262fce1abac3e97f3803734"
+      },
+      "PIL.Image": {
+        "file": "C:\\Users\\caosh\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\site-packages\\PIL\\Image.py",
+        "sha256": "59f1b98ed7bfd7b516b9f13ffd9dd3bc0aa1a495042accdb5ae4609b41c329d5"
+      },
+      "PIL.ImageCms": {
+        "file": "C:\\Users\\caosh\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\site-packages\\PIL\\ImageCms.py",
+        "sha256": "0effeeecadc71257d6eabcbd4cf43277ff35c6aeda0e7ba4c60ab67676bf49de"
+      },
+      "PIL._imaging": {
+        "file": "C:\\Users\\caosh\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\site-packages\\PIL\\_imaging.cp312-win_amd64.pyd",
+        "sha256": "d5f7aaebcc66e96fcff9af9d86cb73a9decba0706c29276af23606e4cdf89fa0"
+      },
+      "PIL._imagingcms": {
+        "file": "C:\\Users\\caosh\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\site-packages\\PIL\\_imagingcms.cp312-win_amd64.pyd",
+        "sha256": "a7482696c98b7d5fe44a172e280147ae6448e82017be3a2322713e53765d9c7a"
+      }
+    },
+    "versions": {
+      "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+      "pillow": "12.3.0",
+      "littlecms": "2.19"
+    },
+    "producer": {
+      "file": "C:\\Users\\caosh\\.codex\\worktrees\\webgpu-runtime-interop\\cocosair.js\\tools\\verify\\runtime-interop-android\\verification-snapshots\\output\\runtime-interop\\android-phone-color-normalize.py",
+      "sha256": "0a6f3d0817bf8693d04ed2a590bfe1cd7faa2d64c0a158e440a8661d93e4f4ac"
+    }
+  },
+  "inputs": {
+    "../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/jszip/lib/index.js": "0fdb844fcdd6fd8ce8ced5e20b37cdabb629b4c155a1d3fb5df29c69eeb4f228",
+    "../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/Lib/site-packages/PIL/Image.py": "59f1b98ed7bfd7b516b9f13ffd9dd3bc0aa1a495042accdb5ae4609b41c329d5",
+    "../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/Lib/site-packages/PIL/ImageCms.py": "0effeeecadc71257d6eabcbd4cf43277ff35c6aeda0e7ba4c60ab67676bf49de",
+    "../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/Lib/site-packages/PIL/__init__.py": "3fffff8502f4b59ca61d39cce713d55ffef046954262fce1abac3e97f3803734",
+    "../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/Lib/site-packages/PIL/_imaging.cp312-win_amd64.pyd": "d5f7aaebcc66e96fcff9af9d86cb73a9decba0706c29276af23606e4cdf89fa0",
+    "../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/Lib/site-packages/PIL/_imagingcms.cp312-win_amd64.pyd": "a7482696c98b7d5fe44a172e280147ae6448e82017be3a2322713e53765d9c7a",
+    "../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe": "ceabb31054d429f57cb3825775677eeaf0db35fdabbc5ff6aef661c037154b00",
+    "output/runtime-interop/android-lifecycle-x64-build-attempt-2/app-debug.apk": "dc7c4d95d16566ada0954f2e6ee2690e645c70bf7fda71cf2185ba59b8edec56",
+    "output/runtime-interop/android-lifecycle-x64-build-attempt-2/build-report.json": "83b9b60ba7c896b3ccfc36cfd8949c1a0b823b69771f3cf2cb72c4d967042070",
+    "tools/verify/runtime-interop-android-lifecycle.cjs": "12c360ece283e99b8fae3925b43e7afeb4772d083e98dc9da6b5332ccfec6ef7",
+    "tools/verify/runtime-interop-android.cjs": "124c9145bf3833c33d95ef692df8a810db8cb8daa1a56d53ce26e0a7fa057837",
+    "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/android-phone-color-normalize.py": "0a6f3d0817bf8693d04ed2a590bfe1cd7faa2d64c0a158e440a8661d93e4f4ac",
+    "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/android-phone-color-presentation.cjs": "d5b57f2feacbba350437cd16c1ace930f02a5e1291e21ccef2bd4f9a8388105f",
+    "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/android-phone-process-table.cjs": "691ee9897c80aef53951b67894618071527d0a02032cd0f2469685ae08a4744d",
+    "E:/AIProMax/github/cocosair.js/node_modules/pngjs/lib/png.js": "e02cecbd36327829758386dc3f0ca4a36a2339ccb5d5e824ca3556e2c3f89726"
+  },
+  "device": {
+    "qemu": "1",
+    "model": "sdk_gphone16k_x86_64",
+    "fingerprint": "google/sdk_gphone16k_x86_64/emu64xa16k:17/CE2A.260420.051.A3/16571990:userdebug/dev-keys",
+    "abiList": "x86_64,arm64-v8a",
+    "pageBytes": 16384
+  },
+  "initialCompat": {
+    "linker": "fatal",
+    "pmDisabled": "true"
+  },
+  "logTimeBounds": {
+    "format": "logcat epoch",
+    "startEpochSecondsInclusive": 1793029351,
+    "precision": "Device seconds; final upper bound is the exclusive next second. The native PID and created lifecycle marker further bind the current run.",
+    "endEpochSecondsExclusive": 1793029385
+  },
+  "launch": "Starting: Intent { cmp=com.mystral.engine.interop/com.mystral.engine.MystralActivity (has extras) }\r\nStatus: ok\r\nLaunchState: COLD\r\nActivity: com.mystral.engine.interop/com.mystral.engine.MystralActivity\r\nTotalTime: 454\r\nWaitTime: 460\r\nComplete",
+  "runtime": {
+    "loadedABI": "x86_64",
+    "v8StartupMode": "embedded",
+    "v8Version": "11.6.189.22",
+    "entryPath": "/data/user/0/com.mystral.engine.interop/files/interop/android-lifecycle-1793029350099/native-entry.mjs",
+    "entrySha256": "01ee283d41f340f0b85fe0da74d58694b5125c36d82fa142a9382ade89cd3a68",
+    "jsEngine": "v8",
+    "backend": "dawn",
+    "nativeStarted": true
+  },
+  "application": {
+    "schema": "air-android-demo-v1",
+    "ready": true,
+    "scope": "interactive-startup-only",
+    "frames": 3,
+    "taps": 0,
+    "color": "orange",
+    "gpuErrors": [],
+    "runId": "android-lifecycle-1793029350099",
+    "caseId": "demo",
+    "pass": true
+  },
+  "recoveryAttempts": [
+    {
+      "label": "background-recovery",
+      "startedAt": "2026-10-26T15:42:40.661Z",
+      "monotonicStartMs": 3372514.7771,
+      "budgetMs": 15000,
+      "existingTaps": 1,
+      "automaticColor": "green",
+      "automaticPresentation": {
+        "label": "background-recovery-automatic-paint-0001",
+        "bounds": {
+          "x": 380,
+          "y": 1080,
+          "width": 320,
+          "height": 240
+        },
+        "wanted": "green",
+        "measuredAt": "2026-10-26T15:42:43.838Z",
+        "originalSha256": "b50b6ab9d911d0a66ea6a0d78a781f18a639ea8e684ae64d526743813da51976",
+        "originalCropSha256": "88d339f7c78fa8c0852aadd64ef4b10ba0914bcff3a77b512959d458028bb4b8",
+        "interpretedSha256": "b50b6ab9d911d0a66ea6a0d78a781f18a639ea8e684ae64d526743813da51976",
+        "interpretedCropSha256": "88d339f7c78fa8c0852aadd64ef4b10ba0914bcff3a77b512959d458028bb4b8",
+        "colors": {
+          "width": 320,
+          "height": 240,
+          "orange": 0,
+          "green": 7759,
+          "blue": 69041,
+          "sha256": "88d339f7c78fa8c0852aadd64ef4b10ba0914bcff3a77b512959d458028bb4b8"
+        },
+        "pass": true,
+        "colorMetadata": "background-recovery-automatic-paint-0001.screen-color.json"
+      },
+      "beforeFirstInput": true,
+      "elapsedMs": 6391.335399999749
+    },
+    {
+      "label": "lock-recovery",
+      "startedAt": "2026-10-26T15:42:48.819Z",
+      "monotonicStartMs": 3380672.1533,
+      "budgetMs": 15000,
+      "existingTaps": 2,
+      "automaticColor": "orange",
+      "automaticPresentation": {
+        "label": "lock-recovery-automatic-paint-0003",
+        "bounds": {
+          "x": 380,
+          "y": 1080,
+          "width": 320,
+          "height": 240
+        },
+        "wanted": "orange",
+        "measuredAt": "2026-10-26T15:42:52.305Z",
+        "originalSha256": "b2bd53f7242815d3abefe514f6a69439606e3eb2361697d653ab1a5ebdf6468b",
+        "originalCropSha256": "588914a95465812d202cf6ae9d3fd0c61953fb3d78ccc5416dd11fe5f7a16a23",
+        "interpretedSha256": "b2bd53f7242815d3abefe514f6a69439606e3eb2361697d653ab1a5ebdf6468b",
+        "interpretedCropSha256": "588914a95465812d202cf6ae9d3fd0c61953fb3d78ccc5416dd11fe5f7a16a23",
+        "colors": {
+          "width": 320,
+          "height": 240,
+          "orange": 7759,
+          "green": 0,
+          "blue": 69041,
+          "sha256": "588914a95465812d202cf6ae9d3fd0c61953fb3d78ccc5416dd11fe5f7a16a23"
+        },
+        "pass": true,
+        "colorMetadata": "lock-recovery-automatic-paint-0003.screen-color.json"
+      },
+      "beforeFirstInput": true,
+      "elapsedMs": 6713.727500000037
+    },
+    {
+      "label": "surface-recovery",
+      "startedAt": "2026-10-26T15:42:56.643Z",
+      "monotonicStartMs": 3388496.7643,
+      "budgetMs": 15000,
+      "existingTaps": 3,
+      "automaticColor": "green",
+      "automaticPresentation": {
+        "label": "surface-recovery-automatic-paint-0005",
+        "bounds": {
+          "x": 380,
+          "y": 1080,
+          "width": 320,
+          "height": 240
+        },
+        "wanted": "green",
+        "measuredAt": "2026-10-26T15:42:59.875Z",
+        "originalSha256": "b50b6ab9d911d0a66ea6a0d78a781f18a639ea8e684ae64d526743813da51976",
+        "originalCropSha256": "88d339f7c78fa8c0852aadd64ef4b10ba0914bcff3a77b512959d458028bb4b8",
+        "interpretedSha256": "b50b6ab9d911d0a66ea6a0d78a781f18a639ea8e684ae64d526743813da51976",
+        "interpretedCropSha256": "88d339f7c78fa8c0852aadd64ef4b10ba0914bcff3a77b512959d458028bb4b8",
+        "colors": {
+          "width": 320,
+          "height": 240,
+          "orange": 0,
+          "green": 7759,
+          "blue": 69041,
+          "sha256": "88d339f7c78fa8c0852aadd64ef4b10ba0914bcff3a77b512959d458028bb4b8"
+        },
+        "pass": true,
+        "colorMetadata": "surface-recovery-automatic-paint-0005.screen-color.json"
+      },
+      "beforeFirstInput": true,
+      "elapsedMs": 6465.791800000239
+    }
+  ],
+  "nativeExit": {
+    "code": 0,
+    "error": "",
+    "pid": 4353,
+    "elapsedRealtime": 902657
+  },
+  "teardown": {
+    "pass": true,
+    "stages": {
+      "runtime-reset-return": true,
+      "shutdown-jsEngine-return": true,
+      "context-surface-release-return": true,
+      "context-device-destroy-return": true,
+      "context-device-release-return": true,
+      "context-instance-release-return": true,
+      "shutdown-window-return": true,
+      "shutdown-complete": true,
+      "java-exit-notify-return": true
+    },
+    "sdlReturned": true,
+    "elapsedMs": 306,
+    "rawLog": "logcat.txt"
+  },
+  "finalCompat": {
+    "linker": "fatal",
+    "pmDisabled": "true"
+  },
+  "processCleanup": {
+    "pass": true,
+    "pidGone": true,
+    "normalNativeExitBeforeCleanup": true,
+    "finishRequested": true
+  },
+  "logcatShutdown": {
+    "budgetMs": 2000,
+    "killRequested": true,
+    "closedBeforeRequest": false,
+    "close": {
+      "observed": true,
+      "code": null,
+      "signal": "SIGTERM",
+      "monotonicMs": 3396513.5852,
+      "measuredAt": "2026-10-26T15:43:04.660Z"
+    },
+    "elapsedMs": 5.682900000363588
+  },
+  "crashAudit": {
+    "pass": true,
+    "nativePid": 4353,
+    "nativeRunId": "android-lifecycle-1793029350099",
+    "lowerEpochSeconds": 1793029351.834,
+    "upperEpochSecondsExclusive": 1793029385,
+    "scope": "Fatal current-PID Java/libc records and debugger blocks explicitly naming this PID, inside retained run time bounds",
+    "fatal": [],
+    "retainedEpochRows": 212,
+    "currentRunRows": 202,
+    "logSha256": "b1811ce53c40ece767e6448ec8c8d1d5a3d0f199667f1ed9e60ce8faff6017c6"
+  },
+  "finalInputs": {
+    "../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/jszip/lib/index.js": "0fdb844fcdd6fd8ce8ced5e20b37cdabb629b4c155a1d3fb5df29c69eeb4f228",
+    "../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/Lib/site-packages/PIL/Image.py": "59f1b98ed7bfd7b516b9f13ffd9dd3bc0aa1a495042accdb5ae4609b41c329d5",
+    "../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/Lib/site-packages/PIL/ImageCms.py": "0effeeecadc71257d6eabcbd4cf43277ff35c6aeda0e7ba4c60ab67676bf49de",
+    "../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/Lib/site-packages/PIL/__init__.py": "3fffff8502f4b59ca61d39cce713d55ffef046954262fce1abac3e97f3803734",
+    "../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/Lib/site-packages/PIL/_imaging.cp312-win_amd64.pyd": "d5f7aaebcc66e96fcff9af9d86cb73a9decba0706c29276af23606e4cdf89fa0",
+    "../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/Lib/site-packages/PIL/_imagingcms.cp312-win_amd64.pyd": "a7482696c98b7d5fe44a172e280147ae6448e82017be3a2322713e53765d9c7a",
+    "../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe": "ceabb31054d429f57cb3825775677eeaf0db35fdabbc5ff6aef661c037154b00",
+    "output/runtime-interop/android-lifecycle-x64-build-attempt-2/app-debug.apk": "dc7c4d95d16566ada0954f2e6ee2690e645c70bf7fda71cf2185ba59b8edec56",
+    "output/runtime-interop/android-lifecycle-x64-build-attempt-2/build-report.json": "83b9b60ba7c896b3ccfc36cfd8949c1a0b823b69771f3cf2cb72c4d967042070",
+    "tools/verify/runtime-interop-android-lifecycle.cjs": "12c360ece283e99b8fae3925b43e7afeb4772d083e98dc9da6b5332ccfec6ef7",
+    "tools/verify/runtime-interop-android.cjs": "124c9145bf3833c33d95ef692df8a810db8cb8daa1a56d53ce26e0a7fa057837",
+    "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/android-phone-color-normalize.py": "0a6f3d0817bf8693d04ed2a590bfe1cd7faa2d64c0a158e440a8661d93e4f4ac",
+    "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/android-phone-color-presentation.cjs": "d5b57f2feacbba350437cd16c1ace930f02a5e1291e21ccef2bd4f9a8388105f",
+    "tools/verify/runtime-interop-android/verification-snapshots/output/runtime-interop/android-phone-process-table.cjs": "691ee9897c80aef53951b67894618071527d0a02032cd0f2469685ae08a4744d",
+    "E:/AIProMax/github/cocosair.js/node_modules/pngjs/lib/png.js": "e02cecbd36327829758386dc3f0ca4a36a2339ccb5d5e824ca3556e2c3f89726"
+  },
+  "inputsUnchanged": true,
+  "physicalAcceptance": false,
+  "page16kRuntimeAcceptance": false,
+  "status": "PARTIAL",
+  "finishedAt": "2026-10-26T15:43:04.685Z"
+}

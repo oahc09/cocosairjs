@@ -1,0 +1,34 @@
+{
+  "schema": "air-android-lifecycle-owned-environment-shutdown-v1",
+  "finishedAt": "2026-10-26T16:03:38.4994707Z",
+  "avd": "Mystral_16KB_API37",
+  "actualPageBytes": 16384,
+  "finalCompat": {
+    "linker": "fatal",
+    "pmDisabled": "true"
+  },
+  "originalLockscreenDisabled": "true",
+  "lockscreenDisabledRestored": "true",
+  "ownedEmulatorStopped": true,
+  "avdAndSdkPreserved": true,
+  "restoreOutput": "Lock screen disabled set to true",
+  "emulatorKillOutput": [
+    "OK: killing emulator, bye bye",
+    "",
+    "OK",
+    ""
+  ],
+  "adbDevices": "List of devices attached\r\n\r\n",
+  "logs": [
+    {
+      "file": "output/runtime-interop/android-lifecycle-env-attempt-1/emulator.stdout.log",
+      "bytes": 13857,
+      "sha256": "6c4cef9d5cb18eb6df3a2484a46a052ea6e871381c17c57c65d1eafabd8ea3a9"
+    },
+    {
+      "file": "output/runtime-interop/android-lifecycle-env-attempt-1/emulator.stderr.log",
+      "bytes": 41,
+      "sha256": "b6eaeacb382b7c62d87f5577e442ba03e94d6c5e94ed6b0b8ab42c99c677cbb8"
+    }
+  ]
+}

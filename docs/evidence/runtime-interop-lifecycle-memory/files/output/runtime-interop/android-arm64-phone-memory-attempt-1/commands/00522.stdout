@@ -1,0 +1,9 @@
+{"event":"created","pid":25763,"surfaceGeneration":0,"orientation":1,"elapsedRealtime":152432487}
+{"event":"resume","pid":25763,"surfaceGeneration":0,"orientation":1,"elapsedRealtime":152432489}
+{"event":"surface-created","pid":25763,"surfaceGeneration":1,"orientation":1,"elapsedRealtime":152432517}
+{"event":"surface-changed","pid":25763,"surfaceGeneration":1,"orientation":1,"elapsedRealtime":152432520}
+{"event":"configuration-changed","pid":25763,"surfaceGeneration":1,"orientation":2,"elapsedRealtime":152536325}
+{"event":"surface-changed","pid":25763,"surfaceGeneration":1,"orientation":2,"elapsedRealtime":152536332}
+{"event":"configuration-changed","pid":25763,"surfaceGeneration":1,"orientation":1,"elapsedRealtime":152536734}
+{"event":"surface-changed","pid":25763,"surfaceGeneration":1,"orientation":1,"elapsedRealtime":152536741}
+{"event":"pause","pid":25763,"surfaceGeneration":1,"orientation":1,"elapsedRealtime":153343743}

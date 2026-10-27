@@ -1,0 +1,21 @@
+{
+  "startedAt": "2026-10-27T04:32:14.3587087Z",
+  "arguments": [
+    "-avd",
+    "Mystral_Memory_16KB_API37",
+    "-port",
+    "5554",
+    "-gpu",
+    "host",
+    "-no-snapshot",
+    "-no-audio",
+    "-no-window",
+    "-no-boot-anim",
+    "-show-kernel"
+  ],
+  "launcherPid": 6432,
+  "ownedAvd": "Mystral_Memory_16KB_API37",
+  "avdHome": "C:\\Users\\caosh\\.codex\\worktrees\\webgpu-runtime-interop\\cocosair.js\\output\\runtime-interop\\android-memory-env-attempt-3\\avd-home",
+  "previousAttemptFailed": true,
+  "originalLockscreenReceipt": "../android-memory-env-attempt-3/lockscreen-policy.json"
+}

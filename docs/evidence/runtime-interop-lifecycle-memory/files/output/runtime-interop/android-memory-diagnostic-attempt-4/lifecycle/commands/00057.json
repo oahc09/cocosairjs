@@ -1,0 +1,13 @@
+{
+  "arguments": [
+    "-s",
+    "emulator-5554",
+    "shell",
+    "wm",
+    "dismiss-keyguard"
+  ],
+  "startedAt": "2026-10-27T04:48:10.452Z",
+  "timeoutMs": 15000,
+  "exitCode": 0,
+  "finishedAt": "2026-10-27T04:48:10.533Z"
+}

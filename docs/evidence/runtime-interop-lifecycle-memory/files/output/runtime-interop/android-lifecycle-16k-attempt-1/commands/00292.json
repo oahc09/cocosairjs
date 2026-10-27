@@ -1,0 +1,15 @@
+{
+  "arguments": [
+    "-s",
+    "emulator-5554",
+    "shell",
+    "input",
+    "tap",
+    "540",
+    "1200"
+  ],
+  "startedAt": "2026-10-26T15:58:45.676Z",
+  "timeoutMs": 12751,
+  "exitCode": 0,
+  "finishedAt": "2026-10-26T15:58:45.770Z"
+}

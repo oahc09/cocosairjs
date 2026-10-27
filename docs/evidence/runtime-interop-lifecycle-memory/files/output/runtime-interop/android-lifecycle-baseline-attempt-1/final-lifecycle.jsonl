@@ -1,0 +1,17 @@
+{"event":"created","pid":3439,"surfaceGeneration":0,"orientation":1,"elapsedRealtime":171140}
+{"event":"resume","pid":3439,"surfaceGeneration":0,"orientation":1,"elapsedRealtime":171158}
+{"event":"surface-created","pid":3439,"surfaceGeneration":1,"orientation":1,"elapsedRealtime":171237}
+{"event":"surface-changed","pid":3439,"surfaceGeneration":1,"orientation":1,"elapsedRealtime":171249}
+{"event":"pause","pid":3439,"surfaceGeneration":1,"orientation":1,"elapsedRealtime":180823}
+{"event":"resume","pid":3439,"surfaceGeneration":1,"orientation":1,"elapsedRealtime":181175}
+{"event":"pause","pid":3439,"surfaceGeneration":1,"orientation":1,"elapsedRealtime":185621}
+{"event":"surface-destroyed","pid":3439,"surfaceGeneration":2,"orientation":1,"elapsedRealtime":185685}
+{"event":"resume","pid":3439,"surfaceGeneration":2,"orientation":1,"elapsedRealtime":186749}
+{"event":"pause","pid":3439,"surfaceGeneration":2,"orientation":1,"elapsedRealtime":186750}
+{"event":"surface-created","pid":3439,"surfaceGeneration":3,"orientation":1,"elapsedRealtime":186781}
+{"event":"surface-changed","pid":3439,"surfaceGeneration":3,"orientation":1,"elapsedRealtime":186789}
+{"event":"surface-destroyed","pid":3439,"surfaceGeneration":4,"orientation":1,"elapsedRealtime":186819}
+{"event":"resume","pid":3439,"surfaceGeneration":4,"orientation":1,"elapsedRealtime":186866}
+{"event":"surface-created","pid":3439,"surfaceGeneration":5,"orientation":1,"elapsedRealtime":186927}
+{"event":"surface-changed","pid":3439,"surfaceGeneration":5,"orientation":1,"elapsedRealtime":186949}
+{"event":"pause","pid":3439,"surfaceGeneration":5,"orientation":1,"elapsedRealtime":202380}

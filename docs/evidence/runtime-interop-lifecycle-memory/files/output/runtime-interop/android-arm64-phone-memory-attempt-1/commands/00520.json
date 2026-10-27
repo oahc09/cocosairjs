@@ -1,0 +1,20 @@
+{
+  "arguments": [
+    "-s",
+    "10CG4G0BE1003M8",
+    "exec-out",
+    "run-as",
+    "com.mystral.engine.interop",
+    "cat",
+    "files/interop/android-phone-foreground-1793110700195/native-ready.json"
+  ],
+  "startedAt": "2026-10-27T14:33:33.876Z",
+  "monotonicStartMs": 85624450.8302,
+  "absoluteDeadlineMs": 85627450.7946,
+  "timeoutMs": 3000,
+  "exitCode": 0,
+  "signal": null,
+  "error": null,
+  "finishedAt": "2026-10-27T14:33:33.970Z",
+  "monotonicEndMs": 85624544.5438
+}

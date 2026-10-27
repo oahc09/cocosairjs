@@ -1,0 +1,146 @@
+{
+  "passVerified": true,
+  "nativeLibraries": [
+    {
+      "file": "lib/x86_64/libSDL3.so",
+      "bytes": 10930984,
+      "sha256": "f3192dadc88692f8cbe8d29cd6a395c3d4139b2b55236540589c1c6f56608ffe",
+      "needed": [
+        "libm.so",
+        "libOpenSLES.so",
+        "libdl.so",
+        "liblog.so",
+        "libandroid.so",
+        "libGLESv1_CM.so",
+        "libGLESv2.so",
+        "libc.so"
+      ],
+      "zipCompression": 8,
+      "elf": {
+        "machine": 62,
+        "loadAlignments": [
+          16384,
+          16384,
+          16384
+        ],
+        "loadAlignment16KB": true,
+        "relro": [
+          {
+            "phdrIndex": 5,
+            "endAligned16KB": false,
+            "ownLoadIndex": 2,
+            "noOtherWritableLoadInProtectedPages": true,
+            "staticAlignmentSafe": true
+          }
+        ],
+        "relroStaticSafe": true
+      },
+      "providerMatches": true
+    },
+    {
+      "file": "lib/x86_64/libmystral-runtime.so",
+      "bytes": 46037544,
+      "sha256": "9a47f3e3dee72ee0f46dc2fb3348be0990079837d743f2080c7e268405c38f57",
+      "needed": [
+        "libdl.so",
+        "liblog.so",
+        "libSDL3.so",
+        "libandroid.so",
+        "libGLESv3.so",
+        "libEGL.so",
+        "libz.so",
+        "libm.so",
+        "libc.so"
+      ],
+      "zipCompression": 8,
+      "elf": {
+        "machine": 62,
+        "loadAlignments": [
+          16384,
+          16384,
+          16384
+        ],
+        "loadAlignment16KB": true,
+        "relro": [
+          {
+            "phdrIndex": 5,
+            "endAligned16KB": true,
+            "ownLoadIndex": 2,
+            "noOtherWritableLoadInProtectedPages": true,
+            "staticAlignmentSafe": true
+          }
+        ],
+        "relroStaticSafe": true
+      },
+      "providerMatches": true
+    }
+  ],
+  "cppUndefinedSymbols": [],
+  "map": {
+    "file": "mystral-runtime.map",
+    "bytes": 104513678,
+    "sha256": "aa3e8b37620145d09dfa7f9ae23ab411a443554b11c1bc6be3db43c1371b4fe4",
+    "origins": {
+      "libc++_static.a": {
+        "count": 5656,
+        "firstLines": [
+          "          4fd408           4fd408       14     4         D:/Android/Sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/lib/x86_64-linux-android/libc++_static.a(call_once.cpp.o):(.gcc_except_table._ZNSt6__ndk111__call_onceERVmPvPFvS2_E)",
+          "          4fd41c           4fd41c       10     4         D:/Android/Sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/lib/x86_64-linux-android/libc++_static.a(call_once.cpp.o):(.gcc_except_table._ZNSt6__ndk128__exception_guard_exceptionsIZNS_11__call_onceERVmPvPFvS3_EE3$_0ED2B8ne210000Ev)",
+          "          4fd42c           4fd42c       10     4         D:/Android/Sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/lib/x86_64-linux-android/libc++_static.a(chrono.cpp.o):(.gcc_except_table._ZNSt6__ndk16chrono12system_clock3nowEv)",
+          "          4fd43c           4fd43c       10     4         D:/Android/Sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/lib/x86_64-linux-android/libc++_static.a(chrono.cpp.o):(.gcc_except_table._ZNSt6__ndk16chrono12steady_clock3nowEv)",
+          "          4fd44c           4fd44c       1c     4         D:/Android/Sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/lib/x86_64-linux-android/libc++_static.a(path.cpp.o):(.gcc_except_table._ZNSt6__ndk14__fs10filesystem4path17replace_extensionERKS2_)",
+          "          4fd468           4fd468       4c     4         D:/Android/Sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/lib/x86_64-linux-android/libc++_static.a(path.cpp.o):(.gcc_except_table._ZNKSt6__ndk14__fs10filesystem4path16lexically_normalEv)",
+          "          4fd4b4           4fd4b4       24     4         D:/Android/Sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/lib/x86_64-linux-android/libc++_static.a(path.cpp.o):(.gcc_except_table._ZNKSt6__ndk14__fs10filesystem4path18lexically_relativeERKS2_)",
+          "          4fd4d8           4fd4d8       14     4         D:/Android/Sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/lib/x86_64-linux-android/libc++_static.a(path.cpp.o):(.gcc_except_table._ZNSt6__ndk14__fs10filesystem10hash_valueERKNS1_4pathE)"
+        ]
+      },
+      "libc++abi.a": {
+        "count": 1693,
+        "firstLines": [
+          "          501e24           501e24       3c     4         D:/Android/Sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/lib/x86_64-linux-android/libc++abi.a(cxa_guard.cpp.o):(.gcc_except_table.__cxa_guard_acquire)",
+          "          501e60           501e60       24     4         D:/Android/Sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/lib/x86_64-linux-android/libc++abi.a(cxa_guard.cpp.o):(.gcc_except_table.__cxa_guard_release)",
+          "          501e84           501e84       24     4         D:/Android/Sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/lib/x86_64-linux-android/libc++abi.a(cxa_guard.cpp.o):(.gcc_except_table.__cxa_guard_abort)",
+          "          501ea8           501ea8       10     4         D:/Android/Sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/lib/x86_64-linux-android/libc++abi.a(cxa_guard.cpp.o):(.gcc_except_table._ZN10__cxxabiv112_GLOBAL__N_119InitByteGlobalMutexINS0_11LibcppMutexENS0_13LibcppCondVarEL_ZNS0_12GlobalStaticIS2_E8instanceEEL_ZNS4_IS3_E8instanceEEXadL_ZNS0_16PlatformThreadIDEvEEE9LockGuardD2Ev)",
+          "          501eb8           501eb8       10     4         D:/Android/Sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/lib/x86_64-linux-android/libc++abi.a(cxa_handlers.cpp.o):(.gcc_except_table._ZSt9terminatev)",
+          "          501ec8           501ec8       18     4         D:/Android/Sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/lib/x86_64-linux-android/libc++abi.a(cxa_handlers.cpp.o):(.gcc_except_table._ZSt11__terminatePFvvE)",
+          "          501ee0           501ee0       1c     4         D:/Android/Sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/lib/x86_64-linux-android/libc++abi.a(cxa_demangle.cpp.o):(.gcc_except_table.__cxa_demangle)",
+          "          501efc           501efc       50     4         D:/Android/Sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/lib/x86_64-linux-android/libc++abi.a(cxa_demangle.cpp.o):(.gcc_except_table._ZN12_GLOBAL__N_116itanium_demangle22AbstractManglingParserINS0_14ManglingParserINS_16DefaultAllocatorEEES3_E13parseEncodingEb)"
+        ]
+      },
+      "libv8_monolith.a": {
+        "count": 61922,
+        "firstLines": [
+          "          644788           644788      174     4         C:/Users/caosh/.codex/worktrees/webgpu-runtime-interop/cocosair.js/output/runtime-interop/deps-16k-attempt-1/v8/x86_64/libv8_monolith.a(logging.o):(.rodata)",
+          "          6448fc           6448fc       18     4         C:/Users/caosh/.codex/worktrees/webgpu-runtime-interop/cocosair.js/output/runtime-interop/deps-16k-attempt-1/v8/x86_64/libv8_monolith.a(platform-posix.o):(.rodata)",
+          "          644914           644914       18     4         C:/Users/caosh/.codex/worktrees/webgpu-runtime-interop/cocosair.js/output/runtime-interop/deps-16k-attempt-1/v8/x86_64/libv8_monolith.a(platform-posix.o):(.rodata)",
+          "          64492c           64492c       18     4         C:/Users/caosh/.codex/worktrees/webgpu-runtime-interop/cocosair.js/output/runtime-interop/deps-16k-attempt-1/v8/x86_64/libv8_monolith.a(api.o):(.rodata)",
+          "          644944           644944       18     4         C:/Users/caosh/.codex/worktrees/webgpu-runtime-interop/cocosair.js/output/runtime-interop/deps-16k-attempt-1/v8/x86_64/libv8_monolith.a(api.o):(.rodata)",
+          "          64495c           64495c       30     4         C:/Users/caosh/.codex/worktrees/webgpu-runtime-interop/cocosair.js/output/runtime-interop/deps-16k-attempt-1/v8/x86_64/libv8_monolith.a(api.o):(.rodata)",
+          "          64498c           64498c        4     4         C:/Users/caosh/.codex/worktrees/webgpu-runtime-interop/cocosair.js/output/runtime-interop/deps-16k-attempt-1/v8/x86_64/libv8_monolith.a(api.o):(.rodata)",
+          "          644990           644990        4     4         C:/Users/caosh/.codex/worktrees/webgpu-runtime-interop/cocosair.js/output/runtime-interop/deps-16k-attempt-1/v8/x86_64/libv8_monolith.a(api.o):(.rodata)"
+        ]
+      },
+      "android_getCpuFamily": {
+        "count": 0,
+        "firstLines": []
+      },
+      "Cr_z_": {
+        "count": 87,
+        "firstLines": [
+          "          6930e0           6930e0       47     1                 Cr_z_deflate_copyright",
+          "          6955b0           6955b0      200     1                 Cr_z__dist_code",
+          "          6957b0           6957b0      100     1                 Cr_z__length_code",
+          "          6961d0           6961d0       26     1                 Cr_z_inflate.order",
+          "          696ac0           696ac0       32     1                 Cr_z_inflate_copyright",
+          "          696b00           696b00       3e     1                 Cr_z_inflate_table.lbase",
+          "          696b40           696b40       3e     1                 Cr_z_inflate_table.lext",
+          "          696b80           696b80       40     1                 Cr_z_inflate_table.dbase"
+        ]
+      }
+    }
+  },
+  "normalLinkWithoutDuplicateSuppression": true,
+  "cppRuntimeCopiesInOtherApplicationDSOs": 0,
+  "externalSnapshotAssets": [],
+  "scope": "Only SDL C-only and one C++ runtime DSO are packaged"
+}

@@ -1,0 +1,14 @@
+{
+  "arguments": [
+    "-s",
+    "emulator-5554",
+    "shell",
+    "dumpsys",
+    "activity",
+    "activities"
+  ],
+  "startedAt": "2026-10-26T15:42:56.821Z",
+  "timeoutMs": 14822,
+  "exitCode": 0,
+  "finishedAt": "2026-10-26T15:42:56.928Z"
+}

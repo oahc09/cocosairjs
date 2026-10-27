@@ -8,6 +8,18 @@ Android 累计宿主修复、binary wrapper 和固定依赖回执见 [独立补�
 
 最新 SDL 3.2.30 / `c++_static` 候选见 [16 KB 交付](verify/runtime-interop-android/host-patches/16k/README.md)与其 `git-delivery.json`。ARM64、static、16 KB collector、色彩/进程 helper 和构建/审计脚本的原始字节另存于[验收源码快照](verify/runtime-interop-android/verification-snapshots/README.md)；按其清单恢复原路径后使用，不将历史快照作为新的直接运行入口。
 
+`node tools/verify/runtime-interop-android-lifecycle.cjs --serial=<emulator> --apk=<candidate.apk> --python=<python> --out=<new-directory>` 单独验证后台、锁屏、真实 Surface 毁建及默认 900 秒有界连续运行。它只操作已安装的专用 debug 包和明确指定的模拟器，不安装 APK、不设置锁屏凭据或修改设备配置；设备必须事先允许显示 keyguard。每次恢复先验证原画面自动呈现，再发送真实触摸；15 分钟采样不能补跑填空。正常 native 退出、日志采集器关闭和进程清理分别判定。`--soak-seconds=0` 仅作诊断，不能输出完整 PASS。详见 [Android 生命周期说明](../docs/reference/android-runtime-interop.md#生命周期验证工具)。
+
+`tools/build/runtime-interop-android-host.ps1` 与 `runtime-interop-android-finalize.py` 为本轮隔离宿主候选构建和静态核验入口，使用已准备的固定依赖、SDK/stage4 与 Windows 工具链，不下载依赖。前者写新输出目录及宿主 Gradle 构建目录，备份后仅删除一个指定的旧生成 APK以重新打包；后者核对源码/资产前后指纹、签名、16 KB ELF/ZIP 和静态链接闭包，不连接设备。
+
+`node tools/verify/runtime-interop-android-lifecycle-audit.cjs --report=<closed-report.json> --out=<new-directory>` 只读复核已关闭的完整生命周期证据，不连接设备。它重算系统图像及裁图、恢复前后顺序、实际采样间隔和退出/关闭记录；当前严格接受本轮 x64 无 ICC 截图，不能借用历史真机色彩证据。审计写新的结果目录，不修改原报告或重标失败。
+
+`node tools/verify/runtime-interop-android-memory.cjs --serial=<emulator> --apk=<candidate.apk> --python=<python> --baseline-report=<closed-900s-baseline.json> --out=<new-directory>` 在冻结生命周期合同之上采集原生引用计数和同口径 meminfo 对照；它复用旧入口，不修改截图、900 秒、恢复或退出门槛。新报告另查当前 PID 的未捕获 V8 回调错误、分块日志完整性、18 类真实 acquire/release 守恒、Canvas 峰值/帧边界和最终 cleanup。`--soak-seconds=0` 仍仅诊断；`PASS_WITH_OPEN_FINDINGS` 不能简写成无泄漏。`runtime-interop-android-memory-audit.cjs --report=<closed-memory-report> --out=<new-directory>` 是无 ADB 的闭合证据复核，图像仍由上面的独立生命周期审计负责。
+
+`node tools/verify/runtime-interop-android-phone-memory.cjs --serial=<physical-device> --apk=<installed-arm64.apk> --python=<python> --expected-page-size=<actual-bytes> --soak-seconds=900 --out=<new-directory>` 采集首份真机前台资源/内存基线：10 秒可信触摸、计划 30 秒系统图像、计划 300 秒 meminfo，沿用真实原生计数、退出及日志关闭门槛。它不安装或自动解锁手机、不改安全或超时设置；必须先正常解锁，不能在锁屏背后计启动成功。phone schema 明确为 foreground-only，不套用模拟器 PSS 比较，也不冒充完整 HOME/Settings/安全锁屏生命周期通过。
+
+`node tools/verify/runtime-interop-archive.cjs --inputs=<exact-inventory.json> --out=<new-directory>` 按精确清单逐字节归档原始验收记录，拒绝已有输出或源哈希变化；`--check=<archive-directory>` 只读核对完整清单、字节和 producer 身份，不执行 GPU 或设备测试。本轮 [生命周期与内存原始档案](../docs/evidence/runtime-interop-lifecycle-memory/README.md) 保留 7,791 份原件，包括失败尝试；构建二进制与缓存的排除范围见该说明。
+
 `node tools/verify/runtime-interop.cjs --host=browser --out=<new-directory>` 验证 Canvas/DOM、模块与资产、真实 Shader WASM、GPU 提交与独立截图、错误与设备生命周期，并运行同一 Bundle 的 AIR 立方体。需要可解析的 Playwright 与现有 Chrome/Edge；可用 `--bundle=<current-bundle.js>` 指定新构建。`--host=mystral --executable=<existing-file>` 运行同一探针的原生诊断，保留原始 stdout/stderr 和进程回执。Shader 失败不再屏蔽独立 GPU 接口诊断。
 
 `node tools/build/runtime-interop-capture.cjs --out=<new-output-directory>` 使用已安装的 Windows CMake/C++ 工具链构建独立 Windows.Graphics.Capture helper，只写新的 `output/` 子目录和构建收据。原生采集器用 `--headed --capture-executable=<existing-helper>` 启用按需系统窗口 PNG 与独立像素验证；默认无呈现回调不能输出兼容验收通过。helper不调用宿主的GPU截图接口，不安装依赖或修改宿主。

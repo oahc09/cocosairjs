@@ -1,0 +1,16 @@
+{
+  "arguments": [
+    "-s",
+    "emulator-5554",
+    "shell",
+    "am",
+    "start",
+    "-W",
+    "-a",
+    "android.settings.SETTINGS"
+  ],
+  "startedAt": "2026-10-27T05:15:49.040Z",
+  "timeoutMs": 15000,
+  "exitCode": 0,
+  "finishedAt": "2026-10-27T05:15:50.038Z"
+}

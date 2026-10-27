@@ -1,0 +1,16 @@
+{
+  "arguments": [
+    "-s",
+    "emulator-5554",
+    "shell",
+    "run-as",
+    "com.mystral.engine.interop",
+    "cat",
+    "files/interop/android-lifecycle-1793073870645/native-exit.json"
+  ],
+  "startedAt": "2026-10-27T04:05:23.537Z",
+  "timeoutMs": 3000,
+  "exitCode": null,
+  "error": "Error: spawnSync adb ETIMEDOUT",
+  "finishedAt": "2026-10-27T04:05:26.559Z"
+}

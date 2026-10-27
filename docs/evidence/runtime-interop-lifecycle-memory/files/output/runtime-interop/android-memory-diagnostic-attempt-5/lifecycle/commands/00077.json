@@ -1,0 +1,16 @@
+{
+  "arguments": [
+    "-s",
+    "emulator-5554",
+    "shell",
+    "run-as",
+    "com.mystral.engine.interop",
+    "cat",
+    "files/interop/android-lifecycle-1793077352020/native-exit.json"
+  ],
+  "startedAt": "2026-10-27T05:03:07.729Z",
+  "timeoutMs": 800,
+  "exitCode": 1,
+  "error": "Error: Command failed: adb -s emulator-5554 shell run-as com.mystral.engine.interop cat files/interop/android-lifecycle-1793077352020/native-exit.json\ncat: files/interop/android-lifecycle-1793077352020/native-exit.json: No such file or directory\r\n",
+  "finishedAt": "2026-10-27T05:03:07.822Z"
+}

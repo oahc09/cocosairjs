@@ -1,0 +1,4 @@
+{"event":"created","pid":3497,"surfaceGeneration":0,"orientation":1,"elapsedRealtime":222655}
+{"event":"resume","pid":3497,"surfaceGeneration":0,"orientation":1,"elapsedRealtime":222668}
+{"event":"surface-created","pid":3497,"surfaceGeneration":1,"orientation":1,"elapsedRealtime":222790}
+{"event":"surface-changed","pid":3497,"surfaceGeneration":1,"orientation":1,"elapsedRealtime":222802}

@@ -1,0 +1,25 @@
+{
+  "label": "lock-recovery-automatic-paint-0003",
+  "bounds": {
+    "x": 380,
+    "y": 1080,
+    "width": 320,
+    "height": 240
+  },
+  "wanted": "orange",
+  "measuredAt": "2026-10-26T15:42:52.305Z",
+  "originalSha256": "b2bd53f7242815d3abefe514f6a69439606e3eb2361697d653ab1a5ebdf6468b",
+  "originalCropSha256": "588914a95465812d202cf6ae9d3fd0c61953fb3d78ccc5416dd11fe5f7a16a23",
+  "interpretedSha256": "b2bd53f7242815d3abefe514f6a69439606e3eb2361697d653ab1a5ebdf6468b",
+  "interpretedCropSha256": "588914a95465812d202cf6ae9d3fd0c61953fb3d78ccc5416dd11fe5f7a16a23",
+  "colors": {
+    "width": 320,
+    "height": 240,
+    "orange": 7759,
+    "green": 0,
+    "blue": 69041,
+    "sha256": "588914a95465812d202cf6ae9d3fd0c61953fb3d78ccc5416dd11fe5f7a16a23"
+  },
+  "pass": true,
+  "colorMetadata": "lock-recovery-automatic-paint-0003.screen-color.json"
+}

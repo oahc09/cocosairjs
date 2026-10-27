@@ -1,0 +1,19 @@
+{
+  "arguments": [
+    "-s",
+    "emulator-5554",
+    "shell",
+    "am",
+    "start",
+    "-W",
+    "-n",
+    "com.mystral.engine.interop/com.mystral.engine.MystralActivity",
+    "--es",
+    "run_id",
+    "android-lifecycle-1793028649762"
+  ],
+  "startedAt": "2026-10-26T15:30:51.134Z",
+  "timeoutMs": 15000,
+  "exitCode": 0,
+  "finishedAt": "2026-10-26T15:30:52.052Z"
+}

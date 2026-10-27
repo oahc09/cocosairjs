@@ -1,0 +1,20 @@
+{
+  "arguments": [
+    "-s",
+    "10CG4G0BE1003M8",
+    "exec-out",
+    "run-as",
+    "com.mystral.engine.interop",
+    "cat",
+    "files/interop/android-phone-foreground-1793110700195/events.jsonl"
+  ],
+  "startedAt": "2026-10-27T14:22:30.467Z",
+  "monotonicStartMs": 84961040.5073,
+  "absoluteDeadlineMs": 84973429.3374,
+  "timeoutMs": 12389,
+  "exitCode": 0,
+  "signal": null,
+  "error": null,
+  "finishedAt": "2026-10-27T14:22:30.578Z",
+  "monotonicEndMs": 84961151.7593
+}

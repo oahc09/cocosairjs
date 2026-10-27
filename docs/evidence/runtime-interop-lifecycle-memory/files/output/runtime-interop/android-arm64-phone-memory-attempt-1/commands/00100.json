@@ -1,0 +1,20 @@
+{
+  "arguments": [
+    "-s",
+    "10CG4G0BE1003M8",
+    "shell",
+    "input",
+    "tap",
+    "720",
+    "1584"
+  ],
+  "startedAt": "2026-10-27T14:20:40.260Z",
+  "monotonicStartMs": 84850834.0147,
+  "absoluteDeadlineMs": 84863342.0483,
+  "timeoutMs": 12509,
+  "exitCode": 0,
+  "signal": null,
+  "error": null,
+  "finishedAt": "2026-10-27T14:20:40.394Z",
+  "monotonicEndMs": 84850968.3166
+}

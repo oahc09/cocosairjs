@@ -1,0 +1,15 @@
+{
+  "arguments": [
+    "-s",
+    "emulator-5554",
+    "shell",
+    "ps",
+    "-A",
+    "-o",
+    "PID,NAME"
+  ],
+  "startedAt": "2026-10-27T05:25:04.273Z",
+  "timeoutMs": 11761,
+  "exitCode": 0,
+  "finishedAt": "2026-10-27T05:25:04.381Z"
+}

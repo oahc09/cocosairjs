@@ -1,0 +1,73 @@
+{
+  "schema": "air-android-arm64-physical-current-memory-candidate-matrix-v1",
+  "createdAt": "2026-10-27T14:09:50.136749+00:00",
+  "status": "PASS_PHYSICAL_4KB_FUNCTIONAL_MATRIX",
+  "serial": "10CG4G0BE1003M8",
+  "device": {
+    "qemu": "",
+    "model": "V2520A",
+    "fingerprint": "vivo/PD2520/PD2520:17/CP2A.260605.016_V000L1/261020003806:user/release-keys",
+    "api": 37,
+    "abiList": [
+      "arm64-v8a"
+    ],
+    "nativeBridge": "0",
+    "pageSize": 4096,
+    "emulator": false,
+    "compatibility": {
+      "linker": "",
+      "packageManagerDisabled": ""
+    }
+  },
+  "apk": {
+    "file": "output/runtime-interop/android-memory-arm64-build-attempt-1/app-debug.apk",
+    "bytes": 22948135,
+    "sha256": "c6d833035389e1e434db3d0957d21a68a8fdfaac03e3422564e5b6515b205819"
+  },
+  "build": {
+    "file": "output/runtime-interop/android-memory-arm64-build-attempt-1/build-report.json",
+    "bytes": 8102,
+    "sha256": "fbfbede4c1de0e0f5c35b4bcccf091a0894b5b608b5d8138343e068e6d848e36"
+  },
+  "sameNativeSourceBinding": {
+    "file": "tools/verify/runtime-interop-android/host-patches/memory/source-build-binding.json",
+    "bytes": 3466,
+    "sha256": "cd4e4c73dff3f6e394a20269d498131dfee7f404ba9e9253cb719f1e8c2364b4"
+  },
+  "matrix": {
+    "file": "output/runtime-interop/android-arm64-memory-matrix-attempt-1/report.json",
+    "bytes": 225924,
+    "sha256": "33e7f677af87619094cfaa542601e019a2203ac9923140bbeb1a332fc0b385c6"
+  },
+  "independentAudit": {
+    "file": "output/runtime-interop/android-arm64-memory-matrix-audit-1/report.json",
+    "bytes": 62794,
+    "sha256": "481899c0cad821d7b0d33bef33b2264e367eddaf381169fac3e4691673f3caed"
+  },
+  "caseIds": [
+    "probes",
+    "air",
+    "pbr",
+    "skin",
+    "ui",
+    "compute"
+  ],
+  "physicalAcceptance": true,
+  "page16kRuntimeAcceptance": false,
+  "phoneMemoryAcceptance": "WAITING_FOR_NORMAL_USER_UNLOCK",
+  "phoneForegroundCollector": {
+    "file": "tools/verify/runtime-interop-android-phone-memory.cjs",
+    "bytes": 38718,
+    "sha256": "9341fc6ae2fdcef326766e9cea4f8a0174f3fc0b8e865496228b835103fcc165"
+  },
+  "lockedAdmissionFailureRetained": {
+    "file": "output/runtime-interop/android-arm64-phone-memory-diagnostic-attempt-1/report.json",
+    "bytes": 48776,
+    "sha256": "48f016c4c2fc1963f8138daf7bf0efe7899e53e71bded20a568afd8a6872222c"
+  },
+  "scope": "Current ARM64 functional matrix only; no emulator-to-phone PSS comparison or full physical lifecycle claim",
+  "subset": true,
+  "releaseReady": false,
+  "sourceChangesCommitted": false,
+  "sourceChangesPushed": false
+}

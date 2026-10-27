@@ -1,0 +1,180 @@
+{
+  "schema": "mystral-android-build-v1",
+  "compiled": true,
+  "runnable": false,
+  "deviceExecution": "NOT_RUN_BY_BUILD_OPERATION",
+  "sourceInputsUnchanged": true,
+  "assetsInputsUnchanged": true,
+  "sourceCount": 116,
+  "sourceBaseCommit": "b98101acd368107829a7aa4c0481084f2ecefd5e",
+  "apk": {
+    "file": "app-debug.apk",
+    "bytes": 24634457,
+    "sha256": "1533cd93dc2a54e6417692ea94ac2db4815191bd3da212f3c962221bbd2a2c67"
+  },
+  "package": "com.mystral.engine.interop",
+  "abi": "x86_64",
+  "minSdk": 26,
+  "targetSdk": 34,
+  "versionCode": 1,
+  "versionName": "0.1.0",
+  "signatureVerified": true,
+  "androidStl": "c++_static",
+  "v8LibraryKind": "static",
+  "v8StartupMode": "embedded",
+  "v8Version": "11.6.189.22",
+  "sdlVersion": "3.2.30",
+  "elf16kCompatible": true,
+  "zipalign16kVerified": true,
+  "payload": {
+    "assetCount": 29,
+    "apkAssets": 29,
+    "assets": {
+      "assets-manifest.json": "18615a9c5b1760074f82296c664d5d894032c62fc1e6671239f94e8c18f418df",
+      "interop/assets/gltf-basic/BoxTextured.LICENSE.md": "505ec72f522d924ae26dbccd78b0b66efe5ef91c454cb16e139a465ce25839b8",
+      "interop/assets/gltf-basic/BoxTextured.glb": "b510eca2e2ef33f62f9ed57d6e7ce2d10ebb2bdebc4a8e59d347719ba81abdf4",
+      "interop/assets/gltf-skin/SimpleSkin.LICENSE.md": "2f6560ab0c37fad10295af0289cbe4a04264c5ef97003a4129a3b8c8b0ba6a27",
+      "interop/assets/gltf-skin/SimpleSkin.gltf": "8d92e9888340eb98e82a65a1f8b037d9a1d9f09e5fd0b6ba6d40fd93700b3239",
+      "interop/assets/gltf-skin/SimpleSkin_animation.bin": "ff21b1bc3d0abbe53f7665060ec6c22d873b6e85a7669171a2b6b8ae01c39347",
+      "interop/assets/gltf-skin/SimpleSkin_geometry.bin": "35f0ca6bc07976c0aadc163d4737758989cfcc9870a99800004c4478fe698b63",
+      "interop/assets/gltf-skin/SimpleSkin_inverseBindMatrices.bin": "5844ab221cd2ad367420a248f6387b46e5f8498604427730a37ee96b4d4ec599",
+      "interop/assets/gltf-skin/SimpleSkin_skinningData.bin": "413bc8a8c0da673df767874e6f05f0b00c9261756a08586b9d555bd5535414b5",
+      "interop/entry.js": "01ee283d41f340f0b85fe0da74d58694b5125c36d82fa142a9382ade89cd3a68",
+      "interop/manifest.json": "18615a9c5b1760074f82296c664d5d894032c62fc1e6671239f94e8c18f418df",
+      "interop/probes/air-smoke.mjs": "cf27c158eda7515906e92a03153f2a12f23219b8cda8e02eda7145e6cdb7d2ea",
+      "interop/probes/android-demo.mjs": "a1d45980a097d1f863ed5eafd7c52ce03816eac134f4e333eaa331e5af9dc9b4",
+      "interop/probes/module-fixture.mjs": "74c80e8da1947d2abb286f690223c6751b050f2c9e254c507b43c164b11791f5",
+      "interop/probes/probes.mjs": "fde69e728aa64ba9de48d16644be002b8ecbca6a35c555f01b1d338ef1f6d199",
+      "interop/probes/scene-compute.mjs": "76d930111874283271a226a4977ebf1f0f21a3017220347418a904c8074be519",
+      "interop/probes/scene-models.mjs": "ec953308f487453faabdafc5ce96fac225b866ca82ee905f9ab10f81b30b48e1",
+      "interop/probes/scene-runner.mjs": "03a8789346334c18f062b8ed71ebb454e2fd7649fd42d5a514dad94bdb613264",
+      "interop/probes/scene-ui.mjs": "a34b91d061136d53734100844547353c0fb988fc773371d4aba05b8d2415b5d4",
+      "interop/sdk/cocosair.module.js": "417509cb4774f85346158c7c27f580a7afe5ace70c7486e095b4bbb216de518a",
+      "interop/sdk/webgpu/LICENSE-apache.txt": "9362ea9ea17cb221a20cbbd63f404710834cc273d2a9a7b60314fd68ab702cd6",
+      "interop/sdk/webgpu/LICENSE-dawn.txt": "0493f897193af1796d5054659f45ec7d4c5af648fa67a99f01d30e55cc805abc",
+      "interop/sdk/webgpu/LICENSE-glslang.txt": "373bb541d74f5a2854e4b752c57952dd8155cca535124176de90c94efc67ef85",
+      "interop/sdk/webgpu/NOTICE-babylon.md": "7f85d099ce3c6e1900a45ee8d5b8fa405e760c746af687b3ee2081416e48f183",
+      "interop/sdk/webgpu/glslang.js": "7937463b384ded16e10da2c1d64cb63a0894e56e8d8167cce636be5635caef59",
+      "interop/sdk/webgpu/glslang.wasm": "2746e37cbb52ff99f21a836e56e72e5771873a83a032faec2ed860941b23768e",
+      "interop/sdk/webgpu/manifest.json": "84161a92c5469819bab8a3ddc6512bf8e6e88c1bb67c1fd4c873be84ce0e6df9",
+      "interop/sdk/webgpu/twgsl.js": "e5664e33a74d064118769636440a5b09121db31370d6fe54b778deb17cd0e4f5",
+      "interop/sdk/webgpu/twgsl.wasm": "a434c2decdbb38caadf5f486d806384a1543554828c983c77922b2d92579914c"
+    },
+    "nativeLibraries": [
+      {
+        "file": "lib/x86_64/libSDL3.so",
+        "bytes": 10930984,
+        "sha256": "f3192dadc88692f8cbe8d29cd6a395c3d4139b2b55236540589c1c6f56608ffe",
+        "needed": [
+          "libm.so",
+          "libOpenSLES.so",
+          "libdl.so",
+          "liblog.so",
+          "libandroid.so",
+          "libGLESv1_CM.so",
+          "libGLESv2.so",
+          "libc.so"
+        ],
+        "zipCompression": 8,
+        "elf": {
+          "machine": 62,
+          "loadAlignments": [
+            16384,
+            16384,
+            16384
+          ],
+          "loadAlignment16KB": true,
+          "relro": [
+            {
+              "phdrIndex": 5,
+              "endAligned16KB": false,
+              "ownLoadIndex": 2,
+              "noOtherWritableLoadInProtectedPages": true,
+              "staticAlignmentSafe": true
+            }
+          ],
+          "relroStaticSafe": true
+        },
+        "providerMatches": true
+      },
+      {
+        "file": "lib/x86_64/libmystral-runtime.so",
+        "bytes": 46119464,
+        "sha256": "f6918ddf6f07c6c06ed489c57c08758d658070fc5d0b59ec1b31656db5a8f4c0",
+        "needed": [
+          "libdl.so",
+          "liblog.so",
+          "libSDL3.so",
+          "libandroid.so",
+          "libGLESv3.so",
+          "libEGL.so",
+          "libz.so",
+          "libm.so",
+          "libc.so"
+        ],
+        "zipCompression": 8,
+        "elf": {
+          "machine": 62,
+          "loadAlignments": [
+            16384,
+            16384,
+            16384
+          ],
+          "loadAlignment16KB": true,
+          "relro": [
+            {
+              "phdrIndex": 5,
+              "endAligned16KB": false,
+              "ownLoadIndex": 2,
+              "noOtherWritableLoadInProtectedPages": true,
+              "staticAlignmentSafe": true
+            }
+          ],
+          "relroStaticSafe": true
+        },
+        "providerMatches": true
+      }
+    ],
+    "snapshotMode": "embedded",
+    "snapshotProviderMatches": null,
+    "snapshotProviderVerification": "NOT_APPLICABLE_EMBEDDED_STARTUP",
+    "externalSnapshotPresent": false,
+    "sdlProviderMatches": true,
+    "sdlVersion": "3.2.30",
+    "v8ProviderKind": "static-monolith",
+    "v8StaticArchiveSha256": "ba0a35faf077ba81ddc3a9213aabc7519d90790f4ccd542405125a74bb39fa9e",
+    "pass": true
+  },
+  "command": {
+    "command": "android/gradlew.bat",
+    "arguments": [
+      ":app:assembleDebug",
+      "--no-daemon",
+      "--stacktrace",
+      "--console=plain",
+      "--max-workers=8",
+      "--gradle-user-home",
+      "C:\\Users\\caosh\\.codex\\worktrees\\webgpu-runtime-interop\\cocosair.js\\output\\runtime-interop\\android-build-deps-attempt-1\\gradle-home",
+      "--project-cache-dir",
+      "C:\\Users\\caosh\\.codex\\worktrees\\webgpu-runtime-interop\\cocosair.js\\output\\runtime-interop\\deps-16k-attempt-1\\project-cache",
+      "-PinteropAbis=x86_64",
+      "-PmystralJsEngine=v8",
+      "-PmystralGpuBackend=dawn",
+      "-PmystralAndroidStl=c++_static",
+      "-PmystralV8LibraryKind=static",
+      "-PmystralV8StartupData=embedded",
+      "-PmystralSdlVersion=3.2.30",
+      "-PinteropAssetsDir=C:/Users/caosh/.codex/worktrees/webgpu-runtime-interop/cocosair.js/output/runtime-interop/android-assets-attempt-4",
+      "-PmystralAndroidDeps=C:/Users/caosh/.codex/worktrees/webgpu-runtime-interop/cocosair.js/output/runtime-interop/deps-16k-attempt-1"
+    ],
+    "startedAt": "2026-10-27T04:18:21.4925905Z",
+    "sourceBaseCommit": "b98101acd368107829a7aa4c0481084f2ecefd5e",
+    "sourceCount": 116,
+    "pass": true,
+    "exitCode": 0,
+    "finishedAt": "2026-10-27T04:18:35.9700392Z"
+  },
+  "createdAt": "2026-10-27T04:20:36.036318+00:00",
+  "releaseReady": false,
+  "pass": true
+}

@@ -1,0 +1,15 @@
+{
+  "arguments": [
+    "-s",
+    "emulator-5554",
+    "shell",
+    "run-as",
+    "com.mystral.engine.interop",
+    "cat",
+    "files/interop/android-lifecycle-1793078243958/lifecycle.jsonl"
+  ],
+  "startedAt": "2026-10-27T05:21:34.434Z",
+  "timeoutMs": 11537,
+  "exitCode": 0,
+  "finishedAt": "2026-10-27T05:21:34.542Z"
+}

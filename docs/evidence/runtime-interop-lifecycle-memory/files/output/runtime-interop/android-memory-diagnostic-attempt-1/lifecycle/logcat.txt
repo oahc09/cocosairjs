@@ -1,0 +1,45 @@
+--------- beginning of system
+         1793073055.526   676  1120 I ActivityManager: Force stopping com.mystral.engine.interop appid=10231 user=0: from pid 3980
+         1793073055.693   676   711 I ActivityManager: Start proc 3990:com.mystral.engine.interop/u0a231 for next-top-activity {com.mystral.engine.interop/com.mystral.engine.MystralActivity}
+--------- beginning of main
+         1793073055.797  3990  3990 V SDL     : Manufacturer: Google
+         1793073055.797  3990  3990 V SDL     : Device: emu64xa16k
+         1793073055.797  3990  3990 V SDL     : Model: sdk_gphone16k_x86_64
+         1793073055.797  3990  3990 V SDL     : onCreate()
+         1793073055.818  3990  3990 V SDL     : nativeSetupJNI()
+         1793073055.818  3990  3990 V SDL     : AUDIO nativeSetupJNI()
+         1793073055.818  3990  3990 V SDL     : CONTROLLER nativeSetupJNI()
+         1793073055.862  3990  3990 I MystralInterop: SERVER_READY {"schema":"air-android-interop-session-v1","runId":"android-lifecycle-1793073055150","caseId":"demo","pid":3990,"demo":true,"v8StartupMode":"embedded","v8Version":"11.6.189.22","origin":"http:\/\/127.0.0.1:34273","token":"9cfe6235-9016-4b19-bdb0-e627c95dc009","entryUrl":"http:\/\/127.0.0.1:34273\/entry.js","bundleUrl":"http:\/\/127.0.0.1:34273\/sdk\/cocosair.module.js","assetBaseUrl":"http:\/\/127.0.0.1:34273\/sdk\/webgpu\/","assetRootUrl":"http:\/\/127.0.0.1:34273\/assets\/","moduleUrl":"http:\/\/127.0.0.1:34273\/probes\/module-fixture.mjs","captureUrl":"http:\/\/127.0.0.1:34273\/capture","reportUrl":"http:\/\/127.0.0.1:34273\/report","eventUrl":"http:\/\/127.0.0.1:34273\/event"}
+         1793073055.862  3990  3990 I MystralInterop: LIFECYCLE {"event":"created","pid":3990,"surfaceGeneration":0,"orientation":1,"elapsedRealtime":1321224}
+         1793073055.863  3990  3990 V SDL     : onStart()
+         1793073055.864  3990  3990 V SDL     : onResume()
+         1793073055.869  3990  3990 I MystralInterop: LIFECYCLE {"event":"resume","pid":3990,"surfaceGeneration":0,"orientation":1,"elapsedRealtime":1321230}
+         1793073055.919  3990  3990 V SDL     : surfaceCreated()
+         1793073055.919  3990  3990 I MystralInterop: SURFACE_QUEUED generation=1 revision=1 available=1 window=0x7da901a45bc0 pid=3990
+         1793073055.925  3990  3990 I MystralInterop: LIFECYCLE {"event":"surface-created","pid":3990,"surfaceGeneration":1,"orientation":1,"elapsedRealtime":1321281}
+         1793073055.925  3990  3990 V SDL     : surfaceChanged()
+         1793073055.925  3990  3990 V SDL     : Window size: 320x240
+         1793073055.925  3990  3990 V SDL     : Device size: 1080x2400
+         1793073055.928  3990  3990 I MystralInterop: SURFACE_QUEUED generation=1 revision=2 available=1 window=0x7da901a45bc0 pid=3990
+         1793073055.928  3990  4014 V SDL     : nativeInitSDLThread() 1 time
+         1793073055.928  3990  3990 I MystralInterop: LIFECYCLE {"event":"surface-changed","pid":3990,"surfaceGeneration":1,"orientation":1,"elapsedRealtime":1321289}
+         1793073055.934  3990  4014 V SDL     : Running main function SDL_main from library /data/app/~~il2m3pUE1jUwE_Z4bXRAPQ==/com.mystral.engine.interop-zzzbPGrqqVK1_9Ve3ouQJA==/lib/x86_64/libmystral-runtime.so
+         1793073055.988  3990  4014 V SDL     : setOrientation() requestedOrientation=13 width=1080 height=2400 resizable=true hint=
+         1793073056.492  3990  4014 I MystralRuntime: Got SDL window: 0x7da921a268d0
+         1793073056.492  3990  4014 I MystralRuntime: Waiting for valid ANativeWindow...
+         1793073056.492  3990  4014 I MystralRuntime: Window event: 526 (shown/restored/focused)
+         1793073056.492  3990  4014 I MystralRuntime: Window event: 514 (shown/restored/focused)
+         1793073056.492  3990  4014 I MystralRuntime: ANativeWindow validated: 0x7da901a45bc0 (320x240)
+         1793073056.492  3990  4014 I MystralRuntime: Got valid ANativeWindow: 0x7da901a45bc0 after 0 attempts
+         1793073056.516  3990  3990 V SDL     : onWindowFocusChanged(): true
+         1793073056.516  3990  3990 V SDL     : nativeFocusChanged()
+         1793073056.607  3990  4014 I MystralRuntime: WebGPU surface created successfully
+         1793073056.607  3990  4014 I MystralRuntime: SURFACE_INITIAL generation=1 revision=2 window=0x7da901a45bc0 device=0x7da961a14010 thread=138157782294720
+         1793073056.607  3990  4014 I MystralRuntime: Configuring surface: 320x240
+         1793073056.628  3990  4014 I MystralRuntime: Surface configured successfully
+         1793073056.628  3990  4014 I MystralRuntime: Creating JavaScript engine...
+         1793073056.630  3990  4014 I MystralRuntime: JS engine created: V8
+         1793073056.632  3990  4014 I MystralInterop: RESOURCE_SNAPSHOT {"schema":"mystral-webgpu-resource-snapshot-v1","stage":"init","sequence":1,"frame":0,"steadyMs":1321994,"pid":3990,"types":{"canvasTexture":{"acquired":0,"released":0,"live":0,"peak":0},"canvasView":{"acquired":0,"released":0,"live":0,"peak":0},"buffer":{"acquired":0,"released":0,"live":0,"peak":0},"texture":{"acquired":0,"released":0,"live":0,"peak":0},"textureView":{"acquired":0,"released":0,"live":0,"peak":0},"shaderModule":{"acquired":0,"released":0,"live":0,"peak":0},"renderPipeline":{"acquired":0,"released":0,"live":0,"peak":0},"computePipeline":{"acquired":0,"released":0,"live":0,"peak":0},"sampler":{"acquired":0,"released":0,"live":0,"peak":0},"bindGroupLayout":{"acquired":0,"released":0,"live":0,"peak":0},"bindGroup":{"acquired":0,"released":0,"live":0,"peak":0},"pipelineLayout":{"acquired":0,"released":0,"live":0,"peak":0},"commandEncoder":{"acquired":0,"released":0,"live":0,"peak":0},"commandBuffer":{"acquired":0,"released":0,"live":0,"peak":0},"renderPass":{"acquired":0,"releas
+         1793073056.635  3990  4014 I MystralInterop: NATIVE_READY {"loadedABI":"x86_64","v8StartupMode":"embedded","v8Version":"11.6.189.22","entryPath":"\/data\/user\/0\/com.mystral.engine.interop\/files\/interop\/android-lifecycle-1793073055150\/native-entry.mjs","entrySha256":"01ee283d41f340f0b85fe0da74d58694b5125c36d82fa142a9382ade89cd3a68","jsEngine":"v8","backend":"dawn","nativeStarted":true}
+         1793073056.636  3990  4014 I MystralInterop: EXIT_STAGE runtime-run-enter pid=3990 thread=138157782294720
+         1793073056.645  3990  4019 I MystralInterop: EVENT entry-ready

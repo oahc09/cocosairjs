@@ -1,0 +1,13 @@
+{
+  "arguments": [
+    "-s",
+    "emulator-5554",
+    "shell",
+    "getconf",
+    "PAGE_SIZE"
+  ],
+  "startedAt": "2026-10-27T04:04:31.353Z",
+  "timeoutMs": 15000,
+  "exitCode": 0,
+  "finishedAt": "2026-10-27T04:04:31.428Z"
+}

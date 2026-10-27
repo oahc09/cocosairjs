@@ -1,0 +1,13 @@
+{
+  "schema": "air-owned-original-avd-policy-restoration-v1",
+  "avd": "Mystral_16KB_API37",
+  "serial": "emulator-5556",
+  "originalDisabled": true,
+  "observedBeforeRestore": "false",
+  "confirmedAfterRestore": "true",
+  "nativeAppLaunched": false,
+  "dedicatedPackageForceStopped": true,
+  "killAcknowledged": "OK: killing emulator, bye bye\r\r\nOK",
+  "pass": true,
+  "previousPolicyReceipt": "output/runtime-interop/android-memory-env-attempt-1/lockscreen-policy.json"
+}

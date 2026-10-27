@@ -1,0 +1,18 @@
+{
+  "arguments": [
+    "-s",
+    "10CG4G0BE1003M8",
+    "exec-out",
+    "screencap",
+    "-p"
+  ],
+  "startedAt": "2026-10-27T14:30:00.981Z",
+  "monotonicStartMs": 85411555.2209,
+  "absoluteDeadlineMs": 85423864.3957,
+  "timeoutMs": 12310,
+  "exitCode": 0,
+  "signal": null,
+  "error": null,
+  "finishedAt": "2026-10-27T14:30:01.533Z",
+  "monotonicEndMs": 85412107.0642
+}

@@ -1,0 +1,87 @@
+{
+  "schema": "air-android-native-memory-dual-build-binding-v1",
+  "pass": true,
+  "sourceCount": 116,
+  "modifiedSourcePaths": 11,
+  "sourceMapIdenticalBothAbis": true,
+  "sourceManifest": {
+    "file": "tools/verify/runtime-interop-android/host-patches/memory/manifest.json",
+    "bytes": 5010,
+    "sha256": "c6fde5004ce350039c7b5172e1e8fa2153033de10264ac69da1f25016773068a"
+  },
+  "sourceMap": {
+    "file": "output/runtime-interop/android-memory-x64-build-attempt-7/source-verified.json",
+    "bytes": 12240,
+    "sha256": "8c5c20e55c67c231adb80c15c00ebb80c77c527cc9aac3602d502574f98cd767"
+  },
+  "builds": {
+    "x86_64": {
+      "apk": {
+        "file": "output/runtime-interop/android-memory-x64-build-attempt-7/app-debug.apk",
+        "bytes": 24636557,
+        "sha256": "341dfe090332cbd440105c254ce6fd0c2aea0ad8af46b92250ba19add551d1d4"
+      },
+      "build": {
+        "file": "output/runtime-interop/android-memory-x64-build-attempt-7/build-report.json",
+        "bytes": 8088,
+        "sha256": "80da6022e545fe3825bd528bdd879609dc6e288158f80993743687232ef98f7d"
+      },
+      "elf": {
+        "file": "output/runtime-interop/android-memory-x64-build-attempt-7/elf-16k-verification.json",
+        "bytes": 2193,
+        "sha256": "daaaf70756c39b396ddf7e5b448dba3757917c9e536929841ff9520fd891444e"
+      },
+      "closure": {
+        "file": "output/runtime-interop/android-memory-x64-build-attempt-7/static-link-closure.json",
+        "bytes": 9984,
+        "sha256": "7040a9f11a1d6c2d10304711487dd32fffc33ef57df335c523f742746d84ff36"
+      }
+    },
+    "arm64-v8a": {
+      "apk": {
+        "file": "output/runtime-interop/android-memory-arm64-build-attempt-1/app-debug.apk",
+        "bytes": 22948135,
+        "sha256": "c6d833035389e1e434db3d0957d21a68a8fdfaac03e3422564e5b6515b205819"
+      },
+      "build": {
+        "file": "output/runtime-interop/android-memory-arm64-build-attempt-1/build-report.json",
+        "bytes": 8102,
+        "sha256": "fbfbede4c1de0e0f5c35b4bcccf091a0894b5b608b5d8138343e068e6d848e36"
+      },
+      "elf": {
+        "file": "output/runtime-interop/android-memory-arm64-build-attempt-1/elf-16k-verification.json",
+        "bytes": 2201,
+        "sha256": "2061ad05f283f3e117a6fc18b089d21594575c0e499348f02fbba86970e4e0ae"
+      },
+      "closure": {
+        "file": "output/runtime-interop/android-memory-arm64-build-attempt-1/static-link-closure.json",
+        "bytes": 10141,
+        "sha256": "8a83d0c1d0a810f017bad232c4be906306b9e5b8e336d034ee4a97024b480a27"
+      }
+    }
+  },
+  "sdk": {
+    "file": "output/runtime-interop/sdk/cocosair.module.js",
+    "bytes": 8526393,
+    "sha256": "417509cb4774f85346158c7c27f580a7afe5ace70c7486e095b4bbb216de518a"
+  },
+  "assets": {
+    "file": "output/runtime-interop/android-assets-attempt-4/assets-manifest.json",
+    "bytes": 6541,
+    "sha256": "18615a9c5b1760074f82296c664d5d894032c62fc1e6671239f94e8c18f418df"
+  },
+  "producers": [
+    {
+      "file": "tools/build/runtime-interop-android-host.ps1",
+      "bytes": 5131,
+      "sha256": "faa182f5951afa313a23ab19fc784cba60e0b524d68ca6b66a38928d10a5ed2c"
+    },
+    {
+      "file": "tools/build/runtime-interop-android-finalize.py",
+      "bytes": 10529,
+      "sha256": "d6a7d65e2fcd8fa92b00a3b6cdc7eee88293f3251b67d744c44037f8e1f62bbe"
+    }
+  ],
+  "runtimeAcceptance": "NOT_GRANTED_BY_BUILD_BINDING",
+  "releaseReady": false
+}

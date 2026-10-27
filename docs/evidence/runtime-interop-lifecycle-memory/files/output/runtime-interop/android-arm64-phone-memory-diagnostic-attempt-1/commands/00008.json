@@ -1,0 +1,18 @@
+{
+  "arguments": [
+    "-s",
+    "10CG4G0BE1003M8",
+    "shell",
+    "getprop",
+    "ro.dalvik.vm.native.bridge"
+  ],
+  "startedAt": "2026-10-27T14:04:31.841Z",
+  "monotonicStartMs": 83882415.1037,
+  "absoluteDeadlineMs": 83897415.0679,
+  "timeoutMs": 15000,
+  "exitCode": 0,
+  "signal": null,
+  "error": null,
+  "finishedAt": "2026-10-27T14:04:31.949Z",
+  "monotonicEndMs": 83882522.8434
+}

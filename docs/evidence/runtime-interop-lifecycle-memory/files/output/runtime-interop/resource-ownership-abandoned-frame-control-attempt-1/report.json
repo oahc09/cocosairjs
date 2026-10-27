@@ -1,0 +1,38 @@
+{
+  "schema": "air-native-abandoned-frame-run-v1",
+  "startedAt": "2026-10-27T04:25:53.217Z",
+  "finishedAt": "2026-10-27T04:25:54.048Z",
+  "executable": {
+    "file": "output/runtime-interop/resource-ownership-win-build-attempt-3/mystral.exe",
+    "bytes": 35636736,
+    "sha256": "90488adf84cee6223a703a9bcad71ca6c8c77e33254a143dd827fddb5d69b844"
+  },
+  "fixture": {
+    "file": "output/runtime-interop/resource-ownership-abandoned-frame-control-attempt-1/control.mjs",
+    "sha256": "2edd64981ae8b562d76c7362182ec2ed685d76566f5d701a50ff230922162b2f"
+  },
+  "arguments": [
+    "run",
+    "C:\\Users\\caosh\\.codex\\worktrees\\webgpu-runtime-interop\\cocosair.js\\output\\runtime-interop\\resource-ownership-abandoned-frame-control-attempt-1\\control.mjs",
+    "--headless",
+    "--width",
+    "320",
+    "--height",
+    "240"
+  ],
+  "pid": 7760,
+  "exitCode": 1,
+  "signal": null,
+  "application": null,
+  "steps": [
+    "[log] AIR_ABANDONED_FRAME_STEP {\"stage\":\"acquired-without-submit\",\"at\":49164542.2278,\"textureId\":1,\"viewId\":2}",
+    "[log] AIR_ABANDONED_FRAME_STEP {\"stage\":\"next-real-frame\",\"at\":49164542.3013}",
+    "[log] AIR_ABANDONED_FRAME_STEP {\"stage\":\"next-frame-acquired\",\"at\":49164542.3173,\"textureId\":3,\"viewId\":4}",
+    "[log] AIR_ABANDONED_FRAME_STEP {\"stage\":\"next-frame-encoded\",\"at\":49164542.4644}"
+  ],
+  "pidGone": true,
+  "pass": false,
+  "scope": "Windows real hidden SDL Surface API control only; no Android, compositor pixel or runtime destructor acceptance",
+  "subset": true,
+  "releaseReady": false
+}

@@ -1,0 +1,98 @@
+[
+  {
+    "name": "source-verify",
+    "executable": "node",
+    "arguments": [
+      "C:\\Users\\caosh\\.codex\\worktrees\\webgpu-runtime-interop\\cocosair.js\\output\\runtime-interop\\android-build-deps-attempt-1\\fingerprint-android-source.cjs",
+      "C:\\Users\\caosh\\.codex\\worktrees\\webgpu-runtime-interop\\cocosair.js\\output\\runtime-interop\\android-memory-x64-build-attempt-1\\source-verified.json"
+    ],
+    "exitCode": 0,
+    "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "name": "assets-verify",
+    "executable": "node",
+    "arguments": [
+      "C:\\Users\\caosh\\.codex\\worktrees\\webgpu-runtime-interop\\cocosair.js\\output\\runtime-interop\\android-build-deps-attempt-1\\fingerprint-assets.cjs",
+      "C:\\Users\\caosh\\.codex\\worktrees\\webgpu-runtime-interop\\cocosair.js\\output\\runtime-interop\\android-assets-attempt-4",
+      "C:\\Users\\caosh\\.codex\\worktrees\\webgpu-runtime-interop\\cocosair.js\\output\\runtime-interop\\android-memory-x64-build-attempt-1\\assets-verified.json"
+    ],
+    "exitCode": 0,
+    "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "name": "aapt-badging",
+    "executable": "D:/Android/Sdk/build-tools/36.0.0/aapt.exe",
+    "arguments": [
+      "dump",
+      "badging",
+      "C:\\Users\\caosh\\.codex\\worktrees\\webgpu-runtime-interop\\cocosair.js\\output\\runtime-interop\\android-memory-x64-build-attempt-1\\app-debug.apk"
+    ],
+    "exitCode": 0,
+    "stdoutSha256": "16224b1a628c4bbeaf0a995e75e12acfdb742fdeee2d32c4fa864d38030fd018"
+  },
+  {
+    "name": "apksigner",
+    "executable": "D:/jdk-17/bin/java.exe",
+    "arguments": [
+      "-jar",
+      "D:/Android/Sdk/build-tools/36.0.0/lib/apksigner.jar",
+      "verify",
+      "--verbose",
+      "--print-certs",
+      "C:\\Users\\caosh\\.codex\\worktrees\\webgpu-runtime-interop\\cocosair.js\\output\\runtime-interop\\android-memory-x64-build-attempt-1\\app-debug.apk"
+    ],
+    "exitCode": 0,
+    "stdoutSha256": "a7b6c3ff109903551d09574849e1a39cf8d792202d2f2a74cf306ec94b5576c0"
+  },
+  {
+    "name": "zipalign-16k",
+    "executable": "D:/Android/Sdk/build-tools/36.0.0/zipalign.exe",
+    "arguments": [
+      "-v",
+      "-c",
+      "-P",
+      "16",
+      "4",
+      "C:\\Users\\caosh\\.codex\\worktrees\\webgpu-runtime-interop\\cocosair.js\\output\\runtime-interop\\android-memory-x64-build-attempt-1\\app-debug.apk"
+    ],
+    "exitCode": 0,
+    "stdoutSha256": "73ef5c9aa8077dddde0a200aa643cd3931c0f6dfb943880f844be93acd165773"
+  },
+  {
+    "name": "libSDL3.so-readelf",
+    "executable": "D:\\Android\\Sdk\\ndk\\29.0.14206865\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\llvm-readelf.exe",
+    "arguments": [
+      "--wide",
+      "--dynamic",
+      "--program-headers",
+      "C:\\Users\\caosh\\.codex\\worktrees\\webgpu-runtime-interop\\cocosair.js\\output\\runtime-interop\\android-memory-x64-build-attempt-1\\lib\\x86_64\\libSDL3.so"
+    ],
+    "exitCode": 0,
+    "stdoutSha256": "9c1ede0c7f3b84bee65a599057007f0285c9b5ca718732f87be4d5b9819b7dd3"
+  },
+  {
+    "name": "libmystral-runtime.so-readelf",
+    "executable": "D:\\Android\\Sdk\\ndk\\29.0.14206865\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\llvm-readelf.exe",
+    "arguments": [
+      "--wide",
+      "--dynamic",
+      "--program-headers",
+      "C:\\Users\\caosh\\.codex\\worktrees\\webgpu-runtime-interop\\cocosair.js\\output\\runtime-interop\\android-memory-x64-build-attempt-1\\lib\\x86_64\\libmystral-runtime.so"
+    ],
+    "exitCode": 0,
+    "stdoutSha256": "6fc3945516c7c19c237ee821e38b138e7d82e6fe688887169d135db1f0f090fe"
+  },
+  {
+    "name": "runtime-undefined-symbols",
+    "executable": "D:\\Android\\Sdk\\ndk\\29.0.14206865\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\llvm-nm.exe",
+    "arguments": [
+      "--dynamic",
+      "--undefined-only",
+      "--demangle",
+      "C:\\Users\\caosh\\.codex\\worktrees\\webgpu-runtime-interop\\cocosair.js\\output\\runtime-interop\\android-memory-x64-build-attempt-1\\lib\\x86_64\\libmystral-runtime.so"
+    ],
+    "exitCode": 0,
+    "stdoutSha256": "07b2a92d1ea37af72fd62142a1932d7f1d0868b3e51df2ebcaf98cac690294b4"
+  }
+]

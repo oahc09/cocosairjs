@@ -1,0 +1,249 @@
+--------- beginning of system
+         1793078122.817   683  1964 I ActivityManager: Force stopping com.mystral.engine.interop appid=10231 user=0: from pid 5497
+         1793078123.056   683   718 I ActivityManager: Start proc 5507:com.mystral.engine.interop/u0a231 for next-top-activity {com.mystral.engine.interop/com.mystral.engine.MystralActivity}
+--------- beginning of main
+         1793078123.224  5507  5507 V SDL     : Manufacturer: Google
+         1793078123.224  5507  5507 V SDL     : Device: emu64xa16k
+         1793078123.224  5507  5507 V SDL     : Model: sdk_gphone16k_x86_64
+         1793078123.224  5507  5507 V SDL     : onCreate()
+         1793078123.253  5507  5507 V SDL     : nativeSetupJNI()
+         1793078123.254  5507  5507 V SDL     : AUDIO nativeSetupJNI()
+         1793078123.254  5507  5507 V SDL     : CONTROLLER nativeSetupJNI()
+         1793078123.351  5507  5507 I MystralInterop: SERVER_READY {"schema":"air-android-interop-session-v1","runId":"android-lifecycle-1793078120924","caseId":"demo","pid":5507,"demo":true,"v8StartupMode":"embedded","v8Version":"11.6.189.22","origin":"http:\/\/127.0.0.1:33081","token":"f66dbef4-3c5c-4261-9e7a-a6517323cfb8","entryUrl":"http:\/\/127.0.0.1:33081\/entry.js","bundleUrl":"http:\/\/127.0.0.1:33081\/sdk\/cocosair.module.js","assetBaseUrl":"http:\/\/127.0.0.1:33081\/sdk\/webgpu\/","assetRootUrl":"http:\/\/127.0.0.1:33081\/assets\/","moduleUrl":"http:\/\/127.0.0.1:33081\/probes\/module-fixture.mjs","captureUrl":"http:\/\/127.0.0.1:33081\/capture","reportUrl":"http:\/\/127.0.0.1:33081\/report","eventUrl":"http:\/\/127.0.0.1:33081\/event"}
+         1793078123.351  5507  5507 I MystralInterop: LIFECYCLE {"event":"created","pid":5507,"surfaceGeneration":0,"orientation":1,"elapsedRealtime":2582759}
+         1793078123.354  5507  5507 V SDL     : onStart()
+         1793078123.355  5507  5507 V SDL     : onResume()
+         1793078123.364  5507  5507 I MystralInterop: LIFECYCLE {"event":"resume","pid":5507,"surfaceGeneration":0,"orientation":1,"elapsedRealtime":2582772}
+         1793078123.479  5507  5507 V SDL     : surfaceCreated()
+         1793078123.479  5507  5507 I MystralInterop: SURFACE_QUEUED generation=1 revision=1 available=1 window=0x72f666618ee0 pid=5507
+         1793078123.480  5507  5507 I MystralInterop: LIFECYCLE {"event":"surface-created","pid":5507,"surfaceGeneration":1,"orientation":1,"elapsedRealtime":2582888}
+         1793078123.481  5507  5507 V SDL     : surfaceChanged()
+         1793078123.481  5507  5507 V SDL     : Window size: 320x240
+         1793078123.481  5507  5507 V SDL     : Device size: 1080x2400
+         1793078123.490  5507  5507 I MystralInterop: SURFACE_QUEUED generation=1 revision=2 available=1 window=0x72f666618ee0 pid=5507
+         1793078123.490  5507  5530 V SDL     : nativeInitSDLThread() 1 time
+         1793078123.491  5507  5507 I MystralInterop: LIFECYCLE {"event":"surface-changed","pid":5507,"surfaceGeneration":1,"orientation":1,"elapsedRealtime":2582899}
+         1793078123.505  5507  5530 V SDL     : Running main function SDL_main from library /data/app/~~rw4ItgMZ3BRIDyERMi93Xg==/com.mystral.engine.interop-DOBvOlZSjL2c7Umf2dQSLg==/lib/x86_64/libmystral-runtime.so
+         1793078123.551  5507  5530 V SDL     : setOrientation() requestedOrientation=13 width=1080 height=2400 resizable=true hint=
+         1793078124.055  5507  5530 I MystralRuntime: Got SDL window: 0x72f706634c50
+         1793078124.055  5507  5530 I MystralRuntime: Waiting for valid ANativeWindow...
+         1793078124.056  5507  5530 I MystralRuntime: Window event: 526 (shown/restored/focused)
+         1793078124.056  5507  5530 I MystralRuntime: Window event: 514 (shown/restored/focused)
+         1793078124.056  5507  5530 I MystralRuntime: ANativeWindow validated: 0x72f666618ee0 (320x240)
+         1793078124.056  5507  5530 I MystralRuntime: Got valid ANativeWindow: 0x72f666618ee0 after 0 attempts
+         1793078124.056  5507  5530 I MystralInterop: SURFACE_CONTEXT_WINDOW_RETAIN window=0x72f666618ee0 contextWindowRefs=1
+         1793078124.091  5507  5507 V SDL     : onWindowFocusChanged(): true
+         1793078124.091  5507  5507 V SDL     : nativeFocusChanged()
+         1793078124.203  5507  5530 I MystralRuntime: WebGPU surface created successfully
+         1793078124.203  5507  5530 I MystralRuntime: SURFACE_INITIAL generation=1 revision=2 window=0x72f666618ee0 device=0x72f686620010 thread=126398990835904
+         1793078124.203  5507  5530 I MystralRuntime: Configuring surface: 320x240
+         1793078124.239  5507  5530 I MystralRuntime: Surface configured successfully
+         1793078124.239  5507  5530 I MystralRuntime: Creating JavaScript engine...
+         1793078124.247  5507  5530 I MystralRuntime: JS engine created: V8
+         1793078124.253  5507  5530 I MystralInterop: RESOURCE_SNAPSHOT_PART 1 0/3 {"schema":"mystral-webgpu-resource-snapshot-v1","stage":"init","sequence":1,"frame":0,"steadyMs":2583662,"pid":5507,"types":{"canvasTexture":{"acquired":0,"released":0,"live":0,"peak":0},"canvasView":{"acquired":0,"released":0,"live":0,"peak":0},"buffer":{"acquired":0,"released":0,"live":0,"peak":0},"texture":{"acquired":0,"released":0,"live":0,"peak":0},"textureView":{"acquired":0,"released":0,"live":0,"peak":0},"shaderModule":{"acquired":0,"released":0,"live":0,"peak":0},"renderPipeline":{"acquired":0,"re
+         1793078124.253  5507  5530 I MystralInterop: RESOURCE_SNAPSHOT_PART 1 1/3 leased":0,"live":0,"peak":0},"computePipeline":{"acquired":0,"released":0,"live":0,"peak":0},"sampler":{"acquired":0,"released":0,"live":0,"peak":0},"bindGroupLayout":{"acquired":0,"released":0,"live":0,"peak":0},"bindGroup":{"acquired":0,"released":0,"live":0,"peak":0},"pipelineLayout":{"acquired":0,"released":0,"live":0,"peak":0},"commandEncoder":{"acquired":0,"released":0,"live":0,"peak":0},"commandBuffer":{"acquired":0,"released":0,"live":0,"peak":0},"renderPass":{"acquired":0,"released":0,"live":0,"pea
+         1793078124.254  5507  5530 I MystralInterop: RESOURCE_SNAPSHOT_PART 1 2/3 k":0},"computePass":{"acquired":0,"released":0,"live":0,"peak":0},"renderBundleEncoder":{"acquired":0,"released":0,"live":0,"peak":0},"renderBundle":{"acquired":0,"released":0,"live":0,"peak":0}},"total":{"acquired":0,"released":0,"live":0,"peak":0},"wrapper":{"created":0,"finalized":0,"live":0,"peak":0}}
+         1793078124.265  5507  5530 I MystralInterop: NATIVE_READY {"loadedABI":"x86_64","v8StartupMode":"embedded","v8Version":"11.6.189.22","entryPath":"\/data\/user\/0\/com.mystral.engine.interop\/files\/interop\/android-lifecycle-1793078120924\/native-entry.mjs","entrySha256":"01ee283d41f340f0b85fe0da74d58694b5125c36d82fa142a9382ade89cd3a68","jsEngine":"v8","backend":"dawn","nativeStarted":true}
+         1793078124.269  5507  5530 I MystralInterop: EXIT_STAGE runtime-run-enter pid=5507 thread=126398990835904
+         1793078124.281  5507  5534 I MystralInterop: EVENT entry-ready
+         1793078127.274  5507  5540 I MystralInterop: EVENT demo-ready
+         1793078127.291  5507  5535 I MystralInterop: REPORT_SAVED android-lifecycle-1793078120924
+         1793078129.254  5507  5530 I MystralInterop: RESOURCE_SNAPSHOT_PART 2 0/3 {"schema":"mystral-webgpu-resource-snapshot-v1","stage":"periodic","sequence":2,"frame":8569,"steadyMs":2588662,"pid":5507,"types":{"canvasTexture":{"acquired":119,"released":119,"live":0,"peak":1},"canvasView":{"acquired":118,"released":118,"live":0,"peak":1},"buffer":{"acquired":63,"released":0,"live":63,"peak":63},"texture":{"acquired":18,"released":0,"live":18,"peak":18},"textureView":{"acquired":202,"released":183,"live":19,"peak":184},"shaderModule":{"acquired":42,"released":0,"live":42,"peak":42},"re
+         1793078129.254  5507  5530 I MystralInterop: RESOURCE_SNAPSHOT_PART 2 1/3 nderPipeline":{"acquired":2,"released":0,"live":2,"peak":2},"computePipeline":{"acquired":0,"released":0,"live":0,"peak":0},"sampler":{"acquired":1,"released":0,"live":1,"peak":1},"bindGroupLayout":{"acquired":4,"released":0,"live":4,"peak":4},"bindGroup":{"acquired":162,"released":141,"live":21,"peak":102},"pipelineLayout":{"acquired":2,"released":0,"live":2,"peak":2},"commandEncoder":{"acquired":142,"released":142,"live":0,"peak":1},"commandBuffer":{"acquired":142,"released":142,"live":0,"peak":1},"render
+         1793078129.254  5507  5530 I MystralInterop: RESOURCE_SNAPSHOT_PART 2 2/3 Pass":{"acquired":160,"released":160,"live":0,"peak":1},"computePass":{"acquired":0,"released":0,"live":0,"peak":0},"renderBundleEncoder":{"acquired":0,"released":0,"live":0,"peak":0},"renderBundle":{"acquired":0,"released":0,"live":0,"peak":0}},"total":{"acquired":1177,"released":1005,"live":172,"peak":422},"wrapper":{"created":1177,"finalized":912,"live":265,"peak":943}}
+         1793078130.811  5507  5537 I MystralInterop: EVENT demo-input
+         1793078133.326  5507  5507 I MystralInterop: LIFECYCLE {"event":"pause","pid":5507,"surfaceGeneration":1,"orientation":1,"elapsedRealtime":2592734}
+         1793078133.326  5507  5507 V SDL     : onPause()
+         1793078133.387  5507  5507 V SDL     : onWindowFocusChanged(): false
+         1793078133.387  5507  5507 V SDL     : nativeFocusChanged()
+         1793078133.699  5507  5507 V SDL     : onResume()
+         1793078133.700  5507  5507 I MystralInterop: LIFECYCLE {"event":"resume","pid":5507,"surfaceGeneration":1,"orientation":1,"elapsedRealtime":2593108}
+         1793078133.785  5507  5507 V SDL     : onWindowFocusChanged(): true
+         1793078133.785  5507  5507 V SDL     : nativeFocusChanged()
+         1793078134.254  5507  5530 I MystralInterop: RESOURCE_SNAPSHOT_PART 3 0/3 {"schema":"mystral-webgpu-resource-snapshot-v1","stage":"periodic","sequence":3,"frame":27203,"steadyMs":2593662,"pid":5507,"types":{"canvasTexture":{"acquired":410,"released":410,"live":0,"peak":1},"canvasView":{"acquired":409,"released":409,"live":0,"peak":1},"buffer":{"acquired":63,"released":0,"live":63,"peak":63},"texture":{"acquired":18,"released":0,"live":18,"peak":18},"textureView":{"acquired":493,"released":442,"live":51,"peak":184},"shaderModule":{"acquired":42,"released":0,"live":42,"peak":42},"r
+         1793078134.254  5507  5530 I MystralInterop: RESOURCE_SNAPSHOT_PART 3 1/3 enderPipeline":{"acquired":2,"released":0,"live":2,"peak":2},"computePipeline":{"acquired":0,"released":0,"live":0,"peak":0},"sampler":{"acquired":1,"released":0,"live":1,"peak":1},"bindGroupLayout":{"acquired":4,"released":0,"live":4,"peak":4},"bindGroup":{"acquired":256,"released":253,"live":3,"peak":115},"pipelineLayout":{"acquired":2,"released":0,"live":2,"peak":2},"commandEncoder":{"acquired":433,"released":433,"live":0,"peak":1},"commandBuffer":{"acquired":433,"released":433,"live":0,"peak":1},"render
+         1793078134.254  5507  5530 I MystralInterop: RESOURCE_SNAPSHOT_PART 3 2/3 Pass":{"acquired":451,"released":451,"live":0,"peak":1},"computePass":{"acquired":0,"released":0,"live":0,"peak":0},"renderBundleEncoder":{"acquired":0,"released":0,"live":0,"peak":0},"renderBundle":{"acquired":0,"released":0,"live":0,"peak":0}},"total":{"acquired":3017,"released":2831,"live":186,"peak":432},"wrapper":{"created":3017,"finalized":2579,"live":438,"peak":1331}}
+         1793078139.254  5507  5530 I MystralInterop: RESOURCE_SNAPSHOT_PART 4 0/3 {"schema":"mystral-webgpu-resource-snapshot-v1","stage":"periodic","sequence":4,"frame":42229,"steadyMs":2598662,"pid":5507,"types":{"canvasTexture":{"acquired":706,"released":706,"live":0,"peak":1},"canvasView":{"acquired":705,"released":705,"live":0,"peak":1},"buffer":{"acquired":63,"released":0,"live":63,"peak":63},"texture":{"acquired":18,"released":0,"live":18,"peak":18},"textureView":{"acquired":789,"released":758,"live":31,"peak":184},"shaderModule":{"acquired":42,"released":0,"live":42,"peak":42},"r
+         1793078139.254  5507  5530 I MystralInterop: RESOURCE_SNAPSHOT_PART 4 1/3 enderPipeline":{"acquired":2,"released":0,"live":2,"peak":2},"computePipeline":{"acquired":0,"released":0,"live":0,"peak":0},"sampler":{"acquired":1,"released":0,"live":1,"peak":1},"bindGroupLayout":{"acquired":4,"released":0,"live":4,"peak":4},"bindGroup":{"acquired":256,"released":253,"live":3,"peak":115},"pipelineLayout":{"acquired":2,"released":0,"live":2,"peak":2},"commandEncoder":{"acquired":729,"released":729,"live":0,"peak":1},"commandBuffer":{"acquired":729,"released":729,"live":0,"peak":1},"render
+         1793078139.254  5507  5530 I MystralInterop: RESOURCE_SNAPSHOT_PART 4 2/3 Pass":{"acquired":747,"released":747,"live":0,"peak":1},"computePass":{"acquired":0,"released":0,"live":0,"peak":0},"renderBundleEncoder":{"acquired":0,"released":0,"live":0,"peak":0},"renderBundle":{"acquired":0,"released":0,"live":0,"peak":0}},"total":{"acquired":4793,"released":4627,"live":166,"peak":432},"wrapper":{"created":4793,"finalized":4475,"live":318,"peak":1331}}
+         1793078139.368  5507  5534 I MystralInterop: EVENT demo-input
+         1793078141.171  5507  5507 I MystralInterop: LIFECYCLE {"event":"pause","pid":5507,"surfaceGeneration":1,"orientation":1,"elapsedRealtime":2600579}
+         1793078141.171  5507  5507 V SDL     : onPause()
+         1793078141.213  5507  5507 V SDL     : surfaceDestroyed()
+         1793078141.213  5507  5507 V SDL     : nativePause()
+         1793078141.237  5507  5507 I MystralInterop: SURFACE_QUEUED generation=2 revision=3 available=0 window=0x0 pid=5507
+         1793078141.237  5507  5507 I MystralInterop: LIFECYCLE {"event":"surface-destroyed","pid":5507,"surfaceGeneration":2,"orientation":1,"elapsedRealtime":2600645}
+         1793078141.249  5507  5507 V SDL     : onTrimMemory()
+         1793078141.253  5507  5507 V SDL     : onStop()
+         1793078141.255  5507  5507 V SDL     : onWindowFocusChanged(): false
+         1793078141.255  5507  5507 V SDL     : nativeFocusChanged()
+         1793078142.107  5507  5507 V SDL     : onStart()
+         1793078142.108  5507  5507 V SDL     : onResume()
+         1793078142.109  5507  5507 I MystralInterop: LIFECYCLE {"event":"resume","pid":5507,"surfaceGeneration":2,"orientation":1,"elapsedRealtime":2601516}
+         1793078142.113  5507  5507 I MystralInterop: LIFECYCLE {"event":"pause","pid":5507,"surfaceGeneration":2,"orientation":1,"elapsedRealtime":2601522}
+         1793078142.113  5507  5507 V SDL     : onPause()
+         1793078142.129  5507  5507 V SDL     : surfaceCreated()
+         1793078142.129  5507  5507 I MystralInterop: SURFACE_QUEUED generation=3 revision=4 available=1 window=0x72f666618870 pid=5507
+         1793078142.130  5507  5507 I MystralInterop: LIFECYCLE {"event":"surface-created","pid":5507,"surfaceGeneration":3,"orientation":1,"elapsedRealtime":2601538}
+         1793078142.130  5507  5507 V SDL     : surfaceChanged()
+         1793078142.130  5507  5507 V SDL     : Window size: 320x240
+         1793078142.130  5507  5507 V SDL     : Device size: 1080x2400
+         1793078142.130  5507  5507 V SDL     : nativeResume()
+         1793078142.150  5507  5530 I MystralInterop: SURFACE_RETIRE_RELEASE_ENTER surface=0x72f6d6682430 window=0x72f666618ee0 contextWindowRefs=1
+         1793078142.150  5507  5530 I MystralInterop: SURFACE_RETIRE_RELEASE_RETURN surface=0 window=0 contextWindowRefs=0
+         1793078142.155  5507  5507 I MystralInterop: SURFACE_QUEUED generation=3 revision=5 available=1 window=0x72f666618870 pid=5507
+         1793078142.157  5507  5507 I MystralInterop: LIFECYCLE {"event":"surface-changed","pid":5507,"surfaceGeneration":3,"orientation":1,"elapsedRealtime":2601563}
+         1793078142.190  5507  5507 V SDL     : onTrimMemory()
+         1793078142.203  5507  5507 V SDL     : surfaceDestroyed()
+         1793078142.203  5507  5507 V SDL     : nativePause()
+         1793078142.205  5507  5530 I MystralInterop: SURFACE_CONTEXT_WINDOW_RETAIN window=0x72f666618870 contextWindowRefs=1
+         1793078142.205  5507  5530 I MystralRuntime: SURFACE_RETIRED generation=1 nextGeneration=3 window=0x72f666618ee0 device=0x72f686620010 thread=126398990835904
+         1793078142.205  5507  5530 I MystralRuntime: SURFACE_RESTORED generation=3 revision=4 window=0x72f666618870 device=0x72f686620010 thread=126398990835904
+         1793078142.225  5507  5507 I MystralInterop: SURFACE_QUEUED generation=4 revision=6 available=0 window=0x0 pid=5507
+         1793078142.225  5507  5507 I MystralInterop: LIFECYCLE {"event":"surface-destroyed","pid":5507,"surfaceGeneration":4,"orientation":1,"elapsedRealtime":2601633}
+         1793078142.230  5507  5507 V SDL     : onStop()
+         1793078142.258  5507  5507 V SDL     : onStart()
+         1793078142.258  5507  5507 V SDL     : onResume()
+         1793078142.258  5507  5507 I MystralInterop: LIFECYCLE {"event":"resume","pid":5507,"surfaceGeneration":4,"orientation":1,"elapsedRealtime":2601666}
+         1793078142.274  5507  5507 V SDL     : surfaceCreated()
+         1793078142.274  5507  5507 I MystralInterop: SURFACE_QUEUED generation=5 revision=7 available=1 window=0x72f666633e30 pid=5507
+         1793078142.275  5507  5507 I MystralInterop: LIFECYCLE {"event":"surface-created","pid":5507,"surfaceGeneration":5,"orientation":1,"elapsedRealtime":2601683}
+         1793078142.275  5507  5507 V SDL     : surfaceChanged()
+         1793078142.276  5507  5507 V SDL     : Window size: 320x240
+         1793078142.276  5507  5507 V SDL     : Device size: 1080x2400
+         1793078142.276  5507  5507 V SDL     : nativeResume()
+         1793078142.302  5507  5530 I MystralInterop: SURFACE_RETIRE_RELEASE_ENTER surface=0x72f6d6682430 window=0x72f666618870 contextWindowRefs=1
+         1793078142.302  5507  5530 I MystralInterop: SURFACE_RETIRE_RELEASE_RETURN surface=0 window=0 contextWindowRefs=0
+         1793078142.303  5507  5507 I MystralInterop: SURFACE_QUEUED generation=5 revision=8 available=1 window=0x72f666633e30 pid=5507
+         1793078142.303  5507  5507 I MystralInterop: LIFECYCLE {"event":"surface-changed","pid":5507,"surfaceGeneration":5,"orientation":1,"elapsedRealtime":2601711}
+         1793078142.354  5507  5530 I MystralInterop: SURFACE_CONTEXT_WINDOW_RETAIN window=0x72f666633e30 contextWindowRefs=1
+         1793078142.354  5507  5530 I MystralRuntime: SURFACE_RETIRED generation=3 nextGeneration=5 window=0x72f666618870 device=0x72f686620010 thread=126398990835904
+         1793078142.354  5507  5530 I MystralRuntime: SURFACE_RESTORED generation=5 revision=7 window=0x72f666633e30 device=0x72f686620010 thread=126398990835904
+         1793078142.838  5507  5507 V SDL     : onWindowFocusChanged(): true
+         1793078142.842  5507  5507 V SDL     : nativeFocusChanged()
+         1793078143.341   683  1958 W ActivityManager: Skipping manifest association check for null package. SourceUid: 10206, SourcePkg: null, TargetUid: 10206, TargetPkg: com.google.android.gms
+         1793078144.254  5507  5530 I MystralInterop: RESOURCE_SNAPSHOT_PART 5 0/3 {"schema":"mystral-webgpu-resource-snapshot-v1","stage":"periodic","sequence":5,"frame":52325,"steadyMs":2603662,"pid":5507,"types":{"canvasTexture":{"acquired":930,"released":930,"live":0,"peak":1},"canvasView":{"acquired":929,"released":929,"live":0,"peak":1},"buffer":{"acquired":63,"released":0,"live":63,"peak":63},"texture":{"acquired":18,"released":0,"live":18,"peak":18},"textureView":{"acquired":1013,"released":995,"live":18,"peak":184},"shaderModule":{"acquired":42,"released":0,"live":42,"peak":42},"
+         1793078144.254  5507  5530 I MystralInterop: RESOURCE_SNAPSHOT_PART 5 1/3 renderPipeline":{"acquired":2,"released":0,"live":2,"peak":2},"computePipeline":{"acquired":0,"released":0,"live":0,"peak":0},"sampler":{"acquired":1,"released":0,"live":1,"peak":1},"bindGroupLayout":{"acquired":4,"released":0,"live":4,"peak":4},"bindGroup":{"acquired":256,"released":253,"live":3,"peak":115},"pipelineLayout":{"acquired":2,"released":0,"live":2,"peak":2},"commandEncoder":{"acquired":953,"released":953,"live":0,"peak":1},"commandBuffer":{"acquired":953,"released":953,"live":0,"peak":1},"rende
+         1793078144.254  5507  5530 I MystralInterop: RESOURCE_SNAPSHOT_PART 5 2/3 rPass":{"acquired":971,"released":971,"live":0,"peak":1},"computePass":{"acquired":0,"released":0,"live":0,"peak":0},"renderBundleEncoder":{"acquired":0,"released":0,"live":0,"peak":0},"renderBundle":{"acquired":0,"released":0,"live":0,"peak":0}},"total":{"acquired":6137,"released":5984,"live":153,"peak":432},"wrapper":{"created":6137,"finalized":5897,"live":240,"peak":1331}}
+         1793078147.985  5507  5537 I MystralInterop: EVENT demo-input
+         1793078149.254  5507  5530 I MystralInterop: RESOURCE_SNAPSHOT_PART 6 0/3 {"schema":"mystral-webgpu-resource-snapshot-v1","stage":"periodic","sequence":6,"frame":64942,"steadyMs":2608662,"pid":5507,"types":{"canvasTexture":{"acquired":1223,"released":1223,"live":0,"peak":1},"canvasView":{"acquired":1222,"released":1222,"live":0,"peak":1},"buffer":{"acquired":63,"released":0,"live":63,"peak":63},"texture":{"acquired":18,"released":0,"live":18,"peak":18},"textureView":{"acquired":1306,"released":1230,"live":76,"peak":184},"shaderModule":{"acquired":42,"released":0,"live":42,"peak":
+         1793078149.254  5507  5530 I MystralInterop: RESOURCE_SNAPSHOT_PART 6 1/3 42},"renderPipeline":{"acquired":2,"released":0,"live":2,"peak":2},"computePipeline":{"acquired":0,"released":0,"live":0,"peak":0},"sampler":{"acquired":1,"released":0,"live":1,"peak":1},"bindGroupLayout":{"acquired":4,"released":0,"live":4,"peak":4},"bindGroup":{"acquired":256,"released":253,"live":3,"peak":115},"pipelineLayout":{"acquired":2,"released":0,"live":2,"peak":2},"commandEncoder":{"acquired":1246,"released":1246,"live":0,"peak":1},"commandBuffer":{"acquired":1246,"released":1246,"live":0,"peak":
+         1793078149.254  5507  5530 I MystralInterop: RESOURCE_SNAPSHOT_PART 6 2/3 1},"renderPass":{"acquired":1264,"released":1264,"live":0,"peak":1},"computePass":{"acquired":0,"released":0,"live":0,"peak":0},"renderBundleEncoder":{"acquired":0,"released":0,"live":0,"peak":0},"renderBundle":{"acquired":0,"released":0,"live":0,"peak":0}},"total":{"acquired":7895,"released":7684,"live":211,"peak":432},"wrapper":{"created":7895,"finalized":7307,"live":588,"peak":1331}}
+         1793078149.354  5507  5507 I MystralInterop: LIFECYCLE {"event":"pause","pid":5507,"surfaceGeneration":5,"orientation":1,"elapsedRealtime":2608763}
+         1793078149.354  5507  5507 V SDL     : onPause()
+         1793078149.396  5507  5507 V SDL     : onWindowFocusChanged(): false
+         1793078149.397  5507  5507 V SDL     : nativeFocusChanged()
+         1793078150.097  5507  5507 V SDL     : surfaceDestroyed()
+         1793078150.097  5507  5507 V SDL     : nativePause()
+         1793078150.109  5507  5507 I MystralInterop: SURFACE_QUEUED generation=6 revision=9 available=0 window=0x0 pid=5507
+         1793078150.109  5507  5507 I MystralInterop: LIFECYCLE {"event":"surface-destroyed","pid":5507,"surfaceGeneration":6,"orientation":1,"elapsedRealtime":2609517}
+         1793078150.240  5507  5507 V SDL     : onStop()
+         1793078150.263  5507  5507 V SDL     : onTrimMemory()
+         1793078150.718  5507  5507 V SDL     : onStart()
+         1793078150.718  5507  5507 V SDL     : onResume()
+         1793078150.719  5507  5507 I MystralInterop: LIFECYCLE {"event":"resume","pid":5507,"surfaceGeneration":6,"orientation":1,"elapsedRealtime":2610127}
+         1793078150.745  5507  5507 V SDL     : surfaceCreated()
+         1793078150.745  5507  5507 I MystralInterop: SURFACE_QUEUED generation=7 revision=10 available=1 window=0x72f6666161d0 pid=5507
+         1793078150.746  5507  5507 I MystralInterop: LIFECYCLE {"event":"surface-created","pid":5507,"surfaceGeneration":7,"orientation":1,"elapsedRealtime":2610154}
+         1793078150.746  5507  5507 V SDL     : surfaceChanged()
+         1793078150.747  5507  5507 V SDL     : Window size: 320x240
+         1793078150.747  5507  5507 V SDL     : Device size: 1080x2400
+         1793078150.747  5507  5507 V SDL     : nativeResume()
+         1793078150.757  5507  5530 I MystralInterop: SURFACE_RETIRE_RELEASE_ENTER surface=0x72f6d6682430 window=0x72f666633e30 contextWindowRefs=1
+         1793078150.757  5507  5530 I MystralInterop: SURFACE_RETIRE_RELEASE_RETURN surface=0 window=0 contextWindowRefs=0
+         1793078150.758  5507  5507 I MystralInterop: SURFACE_QUEUED generation=7 revision=11 available=1 window=0x72f6666161d0 pid=5507
+         1793078150.759  5507  5507 I MystralInterop: LIFECYCLE {"event":"surface-changed","pid":5507,"surfaceGeneration":7,"orientation":1,"elapsedRealtime":2610166}
+         1793078150.816  5507  5530 I MystralInterop: SURFACE_CONTEXT_WINDOW_RETAIN window=0x72f6666161d0 contextWindowRefs=1
+         1793078150.816  5507  5530 I MystralRuntime: SURFACE_RETIRED generation=5 nextGeneration=7 window=0x72f666633e30 device=0x72f686620010 thread=126398990835904
+         1793078150.816  5507  5530 I MystralRuntime: SURFACE_RESTORED generation=7 revision=10 window=0x72f6666161d0 device=0x72f686620010 thread=126398990835904
+         1793078150.821  5507  5507 V SDL     : onWindowFocusChanged(): true
+         1793078150.821  5507  5507 V SDL     : nativeFocusChanged()
+         1793078154.269  5507  5530 I MystralInterop: RESOURCE_SNAPSHOT_PART 7 0/3 {"schema":"mystral-webgpu-resource-snapshot-v1","stage":"periodic","sequence":7,"frame":84463,"steadyMs":2613678,"pid":5507,"types":{"canvasTexture":{"acquired":1464,"released":1464,"live":0,"peak":1},"canvasView":{"acquired":1463,"released":1463,"live":0,"peak":1},"buffer":{"acquired":63,"released":0,"live":63,"peak":63},"texture":{"acquired":18,"released":0,"live":18,"peak":18},"textureView":{"acquired":1547,"released":1545,"live":2,"peak":184},"shaderModule":{"acquired":42,"released":0,"live":42,"peak":4
+         1793078154.269  5507  5530 I MystralInterop: RESOURCE_SNAPSHOT_PART 7 1/3 2},"renderPipeline":{"acquired":2,"released":0,"live":2,"peak":2},"computePipeline":{"acquired":0,"released":0,"live":0,"peak":0},"sampler":{"acquired":1,"released":0,"live":1,"peak":1},"bindGroupLayout":{"acquired":4,"released":0,"live":4,"peak":4},"bindGroup":{"acquired":256,"released":253,"live":3,"peak":115},"pipelineLayout":{"acquired":2,"released":0,"live":2,"peak":2},"commandEncoder":{"acquired":1487,"released":1487,"live":0,"peak":1},"commandBuffer":{"acquired":1487,"released":1487,"live":0,"peak":1
+         1793078154.269  5507  5530 I MystralInterop: RESOURCE_SNAPSHOT_PART 7 2/3 },"renderPass":{"acquired":1505,"released":1505,"live":0,"peak":1},"computePass":{"acquired":0,"released":0,"live":0,"peak":0},"renderBundleEncoder":{"acquired":0,"released":0,"live":0,"peak":0},"renderBundle":{"acquired":0,"released":0,"live":0,"peak":0}},"total":{"acquired":9341,"released":9204,"live":137,"peak":432},"wrapper":{"created":9341,"finalized":9197,"live":144,"peak":1331}}
+         1793078156.581  5507  5540 I MystralInterop: EVENT demo-input
+         1793078157.774  5507  5534 I MystralInterop: EXIT_STAGE finish-request run=android-lifecycle-1793078120924 outcome=0
+         1793078157.774  5507  5534 I MystralInterop: EXIT_STAGE finish-ack-written run=android-lifecycle-1793078120924
+         1793078157.774  5507  5534 I MystralInterop: EXIT_STAGE java-quit-schedule pid=5507
+         1793078157.775  5507  5534 I MystralInterop: EXIT_STAGE java-quit-posted value=true
+         1793078157.775  5507  5534 I MystralInterop: EXIT_STAGE finish-quit-scheduled run=android-lifecycle-1793078120924
+         1793078157.825  5507  5507 I MystralInterop: EXIT_STAGE java-quit-dispatch pid=5507
+         1793078157.825  5507  5507 I MystralInterop: EXIT_STAGE jni-quit-enter pid=5507 thread=126411962896440
+         1793078157.825  5507  5507 I MystralInterop: EXIT_STAGE sdl-quit-pushed result=1 error=
+         1793078157.825  5507  5507 I MystralInterop: EXIT_STAGE java-quit-return pid=5507
+         1793078157.836  5507  5530 I MystralInterop: EXIT_STAGE runtime-run-return pid=5507 thread=126398990835904
+         1793078157.836  5507  5530 I MystralInterop: EXIT_STAGE reported-outcome-enter pid=5507 thread=126398990835904
+         1793078157.836  5507  5530 I MystralInterop: EXIT_STAGE reported-outcome-return value=0
+         1793078157.836  5507  5530 I MystralInterop: EXIT_STAGE runtime-reset-enter pid=5507 thread=126398990835904
+         1793078157.837  5507  5530 I MystralInterop: EXIT_STAGE shutdown-enter
+         1793078157.837  5507  5530 I MystralInterop: EXIT_STAGE shutdown-audio-enter
+         1793078157.837  5507  5530 I MystralInterop: EXIT_STAGE shutdown-audio-return
+         1793078157.837  5507  5530 I MystralInterop: EXIT_STAGE shutdown-http-enter
+         1793078157.837  5507  5530 I MystralInterop: EXIT_STAGE shutdown-http-return
+         1793078157.837  5507  5530 I MystralInterop: EXIT_STAGE shutdown-file-enter
+         1793078157.837  5507  5530 I MystralInterop: EXIT_STAGE shutdown-file-return
+         1793078157.837  5507  5530 I MystralInterop: EXIT_STAGE shutdown-webtransport-enter
+         1793078157.837  5507  5530 I MystralInterop: EXIT_STAGE shutdown-webtransport-return
+         1793078157.837  5507  5530 I MystralInterop: EXIT_STAGE shutdown-eventloop-enter
+         1793078157.837  5507  5530 I MystralInterop: EXIT_STAGE shutdown-eventloop-return
+         1793078157.837  5507  5530 I MystralInterop: EXIT_STAGE shutdown-raf-enter
+         1793078157.837  5507  5530 I MystralInterop: EXIT_STAGE shutdown-raf-return
+         1793078157.837  5507  5530 I MystralInterop: EXIT_STAGE shutdown-timers-enter
+         1793078157.837  5507  5530 I MystralInterop: EXIT_STAGE shutdown-timers-return
+         1793078157.837  5507  5530 I MystralInterop: EXIT_STAGE shutdown-modules-enter
+         1793078157.837  5507  5530 I MystralInterop: EXIT_STAGE shutdown-modules-return
+         1793078157.837  5507  5530 I MystralInterop: EXIT_STAGE shutdown-gc1-enter
+         1793078157.879  5507  5530 I MystralInterop: EXIT_STAGE shutdown-gc1-return
+         1793078157.879  5507  5530 I MystralInterop: EXIT_STAGE shutdown-gc2-enter
+         1793078157.900  5507  5530 I MystralInterop: EXIT_STAGE shutdown-gc2-return
+         1793078157.900  5507  5530 I MystralInterop: EXIT_STAGE shutdown-devicebindings-enter
+         1793078157.906  5507  5530 I MystralInterop: RESOURCE_SNAPSHOT_PART 8 0/3 {"schema":"mystral-webgpu-resource-snapshot-v1","stage":"cleanup","sequence":8,"frame":98751,"steadyMs":2617314,"pid":5507,"types":{"canvasTexture":{"acquired":1673,"released":1673,"live":0,"peak":1},"canvasView":{"acquired":1672,"released":1672,"live":0,"peak":1},"buffer":{"acquired":63,"released":63,"live":0,"peak":63},"texture":{"acquired":18,"released":18,"live":0,"peak":18},"textureView":{"acquired":1756,"released":1756,"live":0,"peak":184},"shaderModule":{"acquired":42,"released":42,"live":0,"peak":42
+         1793078157.906  5507  5530 I MystralInterop: RESOURCE_SNAPSHOT_PART 8 1/3 },"renderPipeline":{"acquired":2,"released":2,"live":0,"peak":2},"computePipeline":{"acquired":0,"released":0,"live":0,"peak":0},"sampler":{"acquired":1,"released":1,"live":0,"peak":1},"bindGroupLayout":{"acquired":4,"released":4,"live":0,"peak":4},"bindGroup":{"acquired":256,"released":256,"live":0,"peak":115},"pipelineLayout":{"acquired":2,"released":2,"live":0,"peak":2},"commandEncoder":{"acquired":1696,"released":1696,"live":0,"peak":1},"commandBuffer":{"acquired":1696,"released":1696,"live":0,"peak":1}
+         1793078157.906  5507  5530 I MystralInterop: RESOURCE_SNAPSHOT_PART 8 2/3 ,"renderPass":{"acquired":1714,"released":1714,"live":0,"peak":1},"computePass":{"acquired":0,"released":0,"live":0,"peak":0},"renderBundleEncoder":{"acquired":0,"released":0,"live":0,"peak":0},"renderBundle":{"acquired":0,"released":0,"live":0,"peak":0}},"total":{"acquired":10595,"released":10595,"live":0,"peak":432},"wrapper":{"created":10595,"finalized":10457,"live":138,"peak":1331}}
+         1793078157.906  5507  5530 I MystralInterop: EXIT_STAGE shutdown-devicebindings-return
+         1793078157.906  5507  5530 I MystralInterop: EXIT_STAGE shutdown-jsEngine-enter
+         1793078157.917  5507  5530 I MystralInterop: EXIT_STAGE shutdown-jsEngine-return
+         1793078157.917  5507  5530 I MystralInterop: EXIT_STAGE shutdown-webgpu-enter
+         1793078157.917  5507  5530 I MystralInterop: EXIT_STAGE context-enter
+         1793078157.917  5507  5530 I MystralInterop: EXIT_STAGE context-surface-release-enter
+         1793078157.917  5507  5530 I MystralInterop: EXIT_STAGE context-surface-release-return
+         1793078157.917  5507  5530 I MystralInterop: SURFACE_CONTEXT_CLEANUP surface=0 window=0 contextWindowRefs=0
+         1793078157.917  5507  5530 I MystralInterop: EXIT_STAGE context-queue-release-enter
+         1793078157.917  5507  5530 I MystralInterop: EXIT_STAGE context-queue-release-return
+         1793078157.917  5507  5530 I MystralInterop: EXIT_STAGE context-device-destroy-enter
+         1793078157.930  5507  5530 I MystralInterop: EXIT_STAGE context-device-destroy-return
+         1793078157.930  5507  5530 I MystralInterop: EXIT_STAGE context-device-tick-enter
+         1793078157.930  5507  5530 I MystralInterop: EXIT_STAGE context-device-tick-return
+         1793078157.930  5507  5530 I MystralInterop: EXIT_STAGE context-callbacks-drain-enter
+         1793078157.930  5507  5530 I MystralInterop: EXIT_STAGE context-callbacks-drain-return
+         1793078157.930  5507  5530 I MystralInterop: EXIT_STAGE context-device-release-enter
+         1793078157.930  5507  5530 I MystralInterop: EXIT_STAGE context-device-release-return
+         1793078157.930  5507  5530 I MystralInterop: EXIT_STAGE context-adapter-release-enter
+         1793078157.930  5507  5530 I MystralInterop: EXIT_STAGE context-adapter-release-return
+         1793078157.930  5507  5530 I MystralInterop: EXIT_STAGE context-instance-release-enter
+         1793078157.930  5507  5530 I MystralInterop: EXIT_STAGE context-instance-release-return
+         1793078157.931  5507  5530 I MystralInterop: EXIT_STAGE context-return
+         1793078157.931  5507  5530 I MystralInterop: EXIT_STAGE shutdown-webgpu-return
+         1793078157.933  5507  5530 I MystralInterop: EXIT_STAGE shutdown-window-enter
+         1793078157.933  5507  5530 I MystralInterop: EXIT_STAGE shutdown-window-return
+         1793078157.933  5507  5530 I MystralInterop: EXIT_STAGE shutdown-complete
+         1793078157.933  5507  5530 I MystralInterop: EXIT_STAGE runtime-reset-return pid=5507 thread=126398990835904
+         1793078157.933  5507  5530 I MystralInterop: Native SDL_main ended code=0 error=
+         1793078157.933  5507  5530 I MystralInterop: EXIT_STAGE java-exit-notify-enter pid=5507 thread=126398990835904
+         1793078157.933  5507  5530 I MystralInterop: EXIT_STAGE java-native-finished code=0 activity=true server=true
+         1793078157.935  5507  5530 I MystralInterop: NATIVE_FINISHED {"code":0,"error":"","pid":5507,"elapsedRealtime":2617342}
+         1793078157.935  5507  5530 I MystralInterop: EXIT_STAGE java-exit-notify-return pid=5507 thread=126398990835904
+         1793078157.935  5507  5530 V SDL     : Finished main function
+         1793078157.950  5507  5507 I MystralInterop: LIFECYCLE {"event":"pause","pid":5507,"surfaceGeneration":7,"orientation":1,"elapsedRealtime":2617358}
+         1793078157.950  5507  5507 V SDL     : onPause()
+         1793078157.971  5507  5507 V SDL     : onWindowFocusChanged(): false
+         1793078158.648  5507  5507 V SDL     : surfaceDestroyed()
+         1793078158.649  5507  5507 I MystralInterop: SURFACE_QUEUED generation=8 revision=13 available=0 window=0x0 pid=5507
+         1793078158.650  5507  5507 I MystralInterop: LIFECYCLE {"event":"surface-destroyed","pid":5507,"surfaceGeneration":8,"orientation":1,"elapsedRealtime":2618058}
+         1793078158.668  5507  5507 V SDL     : onStop()
+         1793078158.669  5507  5507 I MystralInterop: LIFECYCLE {"event":"destroy","pid":5507,"surfaceGeneration":8,"orientation":1,"elapsedRealtime":2618077}
+         1793078158.669  5507  5507 V SDL     : onDestroy()
+         1793078158.670  5507  5507 V SDL     : SDLActivity thread ends
+         1793078159.103   683  1442 I ActivityManager: Force stopping com.mystral.engine.interop appid=10231 user=0: from pid 5971
+         1793078159.106   683  1442 I ActivityManager: Killing 5507:com.mystral.engine.interop/u0a231 (adj 900): stop com.mystral.engine.interop due to from pid 5971
+         1793078159.128   683   711 W ActivityManager: setHasOverlayUi called on unknown pid: 5507

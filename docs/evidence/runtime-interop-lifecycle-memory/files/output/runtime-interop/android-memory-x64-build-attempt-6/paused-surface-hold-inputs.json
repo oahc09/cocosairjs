@@ -1,0 +1,49 @@
+{
+  "schema": "mystral-candidate7-source-before-paused-surface-hold-v1",
+  "createdAt": "2026-10-27T05:11:32.4552757Z",
+  "sourceBeforeSha256": "9c931260d0ab6a8b837a1fbb9acd83d1136e535f6aed54ff17bc41e45f6ecb49",
+  "files": [
+    {
+      "file": "src/webgpu/bindings.cpp",
+      "bytes": 357292,
+      "sha256": "9c7dcaadd8923f9a7f61e9ea0f1ca0fe563db908c1e5ab70271feb7a00e0a08d",
+      "sourceBeforeMatches": true,
+      "newFileCreated": true
+    },
+    {
+      "file": "include/mystral/webgpu/context.h",
+      "bytes": 6543,
+      "sha256": "209758e8aa108c5f9cb4a2b1c1b3d993f6b3861cfdd38e2f4160f150aae30f26",
+      "sourceBeforeMatches": true,
+      "newFileCreated": true
+    },
+    {
+      "file": "src/webgpu/context.cpp",
+      "bytes": 54303,
+      "sha256": "a91bcb8c086a5fc20718f39ccb223b89bccee4a9bc98e341b021cf81db524ef0",
+      "sourceBeforeMatches": true,
+      "newFileCreated": true
+    },
+    {
+      "file": "src/raytracing/bindings.cpp",
+      "bytes": 21299,
+      "sha256": "963970b0df461281cb7ad51dfca7f0b45a03da3985808102774e62d7ce96e01f",
+      "sourceBeforeMatches": true,
+      "newFileCreated": true
+    },
+    {
+      "file": "src/runtime.cpp",
+      "bytes": 210542,
+      "sha256": "bde00b1190db8fc5ca67a790bcc30f6a7ad43e470675e74952d88f07e99efbc7",
+      "sourceBeforeMatches": true,
+      "newFileCreated": true
+    },
+    {
+      "file": "src/js/v8_engine.cpp",
+      "bytes": 62940,
+      "sha256": "57439c441394e2ec4f65bb22c56767ca3c46477c88f46c51bda0f1e44f63b753",
+      "sourceBeforeMatches": true,
+      "newFileCreated": true
+    }
+  ]
+}

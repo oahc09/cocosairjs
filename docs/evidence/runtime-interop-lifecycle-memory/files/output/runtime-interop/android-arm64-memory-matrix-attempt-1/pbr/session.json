@@ -1,0 +1,19 @@
+{
+  "schema": "air-android-interop-session-v1",
+  "runId": "android-1793109216920-pbr-54d11c",
+  "caseId": "pbr",
+  "pid": 19658,
+  "demo": false,
+  "v8StartupMode": "embedded",
+  "v8Version": "11.6.189.22",
+  "origin": "http://127.0.0.1:43547",
+  "token": "99bb26f7-4b9f-4965-bc94-8801294db976",
+  "entryUrl": "http://127.0.0.1:43547/entry.js",
+  "bundleUrl": "http://127.0.0.1:43547/sdk/cocosair.module.js",
+  "assetBaseUrl": "http://127.0.0.1:43547/sdk/webgpu/",
+  "assetRootUrl": "http://127.0.0.1:43547/assets/",
+  "moduleUrl": "http://127.0.0.1:43547/probes/module-fixture.mjs",
+  "captureUrl": "http://127.0.0.1:43547/capture",
+  "reportUrl": "http://127.0.0.1:43547/report",
+  "eventUrl": "http://127.0.0.1:43547/event"
+}

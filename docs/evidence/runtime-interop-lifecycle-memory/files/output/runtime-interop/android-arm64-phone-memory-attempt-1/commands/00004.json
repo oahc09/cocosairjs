@@ -1,0 +1,18 @@
+{
+  "arguments": [
+    "-s",
+    "10CG4G0BE1003M8",
+    "shell",
+    "getprop",
+    "ro.product.model"
+  ],
+  "startedAt": "2026-10-27T14:18:20.695Z",
+  "monotonicStartMs": 84711268.8313,
+  "absoluteDeadlineMs": 84726268.8199,
+  "timeoutMs": 15000,
+  "exitCode": 0,
+  "signal": null,
+  "error": null,
+  "finishedAt": "2026-10-27T14:18:20.793Z",
+  "monotonicEndMs": 84711367.4526
+}

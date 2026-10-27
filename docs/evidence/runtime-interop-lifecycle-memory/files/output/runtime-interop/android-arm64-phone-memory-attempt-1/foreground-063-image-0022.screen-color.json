@@ -1,0 +1,82 @@
+{
+  "schema": "air-android-png-icc-normalization-v1",
+  "completed": true,
+  "pass": true,
+  "action": "icc-to-srgb",
+  "input": {
+    "file": "C:\\Users\\caosh\\.codex\\worktrees\\webgpu-runtime-interop\\cocosair.js\\output\\runtime-interop\\android-arm64-phone-memory-attempt-1\\foreground-063-image-0022.screen.png",
+    "sha256": "3b692903eb6ea3942406a0852074ebc1beda286a9a5107348e43562445f7605c",
+    "bytes": 60945,
+    "width": 1440,
+    "height": 3168,
+    "mode": "RGBA"
+  },
+  "output": {
+    "file": "C:\\Users\\caosh\\.codex\\worktrees\\webgpu-runtime-interop\\cocosair.js\\output\\runtime-interop\\android-arm64-phone-memory-attempt-1\\foreground-063-image-0022.screen-srgb.png",
+    "sha256": "6f9f9d4e0cb571b7c1ddb7009061aa7f7e45ce496a3f939b06752c640884c19f",
+    "bytes": 113897,
+    "width": 1440,
+    "height": 3168,
+    "mode": "RGBA"
+  },
+  "producer": {
+    "file": "C:\\Users\\caosh\\.codex\\worktrees\\webgpu-runtime-interop\\cocosair.js\\tools\\verify\\runtime-interop-android\\verification-snapshots\\output\\runtime-interop\\android-phone-color-normalize.py",
+    "sha256": "0a6f3d0817bf8693d04ed2a590bfe1cd7faa2d64c0a158e440a8661d93e4f4ac"
+  },
+  "icc": {
+    "present": true,
+    "name": "Skia",
+    "bytes": 520,
+    "sha256": "6e72ac49fd45d1275f29daca1038a0b9af5befd0e891af9267f47ab066a5dffb",
+    "base64": "AAACCAAAAAAEMAAAbW50clJHQiBYWVogB+AAAQABAAAAAAAAYWNzcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAPbWAAEAAAAA0y0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJZGVzYwAAAPAAAABkclhZWgAAAVQAAAAUZ1hZWgAAAWgAAAAUYlhZWgAAAXwAAAAUd3RwdAAAAZAAAAAUclRSQwAAAaQAAAAoZ1RSQwAAAaQAAAAoYlRSQwAAAaQAAAAoY3BydAAAAcwAAAA8bWx1YwAAAAAAAAABAAAADGVuVVMAAABGAAAAHABEAGkAcwBwAGwAYQB5ACAAUAAzACAARwBhAG0AdQB0ACAAdwBpAHQAaAAgAHMAUgBHAEIAIABUAHIAYQBuAHMAZgBlAHIAAFhZWiAAAAAAAACD3gAAPb7///+7WFlaIAAAAAAAAEq+AACxNgAACrlYWVogAAAAAAAAKDsAABEMAADIzVhZWiAAAAAAAAD21gABAAAAANMtcGFyYQAAAAAABAAAAAJmZgAA8qcAAA1ZAAAT0AAAClsAAAAAAAAAAG1sdWMAAAAAAAAAAQAAAAxlblVTAAAAIAAAABwARwBvAG8AZwBsAGUAIABJAG4AYwAuACAAMgAwADEANg==",
+    "description": "Display P3 Gamut with sRGB Transfer",
+    "colorSpace": "RGB",
+    "connectionSpace": "XYZ",
+    "deviceClass": "mntr",
+    "iccVersion": 70254592,
+    "outputProfileSha256": "92e6a9a245d2bd07b53b99a7b7afd433d68e05518aa2ceba2a9f91ca9b735075",
+    "outputProfileDescription": "sRGB built-in"
+  },
+  "transform": {
+    "engine": "Pillow.ImageCms/LittleCMS",
+    "renderingIntent": 1,
+    "renderingIntentName": "RELATIVE_COLORIMETRIC",
+    "flags": 0,
+    "inputProfile": "actual embedded ICC bytes",
+    "outputProfile": "ImageCms.createProfile('sRGB')",
+    "outputMode": "RGBA",
+    "bitsPerChannel": 8,
+    "resize": false,
+    "alphaPreserved": true,
+    "fittedFromExpectedPixels": false
+  },
+  "versions": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+    "pillow": "12.3.0",
+    "littlecms": "2.19"
+  },
+  "modules": {
+    "PIL": {
+      "file": "C:\\Users\\caosh\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\site-packages\\PIL\\__init__.py",
+      "sha256": "3fffff8502f4b59ca61d39cce713d55ffef046954262fce1abac3e97f3803734"
+    },
+    "PIL.Image": {
+      "file": "C:\\Users\\caosh\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\site-packages\\PIL\\Image.py",
+      "sha256": "59f1b98ed7bfd7b516b9f13ffd9dd3bc0aa1a495042accdb5ae4609b41c329d5"
+    },
+    "PIL.ImageCms": {
+      "file": "C:\\Users\\caosh\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\site-packages\\PIL\\ImageCms.py",
+      "sha256": "0effeeecadc71257d6eabcbd4cf43277ff35c6aeda0e7ba4c60ab67676bf49de"
+    },
+    "PIL._imaging": {
+      "file": "C:\\Users\\caosh\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\site-packages\\PIL\\_imaging.cp312-win_amd64.pyd",
+      "sha256": "d5f7aaebcc66e96fcff9af9d86cb73a9decba0706c29276af23606e4cdf89fa0"
+    },
+    "PIL._imagingcms": {
+      "file": "C:\\Users\\caosh\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\site-packages\\PIL\\_imagingcms.cp312-win_amd64.pyd",
+      "sha256": "a7482696c98b7d5fe44a172e280147ae6448e82017be3a2322713e53765d9c7a"
+    }
+  },
+  "scope": "Standard whole-image ICC conversion only; no resize, crop, pixel fitting, or oracle adjustment.",
+  "noIccPolicy": "Preserve the original PNG bytes exactly; this does not infer a missing color profile."
+}

@@ -1,0 +1,2 @@
+"allocation_rows","net_size"
+6415,3314408

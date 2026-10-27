@@ -1,0 +1,25 @@
+{
+  "prefix": "foreground-000-image-0001",
+  "measuredAt": "2026-10-27T14:18:31.104Z",
+  "bounds": {
+    "x": 560,
+    "y": 1464,
+    "width": 320,
+    "height": 240
+  },
+  "wanted": "green",
+  "originalSha256": "caf8690dec7957ef898f52668e0f163d1088a7b5a5a12990bed98c7f32ba9b97",
+  "originalCropSha256": "770c51ef70d6208a369fb3c4935dd7fb5c559587638d9a1693ea3e27914256fe",
+  "interpretedSha256": "93a35d16d0d48adec7de08e43c3f833a155aba9e4c29d9a696ccb9c0a097bcf1",
+  "interpretedCropSha256": "eb9a391d853dbeaa1593a1a5e4853de40313b68cd0a0f54867e955cab231495b",
+  "colors": {
+    "width": 320,
+    "height": 240,
+    "orange": 0,
+    "green": 8266,
+    "blue": 68534,
+    "sha256": "eb9a391d853dbeaa1593a1a5e4853de40313b68cd0a0f54867e955cab231495b"
+  },
+  "pass": true,
+  "colorMetadata": "foreground-000-image-0001.screen-color.json"
+}

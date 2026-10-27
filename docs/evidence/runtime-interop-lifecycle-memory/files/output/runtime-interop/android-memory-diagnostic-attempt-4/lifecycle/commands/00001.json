@@ -1,0 +1,11 @@
+{
+  "arguments": [
+    "-s",
+    "emulator-5554",
+    "get-state"
+  ],
+  "startedAt": "2026-10-27T04:47:54.278Z",
+  "timeoutMs": 15000,
+  "exitCode": 0,
+  "finishedAt": "2026-10-27T04:47:54.343Z"
+}

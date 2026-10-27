@@ -1,0 +1,6 @@
+CMake Warning at third_party/sdl3/SDL3-3.2.8/cmake/sdlcpu.cmake:101 (message):
+  Failed to compile source detecting the target CPU architecture
+Call Stack (most recent call first):
+  third_party/sdl3/SDL3-3.2.8/CMakeLists.txt:81 (SDL_DetectTargetCPUArchitectures)
+
+

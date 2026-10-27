@@ -1,0 +1,6 @@
+{"stage":"entry-ready","caseId":"demo"}
+{"stage":"demo-ready","frames":3,"taps":0,"color":"orange","gpuErrors":[],"health":{"state":"healthy","backend":"webgpu","lostCount":0,"restoredCount":0,"isContextLost":null,"gamePaused":false,"reason":null,"suggestion":"none","lastEvent":null,"lastEventAt":null,"timeline":[]}}
+{"stage":"demo-input","frames":210,"taps":1,"color":"green","gpuErrors":[],"type":"mousedown","isTrusted":true,"clientX":160.50157165527344,"clientY":120.5020980834961}
+{"stage":"demo-input","frames":710,"taps":2,"color":"orange","gpuErrors":[],"type":"mousedown","isTrusted":true,"clientX":160.50157165527344,"clientY":120.5020980834961}
+{"stage":"demo-input","frames":1146,"taps":3,"color":"green","gpuErrors":[],"type":"mousedown","isTrusted":true,"clientX":160.50157165527344,"clientY":120.5020980834961}
+{"stage":"demo-input","frames":1598,"taps":4,"color":"orange","gpuErrors":[],"type":"mousedown","isTrusted":true,"clientX":160.50157165527344,"clientY":120.5020980834961}

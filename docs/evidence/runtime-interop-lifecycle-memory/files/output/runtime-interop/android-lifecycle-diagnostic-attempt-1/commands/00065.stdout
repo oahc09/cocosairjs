@@ -1,0 +1,532 @@
+ACTIVITY MANAGER ACTIVITIES (dumpsys activity activities)
+Display #0 (activities from top to bottom):
+  * Task{7a7e06d #29 type=standard A=10231:com.mystral.engine.interop U=0 visible=true visibleRequested=true mode=fullscreen translucent=false sz=1}
+    fullscreenRequestAllowMode=NONE
+    mLastPausedActivity: ActivityRecord{24920196 u0 com.mystral.engine.interop/com.mystral.engine.MystralActivity t29}
+    isSleeping=false
+    topResumedActivity=ActivityRecord{24920196 u0 com.mystral.engine.interop/com.mystral.engine.MystralActivity t29}
+    * Hist  #0: ActivityRecord{24920196 u0 com.mystral.engine.interop/com.mystral.engine.MystralActivity t29}
+      packageName=com.mystral.engine.interop processName=com.mystral.engine.interop
+      launchedFromUid=0 launchedFromPackage=com.android.shell launchedFromFeature=null userId=0
+      app=ProcessRecord{ebee0f0 4353:com.mystral.engine.interop/u0a231}
+      Intent { flg=0x10000000 xflg=0x4 cmp=com.mystral.engine.interop/com.mystral.engine.MystralActivity (has extras) }
+      rootOfTask=true task=Task{7a7e06d #29 type=standard A=10231:com.mystral.engine.interop}
+      taskAffinity=10231:com.mystral.engine.interop
+      mActivityComponent=com.mystral.engine.interop/com.mystral.engine.MystralActivity
+      baseDir=/data/app/~~e03E8h_u-C4tY1UgloixRg==/com.mystral.engine.interop-g3zy_6AC2sSjX0fDg6-Zbg==/base.apk
+      dataDir=/data/user/0/com.mystral.engine.interop
+      stateNotNeeded=false componentSpecified=true mActivityType=standard
+      compat={420dpi} theme=0x7f020000
+      mLastReportedConfigurations:
+        mGlobalConfig={1.0 310mcc260mnc [en_US] ldltr sw411dp w411dp h840dp 420dpi nrml long compactNeeded port finger qwerty/v/v -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 2400) mAppBounds=Rect(0, 132 - 1080, 2337) mMaxBounds=Rect(0, 0 - 1080, 2400) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mActivityType=undefined mAlwaysOnTop=undefined mRotation=ROTATION_0} as.3 s.78 fontWeightAdjustment=0}
+        mOverrideConfig={1.0 310mcc260mnc [en_US] ldltr sw411dp w411dp h840dp 420dpi nrml long compactNeeded port finger qwerty/v/v -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 2400) mAppBounds=Rect(0, 132 - 1080, 2337) mMaxBounds=Rect(0, 0 - 1080, 2400) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mActivityType=standard mAlwaysOnTop=undefined mRotation=ROTATION_0} as.3 s.2 fontWeightAdjustment=0}
+      mLastReportedActivityWindowInfo=ActivityWindowInfo{isEmbedded=false, taskBounds=Rect(0, 0 - 1080, 2400), taskFragmentBounds=Rect(0, 0 - 1080, 2400)}
+      CurrentConfiguration={1.0 310mcc260mnc [en_US] ldltr sw411dp w411dp h840dp 420dpi nrml long compactNeeded port finger qwerty/v/v -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 2400) mAppBounds=Rect(0, 132 - 1080, 2337) mMaxBounds=Rect(0, 0 - 1080, 2400) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mActivityType=standard mAlwaysOnTop=undefined mRotation=ROTATION_0} as.3 s.2 fontWeightAdjustment=0}
+      RequestedOverrideConfiguration={0.0 ?mcc0mnc ?localeList ?layoutDir ?swdp ?wdp ?hdp ?density ?lsize ?long ?round ?ldr ?wideColorGamut ?orien ?uimode ?night ?touch ?keyb/?/? ?nav/? winConfig={ mBounds=Rect(0, 0 - 0, 0) mAppBounds=null mMaxBounds=Rect(0, 0 - 0, 0) mDisplayRotation=undefined mWindowingMode=undefined mActivityType=standard mAlwaysOnTop=undefined mRotation=undefined} ?fontWeightAdjustment}
+      ResolvedOverrideConfiguration={0.0 ?mcc0mnc ?localeList ?layoutDir sw411dp w411dp h840dp ?density ?lsize ?long ?round ?ldr ?wideColorGamut port ?uimode ?night ?touch ?keyb/?/? ?nav/? winConfig={ mBounds=Rect(0, 0 - 0, 0) mAppBounds=Rect(0, 132 - 1080, 2337) mMaxBounds=Rect(0, 0 - 0, 0) mDisplayRotation=undefined mWindowingMode=undefined mActivityType=undefined mAlwaysOnTop=undefined mRotation=undefined} s.2 ?fontWeightAdjustment}
+      taskDescription: label="null" icon=null iconResource=/0 iconFilename=null primaryColor=ff222222
+        backgroundColor=ff000000 statusBarColor=ff000000 navigationBarColor=808080
+       backgroundColorFloating=ff000000
+      launchFailed=false launchCount=0 lastLaunchTime=-20s825ms
+      mHaveState=false mIcicle=null
+      state=RESUMED finishing=false
+      keysPaused=false inHistory=true idle=true
+      occludesParent=true mNoDisplay=false immersive=false launchMode=0
+      mActivityType=standard
+      windows=[Window{16fd126 u0 com.mystral.engine.interop/com.mystral.engine.MystralActivity}]
+      windowType=2
+      mOccludesParent=true
+      overrideOrientation=SCREEN_ORIENTATION_FULL_USER
+      requestedOrientation=SCREEN_ORIENTATION_FULL_USER
+      mVisibleRequested=true mVisible=true mClientVisible=true reportedDrawn=true reportedVisible=true
+      mNumInterestingWindows=1 mNumDrawnWindows=1 allDrawn=true)
+      startingData=null firstWindowDrawn=true
+      nowVisible=true lastVisibleTime=-3s264ms
+      resizeMode=RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION
+      mLastReportedMultiWindowMode=false mLastReportedPictureInPictureMode=false
+      supportsSizeChanges=SIZE_CHANGES_UNSUPPORTED_METADATA
+      configChanges=0x57fb
+      neverSandboxDisplayApis=false
+      alwaysSandboxDisplayApis=false
+      isTransparentPolicyRunning=false
+      areBoundsLetterboxed=false
+      isLetterboxRunning=true
+      AppCompatCameraDisplayRotationPolicy:
+        isTreatmentEnabledForDisplay=false
+      AppCompatCameraSimReqOrientationPolicy:
+      CameraStateMonitor:
+        activeCameraConnections= mCameraAppInfoSet={ mCameraAppInfoSet={} }
+        mAvailableRotateAndCropModesForCamera={}
+
+  * Task{d4dc345 #1 type=home U=0 visible=false visibleRequested=false mode=fullscreen translucent=true sz=1}
+    fullscreenRequestAllowMode=NONE
+    * Task{14307bc #2 type=home I=com.google.android.apps.nexuslauncher/.NexusLauncherActivity U=0 rootTaskId=1 visible=false visibleRequested=false mode=fullscreen translucent=true sz=2}
+      fullscreenRequestAllowMode=NONE
+      mLastPausedActivity: ActivityRecord{48187311 u0 com.google.android.apps.nexuslauncher/.NexusLauncherActivity t2}
+      isSleeping=false
+      * Hist  #1: ActivityRecord{48187311 u0 com.google.android.apps.nexuslauncher/.NexusLauncherActivity t2}
+        packageName=com.google.android.apps.nexuslauncher processName=com.google.android.apps.nexuslauncher
+        launchedFromUid=0 launchedFromPackage=null launchedFromFeature=null userId=0
+        app=ProcessRecord{f2d9e4a 1090:com.google.android.apps.nexuslauncher/u0a199}
+        Intent { act=android.intent.action.MAIN cat=[android.intent.category.HOME] flg=0x10000100 cmp=com.google.android.apps.nexuslauncher/.NexusLauncherActivity (has extras) }
+        rootOfTask=true task=Task{14307bc #2 type=home I=com.google.android.apps.nexuslauncher/.NexusLauncherActivity}
+        taskAffinity=null
+        mActivityComponent=com.google.android.apps.nexuslauncher/.NexusLauncherActivity
+        baseDir=/system_ext/priv-app/NexusLauncherRelease/NexusLauncherRelease.apk
+        dataDir=/data/user/0/com.google.android.apps.nexuslauncher
+        stateNotNeeded=true componentSpecified=true mActivityType=home
+        compat={420dpi} theme=0x7f140024
+        mLastReportedConfigurations:
+          mGlobalConfig={1.0 310mcc260mnc [en_US] ldltr sw411dp w411dp h914dp 420dpi nrml long compactNeeded port finger qwerty/v/v -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 2400) mAppBounds=Rect(0, 0 - 1080, 2400) mMaxBounds=Rect(0, 0 - 1080, 2400) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mActivityType=undefined mAlwaysOnTop=undefined mRotation=ROTATION_0} as.3 s.69 fontWeightAdjustment=0}
+          mOverrideConfig={1.0 310mcc260mnc [en_US] ldltr sw411dp w411dp h914dp 420dpi nrml long compactNeeded port finger qwerty/v/v -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 2400) mAppBounds=Rect(0, 0 - 1080, 2400) mMaxBounds=Rect(0, 0 - 1080, 2400) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mActivityType=home mAlwaysOnTop=undefined mRotation=ROTATION_0} as.3 s.8 fontWeightAdjustment=0}
+        mLastReportedActivityWindowInfo=ActivityWindowInfo{isEmbedded=false, taskBounds=Rect(0, 0 - 1080, 2400), taskFragmentBounds=Rect(0, 0 - 1080, 2400)}
+        CurrentConfiguration={1.0 310mcc260mnc [en_US] ldltr sw411dp w411dp h914dp 420dpi nrml long compactNeeded port finger qwerty/v/v -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 2400) mAppBounds=Rect(0, 0 - 1080, 2400) mMaxBounds=Rect(0, 0 - 1080, 2400) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mActivityType=home mAlwaysOnTop=undefined mRotation=ROTATION_0} as.3 s.8 fontWeightAdjustment=0}
+        RequestedOverrideConfiguration={0.0 ?mcc0mnc ?localeList ?layoutDir ?swdp ?wdp ?hdp ?density ?lsize ?long ?round ?ldr ?wideColorGamut ?orien ?uimode ?night ?touch ?keyb/?/? ?nav/? winConfig={ mBounds=Rect(0, 0 - 0, 0) mAppBounds=null mMaxBounds=Rect(0, 0 - 0, 0) mDisplayRotation=undefined mWindowingMode=undefined mActivityType=home mAlwaysOnTop=undefined mRotation=undefined} as.3 ?fontWeightAdjustment}
+        taskDescription: label="null" icon=null iconResource=/0 iconFilename=null primaryColor=fff1f0f6
+          backgroundColor=ffededf6 statusBarColor=0 navigationBarColor=0
+         backgroundColorFloating=fff1f0f6
+        launchFailed=false launchCount=0 lastLaunchTime=-14m31s517ms
+        mHaveState=true mIcicle=Bundle[mParcelledData.dataSize=8612]
+        state=STOPPED finishing=false
+        keysPaused=false inHistory=true idle=true
+        occludesParent=true mNoDisplay=false immersive=false launchMode=2
+        mActivityType=home
+        windows=[Window{3cedcb3 u0 com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity}]
+        windowType=2
+        mOccludesParent=true
+        overrideOrientation=SCREEN_ORIENTATION_NOSENSOR
+        requestedOrientation=SCREEN_ORIENTATION_NOSENSOR
+        mVisibleRequested=false mVisible=false mClientVisible=false reportedDrawn=false reportedVisible=false
+        mAppStopped=true
+        mNumInterestingWindows=1 mNumDrawnWindows=1 allDrawn=false)
+        nowVisible=false lastVisibleTime=-11s845ms
+        resizeMode=RESIZE_MODE_RESIZEABLE
+        mLastReportedMultiWindowMode=false mLastReportedPictureInPictureMode=false
+        supportsSizeChanges=SIZE_CHANGES_UNSUPPORTED_METADATA
+        configChanges=0x4ffb
+        neverSandboxDisplayApis=false
+        alwaysSandboxDisplayApis=false
+        isTransparentPolicyRunning=false
+        areBoundsLetterboxed=false
+        isLetterboxRunning=false
+        mRecreateConfigMask=0
+        AppCompatCameraDisplayRotationPolicy:
+          isTreatmentEnabledForDisplay=false
+        AppCompatCameraSimReqOrientationPolicy:
+        CameraStateMonitor:
+          activeCameraConnections= mCameraAppInfoSet={ mCameraAppInfoSet={} }
+          mAvailableRotateAndCropModesForCamera={}
+      * TaskFragment{7ae0c76 mode=multi-window organizerUid=10199 organizerProc=com.google.android.apps.nexuslauncher}
+        mForceHiddenFlags=4
+        fullscreenRequestAllowMode=NONE
+
+  * Task{de6a583 #27 type=standard A=1000:com.android.settings.root U=0 visible=false visibleRequested=false mode=fullscreen translucent=true sz=1}
+    fullscreenRequestAllowMode=NONE
+    mLastPausedActivity: ActivityRecord{135345202 u0 com.android.settings/.homepage.SettingsHomepageActivity t27}
+    isSleeping=false
+    * Hist  #0: ActivityRecord{135345202 u0 com.android.settings/.homepage.SettingsHomepageActivity t27}
+      packageName=com.android.settings processName=com.android.settings
+      launchedFromUid=0 launchedFromPackage=com.android.shell launchedFromFeature=null userId=0
+      app=ProcessRecord{f3c45b7 1181:com.android.settings/1000}
+      Intent { act=android.settings.SETTINGS flg=0x10000000 xflg=0x4 cmp=com.android.settings/.homepage.SettingsHomepageActivity }
+      rootOfTask=true task=Task{de6a583 #27 type=standard A=1000:com.android.settings.root}
+      taskAffinity=1000:com.android.settings.root
+      mActivityComponent=com.android.settings/.homepage.SettingsHomepageActivity
+      baseDir=/system_ext/priv-app/SettingsGoogle/SettingsGoogle.apk
+      dataDir=/data/user_de/0/com.android.settings
+      stateNotNeeded=false componentSpecified=false mActivityType=standard
+      compat={420dpi} theme=0x7f1505d6
+      mLastReportedConfigurations:
+        mGlobalConfig={1.0 310mcc260mnc [en_US] ldltr sw411dp w411dp h914dp 420dpi nrml long compactNeeded port finger qwerty/v/v -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 2400) mAppBounds=Rect(0, 0 - 1080, 2400) mMaxBounds=Rect(0, 0 - 1080, 2400) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mActivityType=undefined mAlwaysOnTop=undefined mRotation=ROTATION_0} as.3 s.67 fontWeightAdjustment=0}
+        mOverrideConfig={1.0 310mcc260mnc [en_US] ldltr sw411dp w411dp h914dp 420dpi nrml long compactNeeded port finger qwerty/v/v -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 2400) mAppBounds=Rect(0, 0 - 1080, 2400) mMaxBounds=Rect(0, 0 - 1080, 2400) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mActivityType=standard mAlwaysOnTop=undefined mRotation=ROTATION_0} as.3 s.1 fontWeightAdjustment=0}
+      mLastReportedActivityWindowInfo=ActivityWindowInfo{isEmbedded=false, taskBounds=Rect(0, 0 - 1080, 2400), taskFragmentBounds=Rect(0, 0 - 1080, 2400)}
+      CurrentConfiguration={1.0 310mcc260mnc [en_US] ldltr sw411dp w411dp h914dp 420dpi nrml long compactNeeded port finger qwerty/v/v -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 2400) mAppBounds=Rect(0, 0 - 1080, 2400) mMaxBounds=Rect(0, 0 - 1080, 2400) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mActivityType=standard mAlwaysOnTop=undefined mRotation=ROTATION_0} as.3 s.1 fontWeightAdjustment=0}
+      RequestedOverrideConfiguration={0.0 ?mcc0mnc ?localeList ?layoutDir ?swdp ?wdp ?hdp ?density ?lsize ?long ?round ?ldr ?wideColorGamut ?orien ?uimode ?night ?touch ?keyb/?/? ?nav/? winConfig={ mBounds=Rect(0, 0 - 0, 0) mAppBounds=null mMaxBounds=Rect(0, 0 - 0, 0) mDisplayRotation=undefined mWindowingMode=undefined mActivityType=standard mAlwaysOnTop=undefined mRotation=undefined} ?fontWeightAdjustment}
+      ResolvedOverrideConfiguration={0.0 ?mcc0mnc ?localeList ?layoutDir ?swdp ?wdp ?hdp ?density ?lsize ?long ?round ?ldr ?wideColorGamut ?orien ?uimode ?night ?touch ?keyb/?/? ?nav/? winConfig={ mBounds=Rect(0, 0 - 0, 0) mAppBounds=null mMaxBounds=Rect(0, 0 - 0, 0) mDisplayRotation=undefined mWindowingMode=undefined mActivityType=undefined mAlwaysOnTop=undefined mRotation=undefined} s.1 ?fontWeightAdjustment}
+      taskDescription: label="null" icon=null iconResource=/0 iconFilename=null primaryColor=fff1f0f6
+        backgroundColor=ffededf6 statusBarColor=fff1f0f6 navigationBarColor=0
+       backgroundColorFloating=fff1f0f6
+      launchFailed=false launchCount=0 lastLaunchTime=-13m56s477ms
+      mHaveState=true mIcicle=Bundle[mParcelledData.dataSize=13284]
+      state=STOPPED finishing=false
+      keysPaused=false inHistory=true idle=true
+      occludesParent=true mNoDisplay=false immersive=false launchMode=0
+      mActivityType=standard
+      windows=[Window{e8bafab u0 com.android.settings/com.android.settings.homepage.SettingsHomepageActivity}]
+      windowType=2
+      mOccludesParent=true
+      overrideOrientation=SCREEN_ORIENTATION_UNSPECIFIED
+      requestedOrientation=SCREEN_ORIENTATION_UNSPECIFIED
+      mVisibleRequested=false mVisible=false mClientVisible=false reportedDrawn=false reportedVisible=false
+      mAppStopped=true
+      mNumInterestingWindows=1 mNumDrawnWindows=1 allDrawn=true)
+      nowVisible=false lastVisibleTime=-13m54s853ms
+      resizeMode=RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION
+      mLastReportedMultiWindowMode=false mLastReportedPictureInPictureMode=false
+      supportsSizeChanges=SIZE_CHANGES_UNSUPPORTED_METADATA
+      configChanges=0x4dfb
+      neverSandboxDisplayApis=false
+      alwaysSandboxDisplayApis=false
+      isTransparentPolicyRunning=false
+      areBoundsLetterboxed=false
+      isLetterboxRunning=false
+      AppCompatCameraDisplayRotationPolicy:
+        isTreatmentEnabledForDisplay=false
+      AppCompatCameraSimReqOrientationPolicy:
+      CameraStateMonitor:
+        activeCameraConnections= mCameraAppInfoSet={ mCameraAppInfoSet={} }
+        mAvailableRotateAndCropModesForCamera={}
+
+  * Task{75768b0 #3 name=Bubbles type=undefined U=0 visible=false visibleRequested=false mode=multi-window translucent=true sz=1}
+    fullscreenRequestAllowMode=NONE
+    mCreatedByOrganizer=true
+    mDisablePip=true
+    * Task{e23f7d3 #0 name=Bubbles-visibility-barrier type=undefined U=0 rootTaskId=3 visible=false visibleRequested=false mode=multi-window translucent=true sz=0}
+      fullscreenRequestAllowMode=NONE
+      mCreatedByOrganizer=true
+      isSleeping=false
+
+  * Task{d83bd0 #4 name=SplitRoot type=undefined U=0 visible=false visibleRequested=false mode=fullscreen translucent=true sz=2}
+    fullscreenRequestAllowMode=ENTER
+    mCreatedByOrganizer=true
+    * Task{a27bece #6 name=side type=undefined U=0 rootTaskId=4 visible=false visibleRequested=false mode=multi-window translucent=true sz=0}
+      mBounds=Rect(0, 2400 - 1080, 3600)
+      fullscreenRequestAllowMode=ENTER
+      mCreatedByOrganizer=true
+      mDisallowOverrideBoundsForChildren=true
+      isSleeping=false
+    * Task{12b07c9 #5 name=main type=undefined U=0 rootTaskId=4 visible=false visibleRequested=false mode=multi-window translucent=true sz=0}
+      fullscreenRequestAllowMode=ENTER
+      mCreatedByOrganizer=true
+      mDisallowOverrideBoundsForChildren=true
+      isSleeping=false
+
+  Resumed activities in task display areas (from top to bottom):
+    Resumed: ActivityRecord{24920196 u0 com.mystral.engine.interop/com.mystral.engine.MystralActivity t29}
+
+  ResumedActivity: ActivityRecord{24920196 u0 com.mystral.engine.interop/com.mystral.engine.MystralActivity t29}
+
+ActivityTaskSupervisor state:
+  topDisplayFocusedRootTask=Task{7a7e06d #29 type=standard A=10231:com.mystral.engine.interop}
+  Display: mDisplayId=0 (organized)
+    init=1080x2400 420dpi mMinSizeOfResizeableTaskDp=220 cur=1080x2400 app=1080x2400 rng=1080x1080-2400x2400
+    deferred=false mLayoutNeeded=false
+  mLastOrientationSource=WindowedMagnification:0:31@61954394
+  deepestLastOrientationSource=ActivityRecord{24920196 u0 com.mystral.engine.interop/com.mystral.engine.MystralActivity t29}
+  overrideConfig={1.0 310mcc260mnc [en_US] ldltr sw411dp w411dp h914dp 420dpi nrml long compactNeeded port finger qwerty/v/v -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 2400) mAppBounds=Rect(0, 0 - 1080, 2400) mMaxBounds=Rect(0, 0 - 1080, 2400) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mActivityType=undefined mAlwaysOnTop=undefined mRotation=ROTATION_0} as.3 s.49 fontWeightAdjustment=0}
+  mHasSetIgnoreOrientationRequest=false ignoreOrientationRequest=false
+  mSleeping=false mAllSleepTokens=[]
+  mLayoutSeq=287
+  mImeWindow=Window{1262752 u0 InputMethod}
+  mImeLayeringTarget=Window{16fd126 u0 com.mystral.engine.interop/com.mystral.engine.MystralActivity}
+  mImeInputTarget=Window{16fd126 u0 com.mystral.engine.interop/com.mystral.engine.MystralActivity}
+  mImeControlTarget=Window{16fd126 u0 com.mystral.engine.interop/com.mystral.engine.MystralActivity}
+  ImeContainer
+    mNeedsLayer=false
+    mImeWindowToken=null
+  mImeParent=ActivityRecord{24920196 u0 com.mystral.engine.interop/com.mystral.engine.MystralActivity t29}
+  mRemoteInsetsControlTarget=RemoteInsetsControlTarget{a723bc3 displayId=0 requestedVisibleTypes=503 animatingTypes=0}
+  mCurrentFocus=Window{16fd126 u0 com.mystral.engine.interop/com.mystral.engine.MystralActivity}
+  mFocusedApp=ActivityRecord{24920196 u0 com.mystral.engine.interop/com.mystral.engine.MystralActivity t29}
+  mFixedRotationLaunchingApp=null
+
+  mHoldScreenWindow=Window{16fd126 u0 com.mystral.engine.interop/com.mystral.engine.MystralActivity}
+  mObscuringWindow=null
+  mLastWakeLockHoldingWindow=Window{c9aa2d9 u0 SnapshotStartingWindow for taskId=29}
+  mLastWakeLockObscuringWindow=null
+
+  mIsHardwareRendererOutputDisabled=false
+  mAreClientRenderingLimitationsEnabled=false
+
+  displayId=0
+  mWallpaperTarget=null
+  mLastWallpaperZoomOut=0.0
+  token WallpaperWindowToken{fdb87e8 showWhenLocked=true}:
+    mWallpaperX=0.0
+    mWallpaperY=0.5
+    mWallpaperXStep=0.33333334
+    mWallpaperYStep=1.0
+    mWallpaperDisplayOffsetX=NA
+    mWallpaperDisplayOffsetY=NA
+
+  mSystemGestureExclusion=SkRegion()
+
+  Display areas in top down Z order:
+    * Leaf:36:36
+    * OneHanded:34:35
+      * Leaf:34:35
+    * Leaf:33:33
+    * OneHanded:32:32
+      * Leaf:32:32
+    * WindowedMagnification:0:31 (organized)
+      * OneHanded:26:31
+        * Leaf:26:31
+      * Leaf:24:25
+      * OneHanded:0:23
+        * Leaf:23:23
+        * AppZoomOut:20:22 (organized)
+          * Leaf:20:22
+        * Leaf:17:19
+        * AppZoomOut:16:16 (organized)
+          * Leaf:16:16
+        * Leaf:15:15
+        * AppZoomOut:2:14 (organized)
+          * ImePlaceholder:13:14
+            * ImeContainer
+          * Leaf:3:12
+          * DefaultTaskDisplayArea (organized)
+        * Leaf:1:1
+        * AppZoomOut:0:0 (organized)
+          * Leaf:0:0
+
+  Task display areas in top down Z order:
+    TaskDisplayArea DefaultTaskDisplayArea
+      overrideConfig={0.0 ?mcc0mnc ?localeList ?layoutDir ?swdp ?wdp ?hdp ?density ?lsize ?long ?round ?ldr ?wideColorGamut ?orien ?uimode ?night ?touch ?keyb/?/? ?nav/? winConfig={ mBounds=Rect(0, 0 - 0, 0) mAppBounds=null mMaxBounds=Rect(0, 0 - 0, 0) mDisplayRotation=undefined mWindowingMode=fullscreen mActivityType=undefined mAlwaysOnTop=undefined mRotation=undefined} ?fontWeightAdjustment}
+      mPreferredTopFocusableRootTask=Task{7a7e06d #29 type=standard A=10231:com.mystral.engine.interop}
+      mLastFocusedRootTask=Task{7a7e06d #29 type=standard A=10231:com.mystral.engine.interop}
+      Application tokens in top down Z order:
+      * Task{7a7e06d #29 type=standard A=10231:com.mystral.engine.interop U=0 visible=true visibleRequested=true mode=fullscreen translucent=false sz=1}
+        bounds=[0,0][1080,2400]
+        * ActivityRecord{24920196 u0 com.mystral.engine.interop/com.mystral.engine.MystralActivity t29}
+      * Task{d4dc345 #1 type=home U=0 visible=false visibleRequested=false mode=fullscreen translucent=true sz=1}
+        bounds=[0,0][1080,2400]
+        * Task{14307bc #2 type=home I=com.google.android.apps.nexuslauncher/.NexusLauncherActivity U=0 rootTaskId=1 visible=false visibleRequested=false mode=fullscreen translucent=true sz=2}
+          bounds=[0,0][1080,2400]
+          * ActivityRecord{48187311 u0 com.google.android.apps.nexuslauncher/.NexusLauncherActivity t2}
+          * TaskFragment{7ae0c76 mode=multi-window organizerUid=10199 organizerProc=com.google.android.apps.nexuslauncher}
+            bounds=[0,0][1080,2400]
+      * Task{de6a583 #27 type=standard A=1000:com.android.settings.root U=0 visible=false visibleRequested=false mode=fullscreen translucent=true sz=1}
+        bounds=[0,0][1080,2400]
+        * ActivityRecord{135345202 u0 com.android.settings/.homepage.SettingsHomepageActivity t27}
+      * Task{75768b0 #3 name=Bubbles type=undefined U=0 visible=false visibleRequested=false mode=multi-window translucent=true sz=1}
+        bounds=[0,0][1080,2400]
+        * Task{e23f7d3 #0 name=Bubbles-visibility-barrier type=undefined U=0 rootTaskId=3 visible=false visibleRequested=false mode=multi-window translucent=true sz=0}
+          bounds=[0,0][1080,2400]
+      * Task{d83bd0 #4 name=SplitRoot type=undefined U=0 visible=false visibleRequested=false mode=fullscreen translucent=true sz=2}
+        bounds=[0,0][1080,2400]
+        * Task{a27bece #6 name=side type=undefined U=0 rootTaskId=4 visible=false visibleRequested=false mode=multi-window translucent=true sz=0}
+          bounds=[0,2400][1080,3600]
+        * Task{12b07c9 #5 name=main type=undefined U=0 rootTaskId=4 visible=false visibleRequested=false mode=multi-window translucent=true sz=0}
+          bounds=[0,0][1080,2400]
+
+  rootHomeTask=Task=1
+
+  PinnedTaskController
+    mIsImeShowing=false
+    mImeHeight=0
+    mMinAspectRatio=0.41841003
+    mMaxAspectRatio=2.39
+
+  DisplayFrames w=1080 h=2400 r=0
+
+  DisplayPolicy
+    mCarDockEnablesAccelerometer=true mDeskDockEnablesAccelerometer=true
+    mDockMode=EXTRA_DOCK_STATE_UNDOCKED mLidState=LID_OPEN
+    mAwake=true mScreenOnEarly=true mScreenOnFully=true
+    mKeyguardDrawComplete=true mWindowManagerDrawComplete=true
+    mHdmiPlugged=false
+    mLastBehavior=SHOW_TRANSIENT_BARS_BY_SWIPE
+    mShowingDream=false mDreamingLockscreen=false
+    mStatusBar=Window{1a6008a u0 StatusBar}
+    mExpandedPanel=Window{4d43f72 u0 NotificationShade}
+    isKeyguardShowing=false
+    mNavigationBar=Window{af89aeb u0 Taskbar}
+    mNavBarOpacityMode=2
+    mNavigationBarCanMove=false
+    mHasBottomNavigationBar=true
+    mLeftGestureHost=Window{af89aeb u0 Taskbar}
+    mTopGestureHost=Window{1a6008a u0 StatusBar}
+    mRightGestureHost=Window{af89aeb u0 Taskbar}
+    mBottomGestureHost=Window{af89aeb u0 Taskbar}
+    mFocusedWindow=Window{16fd126 u0 com.mystral.engine.interop/com.mystral.engine.MystralActivity}
+    mTopFullscreenOpaqueWindowState=Window{16fd126 u0 com.mystral.engine.interop/com.mystral.engine.MystralActivity}
+    mSystemUiControllingWindow=Window{16fd126 u0 com.mystral.engine.interop/com.mystral.engine.MystralActivity}
+    mSystemBarColorApps={ActivityRecord{24920196 u0 com.mystral.engine.interop/com.mystral.engine.MystralActivity t29}}
+    mNavBarColorWindowCandidate=Window{16fd126 u0 com.mystral.engine.interop/com.mystral.engine.MystralActivity}
+    mNavBarBackgroundWindowCandidate=Window{16fd126 u0 com.mystral.engine.interop/com.mystral.engine.MystralActivity}
+    mLastStatusBarAppearanceRegions=
+      AppearanceRegion{ bounds=[0,0][1080,2400]}
+    mLastLetterboxDetails=
+    mStatusBarBackgroundWindows=
+      Window{16fd126 u0 com.mystral.engine.interop/com.mystral.engine.MystralActivity}
+    mImeInsetsConsumed=false
+    mForceShowNavigationBarEnabled=false mAllowLockscreenWhenOn=false
+    mAllowsSystemBarRemoteInsetsController=false
+    mDecorInsetsInfo:
+      ROTATION_0={overrideNonDecorInsets=[0,132][0,63], overrideConfigInsets=[0,132][0,63], overrideNonDecorFrame=[0,132][1080,2337], overrideConfigFrame=[0,132][1080,2337]}
+      ROTATION_90={overrideNonDecorInsets=[132,0][0,63], overrideConfigInsets=[132,0][0,63], overrideNonDecorFrame=[132,0][2400,1017], overrideConfigFrame=[132,0][2400,1017]}
+      ROTATION_180={overrideNonDecorInsets=[0,0][0,132], overrideConfigInsets=[0,74][0,132], overrideNonDecorFrame=[0,0][1080,2268], overrideConfigFrame=[0,74][1080,2268]}
+      ROTATION_270={overrideNonDecorInsets=[0,0][132,63], overrideConfigInsets=[0,74][132,63], overrideNonDecorFrame=[0,0][2268,1017], overrideConfigFrame=[0,74][2268,1017]}
+    SystemGestures:
+      mDisplayCutoutTouchableRegionSize=32
+      mSwipeStartThreshold=Rect(63, 164 - 63, 63)
+      mSwipeDistanceThreshold=63
+
+  DisplayRotation
+    mCurrentAppOrientation=SCREEN_ORIENTATION_FULL_USER
+    mLastOrientation=13
+    mRotation=0 mDeferredRotationPauseCount=0
+    mLandscapeRotation=ROTATION_90 mSeascapeRotation=ROTATION_270
+    mPortraitRotation=ROTATION_0 mUpsideDownRotation=ROTATION_180
+    mSupportAutoRotation=true
+    WindowOrientationListener
+      mEnabled=true
+      mCurrentRotation=ROTATION_0
+      mSensorType=null
+      mSensor={Sensor name="Goldfish 3-axis Accelerometer", vendor="The Android Open Source Project", version=1, type=1, maxRange=39.300102, resolution=2.480159E-4, power=3.0, minDelay=10000}
+      mRate=2
+      AccelSensorJudge
+        mProposedRotation=0
+        mPredictedRotation=0
+        mLastFilteredX=0.0
+        mLastFilteredY=9.776321
+        mLastFilteredZ=0.812345
+        mLastFilteredTimestampNanos=891656597500 (14.1065ms ago)
+        mTiltHistory={last: 5.0}
+        mFlat=false
+        mSwinging=false
+        mAccelerating=false
+        mOverhead=false
+        mTouched=false
+        mTiltToleranceConfig=[[-25, 70], [-25, 65], [-25, 60], [-25, 65]]
+
+    mCarDockRotation=-1 mDeskDockRotation=-1
+    mUserRotationMode=USER_ROTATION_FREE mUserRotation=ROTATION_0 mCameraRotationMode=0 mAllowAllRotations=unknown
+    mDemoHdmiRotation=ROTATION_90 mDemoHdmiRotationLock=false mUndockedHdmiRotation=-1
+    mLidOpenRotation=-1
+    mFixedToUserRotation=false
+
+    RotationLockHistory
+      10-26 15:29:04.486: mode=USER_ROTATION_FREE, rotation=ROTATION_0, caller=UiAutomationConnection#restoreRotationStateLocked
+      10-26 15:30:58.586: mode=USER_ROTATION_FREE, rotation=ROTATION_0, caller=UiAutomationConnection#restoreRotationStateLocked
+      10-26 15:31:03.750: mode=USER_ROTATION_FREE, rotation=ROTATION_0, caller=UiAutomationConnection#restoreRotationStateLocked
+      10-26 15:31:09.360: mode=USER_ROTATION_FREE, rotation=ROTATION_0, caller=UiAutomationConnection#restoreRotationStateLocked
+      10-26 15:42:37.737: mode=USER_ROTATION_FREE, rotation=ROTATION_0, caller=UiAutomationConnection#restoreRotationStateLocked
+      10-26 15:42:42.542: mode=USER_ROTATION_FREE, rotation=ROTATION_0, caller=UiAutomationConnection#restoreRotationStateLocked
+      10-26 15:42:45.337: mode=USER_ROTATION_FREE, rotation=ROTATION_0, caller=UiAutomationConnection#restoreRotationStateLocked
+      10-26 15:42:50.980: mode=USER_ROTATION_FREE, rotation=ROTATION_0, caller=UiAutomationConnection#restoreRotationStateLocked
+
+  InputConsumers:
+    name=recents_animation_input_consumer pid=1090 user=UserHandle{0}
+
+  WindowInsetsStateController
+    InsetsState
+      mDisplayFrame=Rect(0, 0 - 1080, 2400)
+      mDisplayCutout=DisplayCutout{insets=Rect(0, 132 - 0, 0) waterfall=Insets{left=0, top=0, right=0, bottom=0} boundingRect={Bounds=[Rect(0, 0 - 0, 0), Rect(479, 0 - 601, 132), Rect(0, 0 - 0, 0), Rect(0, 0 - 0, 0)]} cutoutPathParserInfo={CutoutPathParserInfo{displayWidth=1080 displayHeight=2400 physicalDisplayWidth=1080 physicalDisplayHeight=2400 density={2.625} cutoutSpec={m 576,65.75 a 36.25,36.25 0 0 0 -72.5,0 36.25,36.25 0 0 0 72.5,0 z @left} rotation={0} scale={1.0} physicalPixelDisplaySizeRatio={1.0}}} sideOverrides={}}
+      mRoundedCorners=RoundedCorners{[RoundedCorner{position=TopLeft, radius=104, center=Point(104, 104)}, RoundedCorner{position=TopRight, radius=104, center=Point(976, 104)}, RoundedCorner{position=BottomRight, radius=102, center=Point(978, 2298)}, RoundedCorner{position=BottomLeft, radius=102, center=Point(102, 2298)}]}
+      mRoundedCornerFrame=Rect(0, 0 - 0, 0)
+      mPrivacyIndicatorBounds=PrivacyIndicatorBounds {static bounds=Rect(827, 0 - 1043, 132) rotation=0}
+      mDisplayShape=DisplayShape{type=2, displayWidth=1080, displayHeight=2400, physicalPixelDisplaySizeRatio=1.0, rotation=0, offsetX=0, offsetY=0, scale=1.0}
+        InsetsSource id=ddb80000 type=statusBars frame=[0,0][1080,132] visible=false flags= sideHint=TOP
+        InsetsSource id=ddb80005 type=mandatorySystemGestures frame=[0,0][1080,164] visible=true flags= sideHint=TOP
+        InsetsSource id=ddb80006 type=tappableElement frame=[0,0][1080,132] visible=true flags= sideHint=TOP
+        InsetsSource id=3 type=ime frame=[0,0][0,0] visible=false flags=INVALID sideHint=NONE
+        InsetsSource id=27 type=displayCutout frame=[0,0][1080,132] visible=true flags= sideHint=TOP
+        InsetsSource id=1cd0001 type=navigationBars frame=[0,2337][1080,2400] visible=false flags=SUPPRESS_SCRIM|ANIMATE_RESIZING sideHint=BOTTOM
+        InsetsSource id=1cd0004 type=systemGestures frame=[0,0][78,2400] visible=true flags= sideHint=LEFT
+        InsetsSource id=1cd0005 type=mandatorySystemGestures frame=[0,2316][1080,2400] visible=true flags= sideHint=BOTTOM
+        InsetsSource id=1cd0006 type=tappableElement frame=[0,0][0,0] visible=true flags= sideHint=NONE
+        InsetsSource id=1cd0024 type=systemGestures frame=[1002,0][1080,2400] visible=true flags= sideHint=RIGHT
+    Control map:
+      Window{16fd126 u0 com.mystral.engine.interop/com.mystral.engine.MystralActivity}:
+        InsetsSourceControl: {ddb80000 mType=statusBars initiallyVisible mSurfacePosition=Point(0, 0) mInsetsHint=Insets{left=0, top=132, right=0, bottom=0} mLeash=Surface(name=Surface(name=1a6008a StatusBar#72)/@0x2bc6181 - animation-leash of insets_animation#275)/@0xd8707ba}
+        InsetsSourceControl: {1cd0001 mType=navigationBars initiallyVisible mSurfacePosition=Point(0, 2337) mInsetsHint=Insets{left=0, top=0, right=0, bottom=63} mLeash=Surface(name=Surface(name=af89aeb Taskbar#64)/@0xb699a92 - animation-leash of insets_animation#274)/@0xab5266b}
+        InsetsSourceControl: {3 mType=ime mSurfacePosition=Point(336, 2274) mInsetsHint=Insets{left=0, top=0, right=0, bottom=0} mLeash=null}
+    InsetsSourceProviders:
+      InsetsSourceProvider
+        mSource=InsetsSource id=1cd0024 type=systemGestures frame=[1002,0][1080,2400] visible=true flags= sideHint=RIGHT
+        mSourceFrame=Rect(1002, 0 - 1080, 2400)
+        mIsLeashInitialized=false mHasPendingPosition=false
+        mWin=Window{af89aeb u0 Taskbar}
+      InsetsSourceProvider
+        mSource=InsetsSource id=1cd0006 type=tappableElement frame=[0,0][0,0] visible=true flags= sideHint=NONE
+        mSourceFrame=Rect(0, 0 - 0, 0)
+        mOverrideFrames={2031=Rect(0, 0 - 0, 0)}
+        mIsLeashInitialized=false mHasPendingPosition=false
+        mWin=Window{af89aeb u0 Taskbar}
+      InsetsSourceProvider
+        mSource=InsetsSource id=1cd0005 type=mandatorySystemGestures frame=[0,2316][1080,2400] visible=true flags= sideHint=BOTTOM
+        mSourceFrame=Rect(0, 2316 - 1080, 2400)
+        mIsLeashInitialized=false mHasPendingPosition=false
+        mWin=Window{af89aeb u0 Taskbar}
+      InsetsSourceProvider
+        mSource=InsetsSource id=1cd0004 type=systemGestures frame=[0,0][78,2400] visible=true flags= sideHint=LEFT
+        mSourceFrame=Rect(0, 0 - 78, 2400)
+        mIsLeashInitialized=false mHasPendingPosition=false
+        mWin=Window{af89aeb u0 Taskbar}
+      InsetsSourceProvider
+        mSource=InsetsSource id=1cd0001 type=navigationBars frame=[0,2337][1080,2400] visible=false flags=SUPPRESS_SCRIM|ANIMATE_RESIZING sideHint=BOTTOM
+        mSourceFrame=Rect(0, 2337 - 1080, 2400)
+        mControl=InsetsSourceControl mId=1cd0001 mType=navigationBars mLeash=Surface(name=Surface(name=af89aeb Taskbar#64)/@0xb699a92 - animation-leash of insets_animation#274)/@0xab5266b mInitiallyVisible=true mSurfacePosition=Point(0, 2337) mInsetsHint=Insets{left=0, top=0, right=0, bottom=63} mSkipAnimationOnce=false mImeStatsToken=null
+        mInsetsHint=Insets{left=0, top=0, right=0, bottom=63}
+        mIsLeashInitialized=true mHasPendingPosition=false
+        mWin=Window{af89aeb u0 Taskbar}
+        mAdapter=ControlAdapter mCapturedLeash=Surface(name=Surface(name=af89aeb Taskbar#64)/@0xb699a92 - animation-leash of insets_animation#274)/@0xab5266b
+        mControlTarget=Window{16fd126 u0 com.mystral.engine.interop/com.mystral.engine.MystralActivity}
+      ImeInsetsSourceProvider
+        mSource=InsetsSource id=3 type=ime frame=[0,0][0,0] visible=false flags=INVALID sideHint=NONE
+        mSourceFrame=Rect(336, 2274 - 744, 2400)
+        mControl=InsetsSourceControl mId=3 mType=ime mLeash=Surface(name=Surface(name=1262752 InputMethod#90)/@0x60d8b20 - animation-leash of insets_animation#252)/@0x6f235cc mInitiallyVisible=false mSurfacePosition=Point(336, 2274) mInsetsHint=Insets{left=0, top=0, right=0, bottom=0} mSkipAnimationOnce=false mImeStatsToken=null
+        mInsetsHint=Insets{left=0, top=0, right=0, bottom=0} stale
+        mIsLeashInitialized=true mHasPendingPosition=false
+        mWin=Window{1262752 u0 InputMethod}
+        mAdapter=ControlAdapter mCapturedLeash=Surface(name=Surface(name=1262752 InputMethod#90)/@0x60d8b20 - animation-leash of insets_animation#252)/@0x6f235cc
+        mControlTarget=Window{16fd126 u0 com.mystral.engine.interop/com.mystral.engine.MystralActivity}
+        mImeShowing=false mLastDrawn=false
+      InsetsSourceProvider
+        mSource=InsetsSource id=ddb80006 type=tappableElement frame=[0,0][1080,132] visible=true flags= sideHint=TOP
+        mSourceFrame=Rect(0, 0 - 1080, 132)
+        mIsLeashInitialized=false mHasPendingPosition=false
+        mWin=Window{1a6008a u0 StatusBar}
+      InsetsSourceProvider
+        mSource=InsetsSource id=ddb80005 type=mandatorySystemGestures frame=[0,0][1080,164] visible=true flags= sideHint=TOP
+        mSourceFrame=Rect(0, 0 - 1080, 164)
+        mIsLeashInitialized=false mHasPendingPosition=false
+        mWin=Window{1a6008a u0 StatusBar}
+      InsetsSourceProvider
+        mSource=InsetsSource id=ddb80000 type=statusBars frame=[0,0][1080,132] visible=false flags= sideHint=TOP
+        mSourceFrame=Rect(0, 0 - 1080, 132)
+        mControl=InsetsSourceControl mId=ddb80000 mType=statusBars mLeash=Surface(name=Surface(name=1a6008a StatusBar#72)/@0x2bc6181 - animation-leash of insets_animation#275)/@0xd8707ba mInitiallyVisible=true mSurfacePosition=Point(0, 0) mInsetsHint=Insets{left=0, top=132, right=0, bottom=0} mSkipAnimationOnce=false mImeStatsToken=null
+        mInsetsHint=Insets{left=0, top=132, right=0, bottom=0}
+        mIsLeashInitialized=true mHasPendingPosition=false
+        mWin=Window{1a6008a u0 StatusBar}
+        mAdapter=ControlAdapter mCapturedLeash=Surface(name=Surface(name=1a6008a StatusBar#72)/@0x2bc6181 - animation-leash of insets_animation#275)/@0xd8707ba
+        mControlTarget=Window{16fd126 u0 com.mystral.engine.interop/com.mystral.engine.MystralActivity}
+  InsetsPolicy
+    status: WINDOW_STATE_HIDDEN
+    nav: WINDOW_STATE_HIDDEN
+
+  DisplayWindowSettingsProvider
+    SettingsEntry{mWindowingMode=0, mUserRotationMode=null, mUserRotation=null, mForcedWidth=0, mForcedHeight=0, mForcedDensity=0, mForcedDensityRatio=0.0, mForcedScalingMode=null, mRemoveContentMode=0, mShouldShowWithInsecureKeyguard=null, mShouldShowSystemDecors=null, mIsHomeSupported=null, mShouldShowIme=null, mFixedToUserRotation=null, mIgnoreOrientationRequest=null, mIgnoreDisplayCutout=null, mDontMoveToTop=null, mForceAppsUniversalResizable=null, mCanStealTopFocus=null}
+
+  KeyguardController:
+    mKeyguardShowing=false
+    mAodShowing=false
+    mKeyguardGoingAway=false
+   KeyguardShowing=false AodShowing=false KeyguardGoingAway=false DismissalRequested=false  Occluded=false DismissingKeyguardActivity=null TurnScreenOnActivity=null at display=0
+    mDismissalRequested=false
+
+  LockTaskController:
+    mLockTaskModeState=NONE
+    mLockTaskModeTasks=
+    mLockTaskPackages (userId:packages)=
+
+  mCurTaskIdForUser={0=29}
+  mUserRootTaskInFront={}
+  mVisibilityTransactionDepth=0
+  isHomeRecentsComponent=true
+  mNoHistoryActivities=[]
+
+  TaskOrganizerController:
+      android.window.ITaskOrganizer$Stub$Proxy@c88e5a5 uid=10198 (active):
+        (fullscreen) Task{d4dc345 #1 type=home}
+        (multi-window) Task{75768b0 #3 name=Bubbles type=undefined}
+        (fullscreen) Task{d83bd0 #4 name=SplitRoot type=undefined}
+        (multi-window) Task{12b07c9 #5 name=main type=undefined}
+        (multi-window) Task{a27bece #6 name=side type=undefined}
+        (multi-window) Task{e23f7d3 #0 name=Bubbles-visibility-barrier type=undefined}
+        (fullscreen) Task{de6a583 #27 type=standard A=1000:com.android.settings.root}
+        (fullscreen) Task{7a7e06d #29 type=standard A=10231:com.mystral.engine.interop}
+
+  VisibleActivityProcess:[ ProcessRecord{ebee0f0 4353:com.mystral.engine.interop/u0a231}]
+  NumNonAppVisibleWindowUidMap:[ 10199:1 10198:3]

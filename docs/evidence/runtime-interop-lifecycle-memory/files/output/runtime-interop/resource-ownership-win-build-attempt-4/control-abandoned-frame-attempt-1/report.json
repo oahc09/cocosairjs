@@ -1,0 +1,76 @@
+{
+  "schema": "air-native-ownership-control-run-v1",
+  "control": "abandoned-frame",
+  "startedAt": "2026-10-27T04:33:57.573Z",
+  "finishedAt": "2026-10-27T04:33:58.737Z",
+  "executable": {
+    "file": "output/runtime-interop/resource-ownership-win-build-attempt-4/mystral.exe",
+    "bytes": 35637248,
+    "sha256": "197c9938be597344eb380f725d9d627db5921ece19f959902d686ea99a20b93c"
+  },
+  "fixture": {
+    "file": "output/runtime-interop/resource-ownership-abandoned-frame-control-attempt-1/control.mjs",
+    "sha256": "2edd64981ae8b562d76c7362182ec2ed685d76566f5d701a50ff230922162b2f"
+  },
+  "arguments": [
+    "run",
+    "C:\\Users\\caosh\\.codex\\worktrees\\webgpu-runtime-interop\\cocosair.js\\output\\runtime-interop\\resource-ownership-abandoned-frame-control-attempt-1\\control.mjs",
+    "--headless",
+    "--width",
+    "320",
+    "--height",
+    "240"
+  ],
+  "pid": 13052,
+  "exitCode": 0,
+  "signal": null,
+  "application": {
+    "schema": "air-native-abandoned-frame-control-v1",
+    "completed": true,
+    "pass": true,
+    "steps": [
+      {
+        "stage": "acquired-without-submit",
+        "at": 49649122.4388,
+        "textureId": 1,
+        "viewId": 2
+      },
+      {
+        "stage": "next-real-frame",
+        "at": 49649122.5233
+      },
+      {
+        "stage": "next-frame-acquired",
+        "at": 49649122.5401,
+        "textureId": 3,
+        "viewId": 4
+      },
+      {
+        "stage": "next-frame-encoded",
+        "at": 49649122.6948
+      },
+      {
+        "stage": "next-frame-submitted",
+        "at": 49649125.7461
+      },
+      {
+        "stage": "next-frame-queue-complete",
+        "at": 49649125.8202
+      },
+      {
+        "stage": "completed",
+        "at": 49649125.8389,
+        "retainedOriginalObjects": true
+      }
+    ],
+    "gpuErrors": [],
+    "stage": "completed"
+  },
+  "pidGone": true,
+  "inputsUnchanged": true,
+  "runtimeTeardown": "NOT_RUN_BY_WINDOWS_CLI_EXITPROCESS",
+  "subset": true,
+  "releaseReady": false,
+  "pass": true,
+  "status": "PASS_API_SCOPE_ONLY"
+}

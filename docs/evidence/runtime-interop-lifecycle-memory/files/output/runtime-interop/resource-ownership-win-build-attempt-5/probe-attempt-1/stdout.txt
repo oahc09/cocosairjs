@@ -1,0 +1,66 @@
+=== Mystral Native Runtime ===
+Version: 0.1.6
+Script: C:\Users\caosh\.codex\worktrees\webgpu-runtime-interop\cocosair.js\tools\verify\runtime-interop-android\resource-ownership-probe.mjs
+Window: 320x240
+
+[Mystral] Initializing runtime...
+[Mystral] Window: 320x240
+[Window] Creating window: Mystral (320x240)
+[Window] SDL initialized
+[Window] Running in hidden mode (MYSTRAL_HEADLESS=1)
+[Window] Actual window size: 320x240
+[Window] Window created successfully
+[Mystral] Actual window size: 320x240
+[WebGPU] Initializing...
+[WebGPU] Dawn proc table initialized
+[WebGPU] Instance created
+[Mystral] Got HWND: 00000000000C01DA
+[WebGPU] Creating surface for platform type 1
+[WebGPU] Surface created
+[WebGPU] Adapter acquired successfully
+[WebGPU] Adapter: NVIDIA GeForce RTX 5060
+[WebGPU] Vendor: nvidia
+[WebGPU] Backend: D3D12
+[WebGPU] Requesting maxColorAttachmentBytesPerSample: 64
+[WebGPU] Requesting IndirectFirstInstance feature (supported)
+[WebGPU] Device acquired successfully
+[WebGPU] Queue acquired
+[WebGPU] configureSurface called: 320x240
+[WebGPU] surface_=0000015C6D476250, device_=0000015CB7A4B230, adapter_=0000015CB7343490
+[WebGPU] Getting surface capabilities...
+[WebGPU] Got capabilities: formatCount=4
+[WebGPU] Available surface formats:
+  [0] = 27
+  [1] = 22
+  [2] = 40
+  [3] = 30
+[WebGPU] Using surface format: 27
+[WebGPU] Surface configured: 320x240
+[JS] Creating V8 engine (platform default)
+[V8] Creating engine...
+[V8] Initializing V8 JavaScript engine...
+[V8] V8 initialized successfully
+[V8] Version: 13.1.201.22
+[V8] Engine created successfully
+[Mystral] Using JS engine: V8
+[Mystral] Fetch API initialized (file://, http://, https://)
+[Mystral] Web Streams API initialized (ReadableStream/WritableStream/TransformStream)
+[Mystral] URL and Worker polyfills initialized
+[DOM] Canvas element created with addEventListener, style, etc.
+[log] [Mystral] WebP format support: NO
+[Mystral] DOM event system initialized
+[Mystral] localStorage initialized: C:\Users\caosh\AppData\Roaming\Mystral\storage/probe-attempt-1.json
+[Mystral] GLTF loader initialized
+[Audio] Web Audio API bindings initialized
+RESOURCE_SNAPSHOT {"schema":"mystral-webgpu-resource-snapshot-v1","stage":"init","sequence":1,"frame":0,"steadyMs":52548028,"types":{"canvasTexture":{"acquired":0,"released":0,"live":0,"peak":0},"canvasView":{"acquired":0,"released":0,"live":0,"peak":0},"buffer":{"acquired":0,"released":0,"live":0,"peak":0},"texture":{"acquired":0,"released":0,"live":0,"peak":0},"textureView":{"acquired":0,"released":0,"live":0,"peak":0},"shaderModule":{"acquired":0,"released":0,"live":0,"peak":0},"renderPipeline":{"acquired":0,"released":0,"live":0,"peak":0},"computePipeline":{"acquired":0,"released":0,"live":0,"peak":0},"sampler":{"acquired":0,"released":0,"live":0,"peak":0},"bindGroupLayout":{"acquired":0,"released":0,"live":0,"peak":0},"bindGroup":{"acquired":0,"released":0,"live":0,"peak":0},"pipelineLayout":{"acquired":0,"released":0,"live":0,"peak":0},"commandEncoder":{"acquired":0,"released":0,"live":0,"peak":0},"commandBuffer":{"acquired":0,"released":0,"live":0,"peak":0},"renderPass":{"acquired":0,"released":0,"live":0,"peak":0},"computePass":{"acquired":0,"released":0,"live":0,"peak":0},"renderBundleEncoder":{"acquired":0,"released":0,"live":0,"peak":0},"renderBundle":{"acquired":0,"released":0,"live":0,"peak":0}},"total":{"acquired":0,"released":0,"live":0,"peak":0},"wrapper":{"created":0,"finalized":0,"live":0,"peak":0}}
+[EventLoop] libuv 1.51.0 initialized
+[AsyncHttp] Initialized with curl_multi + libuv
+[AsyncFile] Initialized with libuv thread pool
+[FileWatcher] Initialized with libuv fs_event
+[Mystral] Runtime initialized
+[Mystral] Loading script: C:\Users\caosh\.codex\worktrees\webgpu-runtime-interop\cocosair.js\tools\verify\runtime-interop-android\resource-ownership-probe.mjs
+[Mystral] Starting main loop...
+[log] AIR_RESOURCE_OWNERSHIP_RESULT {"schema":"air-native-resource-ownership-probe-v1","completed":true,"pass":true,"subset":true,"releaseReady":false,"checks":[{"id":"same-frame-current-texture-identity","pass":true,"observations":{}},{"id":"multiple-views-real-submit-and-completion","pass":true,"observations":{}},{"id":"expired-canvas-texture-create-view","pass":true,"observations":{"thrown":"WebGPU resource is expired, destroyed, or already consumed","validation":null}},{"id":"expired-canvas-view-render-pass","pass":true,"observations":{"thrown":"Render attachment view is invalid or expired","validation":null}},{"id":"render-pass-end-once","pass":true,"observations":{"thrown":"WebGPU resource is expired, destroyed, or already consumed","validation":null}},{"id":"command-encoder-finish-once","pass":true,"observations":{"thrown":"WebGPU resource is expired, destroyed, or already consumed","validation":null}},{"id":"command-buffer-submit-once","pass":true,"observations":{"thrown":"Command buffer is invalid, already submitted, or duplicated","validation":null}},{"id":"regular-texture-destroy-idempotent","pass":true,"observations":{"thrown":null,"validation":null}}],"uncapturedErrors":[],"subsequentOrdinaryFrameCompleted":true}
+[Mystral] process.exit(0) called
+[Mystral] Main loop ended
+=== Script finished ===

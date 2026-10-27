@@ -1,0 +1,18 @@
+{
+  "arguments": [
+    "-s",
+    "emulator-5554",
+    "shell",
+    "am",
+    "start",
+    "-W",
+    "-n",
+    "com.mystral.engine.interop/com.mystral.engine.MystralActivity",
+    "--activity-reorder-to-front",
+    "--activity-single-top"
+  ],
+  "startedAt": "2026-10-27T05:15:41.800Z",
+  "timeoutMs": 14999,
+  "exitCode": 0,
+  "finishedAt": "2026-10-27T05:15:41.936Z"
+}

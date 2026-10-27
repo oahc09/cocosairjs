@@ -1,0 +1,992 @@
+  PID NAME                       
+    1 init
+    2 [kthreadd]
+    3 [pool_workqueue_release]
+    4 [kworker/R-rcu_g]
+    5 [kworker/R-slub_]
+    6 [kworker/R-netns]
+    9 [kworker/0:0H-events_highpri]
+   10 [kworker/0:0F]
+   12 [kworker/R-mm_pe]
+   14 [rcu_tasks_kthread]
+   15 [rcu_tasks_trace_kthread]
+   16 [ksoftirqd/0]
+   17 [rcu_preempt]
+   18 [rcuog/0]
+   19 [rcuop/0]
+   20 [rcub/0]
+   21 [rcu_exp_gp_kthread_worker]
+   22 [rcu_exp_par_gp_kthread_worker]
+   23 [migration/0]
+   24 [idle_inject/0]
+   25 [cpuhp/0]
+   26 [cpuhp/1]
+   27 [idle_inject/1]
+   28 [migration/1]
+   29 [ksoftirqd/1]
+   31 [kworker/1:0H-events_highpri]
+   32 [kworker/1:0F]
+   33 [rcuop/1]
+   34 [cpuhp/2]
+   35 [idle_inject/2]
+   36 [migration/2]
+   37 [ksoftirqd/2]
+   40 [kworker/2:0F]
+   41 [rcuop/2]
+   42 [cpuhp/3]
+   43 [idle_inject/3]
+   44 [migration/3]
+   45 [ksoftirqd/3]
+   47 [kworker/3:0H-events_highpri]
+   48 [kworker/3:0F]
+   49 [rcuop/3]
+   50 [cpuhp/4]
+   51 [idle_inject/4]
+   52 [migration/4]
+   53 [ksoftirqd/4]
+   55 [kworker/4:0H-events_highpri]
+   56 [kworker/4:0F]
+   57 [rcuog/4]
+   58 [rcuop/4]
+   59 [cpuhp/5]
+   60 [idle_inject/5]
+   61 [migration/5]
+   62 [ksoftirqd/5]
+   64 [kworker/5:0H-events_highpri]
+   65 [kworker/5:0F]
+   66 [rcuop/5]
+   67 [cpuhp/6]
+   68 [idle_inject/6]
+   69 [migration/6]
+   70 [ksoftirqd/6]
+   72 [kworker/6:0H-events_highpri]
+   73 [kworker/6:0F]
+   74 [rcuop/6]
+   75 [cpuhp/7]
+   76 [idle_inject/7]
+   77 [migration/7]
+   78 [ksoftirqd/7]
+   80 [kworker/7:0H-events_highpri]
+   81 [kworker/7:0F]
+   82 [rcuop/7]
+   85 [kworker/R-inet_]
+   89 [kauditd]
+   90 [khungtaskd]
+   91 [oom_reaper]
+   93 [kworker/R-write]
+   94 [kcompactd0]
+   95 [khugepaged]
+   96 [kworker/R-kbloc]
+   99 [kworker/R-edac-]
+  100 [kworker/R-devfr]
+  101 [watchdogd]
+  103 [kworker/R-quota]
+  104 [kworker/7:1H-kblockd]
+  105 [kswapd0]
+  107 [kworker/R-kthro]
+  109 [dmabuf-deferred-free-worker]
+  110 [kworker/R-nvme-]
+  111 [kworker/R-nvme-]
+  112 [kworker/R-nvme-]
+  113 [kworker/R-uas]
+  114 [kworker/R-dm_bu]
+  116 [hwrng]
+  117 [irq/16-gunyah_rm_rx]
+  119 [kworker/1:1H-kblockd]
+  120 [kworker/R-mld]
+  121 [kworker/R-ipv6_]
+  133 [kworker/R-emerg]
+  142 [pie_cmd_thread]
+  143 [kworker/R-pem_n]
+  145 [kcompressd:0]
+  146 [kcompressd:1]
+  149 [kworker/0:1H-kblockd]
+  150 [kworker/2:1H-kblockd]
+  151 [kworker/3:1H-kblockd]
+  152 [kworker/4:1H-kblockd]
+  153 [kworker/5:1H-kblockd]
+  154 [kworker/6:1H-kblockd]
+  155 [heap_fwork_t]
+  157 [dmabuf_monitor]
+  158 [qcom,system-pool-refill-thread]
+  159 [sys-heap-charge-worker]
+  172 [kworker/R-vivo_]
+  173 [halt_drain_rqs]
+  174 [msm_perf:events_notify]
+  176 [core_ctl]
+  177 [page-pool-refill]
+  178 [qrtr_ns]
+  179 [vkhungtaskd]
+  180 [kzcached]
+  181 [kzcache_stored]
+  184 [Yworker/u30:0]
+  187 [kworker/R-Ybloc]
+  188 [gh-watchdog]
+  194 [irq/53-c228000.tsens0]
+  195 [irq/54-c228000.tsens0]
+  196 [irq/55-c229000.tsens1]
+  197 [irq/56-c229000.tsens1]
+  200 [irq/57-bcl-lvl0]
+  201 [irq/58-bcl-lvl1]
+  202 [irq/59-bcl-lvl2]
+  203 [irq/60-bcl-lvl0]
+  204 [irq/61-bcl-lvl1]
+  205 [irq/62-bcl-lvl2]
+  206 [irq/64-c22a000.tsens2]
+  207 [irq/65-c22a000.tsens2]
+  208 [irq/66-c22b000.tsens3]
+  209 [irq/67-c22b000.tsens3]
+  210 [mem_buf_trusted_vm_rcvr]
+  211 [mem_buf_oem_vm_rcvr]
+  212 [irq/69-qcom,qmp-tme]
+  214 [irq/105-arm-smmu-context-fault]
+  215 [scsi_eh_0]
+  216 [kworker/R-scsi_]
+  217 [kworker/R-qc_uf]
+  218 [kworker/R-ufs_e]
+  219 [kworker/R-ufs_c]
+  220 [irq/106-arm-smmu-context-fault]
+  221 [irq/108-arm-smmu-context-fault]
+  228 [f2fs_ckpt-8:8]
+  229 [f2fs_flush-8:8]
+  230 [f2fs_discard-8:8]
+  231 [f2fs_gc-8:8]
+  232 [kworker/R-kdmfl]
+  233 [kworker/R-kdmfl]
+  234 [kworker/R-kdmfl]
+  235 [kworker/R-kdmfl]
+  236 [kworker/R-kdmfl]
+  237 [kworker/R-kdmfl]
+  238 [kworker/R-kdmfl]
+  239 [kworker/R-kdmfl]
+  240 [kworker/R-kdmfl]
+  245 [kworker/R-kdmfl]
+  246 [kworker/R-kveri]
+  248 [erofs_worker/0]
+  249 [erofs_worker/1]
+  250 [erofs_worker/2]
+  251 [erofs_worker/3]
+  252 [erofs_worker/4]
+  253 [erofs_worker/5]
+  254 [erofs_worker/6]
+  255 [erofs_worker/7]
+  256 [kworker/R-kdmfl]
+  257 [kworker/R-kveri]
+  258 [kworker/R-kdmfl]
+  259 [kworker/R-kveri]
+  260 [kworker/R-kdmfl]
+  261 [kworker/R-kveri]
+  262 [kworker/R-kdmfl]
+  263 [kworker/R-kveri]
+  264 [kworker/R-kdmfl]
+  265 [kworker/R-kveri]
+  266 [kworker/R-kdmfl]
+  267 [kworker/R-kveri]
+  268 [kworker/R-kdmfl]
+  269 [kworker/R-kveri]
+  270 [kworker/R-kdmfl]
+  271 [kworker/R-kveri]
+  273 [Yworker/u30:1-ufs_clk_gating_0]
+  276 init
+  277 ueventd
+  333 [kworker/R-kdmfl]
+  334 [kworker/R-kdmfl]
+  336 [kworker/R-kdmfl]
+  338 [kworker/R-kdmfl]
+  340 [kworker/R-kdmfl]
+  341 [kworker/R-kdmfl]
+  345 [kworker/R-kdmfl]
+  347 [kworker/R-kdmfl]
+  348 [kworker/R-kdmfl]
+  349 [kworker/R-kdmfl]
+  350 [kworker/R-kdmfl]
+  351 [kworker/R-kdmfl]
+  352 [kworker/R-kdmfl]
+  355 [kworker/R-kdmfl]
+  358 [kworker/R-kdmfl]
+  360 [kworker/R-kdmfl]
+  362 [kworker/R-kdmfl]
+  363 [kworker/R-kdmfl]
+  364 [kworker/R-kdmfl]
+  365 [kworker/R-kdmfl]
+  366 [kworker/R-kdmfl]
+  367 [kworker/R-kdmfl]
+  369 [kworker/R-kdmfl]
+  372 [kworker/R-kdmfl]
+  376 [kworker/R-kdmfl]
+  382 [rsc_ktop_noti]
+  383 [bf_async_notify]
+  384 [fas_looper]
+  385 [kworker/R-fas_f]
+  386 [kworker/R-fas_f]
+  387 [kworker/R-fas_m]
+  388 [kworker/R-fas_g]
+  389 [vapt_looper]
+  390 [rsc_vivo_freq]
+  391 [kworker/R-ext4-]
+  392 [kworker/R-ext4-]
+  393 [kworker/R-ext4-]
+  506 [krfcommd]
+  585 [kworker/R-fuels]
+  586 [irq/227-regulator-ocp]
+  587 [irq/228-regulator-alarm]
+  611 [cpudmof/0]
+  613 [irq/229-pmr735d-temp-alarm]
+  620 [irq/109-arm-smmu-context-fault]
+  645 [irq/110-arm-smmu-context-fault]
+  658 [kshrinkd]
+  680 [cpudmof/1]
+  681 [kworker/R-bwmon]
+  701 [kworker/0:1-events]
+  735 [irq/240-240b3400.qcom,bwmon-llcc-gold]
+  806 [kworker/R-memla]
+  807 [kworker/3:2-events]
+  808 [cpudmof/2]
+  814 [kworker/R-pmic_]
+  815 [cpudmof/3]
+  816 [cpudmof/4]
+  817 [kworker/R-pdr_n]
+  819 [kworker/R-pmic_]
+  830 [cdsprm-wq]
+  832 [kworker/R-mpcie]
+  833 [kworker/R-cfg80]
+  834 [kworker/R-cdspr]
+  835 [kworker/R-smfre]
+  844 com.vivo.game
+  867 [kworker/R-therm]
+  870 [irq/240-240b7400.qcom,bwmon-llcc-prime]
+  873 [irq/247-int_global_int]
+  903 [cpudmof/5]
+  915 [cpudmof/6]
+  918 [cpudmof/7]
+  927 [khvcd]
+  928 [adci_thread]
+  930 [irq/251-smp2p_2]
+  931 [irq/252-pmic_pwrkey]
+  933 [irq/254-smp2p_5]
+  934 [spi0]
+  935 [irq/255-smp2p_1]
+  936 [irq/256-pmic_resin]
+  937 [irq/258-smp2p_19]
+  938 [irq/257-q6v5 wdog]
+  939 [spi1]
+  940 [spi2]
+  941 prng_seeder
+  950 [irq/269-q6v5 wdog]
+  972 [irq/276-generic-irq]
+  973 [kworker/R-qcryp]
+  977 [irq/278-q6v5 wdog]
+  978 [irq/111-arm-smmu-context-fault]
+  979 [kworker/R-cpucp]
+  980 [irq/285-q6v5 wdog]
+  982 [kworker/R-pm_wo]
+  983 [kworker/R-batch]
+  984 [irq/290-msm-vidc]
+  985 [irq/112-arm-smmu-context-fault]
+  986 [irq/113-arm-smmu-context-fault]
+  988 [irq/114-arm-smmu-context-fault]
+  992 [kworker/R-pdr_n]
+  993 [irq/115-arm-smmu-context-fault]
+  996 [irq/116-arm-smmu-context-fault]
+  997 [irq/117-arm-smmu-context-fault]
+  998 [kworker/R-ngd_m]
+ 1013 [irq/301-pm8550-temp-alarm]
+ 1014 audioadsprpcd
+ 1015 [irq/302-pm8550ve-d-temp-alarm]
+ 1016 [irq/304-pm8550ve-f-temp-alarm]
+ 1017 [irq/305-pm8550ve-g-temp-alarm]
+ 1018 [irq/306-pm8550ve-i-temp-alarm]
+ 1020 logd
+ 1021 [irq/307-pm8550vs-j-temp-alarm]
+ 1022 lmkd
+ 1023 [irq/308-pmih010x-temp-alarm]
+ 1024 servicemanager
+ 1026 [irq/118-arm-smmu-context-fault]
+ 1027 [irq/309-pmih010x-temp-alarm-lite]
+ 1028 [irq/119-arm-smmu-context-fault]
+ 1029 [irq/295-pwr_event_irq]
+ 1030 [irq/296-dp_hs_phy_irq]
+ 1031 [irq/298-dm_hs_phy_irq]
+ 1032 [irq/299-ss_phy_irq]
+ 1033 vndservicemanager
+ 1034 [kworker/R-dwc3_]
+ 1035 [irq/310-bhi]
+ 1036 vendor.vivo.hardware.configstore@1.0-service
+ 1053 [psimon]
+ 1055 [irq/346-wcd-usbss-sdam]
+ 1056 [Surge kthread]
+ 1059 android.hardware.security.keymint-service-qti
+ 1060 qseecomd
+ 1062 vendor.qti.hardware.qseecom@1.0-service
+ 1063 vold
+ 1066 vendor.vivo.hardware.bspservice@1.0-service
+ 1068 [jbd2/sda27-8]
+ 1069 [kworker/R-ext4-]
+ 1075 [jbd2/sda2-8]
+ 1076 [kworker/R-ext4-]
+ 1077 [kworker/R-kdmfl]
+ 1078 [jbd2/sde42-8]
+ 1079 [kworker/R-ext4-]
+ 1083 [jbd2/sde53-8]
+ 1084 [kworker/R-ext4-]
+ 1088 [jbd2/sde73-8]
+ 1089 [kworker/R-ext4-]
+ 1096 android.system.suspend-service
+ 1097 keystore2
+ 1098 android.hardware.boot-service.qti
+ 1099 vendor.vivo.hardware.biometrics.analysis-service-aidl
+ 1163 [kworker/R-k_ipa]
+ 1164 [adspsleepmon-worker]
+ 1165 [irq/120-arm-smmu-context-fault]
+ 1167 [irq/348-msm_cvp]
+ 1168 [kworker/R-msm_c]
+ 1169 [kworker/R-pm_wo]
+ 1170 [irq/121-arm-smmu-context-fault]
+ 1171 [irq/122-arm-smmu-context-fault]
+ 1172 [irq/123-arm-smmu-context-fault]
+ 1173 [cvp-dsp-thread]
+ 1174 [kworker/R-kgsl-]
+ 1175 [irq/350-flash_all_ramp_up]
+ 1176 [irq/353-fifo-empty]
+ 1177 [irq/351-flash_all_ramp_down]
+ 1178 [kworker/R-kgsl-]
+ 1181 [irq/352-flash_fault]
+ 1182 [irq/107-arm-smmu-context-fault]
+ 1183 [irq/124-arm-smmu-context-fault]
+ 1184 [kworker/R-ipa_p]
+ 1185 [irq/125-arm-smmu-context-fault]
+ 1186 [kworker/R-trans]
+ 1187 [kworker/R-page_]
+ 1188 [kworker/R-ipa_p]
+ 1189 [kworker/R-byte-]
+ 1190 [kworker/R-ipa_u]
+ 1191 [irq/126-arm-smmu-context-fault]
+ 1192 [irq/79-arm-smmu-context-fault]
+ 1193 [irq/80-arm-smmu-context-fault]
+ 1194 [kworker/R-rmnet]
+ 1195 [kworker/R-rmnet]
+ 1196 [irq/81-arm-smmu-context-fault]
+ 1197 [irq/127-arm-smmu-context-fault]
+ 1198 [irq/82-arm-smmu-context-fault]
+ 1199 [irq/128-arm-smmu-context-fault]
+ 1200 [kworker/R-dsi_p]
+ 1201 [irq/129-arm-smmu-context-fault]
+ 1202 [irq/130-arm-smmu-context-fault]
+ 1203 [kworker/R-esd_e]
+ 1204 [kworker/R-displ]
+ 1205 [ltpo restore auto worker]
+ 1206 [kworker/R-backl]
+ 1207 [kworker/R-nvtch]
+ 1208 [kgsl-events]
+ 1209 [kworker/R-kgsl_]
+ 1210 [kgsl_devfreq_notifier]
+ 1212 [kgsl_hwsched]
+ 1213 [kworker/R-dsi_p]
+ 1214 [irq/131-arm-smmu-context-fault]
+ 1215 [irq/132-arm-smmu-context-fault]
+ 1216 [irq/133-arm-smmu-context-fault]
+ 1217 [irq/134-arm-smmu-context-fault]
+ 1218 [kworker/R-drm_d]
+ 1219 [kworker/R-sdm_d]
+ 1220 [kworker/R-hdcp_]
+ 1221 [hdcp_2x]
+ 1222 [dp_hdcp2p2]
+ 1223 [crtc_commit:200]
+ 1224 [crtc_event:200]
+ 1225 [crtc_commit:269]
+ 1226 [crtc_event:269]
+ 1227 [crtc_commit:278]
+ 1228 [crtc_event:278]
+ 1229 [crtc_commit:287]
+ 1230 [crtc_event:287]
+ 1231 [crtc_commit:296]
+ 1232 [kworker/R-cds_r]
+ 1233 [wlan_logging_thread]
+ 1234 [crtc_event:296]
+ 1235 [crtc_commit:305]
+ 1236 [crtc_event:305]
+ 1237 [crtc_commit:314]
+ 1238 [crtc_event:314]
+ 1239 [crtc_commit:323]
+ 1240 [crtc_event:323]
+ 1241 [pp_event]
+ 1242 [card0-crtc0]
+ 1243 [card0-crtc1]
+ 1244 [card0-crtc2]
+ 1245 [card0-crtc3]
+ 1246 [card0-crtc4]
+ 1247 [card0-crtc5]
+ 1248 [card0-crtc6]
+ 1249 [card0-crtc7]
+ 1252 [cam_sync_worker]
+ 1253 [kworker/R-cam-c]
+ 1256 [kworker/R-qcom,]
+ 1257 [kworker/R-rt-cd]
+ 1258 [kworker/R-rt-cd]
+ 1259 [kworker/R-rt-cd]
+ 1260 [kworker/R-rt-cd]
+ 1261 [kworker/R-rt-cd]
+ 1262 [kworker/R-rt-cd]
+ 1263 [kworker/R-rt-cd]
+ 1264 [kworker/R-rt-cd]
+ 1265 [vtsthp_addpoint_worker0]
+ 1266 [vts_nl_thread]
+ 1267 [vtsthread0]
+ 1268 [kworker/R-vts_c]
+ 1269 [kworker/R-rt-cd]
+ 1270 [kworker/R-rt-cd]
+ 1271 [kworker/R-rt-cd]
+ 1272 [kworker/R-rt-cd]
+ 1273 [kworker/R-rt-cd]
+ 1274 [kworker/R-rt-cd]
+ 1275 [kworker/R-rt-cd]
+ 1276 [kworker/R-rt-cd]
+ 1277 [kworker/R-rt-cd]
+ 1278 [kworker/R-rt-cd]
+ 1279 [kworker/R-rt-cd]
+ 1280 [kworker/R-rt-cd]
+ 1282 [cam_ife_worker]
+ 1283 [irq/382-CCI0]
+ 1284 [kworker/R-cam_c]
+ 1285 [kworker/R-cam_c]
+ 1286 [irq/383-CCI1]
+ 1287 [kworker/R-cam_c]
+ 1288 [kworker/R-cam_c]
+ 1289 [irq/384-CCI2]
+ 1290 [kworker/R-cam_c]
+ 1291 [kworker/R-cam_c]
+ 1292 [icp_command_queue]
+ 1293 [icp_message_queue]
+ 1294 [icp_timer_queue]
+ 1295 [icp_command_queue]
+ 1296 [icp1_message_queue]
+ 1297 [icp1_timer_queue]
+ 1298 [jpeg_command_queue]
+ 1299 [jpeg_message_queue]
+ 1311 [f2fs_ckpt-254:67]
+ 1312 [f2fs_flush-254:67]
+ 1313 [f2fs_discard-254:67]
+ 1314 [f2fs_gc-254:67]
+ 1326 [irq/398-vivo_tcm]
+ 1330 tombstoned
+ 1424 [kworker/2:2-mm_percpu_wq]
+ 1429 [kworker/R-ext4-]
+ 1430 [kworker/R-ext4-]
+ 1431 [kworker/R-kveri]
+ 1432 [kworker/R-kveri]
+ 1433 [kworker/R-kveri]
+ 1434 [kworker/R-ext4-]
+ 1435 [kworker/R-kveri]
+ 1436 [kworker/R-kveri]
+ 1437 [kworker/R-kveri]
+ 1438 [kworker/R-kveri]
+ 1439 [kworker/R-ext4-]
+ 1440 [kworker/R-ext4-]
+ 1441 [kworker/R-ext4-]
+ 1442 [kworker/R-ext4-]
+ 1443 [kworker/R-kveri]
+ 1444 [kworker/R-kveri]
+ 1445 [kworker/R-kveri]
+ 1446 [kworker/R-kveri]
+ 1447 [kworker/R-kveri]
+ 1448 [kworker/R-kveri]
+ 1449 [kworker/R-kveri]
+ 1450 [kworker/R-kveri]
+ 1451 [kworker/R-ext4-]
+ 1452 [kworker/R-ext4-]
+ 1453 [kworker/R-ext4-]
+ 1454 [kworker/R-ext4-]
+ 1455 [kworker/R-ext4-]
+ 1456 [kworker/R-ext4-]
+ 1457 [kworker/R-ext4-]
+ 1458 [kworker/R-ext4-]
+ 1459 [kworker/R-ext4-]
+ 1460 [kworker/R-kveri]
+ 1461 [kworker/R-kveri]
+ 1462 [kworker/R-kveri]
+ 1463 [kworker/R-kveri]
+ 1464 [kworker/R-kveri]
+ 1465 [kworker/R-kveri]
+ 1466 [kworker/R-kveri]
+ 1467 [kworker/R-ext4-]
+ 1468 [kworker/R-ext4-]
+ 1469 [kworker/R-ext4-]
+ 1470 [kworker/R-ext4-]
+ 1471 [kworker/R-ext4-]
+ 1472 [kworker/R-ext4-]
+ 1473 [kworker/R-kveri]
+ 1474 [kworker/R-ext4-]
+ 1475 [kworker/R-ext4-]
+ 1476 [kworker/R-ext4-]
+ 1477 [kworker/R-ext4-]
+ 1478 [kworker/R-ext4-]
+ 1479 [kworker/R-ext4-]
+ 1480 [kworker/R-ext4-]
+ 1481 [kworker/R-ext4-]
+ 1482 [kworker/R-ext4-]
+ 1483 [kworker/R-ext4-]
+ 1484 [kworker/R-ext4-]
+ 1485 [kworker/R-ext4-]
+ 1486 [kworker/R-ext4-]
+ 1487 [kworker/R-ext4-]
+ 1488 [kworker/R-ext4-]
+ 1489 [kworker/R-ext4-]
+ 1490 [kworker/R-kveri]
+ 1491 [kworker/R-kveri]
+ 1492 [kworker/R-ext4-]
+ 1493 [kworker/R-ext4-]
+ 1494 [kworker/R-ext4-]
+ 1495 [kworker/R-ext4-]
+ 1496 [kworker/R-ext4-]
+ 1530 [kworker/R-kdmfl]
+ 1531 [kworker/R-ipa_i]
+ 1532 [kworker/R-kveri]
+ 1533 [kworker/R-ipawq]
+ 1534 [kworker/R-ipare]
+ 1536 [kworker/R-ipawq]
+ 1537 [kworker/R-ipare]
+ 1538 [kworker/R-ipafr]
+ 1539 [kworker/R-ipawq]
+ 1540 [kworker/R-ipare]
+ 1541 [kworker/R-ipa_u]
+ 1542 [kworker/R-clnt_]
+ 1582 time_daemon
+ 1619 [kworker/u26:0-events_unbound]
+ 1637 [glink_cdsp]
+ 1639 [qrtr_rx]
+ 1640 [glink-IPCRTR]
+ 1644 [glink-LOOPBACK_CTL_CDSP]
+ 1645 [irq/135-arm-smmu-context-fault]
+ 1650 [irq/136-arm-smmu-context-fault]
+ 1651 [irq/137-arm-smmu-context-fault]
+ 1652 [irq/138-arm-smmu-context-fault]
+ 1653 [irq/139-arm-smmu-context-fault]
+ 1654 [irq/140-arm-smmu-context-fault]
+ 1656 [irq/141-arm-smmu-context-fault]
+ 1657 [irq/142-arm-smmu-context-fault]
+ 1660 netd
+ 1661 statsd
+ 1662 zygote64
+ 1664 [kworker/R-at_us]
+ 1665 [kworker/R-at_us]
+ 1666 [kworker/R-at_us]
+ 1667 [kworker/R-qdss]
+ 1668 [kworker/R-qdss_]
+ 1669 [kworker/R-qdss_]
+ 1700 [irq/143-arm-smmu-context-fault]
+ 1701 [irq/144-arm-smmu-context-fault]
+ 1703 [irq/145-arm-smmu-context-fault]
+ 1704 [irq/146-arm-smmu-context-fault]
+ 1705 [glink-fastrpcglink-apps-dsp]
+ 1706 [glink-cdsprmglink-apps-dsp]
+ 1707 [glink-cvp-glink-apps-dsp]
+ 1755 android.hardware.gnss-aidl-service-qti
+ 1756 hlosminkdaemon
+ 1758 sscrpcd
+ 1761 ssgtzd
+ 1764 diag-router
+ 1782 qccsyshal_aidl-service
+ 1783 android.hardware.bluetooth@aidl-service-qti
+ 1795 android.hardware.drm-service.clearkey
+ 1800 android.hardware.health-service.qti
+ 1826 android.hardware.ir-service.example
+ 1830 android.hardware.power-service
+ 1831 android.hardware.sensors-service.multihal
+ 1835 android.hardware.thermal-service.qti
+ 1836 android.hardware.usb-service.qti
+ 1837 android.hardware.wifi-service
+ 1838 audiohalservice.qti
+ 1840 android.hardware.biometrics.face-service.aidl
+ 1842 vendor.qti.hardware.memtrack-service
+ 1843 vendor.vivo.hardware.npu.vvcp-service.example
+ 1846 poweropt-service
+ 1847 qconfigservice
+ 1850 snapdragon_services
+ 1855 vendor.novatek.hardware.visdisplaysrv-service
+ 1856 vendor.qti.MemHal-service
+ 1862 vendor.qti.camera.provider-service_64
+ 1868 vendor.qti.hardware.display.allocator-service
+ 1869 vendor.qti.hardware.display.color-service
+ 1871 vendor.qti.hardware.display.composer-service
+ 1872 dspservice
+ 1874 [glink_adsp]
+ 1877 [glink-mhi_sat]
+ 1878 [glink-glink_ssr]
+ 1879 [qrtr_rx]
+ 1880 [glink-IPCRTR]
+ 1888 vendor.qti.hardware.minkipcbinder@1.0-service
+ 1889 vendor.qti.hardware.perf2-hal-service
+ 1890 vendor.qti.hardware.secureprocessor
+ 1904 vendor.qti.hardware.sensorscalibrate-service
+ 1905 vendor.qti.hardware.servicetrackeraidl-service
+ 1907 media.hwcodec
+ 1909 [glink-LOOPBACK_CTL_LPASS]
+ 1911 vendor.qti.qspa-service
+ 1912 [irq/147-arm-smmu-context-fault]
+ 1913 [irq/148-arm-smmu-context-fault]
+ 1914 [irq/149-arm-smmu-context-fault]
+ 1915 [irq/150-arm-smmu-context-fault]
+ 1916 [irq/151-arm-smmu-context-fault]
+ 1917 [irq/152-arm-smmu-context-fault]
+ 1918 [kworker/R-pdr_n]
+ 1919 [kworker/R-pdr_n]
+ 1920 [kworker/R-pdr_n]
+ 1921 [glink-fastrpcglink-apps-dsp]
+ 1922 [kworker/R-pdr_n]
+ 1923 vendor.qti.qspmhal-service
+ 1924 [glink-adsp_apps]
+ 1926 [glink-sleepmonglink-apps-adsp]
+ 1927 [glink-bt_cp_ctrl]
+ 1930 vendor.qti.syshealthmon-service
+ 1932 vendor.vivo.hardware.bbklog-service
+ 1935 vendor.vivo.hardware.bbkts-service
+ 1936 vendor.vivo.hardware.camera3rd.provider@1.0-service
+ 1937 vendor.vivo.hardware.heterogeneous-service
+ 1939 vendor.vivo.hardware.omnipotentservice@1.0-service
+ 1940 vendor.vivo.hardware.sensorfactory-service
+ 1944 vendor.vivo.hardware.vcode@1.0-service
+ 1954 vendor.vivo.hardware.vcustom-service
+ 1955 [glink-PMIC_RTR_ADSP_APPS]
+ 1956 vendor.vivo.hardware.vdtf-service
+ 1957 [glink-PMIC_LOGS_ADSP_APPS]
+ 1958 [kworker/5:1-events]
+ 1963 vendor.vivo.hardware.vgnss-service
+ 1964 [kworker/R-vucsi]
+ 1965 [kworker/R-vucsi]
+ 1975 vendor.vivo.hardware.vibrator.custom.service
+ 1981 vendor.vivo.hardware.vivodispcolor-service
+ 1983 [irq/402-vfcs_int_stat_irq]
+ 1984 vendor.vivo.hardware.vmediametrics-service
+ 1985 vendor.vivo.hardware.vperf-service-aidl
+ 1992 android.hardware.cas-service.example
+ 1995 android.hardware.drm-service.widevine
+ 2011 pd-mapper
+ 2019 pm-service
+ 2050 audioserver
+ 2054 gpuservice
+ 2065 surfaceflinger
+ 2075 rmt_storage
+ 2107 tftp_server
+ 2115 sensors.qti
+ 2119 [irq/153-arm-smmu-context-fault]
+ 2136 subsystem_ramdump
+ 2152 zygote_next
+ 2156 [irq/403-swr_master_irq]
+ 2164 qwesd
+ 2174 adbd
+ 2193 pm-proxy
+ 2208 usbdbgd
+ 2209 sensors.logger
+ 2224 drmserver
+ 2228 traced_probes
+ 2229 traced
+ 2235 tcmd
+ 2238 android.hardware.gatekeeper-service-qti
+ 2239 qcrilNrd
+ 2240 qcrilNrd
+ 2244 qmipriod
+ 2249 shsusrd
+ 2253 vendor.dpmd
+ 2268 vivo_daemon
+ 2269 vdtf
+ 2273 bbk_atrace
+ 2276 cameraserver
+ 2280 dr
+ 2283 incidentd
+ 2285 installd
+ 2290 media.extractor
+ 2292 media.metrics
+ 2294 mediaserver
+ 2297 media.vivocodec
+ 2313 netboosterd
+ 2316 storaged
+ 2317 vendor.vivo.hardware.camera.cameralog@1.0-service
+ 2318 vivocameraserver
+ 2323 vivoperfservice
+ 2328 vivosymphonyservice
+ 2348 perfservice
+ 2350 wfdhdcphalservice
+ 2353 cnd
+ 2354 wifidisplayhalservice
+ 2357 dlsc
+ 2364 imsdaemon
+ 2367 ipacm-diag
+ 2369 ipacm
+ 2370 nicmd
+ 2374 port-bridge
+ 2395 qms
+ 2412 tlpd
+ 2414 adsprpcd
+ 2447 cdsprpcd
+ 2483 vendor.vivo.hardware.sectee@1.0-service
+ 2496 wfdvndservice
+ 2500 media.swcodec
+ 2507 qti
+ 2551 tlpd
+ 2552 cnss-daemon
+ 2559 ssgqmigd
+ 2575 mlid
+ 2577 loc_launcher
+ 2584 atcid_vendor
+ 2594 gatekeeperd
+ 2599 update_engine
+ 2647 feature_enabler_client
+ 2654 qcc-vendor
+ 2667 lowi-server
+ 2668 vendor.vivo.hardware.biometrics.fingerprint-service
+ 2670 xtra-daemon
+ 2675 adpl
+ 2740 android.hardware.secure_element-service.qti
+ 2753 android.hardware.nfc2-service.nxp
+ 2819 [gmu_f2h]
+ 2824 vtsthp
+ 2890 [irq/404-goodix_fp_irq]
+ 2975 vivonrtservice
+ 2996 system_server
+ 3016 com.vivo.ai.gptagent
+ 3021 [kworker/R-soc:q]
+ 3059 [irq/154-arm-smmu-context-fault]
+ 3065 [irq/300-dwc3]
+ 3083 com.vivo.launchercopilot
+ 3231 [glink_modem]
+ 3306 [qrtr_rx]
+ 3307 [glink-IPCRTR]
+ 3315 [glink-LOOPBACK_CTL_MPSS]
+ 3328 [kworker/2:2H-events_highpri]
+ 3501 [kworker/R-ipawq]
+ 3502 [kworker/R-ipare]
+ 3506 [kworker/R-ipawq]
+ 3509 [kworker/R-ipare]
+ 3514 [kworker/R-ipawq]
+ 3515 [kworker/R-ipare]
+ 3531 [kworker/R-ipawq]
+ 3532 [kworker/R-ipare]
+ 3533 [kworker/R-ipafr]
+ 3577 [kworker/R-ipawq]
+ 3578 [kworker/R-ipare]
+ 3579 [kworker/R-ipawq]
+ 3580 [kworker/R-ipare]
+ 3581 [kworker/R-ipafr]
+ 3589 [kworker/R-ipawq]
+ 3590 [kworker/R-ipare]
+ 3591 [kworker/R-ipafr]
+ 3592 [glink-DS]
+ 3593 [glink-DATA1]
+ 3594 [glink-DATA4]
+ 3595 [glink-DATA11]
+ 3619 [kworker/R-wda_w]
+ 3681 com.vivo.aiservice
+ 4160 ims-dataservice-daemon
+ 4161 ims_rtp_daemon
+ 4190 com.vivo.sps
+ 4320 com.vivo.abe
+ 4327 webview_zygote
+ 4366 com.qualcomm.location
+ 4392 com.vivo.livewallpaper.box:LightShadow
+ 4424 com.android.networkstack.process
+ 4440 com.bbk.appstore
+ 4504 com.iqoo.powersaving
+ 4522 com.pemPieProcess
+ 4559 .cacertservice
+ 4605 com.qti.phone
+ 4648 .qms
+ 4693 com.vivo.aiengine
+ 4711 com.vivo.daemonService
+ 4736 com.android.se
+ 4779 com.bbk.iqoo.logsystem
+ 4800 com.vivo.biometrics
+ 4826 .qtidataservices
+ 4866 com.vivo.upslide
+ 4879 com.vivo.gamewatch
+ 4912 com.android.phone
+ 4951 .dataservices
+ 5004 com.bbk.updater
+ 5014 com.vivo.ai.copilot:interact
+ 5025 com.bbk.launcher2
+ 5059 com.vivo.sps:rms
+ 5067 com.vivo.aiservice:nlp
+ 5118 com.vivo.smartmultiwindow
+ 5197 com.vivo.vivo3rdalgoservice
+ 5530 com.android.providers.calendar
+ 5628 com.vivo.connbase.deviceaccessory
+ 5934 com.bbk.updater:remote
+ 5967 com.vivo.aiengine:vcode
+ 5995 com.vivo.audiofx
+ 6186 com.vivo.nightpearl
+ 6217 com.vivo.magazine
+ 6574 [kworker/u28:3-pm]
+ 6687 com.android.vending
+ 6804 [kworker/u25:3-kgsl-lockless-work]
+ 6931 com.vivo.pushservice
+ 6963 android.ext.services
+ 7190 [qrtr_rx]
+ 7210 [glink-Ims_dc_sub1]
+ 7222 thermal-engine-v2
+ 7224 [Yworker/u31:1-Yblockd]
+ 7402 [kworker/R-vivo_]
+ 7453 [scheduler_thread]
+ 7483 [dp_refill_thread]
+ 7484 [dp_tx_comp_thr]
+ 7485 [dp_tx_comp_thr]
+ 7486 [dp_rx_thread_0]
+ 7487 [dp_rx_thread_1]
+ 7488 [dp_rx_thread_2]
+ 7489 [dp_rx_thread_3]
+ 7490 [dp_rx_thread_4]
+ 7562 [kworker/u27:2-mhi_offload_wq]
+ 7797 com.android.contacts
+ 7811 vendor.qti.hardware.alarm-service
+ 7862 [zram0_wbd]
+ 7864 [zram0_mcompd]
+ 7865 [zhpd]
+ 7935 [kworker/1:0-events]
+ 8267 com.mobiletools.systemhelper
+ 8299 com.android.providers.media.module
+ 8351 [kworker/u25:1-wmi_rx_diag_event_work_]
+ 8421 com.android.nfc
+ 8453 com.vivo.connbase
+ 8498 com.vivo.safecenter
+ 8534 [kworker/4:0-events]
+ 8539 com.vivo.globalsearch
+ 8579 com.vivo.hiboard
+ 8649 [kworker/u27:0-qc_ufs_qos_swq]
+ 8967 [Yworker/u31:0-kverityd]
+ 8969 android.process.acore
+ 9083 com.baidu.map.location
+ 9300 [kworker/3:0-events]
+ 9333 com.vivo.dis
+ 9518 [kworker/7:0-events]
+ 9632 com.android.mms
+ 9817 [Yworker/u32:3-kverityd]
+10216 com.vivo.hybrid
+10336 [Yworker/u31:3-kverityd]
+10544 [Yworker/u32:4-kverityd]
+10844 [kworker/2:0-events]
+10882 com.qualcomm.qti.modemmbnmode
+11278 com.android.mms:nlp
+11336 [kworker/u28:1-pm]
+11386 [kworker/1:2-events]
+11566 com.vivo.smartanswer
+11624 [kworker/u27:3-qc_ufs_qos_swq]
+11727 [kworker/5:0-mm_percpu_wq]
+11751 [kworker/u24:2-adb]
+11786 [kworker/0:2-events]
+11898 [kworker/u25:2-kgsl-lockless-work]
+11913 [Yworker/u31:2-Yblockd]
+11915 com.vivo.sdkplugin
+12024 [Yworker/u31:4-kverityd]
+12077 [Yworker/u32:0-kverityd]
+12103 [kworker/1:3-events]
+12121 com.vivo.widgetweather
+12171 com.vivo.weather.provider
+12270 com.bbk.SuperPowerSave
+12275 [kworker/4:1-mm_percpu_wq]
+12343 [kworker/5:2-events]
+12364 [kworker/2:1-events]
+12368 [Yworker/u31:5-kverityd]
+12376 com.vivo.timerwidget
+12423 [kworker/u25:4-kgsl-lockless-work]
+12432 [Yworker/u31:6-kverityd]
+12436 [Yworker/u32:1-kverityd]
+12437 [Yworker/u31:7-kverityd]
+12439 com.vivo.telephonyapp
+12450 [kworker/6:1-events]
+12490 [Yworker/u32:2-kverityd]
+12491 [Yworker/u32:5-kverityd]
+12492 [Yworker/u32:6-Yblockd]
+12498 com.android.settings
+12636 [kworker/7:1-events]
+12740 com.android.BBKClock
+12770 com.vivo.ai.ime.nex
+12801 [kworker/u29:0]
+12816 com.vivo.widget.calendar
+12890 com.qualcomm.qti.poweroffalarm
+13010 [kworker/0:0-events]
+13011 [kworker/u24:3-bwmon_wq]
+13057 com.vivo.smartoffice:search
+13101 [kworker/u27:1-qc_ufs_qos_swq]
+13148 com.vivo.networkimprove
+13306 [kworker/1:1-events]
+13310 [kworker/u28:0-pm]
+13342 logcat
+13429 com.amap.android.location
+13528 ps
+13602 com.vivo.smartoffice:remote
+14447 com.bbk.appstore:remote
+14493 com.android.permissioncontroller
+14577 com.android.camera
+15339 [kworker/u29:2-pm]
+15703 com.vivo.SmartKey
+15735 com.android.systemui
+15867 [kworker/u29:4-pm]
+16304 wpa_supplicant
+16319 com.android.bluetooth
+16381 com.google.android.gms.persistent
+17512 com.qti.qcc
+18135 logcat
+18708 [kworker/6:0-events]
+18763 com.vivo.devicereg
+18865 com.vivo.aiservice:ir
+18938 com.google.android.gms.unstable
+19989 com.android.vending:background
+19995 com.android.vending:quick_launch
+20025 com.vivo.vms
+20728 com.vivo.accessibilityenhance:persist
+21101 com.iqoo.secure:remote
+21236 iptables-restore
+21237 ip6tables-restore
+21621 com.vivo.voicewakeup
+22011 artd
+22135 com.vivo.cardstore
+22167 com.google.android.syncadapters.calendar
+22229 com.android.settings:SettingsExProvider
+22330 com.vivo.gamecube:daemon
+22594 com.vivo.gamespace
+23115 com.bbk.account
+23289 com.bbk.cloud
+23350 com.android.notes
+23562 com.bbk.theme
+23655 com.bbk.theme.provider
+23903 com.vivo.assistant
+24079 usap64
+24182 com.vivo.cipherchain
+24208 com.vivo.connbase.deviceaccessory:ai
+24331 com.vivo.gallery
+24347 com.vivo.e2ee
+24390 com.fido.client
+24454 vendor.vivo.hardware.e2eebase@1.0-service
+24461 com.vivo.xspace
+24477 com.vivo.favorite:provider_remote
+24593 com.vivo.gallery.aiservice
+24655 com.vivo.ai.copilot
+24742 com.vivo.handoff
+24981 com.vivo.sos
+25015 com.vivo.visionaid.builtin
+25037 com.android.vivokaraoke.search
+25062 com.vivo.voicerecognition.search
+25095 com.vivo.voicerecognition
+25101 com.vivo.weather
+25167 com.vivo.aiservice:tts
+25191 com.vivo.agent
+25405 com.google.android.gms
+25409 com.vivo.agent:amservice
+25457 com.google.android.webview:webview_service
+25530 com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0
+25785 com.vivo.accessibilityenhance
+25994 com.vivo.health
+26081 com.vivo.health.permanent
+26617 com.vivo.basemanager
+27869 com.vivo.permissionmanager:ui
+28424 com.vivo.vhome
+28475 com.vivo.healthservice
+28566 [kworker/u24:0-memlat_wq]
+29378 abb
+29404 com.android.packageinstaller
+29536 com.iqoo.secure
+29543 com.vivo.recents
+31002 [kworker/u25:0-kgsl-workqueue]
+31572 com.vivo.musicwidgetmix
+31741 [kworker/u26:2-events_unbound]
+31807 com.android.rkpdapp
+32065 [kworker/u24:1-bwmon_wq]
+32412 com.vivo.connbase.deviceaccessory:kit1

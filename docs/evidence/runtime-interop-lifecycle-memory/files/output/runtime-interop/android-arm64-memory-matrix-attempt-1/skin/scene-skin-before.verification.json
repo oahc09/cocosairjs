@@ -1,0 +1,182 @@
+{
+  "captureId": "a96fada9-91e5-49c9-906d-deea2b3eef06",
+  "metadata": {
+    "channel": "android-pixelcopy",
+    "pid": 19834,
+    "file": "scene-skin-before.png",
+    "width": 320,
+    "height": 240,
+    "bitmapWidth": 320,
+    "bitmapHeight": 240,
+    "surfaceWidth": 320,
+    "surfaceHeight": 240,
+    "viewWidth": 320,
+    "viewHeight": 240,
+    "surfaceGeneration": 1,
+    "resultCode": 0,
+    "bounds": {
+      "x": 1424,
+      "y": 600,
+      "width": 320,
+      "height": 240
+    },
+    "sha256": "8d1ec6fdd9bfb7acd24cd72c3c357733e4014492c0982f97f06f88d2d102bb6a",
+    "captureId": "a96fada9-91e5-49c9-906d-deea2b3eef06",
+    "kind": "scene-skin",
+    "phase": "before",
+    "runId": "android-1793109222607-skin-813c36"
+  },
+  "surface": {
+    "pass": true,
+    "status": "PASS",
+    "phase": "before",
+    "width": 320,
+    "height": 240,
+    "sha256": "8d1ec6fdd9bfb7acd24cd72c3c357733e4014492c0982f97f06f88d2d102bb6a",
+    "subjectPixels": 14854,
+    "changedPixels": 0,
+    "textPixels": 0,
+    "textChangedPixels": 0,
+    "spriteBluePixels": 0,
+    "spriteWarmPixels": 0,
+    "spriteInteriorSamples": 0,
+    "redPixels": 0,
+    "greenPixels": 0,
+    "textureGreenPixels": 0,
+    "textureCyanPixels": 0
+  },
+  "compositor": {
+    "pass": true,
+    "status": "PASS",
+    "phase": "before",
+    "width": 320,
+    "height": 240,
+    "sha256": "e4a38369f7cee91cbd7119382c1c162a52092c694c5cd3238f370f441c098e32",
+    "subjectPixels": 14854,
+    "changedPixels": 0,
+    "textPixels": 0,
+    "textChangedPixels": 0,
+    "spriteBluePixels": 0,
+    "spriteWarmPixels": 0,
+    "spriteInteriorSamples": 0,
+    "redPixels": 0,
+    "greenPixels": 0,
+    "textureGreenPixels": 0,
+    "textureCyanPixels": 0
+  },
+  "screenSha256": "768575ea00f4c4b389efb0871c8fb43e7bbe500c24cf9f04a6ab794aa547a77f",
+  "cropSha256": "6ab6356140040cfb19473585e6f24a450b715a9e5f91c4aab7aea7750d21867f",
+  "rawOracle": {
+    "pass": true,
+    "status": "PASS",
+    "phase": "before",
+    "width": 320,
+    "height": 240,
+    "sha256": "6ab6356140040cfb19473585e6f24a450b715a9e5f91c4aab7aea7750d21867f",
+    "subjectPixels": 14854,
+    "changedPixels": 0,
+    "textPixels": 0,
+    "textChangedPixels": 0,
+    "spriteBluePixels": 0,
+    "spriteWarmPixels": 0,
+    "spriteInteriorSamples": 0,
+    "redPixels": 0,
+    "greenPixels": 0,
+    "textureGreenPixels": 0,
+    "textureCyanPixels": 0
+  },
+  "srgbScreenSha256": "4ec2c6d486f6887152663833ba6c425bad79bcb442115c69eb549bd855ce9570",
+  "srgbCropSha256": "e4a38369f7cee91cbd7119382c1c162a52092c694c5cd3238f370f441c098e32",
+  "normalization": {
+    "metadataFile": "scene-skin-before.screen-color.json",
+    "metadata": {
+      "schema": "air-android-png-icc-normalization-v1",
+      "completed": true,
+      "pass": true,
+      "action": "icc-to-srgb",
+      "input": {
+        "file": "C:\\Users\\caosh\\.codex\\worktrees\\webgpu-runtime-interop\\cocosair.js\\output\\runtime-interop\\android-arm64-memory-matrix-attempt-1\\skin\\scene-skin-before.screen.png",
+        "sha256": "768575ea00f4c4b389efb0871c8fb43e7bbe500c24cf9f04a6ab794aa547a77f",
+        "bytes": 56813,
+        "width": 3168,
+        "height": 1440,
+        "mode": "RGBA"
+      },
+      "output": {
+        "file": "C:\\Users\\caosh\\.codex\\worktrees\\webgpu-runtime-interop\\cocosair.js\\output\\runtime-interop\\android-arm64-memory-matrix-attempt-1\\skin\\scene-skin-before.screen-srgb.png",
+        "sha256": "4ec2c6d486f6887152663833ba6c425bad79bcb442115c69eb549bd855ce9570",
+        "bytes": 124071,
+        "width": 3168,
+        "height": 1440,
+        "mode": "RGBA"
+      },
+      "producer": {
+        "file": "C:\\Users\\caosh\\.codex\\worktrees\\webgpu-runtime-interop\\cocosair.js\\output\\runtime-interop\\android-phone-color-normalize.py",
+        "sha256": "0a6f3d0817bf8693d04ed2a590bfe1cd7faa2d64c0a158e440a8661d93e4f4ac"
+      },
+      "icc": {
+        "present": true,
+        "name": "Skia",
+        "bytes": 520,
+        "sha256": "6e72ac49fd45d1275f29daca1038a0b9af5befd0e891af9267f47ab066a5dffb",
+        "base64": "AAACCAAAAAAEMAAAbW50clJHQiBYWVogB+AAAQABAAAAAAAAYWNzcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAPbWAAEAAAAA0y0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJZGVzYwAAAPAAAABkclhZWgAAAVQAAAAUZ1hZWgAAAWgAAAAUYlhZWgAAAXwAAAAUd3RwdAAAAZAAAAAUclRSQwAAAaQAAAAoZ1RSQwAAAaQAAAAoYlRSQwAAAaQAAAAoY3BydAAAAcwAAAA8bWx1YwAAAAAAAAABAAAADGVuVVMAAABGAAAAHABEAGkAcwBwAGwAYQB5ACAAUAAzACAARwBhAG0AdQB0ACAAdwBpAHQAaAAgAHMAUgBHAEIAIABUAHIAYQBuAHMAZgBlAHIAAFhZWiAAAAAAAACD3gAAPb7///+7WFlaIAAAAAAAAEq+AACxNgAACrlYWVogAAAAAAAAKDsAABEMAADIzVhZWiAAAAAAAAD21gABAAAAANMtcGFyYQAAAAAABAAAAAJmZgAA8qcAAA1ZAAAT0AAAClsAAAAAAAAAAG1sdWMAAAAAAAAAAQAAAAxlblVTAAAAIAAAABwARwBvAG8AZwBsAGUAIABJAG4AYwAuACAAMgAwADEANg==",
+        "description": "Display P3 Gamut with sRGB Transfer",
+        "colorSpace": "RGB",
+        "connectionSpace": "XYZ",
+        "deviceClass": "mntr",
+        "iccVersion": 70254592,
+        "outputProfileSha256": "e14e7ade44a3eaf655821995f2a182497d8d8d1d47356c87aced4e60581fe15b",
+        "outputProfileDescription": "sRGB built-in"
+      },
+      "transform": {
+        "engine": "Pillow.ImageCms/LittleCMS",
+        "renderingIntent": 1,
+        "renderingIntentName": "RELATIVE_COLORIMETRIC",
+        "flags": 0,
+        "inputProfile": "actual embedded ICC bytes",
+        "outputProfile": "ImageCms.createProfile('sRGB')",
+        "outputMode": "RGBA",
+        "bitsPerChannel": 8,
+        "resize": false,
+        "alphaPreserved": true,
+        "fittedFromExpectedPixels": false
+      },
+      "versions": {
+        "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+        "pillow": "12.3.0",
+        "littlecms": "2.19"
+      },
+      "modules": {
+        "PIL": {
+          "file": "C:\\Users\\caosh\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\site-packages\\PIL\\__init__.py",
+          "sha256": "3fffff8502f4b59ca61d39cce713d55ffef046954262fce1abac3e97f3803734"
+        },
+        "PIL.Image": {
+          "file": "C:\\Users\\caosh\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\site-packages\\PIL\\Image.py",
+          "sha256": "59f1b98ed7bfd7b516b9f13ffd9dd3bc0aa1a495042accdb5ae4609b41c329d5"
+        },
+        "PIL.ImageCms": {
+          "file": "C:\\Users\\caosh\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\site-packages\\PIL\\ImageCms.py",
+          "sha256": "0effeeecadc71257d6eabcbd4cf43277ff35c6aeda0e7ba4c60ab67676bf49de"
+        },
+        "PIL._imaging": {
+          "file": "C:\\Users\\caosh\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\site-packages\\PIL\\_imaging.cp312-win_amd64.pyd",
+          "sha256": "d5f7aaebcc66e96fcff9af9d86cb73a9decba0706c29276af23606e4cdf89fa0"
+        },
+        "PIL._imagingcms": {
+          "file": "C:\\Users\\caosh\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\site-packages\\PIL\\_imagingcms.cp312-win_amd64.pyd",
+          "sha256": "a7482696c98b7d5fe44a172e280147ae6448e82017be3a2322713e53765d9c7a"
+        }
+      },
+      "scope": "Standard whole-image ICC conversion only; no resize, crop, pixel fitting, or oracle adjustment.",
+      "noIccPolicy": "Preserve the original PNG bytes exactly; this does not infer a missing color profile."
+    },
+    "icc": {
+      "present": true,
+      "file": "C:\\Users\\caosh\\.codex\\worktrees\\webgpu-runtime-interop\\cocosair.js\\output\\runtime-interop\\android-arm64-memory-matrix-attempt-1\\skin\\scene-skin-before.screen-source.icc",
+      "sha256": "6e72ac49fd45d1275f29daca1038a0b9af5befd0e891af9267f47ab066a5dffb",
+      "bytes": 520
+    }
+  },
+  "pass": true
+}

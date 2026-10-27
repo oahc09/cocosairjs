@@ -1,0 +1,25 @@
+{
+  "label": "surface-recovery-paint-0006",
+  "bounds": {
+    "x": 380,
+    "y": 1080,
+    "width": 320,
+    "height": 240
+  },
+  "wanted": "orange",
+  "measuredAt": "2026-10-27T05:15:57.234Z",
+  "originalSha256": "2ee5e52fdeb30926d58215bb28922a5a7ad506475a4a9e698cb2a44546429074",
+  "originalCropSha256": "3baa1fbc58c10f0bed5849ea2093891dab745b9ab473b62290a509ef20fd9ae7",
+  "interpretedSha256": "2ee5e52fdeb30926d58215bb28922a5a7ad506475a4a9e698cb2a44546429074",
+  "interpretedCropSha256": "3baa1fbc58c10f0bed5849ea2093891dab745b9ab473b62290a509ef20fd9ae7",
+  "colors": {
+    "width": 320,
+    "height": 240,
+    "orange": 8131,
+    "green": 0,
+    "blue": 68669,
+    "sha256": "3baa1fbc58c10f0bed5849ea2093891dab745b9ab473b62290a509ef20fd9ae7"
+  },
+  "pass": true,
+  "colorMetadata": "surface-recovery-paint-0006.screen-color.json"
+}

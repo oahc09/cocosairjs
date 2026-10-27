@@ -1,0 +1,15 @@
+{
+  "arguments": [
+    "-s",
+    "emulator-5554",
+    "shell",
+    "run-as",
+    "com.mystral.engine.interop",
+    "cat",
+    "files/interop/android-lifecycle-1793076474017/native-exit.json"
+  ],
+  "startedAt": "2026-10-27T04:48:25.898Z",
+  "timeoutMs": 9801,
+  "exitCode": 0,
+  "finishedAt": "2026-10-27T04:48:25.977Z"
+}

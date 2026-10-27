@@ -1,0 +1,13 @@
+{
+  "arguments": [
+    "-s",
+    "emulator-5554",
+    "exec-out",
+    "screencap",
+    "-p"
+  ],
+  "startedAt": "2026-10-26T15:42:59.310Z",
+  "timeoutMs": 12333,
+  "exitCode": 0,
+  "finishedAt": "2026-10-26T15:42:59.567Z"
+}

@@ -1,0 +1,7 @@
+[WebGPU] Device error (Validation): Destroyed texture [Texture "of [Surface]"] used in a submit.
+ - While calling [Queue].Submit([[CommandBuffer]])
+
+[WebGPU] Device error (Validation): Destroyed texture [Texture "of [Surface]"] used in a submit.
+ - While calling [Queue].Submit([[CommandBuffer]])
+
+[Mystral] Caught signal SIGSEGV, exiting gracefully

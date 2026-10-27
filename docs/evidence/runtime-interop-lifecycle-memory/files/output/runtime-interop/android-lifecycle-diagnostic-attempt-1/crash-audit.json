@@ -1,0 +1,12 @@
+{
+  "pass": true,
+  "nativePid": 4353,
+  "nativeRunId": "android-lifecycle-1793029350099",
+  "lowerEpochSeconds": 1793029351.834,
+  "upperEpochSecondsExclusive": 1793029385,
+  "scope": "Fatal current-PID Java/libc records and debugger blocks explicitly naming this PID, inside retained run time bounds",
+  "fatal": [],
+  "retainedEpochRows": 212,
+  "currentRunRows": 202,
+  "logSha256": "b1811ce53c40ece767e6448ec8c8d1d5a3d0f199667f1ed9e60ce8faff6017c6"
+}

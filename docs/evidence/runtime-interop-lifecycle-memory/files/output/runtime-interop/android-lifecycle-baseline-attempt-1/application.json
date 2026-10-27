@@ -1,0 +1,12 @@
+{
+  "schema": "air-android-demo-v1",
+  "ready": true,
+  "scope": "interactive-startup-only",
+  "frames": 4,
+  "taps": 0,
+  "color": "orange",
+  "gpuErrors": [],
+  "runId": "android-lifecycle-1793028649762",
+  "caseId": "demo",
+  "pass": true
+}

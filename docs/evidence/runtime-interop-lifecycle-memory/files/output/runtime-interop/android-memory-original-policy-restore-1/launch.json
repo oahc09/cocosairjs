@@ -1,0 +1,19 @@
+{
+  "at": "2026-10-27T05:37:30.8838435Z",
+  "avd": "Mystral_16KB_API37",
+  "purpose": "Restore original uncredentialed keyguard policy after failed memory attempts; do not run native app",
+  "launcherPid": 48524,
+  "arguments": [
+    "-avd",
+    "Mystral_16KB_API37",
+    "-port",
+    "5556",
+    "-gpu",
+    "host",
+    "-no-snapshot",
+    "-no-audio",
+    "-no-window",
+    "-no-boot-anim"
+  ],
+  "originalPolicyReceipt": "../android-memory-env-attempt-1/lockscreen-policy.json"
+}

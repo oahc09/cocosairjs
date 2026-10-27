@@ -1,0 +1,85 @@
+{
+  "schema": "mystral-android-16kb-elf-and-zip-audit-v1",
+  "completed": true,
+  "elf16kCompatible": true,
+  "relroStaticSafe": true,
+  "zipalign16kVerified": true,
+  "zipPackaging": "compressed native libraries / extracted by Android",
+  "nativeLibraries": [
+    {
+      "file": "lib/arm64-v8a/libSDL3.so",
+      "bytes": 10782216,
+      "sha256": "92e7ff5548ecd67788e61043c9fcb0250364080726714174e825c48dcc850376",
+      "needed": [
+        "libm.so",
+        "libOpenSLES.so",
+        "libdl.so",
+        "liblog.so",
+        "libandroid.so",
+        "libGLESv1_CM.so",
+        "libGLESv2.so",
+        "libc.so"
+      ],
+      "zipCompression": 8,
+      "elf": {
+        "machine": 183,
+        "loadAlignments": [
+          16384,
+          16384,
+          16384
+        ],
+        "loadAlignment16KB": true,
+        "relro": [
+          {
+            "phdrIndex": 5,
+            "endAligned16KB": false,
+            "ownLoadIndex": 2,
+            "noOtherWritableLoadInProtectedPages": true,
+            "staticAlignmentSafe": true
+          }
+        ],
+        "relroStaticSafe": true
+      },
+      "providerMatches": true
+    },
+    {
+      "file": "lib/arm64-v8a/libmystral-runtime.so",
+      "bytes": 42869888,
+      "sha256": "242c118295cca5e2f633699c00c751b3a59c838900ca5769dae54799e843b5b0",
+      "needed": [
+        "libdl.so",
+        "liblog.so",
+        "libSDL3.so",
+        "libandroid.so",
+        "libGLESv3.so",
+        "libEGL.so",
+        "libz.so",
+        "libm.so",
+        "libc.so"
+      ],
+      "zipCompression": 8,
+      "elf": {
+        "machine": 183,
+        "loadAlignments": [
+          16384,
+          16384,
+          16384
+        ],
+        "loadAlignment16KB": true,
+        "relro": [
+          {
+            "phdrIndex": 5,
+            "endAligned16KB": false,
+            "ownLoadIndex": 2,
+            "noOtherWritableLoadInProtectedPages": true,
+            "staticAlignmentSafe": true
+          }
+        ],
+        "relroStaticSafe": true
+      },
+      "providerMatches": true
+    }
+  ],
+  "runtime16KB": "NOT_RUN_BY_BUILD_OPERATION",
+  "releaseReady": false
+}

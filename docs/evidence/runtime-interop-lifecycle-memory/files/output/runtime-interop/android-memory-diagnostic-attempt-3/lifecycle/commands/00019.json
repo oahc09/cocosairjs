@@ -1,0 +1,14 @@
+{
+  "arguments": [
+    "-s",
+    "emulator-5554",
+    "exec-out",
+    "uiautomator",
+    "dump",
+    "/dev/tty"
+  ],
+  "startedAt": "2026-10-27T04:36:07.793Z",
+  "timeoutMs": 14877,
+  "exitCode": 0,
+  "finishedAt": "2026-10-27T04:36:09.927Z"
+}

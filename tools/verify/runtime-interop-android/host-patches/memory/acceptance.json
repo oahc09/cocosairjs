@@ -1,0 +1,351 @@
+{
+  "schema": "air-android-native-reference-memory-repair-acceptance-v1",
+  "createdAt": "2026-10-27T05:42:00.118065+00:00",
+  "requestedRepairCompleted": true,
+  "status": "PASS_MATCHED_REFERENCE_OWNERSHIP_AND_BOUNDED_RUNTIME",
+  "subset": true,
+  "releaseReady": false,
+  "allResourcesLeakFree": "NOT_ESTABLISHED",
+  "sourceBaseCommit": "b98101acd368107829a7aa4c0481084f2ecefd5e",
+  "sourceChangesCommitted": false,
+  "sourceChangesPushed": false,
+  "configuration": {
+    "androidStl": "c++_static",
+    "sdlVersion": "3.2.30",
+    "v8Version": "11.6.189.22",
+    "v8LibraryKind": "static",
+    "v8StartupMode": "embedded",
+    "gpuBackend": "dawn",
+    "sdkBuild": 216
+  },
+  "source": {
+    "manifest": {
+      "file": "tools/verify/runtime-interop-android/host-patches/memory/manifest.json",
+      "bytes": 5010,
+      "sha256": "c6fde5004ce350039c7b5172e1e8fa2153033de10264ac69da1f25016773068a"
+    },
+    "patch": {
+      "file": "tools/verify/runtime-interop-android/host-patches/memory/mystral-android-memory.patch",
+      "bytes": 162018,
+      "sha256": "bcae91248e19f474163b468f84ed6939b7f85969e871ddeb305585e93cbfb959"
+    },
+    "applyVerification": {
+      "file": "tools/verify/runtime-interop-android/host-patches/memory/verification.json",
+      "bytes": 17543,
+      "sha256": "43ddb02b538e438d6711682ce7ca62b9a813b5ebadb268f59a657daaf456f986"
+    },
+    "dualBuildBinding": {
+      "file": "tools/verify/runtime-interop-android/host-patches/memory/source-build-binding.json",
+      "bytes": 3466,
+      "sha256": "cd4e4c73dff3f6e394a20269d498131dfee7f404ba9e9253cb719f1e8c2364b4"
+    }
+  },
+  "closedBaselineFinding": {
+    "evidence": {
+      "file": "tools/verify/runtime-interop-android/host-patches/lifecycle/acceptance.json",
+      "bytes": 6356,
+      "sha256": "addb29f724cc41922ce747cd3a0e883d18462763a1aef38365405f0a647afcd7"
+    },
+    "finding": "Per-frame Canvas API references and registry entries retained without matching release",
+    "historicalStatusPreserved": "FUNCTIONAL_PASS_WITH_OPEN_MEMORY_FINDING"
+  },
+  "baselineHeapProfile": {
+    "trace": {
+      "file": "output/runtime-interop/android-memory-baseline-heap-attempt-1/native-alloc.pftrace",
+      "bytes": 196940,
+      "sha256": "77e6c537e94e4c0c9a205bac71b09bfa641c780b6dbb4380d397dae0cda6b4e6"
+    },
+    "capture": {
+      "file": "output/runtime-interop/android-memory-baseline-heap-attempt-1/capture.json",
+      "bytes": 453,
+      "sha256": "8c55028cca15ac5cf979fd9bc92f56a27a0b962e242f86aec79f504bbd2aae6a"
+    },
+    "health": {
+      "file": "output/runtime-interop/android-memory-baseline-heap-attempt-1/heapprofd-health.txt",
+      "bytes": 350,
+      "sha256": "f53d8c4b6cdde27ebc65471a52b01dfbb737c241c2abd9e056f7cf0c428de0a4"
+    },
+    "stack": {
+      "file": "output/runtime-interop/android-memory-baseline-heap-attempt-1/heapprofd-top-stack.csv",
+      "bytes": 9407,
+      "sha256": "8cd5dfb0c99a35c003967e69ef006c375f6f78782005c5018b396c7de0ced86d"
+    },
+    "symbols": {
+      "file": "output/runtime-interop/android-memory-baseline-heap-attempt-1/symbols/receipt.json",
+      "bytes": 426,
+      "sha256": "17acadd4b60b2575397869c70bb1216121ccf22e38547ce2f243cc7c16833eb4"
+    },
+    "processor": {
+      "file": "output/runtime-interop/android-memory-tools-attempt-1/binary-receipt.json",
+      "bytes": 368,
+      "sha256": "7c1bbfb09e1e4b022588152cb9838dbed532d7b32607e336430bfba1205d0e41"
+    },
+    "scope": "Warm original APK sampled native allocations; stacks include SwapChainTexture::Create and TextureInfo registry insertion. Stack root truncated at the JIT boundary; no whole-runtime ownership claim."
+  },
+  "runtime": {
+    "memory": {
+      "file": "output/runtime-interop/android-memory-16k-attempt-1/report.json",
+      "bytes": 1285530,
+      "sha256": "9ced030e0351b59821d302b8443547374b9eedebb040ff181539ee08ef8e87b4"
+    },
+    "lifecycle": {
+      "file": "output/runtime-interop/android-memory-16k-attempt-1/lifecycle/report.json",
+      "bytes": 280205,
+      "sha256": "46fbd61da93a2762f9bd99ef23f9623bfcec44b6b51509fe23926026a5dec09f"
+    },
+    "actualPageBytes": 16384,
+    "emulator": true,
+    "abi": "x86_64",
+    "nativePid": 6017,
+    "durationMs": 904125.7142000049,
+    "samples": 31,
+    "actualDraws": 53313,
+    "noUncaughtV8CallbackExceptions": true,
+    "nativeExitCode": 0
+  },
+  "ownedApiReferences": {
+    "scope": "Bindings-managed owned WebGPU API reference accounting plus unchanged Android lifecycle evidence and comparative memory observations",
+    "snapshotCount": 189,
+    "continuousPeriodicSnapshots": 180,
+    "maximumNativePeriodicGapMs": 5015,
+    "finalTotal": {
+      "acquired": 332015,
+      "released": 332015,
+      "live": 0,
+      "peak": 422
+    },
+    "finalCanvasTexture": {
+      "acquired": 55246,
+      "released": 55246,
+      "live": 0,
+      "peak": 1
+    },
+    "finalCanvasView": {
+      "acquired": 55245,
+      "released": 55245,
+      "live": 0,
+      "peak": 1
+    },
+    "wrapperAtNativeCleanup": {
+      "created": 332015,
+      "finalized": 331877,
+      "live": 138,
+      "peak": 943
+    },
+    "wrapperCleanupZeroRequired": false,
+    "openFindings": []
+  },
+  "memoryObservations": {
+    "candidateSamples": [
+      {
+        "sample": "continuous-000",
+        "elapsedMs": 0.03490000218153,
+        "frames": 1828,
+        "taps": 5,
+        "nativeHeapPssKiB": 48618,
+        "nativeHeapRssKiB": 52492,
+        "nativeHeapSizeKiB": 148944,
+        "nativeHeapAllocKiB": 65361,
+        "nativeHeapFreeKiB": 71473,
+        "totalPssKiB": 198217,
+        "totalRssKiB": 340908,
+        "evidence": {
+          "file": "output/runtime-interop/android-memory-16k-attempt-1/lifecycle/continuous-000.meminfo.txt",
+          "bytes": 3513,
+          "sha256": "12855c07e0bcdb0d5ee9a241138e557d0695b21bab6086b944bbfd52628f95e8"
+        }
+      },
+      {
+        "sample": "continuous-010",
+        "elapsedMs": 300068.3325000033,
+        "frames": 19496,
+        "taps": 15,
+        "nativeHeapPssKiB": 48662,
+        "nativeHeapRssKiB": 52536,
+        "nativeHeapSizeKiB": 148944,
+        "nativeHeapAllocKiB": 65018,
+        "nativeHeapFreeKiB": 71892,
+        "totalPssKiB": 198920,
+        "totalRssKiB": 341884,
+        "evidence": {
+          "file": "output/runtime-interop/android-memory-16k-attempt-1/lifecycle/continuous-010.meminfo.txt",
+          "bytes": 3513,
+          "sha256": "b8378861a195dd39f5ea2c82912b7b8c2990eea867599124befbf1e6a8f2f493"
+        }
+      },
+      {
+        "sample": "continuous-020",
+        "elapsedMs": 600143.8830000013,
+        "frames": 37323,
+        "taps": 25,
+        "nativeHeapPssKiB": 48940,
+        "nativeHeapRssKiB": 52812,
+        "nativeHeapSizeKiB": 148944,
+        "nativeHeapAllocKiB": 65383,
+        "nativeHeapFreeKiB": 71527,
+        "totalPssKiB": 200199,
+        "totalRssKiB": 343136,
+        "evidence": {
+          "file": "output/runtime-interop/android-memory-16k-attempt-1/lifecycle/continuous-020.meminfo.txt",
+          "bytes": 3513,
+          "sha256": "579a30806155294de13b01bde6d01d5a833c24cb7c743e0203aa38fff336ea4a"
+        }
+      },
+      {
+        "sample": "continuous-030",
+        "elapsedMs": 900202.514200002,
+        "frames": 55141,
+        "taps": 35,
+        "nativeHeapPssKiB": 48592,
+        "nativeHeapRssKiB": 52464,
+        "nativeHeapSizeKiB": 148944,
+        "nativeHeapAllocKiB": 64811,
+        "nativeHeapFreeKiB": 72100,
+        "totalPssKiB": 200291,
+        "totalRssKiB": 343228,
+        "evidence": {
+          "file": "output/runtime-interop/android-memory-16k-attempt-1/lifecycle/continuous-030.meminfo.txt",
+          "bytes": 3513,
+          "sha256": "01e3e2f35be8d875ea0bf9f3b6d6872303a650f3348ff8e482401ad23e3a7e9e"
+        }
+      }
+    ],
+    "baselineSamples": [
+      {
+        "sample": "continuous-000",
+        "elapsedMs": 0.029700000304728746,
+        "frames": 1637,
+        "taps": 5,
+        "nativeHeapPssKiB": 51526,
+        "nativeHeapRssKiB": 55392,
+        "nativeHeapSizeKiB": 155008,
+        "nativeHeapAllocKiB": 68877,
+        "nativeHeapFreeKiB": 74172,
+        "totalPssKiB": 215839,
+        "totalRssKiB": 359140,
+        "evidence": {
+          "file": "output/runtime-interop/android-lifecycle-16k-attempt-1/continuous-000.meminfo.txt",
+          "bytes": 3513,
+          "sha256": "4cd02165f13d9a027bc2f11afed673ae6cddeac5ee7827e861ff7244be60bdf8"
+        }
+      },
+      {
+        "sample": "continuous-010",
+        "elapsedMs": 300062.96849999996,
+        "frames": 19065,
+        "taps": 15,
+        "nativeHeapPssKiB": 61914,
+        "nativeHeapRssKiB": 65780,
+        "nativeHeapSizeKiB": 165296,
+        "nativeHeapAllocKiB": 77128,
+        "nativeHeapFreeKiB": 76010,
+        "totalPssKiB": 226819,
+        "totalRssKiB": 370304,
+        "evidence": {
+          "file": "output/runtime-interop/android-lifecycle-16k-attempt-1/continuous-010.meminfo.txt",
+          "bytes": 3513,
+          "sha256": "f6cb4f08207402da83b6ff1d5a92aaf2c63811a5fe865ad1ef2b061a81361054"
+        }
+      },
+      {
+        "sample": "continuous-020",
+        "elapsedMs": 600146.5814999999,
+        "frames": 36543,
+        "taps": 25,
+        "nativeHeapPssKiB": 71866,
+        "nativeHeapRssKiB": 75728,
+        "nativeHeapSizeKiB": 175008,
+        "nativeHeapAllocKiB": 88111,
+        "nativeHeapFreeKiB": 74831,
+        "totalPssKiB": 237714,
+        "totalRssKiB": 381196,
+        "evidence": {
+          "file": "output/runtime-interop/android-lifecycle-16k-attempt-1/continuous-020.meminfo.txt",
+          "bytes": 3513,
+          "sha256": "3b23d59ee91caedf5a7bdac02964e7aa47d328e96eb5b4b3805edd09c220fe88"
+        }
+      },
+      {
+        "sample": "continuous-030",
+        "elapsedMs": 900223.0881999996,
+        "frames": 53855,
+        "taps": 35,
+        "nativeHeapPssKiB": 82394,
+        "nativeHeapRssKiB": 86256,
+        "nativeHeapSizeKiB": 184784,
+        "nativeHeapAllocKiB": 96163,
+        "nativeHeapFreeKiB": 76684,
+        "totalPssKiB": 239963,
+        "totalRssKiB": 384044,
+        "evidence": {
+          "file": "output/runtime-interop/android-lifecycle-16k-attempt-1/continuous-030.meminfo.txt",
+          "bytes": 3513,
+          "sha256": "2f9b45de2e96189fcbae94dddc04da018a96d4e4c8256023420de214c0af0fd0"
+        }
+      }
+    ],
+    "candidateNativeHeapPssGrowthKiB": -26,
+    "baselineNativeHeapPssGrowthKiB": 30868,
+    "candidateNativeHeapAllocGrowthKiB": -550,
+    "candidateTotalPssGrowthKiB": 2074,
+    "interpretation": "Original frame-reference retention is repaired within this bounded matched flow. PSS is not an arbitrary PASS threshold or proof of all allocations leak-free."
+  },
+  "surfaceCoverage": {
+    "discardEvents": [
+      [
+        "5",
+        "1"
+      ]
+    ],
+    "recoveryEvents": [
+      [
+        "1",
+        "1"
+      ]
+    ],
+    "nullWindowHoldReturnEvents": 0,
+    "contextAndAnwCleanupZero": true,
+    "unforcedBranches": "Null-window hold was not directly exercised in this final log; OOM and natural device-loss injection are outside this run."
+  },
+  "regression": {
+    "androidSixCaseMatrix": {
+      "file": "output/runtime-interop/android-memory-matrix-regression-attempt-1/report.json",
+      "bytes": 204710,
+      "sha256": "d802d62144f8ba4a4fbe4c0d3a87b734fc8c6798591dc834e0e6712f5c2b0e5a"
+    },
+    "windowsBuild": {
+      "file": "output/runtime-interop/resource-ownership-win-build-attempt-5/build-report.json",
+      "bytes": 24526,
+      "sha256": "08c1b852fb6fe7bf3d0a81af1f9b6520a734026fae5b2515f46090e9aad15a60"
+    },
+    "windowsControls": {
+      "file": "output/runtime-interop/resource-ownership-win-build-attempt-5/controls-summary.json",
+      "bytes": 4968,
+      "sha256": "47743435d2bef9532eae43346a8dd847391ec3d2aa8fd28f473008c996e7c522"
+    },
+    "windowsScope": "Real API/queue/exit only. CLI ExitProcess does not run Runtime teardown."
+  },
+  "audits": {
+    "memory23": {
+      "file": "output/runtime-interop/android-memory-final-audit-attempt-1/report.json",
+      "bytes": 16762,
+      "sha256": "60ac83be43ce3ccd34b89e9bc2bfc277592b493e1e7ce164a01c3cbccb31707d"
+    },
+    "lifecycle17": {
+      "file": "output/runtime-interop/android-memory-lifecycle-audit-attempt-1/report.json",
+      "bytes": 182708,
+      "sha256": "eb5a01aac39f17f16c144993c514d9819f311c421392c6a1e3cea7697739ec51"
+    }
+  },
+  "ownedEnvironment": {
+    "file": "output/runtime-interop/android-memory-env-attempt-4/owned-environment-closed.json",
+    "bytes": 2957,
+    "sha256": "6cb2e724f1483ced28a2b824099fb615a45a423fae67c93fb83dfff1b6cf9e7e"
+  },
+  "limitations": [
+    "One official x86_64 16KB image/GPU configuration and fifteen-minute flow; not long-run, all-engine, all-device or release certification.",
+    "ARM64 new APK built and statically verified, runtime NOT_RUN. New APK 4KB runtime NOT_RUN.",
+    "Managed native API refs reaching zero is separate from still-reachable wrapper/CPU weak metadata or driver residency.",
+    "Activity recreation/epoch reset, natural device loss, OOM injection, and no-SDL backing destruction/rebuild are not certified."
+  ]
+}

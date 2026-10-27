@@ -1,0 +1,35 @@
+{
+  "schema": "mystral-candidate3-retained-source-before-canvas-expiry-fix-v1",
+  "createdAt": "2026-10-27T04:27:16.0013897Z",
+  "sourceBeforeSha256": "8c46cb3ef441069f4d6d0e64d30548c304c8457873120315080e612b51d95190",
+  "files": [
+    {
+      "file": "src/webgpu/bindings.cpp",
+      "bytes": 352129,
+      "sha256": "829c07e5b6734e5ffcf7338d964c6e78c225e14065e2582d099516f08fbd258d",
+      "sourceBeforeMatches": true,
+      "newFileCreated": true
+    },
+    {
+      "file": "include/mystral/webgpu/context.h",
+      "bytes": 6543,
+      "sha256": "209758e8aa108c5f9cb4a2b1c1b3d993f6b3861cfdd38e2f4160f150aae30f26",
+      "sourceBeforeMatches": true,
+      "newFileCreated": true
+    },
+    {
+      "file": "src/raytracing/bindings.cpp",
+      "bytes": 21299,
+      "sha256": "963970b0df461281cb7ad51dfca7f0b45a03da3985808102774e62d7ce96e01f",
+      "sourceBeforeMatches": true,
+      "newFileCreated": true
+    },
+    {
+      "file": "src/js/v8_engine.cpp",
+      "bytes": 61379,
+      "sha256": "3447f93be1f3bb3584a50821b0b22933c56c32bb36ca87766c993d76c308de6a",
+      "sourceBeforeMatches": true,
+      "newFileCreated": true
+    }
+  ]
+}

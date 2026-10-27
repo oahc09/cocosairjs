@@ -1,0 +1,59 @@
+{
+  "schema": "air-android-png-icc-normalization-v1",
+  "completed": true,
+  "pass": true,
+  "action": "no-icc-byte-preserving-copy",
+  "input": {
+    "file": "C:\\Users\\caosh\\.codex\\worktrees\\webgpu-runtime-interop\\cocosair.js\\output\\runtime-interop\\android-lifecycle-16k-attempt-1\\initial-input-paint-0000.screen.png",
+    "sha256": "23c29b76a9782720af393c3c0a28bd69416fa09917dfff12d309a9b093951003",
+    "bytes": 38477,
+    "width": 1080,
+    "height": 2400,
+    "mode": "RGBA"
+  },
+  "output": {
+    "file": "C:\\Users\\caosh\\.codex\\worktrees\\webgpu-runtime-interop\\cocosair.js\\output\\runtime-interop\\android-lifecycle-16k-attempt-1\\initial-input-paint-0000.screen-srgb.png",
+    "sha256": "23c29b76a9782720af393c3c0a28bd69416fa09917dfff12d309a9b093951003",
+    "bytes": 38477,
+    "width": 1080,
+    "height": 2400,
+    "mode": "RGBA"
+  },
+  "producer": {
+    "file": "C:\\Users\\caosh\\.codex\\worktrees\\webgpu-runtime-interop\\cocosair.js\\tools\\verify\\runtime-interop-android\\verification-snapshots\\output\\runtime-interop\\android-phone-color-normalize.py",
+    "sha256": "0a6f3d0817bf8693d04ed2a590bfe1cd7faa2d64c0a158e440a8661d93e4f4ac"
+  },
+  "icc": {
+    "present": false
+  },
+  "transform": null,
+  "versions": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+    "pillow": "12.3.0",
+    "littlecms": "2.19"
+  },
+  "modules": {
+    "PIL": {
+      "file": "C:\\Users\\caosh\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\site-packages\\PIL\\__init__.py",
+      "sha256": "3fffff8502f4b59ca61d39cce713d55ffef046954262fce1abac3e97f3803734"
+    },
+    "PIL.Image": {
+      "file": "C:\\Users\\caosh\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\site-packages\\PIL\\Image.py",
+      "sha256": "59f1b98ed7bfd7b516b9f13ffd9dd3bc0aa1a495042accdb5ae4609b41c329d5"
+    },
+    "PIL.ImageCms": {
+      "file": "C:\\Users\\caosh\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\site-packages\\PIL\\ImageCms.py",
+      "sha256": "0effeeecadc71257d6eabcbd4cf43277ff35c6aeda0e7ba4c60ab67676bf49de"
+    },
+    "PIL._imaging": {
+      "file": "C:\\Users\\caosh\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\site-packages\\PIL\\_imaging.cp312-win_amd64.pyd",
+      "sha256": "d5f7aaebcc66e96fcff9af9d86cb73a9decba0706c29276af23606e4cdf89fa0"
+    },
+    "PIL._imagingcms": {
+      "file": "C:\\Users\\caosh\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\site-packages\\PIL\\_imagingcms.cp312-win_amd64.pyd",
+      "sha256": "a7482696c98b7d5fe44a172e280147ae6448e82017be3a2322713e53765d9c7a"
+    }
+  },
+  "scope": "Standard whole-image ICC conversion only; no resize, crop, pixel fitting, or oracle adjustment.",
+  "noIccPolicy": "Preserve the original PNG bytes exactly; this does not infer a missing color profile."
+}

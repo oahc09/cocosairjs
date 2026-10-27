@@ -1,0 +1,558 @@
+diff --git a/android/app/src/main/java/com/mystral/engine/MystralActivity.java b/android/app/src/main/java/com/mystral/engine/MystralActivity.java
+index 7b211e9cd277e3f786ec8cfb5d3540c333e3e46e..f78d5207ded0f67f020fff80d82c24acd51b3724 100644
+--- a/android/app/src/main/java/com/mystral/engine/MystralActivity.java
++++ b/android/app/src/main/java/com/mystral/engine/MystralActivity.java
+@@ -11,6 +11,7 @@ import android.os.Process;
+ import android.os.SystemClock;
+ import android.util.Log;
+ import android.view.PixelCopy;
++import android.view.Surface;
+ import android.view.SurfaceHolder;
+ import android.view.SurfaceView;
+ import android.widget.RelativeLayout;
+@@ -77,14 +78,17 @@ public class MystralActivity extends SDLActivity {
+         surface.setLayoutParams(layout);
+         surface.getHolder().addCallback(new SurfaceHolder.Callback() {
+             @Override public void surfaceCreated(SurfaceHolder holder) {
+-                surfaceGeneration.incrementAndGet();
++                int generation = surfaceGeneration.incrementAndGet();
++                nativeSurfaceChanged(holder.getSurface(), generation);
+                 record("surface-created");
+             }
+             @Override public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
++                nativeSurfaceChanged(holder.getSurface(), surfaceGeneration.get());
+                 record("surface-changed");
+             }
+             @Override public void surfaceDestroyed(SurfaceHolder holder) {
+-                surfaceGeneration.incrementAndGet();
++                int generation = surfaceGeneration.incrementAndGet();
++                nativeSurfaceChanged(null, generation);
+                 record("surface-destroyed");
+             }
+         });
+@@ -163,6 +167,7 @@ public class MystralActivity extends SDLActivity {
+     private static native String nativeV8StartupMode();
+     private static native String nativeV8Version();
+     private static native void nativeRequestQuit();
++    private static native void nativeSurfaceChanged(Surface surface, int generation);
+ 
+     public static void onNativeReady(String abi, String engine, String backend, String startupMode, String v8Version) {
+         MystralActivity activity = current;
+diff --git a/include/mystral/platform/window.h b/include/mystral/platform/window.h
+index 1790636a962adc1443ee46bd2e7bc1921e3b971f..59ad53f8db4215d96942836ac7537b555ac11328 100644
+--- a/include/mystral/platform/window.h
++++ b/include/mystral/platform/window.h
+@@ -1,5 +1,9 @@
+ #pragma once
+ 
++#if defined(__ANDROID__)
++#include <functional>
++#endif
++
+ // Forward declare SDL types
+ struct SDL_Window;
+ 
+@@ -22,6 +26,12 @@ void destroyWindow();
+  */
+ bool pollEvents();
+ 
++#if defined(__ANDROID__)
++// Runs on the SDL owner after polling, before an event can call JavaScript.
++// Return false while presentation is unavailable; quit is still dispatched.
++void setAndroidEventPreparation(std::function<bool()> prepare);
++#endif
++
+ /**
+  * Check if window should quit
+  */
+diff --git a/include/mystral/webgpu/context.h b/include/mystral/webgpu/context.h
+index 8d8d17ba7f435197173b426aa4dec7fc5059ab1a..d8f151dd36f6e864469b4ae665d8555d3fa25894 100644
+--- a/include/mystral/webgpu/context.h
++++ b/include/mystral/webgpu/context.h
+@@ -23,6 +23,8 @@ void cleanupDeviceBindings();
+ // A presentation surface may cache a swapchain after Unconfigure. Retire it before device teardown.
+ bool releaseContextSurfaceBeforeDeviceDestroy(WGPUDevice device);
+ void retireSurfaceBindings(WGPUSurface surface);
++void suspendSurfaceBindings(WGPUSurface surface);
++bool restoreSurfaceBindings(WGPUSurface surface);
+ 
+ /**
+  * WebGPU Context
+@@ -36,6 +38,10 @@ public:
+     ~Context();
+     // The single-device Runtime must be recreated after device destruction.
+     void releaseSurfaceBeforeDeviceDestroy();
++#if defined(__ANDROID__)
++    // Replace only presentation; the instance, adapter, device and queue stay alive.
++    bool replaceAndroidSurface(void* nativeWindow);
++#endif
+ 
+     /**
+      * Initialize WebGPU - create instance only
+diff --git a/src/platform/android_main.cpp b/src/platform/android_main.cpp
+index 6737623cdd6cb1afa1b815b39db4ee8f9a03f2b3..2783d25000c3cc352f171c3fabc304eaabee5e83 100644
+--- a/src/platform/android_main.cpp
++++ b/src/platform/android_main.cpp
+@@ -2,12 +2,15 @@
+ #ifdef __ANDROID__
+ 
+ #include "mystral/runtime.h"
++#include "mystral/platform/android_surface.h"
+ #include <SDL3/SDL.h>
+ #include <android/log.h>
++#include <android/native_window_jni.h>
+ #include <jni.h>
+ #include <cstdlib>
+ #include <fstream>
+ #include <string>
++#include <mutex>
+ #include <unistd.h>
+ 
+ #ifndef MYSTRAL_V8_EXTERNAL_STARTUP_DATA
+@@ -18,6 +21,50 @@
+ namespace mystral { namespace js { const char* getV8Version(); } }
+ #endif
+ 
++namespace mystral {
++namespace platform {
++namespace {
++std::mutex androidSurfaceMutex;
++AndroidSurfaceState androidSurface;
++}
++
++AndroidSurfaceState acquireAndroidSurfaceState() {
++    std::lock_guard<std::mutex> lock(androidSurfaceMutex);
++    auto state = androidSurface;
++    if (state.window) ANativeWindow_acquire(state.window);
++    return state;
++}
++
++void clearAndroidSurfaceState() {
++    std::lock_guard<std::mutex> lock(androidSurfaceMutex);
++    if (androidSurface.window) ANativeWindow_release(androidSurface.window);
++    androidSurface.window = nullptr;
++    ++androidSurface.revision;
++}
++} // namespace platform
++} // namespace mystral
++
++extern "C" JNIEXPORT void JNICALL
++Java_com_mystral_engine_MystralActivity_nativeSurfaceChanged(JNIEnv* env, jclass, jobject surface, jint generation) {
++    auto* window = surface ? ANativeWindow_fromSurface(env, surface) : nullptr;
++    uint64_t revision;
++    {
++        std::lock_guard<std::mutex> lock(mystral::platform::androidSurfaceMutex);
++        auto& state = mystral::platform::androidSurface;
++        if (generation < state.generation) {
++            if (window) ANativeWindow_release(window);
++            return;
++        }
++        if (state.window) ANativeWindow_release(state.window);
++        state.window = window;
++        state.generation = generation;
++        revision = ++state.revision;
++    }
++    __android_log_print(ANDROID_LOG_INFO, "MystralInterop",
++        "SURFACE_QUEUED generation=%d revision=%llu available=%d window=%p pid=%d",
++        generation, static_cast<unsigned long long>(revision), window ? 1 : 0, window, static_cast<int>(getpid()));
++}
++
+ static void exitStage(const char* stage) {
+     __android_log_print(ANDROID_LOG_INFO, "MystralInterop", "EXIT_STAGE %s pid=%d thread=%llu",
+         stage, static_cast<int>(getpid()), static_cast<unsigned long long>(SDL_GetCurrentThreadID()));
+@@ -165,6 +212,7 @@ extern "C" __attribute__((visibility("default"))) int SDL_main(int argc, char* a
+     exitStage("java-exit-notify-enter");
+     notifyJava("onNativeFinished", "(ILjava/lang/String;)V", failure.c_str(), result);
+     exitStage("java-exit-notify-return");
++    mystral::platform::clearAndroidSurfaceState();
+     return result;
+ }
+ 
+diff --git a/src/platform/window.cpp b/src/platform/window.cpp
+index 0b9bb75c36b8eb26e712a5b9f10ddb745b2e0057..13cd0cc3610052c018d44ee88825cc88854f16b2 100644
+--- a/src/platform/window.cpp
++++ b/src/platform/window.cpp
+@@ -6,6 +6,7 @@
+  */
+ 
+ #include "mystral/platform/input.h"
++#include "mystral/platform/window.h"
+ #include <iostream>
+ #include <cstdlib>
+ #include <SDL3/SDL.h>
+@@ -38,6 +39,14 @@ struct Window {
+ 
+ static Window g_window;
+ 
++#if defined(__ANDROID__)
++static std::function<bool()> g_androidEventPreparation;
++
++void setAndroidEventPreparation(std::function<bool()> prepare) {
++    g_androidEventPreparation = prepare;
++}
++#endif
++
+ /**
+  * Initialize SDL and create window
+  */
+@@ -109,6 +118,9 @@ bool createWindow(const char* title, int width, int height, bool fullscreen, boo
+  */
+ void destroyWindow() {
+     std::cout << "[Window] Destroying window..." << std::endl;
++#if defined(__ANDROID__)
++    g_androidEventPreparation = {};
++#endif
+ 
+ #if defined(__APPLE__)
+     if (g_window.metalView) {
+@@ -137,6 +149,12 @@ void destroyWindow() {
+ bool pollEvents() {
+     SDL_Event event;
+     while (SDL_PollEvent(&event)) {
++#if defined(__ANDROID__)
++        // Polling may have blocked through pause/resume. Rebind presentation
++        // before resize or input callbacks can synchronously execute user JS.
++        const bool prepared = !g_androidEventPreparation || g_androidEventPreparation();
++        if (!prepared && event.type != SDL_EVENT_QUIT) continue;
++#endif
+         switch (event.type) {
+             case SDL_EVENT_QUIT:
+                 std::cout << "[Window] Quit event received" << std::endl;
+@@ -183,6 +201,10 @@ bool pollEvents() {
+                 break;
+         }
+     }
++#if defined(__ANDROID__)
++    // A blocking poll can also return with no queued SDL event at all.
++    if (g_androidEventPreparation) g_androidEventPreparation();
++#endif
+ 
+     return !g_window.shouldQuit;
+ }
+diff --git a/src/runtime.cpp b/src/runtime.cpp
+index 5862a1fa895b20eb31d17d64b55b8e5b0512cb67..0b605ecf158f9d028acc723a02361742b3a294d2 100644
+--- a/src/runtime.cpp
++++ b/src/runtime.cpp
+@@ -26,6 +26,7 @@
+ #if defined(__ANDROID__)
+ #include <android/log.h>
+ #include <android/native_window.h>
++#include "mystral/platform/android_surface.h"
+ #define MYSTRAL_LOG_TAG "MystralRuntime"
+ #define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, MYSTRAL_LOG_TAG, __VA_ARGS__)
+ #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, MYSTRAL_LOG_TAG, __VA_ARGS__)
+@@ -273,9 +274,10 @@ public:
+                 }
+             }
+ 
+-            // Try to get ANativeWindow
+-            nativeWindow = SDL_GetPointerProperty(SDL_GetWindowProperties(sdlWindow),
+-                SDL_PROP_WINDOW_ANDROID_WINDOW_POINTER, nullptr);
++            // The SDL property can remain stale after surfaceDestroyed(). Take an
++            // owned reference from the real Java Surface callback instead.
++            auto state = platform::acquireAndroidSurfaceState();
++            nativeWindow = state.window;
+ 
+             if (nativeWindow) {
+                 // Validate the window using ANativeWindow_getWidth
+@@ -286,9 +288,13 @@ public:
+ 
+                 if (width > 0 && height > 0) {
+                     LOGI("ANativeWindow validated: %p (%dx%d)", nativeWindow, width, height);
++                    androidWindow_ = state.window;
++                    androidSurfaceGeneration_ = state.generation;
++                    androidSurfaceRevision_ = state.revision;
+                     break;  // Window is valid
+                 } else {
+                     LOGI("ANativeWindow invalid dimensions: %dx%d, continuing to wait", width, height);
++                    ANativeWindow_release(state.window);
+                     nativeWindow = nullptr;  // Reset and try again
+                 }
+             }
+@@ -314,6 +320,9 @@ public:
+             return false;
+         }
+         LOGI("WebGPU surface created successfully");
++        LOGI("SURFACE_INITIAL generation=%d revision=%llu window=%p device=%p thread=%llu",
++            androidSurfaceGeneration_, static_cast<unsigned long long>(androidSurfaceRevision_), androidWindow_,
++            static_cast<void*>(webgpu_->getDevice()), static_cast<unsigned long long>(SDL_GetCurrentThreadID()));
+ #elif defined(_WIN32)
+         // Windows: Use HWND from SDL
+         SDL_Window* sdlWindow = platform::getSDLWindow();
+@@ -483,6 +492,19 @@ public:
+         // Initialize WebTransport subsystem (QUIC sockets are created lazily)
+         webtransport::init();
+ 
++#if defined(__ANDROID__)
++        if (!config_.noSdl) {
++            platform::setAndroidEventPreparation([this]() {
++                if (!synchronizeAndroidSurface()) {
++                    exitCode_ = 1;
++                    running_ = false;
++                    return false;
++                }
++                return androidWindow_ != nullptr;
++            });
++        }
++#endif
++
+         std::cout << "[Mystral] Runtime initialized" << std::endl;
+         return true;
+     }
+@@ -498,6 +520,9 @@ public:
+         shutdownStage("enter");
+         std::cout << "[Mystral] Shutting down runtime..." << std::endl;
+         running_ = false;
++#if defined(__ANDROID__)
++        if (!config_.noSdl) platform::setAndroidEventPreparation({});
++#endif
+ 
+         // Clean up audio resources FIRST before touching JS objects
+         // (Audio callback thread may be accessing JS handles)
+@@ -601,6 +626,12 @@ public:
+         shutdownStage("webgpu-enter");
+         webgpu_.reset();      // Release WebGPU resources
+         shutdownStage("webgpu-return");
++#if defined(__ANDROID__)
++        if (androidWindow_) {
++            ANativeWindow_release(androidWindow_);
++            androidWindow_ = nullptr;
++        }
++#endif
+         shutdownStage("window-enter");
+         if (!config_.noSdl) {
+             platform::destroyWindow();
+@@ -818,6 +849,22 @@ public:
+             }
+         }
+ 
++#if defined(__ANDROID__)
++        if (!config_.noSdl) {
++            if (!synchronizeAndroidSurface()) {
++                exitCode_ = 1;
++                running_ = false;
++                return false;
++            }
++            // Do not run JS rendering, timers, or promise callbacks against a
++            // retired presentation target. SDL continues to process quit/resume.
++            if (!androidWindow_) {
++                SDL_Delay(10);
++                return running_;
++            }
++        }
++#endif
++
+         // Poll libuv event loop - process any ready I/O callbacks (non-blocking)
+         // This handles async HTTP requests, file I/O, and libuv-based timers
+         async::EventLoop::instance().runOnce();
+@@ -962,6 +1009,43 @@ public:
+     }
+ 
+ private:
++#if defined(__ANDROID__)
++    bool synchronizeAndroidSurface() {
++        auto state = platform::acquireAndroidSurfaceState();
++        if (state.window && (ANativeWindow_getWidth(state.window) <= 0 || ANativeWindow_getHeight(state.window) <= 0)) {
++            ANativeWindow_release(state.window);
++            state.window = nullptr;
++        }
++        const bool changed = state.generation != androidSurfaceGeneration_ || state.window != androidWindow_;
++        if (changed) {
++            const int previousGeneration = androidSurfaceGeneration_;
++            auto* previousWindow = androidWindow_;
++            if (!webgpu_->replaceAndroidSurface(state.window)) {
++                LOGE("SURFACE_RESTORE_FAILED generation=%d revision=%llu device=%p thread=%llu",
++                    state.generation, static_cast<unsigned long long>(state.revision),
++                    static_cast<void*>(webgpu_->getDevice()), static_cast<unsigned long long>(SDL_GetCurrentThreadID()));
++                if (state.window) ANativeWindow_release(state.window);
++                return false;
++            }
++            LOGI("SURFACE_RETIRED generation=%d nextGeneration=%d window=%p device=%p thread=%llu",
++                previousGeneration, state.generation, previousWindow, static_cast<void*>(webgpu_->getDevice()),
++                static_cast<unsigned long long>(SDL_GetCurrentThreadID()));
++            androidWindow_ = state.window;
++            state.window = nullptr; // Transfer this snapshot's reference to the Runtime.
++            if (previousWindow) ANativeWindow_release(previousWindow);
++            androidSurfaceGeneration_ = state.generation;
++            if (androidWindow_) {
++                LOGI("SURFACE_RESTORED generation=%d revision=%llu window=%p device=%p thread=%llu",
++                    state.generation, static_cast<unsigned long long>(state.revision), androidWindow_,
++                    static_cast<void*>(webgpu_->getDevice()), static_cast<unsigned long long>(SDL_GetCurrentThreadID()));
++            }
++        }
++        androidSurfaceRevision_ = state.revision;
++        if (state.window) ANativeWindow_release(state.window);
++        return true;
++    }
++#endif
++
+     void setupAnimationFrame() {
+         if (!jsEngine_) return;
+ 
+@@ -3455,6 +3539,11 @@ globalThis.__mystralNativeDecodeDracoAsync = function(buffer, attrs) {
+     int exitCode_ = 0;  // Exit code set by process.exit()
+     int width_;
+     int height_;
++#if defined(__ANDROID__)
++    ANativeWindow* androidWindow_ = nullptr;
++    int androidSurfaceGeneration_ = 0;
++    uint64_t androidSurfaceRevision_ = 0;
++#endif
+ 
+     std::unique_ptr<webgpu::Context> webgpu_;
+     std::unique_ptr<js::Engine> jsEngine_;
+diff --git a/src/webgpu/bindings.cpp b/src/webgpu/bindings.cpp
+index 61547fd262cf366a5d136732590246cf440091bd..90a11cba76b8f1efa5ac9718717b32518dd07fbc 100644
+--- a/src/webgpu/bindings.cpp
++++ b/src/webgpu/bindings.cpp
+@@ -532,6 +532,7 @@ static WGPUTextureFormat g_surfaceFormat = WGPUTextureFormat_BGRA8UnormSrgb;  //
+ static uint32_t g_canvasWidth = 800;
+ static uint32_t g_canvasHeight = 600;
+ static bool g_contextConfigured = false;
++static WGPUTextureUsage g_surfaceUsage = WGPUTextureUsage_RenderAttachment | WGPUTextureUsage_CopySrc;
+ 
+ // Current frame's texture (refreshed each frame)
+ static WGPUTexture g_currentTexture = nullptr;
+@@ -778,9 +779,8 @@ static WGPUTexture getCurrentSwapchainTexture() {
+ #endif
+ }
+ 
+-void retireSurfaceBindings(WGPUSurface surface) {
++void suspendSurfaceBindings(WGPUSurface surface) {
+     if (g_surface != surface) return;
+-    g_contextConfigured = false;
+     g_surface = nullptr;
+     if (g_currentTextureView) {
+         wgpuTextureViewRelease(g_currentTextureView);
+@@ -789,6 +789,31 @@ void retireSurfaceBindings(WGPUSurface surface) {
+     // The texture registry owns the texture's API reference; these are only frame aliases.
+     g_currentTexture = nullptr;
+     g_currentViewSourceTexture = nullptr;
++    g_surfaceRenderEncoder = nullptr;
++    g_surfaceRenderPassEnded = false;
++}
++
++void retireSurfaceBindings(WGPUSurface surface) {
++    if (g_surface != surface) return;
++    suspendSurfaceBindings(surface);
++    g_contextConfigured = false;
++}
++
++bool restoreSurfaceBindings(WGPUSurface surface) {
++    if (!surface || !g_device || g_deviceDestroyed) return false;
++    g_surface = surface;
++    if (g_contextConfigured) {
++        WGPUSurfaceConfiguration configuration = {};
++        configuration.device = g_device;
++        configuration.format = g_surfaceFormat;
++        configuration.width = g_canvasWidth;
++        configuration.height = g_canvasHeight;
++        configuration.usage = g_surfaceUsage;
++        configuration.alphaMode = WGPUCompositeAlphaMode_Auto;
++        configuration.presentMode = WGPUPresentMode_Fifo;
++        wgpuSurfaceConfigure(g_surface, &configuration);
++    }
++    return true;
+ }
+ 
+ /**
+@@ -811,6 +836,8 @@ bool initBindings(js::Engine* engine, void* wgpuInstance, void* wgpuDevice, void
+     g_surface = (WGPUSurface)wgpuSurface;
+     g_adapter = (WGPUAdapter)wgpuAdapter;
+     g_deviceDestroyed = false;
++    g_contextConfigured = false;
++    g_surfaceUsage = WGPUTextureUsage_RenderAttachment | WGPUTextureUsage_CopySrc;
+ 
+     // Set canvas dimensions from window size
+     g_canvasWidth = width;
+@@ -938,17 +965,18 @@ bool initBindings(js::Engine* engine, void* wgpuInstance, void* wgpuDevice, void
+                     }
+                     g_canvasWidth = static_cast<uint32_t>(width);
+                     g_canvasHeight = static_cast<uint32_t>(height);
++                    auto usage = g_engine->getProperty(descriptor, "usage");
++                    g_surfaceUsage = (g_engine->isUndefined(usage) ? WGPUTextureUsage_RenderAttachment :
++                        static_cast<WGPUTextureUsage>(static_cast<uint64_t>(g_engine->toNumber(usage)))) |
++                        WGPUTextureUsage_CopySrc;
+                     if (g_surface) {
+                         WGPUSurfaceConfiguration configuration = {};
+                         configuration.device = g_device;
+                         configuration.format = g_surfaceFormat;
+                         configuration.width = g_canvasWidth;
+                         configuration.height = g_canvasHeight;
+-                        auto usage = g_engine->getProperty(descriptor, "usage");
+-                        configuration.usage = g_engine->isUndefined(usage) ? WGPUTextureUsage_RenderAttachment :
+-                            static_cast<WGPUTextureUsage>(static_cast<uint64_t>(g_engine->toNumber(usage)));
+                         // Retain native screenshot support without confusing it with external presentation evidence.
+-                        configuration.usage |= WGPUTextureUsage_CopySrc;
++                        configuration.usage = g_surfaceUsage;
+                         configuration.alphaMode = WGPUCompositeAlphaMode_Auto;
+                         configuration.presentMode = WGPUPresentMode_Fifo;
+                         wgpuSurfaceConfigure(g_surface, &configuration);
+diff --git a/src/webgpu/context.cpp b/src/webgpu/context.cpp
+index 2fc6b42108cf3a63cfc69f2e20b30a6400684c5a..118ecd622669c217ac74bd591af053148641c385 100644
+--- a/src/webgpu/context.cpp
++++ b/src/webgpu/context.cpp
+@@ -285,6 +285,34 @@ void Context::releaseSurfaceBeforeDeviceDestroy() {
+ #endif
+ }
+ 
++#if defined(__ANDROID__)
++bool Context::replaceAndroidSurface(void* nativeWindow) {
++    if (!instance_ || !device_) return false;
++    if (surface_) {
++        // The old swapchain must retire while its device is still alive. This is
++        // called only by the Runtime's SDL/JS owner, never a Surface UI callback.
++        suspendSurfaceBindings(surface_);
++        wgpuSurfaceRelease(surface_);
++        surface_ = nullptr;
++    }
++    if (!nativeWindow) return true;
++
++    WGPUSurfaceDescriptorFromAndroidNativeWindow_Compat androidDesc = {};
++    androidDesc.chain.sType = WGPUSType_SurfaceDescriptorFromAndroidNativeWindow_Compat;
++    androidDesc.window = nativeWindow;
++    WGPUSurfaceDescriptor descriptor = {};
++    descriptor.nextInChain = reinterpret_cast<WGPUChainedStruct*>(&androidDesc);
++    surface_ = wgpuInstanceCreateSurface(instance_, &descriptor);
++    if (!surface_) return false;
++    if (!restoreSurfaceBindings(surface_)) {
++        wgpuSurfaceRelease(surface_);
++        surface_ = nullptr;
++        return false;
++    }
++    return true;
++}
++#endif
++
+ Context::~Context() {
+     const auto stage = [](const char* value) {
+ #if defined(__ANDROID__)
+diff --git a/include/mystral/platform/android_surface.h b/include/mystral/platform/android_surface.h
+new file mode 100644
+index 0000000000000000000000000000000000000000..713aed88ce4a8b7c0e2cb850dd7f9c34573b877e
+--- /dev/null
++++ b/include/mystral/platform/android_surface.h
+@@ -0,0 +1,23 @@
++#pragma once
++
++#if defined(__ANDROID__)
++#include <android/native_window.h>
++#include <cstdint>
++
++namespace mystral {
++namespace platform {
++
++// Java publishes only real Surface callbacks. Each snapshot owns a window reference;
++// the SDL/JavaScript owner releases it after use. No GPU work runs on the UI thread.
++struct AndroidSurfaceState {
++    ANativeWindow* window = nullptr;
++    int generation = 0;
++    uint64_t revision = 0;
++};
++
++AndroidSurfaceState acquireAndroidSurfaceState();
++void clearAndroidSurfaceState();
++
++} // namespace platform
++} // namespace mystral
++#endif

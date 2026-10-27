@@ -1,0 +1,16 @@
+{
+  "arguments": [
+    "-s",
+    "emulator-5554",
+    "shell",
+    "run-as",
+    "com.mystral.engine.interop",
+    "cat",
+    "files/interop/android-lifecycle-1793073870645/events.jsonl"
+  ],
+  "startedAt": "2026-10-27T04:05:29.567Z",
+  "timeoutMs": 3000,
+  "exitCode": null,
+  "error": "Error: spawnSync adb ETIMEDOUT",
+  "finishedAt": "2026-10-27T04:05:32.584Z"
+}

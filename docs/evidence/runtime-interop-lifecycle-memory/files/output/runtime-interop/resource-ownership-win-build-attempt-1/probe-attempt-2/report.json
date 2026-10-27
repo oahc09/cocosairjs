@@ -1,0 +1,102 @@
+{
+  "schema": "air-native-resource-ownership-diagnostic-v2",
+  "startedAt": "2026-10-27T03:54:56.586Z",
+  "finishedAt": "2026-10-27T03:54:57.388Z",
+  "executable": {
+    "file": "output/runtime-interop/resource-ownership-win-build-attempt-1/mystral.exe",
+    "bytes": 35636736,
+    "sha256": "2192c98056e48bb20462579d42f79e915c8aeb08ae7b29394f73b08222b58ed8"
+  },
+  "originalProbeSha256": "7668bf4eb6a4974a2b2f38c5a818dc06330df0b5bcc9db11fb956d3c8cee47f0",
+  "diagnosticSha256": "998407d37476388ae1530324032db13d613ff0e747eb3daf8a4662ff664b47e7",
+  "arguments": [
+    "run",
+    "C:\\Users\\caosh\\.codex\\worktrees\\webgpu-runtime-interop\\cocosair.js\\output\\runtime-interop\\resource-ownership-win-build-attempt-1\\probe-attempt-2\\diagnostic.mjs",
+    "--headless",
+    "--width",
+    "320",
+    "--height",
+    "240"
+  ],
+  "pid": 43044,
+  "exitCode": 1,
+  "signal": null,
+  "application": {
+    "schema": "air-native-resource-ownership-probe-v1",
+    "completed": false,
+    "pass": false,
+    "subset": true,
+    "releaseReady": false,
+    "checks": [
+      {
+        "id": "same-frame-current-texture-identity",
+        "pass": true,
+        "observations": {}
+      },
+      {
+        "id": "multiple-views-real-submit-and-completion",
+        "pass": true,
+        "observations": {}
+      },
+      {
+        "id": "expired-canvas-texture-create-view",
+        "pass": true,
+        "observations": {
+          "thrown": "WebGPU resource is expired, destroyed, or already consumed",
+          "validation": null
+        }
+      },
+      {
+        "id": "expired-canvas-view-render-pass",
+        "pass": false,
+        "observations": {
+          "thrown": null,
+          "validation": null
+        }
+      },
+      {
+        "id": "render-pass-end-once",
+        "pass": true,
+        "observations": {
+          "thrown": "WebGPU resource is expired, destroyed, or already consumed",
+          "validation": null
+        }
+      },
+      {
+        "id": "command-encoder-finish-once",
+        "pass": true,
+        "observations": {
+          "thrown": "WebGPU resource is expired, destroyed, or already consumed",
+          "validation": null
+        }
+      },
+      {
+        "id": "command-buffer-submit-once",
+        "pass": true,
+        "observations": {
+          "thrown": "Command buffer is invalid, already submitted, or duplicated",
+          "validation": null
+        }
+      },
+      {
+        "id": "regular-texture-destroy-idempotent",
+        "pass": true,
+        "observations": {
+          "thrown": null,
+          "validation": null
+        }
+      }
+    ],
+    "uncapturedErrors": [],
+    "error": "Ordinary final render pass is undefined"
+  },
+  "steps": [
+    "[log] OWNERSHIP_STEP expired-view-pass {\"type\":\"undefined\"}",
+    "[log] OWNERSHIP_STEP final-resource {\"encoderId\":10,\"textureId\":11,\"viewType\":\"object\",\"viewId\":12}",
+    "[log] OWNERSHIP_STEP final-pass {\"type\":\"undefined\"}"
+  ],
+  "sourceInputsUnchanged": true,
+  "runtimeTeardown": "NOT_RUN_BY_CLI_EXITPROCESS",
+  "subset": true,
+  "releaseReady": false
+}

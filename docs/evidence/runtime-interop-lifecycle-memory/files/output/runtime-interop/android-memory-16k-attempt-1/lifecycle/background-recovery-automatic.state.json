@@ -1,0 +1,109 @@
+{
+  "session": {
+    "schema": "air-android-interop-session-v1",
+    "runId": "android-lifecycle-1793078243958",
+    "caseId": "demo",
+    "pid": 6017,
+    "demo": true,
+    "v8StartupMode": "embedded",
+    "v8Version": "11.6.189.22",
+    "origin": "http://127.0.0.1:36119",
+    "token": "30113255-4255-4d61-877c-0653f2d21727",
+    "entryUrl": "http://127.0.0.1:36119/entry.js",
+    "bundleUrl": "http://127.0.0.1:36119/sdk/cocosair.module.js",
+    "assetBaseUrl": "http://127.0.0.1:36119/sdk/webgpu/",
+    "assetRootUrl": "http://127.0.0.1:36119/assets/",
+    "moduleUrl": "http://127.0.0.1:36119/probes/module-fixture.mjs",
+    "captureUrl": "http://127.0.0.1:36119/capture",
+    "reportUrl": "http://127.0.0.1:36119/report",
+    "eventUrl": "http://127.0.0.1:36119/event"
+  },
+  "runtime": {
+    "loadedABI": "x86_64",
+    "v8StartupMode": "embedded",
+    "v8Version": "11.6.189.22",
+    "entryPath": "/data/user/0/com.mystral.engine.interop/files/interop/android-lifecycle-1793078243958/native-entry.mjs",
+    "entrySha256": "01ee283d41f340f0b85fe0da74d58694b5125c36d82fa142a9382ade89cd3a68",
+    "jsEngine": "v8",
+    "backend": "dawn",
+    "nativeStarted": true
+  },
+  "captures": [
+    {
+      "captureId": "38e88ef3-1afe-4926-aa33-df51ab8dfaa4",
+      "kind": "scene-demo",
+      "phase": "before",
+      "deadlineElapsedRealtime": 2723765,
+      "expired": false,
+      "metadata": {
+        "channel": "android-pixelcopy",
+        "pid": 6017,
+        "file": "scene-demo-before.png",
+        "width": 320,
+        "height": 240,
+        "bitmapWidth": 320,
+        "bitmapHeight": 240,
+        "surfaceWidth": 320,
+        "surfaceHeight": 240,
+        "viewWidth": 320,
+        "viewHeight": 240,
+        "surfaceGeneration": 1,
+        "resultCode": 0,
+        "bounds": {
+          "x": 380,
+          "y": 1080,
+          "width": 320,
+          "height": 240
+        },
+        "sha256": "f75248fbb34b541674d7c12e037f5ffcc8c97fc497f145bcbb1ebbba60f57d2b",
+        "captureId": "38e88ef3-1afe-4926-aa33-df51ab8dfaa4",
+        "kind": "scene-demo",
+        "phase": "before",
+        "runId": "android-lifecycle-1793078243958"
+      },
+      "acknowledged": true
+    },
+    {
+      "captureId": "aa1b45ae-0e97-4118-8f1b-2b180272c9e7",
+      "kind": "scene-demo",
+      "phase": "after",
+      "deadlineElapsedRealtime": 2728026,
+      "expired": false,
+      "metadata": {
+        "channel": "android-pixelcopy",
+        "pid": 6017,
+        "file": "scene-demo-after.png",
+        "width": 320,
+        "height": 240,
+        "bitmapWidth": 320,
+        "bitmapHeight": 240,
+        "surfaceWidth": 320,
+        "surfaceHeight": 240,
+        "viewWidth": 320,
+        "viewHeight": 240,
+        "surfaceGeneration": 1,
+        "resultCode": 0,
+        "bounds": {
+          "x": 380,
+          "y": 1080,
+          "width": 320,
+          "height": 240
+        },
+        "sha256": "bcc63fd2232c8f5067f2b0ac67fc9ef2794f01cbfa13d158b907665163d8f42e",
+        "captureId": "aa1b45ae-0e97-4118-8f1b-2b180272c9e7",
+        "kind": "scene-demo",
+        "phase": "after",
+        "runId": "android-lifecycle-1793078243958",
+        "previous": {
+          "file": "scene-demo-before.png",
+          "sha256": "f75248fbb34b541674d7c12e037f5ffcc8c97fc497f145bcbb1ebbba60f57d2b",
+          "pid": 6017,
+          "surfaceGeneration": 1
+        }
+      },
+      "acknowledged": true
+    }
+  ],
+  "reportSaved": true,
+  "nativeFinished": false
+}

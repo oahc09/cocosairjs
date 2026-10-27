@@ -1,0 +1,17 @@
+{"stage":"entry-ready","caseId":"demo"}
+{"stage":"demo-ready","frames":3,"taps":0,"color":"orange","gpuErrors":[],"health":{"state":"healthy","backend":"webgpu","lostCount":0,"restoredCount":0,"isContextLost":null,"gamePaused":false,"reason":null,"suggestion":"none","lastEvent":null,"lastEventAt":null,"timeline":[]}}
+{"stage":"demo-input","frames":348,"taps":1,"color":"green","gpuErrors":[],"type":"mousedown","isTrusted":true,"clientX":160.50157165527344,"clientY":120.5020980834961}
+{"stage":"demo-input","frames":964,"taps":2,"color":"orange","gpuErrors":[],"type":"mousedown","isTrusted":true,"clientX":160.50157165527344,"clientY":120.5020980834961}
+{"stage":"demo-input","frames":1566,"taps":3,"color":"green","gpuErrors":[],"type":"mousedown","isTrusted":true,"clientX":160.50157165527344,"clientY":120.5020980834961}
+{"stage":"demo-input","frames":2165,"taps":4,"color":"orange","gpuErrors":[],"type":"mousedown","isTrusted":true,"clientX":160.50157165527344,"clientY":120.5020980834961}
+{"stage":"demo-input","frames":2767,"taps":5,"color":"green","gpuErrors":[],"type":"mousedown","isTrusted":true,"clientX":160.50157165527344,"clientY":120.5020980834961}
+{"stage":"demo-input","frames":3366,"taps":6,"color":"orange","gpuErrors":[],"type":"mousedown","isTrusted":true,"clientX":160.50157165527344,"clientY":120.5020980834961}
+{"stage":"demo-input","frames":3964,"taps":7,"color":"green","gpuErrors":[],"type":"mousedown","isTrusted":true,"clientX":160.50157165527344,"clientY":120.5020980834961}
+{"stage":"demo-input","frames":4566,"taps":8,"color":"orange","gpuErrors":[],"type":"mousedown","isTrusted":true,"clientX":160.50157165527344,"clientY":120.5020980834961}
+{"stage":"demo-input","frames":5170,"taps":9,"color":"green","gpuErrors":[],"type":"mousedown","isTrusted":true,"clientX":160.50157165527344,"clientY":120.5020980834961}
+{"stage":"demo-input","frames":5767,"taps":10,"color":"orange","gpuErrors":[],"type":"mousedown","isTrusted":true,"clientX":160.50157165527344,"clientY":120.5020980834961}
+{"stage":"demo-input","frames":6372,"taps":11,"color":"green","gpuErrors":[],"type":"mousedown","isTrusted":true,"clientX":160.50157165527344,"clientY":120.5020980834961}
+{"stage":"demo-input","frames":6969,"taps":12,"color":"orange","gpuErrors":[],"type":"mousedown","isTrusted":true,"clientX":160.50157165527344,"clientY":120.5020980834961}
+{"stage":"demo-input","frames":7565,"taps":13,"color":"green","gpuErrors":[],"type":"mousedown","isTrusted":true,"clientX":160.50157165527344,"clientY":120.5020980834961}
+{"stage":"demo-input","frames":8172,"taps":14,"color":"orange","gpuErrors":[],"type":"mousedown","isTrusted":true,"clientX":160.50157165527344,"clientY":120.5020980834961}
+{"stage":"demo-input","frames":8768,"taps":15,"color":"green","gpuErrors":[],"type":"mousedown","isTrusted":true,"clientX":160.50157165527344,"clientY":120.5020980834961}

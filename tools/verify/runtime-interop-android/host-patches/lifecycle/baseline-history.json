@@ -1,0 +1,72 @@
+{
+  "schema": "air-android-lifecycle-failure-and-diagnostic-history-v1",
+  "beforeFix": {
+    "apk": {
+      "file": "output/runtime-interop/android-16k-x64-build-attempt-1/app-debug.apk",
+      "bytes": 24607345,
+      "sha256": "3e7931eac6a49a59f9cc165a98dacca3f93b5f0afea7b1dc3b2cffad2d980757"
+    },
+    "report": {
+      "file": "output/runtime-interop/android-lifecycle-baseline-attempt-1/report.json",
+      "bytes": 47001,
+      "sha256": "cb49c9f393f493fe37ad741085f6ab57d8f31d4013d98a6b9f286ff0ec8cb7bc"
+    },
+    "collectorSource": {
+      "file": "tools/verify/runtime-interop-android/host-patches/lifecycle/baseline-collector-source.cjs",
+      "bytes": 37887,
+      "sha256": "ab07fbc83651ae96795ee1641f861ee7d20f2ab97187cf73c226eff212d42d2a"
+    },
+    "status": "FAIL",
+    "observedFailure": "Real keyguard/SLEEP destroyed the Surface; same PID could still process input and advance AIR frames but compositor crop remained all black",
+    "lastVisual": {
+      "label": "lock-recovery-paint-0017",
+      "bounds": {
+        "x": 380,
+        "y": 1080,
+        "width": 320,
+        "height": 240
+      },
+      "wanted": "green",
+      "measuredAt": "2026-10-26T15:31:22.439Z",
+      "originalSha256": "4285961127e31f61c2d0e6b7baa046fbb7d498958b5c33615bf27e8572a069a0",
+      "originalCropSha256": "e8c6c759cbb18b40ce26a4e8c6b21f32c4c4a41574850b17a99c3d31c2543f62",
+      "interpretedSha256": "4285961127e31f61c2d0e6b7baa046fbb7d498958b5c33615bf27e8572a069a0",
+      "interpretedCropSha256": "e8c6c759cbb18b40ce26a4e8c6b21f32c4c4a41574850b17a99c3d31c2543f62",
+      "colors": {
+        "width": 320,
+        "height": 240,
+        "orange": 0,
+        "green": 0,
+        "blue": 0,
+        "sha256": "e8c6c759cbb18b40ce26a4e8c6b21f32c4c4a41574850b17a99c3d31c2543f62"
+      },
+      "pass": false,
+      "colorMetadata": "lock-recovery-paint-0017.screen-color.json"
+    },
+    "nativeTeardownPass": true
+  },
+  "opaqueSettingsReproduction": {
+    "directory": "output/runtime-interop/android-lifecycle-investigation-2",
+    "rawSurfaceCallbacks": "resumed-lifecycle.stdout",
+    "rawSystemImage": "resumed-screen.stdout",
+    "rawLog": "logcat.stdout",
+    "observedFailure": "Surface gen 1 -> destroyed 2 -> created 3; BufferQueue abandoned; compositor black while trusted input frame count advanced"
+  },
+  "afterFixDiagnostic": {
+    "report": {
+      "file": "output/runtime-interop/android-lifecycle-diagnostic-attempt-1/report.json",
+      "bytes": 58436,
+      "sha256": "701e1e754d2a6ccd5e54f5fa2bbc4f6f364a5579a06c1d1fba1eb339709829c1"
+    },
+    "status": "PARTIAL",
+    "stages": {
+      "initial": "PASS",
+      "background": "PASS",
+      "lock": "PASS",
+      "surface": "PASS",
+      "continuous": "NOT_RUN"
+    },
+    "continuousAcceptance": false
+  },
+  "scope": "Historical failure and short diagnostic only; full current lifecycle acceptance is separately bound. No original attempt was relabelled."
+}

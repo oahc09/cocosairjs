@@ -1,0 +1,71 @@
+{
+  "schema": "air-android-native-memory-owned-environment-closed-v1",
+  "at": "2026-10-27T05:40:01.4651921Z",
+  "pass": true,
+  "ownedAvdsStopped": [
+    "Mystral_Memory_16KB_API37",
+    "Mystral_16KB_API37"
+  ],
+  "ownedProcessCount": 0,
+  "logWritersClosed": true,
+  "lockscreenPoliciesRestored": true,
+  "freshPolicyReceipt": "output/runtime-interop/android-memory-env-attempt-4/shutdown-request.json",
+  "originalPolicyReceipt": "output/runtime-interop/android-memory-original-policy-restore-1/policy-restored.json",
+  "failedAttempt2ForcedCleanup": "output/runtime-interop/android-memory-env-attempt-2/hung-vm-cleanup.json",
+  "sdkAndAvdDataPreserved": true,
+  "physicalDeviceSecuritySettingsChanged": false,
+  "logs": [
+    {
+      "file": "output/runtime-interop/android-memory-env-attempt-1/emulator.stdout.log",
+      "bytes": 9544,
+      "sha256": "3cb95bedcf3e15b87743c2cd4af3059490f0784f587dacd332251001caf446b3"
+    },
+    {
+      "file": "output/runtime-interop/android-memory-env-attempt-1/emulator.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "output/runtime-interop/android-memory-env-attempt-2/emulator.stdout.log",
+      "bytes": 9623,
+      "sha256": "f00ec669d10f558fb721f96d1b35ec069bc7aa1ade8586cee0ccdbdb561b2c40"
+    },
+    {
+      "file": "output/runtime-interop/android-memory-env-attempt-2/emulator.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "output/runtime-interop/android-memory-env-attempt-3/emulator.stdout.log",
+      "bytes": 289274,
+      "sha256": "383729cb0b882274287697c4d0b76252b9c94b47e96f1b4d267a7624346de7bb"
+    },
+    {
+      "file": "output/runtime-interop/android-memory-env-attempt-3/emulator.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "output/runtime-interop/android-memory-env-attempt-4/emulator.stdout.log",
+      "bytes": 352043,
+      "sha256": "583954ec6e2c381194f94bc7b43e5729e63c44057c9695ee466ca843ff76c59c"
+    },
+    {
+      "file": "output/runtime-interop/android-memory-env-attempt-4/emulator.stderr.log",
+      "bytes": 41,
+      "sha256": "b6eaeacb382b7c62d87f5577e442ba03e94d6c5e94ed6b0b8ab42c99c677cbb8"
+    },
+    {
+      "file": "output/runtime-interop/android-memory-original-policy-restore-1/emulator.stdout.log",
+      "bytes": 13608,
+      "sha256": "831ef931e4c0688eabe9ecdfde1431ca20e1aa246be5cf7fb03820c9e4fb77f7"
+    },
+    {
+      "file": "output/runtime-interop/android-memory-original-policy-restore-1/emulator.stderr.log",
+      "bytes": 41,
+      "sha256": "b6eaeacb382b7c62d87f5577e442ba03e94d6c5e94ed6b0b8ab42c99c677cbb8"
+    }
+  ],
+  "waitObservations": [],
+  "adbDevices": "List of devices attached\r\n\r\n"
+}

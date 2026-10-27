@@ -1,0 +1,19 @@
+{
+  "arguments": [
+    "-s",
+    "10CG4G0BE1003M8",
+    "shell",
+    "dumpsys",
+    "window",
+    "policy"
+  ],
+  "startedAt": "2026-10-27T14:31:18.468Z",
+  "monotonicStartMs": 85489043.0134,
+  "absoluteDeadlineMs": 85503926.6852,
+  "timeoutMs": 14884,
+  "exitCode": 0,
+  "signal": null,
+  "error": null,
+  "finishedAt": "2026-10-27T14:31:18.571Z",
+  "monotonicEndMs": 85489145.4631
+}

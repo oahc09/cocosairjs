@@ -1,0 +1,13 @@
+{
+  "arguments": [
+    "-s",
+    "emulator-5554",
+    "forward",
+    "tcp:0",
+    "tcp:33567"
+  ],
+  "startedAt": "2026-10-26T15:30:52.179Z",
+  "timeoutMs": 15000,
+  "exitCode": 0,
+  "finishedAt": "2026-10-26T15:30:52.264Z"
+}

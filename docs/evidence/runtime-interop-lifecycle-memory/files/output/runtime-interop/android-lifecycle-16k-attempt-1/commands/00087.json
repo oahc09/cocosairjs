@@ -1,0 +1,15 @@
+{
+  "arguments": [
+    "-s",
+    "emulator-5554",
+    "shell",
+    "run-as",
+    "com.mystral.engine.interop",
+    "cat",
+    "files/interop/android-lifecycle-1793029450575/events.jsonl"
+  ],
+  "startedAt": "2026-10-26T15:44:42.353Z",
+  "timeoutMs": 9435,
+  "exitCode": 0,
+  "finishedAt": "2026-10-26T15:44:42.439Z"
+}

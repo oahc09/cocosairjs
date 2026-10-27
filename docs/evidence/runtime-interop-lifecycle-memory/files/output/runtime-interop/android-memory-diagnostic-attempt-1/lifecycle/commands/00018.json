@@ -1,0 +1,16 @@
+{
+  "arguments": [
+    "-s",
+    "emulator-5554",
+    "shell",
+    "run-as",
+    "com.mystral.engine.interop",
+    "cat",
+    "files/interop/android-lifecycle-1793073055150/session.json"
+  ],
+  "startedAt": "2026-10-27T03:51:27.281Z",
+  "timeoutMs": 3000,
+  "exitCode": 1,
+  "error": "Error: Command failed: adb -s emulator-5554 shell run-as com.mystral.engine.interop cat files/interop/android-lifecycle-1793073055150/session.json\nadb.exe: device 'emulator-5554' not found\r\n",
+  "finishedAt": "2026-10-27T03:51:27.344Z"
+}

@@ -1,0 +1,140 @@
+{
+  "schema": "mystral-android-memory-resource-patch-v1",
+  "createdAt": "2026-10-27T05:20:45.321Z",
+  "base": "b98101acd368107829a7aa4c0481084f2ecefd5e",
+  "repository": "https://github.com/oahc09/mystralnative",
+  "sourceFileCount": 11,
+  "files": [
+    {
+      "file": "android/app/src/main/java/com/mystral/engine/MystralActivity.java",
+      "added": false,
+      "beforeBytes": 16275,
+      "beforeSha256": "a43a14b83bda5e0840381cd3b80a2d17d12f1ef06d3d9daebbb4609d5cc88283",
+      "afterBytes": 16635,
+      "afterSha256": "c68da380085b1875dd0d8d6d8927f11d9fb35e5b8381947236d774e7d2beac57"
+    },
+    {
+      "file": "include/mystral/platform/android_surface.h",
+      "added": true,
+      "beforeBytes": null,
+      "beforeSha256": null,
+      "afterBytes": 567,
+      "afterSha256": "5434534dc84d467f44f3717bf3f85fb889e844aea928ce668db5d70cdc63f556"
+    },
+    {
+      "file": "include/mystral/platform/window.h",
+      "added": false,
+      "beforeBytes": 1490,
+      "beforeSha256": "284b25e94516290b951fabfd6d43624007d0217b08f51a1eaf6be1d335597079",
+      "afterBytes": 1796,
+      "afterSha256": "51bb6ea7c4140f632ae062d1d0f4f03f6d6a5a2409a9632f60b8e6b370e3aa9d"
+    },
+    {
+      "file": "include/mystral/webgpu/context.h",
+      "added": false,
+      "beforeBytes": 6155,
+      "beforeSha256": "c4fd71d37f4d76cdb85da7f75c3283082e5dd5d4cd49d0ef9e4a711ca18d6e37",
+      "afterBytes": 6833,
+      "afterSha256": "9947bbddf9b1674eeae10266c9d11a7b0de13437e8999dc03763696560712000"
+    },
+    {
+      "file": "src/js/v8_engine.cpp",
+      "added": false,
+      "beforeBytes": 61074,
+      "beforeSha256": "d5c78e5919247a4e0030068740cfd56fc6e16592c5baa80da3f4b4b488230f75",
+      "afterBytes": 62940,
+      "afterSha256": "57439c441394e2ec4f65bb22c56767ca3c46477c88f46c51bda0f1e44f63b753"
+    },
+    {
+      "file": "src/platform/android_main.cpp",
+      "added": false,
+      "beforeBytes": 7006,
+      "beforeSha256": "e8d3cd2cde52de9dda520dc062ac8b57f0a8d0f23bf3204d82cdddd62df969d0",
+      "afterBytes": 8763,
+      "afterSha256": "2764f80dc9f4221f1c8ae5140fc0d27e5ebb9016f033da49b9c6c628cfe9e80a"
+    },
+    {
+      "file": "src/platform/window.cpp",
+      "added": false,
+      "beforeBytes": 7396,
+      "beforeSha256": "614dcd7df414eae43fca95dece64c4c69649c0fb9fbfa93cd7ffdb583952e79a",
+      "afterBytes": 8210,
+      "afterSha256": "ef4b64254924049c28f01be8efff07e25f7e7139b37cc9fefe69b4de14059919"
+    },
+    {
+      "file": "src/raytracing/bindings.cpp",
+      "added": false,
+      "beforeBytes": 21179,
+      "beforeSha256": "931ac603fe4a6896f2850fadc919684aae66f059680f5b62ea3e99cabcb61e5e",
+      "afterBytes": 21299,
+      "afterSha256": "963970b0df461281cb7ad51dfca7f0b45a03da3985808102774e62d7ce96e01f"
+    },
+    {
+      "file": "src/runtime.cpp",
+      "added": false,
+      "beforeBytes": 206404,
+      "beforeSha256": "0bdd67b8b72245ad9208a0732e91a544c161b0793df3ef159b36bbc7e95fafb6",
+      "afterBytes": 210542,
+      "afterSha256": "bde00b1190db8fc5ca67a790bcc30f6a7ad43e470675e74952d88f07e99efbc7"
+    },
+    {
+      "file": "src/webgpu/bindings.cpp",
+      "added": false,
+      "beforeBytes": 333167,
+      "beforeSha256": "51274f47094d2fbd970feb2fc6802e6fadeb555b9a1c32252dfb8c96ea378055",
+      "afterBytes": 357354,
+      "afterSha256": "509d6c4ef87815682a983c1a7e8fc9668cb2e055843b8c73df167d3bfad36ac8"
+    },
+    {
+      "file": "src/webgpu/context.cpp",
+      "added": false,
+      "beforeBytes": 53247,
+      "beforeSha256": "d8c39d75c34ead0f0b2e49d701543490a5e7c94a900543b83a12d52268d69cd2",
+      "afterBytes": 57196,
+      "afterSha256": "acd7db860ed334b7e9cfbf276f2b5fa8557cfcd6bac7e9d572903a3101f15b14"
+    }
+  ],
+  "patch": {
+    "file": "mystral-android-memory.patch",
+    "bytes": 162018,
+    "sha256": "bcae91248e19f474163b468f84ed6939b7f85969e871ddeb305585e93cbfb959"
+  },
+  "license": {
+    "file": "LICENSE-MYSTRAL.txt",
+    "bytes": 1076,
+    "sha256": "cdaf2d9170e3c14ab9b4eb421ad29710ce6a856a431bb521d7fe140e81ce91db"
+  },
+  "buildProfile": {
+    "file": "build-profile.json",
+    "bytes": 2917,
+    "sha256": "cecaade39fd09951df55ff6e4053c763729ea34daaa5c46d5632a6cbbd820d7d"
+  },
+  "compiledSource": [
+    {
+      "file": "compiled-source/source-before.json",
+      "bytes": 12240,
+      "sha256": "8c5c20e55c67c231adb80c15c00ebb80c77c527cc9aac3602d502574f98cd767"
+    },
+    {
+      "file": "compiled-source/source-after.json",
+      "bytes": 12240,
+      "sha256": "8c5c20e55c67c231adb80c15c00ebb80c77c527cc9aac3602d502574f98cd767"
+    },
+    {
+      "file": "compiled-source/source-verified.json",
+      "bytes": 12240,
+      "sha256": "8c5c20e55c67c231adb80c15c00ebb80c77c527cc9aac3602d502574f98cd767"
+    }
+  ],
+  "readme": {
+    "file": "README.md",
+    "bytes": 4148,
+    "sha256": "39791bd127c341eb7c61fd171413b724d065b65ca0f7f290d75be476ee481d41"
+  },
+  "producer": {
+    "file": "export.cjs",
+    "bytes": 14724,
+    "sha256": "8cb2b26fa9876cbbaa1d7c89e82385c5450d976fce0d066ad50fec1d33eb70b5"
+  },
+  "verification": "verification.json"
+}

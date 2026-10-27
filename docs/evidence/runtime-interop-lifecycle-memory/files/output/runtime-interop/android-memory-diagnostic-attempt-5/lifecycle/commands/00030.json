@@ -1,0 +1,15 @@
+{
+  "arguments": [
+    "-s",
+    "emulator-5554",
+    "shell",
+    "dumpsys",
+    "activity",
+    "activities"
+  ],
+  "startedAt": "2026-10-27T05:02:43.541Z",
+  "timeoutMs": 14867,
+  "exitCode": null,
+  "error": "Error: spawnSync adb ETIMEDOUT",
+  "finishedAt": "2026-10-27T05:02:58.424Z"
+}

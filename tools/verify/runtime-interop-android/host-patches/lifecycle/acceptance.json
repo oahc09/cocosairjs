@@ -1,0 +1,161 @@
+{
+  "schema": "air-android-surface-lifecycle-acceptance-v1",
+  "createdAt": "2026-10-26T16:05:57.273542+00:00",
+  "requestedVerificationCompleted": true,
+  "functionalLifecyclePass": true,
+  "overallResult": "FUNCTIONAL_PASS_WITH_OPEN_MEMORY_FINDING",
+  "subset": true,
+  "releaseReady": false,
+  "sourceBaseCommit": "b98101acd368107829a7aa4c0481084f2ecefd5e",
+  "sourceChangesCommitted": false,
+  "sourceChangesPushed": false,
+  "configuration": {
+    "androidStl": "c++_static",
+    "sdlVersion": "3.2.30",
+    "v8Version": "11.6.189.22",
+    "v8LibraryKind": "static",
+    "v8StartupMode": "embedded",
+    "backend": "dawn",
+    "sdkBuild": 216
+  },
+  "sourceManifest": {
+    "file": "tools/verify/runtime-interop-android/host-patches/lifecycle/manifest.json",
+    "bytes": 4394,
+    "sha256": "2fceb06bcd5511ece77776c81fe96722c799871353aa2806b3851b27a10cb962"
+  },
+  "sourcePatch": {
+    "file": "tools/verify/runtime-interop-android/host-patches/lifecycle/mystral-android-lifecycle.patch",
+    "bytes": 23142,
+    "sha256": "511d2dd9058aac2bf546d50310929d1cae346ed96340511cc3b48c34f0b262c0"
+  },
+  "sourceApplyVerification": {
+    "file": "tools/verify/runtime-interop-android/host-patches/lifecycle/verification.json",
+    "bytes": 17548,
+    "sha256": "5e0ced2a92b315e954a986d4dd54e0a9cc51d1d1266daee23ac577f4cb8a9866"
+  },
+  "buildBinding": {
+    "file": "tools/verify/runtime-interop-android/host-patches/lifecycle/source-build-binding.json",
+    "bytes": 4620,
+    "sha256": "4e86c6bce57fe61dbaa459cfc301a75a9d08f8194de8613523920ba737c2bc7a"
+  },
+  "failureAndDiagnosticHistory": {
+    "file": "tools/verify/runtime-interop-android/host-patches/lifecycle/baseline-history.json",
+    "bytes": 3012,
+    "sha256": "feb99d1c12ad8464c789eed613e0246234341c5dec382900ff70eae20a184c15"
+  },
+  "runtime": {
+    "abi": "x86_64",
+    "emulator": true,
+    "actualPageBytes": 16384,
+    "compatibilityFallbackDisabled": true,
+    "stages": {
+      "initial": "PASS",
+      "background": "PASS",
+      "lock": "PASS",
+      "surface": "PASS",
+      "continuous": "PASS"
+    },
+    "sameNativePid": 4893,
+    "continuousDurationMs": 903723.5995,
+    "continuousSamples": 31,
+    "report": {
+      "file": "output/runtime-interop/android-lifecycle-16k-attempt-1/report.json",
+      "bytes": 279409,
+      "sha256": "08ffdf1da9a144f317860c9a178a2aa8ffd84a263074df401bce592e7de9c36c"
+    },
+    "collectorSource": {
+      "file": "output/runtime-interop/android-lifecycle-16k-attempt-1/collector-source.cjs",
+      "bytes": 48926,
+      "sha256": "12c360ece283e99b8fae3925b43e7afeb4772d083e98dc9da6b5332ccfec6ef7"
+    }
+  },
+  "graphicsRegression": {
+    "caseCount": 6,
+    "allPass": true,
+    "report": {
+      "file": "output/runtime-interop/android-lifecycle-matrix-regression-attempt-1/report.json",
+      "bytes": 204824,
+      "sha256": "39b935f65a8672340c578b6e28c60b0b714420c779bda18552d70a0ec7ebce02"
+    }
+  },
+  "independentAudit": {
+    "checks": 17,
+    "evidenceFiles": 1068,
+    "report": {
+      "file": "output/runtime-interop/android-lifecycle-final-audit-attempt-1/report.json",
+      "bytes": 176291,
+      "sha256": "39d76f73b2a20b2b2274e7ce6b8d9cd8607275dbd4c3accf05fdee69d7a3dc31"
+    }
+  },
+  "ownedEnvironment": {
+    "file": "output/runtime-interop/android-lifecycle-env-attempt-2/owned-environment-closed.json",
+    "bytes": 1670,
+    "sha256": "92bd4b17969227e5e7c8e3f4db408772170fda69dbbfd8a0c012906ea3f56307"
+  },
+  "resourceRelease": {
+    "nativeExitCode": 0,
+    "normalNativeTeardownAndSdlReturnVerified": true,
+    "processCleanupVerified": true,
+    "collectorPhysicalCloseVerified": true,
+    "scope": "Actual native teardown markers and dedicated process cleanup; no native/GPU live-object census",
+    "gpuLeakFreedom": "NOT_ESTABLISHED"
+  },
+  "memoryObservation": {
+    "samples": [
+      {
+        "sample": 0,
+        "totalPssKiB": 215839,
+        "rssKiB": 359140,
+        "nativeHeapPssKiB": 51526,
+        "evidence": {
+          "file": "output/runtime-interop/android-lifecycle-16k-attempt-1/continuous-000.meminfo.txt",
+          "bytes": 3513,
+          "sha256": "4cd02165f13d9a027bc2f11afed673ae6cddeac5ee7827e861ff7244be60bdf8"
+        }
+      },
+      {
+        "sample": 10,
+        "totalPssKiB": 226819,
+        "rssKiB": 370304,
+        "nativeHeapPssKiB": 61914,
+        "evidence": {
+          "file": "output/runtime-interop/android-lifecycle-16k-attempt-1/continuous-010.meminfo.txt",
+          "bytes": 3513,
+          "sha256": "f6cb4f08207402da83b6ff1d5a92aaf2c63811a5fe865ad1ef2b061a81361054"
+        }
+      },
+      {
+        "sample": 20,
+        "totalPssKiB": 237714,
+        "rssKiB": 381196,
+        "nativeHeapPssKiB": 71866,
+        "evidence": {
+          "file": "output/runtime-interop/android-lifecycle-16k-attempt-1/continuous-020.meminfo.txt",
+          "bytes": 3513,
+          "sha256": "3b23d59ee91caedf5a7bdac02964e7aa47d328e96eb5b4b3805edd09c220fe88"
+        }
+      },
+      {
+        "sample": 30,
+        "totalPssKiB": 239963,
+        "rssKiB": 384044,
+        "nativeHeapPssKiB": 82394,
+        "evidence": {
+          "file": "output/runtime-interop/android-lifecycle-16k-attempt-1/continuous-030.meminfo.txt",
+          "bytes": 3513,
+          "sha256": "2f9b45de2e96189fcbae94dddc04da018a96d4e4c8256023420de214c0af0fd0"
+        }
+      }
+    ],
+    "totalPssDeltaKiB": 24124,
+    "nativeHeapPssDeltaKiB": 30868,
+    "finding": "Native heap PSS continued to grow. This bounded run does not establish leak-free resource ownership.",
+    "staticFollowup": "Existing canvas getCurrentTexture registry adds API references; its release/cleanup path needs focused ownership accounting. No causal attribution is claimed from meminfo alone."
+  },
+  "limitations": [
+    "No connected ARM64 hardware runtime acceptance; both ABI builds and ELF/static checks are separate.",
+    "Same Activity only; Activity recreation/epoch reset and device-loss restoration are outside this test.",
+    "Fifteen minutes is bounded stability, not long-run stress, performance or leak-free certification.",
+    "Native teardown logs record API cleanup calls, not proof that every native/GPU object reached zero references."
+  ]
+}

@@ -1,0 +1,1479 @@
+POWER MANAGER (dumpsys power)
+
+Power Manager State:
+  Settings power_manager_constants:
+    no_cached_wake_locks=true
+  mDirty=0x0
+  mWakefulness=Dozing
+  mWakefulnessChanging=true
+  mIsPowered=true
+  mPlugType=1
+  mBatteryLevel=100
+  mDreamsBatteryLevelDrain=0
+  mDockState=0
+  mStayOn=true
+  mProximityPositive=false
+  mBootCompleted=true
+  mSystemReady=true
+  mEnhancedDischargeTimeElapsed=0
+  mLastEnhancedDischargeTimeUpdatedElapsed=0
+  mEnhancedDischargePredictionIsPersonalized=false
+  mUseAutoSuspend=true
+  mHalAutoSuspendModeEnabled=false
+  mHalInteractiveModeEnabled=true
+  mWakeLockSummary=0x3
+  mNotifyLongScheduled=+44s943ms
+  mNotifyLongDispatched=-2s952ms
+  mNotifyLongNextCheck=+44s943ms
+  mRequestWaitForNegativeProximity=false
+  mInterceptedPowerKeyForProximity=false
+  mSandmanScheduled=false
+  mBatteryLevelLow=false
+  mLightDeviceIdleMode=false
+  mDeviceIdleMode=false
+  mDeviceIdleWhitelist=[2000, 10108, 10110, 10112, 10159, 10202, 10206, 10208, 10210, 10221]
+  mDeviceIdleTempWhitelist=[]
+  mLowPowerStandbyActive=false
+  mLastWakeTime=0 (239496 ms ago)
+  mLastSleepTime=239382 (114 ms ago)
+  mLastSleepReason=sleep_button
+  mLastGlobalWakeTimeRealtime=0 (239496 ms ago)
+  mLastGlobalSleepTimeRealtime=239382 (114 ms ago)
+  mLastInteractivePowerHintTime=238139 (1357 ms ago)
+  mLastScreenBrightnessBoostTime=0 (239496 ms ago)
+  mScreenBrightnessBoostInProgress=false
+  mHoldingWakeLockSuspendBlocker=true
+  mHoldingDisplaySuspendBlocker=true
+  mLastFlipTime=0
+  mIsFaceDown=false
+
+Settings and Configuration:
+  mDecoupleHalAutoSuspendModeFromDisplayConfig=false
+  mDecoupleHalInteractiveModeFromDisplayConfig=false
+  mWakeUpWhenPluggedOrUnpluggedConfig=false
+  mWakeUpWhenPluggedOrUnpluggedInTheaterModeConfig=false
+  mTheaterModeEnabled=false
+  mKeepDreamingWhenUnplugging=false
+  mGlobalForceDisableWakelocks=false
+  mGroupsToForceDisableWakelocks={}
+  mSuspendWhenScreenOffDueToProximityConfig=false
+  mDreamsSupportedConfig=true
+  mDreamsEnabledByDefaultConfig=true
+  mDreamsActivatedOnSleepByDefaultConfig=false
+  mDreamsActivatedOnDockByDefaultConfig=true
+  mDreamsActivatedWhilePosturedByDefaultConfig=false
+  mDreamsActivatedOnlyWhileWirelessChargingConfig=false
+  mDreamsEnabledOnBatteryConfig=false
+  mDreamsBatteryLevelMinimumWhenPoweredConfig=-1
+  mDreamsBatteryLevelMinimumWhenNotPoweredConfig=15
+  mDreamsBatteryLevelDrainCutoffConfig=5
+  mDreamsEnabledSetting=true
+  mDreamsActivateOnSleepSetting=false
+  mDreamsActivateOnDockSetting=true
+  mDreamsActivateWhilePosturedSetting=false
+  mDreamsOnlyOnWirelessChargingSetting=false
+  mDozeAfterScreenOff=true
+  mBrightWhenDozingConfig=false
+  mAttentiveWarningDurationConfig=30000
+  mStayOnWhilePluggedInSetting=1
+  mUserActivityTimeoutOverrideFromWindowManager=-1
+  mUserInactiveOverrideFromWindowManager=false
+  mDozeScreenStateOverrideFromDreamManager=0
+  mDrawWakeLockOverrideFromSidekick=false
+  mDozeScreenBrightnessOverrideFromDreamManager=NaN
+  mUseNormalBrightnessForDoze=false
+  mScreenBrightnessMinimum=0.035433073
+  mScreenBrightnessMaximum=1.0
+  mScreenBrightnessDefault=0.39763778
+  mDoubleTapWakeEnabled=false
+  mForegroundProfile=0
+  mUserId=0
+  mWakeUpDelegate=null
+
+Attentive timeout: -1 ms
+Sleep timeout: -1 ms
+Screen off timeout: 2147483647 ms
+Screen dim duration: 7000 ms
+
+UID states (changing=false changed=false):
+  UID 1000:   ACTIVE  count=1 state=0
+  UID 1001:   ACTIVE  count=0 state=0
+  UID 1002:   ACTIVE  count=0 state=0
+  UID 1041: INACTIVE  count=1 state=20
+  UID 1068:   ACTIVE  count=0 state=0
+  UID 1073:   ACTIVE  count=0 state=0
+  UID 2000: INACTIVE  count=0 state=19
+  UID u0a104: INACTIVE  count=0 state=19
+  UID u0a110: INACTIVE  count=0 state=19
+  UID u0a111: INACTIVE  count=0 state=19
+  UID u0a112: INACTIVE  count=0 state=19
+  UID u0a113: INACTIVE  count=0 state=19
+  UID u0a120: INACTIVE  count=0 state=19
+  UID u0a122: INACTIVE  count=0 state=19
+  UID u0a130: INACTIVE  count=0 state=19
+  UID u0a143: INACTIVE  count=0 state=19
+  UID u0a144: INACTIVE  count=0 state=19
+  UID u0a145: INACTIVE  count=0 state=19
+  UID u0a146:   ACTIVE  count=0 state=19
+  UID u0a147:   ACTIVE  count=0 state=5
+  UID u0a149: INACTIVE  count=0 state=19
+  UID u0a151: INACTIVE  count=0 state=19
+  UID u0a152: INACTIVE  count=1 state=19
+  UID u0a156: INACTIVE  count=0 state=19
+  UID u0a157: INACTIVE  count=0 state=19
+  UID u0a158: INACTIVE  count=0 state=19
+  UID u0a160: INACTIVE  count=0 state=19
+  UID u0a161: INACTIVE  count=0 state=19
+  UID u0a162:   ACTIVE  count=0 state=19
+  UID u0a163:   ACTIVE  count=0 state=5
+  UID u0a169: INACTIVE  count=0 state=19
+  UID u0a175: INACTIVE  count=0 state=19
+  UID u0a176:   ACTIVE  count=0 state=5
+  UID u0a180: INACTIVE  count=0 state=19
+  UID u0a181:   ACTIVE  count=0 state=7
+  UID u0a197: INACTIVE  count=0 state=19
+  UID u0a198:   ACTIVE  count=0 state=0
+  UID u0a199:   ACTIVE  count=0 state=5
+  UID u0a206:   ACTIVE  count=1 state=5
+  UID u0a208: INACTIVE  count=0 state=19
+  UID u0a210:   ACTIVE  count=0 state=6
+  UID u0a216: INACTIVE  count=0 state=19
+  UID u0a217:   ACTIVE  count=0 state=0
+  UID u0a220:   ACTIVE  count=0 state=19
+  UID u0a221: INACTIVE  count=0 state=19
+  UID u0a225: INACTIVE  count=0 state=19
+  UID u0a226: INACTIVE  count=0 state=19
+  UID u0a227:   ACTIVE  count=0 state=5
+  UID u0a229: INACTIVE  count=0 state=19
+  UID u0a231:   ACTIVE  count=0 state=2
+
+Looper state:
+  Looper (PowerManagerService, tid 53) {4329362}
+    (MessageQueue is using DeliQueue implementation)
+    Message 0: { when=+24d20h31m15s290ms what=1 target=android.os.Handler async=true heapIndex=1 }
+    Message 1: { when=+44s942ms what=4 target=android.os.Handler async=true heapIndex=0 }
+    (Total messages: 2, polling=false, quitting=false)
+
+Wake Locks: size=4
+  PARTIAL_WAKE_LOCK                 'fiid-sync' DISABLED (uid=10152 isFrozen=true isAttributedUidCached=false pid=2393 powerGroupId=0)
+  PARTIAL_WAKE_LOCK                 'Checkin Service' ACQ=-3m0s549ms LONG (uid=10206 isFrozen=false isAttributedUidCached=false pid=1583 ws=WorkSource{10206 com.google.android.gms} powerGroupId=0)
+  PARTIAL_WAKE_LOCK                 'AudioMix' ACQ=-31ms (uid=1041 isFrozen=false isAttributedUidCached=false ws=WorkSource{ chains=WorkChain{(10231), (1041)}, WorkChain{(10198), (1041)}} powerGroupId=-1)
+  SCREEN_BRIGHT_WAKE_LOCK           'WindowManager/displayId:0' ON_AFTER_RELEASE ACQ=-16s624ms (uid=1000 isFrozen=false isAttributedUidCached=false pid=683 ws=WorkSource{10231 com.mystral.engine.interop} powerGroupId=0)
+
+Suspend Blockers: size=5
+  PowerManagerService.Booting: ref count=0 []
+  PowerManagerService.WakeLocks: ref count=1 [unknown: (10-27 04:33:06.103)]
+  PowerManagerService.Display: ref count=1 [holding display: (10-27 04:32:54.697)]
+  PowerManagerService.Broadcasts: ref count=0 []
+  PowerManagerService.WirelessChargerDetector: ref count=0 []
+
+Display Power: com.android.server.power.PowerManagerService$1@9dc5429
+
+ScreenTimeoutConstants: 
+  mAttentiveTimeoutConfig=-1
+  mAttentiveTimeoutSetting=-1
+  mMinimumScreenOffTimeoutConfig=10000
+  mMaximumScreenDimDurationConfig=7000
+  mMaximumScreenDimRatioConfig=0.20000005
+  mMaximumScreenOffTimeoutFromDeviceAdmin=9223372036854775807 (enforced=false)
+  mScreenOffTimeoutSetting=2147483647
+  mSleepTimeoutSetting=-1
+
+Battery saving stats:
+  Battery Saver is currently: OFF
+    Times full enabled: 0
+    Times adaptive enabled: 0
+  
+  Drain stats:
+                     Battery saver OFF                          ON
+  NonDoze NonIntr:      0m      0mAh(  0%)      0.0mAh/h          0m      0mAh(  0%)      0.0mAh/h
+             Intr:      0m      0mAh(  0%)      0.0mAh/h          0m      0mAh(  0%)      0.0mAh/h
+  Deep    NonIntr:      0m      0mAh(  0%)      0.0mAh/h          0m      0mAh(  0%)      0.0mAh/h
+             Intr:      0m      0mAh(  0%)      0.0mAh/h          0m      0mAh(  0%)      0.0mAh/h
+  Light   NonIntr:      0m      0mAh(  0%)      0.0mAh/h          0m      0mAh(  0%)      0.0mAh/h
+             Intr:      0m      0mAh(  0%)      0.0mAh/h          0m      0mAh(  0%)      0.0mAh/h
+
+Battery saver policy (*NOTE* they only apply when battery saver is ON):
+  Settings: battery_saver_constants
+    value: 
+  Settings: (overlay)
+    value: 
+  DeviceConfig: battery_saver
+    location_mode: 
+  mAccessibilityEnabled=false
+  mAutomotiveProjectionActive=false
+  mPolicyLevel=0
+  
+  Policy 'default full'
+    advertise_is_enabled=true
+    disable_vibration=false
+    disable_animation=false
+    defer_full_backup=true
+    defer_keyvalue_backup=true
+    enable_firewall=true
+    enable_datasaver=false
+    disable_launch_boost=true
+    enable_brightness_adjustment=false
+    adjust_brightness_factor=0.5
+    location_mode=3
+    force_all_apps_standby=true
+    force_background_check=true
+    disable_optional_sensors=true
+    disable_aod=true
+    soundtrigger_mode=1
+    enable_quick_doze=true
+    enable_night_mode=true
+  
+  Policy 'current full'
+    advertise_is_enabled=true
+    disable_vibration=false
+    disable_animation=false
+    defer_full_backup=true
+    defer_keyvalue_backup=true
+    enable_firewall=true
+    enable_datasaver=false
+    disable_launch_boost=true
+    enable_brightness_adjustment=false
+    adjust_brightness_factor=0.5
+    location_mode=3
+    force_all_apps_standby=true
+    force_background_check=true
+    disable_optional_sensors=true
+    disable_aod=true
+    soundtrigger_mode=1
+    enable_quick_doze=true
+    enable_night_mode=true
+  
+  Policy 'default adaptive'
+    advertise_is_enabled=false
+    disable_vibration=false
+    disable_animation=false
+    defer_full_backup=false
+    defer_keyvalue_backup=false
+    enable_firewall=false
+    enable_datasaver=false
+    disable_launch_boost=false
+    enable_brightness_adjustment=false
+    adjust_brightness_factor=1.0
+    location_mode=0
+    force_all_apps_standby=false
+    force_background_check=false
+    disable_optional_sensors=false
+    disable_aod=false
+    soundtrigger_mode=0
+    enable_quick_doze=false
+    enable_night_mode=false
+  
+  Policy 'current adaptive'
+    advertise_is_enabled=false
+    disable_vibration=false
+    disable_animation=false
+    defer_full_backup=false
+    defer_keyvalue_backup=false
+    enable_firewall=false
+    enable_datasaver=false
+    disable_launch_boost=false
+    enable_brightness_adjustment=false
+    adjust_brightness_factor=1.0
+    location_mode=0
+    force_all_apps_standby=false
+    force_background_check=false
+    disable_optional_sensors=false
+    disable_aod=false
+    soundtrigger_mode=0
+    enable_quick_doze=false
+    enable_night_mode=false
+  
+  Policy 'effective'
+    advertise_is_enabled=false
+    disable_vibration=false
+    disable_animation=false
+    defer_full_backup=false
+    defer_keyvalue_backup=false
+    enable_firewall=false
+    enable_datasaver=false
+    disable_launch_boost=false
+    enable_brightness_adjustment=false
+    adjust_brightness_factor=1.0
+    location_mode=0
+    force_all_apps_standby=false
+    force_background_check=false
+    disable_optional_sensors=false
+    disable_aod=false
+    soundtrigger_mode=0
+    enable_quick_doze=false
+    enable_night_mode=false
+
+Battery saver state machine:
+  Enabled=false
+    full=false
+    adaptive=false
+  mState=1
+  mLastChangedIntReason=0
+  mLastChangedStrReason=null
+  mBootCompleted=true
+  mSettingsLoaded=true
+  mBatteryStatusSet=true
+  mIsPowered=true
+  mBatteryLevel=100
+  mIsBatteryLevelLow=false
+  mSettingAutomaticBatterySaver=0
+  mSettingBatterySaverEnabled=false
+  mSettingBatterySaverEnabledSticky=false
+  mSettingBatterySaverStickyAutoDisableEnabled=true
+  mSettingBatterySaverStickyAutoDisableThreshold=90
+  mSettingBatterySaverTriggerThreshold=0
+  mBatterySaverStickyBehaviourDisabled=false
+  mBatterySaverTurnedOffNotificationEnabled=true
+  mDynamicPowerSavingsDefaultDisableThreshold=80
+  mDynamicPowerSavingsDisableThreshold=80
+  mDynamicPowerSavingsEnableBatterySaver=false
+  mLastAdaptiveBatterySaverChangedExternallyElapsed=0
+AttentionDetector:
+ mIsSettingEnabled=false
+ mMaxExtensionMillis=900000
+ mPreDimCheckDurationMillis=2000
+ mEffectivePostDimTimeout=0
+ mLastUserActivityTime(excludingAttention)=238139
+ mAttentionServiceSupported=false
+ mRequested=false
+
+Profile power states: size=0
+Power Group User Activity:
+groupId: 0
+userActivitySummary=0x1
+mWakeLockSummary=0x3
+lastUserActivityTime=238139 (1371 ms ago)
+lastUserActivityTimeNoChangeLights=222437 (17073 ms ago)
+mLastWakeReason=0
+mLastSleepReason=6
+mDimDuration=-1
+mWakefulness=3
+mIsDefaultGroupAdjacent=false
+mSupportsSandman=true
+mDreamManagerAttemptedDozing=false
+mScreenOffTimeout=-1
+
+Wireless Charger Detector State:
+  mGravitySensor={Sensor name="Gravity Sensor", vendor="AOSP", version=3, type=9, maxRange=19.6133, resolution=2.480159E-4, power=12.7, minDelay=10000}
+  mPoweredWirelessly=false
+  mAtRest=false
+  mRestX=0.0, mRestY=0.0, mRestZ=0.0
+  mDetectionInProgress=false
+  mDetectionStartTime=0 (never)
+  mMustUpdateRestPosition=false
+  mTotalSamples=0
+  mMovingSamples=0
+  mFirstSampleX=0.0, mFirstSampleY=0.0, mFirstSampleZ=0.0
+  mLastSampleX=0.0, mLastSampleY=0.0, mLastSampleZ=0.0
+Notifier:
+Partial Wakelock Log:
+Wake Lock Log
+  10-27 04:32:59.193 - 1000 (System) - ACQ WiredAccessoryManager (partial)
+  10-27 04:32:59.508 - 1000 (System) - ACQ NetworkStats (partial)
+  10-27 04:32:59.518 - 1000 (System) - REL NetworkStats
+  10-27 04:32:59.518 - 1000 (System) - ACQ NetworkStats (partial)
+  10-27 04:32:59.526 - 1000 (System) - REL NetworkStats
+  10-27 04:33:00.004 - 1000 (System) - ACQ *alarm* (partial)
+  10-27 04:33:00.030 - 1000 (System) - ACQ GnssVisibilityControl (partial)
+  10-27 04:33:00.093 - 1000 (System) - REL GnssVisibilityControl
+  10-27 04:33:00.105 - 1000 (System) - ACQ NetworkStats (partial)
+  10-27 04:33:00.118 - 1000 (System) - REL NetworkStats
+  10-27 04:33:00.766 - 1000 (System) - REL WiredAccessoryManager
+  10-27 04:33:00.892 - 1000 (System) - ACQ *job*r/@com.android.server.appwidget.AppWidgetServiceImpl.ReportWidgetEventsJob@android/com.android.server.appwidget.ReportWidgetEventsJob (partial)
+  10-27 04:33:00.894 - 1000 (System) - ACQ *job*r/@com.android.server.appwidget.AppWidgetServiceImpl.ReportWidgetEventsJob@android/com.android.server.appwidget.ReportWidgetEventsJob (partial)
+  10-27 04:33:00.896 - 1000 (System) - REL *job*r/@com.android.server.appwidget.AppWidgetServiceImpl.ReportWidgetEventsJob@android/com.android.server.appwidget.ReportWidgetEventsJob
+  10-27 04:33:00.896 - 1000 (System) - ACQ *job*r/android/com.android.server.notification.NotificationHistoryJobService (partial)
+  10-27 04:33:00.897 - 1000 (System) - ACQ *job*r/android/com.android.server.notification.NotificationHistoryJobService (partial)
+  10-27 04:33:00.898 - 1000 (System) - REL *job*r/android/com.android.server.notification.NotificationHistoryJobService
+  10-27 04:33:00.988 - 1000 (System) - REL *alarm*
+  10-27 04:33:01.211 - 1000 (System) - ACQ NetworkStats (partial)
+  10-27 04:33:01.212 - 1000 (System) - REL *job*r/android/com.android.server.notification.NotificationHistoryJobService
+  10-27 04:33:01.231 - 1000 (System) - REL NetworkStats
+  10-27 04:33:02.115 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:02.116 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:02.116 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:02.160 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:02.160 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:02.166 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:02.449 - 1001 (com.android.ons,...) - ACQ GsmInboundSmsHandler (partial)
+  10-27 04:33:02.460 - 1073 (com.google.android.networkstack.tethering,...) - ACQ GsmCellBroadcastHandler (partial)
+  10-27 04:33:02.466 - 1001 (com.android.ons,...) - ACQ CdmaInboundSmsHandler (partial)
+  10-27 04:33:02.470 - 1073 (com.google.android.networkstack.tethering,...) - ACQ CellBroadcastHandler (partial)
+  10-27 04:33:02.472 - 1073 (com.google.android.networkstack.tethering,...) - ACQ CdmaServiceCategoryProgramHandler (partial)
+  10-27 04:33:02.502 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:02.503 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:02.503 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:02.508 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:02.508 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:02.510 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:02.600 - 1000 (System) - REL *job*r/@com.android.server.appwidget.AppWidgetServiceImpl.ReportWidgetEventsJob@android/com.android.server.appwidget.ReportWidgetEventsJob
+  10-27 04:33:02.731 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:02.732 - 10198 (com.android.systemui) - ACQ SysUI:BroadcastSender (partial)
+  10-27 04:33:02.734 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:02.734 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:02.739 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:02.739 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:02.740 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:02.741 - 10198 (com.android.systemui) - REL SysUI:BroadcastSender
+  10-27 04:33:02.814 - 1000 (System) - ACQ ActivityManager-Sleep (partial)
+  10-27 04:33:02.853 - 1000 (System) - REL ActivityManager-Sleep
+  10-27 04:33:03.077 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.078 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.078 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.091 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.091 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.092 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.096 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.100 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.100 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.110 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.110 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.111 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.120 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.120 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.120 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.122 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.122 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.124 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.126 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.127 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.127 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.129 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.129 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.130 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.131 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.132 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.132 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.132 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.132 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.133 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.134 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.135 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.135 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.135 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.135 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.137 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.146 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.146 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.146 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.152 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.152 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.153 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.154 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.155 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.155 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.156 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.157 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.157 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.162 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.164 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.164 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.167 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.167 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.168 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.169 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.202 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.202 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.244 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.250 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.251 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.252 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.253 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.253 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.255 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.255 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.256 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.264 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.265 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.265 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.270 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.270 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.272 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.299 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.314 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.314 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.317 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.317 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.325 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.347 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.352 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.352 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.357 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.357 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.357 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.358 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.358 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.358 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.360 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.360 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.362 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.363 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.364 - 1000 (System) - ACQ *job*r/com.android.settings/.sim.receivers.SimSlotChangeService (partial)
+  10-27 04:33:03.364 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.364 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.365 - 1000 (System) - ACQ *job*r/com.android.settings/.sim.receivers.SimSlotChangeService (partial)
+  10-27 04:33:03.380 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.380 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.395 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.397 - 1000 (System) - REL *job*r/com.android.settings/.sim.receivers.SimSlotChangeService
+  10-27 04:33:03.398 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.408 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.408 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.417 - 1000 (System) - REL *job*r/com.android.settings/.sim.receivers.SimSlotChangeService
+  10-27 04:33:03.419 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.419 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.420 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.480 - 1001 (com.android.ons,...) - REL GsmInboundSmsHandler
+  10-27 04:33:03.484 - 1001 (com.android.ons,...) - REL CdmaInboundSmsHandler
+  10-27 04:33:03.495 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.502 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.502 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.505 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.505 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.505 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.515 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.520 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.520 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.558 - 1001 (com.android.ons,...) - ACQ NitzSignalInputFilterPredicateFactory (partial)
+  10-27 04:33:03.558 - 1001 (com.android.ons,...) - REL NitzSignalInputFilterPredicateFactory
+  10-27 04:33:03.559 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.559 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.561 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.566 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.566 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.566 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.567 - 1000 (System) - ACQ time_detector (partial)
+  10-27 04:33:03.567 - 1000 (System) - REL time_detector
+  10-27 04:33:03.599 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.599 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:03.626 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:03.710 - 1000 (System) - ACQ UwbServiceCore:mUwbWakeLock (partial)
+  10-27 04:33:04.145 - 1000 (System) - REL UwbServiceCore:mUwbWakeLock
+  10-27 04:33:04.152 - 1000 (System) - ACQ NotificationManagerService:post:android (partial)
+  10-27 04:33:04.265 - 1000 (System) - REL NotificationManagerService:post:android
+  10-27 04:33:04.282 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:04.284 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:04.284 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:04.456 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:04.456 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:04.460 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:04.461 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:04.462 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:04.462 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:04.523 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:04.523 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:04.537 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:04.540 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:04.540 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:04.540 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:04.998 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:04.998 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:05.003 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:05.133 - 10198 (com.android.systemui) - ACQ show keyguard (partial)
+  10-27 04:33:05.162 - 10198 (com.android.systemui) - REL show keyguard
+  10-27 04:33:05.390 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:05.426 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:05.426 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:05.459 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:05.459 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:05.475 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:05.551 - 1073 (com.google.android.networkstack.tethering,...) - REL CdmaServiceCategoryProgramHandler
+  10-27 04:33:05.569 - 1073 (com.google.android.networkstack.tethering,...) - REL CellBroadcastHandler
+  10-27 04:33:05.570 - 1073 (com.google.android.networkstack.tethering,...) - REL GsmCellBroadcastHandler
+  10-27 04:33:06.104 - 1000 (System) - ACQ *job*r/@class com.android.server.healthconnect.migration.MigrationStateChangeJob@android/com.android.server.healthconnect.HealthConnectDailyService (partial)
+  10-27 04:33:06.177 - 1000 (System) - ACQ *job*r/@class com.android.server.healthconnect.migration.MigrationStateChangeJob@android/com.android.server.healthconnect.HealthConnectDailyService (partial)
+  10-27 04:33:06.231 - 1000 (System) - REL *job*r/@class com.android.server.healthconnect.migration.MigrationStateChangeJob@android/com.android.server.healthconnect.HealthConnectDailyService
+  10-27 04:33:06.419 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:06.452 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:06.452 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:06.484 - 1000 (System) - ACQ SyncLoopWakeLock (partial)
+  10-27 04:33:06.485 - 1000 (System) - REL SyncLoopWakeLock
+  10-27 04:33:06.487 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:06.487 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:06.491 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:06.521 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:06.544 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:06.544 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:06.548 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:06.548 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:06.548 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:06.559 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:06.559 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:06.560 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:06.562 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:06.562 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:06.564 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:06.569 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:06.569 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:06.569 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:06.762 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:06.762 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:06.763 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:06.837 - 10198 (com.android.systemui) - ACQ AmbientIndication (partial)
+  10-27 04:33:07.003 - 10217 (com.google.android.providers.media.module) - ACQ *job*e/#MediaServiceV2#@androidx.work.systemjobscheduler@com.google.android.providers.media.module/androidx.work.impl.background.systemjob.SystemJobService (partial)
+  10-27 04:33:07.006 - 10217 (com.google.android.providers.media.module) - ACQ *job*e/#MediaServiceV2#@androidx.work.systemjobscheduler@com.google.android.providers.media.module/androidx.work.impl.background.systemjob.SystemJobService (partial)
+  10-27 04:33:07.011 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:07.011 - 10217 (com.google.android.providers.media.module) - REL *job*e/#MediaServiceV2#@androidx.work.systemjobscheduler@com.google.android.providers.media.module/androidx.work.impl.background.systemjob.SystemJobService
+  10-27 04:33:07.012 - 10206 (com.google.android.gms) - ACQ IntentOp:c.g.a.g/.c.GmsIntentOperationService (partial)
+  10-27 04:33:07.013 - 1000 (System) - REL *job*r/@class com.android.server.healthconnect.migration.MigrationStateChangeJob@android/com.android.server.healthconnect.HealthConnectDailyService
+  10-27 04:33:07.020 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:07.020 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:07.044 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:07.045 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:07.072 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:07.096 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:07.102 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:07.102 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:07.132 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:07.132 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:07.155 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:07.189 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:07.204 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:07.204 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:07.219 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:07.219 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:07.224 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:07.301 - 10147 (com.google.android.as) - ACQ *job*r/com.google.android.as/com.google.android.apps.miphone.aiai.echo.scheduler.EchoJobService (partial)
+  10-27 04:33:07.305 - 10147 (com.google.android.as) - ACQ *job*r/com.google.android.as/com.google.android.apps.miphone.aiai.echo.scheduler.EchoJobService (partial)
+  10-27 04:33:07.316 - 10147 (com.google.android.as) - REL *job*r/com.google.android.as/com.google.android.apps.miphone.aiai.echo.scheduler.EchoJobService
+  10-27 04:33:07.520 - 10147 (com.google.android.as) - ACQ *job*r/#PackageMonitoringWorker#@androidx.work.systemjobscheduler@com.google.android.as/androidx.work.impl.background.systemjob.SystemJobService (partial)
+  10-27 04:33:07.521 - 10147 (com.google.android.as) - ACQ *job*r/#PackageMonitoringWorker#@androidx.work.systemjobscheduler@com.google.android.as/androidx.work.impl.background.systemjob.SystemJobService (partial)
+  10-27 04:33:07.526 - 10147 (com.google.android.as) - REL *job*r/#PackageMonitoringWorker#@androidx.work.systemjobscheduler@com.google.android.as/androidx.work.impl.background.systemjob.SystemJobService
+  10-27 04:33:07.805 - 10163 (com.google.android.googlequicksearchbox) - ACQ GoogleSearchWidgetProvider#onReceive (partial)
+  10-27 04:33:07.851 - 10163 (com.google.android.googlequicksearchbox) - ACQ GnpBroadcastReceiver (partial)
+  10-27 04:33:07.994 - 10147 (com.google.android.as) - ACQ *job*r/#LanguagePackAutoUpdateWorker#@androidx.work.systemjobscheduler@com.google.android.as/androidx.work.impl.background.systemjob.SystemJobService (partial)
+  10-27 04:33:07.994 - 10147 (com.google.android.as) - ACQ *job*r/#LanguagePackAutoUpdateWorker#@androidx.work.systemjobscheduler@com.google.android.as/androidx.work.impl.background.systemjob.SystemJobService (partial)
+  10-27 04:33:08.018 - 10147 (com.google.android.as) - REL *job*r/#LanguagePackAutoUpdateWorker#@androidx.work.systemjobscheduler@com.google.android.as/androidx.work.impl.background.systemjob.SystemJobService
+  10-27 04:33:08.056 - 10163 (com.google.android.googlequicksearchbox) - REL GnpBroadcastReceiver
+  10-27 04:33:08.064 - 10163 (com.google.android.googlequicksearchbox) - ACQ GoogleSearchWidgetProvider#onReceive (partial)
+  10-27 04:33:08.117 - 10163 (com.google.android.googlequicksearchbox) - REL GoogleSearchWidgetProvider#onReceive
+  10-27 04:33:08.281 - 10147 (com.google.android.as) - ACQ *job*r/com.google.android.as/com.google.android.apps.miphone.aiai.common.brella.service.AiAiExampleStoreTtlService (partial)
+  10-27 04:33:08.281 - 10147 (com.google.android.as) - ACQ *job*r/com.google.android.as/com.google.android.apps.miphone.aiai.common.brella.service.AiAiExampleStoreTtlService (partial)
+  10-27 04:33:08.283 - 10147 (com.google.android.as) - REL *job*r/com.google.android.as/com.google.android.apps.miphone.aiai.common.brella.service.AiAiExampleStoreTtlService
+  10-27 04:33:08.294 - 10147 (com.google.android.as) - ACQ *job*r/com.google.android.as/com.google.android.apps.miphone.aiai.fedass.ekho.service.EkhoTtlService (partial)
+  10-27 04:33:08.295 - 10147 (com.google.android.as) - ACQ *job*r/com.google.android.as/com.google.android.apps.miphone.aiai.fedass.ekho.service.EkhoTtlService (partial)
+  10-27 04:33:08.304 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:08.310 - 10147 (com.google.android.as) - REL *job*r/com.google.android.as/com.google.android.apps.miphone.aiai.fedass.ekho.service.EkhoTtlService
+  10-27 04:33:08.320 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:08.320 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:08.335 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:08.335 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:08.336 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:08.638 - 10163 (com.google.android.googlequicksearchbox) - REL GoogleSearchWidgetProvider#onReceive
+  10-27 04:33:09.202 - 10147 (com.google.android.as) - ACQ *job*r/#SimpleStorageMaintenanceWorker#@androidx.work.systemjobscheduler@com.google.android.as/androidx.work.impl.background.systemjob.SystemJobService (partial)
+  10-27 04:33:09.228 - 10147 (com.google.android.as) - ACQ *job*r/#SimpleStorageMaintenanceWorker#@androidx.work.systemjobscheduler@com.google.android.as/androidx.work.impl.background.systemjob.SystemJobService (partial)
+  10-27 04:33:09.459 - 10147 (com.google.android.as) - REL *job*r/#SimpleStorageMaintenanceWorker#@androidx.work.systemjobscheduler@com.google.android.as/androidx.work.impl.background.systemjob.SystemJobService
+  10-27 04:33:09.540 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:09.542 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:09.542 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:09.548 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:09.554 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:09.555 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:09.559 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:09.560 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:09.560 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:09.561 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:09.561 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:09.576 - 10206 (com.google.android.gms) - ACQ IntentOp:.c.b.BackgroundBroadcastReceiverSupport$PersistentReceiverIntentOperation (partial)
+  10-27 04:33:09.576 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:09.609 - 10206 (com.google.android.gms) - ACQ IntentOp:.c.b.BackgroundBroadcastReceiverSupport$PersistentReceiverIntentOperation (partial)
+  10-27 04:33:09.641 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:09.646 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:09.648 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:09.667 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:09.667 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:09.668 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:09.687 - 10206 (com.google.android.gms) - ACQ IntentOp:.a.s.SafetyCenterIntentOperation (partial)
+  10-27 04:33:09.824 - 10206 (com.google.android.gms) - ACQ IntentOp:.a.u.AdvancedProtectionSafetyCenterIntentOperation (partial)
+  10-27 04:33:09.841 - 10206 (com.google.android.gms) - ACQ IntentOp:.b.g.s.Bbg1SafetyCenterIntentOperation (partial)
+  10-27 04:33:09.852 - 10206 (com.google.android.gms) - ACQ IntentOp:.c.m.o.SafetyCenterIntentOperation (partial)
+  10-27 04:33:09.856 - 10206 (com.google.android.gms) - REL IntentOp:.a.s.SafetyCenterIntentOperation
+  10-27 04:33:09.911 - 10206 (com.google.android.gms) - ACQ IntentOp:.m.s.FmdSafetyCenterIntentOperation (partial)
+  10-27 04:33:09.938 - 10206 (com.google.android.gms) - ACQ IntentOp:.p.s.RtSafetyCenterIntentOperation (partial)
+  10-27 04:33:09.981 - 10206 (com.google.android.gms) - REL IntentOp:.c.m.o.SafetyCenterIntentOperation
+  10-27 04:33:10.007 - 10206 (com.google.android.gms) - REL IntentOp:.c.b.BackgroundBroadcastReceiverSupport$PersistentReceiverIntentOperation
+  10-27 04:33:10.022 - 10206 (com.google.android.gms) - REL IntentOp:.c.b.BackgroundBroadcastReceiverSupport$PersistentReceiverIntentOperation
+  10-27 04:33:10.053 - 10206 (com.google.android.gms) - ACQ wake:com.google.android.gms/.auth.account.be.accountstate.LoginAccountsChangedIntentService - 999 (partial)
+  10-27 04:33:10.059 - 10147 (com.google.android.as) - REL *job*r/com.google.android.as/com.google.android.apps.miphone.aiai.echo.scheduler.EchoJobService
+  10-27 04:33:10.063 - 10206 (com.google.android.gms) - REL IntentOp:.m.s.FmdSafetyCenterIntentOperation
+  10-27 04:33:10.088 - 10147 (com.google.android.as) - ACQ *job*r/#UpdateDataCacheStorageWorker#@androidx.work.systemjobscheduler@com.google.android.as/androidx.work.impl.background.systemjob.SystemJobService (partial)
+  10-27 04:33:10.108 - 10147 (com.google.android.as) - ACQ *job*r/#UpdateDataCacheStorageWorker#@androidx.work.systemjobscheduler@com.google.android.as/androidx.work.impl.background.systemjob.SystemJobService (partial)
+  10-27 04:33:10.132 - 10147 (com.google.android.as) - REL *job*r/#UpdateDataCacheStorageWorker#@androidx.work.systemjobscheduler@com.google.android.as/androidx.work.impl.background.systemjob.SystemJobService
+  10-27 04:33:10.296 - 10206 (com.google.android.gms) - REL wake:com.google.android.gms/.auth.account.be.accountstate.LoginAccountsChangedIntentService - 999
+  10-27 04:33:10.404 - 10206 (com.google.android.gms) - REL IntentOp:.a.u.AdvancedProtectionSafetyCenterIntentOperation
+  10-27 04:33:10.445 - 10147 (com.google.android.as) - REL *job*r/#LanguagePackAutoUpdateWorker#@androidx.work.systemjobscheduler@com.google.android.as/androidx.work.impl.background.systemjob.SystemJobService
+  10-27 04:33:10.469 - 1000 (System) - ACQ *job*r/com.android.settings/.safetycenter.WatchRangingJobService (partial)
+  10-27 04:33:10.481 - 1000 (System) - ACQ *job*r/com.android.settings/.safetycenter.WatchRangingJobService (partial)
+  10-27 04:33:10.485 - 10206 (com.google.android.gms) - REL IntentOp:.b.g.s.Bbg1SafetyCenterIntentOperation
+  10-27 04:33:10.488 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:10.495 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:10.497 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:10.506 - 1000 (System) - REL *job*r/com.android.settings/.safetycenter.WatchRangingJobService
+  10-27 04:33:10.510 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:10.510 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:10.516 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:10.558 - 10198 (com.android.systemui) - REL AmbientIndication
+  10-27 04:33:10.561 - 10147 (com.google.android.as) - REL *job*r/#PackageMonitoringWorker#@androidx.work.systemjobscheduler@com.google.android.as/androidx.work.impl.background.systemjob.SystemJobService
+  10-27 04:33:10.566 - 10147 (com.google.android.as) - ACQ *job*r/com.google.android.as/com.google.android.apps.miphone.aiai.common.superpacks.impl.PeriodicCleanupService (partial)
+  10-27 04:33:10.567 - 10147 (com.google.android.as) - ACQ *job*r/com.google.android.as/com.google.android.apps.miphone.aiai.common.superpacks.impl.PeriodicCleanupService (partial)
+  10-27 04:33:10.596 - 10147 (com.google.android.as) - REL *job*r/com.google.android.as/com.google.android.apps.miphone.aiai.common.superpacks.impl.PeriodicCleanupService
+  10-27 04:33:10.597 - 1000 (System) - REL *job*r/com.android.settings/.safetycenter.WatchRangingJobService
+  10-27 04:33:10.623 - 10206 (com.google.android.gms) - ACQ IntentOp:.s.o.OtaSafetyCenterIntentOperation (partial)
+  10-27 04:33:10.662 - 10206 (com.google.android.gms) - ACQ IntentOp:c.g.a.p.s.a.AutoLockSafetyCenterIntentOperation (partial)
+  10-27 04:33:10.672 - 10206 (com.google.android.gms) - ACQ IntentOp:.c.b.BackgroundBroadcastReceiverSupport$PersistentReceiverIntentOperation (partial)
+  10-27 04:33:10.676 - 10206 (com.google.android.gms) - REL IntentOp:.s.o.OtaSafetyCenterIntentOperation
+  10-27 04:33:10.685 - 10206 (com.google.android.gms) - ACQ IntentOp:c.g.a.g/.c.PersistentIntentOperationService (partial)
+  10-27 04:33:10.703 - 10206 (com.google.android.gms) - REL IntentOp:c.g.a.p.s.a.AutoLockSafetyCenterIntentOperation
+  10-27 04:33:10.717 - 10206 (com.google.android.gms) - ACQ IntentOp:.c.a.AppDoctorConfigChangedIntentOperation (partial)
+  10-27 04:33:10.728 - 10206 (com.google.android.gms) - ACQ IntentOp:.c.b.BackgroundBroadcastReceiverSupport$PersistentReceiverIntentOperation (partial)
+  10-27 04:33:10.756 - 10206 (com.google.android.gms) - REL IntentOp:c.g.a.g/.c.GmsIntentOperationService
+  10-27 04:33:10.776 - 10147 (com.google.android.as) - REL *job*r/com.google.android.as/com.google.android.apps.miphone.aiai.common.brella.service.AiAiExampleStoreTtlService
+  10-27 04:33:10.798 - 10206 (com.google.android.gms) - ACQ IntentOp:.p.p.PSimMonitorIntentOperation (partial)
+  10-27 04:33:10.822 - 10206 (com.google.android.gms) - REL IntentOp:c.g.a.g/.c.PersistentIntentOperationService
+  10-27 04:33:10.839 - 10206 (com.google.android.gms) - REL IntentOp:.p.p.PSimMonitorIntentOperation
+  10-27 04:33:10.840 - 10206 (com.google.android.gms) - ACQ Icing (partial)
+  10-27 04:33:10.843 - 10206 (com.google.android.gms) - REL IntentOp:.c.b.BackgroundBroadcastReceiverSupport$PersistentReceiverIntentOperation
+  10-27 04:33:10.888 - 10206 (com.google.android.gms) - REL IntentOp:.p.s.RtSafetyCenterIntentOperation
+  10-27 04:33:10.927 - 10197 (com.google.android.apps.wallpaper) - ACQ *job*r/com.google.android.apps.wallpaper/.module.WallpaperInitializationJobService (partial)
+  10-27 04:33:10.927 - 10197 (com.google.android.apps.wallpaper) - ACQ *job*r/com.google.android.apps.wallpaper/.module.WallpaperInitializationJobService (partial)
+  10-27 04:33:10.932 - 10197 (com.google.android.apps.wallpaper) - REL *job*r/com.google.android.apps.wallpaper/.module.WallpaperInitializationJobService
+  10-27 04:33:10.951 - 10147 (com.google.android.as) - REL *job*r/#UpdateDataCacheStorageWorker#@androidx.work.systemjobscheduler@com.google.android.as/androidx.work.impl.background.systemjob.SystemJobService
+  10-27 04:33:10.957 - 10206 (com.google.android.gms) - ACQ CallbackRunner (partial)
+  10-27 04:33:10.994 - 10197 (com.google.android.apps.wallpaper) - REL *job*r/com.google.android.apps.wallpaper/.module.WallpaperInitializationJobService
+  10-27 04:33:11.064 - 10147 (com.google.android.as) - REL *job*r/#SimpleStorageMaintenanceWorker#@androidx.work.systemjobscheduler@com.google.android.as/androidx.work.impl.background.systemjob.SystemJobService
+  10-27 04:33:11.196 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:11.201 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:11.201 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:11.217 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:11.217 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:11.226 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:11.534 - 10147 (com.google.android.as) - ACQ *job*r/com.google.android.as/com.google.android.apps.miphone.aiai.interestsmodel.storage.privacy.TtlExpiryService (partial)
+  10-27 04:33:11.541 - 10147 (com.google.android.as) - ACQ *job*r/com.google.android.as/com.google.android.apps.miphone.aiai.interestsmodel.storage.privacy.TtlExpiryService (partial)
+  10-27 04:33:11.548 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:11.562 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:11.567 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:11.583 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:11.585 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:11.590 - 10147 (com.google.android.as) - REL *job*r/com.google.android.as/com.google.android.apps.miphone.aiai.interestsmodel.storage.privacy.TtlExpiryService
+  10-27 04:33:11.593 - 10147 (com.google.android.as) - REL *job*r/com.google.android.as/com.google.android.apps.miphone.aiai.common.superpacks.impl.PeriodicCleanupService
+  10-27 04:33:11.616 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:11.678 - 10147 (com.google.android.as) - REL *job*r/com.google.android.as/com.google.android.apps.miphone.aiai.interestsmodel.storage.privacy.TtlExpiryService
+  10-27 04:33:11.721 - 10206 (com.google.android.gms) - REL CallbackRunner
+  10-27 04:33:11.756 - 10206 (com.google.android.gms) - ACQ UlrDispSvcFastWL (partial)
+  10-27 04:33:11.758 - 10206 (com.google.android.gms) - REL UlrDispSvcFastWL
+  10-27 04:33:11.758 - 10206 (com.google.android.gms) - ACQ UlrDispSvcFastWL (partial)
+  10-27 04:33:11.782 - 10206 (com.google.android.gms) - REL UlrDispSvcFastWL
+  10-27 04:33:11.807 - 10147 (com.google.android.as) - ACQ *job*r/#GlideCacheCleanUpWorker#@androidx.work.systemjobscheduler@com.google.android.as/androidx.work.impl.background.systemjob.SystemJobService (partial)
+  10-27 04:33:11.807 - 10147 (com.google.android.as) - ACQ *job*r/#GlideCacheCleanUpWorker#@androidx.work.systemjobscheduler@com.google.android.as/androidx.work.impl.background.systemjob.SystemJobService (partial)
+  10-27 04:33:11.808 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:11.812 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:11.812 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:11.829 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:11.829 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:11.840 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:11.936 - 10147 (com.google.android.as) - REL *job*r/#GlideCacheCleanUpWorker#@androidx.work.systemjobscheduler@com.google.android.as/androidx.work.impl.background.systemjob.SystemJobService
+  10-27 04:33:11.942 - 10147 (com.google.android.as) - REL *job*r/com.google.android.as/com.google.android.apps.miphone.aiai.fedass.ekho.service.EkhoTtlService
+  10-27 04:33:12.015 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:12.021 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:12.021 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:12.028 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:12.028 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:12.028 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:12.148 - 10147 (com.google.android.as) - REL *job*r/#GlideCacheCleanUpWorker#@androidx.work.systemjobscheduler@com.google.android.as/androidx.work.impl.background.systemjob.SystemJobService
+  10-27 04:33:12.280 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:12.280 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:12.280 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:12.286 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:12.286 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:12.294 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:12.341 - 10206 (com.google.android.gms) - ACQ CallbackRunner (partial)
+  10-27 04:33:12.427 - 10206 (com.google.android.gms) - REL IntentOp:.c.b.BackgroundBroadcastReceiverSupport$PersistentReceiverIntentOperation
+  10-27 04:33:12.446 - 10206 (com.google.android.gms) - REL CallbackRunner
+  10-27 04:33:12.650 - 1041 (com.google.android.gms) - ACQ AudioMix (partial)
+  10-27 04:33:12.651 - 1041 (com.google.android.gms) - ACQ AudioMix (partial)
+  10-27 04:33:12.776 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:12.780 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:12.780 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:12.786 - 10206 (com.google.android.gms) - ACQ GOOGLE_C2DM (partial)
+  10-27 04:33:12.788 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:12.788 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:12.791 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:13.028 - 10206 (com.google.android.gms) - REL GOOGLE_C2DM
+  10-27 04:33:13.198 - 10206 (com.google.android.gms) - ACQ CMWakeLock (partial)
+  10-27 04:33:13.682 - 10206 (com.google.android.gms) - ACQ UlrDispSvcFastWL (partial)
+  10-27 04:33:13.712 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:13.712 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:13.712 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:13.715 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:13.715 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:13.716 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:13.736 - 10206 (com.google.android.gms) - REL UlrDispSvcFastWL
+  10-27 04:33:13.736 - 10206 (com.google.android.gms) - ACQ UlrDispSvcFastWL (partial)
+  10-27 04:33:13.762 - 10206 (com.google.android.gms) - ACQ CallbackRunner (partial)
+  10-27 04:33:13.783 - 10206 (com.google.android.gms) - REL CallbackRunner
+  10-27 04:33:13.795 - 10206 (com.google.android.gms) - ACQ CallbackRunner (partial)
+  10-27 04:33:13.832 - 10206 (com.google.android.gms) - REL CallbackRunner
+  10-27 04:33:13.935 - 10163 (com.google.android.googlequicksearchbox) - ACQ *job*r/#TikTokWorker#com.google.android.apps.search.assistant.surfaces.notification.DelayedNotificationWorker#@androidx.work.systemjobscheduler@com.google.android.googlequicksearchbox/androidx.work.impl.background.systemjob.SystemJobService (partial)
+  10-27 04:33:13.936 - 10163 (com.google.android.googlequicksearchbox) - ACQ *job*r/#TikTokWorker#com.google.android.apps.search.assistant.surfaces.notification.DelayedNotificationWorker#@androidx.work.systemjobscheduler@com.google.android.googlequicksearchbox/androidx.work.impl.background.systemjob.SystemJobService (partial)
+  10-27 04:33:13.940 - 10163 (com.google.android.googlequicksearchbox) - REL *job*r/#TikTokWorker#com.google.android.apps.search.assistant.surfaces.notification.DelayedNotificationWorker#@androidx.work.systemjobscheduler@com.google.android.googlequicksearchbox/androidx.work.impl.background.systemjob.SystemJobService
+  10-27 04:33:14.039 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:14.040 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:14.041 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:14.044 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:14.050 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:14.051 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:14.203 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:14.206 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:14.206 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:14.217 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:14.217 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:14.218 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:14.229 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:14.235 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:14.235 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:14.246 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:14.246 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:14.252 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:14.304 - 10206 (com.google.android.gms) - ACQ wake:com.google.android.gms/.chimera.GmsIntentOperationService - 913 (partial)
+  10-27 04:33:14.352 - 10152 (com.google.android.dialer) - ACQ *job*r/#TikTokWorker#com.android.dialer.callscreen.impl.donation.scotty.CallScreenMetricsWorker#@androidx.work.systemjobscheduler@com.google.android.dialer/androidx.work.impl.background.systemjob.SystemJobService (partial)
+  10-27 04:33:14.352 - 10152 (com.google.android.dialer) - ACQ *job*r/#TikTokWorker#com.android.dialer.callscreen.impl.donation.scotty.CallScreenMetricsWorker#@androidx.work.systemjobscheduler@com.google.android.dialer/androidx.work.impl.background.systemjob.SystemJobService (partial)
+  10-27 04:33:14.353 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:14.354 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:14.354 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:14.422 - 10152 (com.google.android.dialer) - REL *job*r/#TikTokWorker#com.android.dialer.callscreen.impl.donation.scotty.CallScreenMetricsWorker#@androidx.work.systemjobscheduler@com.google.android.dialer/androidx.work.impl.background.systemjob.SystemJobService
+  10-27 04:33:14.442 - 10163 (com.google.android.googlequicksearchbox) - REL *job*r/#TikTokWorker#com.google.android.apps.search.assistant.surfaces.notification.DelayedNotificationWorker#@androidx.work.systemjobscheduler@com.google.android.googlequicksearchbox/androidx.work.impl.background.systemjob.SystemJobService
+  10-27 04:33:14.478 - 10152 (com.google.android.dialer) - ACQ *job*r/#TikTokWorker#com.android.dialer.xatu.impl.storage.postcall.XatuMetricsWorker#@androidx.work.systemjobscheduler@com.google.android.dialer/androidx.work.impl.background.systemjob.SystemJobService (partial)
+  10-27 04:33:14.478 - 10152 (com.google.android.dialer) - ACQ *job*r/#TikTokWorker#com.android.dialer.xatu.impl.storage.postcall.XatuMetricsWorker#@androidx.work.systemjobscheduler@com.google.android.dialer/androidx.work.impl.background.systemjob.SystemJobService (partial)
+  10-27 04:33:14.479 - 10152 (com.google.android.dialer) - REL *job*r/#TikTokWorker#com.android.dialer.xatu.impl.storage.postcall.XatuMetricsWorker#@androidx.work.systemjobscheduler@com.google.android.dialer/androidx.work.impl.background.systemjob.SystemJobService
+  10-27 04:33:14.485 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:14.485 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:14.487 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:14.489 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:14.489 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:14.489 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:14.490 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:14.490 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:14.492 - 10152 (com.google.android.dialer) - ACQ *job*r/#TikTokWorker#com.android.dialer.calleridfeeback.impl.database.retention.CallerIdFeedbackDeletionWorker#@androidx.work.systemjobscheduler@com.google.android.dialer/androidx.work.impl.background.systemjob.SystemJobService (partial)
+  10-27 04:33:14.492 - 10152 (com.google.android.dialer) - ACQ *job*r/#TikTokWorker#com.android.dialer.calleridfeeback.impl.database.retention.CallerIdFeedbackDeletionWorker#@androidx.work.systemjobscheduler@com.google.android.dialer/androidx.work.impl.background.systemjob.SystemJobService (partial)
+  10-27 04:33:14.494 - 10152 (com.google.android.dialer) - REL *job*r/#TikTokWorker#com.android.dialer.calleridfeeback.impl.database.retention.CallerIdFeedbackDeletionWorker#@androidx.work.systemjobscheduler@com.google.android.dialer/androidx.work.impl.background.systemjob.SystemJobService
+  10-27 04:33:14.499 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:14.501 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:14.502 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:14.502 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:14.504 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:14.504 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:14.504 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:14.529 - 1000 (System) - ACQ GnssVisibilityControl (partial)
+  10-27 04:33:14.529 - 1000 (System) - REL GnssVisibilityControl
+  10-27 04:33:14.544 - 10206 (com.google.android.gms) - ACQ Checkin Service (partial)
+  10-27 04:33:14.580 - 10206 (com.google.android.gms) - REL Checkin Service
+  10-27 04:33:14.585 - 10206 (com.google.android.gms) - REL wake:com.google.android.gms/.chimera.GmsIntentOperationService - 913
+  10-27 04:33:14.667 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:14.669 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:14.669 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:14.673 - 10206 (com.google.android.gms) - REL UlrDispSvcFastWL
+  10-27 04:33:14.675 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:14.676 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:14.676 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:14.678 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:14.679 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:14.679 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:14.681 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:14.681 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:14.682 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:14.953 - 10206 (com.google.android.gms) - ACQ CallbackRunner (partial)
+  10-27 04:33:14.966 - 10206 (com.google.android.gms) - REL CallbackRunner
+  10-27 04:33:14.984 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:14.985 - 10206 (com.google.android.gms) - ACQ CallbackRunner (partial)
+  10-27 04:33:14.987 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:14.988 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:14.994 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:14.998 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:14.999 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:15.001 - 10206 (com.google.android.gms) - REL CallbackRunner
+  10-27 04:33:15.003 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:15.007 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:15.007 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:15.009 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:15.009 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:15.009 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:15.016 - 1000 (System) - ACQ *alarm* (partial)
+  10-27 04:33:15.051 - 1000 (System) - ACQ NetworkStats (partial)
+  10-27 04:33:15.061 - 10176 (com.google.android.apps.photos) - ACQ *job*r/com.google.android.apps.photos/.dbprocessor.impl.DatabaseProcessorJobService (partial)
+  10-27 04:33:15.066 - 10176 (com.google.android.apps.photos) - ACQ *job*r/com.google.android.apps.photos/.dbprocessor.impl.DatabaseProcessorJobService (partial)
+  10-27 04:33:15.090 - 10176 (com.google.android.apps.photos) - REL *job*r/com.google.android.apps.photos/.dbprocessor.impl.DatabaseProcessorJobService
+  10-27 04:33:15.094 - 10206 (com.google.android.gms) - REL CMWakeLock
+  10-27 04:33:15.120 - 1000 (System) - REL NetworkStats
+  10-27 04:33:15.123 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:15.125 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:15.125 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:15.160 - 1000 (System) - REL *alarm*
+  10-27 04:33:15.264 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:15.264 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:15.264 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:15.310 - 1000 (System) - ACQ NetworkStats (partial)
+  10-27 04:33:15.312 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:15.316 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:15.317 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:15.358 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:15.358 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:15.360 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:15.374 - 1000 (System) - REL NetworkStats
+  10-27 04:33:15.428 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:15.429 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:15.429 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:15.437 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:15.438 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:15.442 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:15.444 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:15.448 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:15.448 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:15.455 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:15.455 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:15.457 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:15.607 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:15.608 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:15.608 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:15.614 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:15.614 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:15.615 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:15.626 - 10176 (com.google.android.apps.photos) - REL *job*r/com.google.android.apps.photos/.dbprocessor.impl.DatabaseProcessorJobService
+  10-27 04:33:15.642 - 1041 (com.google.android.apps.photos) - REL AudioMix
+  10-27 04:33:15.644 - 10206 (com.google.android.gms) - REL IntentOp:.c.a.AppDoctorConfigChangedIntentOperation
+  10-27 04:33:15.655 - 1041 (com.google.android.gms) - REL AudioMix
+  10-27 04:33:15.708 - 10206 (com.google.android.gms) - REL Icing
+  10-27 04:33:15.749 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:15.750 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:15.750 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:15.752 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:15.752 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:15.759 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:15.771 - 1000 (System) - ACQ NetworkStats (partial)
+  10-27 04:33:15.777 - 10162 (com.google.android.apps.wellbeing) - ACQ *job*r/com.google.android.apps.wellbeing/.autodnd.impl.AutoDndJobService (partial)
+  10-27 04:33:15.777 - 10162 (com.google.android.apps.wellbeing) - ACQ *job*r/com.google.android.apps.wellbeing/.autodnd.impl.AutoDndJobService (partial)
+  10-27 04:33:15.803 - 10206 (com.google.android.gms) - ACQ Icing (partial)
+  10-27 04:33:15.806 - 10206 (com.google.android.gms) - ACQ IntentOp:.c.b.BackgroundBroadcastReceiverSupport$PersistentReceiverIntentOperation (partial)
+  10-27 04:33:15.813 - 10162 (com.google.android.apps.wellbeing) - REL *job*r/com.google.android.apps.wellbeing/.autodnd.impl.AutoDndJobService
+  10-27 04:33:15.817 - 10206 (com.google.android.gms) - REL Icing
+  10-27 04:33:15.819 - 1000 (System) - REL NetworkStats
+  10-27 04:33:15.826 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:15.838 - 10206 (com.google.android.gms) - REL IntentOp:.c.b.BackgroundBroadcastReceiverSupport$PersistentReceiverIntentOperation
+  10-27 04:33:15.847 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:15.847 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:15.848 - 10206 (com.google.android.gms) - ACQ IntentOp:.c.b.BackgroundBroadcastReceiverSupport$PersistentReceiverIntentOperation (partial)
+  10-27 04:33:15.850 - 10162 (com.google.android.apps.wellbeing) - REL *job*r/com.google.android.apps.wellbeing/.autodnd.impl.AutoDndJobService
+  10-27 04:33:15.856 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:15.856 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:15.857 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:15.857 - 10206 (com.google.android.gms) - REL IntentOp:.c.b.BackgroundBroadcastReceiverSupport$PersistentReceiverIntentOperation
+  10-27 04:33:15.859 - 10206 (com.google.android.gms) - ACQ Icing (partial)
+  10-27 04:33:15.859 - 10152 (com.google.android.dialer) - ACQ Application creation -> Application.onCreate -> DialerBaseApplication_onCreate -> Startup Listeners -> AfterPackageReplaced (partial)
+  10-27 04:33:15.884 - 1000 (System) - ACQ NetworkStats (partial)
+  10-27 04:33:15.899 - 10206 (com.google.android.gms) - ACQ IntentOp:.c.b.BackgroundBroadcastReceiverSupport$PersistentReceiverIntentOperation (partial)
+  10-27 04:33:15.905 - 10162 (com.google.android.apps.wellbeing) - ACQ *job*r/#TikTokWorker#com.google.android.apps.wellbeing.task.Task#@androidx.work.systemjobscheduler@com.google.android.apps.wellbeing/androidx.work.impl.background.systemjob.SystemJobService (partial)
+  10-27 04:33:15.908 - 10162 (com.google.android.apps.wellbeing) - ACQ *job*r/#TikTokWorker#com.google.android.apps.wellbeing.task.Task#@androidx.work.systemjobscheduler@com.google.android.apps.wellbeing/androidx.work.impl.background.systemjob.SystemJobService (partial)
+  10-27 04:33:15.913 - 10206 (com.google.android.gms) - REL IntentOp:.c.b.BackgroundBroadcastReceiverSupport$PersistentReceiverIntentOperation
+  10-27 04:33:15.933 - 10162 (com.google.android.apps.wellbeing) - REL *job*r/#TikTokWorker#com.google.android.apps.wellbeing.task.Task#@androidx.work.systemjobscheduler@com.google.android.apps.wellbeing/androidx.work.impl.background.systemjob.SystemJobService
+  10-27 04:33:15.959 - 1000 (System) - REL NetworkStats
+  10-27 04:33:16.188 - 10198 (com.android.systemui) - ACQ *alarm* (partial)
+  10-27 04:33:16.189 - 10198 (com.android.systemui) - REL *alarm*
+  10-27 04:33:16.211 - 1000 (System) - ACQ NetworkTimeUpdateService (partial)
+  10-27 04:33:16.214 - 10206 (com.google.android.gms) - ACQ GCM_WORK (partial)
+  10-27 04:33:16.237 - 10206 (com.google.android.gms) - ACQ GCM_CONN_ALARM (partial)
+  10-27 04:33:16.263 - 1000 (System) - ACQ NetworkStats (partial)
+  10-27 04:33:16.269 - 10206 (com.google.android.gms) - REL GCM_WORK
+  10-27 04:33:16.283 - 1000 (System) - REL NetworkStats
+  10-27 04:33:16.295 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:16.297 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:16.298 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:16.301 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:16.301 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:16.306 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:16.325 - 10206 (com.google.android.gms) - ACQ GCM_WORK (partial)
+  10-27 04:33:16.342 - 10206 (com.google.android.gms) - REL GCM_WORK
+  10-27 04:33:16.407 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:16.408 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:16.408 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:16.410 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:16.410 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:16.414 - 10176 (com.google.android.apps.photos) - ACQ *job*r/com.google.android.apps.photos/com.google.android.libraries.social.async.BackgroundTaskJobService (partial)
+  10-27 04:33:16.414 - 10206 (com.google.android.gms) - REL Icing
+  10-27 04:33:16.415 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:16.426 - 10176 (com.google.android.apps.photos) - ACQ *job*r/com.google.android.apps.photos/com.google.android.libraries.social.async.BackgroundTaskJobService (partial)
+  10-27 04:33:16.429 - 10163 (com.google.android.googlequicksearchbox) - ACQ GoogleSearchWidgetProvider#onReceive (partial)
+  10-27 04:33:16.446 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:16.446 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:16.446 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:16.451 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:16.451 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:16.453 - 10176 (com.google.android.apps.photos) - REL *job*r/com.google.android.apps.photos/com.google.android.libraries.social.async.BackgroundTaskJobService
+  10-27 04:33:16.456 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:16.457 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:16.459 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:16.459 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:16.461 - 1000 (System) - ACQ *job*r/com.android.settings/.sim.PrimarySubscriptionListChangedService (partial)
+  10-27 04:33:16.462 - 1000 (System) - ACQ *job*r/com.android.settings/.sim.PrimarySubscriptionListChangedService (partial)
+  10-27 04:33:16.463 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:16.463 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:16.467 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:16.474 - 1000 (System) - REL *job*r/com.android.settings/.sim.PrimarySubscriptionListChangedService
+  10-27 04:33:16.502 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:16.506 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:16.507 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:16.508 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:16.510 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:16.510 - 10110 (com.android.providers.calendar) - ACQ CalendarReceiver_Provider (partial)
+  10-27 04:33:16.512 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:16.542 - 10163 (com.google.android.googlequicksearchbox) - REL GoogleSearchWidgetProvider#onReceive
+  10-27 04:33:16.550 - 1000 (System) - REL *job*r/com.android.settings/.sim.PrimarySubscriptionListChangedService
+  10-27 04:33:16.550 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:16.553 - 10110 (com.android.providers.calendar) - REL CalendarReceiver_Provider
+  10-27 04:33:16.553 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:16.553 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:16.556 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:16.556 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:16.563 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:16.568 - 10176 (com.google.android.apps.photos) - ACQ *job*r/com.google.android.apps.photos/.jobqueue.PhotosOfflineJobQueueJobsService (partial)
+  10-27 04:33:16.568 - 10176 (com.google.android.apps.photos) - ACQ *job*r/com.google.android.apps.photos/.jobqueue.PhotosOfflineJobQueueJobsService (partial)
+  10-27 04:33:16.572 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:16.573 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:16.573 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:16.575 - 10176 (com.google.android.apps.photos) - REL *job*r/com.google.android.apps.photos/.jobqueue.PhotosOfflineJobQueueJobsService
+  10-27 04:33:16.576 - 10176 (com.google.android.apps.photos) - REL *job*r/com.google.android.apps.photos/com.google.android.libraries.social.async.BackgroundTaskJobService
+  10-27 04:33:16.599 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:16.599 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:16.600 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:16.608 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:16.608 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:16.608 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:16.609 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:16.609 - 1001 (com.android.ons,...) - ACQ *telephony-radio* (partial)
+  10-27 04:33:16.612 - 1001 (com.android.ons,...) - REL *telephony-radio*
+  10-27 04:33:16.665 - 10206 (com.google.android.gms) - ACQ CMWakeLock (partial)
+  10-27 04:33:16.682 - 10206 (com.google.android.gms) - REL CMWakeLock
+  10-27 04:33:16.704 - 10176 (com.google.android.apps.photos) - REL *job*r/com.google.android.apps.photos/.jobqueue.PhotosOfflineJobQueueJobsService
+  10-27 04:33:16.807 - 10162 (com.google.android.apps.wellbeing) - ACQ *job*r/#TikTokWorker#com.google.android.apps.wellbeing.widget.WidgetFlagCheckWorker#@androidx.work.systemjobscheduler@com.google.android.apps.wellbeing/androidx.work.impl.background.systemjob.SystemJobService (partial)
+  10-27 04:33:16.807 - 10162 (com.google.android.apps.wellbeing) - ACQ *job*r/#TikTokWorker#com.google.android.apps.wellbeing.widget.WidgetFlagCheckWorker#@androidx.work.systemjobscheduler@com.google.android.apps.wellbeing/androidx.work.impl.background.systemjob.SystemJobService (partial)
+  10-27 04:33:16.813 - 10162 (com.google.android.apps.wellbeing) - REL *job*r/#TikTokWorker#com.google.android.apps.wellbeing.widget.WidgetFlagCheckWorker#@androidx.work.systemjobscheduler@com.google.android.apps.wellbeing/androidx.work.impl.background.systemjob.SystemJobService
+  10-27 04:33:16.845 - 10162 (com.google.android.apps.wellbeing) - ACQ *job*r/#TikTokWorker#com.google.android.apps.wellbeing.autodnd.SettingsInjectionWorker#@androidx.work.systemjobscheduler@com.google.android.apps.wellbeing/androidx.work.impl.background.systemjob.SystemJobService (partial)
+  10-27 04:33:16.845 - 10162 (com.google.android.apps.wellbeing) - ACQ *job*r/#TikTokWorker#com.google.android.apps.wellbeing.autodnd.SettingsInjectionWorker#@androidx.work.systemjobscheduler@com.google.android.apps.wellbeing/androidx.work.impl.background.systemjob.SystemJobService (partial)
+  10-27 04:33:16.851 - 10206 (com.google.android.gms) - ACQ CMWakeLock (partial)
+  10-27 04:33:16.859 - 10162 (com.google.android.apps.wellbeing) - REL *job*r/#TikTokWorker#com.google.android.apps.wellbeing.autodnd.SettingsInjectionWorker#@androidx.work.systemjobscheduler@com.google.android.apps.wellbeing/androidx.work.impl.background.systemjob.SystemJobService
+  10-27 04:33:16.863 - 10206 (com.google.android.gms) - REL CMWakeLock
+  10-27 04:33:16.931 - 10162 (com.google.android.apps.wellbeing) - REL *job*r/#TikTokWorker#com.google.android.apps.wellbeing.widget.WidgetFlagCheckWorker#@androidx.work.systemjobscheduler@com.google.android.apps.wellbeing/androidx.work.impl.background.systemjob.SystemJobService
+  10-27 04:33:16.939 - 10162 (com.google.android.apps.wellbeing) - REL *job*r/#TikTokWorker#com.google.android.apps.wellbeing.task.Task#@androidx.work.systemjobscheduler@com.google.android.apps.wellbeing/androidx.work.impl.background.systemjob.SystemJobService
+  10-27 04:33:16.939 - 10206 (com.google.android.gms) - ACQ CMWakeLock (partial)
+  10-27 04:33:16.978 - 10206 (com.google.android.gms) - REL CMWakeLock
+  10-27 04:33:17.002 - 10206 (com.google.android.gms) - ACQ CMWakeLock (partial)
+  10-27 04:33:17.022 - 10162 (com.google.android.apps.wellbeing) - REL *job*r/#TikTokWorker#com.google.android.apps.wellbeing.autodnd.SettingsInjectionWorker#@androidx.work.systemjobscheduler@com.google.android.apps.wellbeing/androidx.work.impl.background.systemjob.SystemJobService
+  10-27 04:33:17.043 - 10206 (com.google.android.gms) - REL CMWakeLock
+  10-27 04:33:17.298 - 10206 (com.google.android.gms) - ACQ GCM_WORK (partial)
+  10-27 04:33:17.473 - 10206 (com.google.android.gms) - REL GCM_WORK
+  10-27 04:33:17.510 - 10152 (com.google.android.dialer) - REL *job*r/#TikTokWorker#com.android.dialer.calleridfeeback.impl.database.retention.CallerIdFeedbackDeletionWorker#@androidx.work.systemjobscheduler@com.google.android.dialer/androidx.work.impl.background.systemjob.SystemJobService
+  10-27 04:33:17.526 - 10206 (com.google.android.gms) - ACQ GCM_WORK (partial)
+  10-27 04:33:17.541 - 10206 (com.google.android.gms) - REL GCM_WORK
+  10-27 04:33:17.571 - 10152 (com.google.android.dialer) - REL *job*r/#TikTokWorker#com.android.dialer.callscreen.impl.donation.scotty.CallScreenMetricsWorker#@androidx.work.systemjobscheduler@com.google.android.dialer/androidx.work.impl.background.systemjob.SystemJobService
+  10-27 04:33:17.583 - 10152 (com.google.android.dialer) - ACQ fiid-sync (partial)
+  10-27 04:33:17.606 - 10152 (com.google.android.dialer) - ACQ *job*r/#TikTokWorker#com.android.incallui.callscreen.impl.recording.retention.CallScreenRecordingsDeletionWorker#@androidx.work.systemjobscheduler@com.google.android.dialer/androidx.work.impl.background.systemjob.SystemJobService (partial)
+  10-27 04:33:17.607 - 10152 (com.google.android.dialer) - ACQ *job*r/#TikTokWorker#com.android.incallui.callscreen.impl.recording.retention.CallScreenRecordingsDeletionWorker#@androidx.work.systemjobscheduler@com.google.android.dialer/androidx.work.impl.background.systemjob.SystemJobService (partial)
+  10-27 04:33:17.620 - 10152 (com.google.android.dialer) - REL *job*r/#TikTokWorker#com.android.incallui.callscreen.impl.recording.retention.CallScreenRecordingsDeletionWorker#@androidx.work.systemjobscheduler@com.google.android.dialer/androidx.work.impl.background.systemjob.SystemJobService
+  10-27 04:33:17.628 - 10206 (com.google.android.gms) - ACQ *gms_scheduler*:internal (partial)
+  10-27 04:33:17.661 - 10206 (com.google.android.gms) - REL *gms_scheduler*:internal
+  10-27 04:33:17.757 - 10176 (com.google.android.apps.photos) - ACQ *job*r/com.google.android.apps.photos/.account.full.SyncAccountsForLoginService (partial)
+  10-27 04:33:17.758 - 10176 (com.google.android.apps.photos) - ACQ *job*r/com.google.android.apps.photos/.account.full.SyncAccountsForLoginService (partial)
+  10-27 04:33:17.766 - 10176 (com.google.android.apps.photos) - REL *job*r/com.google.android.apps.photos/.account.full.SyncAccountsForLoginService
+  10-27 04:33:17.789 - 10176 (com.google.android.apps.photos) - ACQ BackgroundTaskService-SyncAcctsForLoginTask (partial)
+  10-27 04:33:17.792 - 10206 (com.google.android.gms) - ACQ GCM_READ (partial)
+  10-27 04:33:17.801 - 10206 (com.google.android.gms) - ACQ GCM_WORK (partial)
+  10-27 04:33:17.805 - 10206 (com.google.android.gms) - REL GCM_READ
+  10-27 04:33:17.825 - 10206 (com.google.android.gms) - ACQ GCM_READ (partial)
+  10-27 04:33:17.847 - 10206 (com.google.android.gms) - REL GCM_READ
+  10-27 04:33:17.848 - 10152 (com.google.android.dialer) - REL *job*r/#TikTokWorker#com.android.dialer.xatu.impl.storage.postcall.XatuMetricsWorker#@androidx.work.systemjobscheduler@com.google.android.dialer/androidx.work.impl.background.systemjob.SystemJobService
+  10-27 04:33:17.851 - 10206 (com.google.android.gms) - ACQ IntentOp:.a.f.FrpUpdateIntentOperation (partial)
+  10-27 04:33:17.857 - 10206 (com.google.android.gms) - REL IntentOp:.a.f.FrpUpdateIntentOperation
+  10-27 04:33:17.862 - 10176 (com.google.android.apps.photos) - REL BackgroundTaskService-SyncAcctsForLoginTask
+  10-27 04:33:17.864 - 10206 (com.google.android.gms) - REL GCM_CONN_ALARM
+  10-27 04:33:17.878 - 10176 (com.google.android.apps.photos) - REL *job*r/com.google.android.apps.photos/.account.full.SyncAccountsForLoginService
+  10-27 04:33:17.911 - 10206 (com.google.android.gms) - ACQ IntentOp:.u.e.InstallationIntentOperation (partial)
+  10-27 04:33:17.925 - 10206 (com.google.android.gms) - REL IntentOp:.u.e.InstallationIntentOperation
+  10-27 04:33:18.044 - 10206 (com.google.android.gms) - REL GCM_WORK
+  10-27 04:33:18.221 - 10206 (com.google.android.gms) - ACQ *gms_scheduler*:internal (partial)
+  10-27 04:33:18.670 - 10206 (com.google.android.gms) - REL *gms_scheduler*:internal
+  10-27 04:33:18.974 - 10152 (com.google.android.dialer) - REL Application creation -> Application.onCreate -> DialerBaseApplication_onCreate -> Startup Listeners -> AfterPackageReplaced
+  10-27 04:33:19.141 - 1000 (System) - ACQ *alarm* (partial)
+  10-27 04:33:19.183 - 10158 (com.google.android.partnersetup) - ACQ *job*r/com.google.android.partnersetup/.PhenotypeJobService (partial)
+  10-27 04:33:19.184 - 10158 (com.google.android.partnersetup) - ACQ *job*r/com.google.android.partnersetup/.PhenotypeJobService (partial)
+  10-27 04:33:19.241 - 10158 (com.google.android.partnersetup) - REL *job*r/com.google.android.partnersetup/.PhenotypeJobService
+  10-27 04:33:19.253 - 1000 (System) - REL WiredAccessoryManager
+  10-27 04:33:19.260 - 10152 (com.google.android.dialer) - REL *job*r/#TikTokWorker#com.android.incallui.callscreen.impl.recording.retention.CallScreenRecordingsDeletionWorker#@androidx.work.systemjobscheduler@com.google.android.dialer/androidx.work.impl.background.systemjob.SystemJobService
+  10-27 04:33:19.278 - 10158 (com.google.android.partnersetup) - ACQ *job*r/com.google.android.partnersetup/.AppHidingJobService (partial)
+  10-27 04:33:19.278 - 10158 (com.google.android.partnersetup) - ACQ *job*r/com.google.android.partnersetup/.AppHidingJobService (partial)
+  10-27 04:33:19.280 - 10158 (com.google.android.partnersetup) - REL *job*r/com.google.android.partnersetup/.AppHidingJobService
+  10-27 04:33:19.284 - 10158 (com.google.android.partnersetup) - ACQ *job*r/com.google.android.partnersetup/.ClientIdJobService (partial)
+  10-27 04:33:19.296 - 10158 (com.google.android.partnersetup) - ACQ *job*r/com.google.android.partnersetup/.ClientIdJobService (partial)
+  10-27 04:33:19.317 - 10158 (com.google.android.partnersetup) - REL *job*r/com.google.android.partnersetup/.ClientIdJobService
+  10-27 04:33:19.442 - 10158 (com.google.android.partnersetup) - REL *job*r/com.google.android.partnersetup/.AppHidingJobService
+  10-27 04:33:19.530 - 10206 (com.google.android.gms) - ACQ wake:com.google.android.gms/.chimera.GmsIntentOperationService - 913 (partial)
+  10-27 04:33:19.538 - 10206 (com.google.android.gms) - ACQ Checkin Service (partial)
+  10-27 04:33:20.024 - 10206 (com.google.android.gms) - ACQ *gms_scheduler*:internal (partial)
+  10-27 04:33:20.084 - 10206 (com.google.android.gms) - ACQ Icing (partial)
+  10-27 04:33:20.093 - 10206 (com.google.android.gms) - REL *gms_scheduler*:internal
+  10-27 04:33:20.131 - 10206 (com.google.android.gms) - REL Icing
+  10-27 04:33:20.251 - 10206 (com.google.android.gms) - ACQ CallbackRunner (partial)
+  10-27 04:33:20.260 - 10206 (com.google.android.gms) - REL CallbackRunner
+  10-27 04:33:20.385 - 10206 (com.google.android.gms) - ACQ messaging_service_start_wakelock (partial)
+  10-27 04:33:20.411 - 10206 (com.google.android.gms) - ACQ messaging_service_work_wakelock (partial)
+  10-27 04:33:20.412 - 10206 (com.google.android.gms) - REL messaging_service_start_wakelock
+  10-27 04:33:20.413 - 10161 (com.google.android.settings.intelligence) - ACQ *job*r/com.google.android.settings.intelligence/.modules.routines.impl.worker.RoutinesJobIntentService (partial)
+  10-27 04:33:20.413 - 10161 (com.google.android.settings.intelligence) - ACQ *job*r/com.google.android.settings.intelligence/.modules.routines.impl.worker.RoutinesJobIntentService (partial)
+  10-27 04:33:20.417 - 10161 (com.google.android.settings.intelligence) - REL *job*r/com.google.android.settings.intelligence/.modules.routines.impl.worker.RoutinesJobIntentService
+  10-27 04:33:20.419 - 10206 (com.google.android.gms) - REL messaging_service_work_wakelock
+  10-27 04:33:20.535 - 10161 (com.google.android.settings.intelligence) - REL *job*r/com.google.android.settings.intelligence/.modules.routines.impl.worker.RoutinesJobIntentService
+  10-27 04:33:20.555 - 10206 (com.google.android.gms) - ACQ IntentOp:.c.c.InitConfigOperation (partial)
+  10-27 04:33:21.081 - 10158 (com.google.android.partnersetup) - REL *job*r/com.google.android.partnersetup/.ClientIdJobService
+  10-27 04:33:21.186 - 10158 (com.google.android.partnersetup) - REL *job*r/com.google.android.partnersetup/.PhenotypeJobService
+  10-27 04:33:21.209 - 10206 (com.google.android.gms) - ACQ IntentOp:.r.n.RefreshNotificationsIntentOperation (partial)
+  10-27 04:33:21.224 - 10206 (com.google.android.gms) - ACQ IntentOp:.c.c.InitConfigOperation (partial)
+  10-27 04:33:21.255 - 1000 (System) - ACQ *alarm* (partial)
+  10-27 04:33:21.264 - 10158 (com.google.android.partnersetup) - ACQ *job*r/com.google.android.partnersetup/.PhenotypeJobService (partial)
+  10-27 04:33:21.264 - 1000 (System) - REL *alarm*
+  10-27 04:33:21.265 - 10158 (com.google.android.partnersetup) - ACQ *job*r/com.google.android.partnersetup/.PhenotypeJobService (partial)
+  10-27 04:33:21.273 - 10206 (com.google.android.gms) - ACQ IntentOp:.r.n.ScheduleTimeRemindersIntentOperation (partial)
+  10-27 04:33:21.287 - 10206 (com.google.android.gms) - REL IntentOp:.r.n.ScheduleTimeRemindersIntentOperation
+  10-27 04:33:21.293 - 10158 (com.google.android.partnersetup) - REL *job*r/com.google.android.partnersetup/.PhenotypeJobService
+  10-27 04:33:21.302 - 10206 (com.google.android.gms) - REL IntentOp:.r.n.RefreshNotificationsIntentOperation
+  10-27 04:33:21.395 - 10206 (com.google.android.gms) - REL IntentOp:.c.c.InitConfigOperation
+  10-27 04:33:21.560 - 10110 (com.android.providers.calendar) - ACQ *alarm* (partial)
+  10-27 04:33:21.626 - 10110 (com.android.providers.calendar) - ACQ *job*e/com.android.providers.calendar/.CalendarProviderJobService (partial)
+  10-27 04:33:21.630 - 10110 (com.android.providers.calendar) - ACQ *job*e/com.android.providers.calendar/.CalendarProviderJobService (partial)
+  10-27 04:33:21.747 - 10110 (com.android.providers.calendar) - REL *job*e/com.android.providers.calendar/.CalendarProviderJobService
+  10-27 04:33:21.777 - 10110 (com.android.providers.calendar) - REL *alarm*
+  10-27 04:33:21.783 - 10110 (com.android.providers.calendar) - REL *job*e/com.android.providers.calendar/.CalendarProviderJobService
+  10-27 04:33:21.787 - 10206 (com.google.android.gms) - REL IntentOp:.c.c.InitConfigOperation
+  10-27 04:33:21.824 - 10206 (com.google.android.gms) - ACQ CallbackRunner (partial)
+  10-27 04:33:21.831 - 10206 (com.google.android.gms) - REL CallbackRunner
+  10-27 04:33:21.850 - 10206 (com.google.android.gms) - ACQ CallbackRunner (partial)
+  10-27 04:33:21.864 - 10206 (com.google.android.gms) - ACQ IntentOp:.c.c.InitConfigOperation (partial)
+  10-27 04:33:21.916 - 10206 (com.google.android.gms) - REL CallbackRunner
+  10-27 04:33:21.949 - 10206 (com.google.android.gms) - REL IntentOp:.c.c.InitConfigOperation
+  10-27 04:33:22.058 - 10206 (com.google.android.gms) - ACQ *gms_scheduler*:internal (partial)
+  10-27 04:33:22.087 - 10206 (com.google.android.gms) - ACQ *gms_scheduler*/c.g.a.g/.t.g.TapAndPayGcmTaskService (partial)
+  10-27 04:33:22.228 - 10206 (com.google.android.gms) - ACQ IntentOp:.c.c.InitConfigOperation (partial)
+  10-27 04:33:22.229 - 10206 (com.google.android.gms) - REL *gms_scheduler*:internal
+  10-27 04:33:22.339 - 10206 (com.google.android.gms) - REL IntentOp:.c.c.InitConfigOperation
+  10-27 04:33:22.381 - 10206 (com.google.android.gms) - REL *gms_scheduler*/c.g.a.g/.t.g.TapAndPayGcmTaskService
+  10-27 04:33:22.390 - 10206 (com.google.android.gms) - ACQ UlrDispSvcFastWL (partial)
+  10-27 04:33:22.396 - 10206 (com.google.android.gms) - REL UlrDispSvcFastWL
+  10-27 04:33:22.396 - 10206 (com.google.android.gms) - ACQ UlrDispSvcFastWL (partial)
+  10-27 04:33:22.402 - 10206 (com.google.android.gms) - ACQ *gms_scheduler*:internal (partial)
+  10-27 04:33:22.419 - 10158 (com.google.android.partnersetup) - REL *job*r/com.google.android.partnersetup/.PhenotypeJobService
+  10-27 04:33:22.424 - 10206 (com.google.android.gms) - REL *gms_scheduler*:internal
+  10-27 04:33:22.438 - 10206 (com.google.android.gms) - REL UlrDispSvcFastWL
+  10-27 04:33:22.487 - 10206 (com.google.android.gms) - ACQ *gms_scheduler*:internal (partial)
+  10-27 04:33:22.508 - 10206 (com.google.android.gms) - ACQ *gms_scheduler*/c.g.a.g/.t.g.TapAndPayGcmTaskService (partial)
+  10-27 04:33:22.517 - 10158 (com.google.android.partnersetup) - ACQ *alarm* (partial)
+  10-27 04:33:22.519 - 10158 (com.google.android.partnersetup) - REL *alarm*
+  10-27 04:33:22.520 - 10158 (com.google.android.partnersetup) - ACQ *job*r/com.google.android.partnersetup/.ClientIdJobService (partial)
+  10-27 04:33:22.520 - 10158 (com.google.android.partnersetup) - ACQ *job*r/com.google.android.partnersetup/.ClientIdJobService (partial)
+  10-27 04:33:22.529 - 10158 (com.google.android.partnersetup) - REL *job*r/com.google.android.partnersetup/.ClientIdJobService
+  10-27 04:33:22.530 - 10206 (com.google.android.gms) - REL *gms_scheduler*:internal
+  10-27 04:33:22.535 - 10206 (com.google.android.gms) - ACQ *gms_scheduler*:internal (partial)
+  10-27 04:33:22.541 - 10206 (com.google.android.gms) - ACQ CallbackRunner (partial)
+  10-27 04:33:22.544 - 10206 (com.google.android.gms) - REL CallbackRunner
+  10-27 04:33:22.559 - 10206 (com.google.android.gms) - ACQ CallbackRunner (partial)
+  10-27 04:33:22.564 - 10206 (com.google.android.gms) - REL CallbackRunner
+  10-27 04:33:22.597 - 10206 (com.google.android.gms) - REL *gms_scheduler*:internal
+  10-27 04:33:22.599 - 10206 (com.google.android.gms) - ACQ *gms_scheduler*:internal (partial)
+  10-27 04:33:22.621 - 10206 (com.google.android.gms) - REL *gms_scheduler*:internal
+  10-27 04:33:22.622 - 10206 (com.google.android.gms) - REL *gms_scheduler*/c.g.a.g/.t.g.TapAndPayGcmTaskService
+  10-27 04:33:22.625 - 10206 (com.google.android.gms) - ACQ *gms_scheduler*:internal (partial)
+  10-27 04:33:22.669 - 10206 (com.google.android.gms) - REL *gms_scheduler*:internal
+  10-27 04:33:22.674 - 10206 (com.google.android.gms) - ACQ *gms_scheduler*:internal (partial)
+  10-27 04:33:22.703 - 10206 (com.google.android.gms) - ACQ *gms_scheduler*/c.g.a.g/.t.g.TapAndPayGcmTaskService (partial)
+  10-27 04:33:22.716 - 10206 (com.google.android.gms) - REL *gms_scheduler*:internal
+  10-27 04:33:22.717 - 10206 (com.google.android.gms) - ACQ *gms_scheduler*:internal (partial)
+  10-27 04:33:22.736 - 10206 (com.google.android.gms) - REL *gms_scheduler*:internal
+  10-27 04:33:22.739 - 10206 (com.google.android.gms) - ACQ *gms_scheduler*:internal (partial)
+  10-27 04:33:22.749 - 10206 (com.google.android.gms) - REL *gms_scheduler*:internal
+  10-27 04:33:22.752 - 10206 (com.google.android.gms) - REL *gms_scheduler*/c.g.a.g/.t.g.TapAndPayGcmTaskService
+  10-27 04:33:22.754 - 10206 (com.google.android.gms) - ACQ *gms_scheduler*:internal (partial)
+  10-27 04:33:22.777 - 10206 (com.google.android.gms) - REL *gms_scheduler*:internal
+  10-27 04:33:22.778 - 10206 (com.google.android.gms) - ACQ *gms_scheduler*:internal (partial)
+  10-27 04:33:22.791 - 10206 (com.google.android.gms) - REL *gms_scheduler*:internal
+  10-27 04:33:22.820 - 10158 (com.google.android.partnersetup) - REL *job*r/com.google.android.partnersetup/.ClientIdJobService
+  10-27 04:33:22.827 - 10206 (com.google.android.gms) - ACQ *gms_scheduler*:internal (partial)
+  10-27 04:33:22.837 - 10206 (com.google.android.gms) - REL *gms_scheduler*:internal
+  10-27 04:33:22.839 - 10206 (com.google.android.gms) - ACQ *gms_scheduler*:internal (partial)
+  10-27 04:33:22.856 - 10206 (com.google.android.gms) - ACQ *gms_scheduler*/c.g.a.g/.p.g.PayGcmTaskService (partial)
+  10-27 04:33:22.867 - 10206 (com.google.android.gms) - REL *gms_scheduler*:internal
+  10-27 04:33:22.973 - 10206 (com.google.android.gms) - REL *gms_scheduler*/c.g.a.g/.p.g.PayGcmTaskService
+  10-27 04:33:23.051 - 10206 (com.google.android.gms) - ACQ *gms_scheduler*:internal (partial)
+  10-27 04:33:23.065 - 10206 (com.google.android.gms) - REL *gms_scheduler*:internal
+  10-27 04:33:23.071 - 10206 (com.google.android.gms) - ACQ *gms_scheduler*:internal (partial)
+  10-27 04:33:23.086 - 10206 (com.google.android.gms) - ACQ *gms_scheduler*/c.g.a.g/.p.g.PayGcmTaskService (partial)
+  10-27 04:33:23.097 - 10206 (com.google.android.gms) - REL *gms_scheduler*:internal
+  10-27 04:33:23.108 - 10206 (com.google.android.gms) - REL *gms_scheduler*/c.g.a.g/.p.g.PayGcmTaskService
+  10-27 04:33:23.291 - 10206 (com.google.android.gms) - ACQ *gms_scheduler*:internal (partial)
+  10-27 04:33:23.300 - 10206 (com.google.android.gms) - REL *gms_scheduler*:internal
+  10-27 04:33:23.301 - 10206 (com.google.android.gms) - ACQ *gms_scheduler*:internal (partial)
+  10-27 04:33:23.320 - 10206 (com.google.android.gms) - ACQ *gms_scheduler*/c.g.a.g/.p.g.PayGcmTaskService (partial)
+  10-27 04:33:23.334 - 10206 (com.google.android.gms) - REL *gms_scheduler*:internal
+  10-27 04:33:23.350 - 10206 (com.google.android.gms) - REL *gms_scheduler*/c.g.a.g/.p.g.PayGcmTaskService
+  10-27 04:33:23.458 - 10206 (com.google.android.gms) - ACQ *gms_scheduler*:internal (partial)
+  10-27 04:33:23.465 - 10206 (com.google.android.gms) - REL *gms_scheduler*:internal
+  10-27 04:33:23.468 - 10206 (com.google.android.gms) - ACQ *gms_scheduler*:internal (partial)
+  10-27 04:33:23.491 - 10206 (com.google.android.gms) - ACQ *gms_scheduler*/c.g.a.g/.p.g.PayGcmTaskService (partial)
+  10-27 04:33:23.526 - 10161 (com.google.android.settings.intelligence) - ACQ *job*r/com.google.android.settings.intelligence/.modules.routines.impl.worker.RoutinesJobIntentService (partial)
+  10-27 04:33:23.526 - 10161 (com.google.android.settings.intelligence) - ACQ *job*r/com.google.android.settings.intelligence/.modules.routines.impl.worker.RoutinesJobIntentService (partial)
+  10-27 04:33:23.530 - 10161 (com.google.android.settings.intelligence) - REL *job*r/com.google.android.settings.intelligence/.modules.routines.impl.worker.RoutinesJobIntentService
+  10-27 04:33:23.537 - 10206 (com.google.android.gms) - REL *gms_scheduler*:internal
+  10-27 04:33:23.548 - 10161 (com.google.android.settings.intelligence) - REL *job*r/com.google.android.settings.intelligence/.modules.routines.impl.worker.RoutinesJobIntentService
+  10-27 04:33:23.564 - 10206 (com.google.android.gms) - REL *gms_scheduler*/c.g.a.g/.p.g.PayGcmTaskService
+  10-27 04:33:23.777 - 10206 (com.google.android.gms) - ACQ *gms_scheduler*:internal (partial)
+  10-27 04:33:23.785 - 10206 (com.google.android.gms) - REL *gms_scheduler*:internal
+  10-27 04:33:23.786 - 10206 (com.google.android.gms) - ACQ *gms_scheduler*:internal (partial)
+  10-27 04:33:23.813 - 10206 (com.google.android.gms) - ACQ *gms_scheduler*/c.g.a.g/.p.g.PayGcmTaskService (partial)
+  10-27 04:33:23.846 - 10206 (com.google.android.gms) - REL *gms_scheduler*:internal
+  10-27 04:33:23.896 - 10206 (com.google.android.gms) - REL *gms_scheduler*/c.g.a.g/.p.g.PayGcmTaskService
+  10-27 04:33:24.107 - 10217 (com.google.android.providers.media.module) - REL *job*e/#MediaServiceV2#@androidx.work.systemjobscheduler@com.google.android.providers.media.module/androidx.work.impl.background.systemjob.SystemJobService
+  10-27 04:33:24.124 - 10217 (com.google.android.providers.media.module) - ACQ *job*e/#MediaServiceV2#@androidx.work.systemjobscheduler@com.google.android.providers.media.module/androidx.work.impl.background.systemjob.SystemJobService (partial)
+  10-27 04:33:24.124 - 10217 (com.google.android.providers.media.module) - ACQ *job*e/#MediaServiceV2#@androidx.work.systemjobscheduler@com.google.android.providers.media.module/androidx.work.impl.background.systemjob.SystemJobService (partial)
+  10-27 04:33:24.125 - 10206 (com.google.android.gms) - ACQ *gms_scheduler*:internal (partial)
+  10-27 04:33:24.127 - 10217 (com.google.android.providers.media.module) - REL *job*e/#MediaServiceV2#@androidx.work.systemjobscheduler@com.google.android.providers.media.module/androidx.work.impl.background.systemjob.SystemJobService
+  10-27 04:33:24.152 - 10217 (com.google.android.providers.media.module) - REL *job*e/#MediaServiceV2#@androidx.work.systemjobscheduler@com.google.android.providers.media.module/androidx.work.impl.background.systemjob.SystemJobService
+  10-27 04:33:24.212 - 10206 (com.google.android.gms) - REL *gms_scheduler*:internal
+  10-27 04:33:24.215 - 10206 (com.google.android.gms) - ACQ *gms_scheduler*:internal (partial)
+  10-27 04:33:24.231 - 10206 (com.google.android.gms) - REL *gms_scheduler*:internal
+  10-27 04:33:24.326 - 10206 (com.google.android.gms) - ACQ *gms_scheduler*:internal (partial)
+  10-27 04:33:24.335 - 10206 (com.google.android.gms) - REL *gms_scheduler*:internal
+  10-27 04:33:24.560 - 10206 (com.google.android.gms) - ACQ *gms_scheduler*:internal (partial)
+  10-27 04:33:24.582 - 10206 (com.google.android.gms) - REL *gms_scheduler*:internal
+  10-27 04:33:24.584 - 10206 (com.google.android.gms) - ACQ *gms_scheduler*:internal (partial)
+  10-27 04:33:24.617 - 10206 (com.google.android.gms) - REL *gms_scheduler*:internal
+  10-27 04:33:26.484 - 10176 (com.google.android.apps.photos) - ACQ *job*r/com.google.android.apps.photos/com.google.android.libraries.social.async.BackgroundTaskJobService (partial)
+  10-27 04:33:26.486 - 10176 (com.google.android.apps.photos) - ACQ *job*r/com.google.android.apps.photos/com.google.android.libraries.social.async.BackgroundTaskJobService (partial)
+  10-27 04:33:26.491 - 10176 (com.google.android.apps.photos) - REL *job*r/com.google.android.apps.photos/com.google.android.libraries.social.async.BackgroundTaskJobService
+  10-27 04:33:26.495 - 10176 (com.google.android.apps.photos) - REL *job*r/com.google.android.apps.photos/com.google.android.libraries.social.async.BackgroundTaskJobService
+  10-27 04:33:28.104 - 10206 (com.google.android.gms) - ACQ IntentOp:.c.b.BackgroundBroadcastReceiverSupport$PersistentReceiverIntentOperation (partial)
+  10-27 04:33:28.105 - 10206 (com.google.android.gms) - ACQ IntentOp:.c.b.BackgroundBroadcastReceiverSupport$PersistentReceiverIntentOperation (partial)
+  10-27 04:33:28.108 - 10206 (com.google.android.gms) - REL IntentOp:.c.b.BackgroundBroadcastReceiverSupport$PersistentReceiverIntentOperation
+  10-27 04:33:28.118 - 10206 (com.google.android.gms) - REL IntentOp:.c.b.BackgroundBroadcastReceiverSupport$PersistentReceiverIntentOperation
+  10-27 04:33:29.617 - 1000 (System) - ACQ *alarm* (partial)
+  10-27 04:33:29.630 - 1000 (System) - REL WiredAccessoryManager
+  10-27 04:33:29.633 - 10206 (com.google.android.gms) - ACQ *gms_scheduler*:internal (partial)
+  10-27 04:33:29.638 - 10206 (com.google.android.gms) - REL *gms_scheduler*:internal
+  10-27 04:33:32.343 - 10206 (com.google.android.gms) - ACQ *alarm* (partial)
+  10-27 04:33:32.350 - 10206 (com.google.android.gms) - REL *alarm*
+  10-27 04:33:32.364 - 10206 (com.google.android.gms) - ACQ IntentOp:.c.c.InitConfigOperation (partial)
+  10-27 04:33:32.410 - 10206 (com.google.android.gms) - REL IntentOp:.c.c.InitConfigOperation
+  10-27 04:33:33.126 - 10206 (com.google.android.gms) - ACQ *alarm* (partial)
+  10-27 04:33:33.129 - 10206 (com.google.android.gms) - ACQ GCM_WORK (partial)
+  10-27 04:33:33.131 - 10206 (com.google.android.gms) - REL GCM_WORK
+  10-27 04:33:33.131 - 10206 (com.google.android.gms) - REL *alarm*
+  10-27 04:33:34.077 - 10176 (com.google.android.apps.photos) - ACQ *job*r/com.google.android.apps.photos/com.google.android.libraries.social.mediamonitor.MediaMonitorJobSchedulerService (partial)
+  10-27 04:33:34.078 - 10176 (com.google.android.apps.photos) - ACQ *job*r/com.google.android.apps.photos/com.google.android.libraries.social.mediamonitor.MediaMonitorJobSchedulerService (partial)
+  10-27 04:33:34.081 - 10176 (com.google.android.apps.photos) - REL *job*r/com.google.android.apps.photos/com.google.android.libraries.social.mediamonitor.MediaMonitorJobSchedulerService
+  10-27 04:33:34.097 - 10176 (com.google.android.apps.photos) - REL *job*r/com.google.android.apps.photos/com.google.android.libraries.social.mediamonitor.MediaMonitorJobSchedulerService
+  10-27 04:33:37.151 - 10206 (com.google.android.gms) - ACQ *alarm* (partial)
+  10-27 04:33:37.155 - 10206 (com.google.android.gms) - REL *alarm*
+  10-27 04:33:37.158 - 10206 (com.google.android.gms) - ACQ *gms_scheduler*:internal (partial)
+  10-27 04:33:37.159 - 10206 (com.google.android.gms) - REL *gms_scheduler*:internal
+  10-27 04:33:40.303 - 10163 (com.google.android.googlequicksearchbox) - ACQ *job*r/#TikTokWorker#com.google.android.libraries.search.assistant.launcher.OpaEnabledBroadcastWorker#@androidx.work.systemjobscheduler@com.google.android.googlequicksearchbox/androidx.work.impl.background.systemjob.SystemJobService (partial)
+  10-27 04:33:40.303 - 10163 (com.google.android.googlequicksearchbox) - ACQ *job*r/#TikTokWorker#com.google.android.libraries.search.assistant.launcher.OpaEnabledBroadcastWorker#@androidx.work.systemjobscheduler@com.google.android.googlequicksearchbox/androidx.work.impl.background.systemjob.SystemJobService (partial)
+  10-27 04:33:40.306 - 10163 (com.google.android.googlequicksearchbox) - REL *job*r/#TikTokWorker#com.google.android.libraries.search.assistant.launcher.OpaEnabledBroadcastWorker#@androidx.work.systemjobscheduler@com.google.android.googlequicksearchbox/androidx.work.impl.background.systemjob.SystemJobService
+  10-27 04:33:40.330 - 10163 (com.google.android.googlequicksearchbox) - REL *job*r/#TikTokWorker#com.google.android.libraries.search.assistant.launcher.OpaEnabledBroadcastWorker#@androidx.work.systemjobscheduler@com.google.android.googlequicksearchbox/androidx.work.impl.background.systemjob.SystemJobService
+  10-27 04:33:45.844 - 10152 (com.google.android.dialer) - REL fiid-sync
+  10-27 04:33:56.212 - 10176 (com.google.android.apps.photos) - ACQ *alarm* (partial)
+  10-27 04:33:56.222 - 10206 (com.google.android.gms) - REL *alarm*
+  10-27 04:33:56.223 - 10176 (com.google.android.apps.photos) - ACQ *job*r/com.google.android.apps.photos/.dbprocessor.impl.DatabaseProcessorJobService (partial)
+  10-27 04:33:56.223 - 10176 (com.google.android.apps.photos) - ACQ *job*r/com.google.android.apps.photos/.dbprocessor.impl.DatabaseProcessorJobService (partial)
+  10-27 04:33:56.224 - 10206 (com.google.android.gms) - ACQ *gms_scheduler*:internal (partial)
+  10-27 04:33:56.232 - 10176 (com.google.android.apps.photos) - REL *job*r/com.google.android.apps.photos/.dbprocessor.impl.DatabaseProcessorJobService
+  10-27 04:33:56.245 - 10206 (com.google.android.gms) - ACQ *gms_scheduler*/c.g.a.g/.t.g.TapAndPayGcmTaskService (partial)
+  10-27 04:33:56.251 - 10206 (com.google.android.gms) - ACQ IntentOp:.c.c.InitConfigOperation (partial)
+  10-27 04:33:56.263 - 10206 (com.google.android.gms) - REL *gms_scheduler*:internal
+  10-27 04:33:56.280 - 10206 (com.google.android.gms) - REL *gms_scheduler*/c.g.a.g/.t.g.TapAndPayGcmTaskService
+  10-27 04:33:56.282 - 10206 (com.google.android.gms) - ACQ *gms_scheduler*:internal (partial)
+  10-27 04:33:56.290 - 1000 (System) - REL NetworkTimeUpdateService
+  10-27 04:33:56.297 - 10176 (com.google.android.apps.photos) - REL *job*r/com.google.android.apps.photos/.dbprocessor.impl.DatabaseProcessorJobService
+  10-27 04:33:56.301 - 10206 (com.google.android.gms) - REL IntentOp:.c.c.InitConfigOperation
+  10-27 04:33:56.306 - 10206 (com.google.android.gms) - REL *gms_scheduler*:internal
+  10-27 04:33:56.308 - 10206 (com.google.android.gms) - ACQ *gms_scheduler*:internal (partial)
+  10-27 04:33:56.316 - 10206 (com.google.android.gms) - REL *gms_scheduler*:internal
+  10-27 04:34:00.002 - 1000 (System) - ACQ *alarm* (partial)
+  10-27 04:34:00.003 - 1000 (System) - REL *alarm*
+  10-27 04:34:19.532 - 10206 (com.google.android.gms) - REL wake:com.google.android.gms/.chimera.GmsIntentOperationService - 913
+  10-27 04:34:20.933 - 1000 (System) - ACQ *alarm* (partial)
+  10-27 04:34:20.935 - 1000 (System) - ACQ NetworkTimeUpdateService (partial)
+  10-27 04:34:20.940 - 10206 (com.google.android.gms) - REL *alarm*
+  10-27 04:34:20.947 - 10206 (com.google.android.gms) - ACQ *gms_scheduler*:internal (partial)
+  10-27 04:34:20.950 - 10206 (com.google.android.gms) - REL *gms_scheduler*:internal
+  10-27 04:34:40.806 - 10161 (com.google.android.settings.intelligence) - ACQ *job*r/com.google.android.settings.intelligence/.modules.sliceindexing.impl.SliceIndexUpdateJobService (partial)
+  10-27 04:34:40.807 - 10161 (com.google.android.settings.intelligence) - ACQ *job*r/com.google.android.settings.intelligence/.modules.sliceindexing.impl.SliceIndexUpdateJobService (partial)
+  10-27 04:34:40.813 - 10161 (com.google.android.settings.intelligence) - REL *job*r/com.google.android.settings.intelligence/.modules.sliceindexing.impl.SliceIndexUpdateJobService
+  10-27 04:34:40.938 - 10161 (com.google.android.settings.intelligence) - ACQ Icing (partial)
+  10-27 04:34:40.949 - 10206 (com.google.android.gms) - REL Icing
+  10-27 04:34:41.060 - 10161 (com.google.android.settings.intelligence) - REL *job*r/com.google.android.settings.intelligence/.modules.sliceindexing.impl.SliceIndexUpdateJobService
+  10-27 04:35:00.002 - 1000 (System) - ACQ *alarm* (partial)
+  10-27 04:35:00.002 - 1000 (System) - REL *alarm*
+  10-27 04:35:00.997 - 1000 (System) - REL NetworkTimeUpdateService
+  10-27 04:35:03.477 - 1000 (System) - ACQ *alarm* (partial)
+  10-27 04:35:03.478 - 1000 (System) - REL *alarm*
+  10-27 04:35:06.299 - 10176 (com.google.android.apps.photos) - ACQ *alarm* (partial)
+  10-27 04:35:06.311 - 10176 (com.google.android.apps.photos) - ACQ *job*r/com.google.android.apps.photos/.dbprocessor.impl.DatabaseProcessorJobService (partial)
+  10-27 04:35:06.313 - 10176 (com.google.android.apps.photos) - ACQ *job*r/com.google.android.apps.photos/.dbprocessor.impl.DatabaseProcessorJobService (partial)
+  10-27 04:35:06.321 - 10176 (com.google.android.apps.photos) - REL *job*r/com.google.android.apps.photos/.dbprocessor.impl.DatabaseProcessorJobService
+  10-27 04:35:06.322 - 10206 (com.google.android.gms) - REL *alarm*
+  10-27 04:35:06.331 - 10206 (com.google.android.gms) - ACQ *gms_scheduler*:internal (partial)
+  10-27 04:35:06.337 - 10206 (com.google.android.gms) - ACQ IntentOp:.c.c.InitConfigOperation (partial)
+  10-27 04:35:06.350 - 10206 (com.google.android.gms) - ACQ *gms_scheduler*/c.g.a.g/.t.g.TapAndPayGcmTaskService (partial)
+  10-27 04:35:06.364 - 10206 (com.google.android.gms) - REL *gms_scheduler*:internal
+  10-27 04:35:06.371 - 10176 (com.google.android.apps.photos) - REL *job*r/com.google.android.apps.photos/.dbprocessor.impl.DatabaseProcessorJobService
+  10-27 04:35:06.375 - 10206 (com.google.android.gms) - REL *gms_scheduler*/c.g.a.g/.t.g.TapAndPayGcmTaskService
+  10-27 04:35:06.385 - 10206 (com.google.android.gms) - ACQ *gms_scheduler*:internal (partial)
+  10-27 04:35:06.397 - 10206 (com.google.android.gms) - REL IntentOp:.c.c.InitConfigOperation
+  10-27 04:35:06.404 - 10206 (com.google.android.gms) - REL *gms_scheduler*:internal
+  10-27 04:35:06.405 - 10206 (com.google.android.gms) - ACQ *gms_scheduler*:internal (partial)
+  10-27 04:35:06.415 - 10206 (com.google.android.gms) - REL *gms_scheduler*:internal
+  10-27 04:35:12.868 - 1041 (com.google.android.gms) - ACQ AudioMix (partial)
+  10-27 04:35:12.869 - 1041 (com.google.android.gms) - ACQ AudioMix (partial)
+  10-27 04:35:12.883 - 1041 (com.google.android.gms) - REL AudioMix
+  10-27 04:35:12.883 - 10198 (com.android.systemui) - ACQ AudioMix (partial)
+  10-27 04:35:13.156 - 10198 (com.android.systemui) - REL AudioMix
+  10-27 04:35:13.156 - 1041 (com.android.systemui) - ACQ AudioMix (partial)
+  10-27 04:35:13.419 - 10206 (com.google.android.gms) - ACQ CallbackRunner (partial)
+  10-27 04:35:13.459 - 10206 (com.google.android.gms) - REL CallbackRunner
+  10-27 04:35:13.474 - 10206 (com.google.android.gms) - ACQ IntentOp:.c.b.BackgroundBroadcastReceiverSupport$PersistentReceiverIntentOperation (partial)
+  10-27 04:35:13.486 - 10206 (com.google.android.gms) - ACQ IntentOp:c.g.a.g/.c.GmsIntentOperationService (partial)
+  10-27 04:35:13.497 - 10206 (com.google.android.gms) - REL IntentOp:.c.b.BackgroundBroadcastReceiverSupport$PersistentReceiverIntentOperation
+  10-27 04:35:13.500 - 10206 (com.google.android.gms) - ACQ IntentOp:.p.p.UserPresentIntentOperation (partial)
+  10-27 04:35:13.509 - 10206 (com.google.android.gms) - REL IntentOp:c.g.a.g/.c.GmsIntentOperationService
+  10-27 04:35:13.582 - 1000 (System) - ACQ installer:packages (partial)
+  10-27 04:35:13.589 - 10206 (com.google.android.gms) - REL IntentOp:.p.p.UserPresentIntentOperation
+  10-27 04:35:14.294 - 1000 (System) - REL installer:packages
+  10-27 04:35:14.682 - 10231 (com.mystral.engine.interop) - ACQ *launch* (partial)
+  10-27 04:35:14.908 - 10206 (com.google.android.gms) - ACQ IntentOp:.c.b.BackgroundBroadcastReceiverSupport$PersistentReceiverIntentOperation (partial)
+  10-27 04:35:14.910 - 10206 (com.google.android.gms) - ACQ IntentOp:.c.b.BackgroundBroadcastReceiverSupport$GmsReceiverIntentOperation (partial)
+  10-27 04:35:14.925 - 10206 (com.google.android.gms) - REL IntentOp:.c.b.BackgroundBroadcastReceiverSupport$PersistentReceiverIntentOperation
+  10-27 04:35:14.930 - 10206 (com.google.android.gms) - REL IntentOp:.c.b.BackgroundBroadcastReceiverSupport$GmsReceiverIntentOperation
+  10-27 04:35:14.931 - 10206 (com.google.android.gms) - ACQ IntentOp:.c.b.BackgroundBroadcastReceiverSupport$PersistentReceiverIntentOperation (partial)
+  10-27 04:35:14.969 - 10206 (com.google.android.gms) - ACQ IntentOp:.c.b.BackgroundBroadcastReceiverSupport$GmsReceiverIntentOperation (partial)
+  10-27 04:35:14.994 - 10206 (com.google.android.gms) - ACQ IntentOp:.c.b.BackgroundBroadcastReceiverSupport$PersistentReceiverIntentOperation (partial)
+  10-27 04:35:15.009 - 10206 (com.google.android.gms) - REL IntentOp:.c.b.BackgroundBroadcastReceiverSupport$PersistentReceiverIntentOperation
+  10-27 04:35:15.010 - 10206 (com.google.android.gms) - ACQ Icing (partial)
+  10-27 04:35:15.058 - 10206 (com.google.android.gms) - REL IntentOp:.c.b.BackgroundBroadcastReceiverSupport$PersistentReceiverIntentOperation
+  10-27 04:35:15.076 - 10206 (com.google.android.gms) - REL IntentOp:.c.b.BackgroundBroadcastReceiverSupport$GmsReceiverIntentOperation
+  10-27 04:35:15.092 - 10206 (com.google.android.gms) - REL Icing
+  10-27 04:35:15.163 - 10206 (com.google.android.gms) - ACQ Icing (partial)
+  10-27 04:35:15.252 - 10206 (com.google.android.gms) - REL Icing
+  10-27 04:35:15.282 - 10206 (com.google.android.gms) - ACQ Icing (partial)
+  10-27 04:35:15.294 - 10206 (com.google.android.gms) - REL Icing
+  10-27 04:35:15.681 - 10162 (com.google.android.apps.wellbeing) - ACQ NotificationManagerService:post:com.google.android.apps.wellbeing (partial)
+  10-27 04:35:15.869 - 1041 (com.google.android.apps.wellbeing) - REL AudioMix
+  10-27 04:35:15.887 - 10162 (com.google.android.apps.wellbeing) - REL NotificationManagerService:post:com.google.android.apps.wellbeing
+  10-27 04:35:15.977 - 10231 (com.mystral.engine.interop) - REL *launch*
+  10-27 04:35:16.027 - 1041 (com.mystral.engine.interop) - REL AudioMix
+  10-27 04:35:17.114 - 1041 (com.mystral.engine.interop) - ACQ AudioMix (partial)
+  10-27 04:35:17.115 - 1041 (com.mystral.engine.interop) - ACQ AudioMix (partial)
+  10-27 04:35:17.132 - 1041 (com.mystral.engine.interop) - REL AudioMix
+  10-27 04:35:17.133 - 10231 (com.mystral.engine.interop) - ACQ AudioMix (partial)
+  10-27 04:35:17.166 - 1000 (System) - ACQ NetworkStats (partial)
+  10-27 04:35:17.180 - 1000 (System) - REL NetworkStats
+  10-27 04:35:18.233 - 1000 (System) - ACQ NetworkStats (partial)
+  10-27 04:35:18.252 - 1000 (System) - REL NetworkStats
+  10-27 04:35:20.124 - 1041 (System) - REL AudioMix
+  10-27 04:35:33.728 - 1000 (System) - ACQ *alarm* (partial)
+  10-27 04:35:33.729 - 1000 (System) - ACQ NetworkTimeUpdateService (partial)
+  10-27 04:35:33.744 - 10206 (com.google.android.gms) - REL *alarm*
+  10-27 04:35:33.750 - 10206 (com.google.android.gms) - ACQ *gms_scheduler*:internal (partial)
+  10-27 04:35:33.752 - 10206 (com.google.android.gms) - REL *gms_scheduler*:internal
+  10-27 04:36:00.001 - 1000 (System) - ACQ *alarm* (partial)
+  10-27 04:36:00.002 - 1000 (System) - REL *alarm*
+  10-27 04:36:02.832 - 10231 (com.mystral.engine.interop) - REL AudioMix
+  10-27 04:36:02.832 - 1041 (com.mystral.engine.interop) - ACQ AudioMix (partial)
+  10-27 04:36:02.876 - 10231 (com.mystral.engine.interop) - ACQ *launch* (partial)
+  10-27 04:36:04.007 - 10231 (com.mystral.engine.interop) - REL *launch*
+  10-27 04:36:05.013 - 1041 (com.mystral.engine.interop) - ACQ AudioMix (partial)
+  10-27 04:36:05.029 - 1041 (com.mystral.engine.interop) - REL AudioMix
+  10-27 04:36:05.029 - 10231 (com.mystral.engine.interop) - ACQ AudioMix (partial)
+  10-27 04:36:05.246 - 1000 (System) - ACQ NetworkStats (partial)
+  10-27 04:36:05.260 - 1000 (System) - REL NetworkStats
+  10-27 04:36:08.023 - 1041 (System) - REL AudioMix
+  10-27 04:36:12.712 - 10199 (com.google.android.apps.nexuslauncher) - ACQ *launch* (partial)
+  10-27 04:36:12.849 - 10199 (com.google.android.apps.nexuslauncher) - REL *launch*
+  10-27 04:36:13.080 - 10231 (com.mystral.engine.interop) - ACQ *launch* (partial)
+  10-27 04:36:13.122 - 10231 (com.mystral.engine.interop) - REL *launch*
+  10-27 04:36:13.793 - 1000 (System) - REL NetworkTimeUpdateService
+  -
+  Events: 1036, Time-Resets: 53
+  Buffer, Bytes used: 3068
+  Tag Database: size(128), entries: 114, Bytes used: 18282
+
+Full Wakelock Log:
+Wake Lock Log
+  10-27 04:35:15.926 - 10231 (com.mystral.engine.interop) - ACQ WindowManager/displayId:0 (screen-bright,on-after-release)
+  10-27 04:36:03.029 - 10231 (com.mystral.engine.interop) - REL WindowManager/displayId:0
+  10-27 04:36:03.464 - 10231 (com.mystral.engine.interop) - ACQ WindowManager/displayId:0 (screen-bright,on-after-release)
+  -
+  Events: 3, Time-Resets: 2
+  Buffer, Bytes used: 26
+  Tag Database: size(16), entries: 1, Bytes used: 202
+
+
+Wakefulness Session Observer:
+default timeout: 2147483647
+override timeout: -1
+  Wakefulness Session Power Group powerGroupId: 0
+    current wakefulness: 3
+    current user activity event: 2
+    current user activity duration: 1411
+    previous user activity event: 0
+    previous user activity duration: 7440
+    is in override timeout: false
+    mIsInteractive: false
+    current screen policy: 0
+    current screen policy duration: 168
+    previous screen policy: 3
+    past screen policy duration: 67068
+
+FaceDownDetector:
+  mFaceDown=false
+  mActive=true
+  mLastFlipTime=0
+  mSensorMaxLatencyMicros=2000000
+  mUserInteractionBackoffMillis=60000
+  mPreviousResultTime=0
+  mPreviousResultType=1
+  mMillisSaved=0
+  mZAccelerationThreshold=-9.5
+  mAccelerationThreshold=0.2
+  mTimeThreshold=PT1S
+  mEnabledOverride=true
+AmbientDisplaySuppressionController:
+ ambientDisplaySuppressed=false
+ mSuppressionTokens={}
+ mSuppressions={}
+
+Low Power Standby Controller:
+  mIsActive=false
+  mIsEnabled=false
+  mSupportedConfig=false
+  mEnabledByDefaultConfig=false
+  mStandbyTimeoutConfig=0
+  mEnableCustomPolicy=false
+  Allowed UIDs=[]
+  
+  UID allowed reasons:
+
+ScreenTimeoutOverridePolicy:
+  mScreenTimeoutOverrideConfig=-1
+  mLastAutoReleaseReason=-1
+PowerManagerFlags:
+ enable_early_screen_timeout_detector:                 true (def:true)
+ per_display_wake_by_touch:                            true (def:true)
+ lock_on_unplug:                                       true (def:true)
+ disable_frozen_process_wakelocks:                     true (def:true)
+ partial_sleep_wakelocks:                              true (def:true)
+ separate_timeouts_flicker:                            true (def:true)
+ wait_for_user_boot_complete:                          false (def:false)
