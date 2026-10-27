@@ -19,7 +19,42 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
 */
-import type { Box3DModuleReleaseReceipt } from './box3d/loader/st-loader.mjs';
+/** Detached module evidence. Canonical public types live in emitted TS, not a private .d.mts closure. */
+export interface Box3DModuleReleaseSnapshot {
+    readonly schema: 'air-box3d-module-release-snapshot-v1';
+    readonly schemaVersion: 1;
+    readonly core: Readonly<{ worlds: number; trackedRequestedBytes: number }>;
+    readonly bridge: Readonly<{
+        worlds: number;
+        allocations: number;
+        bytes: number;
+        debugShapeHandles: number;
+        temporaryNodes: number;
+        temporaryBytes: number;
+        wireBuffers: number;
+        wireCapacityRecords: number;
+        wireLengthRecords: number;
+        capturedWorlds: number;
+    }>;
+    readonly mesh: Readonly<{
+        resources: number;
+        leases: number;
+        references: number;
+        borrowNodes: number;
+        resourceStorageBytes: number;
+    }>;
+}
+export interface Box3DModuleReleaseReceipt {
+    readonly status: 'NOT_ACQUIRED' | 'BASELINE_CAPTURED' | 'VERIFIED' | 'FAILED';
+    readonly verified: boolean;
+    readonly baseline: Box3DModuleReleaseSnapshot | null;
+    readonly terminal: Box3DModuleReleaseSnapshot | null;
+    readonly errors: readonly Readonly<{
+        phase: 'baseline' | 'binding-dispose' | 'terminal' | 'verify' | 'release-module';
+        code: string | null;
+        message: string;
+    }>[];
+}
 
 /** Resource acquisition bookkeeping. A successful mock test proves lifecycle, not physics. */
 export type AirPreparedBackend = 'box2d-v3-wasm' | 'box3d';
@@ -154,11 +189,18 @@ export function createAirPhysicsPreparation(): AirPhysicsPreparation {
                         throw new Error('Module release evidence rejects non-plain objects and cycles.');
                     ancestors.add(value);
                     try {
-                        return Array.isArray(value)
-                            ? Object.freeze(value.map(copy))
-                            : Object.freeze(
-                                  Object.fromEntries(Object.entries(value).map(([key, item]) => [key, copy(item)])),
-                              );
+                        if (Array.isArray(value)) return Object.freeze(value.map(copy));
+                        const result: Record<string, unknown> = {};
+                        for (const key of Object.keys(value)) {
+                            // Define data keys, including __proto__, without invoking prototype setters.
+                            Object.defineProperty(result, key, {
+                                value: copy((value as Record<string, unknown>)[key]),
+                                enumerable: true,
+                                configurable: true,
+                                writable: true,
+                            });
+                        }
+                        return Object.freeze(result);
                     } finally {
                         ancestors.delete(value);
                     }

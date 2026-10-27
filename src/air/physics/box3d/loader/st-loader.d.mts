@@ -21,7 +21,7 @@ THE SOFTWARE.
 */
 
 import type { Box3DFoundation, Box3DIdentity } from '../binding/facade.mjs';
-import type { Box3DModuleReleaseSnapshot } from '../binding/module-release.mjs';
+import type { Box3DModuleReleaseReceipt, Box3DModuleReleaseSnapshot } from '../../preparation.js';
 
 /** Internal ST-only preparer; application/feature integration is not complete. */
 export interface Box3DSTOptions {
@@ -48,17 +48,7 @@ export interface Box3DSTLease {
     /** Immutable copy of this lease generation, even after another preparation. */
     diagnostics(): Box3DLoaderReceipt;
 }
-export interface Box3DModuleReleaseReceipt {
-    readonly status: 'NOT_ACQUIRED' | 'BASELINE_CAPTURED' | 'VERIFIED' | 'FAILED';
-    readonly verified: boolean;
-    readonly baseline: Box3DModuleReleaseSnapshot | null;
-    readonly terminal: Box3DModuleReleaseSnapshot | null;
-    readonly errors: readonly Readonly<{
-        phase: 'baseline' | 'binding-dispose' | 'terminal' | 'verify' | 'release-module';
-        code: string | null;
-        message: string;
-    }>[];
-}
+export type { Box3DModuleReleaseReceipt } from '../../preparation.js';
 export interface Box3DLoaderReceipt {
     readonly status: 'IDLE' | 'PREPARING' | 'READY' | 'DISPOSED' | 'CANCELLED' | 'FAILED' | 'CLEANUP_FAILED';
     readonly generation: number;

@@ -7,7 +7,7 @@ import path from 'node:path';
 import vm from 'node:vm';
 import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
-import { stripTypeScriptTypes } from 'node:module';
+import { stripTypeScriptTypes, createRequire } from 'node:module';
 import { createBox3DSTLoader } from '../../../../src/air/physics/box3d/loader/st-loader.mjs';
 import { validatePublicModuleRelease, runPublicModuleRelease } from './public-contract.mjs';
 const sha = (b) => createHash('sha256').update(b).digest('hex');
@@ -650,4 +650,178 @@ test('closed preparation without module capture cannot accept fabricated late te
         /disposal/,
     );
     assert.equal(p.diagnostics().moduleRelease, undefined);
+});
+
+// Declaration-only/in-memory CPU checks: not the official fresh full-SDK DTS seven gates.
+const ts = createRequire(import.meta.url)('typescript');
+const preparationPath = path.join(root, 'src/air/physics/preparation.ts');
+const preparationSource = fs.readFileSync(preparationPath, 'utf8');
+const typeOptions = {
+    target: ts.ScriptTarget.ES2015,
+    module: ts.ModuleKind.ESNext,
+    moduleResolution: ts.ModuleResolutionKind.NodeJs,
+    lib: ['lib.es2015.d.ts', 'lib.es2017.d.ts', 'lib.dom.d.ts'],
+    types: [],
+    strict: true,
+    skipLibCheck: false,
+    declaration: true,
+    emitDeclarationOnly: true,
+    noEmitOnError: true,
+    outDir: path.join(root, '__cpu_module_release_virtual_emit__'),
+};
+function typeProgram(virtualFiles, roots, options = typeOptions) {
+    const host = ts.createCompilerHost(options),
+        output = new Map();
+    const originalRead = host.readFile,
+        originalExists = host.fileExists,
+        originalSource = host.getSourceFile,
+        originalDirectory = host.directoryExists;
+    host.directoryExists = (name) =>
+        [...virtualFiles.keys()].some((file) => path.dirname(file) === path.resolve(name)) ||
+        !!originalDirectory?.(name);
+    host.fileExists = (name) => virtualFiles.has(path.resolve(name)) || originalExists(name);
+    host.readFile = (name) => virtualFiles.get(path.resolve(name)) ?? originalRead(name);
+    host.getSourceFile = (name, languageVersion, onError, shouldCreateNewSourceFile) =>
+        virtualFiles.has(path.resolve(name))
+            ? ts.createSourceFile(name, virtualFiles.get(path.resolve(name)), languageVersion, true)
+            : originalSource(name, languageVersion, onError, shouldCreateNewSourceFile);
+    host.writeFile = (name, text) => output.set(path.resolve(name), text);
+    const program = ts.createProgram(roots, options, host);
+    const diagnostics = ts.getPreEmitDiagnostics(program);
+    if (!diagnostics.length && !options.noEmit) {
+        const emitted = program.emit();
+        diagnostics.push(...emitted.diagnostics);
+    }
+    return { diagnostics, output };
+}
+const diagnosticText = (diagnostics) =>
+    diagnostics.map((d) => d.code + ':' + ts.flattenDiagnosticMessageText(d.messageText, ' ')).join('\n');
+let localDeclaration;
+test('actual preparation declaration emits a self-contained public receipt with original ES2015/ES2017 libraries', () => {
+    const result = typeProgram(new Map([[preparationPath, preparationSource]]), [preparationPath]);
+    assert.equal(result.diagnostics.length, 0, diagnosticText(result.diagnostics));
+    localDeclaration = [...result.output].find(([name]) => name.endsWith('/preparation.d.ts'))?.[1];
+    assert(localDeclaration);
+    assert.match(localDeclaration, /export interface Box3DModuleReleaseSnapshot/);
+    assert.match(localDeclaration, /export interface Box3DModuleReleaseReceipt/);
+    const ast = ts.createSourceFile('preparation.d.ts', localDeclaration, ts.ScriptTarget.ES2015, true);
+    assert(!ast.statements.some(ts.isImportDeclaration), 'Public declaration has no private import closure');
+    assert(!/import\s*\(/.test(localDeclaration), 'Public declaration has no inline private import type');
+});
+function publicTypeCheck(declaration, consumer) {
+    const dir = path.join(root, '__cpu_module_release_virtual_consumer__');
+    const input = path.join(dir, 'consumer.ts'),
+        decl = path.join(dir, 'preparation.d.ts');
+    return typeProgram(
+        new Map([
+            [input, consumer],
+            [decl, declaration],
+        ]),
+        [input],
+        { ...typeOptions, noEmit: true, emitDeclarationOnly: false, declaration: false },
+    );
+}
+const publicConsumer = `import type { AirPhysicsPreparationReceipt, Box3DModuleReleaseReceipt, Box3DModuleReleaseSnapshot } from './preparation';
+declare const appClose: {physicsPreparation:AirPhysicsPreparationReceipt};
+const release:Box3DModuleReleaseReceipt|undefined=appClose.physicsPreparation.moduleRelease;
+if(release){
+ const status:'NOT_ACQUIRED'|'BASELINE_CAPTURED'|'VERIFIED'|'FAILED'=release.status;
+ const baseline:Box3DModuleReleaseSnapshot|null=release.baseline;
+ const terminal:Box3DModuleReleaseSnapshot|null=release.terminal;
+ if(terminal){const count:number=terminal.core.worlds;const bytes:number=terminal.core.trackedRequestedBytes;
+ const borrows:number=terminal.mesh.borrowNodes;const allocations:number=terminal.bridge.allocations;}
+ const errors:ReadonlyArray<{readonly phase:'baseline'|'binding-dispose'|'terminal'|'verify'|'release-module';readonly code:string|null;readonly message:string}>=release.errors;
+}`;
+test('strict public consumer resolves actual emitted detached receipt/snapshot fields without skipLibCheck', () => {
+    assert(localDeclaration);
+    const result = publicTypeCheck(localDeclaration, publicConsumer);
+    assert.equal(result.diagnostics.length, 0, diagnosticText(result.diagnostics));
+});
+test('source-derived missing receipt declaration reproduces TS2304 rather than accepting a dangling public type', () => {
+    assert(localDeclaration);
+    const ast = ts.createSourceFile('preparation.d.ts', localDeclaration, ts.ScriptTarget.ES2015, true);
+    const declaration = ast.statements.find(
+        (s) => ts.isInterfaceDeclaration(s) && s.name.text === 'Box3DModuleReleaseReceipt',
+    );
+    assert(declaration);
+    const broken = localDeclaration.slice(0, declaration.pos) + localDeclaration.slice(declaration.end);
+    const result = publicTypeCheck(
+        broken,
+        `import type {AirPhysicsPreparationReceipt} from './preparation'; declare const x:AirPhysicsPreparationReceipt; void x.moduleRelease;`,
+    );
+    assert(
+        result.diagnostics.some((d) => d.code === 2304 && diagnosticText([d]).includes('Box3DModuleReleaseReceipt')),
+        diagnosticText(result.diagnostics),
+    );
+});
+test('source-derived old fromEntries branch fails the unchanged producer lib set', () => {
+    const marker = 'const result: Record<string, unknown> = {};';
+    assert(preparationSource.includes(marker));
+    const oldBranch = preparationSource.replace(marker, marker + ' Object.fromEntries(Object.entries(value));');
+    const result = typeProgram(new Map([[preparationPath, oldBranch]]), [preparationPath]);
+    assert(
+        result.diagnostics.some((d) => diagnosticText([d]).includes('fromEntries')),
+        diagnosticText(result.diagnostics),
+    );
+    assert.equal(result.output.size, 0, 'A failed local emit is not promoted');
+});
+test('emitted public declaration rejects mutation and invented snapshot fields', () => {
+    const result = publicTypeCheck(
+        localDeclaration,
+        publicConsumer +
+            `
+if(release){release.status='VERIFIED';release.errors.push({phase:'verify',code:null,message:'x'});if(release.terminal){release.terminal.core.worlds=1;void release.terminal.secretModule;}}`,
+    );
+    assert(result.diagnostics.filter((d) => d.code === 2540).length >= 2, diagnosticText(result.diagnostics));
+    assert(
+        result.diagnostics.some((d) => d.code === 2339 && diagnosticText([d]).includes('secretModule')),
+        diagnosticText(result.diagnostics),
+    );
+    assert(
+        result.diagnostics.some((d) => d.code === 2339 && diagnosticText([d]).includes('push')),
+        diagnosticText(result.diagnostics),
+    );
+});
+test('loader and decoder declarations re-export canonical TS types without duplicate private definitions', () => {
+    for (const [relative, name] of [
+        ['src/air/physics/box3d/loader/st-loader.d.mts', 'Box3DModuleReleaseReceipt'],
+        ['src/air/physics/box3d/binding/module-release.d.mts', 'Box3DModuleReleaseSnapshot'],
+    ]) {
+        const text = fs.readFileSync(path.join(root, relative), 'utf8');
+        assert.match(text, /from ['"]\.\.\/\.\.\/preparation\.js['"]/);
+        assert(text.includes('export type { ' + name + ' }'));
+        assert(!text.includes('export interface ' + name));
+    }
+});
+test('actual plain-data copier preserves own __proto__ data without retaining or changing prototypes', async () => {
+    const { createAirPhysicsPreparation } = actualTS('src/air/physics/preparation.ts', ['createAirPhysicsPreparation']);
+    const p = createAirPhysicsPreparation();
+    const receipt = { status: 'VERIFIED', verified: true, baseline: snapshot(), terminal: snapshot(), errors: [] };
+    Object.defineProperty(receipt, '__proto__', { value: { copyOnly: 'not a prototype' }, enumerable: true });
+    p.own('box3d', 'module', () => p.recordBox3DModuleRelease(receipt));
+    const result = await p.dispose();
+    assert.equal(result.status, 'closed');
+    assert(Object.hasOwn(result.moduleRelease, '__proto__'));
+    assert.equal(result.moduleRelease.__proto__.copyOnly, 'not a prototype');
+    assert.equal(Object.getPrototypeOf(result.moduleRelease).copyOnly, undefined);
+    assert.notEqual(result.moduleRelease.__proto__, receipt.__proto__);
+    frozen(result.moduleRelease);
+});
+
+test('actual .d.mts loader/decoder type re-exports resolve canonical TS under NodeNext', () => {
+    const file = path.join(root, '__cpu_module_release_virtual_consumer__', 'direct-consumer.mts');
+    const source = `import type {Box3DModuleReleaseReceipt} from '../src/air/physics/box3d/loader/st-loader.mjs';
+import type {Box3DModuleReleaseSnapshot} from '../src/air/physics/box3d/binding/module-release.mjs';
+import type {Box3DModuleReleaseReceipt as PublicReceipt,Box3DModuleReleaseSnapshot as PublicSnapshot} from '../src/air/physics/preparation.js';
+declare const receipt:Box3DModuleReleaseReceipt;declare const snapshot:Box3DModuleReleaseSnapshot;
+const sameReceipt:PublicReceipt=receipt;const sameSnapshot:PublicSnapshot=snapshot;`;
+    const result = typeProgram(new Map([[file, source]]), [file], {
+        ...typeOptions,
+        module: ts.ModuleKind.NodeNext,
+        moduleResolution: ts.ModuleResolutionKind.NodeNext,
+        noEmit: true,
+        emitDeclarationOnly: false,
+        declaration: false,
+    });
+    assert.equal(result.diagnostics.length, 0, diagnosticText(result.diagnostics));
 });

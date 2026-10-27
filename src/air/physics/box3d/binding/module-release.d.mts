@@ -21,32 +21,10 @@ THE SOFTWARE.
 */
 
 import type { Box3DIdentity } from './facade.mjs';
+import type { Box3DModuleReleaseSnapshot } from '../../preparation.js';
 export const MODULE_RELEASE_WORDS: 38;
 export const MODULE_RELEASE_SCHEMA: 'air-box3d-module-release-snapshot-v1';
-export interface Box3DModuleReleaseSnapshot {
-    readonly schema: typeof MODULE_RELEASE_SCHEMA;
-    readonly schemaVersion: 1;
-    readonly core: Readonly<{ worlds: number; trackedRequestedBytes: number }>;
-    readonly bridge: Readonly<{
-        worlds: number;
-        allocations: number;
-        bytes: number;
-        debugShapeHandles: number;
-        temporaryNodes: number;
-        temporaryBytes: number;
-        wireBuffers: number;
-        wireCapacityRecords: number;
-        wireLengthRecords: number;
-        capturedWorlds: number;
-    }>;
-    readonly mesh: Readonly<{
-        resources: number;
-        leases: number;
-        references: number;
-        borrowNodes: number;
-        resourceStorageBytes: number;
-    }>;
-}
+export type { Box3DModuleReleaseSnapshot } from '../../preparation.js';
 /** Exclusive ST snapshot, copied/frozen, no retained module or borrowed native views. */
 export function captureModuleReleaseSnapshot(
     module: unknown,
