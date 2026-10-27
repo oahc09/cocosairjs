@@ -1,6 +1,6 @@
 # Box3D closure status
 
-Updated: 2026-10-27 04:13 UTC. Branch: `feat/box3d-rebuild-20261022`.
+Updated: 2026-10-27 05:00 UTC. Branch: `feat/box3d-rebuild-20261022`.
 
 ## Current outcome
 
@@ -17,12 +17,14 @@ Updated: 2026-10-27 04:13 UTC. Branch: `feat/box3d-rebuild-20261022`.
 
 4. `f55843f6add3b21fec2858080814d78a8d0168be`: isolated empty-storage core candidate. Fresh host attempt 2 passed 3661 candidate assertions, 2 identity-only control assertions and the separate expected fatal-OOM SIGABRT contract; 100 same-world core cycles, creation-capacity ledger delta +20 bytes, isolated close tracked bytes 0, no source drift and this attempt ECHILD. Attempt 1 remains UNKNOWN_TRANSPORT_INTERRUPTED without closure proof; it is not relabelled. See [empty-storage host report](reports/empty-storage-host-qualification-20261027.md). This does not qualify the original APP C20 or production/WASM integration.
 
-Production `versions.lock.json`, production patch lock, facade, SDK schema and original strict fixture remain unchanged. Do not load the isolated candidate using the production 87-row diagnostic schema. Trim is enabled only inside the independent host fixture; production trim and the app release hook are not enabled.
+5. `fb825da65c8cd259ee8912adb24b7caaa0a64b6a`: production source integration plus CMake v2 route fix. Fresh ST attempt3 passed full41-command/111-input/85-unit/58-evidence build→audit→consumer gates, including controlled storage51 and production-WASM12 checks. Earlier ST source failure and supervisor failure are retained separately, both closed; the older host attempt1 remains UNKNOWN. See [ST qualification report](reports/empty-storage-st-qualification-20261027.md).
+
+Production source now includes the five-patch core, explicit identity/creation-capacity metadata and new89-row/756-word diagnostic schema; old87-row consumers are incompatible. Low-level ST trim is VERIFIED_LIMITED. The application release integration has source/CPU coverage only: fresh complete ESM/DTS and original strict APP execution remain NOT_RUN. No original APP fixture, baseline or threshold was changed.
 
 ## Next actions, in order
 
 1. Verify the current checkout and preserve local changes. Establish one writer before local implementation begins; cloud and local must not write the same module concurrently.
-2. Preserve the completed isolated host-native qualification and its exact source/toolchain binding. WASM and full production integration remain unqualified; do not relabel the host result as SDK or APP acceptance.
+2. Preserve the completed isolated host-native qualification and its exact source/toolchain binding. Preserve the additional limited ST/WASM evidence separately; complete SDK and actual APP integration remain unqualified.
 3. Preserve the limited host verification of same-world empty-storage reclamation and explicit event acknowledgement. Establish production caller quiescence, borrowed-view retirement and binding revision before integration under `empty-world-trim-design.md`; private injected event records are not APP dispatch evidence.
 4. Integrate the production bridge/backend fault state, fixed metadata accounting row/schema and exact producer inventory. Preserve allocator, ID, stale-view and close semantics; do not replace the world or reset its step index.
 5. Integrate the post-scene-destruction, post-cleanup release hook. Legal nonempty persistent worlds skip empty trimming; an eligible-empty failure must not produce a successful restoration receipt.
