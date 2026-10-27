@@ -6,7 +6,7 @@ import test from 'node:test';
 import fs from 'node:fs';
 import path from 'node:path';
 import vm from 'node:vm';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import { stripTypeScriptTypes } from 'node:module';
 import {
     copyContact,
@@ -434,18 +434,145 @@ test('terminal journal error cannot overwrite the actual fixture primary', async
     assert.equal(report.status, 'FAIL');
 });
 
-// Minimal CPU scheduling doubles only drive the real exported fixture to its first Enter.
-// They neither simulate collision detection nor claim that a native/SDK run occurred.
-function failingEnterHarness(kind) {
-    const state = { nodes: [], closes: 0, records: [], callbackFailure: null };
+// Translation-only math and owner/native doubles, explicitly not a physics simulator.
+// The real TS local-chain guard and writeback batch below remain unmodified.
+function actualWritebackCPU() {
     class Vec3 {
         constructor(x = 0, y = 0, z = 0) {
             Object.assign(this, { x, y, z });
         }
+        static transformMat4(out, p, m) {
+            Object.assign(out, { x: p.x + m.m12, y: p.y + m.m13, z: p.z + m.m14 });
+            return out;
+        }
     }
+    class Quat {
+        constructor(x = 0, y = 0, z = 0, w = 1) {
+            Object.assign(this, { x, y, z, w });
+        }
+        static clone(q) {
+            return new Quat(q.x, q.y, q.z, q.w);
+        }
+        static conjugate(out, q) {
+            Object.assign(out, { x: -q.x, y: -q.y, z: -q.z, w: q.w });
+            return out;
+        }
+        static multiply(out, a, b) {
+            assert.equal(a.w, 1);
+            assert.equal(b.w, 1);
+            Object.assign(out, { x: 0, y: 0, z: 0, w: 1 });
+            return out;
+        }
+    }
+    class Mat4 {
+        constructor() {
+            this.m12 = this.m13 = this.m14 = 0;
+        }
+        static fromSRT(out, q, p, scale) {
+            assert.deepEqual([q.x, q.y, q.z, q.w], [0, 0, 0, 1]);
+            assert.deepEqual([scale.x, scale.y, scale.z], [1, 1, 1]);
+            Object.assign(out, { m12: p.x, m13: p.y, m14: p.z });
+            return out;
+        }
+        static multiply(out, a, b) {
+            const p = [a.m12 + b.m12, a.m13 + b.m13, a.m14 + b.m14];
+            Object.assign(out, { m12: p[0], m13: p[1], m14: p[2] });
+            return out;
+        }
+        static toArray(out, m) {
+            out.push(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, m.m12, m.m13, m.m14, 1);
+            return out;
+        }
+        static toSRT(m, q) {
+            Object.assign(q, { x: 0, y: 0, z: 0, w: 1 });
+        }
+        static clone(m) {
+            return Object.assign(new Mat4(), m);
+        }
+        static invert(out, m) {
+            Object.assign(out, { m12: -m.m12, m13: -m.m13, m14: -m.m14 });
+            return out;
+        }
+    }
+    const actual = load('src/air/physics/box3d/world-writeback.ts', ['Box3DSceneTransform', 'writebackSceneBatch'], {
+        Vec3,
+        Quat,
+        Mat4,
+        worldError,
+        isValid: (node) => node.isValid,
+        registerNodeTransformGuard() {
+            throw Error('CPU must pass its explicit owner authority');
+        },
+    });
+    return { ...actual, Vec3, Quat, Mat4 };
+}
+// Execute the actual adapter setter -> actual shared-body control forwarding. The final
+// binding implementation is a named CPU double, not a replacement claimed as native evidence.
+function actualVelocityAdapter(component, onVelocity) {
+    const sharedSource = file('src/air/physics/box3d/shared-body.ts');
+    const control = sharedSource.slice(
+        sharedSource.indexOf('    control<M extends Mutation>'),
+        sharedSource.indexOf('    attachRigidBody(', sharedSource.indexOf('    control<M extends Mutation>')),
+    );
+    const vector = sharedSource.slice(
+        sharedSource.indexOf('export function bodyVector'),
+        sharedSource.indexOf('export function nativeBodyType'),
+    );
+    const rigidSource = file('src/air/physics/box3d/rigid-body.ts');
+    const setter = rigidSource.slice(
+        rigidSource.indexOf('    setLinearVelocity(value:'),
+        rigidSource.indexOf('    getAngularVelocity(', rigidSource.indexOf('    setLinearVelocity(value:')),
+    );
+    assert(control && vector && setter);
+    const binding = {
+        setBodyLinearVelocity(world, body, velocity) {
+            assert.equal(world, 'CPU_WORLD');
+            assert.equal(body, component);
+            onVelocity(Array.from(velocity));
+            return Object.freeze({ linearVelocity: velocity });
+        },
+    };
+    const source = `${vector}
+class Shared { #binding; #world='CPU_WORLD'; #body; #owner={invalidate(){},fault(e){throw e;}}; constructor(binding,body){this.#binding=binding;this.#body=body;} assert(){} assertConfiguration(){} ${control} }
+class Adapter {#body;#component;constructor(shared,component){this.#body=shared;this.#component=component;} ${setter} }
+new Adapter(new Shared(binding,component),component)`;
+    return vm.runInNewContext(transform(source), {
+        binding,
+        component,
+        worldError,
+        BODY_MUTATIONS: new Set(['setBodyLinearVelocity']),
+        mutationNotApplied: () => false,
+        finiteFloat32(value) {
+            assert(Number.isFinite(value));
+            return Math.fround(value);
+        },
+        assertPhysicsBodyVelocityConfiguration(operation, target) {
+            assert.equal(operation, 'setLinearVelocity');
+            assert.equal(target, component);
+        },
+    });
+}
+// Minimal CPU scheduling doubles only drive the real exported fixture to its first Enter.
+// They neither simulate collision detection nor claim that a native/SDK run occurred.
+function failingEnterHarness(kind) {
+    const state = {
+        nodes: [],
+        closes: 0,
+        records: [],
+        callbackFailure: null,
+        guardCalls: 0,
+        completedFakeNativeSteps: 0,
+        externalPositionWrites: [],
+        velocityCalls: [],
+    };
+    const { Box3DSceneTransform, writebackSceneBatch, Vec3, Quat, Mat4 } = actualWritebackCPU();
     class RigidBody {
         static Type = { STATIC: 0, DYNAMIC: 1 };
-        setLinearVelocity() {}
+        velocity = [0, 0, 0];
+        setLinearVelocity(value) {
+            assert(this.adapter, 'Fixture setter follows app.run and initial ready frame');
+            this.adapter.setLinearVelocity(value);
+        }
     }
     class SphereCollider {
         handlers = new Map();
@@ -458,23 +585,51 @@ function failingEnterHarness(kind) {
         constructor(name) {
             this.name = name;
             this.isValid = true;
-            this.worldPosition = new Vec3();
-            this.worldRotation = { x: 0, y: 0, z: 0, w: 1 };
+            this.parent = null;
+            this.position = new Vec3();
+            this.rotation = new Quat();
+            this.scale = new Vec3(1, 1, 1);
             state.nodes.push(this);
         }
+        get worldPosition() {
+            const p = this.parent?.worldPosition ?? new Vec3();
+            return new Vec3(this.position.x + p.x, this.position.y + p.y, this.position.z + p.z);
+        }
+        get worldRotation() {
+            return this.rotation;
+        }
+        get worldMatrix() {
+            return Mat4.fromSRT(new Mat4(), this.worldRotation, this.worldPosition, this.scale);
+        }
         setPosition(x, y, z) {
-            this.worldPosition = new Vec3(x, y, z);
+            state.externalPositionWrites.push({
+                name: this.name,
+                mounted: !!this.sceneTransform,
+                step: state.completedFakeNativeSteps,
+            });
+            this.position = new Vec3(x, y, z);
+        }
+        setWorldPosition(x, y, z) {
+            const p = this.parent?.worldPosition ?? new Vec3();
+            this.position = new Vec3(x - p.x, y - p.y, z - p.z);
+        }
+        setWorldRotation(x, y, z, w) {
+            this.rotation = new Quat(x, y, z, w);
         }
         addComponent(Kind) {
             const component = new Kind();
+            component.node = this;
             if (component instanceof SphereCollider) this.shape = component;
+            else this.body = component;
             return component;
         }
-        addChild() {}
+        addChild(node) {
+            node.parent = this;
+        }
     }
     class Scene extends Node {}
     const c = contact();
-    c.geometry.readStepIndex = 2;
+    c.geometry.readStepIndex = 3;
     if (kind === 'oracle') {
         c.geometry.manifolds[0].points[0].worldPointA[0] += 0.1;
         c.geometry.manifolds[0].points[0].worldPointB[0] += 0.1;
@@ -507,7 +662,7 @@ function failingEnterHarness(kind) {
             ]),
         ),
     });
-    const snapshot = { worldId: 65536, stepIndex: 2, contactsOfOwnedBodies: [c] };
+    const snapshot = { worldId: 65536, stepIndex: 3, contactsOfOwnedBodies: [c] };
     const world = {
         impl: { worldId: 65536 },
         diagnostics: () => ({ native: { nativeStepIndex: 0 } }),
@@ -522,7 +677,34 @@ function failingEnterHarness(kind) {
         },
         async step(dt) {
             this.count++;
-            if (this.count === 2) {
+            const nodes = state.nodes.filter((node) => node.shape);
+            for (const node of nodes) {
+                state.guardCalls++;
+                node.sceneTransform.preflight();
+            }
+            writebackSceneBatch(
+                nodes.map((node) => {
+                    const p = node.worldPosition,
+                        v = node.body.velocity;
+                    const origin = [p.x, p.y, p.z].map((value, i) =>
+                        Math.fround(Math.fround(value) + Math.fround(v[i] * Math.fround(dt))),
+                    );
+                    return {
+                        scene: node.sceneTransform,
+                        origin: [...origin, 0, 0, 0, 1],
+                        writable: node.body.type === RigidBody.Type.DYNAMIC,
+                        assertOwner() {},
+                    };
+                }),
+                () => {},
+                {
+                    write(node, operation, expected, perform) {
+                        perform();
+                    },
+                },
+            );
+            state.completedFakeNativeSteps++;
+            if (this.count === 3) {
                 const self = state.nodes.find((node) => node.name === 'round').shape;
                 const other = state.nodes.find((node) => node.name === 'capsule').shape;
                 const event = Object.freeze({
@@ -530,7 +712,7 @@ function failingEnterHarness(kind) {
                     selfCollider: self,
                     otherCollider: other,
                     contacts: Object.freeze([equation]),
-                    impl: Object.freeze({ backend: 'box3d', stepIndex: 2 }),
+                    impl: Object.freeze({ backend: 'box3d', stepIndex: 3 }),
                 });
                 try {
                     self.handlers.get('onCollisionEnter')(event);
@@ -548,6 +730,13 @@ function failingEnterHarness(kind) {
         session: { token: () => ({ isCurrent: () => true }) },
         run(scene) {
             currentScene = scene;
+            for (const node of state.nodes.filter((node) => node.shape)) {
+                node.sceneTransform = new Box3DSceneTransform(node);
+                node.body.adapter = actualVelocityAdapter(node.body, (velocity) => {
+                    node.body.velocity = velocity;
+                    state.velocityCalls.push({ step: state.completedFakeNativeSteps, value: velocity });
+                });
+            }
         },
         async close() {
             state.closes++;
@@ -598,7 +787,7 @@ for (const kind of ['geometry-status', 'getter', 'identity', 'oracle'])
         assert.equal(raw.type, 'onCollisionEnter');
         assert.equal(raw.contacts.length, 1);
         assert.equal(raw.contacts[0].isBodyA, true);
-        assert.equal(raw.impl.stepIndex, 2);
+        assert.equal(raw.impl.stepIndex, 3);
         assert.equal(raw.independentPreStepPoses.round[0], Math.fround(0.8));
         assert.equal(raw.independentPreStepPoses.capsule[0], 0);
         assert.doesNotThrow(() => JSON.stringify(raw), 'Detached evidence has no Collider/Node cycles');
@@ -615,3 +804,79 @@ for (const kind of ['geometry-status', 'getter', 'identity', 'oracle'])
             assert.deepEqual(h.state.records[copiedRecord].value, row.events[0]);
         }
     });
+
+test('old mounted Node-write operation succeeds locally then actual next-step preflight rejects it', async () => {
+    // A source-derived regression, NOT replay of missing historical runtime. Only the
+    // approach operation is reverted; the production guard and assertions are unchanged.
+    const source = file('tools/physics/box3d/sphere-capsule/public-contract.mjs');
+    const supported = 'round.body.setLinearVelocity(new Vec3(-24, 0, 0));';
+    assert.equal(source.split(supported).length, 2);
+    const oracle = pathToFileURL(path.join(root, 'tools/physics/box3d/sphere-capsule/oracle.mjs')).href;
+    const reverted = source
+        .replace(supported, 'round.node.setPosition(0.8, 0, 0);\nround.body.setLinearVelocity(new Vec3());')
+        .replace("'./oracle.mjs'", JSON.stringify(oracle));
+    const legacy = await import('data:text/javascript;base64,' + Buffer.from(reverted).toString('base64'));
+    const h = failingEnterHarness('geometry-status'),
+        report = {};
+    let primary;
+    await assert.rejects(legacy.runPublicSphereCapsule({ sdk: h.sdk, app: h.app, report, record() {} }), (error) => {
+        primary = error;
+        return (
+            error.code === 'AIR_E_BOX3D_CONFIG' &&
+            error.message.includes('External Node pose/parent/scale synchronization is not enabled.')
+        );
+    });
+    assert(primary.stack.includes('Box3DSceneTransform.preflight'));
+    assert.equal(h.state.closes, 1);
+    assert.equal(h.state.callbackFailure, null);
+    assert.equal(h.state.completedFakeNativeSteps, 1);
+    assert.deepEqual(
+        h.state.externalPositionWrites.filter((v) => v.mounted),
+        [{ name: 'round', mounted: true, step: 1 }],
+    );
+    assert.deepEqual(
+        h.state.velocityCalls,
+        [{ step: 1, value: [0, 0, 0] }],
+        'Node write returned before the following supported setter',
+    );
+    assert.equal(report.frames.length, 1);
+    assert.equal(report.totalSteps, 2, 'Second attempt fails before a completed frame');
+    assert.equal(report.cases[0].events.length, 0);
+    assert.equal(report.cases[0].rawEvents.length, 0);
+    assert.equal(report.status, 'FAIL');
+    assert(report.error.includes(primary.message));
+    assert(report.closeError.includes('secondary-close-failure'));
+});
+
+test('new approach uses actual supported velocity forwarding and actual owned writeback without external Node edits', async () => {
+    const h = failingEnterHarness('geometry-status'),
+        report = {};
+    await assert.rejects(
+        runPublicSphereCapsule({ sdk: h.sdk, app: h.app, report, record() {} }),
+        (error) => error === h.state.callbackFailure,
+    );
+    assert(h.state.callbackFailure, 'Deliberately invalid synthetic geometry is reached, not an earlier guard error');
+    assert(!report.error.includes('External Node pose/parent/scale synchronization is not enabled.'));
+    assert.equal(h.state.completedFakeNativeSteps, 3);
+    assert.equal(h.state.guardCalls, 6);
+    assert.deepEqual(
+        h.state.externalPositionWrites.filter((v) => v.mounted),
+        [],
+    );
+    assert.deepEqual(h.state.velocityCalls, [
+        { step: 1, value: [-24, 0, 0] },
+        { step: 2, value: [0, 0, 0] },
+    ]);
+    assert.equal(report.cases[0].rawEvents[0].independentPreStepPoses.round[0], Math.fround(0.8));
+    assert.equal(h.state.closes, 1);
+});
+
+test('actual public velocity adapter rejects nonfinite input before binding double', () => {
+    const component = {},
+        calls = [],
+        adapter = actualVelocityAdapter(component, (value) => calls.push(value));
+    assert.throws(() => adapter.setLinearVelocity({ x: NaN, y: 0, z: 0 }));
+    assert.deepEqual(calls, []);
+    adapter.setLinearVelocity({ x: 24, y: 0, z: 0 });
+    assert.deepEqual(calls, [[24, 0, 0]]);
+});

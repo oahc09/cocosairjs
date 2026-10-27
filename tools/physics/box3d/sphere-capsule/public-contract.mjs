@@ -168,7 +168,7 @@ export async function runPublicSphereCapsule({ sdk, app, report, record }) {
             report.cases.push(row);
             const make = (role) => {
                 const node = new Node(role);
-                node.setPosition(role === 'round' ? 3 : 0, 0, 0);
+                node.setPosition(role === 'round' ? 1.2 : 0, 0, 0);
                 const body = node.addComponent(RigidBody);
                 body.type = role === 'round' ? RigidBody.Type.DYNAMIC : RigidBody.Type.STATIC;
                 body.mass = 1;
@@ -289,7 +289,10 @@ export async function runPublicSphereCapsule({ sdk, app, report, record }) {
             assert.equal(row.snapshots.at(-1).bodies, 2);
             assert.equal(row.snapshots.at(-1).shapes, 2);
             assert.equal(row.events.length, 0);
-            round.node.setPosition(0.8, 0, 0);
+            // The initial ready frame materializes both public bodies. Move only through
+            // the supported native velocity API; external post-mount Node sync is forbidden.
+            round.body.setLinearVelocity(new Vec3(-24, 0, 0));
+            await advance();
             round.body.setLinearVelocity(new Vec3());
             await advance();
             if (config.destroyPeer) {
@@ -301,12 +304,10 @@ export async function runPublicSphereCapsule({ sdk, app, report, record }) {
                 await advance(); // no synthetic Exit for the retired peer
             } else {
                 for (let i = 0; i < 2; i++) {
-                    round.node.setPosition(0.8, 0, 0);
                     round.body.setLinearVelocity(new Vec3());
                     await advance();
                 }
-                round.node.setPosition(3, 0, 0);
-                round.body.setLinearVelocity(new Vec3());
+                round.body.setLinearVelocity(new Vec3(24, 0, 0));
                 await advance();
                 await advance();
             }
