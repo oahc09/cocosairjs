@@ -1,0 +1,453 @@
+{
+  "schema": "box3d-public-sphere-capsule-sdk231-attempt1-failure-v1",
+  "status": "FAIL",
+  "publicationParent": "1a33238f65363cbe16492507bf2dd2cb2d571b0e",
+  "producerIdentity": {
+    "fixtureCommit": "1a33238f65363cbe16492507bf2dd2cb2d571b0e",
+    "runtimeProducerCommit": "f7f780bba52d97cb4c6b7c396fb159758dc698f1",
+    "nativeProducerCommit": "f7f780bba52d97cb4c6b7c396fb159758dc698f1",
+    "runtimeBuildNumber": 231
+  },
+  "startedAt": "2026-10-27T11:34:10.600Z",
+  "completedAt": "2026-10-27T11:34:13.478Z",
+  "qualifiedCases": 0,
+  "declaredCases": 4,
+  "completedPublicFrames": 1,
+  "rawTotalStepsAttemptCounter": 2,
+  "rawCounterSemantics": "Fixture increments ticks before awaiting step;2 attempts does not establish2 completed native/public frames",
+  "callbacks": 0,
+  "firstCase": {
+    "name": "sphere-created-first",
+    "capsuleFirst": false,
+    "zeroCapsule": false,
+    "destroyPeer": false,
+    "status": "RUNNING",
+    "startStep": 0,
+    "rawEvents": [],
+    "events": [],
+    "snapshots": [
+      {
+        "step": 1,
+        "bodies": 2,
+        "shapes": 2,
+        "contacts": 0,
+        "joints": 0,
+        "liveBytes": "41324"
+      }
+    ]
+  },
+  "primaryFailure": {
+    "code": "AIR_E_BOX3D_CONFIG",
+    "message": "Error: [AIR_E_BOX3D_CONFIG] owned writeback: External Node pose/parent/scale synchronization is not enabled.\n    at worldError (file:///workspace/scratch/62d43a81bbde/box3d-recovery-20261027T0928/sdk231-esm-attempt-1/cocosair.module.js:164958:24)\n    at reject (file:///workspace/scratch/62d43a81bbde/box3d-recovery-20261027T0928/sdk231-esm-attempt-1/cocosair.module.js:179631:9)\n    at Box3DSceneTransform.preflight (file:///workspace/scratch/62d43a81bbde/box3d-recovery-20261027T0928/sdk231-esm-attempt-1/cocosair.module.js:179721:199)\n    at Box3DSharedBody.preflight (file:///workspace/scratch/62d43a81bbde/box3d-recovery-20261027T0928/sdk231-esm-attempt-1/cocosair.module.js:180059:55)\n    at PhysicsWorld.syncSceneToPhysics (file:///workspace/scratch/62d43a81bbde/box3d-recovery-20261027T0928/sdk231-esm-attempt-1/cocosair.module.js:182673:103)\n    at PhysicsSystem.postUpdate (file:///workspace/scratch/62d43a81bbde/box3d-recovery-20261027T0928/sdk231-esm-attempt-1/cocosair.module.js:107490:29)\n    at Director.tick (file:///workspace/scratch/62d43a81bbde/box3d-recovery-20261027T0928/sdk231-esm-attempt-1/cocosair.module.js:47528:30)\n    at file:///workspace/scratch/62d43a81bbde/box3d-recovery-20261027T0928/sdk231-esm-attempt-1/cocosair.module.js:150213:42\n    at Object.frame (file:///workspace/scratch/62d43a81bbde/box3d-recovery-20261027T0928/sdk231-esm-attempt-1/cocosair.module.js:46986:11)\n    at file:///workspace/scratch/62d43a81bbde/box3d-recovery-20261027T0928/sdk231-esm-attempt-1/cocosair.module.js:150213:21",
+    "observedBoundary": "External Node pose/parent/scale synchronization guard refused second attempted tick; no public contact geometry qualified",
+    "repairStatus": "NOT_ASSERTED; investigation separate, no bypass or rerun"
+  },
+  "close": {
+    "status": "released",
+    "scene": "Node.365",
+    "completed": [],
+    "physicsSceneRelease": {
+      "backend": "box3d",
+      "status": "RESTORED"
+    },
+    "pending": [],
+    "failures": [],
+    "retained": ["runtime", "scheduler", "builtin-resources", "shared-asset-caches"],
+    "measurements": {
+      "gpuMemory": "unavailable",
+      "reason": "WebGL provides no portable complete GPU allocation measurement; scene destruction is not proof of zero leaks."
+    },
+    "physicsPreparation": {
+      "attemptGeneration": 1,
+      "status": "closed",
+      "acquired": [
+        {
+          "backend": "box3d",
+          "resource": "module",
+          "cleanup": "released",
+          "retained": []
+        },
+        {
+          "backend": "box3d",
+          "resource": "world",
+          "cleanup": "released",
+          "retained": []
+        }
+      ],
+      "originalError": null,
+      "cleanupErrors": []
+    }
+  },
+  "fixtureOwnCloseObserved": true,
+  "fallbackCloseCalls": 0,
+  "qualification": {
+    "host": "NODE_HEADLESS_JSDOM_ORIGINAL_LOADER_FACTORY",
+    "sphereCapsule": "FOUR_DECLARED_PUBLIC_CASES_ONLY",
+    "browser": "NOT_RUN",
+    "fullT15": "NOT_QUALIFIED",
+    "fullC20": "NOT_QUALIFIED",
+    "I05": "NOT_QUALIFIED",
+    "I06": "NOT_QUALIFIED",
+    "afterCloseNativeMemory": "UNAVAILABLE",
+    "historicalRuns": "UNCHANGED; no historical replay or repaired old failures",
+    "preMountCleanup": "NOT_QUALIFIED"
+  },
+  "separateNativeEvidence": {
+    "profile": "air-box3d-sphere-capsule-native-generation-v1",
+    "samples": 18,
+    "checks": [
+      "eighteenSideAndEndpointCases",
+      "sameGenerationFullIdentityAndExactRetainedPoses",
+      "bothCreationOrdersAllAxesAndOppositeNormals",
+      "readOnlyRepeatedGeometryAndDeepFreeze",
+      "realHeapGrowthPreservesCopiedGeometry",
+      "stepMutationDestroyInvalidateOldCapabilities",
+      "nativeForeignInvalidShortBufferNoPartialWrite",
+      "sameModuleCoreAndNativeGlobalBridgeReturnToBaseline"
+    ],
+    "samplesSha256": "a3a71a6d1cca60203647a5993ecfbc30d309f5d82378a646c4227384ec35f9d1",
+    "fixtureSha256": "861d676e7b26d2611335a5d6a3d64e20c4bfd2db606753fea899bde952e83ead",
+    "oracleSha256": "01cc58398aad1b01cc9e5bd2af91d72baa3abc333dca9129c59317541027b48e",
+    "fullT15": "NOT_QUALIFIED",
+    "publicEvents": "NOT_RUN_BY_THIS_NATIVE_CONSUMER"
+  },
+  "scopeBoundary": "Native18-case analytic qualification and SDK231 ST/ESM/DTS PASS remain separate; neither is public events PASS. APP230100-cycle milestone unchanged, not requalified on SDK231. Historical failures and unavailable oldraw remain unchanged.",
+  "closure": {
+    "status": "FAIL",
+    "exitCode": 1,
+    "signal": null,
+    "rawReturnCode": 1,
+    "subreaper": true,
+    "waitpidECHILD": true,
+    "waitpidScope": "ALL_CHILDREN_-1",
+    "remainingDescendants": [],
+    "remainingProcessGroup": [],
+    "budgetViolation": null,
+    "errors": [],
+    "rawWaitRows": [
+      {
+        "pid": 16,
+        "rawWaitStatus": 256,
+        "exitCode": 1
+      }
+    ],
+    "budget": {
+      "wallSeconds": 334,
+      "rssBytes": 2147483648,
+      "outputBytes": 58720256
+    },
+    "elapsedSeconds": 3.6243965040002877,
+    "closeSeconds": 0.0018208460005553206,
+    "closeBudgetSeconds": 4,
+    "peakSampledDescendantRSSBytes": 504176640,
+    "retainedOutputBytes": 3340283,
+    "samplingIntervalSeconds": 0.025,
+    "rssQualification": "sampled full descendant-tree RSS, not a kernel hard limit",
+    "reportSha256": null,
+    "rawJournalSha256": null,
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+      "/workspace/scratch/62d43a81bbde/box3d-recovery-20261027T0928/sphere-capsule-public-source-1a33238-attempt-1/tools/physics/box3d/sphere-capsule/public-harness/v1/run.mjs",
+      "--authorized-sphere-capsule-fresh-st",
+      "/workspace/scratch/62d43a81bbde/box3d-recovery-20261027T0928/sphere-capsule-public-source-1a33238-attempt-1",
+      "/workspace/scratch/62d43a81bbde/box3d-recovery-20261027T0928/sdk231-esm-attempt-1",
+      "/workspace/scratch/62d43a81bbde/box3d-recovery-20261027T0928/sphere-capsule-public-source-1a33238-attempt-1/tools/physics/box3d/output/production-st-f7f780b-attempt-2",
+      "/workspace/scratch/62d43a81bbde/box3d-recovery-20261027T0928/sphere-capsule-public-preflight-1a33238/evidence",
+      "/workspace/scratch/62d43a81bbde/box3d-recovery-20261027T0928/sphere-capsule-public-attempt-1/preparation/input-lock.json",
+      "/workspace/scratch/62d43a81bbde/box3d-recovery-20261027T0928/sphere-capsule-public-attempt-1/main/run"
+    ],
+    "nodeSha256": "61ab14cd750fc24d5db53490ec5fc40f756e4b6e136b78cf7004265471d9bd1d"
+  },
+  "inputProtection": {
+    "records": 3009,
+    "changes": [],
+    "postverifyPassed": true
+  },
+  "postcheck": {
+    "status": "PASS_READ_ONLY_POSTCHECK_OF_FAILED_ATTEMPT",
+    "runtimeOutcome": "FAIL; no retry",
+    "qualifiedCases": 0,
+    "declaredCases": 4,
+    "completedPublicFrames": 1,
+    "fixtureAttemptCounter": 2,
+    "callbacks": 0,
+    "firstNativeSnapshot": {
+      "step": 1,
+      "bodies": 2,
+      "shapes": 2,
+      "contacts": 0,
+      "joints": 0,
+      "liveBytes": "41324"
+    },
+    "normalFixtureClose": "released",
+    "physicsCleanup": "module/world released",
+    "fallbackCloseCalls": 0,
+    "physicalClosure": "ALL_CHILDREN_ECHILD; main child exit1, not an application PASS",
+    "protectedRecords": 3009,
+    "protectedUniquePaths": 2999,
+    "protectedDrift": [],
+    "producerFullSourceEntries": 4793,
+    "executionSourceEntries": 4799,
+    "stCopyFilesEach": 979,
+    "stCopyBytesEach": 53119432,
+    "dependencies": {
+      "root": "/workspace/scratch/62d43a81bbde/box3d-recovery-20261027T0928/dependencies/node_modules",
+      "sha256": "8517aae50f2b3b8fadd496ec94e51c85ba008236b05f16c146d6901a1ba43a4c",
+      "files": 12989,
+      "links": 56,
+      "directories": 2418
+    },
+    "sdkFiles": 25,
+    "sdkBytes": 43798060,
+    "mainElapsedSeconds": 3.6243965040002877,
+    "closeSeconds": 0.0018208460005553206,
+    "peakSampledDescendantRSSBytes": 504176640,
+    "rawExitCode": 1,
+    "budgetViolation": null,
+    "sourceRuntimeIdentity": {
+      "fixtureCommit": "1a33238f65363cbe16492507bf2dd2cb2d571b0e",
+      "runtimeProducerCommit": "f7f780bba52d97cb4c6b7c396fb159758dc698f1",
+      "nativeProducerCommit": "f7f780bba52d97cb4c6b7c396fb159758dc698f1",
+      "runtimeBuildNumber": 231
+    },
+    "outerExecSession": {
+      "id": 10609,
+      "exitCode": 1,
+      "source": "Observed unified exec session terminal; not a fabricated process receipt"
+    },
+    "artifacts": [
+      {
+        "path": "sphere-capsule-public-attempt-1/result.json",
+        "bytes": 4280,
+        "sha256": "65bb47df5090571fac5ad28ef912e20e30e1afe9d3dc420f6eaff20e9f293696"
+      },
+      {
+        "path": "sphere-capsule-public-attempt-1/main/closure.json",
+        "bytes": 1957,
+        "sha256": "a41713238e1e7ae10aa61756e0c180baca97c58113fb7b63770f996ccaf2b8c9"
+      },
+      {
+        "path": "sphere-capsule-public-attempt-1/main/run/process.raw.json",
+        "bytes": 4779,
+        "sha256": "a67a29bd5388d1aae3ec394bedf4c23bb27a7da31145b1b27f17ad8a2136b4a5"
+      },
+      {
+        "path": "sphere-capsule-public-attempt-1/main/run/result/consumer.raw.json",
+        "bytes": 8923,
+        "sha256": "1314bee22d76e48b728ddf1c40e9130c3ef2104ae7ca1df4fcc848e45e5f9a35"
+      },
+      {
+        "path": "sphere-capsule-public-attempt-1/main/run/result/observations.raw.jsonl",
+        "bytes": 13205,
+        "sha256": "dbde4624ba131aa80d905313907000ea887de7530cdb77861e47833d9bfc60cd"
+      },
+      {
+        "path": "sphere-capsule-public-attempt-1/preparation/input-lock.json",
+        "bytes": 2964532,
+        "sha256": "52e491af3d10e1152dd06241234f7fdfac56b0bbdbb38baae14f175bcbea2ae9"
+      },
+      {
+        "path": "sphere-capsule-public-attempt-1/preparation/protected-inputs.json",
+        "bytes": 809032,
+        "sha256": "2a6247492678f780e82f9c224b2dee9bc8227e5f491951ae447e42f78fbe378e"
+      },
+      {
+        "path": "sphere-capsule-public-attempt-1/preparation/freeze/closure.json",
+        "bytes": 1850,
+        "sha256": "7cfb34fab039d9887249404c4305088c2b98ef3a3ab1f1549abd6701f3288e24"
+      },
+      {
+        "path": "sphere-capsule-public-attempt-1/preparation/postverify/closure.json",
+        "bytes": 1829,
+        "sha256": "d83f3f49f0b0124f322fcda60840c145c41a453ebaece9fc83ea0c2eb81de3c6"
+      },
+      {
+        "path": "sphere-capsule-public-preflight-1a33238/preparation-result.json",
+        "bytes": 3379,
+        "sha256": "c60493d24ebfcc4dde945e5e3659750d5857d325b0973b4b13c616549cc4df30"
+      },
+      {
+        "path": "sphere-capsule-public-preflight-1a33238/publication-receipt.json",
+        "bytes": 355,
+        "sha256": "19f323a335b63e1722351a9665860f21bba7f0eec736ef49c400fff6ea69a896"
+      },
+      {
+        "path": "sphere-capsule-public-preflight-1a33238/postcheck.py",
+        "bytes": 8921,
+        "sha256": "02933d3bf7dc4fc567aeb23aa9aada2f55f97ff729d49ded4d7846b75f4f5a2e"
+      }
+    ],
+    "budget": {
+      "mainBytes": 3340283,
+      "wrapperOutputBytes": 7126365,
+      "wrapperPreparationBytes": 3781769,
+      "externalPreparationBytesIncludingThisSummary": 1104379,
+      "combinedPreparationBytes": 4886148,
+      "combinedAllBytes": 8230744,
+      "limits": {
+        "mainBytes": 58720256,
+        "preparationBytes": 8388608,
+        "combinedBytes": 67108864
+      }
+    }
+  },
+  "evidencePackaging": "INDEX_ONLY_NOT_SELF_CONTAINED_RAW_BUNDLE; original retained paths required for verification",
+  "evidence": [
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-recovery-20261027T0928/sphere-capsule-public-attempt-1/result.json",
+      "relativePath": "sphere-capsule-public-attempt-1/result.json",
+      "bytes": 4280,
+      "sha256": "65bb47df5090571fac5ad28ef912e20e30e1afe9d3dc420f6eaff20e9f293696"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-recovery-20261027T0928/sphere-capsule-public-attempt-1/preparation/protected-inputs.json",
+      "relativePath": "sphere-capsule-public-attempt-1/preparation/protected-inputs.json",
+      "bytes": 809032,
+      "sha256": "2a6247492678f780e82f9c224b2dee9bc8227e5f491951ae447e42f78fbe378e"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-recovery-20261027T0928/sphere-capsule-public-attempt-1/preparation/postverify/stdout.raw",
+      "relativePath": "sphere-capsule-public-attempt-1/preparation/postverify/stdout.raw",
+      "bytes": 62,
+      "sha256": "d41c40a99a142028f714304e2d9e77bf7e2481749fa7001e0d012aceeff3f7bd"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-recovery-20261027T0928/sphere-capsule-public-attempt-1/preparation/freeze/closure.json",
+      "relativePath": "sphere-capsule-public-attempt-1/preparation/freeze/closure.json",
+      "bytes": 1850,
+      "sha256": "7cfb34fab039d9887249404c4305088c2b98ef3a3ab1f1549abd6701f3288e24"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-recovery-20261027T0928/sphere-capsule-public-attempt-1/preparation/input-lock.json",
+      "relativePath": "sphere-capsule-public-attempt-1/preparation/input-lock.json",
+      "bytes": 2964532,
+      "sha256": "52e491af3d10e1152dd06241234f7fdfac56b0bbdbb38baae14f175bcbea2ae9"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-recovery-20261027T0928/sphere-capsule-public-attempt-1/main/closure.json",
+      "relativePath": "sphere-capsule-public-attempt-1/main/closure.json",
+      "bytes": 1957,
+      "sha256": "a41713238e1e7ae10aa61756e0c180baca97c58113fb7b63770f996ccaf2b8c9"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-recovery-20261027T0928/sphere-capsule-public-attempt-1/main/run/process.raw.json",
+      "relativePath": "sphere-capsule-public-attempt-1/main/run/process.raw.json",
+      "bytes": 4779,
+      "sha256": "a67a29bd5388d1aae3ec394bedf4c23bb27a7da31145b1b27f17ad8a2136b4a5"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-recovery-20261027T0928/sphere-capsule-public-attempt-1/main/run/result/consumer.raw.json",
+      "relativePath": "sphere-capsule-public-attempt-1/main/run/result/consumer.raw.json",
+      "bytes": 8923,
+      "sha256": "1314bee22d76e48b728ddf1c40e9130c3ef2104ae7ca1df4fcc848e45e5f9a35"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-recovery-20261027T0928/sphere-capsule-public-attempt-1/main/run/result/observations.raw.jsonl",
+      "relativePath": "sphere-capsule-public-attempt-1/main/run/result/observations.raw.jsonl",
+      "bytes": 13205,
+      "sha256": "dbde4624ba131aa80d905313907000ea887de7530cdb77861e47833d9bfc60cd"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-recovery-20261027T0928/sphere-capsule-public-attempt-1/preparation/postverify/closure.json",
+      "relativePath": "sphere-capsule-public-attempt-1/preparation/postverify/closure.json",
+      "bytes": 1829,
+      "sha256": "d83f3f49f0b0124f322fcda60840c145c41a453ebaece9fc83ea0c2eb81de3c6"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-recovery-20261027T0928/sphere-capsule-public-preflight-1a33238/postcheck.json",
+      "relativePath": "sphere-capsule-public-preflight-1a33238/postcheck.json",
+      "bytes": 4425,
+      "sha256": "5398734dce2afd385c15f5d7a0f6ee430a07c9df466d3b656fbfa65a85e59ce2"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-recovery-20261027T0928/sphere-capsule-public-preflight-1a33238/postcheck.py",
+      "relativePath": "sphere-capsule-public-preflight-1a33238/postcheck.py",
+      "bytes": 8921,
+      "sha256": "02933d3bf7dc4fc567aeb23aa9aada2f55f97ff729d49ded4d7846b75f4f5a2e"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-recovery-20261027T0928/sphere-capsule-public-preflight-1a33238/postcheck-initial-attribute-error.py",
+      "relativePath": "sphere-capsule-public-preflight-1a33238/postcheck-initial-attribute-error.py",
+      "bytes": 8909,
+      "sha256": "670dc62ae77d65c43bde3e1fb54d7dbc79aaa4de2b486b7bb860c3f55a361b2c"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-recovery-20261027T0928/sphere-capsule-public-preflight-1a33238/postcheck-initial-error.txt",
+      "relativePath": "sphere-capsule-public-preflight-1a33238/postcheck-initial-error.txt",
+      "bytes": 231,
+      "sha256": "024cdc581aa3d694d059f4c3aae5d0fda6a519a18c7f91d5771d43d15a2967d7"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-recovery-20261027T0928/sphere-capsule-public-preflight-1a33238/publication-binding.json",
+      "relativePath": "sphere-capsule-public-preflight-1a33238/publication-binding.json",
+      "bytes": 1699,
+      "sha256": "3c4d7f8bead635ce8a462ceec6c01fea88cddffdf1fdac1c060377f402f666ea"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-recovery-20261027T0928/sphere-capsule-public-preflight-1a33238/publication-receipt.json",
+      "relativePath": "sphere-capsule-public-preflight-1a33238/publication-receipt.json",
+      "bytes": 355,
+      "sha256": "19f323a335b63e1722351a9665860f21bba7f0eec736ef49c400fff6ea69a896"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-recovery-20261027T0928/sphere-capsule-public-preflight-1a33238/preparation-result.json",
+      "relativePath": "sphere-capsule-public-preflight-1a33238/preparation-result.json",
+      "bytes": 3379,
+      "sha256": "c60493d24ebfcc4dde945e5e3659750d5857d325b0973b4b13c616549cc4df30"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-recovery-20261027T0928/sphere-capsule-public-preflight-1a33238/source-before.json",
+      "relativePath": "sphere-capsule-public-preflight-1a33238/source-before.json",
+      "bytes": 866293,
+      "sha256": "d805ec55ea2b3ff25e3a0edf220ed85c25b4b34eb94a39d8139ead6db32a502f"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-recovery-20261027T0928/sphere-capsule-public-preflight-1a33238/st-copy.json",
+      "relativePath": "sphere-capsule-public-preflight-1a33238/st-copy.json",
+      "bytes": 153407,
+      "sha256": "ebec53a56c7310d8c0588d8957073e1c40fbb51a2e819d65aaffc584c04fb9de"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-recovery-20261027T0928/sphere-capsule-public-preflight-1a33238/evidence/provenance.json",
+      "relativePath": "sphere-capsule-public-preflight-1a33238/evidence/provenance.json",
+      "bytes": 1197,
+      "sha256": "5725dc9ec216134bfcd3651e6866cd517d85371ff38a6c519d7962505b64fe07"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-recovery-20261027T0928/st231-attempt2-evidence/result.json",
+      "relativePath": "st231-attempt2-evidence/result.json",
+      "bytes": 17967,
+      "sha256": "39c1f423184140e1f96f0d1fecb7dfac5cd5cd6728456dc105632815dba4fac5"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-recovery-20261027T0928/sdk231-esm-evidence/result.json",
+      "relativePath": "sdk231-esm-evidence/result.json",
+      "bytes": 11400,
+      "sha256": "6cf3bfc599489d4f8e1d7eee9da173d2ad11dfe0a230d3a96d8bc1beb62ff538"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-recovery-20261027T0928/sdk231-dts-evidence/result.json",
+      "relativePath": "sdk231-dts-evidence/result.json",
+      "bytes": 11310,
+      "sha256": "034057e950bab0850fafd8dbcd9809df21849afdb4ada763766c7827a823cc4a"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-recovery-20261027T0928/sdk231-dts-evidence/seven-gates.json",
+      "relativePath": "sdk231-dts-evidence/seven-gates.json",
+      "bytes": 2586,
+      "sha256": "7d5eeb36a4e9eee53d2811612402623b87b45d8743bb4059af11942c9c76940b"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-recovery-20261027T0928/sdk231-dts-supervision/driver.json",
+      "relativePath": "sdk231-dts-supervision/driver.json",
+      "bytes": 1766,
+      "sha256": "c544a2544786281af1d6f8f684b987a378a06e38e86969a9c4efdd31f3b3a977"
+    },
+    {
+      "path": "/workspace/scratch/62d43a81bbde/box3d-recovery-20261027T0928/sphere-capsule-public-source-1a33238-attempt-1/tools/physics/box3d/sphere-capsule/public-contract.mjs",
+      "relativePath": "sphere-capsule-public-source-1a33238-attempt-1/tools/physics/box3d/sphere-capsule/public-contract.mjs",
+      "bytes": 18332,
+      "sha256": "f52d86f914740677c1f474583c63ca823acdfefa2b58c6969c3e7bbf9cc773cb"
+    }
+  ]
+}

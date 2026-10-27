@@ -1,8 +1,10 @@
 # Box3D closure status
 
-Updated: 2026-10-27 11:24 UTC. Branch: `feat/box3d-rebuild-20261022`.
+Updated: 2026-10-27 11:36 UTC. Branch: `feat/box3d-rebuild-20261022`.
 
 ## Current outcome
+
+- Latest public Sphere–Capsule attempt on SDK231: **FAIL, 0/4 cases qualified**. One public frame completed (2 native bodies / 2 shapes / 0 contacts); the second attempted tick was refused by `AIR_E_BOX3D_CONFIG` for unsupported external Node pose/parent/scale synchronization. Raw `totalSteps=2` is an attempt counter, not two completed physics steps. Zero callbacks; normal fixture close released/RESTORED with module/world cleanup released, no fallback close. Main exited1 with full ECHILD closure; 3009 protected inputs had0drift. Native18-case and SDK231 build PASS do not substitute for this public failure. See [public attempt1 failure](reports/sphere-capsule-public-sdk231-attempt1-20261027.md).
 
 - Latest build: **SDK231 VERIFIED_LIMITED** on `f7f780bba52d97cb4c6b7c396fb159758dc698f1`: fresh ST43/120/85/60 with18 Sphere–Capsule native oracle samples, full28-feature ESM230→231 and fresh DTS7/7; final25files/43798060B. First ST attempt remains FAIL due to the consumer evidence-list omission; a committed two-file fix preceded fresh ST2 PASS. This does not qualify public Sphere–Capsule events/full T15/C21 or extend the separate APP230 result. See [SDK231 report](reports/sdk231-sphere-capsule-build-and-declarations-20261027.md).
 
@@ -34,6 +36,8 @@ Production source now includes the five-patch core, explicit identity/creation-c
 
 ## Next actions, in order
 
+- Preserve SDK231 public attempt1 FAIL and its complete retained evidence. Investigate the fixture's external Node transform use against the supported writeback contract; no bypass, automatic retry or already-fixed claim. Any changed fixture/source needs separate reviewed identity and fresh authorized evidence. Keep SDK231 native/build qualification and APP230100-cycle milestone separate.
+
 1. Verify the current checkout and preserve local changes. Establish one writer before local implementation begins; cloud and local must not write the same module concurrently.
 2. Preserve the committed host/ST/SDK228 reports and their recorded qualification boundaries. Distinguish those recovered report bytes from unavailable temporary raw/artifacts; do not claim an absent cohort was replayed. New SDK build/declarations require fresh evidence, separate from APP qualification.
 3. Preserve the limited host verification of same-world empty-storage reclamation and explicit event acknowledgement. Establish production caller quiescence, borrowed-view retirement and binding revision before integration under `empty-world-trim-design.md`; private injected event records are not APP dispatch evidence.
@@ -48,3 +52,4 @@ Record implementation and validation separately: SOURCE_ONLY, VERIFIED_LIMITED, 
 For each next run record source/runtime/fixture identities, command, limits, stdout/stderr, exit and process-tree closure, before/after input hashes and artifact hashes. Use a new attempt directory; never overwrite a failed one. Keep code and tests in Git promptly, and store large artifacts only at an authorized persistent destination.
 
 The Chinese handoff is an immutable time-of-handoff explanation; use this status and subsequent verified commits to identify later changes. The full task contract remains authoritative; this status does not reduce scope.
+
