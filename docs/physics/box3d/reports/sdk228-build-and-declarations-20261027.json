@@ -1,0 +1,594 @@
+{
+  "schema": "box3d-sdk228-build-declarations-limited-report-v1",
+  "status": "LIMITED_FRESH_ESM_AND_DECLARATIONS_VERIFIED",
+  "runtimeProducerCommit": "fb825da65c8cd259ee8912adb24b7caaa0a64b6a",
+  "nativeProducerCommit": "fb825da65c8cd259ee8912adb24b7caaa0a64b6a",
+  "publicationParent": "ec67b404179167098290b534e000aae178bff047",
+  "buildNumber": 228,
+  "counter": {
+    "before": 227,
+    "after": 228,
+    "incrementedBy": "single successful fresh official ESM build",
+    "dtsIncrement": false
+  },
+  "tools": {
+    "node": {
+      "version": "v24.22.1",
+      "sha256": "61ab14cd750fc24d5db53490ec5fc40f756e4b6e136b78cf7004265471d9bd1d"
+    },
+    "typescript": "4.9.5",
+    "ccbuild": "2.3.21",
+    "rollup": "4.29.1",
+    "nativeCompiler": "Emscripten 6.0.2; existing exact ST3 only, not rebuilt in ESM/DTS"
+  },
+  "sourceRestoration": {
+    "verifiedGitBlobs": 2329,
+    "scope": "Complete tracked src, vendor, tools/build, licenses and root text target set. Additional frozen ST closure and relocated evidence recorded separately. No Git history synthesized; not full examples/docs/verify tree.",
+    "missing": [],
+    "historical222": "source candidates only; every reused target matched fixed remote Git blob, no historical runtime/PASS reused",
+    "stCopyFiles": 973,
+    "stCopy": "all exact bytes copied to same repository-relative OUT; original producer root retained for provenance checks",
+    "sparkBinary": "decoded existing tracked generated-source base64, exact target Git blob and SHA; no rebuild or feature removal"
+  },
+  "dependencies": {
+    "installedPackages": 848,
+    "platformOptionalOmissions": 44,
+    "ignoreScripts": true,
+    "productionLockUnchanged": true,
+    "registryNormalization": "Installer copy only: npmmirror→registry.npmjs.org, identical version/tar path/integrity; production lock not edited",
+    "normalizedEntries": 127
+  },
+  "esm": {
+    "status": "PASS_FRESH_ESM228_BUILD",
+    "argv": ["node", "--max-old-space-size=4096", "tools/build/build.cjs", "--format", "esm"],
+    "features": [
+      "air",
+      "base",
+      "gfx-webgl2",
+      "gfx-webgpu",
+      "gfx-empty",
+      "3d",
+      "animation",
+      "skeletal-animation",
+      "primitive",
+      "tween",
+      "custom-pipeline",
+      "legacy-pipeline",
+      "profiler",
+      "video",
+      "webview",
+      "2d",
+      "physics-2d-framework",
+      "particle-2d",
+      "tiled-map",
+      "ui",
+      "spine-3.8",
+      "spine-4.2",
+      "dragon-bones",
+      "physics-2d-box2d",
+      "physics-builtin",
+      "physics-cannon",
+      "custom-pipeline-post-process",
+      "physics-box3d"
+    ],
+    "preload": false,
+    "elapsedSeconds": 70.74270727899966,
+    "peakSampledTreeRSS": 3355480064,
+    "exitCode": 0,
+    "abort": null,
+    "physicalClose": "ECHILD_AND_NO_GROUP_MEMBERS",
+    "postInputDrift": [],
+    "protectedEntries": 20901,
+    "fileCount": 23,
+    "bytes": 40408442,
+    "sourceMapSources": 995,
+    "packageMarkerBytes": 18,
+    "outputBytesBeforeTerminal": 40421441,
+    "budget": {
+      "wallSeconds": 600,
+      "safeStopSeconds": 570,
+      "heapMiB": 4096,
+      "treeRSSMiB": 6144,
+      "startAvailableMiB": 8192,
+      "reserveMiB": 1024,
+      "outputMiB": 100,
+      "diagnosticsMiB": 8,
+      "inactivitySeconds": 180
+    }
+  },
+  "dts": {
+    "status": "PASS_FRESH_DTS228_SEVEN_GATES",
+    "elapsedSeconds": 67.10482044700075,
+    "peakSampledTreeRSS": 1405825024,
+    "exitCode": 0,
+    "abort": null,
+    "physicalClose": "ECHILD_AND_NO_GROUP_MEMBERS",
+    "postInputDrift": [],
+    "protectedEntries": 23543,
+    "gates": [
+      {
+        "name": "fresh emit",
+        "exitCode": 0,
+        "seconds": 32.892448356000386,
+        "stdoutSha256": "6fac28be26f722ff5fcfda15a760cc69d70b3c6cc9baf3ab95dcc08da90b9046",
+        "stderrSha256": "39499484092f9f819846c022fd2eb98355435b47abcc253eb3c03b98e722326a"
+      },
+      {
+        "name": "declaration inputs fixture",
+        "exitCode": 0,
+        "seconds": 7.005850689998624,
+        "stdoutSha256": "63dfd03feb15fb172d36ffe6f2d8e3a2e34a6786ab286a501be431d34fde454b",
+        "stderrSha256": "fb37f43c42c80764b482ed45513ec9fdc2ab2d8bd9644eae67dd01bc3194f61b"
+      },
+      {
+        "name": "external types fixture",
+        "exitCode": 0,
+        "seconds": 4.197106740999516,
+        "stdoutSha256": "f34fe3575f6baa2b09643fc41acd7cc4500cd24a1fc5924a4cd7c1e083fccfa6",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "symbol fixture",
+        "exitCode": 0,
+        "seconds": 6.28870285100129,
+        "stdoutSha256": "000cd1a8188c52d434da4685f1032988c26d6da88dd50609aed12014902645b3",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "strict app",
+        "exitCode": 0,
+        "seconds": 2.726617168998928,
+        "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "strict mesh",
+        "exitCode": 0,
+        "seconds": 2.05667826699937,
+        "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "strict terrain",
+        "exitCode": 0,
+        "seconds": 2.9990261389993975,
+        "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "strictOptions": {
+      "strict": true,
+      "skipLibCheck": false,
+      "noEmit": true,
+      "types": [],
+      "references": "this attempt fresh modern declaration, not historical bundle"
+    },
+    "declarations": [
+      {
+        "path": "cocosair.module.d.ts",
+        "bytes": 3375669,
+        "sha256": "a828b79f7395f93b0dd771b937896e6276e7c0c7616125975fd54655de464a32"
+      },
+      {
+        "path": "cocosair.legacy.d.ts",
+        "bytes": 367,
+        "sha256": "6dd42c6a064b17f923568bce9e3befce5ff0e33d7b0af19bed965a9e1a86aed2"
+      }
+    ],
+    "promotion": "both validated before exclusive xb/wx writes; canonical legacy generator literal and relative modern reference, no arbitrary wrapper minimum size",
+    "legacyGeneratorSha256": "5c590e847c619819103833a52971e852f8bb7d228cea211ddd1e9b2248cd7e69",
+    "esmProtection": "ALL_23_ORIGINAL_FILES_UNCHANGED",
+    "budget": {
+      "wallSeconds": 300,
+      "safeStopSeconds": 270,
+      "heapMiB": 2048,
+      "treeRSSMiB": 3072,
+      "startAvailableMiB": 4096,
+      "reserveMiB": 1024,
+      "outputMiB": 100,
+      "diagnosticsMiB": 8,
+      "inactivitySeconds": 180
+    }
+  },
+  "sdk": {
+    "sourceCommit": "fb825da65c8cd259ee8912adb24b7caaa0a64b6a",
+    "buildNumber": 228,
+    "files": [
+      {
+        "path": "box2d3/LICENSE.Box2D.txt",
+        "bytes": 1067,
+        "sha256": "68a3e676d7e94093b102d5cba0d4e04af812040d6f230c3db67a6664574e43d2"
+      },
+      {
+        "path": "box2d3/air-box2d.mjs",
+        "bytes": 56143,
+        "sha256": "5a7d80e036a41ce9921daed74c31d7a30d1a7f41c103e207576991d1db126485"
+      },
+      {
+        "path": "box2d3/air-box2d.wasm",
+        "bytes": 371639,
+        "sha256": "3391e2ace476adba36297ff8ce66766a0a09d9365caec8079b6843d1dd4219ec"
+      },
+      {
+        "path": "box2d3/receipt.json",
+        "bytes": 974,
+        "sha256": "5540911a20a2c624629de1c6f155c43a6cf8e28c91fa0cb6f4cabfb54dfcfbf4"
+      },
+      {
+        "path": "cocosair.legacy.d.ts",
+        "bytes": 367,
+        "sha256": "6dd42c6a064b17f923568bce9e3befce5ff0e33d7b0af19bed965a9e1a86aed2"
+      },
+      {
+        "path": "cocosair.module.d.ts",
+        "bytes": 3375669,
+        "sha256": "a828b79f7395f93b0dd771b937896e6276e7c0c7616125975fd54655de464a32"
+      },
+      {
+        "path": "cocosair.module.js",
+        "bytes": 9473395,
+        "sha256": "9830404ef59792dbeffe429414cda75171a9eda68cdb99d95945133359956522"
+      },
+      {
+        "path": "cocosair.module.js.map",
+        "bytes": 26498851,
+        "sha256": "ed29a3840de573de161b1b3f6a62e8076a76e351ab5061d24544ebb48f06a98d"
+      },
+      {
+        "path": "package.json",
+        "bytes": 18,
+        "sha256": "1239d4d885dcad42201a27ed9324f8f0f760b78700d8db9ced39a511cffe7eae"
+      },
+      {
+        "path": "physics/box3d/st/LICENSE.Box3D.txt",
+        "bytes": 1067,
+        "sha256": "da5e31a26bf3cfd5ba5c96d6823e480128c81e76c107ef9d3ee5d94789184b90"
+      },
+      {
+        "path": "physics/box3d/st/box3d-st.mjs",
+        "bytes": 56196,
+        "sha256": "b9116d2421075df6abe84782bbe16ed37c48309a13a98a9fa399ad49af0ebca1"
+      },
+      {
+        "path": "physics/box3d/st/box3d-st.wasm",
+        "bytes": 709994,
+        "sha256": "5c2af5fb2eeacdf1a98adb77e7d06f55310ac6157f10d38126268d8f53ec9b1c"
+      },
+      {
+        "path": "physics/box3d/st/distribution-receipt.json",
+        "bytes": 3239,
+        "sha256": "0526967e33980ce7dc8df1ce3b61838954d8875c82f41cac091e6215738d6b84"
+      },
+      {
+        "path": "physics/box3d/st/facade.d.mts",
+        "bytes": 31368,
+        "sha256": "617cbc4e0cf2d6b1312f01bb4be18876feb9a541c19fd7d9360d93b553edc8a4"
+      },
+      {
+        "path": "physics/box3d/st/facade.mjs",
+        "bytes": 135503,
+        "sha256": "d5bf62b7a15c47d621fbcd7dfca2d2b1c3d361c26db794196e077fdc5bb4a2a5"
+      },
+      {
+        "path": "physics/box3d/st/manifest.json",
+        "bytes": 7460,
+        "sha256": "746bd1a38516f04413b68aa505373bcc199c92a9a6de586a6c1230236b2c6cb0"
+      },
+      {
+        "path": "webgpu/LICENSE-apache.txt",
+        "bytes": 9226,
+        "sha256": "9362ea9ea17cb221a20cbbd63f404710834cc273d2a9a7b60314fd68ab702cd6"
+      },
+      {
+        "path": "webgpu/LICENSE-dawn.txt",
+        "bytes": 11829,
+        "sha256": "0493f897193af1796d5054659f45ec7d4c5af648fa67a99f01d30e55cc805abc"
+      },
+      {
+        "path": "webgpu/LICENSE-glslang.txt",
+        "bytes": 55719,
+        "sha256": "373bb541d74f5a2854e4b752c57952dd8155cca535124176de90c94efc67ef85"
+      },
+      {
+        "path": "webgpu/NOTICE-babylon.md",
+        "bytes": 793,
+        "sha256": "7f85d099ce3c6e1900a45ee8d5b8fa405e760c746af687b3ee2081416e48f183"
+      },
+      {
+        "path": "webgpu/glslang.js",
+        "bytes": 12829,
+        "sha256": "7937463b384ded16e10da2c1d64cb63a0894e56e8d8167cce636be5635caef59"
+      },
+      {
+        "path": "webgpu/glslang.wasm",
+        "bytes": 1192271,
+        "sha256": "2746e37cbb52ff99f21a836e56e72e5771873a83a032faec2ed860941b23768e"
+      },
+      {
+        "path": "webgpu/manifest.json",
+        "bytes": 1816,
+        "sha256": "84161a92c5469819bab8a3ddc6512bf8e6e88c1bb67c1fd4c873be84ce0e6df9"
+      },
+      {
+        "path": "webgpu/twgsl.js",
+        "bytes": 74129,
+        "sha256": "e5664e33a74d064118769636440a5b09121db31370d6fe54b778deb17cd0e4f5"
+      },
+      {
+        "path": "webgpu/twgsl.wasm",
+        "bytes": 1702916,
+        "sha256": "a434c2decdbb38caadf5f486d806384a1543554828c983c77922b2d92579914c"
+      }
+    ],
+    "totalBytes": 43784478,
+    "esmResultSha256": "6cb455aacde44cefb6b9042184b05272d04ae24d7f4422ddf011e808bb96a908",
+    "dtsResultSha256": "f59b32ea4bf5e45e87260b6bcf2baaef29a391c5bec3223aa8f74ddad103910c"
+  },
+  "warnings": [
+    "ESM Babel deoptimization notices for large generated builtin effect/GLSL files retained.",
+    "DTS TypeScript deprecated factory notices and tfig template-literal handling warnings retained; all seven gates nevertheless exit 0."
+  ],
+  "history": {
+    "nativeAttempts": "ST1 source-route failure; ST2 supervisor temporary-file race failure; ST3 actual PASS remain separate in prior report.",
+    "hostAttempt1": "UNKNOWN remains unchanged; this closure applies only to these new ESM/DTS process trees.",
+    "sdk228Attempts": {
+      "esm": 1,
+      "dts": 1
+    },
+    "priorApp": "C20 APP strict FAIL 0/100 and unexplained 76940-byte delta are not rewritten by build qualification."
+  },
+  "limits": [
+    "NOT_QUALIFIED_BY_BUILD: actual APP/C20/I05/I06/G5, visual/browser/device, leak freedom, or full Box3D acceptance.",
+    "New 41/111/85/58 ST gate and 51 native/12 production-WASM checks are prior low-level evidence, not APP success.",
+    "Native owned-metadata account remains PARTIAL, not full allocator/free accounting; no after-close native observation claimed.",
+    "Source restoration is a verified build-input projection, not complete repository history.",
+    "This small report is not a self-contained replay bundle; referenced raw, SDK and dependency payloads are retained separately and not embedded."
+  ],
+  "retainedEvidence": [
+    {
+      "path": "sdk228-esm-evidence/result.json",
+      "bytes": 8877,
+      "sha256": "6cb455aacde44cefb6b9042184b05272d04ae24d7f4422ddf011e808bb96a908"
+    },
+    {
+      "path": "sdk228-esm-evidence/complete.json",
+      "bytes": 89,
+      "sha256": "8633177dfaf382391fe935541cc38aaf2a7a1f8245a82d430c5682d263588ae6"
+    },
+    {
+      "path": "sdk228-esm-evidence/started.json",
+      "bytes": 229,
+      "sha256": "9553e777674e7bef78471f50640f4efa2d020dc386d970f6df941762538c57ff"
+    },
+    {
+      "path": "sdk228-esm-evidence/build.stdout",
+      "bytes": 12067,
+      "sha256": "7e46ed66bc2e0fe5a706b758c3a2737813150300aa02a22e58e3095957760207"
+    },
+    {
+      "path": "sdk228-esm-evidence/build.stderr",
+      "bytes": 703,
+      "sha256": "41d16f8f0308e6851d38cd2298c4a78f78f73a063828db6095816be612037805"
+    },
+    {
+      "path": "sdk228-esm-supervision/control.json",
+      "bytes": 4018,
+      "sha256": "28c41e33603fa7fbefff57cc8df7d8dfebbf04d0a4c9f134b3ec61f9fc223f63"
+    },
+    {
+      "path": "sdk228-esm-supervision/authorization.json",
+      "bytes": 426,
+      "sha256": "9496de8762db575fcf0cf76904b023545b9a180bc4369e25bd288705814177f8"
+    },
+    {
+      "path": "sdk228-esm-supervision/run-once.py",
+      "bytes": 8466,
+      "sha256": "6febf0769eb72f205369cf9e606af1db293aee2d2b972a41dbbc472531e51f80"
+    },
+    {
+      "path": "sdk228-esm-supervision/protected-inputs.json",
+      "bytes": 5022367,
+      "sha256": "e3da209e9482747d019c6898fe150ec911217f7fdf48ed201b86de0eb06c079b"
+    },
+    {
+      "path": "sdk228-dts-evidence/result.json",
+      "bytes": 3896,
+      "sha256": "f59b32ea4bf5e45e87260b6bcf2baaef29a391c5bec3223aa8f74ddad103910c"
+    },
+    {
+      "path": "sdk228-dts-evidence/complete.json",
+      "bytes": 89,
+      "sha256": "9295541b820a2796d366b33f2d05a88bc4cfdfd69858830498c3dffa161c8219"
+    },
+    {
+      "path": "sdk228-dts-evidence/started.json",
+      "bytes": 1709,
+      "sha256": "0138ed0e32280e0a3809eae3968093e505316976c60a2d2658d3975a0f512413"
+    },
+    {
+      "path": "sdk228-dts-evidence/seven-gates.json",
+      "bytes": 3556,
+      "sha256": "5e89a418187130389129b2ab12d87138161845ccfecaff79e067b3a163acbcef"
+    },
+    {
+      "path": "sdk228-dts-supervision/control.json",
+      "bytes": 2564,
+      "sha256": "056b1093cd8d36cac55a6aac49a819cb61a9024c2e081659eb4d6d560cdd3965"
+    },
+    {
+      "path": "sdk228-dts-supervision/authorization.json",
+      "bytes": 393,
+      "sha256": "ad7982c8c14da1d26c95bec4b8f5603c81b49c9490019eb0e58ea8db3b1d923e"
+    },
+    {
+      "path": "sdk228-dts-supervision/run-once.py",
+      "bytes": 9323,
+      "sha256": "ec6cc98fc455c34c6f026d3ab2d948430196a9a92752ed7e445543f7a5d0c913"
+    },
+    {
+      "path": "sdk228-dts-supervision/driver.py",
+      "bytes": 1039,
+      "sha256": "0150d9f602d4fedc43f3545cd3314f9c5cf8f30fdf927b6c4c0e87a5d6398174"
+    },
+    {
+      "path": "sdk228-dts-supervision/protected-inputs.json",
+      "bytes": 5584461,
+      "sha256": "f2aff65b3bb60ab0a3cb398af07beb4425fec9412a73cf403aa2a9a7dc2b4915"
+    },
+    {
+      "path": "sdk228-dts-supervision/source-copy.json",
+      "bytes": 406292,
+      "sha256": "d3033eb59b9cca41189312f66928d91e1bfdb387561ff5d786c8a4bb222a88d7"
+    },
+    {
+      "path": "sdk228-dts-supervision/esm-protected.json",
+      "bytes": 3443,
+      "sha256": "6152f5a397e47ccc7adb24341d1b39875cbbd53539b4008e57262a01aed74a07"
+    },
+    {
+      "path": "sdk-dependencies-fb825da/restoration-receipt.json",
+      "bytes": 275343,
+      "sha256": "b347f463bc303ec9329b9a49936209dfd711bbb3a0dbca99dc5e9315a6c47482"
+    },
+    {
+      "path": "sdk-dependencies-fb825da/qualification.json",
+      "bytes": 1444,
+      "sha256": "e14f0f321c6b19841e26f162699499d2376583b2539bbfac9b5dc14d72a8c885"
+    },
+    {
+      "path": "sdk-dependencies-fb825da/registry-origin-remap.json",
+      "bytes": 47919,
+      "sha256": "f504b679f9b04eb31ec50395d494d2fd7207fefd60f12f9cb15ee7c5db5967f9"
+    },
+    {
+      "path": "sdk-recovery/source-recovery-receipt.json",
+      "bytes": 557330,
+      "sha256": "04ec5dc43a00c9465b23b59773c2489e19af9b2ebeea2264b72ddf149278914c"
+    },
+    {
+      "path": "sdk-recovery/st3-copy-receipt.json",
+      "bytes": 172171,
+      "sha256": "47e9750c47fb6b913073fb38f678994ecbbc891ebcd79649a914e039a88af7d5"
+    },
+    {
+      "path": "sdk-recovery/preflight-final/result.json",
+      "bytes": 2401,
+      "sha256": "6b6bbf3cfbce42841223092cabcef6194a1240b41d56d6cc86b8360f36f5b2be"
+    },
+    {
+      "path": "sdk-recovery/spark-wasm-recovery.json",
+      "bytes": 404,
+      "sha256": "2925161a36dcd5ec8e6bb9a21b0383a4b7d276b1bd0f89c2216d796507f762fc"
+    },
+    {
+      "path": "sdk-recovery/sdk228-complete-inventory.json",
+      "bytes": 4290,
+      "sha256": "80efeec5b629479951b329255de5e829515b21bf4b372449b8e6323b221891f5"
+    },
+    {
+      "path": "production-st-attempt-3-evidence/result.json",
+      "bytes": 9754,
+      "sha256": "b9955e162e6154d2378c86d3e44edc4545bbbd8ad42c76396a24ebdf81e1021a"
+    },
+    {
+      "path": "sdk228-dts-evidence/gate-0.stdout",
+      "bytes": 428,
+      "sha256": "6fac28be26f722ff5fcfda15a760cc69d70b3c6cc9baf3ab95dcc08da90b9046"
+    },
+    {
+      "path": "sdk228-dts-evidence/gate-0.stderr",
+      "bytes": 523,
+      "sha256": "39499484092f9f819846c022fd2eb98355435b47abcc253eb3c03b98e722326a"
+    },
+    {
+      "path": "sdk228-dts-evidence/gate-1.stdout",
+      "bytes": 145,
+      "sha256": "63dfd03feb15fb172d36ffe6f2d8e3a2e34a6786ab286a501be431d34fde454b"
+    },
+    {
+      "path": "sdk228-dts-evidence/gate-1.stderr",
+      "bytes": 166,
+      "sha256": "fb37f43c42c80764b482ed45513ec9fdc2ab2d8bd9644eae67dd01bc3194f61b"
+    },
+    {
+      "path": "sdk228-dts-evidence/gate-2.stdout",
+      "bytes": 156,
+      "sha256": "f34fe3575f6baa2b09643fc41acd7cc4500cd24a1fc5924a4cd7c1e083fccfa6"
+    },
+    {
+      "path": "sdk228-dts-evidence/gate-2.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk228-dts-evidence/gate-3.stdout",
+      "bytes": 162,
+      "sha256": "000cd1a8188c52d434da4685f1032988c26d6da88dd50609aed12014902645b3"
+    },
+    {
+      "path": "sdk228-dts-evidence/gate-3.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk228-dts-evidence/gate-4.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk228-dts-evidence/gate-4.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk228-dts-evidence/gate-5.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk228-dts-evidence/gate-5.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk228-dts-evidence/gate-6.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk228-dts-evidence/gate-6.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk228-dts-supervision/consumers/app.ts",
+      "bytes": 569,
+      "sha256": "9bac862e3945fbb5c1dee013c28162e47552d0866b63d026b5cf6a438f9210d6"
+    },
+    {
+      "path": "sdk228-dts-supervision/consumers/app.json",
+      "bytes": 263,
+      "sha256": "5a964fd7457f74b4e6b371d7adf32e32845e0ab9a2cced5044b54d7a71271e3f"
+    },
+    {
+      "path": "sdk228-dts-supervision/consumers/mesh.ts",
+      "bytes": 552,
+      "sha256": "f285a7b7503c0b75b23766e7365ba83602d08bae44456fe9bd7128141121bca2"
+    },
+    {
+      "path": "sdk228-dts-supervision/consumers/mesh.json",
+      "bytes": 264,
+      "sha256": "6b2efc6d533301916321dec0f135bbf37ab41268353f6304a38b4fe68529823e"
+    },
+    {
+      "path": "sdk228-dts-supervision/consumers/terrain.ts",
+      "bytes": 572,
+      "sha256": "7336f5924fb9a7684c98e8c20790b77ce1364826c01d4e357d143daa3fccd89f"
+    },
+    {
+      "path": "sdk228-dts-supervision/consumers/terrain.json",
+      "bytes": 267,
+      "sha256": "01ab2305990b8dcf1ea078611c56a62ce611c0ebe88badea2860ee58d58ea8ec"
+    }
+  ]
+}
