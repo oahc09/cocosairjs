@@ -1,12 +1,14 @@
 # Box3D closure status
 
-Updated: 2026-10-27 12:21 UTC. Branch: `feat/box3d-rebuild-20261022`.
+Updated: 2026-10-27 13:19 UTC. Branch: `feat/box3d-rebuild-20261022`.
 
 ## Current outcome
 
+- Latest build attempt: **SDK234 PARTIAL — ST/ESM limited PASS, DTS FAIL** on `eddf4ac58ea536348aac960a527cc27961b9011f`. Fresh47/136/87/63 ST passed module native120/WASM8; bare full28-feature ESM233→234 produced23 files/40457499B. DTS gates1–4 exited0, gate5 strict consumer failed on two missing `Box3DModuleReleaseReceipt` references; gates6/7 NOT_RUN. Emit also reported unsupported `Object.fromEntries` target lib. No declarations promoted, no complete25-file SDK or public module-close qualification. Counter234 is the real successful ESM count, not a whole-cohort PASS. See [SDK234 failure report](reports/sdk234-module-terminal-build-and-dts-failure-20261027.md).
+
 - Latest public Sphere–Capsule attempt3 on SDK233: **PASS_PUBLIC_SPHERE_CAPSULE_SUBSET, 4/4 declared cases**,25 completed public frames/31 callbacks. Destroy-peer observations explicitly retain immediate step24 Node-valid/native2body1shape and original next frame25 Node-invalid/native1body1shape; neither is inferred or backfilled. All4 scene releases restored0 live counts/ledger36096, normal app close/module/world cleanup released, fallback0, exit0/ECHILD,3014 protected records0drift. Attempts1/2 remain FAIL. Headless subset only, not full T15/C21/C20/I05/I06 or browser/mobile. See [SDK233 public qualification](reports/sphere-capsule-public-sdk233-attempt3-20261027.md).
 
-- Latest build: **SDK233 VERIFIED_LIMITED** on `3f7cf0fdc0148c3829f5e1c854d667ec2417e0fc`: fresh43/120/85/60 ST with18 native oracle samples, bare full28-feature ESM232→233 and fresh DTS7/7; final25files/43789105B. This builds the deferred-observation fixture correction without changing native schema or production dispatch guards. Public attempt3 requires a separate result and is not pre-judged by this build; previous SDK232 public overall FAIL is preserved. See [SDK233 report](reports/sdk233-deferred-observation-build-and-declarations-20261027.md).
+- Previous build: **SDK233 VERIFIED_LIMITED** on `3f7cf0fdc0148c3829f5e1c854d667ec2417e0fc`: fresh43/120/85/60 ST with18 native oracle samples, bare full28-feature ESM232→233 and fresh DTS7/7; final25files/43789105B. This builds the deferred-observation fixture correction without changing native schema or production dispatch guards. Public attempt3 requires a separate result and is not pre-judged by this build; previous SDK232 public overall FAIL is preserved. See [SDK233 report](reports/sdk233-deferred-observation-build-and-declarations-20261027.md).
 
 - Earlier public Sphere–Capsule attempt2 on SDK232: **overall FAIL; first3 cases validator-PASS, fourth unqualified**. 25 completed public frames/31 callbacks. At step24 the destroy-peer case captured `destroyedPeerInvalid=false` and native2 bodies/1 shape; step25 native snapshot is1 body/1 shape, but Node validity was not resampled. The first failure is validateCase:128 checking the saved immediate boolean, not proof that the next-frame Node state passed. All4 scene releases restored zero live counts/ledger36096; normal app close/module/world cleanup released, fallback0, exit1 with ECHILD and3012 protected records0drift. Attempt1 FAIL remains unchanged. See [SDK232 public attempt2 failure](reports/sphere-capsule-public-sdk232-attempt2-20261027.md).
 
@@ -64,4 +66,3 @@ Record implementation and validation separately: SOURCE_ONLY, VERIFIED_LIMITED, 
 For each next run record source/runtime/fixture identities, command, limits, stdout/stderr, exit and process-tree closure, before/after input hashes and artifact hashes. Use a new attempt directory; never overwrite a failed one. Keep code and tests in Git promptly, and store large artifacts only at an authorized persistent destination.
 
 The Chinese handoff is an immutable time-of-handoff explanation; use this status and subsequent verified commits to identify later changes. The full task contract remains authoritative; this status does not reduce scope.
-
