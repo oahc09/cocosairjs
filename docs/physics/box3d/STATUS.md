@@ -1,12 +1,14 @@
 # Box3D closure status
 
-Updated: 2026-10-27 12:17 UTC. Branch: `feat/box3d-rebuild-20261022`.
+Updated: 2026-10-27 12:21 UTC. Branch: `feat/box3d-rebuild-20261022`.
 
 ## Current outcome
 
+- Latest public Sphere–Capsule attempt3 on SDK233: **PASS_PUBLIC_SPHERE_CAPSULE_SUBSET, 4/4 declared cases**,25 completed public frames/31 callbacks. Destroy-peer observations explicitly retain immediate step24 Node-valid/native2body1shape and original next frame25 Node-invalid/native1body1shape; neither is inferred or backfilled. All4 scene releases restored0 live counts/ledger36096, normal app close/module/world cleanup released, fallback0, exit0/ECHILD,3014 protected records0drift. Attempts1/2 remain FAIL. Headless subset only, not full T15/C21/C20/I05/I06 or browser/mobile. See [SDK233 public qualification](reports/sphere-capsule-public-sdk233-attempt3-20261027.md).
+
 - Latest build: **SDK233 VERIFIED_LIMITED** on `3f7cf0fdc0148c3829f5e1c854d667ec2417e0fc`: fresh43/120/85/60 ST with18 native oracle samples, bare full28-feature ESM232→233 and fresh DTS7/7; final25files/43789105B. This builds the deferred-observation fixture correction without changing native schema or production dispatch guards. Public attempt3 requires a separate result and is not pre-judged by this build; previous SDK232 public overall FAIL is preserved. See [SDK233 report](reports/sdk233-deferred-observation-build-and-declarations-20261027.md).
 
-- Latest public Sphere–Capsule attempt2 on SDK232: **overall FAIL; first3 cases validator-PASS, fourth unqualified**. 25 completed public frames/31 callbacks. At step24 the destroy-peer case captured `destroyedPeerInvalid=false` and native2 bodies/1 shape; step25 native snapshot is1 body/1 shape, but Node validity was not resampled. The first failure is validateCase:128 checking the saved immediate boolean, not proof that the next-frame Node state passed. All4 scene releases restored zero live counts/ledger36096; normal app close/module/world cleanup released, fallback0, exit1 with ECHILD and3012 protected records0drift. Attempt1 FAIL remains unchanged. See [SDK232 public attempt2 failure](reports/sphere-capsule-public-sdk232-attempt2-20261027.md).
+- Earlier public Sphere–Capsule attempt2 on SDK232: **overall FAIL; first3 cases validator-PASS, fourth unqualified**. 25 completed public frames/31 callbacks. At step24 the destroy-peer case captured `destroyedPeerInvalid=false` and native2 bodies/1 shape; step25 native snapshot is1 body/1 shape, but Node validity was not resampled. The first failure is validateCase:128 checking the saved immediate boolean, not proof that the next-frame Node state passed. All4 scene releases restored zero live counts/ledger36096; normal app close/module/world cleanup released, fallback0, exit1 with ECHILD and3012 protected records0drift. Attempt1 FAIL remains unchanged. See [SDK232 public attempt2 failure](reports/sphere-capsule-public-sdk232-attempt2-20261027.md).
 
 - Previous build: **SDK232 VERIFIED_LIMITED** on `fe69c0e366f663ba4aeae7be390eb3065b7805c5`: fresh43/120/85/60 ST with18 native oracle samples, bare full28-feature ESM231→232 and fresh DTS7/7; final25files/43789105B. This builds the supported-velocity fixture correction without changing production transform guards or native schema. The separate public attempt2 is not qualified by this build report; previous SDK231 public FAIL remains unchanged. See [SDK232 report](reports/sdk232-velocity-fixture-build-and-declarations-20261027.md).
 
@@ -42,9 +44,11 @@ Production source now includes the five-patch core, explicit identity/creation-c
 
 ## Next actions, in order
 
-- Preserve public attempt2 overall FAIL and its three genuinely passed cases. Review the destroy-peer observation timing against the original contract; no next-frame Node-validity inference, skipped assertion, raw rewrite or already-fixed claim. Keep the independently qualified SDK232 build/native evidence and APP230 milestone separate.
+- Preserve the separately bound SDK233 public4-case success and its exact raw evidence; do not repeat or broaden it without cause. Continue remaining original contact-pair/lifecycle coverage and capability/matrix/example/mobile/performance gates; full native census/post-close measurement remains open. Earlier public failures stay unchanged under their original fixtures.
 
-- Preserve SDK231 public attempt1 FAIL and its complete retained evidence. Investigate the fixture's external Node transform use against the supported writeback contract; no bypass, automatic retry or already-fixed claim. Any changed fixture/source needs separate reviewed identity and fresh authorized evidence. Keep SDK231 native/build qualification and APP230100-cycle milestone separate.
+- Preserve public attempt2 overall FAIL and its three genuinely passed cases. The new SDK233 fixture now explicitly samples both destruction phases; do not backfill old next-frame Node validity or rewrite its failure. Keep the independently qualified SDK232 build/native evidence and APP230 milestone separate.
+
+- Preserve SDK231 public attempt1 FAIL and its complete retained evidence. The later supported-velocity fixture has its own reviewed identity and evidence; do not bypass guards or relabel the original failure. Keep SDK231 native/build qualification and APP230100-cycle milestone separate.
 
 1. Verify the current checkout and preserve local changes. Establish one writer before local implementation begins; cloud and local must not write the same module concurrently.
 2. Preserve the committed host/ST/SDK228 reports and their recorded qualification boundaries. Distinguish those recovered report bytes from unavailable temporary raw/artifacts; do not claim an absent cohort was replayed. New SDK build/declarations require fresh evidence, separate from APP qualification.
@@ -60,3 +64,4 @@ Record implementation and validation separately: SOURCE_ONLY, VERIFIED_LIMITED, 
 For each next run record source/runtime/fixture identities, command, limits, stdout/stderr, exit and process-tree closure, before/after input hashes and artifact hashes. Use a new attempt directory; never overwrite a failed one. Keep code and tests in Git promptly, and store large artifacts only at an authorized persistent destination.
 
 The Chinese handoff is an immutable time-of-handoff explanation; use this status and subsequent verified commits to identify later changes. The full task contract remains authoritative; this status does not reduce scope.
+
