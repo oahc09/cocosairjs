@@ -5975,13 +5975,13 @@
     },
     {
       "path": "tools/physics/box3d/sphere-capsule/public-contract.mjs",
-      "bytes": 18467,
-      "sha256": "208fb87eb055dc27d5a64b49bb124d63d805c66639735311ba4bb088b527241e"
+      "bytes": 19674,
+      "sha256": "2f591da973405f286e571cbb65577b93d56471d1d9cc6310eacbe4c517acbd63"
     },
     {
       "path": "tools/physics/box3d/sphere-capsule/public-contract.test.mjs",
-      "bytes": 37650,
-      "sha256": "db2ae337008ef9a0fd78c6ff525aeadbaef20d80ec0c9dc95f1a6a5dd7f1f66f"
+      "bytes": 44297,
+      "sha256": "5c5273936e7bc0c37722e0aecdab3030806e0385f9e023a6ffdcfbaf84b59ac5"
     },
     {
       "path": "tools/physics/box3d/sphere-capsule/qualification.mjs",

@@ -324,6 +324,8 @@ function validCase(destroyPeer = false) {
                   ['onCollisionEnter', 'onCollisionStay', 'onCollisionExit'].map((type) => ({ self, type })),
               ),
         destroyRequested: true,
+        callbackRequestStep: 24,
+        afterCallbackObservationStep: 25,
         destroyedPeerInvalid: true,
         afterCallback: { bodies: 1, shapes: 1 },
     };
@@ -879,4 +881,150 @@ test('actual public velocity adapter rejects nonfinite input before binding doub
     assert.deepEqual(calls, []);
     adapter.setLinearVelocity({ x: 24, y: 0, z: 0 });
     assert.deepEqual(calls, [[24, 0, 0]]);
+});
+
+// Execute only the unchanged TS lifetime methods and actual Director phase order.
+// The tiny roster below is a named CPU double; this is not a native lifetime run.
+function bracedSource(source, marker) {
+    const start = source.indexOf(marker);
+    assert(start >= 0, 'Actual source marker exists: ' + marker);
+    const opening = source.indexOf('{', start);
+    let depth = 1,
+        end = opening + 1;
+    for (; depth; end++) {
+        assert(end < source.length, 'Balanced exact source block');
+        if (source[end] === '{') depth++;
+        else if (source[end] === '}') depth--;
+    }
+    return source.slice(start, end);
+}
+function actualDeferredLifetimeCPU() {
+    const source = file('src/cocos/core/data/object.ts');
+    const methods = [
+        'public static _deferredDestroy ()',
+        'get isValid ()',
+        'public destroy ()',
+        'public _destroyImmediate ()',
+    ].map((marker) => bracedSource(source, marker));
+    const code = `${bracedSource(source, 'export enum CCObjectFlags')}\nconst objectsToDestroy = []; let deferredDestroyTimer = null;
+    class CCObject { _objFlags = 0; _destruct() {} ${methods.join('\n')} }\nCCObject`;
+    const CCObject = vm.runInNewContext(transform(code), {
+        EDITOR: false,
+        EDITOR_NOT_IN_PREVIEW: false,
+        JSB: false,
+        errorID() {
+            throw Error('Unexpected destroyed-object operation');
+        },
+        warnID() {
+            throw Error('Unexpected duplicate destroyed-object operation');
+        },
+    });
+    const director = file('src/cocos/game/director.ts');
+    const begin = director.indexOf('CCObject._deferredDestroy();', director.indexOf('// Late update for components'));
+    const loop = bracedSource(director.slice(begin), 'for (let i = 0; i < this._systems.length; ++i)');
+    const end = director.indexOf(loop, begin) + loop.length;
+    assert(begin >= 0 && end > begin);
+    const phase = vm.runInNewContext('(function(dt) {' + director.slice(begin, end) + '})', { CCObject });
+    const counts = { bodies: 2, shapes: 2, contacts: 0, joints: 0, liveBytes: 1000n };
+    const peer = new CCObject();
+    let requests = 0,
+        phases = 0;
+    peer._onPreDestroy = () => {
+        counts.bodies--;
+    };
+    const context = {
+        _systems: [
+            {
+                postUpdate() {
+                    if (requests++ === 0) {
+                        assert.equal(peer.destroy(), true);
+                        // CPU double for owner dispatch's immediate shape retirement, not native evidence.
+                        counts.shapes--;
+                    }
+                },
+            },
+        ],
+    };
+    const frame = () => {
+        phase.call(context, 1 / 60);
+        phases++;
+    };
+    frame(); // callback requests destroy only after this frame's actual deferred queue drain
+    assert.equal(peer.isValid, true);
+    assert.equal(counts.bodies, 2);
+    assert.equal(counts.shapes, 1);
+    return { peer, counts, frame, phases: () => phases };
+}
+async function callbackObservationCPU({ staleSampling = false, omitDeferredFrame = false } = {}) {
+    const source = file('tools/physics/box3d/sphere-capsule/public-contract.mjs');
+    let branch = bracedSource(source, 'if (config.destroyPeer) {');
+    branch = branch.slice(branch.indexOf('{') + 1, -1);
+    assert.equal((branch.match(/await advance\(\)/g) ?? []).length, 1, 'Reuse exactly one already-declared frame');
+    if (staleSampling) {
+        const sample = branch.match(
+            /                row\.afterCallback = \{[\s\S]*?row\.destroyedPeerInvalid = !destroyedPeer\?\.isValid;/,
+        )?.[0];
+        assert(sample);
+        branch = branch.replace(sample, '').replace('await advance();', sample + '\n                await advance();');
+    }
+    const lifetime = actualDeferredLifetimeCPU(),
+        row = validCase(true),
+        records = [];
+    const context = {
+        row,
+        world: { getNativeCounts: () => ({ ...lifetime.counts }) },
+        destroyedPeer: lifetime.peer,
+        ticks: 24,
+        record(name, value) {
+            records.push({ name, value: structuredClone(value) });
+        },
+        async advance() {
+            if (!omitDeferredFrame) lifetime.frame();
+            context.ticks++;
+        },
+    };
+    await vm.runInNewContext('(async () => {' + branch + '})()', context);
+    return { row, records, lifetime, ticks: context.ticks };
+}
+test('actual callback branch preserves request evidence and samples retirement after the existing next frame', async () => {
+    const { row, records, lifetime, ticks } = await callbackObservationCPU();
+    assert.equal(ticks, 25);
+    assert.equal(lifetime.phases(), 2);
+    assert.equal(row.callbackRequestStep, 24);
+    assert.equal(row.afterCallbackObservationStep, 25);
+    assert.equal(row.destroyedPeerValidAfterRequest, true);
+    assert.equal(row.afterCallbackRequest.bodies, 2);
+    assert.equal(row.afterCallbackRequest.shapes, 1);
+    assert.equal(row.destroyedPeerInvalid, true);
+    assert.equal(row.afterCallback.bodies, 1);
+    assert.equal(row.afterCallback.shapes, 1);
+    assert.deepEqual(
+        records.map((r) => r.name),
+        ['public-callback-destroy-request', 'public-callback-destroy-retired'],
+    );
+    assert.equal(records[0].value.nodeValid, true);
+    assert.equal(records[1].value.nodeInvalid, true);
+    assert(validateCase(row));
+});
+test('source-derived old immediate sample still fails after actual deferred destruction has completed', async () => {
+    const { row, lifetime } = await callbackObservationCPU({ staleSampling: true });
+    assert.equal(lifetime.peer.isValid, false, 'Actual next-frame object destruction did occur');
+    assert.equal(lifetime.counts.bodies, 1);
+    assert.equal(row.destroyedPeerInvalid, false, 'But the pre-boundary observation remains stale');
+    assert.equal(row.afterCallback.bodies, 2);
+    assert.throws(
+        () => validateCase(row),
+        (error) => error.actual === false && error.expected === true,
+    );
+});
+test('a changed step label without actual deferred retirement cannot satisfy the unchanged lifetime assertions', async () => {
+    const { row, lifetime } = await callbackObservationCPU({ omitDeferredFrame: true });
+    assert.equal(row.afterCallbackObservationStep, row.callbackRequestStep + 1);
+    assert.equal(lifetime.phases(), 1);
+    assert.equal(row.destroyedPeerInvalid, false);
+    assert.equal(row.afterCallback.bodies, 2);
+    assert.throws(
+        () => validateCase(row),
+        (error) => error.actual === false && error.expected === true,
+    );
 });

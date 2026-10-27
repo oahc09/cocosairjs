@@ -122,6 +122,7 @@ export function validateCase(row) {
     for (const key of ['bodies', 'shapes', 'contacts', 'joints']) assert.equal(row.afterRelease[key], 0);
     assert.deepEqual(row.resources, []);
     if (row.destroyPeer) {
+        assert.equal(row.afterCallbackObservationStep, row.callbackRequestStep + 1, 'Observe the next completed frame');
         assert.equal(row.events.length, 1, 'Pending peer destruction skips the remaining batch receiver');
         assert.equal(row.events[0].type, 'onCollisionEnter');
         assert.equal(row.destroyRequested, true);
@@ -296,12 +297,31 @@ export async function runPublicSphereCapsule({ sdk, app, report, record }) {
             round.body.setLinearVelocity(new Vec3());
             await advance();
             if (config.destroyPeer) {
+                // Physics callbacks run after this frame's deferred-destroy phase. Preserve
+                // the request boundary, then observe retirement after the existing next frame.
+                row.callbackRequestStep = ticks;
+                row.afterCallbackRequest = {
+                    ...world.getNativeCounts(),
+                    liveBytes: world.getNativeCounts().liveBytes.toString(),
+                };
+                row.destroyedPeerValidAfterRequest = destroyedPeer?.isValid ?? null;
+                record('public-callback-destroy-request', {
+                    step: row.callbackRequestStep,
+                    counts: row.afterCallbackRequest,
+                    nodeValid: row.destroyedPeerValidAfterRequest,
+                });
+                await advance(); // existing next frame: deferred destroy, no synthetic Exit
+                row.afterCallbackObservationStep = ticks;
                 row.afterCallback = {
                     ...world.getNativeCounts(),
                     liveBytes: world.getNativeCounts().liveBytes.toString(),
                 };
                 row.destroyedPeerInvalid = !destroyedPeer?.isValid;
-                await advance(); // no synthetic Exit for the retired peer
+                record('public-callback-destroy-retired', {
+                    step: row.afterCallbackObservationStep,
+                    counts: row.afterCallback,
+                    nodeInvalid: row.destroyedPeerInvalid,
+                });
             } else {
                 for (let i = 0; i < 2; i++) {
                     round.body.setLinearVelocity(new Vec3());
