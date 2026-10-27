@@ -1,8 +1,10 @@
 # Box3D closure status
 
-Updated: 2026-10-27 13:38 UTC. Branch: `feat/box3d-rebuild-20261022`.
+Updated: 2026-10-27 13:47 UTC. Branch: `feat/box3d-rebuild-20261022`.
 
 ## Current outcome
+
+- Latest public normal-close result on SDK235: **PASS_PUBLIC_MODULE_RELEASE_SUBSET**. One original-loader/factory app/scene,4 bodies/4 shapes/1 joint,2 shared Terrain users,2 completed frames; normal close once/fallback0. Same-module terminal receipt VERIFIED: original factory baseline and terminal both core worlds0/core tracked requested bytes0, registered bridge/mesh fields all0; cleanupErrors[]. Native terminal capture occurs inside loader cleanup; after close only copied receipt/debug are read, no new native probe or GC proof. Exit0/ECHILD,3072 protected records0drift. Full C20/I05/I06/T15/all handles/malloc/GC and pre-mount failure cleanup remain unqualified. See [SDK235 public module-release report](reports/module-terminal-public-sdk235-attempt1-20261027.md).
 
 - Latest build: **SDK235 VERIFIED_LIMITED** on `a00306f391c595e292bbcaedd0f757bc99ca4ead`: fresh47/136/87/63 ST including module native120/WASM8, full28-feature ESM234→235 and fresh DTS7/7. Emit has no source diagnostic lines; qualified receipt/snapshot declaration types close correctly. Final25 files/43837664B. SDK234 DTS FAIL remains unchanged; this new build does not pre-judge the separate public module-close run/full C20. See [SDK235 report](reports/sdk235-module-terminal-build-and-declarations-20261027.md).
 
@@ -47,6 +49,8 @@ Updated: 2026-10-27 13:38 UTC. Branch: `feat/box3d-rebuild-20261022`.
 Production source now includes the five-patch core, explicit identity/creation-capacity metadata and new89-row/756-word diagnostic schema; old87-row consumers are incompatible. The published ST/SDK228 reports record VERIFIED_LIMITED qualification; historical SDK229 execution was also reported as passing. Their former temporary artifacts must not be assumed present after reset. Build results alone do not prove APP release integration. The separate current SDK230 live run now passes its strict observable subset as recorded above; full native census and original gates remain open. No original APP fixture, baseline or threshold was changed.
 
 ## Next actions, in order
+
+- Preserve the SDK235 one-scene normal-close registered-native receipt and exact raw evidence without repeating it. It closes this limited terminal-observation path, not full C20 or all-handle/allocator/GC census. Continue original lifecycle/failure-path and full capability/matrix/example/mobile/performance requirements; retain prior failures unchanged.
 
 - Preserve the separately bound SDK233 public4-case success and its exact raw evidence; do not repeat or broaden it without cause. Continue remaining original contact-pair/lifecycle coverage and capability/matrix/example/mobile/performance gates; full native census/post-close measurement remains open. Earlier public failures stay unchanged under their original fixtures.
 
