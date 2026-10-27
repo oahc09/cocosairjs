@@ -1,13 +1,13 @@
 # Box3D closure status
 
-Updated: 2026-10-27 05:32 UTC. Branch: `feat/box3d-rebuild-20261022`.
+Updated: 2026-10-27 09:38 UTC. Branch: `feat/box3d-rebuild-20261022`.
 
 ## Current outcome
 
 - Project: **NOT COMPLETE**. Original 35-task / 91-category / 9-example / G0–G8 scope remains.
-- Last published strict C20 APP result: **FAIL, 0/100 qualified**. SDK227 capture has three complete diagnostic snapshots, but released world ledger remains 112980 versus initial 36040. The SDK228 build evidence below does not supersede this APP verdict; fresh APP execution is recorded separately.
+- Latest historically reported strict C20 APP result: **APP228 FAIL, 0/100 qualified**. Release was refused by the owner ACK guard; reviewed source ordering places that refusal before native trim, not an independently measured call count. Released ledger113036 versus initial36096. Its raw and uncommitted report are now unavailable, so this is historical reporting, not a current raw revalidation. Earlier published SDK227 FAIL remains unchanged. See [environment recovery note](reports/environment-recovery-20261027.md).
 - C20 lowlevel: observed 100×50 native subset passed; full global world/all-handle census remains NOT_QUALIFIED.
-- SDK227 and historical full raw bundles were generated and reported, but their former temporary workspace copies are unavailable. Repository reports remain; do not treat old absolute paths as present artifacts.
+- Environment reset: old temporary workspace is absent. Published source and SDK228 reports are recoverable from Git; APP228 raw, SDK229/ST/ESM/DTS original artifacts and unpublished report/runner candidates are **UNAVAILABLE**. SDK229 ST/ESM/DTS passed and were reviewed according to prior conversation reports, not a current replay. **APP229 NOT_RUN; new SDK230 fresh chain pending.** A persisted build counter229 does not replace artifact evidence.
 
 ## Tonight's checkpoint sequence
 
@@ -21,16 +21,18 @@ Updated: 2026-10-27 05:32 UTC. Branch: `feat/box3d-rebuild-20261022`.
 
 6. The same `fb825da65c8cd259ee8912adb24b7caaa0a64b6a` producer now has fresh SDK228 ESM plus declarations: one successful full28-feature bare Node24 build advanced227→228, 23ESM files/995map sources; fresh emit, three fixtures and three strict consumers passed7/7, two declarations promoted exclusively. Final25files/43784478B, both process trees closed and all protected inputs unchanged. See [SDK228 build/declaration report](reports/sdk228-build-and-declarations-20261027.md). This is VERIFIED_LIMITED build evidence, not APP qualification.
 
-Production source now includes the five-patch core, explicit identity/creation-capacity metadata and new89-row/756-word diagnostic schema; old87-row consumers are incompatible. Low-level ST trim is VERIFIED_LIMITED. Fresh complete ESM/DTS qualification is now VERIFIED_LIMITED; it does not prove the original strict APP release integration, which requires its separate live run. No original APP fixture, baseline or threshold was changed.
+7. `14073d7f05539e23a7367dd35ff52996758110fe`: owner ACK fix preserves only the exact world/System default-material registration capability; all other ownership guards remain. `80be38bce03528d4ba7f445481ce35a6da78de83` persists the completed build counter229. The subsequent historical SDK229 passes and APP229 NOT_RUN are distinguished from unavailable original bytes in the [new recovery note](reports/environment-recovery-20261027.md); this is not restoration of the old report candidates.
+
+Production source now includes the five-patch core, explicit identity/creation-capacity metadata and new89-row/756-word diagnostic schema; old87-row consumers are incompatible. The published ST/SDK228 reports record VERIFIED_LIMITED qualification; historical SDK229 execution was also reported as passing. Their former temporary artifacts must not be assumed present after reset. None of these build results proves the original strict APP release integration, which still requires its separate successful live run. No original APP fixture, baseline or threshold was changed.
 
 ## Next actions, in order
 
 1. Verify the current checkout and preserve local changes. Establish one writer before local implementation begins; cloud and local must not write the same module concurrently.
-2. Preserve the completed isolated host-native qualification and its exact source/toolchain binding. Preserve the additional limited ST/WASM evidence separately; new SDK build/declarations are verified separately while actual APP integration remains outside this build qualification.
+2. Preserve the committed host/ST/SDK228 reports and their recorded qualification boundaries. Distinguish those recovered report bytes from unavailable temporary raw/artifacts; do not claim an absent cohort was replayed. New SDK build/declarations require fresh evidence, separate from APP qualification.
 3. Preserve the limited host verification of same-world empty-storage reclamation and explicit event acknowledgement. Establish production caller quiescence, borrowed-view retirement and binding revision before integration under `empty-world-trim-design.md`; private injected event records are not APP dispatch evidence.
 4. Verify the integrated production bridge/backend fault state, fixed metadata accounting row/schema and exact producer inventory. Preserve allocator, ID, stale-view and close semantics; do not replace the world or reset its step index.
 5. Verify the integrated post-scene-destruction, post-cleanup release hook. Legal nonempty persistent worlds skip empty trimming; an eligible-empty failure must not produce a successful restoration receipt.
-6. Preserve the fresh production ST3/SDK228/DTS cohort; run the original same-app/world 100-scene strict fixture without warmup/rebaselining. Complete full census and remaining original matrix/examples/gates.
+6. Recover fixed published source bytes, then establish a new SDK230 fresh ST/ESM/DTS cohort with retained original receipts. Do not reuse unavailable SDK229 artifacts or PASS identities. Only after that chain and runner/input lock are ready, run the original same-app/world 100-scene strict fixture without warmup/rebaselining. Complete full census and remaining original matrix/examples/gates.
 
 ## State rules
 
