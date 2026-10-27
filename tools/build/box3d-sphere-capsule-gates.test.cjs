@@ -5,6 +5,7 @@ const { test } = require('node:test');
 const { createHash } = require('node:crypto');
 const fs = require('node:fs');
 const path = require('node:path');
+const vm = require('node:vm');
 const hash = (x) =>
     createHash('sha256')
         .update(typeof x === 'string' ? x : JSON.stringify(x))
@@ -183,3 +184,51 @@ const BASE_HASH = {
     compileUnits: '8ba0887b8de875a73833b36c0f70b3cdfd82d7144b9a67170952ab086fa47de6',
     evidence: '6dedb633a3987bbbd501c8df4db3516f2bb6787d4784cff87a07570a7366a6d6',
 };
+
+// Execute the actual production evidence guards, not only the parallel JSON inventory.
+// No artifact reads, WASM imports, or qualification result are simulated by this slice.
+function productionEvidenceGuard(source) {
+    const start = '    assert.deepEqual(\n        sorted(audit.evidence.map((row) => row.path)),\n        sorted([';
+    const end = '    for (const record of audit.evidence) verifyRecord(directory, record);';
+    assert.equal(source.split(start).length, 2, 'Exactly one inline production evidence inventory');
+    assert.equal(source.split(end).length, 2, 'Exactly one following evidence-file verification loop');
+    const from = source.indexOf(start),
+        to = source.indexOf(end, from);
+    assert(to > from);
+    assert(source.lastIndexOf('async function verifySTBuild(', from) >= 0);
+    const statements = source.slice(from, to);
+    assert.match(statements, /sorted\(COMMAND_EXPECTATIONS\.gate\.evidence\)/);
+    return vm.runInNewContext(
+        `(audit) => { ${statements} }`,
+        { assert, COMMAND_EXPECTATIONS: expected, sorted: (items) => Array.from(items).sort() },
+        { timeout: 1000 },
+    );
+}
+const assetsSource = fs.readFileSync(path.join(root, 'tools/build/box3d-assets.cjs'), 'utf8');
+const evidenceRows = (names) => ({ evidence: names.map((name) => ({ path: name })) });
+test('actual verifySTBuild evidence guards accept exactly all 60 current paths, in any audit order', () => {
+    const verify = productionEvidenceGuard(assetsSource);
+    verify(evidenceRows(expected.gate.evidence));
+    verify(evidenceRows([...expected.gate.evidence].reverse()));
+});
+for (const name of ['sphere-capsule-samples.raw.jsonl', 'wasm-sphere-capsule-contract.raw.json'])
+    test('actual verifySTBuild evidence guards reject missing ' + name, () => {
+        const verify = productionEvidenceGuard(assetsSource);
+        assert.throws(() => verify(evidenceRows(expected.gate.evidence.filter((item) => item !== name))));
+    });
+test('actual verifySTBuild evidence guards reject unknown and duplicated paths', () => {
+    const verify = productionEvidenceGuard(assetsSource);
+    assert.throws(() => verify(evidenceRows([...expected.gate.evidence, 'unqualified.raw.json'])));
+    assert.throws(() => verify(evidenceRows([...expected.gate.evidence, expected.gate.evidence[0]])));
+});
+test('regression: the old inline 58-path consumer rejects the real current 60-path inventory', () => {
+    let old = assetsSource;
+    for (const name of ['sphere-capsule-samples.raw.jsonl', 'wasm-sphere-capsule-contract.raw.json']) {
+        const line = `            '${name}',\n`;
+        assert.equal(old.split(line).length, 2);
+        old = old.replace(line, '');
+    }
+    assert.throws(() => productionEvidenceGuard(old)(evidenceRows(expected.gate.evidence)));
+    // The second exact guard still rejects the old 58 even if the first is reverted.
+    assert.throws(() => productionEvidenceGuard(old)(evidenceRows(expected.gate.evidence.slice(0, 58))));
+});

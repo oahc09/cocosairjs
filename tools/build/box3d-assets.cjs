@@ -373,6 +373,8 @@ async function verifySTBuild(buildDirectory, { provenanceRoot = ROOT } = {}) {
             'native-world-storage-contract.raw.json',
             'air_box3d_world_storage_contract.cjs',
             'wasm-storage-contract.raw.json',
+            'sphere-capsule-samples.raw.jsonl',
+            'wasm-sphere-capsule-contract.raw.json',
         ]),
     );
     assert.deepEqual(sorted(audit.evidence.map((row) => row.path)), sorted(COMMAND_EXPECTATIONS.gate.evidence));
