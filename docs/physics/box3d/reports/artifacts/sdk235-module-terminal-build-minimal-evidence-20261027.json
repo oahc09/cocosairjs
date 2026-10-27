@@ -1,0 +1,1044 @@
+{
+  "schema": "box3d-sdk235-minimal-original-evidence-v1",
+  "sourceProducer": "a00306f391c595e292bbcaedd0f757bc99ca4ead",
+  "archive": {
+    "status": "PASS_EXTRACTED_BYTES_AND_SHA256",
+    "originalFiles": 189,
+    "archiveMembers": 192,
+    "uncompressedOriginalBytes": 4060312,
+    "archivePath": "docs/physics/box3d/reports/artifacts/sdk235-module-terminal-build-minimal-evidence-20261027.tar.gz",
+    "archiveBytes": 276469,
+    "archiveSha256": "0e56ef70d5a7d6d2acc6706044a2734bd78e34ccc5a3e8fe1a7fd9a189f69440",
+    "contentManifestSha256": "e66b82c6a42e9113a5a1b2e1926b45466209bfd4af5cde5da85c363f9ac4adb2",
+    "sensitiveScanSha256": "5bf786391ae506948fac86e384abf7b997a274678f6bc8f7626ce009adbed339",
+    "originalsChanged": false,
+    "runtimeExecuted": false
+  },
+  "originals": [
+    {
+      "path": "dependencies/restoration-receipt.json",
+      "bytes": 2409,
+      "sha256": "eb19b9e3ed9c909cf598c2603c103b40b3db282a450a86d2019405b501bc7cdb"
+    },
+    {
+      "path": "sdk235-complete-inventory.json",
+      "bytes": 4976,
+      "sha256": "e293c38f7c0c32460346993e337755698add63b4874d6686e581cc03ba00a7fc"
+    },
+    {
+      "path": "sdk235-dts-evidence/child-start.json",
+      "bytes": 60,
+      "sha256": "fa565e6ee37cf9b77c4e60ccf0b017c7b2fb23c5d12d5ef651fd89ffd25d6ae1"
+    },
+    {
+      "path": "sdk235-dts-evidence/complete.json",
+      "bytes": 263,
+      "sha256": "fcbbc21dc5006dde9d6cbf58c79d2c700dbfe7291e05c7b8fa6b2c9ef236bd05"
+    },
+    {
+      "path": "sdk235-dts-evidence/gate-1.stderr",
+      "bytes": 523,
+      "sha256": "39499484092f9f819846c022fd2eb98355435b47abcc253eb3c03b98e722326a"
+    },
+    {
+      "path": "sdk235-dts-evidence/gate-1.stdout",
+      "bytes": 437,
+      "sha256": "b1f6d3b65a31941739c26ccde1e09a7027ae65c54ea5f31177f24c6e40e821d2"
+    },
+    {
+      "path": "sdk235-dts-evidence/gate-2.stderr",
+      "bytes": 166,
+      "sha256": "fb37f43c42c80764b482ed45513ec9fdc2ab2d8bd9644eae67dd01bc3194f61b"
+    },
+    {
+      "path": "sdk235-dts-evidence/gate-2.stdout",
+      "bytes": 145,
+      "sha256": "63dfd03feb15fb172d36ffe6f2d8e3a2e34a6786ab286a501be431d34fde454b"
+    },
+    {
+      "path": "sdk235-dts-evidence/gate-3.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk235-dts-evidence/gate-3.stdout",
+      "bytes": 156,
+      "sha256": "f34fe3575f6baa2b09643fc41acd7cc4500cd24a1fc5924a4cd7c1e083fccfa6"
+    },
+    {
+      "path": "sdk235-dts-evidence/gate-4.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk235-dts-evidence/gate-4.stdout",
+      "bytes": 162,
+      "sha256": "000cd1a8188c52d434da4685f1032988c26d6da88dd50609aed12014902645b3"
+    },
+    {
+      "path": "sdk235-dts-evidence/gate-5.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk235-dts-evidence/gate-5.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk235-dts-evidence/gate-6.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk235-dts-evidence/gate-6.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk235-dts-evidence/gate-7.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk235-dts-evidence/gate-7.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk235-dts-evidence/result.json",
+      "bytes": 11328,
+      "sha256": "abb21b778389021adf9a73735392c66a52bd4020281d39fc528c15f2f601e4d6"
+    },
+    {
+      "path": "sdk235-dts-evidence/seven-gates.json",
+      "bytes": 2586,
+      "sha256": "e9c8d7f7faee83b0c4c2c812947597f854a6b417000541d1714d87114f1e9b46"
+    },
+    {
+      "path": "sdk235-dts-evidence/stderr.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk235-dts-evidence/stdout.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk235-dts-supervision/attempt.once",
+      "bytes": 47,
+      "sha256": "27872d70362715abd6a00a7d846e343064c177a85938acd8ac20ec74a8010e07"
+    },
+    {
+      "path": "sdk235-dts-supervision/consumers/app.json",
+      "bytes": 273,
+      "sha256": "8ea9a1ecbc023ea1738e6943e58eb21fadbe0f23942e70439dcb527a7f3c8c26"
+    },
+    {
+      "path": "sdk235-dts-supervision/consumers/app.ts",
+      "bytes": 296,
+      "sha256": "f9d260982359027480ae07058e37f23bd7b551cce4eeb7feb3c05964e5262c29"
+    },
+    {
+      "path": "sdk235-dts-supervision/consumers/mesh.json",
+      "bytes": 274,
+      "sha256": "d3a91c0e2e66af4cb9059a8915dff083c4aac5315b330a6fd9d1da4ddea20fae"
+    },
+    {
+      "path": "sdk235-dts-supervision/consumers/mesh.ts",
+      "bytes": 234,
+      "sha256": "d7e2203f3e7e81ca62bc7934fafb4e0b9d379e6b6a33d06acb34c122eeece45d"
+    },
+    {
+      "path": "sdk235-dts-supervision/consumers/terrain.json",
+      "bytes": 277,
+      "sha256": "856f09f8c2652301d2a2bab0413f5b9153056abe1875286e464d6b158a7b499b"
+    },
+    {
+      "path": "sdk235-dts-supervision/consumers/terrain.ts",
+      "bytes": 281,
+      "sha256": "36188c1aa3fa66741fac88313f6742a7ed32ac54b9283d8a32c02692bf17e261"
+    },
+    {
+      "path": "sdk235-dts-supervision/control.json",
+      "bytes": 6447,
+      "sha256": "238599b7bedae48f17618c87000e8515ef48032e8983a9ddcfe8e6d8286ba2c8"
+    },
+    {
+      "path": "sdk235-dts-supervision/driver.json",
+      "bytes": 1766,
+      "sha256": "30dd1e68502c303418c94282664946389a6228c54c2e3d025d445e03e9322c13"
+    },
+    {
+      "path": "sdk235-dts-supervision/driver.py",
+      "bytes": 682,
+      "sha256": "1ab736b65a397018698f629d18b03275e9c4d5bb07cd85a9c9a4dd8b13a70c62"
+    },
+    {
+      "path": "sdk235-dts-supervision/root-authorization.json",
+      "bytes": 614,
+      "sha256": "e15b79b8ce830d0a85e80d022f3eef68428563c26b7fcc8a0708d6b3ed4a7417"
+    },
+    {
+      "path": "sdk235-dts-supervision/run-once.py",
+      "bytes": 9533,
+      "sha256": "de9937b1d8e42515c2509bde6c2c7023760218d036794491731a3edb60228b14"
+    },
+    {
+      "path": "sdk235-esm-evidence/child-start.json",
+      "bytes": 60,
+      "sha256": "14629ec67ba6264bbab99faa56ae04599dc3d9227186a6eee2ffa6809fdf77d5"
+    },
+    {
+      "path": "sdk235-esm-evidence/complete.json",
+      "bytes": 263,
+      "sha256": "667e135b4b194d0a90db681aab0506517fc5bc3b342dde1aec0260c6662daaab"
+    },
+    {
+      "path": "sdk235-esm-evidence/result.json",
+      "bytes": 12226,
+      "sha256": "0c66df3c1e42cfd2507653809073fba815d75afe34a1661d63e0c5e7588291b1"
+    },
+    {
+      "path": "sdk235-esm-evidence/stderr.raw",
+      "bytes": 721,
+      "sha256": "a733c35f4392ae73dc581304ba0e63016c3b2b0b5bcccf33044d821699873f10"
+    },
+    {
+      "path": "sdk235-esm-evidence/stdout.raw",
+      "bytes": 12462,
+      "sha256": "d0e1648b2d02759efbd8488e1614cde279f37b2836b670044fe216b6a46c96b0"
+    },
+    {
+      "path": "sdk235-esm-supervision/attempt.once",
+      "bytes": 47,
+      "sha256": "7ac35055ace710f3a6c58f1df866ba9f7d6e5fcf5b83acecad7866934d00954c"
+    },
+    {
+      "path": "sdk235-esm-supervision/control.json",
+      "bytes": 4767,
+      "sha256": "9d09269a8ba4d10543308ee96bc4185eafe9c2dfcd80e4b3adbf293e9367318e"
+    },
+    {
+      "path": "sdk235-esm-supervision/root-authorization.json",
+      "bytes": 574,
+      "sha256": "cb86134a993214b6c4e2c8e38862ac97a56281457990335c76e47c58ee52917a"
+    },
+    {
+      "path": "sdk235-esm-supervision/run-once.py",
+      "bytes": 9921,
+      "sha256": "6770b2bf14b753af16db335055e26c6e84f26f56701795ddf10b2077c5b9b05b"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/artifact-audit.raw.json",
+      "bytes": 30780,
+      "sha256": "cc44f52385ae8e40a035f4627ba7a5225f62f7c5f4ae5955bc0f9a1c3c10a11c"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/build-receipt.json",
+      "bytes": 93792,
+      "sha256": "d164dbcb3bfe4f696c0bf2ad151951a210187dc595de0903f22c6d1d3292699c"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-1.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-1.stdout.txt",
+      "bytes": 159,
+      "sha256": "eb6279ac90eebb91ab6538d8e3bd1b8d2fe1e6f9bf378fca474ffc1cd533015f"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-10.stderr.txt",
+      "bytes": 795,
+      "sha256": "13429993da6f4a203b1946c1491c5f349c368a2a2010c935434e8623d99c5e91"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-10.stdout.txt",
+      "bytes": 978,
+      "sha256": "de6f29128d97ec2ce109e238fea2a1487f24ab4aaae4811d445f2673e31f019f"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-11.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-11.stdout.txt",
+      "bytes": 10805,
+      "sha256": "b22c6d26554a28767e9ce26bb51e52e4b14571e76f09da2eada5513772919c66"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-12.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-12.stdout.txt",
+      "bytes": 460,
+      "sha256": "a6f0c8f945e9eb5822f912feefa9519ce47a9964c55e60de88c1849cabb47333"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-13.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-13.stdout.txt",
+      "bytes": 289,
+      "sha256": "f73a2add60a0509a8b241e216064a057a4f28dbf932ba3cfbbe01bce95e715a7"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-14.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-14.stdout.txt",
+      "bytes": 486,
+      "sha256": "d00544df0e82dfdb149659799e0f854621628b735d46da45084af025a832bcef"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-15.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-15.stdout.txt",
+      "bytes": 266,
+      "sha256": "fdd38cf8512d70c77e92c9a3cf1b9ef91b52eb90a4a9c48d6d177d01bdcf0923"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-16.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-16.stdout.txt",
+      "bytes": 485,
+      "sha256": "de7503975778783efde1452ccf3ec7f5db75a74bf9722bb7226bc2d6e0a86f71"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-17.stderr.txt",
+      "bytes": 89,
+      "sha256": "32fbddfc851acd4642a4d0693a0632abe180f4909f0ab0262a9e8874caa16f63"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-17.stdout.txt",
+      "bytes": 6894,
+      "sha256": "bf481f2e735cba05d74847658d1a9ab79c9c31d186d312ab6a332f6c19fb07b1"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-18.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-18.stdout.txt",
+      "bytes": 232,
+      "sha256": "7d3a22cfc9a0b9626bc2a6be1531374b8010ca73d17bd6083fd78d716635dd69"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-19.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-19.stdout.txt",
+      "bytes": 374,
+      "sha256": "d47bfa05cf741638d6e3e395e4a8282351d518619429413c8f8467982846e19b"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-2.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-2.stdout.txt",
+      "bytes": 785,
+      "sha256": "8a5fee78d45d5afdb0566bca0ceb3c5f57a9b3c870beca33875fa4084c9abdc3"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-20.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-20.stdout.txt",
+      "bytes": 1234,
+      "sha256": "23af5fdcc54e24055efd89c0fb4ec0a82a5ac907de5c06f6199092eff647855c"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-21.stderr.txt",
+      "bytes": 4276,
+      "sha256": "e8a6c6dcc33e796d24bc3b6e51f586fc04ed28a7c11669d23d258f7c1ec11242"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-21.stdout.txt",
+      "bytes": 707,
+      "sha256": "7cf4ba21ea1c63193a930194633b76864d7c9ae80aed803e53c4908405677942"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-22.stderr.txt",
+      "bytes": 2152,
+      "sha256": "3969464e7d2b455e01434090d41b4af86029e290ec3facc1745c9d1acc004be2"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-22.stdout.txt",
+      "bytes": 722,
+      "sha256": "760ea1c15d768e28378ca2c6dd0bb7f276bac000728bc3dd23398f275b51e7bb"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-23.stderr.txt",
+      "bytes": 124,
+      "sha256": "15bd63418744542785697d272f6a5daa612ba7386b4b0e314dea0e93240c4c94"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-23.stdout.txt",
+      "bytes": 106,
+      "sha256": "973b7eec9667c2974cacaa2376dbcb4356fea4a31c1c6c4375c1eba2e3845e3c"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-24.stderr.txt",
+      "bytes": 124,
+      "sha256": "46eee0a154e85dc26953b2eaa1ccbb8187c1f7243109335b9c60348abd729313"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-24.stdout.txt",
+      "bytes": 450,
+      "sha256": "bc743f2c685bd9bd32140d5348a2ad333196a438b2173afe3e1655986b5f9700"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-25.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-25.stdout.txt",
+      "bytes": 272,
+      "sha256": "10b6852a5ccd34b218452af26146186adc8f009bd67246f1fb651b0f424b7b8b"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-26.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-26.stdout.txt",
+      "bytes": 886,
+      "sha256": "60d3330cd44119490151c10e05eb5ac3245ffbadb41eb0892b0b54c168f18b3d"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-27.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-27.stdout.txt",
+      "bytes": 109,
+      "sha256": "b89e5feb18c8d070933b4d5d7cfbc251f415a76f8633118199191be1b079dfe3"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-28.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-28.stdout.txt",
+      "bytes": 4335,
+      "sha256": "907fb263cb0247c890022d5e5a6187a066202a2addb4123890652aa6b3833ddd"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-29.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-29.stdout.txt",
+      "bytes": 91,
+      "sha256": "ca8dce75961e205b21dbf5067e795721b148984eb7a47871f33a6af50e9af80e"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-3.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-3.stdout.txt",
+      "bytes": 892,
+      "sha256": "254d7b7b2d09770b960f4eaaafa37c0031ce90a6a292353cd6b2b4c4d57366f5"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-30.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-30.stdout.txt",
+      "bytes": 206,
+      "sha256": "bb49e964b18b33a19f3fb04d0e594d744598ff60b6af209494344da65d7025f1"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-31.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-31.stdout.txt",
+      "bytes": 203,
+      "sha256": "40ae9746a4ab38bcfa77d3109506284d74c6d73318463b36a92c5b9d65ef412d"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-32.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-32.stdout.txt",
+      "bytes": 200,
+      "sha256": "f63aae88f859be1cc96c564416245a398528fc418df836d8989f2e692df7bb78"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-33.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-33.stdout.txt",
+      "bytes": 37,
+      "sha256": "fabbe28d972870a824da70232aedb4f33d8bf0055169d6a90b12a0ec75cc5b61"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-34.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-34.stdout.txt",
+      "bytes": 273,
+      "sha256": "11a743b3227b60c869b323b7aac29ae7a3cd28f6a7f9189146fe22297b149f2c"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-35.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-35.stdout.txt",
+      "bytes": 380,
+      "sha256": "7311e5655062405cd2371ac1f7bd90693cc4608b500d980fc787626c8462fafd"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-36.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-36.stdout.txt",
+      "bytes": 441,
+      "sha256": "4cb8c2cd432bee9d44f3954bc9cf28d659d6e8c1b4625400f84ecdaa0ee7c73c"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-37.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-37.stdout.txt",
+      "bytes": 192,
+      "sha256": "a8afc271c1abb4b6943517889f2b5f871dcade0dffc0cf6bba9720cea9f2a7d9"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-38.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-38.stdout.txt",
+      "bytes": 191,
+      "sha256": "f71d6ed635a1464360886cca17c9c5119d86afb8fcd56dcc99b3664e3bed97e6"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-39.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-39.stdout.txt",
+      "bytes": 1017,
+      "sha256": "16f82f9bafc32dcff01d52e81e2dac8a3797a1aa1710425d681537fc9ec79308"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-4.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-4.stdout.txt",
+      "bytes": 542,
+      "sha256": "6c3caa8fd33a13aaa03b6c525954e0dad81a194c26ac91303ce8f01df5601607"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-40.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-40.stdout.txt",
+      "bytes": 741,
+      "sha256": "8e7201109c0ceb6c14977c35b69c9c974d0f98795d187326b301b9d815d62d3b"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-41.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-41.stdout.txt",
+      "bytes": 251024,
+      "sha256": "75e4e73a0fce24bfd4ee42411d3f720a380ca5340918023442a64a3462334f29"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-42.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-42.stdout.txt",
+      "bytes": 2220,
+      "sha256": "c83dc71d454612ddd172dec44e537d214f9131f961f8602c51cb570e804283ee"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-43.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-43.stdout.txt",
+      "bytes": 222,
+      "sha256": "14430c9773fbbc92f826f75e15f350553993aa1fc246f6b918ab9ff0e93bf479"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-44.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-44.stdout.txt",
+      "bytes": 2172,
+      "sha256": "a635193f09c52890eeb998bd1f3025426444962c9badc81161f3d5811dd1f8a7"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-45.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-45.stdout.txt",
+      "bytes": 6728,
+      "sha256": "138e84c78952c3caae2be65289efe01548ded151da459df614b121c6e877063d"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-46.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-46.stdout.txt",
+      "bytes": 1298,
+      "sha256": "cfd66c790c66d6e01a7c7c435bb2d3a9bdc58f356f5d371f9c08c984e28e2f15"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-47.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-47.stdout.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-5.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-5.stdout.txt",
+      "bytes": 3141,
+      "sha256": "e1329fe3b46f3286d6695b39fe276e26366cbaf328f29b2757e1215e93285c46"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-6.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-6.stdout.txt",
+      "bytes": 2767,
+      "sha256": "82ead5f132f6984f32e51ee8862b685a0ba6e426788acb6f87bb3a809ea9028c"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-7.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-7.stdout.txt",
+      "bytes": 6851,
+      "sha256": "e5fe480c05055675507513dc25cb7c6071e5bbbf85a1d279828bb4cad62d33d7"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-8.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-8.stdout.txt",
+      "bytes": 334,
+      "sha256": "b47d3c1887b7da4d1773dfe0ad9799bc416bfccec66f6021cfa377131d5e4e44"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-9.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-9.stdout.txt",
+      "bytes": 90,
+      "sha256": "4d92ce18ddf9889d463ac875608423312823ad89e7fd5178b02a21ea26a2bd3d"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/consumer-ready.json",
+      "bytes": 2929,
+      "sha256": "0d553613029fce4f404785788dee60a9183f29cee16525bb1cf3646b9b81f661"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/hull-legacy-baseline/baseline.raw.txt",
+      "bytes": 120,
+      "sha256": "93dafdca9db10468fab391a6018a878468b8d1d8f0b82d087d763eb6b2527152"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/hull-legacy-baseline/comparison.raw.json",
+      "bytes": 56058,
+      "sha256": "67efae6e8278693ef30c3c76a36b1cdbd22495a9ae237760dcf255d6e39b84cc"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/hull-legacy-baseline/patched.raw.txt",
+      "bytes": 120,
+      "sha256": "93dafdca9db10468fab391a6018a878468b8d1d8f0b82d087d763eb6b2527152"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/manifest.json",
+      "bytes": 7460,
+      "sha256": "414f302fdf9dbbfd0dcae2c2d12ca2334a3b09d73746e74c50016dad36c294aa"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/native-body-contract.raw.json",
+      "bytes": 486,
+      "sha256": "d00544df0e82dfdb149659799e0f854621628b735d46da45084af025a832bcef"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/native-capsule-contract.raw.json",
+      "bytes": 374,
+      "sha256": "d47bfa05cf741638d6e3e395e4a8282351d518619429413c8f8467982846e19b"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/native-command-contract.raw.json",
+      "bytes": 6894,
+      "sha256": "bf481f2e735cba05d74847658d1a9ab79c9c31d186d312ab6a332f6c19fb07b1"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/native-filter-contract.raw.json",
+      "bytes": 266,
+      "sha256": "fdd38cf8512d70c77e92c9a3cf1b9ef91b52eb90a4a9c48d6d177d01bdcf0923"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/native-geometry-contract.raw.json",
+      "bytes": 460,
+      "sha256": "a6f0c8f945e9eb5822f912feefa9519ce47a9964c55e60de88c1849cabb47333"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/native-hinge-contract.raw.json",
+      "bytes": 707,
+      "sha256": "7cf4ba21ea1c63193a930194633b76864d7c9ae80aed803e53c4908405677942"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/native-hull-contract.raw.json",
+      "bytes": 450,
+      "sha256": "bc743f2c685bd9bd32140d5348a2ad333196a438b2173afe3e1655986b5f9700"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/native-hull-core-contract.raw.json",
+      "bytes": 272,
+      "sha256": "10b6852a5ccd34b218452af26146186adc8f009bd67246f1fb651b0f424b7b8b"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/native-joint-contract.raw.json",
+      "bytes": 1234,
+      "sha256": "23af5fdcc54e24055efd89c0fb4ec0a82a5ac907de5c06f6199092eff647855c"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/native-memory-contract.raw.json",
+      "bytes": 886,
+      "sha256": "60d3330cd44119490151c10e05eb5ac3245ffbadb41eb0892b0b54c168f18b3d"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/native-mesh-contract.raw.json",
+      "bytes": 106,
+      "sha256": "973b7eec9667c2974cacaa2376dbcb4356fea4a31c1c6c4375c1eba2e3845e3c"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/native-module-release-contract.raw.json",
+      "bytes": 1298,
+      "sha256": "cfd66c790c66d6e01a7c7c435bb2d3a9bdc58f356f5d371f9c08c984e28e2f15"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/native-motion-contract.raw.json",
+      "bytes": 485,
+      "sha256": "de7503975778783efde1452ccf3ec7f5db75a74bf9722bb7226bc2d6e0a86f71"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/native-p2p-contract.raw.json",
+      "bytes": 722,
+      "sha256": "760ea1c15d768e28378ca2c6dd0bb7f276bac000728bc3dd23398f275b51e7bb"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/native-query-contract.raw.json",
+      "bytes": 232,
+      "sha256": "7d3a22cfc9a0b9626bc2a6be1531374b8010ca73d17bd6083fd78d716635dd69"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/native-world-contract.raw.json",
+      "bytes": 289,
+      "sha256": "f73a2add60a0509a8b241e216064a057a4f28dbf932ba3cfbbe01bce95e715a7"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/native-world-storage-contract.raw.json",
+      "bytes": 741,
+      "sha256": "8e7201109c0ceb6c14977c35b69c9c974d0f98795d187326b301b9d815d62d3b"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/sphere-capsule-samples.raw.jsonl",
+      "bytes": 64386,
+      "sha256": "a3a71a6d1cca60203647a5993ecfbc30d309f5d82378a646c4227384ec35f9d1"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/staged-core.receipt.json",
+      "bytes": 23442,
+      "sha256": "66f84dcc776083682037d35052a0748ce421c68f635d12873128ea85992a7d85"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/wasm-body-contract.raw.json",
+      "bytes": 179767,
+      "sha256": "467af3241a2e2c11735753011a214e3ef6987310c4b46b63b0cf39a16c056f7f"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/wasm-command-contract.raw.json",
+      "bytes": 1024254,
+      "sha256": "ce5f11c94832729fe7bac5c0db00df56a548b5f6ea68a13c1360870d47e82a90"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/wasm-contract.raw.json",
+      "bytes": 6728,
+      "sha256": "91af61da02c7d0b22051093759f480e9ff6ff2d5f5ab77807d271c3050b8f48f"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/wasm-filter-contract.raw.json",
+      "bytes": 341335,
+      "sha256": "1535b16086d60c1349822314b1582748c19961a321ad20b45e76de84049e7d82"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/wasm-geometry-contract.raw.json",
+      "bytes": 116378,
+      "sha256": "2b3f9ea300b28b70c85ec30ca3d7c04492a5fe5494a2267aa07501f622340852"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/wasm-memory-contract.raw.json",
+      "bytes": 1146,
+      "sha256": "2baf9dba23d5b0acd22a4f56892a100fa35cf10153548c192d355812075159b2"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/wasm-mesh-contract.raw.json",
+      "bytes": 10799,
+      "sha256": "f08b17e00600e6125ff0536018e5787c36fff8418eb1d3f443c890d63b80e882"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/wasm-module-release-contract.raw.json",
+      "bytes": 11225,
+      "sha256": "5f6e3fd2da794bf2a3a72724b1221f6e40e9de6b15a8c84c5fad25bd565dbcc1"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/wasm-motion-contract.raw.json",
+      "bytes": 260435,
+      "sha256": "b533287d374af638ce473bc323bf0bdbf4a37c3835dbe8421900059d79e3483e"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/wasm-ownership-contract.raw.json",
+      "bytes": 882090,
+      "sha256": "e51937da145a9046561136c78a564399e8660f129304de02033378aad16b19c9"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/wasm-query-contract.raw.json",
+      "bytes": 9468,
+      "sha256": "8ba5b448bc2b66840d3e131e14ffb51795136d388d066f3e03b52db38a68ba1a"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/wasm-snapshot-contract.raw.json",
+      "bytes": 141480,
+      "sha256": "34c6aa4a6dea4b3b728fc3de87b6720f875daeece51e85bde49c1a73c508f528"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/wasm-sphere-capsule-contract.raw.json",
+      "bytes": 18211,
+      "sha256": "8254e6d26c739ef7c77b6c6db5dddfe261c80bdc8fb0c43dc99a2237e414fd4f"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/wasm-storage-contract.raw.json",
+      "bytes": 251023,
+      "sha256": "6b9db0592eaa4c2ed4ec56bf9b13b9eb466c7233c2abe33f113442e263896b7c"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/wasm-world-contract.raw.json",
+      "bytes": 67146,
+      "sha256": "1aa9da0e4da7d3d670d5ab9abfa03bad09e283027f724a6517f716b14894dc7a"
+    },
+    {
+      "path": "st235-evidence/child-start.json",
+      "bytes": 60,
+      "sha256": "bf5f65bde3495a26b5cec3b8ae3901a24b54465f905e430a6cb46a996234e7c9"
+    },
+    {
+      "path": "st235-evidence/complete.json",
+      "bytes": 258,
+      "sha256": "add8f4413e9167ad902f9c33469c0ac55d2079e6b4e26e56381fdc1cfa84e6c8"
+    },
+    {
+      "path": "st235-evidence/result.json",
+      "bytes": 19306,
+      "sha256": "d44e534bc98c8e2ab40ec1b69877aa3e1787e5cd72d825c3208b8db56493e190"
+    },
+    {
+      "path": "st235-evidence/stderr.raw",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "st235-evidence/stdout.raw",
+      "bytes": 627,
+      "sha256": "d12556af3ad2cec631cb0277acaf126afc27f68fa2368e0ad719358dbab4b4fb"
+    },
+    {
+      "path": "st235-supervision/attempt.once",
+      "bytes": 47,
+      "sha256": "7c1948db5de35571cf3f26af3ea7d60b49f73e67d85339e80c3ff69b24bb7707"
+    },
+    {
+      "path": "st235-supervision/control.json",
+      "bytes": 2156,
+      "sha256": "7e1029a15a004ca4465714977657d067e38612b04f4842a7f0bf5b3b650fc2cf"
+    },
+    {
+      "path": "st235-supervision/root-authorization.json",
+      "bytes": 323,
+      "sha256": "764f9b0f29ca92bd9b8b733b4ae2d9d72222895c8218f5a1623b4f61dbb5f0d0"
+    },
+    {
+      "path": "st235-supervision/run-once.py",
+      "bytes": 9081,
+      "sha256": "cf9cb97a7981aab426b311d32d5d2ecb59e258e059f1f6183e25d93d96422dc0"
+    },
+    {
+      "path": "st235-supervision/source-overlay.json",
+      "bytes": 2675,
+      "sha256": "13c3a6436cd10fa6eabaa434b777910eda8ba80dc61f55bf8ec52d71256ed067"
+    },
+    {
+      "path": "toolchain/receipt.json",
+      "bytes": 3482,
+      "sha256": "53601d24040cfc2cfceb79b7cdf0c016619a11c2224b011ce490016ee522a253"
+    }
+  ],
+  "omittedHashOnly": [
+    {
+      "path": "sdk235-dts-evidence/resources.jsonl",
+      "bytes": 10457,
+      "sha256": "822eb16f421381a8ce845c35482b9891f4e74e0b8aef512f358770e8e68327fe",
+      "reason": "Index only; bytes deliberately not included in minimal evidence bundle"
+    },
+    {
+      "path": "sdk235-dts-supervision/physical-copy.json",
+      "bytes": 117385,
+      "sha256": "298a2d7bebbd9ccb714674a7e7060e7343a61f1e4906a8c3caf1a30dfdcc614c",
+      "reason": "Index only; bytes deliberately not included in minimal evidence bundle"
+    },
+    {
+      "path": "sdk235-dts-supervision/protected-inputs.json",
+      "bytes": 13121114,
+      "sha256": "15a60b7c84f1e35fa63e1ec14e0585de559e77e588f907e6d7332dc16dc645a4",
+      "reason": "Index only; bytes deliberately not included in minimal evidence bundle"
+    },
+    {
+      "path": "sdk235-esm-evidence/resources.jsonl",
+      "bytes": 15075,
+      "sha256": "e749b50ff9d07fb38141bca1bb65989c3293c66a0eec333d0af4850b7a882f25",
+      "reason": "Index only; bytes deliberately not included in minimal evidence bundle"
+    },
+    {
+      "path": "sdk235-esm-supervision/protected-inputs.json",
+      "bytes": 12481203,
+      "sha256": "26f084bb07c553a2fa8c3ef1ede1e81600e545e7c9b463242b771d996eafe85a",
+      "reason": "Index only; bytes deliberately not included in minimal evidence bundle"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/command-samples.raw.jsonl",
+      "bytes": 1398559,
+      "sha256": "1a008980547cc60a9937cea09a2a8760801a67bd966c75fcc5aa13394dbd21bf",
+      "reason": "Index only; bytes deliberately not included in minimal evidence bundle"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/compile_commands.json",
+      "bytes": 76807,
+      "sha256": "e074da57e49aa8336623b0385ab7a16a0f72a727b10e04b04d96780b7f7764eb",
+      "reason": "Index only; bytes deliberately not included in minimal evidence bundle"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/geometry-samples.raw.jsonl",
+      "bytes": 2434215,
+      "sha256": "cbb48189c1211e650e30185aa7202e3b8865178b718b80be47caadbdc7f74bb6",
+      "reason": "Index only; bytes deliberately not included in minimal evidence bundle"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/hull-legacy-baseline/compile_commands.json",
+      "bytes": 68575,
+      "sha256": "f867d025b743f3fbb38d841fb08f56beca0294d245db26f2ce1424d68c3965e4",
+      "reason": "Index only; bytes deliberately not included in minimal evidence bundle"
+    },
+    {
+      "path": "sdk235-source/tools/physics/box3d/output/production-st-a00306f-attempt-1/motion-samples.raw.jsonl",
+      "bytes": 25561966,
+      "sha256": "09d1971ea2f6fa1d320d5ed94d47f88f6c95c2800a22dcc0f2bfdaa71d9e3efe",
+      "reason": "Index only; bytes deliberately not included in minimal evidence bundle"
+    },
+    {
+      "path": "st235-evidence/resources.jsonl",
+      "bytes": 23798,
+      "sha256": "0839a5193b2b5a91fa06a8e514ea880af6c41b645f608f2c316474190750ed4b",
+      "reason": "Index only; bytes deliberately not included in minimal evidence bundle"
+    },
+    {
+      "path": "st235-supervision/protected-inputs.json",
+      "bytes": 11618905,
+      "sha256": "dfad8426ae39446823395e2a49b98863547142d9de852f9b0e23940faea82ddd",
+      "reason": "Index only; bytes deliberately not included in minimal evidence bundle"
+    }
+  ],
+  "scope": "Selected original ST47/136/87/63 PASS including module120/8 and sphere18, ESM PASS, fresh DTS7 PASS and actual emit stderr. Prior SDK234 FAIL not overwritten. No public module-close/fullC20 qualification. Full protection tables and unrelated large raw omitted with hashes only; not self-contained rebuild/full protection audit.",
+  "sensitiveScan": {
+    "status": "PASS_NO_DETECTED_CREDENTIALS_AUTH_PRIVATE_KEYS_OR_ENV_DUMP",
+    "method": "UTF-8 content patterns plus exact parsed non-secret build assignment allowlist; not a guarantee for arbitrary secrets",
+    "findings": []
+  }
+}
