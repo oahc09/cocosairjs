@@ -65,7 +65,7 @@ export const FEATURES = Object.freeze([
     'custom-pipeline-post-process',
     'physics-box3d',
 ]);
-export const PUBLIC_FIXTURE_COMMIT = 'fe69c0e366f663ba4aeae7be390eb3065b7805c5';
+export const PUBLIC_FIXTURE_COMMIT = '3f7cf0fdc0148c3829f5e1c854d667ec2417e0fc';
 export const HOST_PATH = 'tools/physics/box3d/terrain-contract/public-harness/host.mjs';
 export const HOST_SHA256 = '10205d33d67ca3002eb5860aef9047688873423d910964eebf5269b0ef5d367b';
 export const RUNNER_FILES = [
@@ -178,13 +178,13 @@ export const IMPORTED_FILES = Object.freeze(
         },
         {
             path: 'tools/physics/box3d/sphere-capsule/public-contract.mjs',
-            bytes: 18467,
-            sha256: '208fb87eb055dc27d5a64b49bb124d63d805c66639735311ba4bb088b527241e',
+            bytes: 19674,
+            sha256: '2f591da973405f286e571cbb65577b93d56471d1d9cc6310eacbe4c517acbd63',
         },
         {
             path: 'tools/physics/box3d/sphere-capsule/public-contract.test.mjs',
-            bytes: 37650,
-            sha256: 'db2ae337008ef9a0fd78c6ff525aeadbaef20d80ec0c9dc95f1a6a5dd7f1f66f',
+            bytes: 44297,
+            sha256: '5c5273936e7bc0c37722e0aecdab3030806e0385f9e023a6ffdcfbaf84b59ac5',
         },
         {
             path: 'tools/physics/box3d/sphere-capsule/oracle.mjs',
@@ -215,6 +215,16 @@ export const IMPORTED_FILES = Object.freeze(
             path: 'src/air/physics/box3d/shared-body.ts',
             bytes: 70405,
             sha256: '716f07eb2cab288a0283ca0e7ae2808b78518093d474065f60cf5f162cbc61b2',
+        },
+        {
+            path: 'src/cocos/core/data/object.ts',
+            bytes: 23223,
+            sha256: '0caf7f9c37bd59148b60d7ad465426428006c989b32c03632a3d1eae63fc5fb6',
+        },
+        {
+            path: 'src/cocos/game/director.ts',
+            bytes: 37006,
+            sha256: '34459bd732317d51d2ee994885e77763eb6c055da524f54665f601a1ff084701',
         },
     ].map(Object.freeze),
 );
