@@ -6077,6 +6077,36 @@
       "path": "tools/physics/box3d/wasm-module-release-contract.mjs",
       "bytes": 6418,
       "sha256": "cf9253b136dcaf3e76986ceca59c81f21423643a9cc4d0897db6a2b7fd712244"
+    },
+    {
+      "path": "tools/physics/box3d/module-release/public-harness/v1/inputs.mjs",
+      "bytes": 35794,
+      "sha256": "ae280761f42f23509dbef3ed7cf600397f35612f167cdccdb94e3f9f2eaf3801"
+    },
+    {
+      "path": "tools/physics/box3d/module-release/public-harness/v1/consumer.mjs",
+      "bytes": 8502,
+      "sha256": "77a799aec3e64899c3b40714f7580d22a9d56c00035bd37ba536a331517db689"
+    },
+    {
+      "path": "tools/physics/box3d/module-release/public-harness/v1/run.mjs",
+      "bytes": 5061,
+      "sha256": "028ae9f79b75582112aa45b7b8c5208114e7733bbc6bb294b0db9be48bfd7896"
+    },
+    {
+      "path": "tools/physics/box3d/module-release/public-harness/v1/execute-once.py",
+      "bytes": 11308,
+      "sha256": "bd456eb5c16d2b122db14abf86fd1eccd33680be4be081491c5f0d1d7c99ac2b"
+    },
+    {
+      "path": "tools/physics/box3d/module-release/public-harness/v1/inputs.test.mjs",
+      "bytes": 29430,
+      "sha256": "af26fdd921726f73fc5aa60130c14ac11778c23a19d18cceb43803214ee46af5"
+    },
+    {
+      "path": "tools/physics/box3d/module-release/public-harness/v1/README.md",
+      "bytes": 8247,
+      "sha256": "30e37c576895f226734268d8e5039931d48503b402a3d3955fec8f115efb86d2"
     }
   ]
 }
