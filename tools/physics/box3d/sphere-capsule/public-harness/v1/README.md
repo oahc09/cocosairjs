@@ -4,12 +4,14 @@ This is a fresh-only consumer of the committed four-case public fixture. Source/
 
 ## Fixed scope
 
-The unchanged fixture `../../public-contract.mjs` is published at `ffe7307974591a216ed26ec59bea7c8d03118677`. Its exact bytes and the independent oracle are pinned in `inputs.mjs`. It runs one app/world/clock, four real scenes, at most eight public fixed frames per scene:
+The velocity-only fixture `../../public-contract.mjs` is published at `fe69c0e366f663ba4aeae7be390eb3065b7805c5`. Its exact bytes and the independent oracle are pinned in `inputs.mjs`. It runs one app/world/clock, four real scenes, at most eight public fixed frames per scene:
 
 1. Sphere created before Capsule: both receivers Enter/Stay/natural Exit.
 2. Capsule created before Sphere: both receivers Enter/Stay/natural Exit.
 3. A zero-cylinder Capsule descriptor (native Sphere) against a positive Capsule.
 4. Callback destroys its peer; the remaining pending receiver is skipped, destruction is drained, no artificial Exit is manufactured.
+
+Node placement happens only before mounting. After the initial ready frame, motion uses the supported public `RigidBody.setLinearVelocity` API; no external post-mount Node synchronization is enabled. The unchanged per-case limit remains eight frames. The original SDK231 public attempt remains failed and retained; its ST receipt pins the old fixture inputs, so it cannot qualify these new fixture bytes. Fresh matching ST/ESM/DTS receipts are still required, not anticipated here.
 
 First Enter geometry uses independently saved **pre-step public Node poses**, not the event's generation poses as an oracle. Copied contact equations remain unchanged through release and close. Detached raw event data is journaled before any getter/assertion; copied getter data is journaled before identity/oracle validation. Failures retain the first offending observations.
 
@@ -17,7 +19,7 @@ The fixture owns its one `app.close()` in `finally`. The consumer tests **own pr
 
 ## Unchanged host and identity separation
 
-The consumer imports `terrain-contract/public-harness/host.mjs` unchanged, SHA-256 `10205d33d67ca3002eb5860aef9047688873423d910964eebf5269b0ef5d367b`. Its helper/import closure is also pinned. This adapts only JSDOM/HEADLESS and exact asset transport; the product loader, module factory, engine methods, physics and step clock are not replaced. There is no browser/GPU/CSP/presentation claim.
+The consumer imports `terrain-contract/public-harness/host.mjs` unchanged, SHA-256 `10205d33d67ca3002eb5860aef9047688873423d910964eebf5269b0ef5d367b`. Its helper/import closure is also pinned, including the three actual TS preflight/writeback/velocity source files read by the CPU controls. This adapts only JSDOM/HEADLESS and exact asset transport; the product loader, module factory, engine methods, physics and step clock are not replaced. There is no browser/GPU/CSP/presentation claim.
 
 The input declaration uses schema `air-box3d-public-sphere-capsule-producers-v1` and must supply:
 

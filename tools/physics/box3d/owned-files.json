@@ -5995,8 +5995,8 @@
     },
     {
       "path": "tools/physics/box3d/sphere-capsule/public-harness/v1/README.md",
-      "bytes": 8473,
-      "sha256": "2a06d39a48dbcdd2a2091a7f55a40808bd573974b43701b3eb3e2579d36c31f2"
+      "bytes": 9058,
+      "sha256": "4f27dcede706a615767bdf5011ef05351f50173bcc0c780be084cdd22e24131c"
     },
     {
       "path": "tools/physics/box3d/sphere-capsule/public-harness/v1/consumer.mjs",
@@ -6010,8 +6010,8 @@
     },
     {
       "path": "tools/physics/box3d/sphere-capsule/public-harness/v1/inputs.mjs",
-      "bytes": 33882,
-      "sha256": "3c8294e7d706ad2ff70362c30d907638d9aaff9dc191b6a5c81637f588bcf3d6"
+      "bytes": 34464,
+      "sha256": "94f9cb9a58797d10523ccf5a4c47b4f5e768f3bddba4369d8b9a92622efca451"
     },
     {
       "path": "tools/physics/box3d/sphere-capsule/public-harness/v1/inputs.test.mjs",

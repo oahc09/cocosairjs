@@ -65,7 +65,7 @@ export const FEATURES = Object.freeze([
     'custom-pipeline-post-process',
     'physics-box3d',
 ]);
-export const PUBLIC_FIXTURE_COMMIT = 'ffe7307974591a216ed26ec59bea7c8d03118677';
+export const PUBLIC_FIXTURE_COMMIT = 'fe69c0e366f663ba4aeae7be390eb3065b7805c5';
 export const HOST_PATH = 'tools/physics/box3d/terrain-contract/public-harness/host.mjs';
 export const HOST_SHA256 = '10205d33d67ca3002eb5860aef9047688873423d910964eebf5269b0ef5d367b';
 export const RUNNER_FILES = [
@@ -178,13 +178,13 @@ export const IMPORTED_FILES = Object.freeze(
         },
         {
             path: 'tools/physics/box3d/sphere-capsule/public-contract.mjs',
-            bytes: 18332,
-            sha256: 'f52d86f914740677c1f474583c63ca823acdfefa2b58c6969c3e7bbf9cc773cb',
+            bytes: 18467,
+            sha256: '208fb87eb055dc27d5a64b49bb124d63d805c66639735311ba4bb088b527241e',
         },
         {
             path: 'tools/physics/box3d/sphere-capsule/public-contract.test.mjs',
-            bytes: 26202,
-            sha256: 'a627a418a64a245e2a01a612ae147abb2f6e4b60266d4285148ee5f1b8c57199',
+            bytes: 37650,
+            sha256: 'db2ae337008ef9a0fd78c6ff525aeadbaef20d80ec0c9dc95f1a6a5dd7f1f66f',
         },
         {
             path: 'tools/physics/box3d/sphere-capsule/oracle.mjs',
@@ -200,6 +200,21 @@ export const IMPORTED_FILES = Object.freeze(
             path: 'tools/physics/box3d/sphere-capsule/contract.test.mjs',
             bytes: 8842,
             sha256: 'd178b20106deeb1c1fe02d99a1991fddce816fd02f3629dd09803eb4437dafee',
+        },
+        {
+            path: 'src/air/physics/box3d/world-writeback.ts',
+            bytes: 12638,
+            sha256: '8ac29bca08de0b8a76085d081d59d41a6530ef5a0eb5c76989d2ffc117362552',
+        },
+        {
+            path: 'src/air/physics/box3d/rigid-body.ts',
+            bytes: 14671,
+            sha256: 'eee50fe56cfa3c7cd698b1f682428cc8de4494e1cc216f30ae63a36014ed897b',
+        },
+        {
+            path: 'src/air/physics/box3d/shared-body.ts',
+            bytes: 70405,
+            sha256: '716f07eb2cab288a0283ca0e7ae2808b78518093d474065f60cf5f162cbc61b2',
         },
     ].map(Object.freeze),
 );
