@@ -674,3 +674,58 @@ test('qualification rejects the old zero-step-only memory evidence', () => {
         assert.throws(() => verifyMemoryDiagnosticQualification(q));
     }
 });
+
+test('actual CMake configure invokes exactly the current diagnostic gate and fails before core admission', () => {
+    // Source/CPU route contract, not a CMake/native execution claim. The v1 files
+    // remain retained historical inputs; no current execute_process may select them.
+    const source = readFileSync(resolve(root, 'tools/physics/box3d/CMakeLists.txt'), 'utf8');
+    const verifyRoute = (text) => {
+        const calls = [
+            ...text.matchAll(
+                /execute_process\(\s*COMMAND\s+"\$\{AIR_NODE\}"\s+"([^"\n]*memory-diagnostics\/[^"\n]+)"([\s\S]*?)\)/g,
+            ),
+        ];
+        assert.equal(calls.length, 1, 'Exactly one executable memory source gate');
+        const call = calls[0];
+        assert.equal(call[1], '${CMAKE_CURRENT_LIST_DIR}/memory-diagnostics/v2/source-gate.mjs');
+        assert.equal(
+            call[2].trim().replace(/\s+/g, ' '),
+            '--root "${AIR_REPO_ROOT}" --core "${AIR_STAGED_CORE}" RESULT_VARIABLE AIR_MEMORY_SOURCE_STATUS',
+        );
+        const refusals = [
+            ...text.matchAll(
+                /if\(NOT AIR_MEMORY_SOURCE_STATUS EQUAL 0\)\s*message\(FATAL_ERROR "Read-only memory diagnostic source\/profile verification failed"\)\s*endif\(\)/g,
+            ),
+        ];
+        assert.equal(refusals.length, 1, 'A failed gate must fail configure, not become an ignored status');
+        const admission = text.indexOf('add_subdirectory("${AIR_STAGED_CORE}" "core")');
+        assert(admission >= 0);
+        assert(call.index + call[0].length < refusals[0].index);
+        assert(refusals[0].index + refusals[0][0].length < admission, 'No core admission before gate success');
+    };
+    verifyRoute(source);
+    for (const mutate of [
+        (s) => s.replace('memory-diagnostics/v2/source-gate.mjs', 'memory-diagnostics/v1/source-gate.mjs'),
+        (s) => s.replace('memory-diagnostics/v2/source-gate.mjs', 'memory-diagnostics/v3/source-gate.mjs'),
+        (s) => s.replace('RESULT_VARIABLE AIR_MEMORY_SOURCE_STATUS', 'RESULT_VARIABLE IGNORED_STATUS'),
+        (s) => s.replace('--core "${AIR_STAGED_CORE}"', '--core "${AIR_REPO_ROOT}/vendor/box3d/core"'),
+        (s) => s.replace('if(NOT AIR_MEMORY_SOURCE_STATUS EQUAL 0)', 'if(FALSE)'),
+        (s) =>
+            s.replace(
+                'message(FATAL_ERROR "Read-only memory diagnostic source/profile verification failed")',
+                'message(STATUS "ignored")',
+            ),
+        (s) =>
+            s.replace(
+                'execute_process(COMMAND "${AIR_NODE}" "${CMAKE_CURRENT_LIST_DIR}/memory-diagnostics/v2/source-gate.mjs"',
+                'add_subdirectory("${AIR_STAGED_CORE}" "core")\nexecute_process(COMMAND "${AIR_NODE}" "${CMAKE_CURRENT_LIST_DIR}/memory-diagnostics/v2/source-gate.mjs"',
+            ),
+        (s) =>
+            s +
+            '\n' +
+            s.match(
+                /execute_process\(COMMAND "\$\{AIR_NODE\}" "\$\{CMAKE_CURRENT_LIST_DIR\}\/memory-diagnostics\/v2\/source-gate\.mjs"[\s\S]*?\)/,
+            )[0],
+    ])
+        assert.throws(() => verifyRoute(mutate(source)));
+});

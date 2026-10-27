@@ -28,7 +28,7 @@
     {
       "path": "tools/physics/box3d/CMakeLists.txt",
       "bytes": 11568,
-      "sha256": "c5e2601b6a03c22bf4ea96650a50fbdc1087cb0f3d71f36586e4603dcb621764"
+      "sha256": "68d21c27dbc020deb59299179e3f52110d1dfa92bcdd70a8165791ca8d9bf45e"
     },
     {
       "path": "tools/physics/box3d/README.md",
@@ -5932,8 +5932,8 @@
     },
     {
       "path": "tools/physics/box3d/memory-diagnostics/v2/contract.test.mjs",
-      "bytes": 26804,
-      "sha256": "13fc24ff7254597b6d75ae26186d360e9a1e48454dd661ae178085d11bffca3f"
+      "bytes": 29897,
+      "sha256": "9607ff5047da95618d6e5db2368b89bca26c1aacb2a46eea6b48c71b41151d0f"
     },
     {
       "path": "tools/physics/box3d/memory-diagnostics/v2/qualification.mjs",

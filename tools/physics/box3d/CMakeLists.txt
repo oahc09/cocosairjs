@@ -41,7 +41,7 @@ string(JSON AIR_VERIFIED_PATCH_SHA GET "${AIR_STAGE_JSON}" patchChainSha256)
 if(NOT AIR_PATCH_CHAIN_SHA STREQUAL AIR_VERIFIED_PATCH_SHA)
     message(FATAL_ERROR "Patch-chain compile identity mismatch")
 endif()
-execute_process(COMMAND "${AIR_NODE}" "${CMAKE_CURRENT_LIST_DIR}/memory-diagnostics/v1/source-gate.mjs"
+execute_process(COMMAND "${AIR_NODE}" "${CMAKE_CURRENT_LIST_DIR}/memory-diagnostics/v2/source-gate.mjs"
     --root "${AIR_REPO_ROOT}" --core "${AIR_STAGED_CORE}" RESULT_VARIABLE AIR_MEMORY_SOURCE_STATUS)
 if(NOT AIR_MEMORY_SOURCE_STATUS EQUAL 0)
     message(FATAL_ERROR "Read-only memory diagnostic source/profile verification failed")
