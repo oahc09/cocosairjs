@@ -1,8 +1,10 @@
 # Box3D closure status
 
-Updated: 2026-10-27 10:23 UTC. Branch: `feat/box3d-rebuild-20261022`.
+Updated: 2026-10-27 11:24 UTC. Branch: `feat/box3d-rebuild-20261022`.
 
 ## Current outcome
+
+- Latest build: **SDK231 VERIFIED_LIMITED** on `f7f780bba52d97cb4c6b7c396fb159758dc698f1`: fresh ST43/120/85/60 with18 Sphere–Capsule native oracle samples, full28-feature ESM230→231 and fresh DTS7/7; final25files/43798060B. First ST attempt remains FAIL due to the consumer evidence-list omission; a committed two-file fix preceded fresh ST2 PASS. This does not qualify public Sphere–Capsule events/full T15/C21 or extend the separate APP230 result. See [SDK231 report](reports/sdk231-sphere-capsule-build-and-declarations-20261027.md).
 
 - Project: **NOT COMPLETE**. Original 35-task / 91-category / 9-example / G0–G8 scope remains.
 - Historical strict C20 APP failure: **APP228 FAIL, 0/100 qualified**. Release was refused by the owner ACK guard; reviewed source ordering places that refusal before native trim, not an independently measured call count. Released ledger113036 versus initial36096. Its raw and uncommitted report are now unavailable, so this is historical reporting, not a current raw revalidation. Earlier published SDK227 FAIL remains unchanged. See [environment recovery note](reports/environment-recovery-20261027.md).
@@ -46,4 +48,3 @@ Record implementation and validation separately: SOURCE_ONLY, VERIFIED_LIMITED, 
 For each next run record source/runtime/fixture identities, command, limits, stdout/stderr, exit and process-tree closure, before/after input hashes and artifact hashes. Use a new attempt directory; never overwrite a failed one. Keep code and tests in Git promptly, and store large artifacts only at an authorized persistent destination.
 
 The Chinese handoff is an immutable time-of-handoff explanation; use this status and subsequent verified commits to identify later changes. The full task contract remains authoritative; this status does not reduce scope.
-
