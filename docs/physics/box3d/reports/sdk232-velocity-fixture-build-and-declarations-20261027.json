@@ -1,0 +1,671 @@
+{
+  "schema": "box3d-sdk232-build-declarations-limited-report-v1",
+  "sourceProducer": "fe69c0e366f663ba4aeae7be390eb3065b7805c5",
+  "publicationParent": "6a69500aa846342f2ed0fd4650c7ef6485537243",
+  "buildNumber": 232,
+  "status": "VERIFIED_LIMITED_BUILD_AND_DECLARATIONS",
+  "nativeSchema": "d23be6157ee158ade877202b5e38d40978682cbd4794089c763e3ac8a79242a8",
+  "sourceChange": "Public fixture uses supported setLinearVelocity instead of postmount Node transforms; fixture/test/owned metadata changed. Native/core/production transform guard/schema unchanged. The changed fixture inputs require a fresh producer cohort.",
+  "gates": {
+    "commands": 43,
+    "producerInputs": 120,
+    "compiledUnits": 85,
+    "evidence": 60,
+    "sphereCapsuleNativeSamples": 18
+  },
+  "phases": [
+    {
+      "status": "PASS_LIMITED_ST_BUILD_AND_STORAGE_QUALIFICATION",
+      "sourceProducer": "fe69c0e366f663ba4aeae7be390eb3065b7805c5",
+      "startedAt": "2026-10-27T11:52:55Z",
+      "finishedAt": "2026-10-27T11:54:26Z",
+      "exitCode": 0,
+      "physicalClose": "ECHILD",
+      "elapsedSeconds": 91.58961263899982,
+      "elapsedToProcessCloseSeconds": 85.66311667399896,
+      "peakSampledTreeRSSBytes": 261378048,
+      "inputDrift": [],
+      "abort": null,
+      "sphereCapsuleQualification": {
+        "profile": "air-box3d-sphere-capsule-native-generation-v1",
+        "samples": 18,
+        "checks": [
+          "eighteenSideAndEndpointCases",
+          "sameGenerationFullIdentityAndExactRetainedPoses",
+          "bothCreationOrdersAllAxesAndOppositeNormals",
+          "readOnlyRepeatedGeometryAndDeepFreeze",
+          "realHeapGrowthPreservesCopiedGeometry",
+          "stepMutationDestroyInvalidateOldCapabilities",
+          "nativeForeignInvalidShortBufferNoPartialWrite",
+          "sameModuleCoreAndNativeGlobalBridgeReturnToBaseline"
+        ],
+        "samplesSha256": "a3a71a6d1cca60203647a5993ecfbc30d309f5d82378a646c4227384ec35f9d1",
+        "fixtureSha256": "861d676e7b26d2611335a5d6a3d64e20c4bfd2db606753fea899bde952e83ead",
+        "oracleSha256": "01cc58398aad1b01cc9e5bd2af91d72baa3abc333dca9129c59317541027b48e",
+        "fullT15": "NOT_QUALIFIED",
+        "publicEvents": "NOT_RUN_BY_THIS_NATIVE_CONSUMER"
+      },
+      "receiptPath": "st232-evidence/result.json",
+      "command": [
+        "/bin/bash",
+        "-c",
+        "source \"toolchain/use-toolchain.sh\"; export EMCC_TEMP_DIR=\"st232-evidence/tmp\"; exec \"<node>\" tools/physics/box3d/build-ready.mjs --out \"sdk232-source/tools/physics/box3d/output/production-st-fe69c0e-attempt-1\""
+      ],
+      "recordedCommands": [
+        {
+          "command": "<node>",
+          "args": ["tools/physics/box3d/query-admission-contract.mjs"],
+          "exitCode": 0,
+          "error": null
+        },
+        {
+          "command": "<node>",
+          "args": ["tools/physics/box3d/motion-source-controls.mjs"],
+          "exitCode": 0,
+          "error": null
+        },
+        {
+          "command": "<node>",
+          "args": ["tools/physics/box3d/command-source-controls.mjs"],
+          "exitCode": 0,
+          "error": null
+        },
+        {
+          "command": "<node>",
+          "args": [
+            "tools/physics/box3d/memory-diagnostics/v2/source-gate.mjs",
+            "--core",
+            "<repo>/tools/physics/box3d/output/production-st-fe69c0e-attempt-1/staged-core"
+          ],
+          "exitCode": 0,
+          "error": null
+        },
+        {
+          "command": "<node>",
+          "args": ["tools/physics/box3d/memory-diagnostics/v2/contract.test.mjs"],
+          "exitCode": 0,
+          "error": null
+        },
+        {
+          "command": "<node>",
+          "args": ["tools/physics/box3d/empty-world-trim/production/contract.test.mjs"],
+          "exitCode": 0,
+          "error": null
+        },
+        {
+          "command": "<node>",
+          "args": ["--test", "tools/verify/box3d/empty-world-release.test.mjs"],
+          "exitCode": 0,
+          "error": null
+        },
+        {
+          "command": "emcc",
+          "args": ["--version"],
+          "exitCode": 0,
+          "error": null
+        },
+        {
+          "command": "cmake",
+          "args": ["--version"],
+          "exitCode": 0,
+          "error": null
+        },
+        {
+          "command": "emcmake",
+          "args": [
+            "cmake",
+            "-S",
+            "tools/physics/box3d",
+            "-B",
+            "<repo>/tools/physics/box3d/output/production-st-fe69c0e-attempt-1",
+            "-DCMAKE_BUILD_TYPE=Release",
+            "-DAIR_STAGED_CORE=<repo>/tools/physics/box3d/output/production-st-fe69c0e-attempt-1/staged-core",
+            "-DAIR_PATCH_CHAIN_SHA=fce7869b3888ff9bfd417095e70ce72591893b2c3add1802e1a5bc32ca918bfe"
+          ],
+          "exitCode": 0,
+          "error": null
+        },
+        {
+          "command": "cmake",
+          "args": ["--build", "<repo>/tools/physics/box3d/output/production-st-fe69c0e-attempt-1", "--parallel", "1"],
+          "exitCode": 0,
+          "error": null
+        },
+        {
+          "command": "<node>",
+          "args": ["<repo>/tools/physics/box3d/output/production-st-fe69c0e-attempt-1/air_box3d_geometry_contract.cjs"],
+          "exitCode": 0,
+          "error": null
+        },
+        {
+          "command": "<node>",
+          "args": ["<repo>/tools/physics/box3d/output/production-st-fe69c0e-attempt-1/air_box3d_world_contract.cjs"],
+          "exitCode": 0,
+          "error": null
+        },
+        {
+          "command": "<node>",
+          "args": ["<repo>/tools/physics/box3d/output/production-st-fe69c0e-attempt-1/air_box3d_body_contract.cjs"],
+          "exitCode": 0,
+          "error": null
+        },
+        {
+          "command": "<node>",
+          "args": ["<repo>/tools/physics/box3d/output/production-st-fe69c0e-attempt-1/air_box3d_filter_contract.cjs"],
+          "exitCode": 0,
+          "error": null
+        },
+        {
+          "command": "<node>",
+          "args": ["<repo>/tools/physics/box3d/output/production-st-fe69c0e-attempt-1/air_box3d_motion_contract.cjs"],
+          "exitCode": 0,
+          "error": null
+        },
+        {
+          "command": "<node>",
+          "args": ["<repo>/tools/physics/box3d/output/production-st-fe69c0e-attempt-1/air_box3d_command_contract.cjs"],
+          "exitCode": 0,
+          "error": null
+        },
+        {
+          "command": "<node>",
+          "args": ["<repo>/tools/physics/box3d/output/production-st-fe69c0e-attempt-1/air_box3d_query_contract.cjs"],
+          "exitCode": 0,
+          "error": null
+        },
+        {
+          "command": "<node>",
+          "args": ["<repo>/tools/physics/box3d/output/production-st-fe69c0e-attempt-1/air_box3d_capsule_contract.cjs"],
+          "exitCode": 0,
+          "error": null
+        },
+        {
+          "command": "<node>",
+          "args": ["<repo>/tools/physics/box3d/output/production-st-fe69c0e-attempt-1/air_box3d_joint_contract.cjs"],
+          "exitCode": 0,
+          "error": null
+        },
+        {
+          "command": "<node>",
+          "args": ["<repo>/tools/physics/box3d/output/production-st-fe69c0e-attempt-1/air_box3d_hinge_contract.cjs"],
+          "exitCode": 0,
+          "error": null
+        },
+        {
+          "command": "<node>",
+          "args": ["<repo>/tools/physics/box3d/output/production-st-fe69c0e-attempt-1/air_box3d_p2p_contract.cjs"],
+          "exitCode": 0,
+          "error": null
+        },
+        {
+          "command": "<node>",
+          "args": ["<repo>/tools/physics/box3d/output/production-st-fe69c0e-attempt-1/air_box3d_mesh_contract.cjs"],
+          "exitCode": 0,
+          "error": null
+        },
+        {
+          "command": "<node>",
+          "args": ["<repo>/tools/physics/box3d/output/production-st-fe69c0e-attempt-1/air_box3d_hull_contract.cjs"],
+          "exitCode": 0,
+          "error": null
+        },
+        {
+          "command": "<node>",
+          "args": [
+            "<repo>/tools/physics/box3d/output/production-st-fe69c0e-attempt-1/air_box3d_hull_core_contract.cjs"
+          ],
+          "exitCode": 0,
+          "error": null
+        },
+        {
+          "command": "<node>",
+          "args": ["<repo>/tools/physics/box3d/output/production-st-fe69c0e-attempt-1/air_box3d_memory_contract.cjs"],
+          "exitCode": 0,
+          "error": null
+        },
+        {
+          "command": "<node>",
+          "args": [
+            "tools/physics/box3d/hull-legacy-contract.mjs",
+            "<repo>/tools/physics/box3d/output/production-st-fe69c0e-attempt-1"
+          ],
+          "exitCode": 0,
+          "error": null
+        },
+        {
+          "command": "<node>",
+          "args": [
+            "tools/physics/box3d/wasm-contract.mjs",
+            "<repo>/tools/physics/box3d/output/production-st-fe69c0e-attempt-1"
+          ],
+          "exitCode": 0,
+          "error": null
+        },
+        {
+          "command": "<node>",
+          "args": [
+            "tools/physics/box3d/wasm-ownership-contract.mjs",
+            "<repo>/tools/physics/box3d/output/production-st-fe69c0e-attempt-1"
+          ],
+          "exitCode": 0,
+          "error": null
+        },
+        {
+          "command": "<node>",
+          "args": [
+            "tools/physics/box3d/wasm-snapshot-contract.mjs",
+            "<repo>/tools/physics/box3d/output/production-st-fe69c0e-attempt-1"
+          ],
+          "exitCode": 0,
+          "error": null
+        },
+        {
+          "command": "<node>",
+          "args": [
+            "tools/physics/box3d/wasm-geometry-contract.mjs",
+            "<repo>/tools/physics/box3d/output/production-st-fe69c0e-attempt-1"
+          ],
+          "exitCode": 0,
+          "error": null
+        },
+        {
+          "command": "<node>",
+          "args": [
+            "tools/physics/box3d/wasm-world-contract.mjs",
+            "<repo>/tools/physics/box3d/output/production-st-fe69c0e-attempt-1"
+          ],
+          "exitCode": 0,
+          "error": null
+        },
+        {
+          "command": "<node>",
+          "args": [
+            "tools/physics/box3d/wasm-body-contract.mjs",
+            "<repo>/tools/physics/box3d/output/production-st-fe69c0e-attempt-1"
+          ],
+          "exitCode": 0,
+          "error": null
+        },
+        {
+          "command": "<node>",
+          "args": [
+            "tools/physics/box3d/wasm-filter-contract.mjs",
+            "<repo>/tools/physics/box3d/output/production-st-fe69c0e-attempt-1"
+          ],
+          "exitCode": 0,
+          "error": null
+        },
+        {
+          "command": "<node>",
+          "args": [
+            "tools/physics/box3d/wasm-motion-contract.mjs",
+            "<repo>/tools/physics/box3d/output/production-st-fe69c0e-attempt-1"
+          ],
+          "exitCode": 0,
+          "error": null
+        },
+        {
+          "command": "<node>",
+          "args": [
+            "tools/physics/box3d/wasm-command-contract.mjs",
+            "<repo>/tools/physics/box3d/output/production-st-fe69c0e-attempt-1"
+          ],
+          "exitCode": 0,
+          "error": null
+        },
+        {
+          "command": "<node>",
+          "args": [
+            "tools/physics/box3d/wasm-query-contract.mjs",
+            "<repo>/tools/physics/box3d/output/production-st-fe69c0e-attempt-1"
+          ],
+          "exitCode": 0,
+          "error": null
+        },
+        {
+          "command": "<node>",
+          "args": [
+            "tools/physics/box3d/wasm-mesh-contract.mjs",
+            "<repo>/tools/physics/box3d/output/production-st-fe69c0e-attempt-1"
+          ],
+          "exitCode": 0,
+          "error": null
+        },
+        {
+          "command": "<node>",
+          "args": [
+            "tools/physics/box3d/wasm-memory-contract.mjs",
+            "<repo>/tools/physics/box3d/output/production-st-fe69c0e-attempt-1"
+          ],
+          "exitCode": 0,
+          "error": null
+        },
+        {
+          "command": "<node>",
+          "args": [
+            "<repo>/tools/physics/box3d/output/production-st-fe69c0e-attempt-1/air_box3d_world_storage_contract.cjs"
+          ],
+          "exitCode": 0,
+          "error": null
+        },
+        {
+          "command": "<node>",
+          "args": [
+            "tools/physics/box3d/wasm-storage-contract.mjs",
+            "<repo>/tools/physics/box3d/output/production-st-fe69c0e-attempt-1"
+          ],
+          "exitCode": 0,
+          "error": null
+        },
+        {
+          "command": "<node>",
+          "args": ["tools/physics/box3d/sphere-capsule/contract.test.mjs"],
+          "exitCode": 0,
+          "error": null
+        },
+        {
+          "command": "<node>",
+          "args": [
+            "tools/physics/box3d/wasm-sphere-capsule-contract.mjs",
+            "<repo>/tools/physics/box3d/output/production-st-fe69c0e-attempt-1"
+          ],
+          "exitCode": 0,
+          "error": null
+        }
+      ]
+    },
+    {
+      "status": "PASS_FRESH_ESM232_BUILD",
+      "sourceProducer": "fe69c0e366f663ba4aeae7be390eb3065b7805c5",
+      "startedAt": "2026-10-27T11:55:33Z",
+      "finishedAt": "2026-10-27T11:56:38Z",
+      "exitCode": 0,
+      "physicalClose": "ECHILD_AND_NO_GROUP_MEMBERS",
+      "elapsedSeconds": 64.28868627799966,
+      "elapsedToProcessCloseSeconds": 56.758537867000996,
+      "peakSampledTreeRSSBytes": 3420971008,
+      "inputDrift": [],
+      "postInputDrift": [],
+      "abort": null,
+      "receiptPath": "sdk232-esm-evidence/result.json",
+      "command": [
+        "/bin/bash",
+        "-c",
+        "export AIR_FEATURES=\"air,base,gfx-webgl2,gfx-webgpu,gfx-empty,3d,animation,skeletal-animation,primitive,tween,custom-pipeline,legacy-pipeline,profiler,video,webview,2d,physics-2d-framework,particle-2d,tiled-map,ui,spine-3.8,spine-4.2,dragon-bones,physics-2d-box2d,physics-builtin,physics-cannon,custom-pipeline-post-process,physics-box3d\" AIR_OUT_DIR=\"sdk232-esm-attempt-1\" AIR_BOX3D_ST_BUILD_DIR=\"sdk232-source/tools/physics/box3d/output/production-st-fe69c0e-attempt-1\" AIR_BOX3D_PROVENANCE_ROOT=\"sdk232-source\"; exec \"<node>\" --max-old-space-size=4096 tools/build/build.cjs --format esm"
+      ],
+      "recordedCommands": []
+    },
+    {
+      "status": "PASS_FRESH_DTS232_SEVEN_GATES",
+      "sourceProducer": "fe69c0e366f663ba4aeae7be390eb3065b7805c5",
+      "startedAt": "2026-10-27T11:56:57Z",
+      "finishedAt": "2026-10-27T11:58:05Z",
+      "exitCode": 0,
+      "physicalClose": "ECHILD_AND_NO_GROUP_MEMBERS",
+      "elapsedSeconds": 68.07689796100021,
+      "elapsedToProcessCloseSeconds": 47.356428974000664,
+      "peakSampledTreeRSSBytes": 1395437568,
+      "inputDrift": [],
+      "postInputDrift": [],
+      "abort": null,
+      "receiptPath": "sdk232-dts-evidence/result.json",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "-B",
+        "sdk232-dts-supervision/driver.py"
+      ],
+      "recordedCommands": []
+    }
+  ],
+  "esm": {
+    "files": 23,
+    "bytes": 40413249,
+    "sourceMapSources": 995,
+    "features": 28,
+    "node": "24.22.1",
+    "preload": false,
+    "counterBefore": 231,
+    "counterAfter": 232
+  },
+  "dts": {
+    "freshEmit": true,
+    "gates": [
+      {
+        "index": 1,
+        "command": ["<node>", "--max-old-space-size=2048", "tools/build/build-dts.cjs"],
+        "cwd": "sdk232-dts-source",
+        "exitCode": 0
+      },
+      {
+        "index": 2,
+        "command": ["<node>", "tools/build/dts-inputs.test.cjs"],
+        "cwd": "sdk232-dts-source",
+        "exitCode": 0
+      },
+      {
+        "index": 3,
+        "command": ["<node>", "tools/build/dts-external-types.test.cjs"],
+        "cwd": "sdk232-dts-source",
+        "exitCode": 0
+      },
+      {
+        "index": 4,
+        "command": ["<node>", "tools/build/dts-symbols.test.cjs"],
+        "cwd": "sdk232-dts-source",
+        "exitCode": 0
+      },
+      {
+        "index": 5,
+        "command": [
+          "<node>",
+          "dependencies/node_modules/typescript/bin/tsc",
+          "-p",
+          "sdk232-dts-supervision/consumers/app.json"
+        ],
+        "cwd": "sdk232-dts-source",
+        "exitCode": 0
+      },
+      {
+        "index": 6,
+        "command": [
+          "<node>",
+          "dependencies/node_modules/typescript/bin/tsc",
+          "-p",
+          "sdk232-dts-supervision/consumers/mesh.json"
+        ],
+        "cwd": "sdk232-dts-source",
+        "exitCode": 0
+      },
+      {
+        "index": 7,
+        "command": [
+          "<node>",
+          "dependencies/node_modules/typescript/bin/tsc",
+          "-p",
+          "sdk232-dts-supervision/consumers/terrain.json"
+        ],
+        "cwd": "sdk232-dts-source",
+        "exitCode": 0
+      }
+    ],
+    "strictConsumers": 3,
+    "fixtures": 3,
+    "strict": true,
+    "skipLibCheck": false,
+    "canonicalLegacyBytes": 367,
+    "promotion": "Both emitted declarations verified before exclusive promotion; original ESM23 unchanged.",
+    "prelaunch": "A mismatching window string was rejected before lock/once/evidence/child; corrected to frozen control, then one actual emit. This is not an emit retry."
+  },
+  "sdk": {
+    "files": [
+      {
+        "path": "box2d3/LICENSE.Box2D.txt",
+        "bytes": 1067,
+        "sha256": "68a3e676d7e94093b102d5cba0d4e04af812040d6f230c3db67a6664574e43d2"
+      },
+      {
+        "path": "box2d3/air-box2d.mjs",
+        "bytes": 56143,
+        "sha256": "5a7d80e036a41ce9921daed74c31d7a30d1a7f41c103e207576991d1db126485"
+      },
+      {
+        "path": "box2d3/air-box2d.wasm",
+        "bytes": 371639,
+        "sha256": "3391e2ace476adba36297ff8ce66766a0a09d9365caec8079b6843d1dd4219ec"
+      },
+      {
+        "path": "box2d3/receipt.json",
+        "bytes": 974,
+        "sha256": "5540911a20a2c624629de1c6f155c43a6cf8e28c91fa0cb6f4cabfb54dfcfbf4"
+      },
+      {
+        "path": "cocosair.legacy.d.ts",
+        "bytes": 367,
+        "sha256": "6dd42c6a064b17f923568bce9e3befce5ff0e33d7b0af19bed965a9e1a86aed2"
+      },
+      {
+        "path": "cocosair.module.d.ts",
+        "bytes": 3375489,
+        "sha256": "d35e80ae39b0fcfb55486fcc805f4440e35ebf1283805c3647ec0e5f8d16c264"
+      },
+      {
+        "path": "cocosair.module.js",
+        "bytes": 9475101,
+        "sha256": "6e47138f4602080a306bb8674144c00b57ea8faa3cbfb3177ed59a81a4c5eefb"
+      },
+      {
+        "path": "cocosair.module.js.map",
+        "bytes": 26501556,
+        "sha256": "0f8dd2f47708ab1a5db72747e1122ad8469a348754ab0cebd320b8d80276a87d"
+      },
+      {
+        "path": "package.json",
+        "bytes": 18,
+        "sha256": "1239d4d885dcad42201a27ed9324f8f0f760b78700d8db9ced39a511cffe7eae"
+      },
+      {
+        "path": "physics/box3d/st/LICENSE.Box3D.txt",
+        "bytes": 1067,
+        "sha256": "da5e31a26bf3cfd5ba5c96d6823e480128c81e76c107ef9d3ee5d94789184b90"
+      },
+      {
+        "path": "physics/box3d/st/box3d-st.mjs",
+        "bytes": 56196,
+        "sha256": "b9116d2421075df6abe84782bbe16ed37c48309a13a98a9fa399ad49af0ebca1"
+      },
+      {
+        "path": "physics/box3d/st/box3d-st.wasm",
+        "bytes": 710023,
+        "sha256": "20953410bfb69dcdda0f11ff74c59a665a7d731f4cbdb7ba8aa8f1a6dfec608c"
+      },
+      {
+        "path": "physics/box3d/st/distribution-receipt.json",
+        "bytes": 3606,
+        "sha256": "5d8bace81ab6b01201573ba029784ee0d35a5b19326bd30f59df14214ff9acb7"
+      },
+      {
+        "path": "physics/box3d/st/facade.d.mts",
+        "bytes": 31368,
+        "sha256": "617cbc4e0cf2d6b1312f01bb4be18876feb9a541c19fd7d9360d93b553edc8a4"
+      },
+      {
+        "path": "physics/box3d/st/facade.mjs",
+        "bytes": 135503,
+        "sha256": "2fefa1fc26a0b13eaa68ceb20f95cf99127e6b3bc60ccc067e5f0fb2f7df3731"
+      },
+      {
+        "path": "physics/box3d/st/manifest.json",
+        "bytes": 7460,
+        "sha256": "f4a44b934c95a3eb0d9ff3f9e6643118730b4b6101106c508d4b3097c8407f7b"
+      },
+      {
+        "path": "webgpu/LICENSE-apache.txt",
+        "bytes": 9226,
+        "sha256": "9362ea9ea17cb221a20cbbd63f404710834cc273d2a9a7b60314fd68ab702cd6"
+      },
+      {
+        "path": "webgpu/LICENSE-dawn.txt",
+        "bytes": 11829,
+        "sha256": "0493f897193af1796d5054659f45ec7d4c5af648fa67a99f01d30e55cc805abc"
+      },
+      {
+        "path": "webgpu/LICENSE-glslang.txt",
+        "bytes": 55719,
+        "sha256": "373bb541d74f5a2854e4b752c57952dd8155cca535124176de90c94efc67ef85"
+      },
+      {
+        "path": "webgpu/NOTICE-babylon.md",
+        "bytes": 793,
+        "sha256": "7f85d099ce3c6e1900a45ee8d5b8fa405e760c746af687b3ee2081416e48f183"
+      },
+      {
+        "path": "webgpu/glslang.js",
+        "bytes": 12829,
+        "sha256": "7937463b384ded16e10da2c1d64cb63a0894e56e8d8167cce636be5635caef59"
+      },
+      {
+        "path": "webgpu/glslang.wasm",
+        "bytes": 1192271,
+        "sha256": "2746e37cbb52ff99f21a836e56e72e5771873a83a032faec2ed860941b23768e"
+      },
+      {
+        "path": "webgpu/manifest.json",
+        "bytes": 1816,
+        "sha256": "84161a92c5469819bab8a3ddc6512bf8e6e88c1bb67c1fd4c873be84ce0e6df9"
+      },
+      {
+        "path": "webgpu/twgsl.js",
+        "bytes": 74129,
+        "sha256": "e5664e33a74d064118769636440a5b09121db31370d6fe54b778deb17cd0e4f5"
+      },
+      {
+        "path": "webgpu/twgsl.wasm",
+        "bytes": 1702916,
+        "sha256": "a434c2decdbb38caadf5f486d806384a1543554828c983c77922b2d92579914c"
+      }
+    ],
+    "totalFiles": 25,
+    "totalBytes": 43789105
+  },
+  "retainedEvidence": [
+    {
+      "path": "st232-evidence/result.json",
+      "bytes": 17850,
+      "sha256": "3e64f1f2d059a7daf5ccd41ffa0f6031a018b9c4822cbca9473d667d1da9f5d6"
+    },
+    {
+      "path": "sdk232-esm-evidence/result.json",
+      "bytes": 11221,
+      "sha256": "8d3eb718d1b104631d55c2a2f28950f05e443e3df65438bcdc2ea189cbe070ab"
+    },
+    {
+      "path": "sdk232-dts-evidence/result.json",
+      "bytes": 11293,
+      "sha256": "dfa38314d0e1fa492ef767ae4d454743568a863e6b0e8e9e299230091aafec5f"
+    },
+    {
+      "path": "sdk232-dts-evidence/seven-gates.json",
+      "bytes": 2586,
+      "sha256": "cdd7f02cd8e4d1cdcd10d1598bf98d25c75f9830bc5ca0f354ae12a11570066a"
+    },
+    {
+      "path": "sdk232-complete-inventory.json",
+      "bytes": 4976,
+      "sha256": "3833dddf3dfa8db679e3fc9ac41ed5d469ed749cf48f28bf2bb7a58790127d46"
+    },
+    {
+      "path": "sdk232-dts-supervision/prelaunch-rejected-window.json",
+      "bytes": 279,
+      "sha256": "7364d6c9503e02807ba428222cc910e340ddd0afc48c5a54256616a0295f5b86"
+    }
+  ],
+  "scope": {
+    "publicAttempt2": "SEPARATE_RUN_NOT_QUALIFIED_BY_THIS_REPORT",
+    "previousPublicSDK231": "FAIL_0_OF_4_RETAINED_UNCHANGED",
+    "fullT15": "NOT_QUALIFIED",
+    "fullC21": "NOT_QUALIFIED",
+    "APP230": "Separate previous observable-subset result, not rerun or upgraded",
+    "project": "NOT_COMPLETE",
+    "bundle": "Summary is not self-contained rebuild/replay; selected original evidence prepared separately. No full SDK/source/dependency upload."
+  }
+}
