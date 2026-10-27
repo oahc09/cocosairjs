@@ -17,6 +17,7 @@ extern "C" {
 
 enum { AIR_B3_ABI_VERSION = 1, AIR_B3_BODY_INPUT_FLOATS = 16, AIR_B3_BODY_SNAPSHOT_FLOATS = 29 };
 enum { AIR_B3_OK = 0, AIR_B3_INVALID = 1, AIR_B3_ARGUMENT = 2, AIR_B3_CREATION = 3, AIR_B3_CAPACITY = 4, AIR_B3_ALLOCATION = 5, AIR_B3_GEOMETRY_UNAVAILABLE = 6, AIR_B3_UNSUPPORTED_GEOMETRY = 7, AIR_B3_UNSUPPORTED = 8, AIR_B3_LOCKED = 9, AIR_B3_MASS_PENDING = 10 };
+enum { AIR_B3_WORLD_NONEMPTY = 14, AIR_B3_IDENTITY_EXHAUSTED = 15, AIR_B3_TRIM_UNSAFE = 16 };
 enum { AIR_B3_MOTION_LOCK_CONFLICT = 11, AIR_B3_MOTION_SPEED_CAP = 12 };
 
 const char* air_b3_core_sha(void);
@@ -27,6 +28,8 @@ uint32_t air_b3_world_create(float gx, float gy, float gz);
 int air_b3_world_valid(uint32_t world);
 int air_b3_world_destroy(uint32_t world);
 int air_b3_world_step(uint32_t world, float dt, int substeps);
+/* Returned trim refusals are pre-mutation; fatal allocator failure never returns. */
+int air_b3_world_trim_empty(uint32_t world, int acknowledgeRetiredEvents);
 int air_b3_world_counts(uint32_t world, uint32_t* out);
 void air_b3_live_bytes(uint32_t* out);
 int air_b3_body_create(uint32_t world, int type, const float* input, int enable_sleep, uint32_t* out);

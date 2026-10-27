@@ -33,6 +33,8 @@ export interface Box3DSurfaceMaterial {
     readonly restitution: number;
 }
 export interface Box3DWorldBinding extends Box3DFoundation {
+    /** False is mutation-free NONEMPTY; success acknowledges retired events and invalidates native views. */
+    trimEmptyWorld(world: Box3DWorld, acknowledgeRetiredEvents: boolean): boolean;
     setGravity(world: Box3DWorld, gravity: readonly number[]): void;
     getGravity(world: Box3DWorld): readonly number[];
     setSleepingEnabled(world: Box3DWorld, enabled: boolean): void;
@@ -90,6 +92,7 @@ export function requireWorldBinding(binding: Box3DFoundation): Box3DWorldBinding
     const names = [
         'createWorld',
         'destroyWorld',
+        'trimEmptyWorld',
         'step',
         'readStepSnapshot',
         'worldCounts',

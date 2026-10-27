@@ -7,6 +7,7 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 
 import { basename, relative, resolve } from 'node:path';
 import { root, sha256, verifySources } from './verify-sources.mjs';
 import { readPatchPlan, stageCore, validatePatchLock, verifyStagedCore } from './patch-intake.mjs';
+import hullQualification from '../../build/box3d-hull-qualification.cjs';
 
 const parent = resolve(process.argv[2]);
 const native = process.argv.includes('--native');
@@ -44,8 +45,7 @@ function run(command, args) {
 try {
     report.sources = verifySources();
     const plan = readPatchPlan();
-    assert.equal(plan.lock.patches.at(-1).id, 'checked-hull-cooking-v1', 'Review comparison prefix when chain changes');
-    const prefixLock = { ...plan.lock, patches: plan.lock.patches.slice(0, -1) };
+    const prefixLock = hullQualification.preHullPrefix(plan);
     assert.equal(prefixLock.patches.length, 2, 'Expected exact pre-Hull two-patch baseline');
     const prefixChain = validatePatchLock(prefixLock, plan.lock.baseCoreCommit, (path) =>
         readFileSync(resolve(root, path)),

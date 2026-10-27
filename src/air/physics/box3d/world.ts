@@ -55,7 +55,7 @@ import { readPhysicsMaterialPrivateValues } from '../../../cocos/physics/framewo
 import type { Box3DId, Box3DWorld, Box3DStepSnapshot } from './binding/facade.mjs';
 import type { Box3DSTLease } from './loader/st-loader.mjs';
 import type { AirNormalizedBox3DOptions } from './config';
-import type { AirPhysicsPreparation } from '../preparation';
+import type { AirPhysicsPreparation, AirPhysicsSceneReleaseResult } from '../preparation';
 import { copyDebugSnapshot, validateDebugFlags, validateJointScale } from './debug';
 import type { Box3DDebugSnapshot } from './debug';
 import {
@@ -65,6 +65,7 @@ import {
     finiteFloat32,
     requireWorldBinding,
     requireComponentBinding,
+    mutationNotApplied,
     worldError,
 } from './world-binding';
 import type { Box3DNativeStepDiagnostics, Box3DSurfaceMaterial, Box3DWorldBinding } from './world-binding';
@@ -128,6 +129,7 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
     #queryLogicalSequence = 0;
     #beforeStepSource: { dispose(): void } | undefined;
     #querySource: { dispose(): void } | undefined;
+    #sceneReleaseSource: (() => void) | undefined;
     readonly #materialShapes = new Map<Box3DId, boolean>();
     private nativeStep: Readonly<Box3DNativeStepDiagnostics> = Object.freeze({
         nativeStepIndex: 0,
@@ -268,7 +270,10 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
                     this.queryCommittedRay(context, origin, translation, options),
                 target: (body) => this.createKinematicTarget(body),
             });
+            this.#sceneReleaseSource = preparation.installSceneReleaseHook(() => this.#releaseSceneStorage());
         } catch (error) {
+            this.#sceneReleaseSource?.();
+            this.#sceneReleaseSource = undefined;
             this.#querySource?.dispose();
             this.#querySource = undefined;
             this.#beforeStepSource?.dispose();
@@ -1182,6 +1187,69 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
             this.failJointOperation(error);
         }
     }
+    /** Called only through the acquired world's app post-destruction hook. Never step to drain events. */
+    #releaseSceneStorage(): AirPhysicsSceneReleaseResult {
+        this.assertReady('scene release storage');
+        this.#commandOwner.assertSceneReleaseBoundary(false);
+        const counts = this.getNativeCounts();
+        if (counts.bodies || counts.shapes || counts.contacts || counts.joints)
+            return Object.freeze({ backend: 'box3d', status: 'SKIPPED_NONEMPTY' });
+        this.#commandOwner.assertSceneReleaseBoundary(true);
+        if (
+            this.hasOwnerCleanupFailure ||
+            this.#sharedBodies.size ||
+            this.#materialShapes.size ||
+            this.#fixedConstraints.size ||
+            this.#hingeConstraints.size ||
+            this.#pointToPointConstraints.size ||
+            this.pendingSnapshot ||
+            this.getStaticMeshResourceDiagnostics().length
+        )
+            throw worldError(
+                'AIR_E_BOX3D_CONFIG',
+                'scene release storage',
+                'Empty world still has adapter resources, pending events or unresolved ownership.',
+            );
+        const before = copyStepDiagnostics(this.#binding.stepDiagnostics(this.#token));
+        let committed = false;
+        try {
+            const restored = this.#binding.trimEmptyWorld(this.#token, true);
+            if (restored === false) return Object.freeze({ backend: 'box3d', status: 'SKIPPED_NONEMPTY' });
+            if (restored !== true) throw worldError('AIR_E_BOX3D_ABI', 'scene release storage', 'Invalid trim result.');
+            committed = true;
+            this.invalidatePending();
+            this.snapshot = null;
+            this.debug = null;
+            this.#collisionEvents.clear();
+            this.#triggerEvents.clear();
+            const after = copyStepDiagnostics(this.#binding.stepDiagnostics(this.#token));
+            if (
+                after.nativeStepIndex !== before.nativeStepIndex ||
+                after.nativeCompleted !== before.nativeCompleted ||
+                after.snapshotAvailable
+            )
+                throw worldError(
+                    'AIR_E_BOX3D_ABI',
+                    'scene release storage',
+                    'Trim advanced the clock or retained native views.',
+                );
+            this.nativeStep = after;
+            this.nativeObservationCurrent = true;
+            return Object.freeze({ backend: 'box3d', status: 'RESTORED' });
+        } catch (error) {
+            let notMutated = false;
+            try {
+                notMutated = mutationNotApplied(error);
+            } catch (classificationError) {
+                this.recordOwnerCleanup(classificationError);
+            }
+            if (committed || !notMutated) {
+                this.invalidatePending();
+                this.fault(error);
+            }
+            throw error;
+        }
+    }
     /** Internal copied resource diagnostics for qualification; no token is returned. */
     getStaticMeshResourceDiagnostics() {
         this.assertCommittedRead('Mesh resource diagnostics');
@@ -1193,9 +1261,13 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
             throw worldError('AIR_E_BOX3D_REENTRANT', 'getNativeMemoryDiagnostics', 'Requires an idle ready world.');
         this.assertCommittedRead('getNativeMemoryDiagnostics');
         if (typeof this.#binding.memoryDiagnostics !== 'function')
-            throw worldError('AIR_E_BOX3D_ABI', 'getNativeMemoryDiagnostics', 'Diagnostic v1 binding unavailable.');
+            throw worldError('AIR_E_BOX3D_ABI', 'getNativeMemoryDiagnostics', 'Diagnostic v2 binding unavailable.');
         const value = this.#binding.memoryDiagnostics(this.#token);
-        if (value?.profile !== 'air-box3d-memory-diagnostics-v1' || value.identity.worldId !== this.#token.id)
+        if (
+            value?.profile !== 'air-box3d-memory-diagnostics-v2' ||
+            value.schemaVersion !== 2 ||
+            value.identity.worldId !== this.#token.id
+        )
             throw worldError('AIR_E_BOX3D_ABI', 'getNativeMemoryDiagnostics', 'Foreign diagnostic world identity.');
         return Object.freeze({
             ...value,
@@ -1331,6 +1403,8 @@ export class Box3DPhysicsWorld implements IPhysicsWorld {
                 }
             } finally {
                 // Source lookup must not survive terminal owner/native teardown, even when cleanup fails.
+                this.#sceneReleaseSource?.();
+                this.#sceneReleaseSource = undefined;
                 this.#querySource?.dispose();
                 this.#querySource = undefined;
                 this.#beforeStepSource?.dispose();

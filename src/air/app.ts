@@ -39,11 +39,16 @@ import { airError, airBootstrapRegistry } from './app-config';
 import { CCObject } from '../cocos/core/data/object';
 import { releaseManager } from '../cocos/asset/asset-manager/release-manager';
 import type { AirBox3DOptions } from './physics/box3d/config';
-import type { AirPhysicsPreparation, AirPhysicsPreparationReceipt } from './physics/preparation';
+import type {
+    AirPhysicsPreparation,
+    AirPhysicsPreparationReceipt,
+    AirPhysicsSceneReleaseResult,
+} from './physics/preparation';
 
 export interface AirSceneReleaseReceipt extends AirCleanupReceipt {
     readonly scene: string | null;
     readonly physicsPreparation?: AirPhysicsPreparationReceipt;
+    readonly physicsSceneRelease?: AirPhysicsSceneReleaseResult;
     readonly retained: readonly string[];
     readonly measurements: Readonly<{ gpuMemory: 'unavailable'; reason: string }>;
 }
@@ -238,12 +243,23 @@ export class AirAppImpl implements AirApp {
                 if (destructionFailure)
                     failures.push({ label: 'native-scene-destruction', message: destructionFailure });
                 if (scene?.isValid) pending.push('native-scene-destruction');
+                // Scene components, asynchronous scope cleanup and asset deferred destruction
+                // must all settle before acknowledging this world's retired event storage.
+                let physicsSceneRelease: AirPhysicsSceneReleaseResult | undefined;
+                if (!pending.length && !failures.length) {
+                    try {
+                        physicsSceneRelease = this.physicsPreparation?.releaseScene();
+                    } catch (error) {
+                        failures.push({ label: 'box3d-empty-world-reclamation', message: String(error) });
+                    }
+                }
                 const status = pending.length || failures.length ? ('failed' as const) : ('released' as const);
                 this._releaseFailed = status === 'failed';
                 return Object.freeze({
                     status,
                     scene: scene?.uuid ?? null,
                     completed: result.completed,
+                    ...(physicsSceneRelease ? { physicsSceneRelease } : {}),
                     pending: Object.freeze(pending),
                     failures: Object.freeze(failures),
                     retained: Object.freeze([
@@ -329,8 +345,11 @@ export class AirAppImpl implements AirApp {
             });
         });
         attempt('game-clock-terminal', () => {
-            try { terminateGameClock(game); }
-            finally { this._terminalGameClock = isGameClockTerminal(game); }
+            try {
+                terminateGameClock(game);
+            } finally {
+                this._terminalGameClock = isGameClockTerminal(game);
+            }
         });
         attempt('session-deactivate', () => this._scope.deactivate('close'));
         if (!this._terminalGameClock) attempt('game-pause', () => game.pause());

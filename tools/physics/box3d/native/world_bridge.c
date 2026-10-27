@@ -302,3 +302,35 @@ int air_b3_bridge_memory(uint32_t world,uint32_t* out) {
     memcpy(out,copy,sizeof(copy));
     return AIR_B3_OK;
 }
+
+/* Same-world storage release. Caller owns exclusive ST access and has retired all
+ * external native views. No resource, debug buffer or temporary is hidden/freed
+ * here: such ownership refuses before the core can ACK or replace any storage. */
+int air_b3_world_trim_empty(uint32_t world, int acknowledgeRetiredEvents) {
+    if (acknowledgeRetiredEvents != 0 && acknowledgeRetiredEvents != 1) return AIR_B3_ARGUMENT;
+    BridgeWorld* w = find_world(world);
+    if (!w) return AIR_B3_INVALID;
+    int status = air_b3_world_unlocked(world);
+    if (status != AIR_B3_OK) return status;
+    b3WorldId id = b3LoadWorldId(world);
+    if (b3World_HasIdentityFault(id)) return AIR_B3_IDENTITY_EXHAUSTED;
+    b3Counters counts = b3World_GetCounters(id);
+    /* Persistent nonempty scenes skip without consuming even one event. */
+    if (counts.bodyCount || counts.shapeCount || counts.contactCount || counts.jointCount)
+        return AIR_B3_WORLD_NONEMPTY;
+    if (w->temporary || w->wire || w->capacity || w->count || w->captured || w->shapes || w->error ||
+        w->allocations != 1 || w->bytes != sizeof(*w)) return AIR_B3_TRIM_UNSAFE;
+    switch (b3World_TrimEmptyStorage(id, acknowledgeRetiredEvents != 0)) {
+        case b3_emptyTrimSuccess: return AIR_B3_OK;
+        case b3_emptyTrimNonempty: return AIR_B3_WORLD_NONEMPTY;
+        case b3_emptyTrimInvalidWorld: return AIR_B3_INVALID;
+        case b3_emptyTrimLocked: return AIR_B3_LOCKED;
+        case b3_emptyTrimIdentityExhausted:
+        case b3_emptyTrimFaulted: return AIR_B3_IDENTITY_EXHAUSTED;
+        case b3_emptyTrimBusy:
+        case b3_emptyTrimUnacknowledgedEvents:
+        case b3_emptyTrimRecording: return AIR_B3_TRIM_UNSAFE;
+        case b3_emptyTrimInconsistent: return AIR_B3_MEMORY_INCONSISTENT;
+    }
+    return AIR_B3_MEMORY_INCONSISTENT;
+}

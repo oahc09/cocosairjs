@@ -8,6 +8,23 @@ const { createHash } = require('node:crypto');
 const EXPECTED = require('./box3d-command-expectations.json');
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const sorted = (values) => [...values].sort();
+// The legacy oracle remains the original TWO-patch pre-Hull core, even after
+// identity/storage patches are appended. Never infer that prefix from the tail.
+function preHullPrefix(plan) {
+    assert.equal(plan.patchChainSha256, 'fce7869b3888ff9bfd417095e70ce72591893b2c3add1802e1a5bc32ca918bfe');
+    assert.deepEqual(
+        plan.lock.patches.map((patch) => patch.id),
+        [
+            'sse2-loadv-float-alignment-v1',
+            'contact-generation-geometry-v2',
+            'checked-hull-cooking-v1',
+            'same-world-identity-v1-candidate',
+            'same-world-empty-storage-v1',
+        ],
+        'Exact reviewed five-patch order',
+    );
+    return { ...plan.lock, patches: plan.lock.patches.slice(0, 2) };
+}
 const NATIVE_CHECKS = [
     'pureGeometryValidation',
     'trueTetraMassInertia',
@@ -135,9 +152,7 @@ function verifyHullQualification({
     assert.equal(legacy.fixtureSha256, hash(readSource(LEGACY_FIXTURE)), 'Legacy fixture input drift');
     assert.equal(legacy.patchedIdentity.patchChainSha256, identity.patchChainSha256);
     assert.equal(legacy.patchedIdentity.schemaSha256, identity.schemaSha256);
-    assert.equal(patch.lock.patches.length, 3, 'Exact checked-Hull patch chain');
-    assert.equal(patch.lock.patches.at(-1).id, 'checked-hull-cooking-v1');
-    const prefix = { ...patch.lock, patches: patch.lock.patches.slice(0, -1) };
+    const prefix = preHullPrefix(patch);
     assert.equal(legacy.baselineIdentity.coreSha, identity.coreSha, 'Legacy comparison fixed-core identity');
     assert.deepEqual(legacy.baselineIdentity.appliedPatches, prefix.patches);
     const prefixBytes = readArtifact('hull-legacy-baseline/prefix-lock.json');
@@ -261,4 +276,4 @@ function verifyHullQualification({
         legacyCommands: legacy.commands.length,
     };
 }
-module.exports = { verifyHullQualification, legacyCompilePaths };
+module.exports = { verifyHullQualification, legacyCompilePaths, preHullPrefix };

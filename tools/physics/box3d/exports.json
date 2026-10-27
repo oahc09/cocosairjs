@@ -77,5 +77,6 @@
   "_air_b3_mesh_lifetime_counters",
   "_air_b3_mesh_shape_create",
   "_air_b3_mesh_face_read",
-  "_air_b3_world_memory_diagnostics_v1"
+  "_air_b3_world_memory_diagnostics_v2",
+  "_air_b3_world_trim_empty"
 ]

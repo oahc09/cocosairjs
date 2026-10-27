@@ -7,8 +7,11 @@ import { fileURLToPath } from 'node:url';
 import { root, sha256, verifySources } from './verify-sources.mjs';
 import { inspectWasmMemory } from './verify-wasm.mjs';
 import { readPatchPlan, validatePatchLock, verifyStagedCore } from './patch-intake.mjs';
-import { verifyMemoryDiagnosticSources } from './memory-diagnostics/v1/source-gate.mjs';
-import { verifyMemoryDiagnosticQualification } from './memory-diagnostics/v1/qualification.mjs';
+import { verifyMemoryDiagnosticSources } from './memory-diagnostics/v2/source-gate.mjs';
+import { verifyMemoryDiagnosticQualification } from './memory-diagnostics/v2/qualification.mjs';
+import { verifyStorageQualification } from './empty-world-trim/production/qualification.mjs';
+import commandQualification from '../../build/box3d-command-qualification.cjs';
+import hullQualification from '../../build/box3d-hull-qualification.cjs';
 
 const dir = resolve(process.argv[2]);
 const reportPath = resolve(dir, 'artifact-audit.raw.json');
@@ -19,10 +22,18 @@ const fileHash = (path) => ({ path, bytes: read(path).length, sha256: sha256(rea
 const receipt = json('build-receipt.json');
 assert.equal(receipt.status, 'PASS');
 assert.equal(receipt.kind, 'st-simd-wasm');
-assert.equal(receipt.commands.length, 37, 'Exact successful WASM command inventory');
+commandQualification.verifyCommandSchedule(receipt);
 assert.ok(receipt.commands.every((c) => c.exitCode === 0 && !c.error));
-assert.equal(receipt.inputHashes.length, 92);
-assert.equal(new Set(receipt.inputHashes.map((input) => input.path)).size, 92);
+assert.equal(receipt.inputHashes.length, 111);
+assert.equal(new Set(receipt.inputHashes.map((input) => input.path)).size, 111);
+const expectedGate = JSON.parse(
+    readFileSync(resolve(root, 'tools/build/box3d-command-expectations.json'), 'utf8'),
+).gate;
+assert.deepEqual(
+    receipt.inputHashes.map((input) => input.path).sort(),
+    [...expectedGate.inputs].sort(),
+    'Exact producer input set',
+);
 assert.equal(receipt.motionSourceControls.status, 'PASS_SOURCE_CONTROLS_ONLY');
 assert.equal(receipt.commandSourceControls.status, 'PASS_SOURCE_CONTROLS_ONLY');
 assert.deepEqual(receipt.memoryCpuContract, { status: 'PASS_CPU_FAKE_DIAGNOSTICS_ONLY', nativeRuntimeExecuted: false });
@@ -78,6 +89,7 @@ const expectedSources = [
     'tools/physics/box3d/native/world_contract.c',
     'tools/physics/box3d/native/wasm_entry.c',
     'tools/physics/box3d/native/geometry_contract.c',
+    'tools/physics/box3d/native/world_storage_contract.c',
 ].sort();
 assert.deepEqual(commands.map((c) => relative(root, c.file)).sort(), expectedSources);
 const requiredFlags = ['-msimd128', '-msse2', '-fno-fast-math', '-ffp-contract=off'];
@@ -672,7 +684,7 @@ assert.equal(
 );
 assert.equal(legacyHull.patchedIdentity.patchChainSha256, manifest.patchChainSha256);
 assert.equal(legacyHull.patchedIdentity.schemaSha256, manifest.schemaSha256);
-assert.deepEqual(legacyHull.baselineIdentity.appliedPatches, manifest.appliedPatches.slice(0, -1));
+assert.deepEqual(legacyHull.baselineIdentity.appliedPatches, hullQualification.preHullPrefix(patchPlan).patches);
 assert.ok(legacyHull.commands.length > 2 && legacyHull.commands.every((c) => c.exitCode === 0 && !c.error));
 assert.equal(legacyHull.outputs.byteEqual, true);
 assert.deepEqual(legacyHull.outputs.cases, ['tetra', 'prism', 'duplicates256']);
@@ -687,7 +699,7 @@ const legacyPlan = {
     patchLockSha256: legacyHull.baselineIdentity.patchLockSha256,
 };
 assert.equal(sha256(read('hull-legacy-baseline/prefix-lock.json')), legacyPlan.patchLockSha256);
-assert.deepEqual(legacyPlan.lock.patches, manifest.appliedPatches.slice(0, -1));
+assert.deepEqual(legacyPlan.lock.patches, hullQualification.preHullPrefix(patchPlan).patches);
 assert.equal(
     validatePatchLock(legacyPlan.lock, manifest.coreSha, (path) => readFileSync(resolve(root, path))),
     legacyPlan.patchChainSha256,
@@ -718,6 +730,13 @@ for (const filename of ['air_box3d_hull_contract.cjs', 'air_box3d_hull_core_cont
     assert.ok(
         receipt.commands.some((entry) => entry.args.some((arg) => arg.endsWith(filename)) && entry.exitCode === 0),
     );
+const storageQualification = verifyStorageQualification({
+    native: json('native-world-storage-contract.raw.json'),
+    wasm: json('wasm-storage-contract.raw.json'),
+    identity: manifest,
+    fixtureSha256: sha256(readFileSync(resolve(root, 'tools/physics/box3d/wasm-storage-contract.mjs'))),
+    receipt,
+});
 const report = {
     schemaVersion: 1,
     status: 'PASS',
@@ -740,6 +759,7 @@ const report = {
     dynamicExecutionOrWorkerConstructorFound: false,
     artifacts: manifest.artifacts,
     memoryQualification,
+    storageQualification,
     evidence: [
         'native-memory-contract.raw.json',
         'air_box3d_memory_contract.cjs',
@@ -797,8 +817,17 @@ const report = {
         'wasm-command-contract.raw.json',
         'air_box3d_command_contract.cjs',
         'command-samples.raw.jsonl',
+        'native-world-storage-contract.raw.json',
+        'air_box3d_world_storage_contract.cjs',
+        'wasm-storage-contract.raw.json',
     ].map(fileHash),
 };
+assert.deepEqual(
+    report.evidence.map((entry) => entry.path).sort(),
+    [...expectedGate.evidence].sort(),
+    'Exact evidence set',
+);
+assert.equal(report.compiledSourceCount, 85, 'Exact current compiled source inventory');
 writeFileSync(reportPath, JSON.stringify(report, null, 2) + '\n');
 console.log(
     JSON.stringify({ status: report.status, compiledSourceCount: commands.length, output: relative(root, reportPath) }),

@@ -307,7 +307,9 @@ test('Consumer preserves every n4 expectation and adds exact query inventory', (
     assert.deepEqual(expected.native, e.native);
     assert.deepEqual(expected.wasm, e.wasm);
     const inventory = JSON.parse(
-        fs.readFileSync(path.join(root, 'docs/physics/box3d/rebuild/unified-native-source-20261022-n4/inventory-4.json')),
+        fs.readFileSync(
+            path.join(root, 'docs/physics/box3d/rebuild/unified-native-source-20261022-n4/inventory-4.json'),
+        ),
     );
     const additions = {
         inputs: [
@@ -323,7 +325,14 @@ test('Consumer preserves every n4 expectation and adds exact query inventory', (
     for (const key of Object.keys(additions)) {
         assert.deepEqual(expected.queryExtension[key], additions[key]);
         assert.deepEqual(
-            expected.gate[key].filter((name) => !additions[key].includes(name)),
+            expected.gate[key].filter((name) =>
+                (key === 'inputs'
+                    ? inventory.inputs
+                    : key === 'compileUnits'
+                      ? inventory.expectedCompileUnits
+                      : inventory.expectedEvidence
+                ).includes(name),
+            ),
             key === 'inputs'
                 ? inventory.inputs
                 : key === 'compileUnits'
@@ -331,22 +340,42 @@ test('Consumer preserves every n4 expectation and adds exact query inventory', (
                   : inventory.expectedEvidence,
         );
     }
-    assert.equal(expected.gate.inputs.length, 55);
-    assert.equal(expected.gate.compileUnits.length, 69);
-    assert.equal(expected.gate.evidence.length, 32);
+    // Historical n4 + query projection remains 55/69/32; later extensions are not deleted.
+    assert.equal(inventory.inputs.length + additions.inputs.length, 55);
+    assert.equal(inventory.expectedCompileUnits.length + additions.compileUnits.length, 69);
+    assert.equal(inventory.expectedEvidence.length + additions.evidence.length, 32);
 });
-test('SYNTHETIC ONLY: exact 24-command schedule rejects omissions, additions and reordered qualifications', () => {
+test('SYNTHETIC ONLY: exact 41-command schedule rejects omissions, additions and reordered qualifications', () => {
     const scripts = [
         'query-admission-contract.mjs',
         'motion-source-controls.mjs',
         'command-source-controls.mjs',
+        'memory-diagnostics/v2/source-gate.mjs',
+        'memory-diagnostics/v2/contract.test.mjs',
+        'empty-world-trim/production/contract.test.mjs',
+        'tools/verify/box3d/empty-world-release.test.mjs',
         null,
         null,
         null,
         null,
-        ...['geometry', 'world', 'body', 'filter', 'motion', 'command', 'query'].map(
-            (n) => `air_box3d_${n}_contract.cjs`,
-        ),
+        ...[
+            'geometry',
+            'world',
+            'body',
+            'filter',
+            'motion',
+            'command',
+            'query',
+            'capsule',
+            'joint',
+            'hinge',
+            'p2p',
+            'mesh',
+            'hull',
+            'hull_core',
+            'memory',
+        ].map((n) => `air_box3d_${n}_contract.cjs`),
+        'hull-legacy-contract.mjs',
         ...[
             '',
             'ownership-',
@@ -358,19 +387,28 @@ test('SYNTHETIC ONLY: exact 24-command schedule rejects omissions, additions and
             'motion-',
             'command-',
             'query-',
+            'mesh-',
+            'memory-',
         ].map((n) => `wasm-${n}contract.mjs`),
+        'air_box3d_world_storage_contract.cjs',
+        'wasm-storage-contract.mjs',
     ];
     const r = {
         commands: scripts.map((n) => ({ command: 'node', args: ['synthetic/' + n], exitCode: 0, error: null })),
         queryAdmission: { status: 'PASS_ADMISSION_NO_NATIVE_CALLS', nativeQueryCalls: 0 },
         motionSourceControls: { status: 'PASS_SOURCE_CONTROLS_ONLY' },
         commandSourceControls: { status: 'PASS_SOURCE_CONTROLS_ONLY' },
+        memorySourceControls: { status: 'PASS_SOURCE_CONTROLS_ONLY' },
+        memoryCpuContract: { status: 'PASS_CPU_FAKE_DIAGNOSTICS_ONLY', nativeRuntimeExecuted: false },
+        storageCpuContract: { status: 'PASS_CPU_STORAGE_CONTRACT_ONLY', nativeRuntimeExecuted: false },
+        emptyWorldReleaseCpuContract: { status: 'PASS_CPU_TS_NATIVE_MOCKS_ONLY', nativeRuntimeExecuted: false },
     };
     const set = (i, command, args) => Object.assign(r.commands[i], { command, args });
-    set(3, 'emcc', ['--version']);
-    set(4, 'cmake', ['--version']);
-    set(5, 'emcmake', ['cmake']);
-    set(6, 'cmake', ['--build', 'synthetic', '--parallel', '1']);
+    set(6, 'node', ['--test', 'tools/verify/box3d/empty-world-release.test.mjs']);
+    set(7, 'emcc', ['--version']);
+    set(8, 'cmake', ['--version']);
+    set(9, 'emcmake', ['cmake']);
+    set(10, 'cmake', ['--build', 'synthetic', '--parallel', '1']);
     verifyCommandSchedule(r);
     for (const alter of [
         (x) => x.commands.pop(),
@@ -378,6 +416,14 @@ test('SYNTHETIC ONLY: exact 24-command schedule rejects omissions, additions and
         (x) => x.commands.reverse(),
         (x) => (x.commands[20].exitCode = 1),
         (x) => (x.commands[0].args[0] = 'different.mjs'),
+        (x) => (x.commands[3].args[0] = 'synthetic/memory-diagnostics/v1/source-gate.mjs'),
+        (x) => (x.commands[39].args[0] = 'synthetic/air_box3d_world_contract.cjs'),
+        (x) => (x.commands[40].args[0] = 'synthetic/wasm-world-contract.mjs'),
+        (x) => delete x.storageCpuContract,
+        (x) => delete x.emptyWorldReleaseCpuContract,
+        (x) => (x.commands[6].args = ['tools/verify/box3d/empty-world-release.test.mjs']),
+        (x) => (x.emptyWorldReleaseCpuContract.nativeRuntimeExecuted = true),
+        (x) => (x.storageCpuContract.nativeRuntimeExecuted = true),
     ]) {
         const copy = structuredClone(r);
         alter(copy);

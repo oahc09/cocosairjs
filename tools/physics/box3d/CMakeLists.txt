@@ -151,3 +151,17 @@ else()
     add_test(NAME native-hinge COMMAND air_box3d_hinge_contract)
     add_test(NAME native-p2p COMMAND air_box3d_p2p_contract)
 endif()
+
+# Additive real storage lifecycle qualification. This is not the C20 application host.
+add_executable(air_box3d_world_storage_contract native/world_storage_contract.c)
+set_target_properties(air_box3d_world_storage_contract PROPERTIES C_STANDARD 17 C_STANDARD_REQUIRED YES)
+target_include_directories(air_box3d_world_storage_contract PRIVATE "${AIR_STAGED_CORE}/src")
+target_compile_definitions(air_box3d_world_storage_contract PRIVATE BOX3D_DISABLE_AVX2 BOX3D_VALIDATE)
+target_link_libraries(air_box3d_world_storage_contract PRIVATE air_box3d_abi)
+if(EMSCRIPTEN)
+    set_target_properties(air_box3d_world_storage_contract PROPERTIES SUFFIX ".cjs")
+    target_link_options(air_box3d_world_storage_contract PRIVATE -msimd128 -msse2 -fno-fast-math -ffp-contract=off
+        -sENVIRONMENT=node -sSINGLE_FILE=1 -sEXIT_RUNTIME=1 -sFILESYSTEM=0 -sASSERTIONS=2 -sALLOW_MEMORY_GROWTH=1)
+else()
+    add_test(NAME native-world-storage COMMAND air_box3d_world_storage_contract)
+endif()

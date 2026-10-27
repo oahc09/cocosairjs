@@ -57,12 +57,16 @@ try {
     const stagedCore = resolve(out, 'staged-core');
     result.stagedCore = stageCore(stagedCore, patchPlan);
     result.memorySourceControls = JSON.parse(
-        run(process.execPath, ['tools/physics/box3d/memory-diagnostics/v1/source-gate.mjs', '--core', stagedCore]),
+        run(process.execPath, ['tools/physics/box3d/memory-diagnostics/v2/source-gate.mjs', '--core', stagedCore]),
     );
     if (result.memorySourceControls.status !== 'PASS_SOURCE_CONTROLS_ONLY')
         throw new Error('Memory diagnostic source controls failed');
-    run(process.execPath, ['tools/physics/box3d/memory-diagnostics/v1/contract.test.mjs']);
+    run(process.execPath, ['tools/physics/box3d/memory-diagnostics/v2/contract.test.mjs']);
     result.memoryCpuContract = { status: 'PASS_CPU_FAKE_DIAGNOSTICS_ONLY', nativeRuntimeExecuted: false };
+    run(process.execPath, ['tools/physics/box3d/empty-world-trim/production/contract.test.mjs']);
+    result.storageCpuContract = { status: 'PASS_CPU_STORAGE_CONTRACT_ONLY', nativeRuntimeExecuted: false };
+    run(process.execPath, ['--test', 'tools/verify/box3d/empty-world-release.test.mjs']);
+    result.emptyWorldReleaseCpuContract = { status: 'PASS_CPU_TS_NATIVE_MOCKS_ONLY', nativeRuntimeExecuted: false };
     result.identity = {
         patchChainSha256: patchPlan.patchChainSha256,
         coreSha: lock.core.commit,
@@ -327,6 +331,20 @@ try {
         result.hullLegacyComparison = JSON.parse(legacyRaw);
         if (result.hullLegacyComparison.status !== 'PASS')
             throw new Error('Independent old/new native Hull comparison failed');
+        const storageExe = resolve(out, 'native-world-storage-contract');
+        run(cc, [
+            ...flags,
+            'tools/physics/box3d/native/world_storage_contract.c',
+            ...objects.filter((file) => !file.endsWith('/contract.c.o') && !file.endsWith('/world_bridge.c.o')),
+            ...(sanitize ? ['-fsanitize=address,undefined'] : []),
+            '-lm',
+            '-o',
+            storageExe,
+        ]);
+        const storageRaw = run(storageExe, []);
+        writeFileSync(resolve(out, 'native-world-storage-contract.raw.json'), storageRaw);
+        result.storageContract = JSON.parse(storageRaw);
+        if (result.storageContract.status !== 'PASS') throw new Error('Native world storage contract failed');
         result.artifacts = [
             { path: 'native-contract', sha256: sha256(readFileSync(exe)), bytes: readFileSync(exe).length },
         ];
@@ -462,6 +480,12 @@ try {
         run(process.execPath, ['tools/physics/box3d/wasm-query-contract.mjs', out]);
         run(process.execPath, ['tools/physics/box3d/wasm-mesh-contract.mjs', out]);
         run(process.execPath, ['tools/physics/box3d/wasm-memory-contract.mjs', out]);
+        const storageRaw = run(process.execPath, [resolve(out, 'air_box3d_world_storage_contract.cjs')]);
+        writeFileSync(resolve(out, 'native-world-storage-contract.raw.json'), storageRaw);
+        result.storageContract = JSON.parse(storageRaw);
+        if (result.storageContract.status !== 'PASS' || result.storageContract.pointerBytes !== 4)
+            throw new Error('WASM32 world storage native contract failed');
+        run(process.execPath, ['tools/physics/box3d/wasm-storage-contract.mjs', out]);
         result.artifacts = artifacts;
         result.browserStatus = 'NOT_RUN';
     }
@@ -569,6 +593,25 @@ try {
         'docs/physics/box3d/contracts/unified-command-decisions-v1.md',
         'src/air/physics/box3d/binding/facade.mjs',
         'src/air/physics/box3d/binding/facade.d.mts',
+        'tools/physics/box3d/patches/same-world-identity-v1.candidate.patch',
+        'tools/physics/box3d/patches/same-world-empty-storage-v1.candidate.patch',
+        'tools/physics/box3d/memory-diagnostics/v2/schema.json',
+        'tools/physics/box3d/memory-diagnostics/v2/source-lock.json',
+        'tools/physics/box3d/memory-diagnostics/v2/source-gate.mjs',
+        'tools/physics/box3d/memory-diagnostics/v2/contract.test.mjs',
+        'tools/physics/box3d/memory-diagnostics/v2/README.md',
+        'tools/physics/box3d/memory-diagnostics/v2/qualification.mjs',
+        'tools/physics/box3d/native/world_storage_contract.c',
+        'tools/physics/box3d/wasm-storage-contract.mjs',
+        'tools/physics/box3d/empty-world-trim/production/contract.test.mjs',
+        'tools/physics/box3d/empty-world-trim/production/qualification.mjs',
+        'src/air/app.ts',
+        'src/air/physics/preparation.ts',
+        'src/air/physics/box3d/world-command-owner.ts',
+        'src/air/physics/box3d/world-binding.ts',
+        'src/air/session-scope.ts',
+        'tools/verify/box3d/empty-world-release.test.mjs',
+        'tools/build/box3d-hull-qualification.cjs',
     ];
     result.inputHashes = inputs.map((path) => ({ path, sha256: sha256(readFileSync(resolve(root, path))) }));
     receipt();

@@ -118,7 +118,7 @@ function outputPacket(input, output) {
     }
 }
 function verifyCommandSchedule(receipt) {
-    assert.equal(EXPECTED.gate.commands, 37, 'Exact consumer-owned WASM command count');
+    assert.equal(EXPECTED.gate.commands, 41, 'Exact consumer-owned WASM command count');
     assert.equal(receipt.commands.length, EXPECTED.gate.commands, 'Exact successful WASM command inventory');
     assert(receipt.commands.every((row) => row.exitCode === 0 && !row.error));
     assert.equal(receipt.motionSourceControls?.status, 'PASS_SOURCE_CONTROLS_ONLY');
@@ -128,14 +128,24 @@ function verifyCommandSchedule(receipt) {
         status: 'PASS_CPU_FAKE_DIAGNOSTICS_ONLY',
         nativeRuntimeExecuted: false,
     });
+    assert.deepEqual(receipt.storageCpuContract, {
+        status: 'PASS_CPU_STORAGE_CONTRACT_ONLY',
+        nativeRuntimeExecuted: false,
+    });
+    assert.deepEqual(receipt.emptyWorldReleaseCpuContract, {
+        status: 'PASS_CPU_TS_NATIVE_MOCKS_ONLY',
+        nativeRuntimeExecuted: false,
+    });
     assert.equal(receipt.queryAdmission?.status, 'PASS_ADMISSION_NO_NATIVE_CALLS');
     assert.equal(receipt.queryAdmission?.nativeQueryCalls, 0);
     const scripts = [
         'query-admission-contract.mjs',
         'motion-source-controls.mjs',
         'command-source-controls.mjs',
-        'memory-diagnostics/v1/source-gate.mjs',
-        'memory-diagnostics/v1/contract.test.mjs',
+        'memory-diagnostics/v2/source-gate.mjs',
+        'memory-diagnostics/v2/contract.test.mjs',
+        'empty-world-trim/production/contract.test.mjs',
+        'tools/verify/box3d/empty-world-release.test.mjs',
         null,
         null,
         null,
@@ -172,22 +182,26 @@ function verifyCommandSchedule(receipt) {
             'mesh-',
             'memory-',
         ].map((n) => `wasm-${n}contract.mjs`),
+        'air_box3d_world_storage_contract.cjs',
+        'wasm-storage-contract.mjs',
     ];
     assert.equal(scripts.length, EXPECTED.gate.commands, 'Exact consumer-owned command schedule length');
     scripts.forEach((script, i) => {
         const row = receipt.commands[i];
         assert(Array.isArray(row.args) && row.args.every((arg) => typeof arg === 'string'));
-        if (script) assert(row.args[0]?.endsWith('/' + script), `Command ${i + 1}: ${script}`);
+        if (script === 'tools/verify/box3d/empty-world-release.test.mjs')
+            assert.deepEqual(row.args, ['--test', script], 'Exact real TypeScript release CPU command');
+        else if (script) assert(row.args[0]?.endsWith('/' + script), `Command ${i + 1}: ${script}`);
     });
-    assert.equal(receipt.commands[5].command, 'emcc');
-    assert.deepEqual(receipt.commands[5].args, ['--version']);
-    assert.equal(receipt.commands[6].command, 'cmake');
-    assert.deepEqual(receipt.commands[6].args, ['--version']);
-    assert.equal(receipt.commands[7].command, 'emcmake');
-    assert.equal(receipt.commands[7].args[0], 'cmake');
+    assert.equal(receipt.commands[7].command, 'emcc');
+    assert.deepEqual(receipt.commands[7].args, ['--version']);
     assert.equal(receipt.commands[8].command, 'cmake');
-    assert.equal(receipt.commands[8].args[0], '--build');
-    assert.deepEqual(receipt.commands[8].args.slice(-2), ['--parallel', '1']);
+    assert.deepEqual(receipt.commands[8].args, ['--version']);
+    assert.equal(receipt.commands[9].command, 'emcmake');
+    assert.equal(receipt.commands[9].args[0], 'cmake');
+    assert.equal(receipt.commands[10].command, 'cmake');
+    assert.equal(receipt.commands[10].args[0], '--build');
+    assert.deepEqual(receipt.commands[10].args.slice(-2), ['--parallel', '1']);
 }
 function verifyCommandQualification({ native, wasm, samplesBytes, identity, fixtureSha256, receipt }) {
     assert.equal(native.status, 'PASS');

@@ -23,7 +23,7 @@ THE SOFTWARE.
 // Internal, limited M1 foundation. This is not the Cocos physics adapter.
 const CORE_SHA = 'efca0c184d40fd6a82016983f1601c4d23965867';
 const BINDING_BASE_SHA = '5d5a3af049cccd9948b2b55bac4342414af0ef64';
-const SCHEMA_SHA256 = '3a1c552650979c205898c90c4d862483810b66dc5c875f155c80e92fb15618da';
+const SCHEMA_SHA256 = 'f5df4fae8476651b11ae3a952cb418ee987767ae1cfad0f5bb3c8f8e071bae28';
 // Stable rows for the separately versioned diagnostic extension in the main ABI schema.
 // Lengths are storage lengths, not live entities or unconsumed events.
 const MEMORY_DIAGNOSTIC_ROWS = [
@@ -149,17 +149,33 @@ const MEMORY_DIAGNOSTIC_ROWS = [
     ['debug.contact', '64-bit-blocks', '64-bit-blocks', 'allocated capacity, not live allocation usage'],
     ['debug.island', '64-bit-blocks', '64-bit-blocks', 'allocated capacity, not live allocation usage'],
     ['stack', 'allocated-bytes', 'bytes', 'allocated capacity, not live allocation usage'],
+    [
+        'worldFixed.identityHistory',
+        'embedded-structs',
+        'embedded-structs',
+        'Exact sizeof embedded identityHistory metadata; 36 bytes in the qualified layout, not a separate allocator allocation',
+    ],
+    [
+        'worldFixed.creationCapacity',
+        'embedded-structs',
+        'embedded-structs',
+        'Exact sizeof embedded creationCapacity metadata; 20 bytes in the qualified layout, not a separate allocator allocation',
+    ],
 ];
-const MEMORY_DIAGNOSTIC_WORDS = 740;
+const MEMORY_DIAGNOSTIC_WORDS = 756;
 const commandIsArray = Array.isArray;
 const commandKeys = Object.keys;
-const PATCH_CHAIN_SHA256 = '4c9d057fe6d7403f6f2c7672c4a7abe38041d845942540a6b5c5abbc6f4bc45c';
+const PATCH_CHAIN_SHA256 = 'fce7869b3888ff9bfd417095e70ce72591893b2c3add1802e1a5bc32ca918bfe';
 
 function failure(code, message) {
     return Object.assign(new Error(message), { code });
 }
 
 function nativeStatus(status) {
+    if (status === 15)
+        throw failure('AIR_E_BOX3D_IDENTITY_EXHAUSTED', 'Same-world native identity exhausted or faulted');
+    if (status === 16)
+        throw failure('AIR_E_BOX3D_TRIM_UNSAFE', 'Empty-world storage release preconditions are not satisfied');
     if (status === 13) throw failure('AIR_E_BOX3D_ABI', 'Native memory diagnostic accounting is inconsistent');
     if (status === 11) throw failure('AIR_E_BOX3D_CONFIG', 'Motion conflicts with a locked world velocity component');
     if (status === 12) throw failure('AIR_E_BOX3D_CONFIG', 'Motion exceeds the safe native speed cap');
@@ -2571,13 +2587,45 @@ export function createBox3DBinding(module, expected) {
                 };
             });
         },
+        trimEmptyWorld(world, acknowledgeRetiredEvents) {
+            return mutate(() => {
+                if (typeof acknowledgeRetiredEvents !== 'boolean')
+                    throw failure('AIR_E_BOX3D_ARGUMENT', 'acknowledgeRetiredEvents must be boolean');
+                const wid = worldId(world);
+                const state = worldStates.get(world);
+                if (!Number.isSafeInteger(state.revision + 1))
+                    throw failure('AIR_E_BOX3D_CAPACITY', 'Binding mutation revision exhausted');
+                if (typeof module._air_b3_world_trim_empty !== 'function')
+                    throw failure('AIR_E_BOX3D_ABI', 'Empty-world storage export unavailable');
+                activeMutation.outcome = undefined;
+                let status;
+                try {
+                    status = module._air_b3_world_trim_empty(wid, acknowledgeRetiredEvents ? 1 : 0);
+                } catch (error) {
+                    changed(world);
+                    throw error;
+                }
+                if (status === 14) {
+                    activeMutation.outcome = 'not-mutated';
+                    return false;
+                }
+                if (status === 0) {
+                    activeMutation.outcome = 'committed';
+                    changed(world);
+                    return true;
+                }
+                if ([1, 2, 9, 13, 15, 16].includes(status)) activeMutation.outcome = 'not-mutated';
+                else changed(world);
+                nativeStatus(status);
+            });
+        },
         memoryDiagnostics(world) {
             return exclusive(() => {
                 const wid = worldId(world);
                 const state = worldStates.get(world);
-                if (typeof module._air_b3_world_memory_diagnostics_v1 !== 'function')
-                    throw failure('AIR_E_BOX3D_ABI', 'Memory diagnostic v1 export unavailable');
-                nativeStatus(module._air_b3_world_memory_diagnostics_v1(wid, output, MEMORY_DIAGNOSTIC_WORDS));
+                if (typeof module._air_b3_world_memory_diagnostics_v2 !== 'function')
+                    throw failure('AIR_E_BOX3D_ABI', 'Memory diagnostic v2 export unavailable');
+                nativeStatus(module._air_b3_world_memory_diagnostics_v2(wid, output, MEMORY_DIAGNOSTIC_WORDS));
                 // Reacquire after the call, then copy. No HEAP view or pointer is returned.
                 const words = Array.from(module.HEAPU32.slice(output >>> 2, (output >>> 2) + MEMORY_DIAGNOSTIC_WORDS));
                 const reject = (condition, message) => {
@@ -2585,7 +2633,7 @@ export function createBox3DBinding(module, expected) {
                 };
                 reject(
                     words.length === MEMORY_DIAGNOSTIC_WORDS &&
-                        words[0] === 1 &&
+                        words[0] === 2 &&
                         words[1] === MEMORY_DIAGNOSTIC_WORDS &&
                         words[2] === MEMORY_DIAGNOSTIC_ROWS.length &&
                         words[3] === wid &&
@@ -2616,6 +2664,11 @@ export function createBox3DBinding(module, expected) {
                     );
                     reject(expectedFlags !== 2 || u64(at + 2) === 0n, 'Unknown count must carry no numeric claim');
                     const bytes = u64(at + 6);
+                    if (index >= 87)
+                        reject(
+                            u64(at + 2) === 1n && u64(at + 4) === 1n && bytes === (index === 87 ? 36n : 20n),
+                            'Fixed world metadata ledger mismatch',
+                        );
                     classifiedBytes += bytes;
                     reject(classifiedBytes <= 0xffffffffffffffffn, 'Classified memory sum overflow');
                     return {
@@ -2646,8 +2699,8 @@ export function createBox3DBinding(module, expected) {
                     moduleDestroys = u64(38);
                 reject(moduleDestroys <= moduleSuccessfulCooks, 'Mesh lifetime counter ordering invalid');
                 return freeze({
-                    profile: 'air-box3d-memory-diagnostics-v1',
-                    schemaVersion: 1,
+                    profile: 'air-box3d-memory-diagnostics-v2',
+                    schemaVersion: 2,
                     identity: {
                         ...api.identity,
                         worldId: wid,
@@ -2655,7 +2708,8 @@ export function createBox3DBinding(module, expected) {
                         bindingMutationRevision: state.revision,
                     },
                     worldLedger: {
-                        accounting: 'Pinned b3GetWorldByteCount capacity ledger, including embedded tree struct terms',
+                        accounting:
+                            'Pinned b3GetWorldByteCount capacity ledger, including embedded tree and fixed world metadata terms',
                         coreReportedBytes,
                         classifiedBytes,
                         sumMatchesCore: true,

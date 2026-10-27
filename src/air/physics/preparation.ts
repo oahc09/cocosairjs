@@ -21,6 +21,10 @@
 */
 /** Resource acquisition bookkeeping. A successful mock test proves lifecycle, not physics. */
 export type AirPreparedBackend = 'box2d-v3-wasm' | 'box3d';
+export interface AirPhysicsSceneReleaseResult {
+    readonly backend: 'box3d';
+    readonly status: 'RESTORED' | 'SKIPPED_NONEMPTY';
+}
 export interface AirPhysicsCleanupResult {
     readonly retained?: readonly string[];
 }
@@ -50,6 +54,9 @@ export interface AirPhysicsPreparation {
         dispose: () => void | AirPhysicsCleanupResult | Promise<void | AirPhysicsCleanupResult>,
         options?: { readonly dependsOn?: readonly string[] },
     ): void;
+    /** Internal single acquired-world hook; not a public arbitrary-state trim API. */
+    installSceneReleaseHook(callback: () => AirPhysicsSceneReleaseResult): () => void;
+    releaseScene(): AirPhysicsSceneReleaseResult | undefined;
     prepared(): void;
     failed(error: unknown): void;
     recordCleanupError(label: string, error: unknown): void;
@@ -70,6 +77,8 @@ export function createAirPhysicsPreparation(): AirPhysicsPreparation {
     let status: AirPhysicsPreparationReceipt['status'] = 'preparing';
     let originalError: AirPhysicsPreparationReceipt['originalError'] = null;
     let closing: Promise<AirPhysicsPreparationReceipt> | undefined;
+    let sceneReleaseHook: (() => AirPhysicsSceneReleaseResult) | undefined;
+    let sceneReleaseBusy = false;
     const cleanupErrors: { label: string; message: string }[] = [];
     const entries: {
         backend: AirPreparedBackend;
@@ -138,6 +147,36 @@ export function createAirPhysicsPreparation(): AirPhysicsPreparation {
             )
                 throw new Error('Physics dependencies must be acquired before dependent resources.');
             entries.push(entry);
+        },
+        installSceneReleaseHook(callback) {
+            if (
+                closing ||
+                sceneReleaseHook ||
+                typeof callback !== 'function' ||
+                !entries.some(
+                    (entry) =>
+                        entry.backend === 'box3d' && entry.resource === 'world' && entry.cleanup === 'not-attempted',
+                )
+            )
+                throw new Error('Scene release requires one live acquired Box3D world.');
+            sceneReleaseHook = callback;
+            return () => {
+                if (sceneReleaseHook === callback) sceneReleaseHook = undefined;
+            };
+        },
+        releaseScene() {
+            if (closing || sceneReleaseBusy) throw new Error('Physics scene release is closed or reentrant.');
+            if (!sceneReleaseHook) return undefined;
+            if (status !== 'prepared') throw new Error('Physics scene release requires a prepared application.');
+            sceneReleaseBusy = true;
+            try {
+                const result = sceneReleaseHook();
+                if (result?.backend !== 'box3d' || !['RESTORED', 'SKIPPED_NONEMPTY'].includes(result.status))
+                    throw new Error('Invalid physics scene release result.');
+                return Object.freeze({ backend: result.backend, status: result.status });
+            } finally {
+                sceneReleaseBusy = false;
+            }
         },
         prepared() {
             if (closing || originalError) throw new Error('Cannot prepare a failed or closed application attempt.');

@@ -19,7 +19,7 @@ const check = (name, action) => {
     action();
     checks[name] = true;
 };
-const outputWords = 740,
+const outputWords = 756,
     pointer = module._malloc((outputWords + 4) * 4);
 assert(pointer && pointer % 4 === 0);
 const pair = (at) => BigInt(module.HEAPU32[at >>> 2]) | (BigInt(module.HEAPU32[(at >>> 2) + 1]) << 32n);
@@ -33,7 +33,7 @@ try {
         assert.deepEqual(initial.liveCounts, { bodies: 0, shapes: 0, contacts: 0, joints: 0, islands: 0 });
     });
     check('exactLedgerSum', () => {
-        assert.equal(initial.worldLedger.rows.length, 87);
+        assert.equal(initial.worldLedger.rows.length, 89);
         assert.equal(
             initial.worldLedger.rows.reduce((sum, row) => sum + row.bytes, 0n),
             initial.worldLedger.coreReportedBytes,
@@ -54,7 +54,7 @@ try {
             [world.id, outputWords - 1, 4],
         ]) {
             module.HEAPU32.fill(0xa5a5a5a5, pointer >>> 2, (pointer >>> 2) + outputWords + 4);
-            assert.equal(module._air_b3_world_memory_diagnostics_v1(id, pointer, capacity), status);
+            assert.equal(module._air_b3_world_memory_diagnostics_v2(id, pointer, capacity), status);
             assert(
                 Array.from(module.HEAPU32.slice(pointer >>> 2, (pointer >>> 2) + outputWords + 4)).every(
                     (v) => v === 0xa5a5a5a5,
@@ -125,7 +125,7 @@ try {
     module._free(pointer);
 }
 const report = {
-    schema: 'air-box3d-memory-wasm-contract-v1',
+    schema: 'air-box3d-memory-wasm-contract-v2',
     status: 'PASS',
     identity: {
         coreSha: manifest.coreSha,

@@ -114,6 +114,25 @@ const INPUTS = [
     'tools/physics/box3d/native/mesh_contract.c',
     'tools/physics/box3d/wasm-mesh-contract.mjs',
     'tools/physics/box3d/static-mesh-bridge-contract.md',
+    'tools/physics/box3d/patches/same-world-identity-v1.candidate.patch',
+    'tools/physics/box3d/patches/same-world-empty-storage-v1.candidate.patch',
+    'tools/physics/box3d/memory-diagnostics/v2/schema.json',
+    'tools/physics/box3d/memory-diagnostics/v2/source-lock.json',
+    'tools/physics/box3d/memory-diagnostics/v2/source-gate.mjs',
+    'tools/physics/box3d/memory-diagnostics/v2/contract.test.mjs',
+    'tools/physics/box3d/memory-diagnostics/v2/README.md',
+    'tools/physics/box3d/memory-diagnostics/v2/qualification.mjs',
+    'tools/physics/box3d/native/world_storage_contract.c',
+    'tools/physics/box3d/wasm-storage-contract.mjs',
+    'tools/physics/box3d/empty-world-trim/production/contract.test.mjs',
+    'tools/physics/box3d/empty-world-trim/production/qualification.mjs',
+    'src/air/app.ts',
+    'src/air/physics/preparation.ts',
+    'src/air/physics/box3d/world-command-owner.ts',
+    'src/air/physics/box3d/world-binding.ts',
+    'src/air/session-scope.ts',
+    'tools/verify/box3d/empty-world-release.test.mjs',
+    'tools/build/box3d-hull-qualification.cjs',
 ];
 const sha256 = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const read = (file) => fs.readFileSync(file);
@@ -158,10 +177,13 @@ async function verifySTBuild(buildDirectory, { provenanceRoot = ROOT } = {}) {
         pathToFileURL(path.join(ROOT, 'tools/physics/box3d/patch-intake.mjs'))
     );
     const { verifyMemoryDiagnosticSources } = await import(
-        pathToFileURL(path.join(ROOT, 'tools/physics/box3d/memory-diagnostics/v1/source-gate.mjs'))
+        pathToFileURL(path.join(ROOT, 'tools/physics/box3d/memory-diagnostics/v2/source-gate.mjs'))
     );
     const { verifyMemoryDiagnosticQualification } = await import(
-        pathToFileURL(path.join(ROOT, 'tools/physics/box3d/memory-diagnostics/v1/qualification.mjs'))
+        pathToFileURL(path.join(ROOT, 'tools/physics/box3d/memory-diagnostics/v2/qualification.mjs'))
+    );
+    const { verifyStorageQualification } = await import(
+        pathToFileURL(path.join(ROOT, 'tools/physics/box3d/empty-world-trim/production/qualification.mjs'))
     );
     const patch = readPatchPlan();
     const lock = json(path.join(ROOT, 'tools/physics/box3d/versions.lock.json'));
@@ -177,7 +199,7 @@ async function verifySTBuild(buildDirectory, { provenanceRoot = ROOT } = {}) {
         receipt.memorySourceControls,
         verifyMemoryDiagnosticSources(ROOT, path.join(directory, 'staged-core')),
     );
-    assert.equal(INPUTS.length, 92);
+    assert.equal(INPUTS.length, 111);
     assert.deepEqual(sorted(INPUTS), sorted(COMMAND_EXPECTATIONS.gate.inputs));
     assert.deepEqual(sorted(receipt.inputHashes.map((row) => row.path)), sorted(INPUTS), 'Build input inventory drift');
     for (const input of receipt.inputHashes) {
@@ -212,6 +234,14 @@ async function verifySTBuild(buildDirectory, { provenanceRoot = ROOT } = {}) {
         receipt,
     });
     assert.deepEqual(audit.memoryQualification, memoryQualification);
+    const storageQualification = verifyStorageQualification({
+        native: json(fileInside(directory, 'native-world-storage-contract.raw.json')),
+        wasm: json(fileInside(directory, 'wasm-storage-contract.raw.json')),
+        identity,
+        fixtureSha256: sha256(read(path.join(ROOT, 'tools/physics/box3d/wasm-storage-contract.mjs'))),
+        receipt,
+    });
+    assert.deepEqual(audit.storageQualification, storageQualification);
     assert.equal(audit.auditScriptSha256, sha256(read(path.join(ROOT, 'tools/physics/box3d/audit-artifacts.mjs'))));
     assert.deepEqual(audit.sources, sources);
     assert.deepEqual(audit.artifacts, manifest.artifacts);
@@ -219,7 +249,7 @@ async function verifySTBuild(buildDirectory, { provenanceRoot = ROOT } = {}) {
     assert.equal(audit.sharedMemory, false);
     assert.equal(audit.dynamicExecutionOrWorkerConstructorFound, false);
     assert.equal(audit.compiledSourceCount, audit.compiledSourceHashes.length);
-    assert.equal(audit.compiledSourceCount, 84, 'Compile audit inventory drift');
+    assert.equal(audit.compiledSourceCount, 85, 'Compile audit inventory drift');
     assert.equal(new Set(audit.compiledSourceHashes.map((row) => row.path)).size, audit.compiledSourceCount);
     for (const name of [
         'body_control.c',
@@ -320,6 +350,9 @@ async function verifySTBuild(buildDirectory, { provenanceRoot = ROOT } = {}) {
             'wasm-command-contract.raw.json',
             'command-samples.raw.jsonl',
             'air_box3d_command_contract.cjs',
+            'native-world-storage-contract.raw.json',
+            'air_box3d_world_storage_contract.cjs',
+            'wasm-storage-contract.raw.json',
         ]),
     );
     assert.deepEqual(sorted(audit.evidence.map((row) => row.path)), sorted(COMMAND_EXPECTATIONS.gate.evidence));
@@ -620,7 +653,8 @@ async function verifySTBuild(buildDirectory, { provenanceRoot = ROOT } = {}) {
         mode: receipt.mode,
         auditSha256: sha256(read(path.join(directory, 'artifact-audit.raw.json'))),
         qualificationGateSources: [
-            'tools/physics/box3d/memory-diagnostics/v1/qualification.mjs',
+            'tools/physics/box3d/memory-diagnostics/v2/qualification.mjs',
+            'tools/physics/box3d/empty-world-trim/production/qualification.mjs',
             'box3d-command-qualification.cjs',
             'box3d-command-expectations.json',
             'box3d-query-qualification.cjs',

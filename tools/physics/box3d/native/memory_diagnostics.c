@@ -1,5 +1,5 @@
 /* Copyright (c) 2026-2027 oahc09@gmail.com. SPDX-License-Identifier: MIT */
-/* Read-only diagnostic ledger for exactly the source hashes in memory-diagnostics/v1/source-lock.json.
+/* Read-only diagnostic ledger for exactly the source hashes in memory-diagnostics/v2/source-lock.json.
  * This re-expresses the pinned b3GetWorldByteCount formula with checked arithmetic.
  * It does not describe complete allocator ownership. The original core/vendor bytes stay untouched. */
 #include "air_box3d.h"
@@ -115,7 +115,9 @@ enum {
     M_DEBUG_JOINT = 83,
     M_DEBUG_CONTACT = 84,
     M_DEBUG_ISLAND = 85,
-    M_STACK = 86
+    M_STACK = 86,
+    M_WORLDFIXED_IDENTITYHISTORY = 87,
+    M_WORLDFIXED_CREATIONCAPACITY = 88
 };
 typedef struct MemoryRow { uint64_t count, capacity, bytes; uint32_t known; } MemoryRow;
 static int add_u64(uint64_t* value, uint64_t add) {
@@ -183,7 +185,7 @@ static int output_region(uint32_t* out, int capacity) {
 #define BITS(row, b) CHECK(bit_row(&rows[row], &(b)))
 #define STORAGE(row, capacity, type, pointer) CHECK(storage_row(&rows[row], capacity, sizeof(type), pointer))
 
-int air_b3_world_memory_diagnostics_v1(uint32_t world, uint32_t* out, int capacityWords) {
+int air_b3_world_memory_diagnostics_v2(uint32_t world, uint32_t* out, int capacityWords) {
     CHECK(output_region(out, capacityWords));
     /* This helper does IsValid, then GetWorldFromId->locked without GetUnlocked's assertion. */
     CHECK(air_b3_world_unlocked(world));
@@ -377,6 +379,8 @@ int air_b3_world_memory_diagnostics_v1(uint32_t world, uint32_t* out, int capaci
     if (w->stack.capacity < 0 || w->stack.allocation < 0 || (w->stack.capacity && !w->stack.memory))
         return AIR_B3_MEMORY_INCONSISTENT;
     CHECK(add_row(&rows[M_STACK], w->stack.allocation, w->stack.capacity, w->stack.capacity, 3));
+    CHECK(add_row(&rows[M_WORLDFIXED_IDENTITYHISTORY], 1, 1, sizeof(w->identity), 3));
+    CHECK(add_row(&rows[M_WORLDFIXED_CREATIONCAPACITY], 1, 1, sizeof(w->creationCapacity), 3));
     /* Match every signed-int intermediate in the pinned core before invoking GetCounters. */
     CHECK(int_group(rows, M_ISLANDLINKS_BODIES, M_ISLANDLINKS_JOINTS));
     CHECK(int_group(rows, M_SENSOROWNED_HITS, M_SENSOROWNED_OVERLAPS2));

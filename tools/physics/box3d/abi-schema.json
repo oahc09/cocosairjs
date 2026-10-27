@@ -21,7 +21,10 @@
     "10": "BODY_MASS_PENDING",
     "11": "MOTION_LOCK_CONFLICT",
     "12": "MOTION_SPEED_CAP",
-    "13": "MEMORY_DIAGNOSTIC_INCONSISTENT"
+    "13": "MEMORY_DIAGNOSTIC_INCONSISTENT",
+    "14": "WORLD_NONEMPTY: read-only trim skip; no mutation",
+    "15": "IDENTITY_EXHAUSTED: no identity reuse; step may fault and only teardown is guaranteed",
+    "16": "TRIM_UNSAFE: empty-storage preflight refusal; no mutation"
   },
   "bodyInput": [
     "position.xyz",
@@ -683,15 +686,15 @@
     "admission": "static only; nonstatic create or SetType rejected before native mutation; sensor/contact not qualified",
     "copiedDebug": "actual cooked triangle edges; bounded debug allocation, no Hull substitution"
   },
-  "memoryDiagnosticsV1": {
-    "profile": "air-box3d-memory-diagnostics-v1",
-    "version": 1,
+  "memoryDiagnosticsV2": {
+    "profile": "air-box3d-memory-diagnostics-v2",
+    "version": 2,
     "status": "SOURCE_CANDIDATE_NO_NATIVE_EXECUTION",
-    "export": "_air_b3_world_memory_diagnostics_v1",
+    "export": "_air_b3_world_memory_diagnostics_v2",
     "headerWords": 44,
     "rowWords": 8,
-    "rowCount": 87,
-    "wireWords": 740,
+    "rowCount": 89,
+    "wireWords": 756,
     "wireHeader": [
       "version",
       "wireWords",
@@ -1444,6 +1447,22 @@
         "countMeaning": "native storage length or described field, not necessarily live entities or unconsumed events",
         "capacityUnit": "bytes",
         "capacityMeaning": "allocated capacity, not live allocation usage"
+      },
+      {
+        "id": 88,
+        "name": "worldFixed.identityHistory",
+        "countUnit": "embedded-structs",
+        "capacityUnit": "embedded-structs",
+        "countMeaning": "One fixed embedded world metadata struct; not a live entity count",
+        "capacityMeaning": "Exact sizeof embedded identityHistory metadata; 36 bytes in the qualified layout, not a separate allocator allocation"
+      },
+      {
+        "id": 89,
+        "name": "worldFixed.creationCapacity",
+        "countUnit": "embedded-structs",
+        "capacityUnit": "embedded-structs",
+        "countMeaning": "One fixed embedded world metadata struct; not a live entity count",
+        "capacityMeaning": "Exact sizeof embedded creationCapacity metadata; 20 bytes in the qualified layout, not a separate allocator allocation"
       }
     ],
     "rules": {
@@ -1472,5 +1491,15 @@
       "generic malloc observer scratch",
       "WASM memory capacity/JS heap/RSS"
     ]
+  },
+  "emptyWorldStorage": {
+    "export": "_air_b3_world_trim_empty",
+    "arguments": ["worldId:uint32", "acknowledgeRetiredEvents:0|1"],
+    "success": "Same world object and ID, step/end-buffer role/config/history preserved; ACK invalidates all borrowed native views and retires all event buffers. Capacity restored from creationCapacity; F=H. No implicit Step.",
+    "nonempty": "Status14 only: no event ACK, no mutation, no baseline claim",
+    "ownership": "Serialized ready owner, all callbacks/tasks joined, all external views retired, no bridge temporary/debug/resource ownership. Backend additionally proves resource leases and pending event/snapshot state settled.",
+    "errors": "All returned refusals preflight before mutation; unexpected host exception is unknown and faults backend. Allocation failure is process-fatal, not a recoverable rollback.",
+    "identity": "Four-family same-world high/floor with checked exhaustion. Not cross-world raw ID ABA protection.",
+    "baseline": "Current implementation initial world ledger includes fixed identityHistory and creationCapacity metadata. Never substitute historical36040 or rewrite acceptance."
   }
 }

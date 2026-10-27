@@ -349,6 +349,8 @@ export interface Box3DFoundation {
         origin: ArrayLike<number>,
         translation: ArrayLike<number>,
     ): { data: Float32Array; shape: Box3DId | null };
+    /** Explicit event/view ACK; false only for unchanged nonempty worlds. */
+    trimEmptyWorld(world: Box3DWorld, acknowledgeRetiredEvents: boolean): boolean;
     memoryDiagnostics(world: Box3DWorld): Readonly<Box3DMemoryDiagnostics>;
     worldCounts(world: Box3DWorld): { counts: Uint32Array; liveBytes: bigint };
     liveBytes(): bigint;
@@ -712,8 +714,8 @@ export interface Box3DMemoryBridge {
     readonly capturedPrimitives: number;
 }
 export interface Box3DMemoryDiagnostics {
-    readonly profile: 'air-box3d-memory-diagnostics-v1';
-    readonly schemaVersion: 1;
+    readonly profile: 'air-box3d-memory-diagnostics-v2';
+    readonly schemaVersion: 2;
     readonly identity: Readonly<
         Box3DIdentity & {
             worldId: number;

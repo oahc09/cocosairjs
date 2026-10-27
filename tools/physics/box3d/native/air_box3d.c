@@ -57,8 +57,9 @@ int air_b3_world_step(uint32_t world, float dt, int substeps)
     if (!air_b3_world_valid(world)) return AIR_B3_INVALID;
     if (!isfinite(dt) || dt <= 0 || substeps < 1) return AIR_B3_ARGUMENT;
     int locked = air_b3_world_unlocked(world); if (locked) return locked;
+    if (b3World_HasIdentityFault(b3LoadWorldId(world))) return AIR_B3_IDENTITY_EXHAUSTED;
     b3World_Step(b3LoadWorldId(world), dt, substeps);
-    return AIR_B3_OK;
+    return b3World_HasIdentityFault(b3LoadWorldId(world)) ? AIR_B3_IDENTITY_EXHAUSTED : AIR_B3_OK;
 }
 int air_b3_world_counts(uint32_t world, uint32_t* out)
 {

@@ -213,7 +213,26 @@
       "tools/physics/box3d/wasm-memory-contract.mjs",
       "tools/physics/box3d/memory-diagnostics/v1/qualification.mjs",
       "tools/build/box3d-command-expectations.json",
-      "tools/build/box3d-command-qualification.cjs"
+      "tools/build/box3d-command-qualification.cjs",
+      "tools/physics/box3d/patches/same-world-identity-v1.candidate.patch",
+      "tools/physics/box3d/patches/same-world-empty-storage-v1.candidate.patch",
+      "tools/physics/box3d/memory-diagnostics/v2/schema.json",
+      "tools/physics/box3d/memory-diagnostics/v2/source-lock.json",
+      "tools/physics/box3d/memory-diagnostics/v2/source-gate.mjs",
+      "tools/physics/box3d/memory-diagnostics/v2/contract.test.mjs",
+      "tools/physics/box3d/memory-diagnostics/v2/README.md",
+      "tools/physics/box3d/memory-diagnostics/v2/qualification.mjs",
+      "tools/physics/box3d/native/world_storage_contract.c",
+      "tools/physics/box3d/wasm-storage-contract.mjs",
+      "tools/physics/box3d/empty-world-trim/production/contract.test.mjs",
+      "tools/physics/box3d/empty-world-trim/production/qualification.mjs",
+      "src/air/app.ts",
+      "src/air/physics/preparation.ts",
+      "src/air/physics/box3d/world-command-owner.ts",
+      "src/air/physics/box3d/world-binding.ts",
+      "src/air/session-scope.ts",
+      "tools/verify/box3d/empty-world-release.test.mjs",
+      "tools/build/box3d-hull-qualification.cjs"
     ],
     "compileUnits": [
       "staged-core/src/aabb.c",
@@ -299,7 +318,8 @@
       "tools/physics/box3d/native/mesh_bridge.c",
       "tools/physics/box3d/native/mesh_contract.c",
       "tools/physics/box3d/native/memory_diagnostics.c",
-      "tools/physics/box3d/native/memory_contract.c"
+      "tools/physics/box3d/native/memory_contract.c",
+      "tools/physics/box3d/native/world_storage_contract.c"
     ],
     "evidence": [
       "build-receipt.json",
@@ -356,9 +376,12 @@
       "wasm-mesh-contract.raw.json",
       "native-memory-contract.raw.json",
       "air_box3d_memory_contract.cjs",
-      "wasm-memory-contract.raw.json"
+      "wasm-memory-contract.raw.json",
+      "native-world-storage-contract.raw.json",
+      "air_box3d_world_storage_contract.cjs",
+      "wasm-storage-contract.raw.json"
     ],
-    "commands": 37
+    "commands": 41
   },
   "queryExtension": {
     "status": "ADDITIVE_SOURCE_GENERATION_NOT_FORMAL_ACCEPTANCE",
@@ -470,5 +493,51 @@
     "formalC20": "ORIGINAL_FAIL_UNCHANGED",
     "afterClose": "UNAVAILABLE",
     "evidence": ["native-memory-contract.raw.json", "air_box3d_memory_contract.cjs", "wasm-memory-contract.raw.json"]
+  },
+  "storageExtension": {
+    "status": "ADDITIVE_PRODUCTION_SOURCE_NOT_RUNTIME_QUALIFIED",
+    "inputs": [
+      "tools/physics/box3d/patches/same-world-identity-v1.candidate.patch",
+      "tools/physics/box3d/patches/same-world-empty-storage-v1.candidate.patch",
+      "tools/physics/box3d/memory-diagnostics/v2/schema.json",
+      "tools/physics/box3d/memory-diagnostics/v2/source-lock.json",
+      "tools/physics/box3d/memory-diagnostics/v2/source-gate.mjs",
+      "tools/physics/box3d/memory-diagnostics/v2/contract.test.mjs",
+      "tools/physics/box3d/memory-diagnostics/v2/README.md",
+      "tools/physics/box3d/memory-diagnostics/v2/qualification.mjs",
+      "tools/physics/box3d/native/world_storage_contract.c",
+      "tools/physics/box3d/wasm-storage-contract.mjs",
+      "tools/physics/box3d/empty-world-trim/production/contract.test.mjs",
+      "tools/physics/box3d/empty-world-trim/production/qualification.mjs",
+      "src/air/app.ts",
+      "src/air/physics/preparation.ts",
+      "src/air/physics/box3d/world-command-owner.ts",
+      "src/air/physics/box3d/world-binding.ts",
+      "src/air/session-scope.ts",
+      "tools/verify/box3d/empty-world-release.test.mjs",
+      "tools/build/box3d-hull-qualification.cjs"
+    ],
+    "compileUnits": ["tools/physics/box3d/native/world_storage_contract.c"],
+    "evidence": [
+      "native-world-storage-contract.raw.json",
+      "air_box3d_world_storage_contract.cjs",
+      "wasm-storage-contract.raw.json"
+    ],
+    "commands": [
+      "empty-world-trim/production/contract.test.mjs",
+      "tools/verify/box3d/empty-world-release.test.mjs",
+      "air_box3d_world_storage_contract.cjs",
+      "wasm-storage-contract.mjs"
+    ],
+    "memorySchemaVersion": 2,
+    "memoryRows": 89,
+    "memoryWords": 756,
+    "formalC20": "NOT_QUALIFIED",
+    "formal2128": "NOT_RUN",
+    "nineGates": "NOT_RUN",
+    "replacesMemoryCommandPaths": {
+      "memory-diagnostics/v1/source-gate.mjs": "memory-diagnostics/v2/source-gate.mjs",
+      "memory-diagnostics/v1/contract.test.mjs": "memory-diagnostics/v2/contract.test.mjs"
+    }
   }
 }
