@@ -1,12 +1,14 @@
 # Box3D closure status
 
-Updated: 2026-10-27 12:04 UTC. Branch: `feat/box3d-rebuild-20261022`.
+Updated: 2026-10-27 12:17 UTC. Branch: `feat/box3d-rebuild-20261022`.
 
 ## Current outcome
 
+- Latest build: **SDK233 VERIFIED_LIMITED** on `3f7cf0fdc0148c3829f5e1c854d667ec2417e0fc`: fresh43/120/85/60 ST with18 native oracle samples, bare full28-feature ESM232→233 and fresh DTS7/7; final25files/43789105B. This builds the deferred-observation fixture correction without changing native schema or production dispatch guards. Public attempt3 requires a separate result and is not pre-judged by this build; previous SDK232 public overall FAIL is preserved. See [SDK233 report](reports/sdk233-deferred-observation-build-and-declarations-20261027.md).
+
 - Latest public Sphere–Capsule attempt2 on SDK232: **overall FAIL; first3 cases validator-PASS, fourth unqualified**. 25 completed public frames/31 callbacks. At step24 the destroy-peer case captured `destroyedPeerInvalid=false` and native2 bodies/1 shape; step25 native snapshot is1 body/1 shape, but Node validity was not resampled. The first failure is validateCase:128 checking the saved immediate boolean, not proof that the next-frame Node state passed. All4 scene releases restored zero live counts/ledger36096; normal app close/module/world cleanup released, fallback0, exit1 with ECHILD and3012 protected records0drift. Attempt1 FAIL remains unchanged. See [SDK232 public attempt2 failure](reports/sphere-capsule-public-sdk232-attempt2-20261027.md).
 
-- Latest build: **SDK232 VERIFIED_LIMITED** on `fe69c0e366f663ba4aeae7be390eb3065b7805c5`: fresh43/120/85/60 ST with18 native oracle samples, bare full28-feature ESM231→232 and fresh DTS7/7; final25files/43789105B. This builds the supported-velocity fixture correction without changing production transform guards or native schema. The separate public attempt2 is not qualified by this build report; previous SDK231 public FAIL remains unchanged. See [SDK232 report](reports/sdk232-velocity-fixture-build-and-declarations-20261027.md).
+- Previous build: **SDK232 VERIFIED_LIMITED** on `fe69c0e366f663ba4aeae7be390eb3065b7805c5`: fresh43/120/85/60 ST with18 native oracle samples, bare full28-feature ESM231→232 and fresh DTS7/7; final25files/43789105B. This builds the supported-velocity fixture correction without changing production transform guards or native schema. The separate public attempt2 is not qualified by this build report; previous SDK231 public FAIL remains unchanged. See [SDK232 report](reports/sdk232-velocity-fixture-build-and-declarations-20261027.md).
 
 - Earlier public Sphere–Capsule attempt1 on SDK231: **FAIL, 0/4 cases qualified**. One public frame completed (2 native bodies / 2 shapes / 0 contacts); the second attempted tick was refused by `AIR_E_BOX3D_CONFIG` for unsupported external Node pose/parent/scale synchronization. Raw `totalSteps=2` is an attempt counter, not two completed physics steps. Zero callbacks; normal fixture close released/RESTORED with module/world cleanup released, no fallback close. Main exited1 with full ECHILD closure; 3009 protected inputs had0drift. Native18-case and SDK231 build PASS do not substitute for this public failure. See [public attempt1 failure](reports/sphere-capsule-public-sdk231-attempt1-20261027.md).
 
@@ -58,4 +60,3 @@ Record implementation and validation separately: SOURCE_ONLY, VERIFIED_LIMITED, 
 For each next run record source/runtime/fixture identities, command, limits, stdout/stderr, exit and process-tree closure, before/after input hashes and artifact hashes. Use a new attempt directory; never overwrite a failed one. Keep code and tests in Git promptly, and store large artifacts only at an authorized persistent destination.
 
 The Chinese handoff is an immutable time-of-handoff explanation; use this status and subsequent verified commits to identify later changes. The full task contract remains authoritative; this status does not reduce scope.
-
