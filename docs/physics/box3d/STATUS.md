@@ -1,12 +1,14 @@
 # Box3D closure status
 
-Updated: 2026-10-27 11:59 UTC. Branch: `feat/box3d-rebuild-20261022`.
+Updated: 2026-10-27 12:04 UTC. Branch: `feat/box3d-rebuild-20261022`.
 
 ## Current outcome
 
+- Latest public Sphere–Capsule attempt2 on SDK232: **overall FAIL; first3 cases validator-PASS, fourth unqualified**. 25 completed public frames/31 callbacks. At step24 the destroy-peer case captured `destroyedPeerInvalid=false` and native2 bodies/1 shape; step25 native snapshot is1 body/1 shape, but Node validity was not resampled. The first failure is validateCase:128 checking the saved immediate boolean, not proof that the next-frame Node state passed. All4 scene releases restored zero live counts/ledger36096; normal app close/module/world cleanup released, fallback0, exit1 with ECHILD and3012 protected records0drift. Attempt1 FAIL remains unchanged. See [SDK232 public attempt2 failure](reports/sphere-capsule-public-sdk232-attempt2-20261027.md).
+
 - Latest build: **SDK232 VERIFIED_LIMITED** on `fe69c0e366f663ba4aeae7be390eb3065b7805c5`: fresh43/120/85/60 ST with18 native oracle samples, bare full28-feature ESM231→232 and fresh DTS7/7; final25files/43789105B. This builds the supported-velocity fixture correction without changing production transform guards or native schema. The separate public attempt2 is not qualified by this build report; previous SDK231 public FAIL remains unchanged. See [SDK232 report](reports/sdk232-velocity-fixture-build-and-declarations-20261027.md).
 
-- Latest public Sphere–Capsule attempt on SDK231: **FAIL, 0/4 cases qualified**. One public frame completed (2 native bodies / 2 shapes / 0 contacts); the second attempted tick was refused by `AIR_E_BOX3D_CONFIG` for unsupported external Node pose/parent/scale synchronization. Raw `totalSteps=2` is an attempt counter, not two completed physics steps. Zero callbacks; normal fixture close released/RESTORED with module/world cleanup released, no fallback close. Main exited1 with full ECHILD closure; 3009 protected inputs had0drift. Native18-case and SDK231 build PASS do not substitute for this public failure. See [public attempt1 failure](reports/sphere-capsule-public-sdk231-attempt1-20261027.md).
+- Earlier public Sphere–Capsule attempt1 on SDK231: **FAIL, 0/4 cases qualified**. One public frame completed (2 native bodies / 2 shapes / 0 contacts); the second attempted tick was refused by `AIR_E_BOX3D_CONFIG` for unsupported external Node pose/parent/scale synchronization. Raw `totalSteps=2` is an attempt counter, not two completed physics steps. Zero callbacks; normal fixture close released/RESTORED with module/world cleanup released, no fallback close. Main exited1 with full ECHILD closure; 3009 protected inputs had0drift. Native18-case and SDK231 build PASS do not substitute for this public failure. See [public attempt1 failure](reports/sphere-capsule-public-sdk231-attempt1-20261027.md).
 
 - Previous build: **SDK231 VERIFIED_LIMITED** on `f7f780bba52d97cb4c6b7c396fb159758dc698f1`: fresh ST43/120/85/60 with18 Sphere–Capsule native oracle samples, full28-feature ESM230→231 and fresh DTS7/7; final25files/43798060B. First ST attempt remains FAIL due to the consumer evidence-list omission; a committed two-file fix preceded fresh ST2 PASS. This does not qualify public Sphere–Capsule events/full T15/C21 or extend the separate APP230 result. See [SDK231 report](reports/sdk231-sphere-capsule-build-and-declarations-20261027.md).
 
@@ -38,6 +40,8 @@ Production source now includes the five-patch core, explicit identity/creation-c
 
 ## Next actions, in order
 
+- Preserve public attempt2 overall FAIL and its three genuinely passed cases. Review the destroy-peer observation timing against the original contract; no next-frame Node-validity inference, skipped assertion, raw rewrite or already-fixed claim. Keep the independently qualified SDK232 build/native evidence and APP230 milestone separate.
+
 - Preserve SDK231 public attempt1 FAIL and its complete retained evidence. Investigate the fixture's external Node transform use against the supported writeback contract; no bypass, automatic retry or already-fixed claim. Any changed fixture/source needs separate reviewed identity and fresh authorized evidence. Keep SDK231 native/build qualification and APP230100-cycle milestone separate.
 
 1. Verify the current checkout and preserve local changes. Establish one writer before local implementation begins; cloud and local must not write the same module concurrently.
@@ -54,3 +58,4 @@ Record implementation and validation separately: SOURCE_ONLY, VERIFIED_LIMITED, 
 For each next run record source/runtime/fixture identities, command, limits, stdout/stderr, exit and process-tree closure, before/after input hashes and artifact hashes. Use a new attempt directory; never overwrite a failed one. Keep code and tests in Git promptly, and store large artifacts only at an authorized persistent destination.
 
 The Chinese handoff is an immutable time-of-handoff explanation; use this status and subsequent verified commits to identify later changes. The full task contract remains authoritative; this status does not reduce scope.
+
