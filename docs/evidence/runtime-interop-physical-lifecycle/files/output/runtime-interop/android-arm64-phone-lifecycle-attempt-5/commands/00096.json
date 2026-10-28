@@ -1,0 +1,14 @@
+{
+  "arguments": [
+    "-s",
+    "10CG4G0BE1003M8",
+    "exec-out",
+    "uiautomator",
+    "dump",
+    "/dev/tty"
+  ],
+  "startedAt": "2026-10-28T13:48:54.933Z",
+  "timeoutMs": 14421,
+  "exitCode": 0,
+  "finishedAt": "2026-10-28T13:48:57.554Z"
+}

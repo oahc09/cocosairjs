@@ -346,3 +346,21 @@ phone 184个计数快照、180连续periodic、最大间隔5014ms；native328067
 Cocos AIR本提交包含隔离构建工具、生命周期/资源/手机前台采集与审计、独立Windows API probe、两轮累计宿主源码补丁、计划台账和说明。docs/evidence/runtime-interop-lifecycle-memory按原路径映射保留7791份原始记录，共98010189字节，包含失败、PARTIAL、未构建候选、stdout/stderr、PNG/ICC、trace及实际producer；原时间、状态、路径与fingerprint均不改。单文件最大1417845字节。APK/SO/EXE、符号库/MAP、SDK/依赖、AVD、完整apply clone和编译缓存不入Git，其来源/身份仍保留于原收据，完整重放须准备对应物化输入。
 
 交付检查为工具CPU回归7/7、范围内源码/文档格式与whitespace、完整原始档案逐SHA检查及暂存blob字节核对；Git交付没有重新执行或扩大运行验收。SDK216、SDL3.2.30、c++_static、已验收116项宿主源码和运行边界保持。当前功能分支不合并main、不改版本、不发布；手机完整生命周期、实际ARM64 16KB、长期/性能/全资源无泄漏仍未认证。
+
+## ARM64 真机同 Activity 生命周期闭合（2026-10-28）
+
+用户要求继续真机任务。实际ADB识别同一10CG4G0BE1003M8、V2520A/API37/ARM64/4096页、native bridge0；宿主HEAD仍b3786ab6、工作区干净、116文件与已验收构建map逐SHA一致。直接使用既有ARM64 c6d833... APK，SDK216、SDL3.2.30、c++_static/V8 embedded均不改，不重建或安装。旧Life12c/foreground9341/memory680和原audit保持冻结，新增phone-lifecycle入口及独立ICC/audit。
+
+新scope为physical-short-same-activity-surface-lifecycle，仅initial/HOME/Settings真实Surface毁建/用户正常解锁四阶段。启动先检查Awake且所有已识别keyguard字段false，后台明确从实际dumpsys确认本Activity STOPPED，再NEW_TASK/reorder/single-top将原任务带回前台；每次恢复保留原15秒总预算，先原色自动系统呈现再trusted tap/AIR实际draw。锁屏要求真实Asleep+showing+pause，只发sleep/wakeup，180秒人工等待逐条记录；解锁系统状态首次明确false后开始原15秒恢复预算，不输入凭据、不自动dismiss、不改安全/超时/权限或旋转设置。
+
+五次尝试原样保留。attempt1初始orientation1→2→1使PC metadata坐标与真实1440×3168系统图不fit而FAIL，正常native退出；attempt2恢复deadline为小数导致Node timeout拒绝，尚未执行恢复命令。attempt3/4在HOME转场未STOPPED时请求恢复，命令返回delivery但无resume，15秒真实失败；暂停状态退出请求同样超时，强停只能算失败后的专用进程清理。新attempt5明确确认STOPPED后通过，未修补宿主或放宽原渲染/恢复门槛，不把早期失败当宿主崩溃或正常退出。
+
+正式android-arm64-phone-lifecycle-attempt-5/report.json SHA5e1ea2d295edc6f08abcaf894bf761488ac599d6b076605fd98af07220617798，collector e5793d09ee154a08aba30688dd70f56643a8b68c671d06b1d730b3f36117f546，PASS/completed/physicalAcceptance/inputsUnchanged=true。PID314、唯一created/NATIVE_READY/SURFACE_INITIAL，server token/origin和Dawn device0xb400006fb42bd680/owner474228690752保持。退出前created generations1/3/5/7、destroyed2/4/6；Settings明确gen4毁→gen5建。AIRdraw207→791→1335→1915、四trusted输入，自动绿/橙/绿系统图均早于恢复触摸。三恢复8123.713/8083.296/8558.807ms；6次真实manual观测4159.720ms、showing/inputRestricted true→false。
+
+9个原生快照、27片原PART独立组装，18类及总守恒，12752 acquire=release/live0，CanvasTexture2033配对/peak1、CanvasView2032配对/边界0，wrapper138不强制归零。正常nativeExit0、九拆卸标记+SDL返回372ms，Context/ANW最终0；NATIVE_FINISHED之后297ms才force-stop专用包并确认PIDgone。logcat真实close5.34ms，GPU/V8/fatal空，未把强停当析构。三张恢复原色裁图另经实际目视复核。
+
+独立phone-lifecycle-audit原producer ea1e26a83944f9194ad8a434417d79d739d2c5e38038c99a03e9da97fed0ff2b，21项/594hash全通过，报告SHAab2bc26a20e3d7dc3510bf016c7b4b762ff3edf3a270514cce3d1491070577e6。9张P3原全屏各自以独立LittleCMS relative/flags0重放，整屏RGBA/alpha/原始与解释裁图逐像素一致；replay报告SHAef2f4bf4368c2b5d5c1ce6d670a7977f1b8af99b37995b61980b9f2acbd92ea4，两个实际producer副本另按执行SHA保留。原工具CPU7/7、聚焦参数/keyguard检查、JS语法/格式/Python AST和文档diff通过。
+
+docs/evidence/runtime-interop-physical-lifecycle按原路径映射保存五次采集、stdout/stderr和审计全部1129文件/28456008字节，原FAIL、时间、原图及fingerprint不改；archive全量字节检查通过。新的physical-arm64-lifecycle-acceptance.json单独绑定范围，不改此前4KB前台或模拟器历史记录。此次完成一台4KB真机短sameActivity生命周期，不包含新连续运行、Activity重建/进程回收、后台直接退出、device-loss/OOM、实际ARM64 16KB、长期/功耗/性能或全部分配无泄漏认证。Native/APK/SDK/版本未改；新工具/证据/文档未暂存、提交、push或发布。
+
+用户随后授权“提交git并push”。本提交以c06121e8为base，在feat/webgpu-runtime-interop交付上述真机工具、验收清单、完整原始档案和说明；提交前fetch确认当前功能分支0/0、按精确清单暂存并核对blob字节。原验收JSON未提交标记保留生成时状态，不为Git交付改写证据。MystralNative无新增变化，当前b3786ab6与oahc09/feat/cocosair-webgpu-interop实际远端SHA一致、工作区干净；不创建空提交，不合并或发布。

@@ -1,0 +1,69 @@
+{
+  "session": {
+    "schema": "air-android-interop-session-v1",
+    "runId": "android-phone-lifecycle-1793195068990",
+    "caseId": "demo",
+    "pid": 31066,
+    "demo": true,
+    "v8StartupMode": "embedded",
+    "v8Version": "11.6.189.22",
+    "origin": "http://127.0.0.1:45465",
+    "token": "c7c34f18-b8db-4ae5-934c-312cadaf1462",
+    "entryUrl": "http://127.0.0.1:45465/entry.js",
+    "bundleUrl": "http://127.0.0.1:45465/sdk/cocosair.module.js",
+    "assetBaseUrl": "http://127.0.0.1:45465/sdk/webgpu/",
+    "assetRootUrl": "http://127.0.0.1:45465/assets/",
+    "moduleUrl": "http://127.0.0.1:45465/probes/module-fixture.mjs",
+    "captureUrl": "http://127.0.0.1:45465/capture",
+    "reportUrl": "http://127.0.0.1:45465/report",
+    "eventUrl": "http://127.0.0.1:45465/event"
+  },
+  "runtime": {
+    "loadedABI": "arm64-v8a",
+    "v8StartupMode": "embedded",
+    "v8Version": "11.6.189.22",
+    "entryPath": "/data/user/0/com.mystral.engine.interop/files/interop/android-phone-lifecycle-1793195068990/native-entry.mjs",
+    "entrySha256": "01ee283d41f340f0b85fe0da74d58694b5125c36d82fa142a9382ade89cd3a68",
+    "jsEngine": "v8",
+    "backend": "dawn",
+    "nativeStarted": true
+  },
+  "captures": [
+    {
+      "captureId": "ea16cbab-1061-40b2-9c49-015105821399",
+      "kind": "scene-demo",
+      "phase": "before",
+      "deadlineElapsedRealtime": 236819189,
+      "expired": false,
+      "metadata": {
+        "channel": "android-pixelcopy",
+        "pid": 31066,
+        "file": "scene-demo-before.png",
+        "width": 320,
+        "height": 240,
+        "bitmapWidth": 320,
+        "bitmapHeight": 240,
+        "surfaceWidth": 320,
+        "surfaceHeight": 240,
+        "viewWidth": 320,
+        "viewHeight": 240,
+        "surfaceGeneration": 1,
+        "resultCode": 0,
+        "bounds": {
+          "x": 560,
+          "y": 1464,
+          "width": 320,
+          "height": 240
+        },
+        "sha256": "5045c37452682949c1ab5712f9d6692765102647397c40b5d00c8d3b51218a7f",
+        "captureId": "ea16cbab-1061-40b2-9c49-015105821399",
+        "kind": "scene-demo",
+        "phase": "before",
+        "runId": "android-phone-lifecycle-1793195068990"
+      },
+      "acknowledged": true
+    }
+  ],
+  "reportSaved": true,
+  "nativeFinished": false
+}

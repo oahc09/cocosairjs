@@ -1,0 +1,13 @@
+{
+  "arguments": [
+    "-s",
+    "10CG4G0BE1003M8",
+    "shell",
+    "getprop",
+    "ro.kernel.qemu"
+  ],
+  "startedAt": "2026-10-28T13:46:36.465Z",
+  "timeoutMs": 15000,
+  "exitCode": 0,
+  "finishedAt": "2026-10-28T13:46:36.588Z"
+}

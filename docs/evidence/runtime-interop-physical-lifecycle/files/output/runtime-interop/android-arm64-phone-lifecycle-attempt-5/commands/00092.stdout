@@ -1,0 +1,8 @@
+Starting: Intent { flg=0x30020000 cmp=com.mystral.engine.interop/com.mystral.engine.MystralActivity }
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+Status: ok
+LaunchState: UNKNOWN (0)
+Activity: com.mystral.engine.interop/com.mystral.engine.MystralActivity
+TotalTime: 0
+WaitTime: 4
+Complete

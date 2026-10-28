@@ -1,0 +1,20 @@
+{
+  "arguments": [
+    "-s",
+    "10CG4G0BE1003M8",
+    "shell",
+    "am",
+    "start",
+    "-W",
+    "-n",
+    "com.mystral.engine.interop/com.mystral.engine.MystralActivity",
+    "-f",
+    "0x10000000",
+    "--activity-reorder-to-front",
+    "--activity-single-top"
+  ],
+  "startedAt": "2026-10-28T13:46:48.309Z",
+  "timeoutMs": 14999,
+  "exitCode": 0,
+  "finishedAt": "2026-10-28T13:46:48.417Z"
+}

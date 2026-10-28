@@ -1,0 +1,19 @@
+{
+  "schema": "air-phone-lifecycle-audit-producer-archives-v1",
+  "auditReportSha256": "ab2bc26a20e3d7dc3510bf016c7b4b762ff3edf3a270514cce3d1491070577e6",
+  "iccReportSha256": "ef2f4bf4368c2b5d5c1ce6d670a7977f1b8af99b37995b61980b9f2acbd92ea4",
+  "archives": [
+    {
+      "file": "output/runtime-interop/android-arm64-phone-lifecycle-audit-1/audit-source.cjs",
+      "original": "tools/verify/runtime-interop-android-phone-lifecycle-audit.cjs",
+      "sha256": "ea1e26a83944f9194ad8a434417d79d739d2c5e38038c99a03e9da97fed0ff2b",
+      "bytes": 49554
+    },
+    {
+      "file": "output/runtime-interop/android-arm64-phone-lifecycle-audit-1/icc-replay/replay-source.py",
+      "original": "tools/verify/runtime-interop-android-phone-lifecycle-icc-replay.py",
+      "sha256": "13277699b959c4df0ef50f753dae054368ded99683512caef4f80e13fb43c173",
+      "bytes": 10151
+    }
+  ]
+}

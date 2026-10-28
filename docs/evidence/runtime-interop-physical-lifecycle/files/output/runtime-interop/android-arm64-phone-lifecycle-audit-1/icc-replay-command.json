@@ -1,0 +1,16 @@
+{
+  "executable": "C:/Users/caosh/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe",
+  "arguments": [
+    "C:\\Users\\caosh\\.codex\\worktrees\\webgpu-runtime-interop\\cocosair.js\\tools\\verify\\runtime-interop-android-phone-lifecycle-icc-replay.py",
+    "--plan",
+    "C:\\Users\\caosh\\.codex\\worktrees\\webgpu-runtime-interop\\cocosair.js\\output\\runtime-interop\\android-arm64-phone-lifecycle-audit-1\\icc-plan.json",
+    "--out",
+    "C:\\Users\\caosh\\.codex\\worktrees\\webgpu-runtime-interop\\cocosair.js\\output\\runtime-interop\\android-arm64-phone-lifecycle-audit-1\\icc-replay"
+  ],
+  "startedAt": "2026-10-28T13:54:14.503Z",
+  "finishedAt": "2026-10-28T13:54:16.545Z",
+  "timeoutMs": 60000,
+  "exitCode": 0,
+  "signal": null,
+  "error": null
+}

@@ -1,0 +1,19 @@
+{
+  "schema": "air-android-interop-session-v1",
+  "runId": "android-phone-lifecycle-1793195068990",
+  "caseId": "demo",
+  "pid": 31066,
+  "demo": true,
+  "v8StartupMode": "embedded",
+  "v8Version": "11.6.189.22",
+  "origin": "http://127.0.0.1:45465",
+  "token": "c7c34f18-b8db-4ae5-934c-312cadaf1462",
+  "entryUrl": "http://127.0.0.1:45465/entry.js",
+  "bundleUrl": "http://127.0.0.1:45465/sdk/cocosair.module.js",
+  "assetBaseUrl": "http://127.0.0.1:45465/sdk/webgpu/",
+  "assetRootUrl": "http://127.0.0.1:45465/assets/",
+  "moduleUrl": "http://127.0.0.1:45465/probes/module-fixture.mjs",
+  "captureUrl": "http://127.0.0.1:45465/capture",
+  "reportUrl": "http://127.0.0.1:45465/report",
+  "eventUrl": "http://127.0.0.1:45465/event"
+}

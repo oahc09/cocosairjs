@@ -18,6 +18,10 @@ Android 累计宿主修复、binary wrapper 和固定依赖回执见 [独立补�
 
 `node tools/verify/runtime-interop-android-phone-memory.cjs --serial=<physical-device> --apk=<installed-arm64.apk> --python=<python> --expected-page-size=<actual-bytes> --soak-seconds=900 --out=<new-directory>` 采集首份真机前台资源/内存基线：10 秒可信触摸、计划 30 秒系统图像、计划 300 秒 meminfo，沿用真实原生计数、退出及日志关闭门槛。它不安装或自动解锁手机、不改安全或超时设置；必须先正常解锁，不能在锁屏背后计启动成功。phone schema 明确为 foreground-only，不套用模拟器 PSS 比较，也不冒充完整 HOME/Settings/安全锁屏生命周期通过。
 
+`node tools/verify/runtime-interop-android-phone-lifecycle.cjs --serial=<physical-device> --apk=<installed-arm64.apk> --python=<python> --expected-page-size=4096 --out=<new-directory>` 独立验证真机初始画面、HOME、Settings/真实 Surface 毁建和锁屏恢复，写新目录，不安装或重建 APK。后台须实际 STOPPED 后才将原任务切回前台；先验证自动恢复原画面，再发可信触摸。锁屏只发 sleep/wakeup，用户正常解锁，默认 180 秒人机等待与解锁观测起点后的原 15 秒恢复预算分开，不自动 dismiss、不输入凭据或改设置。四阶段 PASS 仅认证同 Activity 短会话，不包含连续运行。
+
+`node tools/verify/runtime-interop-android-phone-lifecycle-audit.cjs --report=<closed-report.json> --out=<new-directory>` 不连接设备，独立复核上述原始命令、时序、画面与资源退出，并调用 `runtime-interop-android-phone-lifecycle-icc-replay.py` 在新审计目录进行全屏 RGBA/ICC 独立重放；保留原图、profile、裁图及重放结果，不修改采集记录或阈值。需要报告绑定的 Python/Pillow/LittleCMS 和可解析的 JSZip/pngjs。
+
 `node tools/verify/runtime-interop-archive.cjs --inputs=<exact-inventory.json> --out=<new-directory>` 按精确清单逐字节归档原始验收记录，拒绝已有输出或源哈希变化；`--check=<archive-directory>` 只读核对完整清单、字节和 producer 身份，不执行 GPU 或设备测试。本轮 [生命周期与内存原始档案](../docs/evidence/runtime-interop-lifecycle-memory/README.md) 保留 7,791 份原件，包括失败尝试；构建二进制与缓存的排除范围见该说明。
 
 `node tools/verify/runtime-interop.cjs --host=browser --out=<new-directory>` 验证 Canvas/DOM、模块与资产、真实 Shader WASM、GPU 提交与独立截图、错误与设备生命周期，并运行同一 Bundle 的 AIR 立方体。需要可解析的 Playwright 与现有 Chrome/Edge；可用 `--bundle=<current-bundle.js>` 指定新构建。`--host=mystral --executable=<existing-file>` 运行同一探针的原生诊断，保留原始 stdout/stderr 和进程回执。Shader 失败不再屏蔽独立 GPU 接口诊断。

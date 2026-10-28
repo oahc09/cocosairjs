@@ -290,3 +290,23 @@ node tools/verify/runtime-interop-archive.cjs --check=docs/evidence/runtime-inte
 ```
 
 上述命令只核对记录字节、清单及 producer，不连接设备或执行 GPU 验收。本次 Git 交付另通过 7 项工具 CPU 回归及范围内格式/差异检查，不重采运行证据、不改变 SDK216 或已验收源码，也不将现有专项扩大为全平台、长期无泄漏或发布认证。
+
+## ARM64 真机短会话生命周期（2026-10-28）
+
+最新已安装 ARM64 APK `c6d833...` 在同一 vivo V2520A / API37 / 实际 4 KB 页手机完成四阶段专项：初始双路画面与可信输入、HOME 后恢复、Settings 引起的真实 Surface 销毁重建、锁屏后由用户正常解锁恢复。宿主仍是 `b3786ab6`，116 份源码、SDK216、SDL3.2.30 和 `c++_static` 均保持原字节，没有重建 APK。
+
+真机入口为 `tools/verify/runtime-interop-android-phone-lifecycle.cjs`。它独立于冻结的模拟器 900 秒工具：启动前要求 Awake/keyguard 明确解锁；后台切出确认实际 STOPPED，再以 `NEW_TASK`/reorder/single-top 恢复原任务，仍要求唯一 Activity、相同 PID/runId/token。每次恢复在原 15 秒内先由独立系统截图验证旧颜色自动呈现，再以真实触摸证明颜色变化及 AIR draw 增长。
+
+锁屏阶段保留真实 Asleep、keyguard showing 和 pause；只自动发送 sleep/wakeup，不 dismiss keyguard、不输入凭据、不改锁屏策略或系统超时。默认 180 秒仅供用户正常解锁，逐次保存原始 power/policy。原 15 秒恢复预算从首次实际观测 Awake 且 keyguard 明确解锁开始，覆盖任务回前台、自动呈现和首次可信触摸，不能把等待时间混入性能数据。
+
+正式 `android-arm64-phone-lifecycle-attempt-5` 四阶段 PASS，原 PID314、Activity 仅创建一次。HOME、Settings、解锁后的恢复检查分别为 8123.7、8083.3、8558.8 ms；Settings 真实 generation4 destroyed→generation5 created。原始 P3 系统图、ICC 和原坐标裁图保留，自动呈现的绿/橙/绿画面均在首次恢复触摸前出现。用户正常解锁的独立等待为 4159.7 ms。
+
+9 个原生资源快照内，12,752 个受管 API 引用全部 acquire/release 配对，最终 live=0，Canvas texture peak=1；CPU wrapper 最后仍为138，不能据此声明全部分配归零。原 native exit0、九个拆卸标记和 SDL 返回在 372 ms 内观察到，Context/ANW refs=0；之后才清理专用进程，logcat 原两秒预算内物理关闭。
+
+失败尝试全部保留：attempt1 在初始截图期间出现 orientation1→2→1，元数据坐标与1440×3168系统图不匹配；attempt2 的采集器恢复期限生成小数 timeout，尚未调用恢复；attempt3/4 在 HOME 过渡时发起任务恢复，原指令返回交付但没有实际 resume，随后退出请求在暂停状态超时。新 attempt5 明确等待 STOPPED 后正常通过。不能把失败尝试的强停清理算作正常退出，也不在本次 PASS 中宣称后台直接退出合同。
+
+这份新 schema 为 `physical-short-same-activity-surface-lifecycle`，不包含新的连续运行或内存趋势比较，也不复用前一天900秒的PASS来填本轮范围。Activity 重建/进程回收、后台直接退出、device-loss/OOM、长期/功耗/性能、实际 ARM64 16 KB 和发布认证仍为独立待决项。
+
+[真机生命周期验收清单](../../tools/verify/runtime-interop-android/host-patches/memory/physical-arm64-lifecycle-acceptance.json)绑定新采集器 `e5793d09...`、正式报告 `5e1ea2d2...`、独立审计 `ab2bc26a...` 和同 APK/source。独立审计21项、594证据哈希全部通过；9张P3全屏图独立以 relative-colorimetric/flags0 重算，整屏RGBA、alpha与原坐标裁图逐像素吻合。三张自动恢复裁图另经目视复核，原工具CPU回归7/7通过。
+
+[原始记录档案](../evidence/runtime-interop-physical-lifecycle/README.md)保留五次采集尝试、实际producer、原始命令/PNG/ICC/日志、独立审计及重放，共1129文件、28456008字节。旧模拟器及真机前台基线工具和历史报告原字节不改。本提交交付新增真机工具、证据和说明至 `feat/webgpu-runtime-interop`；Native、APK、SDK及项目版本均未变。验收 JSON 的未提交标记保留生成时状态，实际 Git 身份以包含该记录的提交为准。

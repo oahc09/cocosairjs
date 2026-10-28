@@ -1,0 +1,206 @@
+{
+  "schema": "air-android-arm64-physical-lifecycle-acceptance-v1",
+  "createdAt": "2026-10-28T13:57:33.146Z",
+  "status": "PASS_PHYSICAL_4KB_SHORT_SAME_ACTIVITY_LIFECYCLE",
+  "scope": "physical-short-same-activity-surface-lifecycle",
+  "subset": true,
+  "releaseReady": false,
+  "serial": "10CG4G0BE1003M8",
+  "device": {
+    "qemu": "",
+    "model": "V2520A",
+    "fingerprint": "vivo/PD2520/PD2520:17/CP2A.260605.016_V000L1/261020003806:user/release-keys",
+    "abiList": "arm64-v8a",
+    "api": 37,
+    "nativeBridge": "0",
+    "pageBytes": 4096
+  },
+  "physicalAcceptance": true,
+  "page16kRuntimeAcceptance": false,
+  "apk": {
+    "file": "output/runtime-interop/android-memory-arm64-build-attempt-1/app-debug.apk",
+    "bytes": 22948135,
+    "sha256": "c6d833035389e1e434db3d0957d21a68a8fdfaac03e3422564e5b6515b205819"
+  },
+  "nativeSourceChanged": false,
+  "nativeCommit": "b3786ab6d2926f031dfb301700f9a80b866cbde6",
+  "sourceBinding": {
+    "sourceCount": 116,
+    "sourceMap": "output/runtime-interop/android-memory-arm64-build-attempt-1/source-verified.json",
+    "nativeCommit": "b3786ab6d2926f031dfb301700f9a80b866cbde6",
+    "file": "output/runtime-interop/android-memory-arm64-build-attempt-1/source-verified.json",
+    "bytes": 12240,
+    "sha256": "8c5c20e55c67c231adb80c15c00ebb80c77c527cc9aac3602d502574f98cd767"
+  },
+  "sdkSha256": "417509cb4774f85346158c7c27f580a7afe5ace70c7486e095b4bbb216de518a",
+  "report": {
+    "file": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-5/report.json",
+    "bytes": 190911,
+    "sha256": "5e1ea2d295edc6f08abcaf894bf761488ac599d6b076605fd98af07220617798"
+  },
+  "audit": {
+    "file": "output/runtime-interop/android-arm64-phone-lifecycle-audit-1/report.json",
+    "bytes": 105966,
+    "sha256": "ab2bc26a20e3d7dc3510bf016c7b4b762ff3edf3a270514cce3d1491070577e6",
+    "checks": 21,
+    "evidenceFiles": 594
+  },
+  "iccReplay": {
+    "file": "output/runtime-interop/android-arm64-phone-lifecycle-audit-1/icc-replay/report.json",
+    "bytes": 28207,
+    "sha256": "ef2f4bf4368c2b5d5c1ce6d670a7977f1b8af99b37995b61980b9f2acbd92ea4"
+  },
+  "producers": [
+    {
+      "file": "tools/verify/runtime-interop-android-phone-lifecycle.cjs",
+      "bytes": 54963,
+      "sha256": "e5793d09ee154a08aba30688dd70f56643a8b68c671d06b1d730b3f36117f546"
+    },
+    {
+      "file": "tools/verify/runtime-interop-android-phone-lifecycle-audit.cjs",
+      "bytes": 49554,
+      "sha256": "ea1e26a83944f9194ad8a434417d79d739d2c5e38038c99a03e9da97fed0ff2b"
+    },
+    {
+      "file": "tools/verify/runtime-interop-android-phone-lifecycle-icc-replay.py",
+      "bytes": 10151,
+      "sha256": "13277699b959c4df0ef50f753dae054368ded99683512caef4f80e13fb43c173"
+    }
+  ],
+  "stages": {
+    "initial": {
+      "status": "PASS"
+    },
+    "background": {
+      "status": "PASS",
+      "recoveryMs": 8123.713400006294
+    },
+    "surface": {
+      "status": "PASS",
+      "recoveryMs": 8083.296499997377
+    },
+    "lock": {
+      "status": "PASS",
+      "recoveryMs": 8558.807099997997
+    }
+  },
+  "manualUnlock": {
+    "automation": "KEYCODE_SLEEP/WAKEUP only; no credential input, keyguard dismissal or settings mutation",
+    "budgetMs": 180000,
+    "observations": 6,
+    "elapsedMs": 4159.720499992371,
+    "recoveryBudgetMs": 15000,
+    "recoveryStartsAt": "First retained system observation of Awake and a known unlocked keyguard"
+  },
+  "activityContinuity": {
+    "pass": true,
+    "created": 1,
+    "destroyedBeforeFinish": 0,
+    "pid": 314
+  },
+  "managedReferences": {
+    "acquired": 12752,
+    "released": 12752,
+    "live": 0,
+    "peak": 416
+  },
+  "canvasTexture": {
+    "acquired": 2033,
+    "released": 2033,
+    "live": 0,
+    "peak": 1
+  },
+  "canvasView": {
+    "acquired": 2032,
+    "released": 2032,
+    "live": 0,
+    "peak": 1
+  },
+  "wrapperCleanupLive": 138,
+  "wrapperCleanupZeroRequired": false,
+  "teardown": {
+    "pass": true,
+    "stages": {
+      "runtime-reset-return": true,
+      "shutdown-jsEngine-return": true,
+      "context-surface-release-return": true,
+      "context-device-destroy-return": true,
+      "context-device-release-return": true,
+      "context-instance-release-return": true,
+      "shutdown-window-return": true,
+      "shutdown-complete": true,
+      "java-exit-notify-return": true
+    },
+    "sdlReturned": true,
+    "elapsedMs": 372,
+    "rawLog": "logcat.txt"
+  },
+  "contextCleanup": {
+    "pass": true,
+    "raw": "         1793195344.107   314   427 I MystralInterop: SURFACE_CONTEXT_CLEANUP surface=0 window=0 contextWindowRefs=0",
+    "contextWindowRefs": 0
+  },
+  "logcatShutdown": {
+    "budgetMs": 2000,
+    "killRequested": true,
+    "closedBeforeRequest": false,
+    "close": {
+      "observed": true,
+      "code": null,
+      "signal": "SIGTERM",
+      "monotonicMs": 169355580.9889,
+      "measuredAt": "2026-10-28T13:49:05.006Z"
+    },
+    "elapsedMs": 5.340799987316132
+  },
+  "rawArchive": {
+    "file": "docs/evidence/runtime-interop-physical-lifecycle/manifest.json",
+    "bytes": 381994,
+    "sha256": "58f83ededbf0b77f67d34736e4a057abf9fe0d9b505e2c0bf7a99fa0cb72453a",
+    "fileCount": 1129,
+    "originalBytes": 28456008
+  },
+  "failedAttempts": [
+    {
+      "file": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-1/report.json",
+      "bytes": 99763,
+      "sha256": "fff8b4b1b3f461ba162e4d8b11277a155962d510dbb24afbeee5eae6ad27d6eb",
+      "status": "FAIL",
+      "error": "Error: Surface bounds do not fit the real screen PNG\n    at assert (C:\\Users\\caosh\\.codex\\worktrees\\webgpu-runtime-interop\\cocosair.js\\tools\\verify\\runtime-interop-android.cjs:16:23)\n    at cropScreen (C:\\Users\\caosh\\.codex\\worktrees\\webgpu-runtime-interop\\cocosair.js\\tools\\verify\\runtime-interop-android.cjs:51:5)\n    at captureScreen (C:\\Users\\caosh\\.codex\\worktrees\\webgpu-runtime-interop\\cocosair.js\\tools\\verify\\runtime-interop-android-phone-lifecycle.cjs:288:25)\n    at capture (C:\\Users\\caosh\\.codex\\worktrees\\webgpu-runtime-interop\\cocosair.js\\tools\\verify\\runtime-interop-android-phone-lifecycle.cjs:660:32)\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async main (C:\\Users\\caosh\\.codex\\worktrees\\webgpu-runtime-interop\\cocosair.js\\tools\\verify\\runtime-interop-android-phone-lifecycle.cjs:678:9)",
+      "normalNativeExit": true
+    },
+    {
+      "file": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-2/report.json",
+      "bytes": 117053,
+      "sha256": "34f8c2c82014c3f26cf99d8fec324f350eefbd701010c25d26b407b0676ae765",
+      "status": "FAIL",
+      "error": "RangeError [ERR_OUT_OF_RANGE]: The value of \"timeout\" is out of range. It must be an unsigned integer. Received 14999.994873046875\n    at validateTimeout (node:child_process:1022:11)\n    at spawnSync (node:child_process:876:3)\n    at execFileSync (node:child_process:954:15)\n    at adb (C:\\Users\\caosh\\.codex\\worktrees\\webgpu-runtime-interop\\cocosair.js\\tools\\verify\\runtime-interop-android-phone-lifecycle.cjs:208:28)\n    at shell (C:\\Users\\caosh\\.codex\\worktrees\\webgpu-runtime-interop\\cocosair.js\\tools\\verify\\runtime-interop-android-phone-lifecycle.cjs:228:40)\n    at resume (C:\\Users\\caosh\\.codex\\worktrees\\webgpu-runtime-interop\\cocosair.js\\tools\\verify\\runtime-interop-android-phone-lifecycle.cjs:381:9)\n    at main (C:\\Users\\caosh\\.codex\\worktrees\\webgpu-runtime-interop\\cocosair.js\\tools\\verify\\runtime-interop-android-phone-lifecycle.cjs:709:51)\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)",
+      "normalNativeExit": true
+    },
+    {
+      "file": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-3/report.json",
+      "bytes": 96239,
+      "sha256": "62dffc77c1758d65180ed8ccc11507d851be2c74949303d21d524b0871028c29",
+      "status": "FAIL",
+      "error": "Error: Original operation deadline exceeded\n    at poll (C:\\Users\\caosh\\.codex\\worktrees\\webgpu-runtime-interop\\cocosair.js\\tools\\verify\\runtime-interop-android-phone-lifecycle.cjs:125:19)\n    at async resume (C:\\Users\\caosh\\.codex\\worktrees\\webgpu-runtime-interop\\cocosair.js\\tools\\verify\\runtime-interop-android-phone-lifecycle.cjs:385:9)\n    at async main (C:\\Users\\caosh\\.codex\\worktrees\\webgpu-runtime-interop\\cocosair.js\\tools\\verify\\runtime-interop-android-phone-lifecycle.cjs:709:45)",
+      "normalNativeExit": false
+    },
+    {
+      "file": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-4/report.json",
+      "bytes": 96237,
+      "sha256": "5ae015ea44dac547dc380eb1863a2bfdfde51000e8e060f630b8357093db8ee6",
+      "status": "FAIL",
+      "error": "Error: Original operation deadline exceeded\n    at poll (C:\\Users\\caosh\\.codex\\worktrees\\webgpu-runtime-interop\\cocosair.js\\tools\\verify\\runtime-interop-android-phone-lifecycle.cjs:125:19)\n    at async resume (C:\\Users\\caosh\\.codex\\worktrees\\webgpu-runtime-interop\\cocosair.js\\tools\\verify\\runtime-interop-android-phone-lifecycle.cjs:397:9)\n    at async main (C:\\Users\\caosh\\.codex\\worktrees\\webgpu-runtime-interop\\cocosair.js\\tools\\verify\\runtime-interop-android-phone-lifecycle.cjs:721:45)",
+      "normalNativeExit": false
+    }
+  ],
+  "limitations": [
+    "This is a four-stage short same-Activity flow, not a new continuous-soak or PSS comparison.",
+    "Activity recreation/process reclaim, background direct exit, device loss/OOM, long-run stress and performance are separate contracts.",
+    "Background finish requests in retained failed transition attempts timed out; those forced process cleanups are not normal-exit evidence.",
+    "The phone uses 4KB pages; physical ARM64 16KB runtime is NOT_RUN.",
+    "Managed API reference balance does not certify every allocation leak-free or release readiness."
+  ],
+  "sourceChangesCommitted": false,
+  "sourceChangesPushed": false
+}

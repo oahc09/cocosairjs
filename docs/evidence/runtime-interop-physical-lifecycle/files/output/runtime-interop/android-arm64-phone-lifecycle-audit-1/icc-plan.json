@@ -1,0 +1,137 @@
+[
+  {
+    "id": "initial-before",
+    "raw": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-5/initial-before.screen.png",
+    "rawCrop": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-5/initial-before.screen-crop.png",
+    "srgb": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-5/initial-before.screen-srgb.png",
+    "srgbCrop": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-5/initial-before.screen-srgb-crop.png",
+    "metadata": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-5/initial-before.screen-color.json",
+    "bounds": {
+      "x": 560,
+      "y": 1464,
+      "width": 320,
+      "height": 240
+    },
+    "icc": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-5/initial-before.screen-source.icc"
+  },
+  {
+    "id": "initial-input-paint-0000",
+    "raw": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-5/initial-input-paint-0000.screen.png",
+    "rawCrop": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-5/initial-input-paint-0000.screen-crop.png",
+    "srgb": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-5/initial-input-paint-0000.screen-srgb.png",
+    "srgbCrop": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-5/initial-input-paint-0000.screen-srgb-crop.png",
+    "metadata": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-5/initial-input-paint-0000.screen-color.json",
+    "bounds": {
+      "x": 560,
+      "y": 1464,
+      "width": 320,
+      "height": 240
+    },
+    "icc": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-5/initial-input-paint-0000.screen-source.icc"
+  },
+  {
+    "id": "initial-after",
+    "raw": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-5/initial-after.screen.png",
+    "rawCrop": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-5/initial-after.screen-crop.png",
+    "srgb": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-5/initial-after.screen-srgb.png",
+    "srgbCrop": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-5/initial-after.screen-srgb-crop.png",
+    "metadata": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-5/initial-after.screen-color.json",
+    "bounds": {
+      "x": 560,
+      "y": 1464,
+      "width": 320,
+      "height": 240
+    },
+    "icc": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-5/initial-after.screen-source.icc"
+  },
+  {
+    "id": "background-recovery-automatic-paint-0001",
+    "raw": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-5/background-recovery-automatic-paint-0001.screen.png",
+    "rawCrop": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-5/background-recovery-automatic-paint-0001.screen-crop.png",
+    "srgb": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-5/background-recovery-automatic-paint-0001.screen-srgb.png",
+    "srgbCrop": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-5/background-recovery-automatic-paint-0001.screen-srgb-crop.png",
+    "metadata": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-5/background-recovery-automatic-paint-0001.screen-color.json",
+    "bounds": {
+      "x": 560,
+      "y": 1464,
+      "width": 320,
+      "height": 240
+    },
+    "icc": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-5/background-recovery-automatic-paint-0001.screen-source.icc"
+  },
+  {
+    "id": "background-recovery-paint-0002",
+    "raw": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-5/background-recovery-paint-0002.screen.png",
+    "rawCrop": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-5/background-recovery-paint-0002.screen-crop.png",
+    "srgb": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-5/background-recovery-paint-0002.screen-srgb.png",
+    "srgbCrop": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-5/background-recovery-paint-0002.screen-srgb-crop.png",
+    "metadata": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-5/background-recovery-paint-0002.screen-color.json",
+    "bounds": {
+      "x": 560,
+      "y": 1464,
+      "width": 320,
+      "height": 240
+    },
+    "icc": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-5/background-recovery-paint-0002.screen-source.icc"
+  },
+  {
+    "id": "surface-recovery-automatic-paint-0003",
+    "raw": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-5/surface-recovery-automatic-paint-0003.screen.png",
+    "rawCrop": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-5/surface-recovery-automatic-paint-0003.screen-crop.png",
+    "srgb": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-5/surface-recovery-automatic-paint-0003.screen-srgb.png",
+    "srgbCrop": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-5/surface-recovery-automatic-paint-0003.screen-srgb-crop.png",
+    "metadata": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-5/surface-recovery-automatic-paint-0003.screen-color.json",
+    "bounds": {
+      "x": 560,
+      "y": 1464,
+      "width": 320,
+      "height": 240
+    },
+    "icc": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-5/surface-recovery-automatic-paint-0003.screen-source.icc"
+  },
+  {
+    "id": "surface-recovery-paint-0004",
+    "raw": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-5/surface-recovery-paint-0004.screen.png",
+    "rawCrop": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-5/surface-recovery-paint-0004.screen-crop.png",
+    "srgb": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-5/surface-recovery-paint-0004.screen-srgb.png",
+    "srgbCrop": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-5/surface-recovery-paint-0004.screen-srgb-crop.png",
+    "metadata": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-5/surface-recovery-paint-0004.screen-color.json",
+    "bounds": {
+      "x": 560,
+      "y": 1464,
+      "width": 320,
+      "height": 240
+    },
+    "icc": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-5/surface-recovery-paint-0004.screen-source.icc"
+  },
+  {
+    "id": "lock-recovery-automatic-paint-0005",
+    "raw": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-5/lock-recovery-automatic-paint-0005.screen.png",
+    "rawCrop": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-5/lock-recovery-automatic-paint-0005.screen-crop.png",
+    "srgb": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-5/lock-recovery-automatic-paint-0005.screen-srgb.png",
+    "srgbCrop": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-5/lock-recovery-automatic-paint-0005.screen-srgb-crop.png",
+    "metadata": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-5/lock-recovery-automatic-paint-0005.screen-color.json",
+    "bounds": {
+      "x": 560,
+      "y": 1464,
+      "width": 320,
+      "height": 240
+    },
+    "icc": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-5/lock-recovery-automatic-paint-0005.screen-source.icc"
+  },
+  {
+    "id": "lock-recovery-paint-0006",
+    "raw": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-5/lock-recovery-paint-0006.screen.png",
+    "rawCrop": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-5/lock-recovery-paint-0006.screen-crop.png",
+    "srgb": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-5/lock-recovery-paint-0006.screen-srgb.png",
+    "srgbCrop": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-5/lock-recovery-paint-0006.screen-srgb-crop.png",
+    "metadata": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-5/lock-recovery-paint-0006.screen-color.json",
+    "bounds": {
+      "x": 560,
+      "y": 1464,
+      "width": 320,
+      "height": 240
+    },
+    "icc": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-5/lock-recovery-paint-0006.screen-source.icc"
+  }
+]

@@ -1,0 +1,14 @@
+{
+  "arguments": [
+    "-s",
+    "10CG4G0BE1003M8",
+    "shell",
+    "dumpsys",
+    "activity",
+    "activities"
+  ],
+  "startedAt": "2026-10-28T13:44:01.353Z",
+  "timeoutMs": 14891,
+  "exitCode": 0,
+  "finishedAt": "2026-10-28T13:44:01.454Z"
+}

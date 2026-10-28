@@ -1,0 +1,32 @@
+{
+  "channel": "android-pixelcopy",
+  "pid": 314,
+  "file": "scene-demo-after.png",
+  "width": 320,
+  "height": 240,
+  "bitmapWidth": 320,
+  "bitmapHeight": 240,
+  "surfaceWidth": 320,
+  "surfaceHeight": 240,
+  "viewWidth": 320,
+  "viewHeight": 240,
+  "surfaceGeneration": 1,
+  "resultCode": 0,
+  "bounds": {
+    "x": 560,
+    "y": 1464,
+    "width": 320,
+    "height": 240
+  },
+  "sha256": "29aa200cb7e14cc52a322a89fa576d552af9b6cffb3c8d8051382fa4f7dbebfb",
+  "captureId": "89f59d71-6805-44fa-aa4b-18f398db1fc8",
+  "kind": "scene-demo",
+  "phase": "after",
+  "runId": "android-phone-lifecycle-1793195299165",
+  "previous": {
+    "file": "scene-demo-before.png",
+    "sha256": "5045c37452682949c1ab5712f9d6692765102647397c40b5d00c8d3b51218a7f",
+    "pid": 314,
+    "surfaceGeneration": 1
+  }
+}

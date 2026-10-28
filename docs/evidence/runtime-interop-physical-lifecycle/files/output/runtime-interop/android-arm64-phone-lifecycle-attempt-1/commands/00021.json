@@ -1,0 +1,13 @@
+{
+  "arguments": [
+    "-s",
+    "10CG4G0BE1003M8",
+    "exec-out",
+    "screencap",
+    "-p"
+  ],
+  "startedAt": "2026-10-28T13:42:31.518Z",
+  "timeoutMs": 14869,
+  "exitCode": 0,
+  "finishedAt": "2026-10-28T13:42:32.494Z"
+}

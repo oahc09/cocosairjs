@@ -1,0 +1,15 @@
+{
+  "arguments": [
+    "-s",
+    "10CG4G0BE1003M8",
+    "shell",
+    "run-as",
+    "com.mystral.engine.interop",
+    "cat",
+    "files/interop/android-phone-lifecycle-1793195299165/lifecycle.jsonl"
+  ],
+  "startedAt": "2026-10-28T13:48:31.332Z",
+  "timeoutMs": 14333,
+  "exitCode": 0,
+  "finishedAt": "2026-10-28T13:48:31.441Z"
+}

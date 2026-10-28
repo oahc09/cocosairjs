@@ -119,3 +119,15 @@ Android使用独立debug包com.mystral.engine.interop（版本不改），真实
 ## 本轮 Git 交付（2026-10-27）
 
 MystralNative累计生命周期/内存修复已提交为 `b3786ab6d2926f031dfb301700f9a80b866cbde6` 并推送至 `oahc09/mystralnative:feat/cocosair-webgpu-interop`，原11路径与验收源码相同。Cocos AIR本提交在 `feat/webgpu-runtime-interop` 汇集测试工具、源码补丁、摘要及7791份逐字节原始记录；独立Git回执与档案清单记录交付，不重写旧记录的未提交状态。归档可只读重算，构建/设备二进制须依原收据单独恢复。此次交付不新增运行结果，不升级未执行项目，也不合并、发版或变更SDK。
+
+## ARM64 真机短会话生命周期（2026-10-28）
+
+| 步骤 | 状态 | 完成标准 |
+| --- | --- | --- |
+| 独立真机入口与安全交接 | completed | 保留旧模拟器及前台基线入口，新增四阶段 physical schema；不自动解锁、不改安全/超时设置，手动等待与恢复计时分开 |
+| 同一已验收 APK 真机实跑 | completed | 当前 c6d833 包、116 源码、SDK216；initial/HOME/Settings真实Surface重建/手动解锁四阶段PASS，同PID314/唯一Activity，3恢复均≤15秒 |
+| 独立审计与原始证据交付 | completed | 独立审计21项/594hash、9张P3全屏ICC/RGBA逐像素通过；5次尝试与审计1129文件/28456008B完整归档，原失败和producer保留 |
+
+最新正式采集为 `output/runtime-interop/android-arm64-phone-lifecycle-attempt-5/report.json`，scope仅同Activity短会话，continuousRunning=NOT_RUN。此前旋转期间坐标不匹配、采集器小数timeout错误、HOME过渡期发恢复指令均保留原FAIL；新入口显式确认实际STOPPED后再恢复原任务。当前宿主、APK、SDK和设备配置均未改，不将此结果扩大为Activity重建、后台直接退出、device-loss/OOM、长时间压力或ARM64 16KB硬件运行。
+
+用户已授权本轮Git交付：Cocos AIR本提交纳入当前feat/webgpu-runtime-interop，验收原件不改；MystralNative没有新增代码，保持已推送b3786ab6。交付只涉及代码/记录，不新增运行结果或合并发布。

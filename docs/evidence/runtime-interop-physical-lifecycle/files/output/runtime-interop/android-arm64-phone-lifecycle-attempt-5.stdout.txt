@@ -1,0 +1,2 @@
+{"stage":"manual-unlock-required","serial":"10CG4G0BE1003M8","deadline":"2026-10-28T13:51:50.195Z","message":"Unlock the phone normally; no automated keyguard dismissal."}
+{"status":"PASS","stages":{"initial":"PASS","background":"PASS","surface":"PASS","lock":"PASS"},"report":"output\\runtime-interop\\android-arm64-phone-lifecycle-attempt-5\\report.json"}

@@ -1,0 +1,368 @@
+{
+  "schema": "mystral-webgpu-resource-snapshot-v1",
+  "scope": "Only bindings-managed owned WGPU API result references; borrowed context/device/queue/adapter and internal native helpers are excluded",
+  "pass": true,
+  "nativePid": 29934,
+  "snapshots": [
+    {
+      "line": 40,
+      "epochSeconds": 1793194950.834,
+      "transport": {
+        "kind": "ordered-parts",
+        "sequence": 1,
+        "total": 3,
+        "lastEpochSeconds": 1793194950.834,
+        "payloadBytes": 1332,
+        "payloadSha256": "39a864e051c4df62357208f22fec8c32d50854b46dd1da60d9c16a0c13d34105",
+        "parts": [
+          {
+            "index": 0,
+            "line": 40,
+            "raw": "         1793194950.834 29934 30013 I MystralInterop: RESOURCE_SNAPSHOT_PART 1 0/3 {\"schema\":\"mystral-webgpu-resource-snapshot-v1\",\"stage\":\"init\",\"sequence\":1,\"frame\":0,\"steadyMs\":24813523,\"pid\":29934,\"types\":{\"canvasTexture\":{\"acquired\":0,\"released\":0,\"live\":0,\"peak\":0},\"canvasView\":{\"acquired\":0,\"released\":0,\"live\":0,\"peak\":0},\"buffer\":{\"acquired\":0,\"released\":0,\"live\":0,\"peak\":0},\"texture\":{\"acquired\":0,\"released\":0,\"live\":0,\"peak\":0},\"textureView\":{\"acquired\":0,\"released\":0,\"live\":0,\"peak\":0},\"shaderModule\":{\"acquired\":0,\"released\":0,\"live\":0,\"peak\":0},\"renderPipeline\":{\"acquired\":0,\"",
+            "rawLineSha256": "34e0d45b47d279e0a9a99537b542a6f9cc02cb595f7d8b996cd452b37d8c4cd1",
+            "epochSeconds": 1793194950.834,
+            "pid": 29934,
+            "payloadBytes": 512,
+            "payloadSha256": "20909e12886469dfed1d896e7851119c626ce344a5595e8652ab0a057854785b"
+          },
+          {
+            "index": 1,
+            "line": 41,
+            "raw": "         1793194950.834 29934 30013 I MystralInterop: RESOURCE_SNAPSHOT_PART 1 1/3 released\":0,\"live\":0,\"peak\":0},\"computePipeline\":{\"acquired\":0,\"released\":0,\"live\":0,\"peak\":0},\"sampler\":{\"acquired\":0,\"released\":0,\"live\":0,\"peak\":0},\"bindGroupLayout\":{\"acquired\":0,\"released\":0,\"live\":0,\"peak\":0},\"bindGroup\":{\"acquired\":0,\"released\":0,\"live\":0,\"peak\":0},\"pipelineLayout\":{\"acquired\":0,\"released\":0,\"live\":0,\"peak\":0},\"commandEncoder\":{\"acquired\":0,\"released\":0,\"live\":0,\"peak\":0},\"commandBuffer\":{\"acquired\":0,\"released\":0,\"live\":0,\"peak\":0},\"renderPass\":{\"acquired\":0,\"released\":0,\"live\":0,\"p",
+            "rawLineSha256": "34e9a6962387c47d0600a9f8247079dea0fe44de49497df9ee69185bdcce2ad0",
+            "epochSeconds": 1793194950.834,
+            "pid": 29934,
+            "payloadBytes": 512,
+            "payloadSha256": "311a82d25a4d291592d699d619459c4b560bd718b582c697c0383b3dc6d94481"
+          },
+          {
+            "index": 2,
+            "line": 42,
+            "raw": "         1793194950.834 29934 30013 I MystralInterop: RESOURCE_SNAPSHOT_PART 1 2/3 eak\":0},\"computePass\":{\"acquired\":0,\"released\":0,\"live\":0,\"peak\":0},\"renderBundleEncoder\":{\"acquired\":0,\"released\":0,\"live\":0,\"peak\":0},\"renderBundle\":{\"acquired\":0,\"released\":0,\"live\":0,\"peak\":0}},\"total\":{\"acquired\":0,\"released\":0,\"live\":0,\"peak\":0},\"wrapper\":{\"created\":0,\"finalized\":0,\"live\":0,\"peak\":0}}",
+            "rawLineSha256": "5b339683d49a55bb779977e34c6fbff6cc8fd267bbe5bec55465f5dce88025ad",
+            "epochSeconds": 1793194950.834,
+            "pid": 29934,
+            "payloadBytes": 308,
+            "payloadSha256": "52d3bd46f8c0dd9927b6a8e2678c4f4364eca8b79cea4931d0788fd42866c17c"
+          }
+        ]
+      },
+      "schema": "mystral-webgpu-resource-snapshot-v1",
+      "stage": "init",
+      "sequence": 1,
+      "frame": 0,
+      "steadyMs": 24813523,
+      "pid": 29934,
+      "types": {
+        "canvasTexture": {
+          "acquired": 0,
+          "released": 0,
+          "live": 0,
+          "peak": 0
+        },
+        "canvasView": {
+          "acquired": 0,
+          "released": 0,
+          "live": 0,
+          "peak": 0
+        },
+        "buffer": {
+          "acquired": 0,
+          "released": 0,
+          "live": 0,
+          "peak": 0
+        },
+        "texture": {
+          "acquired": 0,
+          "released": 0,
+          "live": 0,
+          "peak": 0
+        },
+        "textureView": {
+          "acquired": 0,
+          "released": 0,
+          "live": 0,
+          "peak": 0
+        },
+        "shaderModule": {
+          "acquired": 0,
+          "released": 0,
+          "live": 0,
+          "peak": 0
+        },
+        "renderPipeline": {
+          "acquired": 0,
+          "released": 0,
+          "live": 0,
+          "peak": 0
+        },
+        "computePipeline": {
+          "acquired": 0,
+          "released": 0,
+          "live": 0,
+          "peak": 0
+        },
+        "sampler": {
+          "acquired": 0,
+          "released": 0,
+          "live": 0,
+          "peak": 0
+        },
+        "bindGroupLayout": {
+          "acquired": 0,
+          "released": 0,
+          "live": 0,
+          "peak": 0
+        },
+        "bindGroup": {
+          "acquired": 0,
+          "released": 0,
+          "live": 0,
+          "peak": 0
+        },
+        "pipelineLayout": {
+          "acquired": 0,
+          "released": 0,
+          "live": 0,
+          "peak": 0
+        },
+        "commandEncoder": {
+          "acquired": 0,
+          "released": 0,
+          "live": 0,
+          "peak": 0
+        },
+        "commandBuffer": {
+          "acquired": 0,
+          "released": 0,
+          "live": 0,
+          "peak": 0
+        },
+        "renderPass": {
+          "acquired": 0,
+          "released": 0,
+          "live": 0,
+          "peak": 0
+        },
+        "computePass": {
+          "acquired": 0,
+          "released": 0,
+          "live": 0,
+          "peak": 0
+        },
+        "renderBundleEncoder": {
+          "acquired": 0,
+          "released": 0,
+          "live": 0,
+          "peak": 0
+        },
+        "renderBundle": {
+          "acquired": 0,
+          "released": 0,
+          "live": 0,
+          "peak": 0
+        }
+      },
+      "total": {
+        "acquired": 0,
+        "released": 0,
+        "live": 0,
+        "peak": 0
+      },
+      "wrapper": {
+        "created": 0,
+        "finalized": 0,
+        "live": 0,
+        "peak": 0
+      }
+    },
+    {
+      "line": 97,
+      "epochSeconds": 1793194953.598,
+      "transport": {
+        "kind": "ordered-parts",
+        "sequence": 2,
+        "total": 3,
+        "lastEpochSeconds": 1793194953.598,
+        "payloadBytes": 1389,
+        "payloadSha256": "8ae0311de9d5ecac61c78c78193e94dd6376f4326b4c0459930f0e10290d2968",
+        "parts": [
+          {
+            "index": 0,
+            "line": 97,
+            "raw": "         1793194953.598 29934 30013 I MystralInterop: RESOURCE_SNAPSHOT_PART 2 0/3 {\"schema\":\"mystral-webgpu-resource-snapshot-v1\",\"stage\":\"cleanup\",\"sequence\":2,\"frame\":69897,\"steadyMs\":24816287,\"pid\":29934,\"types\":{\"canvasTexture\":{\"acquired\":90,\"released\":90,\"live\":0,\"peak\":1},\"canvasView\":{\"acquired\":89,\"released\":89,\"live\":0,\"peak\":1},\"buffer\":{\"acquired\":63,\"released\":63,\"live\":0,\"peak\":63},\"texture\":{\"acquired\":18,\"released\":18,\"live\":0,\"peak\":18},\"textureView\":{\"acquired\":173,\"released\":173,\"live\":0,\"peak\":173},\"shaderModule\":{\"acquired\":42,\"released\":42,\"live\":0,\"peak\":42},\"rende",
+            "rawLineSha256": "7a6c6a7a368bfc05df4073b8cd6e06d659a578f62ee1d097be899533b7e16435",
+            "epochSeconds": 1793194953.598,
+            "pid": 29934,
+            "payloadBytes": 512,
+            "payloadSha256": "eb2bf98590c7465ab99ad53cdc7209525785044e1c54463722f0a3dc069d0daf"
+          },
+          {
+            "index": 1,
+            "line": 98,
+            "raw": "         1793194953.598 29934 30013 I MystralInterop: RESOURCE_SNAPSHOT_PART 2 1/3 rPipeline\":{\"acquired\":2,\"released\":2,\"live\":0,\"peak\":2},\"computePipeline\":{\"acquired\":0,\"released\":0,\"live\":0,\"peak\":0},\"sampler\":{\"acquired\":1,\"released\":1,\"live\":0,\"peak\":1},\"bindGroupLayout\":{\"acquired\":4,\"released\":4,\"live\":0,\"peak\":4},\"bindGroup\":{\"acquired\":133,\"released\":133,\"live\":0,\"peak\":91},\"pipelineLayout\":{\"acquired\":2,\"released\":2,\"live\":0,\"peak\":2},\"commandEncoder\":{\"acquired\":113,\"released\":113,\"live\":0,\"peak\":1},\"commandBuffer\":{\"acquired\":113,\"released\":113,\"live\":0,\"peak\":1},\"renderPass\"",
+            "rawLineSha256": "56c5615ed60fa181674471a8147a30680d98bea7703923ee63ebf231a1ed8eb4",
+            "epochSeconds": 1793194953.598,
+            "pid": 29934,
+            "payloadBytes": 512,
+            "payloadSha256": "d28c52eef9688d2ec7a381a36d842b5f94fec16f86e8212bf4fd8d3a8fea587f"
+          },
+          {
+            "index": 2,
+            "line": 99,
+            "raw": "         1793194953.598 29934 30013 I MystralInterop: RESOURCE_SNAPSHOT_PART 2 2/3 :{\"acquired\":131,\"released\":131,\"live\":0,\"peak\":1},\"computePass\":{\"acquired\":0,\"released\":0,\"live\":0,\"peak\":0},\"renderBundleEncoder\":{\"acquired\":0,\"released\":0,\"live\":0,\"peak\":0},\"renderBundle\":{\"acquired\":0,\"released\":0,\"live\":0,\"peak\":0}},\"total\":{\"acquired\":974,\"released\":974,\"live\":0,\"peak\":400},\"wrapper\":{\"created\":974,\"finalized\":836,\"live\":138,\"peak\":866}}",
+            "rawLineSha256": "fc20b96bb777752ffdb2978d9618ba07e8a7cbb58938e4ddec8325f6f2417595",
+            "epochSeconds": 1793194953.598,
+            "pid": 29934,
+            "payloadBytes": 365,
+            "payloadSha256": "dd45a4ca3f3fc9adcfe09e352f1051eb1303e83b2c342c5c3c7b279b22976a4a"
+          }
+        ]
+      },
+      "schema": "mystral-webgpu-resource-snapshot-v1",
+      "stage": "cleanup",
+      "sequence": 2,
+      "frame": 69897,
+      "steadyMs": 24816287,
+      "pid": 29934,
+      "types": {
+        "canvasTexture": {
+          "acquired": 90,
+          "released": 90,
+          "live": 0,
+          "peak": 1
+        },
+        "canvasView": {
+          "acquired": 89,
+          "released": 89,
+          "live": 0,
+          "peak": 1
+        },
+        "buffer": {
+          "acquired": 63,
+          "released": 63,
+          "live": 0,
+          "peak": 63
+        },
+        "texture": {
+          "acquired": 18,
+          "released": 18,
+          "live": 0,
+          "peak": 18
+        },
+        "textureView": {
+          "acquired": 173,
+          "released": 173,
+          "live": 0,
+          "peak": 173
+        },
+        "shaderModule": {
+          "acquired": 42,
+          "released": 42,
+          "live": 0,
+          "peak": 42
+        },
+        "renderPipeline": {
+          "acquired": 2,
+          "released": 2,
+          "live": 0,
+          "peak": 2
+        },
+        "computePipeline": {
+          "acquired": 0,
+          "released": 0,
+          "live": 0,
+          "peak": 0
+        },
+        "sampler": {
+          "acquired": 1,
+          "released": 1,
+          "live": 0,
+          "peak": 1
+        },
+        "bindGroupLayout": {
+          "acquired": 4,
+          "released": 4,
+          "live": 0,
+          "peak": 4
+        },
+        "bindGroup": {
+          "acquired": 133,
+          "released": 133,
+          "live": 0,
+          "peak": 91
+        },
+        "pipelineLayout": {
+          "acquired": 2,
+          "released": 2,
+          "live": 0,
+          "peak": 2
+        },
+        "commandEncoder": {
+          "acquired": 113,
+          "released": 113,
+          "live": 0,
+          "peak": 1
+        },
+        "commandBuffer": {
+          "acquired": 113,
+          "released": 113,
+          "live": 0,
+          "peak": 1
+        },
+        "renderPass": {
+          "acquired": 131,
+          "released": 131,
+          "live": 0,
+          "peak": 1
+        },
+        "computePass": {
+          "acquired": 0,
+          "released": 0,
+          "live": 0,
+          "peak": 0
+        },
+        "renderBundleEncoder": {
+          "acquired": 0,
+          "released": 0,
+          "live": 0,
+          "peak": 0
+        },
+        "renderBundle": {
+          "acquired": 0,
+          "released": 0,
+          "live": 0,
+          "peak": 0
+        }
+      },
+      "total": {
+        "acquired": 974,
+        "released": 974,
+        "live": 0,
+        "peak": 400
+      },
+      "wrapper": {
+        "created": 974,
+        "finalized": 836,
+        "live": 138,
+        "peak": 866
+      }
+    }
+  ],
+  "log": {
+    "file": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-1/logcat.txt",
+    "bytes": 17017,
+    "sha256": "696d9fff80097abaa9c60c33b25b964dba3cd99374a4e14c26993249422f5875"
+  },
+  "nativeCleanupLive": 0,
+  "wrapperCleanupLive": 138,
+  "wrapperCleanupZeroRequired": false,
+  "canvasTextureMaximumOwned": 1,
+  "canvasViewBoundaryOwned": 0,
+  "canvasViewPeak": 1,
+  "canvasViewPeakInterpretation": "Multiple views of one current texture are legal; every sampled completed-frame boundary must release all owned Canvas views",
+  "coverage": {
+    "status": "NOT_RUN",
+    "reason": "Diagnostic --soak-seconds=0 has no continuous stage"
+  }
+}

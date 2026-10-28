@@ -1,0 +1,25 @@
+{
+  "label": "initial-before",
+  "bounds": {
+    "x": 560,
+    "y": 1464,
+    "width": 320,
+    "height": 240
+  },
+  "wanted": "orange",
+  "measuredAt": "2026-10-28T13:46:42.738Z",
+  "originalSha256": "6c2266047b04c31a3cb45961b92ff2a23db72883c616a6287f152e4859d1e75c",
+  "originalCropSha256": "634536e2e33e39a433b370f17928404f28801b234b34120f900088bfa2dc8eb2",
+  "interpretedSha256": "b839ef29bfbef447641fb819eb7b9d89362893f27074f5791f391690ab4d7e48",
+  "interpretedCropSha256": "949c8fe27076aef646b88ca6dbfe81c809166a1cb02764cdffe27b77e17ec084",
+  "colors": {
+    "width": 320,
+    "height": 240,
+    "orange": 7617,
+    "green": 0,
+    "blue": 69183,
+    "sha256": "949c8fe27076aef646b88ca6dbfe81c809166a1cb02764cdffe27b77e17ec084"
+  },
+  "pass": true,
+  "colorMetadata": "initial-before.screen-color.json"
+}

@@ -10,3 +10,4 @@ tools/verify/runtime-interop/host-patches/** -text
 tools/verify/runtime-interop-android/host-patches/** -text
 tools/verify/runtime-interop-android/verification-snapshots/** -text
 docs/evidence/runtime-interop-lifecycle-memory/** -text
+docs/evidence/runtime-interop-physical-lifecycle/** -text

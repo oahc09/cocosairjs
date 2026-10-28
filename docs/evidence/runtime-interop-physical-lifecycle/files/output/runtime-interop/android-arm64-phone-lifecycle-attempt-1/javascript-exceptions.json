@@ -1,0 +1,15 @@
+{
+  "pass": true,
+  "policy": "The unchanged demo expects no uncaught V8 callback exceptions, including diagnostic runs",
+  "nativePid": 29934,
+  "nativeRunId": "android-phone-lifecycle-1793194946297",
+  "lowerEpochSeconds": 1793194950.243,
+  "upperEpochSecondsExclusive": 1793194955,
+  "exceptionLogRows": 0,
+  "exceptions": [],
+  "log": {
+    "file": "output/runtime-interop/android-arm64-phone-lifecycle-attempt-1/logcat.txt",
+    "bytes": 17017,
+    "sha256": "696d9fff80097abaa9c60c33b25b964dba3cd99374a4e14c26993249422f5875"
+  }
+}
