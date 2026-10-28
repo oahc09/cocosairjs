@@ -104,19 +104,48 @@ runner 在当前 Gallery iframe 中使用同一 public createStepClock，动作/
 
 ### 通过条件与真正剩余项
 
-| 项目                              | 实现 / 工具                                                                                                | 当前实际验收                                                                                      |
-| --------------------------------- | ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| Stop→Start 新代、20轮真实释放重建 | 功能已实现；runner 校验12个活动 actor/10瓶身份、clock、两阶段receipt和owned资产0                           | 正向 native/browser NOT_RUN，缺 SDK                                                               |
-| reset 准入队列中 Close            | 功能及runner已实现；校验不得新 mount、4个阶段receipt、1个终态receipt                                       | 正向 NOT_RUN；更窄的释放 await 中途 Close 不被此方法证明                                          |
-| 旧 generation                     | guard 已有；runner 对退休代 frames/clocks/requests/geometry/score 做不变性比较，拒绝 fault                 | 正向 NOT_RUN；全量 native 读写追踪缺口仍 NOT_RUN                                                  |
-| 两阶段资源恢复                    | receipt RESTORED、owned valid0、destroyErrors空均强断言                                                    | 每轮完整 native/GPU 计数导出**尚无实现**，不能把receipt等同零增长；需后续基于受支持诊断入口补计数 |
-| 最终 Close                        | 校验公开 moduleRelease VERIFIED、完整 schema/counter、同module terminal=baseline，cleanup/pending/errors空 | 正向 NOT_RUN；不是全 malloc/GC/所有handle资格                                                     |
-| Gallery 返回与画面                | 真实入口点击/PNG采集/返回中性Gallery已接线                                                                 | HTML导航和缺SDK负向已实测；原生画面仍NOT_RUN，PNG仍需人工review                                   |
-| 正向runner自身                    | CPU拒绝测试6项，真实缺runtime负向通过（collector本身exit1）                                                | 未用真SDK贯通，不能声称采集器的后续分支已浏览器资格                                               |
+| 项目                              | 实现 / 工具                                                                                                | 当前实际验收                                                                                                                                       |
+| --------------------------------- | ---------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Stop→Start 新代、20轮真实释放重建 | 功能已实现；runner 校验12个活动 actor/10瓶身份、clock、两阶段receipt和owned资产0                           | 正向 native/browser NOT_RUN，缺 SDK                                                                                                                |
+| reset 准入队列中 Close            | 功能及runner已实现；校验不得新 mount、4个阶段receipt、1个终态receipt                                       | 正向 NOT_RUN；更窄的释放 await 中途 Close 不被此方法证明                                                                                           |
+| 旧 generation                     | guard 已有；runner 对退休代 frames/clocks/requests/geometry/score 做不变性比较，拒绝 fault                 | 正向 NOT_RUN；全量 native 读写追踪缺口仍 NOT_RUN                                                                                                   |
+| 两阶段资源恢复                    | receipt RESTORED、owned valid0、destroyErrors空均强断言                                                    | EX02没有逐阶段原生计数导出；已有backend资格诊断但非稳定公开IPhysicsWorld接口。完整计数还含原生API缺口，不能把receipt等同零增长（详见下方三项复核） |
+| 最终 Close                        | 校验公开 moduleRelease VERIFIED、完整 schema/counter、同module terminal=baseline，cleanup/pending/errors空 | 正向 NOT_RUN；不是全 malloc/GC/所有handle资格                                                                                                      |
+| Gallery 返回与画面                | 真实入口点击/PNG采集/返回中性Gallery已接线                                                                 | HTML导航和缺SDK负向已实测；原生画面仍NOT_RUN，PNG仍需人工review                                                                                    |
+| 正向runner自身                    | CPU拒绝测试6项，真实缺runtime负向通过（collector本身exit1）                                                | 未用真SDK贯通，不能声称采集器的后续分支已浏览器资格                                                                                                |
 
 每轮缺计数、完整 stale native access census、截图review、物理浏览器进程树闭合目前明确留在report.boundaries，缺任一都不能提升成完整 lifecycle/leak PASS。35项CPU包含人造策略输入，只验证拒绝逻辑。三档质量、COM正确性、独立中心/偏心冲量、计分物理效果、static baked compound及C04/C06–C12/C18不由本runner代替；保留原矩阵，不扩大本轮去实现全引擎。
 
 下一步最小阻塞：在用户本地提供实际合格 runtime，或让管理员允许 `storage.googleapis.com:443` 官方 `/webassembly/emscripten-releases-builds/` 下载以重建；本轮不再请求该域名、不换镜像、不改网络安全设置。源码/工具/文档可先取走；先运行有限正向runner，保留所有失败，再针对真实失败修复。完整资源基线与全量访问证明是随后明确的证据/功能工作，不能让网络解锁自动变成整体完成。
+
+### 三项覆盖缺口复核（只读源码审计，不是新运行证据）
+
+审计基线：`cb129643335da622fbbd98d2467490ec28b1273d`，已重新核验远端及干净工作区。本轮不再运行缺 runtime 的负向截图、不下载 SDK、不新增延时/拦截钩子、不改生产代码或现有判定。下述结论来自实际源码与已有资格工具的接口合同；正向 SDK 结果仍不存在。
+
+| 要求 / 层级                                                                             | 现有能力和实现位置                                                                                                      | 准确分类                                            | 本轮结论 / 下一步                                                                                                                    |
+| --------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| 原公开流程：Stop/Start、20次重建、两阶段receipt、owned资产失效、退休历史冻结、排队Close | EX02功能与runner均已接线；35项CPU包含拒绝式检查                                                                         | **实现/采集已接线，正向尚未运行**                   | 取得合格SDK后运行已有runner；未因此取得全量计数或访问证明                                                                            |
+| 每轮可观测原生计数子集                                                                  | 后端已有 `getNativeCounts()`、`getNativeMemoryDiagnostics()`、`getStaticMeshResourceDiagnostics()`；C20已有受控consumer | **原生子集已实现；EX02采集缺失；稳定公开入口缺口**  | 不是“底层没计数”。直接取后端扩展需明确资格profile/接口边界；当前公开EX02路线未接，不偷偷绕过源合同                                   |
+| 每轮完整原生资源/所有handle/malloc/GPU总量                                              | 世界计数、账本和终态module登记项均不是完整census；receipt显式GPU不可测                                                  | **原生/平台API及度量范围缺口**                      | SDK到位也不会自动补齐；必须先界定可证明范围及安全只读接口，不能以0资产或RESTORED充数                                                 |
+| 退休代历史冻结与拒绝旧身份                                                              | 已有generation/alive guard、内部source撤销和runner历史比较                                                              | **实现/有限采集已接线，正向尚未运行**               | SDK到位可测此有限性质；不能外推“从未发生任何旧代native read”                                                                         |
+| 全量旧代native读写审计                                                                  | 无公开全量访问事件/序列/计数；内部WeakMap不是事件流，读取可无外部副作用                                                 | **访问审计API缺口，同时缺相应采集能力**             | 单靠继续导出相同历史永远无法证明；需独立明确审计范围/入口并资格，不能补一个JS计数冒充                                                |
+| Close发生在真实release等待尚未完成的区间                                                | release Promise实现存在；只有结束receipt和session状态通知；EX02未导出pending phase                                      | **可观测控制点与采集能力缺口；自然可达性待SDK实测** | 不能把目前同stack排队Close升级为此项；先实测是否有天然task-yield窗口，再决定是否能用正常UI输入采集。若无窗口，须另行设计合规测试合同 |
+
+**逐项源码依据与排除方案：**
+
+1. **计数：** [world.ts](../../../../src/air/physics/box3d/world.ts) 1253–1292 行已实现复制式后端读回。`getNativeCounts` 返回 bodies/shapes/contacts/joints 和 bigint liveBytes；内存诊断要求 idle ready safe point，绑定实际 world identity。它不是完整进程malloc或GPU计数，也不能在release任意半途读取。[C20 fixture合同](../../../../tools/physics/box3d/c20-app-scene-cycles/v2/README.md) 的“Exact measurement boundary”已明确它是 **actual backend diagnostic，不是稳定IPhysicsWorld接口**；fixture保留bigint十进制字符串并与首次pre-scene基线严格比较。C20 v5已有内存观察器，但安全点由该fixture自身受控记录，不是可直接装到任何App的公开hook。
+
+   [IPhysicsWorld](../../../../src/cocos/physics/spec/i-physics-world.ts) 无这些扩展方法；[AirApp](../../../../src/air/app.ts) 48–54、139–151行只提供diagnostics/session及release/close结果。[AirPhysicsSceneReleaseResult](../../../../src/air/physics/preparation.ts) 61–64行只有 backend/status；公开moduleRelease只出现在终态preparation收据，并不提供每轮可调用的原生模块句柄。`AirDiagnostics.snapshot()`是有界错误/警告日志，不是内存快照；`session.ownedCount`只是cleanup callback账本，不能替代native资源数。
+
+   当前EX02的 `releaseOwned` 在同一异步操作内依次完成第1次release→请求asset.destroy→第2次release，Start随后立即mount。外部采集器在await结束后只能看到最终导出，无法无侵入地插入两阶段之间的safe-point读回。把每轮改成Stop→读数→Start会形成另一条操作路线，不能偷偷替代现有Start/reset验收。把内部getter藏进新helper以绕过EX02的公开API源检查也不接受。本轮保留现有强断言，没有把未知数改为0、warmup、重置baseline或放宽字节比较。
+
+2. **旧代访问：** [main.ts](../../../../examples/box3d-compound-bowling/src/main.ts) 130–157行在idle操作和motion读前检查generation/alive；before-step另有token guard，release将actor标死并dispose handle。内部 [body-motion-source.ts](../../../../src/air/physics/box3d/body-motion-source.ts) 33–48行通过WeakMap撤销source并在错误world/source下拒绝；[公开controls](../../../../src/air/box3d-controls.ts) `readBox3DBodyMotion`描述已销毁/陈旧owner拒绝。这证明有防护实现，不等于记录了每一次native调用。现有导出完全不变也与“发生过无副作用读取”相容。包裹一个motion helper最多数到该helper，不能覆盖collider、target、binding、engine内部的所有路径；代理WASM exports或替换facade会改变候选身份和测量范围。因此本轮不新增“全量trace已实现”的假证据。真实SDK后可以取得历史不变、stale rejection等有限证据，不能凭这些提升全量访问结论。
+
+3. **释放等待中Close：** [app.ts](../../../../src/air/app.ts) 219–234行先安装共享release Promise，再在microtask中dispose scope/destroy scene/await cleanup；这是真实等待实现，但不是面向浏览器的“当前正在await”事件。`session.onChange`通知中的active/reason会在deactivate/dispose时同步发生；[session-scope.ts](../../../../src/air/session-scope.ts) 87–109行是在安装scope disposal Promise后notify，并未给出cleanup实际未完成的持久区间，更没有stage-1/stage-2 release边界。EX02的module-local app也未对采集器暴露该session。
+
+   从通知中立即调用Close会变成新增的重入回调测试；插入session.own(async delay)、替换releaseScene Promise、调试断点、添加测试专用await或修改释放时序均会制造原来没有的窗口。本轮全部不做。普通浏览器输入是task，不能被假定能穿插进只含microtask的短释放链。真实SDK必须先显示自然异步窗口和真实输入发生在开始之后/receipt之前，才可判这项；若没有，应诚实记录本workload中未捕获，不能让排队Close的boolean代替pending区间证据。
+
+**下一步边界：** 当前可立即交付的是现有runner、源码防护审计和上述准确能力表；本轮没有发现可在原公开EX02合同内无侵入补齐三项完整证明的安全捷径，所以没有为了提交制造新钩子或策略自测。35项CPU和两次缺SDK负向的原始记录仍仅属于上一轮明确范围，不在本轮重复或追溯改写。取得SDK后，先实际跑已接线的有限序列，并观察真实release行为；每轮完整计数和全量访问审计仍需要受支持的观测合同，而非只等待二进制。若另行选择已有C20后端资格读回，须明确它是新增的受限qualification profile，不把它混称普通公开EX02或全量census。
 
 ---
 
