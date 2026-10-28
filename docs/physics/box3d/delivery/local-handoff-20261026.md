@@ -12,6 +12,17 @@
 - 实际运行状态：Chromium/WebGL2/软件渲染器可用；正向生命周期 **NOT_RUN**。新 runner 在真实 HTTP/Chromium 下遇 identity 503 后正确失败并留证。历史失败和本轮两个独立负向 attempt 均保留，见 [runner 负向证据](../reports/artifacts/ex02-runner-negative-20261028/)。第一 attempt 后增加了严格 20 轮序列判定、当前源码 identity 比对和中性 Gallery 返回，第二 attempt 绑定最终工具哈希。
 - 最小环境阻塞：本环境无 SDK235 二进制、无 Emscripten；Google 官方下载被代理 403。没有 SDK235 可复用，证据 tar.gz 不是 SDK。依赖安装已恢复，无需继续修 npm 或开放 npm 镜像。
 
+### 当前保存环境复核（2026-10-28 14:57 UTC）
+
+核验前本地/远端均为 `b3f942fbde0065610127ff35ac1ea6fd166dd14c`，feature工作区干净，无未知新修改。本轮仅提交状态文档及非敏感只读核验记录，不改功能、重建、下载、部署或再次运行缺SDK负向截图。
+
+- **本任务实际观察：** hostname=`37db1441dfc2`，cwd/仓库=`/workspace/cocosairjs`。`/workspace/box3d-ex02-acceptance`、其emsdk克隆/任务目录CMake与Ninja包、dependency-followup、两次runner-negative目录、node_modules、普通build均在。4个选定临时文件与已提交原件字节一致；三批原证据共64项hash全匹配（13+31+20）。esbuild0.28.2可执行文件hash与此前修复后记录一致，普通JS/DTS也与本任务最初记录一致。此处是文件核验，不是重跑原测试。
+- **仍缺但不是新丢失：** 任务目录的Emscripten compiler、build里的Box3D ST WASM/distribution receipt，以及本地ST output目录仍不存在于明确检查路径。SDK235二进制自本任务开始即未找到；原403失败日志仍在且与提交原件一致。现有证据压缩包不是SDK，普通build不能代替BOX3D_RUNTIME，counter仍235。本轮不外推“全磁盘不存在任何SDK”。
+- **不能确认的部分：** 本任务前几轮未记录hostname，无法判定本任务主机/执行器是否更换。所查文件保留不等于平台从未恢复/迁移；缺少平台事件日志，不能确认“还原”的原因或过程。此前命令恢复可执行不代表知道额度余额。
+- **父任务独立工作区（父任务提供的实测，不是本任务跨环境读取）：** Oct27 hostname `8a8701d643f0`，现在 `b8f4588b9ba0`；同一cwd `/workspace/scratch/62d43a81bbde` 下 `box3d-recovery-20261027T0928` 缺失，主要剩Oct3–11老文件。它支持父工作区主机标识变化/目录缺失，不能证明这里也重置，不能把两个工作区当共享路径。
+
+[非敏感核验JSON](../reports/artifacts/ex02-environment-check-20261028.json)保留所查路径、文件hash、对照结果和不确定项；[STATUS](../STATUS.md)同步当前状态。没有读取凭据或受限路径。公开EX02有限采集仍可在取得合格SDK后启动；**完整计数采集/API、全量旧代访问审计、真实释放等待中途Close**三项缺口继续保留，具体分类在下方审计表，不能因文件还在就提升验收。
+
 ### 本地准备与新 SDK 身份（Bash，仓库根目录）
 
 先检查 `AGENTS.md`、`git status --short --branch`、`git remote -v`、`git rev-parse HEAD`。执行 `git fetch origin feat/box3d-rebuild-20261022` 后读取 `git show FETCH_HEAD:tools/build/build-number.json`，与本地计数核对。最后已知功能分支计数 235；新构建必须消费新的实际编号，不能把新字节称为 SDK235，也不能覆盖其他构建者的新编号。不要并行运行两套构建。
