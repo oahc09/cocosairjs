@@ -1,0 +1,43 @@
+{
+  "scope": "dependency and TS conversion recovery; lifecycle NOT_RUN",
+  "commands": [
+    {
+      "command": "npm ci with original lock, task cache, official registry host replacement, ignore-scripts",
+      "exitCode": 0
+    },
+    {
+      "command": "npm rebuild esbuild --offline with task cache",
+      "exitCode": 0
+    },
+    {
+      "command": "npm ls --all --json",
+      "exitCode": 0
+    },
+    {
+      "command": "node verify-transform.cjs (first checker)",
+      "exitCode": 1,
+      "reason": "harness compared source-map-free transform with HTTP inline source map"
+    },
+    {
+      "command": "node verify-transform.cjs (corrected checker)",
+      "exitCode": 0
+    },
+    {
+      "command": "node browser-preflight.cjs (port 7473)",
+      "exitCode": 0,
+      "boundary": "runtime 503; no lifecycle execution"
+    },
+    {
+      "command": "focused CPU command recorded in parent report",
+      "exitCode": 0,
+      "tests": 29
+    },
+    {
+      "command": "prettier --check report",
+      "exitCode": 0
+    }
+  ],
+  "sourceChanged": false,
+  "qualifiedRuntimePresent": false,
+  "newRuntimeBuild": false
+}

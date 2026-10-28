@@ -41,3 +41,44 @@ node --test examples/box3d-compound-bowling/tests/*.test.mjs \
   examples/box3d-compound-bowling/tests/*.test.cjs \
   tools/verify/box3d/compound-bowling/check-types.test.cjs
 ```
+
+## Dependency recovery follow-up — 2026-10-28 01:53 UTC
+
+**Dependency installation and TS/HTTP conversion are now PASS. Qualified SDK and actual lifecycle remain blocked / NOT_RUN.** This appended attempt preserves the original failed boot, screenshots and command logs above. No implementation, package manifest, lockfile or build counter changed. The feature branch was still `e6738d9c36e603620ccbe71338c09565ccee097a` before follow-up edits.
+
+### Diagnosis and recovery
+
+The original npm log has 1,442 tarball retry warnings across 410 distinct package names, including `@jridgewell/gen-mapping` (42), `ansi-regex` (40), `@babel/traverse` and `@babel/generator` (38 each), and `jsesc` (36). Those are warnings from an interrupted installation, not a terminal integrity failure attributable to one package. Their upstream corruption cause was not established. The full package/count inventory is retained in prior-retry-packages.json.
+
+Before reinstalling, `node_modules/@esbuild/linux-x64/bin/esbuild` measured only 17,426 bytes; `file` recognized an ELF whose section header offset was beyond the file (11,427,840). The first HTTP ETXTBSY occurred while npm was still installing. After termination, an independent invocation failed with EPIPE. These observations are consistent with running an executable while it was being written and then using its incomplete bytes; they do not establish an EX02 source defect. The old malformed binary was replaced by npm ci and is not retained. Its size/type observation was recorded during diagnosis; no original binary checksum is claimed.
+
+The official `registry.npmjs.org` download of locked `@esbuild/linux-x64@0.28.2` succeeded, HTTP 200, 4,741,809 compressed bytes. Its SHA512 matches the unchanged package-lock.json SRI exactly. The recovered installed binary matches the tarball member byte-for-byte: 11,427,952 bytes, SHA256 `e1698a3d5c6c0798fee4fd3b5cc816651f460c63d390a7a26ea4beb0b1884100`, version 0.28.2.
+
+A fresh-cache npm attempt exposed a second setup issue: the lockfile has 765 official registry URLs and 127 `registry.npmmirror.com` URLs. A registry option alone does not replace those explicit mirror hosts. That attempt was stopped after TERM did not terminate it, using KILL, to constrain subsequent retrieval to the requested official registry. Its raw log/debug log are retained; no mirror-specific network denial is claimed from that interrupted attempt.
+
+Using npm's existing per-command `replace-registry-host` option preserves locked versions and integrity checks while replacing those mirror hosts with the official registry. The successful command was:
+
+```sh
+npm ci --ignore-scripts --no-audit --no-fund \
+  --registry=https://registry.npmjs.org/ \
+  --replace-registry-host=registry.npmmirror.com \
+  --cache /workspace/box3d-ex02-acceptance/dependency-followup/npm-cache \
+  --fetch-retries=0 --fetch-timeout=30000 --maxsockets=4
+```
+
+Exit 0: 848 packages installed in 5 seconds. Its debug log records 126 GETs, all to `registry.npmjs.org`, with other entries served from the task-local cache. `npm rebuild esbuild --offline` using that cache then exited 0, validating its ordinary postinstall path. `npm ls --all --json` exited 0 with a complete dependency graph. Other package lifecycle scripts were intentionally not run by npm ci; the claim is dependency graph and required esbuild readiness, not validation of every package's scripts. No npm/global/network-security configuration changed. package-lock.json SHA256 remains `69d2f4480314c9a4630a72ff608d1b83fbf7d10a9d2ed8e3b3dc8590e5ff2e47`.
+
+### Fresh verification and retained attempts
+
+- PASS: actual esbuild.transform on current EX02 main.ts, ESM/es2022, no warnings; output 19,889 bytes. Re-parsing the emitted JS also succeeds.
+- PASS: fresh dev server at `127.0.0.1:7473` returns main.ts HTTP 200, JavaScript MIME, 75,292 bytes. The exact response matches an independent transform using the server's absolute sourcefile and inline source map options. Response and hashes are retained.
+- A first follow-up checker exited 1 because it compared the HTTP inline-source-map output with a transform without a source map. This was a harness comparison error. Its original script, JSON, response and failure log are preserved in transform-attempt1. The prematurely written PASS status field in that failed JSON is invalid; its exit failure and matchesDirectTransform=false are authoritative. The corrected checker computes status from the actual assertion and exits 0; this does not require changing application or server code.
+- The first attempt to restart port 7472 failed with EADDRINUSE; its log is retained. The old server's HTTP 500 response is also retained. Port 7473 is a new local server in the same environment, not a deployment or environment switch.
+- PASS limited: fresh real Chromium visit/click/back and WebGL2 capability probe. Current main.ts and the three local protocol/lifecycle/cleanup modules return 200. The runtime module and identity endpoint return 503 because no qualified runtime was supplied. Start and Close stay disabled; screenshot still shows a blank scene. Actual app boot remains FAIL; all requested lifecycle operations remain NOT_RUN.
+- PASS CPU only: all 29 focused tests rerun, zero failures. No strict qualified-SDK declaration check or native simulation was run.
+
+New raw logs, scripts, dependency graph, source/response hashes, failed checker attempt, console/HTTP records and two screenshots are under [ex02-dependency-recovery-20261028](artifacts/ex02-dependency-recovery-20261028/). The new Gallery screenshot was visually inspected. The original preflight directory is unchanged. The official esbuild tarball remains only in the task directory, with its SRI and binary comparison retained in registry-probe.json; no SDK binary is supplied by these evidence records.
+
+### Remaining network action
+
+**Dependency repair is complete; npm registry access needs no change.** For a future qualified ST rebuild, the environment administrator/user must allow the proxy's HTTPS CONNECT/download route to **`storage.googleapis.com:443`**, specifically the official `/webassembly/emscripten-releases-builds/` prefix. The blocked URL was `/webassembly/emscripten-releases-builds/deps/node-v24.19.0-linux-x64.tar.xz`; the pinned compiler package is `/webassembly/emscripten-releases-builds/linux/004876f1984e18a9eb0736c5ca417ac86d386fb8/wasm-binaries.tar.xz`. These supply the official emsdk toolchain required to build the missing ST WASM. The former URL already failed with proxy 403 in the retained original attempts; the latter was not requested in this follow-up. No Google download was retried, no alternate host/mirror was used for that toolchain, and no proxy/security setting was changed. SDK235 is absent and cannot be reused here. Build counter is still 235, with no fresh SDK produced.

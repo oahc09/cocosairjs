@@ -1,0 +1,238 @@
+{
+  "at": "2026-10-28T01:52:53.509Z",
+  "scope": "preflight only; no qualified Box3D runtime",
+  "console": [
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+    }
+  ],
+  "errors": [],
+  "http": [
+    {
+      "url": "http://127.0.0.1:7473/gallery.html",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7473/files.json",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7473/box3d-compound-bowling/",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7473/box3d-compound-bowling/style.css",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7473/__air-prelude.js",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7473/__debug-button.js",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7473/__reload.js",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7473/box3d-compound-bowling/src/main.ts",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7473/__reload_token",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7473/__build_status",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7473/box3d-compound-bowling/runtime/cocosair.module.js",
+      "status": 503
+    },
+    {
+      "url": "http://127.0.0.1:7473/box3d-compound-bowling/src/protocol.mjs",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7473/box3d-compound-bowling/src/cleanup.mjs",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7473/box3d-compound-bowling/src/lifecycle.mjs",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7473/__reload_token",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7473/__build_status",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7473/box3d-compound-bowling/",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7473/box3d-compound-bowling/style.css",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7473/__air-prelude.js",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7473/__debug-button.js",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7473/__reload.js",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7473/box3d-compound-bowling/src/main.ts",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7473/__reload_token",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7473/__build_status",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7473/box3d-compound-bowling/runtime/cocosair.module.js",
+      "status": 503
+    },
+    {
+      "url": "http://127.0.0.1:7473/box3d-compound-bowling/src/protocol.mjs",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7473/box3d-compound-bowling/src/lifecycle.mjs",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7473/box3d-compound-bowling/src/cleanup.mjs",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7473/gallery.html",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7473/box3d-compound-bowling/",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7473/files.json",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7473/box3d-compound-bowling/style.css",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7473/box3d-compound-bowling/",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7473/__air-prelude.js",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7473/__debug-button.js",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7473/box3d-compound-bowling/src/main.ts",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7473/__reload.js",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7473/box3d-compound-bowling/style.css",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7473/__air-prelude.js",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7473/__debug-button.js",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7473/__reload.js",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7473/box3d-compound-bowling/src/main.ts",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7473/__reload_token",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7473/__build_status",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7473/box3d-compound-bowling/runtime/cocosair.module.js",
+      "status": 503
+    },
+    {
+      "url": "http://127.0.0.1:7473/box3d-compound-bowling/src/protocol.mjs",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7473/box3d-compound-bowling/src/lifecycle.mjs",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7473/box3d-compound-bowling/src/cleanup.mjs",
+      "status": 200
+    }
+  ],
+  "browser": "154.0.8037.57",
+  "webgl": {
+    "available": true,
+    "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+  },
+  "gallery": {
+    "url": "http://127.0.0.1:7473/gallery.html#box3d-compound-bowling",
+    "title": "Box3D Compound Bowling · EX02 (draft / NOT_RUN) (box3d-compound-bowling)",
+    "frame": "/box3d-compound-bowling/",
+    "status": "初始化 · NOT_RUN",
+    "startDisabled": true,
+    "closeDisabled": true
+  },
+  "identity": {
+    "status": 503,
+    "body": "EX02 runtime unavailable: Set BOX3D_RUNTIME to the existing qualified runtime directory."
+  },
+  "back": {
+    "url": "http://127.0.0.1:7473/gallery.html#box3d-compound-bowling",
+    "galleryVisible": true
+  },
+  "lifecycle": "NOT_RUN",
+  "preCloseAcknowledged": true,
+  "browserCloseResolved": true
+}

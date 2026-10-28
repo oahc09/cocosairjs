@@ -1,0 +1,37 @@
+✔ scene release precedes asset destroy and second public flush; no post-receipt pending asset (1.982631ms)
+✔ unmounted candidate explicitly destroyed before public flush (0.316578ms)
+✔ failed first scene release never destroys potentially-live shared asset (0.594809ms)
+✔ asset failure preserves identity and still flushes successful destruction requests (1.517114ms)
+✔ released receipt alone does not drop a still-valid asset (0.292412ms)
+✔ refused handle disposal cannot skip remaining stops and public cleanup (0.315095ms)
+✔ multiclick/reset admission and close during transition (1.86678ms)
+✔ fault blocks reset but not preparation; pre-SDK preparation failure permits another attempt (0.219985ms)
+✔ failed release does not strand queued Close or transition finally (0.866531ms)
+✔ SDK close invoked then failed is terminal, not a retry of cached SDK promise (1.259792ms)
+✔ ten distinct triangular pins; no CPU-generated motion evidence (1.367262ms)
+✔ clock copies actual native float32 before exact check; double/incorrect substeps rejected (0.427712ms)
+✔ fall policy: upright and 59 degrees excluded; 61 and upside-down count; invalid input rejects (0.311871ms)
+✔ mass choices bounded; no geometry mutation in policy (1.175438ms)
+✔ target is bounded translation and unit Y rotation, not a body teleport or simulation (0.667588ms)
+✔ retired and stale actor guarded before native read (0.719103ms)
+✔ queued reset failure does not strand Close; operations serialize (0.454863ms)
+✔ standalone and Gallery share exact identity and runtime bytes; no fallback (6.840652ms)
+✔ missing explicit runtime fails closed without breaking unrelated Gallery routes (0.764882ms)
+✔ tampered ST asset and mismatched receipt are rejected before serving (3.208237ms)
+✔ symlink outside selected runtime is rejected (1.580448ms)
+✔ both entry points retain shared routing and scoped relative browser URLs (1.255769ms)
+✔ Gallery metadata remains draft and agrees with its manifest projection (3.722708ms)
+✔ no private physics bypass or body teleport in target update (1.45325ms)
+✔ mount occurs before noncached CCD/velocity and kinematic lease (0.264592ms)
+✔ native COM not visual estimated; explicit acceptance boundary (0.255558ms)
+✔ mounted owner is enabled before velocity and kinematic target admission (0.180447ms)
+✔ typecheck requires explicit --dts without automatic SDK fallback (106.230281ms)
+✔ typecheck rejects missing declaration file before loading compiler (27.606484ms)
+ℹ tests 29
+ℹ suites 0
+ℹ pass 29
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 249.803244
