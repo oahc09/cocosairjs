@@ -86,6 +86,11 @@
     },
     "/workspace/box3d-ex02-acceptance/toolchain/python/ninja/data/bin/ninja": {
       "exists": false
+    },
+    "/workspace/box3d-ex02-acceptance/toolchain/python/bin/ninja": {
+      "exists": true,
+      "bytes": 370448,
+      "sha256": "08639e194fffa7f08b259fc4abfa4803aff66b64de52549cee42ec527d55cea6"
     }
   },
   "taskVersusCommitted": [
@@ -159,5 +164,12 @@
   },
   "remoteFeatureHeadBeforeDocumentation": "b3f942fbde0065610127ff35ac1ea6fd166dd14c",
   "branch": "feat/box3d-rebuild-20261022",
-  "repositoryPath": "/workspace/cocosairjs"
+  "repositoryPath": "/workspace/cocosairjs",
+  "ninjaPathFollowup": {
+    "checkedAt": "2026-10-28T14:59:30.260008+00:00",
+    "installedExecutable": "/workspace/box3d-ex02-acceptance/toolchain/python/bin/ninja",
+    "packageRecordEntry": "../../bin/ninja,sha256=CGOeGU__p_CLJZ_Eq_pIA6_2a2TeUlSc7kLsUn1VzqY,370448",
+    "matchesPackageRecord": true,
+    "note": "Previously checked ninja/data/bin/ninja is not the wheel installed path; its absence is not evidence of lost Ninja installation."
+  }
 }
