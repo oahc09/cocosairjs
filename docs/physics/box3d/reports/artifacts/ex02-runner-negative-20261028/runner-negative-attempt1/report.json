@@ -1,0 +1,96 @@
+{
+  "schema": "ex02-browser-lifecycle-attempt-v1",
+  "startedAt": "2026-10-28T10:11:25.807Z",
+  "status": "FAIL",
+  "stage": "preflight",
+  "complete": false,
+  "expectedBuild": 235,
+  "expectedRuntimeSha256": "0000000000000000000000000000000000000000000000000000000000000000",
+  "checks": [],
+  "cycles": [],
+  "console": [
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+    }
+  ],
+  "http": [
+    {
+      "url": "http://127.0.0.1:7474/gallery.html",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7474/files.json",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7474/box3d-compound-bowling/",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7474/box3d-compound-bowling/style.css",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7474/__air-prelude.js",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7474/__reload.js",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7474/__debug-button.js",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7474/__build_status",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7474/__reload_token",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7474/box3d-compound-bowling/src/main.ts",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7474/box3d-compound-bowling/runtime/cocosair.module.js",
+      "status": 503
+    },
+    {
+      "url": "http://127.0.0.1:7474/box3d-compound-bowling/src/protocol.mjs",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7474/box3d-compound-bowling/src/cleanup.mjs",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7474/box3d-compound-bowling/src/lifecycle.mjs",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7474/__reload_token",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:7474/__build_status",
+      "status": 200
+    }
+  ],
+  "errors": [],
+  "boundaries": {
+    "perCycleNativeCounters": "NOT_RUN: example exports no public native/GPU count snapshots",
+    "allRetiredNativeReads": "NOT_RUN: frozen history and guards do not census every native access",
+    "screenshotReview": "NOT_RUN: inspect retained PNGs manually",
+    "physicalShutdown": "NOT_MEASURED: browser.close is not process-tree wait/ECHILD evidence",
+    "otherPhysicsMatrix": "NOT_RUN: no mass/COM/contact/impulse-isolation qualification"
+  },
+  "browser": "154.0.8037.57",
+  "failure": "AssertionError [ERR_ASSERTION]: qualified runtime identity unavailable\n\n503 !== 200\n\n    at collect (/workspace/cocosairjs/tools/verify/box3d/compound-bowling/browser-lifecycle.cjs:130:16)",
+  "failureCleanup": "TimeoutError: locator.click: Timeout 1500ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#close')\u001b[22m\n\u001b[2m    - locator resolved to <button disabled id=\"close\">关闭</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not enabled\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not enabled\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    3 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not enabled\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n",
+  "browserCloseResolved": true,
+  "finishedAt": "2026-10-28T10:11:29.007Z"
+}

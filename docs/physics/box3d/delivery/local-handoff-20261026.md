@@ -1,5 +1,125 @@
 # Box3D：本地接管、当前进展与剩余闭环
 
+## 最新补充：EX02 本地可执行验收入口（2026-10-28 UTC）
+
+本节覆盖原 EX02 保龄球范围，优先于下方 2026-10-26 历史状态；不重判其余 C20/G0–G8 全项目任务。远端基线先核对 `54c4d8e4eba373ef20698857478e967954696018` 及本节随后提交，工作分支仍是 `feat/box3d-rebuild-20261022`。启动前 fetch/read-back 实际远端，不覆盖未知提交或本地修改；本地接手写入须与云端交接唯一 writer。
+
+### 现在可以直接做什么
+
+- 源码已实现：十个 compound 瓶、球、平台 target、COM、三档质量、冲量、计分、串行 Start/Stop/Close、两阶段公开释放。此次没有因缺 SDK 而重写生命周期。
+- 工具已实现：`tools/verify/box3d/compound-bowling/browser-lifecycle.cjs` 真实浏览器采集器，以及 `lifecycle-evidence.cjs` 拒绝式判定器。它们不安装、不构建、不替换 SDK、不发布 canonical evidence；只接受 loopback Gallery URL、新输出目录、显式 runtime SHA256/build number。
+- 已真实通过：官方 npm 源依赖恢复，esbuild 0.28.2 原 main.ts 转换与 HTTP 200 一致性，35 项 CPU 检查（原 29 + 新 6 项判定/参数测试），当前固定源码库存校验（130 files /111 core files）。这些均不是物理通过。
+- 实际运行状态：Chromium/WebGL2/软件渲染器可用；正向生命周期 **NOT_RUN**。新 runner 在真实 HTTP/Chromium 下遇 identity 503 后正确失败并留证。历史失败和本轮两个独立负向 attempt 均保留，见 [runner 负向证据](../reports/artifacts/ex02-runner-negative-20261028/)。第一 attempt 后增加了严格 20 轮序列判定、当前源码 identity 比对和中性 Gallery 返回，第二 attempt 绑定最终工具哈希。
+- 最小环境阻塞：本环境无 SDK235 二进制、无 Emscripten；Google 官方下载被代理 403。没有 SDK235 可复用，证据 tar.gz 不是 SDK。依赖安装已恢复，无需继续修 npm 或开放 npm 镜像。
+
+### 本地准备与新 SDK 身份（Bash，仓库根目录）
+
+先检查 `AGENTS.md`、`git status --short --branch`、`git remote -v`、`git rev-parse HEAD`。执行 `git fetch origin feat/box3d-rebuild-20261022` 后读取 `git show FETCH_HEAD:tools/build/build-number.json`，与本地计数核对。最后已知功能分支计数 235；新构建必须消费新的实际编号，不能把新字节称为 SDK235，也不能覆盖其他构建者的新编号。不要并行运行两套构建。
+
+依赖恢复命令已实际验证；host 替换仅对本次命令生效，保留原锁文件版本/SRI，不改网络配置：
+
+```sh
+npm ci --ignore-scripts --no-audit --no-fund \
+  --registry=https://registry.npmjs.org/ \
+  --replace-registry-host=registry.npmmirror.com \
+  --cache "$PWD/output/ex02-npm-cache" --fetch-retries=0 --fetch-timeout=30000 --maxsockets=4
+npm rebuild esbuild --offline --cache "$PWD/output/ex02-npm-cache"
+npm ls --all
+node --test examples/box3d-compound-bowling/tests/*.test.mjs \
+  examples/box3d-compound-bowling/tests/*.test.cjs \
+  tools/verify/box3d/compound-bowling/*.test.cjs
+```
+
+记录 `node --version`/`npm --version`。本轮依赖实际使用 Node24.19.0/npm11.9.0，历史 SDK235 使用 Node24.22.1；这不证明新 runtime 构建已经通过。`--ignore-scripts` 只对 esbuild 单独执行了 rebuild，不是所有依赖脚本资格。
+
+如本地已有完整、可信 SDK，先验实际库存及来源，再使用后面的 `BOX3D_RUNTIME` 路径；不可只因目录名含235就信任。没有时，使用仓库**现有**工具链重建：
+
+- 固定 core `efca0c184d40fd6a82016983f1601c4d23965867`；binding-base `5d5a3af049cccd9948b2b55bac4342414af0ef64`（参考，不是混入旧 WASM）。
+- `tools/physics/box3d/versions.lock.json`、`patches/lock.json`、`owned-files.json`、ABI schema 与实际 checkout 一并冻结。当前 schema SHA256 `8af84ffb85ce311e9693d378c70ca3c788896b8aeee228700bbddd61c0ca8a04`；patch chain `fce7869b3888ff9bfd417095e70ce72591893b2c3add1802e1a5bc32ca918bfe`。
+- 官方 Emscripten 6.0.2；emsdk 锁定 commit `ca38f487f28b7c3c16f8f70cd0e012099ac4b7e2`；Emscripten commit `7a2d97d627ff4945eae28847ce0387ac52b92c09`；release `004876f1984e18a9eb0736c5ca417ac86d386fb8`。CMake4.4.4/Ninja1.13.2，使用任务目录安装/已有 shell-scoped 工具链，不改全局。
+- 历史 SDK235 producer `a00306f391c595e292bbcaedd0f757bc99ca4ead`；库存25 files /43,837,664B，inventory SHA256 `e293c38f7c0c32460346993e337755698add63b4874d6686e581cc03ba00a7fc`。此值仅标识原235库存，不是新构建必须伪造的 hash。相对该 producer，目前生产 src/native/vendor 无差异；工具/元数据有差异，仍必须用当前实际 source SHA 记录新构建。
+
+仅在本地工具链确已可用时执行以下起点。`RUN_ID` 必须换成不存在的新目录名。保留完整 stdout/stderr、exit、输入前后 hash、工具版本、构建 receipt、最终库存。命令是交接入口，**本环境没有执行其 ST/ESM/DTS 部分**；不等于 SDK235 的完整7项DTS gate重放或完整产品资格。设置合理时间/内存限额并按原 shutdown 合同记录后代退出；普通 shell exit0 不能冒充 ECHILD。
+
+```sh
+set -euo pipefail
+# 在当前 shell 激活既有受控 emsdk；不要在此环境重试被拒下载。
+# source /absolute/path/to/official-emsdk/emsdk_env.sh
+emcc --version
+cmake --version
+ninja --version
+export RUN_ID=local-ex02-attempt1
+export BOX3D_ST_OUT="$PWD/tools/physics/box3d/output/$RUN_ID"
+export BOX3D_SDK_OUT="$PWD/output/$RUN_ID-sdk"
+mkdir -p "output/$RUN_ID-evidence"
+git rev-parse HEAD | tee "output/$RUN_ID-evidence/source-sha.txt"
+node tools/physics/box3d/verify-sources.mjs
+node tools/physics/box3d/build-ready.mjs --out "$BOX3D_ST_OUT" \
+  2>&1 | tee "output/$RUN_ID-evidence/st.log"
+export AIR_FEATURES='air,base,gfx-webgl2,gfx-webgpu,gfx-empty,3d,animation,skeletal-animation,primitive,tween,custom-pipeline,legacy-pipeline,profiler,video,webview,2d,physics-2d-framework,particle-2d,tiled-map,ui,spine-3.8,spine-4.2,dragon-bones,physics-2d-box2d,physics-builtin,physics-cannon,custom-pipeline-post-process,physics-box3d'
+AIR_OUT_DIR="$BOX3D_SDK_OUT" AIR_BOX3D_ST_BUILD_DIR="$BOX3D_ST_OUT" \
+  AIR_BOX3D_PROVENANCE_ROOT="$PWD" \
+  node --max-old-space-size=4096 tools/build/build.cjs --format esm \
+  2>&1 | tee "output/$RUN_ID-evidence/esm.log"
+# build-dts 不服从 AIR_OUT_DIR，写本 checkout 的 build/；先保留那里已有产物。
+node --max-old-space-size=2048 tools/build/build-dts.cjs \
+  2>&1 | tee "output/$RUN_ID-evidence/dts.log"
+node tools/build/dts-inputs.test.cjs
+node tools/build/dts-external-types.test.cjs
+node tools/build/dts-symbols.test.cjs
+node tools/verify/box3d/compound-bowling/check-types.cjs --dts "$PWD/build/cocosair.module.d.ts"
+cp build/cocosair.module.d.ts build/cocosair.legacy.d.ts "$BOX3D_SDK_OUT/"
+```
+
+DTS 产物存在不代表成功；检查原始 emit diagnostics，非零退出/源码诊断立即停止，不以 finally 恢复的文件替换通过。历史 SDK235 7 gates 中的 app/mesh/terrain strict consumer 配置在历史临时 supervision 目录，不能假设当前存在；完整 SDK 资格仍需恢复相应消费者及原门禁。上面是 EX02 所需的现有直接类型检查，不冒称全部7项。
+
+ST `consumer-ready.json` 必须为 `READY_FOR_LIMITED_CONSUMER_VERIFICATION`，且新 manifest/audit/receipt 和当前输入一致；不是 formal acceptance。记录新 ESM 导出的 `AIR_BUILD_NUMBER`（浏览器 export 将再次核验）、runtime JS SHA256、五个 ST transport 文件及 DTS 的 hash/字节数。选定完整运行目录应含 `cocosair.module.js` 和 `physics/box3d/st/{manifest.json,box3d-st.mjs,box3d-st.wasm,facade.mjs,distribution-receipt.json}`。runtime-route 会检查 manifest/receipt identity 及资产 hash，不能用缺 WASM 的普通 build/ 替代。
+
+### 启动与采集
+
+服务终端（Gallery dev server 保留既有 watcher 行为；冻结后不要改 source/SDK）：
+
+```sh
+BOX3D_RUNTIME=/absolute/path/to/new-qualified-sdk \
+  node tools/dev/dev-server.cjs --example box3d-compound-bowling --port 7474
+```
+
+另一终端，指定已安装的 Playwright（可通过 NODE_PATH 指向既有 tooling，不自动下载浏览器）。`--expect-runtime-sha256` 必须填从选定 SDK 文件独立计算并留档的 hash，不能填零或为了匹配响应临时改值；build 填该 SDK 实际构建号。下面 shell 使用 Node 计算选定文件 hash；SDK_BUILD_NUMBER 仍须从真实构建身份取得，不能默认236。
+
+```sh
+export BOX3D_RUNTIME=/absolute/path/to/new-qualified-sdk
+export SDK_BUILD_NUMBER=实际新构建号
+export SDK_RUNTIME_SHA256="$(node -e 'const fs=require("fs"),c=require("crypto"); process.stdout.write(c.createHash("sha256").update(fs.readFileSync(process.env.BOX3D_RUNTIME+"/cocosair.module.js")).digest("hex"))')"
+mkdir -p output
+node tools/verify/box3d/compound-bowling/browser-lifecycle.cjs \
+  --url=http://127.0.0.1:7474/gallery.html \
+  --out=output/ex02-browser-new-attempt1 \
+  --expect-runtime-sha256="$SDK_RUNTIME_SHA256" --expect-build="$SDK_BUILD_NUMBER"
+# 如 tooling 需要，追加 --executable=/absolute/path/to/already-installed/chromium
+```
+
+输出目录必须不存在；参数错误 exit2，执行失败 exit1。完整有限观察 exit0 且 `report.json.status=LIMITED_OBSERVED_LIFECYCLE`，**永不自动给整体 PASS**。每轮导出由页面原 Export 按钮真实下载，另存 screenshot、console、HTTP、identity、inputs 与 SHA256 库存。没有 mock SDK、私有 world/native 调用、释放延时替身或 baseline 重置。
+
+runner 在当前 Gallery iframe 中使用同一 public createStepClock，动作/断言暂停 native pacer 后显式推进；不在 app 之外创建物理 world。它执行：Start→中心冲量后真实 native ball motion→Stop→后续 clock frames 旧历史不变→Start 新代→20 次实际 release/rebuild（必须21个连续有原生观察的快照）→同 stack DOM Start/Close 竞争→terminal Close→clock.end→回到中性 Gallery。竞争测试是 reset 已准入、release 尚在 Promise 队列时的真实 DOM 控件调用，**不冒称可信鼠标连点或 await release 中途延时竞态**；该更窄中途场景仍未覆盖。可信指针快速连点与真实 fault-then-Close 也仍未验收；原CPU竞争测试不能替代这些浏览器结果。
+
+### 通过条件与真正剩余项
+
+| 项目                              | 实现 / 工具                                                                                                | 当前实际验收                                                                                      |
+| --------------------------------- | ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| Stop→Start 新代、20轮真实释放重建 | 功能已实现；runner 校验12个活动 actor/10瓶身份、clock、两阶段receipt和owned资产0                           | 正向 native/browser NOT_RUN，缺 SDK                                                               |
+| reset 准入队列中 Close            | 功能及runner已实现；校验不得新 mount、4个阶段receipt、1个终态receipt                                       | 正向 NOT_RUN；更窄的释放 await 中途 Close 不被此方法证明                                          |
+| 旧 generation                     | guard 已有；runner 对退休代 frames/clocks/requests/geometry/score 做不变性比较，拒绝 fault                 | 正向 NOT_RUN；全量 native 读写追踪缺口仍 NOT_RUN                                                  |
+| 两阶段资源恢复                    | receipt RESTORED、owned valid0、destroyErrors空均强断言                                                    | 每轮完整 native/GPU 计数导出**尚无实现**，不能把receipt等同零增长；需后续基于受支持诊断入口补计数 |
+| 最终 Close                        | 校验公开 moduleRelease VERIFIED、完整 schema/counter、同module terminal=baseline，cleanup/pending/errors空 | 正向 NOT_RUN；不是全 malloc/GC/所有handle资格                                                     |
+| Gallery 返回与画面                | 真实入口点击/PNG采集/返回中性Gallery已接线                                                                 | HTML导航和缺SDK负向已实测；原生画面仍NOT_RUN，PNG仍需人工review                                   |
+| 正向runner自身                    | CPU拒绝测试6项，真实缺runtime负向通过（collector本身exit1）                                                | 未用真SDK贯通，不能声称采集器的后续分支已浏览器资格                                               |
+
+每轮缺计数、完整 stale native access census、截图review、物理浏览器进程树闭合目前明确留在report.boundaries，缺任一都不能提升成完整 lifecycle/leak PASS。35项CPU包含人造策略输入，只验证拒绝逻辑。三档质量、COM正确性、独立中心/偏心冲量、计分物理效果、static baked compound及C04/C06–C12/C18不由本runner代替；保留原矩阵，不扩大本轮去实现全引擎。
+
+下一步最小阻塞：在用户本地提供实际合格 runtime，或让管理员允许 `storage.googleapis.com:443` 官方 `/webassembly/emscripten-releases-builds/` 下载以重建；本轮不再请求该域名、不换镜像、不改网络安全设置。源码/工具/文档可先取走；先运行有限正向runner，保留所有失败，再针对真实失败修复。完整资源基线与全量访问证明是随后明确的证据/功能工作，不能让网络解锁自动变成整体完成。
+
+---
+
 更新时间：2026-10-26 23:15（UTC+8）。这是执行交接，不是完成报告。
 
 ## 0. 一页结论
@@ -18,6 +138,7 @@
 用户最新要求：今晚将可提交的 Box3D 小任务尽快修复提交，保证功能代码及时入库，同时准备本地接管并自行管理状态。
 
 因此：
+
 1. 云端今晚仅继续原 Box3D 分支上可独立审查的小批修复；不合 main、不强推、不发布、不创建新云任务或切环境。
 2. 本地开始修改时，应明确切换唯一写入者。云端与本地不要同时修改同一功能/分支；建议本地从最新已核提交新建本地接管分支。
 3. 本文记录的是上述基线时刻，不会把后续源码候选自动记为已测试。
@@ -28,23 +149,23 @@
 
 下表是定位锚点，不是所有提交的完整列表。完整历史以 Git 为准。
 
-| 提交 | 内容 | 准确边界 |
-|---|---|---|
+| 提交                                       | 内容                                               | 准确边界                                                   |
+| ------------------------------------------ | -------------------------------------------------- | ---------------------------------------------------------- |
 | `cd742f8000e8718f2bdfde0ce1eb9015271c1e28` | 不支持的 Terrain/Hull/RoundHull 事件注册原子性修复 | 不添加不支持的 geometry 配对；失败注册不遗留 listener/flag |
-| `e5a7ddec9fa515a2fe17316dd3ab36538e48e23d` | SDK225 Terrain 有限公开运行回归及 build225 | 不是全部 Terrain/C19/Gate 完成 |
-| `4a21d78d95b3a7e09f3f6c1226cf0a56339cfea2` | C20 lowlevel v3 debug-cache 口径修正 | shapeHandles 是懒建 debug cache，不是所有 shape 总数 |
-| `84ccd9292af6bea1eb525a50bfc857fe96154c4d` | lowlevel 100 轮可观测子集报告 | 完整 global world/all-handle census 尚未资格 |
-| `f1380eb96809c3a24e7f2ec024f4cdeebefb327e` | APP fixture v2：关节阈值设置移到 mount 后 | 原 baseline 和 100 轮条件不变 |
-| `9e91b0e5570ae0a14a53460beb0a4f4e9331bb0e` | APP 首轮 strict baseline 失败证据 | 不隐去失败 |
-| `8d5fa3208ee2b02793ac50d86e31b5cd11fe860f` | 只读 memory diagnostics | 初版后续发现 tree scratch NULL 误判 |
-| `f3d7457c7b81283bc1af31a0b0a892aedc5f5760` | 精确库存门禁同步修复 | 37 commands / 92 inputs / 84 units / 55 evidence |
-| `3048ffe289cd37e59a66de44472cd18108f05693` | capture 的真实 native producer root 绑定 | 不放宽原构建 gate，不重写编译证据路径 |
-| `117d6af86f96ff15e0d734745b47a8b0b19a9c5f` | tree ledger 合法 inactive scratch 修复 | SDK227 producer；只修六行 guard/描述，不改原账本公式 |
-| `64d3a39884cb0816b34b9bdd89957318a3091be7` | SDK226 capture 失败报告 | 旧 1/3 诊断失败不追溯改成通过 |
-| `a104f15f4ae2fc1f280fd5edfbadc14d5e709e12` | SDK227 构建链报告和 counter227 | native/unit/WASM/ESM/DTS 有限通过，不是 C20 APP 通过 |
-| `a14ce32567166b8b0c124ffaadfe0d92b8db0ee7` | SDK227 capture v2 runner | fixture 身份与 producer 身份分开 |
-| `65730a3adb4c8fc588c7aa2c4a412ba9f891dc7c` | SDK227 三点完整 capture 报告 | strict 仍 FAIL、0 qualified |
-| `f7ff40c23ed4ab3f8cf119ec92289de6277c1024` | 同 world 回收设计 + 代际 CPU 模型 | 只有设计/模型；尚无生产 trim |
+| `e5a7ddec9fa515a2fe17316dd3ab36538e48e23d` | SDK225 Terrain 有限公开运行回归及 build225         | 不是全部 Terrain/C19/Gate 完成                             |
+| `4a21d78d95b3a7e09f3f6c1226cf0a56339cfea2` | C20 lowlevel v3 debug-cache 口径修正               | shapeHandles 是懒建 debug cache，不是所有 shape 总数       |
+| `84ccd9292af6bea1eb525a50bfc857fe96154c4d` | lowlevel 100 轮可观测子集报告                      | 完整 global world/all-handle census 尚未资格               |
+| `f1380eb96809c3a24e7f2ec024f4cdeebefb327e` | APP fixture v2：关节阈值设置移到 mount 后          | 原 baseline 和 100 轮条件不变                              |
+| `9e91b0e5570ae0a14a53460beb0a4f4e9331bb0e` | APP 首轮 strict baseline 失败证据                  | 不隐去失败                                                 |
+| `8d5fa3208ee2b02793ac50d86e31b5cd11fe860f` | 只读 memory diagnostics                            | 初版后续发现 tree scratch NULL 误判                        |
+| `f3d7457c7b81283bc1af31a0b0a892aedc5f5760` | 精确库存门禁同步修复                               | 37 commands / 92 inputs / 84 units / 55 evidence           |
+| `3048ffe289cd37e59a66de44472cd18108f05693` | capture 的真实 native producer root 绑定           | 不放宽原构建 gate，不重写编译证据路径                      |
+| `117d6af86f96ff15e0d734745b47a8b0b19a9c5f` | tree ledger 合法 inactive scratch 修复             | SDK227 producer；只修六行 guard/描述，不改原账本公式       |
+| `64d3a39884cb0816b34b9bdd89957318a3091be7` | SDK226 capture 失败报告                            | 旧 1/3 诊断失败不追溯改成通过                              |
+| `a104f15f4ae2fc1f280fd5edfbadc14d5e709e12` | SDK227 构建链报告和 counter227                     | native/unit/WASM/ESM/DTS 有限通过，不是 C20 APP 通过       |
+| `a14ce32567166b8b0c124ffaadfe0d92b8db0ee7` | SDK227 capture v2 runner                           | fixture 身份与 producer 身份分开                           |
+| `65730a3adb4c8fc588c7aa2c4a412ba9f891dc7c` | SDK227 三点完整 capture 报告                       | strict 仍 FAIL、0 qualified                                |
+| `f7ff40c23ed4ab3f8cf119ec92289de6277c1024` | 同 world 回收设计 + 代际 CPU 模型                  | 只有设计/模型；尚无生产 trim                               |
 
 ## 3. 先读哪些仓库文件
 
@@ -96,26 +217,26 @@ C20 lowlevel v3：真实执行100 world ×50 body/50 shape，包含fixed joint�
 
 同 app、同 world，初始/nativeStep0、满载step7、释放step58，三点各87行全部通过诊断求和与身份校验。
 
-| 计量范围 | 初始 | 满载 | 释放后 | 释放−初始 |
-|---|---:|---:|---:|---:|
-| world ledger | 36,040 | 108,708 | 112,980 | +76,940 |
-| module core requested bytes | 167,320 | 239,624 | 243,480 | +76,160 |
-| world bridge bytes | 48 | 224 | 48 | 0 |
-| global bridge bytes | 48 | 224 | 48 | 0 |
-| excluded arena backing | 131,072 | 131,072 | 131,072 | 0 |
+| 计量范围                    |    初始 |    满载 |  释放后 | 释放−初始 |
+| --------------------------- | ------: | ------: | ------: | --------: |
+| world ledger                |  36,040 | 108,708 | 112,980 |   +76,940 |
+| module core requested bytes | 167,320 | 239,624 | 243,480 |   +76,160 |
+| world bridge bytes          |      48 |     224 |      48 |         0 |
+| global bridge bytes         |      48 |     224 |      48 |         0 |
+| excluded arena backing      | 131,072 | 131,072 | 131,072 |         0 |
 
 world ledger净增分类：
 
-| 分类 | 字节增量 |
-|---|---:|
-| solverSet | 38,656 |
-| worldArray | 16,512 |
-| dynamicTree | 12,348 |
-| graph | 7,104 |
-| events | 1,848 |
-| ID free lists | 384 |
-| hulls.map | 88 |
-| 合计 | **76,940** |
+| 分类          |   字节增量 |
+| ------------- | ---------: |
+| solverSet     |     38,656 |
+| worldArray    |     16,512 |
+| dynamicTree   |     12,348 |
+| graph         |      7,104 |
+| events        |      1,848 |
+| ID free lists |        384 |
+| hulls.map     |         88 |
+| 合计          | **76,940** |
 
 其中tree的1,932 B属于未实际分配backing的共同capacity估算，不能当malloc。module与world两个差值相差780 B，不得人为填平或未经证据归因。
 
@@ -134,6 +255,7 @@ core在heuristic0时只分配leafCenters，leafBoxes/binIndices可合法NULL，�
 已保住：远端f7ff及之前的源码、测试工具、设计、摘要报告、build counter。
 
 未保住：
+
 - 11文件stage2 identity未提交候选、其完整manifest和原日志；
 - control/candidate各111 core staging；
 - 临时SDK与完整raw大包、原工具链目录。
@@ -215,20 +337,20 @@ tools/physics/box3d/empty-world-trim/identity/stage.mjs
 
 ## 8. 原项目剩余范围，不止C20
 
-| 范围 | 剩余工作 |
-|---|---|
-| T00–03、T32 | 同步合同/决策/fixture/预算/当前实际结果；文档存在不等于关闭 |
-| T04–07 | ST、SIMD/CSP、loader/ABI/ownership、ID/heap/bulk-read完整矩阵 |
-| T08–13 | 已有world/body/基础与凸形状能力；补全部setter rollback、父变换/缩放、COM、销毁和指定几何验收 |
-| T14 / C16–20 | mesh/Terrain已有有限实测；static baked compound C18仍缺；完整资源/查询合同；C20APP修复及全局census |
-| T15 / C21–25 | 事件已有通道；补原要求contact geometry配对/snapshot/transient sensor/目标回调；不删除unsupported guard冒充支持 |
-| T16 | 完整query/CCD/事件/生命周期矩阵；已有ray/primitive sweep不是从零；不自增任意hull sweep范围 |
-| T17–19 | P2P/Hinge/Fixed已有基础；T18/C35/C30EXT高级joint与revolute spring、公共合同/拒绝路径 |
-| T20/T33 examples | 已有EX01/02/03/05/09；缺EX04 joint-mechanisms、EX06 terrain-assets；已有项还需完整操作/重置/UI/证据 |
-| T21–23/T34 | ST Node/browser完整回归、builtin/Cannon/2D共存、真实npm pack空消费者、文档、BIZ01–08 |
-| T24–26 | MT、character、正式recording/replay，EX07/EX08；EX09 action playback不能替代T26 |
-| T27–29 | 冻结设备性能P01–07、AG01–05独立验收 |
-| T30–31 | 同一source/runtime全required矩阵、九示例、消费者、许可证、可访问证据闭环 |
+| 范围             | 剩余工作                                                                                                       |
+| ---------------- | -------------------------------------------------------------------------------------------------------------- |
+| T00–03、T32      | 同步合同/决策/fixture/预算/当前实际结果；文档存在不等于关闭                                                    |
+| T04–07           | ST、SIMD/CSP、loader/ABI/ownership、ID/heap/bulk-read完整矩阵                                                  |
+| T08–13           | 已有world/body/基础与凸形状能力；补全部setter rollback、父变换/缩放、COM、销毁和指定几何验收                   |
+| T14 / C16–20     | mesh/Terrain已有有限实测；static baked compound C18仍缺；完整资源/查询合同；C20APP修复及全局census             |
+| T15 / C21–25     | 事件已有通道；补原要求contact geometry配对/snapshot/transient sensor/目标回调；不删除unsupported guard冒充支持 |
+| T16              | 完整query/CCD/事件/生命周期矩阵；已有ray/primitive sweep不是从零；不自增任意hull sweep范围                     |
+| T17–19           | P2P/Hinge/Fixed已有基础；T18/C35/C30EXT高级joint与revolute spring、公共合同/拒绝路径                           |
+| T20/T33 examples | 已有EX01/02/03/05/09；缺EX04 joint-mechanisms、EX06 terrain-assets；已有项还需完整操作/重置/UI/证据            |
+| T21–23/T34       | ST Node/browser完整回归、builtin/Cannon/2D共存、真实npm pack空消费者、文档、BIZ01–08                           |
+| T24–26           | MT、character、正式recording/replay，EX07/EX08；EX09 action playback不能替代T26                                |
+| T27–29           | 冻结设备性能P01–07、AG01–05独立验收                                                                            |
+| T30–31           | 同一source/runtime全required矩阵、九示例、消费者、许可证、可访问证据闭环                                       |
 
 当前示例有限证据：EX02 Firefox 2436 ticks，但20次reset/运动中Stop等未完整覆盖；EX03 channel有限回归，armed preset真人取消未覆盖；EX05对照有限；EX09三单333分仅D路线、formal0。不要把这几项重新称为“源码缺失”，也不能把有限操作升级成formal通过。
 
@@ -254,6 +376,7 @@ tools/physics/box3d/empty-world-trim/identity/stage.mjs
 每项最少字段：`id, contractRefs, implementationStatus, validationStatus, sourceCommit, runtimeIdentity, evidencePaths, blocker, nextAction, owner, updatedAt`。
 
 状态必须区分：
+
 - `NOT_STARTED`：未开始；
 - `SOURCE_ONLY`：源码/审查完成，实际native/runtime未跑；
 - `VERIFIED_LIMITED`：明确范围的实际检查通过；
@@ -262,6 +385,7 @@ tools/physics/box3d/empty-world-trim/identity/stage.mjs
 - `DONE`：原合同要求全部完成且证据可取。
 
 执行规则：
+
 1. 同一核心链只维持一个主要IN_PROGRESS阶段；可并行只读审查或不冲突测试，不多写者争用。
 2. 每个小单元代码+测试+状态成组提交，推送后读回远端SHA；不等长任务全部结束才保存。
 3. 每个新运行独立attempt，不覆盖失败；修复可继续新attempt，但必须标明差异与新身份。

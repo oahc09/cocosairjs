@@ -80,3 +80,15 @@ node --test examples/box3d-compound-bowling/tests/*.test.mjs \
 ```
 
 Route tests use synthetic CPU fixtures and in-memory request/response calls (no browser or socket); fixture bytes are explicitly not native SDK artifacts. Separate read-only comparison with an actual selected SDK can establish route/hash consistency, never engine or visual behavior. The required moving Stop → fresh Start → twenty real release/rebuilds → Close during release sequence remains **NOT_RUN** until a real browser can execute it. Do not replace it with these tests.
+
+## Reusable local lifecycle collector (positive native run still NOT_RUN)
+
+Use `tools/verify/box3d/compound-bowling/browser-lifecycle.cjs` against an already running loopback Gallery server with explicit qualified BOX3D_RUNTIME. Full preparation, new-build identity, commands and honest acceptance boundaries are in [the existing local handoff](../../docs/physics/box3d/delivery/local-handoff-20261026.md#最新补充ex02-本地可执行验收入口2026-10-28-utc).
+
+The collector requires `--url=`, a nonexistent `--out=`, `--expect-runtime-sha256=` and actual `--expect-build=`. It uses real Export downloads and public controls/one step clock for Stop/Start, twenty distinct rebuilds and queued-reset Close. Optional `--executable=` selects an existing Chromium. It never installs, builds, promotes this draft or fabricates native measurements. Even a complete observed run is `LIMITED_OBSERVED_LIFECYCLE`, not full PASS: per-cycle native/GPU counters and a complete retired-native-access census are absent; screenshot review and process-tree shutdown proof are separate. Exit 0 means that limited sequence completed, not leak qualification. Missing runtime fails with retained raw evidence; positive native paths have not yet run here.
+
+CPU-only collector policy checks:
+
+```sh
+node --test tools/verify/box3d/compound-bowling/lifecycle-evidence.test.cjs
+```
