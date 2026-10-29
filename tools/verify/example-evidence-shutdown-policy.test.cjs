@@ -86,6 +86,8 @@ test('versioned browser close protocol retains raw statuses and distinguishes cl
         for (const proof of raw.barriers) {
             proof.elapsedMs += 12345;
             proof.deadlineMs += 12345;
+            // Raw index and original event must remain identical across clock-origin shifts.
+            raw.events[raw.events.findIndex((event) => event.eventId === proof.eventId)] = clone(proof);
         }
         assert.deepEqual(
             validateShutdownPolicy(shifted, raw),
@@ -363,4 +365,54 @@ print('Shared Python deadline controls passed')`;
         { encoding: 'utf8', timeout: 5000 },
     );
     assert.equal(python.status, 0, python.stdout + python.stderr);
+});
+
+test('executable inode/device wire integers are lossless and unsafe legacy identities remain rejected', () => {
+    // Isolated wire validation, not a process custody success receipt.
+    function errors(device, inode) {
+        const witness = {
+            type: 'frozen-browser-image',
+            eventId: 1,
+            cpuDummy: true,
+            image: { device, inode, bytes: 10, mtimeNs: '100', sha256: 'a'.repeat(64) },
+        };
+        return validateShutdownPolicy(
+            { cpuDummy: true, runtimes: [], events: [], browsers: [] },
+            { browserImage: witness, events: [witness], barriers: [], adopted: [] },
+        );
+    }
+    for (const [device, inode] of [
+        [0, 1],
+        [27, Number.MAX_SAFE_INTEGER],
+        ['0', '1'],
+        ['27', '9223372036854817271'],
+        ['18446744073709551615', '18446744073709551615'],
+    ])
+        assert.deepEqual(errors(device, inode), []);
+    for (const bad of [
+        -1,
+        -0,
+        1.5,
+        Number.MAX_SAFE_INTEGER + 1,
+        NaN,
+        Infinity,
+        null,
+        true,
+        '',
+        '01',
+        '-0',
+        '-1',
+        '+1',
+        ' 1',
+        '1 ',
+        '1e3',
+        '1.0',
+        '18446744073709551616',
+        '9'.repeat(100),
+    ]) {
+        assert.ok(errors(bad, '1').length, `device ${String(bad)}`);
+        assert.ok(errors('0', bad).length, `inode ${String(bad)}`);
+    }
+    assert.ok(errors('0', '0').length);
+    assert.ok(errors(0, 0).length);
 });

@@ -292,6 +292,12 @@ def stop_shutdown_evidence(request, closing, same_process=same):
     return closure
 
 
+def image_metadata(stat):
+    # Linux dev_t/ino_t can exceed JavaScript's exact numeric range. Never send them as JSON numbers.
+    return dict(device=str(stat.st_dev), inode=str(stat.st_ino), bytes=stat.st_size,
+                mtimeNs=str(stat.st_mtime_ns))
+
+
 def browser_shutdown_snapshot(request, config, worker, check_deadline):
     """Pre-close live evidence only. Missing child observations never imply a crash or absence."""
     wanted = request.get('browser')
@@ -311,9 +317,9 @@ def browser_shutdown_snapshot(request, config, worker, check_deadline):
     def image_of(pid):
         check_deadline()
         before = os.stat(f'/proc/{pid}/exe')
-        value = dict(device=before.st_dev, inode=before.st_ino, bytes=before.st_size, mtimeNs=str(before.st_mtime_ns))
+        value = image_metadata(before)
         after = os.stat(f'/proc/{pid}/exe')
-        if value != dict(device=after.st_dev, inode=after.st_ino, bytes=after.st_size, mtimeNs=str(after.st_mtime_ns)):
+        if value != image_metadata(after):
             raise RuntimeError('image-changed')
         value['sha256'] = frozen_hash if all(value[key] == frozen[key] for key in value) else None
         return value
@@ -414,8 +420,7 @@ def run(config_path, node, supervisor):
         raise RuntimeError('Browser image changed during launch authentication')
     if not config.get('cpuCase') and digest != config['runtimeIdentity']['executableSha256']:
         raise RuntimeError('Browser image differs from frozen executable')
-    config['_frozenBrowserImage'] = dict(device=after.st_dev, inode=after.st_ino, bytes=after.st_size,
-                                        mtimeNs=str(after.st_mtime_ns), sha256=digest)
+    config['_frozenBrowserImage'] = dict(image_metadata(after), sha256=digest)
     custody = config['custodian']
     limits = config['limits']
     started = datetime.datetime.fromisoformat(config['startedAt'].replace('Z', '+00:00')).timestamp()
