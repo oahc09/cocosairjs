@@ -23,9 +23,25 @@ import type { GLTFMaterial, TextureInfo } from '../schema';
 import { coreTextureCoordinates, TextureCoordinates } from './texture-slots';
 
 /** Texture slot names shared by feature population and material construction. */
-export const TEXTURE_SLOTS = ['baseColor', 'metallicRoughness', 'normal', 'occlusion', 'emissive',
-    'specular', 'specularColor', 'clearcoat', 'clearcoatRoughness', 'clearcoatNormal', 'anisotropy',
-    'iridescence', 'iridescenceIor', 'iridescenceThickness', 'bump', 'transmission', 'volumeThickness'] as const;
+export const TEXTURE_SLOTS = [
+    'baseColor',
+    'metallicRoughness',
+    'normal',
+    'occlusion',
+    'emissive',
+    'specular',
+    'specularColor',
+    'clearcoat',
+    'clearcoatRoughness',
+    'clearcoatNormal',
+    'anisotropy',
+    'iridescence',
+    'iridescenceIor',
+    'iridescenceThickness',
+    'bump',
+    'transmission',
+    'volumeThickness',
+] as const;
 export type TextureSlotName = (typeof TEXTURE_SLOTS)[number];
 
 /**
@@ -54,7 +70,7 @@ export interface PhysicalScalars {
     clearcoat?: { factor: number; roughness: number; normalScale: number };
     /** KHR_materials_anisotropy: tangent-aligned anisotropic specular ([0,1] strength). */
     anisotropy?: { strength: number; rotation: number };
-    /** KHR_materials_iridescence: thin-film layer (factor [0,1], ior [1.3,2.3333], nm range). */
+    /** KHR_materials_iridescence: thin-film layer (factor [0,1], finite ior >= 1.0, nm range). */
     iridescence?: { factor: number; ior: number; thicknessMin: number; thicknessMax: number };
     /** EXT_materials_bump: derivative-based height perturbation (factor >= 0). */
     bump?: { factor: number };
@@ -67,47 +83,67 @@ export interface PhysicalScalars {
 }
 
 /** Type-narrowing helper for the shared physical record. */
-export function physicalScalars (features: GLTFMaterialFeatures): PhysicalScalars {
+export function physicalScalars(features: GLTFMaterialFeatures): PhysicalScalars {
     return features.physical as PhysicalScalars;
 }
 
 /** Slot → TextureInfo mapping shared by feature population, mesh UV checks and material build. */
-export function slotTextureInfo (source: GLTFMaterial, slot: TextureSlotName): TextureInfo | undefined {
+export function slotTextureInfo(source: GLTFMaterial, slot: TextureSlotName): TextureInfo | undefined {
     switch (slot) {
-    case 'baseColor': return source.pbrMetallicRoughness?.baseColorTexture;
-    case 'metallicRoughness': return source.pbrMetallicRoughness?.metallicRoughnessTexture;
-    case 'normal': return source.normalTexture;
-    case 'occlusion': return source.occlusionTexture;
-    case 'emissive': return source.emissiveTexture;
-    case 'specular': return (source.extensions?.KHR_materials_specular as
-        { specularTexture?: TextureInfo } | undefined)?.specularTexture;
-    case 'specularColor': return (source.extensions?.KHR_materials_specular as
-        { specularColorTexture?: TextureInfo } | undefined)?.specularColorTexture;
-    case 'clearcoat': return (source.extensions?.KHR_materials_clearcoat as
-        { clearcoatTexture?: TextureInfo } | undefined)?.clearcoatTexture;
-    case 'clearcoatRoughness': return (source.extensions?.KHR_materials_clearcoat as
-        { clearcoatRoughnessTexture?: TextureInfo } | undefined)?.clearcoatRoughnessTexture;
-    case 'clearcoatNormal': return (source.extensions?.KHR_materials_clearcoat as
-        { clearcoatNormalTexture?: TextureInfo } | undefined)?.clearcoatNormalTexture;
-    case 'anisotropy': return (source.extensions?.KHR_materials_anisotropy as
-        { anisotropyTexture?: TextureInfo } | undefined)?.anisotropyTexture;
-    case 'iridescence': return (source.extensions?.KHR_materials_iridescence as
-        { iridescenceTexture?: TextureInfo } | undefined)?.iridescenceTexture;
-    case 'iridescenceIor': return (source.extensions?.KHR_materials_iridescence as
-        { iridescenceIorTexture?: TextureInfo } | undefined)?.iridescenceIorTexture;
-    case 'iridescenceThickness': return (source.extensions?.KHR_materials_iridescence as
-        { iridescenceThicknessTexture?: TextureInfo } | undefined)?.iridescenceThicknessTexture;
-    case 'bump': return (source.extensions?.EXT_materials_bump as
-        { bumpTexture?: TextureInfo } | undefined)?.bumpTexture;
-    case 'transmission': return (source.extensions?.KHR_materials_transmission as
-        { transmissionTexture?: TextureInfo } | undefined)?.transmissionTexture;
-    case 'volumeThickness': return (source.extensions?.KHR_materials_volume as
-        { thicknessTexture?: TextureInfo } | undefined)?.thicknessTexture;
+        case 'baseColor':
+            return source.pbrMetallicRoughness?.baseColorTexture;
+        case 'metallicRoughness':
+            return source.pbrMetallicRoughness?.metallicRoughnessTexture;
+        case 'normal':
+            return source.normalTexture;
+        case 'occlusion':
+            return source.occlusionTexture;
+        case 'emissive':
+            return source.emissiveTexture;
+        case 'specular':
+            return (source.extensions?.KHR_materials_specular as { specularTexture?: TextureInfo } | undefined)
+                ?.specularTexture;
+        case 'specularColor':
+            return (source.extensions?.KHR_materials_specular as { specularColorTexture?: TextureInfo } | undefined)
+                ?.specularColorTexture;
+        case 'clearcoat':
+            return (source.extensions?.KHR_materials_clearcoat as { clearcoatTexture?: TextureInfo } | undefined)
+                ?.clearcoatTexture;
+        case 'clearcoatRoughness':
+            return (
+                source.extensions?.KHR_materials_clearcoat as { clearcoatRoughnessTexture?: TextureInfo } | undefined
+            )?.clearcoatRoughnessTexture;
+        case 'clearcoatNormal':
+            return (source.extensions?.KHR_materials_clearcoat as { clearcoatNormalTexture?: TextureInfo } | undefined)
+                ?.clearcoatNormalTexture;
+        case 'anisotropy':
+            return (source.extensions?.KHR_materials_anisotropy as { anisotropyTexture?: TextureInfo } | undefined)
+                ?.anisotropyTexture;
+        case 'iridescence':
+            return (source.extensions?.KHR_materials_iridescence as { iridescenceTexture?: TextureInfo } | undefined)
+                ?.iridescenceTexture;
+        // Historical AIR-only texture, retained for compatibility; not part of the Khronos schema.
+        case 'iridescenceIor':
+            return (source.extensions?.KHR_materials_iridescence as { iridescenceIorTexture?: TextureInfo } | undefined)
+                ?.iridescenceIorTexture;
+        case 'iridescenceThickness':
+            return (
+                source.extensions?.KHR_materials_iridescence as
+                    { iridescenceThicknessTexture?: TextureInfo } | undefined
+            )?.iridescenceThicknessTexture;
+        case 'bump':
+            return (source.extensions?.EXT_materials_bump as { bumpTexture?: TextureInfo } | undefined)?.bumpTexture;
+        case 'transmission':
+            return (source.extensions?.KHR_materials_transmission as { transmissionTexture?: TextureInfo } | undefined)
+                ?.transmissionTexture;
+        case 'volumeThickness':
+            return (source.extensions?.KHR_materials_volume as { thicknessTexture?: TextureInfo } | undefined)
+                ?.thicknessTexture;
     }
 }
 
 /** Core feature state before any extension handler runs. */
-export function createMaterialFeatures (index: number, source: GLTFMaterial): GLTFMaterialFeatures {
+export function createMaterialFeatures(index: number, source: GLTFMaterial): GLTFMaterialFeatures {
     const uv = {} as Record<TextureSlotName, TextureCoordinates | undefined>;
     for (const slot of TEXTURE_SLOTS) {
         const info = slotTextureInfo(source, slot);

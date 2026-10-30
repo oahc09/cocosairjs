@@ -12,17 +12,17 @@
 
 以下为项目概念视觉与宣传素材，非引擎实机截图。
 
-| 从想法到可见反馈                                                         | 三维交互创意                                                                                  |
-| ------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------- |
-| ![从想法到可见反馈](assets/cocosairjs-from-idea-to-visible-feedback.png) | ![三维交互创意](assets/cocosairjs-three-dimensional-interactive-creativity.png)               |
-| **代码雕塑舞台**                                                         | **流动的光影与材质之环**                                                                      |
-| ![代码雕塑舞台](assets/cocosairjs-code-sculpture-stage.png)              | ![流动的光影与材质之环](assets/cocosairjs-the-flowing-ring-of-light-and-shadow-materials.png) |
+| 从想法到可见反馈                                                                                                                 | 三维交互创意                                                                                                                                          |
+| -------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ![从想法到可见反馈](https://github.com/oahc09/cocosairjs/blob/main/assets/cocosairjs-from-idea-to-visible-feedback.png?raw=true) | ![三维交互创意](https://github.com/oahc09/cocosairjs/blob/main/assets/cocosairjs-three-dimensional-interactive-creativity.png?raw=true)               |
+| **代码雕塑舞台**                                                                                                                 | **流动的光影与材质之环**                                                                                                                              |
+| ![代码雕塑舞台](https://github.com/oahc09/cocosairjs/blob/main/assets/cocosairjs-code-sculpture-stage.png?raw=true)              | ![流动的光影与材质之环](https://github.com/oahc09/cocosairjs/blob/main/assets/cocosairjs-the-flowing-ring-of-light-and-shadow-materials.png?raw=true) |
 
 ### 宣传视频
 
-[![点击查看宣传视频](assets/cocosairjs-from-idea-to-visible-feedback.png)](assets/cocosairjs-promotion.mp4)
+[![点击查看宣传视频](https://github.com/oahc09/cocosairjs/blob/main/assets/cocosairjs-from-idea-to-visible-feedback.png?raw=true)](https://github.com/oahc09/cocosairjs/blob/main/assets/cocosairjs-promotion.mp4?raw=true)
 
-[观看或下载宣传视频（MP4）](assets/cocosairjs-promotion.mp4)
+[观看或下载宣传视频（MP4）](https://github.com/oahc09/cocosairjs/blob/main/assets/cocosairjs-promotion.mp4?raw=true)
 
 https://github.com/user-attachments/assets/689ea4e1-de14-47dd-a104-564cf1005c06
 
@@ -240,7 +240,7 @@ npm run dev -- --example hello-cube --port 7454
 
 ## 默认 HDR 后处理
 
-主入口提供 `createAirPostProcess(camera, { levels: 5, toneMapping: 'aces', exposure: 1 })`，开箱即用的线性 HDR 捕获、多级 Bloom、ACES/Reinhard 和统一 sRGB 输出。先创建 app，再装配相机；参见 [用法与边界](docs/guides/hdr-post-processing.md) 、[AFTERLIGHT 光环装置](examples/afterlight/index.html) 和 [霓虹夜城示例](examples/neon-city/index.html)。当前支持默认 WebGL2 ForwardPipeline。
+主入口提供 `createAirPostProcess(camera, { levels: 5, toneMapping: 'aces', exposure: 1 })`，开箱即用的线性 HDR 捕获、多级 Bloom、ACES/Reinhard 和统一 sRGB 输出。先创建 app，再装配相机；参见 [用法与边界](docs/guides/hdr-post-processing.md) 、[AFTERLIGHT 光环装置](https://github.com/oahc09/cocosairjs/blob/main/examples/afterlight/index.html) 和 [霓虹夜城示例](https://github.com/oahc09/cocosairjs/blob/main/examples/neon-city/index.html)。当前支持默认 WebGL2 ForwardPipeline。
 
 ## 动态实例批次
 

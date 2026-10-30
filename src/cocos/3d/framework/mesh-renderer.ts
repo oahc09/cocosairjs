@@ -657,6 +657,8 @@ export class MeshRenderer extends ModelRenderer {
         this._geometryEventMesh?.off(Mesh.EVENT_GEOMETRY_CHANGED, this._onMeshGeometryChanged, this);
         this._geometryEventMesh = null;
         super._onPreDestroy();
+        // Never-loaded components skip onDestroy; owned variants still require release.
+        this._destroyOwnedMaterialInstances();
     }
 
     public onDestroy (): void {
@@ -668,6 +670,15 @@ export class MeshRenderer extends ModelRenderer {
         if (this._morphInstance) {
             this._morphInstance.destroy();
         }
+        this._destroyOwnedMaterialInstances();
+    }
+
+    private _destroyOwnedMaterialInstances (): void {
+        // Renderer-created variants own passes/buffers; shared assets and borrowed instances do not.
+        for (const instance of this._materialInstances) {
+            if (instance?.owner === this) { instance.destroy(); }
+        }
+        this._materialInstances.length = 0;
     }
 
     private _watchGeometryInMesh (): void {

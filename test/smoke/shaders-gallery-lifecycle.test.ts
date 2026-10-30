@@ -1,3 +1,4 @@
+import { createLifecycleNativeFixture } from '../helpers/lifecycle-native-fixture';
 /**
  * Gallery lifecycle contract tests: executes the production installShaderLifecycle
  * via Node subprocess esbuild bundling (Lead review pattern, not jsdom Buffer realm).
@@ -28,41 +29,16 @@ function loadHelper(): { window: any; install: (options: any) => void } {
         ['-e', `process.stdout.write(require('esbuild').buildSync(${JSON.stringify(options)}).outputFiles[0].text)`],
         { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] },
     );
+    const native = createLifecycleNativeFixture();
     const window: any = {};
     const module = { exports: {} as any };
     const schedule = (callback: () => void) => Promise.resolve().then(callback);
-    const listeners = new Map<string, Set<() => void>>();
     const timers = new Map<number, () => void>();
-    let frame = 0;
-    let scheduled = false;
-    const director = {
-        getTotalFrames: () => frame,
-        on: (event: string, callback: () => void) => {
-            if (!listeners.has(event)) listeners.set(event, new Set());
-            listeners.get(event)!.add(callback);
-            if (scheduled) return;
-            scheduled = true;
-            schedule(function tick() {
-                scheduled = false;
-                if (!listeners.get('update')?.size) return;
-                for (const callback of listeners.get('update') || []) callback();
-                for (const callback of listeners.get('draw') || []) callback();
-                frame++;
-                scheduled = true;
-                schedule(tick);
-            });
-        },
-        off: (event: string, callback: () => void) => listeners.get(event)?.delete(callback),
-    };
     let timerId = 0;
     new Function('require', 'module', 'exports', 'window', 'requestAnimationFrame', 'setTimeout', 'clearTimeout', code)(
         (id: string) => {
             if (id !== 'cocosair') throw new Error(`Unexpected import: ${id}`);
-            return {
-                isValid: (ref: any) => ref?.isValid === true,
-                director,
-                Director: { EVENT_AFTER_UPDATE: 'update', EVENT_AFTER_DRAW: 'draw' },
-            };
+            return native;
         },
         module,
         module.exports,

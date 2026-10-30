@@ -451,6 +451,115 @@
       }
     },
     {
+      "dir": "asset-request-policy",
+      "id": "asset-request-policy",
+      "version": "0.1.0",
+      "title": "Asset Request Policy",
+      "category": "gltf",
+      "status": "draft",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "在真实本地 glTF 与图片加载中理解请求策略、取消和请求代际隔离。",
+        "points": [
+          "priority 是浏览器提示，HTTP cache 与资产缓存不同",
+          "取消当前请求，以新 AbortController 重试",
+          "阶段、错误与无晚到挂载仍需真实服务端及浏览器证据"
+        ]
+      },
+      "effect": {
+        "functional": "真实 GLTFLoader 读取共享本地 rig、crystal 与 checker；策略控件进入 request options，取消/重试走当前 generation 检查。",
+        "visual": "原生场景含三个独立 rig、12 个材质样片、透射晶体和两个普通离屏预览；状态区显示实际 backend、选择、资源阶段、错误与数值。浏览器画面尚未验收。"
+      },
+      "api": {
+        "primary": [
+          "GLTFLoader",
+          "GLTFLoader.loadAsync"
+        ],
+        "supporting": [
+          "GLTFAsset.instantiate",
+          "createAirApp"
+        ],
+        "claims": [
+          "GLTFLoader",
+          "GLTFLoader.loadAsync",
+          "GLTFAsset.instantiate",
+          "createAirApp"
+        ]
+      },
+      "capabilities": [
+        "gltf"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Inspection camera",
+            "Key light",
+            "Inspection rig 1",
+            "Inspection rig 2",
+            "Inspection rig 3",
+            "Single transmission capture",
+            "Preview A camera",
+            "Preview B camera",
+            "Material sample 1",
+            "Material sample 2",
+            "Material sample 3",
+            "Material sample 4",
+            "Material sample 5",
+            "Material sample 6",
+            "Material sample 7",
+            "Material sample 8",
+            "Material sample 9",
+            "Material sample 10",
+            "Material sample 11",
+            "Material sample 12"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "选择 high 请求优先级",
+            "selectId": "priority",
+            "optionValue": "high",
+            "expected": "下一次 reload 使用 high 提示；不要求完成顺序改变。"
+          },
+          {
+            "action": "重新加载当前本地资产",
+            "buttonText": "Reload asset",
+            "expected": "完成后重新挂载三个独立实例和十二个材质样片；失败保留错误。"
+          },
+          {
+            "action": "加载期间取消并再次重试",
+            "expected": "取消不挂回晚到结果，重试采用新请求；需要专用延迟资源与状态断言。"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "asset-loaded",
+          "animation-playing",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      }
+    },
+    {
       "dir": "audio-basic",
       "id": "audio-basic",
       "version": "1.0.0",
@@ -2655,6 +2764,117 @@
       }
     },
     {
+      "dir": "depth-precision-lab",
+      "id": "depth-precision-lab",
+      "version": "0.1.0",
+      "title": "Depth Precision Lab",
+      "category": "rendering",
+      "status": "draft",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "识别默认原生相机/离屏深度设置与显式 depth 研究入口之间的边界。",
+        "points": [
+          "主相机 near/far 控件验证 finite 0 < near < far；默认 0.1/100，预览固定 0.1/80",
+          "普通目标明确请求 D24S8，不将请求值当成实际 GPU 格式证据",
+          "normal/reverse 与格式比较在孤立 fixture；不更改引擎默认或宣称 OIT"
+        ]
+      },
+      "effect": {
+        "functional": "普通展台保持 native normal-Z；用户可验证并更新主相机 near/far，只有显式打开 diagnostic 才运行独立 normal/reverse/格式实验。",
+        "visual": "原生场景含三个独立 rig、12 个材质样片、透射晶体和两个普通离屏预览；状态区显示实际 backend、选择、资源阶段、错误与数值。浏览器画面尚未验收。"
+      },
+      "api": {
+        "primary": [
+          "Camera.near",
+          "Camera.far",
+          "createAirRenderTarget"
+        ],
+        "supporting": [
+          "Camera",
+          "AirRenderTarget.attachCamera"
+        ],
+        "claims": [
+          "Camera.near",
+          "Camera.far",
+          "createAirRenderTarget",
+          "Camera",
+          "AirRenderTarget.attachCamera"
+        ]
+      },
+      "capabilities": [
+        "gltf"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Inspection camera",
+            "Key light",
+            "Inspection rig 1",
+            "Inspection rig 2",
+            "Inspection rig 3",
+            "Single transmission capture",
+            "Preview A camera",
+            "Preview B camera",
+            "Material sample 1",
+            "Material sample 2",
+            "Material sample 3",
+            "Material sample 4",
+            "Material sample 5",
+            "Material sample 6",
+            "Material sample 7",
+            "Material sample 8",
+            "Material sample 9",
+            "Material sample 10",
+            "Material sample 11",
+            "Material sample 12"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "输入合法 near/far 后更新主相机",
+            "buttonText": "Apply camera range",
+            "expected": "有限且 0 < near < far 时更新 Camera.near/far；非法输入显示错误，不切换深度格式或 reverse convention。"
+          },
+          {
+            "action": "拖动或缩放默认相机",
+            "expected": "使用现有投影观察本地场景；没有实验模式自动开启。"
+          },
+          {
+            "action": "切换材质以比较离屏场景",
+            "selectId": "material",
+            "optionValue": "3",
+            "expected": "仍使用普通目标与原生材质；不据此推断深度精度收益。"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "asset-loaded",
+          "animation-playing",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      }
+    },
+    {
       "dir": "directional-light-face",
       "id": "directional-light-face",
       "version": "1.0.0",
@@ -3113,6 +3333,109 @@
         "verified": 93,
         "attested": 5,
         "units": 98
+      }
+    },
+    {
+      "dir": "first-frame-readiness",
+      "id": "first-frame-readiness",
+      "version": "0.1.0",
+      "title": "First-frame Readiness",
+      "category": "runtime-control",
+      "status": "draft",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "区分展台应用阶段、engine draw 与独立五阶段首帧呈现证明。",
+        "points": [
+          "engine-created、fetching、mounting、scene-mounted 是应用状态",
+          "scene-mounted 与 AFTER_DRAW 均不是 compositor ready",
+          "冷启动/延迟/离屏/fault/context loss 进入显式独立 fixture，不自动预热"
+        ]
+      },
+      "effect": {
+        "functional": "展台记录实际创建、加载和挂载阶段；只把 engine draw 标为非 compositor 观察，显式按钮另开 readiness fixture。",
+        "visual": "原生场景含三个独立 rig、12 个材质样片、透射晶体和两个普通离屏预览；状态区显示实际 backend、选择、资源阶段、错误与数值。浏览器画面尚未验收。"
+      },
+      "api": {
+        "primary": [
+          "createAirApp",
+          "Scene"
+        ],
+        "supporting": [
+          "GLTFLoader",
+          "Camera"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "GLTFLoader",
+          "Camera"
+        ]
+      },
+      "capabilities": [
+        "gltf"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Inspection camera",
+            "Key light",
+            "Inspection rig 1",
+            "Inspection rig 2",
+            "Inspection rig 3",
+            "Single transmission capture",
+            "Preview A camera",
+            "Preview B camera",
+            "Material sample 1",
+            "Material sample 2",
+            "Material sample 3",
+            "Material sample 4",
+            "Material sample 5",
+            "Material sample 6",
+            "Material sample 7",
+            "Material sample 8",
+            "Material sample 9",
+            "Material sample 10",
+            "Material sample 11",
+            "Material sample 12"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "重载资源观察应用阶段",
+            "buttonText": "Reload asset",
+            "expected": "面板经历当前请求状态并保留错误；不能将 scene-mounted 推断为首个完整呈现帧。"
+          },
+          {
+            "action": "拖动默认视口",
+            "expected": "正常示例交互可见；首帧零推进/截图必须由独立 collector 证明。"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "asset-loaded",
+          "animation-playing",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
       }
     },
     {
@@ -6755,6 +7078,236 @@
         "verified": 16,
         "attested": 0,
         "units": 16
+      }
+    },
+    {
+      "dir": "material-contract-lab",
+      "id": "material-contract-lab",
+      "version": "0.1.0",
+      "title": "Material Contract Lab",
+      "category": "materials",
+      "status": "draft",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "在原生材质实例上验证线性颜色、UV 与虹彩参数边界，区分 uniform 和共享模板。",
+        "points": [
+          "12 个固定 glTF 材质样片，实例之间不共享可变 uniform",
+          "线性 RGB、UV offset/scale/rotation 和 film factor/IOR/min/max 控件",
+          "非法值反馈不等于 Shader/GPU 极端值已通过"
+        ]
+      },
+      "effect": {
+        "functional": "切换原生材质模板后取得 renderer 的 material instance；有限值和范围/关系校验完成后写入线性 RGB、UV 仿射行与 airIridescence。",
+        "visual": "原生场景含三个独立 rig、12 个材质样片、透射晶体和两个普通离屏预览；状态区显示实际 backend、选择、资源阶段、错误与数值。浏览器画面尚未验收。"
+      },
+      "api": {
+        "primary": [
+          "Material.setProperty"
+        ],
+        "supporting": [
+          "GLTFLoader",
+          "MeshRenderer",
+          "GLTFAsset.instantiate"
+        ],
+        "claims": [
+          "Material.setProperty",
+          "GLTFLoader",
+          "MeshRenderer",
+          "GLTFAsset.instantiate"
+        ]
+      },
+      "capabilities": [
+        "gltf"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Inspection camera",
+            "Key light",
+            "Inspection rig 1",
+            "Inspection rig 2",
+            "Inspection rig 3",
+            "Single transmission capture",
+            "Preview A camera",
+            "Preview B camera",
+            "Material sample 1",
+            "Material sample 2",
+            "Material sample 3",
+            "Material sample 4",
+            "Material sample 5",
+            "Material sample 6",
+            "Material sample 7",
+            "Material sample 8",
+            "Material sample 9",
+            "Material sample 10",
+            "Material sample 11",
+            "Material sample 12"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "为选中对象切换材质样片",
+            "selectId": "material",
+            "optionValue": "5",
+            "expected": "选中对象切换到第六个样片，其他实例不被替换。"
+          },
+          {
+            "action": "设置线性 RGB、UV/膜厚后应用参数",
+            "buttonText": "Apply validated parameters",
+            "expected": "合法值写入选中实例的原生 uniform；非法 IOR/膜厚关系显示错误而不写入。"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "asset-loaded",
+          "animation-playing",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      }
+    },
+    {
+      "dir": "material-inspection-showroom",
+      "id": "material-inspection-showroom",
+      "version": "0.1.0",
+      "title": "Material Inspection Showroom",
+      "category": "application",
+      "status": "draft",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "用原生 API 组合三个独立 rig、十二材质样片、透射和两路预览的互动业务场景。",
+        "points": [
+          "旋转/拾取、材质/UV/虹彩/Morph、暂停/单步和实例销毁重建",
+          "请求策略、取消/重试与完整资源所有权",
+          "30 轮控件保留逐轮观察；桌面/移动、DPR、GPU 与完整 API 效果尚待实测"
+        ]
+      },
+      "effect": {
+        "functional": "共享 showroom 实现真实 Cocos 场景、三个实例、十二样片、单 capture 和双普通离屏预览；所有实验在显式独立入口。",
+        "visual": "原生场景含三个独立 rig、12 个材质样片、透射晶体和两个普通离屏预览；状态区显示实际 backend、选择、资源阶段、错误与数值。浏览器画面尚未验收。"
+      },
+      "api": {
+        "primary": [
+          "GLTFAsset.instantiate",
+          "Material.setProperty",
+          "AirTransmissionCapture"
+        ],
+        "supporting": [
+          "GLTFLoader",
+          "Animation",
+          "MeshRenderer.setWeight",
+          "Camera.screenPointToRay",
+          "createAirRenderTarget",
+          "AirRenderTarget.readColor",
+          "AirRenderTarget.dispose"
+        ],
+        "claims": [
+          "GLTFAsset.instantiate",
+          "Material.setProperty",
+          "AirTransmissionCapture",
+          "GLTFLoader",
+          "Animation",
+          "MeshRenderer.setWeight",
+          "Camera.screenPointToRay",
+          "createAirRenderTarget",
+          "AirRenderTarget.readColor",
+          "AirRenderTarget.dispose"
+        ]
+      },
+      "capabilities": [
+        "gltf"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Inspection camera",
+            "Key light",
+            "Inspection rig 1",
+            "Inspection rig 2",
+            "Inspection rig 3",
+            "Single transmission capture",
+            "Preview A camera",
+            "Preview B camera",
+            "Material sample 1",
+            "Material sample 2",
+            "Material sample 3",
+            "Material sample 4",
+            "Material sample 5",
+            "Material sample 6",
+            "Material sample 7",
+            "Material sample 8",
+            "Material sample 9",
+            "Material sample 10",
+            "Material sample 11",
+            "Material sample 12"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "切换选中对象的材质",
+            "selectId": "material",
+            "optionValue": "9",
+            "expected": "选中对象变化，其余实例保持各自材质状态。"
+          },
+          {
+            "action": "应用合法 UV/虹彩参数",
+            "buttonText": "Apply validated parameters",
+            "expected": "选中材质实例更新；非法参数不得部分写入。"
+          },
+          {
+            "action": "拖动视角并点击 rig/样片",
+            "expected": "实际 pointer 基于正确 canvas 坐标和 native AABB 命中对象；需要 desktop/mobile/DPR 独立验证。"
+          },
+          {
+            "action": "运行 30 轮所有权循环",
+            "expected": "通过真实 Run 30 ownership cycles 控件采集每轮释放/重建、监听器和资源趋势；不得将此步骤文字当作执行证明。"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "asset-loaded",
+          "animation-playing",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
       }
     },
     {
@@ -16130,6 +16683,110 @@
       }
     },
     {
+      "dir": "probe-sh-lab",
+      "id": "probe-sh-lab",
+      "version": "0.1.0",
+      "title": "Probe / SH Lab",
+      "category": "light",
+      "status": "draft",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "区分原生场景预览和显式串行/atlas、SH 研究，不宣称生产 Web probe baker。",
+        "points": [
+          "默认页只运行普通 Cocos 场景/相机/目标",
+          "用户显式进入常量/方向合成环境与 SH 参考 fixture",
+          "系数误差、CPU 提交、GPU timer、遍历和显存分别保留证据与不可测项"
+        ]
+      },
+      "effect": {
+        "functional": "专题预选 SH/probe 研究链接但不将研究工具导入默认启动；原生预览不是 SH 生成或批量 light-probe 烘焙。",
+        "visual": "原生场景含三个独立 rig、12 个材质样片、透射晶体和两个普通离屏预览；状态区显示实际 backend、选择、资源阶段、错误与数值。浏览器画面尚未验收。"
+      },
+      "api": {
+        "primary": [
+          "createAirRenderTarget",
+          "Camera"
+        ],
+        "supporting": [
+          "AirRenderTarget.readColor",
+          "AirRenderTarget.dispose"
+        ],
+        "claims": [
+          "createAirRenderTarget",
+          "Camera",
+          "AirRenderTarget.readColor",
+          "AirRenderTarget.dispose"
+        ]
+      },
+      "capabilities": [
+        "gltf"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Inspection camera",
+            "Key light",
+            "Inspection rig 1",
+            "Inspection rig 2",
+            "Inspection rig 3",
+            "Single transmission capture",
+            "Preview A camera",
+            "Preview B camera",
+            "Material sample 1",
+            "Material sample 2",
+            "Material sample 3",
+            "Material sample 4",
+            "Material sample 5",
+            "Material sample 6",
+            "Material sample 7",
+            "Material sample 8",
+            "Material sample 9",
+            "Material sample 10",
+            "Material sample 11",
+            "Material sample 12"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "选择另一材质样片观察普通原生预览",
+            "selectId": "material",
+            "optionValue": "6",
+            "expected": "默认场景使用原生目标；该变化不构成 SH/probe 执行证据。"
+          },
+          {
+            "action": "拖动主视口",
+            "expected": "普通场景持续响应；实验必须另页显式选择。"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "asset-loaded",
+          "animation-playing",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      }
+    },
+    {
       "dir": "product-viewer",
       "id": "product-viewer",
       "version": "1.0.0",
@@ -16874,6 +17531,119 @@
         "verified": 31,
         "attested": 1,
         "units": 32
+      }
+    },
+    {
+      "dir": "render-state-isolation",
+      "id": "render-state-isolation",
+      "version": "0.1.0",
+      "title": "Render State Isolation",
+      "category": "rendering",
+      "status": "draft",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "区分两个同尺寸普通离屏目标和单 capture 透射的相机/资源所有权。",
+        "points": [
+          "两台离屏相机分别绑定 192×108 RGBA8/D24S8 目标",
+          "不同背景与视角通过原生 readColor 显示，可交换两相机提交顺序",
+          "A→B→A、resize、DPR、混合顺序及重建的完整像素矩阵仍待采集"
+        ]
+      },
+      "effect": {
+        "functional": "创建两个独立普通 render target 和相机，以不同背景/视角读取预览；透射仅创建一个 capture，不声称多 capture 支持。",
+        "visual": "原生场景含三个独立 rig、12 个材质样片、透射晶体和两个普通离屏预览；状态区显示实际 backend、选择、资源阶段、错误与数值。浏览器画面尚未验收。"
+      },
+      "api": {
+        "primary": [
+          "createAirRenderTarget",
+          "AirTransmissionCapture",
+          "Camera"
+        ],
+        "supporting": [
+          "AirRenderTarget.attachCamera",
+          "AirRenderTarget.readColor",
+          "AirRenderTarget.dispose"
+        ],
+        "claims": [
+          "createAirRenderTarget",
+          "AirTransmissionCapture",
+          "Camera",
+          "AirRenderTarget.attachCamera",
+          "AirRenderTarget.readColor",
+          "AirRenderTarget.dispose"
+        ]
+      },
+      "capabilities": [
+        "gltf"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Inspection camera",
+            "Key light",
+            "Inspection rig 1",
+            "Inspection rig 2",
+            "Inspection rig 3",
+            "Single transmission capture",
+            "Preview A camera",
+            "Preview B camera",
+            "Material sample 1",
+            "Material sample 2",
+            "Material sample 3",
+            "Material sample 4",
+            "Material sample 5",
+            "Material sample 6",
+            "Material sample 7",
+            "Material sample 8",
+            "Material sample 9",
+            "Material sample 10",
+            "Material sample 11",
+            "Material sample 12"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "切换选中物体材质并观察两个预览",
+            "selectId": "material",
+            "optionValue": "8",
+            "expected": "两个离屏预览从各自目标读回，保留各自相机/背景；单靠截图变化不证明 A→B→A。"
+          },
+          {
+            "action": "拖动主视口旋转并滚轮缩放",
+            "expected": "主相机视角改变；离屏相机保持自己的视图。"
+          },
+          {
+            "action": "交换两个预览相机的提交顺序",
+            "buttonText": "Reverse preview submission order",
+            "expected": "仅切换两个 preview camera 的 priority；是否保持目标/像素隔离仍须独立 A→B→A 观察。"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "asset-loaded",
+          "animation-playing",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
       }
     },
     {
@@ -19780,6 +20550,130 @@
         "verified": 54,
         "attested": 0,
         "units": 54
+      }
+    },
+    {
+      "dir": "skinned-instance-lifecycle",
+      "id": "skinned-instance-lifecycle",
+      "version": "0.1.0",
+      "title": "Skinned Instance Lifecycle",
+      "category": "animation",
+      "status": "draft",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "独立控制三个共享资产的 glTF 骨骼实例，并观察销毁重建与原生 bounds。",
+        "points": [
+          "独立动画时间、Morph、位置和材质实例",
+          "真实 pointer 用 native world-AABB 拾取；可显示投影 bounds，仍不是独立裁剪证明",
+          "30 轮复用既有生命周期合同，不以任意 sleep 代替 settlement"
+        ]
+      },
+      "effect": {
+        "functional": "本地双骨骼 rig 生成三个实例；选择后可暂停/单步、改 Morph/位置或逐个 dispose/rebuild，保留共享 Mesh/Texture/Clip。",
+        "visual": "原生场景含三个独立 rig、12 个材质样片、透射晶体和两个普通离屏预览；状态区显示实际 backend、选择、资源阶段、错误与数值。浏览器画面尚未验收。"
+      },
+      "api": {
+        "primary": [
+          "GLTFAsset.instantiate",
+          "Animation",
+          "MeshRenderer.setWeight"
+        ],
+        "supporting": [
+          "Animation.pause",
+          "Animation.resume",
+          "Node.setPosition",
+          "Camera.screenPointToRay"
+        ],
+        "claims": [
+          "GLTFAsset.instantiate",
+          "Animation",
+          "MeshRenderer.setWeight",
+          "Animation.pause",
+          "Animation.resume",
+          "Node.setPosition",
+          "Camera.screenPointToRay"
+        ]
+      },
+      "capabilities": [
+        "gltf"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Inspection camera",
+            "Key light",
+            "Inspection rig 1",
+            "Inspection rig 2",
+            "Inspection rig 3",
+            "Single transmission capture",
+            "Preview A camera",
+            "Preview B camera",
+            "Material sample 1",
+            "Material sample 2",
+            "Material sample 3",
+            "Material sample 4",
+            "Material sample 5",
+            "Material sample 6",
+            "Material sample 7",
+            "Material sample 8",
+            "Material sample 9",
+            "Material sample 10",
+            "Material sample 11",
+            "Material sample 12"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "选择第二个 rig",
+            "selectId": "selection",
+            "optionValue": "rig-1",
+            "expected": "选择标识改变，后续操作只作用于该实例。"
+          },
+          {
+            "action": "暂停选中实例",
+            "buttonText": "Pause selected",
+            "expected": "选中实例暂停或恢复，其他实例仍保持独立状态。"
+          },
+          {
+            "action": "单步选中实例",
+            "buttonText": "Step 1/60s",
+            "expected": "仅选中动画状态增加 1/60s 并采样；需状态快照证明，点击本身不是验收。"
+          },
+          {
+            "action": "修改 Morph 和 Instance X 后销毁/重建该 rig",
+            "expected": "原生 bounds/位置随实例变化，其余实例不受销毁影响；需专用效果断言。"
+          },
+          {
+            "action": "勾选 Show projected world AABB 后移动或改变 Morph",
+            "expected": "覆盖层投影当前选中 renderer 的八个 world-AABB 角；不能代替独立 CPU 顶点 oracle 或真实视锥裁剪。"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "asset-loaded",
+          "animation-playing",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
       }
     },
     {

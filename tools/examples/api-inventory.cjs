@@ -14,6 +14,8 @@ if (!out) throw new Error('Use --out=PATH for a trial or --write for the canonic
 const source = fs.readFileSync(dts, 'utf8');
 const ast = ts.createSourceFile(dts, source, ts.ScriptTarget.Latest, true);
 if (ast.parseDiagnostics.length) throw new Error(`declaration parse errors: ${ast.parseDiagnostics.length}`);
+const { typeOnlyClassExports, namespaceValueAliases, resolveAliasTarget } = require('./type-only-class-exports.cjs');
+const typeOnlyClasses = typeOnlyClassExports(ast);
 
 const core =
     /^(?:math\.|(?:Scene|Node|MeshRenderer|Camera|DirectionalLight|Light|SpotLight|PointLight|SphereLight|AmbientLight|ModelRenderer|Layers|Color|Vec3|Mesh|Material|Texture2D|GLTFLoader|GLTFAsset|GLTFInstance|GLTFExtensionRegistry|Input|createAirApp|frameObject|createMesh|builtinResMgr|primitives|MeshUtils|BatchingUtility|director|game|isValid|instantiate)(?:\.|$))/;
@@ -103,17 +105,22 @@ const add = (name, kind, node, parent, parentTier) => {
 
 function visit(statements, prefix = '') {
     for (const node of statements) {
-        if (!has(node, ts.SyntaxKind.ExportKeyword)) continue;
+        const localName = nameOf(node);
+        const typeOnly = prefix === '' && typeOnlyClasses.has(localName);
+        if (!has(node, ts.SyntaxKind.ExportKeyword) && !typeOnly) continue;
         if (ts.isModuleDeclaration(node) && node.body && ts.isModuleBlock(node.body)) {
             visit(node.body.statements, `${prefix}${node.name.text}.`);
             continue;
         }
-        const bare = nameOf(node);
+        const bare = typeOnly ? typeOnlyClasses.get(localName) : localName;
         if (ts.isClassDeclaration(node) && bare) {
             const fq = prefix + bare;
-            add(fq, 'class', node);
+            add(fq, typeOnly ? 'class-type' : 'class', node);
+            if (typeOnly) Object.assign(units[fq], { typeOnly: true, runtimeValue: false });
             const parentTier = units[fq].tier;
             for (const member of node.members) {
+                if (typeOnly && (ts.isConstructorDeclaration(member) || has(member, ts.SyntaxKind.StaticKeyword)))
+                    continue;
                 if (has(member, ts.SyntaxKind.PrivateKeyword) || has(member, ts.SyntaxKind.ProtectedKeyword)) continue;
                 if (ts.isConstructorDeclaration(member)) {
                     add(`${fq}.constructor`, 'constructor', member, fq, parentTier);
@@ -168,8 +175,11 @@ function visit(statements, prefix = '') {
 }
 
 visit(ast.statements);
-for (const { alias, target, node } of aliases) {
-    const original = units[target];
+aliases.push(...namespaceValueAliases(ast));
+for (const binding of aliases) {
+    const { alias, node } = binding;
+    const target = resolveAliasTarget(binding, units);
+    const original = target && units[target];
     if (!original) continue;
     add(alias, original.kind, node);
     for (const [name, member] of Object.entries(units)) {

@@ -2112,7 +2112,7 @@ function validateCustodyReceipt(receipt, options = {}) {
                 ? !(ack.supervisorElapsedMs <= runtime?.start.supervisorElapsedMs)
                 : !(
                       runtime?.stopBegin.supervisorElapsedMs <= ack.supervisorElapsedMs &&
-                      ack.supervisorElapsedMs <= runtime?.stopComplete.supervisorElapsedMs
+                      ack.supervisorElapsedMs <= runtime?.stopComplete?.supervisorElapsedMs
                   ))
         )
             fail('Custody barrier request/ACK correlation invalid');

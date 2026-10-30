@@ -116,3 +116,7 @@ both platforms; a docs-only PR must skip both; a main merge containing related
 code must independently run both. Retain run URL, event, SHA, job conclusions and
 artifacts. Manual dispatch can validate the matrix but cannot prove PR/push
 event routing. Existing branch PASS records cannot certify a new merge SHA.
+
+## Upstream contract increment
+
+The upstream update uses the unchanged conservative classifier. Its runtime, tool, test and new example paths select the existing full retained route. The mandatory core step now also runs focused request/material/color/bounds/readiness/SDK/gate CPU regressions. The existing five Chromium examples remain, followed by one bounded state/target-isolation probe whose raw output shares the retained core directory. Research GPU, full showroom/lifecycle profiles and all-196 Gallery execution remain explicit phase gates, not a replacement for the original five or the Box2D matrix. `node --test tools/verify/upstream-ci-contract.test.cjs` checks this wiring, not browser execution.

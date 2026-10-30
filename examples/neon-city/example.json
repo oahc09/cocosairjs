@@ -129,181 +129,181 @@
         "api": "createAirApp",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L1009"
+        "sourceLocation": "L1018"
       },
       {
         "api": "Scene",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L1011"
+        "sourceLocation": "L1020"
       },
       {
         "api": "Node",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L675"
+        "sourceLocation": "L684"
       },
       {
         "api": "Node.addChild",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L807"
+        "sourceLocation": "L816"
       },
       {
         "api": "Node.setPosition",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L678"
+        "sourceLocation": "L687"
       },
       {
         "api": "Node.setScale",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L770"
+        "sourceLocation": "L779"
       },
       {
         "api": "Node.addComponent",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L679"
+        "sourceLocation": "L688"
       },
       {
         "api": "Node.lookAt",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L905"
+        "sourceLocation": "L914"
       },
       {
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L1023"
+        "sourceLocation": "L1032"
       },
       {
         "api": "MeshRenderer",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L771"
+        "sourceLocation": "L780"
       },
       {
         "api": "Renderer.setSharedMaterial",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L773"
+        "sourceLocation": "L782"
       },
       {
         "api": "Material",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L631"
+        "sourceLocation": "L640"
       },
       {
         "api": "Material.initialize",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L632"
+        "sourceLocation": "L641"
       },
       {
         "api": "Material.setProperty",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L1000"
+        "sourceLocation": "L1009"
       },
       {
         "api": "EffectAsset",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L920"
+        "sourceLocation": "L929"
       },
       {
         "api": "EffectAsset.register",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L914"
+        "sourceLocation": "L923"
       },
       {
         "api": "Layers",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L676"
+        "sourceLocation": "L685"
       },
       {
         "api": "Layers.Enum",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L676"
+        "sourceLocation": "L685"
       },
       {
         "api": "math.Color",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L539"
+        "sourceLocation": "L548"
       },
       {
         "api": "math.Vec3",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L787"
+        "sourceLocation": "L796"
       },
       {
         "api": "math.Vec4",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L1000"
+        "sourceLocation": "L1009"
       },
       {
         "api": "utils.createMesh",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L1066"
+        "sourceLocation": "L1075"
       },
       {
         "api": "primitives.box",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L1066"
+        "sourceLocation": "L1075"
       },
       {
         "api": "SceneGlobals.fog",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L1015"
+        "sourceLocation": "L1024"
       },
       {
         "api": "DirectionalLight",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L1056"
+        "sourceLocation": "L1065"
       },
       {
         "api": "director",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L1138"
+        "sourceLocation": "L1147"
       },
       {
         "api": "Director.EVENT_AFTER_DRAW",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L1163"
+        "sourceLocation": "L1172"
       },
       {
         "api": "Billboard",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L679"
+        "sourceLocation": "L688"
       },
       {
         "api": "Texture2D",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L656"
+        "sourceLocation": "L665"
       },
       {
         "api": "ImageAsset",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L657"
+        "sourceLocation": "L666"
       }
     ]
   },

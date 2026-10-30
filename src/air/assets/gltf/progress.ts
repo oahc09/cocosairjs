@@ -29,7 +29,19 @@ export interface GLTFLoadProgress {
     url?: string;
 }
 
+/** Network policy only: does not control native Asset or parser caches. */
+export interface AirRequestPolicy {
+    /** Browser scheduling hint; unsupported browsers use their normal scheduling. */
+    priority?: 'high' | 'low' | 'auto';
+    httpCache?: RequestCache;
+    credentials?: RequestCredentials;
+    /** Replaces inherited headers. Sent only to the main document origin; redirects fail closed. */
+    headers?: HeadersInit;
+}
+
 export interface GLTFLoaderOptions {
+    /** Defined fields override global defaults; undefined fields inherit them. */
+    request?: AirRequestPolicy;
     signal?: AbortSignal;
     dracoDecoder?: GLTFDracoDecoder;
     meshoptDecoder?: GLTFMeshoptDecoder;

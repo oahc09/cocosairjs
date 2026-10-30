@@ -109,8 +109,9 @@ async function decodeBufferView (context: GLTFParserContext, index: number, defi
         throw new GLTFError('GLTF_EXTENSION_INVALID', `${extension} on bufferView ${index}: encoded range out of bounds`, extension);
     }
     const source = new Uint8Array(buffer, offset, length);
-    const decoded = await decoder.decodeGltfBufferAsync(count, stride, source, mode, filter)
+    const decoded = await context.wait(() => decoder.decodeGltfBufferAsync(count, stride, source, mode, filter))
         .catch((error: unknown) => {
+            context.throwIfAborted();
             throw new GLTFError('GLTF_DECODE_FAILED', `${extension} on bufferView ${index}: ${(error as Error).message}`, extension);
         }) as ArrayBuffer | Uint8Array;
     const bytes = decoded instanceof Uint8Array ? decoded : new Uint8Array(decoded);

@@ -51,7 +51,7 @@ export const PHYSICAL_COLOR_CONSTANT = 'airSpecularColorFactor';
 export const CLEARCOAT_CONSTANT = 'airClearcoat';
 /** (strength, cos(rotation), sin(rotation), 1) for the KHR_materials_anisotropy lobe. */
 export const ANISO_CONSTANT = 'airAnisotropy';
-/** (factor, filmIor, thicknessMax_nm, substrateIor) for KHR_materials_iridescence thin-film. */
+/** (factor, filmIor, thicknessMin_nm, thicknessMax_nm) for KHR_materials_iridescence thin-film. */
 export const IRIDESCENCE_CONSTANT = 'airIridescence';
 /** (bumpFactor, 0, 0, 1) for EXT_materials_bump derivative perturbation. */
 export const BUMP_CONSTANT = 'airBump';
@@ -320,7 +320,7 @@ export function gltfPhysicalEffect(): EffectAsset {
             const iriFn = [
                 '#if USE_AIR_IRIDESCENCE',
                 'vec3 airIridescenceF0 (float NV) {',
-                'float filmIor = clamp(airIriIorTex, 1.3, 2.33334);',
+                'float filmIor = airIriIorTex;',
                 `float n0 = (1.0 + sqrt(clamp(${PHYSICAL_CONSTANT}.y * 0.04, 0.0, 1.0))) / (1.0 - sqrt(clamp(${PHYSICAL_CONSTANT}.y * 0.04, 0.0, 1.0)) + 1e-6);`,
                 'float cosT1 = clamp(NV, 0.0, 1.0);',
                 'float sinT2sq = (1.0 - cosT1 * cosT1) / (filmIor * filmIor);',
@@ -607,18 +607,18 @@ export function gltfPhysicalEffect(): EffectAsset {
                 '#if USE_AIR_IRIDESCENCE',
                 `airIriFactorTex = ${IRIDESCENCE_CONSTANT}.x;`,
                 `airIriIorTex = ${IRIDESCENCE_CONSTANT}.y;`,
-                // No texture: thickness factor 1 -> maximum (the spec default without volume).
+                // No thickness texture: use maximum, independently of KHR_materials_volume.
                 `airIriThickTex = ${IRIDESCENCE_CONSTANT}.w;`,
                 '#endif',
                 '#if USE_AIR_IRIDESCENCE && USE_AIR_IRIDESCENCE_MAP',
                 `airIriFactorTex *= ${tex('iridescenceMap', 'IRIDESCENCE_UV', 'airIridescence')}.r;`,
                 '#endif',
+                // Compatibility-only AIR field: Khronos KHR_materials_iridescence has no IOR texture.
                 '#if USE_AIR_IRIDESCENCE && USE_AIR_IRIDESCENCE_IOR_MAP',
                 `airIriIorTex = mix(${IRIDESCENCE_CONSTANT}.y, 2.33334, ${tex('iridescenceIorMap', 'IRIDESCENCEIOR_UV', 'airIridescenceIor')}.g);`,
                 '#endif',
                 '#if USE_AIR_IRIDESCENCE && USE_AIR_IRIDESCENCE_THICKNESS_MAP',
-                // Without KHR_materials_volume the effective thickness is the maximum (spec fallback);
-                // the texture lerps [min,max] over that range.
+                // A thickness texture maps its linear green channel over [min,max].
                 `airIriThickTex = mix(${IRIDESCENCE_CONSTANT}.z, ${IRIDESCENCE_CONSTANT}.w, ${tex('iridescenceThicknessMap', 'IRIDESCENCETHICKNESS_UV', 'airIridescenceThickness')}.g);`,
                 '#endif',
                 '#if USE_AIR_BUMP',

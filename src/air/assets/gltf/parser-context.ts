@@ -24,6 +24,7 @@ import type { GLTFExtensionHandler } from './extension-registry';
 import type { GLTFMaterialFeatures } from './material/features';
 import type { GLTFLoaderOptions, GLTFLoadProgress } from './progress';
 import type { DecodedPrimitive } from './decoder/types';
+import { abortError, awaitAbortable, requestArrayBuffer, requestOrigin, throwIfAborted } from './request-policy';
 
 const COMPONENTS: Record<string, number> = { SCALAR: 1, VEC2: 2, VEC3: 3, VEC4: 4, MAT2: 4, MAT3: 9, MAT4: 16 };
 const SIZES: Record<number, number> = { 5120: 1, 5121: 1, 5122: 2, 5123: 2, 5125: 4, 5126: 4 };
@@ -93,8 +94,10 @@ export class GLTFParserContext {
     private readonly decodedViews = new Map<number, Uint8Array>();
     /** Decoded primitives (KHR_draco_mesh_compression), keyed by DependencyKeys.primitive(). */
     private readonly decodedPrimitives = new Map<string, DecodedPrimitive>();
+    private disposed = false;
+    private readonly origin: string | undefined;
     constructor (public readonly json: GLTFDocument, public readonly baseUrl?: string,
-        public readonly options: GLTFLoaderOptions = {}) {}
+        public readonly options: GLTFLoaderOptions = {}) { this.origin = requestOrigin(baseUrl); }
 
     public get signal (): AbortSignal | undefined { return this.options.signal; }
     /** True when the document declares the extension and a handler takes part in this parse. */
@@ -103,10 +106,20 @@ export class GLTFParserContext {
             && (this.json.extensionsUsed?.includes(name) || this.json.extensionsRequired?.includes(name) || false);
     }
     public throwIfAborted (): void {
-        if (this.options.signal?.aborted) { throw new DOMException('glTF load aborted', 'AbortError'); }
+        if (this.disposed) { throw abortError(); }
+        throwIfAborted(this.signal);
+    }
+    /** Wait without letting a canceled/failed parse consume late decoder or extension results. */
+    public async wait<T> (factory: () => T | PromiseLike<T>): Promise<T> {
+        this.throwIfAborted();
+        const value = await awaitAbortable(factory, this.signal);
+        this.throwIfAborted();
+        return value;
     }
     public report (phase: GLTFLoadProgress['phase'], loaded: number, total: number, url?: string): void {
+        this.throwIfAborted();
         this.options.onProgress?.({ phase, loaded, total, url });
+        this.throwIfAborted();
     }
     public warn (message: string): void { this.warnings.push(message); console.warn(`[glTF] ${message}`); }
 
@@ -116,10 +129,11 @@ export class GLTFParserContext {
      * a repaired network or decoder to retry.
      */
     public dependency<T> (key: string, factory: () => Promise<T>): Promise<T> {
+        this.throwIfAborted();
         const cached = this.dependencies.get(key) as Promise<T> | undefined;
         if (cached) { return cached; }
-        const promise = factory().catch((error) => {
-            this.dependencies.delete(key);
+        const promise = this.wait(factory).catch((error) => {
+            if (this.dependencies.get(key) === promise) { this.dependencies.delete(key); }
             throw error;
         });
         this.dependencies.set(key, promise);
@@ -127,9 +141,13 @@ export class GLTFParserContext {
     }
 
     /** Registers parser-owned temporaries (blob URLs, workers, decoded buffers) for LIFO disposal. */
-    public addCleanup (cleanup: () => void): void { this.cleanups.push(cleanup); }
+    public addCleanup (cleanup: () => void): void {
+        if (this.disposed) { cleanup(); } else { this.cleanups.push(cleanup); }
+    }
     /** Releases all parse-scoped state. Safe to call repeatedly; ownership of Cocos assets is separate. */
     public dispose (): void {
+        if (this.disposed) { return; }
+        this.disposed = true;
         while (this.cleanups.length) {
             try { this.cleanups.pop()!(); } catch (error) { console.warn('[glTF] cleanup failed', error); }
         }
@@ -137,7 +155,7 @@ export class GLTFParserContext {
         for (const handler of this.handlers) { try { handler.dispose?.(); } catch (error) { console.warn('[glTF] handler dispose failed', error); } }
     }
     public releaseDecodedData (): void {
-        this.buffers.length = 0; this.accessors.clear(); this.requests.clear();
+        this.buffers.length = 0; this.accessors.clear(); this.requests.clear(); this.dependencies.clear();
         this.decodedViews.clear(); this.decodedPrimitives.clear();
     }
     public resolve (uri: string): string {
@@ -146,13 +164,15 @@ export class GLTFParserContext {
         return new URL(uri, this.baseUrl).href;
     }
     public request (uri: string): Promise<ArrayBuffer> {
+        this.throwIfAborted();
         const url = this.resolve(uri);
         let promise = this.requests.get(url);
         if (!promise) {
-            promise = fetch(url, { signal: this.options.signal }).then((response) => {
-                check(response.ok, `request failed: ${url} (${response.status})`);
-                return response.arrayBuffer();
-            });
+            promise = this.wait(() => requestArrayBuffer(url, this.options.request, this.signal, this.origin))
+                .catch((error) => {
+                    if (this.requests.get(url) === promise) { this.requests.delete(url); }
+                    throw error;
+                });
             this.requests.set(url, promise);
         }
         return promise;
@@ -183,6 +203,7 @@ export class GLTFParserContext {
             const data = buffer.uri !== undefined
                 ? await this.dependency(DependencyKeys.buffer(i), () => this.request(buffer.uri!))
                 : (i === 0 ? bin : undefined);
+            this.throwIfAborted();
             check(data, `buffer ${i}: missing URI/BIN (no compression extension provides these views)`);
             check(data.byteLength >= buffer.byteLength && (buffer.uri !== undefined || data.byteLength <= buffer.byteLength + 3), `buffer ${i}: length mismatch`);
             this.buffers.push(data.slice(0, buffer.byteLength));
@@ -202,7 +223,7 @@ export class GLTFParserContext {
             this.throwIfAborted();
             let decoded: Uint8Array | null = null;
             for (const handler of this.handlers) {
-                const result = await handler.loadBufferView?.(index, this);
+                const result = await this.wait(() => handler.loadBufferView?.(index, this));
                 if (result) { decoded = result; break; }
             }
             if (decoded) {
@@ -224,7 +245,7 @@ export class GLTFParserContext {
                 this.throwIfAborted();
                 let decoded: DecodedPrimitive | null = null;
                 for (const handler of this.handlers) {
-                    const result = await handler.loadPrimitive?.(primitiveIndex, meshIndex, this);
+                    const result = await this.wait(() => handler.loadPrimitive?.(primitiveIndex, meshIndex, this));
                     if (result) { decoded = result; break; }
                 }
                 if (decoded) { this.decodedPrimitives.set(DependencyKeys.primitive(meshIndex, primitiveIndex), decoded); }

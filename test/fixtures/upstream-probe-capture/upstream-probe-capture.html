@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>U08-C probe capture research fixture</title>
+    </head>
+    <body>
+        <h1>Serial versus atlas capture: research only</h1>
+        <p>
+            This standalone WebGL2 synthetic radiance fixture is not a Cocos light-probe baker or an engine benchmark.
+            CPU scene traversal, actual driver VRAM, production capture orientation, and compositor evidence remain
+            separate. No comparison was executed merely by creating these files.
+        </p>
+        <button id="run">Run reference capture</button>
+        <button id="download" disabled>Download raw research report</button>
+        <canvas id="canvas" width="480" height="320"></canvas>
+        <pre id="result">NOT_RUN. T33 decision: BLOCKED until all required engine/device evidence exists.</pre>
+        <script src="../../../tools/verify/upstream-probe-sh-reference.js"></script>
+        <script src="./upstream-probe-capture.js"></script>
+    </body>
+</html>

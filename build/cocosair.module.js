@@ -49477,13 +49477,13 @@ let Mesh = (_dec$2Y = ccclass$x('cc.Mesh'), _dec$2Y(_class$2Z = (_class2$2n = (_
     this._data = info.data;
     this._hash = 0;
   }
-  getBoneSpaceBounds(skeleton) {
+  getBoneSpaceBounds(skeleton, morphWeights) {
     const {
       bindposes
     } = skeleton;
     const signature = bindposes.map(pose => pose ? Mat4.toArray([], pose).join(',') : '<missing>').join(';');
     const cached = this._boneSpaceBounds.get(skeleton);
-    if (cached && cached.signature === signature) {
+    if (!morphWeights && cached && cached.signature === signature) {
       return cached.bounds;
     }
     const bounds = [];
@@ -49506,6 +49506,7 @@ let Mesh = (_dec$2Y = ccclass$x('cc.Mesh'), _dec$2Y(_class$2Z = (_class2$2n = (_
       primitives
     } = this._struct;
     for (let p = 0; p < primitives.length; p++) {
+      var _this$_struct$morph, _morph$attributes$ind;
       const joints = this.readAttribute(p, AttributeName.ATTR_JOINTS);
       const weights = this.readAttribute(p, AttributeName.ATTR_WEIGHTS);
       const positions = this.readAttribute(p, AttributeName.ATTR_POSITION);
@@ -49516,8 +49517,36 @@ let Mesh = (_dec$2Y = ccclass$x('cc.Mesh'), _dec$2Y(_class$2Z = (_class2$2n = (_
         fail('AIR_E_SKINNING_ATTRIBUTE_LAYOUT', `primitive ${p}`, 'positions require 3 components and joints/weights require 4 matching components per vertex; rebuild the mesh with matching attribute counts.');
       }
       const vertCount = positions.length / 3;
+      const morph = (_this$_struct$morph = this._struct.morph) == null ? void 0 : _this$_struct$morph.subMeshMorphs[p];
+      const positionAttribute = (_morph$attributes$ind = morph == null ? void 0 : morph.attributes.indexOf(AttributeName.ATTR_POSITION)) !== null && _morph$attributes$ind !== void 0 ? _morph$attributes$ind : -1;
+      const targets = [];
+      if (morph && morphWeights && positionAttribute >= 0) {
+        for (let target = 0; target < morph.targets.length; target++) {
+          var _morphWeights$p$targe, _morphWeights$p;
+          const weight = (_morphWeights$p$targe = (_morphWeights$p = morphWeights[p]) == null ? void 0 : _morphWeights$p[target]) !== null && _morphWeights$p$targe !== void 0 ? _morphWeights$p$targe : 0;
+          if (!Number.isFinite(weight)) {
+            fail('AIR_E_SKINNING_MORPH_WEIGHT', `primitive ${p} target ${target}`, 'morph weight must be finite.');
+          }
+          if (weight === 0) {
+            continue;
+          }
+          const view = morph.targets[target].displacements[positionAttribute];
+          if (!view || view.count !== positions.length || (this._data.byteOffset + view.offset) % 4 !== 0 || view.offset < 0 || view.offset + view.count * 4 > this._data.byteLength) {
+            fail('AIR_E_SKINNING_MORPH_LAYOUT', `primitive ${p} target ${target}`, 'position displacement must contain three floats per vertex.');
+          }
+          targets.push({
+            weight,
+            values: new Float32Array(this._data.buffer, this._data.byteOffset + view.offset, view.count)
+          });
+        }
+      }
       for (let i = 0; i < vertCount; i++) {
         Vec3.set(v3_1$5, positions[3 * i + 0], positions[3 * i + 1], positions[3 * i + 2]);
+        for (const target of targets) {
+          v3_1$5.x += target.weight * target.values[3 * i];
+          v3_1$5.y += target.weight * target.values[3 * i + 1];
+          v3_1$5.z += target.weight * target.values[3 * i + 2];
+        }
         for (let j = 0; j < 4; ++j) {
           const idx = 4 * i + j;
           const weight = weights[idx];
@@ -49559,10 +49588,12 @@ let Mesh = (_dec$2Y = ccclass$x('cc.Mesh'), _dec$2Y(_class$2Z = (_class2$2n = (_
         aabbFromPoints(b, b.center, b.halfExtents);
       }
     }
-    this._boneSpaceBounds.set(skeleton, {
-      signature,
-      bounds
-    });
+    if (!morphWeights) {
+      this._boneSpaceBounds.set(skeleton, {
+        signature,
+        bounds
+      });
+    }
     return bounds;
   }
   merge(mesh, worldMatrix, validate) {
@@ -51043,6 +51074,7 @@ let MeshRenderer = (_dec8$q = ccclass$s('cc.MeshRenderer'), _dec9$m = executionO
     (_this$_geometryEventM = this._geometryEventMesh) == null ? void 0 : _this$_geometryEventM.off(Mesh.EVENT_GEOMETRY_CHANGED, this._onMeshGeometryChanged, this);
     this._geometryEventMesh = null;
     super._onPreDestroy();
+    this._destroyOwnedMaterialInstances();
   }
   onDestroy() {
     if (this._model) {
@@ -51053,6 +51085,15 @@ let MeshRenderer = (_dec8$q = ccclass$s('cc.MeshRenderer'), _dec9$m = executionO
     if (this._morphInstance) {
       this._morphInstance.destroy();
     }
+    this._destroyOwnedMaterialInstances();
+  }
+  _destroyOwnedMaterialInstances() {
+    for (const instance of this._materialInstances) {
+      if ((instance == null ? void 0 : instance.owner) === this) {
+        instance.destroy();
+      }
+    }
+    this._materialInstances.length = 0;
   }
   _watchGeometryInMesh() {
     var _this$_geometryEventM2, _this$_geometryEventM3;
@@ -53431,6 +53472,11 @@ RealTimeJointTexture.HEIGHT = 3;
 class SkinningModel extends MorphModel {
   constructor() {
     super();
+    this._boundsMesh = null;
+    this._boundsSkeleton = null;
+    this._baseBounds = null;
+    this._morphBounds = null;
+    this._morphBoundsKey = '';
     this._buffers = [];
     this._dataArray = [];
     this._joints = [];
@@ -53467,6 +53513,11 @@ class SkinningModel extends MorphModel {
     }
     this._bufferIndices = null;
     this._joints.length = 0;
+    this._boundsMesh = mesh;
+    this._boundsSkeleton = skeleton;
+    this._baseBounds = null;
+    this._morphBounds = null;
+    this._morphBoundsKey = '';
     if (!skeleton || !skinningRoot || !mesh) {
       return;
     }
@@ -53496,6 +53547,7 @@ class SkinningModel extends MorphModel {
         getRelevantBuffers(indices, buffers, jointMaps, index);
       }
       this._joints.push({
+        skeletonIndex: index,
         indices,
         buffers,
         bound,
@@ -53510,6 +53562,36 @@ class SkinningModel extends MorphModel {
     if (root.hasChangedFlags || root.isTransformDirty()) {
       root.updateWorldTransform();
       this._localDataUpdated = true;
+    }
+    const mesh = this._boundsMesh;
+    const skeleton = this._boundsSkeleton;
+    if (mesh != null && mesh.struct.morph && skeleton) {
+      var _this$node;
+      const morph = mesh.struct.morph;
+      const renderer = (_this$node = this.node) == null ? void 0 : _this$node.getComponent('cc.SkinnedMeshRenderer');
+      const weights = morph.subMeshMorphs.map((sub, subMesh) => {
+        var _sub$targets$map;
+        return (_sub$targets$map = sub == null ? void 0 : sub.targets.map((_, target) => {
+          var _ref, _sub$weights$target, _sub$weights, _morph$weights;
+          return renderer ? renderer.getWeight(subMesh, target) : (_ref = (_sub$weights$target = (_sub$weights = sub.weights) == null ? void 0 : _sub$weights[target]) !== null && _sub$weights$target !== void 0 ? _sub$weights$target : (_morph$weights = morph.weights) == null ? void 0 : _morph$weights[target]) !== null && _ref !== void 0 ? _ref : 0;
+        })) !== null && _sub$targets$map !== void 0 ? _sub$targets$map : [];
+      });
+      const key = weights.map(sub => sub.join(',')).join(';');
+      const base = mesh.getBoneSpaceBounds(skeleton);
+      if (base !== this._baseBounds || key !== this._morphBoundsKey) {
+        const bounds = mesh.getBoneSpaceBounds(skeleton, weights);
+        for (let joint = 0; joint < bounds.length; joint++) {
+          if (bounds[joint] && base[joint]) {
+            AABB.merge(bounds[joint], bounds[joint], base[joint]);
+          }
+        }
+        this._baseBounds = base;
+        this._morphBoundsKey = key;
+        this._morphBounds = bounds;
+      }
+      for (const joint of this._joints) {
+        joint.bound = this._morphBounds[joint.skeletonIndex];
+      }
     }
     Vec3.set(v3_min, Infinity, Infinity, Infinity);
     Vec3.set(v3_max, -Infinity, -Infinity, -Infinity);
@@ -138845,8 +138927,8 @@ class MouseJoint extends BaseJoint {
 
 const AIR_VERSION = '1.0.0';
 const AIR_REVISION = 100;
-const AIR_BUILD_DATE = "202610260748";
-const AIR_BUILD_NUMBER = 242;
+const AIR_BUILD_DATE = "202610291434";
+const AIR_BUILD_NUMBER = 243;
 class AirAppImpl {
   get session() {
     return this._scope;
@@ -147668,12 +147750,156 @@ class GLTFAsset extends Asset {
       return;
     }
     this.resourcesReleased = true;
+    this.context.dispose();
     const owned = new Set([...this.materials, ...this.meshes, ...this.skeletons, ...this.animations, ...this.textures, ...this.images]);
     this.sceneClips.forEach(clips => clips.forEach(clip => owned.add(clip)));
     for (const asset of owned) {
       asset.destroy();
     }
     super.destroy();
+  }
+}
+
+function mergeRequestPolicy(...policies) {
+  let merged;
+  for (const policy of policies) {
+    var _merged;
+    if (policy === undefined) {
+      continue;
+    }
+    (_merged = merged) !== null && _merged !== void 0 ? _merged : merged = {};
+    if (policy.priority !== undefined) {
+      merged.priority = policy.priority;
+    }
+    if (policy.httpCache !== undefined) {
+      merged.httpCache = policy.httpCache;
+    }
+    if (policy.credentials !== undefined) {
+      merged.credentials = policy.credentials;
+    }
+    if (policy.headers !== undefined) {
+      merged.headers = new Headers(policy.headers);
+    }
+  }
+  return merged;
+}
+function abortError() {
+  return new DOMException('glTF load aborted', 'AbortError');
+}
+function throwIfAborted(signal) {
+  if (signal != null && signal.aborted) {
+    throw abortError();
+  }
+}
+function awaitAbortable(factory, signal, discard) {
+  return new Promise((resolve, reject) => {
+    if (signal != null && signal.aborted) {
+      reject(abortError());
+      return;
+    }
+    let settled = false;
+    const aborted = () => {
+      if (settled) {
+        return;
+      }
+      settled = true;
+      signal == null ? void 0 : signal.removeEventListener('abort', aborted);
+      reject(abortError());
+    };
+    signal == null ? void 0 : signal.addEventListener('abort', aborted, {
+      once: true
+    });
+    const release = value => {
+      try {
+        discard == null ? void 0 : discard(value);
+      } catch (error) {
+        console.warn('[glTF] late-result cleanup failed', error);
+      }
+    };
+    let work;
+    try {
+      work = factory();
+    } catch (error) {
+      if (!settled) {
+        settled = true;
+        signal == null ? void 0 : signal.removeEventListener('abort', aborted);
+        reject(error);
+      }
+      return;
+    }
+    Promise.resolve(work).then(value => {
+      if (settled) {
+        release(value);
+        return;
+      }
+      if (signal != null && signal.aborted) {
+        aborted();
+        release(value);
+        return;
+      }
+      settled = true;
+      signal == null ? void 0 : signal.removeEventListener('abort', aborted);
+      resolve(value);
+    }, error => {
+      if (settled) {
+        return;
+      }
+      settled = true;
+      signal == null ? void 0 : signal.removeEventListener('abort', aborted);
+      reject(error);
+    });
+  });
+}
+function requestOrigin(url) {
+  if (!url) {
+    return undefined;
+  }
+  const parsed = new URL(url);
+  return /^https?:$/.test(parsed.protocol) ? parsed.origin : undefined;
+}
+function requestInit(url, policy, signal, origin) {
+  var _policy$credentials;
+  const init = {
+    signal,
+    credentials: (_policy$credentials = policy == null ? void 0 : policy.credentials) !== null && _policy$credentials !== void 0 ? _policy$credentials : 'same-origin'
+  };
+  if ((policy == null ? void 0 : policy.priority) !== undefined) {
+    init.priority = policy.priority;
+  }
+  if ((policy == null ? void 0 : policy.httpCache) !== undefined) {
+    init.cache = policy.httpCache;
+    if (policy.httpCache === 'only-if-cached') {
+      init.mode = 'same-origin';
+    }
+  }
+  if ((policy == null ? void 0 : policy.headers) !== undefined && origin !== undefined && requestOrigin(url) === origin) {
+    const headers = new Headers(policy.headers);
+    init.headers = headers;
+    let hasHeaders = false;
+    headers.forEach(() => {
+      hasHeaders = true;
+    });
+    if (hasHeaders) {
+      init.redirect = 'error';
+    }
+  }
+  return init;
+}
+function discardResponse(response) {
+  try {
+    var _response$body;
+    void ((_response$body = response.body) == null ? void 0 : _response$body.cancel().catch(() => undefined));
+  } catch {}
+}
+async function requestArrayBuffer(url, policy, signal, origin) {
+  const response = await awaitAbortable(() => fetch(url, requestInit(url, policy, signal, origin)), signal, discardResponse);
+  try {
+    throwIfAborted(signal);
+    check(response.ok, `request failed: ${url} (${response.status})`);
+    return await awaitAbortable(() => response.arrayBuffer(), signal);
+  } catch (error) {
+    discardResponse(response);
+    throw error;
   }
 }
 
@@ -147762,9 +147988,12 @@ class GLTFParserContext {
     this.cleanups = [];
     this.decodedViews = new Map();
     this.decodedPrimitives = new Map();
+    this.disposed = false;
+    this.origin = void 0;
     this.json = json;
     this.baseUrl = baseUrl;
     this.options = options;
+    this.origin = requestOrigin(baseUrl);
   }
   get signal() {
     return this.options.signal;
@@ -147774,40 +148003,59 @@ class GLTFParserContext {
     return this.handlers.some(handler => handler.name === name) && (((_this$json$extensions = this.json.extensionsUsed) == null ? void 0 : _this$json$extensions.includes(name)) || ((_this$json$extensions2 = this.json.extensionsRequired) == null ? void 0 : _this$json$extensions2.includes(name)) || false);
   }
   throwIfAborted() {
-    var _this$options$signal;
-    if ((_this$options$signal = this.options.signal) != null && _this$options$signal.aborted) {
-      throw new DOMException('glTF load aborted', 'AbortError');
+    if (this.disposed) {
+      throw abortError();
     }
+    throwIfAborted(this.signal);
+  }
+  async wait(factory) {
+    this.throwIfAborted();
+    const value = await awaitAbortable(factory, this.signal);
+    this.throwIfAborted();
+    return value;
   }
   report(phase, loaded, total, url) {
     var _this$options$onProgr, _this$options;
+    this.throwIfAborted();
     (_this$options$onProgr = (_this$options = this.options).onProgress) == null ? void 0 : _this$options$onProgr.call(_this$options, {
       phase,
       loaded,
       total,
       url
     });
+    this.throwIfAborted();
   }
   warn(message) {
     this.warnings.push(message);
     console.warn(`[glTF] ${message}`);
   }
   dependency(key, factory) {
+    this.throwIfAborted();
     const cached = this.dependencies.get(key);
     if (cached) {
       return cached;
     }
-    const promise = factory().catch(error => {
-      this.dependencies.delete(key);
+    const promise = this.wait(factory).catch(error => {
+      if (this.dependencies.get(key) === promise) {
+        this.dependencies.delete(key);
+      }
       throw error;
     });
     this.dependencies.set(key, promise);
     return promise;
   }
   addCleanup(cleanup) {
-    this.cleanups.push(cleanup);
+    if (this.disposed) {
+      cleanup();
+    } else {
+      this.cleanups.push(cleanup);
+    }
   }
   dispose() {
+    if (this.disposed) {
+      return;
+    }
+    this.disposed = true;
     while (this.cleanups.length) {
       try {
         this.cleanups.pop()();
@@ -147828,6 +148076,7 @@ class GLTFParserContext {
     this.buffers.length = 0;
     this.accessors.clear();
     this.requests.clear();
+    this.dependencies.clear();
     this.decodedViews.clear();
     this.decodedPrimitives.clear();
   }
@@ -147839,14 +148088,15 @@ class GLTFParserContext {
     return new URL(uri, this.baseUrl).href;
   }
   request(uri) {
+    this.throwIfAborted();
     const url = this.resolve(uri);
     let promise = this.requests.get(url);
     if (!promise) {
-      promise = fetch(url, {
-        signal: this.options.signal
-      }).then(response => {
-        check(response.ok, `request failed: ${url} (${response.status})`);
-        return response.arrayBuffer();
+      promise = this.wait(() => requestArrayBuffer(url, this.options.request, this.signal, this.origin)).catch(error => {
+        if (this.requests.get(url) === promise) {
+          this.requests.delete(url);
+        }
+        throw error;
       });
       this.requests.set(url, promise);
     }
@@ -147869,6 +148119,7 @@ class GLTFParserContext {
         continue;
       }
       const data = buffer.uri !== undefined ? await this.dependency(DependencyKeys.buffer(i), () => this.request(buffer.uri)) : i === 0 ? bin : undefined;
+      this.throwIfAborted();
       check(data, `buffer ${i}: missing URI/BIN (no compression extension provides these views)`);
       check(data.byteLength >= buffer.byteLength && (buffer.uri !== undefined || data.byteLength <= buffer.byteLength + 3), `buffer ${i}: length mismatch`);
       this.buffers.push(data.slice(0, buffer.byteLength));
@@ -147882,7 +148133,7 @@ class GLTFParserContext {
       this.throwIfAborted();
       let decoded = null;
       for (const handler of this.handlers) {
-        const result = await (handler.loadBufferView == null ? void 0 : handler.loadBufferView(index, this));
+        const result = await this.wait(() => handler.loadBufferView == null ? void 0 : handler.loadBufferView(index, this));
         if (result) {
           decoded = result;
           break;
@@ -147907,7 +148158,7 @@ class GLTFParserContext {
         this.throwIfAborted();
         let decoded = null;
         for (const handler of this.handlers) {
-          const result = await (handler.loadPrimitive == null ? void 0 : handler.loadPrimitive(primitiveIndex, meshIndex, this));
+          const result = await this.wait(() => handler.loadPrimitive == null ? void 0 : handler.loadPrimitive(primitiveIndex, meshIndex, this));
           if (result) {
             decoded = result;
             break;
@@ -149134,7 +149385,7 @@ function gltfPhysicalEffect() {
       frag = frag.replace(/s\.specularIntensity = 0\.5;/g, `s.specularIntensity = ${PHYSICAL_CONSTANT}.y * 0.5;`);
       frag = frag.replace('s.specularIntensity = pbr.w;', `s.specularIntensity = ${PHYSICAL_CONSTANT}.y * 0.5;`);
       const tex = (sampler, uv, prefix) => textureTransform(language, sampler, uv, prefix);
-      const iriFn = ['#if USE_AIR_IRIDESCENCE', 'vec3 airIridescenceF0 (float NV) {', 'float filmIor = clamp(airIriIorTex, 1.3, 2.33334);', `float n0 = (1.0 + sqrt(clamp(${PHYSICAL_CONSTANT}.y * 0.04, 0.0, 1.0))) / (1.0 - sqrt(clamp(${PHYSICAL_CONSTANT}.y * 0.04, 0.0, 1.0)) + 1e-6);`, 'float cosT1 = clamp(NV, 0.0, 1.0);', 'float sinT2sq = (1.0 - cosT1 * cosT1) / (filmIor * filmIor);', 'float cosT2 = sqrt(max(0.0, 1.0 - sinT2sq));', `vec3 lambda = vec3(680.0, 550.0, 450.0);`, `vec3 phase = 4.0 * PI * filmIor * max(airIriThickTex, 0.0) * cosT2 / lambda;`, 'vec3 f01 = vec3(((1.0 - filmIor) / (1.0 + filmIor)) * ((1.0 - filmIor) / (1.0 + filmIor)));', 'vec3 r12 = (filmIor - vec3(n0)) / (filmIor + vec3(n0));', 'vec3 f12 = r12 * r12;', 'vec3 cross12 = sqrt(f01 * f12);', 'vec3 airy = (f01 + f12 + 2.0 * cross12 * cos(phase)) / (vec3(1.0) + f01 * f12 + 2.0 * cross12 * cos(phase));', 'return clamp(airy, vec3(0.0), vec3(1.0));', '}', '#endif'].join(nl);
+      const iriFn = ['#if USE_AIR_IRIDESCENCE', 'vec3 airIridescenceF0 (float NV) {', 'float filmIor = airIriIorTex;', `float n0 = (1.0 + sqrt(clamp(${PHYSICAL_CONSTANT}.y * 0.04, 0.0, 1.0))) / (1.0 - sqrt(clamp(${PHYSICAL_CONSTANT}.y * 0.04, 0.0, 1.0)) + 1e-6);`, 'float cosT1 = clamp(NV, 0.0, 1.0);', 'float sinT2sq = (1.0 - cosT1 * cosT1) / (filmIor * filmIor);', 'float cosT2 = sqrt(max(0.0, 1.0 - sinT2sq));', `vec3 lambda = vec3(680.0, 550.0, 450.0);`, `vec3 phase = 4.0 * PI * filmIor * max(airIriThickTex, 0.0) * cosT2 / lambda;`, 'vec3 f01 = vec3(((1.0 - filmIor) / (1.0 + filmIor)) * ((1.0 - filmIor) / (1.0 + filmIor)));', 'vec3 r12 = (filmIor - vec3(n0)) / (filmIor + vec3(n0));', 'vec3 f12 = r12 * r12;', 'vec3 cross12 = sqrt(f01 * f12);', 'vec3 airy = (f01 + f12 + 2.0 * cross12 * cos(phase)) / (vec3(1.0) + f01 * f12 + 2.0 * cross12 * cos(phase));', 'return clamp(airy, vec3(0.0), vec3(1.0));', '}', '#endif'].join(nl);
       const airSpec = [`float airSpecularWeight = clamp(${PHYSICAL_CONSTANT}.z, 0.0, 1.0);`, '#if USE_AIR_SPECULAR_MAP', 'airSpecularWeight *= airSpecScale;', '#endif', `vec3 airDielectric = vec3(0.08 * s.specularIntensity);`, '#if USE_AIR_SPECULAR_COLOR', `airDielectric *= ${PHYSICAL_COLOR_CONSTANT}.rgb;`, '#endif', '#if USE_AIR_SPECULAR_COLOR_MAP', 'airDielectric *= airSpecColor;', '#endif', '#if USE_AIR_IRIDESCENCE', `{`, `float iriF = clamp(airIriFactorTex, 0.0, 1.0);`, `if (iriF > 0.0) { airDielectric = mix(airDielectric, airIridescenceF0(max(dot(s.normal, normalize(cc_cameraPos.xyz - s.position)), 0.0)), iriF); }`, `}`, `#endif`, `airDielectric = clamp(airDielectric, vec3(0.0), vec3(1.0));`, `airDielectric *= airSpecularWeight;`,
       `vec3 diffuse = s.albedo.rgb * (1.0 - s.metallic);`, `vec3 specular = mix(airDielectric, s.albedo.rgb, s.metallic);`].join('\n');
       frag = frag.replace(specularMix, airSpec);
@@ -149174,7 +149425,8 @@ function gltfPhysicalEffect() {
       frag = frag.replace(returnAnchor, transmission);
       const modulate = ['#if USE_AIR_TRANSMISSION', `airTrFactorTex = ${TRANSMISSION_CONSTANT}.x;`, `airThickTex = ${TRANSMISSION_CONSTANT}.z;`, '#if USE_AIR_TRANSMISSION_MAP', `airTrFactorTex *= ${tex('transmissionMap', 'TRANSMISSION_UV', 'airTransmission')}.r;`, '#endif', '#if USE_AIR_VOLUME_THICKNESS_MAP', `airThickTex *= ${tex('volumeThicknessMap', 'VOLUMETHICKNESS_UV', 'airVolumeThickness')}.g;`, '#endif', '#endif', '#if USE_AIR_SPECULAR_MAP', `airSpecScale = ${tex('specularMap', 'SPECULAR_UV', 'airSpecular')}.a;`, '#endif', '#if USE_AIR_SPECULAR_COLOR_MAP', `airSpecColor = SRGBToLinear(${tex('specularColorMap', 'SPECULARCOLOR_UV', 'airSpecularColor')}.rgb);`, '#endif', '#if USE_AIR_CLEARCOAT', `airCCFactorTex = ${CLEARCOAT_CONSTANT}.x;`, `airCCRoughTex = ${CLEARCOAT_CONSTANT}.y;`, '#endif', '#if USE_AIR_CLEARCOAT && USE_AIR_CLEARCOAT_MAP', `airCCFactorTex *= ${tex('clearcoatMap', 'CLEARCOAT_UV', 'airClearcoat')}.r;`, '#endif', '#if USE_AIR_CLEARCOAT && USE_AIR_CLEARCOAT_ROUGHNESS_MAP', `airCCRoughTex *= ${tex('clearcoatRoughnessMap', 'CLEARCOATROUGHNESS_UV', 'airClearcoatRoughness')}.g;`, '#endif', '#if USE_AIR_CLEARCOAT && USE_AIR_CLEARCOAT_NORMAL_MAP', '{', `vec3 ccT = ${tex('clearcoatNormalMap', 'CLEARCOATNORMAL_UV', 'airClearcoatNormal')}.xyz * 2.0 - 1.0;`, `ccT.xy *= ${CLEARCOAT_CONSTANT}.z;`, '#if USE_NORMAL_MAP', 'vec3 ccN0 = normalize(v_normal);', 'vec3 ccB0 = normalize(cross(v_tangent.xyz, ccN0)) * v_tangent.w;', 'airCCNormal = normalize(ccT.x * normalize(v_tangent.xyz) + ccT.y * ccB0 + ccT.z * ccN0);', '#else', 'vec3 ccN0 = normalize(v_normal);', 'vec3 ccUp = abs(ccN0.z) < 0.9 ? vec3(0.0, 0.0, 1.0) : vec3(1.0, 0.0, 0.0);', 'vec3 ccTg = normalize(cross(ccUp, ccN0));', 'airCCNormal = normalize(ccT.x * ccTg + ccT.y * cross(ccN0, ccTg) + ccT.z * ccN0);', '#endif', '}', '#endif', '#if USE_AIR_ANISOTROPY', '{', `airAnisoStrength = ${ANISO_CONSTANT}.x;`, 'vec3 aN0 = normalize(v_normal);', '#if USE_NORMAL_MAP', 'vec3 aT = normalize(v_tangent.xyz);', 'vec3 aB = normalize(cross(aT, aN0)) * v_tangent.w;', '#else', 'vec3 aUp = abs(aN0.z) < 0.9 ? vec3(0.0, 0.0, 1.0) : vec3(1.0, 0.0, 0.0);', 'vec3 aT = normalize(cross(aUp, aN0));', 'vec3 aB = cross(aN0, aT);', '#endif', `#if USE_AIR_ANISOTROPY_MAP`,
       `vec3 aTex = ${tex('anisotropyMap', 'ANISOTROPY_UV', 'airAnisotropy')}.xyz;`, 'vec2 aDir = vec2(aTex.x, aTex.y) * 2.0 - 1.0;', 'vec3 aNewT = aDir.x * aT + aDir.y * aB;', 'if (dot(aNewT, aNewT) > 1e-8) { aT = normalize(aNewT); aB = cross(aN0, aT); }', 'airAnisoStrength *= aTex.z;', '#endif', `float aRotC = ${ANISO_CONSTANT}.y; float aRotS = ${ANISO_CONSTANT}.z;`, 'airAnisoT = aT * aRotC + aB * aRotS;', 'airAnisoB = aB * aRotC - aT * aRotS;', '}', '#endif', '#if USE_AIR_IRIDESCENCE', `airIriFactorTex = ${IRIDESCENCE_CONSTANT}.x;`, `airIriIorTex = ${IRIDESCENCE_CONSTANT}.y;`,
-      `airIriThickTex = ${IRIDESCENCE_CONSTANT}.w;`, '#endif', '#if USE_AIR_IRIDESCENCE && USE_AIR_IRIDESCENCE_MAP', `airIriFactorTex *= ${tex('iridescenceMap', 'IRIDESCENCE_UV', 'airIridescence')}.r;`, '#endif', '#if USE_AIR_IRIDESCENCE && USE_AIR_IRIDESCENCE_IOR_MAP', `airIriIorTex = mix(${IRIDESCENCE_CONSTANT}.y, 2.33334, ${tex('iridescenceIorMap', 'IRIDESCENCEIOR_UV', 'airIridescenceIor')}.g);`, '#endif', '#if USE_AIR_IRIDESCENCE && USE_AIR_IRIDESCENCE_THICKNESS_MAP',
+      `airIriThickTex = ${IRIDESCENCE_CONSTANT}.w;`, '#endif', '#if USE_AIR_IRIDESCENCE && USE_AIR_IRIDESCENCE_MAP', `airIriFactorTex *= ${tex('iridescenceMap', 'IRIDESCENCE_UV', 'airIridescence')}.r;`, '#endif',
+      '#if USE_AIR_IRIDESCENCE && USE_AIR_IRIDESCENCE_IOR_MAP', `airIriIorTex = mix(${IRIDESCENCE_CONSTANT}.y, 2.33334, ${tex('iridescenceIorMap', 'IRIDESCENCEIOR_UV', 'airIridescenceIor')}.g);`, '#endif', '#if USE_AIR_IRIDESCENCE && USE_AIR_IRIDESCENCE_THICKNESS_MAP',
       `airIriThickTex = mix(${IRIDESCENCE_CONSTANT}.z, ${IRIDESCENCE_CONSTANT}.w, ${tex('iridescenceThicknessMap', 'IRIDESCENCETHICKNESS_UV', 'airIridescenceThickness')}.g);`, '#endif', '#if USE_AIR_BUMP', '{',
       `float bh = ${tex('bumpMap', 'BUMP_UV', 'airBump')}.r * ${BUMP_CONSTANT}.x;`, `vec2 buv = ${textureUVExpression('BUMP_UV', 'airBump')};`, 'vec2 dbh = vec2(dFdx(bh), dFdy(bh));', 'vec2 duvdx = vec2(dFdx(buv.x), dFdy(buv.x));', 'vec2 duvdy = vec2(dFdx(buv.y), dFdy(buv.y));', 'vec3 dPdx = dFdx(s.position);', 'vec3 dPdy = dFdy(s.position);', 'float bdet = duvdx.x * duvdy.y - duvdx.y * duvdy.x;', 'if (abs(bdet) > 1e-8) {', 'float ga = ( dbh.x * duvdy.y - dbh.y * duvdy.x) / bdet;', 'float gb = (-dbh.x * duvdx.y + dbh.y * duvdx.x) / bdet;', 's.normal = normalize(s.normal - (ga * dPdx + gb * dPdy));', '}', '}', '#endif'].join(nl);
       const mainAnchor = 'StandardSurface s; surf(s);';
@@ -149369,7 +149621,7 @@ function imageExtensionFactory(name) {
         return null;
       }
       const format = FORMATS[name];
-      if (!(await probeSupport(format.mime))) {
+      if (!(await ctx.wait(() => probeSupport(format.mime)))) {
         var _ctx$json$extensionsR;
         if ((_ctx$json$extensionsR = ctx.json.extensionsRequired) != null && _ctx$json$extensionsR.includes(name)) {
           throw new GLTFError('GLTF_DEVICE_UNSUPPORTED', `${name} required but ${format.decoder} decoding is unavailable in this browser`, name);
@@ -149399,6 +149651,7 @@ function imageExtensionFactory(name) {
 async function loadGLTFTextures(context, textures, images) {
   const imageCache = new Map();
   const decodeImage = async (key, bytes, mime) => {
+    context.throwIfAborted();
     const cached = imageCache.get(key);
     if (cached) {
       return cached;
@@ -149407,12 +149660,38 @@ async function loadGLTFTextures(context, textures, images) {
       type: mime
     }));
     try {
-      const element = await new Promise(resolve => {
+      const element = await new Promise((resolve, reject) => {
+        var _context$signal2, _context$signal3;
         const img = new Image();
-        img.onload = () => resolve(img);
-        img.onerror = () => resolve(null);
-        img.src = url;
+        const cleanup = () => {
+          var _context$signal;
+          img.onload = null;
+          img.onerror = null;
+          (_context$signal = context.signal) == null ? void 0 : _context$signal.removeEventListener('abort', aborted);
+        };
+        const aborted = () => {
+          cleanup();
+          img.src = '';
+          reject(abortError());
+        };
+        img.onload = () => {
+          cleanup();
+          resolve(img);
+        };
+        img.onerror = () => {
+          cleanup();
+          resolve(null);
+        };
+        (_context$signal2 = context.signal) == null ? void 0 : _context$signal2.addEventListener('abort', aborted, {
+          once: true
+        });
+        if ((_context$signal3 = context.signal) != null && _context$signal3.aborted) {
+          aborted();
+        } else {
+          img.src = url;
+        }
       });
+      context.throwIfAborted();
       if (!element) {
         return null;
       }
@@ -149427,11 +149706,12 @@ async function loadGLTFTextures(context, textures, images) {
   const brokenMimes = new Set();
   for (const [index, source] of (context.json.textures || []).entries()) {
     var _sampler$minFilter, _sampler$magFilter, _sampler$wrapS, _sampler$wrapT;
+    context.throwIfAborted();
     let image;
     let decoded;
     for (const handler of context.handlers) {
-      var _await$handler$resolv;
-      decoded = (_await$handler$resolv = await (handler.resolveTextureSource == null ? void 0 : handler.resolveTextureSource(index, context))) !== null && _await$handler$resolv !== void 0 ? _await$handler$resolv : undefined;
+      var _await$context$wait;
+      decoded = (_await$context$wait = await context.wait(() => handler.resolveTextureSource == null ? void 0 : handler.resolveTextureSource(index, context))) !== null && _await$context$wait !== void 0 ? _await$context$wait : undefined;
       if (decoded) {
         break;
       }
@@ -149487,7 +149767,7 @@ async function loadGLTFTextures(context, textures, images) {
           image = imageCache.get(candidate.cacheKey);
           break;
         }
-        let bytes = await candidate.bytes();
+        let bytes = await context.wait(candidate.bytes);
         if (!bytes) {
           continue;
         }
@@ -149514,6 +149794,7 @@ async function loadGLTFTextures(context, textures, images) {
         throw new Error(`[glTF] texture ${index}: all image sources failed to decode`);
       }
     }
+    context.throwIfAborted();
     const sampler = source.sampler === undefined ? {} : item(context.json.samplers, source.sampler, 'sampler');
     const texture = new Texture2D();
     textures.push(texture);
@@ -150118,20 +150399,20 @@ function iridescenceFactory(context) {
     }),
     validate(ctx) {
       for (const [index, material] of (ctx.json.materials || []).entries()) {
-        var _material$extensions, _ext$iridescenceFacto, _ext$iridescenceIor, _ext$iridescenceThick, _ext$iridescenceThick2;
+        var _material$extensions;
         const ext = (_material$extensions = material.extensions) == null ? void 0 : _material$extensions[name];
         if (!ext) {
           continue;
         }
-        const factor = (_ext$iridescenceFacto = ext.iridescenceFactor) !== null && _ext$iridescenceFacto !== void 0 ? _ext$iridescenceFacto : 0;
-        const ior = (_ext$iridescenceIor = ext.iridescenceIor) !== null && _ext$iridescenceIor !== void 0 ? _ext$iridescenceIor : 1.3;
-        const min = (_ext$iridescenceThick = ext.iridescenceThicknessMinimum) !== null && _ext$iridescenceThick !== void 0 ? _ext$iridescenceThick : 100;
-        const max = (_ext$iridescenceThick2 = ext.iridescenceThicknessMaximum) !== null && _ext$iridescenceThick2 !== void 0 ? _ext$iridescenceThick2 : 400;
+        const factor = ext.iridescenceFactor === undefined ? 0 : ext.iridescenceFactor;
+        const ior = ext.iridescenceIor === undefined ? 1.3 : ext.iridescenceIor;
+        const min = ext.iridescenceThicknessMinimum === undefined ? 100 : ext.iridescenceThicknessMinimum;
+        const max = ext.iridescenceThicknessMaximum === undefined ? 400 : ext.iridescenceThicknessMaximum;
         if (!inRange(factor, 0, 1)) {
           throw new GLTFError('GLTF_EXTENSION_INVALID', `material ${index}: iridescenceFactor must be [0,1]`, name);
         }
-        if (!inRange(ior, 1.3, 2.33334)) {
-          throw new GLTFError('GLTF_EXTENSION_INVALID', `material ${index}: iridescenceIor must be [1.3,2.3333]`, name);
+        if (!Number.isFinite(ior) || ior < 1.0) {
+          throw new GLTFError('GLTF_EXTENSION_INVALID', `material ${index}: iridescenceIor must be finite and >= 1.0`, name);
         }
         if (!Number.isFinite(min) || min < 0 || !Number.isFinite(max) || max < min) {
           throw new GLTFError('GLTF_EXTENSION_INVALID', `material ${index}: iridescence thickness range must be 0<=min<=max`, name);
@@ -150139,16 +150420,16 @@ function iridescenceFactory(context) {
       }
     },
     extendMaterial(_index, features) {
-      var _features$source$exte, _ext$iridescenceFacto2, _ext$iridescenceIor2, _ext$iridescenceThick3, _ext$iridescenceThick4;
+      var _features$source$exte;
       const ext = (_features$source$exte = features.source.extensions) == null ? void 0 : _features$source$exte[name];
       if (!ext) {
         return;
       }
       physicalScalars(features).iridescence = {
-        factor: (_ext$iridescenceFacto2 = ext.iridescenceFactor) !== null && _ext$iridescenceFacto2 !== void 0 ? _ext$iridescenceFacto2 : 0,
-        ior: (_ext$iridescenceIor2 = ext.iridescenceIor) !== null && _ext$iridescenceIor2 !== void 0 ? _ext$iridescenceIor2 : 1.3,
-        thicknessMin: (_ext$iridescenceThick3 = ext.iridescenceThicknessMinimum) !== null && _ext$iridescenceThick3 !== void 0 ? _ext$iridescenceThick3 : 100,
-        thicknessMax: (_ext$iridescenceThick4 = ext.iridescenceThicknessMaximum) !== null && _ext$iridescenceThick4 !== void 0 ? _ext$iridescenceThick4 : 400
+        factor: ext.iridescenceFactor === undefined ? 0 : ext.iridescenceFactor,
+        ior: ext.iridescenceIor === undefined ? 1.3 : ext.iridescenceIor,
+        thicknessMin: ext.iridescenceThicknessMinimum === undefined ? 100 : ext.iridescenceThicknessMinimum,
+        thicknessMax: ext.iridescenceThicknessMaximum === undefined ? 400 : ext.iridescenceThicknessMaximum
       };
     }
   };
@@ -150416,7 +150697,8 @@ async function decodeBufferView(context, index, definition, extension) {
     throw new GLTFError('GLTF_EXTENSION_INVALID', `${extension} on bufferView ${index}: encoded range out of bounds`, extension);
   }
   const source = new Uint8Array(buffer, offset, length);
-  const decoded = await decoder.decodeGltfBufferAsync(count, stride, source, mode, filter).catch(error => {
+  const decoded = await context.wait(() => decoder.decodeGltfBufferAsync(count, stride, source, mode, filter)).catch(error => {
+    context.throwIfAborted();
     throw new GLTFError('GLTF_DECODE_FAILED', `${extension} on bufferView ${index}: ${error.message}`, extension);
   });
   const bytes = decoded instanceof Uint8Array ? decoded : new Uint8Array(decoded);
@@ -150465,7 +150747,8 @@ async function decodePrimitive(context, meshIndex, primitiveIndex, definition, d
     throw new GLTFError('GLTF_EXTENSION_INVALID', `${EXTENSION}: POSITION attribute is required`, EXTENSION);
   }
   const bytes = context.bufferView(definition.bufferView);
-  const result = await decoder.decodePrimitive(bytes.slice().buffer, attributes, context.json).catch(error => {
+  const result = await context.wait(() => decoder.decodePrimitive(bytes.slice().buffer, attributes, context.json)).catch(error => {
+    context.throwIfAborted();
     if (error instanceof GLTFError) {
       throw error;
     }
@@ -150608,7 +150891,7 @@ function basisuFactory(context) {
       if (!isKTX2(bytes)) {
         throw new GLTFError('GLTF_EXTENSION_INVALID', `texture ${textureIndex}: ${name} image is not a KTX2 container`, name);
       }
-      const decoded = await transcoder.transcode(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), deviceKTX2Formats());
+      const decoded = await ctx.wait(() => transcoder.transcode(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), deviceKTX2Formats()));
       if (decoded.mimeType === KTX2_RAW_MIME) {
         if (!decoded.width || !decoded.height || decoded.format === undefined) {
           throw new GLTFError('GLTF_DECODE_FAILED', `texture ${textureIndex}: raw transcode result lacks geometry/format`);
@@ -150841,7 +151124,15 @@ let globalDefaults = {};
 function configureGLTFLoaderDefaults(options) {
   globalDefaults = {
     ...globalDefaults,
-    ...options
+    ...options,
+    request: Object.prototype.hasOwnProperty.call(options, 'request') && options.request === undefined ? undefined : mergeRequestPolicy(globalDefaults.request, options.request)
+  };
+}
+function resolveOptions(options) {
+  return {
+    ...globalDefaults,
+    ...options,
+    request: mergeRequestPolicy(globalDefaults.request, options.request)
   };
 }
 const KNOWN_UNIMPLEMENTED = [];
@@ -150849,8 +151140,10 @@ class GLTFLoader {
   constructor(options) {
     this.registry = new GLTFExtensionRegistry().register(unlitFactory).register(textureTransformFactory).register(meshQuantizationFactory).register(meshoptCompressionFactory(EXT_MESHOPT_COMPRESSION)).register(meshoptCompressionFactory(KHR_MESHOPT_COMPRESSION)).register(dracoCompressionFactory).register(emissiveStrengthFactory).register(iorFactory).register(specularFactory).register(clearcoatFactory).register(anisotropyFactory).register(iridescenceFactory).register(bumpFactory).register(transmissionFactory).register(volumeFactory).register(dispersionFactory).register(basisuFactory).register(imageExtensionFactory('EXT_texture_webp')).register(imageExtensionFactory('EXT_texture_avif')).register(punctualLightsFactory).register(meshGPUInstancingFactory);
     this.options = void 0;
+    this.customRegistry = false;
     this.options = {
-      ...options
+      ...options,
+      request: mergeRequestPolicy(options == null ? void 0 : options.request)
     };
   }
   setDRACODecoder(decoder) {
@@ -150875,18 +151168,17 @@ class GLTFLoader {
     return this;
   }
   register(factory) {
+    this.customRegistry = true;
     this.registry.register(factory);
     return this;
   }
   unregister(factory) {
+    this.customRegistry = true;
     this.registry.unregister(factory);
     return this;
   }
   getExtensionSupport() {
-    const resolved = {
-      ...globalDefaults,
-      ...this.options
-    };
+    const resolved = resolveOptions(this.options);
     const probe = new GLTFParserContext({
       asset: {
         version: '2.0'
@@ -150915,103 +151207,116 @@ class GLTFLoader {
     return entries;
   }
   loadAsync(url) {
-    registerGLTFLoader();
-    return new Promise((resolve, reject) => assetManager.loadRemote(absoluteURL(url), {
-      ext: gltfExtension(url) || '.glb',
-      gltf: {
-        ...globalDefaults,
-        ...this.options
+    const resolved = resolveOptions(this.options);
+    return awaitAbortable(() => {
+      throwIfAborted(resolved.signal);
+      const target = absoluteURL(url);
+      const isolated = this.customRegistry || Object.keys(this.options).some(key => key !== 'request') || Object.values(resolved).some(value => value !== undefined);
+      if (!isolated) {
+        registerGLTFLoader();
+        return new Promise((resolve, reject) => assetManager.loadRemote(target, {
+          ext: gltfExtension(url) || '.glb'
+        }, (error, asset) => error ? reject(error) : resolve(asset)));
       }
-    }, (error, asset) => error ? reject(error) : resolve(asset)));
-  }
-  async parseAsync(data, baseUrl) {
-    var _resolved$signal;
-    const resolved = {
-      ...globalDefaults,
-      ...this.options
-    };
-    if ((_resolved$signal = resolved.signal) != null && _resolved$signal.aborted) {
-      throw new DOMException('glTF load aborted', 'AbortError');
-    }
-    const {
-      json,
-      bin
-    } = decodeContainer(data);
-    const context = new GLTFParserContext(json, baseUrl === undefined ? undefined : absoluteURL(baseUrl), resolved);
-    const report = (phase, loaded, total) => resolved.onProgress == null ? void 0 : resolved.onProgress({
-      phase,
-      loaded,
-      total,
-      url: typeof data === 'string' ? data : undefined
-    });
-    const layout = prepareNodes(context);
-    const asset = new GLTFAsset(context, layout);
-    try {
-      var _json$accessors, _json$accessors2, _json$textures, _json$textures2;
-      context.throwIfAborted();
-      const handlers = this.registry.createHandlers(context);
-      context.handlers = handlers;
-      this.registry.validateRequired(context, handlers);
-      for (const handler of handlers) {
-        handler.validate == null ? void 0 : handler.validate(context);
-      }
-      context.throwIfAborted();
-      report('container', 1, 1);
-      await context.loadBuffers(bin);
-      (json.accessors || []).forEach((_, i) => context.accessor(i));
-      for (const handler of handlers) {
-        handler.resolveData == null ? void 0 : handler.resolveData(context);
-      }
-      report('decode', ((_json$accessors = json.accessors) == null ? void 0 : _json$accessors.length) || 0, ((_json$accessors2 = json.accessors) == null ? void 0 : _json$accessors2.length) || 0);
-      context.throwIfAborted();
-      const features = [];
-      for (const [i, source] of (json.materials || []).entries()) {
-        const materialFeatures = createMaterialFeatures(i, source);
-        for (const handler of handlers) {
-          await (handler.extendMaterial == null ? void 0 : handler.extendMaterial(i, materialFeatures, context));
-        }
-        features.push(materialFeatures);
-      }
-      context.materialFeatures = features;
-      await loadGLTFTextures(context, asset.owned.textures, asset.images);
-      report('textures', ((_json$textures = json.textures) == null ? void 0 : _json$textures.length) || 0, ((_json$textures2 = json.textures) == null ? void 0 : _json$textures2.length) || 0);
-      createSkeletons(context, layout, asset.owned.skeletons);
-      await context.resolvePrimitives();
-      const materials = new Map();
-      for (const [i, mesh] of (json.meshes || []).entries()) {
-        asset.owned.meshes.push(createGLTFMesh(context, i));
-        asset.meshMaterials.push(mesh.primitives.map(primitive => {
-          var _primitive$material;
-          const key = `${(_primitive$material = primitive.material) !== null && _primitive$material !== void 0 ? _primitive$material : -1}:${primitive.attributes.COLOR_0 !== undefined}`;
-          let material = materials.get(key);
-          if (!material) {
-            const materialFeatures = primitive.material === undefined ? createMaterialFeatures(-1, {}) : item(features, primitive.material, 'material features');
-            material = createGLTFMaterial(materialFeatures, asset.textures, primitive.attributes.COLOR_0 !== undefined);
-            materials.set(key, material);
-            asset.owned.materials.push(material);
-          }
-          return material;
-        }));
-      }
-      for (const node of json.nodes || []) {
-        if (node.mesh !== undefined) {
-          item(asset.meshes, node.mesh, 'node mesh');
-        }
-        if (node.skin !== undefined) {
-          item(asset.skeletons, node.skin, 'node skin');
-          check(node.mesh !== undefined, 'skin node must reference mesh');
-        }
-      }
-      asset.owned.animations.push(...createGLTFAnimations(context, layout.paths));
-      report('objects', 1, 1);
-      context.throwIfAborted();
-      context.releaseDecodedData();
-      return asset;
-    } catch (error) {
-      context.dispose();
+      return requestArrayBuffer(target, resolved.request, resolved.signal, requestOrigin(target)).then(data => this.parseResolvedAsync(data, /^(data|blob):/i.test(target) ? undefined : new URL('.', target).href, resolved, target));
+    }, resolved.signal, asset => {
       asset.destroy();
-      throw error;
-    }
+    });
+  }
+  parseAsync(data, baseUrl) {
+    const resolved = resolveOptions(this.options);
+    return this.parseResolvedAsync(data, baseUrl, resolved);
+  }
+  parseResolvedAsync(data, baseUrl, resolved, sourceUrl) {
+    let context;
+    return awaitAbortable(async () => {
+      const {
+        json,
+        bin
+      } = decodeContainer(data);
+      const base = baseUrl === undefined ? undefined : absoluteURL(baseUrl);
+      const parser = new GLTFParserContext(json, base, resolved);
+      context = parser;
+      const report = (phase, loaded, total) => parser.report(phase, loaded, total, sourceUrl);
+      const layout = prepareNodes(parser);
+      const asset = new GLTFAsset(parser, layout);
+      try {
+        var _resolved$request, _json$accessors, _json$accessors2, _json$textures, _json$textures2;
+        parser.throwIfAborted();
+        const handlers = this.registry.createHandlers(parser);
+        parser.handlers = handlers;
+        this.registry.validateRequired(parser, handlers);
+        for (const handler of handlers) {
+          handler.validate == null ? void 0 : handler.validate(parser);
+        }
+        parser.throwIfAborted();
+        report('container', 1, 1);
+        if (((_resolved$request = resolved.request) == null ? void 0 : _resolved$request.priority) !== undefined && (typeof Request === 'undefined' || !('priority' in Request.prototype))) {
+          parser.warn('request priority support is not exposed; the browser may ignore the scheduling hint');
+        }
+        await parser.loadBuffers(bin);
+        (json.accessors || []).forEach((_, i) => parser.accessor(i));
+        for (const handler of handlers) {
+          handler.resolveData == null ? void 0 : handler.resolveData(parser);
+        }
+        report('decode', ((_json$accessors = json.accessors) == null ? void 0 : _json$accessors.length) || 0, ((_json$accessors2 = json.accessors) == null ? void 0 : _json$accessors2.length) || 0);
+        parser.throwIfAborted();
+        const features = [];
+        for (const [i, source] of (json.materials || []).entries()) {
+          const materialFeatures = createMaterialFeatures(i, source);
+          for (const handler of handlers) {
+            await parser.wait(() => handler.extendMaterial == null ? void 0 : handler.extendMaterial(i, materialFeatures, parser));
+          }
+          features.push(materialFeatures);
+        }
+        parser.materialFeatures = features;
+        parser.throwIfAborted();
+        await loadGLTFTextures(parser, asset.owned.textures, asset.images);
+        parser.throwIfAborted();
+        report('textures', ((_json$textures = json.textures) == null ? void 0 : _json$textures.length) || 0, ((_json$textures2 = json.textures) == null ? void 0 : _json$textures2.length) || 0);
+        createSkeletons(parser, layout, asset.owned.skeletons);
+        await parser.resolvePrimitives();
+        parser.throwIfAborted();
+        const materials = new Map();
+        for (const [i, mesh] of (json.meshes || []).entries()) {
+          asset.owned.meshes.push(createGLTFMesh(parser, i));
+          asset.meshMaterials.push(mesh.primitives.map(primitive => {
+            var _primitive$material;
+            const key = `${(_primitive$material = primitive.material) !== null && _primitive$material !== void 0 ? _primitive$material : -1}:${primitive.attributes.COLOR_0 !== undefined}`;
+            let material = materials.get(key);
+            if (!material) {
+              const materialFeatures = primitive.material === undefined ? createMaterialFeatures(-1, {}) : item(features, primitive.material, 'material features');
+              material = createGLTFMaterial(materialFeatures, asset.textures, primitive.attributes.COLOR_0 !== undefined);
+              materials.set(key, material);
+              asset.owned.materials.push(material);
+            }
+            return material;
+          }));
+        }
+        for (const node of json.nodes || []) {
+          if (node.mesh !== undefined) {
+            item(asset.meshes, node.mesh, 'node mesh');
+          }
+          if (node.skin !== undefined) {
+            item(asset.skeletons, node.skin, 'node skin');
+            check(node.mesh !== undefined, 'skin node must reference mesh');
+          }
+        }
+        asset.owned.animations.push(...createGLTFAnimations(parser, layout.paths));
+        report('objects', 1, 1);
+        parser.throwIfAborted();
+        parser.releaseDecodedData();
+        return asset;
+      } catch (error) {
+        parser.dispose();
+        asset.destroy();
+        throw error;
+      }
+    }, resolved.signal, late => {
+      var _context;
+      (_context = context) == null ? void 0 : _context.dispose();
+      late.destroy();
+    });
   }
 }
 let registered = false;

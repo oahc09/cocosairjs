@@ -50,3 +50,5 @@
 没有构建正在使用时，可清理 `.tmp-dev-*`、`.tmp-min-*`、`.dts-*` 等暂存目录。`metadata/` 是校验输入，不能当临时文件清除。若有 `cc.js` / map，它们是可选 SystemJS 变体。默认构建只移除明确退役的入口与已迁移的旧收据，不删除可选资产或改写历史证据。
 
 脚本用途与写入行为见 [npm 脚本说明](../docs/reference/npm-scripts.md)。
+
+主引擎 map 保留完整 `mappings`、`sources` 与 `names`，不再内嵌可选的 `sourcesContent`。调试时应同时提供同一源码版本的 `src/`，默认 map 的 `../src/...` 相对路径会从 `build/` 指向它；单独复制 `build/` 不再具备离线内嵌源文本。npm 仍维持不发布 map、移除 map 引用的既有规则。详见 [源码映射部署](../docs/guides/source-maps.md)。

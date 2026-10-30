@@ -1,0 +1,993 @@
+{
+  "schema": "upstream-agent-public-inputs/1",
+  "status": "PREPARED_NOT_RUN",
+  "scope": "U10 public input preparation, distinct from CB21. No generated arms or reference successes are claimed.",
+  "cohort": {
+    "tasks": 12,
+    "repetitions": 3,
+    "engines": ["cocosair", "three"],
+    "pairsPerConfiguration": 36,
+    "runsPerConfiguration": 72,
+    "minimumSuccessRate": 0.8,
+    "repairBudget": 5,
+    "timeBudgetMs": 1200000
+  },
+  "seedContract": {
+    "seeds": [2026102201, 2026102202, 2026102203],
+    "assignment": "Same indexed seed in both engine arms and all compared configurations. Never select a successful seed after execution.",
+    "applicationPRNG": "xorshift32; unsigned 32-bit x ^= x << 13; x ^= x >>> 17; x ^= x << 5; emit (x >>> 0) / 4294967296.",
+    "providerSeed": null,
+    "providerSeedNote": "Provider support/seed semantics are an independent launch field, not inferred from application seeds."
+  },
+  "comparisonContract": {
+    "engineRegression": "Hold public tasks/resources/seeds/knowledge/tooling/three baseline fixed; compare exact Cocos main-control and candidate artifacts separately.",
+    "documentation": "Hold engine artifacts and all other factors fixed; compare old/current explicitly curated Cocos public knowledge. Three README stays byte-identical across profiles.",
+    "migration": "Separate branch/environment and excluded from the primary denominator.",
+    "pairing": "Common wording/assets/contract hashes are necessary preparation only; both independent reference arms must establish the same observable task semantics before generation.",
+    "cohortChanges": "Any task/spec/resource/knowledge/validator/threshold/engine change requires a new version and both compared configurations rerun."
+  },
+  "threeBaseline": {
+    "package": "three",
+    "version": "0.186.1",
+    "selectionSource": "tools/benchmark/prepare-cost-retest.mjs existing pairedEngines pin; not its model selection or CB21 cohort",
+    "selectionSourceGitBlob": "d634efb6920fcedf3507218db47ca9cb18bfae13",
+    "tarballUrl": "https://registry.npmjs.org/three/-/three-0.186.1.tgz",
+    "archiveRelativePath": "agent-input-preparation/three-0.186.1.tgz",
+    "artifactSha256": "8cd068708ea44f2c73c944b1cead2ba2f0d5c15c8fc194e5700f4e4f4a033fe7",
+    "npmIntegrity": "sha512-blFeqb49wRCSGUGj7gtpfnSGHy2lwDk94RhUmS1c/hTby70kvChbWpkJ4Pm1390LqzzvTmzgXKHPEafJwCb8jA==",
+    "npmShasum": "6d50f70c2c437f844179bbb56d6f5b774e1ca38a",
+    "registryMetadataRelativePath": "agent-input-preparation/three-0.186.1-registry.json",
+    "registryMetadataSha256": "0305c00b56fcf7ded1d9fa5f166b98f070111273663b616b39e75f1f7bccde65",
+    "extractedRelativePath": "agent-input-preparation/three-0.186.1/package",
+    "moduleEntry": "build/three.module.js",
+    "addonRoot": "examples/jsm",
+    "declarations": {
+      "package": "@types/three",
+      "version": "0.186.0",
+      "manifestPath": "tools/benchmark/upstream/three-declarations.json",
+      "manifestSha256": "ffe4239a1247a766dc13210d24456d32ea37681ed773378d907800011aa10ec9"
+    },
+    "declarationEvidence": "three@0.186.1 itself has no declarations. Official @types/three@0.186.0 targets the same major/minor; its exact archive, six dependency packages, and npm v3 lock are independently frozen. Common compiler TS5.9.3 is above its declared minimum5.6; Cocos legacy coverage stays separate.",
+    "packageFiles": [
+      {
+        "path": "README.md",
+        "bytes": 2969,
+        "sha256": "d553d824625a07d7690de93af6f8daf13d6aaed42700929d7ce4e725fa5ef10d"
+      },
+      {
+        "path": "LICENSE",
+        "bytes": 1081,
+        "sha256": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc"
+      },
+      {
+        "path": "package.json",
+        "bytes": 3672,
+        "sha256": "f9c474a27c920b9435353a6235968f4453436bee0444fac7e5fd289c8fa463de"
+      },
+      {
+        "path": "build/three.module.js",
+        "bytes": 662772,
+        "sha256": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea"
+      },
+      {
+        "path": "build/three.core.js",
+        "bytes": 1458113,
+        "sha256": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6"
+      },
+      {
+        "path": "examples/jsm/loaders/GLTFLoader.js",
+        "bytes": 117570,
+        "sha256": "131c0f78c01d19368ae495caa65b3adaa10487810a36a05bb5901b769a35ac16"
+      }
+    ],
+    "packageFileCount": 1263,
+    "installedTreeSha256": "d72a7132e702355171e287ec5cf40085a8c4bb42945606688780f6e51729e57b"
+  },
+  "engineArtifacts": {
+    "control": {
+      "status": "PENDING_ASSEMBLY_FROM_AVAILABLE_PINNED_MAIN_ARTIFACTS",
+      "sourceCommit": "b573be0741db9e2a13d38ce7e65870b97a1f5fbc",
+      "sourceTree": "13626c455aaadfea31bab1d9e634e0692045bc18",
+      "availableMainInputs": [
+        { "path": "build/cocosair.module.js", "sha": "8463ddafe520001add91d41ea8517648aa683e34", "size": 8499140 },
+        { "path": "build/cocosair.module.d.ts", "sha": "4d68c9f1d53d50cc9ea3972db0c16e57956e1fe7", "size": 3435129 },
+        { "path": "build/package.json", "sha": "3dbc1ca591c0557e35b6004aeba250e6a70b56e3", "size": 23 }
+      ],
+      "receipt": null
+    },
+    "candidate": { "status": "PENDING_EXACT_FINAL_RECEIPT", "receipt": null },
+    "receiptSchema": "upstream-agent-engine-artifacts/1",
+    "receiptContract": "Optional --engine-receipt JSON: control/candidate {artifactPath,sha256,provenance:{sourceCommit,artifactKind,...}}. Repacked main artifacts must be labelled repacked, never historical npm tarballs."
+  },
+  "knowledgeProfiles": {
+    "old": {
+      "engine": "cocosair",
+      "origin": "main-git-blobs",
+      "sourceCommit": "b573be0741db9e2a13d38ce7e65870b97a1f5fbc",
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "5854fce97c97aed731176a89c7f9ee66b714f22cbf308fe15373c85d9f5231a3",
+          "bytes": 27054,
+          "origin": "git-blob",
+          "gitBlobSha1": "8be3371cc57c4c00908495ad4ba9725be34d9fd8",
+          "sourceUrl": "https://api.github.com/repos/oahc09/cocosairjs/git/blobs/8be3371cc57c4c00908495ad4ba9725be34d9fd8"
+        },
+        {
+          "path": "docs/manual/fundamentals.md",
+          "sha256": "317cbe9c00e04cb4c9a4db05c7e47d7679cff0ab7a5412f21dde47dae54df3ec",
+          "bytes": 11987,
+          "origin": "git-blob",
+          "gitBlobSha1": "61e08bb92aa7d35b7c795f0e52420768a6615ce7",
+          "sourceUrl": "https://api.github.com/repos/oahc09/cocosairjs/git/blobs/61e08bb92aa7d35b7c795f0e52420768a6615ce7"
+        },
+        {
+          "path": "docs/manual/creating-a-scene.md",
+          "sha256": "4073982c3d70e8e9ab18be43d88946380374151eda3d20784bb39d4e86c0f3b6",
+          "bytes": 12098,
+          "origin": "git-blob",
+          "gitBlobSha1": "d194bf07b4c70e3a3e79a25abe283ae54a1874d6",
+          "sourceUrl": "https://api.github.com/repos/oahc09/cocosairjs/git/blobs/d194bf07b4c70e3a3e79a25abe283ae54a1874d6"
+        },
+        {
+          "path": "docs/manual/materials.md",
+          "sha256": "4ea3f1d83aa2a451fc15f000c01aa9291279b189153516f4fd42f8a01cf06cc9",
+          "bytes": 13479,
+          "origin": "git-blob",
+          "gitBlobSha1": "66fe08d831ffa39d22c4ffbf3be239d0dca24afc",
+          "sourceUrl": "https://api.github.com/repos/oahc09/cocosairjs/git/blobs/66fe08d831ffa39d22c4ffbf3be239d0dca24afc"
+        },
+        {
+          "path": "docs/manual/uniform-types.md",
+          "sha256": "4f04c219ae30cd1c3749eae34b69a1c3a72701edc3d4bf95894609505ef1f37b",
+          "bytes": 13422,
+          "origin": "git-blob",
+          "gitBlobSha1": "e51428db638aa40b7ffbaafa33925eb2825b1770",
+          "sourceUrl": "https://api.github.com/repos/oahc09/cocosairjs/git/blobs/e51428db638aa40b7ffbaafa33925eb2825b1770"
+        },
+        {
+          "path": "docs/manual/animation-system.md",
+          "sha256": "e9385cd524b75ef4a8b397b725f66ede000a03c23af88695130eae05ca0f4271",
+          "bytes": 22592,
+          "origin": "git-blob",
+          "gitBlobSha1": "f12d7048bd3fa446b6bbab6264febd833c095ec0",
+          "sourceUrl": "https://api.github.com/repos/oahc09/cocosairjs/git/blobs/f12d7048bd3fa446b6bbab6264febd833c095ec0"
+        },
+        {
+          "path": "docs/manual/asset-loading-and-lifetime.md",
+          "sha256": "eb1e01f3f8e34edf689efe64a32099e105475590c00f7d169e15e705e085da66",
+          "bytes": 16108,
+          "origin": "git-blob",
+          "gitBlobSha1": "e6ede07142ad61dd9f1d6f2a1a73f47b27d14f7e",
+          "sourceUrl": "https://api.github.com/repos/oahc09/cocosairjs/git/blobs/e6ede07142ad61dd9f1d6f2a1a73f47b27d14f7e"
+        },
+        {
+          "path": "docs/manual/rendertargets.md",
+          "sha256": "b47d038919a58d0ef643ef596496b8aa0adcf874dd49c27b11a2edfd952ed207",
+          "bytes": 15323,
+          "origin": "git-blob",
+          "gitBlobSha1": "c06ee9ee806050bebe0dbecd1bc50b23b0c0100d",
+          "sourceUrl": "https://api.github.com/repos/oahc09/cocosairjs/git/blobs/c06ee9ee806050bebe0dbecd1bc50b23b0c0100d"
+        },
+        {
+          "path": "docs/manual/transparency.md",
+          "sha256": "a65283d33213a96332cba08259ab79945cbbf5f8d3b9c396280b2f0bfe8ec5ee",
+          "bytes": 15077,
+          "origin": "git-blob",
+          "gitBlobSha1": "790700626242385ca34bf63d76ce6e4cbb6e66e5",
+          "sourceUrl": "https://api.github.com/repos/oahc09/cocosairjs/git/blobs/790700626242385ca34bf63d76ce6e4cbb6e66e5"
+        },
+        {
+          "path": "docs/manual/skinning-code-first.md",
+          "sha256": "4274951d6d86126e3cdcf3b9e03ceaac9e0d528e044ecce28e77ad2b9e78e0a9",
+          "bytes": 7350,
+          "origin": "git-blob",
+          "gitBlobSha1": "bfeee9d1d6c6f349967b5a67fbe87ecd9fde2450",
+          "sourceUrl": "https://api.github.com/repos/oahc09/cocosairjs/git/blobs/bfeee9d1d6c6f349967b5a67fbe87ecd9fde2450"
+        },
+        {
+          "path": "docs/manual/safe-startup-and-release.md",
+          "sha256": "0518c2f25965ccbfb1adddf41e663211ba883a84fcb5f0bbeff0ad555a6e5e75",
+          "bytes": 6484,
+          "origin": "git-blob",
+          "gitBlobSha1": "bbf27f97dd67a5f9d5bc0b7f365e69922a372fde",
+          "sourceUrl": "https://api.github.com/repos/oahc09/cocosairjs/git/blobs/bbf27f97dd67a5f9d5bc0b7f365e69922a372fde"
+        },
+        {
+          "path": "docs/manual/sdk-lifecycle-recipes.md",
+          "sha256": "3e7094c4316d705b2135418bb75bc32f0d76a7504563aad564d87025bdd972a0",
+          "bytes": 4666,
+          "origin": "git-blob",
+          "gitBlobSha1": "d6a221a2cb1646158dddb420cf442456bc35b5d9",
+          "sourceUrl": "https://api.github.com/repos/oahc09/cocosairjs/git/blobs/d6a221a2cb1646158dddb420cf442456bc35b5d9"
+        },
+        {
+          "path": "docs/manual/typescript-dom-compatibility.md",
+          "sha256": "07baa8ff262c081d0977585dfd95c18f114e962b2b49462dec5aaf2e8cb8b61f",
+          "bytes": 1861,
+          "origin": "git-blob",
+          "gitBlobSha1": "519db7b7cc2b7af837a51d17eed9cd01125f397b",
+          "sourceUrl": "https://api.github.com/repos/oahc09/cocosairjs/git/blobs/519db7b7cc2b7af837a51d17eed9cd01125f397b"
+        },
+        {
+          "path": "docs/gltf/gltf-runtime.md",
+          "sha256": "3a7ae054c93a25bc759109290b291d1445dda3b4bb588b13ec782a70406083db",
+          "bytes": 18228,
+          "origin": "git-blob",
+          "gitBlobSha1": "9bbaaf06dbc5ae65eab1ceaced54b29074751ee2",
+          "sourceUrl": "https://api.github.com/repos/oahc09/cocosairjs/git/blobs/9bbaaf06dbc5ae65eab1ceaced54b29074751ee2"
+        },
+        {
+          "path": "docs/gltf/gltf-decoder-deployment.md",
+          "sha256": "d4cb09fa40efbc81e40426f526359195604a8276c41c9b6eacdf845a54e62ae9",
+          "bytes": 5394,
+          "origin": "git-blob",
+          "gitBlobSha1": "d522c28583cb38168f088c6f6ea9750f16f78e3f",
+          "sourceUrl": "https://api.github.com/repos/oahc09/cocosairjs/git/blobs/d522c28583cb38168f088c6f6ea9750f16f78e3f"
+        },
+        {
+          "path": "docs/guides/asset-loading.md",
+          "sha256": "49d40dd316cde0548fc2c9e60f11f2a3d07c82367d54aa33df46a3faa057d567",
+          "bytes": 1848,
+          "origin": "git-blob",
+          "gitBlobSha1": "629f3958d280a51e6cfee74f8cbcf1f2cbbb3402",
+          "sourceUrl": "https://api.github.com/repos/oahc09/cocosairjs/git/blobs/629f3958d280a51e6cfee74f8cbcf1f2cbbb3402"
+        },
+        {
+          "path": "docs/guides/math-entry.md",
+          "sha256": "10c012497fe8a31e8b1aa9a20487c25fc784871b5bf35fa38e428babbdad85c0",
+          "bytes": 2709,
+          "origin": "git-blob",
+          "gitBlobSha1": "9305940c9ed5dced3b3ea63268eba67733d85013",
+          "sourceUrl": "https://api.github.com/repos/oahc09/cocosairjs/git/blobs/9305940c9ed5dced3b3ea63268eba67733d85013"
+        }
+      ],
+      "inventorySha256": "8426413c41c8fe5d6d49d4fdf0a44b74c3770a4ed4c1a6bea854f3086d6134b6",
+      "absentByMainTree": [
+        "docs/gltf/material-parameter-contract.md",
+        "docs/gltf/request-policy.md",
+        "docs/guides/upstream-material-recipe.md",
+        "docs/reference/upstream-first-frame-readiness.md"
+      ],
+      "sourceTree": "13626c455aaadfea31bab1d9e634e0692045bc18"
+    },
+    "current": {
+      "engine": "cocosair",
+      "origin": "current-checkout",
+      "sourceCommit": null,
+      "files": [
+        {
+          "path": "README.md",
+          "sha256": "5854fce97c97aed731176a89c7f9ee66b714f22cbf308fe15373c85d9f5231a3",
+          "bytes": 27054,
+          "origin": "current-checkout"
+        },
+        {
+          "path": "docs/manual/fundamentals.md",
+          "sha256": "317cbe9c00e04cb4c9a4db05c7e47d7679cff0ab7a5412f21dde47dae54df3ec",
+          "bytes": 11987,
+          "origin": "current-checkout"
+        },
+        {
+          "path": "docs/manual/creating-a-scene.md",
+          "sha256": "4073982c3d70e8e9ab18be43d88946380374151eda3d20784bb39d4e86c0f3b6",
+          "bytes": 12098,
+          "origin": "current-checkout"
+        },
+        {
+          "path": "docs/manual/materials.md",
+          "sha256": "4ea3f1d83aa2a451fc15f000c01aa9291279b189153516f4fd42f8a01cf06cc9",
+          "bytes": 13479,
+          "origin": "current-checkout"
+        },
+        {
+          "path": "docs/manual/uniform-types.md",
+          "sha256": "4f04c219ae30cd1c3749eae34b69a1c3a72701edc3d4bf95894609505ef1f37b",
+          "bytes": 13422,
+          "origin": "current-checkout"
+        },
+        {
+          "path": "docs/manual/animation-system.md",
+          "sha256": "e9385cd524b75ef4a8b397b725f66ede000a03c23af88695130eae05ca0f4271",
+          "bytes": 22592,
+          "origin": "current-checkout"
+        },
+        {
+          "path": "docs/manual/asset-loading-and-lifetime.md",
+          "sha256": "eb1e01f3f8e34edf689efe64a32099e105475590c00f7d169e15e705e085da66",
+          "bytes": 16108,
+          "origin": "current-checkout"
+        },
+        {
+          "path": "docs/manual/rendertargets.md",
+          "sha256": "b47d038919a58d0ef643ef596496b8aa0adcf874dd49c27b11a2edfd952ed207",
+          "bytes": 15323,
+          "origin": "current-checkout"
+        },
+        {
+          "path": "docs/manual/transparency.md",
+          "sha256": "a65283d33213a96332cba08259ab79945cbbf5f8d3b9c396280b2f0bfe8ec5ee",
+          "bytes": 15077,
+          "origin": "current-checkout"
+        },
+        {
+          "path": "docs/manual/skinning-code-first.md",
+          "sha256": "4274951d6d86126e3cdcf3b9e03ceaac9e0d528e044ecce28e77ad2b9e78e0a9",
+          "bytes": 7350,
+          "origin": "current-checkout"
+        },
+        {
+          "path": "docs/manual/safe-startup-and-release.md",
+          "sha256": "0518c2f25965ccbfb1adddf41e663211ba883a84fcb5f0bbeff0ad555a6e5e75",
+          "bytes": 6484,
+          "origin": "current-checkout"
+        },
+        {
+          "path": "docs/manual/sdk-lifecycle-recipes.md",
+          "sha256": "3e7094c4316d705b2135418bb75bc32f0d76a7504563aad564d87025bdd972a0",
+          "bytes": 4666,
+          "origin": "current-checkout"
+        },
+        {
+          "path": "docs/manual/typescript-dom-compatibility.md",
+          "sha256": "07baa8ff262c081d0977585dfd95c18f114e962b2b49462dec5aaf2e8cb8b61f",
+          "bytes": 1861,
+          "origin": "current-checkout"
+        },
+        {
+          "path": "docs/gltf/gltf-runtime.md",
+          "sha256": "843029f1f6662ff9ec930bf98194ab80aa04f927633a707006f2799cdeddb9af",
+          "bytes": 18434,
+          "origin": "current-checkout"
+        },
+        {
+          "path": "docs/gltf/gltf-decoder-deployment.md",
+          "sha256": "d4cb09fa40efbc81e40426f526359195604a8276c41c9b6eacdf845a54e62ae9",
+          "bytes": 5394,
+          "origin": "current-checkout"
+        },
+        {
+          "path": "docs/gltf/material-parameter-contract.md",
+          "sha256": "ca013a981c75fc8b5ade5cad6367c417524eb85a64b4f7739e5681e20fc12f80",
+          "bytes": 5113,
+          "origin": "current-checkout"
+        },
+        {
+          "path": "docs/gltf/request-policy.md",
+          "sha256": "2b42858f36b65335d298a061ad10ec3d120fba44149891963531c4f28832f108",
+          "bytes": 5772,
+          "origin": "current-checkout"
+        },
+        {
+          "path": "docs/guides/asset-loading.md",
+          "sha256": "49d40dd316cde0548fc2c9e60f11f2a3d07c82367d54aa33df46a3faa057d567",
+          "bytes": 1848,
+          "origin": "current-checkout"
+        },
+        {
+          "path": "docs/guides/math-entry.md",
+          "sha256": "10c012497fe8a31e8b1aa9a20487c25fc784871b5bf35fa38e428babbdad85c0",
+          "bytes": 2709,
+          "origin": "current-checkout"
+        },
+        {
+          "path": "docs/guides/upstream-material-recipe.md",
+          "sha256": "a3a8668cf6e97d289cfaf100d2e577a64ebcc8def32df1f4fb0109c07cbdd27e",
+          "bytes": 4762,
+          "origin": "current-checkout"
+        },
+        {
+          "path": "docs/reference/upstream-first-frame-readiness.md",
+          "sha256": "279903c30e6c00cbff1f3fa42b114cf25ea296299e9af49791154ef64a736f3f",
+          "bytes": 3243,
+          "origin": "current-checkout"
+        }
+      ],
+      "inventorySha256": "cb7f2e09285fcbba2e8c80b5bbef388034f46359d394926e8c0892a32b8821ad"
+    }
+  },
+  "threeKnowledge": {
+    "engine": "three",
+    "appliesTo": ["old", "current"],
+    "origin": "fixed-npm-package",
+    "files": [
+      {
+        "path": "README.md",
+        "bytes": 2969,
+        "sha256": "d553d824625a07d7690de93af6f8daf13d6aaed42700929d7ce4e725fa5ef10d"
+      }
+    ],
+    "inventorySha256": "f4885377dcda9608b183171e116730d796b8af9bf4cb7205234661c2e6f46238"
+  },
+  "knowledgeScope": "Explicit AU01-AU12 public corpus, not a claim to recover CB21 historical K0. Read only listed files; links do not grant access to unlisted implementation/reference/validator sources. No protected test/oracle sources are copied.",
+  "resources": [
+    {
+      "id": "inspection-rig",
+      "publicPath": "assets/showroom/inspection-rig.gltf",
+      "sourceKind": "checkout-file",
+      "sourcePath": "examples/material-inspection-showroom/assets/inspection-rig.gltf",
+      "bytes": 13664,
+      "sha256": "7019f2000970043194e94c22d1fd71879a4440bf921ab5ccf5ff0513870a7bae"
+    },
+    {
+      "id": "checker",
+      "publicPath": "assets/showroom/checker.png",
+      "sourceKind": "checkout-file",
+      "sourcePath": "examples/material-inspection-showroom/assets/checker.png",
+      "bytes": 97,
+      "sha256": "34dc4853f731464c784dac0a8dc6d511f2d773e12696c3f7cf6c48fac56af3e8"
+    },
+    {
+      "id": "crystal",
+      "publicPath": "assets/showroom/crystal.gltf",
+      "sourceKind": "checkout-file",
+      "sourcePath": "examples/material-inspection-showroom/assets/crystal.gltf",
+      "bytes": 11295,
+      "sha256": "af4f7a96b66e65699dbd8a7ea3e512a55be5aa35796716053387312017deb950"
+    },
+    {
+      "id": "skin-rig",
+      "publicPath": "assets/skinning/rig.gltf",
+      "sourceKind": "checkout-file",
+      "sourcePath": "test/fixtures/upstream-skinning/rig.gltf",
+      "bytes": 5094,
+      "sha256": "f32c03144ee8242aabd781f2e934e18b46f8538d51214bac354fdd6537fa81fb"
+    },
+    {
+      "id": "http-model.gltf",
+      "publicPath": "assets/http/model.gltf",
+      "sourceKind": "request-payload",
+      "sourcePath": "test/fixtures/upstream-request-policy/server.cjs",
+      "sourceSha256": "0882e80a6ebd41290d6acaefca3bab09bad60dc6bd77933a54ea933166eecf93",
+      "payloadCase": "default-options",
+      "payloadResource": "model.gltf",
+      "bytes": 746,
+      "sha256": "390bd62799e00d3ee72779835b3a2e0a23eabc37a02bfcb8df6b737780023568"
+    },
+    {
+      "id": "http-mesh.bin",
+      "publicPath": "assets/http/mesh.bin",
+      "sourceKind": "request-payload",
+      "sourcePath": "test/fixtures/upstream-request-policy/server.cjs",
+      "sourceSha256": "0882e80a6ebd41290d6acaefca3bab09bad60dc6bd77933a54ea933166eecf93",
+      "payloadCase": "default-options",
+      "payloadResource": "mesh.bin",
+      "bytes": 60,
+      "sha256": "cd4f0f0904b0661f78f9e0245ec2bfd2c935ad17afb2d0a9b5082d36f0103405"
+    },
+    {
+      "id": "http-pixel.png",
+      "publicPath": "assets/http/pixel.png",
+      "sourceKind": "request-payload",
+      "sourcePath": "test/fixtures/upstream-request-policy/server.cjs",
+      "sourceSha256": "0882e80a6ebd41290d6acaefca3bab09bad60dc6bd77933a54ea933166eecf93",
+      "payloadCase": "default-options",
+      "payloadResource": "pixel.png",
+      "bytes": 68,
+      "sha256": "dc1ee8a784c37702b5b456b1657db9c8ce3fc98fd4e30c203b300aaf724eae2f"
+    },
+    {
+      "id": "linear-film-rg",
+      "publicPath": "assets/material/linear-film-rg.png",
+      "sourceKind": "literal-data-uri",
+      "sourcePath": "test/fixtures/upstream-material-transitions/main.js",
+      "sourceSha256": "56360e444a063a690d0042af3ea58c6f316fd2e4e5faa0768ee864a715af8730",
+      "base64": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR4nGNwONDwHwAFRAKAbmPx4gAAAABJRU5ErkJggg==",
+      "bytes": 70,
+      "sha256": "9a1194d3233e0d427b3051aa974d9e0653cc8bb031cc9ec298e43e0ec2dada57",
+      "semantic": "One RGBA pixel [64,192,128,255], no gamma metadata. R and G are linear data.",
+      "previousProducerSha256": [
+        "6d3c252149e1d5cb70a5cdb5f7f08c604a7a735adbb1a057e3d0bb8a010b4799",
+        "cdc1262cfdb714a6ef13d052b20d0c883cdd63ede033989f3030b58d1873cfcd"
+      ],
+      "producerUpdateReason": "Authorized protected-reference raw-observation additions and formatting, verified stable; exact public PNG bytes are unchanged. Source-drift failed preparation attempts are retained, not relabelled."
+    }
+  ],
+  "toolContract": {
+    "read": [
+      "Own generated application files",
+      "Assigned public task and resources",
+      "Assigned knowledge profile and supplied public declaration files"
+    ],
+    "write": ["Own application source and work log only"],
+    "execute": [
+      "Runner-mediated build of own application against fixed installed package",
+      "Runner-mediated browser inspection on assigned loopback origins",
+      "DOM-free math probe and independent installed-package consumer through runner"
+    ],
+    "forbidden": [
+      "Engine implementation/source maps",
+      "Protected reference source, expected snapshots and validators",
+      "Other arms and prior attempts",
+      "Repository history, private notes and unassigned documents",
+      "Secrets or credentials",
+      "Package install/upgrade",
+      "Changing tests, public inputs, tool wrappers or policy"
+    ],
+    "isolation": "Use fresh fork-none arms and actual OS/tool-mediated read/network boundaries; prompt wording alone is not isolation. This preparation does not launch arms.",
+    "allowedToolsFrozenAtContractLevel": true,
+    "hostToolBindings": null,
+    "consumerToolVersions": { "typescript": "5.9.3", "vite": "7.1.12" }
+  },
+  "networkContract": {
+    "external": "deny",
+    "loopback": "Only the current arm assigned application and fixture-server origins; exact ports resolved before launch and recorded per arm.",
+    "fixtureOrigins": 2,
+    "originPurposes": [
+      "Application plus same-origin local assets",
+      "Separate synthetic cross-origin fixture only when task requires it"
+    ],
+    "dataAndBlob": "Only task-supplied/generated public asset bytes, no out-of-band document retrieval.",
+    "telemetry": "Provider generation transport is host-owned, not an arm-accessible network route.",
+    "peerAccess": "deny",
+    "publicWebDocumentation": "deny; use frozen knowledge only"
+  },
+  "renderContract": {
+    "backend": "webgl2",
+    "viewport": [640, 360],
+    "devicePixelRatio": 1,
+    "coldStart": true,
+    "businessClock": "Controlled task clock, no uncontrolled business ticks during observations.",
+    "sameEngineRGBA8AbsoluteTolerance": 2,
+    "scalarAbsoluteTolerance": 0.00001,
+    "boundsTolerance": "1e-5 * max(1, sceneDiagonal)",
+    "crossEnginePixelEquality": false,
+    "browserVersion": null,
+    "rendererIdentity": null,
+    "note": "Exact browser/renderer must be supplied at launch; no CPU fixture or EmptyDevice can stand in for pixels."
+  },
+  "httpFixtureContract": {
+    "bodyResources": ["http-model.gltf", "http-mesh.bin", "http-pixel.png"],
+    "root": "assets/http/",
+    "successStatus": 200,
+    "failureStatus": 404,
+    "failureBody": "missing fixture asset",
+    "cacheResponse": "public, max-age=3600 plus content-derived ETag in HTTP-cache case; no-store in cancellation/failure cases.",
+    "delayedDependency": "mesh.bin sends first byte, then waits for explicit runner release; cancellation races are event-barrier driven, not arbitrary timing.",
+    "serverImplementation": "Protected runner owns server/control channel. Generator sees asset endpoint and its own observations, not protected validators."
+  },
+  "tasks": [
+    {
+      "id": "AU01",
+      "topic": "basic-load",
+      "prompt": "Load the fixed local glTF, render its declared scene, and surface a real load failure.",
+      "contractId": "upstream-agent-observation/1:AU01",
+      "publicSpec": {
+        "load": "Load assets/http/model.gltf and its declared default scene, with the fixed mesh.bin and pixel.png dependencies.",
+        "failure": "Request the same local fixture endpoint with its explicit 404 mode and expose the real rejected load; no fabricated error.",
+        "observables": [
+          "Successful rendered nonblank scene",
+          "Main/dependency response hashes",
+          "Rejected failure and no mounted failed result",
+          "Owned cleanup after success and failure"
+        ]
+      },
+      "resourceIds": ["http-model.gltf", "http-mesh.bin", "http-pixel.png"],
+      "repetitionSeeds": [2026102201, 2026102202, 2026102203],
+      "pairedSemanticsStatus": "PREPARED_NOT_VALIDATED",
+      "referenceValidationStatus": "NOT_RUN",
+      "commonInputSha256": "b2e50dd87c62e28640493608cb21cd4420934db469c35d238b788ac18ace29e1"
+    },
+    {
+      "id": "AU02",
+      "topic": "request-policy",
+      "prompt": "Expose browser priority and HTTP cache as distinct request policy, including main document and same-origin dependencies; do not infer priority from completion speed.",
+      "contractId": "upstream-agent-observation/1:AU02",
+      "publicSpec": {
+        "priority": ["high", "low", "auto"],
+        "httpCache": ["default", "no-store", "reload", "no-cache", "force-cache", "only-if-cached"],
+        "credentials": ["omit", "same-origin", "include"],
+        "headers": { "X-Benchmark-Fixture": "public-synthetic" },
+        "precedence": "Defaults followed by explicitly defined per-load fields; explicit legal default values override, headers replace and are snapshotted.",
+        "coverage": [
+          "Main glTF and same-origin mesh/image dependencies",
+          "Isolated configured consumers versus option-free engine cache",
+          "Separate actual HTTP cache observation from native asset/in-flight caches"
+        ],
+        "notEvidence": "Fast completion is not priority support or scheduling-order evidence; record browser support and actual request options separately."
+      },
+      "resourceIds": ["http-model.gltf", "http-mesh.bin", "http-pixel.png"],
+      "repetitionSeeds": [2026102201, 2026102202, 2026102203],
+      "pairedSemanticsStatus": "PREPARED_NOT_VALIDATED",
+      "referenceValidationStatus": "NOT_RUN",
+      "commonInputSha256": "3dc4089e59f9656d61cda931e55946e6c650725398c44959264b6f12bc192bf0"
+    },
+    {
+      "id": "AU03",
+      "topic": "cancel-retry",
+      "prompt": "Cancel during the delayed dependency, discard late work without attachment, and retry successfully without affecting another consumer.",
+      "contractId": "upstream-agent-observation/1:AU03",
+      "publicSpec": {
+        "barrier": "Hold mesh.bin after its first response byte. Cancel after the server acknowledges the held dependency, before releasing its tail.",
+        "sequence": [
+          "Start independent consumers A and B with equal policy",
+          "Cancel A while its dependency is held",
+          "Release both barriers",
+          "B succeeds and A never attaches, even when late work settles",
+          "Retry A with a fresh controller and verify success"
+        ],
+        "observables": [
+          "Server request/hold/abort/release events",
+          "Abort rejection",
+          "No post-cancel attachment or progress",
+          "Other consumer survives",
+          "Retry succeeds",
+          "Owned temporary resources settle"
+        ],
+        "scope": "Logical cancellation; do not claim an uncancellable third-party decoder physically stopped."
+      },
+      "resourceIds": ["http-model.gltf", "http-mesh.bin", "http-pixel.png"],
+      "repetitionSeeds": [2026102201, 2026102202, 2026102203],
+      "pairedSemanticsStatus": "PREPARED_NOT_VALIDATED",
+      "referenceValidationStatus": "NOT_RUN",
+      "commonInputSha256": "2c32f1accbc79447b83ebd9f4d63bb2969d378e96657d7421ce4cc0dd52a725c"
+    },
+    {
+      "id": "AU04",
+      "topic": "shared-instances",
+      "prompt": "Instantiate three independently animated objects sharing immutable mesh, texture and clip assets; destroy one without corrupting the others.",
+      "contractId": "upstream-agent-observation/1:AU04",
+      "publicSpec": {
+        "instances": 3,
+        "animation": "move",
+        "timesSeconds": [0.25, 0.75, 1.5],
+        "ancestorScales": [
+          [0.5, 0.5, 1],
+          [0.75, 0.3, 1],
+          [-0.5, 0.75, 1]
+        ],
+        "ancestorPositions": [
+          [-2.5, 0, 0],
+          [0, 0, 0],
+          [2.5, 0, 0]
+        ],
+        "operations": [
+          "Share immutable mesh, texture and clip identities",
+          "Change each instance state independently",
+          "Destroy the first instance twice",
+          "Verify both survivors retain independent state and render"
+        ],
+        "notAllowed": "Deep-copy immutable assets merely to avoid proving shared ownership."
+      },
+      "resourceIds": ["skin-rig"],
+      "repetitionSeeds": [2026102201, 2026102202, 2026102203],
+      "pairedSemanticsStatus": "PREPARED_NOT_VALIDATED",
+      "referenceValidationStatus": "NOT_RUN",
+      "commonInputSha256": "33e3231d1ae37a852da04b8087c99eb20bce94c4b269d762971bc4caf4c56060"
+    },
+    {
+      "id": "AU05",
+      "topic": "dynamic-uv",
+      "prompt": "Change base-color UV transform on an owned material instance and compare against an independently reconstructed final state.",
+      "contractId": "upstream-agent-observation/1:AU05",
+      "publicSpec": {
+        "uvTransform": {
+          "offset": [0.2, -0.1],
+          "scale": [2, 0.5],
+          "rotationRadians": 0.7,
+          "convention": "Apply scale, then positive mathematical 2D rotation, then translation (T*R*S). Native storage conventions may differ.",
+          "sampleUVs": [
+            [0, 0],
+            [1, 0],
+            [0, 1],
+            [0.25, 0.75]
+          ]
+        },
+        "ownedOnly": true,
+        "comparison": "Mutate one owned material instance, then compare it with a separately reconstructed final-state material using the same source asset and render settings. Keep shared originals unchanged.",
+        "observables": [
+          "Transformed sample UV coordinates",
+          "Native material state",
+          "Initial/mutated/reconstructed frames",
+          "Mutation visibly changes initial image",
+          "Final-state equivalence within frozen same-engine tolerances"
+        ]
+      },
+      "resourceIds": ["inspection-rig", "checker"],
+      "repetitionSeeds": [2026102201, 2026102202, 2026102203],
+      "pairedSemanticsStatus": "PREPARED_NOT_VALIDATED",
+      "referenceValidationStatus": "NOT_RUN",
+      "commonInputSha256": "a44a0955a3424f147352ec82ebbfccf15512f88443714dc2de3b6b2bb2578e6c"
+    },
+    {
+      "id": "AU06",
+      "topic": "iridescence",
+      "prompt": "Control film intensity, IOR and min/max nanometer thickness, honor R/G linear channel semantics and reject invalid values.",
+      "contractId": "upstream-agent-observation/1:AU06",
+      "publicSpec": {
+        "intensity": 0.95,
+        "iorCases": [1, 1.2, 1.3, 2.33334, 2.5],
+        "thicknessNm": [80, 670],
+        "texturedModes": ["constant", "linear-R-intensity-G-thickness"],
+        "linearPixelRGBA": [64, 192, 128, 255],
+        "textureFactor": 0.8,
+        "noThicknessTexture": "Use maximum thickness irrespective of the minimum.",
+        "invalidInputs": [
+          "Nonfinite values",
+          "IOR below 1",
+          "Negative thickness",
+          "Minimum thickness above maximum",
+          "Intensity outside [0,1]"
+        ],
+        "observables": [
+          "Reject invalid controls without committing bad state",
+          "R multiplies intensity; G interpolates thickness",
+          "Do not sRGB-decode film data channels",
+          "Changing volume thickness does not change film thickness",
+          "Compare mutation with independently reconstructed final state"
+        ]
+      },
+      "resourceIds": ["inspection-rig", "checker", "linear-film-rg"],
+      "repetitionSeeds": [2026102201, 2026102202, 2026102203],
+      "pairedSemanticsStatus": "PREPARED_NOT_VALIDATED",
+      "referenceValidationStatus": "NOT_RUN",
+      "commonInputSha256": "27a80ad40009a11860d2b886abbfdde9520437e30f2c9fe1572ba4a4868d9bed"
+    },
+    {
+      "id": "AU07",
+      "topic": "blend-state",
+      "prompt": "Render opaque and transparent objects in both first-construction orders and demonstrate isolated native pipeline/material state.",
+      "contractId": "upstream-agent-observation/1:AU07",
+      "publicSpec": {
+        "constructionOrders": [
+          ["opaque-red", "transparent-blue"],
+          ["transparent-blue", "opaque-red"]
+        ],
+        "opaqueRGBA": [1, 0, 0, 1],
+        "transparentRGBA": [0, 0, 1, 0.5019607843137255],
+        "checks": [
+          "Render each non-overlapping object alone and together in both first-construction orders",
+          "Keep native material and pipeline state isolated",
+          "Render an overlapping transparent pair with each explicit draw order and compare against that order source-over composition"
+        ],
+        "negative": "Do not claim transparent reordering is invariant. Do not implement a fake renderer or replace engine pipeline caches."
+      },
+      "resourceIds": [],
+      "repetitionSeeds": [2026102201, 2026102202, 2026102203],
+      "pairedSemanticsStatus": "PREPARED_NOT_VALIDATED",
+      "referenceValidationStatus": "NOT_RUN",
+      "commonInputSha256": "64cac04e7da20557aac3147239e1dee1532597faaa3ec0a8d9b3cec6f0870e0a"
+    },
+    {
+      "id": "AU08",
+      "topic": "dual-targets",
+      "prompt": "Render two equal-size offscreen targets with independent cameras, perform A-to-B-to-A, resize and recreate without binding contamination.",
+      "contractId": "upstream-agent-observation/1:AU08",
+      "publicSpec": {
+        "targetCount": 2,
+        "initialSize": [128, 64],
+        "resizedA": [256, 128],
+        "format": "RGBA8, depth24-stencil8, one sample",
+        "sequence": [
+          "Render camera A to target A",
+          "Render camera B to target B",
+          "Return to A (A-B-A)",
+          "Resize A only",
+          "Destroy and recreate B at the same size"
+        ],
+        "observables": [
+          "Distinct target texture/framebuffer identities",
+          "Independent cameras, viewport and clear color/depth",
+          "Unchanged B when A resizes",
+          "No stale binding after same-size B recreation",
+          "Release all owned targets"
+        ],
+        "pixelReadback": "Compare within each engine; identical tone mapping across different engines is not assumed."
+      },
+      "resourceIds": [],
+      "repetitionSeeds": [2026102201, 2026102202, 2026102203],
+      "pairedSemanticsStatus": "PREPARED_NOT_VALIDATED",
+      "referenceValidationStatus": "NOT_RUN",
+      "commonInputSha256": "f809237f4576a0ba2c78e46f36940d4e845751644ed76223bf4ab07eb337751f"
+    },
+    {
+      "id": "AU09",
+      "topic": "skinning-culling",
+      "prompt": "Animate and morph a skinned rig under translated/nonuniform/negative-scale parents, compare bounds with independent skinned vertices and demonstrate actual frustum behavior.",
+      "contractId": "upstream-agent-observation/1:AU09",
+      "publicSpec": {
+        "animation": "move",
+        "timesSeconds": [0.25, 0.75, 1.5],
+        "ancestorScales": [
+          [0.5, 0.5, 1],
+          [0.75, 0.3, 1],
+          [-0.5, 0.75, 1]
+        ],
+        "ancestorPositions": [
+          [-2.5, 0, 0],
+          [0, 0, 0],
+          [2.5, 0, 0]
+        ],
+        "morphWeights": [-1, 0, 1],
+        "frustumXPositions": [-8, 0, 8, 0],
+        "camera": { "position": [0, 0, 10], "projection": "orthographic", "verticalHalfExtent": 4 },
+        "colorModes": ["RGB", "RGBA"],
+        "bounds": "Conservative finite world bounds contain independently transformed and weighted skinned/morphed vertices. Do not use engine AABB/matrix helpers as the independent oracle.",
+        "observables": [
+          "Actual animation and morph state",
+          "Per-vertex containment",
+          "Real visible/outside/visible frustum sequence",
+          "Immutable source mesh/clip/texture preservation"
+        ],
+        "notAllowed": "Disabling culling or assigning infinite bounds is not a valid repair."
+      },
+      "resourceIds": ["skin-rig"],
+      "repetitionSeeds": [2026102201, 2026102202, 2026102203],
+      "pairedSemanticsStatus": "PREPARED_NOT_VALIDATED",
+      "referenceValidationStatus": "NOT_RUN",
+      "commonInputSha256": "7026ef3906a02f03a402190709dbd5c631c6906a22c8cf114a29169cfefcf02c"
+    },
+    {
+      "id": "AU10",
+      "topic": "lifecycle",
+      "prompt": "Run thirty load/change/release cycles with actual engine settlement and report owned resource/listener retention without inventing total GPU memory.",
+      "contractId": "upstream-agent-observation/1:AU10",
+      "publicSpec": {
+        "cycles": 30,
+        "survivors": 2,
+        "cycle": [
+          "Load the fixed rig for this cycle (record whether the engine reuses a cache), then create an additional instance",
+          "Change owned material and animation/morph state",
+          "Release twice to check idempotence",
+          "Wait for actual engine update/draw settlement and a microtask checkpoint",
+          "Observe owned-resource and listener retention against a settled baseline"
+        ],
+        "observables": [
+          "Increasing actual engine frame IDs",
+          "Survivor state and output intact",
+          "Owned instance/renderer/material/texture/listener counts where supported",
+          "All unknown counters remain null"
+        ],
+        "notEvidence": "Arbitrary sleeps, draw-only ticks, manual private destruction-queue flushes, or invented total GPU memory."
+      },
+      "resourceIds": ["skin-rig"],
+      "repetitionSeeds": [2026102201, 2026102202, 2026102203],
+      "pairedSemanticsStatus": "PREPARED_NOT_VALIDATED",
+      "referenceValidationStatus": "NOT_RUN",
+      "commonInputSha256": "d8ed290040ba6c3f64736c75a0378f356e37d50de91fd558a6a6edbb2662cbdf"
+    },
+    {
+      "id": "AU11",
+      "topic": "first-frame",
+      "prompt": "Report engine/resources/passes/submission/presentation separately and capture a nonblank compositor frame without advancing frozen business state.",
+      "contractId": "upstream-agent-observation/1:AU11",
+      "publicSpec": {
+        "modes": ["cold", "delayed-resource", "offscreen", "shader-failure", "context-lost"],
+        "delayedResourceMs": 150,
+        "stages": ["engine", "resources", "passes", "submission", "presentation"],
+        "businessState": ["Animation time", "Physics step count", "Application update count"],
+        "requirements": [
+          "Report every readiness stage separately with real evidence",
+          "Unknown pass does not mean ready",
+          "Capture nonblank compositor presentation for successful visible mode",
+          "Preserve frozen business state while collecting readiness",
+          "Expected shader/context failures remain explicit negative cases"
+        ],
+        "notEvidence": "Scene attachment, one frame tick or GPU readback alone does not establish compositor presentation."
+      },
+      "resourceIds": ["inspection-rig", "checker"],
+      "repetitionSeeds": [2026102201, 2026102202, 2026102203],
+      "pairedSemanticsStatus": "PREPARED_NOT_VALIDATED",
+      "referenceValidationStatus": "NOT_RUN",
+      "commonInputSha256": "a79db177238bcd642d8c57af26a917afade88b2fb7ced39fc582ce4665fb853e"
+    },
+    {
+      "id": "AU12",
+      "topic": "sdk-consumer",
+      "prompt": "Build an independent installed-package ESM and Vite consumer with strict types, explicit decoder paths, a DOM-free math import and one engine identity.",
+      "contractId": "upstream-agent-observation/1:AU12",
+      "publicSpec": {
+        "consumers": [
+          "Independent installed-package native ESM import-map page",
+          "Independent installed-package Vite production build",
+          "TypeScript consumer using public declarations",
+          "DOM-free Node math import"
+        ],
+        "strictTypeOptions": { "strict": true, "strictNullChecks": true, "skipLibCheck": true },
+        "requirements": [
+          "No source-tree aliases or hidden repository dependencies",
+          "Explicit local decoder URLs and missing-decoder failure behavior",
+          "One engine constructor/runtime identity across imports",
+          "Math vector/matrix arithmetic without window/document/engine initialization",
+          "Use equivalent public native APIs; package names and export layouts may differ",
+          "Caller strictNullChecks positive and negative probes; preserve skipLibCheck true, without expanding full-library strictness"
+        ],
+        "decoderAssets": "Only exact pinned package-shipped decoders or separately frozen exact decoder artifacts; no automatic network fallback.",
+        "tooling": "Use independently frozen TypeScript and Vite tools through the runner, never npm install during generation.",
+        "compilerContract": {
+          "id": "upstream-sdk-types/3",
+          "commonModeIds": ["5.9.3/node16", "5.9.3/bundler"],
+          "cocosCompatibilityModeIds": ["4.9.5/node", "4.9.5/node16"],
+          "threeCompatibilityModeIds": [],
+          "threeDeclarations": {
+            "package": "@types/three",
+            "version": "0.186.0",
+            "archiveSha256": "903987fb2451466a2c40134626690cb921a8a2552ee95803969d1aa64d9033fe",
+            "lockSha256": "9806b5f268df07a6eb171d13204e9e96419d3016f48202a574c3e5b08715f8b0"
+          },
+          "fixtureScope": "paired-common/1",
+          "candidateExtensionScope": "candidate-u06-extension/1"
+        }
+      },
+      "resourceIds": ["http-model.gltf", "http-mesh.bin", "http-pixel.png"],
+      "repetitionSeeds": [2026102201, 2026102202, 2026102203],
+      "pairedSemanticsStatus": "PREPARED_NOT_VALIDATED",
+      "referenceValidationStatus": "NOT_RUN",
+      "commonInputSha256": "f13ab25d9e4c70cc5a1db73fd6a45ca8cb55587f8e845afd6ce5fd13edd4558a"
+    }
+  ],
+  "remainingRequirements": [
+    {
+      "field": "engineArtifacts.control",
+      "status": "PENDING_ASSEMBLY",
+      "evidence": "Pinned main runtime and DTS blob identities are available; no control receipt has been selected in this public preparation.",
+      "minimumAction": "Assemble/recover fixed main control outside the source tree and supply byte-bound receipt; distinguish repacking from original historical tarball."
+    },
+    {
+      "field": "engineArtifacts.candidate",
+      "status": "PENDING_SELECTION",
+      "evidence": "Candidate packaging is coordinated separately after final source changes.",
+      "minimumAction": "Supply exact final candidate package and SHA256 receipt."
+    },
+    {
+      "field": "toolContract.hostToolBindings",
+      "status": "NOT_FROZEN",
+      "evidence": "Allowed operations and denied paths are specified, but no launch host sandbox/tool binding receipt exists.",
+      "minimumAction": "Bind exact tool versions, enforce read/network boundaries, and test isolation before generation."
+    },
+    {
+      "field": "renderContract.browserVersion/rendererIdentity",
+      "status": "NOT_FROZEN",
+      "evidence": "No real browser execution is performed by this preparer.",
+      "minimumAction": "Freeze actual browser/renderer and collect independent reference runs in both arms."
+    },
+    {
+      "field": "tasks[*].pairedSemanticsStatus",
+      "status": "PREPARED_NOT_VALIDATED",
+      "evidence": "Source-neutral briefs/resources/seeds and public observation contracts do not prove equivalent attainable semantics.",
+      "minimumAction": "Freeze independent protected references and validators, execute both arms, resolve or explicitly preserve unsupported/missing arms without dropping denominator."
+    },
+    {
+      "field": "launch.provider/model/parameters/attribution",
+      "status": "NOT_FROZEN",
+      "evidence": "No real provider, immutable model revision or attributable generation I/O/token/cost route selected; CB21 model identity was not inherited.",
+      "minimumAction": "Freeze genuine launch identity and raw generation/token/cost instrumentation. No scripted/native-assistant output may count as an LLM result."
+    }
+  ],
+  "observations": {
+    "generatedRuns": 0,
+    "referenceRuns": 0,
+    "successRate": null,
+    "tokens": null,
+    "cost": null,
+    "toolCalls": null
+  },
+  "materializationContract": "The output is a protected coordinator-owned input bank, not a generation workspace. Mount exactly one task brief, one engine knowledge profile and its resource subset per fresh arm; never expose both knowledge profiles, peer arms, source repository, producer files or reference/validator trees. No arm is launched by this helper.",
+  "toolingEvidence": {
+    "status": "LOCAL_IDENTITIES_VERIFIED_NOT_LAUNCH_BOUND",
+    "nodeObserved": "v24.19.0",
+    "selectionSource": "Existing isolated consumer-tooling package.json/package-lock.json, no package selection or upgrade by this preparation",
+    "lockRelativePath": "consumer-tooling/package-lock.json",
+    "lockSha256": "fdf59b8e95277799ab5e63a2c2564557eff47d9304b026f42f10d395fa722fa3",
+    "packages": [
+      {
+        "name": "typescript",
+        "version": "5.9.3",
+        "relativePath": "consumer-tooling/node_modules/typescript",
+        "packageJsonSha256": "822ef7ca6452205657b6288b066481ecf508bfbf43455d715cf7d3ec457561e6",
+        "treeSha256": "7e02162c902e5c29ec19fefc573ad55b8ed15fcbda940e737f297c53e9c41f54",
+        "files": 132
+      },
+      {
+        "name": "vite",
+        "version": "7.1.12",
+        "relativePath": "consumer-tooling/node_modules/vite",
+        "packageJsonSha256": "a595ec8935b35dba603f6a4536c9833706023112f069017e8e2ae1fa58f2b57f",
+        "treeSha256": "18d72680f2db3c4fd59ea1e50098a4be2306ade298618cee13dcb9c3ba6cb6b0",
+        "files": 39
+      }
+    ],
+    "limits": "The lock and installed package trees bind the available TypeScript/Vite tools, not an agent host route, browser binary, OS sandbox, or complete future launch environment."
+  },
+  "contractRevision": "sdk-types-3"
+}

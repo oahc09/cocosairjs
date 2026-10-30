@@ -36,12 +36,31 @@ describe('fixed-snapshot segmented example evidence', () => {
         for (const file of state.segmentFiles) expect(read(file)).toMatchObject({ partial: true, completed: false });
         expect(read(path.join(state.repo, 'examples/alpha/example.json')).status).toBe('stable');
     });
-    test('current real manifest includes all 188 examples and 189 ordered modes including Spark and WebGPU', () => {
+    test('current real manifest includes every ordinary example and ordered mode, including new drafts', () => {
         const scope = campaign.collectScope(path.resolve(__dirname, '../..'));
-        expect(scope).toHaveLength(188);
-        expect(scope.reduce((n, e) => n + e.modes.length, 0)).toBe(189);
+        const root = path.resolve(__dirname, '../..');
+        const manifest = read(path.join(root, 'examples/files.json'));
+        const ordinary = manifest.examples.filter((entry: any) => !entry.requiresDevTools);
+        expect(scope.map((entry: any) => entry.id).sort()).toEqual(ordinary.map((entry: any) => entry.id).sort());
+        const expectedModes = ordinary.reduce((sum: number, entry: any) => {
+            const spec = read(path.join(root, 'examples', entry.dir, 'example.json'));
+            return sum + 1 + (spec.bench?.apiVariants?.length || 0);
+        }, 0);
+        expect(scope.reduce((n, e) => n + e.modes.length, 0)).toBe(expectedModes);
+        for (const id of [
+            'material-inspection-showroom',
+            'asset-request-policy',
+            'first-frame-readiness',
+            'material-contract-lab',
+            'render-state-isolation',
+            'skinned-instance-lifecycle',
+            'depth-precision-lab',
+            'probe-sh-lab',
+        ]) {
+            expect(scope.find((entry: any) => entry.id === id)?.statusAdmission.gallery).toBe('draft');
+        }
         for (const id of ['afterlight', 'neon-city', 'instance-batch', 'particles-3d', 'morph-field'])
-            expect(scope.some((e) => e.id === id)).toBe(true);
+            expect(scope.some((entry: any) => entry.id === id)).toBe(true);
         expect(scope.some((e) => e.id === 'spark-splats')).toBe(true);
         expect(scope.find((e) => e.id === 'webgpu-basic').modes).toEqual([
             expect.objectContaining({ id: 'primary', query: 'renderer=webgl2' }),

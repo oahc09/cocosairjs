@@ -14,6 +14,8 @@ describe('competitive bootstrap contract', () => {
         effect.shaders.forEach((shader) => {
             const previous = shader.name;
             shader.name += '|competitive-early';
+            // Renaming changes shader identity; let the normalizer derive its content hash.
+            Reflect.deleteProperty(shader, 'hash');
             programNames.set(previous, shader.name);
         });
         effect.techniques.forEach((technique) =>

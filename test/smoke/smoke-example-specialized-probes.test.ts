@@ -128,17 +128,23 @@ describe('ordinary Driver Pilot specialized proof contract (synthetic CPU only)'
             );
             expect(capture).toBeGreaterThan(0);
             expect(text.indexOf(command!)).toBeLessThan(capture);
-            if (workflow === 'format') {
+            // Full supervisor collection remains an explicit milestone contract.
+            if (workflow === 'example-evidence') {
+                expect(text).toContain('EXAMPLE_EVIDENCE_CPU_OUT="$RUNNER_TEMP/example-evidence-cpu"');
+                expect(text).toContain('node tools/verify/example-evidence-supervisor.test.cjs');
+                expect(text).toMatch(
+                    /if: always\(\)[\s\S]*?name: example-evidence-cpu-receipts[\s\S]*?path: \$\{\{ runner.temp \}\}\/example-evidence-cpu\//,
+                );
+            } else {
+                expect(text).not.toContain('example-evidence-supervisor.test.cjs');
+                expect(text).toContain('example-evidence-shutdown-policy.test.cjs');
+                expect(text).toContain('example-evidence-status.test.cjs');
                 expect(command).toContain('$RUNNER_TEMP/core-cpu/unit-tests.log');
                 expect(text).toContain('${{ runner.temp }}/core-cpu/');
                 expect(text).toMatch(
                     /name: Retain exact-head originals, failures and timings\s+if: always\(\)\s+uses: actions\/upload-artifact@v4/,
                 );
-            } else {
-                expect(text).toContain('EXAMPLE_EVIDENCE_CPU_OUT="$RUNNER_TEMP/example-evidence-cpu"');
-                expect(text).toMatch(
-                    /if: always\(\)[\s\S]*?name: example-evidence-cpu-receipts[\s\S]*?path: \$\{\{ runner.temp \}\}\/example-evidence-cpu\//,
-                );
+                expect(text).toMatch(/if: always\(\)[\s\S]*?actions\/upload-artifact@v4[\s\S]*?core-example-smoke\//);
             }
         }
     });
