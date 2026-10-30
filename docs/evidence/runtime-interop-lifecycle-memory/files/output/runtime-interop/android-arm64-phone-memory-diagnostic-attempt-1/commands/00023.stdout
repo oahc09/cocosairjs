@@ -1,6 +1,0 @@
-{"event":"created","pid":23330,"surfaceGeneration":0,"orientation":1,"elapsedRealtime":151603263}
-{"event":"resume","pid":23330,"surfaceGeneration":0,"orientation":1,"elapsedRealtime":151603269}
-{"event":"pause","pid":23330,"surfaceGeneration":0,"orientation":1,"elapsedRealtime":151603292}
-{"event":"surface-created","pid":23330,"surfaceGeneration":1,"orientation":1,"elapsedRealtime":151603336}
-{"event":"surface-changed","pid":23330,"surfaceGeneration":1,"orientation":1,"elapsedRealtime":151603341}
-{"event":"surface-destroyed","pid":23330,"surfaceGeneration":2,"orientation":1,"elapsedRealtime":151603868}

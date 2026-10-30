@@ -6,21 +6,23 @@
 
 2D 物理默认使用现有 JavaScript 后端；可显式选择 [Box2D 3.2 WASM 后端](docs/guides/box2d3.md)，继续使用 Cocos 刚体、碰撞体和关节组件。WASM 资产独立部署、按需加载。
 
+直接部署 SDK 时，先看 [build 最小文件集](build/README.md)：普通浏览器只需选择一份主 JS，可选后端/解码器按功能部署；声明、source map、编译收据和 Gallery 不是每个应用的运行依赖。
+
 ## 视觉展示
 
 以下为项目概念视觉与宣传素材，非引擎实机截图。
 
-| 从想法到可见反馈                                                         | 三维交互创意                                                                                  |
-| ------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------- |
-| ![从想法到可见反馈](assets/cocosairjs-from-idea-to-visible-feedback.png) | ![三维交互创意](assets/cocosairjs-three-dimensional-interactive-creativity.png)               |
-| **代码雕塑舞台**                                                         | **流动的光影与材质之环**                                                                      |
-| ![代码雕塑舞台](assets/cocosairjs-code-sculpture-stage.png)              | ![流动的光影与材质之环](assets/cocosairjs-the-flowing-ring-of-light-and-shadow-materials.png) |
+| 从想法到可见反馈                                                                                                                 | 三维交互创意                                                                                                                                          |
+| -------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ![从想法到可见反馈](https://github.com/oahc09/cocosairjs/blob/main/assets/cocosairjs-from-idea-to-visible-feedback.png?raw=true) | ![三维交互创意](https://github.com/oahc09/cocosairjs/blob/main/assets/cocosairjs-three-dimensional-interactive-creativity.png?raw=true)               |
+| **代码雕塑舞台**                                                                                                                 | **流动的光影与材质之环**                                                                                                                              |
+| ![代码雕塑舞台](https://github.com/oahc09/cocosairjs/blob/main/assets/cocosairjs-code-sculpture-stage.png?raw=true)              | ![流动的光影与材质之环](https://github.com/oahc09/cocosairjs/blob/main/assets/cocosairjs-the-flowing-ring-of-light-and-shadow-materials.png?raw=true) |
 
 ### 宣传视频
 
-[![点击查看宣传视频](assets/cocosairjs-from-idea-to-visible-feedback.png)](assets/cocosairjs-promotion.mp4)
+[![点击查看宣传视频](https://github.com/oahc09/cocosairjs/blob/main/assets/cocosairjs-from-idea-to-visible-feedback.png?raw=true)](https://github.com/oahc09/cocosairjs/blob/main/assets/cocosairjs-promotion.mp4?raw=true)
 
-[观看或下载宣传视频（MP4）](assets/cocosairjs-promotion.mp4)
+[观看或下载宣传视频（MP4）](https://github.com/oahc09/cocosairjs/blob/main/assets/cocosairjs-promotion.mp4?raw=true)
 
 https://github.com/user-attachments/assets/689ea4e1-de14-47dd-a104-564cf1005c06
 
@@ -31,10 +33,8 @@ https://github.com/user-attachments/assets/689ea4e1-de14-47dd-a104-564cf1005c06
 | 在自己的 TypeScript/JavaScript 项目开发应用 | 推荐安装本地 SDK tarball，或正式发布的 npm 包 | 应用不需要 src/、tools/、引擎 node_modules/ |
 | 不用打包器，直接在网页运行                  | 复制主 JS，通过 import map 加载               | 不需要                                      |
 | 修改引擎或运行仓库示例                      | 在本仓库安装开发依赖、构建并启动 dev server   | 需要                                        |
-| 只做数学计算（含 Node/Worker）              | 从 `cocosair.js/math` 导入                    | 不需要浏览器或主                            |
-
-引擎启动 |
-| 使用 Gaussian Splatting | 额外构建独立 Spark 模块，复用同一主引擎 | 本地构建需要；运行应用不需要 |
+| 只做数学计算（含 Node/Worker）              | 从 `cocosair.js/math` 导入                    | 不需要浏览器或主引擎启动                    |
+| 使用 Gaussian Splatting                     | 额外构建独立 Spark 模块，复用同一主引擎       | 本地构建需要；运行应用不需要                |
 
 ## 方式一：在自己的项目中依赖 SDK（推荐）
 
@@ -240,7 +240,19 @@ npm run dev -- --example hello-cube --port 7454
 
 ## 默认 HDR 后处理
 
-主入口提供 `createAirPostProcess(camera, { levels: 5, toneMapping: 'aces', exposure: 1 })`，开箱即用的线性 HDR 捕获、多级 Bloom、ACES/Reinhard 和统一 sRGB 输出。先创建 app，再装配相机；参见 [用法与边界](docs/guides/hdr-post-processing.md) 、[AFTERLIGHT 光环装置](examples/afterlight/index.html) 和 [霓虹夜城示例](examples/neon-city/index.html)。当前支持默认 WebGL2 ForwardPipeline。
+主入口提供 `createAirPostProcess(camera, { levels: 5, toneMapping: 'aces', exposure: 1 })`，开箱即用的线性 HDR 捕获、多级 Bloom、ACES/Reinhard 和统一 sRGB 输出。先创建 app，再装配相机；参见 [用法与边界](docs/guides/hdr-post-processing.md) 、[AFTERLIGHT 光环装置](https://github.com/oahc09/cocosairjs/blob/main/examples/afterlight/index.html) 和 [霓虹夜城示例](https://github.com/oahc09/cocosairjs/blob/main/examples/neon-city/index.html)。当前支持默认 WebGL2 ForwardPipeline。
+
+## 动态实例批次
+
+动态物件批次可用 `createAirInstanceBatch`：一个原生 Node/Model 共享索引几何，支持实例变换/颜色、范围提交、显式扩容、包围盒和射线选择。用法及 WebGL2/材质边界见[动态实例批次](docs/guides/instance-batches.md)。
+
+## Code First 3D 粒子
+
+`createAirParticleSystem` 直接装配原生 CPU/GPU 粒子与模块，支持纯代码配置发射器、曲线和 CPU 拖尾。示例 `/particles-3d/` 提供喷射、火星、烟雾粒子、雨、雪及暂停/继续/重播。用法与 GPU 模块边界见 [3D 粒子指南](docs/guides/particles.md)。
+
+## GPU 点 / 体素形变
+
+`createAirMorphField` 将文字、图像和网格采样为共享实例批次，形态与颜色由 GPU 插值；进度更新不重传样本数据。示例 `/morph-field/` 提供 16,384 个样本、点/体素切换和 HDR 输出。数据、设备与释放合同见 [GPU 形态场](docs/guides/morph-fields.md)。
 
 ## 可选：Spark 独立模块
 
@@ -370,7 +382,7 @@ cocosair.js/
 - **WASM 物理后端**：可选 Box2D 3.2 通过 `physics2D: 'box2d-v3-wasm'` 使用，配套资产随构建和 npm 包独立提供，默认 JS 后端不加载。它与旧 `physics-2d-box2d-wasm` feature 不同；旧 Box2D WASM、bullet/physx 仍受外部资产限制。分别见 [Box2D 3.2 指南](docs/guides/box2d3.md)和[资产来源记录](docs/notes/physics-asset-sourcing.md)。
 - **Spine**：组件、类型及适配代码存在，但基线的完整运行时依赖尚未部署的外部资产；不能据此宣称 Spine 动画运行已验收。见 [Spine 资产来源](docs/notes/spine-asset-sourcing.md)。
 - **Draco 浏览器解码**：adapter 支持注入 provider；随包入口为 Node/CommonJS 形态，浏览器 factory 由应用另行提供。见 [decoder 部署边界](docs/gltf/gltf-decoder-deployment.md)。
-- **地形、3D 粒子、XR、Light Probe 等范围项**：不属于当前默认支持面，具体排除与待扩展范围见 [范围记录](docs/reference/scope-decisions.md)。
+- **地形、XR、Light Probe 等范围项**：不属于当前默认支持面，具体排除与待扩展范围见 [范围记录](docs/reference/scope-decisions.md)。3D 粒子已通过 `createAirParticleSystem` 接入；当前覆盖与历史范围记录分开说明。
 - **MiniGame、Native/JSB、Creator Editor**：不属于 Web 运行时依赖闭包。
 - **Spark 高斯泼溅**：使用 `npm run build:spark` 生成独立 `build/spark.module.js`，借用主引擎，不重复打包 Cocos。可运行示例为 `examples/spark-splats/`。默认 bundle 不包含 Spark；WASM 仍以内联的上游发行字节提供，XR/hand 家族排除范围不变。Spark-rs 的 crate 级许可处置仍为 pending，因此当前仅提供仓库内可选构建，不纳入默认 npm 包。边界、声明与部署方式见 [Spark 独立模块](docs/reference/spark-optional-entry.md)。
 

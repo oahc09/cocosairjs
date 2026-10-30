@@ -2,7 +2,7 @@
   "meta": {
     "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
     "note": "Air Path 与 Upstream Path 一致(前缀 src/)；modified 文件另行标注 reason；upstreamPath=null 表示该行为 Air 原创文件或上游产物（仓库内无对应源文件），必须 modified:true 并在 reason 说明出处",
-    "modifiedCount": 230,
+    "modifiedCount": 235,
     "pal": {
       "revision": "9f0e30acb31f6d670f2c0bf818d61039846a2860",
       "license": "MIT",
@@ -743,7 +743,7 @@
       "upstreamPath": "cocos/3d/assets/mesh.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "PG-18/21: bone-space bounds use weak skeleton identity plus full bindpose data instead of trusting cached skeleton.hash; reset, dynamic data updates and destroy invalidate the cache. Weighted joint indices, attribute layout, weights, positions and bindposes reject invalid input with actionable AIR_E_SKINNING_* diagnostics. Unweighted/unused joints remain legal null bounds; only complete calculations enter the cache. Native mesh/model abstractions and upstream baseline are preserved.; ENG-01..04: native dynamic preflight, semantic partial streams, retained index validation, bounds refresh, retryable buffer allocation and cleanup. Invalid inputs commit no CPU/GPU update.  2026-10-24 A4: emit a geometry-commit event only after successful dynamic buffer/count/bounds updates."
+      "reason": "PG-18/21: bone-space bounds use weak skeleton identity plus full bindpose data instead of trusting cached skeleton.hash; reset, dynamic data updates and destroy invalidate the cache. Weighted joint indices, attribute layout, weights, positions and bindposes reject invalid input with actionable AIR_E_SKINNING_* diagnostics. Unweighted/unused joints remain legal null bounds; only complete calculations enter the cache. Native mesh/model abstractions and upstream baseline are preserved.; ENG-01..04: native dynamic preflight, semantic partial streams, retained index validation, bounds refresh, retryable buffer allocation and cleanup. Invalid inputs commit no CPU/GPU update.  2026-10-24 A4: emit a geometry-commit event only after successful dynamic buffer/count/bounds updates. ; U05: optional instance morph weights are applied to POSITION displacements before bone-space bounds; base shared-mesh cache remains separate, with finite/layout guards."
     },
     {
       "airPath": "src/cocos/3d/assets/morph-rendering.ts",
@@ -792,7 +792,7 @@
       "upstreamPath": "cocos/3d/framework/mesh-renderer.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "extraction copy AIR A4: subscribe to bound mesh geometry commits and reuse native onGeometryChanged to refresh transformed bounds and draw info for all sharing renderers. Rebind/restore/enable are deduplicated; pre-destroy unsubscribes even never-loaded components; pending destruction ignores updates."
+      "reason": "extraction copy AIR A4: subscribe to bound mesh geometry commits and reuse native onGeometryChanged to refresh transformed bounds and draw info for all sharing renderers. Rebind/restore/enable are deduplicated; pre-destroy unsubscribes even never-loaded components; pending destruction ignores updates. U05: renderer teardown destroys only renderer-owned native MaterialInstance passes/buffers; shared templates and borrowed instances remain caller-owned. 2026-10-29 integration: share idempotent owner-only material cleanup between onDestroy and the unconditional _onPreDestroy path so never-loaded detached/inactive renderers release their passes without disposing borrowed instances."
     },
     {
       "airPath": "src/cocos/3d/index.ts",
@@ -953,7 +953,7 @@
       "upstreamPath": "cocos/3d/models/skinning-model.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "PG-18/19: reject invalid weighted joint paths and realtime palette capacity overflow before releasing the previous binding; keep large skeletons with legal local palettes"
+      "reason": "PG-18/19: reject invalid weighted joint paths and realtime palette capacity overflow before releasing the previous binding; keep large skeletons with legal local palettes; U05: per-model latest morph-weight bounds are refreshed before world bounds, conservatively unioned with base positions; negative weights and nonuniform/negative scaling stay supported without disabling culling."
     },
     {
       "airPath": "src/cocos/3d/reflection-probe/index.ts",
@@ -4529,8 +4529,8 @@
       "airPath": "src/cocos/particle/animator/texture-animation.ts",
       "upstreamPath": "cocos/particle/animator/texture-animation.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR F02 Code First: numTilesX/Y retain their values before a renderer target is bound and defer material updates to native initialization; use optional target access instead of dereferencing null. Baseline and copyright unchanged."
     },
     {
       "airPath": "src/cocos/particle/animator/velocity-overtime.ts",
@@ -4627,8 +4627,8 @@
       "airPath": "src/cocos/particle/particle-system.ts",
       "upstreamPath": "cocos/particle/particle-system.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR F02 late trail enable: move the existing lazy CPU trail initialization before simulation, so updateParticles cannot access an unbound trail owner/pool. Preserve native simulation, culling, material and buffer lifecycle; baseline and copyright unchanged."
     },
     {
       "airPath": "src/cocos/particle/particle-utils.ts",
@@ -4662,8 +4662,8 @@
       "airPath": "src/cocos/particle/renderer/particle-system-renderer-data.ts",
       "upstreamPath": "cocos/particle/renderer/particle-system-renderer-data.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR F02 Code First: alignment setter retains configuration before ParticleSystem/processor binding; onInit applies the stored alignment as before. Baseline and copyright unchanged."
     },
     {
       "airPath": "src/cocos/particle/renderer/particle-system-renderer-gpu.ts",
@@ -4676,8 +4676,8 @@
       "airPath": "src/cocos/particle/renderer/trail.ts",
       "upstreamPath": "cocos/particle/renderer/trail.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR F02 Code First: TrailModule.enable stores the requested state before ParticleSystem.onLoad/onInit, avoiding a null particle-system dereference. Native onInit synchronizes the renderer trail material after binding, including initially disabled trails enabled at runtime, then resolves it before rebuilding so the model transform/submodel is initialized. Native simulation and buffer allocation remain; upstream baseline and copyright unchanged."
     },
     {
       "airPath": "src/cocos/physics-2d/builtin/builtin-contact.ts",
@@ -5264,8 +5264,8 @@
       "airPath": "src/cocos/primitive/quad.ts",
       "upstreamPath": "cocos/primitive/quad.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR optional quad width/height with matching positions and bounds; unit defaults retained"
     },
     {
       "airPath": "src/cocos/primitive/sphere.ts",
@@ -7365,7 +7365,7 @@
       "upstreamPath": "public-pal/pal/input/web/mouse-input.ts",
       "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
       "modified": true,
-      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs; AIR host canvas binding / DPR adaptation; AIR explicit startup canvas binding (generated by startup-binding-patch.cjs), no import-time DOM wrapping/listeners"
+      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs; AIR host canvas binding / DPR adaptation; AIR explicit startup canvas binding (generated by startup-binding-patch.cjs), no import-time DOM wrapping/listeners; AIR preserves mouse/wheel DOM propagation, dispatches mouseup only through window, and cancels only cancelable canvas defaults (pal-source.cjs)"
     },
     {
       "airPath": "src/pal/input/web/touch-input.js",

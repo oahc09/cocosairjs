@@ -15,10 +15,12 @@ const fixtures = [
 ];
 
 function prepare(argv) {
+    const seen = new Set();
     const args = Object.fromEntries(
         argv.map((a) => {
             const m = /^--(out|bundle)=(.+)$/.exec(a);
-            if (!m) throw Error(`Unknown argument: ${a}`);
+            if (!m || seen.has(m[1])) throw Error(`Unknown or duplicate argument: ${a}`);
+            seen.add(m[1]);
             return [m[1], m[2]];
         }),
     );
@@ -26,8 +28,17 @@ function prepare(argv) {
     const out = path.resolve(root, args.out);
     const bundle = path.resolve(root, args.bundle || 'output/runtime-interop/sdk/cocosair.module.js');
     const binding = sourceBinding(bundle);
-    if (!binding.matches) throw Error('Android SDK must match the current source map');
-    require('./webgpu-assets.cjs').verify(root);
+    if (!binding.matches) throw Error('Android SDK source binding failed; rebuild the bundle and its receipt');
+    const shaderManifest = require('./webgpu-assets.cjs').verify(root);
+    const shaderDirectory = path.join(path.dirname(bundle), 'webgpu');
+    for (const [name, expected] of Object.entries(shaderManifest.files)) {
+        if (sha256(fs.readFileSync(path.join(shaderDirectory, name))) !== expected.sha256)
+            throw Error(`Deployed WebGPU asset differs from frozen manifest: ${name}`);
+    }
+    const unregistered = fs
+        .readdirSync(shaderDirectory)
+        .filter((name) => name !== 'manifest.json' && !Object.hasOwn(shaderManifest.files, name));
+    if (unregistered.length) throw Error('Unregistered deployed WebGPU assets');
     fs.mkdirSync(path.dirname(out), { recursive: true });
     fs.mkdirSync(out);
     const files = {};

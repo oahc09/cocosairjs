@@ -9,7 +9,7 @@ const JSZip = require('jszip');
 const life = require('./runtime-interop-android-lifecycle.cjs');
 const memory = require('./runtime-interop-android-memory.cjs');
 const { cropScreen } = require('./runtime-interop-android.cjs');
-const helperRoot = './runtime-interop-android/verification-snapshots/output/runtime-interop/';
+const helperRoot = './runtime-interop-android/lib/';
 const { inspectRuntime, inputFiles: colorInputs, normalizeScreen } = require(
     helperRoot + 'android-phone-color-presentation.cjs',
 );

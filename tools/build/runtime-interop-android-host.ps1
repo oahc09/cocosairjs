@@ -85,3 +85,4 @@ try {
 }
 Get-Content -LiteralPath (Join-Path $taskOps 'gradle.log') -Tail 45
 if (-not $taskCommand.pass) { exit 1 }
+

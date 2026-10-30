@@ -5,9 +5,5 @@ tools/build/box2d/** -text
 build/box2d3/** -text
 build/box2d3-samples/** -text
 
-# Runtime interop patches, evidence and archived producers retain hash-bound bytes.
-tools/verify/runtime-interop/host-patches/** -text
-tools/verify/runtime-interop-android/host-patches/** -text
-tools/verify/runtime-interop-android/verification-snapshots/** -text
-docs/evidence/runtime-interop-lifecycle-memory/** -text
-docs/evidence/runtime-interop-physical-lifecycle/** -text
+# Reading-trial answers and receipts are sealed by byte hash, not prose formatting.
+ai/plans/skills-token-evidence/reading-*/** -text

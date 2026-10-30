@@ -67,6 +67,8 @@ Read relevant [wrong/right examples](references/common-mistakes.md) before imple
 
 ## Reference map
 
+- [AirMorphField polish controls?](../cocosair-performance/references/gpu-morph-fields.md#rendering-and-polish) - Field-owned surface
+
 - [Which material recipe?](references/builtin-effects.md) - Registration and instances
 - [Property rejected?](references/property-types.md) - Types, aliases and color
 - [Write custom GLSL?](references/custom-glsl.md) - Variants and binding layouts

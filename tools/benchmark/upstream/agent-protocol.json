@@ -1,0 +1,706 @@
+{
+  "schema": "upstream-agent-protocol/1",
+  "executionStatus": "BLOCKED",
+  "reason": "Public resources, unchanged runtime artifacts, exact Three declarations and dependency closure, common modern compiler modes and independent Cocos legacy checks are prepared. Generation remains blocked by the real immutable provider/model/parameters/isolation route and missing paired browser reference receipts. No model, credential or route was changed.",
+  "comparisonLines": [
+    "engine-regression: frozen three baseline; Cocos control versus candidate as separate configurations",
+    "documentation: fixed engine, old/new public knowledge as separate configurations",
+    "upstream-migration: separate branch/environment, excluded from primary denominator"
+  ],
+  "cohort": {
+    "tasks": 12,
+    "repetitions": 3,
+    "engines": ["cocosair", "three"],
+    "pairsPerConfiguration": 36,
+    "runsPerConfiguration": 72,
+    "minimumSuccessRate": 0.8,
+    "repairBudget": 5,
+    "timeBudgetMs": 1200000
+  },
+  "existingProtocolSources": [
+    "tools/benchmark/runner/metrics.ts",
+    "tools/benchmark/runner/trial.ts",
+    "tools/benchmark/catalog/catalog100.ts"
+  ],
+  "referenceBaseline": {
+    "versionObservedInExistingPreparation": "three@0.186.1",
+    "source": "tools/benchmark/prepare-cost-retest.mjs",
+    "artifactSha256": "8cd068708ea44f2c73c944b1cead2ba2f0d5c15c8fc194e5700f4e4f4a033fe7",
+    "executionIdentityFrozen": false,
+    "artifactIdentityFrozen": true,
+    "matchingDeclarations": {
+      "name": "@types/three",
+      "version": "0.186.0",
+      "archiveSha256": "903987fb2451466a2c40134626690cb921a8a2552ee95803969d1aa64d9033fe",
+      "lockSha256": "9806b5f268df07a6eb171d13204e9e96419d3016f48202a574c3e5b08715f8b0",
+      "manifest": {
+        "package": "@types/three",
+        "version": "0.186.0",
+        "manifestPath": "tools/benchmark/upstream/three-declarations.json",
+        "manifestSha256": "ffe4239a1247a766dc13210d24456d32ea37681ed773378d907800011aa10ec9"
+      }
+    }
+  },
+  "launchConfiguration": null,
+  "rules": [
+    "A001/scripted references and native assistant turns do not count as LLM runs.",
+    "Freeze model/provider revision, generation parameters, public inputs/assets, engine/package identities, seeds, allowed tools, network and matched task semantics before generation.",
+    "Independent human references remain protected from the generating agent. Never derive a reference from candidate generated answers.",
+    "Use existing isEligible/aggregate implementation. Keep compile/runtime/timeout/budget failures within its predeclared denominator; report infrastructure/refusal/cancel/isolation separately.",
+    "A missing/unsupported arm is not a successful matched pair; no post-hoc task exclusion.",
+    "Record real inputs, raw outputs, validation results, attempts, first submission, elapsed time, token usage and cost with currency. Unknown observations remain null and block metric completeness.",
+    "Keep immutable failed attempts and retries. New protocol/threshold/knowledge versions require both configurations rerun."
+  ],
+  "tasks": [
+    {
+      "id": "AU01",
+      "topic": "basic-load",
+      "prompt": "Load the fixed local glTF, render its declared scene, and surface a real load failure.",
+      "pairingStatus": "PREPARED_NOT_VALIDATED",
+      "resourceContract": "Exact common input hash, resource IDs, repeated seeds and public constraints are bound in preparation and public-inputs.json; native API names may differ.",
+      "referenceAndValidators": "upstream-agent-observation/1:AU01; independently authored protected sources are bound by reference-manifest.json; actual paired browser receipts remain absent."
+    },
+    {
+      "id": "AU02",
+      "topic": "request-policy",
+      "prompt": "Expose browser priority and HTTP cache as distinct request policy, including main document and same-origin dependencies; do not infer priority from completion speed.",
+      "pairingStatus": "PREPARED_NOT_VALIDATED",
+      "resourceContract": "Exact common input hash, resource IDs, repeated seeds and public constraints are bound in preparation and public-inputs.json; native API names may differ.",
+      "referenceAndValidators": "upstream-agent-observation/1:AU02; independently authored protected sources are bound by reference-manifest.json; actual paired browser receipts remain absent."
+    },
+    {
+      "id": "AU03",
+      "topic": "cancel-retry",
+      "prompt": "Cancel during the delayed dependency, discard late work without attachment, and retry successfully without affecting another consumer.",
+      "pairingStatus": "PREPARED_NOT_VALIDATED",
+      "resourceContract": "Exact common input hash, resource IDs, repeated seeds and public constraints are bound in preparation and public-inputs.json; native API names may differ.",
+      "referenceAndValidators": "upstream-agent-observation/1:AU03; independently authored protected sources are bound by reference-manifest.json; actual paired browser receipts remain absent."
+    },
+    {
+      "id": "AU04",
+      "topic": "shared-instances",
+      "prompt": "Instantiate three independently animated objects sharing immutable mesh, texture and clip assets; destroy one without corrupting the others.",
+      "pairingStatus": "PREPARED_NOT_VALIDATED",
+      "resourceContract": "Exact common input hash, resource IDs, repeated seeds and public constraints are bound in preparation and public-inputs.json; native API names may differ.",
+      "referenceAndValidators": "upstream-agent-observation/1:AU04; independently authored protected sources are bound by reference-manifest.json; actual paired browser receipts remain absent."
+    },
+    {
+      "id": "AU05",
+      "topic": "dynamic-uv",
+      "prompt": "Change base-color UV transform on an owned material instance and compare against an independently reconstructed final state.",
+      "pairingStatus": "PREPARED_NOT_VALIDATED",
+      "resourceContract": "Exact common input hash, resource IDs, repeated seeds and public constraints are bound in preparation and public-inputs.json; native API names may differ.",
+      "referenceAndValidators": "upstream-agent-observation/1:AU05; independently authored protected sources are bound by reference-manifest.json; actual paired browser receipts remain absent."
+    },
+    {
+      "id": "AU06",
+      "topic": "iridescence",
+      "prompt": "Control film intensity, IOR and min/max nanometer thickness, honor R/G linear channel semantics and reject invalid values.",
+      "pairingStatus": "PREPARED_NOT_VALIDATED",
+      "resourceContract": "Exact common input hash, resource IDs, repeated seeds and public constraints are bound in preparation and public-inputs.json; native API names may differ.",
+      "referenceAndValidators": "upstream-agent-observation/1:AU06; independently authored protected sources are bound by reference-manifest.json; actual paired browser receipts remain absent."
+    },
+    {
+      "id": "AU07",
+      "topic": "blend-state",
+      "prompt": "Render opaque and transparent objects in both first-construction orders and demonstrate isolated native pipeline/material state.",
+      "pairingStatus": "PREPARED_NOT_VALIDATED",
+      "resourceContract": "Exact common input hash, resource IDs, repeated seeds and public constraints are bound in preparation and public-inputs.json; native API names may differ.",
+      "referenceAndValidators": "upstream-agent-observation/1:AU07; independently authored protected sources are bound by reference-manifest.json; actual paired browser receipts remain absent."
+    },
+    {
+      "id": "AU08",
+      "topic": "dual-targets",
+      "prompt": "Render two equal-size offscreen targets with independent cameras, perform A-to-B-to-A, resize and recreate without binding contamination.",
+      "pairingStatus": "PREPARED_NOT_VALIDATED",
+      "resourceContract": "Exact common input hash, resource IDs, repeated seeds and public constraints are bound in preparation and public-inputs.json; native API names may differ.",
+      "referenceAndValidators": "upstream-agent-observation/1:AU08; independently authored protected sources are bound by reference-manifest.json; actual paired browser receipts remain absent."
+    },
+    {
+      "id": "AU09",
+      "topic": "skinning-culling",
+      "prompt": "Animate and morph a skinned rig under translated/nonuniform/negative-scale parents, compare bounds with independent skinned vertices and demonstrate actual frustum behavior.",
+      "pairingStatus": "PREPARED_NOT_VALIDATED",
+      "resourceContract": "Exact common input hash, resource IDs, repeated seeds and public constraints are bound in preparation and public-inputs.json; native API names may differ.",
+      "referenceAndValidators": "upstream-agent-observation/1:AU09; independently authored protected sources are bound by reference-manifest.json; actual paired browser receipts remain absent."
+    },
+    {
+      "id": "AU10",
+      "topic": "lifecycle",
+      "prompt": "Run thirty load/change/release cycles with actual engine settlement and report owned resource/listener retention without inventing total GPU memory.",
+      "pairingStatus": "PREPARED_NOT_VALIDATED",
+      "resourceContract": "Exact common input hash, resource IDs, repeated seeds and public constraints are bound in preparation and public-inputs.json; native API names may differ.",
+      "referenceAndValidators": "upstream-agent-observation/1:AU10; independently authored protected sources are bound by reference-manifest.json; actual paired browser receipts remain absent."
+    },
+    {
+      "id": "AU11",
+      "topic": "first-frame",
+      "prompt": "Report engine/resources/passes/submission/presentation separately and capture a nonblank compositor frame without advancing frozen business state.",
+      "pairingStatus": "PREPARED_NOT_VALIDATED",
+      "resourceContract": "Exact common input hash, resource IDs, repeated seeds and public constraints are bound in preparation and public-inputs.json; native API names may differ.",
+      "referenceAndValidators": "upstream-agent-observation/1:AU11; independently authored protected sources are bound by reference-manifest.json; actual paired browser receipts remain absent."
+    },
+    {
+      "id": "AU12",
+      "topic": "sdk-consumer",
+      "prompt": "Build an independent installed-package ESM and Vite consumer with strict types, explicit decoder paths, a DOM-free math import and one engine identity.",
+      "pairingStatus": "PREPARED_NOT_VALIDATED",
+      "resourceContract": "Exact common input hash, resource IDs, repeated seeds and public constraints are bound in preparation and public-inputs.json; native API names may differ.",
+      "referenceAndValidators": "upstream-agent-observation/1:AU12; independently authored protected sources are bound by reference-manifest.json; actual paired browser receipts remain absent."
+    }
+  ],
+  "preparation": {
+    "schema": "upstream-agent-preparation/1",
+    "status": "PREPARED_NOT_VALIDATED",
+    "sourceManifestEvidence": [
+      {
+        "path": "tools/benchmark/upstream/public-inputs.json",
+        "sha256": "ffe22915c26fed204e74b333e66e1d3868f7c678631ffaaaa39746b6dfb581ee"
+      },
+      {
+        "path": "tools/benchmark/upstream/reference-manifest.json",
+        "sha256": "4ae718efc49cc068e4f1e8127425e24038bb7078fc46e976df9e7c5f55b55ce1"
+      }
+    ],
+    "publicInventorySha256": "8a63376bb62af56f280fdb1068d1ff4c1702672c2d265515f94d4f6bb0ceec00",
+    "knowledgeInventoryHashes": {
+      "old": "8426413c41c8fe5d6d49d4fdf0a44b74c3770a4ed4c1a6bea854f3086d6134b6",
+      "current": "cb7f2e09285fcbba2e8c80b5bbef388034f46359d394926e8c0892a32b8821ad",
+      "three": "f4885377dcda9608b183171e116730d796b8af9bf4cb7205234661c2e6f46238"
+    },
+    "referenceSourceCount": 57,
+    "referenceManifestSha256": "4ae718efc49cc068e4f1e8127425e24038bb7078fc46e976df9e7c5f55b55ce1",
+    "tasks": [
+      {
+        "id": "AU01",
+        "commonInputSha256": "b2e50dd87c62e28640493608cb21cd4420934db469c35d238b788ac18ace29e1",
+        "repetitionSeeds": [2026102201, 2026102202, 2026102203],
+        "validatorIds": ["upstream-agent-observation/1:AU01"],
+        "resourceIds": ["http-model.gltf", "http-mesh.bin", "http-pixel.png"],
+        "referenceSourceIds": {
+          "cocosair": [
+            "cocos-request-0",
+            "cocos-request-1",
+            "cocos-request-2",
+            "cocos-request-3",
+            "normalizer",
+            "collector",
+            "preparationChecker",
+            "sdkReference",
+            "requestReference",
+            "requestServer"
+          ],
+          "three": [
+            "threePrimitive",
+            "threeRunner",
+            "preparationChecker",
+            "sdkReference",
+            "collector",
+            "three-package",
+            "three-module",
+            "three-core",
+            "three-gltf",
+            "three-loader",
+            "requestReference",
+            "requestServer",
+            "cocos-request-0",
+            "cocos-request-1",
+            "cocos-request-2",
+            "cocos-request-3"
+          ]
+        },
+        "referencesBrowserValidated": false,
+        "referenceEvidence": { "cocosair": [], "three": [] },
+        "referenceReceipts": { "cocosair": [], "three": [] }
+      },
+      {
+        "id": "AU02",
+        "commonInputSha256": "3dc4089e59f9656d61cda931e55946e6c650725398c44959264b6f12bc192bf0",
+        "repetitionSeeds": [2026102201, 2026102202, 2026102203],
+        "validatorIds": ["upstream-agent-observation/1:AU02"],
+        "resourceIds": ["http-model.gltf", "http-mesh.bin", "http-pixel.png"],
+        "referenceSourceIds": {
+          "cocosair": [
+            "cocos-request-0",
+            "cocos-request-1",
+            "cocos-request-2",
+            "cocos-request-3",
+            "normalizer",
+            "collector",
+            "preparationChecker",
+            "sdkReference",
+            "requestReference",
+            "requestServer"
+          ],
+          "three": [
+            "threePrimitive",
+            "threeRunner",
+            "preparationChecker",
+            "sdkReference",
+            "collector",
+            "three-package",
+            "three-module",
+            "three-core",
+            "three-gltf",
+            "three-loader",
+            "requestReference",
+            "requestServer",
+            "cocos-request-0",
+            "cocos-request-1",
+            "cocos-request-2",
+            "cocos-request-3"
+          ]
+        },
+        "referencesBrowserValidated": false,
+        "referenceEvidence": { "cocosair": [], "three": [] },
+        "referenceReceipts": { "cocosair": [], "three": [] }
+      },
+      {
+        "id": "AU03",
+        "commonInputSha256": "2c32f1accbc79447b83ebd9f4d63bb2969d378e96657d7421ce4cc0dd52a725c",
+        "repetitionSeeds": [2026102201, 2026102202, 2026102203],
+        "validatorIds": ["upstream-agent-observation/1:AU03"],
+        "resourceIds": ["http-model.gltf", "http-mesh.bin", "http-pixel.png"],
+        "referenceSourceIds": {
+          "cocosair": [
+            "cocos-request-0",
+            "cocos-request-1",
+            "cocos-request-2",
+            "cocos-request-3",
+            "normalizer",
+            "collector",
+            "preparationChecker",
+            "sdkReference",
+            "requestReference",
+            "requestServer"
+          ],
+          "three": [
+            "threePrimitive",
+            "threeRunner",
+            "preparationChecker",
+            "sdkReference",
+            "collector",
+            "three-package",
+            "three-module",
+            "three-core",
+            "three-gltf",
+            "three-loader",
+            "requestReference",
+            "requestServer",
+            "cocos-request-0",
+            "cocos-request-1",
+            "cocos-request-2",
+            "cocos-request-3"
+          ]
+        },
+        "referencesBrowserValidated": false,
+        "referenceEvidence": { "cocosair": [], "three": [] },
+        "referenceReceipts": { "cocosair": [], "three": [] }
+      },
+      {
+        "id": "AU04",
+        "commonInputSha256": "33e3231d1ae37a852da04b8087c99eb20bce94c4b269d762971bc4caf4c56060",
+        "repetitionSeeds": [2026102201, 2026102202, 2026102203],
+        "validatorIds": ["upstream-agent-observation/1:AU04"],
+        "resourceIds": ["skin-rig"],
+        "referenceSourceIds": {
+          "cocosair": [
+            "cocos-skin-0",
+            "cocos-skin-1",
+            "cocos-skin-2",
+            "cocos-skin-3",
+            "cocos-skin-4",
+            "normalizer",
+            "collector",
+            "preparationChecker",
+            "sdkReference",
+            "cocosInstances"
+          ],
+          "three": [
+            "threePrimitive",
+            "threeRunner",
+            "preparationChecker",
+            "sdkReference",
+            "collector",
+            "three-package",
+            "three-module",
+            "three-core",
+            "three-gltf",
+            "three-skeletonClone",
+            "three-mixer"
+          ]
+        },
+        "referencesBrowserValidated": false,
+        "referenceEvidence": { "cocosair": [], "three": [] },
+        "referenceReceipts": { "cocosair": [], "three": [] }
+      },
+      {
+        "id": "AU05",
+        "commonInputSha256": "a44a0955a3424f147352ec82ebbfccf15512f88443714dc2de3b6b2bb2578e6c",
+        "repetitionSeeds": [2026102201, 2026102202, 2026102203],
+        "validatorIds": ["upstream-agent-observation/1:AU05"],
+        "resourceIds": ["inspection-rig", "checker"],
+        "referenceSourceIds": {
+          "cocosair": [
+            "cocos-material-0",
+            "cocos-material-1",
+            "cocos-material-2",
+            "normalizer",
+            "collector",
+            "preparationChecker",
+            "sdkReference",
+            "cocosMaterial"
+          ],
+          "three": [
+            "threePrimitive",
+            "threeRunner",
+            "preparationChecker",
+            "sdkReference",
+            "collector",
+            "three-package",
+            "three-module",
+            "three-core",
+            "three-gltf",
+            "three-texture",
+            "three-uv"
+          ]
+        },
+        "referencesBrowserValidated": false,
+        "referenceEvidence": { "cocosair": [], "three": [] },
+        "referenceReceipts": { "cocosair": [], "three": [] }
+      },
+      {
+        "id": "AU06",
+        "commonInputSha256": "27a80ad40009a11860d2b886abbfdde9520437e30f2c9fe1572ba4a4868d9bed",
+        "repetitionSeeds": [2026102201, 2026102202, 2026102203],
+        "validatorIds": ["upstream-agent-observation/1:AU06"],
+        "resourceIds": ["inspection-rig", "checker", "linear-film-rg"],
+        "referenceSourceIds": {
+          "cocosair": [
+            "cocos-material-0",
+            "cocos-material-1",
+            "cocos-material-2",
+            "normalizer",
+            "collector",
+            "preparationChecker",
+            "sdkReference",
+            "cocosMaterial"
+          ],
+          "three": [
+            "threePrimitive",
+            "threeRunner",
+            "preparationChecker",
+            "sdkReference",
+            "collector",
+            "three-package",
+            "three-module",
+            "three-core",
+            "three-gltf",
+            "three-physical",
+            "three-filmShader",
+            "three-texture"
+          ]
+        },
+        "referencesBrowserValidated": false,
+        "referenceEvidence": { "cocosair": [], "three": [] },
+        "referenceReceipts": { "cocosair": [], "three": [] }
+      },
+      {
+        "id": "AU07",
+        "commonInputSha256": "64cac04e7da20557aac3147239e1dee1532597faaa3ec0a8d9b3cec6f0870e0a",
+        "repetitionSeeds": [2026102201, 2026102202, 2026102203],
+        "validatorIds": ["upstream-agent-observation/1:AU07"],
+        "resourceIds": [],
+        "referenceSourceIds": {
+          "cocosair": [
+            "cocos-state-0",
+            "cocos-state-1",
+            "normalizer",
+            "collector",
+            "preparationChecker",
+            "sdkReference"
+          ],
+          "three": [
+            "threePrimitive",
+            "threeRunner",
+            "preparationChecker",
+            "sdkReference",
+            "collector",
+            "three-package",
+            "three-module",
+            "three-core",
+            "three-renderer"
+          ]
+        },
+        "referencesBrowserValidated": false,
+        "referenceEvidence": { "cocosair": [], "three": [] },
+        "referenceReceipts": { "cocosair": [], "three": [] }
+      },
+      {
+        "id": "AU08",
+        "commonInputSha256": "f809237f4576a0ba2c78e46f36940d4e845751644ed76223bf4ab07eb337751f",
+        "repetitionSeeds": [2026102201, 2026102202, 2026102203],
+        "validatorIds": ["upstream-agent-observation/1:AU08"],
+        "resourceIds": [],
+        "referenceSourceIds": {
+          "cocosair": [
+            "cocos-state-0",
+            "cocos-state-1",
+            "normalizer",
+            "collector",
+            "preparationChecker",
+            "sdkReference"
+          ],
+          "three": [
+            "threePrimitive",
+            "threeRunner",
+            "preparationChecker",
+            "sdkReference",
+            "collector",
+            "three-package",
+            "three-module",
+            "three-core",
+            "three-renderer",
+            "three-targets"
+          ]
+        },
+        "referencesBrowserValidated": false,
+        "referenceEvidence": { "cocosair": [], "three": [] },
+        "referenceReceipts": { "cocosair": [], "three": [] }
+      },
+      {
+        "id": "AU09",
+        "commonInputSha256": "7026ef3906a02f03a402190709dbd5c631c6906a22c8cf114a29169cfefcf02c",
+        "repetitionSeeds": [2026102201, 2026102202, 2026102203],
+        "validatorIds": ["upstream-agent-observation/1:AU09"],
+        "resourceIds": ["skin-rig"],
+        "referenceSourceIds": {
+          "cocosair": [
+            "cocos-skin-0",
+            "cocos-skin-1",
+            "cocos-skin-2",
+            "cocos-skin-3",
+            "cocos-skin-4",
+            "normalizer",
+            "collector",
+            "preparationChecker",
+            "sdkReference"
+          ],
+          "three": [
+            "threePrimitive",
+            "threeRunner",
+            "preparationChecker",
+            "sdkReference",
+            "collector",
+            "three-package",
+            "three-module",
+            "three-core",
+            "three-gltf",
+            "three-skin",
+            "three-mixer",
+            "three-skeletonClone"
+          ]
+        },
+        "referencesBrowserValidated": false,
+        "referenceEvidence": { "cocosair": [], "three": [] },
+        "referenceReceipts": { "cocosair": [], "three": [] }
+      },
+      {
+        "id": "AU10",
+        "commonInputSha256": "d8ed290040ba6c3f64736c75a0378f356e37d50de91fd558a6a6edbb2662cbdf",
+        "repetitionSeeds": [2026102201, 2026102202, 2026102203],
+        "validatorIds": ["upstream-agent-observation/1:AU10"],
+        "resourceIds": ["skin-rig"],
+        "referenceSourceIds": {
+          "cocosair": [
+            "cocos-lifecycle-0",
+            "cocos-lifecycle-1",
+            "cocos-lifecycle-2",
+            "cocos-lifecycle-3",
+            "normalizer",
+            "collector",
+            "preparationChecker",
+            "sdkReference",
+            "cocosInstances"
+          ],
+          "three": [
+            "threePrimitive",
+            "threeRunner",
+            "preparationChecker",
+            "sdkReference",
+            "collector",
+            "three-package",
+            "three-module",
+            "three-core",
+            "three-gltf",
+            "three-skeletonClone",
+            "three-mixer",
+            "three-renderer"
+          ]
+        },
+        "referencesBrowserValidated": false,
+        "referenceEvidence": { "cocosair": [], "three": [] },
+        "referenceReceipts": { "cocosair": [], "three": [] }
+      },
+      {
+        "id": "AU11",
+        "commonInputSha256": "a79db177238bcd642d8c57af26a917afade88b2fb7ced39fc582ce4665fb853e",
+        "repetitionSeeds": [2026102201, 2026102202, 2026102203],
+        "validatorIds": ["upstream-agent-observation/1:AU11"],
+        "resourceIds": ["inspection-rig", "checker"],
+        "referenceSourceIds": {
+          "cocosair": [
+            "cocos-readiness-0",
+            "cocos-readiness-1",
+            "cocos-readiness-2",
+            "normalizer",
+            "collector",
+            "preparationChecker",
+            "sdkReference",
+            "cocosReadiness"
+          ],
+          "three": [
+            "threePrimitive",
+            "threeRunner",
+            "preparationChecker",
+            "sdkReference",
+            "collector",
+            "three-package",
+            "three-module",
+            "three-core",
+            "three-renderer",
+            "threeReadiness"
+          ]
+        },
+        "referencesBrowserValidated": false,
+        "referenceEvidence": { "cocosair": [], "three": [] },
+        "referenceReceipts": { "cocosair": [], "three": [] }
+      },
+      {
+        "id": "AU12",
+        "commonInputSha256": "f13ab25d9e4c70cc5a1db73fd6a45ca8cb55587f8e845afd6ce5fd13edd4558a",
+        "repetitionSeeds": [2026102201, 2026102202, 2026102203],
+        "validatorIds": ["upstream-agent-observation/1:AU12"],
+        "resourceIds": ["http-model.gltf", "http-mesh.bin", "http-pixel.png"],
+        "referenceSourceIds": {
+          "cocosair": [
+            "cocos-sdk-0",
+            "cocos-sdk-1",
+            "cocos-sdk-2",
+            "cocos-sdk-3",
+            "cocos-sdk-4",
+            "cocos-sdk-5",
+            "normalizer",
+            "collector",
+            "preparationChecker",
+            "sdkReference",
+            "threeDeclarationManifest",
+            "threeDeclarationLock"
+          ],
+          "three": [
+            "threePrimitive",
+            "threeRunner",
+            "preparationChecker",
+            "sdkReference",
+            "collector",
+            "three-package",
+            "three-module",
+            "three-core",
+            "three-gltf",
+            "three-math",
+            "threeDeclarationManifest",
+            "threeDeclarationLock"
+          ]
+        },
+        "referencesBrowserValidated": false,
+        "referenceEvidence": { "cocosair": [], "three": [] },
+        "referenceReceipts": { "cocosair": [], "three": [] }
+      }
+    ]
+  },
+  "preparedComparisonConfigurations": [
+    {
+      "id": "engine-control",
+      "cocosArtifactSha256": "d4e3d26da5a88cc0e1b238732faf9295a1dee35ba1dca6c6e8cd3895913945f1",
+      "cocosArtifactKind": "same-environment-rebuilt-fixed-main-not-historical-package",
+      "cocosKnowledgeSha256": "cb7f2e09285fcbba2e8c80b5bbef388034f46359d394926e8c0892a32b8821ad",
+      "threeArtifactSha256": "8cd068708ea44f2c73c944b1cead2ba2f0d5c15c8fc194e5700f4e4f4a033fe7",
+      "threeKnowledgeSha256": "f4885377dcda9608b183171e116730d796b8af9bf4cb7205234661c2e6f46238",
+      "status": "BLOCKED_NOT_EXECUTED",
+      "model": null,
+      "generationParameters": null,
+      "providerRoute": null,
+      "allowedTools": null,
+      "networkIsolationReceipt": null,
+      "runCount": 0,
+      "threeDeclarationArchiveSha256": "903987fb2451466a2c40134626690cb921a8a2552ee95803969d1aa64d9033fe",
+      "sdkCompilerContract": "upstream-sdk-types/3"
+    },
+    {
+      "id": "engine-candidate",
+      "cocosArtifactSha256": "8ddc2e5e2d95dbf5739e7f6e361ac382c162bf98724361e617344295bcf8eb6b",
+      "cocosArtifactKind": "unaccepted-current-candidate",
+      "cocosKnowledgeSha256": "cb7f2e09285fcbba2e8c80b5bbef388034f46359d394926e8c0892a32b8821ad",
+      "threeArtifactSha256": "8cd068708ea44f2c73c944b1cead2ba2f0d5c15c8fc194e5700f4e4f4a033fe7",
+      "threeKnowledgeSha256": "f4885377dcda9608b183171e116730d796b8af9bf4cb7205234661c2e6f46238",
+      "status": "BLOCKED_NOT_EXECUTED",
+      "model": null,
+      "generationParameters": null,
+      "providerRoute": null,
+      "allowedTools": null,
+      "networkIsolationReceipt": null,
+      "runCount": 0,
+      "threeDeclarationArchiveSha256": "903987fb2451466a2c40134626690cb921a8a2552ee95803969d1aa64d9033fe",
+      "sdkCompilerContract": "upstream-sdk-types/3"
+    },
+    {
+      "id": "knowledge-old",
+      "cocosArtifactSha256": "8ddc2e5e2d95dbf5739e7f6e361ac382c162bf98724361e617344295bcf8eb6b",
+      "cocosArtifactKind": "unaccepted-current-candidate",
+      "cocosKnowledgeSha256": "8426413c41c8fe5d6d49d4fdf0a44b74c3770a4ed4c1a6bea854f3086d6134b6",
+      "threeArtifactSha256": "8cd068708ea44f2c73c944b1cead2ba2f0d5c15c8fc194e5700f4e4f4a033fe7",
+      "threeKnowledgeSha256": "f4885377dcda9608b183171e116730d796b8af9bf4cb7205234661c2e6f46238",
+      "status": "BLOCKED_NOT_EXECUTED",
+      "model": null,
+      "generationParameters": null,
+      "providerRoute": null,
+      "allowedTools": null,
+      "networkIsolationReceipt": null,
+      "runCount": 0,
+      "threeDeclarationArchiveSha256": "903987fb2451466a2c40134626690cb921a8a2552ee95803969d1aa64d9033fe",
+      "sdkCompilerContract": "upstream-sdk-types/3"
+    },
+    {
+      "id": "knowledge-current",
+      "cocosArtifactSha256": "8ddc2e5e2d95dbf5739e7f6e361ac382c162bf98724361e617344295bcf8eb6b",
+      "cocosArtifactKind": "unaccepted-current-candidate",
+      "cocosKnowledgeSha256": "cb7f2e09285fcbba2e8c80b5bbef388034f46359d394926e8c0892a32b8821ad",
+      "threeArtifactSha256": "8cd068708ea44f2c73c944b1cead2ba2f0d5c15c8fc194e5700f4e4f4a033fe7",
+      "threeKnowledgeSha256": "f4885377dcda9608b183171e116730d796b8af9bf4cb7205234661c2e6f46238",
+      "status": "BLOCKED_NOT_EXECUTED",
+      "model": null,
+      "generationParameters": null,
+      "providerRoute": null,
+      "allowedTools": null,
+      "networkIsolationReceipt": null,
+      "runCount": 0,
+      "threeDeclarationArchiveSha256": "903987fb2451466a2c40134626690cb921a8a2552ee95803969d1aa64d9033fe",
+      "sdkCompilerContract": "upstream-sdk-types/3"
+    }
+  ],
+  "remainingRequirements": [
+    {
+      "code": "REAL_GENERATION_ROUTE_NOT_FROZEN",
+      "needed": "Provider-neutral route with immutable provider/model revision, generation parameters, raw inputs/outputs, attempts, tokens, time and currency costs. No model selection or access change is inferred."
+    },
+    {
+      "code": "GENERATOR_ISOLATION_NOT_VALIDATED",
+      "needed": "Actually enforce the declared public-only resources/tools/network; protected human references must not be visible to the generator."
+    },
+    {
+      "code": "PAIRED_REFERENCE_BROWSER_EVIDENCE_MISSING",
+      "needed": "For every configuration, validate both reference engines on all 12 tasks and three seeds with raw task observations, nonblank compositor evidence, exact artifact identities and real cleanup receipts."
+    }
+  ],
+  "sdkCompilerContract": "upstream-sdk-types/3"
+}

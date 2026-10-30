@@ -273,7 +273,7 @@ function main() {
             'build/cocosair.math.js',
             'build/cocosair.math.d.ts',
             'build/cocosair.math.legacy.d.ts',
-            'build/math-build.json',
+            'build/metadata/math-build.json',
         ];
         const actual = cp.execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
         if (actual !== process.env.CI_HEAD_SHA) throw Error('built checkout head mismatch');

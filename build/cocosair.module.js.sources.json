@@ -1,0 +1,3944 @@
+{
+  "schema": "air-bundle-source-binding-v1",
+  "origin": "retained-compiler-map-migration",
+  "bundleSha256": "f963feb809142e64e35bc871135973f4eb1d103332dd16f921d1cbe0be4f49ea",
+  "mapSha256": "7c36117139cb36b46f36fddb1e8322da4a06d178a8f82f420807dbf0ea941ab7",
+  "sources": [
+    {
+      "path": "src/cocos/core/global-exports.ts",
+      "sha256": "3d6e18eb21cad8982fb444f8dec824a34ff5d0976e81ab9424264a0748e33424"
+    },
+    {
+      "path": "src/cocos/core/platform/debug.ts",
+      "sha256": "5946260a6bc7708ede10f2b2c0608313cf655f3bf7b4091b8b41fe901cd736c7"
+    },
+    {
+      "path": "src/cocos/core/math/bits.ts",
+      "sha256": "c87018e7d42d7a3df317ffc6f8e4a2090ba8ecf79b7646bcea2e75b872e20bb7"
+    },
+    {
+      "path": "src/cocos/core/utils/array.ts",
+      "sha256": "868861ada695c1fd9a331e7d908715be3531d0c9dfe0f5a8ee335f2fa3192fb6"
+    },
+    {
+      "path": "src/cocos/core/memop/scalable-container.ts",
+      "sha256": "8999070d23d75ffdb5fb743b6ff55ae3e7f11f54c9618c66b4d95e58213bf414"
+    },
+    {
+      "path": "src/cocos/core/memop/pool.ts",
+      "sha256": "bf79a01b085835e3f351c4103dc2f1e4d13b9b8ec8360df9cbdb6090417da77c"
+    },
+    {
+      "path": "src/cocos/core/memop/recycle-pool.ts",
+      "sha256": "c535843b914161ea6c7656a346077de2a9d2097bd91fc063bca2d576031a6997"
+    },
+    {
+      "path": "src/cocos/core/memop/cached-array.ts",
+      "sha256": "bce20cac0a1fb672e0d8f78e1e5f3bb4209c3b9ea8478afe035e3f2c1186fec4"
+    },
+    {
+      "path": "src/cocos/core/utils/id-generator.ts",
+      "sha256": "4e7ab93a60c622b00f419bfd4abe5ddb0fa379ffadd3da096adf7fdcb5850c2d"
+    },
+    {
+      "path": "src/cocos/core/utils/js-typed.ts",
+      "sha256": "d371e3054283677f8a015055f008aba22479a2210830ebe9724e617759eaf86f"
+    },
+    {
+      "path": "src/cocos/core/utils/pool.ts",
+      "sha256": "df41e640634fe7333c5520dbd08a88952a3eb1cf89d0ed36e81e7bfef1b6df27"
+    },
+    {
+      "path": "src/cocos/core/utils/js.ts",
+      "sha256": "5d93fb9dc6b8c06d195668d5bfece2229a1fd854c6838c653f46dd81d495dac4"
+    },
+    {
+      "path": "src/cocos/core/value-types/bitmask.ts",
+      "sha256": "74386c084dc3651671ebe3bcd70bd0aa6a3417e561baa5c5dc298f3d0bbd5081"
+    },
+    {
+      "path": "src/cocos/core/data/utils/asserts.ts",
+      "sha256": "823637ae6638178f896c8158558c099f288c1fa8629587f2650f684a52597120"
+    },
+    {
+      "path": "src/cocos/core/value-types/enum.ts",
+      "sha256": "93d3192cd10d8e0fef8f7f4b152405b790ae2109f21bfacef4775c69a173abc3"
+    },
+    {
+      "path": "src/cocos/core/value-types/value-type.ts",
+      "sha256": "66a132eba6e4009779601239bf825ea730a75ec3dafb4d4a86115d61d082e5f8"
+    },
+    {
+      "path": "src/cocos/core/settings.ts",
+      "sha256": "b3bd90a8be079252ed30ff6789f135de57f7f90ba8ab1519bcb293e4f78a02b2"
+    },
+    {
+      "path": "src/pal/screen-adapter/enum-type/orientation.js",
+      "sha256": "8a0cd8f6b58475940d71790bba35e4d1206a8b59e5920fd85b7ec46fa71b9434"
+    },
+    {
+      "path": "src/cocos/core/platform/macro.ts",
+      "sha256": "b8cf10d611c8c6401838c0796053f477a637c61c91372e5110eb33758378541d"
+    },
+    {
+      "path": "src/pal/utils.js",
+      "sha256": "0e68022b221217edf35c7719df997aae7c5fdd1af4dd7eb4f83a02cfc42b64ff"
+    },
+    {
+      "path": "src/cocos/core/utils/misc.ts",
+      "sha256": "ecd1ff815cc1dfe07c2f36fa133f7fd3811764cc51872c47c597b721a1d65df9"
+    },
+    {
+      "path": "src/cocos/core/data/utils/attribute.ts",
+      "sha256": "676309e441cf9a92860fa97b1b7e806bdab7795cb5b349d6570b504926e4ac6e"
+    },
+    {
+      "path": "src/cocos/core/data/utils/preprocess-class.ts",
+      "sha256": "81e8bb5dadf7528a1b6fb1ad8cb6343bf2f78ca1a2565d09878f120028bd2186"
+    },
+    {
+      "path": "src/cocos/core/data/utils/requiring-frame.ts",
+      "sha256": "8e5374cfd5a1cf74edaf5fe5fa9408a897af9e2e69e65a73557e7c3d3d91b755"
+    },
+    {
+      "path": "src/cocos/core/data/class-stash.ts",
+      "sha256": "d124b7e86200e29cdde756fdc0d7796c8c9ee92ecd5c7cea8082eb8022c69a71"
+    },
+    {
+      "path": "src/cocos/core/data/utils/attribute-internal.ts",
+      "sha256": "29eafcf224072c005aa57616748ffcb3ae12b2f0910600c5534fc2c0d808e5d4"
+    },
+    {
+      "path": "src/cocos/core/data/class.ts",
+      "sha256": "8fd054ebe1a66bf3245579cb5819b74b9d5f15575bf2db83ed718b0335dff941"
+    },
+    {
+      "path": "src/cocos/core/data/editor-extras-tag.ts",
+      "sha256": "638a1e7f801009cf009679caae7f36277befaebb89cb969204d762f515c2c2c1"
+    },
+    {
+      "path": "src/cocos/core/data/object.ts",
+      "sha256": "0caf7f9c37bd59148b60d7ad465426428006c989b32c03632a3d1eae63fc5fb6"
+    },
+    {
+      "path": "src/cocos/core/event/callbacks-invoker.ts",
+      "sha256": "544780e361767d5ae79d2c20a973651b544ceee6b7bd90e6ebe876185774918a"
+    },
+    {
+      "path": "src/cocos/core/event/eventify.ts",
+      "sha256": "ad59c9f8dc67f40db877b2160989b792e488b256903d6fdccaf2c7433728c7e9"
+    },
+    {
+      "path": "src/cocos/core/event/event-target.ts",
+      "sha256": "822834ef3ab0cad0948aabd5f1796f093b0363bb80def6df63401c0d204f2df0"
+    },
+    {
+      "path": "src/cocos/core/event/async-delegate.ts",
+      "sha256": "fddb443a197b0d1856564369941b74d8b5d8ee6014f05f9da7c41b67a027a13e"
+    },
+    {
+      "path": "src/pal/system-info/enum-type/browser-type.js",
+      "sha256": "570e57504fea91001a6d9aae8866032a39f744c8a741db5b74fd6c12674a21d6"
+    },
+    {
+      "path": "src/pal/system-info/enum-type/language.js",
+      "sha256": "403067729dc7c1e9d41ec1f705fa48f385447aedfd23e41d3e6d0f31765bf153"
+    },
+    {
+      "path": "src/pal/system-info/enum-type/network-type.js",
+      "sha256": "eea88dc70c45fc6be79e38135f789f04f494adab9e46133049e5d37ca623b90b"
+    },
+    {
+      "path": "src/pal/system-info/enum-type/operating-system.js",
+      "sha256": "3937606d4aa2b90965f74b40e5018bf8b35f9f52d3e3fcc63e232cb55c5f5e12"
+    },
+    {
+      "path": "src/pal/system-info/enum-type/platform.js",
+      "sha256": "69adc83be4bdc64bc40cfd1dd653bd77ea73222e5dbc5658657fde37c1c6ee20"
+    },
+    {
+      "path": "src/pal/system-info/enum-type/feature.js",
+      "sha256": "0ce83a5db4d66e39f76fceb57bb8669c3f0fcf5e3086fe587fef2fc8b71dafb3"
+    },
+    {
+      "path": "src/pal/system-info/web/system-info.js",
+      "sha256": "061a818655a5c9914e6a2af8b15aa26a55e7d61d4fba34cfc3271cfd53a4389d"
+    },
+    {
+      "path": "src/cocos/core/utils/path.ts",
+      "sha256": "a97eff09f36bf43b3d9571fa34085cbb44660e6d0f038a3e77db7f97dba292a2"
+    },
+    {
+      "path": "src/cocos/core/legacy.ts",
+      "sha256": "06eaec976ea72176ee14ca56881ceb0ed906dd7d836f7f142805b0490eb6ae98"
+    },
+    {
+      "path": "src/cocos/core/data/garbage-collection.ts",
+      "sha256": "330adcc8947ba2048f1acb2779aabb21520ff82960108bbc612a2e6f642efad0"
+    },
+    {
+      "path": "src/cocos/core/data/gc-object.ts",
+      "sha256": "82afe29b5786db7f1d9f5cc442f4087653c15aedb918816ed374f5edbf254fe1"
+    },
+    {
+      "path": "src/cocos/gfx/base/define.ts",
+      "sha256": "cc08cc3890726cd8d6227f201079b0243d98016b197033ca4adccc9d23880162"
+    },
+    {
+      "path": "src/cocos/gfx/base/buffer.ts",
+      "sha256": "f3863051b76c84a9e433abe3a3597a99f0d248473876cc9ef53df20d164a384a"
+    },
+    {
+      "path": "src/cocos/gfx/base/command-buffer.ts",
+      "sha256": "d924fe7b6bdc0cc74aee95fceb2b7b7e5939cb41a16ed2e2d70f7a3c61967e1f"
+    },
+    {
+      "path": "src/cocos/gfx/base/device.ts",
+      "sha256": "d38ce44360d673631a9da83d89479185cb760672d8a615655cbcd25dfea72c09"
+    },
+    {
+      "path": "src/cocos/gfx/base/swapchain.ts",
+      "sha256": "1f6331c267e3a7edc0da3787ea3beef2ce49f5946db70f5d828957cbde9b2c02"
+    },
+    {
+      "path": "src/cocos/gfx/base/framebuffer.ts",
+      "sha256": "1426980a07497215f951720883c7a5641a569fd6776cd17dd69fb2632c788dab"
+    },
+    {
+      "path": "src/cocos/core/algorithm/murmurhash2_gc.ts",
+      "sha256": "4d045c1307f3c9a4dbf9c959f15b28651e83822b4c8073467874bb107d86be3b"
+    },
+    {
+      "path": "src/cocos/gfx/base/input-assembler.ts",
+      "sha256": "82e3bea08f106d876ef5ccfc11403840958a6c9c3e3da524bd7f20e1e7775ed7"
+    },
+    {
+      "path": "src/cocos/gfx/base/descriptor-set.ts",
+      "sha256": "af1680b9f69b4570ce7bb406467ada6660908e0fbddaf7e53a6512cf74cac07d"
+    },
+    {
+      "path": "src/cocos/gfx/base/descriptor-set-layout.ts",
+      "sha256": "c69c10107e9c290b7498344325ec44aad8b7b2b4b8c794edb34ea7428b37cf25"
+    },
+    {
+      "path": "src/cocos/gfx/base/pipeline-layout.ts",
+      "sha256": "fb655b5e06faa15969d076eb0492dd4faa907892bde81b9ccbb57c1fda491d9a"
+    },
+    {
+      "path": "src/cocos/gfx/base/pipeline-sub-state.ts",
+      "sha256": "e05b76d90ea33647fbe2a6d48363ff0d4d6632d1b6f97d9214ffc1fb375aee36"
+    },
+    {
+      "path": "src/cocos/gfx/base/pipeline-state.ts",
+      "sha256": "d6c00730c442fbc7eb8207931bd3e93d7e3c7ccda6b0aaf8e71defc81942a762"
+    },
+    {
+      "path": "src/cocos/gfx/base/queue.ts",
+      "sha256": "cc4d8b62279e88cc14069abd3bd7edf73838169632722fe02610a3badbbc6ce8"
+    },
+    {
+      "path": "src/cocos/gfx/base/render-pass.ts",
+      "sha256": "6df060ac0db714d86bd2234c8c25f26ba6bcf0d5fd2ccc98b1e6974d3d588fb5"
+    },
+    {
+      "path": "src/cocos/gfx/base/states/sampler.ts",
+      "sha256": "a6f37b440ad8ebc8378d4650ea18c70723f666a23e988fff954fe7f3beb5ea1b"
+    },
+    {
+      "path": "src/cocos/gfx/base/shader.ts",
+      "sha256": "5a6fe178d087166bab951fa3f131c38ef16ac113be66702943878d9cecc34880"
+    },
+    {
+      "path": "src/cocos/gfx/base/texture.ts",
+      "sha256": "581ebfe910eb72df154b5d48c1c57bf81639afaaaffa16a003bf4af540380e98"
+    },
+    {
+      "path": "src/cocos/gfx/base/states/general-barrier.ts",
+      "sha256": "73a3d9bb83b7d5809827ff1d01d99b2064b1736b060e328f685a3c259e92cd57"
+    },
+    {
+      "path": "src/cocos/gfx/base/states/texture-barrier.ts",
+      "sha256": "1d1abe310415f0c3b4aa07fa65427d3961bc7c3bf697808b13d44313822ed25a"
+    },
+    {
+      "path": "src/cocos/gfx/base/states/buffer-barrier.ts",
+      "sha256": "ac613745e20af419bdf4b4f167d15c1ea25faf3fa06c0816a18a706ef35592e3"
+    },
+    {
+      "path": "src/cocos/gfx/polyfill-legacy-cc.ts",
+      "sha256": "bd4f09e5280ed35e0cd6c8bf98fb7aa4a919fdbd86b4f42ddb7e465adf052f7d"
+    },
+    {
+      "path": "src/cocos/core/utils/x-deprecated.ts",
+      "sha256": "89858625f6b60ec783f8be0a3afca06c7484d4209e279c6575cc837f3a19df7d"
+    },
+    {
+      "path": "src/cocos/core/math/utils.ts",
+      "sha256": "9d3323a9fe1c911a7df9301f3f2c62c5df511df15a773e337e4fd74e9c303e37"
+    },
+    {
+      "path": "src/cocos/core/math/vec4.ts",
+      "sha256": "c3f3332b777c3424b22e72b67c7c212f851f5bddfc3d8efc9f33f37d0f22296c"
+    },
+    {
+      "path": "src/cocos/core/math/vec3.ts",
+      "sha256": "fa315c0f3f332d0c4a46136ff6e89394eed78ecf466672414e40bbde6803c87f"
+    },
+    {
+      "path": "src/cocos/core/math/color.ts",
+      "sha256": "f20f3f4f3bcd4a063e02ad9b6952a6e1d51b15e259861ab23e6826eaab43551d"
+    },
+    {
+      "path": "src/cocos/core/math/mat3.ts",
+      "sha256": "9deda856b83baeaa0bdfe92cc563c05c779856c4a6be5c293815b742b9168358"
+    },
+    {
+      "path": "src/cocos/core/math/quat.ts",
+      "sha256": "57fd2bab3cf9336404fea2f8ae93a76d944d328b27708280049ee44d35878f6c"
+    },
+    {
+      "path": "src/cocos/core/math/mat4.ts",
+      "sha256": "ce41535a34d9d1a4d0e6eb4558066d426965eda52379a99ea427785df1a70568"
+    },
+    {
+      "path": "src/cocos/core/math/vec2.ts",
+      "sha256": "63446ee7def9d9e7682f40571dc73f703dc47cecc2cb303d917355d7da2b1508"
+    },
+    {
+      "path": "src/cocos/core/math/deprecated.ts",
+      "sha256": "63fbc299a0ef215bb321a6110ab94c47c0bbabc5db14eb8a7d7dd6e6d3b81cb9"
+    },
+    {
+      "path": "src/cocos/core/math/math-native-ext.ts",
+      "sha256": "f64956c8831ebe742c17f2b124a796637d36cc88fa1c9cf9c5c45ffe43d0fc2f"
+    },
+    {
+      "path": "src/cocos/core/math/size.ts",
+      "sha256": "ce018146fcc1519835708c04dd6283b7367a2beeb1e0d6c948c487b8173cdb4b"
+    },
+    {
+      "path": "src/cocos/core/math/rect.ts",
+      "sha256": "8f2d9531c74b4a1efa005c7aecda3413af25f5466cfd813f610c245ff10e6053"
+    },
+    {
+      "path": "src/cocos/core/math/math-base.ts",
+      "sha256": "1f2e0e9e0ca17bc09571b3eb25aa925bf0b069bb6ae5ac73d2db74cb0513b6ad"
+    },
+    {
+      "path": "src/cocos/core/geometry/distance.ts",
+      "sha256": "776fee0db71c9223dcdfbb5f4703b02b1df77dc7fbca5c78712c2b09cfba698d"
+    },
+    {
+      "path": "src/cocos/core/geometry/enums.ts",
+      "sha256": "3029ad1d1e5bbd1e76c07fc97ffde5da86ba9eaecc38c10ac4b3c4c2202697ca"
+    },
+    {
+      "path": "src/cocos/core/geometry/line.ts",
+      "sha256": "861a138de959e79fb6d81784460a9fc7c084488ae6fd40072683033dd8e26dd1"
+    },
+    {
+      "path": "src/cocos/core/geometry/ray.ts",
+      "sha256": "70956a6c921546042cc97027519152a91739ef8b268f60abe99b96469dbe00d6"
+    },
+    {
+      "path": "src/cocos/core/geometry/sphere.ts",
+      "sha256": "26ba9df85d2a565fb5e0c3f81f38b82f36d457c144d8745b3d8924e39f158860"
+    },
+    {
+      "path": "src/cocos/core/geometry/intersect.ts",
+      "sha256": "1f091c794c40390109c3ac8c6d58a0e3b81659ba786cb573f175ee6fe63233b4"
+    },
+    {
+      "path": "src/cocos/core/geometry/deprecated.ts",
+      "sha256": "f4dfde198ceb0e29f4275ff1b744b123c7d2369746afd32497364ea16565f3d8"
+    },
+    {
+      "path": "src/cocos/core/geometry/plane.ts",
+      "sha256": "a5c89dd4aaf1a6462ba4faa59793ccaa3bb58be12826ca8f5148ecfe5a3c5c8e"
+    },
+    {
+      "path": "src/cocos/core/geometry/triangle.ts",
+      "sha256": "9864b18ff321e28ad962a93393bc416f88a1cf9aabe1f6eab6cd66b46fab855a"
+    },
+    {
+      "path": "src/cocos/core/utils/deprecated-3.6.0.ts",
+      "sha256": "392d59fe558d41fdcbf78f17868362a6028cfae7f8f27c3c4ebd29ea66b59165"
+    },
+    {
+      "path": "src/cocos/core/utils/coordinates-converts-utils.ts",
+      "sha256": "de6369b7046484899bc4106d0175584ba70088d7f9ea4870253d3a748788da0f"
+    },
+    {
+      "path": "src/pal/screen-adapter/web/screen-adapter.js",
+      "sha256": "097a8c675e9cc7fda399baed5843c90932c624701e5a70d1616aec3bfe9763c4"
+    },
+    {
+      "path": "src/cocos/core/platform/screen.ts",
+      "sha256": "e5cd872fc3340860773411695c087266c772de4e1384b5435e9e63d5381be060"
+    },
+    {
+      "path": "src/cocos/core/platform/sys.ts",
+      "sha256": "8f719ecd13e3ba3af399d95e551dce30c0c777facea838db2fa63e01c4ca564a"
+    },
+    {
+      "path": "src/cocos/core/platform/deprecated.ts",
+      "sha256": "2b1b9f0c1a0995007eb5135caec4dfe84cb295c18c871eaee96d4b7e01dae7c4"
+    },
+    {
+      "path": "src/cocos/core/platform/visible-rect.ts",
+      "sha256": "bb1a0bb149f423a6d8da599d12eea115f30aa372384f2c7b2072bb9a411b453b"
+    },
+    {
+      "path": "src/cocos/core/geometry/aabb.ts",
+      "sha256": "81e388ac3c5518688ec4ce0e4be850efe8eb89b99551696a4bc088c144fc51ec"
+    },
+    {
+      "path": "src/cocos/core/geometry/capsule.ts",
+      "sha256": "b02274a3b7cbc8d6ba9b45aa32a90c1a8021241545c6d75e01a19522e0acaf9b"
+    },
+    {
+      "path": "src/cocos/core/geometry/frustum.ts",
+      "sha256": "269ae6649cb1f8bd99f2135b153ed474cf1d08b14b763831c79498791ecdcf94"
+    },
+    {
+      "path": "src/cocos/core/geometry/obb.ts",
+      "sha256": "39f96209f84437d8cfb539e23aec4f40f26046124723fde817df0458167f277d"
+    },
+    {
+      "path": "src/cocos/core/algorithm/binary-search.ts",
+      "sha256": "a868d488be98746be07d3bb6065ba0b846f0503ccf31524db745cd08bd691bb9"
+    },
+    {
+      "path": "src/cocos/core/curves/keyframe-curve.ts",
+      "sha256": "32636e43f53b6a4480735c83196dd35da3aee86618b1b27b6c6e601c907bc5e1"
+    },
+    {
+      "path": "src/cocos/core/curves/real-curve-param.ts",
+      "sha256": "2c513fbc71e925e40686d4bb1376d470773fdb957569b83c3bb2cd3e2513d943"
+    },
+    {
+      "path": "src/cocos/core/curves/solve-cubic.ts",
+      "sha256": "852eae3d4c180fa22ce74ec01978f3fa132e9ea0badd6a3761b5d8cf310669b0"
+    },
+    {
+      "path": "src/cocos/core/data/decorators/utils.ts",
+      "sha256": "a7278cf9850ef207237f186672efb9a7842e0bb14cfb21427841db4ff79b9dda"
+    },
+    {
+      "path": "src/cocos/core/data/decorators/ccclass.ts",
+      "sha256": "6dd1103f0799b0937d8737fff5668ca57e40c3ebc021da9c60d9628aae0e4889"
+    },
+    {
+      "path": "src/cocos/core/data/decorators/component.ts",
+      "sha256": "ff2577e2071544e3c1518295f165b9e4c6acb1a68d5e40149ae803818da224a5"
+    },
+    {
+      "path": "src/cocos/core/data/decorators/property.ts",
+      "sha256": "e5a0c9d4ce6daf5f4838bc99b2f78d5e5d9f1da09fbcf96937b4e7dd96ba96b9"
+    },
+    {
+      "path": "src/cocos/core/data/serialization-metadata.ts",
+      "sha256": "3bc0a386a59cbe00829633a08c2c9eed8a46111a591ee482f9775d62a09eeeaf"
+    },
+    {
+      "path": "src/cocos/core/data/decorators/serializable.ts",
+      "sha256": "fce1147377eb816049b43010351060470de02e12e67a19f2b0b7a6d5fe9465a5"
+    },
+    {
+      "path": "src/cocos/core/data/decorators/editable.ts",
+      "sha256": "3ca33877b293e55a841bc09e193d8e340b83be27b0c6f92371ed065559eb61fb"
+    },
+    {
+      "path": "src/cocos/core/data/decorators/type.ts",
+      "sha256": "a72b1ffb5d0071138c3cea298febd9ebd792c922909d23dd10eb81a19e839edc"
+    },
+    {
+      "path": "src/cocos/core/data/decorators/override.ts",
+      "sha256": "1d7dc83b11d59a0faf2a2d7a9d858e154cf276bd402ff691f974f3c03775930a"
+    },
+    {
+      "path": "src/cocos/core/data/editor-extendable.ts",
+      "sha256": "a6987847969cd5ac0588fb0c9c40d2818bc8d7e7024e940251d9c77f5dd951f3"
+    },
+    {
+      "path": "src/cocos/core/data/utils/compact-value-type-array.ts",
+      "sha256": "c86540fcbe19483464ae49b7ced0c800492606789dcc069ae298a26e3a63f121"
+    },
+    {
+      "path": "src/cocos/core/data/custom-serializable.ts",
+      "sha256": "f6eaf522393245e6c97359a42a40c6eea44848c6a7aa183074ba0f4d6e6ca7f0"
+    },
+    {
+      "path": "src/cocos/core/data/index.ts",
+      "sha256": "0a5d3f279c1469ce20f80a71cbf593386756a7e1f120d18e6cacdc3f0fa00d52"
+    },
+    {
+      "path": "src/cocos/core/algorithm/easing.ts",
+      "sha256": "f9dc0c58134e2e369bbbc9315ca1b77f2951bec91e8366488fb5cb89a4ad2854"
+    },
+    {
+      "path": "src/cocos/core/curves/easing-method.ts",
+      "sha256": "66318595db6bc97badff4161b4a59c0877f9fc49fc1a59e04af8e767d3e9a09a"
+    },
+    {
+      "path": "src/cocos/core/curves/curve.ts",
+      "sha256": "e573bcb7e3e77a836bf276fc17e03647bdd59bf384b50cd4473ffc5efe77472f"
+    },
+    {
+      "path": "src/cocos/core/curves/bezier.ts",
+      "sha256": "442ca2139bf264124033cef2841d68d83922bb40e5cea872e406d1eb4325cdc0"
+    },
+    {
+      "path": "src/cocos/core/curves/quat-curve.ts",
+      "sha256": "a39544182ceca376f0e80ea9724c33494c764370d84055fb66462fb540ef2b99"
+    },
+    {
+      "path": "src/cocos/core/curves/object-curve.ts",
+      "sha256": "28bba303980b0f14ae226a88dd1e3c429b4f9f5e57ccfd6522ae5a1c33c45ff6"
+    },
+    {
+      "path": "src/cocos/core/curves/gradient.ts",
+      "sha256": "dbf9b3a576de9a888c0687ab288a6ce38ca47b0319bc880d0bf63c2a6ba4b706"
+    },
+    {
+      "path": "src/cocos/core/geometry/curve.ts",
+      "sha256": "4130148ade41e1f4a30669aa003308cb3022dcacb1f83dbcb052eb2936debae7"
+    },
+    {
+      "path": "src/cocos/core/geometry/spline.ts",
+      "sha256": "d0be03c4eb1c700ec01693308cfe20b7d50208c640a83385d82bc8e8671badef"
+    },
+    {
+      "path": "src/cocos/core/geometry/spec.ts",
+      "sha256": "99ea85f414518ae4d6645c0cce2af707a5cd14dc03036272db142064f5de193a"
+    },
+    {
+      "path": "src/cocos/core/geometry/deprecated-3.0.0.ts",
+      "sha256": "c7afe3e4dab902fdfcc7a78f786878e10ec5d195cbb4d0f62676c9bfb6119465"
+    },
+    {
+      "path": "src/cocos/core/system.ts",
+      "sha256": "c0130fc74d1694fd76679b9a960431512df09716bc0ccb280723d0654fb75ce1"
+    },
+    {
+      "path": "src/cocos/core/scheduler.ts",
+      "sha256": "236c2b56c26b6d404cd4205424db84c175c4db4d91e6c306a11fa74a769cb877"
+    },
+    {
+      "path": "src/cocos/core/deprecated.ts",
+      "sha256": "34624260a2b89355000a68ea8a8b0502a655b9d39805305a4ad09cbb38846d52"
+    },
+    {
+      "path": "src/cocos/core/deprecated-3.7.0.ts",
+      "sha256": "7cf1e940220463117f1b3a180035021e0d8637687406d7c240b7266fad7b579e"
+    },
+    {
+      "path": "src/cocos/core/algorithm/index.ts",
+      "sha256": "a9a30c330f50001a37ebffb7061ca5257f89cb36f7d353cda7079dc20bd1f315"
+    },
+    {
+      "path": "src/cocos/core/algorithm/move.ts",
+      "sha256": "4f65ec224d7f679398a0d51623d38133407493d7d88e2fb08eb282bacab1d50e"
+    },
+    {
+      "path": "src/cocos/core/data/utils/compiler.ts",
+      "sha256": "8ce3f551c821f6142cef06721ae8bdc908a1ad7090e007a05e31ce50d5f02bdd"
+    },
+    {
+      "path": "src/cocos/core/event/event-target-factory.ts",
+      "sha256": "b041796db0d77951582fdf66e6fb446088cb828b27efc3b2f3ad6bf23b3a2197"
+    },
+    {
+      "path": "src/cocos/core/index.ts",
+      "sha256": "29416384491060988c0f05b1bc42c0e4e0874a1ffb3c727497c6510a9e98b914"
+    },
+    {
+      "path": "src/cocos/gfx/deprecated-3.0.0.ts",
+      "sha256": "6b57d677a8b5df1aa1ccadc30ac10323ccf17f76f1b1af6a20c03e77a9aba514"
+    },
+    {
+      "path": "src/cocos/gfx/deprecated-3.5.0.ts",
+      "sha256": "977f51a2c83d20a891293574f1f7a1625c1c032fcf76527312730e308d54856d"
+    },
+    {
+      "path": "src/cocos/gfx/device-manager.ts",
+      "sha256": "ac610ad28d7e7d4ec4d5c25813aba41048777896cdf296f1182338616bb9ff4a"
+    },
+    {
+      "path": "src/cocos/scene-graph/layers.ts",
+      "sha256": "de271865c0f52d7ad7b9ed6b1290632bd7cb0130784c074ee199ff39b39e8777"
+    },
+    {
+      "path": "src/cocos/rendering/define.ts",
+      "sha256": "6a9c8b88a068ca0a7cc20d0ceaa048e24eeb2db2d42d5edc5c6798789846313a"
+    },
+    {
+      "path": "src/cocos/render-scene/scene/camera.ts",
+      "sha256": "e8b8399d6f655683add3b66baf7c8213e2be283ceb882ab28a57fad4e57d8af2"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/cache.ts",
+      "sha256": "3f6458b78b0d83974fae5c3c1d7776360861a51140d0375756f9d6f915b723b3"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/pipeline.ts",
+      "sha256": "1d9a1bc3a60922161cc5fe3501f16c727cb8b6748bec24f2ffd39a44fbb66470"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/shared.ts",
+      "sha256": "de64f4201612aec364fd7104fb791bf69128f05a2c4d0930b24083a1ddcc889b"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/task.ts",
+      "sha256": "a2c02dbca2b64b014bb818bd787d93bbc35a2acf9e95ed526d0a15f4c3fb921f"
+    },
+    {
+      "path": "src/cocos/core/utils/decode-uuid.ts",
+      "sha256": "3c835523a41a6b343742bebaec466373a30adbc8e286fdb6dbac01071424fb90"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/helper.ts",
+      "sha256": "71ace369cfd7949835c536798ad8e2dcf81501224c05df661c8abebb4790e62c"
+    },
+    {
+      "path": "src/cocos/asset/assets/asset.ts",
+      "sha256": "df868c6007e5ea3b7b122b35b11c469e103c3ab9c6e5b6b7684e5d8aeda3b37b"
+    },
+    {
+      "path": "src/cocos/asset/assets/asset-enum.ts",
+      "sha256": "06eef7b41be56eca078b356a552c2963e571bfb5f533dee6680a332f34bcffc5"
+    },
+    {
+      "path": "src/cocos/asset/assets/image-asset.ts",
+      "sha256": "1e7af3e07e53cebfcbe8b8bfaf2a1a28d6b9057e89bc1635e1de5277a2337796"
+    },
+    {
+      "path": "src/cocos/asset/assets/texture-base.ts",
+      "sha256": "567d24608772c0a3556be8c80f7788086f834259f4a3a8f5aa1486546d14b474"
+    },
+    {
+      "path": "src/cocos/asset/assets/scripts.ts",
+      "sha256": "010c30efe79a8d7fcd5fa5cb11f27ff46d3e2462e0572059ba7ef480d8dfc35d"
+    },
+    {
+      "path": "src/cocos/scene-graph/component-event-handler.ts",
+      "sha256": "99cd51e48899138a64f0dc4e65f32fad4972f81b7d364809ba168e5329aee397"
+    },
+    {
+      "path": "src/cocos/scene-graph/component.ts",
+      "sha256": "a7132692a0e2636b7fe9cb37ef6d79b9cf471710c4107a3a9f7970842de715a8"
+    },
+    {
+      "path": "src/cocos/misc/missing-script.ts",
+      "sha256": "bc01fd3591a31368ef4a0210c4c8da3d2bb13f53914b18ee17d01215200df7e8"
+    },
+    {
+      "path": "src/external/deserialize/notepack_decode.ts",
+      "sha256": "3557fb2a0739a9a48064bb20bf9ade2195bb30a9d2cf409be3c8e1947a6fdbd1"
+    },
+    {
+      "path": "src/external/deserialize/notepack_encode.ts",
+      "sha256": "513ca1c03f13eee675fc96fa311c6ad195a54aeaba498e79f1018497d0b6e70f"
+    },
+    {
+      "path": "src/cocos/serialization/ccon.ts",
+      "sha256": "54f0f928ead75318cecc412204a19eddce282518d5d97cd5b0ca98561cfe37fe"
+    },
+    {
+      "path": "src/cocos/serialization/deserialize-dynamic.ts",
+      "sha256": "cea135a21a30e12396821a059bac483cd3396f61498c611d5f95c6ab2a5515a1"
+    },
+    {
+      "path": "src/cocos/serialization/report-missing-class.ts",
+      "sha256": "57c02271bc4b64431d4d8c5b01dc406e3effad61e4efaada8f3856ae5d17de90"
+    },
+    {
+      "path": "src/cocos/serialization/compiled/builtin-value-type.ts",
+      "sha256": "51e036d011560edacf454400e6bf7a398bf5f7c16768047338b67a76c475cd1e"
+    },
+    {
+      "path": "src/cocos/serialization/deserialize.ts",
+      "sha256": "18d1994f81e3bbf3389e09405ec7e33104432acf00142f743344500580350f73"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/depend-maps.ts",
+      "sha256": "f1a6ce78235c2a49e5f70f1fb8e46f3d6e0fa3aa0173c8a043d6bdb3c6bed315"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/deserialize.ts",
+      "sha256": "02bdd502a96d560a6cd0aac72ec308c4d48af4c1299180ec91da81276ecd8e6f"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/depend-util.ts",
+      "sha256": "9e193394532eb5753676515c36d5d07ac4203066042e73ce3840b0d66fcaacbf"
+    },
+    {
+      "path": "src/cocos/asset/assets/simple-texture.ts",
+      "sha256": "c8de34caaf65979b96f486d5652a541178b61989411308f5b17879315bdac5a8"
+    },
+    {
+      "path": "src/cocos/asset/assets/texture-2d.ts",
+      "sha256": "1f1ace0e8694220fafe897e59f3e97c1a68529e6d0b145a16c5ba6641dfbae5a"
+    },
+    {
+      "path": "src/cocos/asset/assets/texture-cube.ts",
+      "sha256": "1306e22b3eb83276d94ef41b80ebb96562bde48c471f23fdd67eca9e2b47e2ae"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/config.ts",
+      "sha256": "5ab1010951ef50dec1b22be7d58eaffe0bbe4cce96efd148f6d98546d303697f"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/release-manager.ts",
+      "sha256": "01f047ec218e18c8676c1a8eb2ae6dfe013953e61e53c9ee9a5f47210668322f"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/utilities.ts",
+      "sha256": "d38f4e0d4025ac4717467a7428055b8abcd36904d32c10f33b285dbd17472153"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/bundle.ts",
+      "sha256": "40beb79b5547e810679747e0da221ac8771211ab58001e8f573418b26b9c1081"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/cache-manager.ts",
+      "sha256": "711dfe980ec410b5491da83dfc232165b68fe32ec9b7184d72243b7c2cf4b32b"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/download-dom-image.ts",
+      "sha256": "bd3cf76b87b5c9e0da9fdcc5704879df236cf3b13264dfecf33dcb40834fcc1e"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/download-file.ts",
+      "sha256": "5b2bb0c2b8f23ce65ff820ae019716d9b1f39b6b99848a1cbd19ce6e2fe94917"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/download-script.ts",
+      "sha256": "b31eaedf60d462531ab338bc0a01c9c428bd45e8afc8a1e91c0db204f7354d10"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/downloader.ts",
+      "sha256": "5740536b57454b5016a71b9f31d44055594ef22b359814a08ec74a16d6884283"
+    },
+    {
+      "path": "src/cocos/asset/assets/json-asset.ts",
+      "sha256": "ea4f8fd68cf1479665e4d211a9c6a2ca6d0e5c50485e2631be12ea643296daa5"
+    },
+    {
+      "path": "src/cocos/asset/assets/text-asset.ts",
+      "sha256": "6a1a49a28afe526b1deb4bce3eb4523d1a3c8abb476b8a2d959b99bbc246b53b"
+    },
+    {
+      "path": "src/cocos/asset/assets/buffer-asset.ts",
+      "sha256": "82100bb49d3acb497d12f5b483709cfa7989af04bd2c9d9f2900e5d2ae80ac30"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/factory.ts",
+      "sha256": "79c371bc9cae455d2f5b16721b47cd4e30ae7276b139d29b2f22aff38a411960"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/bin-package-unpack.ts",
+      "sha256": "2fdbfbca2e89a6d915718b96131cc4b35410192d12e951b4829d241b93dde04d"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/pack-manager.ts",
+      "sha256": "cdf5dae3df45ed289459b09ee2b2b9434d32f0f027e0b35b5680df48b0ac84bc"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/fetch.ts",
+      "sha256": "89c6464ab675b1ddcb18073cbe42bcbf83b272caa55c6e1b3b22b1f60ed586e8"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/plist-parser.ts",
+      "sha256": "46f24e3e3af42b586566da54fc0bbadd76d6a64dcd99ba0b5db45cc666bfcba3"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/parser.ts",
+      "sha256": "fe657c0bb005705ae9b163402a5930c23b32f1519fe5e0acd5edafb1644c3f15"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/load.ts",
+      "sha256": "6d780a266c09208625cc792a152cf51340e1d90fb30769216254dbf0ac2f7d67"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/preprocess.ts",
+      "sha256": "e61bbcedefb84e142ac09346f0d7b73e4b2d7c6e01289c3059ff70c10aec8d70"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/request-item.ts",
+      "sha256": "f7a0827adbf0f1482ec34e205ad3f405c87059f07ad9f82b1c94c4a24f0caddd"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/url-transformer.ts",
+      "sha256": "dd7f2b3c65493f69564b2ff5e8adafad97a2f905b323aa7073e32bdad1a2d3de"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/asset-manager.ts",
+      "sha256": "417a48c0b42241fda54df55b25a9623809d65cbde9b445f3a85bb08849314c4a"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/builtin-res-mgr.ts",
+      "sha256": "f16e9352c42b58326d0cb41d4d119125d2a78fec1001d2bec48663cfbd83223d"
+    },
+    {
+      "path": "src/air/rendering/hdr-context.ts",
+      "sha256": "33b1ebb7baaf736891a87150b33d395f1dd68e37368c808267227df1a6b140ae"
+    },
+    {
+      "path": "src/cocos/rendering/pass-phase.ts",
+      "sha256": "0993ab4c337bc83dd59fa83648565bb3a888cdb555596f6c94e55f7469fe3b76"
+    },
+    {
+      "path": "src/air/rendering/effect-json-contract.ts",
+      "sha256": "b7dc719894f7e180718e16a44a374b9af3886fd9566600168819889b73dcf27f"
+    },
+    {
+      "path": "src/cocos/core/platform/property-validation.ts",
+      "sha256": "96fd053e6d6a4472aad8b83d7590eed5bc22b8ea0ea060bd01dc1540d240f11a"
+    },
+    {
+      "path": "src/cocos/render-scene/core/pass-utils.ts",
+      "sha256": "e1d4ab2375b913feb76c88a90a5b36755d7e465417b6c30d46360e8611da5177"
+    },
+    {
+      "path": "src/cocos/render-scene/core/program-utils.ts",
+      "sha256": "3cbd1d596a8db74fd0de0ce8df805f2d5fba6ec30f7dab7f4372623a86f96cd4"
+    },
+    {
+      "path": "src/cocos/render-scene/core/program-lib.ts",
+      "sha256": "e9a434a74ed4fe6306c834e4181aa8068f1ade4cc9be1a68b7492cc8aa63b76d"
+    },
+    {
+      "path": "src/cocos/rendering/instanced-buffer.ts",
+      "sha256": "9f28605db4b647601074626c63a7cf712be30fec6dab6be8fc547627831a864a"
+    },
+    {
+      "path": "src/cocos/render-scene/core/pass.ts",
+      "sha256": "914339a3f95f669a8f2dccb56f336fc78c944f85ff7fb6bb01657a9f05c1e842"
+    },
+    {
+      "path": "src/cocos/render-scene/scene/submodel.ts",
+      "sha256": "448b737651c5a15186dd5a9be21809094a2d575d06e2b1608e546cea9762ca90"
+    },
+    {
+      "path": "src/cocos/asset/assets/effect-asset.ts",
+      "sha256": "6fae6d19f70ce8539e1fb6725e30ecb76c087542ff5c6fbb05fd6e2c3565b6a0"
+    },
+    {
+      "path": "src/cocos/rendering/pipeline-state-manager.ts",
+      "sha256": "53dbb3578621847144dc532baaffaf2fae2b73ca13fb274815ef7956fd54fb35"
+    },
+    {
+      "path": "src/cocos/rendering/pipeline-funcs.ts",
+      "sha256": "8e34852feebd45ca44f4854b90a5a240d4f4625303bb34acdf0ec65260a4c285"
+    },
+    {
+      "path": "src/cocos/asset/assets/material.ts",
+      "sha256": "c1708aa798dfc44d382bdc537ec5fc0916843c31ff420682034ef00267a386ad"
+    },
+    {
+      "path": "src/cocos/render-scene/scene/shadows.ts",
+      "sha256": "aafcd29aad30850ba91049fcf63fd4fbf2a4d05844a70e99fdbbf2fdbf02207a"
+    },
+    {
+      "path": "src/cocos/scene-graph/node-transform-validation.ts",
+      "sha256": "b2332b6d50688fbd34f53f0fa4c23e3ce8eb96b0680e7edde355a431e14daecc"
+    },
+    {
+      "path": "src/cocos/scene-graph/node-ui-properties.ts",
+      "sha256": "15b944ea17acf49258b84e82e9c91fb63d50e0fe47449fdba59cfe4b0bf0ce72"
+    },
+    {
+      "path": "src/cocos/scene-graph/node-dev.ts",
+      "sha256": "bd2e94abd4ee51ca427a827aa634b22587963f995c9762415780c9d889f63bad"
+    },
+    {
+      "path": "src/cocos/scene-graph/node-enum.ts",
+      "sha256": "06e99b510f5ba32cab7d94cf51115362d90da079b3c2197143d180338b396c6a"
+    },
+    {
+      "path": "src/cocos/scene-graph/node-event.ts",
+      "sha256": "84d965fed050a41cbae6afa0cdfd7fa8940884f0f8a6ef8f0cd4133dd712b096"
+    },
+    {
+      "path": "src/cocos/input/types/event/event.ts",
+      "sha256": "f6c20f9d0122eca19e15df115f9d350ebcb68a3aeab2fec9c05e2ab02638aff8"
+    },
+    {
+      "path": "src/cocos/input/types/event-enum.ts",
+      "sha256": "9dfdfd305f1af3e47a568a01ba8fdf356dbdbcd67a6618cb7dc21c8461af8fc0"
+    },
+    {
+      "path": "src/cocos/input/types/event/event-acceleration.ts",
+      "sha256": "967ee1e7f1aa14bd6bb5006079be7e0d40fc246df0010e01d630a6e97853ccc9"
+    },
+    {
+      "path": "src/cocos/input/types/event/event-keyboard.ts",
+      "sha256": "25157581a1085a9fa8f14bcd38e3243dbe134b21cc8962a46f58f67733f677bd"
+    },
+    {
+      "path": "src/cocos/input/types/location-output.ts",
+      "sha256": "962f7345456ee3c17d43839b5151e0d4d76ba7db669494ee5f5162d7057485da"
+    },
+    {
+      "path": "src/cocos/input/types/event/event-mouse.ts",
+      "sha256": "5277fb274942324b41b342c1103153d796137965830d66f12f1d81910f28593f"
+    },
+    {
+      "path": "src/cocos/input/types/event/event-touch.ts",
+      "sha256": "22953270f363f648c4bc36276c6bd64e2ae7d133c1e4131192cffaacf132d7d6"
+    },
+    {
+      "path": "src/cocos/input/types/event/event-gamepad.ts",
+      "sha256": "0aea690e25f41bc79fa93e627f135ca8509c2e547b39e2060df8a28c79507805"
+    },
+    {
+      "path": "src/cocos/input/types/event/event-handle.ts",
+      "sha256": "b857da19eb949a352508e117b950cc21bb1a0cc2cacb57d414ca21ab9fdce45a"
+    },
+    {
+      "path": "src/cocos/input/types/event/event-hmd.ts",
+      "sha256": "457caa3cacf8ee4648563fe0b981aa844d4a07dbec103b4bfabf9c3b23d5f2ad"
+    },
+    {
+      "path": "src/cocos/input/types/event/event-handheld.ts",
+      "sha256": "8b07942b4b02cd680e9275e96f13f9fd6becf5b2e59c57eab16e6cd537ce47a2"
+    },
+    {
+      "path": "src/cocos/input/types/acceleration.ts",
+      "sha256": "363715de4682268274bed6b8e98a340df1096b08a0c91cd7575053714f7e9278"
+    },
+    {
+      "path": "src/cocos/input/types/key-code.ts",
+      "sha256": "c2a6dba9b89efa353cb1b9aaa83fe5317173e21f3547f76fe5494b7a0f962b68"
+    },
+    {
+      "path": "src/cocos/input/types/touch.ts",
+      "sha256": "75487bde6e2a595a908e5e39dcc2284ebfd14320ab0c2786fa92abdb23f0d230"
+    },
+    {
+      "path": "src/cocos/scene-graph/node-event-processor.ts",
+      "sha256": "0ae27f104e34126aa48064d52e08d0485227dda090e22ac71da520d9e8f8f57e"
+    },
+    {
+      "path": "src/cocos/scene-graph/node.ts",
+      "sha256": "385eabe981cf2c20c65211a488d03a702727e895029d3743193264cf9b500a2b"
+    },
+    {
+      "path": "src/cocos/asset/assets/render-texture.ts",
+      "sha256": "97f0c048214da4fe805b3a858bef80343d372cf6c3341024e7dd87101f43962b"
+    },
+    {
+      "path": "src/cocos/render-scene/scene/reflection-probe.ts",
+      "sha256": "ab78205c6e90c80de7700357ceb85a6ac826090e972e91ca8cc62ac7fbed5a62"
+    },
+    {
+      "path": "src/cocos/3d/reflection-probe/reflection-probe-enum.ts",
+      "sha256": "61c91c07474631360161124e0c900409e602cdcf494c0f913b8a9d45f877930e"
+    },
+    {
+      "path": "src/cocos/rendering/pipeline-scene-data-utils.ts",
+      "sha256": "4f992682df9986dd60a0bfca1bc5588823136555623285aa2f3d996062eb90fb"
+    },
+    {
+      "path": "src/cocos/render-scene/scene/model.ts",
+      "sha256": "a13ea79b28e2b3ff11ad07f1df9c9fd971ded5d3186910a1712ed8d803e7f007"
+    },
+    {
+      "path": "src/cocos/render-scene/scene/ambient.ts",
+      "sha256": "2fa22f7f2b5d03ee4baafe8e1bc79b48f5f56e27b7a63b44fde658778043d62c"
+    },
+    {
+      "path": "src/cocos/render-scene/core/pass-instance.ts",
+      "sha256": "87674d92ad54e4f3d9cc31c6dc2fa1343c391369c3f370f37d501d0666f1c754"
+    },
+    {
+      "path": "src/cocos/render-scene/core/material-instance.ts",
+      "sha256": "2baf215c4f5161bb8b68a39d7389ca932198af304aca8e64ef9ac5d4fa683ea3"
+    },
+    {
+      "path": "src/cocos/render-scene/scene/skybox.ts",
+      "sha256": "933cd7d40c11897b9f13c8d906e3c377f99c14da074cf60ea2050918e5318c69"
+    },
+    {
+      "path": "src/cocos/render-scene/scene/fog.ts",
+      "sha256": "29a0a545c798531ceed27ab8ad087ec57b6ef06353607bd8f9713d8607c640c5"
+    },
+    {
+      "path": "src/cocos/render-scene/scene/octree.ts",
+      "sha256": "553c71ba241bca12f22a4783a61723778996ea15768df454c28ee44397577956"
+    },
+    {
+      "path": "src/cocos/render-scene/scene/skin.ts",
+      "sha256": "d99f2929f67bd8b9a53cbc3e3f533dec3ffe07c2b6bcaa6f67330daf857f3617"
+    },
+    {
+      "path": "src/cocos/render-scene/scene/light.ts",
+      "sha256": "9de9546acb1244bebeac9c26af3391aa9e30951221d0d60c09a53b2b22eabae3"
+    },
+    {
+      "path": "src/cocos/render-scene/scene/directional-light.ts",
+      "sha256": "61f5bd913d90cc6de829e7d340f21ecd6b07374f462d84791470d6b0cab9c9f4"
+    },
+    {
+      "path": "src/cocos/render-scene/scene/sphere-light.ts",
+      "sha256": "f616075ee68f40a31c9fac6e1a7ceaedd48149d726c589b26966c8ce7ac94431"
+    },
+    {
+      "path": "src/cocos/render-scene/scene/spot-light.ts",
+      "sha256": "dc23235e6b42f31c6525d57a7b043b86a4f76f8cbe1419f9431955d4c63f3909"
+    },
+    {
+      "path": "src/cocos/render-scene/scene/point-light.ts",
+      "sha256": "8c77519e4e9535e80257020e4cc91e595f06852b88074e82d70f27c0b17ecf25"
+    },
+    {
+      "path": "src/cocos/render-scene/scene/ranged-directional-light.ts",
+      "sha256": "e154078c5000531ee5f4bf6b093c1f91ed64db02db067d1741e010612ddd319e"
+    },
+    {
+      "path": "src/cocos/render-scene/scene/lod-group.ts",
+      "sha256": "bdc7e22032630a77ecd931a7479b253ce79dca5e8e40a25a78d429ac573c8e6a"
+    },
+    {
+      "path": "src/cocos/render-scene/scene/post-settings.ts",
+      "sha256": "ef1246fc60ea9c1cb0feed0eb5ec49d5f783f9113f1a7bdaafead768725bfcff"
+    },
+    {
+      "path": "src/cocos/render-scene/utils.ts",
+      "sha256": "b6c8146992a0e6ae944d5b2dfff6f86b14a47da50f79c8ed220083c6e3b6814c"
+    },
+    {
+      "path": "src/cocos/render-scene/core/constants.ts",
+      "sha256": "8f0c8416ce52192c6ddbcb2fc45486fc6b466599cad3513fc722f5026d1c4bf1"
+    },
+    {
+      "path": "src/cocos/render-scene/core/texture-buffer-pool.ts",
+      "sha256": "11bd2ae1d95325e522a37837ae8a9945cf22fe1b979c00414ab70b95d5ff1b4e"
+    },
+    {
+      "path": "src/cocos/render-scene/core/render-scene.ts",
+      "sha256": "1485053d92c751149dc8145710062bed65f9a04c2523d6cc771489141c512c2e"
+    },
+    {
+      "path": "src/cocos/render-scene/core/render-window.ts",
+      "sha256": "1a63bf22d26305d336306a3565fb698d1c4d928a55115c0698e4e6e50008169c"
+    },
+    {
+      "path": "src/cocos/render-scene/deprecated.ts",
+      "sha256": "509a5d9546767165e0c6eb667ddaf4c8362b7797a99afcabeed7dcc391adf3dd"
+    },
+    {
+      "path": "src/cocos/rendering/render-types.ts",
+      "sha256": "03ecbd4bd2a34be244af090bb37fb7c7729b81846a4f28d2963de4191edfe9ef"
+    },
+    {
+      "path": "src/cocos/asset/assets/deprecation.ts",
+      "sha256": "2fb55f6002b94edf6b6e456de650d83a1aff12c5f6edb8bc95d861de62f2bb5e"
+    },
+    {
+      "path": "src/cocos/3d/misc/buffer.ts",
+      "sha256": "4611d0fbd7b7ebb113931ebd580402aed29c4f808db735a20b97fe2e2afec504"
+    },
+    {
+      "path": "src/cocos/asset/assets/rendering-sub-mesh.ts",
+      "sha256": "a3f39fa7a08812defae96f88aec45311d44770a6cc3ed5a4ae9a0cf5cf815ce4"
+    },
+    {
+      "path": "src/cocos/scene-graph/scene-globals.ts",
+      "sha256": "53aacb378e11cbef106ae2fd7617f97e59773b7ba0d7541368c82ce25e712458"
+    },
+    {
+      "path": "src/cocos/scene-graph/prefab/prefab-info.ts",
+      "sha256": "99cb151090f2d15eeb3213a0bf921c6c91a6c0f309237d7776850d6953f577b6"
+    },
+    {
+      "path": "src/cocos/scene-graph/prefab/utils.ts",
+      "sha256": "49df5e749200f3c59c34a2e7b7331d6da801d34ff75c2f3469f0f71f06440523"
+    },
+    {
+      "path": "src/cocos/scene-graph/scene.ts",
+      "sha256": "0f378e89fcfc926c7740d110f97f5ae07752a72ab5d6dd8039148654baaa85a0"
+    },
+    {
+      "path": "src/cocos/asset/assets/scene-asset.ts",
+      "sha256": "c1f7f147e7899b390d6d607540a252d747d06e4ecba563d5e1c2e3653d5b333b"
+    },
+    {
+      "path": "src/cocos/rendering/shadow/csm-layers.ts",
+      "sha256": "9bf70ee2b2194b66a315de9a12d443a1a00cb1002aeccfaa220c6ef7fa0bb528"
+    },
+    {
+      "path": "src/cocos/rendering/pipeline-scene-data.ts",
+      "sha256": "499ba3ad8f3531f6d7798602d06a6c8deba060a51ae43363b9079f1cff1f8414"
+    },
+    {
+      "path": "src/cocos/rendering/pipeline-event.ts",
+      "sha256": "c7f37ea08267396aaacbf4e6c0eed21f0a9faa84758dba0049c981e54974faf7"
+    },
+    {
+      "path": "src/cocos/rendering/debug-view.ts",
+      "sha256": "6fb89bdba2eff0bf7dc3c86ef86693f81dae963efd6dc5dbf470ddb365d6bded"
+    },
+    {
+      "path": "src/cocos/scene-graph/component-event-handler.schema.ts",
+      "sha256": "e7d798cfeafba22ff5254829f2c9bc5add0a635082e7ab39f377a8305ff94573"
+    },
+    {
+      "path": "src/cocos/input/deprecated-3.3.0.ts",
+      "sha256": "9dd0630f7b6f9e043ed166cb2cd03c98fbdc9fad3e5298d3c4b1414bb2041889"
+    },
+    {
+      "path": "src/cocos/input/deprecated-3.4.0.ts",
+      "sha256": "266a996c6b3f7cc338ef710b6ca56c2a527560c35d7f8ed75cb45f6e75140d22"
+    },
+    {
+      "path": "src/pal/input/web/accelerometer-input.js",
+      "sha256": "c77fd2af3cf889b4144d212ebef1f5ff9ed7e11276ea5b9e75d0d3f6da271cb3"
+    },
+    {
+      "path": "src/pal/input/input-source.js",
+      "sha256": "251eea670fc9659ed91301e34ff5916c392dee56c30035a866451941d2ae7b8a"
+    },
+    {
+      "path": "src/pal/input/web/gamepad-input.js",
+      "sha256": "f05efceefd931a72ba9a0a2a9e39be7a42d51d17bcc775c07628a3038757f857"
+    },
+    {
+      "path": "src/pal/input/web/handle-input.js",
+      "sha256": "628e104defb8fa3f0a33e8c719b47626a06b4104d08811ed7ce76eeb9532e00e"
+    },
+    {
+      "path": "src/pal/input/web/hmd-input.js",
+      "sha256": "c0cfcf13b20ac3f6dbf540fc4cac1ffc1abb9d348b8447152ed34e06ed198a9c"
+    },
+    {
+      "path": "src/pal/input/web/handheld-input.js",
+      "sha256": "d0f9677fdcf38b665b2932c6462f51277d06902e4c3ece786f317e72cf2c43a0"
+    },
+    {
+      "path": "src/pal/input/keycodes.js",
+      "sha256": "98e21b331dd2dcf3012c995716d6751998855f15b86d6c72ec0f6aca468bcab6"
+    },
+    {
+      "path": "src/pal/input/web/keyboard-input.js",
+      "sha256": "11008e5dbf6476eb98b3e5aa059fc89cd82ec16041a24190b55fd89a9bdacabe"
+    },
+    {
+      "path": "src/pal/input/web/mouse-input.js",
+      "sha256": "0924c2e0281247259a99b12d2306b523877a2bdccc37bc488e9afbb9b8daedbb"
+    },
+    {
+      "path": "src/pal/input/touch-manager.js",
+      "sha256": "28bb4d2d71e10f35ee3c43e0c78ce4ce871cfb82652eb23dbc3bbede73f4302c"
+    },
+    {
+      "path": "src/pal/input/web/touch-input.js",
+      "sha256": "f6b918e33472f9a4eab37b6bb9d2211fcd361e4cb672f48d6eddfd4fc67b1355"
+    },
+    {
+      "path": "src/cocos/input/input.ts",
+      "sha256": "390a269f83bc555f416877c4d810acd465ab7c5affb5dd4b33fd41396811927d"
+    },
+    {
+      "path": "src/cocos/input/system-event.ts",
+      "sha256": "371997ed7d865d739987af4747ee1d06626aa6ad04cb964d6fc7698b0f8b4335"
+    },
+    {
+      "path": "src/cocos/input/deprecated.ts",
+      "sha256": "9a45e10fe6eeb1c11e6ebd0754a93f1ea9779ae1ed89ea01e90997c58ad0497a"
+    },
+    {
+      "path": "src/cocos/scene-graph/deprecated.ts",
+      "sha256": "5b1b1c8af3089ae396e81cb1eaf4a723e7ad1e08b5f27d30602bfa1a22a73628"
+    },
+    {
+      "path": "src/cocos/scene-graph/deprecated-3.7.0.ts",
+      "sha256": "2e436c4ef96800aa69e67c0dbf2e99199793d177eab6c8417785fa56ef964586"
+    },
+    {
+      "path": "src/cocos/scene-graph/find.ts",
+      "sha256": "880d41d2175ebcfadfa068fd22aa8cee4127feca870c2c61de811fbd424fe9f9"
+    },
+    {
+      "path": "src/cocos/scene-graph/component-scheduler.ts",
+      "sha256": "c6a45d3502dd25dbb2b6e4a9aa185acd87b773d9c8576fe23abefbb46799a1f4"
+    },
+    {
+      "path": "src/cocos/scene-graph/node-activator.ts",
+      "sha256": "7078e8e278b5aec690ddcf30f5f2dbf7d5c4b7e2d13ce309ccb083a5e48055b0"
+    },
+    {
+      "path": "src/cocos/scene-graph/prefab/prefab.ts",
+      "sha256": "9c72745f566a0e21c046981b6455e9775387500fa4145159fd8a90be74299903"
+    },
+    {
+      "path": "src/cocos/misc/intersect.ts",
+      "sha256": "799b464b065a5a08dca83dde20c7c0a386b140d6d4642f440801d4865d06a97b"
+    },
+    {
+      "path": "src/cocos/rendering/post-process/components/post-process.ts",
+      "sha256": "ec13076e10ccad38c3cfe250342a2bda7b47a1ef71485f61f5d347165354d7fc"
+    },
+    {
+      "path": "src/cocos/misc/camera-component.ts",
+      "sha256": "d16bcdf4dd1765e4212cd632e50fcb7e01883fd9de18c0e77bf5d7c23da89ecb"
+    },
+    {
+      "path": "src/cocos/misc/renderer.ts",
+      "sha256": "9553f966d2e93ee434edce063f5fb6829caef841bd8c483b87afc3234af3f0f8"
+    },
+    {
+      "path": "src/cocos/misc/model-renderer.ts",
+      "sha256": "dd5247c2dfe0b0a48e10a25ea6bc7ba08f56adf35ae4450462edabf2d7e4cc92"
+    },
+    {
+      "path": "src/cocos/misc/prefab-link.ts",
+      "sha256": "a5fa4042190a673e5a9a9551458140362919efab73b819d26e29e4037402f91a"
+    },
+    {
+      "path": "src/cocos/misc/FeedStatusController.ts",
+      "sha256": "c5ead61f06995022c9f1057e81f60ed086734a71b5735c84d425450823b0af4e"
+    },
+    {
+      "path": "src/cocos/misc/deprecated.ts",
+      "sha256": "4984081794f8433362f353f8a214490fcadd64a1d12128ea6c708c37a6cb8719"
+    },
+    {
+      "path": "src/cocos/root.ts",
+      "sha256": "5754a570a84136eede9ce547bd2f8cfeb2bf4c243a4803be9615d12229737f60"
+    },
+    {
+      "path": "src/cocos/2d/framework/ui-renderer-manager.ts",
+      "sha256": "389fd1807a07703e614ded5944a2769ca6744aa8d699e93ffdf736f6aaed153d"
+    },
+    {
+      "path": "src/cocos/asset/asset-manager/deprecated.ts",
+      "sha256": "a7ce25927c90290d53a946ddb987a86520c7fbb0c36de947f114eddad48f7ae4"
+    },
+    {
+      "path": "src/cocos/game/director.ts",
+      "sha256": "7b1be62cd9e84e926d1744ccc5d467a63e115f689f888a720df44511f51aa224"
+    },
+    {
+      "path": "src/pal/env/web/env.js",
+      "sha256": "381d377cd1bd65ea6da130c3b0633a985097b1fbd176d41d40b348f663273e52"
+    },
+    {
+      "path": "src/pal/pacer/pacer-web.js",
+      "sha256": "171778adbb33063d20b6bdfab3003b575f4d62c2dfc7c7f65de88cfde272b5a1"
+    },
+    {
+      "path": "src/cocos/ui/view.ts",
+      "sha256": "99eaf20fdd801665ca00be6f3879e0fc1b9c9889f6360f7c0d847b1df23f5117"
+    },
+    {
+      "path": "src/cocos/game/splash-screen.ts",
+      "sha256": "324a95d40b0110c6ea6adae284255b9c9ceb0c1a4be5c29c96dc93cb91f9b657"
+    },
+    {
+      "path": "src/cocos/core/effect-settings.ts",
+      "sha256": "e4bbb7f78ea2961922b6ec6f00f4f02d2910d54f311bbedbf1ad3114f39f7e09"
+    },
+    {
+      "path": "src/cocos/game/game.ts",
+      "sha256": "66eb3ac36fa55f9608a2a1b6ae1e51a6ecb2bc7d37802a038bf5e1077feac62f"
+    },
+    {
+      "path": "src/cocos/game/deprecated.ts",
+      "sha256": "e152368fb8802130ad37932e02467f366a4766ed5a85195e7183ad9547028be2"
+    },
+    {
+      "path": "src/cocos/serialization/instantiate.ts",
+      "sha256": "292ae1b1b56671694176f3fad4c1a65b1fdf318f1fe644fc7ca6389a01fa92c0"
+    },
+    {
+      "path": "src/extensions/ccpool/node-pool.ts",
+      "sha256": "4b3346a84350722134c40ed455d1415cab2e422b8800547e2f9ac8e95667f2ac"
+    },
+    {
+      "path": "src/cocos/native-binding/impl.ts",
+      "sha256": "283f9914fd3c7325f091173ae386310d5ae42551e314eea631f1bb5cd94a576a"
+    },
+    {
+      "path": "src/exports/base.ts",
+      "sha256": "b060d82e23c1cbcc1e92c62a4f283fce9fde636e0b61224049293b02734809f4"
+    },
+    {
+      "path": "src/cocos/3d/misc/ppm.ts",
+      "sha256": "4b61298b9dbc1e74069bc3b6bbd3e1156c94b4a0c1f79699f8598b0a7a992368"
+    },
+    {
+      "path": "src/cocos/3d/misc/read-mesh.ts",
+      "sha256": "04d03d18005cb02fa15fa10d93779df7edcbc8877e9894fa39da163598d86334"
+    },
+    {
+      "path": "src/cocos/3d/misc/buffer-blob.ts",
+      "sha256": "8362da5f7f39c4fccf13845c4704269da8f39da704e311f53232ff8e800ec30b"
+    },
+    {
+      "path": "src/cocos/3d/misc/mesh-validation.ts",
+      "sha256": "3b790c1ad24cf4f0f74d193182e746abe11b6887d1eb77db0f7209c3527bddf6"
+    },
+    {
+      "path": "src/cocos/3d/assets/morph-rendering.ts",
+      "sha256": "25c169d223dafaf9cc6d6d725121935ec2a0e2e59e78c24f81da38def69b0bd6"
+    },
+    {
+      "path": "src/cocos/3d/misc/mesh-codec.ts",
+      "sha256": "ab98825fa78c1bdcd35523064cd1bbb89dd76464660b4573ae31ec68b328334a"
+    },
+    {
+      "path": "src/external/compression/zlib.min.js",
+      "sha256": "6406a8cd1f02bede7834c578dc99df0251ee01cd8cbcbe5fa37453a6e313d676"
+    },
+    {
+      "path": "src/cocos/3d/assets/mesh.ts",
+      "sha256": "50d88068b1be3d1f42b1334cb268534c5f6b6d95c1cbc42eab0495ecc657d6a2"
+    },
+    {
+      "path": "src/cocos/3d/misc/create-mesh.ts",
+      "sha256": "6202c9759e1e2f6bc0d32f2b4892cad87065d21dd8be25c414a8b373d80c4e40"
+    },
+    {
+      "path": "src/cocos/3d/models/morph-model.ts",
+      "sha256": "6d64b56f460573c02e81f4b43587b5aede1fe747fe82e36081678f7c0a80af28"
+    },
+    {
+      "path": "src/cocos/3d/framework/mesh-renderer.ts",
+      "sha256": "675025a354d4bbe557c85db607ed3cd028eaf3e85c719cd9b05802dcd188e8f6"
+    },
+    {
+      "path": "src/cocos/3d/misc/batch-utils.ts",
+      "sha256": "6196aae4f73957be47332f06f5fa71011aca0f30c5f537e7b9b97ab7dc018cd0"
+    },
+    {
+      "path": "src/cocos/3d/assets/deprecated.ts",
+      "sha256": "0e467d65e5d7e486a809ca005b15adb556956dd83034e44236733e60470fce05"
+    },
+    {
+      "path": "src/cocos/3d/assets/skeleton.ts",
+      "sha256": "44b7f0bf52e0e212823d46fb761e3d5537c2d1d0e78e6900b5d546b68ef5113f"
+    },
+    {
+      "path": "src/cocos/3d/framework/deprecated.ts",
+      "sha256": "7aa9902ab7aea42c9c0d727be9cbc132c73ce9a029a0ac045db0a2f63a5fb9d3"
+    },
+    {
+      "path": "src/cocos/3d/lights/light-component.ts",
+      "sha256": "0a753f84e8d003b327add510c1f2cfa8066147514810a97d42c1cb7b8435df5d"
+    },
+    {
+      "path": "src/cocos/3d/lights/directional-light-component.ts",
+      "sha256": "620f9ae1f5d0192731a92d518c1f9c018e88e9bb14be2d0903d323f38d093ac6"
+    },
+    {
+      "path": "src/cocos/3d/lights/sphere-light-component.ts",
+      "sha256": "73deb4beba940adc1c72fc0e6310764b3e185d6e6c7a320ea1f5356f512120f2"
+    },
+    {
+      "path": "src/cocos/3d/lights/spot-light-component.ts",
+      "sha256": "cfc4e2ce1b781cf7febb81e45ee828e7906f51b5abd297cde0ae990bc7e7e902"
+    },
+    {
+      "path": "src/cocos/3d/lights/point-light-component.ts",
+      "sha256": "3fc32b78ee8fc43d00f46b7e2a3d071fe94b5f925bf5f7bac1956e97f9734c23"
+    },
+    {
+      "path": "src/cocos/3d/lights/ranged-directional-light-component.ts",
+      "sha256": "f9494b44fc06a8c03ccd02cee2181dbd43f90623651558f586d6c39995a3404d"
+    },
+    {
+      "path": "src/cocos/3d/lights/deprecated.ts",
+      "sha256": "f68d69213dbed23e7a9e30c7d0a28dbe10ab471cdd3616584fb38db83b41f1d2"
+    },
+    {
+      "path": "src/cocos/animation/internal-symbols.ts",
+      "sha256": "a145541a961d0ea5a180284c00a1ed7a20da03be11671d8ec38288d3137a48d0"
+    },
+    {
+      "path": "src/cocos/3d/skeletal-animation/skeletal-animation-data-hub.ts",
+      "sha256": "cead4093fbfed8a32f788b32a41554aee290cd5b8f74e40d240d137661364134"
+    },
+    {
+      "path": "src/cocos/animation/transform-utils.ts",
+      "sha256": "e9322e18bd4958c1be8db2e84f616d89024848de93c399d47e7a4f3292b10e23"
+    },
+    {
+      "path": "src/cocos/3d/misc/joint-texture-sampler-info.ts",
+      "sha256": "231e7bad273af62d84e0de51fa239b26ce3d60c310b0a76f10bbc3fdab1fbd44"
+    },
+    {
+      "path": "src/cocos/3d/skeletal-animation/skeletal-animation-utils.ts",
+      "sha256": "b187c1663fc31be0c33cc91b8da539e47eee78dba2a1b218affa5727fc8ec0f8"
+    },
+    {
+      "path": "src/cocos/animation/skeletal-animation-utils.ts",
+      "sha256": "1a50cde14711099073d1b4247fb426749f880ba0c5b1e4e166b3bac16a55d7e7"
+    },
+    {
+      "path": "src/cocos/3d/models/skinning-validation.ts",
+      "sha256": "79af3f889647c4d4918b36e285eae7530cc7683045c2c5c2d98b10ada7de3f5d"
+    },
+    {
+      "path": "src/cocos/3d/models/skinning-model.ts",
+      "sha256": "b808e3b9c3f5ab12f77fac283ced291300c2db624419c52f749f4877260a050a"
+    },
+    {
+      "path": "src/cocos/3d/models/baked-skinning-model.ts",
+      "sha256": "523c6a2a0b51b6e8a573d1587b736877e1bcbba7c9bf7a57d71491da54de21dc"
+    },
+    {
+      "path": "src/cocos/3d/skinned-mesh-renderer/skinned-mesh-renderer.ts",
+      "sha256": "16479ad76865cb7bd03fc8bc16527b65416711f503da8277fbecfc348355a575"
+    },
+    {
+      "path": "src/cocos/3d/skinned-mesh-renderer/skinned-mesh-batch-renderer.ts",
+      "sha256": "f476788400cd76accb4b3eae77a45395e6c0f815a85311e1197418fe062de2c6"
+    },
+    {
+      "path": "src/cocos/3d/skinned-mesh-renderer/deprecated.ts",
+      "sha256": "c13a48881944c99ea17a6aa303eca5eb9cd721c0ce2326cf3bae7d0c626dda36"
+    },
+    {
+      "path": "src/cocos/3d/lod/lodgroup-component.ts",
+      "sha256": "395f831f0028ae1119751a419b90f3b6ed3bc7318e789716191cd87e8233d9ea"
+    },
+    {
+      "path": "src/cocos/3d/reflection-probe/reflection-probe-manager.ts",
+      "sha256": "2a1fbb22964a929f925cc4383a7009a4e88af0307b4a96e9838a9572e07efaa3"
+    },
+    {
+      "path": "src/cocos/primitive/utils.ts",
+      "sha256": "574351424c3ffd053ab75fbe0b68b2b7614f404c02d3ed3a57f1a6c2abbd4e06"
+    },
+    {
+      "path": "src/cocos/primitive/define.ts",
+      "sha256": "67920a433c4f262958544d545ccd4ce7fbd8b316dd0ee2149f07921eaf28d60a"
+    },
+    {
+      "path": "src/cocos/primitive/box.ts",
+      "sha256": "67315c85e5e08def0af77e5a901dfccb11531f0196a2acfbf9cba9c9aa90f295"
+    },
+    {
+      "path": "src/cocos/primitive/cylinder.ts",
+      "sha256": "3ed46797b729ee4683e39b6dcd643a2bfbca3d1991c6bce5430da4112f41359b"
+    },
+    {
+      "path": "src/cocos/primitive/cone.ts",
+      "sha256": "3272b299728179940b5a0e1d3dbe9b1d980aa2ba77f6eaed81676dc7f7328a24"
+    },
+    {
+      "path": "src/cocos/primitive/plane.ts",
+      "sha256": "aa21fe6f3bade46c16fa6b7d90b3ae38b0b95c9c1359db287d5d83ea10f88b80"
+    },
+    {
+      "path": "src/cocos/primitive/quad.ts",
+      "sha256": "c8d97fa9b418ca4b385430ee2a486b687ee4e7acedd31c9e29c910dbe4218996"
+    },
+    {
+      "path": "src/cocos/primitive/sphere.ts",
+      "sha256": "0e5188e6e89b2e04d656d7ee4dbc1fcd9e95e6c9f131a8f5bedfe3bdf7d000a2"
+    },
+    {
+      "path": "src/cocos/primitive/torus.ts",
+      "sha256": "eac53f7aaa627d2a71ccb973ece50b8600b8595486b9a3ee04e7c9483aa00653"
+    },
+    {
+      "path": "src/cocos/primitive/capsule.ts",
+      "sha256": "a8e4aed4aed50df63322772c5df6092081c81e130a02ec8d5ce8c4f56805cee5"
+    },
+    {
+      "path": "src/cocos/primitive/circle.ts",
+      "sha256": "3660db4bca8569f46e3f1b932b6e23eb7964f6558786e700194328f98aa84ed7"
+    },
+    {
+      "path": "src/cocos/primitive/transform.ts",
+      "sha256": "7137961228cff3daa256368c88d8d475cb58b88452d998bae4669a4a16c28a7a"
+    },
+    {
+      "path": "src/cocos/physics/utils/util.ts",
+      "sha256": "401e837a5d9c2a4b59a2bd54055f9cc39251e15d8d038a5e4cc28a144b3bed14"
+    },
+    {
+      "path": "src/cocos/3d/reflection-probe/reflection-probe-component.ts",
+      "sha256": "d3f0f116847b9b9c0e5ee09e78050de39ae9243da281110f57b580754ca9e9da"
+    },
+    {
+      "path": "src/cocos/3d/index.ts",
+      "sha256": "397bc2b8f160a89e44f107bd72df837c48f2448d61bfb63d74c92a0f6db1e254"
+    },
+    {
+      "path": "src/cocos/animation/define.ts",
+      "sha256": "2bc8690b9b2909d11ec2d0199a2bfb7c7c97222c08b18776da7d6fd919c43930"
+    },
+    {
+      "path": "src/cocos/animation/embedded-player/embedded-player.ts",
+      "sha256": "6912396ef3564ba8f2c52078db7f3464b7b39562e936b5804f2354b75f414638"
+    },
+    {
+      "path": "src/cocos/animation/playable.ts",
+      "sha256": "2388d898225a8046500d6a8f104b9c14477951a2a855f46dd10e13b6fa3733e4"
+    },
+    {
+      "path": "src/cocos/animation/types.ts",
+      "sha256": "204a84fe7e069aa600cddbe89de0d81a4ff48ca0116c3749f01adf1551535ff2"
+    },
+    {
+      "path": "src/cocos/animation/pose-output.ts",
+      "sha256": "ca6242b14cc2d593ae19e0b1a53e596d4b38aff01d7b4d7d120faf8e1d3426b1"
+    },
+    {
+      "path": "src/cocos/animation/global-animation-manager.ts",
+      "sha256": "d3521a85e736cbd4853aaf4526bbbbdc409028d0bf2e22a28ad6e458db0856e6"
+    },
+    {
+      "path": "src/cocos/animation/animation-state.ts",
+      "sha256": "0997d4d6b614aae6fa605a0e305a485bdcbaa0e06250ff45e2f5feb23b5dc237"
+    },
+    {
+      "path": "src/cocos/animation/embedded-player/embedded-animation-clip-player.ts",
+      "sha256": "39cbd470fe314ca64c161fdaaa29f345196dca8b74a2c9912e718a8cc4a07731"
+    },
+    {
+      "path": "src/cocos/animation/embedded-player/embedded-particle-system-player.ts",
+      "sha256": "1d18d77c0d0ec89e6505a2eff78bcb0dd30da8d9e88a9ff1922ee1d236a36040"
+    },
+    {
+      "path": "src/cocos/animation/target-path.ts",
+      "sha256": "37f54032317c38738c087b23e30f975b0848abfb80d845ed212d3b4a99653f30"
+    },
+    {
+      "path": "src/cocos/animation/tracks/track.ts",
+      "sha256": "46758a1394c584c0e87781932a890cdef31b831bc5db887366d8d17389dd248c"
+    },
+    {
+      "path": "src/cocos/animation/tracks/array-track.ts",
+      "sha256": "de76c8d402ddd10733dc69e38e05ead20ab113c7ca11f0be44fc7b91821f03c5"
+    },
+    {
+      "path": "src/cocos/animation/value-proxy-factories/uniform.ts",
+      "sha256": "77b741b987078b95a1a455eb8dedbd0b77411d027e5344043626a97ecd81a737"
+    },
+    {
+      "path": "src/cocos/animation/value-proxy-factories/morph-weights.ts",
+      "sha256": "48ff0e727e8e4fc14df7b0da9121cbafcad21ff147f251c5fd88efc823443c46"
+    },
+    {
+      "path": "src/cocos/animation/cubic-spline-value.ts",
+      "sha256": "6b9dd76b3b267ab639206620ed709937dece8d9feefc12ae77c8963895f0cafb"
+    },
+    {
+      "path": "src/cocos/animation/tracks/real-track.ts",
+      "sha256": "7328a528e8c6961f3eba27709f1bc52067e8c2ceb893a1910de434a5ebac9204"
+    },
+    {
+      "path": "src/cocos/animation/tracks/utils.ts",
+      "sha256": "cc1e39052a4b9b3d486d5a6598bf54cf599cf76306531fa14e20a8b86b60121b"
+    },
+    {
+      "path": "src/cocos/animation/tracks/vector-track.ts",
+      "sha256": "992bb38f35ff1baa67c0b57258fa700efc2f73c02aed00989e80403a574fecd9"
+    },
+    {
+      "path": "src/cocos/animation/tracks/quat-track.ts",
+      "sha256": "713c43a4f06b5f6f0967fa56078b654290b04f69e1eda53dce04808f19de5f44"
+    },
+    {
+      "path": "src/cocos/animation/tracks/color-track.ts",
+      "sha256": "762d9128b3e45e3d35bb4beb88a3b004b63482b18935e3a0ed9ce88211916bfa"
+    },
+    {
+      "path": "src/cocos/animation/tracks/size-track.ts",
+      "sha256": "943565ec616d12a5b8f60904956279902abcf42c682618edc21b2fa0f18a9112"
+    },
+    {
+      "path": "src/cocos/animation/tracks/object-track.ts",
+      "sha256": "99756606fe0e763f03e7b5cae26c82ca49f219c5d4cfb333258ed1842f95cc51"
+    },
+    {
+      "path": "src/cocos/animation/animation-curve.ts",
+      "sha256": "fd0cae7fc6764018ef4b6acd7fe7c3efe7fa8205cc076b6f759b25caee89282a"
+    },
+    {
+      "path": "src/cocos/animation/tracks/untyped-track.ts",
+      "sha256": "66941eb4f376d7c2646cb5c965a673b0661ed4c40c7620dd56bd0f8f5d3f7376"
+    },
+    {
+      "path": "src/cocos/animation/legacy-clip-data.ts",
+      "sha256": "a8bf7ba8f134b52d9d5aacaa77a60626be85896c2a2eb0f3bc3f4c97644fd11a"
+    },
+    {
+      "path": "src/cocos/animation/exotic-animation/exotic-animation.ts",
+      "sha256": "e83724ab1bc9a41355cb7ad655d8367a26b0afeb9b3549f52c1d86152a7c9ec7"
+    },
+    {
+      "path": "src/cocos/animation/auxiliary-curve-entry.ts",
+      "sha256": "f3ce8385017030164ff8a0d3746b80ac8ceb208ae6cabd6860c234db16c338b5"
+    },
+    {
+      "path": "src/cocos/animation/event/event-emitter.ts",
+      "sha256": "c9942fb61b4b331138a16f969dcac9a50a23cc200c19650a999273043e69eaf3"
+    },
+    {
+      "path": "src/cocos/animation/animation-clip.ts",
+      "sha256": "59d262cb62befdb38bee1d423eaa9956fa210186fc56270d5b9e2b7337676073"
+    },
+    {
+      "path": "src/cocos/3d/skeletal-animation/skeletal-animation-blending.ts",
+      "sha256": "4f07c9a1b53944c47cc969352616ac494bf953bd9c6aaf60b455e38952a14dd9"
+    },
+    {
+      "path": "src/cocos/animation/animation-manager.ts",
+      "sha256": "ee98243d49445257b92344b14f179a1bb5dc2e5c8ba731ae81e9ba2b5c63de7f"
+    },
+    {
+      "path": "src/cocos/animation/cross-fade.ts",
+      "sha256": "df1b3b9fee919c007ec64250c21bf57965ed5634c114d5609930f2c8e32fbe65"
+    },
+    {
+      "path": "src/cocos/animation/animation-component.ts",
+      "sha256": "b9f98a4f40c770e759a46b76ade2517cf0e641c29598950e845deafdb1fa5bb2"
+    },
+    {
+      "path": "src/cocos/3d/skeletal-animation/data-pool-manager.ts",
+      "sha256": "2779eb485a98cd71af18969c717431aca5211c18b543bee81246e14eb823c2c3"
+    },
+    {
+      "path": "src/cocos/3d/skeletal-animation/skeletal-animation-state.ts",
+      "sha256": "47cbda3e69a4f946bc744a71a88924865a3e6c15d29f048e9209a744eef43a56"
+    },
+    {
+      "path": "src/cocos/3d/skeletal-animation/skeletal-animation.ts",
+      "sha256": "abc014114c244d1d3b3dbb25f8e8c8c7ec8830a0d1d3b705e8c886dcfc46ca4f"
+    },
+    {
+      "path": "src/cocos/3d/skeletal-animation/deprecated.ts",
+      "sha256": "5f60f46254050c68f1a281b3135d81947a5066b87572b9900959c5fdfc4a510d"
+    },
+    {
+      "path": "src/cocos/primitive/primitive.ts",
+      "sha256": "4b928fda461559cfe9c0d6098aa124a77dc6fce74634f00b372bc793605c36f7"
+    },
+    {
+      "path": "src/exports/primitive.ts",
+      "sha256": "b489cece843b7aa28f5d32722936a67ea3358d67334bb4fc4bd0213cb9f9c6ba"
+    },
+    {
+      "path": "src/cocos/tween/tween-progress.ts",
+      "sha256": "dd58a633563490c1ef97d6d182c379f82f83bf55e7fbf382bc12a196feefdb15"
+    },
+    {
+      "path": "src/cocos/tween/actions/action.ts",
+      "sha256": "ca33a1a2bb363ab57e3cd48be146afe8c646e46984b773252d8b883fbff1ec36"
+    },
+    {
+      "path": "src/cocos/tween/actions/action-manager.ts",
+      "sha256": "fe4fef5bc18c27d953e16d4b1b0f962f568ae0f101f3ea82711f366715d0178d"
+    },
+    {
+      "path": "src/cocos/tween/tween-system.ts",
+      "sha256": "f96e87802a6dfd750c15beb6b0bd3b627acb0b21cb719425a7233ffc3f390352"
+    },
+    {
+      "path": "src/cocos/tween/actions/action-instant.ts",
+      "sha256": "130b0b5bd824231744f44db1095f05688963b6f9f8c95d779d774a725f3aa09e"
+    },
+    {
+      "path": "src/cocos/tween/actions/action-interval.ts",
+      "sha256": "2ad01c7284f757fa05c8bb0bb6677323f01624da8abd2ea1bc165c5db5c8aaee"
+    },
+    {
+      "path": "src/cocos/tween/actions/action-unknown-duration.ts",
+      "sha256": "0635050f0805f5b660afa30a4bf95fb5bf73f7de110d2c7b22963a76ca62f5c7"
+    },
+    {
+      "path": "src/cocos/tween/tween-action.ts",
+      "sha256": "d2189496bc6798a4fb9f3789c9ae718eb738d307d70ca6f57806b102c369e2b2"
+    },
+    {
+      "path": "src/cocos/tween/set-action.ts",
+      "sha256": "5a65e20b670130606ed00cef54a5c0268ad56320368c634caab9106a79045ae8"
+    },
+    {
+      "path": "src/cocos/tween/tween.ts",
+      "sha256": "923522464ca5fbfe4990525f2c9eb7872fdac4f3f9b598210a9886df772a6aec"
+    },
+    {
+      "path": "src/cocos/profiler/counter.ts",
+      "sha256": "a695e54baea5ed67906b4be01d9978d8621142d1e243e74c1a626731214981fe"
+    },
+    {
+      "path": "src/cocos/profiler/perf-counter.ts",
+      "sha256": "b5e20cf65bb52149d74e76777fcc085cdc09aadf7f45728886a899c3ddc5d042"
+    },
+    {
+      "path": "src/cocos/profiler/profiler.ts",
+      "sha256": "75160ca4bddae876f116c0ada92c2aa433e47ee442eafade25d39b56884c6156"
+    },
+    {
+      "path": "src/cocos/video/assets/video-clip.ts",
+      "sha256": "69dc4eae6035156af6bcc9087fe6b89a21dccf541d1bd3a1d434bcc445ef1ba6"
+    },
+    {
+      "path": "src/cocos/video/video-downloader.ts",
+      "sha256": "02638efa7ea1fdb0b73d5346a54dd8d972c6020a52f22567ec0c5a2b6359a51f"
+    },
+    {
+      "path": "src/cocos/2d/framework/deprecated-1.2.0.ts",
+      "sha256": "74c4f4f89b3a45351f0be0bec5f999218e2510974e67c5f7fb4e0fa4600218bf"
+    },
+    {
+      "path": "src/cocos/2d/framework/deprecated-3.0.0.ts",
+      "sha256": "4bfc6c1c23091945ee166be479389cc412eee5874aae74ac592b2280f9623f22"
+    },
+    {
+      "path": "src/cocos/2d/framework/deprecated-3.6.0.ts",
+      "sha256": "e92cc9fbdf2e2d944b85b51bf4f8e836f35931e3c8e425213b0133d9f93817a3"
+    },
+    {
+      "path": "src/cocos/2d/framework/ui-transform.ts",
+      "sha256": "6e0f4823865c07c9802622afe2881031398c318cab5cba16a86f4d91e1d45e0b"
+    },
+    {
+      "path": "src/cocos/2d/framework/render-root-2d.ts",
+      "sha256": "4e1ab87f82275ea0b6bdea496e5d459748d8d3a210c2f4b20432ce351c6aeba0"
+    },
+    {
+      "path": "src/cocos/2d/framework/canvas.ts",
+      "sha256": "639738c7ef411e677c443740acb915ee46fc2b997bd4558d971dded89b936c91"
+    },
+    {
+      "path": "src/cocos/2d/renderer/stencil-manager.ts",
+      "sha256": "a9965de6e01339917590570401eff74dba2536a9a313a680ddf8dd82408e8fd2"
+    },
+    {
+      "path": "src/cocos/2d/framework/ui-component.ts",
+      "sha256": "d3b9090ec357b1705ce18fa7b45e96ba5bfddb8683eb265c64d2781d7e29aae0"
+    },
+    {
+      "path": "src/cocos/2d/renderer/vertex-format.ts",
+      "sha256": "1dbbafd3038b36006068c2dea6557aa9b16f182b6e9bde507b683638c4e0c98d"
+    },
+    {
+      "path": "src/cocos/2d/renderer/mesh-buffer.ts",
+      "sha256": "acd9caecbffe89a75bcffb9a2acd12770d17fe7968b65b8dd56cb454836aed30"
+    },
+    {
+      "path": "src/cocos/2d/renderer/buffer-accessor.ts",
+      "sha256": "0cc253f3d1d7f552dc6cfea09805e065a569577d14ebc9aafbed2a487fc6959e"
+    },
+    {
+      "path": "src/cocos/2d/renderer/static-vb-accessor.ts",
+      "sha256": "2757f3342bb2f3f33a2c981c2bc6660b3ff56b5f6bb37cd2acb5e076fecbe01b"
+    },
+    {
+      "path": "src/cocos/2d/renderer/render-draw-info.ts",
+      "sha256": "cc7984755cfcbb04e3f761f666fc170fca8886c90dfa59bcef42ab830c9dca9d"
+    },
+    {
+      "path": "src/cocos/2d/renderer/render-entity.ts",
+      "sha256": "4c6d76ee40b66324fc5c0b2de3e92c18fe540d184ddfd9786c611ac178d34348"
+    },
+    {
+      "path": "src/cocos/2d/renderer/render-data.ts",
+      "sha256": "9008de1efa5eaf9cb478f365c5b8813a75bed7ec6948f8bdb1d9afa22e866ab1"
+    },
+    {
+      "path": "src/cocos/sorting/sorting-layers.ts",
+      "sha256": "276a67749b92f907b5ab93d2bec957f9091ed4cd98dbba41cd021e182d899091"
+    },
+    {
+      "path": "src/cocos/2d/framework/ui-renderer.ts",
+      "sha256": "84960e001935452a3453e6de505b32a081352264cd6e933f0a2722dcb7725e95"
+    },
+    {
+      "path": "src/cocos/2d/framework/deprecated.ts",
+      "sha256": "2d6035081339b1bedcaabe5fc2580855f43fdab86c36f2765ada15c162e69625"
+    },
+    {
+      "path": "src/cocos/2d/utils/dynamic-atlas/atlas.ts",
+      "sha256": "fde6c2341873ce25de4c79970a7f4ec00097eb335a7113b1fb8aab449921fa95"
+    },
+    {
+      "path": "src/cocos/2d/utils/dynamic-atlas/atlas-manager.ts",
+      "sha256": "bfa937306065e9f7eba06155397b6a06fd5498b22b537d841d4d93bf1e2abf3f"
+    },
+    {
+      "path": "src/cocos/2d/assets/sprite-frame.ts",
+      "sha256": "75d5e5e818ad681c11b9dc71b37405c95a6db0f081499f5a551bad48d25e1f57"
+    },
+    {
+      "path": "src/cocos/2d/framework/sprite-renderer.ts",
+      "sha256": "5fd244ad0760268eb54055159a70d74378e17bd60f42db9411bd6021a9f346c7"
+    },
+    {
+      "path": "src/cocos/video/video-player-enums.ts",
+      "sha256": "aee086bd7c99de9db8ecf2448e604f39a76a2238ddda389d820e8b4d8ef3794e"
+    },
+    {
+      "path": "src/cocos/video/video-player-impl.ts",
+      "sha256": "6ff5f949b3e179e1eaccb0db5e844a7f40987b662f392d865c72f4e601025a16"
+    },
+    {
+      "path": "src/cocos/video/video-player-impl-web.ts",
+      "sha256": "e0729e2e0ee55b92c040486d8eed21c5676245abf7c2fe92a2d1459768d75bbf"
+    },
+    {
+      "path": "src/cocos/video/video-player-impl-manager.ts",
+      "sha256": "973b322e2201c20fe3a7cf4b726e1c2ff69582483c55127bf1ac87131609110b"
+    },
+    {
+      "path": "src/cocos/video/video-player.ts",
+      "sha256": "6b6df52a5641830df49a1b60f9ba76e90260a35eff93d62b1c7361bc4f434f43"
+    },
+    {
+      "path": "src/cocos/video/deprecated.ts",
+      "sha256": "5f9434609d932daff25dab21a6c263bd20ffcab04b3a5a64fa1e0aec3106955f"
+    },
+    {
+      "path": "src/cocos/web-view/web-view-enums.ts",
+      "sha256": "654c5dde0672a7c84a8d8131eb4af2cec6d4ea86d99e592472d857f04f15fa9b"
+    },
+    {
+      "path": "src/cocos/web-view/web-view-impl.ts",
+      "sha256": "520ec7a66e7a6cdad872d2e2df21dac5f287dd800e13758eab3741ecb7e895cb"
+    },
+    {
+      "path": "src/cocos/web-view/web-view-impl-web.ts",
+      "sha256": "a7300c761195204c0294c3d014f97368684ca5e7a963e488884356ebc663304a"
+    },
+    {
+      "path": "src/cocos/web-view/web-view-impl-manager.ts",
+      "sha256": "61da156aea7928a286f6d668e407414c250bd7005b2ff6ceec166adb332c0eaf"
+    },
+    {
+      "path": "src/cocos/web-view/web-view.ts",
+      "sha256": "e40af776285e0aa1916c842a9902f6a1a4e93bad3b453e2711a352ce6f394459"
+    },
+    {
+      "path": "src/cocos/2d/assembler/utils.ts",
+      "sha256": "637aab32c8fa928812322fbed80d2da5ed2200683b866a0caf5734b1456d0940"
+    },
+    {
+      "path": "src/cocos/2d/assets/sprite-atlas.ts",
+      "sha256": "8118a55e9318ed81197dd774070878cdcceaf53cc3b42cc3ab978260d77b5983"
+    },
+    {
+      "path": "src/cocos/2d/assets/font.ts",
+      "sha256": "0396bab57bf4bededa7820b72d56518be055ab32aa16ed0aaba3ab66986cbd53"
+    },
+    {
+      "path": "src/cocos/2d/assets/ttf-font.ts",
+      "sha256": "bd1d10c0c22c3aa3b4084dbc7faa5a9ec1491dbe5f7da38eb09b5201045676b2"
+    },
+    {
+      "path": "src/pal/minigame/non-minigame.js",
+      "sha256": "4c00494fc33f06e53ac0560f67dd73ab9c662f690c831ae8740bbb6bc52cb71b"
+    },
+    {
+      "path": "src/cocos/2d/utils/text-utils.ts",
+      "sha256": "004901c9146a73ca22f950d8fb5f5a29d144538d1d9bd2ab7a04fb5f9e9e8eb0"
+    },
+    {
+      "path": "src/cocos/2d/utils/font-loader.ts",
+      "sha256": "91a358d527cde3a71175c0f3359bda30216454baeb1423413d174a7a3dfb96b4"
+    },
+    {
+      "path": "src/cocos/2d/utils/html-text-parser.ts",
+      "sha256": "26d8e0032606ae6089dc6c477b36d0ca62c4fc844b8dd1f0fbd98283d13c961c"
+    },
+    {
+      "path": "src/cocos/2d/assets/bitmap-font.ts",
+      "sha256": "be9af06051cef776dc8740162294d8688357e52be53e97ded4f16b9c21de4a45"
+    },
+    {
+      "path": "src/cocos/2d/assets/label-atlas.ts",
+      "sha256": "24e688d2ce59ade99d43bd1dbdb013eb500e4d56e653da0fe2d463c886ab58aa"
+    },
+    {
+      "path": "src/cocos/2d/assembler/label/font-utils.ts",
+      "sha256": "613328115a0abaf5407a6ead27c14524cd6809c3c1cd90c5204bce05e778b10d"
+    },
+    {
+      "path": "src/cocos/2d/assembler/label/text-style.ts",
+      "sha256": "14149c6ad94a0a75909e8741b6035a878e31fddbf0d8ea94a369a75f6159a27c"
+    },
+    {
+      "path": "src/cocos/2d/assembler/label/text-layout.ts",
+      "sha256": "fcd57eb1ce7e84c9855b5f5ed75886cabeb3afa9aff5c950bb8716ff65e2f6ce"
+    },
+    {
+      "path": "src/cocos/2d/assembler/label/text-output-data.ts",
+      "sha256": "be5fe473fbd1d0bd26e9847a40bd352a5e1f4697ea3e64f6bef5eca9a6096d76"
+    },
+    {
+      "path": "src/cocos/2d/components/label.ts",
+      "sha256": "e0e0de9af5fb807b91cf2b87b8c1215aa630da7172d0b9ecd035be9e91de10a5"
+    },
+    {
+      "path": "src/cocos/2d/components/sprite.ts",
+      "sha256": "32f710fd5a85633a75b327da49fe508c5966b56f90380b681c866dab2928d8a1"
+    },
+    {
+      "path": "src/cocos/2d/components/ui-mesh-renderer.ts",
+      "sha256": "1eb5a9fcbcb856311c9eddfb8f2eac792c91b618728c63756509275819f0a62f"
+    },
+    {
+      "path": "src/cocos/2d/components/label-outline.ts",
+      "sha256": "998a8c84c0c7b24dbbacdcaf1a625bc06cf535f78dcece26d6f35609a7fdd775"
+    },
+    {
+      "path": "src/cocos/2d/renderer/draw-batch.ts",
+      "sha256": "67175c28bd80ba6876c91769cc88ab808987d031f19625bb9b128067c11e6233"
+    },
+    {
+      "path": "src/cocos/2d/components/ui-static-batch.ts",
+      "sha256": "5ffe0e7e4aebe8084f5d1aba49f03976884a4f986d02226f23cfb711b98e0280"
+    },
+    {
+      "path": "src/cocos/2d/components/label-shadow.ts",
+      "sha256": "68a6dbfd110095da0fe50c31d8f3d1fa38b322da07f0a111ab6eed0333e53326"
+    },
+    {
+      "path": "src/cocos/2d/components/ui-opacity.ts",
+      "sha256": "3cb21ef00d5d73b3c442d3c34ccc890bed9b903b261a3579b9a4a12e167ce73d"
+    },
+    {
+      "path": "src/cocos/2d/assembler/graphics/types.ts",
+      "sha256": "b7d0db7b3cbeddc5d5cd4ce5a6f92c2714120e6ad86b66f843b0102533aa3d8c"
+    },
+    {
+      "path": "src/cocos/2d/assembler/graphics/helper.ts",
+      "sha256": "5a188f283b87f87b0301db497406b7de84c8b78da173e1515761b0965c3f1741"
+    },
+    {
+      "path": "src/cocos/2d/assembler/graphics/webgl/impl.ts",
+      "sha256": "d241cb6023aaf185c692df393a9322f7bd0aa84f072e46bcf01829f9a0be9a43"
+    },
+    {
+      "path": "src/cocos/2d/components/graphics.ts",
+      "sha256": "dde6b384318704b3b532416e3980063742078e453193bd5217f95b6edc25a239"
+    },
+    {
+      "path": "src/cocos/2d/components/mask.ts",
+      "sha256": "878cbb8adc568ec9766bf209be3a6278e9593d40ad07d1b7ab6fb2729197c0d4"
+    },
+    {
+      "path": "src/cocos/2d/components/rich-text.ts",
+      "sha256": "ced85d909c4bf501c28ed0992950c3d38eccff848ee96defc692a6a42784a86b"
+    },
+    {
+      "path": "src/cocos/2d/components/deprecated.ts",
+      "sha256": "159100d158ff7bbb90c1cd5ca696a892077a2a0aa6de71290e3214fd399787b9"
+    },
+    {
+      "path": "src/cocos/2d/assembler/label/text-processing.ts",
+      "sha256": "8c3dc9ade4a7905437c7b2bb1495322d765d1a4e5741331e63cf67ea4cacbb28"
+    },
+    {
+      "path": "src/cocos/2d/assembler/label/bmfontUtils.ts",
+      "sha256": "2e5e0b8c1dcfcade24125df12f988004f32b00b955e6e3047a618e9c20bdb07f"
+    },
+    {
+      "path": "src/cocos/2d/assembler/label/bmfont.ts",
+      "sha256": "a4f841913314f4f7ff4b76f2409f793b6570d9d470adf285d89e9265ec22dda7"
+    },
+    {
+      "path": "src/cocos/2d/assembler/label/letter-font.ts",
+      "sha256": "0b5d45f6f84462f9d6e237d86164d3ba412bea97e6561d5b88fdc0977a0dc8a2"
+    },
+    {
+      "path": "src/cocos/2d/assembler/label/letter.ts",
+      "sha256": "1b3cb4a9441944f8739fb7d49a072e206665a1de0573e2efee42d8f2b42d9285"
+    },
+    {
+      "path": "src/cocos/2d/assembler/label/ttfUtils.ts",
+      "sha256": "badfcc985e857f0f19137272660fedac73cc1fb8825274bf460d3592486cb411"
+    },
+    {
+      "path": "src/cocos/2d/assembler/label/ttf.ts",
+      "sha256": "3217544cd266daab682a0a08a08cf070131b58a9ac9db15d7ddffe67f860e68d"
+    },
+    {
+      "path": "src/cocos/2d/assembler/label/index.ts",
+      "sha256": "f8a846ed5363e78f4c096983170efc0432524a263646548c6c9b486e258e8e4e"
+    },
+    {
+      "path": "src/cocos/2d/assembler/sprite/bar-filled.ts",
+      "sha256": "76ddcfbaa16b24db8e54ddfa9d4ad4b8da3187565f0cfb79558d353dfefc2e40"
+    },
+    {
+      "path": "src/cocos/2d/assembler/sprite/radial-filled.ts",
+      "sha256": "4ec667f50b60c8934e71e3f9ceb6b27773e812b34d188fa1cbed13b7c4610c58"
+    },
+    {
+      "path": "src/cocos/2d/assembler/sprite/simple.ts",
+      "sha256": "e2c2da3e1f28b38b59d815f761724de884270aebf74fabc7736ced6153d2c7e6"
+    },
+    {
+      "path": "src/cocos/2d/assembler/sprite/sliced.ts",
+      "sha256": "e8438ea67f7e9afb0d6296d4f59ca4b0b6176fd48da29af8e8e25385935c7a5c"
+    },
+    {
+      "path": "src/cocos/2d/assembler/sprite/tiled.ts",
+      "sha256": "46babe633ceceadc917ef450c9c4bebcfa1a2f3a6ee2033f45a9634306ee564d"
+    },
+    {
+      "path": "src/cocos/2d/assembler/sprite/index.ts",
+      "sha256": "6f16489869c557ede1ece700e984e41607e8ed1d2d3d590b5d4ad06981b93afd"
+    },
+    {
+      "path": "src/cocos/2d/event/pointer-event-dispatcher.ts",
+      "sha256": "694b5dfa988a3fc1a8241ba1b0824cff43b45fba90c55ff6f12426c94214a5e3"
+    },
+    {
+      "path": "src/cocos/2d/renderer/batcher-2d.ts",
+      "sha256": "89aedef342cef906aedc739d1c8f1a366e334ac7d0af59ffc7ac1e903505746a"
+    },
+    {
+      "path": "src/cocos/2d/renderer/deprecated.ts",
+      "sha256": "b8ba1c9a55a9ca093eed65657a304aa735a9775d0e2903d81d7e5bd8ffe77b0b"
+    },
+    {
+      "path": "src/cocos/2d/index.ts",
+      "sha256": "4922d11e3f8b4da3eb5b23f0394bdf33a441fe3cce753b1b950b56be50ae0426"
+    },
+    {
+      "path": "src/cocos/2d/assembler/graphics/webgl/earcut.ts",
+      "sha256": "152be1c4570bfe748099721fc504e49f878efd4efd8df8a1166b3f012ec0c496"
+    },
+    {
+      "path": "src/cocos/2d/assembler/graphics/webgl/graphics-assembler.ts",
+      "sha256": "d5b49cbd9f94b2b0ff38da1e785714afe83d59d5d81903fc371f383128536544"
+    },
+    {
+      "path": "src/cocos/2d/assembler/graphics/webgl/index.ts",
+      "sha256": "17fd90f9789ff12e8d7ea1f98a35500850200f5e837993b66c571d141fc41ff2"
+    },
+    {
+      "path": "src/exports/graphics.ts",
+      "sha256": "7f831b38232527515aa437bef27255589cc084e1acafaa698fd5c2cedc7d2328"
+    },
+    {
+      "path": "src/cocos/sorting/sorting.ts",
+      "sha256": "25e0ad3bbf05c426684f0d8ceb7b01822ecc485bbbf14c903a7a4a7af549ec0d"
+    },
+    {
+      "path": "src/cocos/physics-2d/framework/utils/polygon-separator.ts",
+      "sha256": "efaf8d443e5a23cd9899764f438d0cf3203346366e489998434f0a7d82e9796c"
+    },
+    {
+      "path": "src/cocos/physics-2d/framework/utils/polygon-partition.ts",
+      "sha256": "52f286af045c96bd2d1820fbc8d4b6250cdbe1a65403a6c7597c722c1c60c846"
+    },
+    {
+      "path": "src/cocos/physics-2d/framework/physics-types.ts",
+      "sha256": "14d7f16e1a142323c542abbc4eee6240d3e68e5c86024fe56d56fb2c0ca4e946"
+    },
+    {
+      "path": "src/cocos/physics-2d/framework/physics-selector.ts",
+      "sha256": "0864600e285e0845d27132edff8e751289afd50204a6d1ff01b86e4cdf74f4e1"
+    },
+    {
+      "path": "src/cocos/physics/framework/physics-enum.ts",
+      "sha256": "b7c0d11a8b82b6b6dcd8b8e031426315998617423f3273747a2dade95e485b02"
+    },
+    {
+      "path": "src/cocos/physics/framework/collision-matrix.ts",
+      "sha256": "9e6b8bf95e9f2335d004d6c72e2182381e1f2dc5e9cd1374ceecfe5387202a3c"
+    },
+    {
+      "path": "src/cocos/physics-2d/framework/physics-system.ts",
+      "sha256": "2cce7bf08f64f191cdc8a0abf855df0b90d0bc1e323cf63193d309b9555c3b17"
+    },
+    {
+      "path": "src/cocos/physics-2d/spec/i-physics-contact.ts",
+      "sha256": "8a46e1d464f2e2580d264e9d56fbe65c5804bee4abd7835d37c8672f7692eef0"
+    },
+    {
+      "path": "src/cocos/physics-2d/framework/components/rigid-body-2d.ts",
+      "sha256": "17b047dff6b962eab51bc3f509a0b3bd89a8c7f12bfb35196c4e982f158fcd52"
+    },
+    {
+      "path": "src/cocos/physics-2d/framework/components/colliders/collider-2d.ts",
+      "sha256": "eb07e936f59f9b252dd3ecff5784a2ce199a04ac6ee2c98b06f2ff4c6ec6244f"
+    },
+    {
+      "path": "src/cocos/physics-2d/framework/components/colliders/box-collider-2d.ts",
+      "sha256": "d2376d2e227c60d55ee7303d62bc741e6f91896c95505ac0e776acf39720f653"
+    },
+    {
+      "path": "src/cocos/physics-2d/framework/components/colliders/circle-collider-2d.ts",
+      "sha256": "3cefbdb934b5abc458db506da53079dc07de5ef30c9615191714393e2ec6c9f0"
+    },
+    {
+      "path": "src/cocos/physics-2d/framework/components/colliders/polygon-collider-2d.ts",
+      "sha256": "111c6b6022f12382f43e433bcbfbc5013216d799bd0f5c140880ba34c88bc59f"
+    },
+    {
+      "path": "src/cocos/physics-2d/framework/components/joints/joint-2d.ts",
+      "sha256": "a97ddf29913d6b4ca50523f4cbf5745f80beefa263117e5acd59e07bc10f4a13"
+    },
+    {
+      "path": "src/cocos/physics-2d/framework/components/joints/distance-joint-2d.ts",
+      "sha256": "add9a448fec71b66d90977d1983e94141390173f3c72c522c9c5dda37a7093c0"
+    },
+    {
+      "path": "src/cocos/physics-2d/framework/components/joints/spring-joint-2d.ts",
+      "sha256": "7f54979d3abe4913753e945d35b5b16c67785c80c1755a82500b549a68258208"
+    },
+    {
+      "path": "src/cocos/physics-2d/framework/components/joints/mouse-joint-2d.ts",
+      "sha256": "705473fcf8ee70863a7cd7a96938c2abb217831f84c3a4de12fcf2150cc2fef3"
+    },
+    {
+      "path": "src/cocos/physics-2d/framework/components/joints/relative-joint-2d.ts",
+      "sha256": "33424fe2c1b7ac2ad667718e81ac709022ba30847b546a381d923ba7b965b3f2"
+    },
+    {
+      "path": "src/cocos/physics-2d/framework/components/joints/slider-joint-2d.ts",
+      "sha256": "f10bd7b9c71f050e103b3bb6428929f2a53f1c09363fdddb70187f2c072d2e37"
+    },
+    {
+      "path": "src/cocos/physics-2d/framework/components/joints/fixed-joint-2d.ts",
+      "sha256": "4812a1dfa13b1d4476cc6aa3343ad659436d12a91cf030832c58f23d20c6d21f"
+    },
+    {
+      "path": "src/cocos/physics-2d/framework/components/joints/wheel-joint-2d.ts",
+      "sha256": "4a6593cae5551f25e44ba584cdc89706f8276e0c31a6a51dca50164b597f4c06"
+    },
+    {
+      "path": "src/cocos/physics-2d/framework/components/joints/hinge-joint-2d.ts",
+      "sha256": "9b76ba0ea02bb88adffd7c28be3807620c5b15b859f6c489694c2a6c1940fee7"
+    },
+    {
+      "path": "src/cocos/physics-2d/framework/index.ts",
+      "sha256": "0ad722fa8ee5fdf8f147a2cfced13ec2a350c2ff8f57d2cd167634691a91412f"
+    },
+    {
+      "path": "src/cocos/particle-2d/define.ts",
+      "sha256": "65d1247a333328427856eb7676555811656203198ca29615d69442eb1db4132e"
+    },
+    {
+      "path": "src/cocos/particle-2d/particle-simulator-2d.ts",
+      "sha256": "887da0c52c038c85746c833f84c7ebd2e22e0e1f1972c6c0e5ec0d889f9627b9"
+    },
+    {
+      "path": "src/cocos/particle-2d/particle-asset.ts",
+      "sha256": "3beb1fcc09c5df744c61e72144eb51592cb5a370ac7f7f884c5ef21761eeb732"
+    },
+    {
+      "path": "src/cocos/particle-2d/png-reader.ts",
+      "sha256": "d7efabc15102e22b874cf1ec90c9e132157bffbec4a6b4fc11f46339d2955b98"
+    },
+    {
+      "path": "src/cocos/particle-2d/tiff-reader.ts",
+      "sha256": "f76c26803387fe9e9d8428d47c5b7620b732717b2879eb80c863cc511364b238"
+    },
+    {
+      "path": "src/external/compression/base64-values.ts",
+      "sha256": "8a1511a063cc1a47a95f1ab9abc59838a90733dff6e3d2b27fae01d32c16e4cf"
+    },
+    {
+      "path": "src/external/compression/base64.js",
+      "sha256": "1df69557ec7862923ff67169bd839054ae4371b8e3097a5b023f067823cf3e91"
+    },
+    {
+      "path": "src/external/compression/gzip.js",
+      "sha256": "b35ed5dd58fd8cb4ebab692de090f6dc83d0d8ecd6b7e56c0e5cd0e227cbd1dd"
+    },
+    {
+      "path": "src/external/compression/ZipUtils.js",
+      "sha256": "9c6936920fa732fa6732913fb8264d55ace80ee7290c9e3a6213fc7cc8d28489"
+    },
+    {
+      "path": "src/cocos/particle-2d/particle-system-2d.ts",
+      "sha256": "8d3e1e2abac27769a3d7f152cbfb5c142b6e33df450ed9d93ff59fe82617efbf"
+    },
+    {
+      "path": "src/cocos/particle-2d/motion-streak-2d.ts",
+      "sha256": "9acceba0fae526949952d1eb0907d7c01acd00f0aec368b78a63bf9d01b52c21"
+    },
+    {
+      "path": "src/cocos/particle-2d/motion-streak-2d-assembler.ts",
+      "sha256": "9b90f79e941bd3829c4641b115bfe0cfcd5a731832e4fd4aebc2805190dc7131"
+    },
+    {
+      "path": "src/cocos/particle-2d/particle-system-2d-assembler.ts",
+      "sha256": "5ae890343eaf4500046ea696bb837997f4b60c49b229ca292659af24d18e7d08"
+    },
+    {
+      "path": "src/cocos/tiledmap/tiled-types.ts",
+      "sha256": "ca7b8a19b0f8c1bfee9d353809812d5a7c29c0ed08f5194d9a5f3979c3a6a094"
+    },
+    {
+      "path": "src/cocos/tiledmap/tmx-xml-parser.ts",
+      "sha256": "a9c96802fc1305f945de7ef62174cddc1a5d3bb3a070a3b3a911f35a3b0306a3"
+    },
+    {
+      "path": "src/cocos/tiledmap/tiled-tile.ts",
+      "sha256": "b0329dbd99e24e9ed22908dede48d15769481413345fe33be7e0022c6cbf73d5"
+    },
+    {
+      "path": "src/cocos/tiledmap/tiled-utils.ts",
+      "sha256": "1b3ec09fc788aae8eeacf8f3e49db40b522fe1ad79603fcfd417767bba9ffaa3"
+    },
+    {
+      "path": "src/cocos/tiledmap/tiled-layer.ts",
+      "sha256": "a107bd6e178cf67c70801e08238fcc328f61aba4ea4c20cb5cdb2e2f9589c4ce"
+    },
+    {
+      "path": "src/cocos/tiledmap/tiled-object-group.ts",
+      "sha256": "2da6227df5f70bcee53cdde69b9df87b77df00958b7fc6e9849061491949b395"
+    },
+    {
+      "path": "src/cocos/tiledmap/tiled-map-asset.ts",
+      "sha256": "b236b21fb2212297bf4e6c5bae176107a622a02167922fa6cd3be447be530380"
+    },
+    {
+      "path": "src/cocos/tiledmap/tiled-map.ts",
+      "sha256": "c4aec95da36bfef44207ccdaffdb4d321749cdd88a26a8246c2aafd639e62f32"
+    },
+    {
+      "path": "src/cocos/tiledmap/assembler/simple.ts",
+      "sha256": "c533e60ff57f0a9a4d505c16c8f740db76e5fc78350839738070f298890f9493"
+    },
+    {
+      "path": "src/cocos/tiledmap/assembler/index.ts",
+      "sha256": "4f4882d9a2784631e92bdcddaf4613b37a58931c6fde08453855b326555e48c1"
+    },
+    {
+      "path": "src/cocos/ui/button.ts",
+      "sha256": "508962c5c2ceedf00b069137e51db67520eed12166c90d2404235056ff33d7ff"
+    },
+    {
+      "path": "src/cocos/ui/editbox/tabIndexUtil.ts",
+      "sha256": "2eeec9caee3836c643d270507ef845e895e4dde98ec510c36d36e1f58ef787c1"
+    },
+    {
+      "path": "src/cocos/ui/editbox/types.ts",
+      "sha256": "9d486ce72d3ce037c760a63e4ff4fe3e9d35f77a6e5619a4654219575fb12e83"
+    },
+    {
+      "path": "src/cocos/ui/editbox/edit-box-impl-base.ts",
+      "sha256": "6fde29cbb945c7b51b9c0bb37dc2e08fc716a24d83f65a9c9d403c4f0837a795"
+    },
+    {
+      "path": "src/cocos/ui/editbox/edit-box-impl.ts",
+      "sha256": "77ae313e2f9035e2786f10401357d1b86b93772937360bb647b476641f946784"
+    },
+    {
+      "path": "src/cocos/ui/editbox/edit-box.ts",
+      "sha256": "923d471de5845bce1869e2287f81e517ad5588d07b09b2ecd1a6b8c9d017110c"
+    },
+    {
+      "path": "src/cocos/ui/layout.ts",
+      "sha256": "340d98ac8268949683c5abf95fcf4c4e3d89cd0bdb670a46844f493631de7929"
+    },
+    {
+      "path": "src/cocos/ui/progress-bar.ts",
+      "sha256": "7e4cfaeabdf3346721afb0fad1b84e073912beed720dbbda022cec11aea6b891"
+    },
+    {
+      "path": "src/cocos/ui/scroll-bar.ts",
+      "sha256": "156ea3b4f2f720f6b7a1b26a370928573b4dddd9e6c075290e28747604e41f50"
+    },
+    {
+      "path": "src/cocos/ui/view-group.ts",
+      "sha256": "01f20654a16644745d8a775866457d98aaea811bf55fed66f0bbe953aaf56e20"
+    },
+    {
+      "path": "src/cocos/ui/scroll-view.ts",
+      "sha256": "eda970acb9ca60f2924d53c66c8f9cf5845a792a5ab3b2bc2d6729c46986745b"
+    },
+    {
+      "path": "src/cocos/ui/slider.ts",
+      "sha256": "a3a1f3845c5667a95854f7b8d0c103edf895eb72f259b3dc29012875930d8658"
+    },
+    {
+      "path": "src/cocos/core/data/utils/extends-enum.ts",
+      "sha256": "1e0cb12c431e6d362ea55e2e3188d8fb8e5166c27ddbeb580004a2d3afe5a29b"
+    },
+    {
+      "path": "src/cocos/ui/toggle.ts",
+      "sha256": "8c3f57310adacde48cebc33907074d9cd9151b08ee631ce3ece61f6bf953af50"
+    },
+    {
+      "path": "src/cocos/ui/toggle-container.ts",
+      "sha256": "0b069083ac13573dc2bb42ad64e43c53bbe2356158441069cd5786853963180e"
+    },
+    {
+      "path": "src/cocos/ui/widget.ts",
+      "sha256": "cfd33c20eb5ef28b93efc1a90019e81f3dc4425832263a9baf764492f0bcc7b6"
+    },
+    {
+      "path": "src/cocos/ui/page-view-indicator.ts",
+      "sha256": "172755e8235c65dffa17779efa77741194e7288809617909a64b254704fe1200"
+    },
+    {
+      "path": "src/cocos/ui/page-view.ts",
+      "sha256": "bdf4f82262f81282a4e601e0150bcc257dfaf1e6b9aac17978b9b2c63528350c"
+    },
+    {
+      "path": "src/cocos/ui/widget-manager.ts",
+      "sha256": "e4f3e686a395f17171f1e371afcb388e2d69f8a54396b05e272a7485f1ce3ba7"
+    },
+    {
+      "path": "src/cocos/ui/safe-area.ts",
+      "sha256": "7d619e317beacf07cdd4e1fd0548d1ae7c81688ee97a3e012c4a473611fbbd47"
+    },
+    {
+      "path": "src/cocos/ui/ui-coordinate-tracker.ts",
+      "sha256": "c89b3babfb1f353c0d21ac88422385d9c55599d47f2b3c7430f1c2f163c5b975"
+    },
+    {
+      "path": "src/cocos/ui/block-input-events.ts",
+      "sha256": "89cad5d8266b991e6adf0ba65efa1371abab23b3f9b4654570f21bb03a8e5c6a"
+    },
+    {
+      "path": "src/cocos/ui/sub-context-view.ts",
+      "sha256": "4327ef9bf57e45e7b1ceeaa7097c0f625623bf4081fefe71be4a44e209e0018b"
+    },
+    {
+      "path": "src/cocos/ui/deprecated-1.2.0.ts",
+      "sha256": "616b7af68ec60277c1174eea42eaf1c7907e2623189653aee98cd46788430bcd"
+    },
+    {
+      "path": "src/cocos/ui/deprecated.ts",
+      "sha256": "737ae3bd3bbee6c369654c4bd5a2079909b1e133df3fe7929a207b95d7a0b2a4"
+    },
+    {
+      "path": "src/cocos/spine/lib/spine-core.js",
+      "sha256": "8ec3059261c9ad72f88c20c88467f33e10d19f80683b83b6b33e9168336c0a05"
+    },
+    {
+      "path": "src/cocos/spine/lib/spine-version-dynamic.ts",
+      "sha256": "05b76827543aec8a316464775f2b3ca2321a8213460da6f3c5d969a4635f3c20"
+    },
+    {
+      "path": "src/cocos/spine/lib/air-spine-instantiate-js.ts",
+      "sha256": "3764edccaf71f290041e58ff5c6f525110e8e69d8bd155198b2cba71228f8023"
+    },
+    {
+      "path": "src/cocos/spine/lib/instantiated.ts",
+      "sha256": "25f0e5da1b052fccf9d509db8ebaabf33ad51aa9ed7101330fe5dd9c4bc5a3fd"
+    },
+    {
+      "path": "src/cocos/spine/track-entry-listeners.ts",
+      "sha256": "b3fabc37da009d60e9b94b9080b406d8971aee4a659a3b696884fb445db8caed"
+    },
+    {
+      "path": "src/cocos/spine/skeleton-cache.ts",
+      "sha256": "3934c00e9feb6c9041f63880af3f8edd9be8967c1a70b1633fa2a4cc5b7e7439"
+    },
+    {
+      "path": "src/cocos/spine/skeleton-data.ts",
+      "sha256": "94533df101117355a2cf0944268d0e44cf502f705036d9afcd5a1bb66d1885e3"
+    },
+    {
+      "path": "src/cocos/spine/skeleton-system.ts",
+      "sha256": "7b98c34fcc8da427ea6fbfb4ec5e485479dc0d25d7ad70e006ae4a3df144ecb6"
+    },
+    {
+      "path": "src/cocos/spine/attach-util.ts",
+      "sha256": "5191119ff4f5754a662c4e41fee10dc6d83f302176181cb27beea86cc2efdc17"
+    },
+    {
+      "path": "src/cocos/spine/skeleton.ts",
+      "sha256": "5d5093cea717732b234558c4fed2eb5790238f5d0986c07fd56507be1396eac1"
+    },
+    {
+      "path": "src/cocos/spine/vertex-effect-delegate.ts",
+      "sha256": "7ace3ffef7ddccfc67c3549833293400d65552254b6c160d52e082e7312f5db2"
+    },
+    {
+      "path": "src/cocos/spine/assembler/simple.ts",
+      "sha256": "dddc0f8d8e7e875d2d7835c389e534379a7d76c9a9d0a1a07d1e9973969a8277"
+    },
+    {
+      "path": "src/cocos/spine/assembler/index.ts",
+      "sha256": "67ef93afb169132b3db812bd4220167e9cb465cd10fc5e6973b5cc7555ba3570"
+    },
+    {
+      "path": "src/cocos/spine/index.ts",
+      "sha256": "e34d1e613aece5b4548d31c010c4a2e6236afcb000899c3cc6569a4e7c12fe87"
+    },
+    {
+      "path": "src/node_modules/@cocos/dragonbones-js/out/dragonBones.js",
+      "sha256": "cb638d1027fdc1ae30a453561e930225144ec314999489b17d011586739cf74b"
+    },
+    {
+      "path": "src/cocos/dragon-bones/CCTextureData.ts",
+      "sha256": "ef310d2a69b78b4db40399af1dc38fdcd06360288148d59fb8a47b8043ae7bf9"
+    },
+    {
+      "path": "src/cocos/dragon-bones/CCSlot.ts",
+      "sha256": "75a4b770950f281d77b56b7fd672d7443679efa2093d98120c52ec0b50373c22"
+    },
+    {
+      "path": "src/cocos/dragon-bones/CCArmatureDisplay.ts",
+      "sha256": "b43a156cbd55d5c8b36f5fb2bbd9ca15d26474f94f13109552b81e07b591b009"
+    },
+    {
+      "path": "src/cocos/dragon-bones/CCFactory.ts",
+      "sha256": "d0d47369ee634f64f713ab3f349dd5383b2302b4b163d70d2af7743903b9452d"
+    },
+    {
+      "path": "src/cocos/dragon-bones/ArmatureCache.ts",
+      "sha256": "8b9ee54f102dfaf2c3ddbf11e706b6aafd17b27c718931737b113c359feb559e"
+    },
+    {
+      "path": "src/cocos/dragon-bones/DragonBonesAsset.ts",
+      "sha256": "63bfba9c7d1e9de76ca1bb1a6a6e2bb0d3bf7b5624b2c72500ace987dd29f67c"
+    },
+    {
+      "path": "src/cocos/dragon-bones/DragonBonesAtlasAsset.ts",
+      "sha256": "d0c9c0cce610e969b549cb756ad0c47c26895e8f8671973925fd09537665d8eb"
+    },
+    {
+      "path": "src/cocos/dragon-bones/AttachUtil.ts",
+      "sha256": "207c8be8b7e3fcaf08029f253dda9e42b79c9e88d0aedf9520a3b54fd1adfc58"
+    },
+    {
+      "path": "src/cocos/dragon-bones/ArmatureSystem.ts",
+      "sha256": "cbadc81cae6b67804b7063a694d1d1b51f4597a1169dac0411860d4e2ed6b616"
+    },
+    {
+      "path": "src/cocos/dragon-bones/ArmatureDisplay.ts",
+      "sha256": "12395c751436b8a387c8701ed59a52b0d9966f2ace31d4af18ecace29e0341ed"
+    },
+    {
+      "path": "src/cocos/dragon-bones/assembler/simple.ts",
+      "sha256": "d6f56d72fa16e906d8cbb249e6eb50a6e71a68e9f87c13e1394fb7244ccf051e"
+    },
+    {
+      "path": "src/cocos/dragon-bones/assembler/index.ts",
+      "sha256": "6d89ed9dbabf178e332b53c59a4e9a240d8200c3898ed138394e1b6d357607b3"
+    },
+    {
+      "path": "src/cocos/dragon-bones/index.ts",
+      "sha256": "c44748808e38e5a4f01a04773496eb4b9f881920380581e92ef2db9e462a264a"
+    },
+    {
+      "path": "src/cocos/physics-2d/builtin/intersection-2d.ts",
+      "sha256": "8c3060a8d32159fd4db49de966a5beb5d707c7a8375771f3e11bc3289ade86e0"
+    },
+    {
+      "path": "src/cocos/sorting/sorting-2d.ts",
+      "sha256": "408706306dd1f4da8526d362a2e357cb00271e0bd3901beccf867e67300d085d"
+    },
+    {
+      "path": "src/cocos/rendering/geometry-renderer.ts",
+      "sha256": "e6914ebf315bf91f02a569018d0ec74842470b2fa4124ef19f22b8da401a4dbe"
+    },
+    {
+      "path": "src/node_modules/@cocos/box2d/build/box2d/box2d.umd.js",
+      "sha256": "5a049f0608085d1e000117368764e7ffea72f5b29869b76d87d8fc94322fa717"
+    },
+    {
+      "path": "src/node_modules/@cocos/box2d/index.js",
+      "sha256": "66b2b97efd2b3eb74d44d5374b111547f8f6c3b843e6ca6ca81123f04fe23f51"
+    },
+    {
+      "path": "src/cocos/physics-2d/box2d/platform/physics-contact-listener.ts",
+      "sha256": "6fdfde6e55386604d0d17422b5d841247c6a1a633ae18fe07267454fe97830a4"
+    },
+    {
+      "path": "src/cocos/physics-2d/box2d/platform/physics-aabb-query-callback.ts",
+      "sha256": "facc3e181a5d9b32bb315c2af21115f8dd94f3613d2b16a403aa8b8b1394c703"
+    },
+    {
+      "path": "src/cocos/physics-2d/box2d/platform/physics-ray-cast-callback.ts",
+      "sha256": "83b99e02c95afe0a0e519a1c92e0741e1dd6dcd4bf60c3a45aae23218355ce5e"
+    },
+    {
+      "path": "src/cocos/physics-2d/box2d/platform/physics-debug-draw.ts",
+      "sha256": "849b4c1907df567544e9e36e2f2af49351485f9cc496488cde8c0977a83aae14"
+    },
+    {
+      "path": "src/cocos/physics-2d/box2d/physics-contact.ts",
+      "sha256": "29802cbfd36bd2f74072d98f70a519c1ec06c27302a12bdbff0b57439f77c48a"
+    },
+    {
+      "path": "src/cocos/physics-2d/box2d/physics-contact-manager.ts",
+      "sha256": "13228e92878649c4515d55d79d02ec84206091afd9824d4dcb05f4dcd931b1a6"
+    },
+    {
+      "path": "src/cocos/physics-2d/box2d/physics-world.ts",
+      "sha256": "72b40f297399a51365f37bee3ef8707bcc349420c7abff50070dd8791fee5d18"
+    },
+    {
+      "path": "src/cocos/physics-2d/box2d/rigid-body.ts",
+      "sha256": "02539c27781ce9daa40e06d4ed9c82f39a70b1d4db53adf8554d4dddd619de13"
+    },
+    {
+      "path": "src/cocos/physics-2d/box2d/shapes/shape-2d.ts",
+      "sha256": "aef833d5bff9d075bf410add263d1bcae195eceab5a8b5beffc6c4e8f4c8e24a"
+    },
+    {
+      "path": "src/cocos/physics-2d/box2d/shapes/box-shape-2d.ts",
+      "sha256": "1a14f9ede89aacd9e13160013836e678c61425105d2441090aaf399b7a420e38"
+    },
+    {
+      "path": "src/cocos/physics-2d/box2d/shapes/circle-shape-2d.ts",
+      "sha256": "83c2f6c06464e4828420d637edb53398d116b50a8bb328e50f7b7ccd5caf826e"
+    },
+    {
+      "path": "src/cocos/physics-2d/box2d/shapes/polygon-shape-2d.ts",
+      "sha256": "aab9fafeef059ffd9c8c6c5ede83bac1904a3b9842b0020f9ae36a9e852bd282"
+    },
+    {
+      "path": "src/cocos/physics-2d/box2d/joints/joint-2d.ts",
+      "sha256": "9afd89de44cb6c06947249e713716770e4c60554668868438dcc3f8557a2e60d"
+    },
+    {
+      "path": "src/cocos/physics-2d/box2d/joints/mouse-joint.ts",
+      "sha256": "03187af36bb2a9b3aa5754890678ce7e51c4087c8cb9d14b93e9e5e93df4f410"
+    },
+    {
+      "path": "src/cocos/physics-2d/box2d/joints/distance-joint.ts",
+      "sha256": "9e2ff1d015818af2318a6e823131834a2a3e1a84ce7d403013a75ab4a99e044d"
+    },
+    {
+      "path": "src/cocos/physics-2d/box2d/joints/spring-joint.ts",
+      "sha256": "479fcaa96d5681c399e5ddd08db4bb9181d8a772a662446369a67d5275c1c133"
+    },
+    {
+      "path": "src/cocos/physics-2d/box2d/joints/relative-joint.ts",
+      "sha256": "1c4a5df5ce0427ae6bada000eb29f77600bdce1402139bc7753e4458f45ee208"
+    },
+    {
+      "path": "src/cocos/physics-2d/box2d/joints/slider-joint.ts",
+      "sha256": "3597d2473d988cc1627c3db2ef08cf2e9c56b1a0386dc8599fff4bd9835946fa"
+    },
+    {
+      "path": "src/cocos/physics-2d/box2d/joints/fixed-joint.ts",
+      "sha256": "e2cd6fdebd7377398bd7b498d788ca87fbb262f2a86f9aabf90a274531462959"
+    },
+    {
+      "path": "src/cocos/physics-2d/box2d/joints/wheel-joint.ts",
+      "sha256": "2978374afd16fb4c7b9b07137d2d72d7e9683136aff980887c292a3cb12e229c"
+    },
+    {
+      "path": "src/cocos/physics-2d/box2d/joints/hinge-joint.ts",
+      "sha256": "dc08a8d656e894a2013e5337bc4c85051f92e1b52778a8c0bf7ecfde1b9ed359"
+    },
+    {
+      "path": "src/cocos/physics-2d/box2d/instantiate.ts",
+      "sha256": "9a7fae544ba517ee962f95ff61bd0f0ed40efd9db0b250ddc90a499b95e0c4fc"
+    },
+    {
+      "path": "src/cocos/physics/framework/assets/physics-material.ts",
+      "sha256": "6d0bc3e3d83ee723e5bec3a86cb9b36f908d5761f32fbed4be6856fae615ed85"
+    },
+    {
+      "path": "src/cocos/physics/framework/physics-ray-result.ts",
+      "sha256": "db3bf8c0295a061b31cdd370bdd3d627c699776f2c0c7c449b3d89602c1880c2"
+    },
+    {
+      "path": "src/cocos/physics/framework/physics-selector.ts",
+      "sha256": "121956af3ad15be76e7b75ac879adaff666f67e8a3d10327b3302b9fe4efc50c"
+    },
+    {
+      "path": "src/cocos/physics/framework/physics-system.ts",
+      "sha256": "7229d2423e8a8393503936d2576a11ef261f7e9d27b4e0849fb60cb7141e4383"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/rigid-body.ts",
+      "sha256": "d452cafb18d8be4ebf89c4c89aa0342f121cccacbb6b2a096c76cce783b35bbf"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/colliders/collider.ts",
+      "sha256": "9935f116e643095562a02e80b01821b4fa790e6cbb93164c6f67afd38ea9253f"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/colliders/box-collider.ts",
+      "sha256": "86cd8bbef650977c491344317bc107b80cfa12c6d3271422cce3378f8a0f5016"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/colliders/sphere-collider.ts",
+      "sha256": "003803a53848f16905058d44c1688063554d78c1d91e0b8789beb46330ccb6e5"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/colliders/capsule-collider.ts",
+      "sha256": "b5bcd27157c65973f9dfa3475c5bdbfc0e80c82c3fa97beb79dff96eea3f6d14"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/colliders/cylinder-collider.ts",
+      "sha256": "1b93f1dee3e2f14cf2457b40082315c63d552b8d72db9d9b692ced7eba5447a9"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/colliders/cone-collider.ts",
+      "sha256": "b26de110f9b94498bdd5e76c53dea10d82bdcadba556e1662c694758b95a301e"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/colliders/mesh-collider.ts",
+      "sha256": "a2d767c00bb388c2b644fa5b2cca531753fbd94cd46ea8cf1f1051a95a404b36"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/constant-force.ts",
+      "sha256": "8d1dc97ed7582982944eec3141fd5a10587028cd20959f55e65be1f8a06fdcd1"
+    },
+    {
+      "path": "src/cocos/terrain/terrain-asset.ts",
+      "sha256": "6b358b6b6e8660a0ceb80e0d79e8fee5819e9e5f518c93a5c2af5c5e8a6565c0"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/colliders/terrain-collider.ts",
+      "sha256": "7854661026d5975c0aeb7d6bbceb59e063e74602e9a3a5f613b2e59747f00ac5"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/colliders/simplex-collider.ts",
+      "sha256": "ef4d5506fea620036236d1a3b118cf9d7bba6cd8e8d7c09db73afbdcac4a04b2"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/colliders/plane-collider.ts",
+      "sha256": "d30811ff4ece5a48f7613dc4b219b4c7441d2aa868391d8e89adc850b33cbe09"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/constraints/constraint.ts",
+      "sha256": "92e35aab583117907c6be6a8ae63bd5af8d6c6eeee85bdda3e84909c555861b8"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/constraints/hinge-constraint.ts",
+      "sha256": "f04f87fa108317165ccca23a5259db7bf4b2d482bae6547725835673efec9540"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/constraints/fixed-constraint.ts",
+      "sha256": "d48cab0bb2e898cca3665eb28245c04f8660f346ba92133ca18d9ef8db5402c0"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/constraints/configurable-constraint.ts",
+      "sha256": "7e59542cb3ed679d94b1a825379c339b446a18ccb1d010b7247d4aff76cfc8e9"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/constraints/point-to-point-constraint.ts",
+      "sha256": "35bb22698451f05f0127c6ef0977eda34f3196a0f61fbfbb8a73b7c073bc6054"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/character-controllers/character-controller.ts",
+      "sha256": "bdadf7ac604f91131e22b1b236085bfe9e22aa15ab5471cb916a692560c01c67"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/character-controllers/box-character-controller.ts",
+      "sha256": "18294b05409e1aa8ee692fac49266415712ca878360c6d5546fd4b7276f69f9f"
+    },
+    {
+      "path": "src/cocos/physics/framework/components/character-controllers/capsule-character-controller.ts",
+      "sha256": "ee2460cd262d2513bbffe8da8d596870309075e2e82a39b7a71a6d67c73c892a"
+    },
+    {
+      "path": "src/cocos/physics/framework/physics-interface.ts",
+      "sha256": "f77fac40a06486298bd02e5683af027f49c4a7b287383515d8758c967095dc96"
+    },
+    {
+      "path": "src/cocos/physics/framework/index.ts",
+      "sha256": "fc078f18b03a0e3dfb86dcb4cf775f01a286c5e342f9016eec4926de781b9217"
+    },
+    {
+      "path": "src/cocos/physics/framework/deprecated.ts",
+      "sha256": "46ce27eed9ea565de3e78225d967db6be1ac639d768cf66782a9c4e6e1834b00"
+    },
+    {
+      "path": "src/exports/physics-framework.ts",
+      "sha256": "ced9121f956a8c309e216498ff929f9184ccb0a5795534041d38a3166cb3f276"
+    },
+    {
+      "path": "src/cocos/physics/cocos/object/builtin-object.ts",
+      "sha256": "c707f8c6f653973b1fb094e54a5433133348a7d2ae2e58d5d601073ddd2d79dc"
+    },
+    {
+      "path": "src/cocos/physics/cocos/builtin-shared-body.ts",
+      "sha256": "7b056de4ec4a06aba560b6b98b38f0f1bfae865df81e975c04f281277461191f"
+    },
+    {
+      "path": "src/cocos/physics/utils/array-collision-matrix.ts",
+      "sha256": "71ceab718914fd0c4c41a762b5510933b068ed5a254128efaf22c0f19ad1ddc0"
+    },
+    {
+      "path": "src/cocos/physics/cocos/builtin-world.ts",
+      "sha256": "20acaeeb7596eb5b4f7173f4a681ae63b338aaea2264eb66ebeeda05cffb129e"
+    },
+    {
+      "path": "src/cocos/physics/cocos/builtin-rigid-body.ts",
+      "sha256": "cd4a692a7b5229bc943d34ee0a9750cae08db93ea892248811b8b83db4c28ff2"
+    },
+    {
+      "path": "src/cocos/physics/cocos/shapes/builtin-shape.ts",
+      "sha256": "9e29d8a15eab944ce69161549f0cdc82ca8e98fc9612e128060239ffdebc5d8d"
+    },
+    {
+      "path": "src/cocos/physics/cocos/shapes/builtin-box-shape.ts",
+      "sha256": "0ee486828b5306bd299b7f865733b6ca90eea15444b386ca1d81c64ede180005"
+    },
+    {
+      "path": "src/cocos/physics/cocos/shapes/builtin-sphere-shape.ts",
+      "sha256": "4e682c1056d69846bb0a8a6f32e4e2ef5a04dbc0c8d889f05b1088139619d458"
+    },
+    {
+      "path": "src/cocos/physics/cocos/shapes/builtin-capsule-shape.ts",
+      "sha256": "729d6782586e95a7073c8f26b28309c1790e2bd9e9bb5a65ba8f2fecae03b083"
+    },
+    {
+      "path": "src/cocos/physics/cocos/instantiate.ts",
+      "sha256": "a7420b7cad65d3e9738036c169f227540ee5635d8621d1d05f3379d5a8ff11da"
+    },
+    {
+      "path": "src/node_modules/@cocos/cannon/build/cannon.js",
+      "sha256": "a85bf7989236b66ec216e1c8bc8daac9bb5587d6d13ffb56729b27887f994bf9"
+    },
+    {
+      "path": "src/cocos/physics/cannon/cannon-rigid-body.ts",
+      "sha256": "aa7d8c7b4613865b37c962050ca5d9ffb9c14de77e78cc891880fd431b1b081e"
+    },
+    {
+      "path": "src/cocos/physics/cannon/cannon-util.ts",
+      "sha256": "2d2e230f82fc840ebbca19a75b42880cd6a0fcfc17625afda6a94fa71a43441e"
+    },
+    {
+      "path": "src/cocos/physics/cannon/shapes/cannon-shape.ts",
+      "sha256": "0d318ea85990de2fafe7ae07cc9abd9886af573ffd13ded2a0f1b12454534a5d"
+    },
+    {
+      "path": "src/cocos/physics/cannon/cannon-contact-equation.ts",
+      "sha256": "bca819ab336c8687d17ff978bc2cec97e1aeddb90dec1215cca3b32373575e3e"
+    },
+    {
+      "path": "src/cocos/physics/cannon/cannon-shared-body.ts",
+      "sha256": "92c37e0384f1c480a911a89bad9365371c021943149efce4cd6fd341c500a6ee"
+    },
+    {
+      "path": "src/cocos/physics/cannon/cannon-world.ts",
+      "sha256": "53d5ff1803f98af7bd1a1cabf96be5a1d6ef976098f0b0e9b205d7de08616ea3"
+    },
+    {
+      "path": "src/cocos/physics/cannon/shapes/cannon-box-shape.ts",
+      "sha256": "ed796d1c273bf7b16d697109b4896d19eadb5aecb4b9f3073659953d72aef184"
+    },
+    {
+      "path": "src/cocos/physics/cannon/shapes/cannon-sphere-shape.ts",
+      "sha256": "1d0e63d293301066a83bd8ffe20648864fdf2288059b1462bfb0ae4cba6f03f0"
+    },
+    {
+      "path": "src/cocos/physics/cannon/shapes/cannon-trimesh-shape.ts",
+      "sha256": "7a48bf7e4d19a6db16b5f28fab9339d0d0bcf106a9f56e8873e995cc8c75784f"
+    },
+    {
+      "path": "src/cocos/physics/cannon/shapes/cannon-cylinder-shape.ts",
+      "sha256": "f47800c0df6103293f1b644b51db1561eb256cb273c21b02e3ff02cc6d990360"
+    },
+    {
+      "path": "src/cocos/physics/cannon/shapes/cannon-cone-shape.ts",
+      "sha256": "10d886f5216b24949386958d0be9a120dd221ac55eb6f1f28b616653cee927e6"
+    },
+    {
+      "path": "src/cocos/physics/cannon/shapes/cannon-terrain-shape.ts",
+      "sha256": "2c69700227720be4d823768203bb9bb9772fe55d4c48668391fcc517f509f159"
+    },
+    {
+      "path": "src/cocos/physics/cannon/shapes/cannon-simplex-shape.ts",
+      "sha256": "b65aab280c497fe36463961805bb81b93e8b28e4b247bdc8536e006ed007e782"
+    },
+    {
+      "path": "src/cocos/physics/cannon/shapes/cannon-plane-shape.ts",
+      "sha256": "bc78191631e0949efef8ad5f7e4b9375939e98b4093de85acbc62a1e672fc636"
+    },
+    {
+      "path": "src/cocos/physics/cannon/constraints/cannon-constraint.ts",
+      "sha256": "5688624837b50c81f624431a84898787a2a04c11e62f2bcb7bd8a45910b111fb"
+    },
+    {
+      "path": "src/cocos/physics/cannon/constraints/cannon-point-to-point-constraint.ts",
+      "sha256": "0ef8514870054fdd0b1e8c34e3545fc30a131d5716b93b2f7f4b034ccf36e01e"
+    },
+    {
+      "path": "src/cocos/physics/cannon/constraints/cannon-hinge-constraint.ts",
+      "sha256": "da67bc506be556e2bc11770d0101035ab009429796506c491c7d2e9d17f4308b"
+    },
+    {
+      "path": "src/cocos/physics/cannon/constraints/cannon-lock-constraint.ts",
+      "sha256": "7a8f28b4e6b830df89076540c7651c002bcd4d32f7c07b947c83f8a5b21af959"
+    },
+    {
+      "path": "src/cocos/physics/cannon/instantiate.ts",
+      "sha256": "ee0a0d3dc40f1e635a199ea6c130e0d7b11989b1e1c452cca70816ab014b69fa"
+    },
+    {
+      "path": "src/exports/physics-cannon.ts",
+      "sha256": "a3449329885787ecf45ed7f6a225f925fd173107dd85d37e42cc5ef31ffbae18"
+    },
+    {
+      "path": "src/cocos/rendering/custom/types.ts",
+      "sha256": "c1a0dab1b8ba3239e0ed42a7c203002a8dabc60126fa45ad67bbe9dc17804a94"
+    },
+    {
+      "path": "src/cocos/rendering/custom/graph.ts",
+      "sha256": "3d2eee1be6216bfa4b7980c4db63de4cd3cd4aad8fd89a460c6948afb54b4da2"
+    },
+    {
+      "path": "src/cocos/rendering/custom/render-graph.ts",
+      "sha256": "fb282143eeed41305149602bee82671f3ae3d5e030db268752527b1f735bac07"
+    },
+    {
+      "path": "src/cocos/rendering/custom/pipeline.ts",
+      "sha256": "b0e2faca9df10ee99d7cdbf8cc009e88a906a8c05a2c7f3390b30d41babd4eb3"
+    },
+    {
+      "path": "src/cocos/rendering/custom/serialization.ts",
+      "sha256": "f68fd9da3dd56f9094514241cfc34cbfe6c799c8d6f0f3e9ca73fa1bddfcb377"
+    },
+    {
+      "path": "src/cocos/rendering/custom/layout-graph.ts",
+      "sha256": "ba881af3579e45b66686423115b8cc5823e096182a28e455d3ffb9a3bb9043f0"
+    },
+    {
+      "path": "src/cocos/rendering/custom/effect.ts",
+      "sha256": "fa6aff4c7c4da1d9a40a679f86ec207a602e22db5a20cf6208c0d841a3c9bb2d"
+    },
+    {
+      "path": "src/cocos/rendering/custom/utils.ts",
+      "sha256": "40d312154694dc56067abda545d0fe91870ce555e877f160063309e5db8da01f"
+    },
+    {
+      "path": "src/cocos/rendering/custom/define.ts",
+      "sha256": "7cccad48e6372ab3009d57355a212e0dcb906fd9ed2750ccbefe030c5fd4323a"
+    },
+    {
+      "path": "src/cocos/rendering/custom/web-pipeline-types.ts",
+      "sha256": "e2ffa36fe5b1f33b5a866413336422aab819eec9dd84bf7133c96cc59e72d033"
+    },
+    {
+      "path": "src/cocos/rendering/custom/layout-graph-utils.ts",
+      "sha256": "4d65cf929e796b1f8440fbac3b1b6d7f5686279f99daa0207fa334f2660503ac"
+    },
+    {
+      "path": "src/cocos/rendering/custom/scene-culling.ts",
+      "sha256": "29b31f08cbd87b14bcb7901045426badb400d988f54b3a87a0c12d4f0d906878"
+    },
+    {
+      "path": "src/cocos/rendering/custom/executor.ts",
+      "sha256": "e5cd8d4221bc8d35c26e6c4b7da6db2ce9e63aa15d4d478bc1ca4cfa99d22cca"
+    },
+    {
+      "path": "src/cocos/rendering/custom/compiler.ts",
+      "sha256": "15d44ad45acdcec4c9e0780125701e0528008c1dd3bdc925b4afc32373ea9955"
+    },
+    {
+      "path": "src/cocos/rendering/custom/web-pipeline.ts",
+      "sha256": "586b0d295eeaf1a239a8cd834dd826e02fde2bdc1d6c4f5cc15069584c6a5121"
+    },
+    {
+      "path": "src/cocos/rendering/custom/binary-archive.ts",
+      "sha256": "5eefcbe1f61964a43125c237f3cedaebf5f68cb5679d2f96b985727d19cb3910"
+    },
+    {
+      "path": "src/cocos/rendering/custom/web-types.ts",
+      "sha256": "e27bbd7c0f122a02263996f2e0e6fe074bfb1a91d461cad429cef94726a3f403"
+    },
+    {
+      "path": "src/cocos/rendering/custom/web-program-library.ts",
+      "sha256": "32e0844964c2287346fba0cd0d80caa8c96124b955f94915e945e677125c151b"
+    },
+    {
+      "path": "src/cocos/rendering/custom/framework.ts",
+      "sha256": "722342f2098ecc2bc9b50aae52ab08f8a30666641ef2e1ccc34d6622103a1d75"
+    },
+    {
+      "path": "src/cocos/rendering/custom/index.ts",
+      "sha256": "2e1833763c779834eb9482985714df0ac0fa2ec2e0fc8daf53ed05fa2889f7f8"
+    },
+    {
+      "path": "src/cocos/rendering/post-process/utils/pass-context.ts",
+      "sha256": "75a041bb36070c619c7cc553df174cdf3abeebcf9ef185b30767241da06e6cd5"
+    },
+    {
+      "path": "src/cocos/rendering/post-process/passes/base-pass.ts",
+      "sha256": "1dd22d3101c85d06ece09b08e9334ceeedfd62517a3d0d4d75ce672a1cc675f9"
+    },
+    {
+      "path": "src/cocos/rendering/post-process/passes/forward-final-pass.ts",
+      "sha256": "dc4e683b24c655b25561c6afb4a68ee359551b36449a77e45d37a06f54110bdd"
+    },
+    {
+      "path": "src/cocos/rendering/post-process/passes/forward-pass.ts",
+      "sha256": "9d3d36684b65a70f193dd848eba10f9717900ef1463e17f94f8387ec8c36c73b"
+    },
+    {
+      "path": "src/cocos/rendering/post-process/components/post-process-setting.ts",
+      "sha256": "182f3eb986f65ac1beb09bda194cb1b54a94a7e3d34832855a116c0af4c08d9e"
+    },
+    {
+      "path": "src/cocos/rendering/post-process/components/taa.ts",
+      "sha256": "285d4e463aba50bd7173e8294003abe5234358d8735c02dbcb5c50619aa6987d"
+    },
+    {
+      "path": "src/cocos/rendering/post-process/components/taa-mask.ts",
+      "sha256": "c852b91fbd5b478b267447f462d39f688ee5bb4e6e245748d545738c7e157136"
+    },
+    {
+      "path": "src/cocos/rendering/post-process/passes/setting-pass.ts",
+      "sha256": "05218b1878f889e9c26dd23ab222278cc7b77bfe2ff45e138c6bada520269daa"
+    },
+    {
+      "path": "src/cocos/rendering/post-process/passes/taa-pass.ts",
+      "sha256": "298cbb93190d15e8ed83867c397d9ce935f29944ca04ab8eb7b070edeccb2fa4"
+    },
+    {
+      "path": "src/cocos/rendering/post-process/components/fsr.ts",
+      "sha256": "3fdd7a123b083ff1d33a3fbdb65062a2b08a3696a70afe4c848f723530ff2266"
+    },
+    {
+      "path": "src/cocos/rendering/post-process/passes/fsr-pass.ts",
+      "sha256": "46942b6da26d368192bbce7992fc3744899f22fc4015aed459421746cc947d33"
+    },
+    {
+      "path": "src/cocos/rendering/post-process/components/blit-screen.ts",
+      "sha256": "4a745dab69c297d76746ed37e774170537fca88cef2872278c60bf252828bb96"
+    },
+    {
+      "path": "src/cocos/rendering/post-process/passes/blit-screen-pass.ts",
+      "sha256": "0aa4b4e4b961ee074b491f12e2354e11ee089aeebabc60c49c61b7261698e676"
+    },
+    {
+      "path": "src/cocos/rendering/post-process/passes/shadow-pass.ts",
+      "sha256": "7e9078b30f6ab7e2f16182756a42d46cd148a928a9e8d34b23381f2827668f03"
+    },
+    {
+      "path": "src/cocos/rendering/post-process/components/color-grading.ts",
+      "sha256": "355d50c810a65a383cff12a94864f958c82f55b1be1c715e0a405d59a3acba1c"
+    },
+    {
+      "path": "src/cocos/rendering/post-process/components/bloom.ts",
+      "sha256": "3beddc00d4d09c14c16d329080f81138e73df3667bd0c180394778a1d8a46ebb"
+    },
+    {
+      "path": "src/cocos/rendering/post-process/components/hbao.ts",
+      "sha256": "13e4d1459667a0982a999a096c0dc7d584de7a290e8f985da36b7e56fd663160"
+    },
+    {
+      "path": "src/cocos/rendering/post-process/components/dof.ts",
+      "sha256": "dfd7e430a81b50b270635a38f1c2279352c610c704f3dcb122e204116ede5785"
+    },
+    {
+      "path": "src/cocos/rendering/post-process/passes/hbao-pass.ts",
+      "sha256": "90985cce6aaae9ccd921d55bf4740eb945367583d48cca2a8419441d183135cf"
+    },
+    {
+      "path": "src/cocos/rendering/post-process/passes/color-grading-pass.ts",
+      "sha256": "ba270f3b0bc0cacbc99311ceafdf3f5dbda13386ebc6101a6833d95500ff0b68"
+    },
+    {
+      "path": "src/cocos/rendering/post-process/passes/bloom-pass.ts",
+      "sha256": "1bc324b6e598e656a9eb401ec056f56c45f11b6c8dd5bc8f1052b7d68da3cb9d"
+    },
+    {
+      "path": "src/cocos/rendering/post-process/components/fxaa.ts",
+      "sha256": "96f554e15bcf49258a9a2b6b73915326cfd540208699b5abd1ce60361be83530"
+    },
+    {
+      "path": "src/cocos/rendering/post-process/passes/fxaa-pass.ts",
+      "sha256": "af6953bdf12942d0fe81bd7b88802b73dd00a499cb545ed5b3ec1af4c423e31e"
+    },
+    {
+      "path": "src/cocos/rendering/post-process/passes/float-output-process-pass.ts",
+      "sha256": "04ecaff7c1d3c97de122cde28acbb28615951d892c45dae090e35db126a422e8"
+    },
+    {
+      "path": "src/cocos/rendering/post-process/passes/forward-transparency-pass.ts",
+      "sha256": "194a033e470d8af1ef8be06b7d759e012ed6c39bfa69affdeff97e69ee1c6cda"
+    },
+    {
+      "path": "src/cocos/rendering/post-process/passes/forward-transparency-simple-pass.ts",
+      "sha256": "22b130665c58b0987f5ce8032287e4fce46838d34dd8d545120e864a70849348"
+    },
+    {
+      "path": "src/cocos/rendering/post-process/passes/skin-pass.ts",
+      "sha256": "e45d1e08a38443022461be0f2e70773c52f03cc714d25beadc957241f917025e"
+    },
+    {
+      "path": "src/cocos/rendering/post-process/passes/post-final-pass.ts",
+      "sha256": "5229def5548ae4aeb7efdaa9cf2bba67b555c4208eca50b981a34c5922784fee"
+    },
+    {
+      "path": "src/cocos/rendering/post-process/passes/dof-pass.ts",
+      "sha256": "15ec368f68f00d591c0b296383705408c6fea21e7866b3b1e30599dc80b3403d"
+    },
+    {
+      "path": "src/cocos/rendering/post-process/post-process-builder.ts",
+      "sha256": "be08d00808d73a56fa2eaa95043e2502ad7764d46a4054b3074a9a914999942c"
+    },
+    {
+      "path": "src/cocos/rendering/post-process/index.ts",
+      "sha256": "9178e6a5b080b6e953af9ee122e71b9e9ce246d30dd8febdfb7a71ba65107a11"
+    },
+    {
+      "path": "src/pal/audio/type.js",
+      "sha256": "4502a605fe0531cb1329644e40afa95d19da68e9e6a81b3017ca4b384fa35c4e"
+    },
+    {
+      "path": "src/pal/audio/web/player-dom.js",
+      "sha256": "18afb6cb1225eeae0f452816f12198a88f7e9942e84aafd8a9cfe3c6d6db2b41"
+    },
+    {
+      "path": "src/pal/audio/operation-queue.js",
+      "sha256": "43e192afaa3db90155fc3b04ae52fc79e189326414a1453195cd4de307aa3d5b"
+    },
+    {
+      "path": "src/pal/audio/audio-timer.js",
+      "sha256": "80adf9ffd38bb8934f5b9df70c1909fdf294d6d6a31100bfe56ea3291e204733"
+    },
+    {
+      "path": "src/pal/audio/audio-buffer-manager.js",
+      "sha256": "e916fae0acd2d357ad6546528efa24c9ae1a152436e7966b140f4a78c1055691"
+    },
+    {
+      "path": "src/pal/audio/web/player-web.js",
+      "sha256": "08e371ddc86ff0a776945b1106c591c1a8f4d6e301c3e0b0f831f2e7cb190496"
+    },
+    {
+      "path": "src/pal/audio/web/player.js",
+      "sha256": "d9c840c2af71be634ae9673db96e5cc30bd8f0d571d986263edcf5e9b49f50c9"
+    },
+    {
+      "path": "src/cocos/audio/audio-clip.ts",
+      "sha256": "cea3f046fea40d9d00a3784d63544bd7e6bfde36956a6164c334b25834ee65a6"
+    },
+    {
+      "path": "src/cocos/audio/audio-downloader.ts",
+      "sha256": "8e4932193f2d7d63b226dd30fd6cc09e6bc2d015ceaf0e8fdc98a490d308f381"
+    },
+    {
+      "path": "src/cocos/audio/audio-manager.ts",
+      "sha256": "f4fac4a17028c156fdee0cd38e6891eba41de65ff9cfa67fdfd8e9e2db8ad61a"
+    },
+    {
+      "path": "src/cocos/audio/audio-source.ts",
+      "sha256": "d8b129a208c5db6db22af700701cc3aea9c446773ddde0f38daa06de65886553"
+    },
+    {
+      "path": "src/cocos/audio/deprecated.ts",
+      "sha256": "5357a05f84aa5b1fb1173d9be8bea85b9f9f757da5047252c76aed3bde505ec6"
+    },
+    {
+      "path": "src/cocos/audio/index.ts",
+      "sha256": "0c53138173dd635b4119704565e3cce82fea61c6e1b86d22aaafdfb01650f05a"
+    },
+    {
+      "path": "src/air/app-config.ts",
+      "sha256": "68d1a6ea8a9f58f0a2a8d7002be2e8ee168031692baafa7e82481d364a19f02f"
+    },
+    {
+      "path": "src/air/session-scope.ts",
+      "sha256": "28fdf0d1f7a75f06d80e74dde72a9209b6c40a216cccfca9f0101983097d1ea8"
+    },
+    {
+      "path": "src/air/physics-2d/box2d3.ts",
+      "sha256": "d9d803eadd497a1fc83dc418087caa9ea547f7c02b063be5bd10c0e865a96d68"
+    },
+    {
+      "path": "src/air/app.ts",
+      "sha256": "32523c84d5f2efb3af6afe17cff613679c1f0d0f53798f8049ebd1d2f173c714"
+    },
+    {
+      "path": "src/air/builtin/builtin-effects.ts",
+      "sha256": "f4f4015716c4622c895bb592666618852b3f14543ba0fd33551a089a6142c95c"
+    },
+    {
+      "path": "src/air/builtin/builtin-glsl4.ts",
+      "sha256": "fc8de2d2ae2936f859b7c42e7d6ec0bd9e5da38ce2193ef6ef66cf0f2cdaa9d9"
+    },
+    {
+      "path": "src/air/builtin/builtin-material.ts",
+      "sha256": "d84816dc9c9f3fb240cdabd4beb9635c9803b8b5c3f8946e5763f1d9e0345380"
+    },
+    {
+      "path": "src/air/builtin/register.ts",
+      "sha256": "8e63ea49ec8ddafedc6b19ad05d02431f22a24213f2dc1044a89af17b50c94de"
+    },
+    {
+      "path": "src/air/physics-backend.ts",
+      "sha256": "4722b52a2d7821e8ff02a0803f48b8dd9be81791b1a2eee7bacbae747e64132e"
+    },
+    {
+      "path": "src/air/context-health.ts",
+      "sha256": "8c727a075dfc05e4c8d7b074dd514a5295fd576f7c7dc862e6330ef11006aa01"
+    },
+    {
+      "path": "src/air/diagnostics.ts",
+      "sha256": "b95215c450e1d1c96e9f7337d037e9bc3d04db025d305b40d2629dc32279b032"
+    },
+    {
+      "path": "src/cocos/gfx/webgpu/define.ts",
+      "sha256": "6d53c15a94a2a51cf882aaac15f7cf6beb4d2677a75a39dda45c0d0c69377299"
+    },
+    {
+      "path": "src/cocos/gfx/webgpu/webgpu-commands.ts",
+      "sha256": "a09c7cb29f428918aac59baeac97fc745a8303993be86ca22ce26db1bedf464f"
+    },
+    {
+      "path": "src/cocos/gfx/webgpu/webgpu-descriptor-set.ts",
+      "sha256": "48be04522daa70bad2f6a38cd36de8e5091f12968d2f01fa383562d967a467c4"
+    },
+    {
+      "path": "src/cocos/gfx/webgpu/webgpu-buffer.ts",
+      "sha256": "6d299f41cea91a0ec77a32292b2bf2ad409fec32c146d9538a352adcc4273f34"
+    },
+    {
+      "path": "src/cocos/gfx/webgpu/webgpu-command-buffer.ts",
+      "sha256": "c364ffb96acfda4e2b4cb021a1b7dcc58a6068e2e5d198ec4f806235c01d1f72"
+    },
+    {
+      "path": "src/cocos/gfx/webgpu/webgpu-framebuffer.ts",
+      "sha256": "75424953d1f84fabf73302a3aef4520c66fd973cb51b41e21458aa603080ad3e"
+    },
+    {
+      "path": "src/cocos/gfx/webgpu/webgpu-input-assembler.ts",
+      "sha256": "c01e9085baca2e204dc4bd9964bbadb68df68b17af5962d357dfc4578f75423b"
+    },
+    {
+      "path": "src/cocos/gfx/webgpu/webgpu-descriptor-set-layout.ts",
+      "sha256": "1aceb940b1082ef1bbd267599f1efc08ade2a9c80c6439ae78e35575d1728333"
+    },
+    {
+      "path": "src/cocos/gfx/webgpu/webgpu-pipeline-layout.ts",
+      "sha256": "c5e3521f3fee57f4c68082078eefee4bfdb44c30f46a397bacbc95ff1135bbd5"
+    },
+    {
+      "path": "src/cocos/gfx/webgpu/webgpu-pipeline-state.ts",
+      "sha256": "15b319f3059a96aca47e8c22dc5d89d07226effaf8116a77a3fb909bb572e17e"
+    },
+    {
+      "path": "src/cocos/gfx/webgpu/webgpu-queue.ts",
+      "sha256": "9fd7c01425505d9f9db25b74647a7d1febb796f1d781d7d8d1b3743ee5a6be1d"
+    },
+    {
+      "path": "src/cocos/gfx/webgpu/webgpu-render-pass.ts",
+      "sha256": "2621ed4c2154ad29b174f92128841473ce17c02592f98ef69c8adb7cdc2a537c"
+    },
+    {
+      "path": "src/cocos/gfx/webgpu/webgpu-sampler.ts",
+      "sha256": "1e7bc7bc0a9e2fa0922f19abe7f52185eaa7a62c7a6cfb8d59fa61ec6b20acfd"
+    },
+    {
+      "path": "src/cocos/gfx/webgpu/webgpu-shader.ts",
+      "sha256": "db4307854cc604eb7b2087a25b030865d7f01a55ee34a48b08563a654f238708"
+    },
+    {
+      "path": "src/cocos/gfx/webgpu/webgpu-state-cache.ts",
+      "sha256": "f3991c252914decfa060b0bcc446e3d843e3f93f0f3e2b383f3846dfbc39e656"
+    },
+    {
+      "path": "src/cocos/gfx/webgpu/webgpu-texture.ts",
+      "sha256": "7cac9f170f77dffbede4d586f9e86fbac7898044222f87faf619acc75ed17329"
+    },
+    {
+      "path": "src/cocos/gfx/webgpu/webgpu-command-allocator.ts",
+      "sha256": "c3e5999ee540dfcb20caa8b1a01b26c7d043952ca58bf5f529b31c48a7fe76d5"
+    },
+    {
+      "path": "src/cocos/gfx/webgpu/webgpu-gpu-objects.ts",
+      "sha256": "6c27251b499273497c807dbd211b1e3965a6fd184eff415cb83ee26c0996c84b"
+    },
+    {
+      "path": "src/cocos/gfx/webgpu/webgpu-swapchain.ts",
+      "sha256": "af8bd8aa102f87685b1f574eb8fcf470c8fe66196aea572ee9e5b87796145d88"
+    },
+    {
+      "path": "src/cocos/gfx/webgpu/instantiated.ts",
+      "sha256": "7fca829a46424fd3f024d90df85889879bfbfe113d1a108ce20a3dbaa300d189"
+    },
+    {
+      "path": "src/cocos/gfx/webgpu/webgpu-device.ts",
+      "sha256": "cff5e11af625865022da3b0f43b514f2ab64da5562d891bd958ac5977d6d71b9"
+    },
+    {
+      "path": "src/exports/gfx-webgpu.ts",
+      "sha256": "f35a9027cf12848ae269aa6b608099c4a49b9761a9594301f78a74cc9ba41114"
+    },
+    {
+      "path": "src/air/bootstrap.ts",
+      "sha256": "1f625d061489e4c31c235044733b27917d28e8563618275dea494a5ef98ea99c"
+    },
+    {
+      "path": "src/air/html-source.ts",
+      "sha256": "807fac7e746f9105a3cc35e2c2bd1c3340391789790fb058bc258e8f2ae82634"
+    },
+    {
+      "path": "src/air/step-clock.ts",
+      "sha256": "17c2ef19bd7b677384a6905c8f9af9fc5c18091993327a4119e1bb6e4f73799c"
+    },
+    {
+      "path": "src/air/action-state.ts",
+      "sha256": "3c4c7f7af0d76fa07029ed8c51f52bedf76e7a38e7553aeee09fd47186caa1c0"
+    },
+    {
+      "path": "src/air/action-input.ts",
+      "sha256": "395b43f97c8dfd8f58e671f860fb4cbc1c8ad08be4b2678207c73d2dcf0115fd"
+    },
+    {
+      "path": "src/air/assets/asset-bank.ts",
+      "sha256": "bbf85b5f56076d617f79ad5da9b7a1e2c0d15561f6aca9451bad0f36256f7982"
+    },
+    {
+      "path": "src/air/ui-kit.ts",
+      "sha256": "a69d77ce887dbbd96d00726e538ee957ae0dc1c9f7b0ff0458780fd04f17cfc2"
+    },
+    {
+      "path": "src/air/ui-mesh.ts",
+      "sha256": "a9a46f9419221bad663903e9c6c52805e25d32023a8c7c067f6896a2cd7e0eb7"
+    },
+    {
+      "path": "src/air/ui-content-size-fitter.ts",
+      "sha256": "ad487b662a90dfd71f10674d8e9b652a15681f16d3f2161c722cb3a8cb3b9401"
+    },
+    {
+      "path": "src/air/ui-pixel-perfect.ts",
+      "sha256": "41546683aaa9539080aa6cf69fa0e1e126d68f14f0955d4b3eb642748c5d7fda"
+    },
+    {
+      "path": "src/air/dom-overlay.ts",
+      "sha256": "c1803db2b82bf29bf9f34ed15e5c5aea07283c9fde7d4e69626c907d86124e58"
+    },
+    {
+      "path": "src/air/texture-sprite.ts",
+      "sha256": "40af6dd0e50beb4584dfd2ce72b3967aacb81352aba96217dd288215507eda28"
+    },
+    {
+      "path": "src/air/graphics-commands.ts",
+      "sha256": "8e3bbf57b540e52b37dc115d935437b01803e1c0c23268545e30d658f1ce905c"
+    },
+    {
+      "path": "src/air/graphics-raster.ts",
+      "sha256": "b74f86853842dfd3c12074d8e6e480ac7de766dc0d498a764de993f313feb56a"
+    },
+    {
+      "path": "src/air/ui-blend.ts",
+      "sha256": "fba4b23f62f65d6e102ed099c6274b4b75045dfeaccefb7986c02b66019dd35c"
+    },
+    {
+      "path": "src/air/effects/sprite-mask.ts",
+      "sha256": "e30a243f91fa1893f2b43a542003b3dfcb2d0d8d12c0399744463852367962eb"
+    },
+    {
+      "path": "src/air/scene-stack.ts",
+      "sha256": "a913e54f96cdda38325c4f37a09594db8d772ab1b4a206210b20c84e180f4213"
+    },
+    {
+      "path": "src/air/audio-service.ts",
+      "sha256": "a4726899eb71aa55819812da144ecc16cb35c69b5804c5c8ecd601f8e23ca7f6"
+    },
+    {
+      "path": "src/air/assets/gltf/schema.ts",
+      "sha256": "e7297ae48fb0e3a94ffef5ae4e85e52e5cf383c7a0e59e777649b56c70d05525"
+    },
+    {
+      "path": "src/air/assets/gltf/nodes.ts",
+      "sha256": "eb9468e6fedb231ce5a51b82ca3f9a057b71bcd80e59d1d9034c709997d45cd8"
+    },
+    {
+      "path": "src/air/assets/gltf/winding.ts",
+      "sha256": "cb9afb0d37de527017fff511ff7b7c7338bfbdad30af94b8b5e39d08dabc883d"
+    },
+    {
+      "path": "src/air/assets/gltf/asset.ts",
+      "sha256": "a196be63058cbd78c2f90d9a00662bf722c4ada37df59c7709886a3fa4cbb4a1"
+    },
+    {
+      "path": "src/air/assets/gltf/request-policy.ts",
+      "sha256": "a8b40f98fb720354327b291083c5198831d41104776151e27d2ce18101eb2767"
+    },
+    {
+      "path": "src/air/assets/gltf/parser-context.ts",
+      "sha256": "1c365b881b4a541a454e2913807e66684db307c6b73baef49b54db6d4d52c099"
+    },
+    {
+      "path": "src/air/assets/gltf/diagnostics.ts",
+      "sha256": "e719f917d3b65b5d7111ca61cd2552fc248f88cc538216c614ae2f2e6cf2a9c9"
+    },
+    {
+      "path": "src/air/assets/gltf/extension-registry.ts",
+      "sha256": "ded021ad42402f7536bb35974ec4c21c37523a3514736a2a6d8e59e1121b8717"
+    },
+    {
+      "path": "src/air/assets/gltf/attributes.ts",
+      "sha256": "3291a46a1bb43757b73c9116be303e374a2eab83e5d9d8746ca01cc356e6c547"
+    },
+    {
+      "path": "src/air/assets/gltf/material/texture-slots.ts",
+      "sha256": "c6164f65daa5283a51bcbe9b1fd4df17c2543c15b060e7c137158f3122456f20"
+    },
+    {
+      "path": "src/air/assets/gltf/material/features.ts",
+      "sha256": "a8663eb9203bc544097ba81ebb03437ed1ef7366860e63f7873b8eba6ed072b5"
+    },
+    {
+      "path": "src/air/assets/gltf/extensions/geometry/quantization.ts",
+      "sha256": "12117569b28d9e13874aeff1cbf8200aad43ed8c49c742c7464a848a6e05c763"
+    },
+    {
+      "path": "src/air/assets/gltf/mesh.ts",
+      "sha256": "e8c14460567fe0e123fec54bba2443d1011fff10a6449773595429d58f88aeec"
+    },
+    {
+      "path": "src/air/assets/gltf/material/standard-effect.ts",
+      "sha256": "d39835579dca6085c28b6a56e4bb1a080779c5fef0b19aac0d5eb51360f87641"
+    },
+    {
+      "path": "src/air/assets/gltf/material/physical-effect.ts",
+      "sha256": "539487e182415dc07dc9c089bd5a55baa3f1bdfd7d2e1a6f4ab22b763bb05b1a"
+    },
+    {
+      "path": "src/air/assets/gltf/material/transmission-capability.ts",
+      "sha256": "9d0e63b896ebb71f2c6eb0c088a734a7c166420c617488102d35fb5b32302e21"
+    },
+    {
+      "path": "src/air/assets/gltf/decoder/types.ts",
+      "sha256": "f13378cfa64a75d043a1438dac7dbd5ec9de89fabd69eae98cbb876414dba4da"
+    },
+    {
+      "path": "src/air/assets/gltf/extensions/texture/image-formats.ts",
+      "sha256": "bd8422dc4ef9d41603cd5ac4ea24aac2ffdf666736f04da72a2f8ba2997aac3e"
+    },
+    {
+      "path": "src/air/assets/gltf/material.ts",
+      "sha256": "640f6a6deb266f420d3592b4fabf55fe812820d4cbd62802aa6d12db67ca0234"
+    },
+    {
+      "path": "src/air/assets/gltf/animation.ts",
+      "sha256": "77ac7c0bb7b2a1ebb80a26976a47ac120467bf28a927c79f600e8f675615b9f2"
+    },
+    {
+      "path": "src/air/assets/gltf/extensions/material/unlit.ts",
+      "sha256": "d8ae8fc8efb8a04f3069efc036c589f1dcd8c67b9a0f16ffb2a8c944504744e6"
+    },
+    {
+      "path": "src/air/assets/gltf/extensions/material/emissive-strength.ts",
+      "sha256": "c3b447665daa0a15ba26f1b9fd90e99bed7a2617a5b0e832183e3a1f54eaae43"
+    },
+    {
+      "path": "src/air/assets/gltf/extensions/material/ior.ts",
+      "sha256": "160346f28572f90ca6e6b64fbed20f013cb0ac547c610dde6f83a0c6d7f7a65c"
+    },
+    {
+      "path": "src/air/assets/gltf/extensions/material/specular.ts",
+      "sha256": "533de8a63e18b136ccd3605c596342743bc91b0c9459a4e550647d06f631a5ff"
+    },
+    {
+      "path": "src/air/assets/gltf/extensions/material/clearcoat.ts",
+      "sha256": "0790546d45961d5e90e29e2482a54e604ebea49ae08c4d7b299f3088952f9956"
+    },
+    {
+      "path": "src/air/assets/gltf/extensions/material/anisotropy.ts",
+      "sha256": "616bb4d595ed204a2865c20350c6f0f1eb60524274f723bef9780f9d1513dc7f"
+    },
+    {
+      "path": "src/air/assets/gltf/extensions/material/iridescence.ts",
+      "sha256": "61dfd61f6918cba2ac058722b58f0320f9d01781bc8a0044214ec63a587dd8c7"
+    },
+    {
+      "path": "src/air/assets/gltf/extensions/material/bump.ts",
+      "sha256": "0f9b8f8655203d7d29e4da3c8634c2aca876b29bb0fe8a545fdc0af872bff1c6"
+    },
+    {
+      "path": "src/air/assets/gltf/extensions/material/transmission.ts",
+      "sha256": "b5432eeb1a3e530bd277384b8a18f57506250692ced6554ab2316be4bc7e1926"
+    },
+    {
+      "path": "src/air/assets/gltf/extensions/material/volume.ts",
+      "sha256": "c169a8fb2648684b88268eaa6d99c0c8fc8167af250979a516621eb6d63a17df"
+    },
+    {
+      "path": "src/air/assets/gltf/extensions/material/dispersion.ts",
+      "sha256": "0a9b10935d214b9821951566e25acf4a7e2787ca4c20887ebae44539503cfdfa"
+    },
+    {
+      "path": "src/air/assets/gltf/extensions/texture/transform.ts",
+      "sha256": "7a3d85fb59c5d6face63087a73f404253f431bad274e7a94173fb394e8827aa4"
+    },
+    {
+      "path": "src/air/assets/gltf/extensions/geometry/meshopt.ts",
+      "sha256": "a206a80a8a8b5189d94dd2e663f7a16066157f32b9d94c48724d241a860b19a0"
+    },
+    {
+      "path": "src/air/assets/gltf/extensions/geometry/draco.ts",
+      "sha256": "4e05f2d4ccdc99c568197992f6aeb40df5217acc9e744bb6d2d394c472d2653a"
+    },
+    {
+      "path": "src/air/assets/gltf/extensions/texture/device-formats.ts",
+      "sha256": "96b54daed18ea045bad67aed5e988f2c2add556d01a647f049fb58ce71e56b0a"
+    },
+    {
+      "path": "src/air/assets/gltf/extensions/texture/basisu.ts",
+      "sha256": "42e989f09fb0792341046c63895cfbbbf0b9cc92979bda711946c54e17cf347c"
+    },
+    {
+      "path": "src/air/assets/gltf/extensions/scene/lights.ts",
+      "sha256": "42f205b77e86e9392d6cf83910a19fbe768ef49ce770685ad2ad073d68d142c4"
+    },
+    {
+      "path": "src/air/assets/gltf/extensions/scene/instancing.ts",
+      "sha256": "66da3c2eb0157ee8c0f1fc6d6f387b98eb36eed925c65e4a87fca4fecc55b5d9"
+    },
+    {
+      "path": "src/air/assets/gltf/loader.ts",
+      "sha256": "8246d69caa9e112f6d377b097e2eca6602a8a04408ff013eb214a08055941ec4"
+    },
+    {
+      "path": "src/air/utils/load-asset.ts",
+      "sha256": "2a7805e0f94bdec6e4f4b248cd8d82e247ced17fb48f09fdcdb1169825b9d593"
+    },
+    {
+      "path": "src/air/utils/skeleton-tree.ts",
+      "sha256": "e78be159e9cfce3dcc2f14c595eeb50e109a33edd9062851f3e5e86c96332038"
+    },
+    {
+      "path": "src/air/utils/restore-bind-pose.ts",
+      "sha256": "f58737359b9769d9fdc97ab27ef5083027774d66c2f54b554281af7e4cba9ef6"
+    },
+    {
+      "path": "src/air/utils/frame-object.ts",
+      "sha256": "73334924b7e7aa9b725b9e39c5c53a28618a46fc2c59fef58c4c00e69f0ed837"
+    },
+    {
+      "path": "src/air/primitive-geometry.ts",
+      "sha256": "1845716116947c6326f96d7f2afa6b6d2936b9d93d8a8279ac487fd404fe0e7f"
+    },
+    {
+      "path": "src/cocos/particle/particle.ts",
+      "sha256": "175c144bd80ed2792dd80169fc18adea291cae5c2577e9d789c184101d03e1e7"
+    },
+    {
+      "path": "src/cocos/particle/animator/gradient-range.ts",
+      "sha256": "d431f8a3af05e309cd62cd0f0f470416b57030408b36ece0cdb25e989b4932d4"
+    },
+    {
+      "path": "src/cocos/particle/enum.ts",
+      "sha256": "4916eb08de3b86d220faab66adf78f322be6dd3ab6b269f3e4c65d75fc26b65f"
+    },
+    {
+      "path": "src/cocos/particle/animator/curve-range.ts",
+      "sha256": "7cce1e419380cfdf0fef297d30649d58bdf6f3db7dd2b7403b47ede857fb72a0"
+    },
+    {
+      "path": "src/cocos/particle/particle-general-function.ts",
+      "sha256": "3b479f9dfd0124275cc95842364660609634288840b5dbf2da8953439b6ed8e6"
+    },
+    {
+      "path": "src/cocos/particle/animator/color-overtime.ts",
+      "sha256": "77ea198aa403e4de94077089e90a8f977b76c0167b01a54fb197d1ccfa8e03b4"
+    },
+    {
+      "path": "src/cocos/particle/animator/force-overtime.ts",
+      "sha256": "43b6719485c5633392ec89b4f8f9bb31ec4cac7b4348f06aed5696b24ffb241a"
+    },
+    {
+      "path": "src/cocos/particle/animator/limit-velocity-overtime.ts",
+      "sha256": "3bbd0adbd984d89e3e469011abe53eb85f2373e04f38ce3a4034485396ba51b2"
+    },
+    {
+      "path": "src/cocos/particle/animator/rotation-overtime.ts",
+      "sha256": "99f1b0732ec734153fb178dd2b0f25dfabb589247476413600adb370d2f63be6"
+    },
+    {
+      "path": "src/cocos/particle/animator/size-overtime.ts",
+      "sha256": "3a5a23b70b860dd185b0acdbd47baf5d6463af7e7eb5ff43179b4a57aa8ef775"
+    },
+    {
+      "path": "src/cocos/particle/animator/texture-animation.ts",
+      "sha256": "6ebf897fe1cfc524c617481f0cc641b07e516c3dff6ea795847dd9e8a379cfbb"
+    },
+    {
+      "path": "src/cocos/particle/animator/velocity-overtime.ts",
+      "sha256": "dfd0b075b091aede22491844d31cab7c84f154f199b4a76801d1d47884dbf959"
+    },
+    {
+      "path": "src/cocos/particle/burst.ts",
+      "sha256": "25cdd5da8b5a493b6f1cadf442b7461b1dbe80899c6c516520b71e396fcab2a2"
+    },
+    {
+      "path": "src/cocos/particle/emitter/shape-module.ts",
+      "sha256": "46f6dbf85c7a04f0167aa8d0ecea7452a1e6a20d43890fb3b0d22c34c97036ce"
+    },
+    {
+      "path": "src/cocos/particle/models/particle-batch-model.ts",
+      "sha256": "a1241ae26812a6db996548429c201384d9ed31a1e5e0de3f3a5aed36e3eaf187"
+    },
+    {
+      "path": "src/cocos/particle/renderer/particle-system-renderer-base.ts",
+      "sha256": "5dcf548b38367e988e5573fdede8754fc2611fc8f26d2550983d58e09c2a8fec"
+    },
+    {
+      "path": "src/cocos/particle/noise.ts",
+      "sha256": "017ffb9c552b19852f7855a525ddbc9e73dda272a19a77e62f8a6f9503869982"
+    },
+    {
+      "path": "src/cocos/particle/renderer/particle-system-renderer-cpu.ts",
+      "sha256": "a8f8abaed0506c95332febb44f443bd2b4c78d46964ff7f9a46e4e5362c302a1"
+    },
+    {
+      "path": "src/cocos/particle/renderer/particle-system-renderer-gpu.ts",
+      "sha256": "3047d736d2e4966c94059644e580898439062844970e6e1855db34424c933421"
+    },
+    {
+      "path": "src/cocos/particle/renderer/particle-system-renderer-data.ts",
+      "sha256": "b7c87c32eb2c53bdca9214c7443622f9960e1477848cb3d6ed370a90f063083f"
+    },
+    {
+      "path": "src/cocos/particle/renderer/trail.ts",
+      "sha256": "2acfa208a045047550d206741e1284ccf1414088ecc05a818d38a5d8571b5a8e"
+    },
+    {
+      "path": "src/cocos/particle/particle-culler.ts",
+      "sha256": "4e501e31c7a38f166c967e112b6b5d193d520e281353ca61cea119537ceb0f33"
+    },
+    {
+      "path": "src/cocos/particle/animator/noise-module.ts",
+      "sha256": "160e04f56ad3246784a12e19360a27aaac7505a3a9ca0133cfa95b9f0bcae61e"
+    },
+    {
+      "path": "src/cocos/particle/particle-system.ts",
+      "sha256": "638259d085ecfdbc48aa4645a8d172ff451f3b759bd17b0cc10bbff05bd53e44"
+    },
+    {
+      "path": "src/cocos/particle/billboard.ts",
+      "sha256": "870919d0a483b13f51953536b0e9a514113956ec9230acb5266421e47151b44c"
+    },
+    {
+      "path": "src/cocos/particle/models/line-model.ts",
+      "sha256": "dde69852281c1e2dd5a6434cb2f067ba1a44bf9712239ab2d0f77e47f61a8684"
+    },
+    {
+      "path": "src/cocos/particle/line.ts",
+      "sha256": "41623055303ef07d9b24a13b9a2404d3d30d4dc9c6c7470c431cb5908b2518a7"
+    },
+    {
+      "path": "src/cocos/particle/particle-utils.ts",
+      "sha256": "287d67fbc7f73427aec5bc65758d82be2f305f407f7ee2ebafcb30be94238a3b"
+    },
+    {
+      "path": "src/cocos/particle/deprecated.ts",
+      "sha256": "7ce2c65ed3727138a650f207bc0b3ea8b707282eabd9a5296359250d5f9aa6bf"
+    },
+    {
+      "path": "src/cocos/particle/index.ts",
+      "sha256": "5ab2f22495f7dda2821a3ca7ab4690e76f9048634d9c6c70957f51275adf278a"
+    },
+    {
+      "path": "src/air/particles.ts",
+      "sha256": "4529c127fb772353c512eb1e018e9aa40e64dd7259994d1f40f5b474924f01e4"
+    },
+    {
+      "path": "src/air/assets/gltf/decoder/meshopt.ts",
+      "sha256": "445a64b8417d6c718a5c60547862fa7e489ebcacd960dfe623454377e12380f6"
+    },
+    {
+      "path": "src/air/assets/gltf/decoder/draco.ts",
+      "sha256": "ff86467f7ee72da908c46da0019d97d0ab6ea3d4e14794e956b81d73f8df3689"
+    },
+    {
+      "path": "src/air/assets/gltf/decoder/ktx2.ts",
+      "sha256": "de298c031d41a622dc7f58ff36b9fb6d507aeb897166a0e7523f21c52862b26f"
+    },
+    {
+      "path": "src/air/assets/gltf/index.ts",
+      "sha256": "fbe263fd518da7240b4debff4844154d8029e3b7a0217e27689795b4433c7b91"
+    },
+    {
+      "path": "src/air/assets/bmfont.ts",
+      "sha256": "3a3bc2ec85351f9b1f5499d7b3d08da0363ace222a519ac672a579acf879ec2f"
+    },
+    {
+      "path": "src/air/assets/atlas/atlas-parser.ts",
+      "sha256": "768080e89bece46a0343c9828008d551206d3ce6c8611a34aefa6c8051d0b4af"
+    },
+    {
+      "path": "src/air/assets/atlas/atlas-factory.ts",
+      "sha256": "496435d66a1011c8ff65b73f542a68dee5733386a6ebecdfc4ad77a09afd3edb"
+    },
+    {
+      "path": "src/air/assets/atlas/atlas-loader.ts",
+      "sha256": "15d8d71ddda45e3c8d91827df1a3e1a7503dfca278fd6c683b6d60d28913f9cd"
+    },
+    {
+      "path": "src/air/rendering/transmission-capture.ts",
+      "sha256": "335ffb0aa3f1c7ca54f664989a9625b77ec04d119601ae3e5c098b72bfdcd0c5"
+    },
+    {
+      "path": "src/air/effects/unlit-fog.ts",
+      "sha256": "5e2e4b1a7023b9f821c243e662021949b0f2b93c66fd4cbe4c52289b0f8aeb26"
+    },
+    {
+      "path": "src/air/rendering/shader-diagnostics.ts",
+      "sha256": "80c41e3a082a0356f7cf1f4583f14efa957ff21c6483327910dd64a3bfe6c5ad"
+    },
+    {
+      "path": "src/cocos/gfx/webgl2/webgl2-define.ts",
+      "sha256": "1ee3657b9e8119e3407d3e1472be81cb70e4f84be44b9eab2746e2470a826d51"
+    },
+    {
+      "path": "src/cocos/gfx/gl-constants.ts",
+      "sha256": "978d05741c356101afa17751c8c334471d2f5d13e16dcb5a15136533e7c38fca"
+    },
+    {
+      "path": "src/cocos/gfx/webgl2/webgl2-commands.ts",
+      "sha256": "892b3523fd4648a5bbfb2477e0d5d5ae3714d086fdb2b7241c6750f25503f003"
+    },
+    {
+      "path": "src/air/rendering/render-target.ts",
+      "sha256": "41f46788d0d1f0f414c043326d46619094a2c1973a408ac86aefe6722c5007c0"
+    },
+    {
+      "path": "src/air/rendering/screen-effect.ts",
+      "sha256": "14dcd68a54f39b1f37518a1b71a85a4ba490912b044efdadfd32a45ca50478bf"
+    },
+    {
+      "path": "src/air/rendering/screen-pass.ts",
+      "sha256": "2b8f5685028abf628c144732382ff338b755ec6a968237c2f0343eaff51fee1a"
+    },
+    {
+      "path": "src/cocos/rendering/scene-culling.ts",
+      "sha256": "ea5972d8c2d252f6fcfb119446fae2b93b34eae2f23bb60dd109abf5cacd57ab"
+    },
+    {
+      "path": "src/cocos/rendering/global-descriptor-set-manager.ts",
+      "sha256": "1e7bc49aaab03e9da2ea243bb28969800838405ca0f1fbe3a0c92b8b3312da04"
+    },
+    {
+      "path": "src/cocos/rendering/pipeline-ubo.ts",
+      "sha256": "b53f5181eec991ede3c14e8c2c98570bb7c4ae1311eb8f26577e896b884bd4f1"
+    },
+    {
+      "path": "src/cocos/rendering/render-stage.ts",
+      "sha256": "f8101f09283e66b95f72d0ec2d064eb38ceff120ef56fe11a99840d41f4e6ecd"
+    },
+    {
+      "path": "src/cocos/rendering/render-flow.ts",
+      "sha256": "a43189a03aaa5823c6cc6b2ad4c51e6f1d0ab3c76da82286d94a764bcbb3c384"
+    },
+    {
+      "path": "src/cocos/rendering/render-pipeline.ts",
+      "sha256": "d9fbf6767f26917c10d5ac1f946f3799c49c38e507d9d91828107389811a9832"
+    },
+    {
+      "path": "src/cocos/rendering/enum.ts",
+      "sha256": "daadb556c837deea3dca54a190b8d3f21eeb5dee602c65e2587a9f81a3a90671"
+    },
+    {
+      "path": "src/cocos/rendering/pipeline-serialization.ts",
+      "sha256": "51e2ce43ddad462f4aa3ceb6decbaa318b3399a21e29ac6b000a9be40d983dd1"
+    },
+    {
+      "path": "src/cocos/rendering/render-queue.ts",
+      "sha256": "8b8d4a28d645984c33d23d0043fcd28e549e5e62df75eae731f3c705e804e102"
+    },
+    {
+      "path": "src/cocos/rendering/render-instanced-queue.ts",
+      "sha256": "a2322e710211b5e2f3d5bc50124d381e7eb72953b5febb9102f8f1cca4fc880d"
+    },
+    {
+      "path": "src/cocos/rendering/render-additive-light-queue.ts",
+      "sha256": "689ba5867cf3255e3082b840fb30c10e7f58b8435a291cc6afe73e1aaa457682"
+    },
+    {
+      "path": "src/cocos/rendering/planar-shadow-queue.ts",
+      "sha256": "a9b67e96865533814a734097b1e90350112f3fd9a164e14d053a05bf9323304f"
+    },
+    {
+      "path": "src/cocos/rendering/ui-phase.ts",
+      "sha256": "21aef4dd9429f1f7bc129c0ec1cbab12e7a348391281b76f5b292091dcc15b15"
+    },
+    {
+      "path": "src/cocos/rendering/forward/forward-stage.ts",
+      "sha256": "a00340dde1da38dd071e86693734e1efa8e66f7138b82338492107383c3b1f0f"
+    },
+    {
+      "path": "src/cocos/rendering/forward/forward-flow.ts",
+      "sha256": "84b0f2f87b8aa689d6944be97729e64967414d2cff30e610b8ad3b25740aba58"
+    },
+    {
+      "path": "src/cocos/rendering/render-shadow-map-batched-queue.ts",
+      "sha256": "224c24f42d32541d6b6f086546e466648396321bc6c16bf0dfd404d1cbfd3b04"
+    },
+    {
+      "path": "src/cocos/rendering/shadow/shadow-stage.ts",
+      "sha256": "5f925545a3704b93146e8550edc3c4b4deb4c0593ee157ce8c9efa39ba532099"
+    },
+    {
+      "path": "src/cocos/rendering/shadow/shadow-flow.ts",
+      "sha256": "7081faa7db3e080b72935712da229ba98be4998df1f0f9fdf676a23ed956326b"
+    },
+    {
+      "path": "src/cocos/rendering/render-reflection-probe-queue.ts",
+      "sha256": "4eed2cbe7cde29ecd68fe1a65cc8a70f8b199f9ddac5c807303c2df3f733cb54"
+    },
+    {
+      "path": "src/cocos/rendering/reflection-probe/reflection-probe-stage.ts",
+      "sha256": "3f376aaea16c839e1d86f37700bf8d0ccc804f347fe2e05a04ce044d79197a9f"
+    },
+    {
+      "path": "src/cocos/rendering/reflection-probe/reflection-probe-flow.ts",
+      "sha256": "780fa5df8062df27ef9a5a8bb4756844dc7be9a366490ec473a4bf55d37c7ed4"
+    },
+    {
+      "path": "src/cocos/rendering/forward/forward-pipeline.ts",
+      "sha256": "910eea0c3b7abf5c9e7401667459a6ec5b30d12f67073403105cc6edbf91dc34"
+    },
+    {
+      "path": "src/air/rendering/post-process-settings.ts",
+      "sha256": "cd9701039277c4a84b10d28d01021af97e4472d5d0bcb8b47dc09881976648ec"
+    },
+    {
+      "path": "src/air/rendering/post-process-shaders.ts",
+      "sha256": "8528723202b5e368c380a7c929473aa544667988eb1e56ca4acd8ffa2f699974"
+    },
+    {
+      "path": "src/air/rendering/post-process.ts",
+      "sha256": "fda43f16ba982a5a7b57fa8a15ec92d742ff8980f43ac84f945baf3c4fee3d23"
+    },
+    {
+      "path": "src/air/rendering/instance-data.ts",
+      "sha256": "10e7db0d172192494da84ce4f777834b9c79e2e8a237f33eb849527cc6c53cf2"
+    },
+    {
+      "path": "src/air/rendering/instance-material.ts",
+      "sha256": "d5e07711a378fa95240f7b665ab2120bece8148851b50c82b1f3c81bb3ea4977"
+    },
+    {
+      "path": "src/air/rendering/instance-batch.ts",
+      "sha256": "69b43d279699b546a9ecae4beb90f24a2a2960e519ad67accfa963dfbf0b11a9"
+    },
+    {
+      "path": "src/air/rendering/morph-material.ts",
+      "sha256": "ce0adb500bd8b18a48422ef642ada8b5911ca26a5e4d62aacd823a7c901ca544"
+    },
+    {
+      "path": "src/air/rendering/morph-data.ts",
+      "sha256": "a523b97c8811ad7c8fc39b3f1d89e8aba20d78a95de66ced1e800969f80f6ecf"
+    },
+    {
+      "path": "src/air/rendering/morph-field.ts",
+      "sha256": "56a51ecfc80d3c674bec1cbe69b87e607f7d649e7e8862a6a1a108d9b6656cfb"
+    },
+    {
+      "path": "src/air/rendering/point-shapes.ts",
+      "sha256": "a288bf7c009f94d2fe687b988bd6f3146e9d489aef57f354011de6d630096f05"
+    },
+    {
+      "path": "src/air/rendering/point-text.ts",
+      "sha256": "3a476c715b340b3507c7caccd04f91f36e6e0de63c0b46e7d5168be2774f4efb"
+    },
+    {
+      "path": "src/air/effects/vignette.ts",
+      "sha256": "d2702f09c9b28cd5d887aeb90ef0236a91fcb21f1bd798207c4e302355c7788d"
+    },
+    {
+      "path": "src/air/effects/bloom.ts",
+      "sha256": "9e51ee4b7e07f67371ba6892646bc2cebf684a74c479171e19a87643181edeaa"
+    },
+    {
+      "path": "src/air/rendering/color-contract.ts",
+      "sha256": "541ef58b5b5da6aa4e9f5cfb6ce5b0bd8d6dd63e5af93865aa3e9fedbb67a8bc"
+    },
+    {
+      "path": "src/air/rendering/material-diagnostics.ts",
+      "sha256": "a4f9de27f25b35da9b56548809a0bdab31f31082c815015141c220d49b7b774c"
+    },
+    {
+      "path": "src/air/rendering/engine-contracts.ts",
+      "sha256": "f6d68a211dac624ec153343c23ef6df885352e73cad7c63a9177dfd043382922"
+    },
+    {
+      "path": "src/air/ui-glyph-tags.ts",
+      "sha256": "3819be29facfbd0b5fbb7b91dd1241848d275e94df3812b387632a0c034485c8"
+    },
+    {
+      "path": "src/air/ui-glyph-text.ts",
+      "sha256": "1ed2c9aad5837ad028f3a966c7ae88b60bd556a47183070b89878401d2559c2e"
+    },
+    {
+      "path": "src/air/ui-glyph-icons.ts",
+      "sha256": "5a9ba3e134ddf6058767b0d0bcd8577f84fb7628768fc40f2d0cb256fd98b6ba"
+    },
+    {
+      "path": "src/air/ui-typewriter.ts",
+      "sha256": "7bf572629821bb81f50fcc7795bd1651b7a6251f0073762ffd399a00e126eb46"
+    },
+    {
+      "path": "src/cocos/gfx/webgl2/webgl2-descriptor-set.ts",
+      "sha256": "c1df3f3bc224bdd0e94e3a95ce18cbd71f03b5a35989accbd0bf25d30d2bb3bc"
+    },
+    {
+      "path": "src/cocos/gfx/webgl2/webgl2-gpu-objects.ts",
+      "sha256": "ab0f3e85457ef185a984108de009b660e18dcb3fc2d696d24d335ef2b49cfd7d"
+    },
+    {
+      "path": "src/cocos/gfx/webgl2/webgl2-buffer.ts",
+      "sha256": "9a4970059392e80461317000a9d4a5fa995babc2793bd434958d0ab95b41288e"
+    },
+    {
+      "path": "src/cocos/gfx/webgl2/webgl2-command-buffer.ts",
+      "sha256": "57ac1d540c4adae69723dcb1a7137fa5391a94ba85f755e2dcefa0ba73ccf68b"
+    },
+    {
+      "path": "src/cocos/gfx/webgl2/webgl2-framebuffer.ts",
+      "sha256": "32ea0195515620562380f89bd0d15c1f3a6137dc7dc79402c77c18ae5fbf2245"
+    },
+    {
+      "path": "src/cocos/gfx/webgl2/webgl2-input-assembler.ts",
+      "sha256": "c738007113c1ba848138bf2b33b3a7266dd0a7deeca31d73abc742d11bf5a066"
+    },
+    {
+      "path": "src/cocos/gfx/webgl2/webgl2-descriptor-set-layout.ts",
+      "sha256": "cc06b8b53a7522e83bea683013f812a750b87e04ea43ff3d1aa0f6f24ba8c624"
+    },
+    {
+      "path": "src/cocos/gfx/webgl2/webgl2-pipeline-layout.ts",
+      "sha256": "9237045e5ae259b2f26a8485ad200a95bf823fd30aede89146bc84e484331ce9"
+    },
+    {
+      "path": "src/cocos/gfx/webgl2/webgl2-pipeline-state.ts",
+      "sha256": "7a64bef94dc62851be49c72b323ad997db92256a191ca5bded9301763335e79b"
+    },
+    {
+      "path": "src/cocos/gfx/webgl2/webgl2-primary-command-buffer.ts",
+      "sha256": "ea659781820de4640bf71515095334407eaf1a97ac6e7698b67c1e18979bc450"
+    },
+    {
+      "path": "src/cocos/gfx/webgl2/webgl2-queue.ts",
+      "sha256": "3d7c996202949312cf02cd456fa387fd81fad8c569fd6a1208247404bbcfd95a"
+    },
+    {
+      "path": "src/cocos/gfx/webgl2/webgl2-render-pass.ts",
+      "sha256": "16696761a2979ab00b01a33625c74d7bf78a45f72685d347baa9799eda46004f"
+    },
+    {
+      "path": "src/cocos/gfx/webgl2/states/webgl2-sampler.ts",
+      "sha256": "1b87d0f0dd813dd0051744bd55ea9eeee80a30268f36732f5a4ccbcefb96ef3b"
+    },
+    {
+      "path": "src/cocos/gfx/webgl2/webgl2-shader.ts",
+      "sha256": "97141b23827a7eff06a8b3b2ca0920b1edde4c91fc3f1f89c8bfa577d42fb807"
+    },
+    {
+      "path": "src/cocos/gfx/webgl2/webgl2-state-cache.ts",
+      "sha256": "afa25786b21f7780f67f10c72a34d9beb8a1a5d85313e81d1d5e16c11dbc75e3"
+    },
+    {
+      "path": "src/cocos/gfx/webgl2/webgl2-texture.ts",
+      "sha256": "6b51b3a8c03cfb2127dcff5963583113ef0d0311926dcc4f39384077435fba57"
+    },
+    {
+      "path": "src/cocos/gfx/webgl2/webgl2-swapchain.ts",
+      "sha256": "4fb7a8772032a5802a10874739a497ca7fd89b3902d82f1f8e5de1d77112780e"
+    },
+    {
+      "path": "src/cocos/gfx/webgl2/webgl2-device.ts",
+      "sha256": "b3cefa92f46e7b78a2fc8af8b96e1355b8b173b84169ca52fb7a6dd4352681dc"
+    },
+    {
+      "path": "src/exports/gfx-webgl2.ts",
+      "sha256": "52b7090d6639a8b74d21b9d83c85afd0d2ec568b07a770d126cfb0266f19fd1f"
+    },
+    {
+      "path": "src/cocos/gfx/empty/empty-descriptor-set.ts",
+      "sha256": "05d9dc2f733f56f87651c811f77ebe08eb97fba57eedc338688eebef1ff49c5e"
+    },
+    {
+      "path": "src/cocos/gfx/empty/empty-buffer.ts",
+      "sha256": "dc4cac1fae2ad8b549bd6ecbe255d048b2e9164e1eea98514ad57cd49f2acc8d"
+    },
+    {
+      "path": "src/cocos/gfx/empty/empty-command-buffer.ts",
+      "sha256": "b0c318d8bc89cfba05774715171a9f658d411432c975e53707622a2e4e9f4a20"
+    },
+    {
+      "path": "src/cocos/gfx/empty/empty-framebuffer.ts",
+      "sha256": "038896fa6cffa1da9138c6c72e743f048bddc0708bdd0dab99a825fa19d7fc60"
+    },
+    {
+      "path": "src/cocos/gfx/empty/empty-input-assembler.ts",
+      "sha256": "c00e60f740e78495defba1c3fb03f4855a08ec3ec2960222173c3ca16959a471"
+    },
+    {
+      "path": "src/cocos/gfx/empty/empty-descriptor-set-layout.ts",
+      "sha256": "2fb2e141fb716bd0cb627d02fc7394b7848cf3b3add5cac5bd99e0d450578aa1"
+    },
+    {
+      "path": "src/cocos/gfx/empty/empty-pipeline-layout.ts",
+      "sha256": "e26fc55a3f84de2f39f4f322403dd10590160f5aaecb5bbcb12d389a2804a944"
+    },
+    {
+      "path": "src/cocos/gfx/empty/empty-pipeline-state.ts",
+      "sha256": "716481e42b83c9828ac0f55296e82d83391d6caef24edf7288aec4fcd9d89b90"
+    },
+    {
+      "path": "src/cocos/gfx/empty/empty-queue.ts",
+      "sha256": "898ffecd4d6030eb15fef0ba15a1ad0e4f8be6fffb6f8afa36dc3578827f86ae"
+    },
+    {
+      "path": "src/cocos/gfx/empty/empty-render-pass.ts",
+      "sha256": "3e2f06381bcf3f7b37db07bb4e1df1bdf71d6ba97686f577d9c6eee7eae8ac89"
+    },
+    {
+      "path": "src/cocos/gfx/empty/empty-shader.ts",
+      "sha256": "9e202b28ff1e886cc66277ad506d6e3b3a50ab2861fa094dea9be65fcd8d5bda"
+    },
+    {
+      "path": "src/cocos/gfx/empty/empty-texture.ts",
+      "sha256": "2888ffeb4ef74f1d986e9b4269758291d3eeff9433790e7dc5113abfeba2fa51"
+    },
+    {
+      "path": "src/cocos/gfx/empty/empty-swapchain.ts",
+      "sha256": "8349fe10f04620b90121f6dcfe830e52cbcf6ec1b468451a6356a0aa83f5e7d8"
+    },
+    {
+      "path": "src/cocos/gfx/empty/empty-device.ts",
+      "sha256": "ca4ed6c14fed5c60eaacb1e0e22469a28a1063696cc7432b09cfcfae0dec1b38"
+    },
+    {
+      "path": "src/exports/gfx-empty.ts",
+      "sha256": "b3fbc46d93b59dcf63735d4445a290b7c925f0fe0e48cf3ece55baec64c39022"
+    },
+    {
+      "path": "src/exports/custom-pipeline.ts",
+      "sha256": "197153eb0f500072212e9cf5400aac48d63be713521315f64ae022ccfd6b1bbc"
+    },
+    {
+      "path": "src/cocos/rendering/deprecated.ts",
+      "sha256": "c639141b065f01ee66007eb996b8af1bc11e6a15bd50d4bedb8a73a00274860f"
+    },
+    {
+      "path": "src/cocos/rendering/deferred/gbuffer-stage.ts",
+      "sha256": "a2c1c623aa7901a68aecfad7abcd4a53bcab90df4e9a4517e9f2bb8fa7ca6062"
+    },
+    {
+      "path": "src/cocos/rendering/deferred/lighting-stage.ts",
+      "sha256": "d66983aa4d3669960eb8d3389a63fb899b3ae87c4bac41400857055295b5ed25"
+    },
+    {
+      "path": "src/cocos/rendering/deferred/postprocess-stage.ts",
+      "sha256": "99dced6527fc415cf634a48a806c40d7fcc46537c649629e2bda4487bfc8c0a2"
+    },
+    {
+      "path": "src/cocos/rendering/deferred/deferred-pipeline-scene-data.ts",
+      "sha256": "5109c43697612115412a597495a679e80a1319fca86501a430b92608592ff4b1"
+    },
+    {
+      "path": "src/cocos/rendering/deferred/bloom-stage.ts",
+      "sha256": "27e6bd05e615770262984c2c97cfe180b8c0a4315887d058549e1cc620e43f5d"
+    },
+    {
+      "path": "src/cocos/rendering/deferred/main-flow.ts",
+      "sha256": "c039a60e180745ceeed64ce69fc8783457a366b25dc3b48c1add5e737e82f22d"
+    },
+    {
+      "path": "src/cocos/rendering/deferred/deferred-pipeline.ts",
+      "sha256": "0b8026cd71cfad053d8e077b886337cd6b3e0a666000ea6263307e62594af13f"
+    },
+    {
+      "path": "src/exports/legacy-pipeline.ts",
+      "sha256": "c99980e25b8b8c85f58aab3c8d9156527ade14fa46786c1537a9f616bae2008c"
+    }
+  ]
+}

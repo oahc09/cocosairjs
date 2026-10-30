@@ -2,6 +2,8 @@
 
 浏览器可以直接加载 glTF 2.0 JSON、多文件 glTF 或 GLB，无需 Creator 或离线转换。先完成 `createAirApp()`，再加载模型；模型使用原生 Cocos 资源、渲染器和 `Animation`。
 
+请求优先级/HTTP 缓存、跨源 headers 与取消边界见 [请求策略合同](request-policy.md)；原生材质动态修改与虹彩参数见 [材质参数合同](material-parameter-contract.md)。
+
 需要浏览更多官方模型或比较显示效果，使用 [官方模型目录与对照预览](gltf-catalog.md)，地址为 `http://127.0.0.1:7462/gltf-catalog/`。
 
 ## 加载并播放

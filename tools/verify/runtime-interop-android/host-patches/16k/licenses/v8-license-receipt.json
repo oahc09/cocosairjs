@@ -1,9 +1,0 @@
-{
-  "source": "https://raw.githubusercontent.com/v8/v8/11.6.189.22/LICENSE",
-  "tag": "11.6.189.22",
-  "bytes": 3098,
-  "sha256": "81680185f0cb339021e3b73714499264de72f33b17cfdb0c14f400de6d95cf0e",
-  "fetchedAt": "2026-10-26T00:24:24.537Z",
-  "retainedFrom": "cxx-static-host-patch-attempt-1/licenses/LICENSE-V8-11.6.189.22.txt",
-  "scope": "V8 root BSD license, including its original externally-maintained-library notice; not a complete binary third-party license inventory."
-}

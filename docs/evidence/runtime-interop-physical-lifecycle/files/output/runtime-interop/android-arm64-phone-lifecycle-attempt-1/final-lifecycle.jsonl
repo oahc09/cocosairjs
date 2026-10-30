@@ -1,9 +1,0 @@
-{"event":"created","pid":29934,"surfaceGeneration":0,"orientation":1,"elapsedRealtime":236680072}
-{"event":"resume","pid":29934,"surfaceGeneration":0,"orientation":1,"elapsedRealtime":236680075}
-{"event":"surface-created","pid":29934,"surfaceGeneration":1,"orientation":1,"elapsedRealtime":236680101}
-{"event":"surface-changed","pid":29934,"surfaceGeneration":1,"orientation":1,"elapsedRealtime":236680104}
-{"event":"configuration-changed","pid":29934,"surfaceGeneration":1,"orientation":2,"elapsedRealtime":236681797}
-{"event":"surface-changed","pid":29934,"surfaceGeneration":1,"orientation":2,"elapsedRealtime":236681805}
-{"event":"configuration-changed","pid":29934,"surfaceGeneration":1,"orientation":1,"elapsedRealtime":236682211}
-{"event":"surface-changed","pid":29934,"surfaceGeneration":1,"orientation":1,"elapsedRealtime":236682219}
-{"event":"pause","pid":29934,"surfaceGeneration":1,"orientation":1,"elapsedRealtime":236683445}

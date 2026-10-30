@@ -1254,6 +1254,15 @@ export class ParticleSystem extends ModelRenderer {
             }
         }
 
+        // Initialize a newly enabled trail before CPU simulation can access its owner/pool.
+        if (!self.renderer.useGPU && thisTrailModule && thisTrailModule.enable && !thisTrailModule.inited) {
+            thisTrailModule.clear();
+            thisTrailModule.destroy();
+            thisTrailModule.onInit(this);
+            thisTrailModule.enable = false;
+            thisTrailModule.enable = true;
+        }
+
         if (self._isPlaying) {
             self._time += scaledDeltaTime;
 
@@ -1287,16 +1296,6 @@ export class ParticleSystem extends ModelRenderer {
             }
         }
 
-        if (!self.renderer.useGPU && thisTrailModule && thisTrailModule.enable) {
-            if (!thisTrailModule.inited) {
-                thisTrailModule.clear();
-                thisTrailModule.destroy();
-                thisTrailModule.onInit(this);
-                // Rebuild trail buffer
-                thisTrailModule.enable = false;
-                thisTrailModule.enable = true;
-            }
-        }
     }
 
     protected beforeRender (): void {

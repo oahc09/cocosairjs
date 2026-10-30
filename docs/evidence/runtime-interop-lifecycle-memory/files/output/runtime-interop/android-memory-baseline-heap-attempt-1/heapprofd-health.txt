@@ -1,8 +1,0 @@
-"name","value","severity"
-"heapprofd_missing_packet",0,"error"
-"heapprofd_non_finalized_profile",0,"error"
-"heapprofd_last_profile_timestamp",255289512207,"info"
-"heapprofd_sampling_interval_adjusted",0,"info"
-"heapprofd_unwind_time_us",4585680,"info"
-"heapprofd_unwind_samples",242977,"info"
-"heapprofd_client_spinlock_blocked",65000,"info"

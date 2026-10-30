@@ -1,0 +1,94 @@
+{
+  "id": "instance-batch",
+  "version": "1.0.0",
+  "status": "draft",
+  "specStatus": "draft",
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "title": "Dynamic Instance Batches",
+  "category": "rendering",
+  "apiClaims": ["createAirInstanceBatch", "utils.createMesh", "Camera", "Node", "Scene"],
+  "capabilities": ["rendering"],
+  "learning": {
+    "goal": "使用一个原生 Node/Model 与共享几何构造可更新、可拾取的实例批次",
+    "points": [
+      "暂存数据与已提交数据分离",
+      "显式容量、有效数量、范围提交",
+      "包围盒、射线选择与实际绘制一致",
+      "零实例和共享资源所有权"
+    ]
+  },
+  "effect": {
+    "functional": "创建一个批次，按钮执行扩容、范围更新、清空和恢复；指针根据原生相机射线选择实例。",
+    "visual": "彩色索引方块组成网格；扩容后显示 2048 实例，范围更新改变前 16 个颜色，选中实例高亮。"
+  },
+  "api": {
+    "primary": ["createAirInstanceBatch"],
+    "supporting": ["utils.createMesh", "Camera", "Node", "Scene"],
+    "claims": ["createAirInstanceBatch", "utils.createMesh", "Camera", "Node", "Scene"],
+    "forbiddenShortcut": [
+      "不得用逐实例 Node 或多个 MeshRenderer 伪装为共享实例缓冲。",
+      "不得仅检查字段宣称绘制、拾取或释放通过。"
+    ],
+    "evidence": [
+      {
+        "api": "createAirInstanceBatch",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L34"
+      },
+      {
+        "api": "utils.createMesh",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L33"
+      },
+      {
+        "api": "Camera",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L26"
+      },
+      {
+        "api": "Node",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L22"
+      },
+      {
+        "api": "Scene",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L21"
+      }
+    ]
+  },
+  "validation": {
+    "functional": ["scene-ready", "node-exists", "no-runtime-error"],
+    "visual": ["visible-frame"],
+    "interaction": [],
+    "lifecycle": [],
+    "capability": []
+  },
+  "ready": {
+    "validators": ["scene-ready"]
+  },
+  "assets": [],
+  "scene": {
+    "expectedGraph": {
+      "nodes": ["Main Camera", "Instance batch"]
+    }
+  },
+  "interaction": {
+    "steps": []
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "原创程序化几何；仓库 MIT 许可；无外部资产。"
+  }
+}

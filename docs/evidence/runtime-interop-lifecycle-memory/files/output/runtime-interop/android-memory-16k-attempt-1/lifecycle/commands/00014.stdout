@@ -1,7 +1,0 @@
-Starting: Intent { cmp=com.mystral.engine.interop/com.mystral.engine.MystralActivity (has extras) }
-Status: ok
-LaunchState: COLD
-Activity: com.mystral.engine.interop/com.mystral.engine.MystralActivity
-TotalTime: 497
-WaitTime: 498
-Complete

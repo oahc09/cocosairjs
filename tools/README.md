@@ -1,39 +1,5 @@
 # Cocos AIR 工具
 
-## 通用 WebGPU Runtime 桌面兼容探针
-
-Android 原生 APK 的资产准备与 ADB/PixelCopy 采集使用 `tools/build/runtime-interop-android.cjs` 和 `tools/verify/runtime-interop-android.cjs`。写入、安装、专用包停止与证据范围见 [Android 互操作说明](../docs/reference/android-runtime-interop.md)，模拟器和真机结果单独计数。
-
-Android 累计宿主修复、binary wrapper 和固定依赖回执见 [独立补丁交付](verify/runtime-interop-android/host-patches/README.md)；`acceptance.json` 将最终 APK 与源码、SDK 和设备报告分别绑定。默认图标演示及一次同 Surface 暂停恢复不扩大为完整 Android 生命周期、ARM64 或真机验收。
-
-最新 SDL 3.2.30 / `c++_static` 候选见 [16 KB 交付](verify/runtime-interop-android/host-patches/16k/README.md)与其 `git-delivery.json`。ARM64、static、16 KB collector、色彩/进程 helper 和构建/审计脚本的原始字节另存于[验收源码快照](verify/runtime-interop-android/verification-snapshots/README.md)；按其清单恢复原路径后使用，不将历史快照作为新的直接运行入口。
-
-`node tools/verify/runtime-interop-android-lifecycle.cjs --serial=<emulator> --apk=<candidate.apk> --python=<python> --out=<new-directory>` 单独验证后台、锁屏、真实 Surface 毁建及默认 900 秒有界连续运行。它只操作已安装的专用 debug 包和明确指定的模拟器，不安装 APK、不设置锁屏凭据或修改设备配置；设备必须事先允许显示 keyguard。每次恢复先验证原画面自动呈现，再发送真实触摸；15 分钟采样不能补跑填空。正常 native 退出、日志采集器关闭和进程清理分别判定。`--soak-seconds=0` 仅作诊断，不能输出完整 PASS。详见 [Android 生命周期说明](../docs/reference/android-runtime-interop.md#生命周期验证工具)。
-
-`tools/build/runtime-interop-android-host.ps1` 与 `runtime-interop-android-finalize.py` 为本轮隔离宿主候选构建和静态核验入口，使用已准备的固定依赖、SDK/stage4 与 Windows 工具链，不下载依赖。前者写新输出目录及宿主 Gradle 构建目录，备份后仅删除一个指定的旧生成 APK以重新打包；后者核对源码/资产前后指纹、签名、16 KB ELF/ZIP 和静态链接闭包，不连接设备。
-
-`node tools/verify/runtime-interop-android-lifecycle-audit.cjs --report=<closed-report.json> --out=<new-directory>` 只读复核已关闭的完整生命周期证据，不连接设备。它重算系统图像及裁图、恢复前后顺序、实际采样间隔和退出/关闭记录；当前严格接受本轮 x64 无 ICC 截图，不能借用历史真机色彩证据。审计写新的结果目录，不修改原报告或重标失败。
-
-`node tools/verify/runtime-interop-android-memory.cjs --serial=<emulator> --apk=<candidate.apk> --python=<python> --baseline-report=<closed-900s-baseline.json> --out=<new-directory>` 在冻结生命周期合同之上采集原生引用计数和同口径 meminfo 对照；它复用旧入口，不修改截图、900 秒、恢复或退出门槛。新报告另查当前 PID 的未捕获 V8 回调错误、分块日志完整性、18 类真实 acquire/release 守恒、Canvas 峰值/帧边界和最终 cleanup。`--soak-seconds=0` 仍仅诊断；`PASS_WITH_OPEN_FINDINGS` 不能简写成无泄漏。`runtime-interop-android-memory-audit.cjs --report=<closed-memory-report> --out=<new-directory>` 是无 ADB 的闭合证据复核，图像仍由上面的独立生命周期审计负责。
-
-`node tools/verify/runtime-interop-android-phone-memory.cjs --serial=<physical-device> --apk=<installed-arm64.apk> --python=<python> --expected-page-size=<actual-bytes> --soak-seconds=900 --out=<new-directory>` 采集首份真机前台资源/内存基线：10 秒可信触摸、计划 30 秒系统图像、计划 300 秒 meminfo，沿用真实原生计数、退出及日志关闭门槛。它不安装或自动解锁手机、不改安全或超时设置；必须先正常解锁，不能在锁屏背后计启动成功。phone schema 明确为 foreground-only，不套用模拟器 PSS 比较，也不冒充完整 HOME/Settings/安全锁屏生命周期通过。
-
-`node tools/verify/runtime-interop-android-phone-lifecycle.cjs --serial=<physical-device> --apk=<installed-arm64.apk> --python=<python> --expected-page-size=4096 --out=<new-directory>` 独立验证真机初始画面、HOME、Settings/真实 Surface 毁建和锁屏恢复，写新目录，不安装或重建 APK。后台须实际 STOPPED 后才将原任务切回前台；先验证自动恢复原画面，再发可信触摸。锁屏只发 sleep/wakeup，用户正常解锁，默认 180 秒人机等待与解锁观测起点后的原 15 秒恢复预算分开，不自动 dismiss、不输入凭据或改设置。四阶段 PASS 仅认证同 Activity 短会话，不包含连续运行。
-
-`node tools/verify/runtime-interop-android-phone-lifecycle-audit.cjs --report=<closed-report.json> --out=<new-directory>` 不连接设备，独立复核上述原始命令、时序、画面与资源退出，并调用 `runtime-interop-android-phone-lifecycle-icc-replay.py` 在新审计目录进行全屏 RGBA/ICC 独立重放；保留原图、profile、裁图及重放结果，不修改采集记录或阈值。需要报告绑定的 Python/Pillow/LittleCMS 和可解析的 JSZip/pngjs。
-
-`node tools/verify/runtime-interop-archive.cjs --inputs=<exact-inventory.json> --out=<new-directory>` 按精确清单逐字节归档原始验收记录，拒绝已有输出或源哈希变化；`--check=<archive-directory>` 只读核对完整清单、字节和 producer 身份，不执行 GPU 或设备测试。本轮 [生命周期与内存原始档案](../docs/evidence/runtime-interop-lifecycle-memory/README.md) 保留 7,791 份原件，包括失败尝试；构建二进制与缓存的排除范围见该说明。
-
-`node tools/verify/runtime-interop.cjs --host=browser --out=<new-directory>` 验证 Canvas/DOM、模块与资产、真实 Shader WASM、GPU 提交与独立截图、错误与设备生命周期，并运行同一 Bundle 的 AIR 立方体。需要可解析的 Playwright 与现有 Chrome/Edge；可用 `--bundle=<current-bundle.js>` 指定新构建。`--host=mystral --executable=<existing-file>` 运行同一探针的原生诊断，保留原始 stdout/stderr 和进程回执。Shader 失败不再屏蔽独立 GPU 接口诊断。
-
-`node tools/build/runtime-interop-capture.cjs --out=<new-output-directory>` 使用已安装的 Windows CMake/C++ 工具链构建独立 Windows.Graphics.Capture helper，只写新的 `output/` 子目录和构建收据。原生采集器用 `--headed --capture-executable=<existing-helper>` 启用按需系统窗口 PNG 与独立像素验证；默认无呈现回调不能输出兼容验收通过。helper不调用宿主的GPU截图接口，不安装依赖或修改宿主。
-
-采集器只写新的输出目录及临时本机 HTTP 服务，不安装或构建引擎/宿主，不改默认 CI，不刷新正典证据；独立构建命令只编译捕获 helper。`node --test tools/verify/runtime-interop.test.cjs` 是不启动浏览器的定向工具回归。命令、五组行为和结果边界见[Runtime 互操作说明](../docs/reference/runtime-interop.md)。
-
-本地 MystralNative 桌面兼容修复作为 `tools/verify/runtime-interop/host-patches/` 下的固定基线补丁和构建配置交付，供独立源码明确应用；`--host-build=<matching-receipt.json>` 将实际宿主构建、源码补丁与 EXE 身份绑定到本轮验收。该补丁不进入默认引擎或 npm 运行时。
-
-手动 `--matrix` 扩展到 PBR、真实骨骼动画、UI 字体/精灵、direct/indirect Compute 四个隔离场景；每个保留前后两张独立 PNG、真实状态/数值与类型正确的释放证据。缺场景或阶段、仅文字字符串存在却无 glyph、错误间接 offset、无像素效果均拒绝，不增加默认命令或 CI 的执行。矩阵仍为 subset，不更新 canonical example evidence。
-
 ## Box2D 3.2 可选后端
 
 `node tools/build/box2d3.cjs --check` 只读检查冻结源码；`--build` 使用固定的 Emscripten 4.0.21 编译，写入 vendor 运行时与 receipt、`build/box2d3/` 和开发专用的 `build/box2d3-samples/`。它不会安装系统工具链；本地路径可通过 `BOX2D_EMSDK`、`NINJA`、`BOX2D_BUILD_DIR` 指定。
@@ -351,7 +317,7 @@ The six tools under `tools/skills/` share the Markdown/YAML parser in `lib/md-pa
 - `node tools/skills/measure-tokens.cjs --loads <actual-events.jsonl> --snapshot <candidate> --source-snapshot <original> --scenarios tools/skills/fixtures/load-scenarios.json --diff ai/plans/skills-token-evidence/recovery/original-B1.json --baseline-loads ai/plans/skills-token-evidence/recovery/reading-original-B1/events-audited.jsonl`: reaggregate genuine same-protocol B1 records and compare against re-read original logs. This command does not perform or invent a reading trial.
 - `node tools/skills/check-p1.cjs --source <immutable-original-checkout> --out <new-temp-directory>`: deterministic CI orchestration; writes only the new directory below the OS temporary root (or RUNNER_TEMP). It reconstructs and checks original/prerequisite/candidate manifests, retains the original path FAIL, runs final gates and checks a complete isolated skills copy. It never executes snapshot code or synthesizes real reading events.
 
-`check-p1.cjs` additionally accepts `--candidate-loads ai/plans/skills-token-evidence/<new-reading>/events.jsonl` to select a fresh real B1 record explicitly. The default still reads the historical recovery record. The selected JSONL must stay inside the repository's skills evidence tree; all existing snapshot, protocol, receipt, answer and cost checks still apply. Selecting a path does not collect a reading trial or make a stale record valid. The earlier `reading-candidate-B1-20261024` manifest and L0 remain preparation only. CI explicitly selects the [new sealed HDR B1 trial](../ai/plans/skills-token-evidence/reading-hdr-refined-B1-20261024T130646090/review.md); [P1 summary and lossless report archive](../ai/plans/skills-token-evidence/hdr-p1-20261024/index.json) retain the complete checks and both reviewed failed readings. The selected trial measures document input, not billing tokens or runtime acceptance.
+`check-p1.cjs` additionally accepts `--candidate-loads ai/plans/skills-token-evidence/<new-reading>/events.jsonl` to select a fresh real B1 record explicitly. The default still reads the historical recovery record. The selected JSONL must stay inside the repository's skills evidence tree; all snapshot, protocol, receipt, answer and cost checks still apply. CI now selects the [Code First guides sealed B1 trial](../ai/plans/skills-token-evidence/reading-vibe-guides-refined-B1-20261025/review.md). Its [execution archive](../ai/plans/skills-token-evidence/vibe-guides-p1-20261025/index.json) records the passing P1 checker, the retained [first B1 failure](../ai/plans/skills-token-evidence/reading-vibe-guides-B1-20261025/review.md), event-schema correction, unchanged Windows symlink tool-test blockage and unchanged manual-consistency failures. The [earlier current trial](../ai/plans/skills-token-evidence/reading-current-B1-1792852467721/review.md) and [its archive](../ai/plans/skills-token-evidence/current-p1-1792852467721/index.json), plus the [HDR trial](../ai/plans/skills-token-evidence/reading-hdr-refined-B1-20261024T130646090/review.md) and [HDR archive](../ai/plans/skills-token-evidence/hdr-p1-20261024/index.json), remain historical evidence for their own snapshots. Earlier preparation-only manifests/L0 are not completed trials. This measures document input, not billing tokens or runtime acceptance.
 
 The original immutable source is commit `66d11fd0c3c189b7dfa6d20645222e237352f9f3`. The focused Skills P1 workflow checks it out separately and verifies all source bytes against the retained manifest. Existing Code quality and browser-smoke gates remain unchanged. Phase two is not part of these tools' acceptance claim.
 
@@ -372,6 +338,26 @@ The output directory must not exist. The tool checks all four archives before wr
 
 `node tools/verify/hdr-post-process.cjs --out=output/hdr-attempt` runs bounded real Chromium calibration and the neon-city controls. Optional `--bundle=<candidate.js>` selects a candidate runtime. Requires Playwright/browser, pngjs and esbuild. Writes a new attempt directory with raw screenshots, source/runtime fingerprints and report; refuses an existing directory and never publishes canonical example evidence. Validates float HDR capture, tone curves, exposure, Bloom spread, resize and release/recreation. Browser close acknowledgement is separate from compositor presentation and OS shutdown evidence.
 
+### Native 3D particles
+
+`node tools/verify/particles.cjs --bundle=<candidate.js> --out=output/playwright/new-particles-attempt` verifies Code First CPU/GPU particle initialization, actual colored pixels and trail geometry, size curves, local/world spaces, pause/resume/drain/replay, invalid GPU module rejection, native GPU resource deletion and reentry. Requires Playwright/browser, pngjs and esbuild. Writes a new local attempt and retains failures; it does not publish canonical evidence or claim compositor timing/OS process custody.
+
+### GPU point/voxel morph fields
+
+`node tools/verify/morph-field.cjs --bundle=<candidate.js> --out=output/playwright/new-morph-attempt` validates GPU position/color interpolation through real pixels, actual indexed instance counts, zero shape/instance transfers during progress changes, atlas row boundaries, font sampling, parent transforms and native GPU deletion. It also checks the FORM / MATTER controls and portrait output. Requires Playwright/browser, pngjs and esbuild. Retains a new local report and screenshots; no canonical promotion, GPU throughput or OS process-custody claim.
+
 ### AFTERLIGHT visual study
 
 `node tools/verify/afterlight-example.cjs --out=output/new-afterlight-attempt` verifies the procedural light-sculpture example with real Chromium screenshots, actual HDR reflection, tone/exposure/Bloom controls, pause/resume, orbit, portrait projection and texture release. `--url=http://127.0.0.1:7454/afterlight/` verifies an already-running real dev server and checks its served bundle hash. `--bundle=<candidate.js>` selects a runtime; Playwright/browser, esbuild and pngjs are required. It writes a new isolated local attempt, retains failures and never publishes canonical Gallery evidence.
+
+## WebGPU runtime interop probes
+
+The opt-in [`runtime-interop`](../docs/reference/runtime-interop.md) collector runs shared browser/native behavior probes and AIR scene checks. [`Android interop`](../docs/reference/android-runtime-interop.md) has separate staging, device, lifecycle, memory and offline audit entry points. These tools do not change the default runtime or ordinary CI scope.
+
+Run focused CPU regressions with:
+
+```sh
+node --test tools/build/source-binding.test.cjs tools/verify/runtime-interop*.test.cjs
+```
+
+Runtime builds also write `<bundle>.sources.json`: exact bundle/map/source hash bindings for source-content-free maps. Missing or mismatched bindings fail closed. These receipts are consistency checks, not signed build attestations; see the guide for their trust boundary and retained-map migration provenance.

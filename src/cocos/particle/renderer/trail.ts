@@ -177,6 +177,11 @@ export default class TrailModule {
     }
 
     public set enable (val) {
+        // Code First configuration may precede ParticleSystem.onLoad().
+        if (!this._particleSystem) {
+            this._enable = val;
+            return;
+        }
         if (val === this._enable && this._trailModel) {
             return;
         }
@@ -365,6 +370,9 @@ export default class TrailModule {
 
     public onInit (ps: ParticleSystem): void {
         this._particleSystem = ps;
+        // Late enable has no default trail material yet; resolve it before rebuilding.
+        ps.processor.updateTrailMaterial();
+        this.updateMaterial();
         this.minParticleDistance = this._minParticleDistance;
         let burstCount = 0;
         const psTime = ps.startLifetime.getMax();

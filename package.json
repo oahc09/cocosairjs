@@ -38,6 +38,7 @@
     }
   },
   "files": [
+    "build/README.md",
     "build/package.json",
     "build/npm/cocosair.module.js",
     "build/npm/cocosair.module.min.js",

@@ -132,7 +132,7 @@ describe('Evidence collector integration safeguards', () => {
         fs.cpSync(path.join(root, 'vendor/box2d'), path.join(temp, 'vendor/box2d'), { recursive: true });
         fs.cpSync(path.join(root, 'tools/build/box2d'), path.join(temp, 'tools/build/box2d'), { recursive: true });
         // Include the exact canonical dependency closure, including generated PAL helpers.
-        const mathReceipt = JSON.parse(fs.readFileSync(path.join(root, 'build/math-build.json'), 'utf8'));
+        const mathReceipt = JSON.parse(fs.readFileSync(path.join(root, 'build/metadata/math-build.json'), 'utf8'));
         for (const relative of Object.keys(mathReceipt.inputs)) {
             const target = path.join(temp, relative);
             fs.mkdirSync(path.dirname(target), { recursive: true });

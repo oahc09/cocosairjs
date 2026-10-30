@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" href="data:," />
+        <title>U08 native depth path</title>
+        <script type="importmap">
+            { "imports": { "cocosair": "/build/cocosair.module.js" } }
+        </script>
+    </head>
+    <body>
+        <button id="run">Run native depth experiment once</button><button id="save" disabled>Save raw report</button>
+        <div id="GameDiv">
+            <div id="Cocos3dGameContainer"><canvas id="GameCanvas" width="64" height="64"></canvas></div>
+        </div>
+        <pre id="status">Loading native depth experiment.</pre>
+        <script type="module" src="./probe.mjs"></script>
+    </body>
+</html>

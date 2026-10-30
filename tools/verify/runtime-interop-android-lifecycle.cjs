@@ -8,7 +8,7 @@ const { execFileSync, spawn } = require('node:child_process');
 const JSZip = require('jszip');
 const { PNG } = require('pngjs');
 const { cropScreen } = require('./runtime-interop-android.cjs');
-const helperRoot = './runtime-interop-android/verification-snapshots/output/runtime-interop/';
+const helperRoot = './runtime-interop-android/lib/';
 const { parseProcessTable, isPackageProcess } = require(helperRoot + 'android-phone-process-table.cjs');
 const { inspectRuntime, inputFiles: colorInputs, normalizeScreen } = require(
     helperRoot + 'android-phone-color-presentation.cjs',

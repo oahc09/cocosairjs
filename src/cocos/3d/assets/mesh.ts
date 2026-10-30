@@ -690,11 +690,11 @@ export class Mesh extends Asset {
      * @param skeleton @en skeleton data @zh 骨骼信息
      * @param skeleton @en skeleton data @zh 骨骼信息
      */
-    public getBoneSpaceBounds (skeleton: Skeleton): (geometry.AABB | null)[] {
+    public getBoneSpaceBounds (skeleton: Skeleton, morphWeights?: readonly (readonly number[])[]): (geometry.AABB | null)[] {
         const { bindposes } = skeleton;
         const signature = bindposes.map((pose) => pose ? Mat4.toArray([], pose).join(',') : '<missing>').join(';');
         const cached = this._boneSpaceBounds.get(skeleton);
-        if (cached && cached.signature === signature) { return cached.bounds; }
+        if (!morphWeights && cached && cached.signature === signature) { return cached.bounds; }
         const bounds: (geometry.AABB | null)[] = [];
         const valid: boolean[] = [];
         const checkedBindposes = new Set<number>();
@@ -719,8 +719,32 @@ export class Mesh extends Asset {
                     'positions require 3 components and joints/weights require 4 matching components per vertex; rebuild the mesh with matching attribute counts.');
             }
             const vertCount = positions!.length / 3;
+            // Morph displacement happens before skinning. Instance weights must never enter the shared base cache.
+            const morph = this._struct.morph?.subMeshMorphs[p];
+            const positionAttribute = morph?.attributes.indexOf(AttributeName.ATTR_POSITION) ?? -1;
+            const targets: { weight: number; values: Float32Array }[] = [];
+            if (morph && morphWeights && positionAttribute >= 0) {
+                for (let target = 0; target < morph.targets.length; target++) {
+                    const weight = morphWeights[p]?.[target] ?? 0;
+                    if (!Number.isFinite(weight)) {
+                        fail('AIR_E_SKINNING_MORPH_WEIGHT', `primitive ${p} target ${target}`, 'morph weight must be finite.');
+                    }
+                    if (weight === 0) { continue; }
+                    const view = morph.targets[target].displacements[positionAttribute];
+                    if (!view || view.count !== positions!.length || (this._data.byteOffset + view.offset) % 4 !== 0
+                        || view.offset < 0 || view.offset + view.count * 4 > this._data.byteLength) {
+                        fail('AIR_E_SKINNING_MORPH_LAYOUT', `primitive ${p} target ${target}`, 'position displacement must contain three floats per vertex.');
+                    }
+                    targets.push({ weight, values: new Float32Array(this._data.buffer, this._data.byteOffset + view.offset, view.count) });
+                }
+            }
             for (let i = 0; i < vertCount; i++) {
                 Vec3.set(v3_1, positions![3 * i + 0], positions![3 * i + 1], positions![3 * i + 2]);
+                for (const target of targets) {
+                    v3_1.x += target.weight * target.values[3 * i];
+                    v3_1.y += target.weight * target.values[3 * i + 1];
+                    v3_1.z += target.weight * target.values[3 * i + 2];
+                }
                 for (let j = 0; j < 4; ++j) {
                     const idx = 4 * i + j;
                     const weight = weights![idx];
@@ -759,7 +783,7 @@ export class Mesh extends Asset {
             if (!valid[i]) { bounds[i] = null; } else { aabbFromPoints(b, b.center, b.halfExtents); }
         }
         // Only complete, valid calculations enter the cache; a failure never stores partial bounds.
-        this._boneSpaceBounds.set(skeleton, { signature, bounds });
+        if (!morphWeights) { this._boneSpaceBounds.set(skeleton, { signature, bounds }); }
         return bounds;
     }
 

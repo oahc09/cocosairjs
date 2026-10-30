@@ -301,10 +301,17 @@ class ShutdownRejectionTests(unittest.TestCase):
                 request, config, worker, lambda: None))
 
 
+    def test_executable_integer_wire_metadata_is_exact_above_javascript_range(self):
+        metadata = types.SimpleNamespace(st_dev=18446744073709551615,
+                                         st_ino=9223372036854817271, st_size=10, st_mtime_ns=100)
+        value = json.loads(json.dumps(HELPER.image_metadata(metadata)))
+        self.assertEqual(value, dict(device='18446744073709551615', inode='9223372036854817271',
+                                    bytes=10, mtimeNs='100'))
+
     def test_closing_snapshot_matrix_uses_the_actual_observation_boundary(self):
         import copy
         metadata = dict(st_dev=1, st_ino=2, st_size=10, st_mtime_ns=100)
-        image = dict(device=1, inode=2, bytes=10, mtimeNs='100', sha256='a' * 64)
+        image = dict(device='1', inode='2', bytes=10, mtimeNs='100', sha256='a' * 64)
         functional = dict(path='/tmp/cpu/original.json', bytes=20, sha256='b' * 64, completed=True, result='PASS')
         value = dict(schemaVersion='example-functional-result/2', id='cpu-example', completed=True, result='PASS')
         config = dict(id='cpu-example', out='/tmp/cpu/collector.json', _frozenBrowserImage=image, cpuCase='pure')

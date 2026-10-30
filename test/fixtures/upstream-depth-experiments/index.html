@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" href="data:," />
+        <title>U08 depth diagnostic</title>
+    </head>
+    <body>
+        <label
+            >Depth
+            <select id="format">
+                <option>depth24-stencil8</option>
+                <option>depth16</option>
+                <option>depth24</option>
+                <option>depth32f</option>
+            </select></label
+        ><label
+            >Convention
+            <select id="mode">
+                <option>normal</option>
+                <option>reverse</option>
+            </select></label
+        ><button id="run">Run isolated diagnostic</button><button id="save" disabled>Save raw report</button
+        ><canvas width="8" height="8"></canvas>
+        <pre id="status">Loading diagnostic.</pre>
+        <script type="module" src="./probe.mjs"></script>
+    </body>
+</html>

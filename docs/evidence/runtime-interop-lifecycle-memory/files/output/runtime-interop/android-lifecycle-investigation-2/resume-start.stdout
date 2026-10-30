@@ -1,8 +1,0 @@
-Starting: Intent { flg=0x20020000 cmp=com.mystral.engine.interop/com.mystral.engine.MystralActivity }
-Warning: Activity not started, its current task has been brought to the front
-Status: ok
-LaunchState: HOT
-Activity: com.mystral.engine.interop/com.mystral.engine.MystralActivity
-TotalTime: 139
-WaitTime: 155
-Complete

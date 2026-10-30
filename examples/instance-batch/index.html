@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Cocos AIR · 动态实例批次</title>
+        <style>
+            html,
+            body,
+            #GameDiv,
+            #Cocos3dGameContainer,
+            canvas {
+                margin: 0;
+                width: 100%;
+                height: 100%;
+                display: block;
+                background: #09121a;
+                overflow: hidden;
+            }
+            aside {
+                position: fixed;
+                z-index: 2;
+                left: 20px;
+                top: 20px;
+                padding: 18px 22px;
+                color: #e3eef5;
+                background: #0b1725e8;
+                border: 1px solid #486078;
+                font: 14px/1.8 system-ui;
+                max-width: 340px;
+            }
+            h1 {
+                margin: 0 0 8px;
+                font-size: 19px;
+            }
+            p {
+                margin: 5px 0;
+                color: #a5bdcd;
+            }
+            button {
+                padding: 8px;
+                margin: 6px 5px 0 0;
+                color: #e3eef5;
+                background: #223e57;
+                border: 1px solid #627f96;
+                cursor: pointer;
+            }
+            button:focus-visible {
+                outline: 2px solid #92e5ff;
+            }
+            output {
+                display: block;
+                white-space: pre-wrap;
+                font:
+                    12px/1.8 Consolas,
+                    monospace;
+                margin-top: 12px;
+            }
+        </style>
+        <script type="importmap">
+            { "imports": { "cocosair": "/build/cocosair.module.js" } }
+        </script>
+    </head>
+    <body>
+        <div id="GameDiv">
+            <div id="Cocos3dGameContainer"><canvas id="GameCanvas" aria-label="可拾取的彩色实例批次"></canvas></div>
+        </div>
+        <aside>
+            <h1>动态实例批次 / F01</h1>
+            <p>一个 Node / Model，共享索引几何。</p>
+            <p>点击方块拾取；范围更新只提交前 16 个实例。</p>
+            <button id="grow">扩容至 2048</button><button id="range">范围更新</button><button id="empty">零实例</button
+            ><button id="reset">恢复</button>
+            <output id="status" role="status">启动中…</output>
+        </aside>
+        <script type="module" src="./src/main.ts"></script>
+    </body>
+</html>

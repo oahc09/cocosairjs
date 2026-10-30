@@ -12,6 +12,8 @@
 **示例**：有 `▶` 标记的篇目配专属可运行示例，位于 `docs/manual/examples/manual-<slug>/`，
 `npm run dev` 后访问 `http://127.0.0.1:7454/manual/examples/manual-<slug>/`。
 
+大量动态物件与特效的 Code First 装配另见[实例批次](../guides/instance-batches.md)、[3D 粒子](../guides/particles.md)和[GPU 点/体素形态场](../guides/morph-fields.md)指南；最后一项包含文字/图像/网格采样、抛光表面与粗糙度控制，不等同于本手册的骨骼或网格 Morph 权重。
+
 ---
 
 ## Cocos 4.0 开发工作流（对照官方指南补缺）

@@ -53,6 +53,7 @@ function parseArgs(argv) {
                 'executable',
                 'capture-executable',
                 'host-build',
+                'host-patches',
                 'headed',
                 'host-label',
                 'matrix',
@@ -70,7 +71,7 @@ function parseArgs(argv) {
     if (!['chromium', 'edge'].includes(args.browser)) throw Error('--browser must be chromium or edge');
     if (args.host === 'mystral' && typeof args.executable !== 'string')
         throw Error('--host=mystral requires --executable=<existing-file>');
-    for (const name of ['bundle', 'executable', 'capture-executable', 'host-build', 'host-label'])
+    for (const name of ['bundle', 'executable', 'capture-executable', 'host-build', 'host-patches', 'host-label'])
         if (args[name] !== undefined && typeof args[name] !== 'string') throw Error(`--${name} needs a value`);
     if (args.headed !== undefined && args.headed !== true) throw Error('--headed does not take a value');
     if (args.matrix !== undefined && args.matrix !== true) throw Error('--matrix does not take a value');
@@ -78,6 +79,7 @@ function parseArgs(argv) {
         throw Error('--capture-executable requires --host=mystral --headed');
     if (args['host-build'] !== undefined && args.host !== 'mystral')
         throw Error('--host-build requires --host=mystral');
+    if (args['host-patches'] !== undefined && !args['host-build']) throw Error('--host-patches requires --host-build');
     return args;
 }
 
@@ -143,6 +145,9 @@ function inputs(bundle) {
         ...under(path.join(__dirname, 'runtime-interop')),
         bundle,
         bundle + '.map',
+        bundle + '.sources.json',
+        path.join(ROOT, 'tools/build/source-binding.cjs'),
+        path.join(ROOT, 'tools/build/source-map-publication.cjs'),
         ...fs
             .readdirSync(path.join(path.dirname(bundle), 'webgpu'))
             .map((v) => path.join(path.dirname(bundle), 'webgpu', v)),
@@ -153,26 +158,15 @@ function inputs(bundle) {
 }
 
 function sourceBinding(bundle) {
-    const map = JSON.parse(fs.readFileSync(bundle + '.map', 'utf8'));
-    let compared = 0;
-    const mismatches = [];
-    for (let i = 0; i < map.sources.length; i++) {
-        const source = path.resolve(path.dirname(bundle), map.sources[i]);
-        if (!source.startsWith(path.join(ROOT, 'src') + path.sep) || !fs.existsSync(source)) continue;
-        compared++;
-        if (
-            typeof map.sourcesContent?.[i] !== 'string' ||
-            map.sourcesContent[i].replace(/\r\n/g, '\n') !== fs.readFileSync(source, 'utf8').replace(/\r\n/g, '\n')
-        )
-            mismatches.push(portable(source));
-    }
-    return { compared, mismatches, matches: compared > 0 && mismatches.length === 0 };
+    return require('../build/source-binding.cjs').verifySourceBinding(ROOT, bundle);
 }
 
-function hostBuildBinding(receiptFile, executable) {
+function hostBuildBinding(receiptFile, executable, patchDirectory) {
     const raw = fs.readFileSync(receiptFile);
     const receipt = JSON.parse(raw);
-    const directory = path.join(__dirname, 'runtime-interop/host-patches');
+    const directory = patchDirectory || path.join(__dirname, 'runtime-interop/host-patches');
+    if (!fs.existsSync(path.join(directory, 'manifest.json')))
+        throw Error('Frozen host patch manifest unavailable; supply --host-patches=<verified-archive-directory>');
     const manifestBytes = fs.readFileSync(path.join(directory, 'manifest.json'));
     const manifest = JSON.parse(manifestBytes);
     const sources = Object.fromEntries(
@@ -195,6 +189,8 @@ function hostBuildBinding(receiptFile, executable) {
     )
         throw Error('Host build receipt does not bind this executable to the frozen patched source');
     for (const artifact of [manifest.patch, manifest.buildProfile, manifest.license]) {
+        if (typeof artifact?.file !== 'string' || path.basename(artifact.file) !== artifact.file)
+            throw Error('Invalid host patch artifact path');
         if (sha256(fs.readFileSync(path.join(directory, artifact.file))) !== artifact.sha256)
             throw Error(`Host patch artifact changed: ${artifact.file}`);
     }
@@ -212,11 +208,26 @@ function hostBuildBinding(receiptFile, executable) {
 
 async function startServer(bundle) {
     const probeRoot = path.join(__dirname, 'runtime-interop');
+    const probeNames = new Set([
+        'probes.mjs',
+        'module-fixture.mjs',
+        'air-smoke.mjs',
+        'scene-runner.mjs',
+        'scene-models.mjs',
+        'scene-ui.mjs',
+        'scene-compute.mjs',
+    ]);
+    const gpuNames = new Set(['glslang.js', 'glslang.wasm', 'twgsl.js', 'twgsl.wasm']);
     const server = http.createServer((req, res) => {
         try {
+            if (!['GET', 'HEAD'].includes(req.method)) {
+                res.writeHead(405, { Allow: 'GET, HEAD' }).end();
+                return;
+            }
             const pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
             if (pathname === '/probe.html') {
                 res.writeHead(200, { 'Content-Type': 'text/html' });
+                if (req.method === 'HEAD') return res.end();
                 res.end(
                     '<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;width:100%;height:100%}canvas{display:block;width:320px;height:240px}</style></head><body><canvas id="GameCanvas" width="320" height="240"></canvas></body></html>',
                 );
@@ -227,11 +238,14 @@ async function startServer(bundle) {
             if (pathname === '/sdk/cocosair.module.js') file = bundle;
             else if (pathname.startsWith('/sdk/webgpu/')) {
                 const base = path.join(path.dirname(bundle), 'webgpu');
+                if (!gpuNames.has(pathname.slice('/sdk/webgpu/'.length))) return res.writeHead(404).end();
                 file = path.resolve(base, pathname.slice('/sdk/webgpu/'.length));
-                if (!file.startsWith(base + path.sep)) throw Error('Outside asset directory');
+                if (!fs.realpathSync(file).startsWith(fs.realpathSync(base) + path.sep))
+                    throw Error('Outside asset directory');
             } else if (pathname.startsWith('/probes/')) {
+                if (!probeNames.has(pathname.slice('/probes/'.length))) return res.writeHead(404).end();
                 file = path.resolve(probeRoot, pathname.slice('/probes/'.length));
-                if (!file.startsWith(probeRoot + path.sep) || !file.endsWith('.mjs'))
+                if (!fs.realpathSync(file).startsWith(fs.realpathSync(probeRoot) + path.sep))
                     throw Error('Outside probe directory');
             } else if (pathname.startsWith('/assets/')) {
                 const relative = pathname.slice('/assets/'.length);
@@ -239,6 +253,9 @@ async function startServer(bundle) {
                 const candidate = `examples/${parts[0]}/assets/${parts.slice(1).join('/')}`;
                 if (!ASSET_FILES.includes(candidate)) return res.writeHead(404).end();
                 file = path.join(ROOT, candidate);
+                const assetRoot = path.join(ROOT, 'examples', parts[0], 'assets');
+                if (!fs.realpathSync(file).startsWith(fs.realpathSync(assetRoot) + path.sep))
+                    throw Error('Outside scene asset directory');
             }
             if (!file || !fs.existsSync(file) || !fs.statSync(file).isFile()) return res.writeHead(404).end();
             const type =
@@ -251,7 +268,7 @@ async function startServer(bundle) {
                 }[path.extname(file)] || 'text/javascript';
             serveStaticFile(req, res, file, type);
         } catch (error) {
-            res.writeHead(400).end(String(error));
+            res.writeHead(400).end('Bad request');
         }
     });
     await new Promise((resolve, reject) => {
@@ -480,9 +497,15 @@ async function main(argv) {
         };
         report.bundle = portable(bundle);
         report.sourceBinding = sourceBinding(bundle);
+        if (!report.sourceBinding.matches)
+            throw Error('Bundle source binding failed; rebuild the bundle and its receipt');
         report.inputs = inputs(bundle);
         if (args['host-build'])
-            report.hostBuild = hostBuildBinding(path.resolve(ROOT, args['host-build']), path.resolve(args.executable));
+            report.hostBuild = hostBuildBinding(
+                path.resolve(ROOT, args['host-build']),
+                path.resolve(args.executable),
+                args['host-patches'] ? path.resolve(ROOT, args['host-patches']) : undefined,
+            );
         save();
         server = await startServer(bundle);
         report.execution =
@@ -509,6 +532,7 @@ async function main(argv) {
             report.hostBuildAfter = hostBuildBinding(
                 path.resolve(ROOT, args['host-build']),
                 path.resolve(args.executable),
+                args['host-patches'] ? path.resolve(ROOT, args['host-patches']) : undefined,
             );
         report.completed = report.execution.completed === true;
         report.pass =

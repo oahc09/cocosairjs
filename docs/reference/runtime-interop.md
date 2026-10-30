@@ -83,42 +83,42 @@ node tools/verify/runtime-interop.cjs --host=mystral --headed --capture-executab
 
 探针在资源存活的截图边界发送带随机 token 的本机 HTTP 请求。Node 只允许当前已启动子进程的 PID、当前分组及一次捕获，客户端不能选择 PID。辅助程序有原始五秒预算，Node 另有十秒总预算；保留 helper stdout/stderr、PNG、PID/HWND、exit/close 及哈希。只有实际 PNG 独立核对通过，原生呈现才可计 PASS。没有可捕获窗口、捕获超时、错误尺寸或源进程提前退出均失败，不用固定 `--frames` 猜截图时机。
 
-## 本地 MystralNative 兼容补丁
+## Source-map 绑定与信任边界
 
-本仓库提供[固定基线补丁](../../tools/verify/runtime-interop/host-patches/mystral-native.patch)、[身份清单](../../tools/verify/runtime-interop/host-patches/manifest.json)和[依赖/构建配置](../../tools/verify/runtime-interop/host-patches/build-profile.json)。基线为官方 `bafab09d599bd55aeb7433ba7131c3f320334c99`，保留 [Mystral MIT 许可证](../../tools/verify/runtime-interop/host-patches/LICENSE-MYSTRAL.txt)。补丁修改的宿主文件以清单为准，不进入 Cocos AIR 默认 bundle，也不是已发布的上游版本。
+运行时构建在发布不含 `sourcesContent` 的 map 时同步写出 `<bundle>.sources.json`。
+生成器先对照编译器保留的源码内容与当前 `src/` 文件，再绑定最终 JS、map 和每个源码文件的 SHA-256。
+采集器在执行前后验证这些精确字节；缺 receipt、源码或任一文件变化、未知/越界路径均不接受。
+不要手工更新哈希来消除失败，应重新构建并重新采集。
 
-补丁覆盖通用 DOM/Canvas/事件及 Image、V8 URL 模块/import.meta/异步 WASM 任务驱动、跨帧 native callback 生命周期、真实 Adapter/Device 能力与错误回调、WebGPU iterable sequence、拷贝布局默认值和 stencil/writeMask。功能来自宿主接口修复，AIR SDK 字节保持不变。
+Receipt 是可信生成流程下的一致性检测，**不是数字签名或可独立证明编译过程的构建认证**。
+能够同时改写 JS、源码和 receipt 的人仍能伪造一致性；验证者必须信任源码仓库、生成工具和 receipt 来源。
+发布的 map 不恢复嵌入源码，npm 不因此增加源码分发。
 
-在独立干净宿主检出中应用，`<repo-root>` 指当前 Cocos AIR 仓库，`<host-source>` 指新的宿主目录：
+当前合并基线的两份 receipt 标记为 `retained-compiler-map-migration`：从保留的原始含源码 map 逐字节核对当前源码，
+确认移除 `sourcesContent` 后与当前发布 map 完全一致，再绑定未变化的 JS。这是历史构建产物迁移，不是本轮重新编译或新的 GPU 结果。
+后续 `tools/build/build.cjs` 生成的 receipt 使用 `compiler-map`。
 
-```sh
-git clone https://github.com/mystralengine/mystralnative.git <host-source>
-git -C <host-source> switch -c feat/cocosair-webgpu-interop bafab09d599bd55aeb7433ba7131c3f320334c99
-git -C <host-source> apply --check <repo-root>/tools/verify/runtime-interop/host-patches/mystral-native.patch
-git -C <host-source> apply <repo-root>/tools/verify/runtime-interop/host-patches/mystral-native.patch
-```
+## 历史宿主档案与可选身份核验
 
-`manifest.json` 绑定补丁、全部修改文件的基线与修改后 SHA-256、完整构建源码指纹、依赖配置及本次实际 EXE。补丁已在第二个全新基线检出中应用，并逐文件核对生成字节。按 `build-profile.json` 的固定下载和 CMake 参数准备独立依赖及构建目录；这份配置不自动安装全局工具，也不保证不同编译器的 EXE 逐字节相同。
+历史 MystralNative 补丁和设备记录仍保留在
+[原功能分支的固定提交](https://github.com/oahc09/cocosairjs/tree/b939f76241ac77fd99713658f11354d6b3ac64f1/tools/verify/runtime-interop/host-patches)。
+本次工具集成不重新上传原始设备诊断、源码快照或 AI 台账，也不修改第三方仓库。
+不要把旧档案的 PASS 当作当前 SDK 的运行结果。
 
-本次冻结构建可通过 `--host-build=<matching-host-build.json>` 加入验收：采集器在执行前后检查真实 configure/build 成功、源码指纹与补丁清单一致、EXE 字节/哈希一致；缺失或篡改均拒绝。`--host-label` 不能代替此身份绑定。当前工作区的完整命令为：
-
-```powershell
-node tools/verify/runtime-interop.cjs --matrix --host=mystral --headed --capture-executable=output/runtime-interop/capture-build-attempt-2/Release/cocosair-runtime-capture.exe --executable=output/runtime-interop/host-build-attempt-12/mystral.exe --host-build=output/runtime-interop/host-build-attempt-12/host-build.json --bundle=output/runtime-interop/sdk/cocosair.module.js --out=output/runtime-interop/mystral-bound-run
-```
-
-此配置限定为 Windows x64、V8+Dawn、单个 native device、同源 HTTP 模块。模块链接当前使用有界同步 HTTP 读取；上游静态库 `/FORCE:MULTIPLE` 的 V8/Dawn Abseil 链接告警仍保留。通过行为验收不能扩大为全部 DOM/WebGPU、多设备、任意 file URL/重定向、长期 GC 稳定性或性能认证。SWC、Draco、QUIC、ray tracing 与 WebP 不在该最小构建配置中；AIR 模型加载继续使用 JavaScript 实现。
-
-## 结果与边界
-
-- `completed` 表示规定结果已完整返回；`pass` 还要求全部行为、AIR 呈现、当前源码绑定、输入稳定及进程关闭通过。缺项、重复 ID、失败、BLOCKED 或 NOT_RUN 均不能计 PASS。
-- 浏览器每个阶段由 Node 的不可重置 90 秒预算约束。应用结果与退出分别保存；浏览器从确认的关闭边界起有一个原始四秒预算，保留实际 exit/close 和 PID 状态。超时后的强制清理不会把失败改成通过。Windows 不声称测得 ECHILD。
-- 报告固定 `subset:true`、`releaseReady:false`。这不是全功能、多浏览器、多引擎、Android、性能或发布验收，也不刷新 canonical example evidence。
-- 采集器不自动修改宿主；上述补丁需在独立源码中明确应用，不加入引擎特例或自动后端回退。`--matrix` 仅覆盖上述四个受控工程；其他引擎/场景和性能对照仍是后续阶段。Android APK 采用上方链接的独立验收流程。
-
-工具自身的定向回归：
+若需本地编译宿主身份核验，应先独立确认可执行文件与档案来源，再显式提供：
 
 ```sh
-node --test tools/verify/runtime-interop.test.cjs
+node tools/verify/runtime-interop.cjs --host=mystral --executable=/trusted/mystral --host-build=/trusted/build.json --host-patches=/trusted/frozen-patches --out=output/runtime-interop/new-attempt
 ```
 
-该 CPU 回归只检查报告拒绝缺证据、独立像素 oracle、宿主超时和参数校验，不替代真实 GPU 或系统窗口捕获执行。
+`--host-patches` 指向含 `manifest.json` 及其列出的补丁、配置和许可的目录；工具只读验证其哈希。
+缺档案不会降级为通过。提供文件不授权自动下载、安装、运行其他二进制或修改宿主源码。
+
+## 验收边界
+
+CPU 测试检查合同、像素判据、参数、来源绑定、HTTP 路由与 Android 辅助工具，不代表 GPU/设备实跑。
+本次合并环境的 Chromium 在启动阶段受到环境隔离限制，未建立新的 GPU、原生宿主或 Android 验收结果。
+历史运行记录保持原 SDK、宿主、设备、scope 与失败记录，不升级为当前版本 PASS。
+
+浏览器关闭报告保留真实 `exit`/`close`、PID 消失与四秒预算；POSIX `ECHILD` 未测量，不能用此报告声称完整 example campaign 的物理关闭合同已认证。
+所有工具保持 `subset` / `releaseReady=false`；Activity 重建、device-loss/OOM、长期压力、性能、ARM64 16 KB 硬件和发布门禁仍需独立任务与真实环境。

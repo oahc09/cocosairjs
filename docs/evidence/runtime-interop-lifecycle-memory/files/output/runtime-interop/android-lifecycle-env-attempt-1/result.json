@@ -1,8 +1,0 @@
-{
-  "finishedAt": "2026-10-26T15:27:52.2638128Z",
-  "status": "STARTUP_FAILED",
-  "reason": "SwiftShader Vulkan core limits rejected by Dawn before lifecycle test",
-  "nativeRuntimeCode": 1,
-  "originalLockscreenDisabledRestored": true,
-  "ownedEmulatorStopped": true
-}

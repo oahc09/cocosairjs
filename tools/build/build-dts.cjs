@@ -9,21 +9,27 @@
  * 产出: build/cocosair.module.d.ts（由 cc.d.ts 归一化命名）。
  * 支持 TypeScript autocomplete / Go to Definition / 静态类型检查。
  *
- * 注意（safe-delete shim 兼容）：
- * - dtsBundler 会在 src/__dts_before_bundle 生成上千个中间文件并在结束时尝试清理；
- *   批量删除被拦截时它会 throw，但 bundle 产物此时已写入 outDir —— 因此输出拷贝
- *   放在 finally 路径执行，清理失败不丢产物。
- * - 本脚本自身不做任何批量删除；outDir 按时间戳唯一，残留目录留在 build/（已 gitignore）。
+ * 默认 feature 集与 JS 构建同源；输出恢复类型专用出口并保留私有类型引用。
+ * 清理恢复仅限唯一 bundle 已完成、产物有效、错误明确指向临时声明目录删除的情况。
+ * 语义/生成错误或 false 返回值一律失败，即使目录里已有输出也不视为成功。
+ * 拒绝删除的目录保留，不通过重试删除或改名规避限制。正常完成后清理本次输出临时目录。
+ * 另写 build/dts-contract.json（生成器默认 feature/入口/type-value 合同，不随 npm 发布）。
  */
 const { join } = require('path');
 const fs = require('fs');
 const { existsSync, renameSync } = require('fs-extra');
 const { dtsBundler } = require('@cocos/ccbuild');
+const {
+    withMainDeclarations,
+    reconcileExports,
+    normalizeSdkSelfReferences,
+    runDeclarationBuild,
+} = require('./upstream-dts-surface.cjs');
 
 const ROOT = join(__dirname, '..', '..');
 const ENGINE = join(ROOT, 'src');
 
-function cleanupDtsTemp () {
+function cleanupDtsTemp() {
     const tmp = join(ENGINE, '__dts_before_bundle');
     if (!existsSync(tmp)) return;
     try {
@@ -34,7 +40,7 @@ function cleanupDtsTemp () {
     }
 }
 
-function copyOutput (outDir) {
+function copyOutput(outDir, receipt) {
     const candidates = ['cc.d.ts', 'index.d.ts'];
     for (const c of candidates) {
         const p = join(outDir, c);
@@ -45,10 +51,13 @@ function copyOutput (outDir) {
             if (!/^\s*declare module "cc" \{/.test(declarations) || !/\}\s*$/.test(declarations)) {
                 throw new Error('Unexpected ccbuild declaration format');
             }
-            const sdk = declarations.replace(/^\s*declare module "cc" \{\s*/, '')
-                .replace(/\}\s*$/, '')
-                .replace(/(["'])cc\1/g, '"./cocosair.module"');
-            fs.writeFileSync(join(ROOT, 'build', 'cocosair.module.d.ts'), sdk);
+            const sdk = normalizeSdkSelfReferences(
+                declarations.replace(/^\s*declare module "cc" \{\s*/, '').replace(/\}\s*$/, ''),
+            );
+            if (!receipt.surface) throw new Error('Missing main declaration export contract');
+            const normalized = reconcileExports(sdk, receipt.surface);
+            fs.writeFileSync(join(ROOT, 'build', 'cocosair.module.d.ts'), normalized);
+            fs.writeFileSync(join(ROOT, 'build', 'dts-contract.json'), JSON.stringify(receipt, null, 2) + '\n');
             require('./legacy-dom-types.cjs').writeLegacyDomTypes(ROOT);
             require('./runtime-layout.cjs').removeRetiredEntries(join(ROOT, 'build'));
             return true;
@@ -57,30 +66,41 @@ function copyOutput (outDir) {
     return false;
 }
 
-(async function exec () {
+(async function exec() {
     const outDir = join(ROOT, 'build', `.dts-tmp-${Date.now()}`);
     fs.mkdirSync(outDir, { recursive: true });
     console.log('[dts] bundling type declarations (this may take a few minutes) ...');
     const started = Date.now();
     let buildOk = false;
-    try {
-        await dtsBundler.build({ engine: ENGINE, outDir });
-        buildOk = true;
-    } catch (e) {
-        // dtsBundler 内部清理被 safe-delete shim 拦截时会 throw；产物此时通常已写出
-        console.warn('[dts] dtsBundler reported an error (likely temp cleanup):', e && e.message ? e.message : e);
-    } finally {
-        cleanupDtsTemp();
-    }
-    const copied = copyOutput(outDir);
+    const receipt = { schema: 'air-main-dts-contract/1' };
+    const buildResult = await runDeclarationBuild(
+        () => withMainDeclarations(ROOT, () => dtsBundler.build({ engine: ENGINE, outDir }), receipt),
+        { receipt, outDir, temporaryDir: join(ENGINE, '__dts_before_bundle') },
+    );
+    buildOk = !buildResult.recoveredCleanup;
+    if (buildResult.recoveredCleanup) {
+        receipt.recoveredCleanup = { code: buildResult.code, syscall: buildResult.syscall };
+        console.warn(
+            '[dts] completed bundle retained after verified temporary-file cleanup failure:',
+            buildResult.code,
+        );
+        // Do not retry a denied deletion or move the denied target to evade it.
+    } else cleanupDtsTemp();
+    const copied = copyOutput(outDir, receipt);
     if (!copied) {
         console.error('[dts] FAILED: declaration output not found in', outDir);
         process.exit(1);
     }
-    console.log(`[dts] done in ${((Date.now() - started) / 1000).toFixed(1)}s → build/cocosair.module.d.ts${buildOk ? '' : ' (recovered: bundler cleanup was blocked, output intact)'}`);
-    try { fs.rmSync(outDir, { recursive: true, force: true }); } catch (e) { /* shim 可能拦截，残留于 build/ */ }
+    console.log(
+        `[dts] done in ${((Date.now() - started) / 1000).toFixed(1)}s → build/cocosair.module.d.ts${buildOk ? '' : ' (recovered: bundler cleanup was blocked, output intact)'}`,
+    );
+    try {
+        fs.rmSync(outDir, { recursive: true, force: true });
+    } catch (e) {
+        /* shim 可能拦截，残留于 build/ */
+    }
 })().catch((e) => {
-    cleanupDtsTemp();
+    // Retain intermediates on generation/semantic errors; no cleanup fallback can turn them into success.
     console.error('[dts] FAILED:', e && e.message ? e.message : e);
     process.exit(1);
 });

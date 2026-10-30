@@ -59,7 +59,13 @@ function simulatedDevice(colorSamples: number[] = [], depthSamples: number[] = c
     });
     const destroyWindow = jest.fn((window: any) => window.destroy());
     jest.spyOn(deviceManager, 'gfxDevice', 'get').mockReturnValue(device as never);
-    jest.spyOn(director, 'root', 'get').mockReturnValue({ device, createWindow, destroyWindow } as never);
+    const pipelineEvent = { on: jest.fn(), off: jest.fn() };
+    jest.spyOn(director, 'root', 'get').mockReturnValue({
+        device,
+        createWindow,
+        destroyWindow,
+        pipelineEvent,
+    } as never);
     return { device, gl, createWindow, destroyWindow };
 }
 
@@ -198,5 +204,64 @@ describe('AirRenderTarget CPU option validation and explicit simulated fallback'
             target.dispose();
         }
         expect(material.getProperty('colorSource')).toBeNull();
+    });
+    test('equal targets keep cameras/materials isolated through resize, DPR-sized inputs and recreation', () => {
+        const device = simulatedDevice();
+        const a = createAirRenderTarget({ width: 64, height: 32, depthFormat: 'none' });
+        const b = createAirRenderTarget({ width: 64, height: 32, depthFormat: 'none' });
+        const material = () => {
+            const m = new Material();
+            (m as any)._passes = [
+                {
+                    propertyIndex: 0,
+                    getHandle: () => genHandle(1, Type.SAMPLER2D, 1),
+                    bindTexture: jest.fn(),
+                    bindSampler: jest.fn(),
+                    resetTexture: jest.fn(),
+                },
+            ];
+            (m as any)._props = [{ colorSource: null }];
+            return m;
+        };
+        const ma = material(),
+            mb = material();
+        const ca = { targetTexture: null, camera: {}, isValid: true } as any;
+        const cb = { targetTexture: null, camera: {}, isValid: true } as any;
+        const da = a.attachCamera(ca),
+            db = b.attachCamera(cb);
+        a.bindColor(ma, 'colorSource');
+        b.bindColor(mb, 'colorSource');
+        const textureB = b.texture.getGFXTexture(),
+            nativeB = b.renderTexture,
+            before = a.info;
+        expect(a.renderTexture).not.toBe(b.renderTexture);
+        expect(a.texture.getGFXTexture()).not.toBe(textureB);
+        a.resize(64, 32);
+        expect(a.info.generation).toBe(before.generation);
+        // The caller supplies actual target size after DPR changes; no hidden global DPR dependency.
+        a.resize(128, 64);
+        expect(a.info.generation).toBe(before.generation + 1);
+        expect(ca.targetTexture).toBe(a.renderTexture);
+        expect(cb.targetTexture).toBe(nativeB);
+        expect(b.texture.getGFXTexture()).toBe(textureB);
+        expect(ma.getProperty('colorSource')).toBe(a.texture);
+        expect(mb.getProperty('colorSource')).toBe(b.texture);
+        expect((ma.passes[0] as any).bindTexture).toHaveBeenLastCalledWith(1, a.texture.getGFXTexture(), undefined);
+        a.dispose();
+        a.dispose();
+        da();
+        expect(ca.targetTexture).toBeNull();
+        expect(ma.getProperty('colorSource')).toBeNull();
+        expect(cb.targetTexture).toBe(nativeB);
+        expect(mb.getProperty('colorSource')).toBe(b.texture);
+        expect(() => a.resize(64, 32)).toThrow(/AIR_E_RENDER_TARGET_DISPOSED/);
+        const replacement = createAirRenderTarget({ width: 64, height: 32, depthFormat: 'none' });
+        expect(replacement.texture.getGFXTexture()).not.toBe(textureB);
+        expect(device.createWindow).toHaveBeenCalledTimes(4);
+        replacement.dispose();
+        db();
+        b.dispose();
+        expect(cb.targetTexture).toBeNull();
+        expect(mb.getProperty('colorSource')).toBeNull();
     });
 });

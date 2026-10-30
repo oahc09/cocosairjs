@@ -137,7 +137,7 @@ export default class TextureAnimationModule extends ParticleModuleBase {
     set numTilesX (val) {
         if (this._numTilesX !== val) {
             this._numTilesX = val;
-            this.target!.updateMaterialParams();
+            this.target?.updateMaterialParams();
         }
     }
 
@@ -154,7 +154,7 @@ export default class TextureAnimationModule extends ParticleModuleBase {
     set numTilesY (val) {
         if (this._numTilesY !== val) {
             this._numTilesY = val;
-            this.target!.updateMaterialParams();
+            this.target?.updateMaterialParams();
         }
     }
 

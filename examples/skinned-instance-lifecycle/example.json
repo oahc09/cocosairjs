@@ -1,0 +1,205 @@
+{
+  "id": "skinned-instance-lifecycle",
+  "version": "0.1.0",
+  "status": "draft",
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "title": "Skinned Instance Lifecycle",
+  "category": "animation",
+  "apiClaims": [
+    "GLTFAsset.instantiate",
+    "Animation",
+    "MeshRenderer.setWeight",
+    "Animation.pause",
+    "Animation.resume",
+    "Node.setPosition",
+    "Camera.screenPointToRay"
+  ],
+  "capabilities": ["gltf"],
+  "validation": {
+    "functional": ["node-exists", "asset-loaded", "animation-playing", "no-runtime-error"],
+    "interaction": ["frame-diff"],
+    "visual": ["visible-frame"],
+    "lifecycle": ["resource-released"],
+    "capability": []
+  },
+  "specStatus": "frozen",
+  "learning": {
+    "goal": "独立控制三个共享资产的 glTF 骨骼实例，并观察销毁重建与原生 bounds。",
+    "points": [
+      "独立动画时间、Morph、位置和材质实例",
+      "真实 pointer 用 native world-AABB 拾取；可显示投影 bounds，仍不是独立裁剪证明",
+      "30 轮复用既有生命周期合同，不以任意 sleep 代替 settlement"
+    ]
+  },
+  "effect": {
+    "functional": "本地双骨骼 rig 生成三个实例；选择后可暂停/单步、改 Morph/位置或逐个 dispose/rebuild，保留共享 Mesh/Texture/Clip。",
+    "visual": "原生场景含三个独立 rig、12 个材质样片、透射晶体和两个普通离屏预览；状态区显示实际 backend、选择、资源阶段、错误与数值。浏览器画面尚未验收。"
+  },
+  "api": {
+    "primary": ["GLTFAsset.instantiate", "Animation", "MeshRenderer.setWeight"],
+    "supporting": ["Animation.pause", "Animation.resume", "Node.setPosition", "Camera.screenPointToRay"],
+    "claims": [
+      "GLTFAsset.instantiate",
+      "Animation",
+      "MeshRenderer.setWeight",
+      "Animation.pause",
+      "Animation.resume",
+      "Node.setPosition",
+      "Camera.screenPointToRay"
+    ],
+    "forbiddenShortcut": [
+      "静态图或预录视频冒充真实渲染/交互",
+      "把源码绑定、CPU 测试或 handler 调用次数当作 GPU/compositor/控制效果证明",
+      "把独立研究 fixture 当作默认稳定运行时 API",
+      "将 draft 改写为 frozen/stable 或修改历史 promotion 来替代当前完整证据"
+    ],
+    "evidence": [
+      {
+        "api": "GLTFAsset.instantiate",
+        "source": "../material-inspection-showroom/src/showroom.ts",
+        "validator": "asset-loaded",
+        "sourceLocation": "L184"
+      },
+      {
+        "api": "Animation",
+        "source": "../material-inspection-showroom/src/showroom.ts",
+        "validator": "animation-playing",
+        "sourceLocation": "L170"
+      },
+      {
+        "api": "MeshRenderer.setWeight",
+        "source": "../material-inspection-showroom/src/showroom.ts",
+        "validator": "frame-diff",
+        "sourceLocation": "L495"
+      },
+      {
+        "api": "Animation.pause",
+        "source": "../material-inspection-showroom/src/showroom.ts",
+        "validator": "frame-diff",
+        "sourceLocation": "L513"
+      },
+      {
+        "api": "Animation.resume",
+        "source": "../material-inspection-showroom/src/showroom.ts",
+        "validator": "frame-diff",
+        "sourceLocation": "L512"
+      },
+      {
+        "api": "Node.setPosition",
+        "source": "../material-inspection-showroom/src/showroom.ts",
+        "validator": "frame-diff",
+        "sourceLocation": "L110"
+      },
+      {
+        "api": "Camera.screenPointToRay",
+        "source": "../material-inspection-showroom/src/showroom.ts",
+        "validator": "frame-diff",
+        "sourceLocation": "L579"
+      }
+    ]
+  },
+  "assets": [],
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "Inspection camera",
+        "Key light",
+        "Inspection rig 1",
+        "Inspection rig 2",
+        "Inspection rig 3",
+        "Single transmission capture",
+        "Preview A camera",
+        "Preview B camera",
+        "Material sample 1",
+        "Material sample 2",
+        "Material sample 3",
+        "Material sample 4",
+        "Material sample 5",
+        "Material sample 6",
+        "Material sample 7",
+        "Material sample 8",
+        "Material sample 9",
+        "Material sample 10",
+        "Material sample 11",
+        "Material sample 12"
+      ]
+    }
+  },
+  "interaction": {
+    "steps": [
+      {
+        "action": "选择第二个 rig",
+        "selectId": "selection",
+        "optionValue": "rig-1",
+        "expected": "选择标识改变，后续操作只作用于该实例。"
+      },
+      {
+        "action": "暂停选中实例",
+        "buttonText": "Pause selected",
+        "expected": "选中实例暂停或恢复，其他实例仍保持独立状态。"
+      },
+      {
+        "action": "单步选中实例",
+        "buttonText": "Step 1/60s",
+        "expected": "仅选中动画状态增加 1/60s 并采样；需状态快照证明，点击本身不是验收。"
+      },
+      {
+        "action": "修改 Morph 和 Instance X 后销毁/重建该 rig",
+        "expected": "原生 bounds/位置随实例变化，其余实例不受销毁影响；需专用效果断言。"
+      },
+      {
+        "action": "勾选 Show projected world AABB 后移动或改变 Morph",
+        "expected": "覆盖层投影当前选中 renderer 的八个 world-AABB 角；不能代替独立 CPU 顶点 oracle 或真实视锥裁剪。"
+      }
+    ]
+  },
+  "ready": {
+    "validators": ["scene-ready"]
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "MIT；固定本地原始程序化资产及 SHA-256 记录见 examples/material-inspection-showroom/assets/manifest.json 和 LICENSE.txt。专题入口共享该目录，不重复下载或复制。"
+  },
+  "validationExpectations": {
+    "asset-loaded": {
+      "paths": [
+        {
+          "path": "assets/inspection-rig.gltf",
+          "provenance": [
+            {
+              "source": "material-inspection-showroom/src/showroom.ts",
+              "line": 64,
+              "text": "const assetURL = '/examples/material-inspection-showroom/assets/inspection-rig.gltf';"
+            }
+          ]
+        },
+        {
+          "path": "assets/crystal.gltf",
+          "provenance": [
+            {
+              "source": "material-inspection-showroom/src/showroom.ts",
+              "line": 65,
+              "text": "const crystalURL = '/examples/material-inspection-showroom/assets/crystal.gltf';"
+            }
+          ]
+        },
+        {
+          "path": "assets/checker.png",
+          "provenance": [
+            {
+              "source": "material-inspection-showroom/assets/inspection-rig.gltf",
+              "line": 143,
+              "text": "\"uri\": \"checker.png\""
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

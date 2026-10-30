@@ -2274,7 +2274,8 @@ test('target diagnostic profile remains bound to every original and never become
                 r.custody.observation.events.find((e) => e.type === 'diagnostic-profile').limits.finalMs++;
             },
             (r) => {
-                r.limits = { ...DEFAULT_LIMITS };
+                // Shared startup defaults now match the target profile: mutate the actual value.
+                r.limits = { ...r.limits, startupMs: r.limits.startupMs - 1 };
             },
         ];
         for (const [index, change] of checks.entries()) {

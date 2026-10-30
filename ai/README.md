@@ -13,6 +13,7 @@
 
 | 主题 | 计划 | 执行台账 |
 | --- | --- | --- |
+| 高质量互动内容功能补全 | [F01–F18 任务书](plans/vibe-content-capabilities.md) | [执行台账](ledgers/vibe-content-capabilities.md) |
 | Code First 与 Web 可靠性 | [计划](plans/code-first-web-reliability.md) | [台账](ledgers/code-first-web-reliability.md) |
 | API 场景、开发范式与 Shader | [计划](plans/api-scenarios-shaders.md) | [台账](ledgers/api-scenarios-shaders.md) |
 | 引擎抽取 | [计划](plans/engine-extraction.md) | — |
@@ -22,7 +23,6 @@
 | 开发者生态 | [计划](plans/developer-ecosystem.md) | — |
 | PixiJS June 能力借鉴 | [实施顺序与状态](plans/pixi-capability-implementation.md) | — |
 | WebGPU 后端 | [计划](plans/webgpu-backend.md) | [执行台账](ledgers/webgpu-backend.md) |
-| 通用 WebGPU Runtime 互操作 | [计划](plans/runtime-interop.md) | [执行台账](ledgers/runtime-interop.md) |
 | 开发手册 | [计划](plans/development-manual.md) | — |
 | Creator 指南对照补缺 | [计划](plans/manual-creator-guide-coverage.md) | — |
 | Gallery 与 API 覆盖 | [计划](plans/examples-gallery-api-coverage.md) | — |

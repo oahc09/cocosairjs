@@ -47,6 +47,7 @@ describe('HDR post-process contracts', () => {
         };
         const a = normalizeEffectShader(legacy) as any;
         expect(a.glsl3.frag).toContain('#if CC_AIR_LINEAR_HDR\nreturn color;');
+        expect(a.glsl3.frag).toContain('#endif\n return vec4(0.5);');
         expect((legacy as any).defines).toBeUndefined();
         expect(normalizeEffectShader(a).hash).toBe(a.hash);
         const frag =

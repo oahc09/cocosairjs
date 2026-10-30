@@ -114,7 +114,7 @@ export function normalizeEffectShader<T>(input: T, effect = '<direct>', path = '
         }
         let patched = frag.replace(
             /(vec4\s+CCFragOutput\s*\(\s*vec4\s+color\s*\)\s*\{)/,
-            '$1\n#if CC_AIR_LINEAR_HDR\nreturn color;\n#endif',
+            '$1\n#if CC_AIR_LINEAR_HDR\nreturn color;\n#endif\n',
         );
         if (frag.includes('HDRToLDR') && frag.includes('LinearToSRGB')) {
             patched = patched.replace(

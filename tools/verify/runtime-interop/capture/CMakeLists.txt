@@ -8,3 +8,4 @@ target_compile_features(cocosair-runtime-capture PRIVATE cxx_std_20)
 target_compile_definitions(cocosair-runtime-capture PRIVATE UNICODE _UNICODE WIN32_LEAN_AND_MEAN NOMINMAX)
 target_compile_options(cocosair-runtime-capture PRIVATE /W4 /EHsc /utf-8 /permissive-)
 target_link_libraries(cocosair-runtime-capture PRIVATE d3d11 dxgi dwmapi windowscodecs windowsapp user32 ole32)
+
