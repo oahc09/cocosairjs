@@ -1,7 +1,7 @@
 {
   "source": "build/cocosair.module.d.ts",
-  "sourceFingerprint": "f65b917f14ceddad",
-  "apiInventoryRevision": "2d88538dae819fbd",
+  "sourceFingerprint": "96c15e0e17102b84",
+  "apiInventoryRevision": "487b5105378fe9dd",
   "units": {
     "MeshBuffer": {
       "kind": "class",
@@ -3771,6 +3771,12 @@
       "coverageRequired": true,
       "parent": null
     },
+    "Mesh.EVENT_GEOMETRY_CHANGED": {
+      "kind": "property",
+      "tier": "core",
+      "coverageRequired": true,
+      "parent": "Mesh"
+    },
     "Mesh._nativeAsset": {
       "kind": "property",
       "tier": "internal",
@@ -4111,6 +4117,12 @@
       "kind": "method",
       "tier": "core",
       "coverageRequired": true,
+      "parent": "MeshRenderer"
+    },
+    "MeshRenderer._onPreDestroy": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
       "parent": "MeshRenderer"
     },
     "MeshRenderer.onDestroy": {
@@ -55223,6 +55235,18 @@
       "coverageRequired": false,
       "parent": null
     },
+    "createAirInstanceMaterial": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "AIR_INSTANCE_ATTRIBUTES": {
+      "kind": "constant",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
     "AIR_VERSION": {
       "kind": "constant",
       "tier": "supporting",
@@ -55993,6 +56017,1794 @@
       "coverageRequired": false,
       "parent": null
     },
+    "createAirParticleSystem": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "ParticleSystem": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "ParticleSystem.capacity": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.startColor": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.scaleSpace": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.startSize3D": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.startSizeX": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.startSizeY": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.startSizeZ": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.startSpeed": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.startRotation3D": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.startRotationX": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.startRotationY": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.startRotationZ": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.startDelay": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.startLifetime": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.duration": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.loop": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.prewarm": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.simulationSpace": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.simulationSpeed": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.playOnAwake": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.gravityModifier": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.rateOverTime": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.rateOverDistance": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.bursts": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.renderCulling": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.cullingMode": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem._cullingMode": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.CullingMode": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.aabbHalfX": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.aabbHalfY": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.aabbHalfZ": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.dataCulling": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.sharedMaterials": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem._colorOverLifetimeModule": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.colorOverLifetimeModule": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem._shapeModule": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.shapeModule": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem._sizeOvertimeModule": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.sizeOvertimeModule": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem._velocityOvertimeModule": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.velocityOvertimeModule": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem._forceOvertimeModule": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.forceOvertimeModule": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem._limitVelocityOvertimeModule": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.limitVelocityOvertimeModule": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem._rotationOvertimeModule": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.rotationOvertimeModule": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem._textureAnimationModule": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.textureAnimationModule": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.noiseModule": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem._trailModule": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.trailModule": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.renderer": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.processor": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.constructor": {
+      "kind": "constructor",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.onFocusInEditor": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.onLoad": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem._onMaterialModified": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem._onRebuildPSO": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem._collectModels": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem._detachFromScene": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.play": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.pause": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.stopEmitting": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.stop": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.clear": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.getParticleCount": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.setCustomData1": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.setCustomData2": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.emit": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.isPlaying": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.isPaused": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.isStopped": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.isEmitting": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.time": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem._onBeforeSerialize": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ParticleSystem.getNoisePreview": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleSystem"
+    },
+    "ShapeModule": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "ShapeModule.position": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ShapeModule"
+    },
+    "ShapeModule.rotation": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ShapeModule"
+    },
+    "ShapeModule.scale": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ShapeModule"
+    },
+    "ShapeModule.arc": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ShapeModule"
+    },
+    "ShapeModule.angle": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ShapeModule"
+    },
+    "ShapeModule.enable": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ShapeModule"
+    },
+    "ShapeModule._shapeType": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "ShapeModule"
+    },
+    "ShapeModule.shapeType": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ShapeModule"
+    },
+    "ShapeModule.emitFrom": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ShapeModule"
+    },
+    "ShapeModule.alignToDirection": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ShapeModule"
+    },
+    "ShapeModule.randomDirectionAmount": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ShapeModule"
+    },
+    "ShapeModule.sphericalDirectionAmount": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ShapeModule"
+    },
+    "ShapeModule.randomPositionAmount": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ShapeModule"
+    },
+    "ShapeModule.radius": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ShapeModule"
+    },
+    "ShapeModule.radiusThickness": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ShapeModule"
+    },
+    "ShapeModule.arcMode": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ShapeModule"
+    },
+    "ShapeModule.arcSpread": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ShapeModule"
+    },
+    "ShapeModule.arcSpeed": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ShapeModule"
+    },
+    "ShapeModule.length": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ShapeModule"
+    },
+    "ShapeModule.boxThickness": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ShapeModule"
+    },
+    "ShapeModule.constructor": {
+      "kind": "constructor",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ShapeModule"
+    },
+    "ShapeModule.onInit": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "ShapeModule"
+    },
+    "ShapeModule.emit": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "ShapeModule"
+    },
+    "CurveRange": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "CurveRange.Mode": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CurveRange"
+    },
+    "CurveRange.mode": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CurveRange"
+    },
+    "CurveRange.spline": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CurveRange"
+    },
+    "CurveRange.splineMin": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CurveRange"
+    },
+    "CurveRange.splineMax": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CurveRange"
+    },
+    "CurveRange.curve": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CurveRange"
+    },
+    "CurveRange.curveMin": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CurveRange"
+    },
+    "CurveRange.curveMax": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CurveRange"
+    },
+    "CurveRange.constant": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CurveRange"
+    },
+    "CurveRange.constantMin": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CurveRange"
+    },
+    "CurveRange.constantMax": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CurveRange"
+    },
+    "CurveRange.multiplier": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CurveRange"
+    },
+    "CurveRange.constructor": {
+      "kind": "constructor",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CurveRange"
+    },
+    "CurveRange.evaluate": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CurveRange"
+    },
+    "CurveRange.getMax": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CurveRange"
+    },
+    "CurveRange.isZero": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "CurveRange"
+    },
+    "CurveRange._onBeforeSerialize": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "CurveRange"
+    },
+    "GradientRange": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "GradientRange.mode": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "GradientRange"
+    },
+    "GradientRange.Mode": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "GradientRange"
+    },
+    "GradientRange.color": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "GradientRange"
+    },
+    "GradientRange.colorMin": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "GradientRange"
+    },
+    "GradientRange.colorMax": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "GradientRange"
+    },
+    "GradientRange.gradient": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "GradientRange"
+    },
+    "GradientRange.gradientMin": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "GradientRange"
+    },
+    "GradientRange.gradientMax": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "GradientRange"
+    },
+    "GradientRange.evaluate": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "GradientRange"
+    },
+    "GradientRange._onBeforeSerialize": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "GradientRange"
+    },
+    "Burst": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "Burst.time": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "Burst"
+    },
+    "Burst.repeatCount": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "Burst"
+    },
+    "Burst.repeatInterval": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "Burst"
+    },
+    "Burst.count": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "Burst"
+    },
+    "Burst.constructor": {
+      "kind": "constructor",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "Burst"
+    },
+    "Burst.update": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "Burst"
+    },
+    "Burst.reset": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "Burst"
+    },
+    "Burst.getMaxCount": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "Burst"
+    },
+    "ParticleUtils": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "ParticleUtils.instantiate": {
+      "kind": "static",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleUtils"
+    },
+    "ParticleUtils.destroy": {
+      "kind": "static",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleUtils"
+    },
+    "ParticleUtils.play": {
+      "kind": "static",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleUtils"
+    },
+    "ParticleUtils.stop": {
+      "kind": "static",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ParticleUtils"
+    },
+    "ParticleCurveMode": {
+      "kind": "constant",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "TrailModule": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "TrailModule.enable": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule._enable": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule.mode": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule.lifeTime": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule._minParticleDistance": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule.minParticleDistance": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule.space": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule.existWithParticles": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule.textureMode": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule.widthFromParticle": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule.widthRatio": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule.colorFromParticle": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule.colorOverTrail": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule.colorOvertime": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule.getModel": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule.inited": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule.constructor": {
+      "kind": "constructor",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule.onInit": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule.onEnable": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule.onDisable": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule._attachToScene": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule._detachFromScene": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule.destroy": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule.play": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule.clear": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule.updateMaterial": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule.update": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule.animate": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule.removeParticle": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule.updateRenderData": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule.updateIA": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "TrailModule.beforeRender": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TrailModule"
+    },
+    "ColorOvertimeModule": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "ColorOvertimeModule.constructor": {
+      "kind": "constructor",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ColorOvertimeModule"
+    },
+    "ColorOvertimeModule._enable": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "ColorOvertimeModule"
+    },
+    "ColorOvertimeModule.enable": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ColorOvertimeModule"
+    },
+    "ColorOvertimeModule.color": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ColorOvertimeModule"
+    },
+    "ColorOvertimeModule.name": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ColorOvertimeModule"
+    },
+    "ColorOvertimeModule.animate": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "ColorOvertimeModule"
+    },
+    "SizeOvertimeModule": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "SizeOvertimeModule.constructor": {
+      "kind": "constructor",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "SizeOvertimeModule"
+    },
+    "SizeOvertimeModule._enable": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "SizeOvertimeModule"
+    },
+    "SizeOvertimeModule.enable": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "SizeOvertimeModule"
+    },
+    "SizeOvertimeModule.separateAxes": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "SizeOvertimeModule"
+    },
+    "SizeOvertimeModule.size": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "SizeOvertimeModule"
+    },
+    "SizeOvertimeModule.x": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "SizeOvertimeModule"
+    },
+    "SizeOvertimeModule.y": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "SizeOvertimeModule"
+    },
+    "SizeOvertimeModule.z": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "SizeOvertimeModule"
+    },
+    "SizeOvertimeModule.name": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "SizeOvertimeModule"
+    },
+    "SizeOvertimeModule.animate": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "SizeOvertimeModule"
+    },
+    "VelocityOvertimeModule": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "VelocityOvertimeModule._enable": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "VelocityOvertimeModule"
+    },
+    "VelocityOvertimeModule.enable": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "VelocityOvertimeModule"
+    },
+    "VelocityOvertimeModule.x": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "VelocityOvertimeModule"
+    },
+    "VelocityOvertimeModule.y": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "VelocityOvertimeModule"
+    },
+    "VelocityOvertimeModule.z": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "VelocityOvertimeModule"
+    },
+    "VelocityOvertimeModule.speedModifier": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "VelocityOvertimeModule"
+    },
+    "VelocityOvertimeModule.space": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "VelocityOvertimeModule"
+    },
+    "VelocityOvertimeModule.name": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "VelocityOvertimeModule"
+    },
+    "VelocityOvertimeModule.constructor": {
+      "kind": "constructor",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "VelocityOvertimeModule"
+    },
+    "VelocityOvertimeModule.update": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "VelocityOvertimeModule"
+    },
+    "VelocityOvertimeModule.animate": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "VelocityOvertimeModule"
+    },
+    "ForceOvertimeModule": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "ForceOvertimeModule._enable": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "ForceOvertimeModule"
+    },
+    "ForceOvertimeModule.enable": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ForceOvertimeModule"
+    },
+    "ForceOvertimeModule.x": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ForceOvertimeModule"
+    },
+    "ForceOvertimeModule.y": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ForceOvertimeModule"
+    },
+    "ForceOvertimeModule.z": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ForceOvertimeModule"
+    },
+    "ForceOvertimeModule.space": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ForceOvertimeModule"
+    },
+    "ForceOvertimeModule.randomized": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ForceOvertimeModule"
+    },
+    "ForceOvertimeModule.name": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ForceOvertimeModule"
+    },
+    "ForceOvertimeModule.constructor": {
+      "kind": "constructor",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "ForceOvertimeModule"
+    },
+    "ForceOvertimeModule.update": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "ForceOvertimeModule"
+    },
+    "ForceOvertimeModule.animate": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "ForceOvertimeModule"
+    },
+    "LimitVelocityOvertimeModule": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "LimitVelocityOvertimeModule._enable": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "LimitVelocityOvertimeModule"
+    },
+    "LimitVelocityOvertimeModule.enable": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "LimitVelocityOvertimeModule"
+    },
+    "LimitVelocityOvertimeModule.limitX": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "LimitVelocityOvertimeModule"
+    },
+    "LimitVelocityOvertimeModule.limitY": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "LimitVelocityOvertimeModule"
+    },
+    "LimitVelocityOvertimeModule.limitZ": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "LimitVelocityOvertimeModule"
+    },
+    "LimitVelocityOvertimeModule.limit": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "LimitVelocityOvertimeModule"
+    },
+    "LimitVelocityOvertimeModule.dampen": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "LimitVelocityOvertimeModule"
+    },
+    "LimitVelocityOvertimeModule.separateAxes": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "LimitVelocityOvertimeModule"
+    },
+    "LimitVelocityOvertimeModule.space": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "LimitVelocityOvertimeModule"
+    },
+    "LimitVelocityOvertimeModule.drag": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "LimitVelocityOvertimeModule"
+    },
+    "LimitVelocityOvertimeModule.multiplyDragByParticleSize": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "LimitVelocityOvertimeModule"
+    },
+    "LimitVelocityOvertimeModule.multiplyDragByParticleVelocity": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "LimitVelocityOvertimeModule"
+    },
+    "LimitVelocityOvertimeModule.name": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "LimitVelocityOvertimeModule"
+    },
+    "LimitVelocityOvertimeModule.constructor": {
+      "kind": "constructor",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "LimitVelocityOvertimeModule"
+    },
+    "LimitVelocityOvertimeModule.update": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "LimitVelocityOvertimeModule"
+    },
+    "LimitVelocityOvertimeModule.animate": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "LimitVelocityOvertimeModule"
+    },
+    "RotationOvertimeModule": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "RotationOvertimeModule.constructor": {
+      "kind": "constructor",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "RotationOvertimeModule"
+    },
+    "RotationOvertimeModule._enable": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "RotationOvertimeModule"
+    },
+    "RotationOvertimeModule.enable": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "RotationOvertimeModule"
+    },
+    "RotationOvertimeModule.separateAxes": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "RotationOvertimeModule"
+    },
+    "RotationOvertimeModule.x": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "RotationOvertimeModule"
+    },
+    "RotationOvertimeModule.y": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "RotationOvertimeModule"
+    },
+    "RotationOvertimeModule.z": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "RotationOvertimeModule"
+    },
+    "RotationOvertimeModule.name": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "RotationOvertimeModule"
+    },
+    "RotationOvertimeModule.animate": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "RotationOvertimeModule"
+    },
+    "TextureAnimationModule": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "TextureAnimationModule.constructor": {
+      "kind": "constructor",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TextureAnimationModule"
+    },
+    "TextureAnimationModule.enable": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TextureAnimationModule"
+    },
+    "TextureAnimationModule.mode": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TextureAnimationModule"
+    },
+    "TextureAnimationModule.numTilesX": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TextureAnimationModule"
+    },
+    "TextureAnimationModule.numTilesY": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TextureAnimationModule"
+    },
+    "TextureAnimationModule.animation": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TextureAnimationModule"
+    },
+    "TextureAnimationModule.frameOverTime": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TextureAnimationModule"
+    },
+    "TextureAnimationModule.startFrame": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TextureAnimationModule"
+    },
+    "TextureAnimationModule.cycleCount": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TextureAnimationModule"
+    },
+    "TextureAnimationModule.flipU": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TextureAnimationModule"
+    },
+    "TextureAnimationModule.flipV": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TextureAnimationModule"
+    },
+    "TextureAnimationModule.uvChannelMask": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TextureAnimationModule"
+    },
+    "TextureAnimationModule.randomRow": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TextureAnimationModule"
+    },
+    "TextureAnimationModule.rowIndex": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TextureAnimationModule"
+    },
+    "TextureAnimationModule.name": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TextureAnimationModule"
+    },
+    "TextureAnimationModule.init": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "TextureAnimationModule"
+    },
+    "TextureAnimationModule.animate": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "TextureAnimationModule"
+    },
+    "TextureAnimationModule.scaleNumTilesXY": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "TextureAnimationModule"
+    },
+    "NoiseModule": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "NoiseModule.constructor": {
+      "kind": "constructor",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "NoiseModule"
+    },
+    "NoiseModule._enable": {
+      "kind": "property",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "NoiseModule"
+    },
+    "NoiseModule.enable": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "NoiseModule"
+    },
+    "NoiseModule.strengthX": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "NoiseModule"
+    },
+    "NoiseModule.strengthY": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "NoiseModule"
+    },
+    "NoiseModule.strengthZ": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "NoiseModule"
+    },
+    "NoiseModule.noiseSpeedX": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "NoiseModule"
+    },
+    "NoiseModule.noiseSpeedY": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "NoiseModule"
+    },
+    "NoiseModule.noiseSpeedZ": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "NoiseModule"
+    },
+    "NoiseModule.noiseFrequency": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "NoiseModule"
+    },
+    "NoiseModule.remapX": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "NoiseModule"
+    },
+    "NoiseModule.remapY": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "NoiseModule"
+    },
+    "NoiseModule.remapZ": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "NoiseModule"
+    },
+    "NoiseModule.octaves": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "NoiseModule"
+    },
+    "NoiseModule.octaveMultiplier": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "NoiseModule"
+    },
+    "NoiseModule.octaveScale": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "NoiseModule"
+    },
+    "NoiseModule.name": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "NoiseModule"
+    },
+    "NoiseModule.animate": {
+      "kind": "method",
+      "tier": "internal",
+      "coverageRequired": false,
+      "parent": "NoiseModule"
+    },
+    "NoiseModule.getNoisePreview": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "NoiseModule"
+    },
+    "ParticleSpace": {
+      "kind": "enum",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "ParticleCullingMode": {
+      "kind": "enum",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "ParticleAlignmentSpace": {
+      "kind": "enum",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "ParticleRenderMode": {
+      "kind": "enum",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "ParticleShapeType": {
+      "kind": "enum",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "ParticleEmitLocation": {
+      "kind": "enum",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "ParticleArcMode": {
+      "kind": "enum",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "ParticleTrailMode": {
+      "kind": "enum",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "ParticleTextureMode": {
+      "kind": "enum",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "ParticleModuleRandSeed": {
+      "kind": "enum",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
     "GLTFAsset": {
       "kind": "class",
       "tier": "core",
@@ -56531,6 +58343,42 @@
     },
     "AIR_SCREEN_PASS_LAYER": {
       "kind": "constant",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "createAirPostProcess": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "createAirInstanceBatch": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "createAirMorphField": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "sampleAirImageShape": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "sampleAirTriangleShape": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "sampleAirTextShape": {
+      "kind": "function",
       "tier": "supporting",
       "coverageRequired": false,
       "parent": null
@@ -67162,12 +69010,12 @@
     }
   },
   "tierSummary": {
-    "core": 973,
+    "core": 974,
     "important": 293,
     "advanced": 200,
-    "supporting": 8642,
-    "internal": 921
+    "supporting": 8904,
+    "internal": 966
   },
-  "totalUnits": 11029,
-  "coverageRequiredUnits": 1466
+  "totalUnits": 11337,
+  "coverageRequiredUnits": 1467
 }

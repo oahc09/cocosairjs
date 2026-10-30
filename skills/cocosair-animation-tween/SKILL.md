@@ -65,6 +65,7 @@ Read relevant [wrong/right examples](references/common-mistakes.md) before imple
 
 ## Reference map
 
+- [Per-frame geometry?](references/quick-start.md#per-frame-geometry-updates) - Component.update(dt)
 - [Build or loop clips?](references/animation-clip.md) - Tracks and wrap modes
 - [Compose motions?](references/tween-ops.md) - Chains, ownership and defects
 - [Deterministic frames?](references/step-clock.md) - One clock and proof limits

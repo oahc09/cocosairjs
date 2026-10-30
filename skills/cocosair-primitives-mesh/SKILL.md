@@ -70,3 +70,4 @@ Read relevant [wrong/right examples](references/common-mistakes.md) before imple
 - [Which shape API?](references/primitive-shapes.md) - Signatures and defaults
 - [How are buffers laid out?](references/mesh-attributes.md) - Formats and reads
 - [Why is a shape rejected?](references/create-primitive-geometry.md) - Descriptor limits
+- [Dynamic mesh missing or stale?](references/common-mistakes.md#dynamic-mesh-creation-and-update-checklist) - Creation, updates and visibility

@@ -2,9 +2,29 @@
 
 **Cocos Agent-first Interactive Runtime** — 基于 cocos4 的 TypeScript Web 引擎。直接用代码创建 Scene、Node、Camera、材质和动画，无需 Cocos Creator、Editor、场景文件或编辑器资产管线。
 
-浏览器需要 WebGL 2。启动、渲染和 HTML 纹理接口统一从主入口导入；主入口不支持无 DOM 的 Node/SSR 运行。功能与发布边界见[支持策略](docs/webgl2-only.md)和[验证与发布检查](docs/reference/verification.md)。
+默认渲染后端需要 WebGL 2；桌面 Web 可显式选择实验性 WebGPU，失败不会自动回退。启动、渲染和 HTML 纹理接口统一从主入口导入；主入口不支持无 DOM 的 Node/SSR 运行。CPU 数学运算可独立使用 `cocosair.js/math`，无需 DOM 或引擎初始化。功能与发布边界见[支持策略](docs/webgl2-only.md)和[验证与发布检查](docs/reference/verification.md)。
 
 2D 物理默认使用现有 JavaScript 后端；可显式选择 [Box2D 3.2 WASM 后端](docs/guides/box2d3.md)，继续使用 Cocos 刚体、碰撞体和关节组件。WASM 资产独立部署、按需加载。
+
+直接部署 SDK 时，先看 [build 最小文件集](build/README.md)：普通浏览器只需选择一份主 JS，可选后端/解码器按功能部署；声明、source map、编译收据和 Gallery 不是每个应用的运行依赖。
+
+## 视觉展示
+
+以下为项目概念视觉与宣传素材，非引擎实机截图。
+
+| 从想法到可见反馈                                                                                                                 | 三维交互创意                                                                                                                                          |
+| -------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ![从想法到可见反馈](https://github.com/oahc09/cocosairjs/blob/main/assets/cocosairjs-from-idea-to-visible-feedback.png?raw=true) | ![三维交互创意](https://github.com/oahc09/cocosairjs/blob/main/assets/cocosairjs-three-dimensional-interactive-creativity.png?raw=true)               |
+| **代码雕塑舞台**                                                                                                                 | **流动的光影与材质之环**                                                                                                                              |
+| ![代码雕塑舞台](https://github.com/oahc09/cocosairjs/blob/main/assets/cocosairjs-code-sculpture-stage.png?raw=true)              | ![流动的光影与材质之环](https://github.com/oahc09/cocosairjs/blob/main/assets/cocosairjs-the-flowing-ring-of-light-and-shadow-materials.png?raw=true) |
+
+### 宣传视频
+
+[![点击查看宣传视频](https://github.com/oahc09/cocosairjs/blob/main/assets/cocosairjs-from-idea-to-visible-feedback.png?raw=true)](https://github.com/oahc09/cocosairjs/blob/main/assets/cocosairjs-promotion.mp4?raw=true)
+
+[观看或下载宣传视频（MP4）](https://github.com/oahc09/cocosairjs/blob/main/assets/cocosairjs-promotion.mp4?raw=true)
+
+https://github.com/user-attachments/assets/689ea4e1-de14-47dd-a104-564cf1005c06
 
 ## 先选择使用方式
 
@@ -13,6 +33,7 @@
 | 在自己的 TypeScript/JavaScript 项目开发应用 | 推荐安装本地 SDK tarball，或正式发布的 npm 包 | 应用不需要 src/、tools/、引擎 node_modules/ |
 | 不用打包器，直接在网页运行                  | 复制主 JS，通过 import map 加载               | 不需要                                      |
 | 修改引擎或运行仓库示例                      | 在本仓库安装开发依赖、构建并启动 dev server   | 需要                                        |
+| 只做数学计算（含 Node/Worker）              | 从 `cocosair.js/math` 导入                    | 不需要浏览器或主引擎启动                    |
 | 使用 Gaussian Splatting                     | 额外构建独立 Spark 模块，复用同一主引擎       | 本地构建需要；运行应用不需要                |
 
 ## 方式一：在自己的项目中依赖 SDK（推荐）
@@ -29,10 +50,14 @@ cd cocosair.js
 npm ci
 $env:NODE_OPTIONS = '--max-old-space-size=6144'
 npm run build:all
+
+https://github.com/user-attachments/assets/fb91e5d7-f39a-4182-a49c-5047bf190f1b
+
+
 npm pack
 ```
 
-当前版本会生成 cocosair.js-1.0.0.tgz，实际文件名以 npm pack 输出为准。build:all 编译开发版、压缩版和声明，并准备发布副本；npm pack 只打包，不上传、不代替编译。内存上限仅用于本次构建进程及其子进程。
+当前版本会生成 cocosair.js-1.0.0.tgz，实际文件名以 npm pack 输出为准。`build:all` 编译开发版、压缩版和声明，构建独立数学入口，准备发布副本并检查内建资源；`npm pack` 的 `prepack` 会重新准备发布副本和数学入口，但不重编主引擎，也不上传。内存上限仅用于本次构建进程及其子进程。
 
 ### 2. 创建应用项目并安装 SDK
 
@@ -121,6 +146,16 @@ npm run dev
 
 仓库示例里的 cocosair 是 import map 别名；安装包的真实名称是 **cocosair.js**，不能直接照搬示例的裸别名。
 
+### 5. 独立数学入口
+
+```ts
+import { Vec3, Quat, Mat4 } from 'cocosair.js/math';
+
+const transform = Mat4.fromRTS(new Mat4(), new Quat(), new Vec3(1, 2, 3), new Vec3(1, 1, 1));
+```
+
+该入口提供 Vec2/3/4、Mat3/4、Quat、Color、Size、Rect 及数学工具，可在 Node、Worker 和浏览器使用。它与主入口具有独立的构造器和随机数状态；跨入口不要依赖 `instanceof`，调用引擎 API 时使用引擎自己的值类型。构建、类型与使用边界见[数学入口](docs/guides/math-entry.md)。
+
 ## 方式二：不通过 npm 安装 SDK，直接使用 build 文件
 
 普通网页运行只需主 JS。将构建产物复制到自己的站点，例如：
@@ -201,6 +236,24 @@ npm run dev -- --example hello-cube --port 7454
 
 普通应用不需要额外加载 bootstrap.js 或 html-source.js；这些独立入口已移除，相关 API 保留在主引擎。
 
+显式 WebGPU 还需部署主 JS 旁的 `webgpu/` shader 翻译资产；Box2D 3.2 WASM 需部署 `box2d3/` 的 ESM、WASM、许可和 receipt。构建分别复制到 `build/webgpu/`、`build/box2d3/`，npm 发布副本位于 `build/npm/` 对应子目录。打包器移动主 JS 时，应按各指南显式配置 `assetBaseUrl`。
+
+## 默认 HDR 后处理
+
+主入口提供 `createAirPostProcess(camera, { levels: 5, toneMapping: 'aces', exposure: 1 })`，开箱即用的线性 HDR 捕获、多级 Bloom、ACES/Reinhard 和统一 sRGB 输出。先创建 app，再装配相机；参见 [用法与边界](docs/guides/hdr-post-processing.md) 、[AFTERLIGHT 光环装置](https://github.com/oahc09/cocosairjs/blob/main/examples/afterlight/index.html) 和 [霓虹夜城示例](https://github.com/oahc09/cocosairjs/blob/main/examples/neon-city/index.html)。当前支持默认 WebGL2 ForwardPipeline。
+
+## 动态实例批次
+
+动态物件批次可用 `createAirInstanceBatch`：一个原生 Node/Model 共享索引几何，支持实例变换/颜色、范围提交、显式扩容、包围盒和射线选择。用法及 WebGL2/材质边界见[动态实例批次](docs/guides/instance-batches.md)。
+
+## Code First 3D 粒子
+
+`createAirParticleSystem` 直接装配原生 CPU/GPU 粒子与模块，支持纯代码配置发射器、曲线和 CPU 拖尾。示例 `/particles-3d/` 提供喷射、火星、烟雾粒子、雨、雪及暂停/继续/重播。用法与 GPU 模块边界见 [3D 粒子指南](docs/guides/particles.md)。
+
+## GPU 点 / 体素形变
+
+`createAirMorphField` 将文字、图像和网格采样为共享实例批次，形态与颜色由 GPU 插值；进度更新不重传样本数据。示例 `/morph-field/` 提供 16,384 个样本、点/体素切换和 HDR 输出。数据、设备与释放合同见 [GPU 形态场](docs/guides/morph-fields.md)。
+
 ## 可选：Spark 独立模块
 
 在引擎仓库运行 npm run build:spark，然后将 spark.module.js 与主引擎 JS 放在同一个部署目录：
@@ -218,12 +271,15 @@ Spark 只借用该主引擎，不再打包第二份 Cocos。应用与 Spark 必�
 
 ```
 cocosair.js/
+├── assets/         # README 概念图片与宣传视频
 ├── build/          # 产物：cocosair.module.js / cocosair.module.min.js（ESM）
 ├── docs/           # 分析与设计文档（含验收报告与证据截图）
 ├── examples/       # 可运行示例
 │   ├── hello-cube/          # Camera + Light + 旋转 Cube（Code First 入门）
 │   ├── static-model/        # 运行时 JSON 资产加载 + 程序化纹理 + 标准材质
 │   └── skinned-animation/   # 3 骨骼蒙皮 + 骨骼动画（Code First 骨骼链路）
+├── skills/         # 随 SDK 分发的 AIR 技能与参考资料
+├── ai/             # 计划与实施台账，不作为功能交付证据
 ├── src/            # 引擎源码（engine root，与上游 cocos4 相对布局一致）
 │   ├── air/                 # Cocos AIR 新增：bootstrap/app/utils/builtin
 │   ├── cocos/               # 抽取的 Cocos 引擎核心；来源与有意差异见 docs/UPSTREAM.md
@@ -244,7 +300,7 @@ cocosair.js/
 | `npm run build:spark`           | 独立 Spark 模块、声明与 map；复用已有主引擎，不包含于默认 build:all，也不推进主引擎编译序号                                                                                                              |
 | `npm run build:min`             | 压缩 ESM 本地构建 → `build/cocosair.module.min.js`（附 source map）                                                                                                                                      |
 | `npm run build:dts`             | 类型声明 → `build/cocosair.module.d.ts`（编辑器补全 / Go to Definition）                                                                                                                                 |
-| `npm run build:all`             | 以上全量构建，并生成 npm 专用的 `build/npm/` bundle 副本（不含 source map）；本地 `build/cocosair.module*.js.map` 保留调试用途                                                                           |
+| `npm run build:all`             | 构建主引擎开发版、压缩版与声明，准备数学入口和 `build/npm/` 无 map 发布副本，再检查内建资源；不构建 Spark、不采集浏览器证据                                                                              |
 | `npm run typecheck`             | TypeScript 独立编译校验（0 依赖 Creator）                                                                                                                                                                |
 | `npm run verify:web-only`       | Web-only 依赖守卫（按依赖可达性判定，禁止 native/minigame 泄入）                                                                                                                                         |
 | `npm run verify:file-map`       | 簿记一致性：每行上游可解析 + 逐字节比对 + `modified` 标记互证 + `moduleOverrides` 替换件清点                                                                                                             |
@@ -260,11 +316,16 @@ cocosair.js/
 | `npm run analyze`               | 更新 docs 中的抽取清单与文件映射，依赖图写入 build/reports/                                                                                                                                              |
 | `npm run baseline`              | 在上游引擎目录复现 Web 基线构建；前置条件见 AGENTS.md                                                                                                                                                    |
 
+运行时 JS 构建会写入 `AIR_BUILD_DATE`（北京时间）并递增 `AIR_BUILD_NUMBER`；`build:all` 的两次主引擎编译消耗两个编号，声明与打包不递增。`AIR_FEATURES` / `AIR_OUT_DIR` 可用于变体构建，声明构建不跟随 `AIR_OUT_DIR`。完整命令、前置条件、输出与写入范围见 [npm 脚本目录](docs/reference/npm-scripts.md)；上表为常用入口。
+
 ## 文档
 
 - [文档导航](docs/README.md) — 目录与主题入口
 - [开发手册](docs/manual/index.md) — API 教程与可运行示例
 - [渲染目标与 MSAA](docs/manual/rendering-contracts.md) · [纹理颜色、离线 GGX 与材质诊断](docs/reference/rendering-color-diagnostics.md)
+- [独立数学入口](docs/guides/math-entry.md) · [WebGPU](docs/guides/webgpu.md) · [Box2D 3.2 WASM](docs/guides/box2d3.md)
+- [输入动作与状态](docs/manual/input-action-state.md) · [场景切换](docs/manual/scene-switching.md) · [音频就绪与所有权](docs/manual/audio-readiness-ownership.md)
+- [图集加载](docs/manual/atlas-loading.md) · [位图字体](docs/manual/bitmap-font-loading.md) · [SDK 生命周期配方](docs/manual/sdk-lifecycle-recipes.md)
 - [Code First 入门](docs/guides/code-first.md) — 启动与画布约定
 - [资源加载](docs/guides/asset-loading.md) · [骨骼工具](docs/guides/skinned-model.md) · [开发循环](docs/guides/engine-development.md)
 - [运行时资源检查](docs/guides/runtime-inspection.md) · [Agent 调试会话](docs/guides/agent-development.md)
@@ -275,7 +336,7 @@ cocosair.js/
 
 ## 能力与支持边界
 
-浏览器渲染要求 **WebGL 2**。WebGL 1 不受支持；WebGL 2 初始化失败时，`createAirApp()` 拒绝并携带 `WEBGL2_REQUIRED` 错误码。显式 HEADLESS 用于测试，不产生浏览器画面。详见 [浏览器支持策略](docs/webgl2-only.md)。
+默认浏览器渲染要求 **WebGL 2**；WebGPU 使用显式实验入口及独立验收边界。WebGL 1 不受支持；WebGL 2 初始化失败时，`createAirApp()` 拒绝并携带 `WEBGL2_REQUIRED` 错误码。显式 HEADLESS 用于测试，不产生浏览器画面。详见 [浏览器支持策略](docs/webgl2-only.md)。
 
 ### 默认运行时
 
@@ -290,23 +351,38 @@ cocosair.js/
 | 物理             | 2D 默认为纯 JS Box2D；3D 同时包含 builtin 与 Cannon。builtin 提供离散碰撞检测，Cannon 提供刚体模拟；初始化前用 `createAirApp({ physics: 'cannon' })` 选择，默认仍为 builtin。 |
 | 其他模块         | DragonBones、Profiler、GeometryRenderer、intersection-2d、custom pipeline / post-process 导出。具体渲染效果以相应示例与浏览器验证为准。                                       |
 
+### AIR 辅助 API
+
+主入口保留原生 Cocos API，并导出薄辅助接口：
+
+| 场景           | 入口与用途                                                                                                                                                 |
+| -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 启动与生命周期 | `createAirApp`、`app.session`、`app.releaseScene()`、`app.close()`、`createSessionScope`；登记资源清理并处理异步结果过期。关闭后同文档重建需重新加载页面。 |
+| 输入与页面     | `createActionInput`、`createSessionGate`、`SceneStack`；组合动作输入、会话开关及原生 Node 页面。                                                           |
+| UI 与资源      | `createUICanvas`、`spriteNode`、`labelNode`、`AssetBank`，以及 DOM overlay、纹理 Sprite、图集、BMFont、UI 网格和字形工具。                                 |
+| 模型加载       | `GLTFLoader` 的 Promise 加载，以及已注册的 `assetManager` / `loadAssetAsync` 入口；扩展与 decoder 配置见 glTF 指南。                                       |
+| 音频与渲染     | `AudioService`、`createAirRenderTarget`、screen pass/effect、bloom/vignette、透射捕获、颜色合同与材质诊断。                                                |
+| 观察与受控步进 | `app.diagnostics`、`app.contextHealth`、`createStepClock`；受控动作前暂停原生 pacer，避免与实时帧混用。                                                    |
+
+画布支持 selector 或元素，`pixelRatioCap`、`screenMode`、`container`、`designResolution` 在 `createAirApp` 中配置。上下文恢复不代表 GPU 资源已重建；按健康状态处理失败与页面重载。使用细节从[开发手册](docs/manual/index.md)进入。
+
 ### 构建开关与聚合导出
 
-能力名称、feature unit 和公开导出不是同一张清单。当前 `src/cc.config.json` 声明 **33** 个 feature，默认构建选择 **26** 个；以该配置和 `tools/build/build.cjs` 为准。
+能力名称、feature unit 和公开导出不是同一张清单。当前 `src/cc.config.json` 声明 **35** 个 feature，默认构建选择 **27** 个；以该配置和 `tools/build/build.cjs` 为准。
 
 - `audio` 虽未列入默认 feature 选择，但由 `src/exports/air.ts` 静态聚合，音频能力已在默认 bundle 中。
 - `mask`、`graphics`、`sorting`、`intersection-2d`、`geometry-renderer`、`spine`、`physics-framework` 等能力由聚合入口导出，不能仅按同名 feature 开关判断是否包含。
-- 已声明但未选择的 feature 为 `audio`、`physics-2d-builtin`、`physics-ammo`、`physics-physx`、`physics-2d-box2d-wasm`、`marionette`、`procedural-animation`。构建变体使用 `AIR_FEATURES`，仍需验证完整依赖和运行资产。
+- 已声明但未选择的 feature 为 `audio`、`physics-2d-builtin`、`physics-ammo`、`physics-physx`、`physics-2d-box2d-wasm`、`marionette`、`procedural-animation`、`spark`。Spark 使用上文独立构建入口；其他构建变体使用 `AIR_FEATURES`，仍需验证完整依赖和运行资产。
 
 可用 `npm run verify:feature-exports` 核对声明、聚合入口和默认产物组成；详细范围见 [功能范围](docs/reference/web-features.md)。源码或类型存在，只能证明相应代码已抽取，不能代替实际运行验证。
 
 ### 不包含或需要额外资产
 
 - **WebGPU**：桌面 Web 实验后端已接入，使用 `createAirApp({ canvas, renderer: 'webgpu' })` 显式选择；默认仍 WebGL2，不自动回退。部署和当前验收边界见 [WebGPU 指南](docs/guides/webgpu.md)。
-- **WASM 物理后端**：bullet/physx、Box2D WASM 的外部 JS/WASM 资产未随包提供，不属于当前可直接使用的后端。见 [资产来源记录](docs/notes/physics-asset-sourcing.md)。
+- **WASM 物理后端**：可选 Box2D 3.2 通过 `physics2D: 'box2d-v3-wasm'` 使用，配套资产随构建和 npm 包独立提供，默认 JS 后端不加载。它与旧 `physics-2d-box2d-wasm` feature 不同；旧 Box2D WASM、bullet/physx 仍受外部资产限制。分别见 [Box2D 3.2 指南](docs/guides/box2d3.md)和[资产来源记录](docs/notes/physics-asset-sourcing.md)。
 - **Spine**：组件、类型及适配代码存在，但基线的完整运行时依赖尚未部署的外部资产；不能据此宣称 Spine 动画运行已验收。见 [Spine 资产来源](docs/notes/spine-asset-sourcing.md)。
 - **Draco 浏览器解码**：adapter 支持注入 provider；随包入口为 Node/CommonJS 形态，浏览器 factory 由应用另行提供。见 [decoder 部署边界](docs/gltf/gltf-decoder-deployment.md)。
-- **地形、3D 粒子、XR、Light Probe 等范围项**：不属于当前默认支持面，具体排除与待扩展范围见 [范围记录](docs/reference/scope-decisions.md)。
+- **地形、XR、Light Probe 等范围项**：不属于当前默认支持面，具体排除与待扩展范围见 [范围记录](docs/reference/scope-decisions.md)。3D 粒子已通过 `createAirParticleSystem` 接入；当前覆盖与历史范围记录分开说明。
 - **MiniGame、Native/JSB、Creator Editor**：不属于 Web 运行时依赖闭包。
 - **Spark 高斯泼溅**：使用 `npm run build:spark` 生成独立 `build/spark.module.js`，借用主引擎，不重复打包 Cocos。可运行示例为 `examples/spark-splats/`。默认 bundle 不包含 Spark；WASM 仍以内联的上游发行字节提供，XR/hand 家族排除范围不变。Spark-rs 的 crate 级许可处置仍为 pending，因此当前仅提供仓库内可选构建，不纳入默认 npm 包。边界、声明与部署方式见 [Spark 独立模块](docs/reference/spark-optional-entry.md)。
 
@@ -319,6 +395,12 @@ cocosair.js/
 - `Skeleton.joints` 必须是**相对 skinningRoot 的完整路径**（`getChildByPath` 解析），
   层级骨骼写 `bone0/bone1` 而非 `bone1`；使用中的路径缺失报 `AIR_E_SKINNING_JOINT_PATH`。根空间、首帧与重绑定合同见[蒙皮配方](docs/manual/skinning-code-first.md)。
 - 三关节蒙皮与骨骼动画用法见 `examples/skinned-animation/`，工具说明见 [骨骼工具](docs/guides/skinned-model.md)。
+
+## 验证范围
+
+日常 PR 使用 `Code quality / quality` 按改动范围运行格式、类型、CPU 回归、构建与包检查；代码改动还验证 `shader-driver-pilot`、`glass-refraction`、`gltf-viewer`、`input`、`spark-splats` 五个 Chromium 示例。Box2D 有独立的路径选择回归，完整示例 campaign 通过 `example-evidence.yml` 手动执行。具体范围见 [CI scopes](docs/reference/ci-scopes.md)。
+
+局部检查、源码导出或历史 PASS 不代表当前完整示例、跨浏览器或发布验收完成。发布须核对当前候选指纹和完整证据，见[验证与发布检查](docs/reference/verification.md)。
 
 ## 基线与上游
 

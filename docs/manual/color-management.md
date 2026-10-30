@@ -1,5 +1,7 @@
 # 颜色管理（Color Management）
 
+> Code First 的统一 HDR 输出、曝光及 ACES/Reinhard 见 [HDR 后处理指南](../guides/hdr-post-processing.md)。本篇原生 `toneMappingType` 0/1 的历史像素结论不适用于该新链。
+
 > 颜色空间、伽马、色调映射这套"颜色从哪来、到哪去"的规矩。
 > 配套可运行示例：[`examples/manual-color-management/`](examples/manual-color-management/)（hex 色板排 + 逐帧 lerp 渐变带 + 色调映射 A/B 开关）。
 

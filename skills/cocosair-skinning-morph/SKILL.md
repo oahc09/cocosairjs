@@ -69,3 +69,4 @@ Read relevant [wrong/right examples](references/common-mistakes.md) before imple
 - [Why did binding fail?](references/joint-paths.md) - Paths and capacity
 - [Why is bind pose stale?](references/bind-pose.md) - Restore and rebind
 - [Why did weights not apply?](references/morph.md) - Morph data and lifecycle
+- [GPU point/voxel transitions instead?](../cocosair-performance/references/gpu-morph-fields.md) - Different from mesh weights

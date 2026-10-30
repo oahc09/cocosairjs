@@ -1,5 +1,7 @@
 # 后处理（How to use Post Processing）
 
+> 开箱即用的默认 WebGL2 HDR/Bloom 请使用 [AIR HDR 后处理链](../guides/hdr-post-processing.md)。本篇记录原生 postProcess 设置的历史验收边界，不包含新辅助链的结论。
+
 > bloom/辉光/SSAO 这类全屏后期效果怎么挂。
 > 配套可运行示例：[`examples/manual-post-processing/`](examples/manual-post-processing/)（相机后处理开关 A/B + 槽位读回；实测开关无像素级效果，见 §3）。
 

@@ -17,6 +17,7 @@ const { buildEngine } = require('@cocos/ccbuild');
 const { withIncrementalCache, acquireBuildLock } = require('./incremental.cjs');
 const { withESMHelpers } = require('./esm-helpers.cjs');
 const { lineEndingsPlugin } = require('./line-endings.cjs');
+const { externalizeSources } = require('./source-map-publication.cjs');
 const { resolveBuildDate, readBuildNumber, commitBuildNumber, buildMetadataPlugin } = require('./build-metadata.cjs');
 
 const ROOT = join(__dirname, '..', '..');
@@ -143,7 +144,9 @@ const moduleFormat = formatIdx >= 0 ? args[formatIdx + 1] : 'esm';
                     if (isAbsolute(source) || /^[a-z]+:/i.test(source)) return source;
                     return relative(OUT, resolve(dirname(p), source)).replace(/\\/g, '/');
                 });
-                fs.writeFileSync(join(OUT, bundleName + '.map'), JSON.stringify(map));
+                // Keep mappings intact; repository deployments resolve ../src/.
+                // npm already strips sourceMappingURL and does not ship maps.
+                fs.writeFileSync(join(OUT, bundleName + '.map'), JSON.stringify(externalizeSources(map)));
                 // bundle 内 sourceMappingURL 指向 cc.js.map，需改写为最终产物名
                 const bundlePath = join(OUT, bundleName);
                 const code = fs.readFileSync(bundlePath, 'utf8');

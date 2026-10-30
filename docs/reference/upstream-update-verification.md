@@ -1,6 +1,6 @@
 # Upstream candidate verification
 
-This is the execution guide for [the upstream update plan](../../ai/plans/upstream-update.md), not a PASS certificate. The [ledger](../../ai/ledgers/upstream-update.md) separates implementation, current CPU results, retained failures and infrastructure limitations. No merge, release, deployment or remote workflow dispatch is part of this change.
+This is the execution guide for [the upstream update plan](../../ai/plans/upstream-update.md), not a PASS certificate. Historical execution records are retained separately; they do not certify a new candidate. This guide specifies verification steps and does not itself authorize merge, release, deployment or remote workflow dispatch.
 
 ## Candidate order and identity
 

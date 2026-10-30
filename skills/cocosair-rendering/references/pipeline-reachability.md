@@ -1,3 +1,62 @@
+# Code First HDR output
+
+Current entry: `createAirPostProcess`, exported by the main `cocosair.js` runtime. Read this section for Bloom/ACES/Reinhard; the older source inventories below describe their recorded snapshots and are not a reason to hand-build the same chain. The AIR helper and native `camera.postProcess` settings are different paths.
+
+```ts
+import { createAirPostProcess } from 'cocosair.js';
+// After createAirApp(); camera can be assembled before app.run(scene).
+const post = createAirPostProcess(camera, {
+    levels: 6, exposure: 0.85, toneMapping: 'aces',
+    bloom: { intensity: 0.55, threshold: 1.1, softKnee: 0.6, scatter: 0.78 },
+});
+post.setOptions({ toneMapping: 'reinhard' });
+post.setOptions({ bloom: { enabled: false } });
+console.log(post.info); // Effective dimensions/levels/samples and owned resource counts.
+post.dispose(); // Idempotent; restores the previous camera target.
+```
+
+The chain is linear RGBA16F capture → soft-knee prefilter/downsample → tent upsample → additive Bloom → exposure → tone curve → one sRGB output. Custom effects emit linear radiance, including values above 1; do not clamp, encode sRGB or tone-map in their fragment output. Native standard/unlit output conversion is camera-scoped. Other cameras retain their behavior. `exposure` is a post gain; native lighting may already incorporate camera exposure. ACES means the fitted curve, not the full ACES color-management pipeline. `none` still clamps and encodes for display.
+
+Defaults: five levels, exposure 1, ACES, Bloom intensity .6, threshold 1, knee .5, scatter .7. Levels 1–8, resolutionScale (0,1], samples 1/2/4/8 are creation options. Runtime updates accept exposure 0–64, intensity 0–32, threshold 0–65504, knee/scatter 0–1 and boolean enabled. Inspect actual samples rather than assuming a requested 4× was allocated. Unsupported float attachments fail; there is no silent LDR fallback. This helper currently requires the default WebGL2 ForwardPipeline, not WebGPU or an arbitrary custom pipeline.
+
+Ownership: one handle per camera. Do not externally replace its target or dispose its `source`. `setEnabled(false)` restores the target and retains resources; `dispose` releases owned targets/materials/geometry/PSOs. Camera-node destruction also disposes the handle. Four fixed effect/layout/shader caches are shared, not per-instance leaks. Output is color-only; it does not transfer scene depth to the destination. Do not stack the old LDR `attachAirBloom` helper on the same camera.
+
+## Make a light study, not a white screen
+
+- Establish one silhouette and reserve dark negative space. Use two emission hues with a clear hierarchy; avoid giving every window, particle and surface equal intensity. Design framing, material response and depth before increasing Bloom.
+- Keep emitter radiance and output exposure separate. A useful starting point is linear 3–6 for a small emissive tube, threshold near 1, intensity .4–.7 and ACES exposure .7–1. These are art-direction starting points, not engine defaults or universal physical units. A dim scene with no values above threshold will not acquire an optical halo by increasing levels.
+- Put a dark, shaped surface near the emitter: rim-lit metal, an occluding core, a pedestal, and a restrained reflection give the light scale and contrast. Preserve dark interiors instead of making every surface emissive. Thin bright geometry needs enough **longitudinal** curve segments: in `primitives.torus`, `tubularSegments` follows the major arc; `radialSegments` follows the tube cross-section.
+- For a real planar reflection, mirror the camera position and look target across the plane, invert its up vector, render before the main camera into a linear float target, and project world positions through that camera's view-projection matrix when sampling. Exclude the floor from capture to avoid feedback. Resize/rebind the target and refresh the reflected projection before drawing; camera matrices from the preceding aspect ratio can stretch an otherwise valid image. This single horizontal-plane example is not SSR or a general arbitrary-plane clip implementation.
+- Motion, orbit, tone/exposure/Bloom controls and small-screen framing should serve the sculpture. Honor reduced-motion preference and use meaningful HTML labels; avoid a giant diagnostics panel over the focal point.
+
+Checkout references: `examples/afterlight/` is the procedural light sculpture; `examples/neon-city/` retains the denser city study. The sculpture uses actual native meshes, a mirrored capture and the same public HDR chain; no external model, texture or runtime dependency. See `docs/guides/hdr-post-processing.md` for the public contract. An installed skills copy may not include those checkout files; the recipe above is self-contained.
+
+## Prove the result
+
+Use a paused native pacer and `createStepClock` for fixed-time captures. Verify numeric HDR (>1) in `post.source.readColor`, then inspect final screenshots for emitter shape, halo outside the geometry, single output encoding and preserved dark regions. Compare Bloom off/on, ACES/Reinhard and exposure at the **same** camera/time. Do not let DOM FPS text or real rAF advance contaminate a deterministic scene comparison. Source readback alone is not a final screenshot or compositor-presentation proof.
+
+Check portrait resize by examining actual shape/projection, not just target width fields. Validate orbit/reset, pause/resume and disposal/re-entry independently. Confirm underlying texture deletion as well as registration counts, and distinguish intentionally shared caches. Checkout probes: `tools/verify/hdr-post-process.cjs --out=output/new-hdr-attempt` and `tools/verify/afterlight-example.cjs --out=output/new-afterlight-attempt`; each needs the current main bundle, Playwright/browser and its documented Node dependencies, writes a fresh local attempt, and does not publish canonical example evidence. A local Chromium result is not a full multi-browser release claim.
+
+---
+
+## Surface fidelity before glow
+
+A light study can pass every functional test and still look like a prototype. Inspect it with Bloom disabled: metal needs shaped reflections, differentiated roughness and visible construction (lips, housings, fasteners), while the emitting insert should remain distinct from its non-emitting carrier. Avoid hiding a small tube completely inside an opaque torus; place it on the exposed face and parent both to the same moving assembly. Do not add equally bright decorative objects to compensate for a weak silhouette.
+
+For procedural machining, use derivative-aware filtering (`fwidth`) and fade frequencies above pixel resolution; MSAA alone does not remove shader-pattern aliasing. Keep floor reflections slightly rougher/dimmer than the source and distinguish analytic studio-light lobes from a captured environment. AFTERLIGHT uses analytic softboxes on metal/core and a separate real mirrored-camera texture on the floor; it does not claim full environment-map PBR.
+
+Promote a fixed HTML overlay into an explicit stacking/compositing layer above a continuously rendering canvas when testing reveals disappearing text; verify actual screenshots rather than relying only on the DOM tree. Let browser layout/compositing settle independently while keeping the engine step clock paused. Check the final live dev-server URL as well as the isolated collector route.
+
+## Liquid-glass surfaces in a light study
+
+Use real linear-HDR background capture for screen-space refraction, with the transmitting surface excluded from that camera. Keep the capture graph acyclic: in AFTERLIGHT the background capture excludes the reflective floor as well, then the mirrored capture samples the completed background through the core, then the main camera samples both. Reuse native cameras/targets, update projection and bindings on resize, and unbind before disposing every owned texture.
+
+A liquid impression needs slowly varying geometry **and matching normals**, Fresnel edge reflection, thickness-dependent absorption and restrained dispersion. Displacing vertices while leaving sphere normals unchanged makes the highlight slide incorrectly. A mostly black background hides transmission; a small actual light guide behind the glass makes bending observable. Thin saturated emitters exaggerate RGB splitting, so start with sub-percent channel offsets. Keep metal housings opaque and state that a screen-space single-refraction approximation is not full volumetric ray tracing. Compare a real glass/opaque control at fixed time outside its DOM panel, then verify the new capture's dimensions and GFX destruction.
+
+# Historical pipeline inventory
+
+The following original text is retained intact for provenance. Its dates, counts and lack-of-entry conclusions are historical; prefer the scoped public helper above for current Code First HDR work.
+
 Derived from `tools/build/build.cjs`, `src/cc.config.json`, `src/exports/air.ts`, `src/exports/custom-pipeline.ts`, `src/exports/custom-pipeline-post-process.ts`, `src/exports/legacy-pipeline.ts`, `src/air/app.ts`, `src/air/bootstrap.ts`, `src/cocos/game/game.ts`, `src/cocos/game/director.ts`, `src/cocos/root.ts`, `src/cocos/core/platform/macro.ts`, `src/cocos/rendering/define.ts`, `src/cocos/rendering/custom/index.ts`, `src/cocos/rendering/legacy/index.ts`, `src/cocos/rendering/post-process/index.ts`, `src/cocos/rendering/post-process/post-process-builder.ts`, `src/cocos/rendering/post-process/components/post-process.ts`, `src/cocos/rendering/post-process/components/post-process-setting.ts`, `src/cocos/rendering/post-process/components/bloom.ts`, `src/cocos/rendering/post-process/components/color-grading.ts`, `src/cocos/rendering/post-process/components/fsr.ts`, `src/cocos/misc/camera-component.ts`, `src/cocos/render-scene/scene/camera.ts`, `docs/reference/owner-decisions.md`, `docs/reference/api-stability.md`, `docs/reference/web-features.md`, `docs/manual/rendering-contracts.md`, `examples/camera-viewport-props/src/main.ts`, `examples/camera-geometry-extras/src/main.ts`, `test/smoke/competitive-early-effect.test.ts`, `build/cocosair.module.js`, `build/cocosair.module.d.ts`, `docs/evidence/examples-verified.json`, `docs/evidence/examples/rendering-contracts/`, `src/cocos/rendering/forward/`, `src/cocos/rendering/deferred/`, `src/cocos/rendering/shadow/`, `src/cocos/rendering/reflection-probe/`, `src/cocos/rendering/render-pipeline.ts`, `src/cocos/rendering/pipeline-scene-data.ts`, `src/cocos/rendering/pipeline-state-manager.ts`, `src/cocos/rendering/index.ts`, `src/cocos/misc/`, `src/cocos/core/platform/index.ts`, `src/cocos/core/index.ts`, `src/cocos/core/global-exports.ts`, `src/exports/base.ts`, `tools/debug/render-queue.ts`, `tools/debug/probes/light-contribution-probe/main.js` (as of 2026-10-09).
 
 Three capability layers stay separate throughout this file: source export (a symbol exists in `src/exports/*`), default-bundle reachable (the name appears in the built ESM export block), browser-verified (a recorded browser report exists for it).

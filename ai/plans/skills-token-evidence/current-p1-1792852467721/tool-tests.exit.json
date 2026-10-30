@@ -1,0 +1,18 @@
+{
+  "started": "2026-10-24T14:35:17.157Z",
+  "completedAt": "2026-10-24T14:35:25.728Z",
+  "command": [
+    "node",
+    "--test",
+    "tools/skills/test/check-p1.test.cjs",
+    "tools/skills/test/gen-index.test.cjs",
+    "tools/skills/test/md-parse.test.cjs",
+    "tools/skills/test/measure-tokens.test.cjs",
+    "tools/skills/test/restore-route-reports.test.cjs",
+    "tools/skills/test/route-regression.test.cjs",
+    "tools/skills/test/verify-lossless.test.cjs",
+    "tools/skills/test/verify-meta.test.cjs"
+  ],
+  "exitCode": 1,
+  "signal": null
+}

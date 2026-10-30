@@ -1,6 +1,6 @@
 ---
 name: cocosair
-description: "Route Cocos AIR tasks across subsystem skills and direct dependencies. Use to choose a primary owner, adapt Creator knowledge, or apply Code First and capability-evidence rules."
+description: "Route AIR tasks by subsystem or visual symptom; choose direct dependencies and check capabilities."
 license: MIT
 compatibility: "Cocos AIR source checkout or installed cocosair.js package. Browser rendering requires WebGL 2; source tooling requires Node.js >=18. Use the host-provided tools and user-authorized workspace."
 allowed-tools: Read Bash
@@ -70,6 +70,7 @@ Use current main-entry declarations and canonical docs in the located package or
 
 ## Reference map
 
+- [Before visual work; black/invisible?](references/visual-feedback.md)
 - [Which owner?](references/context.md#related-skills) - Direct dependencies
 - [Which environment?](references/environment.md) - Roots and prerequisites
 - [Legacy route terms?](references/skill-index.md) - Compatibility index

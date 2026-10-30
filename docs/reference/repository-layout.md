@@ -31,6 +31,8 @@
 
 ## 临时内容与清理
 
+`build/` 顶层保留兼容的 JS/声明入口和可选模块目录。数学构建收据与 Spark 依赖图统一放 `build/metadata/`；它们是 CI/复现输入，不是浏览器运行资源，也不进 npm 运行包。部署按 [最小文件清单](../../build/README.md) 选取，不能把整个 SDK 目录视作必须下载的资源。
+
 本地 `node_modules/`、`output/`、`.playwright-cli/`、构建缓存和 `tools/**/.tmp-*/` 不作为项目源码入库。临时目录由创建工具负责收尾；有复用价值的增量缓存不因体积较大而删除。
 
 常驻探针放 `tools/debug/probes/`，名称表达诊断对象；生成器放 `tools/fixtures/` 或 `tools/examples/`。一次性修补脚本完成使命后移除，以 Git 历史追溯；不再创建重复的旧版正典生成入口。

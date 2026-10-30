@@ -1,13 +1,13 @@
 ---
 name: cocosair-2d-subsystems
-description: "Build DragonBones, TiledMap, particles and billboards from runtime data. Use for raw asset strings, missing pixels, MotionStreak or Spine backend limits."
+description: "Build DragonBones, TiledMap, 2D/3D particles and billboards from runtime data. Use for raw asset strings, missing pixels, MotionStreak or Spine backend limits."
 license: MIT
 compatibility: "Cocos AIR source checkout or installed cocosair.js package. Browser rendering requires WebGL 2; source tooling requires Node.js >=18. Use the host-provided tools and user-authorized workspace."
 allowed-tools: Read Edit Write Bash
 when_to_use:
   - build DragonBones assets from raw JSON strings
   - TiledMap edits do not redraw or resolve objects
-  - particles compute but render no pixels
+  - particles compute but render no pixels; createAirParticleSystem 3D emitters/trails CPU/GPU
   - Spine skeleton stays blank without an error
   - billboard or motion trail is invisible
 owns: [dragonbones, tiledmap, particle-2d, billboard, motion-streak, spine-limits]
@@ -69,4 +69,5 @@ Read relevant [wrong/right examples](references/common-mistakes.md) before imple
 - [Build DragonBones?](references/dragonbones.md) - Payloads and pitfalls
 - [Edit tiles?](references/tiledmap.md) - Arrays, dirty state and queries
 - [Empty particles?](references/particle-2d.md) - Plist, blend and streaks
+- [Code First 3D emitters or trails?](references/particle-3d.md) - Native CPU/GPU ParticleSystem
 - [Invisible billboard?](references/billboard.md) - Size and texture ownership

@@ -8,7 +8,7 @@
       "layer": "router",
       "family": "runtime-core",
       "path": "cocosair/SKILL.md",
-      "description": "Route Cocos AIR tasks across subsystem skills and direct dependencies. Use to choose a primary owner, adapt Creator knowledge, or apply Code First and capability-evidence rules.",
+      "description": "Route AIR tasks by subsystem or visual symptom; choose direct dependencies and check capabilities.",
       "owns": ["skill-routing", "primary-owner", "direct-dependencies", "code-first", "capability-layers"],
       "when_to_use": [
         "which skill owns this AIR task",
@@ -21,6 +21,7 @@
         "description_zh": "为 Cocos AIR 任务选择主技能和直接依赖，并遵循原生 API、启动时序与能力证据分层。用于开始 AIR 开发、定位能力归属或选择技能。"
       },
       "refs": [
+        { "file": "references/visual-feedback.md", "answers": "" },
         { "file": "references/context.md#related-skills", "answers": "Direct dependencies" },
         { "file": "references/environment.md", "answers": "Roots and prerequisites" },
         { "file": "references/skill-index.md", "answers": "Compatibility index" }
@@ -32,12 +33,12 @@
       "layer": "subsystem",
       "family": "ui-2d",
       "path": "cocosair-2d-subsystems/SKILL.md",
-      "description": "Build DragonBones, TiledMap, particles and billboards from runtime data. Use for raw asset strings, missing pixels, MotionStreak or Spine backend limits.",
+      "description": "Build DragonBones, TiledMap, 2D/3D particles and billboards from runtime data. Use for raw asset strings, missing pixels, MotionStreak or Spine backend limits.",
       "owns": ["dragonbones", "tiledmap", "particle-2d", "billboard", "motion-streak", "spine-limits"],
       "when_to_use": [
         "build DragonBones assets from raw JSON strings",
         "TiledMap edits do not redraw or resolve objects",
-        "particles compute but render no pixels",
+        "particles compute but render no pixels; createAirParticleSystem 3D emitters/trails CPU/GPU",
         "Spine skeleton stays blank without an error",
         "billboard or motion trail is invisible"
       ],
@@ -54,6 +55,7 @@
         { "file": "references/dragonbones.md", "answers": "Payloads and pitfalls" },
         { "file": "references/tiledmap.md", "answers": "Arrays, dirty state and queries" },
         { "file": "references/particle-2d.md", "answers": "Plist, blend and streaks" },
+        { "file": "references/particle-3d.md", "answers": "Native CPU/GPU ParticleSystem" },
         { "file": "references/billboard.md", "answers": "Size and texture ownership" }
       ],
       "last_updated": "2026-10-13"
@@ -117,6 +119,7 @@
         "description_zh": "使用 AnimationClip、Animation 和 tween，管理播放模式、组合及单一时钟。用于动画播放、补间回收或确定性步进问题。"
       },
       "refs": [
+        { "file": "references/quick-start.md#per-frame-geometry-updates", "answers": "Component.update(dt)" },
         { "file": "references/animation-clip.md", "answers": "Tracks and wrap modes" },
         { "file": "references/tween-ops.md", "answers": "Chains, ownership and defects" },
         { "file": "references/step-clock.md", "answers": "One clock and proof limits" }
@@ -340,7 +343,7 @@
       "layer": "subsystem",
       "family": "scene-3d",
       "path": "cocosair-materials-effects/SKILL.md",
-      "description": "Configure materials, effects, uniforms, defines and GLSL. Use for setProperty, missing textures, AIR_E_MATERIAL_NOT_READY, AIR_E_MATERIAL_TYPE or uniform buffer too small.",
+      "description": "Configure materials, effects, uniforms, defines and GLSL. Diagnose black/invisible effects, missing textures, setProperty, AIR_E_MATERIAL_NOT_READY or AIR_E_MATERIAL_TYPE.",
       "owns": ["material", "effect", "uniform-types", "shader-defines", "custom-glsl", "material-instance"],
       "when_to_use": [
         "setProperty changes nothing",
@@ -358,10 +361,22 @@
         "description_zh": "配置材质、效果、属性类型、宏和自定义 GLSL。用于 USE_TEXTURE、uniform 类型、效果初始化或材质诊断问题。"
       },
       "refs": [
+        {
+          "file": "../cocosair-performance/references/gpu-morph-fields.md#rendering-and-polish",
+          "answers": "Field-owned surface"
+        },
         { "file": "references/builtin-effects.md", "answers": "Registration and instances" },
         { "file": "references/property-types.md", "answers": "Types, aliases and color" },
         { "file": "references/custom-glsl.md", "answers": "Variants and binding layouts" },
-        { "file": "references/defines.md", "answers": "Map gates and diagnostics" }
+        { "file": "references/defines.md", "answers": "Map gates and diagnostics" },
+        {
+          "file": "references/custom-glsl.md#runtime-state-and-empty-block-traps",
+          "answers": "Numeric states and block omission"
+        },
+        {
+          "file": "references/custom-glsl.md#complete-minimal-effect-template",
+          "answers": "JSON, registration and version traps"
+        }
       ],
       "last_updated": "2026-10-13"
     },
@@ -399,11 +414,11 @@
       "layer": "subsystem",
       "family": "runtime-core",
       "path": "cocosair-performance/SKILL.md",
-      "description": "Optimize draw calls with static merge, instancing and dynamic atlases. Use for frame budgets, on-demand rendering, AIR_E_MESH_CAPACITY or AIR_E_PIXEL_RATIO_IMPORT_ORDER.",
+      "description": "Optimize draw calls: static merge, instancing, dynamic atlases and GPU morph fields. Frame budgets, on-demand rendering, AIR_E_MESH_CAPACITY, AIR_E_PIXEL_RATIO_IMPORT_ORDER.",
       "owns": ["batching", "instancing", "dynamic-atlas", "profiler", "on-demand-rendering", "pixel-ratio"],
       "when_to_use": [
         "draw calls equal the object count",
-        "batch many static meshes or UI sprites",
+        "batch many static meshes or UI sprites; createAirInstanceBatch/createAirMorphField point/voxel",
         "measure actual draw counts and frame budget",
         "stop rendering until the next requested frame",
         "high pixel density makes the device too slow"
@@ -420,6 +435,8 @@
         { "file": "references/batching-routes.md", "answers": "Routes and counts" },
         { "file": "references/dynamic-atlas.md", "answers": "Acceptance and leases" },
         { "file": "references/instancing.md", "answers": "Macro and grouping" },
+        { "file": "references/instance-batches.md", "answers": "Explicit buffers and ownership" },
+        { "file": "references/gpu-morph-fields.md", "answers": "Sampling, transitions and surface controls" },
         { "file": "references/profiles.md", "answers": "Counters and step clock" }
       ],
       "last_updated": "2026-10-13"
@@ -478,7 +495,11 @@
       "refs": [
         { "file": "references/primitive-shapes.md", "answers": "Signatures and defaults" },
         { "file": "references/mesh-attributes.md", "answers": "Formats and reads" },
-        { "file": "references/create-primitive-geometry.md", "answers": "Descriptor limits" }
+        { "file": "references/create-primitive-geometry.md", "answers": "Descriptor limits" },
+        {
+          "file": "references/common-mistakes.md#dynamic-mesh-creation-and-update-checklist",
+          "answers": "Creation, updates and visibility"
+        }
       ],
       "last_updated": "2026-10-13"
     },
@@ -597,7 +618,8 @@
       "refs": [
         { "file": "references/joint-paths.md", "answers": "Paths and capacity" },
         { "file": "references/bind-pose.md", "answers": "Restore and rebind" },
-        { "file": "references/morph.md", "answers": "Morph data and lifecycle" }
+        { "file": "references/morph.md", "answers": "Morph data and lifecycle" },
+        { "file": "../cocosair-performance/references/gpu-morph-fields.md", "answers": "Different from mesh weights" }
       ],
       "last_updated": "2026-10-13"
     },

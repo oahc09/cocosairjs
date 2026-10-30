@@ -8,6 +8,10 @@ Cocos AIR 使用原生 Cocos 场景、节点、组件、网格、材质、动画
 
 glTF/GLB 使用原生 Mesh、Material、Skeleton 和 AnimationClip。模型扩展的状态以运行时 registry 和模型目录能力清单为准；加载 Draco、Meshopt 或 KTX2 时需配置单独部署的解码器。见 [模型加载](../gltf/gltf-runtime.md) 和 [扩展参考](../gltf/gltf-extension-reference.md)。
 
+## 实例批次、粒子与形态场
+
+当前主入口提供 [createAirInstanceBatch](../guides/instance-batches.md)、[createAirParticleSystem](../guides/particles.md) 和 [createAirMorphField](../guides/morph-fields.md)。它们分别处理显式实例流、原生发射粒子、GPU 形态纹理，不能混用为同一个功能。粒子通过 `air` 聚合导出，不要求也没有独立 `particle` feature 名；不要为它配置不存在的 AIR_FEATURES 项。实例批次和形态场首批限定 WebGL2；本轮粒子的实际覆盖也以 WebGL2 定向报告为准。主入口可导出 API，不等于当前安装的旧包或任意变体已包含这些实现。
+
 ## Spark 高斯泼溅
 
 冻结上游源码在 `vendor/spark/`（`@sparkjsdev/spark` 2.3.1，MIT，105 文件 / `src` 52 个 `.ts` + 8 个 `.glsl`），适配层在 `src/air/spark/`。
