@@ -1,11 +1,5 @@
 name: Code quality
 "on":
-  pull_request: null
-  push:
-    branches:
-      - main
-    tags:
-      - v*
   workflow_dispatch:
     inputs:
       mode:

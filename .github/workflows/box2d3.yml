@@ -1,13 +1,6 @@
 name: Box2D acceptance
 "on":
   workflow_dispatch: null
-  pull_request:
-    branches:
-      - main
-  push:
-    branches:
-      - main
-      - feat/box2d-*
 permissions:
   contents: read
 concurrency:
