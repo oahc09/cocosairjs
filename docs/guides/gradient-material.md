@@ -12,6 +12,10 @@ offset, scale, smoothness and alpha. Its camera faces the opposite side of the X
 quad to match Cocos's camera convention; the gradient and white hemisphere response
 are unchanged. It is a focused manual example, not a new certified Gallery campaign.
 
+For package consumers, `npm run build:all` also refreshes the minified bundle,
+declarations and npm runtime copies. This source-only PR does not replace the
+previously committed generated SDK artifacts.
+
 ## Native API
 
 ```ts
