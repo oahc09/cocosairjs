@@ -49,6 +49,11 @@ npm run dev
 | `npm run build:system` | 构建需要 SystemJS 的模块格式。                                                                         | 写入 `build/` 下的 `cc.js` 及其 map，刷新模块格式标记。不是默认 npm ESM 入口，也不包含在 `build:all` 中；这些文件仅在显式运行此命令后生成。                                                                                       |
 | `npm run baseline`     | 用 SystemJS chunks 构建历史上游 cocos4 Web 基线，排除需要不可得原生/外部资产的特性。                   | 在**当前引擎目录**下写入 `bin/dev/cc-baseline/`。脚本直接读 `cwd/cc.config.json`，该文件在 AIR 仓库根不存在，故直接在此运行会失败。应从上游 cocos4 根调用本仓库的 `tools/baseline/build-baseline.cjs`。                           |
 
+运行时 `build`、`build:min`、`build:system`（包括 `AIR_OUT_DIR` 变体）还写入与 JS 相邻的 `<bundle>.sources.json`，
+绑定最终 JS、无嵌入源码的 map 及全部映射源码的 SHA-256；生成时对照编译器源码内容，缺失或漂移即失败。
+该 receipt 是可信工具生成的一致性记录，不是签名构建证明；旧产物迁移与信任边界见 [interop 指南](runtime-interop.md#source-map-绑定与信任边界)。
+Spark 与数学入口不使用此主运行时 receipt。
+
 默认 `build`、`build:min`、`build:system` 会写入 `build/package.json`（`type: module`）与
 `build/gltf-decoders/package.json`（`type: commonjs`）。后者只声明既有 decoder 文件的模块格式；
 **不下载或生成 decoder JS/WASM 资产**。构建脚本支持用 `AIR_FEATURES` 覆盖特性集、`AIR_OUT_DIR`

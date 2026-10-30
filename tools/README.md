@@ -349,3 +349,15 @@ The output directory must not exist. The tool checks all four archives before wr
 ### AFTERLIGHT visual study
 
 `node tools/verify/afterlight-example.cjs --out=output/new-afterlight-attempt` verifies the procedural light-sculpture example with real Chromium screenshots, actual HDR reflection, tone/exposure/Bloom controls, pause/resume, orbit, portrait projection and texture release. `--url=http://127.0.0.1:7454/afterlight/` verifies an already-running real dev server and checks its served bundle hash. `--bundle=<candidate.js>` selects a runtime; Playwright/browser, esbuild and pngjs are required. It writes a new isolated local attempt, retains failures and never publishes canonical Gallery evidence.
+
+## WebGPU runtime interop probes
+
+The opt-in [`runtime-interop`](../docs/reference/runtime-interop.md) collector runs shared browser/native behavior probes and AIR scene checks. [`Android interop`](../docs/reference/android-runtime-interop.md) has separate staging, device, lifecycle, memory and offline audit entry points. These tools do not change the default runtime or ordinary CI scope.
+
+Run focused CPU regressions with:
+
+```sh
+node --test tools/build/source-binding.test.cjs tools/verify/runtime-interop*.test.cjs
+```
+
+Runtime builds also write `<bundle>.sources.json`: exact bundle/map/source hash bindings for source-content-free maps. Missing or mismatched bindings fail closed. These receipts are consistency checks, not signed build attestations; see the guide for their trust boundary and retained-map migration provenance.

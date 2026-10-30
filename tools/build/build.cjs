@@ -157,6 +157,8 @@ const moduleFormat = formatIdx >= 0 ? args[formatIdx + 1] : 'esm';
                 if (patched !== code) {
                     fs.writeFileSync(bundlePath, patched);
                 }
+                const binding = require('./source-binding.cjs').createSourceBinding(ROOT, bundlePath, map);
+                fs.writeFileSync(bundlePath + '.sources.json', JSON.stringify(binding, null, 2) + '\n');
                 console.log('[build] output: ' + relative(ROOT, join(OUT, bundleName + '.map')) + ' (source map)');
                 break;
             }
