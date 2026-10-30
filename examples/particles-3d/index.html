@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Cocos AIR · Native Particles</title>
+        <style>
+            html,
+            body,
+            #GameDiv,
+            #Cocos3dGameContainer,
+            canvas {
+                margin: 0;
+                width: 100%;
+                height: 100%;
+                display: block;
+                overflow: hidden;
+                background: #070d17;
+            }
+            aside {
+                position: fixed;
+                top: 24px;
+                left: 24px;
+                max-width: 320px;
+                color: #e4eef7;
+                font: 14px/1.8 system-ui;
+            }
+            h1 {
+                font-size: 22px;
+                margin: 0;
+                letter-spacing: 0.06em;
+            }
+            p {
+                color: #9cb2c6;
+                margin: 8px 0;
+            }
+            button {
+                background: #102539;
+                color: #e4eef7;
+                border: 1px solid #37617c;
+                padding: 8px 12px;
+                margin: 4px 4px 0 0;
+                cursor: pointer;
+            }
+            button:focus-visible {
+                outline: 2px solid #7edaff;
+            }
+            output {
+                display: block;
+                margin-top: 12px;
+                white-space: pre-wrap;
+                font: 12px/1.8 monospace;
+            }
+        </style>
+        <script type="importmap">
+            { "imports": { "cocosair": "/build/cocosair.module.js" } }
+        </script>
+    </head>
+    <body>
+        <div id="GameDiv">
+            <div id="Cocos3dGameContainer">
+                <canvas id="GameCanvas" aria-label="橙色 CPU 拖尾与蓝色 GPU 粒子"></canvas>
+            </div>
+        </div>
+        <aside>
+            <h1>NATIVE PARTICLES</h1>
+            <p>左：CPU（喷射带拖尾）。右：GPU 解析运动。<br />原生组件，纯代码装配。</p>
+            <label
+                >效果
+                <select id="preset">
+                    <option value="spray">喷射</option>
+                    <option value="embers">火星</option>
+                    <option value="smoke">烟雾粒子</option>
+                    <option value="rain">雨</option>
+                    <option value="snow">雪</option>
+                </select></label
+            >
+            <button id="pause">暂停</button><button id="resume">继续</button><button id="drain">停止发射</button
+            ><button id="replay">清空重播</button>
+            <output id="status" role="status">初始化…</output>
+        </aside>
+        <script type="module" src="./src/main.ts"></script>
+    </body>
+</html>

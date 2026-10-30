@@ -1,7 +1,82 @@
 {
-  "generatedAt": "2026-10-22T02:57:51.239Z",
-  "revision": "9684562",
+  "generatedAt": "2026-10-25T09:33:02.700Z",
+  "revision": "fa54a3f6",
   "examples": [
+    {
+      "dir": "afterlight",
+      "id": "afterlight",
+      "version": "1.0.0",
+      "title": "AFTERLIGHT — A Study in Radiance",
+      "category": "rendering",
+      "status": "draft",
+      "specStatus": "draft",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "用真实原生网格、镜像相机与 HDR 输出设计有视觉层次的光学装置",
+        "points": [
+          "线性辐射亮度与曝光分离",
+          "多级 Bloom、ACES/Reinhard 与单次输出编码",
+          "镜像相机与投影纹理采样",
+          "同一时刻的画面对照与资源释放"
+        ]
+      },
+      "effect": {
+        "functional": "主相机经 createAirPostProcess 输出 HDR；更早的镜像相机捕获 sculpture，并通过世界坐标投影采样到地面。独立控件切换 Bloom、曲线、曝光、暂停和视角。",
+        "visual": "暗色钛合金光环围绕液体玻璃核心（可切换黑曜石），冷暖发光体在湿润地面形成真实倒影；支持拖拽、Bloom/曲线/曝光切换。"
+      },
+      "api": {
+        "primary": [
+          "createAirPostProcess",
+          "createAirRenderTarget"
+        ],
+        "supporting": [
+          "Camera",
+          "MeshRenderer",
+          "Material"
+        ],
+        "claims": [
+          "createAirPostProcess",
+          "createAirRenderTarget",
+          "Camera",
+          "MeshRenderer",
+          "Material"
+        ]
+      },
+      "capabilities": [
+        "rendering"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Reflection Camera",
+            "Light sculpture",
+            "Wet basalt",
+            "Glass background camera"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "scene-ready",
+          "no-runtime-error"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "interaction": [],
+        "lifecycle": [],
+        "capability": []
+      }
+    },
     {
       "dir": "anim-position",
       "id": "anim-position",
@@ -194,7 +269,7 @@
       "promotion": {
         "spec": "113419aed33a",
         "source": "9630b2703491c62c",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 68,
         "attested": 0,
         "units": 68
@@ -289,7 +364,7 @@
       "promotion": {
         "spec": "87b16f3be7f8",
         "source": "e354b22cadf41979",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 18,
         "attested": 0,
         "units": 18
@@ -369,7 +444,7 @@
       "promotion": {
         "spec": "1e59c272e2e2",
         "source": "396a4df04dfb0493",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 3,
         "attested": 0,
         "units": 3
@@ -616,7 +691,7 @@
       "promotion": {
         "spec": "f5eba590706f",
         "source": "0373eaa5b4d394e0",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 28,
         "attested": 0,
         "units": 28
@@ -699,7 +774,7 @@
       "promotion": {
         "spec": "735d00cae975",
         "source": "e89d32ce3ed3bbb6",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "0a6c249084b50f2f",
         "verified": 9,
         "attested": 2,
         "units": 11
@@ -776,7 +851,7 @@
       "promotion": {
         "spec": "82009221c157",
         "source": "028688f552ab4dc8",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 3,
         "attested": 0,
         "units": 3
@@ -851,7 +926,7 @@
       "promotion": {
         "spec": "f0ec78b8b28f",
         "source": "1d10a4e0ce03cc76",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 2,
         "attested": 0,
         "units": 2
@@ -926,7 +1001,7 @@
       "promotion": {
         "spec": "bf06f0da3626",
         "source": "d656c500fa90594b",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 2,
         "attested": 0,
         "units": 2
@@ -1030,7 +1105,7 @@
       "promotion": {
         "spec": "247bafa0cca7",
         "source": "cc42645c22e9dab1",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -1118,7 +1193,7 @@
       "promotion": {
         "spec": "c4a1c45f2260",
         "source": "a6e9df1cec851de8",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 3,
         "attested": 0,
         "units": 3
@@ -1225,7 +1300,7 @@
       "promotion": {
         "spec": "d314861ea3a2",
         "source": "0af7f6b33b45bf6e",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 13,
         "attested": 0,
         "units": 13
@@ -1427,7 +1502,7 @@
       "promotion": {
         "spec": "b615901b7e17",
         "source": "eff5486133ed2729",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 117,
         "attested": 0,
         "units": 117
@@ -1530,7 +1605,7 @@
       "promotion": {
         "spec": "466cfd2b2403",
         "source": "ef1843dfdc0ab7c7",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -1629,7 +1704,7 @@
       "promotion": {
         "spec": "e428c783e31d",
         "source": "7fec7450acdbcb31",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -1736,7 +1811,7 @@
       "promotion": {
         "spec": "91aa75cbfdff",
         "source": "376aa633d7649377",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -1843,7 +1918,7 @@
       "promotion": {
         "spec": "7c8ed23455ae",
         "source": "8ff725b365aaae2f",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -1946,7 +2021,7 @@
       "promotion": {
         "spec": "7aed442e9832",
         "source": "1c0678748c512bc0",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 20,
         "attested": 0,
         "units": 20
@@ -2119,7 +2194,7 @@
       "promotion": {
         "spec": "a326405c616f",
         "source": "57978adce068771d",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 55,
         "attested": 0,
         "units": 55
@@ -2215,7 +2290,7 @@
       "promotion": {
         "spec": "2a7c20e0f736",
         "source": "03c8ddb152ddb068",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 3,
         "attested": 0,
         "units": 3
@@ -2346,8 +2421,8 @@
       },
       "promotion": {
         "spec": "a7f63fc705a1",
-        "source": "097992b17ba74405",
-        "candidate": "24fcbd038ef9869c",
+        "source": "b17adce2ddcd9c7a",
+        "candidate": "0a6c249084b50f2f",
         "verified": 37,
         "attested": 0,
         "units": 37
@@ -2451,7 +2526,7 @@
       "promotion": {
         "spec": "47b4bae22ade",
         "source": "1103976d73d8af6a",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 19,
         "attested": 1,
         "units": 20
@@ -2561,7 +2636,7 @@
       "promotion": {
         "spec": "f8dbf91bb42e",
         "source": "441178b88666598b",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 18,
         "attested": 8,
         "units": 26
@@ -2681,8 +2756,8 @@
       },
       "promotion": {
         "spec": "5224b3c3a036",
-        "source": "01feed613351fe17",
-        "candidate": "24fcbd038ef9869c",
+        "source": "077679700f54cd31",
+        "candidate": "0a6c249084b50f2f",
         "verified": 28,
         "attested": 0,
         "units": 28
@@ -2895,7 +2970,7 @@
       "promotion": {
         "spec": "455a02a48175",
         "source": "aa06a11253115b53",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -2977,8 +3052,8 @@
       },
       "promotion": {
         "spec": "4c56c78d8a52",
-        "source": "766d792a51a314a4",
-        "candidate": "24fcbd038ef9869c",
+        "source": "8d29d27b466ec553",
+        "candidate": "0a6c249084b50f2f",
         "verified": 2,
         "attested": 0,
         "units": 2
@@ -3254,7 +3329,7 @@
       "promotion": {
         "spec": "8a974b0bce33",
         "source": "13925128ed9b6d46",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 93,
         "attested": 5,
         "units": 98
@@ -3433,7 +3508,7 @@
       "promotion": {
         "spec": "3df77202051c",
         "source": "51df70ec4c85d46b",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 3,
         "attested": 0,
         "units": 3
@@ -3534,7 +3609,7 @@
       "promotion": {
         "spec": "8a2ff6deb160",
         "source": "b0be88070c417d9b",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 2,
         "attested": 0,
         "units": 2
@@ -3612,7 +3687,7 @@
       "promotion": {
         "spec": "be1e9a74c2ca",
         "source": "3cd5ff4cd6abb130",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 3,
         "attested": 0,
         "units": 3
@@ -3734,7 +3809,7 @@
       "promotion": {
         "spec": "c3c81d03e1e2",
         "source": "180b2cc46b5dc471",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 31,
         "attested": 0,
         "units": 31
@@ -3828,7 +3903,7 @@
       "promotion": {
         "spec": "bad5fe27a560",
         "source": "77c2ebc0212d3f0b",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 17,
         "attested": 0,
         "units": 17
@@ -3993,7 +4068,7 @@
       "promotion": {
         "spec": "bb6d696ee3ad",
         "source": "ac4363ed87df4174",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 15,
         "attested": 0,
         "units": 15
@@ -4089,7 +4164,7 @@
       "promotion": {
         "spec": "c40482afd5b5",
         "source": "3a80645a70f5b245",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 14,
         "attested": 0,
         "units": 14
@@ -4208,7 +4283,7 @@
       "promotion": {
         "spec": "410987ea135f",
         "source": "213a22d7c2c3ca48",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 29,
         "attested": 0,
         "units": 29
@@ -4342,7 +4417,7 @@
       "promotion": {
         "spec": "0065082f5534",
         "source": "7e2ac80d6bed00b5",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 26,
         "attested": 4,
         "units": 30
@@ -4443,7 +4518,7 @@
       "promotion": {
         "spec": "814bab1c8d9b",
         "source": "ab283e4fbf2cabc8",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 20,
         "attested": 0,
         "units": 20
@@ -4542,7 +4617,7 @@
       "promotion": {
         "spec": "258a34080cbb",
         "source": "a5ca2316c2c79165",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -4657,7 +4732,7 @@
       "promotion": {
         "spec": "633e34bc9127",
         "source": "8211e97d651e8024",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 18,
         "attested": 2,
         "units": 20
@@ -4744,8 +4819,8 @@
       },
       "promotion": {
         "spec": "0f371203c6f5",
-        "source": "13c203f9784fb7ec",
-        "candidate": "24fcbd038ef9869c",
+        "source": "06d58d66d3c03a1d",
+        "candidate": "0a6c249084b50f2f",
         "verified": 4,
         "attested": 0,
         "units": 4
@@ -4840,7 +4915,7 @@
       "promotion": {
         "spec": "ac8301fccfc7",
         "source": "a4ed304b7a97750c",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 3,
         "attested": 0,
         "units": 3
@@ -4933,8 +5008,8 @@
       },
       "promotion": {
         "spec": "1eec40a9fdad",
-        "source": "037467dd34348936",
-        "candidate": "24fcbd038ef9869c",
+        "source": "e3b861a3edbc2c4a",
+        "candidate": "0a6c249084b50f2f",
         "verified": 17,
         "attested": 0,
         "units": 17
@@ -5005,9 +5080,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "533471c42d45",
-        "source": "f9bcee417e395ab7",
-        "candidate": "24fcbd038ef9869c",
+        "spec": "4ba396ace187",
+        "source": "5e4038ad8271bf66",
+        "candidate": "0a6c249084b50f2f",
         "verified": 2,
         "attested": 0,
         "units": 2
@@ -5109,7 +5184,7 @@
       "promotion": {
         "spec": "f8e73280f4a9",
         "source": "ba898b069fca9274",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 15,
         "attested": 0,
         "units": 15
@@ -5226,10 +5301,83 @@
       "promotion": {
         "spec": "1eaac15002c1",
         "source": "31b545ce974e0261",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 28,
         "attested": 0,
         "units": 28
+      }
+    },
+    {
+      "dir": "instance-batch",
+      "id": "instance-batch",
+      "version": "1.0.0",
+      "title": "Dynamic Instance Batches",
+      "category": "rendering",
+      "status": "draft",
+      "specStatus": "draft",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "使用一个原生 Node/Model 与共享几何构造可更新、可拾取的实例批次",
+        "points": [
+          "暂存数据与已提交数据分离",
+          "显式容量、有效数量、范围提交",
+          "包围盒、射线选择与实际绘制一致",
+          "零实例和共享资源所有权"
+        ]
+      },
+      "effect": {
+        "functional": "创建一个批次，按钮执行扩容、范围更新、清空和恢复；指针根据原生相机射线选择实例。",
+        "visual": "彩色索引方块组成网格；扩容后显示 2048 实例，范围更新改变前 16 个颜色，选中实例高亮。"
+      },
+      "api": {
+        "primary": [
+          "createAirInstanceBatch"
+        ],
+        "supporting": [
+          "utils.createMesh",
+          "Camera",
+          "Node",
+          "Scene"
+        ],
+        "claims": [
+          "createAirInstanceBatch",
+          "utils.createMesh",
+          "Camera",
+          "Node",
+          "Scene"
+        ]
+      },
+      "capabilities": [
+        "rendering"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Instance batch"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "scene-ready",
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "interaction": [],
+        "lifecycle": [],
+        "capability": []
       }
     },
     {
@@ -5333,7 +5481,7 @@
       "promotion": {
         "spec": "e5337b3cc8f9",
         "source": "286de09ae2f442c2",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 20,
         "attested": 0,
         "units": 20
@@ -5421,8 +5569,8 @@
       },
       "promotion": {
         "spec": "1fb0b5ce03ce",
-        "source": "5c5e53a5b2c98609",
-        "candidate": "24fcbd038ef9869c",
+        "source": "e792651857e71998",
+        "candidate": "0a6c249084b50f2f",
         "verified": 1,
         "attested": 0,
         "units": 1
@@ -5543,8 +5691,8 @@
       },
       "promotion": {
         "spec": "6a4291275fd7",
-        "source": "452c99711e0afae5",
-        "candidate": "24fcbd038ef9869c",
+        "source": "3783e9372f2c7815",
+        "candidate": "0a6c249084b50f2f",
         "verified": 4,
         "attested": 0,
         "units": 4
@@ -5629,8 +5777,8 @@
       },
       "promotion": {
         "spec": "7417defd36b5",
-        "source": "763d9b2146b7fb30",
-        "candidate": "24fcbd038ef9869c",
+        "source": "09d67fee0a20a2ae",
+        "candidate": "0a6c249084b50f2f",
         "verified": 3,
         "attested": 0,
         "units": 3
@@ -5725,8 +5873,8 @@
       },
       "promotion": {
         "spec": "01803626c5c7",
-        "source": "45aabc300e76f85c",
-        "candidate": "24fcbd038ef9869c",
+        "source": "456a26784e651023",
+        "candidate": "0a6c249084b50f2f",
         "verified": 2,
         "attested": 1,
         "units": 3
@@ -5808,8 +5956,8 @@
       },
       "promotion": {
         "spec": "a927b1a35391",
-        "source": "cb766ea5e1fc8460",
-        "candidate": "24fcbd038ef9869c",
+        "source": "a3b71bb5505bd115",
+        "candidate": "0a6c249084b50f2f",
         "verified": 1,
         "attested": 0,
         "units": 1
@@ -5901,8 +6049,8 @@
       },
       "promotion": {
         "spec": "4aa8c488c8f2",
-        "source": "7bfa74f88738a66e",
-        "candidate": "24fcbd038ef9869c",
+        "source": "8b6b315ca3c3fd5b",
+        "candidate": "0a6c249084b50f2f",
         "verified": 5,
         "attested": 0,
         "units": 5
@@ -6018,7 +6166,7 @@
       "promotion": {
         "spec": "e22465e2753e",
         "source": "171eaa9512f3bb0e",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 26,
         "attested": 0,
         "units": 26
@@ -6124,7 +6272,7 @@
       "promotion": {
         "spec": "2f25b8264944",
         "source": "0eb2fcf420ce8b42",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 23,
         "attested": 0,
         "units": 23
@@ -6231,7 +6379,7 @@
       "promotion": {
         "spec": "ea400d8377c2",
         "source": "44280f19ae58d54e",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 24,
         "attested": 0,
         "units": 24
@@ -6340,7 +6488,7 @@
       "promotion": {
         "spec": "e8dffc14e4ae",
         "source": "b2706d215970847c",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 25,
         "attested": 0,
         "units": 25
@@ -6489,7 +6637,7 @@
       "promotion": {
         "spec": "c42cdd481052",
         "source": "b03352118c34029e",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 45,
         "attested": 0,
         "units": 45
@@ -6631,7 +6779,7 @@
       "promotion": {
         "spec": "516c502017cf",
         "source": "0de72aa96c0cbf42",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 37,
         "attested": 0,
         "units": 37
@@ -6740,8 +6888,8 @@
       },
       "promotion": {
         "spec": "691785c7d88e",
-        "source": "ccc6fc2c4637ea1e",
-        "candidate": "24fcbd038ef9869c",
+        "source": "3b3048fbb3275f5f",
+        "candidate": "0a6c249084b50f2f",
         "verified": 22,
         "attested": 0,
         "units": 22
@@ -6832,7 +6980,7 @@
       "promotion": {
         "spec": "3dc08a803d09",
         "source": "77978071ea70ce35",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 14,
         "attested": 0,
         "units": 14
@@ -6926,7 +7074,7 @@
       "promotion": {
         "spec": "d332c2a0874b",
         "source": "1c35d1d3e8c24f0e",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 16,
         "attested": 0,
         "units": 16
@@ -7262,7 +7410,7 @@
       "promotion": {
         "spec": "03d09d051045",
         "source": "8c2c756a8e99932b",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 23,
         "attested": 0,
         "units": 23
@@ -7387,7 +7535,7 @@
       "promotion": {
         "spec": "bb797e169f9a",
         "source": "485715f20cfa3290",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 31,
         "attested": 0,
         "units": 31
@@ -7489,7 +7637,7 @@
       "promotion": {
         "spec": "3551d7ace883",
         "source": "7add401a7a5e9dd7",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 22,
         "attested": 0,
         "units": 22
@@ -7580,7 +7728,7 @@
       "promotion": {
         "spec": "57a35450dc95",
         "source": "7517caefdbe8802f",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 16,
         "attested": 0,
         "units": 16
@@ -7689,7 +7837,7 @@
       "promotion": {
         "spec": "fc9bfe4f1c26",
         "source": "20f11d26e9b06084",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 25,
         "attested": 0,
         "units": 25
@@ -7828,7 +7976,7 @@
       "promotion": {
         "spec": "0dac7344c814",
         "source": "3185e7f6fe4b2b48",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 36,
         "attested": 0,
         "units": 36
@@ -7935,7 +8083,7 @@
       "promotion": {
         "spec": "a60808cc9b2d",
         "source": "4a090376a6375b36",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -8040,7 +8188,7 @@
       "promotion": {
         "spec": "f2bd11247de3",
         "source": "8d183eb8d031b279",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -8149,7 +8297,7 @@
       "promotion": {
         "spec": "4e2e445e2a98",
         "source": "ce052ed83cc90a95",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 25,
         "attested": 0,
         "units": 25
@@ -8331,7 +8479,7 @@
       "promotion": {
         "spec": "89ecaa27ffdb",
         "source": "a51f6d658d115a46",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 62,
         "attested": 0,
         "units": 62
@@ -8435,7 +8583,7 @@
       "promotion": {
         "spec": "203f4f311c0b",
         "source": "fd979e704b0fa6c1",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -8536,7 +8684,7 @@
       "promotion": {
         "spec": "abe438ba1222",
         "source": "f83475ba04b23763",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -8642,7 +8790,7 @@
       "promotion": {
         "spec": "f7a11b7992de",
         "source": "8a562381af5876cb",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 22,
         "attested": 0,
         "units": 22
@@ -8819,7 +8967,7 @@
       "promotion": {
         "spec": "4aa1b0553603",
         "source": "b46ab04ed8c9b2e2",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 61,
         "attested": 0,
         "units": 61
@@ -8932,7 +9080,7 @@
       "promotion": {
         "spec": "c0d42af29914",
         "source": "16bbc63646599b56",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 28,
         "attested": 0,
         "units": 28
@@ -9048,7 +9196,7 @@
       "promotion": {
         "spec": "11d86aca4ffd",
         "source": "b910e492ab3c99fd",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 31,
         "attested": 0,
         "units": 31
@@ -9155,7 +9303,7 @@
       "promotion": {
         "spec": "414e57637b2f",
         "source": "23ff32f2b04abb5a",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 23,
         "attested": 0,
         "units": 23
@@ -9379,7 +9527,7 @@
       "promotion": {
         "spec": "6cf98c815458",
         "source": "c4d2a3f10503ceb9",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 85,
         "attested": 0,
         "units": 85
@@ -9487,7 +9635,7 @@
       "promotion": {
         "spec": "679348ba6ca7",
         "source": "c7aaaf8d7e935e74",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 24,
         "attested": 0,
         "units": 24
@@ -9603,7 +9751,7 @@
       "promotion": {
         "spec": "3a33e8470406",
         "source": "b0d669079a3e27a3",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 30,
         "attested": 0,
         "units": 30
@@ -9779,7 +9927,7 @@
       "promotion": {
         "spec": "31ad85d68ae2",
         "source": "0b9d615d0b38693d",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 57,
         "attested": 0,
         "units": 57
@@ -9886,7 +10034,7 @@
       "promotion": {
         "spec": "eb9e9de757e9",
         "source": "a51696c718c2af5c",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 23,
         "attested": 0,
         "units": 23
@@ -9995,7 +10143,7 @@
       "promotion": {
         "spec": "ba5cfcc9eb5b",
         "source": "a8aa732d8837e6c8",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 25,
         "attested": 0,
         "units": 25
@@ -10113,7 +10261,7 @@
       "promotion": {
         "spec": "ffa5adffa8a9",
         "source": "4cbb6eb95ec9b214",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 33,
         "attested": 0,
         "units": 33
@@ -10214,7 +10362,7 @@
       "promotion": {
         "spec": "79c65346c480",
         "source": "cfd361f0e1369cc3",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 18,
         "attested": 0,
         "units": 18
@@ -10345,7 +10493,7 @@
       "promotion": {
         "spec": "aa2c9c573424",
         "source": "8d1360c7ffb96155",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 35,
         "attested": 0,
         "units": 35
@@ -10467,7 +10615,7 @@
       "promotion": {
         "spec": "027f9c6f22cf",
         "source": "7c55d767a20d0caa",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 35,
         "attested": 0,
         "units": 35
@@ -10622,7 +10770,7 @@
       "promotion": {
         "spec": "55b98a111bc1",
         "source": "860768f3941d7dff",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 47,
         "attested": 0,
         "units": 47
@@ -10744,7 +10892,7 @@
       "promotion": {
         "spec": "1c0010ce0740",
         "source": "cd75dcb9b3c7a69f",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 32,
         "attested": 0,
         "units": 32
@@ -10851,7 +10999,7 @@
       "promotion": {
         "spec": "8fb0300091bb",
         "source": "ac2ad052249e06af",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 23,
         "attested": 0,
         "units": 23
@@ -11045,7 +11193,7 @@
       "promotion": {
         "spec": "2924ef8c463d",
         "source": "2e6dbc83e69176ef",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 69,
         "attested": 0,
         "units": 69
@@ -11150,7 +11298,7 @@
       "promotion": {
         "spec": "df85dd1e8123",
         "source": "1e97ac75f2a9f38f",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -11264,7 +11412,7 @@
       "promotion": {
         "spec": "070df733f068",
         "source": "f5ad1388893fcc15",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 29,
         "attested": 0,
         "units": 29
@@ -11376,7 +11524,7 @@
       "promotion": {
         "spec": "5e9a56f9e4d6",
         "source": "7d9357f712fd6afd",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 27,
         "attested": 0,
         "units": 27
@@ -11476,7 +11624,7 @@
       "promotion": {
         "spec": "359302f37ee8",
         "source": "bfb3b149c978500f",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -11583,7 +11731,7 @@
       "promotion": {
         "spec": "42ac85f4d283",
         "source": "888e4f69808a0c53",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 23,
         "attested": 0,
         "units": 23
@@ -11727,7 +11875,7 @@
       "promotion": {
         "spec": "30f3848c9bf2",
         "source": "7391fe4bff75816e",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 44,
         "attested": 0,
         "units": 44
@@ -11833,7 +11981,7 @@
       "promotion": {
         "spec": "09efb0d2382c",
         "source": "ba28a0e1f5ed04ad",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 22,
         "attested": 0,
         "units": 22
@@ -11948,7 +12096,7 @@
       "promotion": {
         "spec": "103676084a48",
         "source": "1721c45a5d158484",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 30,
         "attested": 0,
         "units": 30
@@ -12146,7 +12294,7 @@
       "promotion": {
         "spec": "5708a65d0f42",
         "source": "02d565acd823bc68",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 70,
         "attested": 0,
         "units": 70
@@ -12246,7 +12394,7 @@
       "promotion": {
         "spec": "39e4aa1ca1b9",
         "source": "476470486c6d0c4f",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -12457,7 +12605,7 @@
       "promotion": {
         "spec": "b143498dced9",
         "source": "8fa976235c18bda7",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 76,
         "attested": 0,
         "units": 76
@@ -12564,7 +12712,7 @@
       "promotion": {
         "spec": "8d3ecabd9775",
         "source": "f63c8c756aa249fa",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 23,
         "attested": 0,
         "units": 23
@@ -12679,7 +12827,7 @@
       "promotion": {
         "spec": "aba2d336dced",
         "source": "0aba272be450bb84",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 30,
         "attested": 0,
         "units": 30
@@ -12786,7 +12934,7 @@
       "promotion": {
         "spec": "7331fcb3f758",
         "source": "27a3e28361542221",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 23,
         "attested": 0,
         "units": 23
@@ -12881,7 +13029,7 @@
       "promotion": {
         "spec": "facc0dffdcae",
         "source": "368e3df77b65f7b7",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 18,
         "attested": 0,
         "units": 18
@@ -13017,7 +13165,7 @@
       "promotion": {
         "spec": "83e8aa4de17a",
         "source": "22ad5db42f3d1a3a",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 37,
         "attested": 0,
         "units": 37
@@ -13122,7 +13270,7 @@
       "promotion": {
         "spec": "d84e10888320",
         "source": "e269d7b6ad864d3d",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 22,
         "attested": 0,
         "units": 22
@@ -13217,7 +13365,7 @@
       "promotion": {
         "spec": "5b954574f669",
         "source": "e5951aeb106da7e3",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 16,
         "attested": 0,
         "units": 16
@@ -13313,7 +13461,7 @@
       "promotion": {
         "spec": "2a0473dbdd79",
         "source": "c58257e3098e3e82",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -13418,7 +13566,7 @@
       "promotion": {
         "spec": "ea18270871e1",
         "source": "013fd4d57716343e",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -13513,7 +13661,7 @@
       "promotion": {
         "spec": "5e1972835b36",
         "source": "f5b889e8a655bb9c",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 18,
         "attested": 0,
         "units": 18
@@ -13607,7 +13755,7 @@
       "promotion": {
         "spec": "4ada25082207",
         "source": "10bae6c176697a46",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 18,
         "attested": 0,
         "units": 18
@@ -13771,7 +13919,7 @@
       "promotion": {
         "spec": "5921a5fa608c",
         "source": "d9b62d4d799956ec",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 50,
         "attested": 0,
         "units": 50
@@ -13908,11 +14056,209 @@
       },
       "promotion": {
         "spec": "1e712e56bb86",
-        "source": "a6f36b8c7acce1c3",
-        "candidate": "24fcbd038ef9869c",
+        "source": "32b3409124678f98",
+        "candidate": "0a6c249084b50f2f",
         "verified": 45,
         "attested": 0,
         "units": 45
+      }
+    },
+    {
+      "dir": "morph-field",
+      "id": "morph-field",
+      "version": "1.0.0",
+      "title": "FORM / MATTER — GPU Morph Fields",
+      "category": "rendering",
+      "status": "draft",
+      "specStatus": "draft",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "用原生索引实例化与 GPU 形态纹理连续变形文字、网格和图像",
+        "points": [
+          "固定样本索引和线性 RGB",
+          "进度 uniform 与静态形态纹理",
+          "全形态 envelope bounds",
+          "点/体素与资源所有权",
+          "形态法线与程序化摄影棚反射"
+        ]
+      },
+      "effect": {
+        "functional": "形态选择、进度、点/体素、自动往返、暂停及拖动旋转；竖屏重新适配。",
+        "visual": "16,384 个样本形成文字、球体、斜置圆环和原创图像；抛光表面具有视角反射、清漆亮带和可调粗糙度，经 HDR 输出。"
+      },
+      "api": {
+        "primary": [
+          "createAirMorphField"
+        ],
+        "supporting": [
+          "sampleAirTextShape",
+          "sampleAirImageShape",
+          "sampleAirTriangleShape",
+          "Camera",
+          "Node",
+          "Scene"
+        ],
+        "claims": [
+          "createAirMorphField",
+          "sampleAirTextShape",
+          "sampleAirImageShape",
+          "sampleAirTriangleShape",
+          "Camera",
+          "Node",
+          "Scene"
+        ]
+      },
+      "capabilities": [
+        "rendering"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Morph field"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "scene-ready",
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "interaction": [],
+        "lifecycle": [],
+        "capability": []
+      }
+    },
+    {
+      "dir": "neon-city",
+      "id": "neon-city",
+      "version": "1.0.0",
+      "title": "Neon City: Instanced Night Metropolis",
+      "category": "rendering",
+      "status": "draft",
+      "specStatus": "draft",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "以霓虹夜城复合场景打通「自定义 GLSL × GPU 实例化 × 场景雾」的组合链路：~340 楼 1 draw、420 条顶点动画雨零 CPU 成本、加法混合光效、60fps",
+        "points": [
+          "USE_INSTANCING 宏必须在共享材质 initialize defines 中声明，且 renderer 一律 setSharedMaterial（renderer.material 会实例化 Pass 并把宏重置为 false）",
+          "实例化顶点从 a_matWorld0/1/2 拼装世界矩阵（与引擎 CCGetWorldMatrixFull 同构），实例分组键为 mesh+material，>1024 实例自动拆组",
+          "运行期手写 effect JSON 的 blendState 必须用数值枚举（BlendFactor.ONE=1），字符串枚举被静默忽略会退化为不透明渲染",
+          "自定义着色器每个使用 UBO 的阶段都要显式声明该块；ESSL 片元必须首行 precision；glsl3 由 glsl4 去布局限定符得到",
+          "雨/闪烁等周期动画可完全放在顶点着色器（cc_time + 实例平移 hash 相位），静态实例 + GPU 动画 = CPU 零每帧成本",
+          "场景雾（scene.globals.fog，EXP）只作用于内建材质；自定义着色器用同参数手动距离雾保持画面一致"
+        ]
+      },
+      "effect": {
+        "functional": "createAirApp 启动后注册两个自定义效果（neon-facade / neon-glow），构建 424 栋实例化楼体（共享 unit box + USE_INSTANCING 共享材质）、72 辆双向车流光条（两个实例化 glow 材质）、800 条 RAIN_MODE 顶点动画雨丝、14 块加法混合霓虹招牌与中央光柱、两条大道发光标线；scene.globals.fog EXP 雾密度 0.004；EVENT_AFTER_DRAW 计帧 FPS。window.__appReady 首帧置位；window.__bench.getState() 返回 {fps, buildings, cars, rainDrops, billboards, frames}，reset() 以新种子重建城市（共享 mesh/材质不销毁）。楼顶 26 个航空警示灯与 72 个车头柔光点为 builtin-billboard 摄像机朝向面片（程序化径向纹理，警示灯宽度随时间呼吸）；MSAA 经证实无法从 createAirApp 公开面开启（bootstrap 不透传），已记录为缺口。实测 Chromium 60fps，双帧差分 0.43% 像素持续变化（车流/雨/窗灯闪烁）。",
+        "visual": "深紫星空穹顶（程序星点+地平线光污染）下俯瞰霓虹城市：424 栋楼按层供电点亮青/品红/琥珀/冷白窗格（远景 LOD 退化为柔和光柱），楼顶红色航空警示灯脉冲、最高楼群立白色天线、中央青色光柱；中央十字大道一青一品红光带上 72 辆车流双向移动，800 条蓝白雨丝持续下落，14 块霓虹招牌呼吸脉冲并不时断电闪烁、地面同色光池模拟湿路反射；右下 HUD 实测 fps/楼数/车数/雨丝数；拖拽环绕、滚轮缩放。"
+      },
+      "api": {
+        "primary": [
+          "EffectAsset.register",
+          "Renderer.setSharedMaterial",
+          "SceneGlobals.fog"
+        ],
+        "supporting": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "Node.setPosition",
+          "Node.setScale",
+          "Camera",
+          "MeshRenderer",
+          "Material.setProperty",
+          "utils.createMesh",
+          "primitives.box",
+          "math.Color",
+          "math.Vec4",
+          "DirectionalLight",
+          "director",
+          "Director.EVENT_AFTER_DRAW",
+          "Layers",
+          "Layers.Enum",
+          "Billboard",
+          "Texture2D",
+          "ImageAsset"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "Node.addChild",
+          "Node.setPosition",
+          "Node.setScale",
+          "Node.addComponent",
+          "Node.lookAt",
+          "Camera",
+          "MeshRenderer",
+          "Renderer.setSharedMaterial",
+          "Material",
+          "Material.initialize",
+          "Material.setProperty",
+          "EffectAsset",
+          "EffectAsset.register",
+          "Layers",
+          "Layers.Enum",
+          "math.Color",
+          "math.Vec3",
+          "math.Vec4",
+          "utils.createMesh",
+          "primitives.box",
+          "SceneGlobals.fog",
+          "DirectionalLight",
+          "director",
+          "Director.EVENT_AFTER_DRAW"
+        ]
+      },
+      "capabilities": [
+        "rendering",
+        "custom-shader",
+        "instancing"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Moon",
+            "Ground",
+            "street-x",
+            "street-z",
+            "City"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
       }
     },
     {
@@ -14002,7 +14348,7 @@
       "promotion": {
         "spec": "f8d0a833da2d",
         "source": "1804d7a50f05df91",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 3,
         "attested": 0,
         "units": 3
@@ -14096,7 +14442,7 @@
       "promotion": {
         "spec": "1600f4b3bd82",
         "source": "5a3ed945031356f0",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 18,
         "attested": 0,
         "units": 18
@@ -14206,7 +14552,7 @@
       "promotion": {
         "spec": "f434218d7b1e",
         "source": "04d21d6a2f961c24",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 24,
         "attested": 0,
         "units": 24
@@ -14311,7 +14657,7 @@
       "promotion": {
         "spec": "1e951dea23af",
         "source": "143ddfb3b88e6fa4",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -14429,7 +14775,7 @@
       "promotion": {
         "spec": "349a6cfe97c5",
         "source": "e7104fac7b11ed58",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 33,
         "attested": 0,
         "units": 33
@@ -14630,7 +14976,7 @@
       "promotion": {
         "spec": "9cad82ae2901",
         "source": "6647945ed1133b9b",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 81,
         "attested": 0,
         "units": 81
@@ -14735,7 +15081,7 @@
       "promotion": {
         "spec": "d86a708ca70d",
         "source": "76793cbeacb700ba",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -14831,7 +15177,7 @@
       "promotion": {
         "spec": "adcedee647c1",
         "source": "58438f35cfba2029",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -14932,7 +15278,7 @@
       "promotion": {
         "spec": "4b30e4fbe723",
         "source": "734a03c5b92dfce8",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 18,
         "attested": 1,
         "units": 19
@@ -15004,7 +15350,7 @@
       "promotion": {
         "spec": "5f5dce1baf01",
         "source": "57a546012fee3bed",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 2,
         "attested": 0,
         "units": 2
@@ -15151,10 +15497,82 @@
       "promotion": {
         "spec": "b0aac0b89ee8",
         "source": "fc10897d37d4d02b",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 23,
         "attested": 11,
         "units": 34
+      }
+    },
+    {
+      "dir": "particles-3d",
+      "id": "particles-3d",
+      "version": "1.0.0",
+      "title": "Native 3D Particles",
+      "category": "rendering",
+      "status": "draft",
+      "specStatus": "draft",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "无编辑器资产装配原生 CPU/GPU 粒子与拖尾",
+        "points": [
+          "模块在激活前配置",
+          "原生暂停、自然衰减与重播",
+          "世界与本地模拟空间",
+          "节点销毁与共享资产所有权"
+        ]
+      },
+      "effect": {
+        "functional": "左右两套粒子处理器，按钮控制暂停、继续、停止发射与清空重播。",
+        "visual": "橙色 CPU 粒子带拖尾，蓝色 GPU 喷射，生命周期尺寸曲线。"
+      },
+      "api": {
+        "primary": [
+          "createAirParticleSystem"
+        ],
+        "supporting": [
+          "Camera",
+          "Node",
+          "Scene"
+        ],
+        "claims": [
+          "createAirParticleSystem",
+          "Camera",
+          "Node",
+          "Scene"
+        ]
+      },
+      "capabilities": [
+        "rendering"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "CPU trails",
+            "GPU fountain"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "scene-ready",
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "interaction": [],
+        "lifecycle": [],
+        "capability": []
       }
     },
     {
@@ -15282,7 +15700,7 @@
       "promotion": {
         "spec": "2992f3827c45",
         "source": "0c29ffa9f366c5cf",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 33,
         "attested": 3,
         "units": 36
@@ -15421,7 +15839,7 @@
       "promotion": {
         "spec": "1146afbe7bfc",
         "source": "651f615374c33ffe",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 30,
         "attested": 3,
         "units": 33
@@ -15605,7 +16023,7 @@
       "promotion": {
         "spec": "c8e36fab4e52",
         "source": "5a37fd3d3300ace6",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 63,
         "attested": 6,
         "units": 69
@@ -15730,7 +16148,7 @@
       "promotion": {
         "spec": "3ff3f3d53ed9",
         "source": "6f5ec74fcc298655",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 30,
         "attested": 1,
         "units": 31
@@ -15864,8 +16282,8 @@
       },
       "promotion": {
         "spec": "58000f69e95e",
-        "source": "4753b596e6ba21cb",
-        "candidate": "24fcbd038ef9869c",
+        "source": "4022486e1efb0d2f",
+        "candidate": "0a6c249084b50f2f",
         "verified": 41,
         "attested": 0,
         "units": 41
@@ -15877,7 +16295,7 @@
       "version": "1.0.0",
       "title": "Points and Lines: Topology Contract",
       "category": "shader",
-      "status": "draft",
+      "status": "stable",
       "specStatus": "frozen",
       "requiresDevTools": false,
       "learning": {
@@ -15939,6 +16357,14 @@
           "resource-released"
         ],
         "capability": []
+      },
+      "promotion": {
+        "spec": "d38351764399",
+        "source": "9bd2de5487457126",
+        "candidate": "0a6c249084b50f2f",
+        "verified": 3,
+        "attested": 0,
+        "units": 3
       }
     },
     {
@@ -16041,7 +16467,7 @@
       "promotion": {
         "spec": "50bc153ddb1c",
         "source": "0fda4c96ce7a51a5",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 22,
         "attested": 0,
         "units": 22
@@ -16145,7 +16571,7 @@
       "promotion": {
         "spec": "e76a8b021e50",
         "source": "047accd37ce78909",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -16250,7 +16676,7 @@
       "promotion": {
         "spec": "924c2a4ebd0a",
         "source": "5f322ef65443e136",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 22,
         "attested": 0,
         "units": 22
@@ -16504,8 +16930,8 @@
       },
       "promotion": {
         "spec": "e568b27b4292",
-        "source": "ce8c2f3d46c24e7f",
-        "candidate": "24fcbd038ef9869c",
+        "source": "39da4211027d5d17",
+        "candidate": "0a6c249084b50f2f",
         "verified": 41,
         "attested": 0,
         "units": 41
@@ -16604,7 +17030,7 @@
       "promotion": {
         "spec": "7452de8c11ca",
         "source": "86784386074fa41c",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 23,
         "attested": 0,
         "units": 23
@@ -16694,7 +17120,7 @@
       "promotion": {
         "spec": "4daffe289d95",
         "source": "14dcaa1b1f04abd7",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "0a6c249084b50f2f",
         "verified": 17,
         "attested": 1,
         "units": 18
@@ -16791,7 +17217,7 @@
       "promotion": {
         "spec": "4533f62e9a73",
         "source": "adc7fb751d03f149",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "0a6c249084b50f2f",
         "verified": 17,
         "attested": 3,
         "units": 20
@@ -16883,7 +17309,7 @@
       "promotion": {
         "spec": "01b9b4271da2",
         "source": "8d42f5b915ecd42a",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "0a6c249084b50f2f",
         "verified": 17,
         "attested": 2,
         "units": 19
@@ -16978,7 +17404,7 @@
       "promotion": {
         "spec": "dc7942ac2896",
         "source": "8dbf1e634cee45fa",
-        "candidate": "2f089f6ce25eaccd",
+        "candidate": "0a6c249084b50f2f",
         "verified": 17,
         "attested": 2,
         "units": 19
@@ -17100,8 +17526,8 @@
       },
       "promotion": {
         "spec": "2722e26e69ef",
-        "source": "387281ea52cc532e",
-        "candidate": "24fcbd038ef9869c",
+        "source": "1b32b52f85feeced",
+        "candidate": "0a6c249084b50f2f",
         "verified": 31,
         "attested": 1,
         "units": 32
@@ -17331,8 +17757,8 @@
       },
       "promotion": {
         "spec": "a9a463d9ddd6",
-        "source": "9068fd8c2befd738",
-        "candidate": "24fcbd038ef9869c",
+        "source": "e97ce9a4fa3f9d5b",
+        "candidate": "0a6c249084b50f2f",
         "verified": 10,
         "attested": 0,
         "units": 10
@@ -17425,7 +17851,7 @@
       "promotion": {
         "spec": "f628bd4d35b5",
         "source": "4a9f2c0d68b5473f",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 16,
         "attested": 0,
         "units": 16
@@ -17530,7 +17956,7 @@
       "promotion": {
         "spec": "6e068a897412",
         "source": "da38bbe3d694f92f",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 19,
         "attested": 1,
         "units": 20
@@ -17643,7 +18069,7 @@
       "promotion": {
         "spec": "a9702becc446",
         "source": "ea8fcfd16e2050b1",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 19,
         "attested": 10,
         "units": 29
@@ -17768,7 +18194,7 @@
       "promotion": {
         "spec": "72ed9b905b71",
         "source": "99edfa6fc0060f0f",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 30,
         "attested": 0,
         "units": 30
@@ -17887,8 +18313,8 @@
       },
       "promotion": {
         "spec": "df4aafe4741e",
-        "source": "fd48cef4ffe8c97f",
-        "candidate": "24fcbd038ef9869c",
+        "source": "a50cd2eec17fb127",
+        "candidate": "0a6c249084b50f2f",
         "verified": 32,
         "attested": 0,
         "units": 32
@@ -18038,7 +18464,7 @@
       "promotion": {
         "spec": "5a70d2a55949",
         "source": "5634bc47e0491360",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 9,
         "attested": 0,
         "units": 9
@@ -18166,8 +18592,8 @@
       },
       "promotion": {
         "spec": "b433fdcd5f3f",
-        "source": "4cab0849e36df44f",
-        "candidate": "24fcbd038ef9869c",
+        "source": "97e6541ef655741b",
+        "candidate": "0a6c249084b50f2f",
         "verified": 33,
         "attested": 0,
         "units": 33
@@ -18286,8 +18712,8 @@
       },
       "promotion": {
         "spec": "7cada7a1d2e8",
-        "source": "d5ef856a78549703",
-        "candidate": "24fcbd038ef9869c",
+        "source": "44799135077a57ae",
+        "candidate": "0a6c249084b50f2f",
         "verified": 31,
         "attested": 0,
         "units": 31
@@ -18548,7 +18974,7 @@
       "promotion": {
         "spec": "aa6124af339f",
         "source": "2ad33443613c3ad2",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 10,
         "attested": 0,
         "units": 10
@@ -18676,7 +19102,7 @@
       "promotion": {
         "spec": "0511f4496f87",
         "source": "cf3b46fa6ee333a1",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 10,
         "attested": 0,
         "units": 10
@@ -18825,7 +19251,7 @@
       "promotion": {
         "spec": "7b6c87587774",
         "source": "953812a8830331bd",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 10,
         "attested": 0,
         "units": 10
@@ -18945,7 +19371,7 @@
       "promotion": {
         "spec": "e6368aa5f054",
         "source": "99914ea1f7562a49",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 10,
         "attested": 0,
         "units": 10
@@ -19073,7 +19499,7 @@
       "promotion": {
         "spec": "83c37e26d60a",
         "source": "f67a1904c8e6c2b1",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 10,
         "attested": 0,
         "units": 10
@@ -19213,7 +19639,7 @@
       "promotion": {
         "spec": "861b2ebfc6d8",
         "source": "b2b514ac3a2e7a2c",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 10,
         "attested": 0,
         "units": 10
@@ -19339,7 +19765,7 @@
       "promotion": {
         "spec": "77f871a9a0e2",
         "source": "a161f758b3a1cc88",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 10,
         "attested": 0,
         "units": 10
@@ -19467,7 +19893,7 @@
       "promotion": {
         "spec": "9147fe82635b",
         "source": "8695e54b9086d945",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 10,
         "attested": 0,
         "units": 10
@@ -19594,7 +20020,7 @@
       "promotion": {
         "spec": "8f59f6314924",
         "source": "5e9447d56076c0f6",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 10,
         "attested": 0,
         "units": 10
@@ -19700,8 +20126,8 @@
       },
       "promotion": {
         "spec": "b52811104524",
-        "source": "70eb47b6f16fe75e",
-        "candidate": "24fcbd038ef9869c",
+        "source": "f340a1320e3c5f8f",
+        "candidate": "0a6c249084b50f2f",
         "verified": 8,
         "attested": 0,
         "units": 8
@@ -19837,8 +20263,8 @@
       },
       "promotion": {
         "spec": "3f86371c53fb",
-        "source": "15ad35d573908023",
-        "candidate": "24fcbd038ef9869c",
+        "source": "9358a56e3cdd832e",
+        "candidate": "0a6c249084b50f2f",
         "verified": 9,
         "attested": 0,
         "units": 9
@@ -19946,8 +20372,8 @@
       },
       "promotion": {
         "spec": "518d13357d29",
-        "source": "a005a4421efd24c4",
-        "candidate": "24fcbd038ef9869c",
+        "source": "6d69e81117beae24",
+        "candidate": "0a6c249084b50f2f",
         "verified": 6,
         "attested": 0,
         "units": 6
@@ -20120,7 +20546,7 @@
       "promotion": {
         "spec": "01fa4e3a9f64",
         "source": "a454e3685141457c",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 54,
         "attested": 0,
         "units": 54
@@ -20256,7 +20682,7 @@
       "version": "1.0.0",
       "title": "Spark 独立模块",
       "category": "rendering",
-      "status": "draft",
+      "status": "experimental",
       "specStatus": "frozen",
       "requiresDevTools": false,
       "learning": {
@@ -20400,8 +20826,8 @@
       },
       "promotion": {
         "spec": "89466a671182",
-        "source": "3da17ccaff4ae63a",
-        "candidate": "24fcbd038ef9869c",
+        "source": "73db288ad023a86a",
+        "candidate": "0a6c249084b50f2f",
         "verified": 4,
         "attested": 0,
         "units": 4
@@ -20493,7 +20919,7 @@
       "promotion": {
         "spec": "5a055cbc312f",
         "source": "71fe39e265d47e5f",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 2,
         "attested": 0,
         "units": 2
@@ -20581,7 +21007,7 @@
       "promotion": {
         "spec": "42f31ac5e836",
         "source": "b5961af8e31f5651",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 9,
         "attested": 0,
         "units": 9
@@ -20685,7 +21111,7 @@
       "promotion": {
         "spec": "55ff2f5976e3",
         "source": "b3419d3d54e6f20e",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 23,
         "attested": 0,
         "units": 23
@@ -20804,8 +21230,8 @@
       },
       "promotion": {
         "spec": "b73eafe44754",
-        "source": "ff2b442ea1080e8f",
-        "candidate": "24fcbd038ef9869c",
+        "source": "73bf09bb0bb32dc9",
+        "candidate": "0a6c249084b50f2f",
         "verified": 27,
         "attested": 0,
         "units": 27
@@ -20915,8 +21341,8 @@
       },
       "promotion": {
         "spec": "67d84f00e67a",
-        "source": "3ec71c4754dfb103",
-        "candidate": "24fcbd038ef9869c",
+        "source": "874501e043d0ef25",
+        "candidate": "0a6c249084b50f2f",
         "verified": 23,
         "attested": 0,
         "units": 23
@@ -21049,7 +21475,7 @@
       "promotion": {
         "spec": "5ef4ad7124a9",
         "source": "fa9820ec157d7c34",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 40,
         "attested": 0,
         "units": 40
@@ -21167,7 +21593,7 @@
       "promotion": {
         "spec": "94f1a97e35bc",
         "source": "5d1037188542fa8c",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 30,
         "attested": 0,
         "units": 30
@@ -21274,7 +21700,7 @@
       "promotion": {
         "spec": "bfa4c738187b",
         "source": "6512223704e49e45",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 21,
         "attested": 1,
         "units": 22
@@ -21448,7 +21874,7 @@
       "promotion": {
         "spec": "7cc79446c2a9",
         "source": "9b9f778541adc13a",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 48,
         "attested": 0,
         "units": 48
@@ -21544,7 +21970,7 @@
       "promotion": {
         "spec": "80b0c3becc83",
         "source": "1a37f130b093f25a",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 14,
         "attested": 0,
         "units": 14
@@ -21704,7 +22130,7 @@
       "promotion": {
         "spec": "4f2be6f5dca5",
         "source": "ab152be635b54e0b",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 59,
         "attested": 0,
         "units": 59
@@ -21809,7 +22235,7 @@
       "promotion": {
         "spec": "fb73abcb354f",
         "source": "59231c951d6a22fd",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 17,
         "attested": 0,
         "units": 17
@@ -21930,8 +22356,8 @@
       },
       "promotion": {
         "spec": "ac1d1fe9483f",
-        "source": "cbda0eef993792c8",
-        "candidate": "24fcbd038ef9869c",
+        "source": "0372d1f5dd8850a7",
+        "candidate": "0a6c249084b50f2f",
         "verified": 29,
         "attested": 1,
         "units": 30
@@ -22185,7 +22611,7 @@
       "promotion": {
         "spec": "9784ade4e206",
         "source": "b6ae4901f3c74129",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 96,
         "attested": 0,
         "units": 96
@@ -22347,7 +22773,7 @@
       "promotion": {
         "spec": "e56f7afefc3a",
         "source": "0044e517969554d1",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 49,
         "attested": 0,
         "units": 49
@@ -22451,7 +22877,7 @@
       "promotion": {
         "spec": "a8faeac6500a",
         "source": "b4fadffb071fd409",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 20,
         "attested": 0,
         "units": 20
@@ -22463,9 +22889,12 @@
       "version": "1.0.0",
       "title": "VideoPlayer — HTMLVideoElement 挂载/透明 video/全屏切换/事件回调 + Code First 运行时 VideoClip (V12 LV12-04)",
       "category": "video",
-      "status": "draft",
+      "status": "stable",
       "specStatus": "frozen",
       "requiresDevTools": false,
+      "bench": {
+        "startupButtonText": "Play video"
+      },
       "learning": {
         "goal": "V1.2 回归：`cocos/video`（11 文件，逐字节同源）的 web 通路必须真实跑通——`assetManager.loadRemote('.mp4')` 经 `video-downloader.ts` 的 downloader/factory 注册项产出运行时 `VideoClip`（`_nativeAsset` 是 `<video>` 元素，Code First 无 .meta/无 uuid）；`VideoPlayer` 把 `<video class=\"cocosVideo\">` 挂进 `game.container` 并按节点世界矩阵逐帧定位，`stayOnBottom` 的透明合成、`screen` 的全屏双向、8 个事件名 + `videoPlayerEvent`（EventHandler）两条回调线都要在 chromium/firefox/webkit 三引擎矩阵里逐字段可回读，并且真的解码出图",
         "points": [
@@ -22601,8 +23030,13 @@
         ],
         "capability": []
       },
-      "bench": {
-        "startupButtonText": "Play video"
+      "promotion": {
+        "spec": "a40720e7094b",
+        "source": "7307f72b4443420c",
+        "candidate": "0a6c249084b50f2f",
+        "verified": 29,
+        "attested": 7,
+        "units": 36
       }
     },
     {
@@ -22693,7 +23127,7 @@
       "promotion": {
         "spec": "a4aad142f1b9",
         "source": "557a2bb5a5aced08",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 4,
         "attested": 0,
         "units": 4
@@ -22919,7 +23353,7 @@
       "promotion": {
         "spec": "293bf690ec0f",
         "source": "dba2e31f1d56561a",
-        "candidate": "24fcbd038ef9869c",
+        "candidate": "0a6c249084b50f2f",
         "verified": 31,
         "attested": 5,
         "units": 36
@@ -22927,273 +23361,270 @@
     }
   ],
   "categories": {
+    "basics": [
+      "hello-cube",
+      "starter",
+      "transform",
+      "node-hierarchy",
+      "node-active",
+      "node-scale",
+      "webgpu-basic"
+    ],
+    "mesh": [
+      "static-model",
+      "mesh-attributes-indices",
+      "mesh-lifecycle-ops",
+      "meshrenderer-hooks",
+      "primitives-shapes-extra",
+      "primitives-geometry-ops",
+      "primitives-wireframe-obj",
+      "batching-utility",
+      "mesh-morph-bounds",
+      "mesh-prim-compare"
+    ],
     "animation": [
-      "anim-position",
+      "skinned-animation",
+      "tween-basic",
       "anim-rotation",
-      "animated-character-showcase",
+      "anim-position",
       "color-timeline-key",
       "colortimeline-ops",
       "gltf-animation-contract",
-      "skinned-animation",
-      "tween-basic",
-      "skinned-instance-lifecycle"
+      "animated-character-showcase"
     ],
-    "audio": [
-      "audio-basic"
+    "gltf": [
+      "gltf-viewer",
+      "gltf-catalog",
+      "gltf-draco",
+      "gltf-meshopt",
+      "gltf-morph",
+      "gltf-skin",
+      "gltf-basic",
+      "gltf-loader-registry",
+      "gltf-asset-readonly",
+      "model-character-interaction"
+    ],
+    "camera": [
+      "camera",
+      "camera-lookat",
+      "camera-ortho",
+      "camera-multi",
+      "camera-screen-world",
+      "camera-geometry-extras",
+      "camera-viewport-props",
+      "camera-second-view"
+    ],
+    "interaction": [
+      "input",
+      "orbit-controls",
+      "interactive-input"
     ],
     "devtools": [
       "automation"
     ],
-    "performance": [
-      "batching-dynamic",
-      "batching-merged",
-      "batching-shared"
+    "material": [
+      "material-basic",
+      "material-ops",
+      "material-lifecycle"
     ],
-    "mesh": [
-      "batching-utility",
-      "mesh-attributes-indices",
-      "mesh-lifecycle-ops",
-      "mesh-morph-bounds",
-      "mesh-prim-compare",
-      "meshrenderer-hooks",
-      "primitives-geometry-ops",
-      "primitives-shapes-extra",
-      "primitives-wireframe-obj",
-      "static-model"
+    "lights": [
+      "light-spot",
+      "light-sphere",
+      "light-point",
+      "light-two-directional"
     ],
-    "shader": [
-      "black-hole-accretion",
-      "point-cloud-basics",
-      "shader-custom-gradient",
-      "shader-dissolve"
-    ],
-    "camera": [
-      "camera",
-      "camera-geometry-extras",
-      "camera-lookat",
-      "camera-multi",
-      "camera-ortho",
-      "camera-screen-world",
-      "camera-second-view",
-      "camera-viewport-props"
-    ],
-    "rendering": [
-      "campfire-night",
-      "dom-overlay-texture",
-      "fog-accuracy",
-      "graphics-svg-paints",
-      "hdr-color-pipeline",
-      "html-texture-experimental",
-      "interactive-geometry",
-      "interactive-multipass",
-      "k0-r2-porting-contracts",
-      "neon-night-city",
-      "render-composite",
-      "shader-cursor-trail",
-      "shader-driver-pilot",
-      "shader-emboss",
-      "shader-film-neon",
-      "shader-glass",
-      "shader-glass-trail",
-      "shader-holographic",
-      "shader-input-dissolve",
-      "shader-laser-card",
-      "shader-liquid-metal",
-      "shader-neon",
-      "shader-noise-dissolve",
-      "shader-sparkle",
-      "shader-thin-film",
-      "spark-splats",
-      "sprite-mask-blend",
-      "water-multipass",
-      "depth-precision-lab",
-      "render-state-isolation"
-    ],
-    "game": [
-      "collector-dodge",
-      "contra-action",
-      "match3-classic",
-      "tank-battle",
-      "tetris-classic"
-    ],
-    "light": [
-      "directional-light-face",
-      "light-attach-cycle",
-      "probe-sh-lab"
-    ],
-    "dragon-bones": [
-      "dragonbones-basic"
+    "meshes": [
+      "mesh-sphere",
+      "mesh-cylinder",
+      "mesh-torus",
+      "mesh-plane",
+      "mesh-multi-material"
     ],
     "materials": [
-      "glass-refraction",
-      "gltf-clearcoat",
       "material-color",
       "material-transparent",
       "material-unlit",
       "texture-basic",
-      "material-contract-lab"
+      "gltf-clearcoat",
+      "glass-refraction"
     ],
-    "gltf": [
-      "gltf-asset-readonly",
-      "gltf-basic",
-      "gltf-catalog",
-      "gltf-draco",
-      "gltf-loader-registry",
-      "gltf-meshopt",
-      "gltf-morph",
-      "gltf-skin",
-      "gltf-viewer",
-      "model-character-interaction",
-      "asset-request-policy"
-    ],
-    "basics": [
-      "hello-cube",
-      "node-active",
-      "node-hierarchy",
-      "node-scale",
-      "starter",
-      "transform",
-      "webgpu-basic"
-    ],
-    "interaction": [
-      "input",
-      "interactive-input",
-      "orbit-controls"
+    "runtime-control": [
+      "rc-inspect-scene",
+      "rc-create-node",
+      "rc-capture-frame",
+      "rc-error-report"
     ],
     "input": [
-      "input-queries",
-      "interaction-click"
+      "interaction-click",
+      "input-queries"
     ],
-    "integration": [
-      "interactive-container",
-      "interactive-timeline"
+    "runtime": [
+      "runtime-asset-release",
+      "scene-switch-reentry"
     ],
-    "node": [
-      "layers-enum-ops",
-      "node-children-ops",
-      "node-component-queries",
-      "node-events",
-      "node-pool",
-      "node-scene-id"
+    "debug": [
+      "profiler-overlay"
     ],
-    "lights": [
-      "light-point",
-      "light-sphere",
-      "light-spot",
-      "light-two-directional"
-    ],
-    "material": [
-      "material-basic",
-      "material-lifecycle",
-      "material-ops"
-    ],
-    "math": [
-      "math-approx-compare",
-      "math-bits",
-      "math-bits-constants",
-      "math-color-applied",
-      "math-color-convert",
-      "math-color-models",
-      "math-easing-patterns",
-      "math-enumerable-props",
-      "math-float-encoding",
-      "math-mat3-basics",
-      "math-mat3-elements",
-      "math-mat3-transforms",
-      "math-mat4-applied",
-      "math-mat4-basics",
-      "math-mat4-compose",
-      "math-mat4-transform",
-      "math-quat-applied",
-      "math-quat-components",
-      "math-quat-euler",
-      "math-quat-interp",
-      "math-random-utils",
-      "math-rect-geometry",
-      "math-rect-ops",
-      "math-scalar-utils",
-      "math-size-ops",
-      "math-vec2-applied",
-      "math-vec2-arithmetic",
-      "math-vec2-components",
-      "math-vec2-equality-misc",
-      "math-vec2-length-angle",
-      "math-vec2-tovec3",
-      "math-vec3-applied",
-      "math-vec3-arithmetic",
-      "math-vec3-components",
-      "math-vec3-equality-misc",
-      "math-vec3-length-products",
-      "math-vec3-tovec2",
-      "math-vec4-arithmetic",
-      "math-vec4-components",
-      "math-vec4-length-misc"
-    ],
-    "meshes": [
-      "mesh-cylinder",
-      "mesh-multi-material",
-      "mesh-plane",
-      "mesh-sphere",
-      "mesh-torus"
-    ],
-    "particle-2d": [
-      "particle-2d-basic"
+    "ui": [
+      "ui-components",
+      "ui-layout",
+      "webview-basic",
+      "ui-asset-loading",
+      "ui-api-lifecycle",
+      "responsive-board-recipes"
     ],
     "physics-2d": [
       "physics-2d-basic",
       "physics-2d-collision"
+    ],
+    "particle-2d": [
+      "particle-2d-basic"
+    ],
+    "tiledmap": [
+      "tiledmap-basic"
+    ],
+    "audio": [
+      "audio-basic"
+    ],
+    "video": [
+      "video-basic"
     ],
     "physics": [
       "physics-3d-basic",
       "physics-3d-collision",
       "physics-interaction"
     ],
-    "application": [
-      "product-viewer",
-      "material-inspection-showroom"
+    "dragon-bones": [
+      "dragonbones-basic"
     ],
-    "debug": [
-      "profiler-overlay"
+    "math": [
+      "math-bits",
+      "math-vec2-arithmetic",
+      "math-vec2-length-angle",
+      "math-vec2-equality-misc",
+      "math-vec3-arithmetic",
+      "math-vec3-length-products",
+      "math-vec3-equality-misc",
+      "math-vec4-arithmetic",
+      "math-vec4-length-misc",
+      "math-mat3-basics",
+      "math-mat3-transforms",
+      "math-mat4-basics",
+      "math-mat4-compose",
+      "math-mat4-transform",
+      "math-quat-euler",
+      "math-quat-interp",
+      "math-size-ops",
+      "math-rect-ops",
+      "math-color-convert",
+      "math-color-models",
+      "math-scalar-utils",
+      "math-approx-compare",
+      "math-random-utils",
+      "math-float-encoding",
+      "math-vec2-components",
+      "math-vec3-components",
+      "math-vec4-components",
+      "math-quat-components",
+      "math-mat3-elements",
+      "math-vec2-tovec3",
+      "math-vec3-tovec2",
+      "math-bits-constants",
+      "math-enumerable-props",
+      "math-vec3-applied",
+      "math-quat-applied",
+      "math-mat4-applied",
+      "math-color-applied",
+      "math-rect-geometry",
+      "math-vec2-applied",
+      "math-easing-patterns"
     ],
-    "runtime-control": [
-      "rc-capture-frame",
-      "rc-create-node",
-      "rc-error-report",
-      "rc-inspect-scene",
-      "first-frame-readiness"
+    "node": [
+      "node-events",
+      "node-children-ops",
+      "node-component-queries",
+      "node-pool",
+      "layers-enum-ops",
+      "node-scene-id"
     ],
-    "ui": [
-      "responsive-board-recipes",
-      "ui-api-lifecycle",
-      "ui-asset-loading",
-      "ui-components",
-      "ui-layout",
-      "webview-basic"
-    ],
-    "runtime": [
-      "runtime-asset-release",
-      "scene-switch-reentry"
-    ],
-    "scene": [
-      "scene-asset-meta",
-      "scene-globals-read",
-      "scene-runtime-ops"
-    ],
-    "particles": [
-      "starfield-galaxy"
+    "utils": [
+      "utils-family"
     ],
     "texture": [
       "texture2d-ops",
       "texture2d-serialization"
     ],
-    "tiledmap": [
-      "tiledmap-basic"
+    "scene": [
+      "scene-globals-read",
+      "scene-runtime-ops",
+      "scene-asset-meta"
     ],
-    "utils": [
-      "utils-family"
+    "light": [
+      "directional-light-face",
+      "light-attach-cycle"
     ],
-    "video": [
-      "video-basic"
+    "rendering": [
+      "render-composite",
+      "campfire-night",
+      "fog-accuracy",
+      "neon-night-city",
+      "water-multipass",
+      "hdr-color-pipeline",
+      "graphics-svg-paints",
+      "sprite-mask-blend",
+      "dom-overlay-texture",
+      "html-texture-experimental",
+      "k0-r2-porting-contracts",
+      "interactive-multipass",
+      "interactive-geometry",
+      "shader-noise-dissolve",
+      "shader-thin-film",
+      "shader-sparkle",
+      "shader-neon",
+      "shader-emboss",
+      "shader-holographic",
+      "shader-liquid-metal",
+      "shader-cursor-trail",
+      "shader-glass",
+      "shader-film-neon",
+      "shader-laser-card",
+      "shader-glass-trail",
+      "shader-input-dissolve",
+      "shader-driver-pilot",
+      "spark-splats",
+      "neon-city",
+      "afterlight",
+      "instance-batch",
+      "particles-3d",
+      "morph-field"
+    ],
+    "shader": [
+      "shader-custom-gradient",
+      "shader-dissolve",
+      "point-cloud-basics",
+      "black-hole-accretion"
+    ],
+    "game": [
+      "tetris-classic",
+      "match3-classic",
+      "tank-battle",
+      "contra-action",
+      "collector-dodge"
+    ],
+    "application": [
+      "product-viewer"
+    ],
+    "performance": [
+      "batching-shared",
+      "batching-merged",
+      "batching-dynamic"
+    ],
+    "particles": [
+      "starfield-galaxy"
+    ],
+    "integration": [
+      "interactive-container",
+      "interactive-timeline"
     ]
   }
 }

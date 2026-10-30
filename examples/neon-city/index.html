@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8" />
+        <title>cocosair — neon-city 霓虹夜城</title>
+        <style>
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                background: #05040c;
+            }
+            #GameDiv {
+                width: 100%;
+                height: 100%;
+            }
+            #Cocos3dGameContainer {
+                width: 100%;
+                height: 100%;
+            }
+            #GameCanvas {
+                width: 100%;
+                height: 100%;
+                display: block;
+            }
+            #post-controls {
+                position: fixed;
+                top: 14px;
+                left: 14px;
+                color: #d6f7ff;
+                background: rgba(8, 6, 24, 0.85);
+                padding: 12px;
+                font: 14px/1.8 system-ui;
+                border: 1px solid #385b74;
+                border-radius: 6px;
+            }
+            #post-controls label {
+                display: block;
+            }
+            /* FPS HUD：DOM 覆盖层（与 render-composite 的状态面板同模式），不参与引擎渲染 */
+            #hud {
+                position: fixed;
+                right: 14px;
+                bottom: 12px;
+                padding: 6px 12px;
+                font:
+                    13px/1.4 'SFMono-Regular',
+                    Consolas,
+                    'Liberation Mono',
+                    monospace;
+                color: #9ef2ff;
+                background: rgba(8, 6, 24, 0.55);
+                border: 1px solid rgba(84, 214, 255, 0.35);
+                border-radius: 6px;
+                pointer-events: none;
+                user-select: none;
+                white-space: pre;
+            }
+        </style>
+        <script type="importmap">
+            { "imports": { "cocosair": "/build/cocosair.module.js" } }
+        </script>
+    </head>
+    <body>
+        <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配 -->
+        <div id="GameDiv">
+            <div id="Cocos3dGameContainer">
+                <!-- 推荐模板；也可在 import 后创建 canvas，再传给 createAirApp -->
+                <canvas id="GameCanvas"></canvas>
+            </div>
+        </div>
+        <section id="post-controls" aria-label="HDR 后处理">
+            <strong>Linear HDR · 多级 Bloom</strong>
+            <label><input id="bloom" type="checkbox" checked /> Bloom</label>
+            <label
+                >色调映射
+                <select id="tone">
+                    <option value="aces">ACES</option>
+                    <option value="reinhard">Reinhard</option>
+                    <option value="none">None</option>
+                </select></label
+            >
+            <label
+                >曝光 <input id="exposure" type="range" min="0" max="3" step="0.05" value="0.65" />
+                <output id="exposure-value">0.65</output></label
+            >
+        </section>
+        <div id="hud">booting…</div>
+        <script type="module" src="./src/main.ts"></script>
+    </body>
+</html>

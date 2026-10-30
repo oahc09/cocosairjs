@@ -1,0 +1,83 @@
+{
+  "id": "particles-3d",
+  "version": "1.0.0",
+  "status": "draft",
+  "specStatus": "draft",
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "title": "Native 3D Particles",
+  "category": "rendering",
+  "apiClaims": ["createAirParticleSystem", "Camera", "Node", "Scene"],
+  "capabilities": ["rendering"],
+  "learning": {
+    "goal": "无编辑器资产装配原生 CPU/GPU 粒子与拖尾",
+    "points": ["模块在激活前配置", "原生暂停、自然衰减与重播", "世界与本地模拟空间", "节点销毁与共享资产所有权"]
+  },
+  "effect": {
+    "functional": "左右两套粒子处理器，按钮控制暂停、继续、停止发射与清空重播。",
+    "visual": "橙色 CPU 粒子带拖尾，蓝色 GPU 喷射，生命周期尺寸曲线。"
+  },
+  "api": {
+    "primary": ["createAirParticleSystem"],
+    "supporting": ["Camera", "Node", "Scene"],
+    "claims": ["createAirParticleSystem", "Camera", "Node", "Scene"],
+    "forbiddenShortcut": [
+      "不得用 DOM 粒子或逐粒子 Node 代替原生处理器。",
+      "不得以组件字段或计数代替实际画面和释放检查。"
+    ],
+    "evidence": [
+      {
+        "api": "createAirParticleSystem",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L30"
+      },
+      {
+        "api": "Camera",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L25"
+      },
+      {
+        "api": "Node",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L21"
+      },
+      {
+        "api": "Scene",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L20"
+      }
+    ]
+  },
+  "validation": {
+    "functional": ["scene-ready", "node-exists", "no-runtime-error"],
+    "visual": ["visible-frame"],
+    "interaction": [],
+    "lifecycle": [],
+    "capability": []
+  },
+  "ready": {
+    "validators": ["scene-ready"]
+  },
+  "assets": [],
+  "scene": {
+    "expectedGraph": {
+      "nodes": ["Main Camera", "CPU trails", "GPU fountain"]
+    }
+  },
+  "interaction": {
+    "steps": []
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "原创程序化示例；无外部资产；仓库 MIT 许可。"
+  }
+}
