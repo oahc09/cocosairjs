@@ -9,7 +9,7 @@ function relevant(file) {
         /^tools\/(build|dev)\//.test(file) ||
         /^tools\/verify\/(box2d3[^/]*|browser-engines\.cjs|published-artifacts\.cjs)$/.test(file) ||
         /^tools\/ci\/box2d-scope(?:\.test)?\.cjs$/.test(file) ||
-        /^examples\/box2d3-lab\//.test(file) ||
+        /^examples\/(box2d3-lab|starter)\//.test(file) ||
         file === '.github/workflows/box2d3.yml' ||
         /^(package(?:-lock)?\.json|\.npmrc|\.npmignore|\.gitignore|\.nvmrc|\.gitattributes|tsconfig[^/]*\.json|babel\.config\.[^/]+)$/.test(
             file,

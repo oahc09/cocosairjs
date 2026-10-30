@@ -4,8 +4,8 @@ import { execFileSync } from 'child_process';
 
 const ROOT = path.resolve(__dirname, '../..');
 
-// Production TS + its real shared dependency are bundled; only native isValid
-// and timer scheduling are controlled here. This is NODE_CONTRACT, not pixels.
+// Production helpers are bundled; component validity, director frames and deadlines
+// are controlled here. This is NODE_CONTRACT, not browser settlement evidence.
 function load() {
     const options = {
         entryPoints: [path.join(ROOT, 'examples/shared/shader-lifecycle.ts')],
@@ -27,7 +27,9 @@ function load() {
     const window: any = {};
     const module = { exports: {} as any };
     const schedule = (callback: () => void) => Promise.resolve().then(callback);
-    new Function('require', 'module', 'exports', 'window', 'requestAnimationFrame', 'setTimeout', code)(
+    const timers = new Map<number, () => void>();
+    let timerId = 0;
+    new Function('require', 'module', 'exports', 'window', 'requestAnimationFrame', 'setTimeout', 'clearTimeout', code)(
         (id: string) => {
             if (id !== 'cocosair') throw new Error(`Unexpected import: ${id}`);
             return native;
@@ -36,7 +38,11 @@ function load() {
         module.exports,
         window,
         schedule,
-        setTimeout,
+        (callback: () => void) => {
+            timers.set(++timerId, callback);
+            return timerId;
+        },
+        (id: number) => timers.delete(id),
     );
     return { window, install: module.exports.installShaderLifecycle };
 }

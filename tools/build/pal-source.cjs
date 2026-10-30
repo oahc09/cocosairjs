@@ -61,6 +61,30 @@ function generate() {
             // touch retirement and dispatch without attempting an invalid cancel.
             replace('if (event.target === this._canvas) {', 'if (event.target === this._canvas && event.cancelable) {');
         }
+        if (row.source === 'pal/input/web/mouse-input.ts') {
+            // Mouseup now bubbles to the existing window listener; dispatch it only once.
+            replace("        this._canvas?.addEventListener('mouseup', this._handleMouseUp);\n", '');
+            // Let host DOM listeners observe mouse input; cancel only canvas defaults.
+            source = replaceExactly(
+                source,
+                '            mouseEvent.stopPropagation();\n',
+                '',
+                row.source + ': mouse propagation',
+            );
+            source = replaceExactly(
+                source,
+                '        mouseEvent.stopPropagation();\n',
+                '',
+                row.source + ': wheel propagation',
+            );
+            source = replaceExactly(
+                source,
+                'if (mouseEvent.target === this._canvas) {',
+                'if (mouseEvent.target === this._canvas && mouseEvent.cancelable) {',
+                row.source + ': cancellation',
+                2,
+            );
+        }
         source = patchStartupBinding(source, row.source);
         source = require('./audio-cancellation-patch.cjs').patchAudioCancellation(source, row.source);
         source = require('./audio-readiness-patch.cjs').patchAudioReadiness(source, row.source);

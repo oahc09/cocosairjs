@@ -59,6 +59,8 @@ describe('fixed-snapshot segmented example evidence', () => {
         ]) {
             expect(scope.find((entry: any) => entry.id === id)?.statusAdmission.gallery).toBe('draft');
         }
+        for (const id of ['afterlight', 'neon-city', 'instance-batch', 'particles-3d', 'morph-field'])
+            expect(scope.some((entry: any) => entry.id === id)).toBe(true);
         expect(scope.some((e) => e.id === 'spark-splats')).toBe(true);
         expect(scope.find((e) => e.id === 'webgpu-basic').modes).toEqual([
             expect.objectContaining({ id: 'primary', query: 'renderer=webgl2' }),
@@ -211,8 +213,21 @@ describe('fixed-snapshot segmented example evidence', () => {
         write(path.join(state.repo, 'examples/alpha/assets/new.bin'), 'new');
         expect(check(state, data).ok).toBe(false);
     });
-    test('symlink inputs and artifact symlinks fail closed', () => {
-        fs.symlinkSync(path.join(state.repo, 'package-lock.json'), path.join(state.repo, 'examples/linked.json'));
+    test('new metadata/Spark graph is captured and invalidates an older frozen inventory', () => {
+        const data = complete(state);
+        write(path.join(state.repo, 'build/metadata/spark.module.meta.json'), '{"inputs":{}}');
+        expect(check(state, data).ok).toBe(false);
+    });
+    test('symbolic-link inputs fail closed, including unprivileged Windows junctions', () => {
+        const link = path.join(state.repo, 'examples/linked-input');
+        // Windows file symlinks require extra privileges; a real directory junction exercises the same rejection.
+        const windows = process.platform === 'win32';
+        fs.symlinkSync(
+            path.join(state.repo, windows ? 'tools' : 'package-lock.json'),
+            link,
+            windows ? 'junction' : 'file',
+        );
+        expect(fs.lstatSync(link).isSymbolicLink()).toBe(true);
         expect(() => campaign.collectInputs(state.repo)).toThrow(/symbolic/);
     });
     test.each(['status', 'stableReview'])('publication normalization never excludes %s', (key) => {

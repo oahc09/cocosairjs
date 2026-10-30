@@ -345,6 +345,61 @@ describe('U05: independent native and glTF instance / ownership CPU contracts', 
         expect(material.passes.length).toBeGreaterThan(0);
     });
 
+    test.each(['detached', 'inactive', 'loaded'] as const)(
+        'destroying a %s MeshRenderer releases duplicated owned passes once and preserves another owner',
+        async (mode) => {
+            const material = new Material();
+            material.initialize({ effectName: 'builtin-unlit' });
+            const lenderNode = new Node('Borrowed variant owner');
+            scene.addChild(lenderNode);
+            const lender = lenderNode.addComponent(MeshRenderer);
+            lender.setSharedMaterial(material, 0);
+            const external = lender.getMaterialInstance(0)!;
+            [material, lenderNode, external].forEach((resource) => owned.add(resource));
+            const node = new Node('Material owner under test');
+            owned.add(node);
+            if (mode !== 'detached') {
+                node.active = mode === 'loaded';
+                scene.addChild(node);
+            }
+            const renderer = node.addComponent(MeshRenderer);
+            renderer.setSharedMaterial(material, 0);
+            const internal = renderer.getMaterialInstance(0)!;
+            owned.add(internal); // Cleanup also runs after a failing regression assertion.
+            renderer.setMaterialInstance(external, 1);
+            renderer.setMaterialInstance(internal, 2);
+            expect(node.activeInHierarchy).toBe(mode === 'loaded');
+            expect(internal.owner).toBe(renderer);
+            expect(external.owner).toBe(lender);
+            expect(renderer.getMaterialInstance(0)).toBe(internal);
+            expect(renderer.getRenderMaterial(2)).toBe(internal);
+            expect(renderer.getRenderMaterial(1)).toBe(external);
+            expect(internal.passes.length).toBeGreaterThan(0);
+            const destroyPasses = internal.passes.map((pass) => jest.spyOn(pass, 'destroy'));
+            const borrowedPasses = external.passes.map((pass) => jest.spyOn(pass, 'destroy'));
+            const onDestroy = jest.spyOn(renderer, 'onDestroy');
+            node.destroy();
+            await engineCycles();
+            expect(node.isValid).toBe(false);
+            expect(onDestroy).toHaveBeenCalledTimes(mode === 'loaded' ? 1 : 0);
+            onDestroy.mockRestore();
+            expect(internal.passes).toHaveLength(0);
+            for (const destroy of destroyPasses) {
+                expect(destroy).toHaveBeenCalledTimes(1);
+                destroy.mockRestore();
+            }
+            for (const destroy of borrowedPasses) {
+                expect(destroy).not.toHaveBeenCalled();
+                destroy.mockRestore();
+            }
+            expect(lenderNode.isValid).toBe(true);
+            expect(lender.getMaterialInstance(0)).toBe(external);
+            expect(external.owner).toBe(lender);
+            expect(external.passes.length).toBeGreaterThan(0);
+            expect(material.passes.length).toBeGreaterThan(0);
+        },
+    );
+
     test('unaligned Uint8Array storage fails with the morph-layout diagnostic before constructing Float32Array', async () => {
         const asset = await load();
         const data = new Uint8Array(asset.meshes[0].data.length + 1);

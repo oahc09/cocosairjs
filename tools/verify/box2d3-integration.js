@@ -404,6 +404,59 @@ export async function run(lab) {
         });
         physics.collisionMatrix[4] = 0xffffffff;
 
+        await clear();
+        const baseline = lab.stats();
+        const zeroNode = new air.Node('Bodyless zero-scale collider');
+        zeroNode.setPosition(640, 360, 0);
+        zeroNode.setScale(0, 0, 1);
+        container.addChild(zeroNode);
+        const zeroCollider = zeroNode.addComponent(air.BoxCollider2D);
+        const scaleShapes = [];
+        for (const scale of [0, 1, 0, 1]) {
+            zeroNode.setScale(scale, scale, 1);
+            await frames(2);
+            scaleShapes.push(lab.stats().shapes - baseline.shapes);
+        }
+        check(
+            'bodyless collider restores native shape and queries after zero scale',
+            scaleShapes.join(',') === '0,1,0,1' && physics.testPoint(new air.Vec2(640, 360)).includes(zeroCollider),
+            { scaleShapes },
+        );
+        zeroCollider.enabled = false;
+        await frames(2);
+        check(
+            'disabling a recovered collider releases its private body and shape',
+            lab.stats().bodies === baseline.bodies && lab.stats().shapes === baseline.shapes,
+            { baseline, after: lab.stats() },
+        );
+
+        await clear();
+        physics.gravity = new air.Vec2();
+        spawn('floor', 640, 100, air.ERigidBody2DType.Static);
+        const rebuilt = spawn('box', 640, 132);
+        let rebuildBegins = 0,
+            rebuildEnds = 0;
+        rebuilt.collider.on(air.Contact2DType.BEGIN_CONTACT, () => rebuildBegins++);
+        rebuilt.collider.on(air.Contact2DType.END_CONTACT, () => {
+            if (rebuildEnds++ === 0) rebuilt.collider.apply();
+        });
+        await frames(2);
+        check('reentrant rebuild fixture has a real contact', rebuildBegins > 0, { rebuildBegins });
+        rebuilt.collider.apply();
+        check(
+            'END callback can rebuild its collider without adding native shapes',
+            rebuildEnds === 1 && lab.stats().shapes === 2,
+            { rebuildEnds, stats: lab.stats() },
+        );
+        rebuilt.collider.enabled = false;
+        await frames(2);
+        check(
+            'disabling a reentrantly rebuilt collider leaves only the floor',
+            lab.stats().shapes === 1 && !physics.testPoint(new air.Vec2(640, 132)).includes(rebuilt.collider),
+            { stats: lab.stats() },
+        );
+
+        await clear();
         const kinds = [
             ['DistanceJoint2D', 'maxLength', 100],
             ['SpringJoint2D', 'distance', 100],

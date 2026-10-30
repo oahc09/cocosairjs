@@ -413,7 +413,11 @@ describe('Constrained fixed-snapshot evidence publication', () => {
 
     test('rejects a source directory symlink rather than following it into unrelated data', () => {
         const state = fixture();
-        fs.symlinkSync(path.join(state.repo, 'package.json'), path.join(state.artifacts, 'unexpected-link'));
+        fs.symlinkSync(
+            process.platform === 'win32' ? state.repo : path.join(state.repo, 'package.json'),
+            path.join(state.artifacts, 'unexpected-link'),
+            process.platform === 'win32' ? 'junction' : 'file',
+        );
         expect(() => prepare(state)).toThrow(/symlink forbidden/);
         expect(fs.existsSync(path.join(state.repo, publication.GUARD))).toBe(false);
     });

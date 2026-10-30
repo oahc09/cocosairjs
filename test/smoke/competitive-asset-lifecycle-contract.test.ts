@@ -1,11 +1,11 @@
 import { installAssetLifecycle } from '../../examples/shared/asset-lifecycle';
 import { CCObject } from '../../src/cocos/core/data/object';
-import { director, Director } from '../../src';
+import { director, Director } from '../../src/cocos/game/director';
 
 describe('native asset lifecycle release predicates', () => {
     let frame: number;
     beforeEach(() => {
-        jest.useFakeTimers({ doNotFake: ['queueMicrotask'] });
+        jest.useFakeTimers();
         frame = 0;
         jest.spyOn(director, 'getTotalFrames').mockImplementation(() => frame);
     });
@@ -14,13 +14,14 @@ describe('native asset lifecycle release predicates', () => {
         jest.useRealTimers();
     });
     async function settle(run: Promise<any>): Promise<any> {
-        // Drive the contract's actual event protocol, not all pending timers (which fires its 8 s deadline).
-        // This unit fixture simulates director events; U05 integration tests run real headless director.tick.
+        // Supply complete update/draw cycles and drain their microtasks, not all pending timers.
+        // This unit fixture simulates director events; integration tests exercise the real director.
         for (let i = 0; i < 20; i++) {
             await Promise.resolve();
             director.emit(Director.EVENT_AFTER_UPDATE);
             director.emit(Director.EVENT_AFTER_DRAW);
             frame++;
+            jest.runAllTicks();
             await Promise.resolve();
         }
         const result = await run;

@@ -203,6 +203,26 @@ function oldKnowledgeBytes(repoRoot, inputsRoot, row) {
     assert.equal(gitHash, row.gitBlobSha1, `old knowledge Git blob mismatch: ${row.path}`);
     return checkedBytes(bytes, row);
 }
+// Explicit replay of a frozen current-profile corpus; never silently fall back from checkout drift.
+// "current" names the historical comparison arm, not the current candidate checkout.
+function currentKnowledgeBytes(repoRoot, row, sourceCommit) {
+    if (sourceCommit === undefined) return checkedBytes(fs.readFileSync(boundedFile(repoRoot, row.path)), row);
+    assert(/^[a-f0-9]{40}$/.test(sourceCommit), 'current knowledge replay requires an exact commit');
+    safeRelative(row.path);
+    const objectType = execFileSync('git', ['cat-file', '-t', sourceCommit], {
+        cwd: repoRoot,
+        encoding: 'utf8',
+    }).trim();
+    assert.equal(objectType, 'commit', 'current knowledge source must be a commit');
+    return checkedBytes(
+        execFileSync('git', ['show', `${sourceCommit}:${row.path}`], {
+            cwd: repoRoot,
+            stdio: ['ignore', 'pipe', 'pipe'],
+            maxBuffer: 16 * 1024 * 1024,
+        }),
+        row,
+    );
+}
 function resourceBytes(repoRoot, row) {
     const source = boundedFile(repoRoot, row.sourcePath);
     if (row.sourceKind === 'checkout-file') return checkedBytes(fs.readFileSync(source), row);
@@ -404,7 +424,7 @@ function prepareInputs(options = {}) {
             const bytes =
                 profile === 'old'
                     ? oldKnowledgeBytes(repoRoot, inputsRoot, row)
-                    : checkedBytes(fs.readFileSync(boundedFile(repoRoot, row.path)), row);
+                    : currentKnowledgeBytes(repoRoot, row, options.currentKnowledgeCommit);
             stage(`knowledge/${profile}/cocosair/${row.path}`, bytes);
         }
     const three = verifyThree(manifest, inputsRoot);
@@ -449,6 +469,12 @@ function prepareInputs(options = {}) {
             old: manifest.knowledgeProfiles.old.inventorySha256,
             current: manifest.knowledgeProfiles.current.inventorySha256,
             three: manifest.threeKnowledge.inventorySha256,
+        },
+        currentKnowledgeProvenance: {
+            origin: options.currentKnowledgeCommit ? 'explicit-frozen-git-replay' : 'current-checkout',
+            sourceCommit: options.currentKnowledgeCommit || null,
+            inventorySha256: manifest.knowledgeProfiles.current.inventorySha256,
+            scope: 'Exact manifest corpus only; replay does not establish current candidate knowledge or acceptance.',
         },
         oldKnowledgeProvenance: {
             sourceCommit: MAIN,
@@ -519,6 +545,7 @@ module.exports = {
     commonInput,
     validateManifest,
     checkedBytes,
+    currentKnowledgeBytes,
     boundedFile,
     treeInventory,
     verifyAssetClosure,
@@ -529,6 +556,18 @@ module.exports = {
 };
 if (require.main === module) {
     const args = process.argv.slice(2);
+    if (args.includes('--help')) {
+        console.log(`Usage: node tools/benchmark/upstream/prepare-inputs.cjs [--execute] [--manifest=PATH]
+  [--repo-root=PATH] [--inputs-root=PATH] [--public-root=PATH] [--out=PATH]
+  [--engine-receipt=PATH] [--current-knowledge-commit=40_HEX_COMMIT]
+Default: verify frozen current-profile hashes against the active checkout; drift fails.
+Explicit commit: replay only the exact historical current-profile corpus from Git.
+This is NOT current merged candidate inputs. Old-profile provenance remains unchanged.
+A new candidate campaign must freeze a new version/manifest and rerun both compared
+configurations; historical replay must not be mixed into its current-knowledge claim.
+No model/browser/reference execution or acceptance is established by preparation.`);
+        process.exit(0);
+    }
     const value = (name) => args.find((arg) => arg.startsWith(`--${name}=`))?.slice(name.length + 3);
     try {
         const report = prepareInputs({
@@ -536,6 +575,7 @@ if (require.main === module) {
             repoRoot: value('repo-root'),
             inputsRoot: value('inputs-root'),
             manifest: value('manifest'),
+            currentKnowledgeCommit: value('current-knowledge-commit'),
             publicRoot: value('public-root'),
             out: value('out'),
             engineReceipt: value('engine-receipt'),

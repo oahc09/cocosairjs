@@ -3,8 +3,10 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const os = require('node:os');
+const { execFileSync } = require('node:child_process');
 const helper = require('./prepare-inputs.cjs');
 const manifest = JSON.parse(fs.readFileSync(path.join(__dirname, 'public-inputs.json'), 'utf8'));
+const FROZEN_CURRENT_COMMIT = 'c15aa8b2e61c3eba6ff72eb8c2e5cbfe405cfdc8';
 const clone = () => structuredClone(manifest);
 const temporary = () => fs.mkdtempSync(path.join(os.tmpdir(), 'upstream-public-input-test-'));
 
@@ -167,14 +169,28 @@ const repoRoot = path.resolve(__dirname, '../../..');
 const inputsRoot = `${repoRoot}-inputs`;
 const localArtifactsAvailable = fs.existsSync(path.join(inputsRoot, manifest.threeBaseline.archiveRelativePath));
 test(
-    'real local input-bank materialization preserves exact bytes and never launches arms',
+    'real historical input-bank replay preserves exact frozen bytes and never launches arms',
     { skip: !localArtifactsAvailable },
     () => {
         const root = temporary();
         try {
             const publicRoot = path.join(root, 'public'),
                 out = path.join(root, 'report');
-            const report = helper.prepareInputs({ repoRoot, inputsRoot, publicRoot, out, execute: true });
+            const report = helper.prepareInputs({
+                repoRoot,
+                inputsRoot,
+                publicRoot,
+                out,
+                execute: true,
+                currentKnowledgeCommit: FROZEN_CURRENT_COMMIT,
+            });
+            assert.equal(report.currentKnowledgeProvenance.origin, 'explicit-frozen-git-replay');
+            assert.equal(report.currentKnowledgeProvenance.sourceCommit, FROZEN_CURRENT_COMMIT);
+            assert.equal(report.oldKnowledgeProvenance.sourceCommit, helper.MAIN);
+            assert.equal(
+                report.manifestSha256,
+                helper.sha256(fs.readFileSync(path.join(__dirname, 'public-inputs.json'))),
+            );
             assert.equal(report.publicPreparationComplete, true);
             assert.equal(report.generationAllowed, false);
             assert.equal(report.observations.generatedRuns, 0);
@@ -186,7 +202,15 @@ test(
             }
             assert.equal(helper.inventoryHash(helper.treeInventory(publicRoot)), report.publicInventorySha256);
             assert.throws(
-                () => helper.prepareInputs({ repoRoot, inputsRoot, publicRoot, out, execute: true }),
+                () =>
+                    helper.prepareInputs({
+                        repoRoot,
+                        inputsRoot,
+                        publicRoot,
+                        out,
+                        execute: true,
+                        currentKnowledgeCommit: FROZEN_CURRENT_COMMIT,
+                    }),
                 /already exists/,
             );
         } finally {
@@ -284,5 +308,44 @@ test('versioned AU12 common modes cannot delete Cocos legacy or force legacy mod
         const bad = clone();
         mutate(bad);
         assert.throws(() => helper.validateManifest(rehash(bad)));
+    }
+});
+
+test('explicit historical current knowledge replay remains hash-bound and never hides checkout drift', () => {
+    // Protocol unit: self-contained objects, so ordinary depth-1 CI needs no repository history.
+    // The separate real input-bank test still explicitly replays the frozen historical corpus.
+    const root = temporary();
+    const git = (...args) =>
+        execFileSync(
+            'git',
+            ['-C', root, '-c', 'user.name=Replay fixture', '-c', 'user.email=fixture@example.invalid', ...args],
+            { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] },
+        ).trim();
+    try {
+        git('init', '--quiet');
+        const bytes = Buffer.from('self-contained frozen knowledge\n');
+        const row = { path: 'README.md', bytes: bytes.length, sha256: helper.sha256(bytes) };
+        const file = path.join(root, row.path);
+        fs.writeFileSync(file, bytes);
+        const blob = git('hash-object', '-w', row.path);
+        git('update-index', '--add', '--cacheinfo', `100644,${blob},${row.path}`);
+        const frozen = git('commit-tree', git('write-tree'), '-m', 'Frozen fixture corpus');
+        fs.writeFileSync(file, 'changed candidate documentation');
+        const changedBlob = git('hash-object', '-w', row.path);
+        git('update-index', '--cacheinfo', `100644,${changedBlob},${row.path}`);
+        const changed = git('commit-tree', git('write-tree'), '-p', frozen, '-m', 'Changed fixture corpus');
+
+        assert.throws(() => helper.currentKnowledgeBytes(root, row), /byte length mismatch/);
+        assert.throws(() => helper.currentKnowledgeBytes(root, row, 'HEAD'), /exact commit/);
+        assert.throws(() => helper.currentKnowledgeBytes(root, { ...row, path: '../README.md' }, frozen), /unsafe/);
+        assert.throws(() => helper.currentKnowledgeBytes(root, row, blob), /must be a commit/);
+        assert.throws(() => helper.currentKnowledgeBytes(root, row, changed), /mismatch/);
+        assert.throws(
+            () => helper.currentKnowledgeBytes(root, { ...row, sha256: '0'.repeat(64) }, frozen),
+            /SHA256 mismatch/,
+        );
+        assert.deepEqual(helper.currentKnowledgeBytes(root, row, frozen), bytes);
+    } finally {
+        fs.rmSync(root, { recursive: true, force: true });
     }
 });

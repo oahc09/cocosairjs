@@ -279,6 +279,8 @@ const globalEmptyMeshBuffer = new Uint8Array();
  */
 @ccclass('cc.Mesh')
 export class Mesh extends Asset {
+    /** @engineInternal Emitted after dynamic buffers, counts and bounds have committed. */
+    public static readonly EVENT_GEOMETRY_CHANGED = 'air-geometry-changed';
     /**
      * @deprecated since v3.5.0, this is an engine private interface that will be removed in the future.
      */
@@ -627,6 +629,7 @@ export class Mesh extends Asset {
         }
         this._boneSpaceBounds = new WeakMap(); this._hash = 0;
         subMesh.invalidateGeometricInfo();
+        this.emit(Mesh.EVENT_GEOMETRY_CHANGED, this, primitiveIndex);
     }
 
     /**

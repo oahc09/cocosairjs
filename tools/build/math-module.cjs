@@ -127,7 +127,9 @@ async function buildMathModule(root = path.resolve(__dirname, '../..'), output =
         exports,
         outputs: Object.fromEntries(Object.entries(files).map(([name, content]) => [name, sha256(content)])),
     };
-    fs.writeFileSync(path.join(output, 'math-build.json'), JSON.stringify(receipt, null, 2) + '\n');
+    fs.mkdirSync(path.join(output, 'metadata'), { recursive: true });
+    fs.writeFileSync(path.join(output, 'metadata', 'math-build.json'), JSON.stringify(receipt, null, 2) + '\n');
+    fs.rmSync(path.join(output, 'math-build.json'), { force: true });
     return receipt;
 }
 module.exports = { buildMathModule };

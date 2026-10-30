@@ -22,6 +22,8 @@ function loadHelper(): { window: any; install: (options: any) => void } {
         external: ['cocosair'],
         logLevel: 'silent',
     };
+    // esbuild needs Node's native Uint8Array realm; jsdom's global setup is
+    // intentionally preserved. Compile in a normal Node child, without a shell.
     const code = execFileSync(
         process.execPath,
         ['-e', `process.stdout.write(require('esbuild').buildSync(${JSON.stringify(options)}).outputFiles[0].text)`],
@@ -31,7 +33,9 @@ function loadHelper(): { window: any; install: (options: any) => void } {
     const window: any = {};
     const module = { exports: {} as any };
     const schedule = (callback: () => void) => Promise.resolve().then(callback);
-    new Function('require', 'module', 'exports', 'window', 'requestAnimationFrame', 'setTimeout', code)(
+    const timers = new Map<number, () => void>();
+    let timerId = 0;
+    new Function('require', 'module', 'exports', 'window', 'requestAnimationFrame', 'setTimeout', 'clearTimeout', code)(
         (id: string) => {
             if (id !== 'cocosair') throw new Error(`Unexpected import: ${id}`);
             return native;
@@ -40,7 +44,11 @@ function loadHelper(): { window: any; install: (options: any) => void } {
         module.exports,
         window,
         schedule,
-        setTimeout,
+        (callback: () => void) => {
+            timers.set(++timerId, callback);
+            return timerId;
+        },
+        (id: number) => timers.delete(id),
     );
     return { window, install: module.exports.installShaderLifecycle };
 }

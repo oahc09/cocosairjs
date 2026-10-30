@@ -13,11 +13,11 @@ const path = nodeRequire('path') as typeof import('path');
 const { execFileSync } = nodeRequire('child_process') as typeof import('child_process');
 
 const REPO = process_cwd();
-function process_cwd (): string {
+function process_cwd(): string {
     return path.resolve('.');
 }
 
-function run (script: string, args: string[] = []): { status: number; stdout: string } {
+function run(script: string, args: string[] = []): { status: number; stdout: string } {
     try {
         const stdout = execFileSync('node', [path.join(REPO, script), ...args], { cwd: REPO, encoding: 'utf8' });
         return { status: 0, stdout };
@@ -29,14 +29,14 @@ function run (script: string, args: string[] = []): { status: number; stdout: st
 // 负控一律在**仓库外临时副本**上做：往共享工作树的 examples/** 注入脏态，会让其它会话的 npm test 连带转红。
 const SENTINEL = 'not-a-real-validator';
 
-function mkTmp (): string {
+function mkTmp(): string {
     const os = nodeRequire('os') as typeof import('os');
     const fs = nodeRequire('fs') as typeof import('fs');
     return fs.mkdtempSync(path.join(os.tmpdir(), 'cocosair-spec29-'));
 }
 
 // 复制 examples/mesh-sphere 为独立 examples 根目录；sentinel 非空则注入到 validation.functional。
-function ncExamplesDir (fs: typeof import('fs'), tmp: string, name: string, sentinel: string | null): string {
+function ncExamplesDir(fs: typeof import('fs'), tmp: string, name: string, sentinel: string | null): string {
     const source = path.join(REPO, 'examples', 'mesh-sphere');
     const examplesDir = path.join(tmp, name);
     fs.cpSync(source, path.join(examplesDir, 'mesh-sphere'), { recursive: true });
@@ -44,7 +44,9 @@ function ncExamplesDir (fs: typeof import('fs'), tmp: string, name: string, sent
     const original = fs.readFileSync(specPath, 'utf8');
     // 前置守卫：真树若带着上一轮泄漏的哨兵，那副本就不是洁净基线 ⇒ 停手指向回滚命令，不自我复 bake。
     if (original.includes(SENTINEL)) {
-        throw new Error(`检测到 ${path.relative(REPO, source)} 盘上残留哨兵 validator：它不是洁净基线。先跑 git checkout -- examples/mesh-sphere/example.json 再执行本用例。`);
+        throw new Error(
+            `检测到 ${path.relative(REPO, source)} 盘上残留哨兵 validator：它不是洁净基线。先跑 git checkout -- examples/mesh-sphere/example.json 再执行本用例。`,
+        );
     }
     if (sentinel !== null) {
         const spec = JSON.parse(original);
@@ -56,13 +58,21 @@ function ncExamplesDir (fs: typeof import('fs'), tmp: string, name: string, sent
 
 describe('V1.1 — Example Specification 门禁', () => {
     // r50（F-116 minimalFix 落地）：计数从 files.json 现读——新增示例不再需要手工同步本常数（历史：45→58→动态化）。
-    const EXAMPLE_COUNT = nodeRequire('fs').readFileSync(path.join(REPO, 'examples', 'files.json'), 'utf8') && JSON.parse(nodeRequire('fs').readFileSync(path.join(REPO, 'examples', 'files.json'), 'utf8')).examples.length;
+    const EXAMPLE_COUNT =
+        nodeRequire('fs').readFileSync(path.join(REPO, 'examples', 'files.json'), 'utf8') &&
+        JSON.parse(nodeRequire('fs').readFileSync(path.join(REPO, 'examples', 'files.json'), 'utf8')).examples.length;
 
     test('§15 全部 example.json 达到 frozen 且规格零问题', () => {
-        const result = run('tools/examples/spec-validate.cjs');
-        expect(result.stdout).toContain(`${EXAMPLE_COUNT} examples`);
-        expect(result.stdout).toContain(`${EXAMPLE_COUNT} frozen / 0 draft / 0 blocked`);
-        expect(result.status).toBe(0);
+        const fs = nodeRequire('fs') as typeof import('fs');
+        const tmp = mkTmp();
+        try {
+            const result = run('tools/examples/spec-validate.cjs', ['--out=' + path.join(tmp, 'validation.json')]);
+            expect(result.stdout).toContain(`${EXAMPLE_COUNT} examples`);
+            expect(result.stdout).toContain(`${EXAMPLE_COUNT} frozen / 0 draft / 0 blocked`);
+            expect(result.status).toBe(0);
+        } finally {
+            fs.rmSync(tmp, { recursive: true, force: true });
+        }
     });
 
     test('§12 apiEvidence 行号无漂移（spec-evidence --check）', () => {
@@ -74,9 +84,15 @@ describe('V1.1 — Example Specification 门禁', () => {
     // promotionEvidence 一致 + license + claim↔evidence 1:1）必须由真实运行证据支撑。
     // 改过任意 example.json 却不重跑验证器，这里会直接红。
     test('§11/§12 证据链符合性零 fail（spec-compliance-audit）', () => {
-        const result = run('tools/examples/spec-compliance-audit.cjs');
-        expect(result.stdout).toContain('0 fail');
-        expect(result.status).toBe(0);
+        const fs = nodeRequire('fs') as typeof import('fs');
+        const tmp = mkTmp();
+        try {
+            const result = run('tools/examples/spec-compliance-audit.cjs', ['--out=' + path.join(tmp, 'audit.json')]);
+            expect(result.stdout).toContain('0 fail');
+            expect(result.status).toBe(0);
+        } finally {
+            fs.rmSync(tmp, { recursive: true, force: true });
+        }
     });
 
     test('§23 files.json 只保留 Gallery 字段，规格实现细节不外溢', () => {
@@ -91,7 +107,9 @@ describe('V1.1 — Example Specification 门禁', () => {
             expect(ex.api).toBeTruthy();
             expect(ex.api.evidence).toBeUndefined();
             for (const field of trimmedOut) {
-                if (field === 'evidence') { continue; }
+                if (field === 'evidence') {
+                    continue;
+                }
                 // 裁剪字段不得出现在 gallery api 对象上
             }
             expect(ex.api.claims).toBeDefined();
@@ -107,12 +125,19 @@ describe('V1.1 — Example Specification 门禁', () => {
         try {
             const examplesDir = ncExamplesDir(fs, tmp, 'examples-dirty', SENTINEL);
             const report = path.join(tmp, 'red-report.json');
-            const result = run('tools/examples/spec-validate.cjs', ['--examples-dir=' + examplesDir, '--out=' + report]);
+            const result = run('tools/examples/spec-validate.cjs', [
+                '--examples-dir=' + examplesDir,
+                '--out=' + report,
+            ]);
             expect(result.status).toBe(1);
             expect(result.stdout).toContain(SENTINEL);
             // 注入自证：红必须来自副本那一层，且真树逐字节干净（否则是在读回正典/别人的脏态）。
-            expect(fs.readFileSync(path.join(REPO, 'examples', 'mesh-sphere', 'example.json'), 'utf8')).not.toContain(SENTINEL);
-            const json = JSON.parse(fs.readFileSync(report, 'utf8')) as { examples: { id: string; issues: string[] }[] };
+            expect(fs.readFileSync(path.join(REPO, 'examples', 'mesh-sphere', 'example.json'), 'utf8')).not.toContain(
+                SENTINEL,
+            );
+            const json = JSON.parse(fs.readFileSync(report, 'utf8')) as {
+                examples: { id: string; issues: string[] }[];
+            };
             expect(json.examples[0].issues.join('\n')).toContain(SENTINEL);
         } finally {
             fs.rmSync(tmp, { recursive: true, force: true });
@@ -145,14 +170,21 @@ describe('V1.1 — Example Specification 门禁', () => {
             const redOut = path.join(tmp, 'red.json');
             const armB = run('tools/examples/spec-validate.cjs', ['--examples-dir=' + dirty, '--out=' + redOut]);
             expect(armB.status).toBe(1);
-            expect((JSON.parse(fs.readFileSync(redOut, 'utf8')) as { examples: { issues: string[] }[] }).examples[0].issues.join('\n')).toContain(SENTINEL);
+            expect(
+                (
+                    JSON.parse(fs.readFileSync(redOut, 'utf8')) as { examples: { issues: string[] }[] }
+                ).examples[0].issues.join('\n'),
+            ).toContain(SENTINEL);
 
             // C：绿态落非正典 ⇒ EXIT=0 且写出零 issue 报告（正典的当期刷新归 §15 用例）。
             const greenOut = path.join(tmp, 'green.json');
             const armC = run('tools/examples/spec-validate.cjs', ['--examples-dir=' + clean, '--out=' + greenOut]);
             expect(armC.stdout).toContain('1 examples: 1 frozen / 0 draft / 0 blocked');
             expect(armC.status).toBe(0);
-            expect((JSON.parse(fs.readFileSync(greenOut, 'utf8')) as { examples: { issues: string[] }[] }).examples[0].issues).toEqual([]);
+            expect(
+                (JSON.parse(fs.readFileSync(greenOut, 'utf8')) as { examples: { issues: string[] }[] }).examples[0]
+                    .issues,
+            ).toEqual([]);
 
             // D：子集/外部运行缺 --out ⇒ 必须先被配对护栏拦下（EXIT=2），不得默认落到正典。
             const armD = run('tools/examples/spec-validate.cjs', ['--examples-dir=' + clean]);
@@ -161,7 +193,10 @@ describe('V1.1 — Example Specification 门禁', () => {
 
             // E：反空转 ⇒ 扫到 0 例不是「全绿」。
             fs.mkdirSync(path.join(tmp, 'examples-empty'), { recursive: true });
-            const armE = run('tools/examples/spec-validate.cjs', ['--examples-dir=' + path.join(tmp, 'examples-empty'), '--out=' + path.join(tmp, 'empty.json')]);
+            const armE = run('tools/examples/spec-validate.cjs', [
+                '--examples-dir=' + path.join(tmp, 'examples-empty'),
+                '--out=' + path.join(tmp, 'empty.json'),
+            ]);
             expect(armE.stdout).toContain('0 examples');
             expect(armE.status).toBe(1);
 

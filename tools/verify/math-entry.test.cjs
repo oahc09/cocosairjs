@@ -132,9 +132,12 @@ test('independent source tree reproduces JS, declarations and source receipt byt
         fs.mkdirSync(path.dirname(target), { recursive: true });
         fs.copyFileSync(path.join(root, relative), target);
     }
+    fs.mkdirSync(path.join(independent, 'build'), { recursive: true });
+    fs.writeFileSync(path.join(independent, 'build/math-build.json'), 'stale root receipt');
     const again = await buildMathModule(independent);
+    assert.equal(fs.existsSync(path.join(independent, 'build/math-build.json')), false);
     assert.deepEqual(again, receipt);
-    for (const file of [...Object.keys(receipt.outputs), 'math-build.json'])
+    for (const file of [...Object.keys(receipt.outputs), 'metadata/math-build.json'])
         assert.deepEqual(
             fs.readFileSync(path.join(independent, 'build', file)),
             fs.readFileSync(path.join(root, 'build', file)),
