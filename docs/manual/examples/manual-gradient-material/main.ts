@@ -1,6 +1,5 @@
 import {
     createAirApp,
-    createAirGradientEffect,
     Scene,
     Node,
     Camera,
@@ -11,14 +10,19 @@ import {
     Vec4,
     Layers,
     EffectAsset,
-    director,
     utils,
 } from 'cocosair';
+import * as AIR from 'cocosair';
+
+const createAirGradientEffect = AIR.createAirGradientEffect;
+if (typeof createAirGradientEffect !== 'function') {
+    throw new Error('Gradient API missing from SDK: run npm run build from this checkout, then reload.');
+}
 
 const app = await createAirApp({ canvas: '#GameCanvas' });
 // The reference writes raw RGB, without HDR tone mapping or sRGB conversion.
-director.root!.pipeline.pipelineSceneData.isHDR = false;
 const scene = new Scene('local-y-gradient');
+scene.globals.skybox.useHDR = false;
 scene.globals.ambient.skyColor = new Vec4(1, 1, 1, 1);
 scene.globals.ambient.groundAlbedo = new Vec4(1, 1, 1, 1);
 scene.globals.ambient.skyIllum = 1;

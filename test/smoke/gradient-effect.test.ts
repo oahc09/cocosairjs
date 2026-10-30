@@ -70,7 +70,9 @@ describe('AIR local-Y gradient effect', () => {
         for (const invalid of [NaN, Infinity, -Infinity, 1e40]) {
             expect(() => a.setProperty('offset', invalid)).toThrow();
             expect(a.getProperty('offset')).toBe(0.5);
-            expect(() => a.setProperty('topColor', new Vec4(invalid, 0, 0, 1))).toThrow();
+            const invalidColor = new Vec4(1, 0, 0, 1);
+            invalidColor.x = invalid; // Vec4's constructor normalizes NaN to zero.
+            expect(() => a.setProperty('topColor', invalidColor)).toThrow();
         }
         const packed = new Vec4();
         a.passes[0].getUniform(a.passes[0].getHandle('gradient'), packed);

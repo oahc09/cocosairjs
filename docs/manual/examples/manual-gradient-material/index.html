@@ -5,25 +5,78 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>Local-Y gradient material · Cocos AIR</title>
         <style>
-            html, body, #GameDiv, #Cocos3dGameContainer { margin: 0; width: 100%; height: 100%; }
-            body { background: #202020; color: white; font: 14px system-ui; }
-            canvas { display: block; width: 100%; height: 100%; }
-            #controls { position: fixed; top: 12px; left: 12px; padding: 16px; background: #171b23e8; border-radius: 8px; }
-            label { display: block; margin: 8px 0; }
-            input { width: 130px; vertical-align: middle; }
-            a { color: #b8d7ff; }
+            html,
+            body,
+            #GameDiv,
+            #Cocos3dGameContainer {
+                margin: 0;
+                width: 100%;
+                height: 100%;
+            }
+            body {
+                background: #202020;
+                color: white;
+                font: 14px system-ui;
+            }
+            canvas {
+                display: block;
+                width: 100%;
+                height: 100%;
+            }
+            #controls {
+                position: fixed;
+                top: 12px;
+                left: 12px;
+                padding: 16px;
+                background: #171b23e8;
+                border-radius: 8px;
+            }
+            label {
+                display: block;
+                margin: 8px 0;
+            }
+            input {
+                width: 130px;
+                vertical-align: middle;
+            }
+            a {
+                color: #b8d7ff;
+            }
         </style>
-        <script type="importmap">{ "imports": { "cocosair": "/build/cocosair.module.js" } }</script>
+        <script type="importmap">
+            { "imports": { "cocosair": "/build/cocosair.module.js" } }
+        </script>
     </head>
     <body>
-        <div id="GameDiv"><div id="Cocos3dGameContainer"><canvas id="GameCanvas"></canvas></div></div>
+        <div id="GameDiv">
+            <div id="Cocos3dGameContainer"><canvas id="GameCanvas"></canvas></div>
+        </div>
         <section id="controls">
             <strong>Object-space vertical gradient</strong>
-            <label>Response <select id="mode"><option value="reference">Babylon reference (RGB²)</option><option value="scene">Scene diffuse</option><option value="unlit">Unlit</option></select></label>
-            <label>Offset <input id="offset" type="range" min="-1" max="1" step="0.01" value="0.5" /> <output id="offset-value"></output></label>
-            <label>Scale <input id="scale" type="range" min="-2" max="2" step="0.01" value="1" /> <output id="scale-value"></output></label>
-            <label>Smoothness <input id="smoothness" type="range" min="0" max="12" step="0.01" value="1" /> <output id="smoothness-value"></output></label>
-            <label>Alpha <input id="alpha" type="range" min="0" max="1" step="0.01" value="1" /> <output id="alpha-value"></output></label>
+            <label
+                >Response
+                <select id="mode">
+                    <option value="reference">Babylon reference (RGB²)</option>
+                    <option value="scene">Scene diffuse</option>
+                    <option value="unlit">Unlit</option>
+                </select></label
+            >
+            <label
+                >Offset <input id="offset" type="range" min="-1" max="1" step="0.01" value="0.5" />
+                <output id="offset-value"></output
+            ></label>
+            <label
+                >Scale <input id="scale" type="range" min="-2" max="2" step="0.01" value="1" />
+                <output id="scale-value"></output
+            ></label>
+            <label
+                >Smoothness <input id="smoothness" type="range" min="0" max="12" step="0.01" value="1" />
+                <output id="smoothness-value"></output
+            ></label>
+            <label
+                >Alpha <input id="alpha" type="range" min="0" max="1" step="0.01" value="1" />
+                <output id="alpha-value"></output
+            ></label>
             <a href="/docs/guides/gradient-material.md">API and compatibility notes</a>
         </section>
         <script type="module" src="./main.ts"></script>

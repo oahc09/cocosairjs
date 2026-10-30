@@ -81,5 +81,4 @@ export * from './ui-glyph-text';
 export * from './ui-glyph-icons';
 export * from './ui-typewriter';
 
-
 export { createAirGradientEffect } from './effects/gradient';

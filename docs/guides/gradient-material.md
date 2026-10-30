@@ -43,14 +43,14 @@ rendering. Node translation, rotation and scaling move the gradient with the obj
 they do not redefine its coordinate range. Gradients are calculated per fragment,
 not approximated by four vertex colors.
 
-| Property | Default | Contract |
-| --- | --- | --- |
-| `topColor` | `(1,0,0,1)` | Linear RGBA `Vec4`; native `Color` also maps 0–255 channels to 0–1, without sRGB decoding |
-| `bottomColor` | `(0,0,1,1)` | Linear RGBA, as above |
-| `offset` | `0` | Finite local-height translation |
-| `scale` | `1` | Finite local-height multiplier; negative reverses, zero flattens |
-| `smoothness` | `1` | Finite exponent; values below `.01` use `.01`; values above `10` are **not** capped |
-| `alpha` | `1` | Global opacity in `[0,1]`, multiplied by interpolated endpoint alpha |
+| Property      | Default     | Contract                                                                                  |
+| ------------- | ----------- | ----------------------------------------------------------------------------------------- |
+| `topColor`    | `(1,0,0,1)` | Linear RGBA `Vec4`; native `Color` also maps 0–255 channels to 0–1, without sRGB decoding |
+| `bottomColor` | `(0,0,1,1)` | Linear RGBA, as above                                                                     |
+| `offset`      | `0`         | Finite local-height translation                                                           |
+| `scale`       | `1`         | Finite local-height multiplier; negative reverses, zero flattens                          |
+| `smoothness`  | `1`         | Finite exponent; values below `.01` use `.01`; values above `10` are **not** capped       |
+| `alpha`       | `1`         | Global opacity in `[0,1]`, multiplied by interpolated endpoint alpha                      |
 
 The packed `gradient` Vec4 is `(offset, scale, smoothness, alpha)`; the four named
 properties are native scalar aliases, not independent uniforms. Use the aliases for
@@ -91,7 +91,7 @@ exposure twice. No custom light class or per-frame uniform synchronization is ne
 The reference's white sky and white ground at intensity one can be reproduced with:
 
 ```ts
-director.root!.pipeline.pipelineSceneData.isHDR = false;
+scene.globals.skybox.useHDR = false;
 scene.globals.ambient.skyColor = new Vec4(1, 1, 1, 1);
 scene.globals.ambient.groundAlbedo = new Vec4(1, 1, 1, 1);
 scene.globals.ambient.skyIllum = 1;

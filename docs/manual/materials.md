@@ -278,6 +278,10 @@ app.run(scene);
 console.log('[manual/materials] running on cocosair');
 ```
 
+## 对象空间双色渐变
+
+`createAirGradientEffect()` 通过原生 `EffectAsset`/`Material` 提供局部 Y 双色渐变，支持 offset、scale、smoothness、RGBA 与场景漫反射光照。参见[渐变材质指南](../guides/gradient-material.md)与[可交互手册示例](./examples/manual-gradient-material/index.html)。新增源码 API 使用前请先 `npm run build`；不要把旧生成 SDK 当成当前源码。
+
 ## API 参考
 
 `Material.initialize({ effectName, defines? })`、`Material.setProperty|getProperty`、`Material.effectName`、`Material.copy(mat, overrides?)`、`MeshRenderer.material`、`MeshRenderer.getMaterialInstance(i)`、`builtinResMgr.get(uuid)`。以 `build/cocosair.module.d.ts` 为准。
