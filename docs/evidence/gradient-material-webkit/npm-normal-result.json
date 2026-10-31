@@ -1,0 +1,828 @@
+{
+  "timestamp": "2026-10-30T23:13:50.656Z",
+  "browser": "webkit",
+  "browserVersion": "26.5",
+  "collectorSHA256": "c53259b529d650a0422e958b2d173f06e96bb84541670eee232afdafde3b3170",
+  "effectSourceSHA256": "2129ec570b17e3b9f572dd5fd4f07885d0118ddf5eccd56646f7777413810433",
+  "runtime": "build/npm/cocosair.module.js",
+  "runtimeSHA256": "96b7eb1c92a9260a9027670c03eb036ce7cf0276b5250d310060091bd5b64f41",
+  "scope": "Fresh SDK public API; actual WebGL shader compilation/render/readPixels plus native example DOM interactions. Offline route fixture, not HTTP deployment or real-device/performance certification.",
+  "fixture": {
+    "result": {
+      "done": true,
+      "ok": true,
+      "checks": [
+        {
+          "name": "localY-bottom",
+          "ok": true,
+          "detail": {
+            "pixel": [
+              0,
+              0,
+              255,
+              255
+            ],
+            "h": 0.001953125
+          }
+        },
+        {
+          "name": "localY-quarter",
+          "ok": true,
+          "detail": {
+            "pixel": [
+              63,
+              0,
+              192,
+              255
+            ],
+            "h": 0.248046875
+          }
+        },
+        {
+          "name": "localY-mid",
+          "ok": true,
+          "detail": {
+            "pixel": [
+              127,
+              0,
+              128,
+              255
+            ],
+            "h": 0.498046875
+          }
+        },
+        {
+          "name": "localY-top",
+          "ok": true,
+          "detail": {
+            "pixel": [
+              254,
+              0,
+              1,
+              255
+            ],
+            "h": 0.994140625
+          }
+        },
+        {
+          "name": "scale",
+          "ok": true,
+          "detail": [
+            127,
+            0,
+            128,
+            255
+          ]
+        },
+        {
+          "name": "offset",
+          "ok": true,
+          "detail": [
+            127,
+            0,
+            128,
+            255
+          ]
+        },
+        {
+          "name": "smoothness",
+          "ok": true,
+          "detail": [
+            16,
+            0,
+            239,
+            255
+          ]
+        },
+        {
+          "name": "zero-smoothness-finite",
+          "ok": true,
+          "detail": [
+            251,
+            0,
+            4,
+            255
+          ]
+        },
+        {
+          "name": "translation-localY-stable",
+          "ok": true,
+          "detail": [
+            63,
+            0,
+            192,
+            255
+          ]
+        },
+        {
+          "name": "rotation-localY-stable",
+          "ok": true,
+          "detail": [
+            64,
+            0,
+            191,
+            255
+          ]
+        },
+        {
+          "name": "alpha-blend-black",
+          "ok": true,
+          "detail": [
+            64,
+            0,
+            64,
+            255
+          ]
+        },
+        {
+          "name": "rgba-opaque-canvas",
+          "ok": true,
+          "detail": {
+            "pixel": [
+              0,
+              0,
+              128,
+              255
+            ],
+            "context": {
+              "alpha": false,
+              "antialias": true,
+              "depth": true,
+              "failIfMajorPerformanceCaveat": false,
+              "powerPreference": "default",
+              "premultipliedAlpha": false,
+              "preserveDrawingBuffer": true,
+              "stencil": true
+            }
+          }
+        },
+        {
+          "name": "color-alpha-blend",
+          "ok": true,
+          "detail": [
+            0,
+            0,
+            51,
+            255
+          ]
+        },
+        {
+          "name": "native-white-ambient",
+          "ok": true,
+          "detail": [
+            0,
+            0,
+            128,
+            255
+          ]
+        },
+        {
+          "name": "babylon-blue-square",
+          "ok": true,
+          "detail": [
+            0,
+            0,
+            64,
+            255
+          ]
+        },
+        {
+          "name": "srgb-opt-in",
+          "ok": true,
+          "detail": [
+            137,
+            137,
+            137,
+            255
+          ]
+        },
+        {
+          "name": "extrapolate-above-one",
+          "ok": true,
+          "detail": [
+            128,
+            128,
+            128,
+            255
+          ]
+        },
+        {
+          "name": "smoothness-twenty",
+          "ok": true,
+          "detail": [
+            57,
+            57,
+            57,
+            255
+          ]
+        },
+        {
+          "name": "directional-front",
+          "ok": true,
+          "detail": [
+            128,
+            128,
+            128,
+            255
+          ]
+        },
+        {
+          "name": "directional-away",
+          "ok": true,
+          "detail": [
+            0,
+            0,
+            0,
+            255
+          ]
+        },
+        {
+          "name": "directional-disabled",
+          "ok": true,
+          "detail": [
+            0,
+            0,
+            0,
+            255
+          ]
+        },
+        {
+          "name": "hemisphere-side-normal",
+          "ok": true,
+          "detail": [
+            64,
+            0,
+            64,
+            255
+          ]
+        },
+        {
+          "name": "hemisphere-up-normal",
+          "ok": true,
+          "detail": [
+            128,
+            0,
+            0,
+            255
+          ]
+        },
+        {
+          "name": "hemisphere-down-normal",
+          "ok": true,
+          "detail": [
+            0,
+            0,
+            128,
+            255
+          ]
+        },
+        {
+          "name": "second-effect-independent-green",
+          "ok": true,
+          "detail": [
+            0,
+            255,
+            0,
+            255
+          ]
+        },
+        {
+          "name": "destroy-independent-keeps-first",
+          "ok": true,
+          "detail": [
+            128,
+            128,
+            128,
+            255
+          ]
+        },
+        {
+          "name": "recreate-after-destroy",
+          "ok": true,
+          "detail": [
+            255,
+            255,
+            0,
+            255
+          ]
+        },
+        {
+          "name": "XZ-plane-has-no-localY-gradient",
+          "ok": true,
+          "detail": {
+            "flatA": [
+              128,
+              0,
+              128,
+              255
+            ],
+            "flatB": [
+              128,
+              0,
+              128,
+              255
+            ]
+          }
+        },
+        {
+          "name": "reference-blue-358",
+          "ok": true,
+          "detail": {
+            "y": 358,
+            "localY": -0.400390625,
+            "weight": 0.099609375,
+            "pixel": [
+              0,
+              0,
+              3,
+              255
+            ],
+            "expected": [
+              0,
+              0,
+              3,
+              255
+            ]
+          }
+        },
+        {
+          "name": "reference-blue-307",
+          "ok": true,
+          "detail": {
+            "y": 307,
+            "localY": -0.201171875,
+            "weight": 0.298828125,
+            "pixel": [
+              0,
+              0,
+              23,
+              255
+            ],
+            "expected": [
+              0,
+              0,
+              23,
+              255
+            ]
+          }
+        },
+        {
+          "name": "reference-blue-256",
+          "ok": true,
+          "detail": {
+            "y": 256,
+            "localY": -0.001953125,
+            "weight": 0.498046875,
+            "pixel": [
+              0,
+              0,
+              63,
+              255
+            ],
+            "expected": [
+              0,
+              0,
+              63,
+              255
+            ]
+          }
+        },
+        {
+          "name": "reference-blue-205",
+          "ok": true,
+          "detail": {
+            "y": 205,
+            "localY": 0.197265625,
+            "weight": 0.697265625,
+            "pixel": [
+              0,
+              0,
+              124,
+              255
+            ],
+            "expected": [
+              0,
+              0,
+              124,
+              255
+            ]
+          }
+        },
+        {
+          "name": "reference-blue-154",
+          "ok": true,
+          "detail": {
+            "y": 154,
+            "localY": 0.396484375,
+            "weight": 0.896484375,
+            "pixel": [
+              0,
+              0,
+              205,
+              255
+            ],
+            "expected": [
+              0,
+              0,
+              205,
+              255
+            ]
+          }
+        },
+        {
+          "name": "gl-error-zero",
+          "ok": true,
+          "detail": 0
+        }
+      ],
+      "frameReceipts": [
+        {
+          "step": 1,
+          "dt": 0.016666666666666666,
+          "afterDraw": true
+        },
+        {
+          "step": 2,
+          "dt": 0.016666666666666666,
+          "afterDraw": true
+        },
+        {
+          "step": 3,
+          "dt": 0.016666666666666666,
+          "afterDraw": true
+        },
+        {
+          "step": 4,
+          "dt": 0.016666666666666666,
+          "afterDraw": true
+        },
+        {
+          "step": 5,
+          "dt": 0.016666666666666666,
+          "afterDraw": true
+        },
+        {
+          "step": 6,
+          "dt": 0.016666666666666666,
+          "afterDraw": true
+        },
+        {
+          "step": 7,
+          "dt": 0.016666666666666666,
+          "afterDraw": true
+        },
+        {
+          "step": 8,
+          "dt": 0.016666666666666666,
+          "afterDraw": true
+        },
+        {
+          "step": 9,
+          "dt": 0.016666666666666666,
+          "afterDraw": true
+        },
+        {
+          "step": 10,
+          "dt": 0.016666666666666666,
+          "afterDraw": true
+        },
+        {
+          "step": 11,
+          "dt": 0.016666666666666666,
+          "afterDraw": true
+        },
+        {
+          "step": 12,
+          "dt": 0.016666666666666666,
+          "afterDraw": true
+        },
+        {
+          "step": 13,
+          "dt": 0.016666666666666666,
+          "afterDraw": true
+        },
+        {
+          "step": 14,
+          "dt": 0.016666666666666666,
+          "afterDraw": true
+        },
+        {
+          "step": 15,
+          "dt": 0.016666666666666666,
+          "afterDraw": true
+        },
+        {
+          "step": 16,
+          "dt": 0.016666666666666666,
+          "afterDraw": true
+        },
+        {
+          "step": 17,
+          "dt": 0.016666666666666666,
+          "afterDraw": true
+        },
+        {
+          "step": 18,
+          "dt": 0.016666666666666666,
+          "afterDraw": true
+        },
+        {
+          "step": 19,
+          "dt": 0.016666666666666666,
+          "afterDraw": true
+        },
+        {
+          "step": 20,
+          "dt": 0.016666666666666666,
+          "afterDraw": true
+        },
+        {
+          "step": 21,
+          "dt": 0.016666666666666666,
+          "afterDraw": true
+        },
+        {
+          "step": 22,
+          "dt": 0.016666666666666666,
+          "afterDraw": true
+        },
+        {
+          "step": 23,
+          "dt": 0.016666666666666666,
+          "afterDraw": true
+        },
+        {
+          "step": 24,
+          "dt": 0.016666666666666666,
+          "afterDraw": true
+        },
+        {
+          "step": 25,
+          "dt": 0.016666666666666666,
+          "afterDraw": true
+        },
+        {
+          "step": 26,
+          "dt": 0.016666666666666666,
+          "afterDraw": true
+        },
+        {
+          "step": 27,
+          "dt": 0.016666666666666666,
+          "afterDraw": true
+        },
+        {
+          "step": 28,
+          "dt": 0.016666666666666666,
+          "afterDraw": true
+        },
+        {
+          "step": 29,
+          "dt": 0.016666666666666666,
+          "afterDraw": true
+        },
+        {
+          "step": 30,
+          "dt": 0.016666666666666666,
+          "afterDraw": true
+        },
+        {
+          "step": 31,
+          "dt": 0.016666666666666666,
+          "afterDraw": true
+        },
+        {
+          "step": 32,
+          "dt": 0.016666666666666666,
+          "afterDraw": true
+        },
+        {
+          "step": 33,
+          "dt": 0.016666666666666666,
+          "afterDraw": true
+        },
+        {
+          "step": 34,
+          "dt": 0.016666666666666666,
+          "afterDraw": true
+        },
+        {
+          "step": 35,
+          "dt": 0.016666666666666666,
+          "afterDraw": true
+        }
+      ],
+      "reference": [
+        {
+          "y": 358,
+          "localY": -0.400390625,
+          "weight": 0.099609375,
+          "pixel": [
+            0,
+            0,
+            3,
+            255
+          ],
+          "expected": [
+            0,
+            0,
+            3,
+            255
+          ]
+        },
+        {
+          "y": 307,
+          "localY": -0.201171875,
+          "weight": 0.298828125,
+          "pixel": [
+            0,
+            0,
+            23,
+            255
+          ],
+          "expected": [
+            0,
+            0,
+            23,
+            255
+          ]
+        },
+        {
+          "y": 256,
+          "localY": -0.001953125,
+          "weight": 0.498046875,
+          "pixel": [
+            0,
+            0,
+            63,
+            255
+          ],
+          "expected": [
+            0,
+            0,
+            63,
+            255
+          ]
+        },
+        {
+          "y": 205,
+          "localY": 0.197265625,
+          "weight": 0.697265625,
+          "pixel": [
+            0,
+            0,
+            124,
+            255
+          ],
+          "expected": [
+            0,
+            0,
+            124,
+            255
+          ]
+        },
+        {
+          "y": 154,
+          "localY": 0.396484375,
+          "weight": 0.896484375,
+          "pixel": [
+            0,
+            0,
+            205,
+            255
+          ],
+          "expected": [
+            0,
+            0,
+            205,
+            255
+          ]
+        }
+      ],
+      "colorContract": "readPixels on raw-output WebGL2 opaque default framebuffer; AIR_GRADIENT_SRGB_OUTPUT=false, native LDR white hemisphere. No implicit gamma expectation; separate explicit sRGB test validates .25=>137.",
+      "glError": 0,
+      "nativePacingRestored": true
+    },
+    "errors": [],
+    "resources": [
+      {
+        "path": "/",
+        "sha256": "84f92855a491c58910aefaf2858949cafc68b8d3e4da2c7fa40c4a56cf104a88"
+      },
+      {
+        "path": "/main.js",
+        "sha256": "d29fa033443135ef96deba23e5c3c0546efdda9c8941a6e9b62a0112a215f525"
+      },
+      {
+        "path": "/runtime.js",
+        "sha256": "96b7eb1c92a9260a9027670c03eb036ce7cf0276b5250d310060091bd5b64f41"
+      }
+    ]
+  },
+  "example": {
+    "nativePacingRestored": true,
+    "frameReceipts": [
+      {
+        "step": 1,
+        "dt": 0.016666666666666666,
+        "afterDraw": true
+      },
+      {
+        "step": 2,
+        "dt": 0.016666666666666666,
+        "afterDraw": true
+      },
+      {
+        "step": 3,
+        "dt": 0.016666666666666666,
+        "afterDraw": true
+      },
+      {
+        "step": 4,
+        "dt": 0.016666666666666666,
+        "afterDraw": true
+      },
+      {
+        "step": 5,
+        "dt": 0.016666666666666666,
+        "afterDraw": true
+      }
+    ],
+    "checks": [
+      {
+        "name": "reference-mid-blue",
+        "ok": true,
+        "pixel": [
+          0,
+          0,
+          64,
+          255
+        ]
+      },
+      {
+        "name": "mode-select-changes-real-render",
+        "ok": true,
+        "before": [
+          0,
+          0,
+          64,
+          255
+        ],
+        "after": [
+          0,
+          0,
+          128,
+          255
+        ]
+      },
+      {
+        "name": "alpha-keyboard-zero",
+        "ok": true,
+        "pixel": [
+          32,
+          32,
+          32,
+          255
+        ]
+      },
+      {
+        "name": "offset-keyboard-negative",
+        "ok": true,
+        "pixel": [
+          0,
+          0,
+          0,
+          255
+        ]
+      },
+      {
+        "name": "offset-keyboard-positive",
+        "ok": true,
+        "pixel": [
+          0,
+          0,
+          255,
+          255
+        ]
+      }
+    ],
+    "errors": [],
+    "resources": [
+      {
+        "path": "/",
+        "sha256": "3b7eb6d0cafc5e8899376cbea82325cf2be720eef263fdd72a477e15abd9fb15"
+      },
+      {
+        "path": "/main.ts",
+        "sha256": "09be45b2efb0d1e0077d2390349553e1e94b30affdb9630035bc7a48c972a31a"
+      },
+      {
+        "path": "/build/cocosair.module.js",
+        "sha256": "96b7eb1c92a9260a9027670c03eb036ce7cf0276b5250d310060091bd5b64f41"
+      }
+    ],
+    "sourceSHA256": "ed47538a55018df04124e216becd7b396d548d2af6b980234c492f9350c9878e",
+    "ok": true
+  },
+  "ok": true
+}

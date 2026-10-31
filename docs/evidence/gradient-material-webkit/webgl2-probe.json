@@ -1,0 +1,13 @@
+{
+  "time": "2026-10-30T22:57:45.533Z",
+  "webgl2": true,
+  "version": "WebGL 2.0",
+  "renderer": "WebKit WebGL",
+  "pixel": [
+    64,
+    128,
+    191,
+    255
+  ],
+  "error": 0
+}
