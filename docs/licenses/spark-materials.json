@@ -1,0 +1,1295 @@
+{
+  "schema": "spark-license-materials/1",
+  "status": "PARTIAL_NOT_AUTHORIZATION_CLOSURE",
+  "wasmSha256": "974320be5859f426967a2d9cc237e5eae1aca98b55e35087022d6d884b2dcce7",
+  "cargoLockSha256": "cf6154b3925f929dbad307ddda2b13235e7ba7f44787d65e87e00a392454d3c9",
+  "sourceCommit": "c57ebb936a5d364e021a66a118204d599f6fdaa8",
+  "validation": "Copied existing material; checked file hashes against its inventory and matching frozen Cargo.lock; original crate archives not independently re-downloaded in this run",
+  "files": [
+    {
+      "path": "docs/licenses/WASM-CRATE-LICENSE-LIST-ZH.md",
+      "bytes": 21234,
+      "sha256": "1e63ccd90c94bc12a1c81ff169f366a915e8a4f17fd1e1bd399dda05e4484f81"
+    },
+    {
+      "path": "docs/licenses/rust-1.98.1/COPYRIGHT",
+      "bytes": 1571,
+      "sha256": "172020dbfd5b53a226dfde77616190a48dcff519b0bc0e6deb91a8450782c4af"
+    },
+    {
+      "path": "docs/licenses/rust-1.98.1/COPYRIGHT-library.html",
+      "bytes": 1512520,
+      "sha256": "68129500b616d5838629e68f55ff3aed5e096dacf60ce9eb41bbe599a563afa6"
+    },
+    {
+      "path": "docs/licenses/rust-1.98.1/LICENSE-APACHE",
+      "bytes": 9723,
+      "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a"
+    },
+    {
+      "path": "docs/licenses/rust-1.98.1/LICENSE-MIT",
+      "bytes": 1068,
+      "sha256": "b71bd43a069ca0641a9ecfe585ca7b3c53b5cc1608f8b68321168698e28b5ea1"
+    },
+    {
+      "path": "docs/licenses/rust-1.98.1/compiler-notice-source.json",
+      "bytes": 868,
+      "sha256": "0f63b5d8e075f34394d6409dd1a043b175e30c3c4a4015cdccc6239c1c5728fa"
+    },
+    {
+      "path": "docs/licenses/rust-1.98.1/license-metadata.json",
+      "bytes": 9198,
+      "sha256": "7bed295fb8d5ddc54ef9e7c795b18207d8da747513ae83fce9748e840200b40c"
+    },
+    {
+      "path": "docs/licenses/rust-1.98.1/stdlib-source.json",
+      "bytes": 832,
+      "sha256": "9de5d33f8ec1a22fe6b229507f9e05aeb23803b6d362c60db3c892701d74b62f"
+    },
+    {
+      "path": "docs/licenses/rust-1.98.1/wasm32-standard-library/COPYRIGHT",
+      "bytes": 1571,
+      "sha256": "172020dbfd5b53a226dfde77616190a48dcff519b0bc0e6deb91a8450782c4af"
+    },
+    {
+      "path": "docs/licenses/rust-1.98.1/wasm32-standard-library/LICENSE-APACHE",
+      "bytes": 9723,
+      "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a"
+    },
+    {
+      "path": "docs/licenses/rust-1.98.1/wasm32-standard-library/LICENSE-MIT",
+      "bytes": 1068,
+      "sha256": "b71bd43a069ca0641a9ecfe585ca7b3c53b5cc1608f8b68321168698e28b5ea1"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/adler2-2.0.1/Cargo.toml.evidence",
+      "bytes": 2148,
+      "sha256": "8f30dbd092f3acc475b9d339736cd7b64c6489bc47cd234a7f2232fc52e2d490"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/adler2-2.0.1/LICENSE-0BSD",
+      "bytes": 665,
+      "sha256": "861399f8c21c042b110517e76dc6b63a2b334276c8cf17412fc3c8908ca8dc17"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/adler2-2.0.1/LICENSE-APACHE",
+      "bytes": 10860,
+      "sha256": "8ada45cd9f843acf64e4722ae262c622a2b3b3007c7310ef36ac1061a30f6adb"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/adler2-2.0.1/LICENSE-MIT",
+      "bytes": 1023,
+      "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/ahash-0.7.8/Cargo.toml.evidence",
+      "bytes": 5503,
+      "sha256": "a519809f46c9aad28d6c48748f330fe31e05029d234b6d1743522ec403441744"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/ahash-0.7.8/LICENSE-APACHE",
+      "bytes": 10847,
+      "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/ahash-0.7.8/LICENSE-MIT",
+      "bytes": 1060,
+      "sha256": "ff8f68cb076caf8cefe7a6430d4ac086ce6af2ca8ce2c4e5a2004d4552ef52a2"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/ahash-0.8.12/Cargo.toml.evidence",
+      "bytes": 3277,
+      "sha256": "4ddbacdfae8fa9049a0f47b8f479a5e09536687917415f5c993c9c5438cbdbcd"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/ahash-0.8.12/LICENSE-APACHE",
+      "bytes": 10847,
+      "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/ahash-0.8.12/LICENSE-MIT",
+      "bytes": 1057,
+      "sha256": "0444c6991eead6822f7b9102e654448d51624431119546492e8b231db42c48bb"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/allocator-api2-0.2.21/Cargo.toml.evidence",
+      "bytes": 1250,
+      "sha256": "ddaa434cc54a30a33bbe0096e72479d71ba5deffa2ad9bee39419d4e50b75275"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/allocator-api2-0.2.21/LICENSE-APACHE",
+      "bytes": 9899,
+      "sha256": "20fe7b00e904ed690e3b9fd6073784d3fc428141dbd10b81c01fd143d0797f58"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/allocator-api2-0.2.21/LICENSE-MIT",
+      "bytes": 1046,
+      "sha256": "36516aefdc84c5d5a1e7485425913a22dbda69eb1930c5e84d6ae4972b5194b9"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/anyhow-1.0.98/Cargo.toml.evidence",
+      "bytes": 2618,
+      "sha256": "77502626e95e56fc3cfb2d2f5b27f5415f731bb64314a063f0931d6b54ef401f"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/anyhow-1.0.98/LICENSE-APACHE",
+      "bytes": 9723,
+      "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/anyhow-1.0.98/LICENSE-MIT",
+      "bytes": 1023,
+      "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/autocfg-1.5.0/Cargo.toml.evidence",
+      "bytes": 1581,
+      "sha256": "919934158a57ad16895ec2e937c5c14e3cef405b168c191d64dc81b69b9abe4a"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/autocfg-1.5.0/LICENSE-APACHE",
+      "bytes": 10847,
+      "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/autocfg-1.5.0/LICENSE-MIT",
+      "bytes": 1054,
+      "sha256": "27995d58ad5c1145c1a8cd86244ce844886958a35eb2b78c6b772748669999ac"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/bitflags-2.11.0/Cargo.toml.evidence",
+      "bytes": 2354,
+      "sha256": "2dae965e757af1d20e7ed3588a2ba33918ae94dcfda7efcab0e1f1a9e8a9fa85"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/bitflags-2.11.0/LICENSE-APACHE",
+      "bytes": 10847,
+      "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/bitflags-2.11.0/LICENSE-MIT",
+      "bytes": 1071,
+      "sha256": "6485b8ed310d3f0340bf1ad1f47645069ce4069dcc6bb46c7d5c6faf41de1fdb"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/bumpalo-3.20.2/Cargo.toml.evidence",
+      "bytes": 1926,
+      "sha256": "c7928795a1899a69c3e06fe5bd8628c73a34e19f558d7a9a67bd7dfabf58f632"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/bumpalo-3.20.2/LICENSE-APACHE",
+      "bytes": 10847,
+      "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/bumpalo-3.20.2/LICENSE-MIT",
+      "bytes": 1059,
+      "sha256": "65f94e99ddaf4f5d1782a6dae23f35d4293a9a01444a13135a6887017d353cee"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/bytemuck-1.25.0/Cargo.toml.evidence",
+      "bytes": 3107,
+      "sha256": "eab3420a7e2d065b0720796c2334d4effa38d85671a89db4e431853cdd2b56a9"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/bytemuck-1.25.0/LICENSE-APACHE",
+      "bytes": 10398,
+      "sha256": "e3ba223bb1423f0aad8c3dfce0fe3148db48926d41e6fbc3afbbf5ff9e1c89cb"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/bytemuck-1.25.0/LICENSE-MIT",
+      "bytes": 1110,
+      "sha256": "9df9ba60a11af705f2e451b53762686e615d86f76b169cf075c3237730dbd7e2"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/bytemuck-1.25.0/LICENSE-ZLIB",
+      "bytes": 851,
+      "sha256": "84b34dd7608f7fb9b17bd588a6bf392bf7de504e2716f024a77d89f1b145a151"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/bytemuck_derive-1.10.2/Cargo.toml.evidence",
+      "bytes": 1236,
+      "sha256": "c2683761caf8e89c5e5fbab992dc469da82a83af7b68d9d5fb2fade979c26bda"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/bytemuck_derive-1.10.2/LICENSE-APACHE",
+      "bytes": 10398,
+      "sha256": "e3ba223bb1423f0aad8c3dfce0fe3148db48926d41e6fbc3afbbf5ff9e1c89cb"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/bytemuck_derive-1.10.2/LICENSE-MIT",
+      "bytes": 1110,
+      "sha256": "9df9ba60a11af705f2e451b53762686e615d86f76b169cf075c3237730dbd7e2"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/bytemuck_derive-1.10.2/LICENSE-ZLIB",
+      "bytes": 851,
+      "sha256": "84b34dd7608f7fb9b17bd588a6bf392bf7de504e2716f024a77d89f1b145a151"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/byteorder-lite-0.1.0/Cargo.toml.evidence",
+      "bytes": 1298,
+      "sha256": "86ad0165e3fa2ad3ef17783be36336461747077416ee2279cc47a85cbfe9b786"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/byteorder-lite-0.1.0/LICENSE-MIT",
+      "bytes": 1081,
+      "sha256": "0f96a83840e146e43c0ec96a22ec1f392e0680e6c1226e6f3ba87e0740af850f"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/byteorder-lite-0.1.0/UNLICENSE",
+      "bytes": 1211,
+      "sha256": "7e12e5df4bae12cb21581ba157ced20e1986a0508dd10d0e8a4ab9a4cf94e85c"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/cfg-if-1.0.0/Cargo.toml.evidence",
+      "bytes": 1308,
+      "sha256": "5b2a8f6e5256957c029cf3a8912d51438e7faa5891c5c102c312f6d4599c1f00"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/cfg-if-1.0.0/LICENSE-APACHE",
+      "bytes": 10847,
+      "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/cfg-if-1.0.0/LICENSE-MIT",
+      "bytes": 1057,
+      "sha256": "378f5840b258e2779c39418f3f2d7b2ba96f1c7917dd6be0713f88305dbda397"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/console_error_panic_hook-0.1.7/Cargo.toml.evidence",
+      "bytes": 969,
+      "sha256": "244b9890f37fa312fdf8d8070e60b87055b395099ca6433a2406b0a1dc3b3ad3"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/console_error_panic_hook-0.1.7/LICENSE-APACHE",
+      "bytes": 10848,
+      "sha256": "353b508bbc50274d47a23729f568bab2618e3d0eaa10208616f5fd475255b896"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/console_error_panic_hook-0.1.7/LICENSE-MIT",
+      "bytes": 1059,
+      "sha256": "77674336af8ded214dc3ae07da631c7dd35cc8205f39298474ba98a889e57272"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/const-random-0.1.18/Cargo.toml.evidence",
+      "bytes": 919,
+      "sha256": "82f9f48e8116cf79bc1429fe5907e7c545a989db6bf240a0cc1a2963586562e8"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/const-random-0.1.18/LICENSE-APACHE",
+      "bytes": 10847,
+      "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/const-random-0.1.18/LICENSE-MIT",
+      "bytes": 1060,
+      "sha256": "ff8f68cb076caf8cefe7a6430d4ac086ce6af2ca8ce2c4e5a2004d4552ef52a2"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/const-random-macro-0.1.16/Cargo.toml.evidence",
+      "bytes": 1097,
+      "sha256": "a56e17787441fdf7de892b488d64d31447276599b67baa7e035cc913559ce527"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/const-random-macro-0.1.16/LICENSE-APACHE",
+      "bytes": 10847,
+      "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/const-random-macro-0.1.16/LICENSE-MIT",
+      "bytes": 1060,
+      "sha256": "ff8f68cb076caf8cefe7a6430d4ac086ce6af2ca8ce2c4e5a2004d4552ef52a2"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/crc32fast-1.5.0/Cargo.toml.evidence",
+      "bytes": 1424,
+      "sha256": "e082839aef8c8eebb5a5fca2be48c7dcd27a65e55e05d46a46107e19efe80b30"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/crc32fast-1.5.0/LICENSE-APACHE",
+      "bytes": 11358,
+      "sha256": "c6596eb7be8581c18be736c846fb9173b69eccf6ef94c5135893ec56bd92ba08"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/crc32fast-1.5.0/LICENSE-MIT",
+      "bytes": 1097,
+      "sha256": "61d383b05b87d78f94d2937e2580cce47226d17823c0430fbcad09596537efcf"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/crunchy-0.2.3/Cargo.toml.evidence",
+      "bytes": 1095,
+      "sha256": "00bec219bc270cc20a2e7f2b552b011992c37c0cd6882f82ab9943a166960e99"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/crunchy-0.2.3/LICENSE",
+      "bytes": 1082,
+      "sha256": "3eab77734a181b2a2e8418af9004f960f715f04aac4d76a26cf774f63a7b13d1"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/doc-comment-0.3.4/Cargo.toml.evidence",
+      "bytes": 1033,
+      "sha256": "ebaeb30654425b2afb0784da24a9d9744ed3eee49551acca55ed64499ef248c0"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/doc-comment-0.3.4/LICENSE",
+      "bytes": 1072,
+      "sha256": "7a9b7dd9d68943a39bbf3ea97f37b3c7b257168ecbaa9e00606f64e6ff61fe35"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/either-1.15.0/Cargo.toml.evidence",
+      "bytes": 1525,
+      "sha256": "e88e6acce3b0cbf6734ab7c41cbc01a6b368843eb29d57f06e3b917ec9af03e0"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/either-1.15.0/LICENSE-APACHE",
+      "bytes": 10847,
+      "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/either-1.15.0/LICENSE-MIT",
+      "bytes": 1043,
+      "sha256": "7576269ea71f767b99297934c0b2367532690f8c4badc695edf8e04ab6a1e545"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/equivalent-1.0.2/Cargo.toml.evidence",
+      "bytes": 946,
+      "sha256": "92fcf6d8b32d99f40a5053b9026e417c958d6f5f19581c632d675211b7eeb9f9"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/equivalent-1.0.2/LICENSE-APACHE",
+      "bytes": 10847,
+      "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/equivalent-1.0.2/LICENSE-MIT",
+      "bytes": 1049,
+      "sha256": "7365cc8878a1d7ce155a58c4ca09c3d7a6be413efa5334a80ea842912b669349"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/fdeflate-0.3.7/Cargo.toml.evidence",
+      "bytes": 1350,
+      "sha256": "d5f832103c61c132a406b738c55d0fbc31de926186ded715816bc56ee04e3c53"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/fdeflate-0.3.7/LICENSE-APACHE",
+      "bytes": 10174,
+      "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/fdeflate-0.3.7/LICENSE-MIT",
+      "bytes": 1036,
+      "sha256": "c77a4cf9da729987d0fe7ccd811e3bd27393914ddf3d23467c18cc22954513b3"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/flate2-1.1.9/Cargo.toml.evidence",
+      "bytes": 5253,
+      "sha256": "06464242e6674c339ff6c564551fddc9288a57c2bc1b78f363a643d7c566f007"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/flate2-1.1.9/LICENSE-APACHE",
+      "bytes": 10847,
+      "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/flate2-1.1.9/LICENSE-MIT",
+      "bytes": 1062,
+      "sha256": "025436edff4cfcdde17a5811fdea78892d8482efd1abdec5a17872d07a4f2112"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/foldhash-0.2.0/Cargo.toml.evidence",
+      "bytes": 1551,
+      "sha256": "0a76cc29da1c33f4bdb505f5828ecdc20859c4cb9faa402e000f5f10511a27cc"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/foldhash-0.2.0/LICENSE",
+      "bytes": 856,
+      "sha256": "b1181a40b2a7b25cf66fd01481713bc1005df082c53ef73e851e55071b102744"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/futures-core-0.3.32/Cargo.toml.evidence",
+      "bytes": 1507,
+      "sha256": "8e1fc1b21e82013b3accf43c8fc1bcdddeb3d41c810110fb83a61558a49742c3"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/futures-core-0.3.32/LICENSE-APACHE",
+      "bytes": 10874,
+      "sha256": "275c491d6d1160553c32fd6127061d7f9606c3ea25abfad6ca3f6ed088785427"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/futures-core-0.3.32/LICENSE-MIT",
+      "bytes": 1094,
+      "sha256": "6652c868f35dfe5e8ef636810a4e576b9d663f3a17fb0f5613ad73583e1b88fd"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/futures-task-0.3.32/Cargo.toml.evidence",
+      "bytes": 1335,
+      "sha256": "32f63e3cf3ba8660b2890fc63c07b9872cb3e3c0d955b63d220fc274a819f380"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/futures-task-0.3.32/LICENSE-APACHE",
+      "bytes": 10874,
+      "sha256": "275c491d6d1160553c32fd6127061d7f9606c3ea25abfad6ca3f6ed088785427"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/futures-task-0.3.32/LICENSE-MIT",
+      "bytes": 1094,
+      "sha256": "6652c868f35dfe5e8ef636810a4e576b9d663f3a17fb0f5613ad73583e1b88fd"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/futures-util-0.3.32/Cargo.toml.evidence",
+      "bytes": 3332,
+      "sha256": "154c37245e36982072655c79b83a9ba932a263824228ef6ddbd15cf1e4f47153"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/futures-util-0.3.32/LICENSE-APACHE",
+      "bytes": 10874,
+      "sha256": "275c491d6d1160553c32fd6127061d7f9606c3ea25abfad6ca3f6ed088785427"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/futures-util-0.3.32/LICENSE-MIT",
+      "bytes": 1094,
+      "sha256": "6652c868f35dfe5e8ef636810a4e576b9d663f3a17fb0f5613ad73583e1b88fd"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/getrandom-0.2.16/Cargo.toml.evidence",
+      "bytes": 2823,
+      "sha256": "9159f7c43445be8d9a5f97a1615cd79f243fcfa7a288da4f929ab7c8374ec64a"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/getrandom-0.2.16/LICENSE-APACHE",
+      "bytes": 10849,
+      "sha256": "aaff376532ea30a0cd5330b9502ad4a4c8bf769c539c87ffe78819d188a18ebf"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/getrandom-0.2.16/LICENSE-MIT",
+      "bytes": 1130,
+      "sha256": "42fa16951ce7f24b5a467a40e5b449a1d41e662f97ca779864f053f39e097737"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/glam-0.30.8/Cargo.toml.evidence",
+      "bytes": 4938,
+      "sha256": "23a0262b72c0efdf9710284988d5eac42546bb800131b051e62e504cb6939743"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/glam-0.30.8/LICENSE-APACHE",
+      "bytes": 10834,
+      "sha256": "be33ddb87a30fd321ab100e2d922cba512e50ec7a63d8e62e5bfc0798dd4b585"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/glam-0.30.8/LICENSE-MIT",
+      "bytes": 1023,
+      "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/half-2.6.0/Cargo.toml.evidence",
+      "bytes": 2586,
+      "sha256": "a2d670b4c0afe5ac5115de4da5a83c6c3e5feeeafe0b5b169a5e5c2b03ef2f11"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/half-2.6.0/LICENSE-APACHE",
+      "bytes": 10173,
+      "sha256": "a6cba85bc92e0cff7a450b1d873c0eaa2e9fc96bf472df0247a26bec77bf3ff9"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/half-2.6.0/LICENSE-MIT",
+      "bytes": 1036,
+      "sha256": "508a77d2e7b51d98adeed32648ad124b7b30241a8e70b2e72c99f92d8e5874d1"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/hashbrown-0.11.2/Cargo.toml.evidence",
+      "bytes": 2101,
+      "sha256": "98ca6560469b01c01771f3c22c6182497d2239463cb4f63395d8207002d9a9ad"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/hashbrown-0.11.2/LICENSE-APACHE",
+      "bytes": 10847,
+      "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/hashbrown-0.11.2/LICENSE-MIT",
+      "bytes": 1060,
+      "sha256": "ff8f68cb076caf8cefe7a6430d4ac086ce6af2ca8ce2c4e5a2004d4552ef52a2"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/hashbrown-0.16.1/Cargo.toml.evidence",
+      "bytes": 3295,
+      "sha256": "e5cbc66eeb71d7544bcbbda22065478c5ea270dd620fbcc6d9757e7b18485d47"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/hashbrown-0.16.1/LICENSE-APACHE",
+      "bytes": 10847,
+      "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/hashbrown-0.16.1/LICENSE-MIT",
+      "bytes": 1060,
+      "sha256": "ff8f68cb076caf8cefe7a6430d4ac086ce6af2ca8ce2c4e5a2004d4552ef52a2"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/hnsw-0.11.0/Cargo.toml.evidence",
+      "bytes": 2480,
+      "sha256": "701647fa57cb2bde032e803329fe41b9c87d51aebe13d185c53fa7bf66bd378d"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/hnsw-0.11.0/LICENSE",
+      "bytes": 1083,
+      "sha256": "6f98feb0889f0b59ef5b0b36b53abee34cf5dd74f06def79048bfda4a6465da6"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/image-0.25.10/Cargo.toml.evidence",
+      "bytes": 4189,
+      "sha256": "b45592b42e4f065d5258379bac78e2a00ab6e50bbeec265fcceeea9cf5829c26"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/image-0.25.10/LICENSE-APACHE",
+      "bytes": 10174,
+      "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/image-0.25.10/LICENSE-MIT",
+      "bytes": 1036,
+      "sha256": "c77a4cf9da729987d0fe7ccd811e3bd27393914ddf3d23467c18cc22954513b3"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/image-webp-0.2.4/Cargo.toml.evidence",
+      "bytes": 1392,
+      "sha256": "c05cc68c768c57e79c581b2ad6c112759556df9689b83313e35d5943f2951262"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/image-webp-0.2.4/LICENSE-APACHE",
+      "bytes": 10174,
+      "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/image-webp-0.2.4/LICENSE-MIT",
+      "bytes": 1036,
+      "sha256": "c77a4cf9da729987d0fe7ccd811e3bd27393914ddf3d23467c18cc22954513b3"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/indexmap-2.13.0/Cargo.toml.evidence",
+      "bytes": 3009,
+      "sha256": "4f55f9e04dc1168ee6b0fc1606d03800eaac4039fabcb877d662cb2b6f724d1d"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/indexmap-2.13.0/LICENSE-APACHE",
+      "bytes": 10847,
+      "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/indexmap-2.13.0/LICENSE-MIT",
+      "bytes": 1049,
+      "sha256": "ecc269ef87fd38a1d98e30bfac9ba964a9dbd9315c3770fed98d4d7cb5882055"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/itertools-0.14.0/Cargo.toml.evidence",
+      "bytes": 3265,
+      "sha256": "77735549383196a4156a2246dd1cd6742029b223679b3004531456d33562b0ce"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/itertools-0.14.0/LICENSE-APACHE",
+      "bytes": 10847,
+      "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/itertools-0.14.0/LICENSE-MIT",
+      "bytes": 1043,
+      "sha256": "7576269ea71f767b99297934c0b2367532690f8c4badc695edf8e04ab6a1e545"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/itoa-1.0.15/Cargo.toml.evidence",
+      "bytes": 1557,
+      "sha256": "c1d45a6aa2324a0862b0e6c8100e8f595616f91612f915f63c862010954667bc"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/itoa-1.0.15/LICENSE-APACHE",
+      "bytes": 9723,
+      "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/itoa-1.0.15/LICENSE-MIT",
+      "bytes": 1023,
+      "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/js-sys-0.3.94/Cargo.toml.evidence",
+      "bytes": 2412,
+      "sha256": "a981d4093b24b69f3de229db9e57686752e3c913f92e918431f23579c4d000f7"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/js-sys-0.3.94/LICENSE-APACHE",
+      "bytes": 10847,
+      "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/js-sys-0.3.94/LICENSE-MIT",
+      "bytes": 1057,
+      "sha256": "378f5840b258e2779c39418f3f2d7b2ba96f1c7917dd6be0713f88305dbda397"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/libc-0.2.177/Cargo.toml.evidence",
+      "bytes": 5347,
+      "sha256": "cbae2079ed7be2e12c340f4284e8987e7f532beb59aa6fcee2b7755b99c23fc7"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/libc-0.2.177/LICENSE-APACHE",
+      "bytes": 9723,
+      "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/libc-0.2.177/LICENSE-MIT",
+      "bytes": 1076,
+      "sha256": "a8d47ff51ca256f56a8932dba07660672dbfe3004257ca8de708aac1415937a1"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/libm-0.2.16/Cargo.toml.evidence",
+      "bytes": 1455,
+      "sha256": "a2d94f9cbaa4a177bacde9737bfcc7b2ed9de5bddadafe507923a5b5748f9bd7"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/libm-0.2.16/LICENSE.txt",
+      "bytes": 14088,
+      "sha256": "3823dda7cf046602f4b4e77ec8e227863dc4736037cc85bb33d9f19febe16bb7"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/log-0.4.29/Cargo.toml.evidence",
+      "bytes": 2813,
+      "sha256": "1471858c37a27ccb84d7274816ead00082c0e4acbbb28acc547a6329e3bdaf22"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/log-0.4.29/LICENSE-APACHE",
+      "bytes": 10847,
+      "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/log-0.4.29/LICENSE-MIT",
+      "bytes": 1071,
+      "sha256": "6485b8ed310d3f0340bf1ad1f47645069ce4069dcc6bb46c7d5c6faf41de1fdb"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/memchr-2.7.6/COPYING",
+      "bytes": 126,
+      "sha256": "01c266bced4a434da0051174d6bee16a4c82cf634e2679b6155d40d75012390f"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/memchr-2.7.6/Cargo.toml.evidence",
+      "bytes": 1833,
+      "sha256": "5750ca97e8b2643f2ba1d7e98f54dcf54518c0176899e547876a59eb736198a5"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/memchr-2.7.6/LICENSE-MIT",
+      "bytes": 1081,
+      "sha256": "0f96a83840e146e43c0ec96a22ec1f392e0680e6c1226e6f3ba87e0740af850f"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/memchr-2.7.6/UNLICENSE",
+      "bytes": 1211,
+      "sha256": "7e12e5df4bae12cb21581ba157ced20e1986a0508dd10d0e8a4ab9a4cf94e85c"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/miniz_oxide-0.8.9/Cargo.toml.evidence",
+      "bytes": 2057,
+      "sha256": "f0d2683434f1c0d3cd9b8080031e82aa5089c9be1779cc5101e065883258d77d"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/miniz_oxide-0.8.9/LICENSE",
+      "bytes": 1213,
+      "sha256": "4108245a1f2df9d4e94df8abed5b4ba0759bb2f9b40a6b939f1be141077ae50b"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/miniz_oxide-0.8.9/LICENSE-APACHE.md",
+      "bytes": 10174,
+      "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/miniz_oxide-0.8.9/LICENSE-MIT.md",
+      "bytes": 1212,
+      "sha256": "799e9ca9d179295ef372f25d3769cdda7d25bb2668add6a6a1e22d1e4c678b8d"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/miniz_oxide-0.8.9/LICENSE-ZLIB.md",
+      "bytes": 984,
+      "sha256": "0a54e647fe54104658b5e563c04c6f9edf251710e47bce692e0bd990a4ddaa39"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/moxcms-0.8.1/Cargo.toml.evidence",
+      "bytes": 2361,
+      "sha256": "290c7622a797623db3c35105061673a1231ee462e529fe717bde96b96ff49679"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/moxcms-0.8.1/LICENSE-APACHE.md",
+      "bytes": 11348,
+      "sha256": "90bf2d659c43045111b65c733ab2a6d4cbcb422a098368c8c58a9ba3db4ed0c5"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/moxcms-0.8.1/LICENSE.md",
+      "bytes": 1506,
+      "sha256": "2aa92cada6431e75615e3fe6cb1a9082c98f777d48ae1c087c0da0e37f7b8bff"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/num-traits-0.2.19/Cargo.toml.evidence",
+      "bytes": 1296,
+      "sha256": "dd701a0da6cce7e6e047cc944b2330f3c5e48cd64329e10942ea7d9299d435be"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/num-traits-0.2.19/LICENSE-APACHE",
+      "bytes": 10847,
+      "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/num-traits-0.2.19/LICENSE-MIT",
+      "bytes": 1071,
+      "sha256": "6485b8ed310d3f0340bf1ad1f47645069ce4069dcc6bb46c7d5c6faf41de1fdb"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/once_cell-1.21.3/Cargo.toml.evidence",
+      "bytes": 2542,
+      "sha256": "596b44254327ebe6a182fc70132e544ec437630f8910024ac2bd86187de6fff9"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/once_cell-1.21.3/LICENSE-APACHE",
+      "bytes": 10847,
+      "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/once_cell-1.21.3/LICENSE-MIT",
+      "bytes": 1023,
+      "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/ordered-float-5.1.0/Cargo.toml.evidence",
+      "bytes": 2511,
+      "sha256": "44c285bd912852d617d6141e7e07fa57195127e201aada64fa47b2b47a2d3f3c"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/ordered-float-5.1.0/LICENSE-MIT",
+      "bytes": 1057,
+      "sha256": "f7715d38a3fa1b4ac97c5729740752505a39cb92ee83ab5b102aeb5eaa7cdea4"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/pin-project-lite-0.2.17/Cargo.toml.evidence",
+      "bytes": 3699,
+      "sha256": "473f9cfe9738986d0d1c46e306bd11ad3e36bca8f1eab5bbe9f7297313fb33f4"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/pin-project-lite-0.2.17/LICENSE-APACHE",
+      "bytes": 10174,
+      "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/pin-project-lite-0.2.17/LICENSE-MIT",
+      "bytes": 1023,
+      "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/png-0.18.1/Cargo.toml.evidence",
+      "bytes": 2607,
+      "sha256": "642c5d3c2bf538404cf1d5c4aac254d033e0854af844610435fd13e910bf93aa"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/png-0.18.1/LICENSE-APACHE",
+      "bytes": 10847,
+      "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/png-0.18.1/LICENSE-MIT",
+      "bytes": 1048,
+      "sha256": "eaf40297c75da471f7cda1f3458e8d91b4b2ec866e609527a13acfa93b638652"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/proc-macro2-1.0.95/Cargo.toml.evidence",
+      "bytes": 2425,
+      "sha256": "277a6ffb50768523faca5089df941e0d1baf2a7f91792beef3d30667bce985c8"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/proc-macro2-1.0.95/LICENSE-APACHE",
+      "bytes": 9723,
+      "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/proc-macro2-1.0.95/LICENSE-MIT",
+      "bytes": 1023,
+      "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/pxfm-0.1.28/Cargo.toml.evidence",
+      "bytes": 1219,
+      "sha256": "1b56a7a3933e0f5585a34824a16b9e84b66ecf5675e4083f1150f5c73355ec0a"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/pxfm-0.1.28/LICENSE-APACHE.md",
+      "bytes": 11348,
+      "sha256": "90bf2d659c43045111b65c733ab2a6d4cbcb422a098368c8c58a9ba3db4ed0c5"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/pxfm-0.1.28/LICENSE.md",
+      "bytes": 1506,
+      "sha256": "2aa92cada6431e75615e3fe6cb1a9082c98f777d48ae1c087c0da0e37f7b8bff"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/quick-error-2.0.1/Cargo.toml.evidence",
+      "bytes": 1002,
+      "sha256": "d36aca49b7f7fe25c35e8ef7c3a68f7a94fdc777ac80d52b8fe360608a7d9af1"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/quick-error-2.0.1/LICENSE-APACHE",
+      "bytes": 11358,
+      "sha256": "c6596eb7be8581c18be736c846fb9173b69eccf6ef94c5135893ec56bd92ba08"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/quick-error-2.0.1/LICENSE-MIT",
+      "bytes": 1070,
+      "sha256": "058f01fe181608d027fcde7e528fc03ea3cf90f30903c407644b0a9bbc54f500"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/quote-1.0.40/Cargo.toml.evidence",
+      "bytes": 1713,
+      "sha256": "80803a72c608208f928eaaf3ca4ca06e0705afac3d0d79ca4342b6266cd053ef"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/quote-1.0.40/LICENSE-APACHE",
+      "bytes": 9723,
+      "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/quote-1.0.40/LICENSE-MIT",
+      "bytes": 1023,
+      "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/rand_core-0.6.4/COPYRIGHT",
+      "bytes": 569,
+      "sha256": "90eb64f0279b0d9432accfa6023ff803bc4965212383697eee27a0f426d5f8d5"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/rand_core-0.6.4/Cargo.toml.evidence",
+      "bytes": 1367,
+      "sha256": "4a6762f8364d1a60f1436f4ba7d710de22465722340d2028101fcbd68e89396f"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/rand_core-0.6.4/LICENSE-APACHE",
+      "bytes": 10282,
+      "sha256": "6df43f6f4b5d4587f3d8d71e45532c688fd168afa5fe89d571cb32fa09c4ef51"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/rand_core-0.6.4/LICENSE-MIT",
+      "bytes": 1117,
+      "sha256": "209fbbe0ad52d9235e37badf9cadfe4dbdc87203179c0899e738b39ade42177b"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/rand_pcg-0.3.1/COPYRIGHT",
+      "bytes": 569,
+      "sha256": "90eb64f0279b0d9432accfa6023ff803bc4965212383697eee27a0f426d5f8d5"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/rand_pcg-0.3.1/Cargo.toml.evidence",
+      "bytes": 1146,
+      "sha256": "399e312d58c91b92cf544feb13d5ce62ae148dfaf2e2557682b2885deda1e2df"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/rand_pcg-0.3.1/LICENSE-APACHE",
+      "bytes": 10849,
+      "sha256": "aaff376532ea30a0cd5330b9502ad4a4c8bf769c539c87ffe78819d188a18ebf"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/rand_pcg-0.3.1/LICENSE-MIT",
+      "bytes": 1139,
+      "sha256": "2234e3cefee876aeb686ad89e978bdb07bf118a1186ab1cf161bcdf69d4b4f57"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/rustversion-1.0.20/Cargo.toml.evidence",
+      "bytes": 1783,
+      "sha256": "cf4368897b430c15f09f30084d13b9ba5a88023ccd7e4189d94abf06373a9431"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/rustversion-1.0.20/LICENSE-APACHE",
+      "bytes": 9723,
+      "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/rustversion-1.0.20/LICENSE-MIT",
+      "bytes": 1023,
+      "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/ryu-1.0.20/Cargo.toml.evidence",
+      "bytes": 2245,
+      "sha256": "e524f009fc014c8553ae7f6e0517e555ee25fd4fe20d4acd1d0d7397abdfb163"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/ryu-1.0.20/LICENSE-APACHE",
+      "bytes": 9723,
+      "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/ryu-1.0.20/LICENSE-BOOST",
+      "bytes": 1338,
+      "sha256": "c9bff75738922193e67fa726fa225535870d2aa1059f91452c411736284ad566"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/serde-1.0.228/Cargo.toml.evidence",
+      "bytes": 1969,
+      "sha256": "d7fc24e39691a0831eaa0eac677b46ecbae407a40fa816b904759822d10f42e8"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/serde-1.0.228/LICENSE-APACHE",
+      "bytes": 9723,
+      "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/serde-1.0.228/LICENSE-MIT",
+      "bytes": 1023,
+      "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/serde-wasm-bindgen-0.6.5/Cargo.toml.evidence",
+      "bytes": 1594,
+      "sha256": "74722291b9bdd17e8a0efa4544bdae216a47ca8d57906611626a058bbbcd66d3"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/serde-wasm-bindgen-0.6.5/LICENSE",
+      "bytes": 1094,
+      "sha256": "62a81c033fcf173693b50f068939cd903d8a414d915776ff1fef5d5869aabcb7"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/serde_core-1.0.228/Cargo.toml.evidence",
+      "bytes": 1950,
+      "sha256": "b1c07acb994f88418a0bbb0d393f76c4ca4276d9f4497ca734eb182286169ea8"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/serde_core-1.0.228/LICENSE-APACHE",
+      "bytes": 9723,
+      "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/serde_core-1.0.228/LICENSE-MIT",
+      "bytes": 1023,
+      "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/serde_derive-1.0.228/Cargo.toml.evidence",
+      "bytes": 2099,
+      "sha256": "3de014980e9645f2e33779acd06919c9f3b717a79e10f56004918d12c4365c27"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/serde_derive-1.0.228/LICENSE-APACHE",
+      "bytes": 9723,
+      "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/serde_derive-1.0.228/LICENSE-MIT",
+      "bytes": 1023,
+      "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/serde_json-1.0.145/Cargo.toml.evidence",
+      "bytes": 3083,
+      "sha256": "a603996936a2ed8d62e4bf158aeacd830b7c8f237cefc31c3bf6313fbf26d214"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/serde_json-1.0.145/LICENSE-APACHE",
+      "bytes": 9723,
+      "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/serde_json-1.0.145/LICENSE-MIT",
+      "bytes": 1023,
+      "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/simd-adler32-0.3.9/Cargo.toml.evidence",
+      "bytes": 1401,
+      "sha256": "65f1010e28fcd07973259d53e705388091e9dde5aca820b82952717caf90db05"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/simd-adler32-0.3.9/LICENSE.md",
+      "bytes": 1078,
+      "sha256": "42a35170233e83e18856792e748de4c1ce4a63b2afce9a370c89ef3fe23f9f2d"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/slab-0.4.12/Cargo.toml.evidence",
+      "bytes": 1389,
+      "sha256": "11f31284be0c30b612f4e2c2e46aa14494a81639b12661f01f07394e270c0070"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/slab-0.4.12/LICENSE",
+      "bytes": 1055,
+      "sha256": "8ce0830173fdac609dfb4ea603fdc002c2f4af0dc9b1a005653f5da9cf534b18"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/smallvec-1.15.1/Cargo.toml.evidence",
+      "bytes": 2250,
+      "sha256": "23b775d343d15c7c212134c69a791d75fcdfb4527224b20daf401b494dd4f0c9"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/smallvec-1.15.1/LICENSE-APACHE",
+      "bytes": 10847,
+      "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/smallvec-1.15.1/LICENSE-MIT",
+      "bytes": 1072,
+      "sha256": "0b28172679e0009b655da42797c03fd163a3379d5cfa67ba1f1655e974a2a1a9"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/space-0.17.0/Cargo.toml.evidence",
+      "bytes": 1576,
+      "sha256": "552a2d81453182980e0b97b949e285b7b3a7506a2e096473033119dd9dae1b86"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/space-0.17.0/LICENSE",
+      "bytes": 1085,
+      "sha256": "90bef8b678a2d52e0e640dabc09b8840b83aef8163d2051463bbd8426aa06433"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/syn-2.0.100/Cargo.toml.evidence",
+      "bytes": 4971,
+      "sha256": "2cdd404464108685e81766cca27d49b5f71e55975e46451c52c0e910a90fa8b1"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/syn-2.0.100/LICENSE-APACHE",
+      "bytes": 9723,
+      "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/syn-2.0.100/LICENSE-MIT",
+      "bytes": 1023,
+      "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/tiny-keccak-2.0.2/Cargo.toml.evidence",
+      "bytes": 1989,
+      "sha256": "e8591a61b0fca0a73e34485db425e0fba0130a1ef31365e4b46ff16a7cdcb37a"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/tiny-keccak-2.0.2/LICENSE",
+      "bytes": 7048,
+      "sha256": "a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/typed-path-0.12.3/Cargo.toml.evidence",
+      "bytes": 1866,
+      "sha256": "dc7acd82bde402178e6dadb77c67a5cb9345baf644b364876c884f21dac2019b"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/typed-path-0.12.3/LICENSE-APACHE",
+      "bytes": 9723,
+      "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/typed-path-0.12.3/LICENSE-MIT",
+      "bytes": 1023,
+      "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/unicode-ident-1.0.18/Cargo.toml.evidence",
+      "bytes": 2013,
+      "sha256": "de3bb475aecd050be587a953d31a2a827f571ab9e06507625f831614008ce01f"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/unicode-ident-1.0.18/LICENSE-APACHE",
+      "bytes": 9723,
+      "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/unicode-ident-1.0.18/LICENSE-MIT",
+      "bytes": 1023,
+      "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/unicode-ident-1.0.18/LICENSE-UNICODE",
+      "bytes": 1995,
+      "sha256": "f7db81051789b729fea528a63ec4c938fdcb93d9d61d97dc8cc2e9df6d47f2a1"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/version_check-0.9.5/Cargo.toml.evidence",
+      "bytes": 1049,
+      "sha256": "399ea74400a173c02eabe91cb9487d0cf351117857a5d2ebc6231f0efde67681"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/version_check-0.9.5/LICENSE-APACHE",
+      "bytes": 10847,
+      "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/version_check-0.9.5/LICENSE-MIT",
+      "bytes": 1085,
+      "sha256": "b7e650f3fce5c53249d1cdc608b54df156a97edd636cf9d23498d0cfe7aec63e"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/wasi-0.11.1+wasi-snapshot-preview1/Cargo.toml.evidence",
+      "bytes": 1386,
+      "sha256": "25915be68a3057b798a4a6d4e5ceef36047e03bf0353d3f2a99236cd23e410db"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/wasi-0.11.1+wasi-snapshot-preview1/LICENSE-APACHE",
+      "bytes": 10847,
+      "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/wasi-0.11.1+wasi-snapshot-preview1/LICENSE-Apache-2.0_WITH_LLVM-exception",
+      "bytes": 12243,
+      "sha256": "268872b9816f90fd8e85db5a28d33f8150ebb8dd016653fb39ef1f94f2686bc5"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/wasi-0.11.1+wasi-snapshot-preview1/LICENSE-MIT",
+      "bytes": 1023,
+      "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/wasm-bindgen-0.2.117/Cargo.toml.evidence",
+      "bytes": 2507,
+      "sha256": "bfa7e4dcb68269be04d8117e17e7ae4911c948584af975088d5fcc15a5d5cf0a"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/wasm-bindgen-0.2.117/LICENSE-APACHE",
+      "bytes": 10847,
+      "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/wasm-bindgen-0.2.117/LICENSE-MIT",
+      "bytes": 1057,
+      "sha256": "378f5840b258e2779c39418f3f2d7b2ba96f1c7917dd6be0713f88305dbda397"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/wasm-bindgen-macro-0.2.117/Cargo.toml.evidence",
+      "bytes": 1786,
+      "sha256": "5dd954bcf2ae407286ccc4044d6fa246c6c10b106776d186cdf5e039b1eaa908"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/wasm-bindgen-macro-0.2.117/LICENSE-APACHE",
+      "bytes": 10847,
+      "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/wasm-bindgen-macro-0.2.117/LICENSE-MIT",
+      "bytes": 1057,
+      "sha256": "378f5840b258e2779c39418f3f2d7b2ba96f1c7917dd6be0713f88305dbda397"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/wasm-bindgen-macro-support-0.2.117/Cargo.toml.evidence",
+      "bytes": 1908,
+      "sha256": "c430abeb0b20bd2a191b1932d3851f1f537ee5a51d9257761a79cbb1455f80aa"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/wasm-bindgen-macro-support-0.2.117/LICENSE-APACHE",
+      "bytes": 10847,
+      "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/wasm-bindgen-macro-support-0.2.117/LICENSE-MIT",
+      "bytes": 1057,
+      "sha256": "378f5840b258e2779c39418f3f2d7b2ba96f1c7917dd6be0713f88305dbda397"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/wasm-bindgen-shared-0.2.117/Cargo.toml.evidence",
+      "bytes": 1659,
+      "sha256": "8078db0f5a2937f7e273fdab3d5895ab6ed5c0e9a9de67cad479892e9b6811db"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/wasm-bindgen-shared-0.2.117/LICENSE-APACHE",
+      "bytes": 10847,
+      "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/wasm-bindgen-shared-0.2.117/LICENSE-MIT",
+      "bytes": 1057,
+      "sha256": "378f5840b258e2779c39418f3f2d7b2ba96f1c7917dd6be0713f88305dbda397"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/web-sys-0.3.94/Cargo.toml.evidence",
+      "bytes": 59512,
+      "sha256": "9bd3478f29fc0dc25e64abac34af1d3a719ae9f9f2fe21002927d13820868978"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/web-sys-0.3.94/LICENSE-APACHE",
+      "bytes": 10847,
+      "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/web-sys-0.3.94/LICENSE-MIT",
+      "bytes": 1057,
+      "sha256": "378f5840b258e2779c39418f3f2d7b2ba96f1c7917dd6be0713f88305dbda397"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/zerocopy-0.8.27/Cargo.toml.evidence",
+      "bytes": 2832,
+      "sha256": "aa4901b586f87bddae43ffe5aada7860ecbb8c49da81e92b47e3c72fa7632750"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/zerocopy-0.8.27/LICENSE-APACHE",
+      "bytes": 11350,
+      "sha256": "9d185ac6703c4b0453974c0d85e9eee43e6941009296bb1f5eb0b54e2329e9f3"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/zerocopy-0.8.27/LICENSE-BSD",
+      "bytes": 1275,
+      "sha256": "83c1763356e822adde0a2cae748d938a73fdc263849ccff6b27776dff213bd32"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/zerocopy-0.8.27/LICENSE-MIT",
+      "bytes": 1060,
+      "sha256": "1a2f5c12ddc934d58956aa5dbdd3255fe55fd957633ab7d0d39e4f0daa73f7df"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/zerocopy-derive-0.8.27/Cargo.toml.evidence",
+      "bytes": 3780,
+      "sha256": "2ccfdabb2d8e2a0afab38abe0739ae3e93c35f7d730dc3317279c6cc888eef21"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/zerocopy-derive-0.8.27/LICENSE-APACHE",
+      "bytes": 11350,
+      "sha256": "9d185ac6703c4b0453974c0d85e9eee43e6941009296bb1f5eb0b54e2329e9f3"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/zerocopy-derive-0.8.27/LICENSE-BSD",
+      "bytes": 1275,
+      "sha256": "83c1763356e822adde0a2cae748d938a73fdc263849ccff6b27776dff213bd32"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/zerocopy-derive-0.8.27/LICENSE-MIT",
+      "bytes": 1060,
+      "sha256": "1a2f5c12ddc934d58956aa5dbdd3255fe55fd957633ab7d0d39e4f0daa73f7df"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/zip-7.2.0/Cargo.toml.evidence",
+      "bytes": 5867,
+      "sha256": "91909dd38a75508f6074c2c21913206ea3810a0d225a21f4f987566fb162a814"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/zip-7.2.0/LICENSE",
+      "bytes": 1217,
+      "sha256": "04dc52136d82400b11df5f474949863a70a5d05d2278dec45b99c479494450a6"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/zlib-rs-0.6.3/Cargo.toml.evidence",
+      "bytes": 1655,
+      "sha256": "af1087327731cc6e638105ea18cc19cf89101906d6e934059a8e1121d7a49b2d"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/zlib-rs-0.6.3/LICENSE",
+      "bytes": 856,
+      "sha256": "e72111c52b7d96ebe25348dee19f0744f444d3c95ae6b1ecb6ccaecc5bce05ba"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/zopfli-0.8.3/COPYING",
+      "bytes": 11341,
+      "sha256": "018b1cb87efdf7a04c2fcc13d57ed63f62149113fb207b27ea13430d64f13513"
+    },
+    {
+      "path": "docs/licenses/wasm-crates/zopfli-0.8.3/Cargo.toml.evidence",
+      "bytes": 1957,
+      "sha256": "c4754da82664f913824dae3e49871e2bee5fc624b3ff646c5dff5b908f6b57dd"
+    },
+    {
+      "path": "docs/licenses/wasm-crates.json",
+      "bytes": 82559,
+      "sha256": "363709fc7dfc8bdb240713d6faaeabfcbef92df467532be30307eefc523012ea"
+    },
+    {
+      "path": "docs/licenses/wasm-feature-classification.json",
+      "bytes": 33610,
+      "sha256": "b86503c37eff8cb669747df6ea8b88a76cdea52539f4b9db050593e2f7b951f8"
+    }
+  ]
+}

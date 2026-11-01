@@ -114,7 +114,7 @@ Box2D、Cannon 和 DragonBones 为源码构建及类型检查保留在 devDepend
 
 ## 8. Spark 高斯泼溅冻结上游源码（SPK-03，2026-10-11 落位）
 
-- 来源：`@sparkjsdev/spark` **2.3.1**，上游仓库 https://github.com/sparkjsdev/spark，冻结提交 `c57ebb936a5d364e021a66a118204d599f6fdaa8`（dist 发行提交 `699e3ad06ef78fe7f5f4375f705ef4d17c948993`，两者 `src`/`rust` 树等价），版权属 WORLD LABS TECHNOLOGIES, INC.；本次镜像的只读来源树为本机快照 `E:\AIProMax\github\spark-cocosairjs\upstream\spark`（发布面外路径，不随包发布；可复现判据是下条的逐文件 SHA-256 与 git 子树号）。冻结身份全表见 `docs/UPSTREAM.md` §Spark 冻结上游源码（`src` 树 `e28ecaf12054536738814356db41a44afd1df999`、`rust` 树 `23e1a2a05c28c625dfae7e28eeeb9aafbdec151b`）。
+- 来源：`@sparkjsdev/spark` **2.3.1**，上游仓库 https://github.com/sparkjsdev/spark，冻结提交 `c57ebb936a5d364e021a66a118204d599f6fdaa8`（dist 发行提交 `699e3ad06ef78fe7f5f4375f705ef4d17c948993`，两者 `src`/`rust` 树等价），版权属 WORLD LABS TECHNOLOGIES, INC.；本次镜像来自冻结上游源码快照（可复现判据为逐文件 SHA-256 与 git 子树号）。冻结身份全表见 `docs/UPSTREAM.md` §Spark 冻结上游源码（`src` 树 `e28ecaf12054536738814356db41a44afd1df999`、`rust` 树 `23e1a2a05c28c625dfae7e28eeeb9aafbdec151b`）。
 - 落位：`vendor/spark/`（照 §2 `vendor/pal-source/` 的冻结第三方源码惯例）逐字节镜像上游 `src/**`、`rust/**` 与 `LICENSE`、`package.json`、`CHANGELOG.md`、`README.md`、`tsconfig.json`，共 **105** 个文件（`src` 60：52 个 `.ts` + 8 个 `.glsl`；`rust` 40：29 个 `.rs` + 11 个 Cargo/构建脚本/说明；根 5）。
 - 不落位（决策记录在清单里）：`.git`、`.github`、`node_modules`、`dist`、`test`、`scripts`、`.gitattributes`、`.gitignore`、`lefthook.yml`、`biome.json`、`vite.config.ts`、`examples.html`、`index.html`、`mkdocs.yml`、`package-lock.json`——Git/CI/格式化器/站点外壳与上游依赖锁定不属运行时源码；上游 `test/` 与 `scripts/` 未搬运，本仓回归随 SPK-13 重建。
 - 许可：MIT 原文逐字节保存为 `licenses/LICENSE_spark.txt`（= `vendor/spark/LICENSE` = 上游 `LICENSE`；实测两者 SHA-256 均为 `51829693e5dccd9ca1daa093991faac3aaa93238eb8fd5f5cb4130af85791d64`）；`licenses/` 已在 `package.json` `files[]` 内，随 npm 包发布。该逐字节比对同时由 `npm run verify:licenses` 的 REGISTRY 项（`sourceOfTruth: vendored → vendor/spark/LICENSE`）与 `node tools/build/vendor-spark-tree.cjs --check` 双重断言。
@@ -143,12 +143,8 @@ Box2D、Cannon 和 DragonBones 为源码构建及类型检查保留在 devDepend
   顺带记录一处门禁事实：`tools/verify/license-audit.cjs` 的 `build/` 白名单对**文件**放行任意 `.js/.map/.d.ts/.json`，
   故 `cocosair.module.spark.js（旧整合产物，已退役）` 从不被它拦截；该门禁只扫目录名，`vendor/` 不在其扫描面。首版预写的「必须扩展 `build/` 白名单否则变红」
   在实态路径下不成立；本轮实际需要的只是把新增目录 `build/fflate/` 加入白名单（已加，`license-audit` 的 issues 从 6 回到既存 5 项，均与本任务无关）。
-- **已知许可缺口（已处置登记，未闭合）**：该 WASM 由 Rust crate 依赖树编译而来，除 Spark 自身的 MIT 外还携带 crate 级许可（上游移植件里以逐 crate 清单形式记录：
-  `WASM-LICENSES-ZH.md`、`licenses/wasm-crates/<name-version>/LICENSE-*`、`rust-1.98.1` 标准库许可）。本仓**未**转录这份逐 crate 清单。
-  §9 首版要求的二选一已按 ② 落地：在 `docs/license-decisions.json` 以 `spark-rs WASM 与 wasm-bindgen glue` 登记处置，
-  `disposition: pending`（附三条备选路径与证据指针），`npm run verify:licenses` 因此输出 1 条 ATTENTION（非 FAIL，默认产物不受影响）。
-  **在 owner 闭合该处置前，spark 变体产物不得作为 release 交付物**；未处置前不得声称该资产的许可面已完整。
-- 消费边界：应用自行托管资产目录并指向它；SDK 产物内既不含 WASM magic 字节，也不得硬编码该目录路径（与 `build/gltf-decoders/` 的隔离护栏同规则）。
+- **许可补核仍未闭环**：已保留同一 WASM 哈希、相同冻结 Cargo.lock 对应的 84 节点候选闭包材料、82 个 registry crate 的许可及 Rust 标准库 NOTICE，见 [材料清单](licenses/spark-materials.json) 和 [分发授权状态](reference/distribution-authorization.md)。本次按已有文件清单复核原文字节和锁表 checksum，未重新下载 crate 原包；候选清单不等于实际链接 SBOM。
+  `npm run verify:licenses` 默认包含公开 Git 当前树及已知历史，PAL 历史与 Spark 未决项均为 FAIL；`-- --scope=default` 只证明默认 SDK 范围。Spark 构建在授权证据闭环前拒绝生成新变体。
 
 ## 10. Three.js r180 抄写主体（SPK-04 数学层）—— **已撤销（2026-10-13，复用纪律恢复）**
 

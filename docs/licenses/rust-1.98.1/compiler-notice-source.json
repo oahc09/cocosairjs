@@ -1,0 +1,21 @@
+{
+  "url": "https://static.rust-lang.org/dist/rustc-1.98.1-x86_64-unknown-linux-gnu.tar.xz",
+  "archiveSha256": "e974f036b28565f37c0f3bd92ddefa809bee16c04f9dcf07b9ed96e05aaaf7c4",
+  "officialChecksumMatched": true,
+  "extractedFiles": [
+    {
+      "path": "docs/licenses/rust-1.98.1/COPYRIGHT-library.html",
+      "sha256": "68129500b616d5838629e68f55ff3aed5e096dacf60ce9eb41bbe599a563afa6",
+      "bytes": 1512520
+    }
+  ],
+  "purpose": "Extract license texts only; no compiler or downloaded executable is installed or run",
+  "notRetained": [
+    {
+      "path": "docs/licenses/rust-1.98.1/COPYRIGHT.html",
+      "sha256": "5b0c93fc4e6d4b072eaa521b1762d1e746f4c368f65e81a0e5308e2772dac85e",
+      "bytes": 15380909,
+      "reason": "Full compiler/tools-only aggregate is outside the WASM standard-library scope; retain COPYRIGHT-library.html instead."
+    }
+  ]
+}

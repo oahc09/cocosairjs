@@ -308,7 +308,12 @@ test('one ordinary workflow has CPU before one build, exact-head receipts and al
     assert.deepEqual(Object.keys(workflow.jobs), ['quality']);
     assert.deepEqual(workflow.permissions, { contents: 'read' });
     assert.equal(workflow.concurrency['cancel-in-progress'], true);
-    assert.equal(steps.find((s) => s.uses === 'actions/setup-node@v4').with['node-version'], '22.23.3');
+    assert.equal(
+        steps.find((s) => s.uses === 'actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020').with[
+            'node-version'
+        ],
+        '22.23.3',
+    );
     const all = steps
         .filter((s) => s.run)
         .map((s) => s.run)
@@ -337,7 +342,7 @@ test('one ordinary workflow has CPU before one build, exact-head receipts and al
             assert.equal(syntax.status, 0, syntax.stderr);
         }
     }
-    const upload = steps.filter((s) => s.uses === 'actions/upload-artifact@v4');
+    const upload = steps.filter((s) => s.uses === 'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02');
     assert.equal(upload.length, 1);
     assert.equal(upload[0].if, 'always()');
     assert.match(upload[0].with.path, /output\/ci\//);

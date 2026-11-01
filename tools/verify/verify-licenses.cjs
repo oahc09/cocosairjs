@@ -3,13 +3,15 @@
  *   2) docs/license-decisions.json 里的处置登记（obligation/owner 决定或 pending 状态）；
  *   3) package.json files[] 真的把许可文本随包发布（Spine 明文要求再分发必须附许可）。
  *
- * 执行：node tools/verify/verify-licenses.cjs [--json]
+ * 执行：node tools/verify/verify-licenses.cjs [--json] [--scope=repository|default|spark]
+ * 默认 repository 包括公开 Git 当前树和已知历史；default 仅核验默认 SDK，不能证明仓库分发已获授权。
  */
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 
 const ROOT = path.resolve(__dirname, '../..');
-const UPSTREAM = path.resolve(process.env.COCOS_UPSTREAM || 'E:/AIProMax/github/cocos4');
+const UPSTREAM = path.resolve(process.env.COCOS_UPSTREAM || path.join(ROOT, '..', 'cocos4'));
 const BUNDLE = path.join(ROOT, 'build', 'cocosair.module.js');
 const DECISIONS_PATH = path.join(ROOT, 'docs', 'license-decisions.json');
 
@@ -185,12 +187,66 @@ function truthPath(t) {
     return path.join(ROOT, t.path);
 }
 
-function check() {
+function distributionFailures(decisions, scope) {
+    if (!['repository', 'default', 'spark'].includes(scope)) throw new Error('Unknown license scope: ' + scope);
+    const failures = [];
+    // Approval is a reviewed decision plus retained evidence, never just a status edit.
+    const authorized = (record) =>
+        record?.disposition === 'accepted' &&
+        Array.isArray(record.authorizationEvidence) &&
+        record.authorizationEvidence.length > 0 &&
+        record.authorizationEvidence.every((item) => {
+            if (typeof item.path !== 'string' || !/^[a-f0-9]{64}$/.test(item.sha256 || '')) return false;
+            const file = path.resolve(ROOT, item.path);
+            if (!file.startsWith(ROOT + path.sep) || !fs.existsSync(file) || !fs.lstatSync(file).isFile()) return false;
+            if (fs.realpathSync(file) !== file) return false;
+            return crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex') === item.sha256;
+        });
+    if (scope === 'repository') {
+        const history = decisions['@cocos/engine-pal (src/pal/** 原始字节)']?.historyAuthorization;
+        if (!authorized(history)) {
+            failures.push('公开 Git 历史中的旧 PAL 再分发授权未闭环；当前 MIT 替换和风险接受不能替代历史授权');
+        }
+    }
+    if (scope !== 'default' && !authorized(decisions['spark-rs WASM 与 wasm-bindgen glue'])) {
+        failures.push('Spark WASM 实际构建的传递依赖许可未闭环；仓库文件和内嵌变体均属于分发核验范围');
+    }
+    return failures;
+}
+
+function check({ scope = 'repository' } = {}) {
     const failures = [];
     const attention = [];
     const records = [];
     const bundleText = fs.existsSync(BUNDLE) ? readText(BUNDLE) : '';
     const decisions = fs.existsSync(DECISIONS_PATH) ? JSON.parse(readText(DECISIONS_PATH)).decisions || {} : {};
+    failures.push(...distributionFailures(decisions, scope));
+    if (scope !== 'default') {
+        try {
+            const materials = JSON.parse(readText(path.join(ROOT, 'docs/licenses/spark-materials.json')));
+            const digest = (file) => crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');
+            if (
+                digest(path.join(ROOT, 'vendor/spark-rs/spark_rs_bg.wasm')) !== materials.wasmSha256 ||
+                digest(path.join(ROOT, 'vendor/spark/rust/Cargo.lock')) !== materials.cargoLockSha256
+            ) {
+                failures.push('Spark license materials belong to different WASM/lock bytes');
+            }
+            for (const item of materials.files) {
+                const file = path.resolve(ROOT, item.path);
+                if (
+                    !file.startsWith(path.join(ROOT, 'docs/licenses') + path.sep) ||
+                    fs.realpathSync(file) !== file ||
+                    !fs.lstatSync(file).isFile() ||
+                    fs.statSync(file).size !== item.bytes ||
+                    digest(file) !== item.sha256
+                ) {
+                    failures.push('Spark license material drift: ' + item.path);
+                }
+            }
+        } catch (error) {
+            failures.push('Spark license materials missing or invalid: ' + error.message);
+        }
+    }
     const pkg = JSON.parse(readText(path.join(ROOT, 'package.json')));
     const shipsLicensesDir = (pkg.files || []).some((f) => /^licenses\/?$/.test(f));
 
@@ -297,11 +353,12 @@ function check() {
             failures.push(`${file}: retired engine-pal binary fingerprints remain; rebuild from public MIT PAL`);
         }
     }
-    return { records, failures, attention, shipsLicensesDir };
+    return { scope, records, failures, attention, shipsLicensesDir };
 }
 
 if (require.main === module) {
-    const result = check();
+    const scope = process.argv.find((arg) => arg.startsWith('--scope='))?.slice(8) || 'repository';
+    const result = check({ scope });
     const json = process.argv.includes('--json');
     if (json) {
         console.log(JSON.stringify(result, null, 2));
@@ -326,4 +383,4 @@ if (require.main === module) {
     process.exitCode = result.failures.length ? 1 : 0;
 }
 
-module.exports = { check, REGISTRY };
+module.exports = { check, REGISTRY, distributionFailures };

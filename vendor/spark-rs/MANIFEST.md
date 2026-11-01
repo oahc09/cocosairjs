@@ -14,9 +14,10 @@ Spark 的排序/解码 WASM 与其 wasm-bindgen glue。本目录是**只读冻�
 - License: MIT（与 Spark 项目同源，© 2025 WORLD LABS TECHNOLOGIES, INC.），原文见本目录 `LICENSE`
   与 `licenses/LICENSE_spark.txt`（两者与 `vendor/spark/LICENSE` 逐字节一致）。
 - **已知缺口（不冒充清晰）**：本 wasm 由上游链接的 Rust 传递依赖 crate 编译而成，其逐个 crate 的许可文本
-  **未在本仓转录**。处置登记见 `docs/license-decisions.json` 的 `Spark spark-rs WASM + glue` 条目
-  （disposition=pending，随资产审计门禁进入 `attention` 报告）。复议条件：owner 要求随包转录时，
-  以 `vendor/spark/rust/Cargo.lock` 为准逐项取原文。
+  已按保守候选闭包转录至 `docs/licenses/`（见 `spark-materials.json`），但实际链接组成仍待证明。处置登记见 `docs/license-decisions.json` 的 `Spark spark-rs WASM + glue` 条目
+  （disposition=pending，阻断公开仓库分发核验及新增 Spark 变体构建）。
+  `vendor/spark/rust/Cargo.lock` 只是候选依赖集合；必须先取得与实际 WASM 构建绑定的特性、目标、
+  工具链和依赖信息，再逐项核验适用许可证及必要 NOTICE，不能把候选清单当成实际链接证明。
 
 ## 发运形态（与 `build/gltf-decoders/` 的关键差异）
 
@@ -36,11 +37,11 @@ Spark 的排序/解码 WASM 与其 wasm-bindgen glue。本目录是**只读冻�
 
 ## Landed files
 
-| file | bytes | sha256 |
-|---|---|---|
+| file             | bytes   | sha256                                                           |
+| ---------------- | ------- | ---------------------------------------------------------------- |
 | spark_rs_bg.wasm | 1554721 | 974320be5859f426967a2d9cc237e5eae1aca98b55e35087022d6d884b2dcce7 |
-| spark_rs.js | 47694 | a4b2cc7226f2e4c9bf397b56da3520e6c6f7d65b55e486783ef9bffac3b4bf72 |
-| LICENSE | 1088 | 51829693e5dccd9ca1daa093991faac3aaa93238eb8fd5f5cb4130af85791d64 |
+| spark_rs.js      | 47694   | a4b2cc7226f2e4c9bf397b56da3520e6c6f7d65b55e486783ef9bffac3b4bf72 |
+| LICENSE          | 1088    | 51829693e5dccd9ca1daa093991faac3aaa93238eb8fd5f5cb4130af85791d64 |
 
 替换或重建（本环境真实执行 `build_rust_wasm.sh`、上游发布新的 `spark-rs`、或 glue 的 wasm-bindgen
 生成形态改变）时，必须同时更新本表、`docs/UPSTREAM.md` §Spark WASM 与 glue 的 provenance 与

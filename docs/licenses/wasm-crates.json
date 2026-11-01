@@ -1,0 +1,2151 @@
+{
+  "sourceCommit": "c57ebb936a5d364e021a66a118204d599f6fdaa8",
+  "wasmSha256": "974320be5859f426967a2d9cc237e5eae1aca98b55e35087022d6d884b2dcce7",
+  "scope": "Conservative transitive Cargo.lock closure rooted at spark-rs, including build/proc-macro and target-conditional dependencies; not proof every package contributes machine code to wasm",
+  "workspacePackageCount": 167,
+  "closurePackageCount": 84,
+  "packages": [
+    {
+      "name": "adler2",
+      "version": "2.0.1",
+      "license": "0BSD OR MIT OR Apache-2.0",
+      "licenseFile": null,
+      "repository": "https://github.com/oyvindln/adler2",
+      "crateUrl": "https://static.crates.io/crates/adler2/adler2-2.0.1.crate",
+      "crateSha256": "320119579fcad9c21884f5c4861d16174d0e06250625266f50fe6898340abefa",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/adler2-2.0.1/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/adler2-2.0.1/LICENSE-0BSD",
+          "bytes": 665,
+          "sha256": "861399f8c21c042b110517e76dc6b63a2b334276c8cf17412fc3c8908ca8dc17"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/adler2-2.0.1/LICENSE-APACHE",
+          "bytes": 10860,
+          "sha256": "8ada45cd9f843acf64e4722ae262c622a2b3b3007c7310ef36ac1061a30f6adb"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/adler2-2.0.1/LICENSE-MIT",
+          "bytes": 1023,
+          "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+        }
+      ],
+      "lockDependencies": []
+    },
+    {
+      "name": "ahash",
+      "version": "0.7.8",
+      "license": "MIT OR Apache-2.0",
+      "licenseFile": null,
+      "repository": "https://github.com/tkaitchuck/ahash",
+      "crateUrl": "https://static.crates.io/crates/ahash/ahash-0.7.8.crate",
+      "crateSha256": "891477e0c6a8957309ee5c45a6368af3ae14bb510732d2684ffa19af310920f9",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/ahash-0.7.8/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/ahash-0.7.8/LICENSE-APACHE",
+          "bytes": 10847,
+          "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/ahash-0.7.8/LICENSE-MIT",
+          "bytes": 1060,
+          "sha256": "ff8f68cb076caf8cefe7a6430d4ac086ce6af2ca8ce2c4e5a2004d4552ef52a2"
+        }
+      ],
+      "lockDependencies": [
+        "getrandom",
+        "once_cell",
+        "version_check"
+      ]
+    },
+    {
+      "name": "ahash",
+      "version": "0.8.12",
+      "license": "MIT OR Apache-2.0",
+      "licenseFile": null,
+      "repository": "https://github.com/tkaitchuck/ahash",
+      "crateUrl": "https://static.crates.io/crates/ahash/ahash-0.8.12.crate",
+      "crateSha256": "5a15f179cd60c4584b8a8c596927aadc462e27f2ca70c04e0071964a73ba7a75",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/ahash-0.8.12/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/ahash-0.8.12/LICENSE-APACHE",
+          "bytes": 10847,
+          "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/ahash-0.8.12/LICENSE-MIT",
+          "bytes": 1057,
+          "sha256": "0444c6991eead6822f7b9102e654448d51624431119546492e8b231db42c48bb"
+        }
+      ],
+      "lockDependencies": [
+        "cfg-if",
+        "const-random",
+        "once_cell",
+        "version_check",
+        "zerocopy"
+      ]
+    },
+    {
+      "name": "allocator-api2",
+      "version": "0.2.21",
+      "license": "MIT OR Apache-2.0",
+      "licenseFile": null,
+      "repository": "https://github.com/zakarumych/allocator-api2",
+      "crateUrl": "https://static.crates.io/crates/allocator-api2/allocator-api2-0.2.21.crate",
+      "crateSha256": "683d7910e743518b0e34f1186f92494becacb047c7b6bf616c96772180fef923",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/allocator-api2-0.2.21/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/allocator-api2-0.2.21/LICENSE-APACHE",
+          "bytes": 9899,
+          "sha256": "20fe7b00e904ed690e3b9fd6073784d3fc428141dbd10b81c01fd143d0797f58"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/allocator-api2-0.2.21/LICENSE-MIT",
+          "bytes": 1046,
+          "sha256": "36516aefdc84c5d5a1e7485425913a22dbda69eb1930c5e84d6ae4972b5194b9"
+        }
+      ],
+      "lockDependencies": []
+    },
+    {
+      "name": "anyhow",
+      "version": "1.0.98",
+      "license": "MIT OR Apache-2.0",
+      "licenseFile": null,
+      "repository": "https://github.com/dtolnay/anyhow",
+      "crateUrl": "https://static.crates.io/crates/anyhow/anyhow-1.0.98.crate",
+      "crateSha256": "e16d2d3311acee920a9eb8d33b8cbc1787ce4a264e85f964c2404b969bdcd487",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/anyhow-1.0.98/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/anyhow-1.0.98/LICENSE-APACHE",
+          "bytes": 9723,
+          "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/anyhow-1.0.98/LICENSE-MIT",
+          "bytes": 1023,
+          "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+        }
+      ],
+      "lockDependencies": []
+    },
+    {
+      "name": "autocfg",
+      "version": "1.5.0",
+      "license": "Apache-2.0 OR MIT",
+      "licenseFile": null,
+      "repository": "https://github.com/cuviper/autocfg",
+      "crateUrl": "https://static.crates.io/crates/autocfg/autocfg-1.5.0.crate",
+      "crateSha256": "c08606f8c3cbf4ce6ec8e28fb0014a2c086708fe954eaa885384a6165172e7e8",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/autocfg-1.5.0/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/autocfg-1.5.0/LICENSE-APACHE",
+          "bytes": 10847,
+          "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/autocfg-1.5.0/LICENSE-MIT",
+          "bytes": 1054,
+          "sha256": "27995d58ad5c1145c1a8cd86244ce844886958a35eb2b78c6b772748669999ac"
+        }
+      ],
+      "lockDependencies": []
+    },
+    {
+      "name": "bitflags",
+      "version": "2.11.0",
+      "license": "MIT OR Apache-2.0",
+      "licenseFile": null,
+      "repository": "https://github.com/bitflags/bitflags",
+      "crateUrl": "https://static.crates.io/crates/bitflags/bitflags-2.11.0.crate",
+      "crateSha256": "843867be96c8daad0d758b57df9392b6d8d271134fce549de6ce169ff98a92af",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/bitflags-2.11.0/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/bitflags-2.11.0/LICENSE-APACHE",
+          "bytes": 10847,
+          "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/bitflags-2.11.0/LICENSE-MIT",
+          "bytes": 1071,
+          "sha256": "6485b8ed310d3f0340bf1ad1f47645069ce4069dcc6bb46c7d5c6faf41de1fdb"
+        }
+      ],
+      "lockDependencies": []
+    },
+    {
+      "name": "bumpalo",
+      "version": "3.20.2",
+      "license": "MIT OR Apache-2.0",
+      "licenseFile": null,
+      "repository": "https://github.com/fitzgen/bumpalo",
+      "crateUrl": "https://static.crates.io/crates/bumpalo/bumpalo-3.20.2.crate",
+      "crateSha256": "5d20789868f4b01b2f2caec9f5c4e0213b41e3e5702a50157d699ae31ced2fcb",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/bumpalo-3.20.2/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/bumpalo-3.20.2/LICENSE-APACHE",
+          "bytes": 10847,
+          "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/bumpalo-3.20.2/LICENSE-MIT",
+          "bytes": 1059,
+          "sha256": "65f94e99ddaf4f5d1782a6dae23f35d4293a9a01444a13135a6887017d353cee"
+        }
+      ],
+      "lockDependencies": []
+    },
+    {
+      "name": "bytemuck",
+      "version": "1.25.0",
+      "license": "Zlib OR Apache-2.0 OR MIT",
+      "licenseFile": null,
+      "repository": "https://github.com/Lokathor/bytemuck",
+      "crateUrl": "https://static.crates.io/crates/bytemuck/bytemuck-1.25.0.crate",
+      "crateSha256": "c8efb64bd706a16a1bdde310ae86b351e4d21550d98d056f22f8a7f7a2183fec",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/bytemuck-1.25.0/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/bytemuck-1.25.0/LICENSE-APACHE",
+          "bytes": 10398,
+          "sha256": "e3ba223bb1423f0aad8c3dfce0fe3148db48926d41e6fbc3afbbf5ff9e1c89cb"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/bytemuck-1.25.0/LICENSE-MIT",
+          "bytes": 1110,
+          "sha256": "9df9ba60a11af705f2e451b53762686e615d86f76b169cf075c3237730dbd7e2"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/bytemuck-1.25.0/LICENSE-ZLIB",
+          "bytes": 851,
+          "sha256": "84b34dd7608f7fb9b17bd588a6bf392bf7de504e2716f024a77d89f1b145a151"
+        }
+      ],
+      "lockDependencies": [
+        "bytemuck_derive"
+      ]
+    },
+    {
+      "name": "bytemuck_derive",
+      "version": "1.10.2",
+      "license": "Zlib OR Apache-2.0 OR MIT",
+      "licenseFile": null,
+      "repository": "https://github.com/Lokathor/bytemuck",
+      "crateUrl": "https://static.crates.io/crates/bytemuck_derive/bytemuck_derive-1.10.2.crate",
+      "crateSha256": "f9abbd1bc6865053c427f7198e6af43bfdedc55ab791faed4fbd361d789575ff",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/bytemuck_derive-1.10.2/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/bytemuck_derive-1.10.2/LICENSE-APACHE",
+          "bytes": 10398,
+          "sha256": "e3ba223bb1423f0aad8c3dfce0fe3148db48926d41e6fbc3afbbf5ff9e1c89cb"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/bytemuck_derive-1.10.2/LICENSE-MIT",
+          "bytes": 1110,
+          "sha256": "9df9ba60a11af705f2e451b53762686e615d86f76b169cf075c3237730dbd7e2"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/bytemuck_derive-1.10.2/LICENSE-ZLIB",
+          "bytes": 851,
+          "sha256": "84b34dd7608f7fb9b17bd588a6bf392bf7de504e2716f024a77d89f1b145a151"
+        }
+      ],
+      "lockDependencies": [
+        "proc-macro2",
+        "quote",
+        "syn"
+      ]
+    },
+    {
+      "name": "byteorder-lite",
+      "version": "0.1.0",
+      "license": "Unlicense OR MIT",
+      "licenseFile": null,
+      "repository": "https://github.com/image-rs/byteorder-lite",
+      "crateUrl": "https://static.crates.io/crates/byteorder-lite/byteorder-lite-0.1.0.crate",
+      "crateSha256": "8f1fe948ff07f4bd06c30984e69f5b4899c516a3ef74f34df92a2df2ab535495",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/byteorder-lite-0.1.0/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/byteorder-lite-0.1.0/LICENSE-MIT",
+          "bytes": 1081,
+          "sha256": "0f96a83840e146e43c0ec96a22ec1f392e0680e6c1226e6f3ba87e0740af850f"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/byteorder-lite-0.1.0/UNLICENSE",
+          "bytes": 1211,
+          "sha256": "7e12e5df4bae12cb21581ba157ced20e1986a0508dd10d0e8a4ab9a4cf94e85c"
+        }
+      ],
+      "lockDependencies": []
+    },
+    {
+      "name": "cfg-if",
+      "version": "1.0.0",
+      "license": "MIT/Apache-2.0",
+      "licenseFile": null,
+      "repository": "https://github.com/alexcrichton/cfg-if",
+      "crateUrl": "https://static.crates.io/crates/cfg-if/cfg-if-1.0.0.crate",
+      "crateSha256": "baf1de4339761588bc0619e3cbc0120ee582ebb74b53b4efbf79117bd2da40fd",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/cfg-if-1.0.0/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/cfg-if-1.0.0/LICENSE-APACHE",
+          "bytes": 10847,
+          "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/cfg-if-1.0.0/LICENSE-MIT",
+          "bytes": 1057,
+          "sha256": "378f5840b258e2779c39418f3f2d7b2ba96f1c7917dd6be0713f88305dbda397"
+        }
+      ],
+      "lockDependencies": []
+    },
+    {
+      "name": "console_error_panic_hook",
+      "version": "0.1.7",
+      "license": "Apache-2.0/MIT",
+      "licenseFile": null,
+      "repository": "https://github.com/rustwasm/console_error_panic_hook",
+      "crateUrl": "https://static.crates.io/crates/console_error_panic_hook/console_error_panic_hook-0.1.7.crate",
+      "crateSha256": "a06aeb73f470f66dcdbf7223caeebb85984942f22f1adb2a088cf9668146bbbc",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/console_error_panic_hook-0.1.7/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/console_error_panic_hook-0.1.7/LICENSE-APACHE",
+          "bytes": 10848,
+          "sha256": "353b508bbc50274d47a23729f568bab2618e3d0eaa10208616f5fd475255b896"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/console_error_panic_hook-0.1.7/LICENSE-MIT",
+          "bytes": 1059,
+          "sha256": "77674336af8ded214dc3ae07da631c7dd35cc8205f39298474ba98a889e57272"
+        }
+      ],
+      "lockDependencies": [
+        "cfg-if",
+        "wasm-bindgen"
+      ]
+    },
+    {
+      "name": "const-random",
+      "version": "0.1.18",
+      "license": "MIT OR Apache-2.0",
+      "licenseFile": null,
+      "repository": "https://github.com/tkaitchuck/constrandom",
+      "crateUrl": "https://static.crates.io/crates/const-random/const-random-0.1.18.crate",
+      "crateSha256": "87e00182fe74b066627d63b85fd550ac2998d4b0bd86bfed477a0ae4c7c71359",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/const-random-0.1.18/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/const-random-0.1.18/LICENSE-APACHE",
+          "bytes": 10847,
+          "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/const-random-0.1.18/LICENSE-MIT",
+          "bytes": 1060,
+          "sha256": "ff8f68cb076caf8cefe7a6430d4ac086ce6af2ca8ce2c4e5a2004d4552ef52a2"
+        }
+      ],
+      "lockDependencies": [
+        "const-random-macro"
+      ]
+    },
+    {
+      "name": "const-random-macro",
+      "version": "0.1.16",
+      "license": "MIT OR Apache-2.0",
+      "licenseFile": null,
+      "repository": "https://github.com/tkaitchuck/constrandom",
+      "crateUrl": "https://static.crates.io/crates/const-random-macro/const-random-macro-0.1.16.crate",
+      "crateSha256": "f9d839f2a20b0aee515dc581a6172f2321f96cab76c1a38a4c584a194955390e",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/const-random-macro-0.1.16/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/const-random-macro-0.1.16/LICENSE-APACHE",
+          "bytes": 10847,
+          "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/const-random-macro-0.1.16/LICENSE-MIT",
+          "bytes": 1060,
+          "sha256": "ff8f68cb076caf8cefe7a6430d4ac086ce6af2ca8ce2c4e5a2004d4552ef52a2"
+        }
+      ],
+      "lockDependencies": [
+        "getrandom",
+        "once_cell",
+        "tiny-keccak"
+      ]
+    },
+    {
+      "name": "crc32fast",
+      "version": "1.5.0",
+      "license": "MIT OR Apache-2.0",
+      "licenseFile": null,
+      "repository": "https://github.com/srijs/rust-crc32fast",
+      "crateUrl": "https://static.crates.io/crates/crc32fast/crc32fast-1.5.0.crate",
+      "crateSha256": "9481c1c90cbf2ac953f07c8d4a58aa3945c425b7185c9154d67a65e4230da511",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/crc32fast-1.5.0/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/crc32fast-1.5.0/LICENSE-APACHE",
+          "bytes": 11358,
+          "sha256": "c6596eb7be8581c18be736c846fb9173b69eccf6ef94c5135893ec56bd92ba08"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/crc32fast-1.5.0/LICENSE-MIT",
+          "bytes": 1097,
+          "sha256": "61d383b05b87d78f94d2937e2580cce47226d17823c0430fbcad09596537efcf"
+        }
+      ],
+      "lockDependencies": [
+        "cfg-if"
+      ]
+    },
+    {
+      "name": "crunchy",
+      "version": "0.2.3",
+      "license": "MIT",
+      "licenseFile": null,
+      "repository": "https://github.com/eira-fransham/crunchy",
+      "crateUrl": "https://static.crates.io/crates/crunchy/crunchy-0.2.3.crate",
+      "crateSha256": "43da5946c66ffcc7745f48db692ffbb10a83bfe0afd96235c5c2a4fb23994929",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/crunchy-0.2.3/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/crunchy-0.2.3/LICENSE",
+          "bytes": 1082,
+          "sha256": "3eab77734a181b2a2e8418af9004f960f715f04aac4d76a26cf774f63a7b13d1"
+        }
+      ],
+      "lockDependencies": []
+    },
+    {
+      "name": "doc-comment",
+      "version": "0.3.4",
+      "license": "MIT",
+      "licenseFile": null,
+      "repository": "https://github.com/GuillaumeGomez/doc-comment",
+      "crateUrl": "https://static.crates.io/crates/doc-comment/doc-comment-0.3.4.crate",
+      "crateSha256": "780955b8b195a21ab8e4ac6b60dd1dbdcec1dc6c51c0617964b08c81785e12c9",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/doc-comment-0.3.4/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/doc-comment-0.3.4/LICENSE",
+          "bytes": 1072,
+          "sha256": "7a9b7dd9d68943a39bbf3ea97f37b3c7b257168ecbaa9e00606f64e6ff61fe35"
+        }
+      ],
+      "lockDependencies": []
+    },
+    {
+      "name": "either",
+      "version": "1.15.0",
+      "license": "MIT OR Apache-2.0",
+      "licenseFile": null,
+      "repository": "https://github.com/rayon-rs/either",
+      "crateUrl": "https://static.crates.io/crates/either/either-1.15.0.crate",
+      "crateSha256": "48c757948c5ede0e46177b7add2e67155f70e33c07fea8284df6576da70b3719",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/either-1.15.0/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/either-1.15.0/LICENSE-APACHE",
+          "bytes": 10847,
+          "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/either-1.15.0/LICENSE-MIT",
+          "bytes": 1043,
+          "sha256": "7576269ea71f767b99297934c0b2367532690f8c4badc695edf8e04ab6a1e545"
+        }
+      ],
+      "lockDependencies": []
+    },
+    {
+      "name": "equivalent",
+      "version": "1.0.2",
+      "license": "Apache-2.0 OR MIT",
+      "licenseFile": null,
+      "repository": "https://github.com/indexmap-rs/equivalent",
+      "crateUrl": "https://static.crates.io/crates/equivalent/equivalent-1.0.2.crate",
+      "crateSha256": "877a4ace8713b0bcf2a4e7eec82529c029f1d0619886d18145fea96c3ffe5c0f",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/equivalent-1.0.2/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/equivalent-1.0.2/LICENSE-APACHE",
+          "bytes": 10847,
+          "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/equivalent-1.0.2/LICENSE-MIT",
+          "bytes": 1049,
+          "sha256": "7365cc8878a1d7ce155a58c4ca09c3d7a6be413efa5334a80ea842912b669349"
+        }
+      ],
+      "lockDependencies": []
+    },
+    {
+      "name": "fdeflate",
+      "version": "0.3.7",
+      "license": "MIT OR Apache-2.0",
+      "licenseFile": null,
+      "repository": "https://github.com/image-rs/fdeflate",
+      "crateUrl": "https://static.crates.io/crates/fdeflate/fdeflate-0.3.7.crate",
+      "crateSha256": "1e6853b52649d4ac5c0bd02320cddc5ba956bdb407c4b75a2c6b75bf51500f8c",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/fdeflate-0.3.7/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/fdeflate-0.3.7/LICENSE-APACHE",
+          "bytes": 10174,
+          "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/fdeflate-0.3.7/LICENSE-MIT",
+          "bytes": 1036,
+          "sha256": "c77a4cf9da729987d0fe7ccd811e3bd27393914ddf3d23467c18cc22954513b3"
+        }
+      ],
+      "lockDependencies": [
+        "simd-adler32"
+      ]
+    },
+    {
+      "name": "flate2",
+      "version": "1.1.9",
+      "license": "MIT OR Apache-2.0",
+      "licenseFile": null,
+      "repository": "https://github.com/rust-lang/flate2-rs",
+      "crateUrl": "https://static.crates.io/crates/flate2/flate2-1.1.9.crate",
+      "crateSha256": "843fba2746e448b37e26a819579957415c8cef339bf08564fe8b7ddbd959573c",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/flate2-1.1.9/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/flate2-1.1.9/LICENSE-APACHE",
+          "bytes": 10847,
+          "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/flate2-1.1.9/LICENSE-MIT",
+          "bytes": 1062,
+          "sha256": "025436edff4cfcdde17a5811fdea78892d8482efd1abdec5a17872d07a4f2112"
+        }
+      ],
+      "lockDependencies": [
+        "crc32fast",
+        "miniz_oxide",
+        "zlib-rs"
+      ]
+    },
+    {
+      "name": "foldhash",
+      "version": "0.2.0",
+      "license": "Zlib",
+      "licenseFile": null,
+      "repository": "https://github.com/orlp/foldhash",
+      "crateUrl": "https://static.crates.io/crates/foldhash/foldhash-0.2.0.crate",
+      "crateSha256": "77ce24cb58228fbb8aa041425bb1050850ac19177686ea6e0f41a70416f56fdb",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/foldhash-0.2.0/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/foldhash-0.2.0/LICENSE",
+          "bytes": 856,
+          "sha256": "b1181a40b2a7b25cf66fd01481713bc1005df082c53ef73e851e55071b102744"
+        }
+      ],
+      "lockDependencies": []
+    },
+    {
+      "name": "futures-core",
+      "version": "0.3.32",
+      "license": "MIT OR Apache-2.0",
+      "licenseFile": null,
+      "repository": "https://github.com/rust-lang/futures-rs",
+      "crateUrl": "https://static.crates.io/crates/futures-core/futures-core-0.3.32.crate",
+      "crateSha256": "7e3450815272ef58cec6d564423f6e755e25379b217b0bc688e295ba24df6b1d",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/futures-core-0.3.32/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/futures-core-0.3.32/LICENSE-APACHE",
+          "bytes": 10874,
+          "sha256": "275c491d6d1160553c32fd6127061d7f9606c3ea25abfad6ca3f6ed088785427"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/futures-core-0.3.32/LICENSE-MIT",
+          "bytes": 1094,
+          "sha256": "6652c868f35dfe5e8ef636810a4e576b9d663f3a17fb0f5613ad73583e1b88fd"
+        }
+      ],
+      "lockDependencies": []
+    },
+    {
+      "name": "futures-task",
+      "version": "0.3.32",
+      "license": "MIT OR Apache-2.0",
+      "licenseFile": null,
+      "repository": "https://github.com/rust-lang/futures-rs",
+      "crateUrl": "https://static.crates.io/crates/futures-task/futures-task-0.3.32.crate",
+      "crateSha256": "037711b3d59c33004d3856fbdc83b99d4ff37a24768fa1be9ce3538a1cde4393",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/futures-task-0.3.32/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/futures-task-0.3.32/LICENSE-APACHE",
+          "bytes": 10874,
+          "sha256": "275c491d6d1160553c32fd6127061d7f9606c3ea25abfad6ca3f6ed088785427"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/futures-task-0.3.32/LICENSE-MIT",
+          "bytes": 1094,
+          "sha256": "6652c868f35dfe5e8ef636810a4e576b9d663f3a17fb0f5613ad73583e1b88fd"
+        }
+      ],
+      "lockDependencies": []
+    },
+    {
+      "name": "futures-util",
+      "version": "0.3.32",
+      "license": "MIT OR Apache-2.0",
+      "licenseFile": null,
+      "repository": "https://github.com/rust-lang/futures-rs",
+      "crateUrl": "https://static.crates.io/crates/futures-util/futures-util-0.3.32.crate",
+      "crateSha256": "389ca41296e6190b48053de0321d02a77f32f8a5d2461dd38762c0593805c6d6",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/futures-util-0.3.32/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/futures-util-0.3.32/LICENSE-APACHE",
+          "bytes": 10874,
+          "sha256": "275c491d6d1160553c32fd6127061d7f9606c3ea25abfad6ca3f6ed088785427"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/futures-util-0.3.32/LICENSE-MIT",
+          "bytes": 1094,
+          "sha256": "6652c868f35dfe5e8ef636810a4e576b9d663f3a17fb0f5613ad73583e1b88fd"
+        }
+      ],
+      "lockDependencies": [
+        "futures-core",
+        "futures-task",
+        "pin-project-lite",
+        "slab"
+      ]
+    },
+    {
+      "name": "getrandom",
+      "version": "0.2.16",
+      "license": "MIT OR Apache-2.0",
+      "licenseFile": null,
+      "repository": "https://github.com/rust-random/getrandom",
+      "crateUrl": "https://static.crates.io/crates/getrandom/getrandom-0.2.16.crate",
+      "crateSha256": "335ff9f135e4384c8150d6f27c6daed433577f86b4750418338c01a1a2528592",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/getrandom-0.2.16/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/getrandom-0.2.16/LICENSE-APACHE",
+          "bytes": 10849,
+          "sha256": "aaff376532ea30a0cd5330b9502ad4a4c8bf769c539c87ffe78819d188a18ebf"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/getrandom-0.2.16/LICENSE-MIT",
+          "bytes": 1130,
+          "sha256": "42fa16951ce7f24b5a467a40e5b449a1d41e662f97ca779864f053f39e097737"
+        }
+      ],
+      "lockDependencies": [
+        "cfg-if",
+        "libc",
+        "wasi"
+      ]
+    },
+    {
+      "name": "glam",
+      "version": "0.30.8",
+      "license": "MIT OR Apache-2.0",
+      "licenseFile": null,
+      "repository": "https://github.com/bitshifter/glam-rs",
+      "crateUrl": "https://static.crates.io/crates/glam/glam-0.30.8.crate",
+      "crateSha256": "e12d847aeb25f41be4c0ec9587d624e9cd631bc007a8fd7ce3f5851e064c6460",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/glam-0.30.8/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/glam-0.30.8/LICENSE-APACHE",
+          "bytes": 10834,
+          "sha256": "be33ddb87a30fd321ab100e2d922cba512e50ec7a63d8e62e5bfc0798dd4b585"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/glam-0.30.8/LICENSE-MIT",
+          "bytes": 1023,
+          "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+        }
+      ],
+      "lockDependencies": []
+    },
+    {
+      "name": "half",
+      "version": "2.6.0",
+      "license": "MIT OR Apache-2.0",
+      "licenseFile": null,
+      "repository": "https://github.com/VoidStarKat/half-rs",
+      "crateUrl": "https://static.crates.io/crates/half/half-2.6.0.crate",
+      "crateSha256": "459196ed295495a68f7d7fe1d84f6c4b7ff0e21fe3017b2f283c6fac3ad803c9",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/half-2.6.0/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/half-2.6.0/LICENSE-APACHE",
+          "bytes": 10173,
+          "sha256": "a6cba85bc92e0cff7a450b1d873c0eaa2e9fc96bf472df0247a26bec77bf3ff9"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/half-2.6.0/LICENSE-MIT",
+          "bytes": 1036,
+          "sha256": "508a77d2e7b51d98adeed32648ad124b7b30241a8e70b2e72c99f92d8e5874d1"
+        }
+      ],
+      "lockDependencies": [
+        "cfg-if",
+        "crunchy",
+        "num-traits"
+      ]
+    },
+    {
+      "name": "hashbrown",
+      "version": "0.11.2",
+      "license": "Apache-2.0/MIT",
+      "licenseFile": null,
+      "repository": "https://github.com/rust-lang/hashbrown",
+      "crateUrl": "https://static.crates.io/crates/hashbrown/hashbrown-0.11.2.crate",
+      "crateSha256": "ab5ef0d4909ef3724cc8cce6ccc8572c5c817592e9285f5464f8e86f8bd3726e",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/hashbrown-0.11.2/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/hashbrown-0.11.2/LICENSE-APACHE",
+          "bytes": 10847,
+          "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/hashbrown-0.11.2/LICENSE-MIT",
+          "bytes": 1060,
+          "sha256": "ff8f68cb076caf8cefe7a6430d4ac086ce6af2ca8ce2c4e5a2004d4552ef52a2"
+        }
+      ],
+      "lockDependencies": [
+        "ahash 0.7.8"
+      ]
+    },
+    {
+      "name": "hashbrown",
+      "version": "0.16.1",
+      "license": "MIT OR Apache-2.0",
+      "licenseFile": null,
+      "repository": "https://github.com/rust-lang/hashbrown",
+      "crateUrl": "https://static.crates.io/crates/hashbrown/hashbrown-0.16.1.crate",
+      "crateSha256": "841d1cc9bed7f9236f321df977030373f4a4163ae1a7dbfe1a51a2c1a51d9100",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/hashbrown-0.16.1/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/hashbrown-0.16.1/LICENSE-APACHE",
+          "bytes": 10847,
+          "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/hashbrown-0.16.1/LICENSE-MIT",
+          "bytes": 1060,
+          "sha256": "ff8f68cb076caf8cefe7a6430d4ac086ce6af2ca8ce2c4e5a2004d4552ef52a2"
+        }
+      ],
+      "lockDependencies": [
+        "allocator-api2",
+        "equivalent",
+        "foldhash 0.2.0"
+      ]
+    },
+    {
+      "name": "hnsw",
+      "version": "0.11.0",
+      "license": "MIT",
+      "licenseFile": null,
+      "repository": "https://github.com/rust-cv/hnsw",
+      "crateUrl": "https://static.crates.io/crates/hnsw/hnsw-0.11.0.crate",
+      "crateSha256": "2b9740ebf8769ec4ad6762cc951ba18f39bba6dfbc2fbbe46285f7539af79752",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/hnsw-0.11.0/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/hnsw-0.11.0/LICENSE",
+          "bytes": 1083,
+          "sha256": "6f98feb0889f0b59ef5b0b36b53abee34cf5dd74f06def79048bfda4a6465da6"
+        }
+      ],
+      "lockDependencies": [
+        "ahash 0.7.8",
+        "hashbrown 0.11.2",
+        "libm",
+        "num-traits",
+        "rand_core",
+        "smallvec",
+        "space"
+      ]
+    },
+    {
+      "name": "image",
+      "version": "0.25.10",
+      "license": "MIT OR Apache-2.0",
+      "licenseFile": null,
+      "repository": "https://github.com/image-rs/image",
+      "crateUrl": "https://static.crates.io/crates/image/image-0.25.10.crate",
+      "crateSha256": "85ab80394333c02fe689eaf900ab500fbd0c2213da414687ebf995a65d5a6104",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/image-0.25.10/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/image-0.25.10/LICENSE-APACHE",
+          "bytes": 10174,
+          "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/image-0.25.10/LICENSE-MIT",
+          "bytes": 1036,
+          "sha256": "c77a4cf9da729987d0fe7ccd811e3bd27393914ddf3d23467c18cc22954513b3"
+        }
+      ],
+      "lockDependencies": [
+        "bytemuck",
+        "byteorder-lite",
+        "image-webp",
+        "moxcms",
+        "num-traits",
+        "png"
+      ]
+    },
+    {
+      "name": "image-webp",
+      "version": "0.2.4",
+      "license": "MIT OR Apache-2.0",
+      "licenseFile": null,
+      "repository": "https://github.com/image-rs/image-webp",
+      "crateUrl": "https://static.crates.io/crates/image-webp/image-webp-0.2.4.crate",
+      "crateSha256": "525e9ff3e1a4be2fbea1fdf0e98686a6d98b4d8f937e1bf7402245af1909e8c3",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/image-webp-0.2.4/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/image-webp-0.2.4/LICENSE-APACHE",
+          "bytes": 10174,
+          "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/image-webp-0.2.4/LICENSE-MIT",
+          "bytes": 1036,
+          "sha256": "c77a4cf9da729987d0fe7ccd811e3bd27393914ddf3d23467c18cc22954513b3"
+        }
+      ],
+      "lockDependencies": [
+        "byteorder-lite",
+        "quick-error"
+      ]
+    },
+    {
+      "name": "indexmap",
+      "version": "2.13.0",
+      "license": "Apache-2.0 OR MIT",
+      "licenseFile": null,
+      "repository": "https://github.com/indexmap-rs/indexmap",
+      "crateUrl": "https://static.crates.io/crates/indexmap/indexmap-2.13.0.crate",
+      "crateSha256": "7714e70437a7dc3ac8eb7e6f8df75fd8eb422675fc7678aff7364301092b1017",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/indexmap-2.13.0/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/indexmap-2.13.0/LICENSE-APACHE",
+          "bytes": 10847,
+          "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/indexmap-2.13.0/LICENSE-MIT",
+          "bytes": 1049,
+          "sha256": "ecc269ef87fd38a1d98e30bfac9ba964a9dbd9315c3770fed98d4d7cb5882055"
+        }
+      ],
+      "lockDependencies": [
+        "equivalent",
+        "hashbrown 0.16.1"
+      ]
+    },
+    {
+      "name": "itertools",
+      "version": "0.14.0",
+      "license": "MIT OR Apache-2.0",
+      "licenseFile": null,
+      "repository": "https://github.com/rust-itertools/itertools",
+      "crateUrl": "https://static.crates.io/crates/itertools/itertools-0.14.0.crate",
+      "crateSha256": "2b192c782037fadd9cfa75548310488aabdbf3d2da73885b31bd0abd03351285",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/itertools-0.14.0/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/itertools-0.14.0/LICENSE-APACHE",
+          "bytes": 10847,
+          "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/itertools-0.14.0/LICENSE-MIT",
+          "bytes": 1043,
+          "sha256": "7576269ea71f767b99297934c0b2367532690f8c4badc695edf8e04ab6a1e545"
+        }
+      ],
+      "lockDependencies": [
+        "either"
+      ]
+    },
+    {
+      "name": "itoa",
+      "version": "1.0.15",
+      "license": "MIT OR Apache-2.0",
+      "licenseFile": null,
+      "repository": "https://github.com/dtolnay/itoa",
+      "crateUrl": "https://static.crates.io/crates/itoa/itoa-1.0.15.crate",
+      "crateSha256": "4a5f13b858c8d314ee3e8f639011f7ccefe71f97f96e50151fb991f267928e2c",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/itoa-1.0.15/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/itoa-1.0.15/LICENSE-APACHE",
+          "bytes": 9723,
+          "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/itoa-1.0.15/LICENSE-MIT",
+          "bytes": 1023,
+          "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+        }
+      ],
+      "lockDependencies": []
+    },
+    {
+      "name": "js-sys",
+      "version": "0.3.94",
+      "license": "MIT OR Apache-2.0",
+      "licenseFile": null,
+      "repository": "https://github.com/wasm-bindgen/wasm-bindgen/tree/master/crates/js-sys",
+      "crateUrl": "https://static.crates.io/crates/js-sys/js-sys-0.3.94.crate",
+      "crateSha256": "2e04e2ef80ce82e13552136fabeef8a5ed1f985a96805761cbb9a2c34e7664d9",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/js-sys-0.3.94/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/js-sys-0.3.94/LICENSE-APACHE",
+          "bytes": 10847,
+          "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/js-sys-0.3.94/LICENSE-MIT",
+          "bytes": 1057,
+          "sha256": "378f5840b258e2779c39418f3f2d7b2ba96f1c7917dd6be0713f88305dbda397"
+        }
+      ],
+      "lockDependencies": [
+        "cfg-if",
+        "futures-util",
+        "once_cell",
+        "wasm-bindgen"
+      ]
+    },
+    {
+      "name": "libc",
+      "version": "0.2.177",
+      "license": "MIT OR Apache-2.0",
+      "licenseFile": null,
+      "repository": "https://github.com/rust-lang/libc",
+      "crateUrl": "https://static.crates.io/crates/libc/libc-0.2.177.crate",
+      "crateSha256": "2874a2af47a2325c2001a6e6fad9b16a53b802102b528163885171cf92b15976",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/libc-0.2.177/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/libc-0.2.177/LICENSE-APACHE",
+          "bytes": 9723,
+          "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/libc-0.2.177/LICENSE-MIT",
+          "bytes": 1076,
+          "sha256": "a8d47ff51ca256f56a8932dba07660672dbfe3004257ca8de708aac1415937a1"
+        }
+      ],
+      "lockDependencies": []
+    },
+    {
+      "name": "libm",
+      "version": "0.2.16",
+      "license": "MIT",
+      "licenseFile": null,
+      "repository": "https://github.com/rust-lang/compiler-builtins",
+      "crateUrl": "https://static.crates.io/crates/libm/libm-0.2.16.crate",
+      "crateSha256": "b6d2cec3eae94f9f509c767b45932f1ada8350c4bdb85af2fcab4a3c14807981",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/libm-0.2.16/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/libm-0.2.16/LICENSE.txt",
+          "bytes": 14088,
+          "sha256": "3823dda7cf046602f4b4e77ec8e227863dc4736037cc85bb33d9f19febe16bb7"
+        }
+      ],
+      "lockDependencies": []
+    },
+    {
+      "name": "log",
+      "version": "0.4.29",
+      "license": "MIT OR Apache-2.0",
+      "licenseFile": null,
+      "repository": "https://github.com/rust-lang/log",
+      "crateUrl": "https://static.crates.io/crates/log/log-0.4.29.crate",
+      "crateSha256": "5e5032e24019045c762d3c0f28f5b6b8bbf38563a65908389bf7978758920897",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/log-0.4.29/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/log-0.4.29/LICENSE-APACHE",
+          "bytes": 10847,
+          "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/log-0.4.29/LICENSE-MIT",
+          "bytes": 1071,
+          "sha256": "6485b8ed310d3f0340bf1ad1f47645069ce4069dcc6bb46c7d5c6faf41de1fdb"
+        }
+      ],
+      "lockDependencies": []
+    },
+    {
+      "name": "memchr",
+      "version": "2.7.6",
+      "license": "Unlicense OR MIT",
+      "licenseFile": null,
+      "repository": "https://github.com/BurntSushi/memchr",
+      "crateUrl": "https://static.crates.io/crates/memchr/memchr-2.7.6.crate",
+      "crateSha256": "f52b00d39961fc5b2736ea853c9cc86238e165017a493d1d5c8eac6bdc4cc273",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/memchr-2.7.6/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/memchr-2.7.6/COPYING",
+          "bytes": 126,
+          "sha256": "01c266bced4a434da0051174d6bee16a4c82cf634e2679b6155d40d75012390f"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/memchr-2.7.6/LICENSE-MIT",
+          "bytes": 1081,
+          "sha256": "0f96a83840e146e43c0ec96a22ec1f392e0680e6c1226e6f3ba87e0740af850f"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/memchr-2.7.6/UNLICENSE",
+          "bytes": 1211,
+          "sha256": "7e12e5df4bae12cb21581ba157ced20e1986a0508dd10d0e8a4ab9a4cf94e85c"
+        }
+      ],
+      "lockDependencies": []
+    },
+    {
+      "name": "miniz_oxide",
+      "version": "0.8.9",
+      "license": "MIT OR Zlib OR Apache-2.0",
+      "licenseFile": null,
+      "repository": "https://github.com/Frommi/miniz_oxide/tree/master/miniz_oxide",
+      "crateUrl": "https://static.crates.io/crates/miniz_oxide/miniz_oxide-0.8.9.crate",
+      "crateSha256": "1fa76a2c86f704bdb222d66965fb3d63269ce38518b83cb0575fca855ebb6316",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/miniz_oxide-0.8.9/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/miniz_oxide-0.8.9/LICENSE",
+          "bytes": 1213,
+          "sha256": "4108245a1f2df9d4e94df8abed5b4ba0759bb2f9b40a6b939f1be141077ae50b"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/miniz_oxide-0.8.9/LICENSE-APACHE.md",
+          "bytes": 10174,
+          "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/miniz_oxide-0.8.9/LICENSE-MIT.md",
+          "bytes": 1212,
+          "sha256": "799e9ca9d179295ef372f25d3769cdda7d25bb2668add6a6a1e22d1e4c678b8d"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/miniz_oxide-0.8.9/LICENSE-ZLIB.md",
+          "bytes": 984,
+          "sha256": "0a54e647fe54104658b5e563c04c6f9edf251710e47bce692e0bd990a4ddaa39"
+        }
+      ],
+      "lockDependencies": [
+        "adler2",
+        "simd-adler32"
+      ]
+    },
+    {
+      "name": "moxcms",
+      "version": "0.8.1",
+      "license": "BSD-3-Clause OR Apache-2.0",
+      "licenseFile": null,
+      "repository": "https://github.com/awxkee/moxcms.git",
+      "crateUrl": "https://static.crates.io/crates/moxcms/moxcms-0.8.1.crate",
+      "crateSha256": "bb85c154ba489f01b25c0d36ae69a87e4a1c73a72631fc6c0eb6dde34a73e44b",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/moxcms-0.8.1/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/moxcms-0.8.1/LICENSE-APACHE.md",
+          "bytes": 11348,
+          "sha256": "90bf2d659c43045111b65c733ab2a6d4cbcb422a098368c8c58a9ba3db4ed0c5"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/moxcms-0.8.1/LICENSE.md",
+          "bytes": 1506,
+          "sha256": "2aa92cada6431e75615e3fe6cb1a9082c98f777d48ae1c087c0da0e37f7b8bff"
+        }
+      ],
+      "lockDependencies": [
+        "num-traits",
+        "pxfm"
+      ]
+    },
+    {
+      "name": "num-traits",
+      "version": "0.2.19",
+      "license": "MIT OR Apache-2.0",
+      "licenseFile": null,
+      "repository": "https://github.com/rust-num/num-traits",
+      "crateUrl": "https://static.crates.io/crates/num-traits/num-traits-0.2.19.crate",
+      "crateSha256": "071dfc062690e90b734c0b2273ce72ad0ffa95f0c74596bc250dcfd960262841",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/num-traits-0.2.19/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/num-traits-0.2.19/LICENSE-APACHE",
+          "bytes": 10847,
+          "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/num-traits-0.2.19/LICENSE-MIT",
+          "bytes": 1071,
+          "sha256": "6485b8ed310d3f0340bf1ad1f47645069ce4069dcc6bb46c7d5c6faf41de1fdb"
+        }
+      ],
+      "lockDependencies": [
+        "autocfg",
+        "libm"
+      ]
+    },
+    {
+      "name": "once_cell",
+      "version": "1.21.3",
+      "license": "MIT OR Apache-2.0",
+      "licenseFile": null,
+      "repository": "https://github.com/matklad/once_cell",
+      "crateUrl": "https://static.crates.io/crates/once_cell/once_cell-1.21.3.crate",
+      "crateSha256": "42f5e15c9953c5e4ccceeb2e7382a716482c34515315f7b03532b8b4e8393d2d",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/once_cell-1.21.3/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/once_cell-1.21.3/LICENSE-APACHE",
+          "bytes": 10847,
+          "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/once_cell-1.21.3/LICENSE-MIT",
+          "bytes": 1023,
+          "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+        }
+      ],
+      "lockDependencies": []
+    },
+    {
+      "name": "ordered-float",
+      "version": "5.1.0",
+      "license": "MIT",
+      "licenseFile": null,
+      "repository": "https://github.com/reem/rust-ordered-float",
+      "crateUrl": "https://static.crates.io/crates/ordered-float/ordered-float-5.1.0.crate",
+      "crateSha256": "7f4779c6901a562440c3786d08192c6fbda7c1c2060edd10006b05ee35d10f2d",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/ordered-float-5.1.0/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/ordered-float-5.1.0/LICENSE-MIT",
+          "bytes": 1057,
+          "sha256": "f7715d38a3fa1b4ac97c5729740752505a39cb92ee83ab5b102aeb5eaa7cdea4"
+        }
+      ],
+      "lockDependencies": [
+        "num-traits"
+      ]
+    },
+    {
+      "name": "pin-project-lite",
+      "version": "0.2.17",
+      "license": "Apache-2.0 OR MIT",
+      "licenseFile": null,
+      "repository": "https://github.com/taiki-e/pin-project-lite",
+      "crateUrl": "https://static.crates.io/crates/pin-project-lite/pin-project-lite-0.2.17.crate",
+      "crateSha256": "a89322df9ebe1c1578d689c92318e070967d1042b512afbe49518723f4e6d5cd",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/pin-project-lite-0.2.17/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/pin-project-lite-0.2.17/LICENSE-APACHE",
+          "bytes": 10174,
+          "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/pin-project-lite-0.2.17/LICENSE-MIT",
+          "bytes": 1023,
+          "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+        }
+      ],
+      "lockDependencies": []
+    },
+    {
+      "name": "png",
+      "version": "0.18.1",
+      "license": "MIT OR Apache-2.0",
+      "licenseFile": null,
+      "repository": "https://github.com/image-rs/image-png",
+      "crateUrl": "https://static.crates.io/crates/png/png-0.18.1.crate",
+      "crateSha256": "60769b8b31b2a9f263dae2776c37b1b28ae246943cf719eb6946a1db05128a61",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/png-0.18.1/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/png-0.18.1/LICENSE-APACHE",
+          "bytes": 10847,
+          "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/png-0.18.1/LICENSE-MIT",
+          "bytes": 1048,
+          "sha256": "eaf40297c75da471f7cda1f3458e8d91b4b2ec866e609527a13acfa93b638652"
+        }
+      ],
+      "lockDependencies": [
+        "bitflags",
+        "crc32fast",
+        "fdeflate",
+        "flate2",
+        "miniz_oxide"
+      ]
+    },
+    {
+      "name": "proc-macro2",
+      "version": "1.0.95",
+      "license": "MIT OR Apache-2.0",
+      "licenseFile": null,
+      "repository": "https://github.com/dtolnay/proc-macro2",
+      "crateUrl": "https://static.crates.io/crates/proc-macro2/proc-macro2-1.0.95.crate",
+      "crateSha256": "02b3e5e68a3a1a02aad3ec490a98007cbc13c37cbe84a3cd7b8e406d76e7f778",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/proc-macro2-1.0.95/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/proc-macro2-1.0.95/LICENSE-APACHE",
+          "bytes": 9723,
+          "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/proc-macro2-1.0.95/LICENSE-MIT",
+          "bytes": 1023,
+          "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+        }
+      ],
+      "lockDependencies": [
+        "unicode-ident"
+      ]
+    },
+    {
+      "name": "pxfm",
+      "version": "0.1.28",
+      "license": "BSD-3-Clause OR Apache-2.0",
+      "licenseFile": null,
+      "repository": "https://github.com/awxkee/pxfm",
+      "crateUrl": "https://static.crates.io/crates/pxfm/pxfm-0.1.28.crate",
+      "crateSha256": "b5a041e753da8b807c9255f28de81879c78c876392ff2469cde94799b2896b9d",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/pxfm-0.1.28/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/pxfm-0.1.28/LICENSE-APACHE.md",
+          "bytes": 11348,
+          "sha256": "90bf2d659c43045111b65c733ab2a6d4cbcb422a098368c8c58a9ba3db4ed0c5"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/pxfm-0.1.28/LICENSE.md",
+          "bytes": 1506,
+          "sha256": "2aa92cada6431e75615e3fe6cb1a9082c98f777d48ae1c087c0da0e37f7b8bff"
+        }
+      ],
+      "lockDependencies": []
+    },
+    {
+      "name": "quick-error",
+      "version": "2.0.1",
+      "license": "MIT/Apache-2.0",
+      "licenseFile": null,
+      "repository": "http://github.com/tailhook/quick-error",
+      "crateUrl": "https://static.crates.io/crates/quick-error/quick-error-2.0.1.crate",
+      "crateSha256": "a993555f31e5a609f617c12db6250dedcac1b0a85076912c436e6fc9b2c8e6a3",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/quick-error-2.0.1/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/quick-error-2.0.1/LICENSE-APACHE",
+          "bytes": 11358,
+          "sha256": "c6596eb7be8581c18be736c846fb9173b69eccf6ef94c5135893ec56bd92ba08"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/quick-error-2.0.1/LICENSE-MIT",
+          "bytes": 1070,
+          "sha256": "058f01fe181608d027fcde7e528fc03ea3cf90f30903c407644b0a9bbc54f500"
+        }
+      ],
+      "lockDependencies": []
+    },
+    {
+      "name": "quote",
+      "version": "1.0.40",
+      "license": "MIT OR Apache-2.0",
+      "licenseFile": null,
+      "repository": "https://github.com/dtolnay/quote",
+      "crateUrl": "https://static.crates.io/crates/quote/quote-1.0.40.crate",
+      "crateSha256": "1885c039570dc00dcb4ff087a89e185fd56bae234ddc7f056a945bf36467248d",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/quote-1.0.40/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/quote-1.0.40/LICENSE-APACHE",
+          "bytes": 9723,
+          "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/quote-1.0.40/LICENSE-MIT",
+          "bytes": 1023,
+          "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+        }
+      ],
+      "lockDependencies": [
+        "proc-macro2"
+      ]
+    },
+    {
+      "name": "rand_core",
+      "version": "0.6.4",
+      "license": "MIT OR Apache-2.0",
+      "licenseFile": null,
+      "repository": "https://github.com/rust-random/rand",
+      "crateUrl": "https://static.crates.io/crates/rand_core/rand_core-0.6.4.crate",
+      "crateSha256": "ec0be4795e2f6a28069bec0b5ff3e2ac9bafc99e6a9a7dc3547996c5c816922c",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/rand_core-0.6.4/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/rand_core-0.6.4/COPYRIGHT",
+          "bytes": 569,
+          "sha256": "90eb64f0279b0d9432accfa6023ff803bc4965212383697eee27a0f426d5f8d5"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/rand_core-0.6.4/LICENSE-APACHE",
+          "bytes": 10282,
+          "sha256": "6df43f6f4b5d4587f3d8d71e45532c688fd168afa5fe89d571cb32fa09c4ef51"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/rand_core-0.6.4/LICENSE-MIT",
+          "bytes": 1117,
+          "sha256": "209fbbe0ad52d9235e37badf9cadfe4dbdc87203179c0899e738b39ade42177b"
+        }
+      ],
+      "lockDependencies": []
+    },
+    {
+      "name": "rand_pcg",
+      "version": "0.3.1",
+      "license": "MIT OR Apache-2.0",
+      "licenseFile": null,
+      "repository": "https://github.com/rust-random/rand",
+      "crateUrl": "https://static.crates.io/crates/rand_pcg/rand_pcg-0.3.1.crate",
+      "crateSha256": "59cad018caf63deb318e5a4586d99a24424a364f40f1e5778c29aca23f4fc73e",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/rand_pcg-0.3.1/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/rand_pcg-0.3.1/COPYRIGHT",
+          "bytes": 569,
+          "sha256": "90eb64f0279b0d9432accfa6023ff803bc4965212383697eee27a0f426d5f8d5"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/rand_pcg-0.3.1/LICENSE-APACHE",
+          "bytes": 10849,
+          "sha256": "aaff376532ea30a0cd5330b9502ad4a4c8bf769c539c87ffe78819d188a18ebf"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/rand_pcg-0.3.1/LICENSE-MIT",
+          "bytes": 1139,
+          "sha256": "2234e3cefee876aeb686ad89e978bdb07bf118a1186ab1cf161bcdf69d4b4f57"
+        }
+      ],
+      "lockDependencies": [
+        "rand_core"
+      ]
+    },
+    {
+      "name": "rustversion",
+      "version": "1.0.20",
+      "license": "MIT OR Apache-2.0",
+      "licenseFile": null,
+      "repository": "https://github.com/dtolnay/rustversion",
+      "crateUrl": "https://static.crates.io/crates/rustversion/rustversion-1.0.20.crate",
+      "crateSha256": "eded382c5f5f786b989652c49544c4877d9f015cc22e145a5ea8ea66c2921cd2",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/rustversion-1.0.20/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/rustversion-1.0.20/LICENSE-APACHE",
+          "bytes": 9723,
+          "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/rustversion-1.0.20/LICENSE-MIT",
+          "bytes": 1023,
+          "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+        }
+      ],
+      "lockDependencies": []
+    },
+    {
+      "name": "ryu",
+      "version": "1.0.20",
+      "license": "Apache-2.0 OR BSL-1.0",
+      "licenseFile": null,
+      "repository": "https://github.com/dtolnay/ryu",
+      "crateUrl": "https://static.crates.io/crates/ryu/ryu-1.0.20.crate",
+      "crateSha256": "28d3b2b1366ec20994f1fd18c3c594f05c5dd4bc44d8bb0c1c632c8d6829481f",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/ryu-1.0.20/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/ryu-1.0.20/LICENSE-APACHE",
+          "bytes": 9723,
+          "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/ryu-1.0.20/LICENSE-BOOST",
+          "bytes": 1338,
+          "sha256": "c9bff75738922193e67fa726fa225535870d2aa1059f91452c411736284ad566"
+        }
+      ],
+      "lockDependencies": []
+    },
+    {
+      "name": "serde",
+      "version": "1.0.228",
+      "license": "MIT OR Apache-2.0",
+      "licenseFile": null,
+      "repository": "https://github.com/serde-rs/serde",
+      "crateUrl": "https://static.crates.io/crates/serde/serde-1.0.228.crate",
+      "crateSha256": "9a8e94ea7f378bd32cbbd37198a4a91436180c5bb472411e48b5ec2e2124ae9e",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/serde-1.0.228/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/serde-1.0.228/LICENSE-APACHE",
+          "bytes": 9723,
+          "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/serde-1.0.228/LICENSE-MIT",
+          "bytes": 1023,
+          "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+        }
+      ],
+      "lockDependencies": [
+        "serde_core",
+        "serde_derive"
+      ]
+    },
+    {
+      "name": "serde-wasm-bindgen",
+      "version": "0.6.5",
+      "license": "MIT",
+      "licenseFile": null,
+      "repository": "https://github.com/RReverser/serde-wasm-bindgen",
+      "crateUrl": "https://static.crates.io/crates/serde-wasm-bindgen/serde-wasm-bindgen-0.6.5.crate",
+      "crateSha256": "8302e169f0eddcc139c70f139d19d6467353af16f9fce27e8c30158036a1e16b",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/serde-wasm-bindgen-0.6.5/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/serde-wasm-bindgen-0.6.5/LICENSE",
+          "bytes": 1094,
+          "sha256": "62a81c033fcf173693b50f068939cd903d8a414d915776ff1fef5d5869aabcb7"
+        }
+      ],
+      "lockDependencies": [
+        "js-sys",
+        "serde",
+        "wasm-bindgen"
+      ]
+    },
+    {
+      "name": "serde_core",
+      "version": "1.0.228",
+      "license": "MIT OR Apache-2.0",
+      "licenseFile": null,
+      "repository": "https://github.com/serde-rs/serde",
+      "crateUrl": "https://static.crates.io/crates/serde_core/serde_core-1.0.228.crate",
+      "crateSha256": "41d385c7d4ca58e59fc732af25c3983b67ac852c1a25000afe1175de458b67ad",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/serde_core-1.0.228/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/serde_core-1.0.228/LICENSE-APACHE",
+          "bytes": 9723,
+          "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/serde_core-1.0.228/LICENSE-MIT",
+          "bytes": 1023,
+          "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+        }
+      ],
+      "lockDependencies": [
+        "serde_derive"
+      ]
+    },
+    {
+      "name": "serde_derive",
+      "version": "1.0.228",
+      "license": "MIT OR Apache-2.0",
+      "licenseFile": null,
+      "repository": "https://github.com/serde-rs/serde",
+      "crateUrl": "https://static.crates.io/crates/serde_derive/serde_derive-1.0.228.crate",
+      "crateSha256": "d540f220d3187173da220f885ab66608367b6574e925011a9353e4badda91d79",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/serde_derive-1.0.228/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/serde_derive-1.0.228/LICENSE-APACHE",
+          "bytes": 9723,
+          "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/serde_derive-1.0.228/LICENSE-MIT",
+          "bytes": 1023,
+          "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+        }
+      ],
+      "lockDependencies": [
+        "proc-macro2",
+        "quote",
+        "syn"
+      ]
+    },
+    {
+      "name": "serde_json",
+      "version": "1.0.145",
+      "license": "MIT OR Apache-2.0",
+      "licenseFile": null,
+      "repository": "https://github.com/serde-rs/json",
+      "crateUrl": "https://static.crates.io/crates/serde_json/serde_json-1.0.145.crate",
+      "crateSha256": "402a6f66d8c709116cf22f558eab210f5a50187f702eb4d7e5ef38d9a7f1c79c",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/serde_json-1.0.145/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/serde_json-1.0.145/LICENSE-APACHE",
+          "bytes": 9723,
+          "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/serde_json-1.0.145/LICENSE-MIT",
+          "bytes": 1023,
+          "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+        }
+      ],
+      "lockDependencies": [
+        "itoa",
+        "memchr",
+        "ryu",
+        "serde",
+        "serde_core"
+      ]
+    },
+    {
+      "name": "simd-adler32",
+      "version": "0.3.9",
+      "license": "MIT",
+      "licenseFile": null,
+      "repository": "https://github.com/mcountryman/simd-adler32",
+      "crateUrl": "https://static.crates.io/crates/simd-adler32/simd-adler32-0.3.9.crate",
+      "crateSha256": "703d5c7ef118737c72f1af64ad2f6f8c5e1921f818cdcb97b8fe6fc69bf66214",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/simd-adler32-0.3.9/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/simd-adler32-0.3.9/LICENSE.md",
+          "bytes": 1078,
+          "sha256": "42a35170233e83e18856792e748de4c1ce4a63b2afce9a370c89ef3fe23f9f2d"
+        }
+      ],
+      "lockDependencies": []
+    },
+    {
+      "name": "slab",
+      "version": "0.4.12",
+      "license": "MIT",
+      "licenseFile": null,
+      "repository": "https://github.com/tokio-rs/slab",
+      "crateUrl": "https://static.crates.io/crates/slab/slab-0.4.12.crate",
+      "crateSha256": "0c790de23124f9ab44544d7ac05d60440adc586479ce501c1d6d7da3cd8c9cf5",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/slab-0.4.12/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/slab-0.4.12/LICENSE",
+          "bytes": 1055,
+          "sha256": "8ce0830173fdac609dfb4ea603fdc002c2f4af0dc9b1a005653f5da9cf534b18"
+        }
+      ],
+      "lockDependencies": []
+    },
+    {
+      "name": "smallvec",
+      "version": "1.15.1",
+      "license": "MIT OR Apache-2.0",
+      "licenseFile": null,
+      "repository": "https://github.com/servo/rust-smallvec",
+      "crateUrl": "https://static.crates.io/crates/smallvec/smallvec-1.15.1.crate",
+      "crateSha256": "67b1b7a3b5fe4f1376887184045fcf45c69e92af734b7aaddc05fb777b6fbd03",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/smallvec-1.15.1/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/smallvec-1.15.1/LICENSE-APACHE",
+          "bytes": 10847,
+          "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/smallvec-1.15.1/LICENSE-MIT",
+          "bytes": 1072,
+          "sha256": "0b28172679e0009b655da42797c03fd163a3379d5cfa67ba1f1655e974a2a1a9"
+        }
+      ],
+      "lockDependencies": []
+    },
+    {
+      "name": "space",
+      "version": "0.17.0",
+      "license": "MIT",
+      "licenseFile": null,
+      "repository": "https://github.com/rust-cv/space",
+      "crateUrl": "https://static.crates.io/crates/space/space-0.17.0.crate",
+      "crateSha256": "c5ab9701ae895386d13db622abf411989deff7109b13b46b6173bb4ce5c1d123",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/space-0.17.0/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/space-0.17.0/LICENSE",
+          "bytes": 1085,
+          "sha256": "90bef8b678a2d52e0e640dabc09b8840b83aef8163d2051463bbd8426aa06433"
+        }
+      ],
+      "lockDependencies": [
+        "doc-comment",
+        "num-traits"
+      ]
+    },
+    {
+      "name": "spark-lib",
+      "version": "0.1.0",
+      "local": true,
+      "license": "MIT",
+      "source": "upstream/spark/LICENSE"
+    },
+    {
+      "name": "spark-rs",
+      "version": "0.1.0",
+      "local": true,
+      "license": "MIT",
+      "source": "upstream/spark/LICENSE"
+    },
+    {
+      "name": "syn",
+      "version": "2.0.100",
+      "license": "MIT OR Apache-2.0",
+      "licenseFile": null,
+      "repository": "https://github.com/dtolnay/syn",
+      "crateUrl": "https://static.crates.io/crates/syn/syn-2.0.100.crate",
+      "crateSha256": "b09a44accad81e1ba1cd74a32461ba89dee89095ba17b32f5d03683b1b1fc2a0",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/syn-2.0.100/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/syn-2.0.100/LICENSE-APACHE",
+          "bytes": 9723,
+          "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/syn-2.0.100/LICENSE-MIT",
+          "bytes": 1023,
+          "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+        }
+      ],
+      "lockDependencies": [
+        "proc-macro2",
+        "quote",
+        "unicode-ident"
+      ]
+    },
+    {
+      "name": "tiny-keccak",
+      "version": "2.0.2",
+      "license": "CC0-1.0",
+      "licenseFile": null,
+      "repository": null,
+      "crateUrl": "https://static.crates.io/crates/tiny-keccak/tiny-keccak-2.0.2.crate",
+      "crateSha256": "2c9d3793400a45f954c52e73d068316d76b6f4e36977e3fcebb13a2721e80237",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/tiny-keccak-2.0.2/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/tiny-keccak-2.0.2/LICENSE",
+          "bytes": 7048,
+          "sha256": "a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499"
+        }
+      ],
+      "lockDependencies": [
+        "crunchy"
+      ]
+    },
+    {
+      "name": "typed-path",
+      "version": "0.12.3",
+      "license": "MIT OR Apache-2.0",
+      "licenseFile": null,
+      "repository": "https://github.com/chipsenkbeil/typed-path",
+      "crateUrl": "https://static.crates.io/crates/typed-path/typed-path-0.12.3.crate",
+      "crateSha256": "8e28f89b80c87b8fb0cf04ab448d5dd0dd0ade2f8891bae878de66a75a28600e",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/typed-path-0.12.3/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/typed-path-0.12.3/LICENSE-APACHE",
+          "bytes": 9723,
+          "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/typed-path-0.12.3/LICENSE-MIT",
+          "bytes": 1023,
+          "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+        }
+      ],
+      "lockDependencies": []
+    },
+    {
+      "name": "unicode-ident",
+      "version": "1.0.18",
+      "license": "(MIT OR Apache-2.0) AND Unicode-3.0",
+      "licenseFile": null,
+      "repository": "https://github.com/dtolnay/unicode-ident",
+      "crateUrl": "https://static.crates.io/crates/unicode-ident/unicode-ident-1.0.18.crate",
+      "crateSha256": "5a5f39404a5da50712a4c1eecf25e90dd62b613502b7e925fd4e4d19b5c96512",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/unicode-ident-1.0.18/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/unicode-ident-1.0.18/LICENSE-APACHE",
+          "bytes": 9723,
+          "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/unicode-ident-1.0.18/LICENSE-MIT",
+          "bytes": 1023,
+          "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/unicode-ident-1.0.18/LICENSE-UNICODE",
+          "bytes": 1995,
+          "sha256": "f7db81051789b729fea528a63ec4c938fdcb93d9d61d97dc8cc2e9df6d47f2a1"
+        }
+      ],
+      "lockDependencies": []
+    },
+    {
+      "name": "version_check",
+      "version": "0.9.5",
+      "license": "MIT/Apache-2.0",
+      "licenseFile": null,
+      "repository": "https://github.com/SergioBenitez/version_check",
+      "crateUrl": "https://static.crates.io/crates/version_check/version_check-0.9.5.crate",
+      "crateSha256": "0b928f33d975fc6ad9f86c8f283853ad26bdd5b10b7f1542aa2fa15e2289105a",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/version_check-0.9.5/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/version_check-0.9.5/LICENSE-APACHE",
+          "bytes": 10847,
+          "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/version_check-0.9.5/LICENSE-MIT",
+          "bytes": 1085,
+          "sha256": "b7e650f3fce5c53249d1cdc608b54df156a97edd636cf9d23498d0cfe7aec63e"
+        }
+      ],
+      "lockDependencies": []
+    },
+    {
+      "name": "wasi",
+      "version": "0.11.1+wasi-snapshot-preview1",
+      "license": "Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT",
+      "licenseFile": null,
+      "repository": "https://github.com/bytecodealliance/wasi",
+      "crateUrl": "https://static.crates.io/crates/wasi/wasi-0.11.1+wasi-snapshot-preview1.crate",
+      "crateSha256": "ccf3ec651a847eb01de73ccad15eb7d99f80485de043efb2f370cd654f4ea44b",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/wasi-0.11.1+wasi-snapshot-preview1/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/wasi-0.11.1+wasi-snapshot-preview1/LICENSE-APACHE",
+          "bytes": 10847,
+          "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/wasi-0.11.1+wasi-snapshot-preview1/LICENSE-Apache-2.0_WITH_LLVM-exception",
+          "bytes": 12243,
+          "sha256": "268872b9816f90fd8e85db5a28d33f8150ebb8dd016653fb39ef1f94f2686bc5"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/wasi-0.11.1+wasi-snapshot-preview1/LICENSE-MIT",
+          "bytes": 1023,
+          "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+        }
+      ],
+      "lockDependencies": []
+    },
+    {
+      "name": "wasm-bindgen",
+      "version": "0.2.117",
+      "license": "MIT OR Apache-2.0",
+      "licenseFile": null,
+      "repository": "https://github.com/wasm-bindgen/wasm-bindgen",
+      "crateUrl": "https://static.crates.io/crates/wasm-bindgen/wasm-bindgen-0.2.117.crate",
+      "crateSha256": "0551fc1bb415591e3372d0bc4780db7e587d84e2a7e79da121051c5c4b89d0b0",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/wasm-bindgen-0.2.117/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/wasm-bindgen-0.2.117/LICENSE-APACHE",
+          "bytes": 10847,
+          "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/wasm-bindgen-0.2.117/LICENSE-MIT",
+          "bytes": 1057,
+          "sha256": "378f5840b258e2779c39418f3f2d7b2ba96f1c7917dd6be0713f88305dbda397"
+        }
+      ],
+      "lockDependencies": [
+        "cfg-if",
+        "once_cell",
+        "rustversion",
+        "wasm-bindgen-macro",
+        "wasm-bindgen-shared"
+      ]
+    },
+    {
+      "name": "wasm-bindgen-macro",
+      "version": "0.2.117",
+      "license": "MIT OR Apache-2.0",
+      "licenseFile": null,
+      "repository": "https://github.com/wasm-bindgen/wasm-bindgen/tree/master/crates/macro",
+      "crateUrl": "https://static.crates.io/crates/wasm-bindgen-macro/wasm-bindgen-macro-0.2.117.crate",
+      "crateSha256": "7fbdf9a35adf44786aecd5ff89b4563a90325f9da0923236f6104e603c7e86be",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/wasm-bindgen-macro-0.2.117/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/wasm-bindgen-macro-0.2.117/LICENSE-APACHE",
+          "bytes": 10847,
+          "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/wasm-bindgen-macro-0.2.117/LICENSE-MIT",
+          "bytes": 1057,
+          "sha256": "378f5840b258e2779c39418f3f2d7b2ba96f1c7917dd6be0713f88305dbda397"
+        }
+      ],
+      "lockDependencies": [
+        "quote",
+        "wasm-bindgen-macro-support"
+      ]
+    },
+    {
+      "name": "wasm-bindgen-macro-support",
+      "version": "0.2.117",
+      "license": "MIT OR Apache-2.0",
+      "licenseFile": null,
+      "repository": "https://github.com/wasm-bindgen/wasm-bindgen/tree/master/crates/macro-support",
+      "crateUrl": "https://static.crates.io/crates/wasm-bindgen-macro-support/wasm-bindgen-macro-support-0.2.117.crate",
+      "crateSha256": "dca9693ef2bab6d4e6707234500350d8dad079eb508dca05530c85dc3a529ff2",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/wasm-bindgen-macro-support-0.2.117/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/wasm-bindgen-macro-support-0.2.117/LICENSE-APACHE",
+          "bytes": 10847,
+          "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/wasm-bindgen-macro-support-0.2.117/LICENSE-MIT",
+          "bytes": 1057,
+          "sha256": "378f5840b258e2779c39418f3f2d7b2ba96f1c7917dd6be0713f88305dbda397"
+        }
+      ],
+      "lockDependencies": [
+        "bumpalo",
+        "proc-macro2",
+        "quote",
+        "syn",
+        "wasm-bindgen-shared"
+      ]
+    },
+    {
+      "name": "wasm-bindgen-shared",
+      "version": "0.2.117",
+      "license": "MIT OR Apache-2.0",
+      "licenseFile": null,
+      "repository": "https://github.com/wasm-bindgen/wasm-bindgen/tree/master/crates/shared",
+      "crateUrl": "https://static.crates.io/crates/wasm-bindgen-shared/wasm-bindgen-shared-0.2.117.crate",
+      "crateSha256": "39129a682a6d2d841b6c429d0c51e5cb0ed1a03829d8b3d1e69a011e62cb3d3b",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/wasm-bindgen-shared-0.2.117/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/wasm-bindgen-shared-0.2.117/LICENSE-APACHE",
+          "bytes": 10847,
+          "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/wasm-bindgen-shared-0.2.117/LICENSE-MIT",
+          "bytes": 1057,
+          "sha256": "378f5840b258e2779c39418f3f2d7b2ba96f1c7917dd6be0713f88305dbda397"
+        }
+      ],
+      "lockDependencies": [
+        "unicode-ident"
+      ]
+    },
+    {
+      "name": "web-sys",
+      "version": "0.3.94",
+      "license": "MIT OR Apache-2.0",
+      "licenseFile": null,
+      "repository": "https://github.com/wasm-bindgen/wasm-bindgen/tree/master/crates/web-sys",
+      "crateUrl": "https://static.crates.io/crates/web-sys/web-sys-0.3.94.crate",
+      "crateSha256": "cd70027e39b12f0849461e08ffc50b9cd7688d942c1c8e3c7b22273236b4dd0a",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/web-sys-0.3.94/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/web-sys-0.3.94/LICENSE-APACHE",
+          "bytes": 10847,
+          "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/web-sys-0.3.94/LICENSE-MIT",
+          "bytes": 1057,
+          "sha256": "378f5840b258e2779c39418f3f2d7b2ba96f1c7917dd6be0713f88305dbda397"
+        }
+      ],
+      "lockDependencies": [
+        "js-sys",
+        "wasm-bindgen"
+      ]
+    },
+    {
+      "name": "zerocopy",
+      "version": "0.8.27",
+      "license": "BSD-2-Clause OR Apache-2.0 OR MIT",
+      "licenseFile": null,
+      "repository": "https://github.com/google/zerocopy",
+      "crateUrl": "https://static.crates.io/crates/zerocopy/zerocopy-0.8.27.crate",
+      "crateSha256": "0894878a5fa3edfd6da3f88c4805f4c8558e2b996227a3d864f47fe11e38282c",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/zerocopy-0.8.27/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/zerocopy-0.8.27/LICENSE-APACHE",
+          "bytes": 11350,
+          "sha256": "9d185ac6703c4b0453974c0d85e9eee43e6941009296bb1f5eb0b54e2329e9f3"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/zerocopy-0.8.27/LICENSE-BSD",
+          "bytes": 1275,
+          "sha256": "83c1763356e822adde0a2cae748d938a73fdc263849ccff6b27776dff213bd32"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/zerocopy-0.8.27/LICENSE-MIT",
+          "bytes": 1060,
+          "sha256": "1a2f5c12ddc934d58956aa5dbdd3255fe55fd957633ab7d0d39e4f0daa73f7df"
+        }
+      ],
+      "lockDependencies": [
+        "zerocopy-derive"
+      ]
+    },
+    {
+      "name": "zerocopy-derive",
+      "version": "0.8.27",
+      "license": "BSD-2-Clause OR Apache-2.0 OR MIT",
+      "licenseFile": null,
+      "repository": "https://github.com/google/zerocopy",
+      "crateUrl": "https://static.crates.io/crates/zerocopy-derive/zerocopy-derive-0.8.27.crate",
+      "crateSha256": "88d2b8d9c68ad2b9e4340d7832716a4d21a22a1154777ad56ea55c51a9cf3831",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/zerocopy-derive-0.8.27/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/zerocopy-derive-0.8.27/LICENSE-APACHE",
+          "bytes": 11350,
+          "sha256": "9d185ac6703c4b0453974c0d85e9eee43e6941009296bb1f5eb0b54e2329e9f3"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/zerocopy-derive-0.8.27/LICENSE-BSD",
+          "bytes": 1275,
+          "sha256": "83c1763356e822adde0a2cae748d938a73fdc263849ccff6b27776dff213bd32"
+        },
+        {
+          "path": "docs/licenses/wasm-crates/zerocopy-derive-0.8.27/LICENSE-MIT",
+          "bytes": 1060,
+          "sha256": "1a2f5c12ddc934d58956aa5dbdd3255fe55fd957633ab7d0d39e4f0daa73f7df"
+        }
+      ],
+      "lockDependencies": [
+        "proc-macro2",
+        "quote",
+        "syn"
+      ]
+    },
+    {
+      "name": "zip",
+      "version": "7.2.0",
+      "license": "MIT",
+      "licenseFile": null,
+      "repository": "https://github.com/zip-rs/zip2.git",
+      "crateUrl": "https://static.crates.io/crates/zip/zip-7.2.0.crate",
+      "crateSha256": "c42e33efc22a0650c311c2ef19115ce232583abbe80850bc8b66509ebef02de0",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/zip-7.2.0/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/zip-7.2.0/LICENSE",
+          "bytes": 1217,
+          "sha256": "04dc52136d82400b11df5f474949863a70a5d05d2278dec45b99c479494450a6"
+        }
+      ],
+      "lockDependencies": [
+        "crc32fast",
+        "flate2",
+        "indexmap",
+        "memchr",
+        "typed-path",
+        "zopfli"
+      ]
+    },
+    {
+      "name": "zlib-rs",
+      "version": "0.6.3",
+      "license": "Zlib",
+      "licenseFile": null,
+      "repository": "https://github.com/trifectatechfoundation/zlib-rs",
+      "crateUrl": "https://static.crates.io/crates/zlib-rs/zlib-rs-0.6.3.crate",
+      "crateSha256": "3be3d40e40a133f9c916ee3f9f4fa2d9d63435b5fbe1bfc6d9dae0aa0ada1513",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/zlib-rs-0.6.3/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/zlib-rs-0.6.3/LICENSE",
+          "bytes": 856,
+          "sha256": "e72111c52b7d96ebe25348dee19f0744f444d3c95ae6b1ecb6ccaecc5bce05ba"
+        }
+      ],
+      "lockDependencies": []
+    },
+    {
+      "name": "zopfli",
+      "version": "0.8.3",
+      "license": "Apache-2.0",
+      "licenseFile": null,
+      "repository": "https://github.com/zopfli-rs/zopfli",
+      "crateUrl": "https://static.crates.io/crates/zopfli/zopfli-0.8.3.crate",
+      "crateSha256": "f05cd8797d63865425ff89b5c4a48804f35ba0ce8d125800027ad6017d2b5249",
+      "matchesCargoLock": true,
+      "manifest": "docs/licenses/wasm-crates/zopfli-0.8.3/Cargo.toml.evidence",
+      "noticeFiles": [
+        {
+          "path": "docs/licenses/wasm-crates/zopfli-0.8.3/COPYING",
+          "bytes": 11341,
+          "sha256": "018b1cb87efdf7a04c2fcc13d57ed63f62149113fb207b27ea13430d64f13513"
+        }
+      ],
+      "lockDependencies": [
+        "bumpalo",
+        "crc32fast",
+        "log",
+        "simd-adler32"
+      ]
+    }
+  ],
+  "errors": []
+}

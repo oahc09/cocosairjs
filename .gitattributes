@@ -7,3 +7,6 @@ build/box2d3-samples/** -text
 
 # Reading-trial answers and receipts are sealed by byte hash, not prose formatting.
 ai/plans/skills-token-evidence/reading-*/** -text
+
+# Third-party Spark license materials retain upstream bytes and SHA-256 identities.
+docs/licenses/** -text

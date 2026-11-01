@@ -16,11 +16,11 @@ jobs:
           set -euo pipefail
           mkdir -p "$RUNNER_TEMP/committed-example-campaign"
           date +%s > "$RUNNER_TEMP/committed-example-campaign/job-started-epoch.txt"
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           ref: ${{ github.sha }}
           persist-credentials: false
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: 22
           cache: npm
@@ -56,7 +56,7 @@ jobs:
           node --test tools/verify/example-evidence-process-diagnostics.test.cjs 2>&1 | tee "$RUNNER_TEMP/committed-example-campaign/process-diagnostics-tests.log"
           npx jest --runInBand --no-cache --runTestsByPath test/smoke/smoke-example-workspace.test.ts test/smoke/smoke-example-evidence-campaign.test.ts test/smoke/smoke-example-evidence-publication.test.ts test/smoke/smoke-example-evidence-integration.test.ts test/smoke/smoke-example-specialized-probes.test.ts test/smoke/smoke-example-driver-pixel-diagnostics.test.ts 2>&1 | tee "$RUNNER_TEMP/committed-example-campaign/focused-tests.log"
           node tools/verify/example-evidence-preflight.cjs > "$RUNNER_TEMP/committed-example-campaign/preflight.json"
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: always()
         with:
           name: example-evidence-cpu-receipts
@@ -127,13 +127,13 @@ jobs:
           npm run verify:example-chain
           git diff --binary -- examples > "$campaign/promotion-delta.patch"
           sha256sum --check "$campaign/committed-build.sha256"
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: always()
         with:
           name: committed-example-campaign-raw
           path: ${{ runner.temp }}/committed-example-campaign/
           if-no-files-found: error
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: always() && steps.publish.outcome == 'success'
         with:
           name: committed-example-campaign-publication
@@ -141,7 +141,7 @@ jobs:
             docs/evidence/examples-verified.json
             docs/evidence/example-campaigns/
           if-no-files-found: ignore
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: failure()
         with:
           name: committed-example-publication-interruption

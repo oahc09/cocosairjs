@@ -1,5 +1,7 @@
 # Cocos AIR (cocosair.js)
 
+**简体中文** | [English](README.en.md)
+
 **Cocos Agent-first Interactive Runtime** — 基于 cocos4 的 TypeScript Web 引擎。直接用代码创建 Scene、Node、Camera、材质和动画，无需 Cocos Creator、Editor、场景文件或编辑器资产管线。
 
 默认渲染后端需要 WebGL 2；桌面 Web 可显式选择实验性 WebGPU，失败不会自动回退。启动、渲染和 HTML 纹理接口统一从主入口导入；主入口不支持无 DOM 的 Node/SSR 运行。CPU 数学运算可独立使用 `cocosair.js/math`，无需 DOM 或引擎初始化。功能与发布边界见[支持策略](docs/webgl2-only.md)和[验证与发布检查](docs/reference/verification.md)。
@@ -28,6 +30,8 @@
 
 https://github.com/user-attachments/assets/689ea4e1-de14-47dd-a104-564cf1005c06
 
+https://github.com/user-attachments/assets/fb91e5d7-f39a-4182-a49c-5047bf190f1b
+
 ## 先选择使用方式
 
 | 你的目标                                    | 使用方式                                      | 是否需要引擎源码                            |
@@ -36,7 +40,7 @@ https://github.com/user-attachments/assets/689ea4e1-de14-47dd-a104-564cf1005c06
 | 不用打包器，直接在网页运行                  | 复制主 JS，通过 import map 加载               | 不需要                                      |
 | 修改引擎或运行仓库示例                      | 在本仓库安装开发依赖、构建并启动 dev server   | 需要                                        |
 | 只做数学计算（含 Node/Worker）              | 从 `cocosair.js/math` 导入                    | 不需要浏览器或主引擎启动                    |
-| 使用 Gaussian Splatting                     | 额外构建独立 Spark 模块，复用同一主引擎       | 本地构建需要；运行应用不需要                |
+| 使用 Gaussian Splatting                     | 许可闭环后构建独立 Spark 模块，复用同一主引擎 | 本地构建需要；运行应用不需要                |
 
 ## 方式一：在自己的项目中依赖 SDK（推荐）
 
@@ -52,10 +56,6 @@ cd cocosair.js
 npm ci
 $env:NODE_OPTIONS = '--max-old-space-size=6144'
 npm run build:all
-
-https://github.com/user-attachments/assets/fb91e5d7-f39a-4182-a49c-5047bf190f1b
-
-
 npm pack
 ```
 
@@ -258,7 +258,9 @@ npm run dev -- --example hello-cube --port 7454
 
 ## 可选：Spark 独立模块
 
-在引擎仓库运行 npm run build:spark，然后将 spark.module.js 与主引擎 JS 放在同一个部署目录：
+Spark WASM 分发授权仍为 pending，构建授权门禁目前会拒绝 `npm run build:spark`。以下部署方式仅适用于授权闭环后，详见[分发授权状态](docs/reference/distribution-authorization.md)。
+
+授权闭环后，在引擎仓库运行 npm run build:spark，然后将 spark.module.js 与主引擎 JS 放在同一个部署目录：
 
 ```js
 import * as cc from './vendor/cocosair.module.js';
@@ -267,7 +269,7 @@ import { CocosSparkLayer, sparkRuntime, sparkMath } from './vendor/spark.module.
 
 Spark 只借用该主引擎，不再打包第二份 Cocos。应用与 Spark 必须解析到同一个主 JS URL，不能同时加载两份引擎。TS 项目再复制 spark.module.d.ts 和完整 spark-types/；布局示例与类型路径见 [Spark 模块说明](docs/reference/spark-optional-entry.md)。
 
-运行本地示例：npm run build:spark 后执行 npm run dev -- --example spark-splats。Spark WASM 的既有发布限制仍有效，当前模块不在 npm files/exports 中；不要写成可直接安装 cocosair.js/spark。
+授权闭环后运行本地示例：npm run build:spark 后执行 npm run dev -- --example spark-splats。当前模块不在 npm files/exports 中；不要写成可直接安装 cocosair.js/spark。不发布 npm 不能解除已有公开 Git 文件和历史的授权问题。
 
 ## 仓库结构
 
@@ -299,14 +301,14 @@ cocosair.js/
 | ------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `npm run dev`                   | 三频道 Watch：engine(src/cocos\|pal\|exports)/air(src/air) 自动重建，example 只刷新不构建；example .ts 即时编译 + importmap                                                                              |
 | `npm run build`                 | Development ESM 构建 → `build/cocosair.module.js`（附 source map）                                                                                                                                       |
-| `npm run build:spark`           | 独立 Spark 模块、声明与 map；复用已有主引擎，不包含于默认 build:all，也不推进主引擎编译序号                                                                                                              |
+| `npm run build:spark`           | 受分发授权门禁约束的独立 Spark 模块、声明与 map；复用已有主引擎，不包含于默认 build:all，也不推进主引擎编译序号                                                                                          |
 | `npm run build:min`             | 压缩 ESM 本地构建 → `build/cocosair.module.min.js`（附 source map）                                                                                                                                      |
 | `npm run build:dts`             | 类型声明 → `build/cocosair.module.d.ts`（编辑器补全 / Go to Definition）                                                                                                                                 |
 | `npm run build:all`             | 构建主引擎开发版、压缩版与声明，准备数学入口和 `build/npm/` 无 map 发布副本，再检查内建资源；不构建 Spark、不采集浏览器证据                                                                              |
 | `npm run typecheck`             | TypeScript 独立编译校验（0 依赖 Creator）                                                                                                                                                                |
 | `npm run verify:web-only`       | Web-only 依赖守卫（按依赖可达性判定，禁止 native/minigame 泄入）                                                                                                                                         |
 | `npm run verify:file-map`       | 簿记一致性：每行上游可解析 + 逐字节比对 + `modified` 标记互证 + `moduleOverrides` 替换件清点                                                                                                             |
-| `npm run verify:licenses`       | 上游/第三方许可头清点（抽取件不得丢版权头）                                                                                                                                                              |
+| `npm run verify:licenses`       | 分发授权与许可材料完整性检查；默认覆盖公开仓库范围，含 PAL 历史和 Spark 未决阻塞                                                                                                                         |
 | `npm run verify:browser-matrix` | 三引擎（chromium/firefox/webkit）逐例截图 + probe 断言矩阵 → 产物指针见 `docs/reference/verification.md`（证据目录未随 npm 包发布）                                                                      |
 | `npm run verify:wasm-backends`  | wasm 三后端护栏（只读，A1–A7）：抽取闭包落盘 / 范围计数不漂移 / 字节偏差 ⊆ 在册 / emscripten 说明符只在动态分支 / feature 声明面对账 / **A6 = 类型豁免解禁触发器** / **A7 = 物理子树缺件必须登记在差集** |
 | `npm run verify:custom-exports` | 后处理与 custom 管线交付面护栏（只读，C1–C5）：接线门面与子图逐字节 + 簿记在册 + feature unit 声明与默认发行姿态不漂移                                                                                   |
@@ -334,7 +336,7 @@ cocosair.js/
 - [glTF / GLB 加载](docs/gltf/gltf-runtime.md) · [扩展参考](docs/gltf/gltf-extension-reference.md) · [解码器部署](docs/gltf/gltf-decoder-deployment.md)
 - [官方模型目录与对照预览](docs/gltf/gltf-catalog.md)
 - [功能范围](docs/reference/web-features.md) · [验证与发布检查](docs/reference/verification.md) · [Spark 可选入口边界](docs/reference/spark-optional-entry.md)
-- [上游差异](docs/UPSTREAM.md) · [第三方许可](docs/THIRD_PARTY_LICENSES.md)
+- [上游差异](docs/UPSTREAM.md) · [第三方许可](docs/THIRD_PARTY_LICENSES.md) · [分发授权状态](docs/reference/distribution-authorization.md)
 
 ## 能力与支持边界
 
@@ -386,7 +388,7 @@ cocosair.js/
 - **Draco 浏览器解码**：adapter 支持注入 provider；随包入口为 Node/CommonJS 形态，浏览器 factory 由应用另行提供。见 [decoder 部署边界](docs/gltf/gltf-decoder-deployment.md)。
 - **地形、XR、Light Probe 等范围项**：不属于当前默认支持面，具体排除与待扩展范围见 [范围记录](docs/reference/scope-decisions.md)。3D 粒子已通过 `createAirParticleSystem` 接入；当前覆盖与历史范围记录分开说明。
 - **MiniGame、Native/JSB、Creator Editor**：不属于 Web 运行时依赖闭包。
-- **Spark 高斯泼溅**：使用 `npm run build:spark` 生成独立 `build/spark.module.js`，借用主引擎，不重复打包 Cocos。可运行示例为 `examples/spark-splats/`。默认 bundle 不包含 Spark；WASM 仍以内联的上游发行字节提供，XR/hand 家族排除范围不变。Spark-rs 的 crate 级许可处置仍为 pending，因此当前仅提供仓库内可选构建，不纳入默认 npm 包。边界、声明与部署方式见 [Spark 独立模块](docs/reference/spark-optional-entry.md)。
+- **Spark 高斯泼溅**：独立 `build/spark.module.js` 借用主引擎，不重复打包 Cocos，仓库示例为 `examples/spark-splats/`。默认 bundle 不包含 Spark；WASM 仍以内联的上游发行字节提供，XR/hand 家族排除范围不变。Spark-rs 的 crate 级分发授权仍为 pending，当前阻断新增 Spark 构建，不纳入默认 npm 包。边界、声明与部署方式见 [Spark 独立模块](docs/reference/spark-optional-entry.md)和[分发授权状态](docs/reference/distribution-authorization.md)。
 
 ## Code First 注意事项
 
@@ -400,7 +402,9 @@ cocosair.js/
 
 ## 验证范围
 
-日常 PR 使用 `Code quality / quality` 按改动范围运行格式、类型、CPU 回归、构建与包检查；代码改动还验证 `shader-driver-pilot`、`glass-refraction`、`gltf-viewer`、`input`、`spark-splats` 五个 Chromium 示例。Box2D 有独立的路径选择回归，完整示例 campaign 通过 `example-evidence.yml` 手动执行。具体范围见 [CI scopes](docs/reference/ci-scopes.md)。
+`Code quality / quality` 按改动范围运行格式、类型、CPU 回归、构建与包检查；代码改动还验证 `shader-driver-pilot`、`glass-refraction`、`gltf-viewer`、`input`、`spark-splats` 五个 Chromium 示例。Box2D 有独立的路径选择回归，完整示例 campaign 通过 `example-evidence.yml` 手动执行。具体范围见 [CI scopes](docs/reference/ci-scopes.md)。
+
+当前工作流保持手动／可复用入口；以上为按范围保留的检查内容。
 
 局部检查、源码导出或历史 PASS 不代表当前完整示例、跨浏览器或发布验收完成。发布须核对当前候选指纹和完整证据，见[验证与发布检查](docs/reference/verification.md)。
 
@@ -413,6 +417,7 @@ cocosair.js/
 本项目自有代码使用 MIT（见 LICENSE），内嵌第三方代码分别遵循其许可。
 默认 bundle 包含 Spine 相关代码，使用与再分发须满足随包的 Spine Runtimes License Agreement 及其引用的 Spine Editor 授权条件；不能将整个 bundle 视为仅受 MIT 约束。
 PAL 已改由公开、带 MIT 许可的 cocos4 固定源码生成，旧 `@cocos/engine-pal` 包不再使用。许可及版权 notice 随包提供，完整来源登记见 [第三方许可](docs/THIRD_PARTY_LICENSES.md)。
+当前替换不代表公开 Git 中旧 PAL 历史授权已经闭环；该项和 Spark WASM 分发授权仍为 pending，见[分发授权状态](docs/reference/distribution-authorization.md)。
 
 ## AIR skills 路由与维护
 

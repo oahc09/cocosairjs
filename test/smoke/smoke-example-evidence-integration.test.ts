@@ -408,11 +408,13 @@ test('single quality preserves bounded core coverage and plans related checks wi
     const text = fs.readFileSync(path.join(root, '.github/workflows/format.yml'), 'utf8');
     const workflow = yaml.load(text, { schema: yaml.JSON_SCHEMA });
     expect(Object.keys(workflow.jobs)).toEqual(['quality']);
-    expect(Object.keys(workflow.on).sort()).toEqual(['pull_request', 'push', 'workflow_call', 'workflow_dispatch']);
+    expect(Object.keys(workflow.on).sort()).toEqual(['workflow_call', 'workflow_dispatch']);
     expect(workflow.permissions).toEqual({ contents: 'read' });
     const job = workflow.jobs.quality;
     expect(job['timeout-minutes']).toBe(35);
-    const checkouts = job.steps.filter((s: any) => s.uses === 'actions/checkout@v4');
+    const checkouts = job.steps.filter(
+        (s: any) => s.uses === 'actions/checkout@11d5960a326750d5838078e36cf38b85af677262',
+    );
     expect(checkouts).toHaveLength(3);
     expect(checkouts[0].with.ref).toBe('${{ github.event.pull_request.head.sha || github.sha }}');
     expect(checkouts.find((s: any) => s.id === 'base_tree').with.path).toBe('.ci-base');
@@ -478,7 +480,9 @@ test('single quality preserves bounded core coverage and plans related checks wi
     expect(workflow.concurrency['cancel-in-progress']).toBe(true);
     expect(job.steps.find((step: any) => step.id === 'gate').if).toBe('always()');
     expect(job.steps.find((step: any) => step.id === 'gate').env.CI_STEPS_JSON).toBe('${{ toJSON(steps) }}');
-    const upload = job.steps.filter((s: any) => s.uses === 'actions/upload-artifact@v4');
+    const upload = job.steps.filter(
+        (s: any) => s.uses === 'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02',
+    );
     expect(upload).toHaveLength(1);
     expect(upload[0].if).toBe('always()');
     expect(upload[0].with.path).toContain('/core-example-smoke/');
@@ -692,7 +696,9 @@ describe('Committed example evidence workflow safeguards', () => {
     });
 
     test('uploads preserve raw attempts, complete portable evidence and hidden interruption backups', () => {
-        const uploads = steps.filter((step: any) => step.uses === 'actions/upload-artifact@v4');
+        const uploads = steps.filter(
+            (step: any) => step.uses === 'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02',
+        );
         expect(uploads).toHaveLength(4);
         const byName = Object.fromEntries(uploads.map((step: any) => [step.with.name, step]));
         expect(byName['example-shutdown-diagnostics']).toBeUndefined();

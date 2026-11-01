@@ -1,0 +1,1613 @@
+{
+  "method": "Static feature and cfg evaluation of registry-normalized manifests for wasm32-unknown-unknown; no Cargo or crate code was executed; original build-host cfg conservatively includes all listed targets; not a linked-binary SBOM",
+  "runtimeCandidateCount": 60,
+  "hostCandidateCount": 20,
+  "lockOnlyCount": 9,
+  "runtimeCandidates": [
+    "adler2 2.0.1",
+    "ahash 0.7.8",
+    "ahash 0.8.12",
+    "anyhow 1.0.98",
+    "bitflags 2.11.0",
+    "bumpalo 3.20.2",
+    "bytemuck 1.25.0",
+    "byteorder-lite 0.1.0",
+    "cfg-if 1.0.0",
+    "console_error_panic_hook 0.1.7",
+    "const-random 0.1.18",
+    "crc32fast 1.5.0",
+    "doc-comment 0.3.4",
+    "either 1.15.0",
+    "equivalent 1.0.2",
+    "fdeflate 0.3.7",
+    "flate2 1.1.9",
+    "glam 0.30.8",
+    "half 2.6.0",
+    "hashbrown 0.11.2",
+    "hashbrown 0.16.1",
+    "hnsw 0.11.0",
+    "image 0.25.10",
+    "image-webp 0.2.4",
+    "indexmap 2.13.0",
+    "itertools 0.14.0",
+    "itoa 1.0.15",
+    "js-sys 0.3.94",
+    "libm 0.2.16",
+    "log 0.4.29",
+    "memchr 2.7.6",
+    "miniz_oxide 0.8.9",
+    "moxcms 0.8.1",
+    "num-traits 0.2.19",
+    "once_cell 1.21.3",
+    "ordered-float 5.1.0",
+    "png 0.18.1",
+    "pxfm 0.1.28",
+    "quick-error 2.0.1",
+    "rand_core 0.6.4",
+    "rand_pcg 0.3.1",
+    "ryu 1.0.20",
+    "serde 1.0.228",
+    "serde-wasm-bindgen 0.6.5",
+    "serde_core 1.0.228",
+    "serde_json 1.0.145",
+    "simd-adler32 0.3.9",
+    "smallvec 1.15.1",
+    "space 0.17.0",
+    "spark-lib 0.1.0",
+    "spark-rs 0.1.0",
+    "typed-path 0.12.3",
+    "unicode-ident 1.0.18",
+    "wasm-bindgen 0.2.117",
+    "wasm-bindgen-shared 0.2.117",
+    "web-sys 0.3.94",
+    "zerocopy 0.8.27",
+    "zip 7.2.0",
+    "zlib-rs 0.6.3",
+    "zopfli 0.8.3"
+  ],
+  "hostCandidates": [
+    "autocfg 1.5.0",
+    "bumpalo 3.20.2",
+    "cfg-if 1.0.0",
+    "const-random-macro 0.1.16",
+    "crunchy 0.2.3",
+    "getrandom 0.2.16",
+    "libc 0.2.177",
+    "once_cell 1.21.3",
+    "proc-macro2 1.0.95",
+    "quote 1.0.40",
+    "rustversion 1.0.20",
+    "serde_derive 1.0.228",
+    "syn 2.0.100",
+    "tiny-keccak 2.0.2",
+    "unicode-ident 1.0.18",
+    "version_check 0.9.5",
+    "wasi 0.11.1+wasi-snapshot-preview1",
+    "wasm-bindgen-macro 0.2.117",
+    "wasm-bindgen-macro-support 0.2.117",
+    "wasm-bindgen-shared 0.2.117"
+  ],
+  "lockOnly": [
+    "allocator-api2 0.2.21",
+    "bytemuck_derive 1.10.2",
+    "foldhash 0.2.0",
+    "futures-core 0.3.32",
+    "futures-task 0.3.32",
+    "futures-util 0.3.32",
+    "pin-project-lite 0.2.17",
+    "slab 0.4.12",
+    "zerocopy-derive 0.8.27"
+  ],
+  "unresolvedCfg": [],
+  "features": [
+    {
+      "package": "adler2 2.0.1",
+      "context": "wasm",
+      "requested": []
+    },
+    {
+      "package": "ahash 0.7.8",
+      "context": "wasm",
+      "requested": []
+    },
+    {
+      "package": "ahash 0.8.12",
+      "context": "wasm",
+      "requested": [
+        "compile-time-rng",
+        "std"
+      ]
+    },
+    {
+      "package": "anyhow 1.0.98",
+      "context": "wasm",
+      "requested": [
+        "default"
+      ]
+    },
+    {
+      "package": "autocfg 1.5.0",
+      "context": "host",
+      "requested": [
+        "default"
+      ]
+    },
+    {
+      "package": "bitflags 2.11.0",
+      "context": "wasm",
+      "requested": [
+        "default"
+      ]
+    },
+    {
+      "package": "bumpalo 3.20.2",
+      "context": "host",
+      "requested": [
+        "default"
+      ]
+    },
+    {
+      "package": "bumpalo 3.20.2",
+      "context": "wasm",
+      "requested": [
+        "default"
+      ]
+    },
+    {
+      "package": "bytemuck 1.25.0",
+      "context": "wasm",
+      "requested": [
+        "default",
+        "extern_crate_alloc"
+      ]
+    },
+    {
+      "package": "byteorder-lite 0.1.0",
+      "context": "wasm",
+      "requested": [
+        "default"
+      ]
+    },
+    {
+      "package": "cfg-if 1.0.0",
+      "context": "host",
+      "requested": [
+        "default"
+      ]
+    },
+    {
+      "package": "cfg-if 1.0.0",
+      "context": "wasm",
+      "requested": [
+        "default"
+      ]
+    },
+    {
+      "package": "console_error_panic_hook 0.1.7",
+      "context": "wasm",
+      "requested": [
+        "default"
+      ]
+    },
+    {
+      "package": "const-random 0.1.18",
+      "context": "wasm",
+      "requested": [
+        "default"
+      ]
+    },
+    {
+      "package": "const-random-macro 0.1.16",
+      "context": "host",
+      "requested": [
+        "default"
+      ]
+    },
+    {
+      "package": "crc32fast 1.5.0",
+      "context": "wasm",
+      "requested": [
+        "default",
+        "std"
+      ]
+    },
+    {
+      "package": "crunchy 0.2.3",
+      "context": "host",
+      "requested": [
+        "default"
+      ]
+    },
+    {
+      "package": "doc-comment 0.3.4",
+      "context": "wasm",
+      "requested": [
+        "default"
+      ]
+    },
+    {
+      "package": "either 1.15.0",
+      "context": "wasm",
+      "requested": [
+        "use_std"
+      ]
+    },
+    {
+      "package": "equivalent 1.0.2",
+      "context": "wasm",
+      "requested": []
+    },
+    {
+      "package": "fdeflate 0.3.7",
+      "context": "wasm",
+      "requested": [
+        "default"
+      ]
+    },
+    {
+      "package": "flate2 1.1.9",
+      "context": "wasm",
+      "requested": [
+        "default",
+        "zlib-rs"
+      ]
+    },
+    {
+      "package": "getrandom 0.2.16",
+      "context": "host",
+      "requested": [
+        "default"
+      ]
+    },
+    {
+      "package": "glam 0.30.8",
+      "context": "wasm",
+      "requested": [
+        "default"
+      ]
+    },
+    {
+      "package": "half 2.6.0",
+      "context": "wasm",
+      "requested": [
+        "default",
+        "std"
+      ]
+    },
+    {
+      "package": "hashbrown 0.11.2",
+      "context": "wasm",
+      "requested": [
+        "default"
+      ]
+    },
+    {
+      "package": "hashbrown 0.16.1",
+      "context": "wasm",
+      "requested": []
+    },
+    {
+      "package": "hnsw 0.11.0",
+      "context": "wasm",
+      "requested": [
+        "default"
+      ]
+    },
+    {
+      "package": "image 0.25.10",
+      "context": "wasm",
+      "requested": [
+        "png",
+        "webp"
+      ]
+    },
+    {
+      "package": "image-webp 0.2.4",
+      "context": "wasm",
+      "requested": [
+        "default"
+      ]
+    },
+    {
+      "package": "indexmap 2.13.0",
+      "context": "wasm",
+      "requested": [
+        "default"
+      ]
+    },
+    {
+      "package": "itertools 0.14.0",
+      "context": "wasm",
+      "requested": [
+        "default"
+      ]
+    },
+    {
+      "package": "itoa 1.0.15",
+      "context": "wasm",
+      "requested": [
+        "default"
+      ]
+    },
+    {
+      "package": "js-sys 0.3.94",
+      "context": "wasm",
+      "requested": [
+        "default",
+        "std"
+      ]
+    },
+    {
+      "package": "libc 0.2.177",
+      "context": "host",
+      "requested": []
+    },
+    {
+      "package": "libm 0.2.16",
+      "context": "wasm",
+      "requested": [
+        "default"
+      ]
+    },
+    {
+      "package": "log 0.4.29",
+      "context": "wasm",
+      "requested": [
+        "default"
+      ]
+    },
+    {
+      "package": "memchr 2.7.6",
+      "context": "wasm",
+      "requested": [
+        "default",
+        "std"
+      ]
+    },
+    {
+      "package": "miniz_oxide 0.8.9",
+      "context": "wasm",
+      "requested": [
+        "default",
+        "simd",
+        "with-alloc"
+      ]
+    },
+    {
+      "package": "moxcms 0.8.1",
+      "context": "wasm",
+      "requested": [
+        "default"
+      ]
+    },
+    {
+      "package": "num-traits 0.2.19",
+      "context": "wasm",
+      "requested": [
+        "default",
+        "std"
+      ]
+    },
+    {
+      "package": "once_cell 1.21.3",
+      "context": "host",
+      "requested": [
+        "alloc",
+        "race"
+      ]
+    },
+    {
+      "package": "once_cell 1.21.3",
+      "context": "wasm",
+      "requested": [
+        "alloc"
+      ]
+    },
+    {
+      "package": "ordered-float 5.1.0",
+      "context": "wasm",
+      "requested": [
+        "default"
+      ]
+    },
+    {
+      "package": "png 0.18.1",
+      "context": "wasm",
+      "requested": [
+        "default"
+      ]
+    },
+    {
+      "package": "proc-macro2 1.0.95",
+      "context": "host",
+      "requested": [
+        "default",
+        "proc-macro"
+      ]
+    },
+    {
+      "package": "pxfm 0.1.28",
+      "context": "wasm",
+      "requested": [
+        "default"
+      ]
+    },
+    {
+      "package": "quick-error 2.0.1",
+      "context": "wasm",
+      "requested": [
+        "default"
+      ]
+    },
+    {
+      "package": "quote 1.0.40",
+      "context": "host",
+      "requested": [
+        "default",
+        "proc-macro"
+      ]
+    },
+    {
+      "package": "rand_core 0.6.4",
+      "context": "wasm",
+      "requested": [
+        "default"
+      ]
+    },
+    {
+      "package": "rand_pcg 0.3.1",
+      "context": "wasm",
+      "requested": [
+        "default"
+      ]
+    },
+    {
+      "package": "rustversion 1.0.20",
+      "context": "host",
+      "requested": [
+        "default"
+      ]
+    },
+    {
+      "package": "ryu 1.0.20",
+      "context": "wasm",
+      "requested": [
+        "default"
+      ]
+    },
+    {
+      "package": "serde 1.0.228",
+      "context": "wasm",
+      "requested": [
+        "default",
+        "derive"
+      ]
+    },
+    {
+      "package": "serde-wasm-bindgen 0.6.5",
+      "context": "wasm",
+      "requested": [
+        "default"
+      ]
+    },
+    {
+      "package": "serde_core 1.0.228",
+      "context": "wasm",
+      "requested": [
+        "result",
+        "std"
+      ]
+    },
+    {
+      "package": "serde_derive 1.0.228",
+      "context": "host",
+      "requested": [
+        "default"
+      ]
+    },
+    {
+      "package": "serde_json 1.0.145",
+      "context": "wasm",
+      "requested": [
+        "default"
+      ]
+    },
+    {
+      "package": "simd-adler32 0.3.9",
+      "context": "wasm",
+      "requested": [
+        "default",
+        "std"
+      ]
+    },
+    {
+      "package": "smallvec 1.15.1",
+      "context": "wasm",
+      "requested": [
+        "const_generics",
+        "default"
+      ]
+    },
+    {
+      "package": "space 0.17.0",
+      "context": "wasm",
+      "requested": [
+        "alloc"
+      ]
+    },
+    {
+      "package": "spark-lib 0.1.0",
+      "context": "wasm",
+      "requested": [
+        "antisplat",
+        "bhatt_lod",
+        "csplat",
+        "gsplat",
+        "ksplat",
+        "ply",
+        "rad",
+        "sogs",
+        "spz",
+        "tiny_lod"
+      ]
+    },
+    {
+      "package": "spark-rs 0.1.0",
+      "context": "wasm",
+      "requested": [
+        "default"
+      ]
+    },
+    {
+      "package": "syn 2.0.100",
+      "context": "host",
+      "requested": [
+        "clone-impls",
+        "default",
+        "derive",
+        "extra-traits",
+        "full",
+        "parsing",
+        "printing",
+        "proc-macro",
+        "visit",
+        "visit-mut"
+      ]
+    },
+    {
+      "package": "tiny-keccak 2.0.2",
+      "context": "host",
+      "requested": [
+        "default",
+        "shake"
+      ]
+    },
+    {
+      "package": "typed-path 0.12.3",
+      "context": "wasm",
+      "requested": [
+        "default"
+      ]
+    },
+    {
+      "package": "unicode-ident 1.0.18",
+      "context": "host",
+      "requested": [
+        "default"
+      ]
+    },
+    {
+      "package": "unicode-ident 1.0.18",
+      "context": "wasm",
+      "requested": [
+        "default"
+      ]
+    },
+    {
+      "package": "version_check 0.9.5",
+      "context": "host",
+      "requested": [
+        "default"
+      ]
+    },
+    {
+      "package": "wasi 0.11.1+wasi-snapshot-preview1",
+      "context": "host",
+      "requested": []
+    },
+    {
+      "package": "wasm-bindgen 0.2.117",
+      "context": "wasm",
+      "requested": [
+        "default",
+        "std"
+      ]
+    },
+    {
+      "package": "wasm-bindgen-macro 0.2.117",
+      "context": "host",
+      "requested": [
+        "default"
+      ]
+    },
+    {
+      "package": "wasm-bindgen-macro-support 0.2.117",
+      "context": "host",
+      "requested": [
+        "default"
+      ]
+    },
+    {
+      "package": "wasm-bindgen-shared 0.2.117",
+      "context": "host",
+      "requested": [
+        "default"
+      ]
+    },
+    {
+      "package": "wasm-bindgen-shared 0.2.117",
+      "context": "wasm",
+      "requested": [
+        "default"
+      ]
+    },
+    {
+      "package": "web-sys 0.3.94",
+      "context": "wasm",
+      "requested": [
+        "Performance",
+        "Window",
+        "console",
+        "default"
+      ]
+    },
+    {
+      "package": "zerocopy 0.8.27",
+      "context": "wasm",
+      "requested": [
+        "simd"
+      ]
+    },
+    {
+      "package": "zip 7.2.0",
+      "context": "wasm",
+      "requested": [
+        "deflate"
+      ]
+    },
+    {
+      "package": "zlib-rs 0.6.3",
+      "context": "wasm",
+      "requested": [
+        "rust-allocator",
+        "std"
+      ]
+    },
+    {
+      "package": "zopfli 0.8.3",
+      "context": "wasm",
+      "requested": [
+        "default"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "ahash 0.7.8",
+      "fromContext": "wasm",
+      "to": "once_cell 1.21.3",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "ahash 0.7.8",
+      "fromContext": "wasm",
+      "to": "version_check 0.9.5",
+      "toContext": "host",
+      "kind": "build"
+    },
+    {
+      "from": "ahash 0.8.12",
+      "fromContext": "wasm",
+      "to": "cfg-if 1.0.0",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "ahash 0.8.12",
+      "fromContext": "wasm",
+      "to": "const-random 0.1.18",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "ahash 0.8.12",
+      "fromContext": "wasm",
+      "to": "once_cell 1.21.3",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "ahash 0.8.12",
+      "fromContext": "wasm",
+      "to": "version_check 0.9.5",
+      "toContext": "host",
+      "kind": "build"
+    },
+    {
+      "from": "ahash 0.8.12",
+      "fromContext": "wasm",
+      "to": "zerocopy 0.8.27",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "console_error_panic_hook 0.1.7",
+      "fromContext": "wasm",
+      "to": "cfg-if 1.0.0",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "console_error_panic_hook 0.1.7",
+      "fromContext": "wasm",
+      "to": "wasm-bindgen 0.2.117",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "const-random 0.1.18",
+      "fromContext": "wasm",
+      "to": "const-random-macro 0.1.16",
+      "toContext": "host",
+      "kind": "normal"
+    },
+    {
+      "from": "const-random-macro 0.1.16",
+      "fromContext": "host",
+      "to": "getrandom 0.2.16",
+      "toContext": "host",
+      "kind": "normal"
+    },
+    {
+      "from": "const-random-macro 0.1.16",
+      "fromContext": "host",
+      "to": "once_cell 1.21.3",
+      "toContext": "host",
+      "kind": "normal"
+    },
+    {
+      "from": "const-random-macro 0.1.16",
+      "fromContext": "host",
+      "to": "tiny-keccak 2.0.2",
+      "toContext": "host",
+      "kind": "normal"
+    },
+    {
+      "from": "crc32fast 1.5.0",
+      "fromContext": "wasm",
+      "to": "cfg-if 1.0.0",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "fdeflate 0.3.7",
+      "fromContext": "wasm",
+      "to": "simd-adler32 0.3.9",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "flate2 1.1.9",
+      "fromContext": "wasm",
+      "to": "crc32fast 1.5.0",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "flate2 1.1.9",
+      "fromContext": "wasm",
+      "to": "miniz_oxide 0.8.9",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "flate2 1.1.9",
+      "fromContext": "wasm",
+      "to": "zlib-rs 0.6.3",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "getrandom 0.2.16",
+      "fromContext": "host",
+      "to": "cfg-if 1.0.0",
+      "toContext": "host",
+      "kind": "normal"
+    },
+    {
+      "from": "getrandom 0.2.16",
+      "fromContext": "host",
+      "to": "libc 0.2.177",
+      "toContext": "host",
+      "kind": "normal"
+    },
+    {
+      "from": "getrandom 0.2.16",
+      "fromContext": "host",
+      "to": "wasi 0.11.1+wasi-snapshot-preview1",
+      "toContext": "host",
+      "kind": "normal"
+    },
+    {
+      "from": "half 2.6.0",
+      "fromContext": "wasm",
+      "to": "cfg-if 1.0.0",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "hashbrown 0.11.2",
+      "fromContext": "wasm",
+      "to": "ahash 0.7.8",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "hnsw 0.11.0",
+      "fromContext": "wasm",
+      "to": "ahash 0.7.8",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "hnsw 0.11.0",
+      "fromContext": "wasm",
+      "to": "hashbrown 0.11.2",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "hnsw 0.11.0",
+      "fromContext": "wasm",
+      "to": "libm 0.2.16",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "hnsw 0.11.0",
+      "fromContext": "wasm",
+      "to": "num-traits 0.2.19",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "hnsw 0.11.0",
+      "fromContext": "wasm",
+      "to": "rand_core 0.6.4",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "hnsw 0.11.0",
+      "fromContext": "wasm",
+      "to": "smallvec 1.15.1",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "hnsw 0.11.0",
+      "fromContext": "wasm",
+      "to": "space 0.17.0",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "image 0.25.10",
+      "fromContext": "wasm",
+      "to": "bytemuck 1.25.0",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "image 0.25.10",
+      "fromContext": "wasm",
+      "to": "byteorder-lite 0.1.0",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "image 0.25.10",
+      "fromContext": "wasm",
+      "to": "image-webp 0.2.4",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "image 0.25.10",
+      "fromContext": "wasm",
+      "to": "moxcms 0.8.1",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "image 0.25.10",
+      "fromContext": "wasm",
+      "to": "num-traits 0.2.19",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "image 0.25.10",
+      "fromContext": "wasm",
+      "to": "png 0.18.1",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "image-webp 0.2.4",
+      "fromContext": "wasm",
+      "to": "byteorder-lite 0.1.0",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "image-webp 0.2.4",
+      "fromContext": "wasm",
+      "to": "quick-error 2.0.1",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "indexmap 2.13.0",
+      "fromContext": "wasm",
+      "to": "equivalent 1.0.2",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "indexmap 2.13.0",
+      "fromContext": "wasm",
+      "to": "hashbrown 0.16.1",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "itertools 0.14.0",
+      "fromContext": "wasm",
+      "to": "either 1.15.0",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "js-sys 0.3.94",
+      "fromContext": "wasm",
+      "to": "once_cell 1.21.3",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "js-sys 0.3.94",
+      "fromContext": "wasm",
+      "to": "wasm-bindgen 0.2.117",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "miniz_oxide 0.8.9",
+      "fromContext": "wasm",
+      "to": "adler2 2.0.1",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "miniz_oxide 0.8.9",
+      "fromContext": "wasm",
+      "to": "simd-adler32 0.3.9",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "moxcms 0.8.1",
+      "fromContext": "wasm",
+      "to": "num-traits 0.2.19",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "moxcms 0.8.1",
+      "fromContext": "wasm",
+      "to": "pxfm 0.1.28",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "num-traits 0.2.19",
+      "fromContext": "wasm",
+      "to": "autocfg 1.5.0",
+      "toContext": "host",
+      "kind": "build"
+    },
+    {
+      "from": "ordered-float 5.1.0",
+      "fromContext": "wasm",
+      "to": "num-traits 0.2.19",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "png 0.18.1",
+      "fromContext": "wasm",
+      "to": "bitflags 2.11.0",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "png 0.18.1",
+      "fromContext": "wasm",
+      "to": "crc32fast 1.5.0",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "png 0.18.1",
+      "fromContext": "wasm",
+      "to": "fdeflate 0.3.7",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "png 0.18.1",
+      "fromContext": "wasm",
+      "to": "flate2 1.1.9",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "png 0.18.1",
+      "fromContext": "wasm",
+      "to": "miniz_oxide 0.8.9",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "proc-macro2 1.0.95",
+      "fromContext": "host",
+      "to": "unicode-ident 1.0.18",
+      "toContext": "host",
+      "kind": "normal"
+    },
+    {
+      "from": "quote 1.0.40",
+      "fromContext": "host",
+      "to": "proc-macro2 1.0.95",
+      "toContext": "host",
+      "kind": "normal"
+    },
+    {
+      "from": "rand_pcg 0.3.1",
+      "fromContext": "wasm",
+      "to": "rand_core 0.6.4",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "serde 1.0.228",
+      "fromContext": "wasm",
+      "to": "serde_core 1.0.228",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "serde 1.0.228",
+      "fromContext": "wasm",
+      "to": "serde_derive 1.0.228",
+      "toContext": "host",
+      "kind": "normal"
+    },
+    {
+      "from": "serde-wasm-bindgen 0.6.5",
+      "fromContext": "wasm",
+      "to": "js-sys 0.3.94",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "serde-wasm-bindgen 0.6.5",
+      "fromContext": "wasm",
+      "to": "serde 1.0.228",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "serde-wasm-bindgen 0.6.5",
+      "fromContext": "wasm",
+      "to": "wasm-bindgen 0.2.117",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "serde_derive 1.0.228",
+      "fromContext": "host",
+      "to": "proc-macro2 1.0.95",
+      "toContext": "host",
+      "kind": "normal"
+    },
+    {
+      "from": "serde_derive 1.0.228",
+      "fromContext": "host",
+      "to": "quote 1.0.40",
+      "toContext": "host",
+      "kind": "normal"
+    },
+    {
+      "from": "serde_derive 1.0.228",
+      "fromContext": "host",
+      "to": "syn 2.0.100",
+      "toContext": "host",
+      "kind": "normal"
+    },
+    {
+      "from": "serde_json 1.0.145",
+      "fromContext": "wasm",
+      "to": "itoa 1.0.15",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "serde_json 1.0.145",
+      "fromContext": "wasm",
+      "to": "memchr 2.7.6",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "serde_json 1.0.145",
+      "fromContext": "wasm",
+      "to": "ryu 1.0.20",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "serde_json 1.0.145",
+      "fromContext": "wasm",
+      "to": "serde_core 1.0.228",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "space 0.17.0",
+      "fromContext": "wasm",
+      "to": "doc-comment 0.3.4",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "space 0.17.0",
+      "fromContext": "wasm",
+      "to": "num-traits 0.2.19",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "spark-lib 0.1.0",
+      "fromContext": "wasm",
+      "to": "ahash 0.8.12",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "spark-lib 0.1.0",
+      "fromContext": "wasm",
+      "to": "anyhow 1.0.98",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "spark-lib 0.1.0",
+      "fromContext": "wasm",
+      "to": "glam 0.30.8",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "spark-lib 0.1.0",
+      "fromContext": "wasm",
+      "to": "half 2.6.0",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "spark-lib 0.1.0",
+      "fromContext": "wasm",
+      "to": "hnsw 0.11.0",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "spark-lib 0.1.0",
+      "fromContext": "wasm",
+      "to": "image 0.25.10",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "spark-lib 0.1.0",
+      "fromContext": "wasm",
+      "to": "itertools 0.14.0",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "spark-lib 0.1.0",
+      "fromContext": "wasm",
+      "to": "miniz_oxide 0.8.9",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "spark-lib 0.1.0",
+      "fromContext": "wasm",
+      "to": "ordered-float 5.1.0",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "spark-lib 0.1.0",
+      "fromContext": "wasm",
+      "to": "rand_pcg 0.3.1",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "spark-lib 0.1.0",
+      "fromContext": "wasm",
+      "to": "serde 1.0.228",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "spark-lib 0.1.0",
+      "fromContext": "wasm",
+      "to": "serde_json 1.0.145",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "spark-lib 0.1.0",
+      "fromContext": "wasm",
+      "to": "smallvec 1.15.1",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "spark-lib 0.1.0",
+      "fromContext": "wasm",
+      "to": "space 0.17.0",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "spark-lib 0.1.0",
+      "fromContext": "wasm",
+      "to": "zip 7.2.0",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "spark-rs 0.1.0",
+      "fromContext": "wasm",
+      "to": "ahash 0.8.12",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "spark-rs 0.1.0",
+      "fromContext": "wasm",
+      "to": "anyhow 1.0.98",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "spark-rs 0.1.0",
+      "fromContext": "wasm",
+      "to": "console_error_panic_hook 0.1.7",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "spark-rs 0.1.0",
+      "fromContext": "wasm",
+      "to": "glam 0.30.8",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "spark-rs 0.1.0",
+      "fromContext": "wasm",
+      "to": "half 2.6.0",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "spark-rs 0.1.0",
+      "fromContext": "wasm",
+      "to": "itertools 0.14.0",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "spark-rs 0.1.0",
+      "fromContext": "wasm",
+      "to": "js-sys 0.3.94",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "spark-rs 0.1.0",
+      "fromContext": "wasm",
+      "to": "ordered-float 5.1.0",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "spark-rs 0.1.0",
+      "fromContext": "wasm",
+      "to": "serde 1.0.228",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "spark-rs 0.1.0",
+      "fromContext": "wasm",
+      "to": "serde-wasm-bindgen 0.6.5",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "spark-rs 0.1.0",
+      "fromContext": "wasm",
+      "to": "serde_json 1.0.145",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "spark-rs 0.1.0",
+      "fromContext": "wasm",
+      "to": "smallvec 1.15.1",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "spark-rs 0.1.0",
+      "fromContext": "wasm",
+      "to": "spark-lib 0.1.0",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "spark-rs 0.1.0",
+      "fromContext": "wasm",
+      "to": "wasm-bindgen 0.2.117",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "spark-rs 0.1.0",
+      "fromContext": "wasm",
+      "to": "web-sys 0.3.94",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "syn 2.0.100",
+      "fromContext": "host",
+      "to": "proc-macro2 1.0.95",
+      "toContext": "host",
+      "kind": "normal"
+    },
+    {
+      "from": "syn 2.0.100",
+      "fromContext": "host",
+      "to": "quote 1.0.40",
+      "toContext": "host",
+      "kind": "normal"
+    },
+    {
+      "from": "syn 2.0.100",
+      "fromContext": "host",
+      "to": "unicode-ident 1.0.18",
+      "toContext": "host",
+      "kind": "normal"
+    },
+    {
+      "from": "tiny-keccak 2.0.2",
+      "fromContext": "host",
+      "to": "crunchy 0.2.3",
+      "toContext": "host",
+      "kind": "normal"
+    },
+    {
+      "from": "wasm-bindgen 0.2.117",
+      "fromContext": "wasm",
+      "to": "cfg-if 1.0.0",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "wasm-bindgen 0.2.117",
+      "fromContext": "wasm",
+      "to": "once_cell 1.21.3",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "wasm-bindgen 0.2.117",
+      "fromContext": "wasm",
+      "to": "rustversion 1.0.20",
+      "toContext": "host",
+      "kind": "build"
+    },
+    {
+      "from": "wasm-bindgen 0.2.117",
+      "fromContext": "wasm",
+      "to": "wasm-bindgen-macro 0.2.117",
+      "toContext": "host",
+      "kind": "normal"
+    },
+    {
+      "from": "wasm-bindgen 0.2.117",
+      "fromContext": "wasm",
+      "to": "wasm-bindgen-shared 0.2.117",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "wasm-bindgen-macro 0.2.117",
+      "fromContext": "host",
+      "to": "quote 1.0.40",
+      "toContext": "host",
+      "kind": "normal"
+    },
+    {
+      "from": "wasm-bindgen-macro 0.2.117",
+      "fromContext": "host",
+      "to": "wasm-bindgen-macro-support 0.2.117",
+      "toContext": "host",
+      "kind": "normal"
+    },
+    {
+      "from": "wasm-bindgen-macro-support 0.2.117",
+      "fromContext": "host",
+      "to": "bumpalo 3.20.2",
+      "toContext": "host",
+      "kind": "normal"
+    },
+    {
+      "from": "wasm-bindgen-macro-support 0.2.117",
+      "fromContext": "host",
+      "to": "proc-macro2 1.0.95",
+      "toContext": "host",
+      "kind": "normal"
+    },
+    {
+      "from": "wasm-bindgen-macro-support 0.2.117",
+      "fromContext": "host",
+      "to": "quote 1.0.40",
+      "toContext": "host",
+      "kind": "normal"
+    },
+    {
+      "from": "wasm-bindgen-macro-support 0.2.117",
+      "fromContext": "host",
+      "to": "syn 2.0.100",
+      "toContext": "host",
+      "kind": "normal"
+    },
+    {
+      "from": "wasm-bindgen-macro-support 0.2.117",
+      "fromContext": "host",
+      "to": "wasm-bindgen-shared 0.2.117",
+      "toContext": "host",
+      "kind": "normal"
+    },
+    {
+      "from": "wasm-bindgen-shared 0.2.117",
+      "fromContext": "host",
+      "to": "unicode-ident 1.0.18",
+      "toContext": "host",
+      "kind": "normal"
+    },
+    {
+      "from": "wasm-bindgen-shared 0.2.117",
+      "fromContext": "wasm",
+      "to": "unicode-ident 1.0.18",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "web-sys 0.3.94",
+      "fromContext": "wasm",
+      "to": "js-sys 0.3.94",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "web-sys 0.3.94",
+      "fromContext": "wasm",
+      "to": "wasm-bindgen 0.2.117",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "zip 7.2.0",
+      "fromContext": "wasm",
+      "to": "crc32fast 1.5.0",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "zip 7.2.0",
+      "fromContext": "wasm",
+      "to": "flate2 1.1.9",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "zip 7.2.0",
+      "fromContext": "wasm",
+      "to": "indexmap 2.13.0",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "zip 7.2.0",
+      "fromContext": "wasm",
+      "to": "memchr 2.7.6",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "zip 7.2.0",
+      "fromContext": "wasm",
+      "to": "typed-path 0.12.3",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "zip 7.2.0",
+      "fromContext": "wasm",
+      "to": "zopfli 0.8.3",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "zopfli 0.8.3",
+      "fromContext": "wasm",
+      "to": "bumpalo 3.20.2",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "zopfli 0.8.3",
+      "fromContext": "wasm",
+      "to": "crc32fast 1.5.0",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "zopfli 0.8.3",
+      "fromContext": "wasm",
+      "to": "log 0.4.29",
+      "toContext": "wasm",
+      "kind": "normal"
+    },
+    {
+      "from": "zopfli 0.8.3",
+      "fromContext": "wasm",
+      "to": "simd-adler32 0.3.9",
+      "toContext": "wasm",
+      "kind": "normal"
+    }
+  ]
+}
