@@ -107424,13 +107424,12 @@ class PhysicsSystem extends System {
     let distance = 0;
     const worldRay = new Ray();
     for (let i = 1; i < samplePointsWorldSpace.length; ++i) {
-      if (distance > maxDistance) break;
+      if (distance >= maxDistance) break;
       const fromPoint = samplePointsWorldSpace[i - 1];
       const toPoint = samplePointsWorldSpace[i];
       const direction = new Vec3();
       Vec3.subtract(direction, toPoint, fromPoint);
       const stepLength = Vec3.len(direction);
-      distance += stepLength;
       const EPSILON = 1e-6;
       if (Math.abs(stepLength) < EPSILON) {
         continue;
@@ -107438,7 +107437,9 @@ class PhysicsSystem extends System {
       Vec3.multiplyScalar(direction, direction, 1.0 / stepLength);
       worldRay.d = direction;
       worldRay.o = fromPoint;
-      const hit = this.raycast(worldRay, mask, stepLength, queryTrigger);
+      const castLength = Math.min(stepLength, maxDistance - distance);
+      distance += castLength;
+      const hit = this.raycast(worldRay, mask, castLength, queryTrigger);
       if (hit) {
         for (let re = 0; re < this.raycastResults.length; re++) {
           const result = this.raycastResults[re];
@@ -107461,17 +107462,19 @@ class PhysicsSystem extends System {
     const worldRay = new Ray();
     let hit = false;
     for (let i = 1; i < samplePointsWorldSpace.length; ++i) {
-      if (distance > maxDistance) break;
+      if (distance >= maxDistance) break;
       const fromPoint = samplePointsWorldSpace[i - 1];
       const toPoint = samplePointsWorldSpace[i];
       const direction = new Vec3();
       Vec3.subtract(direction, toPoint, fromPoint);
       const stepLength = Vec3.len(direction);
-      distance += stepLength;
+      if (stepLength < 1e-6) continue;
       Vec3.multiplyScalar(direction, direction, 1.0 / stepLength);
       worldRay.d = direction;
       worldRay.o = fromPoint;
-      hit = this.raycastClosest(worldRay, mask, stepLength, queryTrigger);
+      const castLength = Math.min(stepLength, maxDistance - distance);
+      distance += castLength;
+      hit = this.raycastClosest(worldRay, mask, castLength, queryTrigger);
       if (hit) {
         const result = this.raycastClosestResult;
         const copiedResult = new PhysicsLineStripCastResult();
@@ -142723,7 +142726,7 @@ function createSessionScope() {
         pending.delete(entry.label);
         failures.push({
           label: entry.label,
-          message: String(error)
+          message: safeErrorString(error)
         });
       })));
       disposal = Promise.race([work, new Promise(resolve => {
@@ -142749,8 +142752,8 @@ function createSessionScope() {
 
 const AIR_VERSION = '1.0.0';
 const AIR_REVISION = 100;
-const AIR_BUILD_DATE = "202610312239";
-const AIR_BUILD_NUMBER = 245;
+const AIR_BUILD_DATE = "202611011249";
+const AIR_BUILD_NUMBER = 252;
 class AirAppImpl {
   get session() {
     return this._scope;

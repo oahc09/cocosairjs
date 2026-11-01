@@ -20,6 +20,7 @@
  THE SOFTWARE.
 */
 import { airError } from './app-config';
+import { safeErrorString } from './safe-error';
 
 export interface AirSessionToken { readonly generation: number; isCurrent(): boolean; }
 export interface AirSessionChange { readonly generation: number; readonly active: boolean; readonly reason: string | null; }
@@ -98,7 +99,7 @@ export function createSessionScope (): AirSessionScope {
             // Schedule callbacks only after the shared disposal Promise is installed.
             const work = Promise.all(entries.map((entry) => Promise.resolve().then(entry.cleanup).then(() => {
                 pending.delete(entry.label); completed.push(entry.label);
-            }, (error) => { pending.delete(entry.label); failures.push({ label: entry.label, message: String(error) }); })));
+            }, (error) => { pending.delete(entry.label); failures.push({ label: entry.label, message: safeErrorString(error) }); })));
             disposal = Promise.race([work, new Promise<void>((resolve) => { timer = setTimeout(resolve, timeout); })]).then(() => {
                 clearTimeout(timer);
                 return Object.freeze({ status: pending.size || failures.length ? 'failed' as const : 'released' as const,

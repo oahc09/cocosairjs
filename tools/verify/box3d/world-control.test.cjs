@@ -1,5 +1,7 @@
 /* Copyright (c) 2026-2027 oahc09@gmail.com. SPDX-License-Identifier: MIT
- * Executes actual AIR adapter source with explicitly mocked native operations and selector.
+ * Executes actual AIR adapters, PhysicsSystem, PhysicsMaterial and ownership transactions.
+ * Native operations, engine bootstrap/asset base, scene-component identities and unused math objects
+ * have explicit test seams; unknown imports and unexpected scene operations fail closed.
  * This is control/ownership validation, NOT native physics, engine-loop or browser acceptance.
  * Read-only unless the caller redirects output; no runtime build, evidence writer or Git action.
  */
@@ -10,22 +12,153 @@ const path = require('node:path');
 const vm = require('node:vm');
 const ts = require('typescript');
 const root = path.resolve(__dirname, '../../..');
+const transpiled = new Map();
 function loadSource() {
     const cache = new Map();
+    // Foundation tests do not create scene components or execute engine scheduling.
+    // Keep adapter/owner/transaction modules real; replace only these engine boundary modules.
+    const unexpected = () => {
+        throw new Error('Unexpected engine operation in foundation control');
+    };
+    class Vec3Seam {
+        constructor(x = 0, y = 0, z = 0) {
+            Object.assign(this, { x, y, z });
+        }
+    }
+    const seams = new Map();
+    const seam = (file, exports) => seams.set(path.resolve(root, file), exports);
+    for (const [file, name] of [
+        ['scene-graph/node', 'Node'],
+        ['scene-graph/component', 'Component'],
+        ['physics/framework/components/rigid-body', 'RigidBody'],
+        ['physics/framework/components/constraints/fixed-constraint', 'FixedConstraint'],
+        ['physics/framework/components/constraints/hinge-constraint', 'HingeConstraint'],
+        ['physics/framework/components/constraints/point-to-point-constraint', 'PointToPointConstraint'],
+        ['physics/framework/components/colliders/collider', 'Collider'],
+        ['physics/framework/components/colliders/terrain-collider', 'TerrainCollider'],
+        ['physics/framework/components/colliders/mesh-collider', 'MeshCollider'],
+    ])
+        seam(`src/cocos/${file}.ts`, {
+            [name]: class {
+                constructor() {
+                    unexpected();
+                }
+            },
+        });
+    const game = {};
+    seam('src/cocos/game/game.ts', { game });
+    seam('src/cocos/scene-graph/component-scheduler.ts', { isOriginalComponentActivityScheduler: unexpected });
+    seam('src/cocos/core/scheduler.ts', { isOriginalComponentActivityTimerScheduler: unexpected });
+    seam('src/cocos/core/data/gc-object.ts', {
+        GCObject: class {
+            constructor() {
+                unexpected();
+            }
+        },
+    });
+    class AssetSeam {
+        _objFlags = 0;
+        #listeners = new Map();
+        on(name, callback, target) {
+            const list = this.#listeners.get(name) || [];
+            if (!list.some((entry) => entry.callback === callback && entry.target === target))
+                list.push({ callback, target });
+            this.#listeners.set(name, list);
+        }
+        off(name, callback, target) {
+            this.#listeners.set(
+                name,
+                (this.#listeners.get(name) || []).filter(
+                    (entry) => entry.callback !== callback || entry.target !== target,
+                ),
+            );
+        }
+        emit(name) {
+            for (const entry of [...(this.#listeners.get(name) || [])]) entry.callback.call(entry.target);
+        }
+        destroy() {
+            unexpected();
+        }
+    }
+    class RecyclePoolSeam {
+        constructor(factory) {
+            this.factory = factory;
+        }
+        reset() {}
+        add() {
+            return this.factory();
+        }
+    }
+    const core = {
+        Vec3: Vec3Seam,
+        System: class {},
+        RecyclePool: RecyclePoolSeam,
+        Enum: (value) => value,
+        cclegacy: { internal: {} },
+        settings: { querySettings: () => undefined },
+        SettingsCategory: {},
+        CCFloat: Number,
+        math: null,
+        geometry: {},
+        warn: unexpected,
+        errorID: unexpected,
+        warnID: unexpected,
+    };
+    seam('src/cocos/core.ts', core);
+    seam('src/cocos/asset/assets/asset.ts', { Asset: AssetSeam });
+    seam('src/cocos/asset/asset-manager.ts', { assetManager: {}, builtinResMgr: {} });
+    const selector = { id: 'box3d', physicsWorld: null };
+    seam('src/cocos/physics/framework/physics-selector.ts', { selector, constructDefaultWorld: unexpected });
+    seam('src/cocos/game.ts', { game, director: { once: () => {} }, DirectorEvent: { INIT: 'init' } });
+    seam('src/cocos/core/math/vec3.ts', { Vec3: Vec3Seam });
+    seam('src/cocos/core/math/mat4.ts', {
+        Mat4: class {
+            constructor() {
+                unexpected();
+            }
+        },
+    });
+    seam('src/cocos/core/math/quat.ts', {
+        Quat: class {
+            constructor() {
+                unexpected();
+            }
+        },
+    });
+    seam('src/cocos/core/data/object.ts', {
+        CCObjectFlags: { Destroyed: 1, ToDestroy: 4, Destroying: 128 },
+        isValid: unexpected,
+    });
+
     function load(relative) {
         const file = path.resolve(root, relative);
+        if (seams.has(file)) return seams.get(file);
         if (cache.has(file)) return cache.get(file).exports;
         const module = { exports: {} };
         cache.set(file, module);
-        const source = fs.readFileSync(file, 'utf8');
-        const code = ts.transpileModule(source, {
-            compilerOptions: {
-                module: ts.ModuleKind.CommonJS,
-                target: ts.ScriptTarget.ES2020,
-            },
-        }).outputText;
+        if (!transpiled.has(file))
+            transpiled.set(
+                file,
+                ts.transpileModule(fs.readFileSync(file, 'utf8'), {
+                    compilerOptions: {
+                        module: ts.ModuleKind.CommonJS,
+                        target: ts.ScriptTarget.ES2020,
+                        experimentalDecorators: true,
+                    },
+                }).outputText,
+            );
+        const code = transpiled.get(file);
         vm.runInThisContext(`(function(require,module,exports){${code}\n})`, { filename: file })(
             (name) => {
+                if (name === 'internal:constants') return load('test/stubs/internal-constants.ts');
+                if (name === 'cc.decorator')
+                    return {
+                        ccclass: () => (value) => value,
+                        editable: () => {},
+                        range: () => () => {},
+                        serializable: () => {},
+                        type: () => () => {},
+                    };
                 assert(name.startsWith('.'), `Unexpected runtime dependency: ${name}`);
                 return load(path.relative(root, path.resolve(path.dirname(file), name + '.ts')));
             },
@@ -34,7 +167,20 @@ function loadSource() {
         );
         return module.exports;
     }
+    core.math = load('src/cocos/core/math/utils.ts');
+    load('src/cocos/game/game-clock-control.ts').installGameClockSource(
+        game,
+        {},
+        {
+            readPaused: () => false,
+            applyPaused: unexpected,
+        },
+        false,
+    );
     return {
+        selector,
+        ...load('src/cocos/physics/framework/physics-system.ts'),
+        ...load('src/cocos/physics/framework/assets/physics-material.ts'),
         ...load('src/air/physics/box3d/world.ts'),
         ...load('src/air/physics/box3d/registration.ts'),
         ...load('src/air/physics/box3d/unsupported.ts'),
@@ -45,6 +191,8 @@ function loadSource() {
 const source = loadSource();
 const code = (expected) => (error) => error?.code === expected;
 function fixture(overrides = {}) {
+    // Fault injection must not poison another test through singleton Game/owner registries.
+    const source = loadSource();
     const calls = [],
         worlds = new Map(),
         materials = new Map();
@@ -56,6 +204,18 @@ function fixture(overrides = {}) {
             const token = Object.freeze({ id: ++nextId });
             worlds.set(token, { gravity: [...gravity], sleep: true, step: 0, completed: false, snapshot: false });
             return token;
+        },
+        trimEmptyWorld(world) {
+            assert(worlds.has(world));
+        },
+        validateCommandBatch(world, commands) {
+            assert(worlds.has(world));
+            assert.deepEqual(commands, []);
+        },
+        applyCommandBatch(world, commands) {
+            assert(worlds.has(world));
+            assert.deepEqual(commands, []);
+            return Object.freeze({ executedOperationCount: 0, operations: Object.freeze([]) });
         },
         destroyWorld(world) {
             calls.push('destroy');
@@ -74,6 +234,8 @@ function fixture(overrides = {}) {
                 stepIndex: worlds.get(world).step,
                 bodyMoves: Object.freeze([]),
                 contactsOfOwnedBodies: Object.freeze([]),
+                sensorBegins: Object.freeze([]),
+                sensorEnds: Object.freeze([]),
             });
         },
         stepDiagnostics(world) {
@@ -113,6 +275,14 @@ function fixture(overrides = {}) {
             state.material = { ...material };
             calls.push(['material', shape.id]);
         },
+        rayAllRaw(world) {
+            assert(worlds.has(world));
+            return [];
+        },
+        shapeAllRaw(world) {
+            assert(worlds.has(world));
+            return [];
+        },
         worldCounts: () => ({ counts: new Uint32Array([1, 2, 3, 4]), liveBytes: 123n }),
         liveBytes: () => 234n,
         ...overrides,
@@ -128,7 +298,7 @@ function fixture(overrides = {}) {
     };
     const preparation = source.createAirPhysicsPreparation();
     preparation.own('box3d', 'module', () => lease.dispose());
-    const selector = {
+    const selector = Object.assign(source.selector, {
         physicsWorld: null,
         backend: {},
         wrapper: {},
@@ -137,8 +307,15 @@ function fixture(overrides = {}) {
             this.id = id;
             this.wrapper = this.backend[id] = wrapper;
         },
-    };
-    const prepare = () => source.createBox3DWorldAdapter(selector)(lease, options, preparation);
+    });
+    const system = new source.PhysicsSystem();
+    source.PhysicsSystem._instance = system;
+    const prepare = () =>
+        source.createBox3DWorldAdapter(selector, undefined, undefined, { physicsSystem: () => system })(
+            lease,
+            options,
+            preparation,
+        );
     function construct() {
         const prepared = prepare();
         prepared.select();
@@ -151,7 +328,27 @@ function fixture(overrides = {}) {
         materials.set(shape, { world: token, material });
         return shape;
     }
-    return { calls, binding, worlds, materials, options, lease, preparation, selector, prepare, construct, shape };
+    function setDefaultMaterial(value) {
+        const material = new source.PhysicsMaterial();
+        // setValues preserves the supplied coefficients (individual setters have epsilon no-op semantics).
+        material.setValues(value.friction, value.rollingFriction, value.spinningFriction, value.restitution);
+        system.setDefaultPhysicsMaterial(material);
+    }
+    return {
+        calls,
+        binding,
+        worlds,
+        materials,
+        options,
+        lease,
+        preparation,
+        selector,
+        prepare,
+        construct,
+        shape,
+        setDefaultMaterial,
+        system,
+    };
 }
 const material = (friction = 0.6, restitution = 0) => ({
     friction,
@@ -159,6 +356,28 @@ const material = (friction = 0.6, restitution = 0) => ({
     rollingFriction: 0,
     spinningFriction: 0,
 });
+
+const queryRay = { o: { x: 0, y: 0, z: 0 }, d: { x: 1, y: 0, z: 0 } };
+const queryOptions = { group: -1, mask: 0xffffffff, maxDistance: 1, queryTrigger: true };
+function queryCalls() {
+    const pool = {
+        add() {
+            throw new Error('Unexpected hit in empty fixture');
+        },
+    };
+    const half = { x: 1, y: 1, z: 1 },
+        q = { x: 0, y: 0, z: 0, w: 1 };
+    return [
+        ['raycast', [queryRay, queryOptions, pool, []]],
+        ['raycastClosest', [queryRay, queryOptions, {}]],
+        ['sweepBox', [queryRay, half, q, queryOptions, pool, []]],
+        ['sweepBoxClosest', [queryRay, half, q, queryOptions, {}]],
+        ['sweepSphere', [queryRay, 1, queryOptions, pool, []]],
+        ['sweepSphereClosest', [queryRay, 1, queryOptions, {}]],
+        ['sweepCapsule', [queryRay, 1, 2, q, queryOptions, pool, []]],
+        ['sweepCapsuleClosest', [queryRay, 1, 2, q, queryOptions, {}]],
+    ];
+}
 
 test('current incomplete foundation fails before registration or world allocation', async () => {
     const f = fixture();
@@ -171,6 +390,9 @@ test('current incomplete foundation fails before registration or world allocatio
 });
 test('each mandatory bridge and wrong variant fail closed', () => {
     for (const name of [
+        'trimEmptyWorld',
+        'validateCommandBatch',
+        'applyCommandBatch',
         'getGravity',
         'setSleepingEnabled',
         'isSleepingEnabled',
@@ -226,7 +448,7 @@ test('every missing component constructor throws instead of selector no-op fallb
         assert.throws(() => new f.selector.wrapper[name](), code('AIR_E_BOX3D_UNSUPPORTED'));
     assert.equal(f.worlds.size, 0);
 });
-test('all Cocos queries explicitly reject and native pointers are not exposed', () => {
+test('supported empty-world queries return no hit, missing ray bridge rejects, and native pointers stay private', () => {
     const f = fixture();
     const world = f.construct();
     const native = [...f.worlds.keys()][0];
@@ -235,17 +457,13 @@ test('all Cocos queries explicitly reject and native pointers are not exposed', 
     assert.equal(world.impl.backend, 'box3d');
     assert.equal(Object.hasOwn(world, 'token'), false);
     assert.equal(Object.hasOwn(world, 'binding'), false);
-    for (const name of [
-        'raycast',
-        'raycastClosest',
-        'sweepBox',
-        'sweepBoxClosest',
-        'sweepSphere',
-        'sweepSphereClosest',
-        'sweepCapsule',
-        'sweepCapsuleClosest',
-    ])
-        assert.throws(() => world[name](), code('AIR_E_BOX3D_UNSUPPORTED'));
+    for (const [name, args] of queryCalls()) assert.equal(world[name](...args), false);
+    delete f.binding.rayAllRaw;
+    assert.throws(() => world.raycastClosest(queryRay, queryOptions, {}), code('AIR_E_BOX3D_UNSUPPORTED'));
+    assert.throws(
+        () => world.raycastClosest({ o: queryRay.o, d: { x: NaN, y: 0, z: 0 } }, queryOptions, {}),
+        code('AIR_E_BOX3D_CONFIG'),
+    );
 });
 test('fixed step forwards once and snapshots before the event boundary', () => {
     const f = fixture();
@@ -386,7 +604,7 @@ test('material defaults update inherited and future shapes, preserving explicit 
         b = f.shape();
     world.registerMaterialShape(a, true);
     world.registerMaterialShape(b, false);
-    world.setDefaultMaterial(material(0.25, 0.5));
+    f.setDefaultMaterial(material(0.25, 0.5));
     assert.deepEqual(f.materials.get(a).material, { friction: 0.25, restitution: 0.5 });
     assert.equal(f.materials.get(b).material.friction, 0.6);
     const c = f.shape();
@@ -403,15 +621,19 @@ test('unsupported material fields and invalid numbers reject before mutation', (
     world.registerMaterialShape(a, true);
     const before = f.calls.length;
     for (const field of ['rollingFriction', 'spinningFriction'])
-        assert.throws(() => world.setDefaultMaterial({ ...material(), [field]: 0.2 }), code('AIR_E_BOX3D_UNSUPPORTED'));
+        assert.throws(() => f.setDefaultMaterial({ ...material(), [field]: 0.2 }), code('AIR_E_BOX3D_UNSUPPORTED'));
     for (const n of [-1, -1e-50]) {
-        assert.throws(() => world.setDefaultMaterial(material(n)), code('AIR_E_BOX3D_CONFIG'));
-        assert.throws(() => world.setDefaultMaterial(material(0.5, n)), code('AIR_E_BOX3D_CONFIG'));
+        assert.throws(() => f.setDefaultMaterial(material(n)), code('AIR_E_BOX3D_CONFIG'));
+        assert.throws(() => f.setDefaultMaterial(material(0.5, n)), code('AIR_E_BOX3D_CONFIG'));
     }
-    assert.throws(() => world.setDefaultMaterial(material(NaN)), code('AIR_E_BOX3D_CONFIG'));
+    for (const n of [NaN, Infinity, -Infinity])
+        assert.throws(() => f.setDefaultMaterial(material(n)), {
+            name: 'TypeError',
+            message: 'Material coefficients must be finite numbers.',
+        });
     assert.equal(f.calls.length, before);
 });
-test('material preflight validates every shape before mutation; failure rolls back all attempted writes', () => {
+test('material preflight validates every shape; partial mutation faults without unsafe rollback or replay', () => {
     const f = fixture();
     const world = f.construct();
     const a = f.shape(),
@@ -427,21 +649,32 @@ test('material preflight validates every shape before mutation; failure rolls ba
             throw new Error('partial setter failure');
         }
     };
-    assert.throws(() => world.setDefaultMaterial(material(0.25, 0.5)), /partial setter failure/);
-    assert.equal(f.materials.get(a).material.friction, Math.fround(0.6));
-    assert.equal(f.materials.get(b).material.friction, Math.fround(0.6));
-    assert.equal(world.diagnostics().state, 'ready');
+    assert.throws(() => f.setDefaultMaterial(material(0.25, 0.5)), /partial setter failure/);
+    assert.equal(f.materials.get(a).material.friction, 0.25);
+    assert.equal(f.materials.get(b).material.friction, 0.25);
+    assert.equal(f.calls.filter((call) => Array.isArray(call) && call[0] === 'material').length, 2);
+    assert.equal(world.diagnostics().state, 'faulted');
+    assert.throws(() => world.step(1 / 60), code('AIR_E_BOX3D_WORLD_FAULTED'));
     assert.equal(world.diagnostics().material, null);
 });
-test('material rollback failure faults and cleanup still works', async () => {
+test('material mutation failure retains original error, faults without retry, and cleanup still works', async () => {
     const f = fixture();
     const world = f.construct();
     const a = f.shape();
     world.registerMaterialShape(a, true);
+    let attempts = 0;
+    const failure = new Error('cannot mutate safely');
     f.binding.setShapeMaterial = () => {
-        throw new Error('cannot mutate or restore');
+        ++attempts;
+        throw failure;
     };
-    assert.throws(() => world.setDefaultMaterial(material(0.25)), code('AIR_E_BOX3D_WORLD_FAULTED'));
+    assert.throws(
+        () => f.setDefaultMaterial(material(0.25)),
+        (error) => error === failure,
+    );
+    assert.equal(attempts, 1);
+    assert.equal(world.diagnostics().state, 'faulted');
+    assert.throws(() => world.step(1 / 60), code('AIR_E_BOX3D_WORLD_FAULTED'));
     await f.preparation.dispose();
     assert.equal(f.worlds.size, 0);
 });
@@ -452,7 +685,20 @@ test('destroy is idempotent; closed calls reject while copied diagnostics remain
     world.destroy();
     assert.equal(f.calls.filter((v) => v === 'destroy').length, 1);
     assert.throws(() => world.step(1 / 60), code('AIR_E_BOX3D_DISPOSED'));
-    assert.throws(() => world.raycast(), code('AIR_E_BOX3D_DISPOSED'));
+    assert.throws(
+        () =>
+            world.raycast(
+                queryRay,
+                queryOptions,
+                {
+                    add() {
+                        throw new Error('Unexpected hit');
+                    },
+                },
+                [],
+            ),
+        code('AIR_E_BOX3D_DISPOSED'),
+    );
     await f.preparation.dispose();
     assert.equal(f.calls.filter((v) => v === 'destroy').length, 1);
     assert.equal(world.diagnostics().state, 'destroyed');
@@ -542,7 +788,7 @@ test('all material tokens are read before any inherited shape is modified', () =
         if (shape === b) throw new Error('invalid shape');
         return read(w, shape);
     };
-    assert.throws(() => world.setDefaultMaterial(material(0.25)), /invalid shape/);
+    assert.throws(() => f.setDefaultMaterial(material(0.25)), /invalid shape/);
     assert.equal(f.calls.length, before);
     assert.equal(f.materials.get(a).material.friction, 0.6);
 });
@@ -559,7 +805,7 @@ test('cross-world material adoption rejects before mutation', () => {
 test('native material failure during adoption faults rather than silently registering', () => {
     const f = fixture();
     const world = f.construct();
-    world.setDefaultMaterial(material(0.25));
+    f.setDefaultMaterial(material(0.25));
     const shape = f.shape();
     f.binding.setShapeMaterial = () => {
         throw new Error('adoption failed');
@@ -597,7 +843,7 @@ for (const kind of ['gravity', 'sleep']) {
 test('post-step inherited-shape adoption failure marks native observation stale', () => {
     const f = fixture();
     const world = f.construct();
-    world.setDefaultMaterial(material(0.25));
+    f.setDefaultMaterial(material(0.25));
     const shape = f.shape();
     world.step(1 / 60);
     const read = f.binding.getShapeMaterial,
@@ -617,7 +863,7 @@ test('post-step inherited-shape adoption failure marks native observation stale'
     assert.equal(world.diagnostics().nativeObservationCurrent, false);
     assert.equal(world.diagnostics().lastStepOutcome, 'completed');
 });
-test('post-step material rollback failure marks native observation stale', () => {
+test('post-step material partial failure marks native observation stale without replay', () => {
     const f = fixture();
     const world = f.construct();
     const shape = f.shape();
@@ -629,8 +875,49 @@ test('post-step material rollback failure marks native observation stale', () =>
         [...f.worlds.values()][0].snapshot = false;
         throw new Error('mutated before failure');
     };
-    assert.throws(() => world.setDefaultMaterial(material(0.25)), code('AIR_E_BOX3D_WORLD_FAULTED'));
+    assert.throws(() => f.setDefaultMaterial(material(0.25)), /mutated before failure/);
     assert.equal(world.diagnostics().state, 'faulted');
     assert.equal(world.diagnostics().nativeObservationCurrent, false);
     assert.equal(world.diagnostics().lastStepOutcome, 'completed');
+});
+
+test('direct material identity bypass remains forbidden and does not mutate native state', () => {
+    const f = fixture(),
+        world = f.construct();
+    const before = f.calls.length;
+    assert.throws(() => world.setDefaultMaterial(material(0.25)), code('AIR_E_BOX3D_CONFIG'));
+    assert.equal(f.calls.length, before);
+    assert.equal(world.diagnostics().state, 'ready');
+});
+
+test('foreign current System cannot drive an owned world', () => {
+    const f = fixture(),
+        world = f.construct();
+    const before = f.calls.length;
+    f.system.constructor._instance = {};
+    assert.throws(() => world.step(1 / 60), code('AIR_E_BOX3D_CONFIG'));
+    assert.equal(f.calls.length, before);
+});
+
+test('command batch failure preserves original error, does not solve, and permits cleanup', async () => {
+    const failure = new Error('batch apply failed');
+    let attempts = 0;
+    const f = fixture({
+        applyCommandBatch() {
+            ++attempts;
+            throw failure;
+        },
+    });
+    const world = f.construct();
+    assert.throws(
+        () => world.step(1 / 60),
+        (error) => error === failure,
+    );
+    assert.equal(attempts, 1);
+    assert(!f.calls.some((call) => Array.isArray(call) && call[0] === 'step'));
+    assert.equal(world.diagnostics().state, 'faulted');
+    assert.throws(() => world.step(1 / 60), code('AIR_E_BOX3D_WORLD_FAULTED'));
+    await f.preparation.dispose();
+    assert.equal(f.worlds.size, 0);
+    assert.equal(attempts, 1);
 });

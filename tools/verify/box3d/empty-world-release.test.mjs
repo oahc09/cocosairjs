@@ -513,6 +513,7 @@ function appHarness(options = {}) {
         terminal = false,
         deadline;
     const { createSessionScope } = load('src/air/session-scope.ts', ['createSessionScope'], {
+        ...safeErrors,
         airError: (code, message) => Object.assign(new Error(message), { code }),
         ...(options.manualTimeout
             ? {
@@ -668,6 +669,35 @@ test('scope cleanup failure and timeout remain failures; neither can authorize A
     assert.equal(timed.status, 'failed');
     assert.equal(timed.pending.length, 1);
     assert(!g.calls.includes('hook'));
+});
+test('hostile scope cleanup error remains a failed receipt, forbids ACK and permits terminal teardown', async () => {
+    const f = appHarness();
+    const hostile = {
+        [Symbol.toPrimitive]() {
+            throw new Error('secondary formatting failure');
+        },
+    };
+    f.app.session.own(() => {
+        f.calls.push('independent.cleanup');
+    }, 'independent-owner');
+    f.app.session.own(() => {
+        throw hostile;
+    }, 'hostile-owner');
+    const release = f.app.releaseScene();
+    assert.equal(f.app.releaseScene(), release);
+    const receipt = await release;
+    assert.equal(receipt.status, 'failed');
+    assert.deepEqual(plain(receipt.failures), [{ label: 'hostile-owner#2', message: '[unprintable error]' }]);
+    assert(f.calls.includes('independent.cleanup'));
+    assert(!f.calls.includes('hook'));
+    assert.throws(
+        () => f.app.run(new f.Scene()),
+        (e) => e.code === 'AIR_E_SCENE_RELEASE_FAILED',
+    );
+    await f.app.close();
+    assert.equal(f.calls.filter((x) => x === 'world.dispose').length, 1);
+    assert.equal(f.calls.filter((x) => x === 'module.dispose').length, 1);
+    assert(f.calls.includes('context.close'));
 });
 test('still-valid native scene prevents ACK', async () => {
     const f = appHarness({ sceneStillValid: true });
