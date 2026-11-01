@@ -23,7 +23,13 @@ const row = (base, path) => {
 };
 const walk = (base, dir = '') =>
     readdirSync(join(base, dir), { withFileTypes: true })
-        .flatMap((e) => (e.isDirectory() ? walk(base, join(dir, e.name)) : e.isFile() ? [join(dir, e.name)] : []))
+        .flatMap((e) =>
+            e.isDirectory()
+                ? walk(base, join(dir, e.name))
+                : e.isFile()
+                  ? [join(dir, e.name).replaceAll('\\', '/')]
+                  : [],
+        )
         .sort();
 const scope =
     'Integration 20261031: bounded Node/JSDOM production ST WASM query, ray, target, support and Fixed only. No browser, full EX09, MT or original Gate credit.';
@@ -32,11 +38,11 @@ const lock = {
     cohortIdentity: 'integration-20261031-ex09-limited',
     scope,
     runtimeBuildNumber: Number(buildArg),
-    fixtureRoot: fixture,
+    fixtureRoot: relative(root, fixture).replaceAll('\\', '/'),
     runtime: walk(runtime)
         .filter((p) => p === 'cocosair.module.js' || p.startsWith('physics/box3d/st/'))
         .map((p) => row(runtime, p)),
-    source: walk(join(root, 'src')).map((p) => row(root, join('src', p))),
+    source: walk(join(root, 'src')).map((p) => row(root, join('src', p).replaceAll('\\', '/'))),
     fixture: readdirSync(fixture)
         .filter((p) => p.startsWith('ex09-') && p.endsWith('.mjs'))
         .sort()

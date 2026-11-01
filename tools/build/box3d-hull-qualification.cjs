@@ -57,7 +57,9 @@ function requireChecks(actual, names, label) {
 function legacyCompilePaths({ root, directory, provenanceRoot = root }) {
     for (const value of [root, directory, provenanceRoot]) {
         assert(
-            typeof value === 'string' && !/[\x00-\x1f\\]/.test(value) && path.isAbsolute(value),
+            typeof value === 'string' &&
+                !/[\x00-\x1f\\]/.test(value.split(path.sep).join('/')) &&
+                path.isAbsolute(value),
             'Absolute audit root required',
         );
         assert.equal(path.resolve(value), value, 'Canonical audit root required');
@@ -78,10 +80,13 @@ function legacyCompilePaths({ root, directory, provenanceRoot = root }) {
     ];
     const normalize = (value) => {
         assert.equal(typeof value, 'string');
-        assert(!/[\x00-\x1f\\]/.test(value), 'Unsafe compiler argument');
+        assert(!/[\x00-\x1f]/.test(value), 'Unsafe compiler argument');
         const prefix = value.startsWith('-I') ? '-I' : '';
         const name = prefix ? value.slice(2) : value;
-        if (!path.isAbsolute(name)) return value;
+        if (!path.isAbsolute(name)) {
+            assert(!value.includes('\\'), 'Unsafe compiler argument');
+            return value;
+        }
         assert.equal(path.resolve(name), name, 'Noncanonical compiler path');
         assert(
             name === provenanceRoot || name.startsWith(provenanceRoot + path.sep),

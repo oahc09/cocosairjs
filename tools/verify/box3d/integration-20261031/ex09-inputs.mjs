@@ -20,7 +20,7 @@ export function verifyInputs(artifacts, lockPath = process.env.BOX3D_INTEGRATION
     for (const [group, base] of [
         ['runtime', artifacts],
         ['source', root],
-        ['fixture', lock.fixtureRoot],
+        ['fixture', resolve(root, lock.fixtureRoot)],
     ]) {
         assert(lock[group].length > 0, `Missing ${group} roster`);
         for (const item of lock[group]) {

@@ -2,6 +2,17 @@
 
 This is an **experimental, explicitly selected single-threaded backend**. It is not completion of the original 35-task / 91-category / nine-example / G0–G8 plan. The original plan remains in `ai/plans/box3d-v1.2-reference.md`.
 
+For current build/selection instructions, including Windows PowerShell, see the
+[Box3D guide](../../guides/box3d.md). The ledger below retains its original build
+identities and results; later local checks do not retroactively qualify them.
+
+The [2026-11-01 follow-up ledger](../../../ai/ledgers/box3d-completion.md) records
+the separate Windows ST attempt2 and SDK254 checks: native build/audit/consumption,
+197 bounded public WASM checks, and EX02 Chrome/Edge runs of 20 resets / 13 checks
+each. These do not replace the SDK248 candidate locks or original Gate results.
+Actual Android, iOS, Mac Safari and three first-time playtesters remain pending
+arrangement, as confirmed by the user on 2026-11-01.
+
 ## Integration identity
 
 - Base main: `e0faf47269d45ffd16eed3bf557ae6e1efec894a`.

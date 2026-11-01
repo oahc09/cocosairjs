@@ -58,7 +58,7 @@ const commands = json('compile_commands.json');
 const expectedSources = [
     ...readdirSync(resolve(stagedCore, 'src'))
         .filter((name) => name.endsWith('.c'))
-        .map((name) => relative(root, resolve(stagedCore, 'src', name))),
+        .map((name) => relative(root, resolve(stagedCore, 'src', name)).replaceAll('\\', '/')),
     'tools/physics/box3d/native/air_box3d.c',
     'tools/physics/box3d/native/snapshot.c',
     'tools/physics/box3d/native/geometry.c',
@@ -95,7 +95,7 @@ const expectedSources = [
     'tools/physics/box3d/native/module_release.c',
     'tools/physics/box3d/native/module_release_contract.c',
 ].sort();
-assert.deepEqual(commands.map((c) => relative(root, c.file)).sort(), expectedSources);
+assert.deepEqual(commands.map((c) => relative(root, c.file).replaceAll('\\', '/')).sort(), expectedSources);
 const requiredFlags = ['-msimd128', '-msse2', '-fno-fast-math', '-ffp-contract=off'];
 const forbiddenFlags =
     /pthread|SHARED_MEMORY|USE_PTHREADS|-ffast-math|-Ofast|BOX3D_DISABLE_SIMD|BOX3D_DOUBLE_PRECISION/;
@@ -103,8 +103,10 @@ for (const command of commands) {
     const flags = command.command ?? command.arguments.join(' ');
     assert.ok(!forbiddenFlags.test(flags), command.file);
     for (const flag of requiredFlags) assert.ok(flags.includes(flag), `${command.file}: missing ${flag}`);
-    if (command.file.startsWith(stagedCore + '/')) assert.ok(flags.includes('-DBOX3D_DISABLE_AVX2'));
-    if (command.file.endsWith('/native/air_box3d.c'))
+    const logicalFile = relative(root, command.file).replaceAll('\\', '/');
+    const stagedPrefix = relative(root, stagedCore).replaceAll('\\', '/') + '/';
+    if (logicalFile.startsWith(stagedPrefix)) assert.ok(flags.includes('-DBOX3D_DISABLE_AVX2'));
+    if (logicalFile === 'tools/physics/box3d/native/air_box3d.c')
         assert.ok(flags.includes(patchPlan.patchChainSha256), 'Compiled patch identity missing');
     assert.equal(flags.includes('-DNDEBUG'), receipt.mode === 'Release', `Wrong assertion mode: ${command.file}`);
 }
@@ -759,7 +761,7 @@ const report = {
     schemaVersion: 1,
     status: 'PASS',
     checkedAt: new Date().toISOString(),
-    command: `node tools/physics/box3d/audit-artifacts.mjs ${relative(root, dir)}`,
+    command: `node tools/physics/box3d/audit-artifacts.mjs ${relative(root, dir).replaceAll('\\', '/')}`,
     auditScriptSha256: sha256(readFileSync(fileURLToPath(import.meta.url))),
     nodeVersion: process.version,
     scope: 'Current-input artifact/compile/link audit only; not browser, sanitizer or full G1 acceptance',
@@ -855,5 +857,9 @@ assert.deepEqual(
 assert.equal(report.compiledSourceCount, 87, 'Exact current compiled source inventory');
 writeFileSync(reportPath, JSON.stringify(report, null, 2) + '\n');
 console.log(
-    JSON.stringify({ status: report.status, compiledSourceCount: commands.length, output: relative(root, reportPath) }),
+    JSON.stringify({
+        status: report.status,
+        compiledSourceCount: commands.length,
+        output: relative(root, reportPath).replaceAll('\\', '/'),
+    }),
 );

@@ -30,11 +30,13 @@ function load(file, imports = {}) {
 const errors = load('src/air/physics/box3d/world-binding.ts');
 const before = load('src/air/physics/box3d/before-step-source.ts');
 const motion = load('src/air/physics/box3d/body-motion-source.ts', { './world-binding': errors });
+const constraintState = load('src/cocos/physics/framework/constraint-state-control.ts');
 const PhysicsSystem = { instance: null };
 const controls = load('src/air/box3d-controls.ts', {
     '../cocos/physics/framework/physics-system': { PhysicsSystem },
     './physics/box3d/before-step-source': before,
     './physics/box3d/body-motion-source': motion,
+    '../cocos/physics/framework/constraint-state-control': constraintState,
 });
 const flags = { Destroyed: 1, ToDestroy: 4, Destroying: 128 };
 const noop = () => {};

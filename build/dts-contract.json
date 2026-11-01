@@ -1936,7 +1936,7 @@
   },
   "compatibilityTypeGraph": {
     "source": "original-current-ccbuild-all-feature-entry",
-    "originalEntrySha256": "d1ad5510d0ec11da23cd9c35a14143d4b12cc2285313ca2da25f4e07c67d9914",
+    "originalEntrySha256": "1fcfd972e0293570429df26005c0a8e7d456bb2baab8bee9a5ab3fa575ecdd33",
     "optionalRuntimeValues": false,
     "historicalArtifactCopied": false,
     "retainedPrivateAliases": [

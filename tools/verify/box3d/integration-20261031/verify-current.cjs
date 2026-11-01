@@ -12,6 +12,11 @@ if (!native || !fs.existsSync(path.resolve(root, native, 'build-receipt.json')))
     const groups = [
         [
             '--test',
+            'tools/verify/box3d/source-staging.test.mjs',
+            'tools/verify/box3d/hull-path-portability.test.cjs',
+            'tools/verify/box3d/inventory-v1-history.test.cjs',
+            'tools/verify/box3d/world-control.test.cjs',
+            'tools/verify/box3d/drag-readback-control.test.cjs',
             'tools/verify/box3d/loader-lifecycle.test.mjs',
             'tools/verify/box3d/empty-world-release.test.mjs',
             'tools/verify/box3d/build-assets.test.cjs',

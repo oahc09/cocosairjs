@@ -208,7 +208,11 @@ export function verifyStagedCore(destination, plan = readPatchPlan()) {
             if (entry.isDirectory()) walk(path);
             else {
                 const bytes = regular(path);
-                actual.push({ path: relative(destination, path), bytes: bytes.length, sha256: hash(bytes) });
+                actual.push({
+                    path: relative(destination, path).replaceAll('\\', '/'),
+                    bytes: bytes.length,
+                    sha256: hash(bytes),
+                });
             }
         }
     }

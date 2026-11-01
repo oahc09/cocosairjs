@@ -28,7 +28,10 @@ const report = {
 };
 const persist = () => writeFileSync(resolve(out, 'comparison.raw.json'), JSON.stringify(report, null, 2) + '\n');
 function run(command, args) {
-    const item = { command, args: args.map((a) => a.replaceAll(out, '<baseline>').replaceAll(root, '<repo>')) };
+    const item = {
+        command,
+        args: args.map((a) => a.replaceAll(out, '<baseline>').replaceAll(root, '<repo>').replaceAll('\\', '/')),
+    };
     report.commands.push(item);
     const result = spawnSync(command, args, { cwd: root, encoding: 'utf8', maxBuffer: 32 * 1024 * 1024 });
     const index = report.commands.length;
@@ -76,8 +79,8 @@ try {
         ...(native ? [] : ['-msimd128', '-msse2']),
         ...(debug ? ['-O0', '-g'] : [native ? '-O2' : '-O3', '-DNDEBUG']),
         ...(sanitize ? ['-fsanitize=address,undefined', '-fno-sanitize-recover=all', '-fno-omit-frame-pointer'] : []),
-        `-I${staged}/include`,
-        `-I${staged}/src`,
+        `-I${resolve(staged, 'include')}`,
+        `-I${resolve(staged, 'src')}`,
     ];
     const fixture = resolve(root, 'tools/physics/box3d/native/hull_legacy_fingerprint.c');
     report.fixtureSha256 = sha256(readFileSync(fixture));
@@ -151,5 +154,11 @@ try {
 } finally {
     report.completedAt = new Date().toISOString();
     persist();
-    console.log(JSON.stringify({ status: report.status, output: relative(root, out), error: report.error }));
+    console.log(
+        JSON.stringify({
+            status: report.status,
+            output: relative(root, out).replaceAll('\\', '/'),
+            error: report.error,
+        }),
+    );
 }

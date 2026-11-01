@@ -704,7 +704,7 @@ let localDeclaration;
 test('actual preparation declaration emits a self-contained public receipt with original ES2015/ES2017 libraries', () => {
     const result = typeProgram(new Map([[preparationPath, preparationSource]]), [preparationPath]);
     assert.equal(result.diagnostics.length, 0, diagnosticText(result.diagnostics));
-    localDeclaration = [...result.output].find(([name]) => name.endsWith('/preparation.d.ts'))?.[1];
+    localDeclaration = [...result.output].find(([name]) => path.basename(name) === 'preparation.d.ts')?.[1];
     assert(localDeclaration);
     assert.match(localDeclaration, /export interface Box3DModuleReleaseSnapshot/);
     assert.match(localDeclaration, /export interface Box3DModuleReleaseReceipt/);

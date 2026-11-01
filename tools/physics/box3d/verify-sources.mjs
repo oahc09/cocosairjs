@@ -24,7 +24,8 @@ export function verifySources() {
         for (const entry of readdirSync(directory, { withFileTypes: true })) {
             const path = resolve(directory, entry.name);
             if (entry.isDirectory()) walk(path);
-            else if (!expected.has(relative(root, path))) throw new Error(`Unmanifested upstream file: ${path}`);
+            else if (!expected.has(relative(root, path).replaceAll('\\', '/')))
+                throw new Error(`Unmanifested upstream file: ${path}`);
         }
     }
     for (const name of ['core', 'binding-base', 'old-core-review']) walk(resolve(root, 'vendor/box3d', name));

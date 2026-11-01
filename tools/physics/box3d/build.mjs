@@ -30,8 +30,30 @@ const result = {
 };
 const receipt = () => writeFileSync(resolve(out, 'build-receipt.json'), JSON.stringify(result, null, 2) + '\n');
 function run(command, args) {
-    result.commands.push({ command, args: args.map((a) => a.replaceAll(root, '<repo>').replaceAll(out, '<output>')) });
-    const r = spawnSync(command, args, { cwd: root, encoding: 'utf8', maxBuffer: 32 * 1024 * 1024 });
+    const portable = (value) =>
+        value
+            .replaceAll('\\', '/')
+            .replaceAll(out.replaceAll('\\', '/'), '<output>')
+            .replaceAll(root.replaceAll('\\', '/'), '<repo>');
+    const row = { command, args: args.map(portable) };
+    let executable = command;
+    let actualArgs = args;
+    if (process.platform === 'win32' && ['emcc', 'emcmake'].includes(command)) {
+        // Node cannot directly execute the SDK's .bat launchers. Use the official Python entry
+        // without a command shell; paths and compiler arguments remain separate arguments.
+        if (!process.env.EMSDK) throw new Error('Windows builds require the selected official EMSDK directory.');
+        const script = resolve(process.env.EMSDK, 'upstream/emscripten', command + '.py');
+        if (!existsSync(script)) throw new Error(`Missing official Emscripten entry: ${script}`);
+        executable = process.env.EMSDK_PYTHON || 'python';
+        actualArgs = [script, ...args];
+        row.launcher = {
+            executable: portable(executable),
+            script: portable(script),
+            sha256: sha256(readFileSync(script)),
+        };
+    }
+    result.commands.push(row);
+    const r = spawnSync(executable, actualArgs, { cwd: root, encoding: 'utf8', maxBuffer: 32 * 1024 * 1024 });
     const n = result.commands.length;
     writeFileSync(resolve(out, `command-${n}.stdout.txt`), r.stdout ?? '');
     writeFileSync(resolve(out, `command-${n}.stderr.txt`), r.stderr ?? '');
@@ -377,7 +399,7 @@ try {
             '-B',
             out,
             `-DCMAKE_BUILD_TYPE=${result.mode}`,
-            `-DAIR_STAGED_CORE=${stagedCore}`,
+            `-DAIR_STAGED_CORE=${stagedCore.replaceAll('\\', '/')}`,
             `-DAIR_PATCH_CHAIN_SHA=${patchPlan.patchChainSha256}`,
         ]);
         run('cmake', ['--build', out, '--parallel', '1']);

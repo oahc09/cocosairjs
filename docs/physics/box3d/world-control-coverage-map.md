@@ -1,4 +1,17 @@
-# Legacy world-control harness: coverage migration
+# World-control coverage and historical migration
+
+## Current source check — 2026-11-01
+
+`node --test tools/verify/box3d/world-control.test.cjs` passes **37/37** current
+CPU tests. The current harness executes actual owner/adapter/material transactions
+with explicit engine/native seams; it is not native physics or browser evidence.
+It now appears in the optional `integration-20261031/verify-current.cjs` runner.
+
+This result does not qualify the separate historical 79 failed suites or establish
+that every old adverse case has equivalent current coverage. The prior failure and
+migration notes below remain a record of the 2026-10-31 checkpoint.
+
+## Retained 2026-10-31 checkpoint
 
 `tools/verify/box3d/world-control.test.cjs` is retained, not skipped or declared passing.
 The 2026-10-31 merged-source run fails in its recursive VM loader on
